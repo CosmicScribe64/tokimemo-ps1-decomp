@@ -1,0 +1,10 @@
+extern s16 D_800F1992;
+extern s16 D_800F1994;
+extern s16 D_800F1996;
+extern s16 D_800F199A;
+extern s8 D_800F19A8;
+extern s8 D_800F19A9;
+extern s8 D_800F19AA;
+extern u8 D_800EC234;
+extern u8 D_800EC235;
+extern u8 D_800EC236;

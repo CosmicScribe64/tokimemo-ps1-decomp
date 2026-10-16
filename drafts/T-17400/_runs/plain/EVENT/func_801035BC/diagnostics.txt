@@ -1,0 +1,27 @@
+m2c.py: argument counts from the callees' asm: func_80103774 0
+python3 failed:
+ --------------------^
+cfe: Error: drafts/T-17400/_runs/plain/EVENT/func_801035BC/work/guarded.o.sjis.c, line 4678: This expression is not an lvalue.
+     *(void (**)())((unsigned char *)(&sp28) + (168)) = (void (*)()) D_801228E0.f[0x2A].unk0;
+ --------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-17400/_runs/plain/EVENT/func_801035BC/work/guarded.o.sjis.c, line 4679: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp28 + 0xA8) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_801228E0.f[0x2A]) + (4));
+ -------------------------------^
+cfe: Error: drafts/T-17400/_runs/plain/EVENT/func_801035BC/work/guarded.o.sjis.c, line 4681: 'sp' undefined; reoccurrences will not be reported.
+     (*(s32 (**)(s32))((unsigned char *)(sp + (D_800B1AF6 * 4)) + (40)))(0x80);
+ ----------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/plain/EVENT/func_801035BC/work -o drafts/T-17400/_runs/plain/EVENT/func_801035BC/work/guarded.o /tmp/asm_processorsp9omqvy/preprocessed_b577cfc686a54a9f9a375d599af0e822.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib8gep8k5g/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/plain/EVENT/func_801035BC/work/guarded.o drafts/T-17400/_runs/plain/EVENT/func_801035BC/work/guarded.o.sjis.c
+python3 failed:
+ --------------------^
+cfe: Error: drafts/T-17400/_runs/plain/EVENT/func_801035BC/work/guarded.o.sjis.c, line 4679: This expression is not an lvalue.
+     *(void (**)())((unsigned char *)(&sp28) + (168)) = (void (*)()) D_801228E0.f[0x2A].unk0;
+ --------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-17400/_runs/plain/EVENT/func_801035BC/work/guarded.o.sjis.c, line 4680: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp28 + 0xA8) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_801228E0.f[0x2A]) + (4));
+ -------------------------------^
+cfe: Warning 712: drafts/T-17400/_runs/plain/EVENT/func_801035BC/work/guarded.o.sjis.c, line 4683: illegal combination of pointer and integer
+     if (func_8004C984 == *(s32 *)((unsigned char *)(sp + (D_800B1AF6 * 4)) + (40))) {
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/plain/EVENT/func_801035BC/work -o drafts/T-17400/_runs/plain/EVENT/func_801035BC/work/guarded.o /tmp/asm_processorkx0guza2/preprocessed_276a188d8f8944aa82ee3dd6f49a00f3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibmqq2fa28/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/plain/EVENT/func_801035BC/work/guarded.o drafts/T-17400/_runs/plain/EVENT/func_801035BC/work/guarded.o.sjis.c

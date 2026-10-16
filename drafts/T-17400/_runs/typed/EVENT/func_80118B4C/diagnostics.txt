@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_80118DAC 3
+python3 failed:
+ ---------------^
+cfe: Warning 709: drafts/T-17400/_runs/typed/EVENT/func_80118B4C/work/guarded.o.sjis.c, line 6179: Incompatible pointer type assignment
+     D_80094720 = &D_80124388;
+ ---------------^
+cfe: Error: drafts/T-17400/_runs/typed/EVENT/func_80118B4C/work/guarded.o.sjis.c, line 6317: 'sp' undefined; reoccurrences will not be reported.
+     *(s32 *)((unsigned char *)temp_v0_3 + (424)) = (s32) (*(s32 *)((unsigned char *)temp_v0_3 + (424)) + ((s32) ((*(s16 *)((unsigned char *)(sp + ((&D_8012439C)[D_800EECBC] * 2)) + (56)) * sp4A * sp48) << 0x10) / 16));
+ ---------------------------------------------------------------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-17400/_runs/typed/EVENT/func_80118B4C/work/guarded.o.sjis.c, line 6397: '&' before array or function; ignored
+     if ((((EventStateView *)&D_800B0860)->unk_036 == ((EventBirthday4 *)&D_800B0A04[D_800B1746].pad10[0])->month) &&
+ ----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/typed/EVENT/func_80118B4C/work -o drafts/T-17400/_runs/typed/EVENT/func_80118B4C/work/guarded.o /tmp/asm_processor37f0nxs_/preprocessed_8a914c0a14a142ff81778cd012a9c0fa.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibjbnlsvd7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/typed/EVENT/func_80118B4C/work/guarded.o drafts/T-17400/_runs/typed/EVENT/func_80118B4C/work/guarded.o.sjis.c
