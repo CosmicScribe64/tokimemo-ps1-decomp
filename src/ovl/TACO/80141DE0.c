@@ -32,7 +32,46 @@ s16 func_801421AC() {
     return 0;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80141DE0", func_80142220);
+s32 func_80142220(s32 arg0) {
+    Tc14 *p;
+
+    for (p = D_8015E770; p < &D_8015E770[16]; p++) {
+        if (p->unk13 & 0x80) {
+            return -1;
+        }
+    }
+    if (D_80160460 != 0) {
+        return 1;
+    }
+    if (D_8015EDB4->unk2 & 0x80) {
+        return 0;
+    }
+    if (arg0 & 0x40) {
+        if (func_801421AC() == 3) {
+            D_8015EDB4->unk2 |= 0xC0;
+            func_801334BC();
+            func_8013356C();
+            D_80160460 = 1;
+            return 3;
+        }
+        if (func_801421AC() == 4) {
+            D_8015EDB4->unk2 |= 0xC0;
+            func_801334BC();
+            func_8013356C();
+            D_8015E770[0].unk13 = 0x90;
+            D_8015E770[0].unk0 = D_8015EDB4->unk74;
+            D_8015E770[0].unk2 = D_8015EDB4->unk76;
+            D_8015E770[0].unk4 = D_8015EDB4->unk78 - 0xC8;
+            D_8015E770[0].unk8 = 0;
+            D_8015E770[0].unkA = 0;
+            D_8015E770[0].unkC = -8;
+            D_8015E770[0].unk12 = 0;
+            func_801335A0(1, 0x505);
+            return 4;
+        }
+    }
+    return 0;
+}
 
 s32 func_801423B0(void) {
     Tc14 *var_s0;
