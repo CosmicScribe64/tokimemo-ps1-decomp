@@ -313,4 +313,78 @@ s32 func_801407D4(s32 *arg0, TcPos pos) {
     return count;
 }
 
+/* NON_MATCHING: T-19014, 6 differing lines (3 instructions); the sum (side << 5) + 0x20 for the
+ * u1/u3 stores lands in $a0, the original has $a1 (regdiff: a three-way priority tie with the
+ * hoisted hi(D_8011ECA0) constant). pad[2] is a FAKE frame home (eight unused bytes above m, as in
+ * func_80144430), and the four scalars before depth plus j and rot reproduce the original's slots. */
+#ifdef NON_MATCHING
+void func_80140ADC(Tc14 *arg0, s32 arg1) {
+    s32 pad[2];
+    MATRIX m;
+    SVECTOR v;
+    s32 pt[4];
+    Tc14 *rec;
+    POLY_FT4 *poly;
+    s32 dist;
+    s16 side;
+    s32 depth;
+    s32 flag;
+    s32 o;
+    s32 j;
+    s32 rot;
+
+    m = D_80129C40;
+    func_800A1100(&m);
+    func_800A1070(&m);
+    rec = &arg0[arg1];
+    v.vz = rec->unk4;
+    rot = 0;
+    for (o = 0; o < 2; o++) {
+        v.vy = rec->unk2 + rot - 0x10;
+        for (j = 0; j < 2; j++) {
+            v.vx = rec->unk0 + j * 0x20 - 0x10;
+            func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
+        }
+        rot += 0x20;
+    }
+    if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
+        if (((s16 *)pt)[3] >= D_800E6280.unk_018[D_8011ECA0] - 0x200
+            && D_800E6280.unk_018[D_8011ECA0] + 0x200 >= ((s16 *)pt)[7]) {
+            side = (rec->unk12 >> 4) & 1;
+            dist = (D_80122754 - rec->unk4) / 127;
+            if (dist >= 0x100) {
+                dist = 0xFF;
+            } else if (dist <= 0) {
+                return;
+            }
+            poly = func_800490F0(0x28, D_8011ECA0);
+            func_8009F040(poly);
+            SetSemiTrans(poly, 0);
+            poly->r0 = 0x80;
+            poly->g0 = 0x80;
+            poly->b0 = 0x80;
+            poly->tpage = func_8009ECB0(1, 1, 0x3C0, 0x100);
+            poly->clut = func_8009ED74(0x100, 0x1F8);
+            poly->u1 = (side << 5) + 0x20;
+            poly->u3 = (side << 5) + 0x20;
+            poly->v0 = 0x60;
+            poly->v1 = 0x60;
+            poly->u0 = side << 5;
+            poly->u2 = side << 5;
+            poly->v2 = 0x80;
+            poly->v3 = 0x80;
+            poly->x0 = ((s16 *)pt)[0];
+            poly->y0 = ((s16 *)pt)[1];
+            poly->x1 = ((s16 *)pt)[2];
+            poly->y1 = ((s16 *)pt)[3];
+            poly->x2 = ((s16 *)pt)[4];
+            poly->y2 = ((s16 *)pt)[5];
+            poly->x3 = ((s16 *)pt)[6];
+            poly->y3 = ((s16 *)pt)[7];
+            func_8009EED0((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013F250", func_80140ADC);
+#endif
