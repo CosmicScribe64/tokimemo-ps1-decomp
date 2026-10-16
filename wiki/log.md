@@ -15004,3 +15004,6 @@ As `s8 unk_1093[2]`, 15 matched `switch` functions change (selector `$v1` agains
 
 ## [2026-10-15] ticket | T-16930 pointer reads for kept copies opened
 Opened [[tickets/T-16930-pointer-read-kept-copies]] (In Progress), the follow-up of [[tickets/T-16920-gamestate-1093-type]]: try a local `GameState *g` or record pointer on the 23 other unmatched functions of the [[tickets/T-16910-cpw-census]] census that keep a `move` copy of an aggregate member, and on the five matched constant-first compares that still need a `FAKE` or cast.
+
+## [2026-10-15] build | T-16930 pointer reads: 4 tricks removed, 8 matches, stopped for hand-over
+[[tickets/T-16930-pointer-read-kept-copies]]: EVENT `func_80117004`, BUNKA_SD `func_8013261C`, NAME_ENT `func_80148C20`, ENDING `func_8013855C` lose their constant-first tricks through aggregate reads (RPG_BAT `func_80150CD8`'s `(u32)` is a type and stays). Matched on this branch: main `func_80042AC8` (through `GameState *g`), GEKO `func_80134040`, RPG_BAT `func_801495DC`, ENDING `func_80137730`; on unmerged branch `t16930-a`: main `func_80078C48`, OPTION `func_80137C1C`, `func_801383C4`, SHUGAKU `func_80137490`. Stopped on the user's request; ticket stays In Progress for the main thread.
