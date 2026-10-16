@@ -6103,6 +6103,47 @@ Time: about 100 minutes, two matches by minute 72 (`func_80141B18` at 70, `func_
 - Tools: `tools/siblings.py --package` takes `unit/name` lines (not the work-list lines) and the list must be inside the worktree. A quick loop of "gcc -E, tools/cc.py, objdump, diff against `expected/build/.../X.o`" costs 6 seconds against 30 for `funcdiff`; the row counts match `funcdiff` plus two relocation artefacts.
 - **Closer pass (Opus, 2026-10-16, about 25 minutes): `func_8013D838` still 10 rows.** The uopt trace (`build/scratch/regdiff/<func>/draft.o.trace`, "global coloring") settles which range the first `lw` of `arg3` belongs to: bit 103, `shl(arg3, 6)`, gets colour 2 (`$v1`). ugen loads the leaf into the range's register and as1 puts the shift into a free temporary (`$t4`). Bit 107 (`shl(cvtl(t), 4)`) follows the same pattern: colour 4 is the `lw a1` of the second load. The call result of `func_8009ED74` holds `$v0`, so `$v1` is the lowest free colour. For the original, bit 103 needs colour 11 (`$t4`) while 107, 108, 111 and 115 keep colours 4 to 7 (`$a1`..`$t0`). A tie order cannot give that: 111 (`cvt(add(shl, 63))`, u1/u3) is numbered after 103. The range would need a lower priority (two units) or six more interfering ranges in that block. Tried, with `regdiff --src` on scratch copies, no change from 10 rows: autotweak 120 s (337 edits); separate statements; `(u8)` casts; `arg3 * 64`; `+ 0xBF`; `t = (u16)(arg3 & 4)`; `4 & arg3`; a `void` definition with a prototype; a K&R definition; `poly = poly;`; the dead `t` store repeated 3, 5 and 7 times. Worse: the asm store order on one line (13 rows, the v ranges trade `$a2`/`$a3`/`$t0`); the dead store 10 times (13, a block split moves the v ranges); `if (arg3) {}` (15: bit 103 moves to `$v0` and everything else moves down one); v stores first, u and v on two lines, `t` after the u stores, x/y copies first, clut last (one extra instruction each); `t = arg3; t &= 4;` (structure).
 
+## TT overlay, batch 10: one long Opus run per large function (T-11840)
+
+Twelve large TT functions (1.1-2.2 KB), one Opus agent each with about 90-120 minutes, two at a time in separate
+worktrees: 10 matched (`func_80146348`, `func_80143A44`, `func_80144D70`, `func_801441BC`, `func_801400B0`,
+`func_80137C20`, `func_80141450`, `func_8013D988`, `func_8013230C`, `func_80136C64`; 15,564 bytes), 2 guarded
+(`func_8014A2B4` 28 lines, `func_801455C8` 24 lines). The bulk_m2c rerun with a 900 s autotweak budget on the 18 mid-size
+functions matched none. The large functions converted far better with long single-function sessions than the mid-size
+ones had with short timeboxes. Ticket [[tickets/T-11840-tt-batch-10]].
+
+- **u16 vs s16 stores of a constant decide which register range it joins** (biggest single lever in four functions):
+  a `u16` store can join a later compare or switch case constant (`func_801441BC`, `func_801400B0`, `func_8013230C`,
+  `func_80137C20`), or the other way round (`func_80143A44`). Try both on every constant store.
+- **Chained stores leave invisible traces.** `x[k] = x[k+1] = 0` costs one ugen temp (as1 later forwards it to
+  `sb zero`), shifting the FIFO t-numbering; 3+ chains keep the reloaded value as a uopt range that takes a register
+  without code (`func_80136C64`); u16 chains keep a phantom a1 range (`func_80143A44`). Byte chains that the original
+  stores as $zero each time must be separate stores (`func_8013230C`).
+- **ugen temporaries are FIFO by free order** (t6..t9, t0..t5, then freed registers in free order); `cc -S`
+  (`me/ugen.py`) recovers the source order of first loads and last uses (`func_80144D70`).
+- **Frame:** every declared local gets a slot in declaration order (first declared = highest address); count the
+  original's slots; FAKE pads keep slots of variables the original had. A spill slot below the arrays is a hoisted
+  expression, not a local (write it inline). A dead `move sN,zero` before a reload of sN at a loop head means the inner
+  counter is reused from an earlier loop (`func_8013D988`).
+- **Selectors and calls:** one `u32` local reused for several switch selectors and a call result gets v1 above a busy
+  pointer (`(s32)` casts for signed compares); a local reused for a call argument pulls its range into the call block
+  where a0..aN are forbidden (use a separate local); an implicit-int view of a `void` callee (file-local
+  `MAIN_API_OVERRIDE_` plus a guard in `main_api.h`) moves a post-call reload from v0 to v1.
+- **Loops:** IDO's loop-test variable follows the address spelling (2D-array casts `((T (*)[N])(base))[i][j]` give the
+  i*sizeof(T) counter); identical address spellings in two loops share one uopt range; `p += stride` in the for-header vs
+  the body places pointer increments differently; uopt does not strength-reduce `i << 3`; hoisted invariants and the li
+  order before a loop follow the first use order in the body.
+- **Operand order of sums:** `base + table[idx]` loads the table entry first; `b + a * 10` vs `a * 10 + b` changes the
+  addu order and ugen numbering.
+- **as1 schedules by source line**: in blocks ending at a branch, lines come out reversed and stores within a line too;
+  one-line groups (FAKE comment) for stores the original keeps adjacent; one-line load pairs fix lui/lw order.
+- A pointer parameter used directly can earn a callee-saved register; two names for one object (parameter vs local)
+  give separate uopt expression bits that break priority ties (`func_80141450`).
+- **Process:** long `tools/permute.py -j 4` runs (900 s) found the decisive lever in three functions once the structure
+  matched; `regdiff -v` (`R9COST`/`R9SAVE`) and register-normalized side-by-side diffs did the rest.
+- Open: the ugen emission order of four constants in `func_8014A2B4` case 7, and the a1 register of the state value in
+  `func_801455C8` (v0/v1/a0 busy in the original for no visible reason).
+
 ## T-19020: RENSYU package w3-d-p20 (80132040.c)
 
 [[tickets/T-19020-w3-d-p20]], wave 3 direct package of [[tickets/T-16990-wave-3-conveyor]], worktree `w3-d-p20`. Four functions, one matched (FAKE): `func_80133CB8` (420 B). `func_80133628` (900 B) stays a guarded draft (21 lines); `func_80133990` (844 B) and `func_8013325C` (972 B) are back to `INCLUDE_ASM` (drafts in `drafts/T-19020/RENSYU/`). `tools/siblings.py --package` found no matched relative above 0.70 for any of them.

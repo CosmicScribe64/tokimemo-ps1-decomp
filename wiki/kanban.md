@@ -140,6 +140,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-19023-w3-d-p23|T-19023 Wave 3 package w3-d-p23]]
 - [ ] [[tickets/T-19022-w3-d-p22|T-19022 Wave 3 package w3-d-p22]]
 - [ ] [[tickets/T-19024-w3-d-p24|T-19024 Wave 3 package w3-d-p24]]
+- [ ] [[tickets/T-11840-tt-batch-10|T-11840 TT batch 10]]
 - [ ] [[tickets/T-18700-types-first-bunkasai|T-18700 Types-first: BUNKASAI]]
 - [ ] [[tickets/T-19020-w3-d-p20|T-19020 Wave 3 package w3-d-p20]]
 - [ ] [[tickets/T-18800-types-first-date2|T-18800 Types-first: DATE2]]

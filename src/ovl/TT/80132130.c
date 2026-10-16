@@ -67,7 +67,177 @@ void func_80132198(u8 arg0, u8 arg1, u8 arg2) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132130", func_8013230C);
+/* Fills the 25 grid records and the corner, frame and panel records after them, then the colour bytes
+ * for scene arg0. The u16 stores of 8, 0xD and 0xC give the original register allocation. T-11840 */
+void func_8013230C(u8 arg0, u8 arg1) {
+    u8 *state;
+    u8 *p;
+    u8 *g;
+    s32 i;
+
+    state = D_80158A64;
+    /* FAKE: p, g and the loop header on one line put the hoisted (arg0 >> 4) chain ahead of the p load (as1 order). T-11840 */
+    p = D_80158AA4 + 0x1900; g = D_80158AB0; for (i = 0; i < 25; i++) {
+        *(s16 *)(g + 4) = (i / 5) * 0x48 - 0x5C;
+        *(s16 *)(g + 6) = (i % 5) * 0x48 - 0x48;
+        *(s16 *)(g + 0) = 0x1000;
+        *(s16 *)(g + 2) = 0x1000;
+        p[0] = 1;
+        p[1] = 0;
+        *(u16 *)(p + 0x44) = 8;
+        p[0x3B] = 0x80;
+        *(u8 **)(p + 0x48) = g;
+        p[0x4D] = 0;
+        p[0x4E] = 1;
+        p[0x3A] = 0x40;
+        p[0x39] = 0x40;
+        p[0x38] = 0x40;
+        p[0x50] = 0;
+        *(s16 *)(p + 0x14) = *(s16 *)(g + 4) - 0x24;
+        *(s16 *)(p + 0x16) = *(s16 *)(g + 6) - 0x24;
+        p[0x46] = 0x38; p[0x47] = 0xB8; /* FAKE: one line for the original li order. T-11840 */
+        p[0x4F] = arg1;
+        *(s16 *)(p + 0x3C) = 0x48;
+        *(s16 *)(p + 0x3E) = 0x48;
+        *(s16 *)(p + 0x40) = 0xA;
+        *(s16 *)(p + 0x42) = (arg0 & 0xF) + (((arg0 >> 4) + 0xF0) << 6);
+        p[0x4C] = 0;
+        *(u16 *)(p + 0x10) = 0xD;
+        p += 0x64;
+        g += 0x10;
+    }
+    for (i = 0; i < 4; i++, p += 0x64) {
+        p[0] = 1;
+        p[1] = 0;
+        *(u16 *)(p + 0x44) = 8;
+        if (i & 1) {
+            *(s16 *)(p + 0x14) = 0x58;
+        } else {
+            *(s16 *)(p + 0x14) = -0x60;
+        }
+        if (i >> 1) {
+            *(s16 *)(p + 0x16) = 0xB8;
+        } else {
+            *(s16 *)(p + 0x16) = 0x30;
+        }
+        *(s16 *)(p + 0x3C) = 8;
+        *(s16 *)(p + 0x3E) = 8;
+        p[0x46] = (i << 3) + 0x40;
+        p[0x47] = 0x18;
+        *(s16 *)(p + 0x40) = 0xA;
+        *(s16 *)(p + 0x42) = 0x3C0D;
+        p[0x3B] = 0x65;
+        *(s16 *)(p + 0x10) = 0;
+    }
+    for (i = 0; i < 2; i++, p += 0xC8) {
+        p[0] = 1;
+        p[1] = 0;
+        *(u16 *)(p + 0x44) = 8;
+        *(s16 *)(p + 0x14) = -0x58;
+        *(s16 *)(p + 0x16) = (i == 0 ? 1 : 2) + i * 0x8C + 0x30;
+        *(s16 *)(p + 0x3C) = 0xB0;
+        *(s16 *)(p + 0x3E) = 1;
+        p[0x38] = 0xF8;
+        p[0x39] = 0xD8;
+        p[0x3A] = 0;
+        *(s16 *)(p + 0x10) = 0;
+        p[0x3B] = 0x61;
+        p += 0x64;
+        p[0] = 1;
+        p[1] = 0;
+        *(u16 *)(p + 0x44) = 8;
+        *(s16 *)(p + 0x14) = -0x58;
+        *(s16 *)(p + 0x16) = (i == 0 ? 2 : 1) + i * 0x8C + 0x30;
+        *(s16 *)(p + 0x3C) = 0xB0;
+        *(s16 *)(p + 0x3E) = 1;
+        p[0x38] = 0xF8;
+        p[0x39] = 0xA8;
+        p[0x3A] = 0;
+        *(s16 *)(p + 0x10) = 0;
+        p[0x3B] = 0x61;
+        p += 0x64;
+        p[0] = 1;
+        p[1] = 0;
+        *(u16 *)(p + 0x44) = 8;
+        *(s16 *)(p + 0x14) = -0x58;
+        *(s16 *)(p + 0x16) = i * 0x8C + 0x30;
+        *(s16 *)(p + 0x3C) = 0xB0;
+        *(s16 *)(p + 0x3E) = 4;
+        p[0x38] = 0xC0;
+        p[0x39] = 0x70;
+        p[0x3A] = 0;
+        *(s16 *)(p + 0x10) = 0;
+        p[0x3B] = 0x61;
+    }
+    for (i = 0; i < 2; i++, p += 0xC8) {
+        p[0] = 1;
+        p[1] = 0;
+        *(u16 *)(p + 0x44) = 8;
+        *(s16 *)(p + 0x14) = (i == 0 ? 1 : 2) + i * 0xBC - 0x60;
+        *(s16 *)(p + 0x16) = 0x38;
+        *(s16 *)(p + 0x3C) = 1;
+        *(s16 *)(p + 0x3E) = 0x80;
+        p[0x38] = 0xF8;
+        p[0x39] = 0xD8;
+        p[0x3A] = 0;
+        *(s16 *)(p + 0x10) = 0;
+        p[0x3B] = 0x61;
+        p += 0x64;
+        p[0] = 1;
+        p[1] = 0;
+        *(u16 *)(p + 0x44) = 8;
+        *(s16 *)(p + 0x14) = (i == 0 ? 2 : 1) + i * 0xBC - 0x60;
+        *(s16 *)(p + 0x16) = 0x38;
+        *(s16 *)(p + 0x3C) = 1;
+        *(s16 *)(p + 0x3E) = 0x80;
+        p[0x38] = 0xF8;
+        p[0x39] = 0xA8;
+        p[0x3A] = 0;
+        *(s16 *)(p + 0x10) = 0;
+        p[0x3B] = 0x61;
+        p += 0x64;
+        p[0] = 1;
+        p[1] = 0;
+        *(u16 *)(p + 0x44) = 8;
+        *(s16 *)(p + 0x14) = i * 0xBC - 0x60;
+        *(s16 *)(p + 0x16) = 0x38;
+        *(s16 *)(p + 0x3C) = 4;
+        *(s16 *)(p + 0x3E) = 0x80;
+        p[0x38] = 0xC0;
+        p[0x39] = 0x70;
+        p[0x3A] = 0;
+        *(s16 *)(p + 0x10) = 0;
+        p[0x3B] = 0x61;
+    }
+    p[0] = 1;
+    p[1] = 0;
+    *(s16 *)(p + 0x14) = -0x5E;
+    *(s16 *)(p + 0x16) = 0x32;
+    *(s16 *)(p + 0x3C) = 0xBC;
+    *(s16 *)(p + 0x3E) = 0x8C;
+    p[0x3A] = 0;
+    p[0x39] = 0;
+    p[0x38] = 0;
+    *(u16 *)(p + 0x10) = 0xC;
+    p[0x3B] = 0x63;
+    switch (arg0) {
+    case 12:
+        state[0x13] = 0x7B;
+        state[0x14] = 0xD5;
+        state[0x15] = 0x94;
+        break;
+    case 13:
+        state[0x13] = 0;
+        state[0x14] = 0xCD;
+        state[0x15] = 0xEE;
+        break;
+    case 14:
+        state[0x13] = 0xFF;
+        state[0x14] = 0x9C;
+        state[0x15] = 0xCD;
+        break;
+    }
+}
 
 void func_80132810(void) {
     s32 i;

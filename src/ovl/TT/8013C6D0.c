@@ -577,7 +577,70 @@ void func_8013D73C(void) {
     buffer->ordering[13].addr = (u32)m;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D988);
+void func_8013D988(void) {
+    u8 *c;
+    s32 pad1; /* FAKE: unused, frame slot under c (0x530). T-11840 */
+    TtCmdStream *st;
+    POLY_FT4 *p;
+    TtDrawBuffer80B8 *buffer;
+    u8 *r;
+    s32 j;
+    s32 pad2; /* FAKE: unused, frame slot between j and i (0x518). T-11840 */
+    s32 i;
+    s16 x0;
+    s16 y0;
+    s16 x1;
+    s16 y1;
+    s16 x2;
+    s16 y2;
+    s16 x3;
+    s16 y3;
+    s16 scroll;
+    u8 u;
+    u8 v;
+    s16 x[17][17];
+    s16 y[17][17];
+
+    st = (TtCmdStream *)D_80158A70;
+    c = D_80158A64;
+    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    for (i = 0; i < 17; i++) {
+        for (j = 0; j < 17; j++) {
+            x[j][i] = ((j - 8) * (0x8800 - ((TtCore36 *)c)->unk_34)) / 0x780;
+            y[j][i] = ((i - 8) * (0x8800 - ((TtCore36 *)c)->unk_34)) / 0x780;
+            x[j][i] += (s16)(func_800A0140((((TtCore36 *)c)->unk_32 << 5) + i * 0x200) / ((TtCore36 *)c)->unk_34);
+            y[j][i] += (s16)(func_800A0070((((TtCore36 *)c)->unk_32 << 5) + j * 0x200) / ((TtCore36 *)c)->unk_34);
+        }
+    }
+    scroll = 0x300 - st->time;
+    for (i = 0; i != 0x100; i += 0x10) {
+        for (j = 0; j < 16; j++) {
+            p = (POLY_FT4 *)buffer->cursor;
+            buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x28);
+            ((TtOtTag *)p)->len = 9, p->code = 0x2D;
+            x0 = x[j][i / 16];
+            y0 = y[j][i / 16] - (s16)(scroll & 0xF) + 0x80;
+            x1 = x[j + 1][i / 16];
+            y1 = y[j + 1][i / 16] - (s16)(scroll & 0xF) + 0x80;
+            x2 = x[j][i / 16 + 1];
+            y2 = y[j][i / 16 + 1] - (s16)(scroll & 0xF) + 0x80;
+            x3 = x[j + 1][i / 16 + 1];
+            y3 = y[j + 1][i / 16 + 1] - (s16)(scroll & 0xF) + 0x80;
+            p->x0 = x0, p->y0 = y0, p->x1 = x1, p->y1 = y1, p->x2 = x2, p->y2 = y2, p->x3 = x3, p->y3 = y3;
+            r = (*(TtTileMap **)(c + 0x18))->record + (*(TtTileMap **)(c + 0x18))->index[(i + j + (scroll & ~0xF)) & 0x3FF] * 3;
+            u = (r[1] & 7) << 4;
+            v = (r[1] >> 3) << 4;
+            if (r[0] == 1) {
+                v += 0x80;
+            }
+            p->u0 = u, p->v0 = v, p->u1 = u + 0xF, p->v1 = v, p->u2 = u, p->v2 = v + 0xF, p->u3 = u + 0xF, p->v3 = v + 0xF;
+            p->tpage = 0xE;
+            p->clut = (((r[2] >> 4) + 0xF0) << 6) + (r[2] & 0xF);
+            ((TtOtTag *)p)->addr = buffer->ordering[13].addr;
+            buffer->ordering[13].addr = (u32)p;
+        }
+    }
+}
 
 void func_8013DE10(void) {
     s32 pad1; /* FAKE: unused, with pad2 reproduces the 0x78 frame. T-11510 */

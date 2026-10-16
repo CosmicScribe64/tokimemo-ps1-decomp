@@ -416,7 +416,145 @@ void func_8013FF14(void) {
     p->unk_366++;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_801400B0);
+/* T-11840: matched once the 7 stored to +0x2A8[i] is u16 (it then shares v0 with the (timer & 7) == 7 test), the sums are written base + table[index] (uopt loads the table entry first), and two unused words size the frame. */
+void func_801400B0(void) {
+    u16 mode;
+    u8 *other;
+    u8 *p;
+    s32 angle;
+    s32 pad[2]; /* FAKE: unused, sizes the frame (0x88, point at sp+0x5C). T-11840 */
+    TtPoint14 point;
+    s32 i;
+
+    p = D_80158A8C;
+    mode = *(u16 *)(p + 8);
+    other = D_80158A74;
+    switch (mode) {
+    case 0:
+        func_80133AD0(0x512);
+        *(u16 *)(p + 0x366) = 0;
+        for (i = 0x10; i < 0x13; i++) {
+            ((TtAnim14 *)(p + 0x38))[i].frames = D_80151A50;
+            ((TtAnim14 *)(p + 0x38))[i].unk_04 = 0;
+            ((TtAnim14 *)(p + 0x38))[i].unk_05 = 0xA;
+            ((TtAnim14 *)(p + 0x38))[i].unk_06 = 0x10;
+            ((TtAnim14 *)(p + 0x38))[i].unk_08 = 0x60;
+            ((TtAnim14 *)(p + 0x38))[i].unk_0B = 0xF;
+            ((TtAnim14 *)(p + 0x38))[i].unk_10 = 0;
+            p[i + 0x310] = 1;
+            ((u16 *)(p + 0x2A8))[i] = 7;
+            ((s16 *)(p + 0x248))[i] = 0;
+            ((s16 *)(p + 0x278))[i] = 8;
+        }
+        *(s32 *)(p + 0x3EC) = 0x80000;
+        *(s32 *)(p + 0x3F0) = -0x10000;
+        *(s32 *)(p + 0x3F4) = 0x400;
+        *(s32 *)(p + 0x3F8) = 0;
+        p[0x343] = 0;
+        *(u16 *)(p + 8) = 0x40;
+        break;
+    case 0x40:
+        if (*(s32 *)(D_80158A8C + 0x3EC) > 0x200000) {
+            *(s32 *)(p + 0x3F4) = -0x400;
+        } else {
+            *(s32 *)(p + 0x3F4) = 0x400;
+        }
+        if (*(s32 *)(p + 0x3EC) > 0x200000 && *(s32 *)(p + 0x3F0) <= 0) {
+            *(s32 *)(p + 0x3F4) = 0;
+            *(u16 *)(p + 8) = 0x50;
+        }
+        *(s32 *)(p + 0x3F8) += 0x4000;
+        *(s32 *)(p + 0x3EC) += *(s32 *)(p + 0x3F0);
+        *(s32 *)(p + 0x3F0) += *(s32 *)(p + 0x3F4);
+        *(s16 *)(p + 0x26A) = -*(s32 *)(p + 0x3F8) / 0x10000;
+        *(s16 *)(p + 0x26C) = *(s32 *)(p + 0x3F8) / 0x10000;
+        for (i = 0x10; i < 0x13; i++) {
+            ((s16 *)(p + 0x278))[i] = *(s32 *)(p + 0x3EC) / 0x10000;
+        }
+        break;
+    case 0x50:
+        *(u16 *)(p + 0x366) = 0;
+        *(u16 *)(p + 8) = 0x51;
+        break;
+    case 0x51:
+        if (*(u16 *)(D_80158A8C + 0x366) >= 0x20) {
+            *(u16 *)(p + 0x366) = 0;
+            *(u16 *)(p + 8) = 0x52;
+        }
+        break;
+    case 0x52:
+        *(u16 *)(p + 0x366) = 0;
+        *(u16 *)(p + 0x3D4) = 0;
+        *(u16 *)(p + 0x3D6) = 1;
+        *(u16 *)(p + 0x3D8) = 2;
+        *(u16 *)(p + 8) = 0x53;
+        break;
+    case 0x53:
+        if (*(u8 *)(D_80158A8C + 0x17E) == 0x12 && !(*(u16 *)(D_80158A8C + 0x366) & 7)) {
+            func_80133AD0(0x513);
+        }
+        if (p[0x17E] == 0x12 && (*(u16 *)(p + 0x366) & 7) == 7) {
+            point.x = (*(s16 *)(p + 0x14) + ((s16 *)(p + 0x268))[*(u16 *)(p + 0x3D4)]) << 16;
+            point.y = (*(s16 *)(p + 0x16) + ((s16 *)(p + 0x298))[*(u16 *)(p + 0x3D4)]) << 16;
+            angle = func_801320F0((s32) &point, (s32) (other + 0x14));
+            for (i = 0; i != 0x1000; i += 0x400) {
+                func_80133E30(*(s16 *)(p + 0x14) + ((s16 *)(p + 0x268))[*(u16 *)(p + 0x3D4)],
+                              *(s16 *)(p + 0x16) + ((s16 *)(p + 0x298))[*(u16 *)(p + 0x3D4)], 0x18, angle + i, 0xA0);
+                func_80133E30(*(s16 *)(p + 0x14) + ((s16 *)(p + 0x268))[*(u16 *)(p + 0x3D6)],
+                              *(s16 *)(p + 0x16) + ((s16 *)(p + 0x298))[*(u16 *)(p + 0x3D6)], 0x18, i, 0xA0);
+                func_80133E30(*(s16 *)(p + 0x14) + ((s16 *)(p + 0x268))[*(u16 *)(p + 0x3D8)],
+                              *(s16 *)(p + 0x16) + ((s16 *)(p + 0x298))[*(u16 *)(p + 0x3D8)], 0x18, i + 0x200, 0xA0);
+            }
+        }
+        func_8013F988();
+        *(u16 *)(p + 0x3D4) += 1;
+        if (*(u16 *)(p + 0x3D4) >= 3) {
+            *(u16 *)(p + 0x3D4) = 0;
+        }
+        *(u16 *)(p + 0x3D6) += 1;
+        if (*(u16 *)(p + 0x3D6) >= 3) {
+            *(u16 *)(p + 0x3D6) = 0;
+        }
+        *(u16 *)(p + 0x3D8) += 1;
+        if (*(u16 *)(p + 0x3D8) >= 3) {
+            *(u16 *)(p + 0x3D8) = 0;
+        }
+        if (*(u16 *)(p + 0x366) >= 0x180) {
+            *(u16 *)(p + 8) = 0x80;
+        }
+        break;
+    case 0x80:
+        func_80133AD0(0x50A);
+        p[0x343] = 1;
+        for (i = 0x10; i < 0x13; i++) {
+            ((TtAnim14 *)(p + 0x38))[i].unk_05 = 4;
+            ((TtAnim14 *)(p + 0x38))[i].unk_06 = 0x34;
+            ((TtAnim14 *)(p + 0x38))[i].unk_04 = 0;
+            ((TtAnim14 *)(p + 0x38))[i].unk_08 = 0x80;
+        }
+        *(u16 *)(p + 0x366) = 0;
+        *(u16 *)(p + 8) = 0x81;
+        break;
+    case 0x81:
+        for (i = 0x10; i < 0x13; i++) {
+            func_80142AF0(D_80155DF0, i);
+        }
+        if (*(u16 *)(p + 0x366) >= 0x40) {
+            *(u16 *)(p + 8) = 0xA0;
+        }
+        break;
+    case 0xA0:
+        for (i = 0x10; i < 0x13; i++) {
+            p[i + 0x310] = 0;
+        }
+        *(s32 *)(p + 0x3E8) = 0;
+        *(u16 *)(p + 6) = 0;
+        *(u16 *)(p + 8) = 0;
+        *(s32 *)(p + 0x3E4) = *(s32 *)(p + 0x20);
+        break;
+    }
+    *(u16 *)(p + 0x366) += 1;
+}
 
 /* T-11520/T-11550: matched once the case-0x40 tables are read as x[i]/y[i] in counted loops (i < 5, i < 4): uopt strength-reduces them to the same pointer walk; with i shared by those loops (likely a lower priority for i) the angle loop keeps 0x900 (n) in s1 and angle + i in s0 and spills i, as in the original. The stack layout needs n and i declared after the TtPoint14. */
 void func_80140624(void) {

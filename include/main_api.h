@@ -2632,7 +2632,9 @@ void _bu_init(void);
 s32 _card_auto(s32 arg0);
 s32 _card_status(s32 chan);
 void bzero(void *p, s32 n);
+#ifndef MAIN_API_OVERRIDE_func_800AE080
 void func_800AE080(u8 *arg0, s32 arg1);
+#endif
 #ifndef MAIN_API_OVERRIDE_func_800AE090
 void func_800AE090(void *dst, void *src, s32 n);
 #endif

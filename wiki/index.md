@@ -33,7 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-
+- [[tickets/T-11840-tt-batch-10|T-11840]] TT batch 10: one long Opus run per large function (Done; 10 of 12 matched, TT 78.6% of bytes).
 - [[tickets/T-18700-types-first-bunkasai|T-18700]] Types-first: BUNKASAI: name, text and per-girl tables in `BUNKASAI.h`, 10 redrafts (4 better than the census), 2 matches / 2,376 bytes, packages T-18701..T-18703 (Done).
 - [[tickets/T-19020-w3-d-p20|T-19020]] Wave 3 package w3-d-p20: RENSYU `80132040.c`, 1 of 4 matched (`func_80133CB8`, FAKE: empty test as a basic block boundary), `func_80133628` guarded (21 lines), `func_80133990` and `func_8013325C` back to `INCLUDE_ASM`; stack table layout rule
 - [[tickets/T-18400-types-first-kangei|T-18400]] Types-first: KANGEI: picture-set tables, MASTER streak types and club name tables in `KANGEI.h`, 11 redrafts (7 better than the census), 4 matches / 2,596 bytes, packages T-18401..T-18403 (Done).

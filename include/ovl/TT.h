@@ -684,3 +684,66 @@ extern u8 D_80155D32[];
 extern u8 D_80155D38[];
 extern u8 D_80155D3E[];
 #endif
+
+#ifndef OVL_TT_T11840_80146348
+#define OVL_TT_T11840_80146348
+/* Six-byte rows at D_80158A60 + 0x30 (three rows shifted by func_80145E60; func_80146348 edits bytes 2..4). T-11840 */
+typedef struct TtRow6 {
+    /* 0x00 */ u16 unk_00;
+    /* 0x02 */ u8 unk_02[4];
+} TtRow6; /* size 0x6 */
+#endif
+
+#ifndef OVL_TT_T11840_8014A2B4
+#define OVL_TT_T11840_8014A2B4
+/* Pointer table stored at D_80158A64 + 0x18 by func_8014A2B4. T-11840 */
+extern u8 *D_8015676C[];
+/* Defined after its caller func_8014A2B4 in 80148DB0.c. T-11840 */
+void func_8014A7E0(void);
+#endif
+
+#ifndef OVL_TT_T11840_801441BC
+#define OVL_TT_T11840_801441BC
+/* Per-step frame limits indexed by D_80158A74 + 0x5A / + 0x5B (func_801441BC). T-11840 */
+extern u8 D_801567B0[];
+/* Defined after its caller func_801441BC in 80142D40.c. T-11840 */
+void func_80144CA8(void);
+#endif
+
+#ifndef OVL_TT_T11840_80137C20
+#define OVL_TT_T11840_80137C20
+/* Per-record animation bytes and the update script installed by func_80137C20. T-11840 */
+extern u8 D_80152C4C[];
+extern u8 D_80152C50[];
+extern u8 D_80155C5E[];
+#endif
+
+#ifndef OVL_TT_T11840_80141450
+#define OVL_TT_T11840_80141450
+/* Scale/rotate parameters read by func_80141450 (second argument). T-11840 */
+typedef struct TtSprXform {
+    /* 0x00 */ s16 sx;
+    /* 0x02 */ s16 sy;
+    /* 0x04 */ s16 cx;
+    /* 0x06 */ s16 cy;
+    /* 0x08 */ s16 rx;
+    /* 0x0A */ s16 ry;
+    /* 0x0C */ s32 angle;
+} TtSprXform; /* size 0x10 */
+#endif
+
+#ifndef OVL_TT_T11840_8013D988
+#define OVL_TT_T11840_8013D988
+/* D_80158A64 viewed up to the two fields func_8013D988 reads (0x32: angle step, 0x34: divisor of the grid). T-11840 */
+typedef struct TtCore36 {
+    /* 0x00 */ u8 pad0[0x32];
+    /* 0x32 */ u16 unk_32;
+    /* 0x34 */ s16 unk_34;
+} TtCore36; /* accessed prefix size 0x36 */
+#endif
+
+#ifndef OVL_TT_T11840_80136C64
+#define OVL_TT_T11840_80136C64
+/* Table stored at D_80158A64 + 0x18 by func_80136C64. T-11840 */
+extern u8 D_80156494[];
+#endif
