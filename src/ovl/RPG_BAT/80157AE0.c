@@ -619,7 +619,113 @@ void func_8015906C(void) {
     }
 }
 
+#ifdef NON_MATCHING
+void func_80159214(void) {
+    s32 temp;
+    s32 color;
+    s32 half;
+    s32 sh;
+    s32 mid;
+
+    switch (D_8015EDD8) {
+    case 0:
+        func_80157CCC();
+        return;
+    case 1:
+        func_8013E7C0(0x3B, 9, 5, 1);
+        func_8013F15C(0x50A, 1, 0);
+        func_8014EF3C();
+        return;
+    case 2:
+        if (D_8015EDE0 == 0x6E) {
+            func_8013E97C(0x3A, 0, 0);
+            ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_1A = 0x100;
+            ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_1C = 0x100;
+            ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_01 = 4;
+            func_8013E7C0(0x3A, 0xB, 1, 1);
+            func_8013F15C(0x50B, 1, 0);
+            func_8014EF3C();
+        }
+        D_8015EDE0 += 1;
+        break;
+    case 3:
+        temp = ((D_8015EDE0 << 0xD) / 256) + 0x100;
+        ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_1A = temp;
+        ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_1C = temp;
+        D_8015EDE0 += 3;
+        if (D_8015EDE0 < 0x100) {
+            half = D_8015EDE0 / 2;
+            sh = half << 8;
+            mid = half + sh;
+            sh = mid << 8;
+            color = mid + sh;
+        } else {
+            color = 0x7FFE7F;
+        }
+        func_80049A40(-0xA0, -0x78, 0x140, 0xA8, 2, color, 0x81);
+        dtd_on_tpage(0, 0, 2, 1, 0);
+        if (D_8015EDE0 >= 0x1F5) {
+            ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_1A = 0x1000;
+            ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_1C = 0x1000;
+            ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_01 = 5;
+            func_8013E7C0(0x3A, 0xFF, 1, 0);
+            func_8013E7C0(0x3B, 8, 1, 1);
+            if (D_8015ED98 == 0x02000000) {
+                D_8015ED98 = 0x100;
+            }
+            if (D_8015ED98 != 0x100) {
+                func_8013E7C0(0x30, 5, 1, 1);
+            }
+            func_8014EF3C();
+            return;
+        }
+        break;
+    case 4:
+        half = 0x7F - D_8015EDE0;
+        sh = half << 8;
+        mid = half + sh;
+        sh = mid << 8;
+        func_80049A40(-0xA0, -0x78, 0x140, 0xA8, 2, mid + sh, 0x81);
+        dtd_on_tpage(0, 0, 2, 1, 0);
+        D_8015EDE0 += 7;
+        if (D_8015EDE0 >= 0x80) {
+            func_8014EF3C();
+        }
+        return;
+    case 5:
+        func_801447E0();
+        func_8014D11C((s32) D_8015E828, (s32) D_800E6280.unk_0D4, (s32) "は", D_8015EBB0, (s32) "のダメージを受けた");
+        func_8014B738((s32) D_8015E8F0, 1, 0x3C);
+        func_8014EF3C();
+        return;
+    case 6:
+        func_8014F178(1);
+        return;
+    case 7:
+        func_8013EA60(0, 0x21, D_8015EBB0, 1);
+        if (D_8015ED94 == 0) {
+            D_8015EDD8 = 0;
+            D_8015EDC4 &= 0xFFFF0000;
+            D_8015EDC4 |= 5;
+            D_8015ED98 = 0x1000;
+            func_8013E7C0(0x30, 7, 1, 1);
+        }
+        func_8014EF3C();
+        return;
+    case 8:
+        func_8014F178(0);
+        return;
+    case 9:
+        func_8014F080(0x14);
+        return;
+    case 10:
+        func_8014EF8C();
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_80159214);
+#endif
 
 void func_80159620(void) {
     switch (D_8015EDD8) {
