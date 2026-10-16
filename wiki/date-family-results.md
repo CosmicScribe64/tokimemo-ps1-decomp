@@ -135,5 +135,5 @@ Eight file-disjoint packages from the orchestrator's `mklists3.py` (lists in its
 
 ### Package w3-date-p02 (T-17202)
 
-`80132000.c`, six guarded drafts: 3 matched (`func_80139834`, `func_8013E6A4`, `func_80137DF4`, 820 bytes), 3 guarded at 7, 4 and 1 lines (`func_80139664`, `func_8013BEB8`, `func_801324DC`). New idioms: the callee view `s32 func_80085A60();` (file override), `s32` without `return` for a flag read at the entry, and the dead selector test in the else arm. Details and the remaining differences in [[matching-notes]] (T-17202) and [[data/t0018-cases]].
+`80132000.c`, six guarded drafts, all 6 matched (1,972 bytes). The matcher pass matched `func_80139834`, `func_8013E6A4` and `func_80137DF4` (820 bytes). The Opus closer pass matched `func_801324DC`, `func_8013BEB8` and `func_80139664` (1,152 bytes). New idioms: the callee view `s32 func_80085A60();` (file override), `s32` without `return` for a flag read at the entry, the dead selector test in the else arm, the first mention of a promoted global in a long expression (`g * 0 +`, FAKE), the first chain's value kept in an `s32` local for stores placed after the next chain, and `return;` plus an element view for a byte that `$v0` carries at the exit. Details in [[matching-notes]] (T-17202) and [[data/t0018-cases]].
 
