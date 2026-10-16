@@ -60,6 +60,8 @@ import os
 import re
 import subprocess
 import sys
+from pathlib import Path
+from typing import NamedTuple
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from asm import STRING_LINE, sjis_escape  # noqa: E402
@@ -354,18 +356,26 @@ def load_islands(root, paths, units=None):
     return out
 
 
-def load_funcs(root, units=None, near=False):
-    """Fingerprint original asm, taking current matched state from its owning C source.
+class AsmSource(NamedTuple):
+    rel: str        # asm path relative to the root
+    unit: str       # 'main' or the overlay name
+    folder: str     # c subsegment name (src_for_dir maps it to the C file)
+    name: str
+    matched: bool   # C definition with no INCLUDE_ASM fallback
+    guarded: bool   # a C definition exists but INCLUDE_ASM is still the fallback (NON_MATCHING draft)
 
-    Splat leaves stale files in both folders after a conversion or reversion.
-    Read each C file once and retain only one asm copy per source/function.
-    A NON_MATCHING definition with an assembly fallback is still unmatched.
+
+def asm_sources(root, units=None, paths=None):
+    """The current split function files, one per (C source, function), with matched state from the C.
+
+    Splat leaves stale files in both folders after a conversion or reversion. Read each C file once
+    and retain only one asm copy per source/function. A NON_MATCHING definition with an assembly
+    fallback is still unmatched (guarded). paths: asm paths relative to root (default: all of asm/).
     """
-    funcs, states, copies = [], {}, {}
-    paths = [os.path.relpath(p, root).replace(os.sep, '/')
-             for p in sorted(glob.glob(os.path.join(root, 'asm/**/*.s'), recursive=True))]
-    tables = load_tables(root, paths, units)
-    islands = load_islands(root, paths, units)
+    if paths is None:
+        paths = [os.path.relpath(p, root).replace(os.sep, '/')
+                 for p in sorted(glob.glob(os.path.join(root, 'asm/**/*.s'), recursive=True))]
+    states, copies = {}, {}
     for rel in paths:
         m = ASM_RE.match(rel)
         if not m:
@@ -377,7 +387,6 @@ def load_funcs(root, units=None, near=False):
         if not os.path.exists(source):
             continue          # a folder of an old source layout (asm/ is not cleaned by splat)
         if source not in states:
-            from pathlib import Path
             path = Path(source)
             states[source] = (srcscan.defined_functions(path),
                               {e.name for e in srcscan.include_asm_entries(path)})
@@ -390,11 +399,25 @@ def load_funcs(root, units=None, near=False):
         preferred = (m.group(2) is None) == matched
         if identity in copies and (copies[identity][0] or not preferred):
             continue
+        copies[identity] = (preferred, AsmSource(rel, unit, m.group(3), name, matched,
+                                                 name in defined and name in included))
+    return [src for _preferred, src in copies.values()]
+
+
+def load_funcs(root, units=None, near=False):
+    """Fingerprint original asm, taking current matched state from its owning C source (asm_sources)."""
+    funcs = []
+    paths = [os.path.relpath(p, root).replace(os.sep, '/')
+             for p in sorted(glob.glob(os.path.join(root, 'asm/**/*.s'), recursive=True))]
+    tables = load_tables(root, paths, units)
+    islands = load_islands(root, paths, units)
+    for src in asm_sources(root, units, paths):
+        rel, unit, name, matched = src.rel, src.unit, src.name, src.matched
         with open(os.path.join(root, rel)) as f:
             text = f.read()
         info = {}
         utab = tables.get(unit, {})
-        isl = islands.get(island_path(unit, m.group(3)))
+        isl = islands.get(island_path(unit, src.folder))
         key, relocs, bad = parse_asm(text, info=info, tables=utab, rodata=isl)
         fn = Func(name, unit, matched, rel, key, relocs, bad)
         fn.n = info.get('n', 0)
@@ -408,8 +431,8 @@ def load_funcs(root, units=None, near=False):
         if near:      # T-3320: key becomes the immediate-masked fingerprint, exact keeps the old one
             fn.key = parse_asm(text, 'alu', fn.imm_words, tables=utab, rodata=isl)[0]
             fn.wide = parse_asm(text, 'wide', tables=utab, rodata=isl)[0]
-        copies[identity] = (preferred, fn)
-    return [fn for _preferred, fn in copies.values()]
+        funcs.append(fn)
+    return funcs
 
 
 def group_funcs(funcs):
