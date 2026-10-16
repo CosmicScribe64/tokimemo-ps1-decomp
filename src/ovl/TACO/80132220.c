@@ -318,19 +318,14 @@ void func_801328B0(void) {
     act->unk70 = 0x400;
 }
 
-/* NON_MATCHING: T-19025, 10 differing lines; the two hoisted lui 0x8016 ranges of D_8015EDE4 take $v0, the original $a0 (an interfering range holds $v0 in the original), which also moves the hoisted move a0,zero */
-#ifdef NON_MATCHING
 void func_80132FE8(void) {
-    /* FAKE: pad1..pad4 are unused locals that reserve the original's four extra frame words (flags at sp+0x30, actor at sp+0x2C); real source unknown. T-19025 */
+    /* FAKE: pad1..pad3 are unused locals that reserve the original's three frame words above flags (flags at sp+0x30, actor at sp+0x2C, btn at sp+0x28); real source unknown. T-19025 */
     s32 pad1;
     s32 pad2;
     s32 pad3;
     s32 flags;
     TcActor *actor;
-    s32 pad4;
-    s32 m80;
-    s32 m40;
-    s32 m20;
+    s32 btn;
 
     actor = D_8015EDB4;
     if (actor->unk2 & 0x40) {
@@ -350,30 +345,27 @@ void func_80132FE8(void) {
             if ((D_800E6280.unk_F80 & 0x80) && (D_8015EDE0 % 3 == 2) && !(D_800E6280.unk_10F8 & 3)) {
                 flags |= 0x20;
             }
-            m80 = D_800E6280.unk_F88 & 0x80;
-            m40 = D_800E6280.unk_F88 & 0x40;
-            m20 = D_800E6280.unk_F88 & 0x20;
+            btn = D_800E6280.unk_F88;
         } else {
-            m20 = D_800E6280.unk_F88 & 0x20;
-            m40 = D_800E6280.unk_F88 & 0x40;
-            if (m20 && (D_8015EDE0 % 3 == 0)) {
+            btn = D_800E6280.unk_F88;
+            if (btn) {} /* FAKE: empty test of btn; without it the three btn masks that uopt inserts at the end of the first arm come out as 0x20, 0x80, 0x40, the original has 0x80, 0x40, 0x20. T-19025 */
+            if ((btn & 0x20) && (D_8015EDE0 % 3 == 0)) {
                 flags = 0x20;
             }
-            if (m40 && (D_8015EDE0 % 3 == 1)) {
+            if ((btn & 0x40) && (D_8015EDE0 % 3 == 1)) {
                 flags |= 0x20;
             }
-            m80 = D_800E6280.unk_F88 & 0x80;
-            if (m80 && (D_8015EDE0 % 3 == 2)) {
+            if ((btn & 0x80) && (D_8015EDE0 % 3 == 2)) {
                 flags |= 0x20;
             }
         }
-        if (m40 && (D_8015EDE4 % 3 == 0)) {
+        if ((btn & 0x40) && (D_8015EDE4 % 3 == 0)) {
             flags |= 0x40;
         }
-        if (m80 && (D_8015EDE4 % 3 == 1)) {
+        if ((btn & 0x80) && (D_8015EDE4 % 3 == 1)) {
             flags |= 0x40;
         }
-        if (m20 && (D_8015EDE4 % 3 == 2)) {
+        if ((btn & 0x20) && (D_8015EDE4 % 3 == 2)) {
             flags |= 0x40;
         }
         if (actor->unk72 == 0) {
@@ -397,9 +389,6 @@ void func_80132FE8(void) {
     func_8013C6D4();
     func_8013E4FC();
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_80132FE8);
-#endif
 
 void func_80133374(void) {
     if (D_8015EDCC < 3U) {
