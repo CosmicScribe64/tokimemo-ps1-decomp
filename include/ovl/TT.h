@@ -747,3 +747,30 @@ typedef struct TtCore36 {
 /* Table stored at D_80158A64 + 0x18 by func_80136C64. T-11840 */
 extern u8 D_80156494[];
 #endif
+
+#ifndef OVL_TT_T11850_801478D0
+#define OVL_TT_T11850_801478D0
+/* Sprite animation data drawn by func_80147A18. T-11850 */
+typedef struct TtSprPart {
+    /* 0x00 */ u16 tile;
+    /* 0x02 */ s16 x;
+    /* 0x04 */ s16 y;
+    /* 0x06 */ u8 clut;
+    /* 0x07 */ u8 flags;
+} TtSprPart; /* size 0x08 */
+typedef struct TtSprSeq {
+    /* 0x00 */ u16 count;
+    /* 0x02 */ u16 start;
+} TtSprSeq; /* size 0x04 */
+typedef struct TtSprFrame {
+    /* 0x00 */ u16 seq;
+    /* 0x02 */ u8 pad2[2];
+} TtSprFrame; /* size 0x04 */
+typedef struct TtSprSet {
+    /* 0x00 */ TtSprFrame *frames;
+    /* 0x04 */ TtSprSeq *seqs;
+    /* 0x08 */ TtSprPart *parts;
+    /* 0x0C */ u8 *attr;
+    /* 0x10 */ u16 clut;
+} TtSprSet; /* accessed prefix size 0x12 */
+#endif
