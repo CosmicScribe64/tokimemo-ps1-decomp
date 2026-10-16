@@ -1,0 +1,11 @@
+m2c.py: argument counts from the callees' asm: func_8009F040 1
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/plain/ETC/func_8013D570/work/guarded.c, line 4303: redeclaration of 'func_8013D570'; previous declaration at line 4184 in file 'drafts/T-17300/_runs/plain/ETC/func_8013D570/work/guarded.c'
+ void func_8013D570(s32 arg0, s32 arg1) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/plain/ETC/func_8013D570/work/guarded.c, line 4303: Incompatible function return type for this function.
+ void func_8013D570(s32 arg0, s32 arg1) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/plain/ETC/func_8013D570/work -o drafts/T-17300/_runs/plain/ETC/func_8013D570/work/guarded.o /tmp/asm_processorz851jigo/preprocessed_9fc499db54d34fb2bd22ac767b625fb7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibrcktc7m0/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/plain/ETC/func_8013D570/work/guarded.o drafts/T-17300/_runs/plain/ETC/func_8013D570/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return

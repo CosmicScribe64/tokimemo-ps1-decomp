@@ -1,0 +1,13 @@
+extern s32 D_800E6280;
+extern s32 D_801220D0;
+extern s32 D_80150068;
+extern s32 D_801500D4;
+extern s8 D_801220E2;
+extern u8 D_801220E0;
+extern u8 D_801220E1;
+s32 func_8004A1A0();
+u8 cd_read_sectors();
+u8 cd_read_sync_status();
+u8 func_80042940();
+u8 func_800AE0A0();
+u8 func_8013FA7C();

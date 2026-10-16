@@ -1,0 +1,69 @@
+m2c failed:
+
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4148: redeclaration of 'func_800AE0B0'; previous declaration at line 2339 in file 'drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c'
+ s32 func_800AE0B0();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4148: Incompatible function return type for this function.
+ s32 func_800AE0B0();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4167: This expression is not an lvalue.
+     D_80122640 = 0;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8013F980/work -o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.o /tmp/asm_processorjawc1el8/preprocessed_94f0aee5789b4aa5a14f935d05002857.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibfaw3yrwm/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4147: redeclaration of 'func_8009B430'; previous declaration at line 2292 in file 'drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c'
+ s32 func_8009B430();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4147: Incompatible function return type for this function.
+ s32 func_8009B430();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4166: This expression is not an lvalue.
+     D_80122640 = 0;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8013F980/work -o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.o /tmp/asm_processor1l4s4nx4/preprocessed_342f116ee4344b51af7e2b09816500a5.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibb6hzmqrv/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4146: redeclaration of 'func_8009B3C0'; previous declaration at line 2291 in file 'drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c'
+ s32 func_8009B3C0();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4146: Incompatible function return type for this function.
+ s32 func_8009B3C0();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4165: This expression is not an lvalue.
+     D_80122640 = 0;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8013F980/work -o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.o /tmp/asm_processorbkyk4dgs/preprocessed_61151b7af13c44809e5a7a49e054006b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibajl5jgxj/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4140: redeclaration of 'D_801227A0'; previous declaration at line 1372 in file 'drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c'
+ extern s32 D_801227A0;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4141: redeclaration of 'D_80122CA0'; previous declaration at line 1373 in file 'drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c'
+ extern s32 D_80122CA0;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4164: This expression is not an lvalue.
+     D_80122640 = 0;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8013F980/work -o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.o /tmp/asm_processorah4e2mj9/preprocessed_6c20fe882cc44b8bb4ea4892b258ebcb.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibytf3pcw7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4139: redeclaration of 'D_80122640'; previous declaration at line 1374 in file 'drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c'
+ extern s32 D_80122640;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4162: This expression is not an lvalue.
+     D_80122640 = 0;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8013F980/work -o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.o /tmp/asm_processor5dko2n0s/preprocessed_2676b1c97e9042d0ab46fb4f24961d78.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibgyyzxjqo/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c, line 4161: This expression is not an lvalue.
+     D_80122640 = 0;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8013F980/work -o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.o /tmp/asm_processorjjssqxhw/preprocessed_a799280265ce40c6ab2fd5d0e720f648.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib65edqxv5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8013F980/work/guarded.c

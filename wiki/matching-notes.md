@@ -5723,3 +5723,18 @@ declared above two stack shorts sets their slots; the twin's FAKE entry assignme
   T-3330 needs `s32` counters or a third local (`func_80155E40`, `func_80155004`).
 - Sibling ports find guarded near misses fast: `tools/siblings.py --unit X` lists clones in other overlays
   (TACO, EVENT) whose matched C already carries the fix.
+
+## T-17300: ETC types-first pass
+
+Details in [[etc-family-results]] ("Types-first pass (T-17300)"). Matched: ETC `func_80144AC0` (main clone
+`func_8005C5BC`, only a state code differs), `func_8013E524` (TACO sibling `func_80153E78`: `POLY_F4` bar, colour
+stores in b, g, r order), `func_80145318` (NAME_ENT sibling `func_80142028`: s32 with no return, so the
+incremented step stays in `v0`; the ETC.h prototype became s32).
+- `tools/siblings.py --unit X` first: all three ETC matches of the pass were sibling ports, none needed
+  the new types.
+- An s32 function with no return statement keeps the value of its last expression in `v0` (`move v0,t7` after
+  `andi t7,v0,0xff`); a void definition drops those moves. Check the epilogue paths for `v0` writes before
+  choosing void.
+- Near miss `func_8013C700` (4 rows): the `func_8013C330` shape gives everything except the order of
+  `or v0,zero,zero` and the `sw zero` of `D_80150070 = 0;` around the branch delay slot (an explicit
+  `return 0;` changes nothing).

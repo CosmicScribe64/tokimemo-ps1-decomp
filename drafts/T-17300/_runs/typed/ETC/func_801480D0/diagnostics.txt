@@ -1,0 +1,15 @@
+m2c failed:
+
+python3 failed:
+ ------------------------------------------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_801480D0/work/guarded.o.sjis.c, line 4954: Unacceptable operand of relational operator.
+                         if ((&D_80150668)[var_s2_6].unk0 < (&D_80150668)[var_a3_2]) {
+ ---------------------------------------------------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_801480D0/work/guarded.o.sjis.c, line 4963: Unacceptable operand of relational operator.
+                         if (*(s16 *)((unsigned char *)(&(&D_80150668)[var_s2_6]) + (2)) < (&D_80150668)[var_a3_2]) {
+ ----------------------------------------------------------------------------------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_801480D0/work/guarded.o.sjis.c, line 5046: Unacceptable operand of '-'.
+         temp_t0 = *(&D_80150668 + (var_s3_2 * 4)) - 1;
+ --------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_801480D0/work -o drafts/T-17300/_runs/typed/ETC/func_801480D0/work/guarded.o /tmp/asm_processorh6ubh45e/preprocessed_4ed38aa08de84bceb4ca2980889536b3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibmuqbfjjz/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_801480D0/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_801480D0/work/guarded.o.sjis.c

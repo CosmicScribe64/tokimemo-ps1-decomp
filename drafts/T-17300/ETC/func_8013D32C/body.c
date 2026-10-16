@@ -1,0 +1,51 @@
+s32 func_8013D32C(void) {
+    POLY_FT4 *sp6C;
+    s16 var_s1;
+    s16 var_s2;
+    s32 var_s5;
+    s8 var_s3;
+    s8 var_s6;
+    POLY_FT4 **var_s0;
+    POLY_FT4 *temp_v0;
+
+    var_s0 = &sp6C;
+    var_s1 = 0;
+    var_s2 = 0xA0;
+    var_s3 = 0xA0;
+    var_s5 = 0x280;
+    var_s6 = 0;
+    do {
+        temp_v0 = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+        *var_s0 = temp_v0;
+        func_8009F040(temp_v0);
+        SetSemiTrans(*var_s0, 0);
+        SetShadeTex(*var_s0, 0);
+        (*var_s0)->tpage = func_8009ECB0(2, 0, var_s5, 0);
+        (*var_s0)->x0 = var_s1;
+        (*var_s0)->y0 = (s16) (*(s16 *)((unsigned char *)(&D_800E6280 + (D_8011ECA0 * 2)) + (24)) - 0x78);
+        (*var_s0)->x1 = var_s2;
+        (*var_s0)->y1 = (s16) (*(s16 *)((unsigned char *)(&D_800E6280 + (D_8011ECA0 * 2)) + (24)) - 0x78);
+        (*var_s0)->x2 = var_s1;
+        (*var_s0)->y2 = (s16) (*(s16 *)((unsigned char *)(&D_800E6280 + (D_8011ECA0 * 2)) + (24)) + 0x78);
+        (*var_s0)->x3 = var_s2;
+        (*var_s0)->y3 = (s16) (*(s16 *)((unsigned char *)(&D_800E6280 + (D_8011ECA0 * 2)) + (24)) + 0x78);
+        (*var_s0)->u0 = var_s6;
+        (*var_s0)->v0 = 0;
+        (*var_s0)->u1 = var_s3;
+        (*var_s0)->v1 = 0;
+        (*var_s0)->u2 = var_s6;
+        (*var_s0)->v2 = 0xF0;
+        (*var_s0)->u3 = var_s3;
+        (*var_s0)->v3 = 0xF0;
+        (*var_s0)->r0 = 0x80;
+        (*var_s0)->g0 = 0x80;
+        (*var_s0)->b0 = 0x80;
+        AddPrim((D_8011ECA0 << 0xA) + 0x38 + &D_800E8CA0, *var_s0);
+        var_s3 += 0x20;
+        var_s0 += 1;
+        var_s5 += 0x80;
+        var_s1 += 0xA0;
+        var_s2 += 0xA0;
+        var_s6 += 0x20;
+    } while (var_s3 != 0xE0);
+}

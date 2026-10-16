@@ -56,6 +56,7 @@ import exhaustive_drafts as ex  # noqa: E402
 import m2c  # noqa: E402
 import migrate_globals as mg  # noqa: E402
 
+VARIANTS = ("plain", "typed", "typed1")
 OUT = Path("drafts/T-17300")
 UNIT = "ETC"
 HEADER = "include/ovl/ETC.h"
@@ -203,6 +204,8 @@ RANGES = aggregate_ranges()
 SYM_RE = re.compile(r"%(hi|lo)\(\s*(D_([0-9A-F]{8}))\s*(?:([+-])\s*(0x[0-9A-Fa-f]+|\d+)\s*)?\)")
 
 
+# typed1 (the first T-17300 run): bare-base %hi folding as in T-17200, no stack-array typing
+PASS1 = {"on": False}
 LUI_RE = re.compile(r"\blui\s+(\$\w+),\s*%hi\(\s*(D_[0-9A-F]{8})")
 
 
@@ -234,7 +237,7 @@ def hi_exact(text):
 
 
 def fold(text):
-    exact = hi_exact(text)
+    exact = set() if PASS1["on"] else hi_exact(text)
     lines = text.split("\n")
 
     def rep(m, keep):
@@ -463,6 +466,10 @@ def work_prims(body):
         for pp in set(re.findall(r"^\s+\*(\w+) = %s;$" % var, body, re.M)):
             body = re.sub(OFF_PTR_RE % (r"\(\*%s\)" % pp), lambda m: prim_field(t, pp, True, m), body)
             body = re.sub(r"^(\s+)(?:\?|\w+) \*+%s;$" % pp, r"\1%s **%s;" % (tname, pp), body, count=1, flags=re.M)
+            # the stack array it walks (`var_s0 = &sp6C;`) holds the same pointers
+            for sp in set() if PASS1["on"] else set(re.findall(r"^\s+%s = &(sp[0-9A-F]+)(?:\[0\])?;$" % pp, body, re.M)):
+                body = re.sub(r"^(\s+)(?:\?|\w+) \*?%s((?:\[\d+\])?);$" % sp, r"\1%s *%s\2;" % (tname, sp), body,
+                              count=1, flags=re.M)
     return body
 
 
@@ -607,6 +614,47 @@ def inventory():
     return [r for r in ex.census() if r["unit"] == UNIT]
 
 
+def s32_if_called_before(body, name):
+    """K&R: an earlier call without a prototype declares `int name()`; a void definition then fails.
+
+    exhaustive_drafts repairs this only when cfe's "redeclaration" line survives in the kept
+    diagnostics, which the longer typed runs can push out (T-17300)."""
+    if not re.match(r"\s*void\s+%s\s*\(" % re.escape(name), body):
+        return body
+    for path in Path("src/ovl", UNIT).glob("*.c"):
+        text = path.read_text()
+        inc = re.search(bulk.INCLUDE_ASM_TMPL % re.escape(name), text, re.M)
+        if not inc:
+            continue
+        before = text[:inc.start()]
+        headers = mg.read(HEADER) + "\n" + mg.read("include/main_api.h") + "\n" + mg.read("include/game.h")
+        if not bulk.prototype_in(headers + "\n" + before, name) and re.search(r"\b%s\s*\(" % re.escape(name), before):
+            return bulk.with_return_type(body, name, "s32")
+    return body
+
+
+def keep_errors():
+    """funcdiff_verify keeps the last 12 lines of a failed compile; cfe warnings (three lines each) can push
+    the error out, and with it the "redeclaration" line exhaustive_drafts repairs on. Drop the warnings."""
+    import funcdiff_verify as fv
+
+    def command(args):
+        result = subprocess.run(args, capture_output=True, text=True)
+        if result.returncode:
+            keep, skip = [], 0
+            for line in (result.stderr or result.stdout).splitlines():
+                if line.startswith("cfe: Warning"):
+                    skip = 2
+                    continue
+                if skip:
+                    skip -= 1
+                    continue
+                keep.append(line)
+            raise ValueError("%s failed:\n%s" % (args[0], "\n".join(keep[-12:])))
+        return result.stdout
+    fv.command = command
+
+
 def install_typed(applied):
     orig_hi = m2c.fix_shared_hi
     m2c.fix_shared_hi = lambda t: orig_hi(fold(t))
@@ -624,7 +672,7 @@ def install_typed(applied):
 
     def split_draft(text, name):
         decls, body = orig_split(text, name)
-        return decls, pre_rewrites(body, applied)
+        return decls, s32_if_called_before(pre_rewrites(body, applied), name)
     m2c.split_draft = split_draft
     plain_cleanup = bulk.cleanup
 
@@ -643,10 +691,12 @@ def worker(index, variant):
     ex.BASE = OUT / "_runs" / variant
     os.environ["TOKIMEMO_REGENERATE_GUARDS"] = "1"
     applied = []
-    if variant == "typed":
+    if variant in ("typed", "typed1"):
+        PASS1["on"] = variant == "typed1"
         install_typed(applied)
+        keep_errors()
     got = ex.process(row)
-    if variant == "typed":
+    if variant in ("typed", "typed1"):
         got["rewrites"] = sorted(set(applied))
         ex.save(ex.BASE / row["unit"] / row["func"] / "result.json", json.dumps(got, sort_keys=True) + "\n")
 
@@ -708,7 +758,7 @@ def finish(rows, only, fixes=True):
         if only and func not in only:
             continue
         runs = {}
-        for v in ("plain", "typed"):
+        for v in VARIANTS:
             folder = OUT / "_runs" / v / UNIT / func
             res = folder / "result.json"
             if res.exists():
@@ -721,17 +771,19 @@ def finish(rows, only, fixes=True):
                       guarded=row["guarded"], census_score=c.get("score"), census_path=c.get("path"),
                       plain_score=runs.get("plain", ({},))[0].get("score"),
                       typed_score=runs.get("typed", ({},))[0].get("score"),
+                      typed1_score=runs.get("typed1", ({},))[0].get("score"),
                       rewrites=runs.get("typed", ({},))[0].get("rewrites", []),
+                      typed1_rewrites=runs.get("typed1", ({},))[0].get("rewrites", []),
                       tool="T-17300 drafts/T-17300/redraft.py", harness_hash=digest(Path(__file__).read_text()),
                       created=time.strftime("%Y-%m-%d", time.gmtime()))
         if not scored:
             record.update(status="failed", score=None,
                           reason=" | ".join(r[0].get("reason", "") for r in runs.values())[:300])
-            src = runs.get("typed") or runs.get("plain")
+            src = runs.get("typed") or runs.get("typed1") or runs.get("plain")
             if src and (src[1] / "body.c").exists():
                 shutil.copy(src[1] / "body.c", dest / "body.c")
         else:
-            v = min(scored, key=lambda k: (scored[k][0]["score"], k != "typed"))
+            v = min(scored, key=lambda k: (scored[k][0]["score"], VARIANTS.index(k) ^ 1))
             got, folder = scored[v]
             body = (folder / "body.c").read_text()
             if (folder / "context.c").exists():
@@ -777,7 +829,7 @@ def finish(rows, only, fixes=True):
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--worker", type=int)
-    p.add_argument("--variant", choices=("plain", "typed"))
+    p.add_argument("--variant", choices=VARIANTS)
     p.add_argument("--jobs", type=int, default=2)
     p.add_argument("--timeout", type=int, default=150)
     p.add_argument("--only", nargs="*")
@@ -803,11 +855,11 @@ def main():
                    files={h: digest(mg.read(h)) for h in (HEADER, "include/main_api.h", "include/game.h")})
         ex.save(OUT / "environment.json", json.dumps(env, indent=1, sort_keys=True) + "\n")
     rows = json.loads((OUT / "inventory.json").read_text())
-    for v in ("plain", "typed"):
+    for v in VARIANTS:
         (OUT / "_runs" / v).mkdir(parents=True, exist_ok=True)
         shutil.copy(OUT / "environment.json", OUT / "_runs" / v / "environment.json")
     if not a.finish_only:
-        run_all(rows, ("plain", "typed"), a.jobs, a.timeout, a.only)
+        run_all(rows, VARIANTS, a.jobs, a.timeout, a.only)
     summary = finish(rows, a.only, not a.no_fixes)
     print("DONE", len(summary), sum(r["status"] == "candidate-zero" for r in summary), "zero", flush=True)
 
