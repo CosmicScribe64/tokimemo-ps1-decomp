@@ -195,6 +195,8 @@ extern TkS16x4 D_80149F8C;
 extern TkS16x4 D_8014A360;
 extern u8 D_801492AC[];
 extern u8 D_8014A1D4[];
+extern s32 D_8014A208[8]; /* tpage buffer ids, func_8014280C */
+extern s32 D_8014A228[11]; /* tpage buffer ids, func_8014280C */
 extern u8 D_8014A1E8[]; /* s16 table, indexed like D_8014A1D4 */
 void func_801452D0(void);
 

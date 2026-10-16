@@ -97,7 +97,145 @@ void func_801423A4(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80142400);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_8014280C);
+/* FAKE: `pad` reserves the top local word: the original keeps the two loop spills of the
+ * tpage loops at 0x38 and 0x30 (sp). The u8 views of the s8 flag D_8014A110 keep its lbu loads
+ * (as in func_80143F50). T-16554 */
+void func_8014280C(void) {
+    u8 pad[4];
+    s32 i;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        if (cd_read_sync_status() & 1) {
+            for (i = 0; i < 8; i++) {
+                D_800E6280.unk_1228[search_load_tpage_buf_lock(D_8014A208[i], 1)] = i + 0x80000100;
+                D_8014A208[i] = i + 0x80000100;
+            }
+            for (i = 0; i != 0xB; i++) {
+                D_800E6280.unk_1228[search_load_tpage_buf_lock(D_8014A228[i], 1)] = i + 0x80000200;
+                D_8014A228[i] = i + 0x80000200;
+            }
+            func_8004284C();
+        }
+        break;
+    case 1:
+        Fade_In_Init();
+        func_8004500C(1, 3);
+        func_8004284C();
+        break;
+    case 2:
+        if (Fade_In_Main() != 0) {
+            func_8004284C();
+        }
+        if (D_800E6280.unk_F88 & 0xF0) {
+            Fade_Out_Init();
+            cd_read_sectors(0x87U, 0x8018F000, 0xB98F);
+            func_80042940(5);
+        }
+        Scroll(0, 0xF, 0, 0xF0, 0x280);
+        break;
+    case 3:
+        Scroll(0, 0xF, 0, 0xF0, 0x280);
+        if (((DisplayActor44 *)D_8011ECD0)[96].unk_2A >= 0x61) {
+            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[96].pad_28 -= 0x18000;
+        } else {
+            if (*(u8 *)&D_8014A110 == 0) {
+                ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 1;
+            } else {
+                ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 3;
+            }
+            switch (D_800E6280.unk_110D) {
+            case 0:
+                if (*(u8 *)&D_8014A110 != 0) {
+                    func_80046290(0x1E000050, 0x06000060, 1);
+                } else {
+                    func_80046290(0x1F000394, 0x440003A4, 0);
+                }
+                func_80044750(0x300);
+                D_800E6280.unk_110D += 1;
+                break;
+            case 1:
+            case 3:
+            case 5:
+                if (func_800460EC() == 4) {
+                    D_800E6280.unk_110D += 1;
+                }
+                break;
+            case 2:
+                if (func_800460EC() == 2) {
+                    if (*(u8 *)&D_8014A110 != 0) {
+                        func_80046290(0x1F00009F, 0x140000A9, 1);
+                    } else {
+                        func_80046290(0x1F0003A5, 0x450003B1, 0);
+                    }
+                    func_80044750(0x300);
+                    D_800E6280.unk_110D += 1;
+                }
+                break;
+            case 4:
+                if (func_800460EC() == 2) {
+                    if (*(u8 *)&D_8014A110 != 0) {
+                        func_80046290(0x1F0000AA, 0x150000B7, 1);
+                    } else {
+                        func_80046290(0x0A0003C3, 0x430003D0, 0);
+                    }
+                    func_80044750(0x300);
+                    D_800E6280.unk_110D += 1;
+                }
+                break;
+            case 6:
+                if (func_800460EC() == 2) {
+                    Vblnk_Timer_Init();
+                    D_800E6280.unk_110D += 1;
+                }
+                break;
+            case 7:
+                if (Vblnk_Timer() >= 0xB5) {
+                    D_800E6280.unk_110D = 0;
+                }
+                break;
+            }
+        }
+        if (D_800E6280.unk_F88 & 0xF0) {
+            Fade_Out_Init();
+            func_80044750(0x74);
+            func_8004284C();
+        }
+        break;
+    case 4:
+        Scroll(0, 0xF, 0, 0xF0, 0x280);
+        if (func_800460EC() == 2) {
+            cd_read_sectors(0x87U, 0x8018F000, 0xB98F);
+            func_8004284C();
+        }
+        break;
+    case 5:
+        Scroll(0, 0xF, 0, 0xF0, 0x280);
+        if ((Fade_Out_Main() != 0) && (cd_read_sync_status() & 1)) {
+            func_80133C30();
+            for (i = 0; i != 6; i++) {
+                search_load_tpage_buf_lock(D_8014A070[i], 1);
+            }
+            func_8004284C();
+        }
+        break;
+    case 6:
+        func_80048F64(0x60);
+        for (i = 0; i < 3; i++) {
+            D_800E6280.unk_1228[0x15 + i] = -1;
+        }
+        func_801330D4();
+        func_80132BD0();
+        func_80143814();
+        func_80044750(0x505);
+        Fade_In_Init();
+        func_80042808();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 void func_80142D90(void) {
     switch (D_800E6280.unk_110A) {
@@ -496,7 +634,7 @@ void func_80143DD0(void) {
 
 /* FAKE: the u8 view of the s8 flag D_8014A110 keeps the lbu loads and the register shape of the
  * original; the plain s8 or a (u8) cast changes the allocation. T-16554
- * `bits` (the pad bits of GameState +0xF88) is read per region into a local: reading the field
+ * `bits` (GameState unk_F88) is read per region into a local: reading the field
  * directly lets the hoisted `& 5` test outrank it and take $v0. */
 void func_80143F50(void) {
     s32 bits;
