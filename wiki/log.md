@@ -15551,3 +15551,6 @@ Opened [[tickets/T-19006-w3-d-p06]] (In Progress): TACO `src/ovl/TACO/8013B990.c
 
 ## [2026-10-16] ticket | T-19006 Done
 [[tickets/T-19006-w3-d-p06]] reviewed against `CODING_STANDARDS.md` and moved to Done: 5 functions matched (2,636 bytes: TACO `func_8013B990`, `func_8013CFD8`, `func_8013CC40`, `func_8013C1F4`, `func_8013C440`). One review finding (a stray `value` to `value2` rename inside the matched `func_8013CE78` in `src/ovl/TACO/8013B990.c`), fixed; rebuild OK (globals, headers, TACO.bin SHA1).
+
+## [2026-10-16] ticket | T-19010 In Progress
+[[tickets/T-19010-w3-d-p10]] created and started: Wave 3 package w3-d-p10, TAIIKU `src/ovl/TAIIKU/80142240.c` (game B): `func_8014357C`, `func_80144E54`, `func_80144464`, `func_80143814`, `func_80142FB8`. Worktree `tokimemo-wt/w3-d-p10`, branch `w3-d-p10`.
