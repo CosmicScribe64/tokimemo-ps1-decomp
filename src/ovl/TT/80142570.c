@@ -66,7 +66,52 @@ void func_80142774(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142570", func_801427A8);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142570", func_80142AF0);
+void func_80142AF0(void *arg0, s32 arg1) {
+    u8 *p = D_80158A8C;
+    TtAnim14 *a = (TtAnim14 *)(p + 0x38) + arg1;
+    s32 k;
+    s16 *s;
+    s16 v;
+
+    /* FAKE: the two reads of the index tables go through an s32 view of D_80158A8C, so uopt reloads the pointer (lw t9) instead of reusing p. T-11860 */
+    if (p[0] != 0 && ((u8 *)*(s32 *)&D_80158A8C)[arg1 + 0x310] != 0) {
+        if (a->unk_08 & 0x80) {
+            a->unk_08 &= ~0x80;
+            a->unk_06 = ((s16 *)arg0)[0];
+            a->unk_09 = ((s16 *)arg0)[1];
+            p[arg1 + 0x328] = 0;
+            return;
+        }
+        if (a->unk_08 & 0x20) {
+            a->unk_08 &= ~0x20;
+            p[arg1 + 0x328] = 0;
+            return;
+        }
+        if (a->unk_09 == 0) {
+            k = ((u8 *)*(s32 *)&D_80158A8C)[arg1 + 0x328] + 2; /* FAKE: s32 view, see above. T-11860 */
+            s = (s16 *)((u8 *)arg0 + k * 2);
+            v = *s;
+            if (v == -1) {
+                a->unk_08 |= 1;
+                a->unk_08 |= 0x40;
+                a->unk_06 = s[-2];
+            } else if (v == -2) {
+                a->unk_06 = ((s16 *)arg0)[0];
+                a->unk_09 = ((s16 *)arg0)[1];
+                k = 0;
+            } else if (v == -3) {
+                p[arg1 + 0x310] = 0;
+                a->unk_08 |= 1;
+            } else {
+                a->unk_06 = v;
+                a->unk_09 = s[1];
+            }
+            p[arg1 + 0x328] = k;
+        } else {
+            a->unk_09--;
+        }
+    }
+}
 
 void func_80142C70(void) {
     s32 i;
