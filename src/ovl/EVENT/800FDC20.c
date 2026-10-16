@@ -319,7 +319,8 @@ void func_800FF320(arg0, arg1, arg2)
     s16 arg1;
     s16 arg2;
 {
-    /* Port of the DATE clone func_80152684 (T-17400). FAKE: 8 unused bytes above tbl give the original's frame and tbl offset, as in the clone (T-9310). */
+    /* Port of the DATE clone func_80152684 (T-17400). */
+    /* FAKE: 8 unused bytes above tbl give the original's frame and tbl offset, as in the clone; real locals unknown. T-9310 */
     s32 pad[2];
     EvTbl tbl;
 

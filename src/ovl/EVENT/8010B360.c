@@ -59,7 +59,7 @@ void func_8010B570(void) {
     }
 }
 
-/* NON_MATCHING: T-10610, the original stores the constant 4 straight from $a0 (li a0,4; sb a0 in the jal delay slot); every form tried gets a separate li (u8 store narrows the shared constant) */
+/* NON_MATCHING: T-10610, 33 diff rows left (T-17400 score), the original stores the constant 4 straight from $a0 (li a0,4; sb a0 in the jal delay slot); every form tried gets a separate li (u8 store narrows the shared constant) */
 #ifdef NON_MATCHING
 void func_8010B614(void) {
     u8 *p;
