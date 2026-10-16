@@ -16205,3 +16205,16 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 ## [2026-10-16] ticket | T-17207 Done
 
 [[tickets/T-17207-w3-date-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues in the drafts (missing inline `FAKE` comments on the frame and `sel` locals, `g` called unused), both fixed. 0 of 2 functions matched (`func_801449D4`, `func_80144E20`); no C changed. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17202 started
+[[tickets/T-17202-w3-date-p02]] (17:14 UTC): wave 3 package w3-date-p02, DATE `src/ovl/DATE/80132000.c`, six guarded drafts from the T-17200 list. Branch `w3-date-p02` from `w2-good`.
+
+## [2026-10-16] build | T-17202 DATE 80132000.c, 3 of 6 matched
+[[tickets/T-17202-w3-date-p02]] (17:14-18:36 UTC, Opus): matched `func_80139834` (EVENT twin form with dead selector tests, commit `fd316964`), `func_8013E6A4` (`D.w++ == 1` with `func_80085A60` as an `s32` file override, commit `a7301dea`) and `func_80137DF4` (`s32` function without `return`, commit `261ec214`), 820 bytes in plain C. Guarded: `func_80139664` 7 lines, `func_8013BEB8` 4, `func_801324DC` 1. Notes in [[matching-notes]] (T-17202), rows in [[data/t0018-cases]] and [[register-cheatsheet]], summary on [[date-family-results]]. Checks: clean build 27/27 sha1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known). Ticket In Review.
+
+
+## [2026-10-16] build | T-17202 closer pass, DATE 80132000.c 6 of 6
+[[tickets/T-17202-w3-date-p02]] (18:37-19:08 UTC, Opus closer): matched the three guarded drafts, so the package is 6 of 6 (1,972 bytes). `func_801324DC` (commit `a5497073`): FAKE `date_arrival * 0 +` in front of `P + a*six - T`. ugen emits the promoted global's load and the deferred mask of `t` in first-mention order. `func_8013BEB8` (commit `6887ca7f`): `s32 x` takes the first chain's value, and `D_800CA22C[2] = x; D_800CA234[0] = x;` follow the `21C` chain. `func_80139664` (commit `2263cba4`): `return;` instead of `return unk_110A` plus the FAKE element view `(&D_800E6280.unk_110A)[0] += 0x11;`. Candidates were scored with a scratch harness on the `permute.py setup` base, about 2 s each, with `cc -S` for ugen order. Clean rebuild 27/27 sha1 OK (`ninja -t clean`, then `ninja -j2`), check_headers, `migrate_globals.py --check` and `sync_protos.py --check-branch` (0 new, 15 known) pass. Notes in [[matching-notes]], rows in [[data/t0018-cases]] and [[register-cheatsheet]]. The ticket stays In Review.
+
+## [2026-10-16] ticket | T-17202 Done
+[[tickets/T-17202-w3-date-p02]] reviewed against `CODING_STANDARDS.md` and moved to Done: 6 of 6 DATE functions matched in plain C (1,972 bytes, `src/ovl/DATE/80132000.c`), all FAKEs marked and ticketed. One finding fixed: the value-less `return;` of `func_80139664` had no explaining comment (comment only). DATE.bin SHA1 OK, check_headers, migrate_globals --check and sync_protos --check-branch pass.
