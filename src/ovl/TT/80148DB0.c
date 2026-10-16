@@ -210,8 +210,6 @@ void func_80149400(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801494D8);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11820, 6 lines (registers only): the record-2 constants 0x20/0x40/0x30 get ugen temps t9/t1/t2 where the original has t1/t2/t3 (t9 busy there). The empty if before the 0x65 store (FAKE) splits the block so the 0x65 constant can take v0. */
 void func_80149704(void) {
     u8 *scene;
     u8 *q;
@@ -262,12 +260,11 @@ void func_80149704(void) {
     q[0x47] = 0;
     *(s16 *)(q + 0x40) = 0xB;
     *(s16 *)(q + 0x42) = 0x3C20;
-    if (q) {} /* FAKE: splits the uopt block so 0x65 can take v0. T-11820 */
+    if (q) {} /* FAKE: splits the uopt block so 0x65 can take v0. T-11820, still needed T-11850 */
     q[0x3B] = 0x65;
     *(s16 *)(q + 0x10) = 0;
     q += 0x64;
-    q[0] = 0;
-    q[1] = 0;
+    q[0] = q[1] = 0;
     *(s16 *)(q + 0x44) = 0;
     *(s16 *)(q + 0x14) = 0x20;
     *(s16 *)(q + 0x16) = 0x38;
@@ -280,9 +277,6 @@ void func_80149704(void) {
     q[0x3B] = 0x65;
     *(s16 *)(q + 0x10) = 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149704);
-#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801498C8);
 
