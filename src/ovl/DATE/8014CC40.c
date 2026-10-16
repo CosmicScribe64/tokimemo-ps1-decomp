@@ -398,27 +398,22 @@ void func_8014DC94(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10320 / T-12100, sixteen register/operand rows remain.
- * A byte-field pointer restores the original table offset and frame size.
- * T-17203: still 16 rows (32 diff lines). The table address temp (2 uses, priority 1) takes $v1 before
- * the selector range (priority 0.5); operand order of the two compares, a selector local, and autotweak
- * (120 s) did not move it. */
+/* FAKE: the byte pointer stands for the 4-byte stack slot above tbl (T-3330) and keeps the selector
+ * reads as pointer loads; the table entry is read three times (no function-pointer local), so it is
+ * one CSE value and the selector range outranks the table address in uopt. T-10320, T-12100, T-17203 */
 void func_8014DCCC(void) {
     u8 *selector;
     FnTbl39 tbl;
-    void (*fn)();
 
     selector = &D_800E6280.unk_110A;
     tbl = D_8015E3C4;
-    fn = tbl.f[*selector];
-    if (place_init2 == fn) {
+    if (place_init2 == tbl.f[*selector]) {
         D_80120653 |= 0x80;
     }
-    if (normal_date_bg_out == fn) {
+    if (normal_date_bg_out == tbl.f[*selector]) {
         D_80120653 &= 0xFF7F;
     }
-    fn(0x80);
+    tbl.f[*selector](0x80);
     if (D_80122D04 != 0) {
         func_8014E010();
     }
@@ -429,9 +424,6 @@ void func_8014DCCC(void) {
         func_80140D38();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014DCCC);
-#endif
 
 void func_8014DDD8(void) {
     cd_read_sectors(0x1D, 0x801B0000, 0xBD41);
