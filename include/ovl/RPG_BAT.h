@@ -165,7 +165,17 @@ typedef struct RpgStat {
     /* 0x00 */ s32 unk_00;
     /* 0x04 */ s32 unk_04;
     /* 0x08 */ s32 unk_08;
-    /* 0x0C */ u8 pad_0C[0x2C];
+    /* 0x0C */ s32 unk_0C; /* T-17100: the words between are the scalars D_8015EC08..D_8015EC30 */
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ s32 unk_14;
+    /* 0x18 */ s32 unk_18;
+    /* 0x1C */ s32 unk_1C;
+    /* 0x20 */ s32 unk_20;
+    /* 0x24 */ s32 unk_24;
+    /* 0x28 */ s32 unk_28;
+    /* 0x2C */ s32 unk_2C;
+    /* 0x30 */ s32 unk_30;
+    /* 0x34 */ s32 unk_34;
     /* 0x38 */ s32 unk_38;
 } RpgStat; /* size 0x3C */
 extern RpgStat D_8015EBFC;

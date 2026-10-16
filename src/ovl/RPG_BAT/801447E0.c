@@ -94,9 +94,9 @@ s32 func_801453B4(void) {
     s32 roll;
     s32 total;
 
-    total = (*(s32 *)&D_8015EBFC.pad_0C[0]) + D_8015EBFC.unk_00 + D_8015EBFC.unk_04 + D_8015EBFC.unk_08;
+    total = D_8015EBFC.unk_0C + D_8015EBFC.unk_00 + D_8015EBFC.unk_04 + D_8015EBFC.unk_08;
     if (total < 6) {
-        (*(s32 *)&D_8015EBFC.pad_0C[0]) = 0xA;
+        D_8015EBFC.unk_0C = 0xA;
         D_8015EBFC.unk_04 = 5;
         D_8015EBFC.unk_08 = 0xA;
         D_8015EBFC.unk_00 = 0xF;
@@ -114,6 +114,6 @@ s32 func_801453B4(void) {
         D_8015EBFC.unk_08 -= 5;
         return 1;
     }
-    (*(s32 *)&D_8015EBFC.pad_0C[0]) -= 5;
+    D_8015EBFC.unk_0C -= 5;
     return 2;
 }
