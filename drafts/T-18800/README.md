@@ -25,5 +25,6 @@ during the pass (`status: matched` in its result.json, source in `src/ovl/DATE2/
   loads both call arguments through `a1` (`lui a1; lbu a0,(a1)`) and keeps `unk_71E` in `v0`.
 
 Scores are the resolved full-unit diff rows of `tools/exhaustive_drafts.py`, the measure of
-`drafts/T-14500/best-quality-catalog.jsonl`. `func_801395C8` has no compiling fresh draft (the compiler stops on
-m2c's `&sp60` arithmetic over the 81 x 31 byte buffer); its best starting point is the repaired census body.
+`drafts/T-14500/best-quality-catalog.jsonl`. `func_801395C8` has no compiling fresh draft (IDO stops without an error
+message; `diagnostics.txt` shows only warnings about m2c's `&sp60` arithmetic over the 81 x 31 byte buffer);
+its best starting point is the repaired census body.
