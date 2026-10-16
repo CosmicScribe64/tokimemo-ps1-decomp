@@ -76,7 +76,64 @@ s32 func_8013C1F4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B990", func_8013C440);
+/* FAKE: s32 with no return keeps the loop counter init (v0) live at the exit (void changes the output),
+ * as in func_8013C1F4. The first loop is entered by a goto instead of an enclosing if: the if form
+ * shares the guard's load of D_8015EDB4 with the loop's pointer, the original loads it again. T-19006. */
+s32 func_8013C440(void) {
+    u32 i;
+    s32 a;
+    s32 b;
+    s32 c;
+    s32 limit;
+    u8 value;
+    u8 value2;
+    D_8015F500 = 0;
+    if (D_8015EDB4->unk2 & 0x80) {
+        goto skip1;
+    }
+    for (i = 16; i < 63; i++) {
+        if (((i + D_8015EDB4)->unk0[1] & 0xC0) && ((i + D_8015EDB4)->unk84[1] != 0)) {
+            a = func_800AE0C0((i + D_8015EDB4)->unk74 - D_8015EDB4->unk74);
+            b = func_800AE0C0((i + D_8015EDB4)->unk76 - D_8015EDB4->unk76);
+            c = func_800AE0C0((i + D_8015EDB4)->unk78 - D_8015EDB4->unk78);
+            limit = (s32)(i + D_8015EDB4)->unk84[0] << 4;
+            if (c < 0x100 && b < limit && a < limit) {
+                func_801335A0(1, 0x506);
+                D_8015EDB4->unk2 |= 4;
+                value = D_8015EDB4->unk84[1];
+                if (value >= 0xD) {
+                    D_8015EDB4->unk84[1] = value - 0xC;
+                } else {
+                    D_8015EDB4->unk84[1] = 0;
+                }
+                D_8015EDB4->unk7A = 0x10;
+                break;
+            }
+        }
+    }
+skip1:
+    if (D_8015EDB4[8].unk2 & 0x80) {
+        return;
+    }
+    for (i = 0; i < 16; i++) {
+        if (((i + D_8015EDB4)->unk0[1] & 0xC0) && ((i + D_8015EDB4)->unk84[1] != 0)) {
+            a = func_800AE0C0((i + D_8015EDB4)->unk74 - D_8015EDB4[8].unk74);
+            b = func_800AE0C0((i + D_8015EDB4)->unk76 - D_8015EDB4[8].unk76);
+            c = func_800AE0C0((i + D_8015EDB4)->unk78 - D_8015EDB4[8].unk78);
+            limit = (s32)(i + D_8015EDB4)->unk84[0] << 4;
+            if (c < 0x100 && b < limit && a < limit) {
+                value2 = D_8015EDB4[8].unk84[1];
+                if (value2 >= 0xD) {
+                    D_8015EDB4[8].unk84[1] = value2 - 0xC;
+                } else {
+                    D_8015EDB4[8].unk84[1] = 0;
+                }
+                D_8015EDB4[8].unk7A = 0x10;
+                return;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B990", func_8013C6D4);
 
