@@ -796,7 +796,33 @@ void func_80137090(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137228);
+void func_80137228(void) {
+    s32 i;
+    s32 k;
+
+    for (i = 0; i < 3; i++) {
+        D_80149208.cpu[i].unk_20.word += D_80149208.cpu[i].unk_18;
+        if (((DisplayActor44 *)D_8011ECD0)[111].unk_26 + (i + 1) * 8 < D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high - 0x60 && D_80149208.cpu[i].unk_06 == 0) {
+            ((DisplayActor44 *)D_8011ECD0)[112].unk_18 = 0x8D;
+            if (D_80149208.cpu[i].unk_06 == 0) {
+                k = 0;
+                if (D_801491E0[0] != 0) {
+                    do {
+                        k += 1;
+                    } while (D_801491E0[k] != 0);
+                }
+                D_801491E0[k] = i + 2;
+            }
+            D_80149208.cpu[i].unk_06 = 1;
+        }
+        ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_26 = D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high - 0xA0;
+        if (D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high >= 0x1E1 || D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high < -0xA0) {
+            ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_03 = 0;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_03 = 0xA4;
+        }
+    }
+}
 
 /* FAKE: byte-offset walk over the cpu runners of D_80149208; written as TaiRunnerA fields (p = &D_80149208.cpu[i],
  * or the byte base plus 0x24 * i cast to TaiRunnerA *) the code differs (checked in the T-16550 review). T-16550 */
