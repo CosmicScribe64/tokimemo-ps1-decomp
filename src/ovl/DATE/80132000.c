@@ -1720,9 +1720,8 @@ void func_80137D1C(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11580, 4 differing instructions; D_80122CDC at the entry takes $v1, the original $v0 */
-#ifdef NON_MATCHING
 s32 func_80137DF4(void) {
+    /* No return statement: $v0 is live at the exit, so uopt keeps D_80122CDC in $v0 (T-17202). */
     s32 text;
 
     if (D_80122CDC == 0) {
@@ -1766,15 +1765,11 @@ s32 func_80137DF4(void) {
     func_80085B3C(0, D_80122D08);
     func_80136F2C();
     if ((D_800E6280.unk_F5F == 8) && ((u8)D_8015B68C == 3) && (D_800E6280.unk_1BC[8].unk_14[0x18] != 0)) {
-        (&D_80122CDC)[0] = 1;
-        return (&D_80122CDC)[0];
+        D_80122CDC = 1;
+    } else {
+        D_80122CDC = 0;
     }
-    D_80122CDC = 0;
-    return 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137DF4);
-#endif
 
 void func_80137FAC(void) {
     func_800AE0F0(D_800CA1DC, "ナイトパレード");
