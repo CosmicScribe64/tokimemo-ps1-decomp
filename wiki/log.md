@@ -15673,3 +15673,7 @@ Opened [[tickets/T-17900-types-first-name_ent]] (In Progress) under [[tickets/T-
 ## [2026-10-16] ticket | T-17900 Done
 
 [[tickets/T-17900-types-first-name_ent]] In Review to Done after the code review against `CODING_STANDARDS.md`: no findings. 2 functions matched (904 bytes: `func_80139740`, `func_8013EE7C`), 30 redrafts, 4 packages (T-17901..T-17904). NAME_ENT sha1 OK after a forced rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] ticket | T-18200 Types-first: EN_NICHI started
+
+Opened [[tickets/T-18200-types-first-en_nichi]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover EN_NICHI's shared types, redraft its unmatched functions with the T-16550/T-16560 drivers, then cut packages. Branch `w3-en-nichi-types` from `w2-good`.
