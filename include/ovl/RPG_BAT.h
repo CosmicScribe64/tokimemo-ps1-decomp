@@ -147,6 +147,8 @@ extern s32 D_8015EE40;
 s32 func_8013C1CC(void);
 void func_8013C2A0(void);
 void func_8013C32C(void);
+void func_8013BEA8(void);
+s32 func_8013B910(void);
 void func_8013C890(void);
 void func_8013CC90(void);
 void func_801439E0();
