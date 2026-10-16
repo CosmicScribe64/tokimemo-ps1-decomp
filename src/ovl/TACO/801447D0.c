@@ -244,12 +244,15 @@ s32 func_80145DC4(void) {
     D_800E6280.unk_1104.w += 1;
 }
 
+/* NON_MATCHING: T-19002, 3 differing instruction rows (6 funcdiff lines): the final `+= 1` of the frame counter loads into $v0 and stores from it, the original uses the ugen temporaries $t1 and $t2.
+ * Draft with the plain `D_800E6280.unk_1104.w += 1;` is 242 rows off: IDO keeps the counter (the chain's shared load in $v0) in a register across all arms and reloads it after each call, the original reloads it only at the end. T-0018 `reverse` row.
+ * FAKE: the absolute-address read at the end is a different expression to uopt, so it does not promote the counter across the calls; real source unknown. */
 #ifdef NON_MATCHING
 s32 func_8014616C(void) {
     s32 t;
 
     t = D_800E6280.unk_1104.w;
-    if (D_800E6280.unk_1104.w == 1) {
+    if (t == 1) {
         func_80144DF8(1);
         func_80147488(1, D_8015F82C[0], 9);
         D_80127090.unk0 = 0;
@@ -257,29 +260,29 @@ s32 func_8014616C(void) {
         D_80122750 = 0;
         D_8012274C = 0;
         func_80099540(&D_80122740);
-    } else if ((D_800E6280.unk_1104.w >= 2) && (D_800E6280.unk_1104.w < 0x32)) {
+    } else if ((t >= 2) && (t < 0x32)) {
         func_80147488(1, D_8015F82C[0], 0xA);
-    } else if ((D_800E6280.unk_1104.w >= 0x32) && (D_800E6280.unk_1104.w < 0x64)) {
+    } else if ((t >= 0x32) && (t < 0x64)) {
         func_80147488(1, D_8015F82C[0], 0xB);
-    } else if ((D_800E6280.unk_1104.w >= 0x64) && (D_800E6280.unk_1104.w < 0x78)) {
+    } else if ((t >= 0x64) && (t < 0x78)) {
         func_80147488(1, D_8015F82C[0], 0xC);
-    } else if ((D_800E6280.unk_1104.w >= 0x78) && (D_800E6280.unk_1104.w < 0x91)) {
+    } else if ((t >= 0x78) && (t < 0x91)) {
         func_80147488(1, D_8015F82C[0], 0xD);
-    } else if ((D_800E6280.unk_1104.w >= 0x91) && (D_800E6280.unk_1104.w < 0xB4)) {
+    } else if ((t >= 0x91) && (t < 0xB4)) {
         func_80147488(1, D_8015F82C[0], 0xE);
-    } else if ((D_800E6280.unk_1104.w >= 0xB4) && (D_800E6280.unk_1104.w < 0xC8)) {
+    } else if ((t >= 0xB4) && (t < 0xC8)) {
         func_80147488(1, D_8015F82C[0], 0x10);
-    } else if ((D_800E6280.unk_1104.w >= 0xC8) && (D_800E6280.unk_1104.w < 0xEB)) {
+    } else if ((t >= 0xC8) && (t < 0xEB)) {
         func_80147488(1, D_8015F82C[0], 0x11);
-    } else if ((D_800E6280.unk_1104.w >= 0xEB) && (D_800E6280.unk_1104.w < 0x11D)) {
+    } else if ((t >= 0xEB) && (t < 0x11D)) {
         func_80147488(1, D_8015F82C[0], 0x12);
-    } else if ((D_800E6280.unk_1104.w >= 0x11D) && (D_800E6280.unk_1104.w < 0x14F)) {
+    } else if ((t >= 0x11D) && (t < 0x14F)) {
         func_80147488(1, D_8015F82C[0], 0x13);
-    } else if ((D_800E6280.unk_1104.w >= 0x14F) && (D_800E6280.unk_1104.w < 0x1C2)) {
+    } else if ((t >= 0x14F) && (t < 0x1C2)) {
         func_80147488(1, D_8015F82C[0], 0x14);
-    } else if ((D_800E6280.unk_1104.w >= 0x1CC) && (D_800E6280.unk_1104.w < 0x1EA)) {
+    } else if ((t >= 0x1CC) && (t < 0x1EA)) {
         func_80147488(1, D_8015F82C[0], 0x15);
-    } else if ((D_800E6280.unk_1104.w >= 0x1F4) && (D_800E6280.unk_1104.w < 0x208)) {
+    } else if ((t >= 0x1F4) && (t < 0x208)) {
         func_80147488(1, D_8015F82C[0], 0x16);
     }
     if ((t >= 0x64) && (t < 0xBE)) {
@@ -347,7 +350,7 @@ s32 func_8014616C(void) {
         D_80127090.unk0 = 0x80000000;
         func_8004284C();
     }
-    D_800E6280.unk_1104.w += 1;
+    D_800E6280.unk_1104.w = *(s32 *)0x800E7384 + 1;
 }
 #else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801447D0", func_8014616C);
