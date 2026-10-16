@@ -1,0 +1,20 @@
+m2c.py: argument counts from the callees' asm: func_8004FC10 1, main_state_set 1
+python3 failed:
+cfe: Error: drafts/T-17800/_runs/plain/OPTION/func_80133330/work/guarded.c, line 2991: redeclaration of 'func_80133330'; previous declaration at line 2978 in file 'drafts/T-17800/_runs/plain/OPTION/func_80133330/work/guarded.c'
+ void func_80133330(void) {
+ -----^
+cfe: Error: drafts/T-17800/_runs/plain/OPTION/func_80133330/work/guarded.c, line 2991: Incompatible function return type for this function.
+ void func_80133330(void) {
+ ------------------^
+cfe: Error: drafts/T-17800/_runs/plain/OPTION/func_80133330/work/guarded.c, line 3002: Selector requires struct/union as left hand side
+         D_801206BA = sp2C.a[D_800E7313].unk0 + 0x30;
+ ---------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17800/_runs/plain/OPTION/func_80133330/work -o drafts/T-17800/_runs/plain/OPTION/func_80133330/work/guarded.o /tmp/asm_processor_b0usu7t/preprocessed_edf600f671654f7e9b11776362d322bb.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibpdqyxta_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17800/_runs/plain/OPTION/func_80133330/work/guarded.o drafts/T-17800/_runs/plain/OPTION/func_80133330/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return
+python3 failed:
+cfe: Error: drafts/T-17800/_runs/plain/OPTION/func_80133330/work/guarded.c, line 3002: Selector requires struct/union as left hand side
+         D_801206BA = sp2C.a[D_800E7313].unk0 + 0x30;
+ ---------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17800/_runs/plain/OPTION/func_80133330/work -o drafts/T-17800/_runs/plain/OPTION/func_80133330/work/guarded.o /tmp/asm_processortmgt5nl5/preprocessed_9856ffd8b14b4565a5c63d56c2a319bd.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibghmy0pbd/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17800/_runs/plain/OPTION/func_80133330/work/guarded.o drafts/T-17800/_runs/plain/OPTION/func_80133330/work/guarded.c

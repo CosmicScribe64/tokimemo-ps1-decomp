@@ -1,0 +1,290 @@
+[
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_80132000",
+  "size": 176,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_80132000"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_801320C0",
+  "size": 708,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_801320C0"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_80132384",
+  "size": 356,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_80132384"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_801326BC",
+  "size": 516,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_801326BC"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_801328C0",
+  "size": 460,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_801328C0"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_80132BA8",
+  "size": 1128,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_80132BA8"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_80133010",
+  "size": 800,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_80133010"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_80133330",
+  "size": 588,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_80133330"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_80133718",
+  "size": 564,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_80133718"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_8013394C",
+  "size": 396,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_8013394C"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_80133CB8",
+  "size": 664,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_80133CB8"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_80133F50",
+  "size": 704,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_80133F50"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_801342A8",
+  "size": 468,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_801342A8"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_801344E4",
+  "size": 800,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_801344E4"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_8013493C",
+  "size": 560,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_8013493C"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_80135110",
+  "size": 492,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_80135110"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_8013554C",
+  "size": 1112,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_8013554C"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_801359A4",
+  "size": 616,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_801359A4"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_80135E48",
+  "size": 948,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_80135E48"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_801361FC",
+  "size": 568,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_801361FC"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_80136688",
+  "size": 628,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_80136688"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_80136C30",
+  "size": 780,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_80136C30"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_801373C8",
+  "size": 736,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_801373C8"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_801376A8",
+  "size": 444,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_801376A8"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_801378DC",
+  "size": 832,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_801378DC"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/80132000.c",
+  "func": "func_80138080",
+  "size": 836,
+  "guarded": false,
+  "source_hash": "c0e9498bcfcdbec5cb7b9ba29960cb437e454ad643b15717be05f0eecf98e412",
+  "scope": "OPTION:func_80138080"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/801389A0.c",
+  "func": "func_80139198",
+  "size": 860,
+  "guarded": false,
+  "source_hash": "82ed455dd7f0bdb8b18349ab476e19445548bec82b7dc57fd90431b3337f3ff4",
+  "scope": "OPTION:func_80139198"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/801389A0.c",
+  "func": "func_801394F4",
+  "size": 900,
+  "guarded": false,
+  "source_hash": "82ed455dd7f0bdb8b18349ab476e19445548bec82b7dc57fd90431b3337f3ff4",
+  "scope": "OPTION:func_801394F4"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/801389A0.c",
+  "func": "func_80139A30",
+  "size": 1036,
+  "guarded": false,
+  "source_hash": "82ed455dd7f0bdb8b18349ab476e19445548bec82b7dc57fd90431b3337f3ff4",
+  "scope": "OPTION:func_80139A30"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/801389A0.c",
+  "func": "func_80139E3C",
+  "size": 200,
+  "guarded": true,
+  "source_hash": "82ed455dd7f0bdb8b18349ab476e19445548bec82b7dc57fd90431b3337f3ff4",
+  "scope": "OPTION:func_80139E3C"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/801389A0.c",
+  "func": "func_80139F8C",
+  "size": 132,
+  "guarded": true,
+  "source_hash": "82ed455dd7f0bdb8b18349ab476e19445548bec82b7dc57fd90431b3337f3ff4",
+  "scope": "OPTION:func_80139F8C"
+ },
+ {
+  "unit": "OPTION",
+  "src": "src/ovl/OPTION/8013A550.c",
+  "func": "func_8013A7EC",
+  "size": 1092,
+  "guarded": false,
+  "source_hash": "a11aa4ce24a7ecf4542e28778be5b60ff1ba0c19b5a8ff9e5dabf50830c4cd05",
+  "scope": "OPTION:func_8013A7EC"
+ }
+]

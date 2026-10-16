@@ -1,0 +1,8 @@
+extern s16 D_80120910;
+extern s16 D_80121724;
+extern s16 D_80121732;
+extern s16 D_80121736;
+extern s8 D_801208F9;
+extern s8 D_8012170D;
+extern u8 D_800E62BA;
+extern u8 D_800E738D;

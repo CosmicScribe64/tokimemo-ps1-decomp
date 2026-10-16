@@ -485,6 +485,9 @@ def menu_arrays(body):
     body = body[:head.end()] + "".join("    s16 %s[%d];\n" % (sp, n) for sp in names) + body[head.end():]
     for sp in names:
         body = re.sub(r"&%s\[0\]|&%s\b(?!\[)" % (sp, sp), sp, body)
+        # m2c wrote the first element as the scalar itself
+        body = re.sub(r"^(\s+)%s = " % sp, r"\g<1>%s[0] = " % sp, body, flags=re.M)
+        body = re.sub(r"\((s16|s32)\) %s\b(?!\[)" % sp, r"%s[0]" % sp, body)
         # pointers that walk an array: m2c steps them in bytes, pointer-step turns that into elements
         for var in re.findall(r"^\s+(\w+) = %s;$" % sp, body, re.M):
             body = re.sub(r"^(\s+)(?:\?|\w+) \*%s;$" % var, r"\1s16 *%s;" % var, body, count=1, flags=re.M)
