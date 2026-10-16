@@ -3,7 +3,7 @@
 preprocessed unit, the keep-it hint, the plumbing in both tools, and the clearer message for a missing traced uopt.
 Synthetic text only; no compiler and no game data.
 
-Run: tools/docker.sh python3 -m pytest -q tools/test_protoverride.py   (or python3 tools/test_protoverride.py)
+Run: tools/docker.sh python3 -m unittest -q tools/test_protoverride.py   (pytest is not in the image)
 """
 import argparse
 import contextlib
