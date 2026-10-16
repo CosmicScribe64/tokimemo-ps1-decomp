@@ -243,6 +243,8 @@ s32 func_80137C44();
 s32 func_80137EA8();
 void func_80134D94(void);
 void func_80138224();
+s32 func_80138680();
+s16 func_801388E4();
 
 #ifndef OVL_TAIIKU_W8_3_TYPES_H
 #define OVL_TAIIKU_W8_3_TYPES_H
