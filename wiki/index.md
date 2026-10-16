@@ -28,11 +28,12 @@ Read this first. Update on every ingest or new page.
 - [[shougatu-family-results]] - SHOUGATU type map (step tables, stack tables, work arrays), the types-first redraft and its numbers, GYOZI twin ports, packages (T-17500)
 - [[rpg-bat-family-results]] - RPG_BAT type map (stack tables, `RpgStat`), the types-first redraft and its numbers, idioms (`default:` + `case 0:`, reread globals), packages (T-17100)
 - [[taiiku-family-results]] - TAIIKU type map (runner records of three games, stack tables), idioms, the types-first redraft and its numbers, packages (T-16550)
+- [[bunkasai-family-results]] - BUNKASAI type map (name, text and per-girl tables), the implicit-int v0/v1 fix of the BUNKAKEN port, the types-first redraft and its numbers, packages (T-18700)
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
 
-- [[tickets/T-18700-types-first-bunkasai|T-18700]] Types-first: BUNKASAI: shared types in `BUNKASAI.h`, redraft of the unmatched functions, packages (In Progress).
+- [[tickets/T-18700-types-first-bunkasai|T-18700]] Types-first: BUNKASAI: name, text and per-girl tables in `BUNKASAI.h`, 10 redrafts (4 better than the census), 2 matches / 2,376 bytes, packages T-18701..T-18703 (In Review).
 - [[tickets/T-18400-types-first-kangei|T-18400]] Types-first: KANGEI: picture-set tables, MASTER streak types and club name tables in `KANGEI.h`, 11 redrafts (7 better than the census), 4 matches / 2,596 bytes, packages T-18401..T-18403 (Done).
 - [[tickets/T-18100-types-first-bunka_sd|T-18100]] Types-first: BUNKA_SD: scene event lists (`BsdEvent`), text tables and picture sets in `BUNKA_SD.h`, 15 redrafts (6 better than the census), 9 matches / 4,820 bytes, packages T-18101..T-18103 (Done).
 - [[tickets/T-17800-types-first-option|T-17800]] Types-first: OPTION: menu rows, word tables and the `OptActor44` record view in `OPTION.h`, 32 redrafts (19 better than the census), 4 matches / 1,548 bytes, packages T-17801..T-17803 (Done).

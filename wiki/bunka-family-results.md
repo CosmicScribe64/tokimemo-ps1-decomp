@@ -1,11 +1,13 @@
 ---
 type: research
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # BUNKAKEN and BUNKASAI family reconstruction
 
 Scope: [[tickets/T-12700-bunka-families]], from 95c3fc9f. Existing broad experiment evidence was read from the integration checkout's wiki/matching-breakthroughs.md and wiki/broad-coverage-results.md. That prior 190-target default sweep returned five functions / 5,036 bytes; this work does not repeat it.
+
+BUNKASAI's types-first pass of wave 3 (T-18700) is on [[bunkasai-family-results]].
 
 ## Aggregate address form
 

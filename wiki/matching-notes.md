@@ -6025,6 +6025,15 @@ Closer pass (Opus, about 40 minutes): `func_801471D0` matched (260 bytes); `func
 - Tooling: a 0.5-second scratch loop (`/opt/ido/5.3/cc -S` and `-c` on a stand-alone copy of the function, then a normalising compare against the `.s` that drops `$sp` rows and maps `%hi`/`%lo` and branch targets) found the walker shape in about 25 variants. `funcdiff` still shows one `lui` row on the matched function (the `D_80127480+5120` HI16 pairing); ninja's sha1 is what decides.
 
 Idiom for [[register-cheatsheet]]: a parameter copy before a second loop (`move s4,s3; lw 4(s4); addiu s4,s4,8`) where the first loop already used `arg0 + 8`: restart the walker from a pointer parameter.
+## BUNKASAI types-first pass (T-18700)
+
+[[tickets/T-18700-types-first-bunkasai]], details on [[bunkasai-family-results]]. Two functions matched (2,376 bytes):
+- `func_80147F8C`: `BunkasaiNameTable` stack copy; a named `u8 *name` local for the strcpy source gives the
+  table's stack slot (DATE2's clone `func_80137A2C` needs a FAKE pad instead).
+- `func_8015AF90`: port of BUNKAKEN `func_80152680` (siblings.py 0.976). The last difference was a v0/v1 swap
+  between a stack table base and the promoted `D_80122EBC`, caused by the callee declaration: the original
+  calls `func_80132410` undeclared (implicit `int`), as BUNKAKEN calls `func_80132548`.
+
 ## KANGEI types-first pass (T-18400)
 
 [[tickets/T-18400-types-first-kangei]], details on [[kangei-family-results]]. Four functions matched (2,596 bytes):
