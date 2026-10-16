@@ -1,9 +1,11 @@
+#define RPG_BAT_OVERRIDE_func_8013E7C0 /* implicit int view: the calls' $v0 moves the D_8015EDE0 timer to $v1 (T-17101) */
+#define RPG_BAT_OVERRIDE_func_8013E97C /* implicit int view, same reason (T-17101) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-/* NON_MATCHING: T-12300, 557/557 instructions; promoted D_8015EDE0
- * uses v0 instead of v1 at 58 positions. Control flow and scheduling agree. */
-#ifdef NON_MATCHING
+s32 func_8013E7C0();
+s32 func_8013E97C();
+
 void func_80145CC0(void) {
     switch (D_8015EDD8) {
     case 0:
@@ -217,8 +219,5 @@ void func_80145CC0(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80145CC0", func_80145CC0);
-#endif
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80145CC0", func_80146578);
