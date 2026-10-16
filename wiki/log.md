@@ -16218,3 +16218,17 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 
 ## [2026-10-16] ticket | T-17202 Done
 [[tickets/T-17202-w3-date-p02]] reviewed against `CODING_STANDARDS.md` and moved to Done: 6 of 6 DATE functions matched in plain C (1,972 bytes, `src/ovl/DATE/80132000.c`), all FAKEs marked and ticketed. One finding fixed: the value-less `return;` of `func_80139664` had no explaining comment (comment only). DATE.bin SHA1 OK, check_headers, migrate_globals --check and sync_protos --check-branch pass.
+## [2026-10-16] ticket | T-17204 In Progress
+[[tickets/T-17204-w3-date-p04]] created and started: Wave 3 package for DATE `src/ovl/DATE/80151460.c` (`func_801518B8`, `func_80152E34`, `func_80152060`, `func_80152268`), worktree `tokimemo-wt/w3-date-p04`, branch `w3-date-p04` from `w2-good`.
+
+## [2026-10-16] build | T-17204 matches
+[[tickets/T-17204-w3-date-p04]] on branch `w3-date-p04` (matcher, 17:25-18:55 UTC): DATE `src/ovl/DATE/80151460.c`, 2 of 4 functions matched. `func_80152060` (520 bytes, new `DateWords2` in `include/ovl/DATE.h`) and `func_80152268` (1,052 bytes, FAKE unread copies `j = v`, `void func_80152684();` in `DATE.h`); `func_801518B8` stays guarded (14 rows), `func_80152E34` open (draft `drafts/T-17204/DATE/func_80152E34`). Notes in [[matching-notes]] (section T-17204), [[register-cheatsheet]], [[data/t0018-cases]], [[date-family-results]].
+
+## [2026-10-16] ticket | T-17204 In Review
+[[tickets/T-17204-w3-date-p04]] In Progress to In Review: 2 of 4 matched; clean build, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` to be run before merge.
+
+## [2026-10-16] ticket | T-17204 closer pass
+[[tickets/T-17204-w3-date-p04]] closer pass (Opus, 18:55-19:11 UTC) on branch `w3-date-p04`, scope `func_801518B8` in `src/ovl/DATE/80151460.c`: still guarded at 14 rows. A `cc -S` harness placed the copy in ugen's T-19001 "F" state after the loop's back-edge branch; calls with stack arguments, struct argument forms, register locals and `Blk44` views keep it, and only a direct memory store after the loop (always new code) gives the original's "B" state. Notes in [[matching-notes]] (T-17204), [[register-cheatsheet]] (block-copy row), [[data/t0018-cases]]. Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17204 Done
+[[tickets/T-17204-w3-date-p04]] In Review to Done: code review against `CODING_STANDARDS.md` found one out-of-order declaration (`func_80152684` in `include/ovl/DATE.h`, moved) and one stale `wiki/data/t0018-cases.md` row (reworded), both fixed without a code change (unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 2 of 4 functions matched (`func_80152060`, `func_80152268`; 1,572 bytes), `func_801518B8` guarded at 14 rows, `func_80152E34` still `INCLUDE_ASM`. Merge via the wave 3 merge script.

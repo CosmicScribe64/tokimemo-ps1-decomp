@@ -509,6 +509,7 @@ void func_80151460(void);
 void func_80151510(void);
 void func_801515C0(void);
 void func_80151670(void);
+void func_80152684(); /* old-style definition with s16 parameters, called before it (T-17204) */
 void func_80152FC0(void);
 void func_80153070(void);
 void func_80153120(void);
@@ -1788,6 +1789,11 @@ extern DateWords21 D_8015B888;
 extern DateWords21 D_8015B8DC;
 extern DateWords21 D_8015B930;
 extern Tbl21 D_8015B984; /* func_8013EB8C reads [D_800CA2F8] with lhu */
+
+typedef struct DateWords2 {
+    /* 0x00 */ s32 v[2];
+} DateWords2; /* size 0x08; func_80152060 copies it to the stack */
+extern DateWords2 D_8015EF0C;
 
 typedef struct DateShorts8 {
     /* 0x00 */ s16 v[8];
