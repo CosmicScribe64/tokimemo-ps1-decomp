@@ -213,58 +213,37 @@ void func_8015BF70(s32 arg0) {
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015BF70);
 #endif
 
-/* NON_MATCHING: T-10850, 9 differing listing lines; see the ticket scratch evidence. */
-#ifdef NON_MATCHING
-/* FAKE: repeated empty tests split the actor pointer live range. T-10850 */
-void func_8015C0A0(arg0, arg1)
-s32 arg0;
-s32 arg1;
-{
-  TcActor *a;
-  s32 i;
-  a = &D_8015EDB4[arg1];
-  if (((!a) && (!a)) && (!a))
-  {
-  }
-  if (a->unk0[1] & 0x80)
-  {
-    if (arg0 == 1)
-    {
-      if (a->unk84[2] < 0xB)
-      {
-        *((s32 *) (((u8 *) a) + 4)) = 0;
-        return;
-      }
-      *((s32 *) (((u8 *) a) + 4)) = 0x80000000;
-      for (i = 0; i < 0x40; i++)
-      {
-        if (arg1 == D_80161D9C[i])
-        {
-          D_80127080[i].unk0 = (u16) 0;
+/* The actor is addressed as (arg1 + D_8015EDB4) in every use, no local: uopt then keeps it in $v0 and the index multiply comes first (T-16563). */
+void func_8015C0A0(s32 arg0, s32 arg1) {
+    s32 i;
+
+    if ((arg1 + D_8015EDB4)->unk0[1] & 0x80) {
+        if (arg0 == 1) {
+            if ((arg1 + D_8015EDB4)->unk84[2] < 0xB) {
+                (arg1 + D_8015EDB4)->unk4.unk0 = 0;
+                return;
+            }
+            (arg1 + D_8015EDB4)->unk4.unk0 = 0x80000000;
+            for (i = 0; i < 0x40; i++) {
+                if (arg1 == D_80161D9C[i]) {
+                    D_80127080[i].unk0 = 0;
+                }
+            }
+            return;
         }
-      }
-
-      return;
+        if ((arg1 + D_8015EDB4)->unk84[2] < 9) {
+            (arg1 + D_8015EDB4)->unk4.unk0 = 0x80000000;
+            return;
+        }
+        (arg1 + D_8015EDB4)->unk4.unk0 = 0x80000000;
+        for (i = 0; i < 0x40; i++) {
+            if (arg1 == D_80161D9C[i]) {
+                D_80127080[i].unk0 = 0x80000000;
+            }
+        }
     }
-    if (a->unk84[2] < 9)
-    {
-      *((s32 *) (((u8 *) a) + 4)) = 0x80000000;
-      return;
-    }
-    *((s32 *) (((u8 *) a) + 4)) = 0x80000000;
-    for (i = 0; i < 0x40; i++)
-    {
-      if (arg1 == D_80161D9C[i])
-      {
-        D_80127080[i].unk0 = 0x80000000;
-      }
-    }
-
-  }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015C0A0);
-#endif
+
 
 void func_8015C208(s32 arg0) {
     s32 i;
