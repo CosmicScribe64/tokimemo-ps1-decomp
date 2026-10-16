@@ -34,6 +34,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-20000-first-contribution|T-20000]] Scoped work queues bypass whole-tree cache validation; 52 tests pass, identical real-query output at 53.402 s before / 5.312 s after on Windows/WSL (In Review).
+- [[tickets/T-17207-w3-date-p07|T-17207]] Wave 3 package w3-date-p07: DATE `80141EE0.c`, `func_801449D4` (312 to 71 rows) and `func_80144E20` (exact frame, about 180 register rows), 0 of 2 matched, drafts in `drafts/T-17207/` (Done).
 - [[tickets/T-19032-w3-d-p32|T-19032]] Wave 3 package w3-d-p32: TAIIKU `80141280.c`, 1 of 1 matched (`func_80141280`, 1,764 B intro state machine: auto-array initialiser as `.data` island, rolled 16-record zero loop with a reassigned counter, two FAKE views for a masked byte test and the nested selector in `$v1`) (Done).
 - [[tickets/T-11850-tt-batch-11|T-11850]] TT batch 11: one long Opus run per file group (Done, PR #35 merged; 12 of 15 matched, TT 274/303 functions, 82.7% of bytes).
 - [[tickets/T-11840-tt-batch-10|T-11840]] TT batch 10: one long Opus run per large function (Done, PR #34 merged; 10 of 12 matched, TT 262/303 functions, 78.6% of bytes).
@@ -473,3 +474,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-19023-w3-d-p23|T-19023]] Wave 3 package w3-d-p23: TACO `80135720.c`, 3 of 3 functions matched (2,028 B: `func_801357B0`, `func_80136988`, `func_80135A04`; second induction variable, pad word read in place, peeled-and-unrolled table fill) (Done).
 - [[tickets/T-19027-w3-d-p27|T-19027]] Wave 3 package w3-d-p27: TEL `8013CCD0.c`, 1 of 2 matched (`func_8013CCD0` by the closer pass, `func_8013D03C` back to `INCLUDE_ASM` at 49 rows with its typed draft in `drafts/T-19027/`) (Done).
 - [[tickets/T-19028-w3-d-p28|T-19028]] Wave 3 package w3-d-p28: TACO `8013DB80.c`, `8015CF30.c`, 3 of 5 matched (`func_8013E778`, 812 B, from the sibling `func_8013D528`; `func_8013E424` and `func_8013DB80`, 828 B, in the closer pass), `func_8013DEE4` draft in `drafts/T-19028/`, `func_8015CF30` is libgte hand asm (Done).
+- [[tickets/T-17203-w3-date-p03|T-17203]] Wave 3 package w3-date-p03: DATE `80154260.c`, `80152FC0.c`, `8014CC40.c`, 3 of 4 matched (`func_8014EF1C` POLY_G4 builder, `func_80154118` where `tools/cvt_pass.py` cost a frame slot, `func_8014DCCC` without a function-pointer local), `func_80155004` draft in `drafts/T-17203/` (register names only) (Done)

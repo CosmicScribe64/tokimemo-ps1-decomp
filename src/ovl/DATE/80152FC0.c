@@ -374,4 +374,24 @@ void func_801540E0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80152FC0", func_80154118);
+/* FAKE: D_800CA2F8 is read through its DateSelectionView; a direct read of the u8 keeps cvt_pass's
+ * widening CVT, whose CSE temporary (two compares) costs a 4-byte frame slot the original does not
+ * have (0x70 against 0x68). Same words otherwise. T-17203 */
+void func_80154118(void) {
+    GameState *g = &D_800E6280; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl15 tbl;
+
+    tbl = D_8015F4DC;
+    if (g->unk_110A < 0xC) {
+        if (((g->unk_03E == 0x5F && g->unk_03F == 7 && g->unk_040 == 0x17) ||
+             (g->unk_03E == 0x60 && g->unk_03F == 7 && g->unk_040 == 0x1C) ||
+             (g->unk_03E == 0x61 && g->unk_03F == 7 && g->unk_040 == 0x1B)) &&
+            D_800B593C == 0x80) {
+            func_8006B900();
+        } else if (((DateSelectionView *)&D_800CA2F8)->place == 0x11 ||
+                   ((DateSelectionView *)&D_800CA2F8)->place == 0x10) {
+            func_8006B900();
+        }
+    }
+    tbl.f[g->unk_110A](0x80);
+}
