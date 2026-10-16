@@ -91,7 +91,39 @@ void func_801555C4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_801556D8);
+void func_801556D8(void) {
+    DisplayActor44 *m = (DisplayActor44 *)D_8011ECD0;
+    s16 i;
+    DateShorts8 sp68;
+    DateShorts8 sp58;
+
+    sp68 = D_8015F9B0;
+    sp58 = D_8015F9C0;
+    D_8015E208 = D_8015DF04;
+    D_8015E20C = D_8015E040;
+    D_8015E210 = D_8015E17C;
+    D_800E6280.unk_1BC[5].unk_02 += 2;
+    D_800E6280.unk_1BC[5].unk_06 += 1;
+    D_800E6280.unk_1BC[5].unk_0A -= 0x14;
+    check_para_limit();
+    func_80155360();
+    load_palette(D_8015F93C, 0x11, 1, 2, 0);
+    func_80084E90(D_8015F940, D_8015F944, D_8015F948, D_8015F94C, D_8015F950, D_8015F954);
+    func_800850D4(D_8015F930, D_8015F934, D_8015F92C, D_8015F938);
+    m[96].unk_04 = m[97].unk_04 = 8;
+    for (i = 0; i < 8; i++) {
+        D_8015F9A0[i] = 0;
+    }
+    for (i = 0; i < 8; i++) {
+        m[98 + i] = m[96];
+        m[98 + i].unk_16 = 5;
+        m[98 + i].unk_26 = sp68.v[i] - 0xA0;
+        m[98 + i].unk_2A = sp58.v[i] - 0x78;
+        D_8015F9A8[i] = func_800AE0D0() % 120;
+    }
+    m[98].unk_16 = 4;
+    func_8004284C();
+}
 
 void func_801559C0(void) {
     D_8015E208 = D_8015DF08;
