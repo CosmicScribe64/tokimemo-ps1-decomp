@@ -382,9 +382,11 @@ void func_80134D94(void) {
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80134F98);
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-16551, 22 differing lines (11 instructions): the original keeps `t` in $v1 and loads `v` straight into $v0;
+/* NON_MATCHING: T-19004, 22 differing lines (11 instructions): the original keeps `t` in $v1 and loads `v` straight into $v0;
  * here `t` is a ugen temporary ($t3) and `v` comes through a promoted range of the global ($a1, then move v0,a1). Frame: i and t
- * declared above sp38 reproduce its offset (0x38) and the 0x58 frame; unused/promoted word locals take slots. */
+ * declared above sp38 reproduce its offset (0x38) and the 0x58 frame; unused/promoted word locals take slots. Tried in T-19004
+ * without effect: `t` read before `v`, `t` as the repeated expression `(b & 0xF) & k`, both reads through a `GameState *` local
+ * (frame 8 bytes larger), the field read in each arm of the `if`, autotweak (278 edits). */
 void func_80135480(void) {
     s32 i;
     s32 t;
@@ -890,9 +892,11 @@ s32 func_80137440(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-16551, 26 differing lines (13 instructions, registers only): the loop counter i takes $a3 and the hoisted
+/* NON_MATCHING: T-19004, 26 differing lines (13 instructions, registers only): the loop counter i takes $a3 and the hoisted
  * D_8012091E + 11 takes $a2, the original has them the other way round (regdiff: the hoisted constant outranks i, priority 7
- * against 6.4); the ugen temporaries t8/t3 against t9/t5 follow. Declaration order, initialisation order and autotweak's 628 edits did not move it. */
+ * against 6.4); the ugen temporaries t8/t3 against t9/t5 follow. Declaration order, initialisation order and autotweak's 628 edits
+ * (T-16551) and `register`, no `pos` local, D_8012091E/D_80120922 as fields of display record 106, a for/while loop (T-19004) did
+ * not move it: a loop with the init next to it gives i priority 10.67 and $a0 before a and b, the original needs 7 to 8.2. */
 void func_80137544(void) {
     u8 sel;
     s32 i;
