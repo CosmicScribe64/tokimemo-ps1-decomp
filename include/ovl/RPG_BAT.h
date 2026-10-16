@@ -158,9 +158,15 @@ void func_8014C4FC(void);
 void func_8014C804(void);
 void func_8014CB0C(void);
 void func_8014CE14(void);
-extern s32 D_8015EBF0;
-extern s32 D_8015EBF4;
-extern s32 D_8015EBF8;
+/* Pad-sequence matcher state of func_8013BBF8, one aggregate: as1 never hoists a load over a store to the
+ * same aggregate, and the original keeps the store of unk_00 before the load of unk_04 (T-17107). */
+typedef struct RpgPadSeq {
+    /* 0x00 */ s32 unk_00; /* pad word read this frame (D_8015EBEC) */
+    /* 0x04 */ s32 unk_04; /* pad word of the previous change (D_8015EBF0) */
+    /* 0x08 */ s32 unk_08; /* position in the D_8015E578 sequence (D_8015EBF4) */
+    /* 0x0C */ s32 unk_0C; /* position in the D_8015E550 sequence (D_8015EBF8) */
+} RpgPadSeq; /* size 0x10 */
+extern RpgPadSeq D_8015EBEC;
 void func_8013BBF8();
 /* Battle counters; one struct because as1 then keeps the access order of the original (T-4030, func_801452C0). */
 typedef struct RpgStat {
