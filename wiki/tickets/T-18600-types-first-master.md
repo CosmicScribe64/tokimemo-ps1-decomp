@@ -47,3 +47,4 @@ Result ([[master-family-results]], section "Types-first pass (T-18600)"):
 ## Comments
 
 - 2026-10-16: work done on branch `w3-master-types`; In Review, waiting for the code review against `CODING_STANDARDS.md`.
+- 2026-10-16: final checks: clean `rm -rf build && configure.py && ninja` 665/665, all 27 sha1 OK; `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` 0 new disagreements (15 known).

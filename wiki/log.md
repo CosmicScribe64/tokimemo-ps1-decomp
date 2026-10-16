@@ -15784,3 +15784,7 @@ Opened [[tickets/T-18200-types-first-en_nichi]] (In Progress) under [[tickets/T-
 ## [2026-10-16] ticket | T-18600 In Review
 
 [[tickets/T-18600-types-first-master]]: MASTER's stack tables typed in `include/ovl/MASTER.h` (nine `MasterWords13`, `MasterHalfwords13 D_8013C6A4`), the step tables `FnTbl4/7/30` and `PtrTbl3` moved from four `.c` files, the second mini-event counters sized (`u8 D_8013C788[5]`), one `MasterClubBits` for two local copies; redraft driver `drafts/T-18600/redraft.py` (from T-18300) with MasterSprite44 views, an innermost-range fold and the new `club-bits`, `record-copy` and `reroll` rewrites; 11 redrafts, 8 better than the census (sum 4,793 to 3,044 rows), none 0; 2 matches / 1,208 bytes (`func_80135CF4` with one FAKE, `func_8013348C`); 3 hand drafts; packages T-18601..T-18603 (7 functions, 10,872 bytes). New page [[master-family-results]], a row in [[data-types]], a section in [[matching-notes]]. In Review, waiting for the code review.
+
+## [2026-10-16] build | T-18600 final checks
+
+Branch `w3-master-types`: clean build 665/665 with all 27 sha1 OK; `tools/check_headers.py`, `tools/migrate_globals.py --check` OK; `tools/sync_protos.py --check-branch` 0 new disagreements (15 known). [[tickets/T-18600-types-first-master]] stays In Review.
