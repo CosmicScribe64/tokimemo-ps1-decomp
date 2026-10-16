@@ -1772,3 +1772,33 @@ extern FnTbl44 D_801609F8;
 extern FnTbl20 D_80160B80;
 extern FnTbl20 D_80160BD0;
 #endif
+
+#ifndef OVL_DATE_STACK_TABLES_T17200
+#define OVL_DATE_STACK_TABLES_T17200
+/* Constant tables that one handler copies to the stack whole (T-17200); element types from the loads. */
+typedef struct DateBytes11x21 {
+    /* 0x00 */ u8 v[11][21];
+} DateBytes11x21; /* size 0xE7; func_8013C410 reads [D_800E6280.unk_F5F][D_800CA2F8] */
+extern DateBytes11x21 D_8015B7A0;
+
+typedef struct DateWords21 {
+    /* 0x00 */ s32 v[21];
+} DateWords21; /* size 0x54; func_8013EB8C reads [D_800CA2F8] */
+extern DateWords21 D_8015B888;
+extern DateWords21 D_8015B8DC;
+extern DateWords21 D_8015B930;
+extern Tbl21 D_8015B984; /* func_8013EB8C reads [D_800CA2F8] with lhu */
+
+typedef struct DateShorts8 {
+    /* 0x00 */ s16 v[8];
+} DateShorts8; /* size 0x10; screen x or y lists of func_801556D8 and func_801560E0 */
+extern DateShorts8 D_8015F9B0;
+extern DateShorts8 D_8015F9C0;
+extern DateShorts8 D_8015FB1C;
+extern DateShorts8 D_8015FB2C;
+
+typedef struct DatePairs8 {
+    /* 0x00 */ s16 v[8][2];
+} DatePairs8; /* size 0x20; func_801560E0 reads v[i][1] */
+extern DatePairs8 D_8015FB3C;
+#endif
