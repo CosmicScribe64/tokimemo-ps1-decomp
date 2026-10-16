@@ -16460,3 +16460,7 @@ Maintainer review of PR #36 (KakarottoCake): both review points addressed (empty
 ## [2026-10-16] ticket | T-17110 Done
 
 [[tickets/T-17110-w3-rpg-bat-p10]] In Review to Done: code review against `CODING_STANDARDS.md` found two issues, both fixed: wrong byte counts in the ticket Goal and notes (the matched total is 1,788 bytes, not the 1,800 of the In Review entry; `func_8014D11C` is 600 B, `func_8014B79C` 776 B) and missing comments for the matching tricks in `src/ovl/RPG_BAT/8014ADD0.c`. 3 of 4 functions matched (`func_8014C360`, `func_8014B79C`, `func_8014D11C`), unit sha1 OK; `func_8014BFE4` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17116 In Progress
+
+[[tickets/T-17116-w3-rpg-bat-p16]] created and In Progress: wave 3 package w3-rpg-bat-p16, three RPG_BAT functions in `src/ovl/RPG_BAT/80155CC0.c` and `src/ovl/RPG_BAT/80134D30.c` (links [[tickets/T-17100-types-first-rpg_bat]]).
