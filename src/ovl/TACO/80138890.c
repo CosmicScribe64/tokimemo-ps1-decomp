@@ -23,6 +23,7 @@ s32 func_80138890(void) {
     }
 }
 
+/* No value is returned from the reset arm on purpose: v0 then holds the target (promoted D_8015F4A4) as in the original; the other arm returns D_8015F4A8. T-16564 */
 s32 func_80138964(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     if (arg3 == 0) {
         D_8015F4A4 = arg0;
@@ -102,6 +103,7 @@ s32 func_80138B2C(void) {
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80138890", func_80138B2C);
 #endif
 
+/* No return value on purpose: implicit-int function (v0 of the last call falls through). T-16564 */
 s32 func_80138D08(void) {
     switch (D_800E6280.unk_110D) {
     case 8:

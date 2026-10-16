@@ -15262,3 +15262,11 @@ Filed in [[speedup-research-2026-10-16]].
 ## [2026-10-16] ticket | T-16564 opened
 
 [[tickets/T-16564-taco-types-first-p4]] In Progress: types-first pilot package pt-taco-p4 (TACO `src/ovl/TACO/80154960.c`, `80137A60.c`, `80138890.c`; 8 functions from the [[tickets/T-16560-taco-types-first]] redrafts), branch `pt-taco-p4` from `w2-good`.
+
+## [2026-10-16] build | T-16564 matches
+
+[[tickets/T-16564-taco-types-first-p4]]: TACO `func_801563E4`, `func_80154960`, `func_80138D08`, `func_801557E8`, `func_80138964` and `func_801553AC` matched (5,852 bytes, `src/ovl/TACO/80154960.c`, `80138890.c`), each unit sha1 OK. `func_80138B2C` (30 rows) and `func_80137D00` (8 rows) stay guarded register near misses. Notes in [[matching-notes]] and [[data/t0018-cases]], five rows in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-16564 to In Review
+
+[[tickets/T-16564-taco-types-first-p4]] In Progress to In Review: 6 of 8 functions matched. Clean rebuild 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.

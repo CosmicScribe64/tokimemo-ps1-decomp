@@ -330,6 +330,7 @@ void func_80155F98(s32 arg0) {
     }
 }
 
+/* No return value on purpose: the caller reads v0, the index func_8015ACCC returns (implicit-int style, see func_80137BD8). T-16564 */
 s32 func_80156178(void) {
     TcPos p0;
     TcPos p2;
