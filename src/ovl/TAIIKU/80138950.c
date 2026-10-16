@@ -1008,7 +1008,53 @@ void func_8013B5C0(void) {
     }
 }
 
+/* NON_MATCHING: T-19008, 18 differing lines (100 instructions against 96): the raw position is a uopt range
+ * in a0 in the original (x >> 3 in v1, the result in v0), here px gets a1, x >> 3 v0 and the result a0, and
+ * the original keeps the lui of D_80149986 in the delay slot of the bnez.
+ * FAKE: px is an s16 local; its sll/sra pair stands in for the ugen temporary the original hands out between
+ * the condition and the x * 80 / 48 chain, and costs four instructions. The counter and the flag are read
+ * through u16 pointer views as in func_8013BEF8; the halves of tmp are written through s16 views. */
+#ifdef NON_MATCHING
+void func_8013B608(void) {
+    s32 tmp;
+    s16 v;
+    s16 px;
+
+    if (((u16 *)&D_801499A0)[1] >= 0x258) {
+        ((u16 *)D_801499B0)[1] = 0;
+        func_80044750(0x802);
+        ((u16 *)&D_801499A0)[1] = 0;
+    }
+    func_8013C5C8(0x10000);
+    func_8013C694();
+    if (!(((u16 *)&D_801499A0)[1] & 8)) {
+        func_8013C4E4(0x9000);
+    }
+    if (!(((u16 *)&D_801499A0)[1] & 0xF)) {
+        ((s16 *)&tmp)[0] = 0;
+        px = D_80149968.unk_1C[0];
+        v = (px >> 3) + (px >> 3) * 80 / 48;
+        if (D_80122EC4 % 3 != 0 && (px >= 0 || D_80149968.unk_0C > 0)) {
+            v = (px >> 3) + 0x20;
+        }
+        D_801499A0.unk_04 = v;
+        D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
+        ((s16 *)&tmp)[1] = v;
+    }
+    if (((u16 *)&D_801499A0)[1] != 0 && ((u16 *)&D_801499A0)[1] % 45 == 0) {
+        if (((u16 *)D_801499B0)[1] == 0) {
+            ((u16 *)D_801499B0)[1] = 1;
+            func_80044750(0x800);
+        } else {
+            ((u16 *)D_801499B0)[1] = 0;
+            func_80044750(0x801);
+        }
+        ((u16 *)&D_801499A0)[1]++;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B608);
+#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B78C);
 
