@@ -2287,8 +2287,6 @@ void func_801395B4(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-17202, 7 differing lines; the post-call unk_110A load takes $v1 (the original keeps it in $v0, the sum in $v0 and the andi in $t8, then `move v0,t8`) */
-#ifdef NON_MATCHING
 s32 func_80139664(void) {
     /* FAKE: unused byte local puts prev at 0x28(sp) as in the original. T-11580 */
     u8 pad;
@@ -2329,15 +2327,14 @@ s32 func_80139664(void) {
         func_80085A60();
         if (prev != D_800E6280.unk_110A) {
             D_800CA148 = 8;
-            D_800E6280.unk_110A += 0x11;
+            /* FAKE: T-17202, the element view keeps the new byte in a register (andi t8; move v0,t8)
+             * for $v0, which is live at the exit of this s32 function with no return value */
+            (&D_800E6280.unk_110A)[0] += 0x11;
         }
-        return D_800E6280.unk_110A;
+        return;
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80139664);
-#endif
 
 s32 func_80139834(void) {
     /* FAKE: 4 spare bytes reproduce prev's stack home at 0x2A(sp). T-11140 */
