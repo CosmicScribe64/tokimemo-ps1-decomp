@@ -21,6 +21,17 @@ void func_80132DFC(void);
 void func_8013376C(void);
 void func_80136BFC(void);
 void func_80137D6C(void);
+void func_801322EC(void);
+void func_801336AC(void);
+void func_80133FA4(void);
+void func_801341F0(s32 arg0);
+void func_801345BC(void);
+void func_801362EC(void);
+void func_80136B3C(void);
+void func_80137CAC(void);
+void func_8013867C(void);
+void func_80138860(s32 arg0);
+void func_80138ADC(void);
 void func_80132940(void);
 void func_80134938(void);
 void func_80135630(void);
@@ -46,7 +57,6 @@ void func_801369AC(void);
 void func_80137620(void);
 void func_80137824(s32 arg0);
 extern s32 D_8013C700;
-extern s32 D_8013C814[];
 extern s32 D_8013CEC8, D_8013CECC, D_8013CED0, D_8013CED4;
 
 extern s32 D_8013B7EC;
@@ -136,11 +146,6 @@ void func_801364B4(void);
 void func_801364F0(void);
 void func_801363BC(void);
 
-/* T-11190: declarations added by tools/bulk_m2c.py. */
-extern s32 D_8013C72C;
-extern u8 *D_8013C720;
-extern u8 *D_8013C724;
-extern u8 *D_8013C728;
 
 /* T-12090: typed display setup data and pending dispatcher callees. */
 void func_80139290(void);
@@ -155,10 +160,55 @@ extern u8 *D_8013D9C4;
 extern u8 *D_8013D9C8;
 extern u8 *D_8013D9CC;
 
-/* T-14501: loaded scene data used by func_80136578. */
-extern s32 D_8013C74C;
-extern u8 *D_8013C740;
+
+/* T-18100: scene scripts. The three scenes (A: 80133540.c, B: 801369D0.c, C: 80137B40.c) each
+ * keep a table of event lists, one list per script, and a table of the text each script opens with
+ * (passed to func_801341F0 / func_80137824 / func_80138860 as a word). An event fires when its
+ * unk_00 equals the scene's frame counter (D_8013C6DC, D_8013CED0, D_8013D99C). */
+typedef struct BsdEvent {
+    /* 0x00 */ s32 unk_00; /* frame */
+    /* 0x04 */ s32 unk_04; /* 0x0FFFFFFF ends the list; bits 16..23 display slot, bits 0..7 image
+                            * (0xFE hides the slot), bits 28..31 start the script's text */
+} BsdEvent; /* size 0x08 */
+
+extern s32 D_8013BA20[29];       /* scene A text */
+extern BsdEvent *D_8013C654[29]; /* scene A event lists */
+extern s32 D_8013C814[12];       /* scene B text */
+extern BsdEvent *D_8013CE8C[12]; /* scene B event lists */
+extern s32 D_8013D0C0[31];       /* scene C text */
+extern BsdEvent *D_8013D90C[31]; /* scene C event lists */
+
+/* T-18100: loaded picture sets, four words each, set in .data to fixed addresses of the loaded
+ * scene file: the texture-page table handed to load_tpage_buf_lock, two image pointers stored in
+ * display records +0x0C/+0x10, and the palette for load_palette. Separate objects: matched code
+ * reaches each word through its own symbol. */
+extern s32 *D_8013C6E8; /* scene A */
+extern u8 *D_8013C6EC;
+extern u8 *D_8013C6F0;
+extern s32 D_8013C6F4;
+extern s32 *D_8013C710;
+extern u8 *D_8013C714;
+extern u8 *D_8013C718;
+extern s32 D_8013C71C;
+extern s32 *D_8013C720;
+extern u8 *D_8013C724;
+extern u8 *D_8013C728;
+extern s32 D_8013C72C;
+extern s32 *D_8013C730;
+extern u8 *D_8013C734;
+extern u8 *D_8013C738;
+extern s32 D_8013C73C;
+extern s32 *D_8013C740;
 extern u8 *D_8013C744;
 extern u8 *D_8013C748;
+extern s32 D_8013C74C;
+extern s32 *D_8013CEDC; /* scene B */
+extern u8 *D_8013CEE0;
+extern u8 *D_8013CEE4;
+extern s32 D_8013CEE8;
+extern s32 *D_8013D9A8; /* scene C */
+extern u8 *D_8013D9AC;
+extern u8 *D_8013D9B0;
+extern s32 D_8013D9B4;
 
 #endif /* OVL_BUNKA_SD_H */
