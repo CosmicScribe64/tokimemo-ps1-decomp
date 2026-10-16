@@ -99,8 +99,8 @@ void func_801423A4(void) {
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80142400);
 
 /* FAKE: `pad` reserves the top local word: the original keeps the two loop spills of the
- * tpage loops at 0x38 and 0x30 (sp). The u8 views of the s8 flag D_8014A110 keep its lbu loads
- * (as in func_80143F50). T-16554 */
+ * tpage loops at 0x38 and 0x30 (sp). The u8 views of the flag D_8014A110 keep its lbu loads and
+ * stop uopt from promoting it (as in func_80143F50; D_8014A110 is `u8` since T-19010). T-16554 */
 void func_8014280C(void) {
     u8 pad[4];
     s32 i;
@@ -692,8 +692,8 @@ void func_80143DD0(void) {
     ((DisplayActor44 *)D_8011ECD0)[100].unk_2A = ((DisplayActor44 *)D_8011ECD0)[96].unk_2A;
 }
 
-/* FAKE: the u8 view of the s8 flag D_8014A110 keeps the lbu loads and the register shape of the
- * original; the plain s8 or a (u8) cast changes the allocation. T-16554
+/* FAKE: the u8 view of the flag D_8014A110 keeps the lbu loads and the register shape of the
+ * original; a plain read (promoted) changes the allocation. T-16554
  *
  * `bits` (GameState unk_F88) is read per region into a local: reading the field
  * directly lets the hoisted `& 5` test outrank it and take $v0. */
@@ -1083,7 +1083,52 @@ void func_80144C70(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144E54);
+/* FAKE: the dead `i = D_8014A110;` before the first call puts the flag in the entry set of
+ * tools/cvt_pass.py, which then strips the widening of the flag test in the second loop (promoted
+ * `lbu a1`, flag compared first); the dead `i = 0;` at the end keeps the second loop rolled with the
+ * walk compare, as in func_80135830. D_8014A110 is `u8` (was `s8`; the matched uses are unchanged). T-19010 */
+void func_80144E54(void) {
+    s32 i;
+
+    i = D_8014A110;
+    func_80048E78();
+    for (i = 0; i < 8; i++) {
+        DISP(96 + i).unk_03 = 0xA4;
+        DISP(96 + i).unk_02 = 0x40;
+        DISP(96 + i).unk_05 = 0x80;
+        DISP(96 + i).unk_01 = 3;
+        DISP(96 + i).unk_38 = 0x01000000;
+        DISP(96 + i).unk_07 = 0x80;
+        DISP(96 + i).unk_0C = (u8 *)D_80149FC8;
+        DISP(96 + i).unk_10 = (u8 *)D_8014A000;
+        DISP(96 + i).unk_34 = (u8 *)D_8014A228;
+        DISP(96 + i).unk_14 = D_8014A038;
+        DISP(96 + i).unk_1A = 0x1000;
+        *(s16 *)DISP(96 + i).pad_1C = 0x1000;
+        DISP(96 + i).unk_06 = 2;
+    }
+    for (i = 0; i < 4; i++) {
+        DISP(96 + i).unk_26 = i * 0x40 - 0x78;
+        DISP(96 + i).unk_18 = D_8014A120[i] * 8 + 0x1A;
+        DISP(96 + i).unk_2A = -8;
+        if (DISP(96 + i).unk_18 == 0x22 && D_8014A110 == 1) {
+            DISP(96 + i).unk_18 = 0x42;
+        }
+    }
+    DISP(100).unk_26 = -0x78;
+    DISP(100).unk_2A = -8;
+    DISP(100).unk_18 = D_8014A120[0] * 5 + 0xD;
+    DISP(101).unk_26 = -0x38;
+    DISP(101).unk_2A = -8;
+    DISP(101).unk_18 = D_8014A120[1] * 5 + 0xD;
+    DISP(102).unk_26 = 8;
+    DISP(102).unk_2A = -8;
+    DISP(102).unk_18 = D_8014A120[2] * 5 + 0xD;
+    DISP(103).unk_26 = 0x48;
+    DISP(103).unk_2A = -8;
+    DISP(103).unk_18 = D_8014A120[3] * 5 + 0xD;
+    i = 0;
+}
 
 void func_80145044(void) {
     s32 i;
