@@ -15840,3 +15840,7 @@ Created [[tickets/T-18500-types-first-bunkaken]] (branch `w3-bunkaken-types` fro
 ## [2026-10-16] ticket | T-18500 Done
 
 [[tickets/T-18500-types-first-bunkaken]] In Review to Done: code review against `CODING_STANDARDS.md`, no findings; BUNKAKEN sha1 OK, headers OK, `migrate_globals --check` OK, `sync_protos --check-branch` 0 new disagreements. 6 functions matched (6,232 bytes). Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-18800 Types-first: DATE2, In Progress
+
+Created [[tickets/T-18800-types-first-date2]] (branch `w3-date2-types` from `w2-good`), In Progress: survey DATE2's types, declare them in `include/ovl/DATE2.h`, redraft every unmatched function into `drafts/T-18800/`, cut packages. Card in [[kanban]], line in [[index]].
