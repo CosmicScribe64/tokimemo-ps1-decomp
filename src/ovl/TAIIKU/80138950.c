@@ -1923,27 +1923,21 @@ void func_8014064C(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11640, 3 differing lines (move/addiu); same as TACO func_801347F4: the original keeps 'move s2,s3; addiu s2,s2,8' where this folds to one addiu (s3 = arg0 + 4). The indexed loop (uopt strength-reduces it) fixes the lui order of the older pointer-loop draft. */
-void func_801406A8(arg0)
-s32 arg0;
-{
+void func_801406A8(s32 *arg0) {
+    s32 *dop;
     s32 i;
-    s32 b;
 
-    arg0 += 4;
-    func_8009B3C0(arg0);
-    b = arg0;
-    b += 8;
+    dop = arg0;
+    dop++;
+    func_8009B3C0((s32)dop);
+    dop++;
+    dop++;
     for (i = 0; i < 16; i++) {
-        func_8009B430(b, (u8 *)&D_80122640[i * 4], 0);
+        func_8009B430((s32)dop, (u8 *)&D_80122640[i * 4], 0);
         D_80122640[i * 4 + 1] = (u32)&D_801227A0[i];
         D_80122640[i * 4] = 0x80000000;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_801406A8);
-#endif
 
 void func_80140738(s32 arg0, s32 arg1) {
     u8 *p;
