@@ -1,7 +1,37 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
+/* NON_MATCHING: T-16562, 18 differing lines; only the slot of `move a1,zero` differs (the original fills the delay slot of the `beqz` before the second call with it, IDO puts it after the decrement store) */
+#ifdef NON_MATCHING
+void func_80133870(void) {
+    D_800E6280.unk_1104.u += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80133980();
+        break;
+    case 1:
+        func_80133AF4();
+        break;
+    case 2:
+        func_80133C08();
+        break;
+    case 3:
+        func_80133E98();
+        break;
+    case 4:
+        func_80134500();
+        break;
+    }
+    if (D_800E6280.unk_1104.u & 0x10) {
+        func_801432F0((s32) "NOW LOADING DATA ", -0x60, 0, 1);
+    }
+    if ((D_800E6280.unk_1104.u != 0) && ((u32) D_800E6280.unk_1104.u < 0x400U)) {
+        func_801430D0(D_8015EDEC--, 0, 0x32, 6);
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_80133870);
+#endif
 
 s32 func_80133980(void) {
     switch (D_800E6280.unk_110D) {
@@ -173,7 +203,7 @@ s32 func_80134500(void) {
         func_801345D4();
         func_80058F0C(0x8018A000);
         func_8013474C();
-        func_801347F4(0x801AC000);
+        func_801347F4((s32 *)0x801AC000);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
@@ -205,30 +235,21 @@ void func_801347A8(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, only "move s2,s3; addiu s2,s2,8" against one addiu and the lui/addiu order of the loop constants differ (7 lines); a K&R definition with `s32 arg0` fixes the prologue but the header check rejects it */
-void func_801347F4(s32 arg0) {
-    s32 b;
-    TcObj50 *p;
-    Tc10 *q;
+void func_801347F4(s32 *arg0) {
+    s32 *dop;
+    s32 i;
 
-    arg0 += 4;
-    func_8009B3C0(arg0);
-    b = arg0;
-    b += 8;
-    p = D_80127480;
-    q = D_80127080;
-    do {
-        func_8009B430(b, (u8 *)q, 0);
-        q->unk4[0] = (s32)p;
-        p++;
-        q++;
-        q[-1].unk0 = 0x80000000;
-    } while (p != (TcObj50 *)D_80128880);
+    dop = arg0;
+    dop++;
+    func_8009B3C0((s32)dop);
+    dop++;
+    dop++;
+    for (i = 0; i < 0x40; i++) {
+        func_8009B430((s32)dop, (u8 *)&D_80127080[i], 0);
+        D_80127080[i].unk4[0] = (s32)&D_80127480[i];
+        D_80127080[i].unk0 = 0x80000000;
+    }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_801347F4);
-#endif
 
 void func_80134884(void) {
     func_800AE080((u8 *) D_8015E270, 0x140);

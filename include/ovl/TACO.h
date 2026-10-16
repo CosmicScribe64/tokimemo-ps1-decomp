@@ -11,6 +11,13 @@
 void func_8015C2CC(s32 arg0);
 extern s16 D_801606AC[], D_801606C4[], D_80160858[], D_8016090C[], D_80160A60[];
 
+/* state handlers of the loading screen driver func_80133870 (T-16562) */
+s32 func_80133980(void);
+void func_80133AF4(void);
+void func_80133C08(void);
+void func_80133E98(void);
+s32 func_80134500(void);
+
 void func_8013F468(void);
 void func_8013F7D8(void);
 void func_8013F9C0(void);
@@ -319,7 +326,7 @@ void func_801534E0(s32 arg0);
 void func_8014394C();
 void func_801345D4();
 void func_8013474C();
-void func_801347F4(s32 arg0);
+void func_801347F4(s32 *arg0);
 extern s32 D_8015F440[];
 s32 func_80137BD8(void);
 void func_80137D00(void);
