@@ -517,6 +517,8 @@ void func_800696DC(s32 arg0, s32 arg1) {
         strcpy(spC8, D_800B3288[D_800E7D36]);
         strncat(spC8, "番アルバム", 2);
         set_kanji_string((s16) (spEC + 0xC), -0x50, 0xFU, spC8, 0);
+        /* FAKE: the byte D_800E7D36 read through the NameMetricWork view; uopt does not CSE it with the D_800E7D36 loads
+         * in the else arm, the original reloads it there. Real source unknown. T-17002 */
         if (((NameMetricWork *)&D_800E7D10)->selected_slot == 0) {
             set_kanji_string((s16) spEC, -0x40, 0xFU, "システム", 0);
         } else {
@@ -544,7 +546,8 @@ void func_800696DC(s32 arg0, s32 arg1) {
                 set_kanji_string((s16) spEC, -0x30, 0xFU, spA8, 0);
                 set_kanji_string((s16) spEC, -0x20, 0xFU, sp88, 0);
                 strcpy(sp68, "所属部‥");
-                strncat((s32) sp68, club_name_table[((NameMetricWork *)&D_800E7D10)->club[D_800E7D36]]);
+                /* two arguments as in the original: no count is loaded into $a2 before this call */
+                strncat(sp68, club_name_table[((NameMetricWork *)&D_800E7D10)->club[D_800E7D36]]);
                 set_kanji_string((s16) spEC, -0x10, 0xFU, sp68, 0);
                 strcpy(sp48, "クリア人数‥");
                 if (var_s0 >= 0x64) {
@@ -600,7 +603,8 @@ void func_800696DC(s32 arg0, s32 arg1) {
             set_kanji_string((s16) spEC, -0x20, 0xFU, sp88, 0);
             strcpy(sp68, "所属部‥");
             KEEP_UNK_1117();
-            strncat((s32) sp68, club_name_table[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].club >> 12]);
+            /* two arguments as in the original: no count is loaded into $a2 before this call */
+            strncat(sp68, club_name_table[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].club >> 12]);
             set_kanji_string((s16) spEC, -0x10, 0xFU, sp68, 0);
             strcpy(sp48, "クリア人数‥");
             if (var_s0 >= 0x64) {
