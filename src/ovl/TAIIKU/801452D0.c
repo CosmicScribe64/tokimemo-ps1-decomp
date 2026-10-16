@@ -236,7 +236,7 @@ void func_80145640(void) {
             do {
                 search_load_tpage_buf_lock(D_8014A070[i], 1);
                 i++;
-            } while ((s32 *)&D_8014A088 != &D_8014A070[i]);
+            } while ((s32 *)&D_8014A088 != &D_8014A070[i]); /* bound: the next table symbol (T-16553) */
             func_8004284C();
         }
         break;
@@ -928,7 +928,7 @@ void func_80147594(void) {
             D_8014A454[i + 1].unk_14 = 0;
         }
         i++;
-    } while (&D_8014A4A8 != &D_8014A454[i]);
+    } while (&D_8014A4A8 != &D_8014A454[i]); /* bounds of the loops below: the next table symbol, as in the original (T-16553) */
     k = 0; do { /* one line: as1 schedules the move after the hoisted table addresses (T-16553) */
         if (D_8014A454[k + 1].unk_18 >= 0xB) {
             i = 0;
@@ -1162,7 +1162,7 @@ s32 func_80148370(void) {
         DISP(96 + i).unk_03 = 0xA4;
         DISP(96 + i).unk_0C = (u8 *)D_80149FD8;
         DISP(96 + i).unk_10 = (u8 *)D_8014A010;
-        DISP(96 + i).unk_34 = (u8 *)&D_8014A528;
+        DISP(96 + i).unk_34 = (u8 *)D_8014A528;
         DISP(96 + i).unk_14 = D_8014A048;
         DISP(96 + i).unk_04 = 0;
         DISP(96 + i).unk_05 = 0x80;
