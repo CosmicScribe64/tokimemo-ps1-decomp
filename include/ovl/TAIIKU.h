@@ -39,6 +39,7 @@ void func_80143C84(void);
 void func_80143CC0(void);
 void func_8014756C(void);
 
+extern s32 D_8014A124;
 extern s32 D_8014A128;
 extern s32 D_80148F00;
 extern s32 D_80148F04;
@@ -194,6 +195,7 @@ extern TkS16x4 D_80149F8C;
 extern TkS16x4 D_8014A360;
 extern u8 D_801492AC[];
 extern u8 D_8014A1D4[];
+extern u8 D_8014A1E8[]; /* s16 table, indexed like D_8014A1D4 */
 void func_801452D0(void);
 
 typedef struct {

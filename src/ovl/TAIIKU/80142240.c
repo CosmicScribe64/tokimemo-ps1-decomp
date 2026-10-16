@@ -196,7 +196,104 @@ void func_80143470(void) {
     D_80120656 = 2;
 }
 
+#ifdef NON_MATCHING
+void func_8014357C(void) {
+    GameState *gs;
+    s32 var_v0;
+    s32 temp_v1;
+
+    gs = &D_800E6280;
+    D_8014A120[0] = 0;
+    D_8014A13C[0].unk_01 = 0;
+    D_8014A13C[0].unk_00 = 0;
+    D_8014A13C[0].unk_04 = 0;
+    D_8014A13C[0].unk_08 = 0;
+    D_8014A13C[0].unk_0C = 0;
+    D_8014A13C[0].unk_10 = 0;
+    D_8014A13C[0].unk_14.halves.low = 0;
+    D_8014A13C[0].unk_1C = 1;
+    D_8014A13C[0].unk_20 = 0;
+    D_8014A13C[0].unk_1A = 0;
+    D_8014A13C[0].unk_18 = 0;
+    D_8014A13C[0].unk_02 = 0;
+    D_8014A120[1] = 0;
+    D_8014A13C[1].unk_01 = 0;
+    D_8014A13C[1].unk_00 = 0;
+    D_8014A13C[1].unk_04 = 0;
+    D_8014A13C[1].unk_08 = 0;
+    D_8014A13C[1].unk_0C = 0;
+    D_8014A13C[1].unk_14.halves.high = 8;
+    D_8014A13C[1].unk_1C = 1;
+    D_8014A13C[1].unk_10 = 0;
+    D_8014A13C[1].unk_14.halves.low = 0;
+    D_8014A13C[1].unk_20 = 0;
+    D_8014A13C[1].unk_1A = 0;
+    D_8014A13C[1].unk_18 = 0;
+    D_8014A13C[1].unk_02 = 0;
+    D_8014A120[2] = 0;
+    D_8014A13C[2].unk_01 = 0;
+    D_8014A13C[2].unk_00 = 0;
+    D_8014A13C[2].unk_04 = 0;
+    D_8014A13C[2].unk_08 = 0;
+    D_8014A13C[2].unk_14.halves.high = 0x10;
+    D_8014A13C[2].unk_0C = 0;
+    D_8014A13C[2].unk_10 = 0;
+    D_8014A13C[2].unk_14.halves.low = 0;
+    D_8014A13C[2].unk_1C = 1;
+    D_8014A13C[2].unk_20 = 0;
+    D_8014A13C[2].unk_1A = 0;
+    D_8014A13C[2].unk_18 = 0;
+    D_8014A13C[2].unk_02 = 0;
+    D_8014A120[3] = 0;
+    D_8014A13C[3].unk_01 = 0;
+    D_8014A13C[3].unk_00 = 0;
+    D_8014A13C[3].unk_04 = 0;
+    D_8014A13C[3].unk_14.halves.high = 0x18;
+    D_8014A13C[3].unk_08 = 0;
+    D_8014A13C[3].unk_0C = 0;
+    D_8014A13C[3].unk_10 = 0;
+    D_8014A13C[3].unk_14.halves.low = 0;
+    D_8014A13C[3].unk_1C = 1;
+    D_8014A13C[3].unk_20 = 0;
+    D_8014A13C[3].unk_1A = 0;
+    D_8014A13C[3].unk_18 = 0;
+    D_8014A13C[3].unk_02 = 0;
+    D_8014A13C[0].unk_14.halves.high = -0xA0;
+    D_8014A1D0 = 0;
+    D_8014A1CC.w = 0;
+    D_8014A118 = 0;
+    temp_v1 = gs->unk_0F4.b[1] & 0xF;
+    var_v0 = gs->unk_10C.unk_02;
+    D_8014A130[0] = 0x7E0000; D_8014A130[1] = 0x7F0000; D_8014A130[2] = 0x7D0000;
+    if ((temp_v1 & 1) || (temp_v1 & 2)) {
+        var_v0 = (s16) (var_v0 >> 1);
+    }
+    if (var_v0 >= 0xB4) {
+        D_8014A124 = 6;
+        var_v0 = 0x20000;
+    } else if (var_v0 >= 0x64) {
+        D_8014A124 = 7;
+        var_v0 = 0x1E000;
+    } else if (var_v0 >= 0x41) {
+        D_8014A124 = 8;
+        var_v0 = 0x1C000;
+    } else if (var_v0 >= 0x1E) {
+        D_8014A124 = 9;
+        var_v0 = 0x1A000;
+    } else {
+        D_8014A124 = 0xA;
+        var_v0 = 0x18000;
+    }
+    if ((u8) D_8014A110 != 0) {
+        var_v0 -= 0x2000;
+    }
+    D_8014A128 = var_v0 >> 3;
+    D_8014A12C = var_v0;
+    func_800AE120(gs->unk_10F4);
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_8014357C);
+#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80143814);
 
@@ -265,7 +362,43 @@ void func_80143D24(void) {
     D_80120676 = D_8014A13C[0].unk_14.halves.high;
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80143DD0);
+void func_80143DD0(void) {
+    if (((u32) D_8014A124 < (u32) D_8014A13C[0].unk_04) && (D_8014A13C[0].unk_1C != 0)) {
+        if ((s32) D_8014A13C[0].unk_00 >= 9) {
+            D_8014A13C[0].unk_00 = 2;
+            D_8014A13C[0].unk_04 = 0;
+        } else {
+            D_8014A13C[0].unk_00 = D_8014A13C[0].unk_00 + 1;
+            D_8014A13C[0].unk_04 = 0;
+        }
+        if (D_8014A13C[0].unk_00 == 6) {
+            ((DisplayActor44 *)D_8011ECD0)[100].unk_18 = 0x2E;
+            if ((u8) D_8014A110 != 0) {
+                func_80044750(0x804);
+            } else {
+                func_80044750(0x801);
+            }
+            D_8014A13C[0].unk_02 = 1;
+        }
+        if (D_8014A13C[0].unk_00 == 2) {
+            ((DisplayActor44 *)D_8011ECD0)[100].unk_18 = 0x2F;
+            if ((u8) D_8014A110 != 0) {
+                func_80044750(0x805);
+            } else {
+                func_80044750(0x802);
+            }
+        }
+    }
+    if (D_8014A13C[0].unk_1C != 0) {
+        if ((u8) D_8014A110 != 0) {
+            D_80120668 = *(s16 *)&D_8014A1E8[D_8014A13C[0].unk_00 * 2];
+        } else {
+            D_80120668 = *(s16 *)&D_8014A1D4[D_8014A13C[0].unk_00 * 2];
+        }
+    }
+    ((DisplayActor44 *)D_8011ECD0)[100].unk_26 = ((DisplayActor44 *)D_8011ECD0)[96].unk_26;
+    ((DisplayActor44 *)D_8011ECD0)[100].unk_2A = ((DisplayActor44 *)D_8011ECD0)[96].unk_2A;
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80143F50);
 
