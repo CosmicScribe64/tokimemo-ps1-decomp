@@ -1,0 +1,13 @@
+python3 failed:
+cfe: Error: drafts/T-18100/_runs/plain/BUNKA_SD/func_80133D54/work/guarded.o.sjis.c, line 3056: redeclaration of 'func_80133D54'; previous declaration at line 2922 in file 'drafts/T-18100/_runs/plain/BUNKA_SD/func_80133D54/work/guarded.o.sjis.c'
+ void func_80133D54(void) {
+ -----^
+cfe: Error: drafts/T-18100/_runs/plain/BUNKA_SD/func_80133D54/work/guarded.o.sjis.c, line 3056: Incompatible function return type for this function.
+ void func_80133D54(void) {
+ ------------------^
+cfe: Warning 709: drafts/T-18100/_runs/plain/BUNKA_SD/func_80133D54/work/guarded.o.sjis.c, line 3093: Incompatible pointer type assignment
+                     temp_s1 = temp_fp + var_t2;
+ ----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18100/_runs/plain/BUNKA_SD/func_80133D54/work -o drafts/T-18100/_runs/plain/BUNKA_SD/func_80133D54/work/guarded.o /tmp/asm_processor49a9hqm5/preprocessed_22ecdcaa7bc94c70becd387ff11320ac.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibkqana61g/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18100/_runs/plain/BUNKA_SD/func_80133D54/work/guarded.o drafts/T-18100/_runs/plain/BUNKA_SD/func_80133D54/work/guarded.o.sjis.c
+repair: existing earlier unprototyped call implies s32 return
