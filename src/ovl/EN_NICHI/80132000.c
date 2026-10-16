@@ -450,7 +450,7 @@ void func_801337E0(void) {
     }
     radius *= radius;
     /* FAKE: this shared line preserves the loop-setup load schedule. T-10020. */
-    object = (EnObj *)D_8013984C; status = D_80139B08; do {
+    object = D_8013984C; status = D_80139B08; do {
         distance = func_80132A74((s32) object->unk_16, (s32) object->unk_1A, (s32) D_8011ECF6, (s32) D_8011ECFA);
         if (object->unk_00 != 0) {
             if (distance < radius) {
@@ -514,7 +514,7 @@ s32 arg1;
     rec[0x1983] = 4;
     rec[0x19C7] = 5;
     if (arg1 == 1) {
-        e = D_8013984C + arg0 * 0x30;
+        e = (u8 *)D_8013984C + arg0 * 0x30;
         if (*(s32 *) e == 4) {
             if (!(*(s32 *) (e + 0xC) & 1)) {
                 x = *(s16 *) (e + 0x16);
@@ -542,7 +542,7 @@ s32 arg1;
 s32 func_80134008(s32 arg0) {
     s32 v;
 
-    v = D_80139868[arg0].val;
+    v = D_8013984C[arg0].unk_1C;
     if (v < 0x100) {
         return 0;
     }
@@ -576,7 +576,7 @@ void func_801340CC(void) {
     s32 y;
 
     /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-    for (i = 0; i < 10; i++) if (*(s16 *) &D_8013984C[i * 0x30 + 0x16] < -0xC0 || *(s16 *) &D_8013984C[i * 0x30 + 0x16] >= 0xC1 || *(s16 *) &D_8013984C[i * 0x30 + 0x1A] < -0x98 || *(s16 *) &D_8013984C[i * 0x30 + 0x1A] >= 0x99) *(s32 *) &D_8013984C[i * 0x30] = 0;
+    for (i = 0; i < 10; i++) if (*(s16 *) &((u8 *)D_8013984C)[i * 0x30 + 0x16] < -0xC0 || *(s16 *) &((u8 *)D_8013984C)[i * 0x30 + 0x16] >= 0xC1 || *(s16 *) &((u8 *)D_8013984C)[i * 0x30 + 0x1A] < -0x98 || *(s16 *) &((u8 *)D_8013984C)[i * 0x30 + 0x1A] >= 0x99) *(s32 *) &((u8 *)D_8013984C)[i * 0x30] = 0;
 }
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134258);
@@ -591,37 +591,37 @@ void func_801344F0(s32 arg0, s32 arg1) {
         temp_v1 = func_800AE0D0() % 4;
         switch (temp_v1) {
         default:
-            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            var_s0 = &D_8013984C[arg0];
             break;
         case 0:
             temp_hi = func_800AE0D0() % 320 - 0xA0;
-            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            var_s0 = &D_8013984C[arg0];
             var_s0->unk_16 = temp_hi;
             var_s0->unk_1A = -0x96;
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0x200);
             break;
         case 1:
-            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            var_s0 = &D_8013984C[arg0];
             var_s0->unk_16 = 0xBE;
             var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0x600);
             break;
         case 2:
             temp_hi_2 = func_800AE0D0() % 320 - 0xA0;
-            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            var_s0 = &D_8013984C[arg0];
             var_s0->unk_16 = temp_hi_2;
             var_s0->unk_1A = 0x96;
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0xA00);
             break;
         case 3:
-            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            var_s0 = &D_8013984C[arg0];
             var_s0->unk_16 = -0xBE;
             var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0xE00);
             break;
         }
     } else {
-        var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+        var_s0 = &D_8013984C[arg0];
         var_s0->unk_16 = (s16) ((func_800AE0D0() % 320) - 0xA0);
         var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
         var_s0->unk_1C = (s32) (func_800AE0D0() % 4096);
@@ -641,7 +641,7 @@ void func_80134784(s32 *arg0, s32 *arg1) {
     *arg0 = 0;
     *arg1 = 0;
     for (i = 0; i < 10; i++) {
-        switch (*(s32 *)(D_8013984C + i * 0x30)) {
+        switch (D_8013984C[i].unk_00) {
         case 0:
             break;
         case 1:
@@ -659,7 +659,7 @@ void func_80134784(s32 *arg0, s32 *arg1) {
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134800);
 
 /* FAKE: the record pointer stays an expression; as a local it is spilled to another stack slot than the original's (T-3330, T-9330) */
-#define EN_OBJ(i) ((EnObj *) (D_8013984C + (i) * 0x30))
+#define EN_OBJ(i) (&D_8013984C[i])
 void func_80134C1C(arg0)
 s32 arg0;
 {
@@ -823,7 +823,7 @@ void func_80135044(s32 arg0, s32 arg1) {
 void func_8013515C(s32 arg0, s32 arg1) {
     u8 *p;
 
-    p = D_8013984C + arg0 * 0x30;
+    p = (u8 *)D_8013984C + arg0 * 0x30;
     if (*(s32 *) (p + 0x28) < 3) {
         switch (*(s32 *) (p + 4)) {
         case 1:
@@ -1006,31 +1006,31 @@ void func_80136A2C(void)
   {
     for (i = 0; i < 5; i++)
     {
-      if ((((EnObj *) D_8013984C)[i * 2].unk_00 > 0) && (((EnObj *) D_8013984C)[i * 2].unk_00 < 4))
+      if ((D_8013984C[i * 2].unk_00 > 0) && (D_8013984C[i * 2].unk_00 < 4))
       {
         if (D_80139B18 < 3)
         {
-          ((EnObj *) D_8013984C)[i * 2].unk_00 = ((EnObj *) D_8013984C)[i * 2].unk_04 + 1;
+          D_8013984C[i * 2].unk_00 = D_8013984C[i * 2].unk_04 + 1;
         }
         else
         {
-          ((EnObj *) D_8013984C)[i * 2].unk_00 = 4;
-          ((EnObj *) D_8013984C)[i * 2].unk_04 = 0;
+          D_8013984C[i * 2].unk_00 = 4;
+          D_8013984C[i * 2].unk_04 = 0;
         }
       }
-      if ((((EnObj *) D_8013984C)[(i * 2) + 1].unk_00 > 0) && (((EnObj *) D_8013984C)[(i * 2) + 1].unk_00 < 4))
+      if ((D_8013984C[(i * 2) + 1].unk_00 > 0) && (D_8013984C[(i * 2) + 1].unk_00 < 4))
       {
         if (D_80139B18 < 3)
         {
           if (!i)
           {
           }
-          ((EnObj *) D_8013984C)[(i * 2) + 1].unk_00 = ((EnObj *) D_8013984C)[(i * 2) + 1].unk_04 + 1;
+          D_8013984C[(i * 2) + 1].unk_00 = D_8013984C[(i * 2) + 1].unk_04 + 1;
         }
         else
         {
-          ((EnObj *) D_8013984C)[(i * 2) + 1].unk_00 = 4;
-          ((EnObj *) D_8013984C)[(i * 2) + 1].unk_04 = 0;
+          D_8013984C[(i * 2) + 1].unk_00 = 4;
+          D_8013984C[(i * 2) + 1].unk_04 = 0;
         }
       }
     }

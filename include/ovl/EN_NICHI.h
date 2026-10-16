@@ -20,13 +20,10 @@ typedef struct EnObj {
     /* 0x24 */ s32 unk_24;
     /* 0x28 */ s32 unk_28;
     /* 0x2C */ s32 unk_2C;
-} EnObj; /* size 0x30: record of D_8013984C */
+} EnObj; /* size 0x30, D_8013984C[10] */
 
-typedef struct Rec30 {
-    /* 0x00 */ s32 val;
-    /* 0x04 */ u8 unk_04[0x2C];
-} Rec30; /* size 0x30 */
-extern Rec30 D_80139868[];
+/* The ten objects; splat labels D_80139862..D_801398AC are fields of records 0..2 (T-18200). */
+extern EnObj D_8013984C[10];
 
 /* EN_NICHI data (overlay rodata/data) */
 extern s32 D_80139B1C;
@@ -55,7 +52,6 @@ void func_80136A2C(void);
 void func_801338EC(void);
 void func_80132ADC(void);
 
-extern u8 D_8013984C[];
 
 extern s32 D_801391E0;
 extern s32 D_801391E4;
@@ -75,7 +71,7 @@ void func_80132EE8();
 void func_80132DC4();
 
 extern s32 D_80139AFC;
-extern s32 D_80139278[];
+extern s32 D_80139278[10];
 void func_80135ACC();
 void func_80134C1C();
 void func_801339D4();
@@ -100,10 +96,10 @@ void func_8013515C();
 s32 func_80135274();
 
 extern u16 D_80139C58;
-extern u8 D_80139C34[];
-extern u8 D_80139C3C[];
-extern u8 D_80139C44[];
-extern s16 D_80139C4C[];
+extern u8 D_80139C34[8];
+extern u8 D_80139C3C[8];
+extern u8 D_80139C44[8];
+extern s16 D_80139C4C[6];
 void func_80137E2C(void);
 s32 func_80137FEC();
 #endif /* OVL_EN_NICHI_H */
@@ -157,8 +153,8 @@ void func_8013216C(void);
 void func_80132278(void);
 void func_8013275C(void);
 void func_80132A0C(void);
-extern u8 D_80139A2C[]; /* end of the D_8013984C records (T-10810) */
-extern s16 D_80139228[][4]; /* 8-byte pop-up records (T-10810) */
+extern u8 D_80139A2C[8]; /* follows the D_8013984C records, read as their end (T-10810); object kind -> sprite flag (T-18200) */
+extern s16 D_80139228[10][4]; /* 8-byte pop-up records (T-10810), ten up to D_80139278 */
 #endif
 
 #ifndef OVL_EN_NICHI_T10850_TYPES
