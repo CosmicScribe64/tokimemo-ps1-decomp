@@ -133,6 +133,7 @@ void func_8013F82C(void) {
             load_palette(D_8015EEEC, 0x13, 1, 4, 5);
             break;
         }
+        /* FAKE: the slot table D_8015EBAC (D_8015EC74 is its element 50) is reached through its first symbol; the aggregate is not recovered yet. T-17114 */
         for (i = 0; i < 8; i++) {
             if (D_8015ED14 >= 2 && (&D_8015EC74)[i] == 0 && func_8013E9A8(5) == 0) {
                 D_8015ED14 = 0;
@@ -440,6 +441,7 @@ s32 func_80140204(void) {
     case 8:
         D_8015EDE4 += 1;
         D_8015ED14 += 1;
+        /* FAKE: p[50] walks the slot table D_8015EBAC through its first symbol (element 50 on); the aggregate is not recovered yet. T-17114 */
         p = &D_8015EBAC;
         for (i = 0; i != 0xC; i++, p++) {
             if (p[50] == 3 && !(D_8015ED98 & 0x100)) {
