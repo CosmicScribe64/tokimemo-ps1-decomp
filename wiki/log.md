@@ -14964,3 +14964,14 @@ functions matched (5,072 bytes), no blocking findings. One fix: section 8a of `C
 ## [2026-10-16] ticket | T-11670 Done
 
 [[tickets/T-11670-w1-main-8006cb30]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 functions matched in `src/main/8006CB30.c` (`_schedule_init`, `geko_judge`, `schedule_girls_gakko`, `func_8006EA40`). Review fixes: `FAKE` note on the `geko_judge` frame buffers, line counts on the two T-10880 guards. Build in the worktree: globals OK, headers OK, unit sha1 OK.
+## [2026-10-15] ticket | T-16230 Wave 2 package w2-p03 opened
+
+Opened [[tickets/T-16230-w2-date-80150010]] (In Progress) under [[tickets/T-16200-matching-wave-2]]: branch `w2-p03` from `w2-good`, owned file `src/ovl/DATE/80150010.c`, work list DATE `func_801511B4`, `func_80150460`, `func_80150ED4`, `func_80150C78`.
+
+## [2026-10-16] ticket | T-16230 Wave 2 package w2-p03 to In Review
+
+[[tickets/T-16230-w2-date-80150010]] moved to In Review: 4 of 4 functions matched in plain C (DATE `func_801511B4`, `func_80150460`, `func_80150ED4`, `func_80150C78`; 1,620 bytes), so `src/ovl/DATE/80150010.c` has no `INCLUDE_ASM` left. Keys: real aggregates (`D_801217D0[57]`, display records 96/98 of `D_8011ECD0`), a chain assignment through record elements, a `GameState *g` pointer, and `order_search` over the declarations for a spilled local's stack home. Notes in [[matching-notes]] ("T-16230"), update line in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-16230 Done
+
+[[tickets/T-16230-w2-date-80150010]] reviewed against `CODING_STANDARDS.md` with no findings and moved to Done: 4 of 4 functions matched (DATE `func_801511B4`, `func_80150460`, `func_80150ED4`, `func_80150C78`; 1,620 bytes), DATE sha1 OK in the package worktree. Merge into `w2-good` follows.
