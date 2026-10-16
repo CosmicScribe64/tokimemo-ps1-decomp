@@ -117,31 +117,22 @@ void func_8014E8F4(void) {
     func_80042940((s32) D_800E6280.unk_722);
 }
 
-/* NON_MATCHING: T-10850, 8 differing listing lines; see the ticket scratch evidence. */
-#ifdef NON_MATCHING
-/* FAKE: first-symbol views bridge unresolved aggregate declarations; the
- * offset bound prevents address CSE and the same-line loop preserves scheduling.
- * T-10850. */
+/* FAKE: the three clear loops share one counter (it keeps the first two rolled
+ * and lets the last unroll by four, as in func_8014F540) and walk the legacy
+ * scalar D_8015EBAC and the 2-D D_8015ED64 as flat word arrays; the third loop
+ * body shares its for line to keep the store scheduling. The `+ k` stores
+ * reach the later words of the shared-$at groups through their first symbol
+ * (the aggregates are not recovered). T-17108. */
 s32 func_8014E994(void) {
-    s32 *end;
     s32 i;
-    s32 *var_v1;
-    s32 *var_v1_2;
 
-    end = (s32 *)((u8 *)D_8015ED64 - 0x28);
-    var_v1 = &D_8015EBAC;
-    do {
-        var_v1++;
-        var_v1[-1] = 0;
-    } while ((u32) var_v1 < (u32) end);
-    end = (s32 *)D_8015ED64;
-    var_v1_2 = D_8015ED3C;
-    do {
-        var_v1_2++;
-        var_v1_2[-1] = 0;
-    } while ((u32) var_v1_2 < (u32) end);
-    for (i = 0; i < 12; i++) { (&D_8015ED64[0][0])[i] = 0;
+    for (i = 0; i < 100; i++) {
+        (&D_8015EBAC)[i] = 0;
     }
+    for (i = 0; i < 10; i++) {
+        D_8015ED3C[i] = 0;
+    }
+    for (i = 0; i < 12; i++) (&D_8015ED64[0][0])[i] = 0;
     D_8015EE44.unk_00 = 0;
     D_8015EE44.unk_04 = 0;
     D_8015EE44.unk_08 = 0;
@@ -201,9 +192,6 @@ s32 func_8014E994(void) {
     D_8015EDDC = 0;
     D_8015EE30.unk_04 = 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014E780", func_8014E994);
-#endif
 
 void func_8014EB58(s32 arg0) {
     switch (arg0) {
