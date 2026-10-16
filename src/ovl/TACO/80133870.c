@@ -174,7 +174,30 @@ void func_80133C08(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_80133E98);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_801342CC);
+/* implicit-int function (called before its definition): s32 with no return. The loop re-reads and re-writes one word (buf[0x80]) 16 times, as the asm does. */
+s32 func_801342CC(void) {
+    u32 *buf;
+    s32 i;
+
+    tpage_buf_clear_all();
+    LoadSquare(0x360, 0x180, 0x20, 0x80, (void *)0x80180000);
+    load_tpage_buf_lock(0x3F, 0x80180000, 2);
+    load_tpage_buf_lock(0x3D, 0x80182000, 2);
+    load_tpage_buf_lock(0x1D, 0x80184000, 2);
+    load_tpage_buf_lock(0x1C, 0x80186000, 2);
+    load_tpage_buf_lock(0x3C, 0x80188000, 2);
+    load_palette(0x8018A000, 0xF, 1, 1, 0);
+    load_palette(0x8018A000, 0, 1, 1, 0);
+    LoadSquare(0x360, 0x100, 0x20, 0x80, (void *)0x8018A200);
+    load_palette(0x8018A000, 1, 1, 3, 0);
+    load_tpage_buf_lock(0x1F, 0x8018C200, 1);
+    buf = (u32 *)0x80190200;
+    for (i = 0; i < 0x10; i++) {
+        buf[0x80] &= 0x7FFF0000;
+    }
+    LoadSquare(0x100, 0x1F8, 0x100, 8, buf);
+    func_8009C674(0);
+}
 
 void func_80134450(void) {
     func_8004435C(0x100, 0x1E0, 0x100, 0x18, 0x801B8000);
