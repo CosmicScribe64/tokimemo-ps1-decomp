@@ -16170,3 +16170,7 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 
 ## [2026-10-16] build | T-17208 clean rebuild and checks
 Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17208-w3-date-p08]].
+
+## [2026-10-16] ticket | T-17208 Done
+
+[[tickets/T-17208-w3-date-p08]] In Review to Done: code review against `CODING_STANDARDS.md` found one item, fixed (a comment for the `dop` pointer-variable idiom in `func_8014AF88`); rebuild of DATE OK (headers OK, globals OK, sha1 OK). 1 of 5 functions matched (`func_8014AF88`, 248 bytes); `func_8014A8FC` stays a guarded draft (34 lines), the three libgte rotation helpers stay `INCLUDE_ASM`. Card moved in [[kanban]]. Merge via the wave 3 merge script.
