@@ -29,4 +29,4 @@ Six of eight matched (5,852 bytes), unit sha1 OK after each, in about an hour: `
 
 ## Comments
 
-- 2026-10-16: agent time about 70 minutes (04:58-06:10 UTC). Clean rebuild 27/27 (`rm -rf build && configure.py && ninja`), `check_headers.py` OK, `migrate_globals.py --check` OK, `sync_protos.py --check-branch` OK (0 new, 15 known). Code review against `CODING_STANDARDS.md` still to do before Done.
+- 2026-10-16: agent time about 67 minutes (04:58-06:05 UTC). Clean rebuild 27/27 (`rm -rf build && configure.py && ninja`), `check_headers.py` OK, `migrate_globals.py --check` OK, `sync_protos.py --check-branch` OK (0 new, 15 known). Code review against `CODING_STANDARDS.md` still to do before Done.
