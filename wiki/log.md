@@ -15393,3 +15393,7 @@ Opened [[tickets/T-17000-types-first-main]] (In Progress) on branch `w3-main-typ
 ## [2026-10-16] ticket | T-17000 In Review
 
 [[tickets/T-17000-types-first-main]] In Progress to In Review. Packages T-17001..T-17027 (`w3-main-p01`..`p27`, 105 functions, 75,216 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]).
+
+## [2026-10-16] ticket | T-17000 Done
+
+Code review of [[tickets/T-17000-types-first-main]] against `CODING_STANDARDS.md`: no findings. 5 functions matched (1,948 bytes), 27/27 SHA1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. In Review to Done; branch `w3-main-types` goes to the integration merge.

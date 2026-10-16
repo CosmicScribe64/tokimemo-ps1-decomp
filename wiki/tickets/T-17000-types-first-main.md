@@ -1,7 +1,7 @@
 ---
 id: T-17000
 title: "Types-first: main"
-status: In Review
+status: Done
 assignee: claude (w3-main-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -51,3 +51,26 @@ additions only.
 - Final checks (2026-10-16 08:16 UTC): clean build `rm -rf build && configure.py && ninja`: 27/27 SHA1 OK;
   `check_headers.py` headers OK; `migrate_globals.py --check` globals OK; `sync_protos.py --check-branch`:
   0 new disagreements, 15 known, branch check OK.
+
+### 2026-10-16 claude (review)
+
+Code review of `w2-good...w3-main-types` against `CODING_STANDARDS.md`: no findings, no fixes needed.
+
+- Scope: C changes only in `src/main/80053650.c`, `src/main/80075320.c`, `src/main/800789E0.c` and
+  `include/main_api.h`; `drafts/` additions only under the new `drafts/T-17000/` (no existing archive touched);
+  no `include/game.h`, overlay or generated-asm change; no game data, binaries or `.s` files staged.
+- Matches: 5 functions (`func_80075320`, `func_80053F04`, `func_80075AF8`, `func_8007959C`, `func_80077E30`,
+  1,948 bytes), all plain C (no inline asm, no `.word`); C89 (declarations at block top, `/* */` comments,
+  ASCII). No `NON_MATCHING` block added to `src/`; the `func_8007866C` hand draft lives in `drafts/` only.
+- Fakematches: the three byte-view selectors carry `FAKE` and `T-17000`. The unsigned read of `unk_F6C` and the
+  `Flags7D4F` bit-field store follow established idioms (`8005A0B0.c`, BUNKASAI `BunkaReturnFlags`) and are
+  explained in the code or in `main_api.h`.
+- Headers: the new tables, `Flags7D4F` and the seven callee prototypes are declared once in `main_api.h`;
+  `holiday_club` is `s32` as defined at `80075320.c:467`; `D_8013E850` is an overlay entry outside the main-exe
+  range, declared only in `800789E0.c`.
+- Re-run in the worktree (touched `main_api.h` and the three sources, `tools/docker.sh ninja`): 27/27 SHA1 OK,
+  `headers OK`, `globals OK`; `sync_protos.py --check-branch`: 0 new disagreements, 15 known, branch check OK.
+- Wiki: ticket status and kanban column agree; log, index, `main-family-results`, `data-types` and
+  `matching-notes` updated, wikilinks resolve.
+
+Done.
