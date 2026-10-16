@@ -15527,3 +15527,7 @@ Created [[tickets/T-17600-types-first-gyozi]] (wave 3 types-first pass for GYOZI
 ## [2026-10-16] ticket | T-17600 In Review
 
 [[tickets/T-17600-types-first-gyozi]] In Progress to In Review: clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]].
+
+## [2026-10-16] ticket | T-17600 Done
+
+[[tickets/T-17600-types-first-gyozi]] In Review to Done after the code review against `CODING_STANDARDS.md`: 3 functions matched (908 bytes: `func_8013E308`, `func_8013DC2C`, `func_8013B0C4`), GYOZI types in `include/ovl/GYOZI.h`, 37 redrafts in `drafts/T-17600/`. One finding, fixed: the three fakematch idioms in `func_8013DC2C` now carry `FAKE` comments (comment-only, GYOZI sha1 OK). `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], line in [[index]].

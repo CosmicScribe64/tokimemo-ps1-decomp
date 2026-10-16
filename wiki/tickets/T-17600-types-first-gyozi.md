@@ -1,7 +1,7 @@
 ---
 id: T-17600
 title: "Types-first: GYOZI"
-status: In Review
+status: Done
 assignee: claude (w3-gyozi-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -50,3 +50,27 @@ Matched 3 functions / 908 bytes: `func_8013E308` (SHOUGATU clone port, FAKE T-90
 
 Checks: clean build 27/27 OK (`ninja -j2`), `check_headers` OK, `migrate_globals --check` OK,
 `sync_protos --check-branch` OK (0 new, 15 known). Moved to In Review.
+
+### 2026-10-16 (claude, review)
+
+Code review of `w2-good...w3-gyozi-types` against `CODING_STANDARDS.md`: one finding, fixed in a comment-only commit.
+- Finding (FAKE marking, section 7): `func_8013DC2C` used three idioms without a `FAKE` comment: the `D_800F53A0.unk_10B8`
+  member view of `D_800F6458`, the `GyoziBit3` bit-field view of the girl[10] flag byte, and the byte-typed chain
+  store and reload of `D_800F5ACD`/`D_800F62CF` (the unmarked T-9020 idiom of its sibling `func_8013AC38`). Each now has a
+  `FAKE ... T-17600` comment; the object is unchanged (GYOZI sha1 OK after the edit). The three fakematch idioms of the
+  branch are therefore: `func_8013E308` byte-store-as-argument (T-9020 idiom, already marked), and those three in
+  `func_8013DC2C`. `func_8013B0C4` is plain C (table copy plus the T-3330 index slot, commented).
+- C files changed: `src/ovl/GYOZI/8013AE80.c`, `8013DB50.c`, `8013E1D0.c` only (all owned); headers `include/ovl/GYOZI.h`
+  and `include/main_api.h` (one `extern s32 D_800F62F0;` addition, `lw` in `func_8013C774`, no other user). `drafts/` gained
+  only the new folder `drafts/T-17600/` (no existing archive touched; same file kinds as `drafts/T-17300/`); no asm,
+  `.word`, inline asm, disc data or binaries. No new `NON_MATCHING` guard in `src`; the two near misses
+  (`func_8014206C`, `func_8013C774`) stay as `hand.c` drafts, `INCLUDE_ASM` in `src`.
+- Matches (`func_8013E308` 372 B, `func_8013DC2C` 268 B, `func_8013B0C4` 268 B; 908 B) are C89 with declarations at
+  block top, `/* */` comments only, fixed-width types; `GyoziGirl`/`GyoziWork` offsets documented, new tables declared once.
+- Package totals (33 functions, 19,180 bytes), redraft split (7 better, 19 same, 3 worse of 29 unguarded) and match bytes
+  agree between ticket, family page, catalog and log. Commits carry the ticket id and the trailer.
+- Re-run on the branch: forced re-check of `globals`, `headers` and `build/ovl/GYOZI.bin: OK`, `build/SLPM_86.053.bin: OK`; after
+  the comment edit GYOZI rebuilt, `build/ovl/GYOZI.bin: OK`; `check_headers` OK; `migrate_globals --check` OK;
+  `sync_protos --check-branch` OK (0 new, 15 known).
+
+Moved to Done.
