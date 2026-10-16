@@ -80,7 +80,7 @@ void func_801452D0(void) {
     tbl.f[idx]();
 }
 
-/* NON_MATCHING: T-16553, 22 differing lines; in the two loops that store 8 the original keeps the constant 8 in v0 and the loop pointer in v1, the build has them the other way round (registers only) */
+/* NON_MATCHING: T-16553, 22 differing lines; in the two loops that store 8 the original keeps the constant 8 in v0 and the loop pointer in v1, the build has them the other way round (registers only). T-19007: regdiff colours the pointer start constant (priority 41) before the hoisted 8 (15.5) and gives it v0; autotweak, explicit pointer loops, i = 5..16, do-while forms and a named constant do not flip it */
 #ifdef NON_MATCHING
 void func_80145370(void) {
     s32 i;
@@ -416,7 +416,7 @@ void func_80145F8C(void) {
 /* NON_MATCHING: T-16553, 20 differing lines; the tail loads D_800E638E into a1 and the masked D_800E6375 into t5, the original loads it into v0 (the variable itself) and keeps the mask in v1.
  * IDO propagates both local copies into their uses after the ||: with a then-arm that does not read var_v0_2 the lh goes straight into v0, and a volatile access between the
  * definitions and the if stops the propagation (mask in v1) but materializes the address. Statement order (order_search, 720 orders), local types, labels, if/else forms and
- * record-view stores do not change it. */
+ * record-view stores do not change it. T-19007: a u8 nibble bit-field view of the byte (`lo : 4`) puts the raw lbu in a0 like the original, but the mask stays a ugen temporary (20 lines). */
 #ifdef NON_MATCHING
 void func_8014607C(void) {
     s32 i;

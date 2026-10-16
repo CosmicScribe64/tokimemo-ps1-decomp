@@ -92,6 +92,10 @@ Left for later waves: the rest of `80133C80.c` (8), `80138950.c` (8), `801452D0.
 
 `func_80140A90` (2,020 B) re-worked for about 50 minutes in wave 3: not matched, 33 instructions still differ. The block copy's temporary count was measured as a two-state rule of ugen and no code-neutral C reaches the original's state; the original disagrees with the same rule in SHUGAKU, MASTER and ENDING, so the gap looks like a ugen difference. Evidence and the variants tried: [[matching-notes]], "T-19001".
 
+### Package w3-d-p07 results (T-19007)
+
+Game C, the four open functions of `801452D0.c` (3,088 bytes), about 75 minutes: `func_80146D18` (648 B) matched in plain C; `func_8014607C` (20 lines) and `func_80145370` (22 lines) stay guarded; `func_80147B14` (1,020 B) stays `INCLUDE_ASM` with a typed draft in `drafts/T-19007/TAIIKU/func_80147B14/`. The match came from replacing the draft's hand-shaped `do`/`while` and pointer-walk loops by plain `for`/`while` loops over the index (the two gaps of T-16553 were artifacts of those shapes). The `func_80147B14` draft has the original's 255 instructions and its three table loops (two over `u16[8]` tables from index 2, the third unrolled by IDO only when it has a loop variable of its own); registers and the frame (144 against 128) are open. Details: [[matching-notes]], T-19007.
+
 ## Package pt-taiiku-p2 (T-16552): `80138950.c`
 
 Worktree `pt-taiiku-p2`, 9 functions from the redrafts, about 2 hours. Result: `func_80139FE4` matched (816 bytes, FAKE dead assignments, see below); `func_80138DF8` (1,336 bytes) from 30 to 3 differing lines; `func_80138AA8` stays at 22 lines but loses both FAKE pads; the Opus closer pass then matched both (`func_80138DF8` with a FAKE `goto` into its first loop, `func_80138AA8` by calling `func_80085E30` as an implicit int function); `func_8013B3B0`, `func_8013B608`, `func_8013BCEC`, `func_8013B78C`, `func_8013B94C` and `func_80139AB0` stay `INCLUDE_ASM` (drafts of 33 to 111 lines, rows in [[data/t0018-cases]]). Details and evidence: [[matching-notes]], "T-16552".

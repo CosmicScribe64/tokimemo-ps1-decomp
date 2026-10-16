@@ -15455,3 +15455,7 @@ Opus closer pass on [[tickets/T-19002-w3-d-p02]] (branch w3-d-p02): no new match
 ## [2026-10-16] ticket | T-19007 started
 
 [[tickets/T-19007-w3-d-p07]]: wave 3 package w3-d-p07 opened in worktree `w3-d-p07` (branch `w3-d-p07` from `w2-good`). Scope: `src/ovl/TAIIKU/801452D0.c`, `func_8014607C`, `func_80146D18`, `func_80145370`, `func_80147B14`. Status In Progress.
+
+## [2026-10-16] ticket | T-19007 In Review
+
+[[tickets/T-19007-w3-d-p07]] In Progress to In Review: 1 of 4 functions matched (648 bytes): TAIIKU `func_80146D18` in plain C (plain `for`/`while` loops over the index replace the draft's `do`/`while` shapes). `func_8014607C` (20 lines) and `func_80145370` (22 lines) stay guarded with extended comments, `func_80147B14` stays `INCLUDE_ASM` with a typed draft under `drafts/T-19007/`. Notes in [[matching-notes]] (T-19007), [[data/t0018-cases]] and [[taiiku-family-results]]. Review pending.
