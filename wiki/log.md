@@ -16543,3 +16543,6 @@ Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG
 
 ## [2026-10-16] ticket | T-17118 Done
 [[tickets/T-17118-w3-rpg-bat-p18]] reviewed against `CODING_STANDARDS.md`: no findings. In Review to Done (kanban card moved). Matched 1 of 1 (`func_80133108`, 4,192 B), no guard left.
+
+## [2026-10-16] ticket | T-17003 In Progress
+[[tickets/T-17003-w3-main-p03]] created and In Progress: wave 3 package w3-main-p03, `src/main/800789E0.c`, `func_80079070` and `func_80079800`. Worktree `tokimemo-wt/w3-main-p03`, branch `w3-main-p03` from `w2-good`.
