@@ -16179,3 +16179,14 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 
 ## [2026-10-16] ticket | T-11850 Done (PR #35 merged)
 [[tickets/T-11850-tt-batch-11]] reviewed on integration branch `pr35-int` against `CODING_STANDARDS.md`: one finding fixed (missing `FAKE` mark on the two-store chain `q[0] = q[1] = 0;` in `func_80149704`, comment only), none open. 12 of 15 functions matched (4,520 bytes; 3 guarded: `func_80147A18`, `func_8013A0DC`, `func_8014A2B4`), clean rebuild 27/27 sha1 OK, headers OK, globals OK, `sync_protos --check-branch` OK. TT 274/303 functions, 92080/111376 bytes (82.7%); grand total 6233/6958 functions, 1639244/2279368 bytes, 71.9%. The earlier "started" entry's "PR #34, still open" is outdated: [[tickets/T-11840-tt-batch-10]] is merged. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17203 In Progress
+[[tickets/T-17203-w3-date-p03]] created and In Progress: Wave 3 package w3-date-p03, four DATE functions in `src/ovl/DATE/80154260.c`, `src/ovl/DATE/80152FC0.c` and `src/ovl/DATE/8014CC40.c`, worktree `w3-date-p03`.
+
+## [2026-10-16] build | T-17203 results
+[[tickets/T-17203-w3-date-p03]]: 3 of 4 matched (1,064 bytes). DATE `func_8014EF1C` (468 bytes) in plain C: `s32 unused` before the `POLY_G4 *p`, colour shifts inline with `& 0xFF`, the three stores of a vertex on one source line in the order `r, g, b` (FAKE). `func_80154118` (328 bytes): the last 8 diff lines were `tools/cvt_pass.py` (a retained-`CVT` CSE temporary of `D_800CA2F8` costs a frame slot; with the `uopt` shim removed the draft matches), fixed by reading the byte through `DateSelectionView` (FAKE). `func_8014DCCC` (268 bytes): no function-pointer local, the table entry read three times. `func_80155004` stays `INCLUDE_ASM` (46 lines, register names only, draft in `drafts/T-17203/DATE/func_80155004/body.c`). Notes in [[matching-notes]] (section T-17203), three rows in [[register-cheatsheet]], three rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-17203 In Review
+[[tickets/T-17203-w3-date-p03]] In Progress to In Review (3 of 4 matched).
+
+## [2026-10-16] ticket | T-17203 Done
+[[tickets/T-17203-w3-date-p03]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 3 of 4 functions matched (`func_8014EF1C`, `func_80154118`, `func_8014DCCC`, 1,064 bytes), `func_80155004` still `INCLUDE_ASM` with its draft in `drafts/T-17203/`. Rebuild: DATE unit sha1 OK, headers OK, globals OK. Card moved to Done.

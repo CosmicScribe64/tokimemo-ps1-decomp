@@ -136,3 +136,4 @@ Eight file-disjoint packages from the orchestrator's `mklists3.py` (lists in its
 ### Wave 3 result: w3-date-p01 (T-17201)
 
 `func_80147958` (4,044 bytes) matched in plain C; the old guard was four fade rows, fixed by comparing the `u8` local `value` instead of its masked copy (two FAKE entries stay from T-12100: the `s32` type with bare returns, the unused header view). `func_8014718C` (1,996 bytes) was rewritten by hand in the shape of `func_80147958` (the same movie player with 19 steps) and stays guarded at 26 differing lines, down from 672 rows; its declaration in `DATE.h` is now `s32`. Details and the two left-over register gaps: [[matching-notes]], "T-17201".
+Result of w3-date-p03 ([[tickets/T-17203-w3-date-p03]]): 3 of 4 matched (`func_8014EF1C`, `func_80154118`, `func_8014DCCC`, 1,064 bytes); `func_80155004` is back to `INCLUDE_ASM` with a draft in `drafts/T-17203/` (46 lines, register names only). Notes in [[matching-notes]], section T-17203.
