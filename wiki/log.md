@@ -15274,3 +15274,22 @@ Filed in [[speedup-research-2026-10-16]].
 ## [2026-10-16] ticket | T-16553 Done
 
 [[tickets/T-16553-pt-taiiku-p3]]: code review against `CODING_STANDARDS.md` passed after three small fixes (an ignored `&` before an array in `func_80148370`, comments on two next-symbol loop bounds, stale counts in [[index]], [[matching-notes]] and [[taiiku-family-results]]). 10 functions matched in `src/ovl/TAIIKU/801452D0.c` (6,324 bytes), 3 guarded, `func_80147B14` open. Card moved to Done.
+## [2026-10-16] ticket | T-16562 opened
+
+[[tickets/T-16562-taco-types-first-p2]] (In Progress): matching package 2 of the TACO types-first pilot ([[tickets/T-16560-taco-types-first]]). Worktree `pt-taco-p2` from `w2-good`; owns `src/ovl/TACO/80154230.c`, `src/ovl/TACO/801430B0.c`, `src/ovl/TACO/80133870.c`.
+
+## [2026-10-16] ticket | T-16562 to In Review
+
+[[tickets/T-16562-taco-types-first-p2]]: pilot stage B on `pt-taco-p2`, 5 functions matched (2,156 bytes): `func_801430D0`, `func_801347F4`, `func_80143B58`, `func_801342CC`, `func_80133870`; guarded near misses `func_80154230`, `func_801546FC`, `func_8015443C` (entry copy, 8-9 lines each), `func_801432F0` (8), `func_801345D4` (12); `func_80154820` and `func_80133E98` left `INCLUDE_ASM`. New header entries in `include/ovl/TACO.h` (font tables, loading-screen state handler prototypes, `func_801347F4(s32 *)`). Notes in [[matching-notes]] (section T-16562), rows in [[data/t0018-cases]], [[register-cheatsheet]] (two rows, one extended), [[taco-family-results]].
+
+## [2026-10-16] ticket | T-16562 update: 7 functions matched
+
+[[tickets/T-16562-taco-types-first-p2]]: two more matches after the In Review entry, `func_801432F0` (644 bytes) and `func_80154820` (320 bytes), by reading `*s` / `*p` directly instead of a local copy; total 7 functions, 3,120 bytes. Remaining: `func_80154230`, `func_801546FC`, `func_8015443C` (entry copy, guarded), `func_801345D4` (guarded), `func_80133E98` (INCLUDE_ASM). Notes in [[matching-notes]] (T-16562), [[register-cheatsheet]], [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-16562 closer pass: 4 guarded near misses matched
+
+[[tickets/T-16562-taco-types-first-p2]]: the Opus closer matched `func_80154230`, `func_801546FC`, `func_8015443C` and `func_801345D4` in plain C (1,608 bytes; package total 11 functions, 4,728 bytes), one commit each, plus a follow-up commit with a file-local struct view (`TcSave`) for the settings block. The entry-copy fold is as1's copy propagation; a two-step header walk (`arg0++; ... arg0 += 8;`) keeps `move s0,a0`. The FAKE `s32 pad[2]` of `func_8015443C` became the named `command0`/`command1` constants. `func_801345D4` keeps `&D_800E7D10` in `$v0` once the flag test reads the word through the same base. Notes in [[matching-notes]] (T-16562, "Closer pass"), [[register-cheatsheet]] (two rows, frame row extended), [[data/t0018-cases]] (update paragraph), [[taco-family-results]], [[index]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16562 Done
+
+[[tickets/T-16562-taco-types-first-p2]] reviewed against `CODING_STANDARDS.md`: no findings; TACO.bin sha1 OK, headers, globals and prototype checks OK. 11 TACO functions matched (4,728 bytes).
