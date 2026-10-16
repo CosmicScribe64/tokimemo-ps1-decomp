@@ -189,7 +189,38 @@ void func_80155E08(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-17205, 6 differing instructions; schedule only: the original sets up a1=0x44 and the record base before the counter clear (the draft clears the counter first), and does not move the second loop's counter clear above the byte test */
+#ifdef NON_MATCHING
+void func_80155E40(void) {
+    GameState *g = &D_800E6280;
+    s16 i;
+    FnTbl45 tbl;
+
+    tbl = D_8015FA68;
+    if (((g->unk_03E == 0x5F && g->unk_03F == 7 && g->unk_040 == 0x17) ||
+         (g->unk_03E == 0x60 && g->unk_03F == 7 && g->unk_040 == 0x1C) ||
+         (g->unk_03E == 0x61 && g->unk_03F == 7 && g->unk_040 == 0x1B)) &&
+        D_800B593C == 0x80 && D_80122D04 == 0 && g->unk_110A >= 0x21) {
+        func_8006B900();
+    }
+    tbl.f[g->unk_110A](0x80);
+    if (func_800853FC == tbl.f[g->unk_110A]) {
+        for (i = 0; i < 8; i++) {
+            ((DisplayActor44 *)D_8011ECD0)[98 + i].unk_07 = ((DisplayActor44 *)D_8011ECD0)[96].unk_07;
+        }
+        if (((DisplayActor44 *)D_8011ECD0)[96].unk_07 < 9) {
+            for (i = 0; i < 8; i++) {
+                ((DisplayActor44 *)D_8011ECD0)[98 + i].unk_03 &= 0x7F;
+            }
+        }
+    }
+    if (g->unk_110A >= 0x11 && g->unk_110A < 0x14) {
+        func_801560E0();
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_80155E40);
+#endif
 
 void func_80156024(void) {
     func_8014C5C8();
