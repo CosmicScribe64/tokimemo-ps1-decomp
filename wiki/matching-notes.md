@@ -5261,3 +5261,24 @@ BUNKASAI func_801431D4 had a two-row resolved difference entirely in one label r
 ### T-15600: packed record load and old-counter branch timing
 
 [[tickets/T-15600-fresh-near-matches]] accepts RENSYU func_801320E0 (688 literal linked bytes) and SHOUGATU func_80137144 (568), with both overlay SHA1 checks. RENSYU's word inference at D_800E68EE has wrong width/scaling; actual target lhu accesses bytes +2/+3 of the existing four-byte GameState.unk_66C record. SHOUGATU compares the old counter then increments, faithfully represented by `counter++ >= 0x401U`; the automatic postincrement rewrite had moved the comparison to the new value. These are genuine storage and control-flow corrections. RPG_BAT80155A70 remains a single delay-slot NOP gap, archived without artificial shaping.
+
+## T-11690: main 800674B0 (wave 1 package w1-p13, resumed in wave 2 as w2-r13)
+
+Ticket [[tickets/T-11690-w1-main-800674b0]]. Matched: `club_list_menu`, `func_80067C28` (wave 1), `func_8006A2CC` (3112 bytes, wave 2).
+
+`func_8006A2CC` (profile card setup, switch on the month `unk_03F`, branches on the day `unk_03E`) went from 116 differing lines to a match in four steps:
+- Each record triple `D_8011ECD0[n].unk_18 / unk_26 / unk_2A` after the loop sits on one source line, as if from a macro. as1 schedules by line, so this alone fixed the in-branch store order (the loop's own triple stays on three lines; joining it breaks the loop).
+- Case 1 sets `kind` before the flag store, like the other cases; that fixed two ugen temporaries.
+- Dead reads of both selectors at the top (`i = unk_03F; n = unk_03E;`, both overwritten later, no code emitted) make uopt promote `unk_03E` and give `unk_03F` `$t0`. Only these two globals, only before the first call, and both are needed: one alone, a neighbour field or a pointer view does not work. FAKE.
+- With the dead `unk_03F` read the two `if (unk_03F != 8)` in cases 8-10 compile to `beq t0,a1`; the original has `beq a1,t0` (8 is a hoisted constant in `$a1`). Writing `8 != x`, `!(x == 8)` or `8U` changes nothing. A named `u8 eight = 8;` puts the constant first, as in NAME_ENT `func_80148C20`. The new local must take an existing pad slot (it replaced the frame pad above `i`), or every spill slot moves down 4 bytes. FAKE.
+
+Lesson: when regdiff reports "not allocated ... global X (-ve save)" for a selector the original reloads after every call, try a dead read of X at the very top of the function.
+
+Not matched:
+- `func_8006BC28` (guarded, 17 lines, wave 1 draft): the original loads `D_800B6708` once into `$v0` before the `arg0` dispatch. Local copies (s32, s16, u16, s8), a returned copy, dead reads at the top and an assignment to the copy in the clamp body all leave the load in each arm. A u16 copy without casts did hoist the load, but its compares become unsigned (`sltiu`); any `(s32)` or `(s16)` cast sinks it again.
+- `func_800676AC` (guarded, 11 lines): IDO moves arg0 to `$a1` at entry and hoists `li a0,27` into the bnez delay slot. Index local, if/else, goto, a named 27, s16/u16/u32 parameters and a dead read did not change it.
+- `func_8006C988` (INCLUDE_ASM): best source shape found: records indexed by the count `n` (`D_800E6280.unk_75E[n]`, `n++` last) with a separate do-while counter `i`, `switch (t) { case 0: case 1: case 2: case 0xF: f = rec.unk_00; }` then `l = rec.unk_00` (gives the original PRE load in both paths), and an unused third parameter (gives `sw a2,8(sp)`). That is 70 lines: `found` is numbered after the PRE temporary and gets spilled. Dead copies `pf = found; pl = last;` at the top keep both parameters in `$a0/$a1` (46 lines); left are the PRE temporary and the record pointer swapped between `$t0` and `$t1`.
+- `func_8006BA40` (INCLUDE_ASM, best 63 lines): arms written `x = D_8011ECD0[0].unk_26; x += speed;` reproduce the original in-place `lh v1; addu v1,v1,v0`, and `D_800B6708` as a plain global keeps it in `$v0`. Left: the original computes `lui t0,%hi(unk_2A)` for the first clamp right after the speed test (one row early), the -0x96 clamp goes through `x` in `$v1`, and the `== 0xAC` test reads a `move v1,v0` copy.
+- `func_8006A044` (INCLUDE_ASM): two unused parameters give the original home stores `sw a0,0(sp); sw a1,4(sp)`. The draft swaps `$v0`/`$v1` (the original keeps the result byte in `$v0` with a `move t5,v0` before each `ori`) and drops the store before each `== 0x61` test that the original keeps. 199 lines.
+- `func_8006B0C8` (INCLUDE_ASM): a natural draft (compact by `ScheduleEntryFlags.active`, `bzero` the rest, December fix, selection sort with `keys[8]`, swap through a `GsWord` temporary, undo the fix) compiles to the same blocks but 556 lines: the original frame is 32 bytes larger, the first loop is a pointer walk compared with `&unk_54C[8]`, and the inner sort loop is unrolled by 4 (IDO unrolls by 2).
+- `func_80067870`: dead reads of the promoted globals at the top make it worse (329 lines against 304).
