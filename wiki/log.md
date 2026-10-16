@@ -15405,3 +15405,7 @@ Measured the ugen temporary count of the 0x44-byte block copy in `func_80140A90`
 ## [2026-10-16] ticket | T-19005 In Review
 
 [[tickets/T-19005-w3-d-p05]] In Progress to In Review: 2 of 2 functions matched (680 bytes), OLH sha1 OK. `func_80135B8C` is a port of the C of its three 1.000-ratio siblings; `func_80132114` matches with a chain assignment through a declared FAKE local (`col = (&D_800E6280.unk_036)[0] = [1] = [2] = 0xA0`), which keeps one `li v0` and drops the chain's hidden frame temporary. New: [[matching-notes]] section, [[register-cheatsheet]] row, update in [[data/t0018-cases]]. Changed: `src/ovl/OLH/80135AC0.c`, `src/ovl/OLH/80132000.c`, `include/ovl/OLH.h`. About 35 minutes.
+
+## [2026-10-16] ticket | T-19005 Done
+
+[[tickets/T-19005-w3-d-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 2 of 2 functions matched (680 bytes): OLH `func_80135B8C` and `func_80132114`, both plain C with two marked FAKE locals. Merge via the wave 3 merge script.
