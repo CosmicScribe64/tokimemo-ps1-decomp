@@ -183,7 +183,7 @@ extern s32 D_8014A3D0;
 extern s32 D_8014A3E0;
 extern s32 D_8014A3DC;
 void func_80146C20(void);
-extern u8 D_8014A3D8[];
+extern u8 D_8014A3D8[]; /* next free slot gets i + 2 for runner i (func_80147210) */
 /* Four s16 values added to the D_8011ECD0 records (func_8014038C copies them to a local). */
 typedef struct TkS16x4 {
     /* 0x0 */ s16 v[4];
@@ -205,7 +205,7 @@ void func_80147068(void);
 void func_80147520(void);
 void func_80147F10(void);
 extern s16 D_8014A3DE;
-extern u8 D_8014A120[];
+extern u8 D_8014A120[]; /* next free slot gets i + 2 for runner i (func_801449A0) */
 extern s32 D_8014A130[];
 extern s16 D_8014A1CE;
 
@@ -229,7 +229,7 @@ typedef union {
         s16 low;
         s16 high; /* D_8014929A */
     } halves;
-} TaiHalves;
+} TaiHalves; /* size 0x4 */
 extern TaiHalves D_80149298; /* defined in 80133C80.c */
 void func_80133438(void);
 void func_801345A4(void);
@@ -825,8 +825,6 @@ typedef struct TaiWords8 {
 typedef struct TaiWords10 {
     /* 0x00 */ s32 v[10];
 } TaiWords10; /* size 0x28 */
-/* Three runner indices walked by func_80132970 (the fourth byte is padding). */
-extern u8 D_80148EC0[4];
 extern TaiShorts23 D_80148F28; /* func_80132BD0 */
 extern TaiShorts23 D_80148F58; /* func_80132BD0 */
 extern TaiShorts23 D_80148F88; /* func_80132BD0 */
