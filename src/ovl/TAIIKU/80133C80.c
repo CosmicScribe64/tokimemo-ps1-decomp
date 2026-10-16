@@ -210,7 +210,8 @@ void func_801345A4(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-12020, 8 differing listing rows (4 positions); decrement v1/v0 register allocation. */
+/* NON_MATCHING: T-16551, 8 differing lines (4 instructions; was T-12020); the lh/addiu chain of D_80120676 in case 0 takes $v1, the original $v0 (bit 5, the switch
+ * temporary, outranks the selector; selector locals, byte views and autotweak's 339 edits did not move it). */
 void func_801346FC(void) {
     s16 text_x;
     s16 panel_x;
@@ -582,7 +583,7 @@ void func_80136B18(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-12020, 4 differing listing rows (2 positions); f03 byte store and f0C clear schedule in reverse order. */
+/* NON_MATCHING: T-16551, 4 differing lines (2 instructions; was T-12020); the f03 byte store and the f0C clear schedule in reverse order (a real local for the new f03 value, 130+ statement variants and autotweak's 297 edits did not change it). */
 void func_80136BB4(void) {
     u16 limit;
     TaiikuU11 limits;
@@ -793,9 +794,9 @@ s32 func_80137440(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-16551, 13 differing rows (registers only): the loop counter i takes $a3 and the hoisted
- * D_8012091E + 11 takes $a2, the original has them the other way round (hint: the hoisted constant outranks i,
- * priority 7 against 6.4); ugen temporaries t8/t3 vs t9/t5 follow. */
+/* NON_MATCHING: T-16551, 26 differing lines (13 instructions, registers only): the loop counter i takes $a3 and the hoisted
+ * D_8012091E + 11 takes $a2, the original has them the other way round (regdiff: the hoisted constant outranks i, priority 7
+ * against 6.4); the ugen temporaries t8/t3 against t9/t5 follow. Declaration order, initialisation order and autotweak's 628 edits did not move it. */
 void func_80137544(void) {
     u8 sel;
     s32 i;
