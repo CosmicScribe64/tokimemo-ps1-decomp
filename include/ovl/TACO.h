@@ -204,7 +204,9 @@ void func_8014EB24(s32 arg0);
 void func_8014EF14(s32 arg0);
 void func_8014F044(void);
 void func_80146D60(s32 arg0);
+#ifndef TACO_OVERRIDE_func_801471D0 /* 80146D60.c defines it with a pointer parameter (T-19015) */
 void func_801471D0(s32 arg0);
+#endif
 void func_80147488(s32 arg0, s16 *arg1, s32 arg2);
 extern s32 D_8015F3E0;
 extern s32 D_8015F3E4;
