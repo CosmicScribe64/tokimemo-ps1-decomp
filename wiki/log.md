@@ -16124,3 +16124,19 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 ## [2026-10-16] ticket | T-19031 Done
 
 [[tickets/T-19031-w3-d-p31]] In Review to Done after the code review: wave 3 package w3-d-p31 (TAIIKU `src/ovl/TAIIKU/80132000.c`, `src/ovl/TAIIKU/80132BD0.c`, `include/ovl/TAIIKU.h`, `include/main_api.h`, `config/overlays/TAIIKU.yaml`), 4 of 4 functions matched (4,412 bytes: `func_80133258`, `func_80132BD0`, `func_80132E20`, `func_80132000`, four ticketed FAKEs). One finding fixed: `D_80122E90` moved into address order in `include/main_api.h`. Full build 27/27 sha1 OK, headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-19032 In Progress
+
+Created [[tickets/T-19032-w3-d-p32]] (Wave 3 package w3-d-p32, branch w3-d-p32 from w2-good): TAIIKU `src/ovl/TAIIKU/80141280.c`, `func_80141280` (1840 B). Starting from the T-14500 draft (score 446).
+
+## [2026-10-16] build | T-19032 matched func_80141280
+
+TAIIKU `func_80141280` (1,764 B, `src/ovl/TAIIKU/80141280.c`) matches in plain C, TAIIKU.bin sha1 OK, after about 59 minutes from the T-14500 draft (score 446). Data island for `.data` 0x8014A070-0x8014A0A0 (`config/overlays/TAIIKU.yaml`), `D_8014A070` defined in C, the table `D_8014A088` is the auto array initialiser `tbl`. Two FAKE comments (`(u8)` mask test, `*(u32 *)&D_80122CDC` selector). Notes in [[matching-notes]] (T-19032), five rows in [[register-cheatsheet]], section in [[taiiku-family-results]], and a correction in [[decompile-workflow]]: the rolled loop with a hoisted end pointer has a C form.
+
+## [2026-10-16] ticket | T-19032 In Review
+
+[[tickets/T-19032-w3-d-p32]] In Progress to In Review: 1 of 1 functions matched (`func_80141280`). Clean rebuild 667 steps, 27/27 sha1 OK; `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` OK (0 new, 15 known). Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] ticket | T-19032 Done
+
+[[tickets/T-19032-w3-d-p32]] In Review to Done: code review against `CODING_STANDARDS.md` found two small documentation issues (the zero loop's record view and store order were unexplained in the source; a delay-slot remark in [[register-cheatsheet]] named the wrong field), both fixed. 1 of 1 functions matched: TAIIKU `func_80141280` (1,764 B, two FAKE comments). TAIIKU unit sha1 OK after a rebuild. Merge via the wave 3 merge script.

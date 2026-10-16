@@ -33,6 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
+- [[tickets/T-19032-w3-d-p32|T-19032]] Wave 3 package w3-d-p32: TAIIKU `80141280.c`, 1 of 1 matched (`func_80141280`, 1,764 B intro state machine: auto-array initialiser as `.data` island, rolled 16-record zero loop with a reassigned counter, two FAKE views for a masked byte test and the nested selector in `$v1`) (Done).
 - [[tickets/T-11840-tt-batch-10|T-11840]] TT batch 10: one long Opus run per large function (Done, PR #34 merged; 10 of 12 matched, TT 262/303 functions, 78.6% of bytes).
 
 - [[tickets/T-19025-w3-d-p25|T-19025]] Wave 3 package w3-d-p25: TACO `80132220.c`, 4 of 4 matched (`func_8013356C`, `func_801328B0` 1,848 B with FAKE pads and a pointer local; closer pass: `func_8013240C` as K&R `s32` with no `return`, `func_80132FE8` with a live `btn` local and one FAKE empty test) (Done)

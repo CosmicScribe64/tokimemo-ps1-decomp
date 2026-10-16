@@ -2078,7 +2078,9 @@ void set_movie_offset(s16 arg0, s16 arg1);
 void strKickCD(s32 arg0);
 void func_80056BA8();
 void func_80057390();
+#ifndef MAIN_API_OVERRIDE_set_dec_bri
 void set_dec_bri(u8 arg0);
+#endif
 s32 get_last_gamen_mode(void);
 void dec_bg_reset(void);
 void func_800573AC();
