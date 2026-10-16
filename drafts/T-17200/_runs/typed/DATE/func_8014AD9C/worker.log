@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/work/drafts/T-17200/redraft.py", line 674, in <module>
+    main()
+  File "/work/drafts/T-17200/redraft.py", line 654, in main
+    worker(a.worker, a.variant)
+  File "/work/drafts/T-17200/redraft.py", line 506, in worker
+    got = ex.process(row)
+  File "/work/tools/exhaustive_drafts.py", line 71, in process
+    guard = next(g for g in autotweak.guards(original) if g.func == row['func'])
+StopIteration

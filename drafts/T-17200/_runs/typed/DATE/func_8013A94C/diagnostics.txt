@@ -1,0 +1,13 @@
+python3 failed:
+ -----------------------------------------^
+cfe: Warning 749: drafts/T-17200/_runs/typed/DATE/func_8013A94C/work/guarded.o.sjis.c, line 6646: structure has no member named 'unk0'
+     D_8015BF20 = (s16) ((u32) D_800E6280.unk_10F8 % (u32) ((sp3C.value[D_800E6280.unk0] * (D_80122CDC == 1)) + ((D_80122CDC == 0) * sp54.value[D_800E6280.unk0])));
+ ---------------------------------------------------------------------------------^
+cfe: Warning 749: drafts/T-17200/_runs/typed/DATE/func_8013A94C/work/guarded.o.sjis.c, line 6646: structure has no member named 'unk0'
+     D_8015BF20 = (s16) ((u32) D_800E6280.unk_10F8 % (u32) ((sp3C.value[D_800E6280.unk0] * (D_80122CDC == 1)) + ((D_80122CDC == 0) * sp54.value[D_800E6280.unk0])));
+ ---------------------------------------------------------------------------------------------------------------------------------------------------------^
+cfe: Error: drafts/T-17200/_runs/typed/DATE/func_8013A94C/work/guarded.o.sjis.c, line 6672: Unacceptable operand of &.
+         temp_t6 = *(&D_800E6280 + (D_800E6280.unk_F5F * 0x38)) & 0xF;
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/typed/DATE/func_8013A94C/work -o drafts/T-17200/_runs/typed/DATE/func_8013A94C/work/guarded.o /tmp/asm_processorhy7ut0yg/preprocessed_4053842380e54a3e879c47ef429cbde4.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib85pnwnzd/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/typed/DATE/func_8013A94C/work/guarded.o drafts/T-17200/_runs/typed/DATE/func_8013A94C/work/guarded.o.sjis.c

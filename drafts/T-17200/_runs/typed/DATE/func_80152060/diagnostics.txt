@@ -1,0 +1,9 @@
+python3 failed:
+cfe: Error: drafts/T-17200/_runs/typed/DATE/func_80152060/work/guarded.c, line 4475: 'sp30' undefined; reoccurrences will not be reported.
+         func_80046290(sp2C, sp30, 0xF);
+ ----------------------------^
+cfe: Warning 749: drafts/T-17200/_runs/typed/DATE/func_80152060/work/guarded.c, line 4518: structure has no member named 'unk0'
+     if ((u32) D_800E6280.unk0 < 0x18E3U) {
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/typed/DATE/func_80152060/work -o drafts/T-17200/_runs/typed/DATE/func_80152060/work/guarded.o /tmp/asm_processorh0v0yv8p/preprocessed_f1dcee2ad2044cb0b57f1d3f746d2430.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliboem4_dvp/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/typed/DATE/func_80152060/work/guarded.o drafts/T-17200/_runs/typed/DATE/func_80152060/work/guarded.c

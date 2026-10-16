@@ -1,0 +1,13 @@
+m2c.py: argument counts from the callees' asm: func_80140D38 0
+python3 failed:
+cfe: Error: drafts/T-17200/_runs/plain/DATE/func_8014DCCC/work/guarded.o.sjis.c, line 4634: 'sp30' undefined; reoccurrences will not be reported.
+     *(M2cBlock9C *)(&sp30[0]) = *(M2cBlock9C *)(&D_8015E3C4);
+ ---------------------^
+cfe: Warning 689: drafts/T-17200/_runs/plain/DATE/func_8014DCCC/work/guarded.o.sjis.c, line 4636: Unacceptable operand of == or !=
+     if (&D_8007EC9C == temp_v0) {
+ --------------------^
+cfe: Warning 689: drafts/T-17200/_runs/plain/DATE/func_8014DCCC/work/guarded.o.sjis.c, line 4639: Unacceptable operand of == or !=
+     if (&D_8007D878 == temp_v0) {
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/plain/DATE/func_8014DCCC/work -o drafts/T-17200/_runs/plain/DATE/func_8014DCCC/work/guarded.o /tmp/asm_processorak_0jqd1/preprocessed_f8139ca3a9374c17bbf399b0bac8fde9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibjpjgka21/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/plain/DATE/func_8014DCCC/work/guarded.o drafts/T-17200/_runs/plain/DATE/func_8014DCCC/work/guarded.o.sjis.c

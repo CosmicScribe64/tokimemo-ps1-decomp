@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_80085B3C 2
+python3 failed:
+ ---------------^
+cfe: Warning 709: drafts/T-17200/_runs/typed/DATE/func_801496C4/work/guarded.o.sjis.c, line 4524: Incompatible pointer type assignment
+     D_800CA138 = &D_8015D088;
+ ---------------^
+cfe: Warning 709: drafts/T-17200/_runs/typed/DATE/func_801496C4/work/guarded.o.sjis.c, line 4541: Incompatible pointer type assignment
+     D_800CA134 = &D_8015D084;
+ ---------------^
+cfe: Warning 709: drafts/T-17200/_runs/typed/DATE/func_801496C4/work/guarded.o.sjis.c, line 4542: Incompatible pointer type assignment
+     D_800CA138 = &D_8015D088;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/typed/DATE/func_801496C4/work -o drafts/T-17200/_runs/typed/DATE/func_801496C4/work/guarded.o /tmp/asm_processorm8oeq5f2/preprocessed_040bfcccdcbb492597d5dda8917e6145.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib9ja7cigo/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/typed/DATE/func_801496C4/work/guarded.o drafts/T-17200/_runs/typed/DATE/func_801496C4/work/guarded.o.sjis.c

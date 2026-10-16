@@ -1,0 +1,13 @@
+python3 failed:
+ ---------------^
+cfe: Warning 709: drafts/T-17200/_runs/typed/DATE/func_8013EB8C/work/guarded.o.sjis.c, line 6800: Incompatible pointer type assignment
+     D_800CA134 = &D_8015BF3C;
+ ---------------^
+cfe: Warning 709: drafts/T-17200/_runs/typed/DATE/func_8013EB8C/work/guarded.o.sjis.c, line 6801: Incompatible pointer type assignment
+     D_800CA138 = &D_8015BF40;
+ ---------------^
+cfe: Error: drafts/T-17200/_runs/typed/DATE/func_8013EB8C/work/guarded.o.sjis.c, line 7752: 'sp' undefined; reoccurrences will not be reported.
+     func_80044890(1, var_a1, var_a2, *(s32 *)((unsigned char *)(sp + var_v0) + (188)), *(s32 *)((unsigned char *)(sp + var_v0) + (104)), *(s32 *)((unsigned char *)(sp + var_v0) + (272)));
+ ----------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/typed/DATE/func_8013EB8C/work -o drafts/T-17200/_runs/typed/DATE/func_8013EB8C/work/guarded.o /tmp/asm_processornt14wdtn/preprocessed_7865a4fda6a44419b705b2628a2a8aeb.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibs1bvtj8n/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/typed/DATE/func_8013EB8C/work/guarded.o drafts/T-17200/_runs/typed/DATE/func_8013EB8C/work/guarded.o.sjis.c
