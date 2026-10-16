@@ -15928,6 +15928,12 @@ RENSYU `func_80133CB8` (420 bytes) matched, unit sha1 OK (`src/ovl/RENSYU/801320
 
 ## [2026-10-16] ticket | T-19020 Done
 [[tickets/T-19020-w3-d-p20]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of RENSYU OK (headers OK, globals OK, sha1 OK). 1 of 4 functions matched (`func_80133CB8`, 420 bytes, FAKE), `func_80133628` stays a guarded draft (21 lines), `func_80133990` and `func_8013325C` stay `INCLUDE_ASM`. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-11850 TT batch 11 started
+Created [[tickets/T-11850-tt-batch-11]] (In Progress), stacked on T-11840 (PR #34, still open). Merged upstream `main` (252 commits, no TT changes) into `tt-batch11`; clean rebuild 27/27 OK. Seven file groups, one Opus agent each, two at a time.
+
+## [2026-10-16] ticket | T-11850 TT batch 11 Done
+Seven file groups, one Opus agent each, two at a time: 12 of 15 matched (4,520 bytes), 3 guarded (`func_80147A18`, `func_8013A0DC`, `func_8014A2B4`). The zero-store chain pair matched seven functions. Clean rebuild 27/27 OK, checks clean; TT 274/303 (82.7%). Inline review against CODING_STANDARDS.md: no open findings. Moved [[tickets/T-11850-tt-batch-11]] to Done. Notes in [[matching-notes]] ("TT overlay, batch 11"), 15 rows in [[data/t0018-cases]].
+
 ## [2026-10-16] ticket | T-18800 Types-first: DATE2, In Progress
 
 Created [[tickets/T-18800-types-first-date2]] (branch `w3-date2-types` from `w2-good`), In Progress: survey DATE2's types, declare them in `include/ovl/DATE2.h`, redraft every unmatched function into `drafts/T-18800/`, cut packages. Card in [[kanban]], line in [[index]].
@@ -16170,3 +16176,6 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 ## [2026-10-16] ticket | T-17206 Done
 
 [[tickets/T-17206-w3-date-p06]] In Review to Done after the code review: wave 3 package w3-date-p06 (DATE `src/ovl/DATE/8014B1F0.c`, `src/ovl/DATE/80156600.c`, `include/main_api.h`), 2 of 2 functions matched (1,136 bytes: `func_80157698`, `func_8014C20C`, three ticketed FAKE locals). One finding fixed: the redundant `(u16)` casts on `D_800CA154` in `func_80157698` removed (the unit still matches). Headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-11850 Done (PR #35 merged)
+[[tickets/T-11850-tt-batch-11]] reviewed on integration branch `pr35-int` against `CODING_STANDARDS.md`: one finding fixed (missing `FAKE` mark on the two-store chain `q[0] = q[1] = 0;` in `func_80149704`, comment only), none open. 12 of 15 functions matched (4,520 bytes; 3 guarded: `func_80147A18`, `func_8013A0DC`, `func_8014A2B4`), clean rebuild 27/27 sha1 OK, headers OK, globals OK, `sync_protos --check-branch` OK. TT 274/303 functions, 92080/111376 bytes (82.7%); grand total 6233/6958 functions, 1639244/2279368 bytes, 71.9%. The earlier "started" entry's "PR #34, still open" is outdated: [[tickets/T-11840-tt-batch-10]] is merged. Merge via the wave 3 merge script.

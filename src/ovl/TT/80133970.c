@@ -413,8 +413,6 @@ void func_80134630(s16 x, s16 y, s32 speed, u16 kind) {
     }
 }
 
-/* NON_MATCHING: T-10510, 30 lines: object in v0 / constants 1 and 0 in a2 and a0 in the original */
-#ifdef NON_MATCHING
 void func_80134768(s16 x, s16 y, s32 speed, s32 angle) {
     TtActor68 *object;
 
@@ -423,12 +421,9 @@ void func_80134768(s16 x, s16 y, s32 speed, s32 angle) {
         object->unk_00 = 1;
         object->unk_02 = 0xAB;
         object->unk_04 = 0x40;
-        object->unk_08 = 0;
-        object->unk_06 = 0;
-        object->unk_0A = 0;
-        object->unk_0F = 0;
-        object->unk_0E = 0;
-        object->unk_0D = 0;
+        /* FAKE: u16 view of the s16 fields; the u16 chain reloads 0 into a0 and keeps a dead range in a1, so 1 lands in a2 as in the original. T-11850 */
+        *(u16 *)&object->unk_06 = *(u16 *)&object->unk_08 = *(u16 *)&object->unk_0A = 0;
+        object->unk_0D = object->unk_0E = object->unk_0F = 0;
         object->unk_10 = 1;
         object->unk_20 = x << 16;
         object->unk_24 = y << 16;
@@ -443,12 +438,7 @@ void func_80134768(s16 x, s16 y, s32 speed, s32 angle) {
         object->unk_4C = (u8 *)&D_80155B30[5];
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134768);
-#endif
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10720, T-11620, 14 differing lines: constant 1 is in v1, original has it in a1 (T-0018 phantom registers, same as func_80134768); the lui of D_80155B4E is hoisted early and sh 0x58 late in the original. unk_60 before unk_4C gives the original's t3/t4/t5 (T-11620). */
 void func_80134874(x, y)
 s16 x;
 s16 y;
@@ -462,25 +452,19 @@ s16 y;
         object->unk_00 = 1;
         object->unk_02 = 0xAD;
         object->unk_04 = 0x20;
-        object->unk_0A = 0;
-        object->unk_08 = 0;
-        object->unk_06 = 0;
-        object->unk_0F = 0;
-        object->unk_0E = 0;
-        object->unk_0D = 0;
+        /* FAKE: u16 view of the s16 fields; the u16 and byte chains keep dead ranges in v1/a0 (no code), so the shared 1 lands in a1 as in the original. T-11850 */
+        *(u16 *)&object->unk_06 = *(u16 *)&object->unk_08 = *(u16 *)&object->unk_0A = 0;
+        object->unk_0D = object->unk_0E = object->unk_0F = 0;
         object->unk_10 = 1;
         object->unk_20 = x << 16;
-        object->unk_28 = 0;
         object->unk_24 = y << 16;
-        object->unk_58 = 0;
+        object->unk_28 = 0;
         object->unk_2C = 0;
         object->unk_60 = *(s16 *)(source + 0x14);
+        object->unk_58 = 0;
         object->unk_4C = (u8 *)&D_80155B30[5];
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134874);
-#endif
 
 void func_80134924(u8 *arg0) {
     s16 x;
@@ -583,16 +567,16 @@ void func_80134ADC(TtActor68 *p) {
     p->unk_58++;
 }
 
-/* NON_MATCHING: T-11520, 34 differing instructions, one root cause. The g local for D_80158A60 (T-11520) gives the original's early lui/lw into v1 in the 0xAB block. Left: the original keeps an unused 0x40 in s3 (bit position between the n bound and 0xAD, so the loop head or the unk_00 test), which pushes 0xAD..0xAC to s4..s8 (fp) and the frame to 0x50; here they sit in s3..s7 with a 0x48 frame. Tried: i < n, i < 0x80 without n, permuter 300 s (it can add a hoisted -1 through '& 0xFFFFFFFFu' after 0xAB, never a 0x40 before 0xAD). */
-#ifdef NON_MATCHING
 void func_80134BBC(void) {
     TtActor68 *object;
     s32 i;
-    s32 n;
     u8 *g;
 
     object = (TtActor68 *)D_80158AA0;
-    for (i = 0, n = 0x80; i != n; i++, object++) {
+    for (i = 0; i < 0x80; i++, object++) {
+        /* FAKE: empty test; uopt hoists 0x80 and 0x40 into s2/s3 ahead of the other constants (the original keeps an unused 0x40 in s3), ugen emits no code. T-11850 */
+        if (i == 0x80 || i == 0x40) {
+        }
         if (object->unk_00 != 0) {
             if (object->unk_02 == 0xAD) {
                 func_80134ADC(object);
@@ -614,9 +598,6 @@ void func_80134BBC(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134BBC);
-#endif
 
 /* q is passed as the unused third argument of func_80141EBC, as its other callers do; this puts q in a2 (T-11620). */
 void func_80134D0C(u8 *p) {
