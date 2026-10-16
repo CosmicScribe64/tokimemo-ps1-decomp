@@ -15543,3 +15543,7 @@ Opened [[tickets/T-17500-types-first-shougatu]] (In Progress) on branch `w3-shou
 ## [2026-10-16] ticket | T-17500 Done
 
 Code review of [[tickets/T-17500-types-first-shougatu]] against `CODING_STANDARDS.md`: 3 small findings fixed (missing local declaration beside the `MAIN_API_OVERRIDE_func_800847B8` define in `src/ovl/SHOUGATU/801330C0.c`, a redundant `(u8)` cast in `func_801419D0`, an idiom comment in `func_8013AFEC`). 4 functions matched (1,516 bytes), SHOUGATU sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. In Review to Done; branch `w3-shougatu-types` goes to the integration merge.
+
+## [2026-10-16] ticket | T-17800 Types-first: OPTION opened
+
+Opened [[tickets/T-17800-types-first-option]] (In Progress) on branch `w3-option-types` from `w2-good`: recover OPTION's shared types, redraft every unmatched function with the pilot drivers, package the rest for wave 3.
