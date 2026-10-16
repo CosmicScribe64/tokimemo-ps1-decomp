@@ -16140,3 +16140,7 @@ TAIIKU `func_80141280` (1,764 B, `src/ovl/TAIIKU/80141280.c`) matches in plain C
 ## [2026-10-16] ticket | T-19032 Done
 
 [[tickets/T-19032-w3-d-p32]] In Review to Done: code review against `CODING_STANDARDS.md` found two small documentation issues (the zero loop's record view and store order were unexplained in the source; a delay-slot remark in [[register-cheatsheet]] named the wrong field), both fixed. 1 of 1 functions matched: TAIIKU `func_80141280` (1,764 B, two FAKE comments). TAIIKU unit sha1 OK after a rebuild. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17207 In Progress
+
+[[tickets/T-17207-w3-date-p07]] created and In Progress: DATE `src/ovl/DATE/80141EE0.c`, `func_801449D4` (draft 312) and `func_80144E20` (draft 628), branch `w3-date-p07`.
