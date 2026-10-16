@@ -103,7 +103,8 @@ void func_80152110(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-/* The pair tables are read as words and bytes at i * 2 - 2 (one shared multiply), not as TcPair records at i - 1: the pointer walks then start from one product. T-16563 */
+/* FAKE: the pair tables are read through word and byte casts at i * 2 - 2, not as TcPair records at i - 1: both pointer
+ * walks then start from one shared product. Real source unknown. T-16563 */
 void func_801521EC(s32 arg0, s32 arg1) {
     s32 i;
 
@@ -113,7 +114,6 @@ void func_801521EC(s32 arg0, s32 arg1) {
         arg1++;
     }
 }
-
 
 void func_801522B0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3) {
     u8 var_v0;
@@ -193,7 +193,6 @@ void func_801523D0(s32 arg0, s32 arg1, s32 arg2) {
         }
     }
 }
-
 
 void func_8015266C(u32 arg0) {
     if (arg0 < D_8015EDB4[17].unk3) {
@@ -357,7 +356,6 @@ void func_80152DB4(s32 arg0, s32 arg1, s32 arg2) {
         }
     }
 }
-
 
 void func_80153068(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 pad[15]; /* FAKE: unused slots above idx, the original frame is 64 bytes larger (T-3330 idiom, real source unknown). T-9370 */

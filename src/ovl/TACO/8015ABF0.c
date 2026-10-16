@@ -179,7 +179,8 @@ void func_8015B59C(void) {
     }
 }
 
-/* The actor is addressed by byte offset in the loop: one pointer then serves the field loads and &unk14, the array form builds a second one. T-16563 */
+/* FAKE: the actor is addressed through a byte-offset view in the loop: one pointer then serves the field loads and
+ * &unk14, the array form builds a second one. Real source unknown. T-16563 */
 void func_8015BD30(s32 arg0, s16 *arg1) {
     s32 i;
     s32 val;
@@ -204,7 +205,6 @@ void func_8015BD30(s32 arg0, s16 *arg1) {
             break;
         }
     }
-    i = 0;
     id = D_80161D9C;
     j = arg1[0];
     last = arg1[1];
@@ -279,7 +279,6 @@ void func_8015C0A0(s32 arg0, s32 arg1) {
         }
     }
 }
-
 
 void func_8015C208(s32 arg0) {
     s32 i;
@@ -514,4 +513,3 @@ s32 func_8015CE64(void) {
     }
     return n;
 }
-
