@@ -254,7 +254,77 @@ void func_80153D20(void) {
     } while (var_s0 != 0xAA);
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80153F3C);
+/* FAKE: the two x stores of each point pair share a source line; as1 schedules the stores by source line and only then reproduces the original order (T-17112). */
+void func_80153F3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    s32 xy[8];
+    s32 uv[8];
+
+    xy[0] = arg0; xy[2] = arg0 + 0x7F;
+    xy[1] = arg2;
+    xy[3] = arg2;
+    xy[4] = arg1; xy[6] = arg1 + 0x7F;
+    xy[5] = arg3;
+    xy[7] = arg3;
+    uv[0] = 0; uv[2] = 0x7F;
+    uv[1] = arg2;
+    uv[3] = arg2;
+    uv[4] = 0; uv[6] = 0x7F;
+    uv[5] = arg3;
+    uv[7] = arg3;
+    func_80154220(xy, uv, (D_80120E93 + arg4) >> 1, arg5, 1);
+    xy[0] = arg0 + 0x80; xy[2] = arg0 + 0xFF;
+    xy[1] = arg2;
+    xy[3] = arg2;
+    xy[4] = arg1 + 0x80; xy[6] = arg1 + 0xFF;
+    xy[5] = arg3;
+    xy[7] = arg3;
+    uv[0] = 0; uv[2] = 0x7F;
+    uv[1] = arg2;
+    uv[3] = arg2;
+    uv[4] = 0; uv[6] = 0x7F;
+    uv[5] = arg3;
+    uv[7] = arg3;
+    func_80154220(xy, uv, (D_80120E93 + arg4) >> 1, arg5, 2);
+    xy[0] = arg0 + 0x100; xy[2] = arg0 + 0x13F;
+    xy[1] = arg2;
+    xy[3] = arg2;
+    xy[4] = arg1 + 0x100; xy[6] = arg1 + 0x13F;
+    xy[5] = arg3;
+    xy[7] = arg3;
+    uv[0] = 0; uv[2] = 0x3F;
+    uv[1] = arg2;
+    uv[3] = arg2;
+    uv[4] = 0; uv[6] = 0x3F;
+    uv[5] = arg3;
+    uv[7] = arg3;
+    func_80154220(xy, uv, (D_80120E93 + arg4) >> 1, arg5, 3);
+    xy[0] = arg0; xy[2] = arg0 - 0x7F;
+    xy[1] = arg2;
+    xy[3] = arg2;
+    xy[4] = arg1; xy[6] = arg1 - 0x7F;
+    xy[5] = arg3;
+    xy[7] = arg3;
+    uv[0] = 0; uv[2] = 0x7F;
+    uv[1] = arg2;
+    uv[3] = arg2;
+    uv[4] = 0; uv[6] = 0x7F;
+    uv[5] = arg3;
+    uv[7] = arg3;
+    func_80154220(xy, uv, (D_80120E93 + arg4) >> 1, arg5, 1);
+    xy[0] = arg0 + 0x17F; xy[2] = arg0 + 0x13F;
+    xy[1] = arg2;
+    xy[3] = arg2;
+    xy[4] = arg1 + 0x17F; xy[6] = arg1 + 0x13F;
+    xy[5] = arg3;
+    xy[7] = arg3;
+    uv[0] = 0; uv[2] = 0x3F;
+    uv[1] = arg2;
+    uv[3] = arg2;
+    uv[4] = 0; uv[6] = 0x3F;
+    uv[5] = arg3;
+    uv[7] = arg3;
+    func_80154220(xy, uv, (D_80120E93 + arg4) >> 1, arg5, 3);
+}
 
 void func_80154220(s32 *arg0, s32 *arg1, s32 arg2, s32 arg3, s32 arg4) {
     u8 *p;
