@@ -199,7 +199,7 @@ void func_801553AC(void) {
     D_801604CC += 1;
 }
 
-/* The operand order of the actor address (idx + base or base + idx) differs between the statements of the original; the two spellings reproduce it. T-16564 */
+/* FAKE: the operand order of the actor address (idx + base or base + idx) differs between the statements of the original; the mixed spellings reproduce it, real source unknown. T-16564 */
 void func_801557E8(s32 arg0) {
     s32 t;
 
