@@ -117,7 +117,12 @@ s32 func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g) {
  * the copy gives t3 but adds code; a uopt range in t2 gives t3 but moves the loop registers. No form without extra
  * code found; TACO func_801472D4 has the same miss. T-19026: empty tests on the parameters (removed by uopt or they
  * change the frame), swapped operands of the two multiplies and both orders of the copy and the flag store do not
- * move it either. */
+ * move it either. T-19026 closer: still 8 lines. In `cc -S` ugen loads &matrix into its own temporary t2
+ * (`addu t2,sp,16; move v1,t2; move t0,t2`, which as1 folds to `addiu t0,sp,32; or v1,t0,zero`), so t2 is used once
+ * before the loop. The original's temporaries (t3/t4 in the loop, t5..t8 after it, copy t3) are exactly what IDO gives
+ * when t2 is a uopt register and &matrix is held in it. No C form found that does this: counter and parameter
+ * types, table-typed parameters, pointer walks, a MATRIX pointer in obj's slot, do/while and != loops (about 110 more
+ * variants) give 16 to 80 listing lines. */
 #ifdef NON_MATCHING
 void func_8015B1B8(arg0, arg1, arg2, arg3)
     s32 arg0;
