@@ -304,16 +304,20 @@ void ovl_load_verify(void) {
     }
 }
 
+/* NON_MATCHING: T-17003, 14 differing lines; frame, switch and saves equal. as1 puts the `sb zero` of
+ * ovl_load_state above the four byte loads, the original keeps it below them. A separate symbol for the
+ * unk_1108 store gets the loads right but leaves `lui at` before `lbu a0` (original after); GameState is
+ * one object (wiki/game-state.md), so no such view is used. */
 #ifdef NON_MATCHING
 void func_80079070(void) {
-    s32 unused0;
+    s32 unused0; /* FAKE: unused locals above the saves give the original frame (0x38, saves at sp+0x2F..0x32); T-17003 */
     u8 unused1;
     u8 sp32;
     u8 sp31;
     u8 sp30;
     u8 sp2F;
 
-    switch (*(u8 *)&D_800E6280.unk_110E) {
+    switch (*(u8 *)&D_800E6280.unk_110E) { /* FAKE: byte view keeps the selector in $v1, the TEL idiom of T-10630; T-17003 */
     case 0x3A:
         D_80123110 = (u32) &D_80132000;
         break;

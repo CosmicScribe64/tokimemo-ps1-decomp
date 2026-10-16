@@ -16546,3 +16546,6 @@ Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG
 
 ## [2026-10-16] ticket | T-17003 In Progress
 [[tickets/T-17003-w3-main-p03]] created and In Progress: wave 3 package w3-main-p03, `src/main/800789E0.c`, `func_80079070` and `func_80079800`. Worktree `tokimemo-wt/w3-main-p03`, branch `w3-main-p03` from `w2-good`.
+
+## [2026-10-16] ticket | T-17003 In Review
+[[tickets/T-17003-w3-main-p03]] In Progress to In Review (1 of 2 matched). `func_80079800` (784 B) matched in plain C with one FAKE local (TACO `func_80142AF0` idiom) and a `main_api.h` prototype; `func_80079070` guarded at 14 differing lines, T-0018 row (`sched`) in [[data/t0018-cases]], notes in [[matching-notes]] (section T-17003). Card moved. Commits in `src/main/800789E0.c`, `include/main_api.h`.
