@@ -26,9 +26,7 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492C4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492C8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492DC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492F4);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492F8);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492FC);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_80149300);
+s32 D_801492F8[10] = { 0x801BB000, 0x801BF000, 0x801C3000, 0x801C7000, 0x801CB000, 0x801D3000, 0x801D7000, 0x801DB000, 0x801DF000, 0x801E3000 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_80149320);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_8014933C);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_80149364);
@@ -98,8 +96,6 @@ void func_80133C80(void) {
     tbl.f[idx]();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-16551, 11 differing lines; the two peeled stores D_801492F8[0] and [1] take two `lui at`, the original shares one and loads both words first. */
 void func_80133CFC(void) {
     s32 i;
     s32 j; /* FAKE: unused local; the original frame has a second word above the tables (the offsets of sp9C.. only match with it), real source unknown. T-16551 */
@@ -171,9 +167,6 @@ void func_80133CFC(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80133CFC);
-#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80134060);
 
