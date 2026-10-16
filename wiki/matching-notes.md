@@ -5316,3 +5316,41 @@ Ticket [[tickets/T-16230-w2-date-80150010]]. All four functions of the work list
 - **Copy elements of one array, not two splat symbols.** `func_80150460`'s 0x44-byte copy matches as `((DisplayRecord44 *)D_8011ECD0)[98] = ((DisplayRecord44 *)D_8011ECD0)[96];`. Copying `*(T *)D_801206D8 = *(T *)D_80120650` left the last `lw`/`sw` pair of the copy in the other order (T-9320, T-9780).
 - **A `GameState *g` pointer fixes allocation ties.** In `func_80150ED4` (three-year date check, as in DATE 80132000.c) the swapped `$a0`/`$v1` of `unk_03F`/`unk_040` and the `% 180` value in `$v0` instead of `$v1` all go away with `g->`. In `func_80150C78` it moves the `unk_10F8` load from `$a0` to `$a1` and removes a one-register shift of every ugen temporary in the loop. With `g`, IDO still addresses the fields directly (`lui; lw %lo`). The pointer is a local, so it changes the frame: in `func_80150ED4` it takes the slot the T-3330 `idx` scalar would take above the 39-entry function table (`FnTbl39`, new).
 - **Spilled locals and the frame.** `func_80150C78` uses all nine callee-saved registers, so uopt keeps one of the two equal colour arguments in memory (`sw fp,0x64(sp)`, reloaded in the loop). The variable needs a stack home, and only some locals get one (a `phase` local costs 8 bytes, while `grey` and an `angle` local cost nothing). The home offset and the frame size followed the declaration order. `order_search.py` with `/* ORDER */` around the declarations found the order (`col0, i, col1, g, grey, offset`). The call results are inlined as the arguments of `func_80049FF0`, as the frame size requires.
+## Wave 2 package w2-p02: main 800420D0 and 8007C030 (T-16220)
+
+Ticket [[tickets/T-16220-w2-main-8007c030]]. Three matches, 804 bytes: `func_800422C8` (268), `make_three_select`
+(348, one FAKE) and `junban_init` (188). `_sprite_set_box_shade_tarao` is now a guarded draft at 30 funcdiff lines
+(188 before). `dialogue_speak_part` stays at 16 lines.
+
+- **Assign to the global, then read the global.** `func_800422C8` (8 lines, tried in T-8060, w7-4, T-9730, T-10020,
+  T-10510, T-12010) and `junban_init` (34 lines, T-9150, T-10310, T-10620, T-11590) were T-0018 `regorder` rows.
+  Every earlier draft kept the value in a local: `id = func_80098370(); ... D_8011ECA0 = id;` and
+  `r = D_800E6280.unk_10F8 % 3; ... D_800CA2A4[0] = r;`. The original writes the global first and reads it back:
+  `D_8011ECA0 = func_80098370();` and `D_800CA2A4[0] = D_800E6280.unk_10F8 % 3; if (D_800CA2A4[0] == 0) ...`.
+  uopt promotes the global, sinks its store into each branch (before the call, or to each exit), and colours it the
+  way the original does (the `a3` copy, the remainder in `v0`). Symptom: the draft stores a local to a global in
+  every branch, and that local sits in the wrong register. Row added to [[register-cheatsheet]].
+- **Frame of `make_three_select`.** The slots fill the locals area from the frame top in declaration order, so an
+  unused `u8 pad[0x44]` between the three `s16` locals and `buf[3][0x40]` gives the original 0x170 frame with the
+  buffer at sp+0x64. It is marked FAKE, since the real locals are unknown.
+- **`_sprite_set_box_shade_tarao` (POLY_G4).** Findings that got the draft from 188 to 30 lines:
+  - `(arg6 >> 16) & 0xFF` keeps each shift in a ugen temporary (`t6..t9`), as the original does. ugen drops the
+    `and` for `sb`, so the `and` value is a uopt range that never shows up in the code but still takes a colour.
+    Bare shifts, chain assignments and `u8` locals all become uopt registers instead.
+  - The reload of a spilled pointer goes to the argument register of the call that uses it last (a1 for
+    `AddPrim(ot, p)`), unless something live is in that register. The original has `p` in a2 because arg6 is in
+    a1. That needs the `and(arg6)` range coloured fourth, so the draft writes `r2` before `b0`: uopt numbers
+    ranges in ucode first-mention order.
+  - The colour words are `u32` (`srl`), and `main_api.h` now says so. A `GameState *gs` local takes the place of
+    the earlier FAKE pad word, which kept `p` at sp+0x28.
+  - Still open: as1 loads arg6 before arg5 and puts the `r2` store first. The original loads arg5 first and
+    stores `r2` after `g2`. A leading `p->b2` store fixes the load order but moves the stores. About 6,000
+    single-function compiles over statement order, line grouping and mask/cast forms found nothing below 6 diff
+    lines.
+- **`dialogue_speak_part`.** New probes with no gain: an `s32` coordinate (with and without the pad word, it
+  changes the frame and loses `s1`), narrowing inside the call, a separate `y` local, an `x` local (constant
+  propagated), and the increment on the `if` line or joined by a comma. Still 16 lines.
+- **Tooling.** A standalone compile of one function through `tools/cc.py` with the project headers takes under a
+  second, which makes brute-force searches over statement order and line grouping practical (2 workers). The
+  regdiff trace shows uopt colours (1=v0, 2=v1, 3=a0, ...). The final register can still differ when ugen
+  retargets a reload, as with `p` above.

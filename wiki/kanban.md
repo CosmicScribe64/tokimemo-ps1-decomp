@@ -136,6 +136,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-16220-w2-main-8007c030|T-16220 Wave 2 package w2-p02]]
 
 - [ ] [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210 Wave 2 package w2-p01]]
 

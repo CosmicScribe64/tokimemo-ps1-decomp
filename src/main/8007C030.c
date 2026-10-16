@@ -6,6 +6,7 @@
 #define MAIN_API_OVERRIDE_select_girl_init /* K&R byte parameter is narrowed in the callee. T-10900. */
 #include "common.h"
 #include "game.h"
+#include "psx_types.h"
 s32 func_80049FF0(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, s32 arg6);
 s32 SsVabTransCompleted();
 s32 dialogue_render();
@@ -1673,17 +1674,17 @@ u8 arg2;
     return 0;
 }
 
-/* NON_MATCHING: T-11590, 6 differing lines, frame only: every instruction matches, but the
- * original frame is 0x170 with the buffers at sp+0x64; IDO puts the first local at sp+0x68 or
- * higher whatever is declared (buf[4][0x40] plus two words gives 0x170 with buf at 0x70) */
-#ifdef NON_MATCHING
 s32 make_three_select(str)
     u8 *str;
 {
-    u8 buf[3][0x40];
     s16 i;
     s16 n;
     s16 start;
+    /* FAKE: unused 0x44 bytes above the buffers reproduce the original's 0x170 frame with buf at
+     * sp+0x64 (IDO fills locals from the frame top in declaration order); the real locals are
+     * unknown. T-16220 */
+    u8 pad[0x44];
+    u8 buf[3][0x40];
 
     n = 0;
     start = 0;
@@ -1704,35 +1705,20 @@ s32 make_three_select(str)
     }
     sprintf(str, "%sq%sq%s", buf[D_800CA2A4[0]], buf[D_800CA2A4[1]], buf[D_800CA2A4[2]]);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", make_three_select);
-#endif
 
-/* NON_MATCHING: T-11590, 34 differing lines, all one v0/v1 swap: the original colours the u8 remainder before the GameState word (regdiff: unconstrained ranges go in bit order, the global has the lower bit); return r, a u32 copy, (r = g % 3) == 0 and void do not change it */
-#ifdef NON_MATCHING
 s32 junban_init(void) {
-    u8 r;
-    u8 q;
-
-    q = D_800E6280.unk_10F8 % 3;
-    r = q;
-    if (r == 0) {
-        D_800CA2A4[1] = r + (D_800E6280.unk_10F8 & 1) + 1;
-        D_800CA2A4[2] = r + ((D_800E6280.unk_10F8 + 1) & 1) + 1;
-        D_800CA2A4[0] = r;
-    } else if (r == 1) {
-        D_800CA2A4[1] = (r - 1) + ((D_800E6280.unk_10F8 & 1) * 2);
-        D_800CA2A4[2] = (r - 1) + (((D_800E6280.unk_10F8 + 1) & 1) * 2);
-        D_800CA2A4[0] = r;
+    D_800CA2A4[0] = D_800E6280.unk_10F8 % 3;
+    if (D_800CA2A4[0] == 0) {
+        D_800CA2A4[1] = D_800CA2A4[0] + (D_800E6280.unk_10F8 & 1) + 1;
+        D_800CA2A4[2] = D_800CA2A4[0] + ((D_800E6280.unk_10F8 + 1) & 1) + 1;
+    } else if (D_800CA2A4[0] == 1) {
+        D_800CA2A4[1] = (D_800CA2A4[0] - 1) + ((D_800E6280.unk_10F8 & 1) * 2);
+        D_800CA2A4[2] = (D_800CA2A4[0] - 1) + (((D_800E6280.unk_10F8 + 1) & 1) * 2);
     } else {
-        D_800CA2A4[1] = (r - 1) - (D_800E6280.unk_10F8 & 1);
-        D_800CA2A4[2] = (r - 1) - ((D_800E6280.unk_10F8 + 1) & 1);
-        D_800CA2A4[0] = r;
+        D_800CA2A4[1] = (D_800CA2A4[0] - 1) - (D_800E6280.unk_10F8 & 1);
+        D_800CA2A4[2] = (D_800CA2A4[0] - 1) - ((D_800E6280.unk_10F8 + 1) & 1);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", junban_init);
-#endif
 
 void normal_date_three_select(void) {
     switch (D_800E6280.unk_1104.u) {
@@ -2714,7 +2700,38 @@ void ev_me_on_continue(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-16220, 30 differing lines: registers and colours match the original; as1 still
+ * schedules the r2 store first and loads arg6 before arg5 (the original loads arg5 first and
+ * stores r2 after g2). */
+#ifdef NON_MATCHING
+void _sprite_set_box_shade_tarao(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u32 arg5, u32 arg6) {
+    GameState *gs;
+    POLY_G4 *p;
+
+    p = (POLY_G4 *)GetWorkBase(0x24, D_8011ECA0);
+    func_8009F054(p);
+    SetSemiTrans(p, 0);
+    gs = &D_800E6280;
+    /* FAKE: the explicit masks leave the shifts in ugen temporaries (t6..t9) as in the original
+     * (a bare shift or a chain gets uopt registers); one line per group because as1 schedules by
+     * source line; r2 is written before b0 so that uopt colours and(arg6) after the arg5 red
+     * value, which puts arg6 in a1 and p in a2. The real source is unknown. T-16220 */
+    p->r0 = (arg6 >> 16) & 0xFF; p->g0 = (arg6 >> 8) & 0xFF; p->r2 = (arg5 >> 16) & 0xFF; p->b0 = arg6 & 0xFF;
+    p->r1 = (arg6 >> 16) & 0xFF; p->g1 = (arg6 >> 8) & 0xFF; p->b1 = arg6 & 0xFF;
+    p->g2 = (arg5 >> 8) & 0xFF; p->b2 = arg5 & 0xFF; p->r3 = (arg5 >> 16) & 0xFF; p->g3 = (arg5 >> 8) & 0xFF; p->b3 = arg5 & 0xFF;
+    p->x0 = gs->unk_014[D_8011ECA0] + arg0;
+    p->y0 = gs->unk_018[D_8011ECA0] + arg1;
+    p->x1 = gs->unk_014[D_8011ECA0] + arg0 + arg2;
+    p->y1 = gs->unk_018[D_8011ECA0] + arg1;
+    p->x2 = gs->unk_014[D_8011ECA0] + arg0;
+    p->y2 = gs->unk_018[D_8011ECA0] + arg1 + arg3;
+    p->x3 = gs->unk_014[D_8011ECA0] + arg0 + arg2;
+    p->y3 = gs->unk_018[D_8011ECA0] + arg1 + arg3;
+    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg4 * 4, (s32)p);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", _sprite_set_box_shade_tarao);
+#endif
 
 void func_8008585C(void) {
     s16 i;

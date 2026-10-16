@@ -2412,7 +2412,7 @@ void func_800853FC(void);
 void event_face0(void);
 void event_face1(void);
 void func_800854C8();
-void _sprite_set_box_shade_tarao(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+void _sprite_set_box_shade_tarao(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u32 arg5, u32 arg6);
 void func_80085678();
 void func_8008585C();
 void don_wait(void);

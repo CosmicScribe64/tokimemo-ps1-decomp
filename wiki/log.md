@@ -14975,3 +14975,11 @@ Opened [[tickets/T-16230-w2-date-80150010]] (In Progress) under [[tickets/T-1620
 ## [2026-10-16] ticket | T-16230 Done
 
 [[tickets/T-16230-w2-date-80150010]] reviewed against `CODING_STANDARDS.md` with no findings and moved to Done: 4 of 4 functions matched (DATE `func_801511B4`, `func_80150460`, `func_80150ED4`, `func_80150C78`; 1,620 bytes), DATE sha1 OK in the package worktree. Merge into `w2-good` follows.
+## [2026-10-15] ticket | T-16220 Wave 2 package w2-p02 opened
+Opened [[tickets/T-16220-w2-main-8007c030]] (In Progress) under [[tickets/T-16200-matching-wave-2]] on branch `w2-p02`: func_800422C8, make_three_select, dialogue_speak_part, junban_init, _sprite_set_box_shade_tarao.
+
+## [2026-10-16] ticket | T-16220 Wave 2 package w2-p02 to In Review
+[[tickets/T-16220-w2-main-8007c030]]: 3 of 5 matched (804 bytes): `func_800422C8`, `make_three_select` (FAKE frame pad), `junban_init`. The first and third were T-0018 rows; they match once the global is assigned and read directly. `_sprite_set_box_shade_tarao` is a guarded draft at 30 lines, and `dialogue_speak_part` stays at 16. Notes in [[matching-notes]] ("Wave 2 package w2-p02"), two rows in [[register-cheatsheet]]. Branch `w2-p02`.
+
+## [2026-10-16] ticket | T-16220 Done
+[[tickets/T-16220-w2-main-8007c030]]: review against CODING_STANDARDS.md found one issue (the `_sprite_set_box_shade_tarao` draft tricks lacked a `FAKE` mark), fixed in a comment-only commit. 3 functions matched (`func_800422C8`, `make_three_select`, `junban_init`, 804 bytes); unit sha1 OK, headers, globals and proto checks OK. Moved In Review to Done.
