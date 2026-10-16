@@ -1,0 +1,28 @@
+Target: ['asm/ovl/DATE/nonmatchings/DATE/801594B0/func_80159FAC.s']
+Review: 184-byte copy exists but raw sp dispatch/pointer reads remain; needs function-pointer/coordinate table reconstruction.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80159FAC */  addiu      $sp, $sp, -0xE8
+    /* 80159FB8 */  addiu      $t7, $t7, %lo(D_80160940)
+    /* 80159FBC */  lbu        $v0, %lo(D_800E62BE)($v0)
+    /* 80159FC0 */  sw         $ra, 0x14($sp)
+    /* 80159FC4 */  addiu      $t0, $t7, 0xB4
+    /* 80159FC8 */  addiu      $t6, $sp, 0x2C
+    /* 80159FD0 */  addiu      $t7, $t7, 0xC
+    /* 80159FDC */  addiu      $t6, $t6, 0xC
+    /* 80159FFC */  addiu      $at, $zero, 0x5F
+    /* 8015A008 */  lbu        $a0, %lo(D_800E62BF)($a0)
+    /* 8015A00C */  addiu      $a1, $zero, 0x7
+    /* 8015A018 */  lbu        $v1, %lo(D_800E62C0)($v1)
+    /* 8015A01C */  addiu      $at, $zero, 0x17
+    /* 8015A02C */  lbu        $a0, %lo(D_800E62BF)($a0)
+    /* 8015A030 */  lbu        $v1, %lo(D_800E62C0)($v1)
+    /* 8015A034 */  addiu      $at, $zero, 0x60
+    /* 8015A03C */   addiu     $a1, $zero, 0x7
+    /* 8015A044 */   addiu     $at, $zero, 0x1C
+    /* 8015A04C */   addiu     $at, $zero, 0x61
+    /* 8015A05C */   addiu     $at, $zero, 0x1B
+    /* 8015A068 */  lbu        $t1, %lo(D_800B593C)($t1)
+    /* 8015A06C */  addiu      $at, $zero, 0x80
+    /* 8015A088 */  lbu        $v0, %lo(D_800E738A)($v0)
+    /* 8015A0B0 */  lbu        $v0, %lo(D_800E738A)($v0)

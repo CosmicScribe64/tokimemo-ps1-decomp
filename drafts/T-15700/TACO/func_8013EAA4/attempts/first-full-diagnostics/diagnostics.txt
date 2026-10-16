@@ -1,0 +1,99 @@
+$ gcc -E -P -Iinclude -Isrc/ovl/TACO -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TACO/func_8013EAA4/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TACO/func_8013EAA4/work/guarded.c drafts/T-15700/TACO/func_8013EAA4/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3568: '&' before array or function; ignored
+     (*(s32 *)&spE8) = (s32) D_80129C40;
+ -------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3569: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spE8) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3570: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spE8) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3571: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spE8) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3572: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spE8) + (16)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (16));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3573: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spE8) + (20)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (20));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3575: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spE8) + (24)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (24));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3576: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spE8) + (28)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (28));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3583: '&' before array or function; ignored
+     func_800A1100((s32) &spE8);
+ ------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3584: '&' before array or function; ignored
+     func_800A1070(&spE8);
+ ------------------^
+cfe: Error: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3590: 'spAA' undefined; reoccurrences will not be reported.
+         spC2 = (spAA + var_s5) - 0x40;
+ ----------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3592: Incompatible pointer type assignment
+         var_s0 = sp54 + var_s3;
+ ---------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3595: '&' before array or function; ignored
+         func_800AB170((s32) &spC0, (s32) var_s0, (s32) &sp94, (s32) &sp90);
+ -------------------------------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3595: '&' before array or function; ignored
+         func_800AB170((s32) &spC0, (s32) var_s0, (s32) &sp94, (s32) &sp90);
+ --------------------------------------------------------------------^
+cfe: Error: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3606: 'spB8' undefined; reoccurrences will not be reported.
+     if ((spB8 >= -0x2C0) && (spB0 < 0x2C1)) {
+ ---------^
+cfe: Error: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3608: 'spB6' undefined; reoccurrences will not be reported.
+         if (spB6 >= (temp_v0_2 - 0x200)) {
+ ------------^
+cfe: Error: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3609: 'spBE' undefined; reoccurrences will not be reported.
+             if ((temp_v0_2 + 0x200) >= spBE) {
+ ---------------------------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3630: Incompatible pointer type assignment
+                 temp_v1_2 = sp88 + &D_8015F570;
+ --------------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3632: Incompatible pointer type assignment
+                 temp_a0 = sp88 + &D_8015F578;
+ ------------------------^
+cfe: Error: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3642: 'spBA' undefined; reoccurrences will not be reported.
+                 *(s16 *)((unsigned char *)temp_v0_3 + (10)) = spBA;
+ --------------------------------------------------------------^
+cfe: Error: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3644: 'spB2' undefined; reoccurrences will not be reported.
+                 *(s16 *)((unsigned char *)temp_v0_3 + (18)) = spB2;
+ --------------------------------------------------------------^
+cfe: Error: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3645: 'spBC' undefined; reoccurrences will not be reported.
+                 *(s16 *)((unsigned char *)temp_v0_3 + (24)) = spBC;
+ --------------------------------------------------------------^
+cfe: Error: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3647: 'spB4' undefined; reoccurrences will not be reported.
+                 *(s16 *)((unsigned char *)temp_v0_3 + (32)) = spB4;
+ --------------------------------------------------------------^
+cfe: Error: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3659: 'spAA' undefined; reoccurrences will not be reported.
+                     spC2 = (spAA + var_s5_2) - sp74;
+ ----------------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3661: Incompatible pointer type assignment
+                     var_s0_2 = sp54 + &spB0;
+ -----------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3664: '&' before array or function; ignored
+                     func_800AB170((s32) &spC0, (s32) var_s0_2, (s32) &sp94, (s32) &sp90);
+ ---------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3664: '&' before array or function; ignored
+                     func_800AB170((s32) &spC0, (s32) var_s0_2, (s32) &sp94, (s32) &sp90);
+ ----------------------------------------------------------------------------------^
+cfe: Error: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3706: 'spAA' undefined; reoccurrences will not be reported.
+                     spC2 = (spAA + sp58) - 0x80;
+ ----------------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3709: Incompatible pointer type assignment
+                     var_s0_3 = sp54 + &spB0;
+ -----------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3712: '&' before array or function; ignored
+                     func_800AB170((s32) &spC0, (s32) var_s0_3, (s32) &sp94, (s32) &sp90);
+ ---------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013EAA4/work/guarded.c, line 3712: '&' before array or function; ignored
+                     func_800AB170((s32) &spC0, (s32) var_s0_3, (s32) &sp94, (s32) &sp90);
+ ----------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15700/TACO/func_8013EAA4/work -o drafts/T-15700/TACO/func_8013EAA4/work/guarded.o /tmp/asm_processorft8o2f_e/preprocessed_7086473056e24f148358c66fd02d48be.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib23uqydo8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-15700/TACO/func_8013EAA4/work/guarded.o drafts/T-15700/TACO/func_8013EAA4/work/guarded.c

@@ -1,0 +1,8 @@
+{
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "original_path": "drafts/T-14500/ETC/func_8013FFAC",
+  "original_body_sha256": "f603e8c9b0d6957abbc0812fcf93aabf231af5c90679b69b91d9bcccba46a99b",
+  "compiler": "IDO 5.3 via order_search.compile_variant, full translation unit, Docker serial",
+  "matching_claim": false
+}

@@ -1,0 +1,23 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/RPG_BAT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/RPG_BAT/func_80139E88/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/ovl/RPG_BAT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/RPG_BAT/func_80139E88/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/RPG_BAT/func_80139E88/work/guarded.c drafts/T-16100/batch-1/RPG_BAT/func_80139E88/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-1/RPG_BAT/func_80139E88/work/guarded.o.sjis.c, line 3459: '&' before array or function; ignored
+     (*(s32 *)&sp80) = (s32) D_8015E530;
+ -------------^
+cfe: Warning 681: drafts/T-16100/batch-1/RPG_BAT/func_80139E88/work/guarded.o.sjis.c, line 3460: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp80) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_8015E530) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/RPG_BAT/func_80139E88/work/guarded.o.sjis.c, line 3461: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp80) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_8015E530) + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/RPG_BAT/func_80139E88/work/guarded.o.sjis.c, line 3462: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp80) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_8015E530) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/RPG_BAT/func_80139E88/work/guarded.o.sjis.c, line 3510: '&' before array or function; ignored
+     } while (var_s1_2 != &sp74);
+ -------------------------^
+

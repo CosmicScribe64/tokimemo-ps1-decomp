@@ -1,0 +1,14 @@
+-@row 0 27bdff30  ; addiu sp,sp,-208
++@row 0 27bdff38  ; addiu sp,sp,-200
+-@row 5 27ae0030  ; addiu t6,sp,48
++@row 5 27ae002c  ; addiu t6,sp,44
+-@row 25 8f390030  ; lw t9,48(t9)
++@row 25 8f39002c  ; lw t9,44(t9)
+-@row 44 3c09800f  ; lui t1,0x0
++@row 44 3c02800f  ; lui v0,0x0
+-@row 45 3c03800f  ; lui v1,0x0
++@row 45 3c09800f  ; lui t1,0x0
+-@row 62 906219ab  ; lbu v0,0(v1)
++@row 62 904219ab  ; lbu v0,0(v0)
+-@row 82 27bd00d0  ; addiu sp,sp,208
++@row 82 27bd00c8  ; addiu sp,sp,200

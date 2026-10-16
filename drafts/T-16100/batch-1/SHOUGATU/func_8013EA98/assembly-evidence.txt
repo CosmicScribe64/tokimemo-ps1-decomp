@@ -1,0 +1,33 @@
+    8013EA98:  addiu      $sp, $sp, -0x58
+    8013EAA0:  sw         $ra, 0x14($sp)
+    8013EAAC:  addiu      $ra, $sp, 0x40
+    8013EAD0:  addiu      $t8, $sp, 0x30
+    8013EAE8:  lui        $t1, %hi(D_800E6280)
+    8013EAF8:  addiu      $t1, $t1, %lo(D_800E6280)
+    8013EB0C:  multu      $v0, $v1
+    8013EB18:  addu       $t8, $t1, $t6
+    8013EB24:  sll        $t9, $t7, 30
+    8013EB34:  addu       $a0, $a0, $t8
+    8013EB38:  sll        $t6, $v0, 16
+    8013EB44:  sll        $t7, $a0, 16
+    8013EB84:  addu       $t9, $t7, $v0
+    8013EB90:  sll        $t7, $v0, 16
+    8013EBB4:  multu      $t6, $t5
+    8013EBC0:  addu       $t9, $t1, $t7
+    8013EBCC:  sll        $t6, $v1, 30
+    8013ED08:  multu      $t7, $t5
+    8013ED0C:  lui        $t1, %hi(D_800E6280)
+    8013ED10:  addiu      $t1, $t1, %lo(D_800E6280)
+    8013ED14:  addiu      $ra, $sp, 0x40
+    8013ED28:  addu       $a2, $t1, $t8
+    8013ED34:  sll        $t7, $t9, 30
+    8013EDA8:  sll        $v1, $v0, 1
+    8013EDAC:  addu       $t9, $ra, $v1
+    8013EDC0:   sll       $t7, $v0, 16
+    8013EDD4:  sll        $v1, $t8, 1
+    8013EDE0:  addu       $t8, $sp, $v1
+    8013EDE4:  multu      $t9, $t5
+    8013EDF8:  addu       $a2, $t1, $t6
+    8013EE04:  addu       $t9, $t7, $t8
+    8013EE20:  lw         $ra, 0x14($sp)
+    8013EE24:  addiu      $sp, $sp, 0x58

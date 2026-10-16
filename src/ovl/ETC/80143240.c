@@ -32,7 +32,7 @@ s32 func_80143240(void) {
 void func_80143334(void) {
     D_80150144 = 0;
     func_80143758();
-    if (D_8015014C == 1) {
+    if (D_8015014C[0] == 1) {
         draw2d3d(1, 1);
         func_80061710();
         func_80061790();
@@ -271,7 +271,68 @@ void func_80144768(void) {
         main_state_set(0x11);
     }
 }
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_801447B0);
+
+void func_801447B0(void) {
+    GameState *gs = &D_800E6280;
+
+    switch (gs->unk_110D) {
+    case 0:
+        if (func_80053F04() != 0) {
+            if (gs->unk_1115 == 1) {
+                func_80053D10();
+                gs->unk_110D += 1;
+            } else if (gs->unk_1115 == 0xF1) {
+                func_80053D10();
+                func_80042940(0xA0);
+            } else if (gs->unk_1115 == 0xFF) {
+                func_80053D10();
+                func_80042940(0xFF);
+            }
+        } else if ((u32) gs->unk_1120 >= 0x201U) {
+            func_80053D10();
+            func_80042940(0xFF);
+        }
+        break;
+    case 1:
+        func_80053CE0();
+        gs->unk_110D += 1;
+        break;
+    case 2:
+        if (func_80054140() == 2) {
+            gs->unk_110D += 1;
+        } else if ((u32) gs->unk_1120 >= 0x201U) {
+            func_80042940(0xFF);
+        }
+        break;
+    case 3:
+        if ((u8) D_800E8BEE != 0) {
+            func_80053D10();
+            func_80053CE0();
+            gs->unk_110D += 1;
+        } else {
+            func_80053D10();
+            func_8004E58C();
+            set_kanji_string(-0x80, 0x32, 0, (s32) "セーブするアルバムを選んでください", 0);
+            k_disp_start(1);
+            func_8004284C();
+        }
+        break;
+    case 4:
+        if (func_80054284() == 3) {
+            func_800552DC();
+            func_8004E58C();
+            set_kanji_string(-0x80, 0x32, 0, (s32) "セーブするアルバムを選んでください", 0);
+            k_disp_start(1);
+            func_8004284C();
+            func_80053D10();
+        } else if (((u32) gs->unk_1120 >= 0x201U) || (gs->unk_1115 == 0xF0)) {
+            func_80053D10();
+            func_80042940(0xFF);
+        }
+        break;
+    }
+    k_disp_inc();
+}
 
 s32 func_80144A38(void) {
     switch (D_800E6280.unk_110A) {
@@ -291,7 +352,50 @@ s32 func_80144A38(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144AC0);
+/* Port of the main clone func_8005C5BC (T-17300); only the state codes differ. */
+void func_80144AC0(void) {
+    s32 i;
+    s32 d;
+    FlagsWork24 *work;
+    s16 x[16];
+    s16 y[16];
+    s16 w[16];
+    s16 h[16];
+
+    func_8004E58C();
+    func_80066104("データセーブ");
+    d = 5;
+    for (i = 0; i < 14; i++) {
+        x[i] = (i / d) * 32 - 124;
+        y[i] = (i % d) * 16 - 64;
+        w[i] = 32;
+        h[i] = 16;
+        set_kanji_string(x[i], y[i], 15, D_800B32CC[i], 0);
+    }
+    menu_set(1, 14, x, y, w, h);
+    D_800E6280.unk_1094 = 0;
+    k_sub_reset_point_set();
+    work = (FlagsWork24 *)&D_800E7D10;
+    for (i = 1; i != 15; i++) {
+        if (work->unk_04[i] == 1) {
+            break;
+        }
+    }
+    if ((u8) D_800E8BEE != 0) {
+        D_800E6280.unk_1094 = D_800E7D36 - 1;
+        D_800E6280.unk_1118 = (s8) D_800E7D36;
+        func_80042940(2);
+        func_800696DC(0, 0);
+        func_8005C7C0();
+    } else if (i == 0xF) {
+        func_8005C7C0();
+        func_80042940(2);
+    } else {
+        D_800E6280.unk_1118 = i;
+        func_80042940(0xC0);
+    }
+    func_8005C7FC();
+}
 
 void func_80144CC4(void) {
     switch (D_800E6280.unk_110D) {
@@ -357,7 +461,58 @@ s32 func_801451D4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80145318);
+/* Written in the shape of the NAME_ENT sibling func_80142028 (T-17300). Like the sibling it is s32
+ * with no return statement: the incremented step stays in v0 on the way out. */
+s32 func_80145318(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80053D10();
+        func_80044750(0x502);
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 1, "メモリーカードに空きがありません", 0);
+        k_sub_disp_start(1);
+        D_800E6280.unk_110D++;
+    default:
+        break;
+    case 1:
+        if (D_800E6280.unk_F88 & 0x860) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 2:
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 1, "別のメモリーカードに", 0);
+        set_kanji_string(-0x80, 0x42, 1, "セーブしますか？", 0);
+        set_kanji_string(-0x18, 4, 0xF, D_801500F0, 0);
+        set_kanji_string(0x3C, 4, 1, func_80140F50(), 0);
+        set_kanji_string(-0x18, 0x14, 0xF, D_8015010C, 0);
+        set_kanji_string(0x3C, 0x14, 2, func_80140F94(), 0);
+        k_sub_disp_start(6);
+        D_800E6280.unk_110D++;
+        break;
+    case 3:
+        if (D_800E6280.unk_F88 & 0x20) {
+            D_800E6280.unk_110D++;
+        } else if (D_800E6280.unk_F88 & 0x40) {
+            func_80042908(2);
+        }
+        break;
+    case 4:
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 1, "別のメモリーカードを", 0);
+        set_kanji_string(-0x80, 0x42, 1, "差し込み口１にセットして、", 0);
+        set_kanji_string(-0x80, 0x52, 1, "ボタンを押してください。", 0);
+        k_sub_disp_start(3);
+        D_800E6280.unk_110D++;
+        break;
+    case 5:
+        if (D_800E6280.unk_F88 != 0) {
+            func_80053CE0();
+            func_80042940(0);
+        }
+        break;
+    }
+}
 
 void func_801455B0(void) {
     u8 temp;

@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-10
+updated: 2026-10-16
 sources: ["tools/type_recovery.py", "tools/test_type_recovery.py", "include/main_api.h", "config/symbol_addrs_types.txt", "wiki/matching-notes.md", "tools/migrate_globals.py", "tools/aggregate_audit.py"]
 ---
 
@@ -34,7 +34,18 @@ Limits: the pass is linear (no control flow), so a register state survives a lab
 | `Work80125D10` (0x50 bytes, one work area) | `D_80125D10` | `main_api.h` | 33 globals of main `80079B10`/`8007C030` | 1 |
 | `RpgRec18` (six words) | `D_8015EC58` | `include/ovl/RPG_BAT.h` | 5 globals | 1 |
 | byte view of the 0x44-byte record table | `D_8011ECD0` | existing `u8 D_8011ECD0[]` | uses only | 6 (ENDING 2, DATE 1, RPG_BAT 2, main 1) |
+| stack tables `RpgDirTable`, `RpgStrTbl4`, `RpgWordTbl4`, `RpgWordTbl10`, `RpgHalfTbl12` | `D_8015E4F0`, `D_8015E530`..`D_8015E578`, `D_8015E720`, `D_8015EFA0`..`D_8015EFF0` | `include/ovl/RPG_BAT.h` (T-17100) | 12 undeclared tables | 0 |
+| `RpgStat` pad named (`unk_0C`..`unk_34`) | `D_8015EBFC` | `include/ovl/RPG_BAT.h` (T-17100) | pad cast in `func_801447E0` | 0 |
 | byte view of EVENT's 0x44-byte table | `D_800EAFA0` (new) | `main_api.h` | uses only | 1 |
+| `TaiRunnersA` (`player`, `cpu[3]` of `TaiRunnerA`, 0x24) | `D_80149208` | `include/ovl/TAIIKU.h` (T-16550) | `TaiikuSlots`, `TaiSlot24` views | 0 |
+| `TaiRunnerB[4]` (0x24) | `D_8014A13C` | `include/ovl/TAIIKU.h` (T-16550) | 8 globals | 0 (FAKE byte views kept in `func_801449A0`, `func_801448D4`, `func_80144C70`) |
+| `TaiikuController` player + `D_8014A400[3]`, `TaiikuSlot1C[4]` (0x1C) | `D_8014A3E4`, `D_8014A400`, `D_8014A454` | `include/ovl/TAIIKU.h` (T-16550) | 9 globals, `Tk1C`, `TaiikuTick1C` | 0 |
+| 28 stack-copied constant tables as one-array structs | `D_80148F28`..`D_8014A5F4` | `include/ovl/TAIIKU.h` (T-16550) | none (new declarations) | 0 |
+| `FnTblNN` step tables (35 sizes, `void (*f[NN])()`) | 68 tables `D_8015BF50`..`D_80160BD0` | `include/ovl/DATE.h` (T-17200) | 39 local typedefs and externs of 16 DATE `.c` files | 0 |
+| DATE stack-copied tables `DateBytes11x21`, `DateWords21`, `DateShorts8`, `DatePairs8`, `Tbl21` | `D_8015B7A0`, `D_8015B888`/`8DC`/`930`, `D_8015B984`, `D_8015F9B0`/`9C0`, `D_8015FB1C`/`B2C`/`B3C` | `include/ovl/DATE.h` (T-17200) | none (new declarations) | 0 |
+| ETC overlay data: `EtcExamRank` (0x8C), ranking row positions `s16[14]`, per-girl tables `u8[13]`, `s32[13][2]`, `s32 *[13]`, CD file table `s32 *[22]`, `SVECTOR`, `s32[16]`, `EtcWork40` view moved to the header | `D_80150668`, `D_80150630`/`64C`, `D_80150728`/`738`, `D_8014E0A4`, `D_8014DB90`/`BF8`, `D_8014E070`, `D_8014EA18`, `D_8015013C`, `D_8015014C`, `D_801230D0` | `include/ovl/ETC.h` (T-17300) | `D_80150150`, `D_80150188` (into `D_8015014C`); `D_8015013E`, `D_80150140` and `D_80150668`'s 18 splat labels stay data labels | 0 |
+| `FnTblNN` step tables (36 sizes, `void (*f[NN])()`) | 90 tables `D_801207B8`..`D_8012514C` | `include/ovl/EVENT.h` (T-17400) | 63 local typedefs and externs of 15 EVENT `.c` files, `Blob80` of `D_801218E8` | 0 |
+| EVENT stack-copied tables `U16x21`, `EvPairs8`, `EvShorts82`, `EvShorts10`, `EvShorts11`, `EvShorts5`; views `Ev44`, `EvTbl` | `D_80125454`..`D_801254D8`, `D_80122990`, `D_80121A34`, `D_80123B7C`/`B90`/`BA4`, `D_80125330`/`348`, `D_80125360`, `D_80120A74`, `D_80121AD8` | `include/ovl/EVENT.h` (T-17400) | local `U16x21`, `Ev44`, `EvEnt`/`EvTbl` typedefs | 0 |
 
 33 `FAKE` comments of the "first symbol" family are gone (117 to 84 in `src/`). The `Work80125D10` conversion is the strongest single test: 96 uses in already-matched functions moved to one symbol and none changed bytes.
 
@@ -55,6 +66,7 @@ Linking: a base that no original instruction names has no label. Overlays get su
 - The main bss block is `GameState D_800E6280` (0x800E6280..0x800E7D10, T-5100): [[game-state]] has the layout, the evidence and what is still unknown. Its old `D_` names are rejected by ninja; `tools/migrate_globals.py --apply` rewrites them, also in new code. Every unit reaches it through the base symbol (T-7010, [[game-state]] "Views").
 - `Rec38` +0x0C and +0x10 are `GsWord` unions (word and byte views of bit-field words); a bit-field struct that fits every user is still open.
 - Main `D_80121818`, `D_8012183C`, `D_80121860`, `D_80121864`, `D_80121884` stay declared because EVENT has its own data at those addresses.
+- Overlay aggregates (TAIIKU, T-16550) are not in `config/migrate_globals.txt`: the tool rewrites every `src` file and all overlays share the address 0x80132000 up, so an overlay range would claim other overlays' names. Their absorbed names are rewritten by hand; [[taiiku-family-results]] has the layouts and why each is an array, a struct or two objects.
 
 ## Aggregates and old names (T-5100)
 
@@ -122,3 +134,27 @@ but the actual packet is eight bytes (tag plus one command word), as recorded
 in the [DIABPSX.SYM type dump](https://gist.github.com/mewmew/f4c94068e1462e40142b6cab112d43d2).
 The shared declaration and ABI test use that eight-byte layout. DR_STP is
 twelve bytes, with two command words.
+
+## MASTER held-out table pilot (T-13001)
+
+[[master-types-pilot]] verifies three additional 13-s16 copies at D_8013C7E8/C804/C820 using the existing MasterHalfwords13 type. Reusing MasterSprite44 preserves ordered accesses at +03/+07/+16 in the two later handlers. Three full-TU matches add 3,648 literal bytes; source-level register/stack idioms remain FAKE-labelled, distinct from the demonstrated layouts. No shared type migration.
+
+## TACO types-first pass (T-16560)
+
+`TcActor` (0x88) now has its object handle (`Tc10`, GsDOBJ2 layout) at +0x04 and its coordinate object
+(`TcObj50`, GsCOORDINATE2 layout, complete) at +0x14; `Tc14` has no holes; `D_8015EC70` is a `Tc14[16]`
+table; `D_80129C40` is a `MATRIX` in `main_api.h` (which now includes `libgte.h`). Map, evidence and the
+draft rewrites built on them: [[taco-family-results]] ("Types-first pass").
+- `type_recovery.py` reads every struct copy that IDO emits as a three-word loop as a stride-0xC array: in DATE
+  the 30 highest proposals are step-table copies, not records ([[date-family-results]], T-17200).
+
+## Main types-first pass (T-17000)
+
+Main-only tables declared in `main_api.h` (`D_800B6890`/`D_800B68A8` two-byte rows, `D_800B68E0`/`D_800B6928`
+signed nine-byte rows, `D_800C6200[8]`, `D_800C62C0[32]`, `D_80125DA0`/`D_80125E20` channel rows,
+`D_800B5AA4`/`D_800B5AE4` halfword pairs, `u8 *D_800B6CF8[]`) and the `Flags7D4F` bit-field view of
+`D_800E7D4F`. The shared main aggregates that need overlay edits (`D_800E7D10` object, `D_80125C00` table,
+`D_801230D0`, the GsCOORDINATE2 layout of `TaiikuBig`) are listed in [[main-family-results]] ("Types-first
+pass (T-17000)").
+  the 30 highest proposals are step-table copies, not records ([[date-family-results]], T-17200); the same in EVENT
+  ([[event-family-results]], T-17400).

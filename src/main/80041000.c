@@ -109,7 +109,69 @@ void func_80041168(s32 arg0) {
     func_8009C674(0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800412E0);
+void func_800412E0(s32 arg0) {
+    func_8009C210(0);
+    if (arg0 != 0) {
+        func_80041168(0xFF);
+        bzero(&D_800E6280, 0x1A8C);
+    }
+    D_800E6280.unk_000 = 0x140;
+    D_800E6280.unk_002 = 0xF0;
+    D_800E6280.unk_004 = 0;
+    D_800E6280.unk_036 = 0;
+    D_800E6280.unk_037 = 0;
+    D_800E6280.unk_038 = 0;
+    D_800E6280.unk_014[0] = 0xA0;
+    D_800E6280.unk_014[1] = 0xA0;
+    D_800E6280.unk_018[0] = 0x168;
+    D_800E6280.unk_018[1] = 0x78;
+    D_800E6280.unk_10F8 = 0;
+    D_800E6280.unk_10FC = 0;
+    D_800E6280.unk_1100 = 0;
+    D_800E6280.unk_1104.w = 0;
+    D_800E6280.unk_1108 = 0x10;
+    D_800E6280.unk_1109 = 0;
+    D_800E6280.unk_110A = 0;
+    D_800E6280.unk_F88 = 0;
+    D_800E6280.unk_F84 = 0;
+    D_800E6280.unk_F80 = 0;
+    D_800E6280.unk_1110 = 0;
+    D_800E6280.unk_110F = 0;
+    D_800E6280.unk_10F0 = 0x106;
+    /* Word initialization overlaps the byte selectors read by the menus. */
+    *(s32 *)&D_800E6280.unk_1095[3] = 0x9F;
+    func_8004902C();
+    D_800E6280.unk_039 = 0;
+    D_800E6280.unk_1113 = 0;
+    D_800E6280.unk_1114 = 0;
+    D_800E6280.unk_034 = 1;
+    tpage_buf_clear();
+    search_tpage(0x7FFF, 0, 0);
+    D_800E6280.unk_10E8 = 1;
+    func_80041584();
+    func_80048EB8(0);
+    dec_bg_reset();
+    func_8004482C();
+    menu_bar_color(0x10, 0, 0, 8);
+    func_80041840();
+    strncpy(D_800E6280.unk_0C4, "ときめき", 0x10);
+    strncpy(D_800E6280.unk_0D4, "アルバ", 8);
+    strncpy(D_800E6280.unk_0DC, "ム作成", 8);
+    strncpy(D_800E6280.unk_0E4, "後未セーブ", 0x10);
+    /* Birthday fields share the existing word view. T-14200. */
+    ((GsDateBits *)&D_800E6280.unk_0F8)->month = 1;
+    ((GsDateBits *)&D_800E6280.unk_0F8)->day = 1;
+    func_8006BC28(0);
+    func_8006BD6C(0);
+    func_8006C848(1);
+    func_8006C848(0);
+    func_80041878();
+    func_80054C4C();
+    bzero(D_80122DD0, 0x100);
+    bzero(&D_80122CD0, 0x100);
+    bzero(&D_801230D0, 0x40);
+    func_80042058();
+}
 
 void func_80041584(void) {
     func_800415B4(0, 0x40);
@@ -238,7 +300,58 @@ void func_800418B0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800419FC);
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80041C2C);
+void func_80041C2C(void) {
+    GameState *g = &D_800E6280;
+    s32 i;
+
+    bzero(g->unk_1BC, 0x380);
+    for (i = 0; i < 16; i++) {
+        g->unk_1BC[i].unk_0C.f.b1 = 0;
+        g->unk_1BC[i].unk_0C.f.b3 = 0;
+        g->unk_1BC[i].unk_0C.f.b6 = 0;
+        g->unk_1BC[i].unk_02 = 0;
+        g->unk_1BC[i].unk_06 = 0x32;
+        g->unk_1BC[i].unk_0A = 0;
+        g->unk_1BC[i].unk_0C.b[3] = 0;
+        g->unk_1BC[i].unk_0C.f.b7 = 0;
+        g->unk_1BC[i].unk_0C.f.f9 = 0;
+        g->unk_1BC[i].unk_0C.f.f20 = 11;
+    }
+    g->unk_1BC[0].unk_0C.f.b1 = 1;
+    g->unk_1BC[12].unk_0C.f.b1 = 1;
+    g->unk_1BC[0].unk_0C.f.b3 = 1;
+    g->unk_1BC[0].unk_0C.f.b6 = 1;
+    g->unk_1BC[0].unk_0C.f.b7 = 1;
+    g->unk_1BC[12].unk_0C.f.b3 = 1;
+    g->unk_1BC[0].unk_10.date.month = 2;
+    g->unk_1BC[0].unk_10.date.day = 14;
+    g->unk_1BC[1].unk_10.date.month = 2;
+    g->unk_1BC[1].unk_10.date.day = 3;
+    g->unk_1BC[2].unk_10.date.month = 7;
+    g->unk_1BC[2].unk_10.date.day = 7;
+    g->unk_1BC[3].unk_10.date.month = 9;
+    g->unk_1BC[3].unk_10.date.day = 30;
+    g->unk_1BC[4].unk_10.date.month = 1;
+    g->unk_1BC[4].unk_10.date.day = 13;
+    g->unk_1BC[5].unk_10.date.month = 6;
+    g->unk_1BC[5].unk_10.date.day = 13;
+    g->unk_1BC[6].unk_10.date.month = 12;
+    g->unk_1BC[6].unk_10.date.day = 3;
+    g->unk_1BC[7].unk_10.date.month = 11;
+    g->unk_1BC[7].unk_10.date.day = 15;
+    g->unk_1BC[8].unk_10.date.month = 10;
+    g->unk_1BC[8].unk_10.date.day = 17;
+    g->unk_1BC[9].unk_10.date.month = 9;
+    g->unk_1BC[9].unk_10.date.day = 5;
+    g->unk_1BC[10].unk_10.date.month = 5;
+    g->unk_1BC[10].unk_10.date.day = 16;
+    g->unk_1BC[11].unk_10.date.month = 3;
+    g->unk_1BC[11].unk_10.date.day = 3;
+    g->unk_1BC[12].unk_10.date.month = 8;
+    g->unk_1BC[12].unk_10.date.day = 23;
+    g->unk_1BC[13].unk_10.date.month = 4;
+    g->unk_1BC[13].unk_10.date.day = 4;
+}
 
 void func_80041F48(void) {
     s32 i;

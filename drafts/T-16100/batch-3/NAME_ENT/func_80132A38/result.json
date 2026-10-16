@@ -1,0 +1,24 @@
+{
+  "scope": "NAME_ENT:func_80132A38",
+  "src": "src/ovl/NAME_ENT/80132000.c",
+  "path": "drafts/T-16100/batch-3/NAME_ENT/func_80132A38",
+  "archive_path": "drafts/T-16100/batch-3/NAME_ENT/func_80132A38",
+  "status": "scored",
+  "score": 97,
+  "source_base": "48362009",
+  "header_base": "drafts/T-14500/baseline/include",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "initial_score": 95,
+  "artifact_sha256": {
+    "assembly-evidence.txt": "6c2d06046a82e58041f832a2572d03fb8d75a3c977e4d841bff6c0d9f1a1f593",
+    "provenance.json": "6e3e1bff4f3c2768c3247c96c123024806495ae9249fdbafc6b452da488e3b04",
+    "declarations.h": "d0337a6c13a852123cd4f4d148810a2f710e89125bb403f697f7a5053093d296",
+    "difference.txt": "a0baa73b730f1b2ecb570094f2d40b8032f8e73c3dd7c4ad541344c93ce16f9f",
+    "context.c": "b42cb1e1b126e0d16c63e01bf9b7231b72f1538715072e133d33eb21b54025e3",
+    "body.c": "ea853f98a2793104cddf3230a1132784ceacb03aa84a8baf065883ffbf41ad75",
+    "full-context.c": "9b8fac00cde8252b36f544c3cba4a2609cbf5bde3fdf7c2400a7c8efb6cafb3e",
+    "diagnostics.txt": "b93d1fbe5d52832863684a584805d6d4a4d6f0193112d0a1e29054599a1891c4"
+  }
+}

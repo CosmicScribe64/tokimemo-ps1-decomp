@@ -1,0 +1,40 @@
+m2c.py: argument counts from the callees' asm: func_80108330 0
+python3 failed:
+ ----^
+cfe: Warning 749: drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o.sjis.c, line 4798: structure has no member named 'unk0'
+     sp58[0].unk0 = (s32) D_80123B90.unk0;
+ -----------------------------------^
+cfe: Error: drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o.sjis.c, line 4803: 'sp44' undefined; reoccurrences will not be reported.
+     sp44[0].unk0 = (s32) D_80123BA4.unk0;
+ ----^
+cfe: Warning 749: drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o.sjis.c, line 4803: structure has no member named 'unk0'
+     sp44[0].unk0 = (s32) D_80123BA4.unk0;
+ -----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/plain/EVENT/func_80109404/work -o drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o /tmp/asm_processor6ddl8eq2/preprocessed_c52c1b82dd20443b9d6c4882cc274ade.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibkll70mzp/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o.sjis.c
+python3 failed:
+ -----------------------------------^
+cfe: Error: drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o.sjis.c, line 4799: 'sp58' undefined; reoccurrences will not be reported.
+     sp58[0].unk0 = (s32) D_80123B90.unk0;
+ ----^
+cfe: Warning 749: drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o.sjis.c, line 4799: structure has no member named 'unk0'
+     sp58[0].unk0 = (s32) D_80123B90.unk0;
+ -----------------------------------^
+cfe: Warning 749: drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o.sjis.c, line 4804: structure has no member named 'unk0'
+     sp44[0] = (s32) D_80123BA4.unk0;
+ ------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/plain/EVENT/func_80109404/work -o drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o /tmp/asm_processorxk83xtj2/preprocessed_fa22115dd4f34dbcb3a73076f42c006c.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibdhb123oh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o.sjis.c
+python3 failed:
+ ----^
+cfe: Warning 749: drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o.sjis.c, line 4795: structure has no member named 'unk0'
+     sp6C[0].unk0 = (s32) D_80123B7C.unk0;
+ -----------------------------------^
+cfe: Warning 749: drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o.sjis.c, line 4800: structure has no member named 'unk0'
+     sp58[0] = (s32) D_80123B90.unk0;
+ ------------------------------^
+cfe: Warning 749: drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o.sjis.c, line 4805: structure has no member named 'unk0'
+     sp44[0] = (s32) D_80123BA4.unk0;
+ ------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/plain/EVENT/func_80109404/work -o drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o /tmp/asm_processormnxtcsx0/preprocessed_701ab0ed47514810846ec6ab6f8b27a2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliblsy867sy/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o drafts/T-17400/_runs/plain/EVENT/func_80109404/work/guarded.o.sjis.c

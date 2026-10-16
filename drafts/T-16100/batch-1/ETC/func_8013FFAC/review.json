@@ -1,0 +1,55 @@
+{
+  "scope": "ETC:func_8013FFAC",
+  "selected_path": "drafts/T-14500/ETC/func_8013FFAC",
+  "changed": false,
+  "outcomes": [
+    {
+      "detail": "sp54[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "unresolved-layout",
+      "explanation": "Stack accesses and initialization/call sites reviewed against the target. Separate synthesized locals or oversized arrays are not evidence of a valid aggregate. No safe complete layout was established in this bounded pass; preserve the flag and original draft. sp54 is populated through a six-iteration pointer loop while sp58 is independently assigned. They likely alias one six-word texture-address array; the generated pointer increments still scale as s32 units and need a complete loop rewrite before shrinking the buffer.",
+      "original_excerpt": [
+        "void func_8013FFAC(void) {",
+        "    s32 sp54[16];",
+        "    s32 sp58;"
+      ]
+    }
+  ],
+  "repair_notes": [],
+  "assembly_path": "asm/ovl/ETC/nonmatchings/ETC/8013FF80/func_8013FFAC.s",
+  "assembly_sha256": "f44ec52250eed6adae82db18bebe5b4ed4827764c2142b788e19500f3becdac6",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x14": [
+      "sw"
+    ],
+    "0x10": [
+      "sw"
+    ],
+    "0x24": [
+      "sw"
+    ],
+    "0x20": [
+      "sw"
+    ],
+    "0x1C": [
+      "sw"
+    ],
+    "0x18": [
+      "sw"
+    ],
+    "0x54": [
+      "sw"
+    ],
+    "0x58": [
+      "sw"
+    ]
+  },
+  "layout_limit": "sp54 is populated through a six-iteration pointer loop while sp58 is independently assigned. They likely alias one six-word texture-address array; the generated pointer increments still scale as s32 units and need a complete loop rewrite before shrinking the buffer."
+}

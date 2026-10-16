@@ -966,3 +966,12 @@ void func_80135CA0(void);
 void func_801342A4(void);
 
 #endif
+
+#ifndef OVL_GYOZI_T13202_INITIALIZER
+#define OVL_GYOZI_T13202_INITIALIZER
+/* T-13202: widths read/written by the sprite initializer. */
+extern s16 D_80148810;
+extern s8 D_8014881C;
+extern u8 D_80148754;
+extern u8 D_80148758;
+#endif

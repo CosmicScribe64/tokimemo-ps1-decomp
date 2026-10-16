@@ -1,0 +1,7 @@
+{
+  "scope": "RPG_BAT:func_80153784",
+  "original": "drafts/T-14500/RPG_BAT/func_80153784",
+  "notes": "State callback has no return consumer in current TU; use void and discard incidental register return, preserving all call sideeffects. Existing callee func_80153A60 is void.",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "tool_environment": "drafts/T-14500/environment.json"
+}

@@ -1,0 +1,50 @@
+    80134900:  addiu      $sp, $sp, -0x40
+    8013490C:   sw        $ra, 0x1C($sp)
+    80134910:  sll        $t6, $a3, 2
+    80134918:  addu       $at, $at, $t6
+    80134998:  lui        $t3, %hi(D_800E6280)
+    801349A4:  addiu      $t3, $t3, %lo(D_800E6280)
+    801349CC:  multu      $a0, $a2
+    801349D0:  sll        $t5, $a0, 6
+    801349D8:  sll        $t7, $a0, 1
+    801349E4:  addu       $v0, $a1, $t9
+    801349EC:  sll        $t9, $a0, 7
+    801349F0:  addu       $t6, $t3, $a0
+    801349F8:  sll        $t7, $a0, 16
+    80134BA0:   sw        $zero, 0x10($sp)
+    80134BD4:  sw         $t5, 0x14($sp)
+    80134BDC:   sw        $t7, 0x10($sp)
+    80134C14:  multu      $a0, $a2
+    80134C1C:  sll        $t7, $a0, 16
+    80134C2C:  addu       $v0, $a1, $t8
+    80134C48:  multu      $a0, $a2
+    80134C50:  sll        $t7, $a0, 16
+    80134C60:  addu       $v0, $a1, $t8
+    80134CC0:  multu      $a0, $a2
+    80134CD0:  sll        $t7, $a0, 16
+    80134CE0:  addu       $v0, $a1, $t6
+    80134CF8:  multu      $a0, $a2
+    80134D08:  sll        $t9, $a0, 16
+    80134D18:  addu       $v0, $a1, $t8
+    80134D84:  multu      $a0, $a2
+    80134D94:  sll        $t6, $a0, 16
+    80134DA4:  addu       $v0, $a1, $t9
+    80134DBC:  multu      $a0, $a2
+    80134DCC:  sll        $t8, $a0, 16
+    80134DDC:  addu       $v0, $a1, $t5
+    80134E40:  multu      $a0, $a2
+    80134E50:  sll        $t9, $a0, 16
+    80134E60:  addu       $v0, $a1, $t8
+    80134E78:  multu      $a0, $a2
+    80134E88:  sll        $t5, $a0, 16
+    80134E98:  addu       $v0, $a1, $t7
+    80134EC0:  multu      $a0, $a2
+    80134EC8:  sll        $t8, $a0, 16
+    80134ED8:  addu       $v0, $a1, $t6
+    80134EF4:  multu      $a0, $a2
+    80134EFC:  sll        $t8, $a0, 16
+    80134F0C:  addu       $v0, $a1, $t6
+    80134FFC:  sw         $a3, 0x30($sp)
+    80135010:  lw         $a3, 0x30($sp)
+    80135094:  lw         $ra, 0x1C($sp)
+    80135098:  addiu      $sp, $sp, 0x40

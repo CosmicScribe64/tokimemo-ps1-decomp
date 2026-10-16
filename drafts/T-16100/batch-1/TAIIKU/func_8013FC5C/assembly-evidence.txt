@@ -1,0 +1,31 @@
+    8013FC5C:  addiu      $sp, $sp, -0x78
+    8013FC64:  sw         $ra, 0x3C($sp)
+    8013FC68:  sw         $fp, 0x38($sp)
+    8013FC6C:  sw         $s7, 0x34($sp)
+    8013FC70:  sw         $s6, 0x30($sp)
+    8013FC74:  sw         $s5, 0x2C($sp)
+    8013FC78:  sw         $s4, 0x28($sp)
+    8013FC7C:  sw         $s3, 0x24($sp)
+    8013FC80:  sw         $s2, 0x20($sp)
+    8013FC84:  sw         $s1, 0x1C($sp)
+    8013FC88:  sw         $s0, 0x18($sp)
+    8013FC94:  addiu      $a1, $sp, 0x64
+    8013FCDC:  addiu      $a1, $sp, 0x64
+    8013FCF0:  addu       $t3, $a1, $s5
+    8013FD08:  addu       $t5, $t2, $t4
+    8013FD14:  sll        $t8, $s2, 1
+    8013FD18:  addu       $v0, $s7, $t8
+    8013FD58:  addu       $at, $at, $v1
+    8013FDD8:  sll        $t2, $s2, 1
+    8013FDDC:  addu       $v0, $s7, $t2
+    8013FE14:  lw         $ra, 0x3C($sp)
+    8013FE18:  lw         $s0, 0x18($sp)
+    8013FE1C:  lw         $s1, 0x1C($sp)
+    8013FE20:  lw         $s2, 0x20($sp)
+    8013FE24:  lw         $s3, 0x24($sp)
+    8013FE28:  lw         $s4, 0x28($sp)
+    8013FE2C:  lw         $s5, 0x2C($sp)
+    8013FE30:  lw         $s6, 0x30($sp)
+    8013FE34:  lw         $s7, 0x34($sp)
+    8013FE38:  lw         $fp, 0x38($sp)
+    8013FE40:   addiu     $sp, $sp, 0x78

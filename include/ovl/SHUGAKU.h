@@ -483,6 +483,16 @@ extern s16 D_8013C87C;
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 void func_80132F44(void);
 
+/* Phase handlers that func_80137490 switches over. */
+void func_80132274(void);
+void func_801336A4(void);
+void func_80133E10(void);
+void func_80134930(void);
+void func_80135480(void);
+void func_80138B20(void);
+void func_80139C80(void);
+void func_80139D40(void);
+
 #endif /* OVL_SHUGAKU_H */
 
 #ifndef T9540_SHUGAKU_FN68

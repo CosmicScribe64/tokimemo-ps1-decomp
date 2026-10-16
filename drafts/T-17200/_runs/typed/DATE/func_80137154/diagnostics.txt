@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_80085B3C 2
+python3 failed:
+ -----------------------------------------------------------------^
+cfe: Warning 749: drafts/T-17200/_runs/typed/DATE/func_80137154/work/guarded.o.sjis.c, line 5818: structure has no member named 'unk0'
+         D_800CA21E = (s16) *(u8 *)((unsigned char *)((D_800E6280.unk0 * 0x12) + D_8015B584 + temp_t8) + (13));
+ ----------------------------------------------------------------^
+cfe: Warning 749: drafts/T-17200/_runs/typed/DATE/func_80137154/work/guarded.o.sjis.c, line 5819: structure has no member named 'unk0'
+         D_800CA220 = (s16) *(u8 *)((unsigned char *)((D_800E6280.unk0 * 0x12) + D_8015B584 + temp_t8) + (14));
+ ----------------------------------------------------------------^
+cfe: Error: drafts/T-17200/_runs/typed/DATE/func_80137154/work/guarded.o.sjis.c, line 5823: Unacceptable operand of == or !=
+     if (*(&D_800E6280 + (D_800E6280.unk_F5E * 8)) == 1) {
+ --------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/typed/DATE/func_80137154/work -o drafts/T-17200/_runs/typed/DATE/func_80137154/work/guarded.o /tmp/asm_processorgt91i1en/preprocessed_26a0c88cd475405583717a3106ed360e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib87tnbjun/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/typed/DATE/func_80137154/work/guarded.o drafts/T-17200/_runs/typed/DATE/func_80137154/work/guarded.o.sjis.c

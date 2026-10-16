@@ -1,0 +1,28 @@
+{
+  "scope": "DATE:func_801518B8",
+  "path": "drafts/T-16100/batch-2/DATE/func_801518B8",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "M2cBlock44",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    }
+  ],
+  "explanation": "68-byte global-to-global copy is exact extent but no known record struct; retained opaque copy with explicit unresolved semantic type.",
+  "evidence_path": "drafts/T-16100/batch-2/DATE/func_801518B8/evidence.txt",
+  "compile_status": "scored",
+  "score": 36,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "M2cBlock44",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "68-byte global-to-global copy is exact extent but no known record struct; retained opaque copy with explicit unresolved semantic type."
+    }
+  ]
+}

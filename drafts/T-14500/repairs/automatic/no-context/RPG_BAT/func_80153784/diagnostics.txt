@@ -1,0 +1,91 @@
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3220: Incompatible function return type for this function.
+ void func_80153B08(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3232: redeclaration of 'func_80153D20'; previous declaration at line 3093 in file 'drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c'
+ void func_80153D20(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3232: Incompatible function return type for this function.
+ void func_80153D20(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o /tmp/asm_processoru7lef55f/preprocessed_c4fedc3fc4f34060a3750e9387a7ac63.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib29st0m0v/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3219: Incompatible function return type for this function.
+ void func_80153B08(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3231: redeclaration of 'func_80153D20'; previous declaration at line 3163 in file 'drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c'
+ void func_80153D20(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3231: Incompatible function return type for this function.
+ void func_80153D20(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o /tmp/asm_processorzs5cs0tv/preprocessed_8f7cb1c498304ba6ae679d1af14d8235.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibf9nedb6f/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c
+python3 failed:
+ ------------------^
+cfe: Warning 749: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3206: structure has no member named 'unk_3A'
+         *(s8 *)&D_800E6280.unk_3A = *p;
+ --------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3220: redeclaration of 'func_80153B08'; previous declaration at line 3092 in file 'drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c'
+ void func_80153B08(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3220: Incompatible function return type for this function.
+ void func_80153B08(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o /tmp/asm_processord1oh6k8b/preprocessed_fc7f2422b8c2420dab747614e383fa52.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibuphwqgkq/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c
+python3 failed:
+ ------------------^
+cfe: Warning 749: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3205: structure has no member named 'unk_3A'
+         *(s8 *)&D_800E6280.unk_3A = *p;
+ --------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3219: redeclaration of 'func_80153B08'; previous declaration at line 3162 in file 'drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c'
+ void func_80153B08(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3219: Incompatible function return type for this function.
+ void func_80153B08(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o /tmp/asm_processorq09o2wy0/preprocessed_d5311eadc5414514bfb2b46d3beaf615.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibff5f0ord/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c
+python3 failed:
+ -----------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3198: redeclaration of 'func_80153A60'; previous declaration at line 3094 in file 'drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c'
+ void func_80153A60(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3198: Incompatible function return type for this function.
+ void func_80153A60(void) {
+ ------------------^
+cfe: Warning 749: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3206: structure has no member named 'unk_3A'
+         *(s8 *)&D_800E6280.unk_3A = *p;
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o /tmp/asm_processorofxkecdf/preprocessed_92d934597eea4b7eb620a5942ddb22a9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib49nkewnq/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c
+python3 failed:
+ -----------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3197: redeclaration of 'func_80153A60'; previous declaration at line 3164 in file 'drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c'
+ void func_80153A60(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3197: Incompatible function return type for this function.
+ void func_80153A60(void) {
+ ------------------^
+cfe: Warning 749: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3205: structure has no member named 'unk_3A'
+         *(s8 *)&D_800E6280.unk_3A = *p;
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o /tmp/asm_processor74ipv6o7/preprocessed_e641ae7c9c7c4a1d9a85a071c20ef495.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib6bpevo21/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c
+python3 failed:
+ ----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3165: Reference of an expression of void type or an incomplete type.
+         var_v0 = func_80153A60();
+ ------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3191: '&' before array or function; ignored
+         } while (var_v0_2 != &D_8015ED3C);
+ -----------------------------^
+cfe: Warning 749: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c, line 3206: structure has no member named 'unk_3A'
+         *(s8 *)&D_800E6280.unk_3A = *p;
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o /tmp/asm_processorm0lstm21/preprocessed_7cb4942f8acc48c5a87e97e2ca5a18f6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibskz8jx5p/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80153784/work/guarded.o.sjis.c

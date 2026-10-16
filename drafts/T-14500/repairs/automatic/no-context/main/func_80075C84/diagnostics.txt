@@ -1,0 +1,87 @@
+python3 failed:
+ -------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2685: redeclaration of 'telephone_class_init'; previous declaration at line 2030 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c'
+ s32 telephone_class_init();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2685: Incompatible function return type for this function.
+ s32 telephone_class_init();
+ ------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2732: Incompatible pointer type assignment
+                     temp_a1 = &D_800E6280 + (var_a2 * 0x38);
+ ----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o /tmp/asm_processorjw619486/preprocessed_3a4cad56b3c44c48ae5147b8ca9ab32f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib6sbs3him/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c
+python3 failed:
+ --------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2683: redeclaration of 'k_sub_reset_point_set'; previous declaration at line 1706 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c'
+ s32 k_sub_reset_point_set();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2683: Incompatible function return type for this function.
+ s32 k_sub_reset_point_set();
+ -------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2731: Incompatible pointer type assignment
+                     temp_a1 = &D_800E6280 + (var_a2 * 0x38);
+ ----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o /tmp/asm_processorxtfpzi_y/preprocessed_7e73d2419843477b8389d9b21285f5ec.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibsa5_sqq7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c
+python3 failed:
+ --------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2682: redeclaration of 'k_sub_disp_start'; previous declaration at line 1710 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c'
+ s32 k_sub_disp_start();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2682: Incompatible function return type for this function.
+ s32 k_sub_disp_start();
+ --------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2730: Incompatible pointer type assignment
+                     temp_a1 = &D_800E6280 + (var_a2 * 0x38);
+ ----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o /tmp/asm_processoravhlorm2/preprocessed_ab564a21d29a4428a260bec99e84928d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib0khls3t2/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2681: redeclaration of 'icon_disp_switch'; previous declaration at line 1926 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c'
+ s32 icon_disp_switch();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2681: Incompatible function return type for this function.
+ s32 icon_disp_switch();
+ --------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2729: Incompatible pointer type assignment
+                     temp_a1 = &D_800E6280 + (var_a2 * 0x38);
+ ----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o /tmp/asm_processorgkchj5br/preprocessed_cb4b1a3afd8f433d9c5e4aa097aaab5c.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib2qgj93cf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2680: redeclaration of 'func_80065F34'; previous declaration at line 1931 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c'
+ s32 func_80065F34();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2680: Incompatible function return type for this function.
+ s32 func_80065F34();
+ -----------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2728: Incompatible pointer type assignment
+                     temp_a1 = &D_800E6280 + (var_a2 * 0x38);
+ ----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o /tmp/asm_processor04fwc3o1/preprocessed_5ff1461f419d497a849cdd4b25a6a557.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibjy1qujip/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2679: redeclaration of 'func_8004E58C'; previous declaration at line 1697 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c'
+ s32 func_8004E58C();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2679: Incompatible function return type for this function.
+ s32 func_8004E58C();
+ -----------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2727: Incompatible pointer type assignment
+                     temp_a1 = &D_800E6280 + (var_a2 * 0x38);
+ ----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o /tmp/asm_processorj_u7eoau/preprocessed_bea087d7021e44a794a95ff4412068af.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibli5vjmzh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2667: redeclaration of 'D_800E6280'; previous declaration at line 736 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c'
+ extern s32 D_800E6280;
+ -----------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c, line 2726: Incompatible pointer type assignment
+                     temp_a1 = &D_800E6280 + (var_a2 * 0x38);
+ ----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o /tmp/asm_processorf9ogco5y/preprocessed_46d670c3fb20409199477f21ec4fe632.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibj9_2vv7l/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80075C84/work/guarded.o.sjis.c

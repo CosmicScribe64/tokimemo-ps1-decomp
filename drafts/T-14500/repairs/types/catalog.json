@@ -1,0 +1,137 @@
+[
+  {
+    "scope": "BUNKAKEN:func_80145550",
+    "src": "src/ovl/BUNKAKEN/80144F70.c",
+    "path": "drafts/T-14500/repairs/types/BUNKAKEN/func_80145550",
+    "status": "scored",
+    "score": 302,
+    "compile_verified": true,
+    "literal_verified": false
+  },
+  {
+    "scope": "BUNKAKEN:func_8014A5EC",
+    "src": "src/ovl/BUNKAKEN/80148ED0.c",
+    "path": "drafts/T-14500/repairs/types/BUNKAKEN/func_8014A5EC",
+    "status": "scored",
+    "score": 2,
+    "compile_verified": true,
+    "literal_verified": false
+  },
+  {
+    "scope": "BUNKASAI:func_80142BE8",
+    "src": "src/ovl/BUNKASAI/80142700.c",
+    "path": "drafts/T-14500/repairs/types/BUNKASAI/func_80142BE8",
+    "status": "scored",
+    "score": 445,
+    "compile_verified": true,
+    "literal_verified": false
+  },
+  {
+    "scope": "BUNKASAI:func_80147F8C",
+    "src": "src/ovl/BUNKASAI/80146FA0.c",
+    "path": "drafts/T-14500/repairs/types/BUNKASAI/func_80147F8C",
+    "status": "scored",
+    "score": 2,
+    "compile_verified": true,
+    "literal_verified": false
+  },
+  {
+    "scope": "EN_NICHI:func_80138CCC",
+    "src": "src/ovl/EN_NICHI/80136B10.c",
+    "path": "drafts/T-14500/repairs/types/EN_NICHI/func_80138CCC",
+    "status": "scored",
+    "score": 376,
+    "compile_verified": true,
+    "literal_verified": false
+  },
+  {
+    "scope": "ETC:func_8013CCE4",
+    "src": "src/ovl/ETC/8013BEF0.c",
+    "path": "drafts/T-14500/repairs/types/ETC/func_8013CCE4",
+    "status": "scored",
+    "score": 138,
+    "compile_verified": true,
+    "literal_verified": false
+  },
+  {
+    "scope": "ETC:func_801480D0",
+    "src": "src/ovl/ETC/80146400.c",
+    "path": "drafts/T-14500/repairs/types/ETC/func_801480D0",
+    "status": "scored",
+    "score": 1200,
+    "compile_verified": true,
+    "literal_verified": false
+  },
+  {
+    "scope": "EVENT:func_800FC040",
+    "src": "src/ovl/EVENT/800FBBF0.c",
+    "path": "drafts/T-14500/repairs/types/EVENT/func_800FC040",
+    "status": "scored",
+    "score": 55,
+    "compile_verified": true,
+    "literal_verified": false
+  },
+  {
+    "scope": "EVENT:func_801035BC",
+    "src": "src/ovl/EVENT/801024B0.c",
+    "path": "drafts/T-14500/repairs/types/EVENT/func_801035BC",
+    "status": "scored",
+    "score": 82,
+    "compile_verified": true,
+    "literal_verified": false
+  },
+  {
+    "scope": "EVENT:func_8010AE7C",
+    "src": "src/ovl/EVENT/8010A210.c",
+    "path": "drafts/T-14500/repairs/types/EVENT/func_8010AE7C",
+    "status": "scored",
+    "score": 22,
+    "compile_verified": true,
+    "literal_verified": false
+  },
+  {
+    "scope": "EVENT:func_8010F55C",
+    "src": "src/ovl/EVENT/8010BB90.c",
+    "path": "drafts/T-14500/repairs/types/EVENT/func_8010F55C",
+    "status": "scored",
+    "score": 184,
+    "compile_verified": true,
+    "literal_verified": false
+  },
+  {
+    "scope": "EVENT:func_8010F74C",
+    "src": "src/ovl/EVENT/8010BB90.c",
+    "path": "drafts/T-14500/repairs/types/EVENT/func_8010F74C",
+    "status": "scored",
+    "score": 150,
+    "compile_verified": true,
+    "literal_verified": false
+  },
+  {
+    "scope": "GEKO:func_80136C20",
+    "src": "src/ovl/GEKO/80134D10.c",
+    "path": "drafts/T-14500/repairs/types/GEKO/func_80136C20",
+    "status": "scored",
+    "score": 24,
+    "compile_verified": true,
+    "literal_verified": false
+  },
+  {
+    "scope": "GEKO:func_8013B10C",
+    "src": "src/ovl/GEKO/8013AF80.c",
+    "path": "drafts/T-14500/repairs/types/GEKO/func_8013B10C",
+    "status": "scored",
+    "score": 67,
+    "compile_verified": true,
+    "literal_verified": false
+  },
+  {
+    "scope": "GEKO:func_80143F48",
+    "src": "src/ovl/GEKO/80142760.c",
+    "path": "drafts/T-14500/repairs/types/GEKO/func_80143F48",
+    "status": "scored",
+    "score": 169,
+    "compile_verified": true,
+    "literal_verified": false
+  }
+]

@@ -1,0 +1,27 @@
+diff --git a/src/ovl/TT/8013A3E0.c b/src/ovl/TT/8013A3E0.c
+index 3ee464ec..2281165a 100644
+--- a/src/ovl/TT/8013A3E0.c
++++ b/src/ovl/TT/8013A3E0.c
+@@ -15,9 +15,9 @@ void func_8013A3E0(void *arg0, u8 *arg1, s32 arg2) {
+     u8 *b;
+     u8 *c;
+     u8 *p;
++    u8 *q;
+     s32 i;
+     s32 j;
+-    s32 k;
+ 
+     a = D_80158A74;
+     b = D_80158A64;
+@@ -32,8 +32,9 @@ void func_8013A3E0(void *arg0, u8 *arg1, s32 arg2) {
+         a[14] = 0;
+         a[13] = 0;
+     }
+-    p = D_80158A80;
+-    for (i = 0; i < 12; i++, p += 0x54) {
++    q = D_80158A80;
++    for (i = 0; i < 12; i++) {
++        p = q + i * 0x54;
+         if (p[0] != 0 && *(u16 *)(p + 4) == 0x40 && func_80145508(p + 0x14, &D_80155B30[1], arg0, arg1) != 0) {
+             b[0x25] = b[0x25] + 1;
+             if (b[0x24] != 0 && !(b[0x25] & 3)) {

@@ -8,6 +8,16 @@
 #include "psx_types.h"
 #include "game.h"
 
+void func_8015C2CC(s32 arg0);
+extern s16 D_801606AC[], D_801606C4[], D_80160858[], D_8016090C[], D_80160A60[];
+
+/* state handlers of the loading screen driver func_80133870 (T-16562) */
+s32 func_80133980(void);
+void func_80133AF4(void);
+void func_80133C08(void);
+void func_80133E98(void);
+s32 func_80134500(void);
+
 void func_8013F468(void);
 void func_8013F7D8(void);
 void func_8013F9C0(void);
@@ -36,28 +46,48 @@ typedef struct TcPos {
     /* 0x06 */ s16 unk6;
 } TcPos; /* size 0x08 */
 
+/* Object handle (T-16560): GsDOBJ2 layout; unk0 attribute (0x80000000 hides it), unk4[0] the
+ * TcObj50 coordinate object, unk4[1] the model, unk4[2] the id. func_8009B430 (GsLinkObject4) fills it. */
 typedef struct Tc10 {
     /* 0x00 */ s32 unk0;
     /* 0x04 */ s32 unk4[3];
 } Tc10; /* size 0x10 */
 
+/*
+ * Coordinate object (T-16560). Same layout as libgs GsCOORDINATE2: a flag word (0 marks the local
+ * matrix as changed), the local matrix (rotation unk4, translation unk18..unk20), the world matrix
+ * the library computes, and the param/super/sub links. func_80099E30 (GsInitCoordinate2) takes
+ * a pointer to one. The translation stays three scalars because matched code reads them as such.
+ */
 typedef struct TcObj50 {
-    /* 0x00 */ u8 pad0[0x18];
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s16 unk4[3][3];
+    /* 0x16 */ s16 unk16;
     /* 0x18 */ s32 unk18;
     /* 0x1C */ s32 unk1C;
     /* 0x20 */ s32 unk20;
-    /* 0x24 */ u8 pad24[0x2C];
+    /* 0x24 */ MATRIX unk24;
+    /* 0x44 */ s32 unk44;
+    /* 0x48 */ struct TcObj50 *unk48;
+    /* 0x4C */ struct TcObj50 *unk4C;
 } TcObj50; /* size 0x50 */
 
 extern TcPos D_80128880[];
 extern Tc10 D_80127080[];
 extern TcObj50 D_80127480[];
 
+/*
+ * Actor record, 79 of them at D_8015EDB4 (loops stop at byte offset 0x29F8). T-16560: unk0[1] holds
+ * flag bits (0x80, 0x40); +0x04 is the actor's object handle and +0x14 its coordinate object
+ * (func_8013801C passes &actor->unk14 to func_80099E30). unk74..unk7A and unk7C..unk82 are copied
+ * as two eight-byte TcPos values (lwl/lwr pairs) into by-value TcPos arguments.
+ */
 typedef struct TcActor {
-    /* 0x00 */ u8 pad0[2];
+    /* 0x00 */ u8 unk0[2];
     /* 0x02 */ u8 unk2;
     /* 0x03 */ u8 unk3;
-    /* 0x04 */ u8 pad4[0x60];
+    /* 0x04 */ Tc10 unk4;
+    /* 0x14 */ TcObj50 unk14;
     /* 0x64 */ s16 unk64;
     /* 0x66 */ s16 unk66;
     /* 0x68 */ s16 unk68;
@@ -82,6 +112,11 @@ extern TcActor *D_8015EDB4;
 void func_80140028(s32 arg0);
 void func_80140E18(s32 arg0);
 void func_8015ABF0(void);
+void func_801563E4(s32 arg0);
+s32 func_80156178(void);
+void func_80154F74(void);
+void func_801553AC(void);
+void func_8015595C(void);
 void func_80137CBC(s32 arg0);
 extern Tc10 D_80127090;
 extern Tc10 D_801270A0;
@@ -94,11 +129,11 @@ void func_80136988(void);
 void func_80135A04(void);
 s32 func_8013515C(void);
 void func_80134FB8(void);
-void func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5);
+s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5);
 void func_8014F820(void);
 void func_8013AFDC(void);
 void func_8013A790(s32 arg0, s32 arg1);
-void func_8013760C();
+s32 func_8013760C();
 void func_8013788C();
 void func_8014F210(void);
 void func_8015185C(void);
@@ -156,7 +191,9 @@ void func_8015131C(s32 arg0);
 
 void func_80146F74(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 void func_8014FBD4(s32 arg0);
+void func_8015163C(s32 arg0, s32 arg1);
 void func_80151264(u32 arg0);
+void func_801517AC(s32 arg0);
 void func_8014927C(void);
 void func_8014A79C(void);
 void func_8014D2E0(void);
@@ -168,11 +205,10 @@ void func_8014EF14(s32 arg0);
 void func_8014F044(void);
 void func_80146D60(s32 arg0);
 void func_801471D0(s32 arg0);
-void func_80147488(s32 arg0, s32 arg1, s32 arg2);
+void func_80147488(s32 arg0, s16 *arg1, s32 arg2);
 extern s32 D_8015F3E0;
 extern s32 D_8015F3E4;
-extern s32 D_8015F82C;
-extern s32 D_8015F830;
+extern s16 *D_8015F82C[2]; /* model data pointers for func_80147488, T-19002 */
 extern s16 D_8015F3E8;
 
 void func_80144CC0(u8 *arg0);
@@ -190,14 +226,16 @@ typedef struct Tc14 {
     /* 0x00 */ s16 unk0;
     /* 0x02 */ s16 unk2;
     /* 0x04 */ s16 unk4;
-    /* 0x06 */ s16 pad6;
+    /* 0x06 */ s16 unk6;
     /* 0x08 */ s16 unk8;
     /* 0x0A */ s16 unkA;
     /* 0x0C */ s16 unkC;
-    /* 0x0E */ u8 padE[4];
+    /* 0x0E */ s16 unkE;
+    /* 0x10 */ u8 unk10;
+    /* 0x11 */ u8 unk11;
     /* 0x12 */ u8 unk12;
     /* 0x13 */ u8 unk13;
-} Tc14; /* size 0x14 */
+} Tc14; /* size 0x14; same record as TacoParticle14 (two TcPos, four bytes), T-16560 */
 void func_80151F94(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_801522B0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3);
 void func_80152C60(s32 arg0);
@@ -205,9 +243,18 @@ void func_80153068(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
 extern s32 D_8015F4F0;
 extern s32 D_80160460;
 extern s32 D_80160464;
+extern s32 D_80160470;
+extern u16 *D_801FAA84;
+extern s32 D_8015F490[5];
+extern s32 D_8015F4A4;
+extern s32 D_8015F4A8;
 void func_80153AA0(s32 arg0, s32 arg1, s32 arg2);
 void func_80153E78(s32 arg0, u8 arg1, u8 arg2, u8 arg3);
 extern Tc14 D_8015E270[];
+/* result screen (T-19006): counter and bonus drawers of 8013B990.c */
+s32 func_8013C1F4(void);
+s32 func_8013C440(void);
+void func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2);
 extern Tc14 D_8015E3B0[];
 void func_801413B8(Tc14 *arg0, s32 arg1);
 void func_801416E8(Tc14 *arg0, s32 arg1);
@@ -255,7 +302,7 @@ void func_8014B2A4(s32 arg0);
 void func_8014B8B4(s32 arg0, s32 arg1, s32 arg2);
 void func_8014B790(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, u32 arg4);
 void func_8014DA6C(s32 arg0);
-void func_8014E5F8(s32 arg0);
+s32 func_8014E5F8(s32 arg0);
 s32 func_8014E1A0(s32 arg0);
 void func_8014E048(void);
 extern s16 *D_801600C0[];
@@ -294,7 +341,7 @@ void func_801534E0(s32 arg0);
 void func_8014394C();
 void func_801345D4();
 void func_8013474C();
-void func_801347F4(s32 arg0);
+void func_801347F4(s32 *arg0);
 extern s32 D_8015F440[];
 s32 func_80137BD8(void);
 void func_80137D00(void);
@@ -359,11 +406,17 @@ typedef struct TcPair8 {
     s32 b;
 } TcPair8;
 extern TcPair8 D_8015FAE0[];
+extern s32 D_8015E238[]; /* word pairs, read as a flat table by func_80133738 (T-16561) */
 typedef struct TcPair2 {
     u8 a;
     u8 b;
 } TcPair2;
 extern TcPair2 D_8015FBF8[];
+extern TcPair8 D_80160290[]; /* read at i - 1, T-16563 */
+extern TcPair2 D_801603A8[]; /* read at i - 1, T-16563 */
+/* FAKE: not data of its own. D_801603D4 + 4 * i is D_80160444 + 4 * (i - 0x1C); IDO keeps the symbol as the
+ * induction base, so only this base gives func_80152808 its zero-offset pointer walk (D_80160448). T-16563 */
+extern s16 *D_801603D4[];
 void func_801490B4(void);
 
 void func_80149B7C(void);
@@ -455,6 +508,8 @@ void func_801508D0(void);
 void func_80150DE8(void);
 void func_8014D530(s32 arg0, s32 arg1);
 void func_80153774(s32 arg0);
+void func_8015AB18(s32 arg0);
+void func_8015AB80(s32 arg0);
 
 #ifndef OVL_TACO_MATCHED_VIEWS_T9520
 #define OVL_TACO_MATCHED_VIEWS_T9520
@@ -523,7 +578,10 @@ extern u8 D_801603EC;
 extern u8 D_801603ED;
 void func_8015266C(u32 arg0);
 void func_80152764(s32 arg0);
-extern s16 *D_80160444;
+void func_80152944(s32 arg0, s32 arg1);
+void func_80152DB4(s32 arg0, s32 arg1, s32 arg2);
+void func_801523D0(s32 arg0, s32 arg1, s32 arg2);
+extern s16 *D_80160444[]; /* six pointers: [0] 0x23's model, [1..4] the walk of func_80152944; T-16563 */
 #endif
 
 #ifndef OVL_TACO_T10010_SELECTION
@@ -533,10 +591,11 @@ void func_8013546C(void);
 
 #ifndef OVL_TACO_T10010_SCORE_TABLE
 #define OVL_TACO_T10010_SCORE_TABLE
+extern s32 D_8015F500; /* T-19006 */
 extern s32 D_8015F504[]; /* Word score table indexed modulo 17. T-10010. */
 
 extern Tc14 D_8015EB30[16];
-extern Tc14 D_8015EC70;
+extern Tc14 D_8015EC70[16]; /* the table after D_8015EB30; also its end address (T-16560) */
 void func_8013DEE4();
 extern u8 D_8015FA80[];
 void func_801483B0(void);
@@ -554,6 +613,11 @@ void func_80142DE0(void);
 void func_80142820(void);
 
 #endif
+
+/* Font UV pairs (u, v), T-16562: digits 0-9, letters A-Z, then '.', '-', ' ' and a fallback glyph. */
+extern u8 D_8015F5A0[20];
+extern u8 D_8015F5B4[52];
+extern u8 D_8015F5E8, D_8015F5E9, D_8015F5EA, D_8015F5EB, D_8015F5EC, D_8015F5ED, D_8015F5EE, D_8015F5EF;
 
 extern u8 D_80161ECD;
 extern s32 D_8016024C[];

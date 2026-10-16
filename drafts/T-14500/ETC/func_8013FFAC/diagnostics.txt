@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_8004A1A0 10, func_800618B0 0, func_8013E89C 1, func_8013EEFC 0, func_8013F320 1, func_8013F980 0, func_8013FA7C 0, func_8013FC08 0, func_80140AE4 0
+python3 failed:
+cfe: Error: drafts/T-14500/ETC/func_8013FFAC/work/guarded.c, line 3817: 'sp54' undefined; reoccurrences will not be reported.
+         var_v1 = &sp54[0];
+ ------------------^
+cfe: Warning 709: drafts/T-14500/ETC/func_8013FFAC/work/guarded.c, line 3844: Incompatible pointer type assignment
+         temp_v1_2 = (D_800E71DF * 8) + &D_8014DB90;
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/ETC/func_8013FFAC/work -o drafts/T-14500/ETC/func_8013FFAC/work/guarded.o /tmp/asm_processortp4lnwpf/preprocessed_8581d67386954ebca4fbdd3cb258b06a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibsbs8vn20/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/ETC/func_8013FFAC/work/guarded.o drafts/T-14500/ETC/func_8013FFAC/work/guarded.c

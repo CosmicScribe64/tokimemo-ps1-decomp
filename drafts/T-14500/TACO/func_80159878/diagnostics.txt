@@ -1,0 +1,23 @@
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/TACO/func_80159878/work/guarded.c, line 3484: Incompatible function return type for this function.
+ void func_80159878(s32 arg0) {
+ ------------------^
+cfe: Error: drafts/T-14500/TACO/func_80159878/work/guarded.c, line 3501: 'subroutine_arg2' undefined; reoccurrences will not be reported.
+         func_8015ACCC(3, 0x21, subroutine_arg2, subroutine_arg3, sp50, *(s32 *)((unsigned char *)(&sp50) + (4)), sp48, *(s32 *)((unsigned char *)(&sp48) + (4)), 8, 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/TACO/func_80159878/work/guarded.c, line 3501: 'subroutine_arg3' undefined; reoccurrences will not be reported.
+         func_8015ACCC(3, 0x21, subroutine_arg2, subroutine_arg3, sp50, *(s32 *)((unsigned char *)(&sp50) + (4)), sp48, *(s32 *)((unsigned char *)(&sp48) + (4)), 8, 0);
+ ------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TACO/func_80159878/work -o drafts/T-14500/TACO/func_80159878/work/guarded.o /tmp/asm_processor47pivzho/preprocessed_fbab7449e8b0447e83bda29014ee9bd2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibdb9_gmy8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TACO/func_80159878/work/guarded.o drafts/T-14500/TACO/func_80159878/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/TACO/func_80159878/work/guarded.c, line 3486: redeclaration of 'func_80159878'; previous declaration at line 3426 in file 'drafts/T-14500/TACO/func_80159878/work/guarded.c'
+ void func_80159878(s32 arg0) {
+ -----^
+cfe: Error: drafts/T-14500/TACO/func_80159878/work/guarded.c, line 3486: Incompatible function return type for this function.
+ void func_80159878(s32 arg0) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TACO/func_80159878/work -o drafts/T-14500/TACO/func_80159878/work/guarded.o /tmp/asm_processor83ytfrcg/preprocessed_ffce0c30ab464eaaa944e2e19a498ad5.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibq2a4kopc/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TACO/func_80159878/work/guarded.o drafts/T-14500/TACO/func_80159878/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return

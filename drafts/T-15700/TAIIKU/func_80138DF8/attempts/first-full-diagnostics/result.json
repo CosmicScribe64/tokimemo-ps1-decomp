@@ -1,0 +1,15 @@
+{
+  "scope": "TAIIKU:func_80138DF8",
+  "src": "src/ovl/TAIIKU/80138950.c",
+  "size": 1336,
+  "status": "failed",
+  "score": null,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TAIIKU/func_80138DF8",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "reason": "cfe: Error: drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.c, line 3287: 'sp70' undefined; reoccurrences will not be reported.",
+  "body_c_sha256": "76017dde7191cc8f841d6085e55d7b3e94d17405e2b4e3f6741387f97d905288",
+  "context_c_sha256": "0a6ddfe9e345ecb2ab277fa4f3f36ff90424b0e8dd0d3bbc05dfb45be85851a8",
+  "declarations_h_sha256": "65c0d6960b5e6ed399871104e53880a328c362dc63cf38ef99225baabf859a59"
+}

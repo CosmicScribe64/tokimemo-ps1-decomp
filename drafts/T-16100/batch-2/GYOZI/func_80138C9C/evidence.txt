@@ -1,0 +1,28 @@
+Target: ['asm/ovl/GYOZI/nonmatchings/GYOZI/80138B50/func_80138C9C.s']
+Review: Assembly stores and loads indexed halfwords with stride 2. Existing s32[16] and s32-scaled additions are wrong; use s16[16] and element indexing.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80138CA0 */  addiu      $sp, $sp, -0x68
+    /* 80138CC0 */  sw         $s2, 0x1C($sp)
+    /* 80138CC8 */  sll        $t8, $t6, 30
+    /* 80138CCC */  sw         $ra, 0x2C($sp)
+    /* 80138CD0 */  sw         $s5, 0x28($sp)
+    /* 80138CD4 */  sw         $s4, 0x24($sp)
+    /* 80138CD8 */  sw         $s3, 0x20($sp)
+    /* 80138CDC */  sw         $s1, 0x18($sp)
+    /* 80138CE0 */  sw         $s0, 0x14($sp)
+    /* 80138CF4 */  lh         $t9, %lo(D_800F5746)($t9)
+    /* 80138CF8 */  addiu      $t0, $zero, 0x1
+    /* 80138D10 */  addiu      $s5, $zero, 0x9
+    /* 80138D14 */  addiu      $s4, $zero, 0x1
+    /* 80138D18 */  addiu      $s3, $sp, 0x4C
+    /* 80138D1C */  sll        $t1, $s0, 3
+    /* 80138D28 */  addiu      $t2, $t2, %lo(D_800F53A0)
+    /* 80138D2C */  sll        $t1, $t1, 3
+    /* 80138D30 */  addu       $s1, $t1, $t2
+    /* 80138D3C */  sll        $t5, $t3, 30
+    /* 80138D50 */  lbu        $t6, %lo(D_80147240)($t6)
+    /* 80138D74 */  lbu        $t7, %lo(D_80147240)($t7)
+    /* 80138D8C */  lbu        $t8, %lo(D_80147240)($t8)
+    /* 80138D98 */   sll       $t9, $s2, 1
+    /* 80138DA0 */   sll       $t9, $s2, 1

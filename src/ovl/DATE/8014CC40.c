@@ -68,12 +68,6 @@ INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E318);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E31C);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E3C4);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E460);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E510);
-
-typedef struct {
-    void (*f[43])();
-} FnTbl43; /* size 0xAC */
-extern FnTbl43 D_8015E530;
 
 void func_8014CC40(void) {
     D_8015E220 = 0x801CE0F4;
@@ -211,7 +205,45 @@ void func_8014D0A0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014D298);
+void func_8014D298(void) {
+    DateParticleView44 *sprites;
+    DateParticleView44 scene;
+
+    func_800AE0F0(D_800CA1DC, "ナイトパレード");
+    D_800E6280.unk_71E |= 7;
+    D_8015E208 = D_8015DE58;
+    D_8015E20C = D_8015DF94;
+    D_8015E210 = D_8015E0D0;
+    D_800E6280.unk_1BC[8].unk_02 += 3;
+    D_800E6280.unk_1BC[8].unk_06 += 2;
+    D_800E6280.unk_1BC[8].unk_0A -= 0x14;
+    func_80084D3C();
+    D_800E6280.unk_1228[26] = -1;
+    D_800E6280.unk_1228[58] = -1;
+    func_8014CCF0();
+    func_80043914(D_8015E25C, 0x11, 1, 2, 0);
+    func_80043914(D_8015E25C, 0x12, 1, 2, 4);
+    func_80043914(D_8015E25C, 0x13, 1, 2, 0);
+    func_80084E90(D_8015E260, D_8015E264, D_8015E268, D_8015E26C, D_8015E270, D_8015E274);
+    func_800850D4(D_8015E250, D_8015E254, D_8015E24C, (s32) D_8015E258);
+    D_800CA360 = 1;
+    sprites = (DateParticleView44 *)D_80120650;
+    scene = sprites[0];
+    sprites[3] = scene;
+    *(DateParticleView44 *)D_801206D8 = scene;
+    D_8012071E = 0x40;
+    D_801206DA = 0x40;
+    D_801206F0 = 8;
+    D_801206D9 = 0xC;
+    D_8012071B = 0x13;
+    D_80120734 = 9;
+    D_8012071D = 0xC;
+    D_8012075F = 0x12;
+    D_8015E314 = 0;
+    D_8015E310 = 0;
+    D_8015E318 = 1;
+    func_8004284C();
+}
 
 void func_8014D57C(void) {
     D_8015E310 = 0;
@@ -325,11 +357,6 @@ void func_8014DAE0(void) {
     func_8004284C();
 }
 
-typedef struct {
-    void (*f[42])();
-} FnTbl42; /* size 0xA8 */
-extern FnTbl42 D_8015E31C;
-
 void func_8014DB08(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl42 tbl;
@@ -370,33 +397,31 @@ void func_8014DC94(void) {
     func_8004284C();
 }
 
-typedef struct {
-    void (*f[39])();
-} FnTbl39; /* size 0x9C */
-extern FnTbl39 D_8015E3C4;
-
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10320, base/index registers swapped (a0/v1) around a local function-pointer table, 20 differing lines */
+/* NON_MATCHING: T-10320 / T-12100, sixteen register/operand rows remain.
+ * A byte-field pointer restores the original table offset and frame size. */
 void func_8014DCCC(void) {
+    u8 *selector;
     FnTbl39 tbl;
     void (*fn)();
 
+    selector = &D_800E6280.unk_110A;
     tbl = D_8015E3C4;
-    fn = tbl.f[D_800E6280.unk_110A];
-    if (fn == place_init2) {
+    fn = tbl.f[*selector];
+    if (place_init2 == fn) {
         D_80120653 |= 0x80;
     }
-    if (fn == normal_date_bg_out) {
+    if (normal_date_bg_out == fn) {
         D_80120653 &= 0xFF7F;
     }
     fn(0x80);
     if (D_80122D04 != 0) {
         func_8014E010();
     }
-    if (D_800E6280.unk_110A == 0xE) {
+    if (*selector == 0xE) {
         func_8014E108();
     }
-    if (D_800E6280.unk_110A >= 0x19 && D_800E6280.unk_110A < 0x24) {
+    if (*selector >= 0x19 && *selector < 0x24) {
         func_80140D38();
     }
 }
@@ -487,11 +512,6 @@ void func_8014E108(void) {
     dtd_on_tpage(0, 0, 0xD, 3, 0);
 }
 
-typedef struct {
-    void (*f[44])();
-} FnTbl44; /* size 0xB0 */
-extern FnTbl44 D_8015E460;
-
 void func_8014E2E8(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl44 tbl;
@@ -519,7 +539,68 @@ s32 func_8014E38C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014E3E8);
+void func_8014E3E8(void) {
+    s32 *pair;
+    s32 colors[4][2] = {
+        { 0xFF8080, 0xFF0000 },
+        { 0x8040FF, 0xC000FF },
+        { 0xFFFF80, 0xFFFF00 },
+        { 0xFFFFFF, 0xC0C0C0 }
+    };
+
+    if (((u32) D_800E6280.unk_10F8 % 120U) == 0) {
+        D_8015E310 += 1;
+    }
+    if (D_8015E310 >= 3) {
+        D_8015E310 = 0;
+    }
+    if (((u32) D_800E6280.unk_10F8 % 100U) == 0) {
+        D_8015E314 += 1;
+    }
+    if (D_8015E314 >= 4) {
+        D_8015E314 = 0;
+    }
+    if (((u32) D_800E6280.unk_10F8 % 36U) < 0xCU) {
+        pair = colors[D_8015E314];
+        func_8014EF1C(0xA0, -0xA0, 0xB4, -0xA0, 0x6E, 0x28, 0x82, 0x28, pair[0], pair[1], 9, 1);
+        pair = colors[D_8015E314];
+        func_8014EF1C(0xA5, -0xA0, 0xC3, -0xA0, 0x64, 0x28, 0x46, 0x28, pair[0], pair[1], 9, 1);
+        pair = colors[D_8015E314];
+        func_8014EF1C(0xAA, -0xA0, 0xB4, -0xA0, 0x41, 0x28, 0x32, 0x28, pair[0], pair[1], 9, 1);
+        pair = colors[D_8015E314];
+        func_8014EF1C(0xA0, -0xA0, 0xAF, -0xA0, 0x69, 0x28, 0x7D, 0x28, pair[0], pair[1], 9, 1);
+    } else if (((u32) D_800E6280.unk_10F8 % 36U) < 0x18U) {
+        pair = colors[D_8015E314];
+        func_8014EF1C(0x9B, -0xA0, 0xAF, -0xA0, 0x69, 0x28, 0x82, 0x28, pair[0], pair[1], 9, 1);
+        pair = colors[D_8015E314];
+        func_8014EF1C(0x9B, -0xA0, 0xC3, -0x96, 0x5A, 0x28, 0x3C, 0x28, pair[0], pair[1], 9, 1);
+        pair = colors[D_8015E314];
+        func_8014EF1C(0xA5, -0xA0, 0xAF, -0xA0, 0x3C, 0x28, 0x2D, 0x28, pair[0], pair[1], 9, 1);
+        pair = colors[D_8015E314];
+        func_8014EF1C(0x96, -0xA0, 0xA0, -0xA0, 0x64, 0x28, 0x73, 0x28, pair[0], pair[1], 9, 1);
+    }
+    func_800494BC(0, 0, 9, 3, 0);
+    if (((u32) D_800E6280.unk_10F8 % 30U) < 0xAU) {
+        pair = colors[D_8015E310];
+        func_8014EF1C(0x1E, -0xA0, 0x64, -0xA0, -0x140, 0x28, -0xFA, 0x28, pair[0], pair[1], 0xD, 1);
+        pair = colors[D_8015E310];
+        func_8014EF1C(0xA, -0xA0, 0x19, -0xA0, -0xDC, 0x28, -0xBE, 0x28, pair[0], pair[1], 0xD, 1);
+        pair = colors[D_8015E310];
+        func_8014EF1C(0, -0xA0, 0x14, -0xA0, -0xB4, 0x28, -0x82, 0x28, pair[0], pair[1], 0xD, 1);
+        pair = colors[D_8015E310];
+        func_8014EF1C(0x19, -0xA0, 0x28, -0xA0, -0x12C, 0x28, -0x118, 0x28, pair[0], pair[1], 0xD, 1);
+    } else if (((u32) D_800E6280.unk_10F8 % 30U) < 0x14U) {
+        pair = colors[D_8015E310];
+        func_8014EF1C(0x14, -0xA0, 0x5A, -0xA0, -0x154, 0x28, -0x10E, 0x28, pair[0], pair[1], 0xD, 1);
+        pair = colors[D_8015E310];
+        func_8014EF1C(0xA, -0xA0, 0x1E, -0xA0, -0xF0, 0x28, -0xD2, 0x28, pair[0], pair[1], 0xD, 1);
+        pair = colors[D_8015E310];
+        func_8014EF1C(0, -0xA0, 0xF, -0xA0, -0xC8, 0x28, -0x96, 0x28, pair[0], pair[1], 0xD, 1);
+        pair = colors[D_8015E310];
+        func_8014EF1C(0xF, -0xA0, 0x19, -0xA0, -0x136, 0x28, -0x122, 0x28, pair[0], pair[1], 0xD, 1);
+    }
+    func_800494BC(0, 0, 0xD, 3, 0);
+}
 
 void func_8014EBB8(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -548,11 +629,6 @@ void func_8014ECB8(void) {
     func_8014CE50();
     func_8004284C();
 }
-
-typedef struct {
-    void (*f[44])();
-} FnTbl44; /* size 0xB0 */
-extern FnTbl44 D_8015E5DC;
 
 void func_8014ECF0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

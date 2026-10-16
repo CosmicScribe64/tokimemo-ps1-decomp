@@ -1,0 +1,26 @@
+{
+  "draft_hash": "3ae7c21324328a25b153cf9d90c654674e6a28c3c3a7a0f391a4ba6fc8a553f9",
+  "environment_hash": "6f65598c4801aecc283a0ff94ca04d54505cf70ec6730470159f30c33cb7bd37",
+  "func": "func_801359FC",
+  "guarded": false,
+  "harness_hash": "cbf40cd669e0c44bcb1cb19323f5d31d23204f47dc9bd7013854767313559da1",
+  "scope": "SHOUGATU:func_801359FC",
+  "score": 69,
+  "seconds": 0.609,
+  "size": 276,
+  "source_hash": "5dd841b930e08ec9fcd09b901d1a50c32f866a0d704775c98dd65603cfb4c94d",
+  "src": "src/ovl/SHOUGATU/80134890.c",
+  "status": "scored",
+  "unit": "SHOUGATU",
+  "variant": "unaligned-aggregate-repair",
+  "ticket": "T-15100",
+  "compile_attempts": 1,
+  "notes": [
+    "Genuine seven-by-five-byte fortune table (24+8+3 copied bytes)."
+  ],
+  "matching_claim": false,
+  "archive_path": "drafts/T-14500/repairs-unaligned/SHOUGATU/func_801359FC",
+  "context_sha256": "e69dc9c20f08bdb2f3fe5cf3680fb61217f0cdc85c3d510d2ebe7423432c23dc",
+  "residual_class": "nonmatching instruction, control-flow, stack-layout or inferred-type differences",
+  "body_sha256": "4998d104b5e80a9531ee36b30b9a1cff613d399eaab1f5228ffcb1f0f11c1685"
+}

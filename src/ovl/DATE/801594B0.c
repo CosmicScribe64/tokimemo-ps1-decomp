@@ -4,11 +4,6 @@
 
 extern u32 D_80122CD0;
 
-typedef struct {
-    void (*f[44])();
-} FnTbl44; /* size 0xB0 */
-extern FnTbl44 D_80160890;
-
 void func_801594B0(void) {
     D_801607E0 = 0x801CE0F4;
     D_801607E4 = 0x801CE0F8;
@@ -235,7 +230,22 @@ void func_80159F74(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801594B0", func_80159FAC);
+void func_80159FAC(void) {
+    GameState *g = &D_800E6280; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl46 tbl;
+
+    tbl = D_80160940;
+    if (((g->unk_03E == 0x5F && g->unk_03F == 7 && g->unk_040 == 0x17) ||
+         (g->unk_03E == 0x60 && g->unk_03F == 7 && g->unk_040 == 0x1C) ||
+         (g->unk_03E == 0x61 && g->unk_03F == 7 && g->unk_040 == 0x1B)) &&
+        D_800B593C == 0x80 && D_80122D04 == 0 && (g->unk_110A < 0xD || g->unk_110A >= 0x21)) {
+        func_8006B900();
+    }
+    tbl.f[g->unk_110A](0x80);
+    if (D_80122D04 != 0 && g->unk_10F8 % 150 == 0) {
+        func_8015A170();
+    }
+}
 
 s32 func_8015A114(void) {
     func_8014C5C8();

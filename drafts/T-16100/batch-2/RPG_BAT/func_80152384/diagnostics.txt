@@ -1,0 +1,42 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/RPG_BAT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/RPG_BAT/func_80152384/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/RPG_BAT/func_80152384/full-context.c drafts/T-16100/batch-2/RPG_BAT/func_80152384/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_80152384/work/guarded.o.sjis.c, line 3057: '&' before array or function; ignored
+     (*(s32 *)&spA0) = (s32) D_8015EFA0;
+ -------------^
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_80152384/work/guarded.o.sjis.c, line 3058: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spA0) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_8015EFA0) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_80152384/work/guarded.o.sjis.c, line 3059: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spA0) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_8015EFA0) + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_80152384/work/guarded.o.sjis.c, line 3060: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spA0) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_8015EFA0) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_80152384/work/guarded.o.sjis.c, line 3061: '&' before array or function; ignored
+     (*(s32 *)&sp90) = (s32) D_8015EFB0;
+ -------------^
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_80152384/work/guarded.o.sjis.c, line 3062: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp90) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_8015EFB0) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_80152384/work/guarded.o.sjis.c, line 3063: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp90) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_8015EFB0) + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_80152384/work/guarded.o.sjis.c, line 3064: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp90) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_8015EFB0) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_80152384/work/guarded.o.sjis.c, line 3065: '&' before array or function; ignored
+     (*(s32 *)&sp80) = (s32) D_8015EFC0;
+ -------------^
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_80152384/work/guarded.o.sjis.c, line 3066: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp80) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_8015EFC0) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_80152384/work/guarded.o.sjis.c, line 3067: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp80) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_8015EFC0) + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_80152384/work/guarded.o.sjis.c, line 3068: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp80) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_8015EFC0) + (8));
+ -------------------------------^
+
+Full translation unit compiled and scored.

@@ -1,0 +1,8 @@
+m2c failed:
+
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80140AE4/work/guarded.c, line 4220: redeclaration of 'D_800E6280'; previous declaration at line 764 in file 'drafts/T-17300/_runs/typed/ETC/func_80140AE4/work/guarded.c'
+ extern s32 D_800E6280;
+ -----------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80140AE4/work -o drafts/T-17300/_runs/typed/ETC/func_80140AE4/work/guarded.o /tmp/asm_processordjz0w2m2/preprocessed_61018a157afe4277b25c9d472294c492.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibkqdmimnx/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80140AE4/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80140AE4/work/guarded.c

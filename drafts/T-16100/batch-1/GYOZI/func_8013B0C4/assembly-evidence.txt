@@ -1,0 +1,12 @@
+    8013B0C4:  addiu      $sp, $sp, -0xC8
+    8013B0D0:  sw         $ra, 0x1C($sp)
+    8013B0D8:  addiu      $t6, $sp, 0x34
+    8013B138:  sw         $t3, 0x14($sp)
+    8013B13C:  sw         $t2, 0x10($sp)
+    8013B184:  sw         $t9, 0x14($sp)
+    8013B188:  sw         $t5, 0x10($sp)
+    8013B1A8:  sll        $t8, $v0, 2
+    8013B1AC:  addu       $t9, $sp, $t8
+    8013B1B8:  jalr       $t9
+    8013B1C0:  lw         $ra, 0x1C($sp)
+    8013B1C4:  addiu      $sp, $sp, 0xC8

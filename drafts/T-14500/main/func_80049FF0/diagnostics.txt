@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: SetSemiTrans 2, func_8009F11C 1
+python3 failed:
+cfe: Error: drafts/T-14500/main/func_80049FF0/work/guarded.c, line 2620: redeclaration of 'func_80049FF0'; previous declaration at line 2330 in file 'drafts/T-14500/main/func_80049FF0/work/guarded.c'
+ void func_80049FF0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u32 arg4, u32 arg5, u8 arg6) {
+ -----^
+cfe: Error: drafts/T-14500/main/func_80049FF0/work/guarded.c, line 2620: Incompatible function return type for this function.
+ void func_80049FF0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u32 arg4, u32 arg5, u8 arg6) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/main/func_80049FF0/work -o drafts/T-14500/main/func_80049FF0/work/guarded.o /tmp/asm_processor54rj25e3/preprocessed_5cbf88a3a333458bb38146582206e23d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibbtv5sd7e/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/main/func_80049FF0/work/guarded.o drafts/T-14500/main/func_80049FF0/work/guarded.c

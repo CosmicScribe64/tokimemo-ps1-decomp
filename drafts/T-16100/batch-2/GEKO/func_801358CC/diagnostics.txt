@@ -1,0 +1,36 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/GEKO -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/GEKO/func_801358CC/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/GEKO/func_801358CC/full-context.c drafts/T-16100/batch-2/GEKO/func_801358CC/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-2/GEKO/func_801358CC/full-context.c, line 3937: Incompatible pointer type assignment
+     D_800CA134 = &D_80145060;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-2/GEKO/func_801358CC/full-context.c, line 3938: Incompatible pointer type assignment
+     D_800CA138 = &D_80145064;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-2/GEKO/func_801358CC/full-context.c, line 3945: Incompatible pointer type assignment
+     D_800CA134 = &D_80145060;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-2/GEKO/func_801358CC/full-context.c, line 3946: Incompatible pointer type assignment
+     D_800CA138 = &D_80145064;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-2/GEKO/func_801358CC/full-context.c, line 4396: Incompatible pointer type assignment
+     D_800CA134 = &D_800CA150;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-2/GEKO/func_801358CC/full-context.c, line 4397: Incompatible pointer type assignment
+     D_800CA138 = &D_800CA154;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-2/GEKO/func_801358CC/full-context.c, line 4404: Incompatible pointer type assignment
+     D_800CA134 = &D_800CA150;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-2/GEKO/func_801358CC/full-context.c, line 4405: Incompatible pointer type assignment
+     D_800CA138 = &D_800CA154;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-2/GEKO/func_801358CC/full-context.c, line 4412: Incompatible pointer type assignment
+     D_800CA134 = &D_800CA150;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-2/GEKO/func_801358CC/full-context.c, line 4413: Incompatible pointer type assignment
+     D_800CA138 = &D_800CA154;
+ ---------------^
+
+Full translation unit compiled and scored.

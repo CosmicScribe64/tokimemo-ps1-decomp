@@ -1,0 +1,12 @@
+    801388C0:  addiu      $sp, $sp, -0x28
+    801388CC:  sw         $ra, 0x14($sp)
+    80138988:  lui        $v1, %hi(D_800E6280)
+    8013898C:  addiu      $v1, $v1, %lo(D_800E6280)
+    80138998:  sll        $t0, $v0, 4
+    8013899C:  addu       $t1, $v1, $t0
+    801389A4:  sll        $t3, $v0, 1
+    801389AC:   addu      $t4, $a0, $t3
+    80138A18:  sll        $t0, $v0, 16
+    80138A28:   sll       $t0, $v0, 4
+    80138A2C:  lw         $ra, 0x14($sp)
+    80138A30:  addiu      $sp, $sp, 0x28

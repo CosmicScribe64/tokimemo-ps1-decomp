@@ -1,0 +1,7 @@
+2643:         D_801230D0 = 0;
+2644:         text_set_advance(0xE);
+2645:         func_801325A0((s32) &sp3C);
+2646:         menu_set(0, 8, &sp3C, &sp4C, &sp5C, &sp6C);
+2647:         set_kanji_string(sp3C, sp4C, 0, (s32) "文字\x95\\示速度", 0);
+2648:         set_kanji_string(sp3E, sp4E, 0, (s32) "アイコンモード", 0);
+2649:         set_kanji_string(sp40, sp50, 0, (s32) "マウス設定", 0);

@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: menu_set 6
+python3 failed:
+ -----------------------------------------------------------------------------------^
+cfe: Error: drafts/T-17000/_runs/typed/main/x_taku_menu_set/work/guarded.o.sjis.c, line 2835: 'sp60' undefined; reoccurrences will not be reported.
+     menu_set(arg0, 2, (s32) &sp60[0], (s32) D_800B40F0, (s32) &sp58[0], (s32) &sp50[0]);
+ -----------------------------^
+cfe: Error: drafts/T-17000/_runs/typed/main/x_taku_menu_set/work/guarded.o.sjis.c, line 2835: 'sp58' undefined; reoccurrences will not be reported.
+     menu_set(arg0, 2, (s32) &sp60[0], (s32) D_800B40F0, (s32) &sp58[0], (s32) &sp50[0]);
+ ---------------------------------------------------------------^
+cfe: Error: drafts/T-17000/_runs/typed/main/x_taku_menu_set/work/guarded.o.sjis.c, line 2835: 'sp50' undefined; reoccurrences will not be reported.
+     menu_set(arg0, 2, (s32) &sp60[0], (s32) D_800B40F0, (s32) &sp58[0], (s32) &sp50[0]);
+ -------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/typed/main/x_taku_menu_set/work -o drafts/T-17000/_runs/typed/main/x_taku_menu_set/work/guarded.o /tmp/asm_processorec12ewkn/preprocessed_360333ed530b4aab9a086531ab20d040.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibze_skyhd/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/typed/main/x_taku_menu_set/work/guarded.o drafts/T-17000/_runs/typed/main/x_taku_menu_set/work/guarded.o.sjis.c

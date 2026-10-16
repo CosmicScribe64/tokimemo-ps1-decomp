@@ -1,0 +1,20 @@
+{
+  "scope": "TAIIKU:func_80132BD0",
+  "src": "src/ovl/TAIIKU/80132BD0.c",
+  "size": 592,
+  "path": "drafts/T-16100/batch-1/TAIIKU/func_80132BD0",
+  "archive_path": "drafts/T-16100/batch-1/TAIIKU/func_80132BD0",
+  "status": "scored",
+  "score": 278,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": false,
+  "compile_verified": true,
+  "body.c_sha256": "73c65fd19829fd58664b1f71b346f45c1410453d2bbebaba9a356c2951a4e7fe",
+  "declarations.h_sha256": "8ef29920c37033a32c906d32c306ddcecc5f3372520c7149c012e2451a871136",
+  "context.c_sha256": "2d0f35a140bf48ee697ac1c61cf1cc3c13ba3a6ecfa49bbde3959583932cf1cd",
+  "full-context.c_sha256": "8d9911a0addd7be52e4e2ffb786f2b4a539188e98f76d38457b953592718884d",
+  "diagnostics.txt_sha256": "0b78ee0149a7c8262c526927fddf97c92080ca1d7ddb86a0522769e880c76356",
+  "assembly-evidence.txt_sha256": "fee232feaaae1645af54a14afacb7531c8a6634a9e1c466d982ee49da751f764"
+}

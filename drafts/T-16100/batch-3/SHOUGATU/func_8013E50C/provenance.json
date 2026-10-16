@@ -1,0 +1,11 @@
+{
+  "ticket": "T-16100",
+  "original_attempt": "drafts/T-15800/SHOUGATU/func_8013E50C",
+  "original_sha256": "c5c5ce8e0a072b4bd08692dbd0b00329b5a5cafe362441cf891a531e2fa846e9",
+  "source_base": "48362009",
+  "frozen_header_root": "drafts/T-14500/baseline/include",
+  "context_source": "drafts/T-15800/SHOUGATU/func_8013E50C/context.c",
+  "repair": "tools/t16100_batch3.py",
+  "compiler": "IDO 5.3 via tools/docker.sh; full translation unit",
+  "matching_claim": false
+}

@@ -26,11 +26,6 @@ void func_801391D4(void) {
     func_801391F4();
 }
 
-typedef struct {
-    void (*f[62])();
-} FnTbl62; /* size 0xF8 */
-extern FnTbl62 D_801452B8;
-
 void func_801391F4(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl62 tbl;

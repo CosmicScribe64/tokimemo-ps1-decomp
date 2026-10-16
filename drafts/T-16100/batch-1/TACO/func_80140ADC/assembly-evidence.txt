@@ -1,0 +1,63 @@
+    80140ADC:  addiu      $sp, $sp, -0xC8
+    80140AE4:  sw         $ra, 0x3C($sp)
+    80140AE8:  sw         $fp, 0x38($sp)
+    80140AEC:  sw         $s7, 0x34($sp)
+    80140AF0:  sw         $s6, 0x30($sp)
+    80140AF4:  sw         $s5, 0x2C($sp)
+    80140AF8:  sw         $s4, 0x28($sp)
+    80140AFC:  sw         $s3, 0x24($sp)
+    80140B00:  sw         $s2, 0x20($sp)
+    80140B04:  sw         $s1, 0x1C($sp)
+    80140B08:  sw         $s0, 0x18($sp)
+    80140B14:  addiu      $s0, $sp, 0xA0
+    80140B78:  sll        $t0, $s1, 2
+    80140B7C:  addu       $t0, $t0, $s1
+    80140B80:  sll        $t0, $t0, 2
+    80140B84:  addu       $s7, $t0, $s2
+    80140B8C:  addiu      $s3, $sp, 0x98
+    80140B94:  sw         $zero, 0x64($sp)
+    80140B9C:  addiu      $s5, $sp, 0x70
+    80140BA0:  addiu      $s4, $sp, 0x74
+    80140BA4:  sh         $t1, 0x9C($sp)
+    80140BA8:  lw         $v1, 0x64($sp)
+    80140BB0:  addiu      $s1, $sp, 0x88
+    80140BB4:  addu       $t4, $t3, $v1
+    80140BBC:  sh         $t5, 0x9A($sp)
+    80140BC0:  addu       $s2, $fp, $s1
+    80140BD0:  addu       $t6, $t7, $s0
+    80140BD8:  sh         $t9, 0x98($sp)
+    80140BFC:  lw         $t0, 0x64($sp)
+    80140C10:   sw        $t1, 0x64($sp)
+    80140C14:  lh         $t2, 0x90($sp)
+    80140C18:  lh         $t3, 0x88($sp)
+    80140C38:  sll        $t5, $t4, 1
+    80140C3C:  addu       $v0, $v0, $t5
+    80140C44:  lh         $t8, 0x8E($sp)
+    80140C54:   lw        $ra, 0x3C($sp)
+    80140C58:  lh         $t6, 0x96($sp)
+    80140C90:  sll        $t2, $t1, 16
+    80140CB4:   lw        $ra, 0x3C($sp)
+    80140D10:  sll        $v1, $s3, 5
+    80140D40:  lh         $t7, 0x88($sp)
+    80140D4C:  lh         $t6, 0x8A($sp)
+    80140D50:  sll        $t7, $s2, 2
+    80140D58:  lh         $t9, 0x8C($sp)
+    80140D64:  lh         $t0, 0x8E($sp)
+    80140D70:  lh         $t1, 0x90($sp)
+    80140D7C:  lh         $t2, 0x92($sp)
+    80140D88:  lh         $t3, 0x94($sp)
+    80140D94:  lh         $t4, 0x96($sp)
+    80140DA8:  sll        $t8, $t5, 10
+    80140DAC:  addu       $t6, $t8, $t7
+    80140DB4:   addu      $a0, $t6, $t9
+    80140DB8:  lw         $ra, 0x3C($sp)
+    80140DBC:  lw         $s0, 0x18($sp)
+    80140DC0:  lw         $s1, 0x1C($sp)
+    80140DC4:  lw         $s2, 0x20($sp)
+    80140DC8:  lw         $s3, 0x24($sp)
+    80140DCC:  lw         $s4, 0x28($sp)
+    80140DD0:  lw         $s5, 0x2C($sp)
+    80140DD4:  lw         $s6, 0x30($sp)
+    80140DD8:  lw         $s7, 0x34($sp)
+    80140DDC:  lw         $fp, 0x38($sp)
+    80140DE4:   addiu     $sp, $sp, 0xC8

@@ -1,0 +1,830 @@
+[
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/GYOZI/func_8013C774",
+        "reason": "Error: guarded.o.sjis.c, line 3399: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_8013C774",
+        "reason": "Error: guarded.o.sjis.c, line 3399: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774",
+        "reason": "Error: guarded.o.sjis.c, line 3401: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_8013C774",
+        "reason": "Error: guarded.o.sjis.c, line 3399: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "GYOZI:func_8013C774",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_8013C774",
+    "size": 364,
+    "src": "src/ovl/GYOZI/8013C3B0.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/GYOZI/func_80141944",
+        "reason": "Error: guarded.c, line 3556: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80141944",
+        "reason": "Error: guarded.c, line 3556: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944",
+        "reason": "Error: guarded.c, line 3562: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80141944",
+        "reason": "Error: guarded.c, line 3556: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "GYOZI:func_80141944",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80141944",
+    "size": 336,
+    "src": "src/ovl/GYOZI/801418B0.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/GYOZI/func_80143160",
+        "reason": "Error: guarded.c, line 3341: Type s32  of rhs of assignment expression is incompatible with type str",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160",
+        "reason": "Error: guarded.c, line 3341: Type s32  of rhs of assignment expression is incompatible with type str",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160",
+        "reason": "compile: no fix after 12 attempts",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80143160",
+        "reason": "Error: guarded.c, line 3341: Type s32  of rhs of assignment expression is incompatible with type str",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "GYOZI:func_80143160",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80143160",
+    "size": 436,
+    "src": "src/ovl/GYOZI/80143110.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/GYOZI/func_80144B70",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80144B70",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80144B70",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80144B70",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "GYOZI:func_80144B70",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80144B70",
+    "size": 1300,
+    "src": "src/ovl/GYOZI/80143AD0.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/GYOZI/func_80145384",
+        "reason": "Error: guarded.o.sjis.c, line 3502: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80145384",
+        "reason": "Error: guarded.o.sjis.c, line 3502: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384",
+        "reason": "Error: guarded.o.sjis.c, line 3507: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80145384",
+        "reason": "Error: guarded.o.sjis.c, line 3502: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "GYOZI:func_80145384",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80145384",
+    "size": 372,
+    "src": "src/ovl/GYOZI/80143AD0.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/MASTER/func_8013B448",
+        "reason": "Error: guarded.o.sjis.c, line 3346: Incompatible function return type for this function.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/MASTER/func_8013B448",
+        "reason": "Error: guarded.o.sjis.c, line 3346: Incompatible function return type for this function.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/MASTER/func_8013B448",
+        "reason": "Error: guarded.o.sjis.c, line 3347: Incompatible function return type for this function.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/MASTER/func_8013B448",
+        "reason": "Error: guarded.o.sjis.c, line 3346: Incompatible function return type for this function.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "MASTER:func_8013B448",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/MASTER/func_8013B448",
+    "size": 956,
+    "src": "src/ovl/MASTER/80139000.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/NAME_ENT/func_80133510",
+        "reason": "Error: guarded.o.sjis.c, line 3359: Unacceptable operand of '+'.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/NAME_ENT/func_80133510",
+        "reason": "Error: guarded.o.sjis.c, line 3359: Unacceptable operand of '+'.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/NAME_ENT/func_80133510",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/NAME_ENT/func_80133510",
+        "reason": "Error: guarded.o.sjis.c, line 3359: Unacceptable operand of '+'.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "NAME_ENT:func_80133510",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/NAME_ENT/func_80133510",
+    "size": 972,
+    "src": "src/ovl/NAME_ENT/80132000.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/NAME_ENT/func_80140F90",
+        "reason": "m2c-error: M2C_ERROR",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/NAME_ENT/func_80140F90",
+        "reason": "m2c-error: M2C_ERROR",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/NAME_ENT/func_80140F90",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/NAME_ENT/func_80140F90",
+        "reason": "m2c-error: M2C_ERROR",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "NAME_ENT:func_80140F90",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/NAME_ENT/func_80140F90",
+    "size": 2192,
+    "src": "src/ovl/NAME_ENT/80139740.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/NAME_ENT/func_80141820",
+        "reason": "m2c-error: M2C_ERROR",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/NAME_ENT/func_80141820",
+        "reason": "m2c-error: M2C_ERROR",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/NAME_ENT/func_80141820",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/NAME_ENT/func_80141820",
+        "reason": "m2c-error: M2C_ERROR",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "NAME_ENT:func_80141820",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/NAME_ENT/func_80141820",
+    "size": 1924,
+    "src": "src/ovl/NAME_ENT/80139740.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/OPTION/func_80132384",
+        "reason": "Error: guarded.c, line 2499: Syntax Error",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/OPTION/func_80132384",
+        "reason": "Error: guarded.c, line 2499: Syntax Error",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384",
+        "reason": "Error: guarded.c, line 2501: Syntax Error",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132384",
+        "reason": "Error: guarded.c, line 2499: Syntax Error",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "OPTION:func_80132384",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132384",
+    "size": 356,
+    "src": "src/ovl/OPTION/80132000.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/OPTION/func_80132BA8",
+        "reason": "compile: no fix after 12 attempts",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/OPTION/func_80132BA8",
+        "reason": "Error: guarded.o.sjis.c, line 2603: Incompatible function return type for this function.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8",
+        "reason": "Error: guarded.o.sjis.c, line 2624: Incompatible function return type for this function.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8",
+        "reason": "Error: guarded.o.sjis.c, line 2603: Incompatible function return type for this function.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "OPTION:func_80132BA8",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8",
+    "size": 1128,
+    "src": "src/ovl/OPTION/80132000.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/OPTION/func_80133010",
+        "reason": "Error: guarded.c, line 2655: Reference of an expression of void type or an incomplete type.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/OPTION/func_80133010",
+        "reason": "Error: guarded.c, line 2655: Reference of an expression of void type or an incomplete type.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133010",
+        "reason": "Error: guarded.c, line 2674: Reference of an expression of void type or an incomplete type.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133010",
+        "reason": "Error: guarded.c, line 2655: Reference of an expression of void type or an incomplete type.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "OPTION:func_80133010",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133010",
+    "size": 800,
+    "src": "src/ovl/OPTION/80132000.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/OPTION/func_80133330",
+        "reason": "Error: guarded.c, line 2607: Selector requires union as left hand side",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/OPTION/func_80133330",
+        "reason": "Error: guarded.c, line 2607: Selector requires union as left hand side",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330",
+        "reason": "Error: guarded.c, line 2615: Selector requires union as left hand side",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330",
+        "reason": "Error: guarded.c, line 2607: Selector requires union as left hand side",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "OPTION:func_80133330",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330",
+    "size": 588,
+    "src": "src/ovl/OPTION/80132000.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/OPTION/func_80133718",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/OPTION/func_80133718",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133718",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133718",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "OPTION:func_80133718",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133718",
+    "size": 564,
+    "src": "src/ovl/OPTION/80132000.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/SHOUGATU/func_8013E50C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_8013E50C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_8013E50C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "SHOUGATU:func_8013E50C",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_8013E50C",
+    "size": 472,
+    "src": "src/ovl/SHOUGATU/8013E330.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/SHOUGATU/func_8013EA98",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_8013EA98",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_8013EA98",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "SHOUGATU:func_8013EA98",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_8013EA98",
+    "size": 920,
+    "src": "src/ovl/SHOUGATU/8013E330.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/SHOUGATU/func_8013F224",
+        "reason": "Error: guarded.c, line 3399: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_8013F224",
+        "reason": "Error: guarded.c, line 3399: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013F224",
+        "reason": "Error: guarded.c, line 3407: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_8013F224",
+        "reason": "Error: guarded.c, line 3399: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "SHOUGATU:func_8013F224",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_8013F224",
+    "size": 316,
+    "src": "src/ovl/SHOUGATU/8013F190.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/SHOUGATU/func_801419D0",
+        "reason": "Error: guarded.o.sjis.c, line 3409: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801419D0",
+        "reason": "Error: guarded.o.sjis.c, line 3409: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_801419D0",
+        "reason": "Error: guarded.o.sjis.c, line 3415: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801419D0",
+        "reason": "Error: guarded.o.sjis.c, line 3409: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "SHOUGATU:func_801419D0",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801419D0",
+    "size": 240,
+    "src": "src/ovl/SHOUGATU/80141780.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/SHOUGATU/func_8014288C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_8014288C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8014288C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_8014288C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "SHOUGATU:func_8014288C",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_8014288C",
+    "size": 1300,
+    "src": "src/ovl/SHOUGATU/80141780.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/SHOUGATU/func_801430A0",
+        "reason": "Error: guarded.o.sjis.c, line 3529: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801430A0",
+        "reason": "Error: guarded.o.sjis.c, line 3529: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_801430A0",
+        "reason": "Error: guarded.o.sjis.c, line 3538: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801430A0",
+        "reason": "Error: guarded.o.sjis.c, line 3529: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "SHOUGATU:func_801430A0",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801430A0",
+    "size": 352,
+    "src": "src/ovl/SHOUGATU/80141780.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/SHUGAKU/func_80133E10",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/SHUGAKU/func_80133E10",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/SHUGAKU/func_80133E10",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80133E10",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "SHUGAKU:func_80133E10",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80133E10",
+    "size": 348,
+    "src": "src/ovl/SHUGAKU/80133D60.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/SHUGAKU/func_80134B94",
+        "reason": "Error: guarded.o.sjis.c, line 3175: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/SHUGAKU/func_80134B94",
+        "reason": "Error: guarded.o.sjis.c, line 3175: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/SHUGAKU/func_80134B94",
+        "reason": "Error: guarded.o.sjis.c, line 3179: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94",
+        "reason": "Error: guarded.o.sjis.c, line 3175: Non-function name referenced in function call.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "SHUGAKU:func_80134B94",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94",
+    "size": 260,
+    "src": "src/ovl/SHUGAKU/80134880.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/SHUGAKU/func_80135480",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/SHUGAKU/func_80135480",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/SHUGAKU/func_80135480",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80135480",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "SHUGAKU:func_80135480",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80135480",
+    "size": 340,
+    "src": "src/ovl/SHUGAKU/80135430.c",
+    "status": "failed"
+  }
+]

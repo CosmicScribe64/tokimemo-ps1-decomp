@@ -1,0 +1,25 @@
+{
+  "scope": "NAME_ENT:func_80132A38",
+  "selected_path": "drafts/T-14500/NAME_ENT/func_80132A38",
+  "archive_path": "drafts/T-16100/batch-3/NAME_ENT/func_80132A38",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "Six buffer addresses occupy stack+0x4C..0x60; +0x50 is element one. Six-element call count and word stores establish bound."
+  ],
+  "flags": [
+    {
+      "detail": "sp4C[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "repaired",
+      "explanation": "Six buffer addresses occupy stack+0x4C..0x60; +0x50 is element one. Six-element call count and word stores establish bound. "
+    }
+  ],
+  "notes": "",
+  "assembly_evidence": "drafts/T-16100/batch-3/NAME_ENT/func_80132A38/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "repaired"
+}

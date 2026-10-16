@@ -1,0 +1,28 @@
+Target: ['asm/ovl/TACO/nonmatchings/TACO/8013F250/func_80140028.s']
+Review: Scalar sp6C/sp8C/sp80 fragments coexist with subroutine_arg extern artifacts. Aggregate/by-value ABI remains unresolved.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80140028 */  addiu      $sp, $sp, -0x98
+    /* 8014002C */  sw         $ra, 0x3C($sp)
+    /* 80140030 */  sw         $fp, 0x38($sp)
+    /* 80140034 */  sw         $s7, 0x34($sp)
+    /* 80140038 */  sw         $s6, 0x30($sp)
+    /* 8014003C */  sw         $s5, 0x2C($sp)
+    /* 80140040 */  sw         $s4, 0x28($sp)
+    /* 80140044 */  sw         $s3, 0x24($sp)
+    /* 80140048 */  sw         $s2, 0x20($sp)
+    /* 8014004C */  sw         $s1, 0x1C($sp)
+    /* 80140054 */   sw        $s0, 0x18($sp)
+    /* 80140068 */   addiu     $s3, $s3, %lo(D_8015E4F0)
+    /* 80140078 */  addiu      $s3, $s3, %lo(D_8015E630)
+    /* 8014007C */  addiu      $s4, $s4, 0x440
+    /* 80140088 */  addiu      $fp, $sp, 0x78
+    /* 8014008C */  addiu      $s7, $zero, 0x88
+    /* 80140090 */  addiu      $s6, $zero, -0x1
+    /* 80140094 */  addiu      $s5, $zero, 0xFF
+    /* 80140098 */  addiu      $s2, $zero, 0x40
+    /* 8014009C */  lbu        $t6, 0x12($s0)
+    /* 801400A4 */  addiu      $t7, $t6, 0x1
+    /* 801400B8 */  lh         $v0, 0x4($s0)
+    /* 801400CC */  lh         $v0, 0x4($s0)
+    /* 801400D4 */  lh         $t9, 0x78($s4)

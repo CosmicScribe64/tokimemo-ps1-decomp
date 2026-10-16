@@ -1,0 +1,12 @@
+    8006C988:  sw         $a2, 0x8($sp)
+    8006C98C:  lui        $t1, %hi(D_800E6280)
+    8006C99C:  addiu      $t1, $t1, %lo(D_800E6280)
+    8006CA28:   addu      $t0, $t7, $a2
+    8006CA2C:  lui        $t9, %hi(D_800E6280)
+    8006CA30:  addiu      $t9, $t9, %lo(D_800E6280)
+    8006CA34:  sll        $t8, $a3, 3
+    8006CA38:  addu       $t1, $t8, $t9
+    8006CA50:   sll       $t5, $a3, 3
+    8006CA54:  lui        $t6, %hi(D_800E6280)
+    8006CA58:  addiu      $t6, $t6, %lo(D_800E6280)
+    8006CA64:  addu       $t1, $t5, $t6

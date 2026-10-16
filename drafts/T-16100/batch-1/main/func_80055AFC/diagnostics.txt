@@ -1,0 +1,17 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/main/func_80055AFC/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/main/func_80055AFC/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/main/func_80055AFC/work/guarded.c drafts/T-16100/batch-1/main/func_80055AFC/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-1/main/func_80055AFC/work/guarded.c, line 3196: Incompatible pointer type assignment
+         temp_t8 = var_v0_2 + 0x30;
+ ----------------^
+cfe: Warning 709: drafts/T-16100/batch-1/main/func_80055AFC/work/guarded.c, line 3211: Incompatible pointer type assignment
+     var_v1_4 = temp_ra + 0x698;
+ -------------^
+cfe: Warning 709: drafts/T-16100/batch-1/main/func_80055AFC/work/guarded.c, line 3218: Incompatible pointer type assignment
+     var_v1_5 = temp_ra + 0x6B8;
+ -------------^
+

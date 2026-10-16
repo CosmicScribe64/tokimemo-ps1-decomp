@@ -2,11 +2,6 @@
 #include "ovl/SHOUGATU.h"
 #include "game.h"
 
-typedef struct {
-    void (*f[51])();
-} FnTbl51; /* size 0xCC */
-extern FnTbl51 D_801468A4;
-
 void func_80141780(void) {
     D_801464B0 = 0x801DA680;
     D_801464B4 = 0x801DA68C;
@@ -55,7 +50,26 @@ void func_80141920(void) {
     D_80146538 = (u8 *)0x801C6000;
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_801419D0);
+void func_801419D0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl40 tbl;
+    s16 n;
+
+    tbl = D_80146804;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+    if (D_800E6280.unk_110A < 0x10U) {
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = (u8)D_800B593C;
+        if (((DisplayActor44 *)D_8011ECD0)[96].unk_18 == 0 && ((DisplayActor44 *)D_8011ECD0)[96].unk_08 == 0) {
+            n = ((DisplayActor44 *)D_8011ECD0)[96].unk_16 + 1;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = n;
+            if (n >= 3) {
+                ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 0;
+            }
+        }
+    }
+    func_80141D20();
+}
 
 void func_80141AC0(void) {
     D_800B5A60 = 1;

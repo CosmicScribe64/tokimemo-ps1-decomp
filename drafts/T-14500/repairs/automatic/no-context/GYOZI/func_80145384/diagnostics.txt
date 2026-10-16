@@ -1,0 +1,73 @@
+python3 failed:
+ ----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3508: 'sp28' undefined; reoccurrences will not be reported.
+     *(M2cBlockBC *)(&sp28[0]) = *(M2cBlockBC *)(&D_8014901C);
+ ---------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3537: redeclaration of 'func_80145520'; previous declaration at line 3504 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c'
+ void func_80145520(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3537: Incompatible function return type for this function.
+ void func_80145520(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o /tmp/asm_processor6bbh1fqr/preprocessed_bb76b8e25cfd4bf2b8c09ba829f00532.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib2vm86gw2/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c
+python3 failed:
+ ----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3507: 'sp28' undefined; reoccurrences will not be reported.
+     *(M2cBlockBC *)(&sp28[0]) = *(M2cBlockBC *)(&D_8014901C);
+ ---------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3536: redeclaration of 'func_80145520'; previous declaration at line 3524 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c'
+ void func_80145520(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3536: Incompatible function return type for this function.
+ void func_80145520(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o /tmp/asm_processorxrk2bgli/preprocessed_68fe0208d59e4732a4f4e8cf433ab053.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4flc4svt/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c
+python3 failed:
+ ----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3503: redeclaration of 'D_801317EB'; previous declaration at line 2483 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c'
+ extern u8 D_801317EB;
+ ----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3510: Non-function name referenced in function call.
+     var_v0 = (&sp28[0])[D_800F647A](0x3C);
+ -----------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3526: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80145520();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o /tmp/asm_processorb3fm4jnn/preprocessed_2f04409b31aa47a88aa2ce6eb87cbeb9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliba54ys4pz/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3500: redeclaration of 'D_8012B8C7'; previous declaration at line 2555 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c'
+ extern u8 D_8012B8C7;
+ ----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3509: Non-function name referenced in function call.
+     var_v0 = (&sp28[0])[D_800F647A](0x3C);
+ -----------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3525: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80145520();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o /tmp/asm_processortv6x6oh4/preprocessed_bc8ddfb758ba429cac688663716635c8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib91jnjk3n/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3498: redeclaration of 'D_800F6468'; previous declaration at line 891 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c'
+ extern u32 D_800F6468;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3508: Non-function name referenced in function call.
+     var_v0 = (&sp28[0])[D_800F647A](0x3C);
+ -----------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3524: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80145520();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o /tmp/asm_processorl3_n9c_l/preprocessed_1ee2e6c78cb147dca6dcac9bc63579a6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibezn6t9b3/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3507: Non-function name referenced in function call.
+     var_v0 = (&sp28[0])[D_800F647A](0x3C);
+ -----------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3523: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80145520();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o /tmp/asm_processord7ciahd1/preprocessed_a78fbfd6c683408f8cb3bbcf26c15c19.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib9aw4peik/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80145384/work/guarded.o.sjis.c

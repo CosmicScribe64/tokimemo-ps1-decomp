@@ -106,28 +106,28 @@ s32 func_80140638(s32 *arg0) {
     var_v0 = 0x10;
     do {
         var_a2 = &D_8015EDB4[var_v0];
-        if ((var_a2[0].pad0[1] & 0x80) && (var_a2[0].unk84[3] & 1) && (var_a2[0].unk84[2] != 0xE)) {
+        if ((var_a2[0].unk0[1] & 0x80) && (var_a2[0].unk84[3] & 1) && (var_a2[0].unk84[2] != 0xE)) {
             if (*arg0 == -1) {
                 *arg0 = var_v0;
                 var_a2 = &D_8015EDB4[var_v0];
             }
             var_v1 += 1;
         }
-        if ((var_a2[1].pad0[1] & 0x80) && (var_a2[1].unk84[3] & 1) && (var_a2[1].unk84[2] != 0xE)) {
+        if ((var_a2[1].unk0[1] & 0x80) && (var_a2[1].unk84[3] & 1) && (var_a2[1].unk84[2] != 0xE)) {
             var_v1 += 1;
             if (*arg0 == -1) {
                 *arg0 = var_v0 + 1;
                 var_a2 = &D_8015EDB4[var_v0];
             }
         }
-        if ((var_a2[2].pad0[1] & 0x80) && (var_a2[2].unk84[3] & 1) && (var_a2[2].unk84[2] != 0xE)) {
+        if ((var_a2[2].unk0[1] & 0x80) && (var_a2[2].unk84[3] & 1) && (var_a2[2].unk84[2] != 0xE)) {
             var_v1 += 1;
             if (*arg0 == -1) {
                 *arg0 = var_v0 + 2;
                 var_a2 = &D_8015EDB4[var_v0];
             }
         }
-        if ((var_a2[3].pad0[1] & 0x80) && (var_a2[3].unk84[3] & 1) && (var_a2[3].unk84[2] != 0xE)) {
+        if ((var_a2[3].unk0[1] & 0x80) && (var_a2[3].unk84[3] & 1) && (var_a2[3].unk84[2] != 0xE)) {
             var_v1 += 1;
             if (*arg0 == -1) {
                 *arg0 = var_v0 + 3;

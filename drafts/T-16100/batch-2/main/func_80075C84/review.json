@@ -1,0 +1,28 @@
+{
+  "scope": "main:func_80075C84",
+  "path": "drafts/T-16100/batch-2/main/func_80075C84",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 48
+    }
+  ],
+  "explanation": "Girl stride 0x38 followed by +0x1C8 targets Rec38.unk_0C; local pointer alias spans several views and requires typed reconstruction.",
+  "evidence_path": "drafts/T-16100/batch-2/main/func_80075C84/evidence.txt",
+  "compile_status": "scored",
+  "score": 270,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 48
+      },
+      "outcome": "unresolved",
+      "explanation": "Girl stride 0x38 followed by +0x1C8 targets Rec38.unk_0C; local pointer alias spans several views and requires typed reconstruction."
+    }
+  ]
+}

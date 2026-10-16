@@ -1,0 +1,60 @@
+{
+  "scope": "TAIIKU:func_80133CFC",
+  "selected_path": "drafts/T-14500/TAIIKU/func_80133CFC",
+  "changed": false,
+  "outcomes": [
+    {
+      "detail": "sp48",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "unresolved-layout",
+      "explanation": "Stack accesses and initialization/call sites reviewed against the target. Separate synthesized locals or oversized arrays are not evidence of a valid aggregate. No safe complete layout was established in this bounded pass; preserve the flag and original draft. Multiple scalar-address local copies span 20 and 28 bytes, and the 40-byte prefix at sp44 overlaps synthesized sp48/sp4C aliases. This needs unified table layout recovery; merely enlarging or renaming individual locals would retain the alias defect.",
+      "original_excerpt": [
+        "void func_80133CFC(void) {",
+        "    s32 sp48;",
+        "    typedef struct { s32 w[10]; } M2cBlock28; /* m2c memcpy of 40 bytes */"
+      ]
+    },
+    {
+      "detail": "M2cBlock28",
+      "kind": "inferred-copy-layout",
+      "line": 3,
+      "verdict": "reviewed-copy-evidence-partial",
+      "explanation": "Target lw/sw copy sequences support the documented block byte width. This synthetic block typedef does not establish the original source type; semantic layout and any adjacent/trailing fields remain unresolved. Preserve the flag. Multiple scalar-address local copies span 20 and 28 bytes, and the 40-byte prefix at sp44 overlaps synthesized sp48/sp4C aliases. This needs unified table layout recovery; merely enlarging or renaming individual locals would retain the alias defect.",
+      "original_excerpt": [
+        "    s32 sp48;",
+        "    typedef struct { s32 w[10]; } M2cBlock28; /* m2c memcpy of 40 bytes */",
+        "    s32 sp9C;"
+      ]
+    }
+  ],
+  "repair_notes": [],
+  "assembly_path": "asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80/func_80133CFC.s",
+  "assembly_sha256": "0997bff4be7f16d232fad712c2fb7e0f9d79d08576055054381c746aceb265a7",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x9C": [
+      "lw",
+      "sw"
+    ],
+    "0x44": [
+      "lw"
+    ],
+    "0x48": [
+      "lw"
+    ],
+    "0x10": [
+      "sw"
+    ]
+  },
+  "layout_limit": "Multiple scalar-address local copies span 20 and 28 bytes, and the 40-byte prefix at sp44 overlaps synthesized sp48/sp4C aliases. This needs unified table layout recovery; merely enlarging or renaming individual locals would retain the alias defect."
+}

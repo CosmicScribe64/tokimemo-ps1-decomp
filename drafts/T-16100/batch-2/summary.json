@@ -1,0 +1,89 @@
+{
+  "reviewed": 55,
+  "compiled": 55,
+  "changed": 16,
+  "zero": 0,
+  "false_positive": 4,
+  "changes": [
+    {
+      "scope": "TAIIKU:func_80135F3C",
+      "old": 556,
+      "new": 535
+    },
+    {
+      "scope": "TAIIKU:func_80134F98",
+      "old": 473,
+      "new": 446
+    },
+    {
+      "scope": "GYOZI:func_80138C9C",
+      "old": 326,
+      "new": 302
+    },
+    {
+      "scope": "MASTER:func_8013B448",
+      "old": 338,
+      "new": 329
+    },
+    {
+      "scope": "DATE:func_8014C20C",
+      "old": 262,
+      "new": 254
+    },
+    {
+      "scope": "GEKO:func_80133C50",
+      "old": 164,
+      "new": 168
+    },
+    {
+      "scope": "EVENT:func_800FEAE8",
+      "old": 135,
+      "new": 121
+    },
+    {
+      "scope": "DATE:func_8013EB8C",
+      "old": 178,
+      "new": 145
+    },
+    {
+      "scope": "EN_NICHI:func_80136B74",
+      "old": 56,
+      "new": 56
+    },
+    {
+      "scope": "RPG_BAT:func_80152384",
+      "old": 192,
+      "new": 197
+    },
+    {
+      "scope": "RPG_BAT:func_80159B40",
+      "old": 148,
+      "new": 157
+    },
+    {
+      "scope": "DATE:func_8013EFA0",
+      "old": 123,
+      "new": 105
+    },
+    {
+      "scope": "BUNKASAI:func_801509A4",
+      "old": 85,
+      "new": 59
+    },
+    {
+      "scope": "GEKO:func_801358CC",
+      "old": 130,
+      "new": 113
+    },
+    {
+      "scope": "EVENT:func_801022C0",
+      "old": 86,
+      "new": 87
+    },
+    {
+      "scope": "main:func_8006D6E0",
+      "old": 107,
+      "new": 99
+    }
+  ]
+}

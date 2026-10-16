@@ -1,0 +1,39 @@
+{
+  "scope": "GYOZI:func_8013B0C4",
+  "selected_path": "drafts/T-14500/GYOZI/func_8013B0C4",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "M2cBlock90",
+      "kind": "inferred-copy-layout",
+      "line": 2,
+      "verdict": "copy-width-reviewed-layout-partial",
+      "explanation": "The copied word table is indexed from the target stack base before jalr. Replace invented extern sp addressing with that copied local table. Copy-block type remains a representation of observed word copies, not a recovered semantic struct. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "void func_8013B0C4(void) {",
+        "    typedef struct { s32 w[36]; } M2cBlock90; /* m2c memcpy of 144 bytes */",
+        "    s32 sp34[36];"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "The copied word table is indexed from the target stack base before jalr. Replace invented extern sp addressing with that copied local table. Copy-block type remains a representation of observed word copies, not a recovered semantic struct."
+  ],
+  "assembly_path": "asm/ovl/GYOZI/nonmatchings/GYOZI/8013AE80/func_8013B0C4.s",
+  "assembly_sha256": "bd3794bdb736d9977b3a689c9fec358e585646a05b5f11445547a12e627cb145",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x14": [
+      "sw"
+    ],
+    "0x10": [
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

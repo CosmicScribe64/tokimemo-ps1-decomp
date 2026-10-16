@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_80140510 10
+python3 failed:
+cfe: Warning 709: drafts/T-17500/_runs/typed/SHOUGATU/func_80140314/work/guarded.c, line 3820: Incompatible pointer type assignment
+     temp_v0 = sp70.v + (*(u8 *)((unsigned char *)(sp4C.v + D_80146168[D_80146158] + (D_800E6280.unk_03E * 0xC)) + (-1140)) * 8);
+ ------------^
+cfe: Error: drafts/T-17500/_runs/typed/SHOUGATU/func_80140314/work/guarded.c, line 3826: 'sp' undefined; reoccurrences will not be reported.
+     temp_v0_2 = (*(u8 *)((unsigned char *)(sp + (D_80146168[D_80146158] + (D_800E6280.unk_03E * 0xC))) + (-1064)) * 8) + sp70.v;
+ -------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/typed/SHOUGATU/func_80140314/work -o drafts/T-17500/_runs/typed/SHOUGATU/func_80140314/work/guarded.o /tmp/asm_processorvpvza5x2/preprocessed_d032a0e8c17f4d508e66663949e2c70e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibe45ur_k_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/typed/SHOUGATU/func_80140314/work/guarded.o drafts/T-17500/_runs/typed/SHOUGATU/func_80140314/work/guarded.c

@@ -128,11 +128,6 @@ void func_800F7740(void) {
     func_80015FE0();
 }
 
-typedef struct {
-    void (*f[52])();
-} FnTbl52; /* size 0xD0 */
-extern FnTbl52 D_801207B8;
-
 void func_800F77A0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl52 tbl;
@@ -398,11 +393,6 @@ void func_800F84B8(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    void (*f[41])();
-} FnTbl41; /* size 0xA4 */
-extern FnTbl41 D_80120888;
-
 void func_800F84E0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl41 tbl;
@@ -442,11 +432,6 @@ void func_800F868C(void) {
     D_80094714 = (u16) D_80094714 + D_800EECBC;
     func_80011DFC();
 }
-
-typedef struct {
-    void (*f[35])();
-} FnTbl35; /* size 0x8C */
-extern FnTbl35 D_8012092C;
 
 void func_800F86C4(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -516,11 +501,6 @@ void func_800F8970(void) {
     func_8001A0CC(0, 0, 0xD, 3, 0);
 }
 
-typedef struct {
-    void (*f[47])();
-} FnTbl47; /* size 0xBC */
-extern FnTbl47 D_801209B8;
-
 void func_800F8B50(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl47 tbl;
@@ -538,24 +518,6 @@ void func_800F8BF4(void) {
     func_800F7430();
     func_80011DFC();
 }
-
-typedef struct {
-    s32 a;
-    s32 b;
-} EvEnt;
-typedef struct {
-    EvEnt e[4];
-} EvTbl; /* size 0x20 */
-extern EvTbl D_80120A74;
-
-typedef struct {
-    s32 a;
-    s32 b;
-} EvEnt;
-typedef struct {
-    EvEnt e[4];
-} EvTbl; /* size 0x20 */
-extern EvTbl D_80120A74;
 
 void func_800F8C2C(void) {
     s32 pad[1]; /* FAKE: one unused word above tbl gives the original local offset (0x54); real source unknown. T-9310 */
@@ -600,11 +562,6 @@ void func_800F8C2C(void) {
     func_8001A0CC(0, 0, 0xD, 3, 0);
 }
 
-typedef struct {
-    void (*f[42])();
-} FnTbl42; /* size 0xA8 */
-extern FnTbl42 D_80120A94;
-
 void func_800F93FC(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl42 tbl;
@@ -638,16 +595,6 @@ void func_800F9508(void) {
     }
     func_80011DFC();
 }
-
-typedef struct {
-    void (*f[42])();
-} FnTbl42; /* size 0xA8 */
-extern FnTbl42 D_80120B3C;
-
-typedef struct {
-    void (*f[42])();
-} FnTbl42; /* size 0xA8 */
-extern FnTbl42 D_80120B3C;
 
 void func_800F9558(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

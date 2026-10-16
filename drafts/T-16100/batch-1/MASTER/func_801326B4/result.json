@@ -1,0 +1,20 @@
+{
+  "scope": "MASTER:func_801326B4",
+  "src": "src/ovl/MASTER/80132140.c",
+  "size": 3264,
+  "path": "drafts/T-16100/batch-1/MASTER/func_801326B4",
+  "archive_path": "drafts/T-16100/batch-1/MASTER/func_801326B4",
+  "status": "scored",
+  "score": 957,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": false,
+  "compile_verified": true,
+  "body.c_sha256": "5d5d202df2530763785e326d2ca350dde89bea12c02dbed96afdd4e8a1a8d26f",
+  "declarations.h_sha256": "a2004b471d6378476cbd72a6efe2a987c8c85ab385136c82c1899f38a72dffcd",
+  "context.c_sha256": "32c30807439b81f827ed3d0d5d2f4ef704476203cbb4dcd0d5efb04b592632b2",
+  "full-context.c_sha256": "4a53e2a7632a640d751b059a2574e0ec4107da8a1c0376db14a17ce2fb4b53b5",
+  "diagnostics.txt_sha256": "e887799dc96b50d7f83642831c66f8e081a0570e181ef7b20002cd0fc4d82843",
+  "assembly-evidence.txt_sha256": "e82c09be72505b93e44d577c4aaca03586ea4cbe79fa727146bc93e3774ccf5a"
+}

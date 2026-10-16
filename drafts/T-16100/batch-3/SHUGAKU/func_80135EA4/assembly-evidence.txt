@@ -1,0 +1,23 @@
+80135EA4:  addiu      $t6, $zero, 0x2
+80135EAC:  sb         $t6, %lo(D_800E71DF)($at)
+80135EB4:  sb         $zero, %lo(D_8013C2E4)($at)
+80135EBC:  addiu      $sp, $sp, -0x30
+80135EC0:  sh         $zero, %lo(D_8013C2E8)($at)
+80135EC4:  sw         $ra, 0x1C($sp)
+80135ECC:  addiu      $t7, $zero, 0x1
+80135ED4:   sb        $t7, %lo(D_800CA2F4)($at)
+80135EDC:  sh         $zero, %lo(D_800CA2E4)($at)
+80135EE8:  lw         $t8, %lo(D_8013C508)($t8)
+80135EEC:  sh         $zero, %lo(D_800CA2E8)($at)
+80135EF8:  lw         $t9, %lo(D_8013C644)($t9)
+80135EFC:  sw         $t8, %lo(D_8013BFFC)($at)
+80135F08:  lw         $t0, %lo(D_8013C780)($t0)
+80135F0C:  sw         $t9, %lo(D_8013C000)($at)
+80135F18:   sw        $t0, %lo(D_8013C004)($at)
+80135F20:  lw         $a0, %lo(D_8013C2E0)($a0)
+80135F24:  addiu      $a1, $zero, 0x11
+80135F28:  addiu      $a2, $zero, 0x1
+80135F2C:  addiu      $a3, $zero, 0x2
+80135F68:  sll        $t3, $v0, 16
+80135F94:  lh         $a3, %lo(D_8013C2DC)($a3)
+801360A4:  addiu      $sp, $sp, 0x30

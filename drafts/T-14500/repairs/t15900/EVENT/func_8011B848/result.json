@@ -1,0 +1,18 @@
+{
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010FE10.c",
+  "func": "func_8011B848",
+  "scope": "EVENT:func_8011B848",
+  "size": 1408,
+  "status": "scored",
+  "score": 650,
+  "body_hash": "10603706970a80de0b9315742c22676c1aa9b180d56974d1bf7bb7299be7a68e",
+  "context_hash": "376cd12b55545d8f93264e8797202dea16d8e86cb09559d4b54a5ead200daf71",
+  "repair_path": "drafts/T-14500/repairs/t15900/EVENT/func_8011B848",
+  "ticket": "T-15900",
+  "repair_notes": "Represent absolute assembler mask D_7FFF as0x7FFF; subtraction of address+1 becomes integer0x8000.",
+  "baseline": "48362009",
+  "compiler": "IDO5.3 default full-TU via order_search.compile_variant",
+  "production_changed": false,
+  "preprocessed_context_hash": "4081cebe39cee90467fa3211d5ed207ff0f2ea8e0c01d5a5286320a49b50a0e5"
+}

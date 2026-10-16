@@ -1,0 +1,26 @@
+python3 failed:
+ ----------------------------^
+cfe: Error: drafts/T-17400/_runs/typed/EVENT/func_8011B848/work/guarded.o.sjis.c, line 7064: 'D_7FFF' undefined; reoccurrences will not be reported.
+             var_t1 = temp_v0_2 & (s32) &D_7FFF;
+ ----------------------------------------^
+cfe: Error: drafts/T-17400/_runs/typed/EVENT/func_8011B848/work/guarded.o.sjis.c, line 7127: 'D_7FFF' undefined; reoccurrences will not be reported.
+                         var_t7 = temp_v0_4 & (s32) &D_7FFF;
+ ----------------------------------------------------^
+cfe: Warning 681: drafts/T-17400/_runs/typed/EVENT/func_8011B848/work/guarded.o.sjis.c, line 7259: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/typed/EVENT/func_8011B848/work -o drafts/T-17400/_runs/typed/EVENT/func_8011B848/work/guarded.o /tmp/asm_processorcciekvc8/preprocessed_fd6c8277f9cd4872b08d241f584134a3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibm00nlu13/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/typed/EVENT/func_8011B848/work/guarded.o drafts/T-17400/_runs/typed/EVENT/func_8011B848/work/guarded.o.sjis.c
+python3 failed:
+ ----------------------------^
+cfe: Error: drafts/T-17400/_runs/typed/EVENT/func_8011B848/work/guarded.o.sjis.c, line 7067: Bad operand type for += or -=
+                 var_t1 -= &D_7FFF + 1;
+ -----------------------^
+cfe: Error: drafts/T-17400/_runs/typed/EVENT/func_8011B848/work/guarded.o.sjis.c, line 7130: Bad operand type for += or -=
+                             var_t7 -= &D_7FFF + 1;
+ -----------------------------------^
+cfe: Warning 681: drafts/T-17400/_runs/typed/EVENT/func_8011B848/work/guarded.o.sjis.c, line 7260: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/typed/EVENT/func_8011B848/work -o drafts/T-17400/_runs/typed/EVENT/func_8011B848/work/guarded.o /tmp/asm_processory915m4xm/preprocessed_2a5fb33486c84b1ca8b41bf033b1a95f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib9cfglq4m/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/typed/EVENT/func_8011B848/work/guarded.o drafts/T-17400/_runs/typed/EVENT/func_8011B848/work/guarded.o.sjis.c

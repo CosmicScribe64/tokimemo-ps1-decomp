@@ -1,0 +1,11 @@
+{
+  "ticket": "T-16100",
+  "original_attempt": "drafts/T-14500/RENSYU/func_80133628",
+  "original_sha256": "eb0d9af35e71af84429d45ae8997e0ac3cf776361aece7b420c12b48bc23fdcf",
+  "source_base": "48362009",
+  "frozen_header_root": "drafts/T-14500/baseline/include",
+  "context_source": "drafts/T-14500/RENSYU/func_80133628/context.c",
+  "repair": "tools/t16100_batch3.py",
+  "compiler": "IDO 5.3 via tools/docker.sh; full translation unit",
+  "matching_claim": false
+}

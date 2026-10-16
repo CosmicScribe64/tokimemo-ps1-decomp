@@ -1,0 +1,8 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/MASTER/func_8013B448/work/guarded.c', '/work/drafts/T-15800/MASTER/func_8013B448/work/guarded.o', 'ido', '5.3']
+cfe: Warning 709: /work/drafts/T-15800/MASTER/func_8013B448/work/guarded.o.sjis.c, line 3382: Incompatible pointer type assignment
+         var_t6 = &D_800E6280 + (D_800E71DE * 8);
+ ---------------^
+cfe: Warning 709: /work/drafts/T-15800/MASTER/func_8013B448/work/guarded.o.sjis.c, line 3421: Incompatible pointer type assignment
+         var_t6 = &D_800E6280 + (D_800E71DE * 8);
+ ---------------^
+

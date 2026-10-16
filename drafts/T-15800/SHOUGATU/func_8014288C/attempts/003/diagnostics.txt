@@ -1,0 +1,45 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.c', '/work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o', 'ido', '5.3']
+cfe: Error: /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3520: redeclaration of 'func_8014288C'; previous declaration at line 3472 in file '/work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c'
+ void func_8014288C(void) {
+ -----^
+cfe: Error: /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3520: Incompatible function return type for this function.
+ void func_8014288C(void) {
+ ------------------^
+cfe: Warning 709: /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3587: Incompatible pointer type assignment
+             temp_s0 = D_801217D0 + temp_lo;
+ --------------------^
+cfe: Warning 709: /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3603: Incompatible pointer type assignment
+             temp_s5 = temp_v0_3 + &D_80146540;
+ --------------------^
+cfe: Warning 709: /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3604: Incompatible pointer type assignment
+             temp_s1 = temp_v0_3 + &D_80146608;
+ --------------------^
+cfe: Warning 709: /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3605: Incompatible pointer type assignment
+             temp_s3 = temp_v0_3 + &D_801466D0;
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/SHOUGATU/func_8014288C/work -o /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o /tmp/asm_processorb2jrsypa/preprocessed_de841d6b3150438c8b97380008a28e42.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolibjf04dld5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c
+
+command failed: ['python3', 'tools/cc.py', '/work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.c', '/work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o', 'ido', '5.3']
+
+cfe: Error: /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3520: redeclaration of 'func_8014288C'; previous declaration at line 3472 in file '/work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c'
+ void func_8014288C(void) {
+ -----^
+cfe: Error: /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3520: Incompatible function return type for this function.
+ void func_8014288C(void) {
+ ------------------^
+cfe: Warning 709: /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3587: Incompatible pointer type assignment
+             temp_s0 = D_801217D0 + temp_lo;
+ --------------------^
+cfe: Warning 709: /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3603: Incompatible pointer type assignment
+             temp_s5 = temp_v0_3 + &D_80146540;
+ --------------------^
+cfe: Warning 709: /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3604: Incompatible pointer type assignment
+             temp_s1 = temp_v0_3 + &D_80146608;
+ --------------------^
+cfe: Warning 709: /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3605: Incompatible pointer type assignment
+             temp_s3 = temp_v0_3 + &D_801466D0;
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/SHOUGATU/func_8014288C/work -o /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o /tmp/asm_processorb2jrsypa/preprocessed_de841d6b3150438c8b97380008a28e42.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolibjf04dld5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o /work/drafts/T-15800/SHOUGATU/func_8014288C/work/guarded.o.sjis.c
+

@@ -1,0 +1,16 @@
+m2c.py: argument counts from the callees' asm: func_80062CD0 1
+python3 failed:
+cfe: Error: drafts/T-14500/KANGEI/func_80132C24/work/guarded.c, line 3017: 'sp30' undefined; reoccurrences will not be reported.
+     sp30[0].unk0 = D_80139A3C;
+ ----^
+cfe: Error: drafts/T-14500/KANGEI/func_80132C24/work/guarded.c, line 3019: 'sp28' undefined; reoccurrences will not be reported.
+     sp28[0].unk0 = D_80139A44;
+ ----^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/KANGEI/func_80132C24/work -o drafts/T-14500/KANGEI/func_80132C24/work/guarded.o /tmp/asm_processorpa8i6kq3/preprocessed_fb43c75b4e304dd199ac4c8284165cf8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibu93nmxwv/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/KANGEI/func_80132C24/work/guarded.o drafts/T-14500/KANGEI/func_80132C24/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/KANGEI/func_80132C24/work/guarded.c, line 3020: 'sp28' undefined; reoccurrences will not be reported.
+     sp28[0].unk0 = D_80139A44;
+ ----^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/KANGEI/func_80132C24/work -o drafts/T-14500/KANGEI/func_80132C24/work/guarded.o /tmp/asm_processore01f28sn/preprocessed_9ded1e6c4be84a0493a203b0684afd14.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib7zpjhqes/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/KANGEI/func_80132C24/work/guarded.o drafts/T-14500/KANGEI/func_80132C24/work/guarded.c

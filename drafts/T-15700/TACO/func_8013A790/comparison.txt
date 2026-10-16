@@ -1,0 +1,574 @@
+-27bdff98  ; addiu sp,sp,-104
++27bdff38  ; addiu sp,sp,-200
++afb70030  ; sw s7,48(sp)
++afb6002c  ; sw s6,44(sp)
++0080b825  ; move s7,a0
++afbf0034  ; sw ra,52(sp)
+-0080a825  ; move s5,a0
+-afbf002c  ; sw ra,44(sp)
+-afa5006c  ; sw a1,108(sp)
+-24147530  ; li s4,30000
+-00003025  ; move a2,zero
++afa500cc  ; sw a1,204(sp)
++24167530  ; li s6,30000
++00004025  ; move t0,zero
+-24142710  ; li s4,10000
++24162710  ; li s6,10000
+-3414c350  ; li s4,0xc350
++3416c350  ; li s6,0xc350
+-30480008  ; andi t0,v0,0x8
+-24060028  ; li a2,40
+-11000022  ; beqz t0,1720 <func_8013A790+0x100>
++30490008  ; andi t1,v0,0x8
++24080028  ; li t0,40
++11200021  ; beqz t1,1724 <func_8013A790+0x104>
+-10000020  ; b 1720 <func_8013A790+0x100>
+-2406ffd8  ; li a2,-40
+-8fa9006c  ; lw t1,108(sp)
++1000001f  ; b 1724 <func_8013A790+0x104>
++2408ffd8  ; li t0,-40
++8faa00cc  ; lw t2,204(sp)
+-1521000f  ; bne t1,at,16ec <func_8013A790+0xcc>
++1541000e  ; bne t2,at,16f0 <func_8013A790+0xd0>
++3c0b8016  ; lui t3,0x0
++8d6bedb4  ; lw t3,0(t3)
++24010001  ; li at,1
++91620002  ; lbu v0,2(t3)
+-3c0a8016  ; lui t2,0x0
+-8d4aedb4  ; lw t2,0(t2)
+-24010001  ; li at,1
+-91420002  ; lbu v0,2(t2)
+-00000000  ; nop
+-304b0001  ; andi t3,v0,0x1
+-15610002  ; bne t3,at,16d8 <func_8013A790+0xb8>
+-304c0002  ; andi t4,v0,0x2
+-24060028  ; li a2,40
++304c0001  ; andi t4,v0,0x1
++15810002  ; bne t4,at,16dc <func_8013A790+0xbc>
++304d0002  ; andi t5,v0,0x2
++24080028  ; li t0,40
+-15810010  ; bne t4,at,1720 <func_8013A790+0x100>
++15a10010  ; bne t5,at,1724 <func_8013A790+0x104>
+-2406ffd8  ; li a2,-40
+-8fad006c  ; lw t5,108(sp)
++2408ffd8  ; li t0,-40
++8fae00cc  ; lw t6,204(sp)
+-15a10004  ; bne t5,at,1708 <func_8013A790+0xe8>
++15c10004  ; bne t6,at,170c <func_8013A790+0xec>
+-24060028  ; li a2,40
++24080028  ; li t0,40
+-24144e20  ; li s4,20000
+-8fae006c  ; lw t6,108(sp)
++24164e20  ; li s6,20000
++8faf00cc  ; lw t7,204(sp)
+-15c10003  ; bne t6,at,1720 <func_8013A790+0x100>
++15e10003  ; bne t7,at,1724 <func_8013A790+0x104>
+-24060028  ; li a2,40
+-24142710  ; li s4,10000
+-18c0004c  ; blez a2,1854 <func_8013A790+0x234>
+-00009025  ; move s2,zero
+-00008025  ; move s0,zero
+-24040320  ; li a0,800
++24080028  ; li t0,40
++24162710  ; li s6,10000
++1900004b  ; blez t0,1854 <func_8013A790+0x234>
++0000a025  ; move s4,zero
++00003825  ; move a3,zero
++24150320  ; li s5,800
++3c188016  ; lui t8,0x0
++8f18f4ec  ; lw t8,0(t8)
++000718c0  ; sll v1,a3,0x3
++00781021  ; addu v0,v1,t8
++8c590000  ; lw t9,0(v0)
++3c0a8016  ; lui t2,0x0
++03284821  ; addu t1,t9,t0
++ac490000  ; sw t1,0(v0)
++8d4af4ec  ; lw t2,0(t2)
++00000000  ; nop
++006a1021  ; addu v0,v1,t2
++8c450000  ; lw a1,0(v0)
++00402025  ; move a0,v0
++28a11001  ; slti at,a1,4097
++14200006  ; bnez at,1788 <func_8013A790+0x168>
++24abf000  ; addiu t3,a1,-4096
++ac4b0000  ; sw t3,0(v0)
++3c0c8016  ; lui t4,0x0
++8d8cf4ec  ; lw t4,0(t4)
++00000000  ; nop
++006c2021  ; addu a0,v1,t4
++8c8d0008  ; lw t5,8(a0)
++01a87021  ; addu t6,t5,t0
++ac8e0008  ; sw t6,8(a0)
+-3c088016  ; lui t0,0x0
+-01f01021  ; addu v0,t7,s0
+-8c580000  ; lw t8,0(v0)
+-3c0f8016  ; lui t7,0x0
+-0306c821  ; addu t9,t8,a2
+-ac590000  ; sw t9,0(v0)
+-8d08f4ec  ; lw t0,0(t0)
+-01101021  ; addu v0,t0,s0
+-8c430000  ; lw v1,0(v0)
++006f1021  ; addu v0,v1,t7
++8c460008  ; lw a2,8(v0)
++00402825  ; move a1,v0
++28c11001  ; slti at,a2,4097
++14200006  ; bnez at,17cc <func_8013A790+0x1ac>
++24d8f000  ; addiu t8,a2,-4096
++ac580008  ; sw t8,8(v0)
++3c198016  ; lui t9,0x0
++8f39f4ec  ; lw t9,0(t9)
+-28611001  ; slti at,v1,4097
++00792821  ; addu a1,v1,t9
++8ca90010  ; lw t1,16(a1)
++3c0b8016  ; lui t3,0x0
++01285021  ; addu t2,t1,t0
++acaa0010  ; sw t2,16(a1)
++8d6bf4ec  ; lw t3,0(t3)
++00000000  ; nop
++006b1021  ; addu v0,v1,t3
++8c460010  ; lw a2,16(v0)
++00402025  ; move a0,v0
++28c11001  ; slti at,a2,4097
+-2469f000  ; addiu t1,v1,-4096
+-ac490000  ; sw t1,0(v0)
++24ccf000  ; addiu t4,a2,-4096
++ac4c0010  ; sw t4,16(v0)
++3c0d8016  ; lui t5,0x0
++8dadf4ec  ; lw t5,0(t5)
++00000000  ; nop
++006d2021  ; addu a0,v1,t5
++8c8e0018  ; lw t6,24(a0)
++3c188016  ; lui t8,0x0
++01c87821  ; addu t7,t6,t0
++ac8f0018  ; sw t7,24(a0)
++8f18f4ec  ; lw t8,0(t8)
++24e70020  ; addiu a3,a3,32
++00781021  ; addu v0,v1,t8
++8c450018  ; lw a1,24(v0)
++00000000  ; nop
++28a11001  ; slti at,a1,4097
++14200003  ; bnez at,184c <func_8013A790+0x22c>
++00000000  ; nop
++24b9f000  ; addiu t9,a1,-4096
++ac590018  ; sw t9,24(v0)
++14f5ffb9  ; bne a3,s5,1734 <func_8013A790+0x114>
++00000000  ; nop
++05010046  ; bgez t0,1970 <func_8013A790+0x350>
++24150320  ; li s5,800
++00003825  ; move a3,zero
++3c098016  ; lui t1,0x0
++8d29f4ec  ; lw t1,0(t1)
++000718c0  ; sll v1,a3,0x3
++00691021  ; addu v0,v1,t1
++8c4a0000  ; lw t2,0(v0)
++3c0c8016  ; lui t4,0x0
++01485821  ; addu t3,t2,t0
++ac4b0000  ; sw t3,0(v0)
++8d8cf4ec  ; lw t4,0(t4)
++00000000  ; nop
++006c1021  ; addu v0,v1,t4
++8c450000  ; lw a1,0(v0)
++00402025  ; move a0,v0
++04a10006  ; bgez a1,18b0 <func_8013A790+0x290>
++24ad1000  ; addiu t5,a1,4096
++ac4d0000  ; sw t5,0(v0)
++3c0e8016  ; lui t6,0x0
++8dcef4ec  ; lw t6,0(t6)
++00000000  ; nop
++006e2021  ; addu a0,v1,t6
++8c8f0008  ; lw t7,8(a0)
++3c198016  ; lui t9,0x0
++01e8c021  ; addu t8,t7,t0
++ac980008  ; sw t8,8(a0)
++8f39f4ec  ; lw t9,0(t9)
++00000000  ; nop
++00791021  ; addu v0,v1,t9
++8c460008  ; lw a2,8(v0)
++00402825  ; move a1,v0
++04c10006  ; bgez a2,18f0 <func_8013A790+0x2d0>
++24c91000  ; addiu t1,a2,4096
++ac490008  ; sw t1,8(v0)
+-01501021  ; addu v0,t2,s0
+-8c4b0008  ; lw t3,8(v0)
++006a2821  ; addu a1,v1,t2
++8cab0010  ; lw t3,16(a1)
+-01666021  ; addu t4,t3,a2
+-ac4c0008  ; sw t4,8(v0)
++01686021  ; addu t4,t3,t0
++acac0010  ; sw t4,16(a1)
+-01b01021  ; addu v0,t5,s0
+-8c430008  ; lw v1,8(v0)
++006d1021  ; addu v0,v1,t5
++8c460010  ; lw a2,16(v0)
++00402025  ; move a0,v0
++04c10007  ; bgez a2,1934 <func_8013A790+0x314>
+-28611001  ; slti at,v1,4097
+-14200006  ; bnez at,17cc <func_8013A790+0x1ac>
+-00000000  ; nop
+-246ef000  ; addiu t6,v1,-4096
+-ac4e0008  ; sw t6,8(v0)
++24ce1000  ; addiu t6,a2,4096
++ac4e0010  ; sw t6,16(v0)
++3c0f8016  ; lui t7,0x0
+-01f01021  ; addu v0,t7,s0
+-8c580010  ; lw t8,16(v0)
+-3c088016  ; lui t0,0x0
+-0306c821  ; addu t9,t8,a2
+-ac590010  ; sw t9,16(v0)
+-8d08f4ec  ; lw t0,0(t0)
++006f2021  ; addu a0,v1,t7
++8c980018  ; lw t8,24(a0)
++3c098016  ; lui t1,0x0
++0308c821  ; addu t9,t8,t0
++ac990018  ; sw t9,24(a0)
++8d29f4ec  ; lw t1,0(t1)
++24e70020  ; addiu a3,a3,32
++00691021  ; addu v0,v1,t1
++8c450018  ; lw a1,24(v0)
+-01101021  ; addu v0,t0,s0
+-8c430010  ; lw v1,16(v0)
++04a10003  ; bgez a1,1968 <func_8013A790+0x348>
+-28611001  ; slti at,v1,4097
+-14200007  ; bnez at,1814 <func_8013A790+0x1f4>
++24aa1000  ; addiu t2,a1,4096
++ac4a0018  ; sw t2,24(v0)
++14f5ffbd  ; bne a3,s5,1860 <func_8013A790+0x240>
+-2469f000  ; addiu t1,v1,-4096
+-ac490010  ; sw t1,16(v0)
+-3c0a8016  ; lui t2,0x0
+-8d4af4ec  ; lw t2,0(t2)
+-00000000  ; nop
+-01501021  ; addu v0,t2,s0
+-8c4b0018  ; lw t3,24(v0)
+-3c0d8016  ; lui t5,0x0
+-01666021  ; addu t4,t3,a2
+-ac4c0018  ; sw t4,24(v0)
+-8dadf4ec  ; lw t5,0(t5)
+-00000000  ; nop
+-01b01021  ; addu v0,t5,s0
+-8c430018  ; lw v1,24(v0)
+-26100020  ; addiu s0,s0,32
+-28611001  ; slti at,v1,4097
+-14200003  ; bnez at,184c <func_8013A790+0x22c>
+-00000000  ; nop
+-246ef000  ; addiu t6,v1,-4096
+-ac4e0018  ; sw t6,24(v0)
+-1604ffb8  ; bne s0,a0,1730 <func_8013A790+0x110>
+-00000000  ; nop
+-04c10048  ; bgez a2,1978 <func_8013A790+0x358>
+-00008025  ; move s0,zero
+-24040320  ; li a0,800
+-3c0f8016  ; lui t7,0x0
+-8deff4ec  ; lw t7,0(t7)
+-3c088016  ; lui t0,0x0
+-01f01021  ; addu v0,t7,s0
+-8c580000  ; lw t8,0(v0)
+-3c0f8016  ; lui t7,0x0
+-0306c821  ; addu t9,t8,a2
+-ac590000  ; sw t9,0(v0)
+-8d08f4ec  ; lw t0,0(t0)
+-00000000  ; nop
+-01101021  ; addu v0,t0,s0
+-8c430000  ; lw v1,0(v0)
+-00000000  ; nop
+-04610007  ; bgez v1,18b8 <func_8013A790+0x298>
+-00000000  ; nop
+-24691000  ; addiu t1,v1,4096
+-ac490000  ; sw t1,0(v0)
+-3c0a8016  ; lui t2,0x0
+-8d4af4ec  ; lw t2,0(t2)
+-00000000  ; nop
+-01501021  ; addu v0,t2,s0
+-8c4b0008  ; lw t3,8(v0)
+-3c0d8016  ; lui t5,0x0
+-01666021  ; addu t4,t3,a2
+-ac4c0008  ; sw t4,8(v0)
+-8dadf4ec  ; lw t5,0(t5)
+-00000000  ; nop
+-01b01021  ; addu v0,t5,s0
+-8c430008  ; lw v1,8(v0)
+-00000000  ; nop
+-04610006  ; bgez v1,18f8 <func_8013A790+0x2d8>
+-00000000  ; nop
+-246e1000  ; addiu t6,v1,4096
+-ac4e0008  ; sw t6,8(v0)
+-8deff4ec  ; lw t7,0(t7)
+-00000000  ; nop
+-01f01021  ; addu v0,t7,s0
+-8c580010  ; lw t8,16(v0)
+-3c088016  ; lui t0,0x0
+-0306c821  ; addu t9,t8,a2
+-ac590010  ; sw t9,16(v0)
+-8d08f4ec  ; lw t0,0(t0)
+-00000000  ; nop
+-01101021  ; addu v0,t0,s0
+-8c430010  ; lw v1,16(v0)
+-00000000  ; nop
+-04610007  ; bgez v1,193c <func_8013A790+0x31c>
+-00000000  ; nop
+-24691000  ; addiu t1,v1,4096
+-ac490010  ; sw t1,16(v0)
+-3c0a8016  ; lui t2,0x0
+-8d4af4ec  ; lw t2,0(t2)
+-00000000  ; nop
+-01501021  ; addu v0,t2,s0
+-8c4b0018  ; lw t3,24(v0)
+-3c0d8016  ; lui t5,0x0
+-01666021  ; addu t4,t3,a2
+-ac4c0018  ; sw t4,24(v0)
+-8dadf4ec  ; lw t5,0(t5)
+-00000000  ; nop
+-01b01021  ; addu v0,t5,s0
+-8c430018  ; lw v1,24(v0)
+-26100020  ; addiu s0,s0,32
+-04610003  ; bgez v1,1970 <func_8013A790+0x350>
+-00000000  ; nop
+-246e1000  ; addiu t6,v1,4096
+-ac4e0018  ; sw t6,24(v0)
+-1604ffbc  ; bne s0,a0,1864 <func_8013A790+0x244>
+-00000000  ; nop
+-00008025  ; move s0,zero
++00008825  ; move s1,zero
+-241103e8  ; li s1,1000
+-3c0f8016  ; lui t7,0x0
+-8deff4ec  ; lw t7,0(t7)
+-26440001  ; addiu a0,s2,1
+-01f01021  ; addu v0,t7,s0
+-8c430004  ; lw v1,4(v0)
+-00000000  ; nop
+-14600030  ; bnez v1,1a60 <func_8013A790+0x440>
+-00000000  ; nop
++241203e8  ; li s2,1000
++3c0b8016  ; lui t3,0x0
++8d6bf4ec  ; lw t3,0(t3)
++001180c0  ; sll s0,s1,0x3
++020b1021  ; addu v0,s0,t3
++8c440004  ; lw a0,4(v0)
++26850001  ; addiu a1,s4,1
++00a01825  ; move v1,a1
++14800031  ; bnez a0,1a64 <func_8013A790+0x444>
++00403025  ; move a2,v0
++afa300ac  ; sw v1,172(sp)
+-afa40044  ; sw a0,68(sp)
+-8fa40044  ; lw a0,68(sp)
+-00000000  ; nop
+-0044001a  ; div zero,v0,a0
+-14800002  ; bnez a0,19c4 <func_8013A790+0x3a4>
++afa50048  ; sw a1,72(sp)
++8fa50048  ; lw a1,72(sp)
++8fa300ac  ; lw v1,172(sp)
++0045001a  ; div zero,v0,a1
++14a00002  ; bnez a1,19c8 <func_8013A790+0x3a8>
+-14810004  ; bne a0,at,19dc <func_8013A790+0x3bc>
++14a10004  ; bne a1,at,19e0 <func_8013A790+0x3c0>
+-0000c010  ; mfhi t8
+-17000018  ; bnez t8,1a44 <func_8013A790+0x424>
++00006010  ; mfhi t4
++15800018  ; bnez t4,1a48 <func_8013A790+0x428>
+-00809025  ; move s2,a0
+-3c088016  ; lui t0,0x0
+-8d08f4ec  ; lw t0,0(t0)
++0060a025  ; move s4,v1
++3c0e8016  ; lui t6,0x0
++8dcef4ec  ; lw t6,0(t6)
+-30590fff  ; andi t9,v0,0xfff
+-13200002  ; beqz t9,1a0c <func_8013A790+0x3ec>
++304d0fff  ; andi t5,v0,0xfff
++11a00002  ; beqz t5,1a10 <func_8013A790+0x3f0>
+-2739f000  ; addiu t9,t9,-4096
+-01104821  ; addu t1,t0,s0
+-16a00007  ; bnez s5,1a30 <func_8013A790+0x410>
+-ad390000  ; sw t9,0(t1)
+-3c0a8016  ; lui t2,0x0
+-8d4af4ec  ; lw t2,0(t2)
++25adf000  ; addiu t5,t5,-4096
++01d07821  ; addu t7,t6,s0
++16e00007  ; bnez s7,1a34 <func_8013A790+0x414>
++aded0000  ; sw t5,0(t7)
++3c188016  ; lui t8,0x0
++8f18f4ec  ; lw t8,0(t8)
+-01505821  ; addu t3,t2,s0
++0310c821  ; addu t9,t8,s0
+-ad730004  ; sw s3,4(t3)
++af330004  ; sw s3,4(t9)
++3c098016  ; lui t1,0x0
++8d29f4ec  ; lw t1,0(t1)
++00000000  ; nop
++01305021  ; addu t2,t1,s0
++ad520004  ; sw s2,4(t2)
++3c0b8016  ; lui t3,0x0
++8d6bf4ec  ; lw t3,0(t3)
++00000000  ; nop
++020b1021  ; addu v0,s0,t3
++8c440004  ; lw a0,4(v0)
++10000002  ; b 1a68 <func_8013A790+0x448>
++00403025  ; move a2,v0
++0060a025  ; move s4,v1
++16e00023  ; bnez s7,1af8 <func_8013A790+0x4d8>
++00000000  ; nop
++00920019  ; multu a0,s2
++3c0f8016  ; lui t7,0x0
++00006012  ; mflo t4
++00000000  ; nop
++00000000  ; nop
++0196001a  ; div zero,t4,s6
++16c00002  ; bnez s6,1a94 <func_8013A790+0x474>
++00000000  ; nop
++0007000d  ; break 0x7
++2401ffff  ; li at,-1
++16c10004  ; bne s6,at,1aac <func_8013A790+0x48c>
++3c018000  ; lui at,0x8000
++15810002  ; bne t4,at,1aac <func_8013A790+0x48c>
++00000000  ; nop
++0006000d  ; break 0x6
++00007012  ; mflo t6
++008e6823  ; subu t5,a0,t6
++accd0004  ; sw t5,4(a2)
++8deff4ec  ; lw t7,0(t7)
++00000000  ; nop
++020f1021  ; addu v0,s0,t7
++8c430004  ; lw v1,4(v0)
++00404025  ; move t0,v0
++28610bb9  ; slti at,v1,3001
++1020002a  ; beqz at,1b7c <func_8013A790+0x55c>
++00000000  ; nop
++ad000004  ; sw zero,4(t0)
++3c188016  ; lui t8,0x0
++8f18f4ec  ; lw t8,0(t8)
++00000000  ; nop
++02181021  ; addu v0,s0,t8
++8c430004  ; lw v1,4(v0)
++10000022  ; b 1b7c <func_8013A790+0x55c>
++00404025  ; move t0,v0
++00920019  ; multu a0,s2
++3c0b8016  ; lui t3,0x0
++0000c812  ; mflo t9
++00000000  ; nop
++00000000  ; nop
++0336001a  ; div zero,t9,s6
++16c00002  ; bnez s6,1b1c <func_8013A790+0x4fc>
++00000000  ; nop
++0007000d  ; break 0x7
++2401ffff  ; li at,-1
++16c10004  ; bne s6,at,1b34 <func_8013A790+0x514>
++3c018000  ; lui at,0x8000
++17210002  ; bne t9,at,1b34 <func_8013A790+0x514>
++00000000  ; nop
++0006000d  ; break 0x6
++00004812  ; mflo t1
++01245021  ; addu t2,t1,a0
++acca0004  ; sw t2,4(a2)
++8d6bf4ec  ; lw t3,0(t3)
++00000000  ; nop
++020b1021  ; addu v0,s0,t3
++8c430004  ; lw v1,4(v0)
++00404025  ; move t0,v0
++0073082a  ; slt at,v1,s3
++14200008  ; bnez at,1b7c <func_8013A790+0x55c>
++00000000  ; nop
++ad000004  ; sw zero,4(t0)
+-01906821  ; addu t5,t4,s0
+-adb10004  ; sw s1,4(t5)
+-3c0e8016  ; lui t6,0x0
+-8dcef4ec  ; lw t6,0(t6)
++020c1021  ; addu v0,s0,t4
++8c430004  ; lw v1,4(v0)
++00404025  ; move t0,v0
++10600011  ; beqz v1,1bc4 <func_8013A790+0x5a4>
+-01d01021  ; addu v0,t6,s0
+-8c430004  ; lw v1,4(v0)
+-10000002  ; b 1a64 <func_8013A790+0x444>
+-00000000  ; nop
+-00809025  ; move s2,a0
+-16a00023  ; bnez s5,1af4 <func_8013A790+0x4d4>
+-00000000  ; nop
+-00710019  ; multu v1,s1
+-3c198016  ; lui t9,0x0
+-00007812  ; mflo t7
+-00000000  ; nop
+-00000000  ; nop
+-01f4001a  ; div zero,t7,s4
+-16800002  ; bnez s4,1a90 <func_8013A790+0x470>
++0072001a  ; div zero,v1,s2
++8d040000  ; lw a0,0(t0)
++16400002  ; bnez s2,1b98 <func_8013A790+0x578>
+-16810004  ; bne s4,at,1aa8 <func_8013A790+0x488>
+-3c018000  ; lui at,0x8000
+-15e10002  ; bne t7,at,1aa8 <func_8013A790+0x488>
+-00000000  ; nop
+-0006000d  ; break 0x6
+-0000c012  ; mflo t8
+-00784023  ; subu t0,v1,t8
+-ac480004  ; sw t0,4(v0)
+-8f39f4ec  ; lw t9,0(t9)
+-00000000  ; nop
+-03301021  ; addu v0,t9,s0
+-8c430004  ; lw v1,4(v0)
+-00000000  ; nop
+-28610bb9  ; slti at,v1,3001
+-1020002a  ; beqz at,1b78 <func_8013A790+0x558>
+-00000000  ; nop
+-ac400004  ; sw zero,4(v0)
+-3c098016  ; lui t1,0x0
+-8d29f4ec  ; lw t1,0(t1)
+-00000000  ; nop
+-01301021  ; addu v0,t1,s0
+-8c430004  ; lw v1,4(v0)
+-10000022  ; b 1b78 <func_8013A790+0x558>
+-00000000  ; nop
+-00710019  ; multu v1,s1
+-3c0d8016  ; lui t5,0x0
+-00005012  ; mflo t2
+-00000000  ; nop
+-00000000  ; nop
+-0154001a  ; div zero,t2,s4
+-16800002  ; bnez s4,1b18 <func_8013A790+0x4f8>
+-00000000  ; nop
+-0007000d  ; break 0x7
+-2401ffff  ; li at,-1
+-16810004  ; bne s4,at,1b30 <func_8013A790+0x510>
+-3c018000  ; lui at,0x8000
+-15410002  ; bne t2,at,1b30 <func_8013A790+0x510>
+-00000000  ; nop
+-0006000d  ; break 0x6
+-00005812  ; mflo t3
+-006b6021  ; addu t4,v1,t3
+-ac4c0004  ; sw t4,4(v0)
+-8dadf4ec  ; lw t5,0(t5)
+-00000000  ; nop
+-01b01021  ; addu v0,t5,s0
+-8c430004  ; lw v1,4(v0)
+-00000000  ; nop
+-0073082a  ; slt at,v1,s3
+-14200008  ; bnez at,1b78 <func_8013A790+0x558>
+-00000000  ; nop
+-ac400004  ; sw zero,4(v0)
+-3c0e8016  ; lui t6,0x0
+-8dcef4ec  ; lw t6,0(t6)
+-00000000  ; nop
+-01d01021  ; addu v0,t6,s0
+-8c430004  ; lw v1,4(v0)
+-00000000  ; nop
+-10600011  ; beqz v1,1bc0 <func_8013A790+0x5a0>
+-00000000  ; nop
+-0071001a  ; div zero,v1,s1
+-8c440000  ; lw a0,0(v0)
+-16200002  ; bnez s1,1b94 <func_8013A790+0x574>
+-00000000  ; nop
+-0007000d  ; break 0x7
+-2401ffff  ; li at,-1
+-16210004  ; bne s1,at,1bac <func_8013A790+0x58c>
++16410004  ; bne s2,at,1bb0 <func_8013A790+0x590>
+-8fa7006c  ; lw a3,108(sp)
++8fa700cc  ; lw a3,204(sp)
+-26100008  ; addiu s0,s0,8
+-24010320  ; li at,800
+-1601ff6e  ; bne s0,at,1984 <func_8013A790+0x364>
++26310008  ; addiu s1,s1,8
++1635ff6d  ; bne s1,s5,1980 <func_8013A790+0x360>
+-8fbf002c  ; lw ra,44(sp)
++8fbf0034  ; lw ra,52(sp)
++8fb6002c  ; lw s6,44(sp)
++8fb70030  ; lw s7,48(sp)
+-27bd0068  ; addiu sp,sp,104
++27bd00c8  ; addiu sp,sp,200

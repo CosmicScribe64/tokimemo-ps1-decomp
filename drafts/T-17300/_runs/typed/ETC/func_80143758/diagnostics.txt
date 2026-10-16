@@ -1,0 +1,14 @@
+m2c failed:
+
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80143758/work/guarded.o.sjis.c, line 4241: Syntax Error
+     var_a3 = &&((DisplayActor44 *)D_8011ECD0)[96];
+ -------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80143758/work/guarded.o.sjis.c, line 4271: Syntax Error
+     } while (var_a3 != (&&((DisplayActor44 *)D_8011ECD0)[103]));
+ ------------------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80143758/work/guarded.o.sjis.c, line 4271: Syntax Error
+     } while (var_a3 != (&&((DisplayActor44 *)D_8011ECD0)[103]));
+ -------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80143758/work -o drafts/T-17300/_runs/typed/ETC/func_80143758/work/guarded.o /tmp/asm_processor7wp7wxya/preprocessed_79907cacc4404626aa5e3e842747cc44.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib7frsxdz8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80143758/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80143758/work/guarded.o.sjis.c

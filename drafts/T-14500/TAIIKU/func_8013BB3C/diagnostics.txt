@@ -1,0 +1,11 @@
+m2c.py: argument counts from the callees' asm: func_8013C4E4 1, func_8013C5C8 1, func_8013C694 0
+python3 failed:
+cfe: Error: drafts/T-14500/TAIIKU/func_8013BB3C/work/guarded.c, line 3684: redeclaration of 'func_8013BB3C'; previous declaration at line 3644 in file 'drafts/T-14500/TAIIKU/func_8013BB3C/work/guarded.c'
+ void func_8013BB3C(void) {
+ -----^
+cfe: Error: drafts/T-14500/TAIIKU/func_8013BB3C/work/guarded.c, line 3684: Incompatible function return type for this function.
+ void func_8013BB3C(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TAIIKU/func_8013BB3C/work -o drafts/T-14500/TAIIKU/func_8013BB3C/work/guarded.o /tmp/asm_processorv7w86xhq/preprocessed_064a6e67544046c8be26ccf59dfd2770.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibsaly11tq/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TAIIKU/func_8013BB3C/work/guarded.o drafts/T-14500/TAIIKU/func_8013BB3C/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return

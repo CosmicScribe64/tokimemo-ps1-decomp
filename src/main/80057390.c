@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "psx_types.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 s32 D_800B5920[4] = { 0, 0, 0, 0 };
@@ -166,12 +167,324 @@ s32 func_80057710(void) {
     } while (band < 0xF);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80057390", func_800578F4);
+void func_800578F4(s32 a) {
+    u8 *mode_flags;
+    SPRT *sprite;
+    u8 *flags;
+
+    if (a != -1) {
+        D_800B5948 = a;
+        sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+        func_8009F0A4(sprite);
+        SetSemiTrans(sprite, 0);
+        SetShadeTex(sprite, 0);
+        sprite->r0 = (u8) D_800B593C;
+        sprite->g0 = (u8) D_800B593C;
+        sprite->b0 = (u8) D_800B593C;
+        if (a == 1) {
+            sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0);
+            sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+            sprite->v0 = 0;
+            sprite->u0 = 0;
+            setWH(sprite, 0xC0, 0xA0);
+        } else if (a == 2) {
+            sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0);
+            sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+            sprite->v0 = 0;
+            sprite->u0 = 0;
+            setWH(sprite, 0xC0, 0xF0);
+        } else {
+            sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0);
+            sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+            sprite->v0 = 0xA0;
+            sprite->u0 = 0;
+            setWH(sprite, 0xC0, 0x58);
+        }
+        AddPrim((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, sprite);
+        flags = &D_800B5938[a];
+        mode_flags = flags;
+        if (*flags != 0) {
+            goto_tpage(0x140, 0x100, 0xD, 0, 2);
+        } else {
+            goto_tpage(0x2C0, 0, 0xD, 0, 2);
+        }
+        sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+        func_8009F0A4(sprite);
+        SetSemiTrans(sprite, 0);
+        SetShadeTex(sprite, 0);
+        sprite->r0 = (u8) D_800B593C;
+        sprite->g0 = (u8) D_800B593C;
+        sprite->b0 = (u8) D_800B593C;
+        if (a == 1) {
+            sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20);
+            sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+            sprite->v0 = 0;
+            sprite->u0 = 0;
+            setWH(sprite, 0x80, 0xA0);
+        } else if (a == 2) {
+            sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20);
+            sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+            sprite->v0 = 0;
+            sprite->u0 = 0;
+            setWH(sprite, 0x80, 0xF0);
+        } else {
+            sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20);
+            sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+            sprite->v0 = 0xA0;
+            sprite->u0 = 0;
+            setWH(sprite, 0x80, 0x58);
+        }
+        AddPrim((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, sprite);
+        if (*mode_flags != 0) {
+            goto_tpage(0x200, 0x100, 0xD, 0, 2);
+            return;
+        }
+        goto_tpage(0x380, 0, 0xD, 0, 2);
+    }
+}
 
 void func_80057D1C(u8 arg0) {
     D_800B5940 = arg0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80057390", func_80057D28);
+void func_80057D28(s32 arg0) {
+    /* FAKE: unused word retains the original spill home and frame. T-14200. */
+    s32 pad;
+    u8 *mode_flags;
+    SPRT *sprite;
+    u8 *flags;
 
-INCLUDE_ASM("asm/nonmatchings/main/80057390", func_80058398);
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    SetSemiTrans(sprite, 1);
+    SetShadeTex(sprite, 0);
+    sprite->r0 = (0x80 - D_800B5940);
+    sprite->g0 = (0x80 - D_800B5940);
+    sprite->b0 = (0x80 - D_800B5940);
+    if (arg0 == 1) {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->u0 = 0, sprite->v0 = 0;
+        setWH(sprite, 0xC0, 0xA0);
+    } else {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->u0 = 0, sprite->v0 = 0xA0;
+        setWH(sprite, 0xC0, 0x58);
+    }
+    AddPrim((D_8011ECA0 << 0xA) + 0x28 + D_800E8CA0, sprite);
+    flags = &D_800B5938[arg0];
+    mode_flags = flags;
+    if (*flags != 0) {
+        goto_tpage(0x140, 0x100, 0xA, 1, 2);
+    } else {
+        goto_tpage(0x2C0, 0, 0xA, 1, 2);
+    }
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    SetSemiTrans(sprite, 1);
+    SetShadeTex(sprite, 0);
+    sprite->r0 = (0x80 - D_800B5940);
+    sprite->g0 = (0x80 - D_800B5940);
+    sprite->b0 = (0x80 - D_800B5940);
+    if (arg0 == 1) {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->u0 = 0, sprite->v0 = 0;
+        setWH(sprite, 0x80, 0xA0);
+    } else {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->u0 = 0, sprite->v0 = 0xA0;
+        setWH(sprite, 0x80, 0x58);
+    }
+    AddPrim((D_8011ECA0 << 0xA) + 0x28 + D_800E8CA0, sprite);
+    if (*mode_flags != 0) {
+        goto_tpage(0x200, 0x100, 0xA, 1, 2);
+    } else {
+        goto_tpage(0x380, 0, 0xA, 1, 2);
+    }
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    SetSemiTrans(sprite, 0);
+    SetShadeTex(sprite, 0);
+    sprite->r0 = (u8) D_800B5940;
+    sprite->g0 = (u8) D_800B5940;
+    sprite->b0 = (u8) D_800B5940;
+    if (arg0 == 1) {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->u0 = 0, sprite->v0 = 0;
+        setWH(sprite, 0xC0, 0xA0);
+    } else {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->u0 = 0, sprite->v0 = 0xA0;
+        setWH(sprite, 0xC0, 0x58);
+    }
+    AddPrim((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, sprite);
+    if (*mode_flags != 0) {
+        goto_tpage(0x140, 0x100, 0xD, 0, 2);
+    } else {
+        goto_tpage(0x2C0, 0, 0xD, 0, 2);
+    }
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    SetSemiTrans(sprite, 0);
+    SetShadeTex(sprite, 0);
+    sprite->r0 = (u8) D_800B5940;
+    sprite->g0 = (u8) D_800B5940;
+    sprite->b0 = (u8) D_800B5940;
+    if (arg0 == 1) {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->u0 = 0, sprite->v0 = 0;
+        setWH(sprite, 0x80, 0xA0);
+    } else {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->u0 = 0, sprite->v0 = 0xA0;
+        setWH(sprite, 0x80, 0x58);
+    }
+    AddPrim((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, sprite);
+    if (*mode_flags != 0) {
+        goto_tpage(0x200, 0x100, 0xD, 0, 2);
+        return;
+    }
+    goto_tpage(0x380, 0, 0xD, 0, 2);
+}
+
+void func_80058398(s32 arg0) {
+    /* FAKE: unused word retains the original spill home and frame. T-14200. */
+    s32 pad;
+    u8 *mode_flags;
+    SPRT *sprite;
+    u8 *flags;
+
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    SetSemiTrans(sprite, 1);
+    SetShadeTex(sprite, 0);
+    sprite->r0 = (0x80 - D_800B5940);
+    sprite->g0 = (0x80 - D_800B5940);
+    sprite->b0 = (0x80 - D_800B5940);
+    if (arg0 == 1) {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->u0 = 0, sprite->v0 = 0;
+        setWH(sprite, 0xC0, 0xA0);
+    } else {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->u0 = 0, sprite->v0 = 0xA0;
+        setWH(sprite, 0xC0, 0x58);
+    }
+    AddPrim((D_8011ECA0 << 0xA) + 0x28 + D_800E8CA0, sprite);
+    flags = &D_800B5938[arg0];
+    mode_flags = flags;
+    if (*flags == 0) {
+        goto_tpage(0x140, 0x100, 0xA, 1, 2);
+    } else {
+        goto_tpage(0x2C0, 0, 0xA, 1, 2);
+    }
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    SetSemiTrans(sprite, 1);
+    SetShadeTex(sprite, 0);
+    sprite->r0 = (0x80 - D_800B5940);
+    sprite->g0 = (0x80 - D_800B5940);
+    sprite->b0 = (0x80 - D_800B5940);
+    if (arg0 == 1) {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->u0 = 0, sprite->v0 = 0;
+        setWH(sprite, 0x80, 0xA0);
+    } else {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->u0 = 0, sprite->v0 = 0xA0;
+        setWH(sprite, 0x80, 0x58);
+    }
+    AddPrim((D_8011ECA0 << 0xA) + 0x28 + D_800E8CA0, sprite);
+    if (*mode_flags == 0) {
+        goto_tpage(0x200, 0x100, 0xA, 1, 2);
+    } else {
+        goto_tpage(0x380, 0, 0xA, 1, 2);
+    }
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    SetSemiTrans(sprite, 0);
+    SetShadeTex(sprite, 0);
+    sprite->r0 = (u8) D_800B5940;
+    sprite->g0 = (u8) D_800B5940;
+    sprite->b0 = (u8) D_800B5940;
+    if (arg0 == 1) {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->u0 = 0, sprite->v0 = 0;
+        setWH(sprite, 0xC0, 0xA0);
+    } else {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->u0 = 0, sprite->v0 = 0xA0;
+        setWH(sprite, 0xC0, 0x58);
+    }
+    AddPrim((D_8011ECA0 << 0xA) + 0x30 + D_800E8CA0, sprite);
+    if (*mode_flags != 0) {
+        goto_tpage(0x140, 0x100, 0xC, 0, 2);
+    } else {
+        goto_tpage(0x2C0, 0, 0xC, 0, 2);
+    }
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    SetSemiTrans(sprite, 0);
+    SetShadeTex(sprite, 0);
+    sprite->r0 = (u8) D_800B5940;
+    sprite->g0 = (u8) D_800B5940;
+    sprite->b0 = (u8) D_800B5940;
+    if (arg0 == 1) {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->u0 = 0, sprite->v0 = 0;
+        setWH(sprite, 0x80, 0xA0);
+    } else {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->u0 = 0, sprite->v0 = 0xA0;
+        setWH(sprite, 0x80, 0x58);
+    }
+    AddPrim((D_8011ECA0 << 0xA) + 0x30 + D_800E8CA0, sprite);
+    if (*mode_flags != 0) {
+        goto_tpage(0x200, 0x100, 0xC, 0, 2);
+    } else {
+        goto_tpage(0x380, 0, 0xC, 0, 2);
+    }
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    SetSemiTrans(sprite, 0);
+    SetShadeTex(sprite, 0);
+    sprite->r0 = (u8) D_800B5940;
+    sprite->g0 = (u8) D_800B5940;
+    sprite->b0 = (u8) D_800B5940;
+    if (arg0 == 1) {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->u0 = 0, sprite->v0 = 0;
+        setWH(sprite, 0xC0, 0xA0);
+    } else {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->u0 = 0, sprite->v0 = 0xA0;
+        setWH(sprite, 0xC0, 0x58);
+    }
+    AddPrim((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, sprite);
+    if (*mode_flags == 0) {
+        goto_tpage(0x140, 0x100, 0xD, 0, 2);
+    } else {
+        goto_tpage(0x2C0, 0, 0xD, 0, 2);
+    }
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    SetSemiTrans(sprite, 0);
+    SetShadeTex(sprite, 0);
+    sprite->r0 = (u8) D_800B5940;
+    sprite->g0 = (u8) D_800B5940;
+    sprite->b0 = (u8) D_800B5940;
+    if (arg0 == 1) {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->u0 = 0, sprite->v0 = 0;
+        setWH(sprite, 0x80, 0xA0);
+    } else {
+        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->u0 = 0, sprite->v0 = 0xA0;
+        setWH(sprite, 0x80, 0x58);
+    }
+    AddPrim((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, sprite);
+    if (*mode_flags == 0) {
+        goto_tpage(0x200, 0x100, 0xD, 0, 2);
+        return;
+    }
+    goto_tpage(0x380, 0, 0xD, 0, 2);
+}

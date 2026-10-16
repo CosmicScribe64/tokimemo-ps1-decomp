@@ -1,0 +1,23 @@
+{
+  "scope": "TACO:func_8013BAC4",
+  "selected_path": "drafts/T-14500/TACO/func_8013BAC4",
+  "archive_path": "drafts/T-16100/batch-3/TACO/func_8013BAC4",
+  "changed": false,
+  "reviewed": true,
+  "repair_notes": [],
+  "flags": [
+    {
+      "detail": "sp68[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "unresolved",
+      "explanation": "sp68 is walked to sp468: original offsets differ by 0x400 bytes (256 words), while the draft reserves sixteen words. A second byte lookup still uses synthetic global sp. This requires reconstruction of the complete work buffer, not a frame-size guess."
+    }
+  ],
+  "notes": "sp68 is walked to sp468: original offsets differ by 0x400 bytes (256 words), while the draft reserves sixteen words. A second byte lookup still uses synthetic global sp. This requires reconstruction of the complete work buffer, not a frame-size guess.",
+  "assembly_evidence": "drafts/T-16100/batch-3/TACO/func_8013BAC4/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "reviewed-unresolved"
+}

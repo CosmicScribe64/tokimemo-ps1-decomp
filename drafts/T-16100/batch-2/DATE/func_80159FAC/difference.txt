@@ -1,0 +1,56 @@
+Difference rows: 55; first 80 mnemonic/relocation rows; opcode words omitted.
+-; addiu t6,sp,44
++; addiu t6,sp,48
+-; lui a0,0x0
++; lui v1,0x0
+-; lbu a0,0(a0)
++; lbu v1,0(v1)
+-; bne a1,a0,b74 <func_80159FAC+0x78>
+-; lui v1,0x0
+-; lbu v1,0(v1)
++; bne a1,v1,b74 <func_80159FAC+0x78>
++; lui a0,0x0
++; lbu a0,0(a0)
+-; beq v1,at,bb4 <func_80159FAC+0xb8>
++; beq a0,at,bb4 <func_80159FAC+0xb8>
+-; lbu a0,0(a0)
+-; lbu v1,0(v1)
++; lbu a0,0(a0)
++; lbu v1,0(v1)
+-; bne a1,a0,b9c <func_80159FAC+0xa0>
++; bne a1,v1,b9c <func_80159FAC+0xa0>
+-; beq v1,at,bb4 <func_80159FAC+0xb8>
++; beq a0,at,bb4 <func_80159FAC+0xb8>
+-; bne a1,a0,bfc <func_80159FAC+0x100>
++; bne a1,v1,bfc <func_80159FAC+0x100>
+-; bne v1,at,bfc <func_80159FAC+0x100>
++; bne a0,at,bfc <func_80159FAC+0x100>
+-; lui v0,0x0
+-; lbu v0,0(v0)
++; lui t4,0x0
++; lbu t4,0(t4)
++R_MIPS_HI16 sp  ; lui t3,0x0
++R_MIPS_LO16 sp  ; lw t3,0(t3)
++; sll t5,t4,0x2
++; addu t9,t3,t5
++; lw t9,44(t9)
+-; sll t3,v0,0x2
+-; addu t9,sp,t3
+-; lw t9,44(t9)
+-; nop
+-; lui t4,0x0
+-; lw t4,0(t4)
+-; lui t5,0x0
+-; beqz t4,c58 <func_80159FAC+0x15c>
++; lui t8,0x0
++; lw t8,0(t8)
++; lui t0,0x0
++; beqz t8,c5c <func_80159FAC+0x160>
+-; lw t5,0(t5)
++; lw t0,0(t0)
+-; divu zero,t5,at
+-; mfhi t8
+-; bnez t8,c58 <func_80159FAC+0x15c>
++; divu zero,t0,at
++; mfhi t7
++; bnez t7,c5c <func_80159FAC+0x160>

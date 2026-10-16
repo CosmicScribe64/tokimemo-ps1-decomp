@@ -1,0 +1,39 @@
+python3 failed:
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.c, line 3297: 'sp' undefined; reoccurrences will not be reported.
+         *(s16 *)((unsigned char *)temp_a2_2 + (446)) = (s16) (*(s16 *)((unsigned char *)temp_a2_2 + (446)) + *(s16 *)((unsigned char *)(sp + var_v1) + (48)));
+ ----------------------------------------------------------------------------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.c, line 3303: redeclaration of 'func_8013EE30'; previous declaration at line 3201 in file 'drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.c'
+ void func_8013EE30(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.c, line 3303: Incompatible function return type for this function.
+ void func_8013EE30(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work -o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.o /tmp/asm_processorig6lgbzu/preprocessed_87f972be8228447389ea5eefadad2a75.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibi_3_gp5p/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.c
+python3 failed:
+ ------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.c, line 3296: Incompatible pointer type assignment
+         temp_a2_2 = &D_800E6280 + (D_800E71DF * 0x38);
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.c, line 3303: redeclaration of 'func_8013EE30'; previous declaration at line 3270 in file 'drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.c'
+ void func_8013EE30(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.c, line 3303: Incompatible function return type for this function.
+ void func_8013EE30(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work -o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.o /tmp/asm_processorucq00es7/preprocessed_a1aaae433a9c4e6eb84ae3d8a4543e4f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliby0md0kbi/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.c
+python3 failed:
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.c, line 3229: '&' before array or function; ignored
+     *(u16 *)((unsigned char *)(&sp30) + (12)) = (u16) *(u16 *)((unsigned char *)(&D_8014611C) + (12));
+ -------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.c, line 3273: Incompatible pointer type assignment
+     temp_a2 = &D_800E6280 + (D_800E71DF * 0x38);
+ ------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.c, line 3297: Incompatible pointer type assignment
+         temp_a2_2 = &D_800E6280 + (D_800E71DF * 0x38);
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work -o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.o /tmp/asm_processorycv30cd2/preprocessed_1c1eff09da874020ab5f16656b9340c3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4gic5jqh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013EA98/work/guarded.c

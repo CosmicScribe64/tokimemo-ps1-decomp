@@ -1,0 +1,27 @@
+{
+  "scope": "GYOZI:func_80143160",
+  "unit": "GYOZI",
+  "func": "func_80143160",
+  "src": "src/ovl/GYOZI/80143110.c",
+  "size": 436,
+  "path": "drafts/T-15800/GYOZI/func_80143160",
+  "status": "failed",
+  "score": null,
+  "compile_attempts": 1,
+  "provenance": "drafts/T-15800/GYOZI/func_80143160/provenance.json",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "reason": "cfe: Warning 681: /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c, line 3328: '&' before array or function; ignored",
+  "hashes": {
+    "body.c": "a739ff936cd064ae8903e8ea5a9f213fe0197421de02e868e7acf60fd0297eba",
+    "declarations.h": "d9b0929c114a8ff4283ac89ada981868dae8dabd50b5e7cef7916dca209ff325",
+    "context.c": "06c1a66d9e823a97ac30dfc14afe354e1ce6cc5889e836a7cffbe17ca2cb32a0"
+  },
+  "header_hashes": {
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libgpu.h": "e05cf2f8e95289e3fe4864a80a90dd092437c2d66e140645b477771cb359b2ba",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25",
+    "include/ovl/GYOZI.h": "eb21d305c3df32ff5b256e2307fbfe175527faa0ad1de3292d6beaf82cc059af"
+  },
+  "seconds": 0.316
+}

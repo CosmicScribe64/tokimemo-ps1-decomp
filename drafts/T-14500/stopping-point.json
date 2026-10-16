@@ -1,0 +1,40 @@
+{
+  "initial_scopes": 1066,
+  "initial_bytes": 866424,
+  "initial_outcomes": {
+    "candidate-zero": 29,
+    "scored": 908,
+    "failed": 129
+  },
+  "automatic_attempts": 257,
+  "manual_repairs": 275,
+  "repaired_initial_failures": 129,
+  "compiler_coverage": {
+    "total": 1066,
+    "statuses": {
+      "candidate-zero": 31,
+      "scored": 1035
+    },
+    "reserved": 33,
+    "repaired": 129,
+    "absent": 0
+  },
+  "quality": {
+    "total": 1066,
+    "statuses": {
+      "compiling-audit-clear": 950,
+      "compiling-review-needed": 116
+    },
+    "flag_counts": {
+      "synthesized-stack-local": 115,
+      "inferred-copy-layout": 72,
+      "gamestate-address-arithmetic": 27,
+      "stack-address-arithmetic": 37
+    },
+    "qualification": "Audit-clear means no listed residual pattern; semantic equivalence is unproven."
+  },
+  "stopped": true,
+  "remaining": "Every frozen scope has a compiling alternative; 116 selected drafts retain reconstruction-review flags. Audit-clear does not prove semantics.",
+  "matching_claim": "No production matching claim follows from draft counts or resolved scores.",
+  "final_compilation_repairs": 77
+}

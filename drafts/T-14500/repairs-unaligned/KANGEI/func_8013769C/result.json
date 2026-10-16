@@ -1,0 +1,25 @@
+{
+  "environment_hash": "6f65598c4801aecc283a0ff94ca04d54505cf70ec6730470159f30c33cb7bd37",
+  "func": "func_8013769C",
+  "guarded": false,
+  "harness_hash": "cbf40cd669e0c44bcb1cb19323f5d31d23204f47dc9bd7013854767313559da1",
+  "scope": "KANGEI:func_8013769C",
+  "score": 142,
+  "seconds": 0.505,
+  "size": 1256,
+  "source_hash": "f4a020529d28572f403dc7ebfa4be38630b0443d2051ccb6b509c1c602821d8d",
+  "src": "src/ovl/KANGEI/80135F10.c",
+  "status": "scored",
+  "unit": "KANGEI",
+  "variant": "unaligned-aggregate-repair",
+  "ticket": "T-15100",
+  "compile_attempts": 1,
+  "notes": [
+    "220/231-byte tables and ten four-byte position pairs from observed copies/strides."
+  ],
+  "matching_claim": false,
+  "archive_path": "drafts/T-14500/repairs-unaligned/KANGEI/func_8013769C",
+  "context_sha256": "e679cd09809b7c8d009f2784054ae448dee7cd09dc86f09f68f29b30fcb16a15",
+  "residual_class": "nonmatching instruction, control-flow, stack-layout or inferred-type differences",
+  "body_sha256": "fa4f983fc661342e5abde0072c5ed3ce33c7d6d63d4017999917ed79dbd792dc"
+}

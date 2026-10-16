@@ -1,0 +1,65 @@
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2776: 'sp88' undefined; reoccurrences will not be reported.
+                 var_v0_2 = &(&sp88[0])[0];
+ ------------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2781: Bad operand type for += or -=
+                     var_s0 += 0x10;
+ ---------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2790: 'sp88' undefined; reoccurrences will not be reported.
+                 var_v0_3 = &(&sp88[0])[var_s2];
+ ------------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2792: Selector requires struct/union pointer as left hand side
+                     var_v0_3->unk0 = *(s16 *)((unsigned char *)var_s0_2 + (3984)) - *(s16 *)((unsigned char *)(&D_800E6280 + (*(s8 *)((unsigned char *)temp_s5 + (4243)) * 0x10) + temp_s1_2) + (3984));
+ ----------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2797: Bad operand type for += or -=
+                     var_s0_2 += 0x40;
+ -----------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2812: 'sp88' undefined; reoccurrences will not be reported.
+                 var_v0_4 = &(&sp88[0])[0];
+ ------------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2817: Bad operand type for += or -=
+                     var_s0_3 += 0x10;
+ -----------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2826: 'sp88' undefined; reoccurrences will not be reported.
+                 var_v0_5 = &(&sp88[0])[var_s2];
+ ------------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2828: Selector requires struct/union pointer as left hand side
+                     var_v0_5->unk0 = *(s16 *)((unsigned char *)var_s0_4 + (3986)) - *(s16 *)((unsigned char *)(&D_800E6280 + (*(s8 *)((unsigned char *)temp_s5 + (4243)) * 0x10) + temp_s1_4) + (3986));
+ ----------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2833: Bad operand type for += or -=
+                     var_s0_4 += 0x40;
+ -----------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2846: 'sp88' undefined; reoccurrences will not be reported.
+                 var_v0_6 = &(&sp88[0])[0];
+ ------------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2862: 'sp88' undefined; reoccurrences will not be reported.
+                 var_v0_7 = &(&sp88[0])[var_s2];
+ ------------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2864: Selector requires struct/union pointer as left hand side
+                     temp_v1_2 = var_v0_7->unk0;
+ ----------------------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2866: Selector requires struct/union pointer as left hand side
+                         var_v0_7->unk0 = 0;
+ --------------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2868: Selector requires struct/union pointer as left hand side
+                         var_v0_7->unk0 = -temp_v1_2;
+ --------------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2899: 'sp88' undefined; reoccurrences will not be reported.
+                 var_v0_8 = &(&sp88[0])[0];
+ ------------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2912: 'sp88' undefined; reoccurrences will not be reported.
+                 var_v0_9 = &(&sp88[0])[var_s2];
+ ------------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2914: Selector requires struct/union pointer as left hand side
+                     if (var_v0_9->unk0 < 0) {
+ --------------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2915: Selector requires struct/union pointer as left hand side
+                         var_v0_9->unk0 = 0;
+ --------------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2938: 'sp' undefined; reoccurrences will not be reported.
+                 temp_v1_6 = *(s16 *)((unsigned char *)(sp + (var_s2 * 2)) + (136));
+ -------------------------------------------------------^
+cfe: Error: drafts/T-16000/get_near_menu/work/guarded.o.sjis.c, line 2983: Bad operand type for += or -=
+             var_s0_5 += 0x10;
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16000/get_near_menu/work -o drafts/T-16000/get_near_menu/work/guarded.o /tmp/asm_processorgpwngs2c/preprocessed_cccee6c229f4472898212e23f774d493.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibfy179jh1/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16000/get_near_menu/work/guarded.o drafts/T-16000/get_near_menu/work/guarded.o.sjis.c

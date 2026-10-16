@@ -1,0 +1,52 @@
+    801326B4:  addiu      $sp, $sp, -0x1E8
+    801326C0:  sw         $ra, 0x1C($sp)
+    801326C8:  addiu      $t6, $sp, 0x1A8
+    80132700:  addiu      $t1, $sp, 0x174
+    8013273C:  addiu      $t9, $sp, 0x140
+    80132778:  addiu      $t4, $sp, 0x10C
+    801327B4:  addiu      $t7, $sp, 0xD8
+    801327F0:  addiu      $t2, $sp, 0xA4
+    8013282C:  addiu      $t8, $sp, 0x70
+    80132868:  addiu      $t3, $sp, 0x3C
+    801328B4:   sll       $t0, $t0, 2
+    801328BC:  addu       $at, $at, $t0
+    80132948:   sw        $a1, 0x1DC($sp)
+    8013294C:  lw         $a1, 0x1DC($sp)
+    80132964:  lui        $v1, %hi(D_800E6280)
+    80132968:  addiu      $v1, $v1, %lo(D_800E6280)
+    80132998:  sll        $t3, $t1, 30
+    801329A8:  sw         $v1, 0x34($sp)
+    801329B0:   sw        $a0, 0x1E0($sp)
+    801329B4:  lw         $v1, 0x34($sp)
+    801329B8:  lw         $a0, 0x1E0($sp)
+    80132A40:  sll        $t4, $v1, 2
+    80132A48:  addu       $t2, $t2, $t4
+    80132A4C:  addu       $t5, $t5, $t4
+    80132A5C:  addu       $a3, $a3, $t4
+    80132A74:  sw         $t5, 0x10($sp)
+    80132A7C:   sw        $t2, 0x14($sp)
+    80132C8C:  sll        $t2, $t5, 2
+    80132C90:  addu       $a0, $sp, $t2
+    80132CB0:  sll        $t3, $t1, 2
+    80132CB4:  addu       $a0, $sp, $t3
+    80132D78:   sll       $t8, $t8, 2
+    80132D80:  addu       $at, $at, $t8
+    80132DA0:  sll        $t5, $t4, 2
+    80132DA4:  addu       $t2, $sp, $t5
+    80132E44:  sll        $t2, $t5, 2
+    80132E48:  addu       $t1, $sp, $t2
+    80132E64:  sll        $t0, $t3, 2
+    80132E68:  addu       $t9, $sp, $t0
+    80132EC8:  sll        $t2, $t5, 2
+    80132ECC:  addu       $t1, $sp, $t2
+    80132F28:  sll        $t0, $t3, 2
+    80132F2C:  addu       $t9, $sp, $t0
+    80132FCC:  sll        $t9, $t0, 2
+    80132FD0:  addu       $t7, $sp, $t9
+    8013308C:   sll       $t4, $t4, 2
+    80133094:  addu       $at, $at, $t4
+    801330F0:  sll        $t0, $t3, 20
+    80133184:  sll        $t3, $t5, 20
+    80133238:  sll        $t3, $t5, 20
+    80133364:  lw         $ra, 0x1C($sp)
+    80133368:  addiu      $sp, $sp, 0x1E8

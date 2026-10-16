@@ -1,16 +1,6 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
-typedef struct {
-    void (*f[38])();
-} FnTbl38; /* size 0x98 */
-extern FnTbl38 D_8012153C;
-
-typedef struct {
-    void (*f[41])();
-} FnTbl41; /* size 0xA4 */
-extern FnTbl41 D_80121360;
-
 void func_800FBBF0(void) {
     D_801211E0 = 0x801D21D8;
     D_801211E4 = 0x801D21E0;
@@ -193,10 +183,6 @@ void func_800FC46C(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    s32 w[0x11];
-} Ev44; /* size 0x44: record of D_800EAFA0 */
-
 void func_800FC56C(void) {
     D_80120678 = D_80120374;
     D_8012067C = D_8012038C;
@@ -364,11 +350,6 @@ void func_800FCDA0(void) {
     func_800FBCA0();
     func_80011DFC();
 }
-
-typedef struct {
-    void (*f[39])();
-} FnTbl39; /* size 0x9C */
-extern FnTbl39 D_80121404;
 
 void func_800FCDD8(void) {
     s32 idx; /* FAKE: unused, declared before tbl for its stack slot (T-3330) */

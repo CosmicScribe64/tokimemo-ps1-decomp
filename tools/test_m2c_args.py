@@ -82,6 +82,22 @@ class PostIncrement(unittest.TestCase):
     def test_compare_of_the_new_register_is_not(self):
         self.assertEqual(m2c_args.post_increment_old(NEWVAL), set())
 
+    def test_in_place_increment_after_the_compare_is_a_post_increment(self):
+        # T-16510: `addiu Rl, Rl, 1` after the compare used to end the scan (SHOUGATU func_80137144, T-15600).
+        inplace = asm("lw $v1, %lo(D_1)($v1)", "sltiu $v0, $v1, 0x401", "xori $v0, $v0, 1", "addiu $v1, $v1, 1",
+                      "beqz $v0, .L1", "sw $v1, %lo(D_1)($at)")
+        self.assertEqual(m2c_args.post_increment_old(inplace), {"D_1"})
+        self.assertEqual(m2c_args.post_increment_compares(inplace), {"D_1": {"old"}})
+
+    def test_in_place_increment_compared_after_is_the_new_value(self):
+        text = asm("lw $v1, %lo(D_1)($v1)", "addiu $v1, $v1, 1", "sw $v1, %lo(D_1)($at)", "sltiu $v0, $v1, 3")
+        self.assertEqual(m2c_args.post_increment_old(text), set())
+        self.assertEqual(m2c_args.post_increment_compares(text), {"D_1": {"new"}})
+
+    def test_sign_branch_reads_the_old_value(self):
+        text = asm("lw $v1, %lo(D_1)($v1)", "blez $v1, .L1", "addiu $v0, $v1, -1", "sw $v0, %lo(D_1)($at)")
+        self.assertEqual(m2c_args.post_increment_old(text), {"D_1"})
+
     def test_no_store_back_is_not(self):
         text = asm("lbu $v1, %lo(D_1)($v1)", "sltiu $v0, $v1, 3", "addiu $t6, $v1, 1")
         self.assertEqual(m2c_args.post_increment_old(text), set())

@@ -1,0 +1,9 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/OPTION -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/OPTION/func_80135E48/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/OPTION/func_80135E48/full-context.c drafts/T-16100/batch-2/OPTION/func_80135E48/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-2/OPTION/func_80135E48/full-context.c, line 3067: Incompatible pointer type assignment
+         temp_a0 = &(&sp70[0])[1];
+ ----------------^
+
+Full translation unit compiled and scored.

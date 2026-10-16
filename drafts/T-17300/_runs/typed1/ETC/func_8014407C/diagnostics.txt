@@ -1,0 +1,11 @@
+m2c failed:
+
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_8014407C/work/guarded.o.sjis.c, line 4283: redeclaration of 'D_800E6280'; previous declaration at line 764 in file 'drafts/T-17300/_runs/typed1/ETC/func_8014407C/work/guarded.o.sjis.c'
+ extern s32 D_800E6280;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_8014407C/work/guarded.o.sjis.c, line 4284: redeclaration of 'D_801217D0'; previous declaration at line 1308 in file 'drafts/T-17300/_runs/typed1/ETC/func_8014407C/work/guarded.o.sjis.c'
+ extern s32 D_801217D0;
+ -----------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_8014407C/work -o drafts/T-17300/_runs/typed1/ETC/func_8014407C/work/guarded.o /tmp/asm_processor_8xvgedx/preprocessed_4b33c833027641dab0276c5162fecdba.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibeoaw6wh0/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_8014407C/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_8014407C/work/guarded.o.sjis.c

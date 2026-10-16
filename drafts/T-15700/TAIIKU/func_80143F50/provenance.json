@@ -1,0 +1,31 @@
+{
+  "original_attempt": "drafts/T-14500/TAIIKU/func_80143F50",
+  "prior_attempts": [
+    {
+      "path": "drafts/T-14500/TAIIKU/func_80143F50",
+      "reason": "Error: guarded.c, line 3517: This expression is not an lvalue.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143F50",
+      "reason": "Error: guarded.c, line 3517: This expression is not an lvalue.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50",
+      "reason": "Error: guarded.c, line 3522: This expression is not an lvalue.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80143F50",
+      "reason": "Error: guarded.c, line 3517: This expression is not an lvalue.",
+      "score": null,
+      "status": "failed"
+    }
+  ],
+  "source_base": "48362009",
+  "repair_base": "a445c4e2"
+}

@@ -1,0 +1,13 @@
+m2c.py: argument counts from the callees' asm: func_80141D20 0
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801419D0/work/guarded.o.sjis.c, line 3407: 'sp2C' undefined; reoccurrences will not be reported.
+     *(M2cBlockA0 *)(&sp2C[0]) = *(M2cBlockA0 *)(&D_80146804);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801419D0/work -o drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801419D0/work/guarded.o /tmp/asm_processors9mmf7wj/preprocessed_4ee693268ac849bfbcec303a8c763f6a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibp70x6ux4/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801419D0/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801419D0/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801419D0/work/guarded.o.sjis.c, line 3409: Non-function name referenced in function call.
+     (&sp2C[0])[D_800E738A](0x80);
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801419D0/work -o drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801419D0/work/guarded.o /tmp/asm_processor7wbq2003/preprocessed_984bf3a7aea942ea88fa2fe095200f77.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhk0qwi91/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801419D0/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801419D0/work/guarded.o.sjis.c

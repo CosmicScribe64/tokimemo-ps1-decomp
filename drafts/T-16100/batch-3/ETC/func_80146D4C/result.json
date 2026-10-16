@@ -1,0 +1,24 @@
+{
+  "scope": "ETC:func_80146D4C",
+  "src": "src/ovl/ETC/80146400.c",
+  "path": "drafts/T-16100/batch-3/ETC/func_80146D4C",
+  "archive_path": "drafts/T-16100/batch-3/ETC/func_80146D4C",
+  "status": "scored",
+  "score": 309,
+  "source_base": "48362009",
+  "header_base": "drafts/T-14500/baseline/include",
+  "matching_claim": false,
+  "changed": false,
+  "compile_verified": true,
+  "initial_score": 309,
+  "artifact_sha256": {
+    "assembly-evidence.txt": "61d49c464be88c50df849cd2855922ce06aae2b17bcf6e1ac383baf6c3cddd3e",
+    "provenance.json": "44a0f11ef148021f789ad6aaa385f44de13c633b19ba8102b62225d803e12437",
+    "declarations.h": "06210df0c66e8b92f28fbd463b4ae6d112006e958acecad7df8a434148a9b82e",
+    "difference.txt": "24bfbef93c08ca5bb4f49b80689d223e490d1a07aef2656ea56be0db8825c18b",
+    "context.c": "1297ef00a74810a0f2f255307066817b8379274c0c9d70c2782fbe469d7acfdb",
+    "body.c": "9ccb8825255e46f64a221d33b5d2e9fca15620f6e8e9bdfd2ff33409fe59e94f",
+    "full-context.c": "29ecc564c28abac6d958f2a09e76d37d74fbf2ab64deb46f94551bf17be8a4e9",
+    "diagnostics.txt": "d023fcff196487d84271518cc3bea581b022fb8015e6554fbfdffe56fe599262"
+  }
+}

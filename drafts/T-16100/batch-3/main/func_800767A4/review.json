@@ -1,0 +1,25 @@
+{
+  "scope": "main:func_800767A4",
+  "selected_path": "drafts/T-14500/main/func_800767A4",
+  "archive_path": "drafts/T-16100/batch-3/main/func_800767A4",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "Three zero-fill loops span 0x40 bytes at stack+0x3C/+0x7C/+0xBC; reconstruct u8[64] string buffers. sp108 capacity remains unresolved without func_800764AC output bound."
+  ],
+  "flags": [
+    {
+      "detail": "sp108[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "unresolved",
+      "explanation": "Three u8[64] string buffers reconstructed from zero-fill bounds. sp108 result buffer extent remains unresolved pending callee output-capacity evidence."
+    }
+  ],
+  "notes": "Three u8[64] string buffers reconstructed from zero-fill bounds. sp108 result buffer extent remains unresolved pending callee output-capacity evidence.",
+  "assembly_evidence": "drafts/T-16100/batch-3/main/func_800767A4/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "partial-repair"
+}

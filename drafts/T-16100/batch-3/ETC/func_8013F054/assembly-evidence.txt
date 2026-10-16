@@ -1,0 +1,32 @@
+8013F05C:  lw         $a0, %lo(D_80150064)($a0)
+8013F060:  lbu        $t6, %lo(D_800E73A4)($t6)
+8013F064:  addiu      $sp, $sp, -0x28
+8013F068:  sw         $ra, 0x14($sp)
+8013F084:  lw         $v0, %lo(D_801500D8)($v0)
+8013F088:  addiu      $at, $zero, 0x1
+8013F090:   sll       $t7, $a0, 3
+8013F094:  addiu      $at, $zero, 0x3
+8013F0A0:  addiu      $t8, $t8, %lo(D_800E6280)
+8013F0A4:  addu       $v0, $t7, $t8
+8013F0A8:  lbu        $t1, 0x756($v0)
+8013F0AC:  lbu        $a3, 0x758($v0)
+8013F0B0:  lbu        $t0, 0x757($v0)
+8013F0B4:  addiu      $t2, $zero, 0x2
+8013F0B8:  addiu      $a0, $zero, 0xC
+8013F0C0:   addiu     $a1, $zero, 0xB
+8013F0C8:   addiu     $t2, $zero, 0x2
+8013F0D8:   addiu     $t2, $zero, 0x2
+8013F0E0:  addiu      $t3, $t3, %lo(D_800E6280)
+8013F0E4:  sll        $t9, $v1, 3
+8013F0FC:  lbu        $v1, 0x756($v0)
+8013F10C:  lbu        $t4, %lo(D_800E71DF)($t4)
+8013F124:  lbu        $t5, %lo(D_800E71DF)($t5)
+8013F134:  lbu        $a3, 0x760($v0)
+8013F138:  lbu        $t0, 0x75F($v0)
+8013F174:  sll        $t7, $t6, 3
+8013F17C:  lbu        $t1, 0x58($v0)
+8013F180:  lbu        $a3, 0x5A($v0)
+8013F184:  lbu        $t0, 0x59($v0)
+8013F198:  lbu        $t9, %lo(D_800E71DF)($t9)
+8013F260:  lbu        $t3, %lo(D_800E71DF)($t3)
+8013F314:  addiu      $sp, $sp, 0x28

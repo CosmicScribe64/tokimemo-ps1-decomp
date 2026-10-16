@@ -1,0 +1,13 @@
+diff --git a/src/ovl/NAME_ENT/80132000.c b/src/ovl/NAME_ENT/80132000.c
+index c980c21b..6750e41d 100644
+--- a/src/ovl/NAME_ENT/80132000.c
++++ b/src/ovl/NAME_ENT/80132000.c
+@@ -768,7 +768,7 @@ void func_80134248(s32 arg0) {
+         break;
+     case 2:
+         if (D_8014CCC0 < 16) {
+-            index = D_8014CCC4 * 16 + D_8014CCAC * 16 + D_8014CCC0;
++            index = D_8014CCC4 * 16 + D_8014CCAC * 16 + *(s32 *)&D_8014CCC0;
+             if (index < D_8014CE64[38]) {
+                 dest[selected * 2] = D_8014CE68[38][index * 2];
+                 dest[selected * 2 + 1] = D_8014CE68[38][index * 2 + 1];

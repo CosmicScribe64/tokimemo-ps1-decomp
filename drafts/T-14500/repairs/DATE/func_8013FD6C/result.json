@@ -1,0 +1,10 @@
+{
+  "scope": "DATE:func_8013FD6C",
+  "status": "scored",
+  "score": 471,
+  "note": "Absolute-address mask symbol denotes integer constant; existing scalar union fields retained.",
+  "body_sha256": "eb4db42f01fa365fea3924743349215dcf81b7b34b31ee92b92cf4c637e92671",
+  "context_sha256": "54a5ca2b148d066ddd3d7902a81d57b938097aa9a464596b9a31b1f51544c5ba",
+  "residual_class": "instruction, control-flow or register allocation differences",
+  "matching_claim": false
+}

@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_800FEDC8 0
+python3 failed:
+cfe: Error: drafts/T-17400/_runs/typed/EVENT/func_800FEAE8/work/guarded.o.sjis.c, line 4684: 'spD4' undefined; reoccurrences will not be reported.
+         func_80015C34(spD0, spD4, 0xF);
+ ----------------------------^
+cfe: Warning 709: drafts/T-17400/_runs/typed/EVENT/func_800FEAE8/work/guarded.o.sjis.c, line 4702: Incompatible pointer type assignment
+                 temp_v1 = var_t6 + sp2C.v;
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/typed/EVENT/func_800FEAE8/work -o drafts/T-17400/_runs/typed/EVENT/func_800FEAE8/work/guarded.o /tmp/asm_processor1544eus4/preprocessed_defdd409fe92474982951bd8b5bd9c3c.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibd5h5bwtm/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/typed/EVENT/func_800FEAE8/work/guarded.o drafts/T-17400/_runs/typed/EVENT/func_800FEAE8/work/guarded.o.sjis.c

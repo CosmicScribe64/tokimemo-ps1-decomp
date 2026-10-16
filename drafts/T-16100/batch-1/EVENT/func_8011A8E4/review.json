@@ -1,0 +1,111 @@
+{
+  "scope": "EVENT:func_8011A8E4",
+  "selected_path": "drafts/T-14500/EVENT/func_8011A8E4",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "&sp90 +",
+      "kind": "stack-address-arithmetic",
+      "line": 11,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target copies 40 bytes plus one halfword to three locals, then reads each with lhu at index<<1. Use u16[21], typed element indexing, and byte offsets for the trailing copy. The copy typedef represents only the 40-byte prefix. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    *(M2cBlock28 *)(&sp90) = *(M2cBlock28 *)(&D_80125454);",
+        "    *(u16 *)((unsigned char *)(&sp90 + 0x24) + (4)) = (u16) *(u16 *)((unsigned char *)(&D_80125454 + 0x24) + (4));",
+        "    *(M2cBlock28 *)(&sp64) = *(M2cBlock28 *)(&D_80125480);"
+      ]
+    },
+    {
+      "detail": "&sp64 +",
+      "kind": "stack-address-arithmetic",
+      "line": 13,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target copies 40 bytes plus one halfword to three locals, then reads each with lhu at index<<1. Use u16[21], typed element indexing, and byte offsets for the trailing copy. The copy typedef represents only the 40-byte prefix. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    *(M2cBlock28 *)(&sp64) = *(M2cBlock28 *)(&D_80125480);",
+        "    *(u16 *)((unsigned char *)(&sp64 + 0x24) + (4)) = (u16) *(u16 *)((unsigned char *)(&D_80125480 + 0x24) + (4));",
+        "    *(M2cBlock28 *)(&sp38) = *(M2cBlock28 *)(&D_801254AC);"
+      ]
+    },
+    {
+      "detail": "&sp38 +",
+      "kind": "stack-address-arithmetic",
+      "line": 17,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target copies 40 bytes plus one halfword to three locals, then reads each with lhu at index<<1. Use u16[21], typed element indexing, and byte offsets for the trailing copy. The copy typedef represents only the 40-byte prefix. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    var_a2 = 0xAF23;",
+        "    *(u16 *)((unsigned char *)(&sp38 + 0x24) + (4)) = (u16) *(u16 *)((unsigned char *)(&D_801254AC + 0x24) + (4));",
+        "    if (D_801243B0 == 2) {"
+      ]
+    },
+    {
+      "detail": "&sp64 +",
+      "kind": "stack-address-arithmetic",
+      "line": 65,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target copies 40 bytes plus one halfword to three locals, then reads each with lhu at index<<1. Use u16[21], typed element indexing, and byte offsets for the trailing copy. The copy typedef represents only the 40-byte prefix. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    }",
+        "    func_800143DC(1, var_a1, var_a2, *(&sp64 + var_v0), (s32) *(&sp38 + var_v0), (s32) *(&sp90 + var_v0));",
+        "    func_80011DFC();"
+      ]
+    },
+    {
+      "detail": "&sp38 +",
+      "kind": "stack-address-arithmetic",
+      "line": 65,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target copies 40 bytes plus one halfword to three locals, then reads each with lhu at index<<1. Use u16[21], typed element indexing, and byte offsets for the trailing copy. The copy typedef represents only the 40-byte prefix. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    }",
+        "    func_800143DC(1, var_a1, var_a2, *(&sp64 + var_v0), (s32) *(&sp38 + var_v0), (s32) *(&sp90 + var_v0));",
+        "    func_80011DFC();"
+      ]
+    },
+    {
+      "detail": "&sp90 +",
+      "kind": "stack-address-arithmetic",
+      "line": 65,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target copies 40 bytes plus one halfword to three locals, then reads each with lhu at index<<1. Use u16[21], typed element indexing, and byte offsets for the trailing copy. The copy typedef represents only the 40-byte prefix. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    }",
+        "    func_800143DC(1, var_a1, var_a2, *(&sp64 + var_v0), (s32) *(&sp38 + var_v0), (s32) *(&sp90 + var_v0));",
+        "    func_80011DFC();"
+      ]
+    },
+    {
+      "detail": "M2cBlock28",
+      "kind": "inferred-copy-layout",
+      "line": 2,
+      "verdict": "copy-width-reviewed-layout-partial",
+      "explanation": "Target copies 40 bytes plus one halfword to three locals, then reads each with lhu at index<<1. Use u16[21], typed element indexing, and byte offsets for the trailing copy. The copy typedef represents only the 40-byte prefix. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "void func_8011A8E4(void) {",
+        "    typedef struct { s32 w[10]; } M2cBlock28; /* m2c memcpy of 40 bytes */",
+        "    s32 sp90[10];"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target copies 40 bytes plus one halfword to three locals, then reads each with lhu at index<<1. Use u16[21], typed element indexing, and byte offsets for the trailing copy. The copy typedef represents only the 40-byte prefix."
+  ],
+  "assembly_path": "asm/ovl/EVENT/nonmatchings/EVENT/8010FE10/func_8011A8E4.s",
+  "assembly_sha256": "25106cd94960842866d97020bd69c671dc7f10417dc92b80004abaa237483a4b",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x10": [
+      "sw"
+    ],
+    "0x14": [
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

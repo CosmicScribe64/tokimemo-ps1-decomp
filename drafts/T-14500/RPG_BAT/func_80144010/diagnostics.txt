@@ -1,0 +1,7 @@
+m2c.py: argument counts from the callees' asm: func_801447B8 0
+python3 failed:
+cfe: Error: drafts/T-14500/RPG_BAT/func_80144010/work/guarded.c, line 3029: Improper cast of non-scalar type expression.
+         if (((u32) ((s32) var_v1->unk_66C[0] << 5) >> 0x1E) == 3) {
+ -----------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/RPG_BAT/func_80144010/work -o drafts/T-14500/RPG_BAT/func_80144010/work/guarded.o /tmp/asm_processord3ske36q/preprocessed_35c3f328feb34f2fa8ae8d6a3d8c5995.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibyxwgg5jx/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/RPG_BAT/func_80144010/work/guarded.o drafts/T-14500/RPG_BAT/func_80144010/work/guarded.c

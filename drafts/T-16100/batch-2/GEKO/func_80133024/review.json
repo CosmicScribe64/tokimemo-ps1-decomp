@@ -1,0 +1,28 @@
+{
+  "scope": "GEKO:func_80133024",
+  "path": "drafts/T-16100/batch-2/GEKO/func_80133024",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "sp38[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    }
+  ],
+  "explanation": "sp38[16] and sp3A overlap halfword fields of copied storage. Need actual halfword record and bounds.",
+  "evidence_path": "drafts/T-16100/batch-2/GEKO/func_80133024/evidence.txt",
+  "compile_status": "scored",
+  "score": 94,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp38[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "sp38[16] and sp3A overlap halfword fields of copied storage. Need actual halfword record and bounds."
+    }
+  ]
+}

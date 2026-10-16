@@ -1,0 +1,12 @@
+python3 failed:
+cfe: Error: /work/drafts/T-15800/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3175: Non-function name referenced in function call.
+     (&sp30[0])[D_800E738A](0x80);
+ --------------------------^
+cfe: Warning 712: /work/drafts/T-15800/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3177: illegal combination of pointer and integer
+     if (&D_80085368 == temp_v0) {
+ --------------------^
+cfe: Warning 712: /work/drafts/T-15800/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3181: illegal combination of pointer and integer
+     if (func_800853FC == temp_v0) {
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/SHUGAKU/func_80134B94/work -o /work/drafts/T-15800/SHUGAKU/func_80134B94/work/guarded.o /tmp/asm_processortj_jo8xv/preprocessed_6553eddadb294c099325902bfc36e27a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolib80im0kad/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/SHUGAKU/func_80134B94/work/guarded.o /work/drafts/T-15800/SHUGAKU/func_80134B94/work/guarded.o.sjis.c

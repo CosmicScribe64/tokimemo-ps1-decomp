@@ -1,0 +1,18 @@
+{
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010FE10.c",
+  "func": "func_80117D80",
+  "scope": "EVENT:func_80117D80",
+  "size": 656,
+  "status": "candidate-zero",
+  "score": 0,
+  "body_hash": "85fd4f2eef70d006e6082daea924e1b41d362d92b3341742a598d4cebc360251",
+  "context_hash": "e4cf7c55622f3b997c2617df97ba66a0ab695ae3cde4c3f61d3e0ec58ceacb8e",
+  "repair_path": "drafts/T-14500/repairs/t15900/EVENT/func_80117D80",
+  "ticket": "T-15900",
+  "repair_notes": "Reuse verified production body from integration9cf54649433415bd866602b277037b53bedb79a9; render new EventStateView0xFE halfword as explicit offset load against frozen headers. Existing FAKE scheduling annotation retained from production.",
+  "baseline": "48362009",
+  "compiler": "IDO5.3 default full-TU via order_search.compile_variant",
+  "production_changed": false,
+  "preprocessed_context_hash": "15a5514757f5bd4ce4197aee3ed13940bed979c356470098772fd82055e715c1"
+}

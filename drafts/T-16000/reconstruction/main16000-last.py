@@ -1,0 +1,6 @@
+from pathlib import Path
+base=Path('drafts/T-16000')
+p=base/'func_80052F68/body.c';s=p.read_text().replace('void func_80052F68(', 's32 func_80052F68(');p.write_text(s)
+p=base/'func_80056BA8/body.c';s=p.read_text().replace('DISPENV spEC;', 'u8 spEC[20];').replace('DRAWENV sp90;', 'u8 sp90[92];').replace('CdlFILE sp5C;', 'u8 sp5C[24];').replace('spEC.isrgb24','spEC[17]').replace('spEC.disp.w','*(s16 *)&spEC[4]').replace('(*(s32 *)D_80125C58) = *(s32 *)&sp5C;', '*(u8 *)D_80125C58 = sp5C[0];').replace('sp5D','sp5C[1]').replace('sp5E','sp5C[2]');p.write_text(s)
+p=base/'dialogue_render/body.c';s=p.read_text().replace('if (*arg3 == 0)', 'if (*(u8 *)arg3 == 0)').replace('temp_v0_2 = temp_v1->unk0;', 'temp_v0_2 = *temp_v1;').replace('if (*arg5 != 0)', 'if (*(u8 *)arg5 != 0)').replace('        return;', '        return 0;').replace('        set_kanji_string((s16) ((s16) arg0 - 0xE)', '        return set_kanji_string((s16) ((s16) arg0 - 0xE)').replace('        set_kanji_string((s16) arg0,', '        return set_kanji_string((s16) arg0,');p.write_text(s)
+p=base/'dialogue_render/declarations.h';s=p.read_text();s+='\n'+''.join('extern u8 '+n+'[3];\n' for n in ['D_800B2228','D_800B222C','D_800B2230','D_800B2234','D_800B2238']);s+='extern u8 D_800CA248[];\nextern u8 D_800CA280[];\n';p.write_text(s)

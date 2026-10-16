@@ -1,0 +1,14 @@
+extern s16 D_8014A3DE;
+extern s32 D_8011ECD0;
+extern s32 D_8014A400;
+extern s32 D_8014A454;
+extern s32 D_8014A4D4;
+extern s32 D_8014A4E4;
+extern s32 D_8014A620;
+extern s32 D_8014A634;
+extern s32 D_8014A648;
+extern s32 D_8014A658;
+extern u16 D_8014A4C4;
+extern u16 D_8014A4D8;
+extern u16 D_8014A4E8;
+extern u16 D_8014A4EA;

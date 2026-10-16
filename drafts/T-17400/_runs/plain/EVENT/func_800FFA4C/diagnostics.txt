@@ -1,0 +1,10 @@
+python3 failed:
+cfe: Error: drafts/T-17400/_runs/plain/EVENT/func_800FFA4C/work/guarded.o.sjis.c, line 4767: redeclaration of 'func_800FFA4C'; previous declaration at line 4679 in file 'drafts/T-17400/_runs/plain/EVENT/func_800FFA4C/work/guarded.o.sjis.c'
+ void func_800FFA4C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, u32 arg6, u32 arg7, s32 arg8, s32 arg9) {
+ -----^
+cfe: Error: drafts/T-17400/_runs/plain/EVENT/func_800FFA4C/work/guarded.o.sjis.c, line 4767: Incompatible function return type for this function.
+ void func_800FFA4C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, u32 arg6, u32 arg7, s32 arg8, s32 arg9) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/plain/EVENT/func_800FFA4C/work -o drafts/T-17400/_runs/plain/EVENT/func_800FFA4C/work/guarded.o /tmp/asm_processorj62xyxdc/preprocessed_e875e12be8bb4452a184800936eeef27.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibndt54hvt/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/plain/EVENT/func_800FFA4C/work/guarded.o drafts/T-17400/_runs/plain/EVENT/func_800FFA4C/work/guarded.o.sjis.c
+repair: existing earlier unprototyped call implies s32 return

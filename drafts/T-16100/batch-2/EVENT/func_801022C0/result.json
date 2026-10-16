@@ -1,0 +1,20 @@
+{
+  "scope": "EVENT:func_801022C0",
+  "src": "src/ovl/EVENT/801011A0.c",
+  "size": 308,
+  "path": "drafts/T-16100/batch-2/EVENT/func_801022C0",
+  "archive_path": "drafts/T-16100/batch-2/EVENT/func_801022C0",
+  "ticket": "T-16100",
+  "matching_claim": false,
+  "status": "scored",
+  "score": 87,
+  "changed": true,
+  "source_base": "48362009",
+  "compile_verified": true,
+  "review_outcome": "repaired-with-unresolved-remainder",
+  "body_c_sha256": "eff4f4e5224affb19a44ec25291fa2a48f57e8c6f5a455a941bc434cbdb5f5da",
+  "declarations_h_sha256": "a063870b34514c587e7234eec9ded298310c7bd870192dc7218ab2b0fc2cb6b0",
+  "context_c_sha256": "f06e3165d14548858f57ae1f2c6d059b1a53d90ee4215c9118386c65716fef2c",
+  "full-context_c_sha256": "605ca272d5a4ef8e35f05d2be4cb176ec25199120fcddf0432c7db9a26e99b46",
+  "diagnostics_txt_sha256": "7d74fa6eadd1fd200c9de1c9ed943a258db964e4f1f205b1856ca53f0d1477ab"
+}

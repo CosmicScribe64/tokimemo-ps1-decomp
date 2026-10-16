@@ -61,7 +61,25 @@ void _sys_default_tpage_set(void) {
     D_800E6280.unk_1228[59] = D_800C5FD0;
 }
 
+/* NON_MATCHING: T-12010, 29 differing lines; narrow argument shuffle. */
+#ifdef NON_MATCHING
+void load_tpage_buf_lock(arg0, arg1, arg2)
+s32 arg0;
+s32 arg1;
+u8 arg2;
+{
+    u32 idx;
+    D_800E6280.unk_1228[arg0] = arg1;
+    idx = arg0;
+    if (arg0 < 0x20) {
+        load_csr_tp(arg1, (u8)(idx & 0x1F), (s32)arg2, 0, 0, 0x80, 0x80);
+    } else {
+        load_csr_tp(arg1, arg0 & 0x1F, (s32)arg2, 0, 0x80, 0x80, 0x80);
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80047550", load_tpage_buf_lock);
+#endif
 
 s32 search_load_tpage_buf_lock(s32 arg0, u8 arg1) {
     GameState *var_v0;
@@ -322,32 +340,29 @@ void func_8004902C(void) {
     D_800E6280.unk_03B = 0;
 }
 
-/* NON_MATCHING: T-11310, 6 rows: unk_03A loads into ugen temp $t6/$t7, the original loads it straight into $v1 (the sum register). */
-#ifdef NON_MATCHING
 void func_80049044(void) {
+    u8 *p;
     s32 v;
 
+    p = &D_800E6280.unk_03A;
     if ((s8)D_800E6280.unk_03B != 0) {
         if ((s8)D_800E6280.unk_03B > 0) {
-            v = D_800E6280.unk_03A;
+            v = *p;
             v += (s8)D_800E6280.unk_03B;
             if (v >= 0x100) {
                 v = 0xFF;
             }
-            D_800E6280.unk_03A = v;
+            *p = v;
         } else if ((s8)D_800E6280.unk_03B < 0) {
-            v = D_800E6280.unk_03A;
+            v = *p;
             v += (s8)D_800E6280.unk_03B;
             if (v < 0) {
                 v = 0;
             }
-            D_800E6280.unk_03A = v;
+            *p = v;
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80049044);
-#endif
 
 void func_800490B4(u8 arg0) {
     D_800E6280.unk_03B = arg0;

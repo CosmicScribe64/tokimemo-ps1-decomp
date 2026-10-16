@@ -28,11 +28,6 @@ void func_8010B430(void) {
     }
 }
 
-typedef struct {
-    void (*f[42])();
-} FnTbl42; /* size 0xA8 */
-extern FnTbl42 D_80124120;
-
 void func_8010B490(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl42 tbl;
@@ -64,7 +59,7 @@ void func_8010B570(void) {
     }
 }
 
-/* NON_MATCHING: T-10610, the original stores the constant 4 straight from $a0 (li a0,4; sb a0 in the jal delay slot); every form tried gets a separate li (u8 store narrows the shared constant) */
+/* NON_MATCHING: T-10610, 33 diff rows left (T-17400 score), the original stores the constant 4 straight from $a0 (li a0,4; sb a0 in the jal delay slot); every form tried gets a separate li (u8 store narrows the shared constant) */
 #ifdef NON_MATCHING
 void func_8010B614(void) {
     u8 *p;

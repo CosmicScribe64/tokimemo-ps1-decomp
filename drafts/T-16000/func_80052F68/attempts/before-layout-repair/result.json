@@ -1,0 +1,18 @@
+{
+  "unit": "main",
+  "src": "src/main/8004F870.c",
+  "func": "func_80052F68",
+  "size": 1200,
+  "guarded": false,
+  "source_hash": "5b7a8d53265e317f1396f074a9721c647b5de7d64a5c9301c6ade4d7507cc179",
+  "scope": "main:func_80052F68",
+  "status": "failed",
+  "score": null,
+  "ticket": "T-16000",
+  "matching_claim": false,
+  "path": "drafts/T-16000/func_80052F68",
+  "reason": "cfe: Error: drafts/T-16000/func_80052F68/work/guarded.o.sjis.c, line 3163: 'sp48' undefined; reoccurrences will not be reported.\n             temp_t2 = &(&sp48[0])[var_v1_2];\n -------------------------^\ncfe: Error: drafts/T-16000/func_80052F68/work/guarded.o.sjis.c, line 3179: 'sp48' undefined; reoccurrences will not be reported.\n             temp_t2_2 = &(&sp48[0])[var_v1_2];\n ---------------------------^\ncfe: Warning 709: drafts/T-16000/func_80052F68/work/guarded.o.sjis.c, line 3205: Incompatible pointer type assignment\n         var_t0_3 = var_a3_2 + 4;\n -----------------^\ncfe: Warning 709: drafts/T-16000/func_80052F68/work/guarded.o.sjis.c, line 3227: Incompatible pointer type assignment\n     var_v1_4 = ((u8 *)arg1) + 6;\n -------------^\ncfe: Warning 689: drafts/T-16000/func_80052F68/work/guarded.o.sjis.c, line 3237: Unacceptable operand of == or !=\n     } while (var_a2_4 != &sp5E);\n ----------------------^\ncfe: Warning 681: drafts/T-16000/func_80052F68/work/guarded.o.sjis.c, line 3237: '&' before array or function; ignored\n     } while (var_a2_4 != &sp5E);\n -------------------------^\ncfe: Error: drafts/T-16000/func_80052F68/work/guarded.o.sjis.c, line 3259: Type void  of returning expression is incompatible with type int  of function return type\n     return func_80052F68(arg0, arg1);\n ----^\ncc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16000/func_80052F68/work -o drafts/T-16000/func_80052F68/work/guarded.o /tmp/asm_processor9vcrpfkg/preprocessed_62511352723e41e2bf707e85b1e12809.c\ncc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibby_g5m3h/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16000/func_80052F68/work/guarded.o drafts/T-16000/func_80052F68/work/guarded.o.sjis.c\n",
+  "body.c_sha256": "87395bb6c747fdc0723c033fd15c1eb414cf64dda3e498ed9998c44b00d5e82b",
+  "declarations.h_sha256": "4283bcd75cb948a7cc2d40f9b9a8d51b0554c81dcea449688d650c861036a20e",
+  "context.c_sha256": "4e03ec29ccebd3383cadf82db8aaa97349222ecf42eff014ac17821f9863c716"
+}

@@ -1,0 +1,80 @@
+{
+  "scope": "TACO:func_80144430",
+  "selected_path": "drafts/T-14500/TACO/func_80144430",
+  "changed": false,
+  "outcomes": [
+    {
+      "detail": "+ &sp80",
+      "kind": "stack-address-arithmetic",
+      "line": 53,
+      "verdict": "unresolved-layout",
+      "explanation": "Stack accesses and initialization/call sites reviewed against the target. Separate synthesized locals or oversized arrays are not evidence of a valid aggregate. No safe complete layout was established in this bounded pass; preserve the flag and original draft. sp80 is declared one word but read through projected-point byte offsets. Its pointer loop and AddPrim coordinate consumers demonstrate a larger aggregate; exact vector count and the interior starting aliases are not fully recovered.",
+      "original_excerpt": [
+        "    do {",
+        "        var_s1_2 = var_fp_2 + &sp80;",
+        "        var_s3 = 0;"
+      ]
+    }
+  ],
+  "repair_notes": [],
+  "assembly_path": "asm/ovl/TACO/nonmatchings/TACO/80143E80/func_80144430.s",
+  "assembly_sha256": "7674849019ab8780a564c15323d51cb333c524ed3726ba606486370d21b984af",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x3C": [
+      "lw",
+      "sw"
+    ],
+    "0x38": [
+      "lw",
+      "sw"
+    ],
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x28": [
+      "lw",
+      "sw"
+    ],
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x18": [
+      "lw",
+      "sw"
+    ],
+    "0xAC": [
+      "sh"
+    ],
+    "0x60": [
+      "lw",
+      "sw"
+    ],
+    "0xAA": [
+      "sh"
+    ],
+    "0xA8": [
+      "sh"
+    ]
+  },
+  "layout_limit": "sp80 is declared one word but read through projected-point byte offsets. Its pointer loop and AddPrim coordinate consumers demonstrate a larger aggregate; exact vector count and the interior starting aliases are not fully recovered."
+}

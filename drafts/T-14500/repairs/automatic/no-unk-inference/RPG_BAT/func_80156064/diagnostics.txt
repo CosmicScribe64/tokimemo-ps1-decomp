@@ -1,0 +1,13 @@
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/RPG_BAT/func_80156064/work/guarded.o.sjis.c, line 3104: Incompatible function return type for this function.
+ void func_80156064(void) {
+ ------------------^
+cfe: Warning 689: drafts/T-14500/repairs/automatic/no-unk-inference/RPG_BAT/func_80156064/work/guarded.o.sjis.c, line 3132: Unacceptable operand of == or !=
+         } while (var_s0 != &D_8011F110);
+ ------------------------^
+cfe: Warning 689: drafts/T-14500/repairs/automatic/no-unk-inference/RPG_BAT/func_80156064/work/guarded.o.sjis.c, line 3202: Unacceptable operand of == or !=
+             } while (var_s0_3 != &D_8011F110);
+ ------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/RPG_BAT/func_80156064/work -o drafts/T-14500/repairs/automatic/no-unk-inference/RPG_BAT/func_80156064/work/guarded.o /tmp/asm_processorllybes66/preprocessed_48da89dc582648ea9d37d91d8fb111f7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibusdtsdtu/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/RPG_BAT/func_80156064/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/RPG_BAT/func_80156064/work/guarded.o.sjis.c

@@ -1,0 +1,42 @@
+s16 func_80143228();                                /* extern */
+extern u8 D_800B593C;
+extern u32 D_800E7378;
+extern u8 D_800E738A;
+extern u8 D_80120657;
+extern s16 D_80120658;
+extern s16 D_80120666;
+extern s16 D_80120668;
+extern s8 D_801206DA;
+extern u8 D_801206DB;
+extern u8 D_801206DF;
+extern s32 D_80122D04;
+extern ? D_80146970;
+
+s16 func_801430A0(void) {
+    s16 var_v0;
+
+    M2C_MEMCPY_ALIGNED(&sp2C[0], &D_80146970, 0xC0);
+    var_v0 = (&sp2C[0])[D_800E738A](0x3C);
+    if ((u8) D_800E738A < 0x11U) {
+        D_80120657 = D_800B593C;
+        if ((D_80120668 == 0) && (D_80120658 == 0)) {
+            var_v0 = D_80120666 + 1;
+            D_80120666 = var_v0;
+            if (var_v0 >= 3) {
+                D_80120666 = 0;
+                var_v0 = 0;
+            }
+        }
+    }
+    if (D_80122D04 != 0) {
+        D_801206DB |= 0x80;
+        D_801206DF = D_80120657;
+        if (((u32) D_800E7378 % 300U) == 0) {
+            var_v0 = func_80143228();
+            D_801206DA = 3;
+        }
+    } else {
+        D_801206DB &= 0xFF7F;
+    }
+    return var_v0;
+}

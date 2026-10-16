@@ -1,0 +1,13 @@
+python3 failed:
+ -----------------------^
+cfe: Error: drafts/T-17500/_runs/census/SHOUGATU/func_801359FC/work/guarded.c, line 3694: redeclaration of 'D_800CA248'; previous declaration at line 704 in file 'drafts/T-17500/_runs/census/SHOUGATU/func_801359FC/work/guarded.c'
+ extern s32 D_800CA248;
+ -----------^
+cfe: Warning 681: drafts/T-17500/_runs/census/SHOUGATU/func_801359FC/work/guarded.c, line 3720: '&' before array or function; ignored
+     func_800AE0F0(&D_800CA248, sp28.b + (var_t5 + var_v0));
+ ------------------^
+cfe: Warning 749: drafts/T-17500/_runs/census/SHOUGATU/func_801359FC/work/guarded.c, line 3720: structure has no member named 'b'
+     func_800AE0F0(&D_800CA248, sp28.b + (var_t5 + var_v0));
+ -----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/census/SHOUGATU/func_801359FC/work -o drafts/T-17500/_runs/census/SHOUGATU/func_801359FC/work/guarded.o /tmp/asm_processorcxvgpfpk/preprocessed_9a02b3d78a374f70a73e1df7db02ddf3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibz1tfhvo2/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/census/SHOUGATU/func_801359FC/work/guarded.o drafts/T-17500/_runs/census/SHOUGATU/func_801359FC/work/guarded.c

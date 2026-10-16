@@ -1,0 +1,35 @@
+m2c.py: argument counts from the callees' asm: func_800850D4 4, func_8013F410 0
+python3 failed:
+ ----^
+cfe: Error: drafts/T-14500/GEKO/func_801406CC/work/guarded.o.sjis.c, line 3649: 'sp58' undefined; reoccurrences will not be reported.
+     sp58[0].unk0 = (s32) D_801472D8;
+ ----^
+cfe: Error: drafts/T-14500/GEKO/func_801406CC/work/guarded.o.sjis.c, line 3654: 'sp44' undefined; reoccurrences will not be reported.
+     sp44[0].unk0 = (s32) D_801472EC;
+ ----^
+cfe: Warning 709: drafts/T-14500/GEKO/func_801406CC/work/guarded.o.sjis.c, line 3664: Incompatible pointer type assignment
+         temp_t2 = &D_800E6280 + var_v1;
+ ----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/GEKO/func_801406CC/work -o drafts/T-14500/GEKO/func_801406CC/work/guarded.o /tmp/asm_processor5o5s_xuh/preprocessed_5801198c12504ed7b78264e43ac3842e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibg4b4jql0/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/GEKO/func_801406CC/work/guarded.o drafts/T-14500/GEKO/func_801406CC/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/GEKO/func_801406CC/work/guarded.o.sjis.c, line 3645: 'sp6C' undefined; reoccurrences will not be reported.
+     sp6C[0].unk0 = (s32) D_801472C4;
+ ----^
+cfe: Error: drafts/T-14500/GEKO/func_801406CC/work/guarded.o.sjis.c, line 3655: 'sp44' undefined; reoccurrences will not be reported.
+     sp44[0].unk0 = (s32) D_801472EC;
+ ----^
+cfe: Warning 709: drafts/T-14500/GEKO/func_801406CC/work/guarded.o.sjis.c, line 3665: Incompatible pointer type assignment
+         temp_t2 = &D_800E6280 + var_v1;
+ ----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/GEKO/func_801406CC/work -o drafts/T-14500/GEKO/func_801406CC/work/guarded.o /tmp/asm_processordvt5oojm/preprocessed_c6770b25e1804b04a0b0f8213a0e758c.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibdze2fwtv/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/GEKO/func_801406CC/work/guarded.o drafts/T-14500/GEKO/func_801406CC/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/GEKO/func_801406CC/work/guarded.o.sjis.c, line 3656: 'sp44' undefined; reoccurrences will not be reported.
+     sp44[0].unk0 = (s32) D_801472EC;
+ ----^
+cfe: Warning 709: drafts/T-14500/GEKO/func_801406CC/work/guarded.o.sjis.c, line 3666: Incompatible pointer type assignment
+         temp_t2 = &D_800E6280 + var_v1;
+ ----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/GEKO/func_801406CC/work -o drafts/T-14500/GEKO/func_801406CC/work/guarded.o /tmp/asm_processorjmo3nprd/preprocessed_a1caeb980a8e47038d2237b1849195c3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibxprxahrx/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/GEKO/func_801406CC/work/guarded.o drafts/T-14500/GEKO/func_801406CC/work/guarded.o.sjis.c

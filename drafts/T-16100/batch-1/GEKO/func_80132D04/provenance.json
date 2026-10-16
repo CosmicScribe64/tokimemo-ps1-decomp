@@ -1,0 +1,8 @@
+{
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "original_path": "drafts/T-14500/GEKO/func_80132D04",
+  "original_body_sha256": "ba062863a76e386be8e434a6eefebbef273b9c30e9cfdbb4c11e91e6bd7bbf0b",
+  "compiler": "IDO 5.3 via order_search.compile_variant, full translation unit, Docker serial",
+  "matching_claim": false
+}

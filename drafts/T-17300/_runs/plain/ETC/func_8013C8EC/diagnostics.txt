@@ -1,0 +1,13 @@
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/plain/ETC/func_8013C8EC/work/guarded.c, line 4274: redeclaration of 'func_8013C8EC'; previous declaration at line 4166 in file 'drafts/T-17300/_runs/plain/ETC/func_8013C8EC/work/guarded.c'
+ void func_8013C8EC(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/plain/ETC/func_8013C8EC/work/guarded.c, line 4274: Incompatible function return type for this function.
+ void func_8013C8EC(void) {
+ ------------------^
+cfe: Warning 709: drafts/T-17300/_runs/plain/ETC/func_8013C8EC/work/guarded.c, line 4348: Incompatible pointer type assignment
+             temp_v0 = D_801500C4 + (D_801500C0 * 8);
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/plain/ETC/func_8013C8EC/work -o drafts/T-17300/_runs/plain/ETC/func_8013C8EC/work/guarded.o /tmp/asm_processormpsx94cc/preprocessed_a8d2fa45bc5f499897fb856c26583b74.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib8rm88tof/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/plain/ETC/func_8013C8EC/work/guarded.o drafts/T-17300/_runs/plain/ETC/func_8013C8EC/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return

@@ -1,0 +1,81 @@
+{
+  "scope": "main:func_800654D0",
+  "selected_path": "drafts/T-14500/main/func_800654D0",
+  "changed": false,
+  "outcomes": [
+    {
+      "detail": "spC0[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "unresolved-layout",
+      "explanation": "Stack accesses and initialization/call sites reviewed against the target. Separate synthesized locals or oversized arrays are not evidence of a valid aggregate. No safe complete layout was established in this bounded pass; preserve the flag and original draft. Four generated s32[16] menu arrays are written mainly through s16 pointers at bases sp60,80,A0,C0. Halfword pointer increments and widened generated stores conflict with that declaration; an exact rewrite of the unrolled fill loops remains outstanding.",
+      "original_excerpt": [
+        "void func_800654D0(s32 arg0) {",
+        "    s32 spC0[16];",
+        "    s32 sp60[16];"
+      ]
+    },
+    {
+      "detail": "sp60[16]",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "verdict": "unresolved-layout",
+      "explanation": "Stack accesses and initialization/call sites reviewed against the target. Separate synthesized locals or oversized arrays are not evidence of a valid aggregate. No safe complete layout was established in this bounded pass; preserve the flag and original draft. Four generated s32[16] menu arrays are written mainly through s16 pointers at bases sp60,80,A0,C0. Halfword pointer increments and widened generated stores conflict with that declaration; an exact rewrite of the unrolled fill loops remains outstanding.",
+      "original_excerpt": [
+        "    s32 spC0[16];",
+        "    s32 sp60[16];",
+        "    s32 sp80[16];"
+      ]
+    },
+    {
+      "detail": "sp80[16]",
+      "kind": "synthesized-stack-local",
+      "line": 4,
+      "verdict": "unresolved-layout",
+      "explanation": "Stack accesses and initialization/call sites reviewed against the target. Separate synthesized locals or oversized arrays are not evidence of a valid aggregate. No safe complete layout was established in this bounded pass; preserve the flag and original draft. Four generated s32[16] menu arrays are written mainly through s16 pointers at bases sp60,80,A0,C0. Halfword pointer increments and widened generated stores conflict with that declaration; an exact rewrite of the unrolled fill loops remains outstanding.",
+      "original_excerpt": [
+        "    s32 sp60[16];",
+        "    s32 sp80[16];",
+        "    s32 spA0[16];"
+      ]
+    },
+    {
+      "detail": "spA0[16]",
+      "kind": "synthesized-stack-local",
+      "line": 5,
+      "verdict": "unresolved-layout",
+      "explanation": "Stack accesses and initialization/call sites reviewed against the target. Separate synthesized locals or oversized arrays are not evidence of a valid aggregate. No safe complete layout was established in this bounded pass; preserve the flag and original draft. Four generated s32[16] menu arrays are written mainly through s16 pointers at bases sp60,80,A0,C0. Halfword pointer increments and widened generated stores conflict with that declaration; an exact rewrite of the unrolled fill loops remains outstanding.",
+      "original_excerpt": [
+        "    s32 sp80[16];",
+        "    s32 spA0[16];",
+        "    s32 spE0;"
+      ]
+    }
+  ],
+  "repair_notes": [],
+  "assembly_path": "asm/nonmatchings/main/80062CD0/func_800654D0.s",
+  "assembly_sha256": "8fc71ced08593aabc0a2393c6f227a2504025d82eb5724082a46c65405b45d72",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x14": [
+      "sw"
+    ],
+    "0x10": [
+      "sw"
+    ],
+    "0xE0": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "Four generated s32[16] menu arrays are written mainly through s16 pointers at bases sp60,80,A0,C0. Halfword pointer increments and widened generated stores conflict with that declaration; an exact rewrite of the unrolled fill loops remains outstanding."
+}

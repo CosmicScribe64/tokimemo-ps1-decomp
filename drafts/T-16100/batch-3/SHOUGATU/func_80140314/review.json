@@ -1,0 +1,51 @@
+{
+  "scope": "SHOUGATU:func_80140314",
+  "selected_path": "drafts/T-14500/SHOUGATU/func_80140314",
+  "archive_path": "drafts/T-16100/batch-3/SHOUGATU/func_80140314",
+  "changed": false,
+  "reviewed": true,
+  "repair_notes": [],
+  "flags": [
+    {
+      "detail": "&sp70 +",
+      "kind": "stack-address-arithmetic",
+      "line": 26,
+      "outcome": "unresolved",
+      "explanation": "The 48-byte and 36-byte copies are bounded, but both selector reads subtract offsets inconsistent with their local objects and one still references global sp. Do not fix solely with an array cast."
+    },
+    {
+      "detail": "&sp4C +",
+      "kind": "stack-address-arithmetic",
+      "line": 26,
+      "outcome": "unresolved",
+      "explanation": "The 48-byte and 36-byte copies are bounded, but both selector reads subtract offsets inconsistent with their local objects and one still references global sp. Do not fix solely with an array cast."
+    },
+    {
+      "detail": "M2cBlock30",
+      "kind": "inferred-copy-layout",
+      "line": 2,
+      "outcome": "unresolved",
+      "explanation": "Opaque word-block type has only a copy-extent interpretation; semantic field layout remains unresolved. The 48-byte and 36-byte copies are bounded, but both selector reads subtract offsets inconsistent with their local objects and one still references global sp. Do not fix solely with an array cast."
+    },
+    {
+      "detail": "M2cBlock24",
+      "kind": "inferred-copy-layout",
+      "line": 3,
+      "outcome": "unresolved",
+      "explanation": "Opaque word-block type has only a copy-extent interpretation; semantic field layout remains unresolved. The 48-byte and 36-byte copies are bounded, but both selector reads subtract offsets inconsistent with their local objects and one still references global sp. Do not fix solely with an array cast."
+    },
+    {
+      "detail": "+ &sp70",
+      "kind": "stack-address-arithmetic",
+      "line": 32,
+      "outcome": "unresolved",
+      "explanation": "The 48-byte and 36-byte copies are bounded, but both selector reads subtract offsets inconsistent with their local objects and one still references global sp. Do not fix solely with an array cast."
+    }
+  ],
+  "notes": "The 48-byte and 36-byte copies are bounded, but both selector reads subtract offsets inconsistent with their local objects and one still references global sp. Do not fix solely with an array cast.",
+  "assembly_evidence": "drafts/T-16100/batch-3/SHOUGATU/func_80140314/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "reviewed-unresolved"
+}

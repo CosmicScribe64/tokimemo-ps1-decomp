@@ -1,6 +1,7 @@
 #include "common.h"
 #include "ovl/EN_NICHI.h"
 
+
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80132000.data", D_80139200);
@@ -405,9 +406,37 @@ void func_801330D0(void) {
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801330D0);
 #endif
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801333B0);
+/* FAKE: s32 without return keeps the clamp accumulator in v0 and the original
+ * split epilogue. Original return type is unconfirmed. T-14000. */
+s32 func_801333B0(void) {
+    s32 i;
+
+    func_801330D0();
+    D_80139AFC += 1;
+    if ((D_800E6280.unk_F80 & 0x20) && D_80139AFC >= 4) {
+        func_80135A48(D_8011ECF6, D_8011ECFA);
+        func_801369F4(0x501);
+        D_80139AF8 = 1;
+        D_80139AFC = 0;
+        D_80121531 = 7;
+        D_80139AF4 += 2;
+        func_801337E0();
+        for (i = 0; i < 10; i++) {
+            if (D_80139B08[i] == 2) {
+                D_80139AF4 += 0x20;
+            } else if (D_80139B08[i] == 1) {
+                D_80139AF4 += 0x10;
+            }
+        }
+        if (D_80139AF4 >= 0x50) {
+            D_80139AF4 = 0x64;
+        }
+    }
+}
+
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_8013358C);
+
 
 void func_801337E0(void) {
     s32 distance;
@@ -852,7 +881,22 @@ void func_8013556C(void) {
     func_80135F54();
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135600);
+void func_80135600(void) {
+    s32 x;
+    s32 y;
+    s32 b;
+    EnWords64 table;
+
+    table = D_80139B28;
+    b = (D_80139220 / 7) % 8;
+    for (x = 0; x < 12; x++) {
+        for (y = 0; y < 15; y++) {
+            D_801392AC[y][x].unk_02 = table.value[(x + y * 3) % 8][(D_80139220 / 5) % 8];
+            D_801392AC[y][x].unk_06 = table.value[(x * 3 + y) % 8][b];
+        }
+    }
+}
+
 
 void func_801359D0(void) {
     s32 i;

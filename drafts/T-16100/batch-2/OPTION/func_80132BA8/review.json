@@ -1,0 +1,210 @@
+{
+  "scope": "OPTION:func_80132BA8",
+  "path": "drafts/T-16100/batch-2/OPTION/func_80132BA8",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "sp4E",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    },
+    {
+      "detail": "sp3E",
+      "kind": "synthesized-stack-local",
+      "line": 3
+    },
+    {
+      "detail": "sp42",
+      "kind": "synthesized-stack-local",
+      "line": 4
+    },
+    {
+      "detail": "sp50",
+      "kind": "synthesized-stack-local",
+      "line": 5
+    },
+    {
+      "detail": "sp40",
+      "kind": "synthesized-stack-local",
+      "line": 6
+    },
+    {
+      "detail": "sp54",
+      "kind": "synthesized-stack-local",
+      "line": 7
+    },
+    {
+      "detail": "sp44",
+      "kind": "synthesized-stack-local",
+      "line": 8
+    },
+    {
+      "detail": "sp52",
+      "kind": "synthesized-stack-local",
+      "line": 9
+    },
+    {
+      "detail": "sp48",
+      "kind": "synthesized-stack-local",
+      "line": 10
+    },
+    {
+      "detail": "sp56",
+      "kind": "synthesized-stack-local",
+      "line": 11
+    },
+    {
+      "detail": "sp46",
+      "kind": "synthesized-stack-local",
+      "line": 12
+    },
+    {
+      "detail": "sp5A",
+      "kind": "synthesized-stack-local",
+      "line": 13
+    },
+    {
+      "detail": "sp4A",
+      "kind": "synthesized-stack-local",
+      "line": 14
+    },
+    {
+      "detail": "sp58",
+      "kind": "synthesized-stack-local",
+      "line": 15
+    }
+  ],
+  "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars.",
+  "evidence_path": "drafts/T-16100/batch-2/OPTION/func_80132BA8/evidence.txt",
+  "compile_status": "scored",
+  "score": 196,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp4E",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars."
+    },
+    {
+      "flag": {
+        "detail": "sp3E",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      "outcome": "unresolved",
+      "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars."
+    },
+    {
+      "flag": {
+        "detail": "sp42",
+        "kind": "synthesized-stack-local",
+        "line": 4
+      },
+      "outcome": "unresolved",
+      "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars."
+    },
+    {
+      "flag": {
+        "detail": "sp50",
+        "kind": "synthesized-stack-local",
+        "line": 5
+      },
+      "outcome": "unresolved",
+      "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars."
+    },
+    {
+      "flag": {
+        "detail": "sp40",
+        "kind": "synthesized-stack-local",
+        "line": 6
+      },
+      "outcome": "unresolved",
+      "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars."
+    },
+    {
+      "flag": {
+        "detail": "sp54",
+        "kind": "synthesized-stack-local",
+        "line": 7
+      },
+      "outcome": "unresolved",
+      "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars."
+    },
+    {
+      "flag": {
+        "detail": "sp44",
+        "kind": "synthesized-stack-local",
+        "line": 8
+      },
+      "outcome": "unresolved",
+      "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars."
+    },
+    {
+      "flag": {
+        "detail": "sp52",
+        "kind": "synthesized-stack-local",
+        "line": 9
+      },
+      "outcome": "unresolved",
+      "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars."
+    },
+    {
+      "flag": {
+        "detail": "sp48",
+        "kind": "synthesized-stack-local",
+        "line": 10
+      },
+      "outcome": "unresolved",
+      "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars."
+    },
+    {
+      "flag": {
+        "detail": "sp56",
+        "kind": "synthesized-stack-local",
+        "line": 11
+      },
+      "outcome": "unresolved",
+      "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars."
+    },
+    {
+      "flag": {
+        "detail": "sp46",
+        "kind": "synthesized-stack-local",
+        "line": 12
+      },
+      "outcome": "unresolved",
+      "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars."
+    },
+    {
+      "flag": {
+        "detail": "sp5A",
+        "kind": "synthesized-stack-local",
+        "line": 13
+      },
+      "outcome": "unresolved",
+      "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars."
+    },
+    {
+      "flag": {
+        "detail": "sp4A",
+        "kind": "synthesized-stack-local",
+        "line": 14
+      },
+      "outcome": "unresolved",
+      "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars."
+    },
+    {
+      "flag": {
+        "detail": "sp58",
+        "kind": "synthesized-stack-local",
+        "line": 15
+      },
+      "outcome": "unresolved",
+      "explanation": "Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars."
+    }
+  ]
+}

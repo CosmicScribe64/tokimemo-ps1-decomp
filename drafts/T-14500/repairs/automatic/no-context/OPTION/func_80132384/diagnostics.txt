@@ -1,0 +1,32 @@
+python3 failed:
+ --------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.c, line 2529: Incompatible pointer type assignment
+             temp_v0_2 = get_k_work(var_a0);
+ ----------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.c, line 2577: redeclaration of 'func_801325A0'; previous declaration at line 2501 in file 'drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.c'
+ void func_801325A0(Arrs4x8 *p) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.c, line 2577: Incompatible function return type for this function.
+ void func_801325A0(Arrs4x8 *p) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.o /tmp/asm_processor1dxajl69/preprocessed_3a6b16c628ba40cb8a5bb6e59dde8f30.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibml2u4mwp/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.c
+python3 failed:
+ --------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.c, line 2528: Incompatible pointer type assignment
+             temp_v0_2 = get_k_work(var_a0);
+ ----------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.c, line 2576: redeclaration of 'func_801325A0'; previous declaration at line 2514 in file 'drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.c'
+ void func_801325A0(Arrs4x8 *p) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.c, line 2576: Incompatible function return type for this function.
+ void func_801325A0(Arrs4x8 *p) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.o /tmp/asm_processor5z9zfw59/preprocessed_c0dfa9326dba4df38d3488a94314292b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4o0dkjn0/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.c, line 2501: Syntax Error
+ void func_801325A0(Arrs4x8 *p);
+ ---------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.o /tmp/asm_processor43xhs3n7/preprocessed_8866f93f7f524a70bd82ae4c6d2f5df6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibxmwwmu7z/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384/work/guarded.c

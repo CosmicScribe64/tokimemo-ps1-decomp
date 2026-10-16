@@ -1,0 +1,28 @@
+{
+  "scope": "TACO:func_8014CB24",
+  "path": "drafts/T-16100/batch-2/TACO/func_8014CB24",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "sp52",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    }
+  ],
+  "explanation": "sp52 is synthesized at a halfword interior while sp60[8] and sp5C describe transform storage; current by-value call reconstruction remains unresolved.",
+  "evidence_path": "drafts/T-16100/batch-2/TACO/func_8014CB24/evidence.txt",
+  "compile_status": "scored",
+  "score": 598,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp52",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "sp52 is synthesized at a halfword interior while sp60[8] and sp5C describe transform storage; current by-value call reconstruction remains unresolved."
+    }
+  ]
+}

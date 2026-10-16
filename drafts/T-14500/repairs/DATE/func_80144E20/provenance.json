@@ -1,0 +1,23 @@
+{
+  "ticket": "T-14600",
+  "source_base": "48362009",
+  "original_attempt": "drafts/T-14500/DATE/func_80144E20",
+  "note": "Reuse T-14100 full typed 21-aggregate callback selector, historical 631-row draft.",
+  "original_result": {
+    "compile_attempts": 1,
+    "environment_hash": "6f65598c4801aecc283a0ff94ca04d54505cf70ec6730470159f30c33cb7bd37",
+    "func": "func_80144E20",
+    "guarded": false,
+    "harness_hash": "08d9600cf1e5502347694be448cc4d3aa4388c771120ce1eeefa2689f379ef6d",
+    "reason": "Error: guarded.c, line 5014: Non-function name referenced in function call.",
+    "scope": "DATE:func_80144E20",
+    "score": null,
+    "seconds": 2.74,
+    "size": 3192,
+    "source_hash": "5fca6315d9a9e25460b9eb933d04f2a1e658346e1c7bf05ffe9c835621e930c1",
+    "src": "src/ovl/DATE/80141EE0.c",
+    "status": "failed",
+    "unit": "DATE",
+    "variant": "default"
+  }
+}

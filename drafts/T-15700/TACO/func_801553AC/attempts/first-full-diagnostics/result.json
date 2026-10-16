@@ -1,0 +1,15 @@
+{
+  "scope": "TACO:func_801553AC",
+  "src": "src/ovl/TACO/80154960.c",
+  "size": 1084,
+  "status": "scored",
+  "score": 364,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TACO/func_801553AC",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "compile_attempts": 2,
+  "body_c_sha256": "a29c8461d2767b3c4045fbab56627118e1514c2f587b0fdfe2f966f3a36f40d7",
+  "context_c_sha256": "d3822f68593fd237d9856bcd017ec6292e6646dd209571d4006404700beec658",
+  "declarations_h_sha256": "4f3b1d4106bae090debc9c4115891aa59aab5b78f7733da19655fee33316010b"
+}

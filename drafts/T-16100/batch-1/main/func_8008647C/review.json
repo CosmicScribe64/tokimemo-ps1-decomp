@@ -1,0 +1,67 @@
+{
+  "scope": "main:func_8008647C",
+  "selected_path": "drafts/T-14500/main/func_8008647C",
+  "changed": false,
+  "outcomes": [
+    {
+      "detail": "sp6C[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "unresolved-layout",
+      "explanation": "Stack accesses and initialization/call sites reviewed against the target. Separate synthesized locals or oversized arrays are not evidence of a valid aggregate. No safe complete layout was established in this bounded pass; preserve the flag and original draft. Generated sp6C[16] receives indexed writes, while a later pointer starts from detached sp70. The second word must alias the same actual array; loop bounds and all later consumers need reconstruction before changing its extent.",
+      "original_excerpt": [
+        "s32 func_8008647C(void) {",
+        "    s32 sp6C[16];",
+        "    s32 sp70;"
+      ]
+    }
+  ],
+  "repair_notes": [],
+  "assembly_path": "asm/nonmatchings/main/80085E30/func_8008647C.s",
+  "assembly_sha256": "261480b3cd2c422100cea96c80fda1850002f96a0aa62011d66612dd8894c945",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x30": [
+      "lw",
+      "sw"
+    ],
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x3C": [
+      "lw",
+      "sw"
+    ],
+    "0x38": [
+      "lw",
+      "sw"
+    ],
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x28": [
+      "lw",
+      "sw"
+    ],
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x18": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "Generated sp6C[16] receives indexed writes, while a later pointer starts from detached sp70. The second word must alias the same actual array; loop bounds and all later consumers need reconstruction before changing its extent."
+}

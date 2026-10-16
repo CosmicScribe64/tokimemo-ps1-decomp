@@ -1,0 +1,28 @@
+Target: ['asm/ovl/ENDING/nonmatchings/ENDING/80134D20/func_80135F4C.s']
+Review: GameState+index is incorrectly structure-scaled; menu byte stores at 0x10A9 and adjacent fields need typed reconstruction across both loops.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80135F4C */  addiu      $sp, $sp, -0xA0
+    /* 80135F50 */  sw         $ra, 0x44($sp)
+    /* 80135F54 */  sw         $fp, 0x40($sp)
+    /* 80135F58 */  sw         $s7, 0x3C($sp)
+    /* 80135F5C */  sw         $s6, 0x38($sp)
+    /* 80135F60 */  sw         $s5, 0x34($sp)
+    /* 80135F64 */  sw         $s4, 0x30($sp)
+    /* 80135F68 */  sw         $s3, 0x2C($sp)
+    /* 80135F6C */  sw         $s2, 0x28($sp)
+    /* 80135F70 */  sw         $s1, 0x24($sp)
+    /* 80135F74 */  sw         $s0, 0x20($sp)
+    /* 80135F7C */  addiu      $t7, $t7, %lo(D_8013CA60)
+    /* 80135F84 */  addiu      $t6, $sp, 0x7C
+    /* 80135FC0 */  addiu      $t4, $t4, %lo(D_8013CA7C)
+    /* 80135FC8 */  addiu      $t3, $sp, 0x60
+    /* 80136010 */  lbu        $a0, %lo(D_800E71DF)($a0)
+    /* 8013602C */  addiu      $t6, $zero, 0x1
+    /* 8013603C */  addiu      $t7, $zero, 0x1
+    /* 80136048 */  addiu      $t2, $zero, 0x1
+    /* 80136054 */  addiu      $t9, $zero, 0x1
+    /* 80136060 */  addiu      $t5, $zero, 0x1
+    /* 80136070 */  addiu      $t3, $zero, 0x1
+    /* 8013607C */  addiu      $a1, $zero, 0x11
+    /* 80136080 */  addiu      $a2, $zero, 0x1

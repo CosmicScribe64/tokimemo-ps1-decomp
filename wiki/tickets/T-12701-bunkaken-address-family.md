@@ -1,0 +1,52 @@
+---
+id: T-12701
+title: Match BUNKAKEN flag and address family
+status: Done
+assignee: Codex
+created: 2026-10-15
+updated: 2026-10-15
+links: ['[[tickets/T-12700-bunka-families]]']
+---
+
+## Goal
+
+Match remaining handlers in src/ovl/BUNKAKEN/80140F60.c using existing bitfield drafts and full translation-unit comparisons.
+
+## Acceptance criteria
+
+- Literal linked-byte proof and affected overlay checksum for accepted C.
+- Preserve unsuccessful experiments and document results.
+
+## Notes
+
+Own remaining BUNKAKEN sources and needed overlay-header prototypes. One compiler at a time. Parent maintains shared wiki index, kanban and log.
+
+## Comments
+
+2026-10-15: Read prior broad experiment; start from eight-row func_80141654 address mismatch and 22-row siblings, without repeating default sweeps.
+
+Five existing bitfield drafts match after using a local `GameState *g = &D_800E6280` for every GameState access. Store-only replacement leaves the original mismatch. Full-TU exact scores: func_80141654 8 -> 0; func_801422C4 43 -> 0; func_80142A40 43 -> 0; func_80142FD4 -> 0; func_801438F8 -> 0. This transfers an existing documented idiom, not a new compiler rule. func_80141B80 remains 134 rows and stays assembly.
+
+Docker `ninja -j1 build/ovl/BUNKAKEN.ok` passes SHA1. `funcdiff.py --unit BUNKAKEN --resolve` verifies literal linked bytes for func_80141654 (1324), func_801422C4 (1440), func_80142A40 (1428), func_80142FD4 (1216), func_801438F8 (1136): 6544 bytes total. Evidence in build/bunka12701/build.log and proof.txt; unsuccessful current-TU candidates retained alongside.
+
+Sixth match: func_80141B80 (1860 bytes). The existing matched sibling handler in src/ovl/BUNKAKEN/8014A6A0.c uses BunkakenModeFlags b1=1 and mode=0 before saving GameState fields 0x720..722. Replacing the draft's combined mask with those bitfields reduces 134 -> 24 rows; moving them before the state saves gives zero. Six selector-type/return/local variants had no improvement. Literal linked-byte proof and BUNKAKEN SHA1 pass in build/bunka12701/next-proof.txt and next-build.log. Total this ticket: 8404 verified bytes.
+
+Further archived family transfer adds func_80138A08 (1200 bytes) and func_8013A8CC (804 bytes), both still assembly at the baseline. Existing byte-store bitfields and mode-before-save ordering finish their seeds. BUNKAKEN SHA1 and literal proofs pass (build/bunka12701/four-build.log, four-proof.txt). func_80141088 remains 228 rows. Three other tested historical seeds were already C in this branch and are controls only: 3C634 and 3CA6C reproduce existing source exactly except whitespace (restored); 3C0AC's old seed remains122 rows, while current C already matches. No coverage credited to controls. Ticket total: eight new functions / 10408 literal bytes.
+
+Targeted fresh siblings in src/ovl/BUNKAKEN/8014E440.c: func_8014E5E0 (688), func_8014E890 (608), func_8014EAF0 (868) all exact zero with the established GameState/bitfield source transform, then literal linked proof and overlay SHA1 pass (three-proof.txt, three-build.log). All three were confirmed still assembly before experiments. New gain2164 bytes; cumulative11 functions /12572 bytes. No new compiler settings or fake expressions.
+
+All eight remaining held-out handlers in src/ovl/BUNKAKEN/8014E440.c also match the same source transformation: 8014EE54 (960), 8014F214 (1040), 8014F624 (948), 8014F9D8 (1308), 8014FEF4 (848), 80150244 (600), 80150680 (728), 80150958 (880). Eight literal proofs and BUNKAKEN SHA1 pass in eight-proof.txt/eight-build.log. This file now contains only C. Gain7312 bytes; cumulative19 functions /19884 bytes.
+
+Adjacent-family seed func_8013EC98 initially differs40 rows, all branch relocation shifts plus two extra argument moves at func_80083440. The existing BUNKASAI K&R override convention (callee narrows argument) gives exact zero. Added explained per-TU override in src/ovl/BUNKAKEN/8013EB30.c; canonical header unchanged. Full overlay SHA1 including existing C passes and literal780 bytes verified (kr-build.log/kr-proof.txt). Cumulative20 new functions /20664 bytes.
+
+Eight held-out adjacent siblings match and verify: 8013EFA4 (760), 8013F29C (1040), 8013F6AC (828), 8013F9E8 (856), 801404B0 (508), 801406AC (460), 80140878 (748), 80140B64 (912). Each current baseline was explicitly confirmed INCLUDE_ASM. Source8013EB30.c is now all C. All eight literal proofs and full BUNKAKEN SHA1 pass in adjacent-proof.txt/adjacent-build.log. Gain6112 bytes; cumulative28 new functions /26776 bytes. Verified source-family transfer across two complete translation units; no guessed coverage or reused control wins counted.
+
+8013CF30 family: five matches verified (cf-proof.txt/cf-build.log): 8013D048 (428), 8013D4D8 (852), 8013D82C (956), 8013E2C0 (696), 8013E7C4 (772). Literal-byte total3704; use these proof sizes, not address-gap sizes. Remaining8013DBE8 is170 rows with unconverted mode=3 mask. Cumulative33 new functions /30480 bytes.
+
+Text-preservation audit against95c3fc9f compares37 preexisting C function bodies across every touched BUNKAKEN source, using permute.function_range: zero changes. Script build/bunka12701/audit.py. Similar neighboring functions cause misleading broad Git diff alignment, but original bodies are exactly preserved.
+
+Final bounded reconstruction: 8013DBE8 (1752 bytes) matches after expressing its mode=3 combined mask through existing BunkakenModeFlags and placing flags before saved-state fields. 80141088 (1484 bytes) drops228->6 rows after replacing decompiler artificial goto/shared temporary stores with direct switch-case assignments, then6->0 by ordering D_800CA148=4 before the character bitfield store. Signed selector probes do not improve those6 rows. Both literal proofs and full BUNKAKEN SHA1 pass in final-proof.txt/final-build.log. Gain3236 bytes; final ticket gain35 functions /33716 literal bytes. No more families opened; source ready for parent review and integration.
+
+Remaining exploratory failure artifacts are retained under build/bunka12701. The 3B510 callback-table draft was inspected only, not integrated or counted. Historical already-matched controls were restored unchanged. All original matched C bodies remain textually identical to95c3fc9f.
+
+Final independent Standards and Spec reviews pass through 5f404ed5 with zero actionable findings. Final Docker combined checks pass headers/globals/prototypes (0 new, 15 known), and recalculated BUNKAKEN SHA1 matches d423cb6d09b4b7e96e894168c0db4c7d15745b98. Status Done; remaining assembly is outside this completed bounded family pass.

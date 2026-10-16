@@ -1,0 +1,97 @@
+{
+  "scope": "TACO:func_8014A480",
+  "selected_path": "drafts/T-14500/TACO/func_8014A480",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "sp52",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target sh constructs the three-halfword input at sp+0x58; func_800A0ECC writes to sp+0x50, subsequently read by lh at offsets 0,2,4. Reconstruct separate three-halfword input/output arrays so the output call initializes all three consumed components. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "void func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5) {",
+        "    s32 sp52;",
+        "    s32 sp54;"
+      ]
+    },
+    {
+      "detail": "sp54",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target sh constructs the three-halfword input at sp+0x58; func_800A0ECC writes to sp+0x50, subsequently read by lh at offsets 0,2,4. Reconstruct separate three-halfword input/output arrays so the output call initializes all three consumed components. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp52;",
+        "    s32 sp54;",
+        "    s32 sp60[8];"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target sh constructs the three-halfword input at sp+0x58; func_800A0ECC writes to sp+0x50, subsequently read by lh at offsets 0,2,4. Reconstruct separate three-halfword input/output arrays so the output call initializes all three consumed components."
+  ],
+  "assembly_path": "asm/ovl/TACO/nonmatchings/TACO/80149F90/func_8014A480.s",
+  "assembly_sha256": "f0e776b0b6200e6464a4971bac9a978e2d7a781ca2f6f69861b30fe91792f978",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x84": [
+      "lw",
+      "sw"
+    ],
+    "0x14": [
+      "lw",
+      "sw"
+    ],
+    "0x80": [
+      "lw",
+      "sw"
+    ],
+    "0x4C": [
+      "lw",
+      "sw"
+    ],
+    "0x48": [
+      "lw",
+      "sw"
+    ],
+    "0x44": [
+      "lw",
+      "sw"
+    ],
+    "0x3C": [
+      "lw",
+      "sw"
+    ],
+    "0x38": [
+      "lw",
+      "sw"
+    ],
+    "0x58": [
+      "sh"
+    ],
+    "0x5A": [
+      "sh"
+    ],
+    "0x5C": [
+      "sh"
+    ],
+    "0x50": [
+      "lh"
+    ],
+    "0x52": [
+      "lh"
+    ],
+    "0x54": [
+      "lh"
+    ],
+    "0x90": [
+      "lw"
+    ],
+    "0x94": [
+      "lw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

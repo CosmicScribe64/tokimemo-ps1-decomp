@@ -1,0 +1,12 @@
+python3 failed:
+cfe: Error: drafts/T-14500/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3397: 'sp34' undefined; reoccurrences will not be reported.
+     *(M2cBlock90 *)(&sp34[0]) = *(M2cBlock90 *)(&D_80147C6C);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/GYOZI/func_8013C774/work -o drafts/T-14500/GYOZI/func_8013C774/work/guarded.o /tmp/asm_processorsssaudga/preprocessed_04b23897b20747ba8eb9bdec1c12ca50.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibnpkpmb66/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/GYOZI/func_8013C774/work/guarded.o drafts/T-14500/GYOZI/func_8013C774/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3399: Non-function name referenced in function call.
+     (&sp34[0])[D_800F647A]();
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/GYOZI/func_8013C774/work -o drafts/T-14500/GYOZI/func_8013C774/work/guarded.o /tmp/asm_processorvtd4iet9/preprocessed_9d713d505d3d463b939d7bb4e5c9a354.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib16mefggp/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/GYOZI/func_8013C774/work/guarded.o drafts/T-14500/GYOZI/func_8013C774/work/guarded.o.sjis.c

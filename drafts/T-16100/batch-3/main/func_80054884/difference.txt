@@ -1,0 +1,81 @@
+-27bdff90  ; addiu sp,sp,-112
++27bdffa0  ; addiu sp,sp,-96
+-afb20020  ; sw s2,32(sp)
+-afb00018  ; sw s0,24(sp)
++afb2001c  ; sw s2,28(sp)
++afb00014  ; sw s0,20(sp)
+-afb1001c  ; sw s1,28(sp)
++afb30020  ; sw s3,32(sp)
++afb10018  ; sw s1,24(sp)
+-27a40054  ; addiu a0,sp,84
++27a4005f  ; addiu a0,sp,95
+-27a40054  ; addiu a0,sp,84
++27a4005f  ; addiu a0,sp,95
+-14510012  ; bne v0,s1,12d0 <func_80054884+0x9c>
++14510011  ; bne v0,s1,12d0 <func_80054884+0x9c>
+-1000007a  ; b 148c <func_80054884+0x258>
++10000077  ; b 1484 <func_80054884+0x250>
+-27a40054  ; addiu a0,sp,84
+-10000076  ; b 148c <func_80054884+0x258>
++27a4005f  ; addiu a0,sp,95
++10000073  ; b 1484 <func_80054884+0x250>
+-00008025  ; move s0,zero
+-3c048012  ; lui a0,0x0
++3c138012  ; lui s3,0x0
++26733120  ; addiu s3,s3,0
+-24843120  ; addiu a0,a0,0
++02602025  ; move a0,s3
++3c108012  ; lui s0,0x0
++26103124  ; addiu s0,s0,0
+-3c048012  ; lui a0,0x0
+-24843124  ; addiu a0,a0,0
++02002025  ; move a0,s0
+-3c048012  ; lui a0,0x0
+-24843124  ; addiu a0,a0,0
++02002025  ; move a0,s0
+-3c048012  ; lui a0,0x0
+-24843124  ; addiu a0,a0,0
+-3c18800b  ; lui t8,0x0
+-8f1832cc  ; lw t8,0(t8)
+-0012c880  ; sll t9,s2,0x2
++3c19800b  ; lui t9,0x0
++8f3932cc  ; lw t9,0(t9)
++0012c080  ; sll t8,s2,0x2
++02002025  ; move a0,s0
+-10000005  ; b 1368 <func_80054884+0x134>
++10000006  ; b 136c <func_80054884+0x138>
++02002025  ; move a0,s0
+-27a40047  ; addiu a0,sp,71
+-27a50046  ; addiu a1,sp,70
++27a40057  ; addiu a0,sp,87
++27a50050  ; addiu a1,sp,80
+-93a70047  ; lbu a3,71(sp)
++93b00057  ; lbu s0,87(sp)
+-28e1000d  ; slti at,a3,13
++2a01000d  ; slti at,s0,13
+-00003825  ; move a3,zero
++00008025  ; move s0,zero
+-00075140  ; sll t2,a3,0x5
++001051c0  ; sll t2,s0,0x7
++0c02b828  ; jal 0 <func_80053650>
+-0c02b828  ; jal 0 <func_80053650>
+-afa70050  ; sw a3,80(sp)
+-8fa70050  ; lw a3,80(sp)
++00106900  ; sll t5,s0,0x4
+-00076080  ; sll t4,a3,0x2
+-00ac2821  ; addu a1,a1,t4
++00ad2821  ; addu a1,a1,t5
++3c0f8012  ; lui t7,0x0
++25ef3320  ; addiu t7,t7,0
+-25ce3320  ; addiu t6,t6,0
+-3c0d8012  ; lui t5,0x0
+-25ad4220  ; addiu t5,t5,0
+-25d90f00  ; addiu t9,t6,3840
+-8dc10000  ; lw at,0(t6)
++25ce4220  ; addiu t6,t6,0
++25f90f00  ; addiu t9,t7,3840
++8de10000  ; lw at,0(t7)
++25ef000c  ; addiu t7,t7,12
++adc10000  ; sw at,0(t6)
++8de1fff8  ; lw at,-8(t7)
+[Excerpt limited to 80 differing rows; score retains complete resolved diff count.]

@@ -1,0 +1,129 @@
+$ gcc -E -P -Iinclude -Isrc/ovl/TACO -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TACO/func_80145650/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TACO/func_80145650/work/guarded.c drafts/T-15700/TACO/func_80145650/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3533: '&' before array or function; ignored
+     (*(s32 *)&sp54) = (s32) (*(s32 *)D_80125C60);
+ -------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3534: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (4)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3535: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (8)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3536: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (12)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3537: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (16)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (16));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3538: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (20)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (20));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3539: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (24)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (24));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3541: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (28)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (28));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3545: '&' before array or function; ignored
+     func_8015CF30(temp_lo, (s32) &sp54);
+ ---------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3546: '&' before array or function; ignored
+     func_800A0ECC(&sp54, &sp7C, &sp74);
+ ------------------^
+cfe: Error: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3548: 'sp76' undefined; reoccurrences will not be reported.
+     *(s16 *)((unsigned char *)(*(void **)((unsigned char *)arg0 + (8))) + (10)) = (s16) (sp76 + temp_s3);
+ -----------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3552: '&' before array or function; ignored
+     (*(s32 *)&sp54) = (s32) (*(s32 *)D_80125C60);
+ -------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3553: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (4)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3554: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (8)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3555: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (12)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3556: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (16)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (16));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3557: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (20)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (20));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3558: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (24)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (24));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3559: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (28)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (28));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3563: '&' before array or function; ignored
+     func_8015CF30(temp_lo, (s32) &sp54);
+ ---------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3564: '&' before array or function; ignored
+     func_800A0ECC(&sp54, &sp7C, &sp74);
+ ------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3570: '&' before array or function; ignored
+     (*(s32 *)&sp54) = (s32) (*(s32 *)D_80125C60);
+ -------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3571: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (4)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3572: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (8)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3573: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (12)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3574: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (16)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (16));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3575: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (20)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (20));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3576: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (24)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (24));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3577: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (28)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (28));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3581: '&' before array or function; ignored
+     func_8015CF30(temp_lo, (s32) &sp54);
+ ---------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3582: '&' before array or function; ignored
+     func_800A0ECC(&sp54, &sp7C, &sp74);
+ ------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3588: '&' before array or function; ignored
+     (*(s32 *)&sp54) = (s32) (*(s32 *)D_80125C60);
+ -------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3589: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (4)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3590: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (8)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3591: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (12)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3592: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (16)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (16));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3593: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (20)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (20));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3594: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (24)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (24));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3595: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (28)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (28));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3599: '&' before array or function; ignored
+     func_8015CF30(temp_lo, (s32) &sp54);
+ ---------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3600: '&' before array or function; ignored
+     func_800A0ECC(&sp54, &sp7C, &sp74);
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15700/TACO/func_80145650/work -o drafts/T-15700/TACO/func_80145650/work/guarded.o /tmp/asm_processorhd_bnv79/preprocessed_21609094564243f2809015f1884f97eb.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibaity9016/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-15700/TACO/func_80145650/work/guarded.o drafts/T-15700/TACO/func_80145650/work/guarded.c

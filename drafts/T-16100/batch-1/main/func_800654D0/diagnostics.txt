@@ -1,0 +1,38 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/main/func_800654D0/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/main/func_800654D0/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/main/func_800654D0/work/guarded.c drafts/T-16100/batch-1/main/func_800654D0/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-1/main/func_800654D0/work/guarded.c, line 3220: '&' before array or function; ignored
+     LoadSquare(0x120U, 0x1E0U, 0x10U, 5U, &D_800C6220);
+ ------------------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/main/func_800654D0/work/guarded.c, line 3535: Incompatible pointer type assignment
+             var_v0 = &(&sp60[0])[0];
+ -------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/main/func_800654D0/work/guarded.c, line 3536: Incompatible pointer type assignment
+             var_a2 = &(&sp80[0])[0];
+ -------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/main/func_800654D0/work/guarded.c, line 3537: Incompatible pointer type assignment
+             var_a1 = &(&spA0[0])[0];
+ -------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/main/func_800654D0/work/guarded.c, line 3539: Incompatible pointer type assignment
+             var_a0 = &(&spC0[0])[0];
+ -------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/main/func_800654D0/work/guarded.c, line 3558: Incompatible pointer type assignment
+             var_a0_2 = &(&spC0[0])[var_t0];
+ ---------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/main/func_800654D0/work/guarded.c, line 3559: Incompatible pointer type assignment
+             var_v0_2 = &(&sp60[0])[var_t0];
+ ---------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/main/func_800654D0/work/guarded.c, line 3560: Incompatible pointer type assignment
+             var_a2_2 = &(&sp80[0])[var_t0];
+ ---------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/main/func_800654D0/work/guarded.c, line 3561: Incompatible pointer type assignment
+             var_a1_2 = &(&spA0[0])[var_t0];
+ ---------------------^
+cfe: Warning 689: drafts/T-16100/batch-1/main/func_800654D0/work/guarded.c, line 3584: Unacceptable operand of == or !=
+             } while (var_v0_2 != &(&sp60[0])[var_s0]);
+ ------------------------------^
+

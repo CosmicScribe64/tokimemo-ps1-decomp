@@ -1,0 +1,28 @@
+Target: ['asm/ovl/ETC/nonmatchings/ETC/8013BEF0/func_8013CCE4.s']
+Review: sp54[6] has six word stores and six-entry accesses; synthesized naming is a detector false positive, though other source quality is outside these flags.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8013CCE8 */  lbu        $v1, %lo(D_800E738D)($v1)
+    /* 8013CCEC */  addiu      $sp, $sp, -0x70
+    /* 8013CCF0 */  sw         $ra, 0x2C($sp)
+    /* 8013CCFC */  addiu      $at, $zero, 0x1
+    /* 8013CD08 */  addiu      $at, $zero, 0x2
+    /* 8013CD14 */  addiu      $at, $zero, 0x3
+    /* 8013CD24 */   lw        $ra, 0x2C($sp)
+    /* 8013CD30 */  addiu      $t7, $v1, 0x1
+    /* 8013CD3C */  addiu      $a0, $zero, 0x69
+    /* 8013CD50 */  lbu        $v1, %lo(D_800E738D)($v1)
+    /* 8013CD58 */  addiu      $t6, $v1, 0x1
+    /* 8013CD70 */  addiu      $t8, $v1, 0x1
+    /* 8013CD88 */   lw        $ra, 0x2C($sp)
+    /* 8013CDC0 */  addiu      $at, $zero, 0x1
+    /* 8013CDCC */  addiu      $a0, $zero, 0x2
+    /* 8013CDD8 */  lbu        $v1, %lo(D_800E738D)($v1)
+    /* 8013CDE0 */  addiu      $t0, $v1, 0x1
+    /* 8013CE00 */  addiu      $a0, $zero, 0x2
+    /* 8013CE14 */  sll        $t5, $a0, 2
+    /* 8013CE18 */  sll        $v1, $a0, 14
+    /* 8013CE1C */  addiu      $t6, $sp, 0x54
+    /* 8013CE20 */  addu       $v0, $t5, $t6
+    /* 8013CE24 */  addu       $t9, $v1, $at
+    /* 8013CE28 */  sw         $t4, 0x58($sp)

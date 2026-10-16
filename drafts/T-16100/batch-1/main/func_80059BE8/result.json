@@ -1,0 +1,20 @@
+{
+  "scope": "main:func_80059BE8",
+  "src": "src/main/80059B40.c",
+  "size": 536,
+  "path": "drafts/T-16100/batch-1/main/func_80059BE8",
+  "archive_path": "drafts/T-16100/batch-1/main/func_80059BE8",
+  "status": "scored",
+  "score": 146,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "body.c_sha256": "5acdfa1b7d282d8574ea622b04066bf3212deb9e03e48979e8f28ef19d52124d",
+  "declarations.h_sha256": "9f5de301c2cf88e43b328997e38a4c24a2a2729eb4fd9671f8c5f84f7e9ea934",
+  "context.c_sha256": "cd55052b8342deb91236a67edcab353d575192804b0534862d56935de8188b41",
+  "full-context.c_sha256": "4efcad5b0ee9809a16306c656da7b8e1eec97ba68ac3cbc0fdf5cff05ee1dc34",
+  "diagnostics.txt_sha256": "1a12927ed6d9277d79301c8eae6ad4f30182bb44b4edd45d4d6ac76492c1c873",
+  "assembly-evidence.txt_sha256": "01468bc552e7c59a41358fcb21136ae0e50b74bb7d446a364d3e146ae6f7540b"
+}

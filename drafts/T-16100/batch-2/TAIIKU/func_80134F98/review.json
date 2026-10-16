@@ -1,0 +1,42 @@
+{
+  "scope": "TAIIKU:func_80134F98",
+  "path": "drafts/T-16100/batch-2/TAIIKU/func_80134F98",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "&sp34 +",
+      "kind": "stack-address-arithmetic",
+      "line": 26
+    },
+    {
+      "detail": "M2cBlock24",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    }
+  ],
+  "explanation": "0x24-byte copy then words at +0x24 and +0x28 requires 44-byte destination. Repair tail byte arithmetic and local extent; replace raw sp lookup with sp34 indexing.",
+  "evidence_path": "drafts/T-16100/batch-2/TAIIKU/func_80134F98/evidence.txt",
+  "compile_status": "scored",
+  "score": 446,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "&sp34 +",
+        "kind": "stack-address-arithmetic",
+        "line": 26
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "0x24-byte copy then words at +0x24 and +0x28 requires 44-byte destination. Repair tail byte arithmetic and local extent; replace raw sp lookup with sp34 indexing."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlock24",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "0x24-byte copy then words at +0x24 and +0x28 requires 44-byte destination. Repair tail byte arithmetic and local extent; replace raw sp lookup with sp34 indexing."
+    }
+  ]
+}

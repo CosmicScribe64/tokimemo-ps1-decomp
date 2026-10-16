@@ -1,0 +1,42 @@
+{
+  "scope": "SHOUGATU:func_8014265C",
+  "path": "drafts/T-16100/batch-2/SHOUGATU/func_8014265C",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "M2cBlock40",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    },
+    {
+      "detail": "M2cBlock44",
+      "kind": "inferred-copy-layout",
+      "line": 3
+    }
+  ],
+  "explanation": "64/68-byte global copies have exact extents, opaque block types are not established semantic layouts; retain until shared record type recovered.",
+  "evidence_path": "drafts/T-16100/batch-2/SHOUGATU/func_8014265C/evidence.txt",
+  "compile_status": "scored",
+  "score": 51,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "M2cBlock40",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "64/68-byte global copies have exact extents, opaque block types are not established semantic layouts; retain until shared record type recovered."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlock44",
+        "kind": "inferred-copy-layout",
+        "line": 3
+      },
+      "outcome": "unresolved",
+      "explanation": "64/68-byte global copies have exact extents, opaque block types are not established semantic layouts; retain until shared record type recovered."
+    }
+  ]
+}

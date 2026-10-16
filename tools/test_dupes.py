@@ -68,6 +68,24 @@ class FingerprintTests(unittest.TestCase):
         self.assertIn('/matchings/', next(f.path for f in funcs if f.name == 'f'))
         self.assertIn('/nonmatchings/', next(f.path for f in funcs if f.name == 'g'))
 
+    def test_asm_sources_flags_matched_and_guarded(self):
+        r = Repo()
+        self.addCleanup(r.close)
+        r.write('src/main/80041000.c',
+                'void f(void) { }\n#ifdef NON_MATCHING\nvoid g(void) { }\n#else\n'
+                'INCLUDE_ASM("asm/nonmatchings/main/80041000", g);\n#endif\n'
+                'INCLUDE_ASM("asm/nonmatchings/main/80041000", h);\n')
+        for folder in ('matchings', 'nonmatchings'):
+            for name in ('f', 'g', 'h', 'old'):
+                r.write('asm/%s/main/80041000/%s.s' % (folder, name),
+                        func_asm(name, 'D_80150000', 'D_80150004', 'callee'))
+        got = {s.name: (s.unit, s.folder, s.matched, s.guarded, s.rel) for s in dupes.asm_sources(r.root)}
+        self.assertEqual(sorted(got), ['f', 'g', 'h'])
+        self.assertEqual(got['f'], ('main', '80041000', True, False, 'asm/matchings/main/80041000/f.s'))
+        self.assertEqual(got['g'], ('main', '80041000', False, True, 'asm/nonmatchings/main/80041000/g.s'))
+        self.assertEqual(got['h'][2:4], (False, False))
+        self.assertEqual([s.name for s in dupes.asm_sources(r.root, units=['AAA'])], [])
+
     def test_reloc_symbols_do_not_change_key(self):
         k1, r1, b1 = dupes.parse_asm(func_asm('f', 'D_80150000', 'D_80150004', 'func_80140000'))
         k2, r2, b2 = dupes.parse_asm(func_asm('g', 'D_80151110', 'D_80151114', 'func_80142222'))

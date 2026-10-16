@@ -1,0 +1,23 @@
+{
+  "scope": "ETC:func_80146D4C",
+  "selected_path": "drafts/T-14500/ETC/func_80146D4C",
+  "archive_path": "drafts/T-16100/batch-3/ETC/func_80146D4C",
+  "changed": false,
+  "reviewed": true,
+  "repair_notes": [],
+  "flags": [
+    {
+      "detail": "sp3C",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "unresolved",
+      "explanation": "sp3C and sp48 are read without writes in this draft. Need recover control-flow values from assembly before claiming stack reconstruction."
+    }
+  ],
+  "notes": "sp3C and sp48 are read without writes in this draft. Need recover control-flow values from assembly before claiming stack reconstruction.",
+  "assembly_evidence": "drafts/T-16100/batch-3/ETC/func_80146D4C/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "reviewed-unresolved"
+}

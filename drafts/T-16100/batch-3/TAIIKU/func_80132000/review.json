@@ -1,0 +1,81 @@
+{
+  "scope": "TAIIKU:func_80132000",
+  "selected_path": "drafts/T-14500/TAIIKU/func_80132000",
+  "archive_path": "drafts/T-16100/batch-3/TAIIKU/func_80132000",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "Target fills byte candidate list at +0x74, bounded by eleven characters; +0x75/+0x76 are byte entries. Initializer table is 40+4 bytes, so reserve eleven words and use byte tail offsets."
+  ],
+  "flags": [
+    {
+      "detail": "sp75",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "repaired",
+      "explanation": "Target fills byte candidate list at +0x74, bounded by eleven characters; +0x75/+0x76 are byte entries. Initializer table is 40+4 bytes, so reserve eleven words and use byte tail offsets. Byte candidate list and table tail reconstructed. Remaining GameState* record walk increments still need conversion to Rec38 before production use."
+    },
+    {
+      "detail": "sp76",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "outcome": "repaired",
+      "explanation": "Target fills byte candidate list at +0x74, bounded by eleven characters; +0x75/+0x76 are byte entries. Initializer table is 40+4 bytes, so reserve eleven words and use byte tail offsets. Byte candidate list and table tail reconstructed. Remaining GameState* record walk increments still need conversion to Rec38 before production use."
+    },
+    {
+      "detail": "&sp3C +",
+      "kind": "stack-address-arithmetic",
+      "line": 33,
+      "outcome": "repaired",
+      "explanation": "Target fills byte candidate list at +0x74, bounded by eleven characters; +0x75/+0x76 are byte entries. Initializer table is 40+4 bytes, so reserve eleven words and use byte tail offsets. Byte candidate list and table tail reconstructed. Remaining GameState* record walk increments still need conversion to Rec38 before production use."
+    },
+    {
+      "detail": "&sp74 +",
+      "kind": "stack-address-arithmetic",
+      "line": 61,
+      "outcome": "repaired",
+      "explanation": "Target fills byte candidate list at +0x74, bounded by eleven characters; +0x75/+0x76 are byte entries. Initializer table is 40+4 bytes, so reserve eleven words and use byte tail offsets. Byte candidate list and table tail reconstructed. Remaining GameState* record walk increments still need conversion to Rec38 before production use."
+    },
+    {
+      "detail": "&sp74 +",
+      "kind": "stack-address-arithmetic",
+      "line": 76,
+      "outcome": "repaired",
+      "explanation": "Target fills byte candidate list at +0x74, bounded by eleven characters; +0x75/+0x76 are byte entries. Initializer table is 40+4 bytes, so reserve eleven words and use byte tail offsets. Byte candidate list and table tail reconstructed. Remaining GameState* record walk increments still need conversion to Rec38 before production use."
+    },
+    {
+      "detail": "&sp74 +",
+      "kind": "stack-address-arithmetic",
+      "line": 80,
+      "outcome": "repaired",
+      "explanation": "Target fills byte candidate list at +0x74, bounded by eleven characters; +0x75/+0x76 are byte entries. Initializer table is 40+4 bytes, so reserve eleven words and use byte tail offsets. Byte candidate list and table tail reconstructed. Remaining GameState* record walk increments still need conversion to Rec38 before production use."
+    },
+    {
+      "detail": "&sp74 +",
+      "kind": "stack-address-arithmetic",
+      "line": 89,
+      "outcome": "repaired",
+      "explanation": "Target fills byte candidate list at +0x74, bounded by eleven characters; +0x75/+0x76 are byte entries. Initializer table is 40+4 bytes, so reserve eleven words and use byte tail offsets. Byte candidate list and table tail reconstructed. Remaining GameState* record walk increments still need conversion to Rec38 before production use."
+    },
+    {
+      "detail": "&sp74 +",
+      "kind": "stack-address-arithmetic",
+      "line": 97,
+      "outcome": "repaired",
+      "explanation": "Target fills byte candidate list at +0x74, bounded by eleven characters; +0x75/+0x76 are byte entries. Initializer table is 40+4 bytes, so reserve eleven words and use byte tail offsets. Byte candidate list and table tail reconstructed. Remaining GameState* record walk increments still need conversion to Rec38 before production use."
+    },
+    {
+      "detail": "M2cBlock28",
+      "kind": "inferred-copy-layout",
+      "line": 4,
+      "outcome": "unresolved",
+      "explanation": "Opaque word-block type has only a copy-extent interpretation; semantic field layout remains unresolved. Byte candidate list and table tail reconstructed. Remaining GameState* record walk increments still need conversion to Rec38 before production use."
+    }
+  ],
+  "notes": "Byte candidate list and table tail reconstructed. Remaining GameState* record walk increments still need conversion to Rec38 before production use.",
+  "assembly_evidence": "drafts/T-16100/batch-3/TAIIKU/func_80132000/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "partial-repair"
+}

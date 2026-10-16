@@ -1,0 +1,48 @@
+python3 failed:
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c, line 2738: Incompatible function return type for this function.
+ s32 k_disp_start();
+ ----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c, line 2739: redeclaration of 'k_disp_switch'; previous declaration at line 1702 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c'
+ s32 k_disp_switch();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c, line 2739: Incompatible function return type for this function.
+ s32 k_disp_switch();
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work -o drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.o /tmp/asm_processorxwhqsetw/preprocessed_074c8787d164488283f8b60391f9e982.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibm5l27tal/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c
+python3 failed:
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c, line 2736: Incompatible function return type for this function.
+ s32 func_800570B8();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c, line 2738: redeclaration of 'k_disp_start'; previous declaration at line 1701 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c'
+ s32 k_disp_start();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c, line 2738: Incompatible function return type for this function.
+ s32 k_disp_start();
+ ----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work -o drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.o /tmp/asm_processorc7lxijyt/preprocessed_a8697324581b4eabbd15a5d401e4203f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibr2tdfucz/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c
+python3 failed:
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c, line 2735: Incompatible function return type for this function.
+ s32 func_8004E58C();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c, line 2736: redeclaration of 'func_800570B8'; previous declaration at line 2721 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c'
+ s32 func_800570B8();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c, line 2736: Incompatible function return type for this function.
+ s32 func_800570B8();
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work -o drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.o /tmp/asm_processorn3vqujxu/preprocessed_92e3c4f1225642df8ec0adca0eacdd5a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib2guf1umj/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c, line 2735: redeclaration of 'func_8004E58C'; previous declaration at line 1697 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c'
+ s32 func_8004E58C();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c, line 2735: Incompatible function return type for this function.
+ s32 func_8004E58C();
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work -o drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.o /tmp/asm_processorrgy73b2t/preprocessed_783a5156cc7e4ebca8592ccbf4a47c30.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibexx_yj2g/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_8005715C/work/guarded.c

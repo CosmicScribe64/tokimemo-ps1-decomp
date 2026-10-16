@@ -4,10 +4,6 @@
 
 extern u32 D_80122CD0;
 
-typedef struct {
-    void (*f[40])();
-} FnTbl40; /* size 0xA0 */
-
 void func_80150010(void) {
     D_8015EA40 = 0x801B0000;
     D_8015EA44 = 0x801B2000;
@@ -100,7 +96,22 @@ void func_80150344(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80150460);
+/* Copies display record 96 (D_80120650) over record 98 (D_801206D8). */
+void func_80150460(void) {
+    D_8015E208 = D_8015DE90;
+    D_8015E20C = D_8015DFCC;
+    D_8015E210 = D_8015E108;
+    D_800E6280.unk_1BC[2].unk_02 += 2;
+    D_800E6280.unk_1BC[2].unk_0A -= 0xA;
+    func_80084D3C();
+    func_80150080();
+    func_80043914((s32) D_8015EA6C, 0x11, 1, 2, 0);
+    func_80084E90((s32) D_8015EA70, (s32) D_8015EA74, (s32) D_8015EA78, (s32) D_8015EA7C, (s32) D_8015EA80, (s32) D_8015EA84);
+    func_800850D4((s32) D_8015EA60, (s32) D_8015EA64, (s32) D_8015EA5C, (s32) D_8015EA68);
+    ((DisplayRecord44 *)D_8011ECD0)[98] = ((DisplayRecord44 *)D_8011ECD0)[96];
+    D_800CA360 = 1;
+    func_8004284C();
+}
 
 void func_801505B4(void) {
     D_8015E208 = D_8015DE94;
@@ -231,8 +242,6 @@ void func_80150B9C(void) {
     func_8004284C();
 }
 
-extern FnTbl40 D_8015EAE8;
-
 void func_80150BCC(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl40 tbl;
@@ -248,7 +257,31 @@ void func_80150BCC(void) {
     D_800B5BD4 = 0xF;
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80150C78);
+/* Sixteen grey lines through func_80049FF0. All nine s-registers are taken, so uopt keeps col1 in
+ * memory: its stack home (0x64) and the frame size follow the declaration order. */
+void func_80150C78(void) {
+    s32 col0;
+    s16 i;
+    s32 col1;
+    GameState *g = &D_800E6280;
+    u32 grey;
+    s32 offset;
+
+    grey = D_800B593C / 10;
+    offset = 0;
+    col1 = col0 = (grey * 19 << 16) | (grey * 19 << 8) | (grey * 19);
+    if (g->unk_10F8 % 45 < 15) {
+        offset = 0xAA;
+    } else if (g->unk_10F8 % 45 < 30) {
+        offset = 0x155;
+    }
+    for (i = 0; i < 16; i++) {
+        func_80049FF0((s16)(func_800A0140((i << 8) + offset) / 20),
+                      (s16)(func_800A0070((i << 8) + offset) / 20 - 30),
+                      (s16)(func_800A0140((i << 8) + offset) / 60),
+                      (s16)(func_800A0070((i << 8) + offset) / 60 - 30), col0, col1, 10);
+    }
+}
 
 void func_80150E9C(void) {
     cd_read_sectors(0x35, 0x801B0000, 0x8144);
@@ -256,7 +289,28 @@ void func_80150E9C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80150ED4);
+void func_80150ED4(void) {
+    GameState *g = &D_800E6280; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl39 tbl;
+
+    tbl = D_8015EB88;
+    if (((g->unk_03E == 0x5F && g->unk_03F == 7 && g->unk_040 == 0x17) ||
+         (g->unk_03E == 0x60 && g->unk_03F == 7 && g->unk_040 == 0x1C) ||
+         (g->unk_03E == 0x61 && g->unk_03F == 7 && g->unk_040 == 0x1B)) &&
+        D_800B593C == 0x80 && D_80122D04 == 0 && g->unk_110A >= 0x1A) {
+        func_8006B900();
+    }
+
+    tbl.f[g->unk_110A](0x80);
+    if (g->unk_110A >= 0xD && g->unk_110A < 0x10) {
+        if (g->unk_10F8 % 180 == 0) {
+            func_8015114C();
+        }
+        if (g->unk_10F8 % 180 == 0x5A) {
+            func_8015116C();
+        }
+    }
+}
 
 void func_80151064(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8179);
@@ -295,9 +349,29 @@ void func_8015118C(void) {
     func_8004284C();
 }
 
-extern FnTbl40 D_8015EC24;
+/* D_80121FD4 is record 57 of the Rec24 table and D_801206D8 record 98 of the D_8011ECD0 display
+ * records; the chain assignment keeps the loaded byte in one register for all four stores. */
+void func_801511B4(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl40 tbl;
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_801511B4);
+    tbl = D_8015EC24;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+    if (D_80122D04 != 0) {
+        ((DisplayRecord44 *)D_8011ECD0)[98].unk_03 |= 0x80;
+        if (D_800E6280.unk_10F8 % 40 < 20) {
+            D_801217D0[57].unk_00 &= 0x7FFFFFFF;
+        } else {
+            D_801217D0[57].unk_00 |= 0x80000000;
+        }
+        D_801217D0[57].unk_14 = D_801217D0[57].unk_15 = D_801217D0[57].unk_16 =
+            ((DisplayRecord44 *)D_8011ECD0)[98].unk_07 = D_800B593C;
+        return;
+    }
+    ((DisplayRecord44 *)D_8011ECD0)[98].unk_03 &= 0xFF7F;
+    D_801217D0[57].unk_00 |= 0x80000000;
+}
 
 void func_80151300(void) {
     func_80044750(0x502);
@@ -309,8 +383,6 @@ void func_80151328(void) {
     func_80150130();
     func_8004284C();
 }
-
-extern FnTbl40 D_8015ECC4;
 
 void func_80151360(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

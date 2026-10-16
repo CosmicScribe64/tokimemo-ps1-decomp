@@ -1,0 +1,24 @@
+{
+  "scope": "SHOUGATU:func_8013737C",
+  "src": "src/ovl/SHOUGATU/80136F90.c",
+  "path": "drafts/T-16100/batch-3/SHOUGATU/func_8013737C",
+  "archive_path": "drafts/T-16100/batch-3/SHOUGATU/func_8013737C",
+  "status": "scored",
+  "score": 208,
+  "source_base": "48362009",
+  "header_base": "drafts/T-14500/baseline/include",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "initial_score": 228,
+  "artifact_sha256": {
+    "assembly-evidence.txt": "f1f082e680db3c5d8e40b8f6a4713ea4d65d5193c0385ee1a06ac4501ad31a09",
+    "provenance.json": "a944701efb5c971a5fd1a97ae0ef3e0dc2fef6ec61a108522394a5dd831e791d",
+    "declarations.h": "371128146f2e1b3f297477d5af2171386d2fb384e1d5bdd6ec9345e7a167869a",
+    "difference.txt": "ee6cc42d469e60a2c2af14709056c1f5791eb0c123a2dc7d23276243eee75b9a",
+    "context.c": "28872b3de13e82a5f5ff1db9549489fa0b5f9bb754afbb29a07fe49c9f2a2242",
+    "body.c": "bb82775ad36181fb52cd4562ddd21a1b60ff703f073b58945daf2477bb9584fc",
+    "full-context.c": "9bab643bb6c560e4bdb855ff9733d42ca8746c13717aabbe6ae3632f73ea8c0f",
+    "diagnostics.txt": "2d9824e8a6fbde6f10010a117dfd4e747bacc1bc04602a738eb612029147314c"
+  }
+}

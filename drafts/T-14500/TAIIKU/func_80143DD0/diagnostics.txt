@@ -1,0 +1,13 @@
+python3 failed:
+ -----------------------^
+cfe: Error: drafts/T-14500/TAIIKU/func_80143DD0/work/guarded.c, line 3452: Unacceptable operand of a multiplicative operator.
+             D_80120668 = *(&D_8014A1E8 + (D_8014A13C * 2));
+ ------------------------------------------^
+cfe: Error: drafts/T-14500/TAIIKU/func_80143DD0/work/guarded.c, line 3454: Unacceptable operand of a multiplicative operator.
+             D_80120668 = *(D_8014A1D4 + (D_8014A13C * 2));
+ -----------------------------------------^
+cfe: Error: drafts/T-14500/TAIIKU/func_80143DD0/work/guarded.c, line 3456: This expression is not an lvalue.
+         D_8014A13C = D_8014A13C;
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TAIIKU/func_80143DD0/work -o drafts/T-14500/TAIIKU/func_80143DD0/work/guarded.o /tmp/asm_processor0r47pyvp/preprocessed_a06d381a4ef948328e1ff75f6b9a8f5c.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibfnr8t0io/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TAIIKU/func_80143DD0/work/guarded.o drafts/T-14500/TAIIKU/func_80143DD0/work/guarded.c

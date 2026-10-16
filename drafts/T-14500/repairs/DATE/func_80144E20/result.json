@@ -1,0 +1,10 @@
+{
+  "scope": "DATE:func_80144E20",
+  "status": "scored",
+  "score": 628,
+  "note": "Reuse T-14100 full typed 21-aggregate callback selector, historical 631-row draft.",
+  "body_sha256": "eb29324795b049439af00f5ab8c596ccbfc535d986b93837fb3cbaa68e666c5b",
+  "context_sha256": "4542d3b97b519622bfc20976a44ad4d00987f0a194bc460a6b14c8796d2902b5",
+  "residual_class": "instruction, control-flow or register allocation differences",
+  "matching_claim": false
+}

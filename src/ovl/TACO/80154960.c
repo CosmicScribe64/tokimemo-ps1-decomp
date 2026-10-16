@@ -1,7 +1,115 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_80154960);
+void func_80154960(void) {
+    /* FAKE: reserves the word above poly's spill slot (poly sits at 0x30 in the original); real local unknown. T-16564 */
+    u8 pad[4];
+    POLY_F4 *poly;
+
+    D_801604C0 += 1;
+    func_8015B59C();
+    switch (D_801604C4) {
+    case 0:
+        if (D_801604C0 < 0x834) {
+            if ((D_801604C0 % 7) == 0) {
+                func_80154F74();
+            }
+        }
+        if (D_801604C0 < 0x4B0) {
+            if ((D_801604C0 % 50) == 0) {
+                func_801563E4(0);
+            }
+        }
+        if (D_801604C0 >= 0x259) {
+            if ((D_801604C0 < 0x708) && (func_8015CCC8(4) == 0)) {
+                func_801553AC();
+            }
+        }
+        if (D_801604C0 >= 0x709) {
+            func_8015A900();
+        }
+        break;
+    case 1:
+        D_80160470 = func_80156178();
+        func_8015A900();
+        break;
+    case 2:
+        if (D_801604C0 < 0x258) {
+            if ((D_801604C0 % 7) == 0) {
+                func_80154F74();
+            }
+        }
+        if ((D_801604C0 < 0x12C) && (func_8015CCC8(4) == 0)) {
+            func_801553AC();
+        }
+        if (D_801604C0 >= 0x1E1) {
+            if ((D_801604C0 % 110) == 0) {
+                func_801563E4(1);
+            }
+        }
+        if (D_801604C0 >= 0x12D) {
+            if ((D_801604C0 % 120) == 0) {
+                func_8015595C();
+            }
+        }
+        if (func_8015CCC8(6) == 0) {
+            func_8015A900();
+        }
+        if ((D_80160470 + D_8015EDB4)->unk3 == 2) {
+            func_8015A900();
+        }
+        break;
+    case 3:
+        func_8015C698();
+        func_8015A900();
+        break;
+    case 4:
+        poly = GetWorkBase(0x18, D_8011ECA0);
+        func_8009F02C(poly);
+        SetSemiTrans(poly, 1);
+        poly->r0 = D_801604C0;
+        poly->g0 = D_801604C0;
+        poly->b0 = D_801604C0;
+        poly->x0 = D_800E6280.unk_014[D_8011ECA0] - 0x100;
+        poly->y0 = D_800E6280.unk_018[D_8011ECA0] - 0x78;
+        poly->x1 = D_800E6280.unk_014[D_8011ECA0] + 0x100;
+        poly->y1 = D_800E6280.unk_018[D_8011ECA0] - 0x78;
+        poly->x2 = D_800E6280.unk_014[D_8011ECA0] - 0x100;
+        poly->y2 = D_800E6280.unk_018[D_8011ECA0] + 0x78;
+        poly->x3 = D_800E6280.unk_014[D_8011ECA0] + 0x100;
+        poly->y3 = D_800E6280.unk_018[D_8011ECA0] + 0x78;
+        AddPrim((D_8011ECA0 << 0xA) + D_800E8CA0, poly);
+        dtd_on_tpage(0, 0, 0, 1, 0);
+        D_801604C0 += 2;
+        if (D_801604C0 >= 0x80) {
+            func_8015A900();
+        }
+        break;
+    case 5:
+        poly = GetWorkBase(0x18, D_8011ECA0);
+        func_8009F02C(poly);
+        SetSemiTrans(poly, 1);
+        poly->r0 = 0x80 - D_801604C0;
+        poly->g0 = 0x80 - D_801604C0;
+        poly->b0 = 0x80 - D_801604C0;
+        poly->x0 = D_800E6280.unk_014[D_8011ECA0] - 0x100;
+        poly->y0 = D_800E6280.unk_018[D_8011ECA0] - 0x78;
+        poly->x1 = D_800E6280.unk_014[D_8011ECA0] + 0x100;
+        poly->y1 = D_800E6280.unk_018[D_8011ECA0] - 0x78;
+        poly->x2 = D_800E6280.unk_014[D_8011ECA0] - 0x100;
+        poly->y2 = D_800E6280.unk_018[D_8011ECA0] + 0x78;
+        poly->x3 = D_800E6280.unk_014[D_8011ECA0] + 0x100;
+        poly->y3 = D_800E6280.unk_018[D_8011ECA0] + 0x78;
+        AddPrim((D_8011ECA0 << 0xA) + D_800E8CA0, poly);
+        dtd_on_tpage(0, 0, 0, 1, 0);
+        D_801604C0 += 3;
+        if (D_801604C0 >= 0x80) {
+            func_8015ABF0();
+            func_8004284C();
+        }
+        break;
+    }
+}
 
 void func_80154F74(void) {
     /* FAKE: unused leading TcPos local reproduces the frame (see func_80156F50); real locals unknown. T-9180 */
@@ -63,9 +171,54 @@ void func_80155230(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_801553AC);
+void func_801553AC(void) {
+    TcPos sp50;
+    /* FAKE: unused TcPos between the two reproduces the original frame (see func_80156F50); real local unknown. T-16564 */
+    TcPos sp48;
+    TcPos sp40;
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_801557E8);
+    func_800AE120(D_801604C0);
+    sp50.x = D_8015EDB4->unk74;
+    sp50.y = (D_8015EDB4->unk74 > 0) ? 1 : -1;
+    sp50.z = -0x2BC;
+    sp40.unk6 = 0;
+    if ((D_801604CC % 3) == 0) {
+        func_8015ACCC(4, 2, sp50, D_801604D4, sp40, 6, 0xE0);
+    } else {
+        func_8015ACCC(4, 2, sp50, D_801604D4, sp40, 6, 0x50);
+    }
+    /* FAKE: both stores on one line so as1 orders them z, unk6 like the original (T-11690 idiom); real source unknown. T-16564 */
+    sp40.unk6 = 0x14; sp50.z = -0x384;
+    func_8015ACCC(4, 2, sp50, D_801604D4, sp40, 6, 0);
+    sp40.unk6 = 0x14; sp50.z = -0x1F4;
+    func_8015ACCC(4, 2, sp50, D_801604D4, sp40, 6, 0);
+    sp40.unk6 = 0x28; sp50.z = -0x44C;
+    func_8015ACCC(4, 2, sp50, D_801604D4, sp40, 6, 0);
+    sp40.unk6 = 0x28; sp50.z = -0x12C;
+    func_8015ACCC(4, 2, sp50, D_801604D4, sp40, 6, 0);
+    D_801604CC += 1;
+}
+
+/* FAKE: the operand order of the actor address (idx + base or base + idx) differs between the statements of the original; the mixed spellings reproduce it, real source unknown. T-16564 */
+void func_801557E8(s32 arg0) {
+    s32 t;
+
+    t = ((arg0 + D_8015EDB4)->unk7A - (arg0 + D_8015EDB4)->unk6A) * 7;
+    (D_8015EDB4 + arg0)->unk78 = (func_800A0070(t) * -0x3A98) >> 0xC;
+    (D_8015EDB4 + arg0)->unk74 = (((func_800A0140(t) << 0xB) >> 0xC) * (D_8015EDB4 + arg0)->unk7E) + (D_8015EDB4 + arg0)->unk7C;
+    (arg0 + D_8015EDB4)->unk76 = (arg0 + D_8015EDB4)->unk80;
+    (D_8015EDB4 + arg0)->unk64 = 0;
+    if ((arg0 + D_8015EDB4)->unk7E == 1) {
+        (arg0 + D_8015EDB4)->unk66 = t;
+        (D_8015EDB4 + arg0)->unk68 = 0xC00;
+    } else {
+        (arg0 + D_8015EDB4)->unk66 = 0x1000 - t;
+        (D_8015EDB4 + arg0)->unk68 = 0x400;
+    }
+    if (t >= 0xA01) {
+        func_8015C208(arg0);
+    }
+}
 
 void func_8015595C(void) {
     /* FAKE: unused TcPos local reproduces the frame and the offsets of pos and vel (see func_80156F50); real locals unknown. T-9180 */
@@ -177,7 +330,8 @@ void func_80155F98(s32 arg0) {
     }
 }
 
-void func_80156178(void) {
+/* No return value on purpose: the caller reads v0, the index func_8015ACCC returns (implicit-int style, see func_80137BD8). T-16564 */
+s32 func_80156178(void) {
     TcPos p0;
     TcPos p2;
     TcPos pos;
@@ -228,7 +382,48 @@ s32 func_80156244(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_801563E4);
+void func_801563E4(s32 arg0) {
+    TcPos sp58;
+    TcPos sp50;
+    TcPos sp48;
+    /* FAKE: reserves the unused word under the position locals (the spill temporary sits one word lower); real local unknown. T-16564 */
+    u8 pad[4];
+
+    func_800AE120(D_801604C0);
+    if (arg0 == 0) {
+        sp50.x = ((func_800AE0D0() % 2000) + ((func_800AE0D0() % 4000) + D_8015EDB4->unk74)) - 0xBB8;
+        sp50.y = ((func_800AE0D0() % 1500) + ((func_800AE0D0() % 2500) + D_8015EDB4->unk76)) - 0x7D0;
+        sp50.z = (func_800AE0D0() % 20000) + 0x8000;
+        sp58.x = (func_800AE0D0() % 30) + 0x28;
+        sp48.y = 0x800;
+        sp48.x = 0;
+        sp48.z = 0;
+        sp58.y = func_800AE0D0() % 2;
+        if (D_801604C0 < 0xF0) {
+            func_8015ACCC(7, 7, sp58, sp50, sp48, 5, 0x50);
+            return;
+        }
+        func_8015ACCC(7, 7, sp58, sp50, sp48, 5, 0);
+        return;
+    }
+    sp50.y = -0x384;
+    sp50.z = -0x6590;
+    sp48.y = 0x800;
+    sp48.x = 0;
+    sp48.z = 0;
+    sp58.x = (func_800AE0D0() % 20) + 0x1E;
+    sp50.x = 0;
+    sp58.y = func_800AE0D0() % 2;
+    D_8015EDB4[func_8015ACCC(7, 7, sp58, sp50, sp48, 0x14, 0)].unk84[0] = 4;
+    sp58.x = (func_800AE0D0() % 20) + 0x1E;
+    sp50.x = -0x3E8;
+    sp58.y = func_800AE0D0() % 2;
+    D_8015EDB4[func_8015ACCC(7, 7, sp58, sp50, sp48, 0x14, 0)].unk84[0] = 4;
+    sp58.x = (func_800AE0D0() % 20) + 0x1E;
+    sp50.x = 0x3E8;
+    sp58.y = func_800AE0D0() % 2;
+    D_8015EDB4[func_8015ACCC(7, 7, sp58, sp50, sp48, 0x14, 0)].unk84[0] = 4;
+}
 
 void func_80156924(s32 arg0) {
     (arg0 + D_8015EDB4)->unk78 += 0xFA;

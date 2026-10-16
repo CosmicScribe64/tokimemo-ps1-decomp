@@ -1,0 +1,28 @@
+Target: ['asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0/func_80134628.s']
+Review: sp28[16]/sp30[16] overlap and 44-byte copy targets local scalar. Need one actual stack record; no declaration-only rename.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80134628 */  addiu      $sp, $sp, -0x70
+    /* 80134634 */  addiu      $v1, $sp, 0x40
+    /* 80134638 */  addiu      $t6, $t6, %lo(D_80134D38)
+    /* 8013463C */  lbu        $v0, %lo(D_800E62BF)($v0)
+    /* 80134640 */  sw         $ra, 0x14($sp)
+    /* 80134644 */  addiu      $a1, $sp, 0x38
+    /* 80134648 */  addiu      $a2, $sp, 0x30
+    /* 8013464C */  addiu      $a3, $sp, 0x28
+    /* 80134650 */  addiu      $t9, $t6, 0x24
+    /* 8013465C */  addiu      $t6, $t6, 0xC
+    /* 80134668 */  addiu      $t0, $t0, 0xC
+    /* 8013468C */  addiu      $t1, $t1, %lo(D_80134D64)
+    /* 801346A4 */  addiu      $t5, $t5, %lo(D_80134D6C)
+    /* 801346BC */  addiu      $t6, $t6, %lo(D_80134D74)
+    /* 801346E8 */   addiu     $t1, $zero, 0x544A
+    /* 801346EC */  addiu      $t4, $zero, 0x544A
+    /* 801346F0 */  addiu      $t7, $zero, 0x544A
+    /* 801346F4 */  addiu      $t8, $zero, 0x5D41
+    /* 801346F8 */  addiu      $t5, $zero, 0x522E
+    /* 801346FC */  addiu      $t9, $zero, 0x58AF
+    /* 80134700 */  sw         $t1, 0x40($sp)
+    /* 80134704 */  sw         $t4, 0x4C($sp)
+    /* 80134708 */  sw         $t7, 0x54($sp)
+    /* 8013470C */  sw         $t8, 0x38($sp)

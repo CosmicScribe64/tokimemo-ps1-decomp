@@ -1,0 +1,25 @@
+python3 failed:
+ ----------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work/guarded.c, line 3651: 'subroutine_arg3' undefined; reoccurrences will not be reported.
+         func_8015ACCC(7, 7, subroutine_arg2, subroutine_arg3, sp50, *(s32 *)((unsigned char *)(&sp50) + (4)), sp48, *(s32 *)((unsigned char *)(&sp48) + (4)), 5, 0);
+ ---------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work/guarded.c, line 3663: 'subroutine_arg2' undefined; reoccurrences will not be reported.
+     *(s8 *)((unsigned char *)(D_8015EDB4 + (func_8015ACCC(7, 7, subroutine_arg2, subroutine_arg3, sp50, *(s32 *)((unsigned char *)(&sp50) + (4)), sp48, *(s32 *)((unsigned char *)(&sp48) + (4)), 0x14, 0) * 0x88)) + (132)) = 4;
+ ----------------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work/guarded.c, line 3663: 'subroutine_arg3' undefined; reoccurrences will not be reported.
+     *(s8 *)((unsigned char *)(D_8015EDB4 + (func_8015ACCC(7, 7, subroutine_arg2, subroutine_arg3, sp50, *(s32 *)((unsigned char *)(&sp50) + (4)), sp48, *(s32 *)((unsigned char *)(&sp48) + (4)), 0x14, 0) * 0x88)) + (132)) = 4;
+ ---------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work/guarded.o /tmp/asm_processorbf6jmjlg/preprocessed_0e35c0f46f5d482a9d78b5b4a2999e72.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibs13w4vhf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work/guarded.c, line 3616: redeclaration of 'D_8015EDB4'; previous declaration at line 3005 in file 'drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work/guarded.c'
+ extern void *D_8015EDB4;
+ -------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work/guarded.c, line 3618: redeclaration of 'func_800AE120'; previous declaration at line 2627 in file 'drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work/guarded.c'
+ s32 func_800AE120();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work/guarded.c, line 3618: Incompatible function return type for this function.
+ s32 func_800AE120();
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work/guarded.o /tmp/asm_processorl6cuy8w1/preprocessed_88cc9b60fb014bc99f6eb74a7538cf2c.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibg_3lblig/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_801563E4/work/guarded.c

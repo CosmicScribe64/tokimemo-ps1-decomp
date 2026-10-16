@@ -1,0 +1,11 @@
+{
+  "ticket": "T-16100",
+  "original_attempt": "drafts/T-14500/main/func_800767A4",
+  "original_sha256": "c1327e8bb2481f96313e7027f63064e18cee1132ff6800b2908b814a2ad5da0c",
+  "source_base": "48362009",
+  "frozen_header_root": "drafts/T-14500/baseline/include",
+  "context_source": "drafts/T-14500/main/func_800767A4/context.c",
+  "repair": "tools/t16100_batch3.py",
+  "compiler": "IDO 5.3 via tools/docker.sh; full translation unit",
+  "matching_claim": false
+}

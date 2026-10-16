@@ -1,0 +1,9 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/EVENT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/EVENT/func_800FEAE8/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/EVENT/func_800FEAE8/full-context.c drafts/T-16100/batch-2/EVENT/func_800FEAE8/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-2/EVENT/func_800FEAE8/work/guarded.o.sjis.c, line 4397: '&' before array or function; ignored
+     *(M2cBlockA0 *)(&sp2C) = *(M2cBlockA0 *)(&D_80121A34);
+ --------------------^
+
+Full translation unit compiled and scored.

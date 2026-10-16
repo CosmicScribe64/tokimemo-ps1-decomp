@@ -1,0 +1,28 @@
+Target: ['asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80150930/func_801509A4.s']
+Review: 44-byte memcpy at sp30 is eleven word entries and original girl loop has eleven iterations. Repair sp30[11], keep separate byte sp63, and use Rec38 pointer iteration.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 801509A4 */  addiu      $sp, $sp, -0x68
+    /* 801509AC */  addiu      $t6, $t6, %lo(D_80160AA4)
+    /* 801509B0 */  sw         $ra, 0x14($sp)
+    /* 801509B4 */  addiu      $t0, $sp, 0x30
+    /* 801509B8 */  addiu      $t9, $t6, 0x24
+    /* 801509C0 */  addiu      $t6, $t6, 0xC
+    /* 801509CC */  addiu      $t0, $t0, 0xC
+    /* 80150A08 */  addiu      $a3, $sp, 0x30
+    /* 80150A10 */  addiu      $a0, $a0, %lo(D_800E6280)
+    /* 80150A18 */  addiu      $a2, $zero, 0xB
+    /* 80150A1C */  addiu      $v0, $zero, 0x1
+    /* 80150A24 */  sll        $t4, $a1, 2
+    /* 80150A28 */  sll        $t2, $t1, 30
+    /* 80150A34 */   addu      $t5, $a3, $t4
+    /* 80150A38 */  addiu      $a1, $a1, 0x1
+    /* 80150A48 */  addiu      $v1, $v1, 0x1
+    /* 80150A50 */   addiu     $a0, $a0, 0x38
+    /* 80150A58 */   sb        $a1, 0x63($sp)
+    /* 80150A5C */  lbu        $a1, 0x63($sp)
+    /* 80150A60 */  addiu      $a3, $sp, 0x30
+    /* 80150A7C */  sll        $t9, $t7, 2
+    /* 80150A80 */  addu       $t6, $a3, $t9
+    /* 80150A98 */   sll       $t0, $v1, 2
+    /* 80150AA0 */  addu       $at, $at, $t0

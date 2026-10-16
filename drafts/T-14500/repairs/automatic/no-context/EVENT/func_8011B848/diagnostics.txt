@@ -1,0 +1,13 @@
+python3 failed:
+ ----------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/EVENT/func_8011B848/work/guarded.o.sjis.c, line 6739: '&' before array or function; ignored
+             temp_s0_2 = &D_800E9620 + (var_s1_2 * 0x44);
+ ------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/EVENT/func_8011B848/work/guarded.o.sjis.c, line 6779: Bad operand type for += or -=
+                             var_t7 -= &D_7FFF + 1;
+ -----------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/EVENT/func_8011B848/work/guarded.o.sjis.c, line 6782: '&' before array or function; ignored
+                         *(&D_801257DC + (var_s1_2 * 4)) = ((func_800789A0() % 9) * -0x10000) + 0xFFD80000;
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/EVENT/func_8011B848/work -o drafts/T-14500/repairs/automatic/no-context/EVENT/func_8011B848/work/guarded.o /tmp/asm_processorhh7fqtaj/preprocessed_5b613ad24f3d4b508bdfe4ada64fbd4a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibtn40qw_3/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/EVENT/func_8011B848/work/guarded.o drafts/T-14500/repairs/automatic/no-context/EVENT/func_8011B848/work/guarded.o.sjis.c

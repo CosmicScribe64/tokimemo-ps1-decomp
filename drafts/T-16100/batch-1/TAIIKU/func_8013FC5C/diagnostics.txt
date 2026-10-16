@@ -1,0 +1,21 @@
+Frozen archived full-context.c replaced at target definition only.
+$ gcc -E -P -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/TAIIKU/func_8013FC5C/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/TAIIKU/func_8013FC5C/work/guarded.c drafts/T-16100/batch-1/TAIIKU/func_8013FC5C/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-1/TAIIKU/func_8013FC5C/work/guarded.c, line 3868: '&' before array or function; ignored
+     (*(s32 *)&sp64) = (s32) D_80149F80;
+ -------------^
+cfe: Warning 681: drafts/T-16100/batch-1/TAIIKU/func_8013FC5C/work/guarded.c, line 3869: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp64) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80149F80) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/TAIIKU/func_8013FC5C/work/guarded.c, line 3874: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp64) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_80149F80) + (8));
+ -------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/TAIIKU/func_8013FC5C/work/guarded.c, line 3882: Incompatible pointer type assignment
+             temp_v0 = &D_801499C4 + (var_s2 * 2);
+ --------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/TAIIKU/func_8013FC5C/work/guarded.c, line 3902: Incompatible pointer type assignment
+             temp_v0_2 = &D_801499C4 + (var_s2 * 2);
+ ----------------------^
+

@@ -1,0 +1,34 @@
+{
+  "selected_seed": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_8013E50C",
+  "prior_attempts": [
+    {
+      "path": "drafts/T-14500/SHOUGATU/func_8013E50C",
+      "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_8013E50C",
+      "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C",
+      "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_8013E50C",
+      "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+      "score": null,
+      "status": "failed"
+    }
+  ],
+  "frozen_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "production_src": "src/ovl/SHOUGATU/8013E330.c",
+  "repairs": [
+    "recover seven-halfword threshold local from 14-byte copy; use explicit saved-array indexing for stack-relative lookup"
+  ]
+}

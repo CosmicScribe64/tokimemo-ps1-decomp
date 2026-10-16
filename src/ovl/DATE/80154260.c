@@ -4,11 +4,6 @@
 
 extern u32 D_80122CD0;
 
-typedef struct {
-    void (*f[41])();
-} FnTbl41; /* size 0xA4 */
-extern FnTbl41 D_8015F788;
-
 void func_80154260(void) {
     D_8015F520 = 0x801D2240;
     D_8015F524 = 0x801D2248;
@@ -218,11 +213,6 @@ void func_80154C54(void) {
     func_8004284C();
 }
 
-typedef struct {
-    void (*f[67])();
-} FnTbl67; /* size 0x10C */
-extern FnTbl67 D_8015F5D4;
-
 void func_80154C84(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl67 tbl;
@@ -262,11 +252,6 @@ void func_80154E14(void) {
     func_800AE0F0(D_800CA1DC, "絶叫マシーンビビール");
     func_8004284C();
 }
-
-typedef struct {
-    void (*f[42])();
-} FnTbl42; /* size 0xA8 */
-extern FnTbl42 D_8015F6E0;
 
 void func_80154E48(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

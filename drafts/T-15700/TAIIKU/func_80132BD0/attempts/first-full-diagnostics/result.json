@@ -1,0 +1,15 @@
+{
+  "scope": "TAIIKU:func_80132BD0",
+  "src": "src/ovl/TAIIKU/80132BD0.c",
+  "size": 592,
+  "status": "failed",
+  "score": null,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TAIIKU/func_80132BD0",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "reason": "cfe: Error: drafts/T-15700/TAIIKU/func_80132BD0/work/guarded.o.sjis.c, line 3203: Syntax Error",
+  "body_c_sha256": "9984975f2a30157c577610ae868f21b77ae6daefc213b7dc269624bc69989903",
+  "context_c_sha256": "ae1fe193520aa8365eb4df2809482e952d75d9f68ab18c2c42120ed741eb237c",
+  "declarations_h_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+}

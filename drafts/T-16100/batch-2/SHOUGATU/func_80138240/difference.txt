@@ -1,0 +1,40 @@
+Difference rows: 39; first 80 mnemonic/relocation rows; opcode words omitted.
+-; addiu sp,sp,-200
++; addiu sp,sp,-208
+-; addiu t6,sp,48
++; addiu t6,sp,60
+-; lui v0,0x0
++; lui v1,0x0
+-; lbu v0,0(v0)
++; lbu v1,0(v1)
+-; sltiu at,v0,19
++; sltiu at,v1,19
+-; sltiu at,v0,28
++; sltiu at,v1,28
++; lui v1,0x0
++; lbu v1,0(v1)
+-; lui v0,0x0
+-; lbu v0,0(v0)
+-; bne t4,at,33c <func_80138240+0xec>
+-; sltiu at,v0,19
++; bne t4,at,340 <func_80138240+0xf0>
++; move v0,v1
++; sltiu at,v1,19
+-; sltiu at,v0,28
++; sltiu at,v1,28
++; li a3,8
+-; li a3,8
+-; lui v0,0x0
+-; lbu v0,0(v0)
++; sb v0,59(sp)
++; lbu v0,59(sp)
+-; sll t8,v0,0x2
+-; addu t9,sp,t8
+-; lw t9,48(t9)
++R_MIPS_HI16 sp  ; lui t8,0x0
++R_MIPS_LO16 sp  ; lw t8,0(t8)
++; sll t0,v0,0x2
++; addu t7,t8,t0
++; lw t9,48(t7)
+-; addiu sp,sp,200
++; addiu sp,sp,208

@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_800AA460 2
+python3 failed:
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_8013DB80/work/guarded.c, line 3502: 'sp40' undefined; reoccurrences will not be reported.
+         var_v1->unkA = (s16) (sp40 / temp_a0);
+ ------------------------------^
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_8013DB80/work/guarded.c, line 3503: 'sp44' undefined; reoccurrences will not be reported.
+         var_v1->unkC = (s16) (sp44 / temp_a0);
+ ------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/typed/TACO/func_8013DB80/work -o drafts/T-16560/_runs/typed/TACO/func_8013DB80/work/guarded.o /tmp/asm_processorkj8tvgo2/preprocessed_63903c1d1b7547caa11403e6ad6a5ad3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibtc7t2k_2/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/typed/TACO/func_8013DB80/work/guarded.o drafts/T-16560/_runs/typed/TACO/func_8013DB80/work/guarded.c

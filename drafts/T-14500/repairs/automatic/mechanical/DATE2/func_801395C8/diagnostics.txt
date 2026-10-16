@@ -1,0 +1,13 @@
+python3 failed:
+ --------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/DATE2/func_801395C8/work/guarded.o.sjis.c, line 3111: '&' before array or function; ignored
+         temp_s3_4 = &sp60 + (arg0 * 0x1F);
+ --------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/DATE2/func_801395C8/work/guarded.o.sjis.c, line 3129: '&' before array or function; ignored
+         temp_s3_5 = &sp60 + (arg0 * 0x1F);
+ --------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/DATE2/func_801395C8/work/guarded.o.sjis.c, line 3146: '&' before array or function; ignored
+     temp_s3_6 = &sp60 + (arg0 * 0x1F);
+ ----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/DATE2/func_801395C8/work -o drafts/T-14500/repairs/automatic/mechanical/DATE2/func_801395C8/work/guarded.o /tmp/asm_processors2j1ln6i/preprocessed_371a2b6fa0d4478da52a32135df60439.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib960fkzev/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/DATE2/func_801395C8/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/DATE2/func_801395C8/work/guarded.o.sjis.c

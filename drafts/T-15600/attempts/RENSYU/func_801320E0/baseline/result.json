@@ -1,0 +1,14 @@
+{
+  "scope": "RENSYU:func_801320E0",
+  "variant": "baseline",
+  "score": 16,
+  "status": "scored",
+  "matching_claim": false,
+  "source_base": "ffac0f04",
+  "census_base": "48362009",
+  "original_attempt": "drafts/T-14500/RENSYU/func_801320E0",
+  "archive_path": "drafts/T-15600/attempts/RENSYU/func_801320E0/baseline",
+  "body_sha256": "289f5489542eb75384ccb3f582dde22fde3287ba18014eec5019bfc98748ca83",
+  "context_sha256": "7bef09db4066a8aec182641c1fb7fcfdb4e0a666cb5bd583638148a686da03ab",
+  "compiled_context_sha256": "cfeb16592e778f1a0c017b50ccfa2da6cfd2ef196d60a6a9365ca8d13c2ce304"
+}

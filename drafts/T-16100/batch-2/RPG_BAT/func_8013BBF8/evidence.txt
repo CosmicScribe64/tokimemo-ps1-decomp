@@ -1,0 +1,28 @@
+Target: ['asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013B5B0/func_8013BBF8.s']
+Review: Nine and ten words are copied into ten-word buffers; inspect trailing word and source types before adopting a named layout. Preserve copy representation.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8013BBF8 */  addiu      $sp, $sp, -0x80
+    /* 8013BC00 */  addiu      $t7, $t7, %lo(D_8015E550)
+    /* 8013BC04 */  sw         $ra, 0x14($sp)
+    /* 8013BC08 */  addiu      $t0, $t7, 0x24
+    /* 8013BC0C */  addiu      $t6, $sp, 0x58
+    /* 8013BC14 */  addiu      $t7, $t7, 0xC
+    /* 8013BC20 */  addiu      $t6, $t6, 0xC
+    /* 8013BC3C */  addiu      $t2, $t2, %lo(D_8015E578)
+    /* 8013BC40 */  addiu      $t5, $t2, 0x24
+    /* 8013BC44 */  addiu      $t1, $sp, 0x30
+    /* 8013BC50 */  addiu      $t2, $t2, 0xC
+    /* 8013BC5C */  addiu      $t1, $t1, 0xC
+    /* 8013BCAC */  sll        $t0, $v1, 2
+    /* 8013BCB0 */  addu       $t7, $sp, $t0
+    /* 8013BCB8 */  addiu      $a1, $zero, 0xA
+    /* 8013BCC8 */   addiu     $v1, $v1, 0x1
+    /* 8013BCD8 */  sll        $t6, $a0, 2
+    /* 8013BCDC */  addu       $t4, $sp, $t6
+    /* 8013BCF4 */   addiu     $a0, $a0, 0x1
+    /* 8013BD48 */   addiu     $t3, $zero, 0x1
+    /* 8013BD58 */  addiu      $t5, $zero, 0x1662
+    /* 8013BD64 */   addiu     $v1, $zero, 0x1662
+    /* 8013BD94 */   addiu     $t2, $zero, 0x1661
+    /* 8013BDA0 */  addiu      $v1, $zero, 0x1661

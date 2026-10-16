@@ -1,0 +1,34 @@
+{
+  "selected_seed": "drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133010",
+  "prior_attempts": [
+    {
+      "path": "drafts/T-14500/OPTION/func_80133010",
+      "reason": "Error: guarded.c, line 2655: Reference of an expression of void type or an incomplete type.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/mechanical/OPTION/func_80133010",
+      "reason": "Error: guarded.c, line 2655: Reference of an expression of void type or an incomplete type.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133010",
+      "reason": "Error: guarded.c, line 2674: Reference of an expression of void type or an incomplete type.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133010",
+      "reason": "Error: guarded.c, line 2655: Reference of an expression of void type or an incomplete type.",
+      "score": null,
+      "status": "failed"
+    }
+  ],
+  "frozen_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "production_src": "src/ovl/OPTION/80132000.c",
+  "repairs": [
+    "byte store uses existing u8 global, not incomplete void dereference"
+  ]
+}

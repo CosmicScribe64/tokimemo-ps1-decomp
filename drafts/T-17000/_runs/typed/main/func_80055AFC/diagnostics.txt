@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_8006C988 4
+python3 failed:
+ --------------^
+cfe: Warning 709: drafts/T-17000/_runs/typed/main/func_80055AFC/work/guarded.c, line 3229: Incompatible pointer type assignment
+     var_v1_4 = temp_ra + 0x698;
+ -------------^
+cfe: Warning 709: drafts/T-17000/_runs/typed/main/func_80055AFC/work/guarded.c, line 3236: Incompatible pointer type assignment
+     var_v1_5 = temp_ra + 0x6B8;
+ -------------^
+cfe: Warning 689: drafts/T-17000/_runs/typed/main/func_80055AFC/work/guarded.c, line 3317: Unacceptable operand of == or !=
+     } while (var_v1_10 != &D_800E6280.unk_F76);
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/typed/main/func_80055AFC/work -o drafts/T-17000/_runs/typed/main/func_80055AFC/work/guarded.o /tmp/asm_processorlfafrkpm/preprocessed_00304e6466894dfbbf2d4ffff74c39de.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib2la6pcrn/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/typed/main/func_80055AFC/work/guarded.o drafts/T-17000/_runs/typed/main/func_80055AFC/work/guarded.c

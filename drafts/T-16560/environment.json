@@ -1,0 +1,9 @@
+{
+ "base": "",
+ "files": {
+  "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+  "include/libgte.h": "914456b688f1c510ee2406ff0f493d9adec3dc07394a39b04152883d8cba958d",
+  "include/main_api.h": "207539164a2cb1a3a5df44ba6a4b0bfe57ab81bb092919f9bfbf08608833a22b",
+  "include/ovl/TACO.h": "d2df56b5fab9a33cb9e28966322fa8cdc03183bf5b069c3af1f622c51e87e1ec"
+ }
+}

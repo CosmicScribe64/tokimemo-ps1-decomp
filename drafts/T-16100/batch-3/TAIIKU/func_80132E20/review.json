@@ -1,0 +1,37 @@
+{
+  "scope": "TAIIKU:func_80132E20",
+  "selected_path": "drafts/T-15700/TAIIKU/func_80132E20",
+  "archive_path": "drafts/T-16100/batch-3/TAIIKU/func_80132E20",
+  "changed": false,
+  "reviewed": true,
+  "repair_notes": [],
+  "flags": [
+    {
+      "detail": "sp78[23]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "unresolved",
+      "explanation": "The 46-byte short table is evidence-backed, but the draft retains a sixteen-word selection buffer whose bound depends on arg1. Buffer capacity is not established by this function alone."
+    },
+    {
+      "detail": "spA8[16]",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "outcome": "unresolved",
+      "explanation": "The 46-byte short table is evidence-backed, but the draft retains a sixteen-word selection buffer whose bound depends on arg1. Buffer capacity is not established by this function alone."
+    },
+    {
+      "detail": "M2cBlock28",
+      "kind": "inferred-copy-layout",
+      "line": 4,
+      "outcome": "unresolved",
+      "explanation": "Opaque word-block type has only a copy-extent interpretation; semantic field layout remains unresolved. The 46-byte short table is evidence-backed, but the draft retains a sixteen-word selection buffer whose bound depends on arg1. Buffer capacity is not established by this function alone."
+    }
+  ],
+  "notes": "The 46-byte short table is evidence-backed, but the draft retains a sixteen-word selection buffer whose bound depends on arg1. Buffer capacity is not established by this function alone.",
+  "assembly_evidence": "drafts/T-16100/batch-3/TAIIKU/func_80132E20/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "reviewed-unresolved"
+}

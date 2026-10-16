@@ -1,0 +1,6 @@
+python3 failed:
+cfe: Error: /work/drafts/T-15800/GYOZI/func_80141944/work/guarded.c, line 3589: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80142C14();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/GYOZI/func_80141944/work -o /work/drafts/T-15800/GYOZI/func_80141944/work/guarded.o /tmp/asm_processor944t3m8r/preprocessed_4e2330b2652743cd8c41aa8a2828fb20.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolibfhfq7d7f/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/GYOZI/func_80141944/work/guarded.o /work/drafts/T-15800/GYOZI/func_80141944/work/guarded.c

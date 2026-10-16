@@ -1,0 +1,42 @@
+{
+  "scope": "BUNKASAI:func_801509A4",
+  "path": "drafts/T-16100/batch-2/BUNKASAI/func_801509A4",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "sp30[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    },
+    {
+      "detail": "M2cBlock2C",
+      "kind": "inferred-copy-layout",
+      "line": 3
+    }
+  ],
+  "explanation": "44-byte memcpy at sp30 is eleven word entries and original girl loop has eleven iterations. Repair sp30[11], keep separate byte sp63, and use Rec38 pointer iteration.",
+  "evidence_path": "drafts/T-16100/batch-2/BUNKASAI/func_801509A4/evidence.txt",
+  "compile_status": "scored",
+  "score": 59,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp30[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "44-byte memcpy at sp30 is eleven word entries and original girl loop has eleven iterations. Repair sp30[11], keep separate byte sp63, and use Rec38 pointer iteration."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlock2C",
+        "kind": "inferred-copy-layout",
+        "line": 3
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "44-byte memcpy at sp30 is eleven word entries and original girl loop has eleven iterations. Repair sp30[11], keep separate byte sp63, and use Rec38 pointer iteration."
+    }
+  ]
+}

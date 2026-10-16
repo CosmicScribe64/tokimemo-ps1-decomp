@@ -1,0 +1,14 @@
+extern s16 D_800E6396;
+extern s32 D_800E7378;
+extern s32 D_80122D48;
+extern s8 D_800E69A2;
+extern u8 D_800E644A;
+extern u8 D_800E69A0;
+extern u8 D_800E69A1;
+extern u8 D_800E71DF;
+extern u8 D_800E7388;
+extern u8 D_800E7389;
+extern u8 D_80146054;
+extern u8 D_80146058;
+void func_8013EE30(void);
+extern s32 sp;

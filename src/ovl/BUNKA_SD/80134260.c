@@ -44,7 +44,7 @@ s32 func_80134314(void) {
     }
 }
 
-/* NON_MATCHING: T-10850, 26 differing listing lines; regdiff evidence in the ticket scratch. */
+/* NON_MATCHING: T-12090, 26 differing listing rows; selector/base allocation and shared 0x80 constant. */
 #ifdef NON_MATCHING
 void func_80134418(void) {
     s32 i;

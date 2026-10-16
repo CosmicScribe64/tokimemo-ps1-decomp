@@ -1,0 +1,52 @@
+#include "common.h"
+#include "ovl/TAIIKU.h"
+
+/* FAKE: literal asset bases retain the independent source loads; named
+ * declarations hoist their bases. The asset data is loaded outside this
+ * overlay (T-3300, T-9720). */
+void func_80140810(void) {
+    D_80149FB0 = 0x80180144;
+    D_80149FB4 = 0x801820FC;
+    D_80149FB8 = 0x80183E7C;
+    D_80149FBC = 0x80185F94;
+    D_80149FC0 = 0x80186674;
+    D_80149FC4 = 0x80187088;
+    D_80149FC8 = 0x80187F20;
+    D_80149FCC = 0x80188BC8;
+    D_80149FD0 = 0x80188DA4;
+    D_80149FD4 = 0x80189A90;
+    D_80149FD8 = 0x8018A794;
+    D_80149FDC = 0x8018C0C8;
+    D_80149FE0 = 0x8018CEE0;
+    D_80149FE4 = 0x8018EA78;
+    D_80149FE8 = 0x8018016C;
+    D_80149FEC = 0x801823BC;
+    D_80149FF0 = 0x80184100;
+    D_80149FF4 = 0x801861D4;
+    D_80149FF8 = 0x801866BC;
+    D_80149FFC = 0x80187170;
+    D_8014A000 = 0x80188048;
+    D_8014A004 = 0x80188C98;
+    D_8014A008 = 0x80188DB4;
+    D_8014A00C = 0x80189BF4;
+    D_8014A010 = 0x8018A89C;
+    D_8014A014 = 0x8018C31C;
+    D_8014A018 = 0x8018CFEC;
+    D_8014A01C = 0x8018EC14;
+    D_8014A020 = *(s16 *)0x8018EC40;
+    D_8014A024 = *(s16 *)0x8018EC44;
+    D_8014A028 = *(s16 *)0x8018EC48;
+    D_8014A02C = *(s16 *)0x8018EC4C;
+    D_8014A030 = *(s16 *)0x8018EC50;
+    D_8014A034 = *(s16 *)0x8018EC54;
+    D_8014A038 = *(s16 *)0x8018EC58;
+    D_8014A03C = *(s16 *)0x8018EC5C;
+    D_8014A040 = *(s16 *)0x8018EC60;
+    D_8014A044 = *(s16 *)0x8018EC64;
+    D_8014A048 = *(s16 *)0x8018EC68;
+    D_8014A04C = *(s16 *)0x8018EC6C;
+    D_8014A050 = *(s16 *)0x8018EC70;
+    D_8014A054 = *(s16 *)0x8018EC74;
+}
+
+INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80140810", func_80140A90);

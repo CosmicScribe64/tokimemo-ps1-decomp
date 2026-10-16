@@ -1,0 +1,63 @@
+m2c.py: argument counts from the callees' asm: func_80148F7C 5
+m2c failed:
+
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c, line 4658: redeclaration of 'D_80150668'; previous declaration at line 4105 in file 'drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c'
+ extern s32 D_80150668;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c, line 4709: Unacceptable operand of &.
+         } else if (*(&D_800E6280 + (temp_v1 * 0x38)) & 2) {
+ -------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c, line 4715: Improper cast of non-scalar type expression.
+             func_80148F7C((s16) *(&D_80150668 + (*var_s3 * 4)), *temp_s0_4 + 4, *temp_s1_4, 0, 1);
+ --------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work -o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o /tmp/asm_processor20h47x87/preprocessed_c9243d1bede54cd4aa15e63f02b171a6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibkcx_kv99/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c, line 4657: redeclaration of 'D_8015064C'; previous declaration at line 4107 in file 'drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c'
+ extern s32 D_8015064C;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c, line 4708: Unacceptable operand of &.
+         } else if (*(&D_800E6280 + (temp_v1 * 0x38)) & 2) {
+ -------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c, line 4714: Improper cast of non-scalar type expression.
+             func_80148F7C((s16) *(&D_80150668 + (*var_s3 * 4)), *temp_s0_4 + 4, *temp_s1_4, 0, 1);
+ --------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work -o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o /tmp/asm_processorujzud76k/preprocessed_828296d9d91f4a07a2040a5ea7976cbd.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4ifcst90/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c, line 4656: redeclaration of 'D_80150630'; previous declaration at line 4106 in file 'drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c'
+ extern s32 D_80150630;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c, line 4707: Unacceptable operand of &.
+         } else if (*(&D_800E6280 + (temp_v1 * 0x38)) & 2) {
+ -------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c, line 4713: Improper cast of non-scalar type expression.
+             func_80148F7C((s16) *(&D_80150668 + (*var_s3 * 4)), *temp_s0_4 + 4, *temp_s1_4, 0, 1);
+ --------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work -o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o /tmp/asm_processorggnrif4t/preprocessed_77bc503d72004ffdb1d68524d9b39b8f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibjsbyattn/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c, line 4655: redeclaration of 'D_800E6280'; previous declaration at line 764 in file 'drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c'
+ extern s32 D_800E6280;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c, line 4706: Unacceptable operand of &.
+         } else if (*(&D_800E6280 + (temp_v1 * 0x38)) & 2) {
+ -------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c, line 4712: Improper cast of non-scalar type expression.
+             func_80148F7C((s16) *(&D_80150668 + (*var_s3 * 4)), *temp_s0_4 + 4, *temp_s1_4, 0, 1);
+ --------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work -o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o /tmp/asm_processorx6jpfiuk/preprocessed_93dce49860974fd3bf913ece009ae379.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibyfe520ut/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c, line 4705: Unacceptable operand of &.
+         } else if (*(&D_800E6280 + (temp_v1 * 0x38)) & 2) {
+ -------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c, line 4711: Improper cast of non-scalar type expression.
+             func_80148F7C((s16) *(&D_80150668 + (*var_s3 * 4)), *temp_s0_4 + 4, *temp_s1_4, 0, 1);
+ --------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work -o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o /tmp/asm_processorgxrgcx0t/preprocessed_45557de5a15247f291f2fe18185291e7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibxt_gp9m0/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80148BC8/work/guarded.o.sjis.c

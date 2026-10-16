@@ -1,0 +1,66 @@
+m2c.py: argument counts from the callees' asm: func_8005751C 1, func_80062CD0 1, func_8008647C 0, func_80133E5C 0
+python3 failed:
+ ----------------------------------^
+cfe: Error: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2712: 'sp74' undefined; reoccurrences will not be reported.
+                 func_80062CD0(sp74);
+ ------------------------------^
+cfe: Error: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2749: 'sp' undefined; reoccurrences will not be reported.
+                     func_80062CD0(*(s32 *)((unsigned char *)(sp + (D_801342D0 * 4)) + (120)));
+ -------------------------------------------------------------^
+cfe: Error: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2751: 'sp' undefined; reoccurrences will not be reported.
+                     func_80062CD0(*(s32 *)((unsigned char *)(sp + (D_801342D0 * 4)) + (68)));
+ -------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/RENSYU/func_80132390/work -o drafts/T-14500/RENSYU/func_80132390/work/guarded.o /tmp/asm_processor8j2fhek_/preprocessed_2440a3e0eff04b82af53b7faee773b88.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibs3rb0ue1/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/RENSYU/func_80132390/work/guarded.o drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c
+python3 failed:
+ ----------------------------------^
+cfe: Error: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2699: 'sp70' undefined; reoccurrences will not be reported.
+                 func_80062CD0(sp70);
+ ------------------------------^
+cfe: Error: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2707: 'spA8' undefined; reoccurrences will not be reported.
+                     func_80062CD0(spA8);
+ ----------------------------------^
+cfe: Error: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2713: 'sp74' undefined; reoccurrences will not be reported.
+                 func_80062CD0(sp74);
+ ------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/RENSYU/func_80132390/work -o drafts/T-14500/RENSYU/func_80132390/work/guarded.o /tmp/asm_processoruu4m_0e_/preprocessed_1c0b02490bee4bfbadfa6f6cd470ac19.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhalxa8s7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/RENSYU/func_80132390/work/guarded.o drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c
+python3 failed:
+ --------------------^
+cfe: Error: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2694: 'spA4' undefined; reoccurrences will not be reported.
+                     func_80062CD0(spA4);
+ ----------------------------------^
+cfe: Error: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2708: 'spA8' undefined; reoccurrences will not be reported.
+                     func_80062CD0(spA8);
+ ----------------------------------^
+cfe: Error: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2714: 'sp74' undefined; reoccurrences will not be reported.
+                 func_80062CD0(sp74);
+ ------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/RENSYU/func_80132390/work -o drafts/T-14500/RENSYU/func_80132390/work/guarded.o /tmp/asm_processorqg392fhz/preprocessed_d6896545041d4d53be17c8e906fbe039.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibgv3azdju/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/RENSYU/func_80132390/work/guarded.o drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2683: '&' before array or function; ignored
+     *(M2cBlock34 *)(&sp44) = *(M2cBlock34 *)(&D_80134328);
+ --------------------^
+cfe: Error: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2709: 'spA8' undefined; reoccurrences will not be reported.
+                     func_80062CD0(spA8);
+ ----------------------------------^
+cfe: Error: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2715: 'sp74' undefined; reoccurrences will not be reported.
+                 func_80062CD0(sp74);
+ ------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/RENSYU/func_80132390/work -o drafts/T-14500/RENSYU/func_80132390/work/guarded.o /tmp/asm_processorvlcjspai/preprocessed_861d302835ee4f07ab47b2ba0a02f8dc.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibq_vmc22_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/RENSYU/func_80132390/work/guarded.o drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c
+python3 failed:
+ --------------------^
+cfe: Warning 681: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2683: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp78) + (48)) = (s32) *(s32 *)((unsigned char *)(&D_801342F4) + (48));
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2684: '&' before array or function; ignored
+     *(M2cBlock34 *)(&sp44) = *(M2cBlock34 *)(&D_80134328);
+ --------------------^
+cfe: Error: drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c, line 2716: 'sp74' undefined; reoccurrences will not be reported.
+                 func_80062CD0(sp74);
+ ------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/RENSYU/func_80132390/work -o drafts/T-14500/RENSYU/func_80132390/work/guarded.o /tmp/asm_processoro14fcbq2/preprocessed_83f2f1f934db41a784a624db8e149beb.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliby52pv_yk/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/RENSYU/func_80132390/work/guarded.o drafts/T-14500/RENSYU/func_80132390/work/guarded.o.sjis.c

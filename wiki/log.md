@@ -13514,6 +13514,2044 @@ removed the remaining TT packages from wave 1, and handed over seven TT function
 for all seven, prototype and global checks clean), retagged the T-11660/T-11680 comments to T-11830. TT 252/303 (65.3%);
 grand total `5740/6958   1293292/2279368  56.7%`.
 
+## [2026-10-15] ticket | Integrate verified matching work on main
+Created [[tickets/T-12400-integrate-verified-matches]] after explicit user authorization to merge PR #33 and push the current verified matches directly to main, without draft PRs. An isolated integration checkout starts from 1668c560; original main and active workers remain untouched. PR #33 independently passed all27 checksums and seven literal proofs (5216 bytes); GitHub merge1668c560 confirmed.
+## [2026-10-15] setup | T-12010 cx1 isolated matching pass
+
+Created [[tickets/T-12010-codex-cx1]] for twelve assigned main helpers. Read standards, [[decompile-workflow]], [[register-cheatsheet]] and historical blockers. Baseline Docker configure/build passed 27/27 SHA1; log /tmp/cx1-baseline.log. Three workers share Docker; subsequent builds use two jobs.
+
+## [2026-10-15] build | T-12010 InitMouse matches through data ownership
+
+[[tickets/T-12010-codex-cx1]] records evidence for the mouse object data range, generated island, and C-defined pointer pair. InitMouse passes literal linked funcdiff (16 bytes); configure/ninja passes 27/27 SHA1 with headers/globals OK. [[matching-notes]] updated. Checksum scheduling and brightness register attempts remain unmatched.
+
+## [2026-10-15] build | T-12010 main entry loop matches
+
+func_80042134 in src/main/800420D0.c passes literal linked funcdiff (404 bytes) and main SHA1 after promotion to plain C. [[tickets/T-12010-codex-cx1]] and [[matching-notes]] record the loop-tail GameState pointer and forward prototypes. Full overlay rebuild follows the shared header change.
+
+## [2026-10-15] build | T-12010 brightness clamp matches
+
+func_80049044 passes 112-byte linked comparison and main checksum via a local field pointer. [[tickets/T-12010-codex-cx1]] and [[matching-notes]] record why the nonzero stripped permutation score concealed an exact full-unit match. Previous main-loop header rebuild finished 27/27.
+
+## [2026-10-15] build | T-12010 mouse coordinate update matches
+
+func_80059938 passes linked verification (232 bytes) and main SHA1; its updated explicit-port caller remains a 216-byte match. Shared header rebuild passed 27/27 with headers/globals OK. [[tickets/T-12010-codex-cx1]] and [[matching-notes]] record the natural pointer-table slot idiom.
+
+## [2026-10-15] ticket | T-12010 deep pass ready for review
+
+All twelve assigned cx1 functions were attempted: four matched, four guarded near misses (4/8/29/17 listing lines), four larger scratch-only drafts. Recorded bounded permutation/type/stack experiments and rejected semantically different or unjustified-buffer candidates in [[tickets/T-12010-codex-cx1]], [[matching-notes]] and [[data/t0018-cases]]. Moved the ticket/card to In Review; one new guard has an explicit FAKE zero-chain note. Final configure/build and prototype validation running; independent code review remains required.
+
+## [2026-10-15] build | T-12010 final package verification
+
+Final Docker configure/ninja -j2 passes all 27 binary checksums, headers and globals. Branch prototype check passes with zero new and fifteen known disagreements. Current full-unit guarded diffs are 4/8/29/17 listing lines. `git diff --check` is clean and no inline assembly was added. Evidence in build/scratch/final-build.log, final-protos.log and final-guards.log; [[tickets/T-12010-codex-cx1]] remains In Review.
+
+## [2026-10-15] lint | T-12010 index status reconciled
+
+Updated [[index]] to agree with the In Review ticket and kanban card for [[tickets/T-12010-codex-cx1]].
+## [2026-10-15] ticket | Start cx2 TAIIKU matching pass
+
+Created [[tickets/T-12020-codex-cx2]] In Progress for src/ovl/TAIIKU/80133C80.c. Baseline Docker configure/build: 27/27 SHA1, headers OK, globals OK. Reviewed prior matching evidence.
+
+## [2026-10-15] build | Match TAIIKU random actor table assignment
+
+[[tickets/T-12020-codex-cx2]]: src/ovl/TAIIKU/80133C80.c func_80135DF8 matches 324 linked bytes and TAIIKU.bin SHA1 passes. Typed table assignment and nested actor indexing need no fakematch. Initial counter/hoist/decrement grids did not improve existing guarded drafts.
+
+## [2026-10-15] build | Match TAIIKU three-slot wait state machine
+
+[[tickets/T-12020-codex-cx2]]: func_80136EC0 matches 380 linked bytes, with 27/27 checksums and headers/globals OK. The signed selector retains separate constant ranges; the six-byte u16 wait table is declared in include/ovl/TAIIKU.h. Traced regdiff successfully diagnoses the remaining four-position func_801346FC register miss.
+
+## [2026-10-15] build | Match TAIIKU eligible-character actor initialization
+
+[[tickets/T-12020-codex-cx2]]: func_80135AD0 matches 596 exact linked bytes and TAIIKU SHA1. Recovered table/list types, local declaration order and independent actor-store order; headers/globals pass. Scratch-only typed reconstructions expose remaining layout/register gaps in six other owned functions.
+
+## [2026-10-15] decision | T-12020 bounded deep pass complete
+
+All fifteen cx2 functions attempted: three exact matches totaling 1,300 bytes. Retained three guarded drafts with 8/4/4 differing listing rows; removed oversized inherited guards for func_80137228 and func_80137C44. Recorded full-file experiment counts, traced-compiler evidence and remaining type/loop blockers in [[matching-notes]], [[data/t0018-cases]] and [[tickets/T-12020-codex-cx2]]. Final verification underway.
+
+## [2026-10-15] ticket | T-12020 ready for review
+
+Moved [[tickets/T-12020-codex-cx2]] and its [[kanban]] card to In Review; updated [[index]]. Implementation and measured near-miss records are complete. Independent review against CODING_STANDARDS.md remains required before Done.
+
+## [2026-10-15] build | T-12020 final verification passes
+
+Clean configure plus ninja -j2 completed all 27 SHA1 checks, headers OK and globals OK. Final linked comparisons reconfirmed the three matches (1,300 bytes); full-file guarded comparisons reconfirmed 8/4/4 rows. sync_protos --check-branch reports zero new disagreements, fifteen known, branch check OK. No new inline asm or FAKE constructs; git diff --check clean. [[tickets/T-12020-codex-cx2]] remains In Review for independent standards review.
+## [2026-10-15] setup | T-12030 cx3 baseline and claim
+
+Read workflow, standards and register cheat sheet. Docker configure and ninja verified 27/27 SHA1 targets. Claimed [[tickets/T-12030-codex-cx3]]; owned source is src/main/8005A0B0.c.
+
+## [2026-10-15] build | T-12030 join_club_message matched
+
+[[tickets/T-12030-codex-cx3]]: src/main/8005A0B0.c now has active C for join_club_message. Verified 544 literal linked bytes and main SHA1. Header uses s32; selector-view fakematch is explicitly marked. Global and header checks pass during rebuild.
+
+## [2026-10-15] build | T-12030 guarded status-handler diagnosis
+
+[[tickets/T-12030-codex-cx3]]: func_8005BE8C now compiles as guarded s32 C and remains three differing instruction rows. Traced uopt identifies a temporary allocation discrepancy; scalar view, local reuse, autotweak and bounded permutation found no verified match. Default assembly remains active.
+
+## [2026-10-15] build | T-12030 menu selection handler matched
+
+[[tickets/T-12030-codex-cx3]]: func_8005D448 is active C with 292 exact linked bytes and passing main SHA1, headers and globals. Reused the pre-call menu index and documented its stack-home padding fakematch.
+
+## [2026-10-15] build | T-12030 availability handler matched
+
+[[tickets/T-12030-codex-cx3]]: func_800603C0 verifies 324 linked bytes plus main SHA1, headers and globals. Added D_800E7D24 byte-array declaration and used GameState.unk_53C for the saved draft's old address alias.
+
+## [2026-10-15] build | T-12030 system-settings initializer matched
+
+[[tickets/T-12030-codex-cx3]]: system_settings_init verifies 360 literal linked bytes and main SHA1. Four typed arrays and two real scalar locals recover the frame without a fakematch. Coordinate-loop experiments on func_8005A410 remain beyond retention threshold; assembly restored.
+
+## [2026-10-15] build | T-12030 text-speed initializer matched
+
+[[tickets/T-12030-codex-cx3]]: func_8005E150 verifies 368 literal linked bytes and main SHA1. Typed arrays plus an initialized empty counter test (marked FAKE) resolve the historical loop allocation discrepancy. Removing the test loses the match.
+
+## [2026-10-15] build | T-12030 settings labels matched
+
+[[tickets/T-12030-codex-cx3]]: func_8005DEA0 now verifies 376 linked bytes and main SHA1. Reconstructed indexed coordinate and colour arrays with counter-first declaration order; no fakematch required.
+
+## [2026-10-15] build | T-12030 voice-mode initializer matched
+
+[[tickets/T-12030-codex-cx3]]: func_8005FDEC verifies 380 linked bytes and main SHA1, with typed arrays and an unsigned selector conversion.
+
+## [2026-10-15] build | T-12030 click-speed clamp matched
+
+[[tickets/T-12030-codex-cx3]]: func_8005F09C verifies 400 literal linked bytes and main SHA1. Direct scalar-byte clamping (marked FAKE) plus an explicit void prototype resolve its historical register and exit differences.
+
+## [2026-10-15] build | cx3 reuse established availability aggregate
+
+[[tickets/T-12030-codex-cx3]] reused FlagsWork24 for func_800603C0 and removed a duplicate alias declaration. Literal 324-byte comparison and all 27 checksums pass after a full header-triggered rebuild; evidence in build/scratch/603c0-aggregate.log and aggregate-full-build.log.
+
+## [2026-10-15] build | cx3 matches two-item save/load selector
+
+[[tickets/T-12030-codex-cx3]] matched func_8005BCEC (416 linked bytes, main SHA1 OK). Grouped array-store pairs resolve the T-8080 scheduling gap; stack reservation and grouping are marked FAKE. pre_syogatu1 remains a guarded 19-row draft after typed-buffer recovery and bounded search. Evidence: build/scratch/bcec-final.log, bcec-build.log and pre-autotweak.log.
+
+## [2026-10-15] build | cx3 matches save-menu initializer
+
+[[tickets/T-12030-codex-cx3]] matched func_8005C5BC (516 linked bytes, main SHA1/header/global checks pass). Natural indexed coordinate arrays and a FlagsWork24 pointer recover the layout and induction order without a new fakematch. Evidence: build/scratch/c5bc-final.log and c5bc-build.log.
+
+## [2026-10-15] build | cx3 matches load-menu initializer
+
+[[tickets/T-12030-codex-cx3]] matched func_8005CF6C (520 linked bytes, main SHA1/header/global checks pass). Natural typed coordinate arrays and the established work aggregate also reproduce this menu twin. Evidence: build/scratch/cf6c-final.log and cf6c-build.log.
+
+## [2026-10-15] decision | cx3 card-action candidate restored
+
+[[tickets/T-12030-codex-cx3]] restored func_8005CA94 to assembly after typed aggregate recovery, controlled result/view trials and a 363-candidate search left 57 differing rows. Register tracing identifies structural narrowing and ugen-temporary differences. Evidence remains in build/scratch/ca94-*.log.
+
+## [2026-10-15] build | cx3 matches card status handler
+
+[[tickets/T-12030-codex-cx3]] matched func_8005BE8C (704 literal bytes, main SHA1/header/global checks pass). Full-file and production rescoring of an earlier permutation reveals a match despite its nonzero stripped score. A natural status-byte pointer fixes the final three instruction rows. Evidence: build/scratch/be-clean-final.log and be-clean-build.log.
+
+## [2026-10-15] ticket | cx3 ready for review: 5,200 matched bytes
+
+[[tickets/T-12030-codex-cx3]] moves to In Review with twelve matches (5,200 bytes), one guarded 15-row New Year draft, and two restored assembly functions. [[matching-notes]] and [[data/t0018-cases]] record outcomes and compiler evidence. Full configure/build passes 27/27 checksums plus headers/globals; prototype branch check has zero new disagreements; all twelve fresh literal-byte proofs pass. Evidence: build/scratch/final-build.log, final-protos.log, final-matches.log and final-near-miss.log. Board and index are synchronized; no inline assembly or raw-data additions.
+## [2026-10-15] setup | cx4 RPG battle matching package
+
+Read the cx4 wiki and workflow/standards, reviewed prior matching notes and compiler-gap rows for the assigned functions, and created [[tickets/T-12040-codex-cx4]] In Progress with matching index/card. Docker configure/build baseline running with ninja -j2; log build/scratch/baseline.log. Work restricted to the four owned RPG_BAT C files plus allowed headers/config/wiki.
+
+## [2026-10-15] build | cx4 baseline verified
+
+Docker configure/ninja -j2 passes 27/27 SHA1 checks, headers and globals. Baseline evidence: build/scratch/baseline.log; matching can begin under [[tickets/T-12040-codex-cx4]].
+
+## [2026-10-15] build | RPG_BAT func_80132EE0 matched
+
+Corrected the saved draft's stale counter local to current aggregate reads. Plain C passes linked funcdiff256 bytes and RPG_BAT checksum/globals. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/32EE0-match.diff and 32EE0-build.log.
+
+## [2026-10-15] build | RPG_BAT func_8014E300 matched
+
+A shared coordinate/displacement aggregate preserves the original load/store order. Linked funcdiff692 bytes and full header rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/4E300-match.diff and 4E300-build.log.
+
+## [2026-10-15] build | RPG_BAT func_801321D0 matched
+
+Restored the dispatcher selector reload after its optional call and declared its shared halfword/helper dependencies. Plain C linked MATCH376, full rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/321D0-match.diff and 321D0-build.log.
+
+## [2026-10-15] build | RPG_BAT func_8013415C matched
+
+Traced uopt led to removing two increment-result temporaries. Plain C passes linked funcdiff1044 bytes and RPG_BAT checksum/globals. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/3415C-regdiff.log and 3415C-match.diff.
+
+## [2026-10-15] build | RPG_BAT func_80134570 matched
+
+The twin's two counter temporaries were replaced by compound increments and direct tests. Plain C linked MATCH1044 and RPG_BAT checksum/globals. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/34570-match.diff.
+
+## [2026-10-15] build | RPG_BAT func_8015A1F0 matched
+
+Recovered the large battle state's selector reloads, compound counter updates and zero initialization. Plain C linked MATCH1252 and full header rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/5A1F0-match.diff and 5A1F0-build.log.
+
+## [2026-10-15] build | RPG_BAT func_80132348 matched
+
+Combined the compound-counter and shared-work-range findings to match1404 linked bytes. Full header rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/32348-match.diff and 32348-build.log.
+
+## [2026-10-15] ticket | T-12040 deep pass ready for review
+
+All eleven assigned functions attempted; seven matched totaling6068 linked bytes, one existing guard17 rows and three scratch-only drafts. Recorded rejected unsigned and next-record forms, bounded known-gap retries, and table-copy experiments in [[tickets/T-12040-codex-cx4]], [[matching-notes]] and [[data/t0018-cases]]. Ticket/card/index now In Review; no new FAKE code. Final package verification running.
+
+## [2026-10-15] build | T-12040 final 27-binary verification
+
+Final configure/ninja and explicit verification-stamp rebuild passed all27 binary checksums, headers and globals. Branch prototypes: zero new and fifteen known disagreements. The existing full-TU guard remains17 listing lines. Diff whitespace check clean; no added inline assembly. Evidence: build/scratch/final-build.log, final-all-checks.log, final-protos.log and final-guard.diff. [[tickets/T-12040-codex-cx4]] remains In Review with matching [[index]] and [[kanban]] status.
+
+## [2026-10-15] lint | T-12040 trailing blank line cleanup
+
+Independent branch review found an extra blank line at the end of src/ovl/RPG_BAT/801321D0.c. Removed only that trailing blank line; no substantive source change. Full branch whitespace verification follows before committing the cleanup for [[tickets/T-12040-codex-cx4]].
+## [2026-10-15] ticket | Start cx5 matching pass
+
+Created [[tickets/T-12050-codex-cx5]] In Progress with [[kanban]] and [[index]] entries. Read workflow and prior matching evidence for all fourteen functions; Docker configure plus ninja -j2 baseline passes 27/27 SHA1, headers OK and globals OK. Ownership is src/main/8004F870.c plus permitted headers/config/wiki.
+
+## [2026-10-15] build | T-12050 menu bar display matches
+
+main:menu_bar_show is plain C with a 208-byte exact linked MATCH and main executable SHA1 OK. Canonical selection and interleaved record views close the prior register-only miss. No new FAKE. Details in [[tickets/T-12050-codex-cx5]].
+
+## [2026-10-15] decision | T-12050 prioritize larger functions
+
+Completed first comparisons for all fourteen listed functions and recorded corrected draft scores in [[tickets/T-12050-codex-cx5]]. Following user steering, prioritize verified byte gains through the larger state-machine and score-building routines. A narrowing introduced by automated experimentation changes comparison semantics and was rejected despite its better score.
+
+## [2026-10-15] decision | T-12050 bounded deep pass complete
+
+All fourteen cx5 targets attempted, with 208 verified matched bytes. Retained three measured guards and removed the broad inherited menu_set guard. Larger state-machine and threshold routines need loop/lifetime evidence; semantic-breaking narrow comparisons were rejected. Recorded exact scores and reusable blockers in [[matching-notes]], [[data/t0018-cases]] and [[tickets/T-12050-codex-cx5]]. Fresh full verification is running.
+
+## [2026-10-15] ticket | T-12050 ready for review
+
+Moved [[tickets/T-12050-codex-cx5]] and [[kanban]] to In Review, refreshed [[index]]. Fresh configure/ninja passes 27/27 SHA1, headers and globals; prototype branch check has zero new disagreements. Linked menu_bar_show matches 208 bytes. Ticket/card status and retained guard counts checked; independent standards review remains pending.
+## [2026-10-15] setup | cx7 TACO actor matching
+
+Read the cx7 index, standards/workflow/cheatsheet and prior target notes; created [[tickets/T-12070-codex-cx7]] In Progress with matching index/card. Docker baseline running with ninja -j2. Larger actor functions and reusable patterns take priority per user steering; only src/ovl/TACO/8015ABF0.c is owned.
+
+## [2026-10-15] build | cx7 baseline verified
+
+Docker baseline configure/ninja -j2 passed all 27 binary checksums, headers and globals. Evidence build/scratch/baseline.log; matching now begins under [[tickets/T-12070-codex-cx7]].
+
+## [2026-10-15] query | cx7 large TACO draft repairs
+
+[[tickets/T-12070-codex-cx7]]: repaired by-value position calls and actor pointer scaling in scratch drafts; unsigned flag stores recovered most of the 2,392-byte B59C function (550 to 61 full-file differing rows). Large candidates remain scratch-only while stack layout and pointer live ranges are tested. Existing production source unchanged.
+
+## [2026-10-15] build | cx7 B59C exact match
+
+[[tickets/T-12070-codex-cx7]]: `func_8015B59C` production linked MATCH (1,940 bytes) and TACO SHA1 pass. Recorded FAKE byte-offset actor views and reusable induction/temporary cleanup in [[matching-notes]]. Worklist's 2,392-byte estimate corrected to literal linked size. Proof: build/scratch/B59C-production.log.
+
+## [2026-10-15] build | cx7 C718 exact match
+
+[[tickets/T-12070-codex-cx7]]: `func_8015C718` literal linked MATCH (1,340 bytes), TACO SHA1 passes. Direct unsigned selector load closes the last six register rows; [[matching-notes]] records the reusable distinction. Cumulative 3,280 bytes from two functions. Evidence: build/scratch/C718-production.log.
+## [2026-10-15] ticket | Start cx9 BUNKA_SD matching pass
+
+Created [[tickets/T-12090-codex-cx9]] In Progress, with [[kanban]] and [[index]] entries. Read required guidance and historical evidence for all ten targets. Baseline Docker configure/ninja passes 27/27 SHA1, headers and globals. Prioritize verified bytes and larger related setup functions.
+
+## [2026-10-15] build | T-12090 dispatcher matched
+
+BUNKA_SD:func_80132428 matches exact linked text (448 bytes) with overlay SHA1, headers and globals OK. Canonical global fields and missing forward declarations resolve prior full-file failure. Plain C, no FAKE. Details in [[tickets/T-12090-codex-cx9]].
+
+## [2026-10-15] build | T-12090 name text builder matched
+
+BUNKA_SD:func_80132FF0 has532 exact linked text bytes and a passing overlay checksum, headers and globals. Restored the fifth jump-table case. Explicit FAKE documents the inferred buffer capacity. Cumulative980 text bytes; see [[tickets/T-12090-codex-cx9]].
+## [2026-10-15] setup | cx10 DATE package baseline verified
+
+Created [[tickets/T-12100-codex-cx10]] In Progress after Docker configure/build passed 27/27 checksums plus headers/globals. Prioritize larger movie/effect functions and legitimate data ownership repair; native AS1 research is diagnostic only. Baseline evidence: build/scratch/baseline.log. Board and index updated.
+
+## [2026-10-15] build | cx10 matches 2,068-byte DATE movie handler
+
+[[tickets/T-12100-codex-cx10]] matched func_801489D0 with exact production linked bytes and DATE SHA1. The owned data range 8015CF80..8015CFD0 is now a data island; four recovered coordinate/velocity arrays are defined in the C object. This resolves the previously scope-blocked shared-LUI initialization residual without a fakematch. Evidence: build/scratch/489d0-final.log, 489d0-build.log and island-build.log.
+
+## [2026-10-15] build | cx10 matches 2,000-byte DATE colour animation
+
+[[tickets/T-12100-codex-cx10]] promotes func_8014E3E8 after literal linked-byte equality and DATE SHA1. A correctly typed initialized colour table and remainder expressions recover data and stack layout naturally. Normalized relocation diagnostics cannot resolve the anonymous local initializer, so the existing exact verifier was invoked directly on a frozen production object with stable source hashes. Evidence: build/scratch/e3e8-literal.log and e3e8-build.log. Package total: 4,068 bytes in two matches.
+
+## [2026-10-15] decision | cx10 bounds movie handler reconstruction
+
+[[tickets/T-12100-codex-cx10]] repaired the malformed 4718C seed sufficiently to compile with real record views. Variable unification reduces stack use but control flow remains hundreds of rows away; fallback restored and typed candidate saved in ignored scratch. Continue the other assigned large handlers before spending further time on this draft.
+
+## [2026-10-15] decision | cx10 finishes bounded large movie seed attempts
+
+[[tickets/T-12100-codex-cx10]] tested record, rectangle and scalar-lifetime repairs on the 4 KB 47958 and 462B0 seeds. Both remain substantial reconstructions, so production fallbacks and prototypes are restored; ignored scratch retains the repaired candidates and evidence. Continue adjacent draw/effect functions for verified byte gains.
+
+## [2026-10-15] build | cx10 matches 820-byte DATE startup handler
+
+[[tickets/T-12100-codex-cx10]] promotes func_8014A4DC: real pointer-array ownership, corrected buffer iteration and source statement grouping recover exact bytes. DATE SHA1, linked-byte proof and globals pass; package total 4,888 bytes. EF1C packet experiments remain distant and were restored. Evidence: build/scratch/a4dc-final.log and a4dc-build.log.
+## [2026-10-15] setup | T-12100 isolated acceleration investigation
+
+Created branch codex/acceleration-audit at 7a65b3d8 in /private/tmp/tokimemo-acceleration and [[tickets/T-12100-acceleration-audit]]. Read existing scoring evidence in [[tickets/T-11250-faster-candidate-scoring]] and [[tickets/T-11260-fast-scoring-order-search-permute]]. Main and matching worktrees are read-only; reuse the existing native Docker image with one CPU for experiments. Docker inspection found about 175% CPU in one active container, plus a transient second container; no running process changed.
+
+## [2026-10-15] decision | T-12100 remove repeated whole-unit scans
+
+Inspection found tools/permute.py searches the entire preprocessed unit for every signature name, including hundreds of header prototypes. Prototype-offset matching can preserve the same definition regex and brace scanner while avoiding repeated full-text searches. Implemented a bounded experiment; comparison against the base revision must prove identical stripped compiler input before adoption. Existing caches stay in place.
+
+## [2026-10-15] build | T-12100 bounded strip comparison
+
+One-CPU/1-GiB native Docker comparison on 21 translation units (8 main and every 30th non-TT overlay source), three repetitions each: all 63 stripped compiler inputs identical to base 7a65b3d8. Sum of per-file medians fell from 14.633 s to 0.800 s (18.29x for stripping only). Added tools/bench_strip.py to reproduce against an exported baseline. Initial scratch harness used an unsupported subprocess helper argument; corrected before measurements. Results live in build/acceleration/strip-results.jsonl (ignored).
+
+## [2026-10-15] ticket | T-12100 ready for review
+
+Moved [[tickets/T-12100-acceleration-audit]] to In Review. Added [[acceleration-audit]] with bounded timing/equality evidence and priorities from read-only cx worklists, including the queued BUNKA_SD zero-score draft. 229 affected tests and header validation passed in the capped Docker container. Compiler and allocator negative results cross-referenced; exact rescoring and linked proof remain unchanged.
+
+## [2026-10-15] ticket | T-12100 reviews complete
+
+Separate code-review skill standards and requirements reviews of 7a65b3d8...87e7889d returned no findings. Both confirmed scope and equivalence logic and the limits of timing claims. Recorded reviews in [[tickets/T-12100-acceleration-audit]] and moved the ticket/card/index to Done. No merge, push, game-source edit, or other-worker change performed.
+
+## [2026-10-15] ticket | Correct acceleration ticket collision and start matching research
+
+Read-only inspection of the external run's status revealed T-12100 is reserved for cx10. Renamed this branch's acceleration ticket to [[tickets/T-12200-acceleration-audit]] and updated current references; previous log entries and commit messages remain historical. Opened [[tickets/T-12210-matching-bottleneck-research]] for the user's clarified priority: high-impact matching research, with remaining-byte and repeated-blocker measurements plus a concrete experiment.
+
+## [2026-10-15] query | T-12210 baseline and exhausted exact reuse
+
+Census at 7a65b3d8 reports 5,733/6,958 functions and 1,288,084/2,279,368 progress bytes in C (56.5%). Queue: 1,225 remaining, 424 heuristically blocked, 801 unblocked; only 134 have guarded drafts in src (external drafts not yet counted). Exact duplicate report yields two plans, eight skips; near-duplicate report yields zero immediately fillable and five skipped. Tests of register-relaxed family discovery follow. Copied generated asm into this worktree; all analysis in one-CPU Docker. Reports in build/acceleration/.
+
+## [2026-10-15] build | T-12210 two family-guided matches
+
+[[tickets/T-12210-matching-bottleneck-research]]: two BUNKASAI matches in src/ovl/BUNKASAI/8014DD90.c, 1,512 literal linked bytes; BUNKASAI SHA1 passes. Distinguishing character-ID constants from switch labels resolved automatic near-copy rejection. Register-only fingerprint relaxation found no new whole-function families beyond existing duplicate leads. Upstream m2c documentation confirms multi-function/stack-template inference; upstream permuter documentation positions it as end-stage register-allocation work, not a solution for structural differences. Research synthesis follows.
+
+## [2026-10-15] ticket | T-12210 matching research in review
+
+Added [[matching-breakthroughs]], including three verified matches / 2,352 linked bytes and the finding that the default under-600-byte bulk selection covers only 21.8% of remaining progress bytes. 600–1,999-byte targets hold 59.2%. Documented heuristic false positives, draft-provenance limitations, bounded negative register-relaxation result, and upstream primary references. [[tickets/T-12210-matching-bottleneck-research]] moved to In Review; affected unit SHA1s and header/global/prototype guards pass. Historical T-12100 log links predate the collision correction; current acceleration ticket is [[tickets/T-12200-acceleration-audit]].
+
+## [2026-10-15] ticket | T-12210 research and matching review complete
+
+Standards and requirements reviews of 47bdf34e...9f34527f passed with no findings. [[tickets/T-12210-matching-bottleneck-research]] moved to Done; [[matching-breakthroughs]] documents three verified matches and evidence-ranked follow-ups, not a claim that the larger matching problem is solved. Final progress measurement is in build/acceleration/progress-after.txt. The branch remains isolated and unmerged.
+
+## [2026-10-15] ticket | T-12220 continue with medium handler families
+
+User requested continued matching research. Opened [[tickets/T-12220-scene-handler-family-experiment]] to compare fresh m2c output with family-guided reconstruction in BUNKASAI objects outside cx ownership. Read active run status read-only; preserve its work. Prior census and experiment rationale are in [[matching-breakthroughs]].
+
+## [2026-10-15] decision | T-12220 zero-search medium cohort
+
+Fresh normalized m2c drafts for both seed handlers scored zero, so a special family-guided rewrite would not explain these outcomes. [[tickets/T-12220-scene-handler-family-experiment]] now tests a frozen 24-target medium-function cohort through existing bulk_m2c with no hill-climb budget. Preserve precise distinction between full-unit zero score and final linked verification.
+
+## [2026-10-15] build | T-12220 seed matches and cohort underway
+
+BUNKASAI func_80150234 and func_80145930 both pass literal linked equality at 760 bytes each and the BUNKASAI SHA1. The frozen 24-target medium cohort is running in one-CPU Docker with --time 0, one m2c variant, no order/regdiff search. First three pipeline records are verified matches; final counts and post-migration verification pending. State and frozen target list are outside the worktree at /private/tmp/tokimemo-family-out/.
+
+## [2026-10-15] build | T-12220 twenty verified medium-function matches
+
+[[tickets/T-12220-scene-handler-family-experiment]]: 16/24 direct cohort wins in 260.18 seconds, two seed wins, and two paired CharFlags bitfield fixes; 20 functions / 16,272 literal linked bytes total. Both unit checksums pass. [[matching-breakthroughs]] preserves the cohort, negative results, timing boundaries and limited transfer claim. Header/global/prototype guards pass; no full-game build. Ticket moved to In Review for standards and requirements review.
+
+## [2026-10-15] ticket | T-12220 reviewed and complete
+
+Requirements review of f1010b54...5deb7fa0 passed; standards review found only the stale index status, now fixed. No code findings. [[tickets/T-12220-scene-handler-family-experiment]] moved to Done with synchronized board/index. Twenty literal-verified functions and 16,272 bytes are committed locally on codex/acceleration-audit; no merge or push. [[matching-breakthroughs]] records the bounded result and next scheduling experiment.
+
+## [2026-10-15] ticket | T-12230 broaden coverage sweep
+
+User requested broader work aimed at large coverage gains. Opened [[tickets/T-12230-broad-coverage-sweep]] to extend the successful medium-function pipeline into unclaimed objects and larger functions. Baseline 6d1e9cf2, 57.3%. Inspecting current ownership read-only before freezing targets.
+
+## [2026-10-15] decision | T-12230 freeze broad cohort
+
+[[tickets/T-12230-broad-coverage-sweep]] selects 101 functions / 150,524 list bytes across 18 units, emphasizing the larger eligible functions. Known cx claims and all other worktree source differences excluded; three stale worktrees checked by filesystem comparison. Zero-search pipeline started under one CPU / 1 GiB. No global success-rate extrapolation from the earlier two-overlay sample.
+
+## [2026-10-15] decision | T-12230 preserve misses and check selection bias
+
+The broad first-pass sample is much harder than T-12220's related-overlay cohort. Two wins in the first 51 attempts; remaining failures retained. After the first sweep completes, test remaining eligible medium/large targets under the same ownership exclusions, then apply the known CharFlags store idiom to suitable close drafts. No claim that widening the size limit alone produces a game-wide high success rate.
+
+## [2026-10-15] build | T-12230 first broad sweep result
+
+101-target sweep completed in 459.49 seconds: two verified pipeline matches / 2,228 bytes, 92 near misses, seven draft/compile failures. Global migration and header checks pass. This rejects extrapolating T-12220's 16/24 direct success rate across these broader units. The remaining 99 eligible targets are now running with identical zero-search settings. A 1,996-byte RPG_BAT draft has a 20-row exact mismatch and is prioritized for bounded follow-up.
+
+## [2026-10-15] build | T-12230 second cohort and targeted follow-up
+
+Remaining sweep completed: 89 targets / 85,100 bytes, one verified pipeline match / 792 bytes, 86 near misses, two compile failures, 432.70 seconds. Correction to the earlier estimate: 190 eligible targets total, not 200, hence 89 remaining rather than 99. Broad direct totals: 3/190, 3,020 bytes. Scratch RPG_BAT increment, return-type and aggregate probes did not improve the 20-row mismatch. Follow-up tests known CharFlags reads/stores, the existing func_80083440 K&R call convention, and up to five m2c source variants on ten closest remaining drafts. Ambiguous D_800E68FC in the K&R draft resolved to its existing halfword GameState member.
+
+## [2026-10-15] build | T-12230 five verified matches, broad hypothesis bounded
+
+[[broad-coverage-results]] records 190 targets / 235,624 list bytes across 18 units: three direct wins plus the K&R call and CharFlags test fixes, five functions / 5,036 literal bytes total. Both affected overlay SHA1s and header/global/prototype guards pass. Nine source-variant retries produced no win; flag-store/local-copy and RPG counter probes remain nonmatching. No broad success-rate or full-game-build claim. [[tickets/T-12230-broad-coverage-sweep]] moved to In Review with full outcome ledger and linked evidence.
+
+## [2026-10-15] ticket | T-12230 broad sweep reviewed and complete
+
+Standards and requirements reviews of 6d1e9cf2...70307e64 both passed with no actionable findings. [[tickets/T-12230-broad-coverage-sweep]] moved to Done; index and board synchronized. [[broad-coverage-results]] records 190 attempts, five literal matches / 5,036 bytes, and the negative result for blind expansion/variants. Changes remain committed locally, unmerged and unpushed.
+## [2026-10-15] setup | T-12300 isolated byte-focused matching
+
+Created isolated checkout at baseline 7a65b3d8 and [[tickets/T-12300-large-unclaimed-byte-matches]]. Read existing ownership, workflow and external research. The acceleration chat now owns its broad T-12230 cohort objects as well as its earlier matches; exclude these before selecting C files. Checkout moved to /private/tmp/tokimemo-large-bytes for sandbox write access. No source edits yet.
+
+## [2026-10-15] decision | T-12300 claim remaining substantial objects
+
+[[tickets/T-12300-large-unclaimed-byte-matches]] owns RPG_BAT/80145CC0, RPG_BAT/8014ADD0, RPG_BAT/8014A660 and BUNKAKEN/8013BFE0. Census excludes current acceleration manifest and known worktree objects. Additional ticket inspection excludes RPG_BAT/80137280 (T-9960). Focus on the 2,232-byte target and related 1–1.4 KB handlers.
+
+## [2026-10-15] build | T-12300 baseline verified
+
+All 27 baseline binaries passed SHA1 in Docker (build/large-bytes/setup.log), with header/global checks. The bulk tool requires scratch outside the checkout; corrected the output mount to /results before any matching attempts.
+
+## [2026-10-15] build | T-12300 first drafts and parallel source work
+
+Eight substantial drafts produced no immediate match; full-unit scores 103–501 rows retained in [[tickets/T-12300-large-unclaimed-byte-matches]]. User requested subagents; assigned disjoint owned source files, two compiler slots total, and a third source-reasoning task. Existing aggregate normalization and switch/counter reconstruction are the next experiments.
+
+## [2026-10-15] build | T-12300 draft declaration prerequisites
+
+Full-file probes exposed two missing overlay declarations: existing void BUNKAKEN func_8013CEC0 and RPG_BAT word D_8015EE18 (definition in src/ovl/RPG_BAT/8014E780.c). Added their canonical overlay declarations for source probes; final validation will include all 27 binaries. No main API edits.
+
+## [2026-10-15] build | T-12300 verified 3604-byte BUNKAKEN family
+
+[[tickets/T-12300-large-unclaimed-byte-matches]]: three related 1–1.4 KB handlers pass literal linked-byte proof and whole BUNKAKEN SHA1. [[matching-notes]] records consistent GameState pointer and CharFlags bit2 idioms. Existing C preserved; no FAKE added. Compiler slot transferred to the RPG effects/UI worker.
+
+## [2026-10-15] build | T-12300 retain structurally recovered RPG target
+
+[[tickets/T-12300-large-unclaimed-byte-matches]] records the 2,232-byte func_80145CC0 guarded draft: zero byte gain, 557/557 compared instructions, 58 register-only positions remaining after bounded source experiments. Default RPG_BAT SHA1 and header/global checks pass. Raw experiment evidence retained in ignored scratch; no compiler changes or dummy source workarounds.
+
+## [2026-10-15] build | T-12300 verified 1316-byte RPG effect handler
+
+[[tickets/T-12300-large-unclaimed-byte-matches]] reaches 4,920 verified bytes / four functions. RPG_BAT func_8014A660 passes literal linked proof and unit SHA1 with explicit nested cases and a documented FAKE scalar pointer view. [[matching-notes]] records both the success and failed transfer to the larger guarded timer handler. Final full-game checks and review follow.
+
+## [2026-10-15] lint | T-12300 independent standards and requirements review
+
+Two-axis review of 7a65b3d8...be40e697: requirements review found no substantive issue; standards found one unreachable break after an all-return nested switch in RPG_BAT func_8014A660. Removed it and scheduled fresh literal/unit validation. Refreshed stale ownership-plan wording in [[tickets/T-12300-large-unclaimed-byte-matches]]. Final In Review handoff and full-check evidence remain pending validation.
+
+## [2026-10-15] ticket | T-12300 reviewed handoff with 4920 verified bytes
+
+[[tickets/T-12300-large-unclaimed-byte-matches]] moves to In Review, synchronized with board/index. Four functions add 4,920 literal linked bytes; final progress 5,737/6,958 functions and 1,293,004/2,279,368 bytes (56.7%). Review's unreachable break removed; fresh rebuilt literal proof and all 27 built-binary SHA1s pass. Header/global checks pass; prototypes 0 new / 15 known. Requirements review has no substantive findings; standards follow-up resolved its sole finding. Guarded 2,232-byte timer target contributes zero bytes. All work committed locally, no integration or push. Checkout returning from temporary sandbox staging to its original managed path for persistent chat attachment.
+
+## [2026-10-15] build | cx7 C2CC exact match and byte-first continuation
+
+[[tickets/T-12070-codex-cx7]]: C2CC matches 972 linked bytes with TACO SHA1 pass; cumulative three functions / 4,252 bytes. Recorded unsigned-selector, jump-table and source-line scheduling evidence in [[matching-notes]]. User steering prioritizes longer passes on largest remaining owned functions: ACCC 1,260 bytes, BD30 576 bytes. No larger beyond-list target remains in this object.
+
+## [2026-10-15] ticket | cx7 In Review handoff
+
+[[tickets/T-12070-codex-cx7]] moved In Review with index/kanban synchronized. Three matches / 4,252 linked bytes; existing guards unchanged (16/9/32 rows), larger misses remain scratch-only. Final configure and forced clean checksum/header/global rebuild passed 526 ninja tasks, 27/27 binary checksums, headers and globals. Branch prototypes: 0 new, 15 known. Baseline-to-HEAD diff check passes. Logs: build/scratch/final-{configure,clean,build,prototypes,guards}.log. User-directed next focus is the separate largest dialogue routine; this worktree awaits independent review.
+
+## [2026-10-15] build | Combined matching integration verified
+[[tickets/T-12400-integrate-verified-matches]] integrates completed worker and acceleration/large-function chat commits. All 27 binary checksums, headers, globals and prototype checks pass (0 new/15 known); 55 permuter tests pass. Coverage rises by 67 functions and 52,232 bytes to 59.0%. Reconciled duplicate cx7 index/kanban entries; integration moved to In Review. User authorized direct push to main without a PR.
+
+## [2026-10-15] build | Verified matches published to main
+[[tickets/T-12400-integrate-verified-matches]]: direct non-force push succeeded, advancing remote main from 1668c560 to 8f78e5e5. All verified matching checkpoints collected for this batch are published; active experiments remain in worker worktrees.
+
+## [2026-10-15] decision | Prioritize byte throughput toward 80 percent
+[[tickets/T-12600-byte-coverage-families]] records the user's 80% target, requiring another 477,972 aligned bytes from current main. Largest-dialogue and DATE work continue; root tests the shared BUNKAKEN flag/addressing family identified by [[broad-coverage-results]]. Avoid repeating the low-yield default sweep; measure production-verified gains.
+
+## [2026-10-15] decision | Additional matching chats with subagents
+[[tickets/T-12600-byte-coverage-families]]: user explicitly authorized additional chats and their own subagents. Dispatched shared-fix team (T-12700 series; BUNKAKEN/BUNKASAI, including root's candidate family) and large-function team (T-12800 series; main/8006CB30.c, EVENT/8010FE10.c, TEL/80132000.c). Root yields those sources; current workers retain dialogue, BUNKA_SD and DATE. Each new team is capped at two concurrent compilers initially and must provide literal/affected-binary proof before root integration.
+
+## [2026-10-15] decision | Small-function and type-recovery chats assigned
+[[tickets/T-12600-byte-coverage-families]]: user requested GPT-6.1 Sol medium for small functions, and a separate types/globals chat. Small-function team owns OPTION plus main/80079B10.c (previously queued cx6/cx8), T-12900 series. Type team owns MASTER implementation pilot, T-13000 series, with minimal evidence-backed shared-header edits requiring all27 checks; other scopes read-only. One concurrent compiler per new team initially. Root retains integration responsibility.
+
+## [2026-10-15] build | T-12090 large display setup matched
+
+BUNKA_SD:func_80132940 matches1144 linked text bytes and its overlay checksum. Typed records, a reused loop counter, explicit fifth switch case and unsigned16-bit frame intermediate resolve the setup family. No FAKE. Cumulative2124 verified code bytes; [[tickets/T-12090-codex-cx9]] records evidence.
+
+## [2026-10-15] build | T-12090 native scheduler trace calibrated
+
+A scratch-only AS1 diagnostic shim preserves the complete stock object byte-for-byte while producing a reached scheduling DAG for the952-byte setup near miss. [[tickets/T-12090-codex-cx9]] records fidelity, wrapper limitation and the equal-priority ordering hypothesis. Production compiler tools are unchanged.
+
+## [2026-10-15] build | T-12090 second large setup matched
+
+BUNKA_SD:func_80138D48 now matches952 linked bytes and overlay checksum, headers and globals. Natural for-loop increment placement resolves the equal-priority scheduler tie; keep initialization order intact. No FAKE. Cumulative3076 text bytes; see [[tickets/T-12090-codex-cx9]].
+
+## [2026-10-15] build | T-12090 dialogue script matched
+
+BUNKA_SD:func_80133204 matches820 linked text bytes with overlay checksum, headers and globals OK. Typed table access and independent branch assignments remove the m2c control-flow artifact. No FAKE. Cumulative3896 text bytes; [[tickets/T-12090-codex-cx9]] records evidence.
+
+## [2026-10-15] lint | T-12090 linked size correction
+
+Corrected [[tickets/T-12090-codex-cx9]]: func_80133204 exact linked span is828 bytes, including8 trailing padding bytes; the preceding entry used the raw820-byte assembly declaration. Cumulative verified text is3904 bytes plus124 bytes of jump tables.
+
+## [2026-10-15] build | T-12090 state-machine idiom transferred
+
+BUNKA_SD:func_801388D0 matches268 bytes after three evidence-based repairs from neighboring C: live s32 result, byte compound increment, and correct zero-argument call. Exact linked and overlay SHA1/header/global checks pass. Cumulative4172 text bytes; [[tickets/T-12090-codex-cx9]].
+## [2026-10-15] ticket | BUNKAKEN/BUNKASAI isolated family work
+Created [[tickets/T-12700-bunka-families]] from 95c3fc9f and inspected prior family evidence. Original checkout remains read-only; experiments and ignored inputs reside in bunka-12700 worktree. Two compiler workers maximum.
+
+## [2026-10-15] ticket | Independent family assignments
+Created [[tickets/T-12701-bunkaken-address-family]] and [[tickets/T-12702-bunkasai-family]] in In Progress, with disjoint source ownership. Prior exact diffs isolate aggregate address allocation in the BUNKAKEN bitfield stores; matched siblings use a local GameState pointer, which remains a candidate rather than a claimed fix.
+
+## [2026-10-15] query | BUNKAKEN aggregate address form and BUNKASAI reload
+Recorded candidate evidence and rejected variants in [[bunka-family-results]]. Full local GameState pointer form scores zero on five BUNKAKEN handlers; one BUNKASAI candidate scores zero after reloading state across calls. Linked verification remains the acceptance gate.
+
+## [2026-10-15] build | Seven BUNKA handlers verified
+[[tickets/T-12701-bunkaken-address-family]] adds five functions / 6,544 bytes (commit fdcac574); [[tickets/T-12702-bunkasai-family]] adds two / 2,520. Each function passes literal linked-byte verification and both affected overlay SHA1 checks pass in Docker. [[bunka-family-results]] records the mechanisms and failures. Review remains pending.
+
+## [2026-10-15] build | Continuation flag ordering transfers to BUNKAKEN
+[[tickets/T-12701-bunkaken-address-family]] adds func_80141B80, 1,860 literal verified bytes with BUNKAKEN SHA1 OK. Existing BunkakenModeFlags stores precede continuation copies in matched siblings; applying that order finishes the prior 134-row miss. Total this branch: 8 functions / 10,924 bytes. Checkpoint Spec review of the first seven functions found no issues.
+
+## [2026-10-15] build | Two additional family matches and control audit
+[[tickets/T-12701-bunkaken-address-family]] adds func_80138A08 and func_8013A8CC, 2,004 linked bytes, with BUNKAKEN SHA1 OK. Historical candidates already C in the baseline are excluded from gains. Branch total: ten functions / 12,928 bytes. Both review axes pass the earlier eight-function checkpoint; new pair awaits review. [[tickets/T-12702-bunkasai-family]] completes its bounded follow-up with two verified matches / 2,520 bytes and retained negatives.
+
+## [2026-10-15] build | Fresh family transfer adds three handlers
+[[tickets/T-12701-bunkaken-address-family]] adds 2,164 verified bytes in BUNKAKEN 8014E440.c using the established aggregate-pointer/bitfield/ordering forms. Literal proof and overlay SHA1 pass. Both review axes passed prior ten-function checkpoint; final checks there show 5,817/6,958 functions and 1,358,452/2,279,368 bytes with zero new prototype disagreements (15 known). Current new total: thirteen functions / 15,092 bytes.
+
+## [2026-10-15] decision | Expand only the successful source family
+BUNKAKEN fresh probes in 8014E440.c have reached zero full-TU differences for all eight further adjacent handlers after the first three verified matches. Linked proof remains required. This evidence justifies a bounded analogous BUNKASAI probe under T-12703, rather than a repeated default sweep. Two compiler workers maximum; each lane stops after two distant misses.
+
+## [2026-10-15] build | Complete the 8014E440 handler family
+[[tickets/T-12701-bunkaken-address-family]] adds eight literal-verified functions / 7,312 bytes, BUNKAKEN SHA1 OK. All eleven previously remaining functions in that file are now C using the same source reconstruction. Branch cumulative gain: twenty-one functions / 22,404 bytes. One adjacent-family held-out probe is next; no unrelated overlays claimed.
+
+## [2026-10-15] ticket | BUNKASAI held-out family transfer
+Created [[tickets/T-12703-bunkasai-heldout-family]] in In Progress for the bounded 8014DD90.c test justified by BUNKAKEN transfer results. Existing BunkasaiModeFlags and direct source evidence govern candidates; old matched source is preserved.
+
+## [2026-10-15] query | Review checkpoint through bad8fc7b
+Independent Standards and Spec reviews pass all twenty-one accepted functions / 22,404 bytes. No fake matches or scope violations found. [[tickets/T-12700-bunka-families]] records the review boundary; subsequent candidates still require their own proof and review.
+
+## [2026-10-15] build | Adjacent BUNKAKEN call convention seed
+[[tickets/T-12701-bunkaken-address-family]] adds func_8013EC98, 780 verified linked bytes, using the existing K&R declaration override mechanism. BUNKAKEN SHA1 passes. The override is translation-unit-local and documented; shared main prototypes are unchanged. Cumulative branch gain: twenty-two functions / 23,184 bytes.
+## [2026-10-15] ticket | Claim small OPTION and main audio matching
+
+Created [[tickets/T-12900-small-option-main]] and [[tickets/T-12901-small-option-main-first]] before experiments. Isolated branch codex/small-option-main starts at 95c3fc9f; original checkout remains read-only. Read cx6/cx8 leads and project standards; reused Docker image and copied ignored disc inputs.
+
+## [2026-10-15] build | OPTION handler exact candidate
+
+[[tickets/T-12901-small-option-main-first]]: full-unit scoring found zero differing rows for func_80137E38 with word-array indexing of the pair table; enabled its C for literal verification. Nine bounded variants tried. Aggregate field accesses reduce func_8007A868 from 62 to 20 diff rows; retained behind its existing NON_MATCHING guard pending further work.
+
+## [2026-10-15] build | Main reset exact candidate
+
+[[tickets/T-12901-small-option-main-first]]: moving the independent unk_08 assignment after the four flag-mask updates gives zero full-unit diff rows for func_8007A868. Enabled ordinary C using the existing Work80125D10 aggregate; no shared header change or artificial source form needed. OPTION literal proof already confirms 360 bytes.
+
+## [2026-10-15] build | Two verified small-function matches
+
+[[tickets/T-12901-small-option-main-first]] moves to In Review. Docker funcdiff --resolve proves default C linked bytes for OPTION func_80137E38 (360) and main func_8007A868 (188), total 548. Docker ninja -j1 passes both build/ovl/OPTION.ok and build/SLPM_86.053.ok. No shared-header changes.
+## [2026-10-15] ticket | T-12800 isolated matching batch
+
+Created [[tickets/T-12800-large-event-tel]] and children [[tickets/T-12801-event]], [[tickets/T-12802-tel]], [[tickets/T-12803-main]] from origin/main 95c3fc9f. Read historical EVENT/TEL findings; copied ignored build inputs into isolated worktree.
+
+## [2026-10-15] query | Main residuals verified
+
+[[tickets/T-12803-main]] confirms the documented full-TU register-only residuals. Two explicit word-view hypotheses rejected; large func_8007132C requires structured aggregate reconstruction before scoring.
+
+## [2026-10-15] query | Calendar allocation hypothesis improves residual
+
+[[tickets/T-12803-main]]: month-first explicit locals fix the register tie, leaving frame size and two comparison operand reversals. No match claimed.
+
+## [2026-10-15] build | Calendar judge linked match
+
+[[tickets/T-12803-main]]: date_sasoi_judge matches 644 linked bytes. Explicit constant in existing local resolves final operand reversals; FAKE-marked source activated for production verification.
+
+## [2026-10-15] build | Production calendar match verified
+
+[[tickets/T-12803-main]]: default full-TU linked proof passes for 644 bytes; build/SLPM_86.053.bin SHA1 OK. Separate standards/spec reviews found no source issues.
+
+## [2026-10-15] lint | Incremental integration whitespace
+[[tickets/T-12400-integrate-verified-matches]]: removed an extra final blank line from src/ovl/BUNKA_SD/80132000.c after new matching commits. Combined verification is running. User requested continued integration; heartbeat checks every10minutes and reports only meaningful changes.
+
+## [2026-10-15] build | Complete adjacent BUNKAKEN scene handlers
+[[tickets/T-12701-bunkaken-address-family]] adds eight functions / 6,112 linked bytes and passes BUNKAKEN SHA1. 8013EB30.c now contains only C; prior matched bodies are preserved. BUNKAKEN cumulative gain: twenty-eight functions / 26,776 bytes.
+## [2026-10-15] ticket | T-12800 batch enters review
+
+[[tickets/T-12800-large-event-tel]], [[tickets/T-12801-event]], [[tickets/T-12802-tel]], and [[tickets/T-12803-main]] moved to In Review. Commit c0cc3335 contains one 644-byte production match. EVENT/TEL experiments restored; negative evidence retained. Full 27-binary build running at two jobs.
+
+## [2026-10-15] build | T-12800 final proof and review
+
+All 27 binary SHA1 hashes pass against config manifests. Prototype branch check has zero new disagreements (15 known), header and global checks pass, and standards/spec reviews are clean. [[tickets/T-12800-large-event-tel]], [[tickets/T-12801-event]], [[tickets/T-12802-tel]], [[tickets/T-12803-main]] moved In Review to Done. Only production change is date_sasoi_judge, 644 linked bytes, commit c0cc3335. Local experiments moved under gitignored build/t12800-evidence/ for clean handoff; large global 80% objective remains with integration.
+
+## [2026-10-15] build | Incremental matching chats verified for publication
+[[tickets/T-12400-integrate-verified-matches]] and [[tickets/T-12600-byte-coverage-families]]: integrated cx9 through ed17af5c, Bunka family through4b5f182e, small-function6aa2f091 and large-function handoffdd033b2a. Combined build plus all27 forced checksums pass; final additional BUNKAKEN source passes affected SHA1; headers/globals pass and prototype audit remains0new/15known. Progress5844/6958 functions,1379196/2279368 bytes (60.5%). Gain37functions/33672progressbytes over prior published95c3fc9f. Need444300additional aligned bytes for80%. Reconciled T12800-series status cards. Logs: build/scratch/integration-chats.log and integration-final-chat.log. Direct fast-forward publication authorized; heartbeat checks every10minutes.
+
+## [2026-10-15] decision | T-12090 bounded pass complete
+
+All ten targets attempted, six exact matches totaling4172 text bytes plus124 table bytes. Retained two measured guards, left two broad misses as assembly, and recorded reusable control-flow/type/scheduling fixes in [[matching-notes]] and [[data/t0018-cases]]. Fresh full-package verification is starting; [[tickets/T-12090-codex-cx9]].
+
+## [2026-10-15] ticket | cx9 ready for independent review
+
+Moved [[tickets/T-12090-codex-cx9]] and its kanban card to In Review. Six exact matches contribute 4172 linked text bytes plus 124 jump-table bytes. Fresh Docker configure/ninja passes 27/27 SHA1 checks and headers/globals; prototype branch audit reports zero new disagreements and 15 known. All ten targets attempted, two measured guards retained and two broader drafts left as assembly. See [[matching-notes]] and [[data/t0018-cases]] for reusable control-flow and scheduling findings.
+
+## [2026-10-15] build | Four BUNKASAI held-out matches
+[[tickets/T-12703-bunkasai-heldout-family]] moves to In Review after four literal matches / 4,016 bytes, BUNKASAI SHA1 OK and headers OK. Existing typed byte stores and ordinary switch structure complete 8014DD90.c without changing prior C. Branch total: thirty-four functions / 33,312 bytes.
+
+## [2026-10-15] build | Five more BUNKAKEN siblings and preservation audit
+[[tickets/T-12701-bunkaken-address-family]] adds five verified functions / 3,704 linked bytes in 8013CF30.c, SHA1 OK. All 37 pre-existing C function bodies in touched BUNKAKEN files are textually identical to baseline95c3fc9f. Total branch gain: thirty-nine functions / 37,016 bytes. Standards review passes prior thirty-four-function checkpoint.
+
+## [2026-10-15] build | Final two bounded probes matched
+[[tickets/T-12701-bunkaken-address-family]] moves to In Review with 35 functions / 33,716 literal bytes. Final pair 3DBE8 and41088 adds3,236 bytes and passes BUNKAKEN SHA1. Repeated body audit preserves all37 prior BUNKAKEN C bodies. Combined branch gain:41 functions /40,252 bytes; final review and validation follow.
+
+## [2026-10-15] build | Final BUNKA validation and completed reviews
+[[tickets/T-12700-bunka-families]], [[tickets/T-12701-bunkaken-address-family]] and [[tickets/T-12703-bunkasai-heldout-family]] move to Done after independent Standards/Spec review found no actionable issues through5f404ed5. Final Docker header/global/prototype checks pass (0 new/15 known); both overlay SHA1 hashes were recalculated successfully. Total gain41 functions/40,252 linked bytes; branch progress5,848/6,958 and1,385,776/2,279,368 (60.8%). All53 preexisting C bodies in touched sources remain identical. No full-game checksum or publication claimed; 80% remains pending integration and additional work.
+
+## [2026-10-15] lint | Final BUNKA ticket lifecycle check
+Docker lint confirms T-12700 through T-12703 each has one kanban card in Done matching its ticket status. Source handoff was clean at0f2032a3; this final entry records the check.
+## [2026-10-15] ticket | T-13000 / T-13001 types and MASTER pilot
+
+Created isolated worktree at origin/main 95c3fc9f; read [[data-types]], [[game-state]], [[broad-coverage-results]] and coding standards. Claimed MASTER only; compile concurrency one. Tickets [[tickets/T-13000-types-globals]] and [[tickets/T-13001-master-layout-pilot]].
+
+## [2026-10-15] build | MASTER typed-copy pilot
+
+Baseline MASTER checksum passed. type_recovery identified three 0x1A-byte copies; original indexed lh confirms MasterHalfwords13 at D_8013C7E8/C804/C820. Full-TU pilot func_80139910 matched 952 literal linked bytes after local declaration ordering and the existing sibling scalar byte-view idiom; others still under test. No shared headers changed. [[tickets/T-13001-master-layout-pilot]].
+
+## [2026-10-15] build | Three MASTER typed-table matches
+
+[[master-types-pilot]] records 952 + 1,388 + 1,308 = 3,648 literal linked bytes in three handlers. Existing table and sprite views recovered; artificial selector/stack idioms labelled FAKE. Event-log helper experiment rejected and INCLUDE_ASM restored. Updated [[data-types]]. No shared headers changed.
+
+## [2026-10-15] ticket | T-13000 and T-13001 ready for review
+
+Moved both tickets to In Review with matching board cards. MASTER checksum and all three literal-byte checks pass. No shared declarations changed; no full-game rebuild claimed. [[tickets/T-13000-types-globals]], [[tickets/T-13001-master-layout-pilot]].
+
+## [2026-10-15] lint | Complete declaration audit for MASTER pilot
+
+Reused generated assembly from all integration address spaces, preserving local MASTER assembly. Header/global checks pass; prototype branch audit reports zero new disagreements / 15 known. This replaces the initial MASTER-only 12-known audit count. [[master-types-pilot]].
+
+## [2026-10-15] ticket | T-13000 / T-13001 reviewed and Done
+
+Independent standards and spec reviews found no code or scope issues against 95c3fc9f..f17ceea9. The requested explicit prototype-audit record is now included; no unresolved findings. Moved [[tickets/T-13000-types-globals]] and [[tickets/T-13001-master-layout-pilot]] to Done and synchronized board/index. Three matches / 3,648 literal bytes; MASTER checksum and declaration audits pass. Full 27-binary integration gate remains for root.
+
+## [2026-10-15] ticket | Saved small-draft triage
+
+Created [[tickets/T-12902-small-draft-triage]] under [[tickets/T-12900-small-option-main]]. First checkpoint 6aa2f091 has 548 verified bytes. Next run scores existing small drafts with canonical aggregate views, one compiler at a time.
+
+## [2026-10-15] ticket | Additional small OPTION handlers
+
+Created [[tickets/T-12903-option-small-handlers]] for two guarded candidates (132/200 bytes) in the owned OPTION/801389A0 unit. [[tickets/T-12902-small-draft-triage]] full-unit triage found no immediate match; closest saved draft is main func_80079F00 at 21 rows, with argument-width differences. No experimental source/header changes installed.
+
+## [2026-10-15] decision | Audio-call width and exact third candidate
+
+[[tickets/T-12902-small-draft-triage]]: func_80079F00 scores zero full-unit rows (264 bytes) with s16 volume arguments and volume assignment before the flag update. Added only the existing override mechanism to include/main_api.h and src/main/80079B10.c. Literal proof and all 27 SHA1 checks are next; other callers retain the prior declaration.
+
+## [2026-10-15] build | Third verified match and shared-header validation
+
+[[tickets/T-12902-small-draft-triage]] moves to In Review. func_80079F00 proves 264 literal linked bytes, and main SHA1 passes. Combined checkpoint is 3 functions / 812 bytes (360 + 188 + 264). Full 27-check rebuild is running serially; [[matching-notes]] records the indexing, aggregate, and call-width findings.
+
+## [2026-10-15] decision | Goal continuation and Sol medium replacement lanes
+[[tickets/T-12600-byte-coverage-families]]: active goal is at least80% verified game-code bytes published to main. Previous goal turn established the objective; this continuation integrates new committed matches and dispatches replacement work. User requests Sol6.1 medium for new workers. New isolated scopes: ETC (T13100), GYOZI/SHOUGATU (T13200), RPG_BAT (T13300). Existing dialogue and DATE workers continue. Reconciled integrated T12000+ ticket cards to their authoritative frontmatter statuses; no source changes from lint.
+
+## [2026-10-15] ticket | Saved small-draft triage
+
+Created [[tickets/T-12902-small-draft-triage]] under [[tickets/T-12900-small-option-main]]. First checkpoint 6aa2f091 has 548 verified bytes. Next run scores existing small drafts with canonical aggregate views, one compiler at a time.
+
+## [2026-10-15] ticket | Additional small OPTION handlers
+
+Created [[tickets/T-12903-option-small-handlers]] for two guarded candidates (132/200 bytes) in the owned OPTION/801389A0 unit. [[tickets/T-12902-small-draft-triage]] full-unit triage found no immediate match; closest saved draft is main func_80079F00 at 21 rows, with argument-width differences. No experimental source/header changes installed.
+
+## [2026-10-15] decision | Audio-call width and exact third candidate
+
+[[tickets/T-12902-small-draft-triage]]: func_80079F00 scores zero full-unit rows (264 bytes) with s16 volume arguments and volume assignment before the flag update. Added only the existing override mechanism to include/main_api.h and src/main/80079B10.c. Literal proof and all 27 SHA1 checks are next; other callers retain the prior declaration.
+
+## [2026-10-15] build | Third verified match and shared-header validation
+
+[[tickets/T-12902-small-draft-triage]] moves to In Review. func_80079F00 proves 264 literal linked bytes, and main SHA1 passes. Combined checkpoint is 3 functions / 812 bytes (360 + 188 + 264). Full 27-check rebuild is running serially; [[matching-notes]] records the indexing, aggregate, and call-width findings.
+
+## [2026-10-15] build | All 27 binary checks pass
+
+[[tickets/T-12900-small-option-main]]: Docker ninja -j1 completes 27/27 SHA1 checks after the API guard, with headers/globals checks passing. Standards review requests source-local matching comments and a split first checkpoint; added the comments and split unpublished history without changing the final tree. Replacements: 7cb341f6 (OPTION 360), f1744de9 (main reset 188), 41d7a47e (main resume 264); these supersede 6aa2f091/cbe7698f for integration. Spec review reports no implementation or scope findings; final cleanliness and review validation are next.
+
+## [2026-10-15] ticket | Close T-12900 after review
+
+[[tickets/T-12900-small-option-main]] moves from In Progress to Done after separate standards/spec reviews and resolved findings. Full default Docker build passes 27/27 checks; final literal proof totals 812 bytes. Local evidence is in build/t12900/experiments/. T-12903 is a bounded negative result, with no new source or match claims.
+
+## [2026-10-15] ticket | Close T-12901 after review
+
+[[tickets/T-12901-small-option-main-first]] moves from In Review to Done after separate standards/spec reviews and resolved findings. Full default Docker build passes 27/27 checks; final literal proof totals 812 bytes. Local evidence is in build/t12900/experiments/. T-12903 is a bounded negative result, with no new source or match claims.
+
+## [2026-10-15] ticket | Close T-12902 after review
+
+[[tickets/T-12902-small-draft-triage]] moves from In Review to Done after separate standards/spec reviews and resolved findings. Full default Docker build passes 27/27 checks; final literal proof totals 812 bytes. Local evidence is in build/t12900/experiments/. T-12903 is a bounded negative result, with no new source or match claims.
+
+## [2026-10-15] ticket | Close T-12903 after review
+
+[[tickets/T-12903-option-small-handlers]] moves from In Progress to Done after separate standards/spec reviews and resolved findings. Full default Docker build passes 27/27 checks; final literal proof totals 812 bytes. Local evidence is in build/t12900/experiments/. T-12903 is a bounded negative result, with no new source or match claims.
+
+## [2026-10-15] lint | Small-match handoff consistency
+
+Checked T-12900 through T-12903 status/card agreement and ticket links. The first two matches (548 bytes) plus the resume handler (264) total 812; no negative experiment contributes coverage. Source comments are committed, old checkpoint hashes are documented as superseded, and scratch files moved under ignored build/t12900/.
+
+## [2026-10-15] build | Goal batch reaches 61.2 percent
+[[tickets/T-12400-integrate-verified-matches]]: new family, type and small-function commits add15functions/14868progressbytes beyond0d777614. Verified total5859/6958functions and1394064/2279368bytes (61.2%); need429432additional alignedbytes for80%. All27 binary checksums pass, headers/globals pass, prototype audit0new/15known. Small-function final history had been rewritten; final source compared to integrated checkpoint differs only by three comments, preserved and affected main/OPTION hashes reverified. Logs build/scratch/goal-batch1.log and goal-batch1-comments.log. Reconciled final ticket statuses before publication. New Sol6.1medium family lanes are active.
+
+## [2026-10-15] ticket | Root TACO control-flow probe
+[[tickets/T-13400-taco-control-flow]] opened for a bounded full-TU experiment on func_80132FE8 while other family lanes continue. Previous goal turn made authoritative progress by publishing61.2%; current checks confirm active worker processes and no new committed matches yet. Baseline source remains assembly.
+
+## [2026-10-15] query | cx10 reconstructs largest DATE state machine
+
+[[tickets/T-12100-codex-cx10]] revisits the 4,044-byte 47958 handler following bytes-first steering. Natural indexed loops restore most original register choices; a typed GameState pointer improves callback state preservation. Exact matching remains blocked by fade conversion and callback/timer scheduling, and the assembly fallback stays active. Scratch evidence recorded in ticket.
+
+## [2026-10-15] query | cx10 narrows largest DATE handler to four rows
+
+[[tickets/T-12100-codex-cx10]] records exact1,010-instruction alignment for47958 after natural indexed loops, control-flow reconstruction and callback statement grouping. Four fade register rows remain; frame-only local and undefined return shaping require FAKE labels if retained. Production fallback remains active; no additional coverage claimed.
+
+## [2026-10-15] build | cx10 matches 740-byte DATE scene initializer
+
+[[tickets/T-12100-codex-cx10]] promotes func_8014D298 after exact production linked-byte and DATE checksum proof. Existing DateParticleView44 recovers the three68-byte copies; natural local declaration order recovers the stack address. No dummy padding retained. Package total5,628 bytes; evidence build/scratch/d298-final.log and d298-build.log.
+
+## [2026-10-15] build | TACO natural conditions improve full-TU candidate
+[[tickets/T-13400-taco-control-flow]]: reproduced89row baseline; removing two decompiler gotos reduces to57rows. Eight full-TU variants show consistent GameState pointer worsens this function and signedness of canonical flag read is irrelevant. Remaining stack/lifetime mismatches retained in scratch; zero coverage claimed.
+## [2026-10-15] ticket | Claim ETC source-family transfer
+Created [[tickets/T-13100-etc-families]] from aa2b3158 in isolated codex/etc-13100 worktree. Read [[bunka-family-results]] and [[matching-breakthroughs]]; original checkout left untouched.
+
+## [2026-10-15] build | ETC dialogue family verified
+[[tickets/T-13100-etc-families]] adds three handlers / 2400 literal linked bytes in src/ovl/ETC/8014ABD0.c, ETC SHA1 OK. Consistent GameState pointer resolves first handler; direct access suffices for held-out siblings.
+
+## [2026-10-15] ticket | Claim ETC career family
+Created [[tickets/T-13101-etc-career-family]] for bounded adjacent-family transfer.
+## [2026-10-15] setup | T-13200 isolated event matching lane
+Created codex/events-13200 at aa2b3158 and copied ignored inputs from integration read-only. Claimed only GYOZI/SHOUGATU source. Read [[bunka-family-results]], [[matching-breakthroughs]], [[broad-coverage-results]] and coding standards; work tracked in [[tickets/T-13200-event-family-transfer]].
+
+## [2026-10-15] ticket | T-13201 direct case-store family
+[[tickets/T-13201-event-selector-stores]] records first bounded result: SHOUGATU 8013BDE0 base215 -> direct stores0 full-TU difference rows. Awaiting literal link and overlay SHA1; no bytes counted yet.
+
+## [2026-10-15] build | T-13201 first literal event match
+SHOUGATU func_8013BDE0 adds656 literal linked bytes; affected overlay SHA1 passes. Two GYOZI selector siblings remain failed probes (best33/24 rows); their unchanged-ASM default proofs add no coverage. See [[tickets/T-13201-event-selector-stores]].
+
+## [2026-10-15] build | TACO mask lifetime probe narrows mismatch
+[[tickets/T-13400-taco-control-flow]]: four local-coalescing full-TU probes improve best57to52rows. No C promotion; assembly and default checksum path unchanged. Remaining lifetime/register problem documented for a later focused pass.
+
+## [2026-10-15] build | New family batch verified at 61.3 percent
+[[tickets/T-12400-integrate-verified-matches]]: DATE7cb6d2a1, ETCf561351b and SHOUGATU21df4fe7 integrated. All27 binary hashes pass; header/global checks and branch prototype audit pass (0new/15known). Current progress5864/6958functions and1397856/2279368bytes (61.3%), a gain5functions/3792progressbytes over b8f516ff. Literal proof totals3796bytes include4bytes not counted by the progress inventory; the unchanged progress definition governs the80% goal. Remaining425640alignedprogressbytes. Evidence build/scratch/goal-family-next.log and goal-date740.log. Previous goal continuation made progress via these source integrations and bounded TACO evidence; this continuation completes verification and publication.
+
+## [2026-10-15] build | TACO stack-slot evidence retained
+[[tickets/T-13400-taco-control-flow]]: bounded declaration/lifetime tests improve52to44rows. Best candidate matches instruction count but differs in frame size, maskspill home and divide registers. No production promotion or coverage claim.
+
+## [2026-10-15] build | ETC career checkpoint
+[[tickets/T-13101-etc-career-family]] adds four functions / 1132 literal linked bytes, ETC SHA1 OK. Two bounded failures remain assembly; evidence and scores recorded in ticket.
+
+## [2026-10-15] ticket | Claim ETC exam family
+Created [[tickets/T-13102-etc-exam-family]] for medium state handlers and work-memory layout transfer.
+
+## [2026-10-15] decision | Reduce repeated validation cost
+[[tickets/T-12600-byte-coverage-families]]: root observed all526tasks rebuild because headers.ok is a normal implicit dependency of every C object and touches on all-source/header audits. tools/cc.py depfiles currently list ASM/padding dependencies but not actual C headers, so changing stamp ordering alone would be unsafe. Assigned Sol6.1medium build-dependency chat (T13500) to add tested real header tracking while preserving checker gating and all27 binary outputs. No tool changes accepted yet. RPG bounded probe produced no matches; replacement Solmedium lane assigned TAIIKU (T13600), which has27.7% byte coverage.
+## [2026-10-15] ticket | T-13202 sprite initialization family
+Opened [[tickets/T-13202-event-sprite-initializers]] to test existing DisplayActor44 and chained aggregate copies against the two overlays matching initializers. GYOZI selector probes remain33/24 best rows after bounded variants.
+
+## [2026-10-15] decision | T-13202 two initializer zero scores
+Existing DisplayActor44 and chained assignment reconstruct SHOUGATU F494/GYOZI41ACC. Both retain a marked FAKE unused scalar to reproduce two measured temporary stack offsets after bounded natural alternatives fail. No bytes counted before link proof. See [[tickets/T-13202-event-sprite-initializers]].
+
+## [2026-10-15] build | T-13202 two sprite initializers verified
+Default literal proofs verify1328+1440=2768 new bytes; both GYOZI and SHOUGATU SHA1 and header validation pass. Marked FAKE scalar retained with evidence. Lane cumulative3424 bytes. See [[tickets/T-13202-event-sprite-initializers]].
+## [2026-10-15] ticket | T-13300 RPG_BAT source-family recovery
+
+Created [[tickets/T-13300-rpg-families]] in isolated codex/rpg-13300 from aa2b3158. Read [[broad-coverage-results]] and [[bunka-family-results]]; avoid repeating blind sweeps and failed counter forms.
+
+## [2026-10-15] query | RPG_BAT bounded counter and call-family negative evidence
+
+[[tickets/T-13300-rpg-families]] records corrected full-TU scores and rejected evidence-backed source forms. AF1C remains six rows, 568A4 twenty, 52080 thirty-two; compact damage helper 495DC improves to forty after correcting local width. Zero accepted functions/bytes and no production edits. Scratch evidence retained under build/rpg13300.
+
+## [2026-10-15] query | RPG_BAT water-state held-out test
+
+[[tickets/T-13300-rpg-families]] records four activity words and four position pairs confirmed by AB84 and held-out AC74. Typed views preserve the remaining register gaps; no verified wins. The broad type-recovery proposal is insufficient for canonical migration. Existing guarded drafts outperform fresh m2c's excessive locals and mis-scaled word-pointer walk. Production files remain untouched.
+
+## [2026-10-15] ticket | T-13300 diagnostic-only handoff for review
+
+Moved [[tickets/T-13300-rpg-families]] to In Review for the documented bounded experiments. Zero accepted functions/bytes, no production changes. Recovery remains unfinished and requires follow-up work.
+## [2026-10-15] setup | Largest dialogue isolated pass
+
+Created codex/largest-dialogue from integration 2cb6a11c for [[tickets/T-12500-largest-dialogue]]. Own src/main/8007C030.c only, targeting 8,672-byte dialogue_speak_part. Read prior T-10900/T-11590 scheduling findings and external native AS1 research. Reused ignored inputs and tool diagnostics; no integration edits.
+
+## [2026-10-15] build | Largest dialogue baseline verified
+
+[[tickets/T-12500-largest-dialogue]] baseline configure/ninja succeeds: 665 tasks, 27/27 checksums, headers/globals. Prepared ignored AS1 capture wrapper preserving production frame/cvt/layout stages for a diagnostic fidelity control. Prior failed coordinate/argument/string families remain excluded from blind repetition.
+
+## [2026-10-15] query | Dialogue native AS1 fidelity and scheduler localization
+
+[[tickets/T-12500-largest-dialogue]]: stock, capture-only and native diagnostic full-TU objects are byte-identical. Nonempty AS1 DAG trace localizes two rotations to zero-downstream-cycle constant versus signed-Y conversion and string stores. First 24 source-layout probes give no improvement; inline assignment adds a copy and shifts priority. Production source remains untouched. Evidence: build/scratch/as1-{stock,trace,inline}/, baseline.diff and dialogue-probes.log.
+
+## [2026-10-15] query | Dialogue source hypotheses remain at sixteen rows
+
+[[tickets/T-12500-largest-dialogue]] records full-TU type, lifetime, control-flow and expression probes. No improvement over inherited 16 rows; wider types change allocation/frame, inline narrow assignments introduce an extra move. Started a bounded combined-mutation search plus fine source-line boundary sweep. Production source and compiler are unchanged; scratch ledgers retain measured evidence.
+
+
+## [2026-10-15] ticket | Largest dialogue diagnostic handoff
+
+[[tickets/T-12500-largest-dialogue]] moves to In Review with board/index synchronized. Zero new bytes; inherited 16-row guard and production source unchanged. Native AS1 diagnostic fidelity is established; 128 fine line layouts and two bounded combined searches (215 + 44 full-TU evaluations) do not improve it. [[matching-notes]] preserves the measured blocker and reproduction paths. Final configure/rebuild passes 526 tasks, 27/27 checksums, headers/globals; prototypes 0 new / 15 known; fresh guard diff remains 16 rows. No compiler change or assembly patching.
+
+## [2026-10-15] decision | Replace exhausted dialogue pass with NAME_ENT family work
+[[tickets/T-12600-byte-coverage-families]]: largest-function worker completed diagnostic-only b1d78a41 after calibrated AS1 tracing and bounded source searches; dialogue_speak_part remains16rows/0newbytes. Evidence retained under [[tickets/T-12500-largest-dialogue]]. New replacement agent uses user-requested Sol6.1medium, isolated NAME_ENT scope and T13700 series. Avoid repeating exhausted T11570 selector-copy hypotheses; prioritize coherent type/control-flow families. DATE, ETC, GYOZI/SHOUGATU, TAIIKU and build-dependency work remain active.
+
+## [2026-10-15] ticket | Bounded TACO pass enters review
+[[tickets/T-13400-taco-control-flow]] moved to In Review after reproducing89rows and reducing to44 with natural conditions and local lifetimes. No new C or claimed bytes. Integrated ticket cards reconciled with frontmatter after completed worker handoffs.
+
+## [2026-10-15] build | Six further matches verified at 61.5 percent
+[[tickets/T-12400-integrate-verified-matches]]: ETCb5adaff4 and event63d90035 add6functions/3900progressbytes beyond5ccb8765. Current verified total5870/6958functions,1401756/2279368bytes (61.5%); remaining421740alignedbytes to80%. Both combined rebuilds pass all27binarychecksums, header/global checks and branch prototypes0new/15known. Logs build/scratch/goal-etc-career.log and goal-event-pair.log. Diagnostic-only RPG/dialogue/TACO handoffs carry no coverage claims. New Solmedium lanes and safe incremental-build investigation continue.
+
+## [2026-10-15] query | Remaining-byte inventory refines family priority
+[[tickets/T-12600-byte-coverage-families]]: fresh generated-assembly/source census reproduces877612remaining bytes/1088functions. Top200sum387848bytes, below421740goal gap; family-wide source/type fixes remain necessary. Sent bounded family prioritization to active TAIIKU and NAME_ENT workers. No new matching claim; active chat handles were directly revalidated.
+
+## [2026-10-15] ticket | T-13203 particle initialization family
+Opened [[tickets/T-13203-event-particle-family]] for related50-entry loops. Selector GYOZI39E4C aggregate-field probes improve33->27 but do not match; experimental header restored. GYOZIE824 remains24 rows after bounded source forms.
+
+## [2026-10-15] decision | T-13202 resolve review findings
+Two-axis review confirms3424 bytes and flags uncovered header declarations plus missing central func_800BCE40 declaration. Added overlay guards and minimal main_api.h old-style s32 declaration. No codegen change expected, but all27 checksums now required. See [[tickets/T-13202-event-sprite-initializers]].
+
+## [2026-10-15] ticket | T-13200 family lane enters review
+Created [[event-family-results]] with3424 verified bytes, full failed-probe ledger and unchanged744-body audit. [[tickets/T-13200-event-family-transfer]], [[tickets/T-13201-event-selector-stores]], [[tickets/T-13202-event-sprite-initializers]] and [[tickets/T-13203-event-particle-family]] move In Progress -> In Review. Both review axes resolve guard/central-declaration findings; all27 build pending. The earlier progress-read error was a concurrent splat-regeneration race, not persistent malformed copied input.
+
+## [2026-10-15] build | T-13200 final verified event handoff
+Three default C functions add3424 literal linked bytes (progress convention3420). All27 Docker binary checks and independentSHA1 recomputation pass; headers/globals pass; prototype branch guard0new/15known. Census5862/6958 functions,1397484/2279368 game bytes61.3%; broader80% target remains open. Proof build/events13200/final-proof.txt and final-hashes.txt. See [[event-family-results]].
+
+## [2026-10-15] ticket | T-13200 event family tickets Done
+After independent Standards/Spec review and resolved findings, [[tickets/T-13200-event-family-transfer]], [[tickets/T-13201-event-selector-stores]], [[tickets/T-13202-event-sprite-initializers]] and [[tickets/T-13203-event-particle-family]] move In Review -> Done. Two header guard fixes and necessary shared main function declaration pass all27 checks.
+
+## [2026-10-15] lint | T-13200 scoped wiki consistency
+Four ticket frontmatters match exactly one Done card each; new tickets and [[event-family-results]] are indexed and cross-linked. Existing C preservation audit checks744 bodies against aa2b3158 with0 changes. All47 full-TU probe results, including44 nonzero/error outcomes, remain in ignored build/events13200.
+## [2026-10-15] ticket | Claim ETC memory-card state family
+Created [[tickets/T-13103-etc-memory-card-family]] after bounded exam-family tests. Rejected exam rendering forms stay in ignored scratch.
+
+## [2026-10-15] decision | ETC pointer form transfers to card states
+[[tickets/T-13103-etc-memory-card-family]]: 15/104/104 rows become zero with consistent GameState pointer; album loader variants remain nonmatching. Extend to related card initialization before closing the family.
+
+## [2026-10-15] ticket | 13100 ready for review
+[[tickets/T-13100-etc-families]] moved In Progress -> In Review. Combined checkpoint: eleven functions / 5900 literal linked bytes; final default proofs and ETC SHA1 pass. All 91 existing C bodies unchanged; headers/globals pass. Details in [[etc-family-results]]. Awaiting standards/spec review.
+
+## [2026-10-15] ticket | 13101 ready for review
+[[tickets/T-13101-etc-career-family]] moved In Progress -> In Review. Final combined proof retains all four accepted functions / 1132 bytes. Existing C body audit passes. No rejected career variants promoted. See [[etc-family-results]].
+
+## [2026-10-15] ticket | 13102 ready for review
+[[tickets/T-13102-etc-exam-family]] moved In Progress -> In Review. Accepted func_80146714: 176 literal linked bytes, default proof and ETC SHA1 pass. Remaining calculation/ranking/drawing probes rejected (310/192, 40, 336/338 rows). No experimental declarations retained. See [[etc-family-results]].
+
+## [2026-10-15] ticket | 13103 ready for review
+[[tickets/T-13103-etc-memory-card-family]] moved In Progress -> In Review. Accepted 80140FD8 (380), 80141E10 (924), held-out 80142574 (888): 2192 literal linked bytes with ETC SHA1 pass. Original C preserved; temporary main-header declaration and rejected album/init declarations removed. See [[etc-family-results]].
+
+## [2026-10-15] build | Combined ETC literal proof and preservation audit
+All eleven functions / 5900 literal bytes pass default linked proof, ETC SHA1 681c93b6e57c885f86e074c885a8bf6c3cca2319; 91 existing C bodies are text-identical to aa2b3158. Headers/globals pass. [[etc-family-results]] records bounded positive/negative results and source census.
+
+## [2026-10-15] decision | TACO replacement and final event declaration fixes
+[[tickets/T-12600-byte-coverage-families]]: finished event team replaced by Sol6.1medium TACO chat (T13800; remaining94780bytes/126functions). Prior cx7 and rootT13400 evidence explicitly provided to prevent repeated searches. Integrated event declaration fixes178f61b1 and ETCcard/exam2368-byte checkpointaa1c51ec; combined rebuild/audit running. Ticket cards reconciled to frontmatter after merges. Prior continuation published61.5%; current continuation has new source integration in progress.
+
+## [2026-10-15] build | Card-state batch verified at 61.6 percent
+[[tickets/T-12400-integrate-verified-matches]]: ETCaa1c51ec adds4functions/2368bytes; event178f61b1 fixes include guards and canonical main declaration without changing matched bytes. All27 checksums, header/global checks and prototype audit pass (0new/15known). Total5874/6958functions,1404124/2279368bytes (61.6%); remaining419372alignedbytes for80%. Evidence build/scratch/goal-card-states.log. Build-dependency experiment remains unintegrated pending file-addition correctness fixes; observed ETC-header rebuild reduction443to13compiles is not a game-byte gain.
+
+## [2026-10-15] ticket | T-14000 ENDING and EN_NICHI families
+
+Created [[tickets/T-14000-ending-en-nichi-families]] in In Progress after reading [[index]], [[decompile-workflow]], [[matching-notes]], CODING_STANDARDS.md and AGENTS.local.md. Isolated worktree codex/ending-14000 owns ENDING and EN_NICHI only.
+
+## [2026-10-15] build | ENDING asset dispatcher verified
+
+[[tickets/T-14000-ending-en-nichi-families]] converts src/ovl/ENDING/80134D20.c func_80136EE4: 580 linked bytes MATCH, ENDING SHA1 OK. Existing CharFlags b14 fixes the raw-mask instruction mismatch. Rejected scene and EN_NICHI dispatcher candidates remain ASM; diagnostics in scratchpad/t14000.
+## [2026-10-15] ticket | 13100 review complete
+[[tickets/T-13100-etc-families]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] ticket | 13101 review complete
+[[tickets/T-13101-etc-career-family]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] ticket | 13102 review complete
+[[tickets/T-13102-etc-exam-family]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] ticket | 13103 review complete
+[[tickets/T-13103-etc-memory-card-family]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] lint | ETC completion records coherent
+Four new tickets each have one Done card matching frontmatter; all new pages are indexed and cross-linked. Eleven final proof spans sum to 5900 bytes. Independent standards/spec reviews pass; 0 new prototype disagreements. See [[etc-family-results]].
+## [2026-10-15] ticket | T-13500 incremental dependency tracking
+
+Created [[tickets/T-13500-incremental-build-dependencies]] in isolated codex/build-deps-13500 from 5ccb8765. Inspected [[build-system]], configure.py, tools/cc.py and compiler behavior in the existing Docker image. IDO -M works; -MD does not. Preserve asm-processor input and include-search semantics when collecting dependencies.
+
+## [2026-10-15] build | T-13500 baseline and dependency implementation
+
+Baseline 5ccb8765 built all 27 binary checks in Docker. Touch benchmark: one main source = 1 compile / 5 tasks; shared main_api.h or overlay ETC.h = 443 compiles / 526 tasks each. Synthetic regressions exposed missing source-triggered header checking and broad overlay invalidation before the change. tools/cc.py now discovers IDO headers from the exact asm-processor temporary input via -M, and GCC headers from its existing cpp output; configure.py uses an order-only validation gate, explicit assembly macro inputs and include/src directory regeneration. [[tickets/T-13500-incremental-build-dependencies]] remains In Progress pending expanded regressions, full build and review.
+
+## [2026-10-15] build | T-13500 incremental proof and review handoff
+
+Eight synthetic Ninja dependency regressions and 17 existing compiler tests pass in Docker. Updated full build passes 27/27 checks; subsequent build is a no-op. ETC.h touch now schedules only 13 compiles / 18 tasks instead of 443 / 526; shared main_api.h retains 442 actual consumers. Source touch retains one compile and now checks headers. Actual incremental source/ETC builds took 8.981s/12.990s on the shared host. Updated [[build-system]], moved [[tickets/T-13500-incremental-build-dependencies]] to In Review in ticket and kanban. No new matched-byte claim.
+
+## [2026-10-15] decision | T-13500 review findings and membership fallback
+
+Standards review found no documented style violations; both reviews identified a stale-object risk when a newly added header shadows an existing include. Directory removal could also leave a missing generator input. Added a configure-owned source/include path inventory as a normal C prerequisite: additions/removals conservatively rebuild all C, while content edits stay selective. Watched directories receive phony producers to permit removal-triggered regeneration. New regression cases execute actual configure regeneration and cover source-local/nested header shadow additions, directory removal and deleted-inventory recovery. 131 surrounding header/prototype/padding/rodata/layout tests also pass. [[tickets/T-13500-incremental-build-dependencies]] remains In Review pending verification of the fixes.
+
+## [2026-10-15] ticket | T-13500 reviewed and complete
+
+Final full Docker rebuild passed 27/27 SHA1 checks; subsequent build no-op. Final touch benchmark preserved source 1/6, main_api.h 442/525, ETC.h 13/18 compiles/tasks. Eleven new integration, 17 cc and 131 surrounding regressions pass (159 total). Standards/spec reviewers cleared the shadow-header/directory-removal fixes; the spec reviewer independently passed all 11 integration tests. Updated [[build-system]], moved [[tickets/T-13500-incremental-build-dependencies]] to Done in ticket/kanban/index after resolving every review finding. Read-only original checkout, no push/PR, no game-code edits or matched-byte gain.
+## [2026-10-15] ticket | NAME_ENT family reconstruction
+
+Created [[tickets/T-13700-name-ent-families]] from origin/main 5ccb8765. Read prior negative selector-copy evidence and family reconstruction results. All work isolated in codex/name-13700.
+
+## [2026-10-15] query | NAME_ENT bounded negative evidence
+
+[[tickets/T-13700-name-ent-families]] records exact full-TU failures for prologue setup and table-loop hypotheses. No production source changed; excluded selector-copy family remains untouched. Moving to larger menu handlers.
+
+## [2026-10-15] decision | NAME_ENT family pass handoff
+
+Moved [[tickets/T-13700-name-ent-families]] to In Review. [[name-ent-family-results]] records bounded prologue and memory-card menu failures with exact full-TU scores. Zero accepted bytes; production source and headers unchanged. Stopped transfer after no reusable source form emerged.
+
+## [2026-10-15] ticket | NAME_ENT record type recovery
+
+Created [[tickets/T-13701-name-ent-record-types]] for semantic reconstruction of39F30 after [[tickets/T-13700-name-ent-families]] source-form probes. Existing layouts and original strides identify work flags, stored record flags and actor128..140 status fields.
+
+## [2026-10-15] ingest | NAME_ENT record and actor layout evidence
+
+[[tickets/T-13701-name-ent-record-types]] moves to In Review. [[name-ent-family-results]] records existing aggregate views for39F30, fixed actor mapping and a complete compiling typed draft (769 exact rows; bounded actor-end variant746). Zero accepted bytes, no production source/header edits.
+
+## [2026-10-15] build | Incremental dependency optimization integrated
+[[tickets/T-12400-integrate-verified-matches]] independently validated [[tickets/T-13500-incremental-build-dependencies]] on the combined tree: all 11 dependency regressions, all 27 binary checksums, header/global checks, and branch prototype audit pass; final Ninja invocation is a no-op. Evidence: build/scratch/goal-incremental-build.log. Game coverage remains 1404124/2279368 bytes (61.6%), 5874 functions; tooling is not counted as matched bytes. Integrated final ETC completion records and NAME_ENT type research (zero new bytes); reconciled ticket cards against frontmatter. A fresh Sol6.1medium worker owns ENDING/EN_NICHI under T14000, while GEKO/DATE2 chat owns T13900.
+## [2026-10-15] ticket | cx10 DATE handoff ready for review
+
+[[tickets/T-12100-codex-cx10]] moves to In Review with 5,628 verified bytes in four matches. Fresh Docker configure and ninja -j2 passed 27/27 binary checksums, headers, globals and symbols; the prototype check reports zero new disagreements and 15 known baseline conflicts. Final literal production-byte checks reconfirm 489D0 (2,068), E3E8 (2,000), A4DC (820) and D298 (740). None of these matches uses FAKE shaping.
+
+All twelve assigned functions were attempted. Retained ticketed guards differ by 4 rows (47958), 5 (AD9C), 16 (DCCC) and 17 (AF88); required return/frame/source-grouping shaping in 47958 is labelled FAKE. Larger unproven reconstructions remain only in ignored build/scratch; production retains assembly fallbacks. Reusable findings are recorded in [[matching-notes]]. Evidence: build/scratch/final-build.log, final-protos.log, final-literal.log and *-retained.log. No production toolchain changes or new conflicts.
+
+## [2026-10-15] build | Final DATE handoff preserves verified coverage
+[[tickets/T-12400-integrate-verified-matches]] integrated completed cx10 handoff589bacb8. The four matches totaling5628literalbytes were already published; this handoff retains documented guarded drafts at4/5/16/17 differing rows. Combined Docker incremental build passes DATE SHA1, header/global gates and branch prototype check; unchanged objects retain the prior27-check verification. Total remains1404124/2279368bytes. Evidence: build/scratch/goal-date-handoff.log. Replacement Sol6.1medium worker T14100 owns DATE and must avoid repeating exhausted probes; existing TAIIKU worker reports two provisional dispatcher matches pending literal proof.
+## [2026-10-15] ticket | T-13600 TAIIKU source-family lane
+
+Created [[tickets/T-13600-taiiku-families]] from 5ccb8765 in isolated codex/taiiku-13600. Read [[bunka-family-results]] and previous TAIIKU matching notes; prioritize reusable scene/selector/type reconstruction.
+
+## [2026-10-15] query | TAIIKU scene and actor-table family evidence
+
+[[tickets/T-13600-taiiku-families]] records scene-loop non-transfer, recovered nine-halfword table copies, corrected m2c pointer scaling, and the bounded controller/reset family under test. No accepted matches or production changes at this checkpoint.
+
+## [2026-10-15] query | TAIIKU controller and held-out initializer bounded test
+
+[[tickets/T-13600-taiiku-families]] records reset4607C at52 full-TU lines and held-out actor initializer46338 at256, with no accepted bytes. Width and stride evidence is preserved; remaining normalization/frame allocation is not treated as a source win.
+
+## [2026-10-15] query | TAIIKU polygon coordinate-array family evidence
+
+[[tickets/T-13600-taiiku-families]] records POLY_FT4 and six eighty-halfword coordinate arrays shared by3D9B4/3DDB8. The typed full-TU draft remains346 lines; zero accepted functions/bytes. Production source and header files remain unchanged.
+
+## [2026-10-15] decision | Rank fresh TAIIKU helper families
+
+[[tickets/T-13600-taiiku-families]] ranks lower-complexity controller/slot helpers by complete types and matching donors.46A60/47928 are the concrete next family; earlier hard-family diagnostics do not imply exhaustion of all84 remaining functions.
+
+## [2026-10-15] build | T-13600 verify two TAIIKU scene dispatchers
+
+[[tickets/T-13600-taiiku-families]] adds func_80133494 (432 bytes) and func_80133644 (520), both literal linked MATCH with TAIIKU SHA1 OK. Ordinary nested dispatch removes m2c's goto mismatch. Existing source outside the two replacements is text-identical. Headers/globals pass; independent review remains pending. [[data/t13600-remaining-census]] corrects the initial limited prior-evidence search and records all84 baseline candidates.
+
+## [2026-10-15] build | TAIIKU dispatcher pair verified on integration
+[[tickets/T-12400-integrate-verified-matches]] integrated95a444d5 from [[tickets/T-13600-taiiku-families]]. Root standards inspection finds ordinary C89 dispatchers with canonical fields, no artificial padding/register tricks, no header changes and original function order preserved. Independent default linked funcdiff confirms33494=432bytes and33644=520bytes; affected TAIIKU checksum, header/global checks and branch prototype audit pass. Total5876/6958functions,1405076/2279368bytes (61.6%); remaining418420alignedbytes to80%. Evidence build/scratch/goal-taiiku-pair.log. T13600 remains In Progress while the worker pursues adjacent families.
+
+## [2026-10-15] ticket | T-14000 ENDING and EN_NICHI families
+
+## [2026-10-15] build | EN_NICHI input loop verified
+
+## [2026-10-15] build | ENDING asset dispatcher verified
+
+[[tickets/T-14000-ending-en-nichi-families]] converts src/ovl/ENDING/80134D20.c func_80136EE4: 580 linked bytes MATCH, ENDING SHA1 OK. Existing CharFlags b14 fixes the raw-mask instruction mismatch. Rejected scene and EN_NICHI dispatcher candidates remain ASM; diagnostics in scratchpad/t14000.
+
+## [2026-10-15] setup | Isolated GEKO and DATE2 lane
+
+Created codex/scenes-13900 at 0e670a13 with ignored reference inputs copied from integration. Claimed [[tickets/T-13900-scenes-families]], [[tickets/T-13901-geko-families]] and [[tickets/T-13902-date2-families]] In Progress. Read prior source-form successes and failures; see [[scenes-family-results]].
+
+## [2026-10-15] build | First DATE2 literal match
+
+[[tickets/T-13902-date2-families]] accepts func_8013820C, 768 literal linked bytes with DATE2 SHA1 OK. Direct switch stores plus the target halfword type close it. GEKO background helper remains diagnostic-only; see [[scenes-family-results]].
+
+## [2026-10-15] build | ENDING and DATE2 verified at 61.7 percent
+[[tickets/T-12400-integrate-verified-matches]] integrated fbedc27e and1cd70b47. Root independently confirms default literal linked MATCH for ENDING80136EE4 (580bytes) and DATE2 8013820C (768bytes), affected binary checksums, headers/globals and branch prototype checks. Standards inspection confirms canonical existing bitfield access and direct case stores; DATE2 halfword declaration follows target stores. No unverified drafts counted. Combined total5878/6958functions,1406424/2279368bytes (61.7%); remaining417072alignedbytes to80%. Evidence build/scratch/goal-ending-date2.log. Incremental build scheduled15tasks. Ticket cards reconciled and accumulated blank separators collapsed; active workers continue their families.
+## [2026-10-15] setup | DATE near-match follow-up
+
+Created [[tickets/T-14100-date-near-matches]] from the verified [[tickets/T-12100-codex-cx10]] handoff. Reused selective compiler include-dependency fixes; broad integration merge was aborted because of overlapping wiki history. Existing four DATE matches remain baseline.
+
+## [2026-10-15] build | Two DATE dispatch handlers verified
+
+[[tickets/T-14100-date-near-matches]] adds 340 verified bytes: src/ovl/DATE/8015A190.c func_8015A288 and src/ovl/DATE/80152FC0.c func_80154004. Full-TU default literal bytes match and production DATE SHA1 passes. New table declarations live in include/ovl/DATE.h. Four bounded scoped-width probes failed for 47958; original guard restored. [[matching-notes]] records the callback/selector reload rule.
+
+## [2026-10-15] build | DATE conditional dispatchers verified
+[[tickets/T-12400-integrate-verified-matches]] integrated e8556ca4 from [[tickets/T-14100-date-near-matches]]. Default linked proofs independently confirm8015A288=160bytes and80154004=180bytes; affected DATE SHA1, headers/globals and branch prototype check pass. Standards inspection confirms ordinary aggregate function tables and separate mutable-selector conditions, no FAKE required. Duplicate build-tool ancestry had no tooling changes; restored completed T13500 metadata after wiki union. Total5880/6958functions,1406764/2279368bytes (61.7%); remaining416732alignedbytes for80%. Evidence build/scratch/goal-date-dispatch.log. Workers continue toward larger family opportunities.
+## [2026-10-15] build | DATE flag-aware dispatch matched
+
+[[tickets/T-14100-date-near-matches]] adds func_80152980 in src/ovl/DATE/80151460.c: 296 literal linked bytes, default-build DATE SHA1 OK. Natural bit clearing preserves FF7F immediate. New package total 636 bytes. func_80158338 remains scratch-only after a 16-row comparison.
+[[tickets/T-14000-ending-en-nichi-families]] converts src/ovl/EN_NICHI/80132000.c func_801333B0: 476 linked bytes MATCH, EN_NICHI SHA1 OK. Natural ten-object loop matches compiler unrolling; the matched s32 return type preserves the final accumulator lifetime. Total accepted gain 1056 bytes.
+
+## [2026-10-15] decision | Label input handler return accommodation
+
+Review of [[tickets/T-14000-ending-en-nichi-families]] identifies func_801333B0's unconfirmed s32-without-return form as a return/liveness accommodation. Added explicit FAKE comment and ticket explanation, following CODING_STANDARDS.md section 7a. No new coverage.
+
+## [2026-10-15] build | DATE and EN_NICHI gain verified at 61.8 percent
+[[tickets/T-12400-integrate-verified-matches]] integrated6e23f2c0 and4f1ca7a6 plus3860fddf annotation fix. Independent default literal proof confirms DATE80152980=296bytes and EN_NICHI801333B0=476bytes, with affected binary SHA1s, headers/globals and branch prototype checks passing. Standards inspection required an explicit FAKE label for the unconfirmed s32-without-return lifetime choice; final annotated source reverified. Total5882/6958functions,1407536/2279368bytes (61.8%); remaining415960alignedbytes to80%. Evidence build/scratch/goal-date-52980.log, goal-en-nichi.log and goal-en-nichi-final.log. DATE worker now reconstructs3192-byte dispatch aggregate family; other active workers continue distinct scopes.
+## [2026-10-15] setup | Isolated TACO family pass
+Created codex/taco-13800 from 97ec697f and claimed [[tickets/T-13800-taco-families]] and [[tickets/T-13801-taco-actor-family]] before source work. Read [[decompile-workflow]], [[bunka-family-results]], prior T-12070 and T-13400 evidence. Original checkout is read only; Docker only, one compiler initially, verified production matches only.
+
+## [2026-10-15] query | TACO boss transform family selected
+[[tickets/T-13801-taco-actor-family]] records bounded m2c/assembly inspection of actor transform siblings. Initial 4A480 candidate compiles in its full TU after adding one overlay-owned forward declaration, but retains stack/register/address differences. No verified coverage gain yet; original source restored after comparisons.
+
+## [2026-10-15] build | TACO transform reconstruction reaches three rows
+[[tickets/T-13801-taco-actor-family]] records bounded local/type/operand tests: 4A480 now matches the frame and all but three rows. Separate sibling 497EC reconstruction started. All full-TU candidate source edits are restored after scoring; no coverage accepted.
+
+## [2026-10-15] ticket | TACO diagnostic handoff enters review
+[[tickets/T-13800-taco-families]] and [[tickets/T-13801-taco-actor-family]] move to In Review with matching cards. [[taco-family-results]] records zero accepted bytes, one-row 497EC, three-row 4A480 and 62-row 87A4. Preserved all ignored candidate bodies/diffs and reproducible full-TU probe; source and header diffs against 97ec697f are empty. Final default overlay build is running.
+
+## [2026-10-15] build | TACO default restored and diagnostic review recorded
+[[tickets/T-13800-taco-families]] and [[tickets/T-13801-taco-actor-family]]: saved probe reproduces 497EC one row and 4A480 three rows; source restored. Explicit checked Docker ninja exits 0 with TACO SHA1 OK (1419e93cbad6c0df790577701181be04e0747969), headers/globals pass. Independent standards review has zero findings; spec review notes the primary matching goal remains unmet and the pending-verification text needed updating (now corrected). Tickets remain In Review, zero accepted bytes; [[taco-family-results]] updated.
+## [2026-10-15] build | GEKO single induction variable match
+
+[[tickets/T-13901-geko-families]] accepts func_80141374, 416 linked bytes, with GEKO SHA1 OK. [[scenes-family-results]] records the source correction and type-reconstruction negatives.
+
+## [2026-10-15] build | GEKO dispatcher and shared indicator source form
+
+[[tickets/T-13901-geko-families]] adds two functions / 924 literal linked bytes with GEKO SHA1 OK. [[scenes-family-results]] records direct global updates and the established function-table source form.
+
+## [2026-10-15] build | GEKO triple verified and TACO evidence preserved
+[[tickets/T-12400-integrate-verified-matches]] integrated b234c5e5/1e2eb462: independent default literal proofs confirm GEKO80141374=416bytes,801351F8=328bytes,8013882C=596bytes (1340total). Affected GEKO SHA1, headers/globals and branch prototype checks pass. Standards inspection confirms ordinary cursor loop, aggregate callback table and dispatcher logic. Total5885/6958functions,1408876/2279368bytes (61.8%); remaining414620alignedbytes to80%. Evidence build/scratch/goal-geko-triple.log. TACO09074a2c preserves one/three-row near misses with zero new bytes; that completed chat replaced by Sol6.1medium MAIN-family chat T14200, excluding existing dialogue and uncertain8007C030ownership. Active larger DATE/EN_NICHI candidates remain uncounted.
+## [2026-10-15] build | T-13600 verify actor-field scene dispatcher
+
+[[tickets/T-13600-taiiku-families]] adds func_80139330 (544 literal linked bytes), with TAIIKU SHA1 and headers/globals passing. Existing DisplayActor44 coordinate fields fix the target load/store ordering. Canonical overlay prototypes preserve all existing output; source bodies remain untouched. Cumulative gain3 functions/1,496 bytes.
+
+## [2026-10-15] build | TAIIKU actor-field dispatcher integrated
+[[tickets/T-12400-integrate-verified-matches]] integrated54c37e1f. Independent default linked proof confirms func80139330=544bytes; TAIIKU SHA1, headers/globals and branch prototype checks pass. Standards inspection confirms existing DisplayActor44 field views and compatible forward declarations under a dedicated include guard; no artificial frame or register accommodation. Total5886/6958functions,1409420/2279368bytes (61.8%); remaining414076alignedbytes to80%. Evidence build/scratch/goal-taiiku-39330.log. Larger sibling39610 remains16rows and is not counted. Prior turn advanced main by1340bytes; current turn advances it by544bytes.
+
+## [2026-10-15] ticket | DATE follow-up ready for review
+
+Moved [[tickets/T-14100-date-near-matches]] to In Review with 636 verified new bytes in three natural dispatchers. Larger func_80144E20 and func_801449D4 typed recoveries remain distant; documented bounded alias/type/data-flow evidence in [[matching-notes]] and restored assembly fallbacks and temporary header context. Existing matched source and near guards are unchanged.
+
+## [2026-10-15] build | DATE cleanup verification passed
+
+After restoring distant scratch experiments, [[tickets/T-14100-date-near-matches]] passes all three default-build literal-byte proofs, DATE SHA1, headers, and prototype branch check (zero new disagreements; 15 known baseline). No further bytes claimed.
+## [2026-10-15] ticket | GEKO and DATE2 bounded pass enters review
+
+Moved [[tickets/T-13900-scenes-families]], [[tickets/T-13901-geko-families]] and [[tickets/T-13902-date2-families]] to In Review. Four default literal proofs, both overlay SHA1 checks, headers/globals/prototypes pass. Exact body audit preserves all 102 pre-existing C bodies. Standards and spec reviews found no actionable issues.
+
+## [2026-10-15] ticket | Close reviewed GEKO and DATE2 bounded pass
+
+Moved [[tickets/T-13900-scenes-families]], [[tickets/T-13901-geko-families]] and [[tickets/T-13902-date2-families]] from In Review to Done after both independent review axes passed without findings. Four functions / 2108 literal linked bytes; affected overlay checks and 102-body preservation audit pass. [[scenes-family-results]] preserves all bounded negatives and unresolved larger candidates. No full-game completion or 27-binary checksum claim.
+
+## [2026-10-15] lint | GEKO and DATE2 handoff consistency
+
+Three ticket statuses match Done cards; result page and ticket cross-references exist. Accepted byte totals agree with final-proof.log. All speculative prototype/type edits removed; only accepted C/header changes remain. Original source checkout read only, copyrighted inputs ignored. Integration remains responsible for main and the 80% goal.
+
+## [2026-10-15] decision | Preserve completed family evidence and rotate scopes
+[[tickets/T-12600-byte-coverage-families]] refreshed census at45d52546:1072remainingfunctions/869948bytes. Largest200still387848bytes, below414076-byte80%gap; sustained family coverage remains necessary. DATEc9d9b3b9 and scene6caf5ee9 final records integrated with no production changes or new byte claims; their636/2108bytes were already published. Replacement Sol6.1medium EVENT worker T14300 owns43796remainingbytes/48functions, and OPTION chat T14400 owns29612bytes/44functions. Both receive prior failed-search evidence and full literal-proof requirements. MAIN,TAIIKU,ENDING/EN_NICHI continue independently. Ticket cards reconciled to final frontmatter; coverage remains1409420/2279368bytes (61.8%).
+
+## [2026-10-15] query | Distinguish retained drafts from remaining assembly
+[[tickets/T-12600-byte-coverage-families]] answers the user's draft-coverage question with a Docker source census:125unmatched functions/70500bytes have retained C drafts;947/799448bytes have only assembly includes in tracked source. Scratch drafts are not exhaustively inventoried and must not be conflated with no prior attempts or usable matching C. Matched coverage unchanged. The previous goal turn published evidence/worker rotation; this query adds measured evidence about the actual remaining reconstruction work.
+## [2026-10-15] build | EN_NICHI pattern matrix verified
+
+[[tickets/T-14000-ending-en-nichi-families]] converts func_80135600 in src/ovl/EN_NICHI/80132000.c, 976 literal linked bytes MATCH and overlay SHA1 OK. The existing EnWords64 now includes its observed 8x8 matrix view. Direct invariant expression and natural nested loops recover frame and register shapes without padding. Cumulative accepted gain 2032 bytes / three functions. Rejected AI/spawn hypotheses are retained locally.
+## [2026-10-15] ticket | Claim remaining EVENT families
+
+Created [[tickets/T-14300-event-families]] in isolated codex/event-14300 from 45d52546. Read [[bunka-family-results]], [[etc-family-results]], [[broad-coverage-results]] and [[tickets/T-12801-event]]; preserve existing C and avoid repeated dispatcher/entry-read negatives. Ignored inputs copied from integration; original checkout read-only.
+
+## [2026-10-15] build | EVENT place-handler family adds 2548 bytes
+
+[[tickets/T-14300-event-families]] verifies five adjacent handlers in src/ovl/EVENT/8010FE10.c through full-TU default literal linked proof and EVENT SHA1. Consistent existing EventStateView access matches; no headers or existing C changed. Header/global/prototype guards pass. 8010A91C typed-bitfield loop probe remains two rows and was restored.
+
+## [2026-10-15] setup | Authorized disk cleanup preserves matching work
+User authorized cleanup after disk audit found2.9GiB free99%,39GB in matching worktrees,31.17GiB in their disc directories. Compared both track files byte-for-byte against the original project disc, then atomically replaced44identical copies across22finished worktrees with hard links to the original files. No source, commit, scratch draft, original data or active worktree input removed. Docker builder prune reclaimed2.174GB oldcache plus4.665GB additional unusedcache; installed toolchain images retained. Final df reports18GiB free92%, approximately15GiB more available. Future worktree setup must reuse immutable inputs (same-filesystem hard links or explicit read-only Docker mounts), not create independent disc copies. Cleanup script: /private/tmp/tokimemo-dedup-disc.sh. [[tickets/T-12400-integrate-verified-matches]] retains pending verified EN_NICHI/EVENT integration; no extra coding was undertaken during cleanup.
+
+## [2026-10-15] build | Six verified functions reach 62 percent
+[[tickets/T-12400-integrate-verified-matches]] integrated EN_NICHI2d9f77af and EVENTe929c063 before diskcleanup; independent default literal proofs confirm976+2548=3524bytes. Affected overlay SHA1s, headers/globals and branch prototype audits pass. Standards inspection confirms natural matrix loops/union view and consistent existingEventStateView, with no artificial padding/register tricks. Total5892/6958functions,1412944/2279368bytes (62.0%); remaining410552alignedbytes to80%. Evidence build/scratch/goal-en-nichi-35600.log and goal-event-five.log.
+
+## [2026-10-15] decision | Exhaustive remaining-function drafts requested
+User explicitly requests drafting every remaining game function to find additional direct matches. Assigned Sol6.1medium T14500 exhaustive isolated generation/scoring/catalog work from48362009, retaining contexts and classifying every failure rather than silently skipping. Reuse existing drafts where context-valid; no randommutation firstpass. Unverified C must not replace production assembly or count toward80%. Existing semantic-family workers retain scopes and root coordinates any overlappingwins. Share immutablediscinputs; no independent imagecopies aftercleanup. [[tickets/T-12600-byte-coverage-families]] records the retained-source census; newinventory must use current code, not stale1072total.
+
+## [2026-10-15] ticket | T-14200 MAIN family pass
+Created isolated codex/main-14200 from 0f117230; original checkout read only. Read [[matching-breakthroughs]], [[bunka-family-results]], [[etc-family-results]] and standards; excluded two reserved MAIN files. Claimed [[tickets/T-14200-main-source-families]] before probes.
+
+## [2026-10-15] build | T-14200 initializer 676-byte checkpoint
+[[main-family-results]] records default full-TU literal MATCH for func_800412E0 and MAIN SHA1 OK. Canonical state views close the prior initializer near miss; original 0xFFF0 mask retained. Rejected appointment/parameter source forms and temporary headers removed. [[tickets/T-14200-main-source-families]] remains In Progress.
+
+## [2026-10-15] build | T-14200 character initializer 796-byte checkpoint
+[[main-family-results]] records func_80041C2C: consistent GameState pointer and existing flag members give default literal MATCH; MAIN SHA1 OK, earlier initializer reverified. No new header layout or FAKE. [[tickets/T-14200-main-source-families]] continues at 1472 verified bytes.
+## [2026-10-15] ticket | Start isolated OPTION family pass
+
+Created [[tickets/T-14400-option-menu-families]] on codex/option-14400 from origin/main a46afeb8. Read [[index]], coding standards, local instructions and prior OPTION evidence. Scope is OPTION source/header only, with full-unit linked proof and affected SHA1 required.
+
+## [2026-10-15] build | Verify first OPTION settings pair
+
+[[tickets/T-14400-option-menu-families]] adds 2148 default C bytes in src/ovl/OPTION/8013A550.c. Full-TU literal proofs and OPTION SHA1 pass; recovered packed views and consistent GameState pointer described in [[matching-notes]]. All prior C preserved; no FAKE workaround or compiler change.
+
+## [2026-10-15] build | Verify OPTION character settings
+
+[[tickets/T-14400-option-menu-families]] adds func_8013B568 (2320 literal linked bytes), cumulative 4468. OPTION SHA1 passes. Packed character fields and direct switch stores compile exactly in both direct and pointer forms. Fourth sibling remains scratch-only; existing C stays unchanged.
+
+## [2026-10-15] build | MAIN and OPTION families reach 62.2 percent
+[[tickets/T-12400-integrate-verified-matches]] integrated MAIN5991ac30/d7c2e35d and OPTION90580c83/d63d1842: five functions add5940literalbytes (MAIN1472,OPTION4468). Root standards inspection moved newMAIN declaration inside its existing include guard. Final combined Docker rebuild passes27/27binarychecksums, headers/globals and branch prototype audit; independent defaultlinked proofs confirm allfivefunctions. Total5897/6958functions,1418884/2279368bytes (62.2%); remaining404612alignedbytes to80%. Evidence build/scratch/goal-main-option.log and goal-main-option-final.log. No padding/register tricks introduced.
+
+## [2026-10-15] build | Exhaustive draft execution launched
+T14500 frozen48362009census:1066remainingfunctions/866424bytes,including125guarded drafts,allunitsincluded. DedicatedSol6.1medium harness saves wholecandidateTU,body,declarations and context hashes; serialexecution uses120secondper-targettimeout and per-functionresumable results. Fullrun handle85687, log/private/tmp/t14500-run.log, catalog in drafts-14500/drafts/T-14500/catalog.jsonl. FirstBUNKAKENunit21entriesincludesmultiplezero-scorecandidates; unitboundaryliteralverification underway in separateproofcheckout, uncounteduntil verified. Sharedimmutableinputs avoidindependentdiscimagecopies; currenthost20GiBfree.
+## [2026-10-15] build | EVENT interaction adds 656 bytes
+
+[[tickets/T-14300-event-families]] matches func_80117D80 in src/ovl/EVENT/8010FE10.c using ordinary conditions, the observed signed EventStateView field at offset 0xFE, and one explicitly marked FAKE discarded entry assignment for operand order. Default literal proof, EVENT SHA1, header/global/prototype guards pass. Cumulative gain: six functions / 3,204 literal linked bytes. Shop and medal probes remain ignored scratch.
+
+## [2026-10-15] build | EVENT interaction reaches 62.3 percent
+[[tickets/T-12400-integrate-verified-matches]] integratedb78c6775: independent defaultliteralproof confirms80117D80=656bytes, EVENT SHA1, headers/globals and branch prototype checks pass. Standards inspection confirms signedhalfword+0xFE splits existingpadding withoutlayoutshift; explicitlyFAKE-labelled discardedassignment tracks branchoperand workaround. Total5898/6958functions,1419540/2279368bytes (62.3%); remaining403956alignedbytes to80%. Evidence build/scratch/goal-event-17d80.log.
+
+## [2026-10-15] decision | Separate exhaustive generation and proof lanes
+T14500 census resumed beyondBUNKAKEN intoBUNKASAI (about44/1066); first12zero-scorecandidates/8384bytes have affectedchecksum passing but remain pendingcomplete literalproof. Assigned Sol6.1medium proofworker in/private/tmp/t14500-proof to validate/commit batches while generation continues frozencontext uninterrupted. Sharedimmutableinputs retained; proofgeneratedASM private to avoid sharedmutations. No candidatebytes added tocoverageuntilproof and integration. [[tickets/T-12600-byte-coverage-families]] remains80%coordination.
+
+## [2026-10-15] build | T-14200 resolve initializer review findings
+[[main-family-results]] and [[game-state]] record actual packed birthday/date and character-nibble fields replacing the first checkpoint's masks. Prototype moved inside its guard and pointer casts removed. Both default literal functions and MAIN SHA1 pass. Initial review findings addressed; final re-review pending in [[tickets/T-14200-main-source-families]].
+## [2026-10-15] query | Bound OPTION grid and date probes
+
+[[tickets/T-14400-option-menu-families]] records negative grid-local/type and date-state lifetime experiments. No matching source changed. Four coordinate arrays and sprite member accesses remain useful scratch evidence, but differences in state retention and scheduling are unresolved. Pivoted to the coherent three-handler audio row-table family.
+
+## [2026-10-15] build | Verify three OPTION audio row handlers
+
+[[tickets/T-14400-option-menu-families]] adds 1400 literal linked bytes, cumulative 5868. Default full-TU proofs and OPTION SHA1 pass. Local row-table pointers and genuine loop indices fix the family; no FAKE workaround. Failed grid/date/control probes remain ignored, with precise negative evidence in the ticket and [[matching-notes]].
+
+## [2026-10-15] decision | Document OPTION packed views
+
+Added source-local offset/evidence comments for the player and schedule bitfield views in [[tickets/T-14400-option-menu-families]]. Fresh full-TU proof confirms all six accepted functions and the OPTION SHA1 after final formatting/comments. No prior function body changed.
+## [2026-10-15] build | EVENT medal-game handler adds 480 bytes
+
+[[tickets/T-14300-event-families]] adds func_801166A8 in src/ovl/EVENT/8010FE10.c. Direct compound updates plus one marked FAKE entry assignment match. Combined seven-function default literal proof, EVENT SHA1 and declaration/aggregate/prototype guards pass. Cumulative gain: seven / 3,684 bytes. Rejected particle draft restored before literal proof; normalized equality alone was not counted.
+## [2026-10-15] ticket | T-14501 proof lane claimed and first batch ready for review
+
+Created [[tickets/T-14501-remaining-draft-proof]] for promotion of T-14500 census candidates. Twelve BUNKAKEN functions (8,384 bytes) pass Docker default linked literal-byte proof; build/ovl/BUNKAKEN.bin SHA1 passes; prototype branch check reports zero new disagreements. Existing C is preserved. Focused standards inspection found ordinary state-machine C and removed empty generated declaration markers. Status In Review pending the required review gate; [[kanban]] and [[index]] updated.
+
+## [2026-10-15] build | T-14501 BUNKASAI verified draft batch
+
+Promoted 6 ordinary C functions / 4,248 bytes for BUNKASAI after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] build | EVENT typed record loop adds 400 bytes
+
+[[tickets/T-14300-event-families]] adds func_8010A91C through the observed Rec34 bit1 view and an ordinary for loop, superseding its earlier two-row negative. Combined eight-function default literal proof and EVENT SHA1 pass; header/global/prototype checks pass, zero new and 12 known disagreements. Cumulative accepted gain: eight functions / 4,084 bytes. Existing-body audit preserves both touched files' baseline C. Scope complete and moved In Review for independent review.
+## [2026-10-15] setup | Exhaustive remaining-function draft census
+
+Created [[tickets/T-14500-exhaustive-drafts]] and an isolated branch from 48362009. Shared immutable inputs with hard links. The census includes guarded drafts and all units, with serial bounded full-TU scoring and retained context; unverified C stays under drafts/T-14500/.
+
+## [2026-10-15] query | Freeze exhaustive game-function census
+
+[[exhaustive-drafts]] records 1,066 remaining functions / 866,424 progress bytes at 48362009, including 125 guards. Serial bounded run started after three smoke scores. Historical scores lack full current context and remain provenance only; no verified-byte gain claimed.
+
+## [2026-10-15] ingest | Preserve reproducible draft context
+
+[[exhaustive-drafts]] now has full source/header snapshots, compiler/tool/header hashes and 180 historical broad/family attempt records. First 45 entries yielded 18 full-TU zero candidates, 19 nonzero scores and eight retained failures; these are draft outcomes, not verified gains. A separate proof checkout preserves frozen scoring context.
+
+## [2026-10-15] lint | Check exhaustive-census failure handling
+
+Three synthetic Docker tests passed: guarded/TT inclusion, duplicate-scope rejection, and durable generation-failure recording with unchanged production source. Compiler repair now considers only the latest compile diagnostic while retaining all prior diagnostics, preventing stale errors from reintroducing removed declarations. Complete compiler failures remain explicit outcomes in [[exhaustive-drafts]].
+
+## [2026-10-15] build | Exhaustive draft batches reach 62.9 percent
+[[tickets/T-12400-integrate-verified-matches]] integrated proof5c277a88/543418ab (BUNKAKEN12/8384B,BUNKASAI6/4248B), OPTION24c028b4/ff37e3ab (3/1400B), EVENT91942f69/9f9c1cad (2/880B), and MAIN86584044 type/standards corrections with unchanged matched bytes. Added23functions/14912bytes over94aabf1f. Proof-lane literal gates coverall18draftwins; root combined27checksum rebuild aftersharedMAINtypechanges and finalaffectedBUNKASAI/EVENTchecks pass, plusheaders/globals/prototypes. Root exactchecks confirmOPTIONaudio,EVENTmedal andbothchangedMAINbodies. Focusedstandardsinspection acceptsordinarydraftstatehandlers, canonicalnormalization, realrowtables andexplicitEVENTFAKElabel. Total5921/6958functions,1434452/2279368bytes (62.9%); remaining389044alignedbytes to80%. Logs build/scratch/goal-exhaustive-first.log and goal-exhaustive-second.log.
+
+## [2026-10-15] build | Exhaustive tooling checkpoint verified
+Integrated5d4717cc complete1066-targetinventory andserialfull-TU draft/scoringharness under [[tickets/T-14500-exhaustive-drafts]]. Three syntheticregressions pass inDocker. Activegeneration beyond169entries retains failures/context; proofworker continueslaterunits separately. Sourcecatalog andcompileridentities tracked; generateddraftbatches stillinprogress. Disk20GiBfree; nocopieddiscimages. [[tickets/T-14501-remaining-draft-proof]] remainsongoingasfuturebatchesarrive.
+## [2026-10-15] build | T-14501 BUNKA_SD verified draft batch
+
+Promoted 1 ordinary C functions / 908 bytes for BUNKA_SD after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] build | T-14200 background renderers add 5152 bytes
+Three default literal functions and MAIN SHA1 pass; [[main-family-results]] documents one reused SPRT pointer, actual mode comparisons and paired sizes. 57D28/58398 honestly label FAKE unused-word frame homes; 578F4 is ordinary C. Cumulative five functions/6624 bytes, 2536 without new FAKE. Source audit preserves 22 old C bodies. [[tickets/T-14200-main-source-families]] remains In Progress pending final guards/review.
+
+## [2026-10-15] ticket | OPTION batch ready for review
+
+[[tickets/T-14400-option-menu-families]] moves to In Review. Six functions add 5868 default literal verified bytes. Headers/globals pass, prototype guard reports zero new / twelve known disagreements, and affected OPTION SHA1 is exact. All pre-existing C bodies in touched sources are unchanged. Separate standards and spec reviews cover a46afeb8 through ff37e3ab; 80% game-wide goal remains outside this bounded pass.
+
+## [2026-10-15] decision | Resolve OPTION standards finding
+
+[[tickets/T-14400-option-menu-families]] review flagged three byte offsets through the first GameState member. Replaced them with the existing named fields, removed unnecessary audio initializations, and deduplicated the ticket card. All prior C bodies remain preserved; repeat literal proofs and standards review required before Done.
+
+## [2026-10-15] decision | Remove redundant OPTION audio initialization
+
+Removed unnecessary pre-branch loop initializations from two new audio handlers in [[tickets/T-14400-option-menu-families]]. Both scratch probes and fresh default linked proofs remain exact; OPTION SHA1 and all 33 pre-existing C body comparisons pass.
+
+## [2026-10-15] ticket | Complete reviewed OPTION family pass
+
+[[tickets/T-14400-option-menu-families]] moves to Done after both independent review axes pass the source fixes. Six functions add 5868 literal verified bytes, OPTION SHA1 matches, headers/globals/prototypes pass, and all 33 pre-existing C bodies are unchanged. No new FAKE workaround or shared main-header change. Remaining assigned OPTION queue: 23744 bytes / 38 functions; broader 80% goal ongoing. Branch codex/option-14400 is ready for integration without a worker push or PR.
+## [2026-10-15] build | T-14501 DATE verified draft batch
+
+Promoted 2 ordinary C functions / 1,088 bytes for DATE after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+## [2026-10-15] decision | Preserve existing implicit-int function views
+
+Several exhaustive drafts fail only because m2c infers void after an earlier unprototyped call in the same translation unit, which implies int under the existing K&R build. The bounded repair now tries s32 for the new definition only when the compiler reports that redeclaration, an earlier call exists, and no explicit prototype supplies a different view. Production source and shared headers remain unchanged; actual full-TU scores decide candidate quality. See [[exhaustive-drafts]].
+
+## [2026-10-15] ticket | Reserve DATE draft failures for type repair
+
+Nine failed DATE targets from the completed unit are reserved in drafts/T-14500/date-repair-reservation.json for the independent repair lane. Their initial attempts remain immutable; alternate bodies must retain declarations and full context. The census continues independently, and its later mechanical retry excludes these scopes. See [[tickets/T-14500-exhaustive-drafts]].
+
+## [2026-10-15] build | Sprite and exhaustive-draft matches verified at 63.2 percent
+[[tickets/T-12400-integrate-verified-matches]] integrated MAIN6236f995 (3spritefunctions/5152literalbytes), BUNKA_SDce3db827 (908B), DATEc74b2fb0 (2/1088B), OPTIONfinalrecords605ccaa8 and draftarchive92d39c5f. Independent defaultliteralproofs pass for allsixfunctions; affectedbinarychecksums,headers/globals andbranchprototypes pass. MAINtwoframeworkarounds explicitlyFAKElabeled. Total5927/6958functions,1441592/2279368bytes (63.2%); progressgain7140bytes differsfrom7148literalspan total by8paddingbytes. Remaining381904alignedbytes to80%. Logs build/scratch/goal-bunka-sd-draft.log, goal-main-sprites.log, goal-date-draft-pair.log. Fiveharnessregressions pass.
+
+## [2026-10-15] decision | Draft completion requires addressing missing functions
+User asks whether everyfunctionwillhaveadraftwhenfinished: confirmedtargetis savedCwithreproduciblecontext for everyremainingfunction, notmerelyanattemptcounter. Initialfailures remainexplicitrepairqueue; Sol6.1medium T14600 owns9reservedDATEfailures, whilegenerationcontinues beyond267/1066. First210attemptarchive committedwithbaselines/context/diagnostics, ~16MiB; noASM/binaries. The draftingtask remainsincompleteuntilmissingdrafts areaddressed; byte-matchinggoal isseparate andunchanged. [[tickets/T-14500-exhaustive-drafts]] and [[tickets/T-14501-remaining-draft-proof]] trackbothlanes.
+## [2026-10-15] ticket | T-14200 final checkpoint In Review
+Moved [[tickets/T-14200-main-source-families]] and its kanban card to In Review after the five-function checkpoint. Final standards review resolves initial findings and requests removal of redundant signed RGB casts; these are removed pending renewed literal checks. Spec review accepts the bounded checkpoint, including clearly separated FAKE frame coverage; final 27-binary/header/global/prototype validation remains pending.
+
+## [2026-10-15] ticket | T-14200 checkpoint Done after review
+Standards and spec review pass after all findings resolved. Final five default literal proofs total 6624 bytes; all 27 freshly rerun binary SHA1 checks pass, headers/globals pass, prototypes 0 new / 15 known. Two FAKE frame-home functions account for 4088 bytes; ordinary-source gain 2536 bytes. All 22 old C bodies preserved. Moved [[tickets/T-14200-main-source-families]] and its card to Done; [[main-family-results]] records evidence and 62.0% isolated census. The wider 80% goal remains ongoing. No push/PR; cross-chat status delivery was rejected by automatic approval review and not bypassed.
+
+## [2026-10-15] build | Final MAIN corrections preserve sprite matches
+[[tickets/T-12400-integrate-verified-matches]] integrated ded2a3bf, removing redundant signed RGB casts and recording completed MAIN reviews. Independent default linked proofs reconfirm all three renderers; MAIN checksum, header/global checks and branch prototype audit pass. No new bytes claimed. Evidence: build/scratch/goal-main-final-review.log. Coverage remains 1441592/2279368 bytes (63.2%).
+
+## [2026-10-15] decision | Expand repair work for complete draft coverage
+[[tickets/T-14500-exhaustive-drafts]] generation is around 325/1066 attempts. DATE repair worker has eight of nine reserved failures compiling with full-TU scores; none is a match yet. Created Sol6.1medium chat T14700 for fifteen reserved aggregate/callback-table failures outside DATE, using type-repair-reservation.json. Original attempts remain immutable; repairs retain complete contexts and provenance. New worktree must share disc inputs. Final MAIN chat completed; its replacement addresses missing drafts rather than repeating known matching searches.
+
+## [2026-10-15] build | T-14501 KANGEI verified draft batch
+
+Promoted 3 ordinary C functions / 1,328 bytes for KANGEI after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+## [2026-10-15] ticket | Reserve nine DATE census repair failures
+
+Created [[tickets/T-14600-date-draft-repairs]] at frozen base 48362009. Preserve initial T-14500 attempts and retain repaired alternatives separately. Read T-14100 callback table evidence; no historical draft constitutes a verified match.
+
+## [2026-10-15] build | Compile all nine repaired DATE census drafts
+
+[[tickets/T-14600-date-draft-repairs]] now In Review. All nine alternatives compile serially in Docker; diagnostic differences range from 12 to 628 rows, no zero candidates and no matching-coverage claim. T-14100 real callback-table types were reused for 449D4/44E20. Alternatives, full preprocessed contexts, provenance and comparison records are in drafts/T-14500/repairs. Initial census attempts remain immutable; production C and shared generated assembly are unchanged.
+
+## [2026-10-15] build | KANGEI draft matches and DATE repair archives
+Integrated three KANGEI matches after source inspection and Docker default linked proofs, affected checksum, header/global and prototype checks. Coverage is 1,442,920 / 2,279,368 bytes (63.3%). Nine DATE repair archives compile but remain nonmatching and receive no byte credit. See [[tickets/T-12600-byte-coverage-families]], [[tickets/T-14501-remaining-draft-proof]] and [[tickets/T-14600-date-draft-repairs]].
+
+## [2026-10-15] lint | DATE repair archive integrity
+Docker audit verified all nine body/context hashes and required context, provenance, comparison and diagnostics artifacts. Every result remains explicitly nonmatching. Fixed the results table header in [[tickets/T-14600-date-draft-repairs]].
+
+## [2026-10-15] build | T-14501 RPG_BAT verified draft batch
+
+Promoted 2 ordinary C functions / 1,048 bytes for RPG_BAT after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+## [2026-10-15] ingest | DATE source/type repair alternatives
+
+Ingested exact repair artifacts from commit 1308ed4a as separate alternatives under drafts/T-14500/repairs/. All nine reserved DATE failures now compile and have nonzero full-TU scores; the initial census outcomes remain unchanged. Final best-catalog aggregation includes these context-qualified alternatives. No production source or matching-byte gain is claimed.
+
+## [2026-10-15] lint | Bound and preserve post-census repairs
+
+The automatic repair runner keeps initial artifacts immutable, excludes 24 externally reserved scopes, and will try current mechanical repairs plus bounded context/type-inference fallbacks only after the complete default census. Seven synthetic tests pass. OPTION exposed more than twelve missing stack locals; independent existing source fixes from one compiler diagnostic are now batched before the next compile, within the same bounded attempt budget.
+
+## [2026-10-15] query | Exhaustive census checkpoint 487 of 1066
+
+[[exhaustive-drafts]] updated with the complete per-unit execution table: {'candidate-zero': 24, 'failed': 65, 'scored': 398}. Initial outcomes are preserved; separate repair attempts improve compilable draft coverage without changing production source.
+
+## [2026-10-15] build | Harden resumable draft evidence
+
+Per-target artifacts now use atomic replacement, source failures retain body/context hashes, and the harness accepts an explicit archive path. The complete census remains serial; seven synthetic Docker checks continue to pass. Completed source/context batches remain immutable while repairs write separate alternatives.
+## [2026-10-15] ticket | Inspect ETC six-row album dispatcher near-match
+
+Started [[tickets/T-14800-etc-801447b0]]. Read [[etc-family-results]] and [[tickets/T-13100-etc-families]]; no retained target-specific historical probe was located. ETC source/header are identical to integration 3aaa8c01. Preserve original census attempt and test structural hypotheses in scratch.
+
+## [2026-10-15] build | Match ETC album dispatcher through consistent aggregate pointer
+
+[[tickets/T-14800-etc-801447b0]]: func_801447B0 adds 648 default-build literal linked bytes; ETC SHA1 passes. Direct-field six-row difference is a final status-byte register allocation; consistent existing GameState pointer yields diagnostic zero and verified bytes. [[etc-family-results]] records the structural transfer. Original attempts and prior C are unchanged; ticket moved to In Review for independent review.
+
+## [2026-10-15] build | RPG and ETC draft matches
+Integrated 002eb61d and 2c98de67 with completed draft archive b59ad160. RPG shared-header validation passes all 27 binaries and two default literal proofs. The ETC follow-up preserves prior matching C and uses the established GameState view. Seven exhaustive draft/repair tooling tests pass using the tools directory. See [[tickets/T-12600-byte-coverage-families]] and [[tickets/T-14800-etc-801447b0]].
+
+## [2026-10-15] build | T-14501 SHUGAKU verified draft batch
+
+Promoted 2 ordinary C functions / 1,052 bytes for SHUGAKU after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] decision | Regenerate failed guards as separate alternatives
+
+The usable-draft target includes guarded drafts that no longer compile in the current context. Automatic repairs will preserve their original artifacts and separately regenerate from assembly with default/context fallbacks, folding only the target guard to its existing INCLUDE_ASM while building the candidate translation unit. Default census reuse of guards is unchanged. No production source is modified.
+
+## [2026-10-15] query | Exhaustive census checkpoint 678 of 1066
+
+[[exhaustive-drafts]] updated with the complete per-unit execution table: {'candidate-zero': 28, 'failed': 88, 'scored': 562}. Initial outcomes are preserved; separate repair attempts improve compilable draft coverage without changing production source.
+## [2026-10-15] setup | T-14700 reserved type repairs
+
+Created isolated codex/type-repair-14700 from 48362009. Archived fifteen immutable attempts; hard-linked immutable inputs; generated ASM remains private. See [[tickets/T-14700-reserved-type-repairs]].
+
+## [2026-10-15] build | T-14700 fifteen compiling reserved drafts
+
+Recovered actual byte/halfword/word aggregates and callback tables in draft-only archives; all fifteen compile with default full-TU IDO and have nonzero resolved scores. Production C/header closure unchanged. Full diagnostics and provenance in drafts/T-14500/repairs/types/. Ticket moved to In Review: [[tickets/T-14700-reserved-type-repairs]].
+
+## [2026-10-15] decision | T-14700 resolve draft review findings
+
+Two-axis review identified an EVENT callback still using a synthetic sp global and a scoring script that exited successfully after failures. Replaced dispatch with the actual local table, removed the declaration, made failure status nonzero, retained complete successful compiler diagnostics and reran all fifteen serial full-TU compiles successfully. Semantic audit checked ETC rank loops, GEKO season-relative pairs and EVENT copy-tail lengths. No production promotion. See [[tickets/T-14700-reserved-type-repairs]].
+
+## [2026-10-15] build | SHUGAKU pair and repaired draft checkpoint
+Two default linked proofs and affected checksum pass, adding 1,052 coverage bytes (1,056 literal span bytes). Total 1,445,668 / 2,279,368 bytes. Eight draft-tool tests and fifteen repair-archive hash audits pass. Completed unit archives through SHUGAKU and corrected type repairs are integrated without matching credit. See [[tickets/T-12600-byte-coverage-families]] and [[tickets/T-14700-reserved-type-repairs]].
+## [2026-10-15] decision | Distinguish draft coverage gains from literal proof spans
+
+Clarified [[tickets/T-14501-remaining-draft-proof]] byte accounting: frozen inventory coverage sizes can exclude alignment included by funcdiff's linked comparison. SHUGAKU contributes 1,052 coverage bytes while its two proofs compare 1,056 linked bytes. The cumulative 28-function gain is 18,056 inventory coverage bytes; all literal match proofs remain valid. Future batches record both measures separately.
+## [2026-10-15] ticket | T-14700 reviewed draft archive complete
+
+Standards and spec review rechecked ce44a7e0 and resolved both findings, with no further actionable findings. All fifteen compile and artifact hashes/source snapshots validate; failure exit behavior verified. Retained original census and current repair environment fingerprints. Moved [[tickets/T-14700-reserved-type-repairs]] to Done for the draft-only scope; no literal-byte or SHA1 promotion claim.
+## [2026-10-15] ticket | Revisit three RPG_BAT diagnostic near matches
+
+Started [[tickets/T-14900-rpg-near-matches]] after reading [[tickets/T-13300-rpg-families]] and T-9780 evidence. Coordinate separate TU ownership with proof lane; preserve immutable draft attempts and existing C. Probe genuine typed aggregate pointers before further expression changes.
+
+## [2026-10-15] build | Match RPG motion through recovered aggregate aliasing
+
+[[tickets/T-14900-rpg-near-matches]]: func_80148B08 passes 1,128 default linked bytes and RPG_BAT SHA1; existing RpgMotion20 aliases preserve EC50 store before EC6C load. Added canonical u8 flag declarations and genuine void prototype. 454F0 remains twenty register rows, AF1C six after corrected u8 stores; bounded typed-pointer/local-lifetime probes do not improve them. Original attempts and preexisting C unchanged. Ticket moves In Review; [[matching-notes]] updated.
+
+## [2026-10-15] ticket | T-15000 KANGEI near-match investigation
+
+Claimed [[tickets/T-15000-kangei-near-match]] for bounded type/aggregate investigation of KANGEI func_80135CE0, whose T-14500 draft has score 6 over 432 inventory bytes. Incoming zero candidates keep priority; the frozen census context is unchanged. [[kanban]] and [[index]] updated.
+
+## [2026-10-15] build | T-15000 KANGEI duplicated-branch-store match
+
+Promoted KANGEI func_80135CE0: 432 inventory coverage bytes and 432 default linked literal bytes. Replaced m2c's shared-store goto with ordinary if/else-if branches, each with its own final byte store. KANGEI SHA1 and header/global/prototype guards pass; no FAKE or header changes. [[tickets/T-15000-kangei-near-match]] moves to In Review, with [[kanban]], [[index]], and [[matching-notes]] updated.
+
+## [2026-10-15] build | RPG motion and KANGEI branches
+RPG motion aggregate reconstruction passes all 27 integrated binary checksums and default literal proof. KANGEI ordinary branch reconstruction adds another candidate checked in the integration worktree. Dedicated EVENT large-function chat started on Sol 6.1 medium, using isolated source and shared immutable disc inputs. See [[tickets/T-12600-byte-coverage-families]], [[tickets/T-14900-rpg-near-matches]] and [[tickets/T-15000-kangei-near-match]].
+
+## [2026-10-15] build | Motion and branch publication validation
+Final KANGEI default literal proof and checksum pass. Combined total is 1,447,220 / 2,279,368 game-code bytes (63.5%); 376,276 remain to the 80% threshold. See [[tickets/T-12600-byte-coverage-families]].
+
+## [2026-10-15] ticket | BUNKASAI label draft investigation
+Opened [[tickets/T-15400-bunkasai-label-draft]] for the fresh two-row candidate. Check emitted string bytes and canonical GameState access before changing control flow; initial archive is immutable.
+
+## [2026-10-15] build | BUNKASAI label encoding match
+Ordinary Unicode label text fixes the two-row escaped-byte difference in func_801431D4. Canonical GameState access and restored text pass explicit default linked proof, affected SHA1 and guards, adding 440 coverage bytes. Original draft archive preserved. See [[tickets/T-15400-bunkasai-label-draft]].
+## [2026-10-15] ticket | T-15300 fresh structural near matches
+
+Claimed [[tickets/T-15300-fresh-structural-near-matches]] for bounded C fixes from completed census units, starting fresh BUNKASAI func_801438E4 (852 inventory bytes, score 14). No prior scope entry in historical wiki/catalog. Incoming zero proofs keep priority; [[kanban]] and [[index]] updated.
+
+## [2026-10-15] build | T-15300 BUNKASAI flag-store match
+
+Promoted BUNKASAI func_801438E4: 852 inventory coverage bytes and 852 default linked literal bytes. Existing CharFlags bits 12/13 replace byte-OR updates, resolving the complete 14-row gap. BUNKASAI SHA1 and header/global/prototype guards pass. No FAKE/header changes; existing C preserved. [[tickets/T-15300-fresh-structural-near-matches]] remains In Progress for fresh TACO probes; [[matching-notes]] updated.
+
+## [2026-10-15] build | BUNKASAI encoding and bitfield pair
+Combined default linked proofs, affected checksum and guards pass for 440-byte label and 852-byte character-state functions. Total 1,448,512 / 2,279,368 game bytes. Documented the emitted Shift-JIS escape defect for follow-up draft repair. See [[tickets/T-15400-bunkasai-label-draft]], [[tickets/T-15300-fresh-structural-near-matches]] and [[matching-notes]].
+
+## [2026-10-15] ticket | BUNKASAI character flag continuation
+Opened [[tickets/T-15500-bunkasai-character-flags]] to transfer the proven CharFlags access to a fresh six-row candidate.
+
+## [2026-10-15] build | BUNKASAI record-ten flag match
+Existing CharFlags bit13 eliminates six draft differences. Default literal820-byte proof, BUNKASAI SHA1 and guards pass, with prior C preserved. Coverage now 1,449,332 / 2,279,368 bytes (63.6%). See [[tickets/T-15500-bunkasai-character-flags]].
+
+## [2026-10-15] ticket | Reserve nine unaligned aggregate-copy failures
+
+The DATE repair lane accepted the nine unaligned-copy scopes under T-15100. drafts/T-14500/unaligned-repair-reservation.json excludes them from automatic retry, preserving initial attempts and avoiding duplicate compiler work. Final completeness auditing will distinguish compilation from residual synthetic-stack/placeholder expressions.
+
+## [2026-10-15] ingest | Fifteen independent type-repair alternatives
+
+Ingested the exact type-repair archive through 1d0069fa. Both compiler-coverage and quality ledgers read its catalog.json alongside DATE catalog.jsonl, preserving all initial attempts. The quality audit separately flags placeholders, synthesized stack locals, scaled address arithmetic in either operand order, and generated copy layouts requiring review. Compilation alone is not reported as usable reconstruction.
+
+## [2026-10-15] lint | Separate draft compilation from reconstruction quality
+
+Added the independent quality audit and three synthetic checks for placeholder masking, byte-view arithmetic, and preference for a reconstruction-clear alternative without changing initial outcomes. Eight census/repair checks also pass. Imported the fifteen context-qualified type alternatives through 1d0069fa; the final quality ledger will retain unresolved synthetic expressions explicitly.
+## [2026-10-15] ticket | Reserve unaligned aggregate-copy repair lane
+
+Created [[tickets/T-15100-unaligned-draft-repairs]] and notified the census generator to reserve the nine listed scopes. Read original m2c and target copy tails. Genuine sizes include 35-byte fortune table, three-byte flag table, and byte-string initializers; preserve original attempts and reconstruct typed alternatives without ASM edits.
+
+## [2026-10-15] build | Compile nine genuine unaligned-copy alternatives
+
+[[tickets/T-15100-unaligned-draft-repairs]] moves to In Review. All nine full-TU C alternatives compile and compare serially in Docker, spanning 17,408 target code bytes; scores 69..1667, no zeros and no matching-coverage claim. Copies recover genuine byte extents, string initializers and GEKO stack aliases. ENDING uses existing integer dialogue_render ABI evidence only in archived context. Complete separate catalog/provenance in drafts/T-14500/repairs-unaligned; initial attempts and production sources untouched.
+
+## [2026-10-15] build | Repair catalog duplicate-key fix
+Integrated audit test exposed duplicate repair_path keyword handling when joining a manual repair result with its catalog row. Replaced the duplicate keyword construction with an explicit merged mapping and final path override. All eleven draft, repair and audit tests pass in Docker. Initial census has all 1,066 outcomes (29 zero candidates, 908 other compiled scores, 129 failures); repairs remain separate and no complete usable-draft claim is made. See [[tickets/T-14500-exhaustive-drafts]].
+## [2026-10-15] build | T-15300 BUNKAKEN label encoding match
+
+Promoted BUNKAKEN func_80145844: 440 inventory coverage bytes and 440 literal default linked bytes. Restoring the ordinary Unicode label fixes an unsupported mixed hex-escape spelling in IDO K&R mode, following root's BUNKASAI finding. BUNKAKEN SHA1 and header/global/prototype guards pass. No FAKE/header changes or existing C edits. TACO's bounded structural probe is retained locally and paused for incoming exact candidates; see [[tickets/T-15300-fresh-structural-near-matches]].
+
+## [2026-10-15] build | Flag and encoding recovery publication
+Default literal proofs and affected checksum/guard checks pass for BUNKASAI820 and BUNKAKEN440 bytes. Total 1,449,772 / 2,279,368 game-code bytes. Nine integrated unaligned repair hashes and eleven tooling tests pass; repairs remain nonmatching. See [[tickets/T-12600-byte-coverage-families]], [[tickets/T-15500-bunkasai-character-flags]] and [[tickets/T-15300-fresh-structural-near-matches]].
+## [2026-10-15] build | T-14501 main verified draft batch
+
+Promoted 1 ordinary C functions / 188 inventory coverage bytes for main; default linked literal proof compared 188 bytes and overlay SHA1 passes. Header/global/prototype checks pass. No raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] build | All first-pass zero candidates have literal proof
+
+The main `_schedule_init` candidate passes 188 literal bytes / 188 inventory coverage bytes. Its three void forward declarations were centralized from existing definitions into main_api.h; all 27 binary SHA1 checks and header/global/prototype guards pass. This completes the 29 first-pass zero candidates, totaling 18,244 inventory coverage bytes across eight units; near/encoding repairs are separate. [[tickets/T-14501-remaining-draft-proof]] records the proof and accounting. The generation lane retains ownership of retry archives.
+
+## [2026-10-15] ingest | Preserve root reconstruction alternatives
+At the user's request to publish drafts before usage runs low, retained root T15400 canonical/nonmatching and Unicode/matching translation units, T15500 matching candidate, diffs, reproduction scripts and baseline notes under drafts/T-15400 and drafts/T-15500. No binaries or generated assembly included. See [[tickets/T-15400-bunkasai-label-draft]] and [[tickets/T-15500-bunkasai-character-flags]].
+## [2026-10-15] build | T-14501 ETC verified draft batch
+
+Promoted 1 ordinary C functions / 976 inventory coverage bytes for ETC; default linked literal proof compared 976 bytes and overlay SHA1 passes. Header/global/prototype checks pass. No raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] ingest | Preserve outstanding local draft snapshots
+Read-only worktree inspection found older ENDING and wave source edits plus external tooling research not yet committed to main. Preserved their base commits, source patches, complete modified C/headers and research notes under drafts/preserved-worktrees-2026-10-15, explicitly unverified and excluded from coverage. Original worktrees untouched. Active workers are checkpointing their own source/context archives separately. See [[tickets/T-12600-byte-coverage-families]].
+
+## [2026-10-15] ingest | Nine unaligned-copy reconstruction alternatives
+
+Ingested the separate repairs-unaligned archive from ffac0f04, preserving all original scopes. All nine alternatives compile with nonzero full-TU scores; no new match is claimed. The catalog join supports sibling repair archives and their archive_path schema in addition to repair_path/path.
+
+## [2026-10-15] query | Exhaustive census checkpoint 1066 of 1066
+
+[[exhaustive-drafts]] updated with the complete per-unit execution table: {'candidate-zero': 29, 'failed': 129, 'scored': 908}. Initial outcomes are preserved; separate repair attempts improve compilable draft coverage without changing production source.
+
+## [2026-10-15] build | Publish all initial draft work and current repairs
+
+At the user request, checkpoint all 1,066 initial scopes, current complete repair alternatives, source/header contexts, provenance, quality tools and compact snapshot ledgers for integration onto main. The serial repair remains active. Quality counts: {'compiling-audit-clear': 843, 'uncompilable': 84, 'compiling-review-needed': 139}. The all-usable target is explicitly incomplete; no absent initial scope and no new production match claim.
+
+## [2026-10-15] build | Publish complete initial draft census checkpoint
+User requested all work including drafts on main before usage runs low. Integrated all 1,066 initial outcomes, current automatic attempts, all 33 manual repair alternatives, root experiment contexts and older worktree/research snapshots. Quality snapshot: 843 compiling pattern-audit-clear, 139 compiling review-needed, 84 without compiling alternatives, zero absent initial scopes; audit-clear is not semantic proof. Fifteen tooling tests pass. Scheduler188 bytes passes all27 checksums and literal proof; ETC976 bytes passes affected checksum, guards and literal proof. Verified total 1,450,936 / 2,279,368 bytes (63.7%). Remaining80% gap372,560 bytes. Active workers are packaging final remaining archives. See [[tickets/T-12600-byte-coverage-families]] and [[tickets/T-14500-exhaustive-drafts]].
+## [2026-10-15] ticket | Inspect fresh RENSYU and RPG near matches
+
+Started [[tickets/T-15600-fresh-near-matches]]. Read wiki evidence and initial census drafts; RENSYU's inferred word at GameState+0x66E is an existing canonical record byte at stride four. No prior target-specific experiments found; old rodata build restriction is obsolete. Preserve all previous matches and archived attempts.
+
+## [2026-10-15] build | Verify fresh RENSYU and SHOUGATU matches
+
+[[tickets/T-15600-fresh-near-matches]]: two default linked-byte matches / 1,256 bytes, RENSYU and SHOUGATU SHA1 OK, headers/globals OK, prototype0new/15known. Packed record halfword and original postincrement timing explain the gains; [[matching-notes]] updated. RPG's remaining nine-row NOP gap and all attempted C/context/provenance are archived in drafts/T-15600. Original attempts and previous matching C preserved. Ticket moved In Review; no further experiments under the user's usage-budget instruction.
+
+## [2026-10-15] lint | Normalize archived context EOF whitespace
+
+[[tickets/T-15600-fresh-near-matches]] archived source contexts drop surplus EOF blank lines; updated archive hashes retain original compiled-context hashes separately. Full preprocessed inputs and production code are unchanged. Diff whitespace check passes; no new experiments.
+## [2026-10-15] ingest | T-15300 unfinished TACO source archive and handoff
+
+At the user's request, stopped new experiments and saved drafts/T-15300/TACO/func_80133738/: exact latest guarded source/body, header closure and SHA256 manifest, diagnostics, transformations and findings. Eight instruction positions remain different; no match or untested lead is claimed. Restored the production TACO source exactly to its committed ASM fallback. No assembly files, game binaries, or build outputs are included. [[tickets/T-15300-fresh-structural-near-matches]] moves to In Review; [[kanban]] and [[index]] updated.
+
+## [2026-10-15] ingest | Preserve proof-lane scaffolding for complete handoff
+
+Saved the local Python proof helpers and per-target transformations in drafts/T-14501/proof-lane-tools/ with source-path/SHA256 manifest and session context. No game binaries, generated assembly files, or build outputs are included. This preserves remaining local work alongside the exact TACO draft archive; [[tickets/T-14501-remaining-draft-proof]] records the handoff.
+
+## [2026-10-15] ticket | Claim large EVENT reconstruction
+
+Created [[tickets/T-15200-event-large]] in isolated codex/event-large-15200 at c5859bf5. Read [[index]], coding standards, local setup, prior [[tickets/T-11600-w1-ovl-event-8010fe10]] and T-14300 evidence. Disc inputs hardlinked; production C untouched.
+
+## [2026-10-15] query | Recover EVENT dispatcher state and related handler shape
+
+[[tickets/T-15200-event-large]] records assembly-backed bitfield/date-assignment reconstruction and diagnostic reductions: dispatcher 3,174 archived rows to 1,930; related func_80118010 down to 26 rows. No matching claim. Reused EventStateView/Rec34, preserved original archives and all production C.
+
+## [2026-10-15] decision | Retain recovered EVENT fields and guarded close handler
+
+[[tickets/T-15200-event-large]] retains the large dispatcher separately and func_80118010 under NON_MATCHING. Added explicit state fields for selector table D_800B0F35 and flag D_800B0F45. Traced allocator isolates 13 register-only instruction differences; no new verified C coverage claimed.
+
+## [2026-10-15] decision | Pin all EVENT reconstructions for integration
+
+Parent requests immediate draft checkpoint with no further exploration. [[tickets/T-15200-event-large]] moves all nonmatching code to drafts/T-15200, restores production C exactly, preserves measured alternatives and useful compiler contexts, and retains only supported EVENT state field names in the header. EVENT checksum passed; verified coverage gain zero.
+
+## [2026-10-15] ticket | EVENT draft checkpoint awaits review
+
+[[tickets/T-15200-event-large]] moves In Review for parent integration. Useful nonmatching source, exact context snapshots, hashes, measured alternatives and serial replay scripts are committed separately from production C. Standards/spec review remains required before Done.
+
+## [2026-10-15] ingest | Draft archive navigation and final worker handoffs
+Added drafts/README.md describing the complete initial census, repair/quality limits, focused reconstruction archives and preserved older worktrees. Integrated final proof-lane helpers/TACO draft and EVENT reconstructions. RENSYU688 and SHOUGATU568 default literal proofs and affected checksum/guards pass; verified total is 1,452,192 / 2,279,368 bytes (63.7%). EVENT header consumer validation is recorded separately in build/scratch/goal-event-archive.log. Remaining automatic pass will receive a final source-only checkpoint. See [[tickets/T-12600-byte-coverage-families]] and [[tickets/T-14500-exhaustive-drafts]].
+## [2026-10-15] decision | Preserve bounded TAIIKU follow-up evidence during disk audit
+
+[[tickets/T-13600-taiiku-families]] records39610's sixteen-line residual after canonical stat-loop reconstruction,34F98's copied-table mismatch, and3D788's unsuccessful calling-convention test. No new source or ABI changes are accepted; cumulative gain remains1,496 literal-verified bytes. Root's disk audit limits further large outputs/full builds while the committed wins await independent review.
+
+## [2026-10-15] build | T-13600 bounded resource dispatcher and table helper
+
+[[tickets/T-13600-taiiku-families]] records45640's12/4-word resource tables, canonical two-argument resource API, and61-line stack residual;44464's four-halfword table draft remains197 lines. No new production source or shared declarations, no additional verified bytes. Root's disk cleanup allowed resuming small one-compiler Docker comparisons.
+
+## [2026-10-15] build | T-13600 fresh timing and animation helper evidence
+
+[[tickets/T-13600-taiiku-families]] recordsBCEC's collapsed second coordinate and115-line residual, plus43DD0's matching-sibling direct-store improvement109 to36 lines. No production source is accepted and no further verified bytes claimed. New drivers and diffs are preserved in build/taiiku13600 for the exhaustive draft catalog.
+
+## [2026-10-15] decision | T-13600 isolate donor reset ordering
+
+[[tickets/T-13600-taiiku-families]] records43DD0's20-line residual after applying only the matched44B40 per-branch reset form. All twelve previously unmentioned candidates have now received inspection or bounded tests; the larger84-function baseline remains open and the exhaustive catalog can guide the next family. No new verified bytes.
+## [2026-10-15] build | Verify pinned EVENT draft checkpoint
+
+[[tickets/T-15200-event-large]]: default ASM fallback linked proofs pass (6,848 / 680 bytes); EVENT checksum, header/global guards and prototype branch guard pass (zero new, 15 known). Preferred nonmatching contexts rescore to 1,930 / 26 rows. Host Git confirms production C unchanged; no new matching coverage. Saved proof metadata in drafts/T-15200/verification.json.
+
+## [2026-10-15] decision | Repair all remaining compile failures before stopping
+User updated stopping condition to try to get every draft compiling. Partitioned remaining77 failures into disjoint batches: T15700 TACO/TAIIKU28, T15800 other small overlays23, T15900 remaining overlays13, T16000 main13. Current preservation checkpoints remain on main; recurring monitoring stays paused while this explicit repair request proceeds. See [[tickets/T-16000-main-draft-compilation]] and [[exhaustive-drafts]].
+## [2026-10-15] decision | Stop exhaustive drafting at the user-requested checkpoint
+
+Finished the already-running final repair pass and stopped without starting new work. All 1,066 initial scopes have outcomes. Across 257 automatic attempts and 33 manual reconstructions, 52 original failures now compile; 77 still do not. Quality ledger: 849 compiling/audit-clear, 140 compiling/review-needed, 77 uncompilable. Original artifacts remain immutable. [[exhaustive-drafts]] records remaining gaps and restart commands; the all-usable target is not marked complete.
+
+## [2026-10-15] ticket | Resume to compile every remaining draft
+
+The user superseded the stopping request and asked to get all drafts compiling. Reopened work with an exact 77-scope manifest carrying all context paths and complete diagnostics. Disjoint assignment: T-16000 MAIN13, T-15700 TACO17/TAIIKU11, T-15800 six-unit batch23, T-15900 mixed-overlay batch13. Initial artifacts remain immutable; no stub bodies are permitted.
+
+## [2026-10-15] build | T15900 thirteen compiling source alternatives
+
+All thirteen reserved mixed-overlay scopes now compile through default full-TU IDO5.3, replayed with exact score assertions. Saved bodies, declarations, complete and preprocessed contexts, full compiler output, hashes and provenance under `drafts/T-14500/repairs/t15900`. Existing production EVENT17D80 is reused; no new matching-byte claim. Original attempts remain immutable. Updated [[exhaustive-drafts]] and [[tickets/T-15900-remaining-draft-compile-repairs]]. Remaining77 completion still awaits the disjoint batches.
+
+## [2026-10-15] ticket | Reserve all TACO and TAIIKU draft failures
+
+Started [[tickets/T-15700-taco-taiiku-draft-repairs]], 28 scopes (17/11). Inspected all prior alternative references/diagnostics and four historical source trees; none implements these exact targets. Preserve initial attempts; capture full diagnostics rather than helper-tail truncation before genuine SDK/type/stack reconstruction.
+
+## [2026-10-15] build | Compile every reserved TACO and TAIIKU draft
+
+[[tickets/T-15700-taco-taiiku-draft-repairs]] moves In Review:28/28 full TUs compile in Docker (17TACO/11TAIIKU), 29584 target code bytes, scores98..709 and no zeros/coverage claim. SDK vector/coordinate layouts, actual copied tables and canonical aggregate/ABI views resolve all blockers. Complete C/context/diagnostics/hash/provenance and one-time derivation scripts saved in drafts/T-15700; initial attempts and production C/header files unchanged.
+
+## [2026-10-15] build | Publish 41 final compilation repairs
+
+Integrated T15700 (28) and T15900 (13), plus final257 automatic-attempt census and source-only checkpoint metadata. Published main f600eae0. No production C/header changes from c21bb523 and no new matching-byte claims. Prepared tools/refresh_draft_ledgers.py to join complete final catalogs without launching more generation. T15800 and T16000 continue the remaining compilation repairs; [[exhaustive-drafts]] and [[stopping-point-2026-10-15]] distinguish the earlier 77-failure checkpoint.
+## [2026-10-15] ticket | T-15800 compile every assigned failed overlay draft
+
+The user renewed the stopping condition to seek compiling C for every remaining draft. Claimed 23 nonreserved failed scopes in GYOZI, OPTION, SHOUGATU, SHUGAKU, MASTER and NAME_ENT under [[tickets/T-15800-compile-remaining-overlay-drafts]]. Use frozen source/header snapshots and serial Docker compilation; original archives and production C remain unchanged. [[kanban]] and [[index]] updated.
+
+## [2026-10-15] build | T-15800 all 23 assigned alternatives compile
+
+Completed serial full-TU Docker compilation for all 23 assigned scopes across GYOZI, OPTION, SHOUGATU, SHUGAKU, MASTER and NAME_ENT. Typed callback/coordinate/threshold arrays, concrete byte/word views, existing return views and callee-derived argument corrections remove compile blockers. Saved complete final/preprocessed C contexts, all attempt diagnostics, scores, hashes and provenance under drafts/T-15800; archive audit passes 23/23. No target stubs/ASM fallback counted and no production source changed. [[tickets/T-15800-compile-remaining-overlay-drafts]] moves to In Review; [[kanban]] and [[index]] updated.
+
+## [2026-10-15] build | Every frozen-census scope has a compiling draft
+
+Completed all77 final compiler repairs across T15700–T16000. Joined ledgers cover1066/1066 scopes with zero compiler failures or missing alternatives; quality audit reports901 audit-clear and165 review-needed. Original attempts remain immutable. Compilation adds no verified bytes: production stays1,452,192/2,279,368 (63.7%). Updated [[exhaustive-drafts]], [[stopping-point-2026-10-15]] and draft navigation. T16000 moves In Review; semantic/matching work remains open. User-requested stopping point reached after final validation/publication; recurring heartbeat stays paused.
+
+## [2026-10-15] ticket | Final compilation archive validation
+
+T15900 moves In Review following completed13/13 compilation; ticket and board now agree. Final validation: no pending build work, prototype branch check passes (zero new/15 known), all13 draft-tool tests pass, recorded final repair hashes pass, all1066 scopes have scored compiler outcomes. Production C/headers remain unchanged from c21bb523. The additional diagnostic zero in the joined catalog is EVENT17D80 reusing already verified production C, not an unpromoted new match. See [[stopping-point-2026-10-15]].
+
+## [2026-10-15] ticket | Review 165 flagged compiling drafts
+
+User requested Sol6.1 medium pass. Froze165 selected review-needed scopes and assigned disjoint batches under [[tickets/T-16100-flagged-draft-pass]]. Preserve original alternatives, repair supported issues, retain explicit unresolved findings, and compile changed full contexts. No automated matching restart.
+
+## [2026-10-15] build | Sol medium pass reviews all165 flagged drafts
+
+Three disjoint Sol6.1 medium workers reviewed165 scopes and retained165 full-TU compiled/scored alternatives;93 bodies repaired,72 preserved. Scope coverage and archive hashes validate. Unchanged quality audit moves901/165 to950/116 audit-clear/review-needed (49 cleared). No production edits or new matching bytes; original alternatives preserved. Added [[flagged-draft-pass]] and refreshed [[exhaustive-drafts]], [[stopping-point-2026-10-15]] and ledgers. [[tickets/T-16100-flagged-draft-pass]] moves In Review with semantic limitations explicit.
+
+## [2026-10-15] decision | Prepare final main publication and agent handoff
+
+User requested all work on main and a wiki ready for a later agent. Rewrote [[stopping-point-2026-10-15]] around current63.7% matching coverage,1066 compiling census scopes,116 remaining flagged scopes, archive paths, evidence limitations and exact metadata validation commands. All workers finished; recurring monitoring remains paused. Join/hash checks and13 draft-tool tests pass; production files unchanged. Original checkout and archived attempts preserved.
+
+## [2026-10-15] decision | Local worktree storage cleanup
+
+User requested disk cleanup while retaining game files. Audited worktree status; dirty and locked trees are retained. Clean tokimemo-wt checkouts are archived with file-hash verification, duplicate disc files are verified against retained main-project copies, and commit references are retained before worktree removal. See [[tickets/T-11920-local-storage-cleanup]].
+
+## [2026-10-15] lint | Verify local storage cleanup
+
+[[tickets/T-11920-local-storage-cleanup]] moved to In Review. Removed 35 clean registered worktrees and four orphaned folders after archive verification. Confirmed 1,360 retained game files still match their SHA-256 hashes, and all six dirty worktrees retain their previous Git status. Main project and other agent worktrees remain. No project code changed.
+
+## [2026-10-15] ticket | T-16200 Matching wave 2 opened
+
+Opened [[tickets/T-16200-matching-wave-2]] (In Progress) on integration branch `w2-int` from main `868c879a`
+(5,945/6,958, 63.7%). Fresh inventory over the T-14500 census: 882 non-TT functions / 739,240 bytes in 128 file-disjoint
+packages; wave 2 runs the top 24 (T-16210..T-16440) plus the four unmerged wave-1 packages (T-11640, T-11650, T-11670,
+T-11690). TT stays excluded (issue #2).
+
+## [2026-10-15] ticket | T-16210 Wave 2 package w2-p01 opened
+
+Opened [[tickets/T-16210-w2-rpg_bat-801454f0]] (In Progress) under [[tickets/T-16200-matching-wave-2]]: five RPG_BAT
+functions from the T-14500 census drafts, owned files `src/ovl/RPG_BAT/801454F0.c`, `src/ovl/RPG_BAT/80155A70.c`,
+`src/ovl/RPG_BAT/80156870.c`, `src/ovl/RPG_BAT/8013AD50.c`.
+
+## [2026-10-15] ticket | T-16210 Wave 2 package w2-p01 to In Review
+
+[[tickets/T-16210-w2-rpg_bat-801454f0]] moved to In Review: 5 of 5 RPG_BAT functions matched (5,072 bytes):
+`func_80155A70`, `func_8013AF1C`, `func_801454F0`, `func_801568A4`, `func_8013AD50`. New finding in
+[[matching-notes]]: callers of `func_8013E7C0`/`func_8013E97C` saw an implicit int declaration (counter in `$v1`
+after the call); `include/ovl/RPG_BAT.h` gets an `RPG_BAT_OVERRIDE_<name>` guard for them. Owned files
+`src/ovl/RPG_BAT/801454F0.c`, `80155A70.c`, `80156870.c`, `8013AD50.c` hold no asm any more.
+
+## [2026-10-15] ticket | T-16210 Done
+
+[[tickets/T-16210-w2-rpg_bat-801454f0]] reviewed against `CODING_STANDARDS.md` and moved to Done: 5 of 5 RPG_BAT
+functions matched (5,072 bytes), no blocking findings. One fix: section 8a of `CODING_STANDARDS.md` now describes the
+`<NAME>_OVERRIDE_<symbol>` guard for overlay-local symbols that the package introduced (`RPG_BAT_OVERRIDE_func_8013E7C0`,
+`RPG_BAT_OVERRIDE_func_8013E97C`). Follow-up: teach `tools/sync_protos.py` and `tools/check_headers.py` this form.
+## [2026-10-15] ticket | T-11670 In Progress
+
+[[tickets/T-11670-w1-main-8006cb30]] created and claimed: wave 1 package w1-p11, 12 functions of `src/main/8006CB30.c`.
+
+## [2026-10-15] ticket | T-11670 resumed in wave 2 (w2-r11)
+
+[[tickets/T-11670-w1-main-8006cb30]] (In Progress) resumed as wave-2 package w2-r11 under [[tickets/T-16200-matching-wave-2]]. Merged branch `w1-p11` (matches `_schedule_init`, `geko_judge`, `schedule_girls_gakko`; guarded `func_80072998`, `func_800726F0`) onto the wave-2 base; dropped three duplicate declarations in `include/main_api.h`; `src/main/8006CB30.c` sha1 OK.
+
+## [2026-10-15] ticket | T-11670 to In Review
+
+[[tickets/T-11670-w1-main-8006cb30]] (wave 2 package w2-r11): 1 new match in `src/main/8006CB30.c` (`func_8006EA40`, 292 bytes; 4 on the ticket with wave 1). New guarded draft `func_8006D6E0` (5 lines), `func_80072D70` cut to 22 lines; others unchanged or left `INCLUDE_ASM`. Finding: a value-returning call used as a statement keeps later ranges in its block out of `v0`; a `void` override fixed `func_8006EA40`. Notes in [[matching-notes]] (T-11670), 5 rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-11670 Done
+
+[[tickets/T-11670-w1-main-8006cb30]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 functions matched in `src/main/8006CB30.c` (`_schedule_init`, `geko_judge`, `schedule_girls_gakko`, `func_8006EA40`). Review fixes: `FAKE` note on the `geko_judge` frame buffers, line counts on the two T-10880 guards. Build in the worktree: globals OK, headers OK, unit sha1 OK.
+## [2026-10-15] ticket | T-16230 Wave 2 package w2-p03 opened
+
+Opened [[tickets/T-16230-w2-date-80150010]] (In Progress) under [[tickets/T-16200-matching-wave-2]]: branch `w2-p03` from `w2-good`, owned file `src/ovl/DATE/80150010.c`, work list DATE `func_801511B4`, `func_80150460`, `func_80150ED4`, `func_80150C78`.
+
+## [2026-10-16] ticket | T-16230 Wave 2 package w2-p03 to In Review
+
+[[tickets/T-16230-w2-date-80150010]] moved to In Review: 4 of 4 functions matched in plain C (DATE `func_801511B4`, `func_80150460`, `func_80150ED4`, `func_80150C78`; 1,620 bytes), so `src/ovl/DATE/80150010.c` has no `INCLUDE_ASM` left. Keys: real aggregates (`D_801217D0[57]`, display records 96/98 of `D_8011ECD0`), a chain assignment through record elements, a `GameState *g` pointer, and `order_search` over the declarations for a spilled local's stack home. Notes in [[matching-notes]] ("T-16230"), update line in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-16230 Done
+
+[[tickets/T-16230-w2-date-80150010]] reviewed against `CODING_STANDARDS.md` with no findings and moved to Done: 4 of 4 functions matched (DATE `func_801511B4`, `func_80150460`, `func_80150ED4`, `func_80150C78`; 1,620 bytes), DATE sha1 OK in the package worktree. Merge into `w2-good` follows.
+## [2026-10-15] ticket | T-16220 Wave 2 package w2-p02 opened
+Opened [[tickets/T-16220-w2-main-8007c030]] (In Progress) under [[tickets/T-16200-matching-wave-2]] on branch `w2-p02`: func_800422C8, make_three_select, dialogue_speak_part, junban_init, _sprite_set_box_shade_tarao.
+
+## [2026-10-16] ticket | T-16220 Wave 2 package w2-p02 to In Review
+[[tickets/T-16220-w2-main-8007c030]]: 3 of 5 matched (804 bytes): `func_800422C8`, `make_three_select` (FAKE frame pad), `junban_init`. The first and third were T-0018 rows; they match once the global is assigned and read directly. `_sprite_set_box_shade_tarao` is a guarded draft at 30 lines, and `dialogue_speak_part` stays at 16. Notes in [[matching-notes]] ("Wave 2 package w2-p02"), two rows in [[register-cheatsheet]]. Branch `w2-p02`.
+
+## [2026-10-16] ticket | T-16220 Done
+[[tickets/T-16220-w2-main-8007c030]]: review against CODING_STANDARDS.md found one issue (the `_sprite_set_box_shade_tarao` draft tricks lacked a `FAKE` mark), fixed in a comment-only commit. 3 functions matched (`func_800422C8`, `make_three_select`, `junban_init`, 804 bytes); unit sha1 OK, headers, globals and proto checks OK. Moved In Review to Done.
+## [2026-10-15] ticket | T-11650 created
+
+Created [[tickets/T-11650-w1-ovl-name_ent-80132000]] (In Progress): wave 1 package w1-p09, NAME_ENT `src/ovl/NAME_ENT/80132000.c`.
+
+## [2026-10-15] ticket | T-11650 resumed in wave 2 (w2-r09)
+
+[[tickets/T-11650-w1-ovl-name_ent-80132000]] resumed under [[tickets/T-16200-matching-wave-2]] as package w2-r09. Merged branch w1-p09 (8 matched functions in `src/ovl/NAME_ENT/80132000.c`) onto the wave-2 base; NAME_ENT sha1 OK. Status stays In Progress.
+
+## [2026-10-15] ticket | T-11650 to In Review (w2-r09)
+
+[[tickets/T-11650-w1-ovl-name_ent-80132000]]: wave 2 package w2-r09 matched 8 functions in `src/ovl/NAME_ENT/80132000.c` (func_80139684, func_80135650, func_80137CA0, func_80139440, func_80132B78, func_80133510, func_801338DC, func_8013635C), 16 for the ticket with wave 1. Guarded: func_80132320, func_80134B94. Three [[data/t0018-cases]] rows; notes in [[matching-notes]]. Clean build 27/27 sha1 OK; header, globals and prototype checks pass. Awaiting code review.
+
+## [2026-10-16] ticket | T-11650 Done
+
+[[tickets/T-11650-w1-ovl-name_ent-80132000]] reviewed against `CODING_STANDARDS.md` and moved to Done: 8 functions matched in wave 2 (16 for the ticket) in `src/ovl/NAME_ENT/80132000.c`. Review fixes were comments only (lines left on the func_80134248 guard, `FAKE` marks on the u8-view casts, implicit-int notes). Clean build 27/27 sha1 OK.
+## [2026-10-15] ticket | T-11690 opened
+
+Created [[tickets/T-11690-w1-main-800674b0]] (In Progress): wave 1 package w1-p13, twelve functions of `src/main/800674B0.c`.
+
+## [2026-10-15] ticket | T-11690 resumed in wave 2 as w2-r13
+
+Merged branch w1-p13 (club_list_menu and func_80067C28 matched) onto w2-good in worktree w2-r13 under [[tickets/T-16200-matching-wave-2]]. Conflicts only in wiki index, kanban and log; all 27 sha1 OK after the merge. [[tickets/T-11690-w1-main-800674b0]] stays In Progress.
+
+## [2026-10-15] ticket | T-11690 to In Review (w2-r13)
+
+[[tickets/T-11690-w1-main-800674b0]] moved to In Review. Wave 2 matched 1 function, `func_8006A2CC` (3112 bytes), for 3 in total with the wave 1 matches `club_list_menu` and `func_80067C28`. Guarded drafts: `func_8006BC28` (17 lines), `func_800676AC` (11 lines). Notes in [[matching-notes]] ("T-11690"), new rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-11690 Done
+
+Code review of w2-r13 against CODING_STANDARDS.md: 4 findings (unmarked fakematches in `func_80067C28` and `func_8006A2CC`, a FAKE ticket reference, an indentation slip), all fixed in the worktree, build checks OK. [[tickets/T-11690-w1-main-800674b0]] moved to Done with 3 functions matched (`club_list_menu`, `func_80067C28`, `func_8006A2CC`); guarded drafts `func_8006BC28` and `func_800676AC`.
+## [2026-10-15] ticket | T-11640 created
+
+Created [[tickets/T-11640-w1-ovl-taiiku-80138950]] (In Progress) in worktree w1-p08: wave 1 package for src/ovl/TAIIKU/80138950.c.
+
+## [2026-10-15] ticket | T-11640 resumed in wave 2 (w2-r08)
+
+Merged branch w1-p08 into w2-r08 (7 TAIIKU matches; main's func_80139330 kept and renamed to the TaiikuBall layout); TAIIKU sha1 OK. [[tickets/T-11640-w1-ovl-taiiku-80138950]] stays In Progress under [[tickets/T-16200-matching-wave-2]].
+
+## [2026-10-15] ticket | T-11640 to In Review (wave 2, w2-r08)
+
+[[tickets/T-11640-w1-ovl-taiiku-80138950]]: 8 more TAIIKU 80138950.c functions matched in wave 2 (15 with the merged wave-1 work), 2 guarded drafts, 7 rows in [[data/t0018-cases]], section "T-11640 wave 2" in [[matching-notes]]. Status In Review.
+
+## [2026-10-15] build | T-11640: func_8013BEF8 and func_8013C0E4 matched
+
+[[tickets/T-11640-w1-ovl-taiiku-80138950]]: the D_801499A2 counter functions match with u16 pointer views of the counter and the flag (no volatile flag); 10 wave-2 matches in total. Notes in [[matching-notes]], one more row in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-11640 Done
+
+Reviewed [[tickets/T-11640-w1-ovl-taiiku-80138950]] against `CODING_STANDARDS.md`: one finding (FAKE explanations for the s16 tmp/halfword views, fixed, comments only), no open findings. 10 wave-2 functions matched in `src/ovl/TAIIKU/80138950.c` (6,876 bytes), 6 more from the merged wave-1 branch, 4 guarded drafts. TAIIKU sha1 OK, headers OK, globals OK, `sync_protos.py --check-branch` OK. Moved to Done on the kanban board.
+
+## [2026-10-16] ingest | Register cheat sheet: wave 2 tricks
+
+Folded the wave-2 FAKE tricks and the wave-2 sections of [[matching-notes]] (T-11640, T-11650, T-11670, T-11690, T-16210, T-16220, T-16230; no notes exist yet for T-16240 to T-16440) into [[register-cheatsheet]]: 21 new rows (callee `int`/`void`/unprototyped views, delay-slot `lui` fixed by implicit int, absolute-address `lui`/`lw` split, strength-reduced `(start + i) % n`, spill-slot and frame rules, chain assignment with a call index, single `&&` return chain, narrow-field decrement through `GameState`, record copy through one array, `GameState *g` colouring, field types and register sharing, peeled copy, empty last switch case, `(u8)` narrowing, `u16`/`s16` pointer views of the TAIIKU counter family, dead selector reads, `setWH`, plain unrolled loops) and 8 existing rows extended with the wave-2 variants. Tricks already on the page from T-16220 (assign to the global, masked byte stores) were not repeated.
+
+## [2026-10-16] query | Compiler reverse engineering and faster source recovery
+
+Two read-only research passes (readers, analyst, one skeptic per idea) answered the user's questions; filed as
+[[speedup-research-2026-10-16]]. Compiler RE: the paying work is already in the build; estimate 5-10% of remaining
+bytes compiler-limited. Source recovery: types-first family passes are the strongest lever; tooling round
+T-16500..T-16530 and a two-unit types-first pilot follow. Compiler experiments run as T-16900 in a separate session.
+
+## [2026-10-16] ticket | T-16200 Done
+
+Wave 2 closed early by user decision (Sonnet first with an Opus closer from wave 3). Seven packages merged and pushed,
+each reviewed by its merge agent; 21 packages never started and return to the inventory. 5,945 -> 5,995/6,958
+functions, 63.7% -> 65.1% of bytes. Final `w2-int` check clean (27/27, headers, globals, prototypes). Results and
+blockers in [[tickets/T-16200-matching-wave-2]].
+
+## [2026-10-16] ticket | T-16500 started
+
+[[tickets/T-16500-twin-sweep]] (tooling round, parent [[tickets/T-16200-matching-wave-2]]): whole-tree twin sweep over `tools/dupes.py` and `tools/neardupes.py`. Branch `t16500-twin-sweep`; nothing under `src/` is touched.
+
+## [2026-10-16] ticket | T-16500 to In Review
+
+[[tickets/T-16500-twin-sweep]]: `tools/twin_sweep.py` (tests `tools/test_twin_sweep.py`, 32; whole suite 1048 OK) plans every exact, near and lenient copy over the whole tree and applies only the files it is given, each copy verified by the unit sha1; section in [[decompile-workflow]]. Dry run on w2-good `7f081d79`: 6958 functions, 4 plans / 944 B (exact GYOZI func_8013506C, TAIIKU func_801406A8; lenient GEKO func_8013E22C, TACO func_801347F4; near 0), 4 functions without a plan, 12 s idle. Applied in a scratch clone (no change to `src/`): 1 kept, TAIIKU func_801406A8 144 B; GYOZI and GEKO fail the sha1, TACO the header check. Finding: a NON_MATCHING draft left above the INCLUDE_ASM made every copy fail or leave dead code, so the sweep replaces the block. Small changes in `tools/dupes.py` (`src_unit`, `NINJA_ARGS`, optional replacement pattern).
+
+## [2026-10-16] ticket | T-16500 Done
+
+[[tickets/T-16500-twin-sweep]] reviewed against `CODING_STANDARDS.md` and moved to Done: only `tools/` and wiki pages changed (nothing under `src/`, `drafts/`, `asm/`), 1048 tool tests OK, dry run reproduces the 4 plans / 944 B on w2-good, and an apply in a scratch clone kept TAIIKU func_801406A8 (144 B, sha1 and `check_headers.py` OK). Review fixes: docstring timing, "whole tree" labels on two summary lines, [[decompile-workflow]] names the header edits a copy makes. The tool exits 0 when copies are rejected; read its `applied N of M` line.
+
+## [2026-10-16] ticket | T-16510 started
+
+[[tickets/T-16510-m2c-defect-rewrites]] (In Progress, under [[tickets/T-16200-matching-wave-2]]): detectors and mechanical rewrites for recurring m2c draft defects (shared-store goto, Shift-JIS hex escapes, post-increment compare; report-only void/s32 candidates), run over the `drafts/T-14500` selected bodies. Branch `t16510-m2c-defects`.
+
+## [2026-10-16] ticket | T-16510 to In Review
+
+[[tickets/T-16510-m2c-defect-rewrites]]: `tools/draft_fixes.py` (detectors, mechanical rewrites, `survey`, `rescore`), `tools/m2c.py --fix-defects`, in-place post-increment fix in `tools/m2c_args.py`, tests `tools/test_draft_fixes.py`, section in [[decompile-workflow]], notes in [[matching-notes]]. Survey of the 1,066 selected T-14500 bodies: 27 rewritable shared-store `goto` bodies (263 labels left alone), 13 Shift-JIS escape bodies, 11 post-increment bodies, 71 `s32-no-return` candidates, 0 void-callers-read-v0. Rescore of the 50 changed drafts in the full unit: 3 at score 0 (BUNKAKEN `func_80145844`, BUNKASAI `func_801431D4`, SHOUGATU `func_80137144`, all already matched by hand), 31 better, 3 equal, 13 worse (original kept); 1,499 rows removed. Output in `drafts/T-16510/` (`GEKO:func_801327AC` 223 to 2, score 0 with one more line). No change under `src/`. Waiting for code review.
+
+## [2026-10-16] ticket | T-16510 Done
+
+[[tickets/T-16510-m2c-defect-rewrites]] reviewed against `CODING_STANDARDS.md` and moved to Done: only `tools/`, new `drafts/T-16510/` folders and wiki pages changed, nothing under `src/`; all 51 tool test files pass in Docker (37 new tests). Review fixes: the ticket now counts 13 worse `goto` rewrites (7 in the top 30), the `rescore` docs state the two-to-six rule, [[decompile-workflow]] gives the post-increment count of the wider scan (207 of 6,958 asm functions, 83 before). The branch is 101 commits behind `w2-good`; merging conflicts only in `wiki/log.md` and `wiki/matching-notes.md`. Not merged or pushed.
+
+## [2026-10-16] ticket | T-16520 matched-sibling report started
+
+[[tickets/T-16520-sibling-report]] (In Progress, under [[tickets/T-16200-matching-wave-2]]): new tool `tools/siblings.py` finds the closest matched functions for every unmatched one by register-erased opcode similarity, plus unmatched-unmatched clusters, and writes per-target sibling notes for work packages. Branch `t16520-siblings`. No `src/` edits.
+
+## [2026-10-16] ticket | T-16520 to In Review
+
+[[tickets/T-16520-sibling-report]]: `tools/siblings.py` (tests `tools/test_siblings.py`, 44) and `dupes.asm_sources` (shared file selection, test in `tools/test_dupes.py`); docs in [[decompile-workflow]]. On the tree (1,005 unmatched, 5,953 matched): best sibling >= 0.90 for 46 functions / 24,616 bytes (12 clones), 0.80-0.90 for 36 / 19,676, 0.70-0.80 for 68 / 28,556; 855 / 748,888 bytes have none. 59 unmatched clusters at >= 0.90 (139 functions, 102,340 bytes), 42 without a matched sibling (matching one member of each opens 55 functions, 45,348 bytes). Index recall against brute force on 300 targets: 50 of 50. Runtime 30 s cold, 2-25 s warm. Five pairs checked by eye. Full tool test suite passes.
+
+## [2026-10-16] ticket | T-16520 Done
+
+[[tickets/T-16520-sibling-report]] reviewed against `CODING_STANDARDS.md` and moved to Done: `tools/siblings.py` (matched-sibling report, `--package` notes) and `dupes.asm_sources`. Verified: 45 sibling tests and the whole tool suite (1062) pass in Docker, `load_funcs` unchanged on the real tree, tier and cluster figures reproduced, recall 50 of 50. Review fixes: `--package` examples in the docstring and [[decompile-workflow]] named a function and a C path that do not exist; new test for `file:` entries in the per-object layout. Branch `t16520-siblings`, not merged.
+
+## [2026-10-16] ticket | T-16530 opened
+
+[[tickets/T-16530-proto-override]] (In Progress, under [[tickets/T-16200-matching-wave-2]]): add a repeatable `--proto` prototype override to `tools/regdiff.py` and `tools/funcdiff.py` and a clearer missing-traced-uopt message. Worktree branch `t16530-proto-override`; no `src/` edits.
+
+## [2026-10-16] ticket | T-16530 to In Review
+
+[[tickets/T-16530-proto-override]]: `--proto DECL` (repeatable) in `tools/regdiff.py` and `tools/funcdiff.py` replaces the declaration of a called function for one compile (`tools/protoverride.py`, `tools/funcdiff_verify.py` `compile_unit`), no file under `src/` or `include/` edited; regdiff's missing-traced-uopt message lists the paths tried and how to provide the binary (`regdiff.find_uopt`). Validated on the T-16210 case (RPG_BAT `func_801454F0`, `func_8013E97C`): the void view gives the `$v0`/`$v1` divergence at insn 89, `--proto 's32 func_8013E97C();'` gives MATCH 498/498 from a copy without the override, funcdiff MATCH (2,000 linked bytes) and DIFF for the two views. 50 new tests; full tool suite 1,066 OK (3 skipped) without the scratch mount; three `test_bulk_m2c` tests fail only when the traced uopt is mounted, same at the base commit. Sweep: 443 `src` units scanned, 6,081 definitions, 1,769 real declarations round-tripped unchanged. Docs: [[decompile-workflow]] ("Trying another prototype", "Where regdiff looks for the traced uopt"), pointers in [[matching-notes]] and [[uopt-register-allocation]]. Awaiting code review before Done.
+
+## [2026-10-16] ticket | T-16530 Done
+
+[[tickets/T-16530-proto-override]] reviewed against `CODING_STANDARDS.md` and moved to Done. No change under `src/`, `include/` or `drafts/`; 50 new tests and the full tool suite pass in Docker; `tools/funcdiff.py` and `tools/regdiff.py` run with `--proto` on RPG_BAT `func_801454F0` (MATCH with `s32`, DIFF with `void`, refusals checked). One fix: an unused import in `tools/test_protoverride.py`.
+
+## [2026-10-16] build | Tooling round T-16500..T-16530 merged; two matches
+
+Merged [[tickets/T-16500-twin-sweep]], [[tickets/T-16510-m2c-defect-rewrites]], [[tickets/T-16520-sibling-report]]
+and [[tickets/T-16530-proto-override]] into `w2-int` (each clean 27/27; tool suite 1,184 tests OK). The whole-tree twin
+sweep matched TAIIKU `func_801406A8` (144 bytes); the defect-rewrite follow-up matched GEKO `func_801327AC` (672
+bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,958, 1,484,732 bytes (65.1%).
+
+## [2026-10-16] ticket | T-16550 opened
+
+[[tickets/T-16550-taiiku-types-first]] (In Progress): types-first pilot on the TAIIKU overlay, per [[speedup-research-2026-10-16]]. Recover shared types in `include/ovl/TAIIKU.h`, redraft every unmatched TAIIKU function into `drafts/T-16550/`, define packages T-16551..T-16554. Worktree branch `pt-taiiku` from `w2-good`.
+
+## [2026-10-16] decision | T-16550 TAIIKU types
+
+[[tickets/T-16550-taiiku-types-first]]: TAIIKU's three games hold the same runner-update code with three record layouts, and the build chose a different shape for each: game A `TaiRunnersA D_80149208` (struct `player` + `cpu[3]`), game B `TaiRunnerB D_8014A13C[4]` (array; a struct member breaks `func_80143D24`), game C player `D_8014A3E4` and `D_8014A400[3]` as two objects (a `[4]` array breaks three functions) plus `TaiikuSlot1C D_8014A454[4]`. 28 stack-copied constant tables declared as one-array structs. All matched code rewritten to the fields; TAIIKU sha1 OK. Overlay aggregates stay out of `config/migrate_globals.txt` (shared overlay addresses). Type map in [[taiiku-family-results]], rows in [[data-types]].
+
+## [2026-10-16] build | T-16550 redraft and match
+
+`drafts/T-16550/redraft.py` redrafted all 64 unmatched TAIIKU functions (full-translation-unit scores as in the census) with five variants; every distinct body was rescored with the final header. Median score 241.5 (census) / 234.5 (census or guarded) to 183 for the 58 new drafts, best starting point median 203; 27 better (21,632 bytes), 10 worse, 21 equal, 6 without a compiling draft, no zero. 25 of the 27 gains come from folding splat labels into `base + offset` before m2c (pointer in [[decompile-workflow]]). Matched `func_80141CDC` (1,120 bytes) from its 18-row draft by writing the display-record flag loop as an index loop.
+
+## [2026-10-16] ticket | T-16550 to In Review
+
+[[tickets/T-16550-taiiku-types-first]]: types, redraft (`drafts/T-16550/`), one match and four packages: pt-taiiku-p1 T-16551 `80133C80.c` (8 functions, 7,012 B), pt-taiiku-p2 T-16552 `80138950.c` (9, 6,196 B), pt-taiiku-p3 T-16553 `801452D0.c` (9, 5,412 B), pt-taiiku-p4 T-16554 `80140810.c`, `80132000.c`, `80142240.c` (7, 6,884 B). Family page [[taiiku-family-results]]. Awaiting code review.
+
+## [2026-10-16] ticket | T-16550 Done
+
+[[tickets/T-16550-taiiku-types-first]] reviewed against `CODING_STANDARDS.md` and moved to Done: 1 function matched (`func_80141CDC`, 1,120 bytes), TAIIKU types recovered, 64 functions redrafted into `drafts/T-16550/`. Review fixes: two stale FAKE comments removed, `func_80147210`, `func_80148194` and `func_80148228` converted to fields (still match), FAKE comments on the byte views of `func_8013732C`, `func_801448D4`, `func_80144C70` and `func_80138680`, a misplaced header comment moved. Headers, globals and prototype checks OK, TAIIKU sha1 OK.
+## [2026-10-16] ticket | T-16560 opened
+
+[[tickets/T-16560-taco-types-first]] (In Progress): types-first pilot for TACO from [[speedup-research-2026-10-16]]. Recover the overlay's shared types in `include/ovl/TACO.h`, redraft every unmatched TACO function with them under `drafts/T-16560/`, and cut four work packages (T-16561..T-16564). Worktree branch `pt-taco` from `w2-good`.
+
+## [2026-10-16] ticket | T-16560 to In Review
+
+[[tickets/T-16560-taco-types-first]]: types-first pilot on TACO, about one hour of the three planned. Types in `include/ovl/TACO.h`: `TcActor` +0x04 object handle (`Tc10`, GsDOBJ2 layout) and +0x14 coordinate object (`TcObj50`, GsCOORDINATE2 layout, completed), `Tc14` holes filled, `D_8015EC70` as `Tc14[16]`; `extern MATRIX D_80129C40;` added to `include/main_api.h` (now includes `libgte.h`). Redraft of all 126 unmatched functions in `drafts/T-16560/` (driver `redraft.py`; rewrites pointer-step, actor-offset, matrix-copy, tcpos-args, field-symbols): over the 116 unguarded ones 48 better than the T-14500 census, 53 same, 2 worse, median 166 to 150 diff rows, sum -8%; headers alone changed 7 of 98 scores; no draft scored 0. Five matches after small hand edits, 2,032 bytes: `func_8013822C`, `func_8013555C`, `func_80135638`, `func_8015A948`, `func_80159260`. Packages T-16561..T-16564 (`pt-taco-p1`..`p4`), about 170 minutes each. Findings and idioms: [[taco-family-results]] ("Types-first pass"), pointer in [[data-types]].
+
+## [2026-10-16] ticket | T-16560 Done
+
+[[tickets/T-16560-taco-types-first]] reviewed against `CODING_STANDARDS.md`: one finding (unexplained `*(u8 *)&D_8015EDE8` view cast, comments added to `func_8013555C` and `func_80135638`), fixed; TACO sha1 OK, headers, globals and prototype checks OK. 5 TACO functions matched (2,032 bytes). Packages T-16561..T-16564 follow.
+
+## [2026-10-15] ticket | T-16910 cpw census opened
+Opened [[tickets/T-16910-cpw-census]] (In Progress): count the coupled selector-copy shape of [[tickets/T-16900-compiler-experiments]] in the original asm, then either make `cpw` a uniform step of `tools/cvt_pass.py` or record a negative result. Branch `claude/quizzical-swanson-a4bc82`.
+
+## [2026-10-15] query | T-16910 cpw census of the original asm
+Dataflow census of the 6958 game functions in the split asm for [[tickets/T-16910-cpw-census]]. Narrow signed globals compared `==`/`!=` with a register constant: 72 compares in 23 functions. The `cpw` coupled shape (used `move` copy plus constant-first compare) is only the 7 NAME_ENT `80139740.c` functions on GameState +0x1093; 15 functions compare constant-first with no copy, 6 compare variable-first, none with a copy. The order follows aggregate membership (64/64 constant-first on GameState, record-table or indexed-array members; 8/8 variable-first on the scalars ENDING `D_8013C35C`, SHOUGATU `D_80144E0C`). Scratch experiment: the NAME_ENT drafts with the selector read as an element get the constant-first compares from IDO; with zcopy off for the file `func_8013DAC4`, `func_8013F454`, `func_8013FB8C` reach 0 lines. Notes in [[matching-notes]], [[toolchain]], [[game-state]]. Scratch scripts in the session group's shared notes folder (`t16910/`).
+
+## [2026-10-15] decision | T-16910 no cpw step; ticket to In Review
+`cpw` does not meet CODING_STANDARDS 7a: its coupling selects one family, and the constant-first order it adds is an aggregate-member effect that C reading through the aggregate already gives (section 8). `tools/cvt_pass.py` unchanged; nothing matched. [[tickets/T-16910-cpw-census]] moved In Progress to In Review. Open follow-ups: the type of GameState +0x1093/+0x1094, a census for the kept local copy, and the 5 `FAKE`/cast compares that could become aggregate reads.
+
+## [2026-10-15] ticket | T-16920 GameState +0x1093 type and kept-copy census opened
+Opened [[tickets/T-16920-gamestate-1093-type]] (In Progress), the follow-up of [[tickets/T-16910-cpw-census]]: test an array type for GameState +0x1093/+0x1094 against the matched build, and count where the original keeps a local copy of an aggregate element in its own register.
+
+## [2026-10-15] build | T-16920 NAME_ENT selector-copy family matched
+[[tickets/T-16920-gamestate-1093-type]]: the 7 NAME_ENT selector-copy functions (`func_8013CEC8`, `func_8013D4CC`, `func_8013DAC4`, `func_8013E430`, `func_8013F0DC`, `func_8013F454`, `func_8013FB8C`; 2,332 bytes) match with `tools/cvt_pass.py` as built when the C reads GameState through a local `GameState *g`: the indirect load gives the constant-first compare and the kept copy. Three carry a `FAKE` `s32 pad[2]` for the 0x38 frame. `D_800E7D15` is now `extern u8 D_800E7D15[]`. Rebuild: 27/27 sha1 OK, NAME_ENT.bin OK, headers and globals OK; `uopt_eval regress` on the two touched files 116/116.
+
+## [2026-10-15] decision | T-16920 +0x1093 stays a member; no zcopy rule; ticket to In Review
+As `s8 unk_1093[2]`, 15 matched `switch` functions change (selector `$v1` against the original's `$v0`), so +0x1093/+0x1094 stay members. Kept-copy census: used `move` copies of global loads in 42 functions for aggregate members (12 matched) and 47 for scalars (27 matched), all matched ones from ordinary C. Copy propagation off for every procedure changes 737 of 5,967 matched functions, so no zcopy rule. Notes in [[matching-notes]], [[game-state]], [[register-cheatsheet]], [[toolchain]]; T-11570's "copy-propagation gap" note in [[matching-notes]] corrected. [[tickets/T-16920-gamestate-1093-type]] moved In Progress to In Review.
+
+## [2026-10-15] ticket | T-16930 pointer reads for kept copies opened
+Opened [[tickets/T-16930-pointer-read-kept-copies]] (In Progress), the follow-up of [[tickets/T-16920-gamestate-1093-type]]: try a local `GameState *g` or record pointer on the 23 other unmatched functions of the [[tickets/T-16910-cpw-census]] census that keep a `move` copy of an aggregate member, and on the five matched constant-first compares that still need a `FAKE` or cast.
+
+## [2026-10-15] build | T-16930 pointer reads: 4 tricks removed, 8 matches, stopped for hand-over
+[[tickets/T-16930-pointer-read-kept-copies]]: EVENT `func_80117004`, BUNKA_SD `func_8013261C`, NAME_ENT `func_80148C20`, ENDING `func_8013855C` lose their constant-first tricks through aggregate reads (RPG_BAT `func_80150CD8`'s `(u32)` is a type and stays). Matched on this branch: main `func_80042AC8` (through `GameState *g`), GEKO `func_80134040`, RPG_BAT `func_801495DC`, ENDING `func_80137730`; on unmerged branch `t16930-a`: main `func_80078C48`, OPTION `func_80137C1C`, `func_801383C4`, SHUGAKU `func_80137490`. Stopped on the user's request; ticket stays In Progress for the main thread.
+
+## [2026-10-15] ticket | T-16900 created, In Progress
+
+[[tickets/T-16900-compiler-experiments]]: two time-boxed compiler experiments on branch `claude/blissful-fermi-43d29a`
+(cut from `w2-good`). 1. The signed narrow selector-copy rule of [[tickets/T-11570-w1-ovl-name_ent-80139740]] in a
+scratch copy of `tools/cvt_pass.py` (item 4 of [[matching-breakthroughs]]). 2. A regdiff survey of the 21-100 line
+drafts of `drafts/T-14500/best-quality-catalog.jsonl` to decide on a ugen trace. No `src/` changes.
+
+## [2026-10-15] query | T-16900 selector-copy rule (experiment 1)
+
+[[tickets/T-16900-compiler-experiments]], item 4 of [[matching-breakthroughs]]. Scratch variant of `tools/cvt_pass.py`
+(outside the repository) on the 7 frozen NAME_ENT drafts of [[tickets/T-11570-w1-ovl-name_ent-80139740]]. Widening
+records (`CVT J<-J`, `CVT J<-L`) do not give the original's constant-first compare. Zcopy off plus constant first after
+uopt (register operands classified by their latest definition) matches `func_8013DAC4`, `func_8013F454`,
+`func_8013FB8C`. Uncoupled, zcopy off changes 12 matched functions and constant first changes 5. The coupled rule
+changes none: clean rebuild 27/27 sha1, and NAME_ENT.bin sha1 OK with the three drafts active (both via temporary,
+reverted working-tree edits). It fires in no matched function, so the zero is not evidence for it. Meets the bar;
+a uniform pass needs a census of the shape in the original first. Section in [[uopt-register-allocation]].
+
+## [2026-10-15] query | T-16900 ugen survey (experiment 2)
+
+regdiff over the 262 unmatched T-14500 drafts 21 to 100 lines from matching (no TT; 31 stale TUs rebuilt from the
+current source, 7 still fail): 59 of 250 first register divergences are ugen temporaries on the draft side (23.6%),
+23 (9.2%) on both sides. Below 25%: no 3-day ugen trace. [[uopt-register-allocation]], [[tickets/T-16900-compiler-experiments]].
+
+## [2026-10-15] ticket | T-16900 In Review
+
+[[tickets/T-16900-compiler-experiments]] moved to In Review with both results. No `src/` or `tools/` change on the
+branch; only wiki pages ([[uopt-register-allocation]], [[matching-breakthroughs]], [[kanban]], [[index]]).
+
+## [2026-10-16] ticket | T-16910, T-16920, T-16930, T-16900 merged onto w2-good (side-int)
+
+Merged `claude/pensive-montalcini-7151d4` ([[tickets/T-16910-cpw-census]], [[tickets/T-16920-gamestate-1093-type]], [[tickets/T-16930-pointer-read-kept-copies]]), `t16930-a` (T-16930 agent A) and `claude/blissful-fermi-43d29a` ([[tickets/T-16900-compiler-experiments]], wiki only) into branch `side-int` (based on `w2-good`). Wiki conflicts kept both sides; `include/main_api.h` kept `D_800B5A68[][3]` and ENDING `func_80137730` indexes it as `[unk_F5F][i]`. Clean rebuild 27/27 sha1 OK; headers, globals and `sync_protos.py --check-branch` OK. `funcdiff.py --resolve` MATCH for all 15 claimed matches (NAME_ENT x7, main `func_80042AC8` and `func_80078C48`, GEKO, RPG_BAT, ENDING `func_80137730`, OPTION x2, SHUGAKU) and the four rewritten functions. Total 6018/6958 functions, 1,494,640/2,279,368 bytes (65.6%). Statuses unchanged: T-16900, T-16910, T-16920 In Review; T-16930 In Progress.
+
+## [2026-10-16] ticket | T-16900, T-16910, T-16920, T-16930 Done
+
+Code review of `git diff w2-good...side-int` against `CODING_STANDARDS.md` (12 C files, 4 headers). `funcdiff.py --resolve`
+MATCH for the 15 new matches (6,756 bytes) and the 5 changed matched functions; 27/27 sha1 after the fixes, `check_headers`,
+`migrate_globals --check` and `sync_protos --check-branch` OK. Fixes (comments and one prototype, no code bytes): `FAKE`
+comments on the scalar pointer reads in EVENT `func_80117004` and BUNKA_SD `func_8013261C`, reasons for the record
+pointer and table view in NAME_ENT `func_80148C20` and ENDING `func_8013855C`, a fall-through note on ENDING
+`func_80137730`, GEKO `func_801341A0` declared in `include/ovl/GEKO.h`. Wiki: T-16930 section in [[matching-notes]]
+(the findings of its hand-over), [[register-cheatsheet]] rows, follow-up note in [[uopt-register-allocation]], stale
+duplicate T-16200 line removed from [[index]]. Tickets [[tickets/T-16900-compiler-experiments]],
+[[tickets/T-16910-cpw-census]], [[tickets/T-16920-gamestate-1093-type]] and
+[[tickets/T-16930-pointer-read-kept-copies]] moved to Done on [[kanban]]; the open misses and the functions not attempted
+(listed in the T-16930 ticket) go to the next inventory.
+
+## [2026-10-16] ticket | T-16554 In Progress
+
+[[tickets/T-16554-pt-taiiku-p4]] started (pilot stage B): package pt-taiiku-p4 of [[tickets/T-16550-taiiku-types-first]], 7 TAIIKU functions in `src/ovl/TAIIKU/80140810.c`, `80132000.c`, `80142240.c`, worktree `pt-taiiku-p4`.
+
+## [2026-10-16] ticket | T-16554 In Review
+
+[[tickets/T-16554-pt-taiiku-p4]]: 4 of 7 functions matched (`func_80132970`, `func_80143DD0`, `func_80143F50`, `func_8014280C`, 3,208 bytes), 2 guarded drafts in `src/ovl/TAIIKU/80140810.c` and `80142240.c` (33 and 20 differing instructions), `func_80142FB8` left as `INCLUDE_ASM`. Notes in [[matching-notes]] ("T-16554"), rows in [[data/t0018-cases]], rows added to [[register-cheatsheet]], results in [[taiiku-family-results]]. New header declarations in `include/ovl/TAIIKU.h`, two `MAIN_API_OVERRIDE_*` in `src/ovl/TAIIKU/80140810.c` with the matching guards in `include/main_api.h`.
+
+## [2026-10-16] build | T-16554 final checks
+
+[[tickets/T-16554-pt-taiiku-p4]]: clean rebuild 27/27, `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` OK on branch `pt-taiiku-p4` (about 83 minutes of agent time, 4 of 7 functions matched).
+
+## [2026-10-16] ticket | T-16554 Done
+
+[[tickets/T-16554-pt-taiiku-p4]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 of 7 functions matched (`func_80132970`, `func_80143DD0`, `func_80143F50`, `func_8014280C`, 3,208 bytes), 2 guarded drafts, `func_80142FB8` left as `INCLUDE_ASM`. Review fixes: ignored `&` before an array removed from the `pad_28` cast and the cast marked FAKE, `D_8014A1E8` typed `s16[]` (plain element access, still matches), override reason spelled out, FAKE comment tidied. Headers, globals and prototype checks OK, TAIIKU sha1 OK.
+
+## [2026-10-16] query | Why Codex astra looked faster
+
+Yield tables for all recorded Codex and Claude matching sessions, compared with function size, overlay, era and clock
+controlled, skeptic-checked. Astra's byte rate comes mostly from larger functions (about 1,070 vs 410 bytes per match)
+and from family overlays (78-84% of its big-session bytes); matches per hour are similar; no clean model comparison.
+Filed in [[speedup-research-2026-10-16]].
+
+## [2026-10-16] ticket | T-16552 started
+
+[[tickets/T-16552-pt-taiiku-p2]] created and In Progress: pilot stage B, package pt-taiiku-p2 (`src/ovl/TAIIKU/80138950.c`, 9 functions) from the [[tickets/T-16550-taiiku-types-first]] redrafts, worktree `tokimemo-wt/pt-taiiku-p2`.
+
+## [2026-10-16] build | T-16552 TAIIKU 80138950.c results
+
+[[tickets/T-16552-pt-taiiku-p2]]: matched `func_80139FE4` (816 bytes; FAKE dead assignments `m = rec[96 + i].unk_26; cnt = D_800E6280.unk_F80;` renumber the uopt ranges of a leaf function). `func_80138DF8` 30 to 3 differing lines (local `idx` for `A[f()] = v` removes a phantom spill slot; `u32` address parameter of `cd_read_sectors` via a file-local override in `src/ovl/TAIIKU/80138950.c`, guard in `include/main_api.h`); `func_80138AA8` keeps 22 lines without its FAKE pads. Counter family and `func_80139AB0` stay `INCLUDE_ASM`; rows in [[data/t0018-cases]], findings in [[matching-notes]] (T-16552), [[taiiku-family-results]] and [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-16552 to In Review
+
+[[tickets/T-16552-pt-taiiku-p2]] In Progress to In Review: 1 function matched (816 bytes), 2 guarded drafts improved. Clean rebuild, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` run before this entry.
+
+## [2026-10-16] lint | T-16552 final verification
+
+[[tickets/T-16552-pt-taiiku-p2]]: clean `rm -rf build && python3 configure.py && ninja` 665/665, all 27 units sha1 OK; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK. One commit (AA8 `idx`) had overwritten the DF8 and `func_80139FE4` work with an older copy of `src/ovl/TAIIKU/80138950.c`; restored in the next commit and re-checked (`func_80139FE4` MATCH in the default build, DF8 3 lines, AA8 22 lines).
+
+## [2026-10-16] build | T-16552 closer pass: func_80138DF8 and func_80138AA8 matched
+
+[[tickets/T-16552-pt-taiiku-p2]]: Opus closer matched TAIIKU `func_80138DF8` (1,336 B; FAKE `i = 0` before the test and `goto` into the first loop) and `func_80138AA8` (848 B; `MAIN_API_OVERRIDE_func_80085E30` with `s32 func_80085E30();` in `src/ovl/TAIIKU/80138950.c`, guard in `include/main_api.h`; local `p` replaces the last frame pad). Updated [[matching-notes]] "T-16552", [[register-cheatsheet]], [[taiiku-family-results]], [[data/t0018-cases]], [[index]]. Ticket stays In Review.
+
+## [2026-10-16] lint | T-16552 closer verification
+
+[[tickets/T-16552-pt-taiiku-p2]]: clean `rm -rf build && python3 configure.py && ninja` 665/665, 27 binaries sha1 OK (main + 26 overlays); `tools/check_headers.py` OK, `tools/migrate_globals.py --check` OK, `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] ticket | T-16552 Done
+
+[[tickets/T-16552-pt-taiiku-p2]] In Review to Done after code review against `CODING_STANDARDS.md`: 3 functions matched (`func_80139FE4`, `func_80138DF8`, `func_80138AA8`, 3,000 bytes). One finding fixed (local `p` of `func_80138AA8` marked FAKE, comment only) and a stale intro in [[matching-notes]] refreshed. TAIIKU sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK.
+
+## [2026-10-16] ticket | T-16553 opened
+
+[[tickets/T-16553-pt-taiiku-p3]] (In Progress): pt-taiiku-p3, the TAIIKU `src/ovl/TAIIKU/801452D0.c` package of [[tickets/T-16550-taiiku-types-first]]; branch `pt-taiiku-p3` from `w2-good`, nine functions, measured pilot (start 02:25 UTC).
+
+## [2026-10-16] ticket | T-16553 to In Review
+
+[[tickets/T-16553-pt-taiiku-p3]]: 9 functions of `src/ovl/TAIIKU/801452D0.c` matched (`func_8014666C`, `func_80145C28`, `func_80147318`, `func_80147928`, `func_80146A60`, `func_80147F58`, `func_80148370`, `func_80146338`, `func_80147594`; 5,244 bytes), four guarded (`func_80145640` 8 lines, `func_8014607C` 20, `func_80145370` 22, `func_80146D18` 31), `func_80147B14` not started. New section in [[matching-notes]], four rows and an update line in [[data/t0018-cases]], results in [[taiiku-family-results]]. Waiting for the code review.
+
+## [2026-10-16] build | T-16553 closer pass
+
+[[tickets/T-16553-pt-taiiku-p3]]: Opus closer on the two guarded near misses in `src/ovl/TAIIKU/801452D0.c`. `func_80145640` matched (1,080 bytes): the call result goes into a declared local before the counter, which moves the counter's home from sp+0x3C to sp+0x38. `func_8014607C` stays guarded at 20 lines: IDO propagates the tail's two local copies of globals past the `||`. Notes in [[matching-notes]] (T-16553), [[data/t0018-cases]] and [[taiiku-family-results]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16553 Done
+
+[[tickets/T-16553-pt-taiiku-p3]]: code review against `CODING_STANDARDS.md` passed after three small fixes (an ignored `&` before an array in `func_80148370`, comments on two next-symbol loop bounds, stale counts in [[index]], [[matching-notes]] and [[taiiku-family-results]]). 10 functions matched in `src/ovl/TAIIKU/801452D0.c` (6,324 bytes), 3 guarded, `func_80147B14` open. Card moved to Done.
+## [2026-10-16] ticket | T-16562 opened
+
+[[tickets/T-16562-taco-types-first-p2]] (In Progress): matching package 2 of the TACO types-first pilot ([[tickets/T-16560-taco-types-first]]). Worktree `pt-taco-p2` from `w2-good`; owns `src/ovl/TACO/80154230.c`, `src/ovl/TACO/801430B0.c`, `src/ovl/TACO/80133870.c`.
+
+## [2026-10-16] ticket | T-16562 to In Review
+
+[[tickets/T-16562-taco-types-first-p2]]: pilot stage B on `pt-taco-p2`, 5 functions matched (2,156 bytes): `func_801430D0`, `func_801347F4`, `func_80143B58`, `func_801342CC`, `func_80133870`; guarded near misses `func_80154230`, `func_801546FC`, `func_8015443C` (entry copy, 8-9 lines each), `func_801432F0` (8), `func_801345D4` (12); `func_80154820` and `func_80133E98` left `INCLUDE_ASM`. New header entries in `include/ovl/TACO.h` (font tables, loading-screen state handler prototypes, `func_801347F4(s32 *)`). Notes in [[matching-notes]] (section T-16562), rows in [[data/t0018-cases]], [[register-cheatsheet]] (two rows, one extended), [[taco-family-results]].
+
+## [2026-10-16] ticket | T-16562 update: 7 functions matched
+
+[[tickets/T-16562-taco-types-first-p2]]: two more matches after the In Review entry, `func_801432F0` (644 bytes) and `func_80154820` (320 bytes), by reading `*s` / `*p` directly instead of a local copy; total 7 functions, 3,120 bytes. Remaining: `func_80154230`, `func_801546FC`, `func_8015443C` (entry copy, guarded), `func_801345D4` (guarded), `func_80133E98` (INCLUDE_ASM). Notes in [[matching-notes]] (T-16562), [[register-cheatsheet]], [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-16562 closer pass: 4 guarded near misses matched
+
+[[tickets/T-16562-taco-types-first-p2]]: the Opus closer matched `func_80154230`, `func_801546FC`, `func_8015443C` and `func_801345D4` in plain C (1,608 bytes; package total 11 functions, 4,728 bytes), one commit each, plus a follow-up commit with a file-local struct view (`TcSave`) for the settings block. The entry-copy fold is as1's copy propagation; a two-step header walk (`arg0++; ... arg0 += 8;`) keeps `move s0,a0`. The FAKE `s32 pad[2]` of `func_8015443C` became the named `command0`/`command1` constants. `func_801345D4` keeps `&D_800E7D10` in `$v0` once the flag test reads the word through the same base. Notes in [[matching-notes]] (T-16562, "Closer pass"), [[register-cheatsheet]] (two rows, frame row extended), [[data/t0018-cases]] (update paragraph), [[taco-family-results]], [[index]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16562 Done
+
+[[tickets/T-16562-taco-types-first-p2]] reviewed against `CODING_STANDARDS.md`: no findings; TACO.bin sha1 OK, headers, globals and prototype checks OK. 11 TACO functions matched (4,728 bytes).
+
+## [2026-10-16] ticket | T-16551 In Progress
+
+[[tickets/T-16551-pt-taiiku-p1]] started: pilot stage B, package pt-taiiku-p1 (`src/ovl/TAIIKU/80133C80.c`, 8 functions from the [[tickets/T-16550-taiiku-types-first]] redrafts), worktree `tokimemo-wt/pt-taiiku-p1`.
+
+## [2026-10-16] build | T-16551 package pt-taiiku-p1
+
+[[tickets/T-16551-pt-taiiku-p1]]: 3 functions matched in `src/ovl/TAIIKU/80133C80.c` (`func_80138224`, `func_80133CFC`, `func_801368B8`; 2,296 bytes), guarded drafts `func_801346FC` (8 lines), `func_80136BB4` (4), `func_80135480` (22), `func_80137544` (26), `func_80134060` not started. New findings in [[matching-notes]] (T-16551): a table defined in the unit gives the shared `lui at`; a run of identical statements over the four runners is a loop IDO unrolls with the first iteration peeled; word-local slot layouts found by printing the offset of the stack table. Rows appended to [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-16551 to In Review
+
+[[tickets/T-16551-pt-taiiku-p1]] moved to In Review with 3 functions matched; code review (against `CODING_STANDARDS.md`) still to run.
+
+## [2026-10-16] build | T-16551 closer pass: func_801346FC and func_80136BB4 matched
+
+[[tickets/T-16551-pt-taiiku-p1]], Opus closer on the two short guarded drafts of `src/ovl/TAIIKU/80133C80.c`: `func_801346FC` (1,688 B; `func_801365C8` declared `void` in `include/ovl/TAIIKU.h`, its `s32` prototype blocked `$v0`) and `func_80136BB4` (496 B; `u16` copy of the f0C counter, so its clear is a store-back after the f03 store-back). Plain C, TAIIKU sha1 OK, one commit each. Package total 5 functions, 4,480 bytes; `func_80135480` and `func_80137544` stay guarded. Notes in [[matching-notes]] (T-16551), rows in [[register-cheatsheet]], update line in [[data/t0018-cases]], [[taiiku-family-results]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16551 Done
+
+[[tickets/T-16551-pt-taiiku-p1]] reviewed against `CODING_STANDARDS.md` and moved to Done: 5 functions matched (`func_80138224`, `func_80133CFC`, `func_801368B8`, `func_801346FC`, `func_80136BB4`; 4,480 bytes), `func_80135480` and `func_80137544` guarded, `func_80134060` not started. Review fixes: comments for the peeled copy and the two unit-defined data pieces in `src/ovl/TAIIKU/80133C80.c`, stale counts in [[index]], [[taiiku-family-results]] and [[matching-notes]]. Clean rebuild 27/27, headers, globals and prototype checks OK.
+## [2026-10-16] ticket | T-16561 opened
+
+[[tickets/T-16561-taco-types-first-p1]] (In Progress): matching stage for the pt-taco-p1 package of [[tickets/T-16560-taco-types-first]] (9 functions in `src/ovl/TACO/801335A0.c`, `80137590.c`, `80159090.c`, `80146D60.c`), worktree pt-taco-p1 from w2-good.
+
+## [2026-10-16] ticket | T-16561 to In Review
+
+[[tickets/T-16561-taco-types-first-p1]]: matching stage of the TACO types-first pilot, package p1 (`src/ovl/TACO/801335A0.c`, `80137590.c`, `80159090.c`, `80146D60.c`). 7 functions matched (5,104 bytes: `func_80147488`, `func_80159878`, `func_8013788C`, `func_8013760C`, `func_80147C98`, `func_80146F74`, `func_80147674`), 3 guarded (`func_80147928` 4 lines, `func_80133738` 8, `func_801472D4` 20), `func_80147B24` left as `INCLUDE_ASM` (63 lines). Idioms (pointer locals add stack homes, `default: break;` changes s-register allocation, the parameter as walking pointer, accumulate in the promoted global) in [[matching-notes]]; rows in [[data/t0018-cases]]; summary table in [[taco-family-results]]. Board, ticket and index updated.
+
+## [2026-10-16] ticket | T-16561 permuter match
+
+[[tickets/T-16561-taco-types-first-p1]]: `func_80147928` (508 bytes) matched after a 150-second `tools/permute.py` run found an empty `do { } while (0);` after `base = arg2 + 4;` (FAKE) and the declaration order `p, pos, slot, base`; the package is now 8 matched functions, 5,612 bytes. See [[matching-notes]] (T-16561 section) and [[data/t0018-cases]].
+
+## [2026-10-16] build | T-16561 closer pass
+
+[[tickets/T-16561-taco-types-first-p1]]: the Opus closer matched TACO `func_80133738` (312 bytes) by reading `D_8015E238` as flat words (`&D_8015E238[idx * 2]`, header type now `s32[]`). `func_801472D4` (20 lines) and `func_801471D0` (4 lines) stay guarded; their comments, [[matching-notes]] and [[register-cheatsheet]] record the struct-copy temporary rule and the copy-propagation dead end. Also updated: [[taco-family-results]], [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16561 Done
+
+[[tickets/T-16561-taco-types-first-p1]] reviewed against `CODING_STANDARDS.md`: three findings (`FAKE` marker position in `func_80147928`, unmarked one-line store pairs in `func_80159878`, a typo in the `func_801472D4` guard comment; stale 8-function counts in ticket and [[index]]), fixed; TACO sha1 OK, headers, globals and prototype checks OK. 9 TACO functions matched (5,924 bytes).
+## [2026-10-16] ticket | T-16563 In Progress
+
+[[tickets/T-16563-taco-types-first-p3]]: matching stage of the TACO types-first pilot, package 3 (`src/ovl/TACO/80151C30.c`, `src/ovl/TACO/8015ABF0.c`, 10 functions) on branch `pt-taco-p3`. Follows [[tickets/T-16560-taco-types-first]].
+
+## [2026-10-16] build | T-16563 matches
+
+[[tickets/T-16563-taco-types-first-p3]]: 9 functions matched on branch `pt-taco-p3` in `src/ovl/TACO/80151C30.c` and `src/ovl/TACO/8015ABF0.c`: `func_8015C0A0`, `func_80151D1C`, `func_80152944`, `func_8015BF70`, `func_80152808`, `func_80152DB4`, `func_801523D0`, `func_801521EC`, `func_8015CE64` (4,164 bytes, two with a `FAKE`). `include/ovl/TACO.h` gains the pair tables, a pointer-table view and three prototypes. `func_8015B1B8` stays guarded (8 lines); `func_8015BD30` (65 rows) stays `INCLUDE_ASM`. Notes: [[matching-notes]], [[taco-family-results]], [[register-cheatsheet]], [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-16563 In Review
+
+[[tickets/T-16563-taco-types-first-p3]] moved to In Review after about 60 minutes of agent time: 9 of 10 listed functions matched. Clean build 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] build | T-16563 func_8015BD30
+
+[[tickets/T-16563-taco-types-first-p3]]: `func_8015BD30` (576 bytes, not on the work list) matched in `src/ovl/TACO/8015ABF0.c` after a 1-second scratch compile loop (`tools/cc.py` on one function, diffed against `expected/`): actor addressed by byte offset, `n = 0` before the key search, one local declared before the spilled `val`, a `FAKE` empty test on `i`. In all 10 functions, 4,740 bytes. `func_8015ACCC` rewritten once by hand (437 lines left) and `func_8015B1B8` (8 lines) stay open; rows in [[data/t0018-cases]], idioms in [[matching-notes]] and [[register-cheatsheet]].
+
+## [2026-10-16] build | T-16563 closer pass
+
+[[tickets/T-16563-taco-types-first-p3]]: Opus closer on `func_8015B1B8` in `src/ovl/TACO/8015ABF0.c`, about 40 minutes, no new match (still guarded at 8 lines). Found the rule that picks ugen's struct-copy temporary: one free temporary is skipped after a store through a pointer, two after a direct stack or global store or at function entry. Notes in [[matching-notes]] (T-16563 section), new row in [[register-cheatsheet]], row in [[data/t0018-cases]]. Clean build 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16563 Done
+
+[[tickets/T-16563-taco-types-first-p3]] reviewed against `CODING_STANDARDS.md` and moved to Done: 10 functions matched (4,740 bytes), `func_8015B1B8` guarded, `func_8015ACCC` left as `INCLUDE_ASM`. Review fixes in `src/ovl/TACO/80151C30.c` and `src/ovl/TACO/8015ABF0.c`: two unmarked cast views (`func_801521EC`, `func_8015BD30`) marked FAKE, a dead `i = 0;` removed, blank lines tidied, stale ticket line corrected. Headers, globals and prototype checks OK, TACO sha1 OK.
+## [2026-10-16] ticket | T-16564 opened
+
+[[tickets/T-16564-taco-types-first-p4]] In Progress: types-first pilot package pt-taco-p4 (TACO `src/ovl/TACO/80154960.c`, `80137A60.c`, `80138890.c`; 8 functions from the [[tickets/T-16560-taco-types-first]] redrafts), branch `pt-taco-p4` from `w2-good`.
+
+## [2026-10-16] build | T-16564 matches
+
+[[tickets/T-16564-taco-types-first-p4]]: TACO `func_801563E4`, `func_80154960`, `func_80138D08`, `func_801557E8`, `func_80138964` and `func_801553AC` matched (5,852 bytes, `src/ovl/TACO/80154960.c`, `80138890.c`), each unit sha1 OK. `func_80138B2C` (30 rows) and `func_80137D00` (8 rows) stay guarded register near misses. Notes in [[matching-notes]] and [[data/t0018-cases]], five rows in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-16564 to In Review
+
+[[tickets/T-16564-taco-types-first-p4]] In Progress to In Review: 6 of 8 functions matched. Clean rebuild 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] query | T-16564 closer pass on func_80137D00
+
+Opus closer on [[tickets/T-16564-taco-types-first-p4]]: `func_80137D00` stays guarded at 8 rows. Cause found from uopt's output ucode: the copy-propagated first store shares the `D_801FAA84` load, and ugen keeps it in a temporary for every use of `p`. Notes in [[matching-notes]] (T-16564 closer pass), row updated in [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16564 Done
+
+[[tickets/T-16564-taco-types-first-p4]] In Review to Done after the code review against `CODING_STANDARDS.md`: 6 functions matched (5,852 bytes), 2 guarded. One finding fixed (the `func_801557E8` operand-order comment in `src/ovl/TACO/80154960.c` now starts with `FAKE`). TACO unit sha1 OK after the rebuild.
+
+## [2026-10-16] ticket | T-16990 Wave 3 conveyor opened
+
+Pilot T-16550/T-16560 done: 64 matches / 41.4 KB in about 20 agent-hours (types passes 2 h Opus; packages 14 h Sonnet;
+closers 4 h Opus with 10 matches), 2.0 KB per agent-hour, at or above wave 2 (Opus). Main 6,076/6,958 (67.2%).
+Opened [[tickets/T-16990-wave-3-conveyor]]: types-first passes on 19 units and 32 direct packages feeding a 7-worker
+pool; merges run in parallel through a locked, self-cleaning merge script.
+
+## [2026-10-16] ticket | T-19001 opened
+
+[[tickets/T-19001-w3-d-p01]] In Progress: wave 3 direct package w3-d-p01 (TAIIKU `src/ovl/TAIIKU/80140810.c`, `func_80140A90`), worktree `w3-d-p01` from `w2-good`.
+
+## [2026-10-16] query | T-19001 block-copy temporary rule
+
+Measured the ugen temporary count of the 0x44-byte block copy in `func_80140A90` ([[tickets/T-19001-w3-d-p01]]) with about 80 variants of the real function and about 120 isolated `cc -S` contexts: one rotation step is skipped after a loop or a pointer store, two after a global or stack store, a call or at entry, and no code-neutral C changes the state. The original disagrees with that rule in SHUGAKU, MASTER and ENDING, so the gap looks like a ugen difference. Notes in [[matching-notes]] ("T-19001"), row in [[data/t0018-cases]], cheat sheet row in [[register-cheatsheet]], summary in [[taiiku-family-results]].
+
+## [2026-10-16] ticket | T-19001 to In Review
+
+[[tickets/T-19001-w3-d-p01]] In Progress to In Review: 0 of 1 functions matched. `func_80140A90` stays a `NON_MATCHING` draft at 33 differing instructions (66 diff lines); comment in `src/ovl/TAIIKU/80140810.c` updated. Clean rebuild 27/27 (`rm -rf build && configure.py && ninja`), `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK. About 50 minutes.
+
+## [2026-10-16] ticket | T-19001 Done
+
+[[tickets/T-19001-w3-d-p01]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 0 of 1 functions matched; `func_80140A90` stays a guarded `NON_MATCHING` draft at 33 differing instructions (66 diff lines). Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17200 Types-first: DATE opened
+
+[[tickets/T-17200-types-first-date]] created In Progress on branch `w3-date-types` (from `w2-good`), part of
+[[tickets/T-16990-wave-3-conveyor]]: types-first pass for DATE following [[speedup-research-2026-10-16]].
+
+## [2026-10-16] ticket | T-17200 Types-first: DATE to In Review
+
+[[tickets/T-17200-types-first-date]] In Progress to In Review. Types in `include/ovl/DATE.h`: 68 step tables as
+`FnTblNN` (local typedefs and externs of 16 `.c` files moved), 9 stack-copied data tables, one prototype.
+Redraft of all 49 unmatched functions with `drafts/T-17200/redraft.py` (T-16560 driver + T-16550 fold +
+stack-table, fptab, record-temp rewrites): of the 32 unguarded functions still open, 28 compile, 7 better
+than the census, sum 7,498 to 7,230 rows, none 0. Matched 4 functions / 1,760 bytes (`func_8014AD9C`,
+`func_8013B208`, `func_80159FAC`, `func_80158338`), two of them from sibling ports found by
+`tools/siblings.py`. New page [[date-family-results]]; rows in [[data-types]] and [[matching-notes]].
+Packages T-17201..T-17208 (`w3-date-p01`..`p08`, 30 functions, 23,468 bytes). Clean build 27/27 OK,
+`check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known).
+
+## [2026-10-16] ticket | T-17200 Done
+
+[[tickets/T-17200-types-first-date]] In Review to Done after the code review against `CODING_STANDARDS.md`: 4 functions matched (1,760 bytes: `func_8014AD9C`, `func_8013B208`, `func_80159FAC`, `func_80158338`), 13 guarded drafts unchanged. No code findings. Two wording findings: commit messages of `8e4eb55c` and `2bdd2567` carry interim numbers (39 typedef blocks, not 47; 32 unguarded, 7 better, 5 worse), recorded on the ticket, history left as is; `wiki/index.md` stack-table count fixed to 10. DATE sha1 OK, `check_headers` and `sync_protos --check-branch` OK.
+## [2026-10-16] ticket | T-17100 Types-first: RPG_BAT started
+
+Opened [[tickets/T-17100-types-first-rpg_bat]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover RPG_BAT's shared types, redraft its unmatched functions with the T-16550/T-16560 drivers, then cut packages. Branch `w3-rpg-bat-types` from `w2-good`.
+
+## [2026-10-16] ticket | T-17100 Types-first: RPG_BAT to In Review
+
+[[tickets/T-17100-types-first-rpg_bat]]: stack-table types and `RpgStat` fields in `include/ovl/RPG_BAT.h`; 74 redrafts with `drafts/T-17100/redraft.py` (20 better than the census, sum 17,474 to 16,558 rows); 4 matches / 3,168 bytes (`func_80157640`, `func_8014F88C`, `func_801525B0`, `func_801498C0`); 19 packages T-17101..T-17119 (62 functions). New page [[rpg-bat-family-results]]; idioms in [[matching-notes]], type rows in [[data-types]]. In Review, waiting for the code review.
+
+## [2026-10-16] ticket | T-17100 Done
+
+[[tickets/T-17100-types-first-rpg_bat]] In Review to Done after the code review against `CODING_STANDARDS.md`: 4 functions matched (3,168 bytes: `func_80157640`, `func_8014F88C`, `func_801525B0`, `func_801498C0`), 74 redrafts, 19 packages. One finding fixed (comment on the `u16` view of `DisplayActor44.unk_18` in `src/ovl/RPG_BAT/8014F790.c`, no byte change). RPG_BAT unit sha1 OK after the rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+## [2026-10-16] ticket | T-19002 Wave 3 package w3-d-p02 started
+Opened [[tickets/T-19002-w3-d-p02]] (In Progress): TACO `src/ovl/TACO/801447D0.c` and `src/ovl/TACO/80137A60.c`, work list `func_801449D8`, `func_80137D00`, `func_80145DC4`, `func_8014616C`. Part of [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-16] ticket | T-19002 In Review, 3 of 4 functions matched
+[[tickets/T-19002-w3-d-p02]] moved to In Review: TACO `src/ovl/TACO/801447D0.c` and `src/ovl/TACO/80137A60.c`. Matched `func_801449D8`, `func_80145DC4` and `func_80137D00` (2,008 bytes); `func_8014616C` stays a 3-row NON_MATCHING draft. New FAKEs: `u8 pad[0x130]` frame reserve, absolute-address pointer load in `func_80137D00`, absolute-address read in the guarded `func_8014616C`. Notes in [[matching-notes]], rows in [[data/t0018-cases]], cheat sheet rows in [[register-cheatsheet]], package line in [[taco-family-results]].
+
+## [2026-10-16] build | T-19002 closer pass on func_8014616C
+Opus closer pass on [[tickets/T-19002-w3-d-p02]] (branch w3-d-p02): no new match. TACO `func_8014616C` stays a 3-row NON_MATCHING draft in `src/ovl/TACO/801447D0.c`, and its comment now records the live-range finding. A volatile `&D_800E6280` access in the last block takes it out of the counter's range but adds an address instruction (7 lines). Folded forms give 242 lines, two constants 12, and autotweak 120 s none. Notes in [[matching-notes]] and [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19002 Done
+[[tickets/T-19002-w3-d-p02]] reviewed against `CODING_STANDARDS.md` and moved to Done: 3 functions matched (2,008 bytes: TACO `func_801449D8`, `func_80145DC4`, `func_80137D00`), `func_8014616C` a 3-row NON_MATCHING draft. One review finding (missing ticket id on a FAKE comment in `src/ovl/TACO/801447D0.c`), fixed; rebuild OK (globals, headers, TACO.bin SHA1).
+
+## [2026-10-16] ticket | T-19005 In Progress
+
+[[tickets/T-19005-w3-d-p05]] created and In Progress: wave 3 package w3-d-p05, OLH `func_80135B8C` and `func_80132114` (`src/ovl/OLH/80135AC0.c`, `src/ovl/OLH/80132000.c`).
+
+## [2026-10-16] ticket | T-19005 In Review
+
+[[tickets/T-19005-w3-d-p05]] In Progress to In Review: 2 of 2 functions matched (680 bytes), OLH sha1 OK. `func_80135B8C` is a port of the C of its three 1.000-ratio siblings; `func_80132114` matches with a chain assignment through a declared FAKE local (`col = (&D_800E6280.unk_036)[0] = [1] = [2] = 0xA0`), which keeps one `li v0` and drops the chain's hidden frame temporary. New: [[matching-notes]] section, [[register-cheatsheet]] row, update in [[data/t0018-cases]]. Changed: `src/ovl/OLH/80135AC0.c`, `src/ovl/OLH/80132000.c`, `include/ovl/OLH.h`. About 35 minutes.
+
+## [2026-10-16] ticket | T-19005 Done
+
+[[tickets/T-19005-w3-d-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 2 of 2 functions matched (680 bytes): OLH `func_80135B8C` and `func_80132114`, both plain C with two marked FAKE locals. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17000 Types-first: main opened
+
+Opened [[tickets/T-17000-types-first-main]] (In Progress) on branch `w3-main-types` from `w2-good`: recover the main executable's shared types, redraft every unmatched `src/main` function, package the rest. Method from [[speedup-research-2026-10-16]].
+
+## [2026-10-16] build | T-17000 main types and redraft
+
+[[tickets/T-17000-types-first-main]]: main-only tables and the `Flags7D4F` view declared in `include/main_api.h`; `drafts/T-17000/redraft.py` redrafted all 163 unmatched `src/main` functions (unguarded: 45 better than the census, 72 same, 9 worse, 14 failed; no score 0). Matched from the redrafts: `func_80075320`, `func_80053F04`, `func_80075AF8`, `func_8007959C`, `func_80077E30` (1,948 bytes). Type map, idioms and numbers in [[main-family-results]]; notes in [[matching-notes]] and [[data-types]].
+
+## [2026-10-16] ticket | T-17000 In Review
+
+[[tickets/T-17000-types-first-main]] In Progress to In Review. Packages T-17001..T-17027 (`w3-main-p01`..`p27`, 105 functions, 75,216 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]).
+
+## [2026-10-16] ticket | T-17000 Done
+
+Code review of [[tickets/T-17000-types-first-main]] against `CODING_STANDARDS.md`: no findings. 5 functions matched (1,948 bytes), 27/27 SHA1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. In Review to Done; branch `w3-main-types` goes to the integration merge.
+## [2026-10-16] ticket | T-19004 Wave 3 package w3-d-p04 started
+
+[[tickets/T-19004-w3-d-p04]] In Progress: 5 TAIIKU game A functions in `src/ovl/TAIIKU/80133C80.c`, worktree `tokimemo-wt/w3-d-p04` (branch `w3-d-p04`, base `w2-good`). Part of [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-16] ticket | T-19004 In Review
+
+[[tickets/T-19004-w3-d-p04]] In Progress to In Review: 1 of 5 listed TAIIKU functions matched (`func_80137228`, 260 bytes, plain C). `func_80135830` is a new guarded draft at 18 lines (FAKE `i` as record address), `func_80137544` (26 lines) and `func_80135480` (22 lines) keep their guards, `func_80137C44` stays `INCLUDE_ASM`. The reload of `D_80120A72` is explained by its being display record 111 `unk_26`; notes in [[matching-notes]] (T-19004), three rows in [[register-cheatsheet]], four rows and an update line in [[data/t0018-cases]], section in [[taiiku-family-results]]. Branch `w3-d-p04`, code review pending.
+
+## [2026-10-16] build | T-19004 closer pass
+
+[[tickets/T-19004-w3-d-p04]] closer: TAIIKU `func_80135830` matched (672 bytes, plain index loop C plus a dead `i = 0;`, FAKE), commit `a33af760`. Notes in [[matching-notes]], [[register-cheatsheet]] and [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19004 Done
+
+[[tickets/T-19004-w3-d-p04]] In Review to Done after the code review: 2 of 5 listed TAIIKU functions matched (932 bytes: `func_80137228` 260, `func_80135830` 672 with a FAKE dead `i = 0;`), `func_80137544` and `func_80135480` guarded, `func_80137C44` left `INCLUDE_ASM`. Two findings fixed: the `NON_MATCHING` comments of the two guarded drafts had lost their T-19004 notes (commit `112cfc10`), and the index, [[taiiku-family-results]] and [[matching-notes]] still called `func_80135830` a guarded draft. Unit sha1 OK, headers, globals and proto checks OK.
+## [2026-10-16] ticket | T-19003 Wave 3 package w3-d-p03 In Progress
+Opened [[tickets/T-19003-w3-d-p03]] on branch w3-d-p03 (base w2-good): TACO `src/ovl/TACO/80149F90.c`, work list `func_8014F5F0`, `func_801511C0`, `func_8014E5F8`, `func_8014F820`, `func_8014A480`. Part of [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-16] ticket | T-19003 In Progress -> In Review
+Wave 3 package w3-d-p03 on `src/ovl/TACO/80149F90.c`: 0 of 5 functions matched. `func_8014F5F0` (14 lines), `func_8014E5F8` (16), `func_8014A480` (16) guarded with typed drafts, `func_801511C0` (10) unchanged, `func_8014F820` back to `INCLUDE_ASM`. Five rows in [[data/t0018-cases]], section "T-19003" in [[matching-notes]]. Ticket [[tickets/T-19003-w3-d-p03]], part of [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-16] build | T-19003 final checks
+Clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` all OK on branch w3-d-p03. See [[tickets/T-19003-w3-d-p03]].
+
+## [2026-10-16] ticket | T-19003 closer pass
+Opus closer on w3-d-p03: `func_8014E5F8` matched (`s32` with no `return`; the T-0018 const-order case was a delay-slot effect). `func_8014A480` 16 -> 12 lines, `func_8014F5F0` 14 -> 11, `func_801511C0` unchanged at 10. `include/ovl/TACO.h` declares `func_8014E5F8` and `func_8014A480` as `s32`. Notes in [[matching-notes]] (T-19003, "Closer pass"), rows in [[data/t0018-cases]], comment in [[tickets/T-19003-w3-d-p03]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19003 Done
+Code review of w3-d-p03 against `CODING_STANDARDS.md`: no open findings; two fixed (the `D_80127610`/`D_801277F0` declarations moved into address order in `include/main_api.h`, stale 0-of-5 wording in the ticket, index and [[matching-notes]] corrected). 1 of 5 functions matched (`func_8014E5F8`), 3 guarded, 1 back to `INCLUDE_ASM`. Rebuild 27/27 OK, grand total 6077/6958 (67.3%). Ticket [[tickets/T-19003-w3-d-p03]], part of [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-16] ticket | T-17300 Types-first: ETC, In Progress
+
+Created [[tickets/T-17300-types-first-etc]] (wave 3, [[speedup-research-2026-10-16]]): types-first pass for ETC on branch `w3-etc-types` from `w2-good`. Card in In Progress.
+
+## [2026-10-16] decision | T-17300 ETC types in ETC.h
+
+[[tickets/T-17300-types-first-etc]]: `EtcExamRank` at `D_80150668` (0x8C), ranking row positions, per-girl tables (`D_80150728`, `D_80150738`, `D_8014E0A4`, `D_8014DB90`, `D_8014DBF8`, `D_8014E070`), the CD file table `D_8014EA18`, `SVECTOR D_8015013C`, `D_8015014C[16]`, 14 scalar widths, `EtcWork40` moved from `src/ovl/ETC/80146400.c` to `include/ovl/ETC.h`, which now includes `psx_types.h`. ETC sha1 OK after each step; rows in [[data-types]].
+
+## [2026-10-16] build | T-17300 ETC redraft and sibling ports
+
+`drafts/T-17300/redraft.py` (T-17200 driver plus work-prim, display-base, work-view, Rec24 fold, lui pairing): 36 of 38 unguarded drafts compile, 11 better than the census (8,316 bytes), sum 6,856 to 6,532 rows, none 0. Matched 3 functions / 1,572 bytes from `tools/siblings.py` ports: `func_80144AC0`, `func_8013E524`, `func_80145318`. Packages T-17301..T-17308 (29 functions, 22,400 bytes). Details on [[etc-family-results]], notes in [[matching-notes]].
+
+## [2026-10-16] ticket | T-17300 In Review
+
+[[tickets/T-17300-types-first-etc]] In Progress to In Review: clean build, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` results on the ticket. Card moved in [[kanban]].
+
+## [2026-10-16] ticket | T-17300 Done
+
+[[tickets/T-17300-types-first-etc]] In Review to Done after the code review against `CODING_STANDARDS.md`: 3 functions matched (1,572 bytes: `func_80144AC0`, `func_8013E524`, `func_80145318`, all sibling ports), ETC types in `include/ovl/ETC.h`, 40 redrafts in `drafts/T-17300/`. No findings. ETC sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK.
+
+## [2026-10-16] ticket | T-17400 Types-first: EVENT started
+
+Opened [[tickets/T-17400-types-first-event]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover EVENT's shared types, redraft its 40 unmatched functions with the T-16550/T-16560/T-17200 drivers, then cut packages. Branch `w3-event-types` from `w2-good`.
+
+## [2026-10-16] ticket | T-17400 Types-first: EVENT to In Review
+
+[[tickets/T-17400-types-first-event]]: 90 step tables (`FnTblNN`) and 12 stack tables typed in `include/ovl/EVENT.h`; 38 redrafts with `drafts/T-17400/redraft.py` (9 better than the census, sum 11,600 to 11,395 rows over the unguarded functions, none 0); 4 matches / 1,416 bytes (`func_800FF320`, `func_80104C3C`, `func_800FF61C`, `func_8010AE7C`); 7 packages T-17401..T-17407 (27 functions). New section "Types-first pass (T-17400)" on [[event-family-results]]; rows in [[data-types]], notes in [[matching-notes]]. In Review, waiting for the code review.
+
+## [2026-10-16] ticket | T-17400 Done
+
+[[tickets/T-17400-types-first-event]] In Review to Done after the code review against `CODING_STANDARDS.md`: 4 functions matched (1,416 bytes: `func_800FF320`, `func_80104C3C`, `func_800FF61C`, `func_8010AE7C`), 38 redrafts, 7 packages (T-17401..T-17407). Two findings fixed, comment-only: the `FAKE` comment of `func_800FF320` now starts with `FAKE` (`src/ovl/EVENT/800FDC20.c`), and the guard of `func_8010B614` names its 33 remaining diff rows (`src/ovl/EVENT/8010B360.c`). EVENT unit sha1 OK after the rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] ticket | T-17500 Types-first: SHOUGATU opened
+
+Opened [[tickets/T-17500-types-first-shougatu]] (In Progress) on branch `w3-shougatu-types` from `w2-good`: recover SHOUGATU's shared types, redraft every unmatched function with the pilot drivers, package the rest for wave 3.
+
+## [2026-10-16] build | T-17500 SHOUGATU types and redraft
+
+[[tickets/T-17500-types-first-shougatu]]: step tables, stack-table types and work arrays declared in `include/ovl/SHOUGATU.h` (which now includes `game.h`), `D_800CA248` added to `include/main_api.h`; `drafts/T-17500/redraft.py` redrafted all 38 unmatched functions (15 of the 32 still unmatched better than the census). Matched `func_801419D0`, `func_80132A34`, `func_80133760`, `func_8013AFEC` (1,516 bytes). New page [[shougatu-family-results]].
+
+## [2026-10-16] ticket | T-17500 In Review
+
+[[tickets/T-17500-types-first-shougatu]] In Progress to In Review. Packages T-17501..T-17507 (`w3-shougatu-p01`..`p07`, 33 functions, 18,404 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]).
+
+## [2026-10-16] ticket | T-17500 Done
+
+Code review of [[tickets/T-17500-types-first-shougatu]] against `CODING_STANDARDS.md`: 3 small findings fixed (missing local declaration beside the `MAIN_API_OVERRIDE_func_800847B8` define in `src/ovl/SHOUGATU/801330C0.c`, a redundant `(u8)` cast in `func_801419D0`, an idiom comment in `func_8013AFEC`). 4 functions matched (1,516 bytes), SHOUGATU sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. In Review to Done; branch `w3-shougatu-types` goes to the integration merge.
+## [2026-10-16] ticket | T-19006 Wave 3 package w3-d-p06 started
+Opened [[tickets/T-19006-w3-d-p06]] (In Progress): TACO `src/ovl/TACO/8013B990.c`, work list `func_8013B990`, `func_8013CFD8`, `func_8013CC40`, `func_8013C1F4`, `func_8013C440`. Part of [[tickets/T-16990-wave-3-conveyor]]. Branch w3-d-p06.
+
+## [2026-10-16] ticket | T-19006 In Review, 5 of 5 functions matched
+[[tickets/T-19006-w3-d-p06]] moved to In Review: TACO `src/ovl/TACO/8013B990.c`. Matched `func_8013B990`, `func_8013CFD8`, `func_8013CC40`, `func_8013C1F4` and `func_8013C440` (2,636 bytes) in plain C with four FAKE comments (`s32` with no return x3, branch-over guard x1). New prototypes and `D_8015F500` in `include/ovl/TACO.h`. Findings: a guard written as `if (x) goto skip;` gives the loop its own load of the base pointer where an enclosing `if` shares the guard's load; the limit byte must be read before the first branch for the strength-reduced actor pointer to appear. See [[matching-notes]] ("T-19006"), [[taco-family-results]] and [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-19006 Done
+[[tickets/T-19006-w3-d-p06]] reviewed against `CODING_STANDARDS.md` and moved to Done: 5 functions matched (2,636 bytes: TACO `func_8013B990`, `func_8013CFD8`, `func_8013CC40`, `func_8013C1F4`, `func_8013C440`). One review finding (a stray `value` to `value2` rename inside the matched `func_8013CE78` in `src/ovl/TACO/8013B990.c`), fixed; rebuild OK (globals, headers, TACO.bin SHA1).
+
 ## [2026-10-15] ticket | T-11840 TT batch 10 opened
 
 Opened [[tickets/T-11840-tt-batch-10]] (In Progress), stacked on T-11830 (PR #33): one long Opus run per large TT

@@ -1,0 +1,2 @@
+m2c.py: argument counts from the callees' asm: func_8005751C 1, func_8006612C 1, func_80083808 0, func_8008585C 0, func_80145500 0, func_80145550 0, func_80145A64 0, func_80145E40 0, func_80149144 0, func_8014A0E0 0
+RuntimeError: m2c-error: M2C_LWL

@@ -1,0 +1,24 @@
+m2c.py: argument counts from the callees' asm: func_8013F320 2
+m2c failed:
+
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_8013F054/work/guarded.c, line 4578: redeclaration of 'D_800E6280'; previous declaration at line 1071 in file 'drafts/T-17300/_runs/typed1/ETC/func_8013F054/work/guarded.c'
+ extern s32 D_800E6280;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_8013F054/work/guarded.c, line 4675: redeclaration of 'func_8013F320'; previous declaration at line 4583 in file 'drafts/T-17300/_runs/typed1/ETC/func_8013F054/work/guarded.c'
+ void func_8013F320(s32 arg0) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_8013F054/work/guarded.c, line 4675: Incompatible function return type for this function.
+ void func_8013F320(s32 arg0) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_8013F054/work -o drafts/T-17300/_runs/typed1/ETC/func_8013F054/work/guarded.o /tmp/asm_processorixehxh_a/preprocessed_18447726eade4209b96139ed2af98d6b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib3mninnax/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_8013F054/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_8013F054/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_8013F054/work/guarded.c, line 4673: redeclaration of 'func_8013F320'; previous declaration at line 4637 in file 'drafts/T-17300/_runs/typed1/ETC/func_8013F054/work/guarded.c'
+ void func_8013F320(s32 arg0) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_8013F054/work/guarded.c, line 4673: Incompatible function return type for this function.
+ void func_8013F320(s32 arg0) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_8013F054/work -o drafts/T-17300/_runs/typed1/ETC/func_8013F054/work/guarded.o /tmp/asm_processori2_ag5dq/preprocessed_73f2f765b51e4f46a44c37876f030b14.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibwmgpb3ou/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_8013F054/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_8013F054/work/guarded.c

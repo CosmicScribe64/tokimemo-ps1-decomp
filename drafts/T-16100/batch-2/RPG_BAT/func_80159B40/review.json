@@ -1,0 +1,28 @@
+{
+  "scope": "RPG_BAT:func_80159B40",
+  "path": "drafts/T-16100/batch-2/RPG_BAT/func_80159B40",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "+ &sp88",
+      "kind": "stack-address-arithmetic",
+      "line": 67
+    }
+  ],
+  "explanation": "sp88[4] is a copied four-word pointer table. Repair byte-stride lookup, unify four flags at sp5C into one four-word array, and use one-past-end bound with word increments.",
+  "evidence_path": "drafts/T-16100/batch-2/RPG_BAT/func_80159B40/evidence.txt",
+  "compile_status": "scored",
+  "score": 157,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "+ &sp88",
+        "kind": "stack-address-arithmetic",
+        "line": 67
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "sp88[4] is a copied four-word pointer table. Repair byte-stride lookup, unify four flags at sp5C into one four-word array, and use one-past-end bound with word increments."
+    }
+  ]
+}

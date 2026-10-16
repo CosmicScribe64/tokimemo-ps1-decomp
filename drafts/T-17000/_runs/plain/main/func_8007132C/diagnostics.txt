@@ -1,0 +1,1 @@
+m2c.py: argument counts from the callees' asm: appointment_find_today 3, func_8006B014 1, func_8006B0C8 0, func_8006CF80 0, func_8006D00C 0, func_80071038 0, func_80071110 0, func_80071280 0, main_state_set 1, rand 0

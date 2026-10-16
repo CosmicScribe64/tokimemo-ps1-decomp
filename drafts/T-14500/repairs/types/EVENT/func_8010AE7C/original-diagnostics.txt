@@ -1,0 +1,13 @@
+m2c.py: argument counts from the callees' asm: func_8010AFE4 0
+python3 failed:
+cfe: Error: drafts/T-14500/EVENT/func_8010AE7C/work/guarded.o.sjis.c, line 4347: 'sp2C' undefined; reoccurrences will not be reported.
+     *(M2cBlockE0 *)(&sp2C[0]) = *(M2cBlockE0 *)(&D_80123FCC);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/EVENT/func_8010AE7C/work -o drafts/T-14500/EVENT/func_8010AE7C/work/guarded.o /tmp/asm_processorji8pkixz/preprocessed_ec2e2c774ccf4c2e8ffcb0da580ef855.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibil35ea2_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/EVENT/func_8010AE7C/work/guarded.o drafts/T-14500/EVENT/func_8010AE7C/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/EVENT/func_8010AE7C/work/guarded.o.sjis.c, line 4349: Non-function name referenced in function call.
+     (&sp2C[0])[D_800B1AF6](0x80);
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/EVENT/func_8010AE7C/work -o drafts/T-14500/EVENT/func_8010AE7C/work/guarded.o /tmp/asm_processorts8w63ru/preprocessed_4d44fb21a75845b4a402adf84b550a25.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib2fuai51d/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/EVENT/func_8010AE7C/work/guarded.o drafts/T-14500/EVENT/func_8010AE7C/work/guarded.o.sjis.c

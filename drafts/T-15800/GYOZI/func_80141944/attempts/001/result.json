@@ -1,0 +1,28 @@
+{
+  "scope": "GYOZI:func_80141944",
+  "unit": "GYOZI",
+  "func": "func_80141944",
+  "src": "src/ovl/GYOZI/801418B0.c",
+  "size": 336,
+  "path": "drafts/T-15800/GYOZI/func_80141944",
+  "status": "failed",
+  "score": null,
+  "compile_attempts": 1,
+  "provenance": "drafts/T-15800/GYOZI/func_80141944/provenance.json",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "reason": "cfe: Error: /work/drafts/T-15800/GYOZI/func_80141944/work/guarded.c, line 3556: Non-function name referenced in function call.",
+  "hashes": {
+    "body.c": "709d2a7d420cda2a7027d6173232a3b7a64ebeff726cfd60f961a706015706ee",
+    "declarations.h": "7b52baa9b5f2f0df7d62d17c0aa08d2d62fbb859726b7f0fa27bfd876f2cf15f",
+    "context.c": "5b0ed5f6519977514b6c3fc6dc606123c3ceacca449f8480029f6367a61f61b8"
+  },
+  "header_hashes": {
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libgpu.h": "e05cf2f8e95289e3fe4864a80a90dd092437c2d66e140645b477771cb359b2ba",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25",
+    "include/ovl/GYOZI.h": "eb21d305c3df32ff5b256e2307fbfe175527faa0ad1de3292d6beaf82cc059af"
+  },
+  "seconds": 0.321
+}

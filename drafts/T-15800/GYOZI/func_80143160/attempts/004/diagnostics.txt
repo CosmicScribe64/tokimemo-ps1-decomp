@@ -1,0 +1,8 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c', '/work/drafts/T-15800/GYOZI/func_80143160/work/guarded.o', 'ido', '5.3']
+cfe: Warning 681: /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c, line 3328: '&' before array or function; ignored
+     *(Word4 *)&D_800F53A0.girl[D_800F62CF].unk_08 = D_80148970;
+ --------------^
+cfe: Warning 681: /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c, line 3341: '&' before array or function; ignored
+         D_80148970 = *(Word4 *)&D_800F53A0.girl[D_800F62CF].unk_08;
+ -------------------------------^
+

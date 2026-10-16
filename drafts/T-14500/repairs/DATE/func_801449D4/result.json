@@ -1,0 +1,10 @@
+{
+  "scope": "DATE:func_801449D4",
+  "status": "scored",
+  "score": 312,
+  "note": "Reuse T-14100 449-u32.c real 76-callback aggregate; unsigned index historical 315-row draft.",
+  "body_sha256": "734ecf9c7b635bd350045e976dcd59b7abd49636f9357386024159fd60d308fe",
+  "context_sha256": "63508b5e4ba7e8d91142285ab0870f4fd1199b867d0c91aaa2e6ce0635428cb6",
+  "residual_class": "instruction, control-flow or register allocation differences",
+  "matching_claim": false
+}

@@ -1,0 +1,15 @@
+{
+  "scope": "TACO:func_80137264",
+  "src": "src/ovl/TACO/80136B40.c",
+  "size": 812,
+  "status": "failed",
+  "score": null,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TACO/func_80137264",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "reason": "cfe: Error: drafts/T-15700/TACO/func_80137264/work/guarded.c, line 3557: Syntax Error",
+  "body_c_sha256": "c56b3c509897c35629eb931fa9823c69bd38447fcdd5f4153f22b31c6d8361df",
+  "context_c_sha256": "498384bdf10ace1764d1767a735da1628c219b93a564c093504332d1ae71121f",
+  "declarations_h_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+}

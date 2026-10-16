@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_8004A14C 4
+python3 failed:
+ ----------------------------------^
+cfe: Error: drafts/T-17000/_runs/typed/main/func_8004443C/work/guarded.c, line 2860: 'subroutine_arg2' undefined; reoccurrences will not be reported.
+         func_8004A14C(var_s3 + 6, subroutine_arg1, subroutine_arg2, *var_s0_2);
+ ---------------------------------------------------^
+cfe: Error: drafts/T-17000/_runs/typed/main/func_8004443C/work/guarded.c, line 2869: 'subroutine_arg1' undefined; reoccurrences will not be reported.
+     func_8004A14C(var_s3 + 6, subroutine_arg1, subroutine_arg2, 0x808080);
+ ------------------------------^
+cfe: Error: drafts/T-17000/_runs/typed/main/func_8004443C/work/guarded.c, line 2869: 'subroutine_arg2' undefined; reoccurrences will not be reported.
+     func_8004A14C(var_s3 + 6, subroutine_arg1, subroutine_arg2, 0x808080);
+ -----------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/typed/main/func_8004443C/work -o drafts/T-17000/_runs/typed/main/func_8004443C/work/guarded.o /tmp/asm_processorcc9h_o70/preprocessed_a689521cc3594bbd8f927725cc5f49a3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibnr1vcomr/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/typed/main/func_8004443C/work/guarded.o drafts/T-17000/_runs/typed/main/func_8004443C/work/guarded.c

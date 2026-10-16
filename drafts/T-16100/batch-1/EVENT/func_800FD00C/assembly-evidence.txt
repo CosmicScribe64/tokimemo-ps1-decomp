@@ -1,0 +1,8 @@
+    800FD00C:  addiu      $sp, $sp, -0xD0
+    800FD018:  sw         $ra, 0x14($sp)
+    800FD020:  addiu      $t6, $sp, 0x30
+    800FD068:  sll        $t2, $t1, 2
+    800FD06C:  addu       $t9, $sp, $t2
+    800FD078:  jalr       $t9
+    800FD150:  lw         $ra, 0x14($sp)
+    800FD154:  addiu      $sp, $sp, 0xD0

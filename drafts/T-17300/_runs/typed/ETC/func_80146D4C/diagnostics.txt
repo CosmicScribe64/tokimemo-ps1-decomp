@@ -1,0 +1,31 @@
+m2c.py: argument counts from the callees' asm: func_80146400 0
+m2c failed:
+
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o.sjis.c, line 4354: redeclaration of 'func_800AE0B0'; previous declaration at line 2339 in file 'drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o.sjis.c'
+ s32 func_800AE0B0();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o.sjis.c, line 4354: Incompatible function return type for this function.
+ s32 func_800AE0B0();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o.sjis.c, line 4411: 'sp3C' undefined; reoccurrences will not be reported.
+         var_a3 = sp3C;
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80146D4C/work -o drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o /tmp/asm_processor_8d3mqo5/preprocessed_df61b3721ac249be8add78d4172334d9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibjlay33m6/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o.sjis.c, line 4350: redeclaration of 'D_800E6280'; previous declaration at line 764 in file 'drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o.sjis.c'
+ extern s32 D_800E6280;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o.sjis.c, line 4410: 'sp3C' undefined; reoccurrences will not be reported.
+         var_a3 = sp3C;
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80146D4C/work -o drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o /tmp/asm_processorg71xevli/preprocessed_05b08316c9b146f493dba5b245350f3d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibmebleg16/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o.sjis.c, line 4409: 'sp3C' undefined; reoccurrences will not be reported.
+         var_a3 = sp3C;
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80146D4C/work -o drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o /tmp/asm_processor4k3ms3_8/preprocessed_53398c8786d84136995f4bbc572d7759.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4pnfi6yj/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80146D4C/work/guarded.o.sjis.c

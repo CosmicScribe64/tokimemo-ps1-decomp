@@ -1,0 +1,28 @@
+{
+  "scope": "GEKO:func_801358CC",
+  "path": "drafts/T-16100/batch-2/GEKO/func_801358CC",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 18
+    }
+  ],
+  "explanation": "Shift/subtract computes girl index*0x38 and +0x1C8 is Rec38.unk_0C. Repair established GameState record field.",
+  "evidence_path": "drafts/T-16100/batch-2/GEKO/func_801358CC/evidence.txt",
+  "compile_status": "scored",
+  "score": 113,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 18
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Shift/subtract computes girl index*0x38 and +0x1C8 is Rec38.unk_0C. Repair established GameState record field."
+    }
+  ]
+}

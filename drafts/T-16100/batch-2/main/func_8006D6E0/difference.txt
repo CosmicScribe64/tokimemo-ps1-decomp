@@ -1,0 +1,81 @@
+Difference rows: 99; first 80 mnemonic/relocation rows; opcode words omitted.
+-; lui a0,0x0
++; lui v1,0x0
+-; addiu a0,a0,0
+-; move v1,zero
++; addiu v1,v1,1692
++; move a0,zero
+-; lbu t6,1692(a0)
++; lbu t6,0(v1)
+-; bne a1,t6,c2c <func_8006D6E0+0x7c>
++; bne a1,t6,c30 <func_8006D6E0+0x80>
+-; bnez v0,c28 <func_8006D6E0+0x78>
++; bnez v0,c24 <func_8006D6E0+0x74>
+-; sb v1,0(at)
+-; lbu t7,1688(a0)
+-; li a1,37
+-; beq a1,t7,c1c <func_8006D6E0+0x6c>
+-; lui v0,0x0
+-; lui t8,0x0
+-; lbu t8,0(t8)
++; sb a0,0(at)
++; lbu t7,-4(v1)
++; li a2,37
++; beq a2,t7,c14 <func_8006D6E0+0x64>
++; addiu v0,a0,-1
+-; addiu t9,t8,-1
++; sb v0,0(at)
++; lbu t8,-8(v1)
++; andi a1,v0,0xff
++; beq a2,t8,c14 <func_8006D6E0+0x64>
++; addiu t9,a1,-1
++; lui at,0x0
+-; lbu t0,1684(a0)
+-; lui at,0x0
+-; beq a1,t0,c1c <func_8006D6E0+0x6c>
+-; addiu t2,t9,-1
+-; sb t2,0(at)
+-; lbu v0,0(v0)
+-; b c48 <func_8006D6E0+0x98>
+-; nop
+-; addiu v0,v0,-1
+-; addiu v1,v1,1
+-; slti at,v1,32
+-; bnez at,bc8 <func_8006D6E0+0x18>
+-; addiu a0,a0,4
+-; li a1,37
+-; beqz v0,c5c <func_8006D6E0+0xac>
++; b c58 <func_8006D6E0+0xa8>
++; move v1,v0
++; addiu v0,v0,-1
++; andi t0,v0,0xff
++; move v0,t0
++; addiu a0,a0,1
++; andi t1,a0,0xff
++; slti at,t1,32
++; move a0,t1
++; bnez at,bc8 <func_8006D6E0+0x18>
++; addiu v1,v1,4
++; lui v0,0x0
++; lbu v0,0(v0)
++; li a2,37
++; move v1,v0
++; beqz v0,c68 <func_8006D6E0+0xb8>
+-; addiu v0,v0,-1
+-; andi t3,v0,0xff
+-; move v0,t3
+-; sb v0,0(at)
+-; slti at,v0,32
++; addiu t2,v0,-1
++; andi v1,t2,0xff
++; sb v1,0(at)
++; slti at,v1,32
+-; move v1,v0
+-; lui t5,0x0
+-; addiu t5,t5,0
+-; lui a2,0x0
+-; addiu a2,a2,0
+-; addu a0,t4,t5
+-; li v1,255
+-; lbu v0,1692(a0)
++; lui t6,0x0

@@ -1,0 +1,28 @@
+python3 failed:
+ ----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.c, line 3427: redeclaration of 'D_8014A110'; previous declaration at line 2744 in file 'drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.c'
+ extern u8 D_8014A110;
+ ----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.c, line 3428: redeclaration of 'D_8014A13C'; previous declaration at line 3184 in file 'drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.c'
+ extern u8 D_8014A13C;
+ ----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.c, line 3525: This expression is not an lvalue.
+             D_8014A13C = 0;
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work -o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.o /tmp/asm_processorjqvdpof1/preprocessed_90c2896996ab45aaa0a39f14d0f4ddca.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibufphy7um/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.c, line 3425: redeclaration of 'D_80120763'; previous declaration at line 1109 in file 'drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.c'
+ extern s8 D_80120763;
+ ----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.c, line 3523: This expression is not an lvalue.
+             D_8014A13C = 0;
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work -o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.o /tmp/asm_processorm40a6oyp/preprocessed_4fea16e12fbe4c3793a7f9aa0599640e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibm4k3fbsf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.c, line 3522: This expression is not an lvalue.
+             D_8014A13C = 0;
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work -o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.o /tmp/asm_processormeowrlwn/preprocessed_377947d216b5471f969a61e7df33189c.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibcd4qoef1/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50/work/guarded.c

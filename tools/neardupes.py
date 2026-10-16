@@ -33,6 +33,7 @@ the report lists them as "needs jtbl check". Functions with own rodata (T-11160)
 part of the shape (exact, constants are not substituted in it), and a copy is applied only with --check
 when the data is in its own function file (dupes.split_held); the report lists them as "needs data
 check". Numbers inside C string literals are never substituted.
+T-16500: tools/twin_sweep.py runs this planner and dupes.py over the whole tree after every merge.
 Tests: tools/test_neardupes.py.
 """
 import argparse

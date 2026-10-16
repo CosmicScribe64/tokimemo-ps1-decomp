@@ -1,0 +1,1 @@
+m2c.py: argument counts from the callees' asm: func_8004FC10 1, menu_bar_show 1, menu_check 3

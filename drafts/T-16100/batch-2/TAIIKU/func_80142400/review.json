@@ -1,0 +1,56 @@
+{
+  "scope": "TAIIKU:func_80142400",
+  "path": "drafts/T-16100/batch-2/TAIIKU/func_80142400",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "sp92",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    },
+    {
+      "detail": "&sp44 +",
+      "kind": "stack-address-arithmetic",
+      "line": 49
+    },
+    {
+      "detail": "M2cBlock28",
+      "kind": "inferred-copy-layout",
+      "line": 3
+    }
+  ],
+  "explanation": "spA4/sp90 initializations write five words into s16 scalars, sp70 writes eight words, sp44 copies 40. Real overlapping stack storage defect; large coordinated reconstruction deferred.",
+  "evidence_path": "drafts/T-16100/batch-2/TAIIKU/func_80142400/evidence.txt",
+  "compile_status": "scored",
+  "score": 391,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp92",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "spA4/sp90 initializations write five words into s16 scalars, sp70 writes eight words, sp44 copies 40. Real overlapping stack storage defect; large coordinated reconstruction deferred."
+    },
+    {
+      "flag": {
+        "detail": "&sp44 +",
+        "kind": "stack-address-arithmetic",
+        "line": 49
+      },
+      "outcome": "unresolved",
+      "explanation": "spA4/sp90 initializations write five words into s16 scalars, sp70 writes eight words, sp44 copies 40. Real overlapping stack storage defect; large coordinated reconstruction deferred."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlock28",
+        "kind": "inferred-copy-layout",
+        "line": 3
+      },
+      "outcome": "unresolved",
+      "explanation": "spA4/sp90 initializations write five words into s16 scalars, sp70 writes eight words, sp44 copies 40. Real overlapping stack storage defect; large coordinated reconstruction deferred."
+    }
+  ]
+}

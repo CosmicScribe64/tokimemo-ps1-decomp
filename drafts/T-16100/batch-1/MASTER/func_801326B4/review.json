@@ -1,0 +1,61 @@
+{
+  "scope": "MASTER:func_801326B4",
+  "selected_path": "drafts/T-14500/MASTER/func_801326B4",
+  "changed": false,
+  "outcomes": [
+    {
+      "detail": "M2cBlock30",
+      "kind": "inferred-copy-layout",
+      "line": 2,
+      "verdict": "reviewed-copy-evidence-partial",
+      "explanation": "Target lw/sw copy sequences support the documented block byte width. This synthetic block typedef does not establish the original source type; semantic layout and any adjacent/trailing fields remain unresolved. Preserve the flag. Eight local 0x34-byte records and a 0x30-byte prefix copy are visible. Existing copied word blocks compile, but converting these to the shared Rec34 layout needs analysis of every field use and the trailing word; this pass preserves them.",
+      "original_excerpt": [
+        "void func_801326B4(void) {",
+        "    typedef struct { s32 w[12]; } M2cBlock30; /* m2c memcpy of 48 bytes */",
+        "    typedef struct { s32 w[13]; } M2cBlock34; /* m2c memcpy of 52 bytes */"
+      ]
+    },
+    {
+      "detail": "M2cBlock34",
+      "kind": "inferred-copy-layout",
+      "line": 3,
+      "verdict": "reviewed-copy-evidence-partial",
+      "explanation": "Target lw/sw copy sequences support the documented block byte width. This synthetic block typedef does not establish the original source type; semantic layout and any adjacent/trailing fields remain unresolved. Preserve the flag. Eight local 0x34-byte records and a 0x30-byte prefix copy are visible. Existing copied word blocks compile, but converting these to the shared Rec34 layout needs analysis of every field use and the trailing word; this pass preserves them.",
+      "original_excerpt": [
+        "    typedef struct { s32 w[12]; } M2cBlock30; /* m2c memcpy of 48 bytes */",
+        "    typedef struct { s32 w[13]; } M2cBlock34; /* m2c memcpy of 52 bytes */",
+        "    s32 sp1E0;"
+      ]
+    }
+  ],
+  "repair_notes": [],
+  "assembly_path": "asm/ovl/MASTER/nonmatchings/MASTER/80132140/func_801326B4.s",
+  "assembly_sha256": "43c5f77b3d32c78201eaead8ad80767ae49e881f09f3170f083d7707b860a7ad",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x1DC": [
+      "lw",
+      "sw"
+    ],
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x1E0": [
+      "lw",
+      "sw"
+    ],
+    "0x10": [
+      "sw"
+    ],
+    "0x14": [
+      "sw"
+    ]
+  },
+  "layout_limit": "Eight local 0x34-byte records and a 0x30-byte prefix copy are visible. Existing copied word blocks compile, but converting these to the shared Rec34 layout needs analysis of every field use and the trailing word; this pass preserves them."
+}

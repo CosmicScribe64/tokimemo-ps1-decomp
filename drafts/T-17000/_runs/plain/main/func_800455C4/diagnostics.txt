@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_800460FC 0, func_80046478 1, func_800879A8 1, func_800879D0 3, func_80087B1C 2, func_80087C64 3, func_80087E08 1, func_80087EE8 2, func_80088070 1, func_800880C0 1, func_8008B750 2, func_800AD950 1
+python3 failed:
+ ------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-17000/_runs/plain/main/func_800455C4/work/guarded.c, line 2874: '&' before array or function; ignored
+                     if (func_80087C64(2, (s32) &sp38, 0) == 0) {
+ -----------------------------------------------^
+cfe: Warning 681: drafts/T-17000/_runs/plain/main/func_800455C4/work/guarded.c, line 2876: '&' before array or function; ignored
+                         } while (func_80087C64(2, (s32) &sp38, 0) == 0);
+ --------------------------------------------------------^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_800455C4/work/guarded.c, line 2978: 'NULL' undefined; reoccurrences will not be reported.
+     } else if (func_80087954(1, NULL) == 5) {
+ --------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/plain/main/func_800455C4/work -o drafts/T-17000/_runs/plain/main/func_800455C4/work/guarded.o /tmp/asm_processormo6jqdqq/preprocessed_8344c9e23d5c432f909060ffc89cd9e5.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibyb8tqkb5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/plain/main/func_800455C4/work/guarded.o drafts/T-17000/_runs/plain/main/func_800455C4/work/guarded.c

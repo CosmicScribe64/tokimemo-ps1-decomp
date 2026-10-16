@@ -1,0 +1,25 @@
+{
+  "func": "func_80144F70",
+  "guarded": false,
+  "scope": "BUNKAKEN:func_80144F70",
+  "score": 426,
+  "seconds": 1.5,
+  "size": 1424,
+  "source_hash": "665dff323225014b8e7e4dd4a960af4b2c6daecc7fa04662e928e85c722faa0f",
+  "src": "src/ovl/BUNKAKEN/80144F70.c",
+  "status": "scored",
+  "unit": "BUNKAKEN",
+  "variant": "unaligned-aggregate-repair",
+  "ticket": "T-15100",
+  "compile_attempts": 1,
+  "notes": [
+    "Eleven-byte local copy: two words plus three-byte tail."
+  ],
+  "matching_claim": false,
+  "archive_path": "drafts/T-14500/repairs-unaligned/BUNKAKEN/func_80144F70",
+  "context_sha256": "7a3b936ee52bcb9482b9becd0391e0f05beb26f310bafa17ae143fc606c920ca",
+  "residual_class": "nonmatching instruction, control-flow, stack-layout or inferred-type differences",
+  "environment_hash": "6f65598c4801aecc283a0ff94ca04d54505cf70ec6730470159f30c33cb7bd37",
+  "harness_hash": "cbf40cd669e0c44bcb1cb19323f5d31d23204f47dc9bd7013854767313559da1",
+  "body_sha256": "641d7216c200d7a5a8aa5bf9fb9367219f70fa67107c3a9f03e8546b1d0e4f04"
+}

@@ -1,0 +1,44 @@
+{
+  "scope": "main:func_8006C988",
+  "selected_path": "drafts/T-14500/main/func_8006C988",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 38,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "        if (temp_t7 != 0) {",
+        "            var_t1_2 = (var_a3_2 * 8) + &D_800E6280;",
+        "            do {"
+      ]
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 49,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "block_14:",
+        "            var_t1_3 = (var_a3_2 * 8) + &D_800E6280;",
+        "            do {"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields."
+  ],
+  "assembly_path": "asm/nonmatchings/main/800674B0/func_8006C988.s",
+  "assembly_sha256": "c660653eb37a9443d71d28afba31de2811cd9642cdd985054d2ec4f5708283fb",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x8": [
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

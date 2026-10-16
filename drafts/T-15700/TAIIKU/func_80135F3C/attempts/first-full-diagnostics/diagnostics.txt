@@ -1,0 +1,98 @@
+$ gcc -E -P -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TAIIKU/func_80135F3C/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.o ido 5.3
+cfe: Error: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3519: 'spF0' undefined; reoccurrences will not be reported.
+     *(M2cBlock2C *)(&spF0[0]) = *(M2cBlock2C *)(&D_80149728);
+ ---------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3520: 'spD8' undefined; reoccurrences will not be reported.
+     spD8[0].unk0 = (s32) D_80149754.unk0;
+ ----^
+cfe: Warning 749: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3520: structure has no member named 'unk0'
+     spD8[0].unk0 = (s32) D_80149754.unk0;
+ -----------------------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3526: 'spC0' undefined; reoccurrences will not be reported.
+     spC0[0].unk0 = (s32) D_8014976C.unk0;
+ ----^
+cfe: Warning 749: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3526: structure has no member named 'unk0'
+     spC0[0].unk0 = (s32) D_8014976C.unk0;
+ -----------------------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3532: '&' before array or function; ignored
+     *(M2cBlock58 *)(&sp68) = *(M2cBlock58 *)(&D_80149784);
+ --------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3566: '&' before array or function; ignored
+         D_80120B9F = *(&sp68 + ((temp_a0 >> 3) * 8) + (temp_a0 & 7));
+ -----------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3567: 'sp' undefined; reoccurrences will not be reported.
+         var_a1 = *(s32 *)((unsigned char *)(sp + (D_801491EC * 4)) + (240));
+ --------------------------------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3570: 'sp' undefined; reoccurrences will not be reported.
+         var_a1 = *(s32 *)((unsigned char *)(sp + (D_801491EC * 4)) + (240));
+ --------------------------------------------^
+cfe: Warning 709: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3580: Incompatible pointer type assignment
+             temp_s1 = (var_a0 * 0x24) + &D_80149208;
+ --------------------^
+cfe: Warning 709: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3582: Incompatible pointer type assignment
+             var_s0 = (var_a0 * 0x24) - 0x24 + &D_80149208;
+ -------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3611: '&' before array or function; ignored
+     D_8012097F = *(&sp68 + ((temp_v0_2 >> 3) * 8) + (temp_v0_2 & 7));
+ -------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3613: '&' before array or function; ignored
+     D_801209C3 = *(&sp68 + ((temp_v1_2 >> 3) * 8) + (temp_v1_2 & 7));
+ -------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3615: '&' before array or function; ignored
+     D_80120A07 = *(&sp68 + ((temp_a0_2 >> 3) * 8) + (temp_a0_2 & 7));
+ -------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3617: '&' before array or function; ignored
+     D_80120A4B = *(&sp68 + ((temp_a1 >> 3) * 8) + (temp_a1 & 7));
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15700/TAIIKU/func_80135F3C/work -o drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.o /tmp/asm_processor59ny0o5v/preprocessed_81ff2b287c3a4d5b8247751b58428f8a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibh3rtuh44/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.o drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c
+
+
+$ gcc -E -P -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TAIIKU/func_80135F3C/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.o ido 5.3
+cfe: Error: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3520: 'spF0' undefined; reoccurrences will not be reported.
+     *(M2cBlock2C *)(&spF0[0]) = *(M2cBlock2C *)(&D_80149728);
+ ---------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3521: 'spD8' undefined; reoccurrences will not be reported.
+     spD8[0].unk0 = (s32) D_80149754.unk0;
+ ----^
+cfe: Warning 749: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3521: structure has no member named 'unk0'
+     spD8[0].unk0 = (s32) D_80149754.unk0;
+ -----------------------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3527: 'spC0' undefined; reoccurrences will not be reported.
+     spC0[0].unk0 = (s32) D_8014976C.unk0;
+ ----^
+cfe: Warning 749: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3527: structure has no member named 'unk0'
+     spC0[0].unk0 = (s32) D_8014976C.unk0;
+ -----------------------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3533: '&' before array or function; ignored
+     *(M2cBlock58 *)(&sp68) = *(M2cBlock58 *)(&D_80149784);
+ --------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3567: '&' before array or function; ignored
+         D_80120B9F = *(&sp68 + ((temp_a0 >> 3) * 8) + (temp_a0 & 7));
+ -----------------------^
+cfe: Warning 709: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3581: Incompatible pointer type assignment
+             temp_s1 = (var_a0 * 0x24) + &D_80149208;
+ --------------------^
+cfe: Warning 709: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3583: Incompatible pointer type assignment
+             var_s0 = (var_a0 * 0x24) - 0x24 + &D_80149208;
+ -------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3612: '&' before array or function; ignored
+     D_8012097F = *(&sp68 + ((temp_v0_2 >> 3) * 8) + (temp_v0_2 & 7));
+ -------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3614: '&' before array or function; ignored
+     D_801209C3 = *(&sp68 + ((temp_v1_2 >> 3) * 8) + (temp_v1_2 & 7));
+ -------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3616: '&' before array or function; ignored
+     D_80120A07 = *(&sp68 + ((temp_a0_2 >> 3) * 8) + (temp_a0_2 & 7));
+ -------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3618: '&' before array or function; ignored
+     D_80120A4B = *(&sp68 + ((temp_a1 >> 3) * 8) + (temp_a1 & 7));
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15700/TAIIKU/func_80135F3C/work -o drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.o /tmp/asm_processorysrzzh7l/preprocessed_a385020bb1bc4a4bb00c593fa7fe1324.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibat0palu0/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.o drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c

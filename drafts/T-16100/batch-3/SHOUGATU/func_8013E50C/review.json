@@ -1,0 +1,25 @@
+{
+  "scope": "SHOUGATU:func_8013E50C",
+  "selected_path": "drafts/T-15800/SHOUGATU/func_8013E50C",
+  "archive_path": "drafts/T-16100/batch-3/SHOUGATU/func_8013E50C",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "GameState arithmetic changed to explicit byte-address addition: target addu adds unscaled index/byte stride; GameState* addition multiplies by sizeof(GameState). Existing member uses remain available."
+  ],
+  "flags": [
+    {
+      "detail": "sp40[7]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "justified-false-positive",
+      "explanation": "sp40[7] has exactly fourteen initialized bytes (three words plus final halfword), indexed by a loop bounded by seven; this flag is justified. Adjacent sp30 and possible boundary index remain unresolved."
+    }
+  ],
+  "notes": "sp40[7] has exactly fourteen initialized bytes (three words plus final halfword), indexed by a loop bounded by seven; this flag is justified. Adjacent sp30 and possible boundary index remain unresolved.",
+  "assembly_evidence": "drafts/T-16100/batch-3/SHOUGATU/func_8013E50C/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "repaired"
+}

@@ -1,0 +1,2 @@
+m2c.py: argument counts from the callees' asm: func_80133AD0 3
+RuntimeError: m2c-error: M2C_ERROR

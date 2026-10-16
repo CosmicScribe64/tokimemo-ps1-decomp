@@ -1,0 +1,57 @@
+    8005F730:  addiu      $sp, $sp, -0x80
+    8005F734:  sw         $ra, 0x1C($sp)
+    8005F764:  sh         $t9, 0x44($sp)
+    8005F768:  sh         $t8, 0x50($sp)
+    8005F76C:  sh         $t7, 0x5C($sp)
+    8005F770:  sh         $t6, 0x68($sp)
+    8005F778:  sll        $v0, $t3, 1
+    8005F77C:  addiu      $t4, $sp, 0x68
+    8005F780:  addiu      $t5, $sp, 0x5C
+    8005F784:  addu       $v1, $v0, $t4
+    8005F788:  addu       $a0, $v0, $t5
+    8005F78C:  sll        $a1, $t3, 4
+    8005F790:  addiu      $t7, $sp, 0x50
+    8005F794:  addiu      $t8, $sp, 0x44
+    8005F7A4:  addu       $a2, $v0, $t7
+    8005F7A8:  addu       $a3, $v0, $t8
+    8005F804:  lh         $a0, 0x68($sp)
+    8005F818:  lh         $a1, 0x5C($sp)
+    8005F828:  lh         $a1, 0x5C($sp)
+    8005F83C:   sw        $zero, 0x10($sp)
+    8005F840:  lh         $a0, 0x6A($sp)
+    8005F844:  lh         $a1, 0x5E($sp)
+    8005F858:   sw        $zero, 0x10($sp)
+    8005F85C:  lh         $a0, 0x6C($sp)
+    8005F860:  lh         $a1, 0x60($sp)
+    8005F874:   sw        $zero, 0x10($sp)
+    8005F878:  lh         $a0, 0x6E($sp)
+    8005F87C:  lh         $a1, 0x62($sp)
+    8005F890:   sw        $zero, 0x10($sp)
+    8005F894:  lh         $a0, 0x70($sp)
+    8005F898:  lh         $a1, 0x64($sp)
+    8005F8AC:   sw        $zero, 0x10($sp)
+    8005F8B8:  lh         $a0, 0x68($sp)
+    8005F8C8:   sw        $zero, 0x10($sp)
+    8005F8CC:  lh         $a0, 0x6A($sp)
+    8005F8D0:  lh         $a1, 0x5E($sp)
+    8005F8E4:   sw        $zero, 0x10($sp)
+    8005F8E8:  lh         $a0, 0x6C($sp)
+    8005F8EC:  lh         $a1, 0x60($sp)
+    8005F900:   sw        $zero, 0x10($sp)
+    8005F904:  lh         $a0, 0x6E($sp)
+    8005F908:  lh         $a1, 0x62($sp)
+    8005F91C:   sw        $zero, 0x10($sp)
+    8005F920:  lh         $a0, 0x70($sp)
+    8005F924:  lh         $a1, 0x64($sp)
+    8005F938:   sw        $zero, 0x10($sp)
+    8005F95C:   sw        $zero, 0x10($sp)
+    8005F960:  addiu      $t8, $sp, 0x50
+    8005F964:  addiu      $t9, $sp, 0x44
+    8005F968:  sw         $t9, 0x14($sp)
+    8005F96C:  sw         $t8, 0x10($sp)
+    8005F978:  addiu      $a2, $sp, 0x68
+    8005F980:   addiu     $a3, $sp, 0x5C
+    8005F99C:   sll       $t5, $t5, 2
+    8005F9A4:  addu       $at, $at, $t5
+    8005FA10:  lw         $ra, 0x1C($sp)
+    8005FA14:  addiu      $sp, $sp, 0x80

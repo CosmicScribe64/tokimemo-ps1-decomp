@@ -1,0 +1,36 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/TAIIKU/func_8013EC60/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/TAIIKU/func_8013EC60/full-context.c drafts/T-16100/batch-2/TAIIKU/func_8013EC60/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-2/TAIIKU/func_8013EC60/full-context.c, line 3932: Incompatible pointer type assignment
+         temp_t1 = &sp9C + temp_t4;
+ ----------------^
+cfe: Warning 709: drafts/T-16100/batch-2/TAIIKU/func_8013EC60/full-context.c, line 3936: Incompatible pointer type assignment
+             temp_v1_2 = &spAC + temp_t4;
+ ----------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TAIIKU/func_8013EC60/full-context.c, line 3970: '&' before array or function; ignored
+         if ((u32) var_s1_3 < (u32) &spBC) {
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TAIIKU/func_8013EC60/full-context.c, line 3986: '&' before array or function; ignored
+         if ((u32) var_s1_4 < (u32) &spBC) {
+ -----------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/TAIIKU/func_8013EC60/full-context.c, line 3993: Incompatible pointer type assignment
+         temp_v1_3 = &spAC + temp_t8_3;
+ ------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/TAIIKU/func_8013EC60/full-context.c, line 4056: Incompatible pointer type assignment
+         temp_t1_2 = &sp9C + temp_t6;
+ ------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/TAIIKU/func_8013EC60/full-context.c, line 4060: Incompatible pointer type assignment
+             temp_v1_4 = &spAC + temp_t6;
+ ----------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TAIIKU/func_8013EC60/full-context.c, line 4094: '&' before array or function; ignored
+         if ((u32) var_s1_6 < (u32) &spBC) {
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TAIIKU/func_8013EC60/full-context.c, line 4110: '&' before array or function; ignored
+         if ((u32) var_s1_7 < (u32) &spBC) {
+ -----------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/TAIIKU/func_8013EC60/full-context.c, line 4117: Incompatible pointer type assignment
+         temp_v1_5 = &spAC + temp_t9;
+ ------------------^
+
+Full translation unit compiled and scored.

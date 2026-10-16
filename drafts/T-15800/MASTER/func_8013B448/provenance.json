@@ -1,0 +1,34 @@
+{
+  "selected_seed": "drafts/T-14500/repairs/automatic/no-unk-inference/MASTER/func_8013B448",
+  "prior_attempts": [
+    {
+      "path": "drafts/T-14500/MASTER/func_8013B448",
+      "reason": "Error: guarded.o.sjis.c, line 3346: Incompatible function return type for this function.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/mechanical/MASTER/func_8013B448",
+      "reason": "Error: guarded.o.sjis.c, line 3346: Incompatible function return type for this function.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-context/MASTER/func_8013B448",
+      "reason": "Error: guarded.o.sjis.c, line 3347: Incompatible function return type for this function.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-unk-inference/MASTER/func_8013B448",
+      "reason": "Error: guarded.o.sjis.c, line 3346: Incompatible function return type for this function.",
+      "score": null,
+      "status": "failed"
+    }
+  ],
+  "frozen_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "production_src": "src/ovl/MASTER/80139000.c",
+  "repairs": [
+    "retain existing explicit/implicit s32 return view; no stub or new control flow"
+  ]
+}

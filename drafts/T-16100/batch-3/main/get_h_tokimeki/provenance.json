@@ -1,0 +1,11 @@
+{
+  "ticket": "T-16100",
+  "original_attempt": "drafts/T-14500/main/get_h_tokimeki",
+  "original_sha256": "24cd5d6281fe2370c3b86ca1bd996a218b780334d75f367aa2144f5568abf1cb",
+  "source_base": "48362009",
+  "frozen_header_root": "drafts/T-14500/baseline/include",
+  "context_source": "drafts/T-14500/main/get_h_tokimeki/context.c",
+  "repair": "tools/t16100_batch3.py",
+  "compiler": "IDO 5.3 via tools/docker.sh; full translation unit",
+  "matching_claim": false
+}

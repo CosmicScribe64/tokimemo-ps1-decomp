@@ -1,0 +1,36 @@
+{
+  "scope": "EN_NICHI:func_80132834",
+  "selected_path": "drafts/T-14500/repairs/automatic/mechanical/EN_NICHI/func_80132834",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 33,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "            D_800E7540 = -1;",
+        "            temp_v0 = (2 * 4) + &D_800E6280;",
+        "            *(s32 *)((unsigned char *)temp_v0 + (4672)) = -1;"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields."
+  ],
+  "assembly_path": "asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000/func_80132834.s",
+  "assembly_sha256": "2e32cbe3553dcec51feaaf5007b50e448e3f43438199971805b6da02321bc85e",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x10": [
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

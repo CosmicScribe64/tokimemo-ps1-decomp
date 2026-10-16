@@ -1,0 +1,119 @@
+? func_8004F984(?, s16, s16, u8 *);                 /* extern */
+extern u8 D_80146054;
+extern u8 D_80146058;
+extern s8 D_8014616B;
+
+void func_8013FB28(void) {
+    s16 temp_t9;
+    s16 var_v0;
+    s16 var_v1;
+    s16 var_v1_2;
+    s32 temp_v0_2;
+    s32 temp_v0_3;
+    s32 var_v0_2;
+    s8 temp_t4;
+    s8 temp_t7;
+    s8 temp_t8;
+    u8 *var_a0;
+    u8 temp_t6;
+    u8 temp_v0;
+    u8 temp_v1;
+
+    temp_t6 = D_800E6280.unk_10F8 & 3;
+    var_v1 = 1;
+loop_1:
+    temp_t8 = ((D_800E6280.unk_10F8 * 2) + var_v1) & 3 & 0xFF;
+    var_v0 = var_v1;
+    if (temp_t6 == temp_t8) {
+        var_v1 += 1;
+        goto loop_1;
+    }
+loop_4:
+    temp_t7 = (((u32) D_800E6280.unk_10F8 / 10U) + var_v0) & 3 & 0xFF;
+    if (temp_t6 == temp_t7) {
+block_6:
+        temp_t9 = var_v1 + 1;
+        var_v1 = temp_t9;
+        var_v0 = temp_t9;
+        goto loop_4;
+    }
+    if (temp_t8 == temp_t7) {
+        goto block_6;
+    }
+loop_7:
+    temp_t4 = (var_v1 % 4) & 0xFF;
+    if (temp_t6 == temp_t4) {
+block_11:
+        var_v1 += 1;
+        goto loop_7;
+    }
+    if (temp_t8 == temp_t4) {
+        goto block_11;
+    }
+    D_8014616B = temp_t4;
+    if (temp_t7 == temp_t4) {
+        goto block_11;
+    }
+    D_80146168->unk0 = temp_t6;
+    *(s8 *)((unsigned char *)D_80146168 + (1)) = temp_t8;
+    *(s8 *)((unsigned char *)D_80146168 + (2)) = temp_t7;
+    var_v1_2 = 0;
+    var_a0 = D_80146168;
+    do {
+        temp_v0 = *var_a0;
+        if (temp_v0 == 1) {
+            *var_a0 = 0xB;
+        } else if (temp_v0 == 2) {
+            *var_a0 = D_80146054;
+        } else if (temp_v0 == 3) {
+            *var_a0 = D_80146058;
+        }
+        var_v1_2 += 1;
+        var_a0 = &D_80146168[var_v1_2];
+    } while (var_v1_2 < 4);
+    func_8004F984(0, D_8011ECD0->unk_26, D_8011ECD0->unk_2A, D_80146168);
+    func_8004FC10(0);
+    if ((D_800E6280.unk_F88 & 0xF000) && ((temp_v0_2 = D_800E6280.unk_1092 & 3, (temp_v0_2 == 1)) || (temp_v0_2 == 3))) {
+        func_80044750(0x502);
+    }
+    if (D_800E6280.unk_F88 & 0x200020) {
+        if (func_8004ECB4() != 0) {
+            if (D_800E6280.unk_F90[0].unk_06 != 0) {
+                D_80146158 = 0;
+                goto block_35;
+            }
+            if (D_800E6280.unk_F90[2].unk_06 != 0) {
+                D_80146158 = 1;
+                goto block_35;
+            }
+            if (D_800E6280.unk0 != 0) {
+                D_80146158 = 2;
+                goto block_35;
+            }
+            if (D_800E6280.unk0 != 0) {
+                D_80146158 = 3;
+block_35:
+                D_8011ECD0->unk_03 = D_8011ECD0->unk_03 & 0xFF7F;
+                D_80122D30 = 0;
+                func_8004E9F4(1);
+                *(u8 *)((unsigned char *)D_8011ECD0 + (6599)) = (u8) (*(u8 *)((unsigned char *)D_8011ECD0 + (6599)) | 0x80);
+                temp_v1 = D_80146168[D_80146158];
+                var_v0_2 = temp_v1 == 0xB;
+                if (var_v0_2 != 0) {
+                    var_v0_2 = D_800E6280.unk_03E == 0x5F;
+                }
+                *(s16 *)((unsigned char *)D_8011ECD0 + (6620)) = (s16) (((temp_v1 + ((D_800E6280.unk_03E == 0x60) * 0xB) + ((D_800E6280.unk_03E == 0x61) * 0x17)) - var_v0_2) + 1);
+                *(s16 *)((unsigned char *)D_8011ECD0 + (6634)) = (s16) ((D_80146158 * 0x4D) - 0x75);
+                *(s16 *)((unsigned char *)D_8011ECD0 + (6638)) = -0x3C;
+                *(s16 *)((unsigned char *)D_8011ECD0 + (6624)) = 0;
+                D_80145F2C = (D_80145F2C + (temp_v1 * 3) + D_800E6280.unk_03E) - 0x5F;
+                D_80146160 = 1;
+                D_80146158 = D_80146158;
+                if (((D_800E6280.unk_03E == 0x5F) && (temp_v1 == 0) && (D_800E6280.unk_108.unk_02 >= 0x64)) || (((temp_v1 == 0) & (D_800E6280.unk_03E == 0x5F)) && ((u16) D_800E6280.unk_66C[5].unk_00 >= 0x64U)) || ((temp_v0_3 = temp_v1 == 1, ((temp_v0_3 & (D_800E6280.unk_03E == 0x5F)) != 0)) && (D_800E6280.unk_100.unk_02 >= 0x46)) || ((temp_v0_3 & (D_800E6280.unk_03E == 0x61)) && (D_800E6280.unk_100.unk_02 >= 0x64)) || (((temp_v1 == 2) & (D_800E6280.unk_03E == 0x60)) && (D_800E6280.unk_100.unk_02 >= 0x64))) {
+                    D_80145F30 = 1;
+                }
+                func_8004284C();
+            }
+        }
+    }
+}

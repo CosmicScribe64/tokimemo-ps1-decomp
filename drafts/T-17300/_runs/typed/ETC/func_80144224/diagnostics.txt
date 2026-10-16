@@ -1,0 +1,96 @@
+m2c.py: argument counts from the callees' asm: func_801436E4 1, func_80143968 0, func_801441DC 4
+m2c failed:
+
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4309: redeclaration of 'func_801441DC'; previous declaration at line 4284 in file 'drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c'
+ s32 func_801441DC();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4309: Incompatible function return type for this function.
+ s32 func_801441DC();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4321: Selector requires struct/union as left hand side
+     D_801217D0.unk0 = 0x80000000;
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80144224/work -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o /tmp/asm_processor2_x32nrl/preprocessed_cf6b71991dd448b0bec7a8e0f4444dd1.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibwd2f8yf9/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4308: redeclaration of 'func_8014407C'; previous declaration at line 3844 in file 'drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c'
+ s32 func_8014407C();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4308: Incompatible function return type for this function.
+ s32 func_8014407C();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4320: Selector requires struct/union as left hand side
+     D_801217D0.unk0 = 0x80000000;
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80144224/work -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o /tmp/asm_processor8zicabae/preprocessed_a809f8ffb0ce4dfdb9c67106ddf2b474.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibrt9t3ul7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4306: redeclaration of 'func_801436E4'; previous declaration at line 4225 in file 'drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c'
+ s32 func_801436E4();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4306: Incompatible function return type for this function.
+ s32 func_801436E4();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4319: Selector requires struct/union as left hand side
+     D_801217D0.unk0 = 0x80000000;
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80144224/work -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o /tmp/asm_processortcar8uk0/preprocessed_674bdab1762c43659774fb45d7fc5a77.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibxiompbfe/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4305: redeclaration of 'func_8004B19C'; previous declaration at line 1709 in file 'drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c'
+ s32 func_8004B19C();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4305: Incompatible function return type for this function.
+ s32 func_8004B19C();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4318: Selector requires struct/union as left hand side
+     D_801217D0.unk0 = 0x80000000;
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80144224/work -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o /tmp/asm_processorydyd6p_c/preprocessed_8dd3e32ae9914514a07c07a6dd0b5df9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib9hnuwx0h/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4304: redeclaration of 'func_800460EC'; previous declaration at line 1660 in file 'drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c'
+ s32 func_800460EC();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4304: Incompatible function return type for this function.
+ s32 func_800460EC();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4317: Selector requires struct/union as left hand side
+     D_801217D0.unk0 = 0x80000000;
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80144224/work -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o /tmp/asm_processormqfx9c3l/preprocessed_070b6e12c3d5430cb5c7ad23c00813f0.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibc3uyl4ik/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4300: redeclaration of 'D_801217D0'; previous declaration at line 1308 in file 'drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c'
+ extern s32 D_801217D0;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4302: redeclaration of 'D_8015014C'; previous declaration at line 3839 in file 'drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c'
+ extern s32 D_8015014C;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4316: Selector requires struct/union as left hand side
+     D_801217D0.unk0 = 0x80000000;
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80144224/work -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o /tmp/asm_processor8psf0abd/preprocessed_34102be465e14147981a75ba7e00c57d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibgri6c4yk/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4299: redeclaration of 'D_800E6280'; previous declaration at line 764 in file 'drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c'
+ extern s32 D_800E6280;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4314: Selector requires struct/union as left hand side
+     D_801217D0.unk0 = 0x80000000;
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80144224/work -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o /tmp/asm_processore9g5w249/preprocessed_edc0fbb22995470bae974da85fba31ff.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib5xz8yy9n/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c, line 4313: Selector requires struct/union as left hand side
+     D_801217D0.unk0 = 0x80000000;
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80144224/work -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o /tmp/asm_processor46l4yats/preprocessed_9bcb2d32a4f04af5935c4d77947e33e7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliba9mwohto/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80144224/work/guarded.o.sjis.c

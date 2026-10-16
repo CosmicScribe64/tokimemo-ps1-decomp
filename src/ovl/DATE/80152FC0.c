@@ -1,11 +1,6 @@
 #include "common.h"
 #include "ovl/DATE.h"
 
-typedef struct {
-    void (*f[41])();
-} FnTbl41; /* size 0xA4 */
-extern FnTbl41 D_8015F210;
-
 void func_80152FC0(void) {
     D_8015F160 = 0x801CE124;
     D_8015F164 = 0x801CE128;
@@ -304,11 +299,6 @@ void func_80153DE4(void) {
     func_8004284C();
 }
 
-typedef struct {
-    void (*f[57])();
-} FnTbl57; /* size 0xE4 */
-extern FnTbl57 D_8015F350;
-
 void func_80153E1C(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl57 tbl;
@@ -359,7 +349,19 @@ void func_80153FCC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80152FC0", func_80154004);
+void func_80154004(void) {
+    s32 idx;
+    DateDispatch80154004 tbl;
+    tbl = D_8015F434;
+    if (D_800E6280.unk_110A < 9) {
+        func_8006B900();
+    }
+    if ((D_800E6280.unk_110A >= 0x16) && (D_800E6280.unk_110A < 0x1C)) {
+        func_8006B900();
+    }
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 void func_801540B8(void) {
     func_80044750(0x502);

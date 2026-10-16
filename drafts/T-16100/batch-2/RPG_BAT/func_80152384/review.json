@@ -1,0 +1,28 @@
+{
+  "scope": "RPG_BAT:func_80152384",
+  "path": "drafts/T-16100/batch-2/RPG_BAT/func_80152384",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "sp64[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    }
+  ],
+  "explanation": "Four four-word tables are copied at 0x64/0x80/0x90/0xA0; repair sp64[4], one-past-end bound, word pointer increment, and raw sp lookups to the actual arrays.",
+  "evidence_path": "drafts/T-16100/batch-2/RPG_BAT/func_80152384/evidence.txt",
+  "compile_status": "scored",
+  "score": 197,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp64[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Four four-word tables are copied at 0x64/0x80/0x90/0xA0; repair sp64[4], one-past-end bound, word pointer increment, and raw sp lookups to the actual arrays."
+    }
+  ]
+}

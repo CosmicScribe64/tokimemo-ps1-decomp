@@ -1,0 +1,95 @@
+{
+  "scope": "GEKO:func_80144270",
+  "selected_path": "drafts/T-14500/GEKO/func_80144270",
+  "archive_path": "drafts/T-16100/batch-3/GEKO/func_80144270",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "Target copies twenty bytes plus one byte to stack+0x2C and reads lbu at offsets +2..+15; fold independent uninitialized aliases into u8[21]."
+  ],
+  "flags": [
+    {
+      "detail": "sp34",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "repaired",
+      "explanation": "Target copies twenty bytes plus one byte to stack+0x2C and reads lbu at offsets +2..+15; fold independent uninitialized aliases into u8[21]. The initializer and all byte aliases now share one u8[21] array, using target lbu offsets."
+    },
+    {
+      "detail": "sp38",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "outcome": "repaired",
+      "explanation": "Target copies twenty bytes plus one byte to stack+0x2C and reads lbu at offsets +2..+15; fold independent uninitialized aliases into u8[21]. The initializer and all byte aliases now share one u8[21] array, using target lbu offsets."
+    },
+    {
+      "detail": "sp3A",
+      "kind": "synthesized-stack-local",
+      "line": 4,
+      "outcome": "repaired",
+      "explanation": "Target copies twenty bytes plus one byte to stack+0x2C and reads lbu at offsets +2..+15; fold independent uninitialized aliases into u8[21]. The initializer and all byte aliases now share one u8[21] array, using target lbu offsets."
+    },
+    {
+      "detail": "sp33",
+      "kind": "synthesized-stack-local",
+      "line": 5,
+      "outcome": "repaired",
+      "explanation": "Target copies twenty bytes plus one byte to stack+0x2C and reads lbu at offsets +2..+15; fold independent uninitialized aliases into u8[21]. The initializer and all byte aliases now share one u8[21] array, using target lbu offsets."
+    },
+    {
+      "detail": "sp2E",
+      "kind": "synthesized-stack-local",
+      "line": 6,
+      "outcome": "repaired",
+      "explanation": "Target copies twenty bytes plus one byte to stack+0x2C and reads lbu at offsets +2..+15; fold independent uninitialized aliases into u8[21]. The initializer and all byte aliases now share one u8[21] array, using target lbu offsets."
+    },
+    {
+      "detail": "sp39",
+      "kind": "synthesized-stack-local",
+      "line": 7,
+      "outcome": "repaired",
+      "explanation": "Target copies twenty bytes plus one byte to stack+0x2C and reads lbu at offsets +2..+15; fold independent uninitialized aliases into u8[21]. The initializer and all byte aliases now share one u8[21] array, using target lbu offsets."
+    },
+    {
+      "detail": "sp2F",
+      "kind": "synthesized-stack-local",
+      "line": 8,
+      "outcome": "repaired",
+      "explanation": "Target copies twenty bytes plus one byte to stack+0x2C and reads lbu at offsets +2..+15; fold independent uninitialized aliases into u8[21]. The initializer and all byte aliases now share one u8[21] array, using target lbu offsets."
+    },
+    {
+      "detail": "sp31",
+      "kind": "synthesized-stack-local",
+      "line": 9,
+      "outcome": "repaired",
+      "explanation": "Target copies twenty bytes plus one byte to stack+0x2C and reads lbu at offsets +2..+15; fold independent uninitialized aliases into u8[21]. The initializer and all byte aliases now share one u8[21] array, using target lbu offsets."
+    },
+    {
+      "detail": "sp36",
+      "kind": "synthesized-stack-local",
+      "line": 10,
+      "outcome": "repaired",
+      "explanation": "Target copies twenty bytes plus one byte to stack+0x2C and reads lbu at offsets +2..+15; fold independent uninitialized aliases into u8[21]. The initializer and all byte aliases now share one u8[21] array, using target lbu offsets."
+    },
+    {
+      "detail": "sp37",
+      "kind": "synthesized-stack-local",
+      "line": 11,
+      "outcome": "repaired",
+      "explanation": "Target copies twenty bytes plus one byte to stack+0x2C and reads lbu at offsets +2..+15; fold independent uninitialized aliases into u8[21]. The initializer and all byte aliases now share one u8[21] array, using target lbu offsets."
+    },
+    {
+      "detail": "sp3B",
+      "kind": "synthesized-stack-local",
+      "line": 12,
+      "outcome": "repaired",
+      "explanation": "Target copies twenty bytes plus one byte to stack+0x2C and reads lbu at offsets +2..+15; fold independent uninitialized aliases into u8[21]. The initializer and all byte aliases now share one u8[21] array, using target lbu offsets."
+    }
+  ],
+  "notes": "The initializer and all byte aliases now share one u8[21] array, using target lbu offsets.",
+  "assembly_evidence": "drafts/T-16100/batch-3/GEKO/func_80144270/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "repaired"
+}

@@ -1,0 +1,26 @@
+python3 failed:
+ ------------^
+cfe: Error: drafts/T-14500/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3214: 'spA8' undefined; reoccurrences will not be reported.
+                 var_s0 = &(&spA8[0])[0];
+ ----------------------------^
+cfe: Error: drafts/T-14500/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3228: 'spA8' undefined; reoccurrences will not be reported.
+                 var_s0_2 = &(&spA8[0])[var_s1];
+ ------------------------------^
+cfe: Error: drafts/T-14500/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3247: 'spA8' undefined; reoccurrences will not be reported.
+         var_s0_3 = &spA8[0];
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TAIIKU/func_80132E20/work -o drafts/T-14500/TAIIKU/func_80132E20/work/guarded.o /tmp/asm_processorv37d34jj/preprocessed_0ec5ebad2fcb4cdaa9a074814d38cfeb.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqkes7og4/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TAIIKU/func_80132E20/work/guarded.o drafts/T-14500/TAIIKU/func_80132E20/work/guarded.o.sjis.c
+python3 failed:
+ -----------------------^
+cfe: Warning 709: drafts/T-14500/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3229: Incompatible pointer type assignment
+                 var_s0_2 = &(&spA8[0])[var_s1];
+ -------------------------^
+cfe: Warning 689: drafts/T-14500/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3244: Unacceptable operand of == or !=
+                 } while (var_s0_2 != &(&spA8[0])[arg1]);
+ ----------------------------------^
+cfe: Warning 709: drafts/T-14500/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3248: Incompatible pointer type assignment
+         var_s0_3 = &spA8[0];
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TAIIKU/func_80132E20/work -o drafts/T-14500/TAIIKU/func_80132E20/work/guarded.o /tmp/asm_processorkzespd66/preprocessed_1e536fdaecf84c6589897b5b759d01c0.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibn_3rfn1u/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TAIIKU/func_80132E20/work/guarded.o drafts/T-14500/TAIIKU/func_80132E20/work/guarded.o.sjis.c

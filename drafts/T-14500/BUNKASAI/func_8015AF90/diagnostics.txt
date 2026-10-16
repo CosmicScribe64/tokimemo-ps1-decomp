@@ -1,0 +1,35 @@
+m2c.py: argument counts from the callees' asm: func_80132410 0, func_8015B828 0
+python3 failed:
+ --------------------^
+cfe: Error: drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 2825: 'sp4C' undefined; reoccurrences will not be reported.
+     *(M2cBlock2C *)(&sp4C[0]) = *(M2cBlock2C *)(&D_80160B10);
+ ---------------------^
+cfe: Error: drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 2826: 'sp3C' undefined; reoccurrences will not be reported.
+     sp3C[0].unk0 = D_80160B3C;
+ ----^
+cfe: Error: drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 2907: 'sp' undefined; reoccurrences will not be reported.
+         set_kanji_string(-0x48, 0x42, 0, *(s32 *)((unsigned char *)(sp + (D_80122EBC * 4)) + (120)), 0);
+ --------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/BUNKASAI/func_8015AF90/work -o drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o /tmp/asm_processor_qqksush/preprocessed_ab5c59d84aca47c8b7c16a0f939c0736.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibelkfx_hq/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c
+python3 failed:
+cfe: Warning 681: drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 2825: '&' before array or function; ignored
+     *(M2cBlock30 *)(&sp78) = *(M2cBlock30 *)(&D_80160AE0);
+ --------------------^
+cfe: Error: drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 2826: 'sp4C' undefined; reoccurrences will not be reported.
+     *(M2cBlock2C *)(&sp4C[0]) = *(M2cBlock2C *)(&D_80160B10);
+ ---------------------^
+cfe: Error: drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 2827: 'sp3C' undefined; reoccurrences will not be reported.
+     sp3C[0].unk0 = D_80160B3C;
+ ----^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/BUNKASAI/func_8015AF90/work -o drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o /tmp/asm_processorldrsru1p/preprocessed_3805ce3b72394722b2edf8fae199a04b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibo66sab0a/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c
+python3 failed:
+cfe: Warning 681: drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 2826: '&' before array or function; ignored
+     *(M2cBlock30 *)(&sp78) = *(M2cBlock30 *)(&D_80160AE0);
+ --------------------^
+cfe: Error: drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 2828: 'sp3C' undefined; reoccurrences will not be reported.
+     sp3C[0].unk0 = D_80160B3C;
+ ----^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/BUNKASAI/func_8015AF90/work -o drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o /tmp/asm_processor8jhiux2q/preprocessed_2e2e598d5b204fbea543588753c2a73b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibcoobd782/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o drafts/T-14500/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c

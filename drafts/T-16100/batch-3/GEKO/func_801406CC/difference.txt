@@ -1,0 +1,81 @@
+-27bdff78  ; addiu sp,sp,-136
++27bdff80  ; addiu sp,sp,-128
+-afbf002c  ; sw ra,44(sp)
+-afb20028  ; sw s2,40(sp)
+-afb10024  ; sw s1,36(sp)
+-afb00020  ; sw s0,32(sp)
+-25ce72c4  ; addiu t6,t6,0
+-8dc10000  ; lw at,0(t6)
+-27b0006c  ; addiu s0,sp,108
+-ae010000  ; sw at,0(s0)
+-8dd90004  ; lw t9,4(t6)
+-3c088014  ; lui t0,0x0
+-ae190004  ; sw t9,4(s0)
+-8dc10008  ; lw at,8(t6)
+-250872d8  ; addiu t0,t0,0
+-ae010008  ; sw at,8(s0)
+-8dd9000c  ; lw t9,12(t6)
+-27b10058  ; addiu s1,sp,88
+-ae19000c  ; sw t9,12(s0)
+-8dc10010  ; lw at,16(t6)
+-3c0c8014  ; lui t4,0x0
+-ae010010  ; sw at,16(s0)
+-8d010000  ; lw at,0(t0)
+-258c72ec  ; addiu t4,t4,0
+-ae210000  ; sw at,0(s1)
+-8d0b0004  ; lw t3,4(t0)
+-27b20044  ; addiu s2,sp,68
+-ae2b0004  ; sw t3,4(s1)
+-8d010008  ; lw at,8(t0)
+-00000000  ; nop
+-ae210008  ; sw at,8(s1)
+-8d0b000c  ; lw t3,12(t0)
+-00000000  ; nop
+-ae2b000c  ; sw t3,12(s1)
+-8d010010  ; lw at,16(t0)
+-00000000  ; nop
+-ae210010  ; sw at,16(s1)
+-8d810000  ; lw at,0(t4)
+-00000000  ; nop
+-ae410000  ; sw at,0(s2)
+-8d8f0004  ; lw t7,4(t4)
+-00000000  ; nop
+-ae4f0004  ; sw t7,4(s2)
+-8d810008  ; lw at,8(t4)
+-00000000  ; nop
+-ae410008  ; sw at,8(s2)
+-8d8f000c  ; lw t7,12(t4)
+-00000000  ; nop
+-ae4f000c  ; sw t7,12(s2)
+-8d810010  ; lw at,16(t4)
++3c0f8014  ; lui t7,0x0
++3c188014  ; lui t8,0x0
++8dce72c4  ; lw t6,0(t6)
++8def72c8  ; lw t7,4(t7)
++8f1872cc  ; lw t8,8(t8)
++afae0058  ; sw t6,88(sp)
++afaf005c  ; sw t7,92(sp)
++afb80060  ; sw t8,96(sp)
++3c198014  ; lui t9,0x0
++3c0e8014  ; lui t6,0x0
++3c0f8014  ; lui t7,0x0
++3c188014  ; lui t8,0x0
++8f3972d0  ; lw t9,12(t9)
++8dce72d4  ; lw t6,16(t6)
++8def72d8  ; lw t7,0(t7)
++8f1872dc  ; lw t8,4(t8)
++afb90064  ; sw t9,100(sp)
++afae0068  ; sw t6,104(sp)
++afaf0044  ; sw t7,68(sp)
++afb80048  ; sw t8,72(sp)
++3c198014  ; lui t9,0x0
++3c0e8014  ; lui t6,0x0
++3c0f8014  ; lui t7,0x0
++3c188014  ; lui t8,0x0
++8f3972e0  ; lw t9,8(t9)
++8dce72e4  ; lw t6,12(t6)
++8def72e8  ; lw t7,16(t7)
++8f1872ec  ; lw t8,0(t8)
++afb9004c  ; sw t9,76(sp)
++afae0050  ; sw t6,80(sp)
+[Excerpt limited to 80 differing rows; score retains complete resolved diff count.]

@@ -1,0 +1,10 @@
+{
+  "scope": "DATE:func_801511B4",
+  "status": "scored",
+  "score": 12,
+  "note": "Use existing TU FnTbl40 declaration and genuine 40-callback copy.",
+  "body_sha256": "c33cbe802ad777846fc310defa960d8c25e8368b876f97ace2d91308b0765659",
+  "context_sha256": "c5d4b1959c920f682fd5ee3d60f1ee06831acd11f1a843e04d891b2496d0d60d",
+  "residual_class": "frame offsets and register scheduling",
+  "matching_claim": false
+}

@@ -103,11 +103,6 @@ void func_80107030(void) {
     func_80015FE0();
 }
 
-typedef struct {
-    void (*f[35])();
-} FnTbl35; /* size 0x8C */
-extern FnTbl35 D_8012350C;
-
 void func_80107090(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl35 tbl;
@@ -293,11 +288,6 @@ void func_80107A00(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    void (*f[37])();
-} FnTbl37; /* size 0x94 */
-extern FnTbl37 D_80123598;
-
 void func_80107A28(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl37 tbl;
@@ -330,11 +320,6 @@ void func_80107B5C(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    void (*f[55])();
-} FnTbl55; /* size 0xDC */
-extern FnTbl55 D_8012362C;
-
 void func_80107BB0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl55 tbl;
@@ -359,11 +344,6 @@ void func_80107CB4(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    void (*f[40])();
-} FnTbl40; /* size 0xA0 */
-extern FnTbl40 D_80123708;
-
 void func_80107CEC(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl40 tbl;
@@ -387,11 +367,6 @@ void func_80107DE8(void) {
     func_80106E30();
     func_80011DFC();
 }
-
-typedef struct {
-    void (*f[51])();
-} FnTbl51; /* size 0xCC */
-extern FnTbl51 D_801237A8;
 
 void func_80107E20(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

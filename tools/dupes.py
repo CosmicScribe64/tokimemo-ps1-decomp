@@ -51,6 +51,8 @@ target's data must all be in its own function file and hold no relocated words. 
 applied only with --check; the others are listed as "needs data check" and never applied. Lines in
 the function text that are neither instructions nor labels still keep a function out
 ("data in function text").
+T-16500: tools/twin_sweep.py runs this planner and neardupes.py over the whole tree and applies the
+copies of the files it is given.
 Tests: tools/test_dupes.py.
 """
 import argparse
@@ -60,6 +62,8 @@ import os
 import re
 import subprocess
 import sys
+from pathlib import Path
+from typing import NamedTuple
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from asm import STRING_LINE, sjis_escape  # noqa: E402
@@ -354,18 +358,26 @@ def load_islands(root, paths, units=None):
     return out
 
 
-def load_funcs(root, units=None, near=False):
-    """Fingerprint original asm, taking current matched state from its owning C source.
+class AsmSource(NamedTuple):
+    rel: str        # asm path relative to the root
+    unit: str       # 'main' or the overlay name
+    folder: str     # c subsegment name (src_for_dir maps it to the C file)
+    name: str
+    matched: bool   # C definition with no INCLUDE_ASM fallback
+    guarded: bool   # a C definition exists but INCLUDE_ASM is still the fallback (NON_MATCHING draft)
 
-    Splat leaves stale files in both folders after a conversion or reversion.
-    Read each C file once and retain only one asm copy per source/function.
-    A NON_MATCHING definition with an assembly fallback is still unmatched.
+
+def asm_sources(root, units=None, paths=None):
+    """The current split function files, one per (C source, function), with matched state from the C.
+
+    Splat leaves stale files in both folders after a conversion or reversion. Read each C file once
+    and retain only one asm copy per source/function. A NON_MATCHING definition with an assembly
+    fallback is still unmatched (guarded). paths: asm paths relative to root (default: all of asm/).
     """
-    funcs, states, copies = [], {}, {}
-    paths = [os.path.relpath(p, root).replace(os.sep, '/')
-             for p in sorted(glob.glob(os.path.join(root, 'asm/**/*.s'), recursive=True))]
-    tables = load_tables(root, paths, units)
-    islands = load_islands(root, paths, units)
+    if paths is None:
+        paths = [os.path.relpath(p, root).replace(os.sep, '/')
+                 for p in sorted(glob.glob(os.path.join(root, 'asm/**/*.s'), recursive=True))]
+    states, copies = {}, {}
     for rel in paths:
         m = ASM_RE.match(rel)
         if not m:
@@ -377,7 +389,6 @@ def load_funcs(root, units=None, near=False):
         if not os.path.exists(source):
             continue          # a folder of an old source layout (asm/ is not cleaned by splat)
         if source not in states:
-            from pathlib import Path
             path = Path(source)
             states[source] = (srcscan.defined_functions(path),
                               {e.name for e in srcscan.include_asm_entries(path)})
@@ -390,11 +401,25 @@ def load_funcs(root, units=None, near=False):
         preferred = (m.group(2) is None) == matched
         if identity in copies and (copies[identity][0] or not preferred):
             continue
+        copies[identity] = (preferred, AsmSource(rel, unit, m.group(3), name, matched,
+                                                 name in defined and name in included))
+    return [src for _preferred, src in copies.values()]
+
+
+def load_funcs(root, units=None, near=False):
+    """Fingerprint original asm, taking current matched state from its owning C source (asm_sources)."""
+    funcs = []
+    paths = [os.path.relpath(p, root).replace(os.sep, '/')
+             for p in sorted(glob.glob(os.path.join(root, 'asm/**/*.s'), recursive=True))]
+    tables = load_tables(root, paths, units)
+    islands = load_islands(root, paths, units)
+    for src in asm_sources(root, units, paths):
+        rel, unit, name, matched = src.rel, src.unit, src.name, src.matched
         with open(os.path.join(root, rel)) as f:
             text = f.read()
         info = {}
         utab = tables.get(unit, {})
-        isl = islands.get(island_path(unit, m.group(3)))
+        isl = islands.get(island_path(unit, src.folder))
         key, relocs, bad = parse_asm(text, info=info, tables=utab, rodata=isl)
         fn = Func(name, unit, matched, rel, key, relocs, bad)
         fn.n = info.get('n', 0)
@@ -408,8 +433,8 @@ def load_funcs(root, units=None, near=False):
         if near:      # T-3320: key becomes the immediate-masked fingerprint, exact keeps the old one
             fn.key = parse_asm(text, 'alu', fn.imm_words, tables=utab, rodata=isl)[0]
             fn.wide = parse_asm(text, 'wide', tables=utab, rodata=isl)[0]
-        copies[identity] = (preferred, fn)
-    return [fn for _preferred, fn in copies.values()]
+        funcs.append(fn)
+    return funcs
 
 
 def group_funcs(funcs):
@@ -860,7 +885,7 @@ def plan_copy(root, src, tgt, cache):
     """Plan the copy of matched src to unmatched tgt.
 
     Returns (plan, reason). plan = dict(text, tgtfile, name, decls=[(header, line)], local=[(kind, text)],
-    retype=[(header, function, old return type, new)], src). local: 'define' lines go before the first
+    retype=[(header, function, old return type, new)], src, src_unit). local: 'define' lines go before the first
     #include of the target file (MAIN_API_OVERRIDE_ of a view the source was matched with), 'block'
     texts (file-local typedefs and declarations the source file carries) after its last #include,
     'late' texts right above the function (a declaration that needs a typedef the target .c defines
@@ -1072,7 +1097,7 @@ def plan_copy(root, src, tgt, cache):
                 dest = 'include/ovl/%s.h' % tgt.unit
             decls.append((dest, proto))
     return dict(text=text, tgtfile=tfile, name=tgt.name, decls=decls, local=local, retype=retype,
-                src=src.name, jtbl=tgt.jtbl_home, data=tgt.data_home), None
+                src=src.name, src_unit=src.unit, jtbl=tgt.jtbl_home, data=tgt.data_home), None
 
 
 def add_local(text, local):
@@ -1097,13 +1122,14 @@ def add_local(text, local):
 
 
 def apply_plan(root, plan):
-    """Write one plan; returns {path: previous text} for rollback."""
+    """Write one plan; returns {path: previous text} for rollback. plan['pattern'] (a compiled regex,
+    optional) says what the copy replaces instead of the INCLUDE_ASM line (twin_sweep.py, T-16500)."""
     saved = {}
     tp = os.path.join(root, plan['tgtfile'])
     with open(tp) as fh:
         t = fh.read()
     saved[plan['tgtfile']] = t
-    pat = re.compile(r'^INCLUDE_ASM\("[^"]*",\s*%s\);[ \t]*$' % re.escape(plan['name']), re.M)
+    pat = plan.get('pattern') or re.compile(r'^INCLUDE_ASM\("[^"]*",\s*%s\);[ \t]*$' % re.escape(plan['name']), re.M)
     late = [b for kind, b in plan.get('local', ()) if kind == 'late' and b not in t]
     body = '\n'.join(late) + '\n\n' + plan['text'].rstrip('\n') if late else plan['text'].rstrip('\n')
     t = pat.sub(lambda m: body, t, count=1)
@@ -1221,13 +1247,16 @@ def sync_headers(root, plans, log=print, before=None):
     return 'sync_protos reports %d risky view change(s)' % risky if risky else None
 
 
+NINJA_ARGS = []          # extra ninja arguments for build_ok, e.g. ['-j2'] (twin_sweep.py --jobs, T-16500)
+
+
 def build_ok(root, unit):
     tgt = 'build/SLPM_86.053.ok' if unit == 'main' else 'build/ovl/%s.ok' % unit
     try:
         os.remove(os.path.join(root, tgt))
     except OSError:
         pass
-    r = subprocess.run(['ninja', tgt], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    r = subprocess.run(['ninja'] + NINJA_ARGS + [tgt], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
     return r.returncode == 0, r.stdout
 
 

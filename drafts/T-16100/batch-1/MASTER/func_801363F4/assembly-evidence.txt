@@ -1,0 +1,27 @@
+    801363FC:  addiu      $sp, $sp, -0x40
+    80136408:   sw        $ra, 0x1C($sp)
+    8013640C:  sll        $t6, $t6, 2
+    80136414:  addu       $at, $at, $t6
+    8013648C:   sw        $zero, 0x10($sp)
+    801364C8:   sw        $zero, 0x10($sp)
+    801364E4:   sw        $zero, 0x10($sp)
+    80136500:   sw        $zero, 0x10($sp)
+    8013651C:   sw        $zero, 0x10($sp)
+    80136538:   sw        $zero, 0x10($sp)
+    80136554:   sw        $zero, 0x10($sp)
+    80136648:   sw        $zero, 0x10($sp)
+    80136658:  sw         $t7, 0x10($sp)
+    8013684C:   sw        $v1, 0x34($sp)
+    80136858:  lw         $v1, 0x34($sp)
+    8013688C:  sw         $v1, 0x30($sp)
+    80136894:   sw        $a0, 0x34($sp)
+    801368A0:  lw         $a0, 0x34($sp)
+    801368BC:  lw         $v1, 0x30($sp)
+    801368C0:  lw         $a0, 0x34($sp)
+    8013692C:   sw        $zero, 0x10($sp)
+    80136950:   sw        $zero, 0x10($sp)
+    80136BC0:   sw        $zero, 0x10($sp)
+    80136BDC:   sw        $zero, 0x10($sp)
+    80136BF8:   sw        $zero, 0x10($sp)
+    80136E14:  lw         $ra, 0x1C($sp)
+    80136E18:  addiu      $sp, $sp, 0x40

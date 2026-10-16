@@ -1,0 +1,28 @@
+{
+  "scope": "NAME_ENT:func_80140F90",
+  "unit": "NAME_ENT",
+  "func": "func_80140F90",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "size": 2192,
+  "path": "drafts/T-15800/NAME_ENT/func_80140F90",
+  "status": "compiled",
+  "score": 847,
+  "compile_attempts": 5,
+  "provenance": "drafts/T-15800/NAME_ENT/func_80140F90/provenance.json",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "compiled_instruction_count": 841,
+  "hashes": {
+    "body.c": "1cc7eeec854a6620c3f99ce722e9c798e416d4ce19bffd570c9da8b8fa5e832e",
+    "declarations.h": "59b93fba5a8c49892c0ce46bb8b360bbf94e6834b7d2c178aeff5195e5f8e464",
+    "context.c": "8bf553de513b22f0a49de9f8a8eaab7de143bc52afa1fd876bf2e05143cb06f1"
+  },
+  "header_hashes": {
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libgpu.h": "e05cf2f8e95289e3fe4864a80a90dd092437c2d66e140645b477771cb359b2ba",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25",
+    "include/ovl/NAME_ENT.h": "8555aa2f6277dc576f25a8abed80612aff4281f8b80994f04bf7128a1ec6fd36"
+  },
+  "seconds": 1.315
+}

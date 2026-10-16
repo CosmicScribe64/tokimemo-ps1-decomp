@@ -1,0 +1,28 @@
+{
+  "scope": "RPG_BAT:func_801328C4",
+  "path": "drafts/T-16100/batch-2/RPG_BAT/func_801328C4",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "M2cBlock3C",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    }
+  ],
+  "explanation": "60-byte copied table stored in sp4C[16] is an exact block but buffer extra element has no identified need; preserve unresolved table type.",
+  "evidence_path": "drafts/T-16100/batch-2/RPG_BAT/func_801328C4/evidence.txt",
+  "compile_status": "scored",
+  "score": 130,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "M2cBlock3C",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "60-byte copied table stored in sp4C[16] is an exact block but buffer extra element has no identified need; preserve unresolved table type."
+    }
+  ]
+}

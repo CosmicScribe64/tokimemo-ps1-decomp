@@ -1,0 +1,21 @@
+m2c failed:
+
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80149F48/work/guarded.o.sjis.c, line 4442: redeclaration of 'D_8011ECD0'; previous declaration at line 938 in file 'drafts/T-17300/_runs/typed/ETC/func_80149F48/work/guarded.o.sjis.c'
+ extern s32 D_8011ECD0;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80149F48/work/guarded.o.sjis.c, line 4448: redeclaration of 'func_800AE0B0'; previous declaration at line 2339 in file 'drafts/T-17300/_runs/typed/ETC/func_80149F48/work/guarded.o.sjis.c'
+ s32 func_800AE0B0();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80149F48/work/guarded.o.sjis.c, line 4448: Incompatible function return type for this function.
+ s32 func_800AE0B0();
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80149F48/work -o drafts/T-17300/_runs/typed/ETC/func_80149F48/work/guarded.o /tmp/asm_processornf9bfj80/preprocessed_eac3c2d98af54e87b7fa644111b6ed75.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib3_2bntp5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80149F48/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80149F48/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80149F48/work/guarded.o.sjis.c, line 4441: redeclaration of 'D_800E6280'; previous declaration at line 764 in file 'drafts/T-17300/_runs/typed/ETC/func_80149F48/work/guarded.o.sjis.c'
+ extern s32 D_800E6280;
+ -----------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80149F48/work -o drafts/T-17300/_runs/typed/ETC/func_80149F48/work/guarded.o /tmp/asm_processor59eptci_/preprocessed_99eede0d739545ccb6276ea0d1db75a6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibvpxaiayw/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80149F48/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80149F48/work/guarded.o.sjis.c

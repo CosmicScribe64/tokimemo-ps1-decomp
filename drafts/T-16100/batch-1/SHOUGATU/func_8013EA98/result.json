@@ -1,0 +1,20 @@
+{
+  "scope": "SHOUGATU:func_8013EA98",
+  "src": "src/ovl/SHOUGATU/8013E330.c",
+  "size": 920,
+  "path": "drafts/T-16100/batch-1/SHOUGATU/func_8013EA98",
+  "archive_path": "drafts/T-16100/batch-1/SHOUGATU/func_8013EA98",
+  "status": "scored",
+  "score": 385,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": false,
+  "compile_verified": true,
+  "body.c_sha256": "5f8d9e13a9f8468233be777ffa291473f3aea613203459f870a661a7db9c9b5f",
+  "declarations.h_sha256": "0fe859507278baa4d50f22fd374779630b1518ae929725d40c0caf8a47d84441",
+  "context.c_sha256": "094378a5884bed35a014fb22b85c134a4b45dba971771780d2572b2a1ede4371",
+  "full-context.c_sha256": "c5e4481f30b7d0efed0840ff249fdd1fbb93a0760a618f0e9d7bc3eea88f0c90",
+  "diagnostics.txt_sha256": "fb3721d456861ca14d966a63c48c7ed3bf66621cc42d4927c2dc9bb54aac11e6",
+  "assembly-evidence.txt_sha256": "ec5896a80f9f8abfefe67c358b81fb8efd2cc679309c051ecea6d5d4288c0bd6"
+}

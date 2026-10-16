@@ -14,21 +14,21 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801491E4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801491E8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801491EC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_80149204);
-TaiikuSlots D_80149208 = { 0 };
+TaiRunnersA D_80149208 = { 0 };
 TaiHalves D_80149298 = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_8014929C);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492A0);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492A4);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492A8);
+/* Defined in the unit (not an island piece) so that stores to it share one lui at; T-16551, func_80135480. */
+u8 D_801492A8[4] = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492AC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492B8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492C4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492C8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492DC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492F4);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492F8);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492FC);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_80149300);
+/* Defined in the unit (not an island piece) so that stores to it share one lui at; T-16551, func_80133CFC. */
+s32 D_801492F8[10] = { 0x801BB000, 0x801BF000, 0x801C3000, 0x801C7000, 0x801CB000, 0x801D3000, 0x801D7000, 0x801DB000, 0x801DF000, 0x801E3000 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_80149320);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_8014933C);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_80149364);
@@ -98,7 +98,80 @@ void func_80133C80(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80133CFC);
+void func_80133CFC(void) {
+    s32 i;
+    s32 j; /* FAKE: unused local; the original frame has a second word above the tables (the offsets of sp9C.. only match with it), real source unknown. T-16551 */
+    s32 sp9C;
+    TaiikuW5 sp88;
+    TaiWords7 sp6C;
+    TaiWords10 sp44;
+
+    sp9C = D_80149364;
+    sp88 = D_80149368;
+    sp6C = D_8014937C;
+    sp44 = D_80149398;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80085E30(1, 1);
+        func_80048EB8(0);
+        func_8006BD6C(0);
+        for (i = 0; i < 11; i++) {
+            D_800E6280.unk_1228[i + 5] = 8;
+        }
+        for (i = 0; i < 3; i++) {
+            D_800E6280.unk_1228[i + 0x25] = 8;
+        }
+        D_800E6280.unk_1228[28] = 8;
+        D_800E6280.unk_1228[63] = 8;
+        D_801492C4 = sp9C;
+        for (i = 0; i < 5; i++) {
+            D_801492C8[i] = sp88.v[i];
+        }
+        for (i = 0; i < 7; i++) {
+            D_801492DC[i] = sp6C.v[i];
+        }
+        /* The first two words are written out and the loop starts at 2: IDO unrolls the 8-word copy by four, and this split
+         * gives the original's single shared lui at for the two stores (D_801492F8 is defined in this unit for the same
+         * reason, see matching-notes T-16551). */
+        D_801492F8[0] = sp44.v[0];
+        D_801492F8[1] = sp44.v[1];
+        for (i = 2; i < 10; i++) {
+            D_801492F8[i] = sp44.v[i];
+        }
+        func_8004284C();
+        break;
+    case 1:
+        cd_read_sectors(0x1E, 0x80180000, 0xBAD0);
+        Fade_Out_Init();
+        func_8004284C();
+        break;
+    case 2:
+        Fade_Out_Main();
+        if (cd_read_sync_status() & 1) {
+            cd_read_sectors(0x1F, 0x8018F000, 0xB79F);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        if (Fade_Out_Main() != 0 && (cd_read_sync_status() & 1)) {
+            func_80140810();
+            func_801407C0();
+            search_load_tpage_buf_lock(D_801492C4, 1);
+            for (i = 0; i < 16; i++) {
+                load_palette(D_80149FA4, (u8) (i + 0x10), 1, 1, i);
+            }
+            func_80135480();
+            func_801356E0();
+            func_80135778();
+            cd_read_sectors(0xC1, 0x8018F000, 0xB6DE);
+            func_80042808();
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80134060);
 
@@ -141,8 +214,6 @@ void func_801345A4(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10890, ten listing lines: decrement v1/v0 and scheduling. */
 void func_801346FC(void) {
     s16 text_x;
     s16 panel_x;
@@ -167,8 +238,8 @@ void func_801346FC(void) {
             func_80044750(0x700);
         }
         func_801368B8();
-        D_80149208.f18 = ((s32) D_801491E8 >> 1) + 1;
-        D_80149208.f10 = 1;
+        D_80149208.player.unk_18 = ((s32) D_801491E8 >> 1) + 1;
+        D_80149208.player.unk_10 = 1;
         func_80136BB4();
         func_80136E80();
         func_80137C44();
@@ -219,7 +290,7 @@ void func_801346FC(void) {
         func_80085F0C(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
         func_80132E20((s32) D_80149298.halves.high, 3);
         func_80137EA8();
-        if (D_80149208.pad00[1] != 0) {
+        if (D_80149208.player.unk_01 != 0) {
             func_8004284C();
         }
         break;
@@ -232,8 +303,8 @@ void func_801346FC(void) {
         func_80085F0C(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
         func_80137EA8();
         if (func_80137784(0) != 0) {
-            D_80149208.pad00[1] = 0U;
-            D_80149208.pad00[0] = 1;
+            D_80149208.player.unk_01 = 0U;
+            D_80149208.player.unk_00 = 1;
             if (D_80122E94 == 1) {
                 D_801491E8 += delta_x.value[D_80149320[D_801491DC]];
                 D_801491E4 += delta_y.value[D_80149320[D_801491DC]];
@@ -249,9 +320,6 @@ void func_801346FC(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_801346FC);
-#endif
 
 void func_80134D94(void) {
     s32 var_s0;
@@ -313,7 +381,83 @@ void func_80134D94(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80134F98);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-19004, 22 differing lines (11 instructions): the original keeps `t` in $v1 and loads `v` straight into $v0;
+ * here `t` is a ugen temporary ($t3) and `v` comes through a promoted range of the global ($a1, then move v0,a1). Frame: i and t
+ * declared above sp38 reproduce its offset (0x38) and the 0x58 frame; unused/promoted word locals take slots. Tried in T-19004
+ * without effect: `t` read before `v`, `t` as the repeated expression `(b & 0xF) & k`, both reads through a `GameState *` local
+ * (frame 8 bytes larger), the field read in each arm of the `if`, autotweak (278 edits). */
+void func_80135480(void) {
+    s32 i;
+    s32 t;
+    TaiikuS11 sp38;
+    s32 v;
+
+    sp38 = D_801494F0;
+    for (i = 0; i < 11; i++) {
+        D_80149320[i] = sp38.v[i];
+    }
+    /* FAKE: indexes the four runners (player, cpu[3]) from the player record, as in func_801368B8. T-16551 */
+    for (i = 0; i < 4; i++) {
+        D_801491E0[i] = 0;
+        (&D_80149208.player)[i].unk_20.halves.high = i * 8;
+        (&D_80149208.player)[i].unk_00 = 0;
+        (&D_80149208.player)[i].unk_01 = 0;
+        (&D_80149208.player)[i].unk_02 = 0;
+        (&D_80149208.player)[i].unk_06 = 0;
+        (&D_80149208.player)[i].unk_03 = 0;
+        (&D_80149208.player)[i].unk_04 = 0;
+        (&D_80149208.player)[i].unk_0C = 0;
+        (&D_80149208.player)[i].unk_0E = 0;
+        (&D_80149208.player)[i].unk_10 = 0;
+        (&D_80149208.player)[i].unk_14 = 0;
+        (&D_80149208.player)[i].unk_18 = 0;
+        (&D_80149208.player)[i].unk_1C = 0;
+        (&D_80149208.player)[i].unk_20.halves.low = 0;
+        (&D_80149208.player)[i].unk_05 = 0;
+        (&D_80149208.player)[i].unk_08 = 0;
+        (&D_80149208.player)[i].unk_0A = 0;
+        (&D_80149208.player)[i].unk_07 = 0;
+    }
+    D_80149208.player.unk_20.halves.high = -0xA0;
+    D_80149204 = 0;
+    D_801491D4 = 0;
+    D_8014929C = 0;
+    D_80149298.word = 0;
+    v = D_800E6280.unk_10C.unk_02;
+    t = D_800E6280.unk_0F4.b[1] & 0xF;
+    D_801492A0 = 0;
+    if ((t & 1) || (t & 2)) {
+        v = (s16) (v >> 1);
+    }
+    if (v >= 0xA0) {
+        D_801491E4 = 0x280;
+        D_801491E8 = 0x20000;
+    } else if (v >= 0x7D) {
+        D_801491E4 = 0x220;
+        D_801491E8 = 0x1E000;
+    } else if (v >= 0x64) {
+        D_801491E4 = 0x1C0;
+        D_801491E8 = 0x1C000;
+    } else if (v >= 0x4B) {
+        D_801491E4 = 0x160;
+        D_801491E8 = 0x1A000;
+    } else {
+        D_801491E4 = 0x100;
+        D_801491E8 = 0x18000;
+    }
+    func_800AE120(D_800E6280.unk_10F4);
+    for (i = 0; i < 2; i++) {
+        D_801492A4[i] = 0xFF;
+    }
+    D_801492A8[0] = 0;
+    D_801492A8[1] = 0x3C;
+    D_80122E94 = 0xFF;
+    D_801491DC = 0xFF;
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135480);
+#endif
 
 void func_801356E0(void) {
     s32 i;
@@ -336,7 +480,7 @@ void func_80135778(void) {
     D_80120657 = 0x80;
     D_8012065C = (u8 *) D_80149FB0;
     D_80120660 = (u8 *) D_80149FE8;
-    D_80120684 = &D_801492C4;
+    D_80120684 = (u8 *)&D_801492C4;
     D_80120664 = D_8014A020;
     D_80120654 = 0;
     D_80120655 = 0x80;
@@ -345,9 +489,112 @@ void func_80135778(void) {
     D_80120656 = 2;
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135830);
+void func_80135830(void) {
+    s32 i;
+    TaiShorts20 sp84;
+    TaiShorts20 sp5C;
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135AD0);
+    sp84 = D_80149508;
+    sp5C = D_80149530;
+    for (i = 0; i < 20; i++) {
+        func_80048F64(i + 0x60);
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_38 = 0x01000000;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_07 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_0C = (u8 *)D_80149FB8;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_10 = (u8 *)D_80149FF0;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_34 = (u8 *)D_801492DC;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_14 = D_8014A028;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_2A = sp84.v[i];
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_18 = sp5C.v[i];
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_04 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_05 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_1A = 0x1000;
+        *(s16 *)((DisplayActor44 *)D_8011ECD0)[96 + i].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_06 = 2;
+    }
+    for (i = 0; i < 4; i++) {
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 = -0xA0 + i * 8;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_01 = i + 4;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_02 = 0x40;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_03 = 0xA4;
+    }
+    for (i = 0; i < 4; i++) {
+        ((DisplayActor44 *)D_8011ECD0)[100 + i].unk_01 = 8;
+        ((DisplayActor44 *)D_8011ECD0)[100 + i].unk_26 = 0xE8;
+        ((DisplayActor44 *)D_8011ECD0)[100 + i].unk_02 = 0x40;
+        ((DisplayActor44 *)D_8011ECD0)[100 + i].unk_03 = 0xA4;
+    }
+    /* FAKE: dead store; with `i` assigned again IDO keeps the 4-trip loop above rolled and replaces its test by the
+     * record-walk compare (`sltu` against D_8011EDE0, walk in $s0). Real source unknown. T-19004 */
+    i = 0;
+    ((DisplayActor44 *)D_8011ECD0)[104].unk_01 = 3;
+    ((DisplayActor44 *)D_8011ECD0)[105].unk_01 = 2;
+    ((DisplayActor44 *)D_8011ECD0)[106].unk_01 = 1;
+    ((DisplayActor44 *)D_8011ECD0)[107].unk_01 = 4;
+    ((DisplayActor44 *)D_8011ECD0)[108].unk_01 = 5;
+    ((DisplayActor44 *)D_8011ECD0)[109].unk_01 = 6;
+    ((DisplayActor44 *)D_8011ECD0)[110].unk_01 = 7;
+    ((DisplayActor44 *)D_8011ECD0)[111].unk_01 = 9;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_01 = 8;
+    ((DisplayActor44 *)D_8011ECD0)[113].unk_01 = 9;
+    ((DisplayActor44 *)D_8011ECD0)[114].unk_01 = 9;
+    ((DisplayActor44 *)D_8011ECD0)[114].unk_26 = -0x30;
+    ((DisplayActor44 *)D_8011ECD0)[114].unk_02 = 0x40;
+    ((DisplayActor44 *)D_8011ECD0)[114].unk_03 = 0xA4;
+    ((DisplayActor44 *)D_8011ECD0)[0].unk_26 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[0].unk_2A = 0;
+}
+
+void func_80135AD0(void) {
+    s32 i;
+    s32 count;
+    s32 row;
+    s32 available[11];
+    s32 temp;
+    TaiikuS11 characters;
+
+    characters = D_80149558;
+    for (i = 0; i < 11; i++) {
+        available[i] = 128;
+    }
+    count = 0;
+    for (i = 0; i < 11; i++) {
+        if (((D_800E6280.unk_1BC[i].unk_0C.u << 30) >> 31) == 1) {
+            available[count++] = i;
+        }
+    }
+    D_801491EC = characters.v[available[func_800AE0D0() % count]];
+    for (i = 0; i < 30; i++) {
+        if (i < 10) {
+            row = 0;
+        } else if (i < 20) {
+            row = 1;
+        } else {
+            row = 2;
+        }
+        func_80048F64(i + 46);
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_38 = 0x01000000;
+        temp = row + 9;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_01 = temp;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_04 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_05 = 128;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_06 = 2;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_08 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_0C = (u8 *)D_80149FB4;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_10 = (u8 *)D_80149FEC;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_34 = (u8 *)D_801492C8;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_14 = (s16)D_8014A024;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_1A = 0x1000;
+        *(s16 *)((DisplayActor44 *)D_8011ECD0)[i + 46].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_07 = 128;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_2A = -48 - row * 16;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_16 = func_80135D24();
+        while (((DisplayActor44 *)D_8011ECD0)[i + 46].unk_16 == ((DisplayActor44 *)D_8011ECD0)[i + 45].unk_16) {
+            ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_16 = func_80135D24();
+        }
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_18 = 0;
+    }
+}
 
 s32 func_80135D24(void) {
     s32 row;
@@ -367,36 +614,46 @@ s32 func_80135D24(void) {
     return table.value[row][random % 10];
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135DF8);
+void func_80135DF8(void) {
+    s32 index;
+    s32 row;
+    s32 column;
+    s32 skip;
+    TaiRandomTable table;
+
+    table = D_8014964C;
+    index = 0;
+    for (row = 0; row < 10; row++) {
+        skip = func_800AE0D0() % 3;
+        for (column = 0; column < 3; column++) {
+            if (skip != column) {
+                ((DisplayActor44 *)D_8011ECD0)[row * 3 + column + 46].unk_16 = table.value[D_801491EC][index];
+                index++;
+                if (index >= 10) {
+                    index = 0;
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135F3C);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_801365C8);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, one swap: the original schedules lui t4 (next load) before the sw to D_80149224; the data of D_80149208..D_80149297 is one object here (TaiikuSlots), 2 lines */
 s32 func_801368B8() {
-    D_80149208.f0C += 1;
-    D_80149208.f0E += 1;
-    D_80149208.f14 += 1;
-    D_80149208.f1C += 1;
-    D_80149208.f30 += 1;
-    D_80149208.f32 += 1;
-    D_80149208.f38 += 1;
-    D_80149208.f40 += 1;
-    D_80149208.f54 += 1;
-    D_80149208.f56 += 1;
-    D_80149208.f5C += 1;
-    D_80149208.f64 += 1;
-    D_80149208.f78 += 1;
-    D_80149208.f7A += 1;
-    D_80149208.f80 += 1;
-    D_80149208.f88 += 1;
-    D_80149208.f07 += 1;
+    s32 i;
+
+    /* FAKE: indexes the four runners (player, cpu[3]) from the player record; the object is player + cpu[3], not one array.
+     * IDO unrolls the loop, and the peeled first runner is what makes the scheduling match. T-16551 */
+    for (i = 0; i < 4; i++) {
+        (&D_80149208.player)[i].unk_0C += 1;
+        (&D_80149208.player)[i].unk_0E += 1;
+        (&D_80149208.player)[i].unk_14 += 1;
+        (&D_80149208.player)[i].unk_1C += 1;
+    }
+    D_80149208.player.unk_07 += 1;
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_801368B8);
-#endif
 
 void func_801369F0(void) {
     func_80136A28();
@@ -409,41 +666,41 @@ void func_80136A28(void) {
     if (D_800E6280.unk_F88 & 0x20) {
         D_80149204 = 1;
     }
-    if (D_80149208.f14 >= 0x10U) {
+    if (D_80149208.player.unk_14 >= 0x10U) {
         if (D_80149204 != 0) {
-            if (D_80149208.f18 < 0) {
-                D_80149208.f18 = 0;
+            if (D_80149208.player.unk_18 < 0) {
+                D_80149208.player.unk_18 = 0;
             }
-            D_80149208.f10 = D_801491E4;
+            D_80149208.player.unk_10 = D_801491E4;
         } else {
-            D_80149208.f10 = -0x300;
+            D_80149208.player.unk_10 = -0x300;
         }
-        D_80149208.f14 = 0;
+        D_80149208.player.unk_14 = 0;
         D_80149204 = 0;
     }
 }
 
 void func_80136AB0(void) {
-    if ((u32)D_80149208.f1C >= 0xB) {
-        D_80149208.f18 += D_80149208.f10;
-        if (D_80149208.f18 < -0x10000) {
-            D_80149208.f18 = -0x10000;
+    if ((u32)D_80149208.player.unk_1C >= 0xB) {
+        D_80149208.player.unk_18 += D_80149208.player.unk_10;
+        if (D_80149208.player.unk_18 < -0x10000) {
+            D_80149208.player.unk_18 = -0x10000;
         }
-        if (D_801491E8 < D_80149208.f18) {
-            D_80149208.f18 = D_801491E8;
+        if (D_801491E8 < D_80149208.player.unk_18) {
+            D_80149208.player.unk_18 = D_801491E8;
         }
-        D_80149208.f1C = 0;
+        D_80149208.player.unk_1C = 0;
     }
 }
 
 void func_80136B18(void) {
-    TaiSlot24 *state;
+    TaiRunnerA *state;
 
-    state = (TaiSlot24 *)&D_80149208;
-    if (D_80149208.f10 < 0 || D_80149298.halves.high == 0) {
-        ((TaiSlot24 *)&D_80149208)->unk_20.word -= D_8014929C;
+    state = &D_80149208.player;
+    if (D_80149208.player.unk_10 < 0 || D_80149298.halves.high == 0) {
+        D_80149208.player.unk_20.word -= D_8014929C;
     } else {
-        ((TaiSlot24 *)&D_80149208)->unk_20.word = ((TaiSlot24 *)&D_80149208)->unk_20.word + 0x8000;
+        D_80149208.player.unk_20.word = D_80149208.player.unk_20.word + 0x8000;
     }
     if (state->unk_20.halves.high >= -0x1F) {
         state->unk_20.halves.high = -0x20;
@@ -454,16 +711,51 @@ void func_80136B18(void) {
     D_80120676 = state->unk_20.halves.high;
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80136BB4);
+void func_80136BB4(void) {
+    u16 limit;
+    TaiikuU11 limits;
+    u8 temp;
+    u16 count;
+
+    limits = D_801497DC;
+    if (D_80122E94 == 1) {
+        limit = limits.v[D_801491DC];
+    } else {
+        limit = limits.v[((DisplayActor44 *)D_8011ECD0)[46 + D_80149208.player.unk_02].unk_16 >> 3];
+    }
+    if ((limit < D_80149208.player.unk_0E) && (D_80149208.player.unk_18 != 0)) {
+        if (D_80149208.player.unk_04 >= 5U) {
+            D_80149208.player.unk_04 = 0;
+        } else {
+            D_80149208.player.unk_04++;
+        }
+        D_80149208.player.unk_0E = 0;
+    }
+    count = D_80149208.player.unk_0C;
+    if (((count >= 6U) && (D_80149208.player.unk_10 > 0)) || ((count >= 8U) && (((s32) D_801491E8 >> 1) < D_80149208.player.unk_18)) || ((count >= 11U) && (D_80149208.player.unk_18 != 0))) {
+        temp = D_80149208.player.unk_03;
+        if (temp >= 5U) {
+            D_80149208.player.unk_03 = 0;
+        } else {
+            D_80149208.player.unk_03 = D_80149208.player.unk_03 + 1;
+        }
+        D_80149208.player.unk_0C = 0;
+    }
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = *(s16 *)(D_801492AC + D_80149208.player.unk_03 * 2);
+    if ((D_8014929C == 0) && (D_80149208.player.unk_10 <= 0)) {
+        D_80149208.player.unk_03 = 5;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0x90;
+    }
+}
 
 s32 func_80136DA4() {
     s32 temp;
-    D_8014929C += D_80149208.f10;
+    D_8014929C += D_80149208.player.unk_10;
     temp = (*(u32 *)&D_801491E8);
     if (temp < D_8014929C) {
         D_8014929C = D_801491E8;
     }
-    if (D_8014929C < 0 || (D_80149208.f10 < 0 && D_80149208.f22 < -0x9F)) {
+    if (D_8014929C < 0 || (D_80149208.player.unk_10 < 0 && D_80149208.player.unk_20.halves.high < -0x9F)) {
         D_8014929C = 0;
     }
     D_80149298.word += D_8014929C;
@@ -479,7 +771,37 @@ void func_80136E80(void) {
     func_8013732C();
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80136EC0);
+/* Signed selector keeps the case constants distinct from byte stores. T-12020. */
+void func_80136EC0(void) {
+    s32 i;
+    TaiWait3 wait;
+
+    wait = D_801497F4;
+    for (i = 0; i < 3; i++) {
+        if (D_80149208.cpu[i].unk_01 != 0) {
+            switch ((s32)D_80149208.cpu[i].unk_05) {
+            case 0:
+                D_80149208.cpu[i].unk_08 = func_800AE0D0() % 120 + wait.value[i] + 60;
+                D_80149208.cpu[i].unk_05++;
+                break;
+            case 1:
+                if (++D_80149208.cpu[i].unk_0A >= D_80149208.cpu[i].unk_08) {
+                    D_80149208.cpu[i].unk_05++;
+                }
+                break;
+            case 2:
+                if (func_80137784(i + 1) != 0) {
+                    D_80149208.cpu[i].unk_01 = 0;
+                    D_80149208.cpu[i].unk_00 = 1;
+                }
+                break;
+            default:
+                func_80046500();
+                break;
+            }
+        }
+    }
+}
 
 typedef struct {
     s32 w[3];
@@ -492,7 +814,7 @@ void func_8013703C(void) {
 
     t = D_801497FC;
     for (i = 0; i < 3; i++) {
-        *(s32 *)(((u8 *)&D_80149208) + i * 0x24 + 0x34) = t.w[i];
+        D_80149208.cpu[i].unk_10 = t.w[i];
     }
 }
 
@@ -508,68 +830,58 @@ void func_80137090(void) {
     lim = D_80149808;
     th = D_80149814;
     for (i = 0; i < 3; i++) {
-        if (D_80149208.pad24[i * 0x24 + 6] == 1 && D_80120A72 + i * 8 + 0x148 < *(s16 *)(D_8011ECD0 + i * 0x44 + 0x19EA)) {
-            *(s32 *)&D_80149208.pad24[i * 0x24 + 0x18] = 0;
+        if (D_80149208.cpu[i].unk_06 == 1 && D_80120A72 + i * 8 + 0x148 < *(s16 *)(D_8011ECD0 + i * 0x44 + 0x19EA)) {
+            D_80149208.cpu[i].unk_18 = 0;
         } else {
-            if (th.v[i] <= (y = *(s16 *)&D_80149208.pad24[i * 0x24 + 0x22]) && D_80149208.pad24[i * 0x24 + 0] == 0) {
-                *(s32 *)&D_80149208.pad24[i * 0x24 + 0x18] = 0;
-                D_80149208.pad24[i * 0x24 + 1] = 1;
-            } else if (y >= 0x140 && D_80149208.pad24[i * 0x24 + 0] == 0) {
-                *(s32 *)&D_80149208.pad24[i * 0x24 + 0x18] = (lim.v[i] >> 1) + 1;
-            } else if (*(u32 *)&D_80149208.pad24[i * 0x24 + 0x1C] >= 0xB && D_80149208.pad24[i * 0x24 + 1] == 0 && D_80149208.pad24[i * 0x24 + 6] == 0) {
-                *(s32 *)&D_80149208.pad24[i * 0x24 + 0x18] += *(s32 *)&D_80149208.pad24[i * 0x24 + 0x10];
-                if (*(s32 *)&D_80149208.pad24[i * 0x24 + 0x18] < 0) {
-                    *(s32 *)&D_80149208.pad24[i * 0x24 + 0x18] = 0;
+            if (th.v[i] <= (y = D_80149208.cpu[i].unk_20.halves.high) && D_80149208.cpu[i].unk_00 == 0) {
+                D_80149208.cpu[i].unk_18 = 0;
+                D_80149208.cpu[i].unk_01 = 1;
+            } else if (y >= 0x140 && D_80149208.cpu[i].unk_00 == 0) {
+                D_80149208.cpu[i].unk_18 = (lim.v[i] >> 1) + 1;
+            } else if (D_80149208.cpu[i].unk_1C >= 0xB && D_80149208.cpu[i].unk_01 == 0 && D_80149208.cpu[i].unk_06 == 0) {
+                D_80149208.cpu[i].unk_18 += D_80149208.cpu[i].unk_10;
+                if (D_80149208.cpu[i].unk_18 < 0) {
+                    D_80149208.cpu[i].unk_18 = 0;
                 }
-                if (lim.v[i] < *(s32 *)&D_80149208.pad24[i * 0x24 + 0x18]) {
-                    *(s32 *)&D_80149208.pad24[i * 0x24 + 0x18] = lim.v[i];
+                if (lim.v[i] < D_80149208.cpu[i].unk_18) {
+                    D_80149208.cpu[i].unk_18 = lim.v[i];
                 }
-                *(s32 *)&D_80149208.pad24[i * 0x24 + 0x1C] = 0;
+                D_80149208.cpu[i].unk_1C = 0;
             }
         }
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, D_80149298.halves.high (D_8014929A) is not hoisted out of the loop as in the original; the rest has the original structure, large diff (all registers) */
 void func_80137228(void) {
     s32 i;
-    s32 y;
-    s32 j;
-    u8 *a;
-    u8 *r;
+    s32 k;
 
-    a = (u8 *)&D_80149208;
     for (i = 0; i < 3; i++) {
-        *(s32 *)(a + i * 0x24 + 0x44) += *(s32 *)(a + i * 0x24 + 0x3C);
-        y = *(s16 *)(a + i * 0x24 + 0x46) - D_80149298.halves.high;
-        if (D_80120A72 + i * 8 + 8 < y - 0x60) {
-            if (a[i * 0x24 + 0x2A] == 0) {
-                (&D_80120A72)[0x1B] = 0x8D;
-                if (a[i * 0x24 + 0x2A] == 0) {
-                    j = 0;
-                    while (D_801491E0[j] != 0) {
-                        j++;
-                    }
-                    D_801491E0[j] = i + 2;
+        D_80149208.cpu[i].unk_20.word += D_80149208.cpu[i].unk_18;
+        if (((DisplayActor44 *)D_8011ECD0)[111].unk_26 + (i + 1) * 8 < D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high - 0x60 && D_80149208.cpu[i].unk_06 == 0) {
+            ((DisplayActor44 *)D_8011ECD0)[112].unk_18 = 0x8D;
+            if (D_80149208.cpu[i].unk_06 == 0) {
+                k = 0;
+                if (D_801491E0[0] != 0) {
+                    do {
+                        k += 1;
+                    } while (D_801491E0[k] != 0);
                 }
-                a[i * 0x24 + 0x2A] = 1;
-                y = *(s16 *)(a + i * 0x24 + 0x46) - D_80149298.halves.high;
+                D_801491E0[k] = i + 2;
             }
+            D_80149208.cpu[i].unk_06 = 1;
         }
-        r = D_8011ECD0 + i * 0x44;
-        *(s16 *)(r + 0x19EA) = y - 0xA0;
-        if (y >= 0x1E1 || y < -0xA0) {
-            r[0x19C7] = 0;
+        ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_26 = D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high - 0xA0;
+        if (D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high >= 0x1E1 || D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high < -0xA0) {
+            ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_03 = 0;
         } else {
-            r[0x19C7] = 0xA4;
+            ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_03 = 0xA4;
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137228);
-#endif
 
+/* FAKE: byte-offset walk over the cpu runners of D_80149208; written as TaiRunnerA fields (p = &D_80149208.cpu[i],
+ * or the byte base plus 0x24 * i cast to TaiRunnerA *) the code differs (checked in the T-16550 review). T-16550 */
 void func_8013732C(void) {
     s32 i;
     u8 *p;
@@ -633,52 +945,87 @@ s32 func_80137440(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137544);
-
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137784);
-
 #ifdef NON_MATCHING
-/* Falls through without a return statement: $v0 still holds D_8014929A. */
-s32 func_80137C44(void) {
+/* NON_MATCHING: T-19004, 26 differing lines (13 instructions, registers only): the loop counter i takes $a3 and the hoisted
+ * D_8012091E + 11 takes $a2, the original has them the other way round (regdiff: the hoisted constant outranks i, priority 7
+ * against 6.4); the ugen temporaries t8/t3 against t9/t5 follow. Declaration order, initialisation order and autotweak's 628 edits
+ * (T-16551) and `register`, no `pos` local, D_8012091E/D_80120922 as fields of display record 106, a for/while loop (T-19004) did
+ * not move it: a loop with the init next to it gives i priority 10.67 and $a0 before a and b, the original needs 7 to 8.2. */
+void func_80137544(void) {
+    u8 sel;
     s32 i;
-    TaiSlot24 *slot;
-    s32 dx;
+    s32 a;
+    s32 b;
+    s16 lo;
+    s16 hi;
+    s32 pos;
+    s32 one; /* FAKE: names the constant 1 so that it is the first operand of the three compares (bne v0,t8); real source unknown. T-16551 */
 
-    slot = (TaiSlot24 *)&D_80149208;
-    for (i = 0; i < 4; i++, slot++) {
-        if (slot->pad_00[0] != 0) {
-            ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_26 = ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 - 8;
-            if (i == 0) {
-                if (D_80122E94 == 1) {
-                    ((DisplayActor44 *)D_8011ECD0)[107].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + D_801491D8].unk_16 >> 3) * 6 + D_801492B8[D_80149208.pad04[0]];
-                } else {
-                    ((DisplayActor44 *)D_8011ECD0)[107].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + slot->index].unk_16 >> 3) * 6 + D_801492B8[D_80149208.pad04[0]];
-                }
-            } else {
-                ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + slot->index].unk_16 >> 3) * 6 + D_801492B8[slot->pad_03[0]];
-            }
-            if (i + 0x90 == ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_18) {
-                if (D_80122E94 == 1) {
-                    ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_18 = D_80149320[D_801491DC] * 6 + 5;
-                } else {
-                    ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + slot->index].unk_16 >> 3) * 6 + 5;
-                }
-            }
-        }
-    }
-    slot = (TaiSlot24 *)&D_80149208;
-    for (i = 0; i < 3; i++, slot++) {
-        if (((slot[1].pad_03[2] == 2 && ((DisplayActor44 *)D_8011ECD0)[108 + i].unk_02 != 0) || slot[1].pad_00[0] == 1) &&
-            (dx = slot[1].unk_20.halves.high - D_80149298.halves.high, dx < 0x140) && dx >= -0x13F) {
-            ((DisplayActor44 *)D_8011ECD0)[108 + i].unk_03 = 0xA4;
+    one = 1;
+    func_800863D4(0x6A);
+    if (D_800B3CFC != 0 && D_80122E94 == 0xFF) {
+        if (one == D_80122EA0) {
+            func_80044750(0x60E);
         } else {
-            ((DisplayActor44 *)D_8011ECD0)[108 + i].unk_03 = 0;
+            func_80044750(0x50E);
+        }
+        D_80122E94 = 1;
+    } else if (D_800E6280.unk_F88 & 0x20) {
+        if (D_80149208.player.unk_07 >= 0x29U) {
+            i = 0;
+            a = -0xA0;
+            b = -0x80;
+            if (D_80120922 < 0 && D_80120922 >= -0x30) {
+                sel = 0;
+            } else if (D_80120922 < -0x30 && D_80120922 >= -0x40) {
+                sel = 0xA;
+            } else if (D_80120922 < -0x40 && D_80120922 >= -0x50) {
+                sel = 0x14;
+            } else {
+                sel = 0x80;
+            }
+            pos = D_8012091E + 0xB;
+            do {
+                lo = a;
+                hi = b;
+                if (sel == 10) {
+                    lo = a + 0x10;
+                    hi = b + 0x10;
+                }
+                a += 0x20;
+                if (lo < pos && pos < hi) {
+                    sel = sel + (s8) i; /* FAKE: the cast only moves the ugen temporaries (andi t7); autotweak. T-16551 */
+                    break;
+                }
+                i++;
+                b += 0x20;
+            } while (i != 10);
+            if (one == D_80122E94 && sel == D_801491D8 && D_801491DC != 0xFF) {
+                if (one == D_80122EA0) {
+                    func_80044750(0x60C);
+                } else {
+                    func_80044750(0x50C);
+                }
+                D_80149208.player.unk_01 = 1;
+            } else if (sel == D_80149208.player.unk_02) {
+                func_80044750(0x601);
+                D_80149208.player.unk_01 = 1;
+                D_80122E94 = 0xFF;
+                D_801491DC = 0xFF;
+            } else {
+                func_80044750(0x600);
+            }
+            D_80149208.player.unk_07 = 0;
         }
     }
 }
 #else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137C44);
+INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137544);
 #endif
+
+INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137784);
+
+INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137C44);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137EA8);
 
@@ -689,25 +1036,123 @@ s32 func_8013815C(void) {
     s32 i;
 
     for (i = 0; i < 3; i++) {
-        if (((u8 *)&D_80149208)[i * 0x24 + 0x2A] == 0) {
+        if (D_80149208.cpu[i].unk_06 == 0) {
             v[i] = *(s16 *)(D_8011ECD0 + i * 0x44 + 0x19EA);
         } else {
             v[i] = -0xF00;
         }
     }
     if (v[0] >= v[1] && v[0] >= v[2]) {
-        D_80149208.pad24[6] = 1;
+        D_80149208.cpu[0].unk_06 = 1;
         return 2;
     }
     if (v[1] >= v[2]) {
-        D_80149208.pad44[0xA] = 1;
+        D_80149208.cpu[1].unk_06 = 1;
         return 3;
     }
-    D_80149208.pad6C[6] = 1;
+    D_80149208.cpu[2].unk_06 = 1;
     return 4;
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80138224);
+void func_80138224(void) {
+    s32 i;
+    s32 j; /* FAKE: unused local; the original frame is 8 bytes larger, two words above spA4 (a second counter?), real source unknown. T-16551 */
+    TaiBytes10 spA4;
+    TaiikuHalf10 sp90;
+    TaiikuHalf10 sp7C;
+    TaiikuHalf10 sp68;
+
+    spA4 = D_80149864;
+    sp90 = D_80149870;
+    sp7C = D_80149884;
+    sp68 = D_80149898;
+    for (i = 0; i < 4; i++) {
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_38 = 0x01000000;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_01 = i * 2 + 2;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_04 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_05 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_02 = 0x40;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_03 = 0xA4;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_06 = 2;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_08 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_0C = (u8 *)D_80149FBC;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_10 = (u8 *)D_80149FF4;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_34 = (u8 *)D_801492F8;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_14 = D_8014A02C;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_16 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_18 = func_80138680(i, 1);
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_1A = 0x1000;
+        *(s16 *)((DisplayActor44 *)D_8011ECD0)[96 + i].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_07 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 = func_801388E4(i);
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_2A = 0x28 - i * 0x18;
+    }
+    for (i = 0; i < 4; i++) {
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_38 = 0x01000000;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_01 = i * 2 + 3;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_04 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_05 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_02 = 0x40;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_03 = 0xA4;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_06 = 2;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_08 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_0C = (u8 *)D_80149FBC;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_10 = (u8 *)D_80149FF4;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_34 = (u8 *)D_801492F8;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_14 = D_8014A02C;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_16 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_18 = func_80138680(i, 0);
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_1A = 0x1000;
+        *(s16 *)((DisplayActor44 *)D_8011ECD0)[107 + i].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_07 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_26 = func_801388E4(i);
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_2A = 0x28 - i * 0x18;
+    }
+    for (i = 0; i != 10; i++) {
+        func_80048F64(i + 111);
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_38 = 0x01000000;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_01 = spA4.v[i];
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_04 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_05 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_02 = 1;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_03 = 0xA4;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_06 = 2;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_08 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_0C = (u8 *)D_80149FBC;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_10 = (u8 *)D_80149FF4;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_34 = (u8 *)D_801492F8;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_14 = D_8014A02C;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_16 = sp90.h[i];
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_18 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_1A = 0x1000;
+        *(s16 *)((DisplayActor44 *)D_8011ECD0)[111 + i].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_43 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_07 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_26 = sp7C.h[i];
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_2A = sp68.h[i];
+    }
+    func_80048F64(0x70);
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_38 = 0x01000000;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_01 = 1;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_04 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_05 = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_02 = 0x40;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_03 = 0xA4;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_06 = 2;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_08 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_0C = (u8 *)D_80149FB8;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_10 = (u8 *)D_80149FF0;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_34 = (u8 *)D_801492DC;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_14 = D_8014A028;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_16 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_18 = 0xA0;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_1A = 0x2000;
+    *(s16 *)((DisplayActor44 *)D_8011ECD0)[112].pad_1C = 0x2000;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_43 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_07 = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_26 = -0x80;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_2A = -0xF8;
+}
 
 s32 func_80138680(s32 arg0, s32 arg1) {
     s32 key;
@@ -737,7 +1182,9 @@ s32 func_80138680(s32 arg0, s32 arg1) {
         if (D_80122E94 == 1 && slot == 4) {
             slot += large.value[D_80149320[D_801491DC]];
         } else {
-            slot += large.value[((TaiValue44 *)D_8011ECD0)[((TaiSlot24 *)&D_80149208)[arg0].index + 46].unk_16 >> 3];
+            /* FAKE: indexes the four runners (player, cpu[3]) of D_80149208 from the player record; the
+             * object is player + cpu[3], not one array (see TaiRunnersA). T-16550 */
+            slot += large.value[((TaiValue44 *)D_8011ECD0)[(&D_80149208.player)[arg0].unk_02 + 46].unk_16 >> 3];
         }
     }
     return slot;
@@ -747,20 +1194,20 @@ void func_80138800(void) {
     s32 i;
     s16 t;
 
-    if (D_80149208.f0C >= 0xBU) {
-        D_80149208.f03 += 1;
-        D_80149208.f0C = 0;
+    if (D_80149208.player.unk_0C >= 0xBU) {
+        D_80149208.player.unk_03 += 1;
+        D_80149208.player.unk_0C = 0;
     }
-    if (D_80149208.f03 >= 4U) {
-        D_80149208.f03 = 0;
+    if (D_80149208.player.unk_03 >= 4U) {
+        D_80149208.player.unk_03 = 0;
     }
     for (i = 0; i < 4; i++) {
         t = func_80138680(i, 1);
-        *(s16 *)(D_8011ECD0 + i * 0x44 + 0x1998) = D_80149208.f03 + t;
+        *(s16 *)(D_8011ECD0 + i * 0x44 + 0x1998) = D_80149208.player.unk_03 + t;
     }
     for (i = 0; i != 4; i++) {
         t = func_80138680(i, 0);
-        *(s16 *)(D_8011ECD0 + i * 0x44 + 0x1C84) = (D_80149208.f03 & 1) + t;
+        *(s16 *)(D_8011ECD0 + i * 0x44 + 0x1C84) = (D_80149208.player.unk_03 & 1) + t;
     }
 }
 

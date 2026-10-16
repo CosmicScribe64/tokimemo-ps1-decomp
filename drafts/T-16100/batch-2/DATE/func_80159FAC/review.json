@@ -1,0 +1,28 @@
+{
+  "scope": "DATE:func_80159FAC",
+  "path": "drafts/T-16100/batch-2/DATE/func_80159FAC",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "M2cBlockB8",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    }
+  ],
+  "explanation": "184-byte copy exists but raw sp dispatch/pointer reads remain; needs function-pointer/coordinate table reconstruction.",
+  "evidence_path": "drafts/T-16100/batch-2/DATE/func_80159FAC/evidence.txt",
+  "compile_status": "scored",
+  "score": 55,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "M2cBlockB8",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "184-byte copy exists but raw sp dispatch/pointer reads remain; needs function-pointer/coordinate table reconstruction."
+    }
+  ]
+}

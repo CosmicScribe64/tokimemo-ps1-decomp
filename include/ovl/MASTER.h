@@ -158,6 +158,10 @@ typedef struct MasterHalfwords5 {
 } MasterHalfwords5; /* size 0x0A */
 extern MasterHalfwords13 D_8013C6C0;
 extern MasterHalfwords13 D_8013C6DC;
+/* T-13001: 0x1A-byte copies, indexed signed halfword reads in each consumer. */
+extern MasterHalfwords13 D_8013C7E8;
+extern MasterHalfwords13 D_8013C804;
+extern MasterHalfwords13 D_8013C820;
 extern MasterHalfwords5 D_8013C640;
 extern u8 D_8013C584;
 extern s32 D_8013C574;
@@ -184,3 +188,7 @@ typedef struct MasterClubBits {
 
 /* T-10630: eleven resource IDs copied by the neighboring selector. */
 extern MasterWords11 D_8013C678;
+
+/* T-13001: later helpers called by the typed-table scene handlers. */
+void func_8013B354(void);
+void func_8013B804(void);

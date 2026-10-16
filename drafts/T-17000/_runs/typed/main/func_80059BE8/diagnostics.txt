@@ -1,0 +1,1 @@
+m2c.py: argument counts from the callees' asm: load_tpage_buf_lock 3

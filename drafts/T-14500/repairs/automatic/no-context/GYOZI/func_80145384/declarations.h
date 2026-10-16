@@ -1,0 +1,10 @@
+extern s16 D_8012B8C8;
+extern s16 D_8012B8D6;
+extern s16 D_8012B8D8;
+extern s32 D_8012E694;
+extern s32 D_8014901C;
+extern s8 D_8012B94A;
+extern u8 D_800F647A;
+extern u8 D_8012B94B;
+extern u8 D_8012B94F;
+void func_80145520(void);

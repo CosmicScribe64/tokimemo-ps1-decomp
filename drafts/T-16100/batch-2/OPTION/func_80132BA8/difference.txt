@@ -1,0 +1,81 @@
+Difference rows: 196; first 80 mnemonic/relocation rows; opcode words omitted.
+-; lui v1,0x0
+-; lbu v1,0(v1)
+-; addiu sp,sp,-144
+-; sltiu at,v1,5
+-; bnez at,bd4 <func_80132BA8+0x2c>
++; lui t6,0x0
++; lbu t6,0(t6)
++; addiu sp,sp,-120
++; sltiu at,t6,5
++; beqz at,fb0 <func_80132BA8+0x408>
+-; li at,255
+-; beq v1,at,fdc <.L80132FA8+0x34>
+-; li a0,61
+-; b fdc <.L80132FA8+0x34>
+-; li a0,61
+-; sltiu at,v1,5
+-; beqz at,fd8 <.L80132FA8+0x30>
+-; sll t6,v1,0x2
++; sll t6,t6,0x2
+-; addiu a0,sp,60
+-; addiu t0,sp,92
+-; addiu t1,sp,108
++; addiu a0,sp,52
++; addiu t0,sp,56
++; addiu t1,sp,60
+-; addiu a2,sp,60
++; addiu a2,sp,52
+-; addiu a3,sp,76
+-; lh a0,60(sp)
+-; lh a1,76(sp)
++; addiu a3,sp,54
++; lh a0,52(sp)
++; lh a1,54(sp)
+-R_MIPS_LO16 string b'\x95\xb6\x8e\x9a\x95\\\x8e\xa6\x91\xac\x93x'  ; addiu a3,a3,0
++R_MIPS_LO16 string b'\x95\xb6\x8e\x9ax95\\\x8e\xa6\x91\xac\x93x'  ; addiu a3,a3,0
+-; lh a0,62(sp)
+-; lh a1,78(sp)
++; lh a0,112(sp)
++; lh a1,116(sp)
+-; lh a0,64(sp)
+-; lh a1,80(sp)
++; lh a0,100(sp)
++; lh a1,104(sp)
+-; lh a0,66(sp)
+-; lh a1,82(sp)
++; lh a0,108(sp)
++; lh a1,88(sp)
+-; lh a0,68(sp)
+-; lh a1,84(sp)
++; lh a0,92(sp)
++; lh a1,96(sp)
+-R_MIPS_LO16 string b'\x83J\x81[\x83\\\x83\x8b\x91\xac\x93x'  ; addiu a3,a3,0
++R_MIPS_LO16 string b'\x83J\x81[x83\\\x83\x8b\x91\xac\x93x'  ; addiu a3,a3,60
+-; lh a0,70(sp)
+-; lh a1,86(sp)
++; lh a0,76(sp)
++; lh a1,80(sp)
+-; lh a0,72(sp)
+-; lh a1,88(sp)
++; lh a0,84(sp)
++; lh a1,64(sp)
+-; lh a0,74(sp)
+-; lh a1,90(sp)
++; lh a0,68(sp)
++; lh a1,72(sp)
+-; li v1,1
++; li t4,1
+-; sb v1,0(at)
+-; b ff0 <.L80132FA8+0x48>
++; sb t4,0(at)
++; b fc8 <func_80132BA8+0x420>
+-; beqz v0,e7c <.L80132DFC+0x80>
++; beqz v0,e58 <func_80132BA8+0x2b0>
++; lui t1,0x0
++; lui v0,0x0
++; lbu v0,0(v0)
++; li at,1
++; bne v0,at,e18 <func_80132BA8+0x270>
++; lui t5,0x0
++; lbu t5,0(t5)

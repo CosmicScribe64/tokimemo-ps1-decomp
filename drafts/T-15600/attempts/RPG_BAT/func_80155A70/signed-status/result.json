@@ -1,0 +1,13 @@
+{
+  "scope": "RPG_BAT:func_80155A70",
+  "variant": "signed-status",
+  "score": 53,
+  "status": "scored",
+  "matching_claim": false,
+  "source_base": "ffac0f04",
+  "census_base": "48362009",
+  "original_attempt": "drafts/T-14500/RPG_BAT/func_80155A70",
+  "archive_path": "drafts/T-15600/attempts/RPG_BAT/func_80155A70/signed-status",
+  "body_sha256": "9680fed58ad626e0a1ee2cd59be80099ed8aebeaf887c6df36a3450528ef6a1e",
+  "context_sha256": "2c857aaeb37b6923b480cc73131d590639ad8100e185f74151e7d645437a5823"
+}

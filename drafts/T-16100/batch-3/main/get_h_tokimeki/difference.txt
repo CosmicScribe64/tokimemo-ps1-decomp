@@ -1,0 +1,81 @@
+-3c0e800b  ; lui t6,0x0
++3c19800b  ; lui t9,0x0
+-27bdff78  ; addiu sp,sp,-136
+-3c07800b  ; lui a3,0x0
+-afb00014  ; sw s0,20(sp)
+-afb2001c  ; sw s2,28(sp)
+-afb10018  ; sw s1,24(sp)
+-27a20040  ; addiu v0,sp,64
+-24040001  ; li a0,1
+-24080001  ; li t0,1
+-3c10800b  ; lui s0,0x0
+-3c0c800b  ; lui t4,0x0
+-3c0b800b  ; lui t3,0x0
+-3c0a800b  ; lui t2,0x0
+-3c09800b  ; lui t1,0x0
++25ad4110  ; addiu t5,t5,0
++27bdff90  ; addiu sp,sp,-112
++240c0001  ; li t4,1
++27a9006c  ; addiu t1,sp,108
+-000578c0  ; sll t7,a1,0x3
+-01e57823  ; subu t7,t7,a1
+-000f78c0  ; sll t7,t7,0x3
+-00cfc021  ; addu t8,a2,t7
+-01c57021  ; addu t6,t6,a1
+-91ce4100  ; lbu t6,0(t6)
+-871901be  ; lh t9,446(t8)
+-00e53821  ; addu a3,a3,a1
+-01d90019  ; multu t6,t9
+-90e74110  ; lbu a3,0(a3)
++000570c0  ; sll t6,a1,0x3
++01c57023  ; subu t6,t6,a1
++000e70c0  ; sll t6,t6,0x3
++00ce7821  ; addu t7,a2,t6
++0325c821  ; addu t9,t9,a1
++93394100  ; lbu t9,0(t9)
++85f801be  ; lh t8,446(t7)
++00ad2021  ; addu a0,a1,t5
++03190019  ; multu t8,t9
++90870000  ; lbu a3,0(a0)
++240f0001  ; li t7,1
++30ee0004  ; andi t6,a3,0x4
++30f80008  ; andi t8,a3,0x8
++24070004  ; li a3,4
++11c00003  ; beqz t6,2e64 <get_h_tokimeki+0x8c>
++10000002  ; b 2e68 <get_h_tokimeki+0x90>
++afaf0068  ; sw t7,104(sp)
++afa00068  ; sw zero,104(sp)
++13000004  ; beqz t8,2e7c <get_h_tokimeki+0xa4>
++27a20078  ; addiu v0,sp,120
++24080001  ; li t0,1
++10000003  ; b 2e84 <get_h_tokimeki+0xac>
++ac480000  ; sw t0,0(v0)
++ac400000  ; sw zero,0(v0)
++24080001  ; li t0,1
++90990000  ; lbu t9,0(a0)
++00ec6804  ; sllv t5,t4,a3
++032d7024  ; and t6,t9,t5
++11c00003  ; beqz t6,2ea0 <get_h_tokimeki+0xc8>
++24420010  ; addiu v0,v0,16
++10000002  ; b 2ea4 <get_h_tokimeki+0xcc>
++ac480000  ; sw t0,0(v0)
++ac400000  ; sw zero,0(v0)
++908f0000  ; lbu t7,0(a0)
++24f80001  ; addiu t8,a3,1
++240c0001  ; li t4,1
++030cc804  ; sllv t9,t4,t8
++01f96824  ; and t5,t7,t9
++11a00003  ; beqz t5,2ec8 <get_h_tokimeki+0xf0>
++24420010  ; addiu v0,v0,16
++10000002  ; b 2ecc <get_h_tokimeki+0xf4>
++ac480000  ; sw t0,0(v0)
++ac400000  ; sw zero,0(v0)
++908e0000  ; lbu t6,0(a0)
++24ec0002  ; addiu t4,a3,2
++24180001  ; li t8,1
++01987804  ; sllv t7,t8,t4
++01cfc824  ; and t9,t6,t7
++13200003  ; beqz t9,2ef0 <get_h_tokimeki+0x118>
++24420010  ; addiu v0,v0,16
++10000002  ; b 2ef4 <get_h_tokimeki+0x11c>
+[Excerpt limited to 80 differing rows; score retains complete resolved diff count.]

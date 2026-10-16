@@ -1,0 +1,11 @@
+{
+  "ticket": "T-16100",
+  "original_attempt": "drafts/T-14500/TACO/func_80144094",
+  "original_sha256": "20eba72fc059867210c6d8c93e56a7cdd4393af45e19d1c71eafd8bee06b5c56",
+  "source_base": "48362009",
+  "frozen_header_root": "drafts/T-14500/baseline/include",
+  "context_source": "drafts/T-14500/TACO/func_80144094/context.c",
+  "repair": "tools/t16100_batch3.py",
+  "compiler": "IDO 5.3 via tools/docker.sh; full translation unit",
+  "matching_claim": false
+}

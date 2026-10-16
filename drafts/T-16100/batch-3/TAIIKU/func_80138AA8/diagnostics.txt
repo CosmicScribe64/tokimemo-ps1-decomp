@@ -1,0 +1,30 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-3/TAIIKU/func_80138AA8/work/variant.c
+[Preprocessed C retained in full-context.c]
+
+$ python3 tools/cc.py drafts/T-16100/batch-3/TAIIKU/func_80138AA8/work/guarded.c drafts/T-16100/batch-3/TAIIKU/func_80138AA8/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80138AA8/work/guarded.c, line 3278: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spA4) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80149E2C) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80138AA8/work/guarded.c, line 3279: '&' before array or function; ignored
+     *(M2cBlock48 *)(&sp5C) = *(M2cBlock48 *)(&D_80149E34);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80138AA8/work/guarded.c, line 3281: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp48) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80149E7C) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80138AA8/work/guarded.c, line 3282: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp48) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_80149E7C) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80138AA8/work/guarded.c, line 3283: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp48) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_80149E7C) + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80138AA8/work/guarded.c, line 3284: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp48) + (16)) = (s32) *(s32 *)((unsigned char *)(&D_80149E7C) + (16));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80138AA8/work/guarded.c, line 3332: '&' before array or function; ignored
+         Fade_Out_Main(0x1E, &sp48);
+ ----------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80138AA8/work/guarded.c, line 3339: '&' before array or function; ignored
+         if ((Fade_Out_Main(0x1E, &sp48) != 0) && (cd_read_sync_status() & 1)) {
+ ---------------------------------^
+
+Full TU compiled; score 249

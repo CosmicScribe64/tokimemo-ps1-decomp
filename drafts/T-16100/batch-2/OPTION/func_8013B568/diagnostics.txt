@@ -1,0 +1,15 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/OPTION -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/OPTION/func_8013B568/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/OPTION/func_8013B568/full-context.c drafts/T-16100/batch-2/OPTION/func_8013B568/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-2/OPTION/func_8013B568/work/guarded.o.sjis.c, line 2665: '&' before array or function; ignored
+     func_8004E788(0x40, -0x18, 0xF, (&D_800B3538)[D_8013E740 & 0xF], 0);
+ -------------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/OPTION/func_8013B568/work/guarded.o.sjis.c, line 2740: Incompatible pointer type assignment
+             var_v1 = &D_800E6280 + (D_8013E740 * 0x38);
+ -------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/OPTION/func_8013B568/work/guarded.o.sjis.c, line 2755: Incompatible pointer type assignment
+             var_v1 = &D_800E6280 + (D_8013E740 * 0x38);
+ -------------------^
+
+Full translation unit compiled and scored.

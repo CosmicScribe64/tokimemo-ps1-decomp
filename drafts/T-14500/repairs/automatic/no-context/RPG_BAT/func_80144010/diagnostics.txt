@@ -1,0 +1,25 @@
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.c, line 3020: redeclaration of 'D_8015EC34'; previous declaration at line 2871 in file 'drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.c'
+ extern s32 D_8015EC34;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.c, line 3031: redeclaration of 'D_8015EB9C'; previous declaration at line 2685 in file 'drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.c'
+ extern u32 D_8015EB9C;
+ -----------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.c, line 3045: Incompatible pointer type assignment
+     var_v1 = &D_800E6280;
+ -----------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.o /tmp/asm_processor57ehevmg/preprocessed_d5441327f87343c6b45a8f7f1000ee8a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib_uv_70gh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.c, line 3010: redeclaration of 'D_800E6280'; previous declaration at line 736 in file 'drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.c'
+ extern s32 D_800E6280;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.c, line 3012: redeclaration of 'D_8015EBA0'; previous declaration at line 2820 in file 'drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.c'
+ extern s32 D_8015EBA0;
+ -----------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.c, line 3043: Incompatible pointer type assignment
+     var_v1 = &D_800E6280;
+ -----------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.o /tmp/asm_processorskk5m2_8/preprocessed_10f8121c25804a7db585200333c66c64.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib8d965llu/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.o drafts/T-14500/repairs/automatic/no-context/RPG_BAT/func_80144010/work/guarded.c

@@ -1,0 +1,70 @@
+{
+  "scope": "ETC:func_801328A4",
+  "path": "drafts/T-16100/batch-2/ETC/func_801328A4",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "&sp90 +",
+      "kind": "stack-address-arithmetic",
+      "line": 80
+    },
+    {
+      "detail": "+ &sp90",
+      "kind": "stack-address-arithmetic",
+      "line": 59
+    },
+    {
+      "detail": "+ &sp90",
+      "kind": "stack-address-arithmetic",
+      "line": 60
+    },
+    {
+      "detail": "+ &sp90",
+      "kind": "stack-address-arithmetic",
+      "line": 80
+    }
+  ],
+  "explanation": "Three 0x1120-byte scratch planes are based on scalar sp90; current stack allocation cannot represent those buffers. Needs complete plane layout/element-width reconstruction.",
+  "evidence_path": "drafts/T-16100/batch-2/ETC/func_801328A4/evidence.txt",
+  "compile_status": "scored",
+  "score": 313,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "&sp90 +",
+        "kind": "stack-address-arithmetic",
+        "line": 80
+      },
+      "outcome": "unresolved",
+      "explanation": "Three 0x1120-byte scratch planes are based on scalar sp90; current stack allocation cannot represent those buffers. Needs complete plane layout/element-width reconstruction."
+    },
+    {
+      "flag": {
+        "detail": "+ &sp90",
+        "kind": "stack-address-arithmetic",
+        "line": 59
+      },
+      "outcome": "unresolved",
+      "explanation": "Three 0x1120-byte scratch planes are based on scalar sp90; current stack allocation cannot represent those buffers. Needs complete plane layout/element-width reconstruction."
+    },
+    {
+      "flag": {
+        "detail": "+ &sp90",
+        "kind": "stack-address-arithmetic",
+        "line": 60
+      },
+      "outcome": "unresolved",
+      "explanation": "Three 0x1120-byte scratch planes are based on scalar sp90; current stack allocation cannot represent those buffers. Needs complete plane layout/element-width reconstruction."
+    },
+    {
+      "flag": {
+        "detail": "+ &sp90",
+        "kind": "stack-address-arithmetic",
+        "line": 80
+      },
+      "outcome": "unresolved",
+      "explanation": "Three 0x1120-byte scratch planes are based on scalar sp90; current stack allocation cannot represent those buffers. Needs complete plane layout/element-width reconstruction."
+    }
+  ]
+}

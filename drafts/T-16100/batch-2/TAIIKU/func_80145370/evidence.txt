@@ -1,0 +1,28 @@
+Target: ['asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0/func_80145370.s']
+Review: 0x30/0x24 byte memcpy extents exist but destinations sp6C/sp9C are scalars. Needs coordinate/SDK array layout recovery.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80145370 */  addiu      $sp, $sp, -0xA8
+    /* 80145384 */  addiu      $t8, $t8, %lo(D_8014A570)
+    /* 80145388 */  lbu        $v1, %lo(D_800E738A)($v1)
+    /* 8014538C */  sw         $ra, 0x24($sp)
+    /* 80145390 */  sw         $s0, 0x20($sp)
+    /* 80145394 */  addiu      $t1, $t8, 0x30
+    /* 80145398 */  addiu      $t7, $sp, 0x6C
+    /* 8014539C */  sw         $t6, 0x9C($sp)
+    /* 801453A4 */  addiu      $t8, $t8, 0xC
+    /* 801453B0 */  addiu      $t7, $t7, 0xC
+    /* 801453C8 */  addiu      $t3, $t3, %lo(D_8014A5A0)
+    /* 801453CC */  addiu      $t6, $t3, 0x24
+    /* 801453D0 */  addiu      $t2, $sp, 0x48
+    /* 801453D8 */  addiu      $t3, $t3, 0xC
+    /* 801453E4 */  addiu      $t2, $t2, 0xC
+    /* 801453FC */   addiu     $a0, $zero, 0x1
+    /* 80145400 */  addiu      $at, $zero, 0x1
+    /* 80145408 */   addiu     $a0, $zero, 0x1E
+    /* 8014540C */  addiu      $at, $zero, 0x2
+    /* 80145414 */   addiu     $at, $zero, 0x3
+    /* 8014542C */   addiu     $a1, $zero, 0x1
+    /* 80145438 */  addiu      $a0, $a0, %lo(D_800E62AC)
+    /* 8014543C */  addiu      $v1, $v1, %lo(D_800E6280)
+    /* 80145440 */  addiu      $v0, $zero, 0x8

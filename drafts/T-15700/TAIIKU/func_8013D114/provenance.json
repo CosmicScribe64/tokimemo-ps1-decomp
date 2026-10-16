@@ -1,0 +1,31 @@
+{
+  "original_attempt": "drafts/T-14500/TAIIKU/func_8013D114",
+  "prior_attempts": [
+    {
+      "path": "drafts/T-14500/TAIIKU/func_8013D114",
+      "reason": "Error: guarded.c, line 3780: Improper cast of non-scalar type expression.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_8013D114",
+      "reason": "Error: guarded.c, line 3780: Improper cast of non-scalar type expression.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_8013D114",
+      "reason": "Error: guarded.c, line 3818: Unacceptable operand of a multiplicative operator.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_8013D114",
+      "reason": "Error: guarded.c, line 3780: Improper cast of non-scalar type expression.",
+      "score": null,
+      "status": "failed"
+    }
+  ],
+  "source_base": "48362009",
+  "repair_base": "a445c4e2"
+}

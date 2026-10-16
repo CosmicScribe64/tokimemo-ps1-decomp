@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_80143B34 1, func_8015B1B8 4, func_8015B2AC 2
+python3 failed:
+ ----^
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_8015ACCC/work/guarded.c, line 3469: Function func_8015ACCC is redeclared with an incompatible argument type (after default argument promotion), which could lead to undefined run-time behaviour.
+ s32 func_8015ACCC(s32 a, s32 b, s16 c_unk0, s16 c_unk4, s16 d_unk0, s16 d_unk4, s16 e_unk0, s16 e_unk4, s32 f, s32 g) {
+ ------------------------------------^
+cfe: Warning 709: drafts/T-16560/_runs/typed/TACO/func_8015ACCC/work/guarded.c, line 3539: Incompatible pointer type assignment
+                 temp_s3 = sp50 + D_80161E60;
+ ------------------------^
+cfe: Warning 709: drafts/T-16560/_runs/typed/TACO/func_8015ACCC/work/guarded.c, line 3575: Incompatible pointer type assignment
+     temp_v0_3 = (a * 2) + &D_80161EA4;
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/typed/TACO/func_8015ACCC/work -o drafts/T-16560/_runs/typed/TACO/func_8015ACCC/work/guarded.o /tmp/asm_processorja8l1t4b/preprocessed_1341fc92803b4012ba5e2b97dd752f9b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibwqn8fmn4/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/typed/TACO/func_8015ACCC/work/guarded.o drafts/T-16560/_runs/typed/TACO/func_8015ACCC/work/guarded.c

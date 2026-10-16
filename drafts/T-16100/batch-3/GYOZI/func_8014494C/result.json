@@ -1,0 +1,24 @@
+{
+  "scope": "GYOZI:func_8014494C",
+  "src": "src/ovl/GYOZI/80143AD0.c",
+  "path": "drafts/T-16100/batch-3/GYOZI/func_8014494C",
+  "archive_path": "drafts/T-16100/batch-3/GYOZI/func_8014494C",
+  "status": "scored",
+  "score": 51,
+  "source_base": "48362009",
+  "header_base": "drafts/T-14500/baseline/include",
+  "matching_claim": false,
+  "changed": false,
+  "compile_verified": true,
+  "initial_score": 51,
+  "artifact_sha256": {
+    "assembly-evidence.txt": "c06d22f4d29f36332375d2a2381b6a9d4fee681744e933930c398531f4a54b38",
+    "provenance.json": "b8feeb66c02449d8c51becf1f23f8a85e6db996dc04bc71710adcabe0b506612",
+    "declarations.h": "d45f4071b4c237b5f1b7a4c6538e22f4acf3416b5b92bff2e9ce0caa98c42cff",
+    "difference.txt": "6a2b75b159449b66679b58b1bbf3c4d51d2472ce8f63a9f7f3e9d3f38b514e71",
+    "context.c": "fc7ed2a8ec1b1bc3647c9856b52e2ae320e13ecec7b93d94b18d8196d26725ad",
+    "body.c": "3341a9d5df97efc8803652e4aadc7d2e3bd85b1d085989bf76d54c4f47802af4",
+    "full-context.c": "5a870cfe11f552c3e696105dfc710e5abf91659e85c246fc86f9d9d0ff45621b",
+    "diagnostics.txt": "190b954a38ff5889c52e322a429735e6a0c5fa1fa8c8764a64f7bb48830ebc7a"
+  }
+}

@@ -1,0 +1,28 @@
+Target: ['asm/ovl/ETC/nonmatchings/ETC/80132880/func_801328A4.s']
+Review: Three 0x1120-byte scratch planes are based on scalar sp90; current stack allocation cannot represent those buffers. Needs complete plane layout/element-width reconstruction.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 801328A4 */  addiu      $sp, $sp, -0x3410
+    /* 801328A8 */  sw         $s7, 0x34($sp)
+    /* 801328B0 */  sw         $s6, 0x30($sp)
+    /* 801328B8 */  sw         $ra, 0x3C($sp)
+    /* 801328BC */  addiu      $t6, $zero, 0x157
+    /* 801328C0 */  addiu      $t7, $zero, 0x113
+    /* 801328C4 */  addiu      $t8, $zero, 0x112
+    /* 801328C8 */  addiu      $t9, $zero, 0xA0
+    /* 801328D0 */  sw         $fp, 0x38($sp)
+    /* 801328D4 */  sw         $s5, 0x2C($sp)
+    /* 801328D8 */  sw         $s4, 0x28($sp)
+    /* 801328DC */  sw         $s3, 0x24($sp)
+    /* 801328E0 */  sw         $s2, 0x20($sp)
+    /* 801328E4 */  sw         $s1, 0x1C($sp)
+    /* 801328E8 */  sw         $s0, 0x18($sp)
+    /* 801328EC */  sh         $t6, 0x3408($sp)
+    /* 801328F0 */  sh         $t7, 0x340A($sp)
+    /* 801328F4 */  sh         $t8, 0x340C($sp)
+    /* 801328F8 */  sh         $t9, 0x340E($sp)
+    /* 80132904 */   addiu     $a0, $sp, 0x3408
+    /* 80132918 */  addu       $s4, $s2, $zero
+    /* 80132920 */  addiu      $s3, $zero, 0x64
+    /* 80132928 */   addiu     $s0, $sp, 0x90
+    /* 8013292C */  addiu      $s1, $sp, 0x22D0

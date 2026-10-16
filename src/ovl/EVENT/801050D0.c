@@ -1,11 +1,6 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
-typedef struct {
-    void (*f[20])();
-} FnTbl20; /* size 0x50 */
-extern FnTbl20 D_80123100;
-
 void func_801050D0(void) {
     D_80122F70 = 0x801D22F4;
     D_80122F74 = 0x801D22F8;
@@ -121,11 +116,6 @@ void func_80105570(void) {
     }
     func_80015FE0();
 }
-
-typedef struct {
-    void (*f[45])();
-} FnTbl45; /* size 0xB4 */
-extern FnTbl45 D_8012304C;
 
 void func_801055D0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -439,11 +429,6 @@ void func_8010680C(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    void (*f[47])();
-} FnTbl47; /* size 0xBC */
-extern FnTbl47 D_80123150;
-
 void func_80106834(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl47 tbl;
@@ -459,11 +444,6 @@ void func_801068D0(void) {
     func_801051A0();
     func_80011DFC();
 }
-
-typedef struct {
-    void (*f[63])();
-} FnTbl63; /* size 0xFC */
-extern FnTbl63 D_8012320C;
 
 void func_80106908(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -506,11 +486,6 @@ void func_80106A64(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    void (*f[36])();
-} FnTbl36; /* size 0x90 */
-extern FnTbl36 D_80123308;
-
 void func_80106A8C(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl36 tbl;
@@ -526,8 +501,6 @@ void func_80106B10(void) {
     func_80105300();
     func_80011DFC();
 }
-
-extern FnTbl36 D_80123398;
 
 void func_80106B48(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

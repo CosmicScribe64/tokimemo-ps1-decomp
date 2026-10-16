@@ -9,6 +9,14 @@
 
 s32 set_kanji_string();
 
+/* T-12090: dispatcher and its later definitions in 80132000.c. */
+void func_80132428(void);
+void func_801325E8(void);
+void func_8013261C(void);
+void func_801327E4(void);
+void func_80132DB8(u32 arg0);
+void func_80132DFC(void);
+
 /* BUNKA_SD functions called across the overlay. */
 void func_80132940(void);
 void func_80134938(void);
@@ -48,7 +56,7 @@ void func_80134418();
 s32 func_801389DC();
 void func_80138CAC();
 void func_8013987C();
-void func_801388D0();
+s32 func_801388D0(void);
 void func_80138C34(void);
 s32 func_80135160(void);
 s32 func_801359B0(void);
@@ -130,5 +138,24 @@ extern s32 D_8013C72C;
 extern u8 *D_8013C720;
 extern u8 *D_8013C724;
 extern u8 *D_8013C728;
+
+/* T-12090: typed display setup data and pending dispatcher callees. */
+void func_80139290(void);
+void func_80132FF0(void);
+void func_80133204(void);
+extern u8 *D_8013B7F8;
+extern u8 *D_8013B7FC;
+extern u8 *D_8013B800;
+extern u8 *D_8013B804;
+extern u8 *D_8013D9C0;
+extern u8 *D_8013D9C4;
+extern u8 *D_8013D9C8;
+extern u8 *D_8013D9CC;
+
+/* T-14501: loaded scene data used by func_80136578. */
+extern s32 D_8013C74C;
+extern u8 *D_8013C740;
+extern u8 *D_8013C744;
+extern u8 *D_8013C748;
 
 #endif /* OVL_BUNKA_SD_H */

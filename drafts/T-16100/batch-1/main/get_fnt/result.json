@@ -1,0 +1,20 @@
+{
+  "scope": "main:get_fnt",
+  "src": "src/main/8004C3F0.c",
+  "size": 1036,
+  "path": "drafts/T-16100/batch-1/main/get_fnt",
+  "archive_path": "drafts/T-16100/batch-1/main/get_fnt",
+  "status": "scored",
+  "score": 349,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "body.c_sha256": "26f400a3e7ae5c0e6f91a0c572d8356bee1ca600d072bc5842a492cf1d9e2d4e",
+  "declarations.h_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+  "context.c_sha256": "82bef06fdda355a136c4bd871c252b8b423e230768d1ce1051d1269072320889",
+  "full-context.c_sha256": "2056620f62d3f41329aa47d366829fac83b01c419e129319278c24a6622589ef",
+  "diagnostics.txt_sha256": "bdb2ee53d09cfeaa5def0f7049d5f052b2ee758ab8fd70c4b598dcb7a7ae2f27",
+  "assembly-evidence.txt_sha256": "665c749cbd1b23138e9892bc92ff94d745a4aa03a7d1496ce47cdcc7797652d9"
+}

@@ -1,0 +1,156 @@
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4352: redeclaration of 'D_80142B40'; previous declaration at line 2601 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ extern s32 D_80142B40;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4353: redeclaration of 'D_80142B70'; previous declaration at line 2602 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ extern s32 D_80142B70;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4354: redeclaration of 'D_80142BD0'; previous declaration at line 2603 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ extern s32 D_80142BD0;
+ -----------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o /tmp/asm_processorf8iip83o/preprocessed_f94db05fe73e4ca48bbdd57ed7c67267.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqc71_egz/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4352: redeclaration of 'D_80142CB0'; previous declaration at line 2604 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ extern s32 D_80142CB0;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4353: redeclaration of 'D_80142E70'; previous declaration at line 2605 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ extern s32 D_80142E70;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4354: redeclaration of 'D_80142EA0'; previous declaration at line 2606 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ extern s32 D_80142EA0;
+ -----------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o /tmp/asm_processormjrlppzj/preprocessed_6f19be47ae4547f78738fc274557a592.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliboo2w86_9/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4352: redeclaration of 'D_80142F00'; previous declaration at line 2607 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ extern s32 D_80142F00;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4353: redeclaration of 'D_8014306C'; previous declaration at line 2608 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ extern s32 D_8014306C;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4354: redeclaration of 'D_801431E8'; previous declaration at line 2609 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ extern s32 D_801431E8;
+ -----------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o /tmp/asm_processorjpmiot4y/preprocessed_cd9ef03a4a85422583141506e177a5fd.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib57gq29pv/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4352: redeclaration of 'D_80143218'; previous declaration at line 2610 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ extern s32 D_80143218;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4353: redeclaration of 'D_80143278'; previous declaration at line 2611 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ extern s32 D_80143278;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4354: redeclaration of 'D_8014333C'; previous declaration at line 2612 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ extern s32 D_8014333C;
+ -----------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o /tmp/asm_processor15um82uf/preprocessed_a84a3cebb8554e969f177da4a93813f0.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibcdo0xlkd/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4352: redeclaration of 'girl_short_name_table'; previous declaration at line 492 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ extern s32 girl_short_name_table;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4360: redeclaration of 'func_80048E78'; previous declaration at line 1641 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ s32 func_80048E78();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4360: Incompatible function return type for this function.
+ s32 func_80048E78();
+ -----------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o /tmp/asm_processornh10ab67/preprocessed_c603ba7692484a3a9ce3e95535fc00c3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibbnzf4s40/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4359: redeclaration of 'func_8004E58C'; previous declaration at line 1697 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ s32 func_8004E58C();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4359: Incompatible function return type for this function.
+ s32 func_8004E58C();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4360: Incompatible function return type for this function.
+ s32 func_8004FC10();
+ -----------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o /tmp/asm_processor_q9t66ei/preprocessed_fe174881167a4681b7659065c81f1d66.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibkm2ssq1q/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4359: redeclaration of 'func_8004FC10'; previous declaration at line 1726 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ s32 func_8004FC10();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4359: Incompatible function return type for this function.
+ s32 func_8004FC10();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4360: Incompatible function return type for this function.
+ s32 func_80052060();
+ -----------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o /tmp/asm_processor7m_4z_aq/preprocessed_af6440494518474ca6a8aed8023016c6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibyf5kmkrl/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4359: redeclaration of 'func_80052060'; previous declaration at line 1753 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ s32 func_80052060();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4359: Incompatible function return type for this function.
+ s32 func_80052060();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4362: Incompatible function return type for this function.
+ s32 func_8006B0C8();
+ -----------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o /tmp/asm_processorhvnlmmnx/preprocessed_c4accf453d8549b8a41a06af101e5b35.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibjy_emfhf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4361: redeclaration of 'func_8006B0C8'; previous declaration at line 1957 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ s32 func_8006B0C8();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4361: Incompatible function return type for this function.
+ s32 func_8006B0C8();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4362: Incompatible function return type for this function.
+ s32 func_8006B5BC();
+ -----------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o /tmp/asm_processorkfe324nw/preprocessed_4aff1824d2e947c3aad04a8f2f65cedf.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibk5mdykoi/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4361: redeclaration of 'func_8006B5BC'; previous declaration at line 2337 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ s32 func_8006B5BC();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4361: Incompatible function return type for this function.
+ s32 func_8006B5BC();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4364: Incompatible function return type for this function.
+ s32 func_800AE0F0();
+ -----------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o /tmp/asm_processor0csjrf0g/preprocessed_5c8b983048884f088434e0ce1df0208a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib6d0llo9t/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4363: redeclaration of 'func_800AE0F0'; previous declaration at line 2302 in file 'drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c'
+ s32 func_800AE0F0();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4363: Incompatible function return type for this function.
+ s32 func_800AE0F0();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4365: Incompatible function return type for this function.
+ s32 func_8013D88C();
+ -----------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o /tmp/asm_processor2ou2lwbh/preprocessed_4b2e3938194a4bd2a2fb57245c39fc68.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliby5i31glv/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c
+python3 failed:
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4487: '&' before array or function; ignored
+         func_80053418(&sp68, &sp48);
+ ----------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4487: '&' before array or function; ignored
+         func_80053418(&sp68, &sp48);
+ -----------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c, line 4488: 'sp' undefined; reoccurrences will not be reported.
+         temp_t2 = (u8) *(u8 *)((unsigned char *)(sp + D_800E71DF) + (104)) >> 2;
+ -------------------------------------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o /tmp/asm_processorlk5n43hc/preprocessed_1fafa7d4fe654aaba7cb7f948494fb7d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibnkr55lso/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TEL/func_80136724/work/guarded.o.sjis.c

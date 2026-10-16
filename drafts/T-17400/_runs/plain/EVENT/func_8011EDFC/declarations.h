@@ -1,0 +1,11 @@
+extern s16 D_801258E6;
+extern s16 D_801258E8;
+extern s16 D_801258EE;
+extern s16 D_801258F0;
+extern s16 D_801258F6;
+extern s16 D_801258F8;
+extern s16 D_801258FE;
+extern s16 D_80125900;
+s32 func_8001BB10();
+s32 func_80046480();
+s32 func_80046598();

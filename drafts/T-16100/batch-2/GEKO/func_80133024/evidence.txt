@@ -1,0 +1,28 @@
+Target: ['asm/ovl/GEKO/nonmatchings/GEKO/801323E0/func_80133024.s']
+Review: sp38[16] and sp3A overlap halfword fields of copied storage. Need actual halfword record and bounds.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80133024 */  addiu      $sp, $sp, -0x58
+    /* 8013302C */  sw         $ra, 0x1C($sp)
+    /* 80133030 */  sw         $s1, 0x18($sp)
+    /* 80133034 */  sw         $s0, 0x14($sp)
+    /* 80133038 */  addiu      $t6, $t6, %lo(D_80144D28)
+    /* 80133040 */  addiu      $s1, $sp, 0x38
+    /* 80133058 */  addiu      $t1, $zero, 0x1D
+    /* 80133064 */  addiu      $s0, $zero, 0x1
+    /* 8013307C */  addiu      $at, $zero, 0x60
+    /* 80133084 */  lbu        $t0, %lo(D_800E62BE)($t0)
+    /* 80133094 */  sh         $t1, 0x3A($sp)
+    /* 801330A4 */  lbu        $a3, %lo(D_800E62BF)($a3)
+    /* 801330AC */  sll        $t2, $a3, 1
+    /* 801330B0 */  lbu        $a2, %lo(D_800E62C0)($a2)
+    /* 801330B4 */  addu       $t3, $s1, $t2
+    /* 801330B8 */  lh         $v1, -0x2($t3)
+    /* 801330BC */  addu       $t4, $a2, $s0
+    /* 801330CC */  addu       $a1, $a2, $v0
+    /* 801330D0 */  addiu      $a1, $a1, -0x1
+    /* 801330D4 */  sll        $t5, $a1, 16
+    /* 801330E8 */   addiu     $s0, $s0, 0x1
+    /* 801330EC */  addu       $t7, $a2, $v0
+    /* 801330F4 */  addiu      $a1, $a1, -0x1
+    /* 801330F8 */  sll        $t6, $a1, 16

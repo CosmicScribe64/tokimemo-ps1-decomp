@@ -1,0 +1,2 @@
+-@row 65 24840000 R_MIPS_LO16 string b'\x83p\x83\\\x83R\x83\x93\x90\xe8\x82\xa2'  ; addiu a0,a0,0
++@row 65 24840000 R_MIPS_LO16 string b'\x83px83\\\x83R\x83\x93\x90\xe8\x82\xa2'  ; addiu a0,a0,68

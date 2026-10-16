@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_8013867C 0, func_80138860 1
+python3 failed:
+cfe: Error: drafts/T-14500/BUNKA_SD/func_8013842C/work/guarded.o.sjis.c, line 2683: redeclaration of 'func_8013842C'; previous declaration at line 2584 in file 'drafts/T-14500/BUNKA_SD/func_8013842C/work/guarded.o.sjis.c'
+ void func_8013842C(void) {
+ -----^
+cfe: Error: drafts/T-14500/BUNKA_SD/func_8013842C/work/guarded.o.sjis.c, line 2683: Incompatible function return type for this function.
+ void func_8013842C(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/BUNKA_SD/func_8013842C/work -o drafts/T-14500/BUNKA_SD/func_8013842C/work/guarded.o /tmp/asm_processor6b7jhi5z/preprocessed_4874ea71bfeb40ee854e0a8212e36616.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib_q67w5b4/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/BUNKA_SD/func_8013842C/work/guarded.o drafts/T-14500/BUNKA_SD/func_8013842C/work/guarded.o.sjis.c

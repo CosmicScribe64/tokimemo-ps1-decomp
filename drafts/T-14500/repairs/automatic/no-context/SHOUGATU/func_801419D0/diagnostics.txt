@@ -1,0 +1,12 @@
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_801419D0/work/guarded.o.sjis.c, line 3413: 'sp2C' undefined; reoccurrences will not be reported.
+     *(M2cBlockA0 *)(&sp2C[0]) = *(M2cBlockA0 *)(&D_80146804);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_801419D0/work -o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_801419D0/work/guarded.o /tmp/asm_processore9oc1nui/preprocessed_22a78fe4327a43a8b7ae0922ea7f945f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibvna4h7nf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_801419D0/work/guarded.o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_801419D0/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_801419D0/work/guarded.o.sjis.c, line 3415: Non-function name referenced in function call.
+     (&sp2C[0])[D_800E738A](0x80);
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_801419D0/work -o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_801419D0/work/guarded.o /tmp/asm_processorn3dyktam/preprocessed_6edf3584bc724535a16ddb030bd8d2b7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibt94q8xpr/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_801419D0/work/guarded.o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_801419D0/work/guarded.o.sjis.c

@@ -1,0 +1,34 @@
+{
+  "selected_seed": "drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80143160",
+  "prior_attempts": [
+    {
+      "path": "drafts/T-14500/GYOZI/func_80143160",
+      "reason": "Error: guarded.c, line 3341: Type s32  of rhs of assignment expression is incompatible with type str",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160",
+      "reason": "Error: guarded.c, line 3341: Type s32  of rhs of assignment expression is incompatible with type str",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160",
+      "reason": "compile: no fix after 12 attempts",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80143160",
+      "reason": "Error: guarded.c, line 3341: Type s32  of rhs of assignment expression is incompatible with type str",
+      "score": null,
+      "status": "failed"
+    }
+  ],
+  "frozen_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "production_src": "src/ovl/GYOZI/80143110.c",
+  "repairs": [
+    "use existing Word4 copy view corroborated by inverse-copy neighbor func_80143110"
+  ]
+}

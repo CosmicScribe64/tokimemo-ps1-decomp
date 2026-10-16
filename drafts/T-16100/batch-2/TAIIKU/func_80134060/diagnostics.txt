@@ -1,0 +1,30 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/TAIIKU/func_80134060/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/TAIIKU/func_80134060/full-context.c drafts/T-16100/batch-2/TAIIKU/func_80134060/work/guarded.o ido 5.3
+cfe: Warning 749: drafts/T-16100/batch-2/TAIIKU/func_80134060/full-context.c, line 3290: structure has no member named 'unk0'
+     *(s32 *)&sp68[0] = (s32) D_801493C0.unk0;
+ ---------------------------------------^
+cfe: Warning 749: drafts/T-16100/batch-2/TAIIKU/func_80134060/full-context.c, line 3295: structure has no member named 'unk0'
+     *(s32 *)&sp54[0] = (s32) D_801493D4.unk0;
+ ---------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TAIIKU/func_80134060/full-context.c, line 3300: '&' before array or function; ignored
+     (*(s32 *)&sp40) = (s32) D_801493E8.unk0;
+ -------------^
+cfe: Warning 749: drafts/T-16100/batch-2/TAIIKU/func_80134060/full-context.c, line 3300: structure has no member named 'unk0'
+     (*(s32 *)&sp40) = (s32) D_801493E8.unk0;
+ --------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TAIIKU/func_80134060/full-context.c, line 3301: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp40) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_801493E8) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TAIIKU/func_80134060/full-context.c, line 3302: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp40) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_801493E8) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TAIIKU/func_80134060/full-context.c, line 3303: '&' before array or function; ignored
+     *(u16 *)((unsigned char *)(&sp40) + (16)) = (u16) D_801493E8.value[8];
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TAIIKU/func_80134060/full-context.c, line 3304: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp40) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_801493E8) + (12));
+ -------------------------------^
+
+Full translation unit compiled and scored.

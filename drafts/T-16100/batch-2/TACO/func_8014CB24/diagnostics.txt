@@ -1,0 +1,42 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/TACO -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/TACO/func_8014CB24/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/TACO/func_8014CB24/full-context.c drafts/T-16100/batch-2/TACO/func_8014CB24/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-2/TACO/func_8014CB24/full-context.c, line 4104: '&' before array or function; ignored
+         (*(s32 *)&sp60) = (s32) (*(s32 *)D_80125C60);
+ -----------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TACO/func_8014CB24/full-context.c, line 4105: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&sp60) + (4)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (4));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TACO/func_8014CB24/full-context.c, line 4106: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&sp60) + (8)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (8));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TACO/func_8014CB24/full-context.c, line 4107: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&sp60) + (12)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (12));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TACO/func_8014CB24/full-context.c, line 4108: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&sp60) + (16)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (16));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TACO/func_8014CB24/full-context.c, line 4109: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&sp60) + (20)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (20));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TACO/func_8014CB24/full-context.c, line 4110: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&sp60) + (24)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (24));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TACO/func_8014CB24/full-context.c, line 4111: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&sp60) + (28)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (28));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TACO/func_8014CB24/full-context.c, line 4112: '&' before array or function; ignored
+         func_8015D0D0((s32) (D_80128880->x << 0xC) / 360, (s32) &sp60);
+ ----------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TACO/func_8014CB24/full-context.c, line 4113: '&' before array or function; ignored
+         func_8015CF30((s32) (D_80128884 << 0xC) / 360, (s32) &sp60);
+ -------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TACO/func_8014CB24/full-context.c, line 4114: '&' before array or function; ignored
+         func_8015D270((s32) (D_80128882 << 0xC) / 360, (s32) &sp60);
+ -------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TACO/func_8014CB24/full-context.c, line 4118: '&' before array or function; ignored
+         func_800A0ECC(&sp60, &sp58, &sp50);
+ ----------------------^
+
+Full translation unit compiled and scored.

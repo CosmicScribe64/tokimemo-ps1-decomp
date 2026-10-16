@@ -1,0 +1,29 @@
+m2c.py: argument counts from the callees' asm: func_8004A1A0 10, func_8013FA7C 0
+m2c failed:
+
+python3 failed:
+ ----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013CCE4/work/guarded.c, line 4307: Reference of an expression of void type or an incomplete type.
+             var_v0 = cd_read_sectors(0x69, 0x801A0000, 0xB389);
+ ------------------------------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013CCE4/work/guarded.c, line 4319: Reference of an expression of void type or an incomplete type.
+                 var_v0 = func_800AE0A0(0x801E2000, 0x801A0600, 0x18000);
+ --------------------------------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013CCE4/work/guarded.c, line 4330: 'sp54' undefined; reoccurrences will not be reported.
+             temp_v0 = &(&sp54[0])[2];
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8013CCE4/work -o drafts/T-17300/_runs/typed/ETC/func_8013CCE4/work/guarded.o /tmp/asm_processor88xpsgwk/preprocessed_bf46c4899ca440519a16ab9c54b300e6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib_r568aee/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8013CCE4/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8013CCE4/work/guarded.c
+python3 failed:
+ ---^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013CCE4/work/guarded.c, line 4298: Incompatible function return type for this function.
+ u8 func_8013CCE4(void) {
+ ----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013CCE4/work/guarded.c, line 4308: Reference of an expression of void type or an incomplete type.
+             var_v0 = cd_read_sectors(0x69, 0x801A0000, 0xB389);
+ ------------------------------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013CCE4/work/guarded.c, line 4320: Reference of an expression of void type or an incomplete type.
+                 var_v0 = func_800AE0A0(0x801E2000, 0x801A0600, 0x18000);
+ --------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8013CCE4/work -o drafts/T-17300/_runs/typed/ETC/func_8013CCE4/work/guarded.o /tmp/asm_processor0vqwg07e/preprocessed_8d1083be5edd48aab2c3ab44995283a2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib9j9gvwvm/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8013CCE4/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8013CCE4/work/guarded.c

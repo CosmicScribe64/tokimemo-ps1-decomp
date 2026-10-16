@@ -1,0 +1,28 @@
+3584:             temp_s2 = var_s2 + 1;
+3585:             temp_at = temp_s2 < 0x36;
+3586:             var_s2 = temp_s2;
+3587:             temp_s0 = D_801217D0 + temp_lo;
+3588:             *temp_s0 |= 0x80000000;
+3589:         } while (temp_at != 0);
+3590:     }
+3600:             temp_s0_2->unk_16 = D_800B593C;
+3601:             temp_v0_3 = var_s2_2 * 4;
+3602:             temp_s0_2->unk_00 &= 0x7FFFFFFF;
+3603:             temp_s5 = temp_v0_3 + &D_80146540;
+3604:             temp_s1 = temp_v0_3 + &D_80146608;
+3605:             temp_s3 = temp_v0_3 + &D_801466D0;
+3606:             if ((D_80146800 % (u32) *(s16 *)((unsigned char *)temp_s4 + (-8))) == 0) {
+3601:             temp_v0_3 = var_s2_2 * 4;
+3602:             temp_s0_2->unk_00 &= 0x7FFFFFFF;
+3603:             temp_s5 = temp_v0_3 + &D_80146540;
+3604:             temp_s1 = temp_v0_3 + &D_80146608;
+3605:             temp_s3 = temp_v0_3 + &D_801466D0;
+3606:             if ((D_80146800 % (u32) *(s16 *)((unsigned char *)temp_s4 + (-8))) == 0) {
+3607:                 temp_s0_2->unk_06 += 1;
+3602:             temp_s0_2->unk_00 &= 0x7FFFFFFF;
+3603:             temp_s5 = temp_v0_3 + &D_80146540;
+3604:             temp_s1 = temp_v0_3 + &D_80146608;
+3605:             temp_s3 = temp_v0_3 + &D_801466D0;
+3606:             if ((D_80146800 % (u32) *(s16 *)((unsigned char *)temp_s4 + (-8))) == 0) {
+3607:                 temp_s0_2->unk_06 += 1;
+3608:             }

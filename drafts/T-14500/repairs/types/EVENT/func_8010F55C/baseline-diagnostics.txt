@@ -1,0 +1,13 @@
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/types/EVENT/func_8010F55C/work/guarded.c, line 5050: Incompatible function return type for this function.
+ void func_8010F55C(void) {
+ ------------------^
+cfe: Warning 709: drafts/T-14500/repairs/types/EVENT/func_8010F55C/work/guarded.c, line 5056: Incompatible pointer type assignment
+     temp_v0 = &(&sp30[0])[D_800B1AF6];
+ ------------^
+cfe: Warning 689: drafts/T-14500/repairs/types/EVENT/func_8010F55C/work/guarded.c, line 5059: Unacceptable operand of == or !=
+     if (&func_80111E60 == var_v1) {
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/types/EVENT/func_8010F55C/work -o drafts/T-14500/repairs/types/EVENT/func_8010F55C/work/guarded.o /tmp/asm_processorqji4yk72/preprocessed_97b1e02e8c4d43c8b007658a00b2efce.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib145jbny7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/types/EVENT/func_8010F55C/work/guarded.o drafts/T-14500/repairs/types/EVENT/func_8010F55C/work/guarded.c

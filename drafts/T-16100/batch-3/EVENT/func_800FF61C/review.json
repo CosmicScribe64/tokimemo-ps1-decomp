@@ -1,0 +1,25 @@
+{
+  "scope": "EVENT:func_800FF61C",
+  "selected_path": "drafts/T-14500/EVENT/func_800FF61C",
+  "archive_path": "drafts/T-16100/batch-3/EVENT/func_800FF61C",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "Target indexed lw uses stack+0x2C after the 192-byte copy; dispatch through sp2C instead of synthetic global sp."
+  ],
+  "flags": [
+    {
+      "detail": "M2cBlockC0",
+      "kind": "inferred-copy-layout",
+      "line": 2,
+      "outcome": "unresolved",
+      "explanation": "Opaque word-block type has only a copy-extent interpretation; semantic field layout remains unresolved. The 192-byte stack copy matches 48 function-pointer words, but the subsequent indexed call still reads synthetic global sp instead of sp2C. Replace with the local table after signature verification."
+    }
+  ],
+  "notes": "The 192-byte stack copy matches 48 function-pointer words, but the subsequent indexed call still reads synthetic global sp instead of sp2C. Replace with the local table after signature verification.",
+  "assembly_evidence": "drafts/T-16100/batch-3/EVENT/func_800FF61C/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "partial-repair"
+}

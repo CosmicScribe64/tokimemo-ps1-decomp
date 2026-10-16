@@ -1,0 +1,31 @@
+{
+  "scope": "OPTION:func_80132384",
+  "unit": "OPTION",
+  "func": "func_80132384",
+  "src": "src/ovl/OPTION/80132000.c",
+  "size": 356,
+  "path": "drafts/T-15800/OPTION/func_80132384",
+  "status": "compiled",
+  "score": 111,
+  "compile_attempts": 5,
+  "provenance": "drafts/T-15800/OPTION/func_80132384/provenance.json",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "compiled_instruction_count": 96,
+  "hashes": {
+    "body.c": "0d7b85f1a8994e3da0655bf88bd308c8c82ef37ab5a5113b39e9ea1ad4b7caef",
+    "declarations.h": "7af1ae571727873d3e650cfb5f6c9032f8b5350af5708dece6d3e1979cfab827",
+    "context.c": "22a36d868cd4abd11e85c54b83b28b4a464038eaa54bd9538bf376ecd0a17831",
+    "preprocessed.c": "8ebfc49605cbcdcbc36dd7439934e219133253b43946bdc1fdc9435ef6c935c4"
+  },
+  "header_hashes": {
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libgpu.h": "e05cf2f8e95289e3fe4864a80a90dd092437c2d66e140645b477771cb359b2ba",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25",
+    "include/ovl/OPTION.h": "343eec24df5ff6a4cffee75f00ebd5d58d166c7368c4f1eaa91ac03b895fb479"
+  },
+  "frozen_source_sha256": "a85ac068332dcc97dee2a74c81148dae6d1003c2ee158bcd6a7f3b15bbe4b8aa",
+  "compiler_script_sha256": "1996143556607249784a78545f275241292bb085068c0bea71e6fae2167956d7",
+  "dockerfile_sha256": "4cb48e7f6c01e857e490b49dc1ee23b73ea3dda9393fecd71fa4b1f87a0859ab",
+  "seconds": 0.604
+}

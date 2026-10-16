@@ -1,0 +1,18 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-3/TAIIKU/func_80135830/work/variant.c
+[Preprocessed C retained in full-context.c]
+
+$ python3 tools/cc.py drafts/T-16100/batch-3/TAIIKU/func_80135830/work/guarded.c drafts/T-16100/batch-3/TAIIKU/func_80135830/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80135830/work/guarded.c, line 3420: '&' before array or function; ignored
+     *(M2cBlock24 *)(&sp84) = *(M2cBlock24 *)(&D_80149508);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80135830/work/guarded.c, line 3421: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp84) + (36)) = (s32) *(s32 *)((unsigned char *)(&D_80149508) + (36));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80135830/work/guarded.c, line 3422: '&' before array or function; ignored
+     *(M2cBlock24 *)(&sp5C) = *(M2cBlock24 *)(&D_80149530);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80135830/work/guarded.c, line 3427: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp5C) + (36)) = (s32) *(s32 *)((unsigned char *)(&D_80149530) + (36));
+ -------------------------------^
+
+Full TU compiled; score 222

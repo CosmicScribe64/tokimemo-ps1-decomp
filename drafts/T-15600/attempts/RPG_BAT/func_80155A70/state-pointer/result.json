@@ -1,0 +1,13 @@
+{
+  "scope": "RPG_BAT:func_80155A70",
+  "variant": "state-pointer",
+  "score": 9,
+  "status": "scored",
+  "matching_claim": false,
+  "source_base": "ffac0f04",
+  "census_base": "48362009",
+  "original_attempt": "drafts/T-14500/RPG_BAT/func_80155A70",
+  "archive_path": "drafts/T-15600/attempts/RPG_BAT/func_80155A70/state-pointer",
+  "body_sha256": "c1456f6d735f5cf017165c31b400e68373a945a07385cc0a3c8d98a519e369ce",
+  "context_sha256": "f5bb36a1e86fc27f7b9937b84e1b0cbd6190f66507191fc7235a73be7fd12ec2"
+}

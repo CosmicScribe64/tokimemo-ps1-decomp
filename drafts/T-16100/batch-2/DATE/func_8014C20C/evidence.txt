@@ -1,0 +1,28 @@
+Target: ['asm/ovl/DATE/nonmatchings/DATE/8014B1F0/func_8014C20C.s']
+Review: Read at 0x758 + 8*index equals unk_75E[index-1].unk_02. Established GameState documentation confirms one-based record indexing; repair direct member read.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8014C210 */  lbu        $v0, %lo(D_800E738D)($v0)
+    /* 8014C214 */  addiu      $sp, $sp, -0x28
+    /* 8014C21C */   sw        $ra, 0x14($sp)
+    /* 8014C22C */  lbu        $v0, %lo(D_800E738D)($v0)
+    /* 8014C234 */  addiu      $v0, $v0, 0x1
+    /* 8014C248 */  addiu      $at, $zero, 0x1
+    /* 8014C264 */  addiu      $v1, $v1, 0x1
+    /* 8014C290 */  addiu      $at, $zero, 0x1
+    /* 8014C29C */  lbu        $v0, %lo(D_800E738D)($v0)
+    /* 8014C2A4 */  addiu      $t7, $v0, 0x1
+    /* 8014C2BC */  lh         $v0, %lo(D_800E6396)($v0)
+    /* 8014C2CC */   addiu     $a0, $zero, 0x7
+    /* 8014C2DC */  lbu        $t8, %lo(D_800E71DF)($t8)
+    /* 8014C2E0 */  addiu      $at, $zero, 0x7
+    /* 8014C2F8 */   addiu     $at, $zero, 0x8
+    /* 8014C300 */  lbu        $t9, %lo(D_800E71DF)($t9)
+    /* 8014C304 */  addiu      $a2, $a2, %lo(D_800E6280)
+    /* 8014C308 */  addu       $t0, $a2, $t9
+    /* 8014C314 */  lbu        $t2, %lo(D_800E71DF)($t2)
+    /* 8014C318 */  addiu      $t1, $zero, 0xC
+    /* 8014C31C */  addu       $t3, $a2, $t2
+    /* 8014C32C */   addiu     $a2, $a2, %lo(D_800E6280)
+    /* 8014C334 */  lbu        $t5, %lo(D_800E71DF)($t5)
+    /* 8014C338 */  addiu      $t4, $zero, 0x7

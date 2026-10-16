@@ -1,0 +1,39 @@
+python3 failed:
+ ----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.c, line 3050: More than one default label in the same switch statement
+     default:
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.c, line 3056: redeclaration of 'func_8013BFA0'; previous declaration at line 2754 in file 'drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.c'
+ void func_8013BFA0(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.c, line 3056: Incompatible function return type for this function.
+ void func_8013BFA0(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work -o drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.o /tmp/asm_processorbfe_fpii/preprocessed_f59540cba0394cd480ee960c472ab915.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibggc7gy7i/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.o drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.c
+python3 failed:
+ ----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.c, line 3049: More than one default label in the same switch statement
+     default:
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.c, line 3055: redeclaration of 'func_8013BFA0'; previous declaration at line 2791 in file 'drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.c'
+ void func_8013BFA0(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.c, line 3055: Incompatible function return type for this function.
+ void func_8013BFA0(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work -o drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.o /tmp/asm_processormzyisdpz/preprocessed_52d55f2515ea416287d8d766fd16660e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibeanrlnrb/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.o drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.c, line 2791: Non-function name referenced in function call.
+             *(&D_80155ED0 + (D_80122EBC * 4))();
+ ---------------------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.c, line 2961: Incompatible pointer type assignment
+         temp_v0 = (D_80122EBC * 0x38) + &D_800E6280;
+ ----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.c, line 3050: More than one default label in the same switch statement
+     default:
+ ----^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work -o drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.o /tmp/asm_processorgm1hxj9r/preprocessed_a511c091a7854e12b16d9030d28d2fab.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib5nuofdmd/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.o drafts/T-14500/repairs/automatic/no-context/BUNKAKEN/func_8013B510/work/guarded.c

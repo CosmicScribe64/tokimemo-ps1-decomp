@@ -1,0 +1,22 @@
+m2c.py: argument counts from the callees' asm: func_8009F040 1
+m2c failed:
+
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013D32C/work/guarded.c, line 4308: redeclaration of 'D_800E8CA0'; previous declaration at line 1107 in file 'drafts/T-17300/_runs/typed/ETC/func_8013D32C/work/guarded.c'
+ extern s32 D_800E8CA0;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013D32C/work/guarded.c, line 4310: redeclaration of 'func_8009ECB0'; previous declaration at line 2613 in file 'drafts/T-17300/_runs/typed/ETC/func_8013D32C/work/guarded.c'
+ s16 func_8009ECB0();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013D32C/work/guarded.c, line 4310: Incompatible function return type for this function.
+ s16 func_8009ECB0();
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8013D32C/work -o drafts/T-17300/_runs/typed/ETC/func_8013D32C/work/guarded.o /tmp/asm_processordhxd86m2/preprocessed_04f16b376d2b442e86d74d404f81b4fa.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib0ql1urxw/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8013D32C/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8013D32C/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013D32C/work/guarded.c, line 4307: redeclaration of 'D_800E6280'; previous declaration at line 1071 in file 'drafts/T-17300/_runs/typed/ETC/func_8013D32C/work/guarded.c'
+ extern s32 D_800E6280;
+ -----------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8013D32C/work -o drafts/T-17300/_runs/typed/ETC/func_8013D32C/work/guarded.o /tmp/asm_processor2o6qyl5b/preprocessed_8b86678e06594d789afe71f409fc967f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibtmos4l8u/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8013D32C/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8013D32C/work/guarded.c

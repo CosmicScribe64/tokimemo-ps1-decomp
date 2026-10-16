@@ -1,0 +1,38 @@
+python3 failed:
+ --------------------------------------------------------------------------------^
+cfe: Error: drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.c, line 3738: 'D_800E6608' undefined; reoccurrences will not be reported.
+     D_800E6280.unk_1BC[8].unk_0C.b[1] = (((((u32) (D_800E6608 << 0x14) >> 0x1D) + 1) * 2) & 0xE) | (D_800E6280.unk_1BC[8].unk_0C.b[1] & 0xFFF1);
+ ---------------------------------------------------^
+cfe: Warning 709: drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.c, line 3815: Incompatible pointer type assignment
+     D_800CA134 = &D_80144E08;
+ ---------------^
+cfe: Warning 709: drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.c, line 3816: Incompatible pointer type assignment
+     D_800CA138 = &D_80144E0C;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work -o drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.o /tmp/asm_processorsb_38c_y/preprocessed_3d175946b52847ee95ba0448cff775e6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhx3vt29d/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.o drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.c
+python3 failed:
+ ------------------^
+cfe: Error: drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.c, line 3721: 'D_800E64BA' undefined; reoccurrences will not be reported.
+     if ((D_80144E10 == 2) && ((D_80144E14 == 2) || (D_80144E14 == 3)) && (((u8) D_800E64BA >> 4) == 3)) {
+ --------------------------------------------------------------------------------^
+cfe: Warning 709: drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.c, line 3816: Incompatible pointer type assignment
+     D_800CA134 = &D_80144E08;
+ ---------------^
+cfe: Warning 709: drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.c, line 3817: Incompatible pointer type assignment
+     D_800CA138 = &D_80144E0C;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work -o drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.o /tmp/asm_processorcp49204a/preprocessed_05e8ca5e5e8e4e41ac73bf946be8b01e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibeut0kwaq/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.o drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.c, line 3709: 'D_800E7384' undefined; reoccurrences will not be reported.
+         if ((u32) D_800E7384++ >= 0x400U) {
+ ------------------^
+cfe: Warning 709: drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.c, line 3817: Incompatible pointer type assignment
+     D_800CA134 = &D_80144E08;
+ ---------------^
+cfe: Warning 709: drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.c, line 3818: Incompatible pointer type assignment
+     D_800CA138 = &D_80144E0C;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work -o drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.o /tmp/asm_processor53isbi3u/preprocessed_5f2659f8ba0d4bf2a683a0da1113988d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqdvetjdx/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.o drafts/T-17500/_runs/census/SHOUGATU/func_8013737C/work/guarded.c

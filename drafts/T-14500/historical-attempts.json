@@ -1,0 +1,1802 @@
+[
+  {
+    "scope": "SHUGAKU:func_80137490",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 1349,
+    "exact": 98,
+    "draft": "/results/drafts/SHUGAKU/func_80137490.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "EVENT:func_80103774",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 8559,
+    "exact": 206,
+    "draft": "/results/drafts/EVENT/func_80103774.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TAIIKU:func_8014357C",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 11321,
+    "exact": 173,
+    "draft": "/results/drafts/TAIIKU/func_8014357C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "EVENT:func_80102E54",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 5288,
+    "exact": 159,
+    "draft": "/results/drafts/EVENT/func_80102E54.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "BUNKA_SD:func_80137890",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 485,
+    "exact": 30,
+    "draft": "/results/drafts/BUNKA_SD/func_80137890.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TAIIKU:func_80143814",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 7145,
+    "exact": 211,
+    "draft": "/results/drafts/TAIIKU/func_80143814.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "GYOZI:func_80139E4C",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 2160,
+    "exact": 196,
+    "draft": "/results/drafts/GYOZI/func_80139E4C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "EVENT:func_800FF320",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 10610,
+    "exact": 327,
+    "draft": "/results/drafts/EVENT/func_800FF320.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "GYOZI:func_80145084",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 4121,
+    "exact": 116,
+    "draft": "/results/drafts/GYOZI/func_80145084.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "EVENT:func_800FEAE8",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 2631,
+    "exact": 135,
+    "draft": "/results/drafts/EVENT/func_800FEAE8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "GYOZI:func_801444CC",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 4766,
+    "exact": 124,
+    "draft": "/results/drafts/GYOZI/func_801444CC.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "EVENT:func_80109404",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 9078,
+    "exact": 284,
+    "draft": "/results/drafts/EVENT/func_80109404.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "ETC:func_8013FC64",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 1677,
+    "exact": 224,
+    "draft": "/results/drafts/ETC/func_8013FC64.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "ETC:func_80132FB0",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 8314,
+    "exact": 224,
+    "draft": "/results/drafts/ETC/func_80132FB0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "GEKO:func_80133C50",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 2751,
+    "exact": 164,
+    "draft": "/results/drafts/GEKO/func_80133C50.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "EVENT:func_80105DF8",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 11130,
+    "exact": 330,
+    "draft": "/results/drafts/EVENT/func_80105DF8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TEL:func_8013CCD0",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 6813,
+    "exact": 220,
+    "draft": "/results/drafts/TEL/func_8013CCD0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "ETC:func_80132C3C",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 3874,
+    "exact": 241,
+    "draft": "/results/drafts/ETC/func_80132C3C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "VALEN:func_80132D0C",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 2943,
+    "exact": 218,
+    "draft": "/results/drafts/VALEN/func_80132D0C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "ETC:func_801328A4",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 23097,
+    "exact": 313,
+    "draft": "/results/drafts/ETC/func_801328A4.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "BUNKASAI:func_801433C0",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 15663,
+    "exact": 332,
+    "draft": "/results/drafts/BUNKASAI/func_801433C0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "NAME_ENT:func_80142A80",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 784,
+    "exact": 30,
+    "draft": "/results/drafts/NAME_ENT/func_80142A80.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "EVENT:func_800FEF74",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 12752,
+    "exact": null,
+    "draft": "/results/drafts/EVENT/func_800FEF74.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "MASTER:func_8013B448",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 18083,
+    "exact": 331,
+    "draft": "/results/drafts/MASTER/func_8013B448.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TAIIKU:func_80143F50",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "fail",
+    "score": null,
+    "exact": null,
+    "draft": "/results/drafts/TAIIKU/func_80143F50.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TAIIKU:func_80142FB8",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 16959,
+    "exact": 439,
+    "draft": "/results/drafts/TAIIKU/func_80142FB8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TAIIKU:func_80142400",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 14503,
+    "exact": 391,
+    "draft": "/results/drafts/TAIIKU/func_80142400.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:get_fnt",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 15898,
+    "exact": 347,
+    "draft": "/results/drafts/main/get_fnt.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:func_800578F4",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 2844,
+    "exact": 151,
+    "draft": "/results/drafts/main/func_800578F4.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "BUNKASAI:func_8013B25C",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 3527,
+    "exact": 183,
+    "draft": "/results/drafts/BUNKASAI/func_8013B25C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:make_color_bar",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 39723,
+    "exact": 665,
+    "draft": "/results/drafts/main/make_color_bar.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "VALEN:func_80133088",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 4262,
+    "exact": 264,
+    "draft": "/results/drafts/VALEN/func_80133088.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TAIIKU:func_80141CDC",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 3046,
+    "exact": 98,
+    "draft": "/results/drafts/TAIIKU/func_80141CDC.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:_sprite_set_light_effect1",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 9344,
+    "exact": 403,
+    "draft": "/results/drafts/main/_sprite_set_light_effect1.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "BUNKASAI:func_80142700",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "fail",
+    "score": null,
+    "exact": null,
+    "draft": "/results/drafts/BUNKASAI/func_80142700.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "GYOZI:func_80144018",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 16062,
+    "exact": 461,
+    "draft": "/results/drafts/GYOZI/func_80144018.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "VALEN:func_80132834",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 24493,
+    "exact": 509,
+    "draft": "/results/drafts/VALEN/func_80132834.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "ETC:func_80136448",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 176,
+    "exact": 145,
+    "draft": "/results/drafts/ETC/func_80136448.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:func_80056BA8",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 10522,
+    "exact": 287,
+    "draft": "/results/drafts/main/func_80056BA8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "GYOZI:func_80144B70",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 14131,
+    "exact": null,
+    "draft": "/results/drafts/GYOZI/func_80144B70.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8014F88C",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 1527,
+    "exact": 145,
+    "draft": "/results/drafts/RPG_BAT/func_8014F88C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8013F82C",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 3072,
+    "exact": 248,
+    "draft": "/results/drafts/RPG_BAT/func_8013F82C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013C6D4",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 11203,
+    "exact": 539,
+    "draft": "/results/drafts/TACO/func_8013C6D4.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TAIIKU:func_8014280C",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 7392,
+    "exact": 260,
+    "draft": "/results/drafts/TAIIKU/func_8014280C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "KANGEI:func_80132FF8",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 27672,
+    "exact": 441,
+    "draft": "/results/drafts/KANGEI/func_80132FF8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:func_80049A40",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 7230,
+    "exact": 589,
+    "draft": "/results/drafts/main/func_80049A40.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80139FB8",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 6350,
+    "exact": 558,
+    "draft": "/results/drafts/TACO/func_80139FB8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013A790",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "fail",
+    "score": null,
+    "exact": null,
+    "draft": "/results/drafts/TACO/func_8013A790.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80147930",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 16371,
+    "exact": 396,
+    "draft": "/results/drafts/RPG_BAT/func_80147930.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8015528C",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 12360,
+    "exact": 498,
+    "draft": "/results/drafts/RPG_BAT/func_8015528C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "BUNKASAI:func_80142BE8",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 32996,
+    "exact": 717,
+    "draft": "/results/drafts/BUNKASAI/func_80142BE8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:make_color_bar16",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 45322,
+    "exact": 840,
+    "draft": "/results/drafts/main/make_color_bar16.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80154960",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "fail",
+    "score": null,
+    "exact": null,
+    "draft": "/results/drafts/TACO/func_80154960.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "MASTER:func_801391E4",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 2271,
+    "exact": 270,
+    "draft": "/results/drafts/MASTER/func_801391E4.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80148F70",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 15424,
+    "exact": 521,
+    "draft": "/results/drafts/RPG_BAT/func_80148F70.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:func_80057D28",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 5245,
+    "exact": 266,
+    "draft": "/results/drafts/main/func_80057D28.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "NAME_ENT:func_80142E24",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 918,
+    "exact": 56,
+    "draft": "/results/drafts/NAME_ENT/func_80142E24.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80154760",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 5877,
+    "exact": null,
+    "draft": "/results/drafts/RPG_BAT/func_80154760.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80139424",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 13445,
+    "exact": 606,
+    "draft": "/results/drafts/TACO/func_80139424.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8013DC60",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 14037,
+    "exact": 319,
+    "draft": "/results/drafts/RPG_BAT/func_8013DC60.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "ETC:func_80142B80",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 5366,
+    "exact": 242,
+    "draft": "/results/drafts/ETC/func_80142B80.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "EVENT:func_8010F74C",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "fail",
+    "score": null,
+    "exact": null,
+    "draft": "/results/drafts/EVENT/func_8010F74C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TAIIKU:func_80141280",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 8850,
+    "exact": 446,
+    "draft": "/results/drafts/TAIIKU/func_80141280.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013BAC4",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 45350,
+    "exact": 817,
+    "draft": "/results/drafts/TACO/func_8013BAC4.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_801328B0",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 7670,
+    "exact": 541,
+    "draft": "/results/drafts/TACO/func_801328B0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "ETC:func_8013B1F0",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 1656,
+    "exact": 188,
+    "draft": "/results/drafts/ETC/func_8013B1F0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013EAA4",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 25419,
+    "exact": 644,
+    "draft": "/results/drafts/TACO/func_8013EAA4.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_801454F0",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 70,
+    "exact": 20,
+    "draft": "/results/drafts/RPG_BAT/func_801454F0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TAIIKU:func_80140A90",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 5319,
+    "exact": 228,
+    "draft": "/results/drafts/TAIIKU/func_80140A90.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "EVENT:func_8011D5C4",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 30327,
+    "exact": 700,
+    "draft": "/results/drafts/EVENT/func_8011D5C4.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "ETC:func_8013FFAC",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 7905,
+    "exact": 512,
+    "draft": "/results/drafts/ETC/func_8013FFAC.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TEL:func_8013D03C",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 10281,
+    "exact": 1050,
+    "draft": "/results/drafts/TEL/func_8013D03C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "BUNKAKEN:func_8013B510",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "fail",
+    "score": null,
+    "exact": null,
+    "draft": "/results/drafts/BUNKAKEN/func_8013B510.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "BUNKASAI:func_8015AF90",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 15617,
+    "exact": 402,
+    "draft": "/results/drafts/BUNKASAI/func_8015AF90.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TAIIKU:func_80132000",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 10282,
+    "exact": 539,
+    "draft": "/results/drafts/TAIIKU/func_80132000.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:func_80058398",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 7757,
+    "exact": 388,
+    "draft": "/results/drafts/main/func_80058398.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80141060",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 117421,
+    "exact": 1831,
+    "draft": "/results/drafts/RPG_BAT/func_80141060.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "MASTER:func_80139CC8",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 37641,
+    "exact": 885,
+    "draft": "/results/drafts/MASTER/func_80139CC8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TEL:func_8013D88C",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "fail",
+    "score": null,
+    "exact": null,
+    "draft": "/results/drafts/TEL/func_8013D88C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80146C30",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 3541,
+    "exact": 329,
+    "draft": "/results/drafts/RPG_BAT/func_80146C30.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:srn_tpage_show",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 17671,
+    "exact": 1311,
+    "draft": "/results/drafts/main/srn_tpage_show.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "EVENT:func_8011C750",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 30166,
+    "exact": 1285,
+    "draft": "/results/drafts/EVENT/func_8011C750.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "EVENT:func_8011DDB8",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 24176,
+    "exact": 1374,
+    "draft": "/results/drafts/EVENT/func_8011DDB8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80133108",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 20421,
+    "exact": 863,
+    "draft": "/results/drafts/RPG_BAT/func_80133108.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "NAME_ENT:func_80143580",
+    "archive": "/private/tmp/tokimemo-broad-out/state.jsonl",
+    "status": "near",
+    "score": 24170,
+    "exact": 1189,
+    "draft": "/results/drafts/NAME_ENT/func_80143580.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8014D11C",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 675,
+    "exact": 156,
+    "draft": "/results/drafts/RPG_BAT/func_8014D11C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013DB80",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 5443,
+    "exact": 235,
+    "draft": "/results/drafts/TACO/func_8013DB80.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80140A58",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 0,
+    "exact": null,
+    "draft": "/results/drafts/RPG_BAT/func_80140A58.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8013E54C",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 103794,
+    "exact": 1095,
+    "draft": "/results/drafts/RPG_BAT/func_8013E54C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:func_8004A1A0",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 9063,
+    "exact": 231,
+    "draft": "/results/drafts/main/func_8004A1A0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8014A3DC",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 862,
+    "exact": 66,
+    "draft": "/results/drafts/RPG_BAT/func_8014A3DC.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013AD64",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 2798,
+    "exact": 194,
+    "draft": "/results/drafts/TACO/func_8013AD64.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013760C",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 1970,
+    "exact": 114,
+    "draft": "/results/drafts/TACO/func_8013760C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:strCallback",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 4025,
+    "exact": 139,
+    "draft": "/results/drafts/main/strCallback.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_801432F0",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 855,
+    "exact": 124,
+    "draft": "/results/drafts/TACO/func_801432F0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013C440",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 3573,
+    "exact": 217,
+    "draft": "/results/drafts/TACO/func_8013C440.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:srn_vram_set",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 2634,
+    "exact": 138,
+    "draft": "/results/drafts/main/srn_vram_set.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80144430",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 7305,
+    "exact": 197,
+    "draft": "/results/drafts/TACO/func_80144430.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:func_800412E0",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 605,
+    "exact": 19,
+    "draft": "/results/drafts/main/func_800412E0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8013BBF8",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "fail",
+    "score": null,
+    "exact": null,
+    "draft": "/results/drafts/RPG_BAT/func_8013BBF8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80149538",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 5274,
+    "exact": null,
+    "draft": "/results/drafts/TACO/func_80149538.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8013A034",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 8821,
+    "exact": 138,
+    "draft": "/results/drafts/RPG_BAT/func_8013A034.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8015443C",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 5941,
+    "exact": 193,
+    "draft": "/results/drafts/TACO/func_8015443C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80141B18",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 7135,
+    "exact": 245,
+    "draft": "/results/drafts/TACO/func_80141B18.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:mod_trans_vram",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 7895,
+    "exact": 245,
+    "draft": "/results/drafts/main/mod_trans_vram.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80141DE0",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 10778,
+    "exact": 257,
+    "draft": "/results/drafts/TACO/func_80141DE0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80152080",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 90,
+    "exact": 34,
+    "draft": "/results/drafts/RPG_BAT/func_80152080.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8014B79C",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 4109,
+    "exact": 148,
+    "draft": "/results/drafts/RPG_BAT/func_8014B79C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_801407D4",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 4325,
+    "exact": 310,
+    "draft": "/results/drafts/TACO/func_801407D4.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80140ADC",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 12364,
+    "exact": 241,
+    "draft": "/results/drafts/TACO/func_80140ADC.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:mod_set",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 14409,
+    "exact": 254,
+    "draft": "/results/drafts/main/mod_set.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013D528",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 12108,
+    "exact": null,
+    "draft": "/results/drafts/TACO/func_8013D528.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:func_80041C2C",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 26732,
+    "exact": 449,
+    "draft": "/results/drafts/main/func_80041C2C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80143B58",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 542,
+    "exact": 123,
+    "draft": "/results/drafts/TACO/func_80143B58.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:mod_set_gpu",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 4978,
+    "exact": 210,
+    "draft": "/results/drafts/main/mod_set_gpu.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80151C10",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 1128,
+    "exact": 62,
+    "draft": "/results/drafts/RPG_BAT/func_80151C10.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80146578",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 10631,
+    "exact": 277,
+    "draft": "/results/drafts/RPG_BAT/func_80146578.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013E778",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 13915,
+    "exact": 265,
+    "draft": "/results/drafts/TACO/func_8013E778.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_801413B8",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 13870,
+    "exact": 254,
+    "draft": "/results/drafts/TACO/func_801413B8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80156064",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 11901,
+    "exact": null,
+    "draft": "/results/drafts/RPG_BAT/func_80156064.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80140028",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 6750,
+    "exact": 296,
+    "draft": "/results/drafts/TACO/func_80140028.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013D838",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 12069,
+    "exact": null,
+    "draft": "/results/drafts/TACO/func_8013D838.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80153B38",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 8105,
+    "exact": null,
+    "draft": "/results/drafts/TACO/func_80153B38.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:func_8004AE54",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 3421,
+    "exact": 149,
+    "draft": "/results/drafts/main/func_8004AE54.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8013B5B0",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 1444,
+    "exact": 109,
+    "draft": "/results/drafts/RPG_BAT/func_8013B5B0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:func_80042CB0",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 9962,
+    "exact": 333,
+    "draft": "/results/drafts/main/func_80042CB0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013F468",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 12248,
+    "exact": 264,
+    "draft": "/results/drafts/TACO/func_8013F468.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_801424A8",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 10083,
+    "exact": null,
+    "draft": "/results/drafts/TACO/func_801424A8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8014BFE4",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 7401,
+    "exact": 229,
+    "draft": "/results/drafts/RPG_BAT/func_8014BFE4.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:func_800430C0",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 4952,
+    "exact": 146,
+    "draft": "/results/drafts/main/func_800430C0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80132FE8",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 1714,
+    "exact": 89,
+    "draft": "/results/drafts/TACO/func_80132FE8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_801497EC",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 11461,
+    "exact": null,
+    "draft": "/results/drafts/TACO/func_801497EC.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_801447E0",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 2978,
+    "exact": 216,
+    "draft": "/results/drafts/RPG_BAT/func_801447E0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80144094",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 11541,
+    "exact": 289,
+    "draft": "/results/drafts/TACO/func_80144094.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8013CC90",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 1398,
+    "exact": 161,
+    "draft": "/results/drafts/RPG_BAT/func_8013CC90.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_801387F0",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 215,
+    "exact": 66,
+    "draft": "/results/drafts/RPG_BAT/func_801387F0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_801487A4",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 7809,
+    "exact": null,
+    "draft": "/results/drafts/TACO/func_801487A4.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80138B9C",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 725,
+    "exact": 88,
+    "draft": "/results/drafts/RPG_BAT/func_80138B9C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8013AF1C",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 30,
+    "exact": 10,
+    "draft": "/results/drafts/RPG_BAT/func_8013AF1C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80156D78",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 818,
+    "exact": 91,
+    "draft": "/results/drafts/RPG_BAT/func_80156D78.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_801585D0",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 4800,
+    "exact": 259,
+    "draft": "/results/drafts/TACO/func_801585D0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80139BCC",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 6594,
+    "exact": 332,
+    "draft": "/results/drafts/TACO/func_80139BCC.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8013C890",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 3450,
+    "exact": 212,
+    "draft": "/results/drafts/RPG_BAT/func_8013C890.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80148714",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 2877,
+    "exact": null,
+    "draft": "/results/drafts/RPG_BAT/func_80148714.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:func_8004A414",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 7332,
+    "exact": 396,
+    "draft": "/results/drafts/main/func_8004A414.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:func_8004A814",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 5267,
+    "exact": 436,
+    "draft": "/results/drafts/main/func_8004A814.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_80138D08",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 3462,
+    "exact": null,
+    "draft": "/results/drafts/TACO/func_80138D08.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013FBF0",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 12549,
+    "exact": 394,
+    "draft": "/results/drafts/TACO/func_8013FBF0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_801568A4",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 75,
+    "exact": 22,
+    "draft": "/results/drafts/RPG_BAT/func_801568A4.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8013D834",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 5821,
+    "exact": 158,
+    "draft": "/results/drafts/RPG_BAT/func_8013D834.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_801416E8",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 13520,
+    "exact": 384,
+    "draft": "/results/drafts/TACO/func_801416E8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_801553AC",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 30462,
+    "exact": 364,
+    "draft": "/results/drafts/TACO/func_801553AC.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8013EA60",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 1600,
+    "exact": 144,
+    "draft": "/results/drafts/RPG_BAT/func_8013EA60.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80148B08",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 270,
+    "exact": null,
+    "draft": "/results/drafts/RPG_BAT/func_80148B08.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8014BB80",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 4134,
+    "exact": 214,
+    "draft": "/results/drafts/RPG_BAT/func_8014BB80.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8014B294",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 7909,
+    "exact": 501,
+    "draft": "/results/drafts/RPG_BAT/func_8014B294.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013240C",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 23549,
+    "exact": 534,
+    "draft": "/results/drafts/TACO/func_8013240C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80154DD8",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 2270,
+    "exact": null,
+    "draft": "/results/drafts/RPG_BAT/func_80154DD8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8014ADD0",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 1863,
+    "exact": 284,
+    "draft": "/results/drafts/RPG_BAT/func_8014ADD0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80138324",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 671,
+    "exact": 176,
+    "draft": "/results/drafts/RPG_BAT/func_80138324.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80157158",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 1193,
+    "exact": 127,
+    "draft": "/results/drafts/RPG_BAT/func_80157158.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_801505B8",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 4780,
+    "exact": 235,
+    "draft": "/results/drafts/RPG_BAT/func_801505B8.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80138F6C",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 1040,
+    "exact": 128,
+    "draft": "/results/drafts/RPG_BAT/func_80138F6C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80144C84",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 3828,
+    "exact": 393,
+    "draft": "/results/drafts/RPG_BAT/func_80144C84.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80149C5C",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 42165,
+    "exact": 567,
+    "draft": "/results/drafts/RPG_BAT/func_80149C5C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013B460",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 17615,
+    "exact": null,
+    "draft": "/results/drafts/TACO/func_8013B460.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_8013DEE4",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 20063,
+    "exact": 431,
+    "draft": "/results/drafts/TACO/func_8013DEE4.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "TACO:func_801563E4",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "fail",
+    "score": null,
+    "exact": null,
+    "draft": "/results/drafts/TACO/func_801563E4.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80140204",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 11561,
+    "exact": null,
+    "draft": "/results/drafts/RPG_BAT/func_80140204.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80145CC0",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 1678,
+    "exact": 195,
+    "draft": "/results/drafts/RPG_BAT/func_80145CC0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80139510",
+    "archive": "/private/tmp/tokimemo-broad-rest/state.jsonl",
+    "status": "near",
+    "score": 4194,
+    "exact": 281,
+    "draft": "/results/drafts/RPG_BAT/func_80139510.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "BUNKA_SD:func_80137890",
+    "archive": "/private/tmp/tokimemo-broad-followup/state.jsonl",
+    "status": "near",
+    "score": 485,
+    "exact": 30,
+    "draft": "/results/drafts/BUNKA_SD/func_80137890.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "main:func_800412E0",
+    "archive": "/private/tmp/tokimemo-broad-followup/state.jsonl",
+    "status": "near",
+    "score": 605,
+    "exact": 19,
+    "draft": "/results/drafts/main/func_800412E0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_80152080",
+    "archive": "/private/tmp/tokimemo-broad-followup/state.jsonl",
+    "status": "near",
+    "score": 90,
+    "exact": 34,
+    "draft": "/results/drafts/RPG_BAT/func_80152080.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "NAME_ENT:func_80142A80",
+    "archive": "/private/tmp/tokimemo-broad-followup/state.jsonl",
+    "status": "near",
+    "score": 784,
+    "exact": 30,
+    "draft": "/results/drafts/NAME_ENT/func_80142A80.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_8013AF1C",
+    "archive": "/private/tmp/tokimemo-broad-followup/state.jsonl",
+    "status": "near",
+    "score": 30,
+    "exact": 10,
+    "draft": "/results/drafts/RPG_BAT/func_8013AF1C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_801568A4",
+    "archive": "/private/tmp/tokimemo-broad-followup/state.jsonl",
+    "status": "near",
+    "score": 75,
+    "exact": 22,
+    "draft": "/results/drafts/RPG_BAT/func_801568A4.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "NAME_ENT:func_80142E24",
+    "archive": "/private/tmp/tokimemo-broad-followup/state.jsonl",
+    "status": "near",
+    "score": 918,
+    "exact": 56,
+    "draft": "/results/drafts/NAME_ENT/func_80142E24.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "RPG_BAT:func_801454F0",
+    "archive": "/private/tmp/tokimemo-broad-followup/state.jsonl",
+    "status": "near",
+    "score": 70,
+    "exact": 20,
+    "draft": "/results/drafts/RPG_BAT/func_801454F0.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  },
+  {
+    "scope": "BUNKASAI:func_80135C4C",
+    "archive": "/private/tmp/tokimemo-family-out/state.jsonl",
+    "status": "near",
+    "score": 3364,
+    "exact": 276,
+    "draft": "/results/drafts/BUNKASAI/func_80135C4C.c",
+    "reusable_score": false,
+    "reason": "archive lacks complete current compiler/header/TU context"
+  }
+]

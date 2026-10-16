@@ -1,0 +1,28 @@
+{
+  "scope": "DATE:func_80150ED4",
+  "path": "drafts/T-16100/batch-2/DATE/func_80150ED4",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "M2cBlock9C",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    }
+  ],
+  "explanation": "156-byte copy is supported but raw sp uses remain instead of sp30 indexing. Opaque block alone is insufficient to claim valid full stack layout.",
+  "evidence_path": "drafts/T-16100/batch-2/DATE/func_80150ED4/evidence.txt",
+  "compile_status": "scored",
+  "score": 51,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "M2cBlock9C",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "156-byte copy is supported but raw sp uses remain instead of sp30 indexing. Opaque block alone is insufficient to claim valid full stack layout."
+    }
+  ]
+}

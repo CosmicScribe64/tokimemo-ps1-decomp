@@ -1,0 +1,20 @@
+{
+  "scope": "ETC:func_8013FFAC",
+  "src": "src/ovl/ETC/8013FF80.c",
+  "size": 2116,
+  "path": "drafts/T-16100/batch-1/ETC/func_8013FFAC",
+  "archive_path": "drafts/T-16100/batch-1/ETC/func_8013FFAC",
+  "status": "scored",
+  "score": 514,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": false,
+  "compile_verified": true,
+  "body.c_sha256": "f603e8c9b0d6957abbc0812fcf93aabf231af5c90679b69b91d9bcccba46a99b",
+  "declarations.h_sha256": "b3e486e59af1ee563b25722ef0a1348259de467f4f389e97a5cb550be86ea7eb",
+  "context.c_sha256": "46057bd4655153367350ecf5dd6d2a3107d928b1ca2da143a94e446b8501e0f9",
+  "full-context.c_sha256": "90fd804e26ee9c7e54ce7c488aed1b4a0ff60d68bdaeb3b8ee9fa0aea75c8cca",
+  "diagnostics.txt_sha256": "d42c4d33dd2e99cf90623db79483ef9da47d1e546b0d9bbe345e7db8ee9ec9cc",
+  "assembly-evidence.txt_sha256": "85681891e9eefa21bb07b9be4aed0919533a16a17181c9d4eae00fcc10579918"
+}

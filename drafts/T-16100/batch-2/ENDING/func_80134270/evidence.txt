@@ -1,0 +1,28 @@
+Target: ['asm/ovl/ENDING/nonmatchings/ENDING/80133C10/func_80134270.s']
+Review: 68-byte copied record plus GameState+index menu updates: copy extent is supported but GameState arithmetic remains invalid.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80134270 */  addiu      $sp, $sp, -0x30
+    /* 80134274 */  sw         $ra, 0x1C($sp)
+    /* 8013427C */   addiu     $a0, $zero, 0x1
+    /* 80134290 */  addiu      $a1, $zero, 0x10
+    /* 80134294 */  addiu      $a2, $zero, 0x1
+    /* 80134298 */  addiu      $a3, $zero, 0x2
+    /* 801342A0 */   sw        $zero, 0x10($sp)
+    /* 801342AC */  addiu      $t6, $zero, 0x1
+    /* 801342B0 */  sw         $t6, 0x10($sp)
+    /* 801342B4 */  addiu      $a1, $zero, 0x11
+    /* 801342B8 */  addiu      $a2, $zero, 0x1
+    /* 801342C0 */   addiu     $a3, $zero, 0x2
+    /* 801342CC */  addiu      $a0, $zero, 0x140
+    /* 801342D0 */  addiu      $a1, $zero, 0x80
+    /* 801342D4 */  addiu      $a2, $zero, 0x40
+    /* 801342D8 */  addiu      $a3, $zero, 0x80
+    /* 801342E0 */   sw        $t7, 0x10($sp)
+    /* 801342EC */  addiu      $a0, $zero, 0x180
+    /* 801342F0 */  addiu      $a1, $zero, 0x80
+    /* 801342F4 */  addiu      $a2, $zero, 0x40
+    /* 801342F8 */  addiu      $a3, $zero, 0x80
+    /* 80134300 */   sw        $t8, 0x10($sp)
+    /* 8013430C */  addiu      $a0, $zero, 0x1C0
+    /* 80134310 */  addiu      $a1, $zero, 0x80

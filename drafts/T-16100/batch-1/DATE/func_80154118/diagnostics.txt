@@ -1,0 +1,11 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/DATE -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/DATE/func_80154118/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/ovl/DATE -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/DATE/func_80154118/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/DATE/func_80154118/work/guarded.c drafts/T-16100/batch-1/DATE/func_80154118/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-1/DATE/func_80154118/work/guarded.o.sjis.c, line 4364: '&' before array or function; ignored
+     *(M2cBlock3C *)(&sp28) = *(M2cBlock3C *)(&D_8015F4DC);
+ --------------------^
+

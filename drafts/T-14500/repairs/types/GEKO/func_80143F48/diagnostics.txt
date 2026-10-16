@@ -1,0 +1,14 @@
+cfe: Warning 709: drafts/T-14500/repairs/types/GEKO/func_80143F48/work/guarded.c, line 3404: Incompatible pointer type assignment
+     D_800CA134 = &D_801476D8;
+ ---------------^
+cfe: Warning 709: drafts/T-14500/repairs/types/GEKO/func_80143F48/work/guarded.c, line 3405: Incompatible pointer type assignment
+     D_800CA138 = &D_801476DC;
+ ---------------^
+cfe: Warning 709: drafts/T-14500/repairs/types/GEKO/func_80143F48/work/guarded.c, line 3412: Incompatible pointer type assignment
+     D_800CA134 = &D_801476D8;
+ ---------------^
+cfe: Warning 709: drafts/T-14500/repairs/types/GEKO/func_80143F48/work/guarded.c, line 3413: Incompatible pointer type assignment
+     D_800CA138 = &D_801476DC;
+ ---------------^
+
+Full-TU compile successful. Default resolved score: 169

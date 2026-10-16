@@ -1,0 +1,18 @@
+{
+  "unit": "main",
+  "src": "src/main/800737A0.c",
+  "func": "parameter_up_down",
+  "size": 1228,
+  "guarded": false,
+  "source_hash": "510647c5633d94556137c76122252c933d23cf428d3ab8c39659f7d022e5659a",
+  "scope": "main:parameter_up_down",
+  "status": "failed",
+  "score": null,
+  "ticket": "T-16000",
+  "matching_claim": false,
+  "path": "drafts/T-16000/parameter_up_down",
+  "reason": "cfe: Error: drafts/T-16000/parameter_up_down/work/guarded.c, line 2820: redeclaration of 'parameter_up_down'; previous declaration at line 2795 in file 'drafts/T-16000/parameter_up_down/work/guarded.c'\n void parameter_up_down(s32 arg0, s32 arg1, s32 arg2);\n -----^\ncfe: Error: drafts/T-16000/parameter_up_down/work/guarded.c, line 2820: Incompatible function return type for this function.\n void parameter_up_down(s32 arg0, s32 arg1, s32 arg2);\n ----------------------^\ncfe: Error: drafts/T-16000/parameter_up_down/work/guarded.c, line 2821: redeclaration of 'parameter_up_down'; previous declaration at line 2795 in file 'drafts/T-16000/parameter_up_down/work/guarded.c'\n void parameter_up_down(s32 arg0, s32 arg1, s32 arg2) {\n -----^\ncfe: Error: drafts/T-16000/parameter_up_down/work/guarded.c, line 2821: Incompatible function return type for this function.\n void parameter_up_down(s32 arg0, s32 arg1, s32 arg2) {\n ----------------------^\ncfe: Warning 709: drafts/T-16000/parameter_up_down/work/guarded.c, line 2858: Incompatible pointer type assignment\n         temp_t9 = (((u16) D_800E6374 >> 0xC) * 9) + &D_800B6928;\n ----------------^\ncfe: Warning 709: drafts/T-16000/parameter_up_down/work/guarded.c, line 2880: Incompatible pointer type assignment\n     temp_t5 = (arg0 * 9) + &D_800B68E0;\n ------------^\ncc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16000/parameter_up_down/work -o drafts/T-16000/parameter_up_down/work/guarded.o /tmp/asm_processorqarzjm5z/preprocessed_8eaa48113cbb48ab8d8eccb4714118bd.c\ncc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibdz3v6lcy/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16000/parameter_up_down/work/guarded.o drafts/T-16000/parameter_up_down/work/guarded.c\n",
+  "body.c_sha256": "40157cab046ffb3b61c3e4a5277e9728cb92549300232cdc56456e8239b30ad3",
+  "declarations.h_sha256": "de5cbbb4f1b7232eb57c165d814d11c07939b7b30b14197828a528e2a7415fb4",
+  "context.c_sha256": "1ed8c9382a7d6478e1c4e0e5d3d06007241c9e89d995f46c466e72082f8ebeb7"
+}

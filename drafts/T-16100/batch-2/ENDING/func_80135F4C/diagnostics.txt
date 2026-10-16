@@ -1,0 +1,54 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/ENDING -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/ENDING/func_80135F4C/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c drafts/T-16100/batch-2/ENDING/func_80135F4C/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3257: '&' before array or function; ignored
+     (*(s32 *)&sp7C) = (s32) D_8013CA60;
+ -------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3258: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp7C) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_8013CA60) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3259: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp7C) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_8013CA60) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3260: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp7C) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_8013CA60) + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3261: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp7C) + (16)) = (s32) *(s32 *)((unsigned char *)(&D_8013CA60) + (16));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3262: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp7C) + (24)) = (s32) *(s32 *)((unsigned char *)(&D_8013CA60) + (24));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3263: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp7C) + (20)) = (s32) *(s32 *)((unsigned char *)(&D_8013CA60) + (20));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3264: '&' before array or function; ignored
+     (*(s32 *)&sp60) = (s32) D_8013CA7C;
+ -------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3265: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp60) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_8013CA7C) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3266: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp60) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_8013CA7C) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3267: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp60) + (16)) = (s32) *(s32 *)((unsigned char *)(&D_8013CA7C) + (16));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3268: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp60) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_8013CA7C) + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3269: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp60) + (24)) = (s32) *(s32 *)((unsigned char *)(&D_8013CA7C) + (24));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3270: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp60) + (20)) = (s32) *(s32 *)((unsigned char *)(&D_8013CA7C) + (20));
+ -------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3291: Incompatible pointer type assignment
+         temp_t3 = &D_800E6280 + var_s1;
+ ----------------^
+cfe: Warning 709: drafts/T-16100/batch-2/ENDING/func_80135F4C/full-context.c, line 3293: Incompatible pointer type assignment
+         temp_v0 = D_801217D0 + temp_lo;
+ ----------------^
+
+Full translation unit compiled and scored.

@@ -1,0 +1,6 @@
+    801441A4:  addiu      $sp, $sp, -0x40
+    801441B0:  addiu      $t1, $sp, 0x18
+    801441FC:  sh         $t2, 0x1A($sp)
+    8014420C:  sll        $t5, $a3, 1
+    80144210:  addu       $t8, $t1, $t5
+    8014426C:   addiu     $sp, $sp, 0x40

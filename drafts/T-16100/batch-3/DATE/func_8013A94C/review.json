@@ -1,0 +1,33 @@
+{
+  "scope": "DATE:func_8013A94C",
+  "selected_path": "drafts/T-14500/DATE/func_8013A94C",
+  "archive_path": "drafts/T-16100/batch-3/DATE/func_8013A94C",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "sp54: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[11].",
+    "sp3C: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[11]."
+  ],
+  "flags": [
+    {
+      "detail": "sp54[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "repaired",
+      "explanation": "sp54: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[11]. sp3C: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[11]. "
+    },
+    {
+      "detail": "sp3C[16]",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "outcome": "repaired",
+      "explanation": "sp54: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[11]. sp3C: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[11]. "
+    }
+  ],
+  "notes": "",
+  "assembly_evidence": "drafts/T-16100/batch-3/DATE/func_8013A94C/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "repaired"
+}

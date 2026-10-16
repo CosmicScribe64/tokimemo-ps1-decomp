@@ -1,0 +1,28 @@
+Target: ['asm/nonmatchings/main/800674B0/func_8006B0C8.s']
+Review: sp7C[8] has documented eight-entry scratch purpose, but GameState* byte-stride walks through unk_54C remain incorrect and require one coherent rewrite.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8006B0C8 */  addiu      $sp, $sp, -0xB0
+    /* 8006B0D4 */  sw         $ra, 0x14($sp)
+    /* 8006B0D8 */  addiu      $v0, $v0, %lo(D_800E62A0)
+    /* 8006B0DC */  addiu      $a1, $a1, %lo(D_800E6280)
+    /* 8006B0E8 */  sll        $t9, $t3, 2
+    /* 8006B0EC */  sll        $t8, $t6, 2
+    /* 8006B0F4 */   addiu     $t6, $t9, 0x54C
+    /* 8006B100 */  addiu      $t7, $t7, %lo(D_800E6280)
+    /* 8006B104 */  addu       $t8, $t6, $t7
+    /* 8006B108 */  addiu      $t3, $t3, 0x1
+    /* 8006B110 */  addiu      $a1, $a1, 0x4
+    /* 8006B12C */  sll        $t6, $a2, 2
+    /* 8006B134 */  addiu      $t8, $t8, %lo(D_800E6280)
+    /* 8006B138 */  addiu      $t9, $t6, 0x54C
+    /* 8006B13C */  addu       $a0, $t9, $t8
+    /* 8006B140 */  addiu      $a1, $zero, 0x4
+    /* 8006B144 */  sw         $a0, 0x40($sp)
+    /* 8006B14C */   sw        $t3, 0xA4($sp)
+    /* 8006B150 */  lw         $a0, 0x40($sp)
+    /* 8006B158 */  addiu      $t7, $t7, %lo(D_800E67EC)
+    /* 8006B15C */  lw         $t3, 0xA4($sp)
+    /* 8006B160 */  addiu      $a0, $a0, 0x4
+    /* 8006B168 */   addiu     $a1, $zero, 0x4
+    /* 8006B170 */  lbu        $t6, %lo(D_800E62BF)($t6)

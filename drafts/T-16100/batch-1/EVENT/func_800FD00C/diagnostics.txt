@@ -1,0 +1,20 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/EVENT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/EVENT/func_800FD00C/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/ovl/EVENT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/EVENT/func_800FD00C/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/EVENT/func_800FD00C/work/guarded.c drafts/T-16100/batch-1/EVENT/func_800FD00C/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_800FD00C/work/guarded.o.sjis.c, line 4336: '&' before array or function; ignored
+     ((EventStateView *)&D_800B0860)->unk_1037 = 0xB;
+ -----------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_800FD00C/work/guarded.o.sjis.c, line 4337: '&' before array or function; ignored
+     ((EventStateView *)&D_800B0860)->unk_1A4[2].unk_06 += 2;
+ -----------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_800FD00C/work/guarded.o.sjis.c, line 4338: '&' before array or function; ignored
+     ((EventStateView *)&D_800B0860)->unk_1A4[2].unk_0A -= 0xA;
+ -----------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_800FD00C/work/guarded.o.sjis.c, line 4483: '&' before array or function; ignored
+     *(M2cBlock9C *)(&sp30) = *(M2cBlock9C *)(&D_801214A0);
+ --------------------^
+

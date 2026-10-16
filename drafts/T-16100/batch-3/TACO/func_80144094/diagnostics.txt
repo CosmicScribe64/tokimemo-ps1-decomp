@@ -1,0 +1,78 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/TACO -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-3/TACO/func_80144094/work/variant.c
+[Preprocessed C retained in full-context.c]
+
+$ python3 tools/cc.py drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3501: '&' before array or function; ignored
+     (*(s32 *)&sp268) = (s32) D_80129C40;
+ -------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3502: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp268) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3503: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp268) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3504: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp268) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3505: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp268) + (16)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (16));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3506: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp268) + (20)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (20));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3507: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp268) + (24)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (24));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3508: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp268) + (28)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (28));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3509: '&' before array or function; ignored
+     func_800A1100((s32) &sp268);
+ ------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3510: '&' before array or function; ignored
+     func_800A1070(&sp268);
+ ------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3521: '&' before array or function; ignored
+         var_s2 = &sp8C;
+ -----------------^
+cfe: Warning 709: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3522: Incompatible pointer type assignment
+         var_s1 = sp54 + var_s2;
+ ---------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3525: '&' before array or function; ignored
+         func_800AB170((s32) &sp260, (s32) var_s1, (s32) &sp74, (s32) &sp70);
+ --------------------------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3525: '&' before array or function; ignored
+         func_800AB170((s32) &sp260, (s32) var_s1, (s32) &sp74, (s32) &sp70);
+ ---------------------------------------------------------------------^
+cfe: Warning 689: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3529: Unacceptable operand of == or !=
+         if (var_s2 != &sp260) {
+ -------------------^
+cfe: Warning 709: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3540: Incompatible pointer type assignment
+         var_s1_2 = sp54 + &sp8C;
+ -----------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3540: '&' before array or function; ignored
+         var_s1_2 = sp54 + &sp8C;
+ --------------------------^
+cfe: Warning 709: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3556: Incompatible pointer type assignment
+                 temp_v0_3 = var_a0 + &sp68;
+ --------------------------^
+cfe: Warning 709: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3557: Incompatible pointer type assignment
+                 temp_v1 = var_a0 + &sp64;
+ ------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3596: '&' before array or function; ignored
+             func_80099B10(var_s0->unk4[0], &sp50, &sp70);
+ -------------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3596: '&' before array or function; ignored
+             func_80099B10(var_s0->unk4[0], &sp50, &sp70);
+ --------------------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3597: '&' before array or function; ignored
+             func_80099F04(&sp50);
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3598: '&' before array or function; ignored
+             func_8009A200(var_s0->unk4[0], &sp70);
+ -------------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TACO/func_80144094/work/guarded.c, line 3599: '&' before array or function; ignored
+             func_80099ED8(&sp70);
+ --------------------------^
+
+Full TU compiled; score 289

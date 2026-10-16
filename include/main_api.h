@@ -21,6 +21,16 @@
 
 #include "common.h"
 #include "libgpu.h"
+#include "libgte.h"
+
+/* T-12010: D_801255D0 is saved as a word and read as four bytes. */
+typedef union WordBytes4 {
+    u32 word;
+    u8 bytes[4];
+} WordBytes4;
+extern WordBytes4 D_801255D0;
+/* T-12040: halfword tested by the RPG battle command dispatcher. */
+extern s16 D_80121428;
 
 /* T-10730: dialogue voice table leaves, indexed with an eight-byte stride. */
 typedef struct DialogueVoice8 {
@@ -115,7 +125,15 @@ typedef struct Rec34 {
 
 /* One word read as a whole and through its halves and bytes: the original tests bit-fields of these
  * words with lw and shifts, and IDO-style narrowed loads (lbu, then a shift) of single bytes. */
+/* T-14200: month/day packed in the birthday word and Rec38 +0x10. */
+typedef struct GsDateBits {
+    /* 0x00 */ u32 month : 4;
+    u32 day : 5;
+    u32 rest : 23;
+} GsDateBits; /* size 0x04 */
+
 typedef union GsWord {
+    /* 0x00 */ GsDateBits date;
     /* 0x00 */ s32 w;
     /* 0x00 */ u32 u;
     /* 0x00 */ u16 h[2];
@@ -130,10 +148,10 @@ typedef union GsHalf {
 
 #ifndef T9540_FLAGS_WORK24
 #define T9540_FLAGS_WORK24
-/* Minimum view covering the word at 0x800E7D10 and fourteen flags at +0x14; T-9540. */
+/* Word at 0x800E7D10, slot bytes at +4, and fourteen flags at +0x14; T-9540/T-12030. */
 typedef struct FlagsWork24 {
     /* 0x00 */ s32 unk_00;
-    /* 0x04 */ u8 pad04[0x10];
+    /* 0x04 */ u8 unk_04[0x10];
     /* 0x14 */ u8 flags[14];
     /* 0x22 */ u8 pad22[2];
 } FlagsWork24; /* size 0x24 */
@@ -156,7 +174,9 @@ typedef struct CharFlags {
     /* 0x00 */ u32 b12 : 1;
     /* 0x00 */ u32 b13 : 1;
     /* 0x00 */ u32 b14 : 1;
-    /* 0x00 */ u32 rest : 17;
+    /* 0x00 */ u32 f15 : 5;
+    u32 f20 : 4;
+    u32 rest : 8;
 } CharFlags; /* size 0x04 */
 
 /* The Rec38 flag word: whole, by halves and bytes, or by bits. */
@@ -634,6 +654,8 @@ typedef struct KWork {
     /* 0xB */ u8 pad_0B;
 } KWork; /* size 0xC */
 extern KWork text_list_count;
+/* Four signed menu row positions, read by x_taku_menu_set. */
+extern s16 D_800B40F0[4];
 extern u8 D_800B4100[13];
 extern u8 D_800B4110[13];
 extern u8 D_800B4120[13];
@@ -661,12 +683,18 @@ extern u8 D_800B5940;
 extern s32 D_800B5944;
 extern s32 D_800B5948;
 extern s32 D_800B594C;
+extern u8 D_800B5A68[][3];
 extern s32 D_800B5950[];
 extern s32 D_800B5960[];
 extern s16 D_800B59F0;
 extern s16 D_800B59F4;
 extern u8 D_800B5A60;
 extern u8 D_800B5A64;
+/* T-17000: two tables of (x, y) halfword pairs that func_8006509C copies pair by pair into the pair
+ * table at D_80125C10 (`lh`/`sh` at +0 and +2, step 4); the copy of the second table from D_800B5AF0
+ * (pair 3) runs to D_800B5B20, its end. 16 + 15 pairs fill 0x800B5AA4..0x800B5B20. */
+extern s16 D_800B5AA4[16][2];
+extern s16 D_800B5AE4[15][2];
 extern s16 D_800B5B24;
 extern u32 D_800B5B28[4][8];
 extern u32 D_800B5BA8[8];
@@ -709,7 +737,17 @@ extern s32 D_800B6758;
 extern s32 D_800B6760[];
 extern s32 D_800B6780[];
 extern s32 D_800B6810[];
+/* T-17000: parameter tables of func_80076FDC, func_80073CB0 and parameter_up_down. func_80076FDC
+ * reads byte [row][col] of two 12-row, two-byte tables in an 11-case switch (`lbu %lo(D_800B6892)` after
+ * `addu` of the column); func_80073CB0 starts the next table at D_800B68C0. parameter_up_down walks
+ * signed nine-byte rows (`lb`, row index * 9): eight rows at D_800B68E0 end where D_800B6928 starts. */
+extern u8 D_800B6890[12][2];
+extern u8 D_800B68A8[12][2];
+extern s8 D_800B68E0[8][9];
+extern s8 D_800B6928[][9];
 extern s32 D_800B69E0[];
+/* T-17000: message table of func_80077E30, indexed by func_80077CA8() and passed to sndisp. */
+extern u8 *D_800B6CF8[];
 extern u8 D_800B6D30;
 extern u8 ovl_load_state;
 extern u8 ovl_load_sectors;
@@ -719,6 +757,13 @@ extern u8 font_glyphs[];
 extern s8 D_800C51C4;
 extern s32 D_800C5FCC;
 extern s32 D_800C5FD0;
+extern u8 D_800C5FD4[];
+extern u8 D_800C6010[];
+extern s16 D_800C6014;
+/* T-17000: word tables walked by func_80059EF0 (and func_8006509C) up to the next symbol: eight words
+ * ending at D_800C6220, 32 words ending at D_800C6340. */
+extern s32 D_800C6200[8];
+extern s32 D_800C62C0[32];
 extern u8 D_800C6220[];
 extern u8 D_800C9730[];
 extern s32 D_800C9734;
@@ -764,6 +809,7 @@ extern u8 D_800CA188[];
 extern u8 girl_name_buf[];
 extern u8 D_800CA19C[];
 extern u8 D_800CA1DC[];
+extern u8 D_800CA248[]; /* text buffer (SHOUGATU func_801359FC, T-17500) */
 /* Four s16[4] rows (T-9020): DATE indexes each from its own base (D_800CA22C[i]) and sets a row
  * with one chain assignment, which gives the original's shared register only for array elements. */
 extern s16 D_800CA21C[4];
@@ -842,7 +888,7 @@ extern s32 D_800E7D10;
 extern u8 D_800E7D11[];
 extern u8 D_800E7D13[];
 extern u8 D_800E7D14[];
-extern s8 D_800E7D15;
+extern u8 D_800E7D15[];
 extern s8 D_800E7D16;
 extern u8 D_800E7D1F;
 extern u8 D_800E7D2C;
@@ -862,6 +908,15 @@ extern u8 D_800E7D49;
 extern u8 D_800E7D4A;
 extern u8 D_800E7D4B;
 extern s32 D_800E7D4C;
+/* T-17000: bit-field view of the flag byte D_800E7D4F. `lui rA; lbu rB,%lo(D_800E7D4F)(rA); ori; sb` with
+ * rB != rA is a bit-field store (T-7010); func_8007959C sets b0 so. BUNKASAI's BunkaReturnFlags
+ * (T-10630) is the same view. */
+typedef struct Flags7D4F {
+    u8 b0 : 1;
+    u8 b1 : 1;
+    u8 unk_2_4 : 3;
+    u8 unk_5_7 : 3;
+} Flags7D4F; /* size 0x01 */
 extern u8 D_800E7D4F;
 extern s32 D_800E7D50;
 extern u8 D_800E7D68;
@@ -1322,6 +1377,7 @@ extern s16 D_801208CC;
 extern s16 D_801208DE;
 extern u8 D_801208FB;
 extern s16 D_80120912[];
+extern s16 D_8012091E;
 extern s16 D_80120922;
 extern u8 D_8012093F;
 extern s16 D_80120966;
@@ -1365,6 +1421,7 @@ extern s16 D_80120DA6;
 extern s8 D_80120DC1;
 extern s8 D_80120E05;
 extern u8 D_80120E07;
+extern u8 D_80120E0A;
 extern s16 D_80120E1C;
 extern u8 D_80120E4E;
 extern s16 D_80120E60;
@@ -1375,6 +1432,7 @@ extern s16 D_80120EFA;
 extern s16 D_80120F2A;
 extern s16 D_80120F3A;
 extern s16 D_80120F3E;
+extern u8 D_801210F2;
 extern s16 D_8012114C;
 extern u8 D_8012117A;
 extern u8 D_801211BE;
@@ -1389,15 +1447,18 @@ extern s32 D_8012127C;
 extern s8 D_801212CB;
 extern s8 D_80121311;
 extern u8 D_80121313;
+extern u8 D_80121316;
 #ifndef MAIN_API_OVERRIDE_D_80121317
 extern s8 D_80121317;
 #endif
 extern s16 D_80121328;
 extern s8 D_80121353;
+extern u8 D_8012135A;
 extern u8 D_80121357;
 extern s16 D_8012136C;
 extern s8 D_80121397;
 extern s8 D_80121399;
+extern u8 D_8012139A;
 extern u8 D_8012139B;
 extern u8 D_8012139E;
 extern s16 D_801213B0;
@@ -1427,6 +1488,7 @@ extern s16 D_80121548;
 extern s16 D_80121556;
 extern s16 D_8012155A;
 extern s16 D_8012158C;
+extern u8 D_801215BA;
 extern s8 D_801215FD;
 extern u8 D_801215FF;
 extern s8 D_80121603;
@@ -1632,6 +1694,7 @@ extern u8 D_80125C54;
 extern u8 D_80125C55;
 extern u8 *D_80125C58;
 extern u8 D_80125C60[];
+extern s16 D_80125C80[]; /* four s16 slots, written at index (tick & 3) (ENDING func_80137730) */
 extern u8 D_80125C90[];
 extern s16 D_80125CA0;
 extern s32 D_80125CA4;
@@ -1671,6 +1734,11 @@ extern s32 D_80125D90;
 extern s32 D_80125D94;
 extern s32 D_80125D98;
 extern s32 D_80125D9C;
+/* T-17000: per-channel tables of func_8007BBE8 and func_8007AF0C, indexed by channel << 6 and
+ * channel << 5: 0x40-byte rows of words and 0x20-byte rows of halfwords (two rows each would end at
+ * D_80125E20 and D_80125E60). */
+extern s32 D_80125DA0[][16];
+extern s16 D_80125E20[][16];
 extern u16 D_80125E60;
 extern u16 D_80125E62;
 extern s16 D_80125E64;
@@ -1680,6 +1748,9 @@ extern u8 D_80125E70[];
 extern s16 D_80126080[]; /* two 0x200-entry s16 tables (+0, +0x400), SD_CalcCDAve */
 extern s32 D_8012749C;
 extern s32 D_801274A0;
+extern u8 D_80127610[];
+extern u8 D_801277F0[];
+extern MATRIX D_80129C40; /* bss matrix copied whole by TACO (T-16560) */
 extern s32 D_80129F10;
 extern u8 D_80129F40[];
 extern s32 D_800B699C[];
@@ -1765,6 +1836,8 @@ void func_80041C2C(void);
 void func_80041F48(void);
 void func_80042058(void);
 void func_80042134();
+void func_800422C8(void);
+void func_80042418(void);
 void func_80042458(void);
 void func_80042488(void);
 s32 func_80042808(void);
@@ -1774,7 +1847,9 @@ s32 func_80042908(s32 arg0);
 s32 func_80042940(s32 arg0);
 s32 func_80042960(void);
 s32 func_80042AC8();
+void func_80042BD4(void);
 void func_80042C30(void);
+void func_80042C74(void);
 void func_80042CB0();
 s32 func_80043010(void);
 void func_800430C0();
@@ -1820,7 +1895,9 @@ void func_800462BC(u8 arg0, s32 arg1, s32 *arg2);
 #ifndef MAIN_API_OVERRIDE_func_800462C8
 void func_800462C8(u8 arg0, s32 arg1, s32 arg2);
 #endif
+#ifndef MAIN_API_OVERRIDE_cd_read_sectors
 void cd_read_sectors(u8 arg0, s32 arg1, s32 arg2);
+#endif
 s32 file_checksum_ok();
 s32 func_80046500(void);
 void func_800469F4();
@@ -1830,6 +1907,7 @@ void func_80047550(void);
 void func_80047560();
 void tpage_buf_clear_all(void);
 void func_80048390();
+s32 func_800486A4();
 void tpage_buf_clear(void);
 void _sys_default_tpage_set(void);
 void load_tpage_buf_lock();
@@ -2023,7 +2101,7 @@ void func_80059308(void);
 void func_80059688(s32 arg0);
 void SenseMouse(u16 arg0, u16 arg1);
 void SetMouse(s32 arg0, u32 arg1, u32 arg2);
-void func_80059938(void);
+void func_80059938(s32 port);
 void func_80059B04();
 void func_80059B40(void);
 void func_80059BC0(void);
@@ -2062,13 +2140,30 @@ void func_8005B908();
 void func_8005BD20();
 void func_8005C4CC(s32 arg0);
 void func_8005D174(void);
+s32 func_8005D448(void);
+s32 func_8005BE8C(void);
+void func_8005BCEC(void);
+void func_8005C5BC(void);
+void func_8005CF6C(void);
+void func_8005CA94(void);
+
+void func_8005C7C0(void);
+void func_8005C7FC(void);
+extern u8 D_800B59F8[];
+extern u8 D_800B5A1C[];
+void func_8005F09C(void);
+s32 func_8005FDEC(void);
+s32 func_8005DEA0(s32 arg0);
+s32 func_8005E150(void);
+s32 system_settings_init(void);
+s32 func_800603C0(void);
 void func_8005D1B0();
 void func_8005D9B4();
 s32 func_8005E0E0();
 void join_club(void);
 void join_club_init(void);
 s32 join_club_select(void);
-void join_club_message(void);
+s32 join_club_message(void);
 void join_club_exit(void);
 s32 func_80060B24();
 void func_80060B78(void);
@@ -2159,14 +2254,20 @@ void func_8006C848(s32 arg0);
 u8 *func_8006CA9C(void);
 u8 *func_8006CAE0(void);
 void _schedule_init(void);
+/* T-14501: _schedule_init callees defined later in 8006CB30.c. */
+void func_8006CD14(void);
+void schdeule_girls_param(void);
+void func_80070ECC(void);
 void last_date_spot_timer_dec(void);
 void restore_bgm(void);
 s32 func_8006CDD4(void);
 void func_8006D038(void);
 void func_8006D138(void);
 void func_8006D6E0();
+void func_8006D7EC(void);
 s32 func_8006EB64(u8 *arg0, u8 *arg1);
 s32 func_8006EEC4(u8 *arg0, u8 *arg1);
+void schedule_girls_gakko(void);
 void yuukou_down(void);
 void syoushin_up(void);
 void func_80070F80(void);
@@ -2177,7 +2278,7 @@ void func_8007259C(u8 arg0);
 void func_800726F0(void);
 void func_80072734();
 s32 func_80072944(void);
-void func_80072998(void);
+s32 func_80072998(void);
 void func_80072B20(void);
 s32 func_80072B5C(s32 arg0);
 void func_80072C68(void);
@@ -2214,6 +2315,13 @@ void appointment_launch(void);
 void func_8007739C(void);
 void func_80077694(void);
 void func_80077900(void);
+void func_80075468(void);
+void func_80075BE8(void);
+void func_80076EC0(void);
+void func_80076F48(void);
+void func_80077BE0(void);
+s32 holiday_club(void);
+void func_8007894C(void);
 void func_80077C50(void);
 void func_80077E30(void);
 void magazine_exit(void);
@@ -2227,7 +2335,7 @@ void func_80078970();
 s32 func_800789A0();
 void func_800789E0(void);
 void func_80078A94();
-void func_80078C48();
+s32 func_80078C48();
 void ovl_load_poll(void);
 void ovl_load_verify(void);
 void func_80079070();
@@ -2355,12 +2463,16 @@ void func_80084E4C(void);
 s32 func_80084E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 s32 func_800850D4();
 void func_80085234();
+#ifndef MAIN_API_OVERRIDE_func_80085368
 void func_80085368(void);
+#endif
+#ifndef MAIN_API_OVERRIDE_func_800853FC
 void func_800853FC(void);
+#endif
 void event_face0(void);
 void event_face1(void);
 void func_800854C8();
-void _sprite_set_box_shade_tarao(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+void _sprite_set_box_shade_tarao(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u32 arg5, u32 arg6);
 void func_80085678();
 void func_8008585C();
 void don_wait(void);
@@ -2369,7 +2481,9 @@ void func_80085A60();
 void normal_date_speak(void);
 s32 func_80085B3C();
 void func_80085CD4(u8 a);
+#ifndef MAIN_API_OVERRIDE_func_80085E30
 void func_80085E30(s32 arg0, s32 arg1);
+#endif
 void Vblnk_Timer_Init(void);
 s32 Vblnk_Timer(void);
 void Scroll(s32, s32, s32, s32, s32);
@@ -2408,7 +2522,9 @@ void func_8008BE34();
 void func_8008BE54();
 void func_8008BEBC();
 void func_8008BEE0();
+#ifndef MAIN_API_OVERRIDE_func_8008BFB0
 void func_8008BFB0();
+#endif
 s32 func_8008C1B0();
 s32 func_8008C620();
 #ifndef MAIN_API_OVERRIDE_SsVabTransCompleted
@@ -2511,7 +2627,9 @@ void bzero(void *p, s32 n);
 #ifndef MAIN_API_OVERRIDE_func_800AE080
 void func_800AE080(u8 *arg0, s32 arg1);
 #endif
+#ifndef MAIN_API_OVERRIDE_func_800AE090
 void func_800AE090(void *dst, void *src, s32 n);
+#endif
 void func_800AE0A0(void *arg0, s32 arg1, s32 arg2);
 void memcpy();
 void func_800AE0B0(void *arg0, ...); /* printf-like (SDK libc) */
@@ -2519,6 +2637,8 @@ s32 printf(u8 *fmt, ...);
 s32 func_800AE0C0(s32);
 s32 func_800AE0D0(void);
 s32 rand();
+/* GYOZI calls this entry with an implicit-int ABI; semantics unknown. T-13202. */
+s32 func_800BCE40();
 s32 func_800AE0E0(void *arg0);
 s32 strlen(u8 *s);
 void func_800AE0F0(void *dst, void *src);  /* strcpy (SDK libc) */
@@ -2547,7 +2667,9 @@ void func_800BCE10();
 s32 func_800BDC20();
 void func_801040F0(void);
 s32 func_80067DFC(void);
+#ifndef MAIN_API_OVERRIDE_func_80053418
 s32 func_80053418();
+#endif
 s32 func_800463E8(void);
 #ifndef MAIN_API_OVERRIDE_func_80049FF0
 s32 func_80049FF0();
@@ -2710,5 +2832,8 @@ void func_8005FF68(void);
 void func_80060104(void);
 void func_80060504(void);
 void func_80060150(void);
+
+/* T-14200: canonical declaration of the existing MAIN definition. */
+void func_80041840(void);
 
 #endif /* MAIN_API_H */

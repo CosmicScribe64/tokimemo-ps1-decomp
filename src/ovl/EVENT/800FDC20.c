@@ -105,14 +105,9 @@ void func_800FE030(void) {
     func_80015FE0();
 }
 
-typedef struct {
-    u8 b[0x80];
-} Blob80; /* size 0x80 */
-extern Blob80 D_801218E8;
-
 void func_800FE090(void) {
     s32 pad; /* FAKE: unused local above tmp; the original frame is 4 bytes larger, real source unknown. T-4080 */
-    Blob80 tmp;
+    FnTbl32 tmp;
 
     tmp = D_801218E8;
     func_80078950("s%d\n", D_800B1AF6);
@@ -301,11 +296,6 @@ void func_800FEA10(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    void (*f[49])();
-} FnTbl49; /* size 0xC4 */
-extern FnTbl49 D_80121968;
-
 void func_800FEA38(void) {
     s32 idx; /* FAKE: unused local declared before the table, the original frame has the table 4 bytes lower (T-3330) */
     FnTbl49 tbl;
@@ -324,7 +314,28 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FEDC8);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FEF74);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FF320);
+void func_800FF320(arg0, arg1, arg2)
+    s16 arg0;
+    s16 arg1;
+    s16 arg2;
+{
+    /* Port of the DATE clone func_80152684 (T-17400). */
+    /* FAKE: 8 unused bytes above tbl give the original's frame and tbl offset, as in the clone; real locals unknown. T-9310 */
+    s32 pad[2];
+    EvTbl tbl;
+
+    tbl = D_80121AD8;
+    if (arg0 < 0x140) {
+        func_800FFA4C(0x140, -0x118, 0xA0 - arg0, 0x28, (0xA0 - arg0) + (s16)(arg0 / 32 + 0xA), 0x28, tbl.e[*(u8 *)&D_801218DC[arg1]].a, tbl.e[*(u8 *)&D_801218DC[arg1]].b, arg2, 1);
+        return;
+    }
+    if (arg0 < 0x154) {
+        func_800FFA4C(0x140, -0x118, -0xA0, 0x28 - (s16)((arg0 * 7 - 0x8C0) / 8), -0xA0, 0x28, tbl.e[*(u8 *)&D_801218DC[arg1]].a, tbl.e[*(u8 *)&D_801218DC[arg1]].b, arg2, 1);
+        func_800FFA4C(0x140, -0x118, -0xA0, 0x28, (s16)(arg0 / 32 + 0xA) - arg0 + 0xA0, 0x28, tbl.e[*(u8 *)&D_801218DC[arg1]].a, tbl.e[*(u8 *)&D_801218DC[arg1]].b, arg2, 1);
+        return;
+    }
+    func_800FFA4C(0x140, -0x118, -0xA0, 0x28 - (s16)((arg0 * 7 - 0x8C0) / 8), -0xA0, (0x28 - (s16)((arg0 * 7 - 0x8C0) / 8)) + (s16)(0xF - (arg0 - 0x140) / 32), tbl.e[*(u8 *)&D_801218DC[arg1]].a, tbl.e[*(u8 *)&D_801218DC[arg1]].b, arg2, 1);
+}
 
 void func_800FF5E4(void) {
     func_80015D28(0x3D, 0x801B0000, 0x7F67);
@@ -332,7 +343,24 @@ void func_800FF5E4(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FF61C);
+void func_800FF61C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl48 tbl;
+
+    tbl = D_80121AF8;
+    func_80078950("%d\n", D_800B1AF6);
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+    if (D_800EECE0 != 0) {
+        D_800EB02B |= 0x80;
+        D_800EB02F = D_800F19AB;
+    } else {
+        D_800EB02B &= 0xFF7F;
+    }
+    if (D_800B1AF6 >= 0x10 && D_800B1AF6 < 0x13) {
+        func_8010AFE4();
+    }
+}
 
 void func_800FF710(void) {
     func_80015D28(0x45, 0x801B0000, 0x7FA4);
@@ -344,11 +372,6 @@ void func_800FF748(void) {
     D_800EB02A = 5;
     func_80011DFC();
 }
-
-typedef struct {
-    void (*f[42])();
-} FnTbl42; /* size 0xA8 */
-extern FnTbl42 D_80121BB8;
 
 void func_800FF770(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -365,11 +388,6 @@ void func_800FF7F4(void) {
     func_800FDE30();
     func_80011DFC();
 }
-
-typedef struct {
-    void (*f[45])();
-} FnTbl45; /* size 0xB4 */
-extern FnTbl45 D_80121C60;
 
 void func_800FF82C(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

@@ -61,7 +61,41 @@ void func_80159090(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80159090", func_80159260);
+s32 func_80159260(void) {
+    TcPos vel;
+    TcPos pos;
+    /* FAKE: unused TcPos below the two positions reproduces the frame and their offsets; real locals unknown. T-16560 */
+    TcPos pad;
+    s32 r;
+    u32 kind;
+
+    func_800AE120(D_801604C0);
+    r = func_800AE0D0();
+    pos.x = ((func_800AE0D0() % 2500) + (r % 1500)) - 0x7D0;
+    r = func_800AE0D0();
+    pos.y = ((func_800AE0D0() % 2000) + (r % 1000)) - 0x7D0;
+    pos.z = (func_800AE0D0() % 5000) - 0x61A8;
+    vel.x = (func_800AE0D0() % 200) - 0x64;
+    vel.y = (func_800AE0D0() % 200) - 0x64;
+    kind = func_800AE0D0() % 5U;
+    switch (kind) {
+    case 0:
+        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0x10);
+        return;
+    case 1:
+        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0x10);
+        return;
+    case 2:
+        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0);
+        return;
+    case 3:
+        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0);
+        return;
+    case 4:
+        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0);
+        return;
+    }
+}
 
 void func_80159678(s32 arg0) {
     (arg0 + D_8015EDB4)->unk74 -= (((((arg0 + D_8015EDB4)->unk78 << 5) / 25000) * func_800A0140((arg0 + D_8015EDB4)->unk7A << 5)) >> 0xC);
@@ -76,7 +110,62 @@ void func_80159678(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80159090", func_80159878);
+s32 func_80159878(s32 arg0) {
+    /* FAKE: unused TcPos above the two positions reproduces the frame (0x60) and their offsets; real locals unknown. T-16561 */
+    TcPos pad;
+    TcPos sp50;
+    TcPos sp48;
+
+    func_800AE120(D_801604C0);
+    sp48.x = 0;
+    sp48.z = 0;
+    sp50.z = -0x4E20;
+    /* FAKE: each `sp48.y = ..; sp50.x = ..;` pair shares a source line; as1 orders the sh stores by line and only this layout gives the original order. T-16561 */
+    switch (arg0) {
+    case 0:
+    case 2:
+        sp48.y = 0x400; sp50.x = 0x1B58;
+        sp50.y = -0x4B0;
+        func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0);
+        sp50.y = -0xC8;
+        func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0);
+        sp48.y = 0xC00; sp50.x = -0x1B58;
+        sp50.y = -0x2BC;
+        if (arg0 == 0) {
+            func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 0xA, 0xE0);
+            return;
+        }
+        func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 0xA, 0);
+        return;
+    case 1:
+        /* fallthrough */
+    case 3:
+        sp48.y = 0xC00; sp50.x = -0x1B58;
+        sp50.y = -0x4B0;
+        if (arg0 == 3) {
+            func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0x50);
+        } else {
+            func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0);
+        }
+        sp50.y = -0xC8;
+        if (arg0 == 1) {
+            func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0x50);
+        } else {
+            func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0);
+        }
+        sp48.y = 0x400; sp50.x = 0x1B58;
+        sp50.y = -0x2BC;
+        if (arg0 == 3) {
+            func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 0xA, 0x80);
+            return;
+        }
+        func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0);
+        return;
+    default:
+        /* the empty default adds the basic blocks that keep arg0 out of $s0 (uopt allocation cost); the original reloads it from its home. T-16561 */
+        break;
+    }
+}
 
 void func_80159F60(s32 arg0) {
     TcPos pos;

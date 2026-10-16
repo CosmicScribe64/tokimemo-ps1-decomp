@@ -1,0 +1,7 @@
+3666:     idx = D_800E6280.unk_110A;
+3667:     tbl.f[idx](0x80);
+3668:     j = D_800E6280.unk_110A;
+3669:     if (normal_date_bg_fadein == tbl.f[j] || normal_date_bg_fadeout == tbl.f[j]) {
+3670:         D_80120653 |= 0x80;
+3671:         D_80120657 = D_800B593C;
+3672:     }

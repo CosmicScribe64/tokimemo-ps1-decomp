@@ -1,0 +1,12 @@
+python3 failed:
+cfe: Error: drafts/T-17000/_runs/typed/main/func_800764AC/work/guarded.o.sjis.c, line 2766: 'sp2C' undefined; reoccurrences will not be reported.
+         var_v1 = &sp2C[0];
+ ------------------^
+cfe: Warning 681: drafts/T-17000/_runs/typed/main/func_800764AC/work/guarded.o.sjis.c, line 2770: '&' before array or function; ignored
+         } while ((u32) var_v1 < (u32) &spAC);
+ --------------------------------------^
+cfe: Warning 681: drafts/T-17000/_runs/typed/main/func_800764AC/work/guarded.o.sjis.c, line 2797: '&' before array or function; ignored
+         } while ((u32) var_v1_3 < (u32) &spAC);
+ ----------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/typed/main/func_800764AC/work -o drafts/T-17000/_runs/typed/main/func_800764AC/work/guarded.o /tmp/asm_processor1g4_h1qj/preprocessed_e5addf06210e4c8ebb0ede9f35e4b194.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibizrr8pb5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/typed/main/func_800764AC/work/guarded.o drafts/T-17000/_runs/typed/main/func_800764AC/work/guarded.o.sjis.c

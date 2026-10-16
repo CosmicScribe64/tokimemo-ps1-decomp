@@ -1,0 +1,20 @@
+{
+  "scope": "GYOZI:func_8013B0C4",
+  "src": "src/ovl/GYOZI/8013AE80.c",
+  "size": 268,
+  "path": "drafts/T-16100/batch-1/GYOZI/func_8013B0C4",
+  "archive_path": "drafts/T-16100/batch-1/GYOZI/func_8013B0C4",
+  "status": "scored",
+  "score": 29,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "body.c_sha256": "d857d0fcdc6e55fb3334c2fe8714d897e10fdad6657e4a0b1a1517a78e260ba0",
+  "declarations.h_sha256": "bdbf073f7080d5883b7ba07d487249f98d899d3f633df0e748c2b1a982414b19",
+  "context.c_sha256": "b975bad9d66d52bd730dc9a445d79d272421e45640deb5549fccd030f5c7dd19",
+  "full-context.c_sha256": "37f4c0489b1169d54d207805fe183790216f7871b3b0e4e966277f451a776801",
+  "diagnostics.txt_sha256": "f82cd0a40ee223330eae7dbc1a89d755ddab6bf512323e165da2bf506c853735",
+  "assembly-evidence.txt_sha256": "84a54f29aa8dd49387d7ece65e14675e335ac83e3a712d7d7d12547c44891b3f"
+}

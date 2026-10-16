@@ -1,0 +1,12 @@
+python3 failed:
+cfe: Error: drafts/T-14500/TAIIKU/func_80147594/work/guarded.c, line 3537: 'sp68' undefined; reoccurrences will not be reported.
+     sp68[0].unk0 = D_8014A614;
+ ----^
+cfe: Warning 689: drafts/T-14500/TAIIKU/func_80147594/work/guarded.c, line 3554: Unacceptable operand of == or !=
+     } while (var_s0 != &D_8014A4A8);
+ --------------------^
+cfe: Warning 689: drafts/T-14500/TAIIKU/func_80147594/work/guarded.c, line 3596: Unacceptable operand of == or !=
+             } while (var_s3_3 != &D_8014A4D4);
+ ------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TAIIKU/func_80147594/work -o drafts/T-14500/TAIIKU/func_80147594/work/guarded.o /tmp/asm_processoraavwh0tz/preprocessed_a85694a3fafd4b198c9de81c3f359f6f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib_ybexsvs/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TAIIKU/func_80147594/work/guarded.o drafts/T-14500/TAIIKU/func_80147594/work/guarded.c

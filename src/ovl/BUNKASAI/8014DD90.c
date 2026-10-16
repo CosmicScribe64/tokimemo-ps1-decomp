@@ -53,9 +53,266 @@ void func_8014DD90(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014DD90", func_8014DF04);
+/* T-12703: existing aggregate and flag views reproduce the scene family. */
+void func_8014DF04(void) {
+    GameState *g = &D_800E6280;
+    u32 temp_v0;
+    u32 temp_v0_2;
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014DD90", func_8014E2AC);
+    switch (g->unk_110A) {
+    case 0:
+        func_8005742C(0x40EA, 1);
+        func_8004284C();
+        break;
+    case 1:
+        func_8007E934();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_801431D4();
+            func_80057418(1, func_8005751C(1));
+            func_80062CD0(0x622D);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        func_8007E81C();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            func_8007C740();
+            g->unk_F5F = 6;
+            func_80083474();
+            if (g->unk_03E == 0x5F) {
+                D_800CA148 = 0x24;
+            } else {
+                D_800CA148 = 0x25;
+            }
+        }
+        break;
+    case 5:
+        func_80085A60();
+        break;
+    case 6:
+        cd_read_sectors(0xFU, 0x801E8000, 0x4B13);
+        func_8004284C();
+        break;
+    case 7:
+        func_8007E390();
+        break;
+    case 8:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(6);
+            switch (temp_v0) {
+            case 0:
+            case 1:
+                D_800CA148 = 4;
+                break;
+            case 2:
+                D_800CA148 = 5;
+                break;
+            case 3:
+                D_800CA148 = 6;
+                break;
+            case 4:
+                D_800CA148 = 7;
+                break;
+            }
+            if (g->unk_03E == 0x60) {
+                D_800CA148 += 4;
+            }
+            func_801508C4();
+        }
+        break;
+    case 9:
+        func_80085A60();
+        break;
+    case 10:
+        func_8004284C();
+        temp_v0_2 = func_8008667C(6);
+        switch (temp_v0_2) {
+        case 0:
+        case 1:
+            D_800CA148 = 1;
+            break;
+        case 2:
+            D_800CA148 = 2;
+            break;
+        case 3:
+            D_800CA148 = 3;
+            break;
+        case 4:
+            func_80042940(0xC);
+            break;
+        }
+        break;
+    case 11:
+        func_80085A60();
+        break;
+    case 12:
+        D_800CA148 = 0x78;
+        func_8007E5A0();
+        break;
+    case 13:
+        if (func_8008667C(6) == 4) {
+            func_80085A60();
+        } else {
+            func_8007E934();
+        }
+        break;
+    case 14:
+        D_800CA148 = 0;
+        if (func_8008667C(6) == 4) {
+            func_8007E934();
+        } else {
+            func_8004284C();
+        }
+        break;
+    case 15:
+        func_80085A60();
+        break;
+    case 16:
+        if (func_8008667C(6) != 4) {
+            if (g->unk_03E == 0x5F) {
+                g->unk_1BC[6].unk_0C.f.b12 = 1;
+            } else {
+                g->unk_1BC[6].unk_0C.f.b13 = 1;
+            }
+        }
+        func_80142BC8();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
+
+/* T-12703: existing aggregate and flag views reproduce the scene family. */
+void func_8014E2AC(void) {
+    GameState *g = &D_800E6280;
+    s32 temp_v0_2;
+    u32 temp_v0;
+
+    switch (g->unk_110A) {
+    case 0:
+        func_8005742C(0x40F4, 1);
+        func_8004284C();
+        break;
+    case 1:
+        func_8007E934();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_8014338C();
+            func_80057418(1, func_8005751C(1));
+            func_8004284C();
+        }
+        break;
+    case 3:
+        func_8007E81C();
+        break;
+    case 4:
+        D_800CA148 = 0x26;
+        func_8004284C();
+        break;
+    case 5:
+        func_80085A60();
+        break;
+    case 6:
+        func_8007E934();
+        break;
+    case 7:
+        D_80122EAC = 0;
+        D_80122EB0 = (s32) g->unk_1109;
+        D_80122EB4 = g->unk_110A + 1;
+        main_state_set(0x80);
+        break;
+    case 8:
+        func_800866A0(0x622D);
+        break;
+    case 9:
+        func_8014338C();
+        D_80125CA0 = 0xC0;
+        func_8007C740();
+        g->unk_F5F = 6;
+        func_80083474();
+        cd_read_sectors(0xFU, 0x801E8000, 0x4B13);
+        break;
+    case 10:
+        func_8007E884();
+        break;
+    case 11:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(6);
+            switch (temp_v0) {
+            case 0:
+            case 1:
+                D_800CA148 = 0xC;
+                break;
+            case 2:
+                D_800CA148 = 0xD;
+                break;
+            case 3:
+                D_800CA148 = 0xF;
+                break;
+            case 4:
+                D_800CA148 = 0x10;
+                break;
+            }
+            func_801508C4();
+        }
+        break;
+    case 12:
+        func_80085A60();
+        break;
+    case 13:
+        if (func_8008667C(6) == 4) {
+            func_8007E5A0();
+        } else {
+            func_8004284C();
+        }
+        break;
+    case 14:
+        temp_v0_2 = func_8008667C(6);
+        switch (temp_v0_2) {                        /* switch 3; irregular */
+        case 0:
+        case 1:
+            D_800CA148 = 1;
+            break;
+        case 3:
+            D_800CA148 = 3;
+            break;
+        }
+        func_8004284C();
+        break;
+    case 15:
+        func_80085A60();
+        break;
+    case 16:
+        if (func_8008667C(6) == 4) {
+            func_8004284C();
+        } else {
+            func_8007E5A0();
+        }
+        break;
+    case 17:
+        func_8007E934();
+        break;
+    case 18:
+        D_800CA148 = 0;
+        func_8004284C();
+        break;
+    case 19:
+        func_80085A60();
+        break;
+    case 20:
+        func_80142BC8();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 void func_8014E5EC(void) {
     s32 temp_v0_2;
@@ -194,7 +451,195 @@ void func_8014E5EC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014DD90", func_8014E9D0);
+/* T-12703: existing aggregate and flag views reproduce the scene family. */
+void func_8014E9D0(void) {
+    GameState *g = &D_800E6280;
+    u32 temp_v0;
+    u32 temp_v0_2;
+    u32 temp_v0_3;
+
+    switch (g->unk_110A) {
+    case 0:
+        if (((u16) g->unk_0F4.h >> 0xC) == 2) {
+            func_8005742C(0x40FC, 1);
+        } else {
+            func_8005742C(0x4105, 1);
+        }
+        func_8004284C();
+        break;
+    case 1:
+        func_8007E934();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_801431D4();
+            func_80057418(1, func_8005751C(1));
+            func_80062CD0(0x622D);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        func_8007E81C();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            func_8007C740();
+            g->unk_F5F = 6;
+            func_80083474();
+            D_800CA148 = 0x29;
+        }
+        break;
+    case 5:
+        func_80085A60();
+        break;
+    case 6:
+        cd_read_sectors(0xFU, 0x801E8000, 0x4B13);
+        func_8004284C();
+        break;
+    case 7:
+        func_8007E390();
+        break;
+    case 8:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(6);
+            switch (temp_v0) {
+            case 0:
+            case 1:
+                if (g->unk_03E == 0x60) {
+                    D_800CA148 = 0x21;
+                } else {
+                    D_800CA148 = 0x1D;
+                }
+                break;
+            case 2:
+                D_800CA148 = 0x1E;
+                break;
+            case 3:
+                D_800CA148 = 0x1F;
+                break;
+            case 4:
+                D_800CA148 = 0x20;
+                break;
+            }
+            func_801508C4();
+        }
+        break;
+    case 9:
+        func_80085A60();
+        break;
+    case 10:
+        func_8007E99C();
+        break;
+    case 11:
+        D_80122EAC = 0;
+        D_80122EB0 = (s32) g->unk_1109;
+        D_80122EB4 = g->unk_110A + 1;
+        main_state_set(0x80);
+        break;
+    case 12:
+        func_800866A0(0x622D);
+        break;
+    case 13:
+        func_801431D4();
+        D_80125CA0 = 0xC0;
+        func_8007C740();
+        g->unk_F5F = 6;
+        func_80083474();
+        if (((u16) g->unk_0F4.h >> 0xC) == 3) {
+            func_80083440(3U);
+        }
+        cd_read_sectors(0xFU, 0x801E8000, 0x4B13);
+        break;
+    case 14:
+        if (func_8008667C(6) == 4) {
+            func_8007E81C();
+        } else {
+            func_8007E884();
+        }
+        break;
+    case 15:
+        if (cd_read_sync_status() & 1) {
+            temp_v0_2 = func_8008667C(6);
+            switch (temp_v0_2) {
+            case 0:
+            case 1:
+                if (((u16) g->unk_0F4.h >> 0xC) == 3) {
+                    D_800CA148 = 0x2B;
+                } else {
+                    D_800CA148 = (g->unk_03E * 3) - 0xFB;
+                }
+                break;
+            case 2:
+                if (((u16) g->unk_0F4.h >> 0xC) == 3) {
+                    D_800CA148 = 0x2C;
+                } else {
+                    D_800CA148 = (g->unk_03E * 3) - 0xFA;
+                }
+                break;
+            case 3:
+                if (((u16) g->unk_0F4.h >> 0xC) == 3) {
+                    D_800CA148 = 0x2D;
+                } else {
+                    D_800CA148 = (g->unk_03E * 3) - 0xF9;
+                }
+                break;
+            case 4:
+                D_800CA148 = 0x2E;
+                break;
+            }
+            func_801508C4();
+        }
+        break;
+    case 16:
+        func_80085A60();
+        break;
+    case 17:
+        func_8004284C();
+        temp_v0_3 = func_8008667C(6);
+        switch (temp_v0_3) {
+        case 0:
+        case 1:
+            D_800CA148 = 1;
+            break;
+        case 2:
+            D_800CA148 = 2;
+            break;
+        case 3:
+            D_800CA148 = 3;
+            break;
+        case 4:
+            func_80042940(0x13);
+            break;
+        }
+        break;
+    case 18:
+        func_80085A60();
+        break;
+    case 19:
+        if (func_8008667C(6) == 4) {
+            func_8004284C();
+        } else {
+            func_8007E5A0();
+        }
+        break;
+    case 20:
+        func_8007E934();
+        break;
+    case 21:
+        D_800CA148 = 0;
+        func_8004284C();
+        break;
+    case 22:
+        func_80085A60();
+        break;
+    case 23:
+        func_80142BC8();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 void func_8014EF24(void) {
     u32 temp_v0;
@@ -673,13 +1118,469 @@ void func_8014F36C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014DD90", func_8014FC70);
+/* T-12703: existing aggregate and flag views reproduce the scene family. */
+void func_8014FC70(void) {
+    GameState *g = &D_800E6280;
+    s32 temp_v0_2;
+    u32 temp_v0;
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014DD90", func_8014FFE4);
+    switch (g->unk_110A) {
+    case 0:
+        func_8005742C(0x410F, 1);
+        func_8004284C();
+        break;
+    case 1:
+        func_8007E934();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_801431D4();
+            func_80057418(1, func_8005751C(1));
+            func_80062CD0(0x622D);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        func_8007E81C();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            func_8007C740();
+            g->unk_F5F = 6;
+            func_80083474();
+            D_800CA148 = 0x2B;
+        }
+        break;
+    case 5:
+        func_80085A60();
+        break;
+    case 6:
+        cd_read_sectors(0xFU, 0x801E8000, 0x4B13);
+        func_8004284C();
+        break;
+    case 7:
+        func_8007E390();
+        break;
+    case 8:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(6);
+            switch (temp_v0) {
+            case 0:
+            case 1:
+                D_800CA148 = 0x56;
+                break;
+            case 2:
+                D_800CA148 = 0x59;
+                break;
+            case 3:
+                D_800CA148 = 0x5C;
+                break;
+            case 4:
+                D_800CA148 = 0x5F;
+                break;
+            }
+            func_801508C4();
+        }
+        break;
+    case 9:
+        func_80085A60();
+        break;
+    case 10:
+        if (func_8008667C(6) == 4) {
+            func_80042940(0xE);
+        } else {
+            if ((u16) g->unk_66C[4].unk_00 < 0x64U) {
+                D_800CA148 += 1;
+            }
+            func_8004284C();
+        }
+        break;
+    case 11:
+        func_80085A60();
+        break;
+    case 12:
+        temp_v0_2 = func_8008667C(6);
+        switch (temp_v0_2) {                        /* switch 3; irregular */
+        case 0:
+        case 1:
+            D_800CA148 = 1;
+            break;
+        case 2:
+            D_800CA148 = 2;
+            break;
+        case 3:
+            D_800CA148 = 3;
+            break;
+        }
+        func_8004284C();
+        break;
+    case 13:
+        func_80085A60();
+        break;
+    case 14:
+        D_800CA148 = 0x78;
+        func_8007E5A0();
+        break;
+    case 15:
+        if (func_8008667C(6) == 4) {
+            func_80085A60();
+        } else {
+            func_8007E934();
+        }
+        break;
+    case 16:
+        D_800CA148 = 0;
+        if (func_8008667C(6) == 4) {
+            func_8007E934();
+        } else {
+            func_8004284C();
+        }
+        break;
+    case 17:
+        func_80085A60();
+        break;
+    case 18:
+        func_80142BC8();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014DD90", func_80150234);
+void func_8014FFE4(void) {
+    u32 temp_v0;
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014DD90", func_8015052C);
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8005742C(0x4118, 1);
+        func_8004284C();
+        break;
+    case 1:
+        func_8007E934();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_801431D4();
+            func_80057418(1, func_8005751C(1));
+            func_80062CD0(0x622D);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        func_8007E81C();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            func_8007C740();
+            D_800E6280.unk_F5F = 6;
+            func_80083474();
+            D_800CA148 = 0x2C;
+        }
+        break;
+    case 5:
+        func_80085A60();
+        break;
+    case 6:
+        cd_read_sectors(0xFU, 0x801E8000, 0x4B13);
+        func_8004284C();
+        break;
+    case 7:
+        func_8007E390();
+        break;
+    case 8:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(6);
+            switch (temp_v0) {
+            case 0:
+            case 1:
+                D_800CA148 = 0x60;
+                break;
+            case 2:
+                D_800CA148 = 0x62;
+                break;
+            case 3:
+                D_800CA148 = 0x64;
+                break;
+            case 4:
+                D_800CA148 = 0x66;
+                break;
+            }
+            func_801508C4();
+        }
+        break;
+    case 9:
+        func_80085A60();
+        break;
+    case 10:
+        normal_date_girl_out();
+        break;
+    case 11:
+        func_80085A60();
+        break;
+    case 12:
+        func_8007E934();
+        break;
+    case 13:
+        D_800CA148 = 0;
+        func_8004284C();
+        break;
+    case 14:
+        func_80085A60();
+        break;
+    case 15:
+        func_80142BC8();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
+
+void func_80150234(void) {
+    u32 temp_v0;
+    u32 temp_v0_2;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8005742C(0x410F, 1);
+        func_8004284C();
+        break;
+    case 1:
+        func_8007E934();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_801431D4();
+            func_80057418(1, func_8005751C(1));
+            func_80062CD0(0x622D);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        func_8007E81C();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            func_8007C740();
+            D_800E6280.unk_F5F = 6;
+            func_80083474();
+            D_800CA148 = 0x2D;
+        }
+        break;
+    case 5:
+        func_80085A60();
+        break;
+    case 6:
+        cd_read_sectors(0xFU, 0x801E8000, 0x4B13);
+        func_8004284C();
+        break;
+    case 7:
+        func_8007E390();
+        break;
+    case 8:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(6);
+            switch (temp_v0) {
+            case 0:
+            case 1:
+                D_800CA148 = 0x68;
+                break;
+            case 2:
+                D_800CA148 = 0x69;
+                break;
+            case 3:
+                D_800CA148 = 0x6A;
+                break;
+            case 4:
+                D_800CA148 = 0x6B;
+                break;
+            }
+            func_801508C4();
+        }
+        break;
+    case 9:
+        func_80085A60();
+        break;
+    case 10:
+        temp_v0_2 = func_8008667C(6);
+        switch (temp_v0_2) {
+        case 0:
+        case 1:
+            D_800CA148 = 1;
+            func_8004284C();
+            break;
+        case 2:
+            D_800CA148 = 2;
+            func_8004284C();
+            break;
+        case 3:
+            D_800CA148 = 3;
+            func_8004284C();
+            break;
+        case 4:
+            func_8007E5A0();
+            break;
+        }
+        break;
+    case 11:
+        func_80085A60();
+        break;
+    case 12:
+        if (func_8008667C(6) == 4) {
+            func_8004284C();
+        } else {
+            func_8007E5A0();
+        }
+        break;
+    case 13:
+        func_8007E934();
+        break;
+    case 14:
+        D_800CA148 = 0;
+        func_8004284C();
+        break;
+    case 15:
+        func_80085A60();
+        break;
+    case 16:
+        func_80142BC8();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
+
+void func_8015052C(void) {
+    u32 temp_v0;
+    u32 temp_v0_2;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8005742C(0x40F4, 1);
+        func_8004284C();
+        break;
+    case 1:
+        func_8007E934();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_8014338C();
+            func_80057418(1, func_8005751C(1));
+            func_8004284C();
+        }
+        break;
+    case 3:
+        func_8007E81C();
+        break;
+    case 4:
+        if (D_800E6280.unk_03E == 0x5F) {
+            D_800CA148 = 0x2E;
+        } else {
+            D_800CA148 = 0x2F;
+        }
+        func_8004284C();
+        break;
+    case 5:
+        func_80085A60();
+        break;
+    case 6:
+        func_8007E934();
+        break;
+    case 7:
+        D_80122EAC = 2;
+        D_80122EB0 = (s32) D_800E6280.unk_1109;
+        D_80122EB4 = D_800E6280.unk_110A + 1;
+        main_state_set(0x80);
+        break;
+    case 8:
+        func_800866A0(0x622D);
+        break;
+    case 9:
+        func_8014338C();
+        D_80125CA0 = 0xC0;
+        func_8007C740();
+        D_800E6280.unk_F5F = 6;
+        func_80083474();
+        cd_read_sectors(0xFU, 0x801E8000, 0x4B13);
+        break;
+    case 10:
+        normal_date_bggirl_fadein();
+        break;
+    case 11:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(6);
+            switch (temp_v0) {
+            case 0:
+            case 1:
+                D_800CA148 = (D_800E6280.unk_03E * 3) - 0xB0;
+                break;
+            case 2:
+                D_800CA148 = (D_800E6280.unk_03E * 3) - 0xAF;
+                break;
+            case 3:
+                D_800CA148 = (D_800E6280.unk_03E * 3) - 0xAE;
+                break;
+            case 4:
+                D_800CA148 = 0x76;
+                break;
+            }
+            func_801508C4();
+        }
+        break;
+    case 12:
+        func_80085A60();
+        break;
+    case 13:
+        temp_v0_2 = func_8008667C(6);
+        switch (temp_v0_2) {
+        case 0:
+        case 1:
+            D_800CA148 = 1;
+            func_8004284C();
+            break;
+        case 2:
+            D_800CA148 = 2;
+            func_8004284C();
+            break;
+        case 3:
+            D_800CA148 = 3;
+            func_8004284C();
+            break;
+        case 4:
+            normal_date_girl_out();
+            break;
+        }
+        break;
+    case 14:
+        func_80085A60();
+        break;
+    case 15:
+        if (func_8008667C(6) == 4) {
+            func_8004284C();
+        } else {
+            normal_date_girl_out();
+        }
+        break;
+    case 16:
+        func_8007E934();
+        break;
+    case 17:
+        D_800CA148 = 0;
+        func_8004284C();
+        break;
+    case 18:
+        func_80085A60();
+        break;
+    case 19:
+        func_80142BC8();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 void func_801508C4(void) {
     func_800847B8(6);

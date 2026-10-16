@@ -1,7 +1,33 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_80133870);
+/* s32 with no return (the caller uses it as implicit int): v0 is live at the exit, so as1 cannot fill the delay slot of the branch before the last call with lui v0 and takes the move a1,zero instead. T-16562 */
+s32 func_80133870(void) {
+    D_800E6280.unk_1104.u += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80133980();
+        break;
+    case 1:
+        func_80133AF4();
+        break;
+    case 2:
+        func_80133C08();
+        break;
+    case 3:
+        func_80133E98();
+        break;
+    case 4:
+        func_80134500();
+        break;
+    }
+    if (D_800E6280.unk_1104.u & 0x10) {
+        func_801432F0((s32) "NOW LOADING DATA ", -0x60, 0, 1);
+    }
+    if ((D_800E6280.unk_1104.u != 0) && ((u32) D_800E6280.unk_1104.u < 0x400U)) {
+        func_801430D0(D_8015EDEC--, 0, 0x32, 6);
+    }
+}
 
 s32 func_80133980(void) {
     switch (D_800E6280.unk_110D) {
@@ -144,7 +170,30 @@ void func_80133C08(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_80133E98);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_801342CC);
+/* implicit-int function (called before its definition): s32 with no return. The loop re-reads and re-writes one word (buf[0x80]) 16 times, as the asm does. */
+s32 func_801342CC(void) {
+    u32 *buf;
+    s32 i;
+
+    tpage_buf_clear_all();
+    LoadSquare(0x360, 0x180, 0x20, 0x80, (void *)0x80180000);
+    load_tpage_buf_lock(0x3F, 0x80180000, 2);
+    load_tpage_buf_lock(0x3D, 0x80182000, 2);
+    load_tpage_buf_lock(0x1D, 0x80184000, 2);
+    load_tpage_buf_lock(0x1C, 0x80186000, 2);
+    load_tpage_buf_lock(0x3C, 0x80188000, 2);
+    load_palette(0x8018A000, 0xF, 1, 1, 0);
+    load_palette(0x8018A000, 0, 1, 1, 0);
+    LoadSquare(0x360, 0x100, 0x20, 0x80, (void *)0x8018A200);
+    load_palette(0x8018A000, 1, 1, 3, 0);
+    load_tpage_buf_lock(0x1F, 0x8018C200, 1);
+    buf = (u32 *)0x80190200;
+    for (i = 0; i < 0x10; i++) {
+        buf[0x80] &= 0x7FFF0000;
+    }
+    LoadSquare(0x100, 0x1F8, 0x100, 8, buf);
+    func_8009C674(0);
+}
 
 void func_80134450(void) {
     func_8004435C(0x100, 0x1E0, 0x100, 0x18, 0x801B8000);
@@ -173,7 +222,7 @@ s32 func_80134500(void) {
         func_801345D4();
         func_80058F0C(0x8018A000);
         func_8013474C();
-        func_801347F4(0x801AC000);
+        func_801347F4((s32 *)0x801AC000);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
@@ -182,7 +231,72 @@ s32 func_80134500(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_801345D4);
+/* File-local view of the settings block at D_800E7D10 (0x800E7D50 = +0x40), T-16562.
+   The flag test reads the word at +0x40 through this view too: uopt then sees the byte
+   read-modify-write of the else path overlap a word access and keeps &D_800E7D10 in $v0
+   (with D_800E7D50 in the test it makes the byte a plain global with lui/%lo addresses). */
+typedef struct TcSetW {
+    u32 pad0 : 2;
+    u32 mode : 1;
+    u32 sel : 2;
+} TcSetW;
+typedef struct TcSetH {
+    u16 pad0 : 12;
+    u16 hi : 4;
+} TcSetH;
+typedef struct TcSetB {
+    u8 b0;
+    u8 lo : 4;
+} TcSetB;
+typedef struct TcSetF {
+    u8 flag : 1;
+} TcSetF;
+typedef struct TcSave {
+    u8 pad00[0x40];
+    union {         /* 0x40: one view per load width of the original */
+        s32 word;
+        TcSetW w;
+        TcSetH h;
+        TcSetB b;
+        TcSetF f;
+        struct {
+            u8 pad[2];
+            u8 name0[3];    /* 0x42 */
+            u8 name1[3];    /* 0x45 */
+            u8 name2[3];    /* 0x48 */
+            u8 pad4B;
+            s32 unk4C;      /* 0x4C */
+            s32 unk50;      /* 0x50 */
+            s32 unk54;      /* 0x54 */
+        } s;
+    } set;
+} TcSave;
+
+void func_801345D4(void) {
+    TcSave *save;
+
+    save = (TcSave *)&D_800E7D10;
+    if (save->set.word & 1) {
+        D_8015EDF8 = save->set.s.unk4C;
+        D_8015EDFC = save->set.s.unk50;
+        D_8015EE00 = save->set.s.unk54;
+        D_8015EDD8 = save->set.w.mode;
+        D_8015EDDC = save->set.w.sel;
+        D_8015EDE0 = save->set.h.hi;
+        D_8015EDE4 = save->set.b.lo;
+        func_800AE090(D_8015EE04, save->set.s.name0, 3);
+        func_800AE090(D_8015EE08, save->set.s.name1, 3);
+        func_800AE090(D_8015EE0C, save->set.s.name2, 3);
+        return;
+    }
+    save->set.f.flag = 1;
+    D_8015EDF8 = 0x2EA694;
+    D_8015EDFC = 0x1F6454;
+    D_8015EE00 = 0x102214;
+    func_800AE0F0(D_8015EE04, "K.K");
+    func_800AE0F0(D_8015EE08, "K.T");
+    func_800AE0F0(D_8015EE0C, "N.S");
+}
 
 void func_8013474C(void) {
     TcObj50 *p;
@@ -205,30 +319,21 @@ void func_801347A8(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, only "move s2,s3; addiu s2,s2,8" against one addiu and the lui/addiu order of the loop constants differ (7 lines); a K&R definition with `s32 arg0` fixes the prologue but the header check rejects it */
-void func_801347F4(s32 arg0) {
-    s32 b;
-    TcObj50 *p;
-    Tc10 *q;
+void func_801347F4(s32 *arg0) {
+    s32 *dop;
+    s32 i;
 
-    arg0 += 4;
-    func_8009B3C0(arg0);
-    b = arg0;
-    b += 8;
-    p = D_80127480;
-    q = D_80127080;
-    do {
-        func_8009B430(b, (u8 *)q, 0);
-        q->unk4[0] = (s32)p;
-        p++;
-        q++;
-        q[-1].unk0 = 0x80000000;
-    } while (p != (TcObj50 *)D_80128880);
+    dop = arg0;
+    dop++;
+    func_8009B3C0((s32)dop);
+    dop++;
+    dop++;
+    for (i = 0; i < 0x40; i++) {
+        func_8009B430((s32)dop, (u8 *)&D_80127080[i], 0);
+        D_80127080[i].unk4[0] = (s32)&D_80127480[i];
+        D_80127080[i].unk0 = 0x80000000;
+    }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_801347F4);
-#endif
 
 void func_80134884(void) {
     func_800AE080((u8 *) D_8015E270, 0x140);
@@ -239,5 +344,5 @@ void func_80134884(void) {
     func_800AE080((u8 *) D_8015E8B0, 0x140);
     func_800AE080((u8 *) D_8015E9F0, 0x140);
     func_800AE080((u8 *) D_8015EB30, 0x140);
-    func_800AE080((u8 *) &D_8015EC70, 0x140);
+    func_800AE080((u8 *) D_8015EC70, 0x140);
 }

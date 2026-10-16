@@ -1,0 +1,22 @@
+{
+  "scope": "ETC:func_8013CCE4",
+  "unit": "ETC",
+  "func": "func_8013CCE4",
+  "src": "src/ovl/ETC/8013BEF0.c",
+  "size": 584,
+  "status": "scored",
+  "score": 138,
+  "base_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "ticket": "T-14700",
+  "production_changed": false,
+  "literal_verified": false,
+  "affected_sha1_verified": false,
+  "compile_verified": true,
+  "scoring": "default full-TU resolved comparison; diagnostic only",
+  "remaining_blockers": [
+    "Nonzero code generation differences; literal-byte proof and affected SHA1 required before promotion."
+  ],
+  "body.c_sha256": "b9d167286ae14142970b47520b993429bdcc90e2d7b81917157d74dd5be40ec8",
+  "declarations.h_sha256": "00fbecd9fa0881132faefde31b813e8efe3ff1ff3f7933ef1329765e0275dca7",
+  "context.c_sha256": "8322ccf9a6ea29c0ded6eb069934a0789101a33c863deb6b9f865c2b98a254fd"
+}

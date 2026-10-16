@@ -1,11 +1,6 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-typedef struct {
-    void (*f[19])();
-} FnTbl19; /* size 0x4C */
-extern FnTbl19 D_80145A80;
-
 void func_8013BA00(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl19 tbl;
@@ -57,4 +52,65 @@ void func_8013BD2C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013BA00", func_8013BDE0);
+void func_8013BDE0(void) {
+
+    D_80145A08 = 0;
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        D_801459FC = D_80145964;
+        D_80145A00 = D_80145998;
+        D_80145A04 = D_801459CC;
+        break;
+    case 1:
+        D_801459FC = D_80145978;
+        D_80145A00 = D_801459AC;
+        D_80145A04 = D_801459E0;
+        break;
+    case 2:
+        D_801459FC = D_80145968;
+        D_80145A00 = D_8014599C;
+        D_80145A04 = D_801459D0;
+        break;
+    case 3:
+        D_801459FC = D_80145970;
+        D_80145A00 = D_801459A4;
+        D_80145A04 = D_801459D8;
+        break;
+    case 4:
+        D_801459FC = D_80145988;
+        D_80145A00 = D_801459BC;
+        D_80145A04 = D_801459F0;
+        break;
+    case 5:
+        D_801459FC = D_8014597C;
+        D_80145A00 = D_801459B0;
+        D_80145A04 = D_801459E4;
+        break;
+    case 6:
+        D_801459FC = D_80145980;
+        D_80145A00 = D_801459B4;
+        D_80145A04 = D_801459E8;
+        break;
+    case 7:
+        D_801459FC = D_80145974;
+        D_80145A00 = D_801459A8;
+        D_80145A04 = D_801459DC;
+        break;
+    case 8:
+        D_801459FC = D_80145960;
+        D_80145A00 = D_80145994;
+        D_80145A04 = D_801459C8;
+        break;
+    case 9:
+        D_801459FC = D_80145984;
+        D_80145A00 = D_801459B8;
+        D_80145A04 = D_801459EC;
+        break;
+    case 10:
+        D_801459FC = D_80145990;
+        D_80145A00 = D_801459C4;
+        D_80145A04 = D_801459F8;
+        break;
+    }
+    func_8004284C();
+}

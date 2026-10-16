@@ -1,0 +1,8 @@
+{
+ "base": "",
+ "files": {
+  "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+  "include/main_api.h": "5547d795f771168a2c74e9353ad565873bd1e1fe61c1aa9bc2fcd16c45bf74d9",
+  "include/ovl/SHOUGATU.h": "5b02cb6d6f14dc9b2e539784ba14c4bd45e1c67209a93658aabf53cb375fa491"
+ }
+}

@@ -1,0 +1,6 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/BUNKASAI -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/BUNKASAI/func_801509A4/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/BUNKASAI/func_801509A4/full-context.c drafts/T-16100/batch-2/BUNKASAI/func_801509A4/work/guarded.o ido 5.3
+
+Full translation unit compiled and scored.

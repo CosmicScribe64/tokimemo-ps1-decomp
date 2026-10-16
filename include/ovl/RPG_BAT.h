@@ -80,9 +80,16 @@ s32 func_80144C84();
 s32 func_801452C0();
 s32 func_801453B4();
 extern s32 D_8015EBBC;
+/* The two prototypes below can be hidden by a file that was matched with the implicit int view the
+ * original callers had: it defines RPG_BAT_OVERRIDE_<name> before its includes and declares
+ * `s32 <name>();` itself (the definitions in 8013E4D0.c are void; T-16210). */
+#ifndef RPG_BAT_OVERRIDE_func_8013E7C0
 void func_8013E7C0(s32 a, s32 b, s32 c, s32 d);
+#endif
 void func_8013E810(s32 a, s32 b, s32 c, s32 d);
+#ifndef RPG_BAT_OVERRIDE_func_8013E97C
 void func_8013E97C(s32 a, s32 b, s32 c);
+#endif
 
 void func_8014F080(s32 arg0);
 void func_8014EF3C(void);
@@ -158,7 +165,17 @@ typedef struct RpgStat {
     /* 0x00 */ s32 unk_00;
     /* 0x04 */ s32 unk_04;
     /* 0x08 */ s32 unk_08;
-    /* 0x0C */ u8 pad_0C[0x2C];
+    /* 0x0C */ s32 unk_0C; /* T-17100: the words between are the scalars D_8015EC08..D_8015EC30 */
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ s32 unk_14;
+    /* 0x18 */ s32 unk_18;
+    /* 0x1C */ s32 unk_1C;
+    /* 0x20 */ s32 unk_20;
+    /* 0x24 */ s32 unk_24;
+    /* 0x28 */ s32 unk_28;
+    /* 0x2C */ s32 unk_2C;
+    /* 0x30 */ s32 unk_30;
+    /* 0x34 */ s32 unk_34;
     /* 0x38 */ s32 unk_38;
 } RpgStat; /* size 0x3C */
 extern RpgStat D_8015EBFC;
@@ -217,6 +234,7 @@ extern u8 D_8015EA58[];
 extern u8 D_8015EA80[];
 extern u8 D_8015EAA8[];
 extern s32 D_8015EDA0;
+extern s32 D_8015EDA4;
 extern u32 D_8015EE08;
 void func_8014F38C();
 extern s32 D_8015EDC0;
@@ -253,7 +271,9 @@ void func_8014DF60();
 void func_8014F88C();
 void func_8014FDBC();
 void func_80151C10();
-void func_80155A70();
+s32 func_80155A70();
+s32 func_8013B2F0(void);
+void func_8013B534(void);
 void func_8015675C();
 void func_801568A4();
 void func_80159E28();
@@ -339,6 +359,7 @@ typedef struct RpgFlagRecord44 { /* size 0x44 */
 } RpgFlagRecord44;
 
 void func_80148654(void);
+void func_80148B08(void);
 
 /* T-9780: second dialogue text buffer. */
 s32 func_80142544(void);
@@ -494,4 +515,87 @@ extern s32 D_8015EEC8;
 #define OVL_RPG_BAT_T10850_TYPES
 /* T-10850: initializer is called before its definition in its original object. */
 s32 func_8014E994(void);
+#endif
+
+
+#ifndef OVL_RPG_BAT_T12040
+#define OVL_RPG_BAT_T12040
+void func_80132348(void);
+void func_80132A94(s32 arg0, s32 arg1);
+
+/* T-12040: displacement and the six rectangle words share EC50..EC6F. */
+typedef struct RpgMotion20 {
+    /* 0x00 */ s32 dx;
+    /* 0x04 */ s32 dy;
+    /* 0x08 */ RpgRec18 rect;
+} RpgMotion20; /* size 0x20 */
+void func_8015A6D4(void);
+void func_8015A744(void);
+void func_8015A8B4(void);
+void func_80132CE4(void);
+void func_80132DE8(void);
+void func_80132EE0(void);
+
+/* T-12040: position and displacement share the EC28..EC57 work range. */
+typedef struct RpgMotion30 {
+    /* 0x00 */ s32 x;
+    /* 0x04 */ s32 y;
+    /* 0x08 */ u8 unk_08[0x20];
+    /* 0x28 */ s32 dx;
+    /* 0x2C */ s32 dy;
+} RpgMotion30; /* size 0x30 */
+
+#endif
+
+#ifndef OVL_RPG_BAT_T12300_DECLS
+#define OVL_RPG_BAT_T12300_DECLS
+/* T-12300: word flag defined in 8014E780.c and read by 80145CC0.c. */
+extern s32 D_8015EE18;
+/* T-12300: word counters cleared by func_8014A660 (sw accesses). */
+extern s32 D_8015EC7C;
+extern s32 D_8015EC80;
+extern s32 D_8015ECEC;
+extern s32 D_8015ECF0;
+extern s32 D_8015ECF4;
+extern s32 D_8015ECF8;
+/* Existing guarded definitions later in 8014A660.c. */
+void func_8014AB84(s32 arg0, s32 arg1, s32 arg2);
+void func_8014AC74(void);
+
+#ifndef OVL_RPG_BAT_T17100_TABLES
+#define OVL_RPG_BAT_T17100_TABLES
+/* T-17100: constant tables that unmatched functions copy whole to the stack
+ * (an lw/sw run, written in C as one struct assignment, like StrTbl41). */
+typedef struct RpgDirTable {
+    /* 0x00 */ s32 v[16]; /* eight (x, y) unit steps at 45 degrees, 0x100 = 1.0 */
+} RpgDirTable; /* size 0x40 */
+typedef struct RpgStrTbl4 {
+    /* 0x00 */ u8 *s[4];
+} RpgStrTbl4; /* size 0x10 */
+typedef struct RpgWordTbl4 {
+    /* 0x00 */ s32 v[4];
+} RpgWordTbl4; /* size 0x10 */
+typedef struct RpgWordTbl10 {
+    /* 0x00 */ s32 v[10];
+} RpgWordTbl10; /* size 0x28 */
+typedef struct RpgHalfTbl12 {
+    /* 0x00 */ s16 v[12]; /* six (x, y) offsets */
+} RpgHalfTbl12; /* size 0x18 */
+extern RpgDirTable D_8015E4F0;  /* func_801328C4 */
+extern RpgStrTbl4 D_8015E530;   /* func_80139E88 */
+extern RpgWordTbl4 D_8015E540;  /* func_80139E88 */
+extern RpgWordTbl10 D_8015E550; /* func_8013BBF8 */
+extern RpgWordTbl10 D_8015E578; /* func_8013BBF8 */
+extern RpgHalfTbl12 D_8015E720; /* func_8014BB80 */
+extern RpgStrTbl4 D_8015EFA0;   /* func_80152384 */
+extern RpgStrTbl4 D_8015EFB0;   /* func_80152384 */
+extern RpgStrTbl4 D_8015EFC0;   /* func_80152384 */
+extern RpgWordTbl4 D_8015EFD0;  /* func_80152384 */
+extern RpgStrTbl4 D_8015EFE0;   /* func_80159B40 */
+extern RpgStrTbl4 D_8015EFF0;   /* func_80159B40 */
+/* T-17100: called by func_801498C0 before their definitions. */
+void func_80149AA8(void);
+void func_8014A16C(void);
+#endif
+
 #endif

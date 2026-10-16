@@ -1,0 +1,25 @@
+{
+  "environment_hash": "6f65598c4801aecc283a0ff94ca04d54505cf70ec6730470159f30c33cb7bd37",
+  "func": "func_8013A2E8",
+  "guarded": false,
+  "harness_hash": "cbf40cd669e0c44bcb1cb19323f5d31d23204f47dc9bd7013854767313559da1",
+  "scope": "ENDING:func_8013A2E8",
+  "score": 1667,
+  "seconds": 1.658,
+  "size": 4648,
+  "source_hash": "487d47537c90abb055d951ee60cf4e14babd9f7ec7b1819c7d65f213fe2b357e",
+  "src": "src/ovl/ENDING/801396E0.c",
+  "status": "scored",
+  "unit": "ENDING",
+  "variant": "unaligned-aggregate-repair",
+  "ticket": "T-15100",
+  "compile_attempts": 1,
+  "notes": [
+    "Real 27-byte copied string aggregate and nine consumed dialogue_render integer returns (existing main-source ABI view)."
+  ],
+  "matching_claim": false,
+  "archive_path": "drafts/T-14500/repairs-unaligned/ENDING/func_8013A2E8",
+  "context_sha256": "f0fb505ce00152456eccfd762de215034a3a307c6375cdb8a8dd0dcd69e7947e",
+  "residual_class": "nonmatching instruction, control-flow, stack-layout or inferred-type differences",
+  "body_sha256": "8de93bafceaa9da7f785ca2c9d60e504d60c4d6b0ffe0f50fd398894a5b00734"
+}

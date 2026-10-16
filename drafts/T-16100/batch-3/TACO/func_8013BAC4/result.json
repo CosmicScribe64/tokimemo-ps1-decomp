@@ -1,0 +1,24 @@
+{
+  "scope": "TACO:func_8013BAC4",
+  "src": "src/ovl/TACO/8013B990.c",
+  "path": "drafts/T-16100/batch-3/TACO/func_8013BAC4",
+  "archive_path": "drafts/T-16100/batch-3/TACO/func_8013BAC4",
+  "status": "scored",
+  "score": 817,
+  "source_base": "48362009",
+  "header_base": "drafts/T-14500/baseline/include",
+  "matching_claim": false,
+  "changed": false,
+  "compile_verified": true,
+  "initial_score": 817,
+  "artifact_sha256": {
+    "assembly-evidence.txt": "534cfb190d18dd39a301447283853923ef79757811bc1653fb37f73f5cbe953e",
+    "provenance.json": "ef8bb8f3967331850a921c8718943dbc3625b5bd5916c9370fa5369a5dd67493",
+    "declarations.h": "9deb43d30a94578b0ea2682e69c628411e946e9a2f47db6645965624f94c851d",
+    "difference.txt": "d28bbcf2bab5cd5ccc2487226fb9e2765a0bfbc3412d906f6221316d2251d70e",
+    "context.c": "dd646b98d91539a76752a8b5f787b19d2ba57c4c86357fdae7ef4678d2627684",
+    "body.c": "6b68634103163110e6cdd5bcfe9272fe1561c31874b5b1e84dc5b8c883d63d0a",
+    "full-context.c": "c548bf39133f0dc8ed737eefbf67ad43778f5c85f4ad3c28a41351bc74220fba",
+    "diagnostics.txt": "6e0327e9884e14743ab6af19bac1d7ac1914597144c1da710503eed4328058ac"
+  }
+}

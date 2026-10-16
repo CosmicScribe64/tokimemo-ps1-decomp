@@ -1,0 +1,22 @@
+m2c.py: argument counts from the callees' asm: func_80053418 2
+python3 failed:
+cfe: Warning 681: drafts/T-14500/TEL/func_8013CCD0/work/guarded.o.sjis.c, line 2738: '&' before array or function; ignored
+     func_80053418((s32) &sp98, (s32) &sp78[0]);
+ ------------------------^
+cfe: Error: drafts/T-14500/TEL/func_8013CCD0/work/guarded.o.sjis.c, line 2738: 'sp78' undefined; reoccurrences will not be reported.
+     func_80053418((s32) &sp98, (s32) &sp78[0]);
+ --------------------------------------^
+cfe: Error: drafts/T-14500/TEL/func_8013CCD0/work/guarded.o.sjis.c, line 2757: 'sp' undefined; reoccurrences will not be reported.
+                 temp_v0 = *(u8 *)((unsigned char *)(sp + var_s2_2) + (152));
+ ----------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TEL/func_8013CCD0/work -o drafts/T-14500/TEL/func_8013CCD0/work/guarded.o /tmp/asm_processork9t1y8yg/preprocessed_24cc3ca319d44d829cf95ac9d7979b50.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibdec3c9o0/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TEL/func_8013CCD0/work/guarded.o drafts/T-14500/TEL/func_8013CCD0/work/guarded.o.sjis.c
+python3 failed:
+cfe: Warning 681: drafts/T-14500/TEL/func_8013CCD0/work/guarded.o.sjis.c, line 2739: '&' before array or function; ignored
+     func_80053418((s32) &sp98, (s32) &sp78[0]);
+ ------------------------^
+cfe: Error: drafts/T-14500/TEL/func_8013CCD0/work/guarded.o.sjis.c, line 2739: 'sp78' undefined; reoccurrences will not be reported.
+     func_80053418((s32) &sp98, (s32) &sp78[0]);
+ --------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TEL/func_8013CCD0/work -o drafts/T-14500/TEL/func_8013CCD0/work/guarded.o /tmp/asm_processormt9t0013/preprocessed_15077d08a16c41138abd4e20119a7e9f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqrd8a4rb/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TEL/func_8013CCD0/work/guarded.o drafts/T-14500/TEL/func_8013CCD0/work/guarded.o.sjis.c

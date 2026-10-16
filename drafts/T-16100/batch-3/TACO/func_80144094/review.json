@@ -1,0 +1,37 @@
+{
+  "scope": "TACO:func_80144094",
+  "selected_path": "drafts/T-14500/TACO/func_80144094",
+  "archive_path": "drafts/T-16100/batch-3/TACO/func_80144094",
+  "changed": false,
+  "reviewed": true,
+  "repair_notes": [],
+  "flags": [
+    {
+      "detail": "+ &sp8C",
+      "kind": "stack-address-arithmetic",
+      "line": 67,
+      "outcome": "unresolved",
+      "explanation": "Stack-address arithmetic reaches beyond a scalar stack object. Requires reconstruction of coordinate aggregate and alias uses."
+    },
+    {
+      "detail": "+ &sp68",
+      "kind": "stack-address-arithmetic",
+      "line": 83,
+      "outcome": "unresolved",
+      "explanation": "Stack-address arithmetic reaches beyond a scalar stack object. Requires reconstruction of coordinate aggregate and alias uses."
+    },
+    {
+      "detail": "+ &sp64",
+      "kind": "stack-address-arithmetic",
+      "line": 84,
+      "outcome": "unresolved",
+      "explanation": "Stack-address arithmetic reaches beyond a scalar stack object. Requires reconstruction of coordinate aggregate and alias uses."
+    }
+  ],
+  "notes": "Stack-address arithmetic reaches beyond a scalar stack object. Requires reconstruction of coordinate aggregate and alias uses.",
+  "assembly_evidence": "drafts/T-16100/batch-3/TACO/func_80144094/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "reviewed-unresolved"
+}

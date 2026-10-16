@@ -1,0 +1,103 @@
+{
+  "scope": "TT:func_8013D988",
+  "selected_path": "drafts/T-14500/TT/func_8013D988",
+  "changed": false,
+  "outcomes": [
+    {
+      "detail": "+ &sp78",
+      "kind": "stack-address-arithmetic",
+      "line": 50,
+      "verdict": "unresolved-layout",
+      "explanation": "Stack accesses and initialization/call sites reviewed against the target. Separate synthesized locals or oversized arrays are not evidence of a valid aggregate. No safe complete layout was established in this bounded pass; preserve the flag and original draft. sp78 and sp2BC are starts of large projected-coordinate grids, and sp298 lies inside the first grid. The one-word locals are invalid bounds; recovering the nested loop dimensions and interior aliases is required before assigning array sizes.",
+      "original_excerpt": [
+        "        var_s3 = 0;",
+        "        var_s1 = sp70 + &sp78;",
+        "        var_s0 = sp70 + &sp2BC;"
+      ]
+    },
+    {
+      "detail": "+ &sp2BC",
+      "kind": "stack-address-arithmetic",
+      "line": 51,
+      "verdict": "unresolved-layout",
+      "explanation": "Stack accesses and initialization/call sites reviewed against the target. Separate synthesized locals or oversized arrays are not evidence of a valid aggregate. No safe complete layout was established in this bounded pass; preserve the flag and original draft. sp78 and sp2BC are starts of large projected-coordinate grids, and sp298 lies inside the first grid. The one-word locals are invalid bounds; recovering the nested loop dimensions and interior aliases is required before assigning array sizes.",
+      "original_excerpt": [
+        "        var_s1 = sp70 + &sp78;",
+        "        var_s0 = sp70 + &sp2BC;",
+        "loop_2:"
+      ]
+    }
+  ],
+  "repair_notes": [],
+  "assembly_path": "asm/ovl/TT/nonmatchings/TT/8013C6D0/func_8013D988.s",
+  "assembly_sha256": "39212cf8e344de20376648d4da8fc353683cf8d8df61498f45a11bee63ed7114",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x3C": [
+      "lw",
+      "sw"
+    ],
+    "0x38": [
+      "lw",
+      "sw"
+    ],
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x28": [
+      "lw",
+      "sw"
+    ],
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x18": [
+      "lw",
+      "sw"
+    ],
+    "0x52C": [
+      "lw",
+      "sw"
+    ],
+    "0x524": [
+      "lw",
+      "sw"
+    ],
+    "0x60": [
+      "lw",
+      "sw"
+    ],
+    "0x514": [
+      "lw",
+      "sw"
+    ],
+    "0x70": [
+      "lw",
+      "sw"
+    ],
+    "0x54": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "sp78 and sp2BC are starts of large projected-coordinate grids, and sp298 lies inside the first grid. The one-word locals are invalid bounds; recovering the nested loop dimensions and interior aliases is required before assigning array sizes."
+}

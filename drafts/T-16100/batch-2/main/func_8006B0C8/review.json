@@ -1,0 +1,182 @@
+{
+  "scope": "main:func_8006B0C8",
+  "path": "drafts/T-16100/batch-2/main/func_8006B0C8",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "sp7C[8]",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 43
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 50
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 63
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 76
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 91
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 111
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 129
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 162
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 173
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 186
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 201
+    }
+  ],
+  "explanation": "sp7C[8] has documented eight-entry scratch purpose, but GameState* byte-stride walks through unk_54C remain incorrect and require one coherent rewrite.",
+  "evidence_path": "drafts/T-16100/batch-2/main/func_8006B0C8/evidence.txt",
+  "compile_status": "scored",
+  "score": 1056,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp7C[8]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "sp7C[8] has documented eight-entry scratch purpose, but GameState* byte-stride walks through unk_54C remain incorrect and require one coherent rewrite."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 43
+      },
+      "outcome": "unresolved",
+      "explanation": "sp7C[8] has documented eight-entry scratch purpose, but GameState* byte-stride walks through unk_54C remain incorrect and require one coherent rewrite."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 50
+      },
+      "outcome": "unresolved",
+      "explanation": "sp7C[8] has documented eight-entry scratch purpose, but GameState* byte-stride walks through unk_54C remain incorrect and require one coherent rewrite."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 63
+      },
+      "outcome": "unresolved",
+      "explanation": "sp7C[8] has documented eight-entry scratch purpose, but GameState* byte-stride walks through unk_54C remain incorrect and require one coherent rewrite."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 76
+      },
+      "outcome": "unresolved",
+      "explanation": "sp7C[8] has documented eight-entry scratch purpose, but GameState* byte-stride walks through unk_54C remain incorrect and require one coherent rewrite."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 91
+      },
+      "outcome": "unresolved",
+      "explanation": "sp7C[8] has documented eight-entry scratch purpose, but GameState* byte-stride walks through unk_54C remain incorrect and require one coherent rewrite."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 111
+      },
+      "outcome": "unresolved",
+      "explanation": "sp7C[8] has documented eight-entry scratch purpose, but GameState* byte-stride walks through unk_54C remain incorrect and require one coherent rewrite."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 129
+      },
+      "outcome": "unresolved",
+      "explanation": "sp7C[8] has documented eight-entry scratch purpose, but GameState* byte-stride walks through unk_54C remain incorrect and require one coherent rewrite."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 162
+      },
+      "outcome": "unresolved",
+      "explanation": "sp7C[8] has documented eight-entry scratch purpose, but GameState* byte-stride walks through unk_54C remain incorrect and require one coherent rewrite."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 173
+      },
+      "outcome": "unresolved",
+      "explanation": "sp7C[8] has documented eight-entry scratch purpose, but GameState* byte-stride walks through unk_54C remain incorrect and require one coherent rewrite."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 186
+      },
+      "outcome": "unresolved",
+      "explanation": "sp7C[8] has documented eight-entry scratch purpose, but GameState* byte-stride walks through unk_54C remain incorrect and require one coherent rewrite."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 201
+      },
+      "outcome": "unresolved",
+      "explanation": "sp7C[8] has documented eight-entry scratch purpose, but GameState* byte-stride walks through unk_54C remain incorrect and require one coherent rewrite."
+    }
+  ]
+}

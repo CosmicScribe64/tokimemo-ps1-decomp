@@ -1,0 +1,21 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/DATE2 -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-3/DATE2/func_80133AF0/work/variant.c
+[Preprocessed C retained in full-context.c]
+
+$ python3 tools/cc.py drafts/T-16100/batch-3/DATE2/func_80133AF0/work/guarded.c drafts/T-16100/batch-3/DATE2/func_80133AF0/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-3/DATE2/func_80133AF0/work/guarded.o.sjis.c, line 2768: '&' before array or function; ignored
+     get_p_name(&D_800CA17C, 0);
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-3/DATE2/func_80133AF0/work/guarded.o.sjis.c, line 3127: Incompatible pointer type assignment
+                                 temp_v0_3 = D_801217D0 + temp_lo;
+ ------------------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-3/DATE2/func_80133AF0/work/guarded.o.sjis.c, line 3140: Incompatible pointer type assignment
+                             temp_v0_4 = D_801217D0 + temp_lo_2;
+ --------------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-3/DATE2/func_80133AF0/work/guarded.o.sjis.c, line 3153: Incompatible pointer type assignment
+                         temp_v0_5 = D_801217D0 + temp_lo_3;
+ ----------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-3/DATE2/func_80133AF0/work/guarded.o.sjis.c, line 3166: Incompatible pointer type assignment
+                     temp_v0_6 = D_801217D0 + temp_lo_4;
+ ------------------------------^
+
+Full TU compiled; score 1441

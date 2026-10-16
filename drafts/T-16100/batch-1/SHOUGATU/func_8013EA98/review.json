@@ -1,0 +1,31 @@
+{
+  "scope": "SHOUGATU:func_8013EA98",
+  "selected_path": "drafts/T-15800/SHOUGATU/func_8013EA98",
+  "changed": false,
+  "outcomes": [
+    {
+      "detail": "sp40[7]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "unresolved-layout",
+      "explanation": "Stack accesses and initialization/call sites reviewed against the target. Separate synthesized locals or oversized arrays are not evidence of a valid aggregate. No safe complete layout was established in this bounded pass; preserve the flag and original draft. sp30 receives 12 bytes plus a trailing halfword; another local sp40 table is supplied through the preserved declaration/context. Halfword indexing and table roles need reconciliation; retain the synthesized word-array warning.",
+      "original_excerpt": [
+        "void func_8013EA98(void) {",
+        "    s16 sp40[7];",
+        "    s32 sp30[4];"
+      ]
+    }
+  ],
+  "repair_notes": [],
+  "assembly_path": "asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330/func_8013EA98.s",
+  "assembly_sha256": "247574d3cd71c9a7f012d8bfc57b216352e74022d82574cce30fa7954804e4ba",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x14": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "sp30 receives 12 bytes plus a trailing halfword; another local sp40 table is supplied through the preserved declaration/context. Halfword indexing and table roles need reconciliation; retain the synthesized word-array warning."
+}

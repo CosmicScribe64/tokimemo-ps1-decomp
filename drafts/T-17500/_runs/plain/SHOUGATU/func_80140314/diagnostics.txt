@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_80140510 10
+python3 failed:
+ ------------^
+cfe: Warning 681: drafts/T-17500/_runs/plain/SHOUGATU/func_80140314/work/guarded.c, line 3821: '&' before array or function; ignored
+     temp_v0 = &sp70 + (*(u8 *)((unsigned char *)(&sp4C + D_80146168[D_80146158] + (D_800E62BE * 0xC)) + (-1140)) * 8);
+ --------------^
+cfe: Warning 681: drafts/T-17500/_runs/plain/SHOUGATU/func_80140314/work/guarded.c, line 3821: '&' before array or function; ignored
+     temp_v0 = &sp70 + (*(u8 *)((unsigned char *)(&sp4C + D_80146168[D_80146158] + (D_800E62BE * 0xC)) + (-1140)) * 8);
+ -------------------------------------------------^
+cfe: Error: drafts/T-17500/_runs/plain/SHOUGATU/func_80140314/work/guarded.c, line 3827: 'sp' undefined; reoccurrences will not be reported.
+     temp_v0_2 = (*(u8 *)((unsigned char *)(sp + (D_80146168[D_80146158] + (D_800E62BE * 0xC))) + (-1064)) * 8) + &sp70;
+ -------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/plain/SHOUGATU/func_80140314/work -o drafts/T-17500/_runs/plain/SHOUGATU/func_80140314/work/guarded.o /tmp/asm_processorhu38y29d/preprocessed_5f8a6126b94f4cda9616256c8a89e7b7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib0ahto1yg/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/plain/SHOUGATU/func_80140314/work/guarded.o drafts/T-17500/_runs/plain/SHOUGATU/func_80140314/work/guarded.c

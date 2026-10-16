@@ -1,0 +1,18 @@
+{
+  "unit": "main",
+  "src": "src/main/8005A0B0.c",
+  "func": "func_8005CC40",
+  "size": 812,
+  "guarded": false,
+  "source_hash": "541f5b7ec75e93d3f677405430c42eb9cf092f56f60c80103ea76ddd8b97e58f",
+  "scope": "main:func_8005CC40",
+  "status": "failed",
+  "score": null,
+  "ticket": "T-16000",
+  "matching_claim": false,
+  "path": "drafts/T-16000/func_8005CC40",
+  "reason": "cfe: Error: drafts/T-16000/func_8005CC40/work/guarded.o.sjis.c, line 3334: redeclaration of 'func_8005CC40'; previous declaration at line 3004 in file 'drafts/T-16000/func_8005CC40/work/guarded.o.sjis.c'\n void func_8005CC40(void);\n -----^\ncfe: Error: drafts/T-16000/func_8005CC40/work/guarded.o.sjis.c, line 3334: Incompatible function return type for this function.\n void func_8005CC40(void);\n ------------------^\ncfe: Error: drafts/T-16000/func_8005CC40/work/guarded.o.sjis.c, line 3335: redeclaration of 'func_8005CC40'; previous declaration at line 3004 in file 'drafts/T-16000/func_8005CC40/work/guarded.o.sjis.c'\n void func_8005CC40(void) {\n -----^\ncfe: Error: drafts/T-16000/func_8005CC40/work/guarded.o.sjis.c, line 3335: Incompatible function return type for this function.\n void func_8005CC40(void) {\n ------------------^\ncfe: Warning 709: drafts/T-16000/func_8005CC40/work/guarded.o.sjis.c, line 3355: Incompatible pointer type assignment\n             temp_v1 = D_800E7398 + &D_800E7D10;\n --------------------^\ncfe: Warning 709: drafts/T-16000/func_8005CC40/work/guarded.o.sjis.c, line 3378: Incompatible pointer type assignment\n             temp_v1_2 = (temp_hi * 8) + &D_800B39C4;\n ----------------------^\ncc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16000/func_8005CC40/work -o drafts/T-16000/func_8005CC40/work/guarded.o /tmp/asm_processorgg26jq7n/preprocessed_629d3e674c634162ad01ae03af0ee8b0.c\ncc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibh2pmwb18/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16000/func_8005CC40/work/guarded.o drafts/T-16000/func_8005CC40/work/guarded.o.sjis.c\n",
+  "body.c_sha256": "bcdc78316ca075a2cac95ae250f52b068f471ff9824adc843c1dc52763579505",
+  "declarations.h_sha256": "696d2e09d1dcc10dbd04b081aa08594c3c6207f53d6de78214d052a0b59da6c7",
+  "context.c_sha256": "e9c18af32e874670c954461d6f76bb24f7299041cf834290170011135a56e4f3"
+}

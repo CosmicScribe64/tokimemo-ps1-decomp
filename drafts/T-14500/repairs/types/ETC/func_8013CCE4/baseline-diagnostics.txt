@@ -1,0 +1,9 @@
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/types/ETC/func_8013CCE4/work/guarded.c, line 4121: redeclaration of 'func_8013CCE4'; previous declaration at line 4102 in file 'drafts/T-14500/repairs/types/ETC/func_8013CCE4/work/guarded.c'
+ void func_8013CCE4(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/types/ETC/func_8013CCE4/work/guarded.c, line 4121: Incompatible function return type for this function.
+ void func_8013CCE4(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/types/ETC/func_8013CCE4/work -o drafts/T-14500/repairs/types/ETC/func_8013CCE4/work/guarded.o /tmp/asm_processorf307iira/preprocessed_e51b0528daa542229df024d6df6aebbc.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibznk55ggr/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/types/ETC/func_8013CCE4/work/guarded.o drafts/T-14500/repairs/types/ETC/func_8013CCE4/work/guarded.c

@@ -1,0 +1,81 @@
+{
+  "scope": "SHOUGATU:func_80141D20",
+  "selected_path": "drafts/T-14500/SHOUGATU/func_80141D20",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 37,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "        if ((temp_t0 & 0xFF) == 8) {",
+        "            *(s8 *)((unsigned char *)(&D_800E6280 + D_801467FC) + (4264)) = 0xC;",
+        "            D_801467FC = D_801467FC;"
+      ]
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 43,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "        } else {",
+        "            *(s8 *)((unsigned char *)(&D_800E6280 + D_801467FC) + (4264)) = 9;",
+        "            D_801467FC = D_801467FC;"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields."
+  ],
+  "assembly_path": "asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780/func_80141D20.s",
+  "assembly_sha256": "dc36f167be4affaa3809eeca01f794dbb66c90896912209e06747b516b551478",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x3C": [
+      "lw",
+      "sw"
+    ],
+    "0x38": [
+      "lw",
+      "sw"
+    ],
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x28": [
+      "lw",
+      "sw"
+    ],
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x18": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

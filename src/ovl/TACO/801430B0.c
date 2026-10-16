@@ -5,9 +5,111 @@ void func_801430B0(void) {
     func_8004ACC8(0x800000);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801430D0);
+void func_801430D0(arg0, arg1, arg2, arg3)
+s32 arg0;
+s32 arg1;
+s32 arg2;
+s32 arg3;
+{
+    s32 n;
+    s32 sign;
+    s32 xoff;
+    SPRT *sprite;
+    u8 *uv;
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801432F0);
+    if (arg0 < 0) {
+        n = -arg0;
+        sign = -1;
+    } else {
+        n = arg0;
+        sign = 1;
+    }
+    if (sign != -1 || !(D_800E6280.unk_10F8 & 4)) {
+        xoff = 0;
+        if (n >= 0) {
+            do {
+                sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+                func_8009F0A4(sprite);
+                sprite->w = 0xC;
+                sprite->h = 0x10;
+                SetSemiTrans(sprite, 0);
+                sprite->r0 = 0x80;
+                sprite->g0 = 0x80;
+                sprite->b0 = 0x80;
+                sprite->x0 = D_800E6280.unk_014[D_8011ECA0] + arg1 - xoff;
+                sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2;
+                uv = &D_8015F5A0[n % 10 * 2];
+                sprite->u0 = uv[0] + 0x80;
+                sprite->v0 = uv[1];
+                sprite->clut = func_8009ED74(arg3 * 0x10, 0x1EF);
+                AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, (s32)sprite);
+                if (n < 10) {
+                    break;
+                }
+                xoff += 0xC;
+                n = n / 10;
+            } while (n >= 0);
+        }
+        dtd_on_tpage(0x340, 0x180, 1, 0, 0);
+    }
+}
+
+/* The character is read as *s in every test (no local copy): uopt then keeps the load in $v1 and the `*s - 0x30` / `*s - 0x41` values in $a0, as the original does. T-16562 */
+void func_801432F0(arg0, arg1, arg2, arg3)
+u8 *arg0;
+s32 arg1;
+s32 arg2;
+s32 arg3;
+{
+    SPRT *sprite;
+    u8 *s;
+    u8 idx;
+    s32 x;
+
+    s = arg0;
+    x = arg1;
+    if (*s != 0) {
+        do {
+            sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+            func_8009F0A4(sprite);
+            SetSemiTrans(sprite, 0);
+            sprite->r0 = 0x80;
+            sprite->g0 = 0x80;
+            sprite->b0 = 0x80;
+            sprite->x0 = D_800E6280.unk_014[D_8011ECA0] + x;
+            x += 0xC;
+            sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2;
+            if (*s >= 0x30 && *s < 0x3A) {
+                idx = *s - 0x30;
+                sprite->u0 = D_8015F5A0[idx * 2] + 0x80;
+                sprite->v0 = D_8015F5A0[idx * 2 + 1];
+            } else {
+                idx = *s - 0x41;
+                if (idx < 0x1A) {
+                    sprite->u0 = D_8015F5B4[idx * 2] + 0x80;
+                    sprite->v0 = D_8015F5B4[idx * 2 + 1];
+                } else if (*s == 0x2E) {
+                    sprite->u0 = D_8015F5E8 + 0x80;
+                    sprite->v0 = D_8015F5E9;
+                } else if (*s == 0x2D) {
+                    sprite->u0 = D_8015F5EA + 0x80;
+                    sprite->v0 = D_8015F5EB;
+                } else if (*s == 0x20) {
+                    sprite->u0 = D_8015F5EC + 0x80;
+                    sprite->v0 = D_8015F5ED;
+                } else {
+                    sprite->u0 = D_8015F5EE + 0x80;
+                    sprite->v0 = D_8015F5EF;
+                }
+            }
+            /* FAKE: w and h on one source line give the original's store order (h first) and the register for 0xC. T-16562 */
+            sprite->w = 0xC; sprite->h = 0x10;
+            sprite->clut = func_8009ED74(arg3 << 4, 0x1EF);
+            AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, (s32)sprite);
+        } while (*++s != 0);
+    }
+    dtd_on_tpage(0x340, 0x180, 1, 0, 0);
+}
 
 void func_80143574(s32 arg0, s32 arg1, s32 arg2) {
     s32 pad; /* FAKE: unused local declared first puts p at sp+0x28 as in the original; real source unknown. T-6070 */
@@ -142,4 +244,66 @@ void func_80143B34(s32 arg0) {
     func_80059688((arg0 * 2) + 2);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143B58);
+void func_80143B58(void) {
+    switch (D_8015EDBC) {
+    case 0: /* empty case of its own: the jump table starts at 0 and its entry 0 is not the default */
+        break;
+    case 0x10:
+        func_800462C8(0x20, 0x80162000, 0xB69B);
+        func_800462C8(0x20, 0x80172000, 0xB6BB);
+        func_800462C8(8, 0x80182000, 0xB47E);
+        D_8015EDBC += 1;
+        break;
+    case 0x14:
+        func_80044890(0, 0xBF43, 0xBF26, 0xD310, 0xD2C2, 0xD29D);
+        D_8015EDBC += 1;
+        break;
+    case 0x18:
+        func_800462C8(0x12, 0x8018D000, 0xB438);
+        cd_read_sectors(0xC, 0x801E0000, 0xB44A);
+        func_800462C8(0x20, 0x80162000, 0xB418);
+        D_8015EDBC += 1;
+        break;
+    case 0x20:
+        func_800462C8(0x20, 0x80162000, 0xB647);
+        func_800462C8(0x20, 0x80172000, 0xB5A0);
+        D_8015EDBC += 1;
+        break;
+    case 0x24:
+        func_80044890(0, 0xBF61, 0xBF45, 0xD310, 0xD2C2, 0xD29D);
+        D_8015EDBC += 1;
+        break;
+    case 0x28:
+        func_800462C8(7, 0x80196000, 0xB45B);
+        cd_read_sectors(5, 0x801E0000, 0xB462);
+        func_800462C8(0x20, 0x80162000, 0xB535);
+        D_8015EDBC += 1;
+        break;
+    case 0x30:
+        func_800462C8(0x20, 0x80162000, 0xB67B);
+        func_800462C8(0x20, 0x80172000, 0xB5C1);
+        D_8015EDBC += 1;
+        break;
+    case 0x34:
+        func_80044890(0, 0xBF77, 0xBF63, 0xD310, 0xD2C2, 0xD29D);
+        D_8015EDBC += 1;
+        break;
+    case 0x38:
+        func_800462C8(0xA, 0x801A7000, 0xB515);
+        cd_read_sectors(0x15, 0x801E0000, 0xB51F);
+        func_800462C8(0x20, 0x80162000, 0xB5FC);
+        func_800462C8(0x20, 0x80172000, 0xB61D);
+        D_8015EDBC += 1;
+        break;
+    case 0x44:
+        func_80044890(0, 0xC56D, 0xC54D, 0xD310, 0xD2C2, 0xD29D);
+        D_8015EDBC += 1;
+        break;
+    default:
+        if (func_80045288() == 1) {
+            D_8015EDBC = 0;
+        }
+        break;
+    }
+}
+

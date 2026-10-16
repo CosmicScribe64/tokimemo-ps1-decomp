@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_80152684 3
+python3 failed:
+cfe: Error: drafts/T-14500/DATE/func_80152268/work/guarded.c, line 4230: redeclaration of 'func_80152268'; previous declaration at line 4219 in file 'drafts/T-14500/DATE/func_80152268/work/guarded.c'
+ void func_80152268(void) {
+ -----^
+cfe: Error: drafts/T-14500/DATE/func_80152268/work/guarded.c, line 4230: Incompatible function return type for this function.
+ void func_80152268(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/DATE/func_80152268/work -o drafts/T-14500/DATE/func_80152268/work/guarded.o /tmp/asm_processore844shp7/preprocessed_0c5c39890f32409d90c2ec952ce3c8df.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib0gx5jl58/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/DATE/func_80152268/work/guarded.o drafts/T-14500/DATE/func_80152268/work/guarded.c

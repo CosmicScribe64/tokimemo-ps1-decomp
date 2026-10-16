@@ -1,0 +1,18 @@
+$ gcc -E -P -Iinclude -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16000/func_80054E6C/work/variant.c
+Preprocessed C retained in full-context.c
+
+$ python3 tools/cc.py drafts/T-16000/func_80054E6C/work/guarded.c drafts/T-16000/func_80054E6C/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16000/func_80054E6C/work/guarded.c, line 3103: Incompatible pointer type assignment
+     temp_a3 = &D_800E7D10 + temp_t6;
+ ------------^
+cfe: Warning 709: drafts/T-16000/func_80054E6C/work/guarded.c, line 3106: Incompatible pointer type assignment
+     temp_v0 = &D_800E7D10 + (temp_t6 * 8);
+ ------------^
+cfe: Warning 709: drafts/T-16000/func_80054E6C/work/guarded.c, line 3122: Incompatible pointer type assignment
+     var_v1_2 = (temp_t6 * 0x10) + &D_800E7D10;
+ -------------^
+cfe: Warning 689: drafts/T-16000/func_80054E6C/work/guarded.c, line 3134: Unacceptable operand of == or !=
+     } while (var_v0_2 != &D_800E6290);
+ ----------------------^
+
+Full translation unit compiled with IDO 5.3. Score 179

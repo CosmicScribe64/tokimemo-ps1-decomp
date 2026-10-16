@@ -1,0 +1,72 @@
+{
+  "scope": "BUNKASAI:func_8015AF90",
+  "selected_path": "drafts/T-14500/BUNKASAI/func_8015AF90",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "sp3C[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target copies exactly four words to sp+0x3C and 44 bytes to sp+0x4C, followed by the 48-byte local at sp+0x78. Shrink synthesized arrays to four and eleven words; synthetic block typedef semantics remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "void func_8015AF90(void) {",
+        "    s32 sp3C[16];",
+        "    s32 sp4C[16];"
+      ]
+    },
+    {
+      "detail": "sp4C[16]",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target copies exactly four words to sp+0x3C and 44 bytes to sp+0x4C, followed by the 48-byte local at sp+0x78. Shrink synthesized arrays to four and eleven words; synthetic block typedef semantics remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp3C[16];",
+        "    s32 sp4C[16];",
+        "    typedef struct { s32 w[12]; } M2cBlock30; /* m2c memcpy of 48 bytes */"
+      ]
+    },
+    {
+      "detail": "M2cBlock30",
+      "kind": "inferred-copy-layout",
+      "line": 4,
+      "verdict": "copy-width-reviewed-layout-partial",
+      "explanation": "Target copies exactly four words to sp+0x3C and 44 bytes to sp+0x4C, followed by the 48-byte local at sp+0x78. Shrink synthesized arrays to four and eleven words; synthetic block typedef semantics remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp4C[16];",
+        "    typedef struct { s32 w[12]; } M2cBlock30; /* m2c memcpy of 48 bytes */",
+        "    typedef struct { s32 w[11]; } M2cBlock2C; /* m2c memcpy of 44 bytes */"
+      ]
+    },
+    {
+      "detail": "M2cBlock2C",
+      "kind": "inferred-copy-layout",
+      "line": 5,
+      "verdict": "copy-width-reviewed-layout-partial",
+      "explanation": "Target copies exactly four words to sp+0x3C and 44 bytes to sp+0x4C, followed by the 48-byte local at sp+0x78. Shrink synthesized arrays to four and eleven words; synthetic block typedef semantics remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    typedef struct { s32 w[12]; } M2cBlock30; /* m2c memcpy of 48 bytes */",
+        "    typedef struct { s32 w[11]; } M2cBlock2C; /* m2c memcpy of 44 bytes */",
+        "    s32 sp78[12];"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target copies exactly four words to sp+0x3C and 44 bytes to sp+0x4C, followed by the 48-byte local at sp+0x78. Shrink synthesized arrays to four and eleven words; synthetic block typedef semantics remain unresolved."
+  ],
+  "assembly_path": "asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8015AF90/func_8015AF90.s",
+  "assembly_sha256": "6eabdb96f60d3bd0c6a9ff20d3d3488e53faa5e59c6a0bcfdaa17f9a55b884ec",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x10": [
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

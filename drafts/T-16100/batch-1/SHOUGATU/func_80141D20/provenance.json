@@ -1,0 +1,8 @@
+{
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "original_path": "drafts/T-14500/SHOUGATU/func_80141D20",
+  "original_body_sha256": "bec016cade64211f1f35ace6e92a0a9ba677509daf81c2810118f516a7aebc6a",
+  "compiler": "IDO 5.3 via order_search.compile_variant, full translation unit, Docker serial",
+  "matching_claim": false
+}

@@ -1,0 +1,28 @@
+-@row 5 27ae0028  ; addiu t6,sp,40
++@row 5 27ae002c  ; addiu t6,sp,44
+-@row 24 3c04800e  ; lui a0,0x0
++@row 24 3c03800e  ; lui v1,0x0
+-@row 25 908462bf  ; lbu a0,0(a0)
++@row 25 906362bf  ; lbu v1,0(v1)
+-@row 27 14a40004  ; bne a1,a0,11d8 <func_80154118+0x80>
++@row 27 14a30004  ; bne a1,v1,11d8 <func_80154118+0x80>
+-@row 28 3c03800e  ; lui v1,0x0
++@row 28 3c04800e  ; lui a0,0x0
+-@row 29 906362c0  ; lbu v1,0(v1)
++@row 29 908462c0  ; lbu a0,0(a0)
+-@row 31 10610010  ; beq v1,at,1218 <func_80154118+0xc0>
++@row 31 10810010  ; beq a0,at,1218 <func_80154118+0xc0>
+-@row 34 908462bf  ; lbu a0,0(a0)
++@row 34 908462c0  ; lbu a0,0(a0)
+-@row 35 906362c0  ; lbu v1,0(v1)
++@row 35 906362bf  ; lbu v1,0(v1)
+-@row 39 14a40002  ; bne a1,a0,1200 <func_80154118+0xa8>
++@row 39 14a30002  ; bne a1,v1,1200 <func_80154118+0xa8>
+-@row 41 10610006  ; beq v1,at,1218 <func_80154118+0xc0>
++@row 41 10810006  ; beq a0,at,1218 <func_80154118+0xc0>
+-@row 45 14a4000b  ; bne a1,a0,123c <func_80154118+0xe4>
++@row 45 14a3000b  ; bne a1,v1,123c <func_80154118+0xe4>
+-@row 47 14610009  ; bne v1,at,123c <func_80154118+0xe4>
++@row 47 14810009  ; bne a0,at,123c <func_80154118+0xe4>
+-@row 71 8f390028  ; lw t9,40(t9)
++@row 71 8f39002c  ; lw t9,44(t9)

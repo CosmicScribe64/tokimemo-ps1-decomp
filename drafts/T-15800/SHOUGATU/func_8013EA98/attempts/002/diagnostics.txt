@@ -1,0 +1,13 @@
+python3 failed:
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/SHOUGATU/func_8013EA98/work/guarded.c, line 3216: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp30) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_8014611C) + (8));
+ -------------------------------^
+cfe: Warning 681: /work/drafts/T-15800/SHOUGATU/func_8013EA98/work/guarded.c, line 3219: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp30) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_8014611C) + (4));
+ -------------------------------^
+cfe: Warning 681: /work/drafts/T-15800/SHOUGATU/func_8013EA98/work/guarded.c, line 3220: '&' before array or function; ignored
+     *(u16 *)((unsigned char *)(&sp30) + (12)) = (u16) *(u16 *)((unsigned char *)(&D_8014611C) + (12));
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/SHOUGATU/func_8013EA98/work -o /work/drafts/T-15800/SHOUGATU/func_8013EA98/work/guarded.o /tmp/asm_processorhn6rjby1/preprocessed_a526af7a53654544ba17581c47498ed2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolib08cgwxhi/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/SHOUGATU/func_8013EA98/work/guarded.o /work/drafts/T-15800/SHOUGATU/func_8013EA98/work/guarded.c

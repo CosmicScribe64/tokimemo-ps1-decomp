@@ -1,0 +1,16 @@
+-@row 146 3c0b800e  ; lui t3,0x0
++@row 146 3c0c800e  ; lui t4,0x0
+-@row 147 00084b02  ; srl t1,t0,0xc
++@row 147 00085302  ; srl t2,t0,0xc
+-@row 148 00095080  ; sll t2,t1,0x2
++@row 148 000a5900  ; sll t3,t2,0x4
+-@row 149 016a5821  ; addu t3,t3,t2
++@row 149 018b6021  ; addu t4,t4,t3
+-@row 150 956b68ee  ; lhu t3,0(t3)
++@row 150 8d8c68ee  ; lw t4,0(t4)
+-@row 152 316c000f  ; andi t4,t3,0xf
++@row 152 318d000f  ; andi t5,t4,0xf
+-@row 153 258d0005  ; addiu t5,t4,5
++@row 153 25ae0005  ; addiu t6,t5,5
+-@row 154 a42da148  ; sh t5,0(at)
++@row 154 a42ea148  ; sh t6,0(at)

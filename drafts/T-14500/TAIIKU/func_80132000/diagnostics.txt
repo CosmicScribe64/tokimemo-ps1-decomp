@@ -1,0 +1,40 @@
+m2c.py: argument counts from the callees' asm: func_8004500C 2, func_8005751C 1, func_80062CD0 1, func_8006612C 1, func_80083808 0, func_8008585C 0, func_80132970 0, func_80133BF0 0
+python3 failed:
+ ---------------------------------------^
+cfe: Warning 681: drafts/T-14500/TAIIKU/func_80132000/work/guarded.o.sjis.c, line 3274: '&' before array or function; ignored
+                             var_a1 = *(&sp74 + (func_800AE0D0() % var_v1_2));
+ ---------------------------------------^
+cfe: Error: drafts/T-14500/TAIIKU/func_80132000/work/guarded.o.sjis.c, line 3309: 'sp' undefined; reoccurrences will not be reported.
+             func_80062CD0(*(s32 *)((unsigned char *)(sp + (D_80148EC0 * 4)) + (60)));
+ -----------------------------------------------------^
+cfe: Error: drafts/T-14500/TAIIKU/func_80132000/work/guarded.o.sjis.c, line 3394: 'sp' undefined; reoccurrences will not be reported.
+         func_80062CD0(*(s32 *)((unsigned char *)(sp + (*(u8 *)((unsigned char *)(&D_80148EC0) + (1)) * 4)) + (60)));
+ -------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TAIIKU/func_80132000/work -o drafts/T-14500/TAIIKU/func_80132000/work/guarded.o /tmp/asm_processorxdfopw7s/preprocessed_074dc403f24e4281830e8f1908a3aaaf.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibij_1l7o3/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TAIIKU/func_80132000/work/guarded.o drafts/T-14500/TAIIKU/func_80132000/work/guarded.o.sjis.c
+python3 failed:
+ -----------------------------^
+cfe: Error: drafts/T-14500/TAIIKU/func_80132000/work/guarded.o.sjis.c, line 3261: 'sp76' undefined; reoccurrences will not be reported.
+                     var_a1 = sp76;
+ -----------------------------^
+cfe: Warning 681: drafts/T-14500/TAIIKU/func_80132000/work/guarded.o.sjis.c, line 3267: '&' before array or function; ignored
+                             var_a0 = *(&sp74 + (func_800AE0D0() % var_v1_2));
+ ---------------------------------------^
+cfe: Warning 681: drafts/T-14500/TAIIKU/func_80132000/work/guarded.o.sjis.c, line 3275: '&' before array or function; ignored
+                             var_a1 = *(&sp74 + (func_800AE0D0() % var_v1_2));
+ ---------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TAIIKU/func_80132000/work -o drafts/T-14500/TAIIKU/func_80132000/work/guarded.o /tmp/asm_processorn0k1nj1k/preprocessed_ced30f8d54924128aa96f0094762a89f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib6g4yl7ik/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TAIIKU/func_80132000/work/guarded.o drafts/T-14500/TAIIKU/func_80132000/work/guarded.o.sjis.c
+python3 failed:
+ ---------------------------^
+cfe: Error: drafts/T-14500/TAIIKU/func_80132000/work/guarded.o.sjis.c, line 3261: 'sp75' undefined; reoccurrences will not be reported.
+                     var_a0 = sp75;
+ -----------------------------^
+cfe: Warning 681: drafts/T-14500/TAIIKU/func_80132000/work/guarded.o.sjis.c, line 3268: '&' before array or function; ignored
+                             var_a0 = *(&sp74 + (func_800AE0D0() % var_v1_2));
+ ---------------------------------------^
+cfe: Warning 681: drafts/T-14500/TAIIKU/func_80132000/work/guarded.o.sjis.c, line 3276: '&' before array or function; ignored
+                             var_a1 = *(&sp74 + (func_800AE0D0() % var_v1_2));
+ ---------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TAIIKU/func_80132000/work -o drafts/T-14500/TAIIKU/func_80132000/work/guarded.o /tmp/asm_processor3yum1sn_/preprocessed_8211d5b973af48babfa2fbdb6763d8a3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibep8ie8t_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TAIIKU/func_80132000/work/guarded.o drafts/T-14500/TAIIKU/func_80132000/work/guarded.o.sjis.c

@@ -1,0 +1,20 @@
+    80076DA0:  addiu      $sp, $sp, -0x48
+    80076DC8:  lui        $a1, %hi(D_800E6280)
+    80076DD0:  sw         $ra, 0x14($sp)
+    80076DD8:  addiu      $a1, $a1, %lo(D_800E6280)
+    80076DDC:  addiu      $v0, $sp, 0x30
+    80076DE0:  addiu      $a2, $sp, 0x3C
+    80076DE8:  sw         $t6, 0x30($sp)
+    80076DEC:  sw         $t7, 0x34($sp)
+    80076DF0:  sw         $t8, 0x38($sp)
+    80076E08:  addu       $t3, $a1, $v1
+    80076E28:  sll        $t6, $t5, 2
+    80076E2C:  addu       $t7, $a1, $t6
+    80076E44:  sll        $t2, $t1, 2
+    80076E48:  sll        $t9, $t8, 3
+    80076E50:  addu       $t3, $a1, $t2
+    80076E68:  sll        $t7, $t4, 2
+    80076E6C:  addu       $t8, $a1, $t7
+    80076E84:  sll        $t9, $v0, 3
+    80076EB0:  lw         $ra, 0x14($sp)
+    80076EB4:  addiu      $sp, $sp, 0x48

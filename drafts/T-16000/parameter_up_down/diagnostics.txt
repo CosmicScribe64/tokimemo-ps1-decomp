@@ -1,0 +1,12 @@
+$ gcc -E -P -Iinclude -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16000/parameter_up_down/work/variant.c
+Preprocessed C retained in full-context.c
+
+$ python3 tools/cc.py drafts/T-16000/parameter_up_down/work/guarded.c drafts/T-16000/parameter_up_down/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16000/parameter_up_down/work/guarded.c, line 2859: Incompatible pointer type assignment
+         temp_t9 = (((u16) D_800E6374 >> 0xC) * 9) + &D_800B6928;
+ ----------------^
+cfe: Warning 709: drafts/T-16000/parameter_up_down/work/guarded.c, line 2881: Incompatible pointer type assignment
+     temp_t5 = (arg0 * 9) + &D_800B68E0;
+ ------------^
+
+Full translation unit compiled with IDO 5.3. Score 408

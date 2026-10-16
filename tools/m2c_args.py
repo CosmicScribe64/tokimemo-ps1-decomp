@@ -139,11 +139,18 @@ def caller_arities(text):
     return counts
 
 
-def post_increment_old(text):
-    """Symbols loaded into Rl, incremented into Rt (`addiu Rt, Rl, +-1`), stored back from Rt, with a
-    compare or branch in between or after that reads Rl (the old value) rather than Rt."""
+COMPARES = {"slti", "sltiu", "slt", "sltu", "xori", "xor", "beq", "bne", "beqz", "bnez", "andi",
+            "bgez", "bgtz", "blez", "bltz"}
+
+
+def post_increment_compares(text):
+    """{symbol: {"old" and/or "new"}} for globals that are loaded into Rl, incremented into Rt
+    (`addiu Rt, Rl, +-1`, Rt may be Rl) and stored back from Rt. "old": a compare or branch reads the
+    value from before the increment (Rl before the addiu, or Rl when Rt is another register); "new":
+    one reads the incremented value (Rt after the addiu). T-16510: an in-place `addiu Rl, Rl, 1` after
+    the compare was missed by the first version."""
     insns = parse(text)
-    found = set()
+    found = {}
     for i, (mn, ops) in enumerate(insns):
         if mn not in LOADS or len(ops) < 2:
             continue
@@ -155,20 +162,38 @@ def post_increment_old(text):
             mn2, ops2 = insns[j]
             if mn2 in ("addiu", "addi") and len(ops2) == 3 and ops2[1] == rl and ops2[2] in ("1", "-1", "0x1"):
                 rt = ops2[0]
-                if rt == rl:
-                    break
                 stored = any(m3 in STORES and len(o3) > 1 and o3[0] == rt and ("%%lo(%s)" % sym) in o3[1]
                              for m3, o3 in insns[j + 1:j + 14])
-                compared = any(k != j and mn3 not in LOADS and mn3 not in STORES and rl in o3
-                               and mn3 in ("slti", "sltiu", "slt", "sltu", "xori", "xor", "beq", "bne", "beqz", "bnez",
-                                           "andi", "sltiu")
-                               for k, (mn3, o3) in enumerate(insns[i + 1:j + 14], i + 1))
-                if stored and compared:
-                    found.add(sym)
+                kinds = set()
+                for k in range(i + 1, min(j + 14, len(insns))):
+                    mn3, o3 = insns[k]
+                    if k == j or mn3 in LOADS or mn3 in STORES or mn3 not in COMPARES:
+                        continue
+                    if k < j and rl in o3:
+                        kinds.add("old")
+                    elif k > j and rt != rl and rl in o3:
+                        kinds.add("old")
+                    elif k > j and rt in o3:
+                        kinds.add("new")
+                if stored and kinds:
+                    found.setdefault(sym, set()).update(kinds)
+                break
+            if rl in effects(mn2, ops2)[1] and j > i:
                 break
             if mn2 in ("jal", "jalr") or mn2 in BRANCHES and j > i + 8:
                 break
     return found
+
+
+def post_increment_old(text):
+    """Symbols whose post-increment is compared through the OLD value (see post_increment_compares)."""
+    return {sym for sym, kinds in post_increment_compares(text).items() if "old" in kinds}
+
+
+def postinc_pattern(sym):
+    """Regex of m2c's `SYM += 1;` line followed by the `if`/`while` line that reads SYM."""
+    return re.compile(r"^([ \t]*)%s[ \t]*([+-])=[ \t]*1;[ \t]*\n([ \t]*(?:if|while)[ \t]*\([^\n]*?)\b%s\b"
+                      % (re.escape(sym), re.escape(sym)), re.M)
 
 
 def rewrite_post_increment(draft, symbols):
@@ -179,8 +204,7 @@ def rewrite_post_increment(draft, symbols):
     into `if ((u8) D++ >= N) {`. Returns (text, [symbols rewritten])."""
     done = []
     for sym in sorted(symbols):
-        pat = re.compile(r"^([ \t]*)%s[ \t]*([+-])=[ \t]*1;[ \t]*\n([ \t]*(?:if|while)[ \t]*\([^\n]*?)\b%s\b"
-                         % (re.escape(sym), re.escape(sym)), re.M)
+        pat = postinc_pattern(sym)
         new, n = pat.subn(lambda m: m.group(3) + sym + ("++" if m.group(2) == "+" else "--"),
                           draft)
         if n:

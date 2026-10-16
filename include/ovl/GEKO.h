@@ -232,6 +232,7 @@ void func_8013C5B0(void);
 void func_8013D1E0(void);
 void func_8013DC70(void);
 void func_8013EF30(void);
+void func_801341A0(void);
 
 extern u8 D_801476E0;
 

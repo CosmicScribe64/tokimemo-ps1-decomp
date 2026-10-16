@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: memcpy 3
+python3 failed:
+ ------------^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/main/func_80054E6C/work/guarded.c, line 3101: Improper cast of non-scalar type expression.
+         temp_t6_2 = (s32) var_v0->unk_0FC;
+ --------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/mechanical/main/func_80054E6C/work/guarded.c, line 3107: Incompatible pointer type assignment
+     var_v1_2 = (temp_t6 * 0x10) + &D_800E7D10;
+ -------------^
+cfe: Warning 689: drafts/T-14500/repairs/automatic/mechanical/main/func_80054E6C/work/guarded.c, line 3119: Unacceptable operand of == or !=
+     } while (var_v0_2 != &D_800E6290);
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/main/func_80054E6C/work -o drafts/T-14500/repairs/automatic/mechanical/main/func_80054E6C/work/guarded.o /tmp/asm_processorxmny2uop/preprocessed_6337d989d515478199d07412aee7e9e9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibbg0iu3h3/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/main/func_80054E6C/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/main/func_80054E6C/work/guarded.c

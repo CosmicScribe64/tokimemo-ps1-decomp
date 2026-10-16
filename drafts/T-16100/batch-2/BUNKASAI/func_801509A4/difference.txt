@@ -1,0 +1,60 @@
+Difference rows: 59; first 80 mnemonic/relocation rows; opcode words omitted.
+-; addiu t0,sp,48
++; addiu t0,sp,60
+-; lui a0,0x0
+-; addiu a3,sp,48
+-; move a1,zero
+-; addiu a0,a0,0
+-; move v1,zero
++; lui v1,0x0
++; addiu a3,sp,60
++; move a0,zero
++; addiu v1,v1,444
++; move v0,zero
+-; li v0,1
+-; lw t1,456(a0)
+-; sll t4,a1,0x2
++; li a1,1
++; lw t1,12(v1)
++; sll t4,a0,0x2
+-; bne v0,t3,118 <func_801509A4+0xa4>
++; bne a1,t3,114 <func_801509A4+0xa0>
+-; addiu a1,a1,1
+-; andi t8,a1,0xff
+-; sw v1,0(t5)
+-; move a1,t8
+-; addiu v1,v1,1
+-; bne v1,a2,f0 <func_801509A4+0x7c>
+-; addiu a0,a0,56
++; addiu t8,a0,1
++; sw v0,0(t5)
++; andi a0,t8,0xff
++; addiu v0,v0,1
++; bne v0,a2,f0 <func_801509A4+0x7c>
++; addiu v1,v1,56
+-; sb a1,99(sp)
+-; lbu a1,99(sp)
+-; addiu a3,sp,48
+-; divu zero,v0,a1
++; sb a0,43(sp)
++; lbu a0,43(sp)
++; addiu a3,sp,60
++; divu zero,v0,a0
+-; bnez a1,148 <func_801509A4+0xd4>
++; bnez a0,144 <func_801509A4+0xd0>
+-; mfhi t7
+-; sll t9,t7,0x2
+-; addu t6,a3,t9
+-; lw v1,0(t6)
++; mfhi t9
++; sll t6,t9,0x2
++; addu t0,a3,t6
++; lw v1,0(t0)
+-; sll t0,v1,0x2
++; sll t1,v1,0x2
+-; addu at,at,t0
+-R_MIPS_LO16 jump-table  ; lw t0,0(at)
++; addu at,at,t1
++R_MIPS_LO16 jump-table  ; lw t1,12(at)
+-; jr t0
++; jr t1

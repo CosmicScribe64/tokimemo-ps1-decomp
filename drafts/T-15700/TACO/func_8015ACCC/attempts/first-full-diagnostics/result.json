@@ -1,0 +1,15 @@
+{
+  "scope": "TACO:func_8015ACCC",
+  "src": "src/ovl/TACO/8015ABF0.c",
+  "size": 1260,
+  "status": "failed",
+  "score": null,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TACO/func_8015ACCC",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "reason": "cfe: Error: drafts/T-15700/TACO/func_8015ACCC/work/guarded.c, line 3436: redeclaration of 'func_8015ACCC'; previous declaration at line 3218 in file 'drafts/T-15700/TACO/func_8015ACCC/work/guarded.c'",
+  "body_c_sha256": "259424fd16e9b16b643faf11e30c7e051c7dc3c10283fd30872ebc00d17997fe",
+  "context_c_sha256": "0f3b1affa270ba23233eb28d3756435f522e28d5409d92fc36826deae38f14b7",
+  "declarations_h_sha256": "f1358d712c729fcf44e9acaf61c3373c309bde06459dc85d9d46d6b58b4646ad"
+}

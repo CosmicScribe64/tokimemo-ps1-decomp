@@ -1,0 +1,70 @@
+{
+  "scope": "DATE2:func_801330D4",
+  "selected_path": "drafts/T-14500/DATE2/func_801330D4",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "sp38[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields. Target array base sp+0x38, sh/lh, indices 1..9 via index<<1 establish ten halfwords. Second loop var_t6 already contains a byte offset, divided by two for typed indexing. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "void func_801330D4(void) {",
+        "    s32 sp38[16];",
+        "    s16 *temp_v1;"
+      ]
+    },
+    {
+      "detail": "&sp38[0] +",
+      "kind": "stack-address-arithmetic",
+      "line": 35,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields. Target array base sp+0x38, sh/lh, indices 1..9 via index<<1 establish ten halfwords. Second loop var_t6 already contains a byte offset, divided by two for typed indexing. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    do {",
+        "        temp_v1_2 = &sp38[0] + var_t6;",
+        "        if ((*temp_v1_2 < var_a2) && (D_800E6280.unk_1BC[var_a1_2].unk_0C.w & 2)) {"
+      ]
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 22,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "loop_2:",
+        "        temp_t3 = *(u8 *)((unsigned char *)(&D_800E6280 + (var_a1 * 0x38) + var_v0) + (464));",
+        "        var_v0 += 1;"
+      ]
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 30,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "        var_a1 += 1;",
+        "        *temp_v1 -= *(u8 *)((unsigned char *)(&D_800E6280 + temp_lo) + (490));",
+        "    } while (var_a1 < 0xA);"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+    "Target array base sp+0x38, sh/lh, indices 1..9 via index<<1 establish ten halfwords. Second loop var_t6 already contains a byte offset, divided by two for typed indexing."
+  ],
+  "assembly_path": "asm/ovl/DATE2/nonmatchings/DATE2/80132DE0/func_801330D4.s",
+  "assembly_sha256": "1c3db022d71222af2decf750da719fbcaf8e0d632b38520b4463c057b5eb880e",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x14": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

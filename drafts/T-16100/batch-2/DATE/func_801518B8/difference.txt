@@ -1,0 +1,37 @@
+Difference rows: 36; first 80 mnemonic/relocation rows; opcode words omitted.
+-@row 4 3c0e8016  ; lui t6,0x0
++@row 4 3c0f8016  ; lui t7,0x0
+-@row 5 8dceed70  ; lw t6,0(t6)
++@row 5 8defed70  ; lw t7,0(t7)
+-@row 6 00107880  ; sll t7,s0,0x2
++@row 6 00107080  ; sll t6,s0,0x2
+-@row 56 258f003c  ; addiu t7,t4,60
++@row 56 258e003c  ; addiu t6,t4,60
+-@row 64 158ffff8  ; bne t4,t7,53c <func_801518B8+0xe4>
++@row 64 158efff8  ; bne t4,t6,53c <func_801518B8+0xe4>
+-@row 67 24180003  ; li t8,3
++@row 67 8d8e0004  ; lw t6,4(t4)
+-@row 69 8d8f0004  ; lw t7,4(t4)
++@row 69 3c018012  ; lui at,0x0
+-@row 70 3c018012  ; lui at,0x0
++@row 70 240f0003  ; li t7,3
+-@row 71 ad6f0004  ; sw t7,4(t3)
++@row 71 ad6e0004  ; sw t6,4(t3)
+-@row 72 a43806aa  ; sh t8,0(at)
++@row 72 a42f06aa  ; sh t7,0(at)
+-@row 74 24190002  ; li t9,2
++@row 74 24180002  ; li t8,2
+-@row 75 ac392d10  ; sw t9,0(at)
++@row 75 ac382d10  ; sw t8,0(at)
+-@row 77 24080001  ; li t0,1
++@row 77 24190001  ; li t9,1
+-@row 78 ac282d0c  ; sw t0,0(at)
++@row 78 ac392d0c  ; sw t9,0(at)
+-@row 80 24090003  ; li t1,3
++@row 80 24080003  ; li t0,3
+-@row 81 a4290668  ; sh t1,0(at)
++@row 81 a4280668  ; sh t0,0(at)
+-@row 83 240a0003  ; li t2,3
++@row 83 24090003  ; li t1,3
+-@row 85 a42a06ac  ; sh t2,0(at)
++@row 85 a42906ac  ; sh t1,0(at)

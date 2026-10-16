@@ -1,0 +1,56 @@
+{
+  "scope": "KANGEI:func_80132C24",
+  "path": "drafts/T-16100/batch-2/KANGEI/func_80132C24",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "sp28[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    },
+    {
+      "detail": "sp30[16]",
+      "kind": "synthesized-stack-local",
+      "line": 3
+    },
+    {
+      "detail": "M2cBlock2C",
+      "kind": "inferred-copy-layout",
+      "line": 4
+    }
+  ],
+  "explanation": "KANGEI duplicates OMIMAI copied record and overlapping sp28/sp30 buffers; same coordinated record repair needed.",
+  "evidence_path": "drafts/T-16100/batch-2/KANGEI/func_80132C24/evidence.txt",
+  "compile_status": "scored",
+  "score": 114,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp28[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "KANGEI duplicates OMIMAI copied record and overlapping sp28/sp30 buffers; same coordinated record repair needed."
+    },
+    {
+      "flag": {
+        "detail": "sp30[16]",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      "outcome": "unresolved",
+      "explanation": "KANGEI duplicates OMIMAI copied record and overlapping sp28/sp30 buffers; same coordinated record repair needed."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlock2C",
+        "kind": "inferred-copy-layout",
+        "line": 4
+      },
+      "outcome": "unresolved",
+      "explanation": "KANGEI duplicates OMIMAI copied record and overlapping sp28/sp30 buffers; same coordinated record repair needed."
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "scope": "GYOZI:func_8013C774",
+  "unit": "GYOZI",
+  "func": "func_8013C774",
+  "src": "src/ovl/GYOZI/8013C3B0.c",
+  "size": 364,
+  "path": "drafts/T-15800/GYOZI/func_8013C774",
+  "status": "compiled",
+  "score": 14,
+  "compile_attempts": 4,
+  "provenance": "drafts/T-15800/GYOZI/func_8013C774/provenance.json",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "compiled_instruction_count": 89,
+  "hashes": {
+    "body.c": "cdce9ecc310263888a2e3ce8887f3e3f2702653f53ef8ae35b0b31b2b1c95690",
+    "declarations.h": "432c26062a3bb345f1f56af8e83f991600ee5bfdf4abf69e2ada7746919e12b3",
+    "context.c": "531a5786bdaa4ebe52f5049cf5d2b40b153e6705237492aaeea7ace8691d23d8",
+    "preprocessed.c": "f2467a0144968f6fa1f6864ebe57fd13981566fbe0d694f01e66debcfaf825da"
+  },
+  "header_hashes": {
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libgpu.h": "e05cf2f8e95289e3fe4864a80a90dd092437c2d66e140645b477771cb359b2ba",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25",
+    "include/ovl/GYOZI.h": "eb21d305c3df32ff5b256e2307fbfe175527faa0ad1de3292d6beaf82cc059af"
+  },
+  "frozen_source_sha256": "cf87ea6be827a5ccc2af52b690b259854164b9b9a06eeae09e15ecbcd75abc4c",
+  "compiler_script_sha256": "1996143556607249784a78545f275241292bb085068c0bea71e6fae2167956d7",
+  "dockerfile_sha256": "4cb48e7f6c01e857e490b49dc1ee23b73ea3dda9393fecd71fa4b1f87a0859ab",
+  "seconds": 0.604
+}

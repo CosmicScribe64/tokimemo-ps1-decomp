@@ -1,0 +1,20 @@
+{
+  "scope": "RPG_BAT:func_80159B40",
+  "src": "src/ovl/RPG_BAT/80157AE0.c",
+  "size": 516,
+  "path": "drafts/T-16100/batch-2/RPG_BAT/func_80159B40",
+  "archive_path": "drafts/T-16100/batch-2/RPG_BAT/func_80159B40",
+  "ticket": "T-16100",
+  "matching_claim": false,
+  "status": "scored",
+  "score": 157,
+  "changed": true,
+  "source_base": "48362009",
+  "compile_verified": true,
+  "review_outcome": "repaired-with-unresolved-remainder",
+  "body_c_sha256": "d1a8f4a7e1c21f9f099542189160bc0db35f6c186eae723b041bcab92738eb1a",
+  "declarations_h_sha256": "c898d75751e5b3f2c6a8738a250bb89692820f3bc789dffa12c5d4a8e9a0b9e6",
+  "context_c_sha256": "3aa96e55b72278f95f08dde50ee107e8643d6558a81343f32c060c04299b200f",
+  "full-context_c_sha256": "f591c0ccd51d39d9951be5ea20f7cbb5649887a782ad0324d742d9cd54ede581",
+  "diagnostics_txt_sha256": "db87b3b187f61345d68d8b2d167b86d9dd1d079d267877721891d12ca01bde8d"
+}

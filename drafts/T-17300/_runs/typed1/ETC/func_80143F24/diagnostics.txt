@@ -1,0 +1,35 @@
+m2c.py: argument counts from the callees' asm: func_80059048 0, func_80142AE8 0, main_state_set 1
+m2c failed:
+
+python3 failed:
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o.sjis.c, line 4267: Incompatible function return type for this function.
+ s32 func_80059048();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o.sjis.c, line 4269: redeclaration of 'main_state_set'; previous declaration at line 1618 in file 'drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o.sjis.c'
+ s32 main_state_set();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o.sjis.c, line 4269: Incompatible function return type for this function.
+ s32 main_state_set();
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80143F24/work -o drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o /tmp/asm_processorfysb3c13/preprocessed_9ccf789e66324c8ba1c60f4d37f9f55c.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhllfrzvd/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o.sjis.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o.sjis.c, line 4266: redeclaration of 'D_801217D0'; previous declaration at line 1308 in file 'drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o.sjis.c'
+ extern s32 D_801217D0;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o.sjis.c, line 4267: redeclaration of 'func_80059048'; previous declaration at line 1852 in file 'drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o.sjis.c'
+ s32 func_80059048();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o.sjis.c, line 4267: Incompatible function return type for this function.
+ s32 func_80059048();
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80143F24/work -o drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o /tmp/asm_processorv1u8s3gj/preprocessed_4ff6a266e39c4627817b2708c995424a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib25_bi3_w/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o.sjis.c, line 4265: redeclaration of 'D_800E6280'; previous declaration at line 764 in file 'drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o.sjis.c'
+ extern s32 D_800E6280;
+ -----------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80143F24/work -o drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o /tmp/asm_processorw7lcdgro/preprocessed_50cea75a69074714af02a65fe4cc5d59.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibn9bs5zot/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80143F24/work/guarded.o.sjis.c

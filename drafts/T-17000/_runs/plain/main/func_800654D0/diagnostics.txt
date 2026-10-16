@@ -1,0 +1,27 @@
+m2c.py: argument counts from the callees' asm: menu_set 6
+python3 failed:
+ --------------------------------------^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_800654D0/work/guarded.c, line 3624: 'spA0' undefined; reoccurrences will not be reported.
+     menu_set(0, var_s0 & 0xFF, (s32) &spC0[0], (s32) &spA0[0], (s32) &sp80[0], (s32) &sp60[0]);
+ ------------------------------------------------------^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_800654D0/work/guarded.c, line 3624: 'sp80' undefined; reoccurrences will not be reported.
+     menu_set(0, var_s0 & 0xFF, (s32) &spC0[0], (s32) &spA0[0], (s32) &sp80[0], (s32) &sp60[0]);
+ ----------------------------------------------------------------------^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_800654D0/work/guarded.c, line 3624: 'sp60' undefined; reoccurrences will not be reported.
+     menu_set(0, var_s0 & 0xFF, (s32) &spC0[0], (s32) &spA0[0], (s32) &sp80[0], (s32) &sp60[0]);
+ --------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/plain/main/func_800654D0/work -o drafts/T-17000/_runs/plain/main/func_800654D0/work/guarded.o /tmp/asm_processordrvjmduh/preprocessed_08429477e95149d0a86c941948fbaf03.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib1tfpjl7p/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/plain/main/func_800654D0/work/guarded.o drafts/T-17000/_runs/plain/main/func_800654D0/work/guarded.c
+python3 failed:
+ ---------------------^
+cfe: Warning 709: drafts/T-17000/_runs/plain/main/func_800654D0/work/guarded.c, line 3600: Incompatible pointer type assignment
+             var_a1_2 = &(&spA0[0])[var_t0];
+ ---------------------^
+cfe: Warning 689: drafts/T-17000/_runs/plain/main/func_800654D0/work/guarded.c, line 3623: Unacceptable operand of == or !=
+             } while (var_v0_2 != &(&sp60[0])[var_s0]);
+ ------------------------------^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_800654D0/work/guarded.c, line 3627: 'spC0' undefined; reoccurrences will not be reported.
+     menu_set(0, var_s0 & 0xFF, (s32) &spC0[0], (s32) &spA0[0], (s32) &sp80[0], (s32) &sp60[0]);
+ --------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/plain/main/func_800654D0/work -o drafts/T-17000/_runs/plain/main/func_800654D0/work/guarded.o /tmp/asm_processorv4ytx1fu/preprocessed_4ab2fa8f350046aeabf4383fc420511b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibzvfqfn2t/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/plain/main/func_800654D0/work/guarded.o drafts/T-17000/_runs/plain/main/func_800654D0/work/guarded.c

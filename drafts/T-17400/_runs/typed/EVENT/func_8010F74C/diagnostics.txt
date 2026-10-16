@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_8011B848 0, func_8011C11C 0, func_8011C164 0
+python3 failed:
+ ---------------^
+cfe: Error: drafts/T-17400/_runs/typed/EVENT/func_8010F74C/work/guarded.c, line 5438: Non-function name referenced in function call.
+     *(var_v0 + (D_800B1AF6 * 4))(0x80, spB38.f, spAAC.f, spA24.f);
+ --------------------------------^
+cfe: Warning 689: drafts/T-17400/_runs/typed/EVENT/func_8010F74C/work/guarded.c, line 5443: Unacceptable operand of == or !=
+     if ((var_v0_2 == spC78.f) && ((u8) D_800B1AF6 >= 0xCU) && ((u8) D_800B1AF6 < 0x15U)) {
+ ------------------^
+cfe: Warning 689: drafts/T-17400/_runs/typed/EVENT/func_8010F74C/work/guarded.c, line 5447: Unacceptable operand of == or !=
+     if (var_v0_2 == spC78.f) {
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/typed/EVENT/func_8010F74C/work -o drafts/T-17400/_runs/typed/EVENT/func_8010F74C/work/guarded.o /tmp/asm_processor_9kej65u/preprocessed_cb1618955dd2427ca2c26c14f29e6a4e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibb83nwy0z/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/typed/EVENT/func_8010F74C/work/guarded.o drafts/T-17400/_runs/typed/EVENT/func_8010F74C/work/guarded.c

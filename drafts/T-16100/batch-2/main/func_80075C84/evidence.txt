@@ -1,0 +1,28 @@
+Target: ['asm/nonmatchings/main/80075320/func_80075C84.s']
+Review: Girl stride 0x38 followed by +0x1C8 targets Rec38.unk_0C; local pointer alias spans several views and requires typed reconstruction.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80075C88 */  lh         $v0, %lo(D_8011ECF6)($v0)
+    /* 80075C8C */  addiu      $sp, $sp, -0x48
+    /* 80075C98 */   sw        $ra, 0x14($sp)
+    /* 80075CA8 */  lh         $v0, %lo(D_8011ECFA)($v0)
+    /* 80075CC8 */  addiu      $at, $zero, 0x10
+    /* 80075CD8 */  addiu      $at, $zero, 0x20
+    /* 80075CE4 */  addiu      $at, $zero, 0x40
+    /* 80075CF8 */   addiu     $t4, $t4, %lo(D_800B6990)
+    /* 80075D00 */  lbu        $t6, %lo(D_800B6998)($t6)
+    /* 80075D04 */  addiu      $t4, $t4, %lo(D_800B6990)
+    /* 80075D08 */  addu       $t7, $t4, $t6
+    /* 80075D14 */  lbu        $t8, %lo(D_800B6998)($t8)
+    /* 80075D1C */  addiu      $t9, $t8, 0x1
+    /* 80075D28 */   addiu     $a0, $zero, 0x505
+    /* 80075D38 */  addiu      $t4, $t4, %lo(D_800B6990)
+    /* 80075D48 */  lbu        $t7, %lo(D_800B6998)($t7)
+    /* 80075D4C */  addiu      $t4, $t4, %lo(D_800B6990)
+    /* 80075D50 */  addiu      $t6, $zero, 0x1
+    /* 80075D54 */  addu       $t8, $t4, $t7
+    /* 80075D60 */  lbu        $t9, %lo(D_800B6998)($t9)
+    /* 80075D68 */  addiu      $t7, $t9, 0x1
+    /* 80075D74 */   addiu     $a0, $zero, 0x506
+    /* 80075D84 */  addiu      $t4, $t4, %lo(D_800B6990)
+    /* 80075D94 */  lbu        $t8, %lo(D_800B6998)($t8)

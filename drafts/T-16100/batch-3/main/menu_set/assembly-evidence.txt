@@ -1,0 +1,27 @@
+8004F870:  addiu      $sp, $sp, -0x18
+8004F878:  sw         $s0, 0x14($sp)
+8004F87C:  addiu      $t6, $t6, %lo(D_800E6280)
+8004F880:  sll        $v1, $a0, 3
+8004F888:  sw         $a3, 0x24($sp)
+8004F88C:  addu       $t2, $v1, $t6
+8004F894:  addiu      $v0, $v0, 0x1
+8004F89C:  addiu      $t2, $t2, 0x10
+8004F8A0:  sb         $zero, 0xF87($t2)
+8004F8A4:  sb         $zero, 0xF85($t2)
+8004F8AC:   sb        $zero, 0xF84($t2)
+8004F8B0:  lw         $a3, 0x24($sp)
+8004F8B4:  lw         $t0, 0x28($sp)
+8004F8B8:  lw         $t1, 0x2C($sp)
+8004F8CC:   addiu     $v0, $zero, -0x1
+8004F8D4:  addiu      $t7, $t7, %lo(D_800E6280)
+8004F8D8:  addu       $v0, $a0, $t7
+8004F8DC:  addiu      $t8, $zero, -0x1
+8004F8E4:  sb         $s0, 0x1090($v0)
+8004F8EC:   sb        $t8, 0x1095($v0)
+8004F910:  lh         $t3, 0x0($a1)
+8004F91C:  lh         $t4, 0x0($a3)
+8004F928:  lh         $t6, 0x0($t0)
+8004F92C:  lh         $t5, 0x0($t1)
+8004F954:  lh         $t8, 0x0($t0)
+8004F960:  lh         $t9, 0x0($t1)
+8004F980:   addiu     $sp, $sp, 0x18

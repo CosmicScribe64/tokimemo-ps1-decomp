@@ -1,0 +1,28 @@
+Target: ['asm/ovl/EVENT/nonmatchings/EVENT/8010FE10/func_8011767C.s']
+Review: sp3C[16]/sp54[16] overlap original offsets and halfword aliases; must reconstruct copied coordinate structures rather than keep independently oversized arrays.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8011767C */  addiu      $sp, $sp, -0x70
+    /* 80117684 */  sw         $ra, 0x14($sp)
+    /* 80117688 */  addiu      $t6, $t6, %lo(D_80125330)
+    /* 80117690 */  addiu      $a3, $sp, 0x54
+    /* 801176A8 */  addiu      $t2, $t2, %lo(D_80125348)
+    /* 801176B4 */  addiu      $t0, $sp, 0x3C
+    /* 801176C8 */  lhu        $at, 0x14($t6)
+    /* 801176CC */  addiu      $t1, $zero, 0x61
+    /* 80117710 */  lhu        $at, 0x14($t2)
+    /* 8011771C */  lbu        $t8, %lo(D_800B0895)($t8)
+    /* 8011772C */  lbu        $t7, %lo(D_800B0896)($t7)
+    /* 80117730 */  lh         $t6, 0x42($sp)
+    /* 8011773C */   addiu     $t9, $t6, 0x1
+    /* 80117744 */   sh        $t9, 0x42($sp)
+    /* 80117748 */  lbu        $t4, %lo(D_800B0895)($t4)
+    /* 8011774C */  addiu      $at, $zero, 0x62
+    /* 80117758 */  lh         $t3, 0x42($sp)
+    /* 80117760 */  addiu      $t2, $t3, 0x1
+    /* 80117764 */  sh         $t2, 0x42($sp)
+    /* 80117768 */  lbu        $t5, %lo(D_800B1746)($t5)
+    /* 80117774 */  sll        $v0, $t5, 1
+    /* 80117778 */  addu       $t8, $t0, $v0
+    /* 80117780 */  lh         $t7, 0x0($t8)
+    /* 80117790 */  addu       $t3, $a3, $v0

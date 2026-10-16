@@ -1,0 +1,16 @@
+extern u8 D_800E738A;
+void func_80135434(s32 arg0);
+void func_80134EB8(void);
+void func_8013621C(s32 arg0);
+void func_80138268(s32 arg0);
+void func_80138330(void);
+void func_80135168(void);
+void func_801357F4(void);
+void func_80135A98(void);
+void func_80135BB4(void);
+void func_80135E58(void);
+void func_80135F74(void);
+void func_801362D0(void);
+void func_80137708(void);
+void func_80137FC4(void);
+void func_80138338(void);

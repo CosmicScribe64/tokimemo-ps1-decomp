@@ -1,0 +1,20 @@
+{
+  "scope": "main:appointment_launch",
+  "src": "src/main/80075320.c",
+  "size": 288,
+  "path": "drafts/T-16100/batch-1/main/appointment_launch",
+  "archive_path": "drafts/T-16100/batch-1/main/appointment_launch",
+  "status": "scored",
+  "score": 95,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "body.c_sha256": "145521327b8364276b2487422f4a305cbac8b9a3b44d85d78f1f8e0fa743ec52",
+  "declarations.h_sha256": "f07878693a986f989ac5045a4d78966e1f1c99c66b6c28ceb11ac3049e850ff5",
+  "context.c_sha256": "d0e17aba7a189a1dd88ebc4e8c30e5aaa7722e5f63a284f7cc1dfe6daab6c0f1",
+  "full-context.c_sha256": "6f438003ae9f3cfd191af00a4c64d212858a384e73470898dee4b2922b7f3d89",
+  "diagnostics.txt_sha256": "fbddb664c7a1e6538144dc1beaeabe5c3c5c61fbf82a03834b8dba136d9aa5d8",
+  "assembly-evidence.txt_sha256": "b0a6c6bc69b57741b6aede70f71fe35530abe4394709ae9ece3b12fe7b66774f"
+}

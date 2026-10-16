@@ -1,0 +1,23 @@
+{
+  "scope": "main:func_80054884",
+  "selected_path": "drafts/T-14500/main/func_80054884",
+  "archive_path": "drafts/T-16100/batch-3/main/func_80054884",
+  "changed": false,
+  "reviewed": true,
+  "repair_notes": [],
+  "flags": [
+    {
+      "detail": "M2cBlockF00",
+      "kind": "inferred-copy-layout",
+      "line": 2,
+      "outcome": "unresolved",
+      "explanation": "Opaque word-block type has only a copy-extent interpretation; semantic field layout remains unresolved. "
+    }
+  ],
+  "notes": "",
+  "assembly_evidence": "drafts/T-16100/batch-3/main/func_80054884/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "reviewed-unresolved"
+}

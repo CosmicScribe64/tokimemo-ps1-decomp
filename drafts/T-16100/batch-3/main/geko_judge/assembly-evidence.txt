@@ -1,0 +1,25 @@
+80070694:  addiu      $sp, $sp, -0xA0
+80070698:  sw         $s0, 0x18($sp)
+8007069C:  sw         $ra, 0x3C($sp)
+800706A0:  sw         $fp, 0x38($sp)
+800706A4:  sw         $s7, 0x34($sp)
+800706A8:  sw         $s6, 0x30($sp)
+800706AC:  sw         $s5, 0x2C($sp)
+800706B0:  sw         $s4, 0x28($sp)
+800706B4:  sw         $s3, 0x24($sp)
+800706B8:  sw         $s2, 0x20($sp)
+800706BC:  sw         $s1, 0x1C($sp)
+800706C0:  sw         $a0, 0xA0($sp)
+800706C4:  sb         $zero, 0x0($a0)
+800706CC:  lw         $s0, %lo(D_800E7D10)($s0)
+800706D0:  addiu      $at, $zero, 0xB
+800706D8:  addiu      $fp, $sp, 0x7C
+800706E0:  addiu      $a1, $sp, 0x5C
+800706F4:  addiu      $s4, $s4, %lo(D_800E6280)
+80070700:  addiu      $s7, $zero, 0x64
+80070704:  addiu      $s6, $zero, 0x4
+80070758:  sll        $t0, $t9, 30
+80070768:  lh         $t2, 0x1C6($v0)
+80070790:  lbu        $t4, 0x0($t3)
+800707E8:  lb         $t6, %lo(D_800B6740)($t6)
+8007084C:   addiu     $sp, $sp, 0xA0

@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_80054388 0, func_80141ABC 0, main_state_set 1
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4011: Incompatible function return type for this function.
+ void func_80141BE8(void) {
+ ------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/mechanical/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4034: Incompatible pointer type assignment
+             temp_v0 = (temp_t3 * 8) + &D_800B383C;
+ --------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/mechanical/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4037: Incompatible pointer type assignment
+             temp_v0_2 = (temp_t3 * 8) + D_800B37D4;
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/ETC/func_80141BE8/work -o drafts/T-14500/repairs/automatic/mechanical/ETC/func_80141BE8/work/guarded.o /tmp/asm_processor_j89jy0l/preprocessed_1b2b0146e92542d085b61cddfe2166b7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibwk768vav/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/ETC/func_80141BE8/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/ETC/func_80141BE8/work/guarded.o.sjis.c

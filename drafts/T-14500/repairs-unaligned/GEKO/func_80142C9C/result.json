@@ -1,0 +1,25 @@
+{
+  "environment_hash": "6f65598c4801aecc283a0ff94ca04d54505cf70ec6730470159f30c33cb7bd37",
+  "func": "func_80142C9C",
+  "guarded": false,
+  "harness_hash": "cbf40cd669e0c44bcb1cb19323f5d31d23204f47dc9bd7013854767313559da1",
+  "scope": "GEKO:func_80142C9C",
+  "score": 1122,
+  "seconds": 1.031,
+  "size": 3656,
+  "source_hash": "f8be9e80299986b8534fb0f43e30c4d9a50927083fb46e5d52ad6660a607adfd",
+  "src": "src/ovl/GEKO/80142760.c",
+  "status": "scored",
+  "unit": "GEKO",
+  "variant": "unaligned-aggregate-repair",
+  "ticket": "T-15100",
+  "compile_attempts": 1,
+  "notes": [
+    "Nine real copied byte tables, 21-byte writable flags and explicit stack aliases; 627-byte tail table."
+  ],
+  "matching_claim": false,
+  "archive_path": "drafts/T-14500/repairs-unaligned/GEKO/func_80142C9C",
+  "context_sha256": "ab2acc4aedd5ac5fe7e0e1fcd20b24fcd120a44eecdda0db4a9abcdedfcc9b03",
+  "residual_class": "nonmatching instruction, control-flow, stack-layout or inferred-type differences",
+  "body_sha256": "0e2953828da45a674ee9ae7f6631523cf5daa3e885119e28365f32ef145247fa"
+}

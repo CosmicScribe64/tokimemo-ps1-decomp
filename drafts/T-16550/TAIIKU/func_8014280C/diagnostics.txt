@@ -1,0 +1,12 @@
+python3 failed:
+cfe: Error: build/t16550/rescore/0/TAIIKU/func_8014280C/work/guarded.c, line 3417: redeclaration of 'D_8014A088'; previous declaration at line 3318 in file 'build/t16550/rescore/0/TAIIKU/func_8014280C/work/guarded.c'
+ extern s32 D_8014A088;
+ -----------^
+cfe: Warning 689: build/t16550/rescore/0/TAIIKU/func_8014280C/work/guarded.c, line 3561: Unacceptable operand of == or !=
+             } while (var_v1 != &D_8014A088);
+ ----------------------------^
+cfe: Warning 689: build/t16550/rescore/0/TAIIKU/func_8014280C/work/guarded.c, line 3571: Unacceptable operand of == or !=
+         } while (var_v0 != &D_800E628C);
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/build/t16550/rescore/0/TAIIKU/func_8014280C/work -o build/t16550/rescore/0/TAIIKU/func_8014280C/work/guarded.o /tmp/asm_processormtkon7re/preprocessed_09dac05e16bd422cb1b350233a1f01ee.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibxc64xmfg/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o build/t16550/rescore/0/TAIIKU/func_8014280C/work/guarded.o build/t16550/rescore/0/TAIIKU/func_8014280C/work/guarded.c

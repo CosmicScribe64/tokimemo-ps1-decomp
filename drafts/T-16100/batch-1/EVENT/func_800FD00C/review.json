@@ -1,0 +1,33 @@
+{
+  "scope": "EVENT:func_800FD00C",
+  "selected_path": "drafts/T-14500/EVENT/func_800FD00C",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "M2cBlock9C",
+      "kind": "inferred-copy-layout",
+      "line": 2,
+      "verdict": "copy-width-reviewed-layout-partial",
+      "explanation": "The copied word table is indexed from the target stack base before jalr. Replace invented extern sp addressing with that copied local table. Copy-block type remains a representation of observed word copies, not a recovered semantic struct. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "void func_800FD00C(void) {",
+        "    typedef struct { s32 w[39]; } M2cBlock9C; /* m2c memcpy of 156 bytes */",
+        "    s32 sp30[39];"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "The copied word table is indexed from the target stack base before jalr. Replace invented extern sp addressing with that copied local table. Copy-block type remains a representation of observed word copies, not a recovered semantic struct."
+  ],
+  "assembly_path": "asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0/func_800FD00C.s",
+  "assembly_sha256": "21c0bf3b380b7a24bc89f878523ad1dca282f6e6bd28b82506d1b1333abbcee1",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x14": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

@@ -1,0 +1,19 @@
+m2c.py: argument counts from the callees' asm: func_80143228 0
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801430A0/work/guarded.o.sjis.c, line 3527: 'sp2C' undefined; reoccurrences will not be reported.
+     *(M2cBlockC0 *)(&sp2C[0]) = *(M2cBlockC0 *)(&D_80146970);
+ ---------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801430A0/work/guarded.o.sjis.c, line 3544: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80143228();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801430A0/work -o drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801430A0/work/guarded.o /tmp/asm_processor8mpp1pl7/preprocessed_aa6d0014d6c34b9cb9b4bf806ac6c8e8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibnrg29nm2/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801430A0/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801430A0/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801430A0/work/guarded.o.sjis.c, line 3529: Non-function name referenced in function call.
+     var_v0 = (&sp2C[0])[D_800E738A](0x3C);
+ -----------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801430A0/work/guarded.o.sjis.c, line 3545: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80143228();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801430A0/work -o drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801430A0/work/guarded.o /tmp/asm_processorsyu0hut4/preprocessed_b6df9091a8cf4700a8fefee3838c649d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibgsqhuvxs/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801430A0/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801430A0/work/guarded.o.sjis.c

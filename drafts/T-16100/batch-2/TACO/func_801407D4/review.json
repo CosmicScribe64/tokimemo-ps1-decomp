@@ -1,0 +1,28 @@
+{
+  "scope": "TACO:func_801407D4",
+  "path": "drafts/T-16100/batch-2/TACO/func_801407D4",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "sp24",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    }
+  ],
+  "explanation": "sp24 is a TcPos-by-value return fragment. Needs canonical TcPos return signature/usage at all call sites.",
+  "evidence_path": "drafts/T-16100/batch-2/TACO/func_801407D4/evidence.txt",
+  "compile_status": "scored",
+  "score": 310,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp24",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "sp24 is a TcPos-by-value return fragment. Needs canonical TcPos return signature/usage at all call sites."
+    }
+  ]
+}

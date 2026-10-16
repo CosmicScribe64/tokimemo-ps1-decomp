@@ -1,0 +1,16 @@
+m2c.py: argument counts from the callees' asm: func_80062CD0 1
+python3 failed:
+cfe: Error: drafts/T-14500/OMIMAI/func_80134628/work/guarded.o.sjis.c, line 2989: 'sp30' undefined; reoccurrences will not be reported.
+     sp30[0].unk0 = D_80134D6C;
+ ----^
+cfe: Error: drafts/T-14500/OMIMAI/func_80134628/work/guarded.o.sjis.c, line 2991: 'sp28' undefined; reoccurrences will not be reported.
+     sp28[0].unk0 = D_80134D74;
+ ----^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OMIMAI/func_80134628/work -o drafts/T-14500/OMIMAI/func_80134628/work/guarded.o /tmp/asm_processorj2je9iub/preprocessed_0db2c426c1ca43268bde01060b725033.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibv7un_662/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OMIMAI/func_80134628/work/guarded.o drafts/T-14500/OMIMAI/func_80134628/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/OMIMAI/func_80134628/work/guarded.o.sjis.c, line 2992: 'sp28' undefined; reoccurrences will not be reported.
+     sp28[0].unk0 = D_80134D74;
+ ----^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OMIMAI/func_80134628/work -o drafts/T-14500/OMIMAI/func_80134628/work/guarded.o /tmp/asm_processorjhqo8o7c/preprocessed_a1b982ecf8d245f6bd1bbc4f64786bb7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibktluyzum/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OMIMAI/func_80134628/work/guarded.o drafts/T-14500/OMIMAI/func_80134628/work/guarded.o.sjis.c

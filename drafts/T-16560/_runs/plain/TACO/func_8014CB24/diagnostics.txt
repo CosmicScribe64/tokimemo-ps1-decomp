@@ -1,0 +1,27 @@
+m2c.py: argument counts from the callees' asm: func_8015CF30 2, func_8015D0D0 2, func_8015D270 2
+python3 failed:
+ -------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16560/_runs/plain/TACO/func_8014CB24/work/guarded.c, line 4148: '&' before array or function; ignored
+         func_8015D270((s32) (D_80128882 << 0xC) / 360, (s32) &sp60);
+ -------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16560/_runs/plain/TACO/func_8014CB24/work/guarded.c, line 4152: '&' before array or function; ignored
+         func_800A0ECC(&sp60, &sp58, &sp50);
+ ----------------------^
+cfe: Error: drafts/T-16560/_runs/plain/TACO/func_8014CB24/work/guarded.c, line 4155: 'sp52' undefined; reoccurrences will not be reported.
+         *(s16 *)((unsigned char *)D_8015EDB4 + (2838)) = (s16) (D_8012749C + sp52);
+ -----------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/plain/TACO/func_8014CB24/work -o drafts/T-16560/_runs/plain/TACO/func_8014CB24/work/guarded.o /tmp/asm_processorv0cxl84w/preprocessed_198ac0f918c64a7ead6cb0bf00d732ff.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib2uzi6ra9/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/plain/TACO/func_8014CB24/work/guarded.o drafts/T-16560/_runs/plain/TACO/func_8014CB24/work/guarded.c
+python3 failed:
+ ----------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16560/_runs/plain/TACO/func_8014CB24/work/guarded.c, line 4148: '&' before array or function; ignored
+         func_8015CF30((s32) (D_80128884 << 0xC) / 360, (s32) &sp60);
+ -------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16560/_runs/plain/TACO/func_8014CB24/work/guarded.c, line 4149: '&' before array or function; ignored
+         func_8015D270((s32) (D_80128882 << 0xC) / 360, (s32) &sp60);
+ -------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16560/_runs/plain/TACO/func_8014CB24/work/guarded.c, line 4153: '&' before array or function; ignored
+         func_800A0ECC(&sp60, &sp58, &sp50);
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/plain/TACO/func_8014CB24/work -o drafts/T-16560/_runs/plain/TACO/func_8014CB24/work/guarded.o /tmp/asm_processorn3ah7hf3/preprocessed_93d85be947504fe18f98a34f8f6c799d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4fw4__yp/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/plain/TACO/func_8014CB24/work/guarded.o drafts/T-16560/_runs/plain/TACO/func_8014CB24/work/guarded.c

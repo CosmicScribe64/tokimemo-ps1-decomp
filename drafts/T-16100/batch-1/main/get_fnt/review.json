@@ -1,0 +1,83 @@
+{
+  "scope": "main:get_fnt",
+  "selected_path": "drafts/T-14500/main/get_fnt",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "+ &sp8C",
+      "kind": "stack-address-arithmetic",
+      "line": 50,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Both target memcpy calls copy 0x100 bytes into sp+0x8C, requiring 256 bytes, not three words. Byte pointer walking matches row stride arg4. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "                var_v0 = arg0 + temp_lo_2;",
+        "                var_v1 = temp_lo_2 + &sp8C;",
+        "                temp_lo_3 = arg4 * (var_s0_2 + 1);"
+      ]
+    },
+    {
+      "detail": "+ &sp8C",
+      "kind": "stack-address-arithmetic",
+      "line": 53,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Both target memcpy calls copy 0x100 bytes into sp+0x8C, requiring 256 bytes, not three words. Byte pointer walking matches row stride arg4. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "                var_a0 = arg0 + temp_lo_3;",
+        "                var_a1 = temp_lo_3 + &sp8C;",
+        "                do {"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Both target memcpy calls copy 0x100 bytes into sp+0x8C, requiring 256 bytes, not three words. Byte pointer walking matches row stride arg4."
+  ],
+  "assembly_path": "asm/nonmatchings/main/8004C3F0/get_fnt.s",
+  "assembly_sha256": "66e65f921f56ee96304a9a29c15dc3b2d5e10c6540aca411dc3d1c64d0621339",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x1B0": [
+      "lw"
+    ],
+    "0x28": [
+      "lw",
+      "sw"
+    ],
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x14": [
+      "lw",
+      "sw"
+    ],
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x18": [
+      "lw",
+      "sw"
+    ],
+    "0x1B4": [
+      "lbu"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

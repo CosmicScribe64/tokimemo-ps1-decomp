@@ -1,0 +1,1 @@
+m2c.py: argument counts from the callees' asm: SetSemiTrans 2, abs 0, func_8009ED74 2, func_8009F07C 1

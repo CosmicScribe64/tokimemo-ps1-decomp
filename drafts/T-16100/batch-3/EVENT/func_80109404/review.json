@@ -1,0 +1,48 @@
+{
+  "scope": "EVENT:func_80109404",
+  "selected_path": "drafts/T-14500/EVENT/func_80109404",
+  "archive_path": "drafts/T-16100/batch-3/EVENT/func_80109404",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "sp44: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[10].",
+    "sp58: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[10].",
+    "sp6C: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[10]."
+  ],
+  "flags": [
+    {
+      "detail": "sp44[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "repaired",
+      "explanation": "sp44: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[10]. sp58: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[10]. sp6C: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[10]. Three copied 20-byte tables read by lh/index*2 justify s16[10]. Raw 0x44 copy type remains provisional."
+    },
+    {
+      "detail": "sp58[16]",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "outcome": "repaired",
+      "explanation": "sp44: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[10]. sp58: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[10]. sp6C: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[10]. Three copied 20-byte tables read by lh/index*2 justify s16[10]. Raw 0x44 copy type remains provisional."
+    },
+    {
+      "detail": "sp6C[16]",
+      "kind": "synthesized-stack-local",
+      "line": 4,
+      "outcome": "repaired",
+      "explanation": "sp44: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[10]. sp58: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[10]. sp6C: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[10]. Three copied 20-byte tables read by lh/index*2 justify s16[10]. Raw 0x44 copy type remains provisional."
+    },
+    {
+      "detail": "M2cBlock44",
+      "kind": "inferred-copy-layout",
+      "line": 5,
+      "outcome": "unresolved",
+      "explanation": "Opaque word-block type has only a copy-extent interpretation; semantic field layout remains unresolved. Three copied 20-byte tables read by lh/index*2 justify s16[10]. Raw 0x44 copy type remains provisional."
+    }
+  ],
+  "notes": "Three copied 20-byte tables read by lh/index*2 justify s16[10]. Raw 0x44 copy type remains provisional.",
+  "assembly_evidence": "drafts/T-16100/batch-3/EVENT/func_80109404/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "partial-repair"
+}

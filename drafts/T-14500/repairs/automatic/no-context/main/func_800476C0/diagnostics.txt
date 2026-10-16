@@ -1,0 +1,13 @@
+python3 failed:
+ ---------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/func_800476C0/work/guarded.c, line 2729: Incompatible pointer type assignment
+         var_s1 = &D_8011ECD0;
+ ---------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/main/func_800476C0/work/guarded.c, line 2729: '&' before array or function; ignored
+         var_s1 = &D_8011ECD0;
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_800476C0/work/guarded.c, line 2907: Duplicate case label in the same switch statement
+                                         case 32:
+ ----------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_800476C0/work -o drafts/T-14500/repairs/automatic/no-context/main/func_800476C0/work/guarded.o /tmp/asm_processorg758vjhd/preprocessed_2bbb4458b5da45b2b6a36b88ded6d6fd.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibd0s34vcz/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_800476C0/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_800476C0/work/guarded.c

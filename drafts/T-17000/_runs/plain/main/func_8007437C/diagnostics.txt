@@ -1,0 +1,1 @@
+m2c.py: argument counts from the callees' asm: addr_init_club_sd 1, addr_init_else_sd 1, addr_init_weekly_sd 1, load_palette 4

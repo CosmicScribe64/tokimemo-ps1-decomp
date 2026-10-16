@@ -29,6 +29,7 @@
 #define MAIN_API_OVERRIDE_D_80121874 /* EVENT overlay data at this address, s32 (main_api.h: u8) */
 #define MAIN_API_OVERRIDE_D_801206B0 /* EVENT overlay data at this address, s32 (main_api.h: volatile s16) */
 
+#define MAIN_API_OVERRIDE_D_80122EC8 /* EVENT table of 40 function pointers (main_api.h: s32, used by TAIIKU) */
 #include "common.h"
 #include "game.h"
 
@@ -1509,7 +1510,9 @@ typedef struct EventStateView {
     /* 0x037 */ u8 unk_037;
     /* 0x038 */ u8 pad_038[0xAC];
     /* 0x0E4 */ Rec38Flags unk_0E4;
-    /* 0x0E8 */ u8 pad_0E8[0xBC];
+    /* 0x0E8 */ u8 pad_0E8[0x16];
+    /* 0x0FE */ s16 unk_0FE;
+    /* 0x100 */ u8 pad_100[0xA4];
     /* 0x1A4 */ Rec34 unk_1A4[12];
     /* 0x414 */ u8 pad_414[0x1B6];
     /* 0x5CA */ u8 unk_5CA[0x4B];
@@ -1517,7 +1520,13 @@ typedef struct EventStateView {
     /* 0x6C8 */ s8 unk_6C8;
     /* 0x6C9 */ s8 unk_6C9;
     /* 0x6CA */ s8 unk_6CA;
-    /* 0x6CB */ u8 pad_6CB[0x81B];
+    /* T-15200: selector-indexed bytes at D_800B0F35 and flag D_800B0F45.
+     * Twelve slots follow the existing Rec34 table extent; semantics unknown. */
+    /* 0x6CB */ u8 pad_6CB[0xA];
+    /* 0x6D5 */ u8 unk_6D5[12];
+    /* 0x6E1 */ u8 pad_6E1[4];
+    /* 0x6E5 */ u8 unk_6E5;
+    /* 0x6E6 */ u8 pad_6E6[0x800];
     /* 0xEE6 */ u8 unk_EE6;
     /* 0xEE7 */ u8 pad_EE7[0x150];
     /* 0x1037 */ u8 unk_1037;
@@ -1526,6 +1535,13 @@ typedef struct EventStateView {
     /* 0x1296 */ u8 unk_1296;
     /* 0x1297 */ u8 pad_1297;
 } EventStateView; /* minimum size 0x1298 */
+
+/* Bit 1 of Rec34.unk_0C is tested with a word shift/sign test (T-14300). */
+typedef struct EventRecordFlags {
+    /* 0x00 */ u32 lo : 1;
+    /* 0x00 */ u32 bit1 : 1;
+    /* 0x00 */ u32 hi : 30;
+} EventRecordFlags; /* size 0x04 */
 #endif
 
 #ifndef OVL_EVENT_MOVIE_STATE_T10830_H
@@ -1621,3 +1637,267 @@ extern EventTable2D6 D_80125504;
 extern s16 D_8012434C;
 extern s16 D_80124350;
 void func_80115C18(void);
+
+#ifndef OVL_EVENT_STEP_TABLES_T17400
+#define OVL_EVENT_STEP_TABLES_T17400
+/* Step tables (T-3330, T-17400): one handler per scene step; each handler copies its table to the stack
+ * whole and calls tbl.f[D_800B1AF6]. NN is the run of code pointers in the data. The types and externs were
+ * local to each .c file before; the tables of the unmatched handlers are declared here too. D_801220EC (FnTbl42)
+ * and D_8012277C (FnTbl32) stay main_api.h scalars read through a cast: main_api.h has no override guard for them. */
+typedef struct {
+    void (*f[14])();
+} FnTbl14; /* size 0x38 */
+typedef struct {
+    void (*f[15])();
+} FnTbl15; /* size 0x3C */
+typedef struct {
+    void (*f[18])();
+} FnTbl18; /* size 0x48 */
+typedef struct {
+    void (*f[19])();
+} FnTbl19; /* size 0x4C */
+typedef struct {
+    void (*f[20])();
+} FnTbl20; /* size 0x50 */
+typedef struct {
+    void (*f[21])();
+} FnTbl21; /* size 0x54 */
+typedef struct {
+    void (*f[22])();
+} FnTbl22; /* size 0x58 */
+typedef struct {
+    void (*f[25])();
+} FnTbl25; /* size 0x64 */
+typedef struct {
+    void (*f[29])();
+} FnTbl29; /* size 0x74 */
+typedef struct {
+    void (*f[31])();
+} FnTbl31; /* size 0x7C */
+typedef struct {
+    void (*f[32])();
+} FnTbl32; /* size 0x80 */
+typedef struct {
+    void (*f[34])();
+} FnTbl34; /* size 0x88 */
+typedef struct {
+    void (*f[35])();
+} FnTbl35; /* size 0x8C */
+typedef struct {
+    void (*f[36])();
+} FnTbl36; /* size 0x90 */
+typedef struct {
+    void (*f[37])();
+} FnTbl37; /* size 0x94 */
+typedef struct {
+    void (*f[38])();
+} FnTbl38; /* size 0x98 */
+typedef struct {
+    void (*f[39])();
+} FnTbl39; /* size 0x9C */
+typedef struct {
+    void (*f[40])();
+} FnTbl40; /* size 0xA0 */
+typedef struct {
+    void (*f[41])();
+} FnTbl41; /* size 0xA4 */
+typedef struct {
+    void (*f[42])();
+} FnTbl42; /* size 0xA8 */
+typedef struct {
+    void (*f[44])();
+} FnTbl44; /* size 0xB0 */
+typedef struct {
+    void (*f[45])();
+} FnTbl45; /* size 0xB4 */
+typedef struct {
+    void (*f[46])();
+} FnTbl46; /* size 0xB8 */
+typedef struct {
+    void (*f[47])();
+} FnTbl47; /* size 0xBC */
+typedef struct {
+    void (*f[48])();
+} FnTbl48; /* size 0xC0 */
+typedef struct {
+    void (*f[49])();
+} FnTbl49; /* size 0xC4 */
+typedef struct {
+    void (*f[50])();
+} FnTbl50; /* size 0xC8 */
+typedef struct {
+    void (*f[51])();
+} FnTbl51; /* size 0xCC */
+typedef struct {
+    void (*f[52])();
+} FnTbl52; /* size 0xD0 */
+typedef struct {
+    void (*f[55])();
+} FnTbl55; /* size 0xDC */
+typedef struct {
+    void (*f[56])();
+} FnTbl56; /* size 0xE0 */
+typedef struct {
+    void (*f[58])();
+} FnTbl58; /* size 0xE8 */
+typedef struct {
+    void (*f[61])();
+} FnTbl61; /* size 0xF4 */
+typedef struct {
+    void (*f[63])();
+} FnTbl63; /* size 0xFC */
+typedef struct {
+    void (*f[67])();
+} FnTbl67; /* size 0x10C */
+typedef struct {
+    void (*f[103])();
+} FnTbl103; /* size 0x19C */
+extern FnTbl52 D_801207B8;
+extern FnTbl41 D_80120888;
+extern FnTbl35 D_8012092C;
+extern FnTbl47 D_801209B8;
+extern FnTbl42 D_80120A94;
+extern FnTbl42 D_80120B3C;
+extern FnTbl39 D_80120D30;
+extern FnTbl22 D_80120DCC;
+extern FnTbl45 D_80120EE0;
+extern FnTbl44 D_80120F94;
+extern FnTbl58 D_80121044;
+extern FnTbl45 D_8012112C;
+extern FnTbl42 D_801212B8; /* unmatched user */
+extern FnTbl41 D_80121360;
+extern FnTbl39 D_80121404;
+extern FnTbl39 D_801214A0; /* unmatched user */
+extern FnTbl38 D_8012153C;
+extern FnTbl51 D_801215FC;
+extern FnTbl37 D_801216C8;
+extern FnTbl41 D_8012175C;
+extern FnTbl32 D_801218E8; /* unmatched user */
+extern FnTbl49 D_80121968;
+extern FnTbl48 D_80121AF8; /* unmatched user */
+extern FnTbl42 D_80121BB8;
+extern FnTbl45 D_80121C60;
+extern FnTbl38 D_80121DFC;
+extern FnTbl21 D_80121E94;
+extern FnTbl40 D_80121EE8;
+extern FnTbl38 D_80121F88;
+extern FnTbl51 D_80122020;
+extern FnTbl15 D_80122194;
+extern FnTbl39 D_801222AC;
+extern FnTbl67 D_80122348;
+extern FnTbl39 D_80122454;
+extern FnTbl46 D_801224F0;
+extern FnTbl19 D_801227FC;
+extern FnTbl38 D_80122848;
+extern FnTbl40 D_801229B0;
+extern FnTbl56 D_80122A50;
+extern FnTbl29 D_80122C0C;
+extern FnTbl50 D_80122C80;
+extern FnTbl55 D_80122D48;
+extern FnTbl41 D_80122E24;
+extern FnTbl40 D_80122EC8;
+extern FnTbl45 D_8012304C;
+extern FnTbl20 D_80123100;
+extern FnTbl47 D_80123150;
+extern FnTbl63 D_8012320C;
+extern FnTbl36 D_80123308;
+extern FnTbl36 D_80123398;
+extern FnTbl35 D_8012350C;
+extern FnTbl37 D_80123598;
+extern FnTbl55 D_8012362C;
+extern FnTbl40 D_80123708;
+extern FnTbl51 D_801237A8;
+extern FnTbl47 D_80123990;
+extern FnTbl21 D_80123A4C;
+extern FnTbl55 D_80123AA0;
+extern FnTbl41 D_80123BB8;
+extern FnTbl44 D_80123C5C;
+extern FnTbl44 D_80123D0C;
+extern FnTbl52 D_80123DBC;
+extern FnTbl22 D_80123ED8;
+extern FnTbl25 D_80123F30;
+extern FnTbl14 D_80123F94;
+extern FnTbl56 D_80123FCC; /* unmatched user */
+extern FnTbl14 D_801240AC;
+extern FnTbl42 D_80124120;
+extern FnTbl61 D_801243B8; /* unmatched user */
+extern FnTbl18 D_801244AC; /* unmatched user */
+extern FnTbl35 D_801244F4; /* unmatched user */
+extern FnTbl48 D_80124580; /* unmatched user */
+extern FnTbl32 D_80124640; /* unmatched user */
+extern FnTbl35 D_801246C0; /* unmatched user */
+extern FnTbl34 D_8012474C; /* unmatched user */
+extern FnTbl36 D_801247D4; /* unmatched user */
+extern FnTbl37 D_80124864; /* unmatched user */
+extern FnTbl36 D_801248F8; /* unmatched user */
+extern FnTbl39 D_80124988; /* unmatched user */
+extern FnTbl32 D_80124A24; /* unmatched user */
+extern FnTbl32 D_80124AA4; /* unmatched user */
+extern FnTbl103 D_80124B24; /* unmatched user */
+extern FnTbl29 D_80124CC0; /* unmatched user */
+extern FnTbl45 D_80124D34; /* unmatched user */
+extern FnTbl41 D_80124DE8; /* unmatched user */
+extern FnTbl37 D_80124E8C; /* unmatched user */
+extern FnTbl47 D_80124F20; /* unmatched user */
+extern FnTbl61 D_80124FDC; /* unmatched user */
+extern FnTbl22 D_801250D0; /* unmatched user */
+extern FnTbl31 D_8012514C; /* unmatched user */
+#endif
+
+#ifndef OVL_EVENT_RECORD_COPIES_T17400
+#define OVL_EVENT_RECORD_COPIES_T17400
+/* T-17400: shared views that were local to the .c files. */
+typedef struct {
+    s32 w[0x11];
+} Ev44; /* size 0x44: one D_800E9620 record copied whole (D_800EAFA0 is record 96) */
+typedef struct {
+    s32 a;
+    s32 b;
+} EvEnt; /* size 0x08 */
+typedef struct {
+    EvEnt e[4];
+} EvTbl; /* size 0x20: four (a, b) pairs, copied to the stack whole */
+extern EvTbl D_80120A74;
+extern EvTbl D_80121AD8;
+#endif
+
+#ifndef OVL_EVENT_STACK_TABLES_T17400
+#define OVL_EVENT_STACK_TABLES_T17400
+/* T-17400: constant tables that a handler copies to the stack whole (lw/sw runs plus an lh/sh tail) and
+ * then reads by index. Element widths from the reads of the copy (lh for the halfword tables). */
+typedef struct {
+    u16 v[21];
+} U16x21; /* size 0x2A */
+extern U16x21 D_80125454; /* func_8011A8E4 */
+extern U16x21 D_80125480; /* func_8011A8E4 */
+extern U16x21 D_801254AC; /* func_8011A8E4 */
+extern U16x21 D_801254D8; /* func_8011AB00 */
+typedef struct {
+    s16 v[8][2];
+} EvPairs8; /* size 0x20: func_80103774 reads v[i][1] (lh 0x6A + 4 * i) */
+extern EvPairs8 D_80122990;
+typedef struct {
+    s16 v[0x52];
+} EvShorts82; /* size 0xA4 */
+extern EvShorts82 D_80121A34; /* func_800FEAE8 */
+typedef struct {
+    s16 v[10];
+} EvShorts10; /* size 0x14 */
+extern EvShorts10 D_80123B7C; /* func_80109404, with the next two */
+extern EvShorts10 D_80123B90;
+extern EvShorts10 D_80123BA4;
+typedef struct {
+    s16 v[11];
+} EvShorts11; /* size 0x16 */
+extern EvShorts11 D_80125330; /* func_8011767C */
+extern EvShorts11 D_80125348;
+typedef struct {
+    s16 v[5];
+} EvShorts5; /* size 0x0A */
+extern EvShorts5 D_80125360; /* func_80118B4C */
+#endif
+
+#ifndef OVL_EVENT_PROTOS_T17400
+#define OVL_EVENT_PROTOS_T17400
+void func_8010AFE4(void); /* T-17400: defined in 8010A210.c after its first caller */
+#endif

@@ -1,0 +1,10 @@
+{
+  "total": 1066,
+  "statuses": {
+    "candidate-zero": 31,
+    "scored": 1035
+  },
+  "reserved": 33,
+  "repaired": 129,
+  "absent": 0
+}

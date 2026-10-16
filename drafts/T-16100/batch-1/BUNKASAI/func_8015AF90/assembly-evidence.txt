@@ -1,0 +1,70 @@
+    8015AF90:  addiu      $sp, $sp, -0xB0
+    8015AF9C:  sw         $ra, 0x1C($sp)
+    8015AFA0:  addiu      $v0, $sp, 0x3C
+    8015AFA4:  addiu      $t0, $sp, 0x4C
+    8015AFAC:  addiu      $t6, $sp, 0x78
+    8015B060:   sll       $t4, $t4, 2
+    8015B068:  addu       $at, $at, $t4
+    8015B0A0:  sll        $t5, $t3, 30
+    8015B0B8:  sll        $t7, $t9, 30
+    8015B0C8:  sll        $t6, $t8, 30
+    8015B0F8:  sll        $t5, $t3, 30
+    8015B10C:  sll        $t7, $t9, 30
+    8015B110:  sll        $t5, $t3, 30
+    8015B114:  sll        $t6, $t8, 30
+    8015B148:   lw        $ra, 0x1C($sp)
+    8015B15C:   lw        $ra, 0x1C($sp)
+    8015B240:   lw        $ra, 0x1C($sp)
+    8015B25C:   lw        $ra, 0x1C($sp)
+    8015B26C:   lw        $ra, 0x1C($sp)
+    8015B27C:   lw        $ra, 0x1C($sp)
+    8015B2A0:   lw        $ra, 0x1C($sp)
+    8015B2B0:   lw        $ra, 0x1C($sp)
+    8015B2D4:   sw        $zero, 0x10($sp)
+    8015B2EC:   lw        $ra, 0x1C($sp)
+    8015B304:   lw        $ra, 0x1C($sp)
+    8015B334:   sw        $zero, 0x10($sp)
+    8015B340:  sll        $t6, $v1, 2
+    8015B348:  addu       $a3, $a3, $t6
+    8015B364:   sw        $zero, 0x10($sp)
+    8015B374:  sll        $t4, $v1, 2
+    8015B378:  addu       $a3, $sp, $t4
+    8015B380:  sw         $zero, 0x10($sp)
+    8015B3A8:   lw        $ra, 0x1C($sp)
+    8015B3DC:   lw        $ra, 0x1C($sp)
+    8015B3F8:   sw        $zero, 0x10($sp)
+    8015B410:   lw        $ra, 0x1C($sp)
+    8015B444:   lw        $ra, 0x1C($sp)
+    8015B470:  sll        $t9, $t2, 21
+    8015B478:  sll        $t1, $t7, 2
+    8015B47C:  addu       $t8, $v0, $t1
+    8015B484:  sw         $zero, 0x10($sp)
+    8015B498:  sll        $t6, $v1, 2
+    8015B49C:  addu       $t4, $t0, $t6
+    8015B4AC:  sw         $zero, 0x10($sp)
+    8015B4D0:   lw        $ra, 0x1C($sp)
+    8015B504:   lw        $ra, 0x1C($sp)
+    8015B51C:   lw        $ra, 0x1C($sp)
+    8015B538:   sw        $zero, 0x10($sp)
+    8015B554:   sw        $zero, 0x10($sp)
+    8015B570:   lw        $ra, 0x1C($sp)
+    8015B5A4:   lw        $ra, 0x1C($sp)
+    8015B5C0:   sw        $zero, 0x10($sp)
+    8015B5D8:   lw        $ra, 0x1C($sp)
+    8015B60C:   lw        $ra, 0x1C($sp)
+    8015B61C:  sll        $t7, $t9, 21
+    8015B624:  sll        $t8, $t1, 2
+    8015B628:  addu       $t6, $v0, $t8
+    8015B630:  sw         $zero, 0x10($sp)
+    8015B654:   lw        $ra, 0x1C($sp)
+    8015B6B8:   lw        $ra, 0x1C($sp)
+    8015B6C8:   lw        $ra, 0x1C($sp)
+    8015B6F0:   lw        $ra, 0x1C($sp)
+    8015B700:   lw        $ra, 0x1C($sp)
+    8015B718:   lw        $ra, 0x1C($sp)
+    8015B73C:   lw        $ra, 0x1C($sp)
+    8015B774:   lw        $ra, 0x1C($sp)
+    8015B784:   lw        $ra, 0x1C($sp)
+    8015B80C:   lw        $ra, 0x1C($sp)
+    8015B818:  lw         $ra, 0x1C($sp)
+    8015B81C:  addiu      $sp, $sp, 0xB0

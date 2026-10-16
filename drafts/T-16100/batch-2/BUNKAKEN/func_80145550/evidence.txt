@@ -1,0 +1,28 @@
+Target: ['asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80144F70/func_80145550.s']
+Review: spDA is intentionally uninitialized byte in original default arm; exact 54/66/66-byte copies already recovered. Preserve explicit diagnostic; flag is justified false positive.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80145550 */  addiu      $sp, $sp, -0xE0
+    /* 8014555C */  addiu      $a1, $sp, 0xA4
+    /* 80145560 */  addiu      $t6, $t6, %lo(D_80155F9C)
+    /* 80145568 */  addiu      $a2, $sp, 0x60
+    /* 8014556C */  addiu      $a3, $sp, 0x1C
+    /* 80145570 */  addiu      $t9, $t6, 0x30
+    /* 8014557C */  addiu      $t6, $t6, 0xC
+    /* 80145588 */  addiu      $t2, $t2, 0xC
+    /* 801455A8 */  lhu        $at, 0x4($t6)
+    /* 801455AC */  addiu      $t3, $t3, %lo(D_80155FD4)
+    /* 801455B0 */  addiu      $t8, $t3, 0x3C
+    /* 801455C0 */  addiu      $t3, $t3, 0xC
+    /* 801455CC */  addiu      $t7, $t7, 0xC
+    /* 801455EC */  lhu        $at, 0x4($t3)
+    /* 801455F0 */  addiu      $t9, $t9, %lo(D_80156018)
+    /* 801455F4 */  addiu      $t5, $t9, 0x3C
+    /* 80145604 */  addiu      $t9, $t9, 0xC
+    /* 80145610 */  addiu      $t4, $t4, 0xC
+    /* 80145630 */  lhu        $at, 0x4($t9)
+    /* 8014563C */  lbu        $v0, %lo(D_800E62BE)($v0)
+    /* 80145640 */  addiu      $at, $zero, 0xB
+    /* 80145644 */  addiu      $v0, $v0, -0x5F
+    /* 80145654 */  lh         $t3, %lo(D_800E6442)($t3)
+    /* 8014565C */  addiu      $t7, $t3, 0x2

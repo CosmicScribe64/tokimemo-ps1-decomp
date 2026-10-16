@@ -44,4 +44,27 @@ void func_80133694(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801335A0", func_80133738);
+/* The table is read as flat word pairs: `&D_8015E238[idx * 2]` takes the ugen temporaries of the
+ * original; a pair-struct element (`&pairs[idx]`) gets them one register lower (T-16561). */
+void func_80133738(void) {
+    s32 *p;
+    s32 idx;
+
+    idx = 3;
+    if ((D_800E6280.unk_1109 & 1) && (D_800E6280.unk_110A == 1)) {
+        if ((D_8015EDBC == 0) && (D_800E6280.unk_F88 & 0x10) && (D_800E6280.unk_10F8 & 0xFF)) {
+            if (func_80045288() == 1) {
+                if (func_800460EC() & 2) {
+                    if (D_8015EDB4[8].unk78 < D_8015EDB4->unk78) {
+                        idx = (func_800AE0D0() & 1) + 2;
+                    } else if (D_800E6280.unk_10F4 & 1) {
+                        idx = func_800AE0D0() % 6;
+                    }
+                    p = &D_8015E238[idx * 2];
+                    func_80046290(p[0], p[1], 8);
+                    func_80044750(0x300);
+                }
+            }
+        }
+    }
+}

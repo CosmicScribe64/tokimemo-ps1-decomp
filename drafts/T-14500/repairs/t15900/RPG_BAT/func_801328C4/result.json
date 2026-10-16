@@ -1,0 +1,18 @@
+{
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801321D0.c",
+  "func": "func_801328C4",
+  "scope": "RPG_BAT:func_801328C4",
+  "size": 464,
+  "status": "scored",
+  "score": 130,
+  "body_hash": "b36f0da48b5adeec41e4aa6061b03a064b50f6d12084513ed41987b4275098fd",
+  "context_hash": "e22d193047cbf3dd72dc88cd7de808803739dfeb6e13e1182a40697db3b2efb8",
+  "repair_path": "drafts/T-14500/repairs/t15900/RPG_BAT/func_801328C4",
+  "ticket": "T-15900",
+  "repair_notes": "Use implicit-int ABI established by earlier unprototyped calls. Preserve real16word local copy and no manufactured return.",
+  "baseline": "48362009",
+  "compiler": "IDO5.3 default full-TU via order_search.compile_variant",
+  "production_changed": false,
+  "preprocessed_context_hash": "6bec7550bf854bfecc5212190af02684153591aa5393281468fc809b5ec3df4c"
+}

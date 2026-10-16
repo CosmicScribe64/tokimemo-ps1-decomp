@@ -1,0 +1,65 @@
+{
+  "scope": "TACO:func_8013E778",
+  "selected_path": "drafts/T-15700/TACO/func_8013E778",
+  "archive_path": "drafts/T-16100/batch-3/TACO/func_8013E778",
+  "changed": false,
+  "reviewed": true,
+  "repair_notes": [],
+  "flags": [
+    {
+      "detail": "sp98",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "outcome": "unresolved",
+      "explanation": "Four projected points at 0x90..0x9F are independent uninitialized aliases. Needs s16 coordinate pairs and pointer walk termination inside the array."
+    },
+    {
+      "detail": "sp92",
+      "kind": "synthesized-stack-local",
+      "line": 4,
+      "outcome": "unresolved",
+      "explanation": "Four projected points at 0x90..0x9F are independent uninitialized aliases. Needs s16 coordinate pairs and pointer walk termination inside the array."
+    },
+    {
+      "detail": "sp9E",
+      "kind": "synthesized-stack-local",
+      "line": 5,
+      "outcome": "unresolved",
+      "explanation": "Four projected points at 0x90..0x9F are independent uninitialized aliases. Needs s16 coordinate pairs and pointer walk termination inside the array."
+    },
+    {
+      "detail": "sp96",
+      "kind": "synthesized-stack-local",
+      "line": 6,
+      "outcome": "unresolved",
+      "explanation": "Four projected points at 0x90..0x9F are independent uninitialized aliases. Needs s16 coordinate pairs and pointer walk termination inside the array."
+    },
+    {
+      "detail": "sp9C",
+      "kind": "synthesized-stack-local",
+      "line": 7,
+      "outcome": "unresolved",
+      "explanation": "Four projected points at 0x90..0x9F are independent uninitialized aliases. Needs s16 coordinate pairs and pointer walk termination inside the array."
+    },
+    {
+      "detail": "sp9A",
+      "kind": "synthesized-stack-local",
+      "line": 8,
+      "outcome": "unresolved",
+      "explanation": "Four projected points at 0x90..0x9F are independent uninitialized aliases. Needs s16 coordinate pairs and pointer walk termination inside the array."
+    },
+    {
+      "detail": "sp94",
+      "kind": "synthesized-stack-local",
+      "line": 9,
+      "outcome": "unresolved",
+      "explanation": "Four projected points at 0x90..0x9F are independent uninitialized aliases. Needs s16 coordinate pairs and pointer walk termination inside the array."
+    }
+  ],
+  "notes": "Four projected points at 0x90..0x9F are independent uninitialized aliases. Needs s16 coordinate pairs and pointer walk termination inside the array.",
+  "assembly_evidence": "drafts/T-16100/batch-3/TACO/func_8013E778/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "reviewed-unresolved"
+}

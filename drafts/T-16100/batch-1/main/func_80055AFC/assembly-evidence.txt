@@ -1,0 +1,31 @@
+    80055AFC:  addiu      $sp, $sp, -0x48
+    80055B00:  sw         $ra, 0x14($sp)
+    80055B04:  sw         $a0, 0x48($sp)
+    80055B30:  sll        $t7, $t6, 4
+    80055B38:  sll        $t7, $t7, 8
+    80055B40:  addu       $t5, $t7, $t8
+    80055BAC:  sll        $t9, $a0, 4
+    80055BC4:  sll        $t9, $t9, 8
+    80055BCC:  addu       $ra, $t9, $t6
+    80055CEC:  lui        $v0, %hi(D_800E6280)
+    80055CF8:  addiu      $v0, $v0, %lo(D_800E6280)
+    80055DD4:  sw         $ra, 0x2C($sp)
+    80055DE0:   sw        $t5, 0x30($sp)
+    80055DE8:  lw         $ra, 0x2C($sp)
+    80055DF4:  lui        $v0, %hi(D_800E6280)
+    80055DFC:  lw         $t5, 0x30($sp)
+    80055E04:  addiu      $v0, $v0, %lo(D_800E6280)
+    80055E28:  lui        $v0, %hi(D_800E6280)
+    80055E34:  addiu      $v0, $v0, %lo(D_800E6280)
+    80055E54:  lui        $v0, %hi(D_800E6280)
+    80055E60:  addiu      $v0, $v0, %lo(D_800E6280)
+    80055E80:  lui        $v0, %hi(D_800E6280)
+    80055E8C:  addiu      $v0, $v0, %lo(D_800E6280)
+    80055EB0:  sw         $ra, 0x2C($sp)
+    80055EC0:   sw        $t5, 0x30($sp)
+    80055EC4:  lw         $ra, 0x2C($sp)
+    80055EDC:  lw         $t5, 0x30($sp)
+    80055FC0:   sw        $t5, 0x30($sp)
+    80055FC4:  lw         $t5, 0x30($sp)
+    80056060:  lw         $ra, 0x14($sp)
+    80056064:  addiu      $sp, $sp, 0x48

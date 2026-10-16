@@ -1,0 +1,151 @@
+#include "common.h"
+#include "ovl/SHOUGATU.h"
+
+typedef struct {
+    void (*f[22])();
+} FnTbl22; /* size 0x58 */
+extern FnTbl22 D_80145170;
+
+typedef struct {
+    void (*f[20])();
+} FnTbl20; /* size 0x50 */
+extern FnTbl20 D_801451C8;
+
+void func_80138B40(void) {
+    u8 sel = D_80144E14; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
+
+    switch (sel) {
+    case 0:
+        func_80138BA0();
+        return;
+    case 1:
+        func_80138C1C();
+        return;
+    default:
+        func_80138CA4();
+        return;
+    }
+}
+
+void func_80138BA0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl22 tbl;
+
+    tbl = D_80145170;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx]();
+}
+
+void func_80138C1C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl20 tbl;
+
+    tbl = D_801451C8;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx]();
+}
+
+extern FnTbl20 D_80145218;
+
+void func_80138CA4(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl20 tbl;
+
+    tbl = D_80145218;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx]();
+}
+
+void func_80138D2C(void) {
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    func_8008585C();
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    D_800B5940 = 0;
+    func_8007C740();
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    /* FAKE: the byte-typed store as the argument keeps the constant in $a0 (T-9020 idiom); T-10520 */
+    func_800847B8(*(u8 *)&D_800E6280.unk_F5F = 3);
+    func_80136F90();
+    D_80144DFC = D_80144D98;
+    D_80144E00 = D_80144DBC;
+    D_80144E04 = D_80144DE0;
+    func_8004284C();
+}
+
+void func_80138E1C(void) {
+    D_80144E08 = 0;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "中庭");
+    func_8004284C();
+}
+
+void func_80138E60(void) {
+    ((Bits64B8 *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[0])->f = 1;
+    D_80144E08 = 8;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "美術室");
+    func_8004284C();
+}
+
+void func_80138ED4(void) {
+    ((Bits64B8 *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[0])->f = 1;
+    D_80144E08 = 0xB;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "音楽室");
+    func_8004284C();
+}
+
+void func_80138F48(void) {
+    bg_read_sub2(0x4071);
+    func_8004284C();
+}
+
+void func_80138F70(void) {
+    bg_read_sub2(0x40E2);
+    func_8004284C();
+}
+
+void func_80138F98(void) {
+    bg_read_sub2(0x40D9);
+    func_8004284C();
+}
+
+/* bulk_m2c declarations (T-11190) */
+extern u16 D_800E6374;
+extern u8 D_800E64F2;
+extern u8 D_800E71DF;
+/* end bulk_m2c declarations */
+void func_80138FC0(void) {
+    s32 var_v0;
+    s32 var_v1;
+
+    var_v1 = 0;
+    D_800E6280.unk_1BC[D_800E71DF].unk_0C.b[0] |= 4;
+    var_v0 = 0;
+    if (((u16) D_800E6374 >> 0xC) == 4) {
+        var_v1 = 1;
+    }
+    if (((u8) D_800E64F2 >> 4) == 4) {
+        var_v0 = 1;
+    }
+    if ((var_v1 == 0) || (var_v0 == 0)) {
+        if (var_v0 != 0) {
+            D_80144E08 += 2;
+        } else {
+            D_80144E08 += 4;
+            D_800E6280.unk_1BC[D_800E71DF].unk_0C.b[0] &= 0xFFFB;
+        }
+    }
+    func_8004284C();
+}

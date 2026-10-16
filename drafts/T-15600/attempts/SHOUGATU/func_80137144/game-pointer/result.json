@@ -1,0 +1,13 @@
+{
+  "scope": "SHOUGATU:func_80137144",
+  "variant": "game-pointer",
+  "score": 14,
+  "status": "scored",
+  "matching_claim": false,
+  "source_base": "ffac0f04",
+  "census_base": "48362009",
+  "original_attempt": "drafts/T-14500/SHOUGATU/func_80137144",
+  "archive_path": "drafts/T-15600/attempts/SHOUGATU/func_80137144/game-pointer",
+  "body_sha256": "dcad2b508a301b3bdcb4b9a9fa90a0a646abc9e046a0685ad75d672c0b63d6bf",
+  "context_sha256": "94d39a85d53bfc50e3aef050cc08b8bd2e021c00a136230b64ea4c3ee35625d7"
+}

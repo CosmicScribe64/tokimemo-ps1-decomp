@@ -1,0 +1,9 @@
+python3 failed:
+cfe: Error: drafts/T-14500/RPG_BAT/func_80147930/work/guarded.c, line 3044: redeclaration of 'func_80147930'; previous declaration at line 2842 in file 'drafts/T-14500/RPG_BAT/func_80147930/work/guarded.c'
+ void func_80147930(void) {
+ -----^
+cfe: Error: drafts/T-14500/RPG_BAT/func_80147930/work/guarded.c, line 3044: Incompatible function return type for this function.
+ void func_80147930(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/RPG_BAT/func_80147930/work -o drafts/T-14500/RPG_BAT/func_80147930/work/guarded.o /tmp/asm_processorf_1oepw9/preprocessed_8444f621cea14bbca70c2b1a9d09f750.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibtf3bkyz2/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/RPG_BAT/func_80147930/work/guarded.o drafts/T-14500/RPG_BAT/func_80147930/work/guarded.c

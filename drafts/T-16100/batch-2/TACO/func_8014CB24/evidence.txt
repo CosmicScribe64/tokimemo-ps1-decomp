@@ -1,0 +1,28 @@
+Target: ['asm/ovl/TACO/nonmatchings/TACO/80149F90/func_8014CB24.s']
+Review: sp52 is synthesized at a halfword interior while sp60[8] and sp5C describe transform storage; current by-value call reconstruction remains unresolved.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8014CB24 */  addiu      $sp, $sp, -0x80
+    /* 8014CB2C */  sw         $ra, 0x2C($sp)
+    /* 8014CB30 */  sw         $s2, 0x28($sp)
+    /* 8014CB34 */  sw         $s1, 0x24($sp)
+    /* 8014CB38 */  sw         $s0, 0x20($sp)
+    /* 8014CB40 */   sw        $a0, 0x80($sp)
+    /* 8014CB48 */  addiu      $s2, $s2, %lo(D_801600C0)
+    /* 8014CB50 */  addiu      $s1, $s0, 0x1
+    /* 8014CB5C */  addiu      $a2, $zero, 0x1
+    /* 8014CB68 */   sw        $zero, 0x10($sp)
+    /* 8014CB78 */   addiu     $s2, $s2, 0x4
+    /* 8014CB80 */  addiu      $s1, $s1, %lo(D_801600D4)
+    /* 8014CB8C */  addiu      $a0, $s0, 0x19
+    /* 8014CB90 */  addiu      $a2, $zero, 0x1
+    /* 8014CB9C */   sw        $zero, 0x10($sp)
+    /* 8014CBA0 */  addiu      $s0, $s0, 0x1
+    /* 8014CBAC */   addiu     $s1, $s1, 0x4
+    /* 8014CBB4 */  addiu      $s1, $s1, %lo(D_801600E0)
+    /* 8014CBC0 */  addiu      $a0, $s0, 0x1D
+    /* 8014CBC4 */  addiu      $a2, $zero, 0x1
+    /* 8014CBD0 */   sw        $zero, 0x10($sp)
+    /* 8014CBD4 */  addiu      $s0, $s0, 0x1
+    /* 8014CBE0 */   addiu     $s1, $s1, 0x4
+    /* 8014CBEC */  addiu      $a0, $zero, 0x8

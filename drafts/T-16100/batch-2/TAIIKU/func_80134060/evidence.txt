@@ -1,0 +1,28 @@
+Target: ['asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80/func_80134060.s']
+Review: sp54/sp68 each have nine signed halfword elements copied through offsets 0..16; naming alone is a detector false positive. Other pointer-walk scaling still warrants later work.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80134060 */  addiu      $sp, $sp, -0x88
+    /* 80134068 */  sw         $ra, 0x24($sp)
+    /* 8013406C */  sw         $s1, 0x20($sp)
+    /* 80134070 */  sw         $s0, 0x1C($sp)
+    /* 80134074 */  addiu      $t6, $t6, %lo(D_801493C0)
+    /* 8013407C */  addiu      $s0, $sp, 0x68
+    /* 80134094 */  addiu      $t0, $t0, %lo(D_801493D4)
+    /* 801340A0 */  addiu      $s1, $sp, 0x54
+    /* 801340A8 */  lhu        $at, 0x10($t6)
+    /* 801340B8 */  addiu      $t5, $t5, %lo(D_801493E8)
+    /* 801340C4 */  addiu      $t4, $sp, 0x40
+    /* 801340E4 */  lhu        $at, 0x10($t0)
+    /* 80134108 */  lhu        $at, 0x10($t5)
+    /* 80134118 */  lbu        $t9, %lo(D_800E738A)($t9)
+    /* 80134128 */   sll       $t9, $t9, 2
+    /* 80134130 */  addu       $at, $at, $t9
+    /* 80134160 */   addiu     $a1, $zero, 0x1
+    /* 80134168 */  addiu      $s1, $s1, %lo(D_800E6280)
+    /* 80134170 */  sll        $t0, $v0, 2
+    /* 80134174 */  addu       $t3, $s1, $t0
+    /* 8013418C */  addiu      $a2, $a2, %lo(D_801492C8)
+    /* 80134198 */  addiu      $a1, $zero, 0x1
+    /* 801341A0 */   sw        $a2, 0x3C($sp)
+    /* 801341AC */  addu       $v1, $s0, $at

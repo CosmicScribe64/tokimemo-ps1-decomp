@@ -1,0 +1,9 @@
+python3 failed:
+cfe: Error: build/t16550/rescore/0/TAIIKU/func_80135830/work/guarded.c, line 3544: redeclaration of 'D_80149508'; previous declaration at line 3311 in file 'build/t16550/rescore/0/TAIIKU/func_80135830/work/guarded.c'
+ extern s32 D_80149508;
+ -----------^
+cfe: Error: build/t16550/rescore/0/TAIIKU/func_80135830/work/guarded.c, line 3545: redeclaration of 'D_80149530'; previous declaration at line 3312 in file 'build/t16550/rescore/0/TAIIKU/func_80135830/work/guarded.c'
+ extern s32 D_80149530;
+ -----------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/build/t16550/rescore/0/TAIIKU/func_80135830/work -o build/t16550/rescore/0/TAIIKU/func_80135830/work/guarded.o /tmp/asm_processor3b0w1rwj/preprocessed_bd50e0ab071b4647a5f338f812d9f63f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliblrlawvu8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o build/t16550/rescore/0/TAIIKU/func_80135830/work/guarded.o build/t16550/rescore/0/TAIIKU/func_80135830/work/guarded.c

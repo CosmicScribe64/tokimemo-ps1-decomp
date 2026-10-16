@@ -1,0 +1,28 @@
+Target: ['asm/ovl/DATE/nonmatchings/DATE/80157880/func_80158338.s']
+Review: 252-byte copy exists but raw sp accesses remain; preserve unresolved dispatch table representation.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80158338 */  addiu      $sp, $sp, -0x128
+    /* 80158344 */  addiu      $t7, $t7, %lo(D_8016020C)
+    /* 80158348 */  lbu        $v0, %lo(D_800E62BE)($v0)
+    /* 8015834C */  sw         $ra, 0x14($sp)
+    /* 80158350 */  addiu      $t0, $t7, 0xFC
+    /* 80158354 */  addiu      $t6, $sp, 0x28
+    /* 8015835C */  addiu      $t7, $t7, 0xC
+    /* 80158368 */  addiu      $t6, $t6, 0xC
+    /* 8015837C */  addiu      $at, $zero, 0x5F
+    /* 80158388 */  lbu        $a0, %lo(D_800E62BF)($a0)
+    /* 8015838C */  addiu      $a1, $zero, 0x7
+    /* 80158398 */  lbu        $v1, %lo(D_800E62C0)($v1)
+    /* 8015839C */  addiu      $at, $zero, 0x17
+    /* 801583AC */  lbu        $a0, %lo(D_800E62BF)($a0)
+    /* 801583B0 */  lbu        $v1, %lo(D_800E62C0)($v1)
+    /* 801583B4 */  addiu      $at, $zero, 0x60
+    /* 801583BC */   addiu     $a1, $zero, 0x7
+    /* 801583C4 */   addiu     $at, $zero, 0x1C
+    /* 801583CC */   addiu     $at, $zero, 0x61
+    /* 801583DC */   addiu     $at, $zero, 0x1B
+    /* 801583E8 */  lbu        $t1, %lo(D_800B593C)($t1)
+    /* 801583EC */  addiu      $at, $zero, 0x80
+    /* 80158414 */  lbu        $t3, %lo(D_800E738A)($t3)
+    /* 80158418 */  addiu      $a0, $zero, 0x80

@@ -1,0 +1,103 @@
+{
+  "scope": "EVENT:func_800FF320",
+  "selected_path": "drafts/T-14500/EVENT/func_800FF320",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "&sp50 +",
+      "kind": "stack-address-arithmetic",
+      "line": 22,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target indexes the copied word-pair table by selector<<3. Preserve its byte offset instead of multiplying it again by sizeof the entire 32-byte array. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "        temp_a2 = 0xA0 - arg0;",
+        "        temp_v0 = &sp50 + ((u8) D_801218DC[arg1] * 8);",
+        "        func_800FFA4C(0x140, -0x118, temp_a2, 0x28, temp_a2 + (s16) ((arg0 / 32) + 0xA), 0x28, (*(s32 *)temp_v0), *(s32 *)((unsigned char *)temp_v0 + (4)), (s32) arg2, 1);"
+      ]
+    },
+    {
+      "detail": "&sp50 +",
+      "kind": "stack-address-arithmetic",
+      "line": 28,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target indexes the copied word-pair table by selector<<3. Preserve its byte offset instead of multiplying it again by sizeof the entire 32-byte array. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "        temp_v1 = &D_801218DC[arg1];",
+        "        temp_v0_2 = &sp50 + ((u8) *temp_v1 * 8);",
+        "        sp4C = temp_v1;"
+      ]
+    },
+    {
+      "detail": "&sp50 +",
+      "kind": "stack-address-arithmetic",
+      "line": 31,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target indexes the copied word-pair table by selector<<3. Preserve its byte offset instead of multiplying it again by sizeof the entire 32-byte array. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "        func_800FFA4C(0x140, -0x118, -0xA0, 0x28 - (s16) ((s32) ((arg0 * 7) - 0x8C0) / 8), -0xA0, 0x28, (*(s32 *)temp_v0_2), *(s32 *)((unsigned char *)temp_v0_2 + (4)), (s32) arg2, 1);",
+        "        temp_v0_3 = &sp50 + ((u8) *temp_v1 * 8);",
+        "        func_800FFA4C(0x140, -0x118, -0xA0, 0x28, ((s16) ((arg0 / 32) + 0xA) - arg0) + 0xA0, 0x28, (*(s32 *)temp_v0_3), *(s32 *)((unsigned char *)temp_v0_3 + (4)), (s32) arg2, 1);"
+      ]
+    },
+    {
+      "detail": "&sp50 +",
+      "kind": "stack-address-arithmetic",
+      "line": 36,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target indexes the copied word-pair table by selector<<3. Preserve its byte offset instead of multiplying it again by sizeof the entire 32-byte array. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    temp_a3 = 0x28 - (s16) ((s32) ((arg0 * 7) - 0x8C0) / 8);",
+        "    temp_v0_4 = &sp50 + ((u8) D_801218DC[arg1] * 8);",
+        "    func_800FFA4C(0x140, -0x118, -0xA0, temp_a3, -0xA0, temp_a3 + (s16) (0xF - ((s32) (arg0 - 0x140) / 32)), (*(s32 *)temp_v0_4), *(s32 *)((unsigned char *)temp_v0_4 + (4)), (s32) arg2, 1);"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target indexes the copied word-pair table by selector<<3. Preserve its byte offset instead of multiplying it again by sizeof the entire 32-byte array."
+  ],
+  "assembly_path": "asm/ovl/EVENT/nonmatchings/EVENT/800FDC20/func_800FF320.s",
+  "assembly_sha256": "7b4afd4b790dab97b53e4230033db87eaf5ecd3c252fc75223b1224795b1cb95",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ],
+    "0x7C": [
+      "lh",
+      "sw"
+    ],
+    "0x80": [
+      "lh",
+      "sw"
+    ],
+    "0x14": [
+      "sw"
+    ],
+    "0x10": [
+      "sw"
+    ],
+    "0x18": [
+      "sw"
+    ],
+    "0x24": [
+      "sw"
+    ],
+    "0x20": [
+      "sw"
+    ],
+    "0x1C": [
+      "sw"
+    ],
+    "0x4C": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

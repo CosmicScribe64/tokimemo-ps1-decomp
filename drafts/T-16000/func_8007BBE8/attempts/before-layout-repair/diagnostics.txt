@@ -1,0 +1,44 @@
+cfe: Error: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3170: redeclaration of 'func_8007BBE8'; previous declaration at line 2770 in file 'drafts/T-16000/func_8007BBE8/work/guarded.c'
+ void func_8007BBE8(s32 *arg0, s32 arg1);
+ -----^
+cfe: Error: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3170: Incompatible function return type for this function.
+ void func_8007BBE8(s32 *arg0, s32 arg1);
+ ------------------^
+cfe: Error: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3171: redeclaration of 'func_8007BBE8'; previous declaration at line 2770 in file 'drafts/T-16000/func_8007BBE8/work/guarded.c'
+ void func_8007BBE8(s32 *arg0, s32 arg1) {
+ -----^
+cfe: Error: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3171: Incompatible function return type for this function.
+ void func_8007BBE8(s32 *arg0, s32 arg1) {
+ ------------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3190: Incompatible pointer type assignment
+     var_a3 = (temp_t6 << 5) + &D_80125E20;
+ -----------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3191: Incompatible pointer type assignment
+     var_a2 = (temp_t6 << 6) + &D_80125DA0;
+ -----------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3200: Incompatible pointer type assignment
+         var_t6 = arg0 + temp_v0;
+ ---------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3202: Incompatible pointer type assignment
+             var_t6 = arg0 + *arg0;
+ -------------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3208: Incompatible pointer type assignment
+         var_t4 = arg0 + temp_v0_2;
+ ---------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3210: Incompatible pointer type assignment
+             var_t4 = arg0 + *arg0;
+ -------------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3216: Incompatible pointer type assignment
+         var_t8 = arg0 + temp_v0_3;
+ ---------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3218: Incompatible pointer type assignment
+             var_t8 = arg0 + *arg0;
+ -------------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3224: Incompatible pointer type assignment
+         var_t6_2 = arg0 + temp_v0_4;
+ -----------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3226: Incompatible pointer type assignment
+             var_t6_2 = arg0 + *arg0;
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16000/func_8007BBE8/work -o drafts/T-16000/func_8007BBE8/work/guarded.o /tmp/asm_processorbs_eb6_h/preprocessed_edaf83e7f7194f258191725093ffe6ef.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibw51snoh7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16000/func_8007BBE8/work/guarded.o drafts/T-16000/func_8007BBE8/work/guarded.c

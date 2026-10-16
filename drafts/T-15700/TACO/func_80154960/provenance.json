@@ -1,0 +1,31 @@
+{
+  "original_attempt": "drafts/T-14500/TACO/func_80154960",
+  "prior_attempts": [
+    {
+      "path": "drafts/T-14500/TACO/func_80154960",
+      "reason": "Error: guarded.c, line 3459: Reference of an expression of void type or an incomplete type.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_80154960",
+      "reason": "Error: guarded.c, line 3459: Reference of an expression of void type or an incomplete type.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960",
+      "reason": "Error: guarded.c, line 3425: Incompatible function return type for this function.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80154960",
+      "reason": "Error: guarded.c, line 3459: Reference of an expression of void type or an incomplete type.",
+      "score": null,
+      "status": "failed"
+    }
+  ],
+  "source_base": "48362009",
+  "repair_base": "a445c4e2"
+}

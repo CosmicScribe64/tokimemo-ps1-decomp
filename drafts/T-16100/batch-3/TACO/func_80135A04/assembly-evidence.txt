@@ -1,0 +1,25 @@
+80135A04:  addiu      $sp, $sp, -0x60
+80135A08:  addiu      $v1, $zero, 0x2
+80135A0C:  sll        $t8, $v1, 2
+80135A10:  addiu      $t1, $sp, 0x44
+80135A14:  addiu      $t6, $zero, 0x3
+80135A18:  addiu      $t7, $zero, 0x3
+80135A1C:  sw         $ra, 0x24($sp)
+80135A20:  sw         $t7, 0x48($sp)
+80135A24:  sw         $t6, 0x44($sp)
+80135A28:  addu       $v0, $t1, $t8
+80135A2C:  addiu      $t0, $zero, 0x3
+80135A30:  sw         $t0, 0x0($v0)
+80135A34:  sw         $t0, 0x4($v0)
+80135A38:  sw         $t0, 0x8($v0)
+80135A3C:  sw         $t0, 0xC($v0)
+80135A44:  lw         $t2, %lo(D_8015F3F0)($t2)
+80135A48:  addiu      $t9, $zero, 0x5
+80135A4C:  sll        $t3, $t2, 2
+80135A50:  addu       $t4, $t1, $t3
+80135A54:  sw         $t9, 0x0($t4)
+80135BD4:  lbu        $v0, %lo(D_8015EDD8)($v0)
+80135C88:  lbu        $v0, %lo(D_8015EDDC)($v0)
+80135D88:  lbu        $v0, %lo(D_8015EDE0)($v0)
+80135E88:  lbu        $v0, %lo(D_8015EDE4)($v0)
+80135F60:  addiu      $sp, $sp, 0x60

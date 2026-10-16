@@ -1,0 +1,3492 @@
+[
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 73
+          },
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 100
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/DATE/func_801462B0",
+        "reason": null,
+        "score": 1511,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 73
+      },
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 100
+      }
+    ],
+    "scope": "DATE:func_801462B0",
+    "selected_path": "drafts/T-14500/DATE/func_801462B0",
+    "size": 3804,
+    "src": "src/ovl/DATE/801461B0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 72
+          },
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 99
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/DATE2/func_80133AF0",
+        "reason": null,
+        "score": 1364,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 72
+      },
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 99
+      }
+    ],
+    "scope": "DATE2:func_80133AF0",
+    "selected_path": "drafts/T-14500/DATE2/func_80133AF0",
+    "size": 3584,
+    "src": "src/ovl/DATE2/80132DE0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "M2cBlock44",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/MASTER/func_801344E0",
+        "reason": null,
+        "score": 1014,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "M2cBlock44",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      }
+    ],
+    "scope": "MASTER:func_801344E0",
+    "selected_path": "drafts/T-14500/MASTER/func_801344E0",
+    "size": 2912,
+    "src": "src/ovl/MASTER/80133680.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp75",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp76",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "&sp3C +",
+            "kind": "stack-address-arithmetic",
+            "line": 33
+          },
+          {
+            "detail": "&sp74 +",
+            "kind": "stack-address-arithmetic",
+            "line": 61
+          },
+          {
+            "detail": "&sp74 +",
+            "kind": "stack-address-arithmetic",
+            "line": 76
+          },
+          {
+            "detail": "&sp74 +",
+            "kind": "stack-address-arithmetic",
+            "line": 80
+          },
+          {
+            "detail": "&sp74 +",
+            "kind": "stack-address-arithmetic",
+            "line": 89
+          },
+          {
+            "detail": "&sp74 +",
+            "kind": "stack-address-arithmetic",
+            "line": 97
+          },
+          {
+            "detail": "M2cBlock28",
+            "kind": "inferred-copy-layout",
+            "line": 4
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TAIIKU/func_80132000",
+        "reason": null,
+        "score": 544,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp75",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "sp76",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      {
+        "detail": "&sp3C +",
+        "kind": "stack-address-arithmetic",
+        "line": 33
+      },
+      {
+        "detail": "&sp74 +",
+        "kind": "stack-address-arithmetic",
+        "line": 61
+      },
+      {
+        "detail": "&sp74 +",
+        "kind": "stack-address-arithmetic",
+        "line": 76
+      },
+      {
+        "detail": "&sp74 +",
+        "kind": "stack-address-arithmetic",
+        "line": 80
+      },
+      {
+        "detail": "&sp74 +",
+        "kind": "stack-address-arithmetic",
+        "line": 89
+      },
+      {
+        "detail": "&sp74 +",
+        "kind": "stack-address-arithmetic",
+        "line": 97
+      },
+      {
+        "detail": "M2cBlock28",
+        "kind": "inferred-copy-layout",
+        "line": 4
+      }
+    ],
+    "scope": "TAIIKU:func_80132000",
+    "selected_path": "drafts/T-14500/TAIIKU/func_80132000",
+    "size": 2416,
+    "src": "src/ovl/TAIIKU/80132000.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp58[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "M2cBlock40",
+            "kind": "inferred-copy-layout",
+            "line": 3
+          },
+          {
+            "detail": "+ &D_800E6280",
+            "kind": "gamestate-address-arithmetic",
+            "line": 38
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TEL/func_8013D03C",
+        "reason": null,
+        "score": 1050,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp58[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "M2cBlock40",
+        "kind": "inferred-copy-layout",
+        "line": 3
+      },
+      {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 38
+      }
+    ],
+    "scope": "TEL:func_8013D03C",
+    "selected_path": "drafts/T-14500/TEL/func_8013D03C",
+    "size": 2128,
+    "src": "src/ovl/TEL/8013CCD0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 66
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/DATE/func_8014718C",
+        "reason": null,
+        "score": 726,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 66
+      }
+    ],
+    "scope": "DATE:func_8014718C",
+    "selected_path": "drafts/T-14500/DATE/func_8014718C",
+    "size": 1996,
+    "src": "src/ovl/DATE/801461B0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp68[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TACO/func_8013BAC4",
+        "reason": null,
+        "score": 817,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp68[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      }
+    ],
+    "scope": "TACO:func_8013BAC4",
+    "selected_path": "drafts/T-14500/TACO/func_8013BAC4",
+    "size": 1840,
+    "src": "src/ovl/TACO/8013B990.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp3C",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TAIIKU/func_80141280",
+        "reason": null,
+        "score": 446,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp3C",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      }
+    ],
+    "scope": "TAIIKU:func_80141280",
+    "selected_path": "drafts/T-14500/TAIIKU/func_80141280",
+    "size": 1764,
+    "src": "src/ovl/TAIIKU/80141280.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp74",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "spA8",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "spA4",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "sp70",
+            "kind": "synthesized-stack-local",
+            "line": 5
+          },
+          {
+            "detail": "M2cBlock30",
+            "kind": "inferred-copy-layout",
+            "line": 6
+          },
+          {
+            "detail": "M2cBlock34",
+            "kind": "inferred-copy-layout",
+            "line": 7
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/RENSYU/func_80132390",
+        "reason": null,
+        "score": 416,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp74",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "spA8",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      {
+        "detail": "spA4",
+        "kind": "synthesized-stack-local",
+        "line": 4
+      },
+      {
+        "detail": "sp70",
+        "kind": "synthesized-stack-local",
+        "line": 5
+      },
+      {
+        "detail": "M2cBlock30",
+        "kind": "inferred-copy-layout",
+        "line": 6
+      },
+      {
+        "detail": "M2cBlock34",
+        "kind": "inferred-copy-layout",
+        "line": 7
+      }
+    ],
+    "scope": "RENSYU:func_80132390",
+    "selected_path": "drafts/T-14500/RENSYU/func_80132390",
+    "size": 1688,
+    "src": "src/ovl/RENSYU/80132040.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 46
+          },
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 77
+          },
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 104
+          },
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 137
+          },
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 168
+          },
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 193
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/main/get_h_tokimeki",
+        "reason": null,
+        "score": 876,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 46
+      },
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 77
+      },
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 104
+      },
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 137
+      },
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 168
+      },
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 193
+      }
+    ],
+    "scope": "main:get_h_tokimeki",
+    "selected_path": "drafts/T-14500/main/get_h_tokimeki",
+    "size": 1600,
+    "src": "src/main/8004F870.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp58",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp54",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp50",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "sp4C",
+            "kind": "synthesized-stack-local",
+            "line": 5
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TACO/func_80135A04",
+        "reason": null,
+        "score": 501,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp58",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "sp54",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      {
+        "detail": "sp50",
+        "kind": "synthesized-stack-local",
+        "line": 4
+      },
+      {
+        "detail": "sp4C",
+        "kind": "synthesized-stack-local",
+        "line": 5
+      }
+    ],
+    "scope": "TACO:func_80135A04",
+    "selected_path": "drafts/T-14500/TACO/func_80135A04",
+    "size": 1384,
+    "src": "src/ovl/TACO/80135720.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "&sp70[0] +",
+            "kind": "stack-address-arithmetic",
+            "line": 25
+          },
+          {
+            "detail": "&sp44 +",
+            "kind": "stack-address-arithmetic",
+            "line": 28
+          },
+          {
+            "detail": "M2cBlock28",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          },
+          {
+            "detail": "M2cBlock24",
+            "kind": "inferred-copy-layout",
+            "line": 3
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TAIIKU/func_80138DF8",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "&sp70[0] +",
+            "kind": "stack-address-arithmetic",
+            "line": 25
+          },
+          {
+            "detail": "&sp44 +",
+            "kind": "stack-address-arithmetic",
+            "line": 28
+          },
+          {
+            "detail": "M2cBlock28",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          },
+          {
+            "detail": "M2cBlock24",
+            "kind": "inferred-copy-layout",
+            "line": 3
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80138DF8",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "&sp70[0] +",
+            "kind": "stack-address-arithmetic",
+            "line": 25
+          },
+          {
+            "detail": "&sp44 +",
+            "kind": "stack-address-arithmetic",
+            "line": 28
+          },
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 38
+          },
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 54
+          },
+          {
+            "detail": "M2cBlock28",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          },
+          {
+            "detail": "M2cBlock24",
+            "kind": "inferred-copy-layout",
+            "line": 3
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "&sp70[0] +",
+            "kind": "stack-address-arithmetic",
+            "line": 25
+          },
+          {
+            "detail": "&sp44 +",
+            "kind": "stack-address-arithmetic",
+            "line": 28
+          },
+          {
+            "detail": "M2cBlock28",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          },
+          {
+            "detail": "M2cBlock24",
+            "kind": "inferred-copy-layout",
+            "line": 3
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80138DF8",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp70[11]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "&sp44 +",
+            "kind": "stack-address-arithmetic",
+            "line": 29
+          },
+          {
+            "detail": "M2cBlock28",
+            "kind": "inferred-copy-layout",
+            "line": 3
+          },
+          {
+            "detail": "M2cBlock24",
+            "kind": "inferred-copy-layout",
+            "line": 4
+          }
+        ],
+        "origin": "manual",
+        "path": "drafts/T-15700/TAIIKU/func_80138DF8",
+        "reason": null,
+        "score": 236,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp70[11]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "&sp44 +",
+        "kind": "stack-address-arithmetic",
+        "line": 29
+      },
+      {
+        "detail": "M2cBlock28",
+        "kind": "inferred-copy-layout",
+        "line": 3
+      },
+      {
+        "detail": "M2cBlock24",
+        "kind": "inferred-copy-layout",
+        "line": 4
+      }
+    ],
+    "scope": "TAIIKU:func_80138DF8",
+    "selected_path": "drafts/T-15700/TAIIKU/func_80138DF8",
+    "size": 1336,
+    "src": "src/ovl/TAIIKU/80138950.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 20
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/main/func_8005A668",
+        "reason": null,
+        "score": 160,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 20
+      }
+    ],
+    "scope": "main:func_8005A668",
+    "selected_path": "drafts/T-14500/main/func_8005A668",
+    "size": 1252,
+    "src": "src/main/8005A0B0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp54[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp3C[16]",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/DATE/func_8013A94C",
+        "reason": null,
+        "score": 473,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp54[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "sp3C[16]",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      }
+    ],
+    "scope": "DATE:func_8013A94C",
+    "selected_path": "drafts/T-14500/DATE/func_8013A94C",
+    "size": 1208,
+    "src": "src/ovl/DATE/80132000.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp34",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp38",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp3A",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "sp33",
+            "kind": "synthesized-stack-local",
+            "line": 5
+          },
+          {
+            "detail": "sp2E",
+            "kind": "synthesized-stack-local",
+            "line": 6
+          },
+          {
+            "detail": "sp39",
+            "kind": "synthesized-stack-local",
+            "line": 7
+          },
+          {
+            "detail": "sp2F",
+            "kind": "synthesized-stack-local",
+            "line": 8
+          },
+          {
+            "detail": "sp31",
+            "kind": "synthesized-stack-local",
+            "line": 9
+          },
+          {
+            "detail": "sp36",
+            "kind": "synthesized-stack-local",
+            "line": 10
+          },
+          {
+            "detail": "sp37",
+            "kind": "synthesized-stack-local",
+            "line": 11
+          },
+          {
+            "detail": "sp3B",
+            "kind": "synthesized-stack-local",
+            "line": 12
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/GEKO/func_80144270",
+        "reason": null,
+        "score": 448,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp34",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "sp38",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      {
+        "detail": "sp3A",
+        "kind": "synthesized-stack-local",
+        "line": 4
+      },
+      {
+        "detail": "sp33",
+        "kind": "synthesized-stack-local",
+        "line": 5
+      },
+      {
+        "detail": "sp2E",
+        "kind": "synthesized-stack-local",
+        "line": 6
+      },
+      {
+        "detail": "sp39",
+        "kind": "synthesized-stack-local",
+        "line": 7
+      },
+      {
+        "detail": "sp2F",
+        "kind": "synthesized-stack-local",
+        "line": 8
+      },
+      {
+        "detail": "sp31",
+        "kind": "synthesized-stack-local",
+        "line": 9
+      },
+      {
+        "detail": "sp36",
+        "kind": "synthesized-stack-local",
+        "line": 10
+      },
+      {
+        "detail": "sp37",
+        "kind": "synthesized-stack-local",
+        "line": 11
+      },
+      {
+        "detail": "sp3B",
+        "kind": "synthesized-stack-local",
+        "line": 12
+      }
+    ],
+    "scope": "GEKO:func_80144270",
+    "selected_path": "drafts/T-14500/GEKO/func_80144270",
+    "size": 1172,
+    "src": "src/ovl/GEKO/80142760.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp98",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp92",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp9E",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "sp96",
+            "kind": "synthesized-stack-local",
+            "line": 5
+          },
+          {
+            "detail": "sp9C",
+            "kind": "synthesized-stack-local",
+            "line": 6
+          },
+          {
+            "detail": "sp9A",
+            "kind": "synthesized-stack-local",
+            "line": 7
+          },
+          {
+            "detail": "sp94",
+            "kind": "synthesized-stack-local",
+            "line": 8
+          },
+          {
+            "detail": "+ &sp90",
+            "kind": "stack-address-arithmetic",
+            "line": 65
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TACO/func_801416E8",
+        "reason": null,
+        "score": 384,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp98",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "sp92",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      {
+        "detail": "sp9E",
+        "kind": "synthesized-stack-local",
+        "line": 4
+      },
+      {
+        "detail": "sp96",
+        "kind": "synthesized-stack-local",
+        "line": 5
+      },
+      {
+        "detail": "sp9C",
+        "kind": "synthesized-stack-local",
+        "line": 6
+      },
+      {
+        "detail": "sp9A",
+        "kind": "synthesized-stack-local",
+        "line": 7
+      },
+      {
+        "detail": "sp94",
+        "kind": "synthesized-stack-local",
+        "line": 8
+      },
+      {
+        "detail": "+ &sp90",
+        "kind": "stack-address-arithmetic",
+        "line": 65
+      }
+    ],
+    "scope": "TACO:func_801416E8",
+    "selected_path": "drafts/T-14500/TACO/func_801416E8",
+    "size": 1072,
+    "src": "src/ovl/TACO/80140DF0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp3C",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/ETC/func_80146D4C",
+        "reason": null,
+        "score": 309,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp3C",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      }
+    ],
+    "scope": "ETC:func_80146D4C",
+    "selected_path": "drafts/T-14500/ETC/func_80146D4C",
+    "size": 1056,
+    "src": "src/ovl/ETC/80146400.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "sp32",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp30",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "&sp60 +",
+            "kind": "stack-address-arithmetic",
+            "line": 60
+          },
+          {
+            "detail": "&sp4C +",
+            "kind": "stack-address-arithmetic",
+            "line": 61
+          },
+          {
+            "detail": "&sp3C +",
+            "kind": "stack-address-arithmetic",
+            "line": 73
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TAIIKU/func_80147B14",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "sp32",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp30",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "&sp60 +",
+            "kind": "stack-address-arithmetic",
+            "line": 60
+          },
+          {
+            "detail": "&sp4C +",
+            "kind": "stack-address-arithmetic",
+            "line": 61
+          },
+          {
+            "detail": "&sp3C +",
+            "kind": "stack-address-arithmetic",
+            "line": 73
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80147B14",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "&sp60 +",
+            "kind": "stack-address-arithmetic",
+            "line": 58
+          },
+          {
+            "detail": "&sp4C +",
+            "kind": "stack-address-arithmetic",
+            "line": 59
+          },
+          {
+            "detail": "&sp3C +",
+            "kind": "stack-address-arithmetic",
+            "line": 71
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80147B14",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "sp32",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp30",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "&sp60 +",
+            "kind": "stack-address-arithmetic",
+            "line": 60
+          },
+          {
+            "detail": "&sp4C +",
+            "kind": "stack-address-arithmetic",
+            "line": 61
+          },
+          {
+            "detail": "&sp3C +",
+            "kind": "stack-address-arithmetic",
+            "line": 73
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp2C[8]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "&sp60 +",
+            "kind": "stack-address-arithmetic",
+            "line": 59
+          },
+          {
+            "detail": "&sp4C +",
+            "kind": "stack-address-arithmetic",
+            "line": 60
+          },
+          {
+            "detail": "&sp3C +",
+            "kind": "stack-address-arithmetic",
+            "line": 72
+          }
+        ],
+        "origin": "manual",
+        "path": "drafts/T-15700/TAIIKU/func_80147B14",
+        "reason": null,
+        "score": 540,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp2C[8]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "&sp60 +",
+        "kind": "stack-address-arithmetic",
+        "line": 59
+      },
+      {
+        "detail": "&sp4C +",
+        "kind": "stack-address-arithmetic",
+        "line": 60
+      },
+      {
+        "detail": "&sp3C +",
+        "kind": "stack-address-arithmetic",
+        "line": 72
+      }
+    ],
+    "scope": "TAIIKU:func_80147B14",
+    "selected_path": "drafts/T-15700/TAIIKU/func_80147B14",
+    "size": 1020,
+    "src": "src/ovl/TAIIKU/801452D0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "&sp9C +",
+            "kind": "stack-address-arithmetic",
+            "line": 85
+          },
+          {
+            "detail": "&spAC +",
+            "kind": "stack-address-arithmetic",
+            "line": 89
+          },
+          {
+            "detail": "&spAC +",
+            "kind": "stack-address-arithmetic",
+            "line": 146
+          },
+          {
+            "detail": "&sp9C +",
+            "kind": "stack-address-arithmetic",
+            "line": 148
+          },
+          {
+            "detail": "&sp9C +",
+            "kind": "stack-address-arithmetic",
+            "line": 151
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TAIIKU/func_8013E894",
+        "reason": null,
+        "score": 366,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "&sp9C +",
+        "kind": "stack-address-arithmetic",
+        "line": 85
+      },
+      {
+        "detail": "&spAC +",
+        "kind": "stack-address-arithmetic",
+        "line": 89
+      },
+      {
+        "detail": "&spAC +",
+        "kind": "stack-address-arithmetic",
+        "line": 146
+      },
+      {
+        "detail": "&sp9C +",
+        "kind": "stack-address-arithmetic",
+        "line": 148
+      },
+      {
+        "detail": "&sp9C +",
+        "kind": "stack-address-arithmetic",
+        "line": 151
+      }
+    ],
+    "scope": "TAIIKU:func_8013E894",
+    "selected_path": "drafts/T-14500/TAIIKU/func_8013E894",
+    "size": 972,
+    "src": "src/ovl/TAIIKU/80138950.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp108[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/main/func_800767A4",
+        "reason": null,
+        "score": 318,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp108[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      }
+    ],
+    "scope": "main:func_800767A4",
+    "selected_path": "drafts/T-14500/main/func_800767A4",
+    "size": 932,
+    "src": "src/main/80075320.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "+ &sp8C",
+            "kind": "stack-address-arithmetic",
+            "line": 67
+          },
+          {
+            "detail": "+ &sp68",
+            "kind": "stack-address-arithmetic",
+            "line": 83
+          },
+          {
+            "detail": "+ &sp64",
+            "kind": "stack-address-arithmetic",
+            "line": 84
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TACO/func_80144094",
+        "reason": null,
+        "score": 289,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "+ &sp8C",
+        "kind": "stack-address-arithmetic",
+        "line": 67
+      },
+      {
+        "detail": "+ &sp68",
+        "kind": "stack-address-arithmetic",
+        "line": 83
+      },
+      {
+        "detail": "+ &sp64",
+        "kind": "stack-address-arithmetic",
+        "line": 84
+      }
+    ],
+    "scope": "TACO:func_80144094",
+    "selected_path": "drafts/T-14500/TACO/func_80144094",
+    "size": 924,
+    "src": "src/ovl/TACO/80143E80.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp68[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TAIIKU/func_80147594",
+        "reason": null,
+        "score": 308,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp68[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      }
+    ],
+    "scope": "TAIIKU:func_80147594",
+    "selected_path": "drafts/T-14500/TAIIKU/func_80147594",
+    "size": 916,
+    "src": "src/ovl/TAIIKU/801452D0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp2C[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/RENSYU/func_80133628",
+        "reason": null,
+        "score": 224,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp2C[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      }
+    ],
+    "scope": "RENSYU:func_80133628",
+    "selected_path": "drafts/T-14500/RENSYU/func_80133628",
+    "size": 872,
+    "src": "src/ovl/RENSYU/80132040.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "M2cBlock48",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TAIIKU/func_80138AA8",
+        "reason": null,
+        "score": 253,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "M2cBlock48",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      }
+    ],
+    "scope": "TAIIKU:func_80138AA8",
+    "selected_path": "drafts/T-14500/TAIIKU/func_80138AA8",
+    "size": 848,
+    "src": "src/ovl/TAIIKU/80138950.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "&sp78 +",
+            "kind": "stack-address-arithmetic",
+            "line": 53
+          },
+          {
+            "detail": "&sp78 +",
+            "kind": "stack-address-arithmetic",
+            "line": 63
+          },
+          {
+            "detail": "+ &sp78",
+            "kind": "stack-address-arithmetic",
+            "line": 29
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TACO/func_80153B38",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "&sp78 +",
+            "kind": "stack-address-arithmetic",
+            "line": 53
+          },
+          {
+            "detail": "&sp78 +",
+            "kind": "stack-address-arithmetic",
+            "line": 63
+          },
+          {
+            "detail": "+ &sp78",
+            "kind": "stack-address-arithmetic",
+            "line": 29
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80153B38",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "&sp78 +",
+            "kind": "stack-address-arithmetic",
+            "line": 53
+          },
+          {
+            "detail": "&sp78 +",
+            "kind": "stack-address-arithmetic",
+            "line": 63
+          },
+          {
+            "detail": "+ &sp78",
+            "kind": "stack-address-arithmetic",
+            "line": 29
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_80153B38",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "&sp78 +",
+            "kind": "stack-address-arithmetic",
+            "line": 53
+          },
+          {
+            "detail": "&sp78 +",
+            "kind": "stack-address-arithmetic",
+            "line": 63
+          },
+          {
+            "detail": "+ &sp78",
+            "kind": "stack-address-arithmetic",
+            "line": 29
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_80153B38",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "&sp78 +",
+            "kind": "stack-address-arithmetic",
+            "line": 53
+          },
+          {
+            "detail": "&sp78 +",
+            "kind": "stack-address-arithmetic",
+            "line": 63
+          },
+          {
+            "detail": "+ &sp78",
+            "kind": "stack-address-arithmetic",
+            "line": 29
+          }
+        ],
+        "origin": "manual",
+        "path": "drafts/T-15700/TACO/func_80153B38",
+        "reason": null,
+        "score": 293,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "&sp78 +",
+        "kind": "stack-address-arithmetic",
+        "line": 53
+      },
+      {
+        "detail": "&sp78 +",
+        "kind": "stack-address-arithmetic",
+        "line": 63
+      },
+      {
+        "detail": "+ &sp78",
+        "kind": "stack-address-arithmetic",
+        "line": 29
+      }
+    ],
+    "scope": "TACO:func_80153B38",
+    "selected_path": "drafts/T-15700/TACO/func_80153B38",
+    "size": 832,
+    "src": "src/ovl/TACO/80153AA0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "sp98",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp92",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp9E",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "sp96",
+            "kind": "synthesized-stack-local",
+            "line": 5
+          },
+          {
+            "detail": "sp9C",
+            "kind": "synthesized-stack-local",
+            "line": 6
+          },
+          {
+            "detail": "sp9A",
+            "kind": "synthesized-stack-local",
+            "line": 7
+          },
+          {
+            "detail": "sp94",
+            "kind": "synthesized-stack-local",
+            "line": 8
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TACO/func_8013E778",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "sp98",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp92",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp9E",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "sp96",
+            "kind": "synthesized-stack-local",
+            "line": 5
+          },
+          {
+            "detail": "sp9C",
+            "kind": "synthesized-stack-local",
+            "line": 6
+          },
+          {
+            "detail": "sp9A",
+            "kind": "synthesized-stack-local",
+            "line": 7
+          },
+          {
+            "detail": "sp94",
+            "kind": "synthesized-stack-local",
+            "line": 8
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8013E778",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "sp98",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp9E",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp96",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "sp94",
+            "kind": "synthesized-stack-local",
+            "line": 5
+          },
+          {
+            "detail": "sp92",
+            "kind": "synthesized-stack-local",
+            "line": 6
+          },
+          {
+            "detail": "sp9C",
+            "kind": "synthesized-stack-local",
+            "line": 7
+          },
+          {
+            "detail": "sp9A",
+            "kind": "synthesized-stack-local",
+            "line": 8
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_8013E778",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "sp98",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp92",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp9E",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "sp96",
+            "kind": "synthesized-stack-local",
+            "line": 5
+          },
+          {
+            "detail": "sp9C",
+            "kind": "synthesized-stack-local",
+            "line": 6
+          },
+          {
+            "detail": "sp9A",
+            "kind": "synthesized-stack-local",
+            "line": 7
+          },
+          {
+            "detail": "sp94",
+            "kind": "synthesized-stack-local",
+            "line": 8
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_8013E778",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp98",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp92",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "sp9E",
+            "kind": "synthesized-stack-local",
+            "line": 5
+          },
+          {
+            "detail": "sp96",
+            "kind": "synthesized-stack-local",
+            "line": 6
+          },
+          {
+            "detail": "sp9C",
+            "kind": "synthesized-stack-local",
+            "line": 7
+          },
+          {
+            "detail": "sp9A",
+            "kind": "synthesized-stack-local",
+            "line": 8
+          },
+          {
+            "detail": "sp94",
+            "kind": "synthesized-stack-local",
+            "line": 9
+          }
+        ],
+        "origin": "manual",
+        "path": "drafts/T-15700/TACO/func_8013E778",
+        "reason": null,
+        "score": 263,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp98",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      {
+        "detail": "sp92",
+        "kind": "synthesized-stack-local",
+        "line": 4
+      },
+      {
+        "detail": "sp9E",
+        "kind": "synthesized-stack-local",
+        "line": 5
+      },
+      {
+        "detail": "sp96",
+        "kind": "synthesized-stack-local",
+        "line": 6
+      },
+      {
+        "detail": "sp9C",
+        "kind": "synthesized-stack-local",
+        "line": 7
+      },
+      {
+        "detail": "sp9A",
+        "kind": "synthesized-stack-local",
+        "line": 8
+      },
+      {
+        "detail": "sp94",
+        "kind": "synthesized-stack-local",
+        "line": 9
+      }
+    ],
+    "scope": "TACO:func_8013E778",
+    "selected_path": "drafts/T-15700/TACO/func_8013E778",
+    "size": 812,
+    "src": "src/ovl/TACO/8013DB80.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp30[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/RENSYU/func_80133990",
+        "reason": null,
+        "score": 238,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp30[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      }
+    ],
+    "scope": "RENSYU:func_80133990",
+    "selected_path": "drafts/T-14500/RENSYU/func_80133990",
+    "size": 808,
+    "src": "src/ovl/RENSYU/80132040.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "sp88",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp82",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp8E",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "sp86",
+            "kind": "synthesized-stack-local",
+            "line": 5
+          },
+          {
+            "detail": "sp8C",
+            "kind": "synthesized-stack-local",
+            "line": 6
+          },
+          {
+            "detail": "sp8A",
+            "kind": "synthesized-stack-local",
+            "line": 7
+          },
+          {
+            "detail": "sp84",
+            "kind": "synthesized-stack-local",
+            "line": 8
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TACO/func_8013D528",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "sp88",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp82",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp8E",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "sp86",
+            "kind": "synthesized-stack-local",
+            "line": 5
+          },
+          {
+            "detail": "sp8C",
+            "kind": "synthesized-stack-local",
+            "line": 6
+          },
+          {
+            "detail": "sp8A",
+            "kind": "synthesized-stack-local",
+            "line": 7
+          },
+          {
+            "detail": "sp84",
+            "kind": "synthesized-stack-local",
+            "line": 8
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8013D528",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "sp88",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp8E",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp86",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "sp84",
+            "kind": "synthesized-stack-local",
+            "line": 5
+          },
+          {
+            "detail": "sp82",
+            "kind": "synthesized-stack-local",
+            "line": 6
+          },
+          {
+            "detail": "sp8C",
+            "kind": "synthesized-stack-local",
+            "line": 7
+          },
+          {
+            "detail": "sp8A",
+            "kind": "synthesized-stack-local",
+            "line": 8
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_8013D528",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "sp88",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp82",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp8E",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "sp86",
+            "kind": "synthesized-stack-local",
+            "line": 5
+          },
+          {
+            "detail": "sp8C",
+            "kind": "synthesized-stack-local",
+            "line": 6
+          },
+          {
+            "detail": "sp8A",
+            "kind": "synthesized-stack-local",
+            "line": 7
+          },
+          {
+            "detail": "sp84",
+            "kind": "synthesized-stack-local",
+            "line": 8
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_8013D528",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp88",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp82",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp8E",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "sp86",
+            "kind": "synthesized-stack-local",
+            "line": 5
+          },
+          {
+            "detail": "sp8C",
+            "kind": "synthesized-stack-local",
+            "line": 6
+          },
+          {
+            "detail": "sp8A",
+            "kind": "synthesized-stack-local",
+            "line": 7
+          },
+          {
+            "detail": "sp84",
+            "kind": "synthesized-stack-local",
+            "line": 8
+          }
+        ],
+        "origin": "manual",
+        "path": "drafts/T-15700/TACO/func_8013D528",
+        "reason": null,
+        "score": 259,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp88",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "sp82",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      {
+        "detail": "sp8E",
+        "kind": "synthesized-stack-local",
+        "line": 4
+      },
+      {
+        "detail": "sp86",
+        "kind": "synthesized-stack-local",
+        "line": 5
+      },
+      {
+        "detail": "sp8C",
+        "kind": "synthesized-stack-local",
+        "line": 6
+      },
+      {
+        "detail": "sp8A",
+        "kind": "synthesized-stack-local",
+        "line": 7
+      },
+      {
+        "detail": "sp84",
+        "kind": "synthesized-stack-local",
+        "line": 8
+      }
+    ],
+    "scope": "TACO:func_8013D528",
+    "selected_path": "drafts/T-15700/TACO/func_8013D528",
+    "size": 784,
+    "src": "src/ovl/TACO/8013D1E0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp44[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp6C[16]",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp58[16]",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 34
+          },
+          {
+            "detail": "M2cBlock44",
+            "kind": "inferred-copy-layout",
+            "line": 5
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/GEKO/func_801406CC",
+        "reason": null,
+        "score": 386,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp44[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "sp6C[16]",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      {
+        "detail": "sp58[16]",
+        "kind": "synthesized-stack-local",
+        "line": 4
+      },
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 34
+      },
+      {
+        "detail": "M2cBlock44",
+        "kind": "inferred-copy-layout",
+        "line": 5
+      }
+    ],
+    "scope": "GEKO:func_801406CC",
+    "selected_path": "drafts/T-14500/GEKO/func_801406CC",
+    "size": 780,
+    "src": "src/ovl/GEKO/8013F360.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp44[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp58[16]",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "sp6C[16]",
+            "kind": "synthesized-stack-local",
+            "line": 4
+          },
+          {
+            "detail": "M2cBlock44",
+            "kind": "inferred-copy-layout",
+            "line": 5
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/EVENT/func_80109404",
+        "reason": null,
+        "score": 284,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp44[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "sp58[16]",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      {
+        "detail": "sp6C[16]",
+        "kind": "synthesized-stack-local",
+        "line": 4
+      },
+      {
+        "detail": "M2cBlock44",
+        "kind": "inferred-copy-layout",
+        "line": 5
+      }
+    ],
+    "scope": "EVENT:func_80109404",
+    "selected_path": "drafts/T-14500/EVENT/func_80109404",
+    "size": 768,
+    "src": "src/ovl/EVENT/80107FC0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp68[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp58[16]",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "M2cBlock44",
+            "kind": "inferred-copy-layout",
+            "line": 4
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/DATE/func_801556D8",
+        "reason": null,
+        "score": 338,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp68[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "sp58[16]",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      {
+        "detail": "M2cBlock44",
+        "kind": "inferred-copy-layout",
+        "line": 4
+      }
+    ],
+    "scope": "DATE:func_801556D8",
+    "selected_path": "drafts/T-14500/DATE/func_801556D8",
+    "size": 744,
+    "src": "src/ovl/DATE/801552B0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 44
+          },
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 51
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/SHOUGATU/func_8013737C",
+        "reason": null,
+        "score": 228,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 44
+      },
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 51
+      }
+    ],
+    "scope": "SHOUGATU:func_8013737C",
+    "selected_path": "drafts/T-14500/SHOUGATU/func_8013737C",
+    "size": 744,
+    "src": "src/ovl/SHOUGATU/80136F90.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "+ &D_800E6280",
+            "kind": "gamestate-address-arithmetic",
+            "line": 16
+          },
+          {
+            "detail": "+ &D_800E6280",
+            "kind": "gamestate-address-arithmetic",
+            "line": 21
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/ETC/func_8013F054",
+        "reason": null,
+        "score": 270,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 16
+      },
+      {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 21
+      }
+    ],
+    "scope": "ETC:func_8013F054",
+    "selected_path": "drafts/T-14500/ETC/func_8013F054",
+    "size": 716,
+    "src": "src/ovl/ETC/8013BEF0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "spA8[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "&sp78[0] +",
+            "kind": "stack-address-arithmetic",
+            "line": 26
+          },
+          {
+            "detail": "M2cBlock28",
+            "kind": "inferred-copy-layout",
+            "line": 3
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TAIIKU/func_80132E20",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "spA8[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "&sp78[0] +",
+            "kind": "stack-address-arithmetic",
+            "line": 26
+          },
+          {
+            "detail": "M2cBlock28",
+            "kind": "inferred-copy-layout",
+            "line": 3
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "spA8[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "&sp78[0] +",
+            "kind": "stack-address-arithmetic",
+            "line": 26
+          },
+          {
+            "detail": "M2cBlock28",
+            "kind": "inferred-copy-layout",
+            "line": 3
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80132E20",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "spA8[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "&sp78[0] +",
+            "kind": "stack-address-arithmetic",
+            "line": 26
+          },
+          {
+            "detail": "M2cBlock28",
+            "kind": "inferred-copy-layout",
+            "line": 3
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80132E20",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp78[23]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "spA8[16]",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          },
+          {
+            "detail": "M2cBlock28",
+            "kind": "inferred-copy-layout",
+            "line": 4
+          }
+        ],
+        "origin": "manual",
+        "path": "drafts/T-15700/TAIIKU/func_80132E20",
+        "reason": null,
+        "score": 525,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp78[23]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "spA8[16]",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      {
+        "detail": "M2cBlock28",
+        "kind": "inferred-copy-layout",
+        "line": 4
+      }
+    ],
+    "scope": "TAIIKU:func_80132E20",
+    "selected_path": "drafts/T-15700/TAIIKU/func_80132E20",
+    "size": 692,
+    "src": "src/ovl/TAIIKU/80132BD0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "M2cBlock44",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/EVENT/func_80102E54",
+        "reason": null,
+        "score": 159,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "M2cBlock44",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      }
+    ],
+    "scope": "EVENT:func_80102E54",
+    "selected_path": "drafts/T-14500/EVENT/func_80102E54",
+    "size": 672,
+    "src": "src/ovl/EVENT/801024B0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "M2cBlock24",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TAIIKU/func_80135830",
+        "reason": null,
+        "score": 223,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "M2cBlock24",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      }
+    ],
+    "scope": "TAIIKU:func_80135830",
+    "selected_path": "drafts/T-14500/TAIIKU/func_80135830",
+    "size": 672,
+    "src": "src/ovl/TAIIKU/80133C80.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "M2cBlockF00",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/main/func_80054884",
+        "reason": null,
+        "score": 117,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "M2cBlockF00",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      }
+    ],
+    "scope": "main:func_80054884",
+    "selected_path": "drafts/T-14500/main/func_80054884",
+    "size": 624,
+    "src": "src/main/80053650.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "&sp64 +",
+            "kind": "stack-address-arithmetic",
+            "line": 27
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TAIIKU/func_80147F58",
+        "reason": null,
+        "score": 141,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "&sp64 +",
+        "kind": "stack-address-arithmetic",
+        "line": 27
+      }
+    ],
+    "scope": "TAIIKU:func_80147F58",
+    "selected_path": "drafts/T-14500/TAIIKU/func_80147F58",
+    "size": 572,
+    "src": "src/ovl/TAIIKU/801452D0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp44",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/main/func_8007AF0C",
+        "reason": null,
+        "score": 146,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp44",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      }
+    ],
+    "scope": "main:func_8007AF0C",
+    "selected_path": "drafts/T-14500/main/func_8007AF0C",
+    "size": 568,
+    "src": "src/main/80079B10.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "M2cBlock44",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/SHUGAKU/func_80135EA4",
+        "reason": null,
+        "score": 40,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "M2cBlock44",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      }
+    ],
+    "scope": "SHUGAKU:func_80135EA4",
+    "selected_path": "drafts/T-14500/SHUGAKU/func_80135EA4",
+    "size": 524,
+    "src": "src/ovl/SHUGAKU/80135430.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "&sp70 +",
+            "kind": "stack-address-arithmetic",
+            "line": 26
+          },
+          {
+            "detail": "&sp4C +",
+            "kind": "stack-address-arithmetic",
+            "line": 26
+          },
+          {
+            "detail": "M2cBlock30",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          },
+          {
+            "detail": "M2cBlock24",
+            "kind": "inferred-copy-layout",
+            "line": 3
+          },
+          {
+            "detail": "+ &sp70",
+            "kind": "stack-address-arithmetic",
+            "line": 32
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/SHOUGATU/func_80140314",
+        "reason": null,
+        "score": 181,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "&sp70 +",
+        "kind": "stack-address-arithmetic",
+        "line": 26
+      },
+      {
+        "detail": "&sp4C +",
+        "kind": "stack-address-arithmetic",
+        "line": 26
+      },
+      {
+        "detail": "M2cBlock30",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      {
+        "detail": "M2cBlock24",
+        "kind": "inferred-copy-layout",
+        "line": 3
+      },
+      {
+        "detail": "+ &sp70",
+        "kind": "stack-address-arithmetic",
+        "line": 32
+      }
+    ],
+    "scope": "SHOUGATU:func_80140314",
+    "selected_path": "drafts/T-14500/SHOUGATU/func_80140314",
+    "size": 508,
+    "src": "src/ovl/SHOUGATU/8013F190.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "M2cBlockF00",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/main/func_80054C74",
+        "reason": null,
+        "score": 47,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "M2cBlockF00",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      }
+    ],
+    "scope": "main:func_80054C74",
+    "selected_path": "drafts/T-14500/main/func_80054C74",
+    "size": 504,
+    "src": "src/main/80053650.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp1C[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          },
+          {
+            "detail": "sp34[16]",
+            "kind": "synthesized-stack-local",
+            "line": 3
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/GEKO/func_80132B24",
+        "reason": null,
+        "score": 211,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp1C[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      {
+        "detail": "sp34[16]",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      }
+    ],
+    "scope": "GEKO:func_80132B24",
+    "selected_path": "drafts/T-14500/GEKO/func_80132B24",
+    "size": 480,
+    "src": "src/ovl/GEKO/801323E0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 41
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/SHOUGATU/func_8013E50C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 41
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_8013E50C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 29
+          },
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 43
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": false,
+        "flags": [
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 41
+          }
+        ],
+        "origin": "automatic",
+        "path": "drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_8013E50C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp40[7]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          }
+        ],
+        "origin": "manual",
+        "path": "drafts/T-15800/SHOUGATU/func_8013E50C",
+        "reason": null,
+        "score": 215,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp40[7]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      }
+    ],
+    "scope": "SHOUGATU:func_8013E50C",
+    "selected_path": "drafts/T-15800/SHOUGATU/func_8013E50C",
+    "size": 472,
+    "src": "src/ovl/SHOUGATU/8013E330.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "&sp7C +",
+            "kind": "stack-address-arithmetic",
+            "line": 16
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/main/geko_judge",
+        "reason": null,
+        "score": 43,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "&sp7C +",
+        "kind": "stack-address-arithmetic",
+        "line": 16
+      }
+    ],
+    "scope": "main:geko_judge",
+    "selected_path": "drafts/T-14500/main/geko_judge",
+    "size": 444,
+    "src": "src/main/8006CB30.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp54[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/TAIIKU/func_80139E34",
+        "reason": null,
+        "score": 108,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp54[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      }
+    ],
+    "scope": "TAIIKU:func_80139E34",
+    "selected_path": "drafts/T-14500/TAIIKU/func_80139E34",
+    "size": 432,
+    "src": "src/ovl/TAIIKU/80138950.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "M2cBlock44",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/SHUGAKU/func_801357AC",
+        "reason": null,
+        "score": 40,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "M2cBlock44",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      }
+    ],
+    "scope": "SHUGAKU:func_801357AC",
+    "selected_path": "drafts/T-14500/SHUGAKU/func_801357AC",
+    "size": 396,
+    "src": "src/ovl/SHUGAKU/80135430.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "&D_800E6280 +",
+            "kind": "gamestate-address-arithmetic",
+            "line": 33
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/GEKO/func_80138E10",
+        "reason": null,
+        "score": 89,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 33
+      }
+    ],
+    "scope": "GEKO:func_80138E10",
+    "selected_path": "drafts/T-14500/GEKO/func_80138E10",
+    "size": 364,
+    "src": "src/ovl/GEKO/80134D10.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "M2cBlock44",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/DATE/func_80150460",
+        "reason": null,
+        "score": 20,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "M2cBlock44",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      }
+    ],
+    "scope": "DATE:func_80150460",
+    "selected_path": "drafts/T-14500/DATE/func_80150460",
+    "size": 340,
+    "src": "src/ovl/DATE/80150010.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp4C[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/NAME_ENT/func_80132A38",
+        "reason": null,
+        "score": 95,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp4C[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      }
+    ],
+    "scope": "NAME_ENT:func_80132A38",
+    "selected_path": "drafts/T-14500/NAME_ENT/func_80132A38",
+    "size": 320,
+    "src": "src/ovl/NAME_ENT/80132000.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "M2cBlock40",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          },
+          {
+            "detail": "M2cBlock44",
+            "kind": "inferred-copy-layout",
+            "line": 3
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/GYOZI/func_8014494C",
+        "reason": null,
+        "score": 51,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "M2cBlock40",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      {
+        "detail": "M2cBlock44",
+        "kind": "inferred-copy-layout",
+        "line": 3
+      }
+    ],
+    "scope": "GYOZI:func_8014494C",
+    "selected_path": "drafts/T-14500/GYOZI/func_8014494C",
+    "size": 296,
+    "src": "src/ovl/GYOZI/80143AD0.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "sp2C[16]",
+            "kind": "synthesized-stack-local",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/main/func_8006EA40",
+        "reason": null,
+        "score": 114,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "sp2C[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      }
+    ],
+    "scope": "main:func_8006EA40",
+    "selected_path": "drafts/T-14500/main/func_8006EA40",
+    "size": 292,
+    "src": "src/main/8006CB30.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "+ &D_800E6280",
+            "kind": "gamestate-address-arithmetic",
+            "line": 16
+          },
+          {
+            "detail": "+ &D_800E6280",
+            "kind": "gamestate-address-arithmetic",
+            "line": 32
+          },
+          {
+            "detail": "+ &D_800E6280",
+            "kind": "gamestate-address-arithmetic",
+            "line": 39
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/main/menu_set",
+        "reason": null,
+        "score": 131,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 16
+      },
+      {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 32
+      },
+      {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 39
+      }
+    ],
+    "scope": "main:menu_set",
+    "selected_path": "drafts/T-14500/main/menu_set",
+    "size": 276,
+    "src": "src/main/8004F870.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "M2cBlock44",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/EVENT/func_80104C3C",
+        "reason": null,
+        "score": 52,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "M2cBlock44",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      }
+    ],
+    "scope": "EVENT:func_80104C3C",
+    "selected_path": "drafts/T-14500/EVENT/func_80104C3C",
+    "size": 268,
+    "src": "src/ovl/EVENT/80103B60.c",
+    "status": "compiling-review-needed"
+  },
+  {
+    "alternatives": [
+      {
+        "compiled": true,
+        "flags": [
+          {
+            "detail": "M2cBlockC0",
+            "kind": "inferred-copy-layout",
+            "line": 2
+          }
+        ],
+        "origin": "initial",
+        "path": "drafts/T-14500/EVENT/func_800FF61C",
+        "reason": null,
+        "score": 52,
+        "status": "scored"
+      }
+    ],
+    "flags": [
+      {
+        "detail": "M2cBlockC0",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      }
+    ],
+    "scope": "EVENT:func_800FF61C",
+    "selected_path": "drafts/T-14500/EVENT/func_800FF61C",
+    "size": 244,
+    "src": "src/ovl/EVENT/800FDC20.c",
+    "status": "compiling-review-needed"
+  }
+]

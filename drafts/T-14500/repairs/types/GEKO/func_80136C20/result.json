@@ -1,0 +1,22 @@
+{
+  "scope": "GEKO:func_80136C20",
+  "unit": "GEKO",
+  "func": "func_80136C20",
+  "src": "src/ovl/GEKO/80134D10.c",
+  "size": 604,
+  "status": "scored",
+  "score": 24,
+  "base_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "ticket": "T-14700",
+  "production_changed": false,
+  "literal_verified": false,
+  "affected_sha1_verified": false,
+  "compile_verified": true,
+  "scoring": "default full-TU resolved comparison; diagnostic only",
+  "remaining_blockers": [
+    "Nonzero code generation differences; literal-byte proof and affected SHA1 required before promotion."
+  ],
+  "body.c_sha256": "e06915702e9a90608252c4a7db961faac11d53f8517dab3c9b09b3c64b2c1719",
+  "declarations.h_sha256": "be4f787961fb4c80b1d8d8500795647b43e5f56bac8d6ef3fcaf9211a37c6f0c",
+  "context.c_sha256": "06233f95d50f0e79dbdee4712ffd656ec65c82f6f4324c35a95271683863655f"
+}

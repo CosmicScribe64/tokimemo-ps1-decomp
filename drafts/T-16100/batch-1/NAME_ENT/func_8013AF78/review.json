@@ -1,0 +1,50 @@
+{
+  "scope": "NAME_ENT:func_8013AF78",
+  "selected_path": "drafts/T-14500/NAME_ENT/func_8013AF78",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "sp24",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target zeroes three consecutive words at sp+0x1C,20,24 and ends at sp+0x28; one three-word flags array connects the initialization to later scalar reads. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "u8 func_8013AF78(s32 arg0) {",
+        "    s32 sp24;",
+        "    s32 sp20;"
+      ]
+    },
+    {
+      "detail": "sp20",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target zeroes three consecutive words at sp+0x1C,20,24 and ends at sp+0x28; one three-word flags array connects the initialization to later scalar reads. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp24;",
+        "    s32 sp20;",
+        "    s32 sp28[1];"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target zeroes three consecutive words at sp+0x1C,20,24 and ends at sp+0x28; one three-word flags array connects the initialization to later scalar reads."
+  ],
+  "assembly_path": "asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740/func_8013AF78.s",
+  "assembly_sha256": "07ba85682822ffc4620529bd19c9844224e94dac2bb6bdcd253beec34eab4d74",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x1C": [
+      "lw"
+    ],
+    "0x20": [
+      "lw"
+    ],
+    "0x24": [
+      "lw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

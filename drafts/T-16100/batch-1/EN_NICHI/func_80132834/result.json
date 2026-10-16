@@ -1,0 +1,20 @@
+{
+  "scope": "EN_NICHI:func_80132834",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "size": 472,
+  "path": "drafts/T-16100/batch-1/EN_NICHI/func_80132834",
+  "archive_path": "drafts/T-16100/batch-1/EN_NICHI/func_80132834",
+  "status": "scored",
+  "score": 52,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "body.c_sha256": "acf5416bea3a091b9fba4a88619dba557302557971693523b5f75de0572c6934",
+  "declarations.h_sha256": "7eff7f167cc4d5fd5b69c92cebcacee78eb5b5217f3cc60fb6876d2d9eb0c3e4",
+  "context.c_sha256": "3334ebf459e6fb6ab19e6c995e68e1bdacba427091fce7dcaeddafcf7e4686d4",
+  "full-context.c_sha256": "ffc8e5956ff803ea6371210d8d5d5746a70830ce6f1fccf5eb113b673f1f31ee",
+  "diagnostics.txt_sha256": "384bdb652be1fc723ebac35a39def0bcd6bb09cdc114995e2feed8333bea55cc",
+  "assembly-evidence.txt_sha256": "8ec10a18212305eecc010951ef5b852c26b4fb511fd083d86684fe2995668894"
+}

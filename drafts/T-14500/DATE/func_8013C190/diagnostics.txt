@@ -1,0 +1,26 @@
+python3 failed:
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/DATE/func_8013C190/work/guarded.o.sjis.c, line 6638: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp38) + (16)) = (s32) D_8015B78C.w[4];
+ -------------------------------^
+cfe: Error: drafts/T-14500/DATE/func_8013C190/work/guarded.o.sjis.c, line 6641: Unacceptable operand of '+'.
+     D_800E6280.unk_1BC[D_800E71DF] = (s32) (D_800E6280.unk_1BC[D_800E71DF] + ((s32) (((3 - D_800CA22C[D_80122CDC]) * sp58 * sp54) << 0x10) / 16));
+ ---------------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/DATE/func_8013C190/work/guarded.o.sjis.c, line 6646: 'sp' undefined; reoccurrences will not be reported.
+     *(s32 *)((unsigned char *)(&D_800E6280.unk_1BC[D_800E71DF]) + (8)) = (s32) (*(s32 *)((unsigned char *)(&D_800E6280.unk_1BC[D_800E71DF]) + (8)) + ((s32) ((*(s32 *)((unsigned char *)(sp + (D_800CA22C[D_80122CDC] * 4)) + (56)) * sp58 * sp54) << 0x10) / 16));
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/DATE/func_8013C190/work -o drafts/T-14500/DATE/func_8013C190/work/guarded.o /tmp/asm_processorh_0sqknc/preprocessed_082d3cf7d899478ebd64fdc6d3de7c9b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib_qe6cq69/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/DATE/func_8013C190/work/guarded.o drafts/T-14500/DATE/func_8013C190/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/DATE/func_8013C190/work/guarded.o.sjis.c, line 6638: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp38) + (12)) = (s32) D_8015B78C.w[3];
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/DATE/func_8013C190/work/guarded.o.sjis.c, line 6639: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp38) + (16)) = (s32) D_8015B78C.w[4];
+ -------------------------------^
+cfe: Error: drafts/T-14500/DATE/func_8013C190/work/guarded.o.sjis.c, line 6642: Unacceptable operand of '+'.
+     D_800E6280.unk_1BC[D_800E71DF] = (s32) (D_800E6280.unk_1BC[D_800E71DF] + ((s32) (((3 - D_800CA22C[D_80122CDC]) * sp58 * sp54) << 0x10) / 16));
+ ---------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/DATE/func_8013C190/work -o drafts/T-14500/DATE/func_8013C190/work/guarded.o /tmp/asm_processormu54pzzs/preprocessed_9343448b751446ac9b7aaa20fcd5583e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib91de8ilq/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/DATE/func_8013C190/work/guarded.o drafts/T-14500/DATE/func_8013C190/work/guarded.o.sjis.c

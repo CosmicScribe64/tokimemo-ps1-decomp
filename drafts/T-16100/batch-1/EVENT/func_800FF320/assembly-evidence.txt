@@ -1,0 +1,66 @@
+    800FF320:  addiu      $sp, $sp, -0x78
+    800FF328:  sw         $ra, 0x34($sp)
+    800FF32C:  sw         $s0, 0x30($sp)
+    800FF330:  sw         $a1, 0x7C($sp)
+    800FF334:  sw         $a2, 0x80($sp)
+    800FF340:  addiu      $t0, $sp, 0x50
+    800FF34C:  sll        $s0, $a0, 16
+    800FF3A0:  lh         $t7, 0x7C($sp)
+    800FF3AC:  addu       $t1, $t1, $t7
+    800FF3B8:  sll        $t2, $t1, 3
+    800FF3BC:  addu       $v0, $t0, $t2
+    800FF3C0:  sw         $t8, 0x14($sp)
+    800FF3DC:  sll        $t5, $t4, 16
+    800FF3E4:  addu       $t9, $a2, $t6
+    800FF3E8:  sw         $t9, 0x10($sp)
+    800FF3F0:  lh         $t5, 0x80($sp)
+    800FF3F4:  sw         $t3, 0x18($sp)
+    800FF400:  sw         $t6, 0x24($sp)
+    800FF404:  sw         $t5, 0x20($sp)
+    800FF40C:   sw        $t4, 0x1C($sp)
+    800FF414:   lw        $ra, 0x34($sp)
+    800FF424:  sll        $t9, $s0, 3
+    800FF430:  lh         $t6, 0x7C($sp)
+    800FF43C:  addu       $v1, $t6, $t9
+    800FF448:  sw         $t5, 0x14($sp)
+    800FF44C:  sw         $t4, 0x10($sp)
+    800FF478:  sll        $t1, $t7, 16
+    800FF47C:  sll        $t7, $t8, 3
+    800FF480:  addu       $v0, $t0, $t7
+    800FF490:  sw         $t1, 0x18($sp)
+    800FF498:  lh         $t2, 0x80($sp)
+    800FF49C:  sw         $v1, 0x4C($sp)
+    800FF4A0:  sw         $t4, 0x24($sp)
+    800FF4A4:  sw         $t3, 0x1C($sp)
+    800FF4AC:   sw        $t2, 0x20($sp)
+    800FF4B0:  lw         $v1, 0x4C($sp)
+    800FF4B4:  addiu      $t0, $sp, 0x50
+    800FF4C0:  sll        $t4, $t2, 3
+    800FF4C4:  addu       $v0, $t0, $t4
+    800FF4C8:  sw         $t3, 0x14($sp)
+    800FF4F0:  sll        $t9, $t6, 16
+    800FF500:  sw         $t1, 0x10($sp)
+    800FF508:  lh         $t9, 0x80($sp)
+    800FF50C:  sw         $t5, 0x18($sp)
+    800FF518:  sw         $t8, 0x24($sp)
+    800FF51C:  sw         $t9, 0x20($sp)
+    800FF524:   sw        $t6, 0x1C($sp)
+    800FF52C:   lw        $ra, 0x34($sp)
+    800FF530:  sll        $t7, $s0, 3
+    800FF544:  sw         $t6, 0x10($sp)
+    800FF56C:  sll        $t2, $t3, 16
+    800FF578:  lh         $t4, 0x7C($sp)
+    800FF590:  addu       $t6, $t6, $t4
+    800FF598:  sll        $t3, $t1, 16
+    800FF5A0:  addu       $t5, $a3, $t2
+    800FF5A4:  sll        $t9, $t6, 3
+    800FF5A8:  addu       $v0, $t0, $t9
+    800FF5AC:  sw         $t5, 0x14($sp)
+    800FF5B4:  lh         $t1, 0x80($sp)
+    800FF5B8:  sw         $t7, 0x18($sp)
+    800FF5C4:  sw         $t3, 0x24($sp)
+    800FF5C8:  sw         $t1, 0x20($sp)
+    800FF5D0:   sw        $t8, 0x1C($sp)
+    800FF5D4:  lw         $ra, 0x34($sp)
+    800FF5D8:  lw         $s0, 0x30($sp)
+    800FF5E0:   addiu     $sp, $sp, 0x78

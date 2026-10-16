@@ -1,0 +1,46 @@
+{
+  "scope": "TACO:func_80135A04",
+  "selected_path": "drafts/T-14500/TACO/func_80135A04",
+  "archive_path": "drafts/T-16100/batch-3/TACO/func_80135A04",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "Six consecutive word locals 0x44..0x58 plus indexed selector store form a six-word array; fold aliases into elements."
+  ],
+  "flags": [
+    {
+      "detail": "sp58",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "repaired",
+      "explanation": "Six consecutive word locals 0x44..0x58 plus indexed selector store form a six-word array; fold aliases into elements. "
+    },
+    {
+      "detail": "sp54",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "outcome": "repaired",
+      "explanation": "Six consecutive word locals 0x44..0x58 plus indexed selector store form a six-word array; fold aliases into elements. "
+    },
+    {
+      "detail": "sp50",
+      "kind": "synthesized-stack-local",
+      "line": 4,
+      "outcome": "repaired",
+      "explanation": "Six consecutive word locals 0x44..0x58 plus indexed selector store form a six-word array; fold aliases into elements. "
+    },
+    {
+      "detail": "sp4C",
+      "kind": "synthesized-stack-local",
+      "line": 5,
+      "outcome": "repaired",
+      "explanation": "Six consecutive word locals 0x44..0x58 plus indexed selector store form a six-word array; fold aliases into elements. "
+    }
+  ],
+  "notes": "",
+  "assembly_evidence": "drafts/T-16100/batch-3/TACO/func_80135A04/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "repaired"
+}

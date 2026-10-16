@@ -25,6 +25,7 @@ import srcscan  # noqa: E402  (tools/srcscan.py: the C files of every unit, from
 
 EXE = "SLPM_86.053"
 DISC_STAMP = "build/disc.stamp"  # tools/prepare_disc.py: disc/files is unpacked from game/ (T-3300)
+INCLUDE_FILES = "build/include-files.txt"  # membership changes can alter include lookup (T-13500)
 HEADERS_OK = "build/headers.ok"  # tools/check_headers.py passed (T-1200)
 SYMBOLS_OK = "build/symbols.ok"  # no overlay symbols in shared main config (T-9400)
 GLOBALS_OK = "build/globals.ok"  # tools/migrate_globals.py --check passed (T-5100)
@@ -192,10 +193,10 @@ def overlay_targets(n, overlays):
         for cf in srcscan.unit_c_files(name):
             n.build(cf.obj, "cc", str(cf.src),
                     variables={"toolchain": " ".join(OBJECT_TOOLCHAINS.get(cf.name, OVL_C_TOOLCHAIN))},
-                    implicit=[stamp, HEADERS_OK, SYMBOLS_OK, "include/common.h", "include/include_asm.h",
+                    implicit=[stamp, SYMBOLS_OK, INCLUDE_FILES, "include/macro.inc", "include/labels.inc",
                               "include/asmproc_prelude.inc",
                               "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py",
-                              "tools/object_layout.py"])
+                              "tools/object_layout.py"], order_only=[HEADERS_OK])
             c_os.append(cf.obj)
         data_os = []
         for data_s in data_ss:
@@ -213,16 +214,36 @@ def overlay_targets(n, overlays):
 
 
 def main():
+    # -M records files read, not failed higher-priority include lookups. A new
+    # or removed file can change resolution without touching an old dependency.
+    # Conservatively invalidate C objects on membership changes, not file edits.
+    paths = sorted(p for root in ("include", "src")
+                   for p in glob.glob(root + "/**/*", recursive=True) if os.path.isfile(p))
+    contents = "\n".join(paths) + "\n"
+    os.makedirs("build", exist_ok=True)
+    previous = None
+    if os.path.exists(INCLUDE_FILES):
+        with open(INCLUDE_FILES) as f:
+            previous = f.read()
+    if previous != contents:
+        with open(INCLUDE_FILES, "w") as f:
+            f.write(contents)
+    directories = sorted(glob.glob("include/**/", recursive=True)
+                         + glob.glob("src/**/", recursive=True))
     n = ninja_syntax.Writer(open("build.ninja", "w"))
     n.variable("ninja_required_version", "1.10")
-    n.rule("configure", command="python3 configure.py", generator=True,
+    n.rule("configure", command="python3 configure.py", generator=True, restat=True,
            description="configure")
     # the asm objects to build depend on the subsegments of the yaml files (T-1340)
     images, image_dirs = prepare_disc.find_candidates()
-    n.build("build.ninja", "configure", "configure.py",
+    n.build(["build.ninja", INCLUDE_FILES], "configure", "configure.py",
             implicit=["config/%s.yaml" % EXE, "config/overlays.txt"]
             + ([TOOLCHAINS_FILE] if os.path.exists(TOOLCHAINS_FILE) else []) + image_dirs
+            + directories
             + ["config/overlays/%s.yaml" % o[0] for o in read_overlays()])
+    # Missing watched directories must allow regeneration after directory removal.
+    for directory in directories:
+        n.build(directory, "phony")
     # game image -> disc/files (T-3300); reruns only when an image or the tools change, and a new
     # file in game/ changes a directory time, which regenerates build.ninja and so re-finds the images
     n.rule("disc", command="python3 tools/prepare_disc.py --stamp $out", description="DISC game/ -> disc/files")
@@ -240,7 +261,9 @@ def main():
     n.build("symbols", "phony", SYMBOLS_OK)
     n.rule("headers", command="python3 tools/check_headers.py include src && touch $out",
            description="CHECK HEADERS")
-    n.build(HEADERS_OK, "headers", implicit=["tools/check_headers.py"] + HEADER_FILES)
+    n.build(HEADERS_OK, "headers",
+            implicit=["tools/check_headers.py", "tools/sync_protos.py", "tools/srcscan.py"]
+            + HEADER_FILES + sorted(glob.glob("src/**/*.c", recursive=True)))
     n.build("headers", "phony", HEADERS_OK)
     # old D_ names of aggregate fields (T-5100): tools/migrate_globals.py --check over every C file
     n.rule("globals", command="python3 tools/migrate_globals.py --check && touch $out",
@@ -274,12 +297,13 @@ def main():
             implicit=[DISC_STAMP, "tools/data_pieces.py"])
 
     objs = []
-    headers = sorted(glob.glob("include/**/*.h", recursive=True) + glob.glob("include/**/*.inc", recursive=True))
     for c, toolchain in sorted(C_FILES.items()):
         o = "build/" + c[:-2] + ".o"
         n.build(o, "cc", c, variables={"toolchain": " ".join(toolchain)},
-                implicit=[stamp, HEADERS_OK, SYMBOLS_OK, "tools/cc.py", "tools/frame_pass.py",
-                          "tools/object_layout.py"] + headers)
+                implicit=[stamp, SYMBOLS_OK, INCLUDE_FILES, "tools/cc.py", "tools/frame_pass.py",
+                          "tools/object_layout.py", "include/asmproc_prelude.inc",
+                          "include/gte_macros.inc", "include/macro.inc", "include/labels.inc"],
+                order_only=[HEADERS_OK])
         objs.append(o)
     for s in ASM_FILES:
         o = "build/" + s[:-2] + ".o"

@@ -1,0 +1,14 @@
+{
+  "scope": "RENSYU:func_801320E0",
+  "variant": "game-pointer",
+  "score": 60,
+  "status": "scored",
+  "matching_claim": false,
+  "source_base": "ffac0f04",
+  "census_base": "48362009",
+  "original_attempt": "drafts/T-14500/RENSYU/func_801320E0",
+  "archive_path": "drafts/T-15600/attempts/RENSYU/func_801320E0/game-pointer",
+  "body_sha256": "34bb90d2ce660aa1bc0052782bb4d5b5ad57f71c0c92101ec43cd1fe07641451",
+  "context_sha256": "249d2ae5a570c7e42d14ec5b7413ecf5408bea815c2cc621f5aa172912c129b2",
+  "compiled_context_sha256": "017fa034ddbf08b472cb3424ab6d69a6a53aaf5799fc19f3b72b7fa6460435a0"
+}

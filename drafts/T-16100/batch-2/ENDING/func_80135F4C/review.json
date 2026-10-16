@@ -1,0 +1,42 @@
+{
+  "scope": "ENDING:func_80135F4C",
+  "path": "drafts/T-16100/batch-2/ENDING/func_80135F4C",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 57
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 155
+    }
+  ],
+  "explanation": "GameState+index is incorrectly structure-scaled; menu byte stores at 0x10A9 and adjacent fields need typed reconstruction across both loops.",
+  "evidence_path": "drafts/T-16100/batch-2/ENDING/func_80135F4C/evidence.txt",
+  "compile_status": "scored",
+  "score": 815,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 57
+      },
+      "outcome": "unresolved",
+      "explanation": "GameState+index is incorrectly structure-scaled; menu byte stores at 0x10A9 and adjacent fields need typed reconstruction across both loops."
+    },
+    {
+      "flag": {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 155
+      },
+      "outcome": "unresolved",
+      "explanation": "GameState+index is incorrectly structure-scaled; menu byte stores at 0x10A9 and adjacent fields need typed reconstruction across both loops."
+    }
+  ]
+}

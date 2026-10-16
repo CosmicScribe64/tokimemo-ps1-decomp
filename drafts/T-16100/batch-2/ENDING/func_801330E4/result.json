@@ -1,0 +1,20 @@
+{
+  "scope": "ENDING:func_801330E4",
+  "src": "src/ovl/ENDING/80133030.c",
+  "size": 796,
+  "path": "drafts/T-16100/batch-2/ENDING/func_801330E4",
+  "archive_path": "drafts/T-16100/batch-2/ENDING/func_801330E4",
+  "ticket": "T-16100",
+  "matching_claim": false,
+  "status": "scored",
+  "score": 129,
+  "changed": false,
+  "source_base": "48362009",
+  "compile_verified": true,
+  "review_outcome": "unresolved",
+  "body_c_sha256": "90d998c8d6d73df700b46732a104635c896940d8c25fc1ce29995b5c8e964b73",
+  "declarations_h_sha256": "78d4989d4f1d0518282fdbc4309a8ed4a728678bd6e819f66809fae3e6ffcdbf",
+  "context_c_sha256": "8d7a3920a0f19e21177c59b7a97b965f820cab04a0720cf4b13459eadd8981d5",
+  "full-context_c_sha256": "e4b5a28517c6b5a9ba5e4d17b56e65e3b8391b358c2e0a2e990bfb3ff32965bd",
+  "diagnostics_txt_sha256": "8ba9fea13897c6882bf825e9ed53a081794de615503bec3bb586f824f9906780"
+}

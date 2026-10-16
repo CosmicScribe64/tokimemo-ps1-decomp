@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_8005751C 1, func_8006612C 1, func_8008585C 0, func_80132000 0, func_80132B90 0, func_80133C80 0, func_80138A34 0, func_80141964 0, func_801419F8 0, func_80141AE8 0, func_80141B28 0, func_80141B70 0, func_80142240 0
+python3 failed:
+cfe: Error: drafts/T-14500/TAIIKU/func_80141280/work/guarded.o.sjis.c, line 3201: 'sp3C' undefined; reoccurrences will not be reported.
+         D_8014A070[1] = sp3C;
+ ------------------------^
+cfe: Warning 689: drafts/T-14500/TAIIKU/func_80141280/work/guarded.o.sjis.c, line 3396: Unacceptable operand of == or !=
+             } while (var_v1 != &D_80122ED0);
+ ----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TAIIKU/func_80141280/work -o drafts/T-14500/TAIIKU/func_80141280/work/guarded.o /tmp/asm_processor1kyd9n5i/preprocessed_ba8b1fde644d4667a6c726be4946d161.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliblg1ljk_3/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TAIIKU/func_80141280/work/guarded.o drafts/T-14500/TAIIKU/func_80141280/work/guarded.o.sjis.c

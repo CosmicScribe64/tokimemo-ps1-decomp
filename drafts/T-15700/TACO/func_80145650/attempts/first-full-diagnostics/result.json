@@ -1,0 +1,15 @@
+{
+  "scope": "TACO:func_80145650",
+  "src": "src/ovl/TACO/801447D0.c",
+  "size": 1908,
+  "status": "failed",
+  "score": null,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TACO/func_80145650",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "reason": "cfe: Error: drafts/T-15700/TACO/func_80145650/work/guarded.c, line 3548: 'sp76' undefined; reoccurrences will not be reported.",
+  "body_c_sha256": "6cbaf81047eee308e0a90cca6d2bd87cc6198f88324781f6be955eefd7bd451a",
+  "context_c_sha256": "690d08f82985c3ff2ca1c68adced6677559b11d59e3735ad17f5827bea31e3f4",
+  "declarations_h_sha256": "c8783a6f3991d5984ff5589853d60429d5b580fd363d2a4c4e9999e4ffeeb740"
+}

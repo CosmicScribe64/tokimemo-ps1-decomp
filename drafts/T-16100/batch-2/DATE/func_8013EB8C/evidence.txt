@@ -1,0 +1,28 @@
+Target: ['asm/ovl/DATE/nonmatchings/DATE/80132000/func_8013EB8C.s']
+Review: Final table is 40 copied bytes plus one halfword. Repair 42-byte local and tail, and replace raw sp table reads with real local indexing.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8013EB8C */  addiu      $sp, $sp, -0x168
+    /* 8013EB94 */  addiu      $t7, $t7, %lo(D_8015B888)
+    /* 8013EB98 */  sw         $ra, 0x1C($sp)
+    /* 8013EB9C */  addiu      $t0, $t7, 0x54
+    /* 8013EBA0 */  addiu      $t6, $sp, 0x110
+    /* 8013EBA8 */  addiu      $t7, $t7, 0xC
+    /* 8013EBB4 */  addiu      $t6, $t6, 0xC
+    /* 8013EBCC */  addiu      $t2, $t2, %lo(D_8015B8DC)
+    /* 8013EBD0 */  addiu      $t5, $t2, 0x54
+    /* 8013EBD4 */  addiu      $t1, $sp, 0xBC
+    /* 8013EBDC */  addiu      $t2, $t2, 0xC
+    /* 8013EBE8 */  addiu      $t1, $t1, 0xC
+    /* 8013EC00 */  addiu      $t8, $t8, %lo(D_8015B930)
+    /* 8013EC04 */  addiu      $t6, $t8, 0x54
+    /* 8013EC08 */  addiu      $t9, $sp, 0x68
+    /* 8013EC10 */  addiu      $t8, $t8, 0xC
+    /* 8013EC1C */  addiu      $t9, $t9, 0xC
+    /* 8013EC34 */  addiu      $t3, $t3, %lo(D_8015B984)
+    /* 8013EC40 */  addiu      $t1, $t3, 0x24
+    /* 8013EC44 */  addiu      $t4, $sp, 0x34
+    /* 8013EC4C */  addiu      $t3, $t3, 0xC
+    /* 8013EC58 */  addiu      $t4, $t4, 0xC
+    /* 8013EC70 */  addiu      $a0, $zero, 0xCF
+    /* 8013EC78 */  lhu        $at, 0x4($t3)

@@ -1,0 +1,32 @@
+{
+  "scope": "GEKO:func_80144198",
+  "selected_path": "drafts/T-14500/GEKO/func_80144198",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "sp18[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target copies six words (0x18 bytes) to sp+0x18, patches sp+0x1A with sh, then uses month<<1 and lh -2. Twelve s16 entries represent that exact copy and patch, eliminating the detached scalar. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "u8 func_80144198(s32 arg0) {",
+        "    s32 sp18[16];",
+        "    s16 sp1A;"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target copies six words (0x18 bytes) to sp+0x18, patches sp+0x1A with sh, then uses month<<1 and lh -2. Twelve s16 entries represent that exact copy and patch, eliminating the detached scalar."
+  ],
+  "assembly_path": "asm/ovl/GEKO/nonmatchings/GEKO/80142760/func_80144198.s",
+  "assembly_sha256": "be56c8a842b9f843910ea2ed729f29b05bebb78c5c0eec1b44f8530b9d2d6989",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x1A": [
+      "sh"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

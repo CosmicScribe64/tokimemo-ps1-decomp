@@ -8,11 +8,6 @@ typedef struct ShougatuFlag4 {
     /* 0x00 */ u8 rest : 5;
 } ShougatuFlag4; /* size 0x01 */
 
-typedef struct {
-    void (*f[19])();
-} FnTbl19; /* size 0x4C */
-extern FnTbl19 D_80145648;
-
 void func_8013A190(void) {
     if (D_80144E14 == 0) {
         func_8013A1CC();
@@ -20,11 +15,6 @@ void func_8013A190(void) {
     }
     func_8013A27C();
 }
-
-typedef struct {
-    void (*f[26])();
-} FnTbl26; /* size 0x68 */
-extern FnTbl26 D_801455E0;
 
 void func_8013A1CC(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

@@ -1,0 +1,20 @@
+{
+  "scope": "GYOZI:func_80138C9C",
+  "src": "src/ovl/GYOZI/80138B50.c",
+  "size": 992,
+  "path": "drafts/T-16100/batch-2/GYOZI/func_80138C9C",
+  "archive_path": "drafts/T-16100/batch-2/GYOZI/func_80138C9C",
+  "ticket": "T-16100",
+  "matching_claim": false,
+  "status": "scored",
+  "score": 302,
+  "changed": true,
+  "source_base": "48362009",
+  "compile_verified": true,
+  "review_outcome": "repaired-with-unresolved-remainder",
+  "body_c_sha256": "431e2597fa8efaee58dc6d53509d625aeb2784d5418edcb155c8a6e07f1d01b9",
+  "declarations_h_sha256": "a0971b8ced57b4dc7bc297db5e0ee1f5d0e8b42ccd34520dd35de941bb131863",
+  "context_c_sha256": "3486a6ce588adc572b0a82a773e23b2c16813db254d1bc7c1eeba952616fa7ec",
+  "full-context_c_sha256": "428d6dad06750e42fc5615dca09fecbf4d7d11980797aa9e0063766d3472e02d",
+  "diagnostics_txt_sha256": "0f0f9c1079f7b5be64d8120ecb79e9cdb358b11a0eb703e52c514022c948b15d"
+}

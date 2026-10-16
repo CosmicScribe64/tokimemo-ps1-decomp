@@ -1,0 +1,17 @@
+regdiff func_80118010 [EVENT]  draft: build/t15200/18010-stride-call/context.c
+  169 draft / 169 original instructions
+  9 instruction(s) differ in registers only
+  register map (draft -> original): $v0->$v1 x9
+
+FIRST DIVERGENCE at draft insn 97
+  draft    addu v0,a1,t7
+  original addu v1,a1,t7
+  draft puts value computed by `addu v0,a1,t7` in $v0, the original in $v1 (result of `addu v0,a1,t7`).
+  draft range: bit 117, expression ixa(#468, mpy(S178+3814, #52))
+    priority 9 = 6 use(s) + 3 def(s) over 1 unit(s), loop weight 1, denominator 1; constrained, allocated #1, cheapest colour cost 0, got colour 1 ($v0) [the only range in $v0]
+  range holding $v1 next to it in the draft: bit 163, new temporary (bit 163 is past the expression table: hoisted constant, address or strength-reduced value)
+    priority 2 = 3 use(s) + 0 def(s), constrained, allocated #4, cheapest colour cost 0, got colour 2 ($v1)
+  hint: bit 117 (priority 9) is coloured before bit 163 (priority 2) and takes the lower colour. The original has the order the other way: raise bit 163 above 9 (one more use; a use inside a loop weighs 10x), or lower bit 117 below 2 (fewer uses, a use moved out of the loop).
+  not allocated in the draft: bit 3, global S178+3814 (priority -0.25, -ve save). If the original keeps it in a register, make it profitable: more uses, a store plus uses, no call between them.
+  not allocated in the draft: bit 33, global D_800EECBC (net zero: 2 use(s) and 0 def(s) are paid back by 2 reload/save charge(s)). If the original keeps it in a register, make it profitable: more uses, a store plus uses, no call between them.
+  [lookup 0.8s, traced compile 1.3s, analysis 0.3s]

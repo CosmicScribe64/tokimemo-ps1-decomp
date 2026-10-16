@@ -1,0 +1,14 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/main/func_8006C988/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/main/func_8006C988/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/main/func_8006C988/work/guarded.c drafts/T-16100/batch-1/main/func_8006C988/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-1/main/func_8006C988/work/guarded.c, line 3270: Incompatible pointer type assignment
+     var_t1 = ((u8 *)&D_800E6280);
+ -----------^
+cfe: Warning 689: drafts/T-16100/batch-1/main/func_8006C988/work/guarded.c, line 3309: Unacceptable operand of == or !=
+             } while (var_t1_3 != &D_800E6A80);
+ ------------------------------^
+

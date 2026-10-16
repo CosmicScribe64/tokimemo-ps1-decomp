@@ -1,0 +1,32 @@
+{
+  "selected_seed": "drafts/T-14500/repairs/automatic/no-unk-inference/NAME_ENT/func_80140F90",
+  "prior_attempts": [
+    {
+      "path": "drafts/T-14500/NAME_ENT/func_80140F90",
+      "reason": "m2c-error: M2C_ERROR",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/mechanical/NAME_ENT/func_80140F90",
+      "reason": "m2c-error: M2C_ERROR",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-context/NAME_ENT/func_80140F90",
+      "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-unk-inference/NAME_ENT/func_80140F90",
+      "reason": "m2c-error: M2C_ERROR",
+      "score": null,
+      "status": "failed"
+    }
+  ],
+  "frozen_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "production_src": "src/ovl/NAME_ENT/80139740.c",
+  "callee_abi_reconstruction": "func80054E6C takes no incoming arguments: all argument registers are defined before first use in target callee; existing NAME_ENT and ETC source calls noarg. Remove spurious m2c unsetargument placeholders, without fabricated values."
+}

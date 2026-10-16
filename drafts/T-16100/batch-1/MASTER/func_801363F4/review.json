@@ -1,0 +1,42 @@
+{
+  "scope": "MASTER:func_801363F4",
+  "selected_path": "drafts/T-14500/MASTER/func_801363F4",
+  "changed": false,
+  "outcomes": [
+    {
+      "detail": "M2cBlock44",
+      "kind": "inferred-copy-layout",
+      "line": 2,
+      "verdict": "reviewed-copy-evidence-partial",
+      "explanation": "Target lw/sw copy sequences support the documented block byte width. This synthetic block typedef does not establish the original source type; semantic layout and any adjacent/trailing fields remain unresolved. Preserve the flag. The 0x44-byte aggregate assignment is supported by the target word copy, but overlays expose overlapping record views. MasterPoint2 walks and the corresponding global record type must be reconciled before replacing the block type.",
+      "original_excerpt": [
+        "void func_801363F4(void) {",
+        "    typedef struct { s32 w[17]; } M2cBlock44; /* m2c memcpy of 68 bytes */",
+        "    u8 *sp34;                                       /* compiler-managed */"
+      ]
+    }
+  ],
+  "repair_notes": [],
+  "assembly_path": "asm/ovl/MASTER/nonmatchings/MASTER/80133680/func_801363F4.s",
+  "assembly_sha256": "1648e85f22763115fdf3ddf45bfbfefe79b2e4aa431bf5ca6ff70bf61af01e06",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x10": [
+      "sw"
+    ],
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "The 0x44-byte aggregate assignment is supported by the target word copy, but overlays expose overlapping record views. MasterPoint2 walks and the corresponding global record type must be reconciled before replacing the block type."
+}

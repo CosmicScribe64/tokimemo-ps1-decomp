@@ -1,0 +1,28 @@
+Target: ['asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950/func_8013EC60.s']
+Review: sp9C and spAC indexed with an 8-byte stride indicate two coordinate arrays. Declared scalar bases and fixed adjacent slots must be unified before safe repair.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8013EC60 */  addiu      $sp, $sp, -0xC8
+    /* 8013EC64 */  sw         $s4, 0x38($sp)
+    /* 8013EC68 */  sw         $s5, 0x3C($sp)
+    /* 8013EC6C */  addiu      $s4, $sp, 0xAC
+    /* 8013EC70 */  sw         $fp, 0x48($sp)
+    /* 8013EC74 */  sw         $s7, 0x44($sp)
+    /* 8013EC78 */  sw         $s6, 0x40($sp)
+    /* 8013EC7C */  sw         $s3, 0x34($sp)
+    /* 8013EC84 */  sw         $ra, 0x4C($sp)
+    /* 8013EC88 */  sw         $s2, 0x30($sp)
+    /* 8013EC8C */  sw         $s1, 0x2C($sp)
+    /* 8013EC90 */  sw         $s0, 0x28($sp)
+    /* 8013EC98 */  addiu      $s3, $sp, 0x9C
+    /* 8013EC9C */  addiu      $s6, $zero, 0x2
+    /* 8013ECAC */  addiu      $a1, $v0, 0x1
+    /* 8013ECB0 */  addiu      $a3, $zero, 0x140
+    /* 8013ECB4 */  addiu      $t0, $zero, 0xF0
+    /* 8013ECB8 */  sll        $v1, $v0, 3
+    /* 8013ECBC */  sll        $a0, $a1, 3
+    /* 8013ECC0 */  sw         $a3, 0xB0($sp)
+    /* 8013ECC4 */  sw         $t0, 0xB8($sp)
+    /* 8013ECC8 */  sw         $v1, 0xA4($sp)
+    /* 8013ECCC */  sw         $a0, 0xA8($sp)
+    /* 8013ECD0 */  sw         $a0, 0xA0($sp)

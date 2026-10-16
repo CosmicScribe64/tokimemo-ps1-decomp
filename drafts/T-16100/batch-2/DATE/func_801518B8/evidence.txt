@@ -1,0 +1,28 @@
+Target: ['asm/ovl/DATE/nonmatchings/DATE/80151460/func_801518B8.s']
+Review: 68-byte global-to-global copy is exact extent but no known record struct; retained opaque copy with explicit unresolved semantic type.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 801518B8 */  addiu      $sp, $sp, -0x38
+    /* 801518BC */  sw         $s0, 0x20($sp)
+    /* 801518C0 */  sw         $ra, 0x24($sp)
+    /* 801518D0 */  sll        $t7, $s0, 2
+    /* 801518D4 */  addu       $t8, $t6, $t7
+    /* 801518DC */  addiu      $a0, $s0, 0x5
+    /* 801518E4 */   addiu     $a2, $zero, 0x1
+    /* 801518E8 */  addiu      $s0, $s0, 0x1
+    /* 801518EC */  sll        $t9, $s0, 16
+    /* 80151910 */  addiu      $a1, $zero, 0x11
+    /* 80151914 */  addiu      $a2, $zero, 0x1
+    /* 80151918 */  addiu      $a3, $zero, 0x2
+    /* 80151920 */   sw        $zero, 0x10($sp)
+    /* 80151954 */  sw         $t2, 0x14($sp)
+    /* 8015195C */   sw        $t1, 0x10($sp)
+    /* 80151970 */  lh         $a3, %lo(D_8015ED7C)($a3)
+    /* 8015198C */  addiu      $t4, $t4, %lo(D_80120650)
+    /* 80151994 */  addiu      $t3, $t3, %lo(D_80120694)
+    /* 80151998 */  addiu      $t7, $t4, 0x3C
+    /* 801519A0 */  addiu      $t4, $t4, 0xC
+    /* 801519AC */  addiu      $t3, $t3, 0xC
+    /* 801519C4 */  addiu      $t8, $zero, 0x3
+    /* 801519E0 */  addiu      $t9, $zero, 0x2
+    /* 801519EC */  addiu      $t0, $zero, 0x1

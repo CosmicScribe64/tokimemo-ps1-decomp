@@ -1,0 +1,35 @@
+m2c.py: argument counts from the callees' asm: func_8009ED74 2, func_8009F0A4 1
+m2c failed:
+
+python3 failed:
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.c, line 4193: Incompatible function return type for this function.
+ s16 func_8009ED74();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.c, line 4194: redeclaration of 'func_8009F0A4'; previous declaration at line 2315 in file 'drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.c'
+ s32 func_8009F0A4();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.c, line 4194: Incompatible function return type for this function.
+ s32 func_8009F0A4();
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work -o drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.o /tmp/asm_processorfdaf2v7c/preprocessed_555d7ea3ed70436e84d76a4dab0544c8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqwawchqb/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.c, line 4188: redeclaration of 'D_800E8CA0'; previous declaration at line 800 in file 'drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.c'
+ extern s32 D_800E8CA0;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.c, line 4193: redeclaration of 'func_8009ED74'; previous declaration at line 2307 in file 'drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.c'
+ s16 func_8009ED74();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.c, line 4193: Incompatible function return type for this function.
+ s16 func_8009ED74();
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work -o drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.o /tmp/asm_processorm_flb4jo/preprocessed_e7ce5d79512c4dc1b630e835418694b8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibc26469ue/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.c, line 4187: redeclaration of 'D_800E6280'; previous declaration at line 764 in file 'drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.c'
+ extern s32 D_800E6280;
+ -----------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work -o drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.o /tmp/asm_processorfdqis0ck/preprocessed_8f5da7e630164699ad310251db7a3e16.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibxoipngup/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_8013FC64/work/guarded.c

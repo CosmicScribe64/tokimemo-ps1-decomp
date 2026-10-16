@@ -1,0 +1,39 @@
+{
+  "scope": "DATE:func_80152060",
+  "selected_path": "drafts/T-14500/DATE/func_80152060",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "sp30",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Two lw/sw copy words to sp+0x2C/+0x30, passed as a0/a1. Use one two-word local so the second copy store initializes the actual second argument. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "u8 func_80152060(void) {",
+        "    s32 sp30;",
+        "    s32 sp2C;"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Two lw/sw copy words to sp+0x2C/+0x30, passed as a0/a1. Use one two-word local so the second copy store initializes the actual second argument."
+  ],
+  "assembly_path": "asm/ovl/DATE/nonmatchings/DATE/80151460/func_80152060.s",
+  "assembly_sha256": "edf52bd077dc8b779a17c7e8c194018c89d341a086453f7ac2bfa5362515dbf9",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x14": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw"
+    ],
+    "0x30": [
+      "lw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

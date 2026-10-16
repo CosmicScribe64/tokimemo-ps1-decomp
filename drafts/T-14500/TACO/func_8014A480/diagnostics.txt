@@ -1,0 +1,27 @@
+m2c.py: argument counts from the callees' asm: func_8015163C 2, func_8015CF30 2, func_8015D0D0 2, func_8015D270 2
+python3 failed:
+ ------------------------------------------^
+cfe: Error: drafts/T-14500/TACO/func_8014A480/work/guarded.c, line 3554: 'sp54' undefined; reoccurrences will not be reported.
+     D_8015EDB4[sp4C].unk78 = D_801274A0 + sp54;
+ ------------------------------------------^
+cfe: Warning 689: drafts/T-14500/TACO/func_8014A480/work/guarded.c, line 3567: Unacceptable operand of == or !=
+         if (sp38 == &D_80127610) {
+ -----------------^
+cfe: Warning 689: drafts/T-14500/TACO/func_8014A480/work/guarded.c, line 3572: Unacceptable operand of == or !=
+         } else if (sp38 == &D_801277F0) {
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TACO/func_8014A480/work -o drafts/T-14500/TACO/func_8014A480/work/guarded.o /tmp/asm_processoramawmmcx/preprocessed_25a8d7be3a7c4483bc1708897f505f26.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4uhghckh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TACO/func_8014A480/work/guarded.o drafts/T-14500/TACO/func_8014A480/work/guarded.c
+python3 failed:
+ ------------------^
+cfe: Error: drafts/T-14500/TACO/func_8014A480/work/guarded.c, line 3554: 'sp52' undefined; reoccurrences will not be reported.
+     D_8015EDB4[sp4C].unk76 = D_8012749C + sp52 + sp44;
+ ------------------------------------------^
+cfe: Warning 689: drafts/T-14500/TACO/func_8014A480/work/guarded.c, line 3568: Unacceptable operand of == or !=
+         if (sp38 == &D_80127610) {
+ -----------------^
+cfe: Warning 689: drafts/T-14500/TACO/func_8014A480/work/guarded.c, line 3573: Unacceptable operand of == or !=
+         } else if (sp38 == &D_801277F0) {
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TACO/func_8014A480/work -o drafts/T-14500/TACO/func_8014A480/work/guarded.o /tmp/asm_processor1j_uz21i/preprocessed_af5e1936e1ed45e2b56e001ec6bb7f18.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibwcfs_8b_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TACO/func_8014A480/work/guarded.o drafts/T-14500/TACO/func_8014A480/work/guarded.c

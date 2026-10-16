@@ -1,0 +1,52 @@
+Difference rows: 51; first 80 mnemonic/relocation rows; opcode words omitted.
+-; lui a0,0x0
+-; lw a0,0(a0)
++; lui v1,0x0
++; lw v1,0(v1)
+-; sltiu v1,a0,1
+-; addiu a0,a0,1
+-; beqz v1,fa4 <func_8014265C+0xc8>
++; addiu a0,v1,1
++; bnez a0,fa8 <func_8014265C+0xcc>
+-; move t0,v0
+-; move t9,v1
+-; addiu t8,v1,60
+-; lw at,0(t9)
++; move t9,v0
++; move t8,v1
++; addiu t7,v1,60
++; lw at,0(t8)
++; addiu t8,t8,12
++; sw at,0(t9)
++; lw at,-8(t8)
+-; sw at,0(t0)
+-; lw at,-8(t9)
+-; addiu t0,t0,12
+-; sw at,-8(t0)
+-; lw at,-4(t9)
+-; bne t9,t8,f24 <func_8014265C+0x48>
+-; sw at,-4(t0)
+-; lw at,0(t9)
++; sw at,-8(t9)
++; lw at,-4(t8)
++; bne t8,t7,f20 <func_8014265C+0x44>
++; sw at,-4(t9)
++; lw at,0(t8)
++; lui t0,0x0
++; sw at,0(t9)
++; lw t0,64(t0)
++; lui at,0x0
+-; sw at,0(t0)
+-; lw t8,4(t9)
+-; sw t8,4(t0)
++; sw t0,64(at)
+-; li t7,4
++; li t6,4
+-; sh t7,0(at)
+-; lui t6,0x0
+-; lhu t6,0(t6)
++; sh t6,0(at)
++; lui t7,0x0
++; lhu t7,0(t7)
+-; bne t6,at,fe4 <func_8014265C+0x108>
++; bne t7,at,fe8 <func_8014265C+0x10c>

@@ -1,0 +1,28 @@
+Target: ['asm/ovl/DATE2/nonmatchings/DATE2/80137D50/func_801385CC.s']
+Review: 84-byte copy is supported, but sp8F[1]/sp7A[1] are byte-interior aliases in wider stack copies. Needs shared typed stack representation.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 801385CC */  addiu      $sp, $sp, -0xB0
+    /* 801385D4 */  addiu      $t7, $t7, %lo(D_8013B634)
+    /* 801385D8 */  sw         $ra, 0x1C($sp)
+    /* 801385DC */  addiu      $t1, $t7, 0x54
+    /* 801385E0 */  addiu      $t6, $sp, 0x50
+    /* 801385E8 */  addiu      $t7, $t7, 0xC
+    /* 801385F4 */  addiu      $t6, $t6, 0xC
+    /* 80138608 */  addiu      $t2, $zero, -0x80
+    /* 8013860C */  addiu      $t3, $zero, 0x34
+    /* 80138610 */  addiu      $t4, $zero, 0x34
+    /* 80138614 */  addiu      $t5, $zero, -0x80
+    /* 80138618 */  addiu      $t9, $zero, 0x4C
+    /* 8013861C */  addiu      $t8, $zero, -0x20
+    /* 80138620 */  addiu      $t1, $zero, 0x4C
+    /* 80138624 */  sh         $t3, 0x40($sp)
+    /* 80138628 */  sh         $t2, 0x48($sp)
+    /* 8013862C */  sh         $t4, 0x42($sp)
+    /* 80138630 */  sh         $zero, 0x4A($sp)
+    /* 80138634 */  sh         $t9, 0x44($sp)
+    /* 80138638 */  sh         $t5, 0x4C($sp)
+    /* 8013863C */  sh         $t1, 0x46($sp)
+    /* 80138640 */  sh         $t8, 0x4E($sp)
+    /* 80138648 */   addiu     $a0, $sp, 0x65
+    /* 80138654 */  addiu      $at, $v0, 0x1

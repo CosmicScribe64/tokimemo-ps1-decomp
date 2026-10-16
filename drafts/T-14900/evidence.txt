@@ -1,0 +1,22 @@
+T-14900 RPG_BAT motion match and bounded register blockers
+
+
+default-proof.log
+RPG_BAT:func_80148B08: compared default build
+note: ignored 1 stale asm file(s) of functions that changed between C and INCLUDE_ASM (e.g. asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801484E0/func_80148B08.s); `rm` them or rebuild asm/ to clean up
+RPG_BAT:func_80148B08: MATCH (linked function bytes equal target (1128 bytes))
+
+rpg-sha1.log
+[1/2] OBJCOPY build/ovl/RPG_BAT.bin
+[2/2] SHA1 CHECK build/ovl/RPG_BAT.bin
+build/ovl/RPG_BAT.bin: OK
+
+headers.log
+headers OK
+
+globals.log
+globals OK
+
+protos.log
+0 new disagreement(s), 15 known (config/proto_known.txt)
+branch check OK

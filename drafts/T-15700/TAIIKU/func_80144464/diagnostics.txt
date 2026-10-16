@@ -1,0 +1,13 @@
+$ gcc -E -P -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TAIIKU/func_80144464/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TAIIKU/func_80144464/work/guarded.c drafts/T-15700/TAIIKU/func_80144464/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-15700/TAIIKU/func_80144464/work/guarded.c, line 3466: Incompatible pointer type assignment
+     var_v0_3 = &D_8014A13C;
+ -------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80144464/work/guarded.c, line 3466: '&' before array or function; ignored
+     var_v0_3 = &D_8014A13C;
+ ---------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80144464/work/guarded.c, line 3483: '&' before array or function; ignored
+     } while ((u32) var_v1 < (u32) &sp40);
+ ----------------------------------^

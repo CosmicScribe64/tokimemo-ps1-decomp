@@ -1,0 +1,161 @@
+{
+  "scope": "main:func_8005F730",
+  "selected_path": "drafts/T-14500/main/func_8005F730",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "sp6A",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target sh fills five halfwords in each region based at sp+0x44,50,5C,68 and passes those bases to menu_set. Reconstruct four five-halfword arrays, including synthesized +2/+4/+6/+8 aliases. No padding or frame-size match is forced. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "s32 func_8005F730(void) {",
+        "    s32 sp6A;",
+        "    s32 sp5E;"
+      ]
+    },
+    {
+      "detail": "sp5E",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target sh fills five halfwords in each region based at sp+0x44,50,5C,68 and passes those bases to menu_set. Reconstruct four five-halfword arrays, including synthesized +2/+4/+6/+8 aliases. No padding or frame-size match is forced. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp6A;",
+        "    s32 sp5E;",
+        "    s32 sp6E;"
+      ]
+    },
+    {
+      "detail": "sp6E",
+      "kind": "synthesized-stack-local",
+      "line": 4,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target sh fills five halfwords in each region based at sp+0x44,50,5C,68 and passes those bases to menu_set. Reconstruct four five-halfword arrays, including synthesized +2/+4/+6/+8 aliases. No padding or frame-size match is forced. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp5E;",
+        "    s32 sp6E;",
+        "    s32 sp60;"
+      ]
+    },
+    {
+      "detail": "sp60",
+      "kind": "synthesized-stack-local",
+      "line": 5,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target sh fills five halfwords in each region based at sp+0x44,50,5C,68 and passes those bases to menu_set. Reconstruct four five-halfword arrays, including synthesized +2/+4/+6/+8 aliases. No padding or frame-size match is forced. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp6E;",
+        "    s32 sp60;",
+        "    s32 sp6C;"
+      ]
+    },
+    {
+      "detail": "sp6C",
+      "kind": "synthesized-stack-local",
+      "line": 6,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target sh fills five halfwords in each region based at sp+0x44,50,5C,68 and passes those bases to menu_set. Reconstruct four five-halfword arrays, including synthesized +2/+4/+6/+8 aliases. No padding or frame-size match is forced. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp60;",
+        "    s32 sp6C;",
+        "    s32 sp64;"
+      ]
+    },
+    {
+      "detail": "sp64",
+      "kind": "synthesized-stack-local",
+      "line": 7,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target sh fills five halfwords in each region based at sp+0x44,50,5C,68 and passes those bases to menu_set. Reconstruct four five-halfword arrays, including synthesized +2/+4/+6/+8 aliases. No padding or frame-size match is forced. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp6C;",
+        "    s32 sp64;",
+        "    s32 sp70;"
+      ]
+    },
+    {
+      "detail": "sp70",
+      "kind": "synthesized-stack-local",
+      "line": 8,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target sh fills five halfwords in each region based at sp+0x44,50,5C,68 and passes those bases to menu_set. Reconstruct four five-halfword arrays, including synthesized +2/+4/+6/+8 aliases. No padding or frame-size match is forced. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp64;",
+        "    s32 sp70;",
+        "    s32 sp62;"
+      ]
+    },
+    {
+      "detail": "sp62",
+      "kind": "synthesized-stack-local",
+      "line": 9,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target sh fills five halfwords in each region based at sp+0x44,50,5C,68 and passes those bases to menu_set. Reconstruct four five-halfword arrays, including synthesized +2/+4/+6/+8 aliases. No padding or frame-size match is forced. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp70;",
+        "    s32 sp62;",
+        "    s16 sp68;"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target sh fills five halfwords in each region based at sp+0x44,50,5C,68 and passes those bases to menu_set. Reconstruct four five-halfword arrays, including synthesized +2/+4/+6/+8 aliases. No padding or frame-size match is forced."
+  ],
+  "assembly_path": "asm/nonmatchings/main/8005A0B0/func_8005F730.s",
+  "assembly_sha256": "297773af781d7943f4370ac360815d37b25f90599c64d02e76c203fd872729a5",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x44": [
+      "sh"
+    ],
+    "0x50": [
+      "sh"
+    ],
+    "0x5C": [
+      "lh",
+      "sh"
+    ],
+    "0x68": [
+      "lh",
+      "sh"
+    ],
+    "0x10": [
+      "sw"
+    ],
+    "0x6A": [
+      "lh"
+    ],
+    "0x5E": [
+      "lh"
+    ],
+    "0x6C": [
+      "lh"
+    ],
+    "0x60": [
+      "lh"
+    ],
+    "0x6E": [
+      "lh"
+    ],
+    "0x62": [
+      "lh"
+    ],
+    "0x70": [
+      "lh"
+    ],
+    "0x64": [
+      "lh"
+    ],
+    "0x14": [
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

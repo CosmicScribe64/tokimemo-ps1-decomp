@@ -1,0 +1,81 @@
+Difference rows: 228; first 80 mnemonic/relocation rows; opcode words omitted.
+-; beqz at,a40 <.L8014120C+0x44>
++; beqz at,aa0 <func_80140A90+0x820>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; beqz t8,a48 <.L8014120C+0x4c>
++; beqz t8,aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; beqz t9,a48 <.L8014120C+0x4c>
++; beqz t9,aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; beqz t1,a48 <.L8014120C+0x4c>
++; beqz t1,aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; lui v1,0x0
+-; lw v1,0(v1)
++; lui v0,0x0
++; lw v0,0(v0)
+-; beqz v1,4b8 <.L80140CA4+0x24>
++; beqz v0,4b8 <func_80140A90+0x238>
+-; beq v1,at,4c8 <.L80140CA4+0x34>
++; beq v0,at,4c8 <func_80140A90+0x248>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
++; lui t7,0x0
++; lh t7,0(t7)
+-; lui t7,0x0
+-; lh t7,0(t7)
++; lui t9,0x0
++; lh t9,0(t9)
+-; lui t9,0x0
+-; lh t9,0(t9)
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; beqz t3,a48 <.L8014120C+0x4c>
++; beqz t3,aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; b a48 <.L8014120C+0x4c>
++; b aa8 <func_80140A90+0x828>
+-; beqz t5,a48 <.L8014120C+0x4c>
++; beqz t5,aa8 <func_80140A90+0x828>
+-; lui v1,0x0
+-; lui v0,0x0
+-; addiu v0,v0,0
+-; addiu v1,v1,0
+-; lbu t8,6532(v1)
++; lui a2,0x0
++; lui a1,0x0
++; addiu a2,a2,0
++; addiu a1,a1,0
++; subu v0,a1,a2
++; li at,272
++; divu zero,v0,at
++; lui t5,0x0
++; addiu t5,t5,0

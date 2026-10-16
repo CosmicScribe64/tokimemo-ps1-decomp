@@ -1,0 +1,28 @@
+Target: ['asm/ovl/EVENT/nonmatchings/EVENT/800FDC20/func_800FEAE8.s']
+Review: 40 copied words plus one trailing word total 164 bytes. Repair extent, byte tail, and indexed byte address; retain unresolved wider table semantics.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 800FEAE8 */  addiu      $sp, $sp, -0xE0
+    /* 800FEAF0 */  sw         $ra, 0x14($sp)
+    /* 800FEAF4 */  addiu      $t7, $t7, %lo(D_80121A2C)
+    /* 800FEB08 */  addiu      $t6, $sp, 0xD0
+    /* 800FEB18 */  addiu      $t6, $t6, %lo(D_80121A34)
+    /* 800FEB1C */  addiu      $t9, $t6, 0x9C
+    /* 800FEB20 */  addiu      $t8, $sp, 0x2C
+    /* 800FEB28 */  addiu      $t6, $t6, 0xC
+    /* 800FEB34 */  addiu      $t8, $t8, 0xC
+    /* 800FEB5C */  lw         $a0, 0xD0($sp)
+    /* 800FEB60 */  lw         $a1, 0xD4($sp)
+    /* 800FEB68 */   addiu     $a2, $zero, 0xF
+    /* 800FEB70 */   addiu     $a0, $zero, 0x71
+    /* 800FEB78 */   addiu     $a0, $zero, 0x300
+    /* 800FEB88 */  addiu      $a1, $a1, 0x1
+    /* 800FEB9C */  addiu      $at, $zero, 0x9
+    /* 800FEBB4 */   addiu     $a0, $zero, 0x202
+    /* 800FEBE4 */   addiu     $a0, $zero, 0xB4
+    /* 800FEBEC */   addiu     $a0, $zero, 0x202
+    /* 800FEC08 */  addiu      $ra, $zero, 0x1D
+    /* 800FEC0C */  addiu      $t5, $zero, 0x1A
+    /* 800FEC10 */  addiu      $t4, $zero, 0x19
+    /* 800FEC14 */  addiu      $t3, $zero, 0x18
+    /* 800FEC18 */  addiu      $t2, $zero, 0x17

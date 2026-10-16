@@ -1,0 +1,13 @@
+python3 failed:
+ -----------------------^
+cfe: Warning 681: drafts/T-14500/EVENT/func_800FD00C/work/guarded.o.sjis.c, line 4338: '&' before array or function; ignored
+     ((EventStateView *)&D_800B0860)->unk_1A4[2].unk_0A -= 0xA;
+ -----------------------^
+cfe: Warning 681: drafts/T-14500/EVENT/func_800FD00C/work/guarded.o.sjis.c, line 4483: '&' before array or function; ignored
+     *(M2cBlock9C *)(&sp30) = *(M2cBlock9C *)(&D_801214A0);
+ --------------------^
+cfe: Error: drafts/T-14500/EVENT/func_800FD00C/work/guarded.o.sjis.c, line 4485: 'sp' undefined; reoccurrences will not be reported.
+     (*(s32 (**)(s32))((unsigned char *)(sp + (D_800B1AF6 * 4)) + (48)))(0x80);
+ ----------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/EVENT/func_800FD00C/work -o drafts/T-14500/EVENT/func_800FD00C/work/guarded.o /tmp/asm_processorx7_hv4ig/preprocessed_3b00158911c047ac8e826be7c4ab9720.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib_8fodk66/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/EVENT/func_800FD00C/work/guarded.o drafts/T-14500/EVENT/func_800FD00C/work/guarded.o.sjis.c
