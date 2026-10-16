@@ -315,11 +315,6 @@ block_8:
     func_80086424();
 }
 
-typedef struct {
-    void *p[3];
-} PtrTbl3; /* size 0xC */
-extern PtrTbl3 D_8013C700;
-
 void func_80138E58(void) {
     s32 idx; /* unused: its stack slot sits above tbl (T-3330) */
     PtrTbl3 tbl;
