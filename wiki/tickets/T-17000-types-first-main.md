@@ -48,3 +48,6 @@ additions only.
 - Packages: T-17001..T-17027 (`w3-main-p01`..`p27`), 105 functions, 75,216 bytes.
 - Checks at the end: clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch`
   (results below). Waiting for the code review.
+- Final checks (2026-10-16 08:16 UTC): clean build `rm -rf build && configure.py && ninja`: 27/27 SHA1 OK;
+  `check_headers.py` headers OK; `migrate_globals.py --check` globals OK; `sync_protos.py --check-branch`:
+  0 new disagreements, 15 known, branch check OK.
