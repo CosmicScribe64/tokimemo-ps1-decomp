@@ -88,4 +88,10 @@ void func_801334BC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_8013356C);
+void func_8013356C(void) {
+    s32 i;
+
+    for (i = 0; i < 16; i++) {
+        D_8015EB30[i].unk13 = 0;
+    }
+}
