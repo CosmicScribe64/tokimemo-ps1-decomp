@@ -29,6 +29,6 @@ the scratchpad `pt-taco-p2-list.txt` (best draft per function).
 
 ## Results
 
-Pilot stage B (measured): started 02:40 UTC, 2026-10-16. Matched in plain C (unit sha1 OK): `func_801430D0` (544 B), `func_801347F4` (144 B, TAIIKU/main clone idiom), `func_80143B58` (808 B, explicit `case 0`), `func_801342CC` (388 B), `func_80133870` (272 B, `s32` without return), 2,156 bytes in 5 functions. Guarded `NON_MATCHING`: `func_80154230` (8 lines), `func_801546FC` (8), `func_8015443C` (9; `s32 pad[2]` FAKE above `interval`), `func_801432F0` (8), `func_801345D4` (12). Left `INCLUDE_ASM`: `func_80154820` (64 lines), `func_80133E98` (126 lines at best). Details: [[matching-notes]], "T-16562"; rows in [[data/t0018-cases]].
+Pilot stage B (measured): started 02:40 UTC, 2026-10-16. Matched in plain C (unit sha1 OK): `func_801430D0` (544 B), `func_801347F4` (144 B, TAIIKU/main clone idiom), `func_80143B58` (808 B, explicit `case 0`), `func_801342CC` (388 B), `func_80133870` (272 B, `s32` without return), `func_801432F0` (644 B, `*s` read directly), `func_80154820` (320 B, `*p` read directly, two-step r/g/b): 3,120 bytes in 7 functions. Guarded `NON_MATCHING`: `func_80154230` (8 lines), `func_801546FC` (8), `func_8015443C` (9; `s32 pad[2]` FAKE above `interval`), `func_801345D4` (12). Left `INCLUDE_ASM`: `func_80133E98` (126 lines at best). Details: [[matching-notes]], "T-16562"; rows in [[data/t0018-cases]].
 
 ## Comments

@@ -2050,3 +2050,5 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TACO/80133870 | `func_801345D4` | other | T-16562: settings copy with bit-field views at `D_800E7D10 + 0x40`; true path matches, the else path byte read-modify-write is folded into `lui/%lo` by IDO (plain global variable), the original keeps `&D_800E7D10` in `$v0` (12 lines) |
 | TACO/80154230 | `func_80154820` | other | T-16562: clamped r/g/b sums: IDO makes each sum an expression range next to the variable (three extra moves, `word` in `$v1`); the original keeps the sum in the variable register (64 lines, left INCLUDE_ASM) |
 | TACO/80133870 | `func_80133E98` | regorder | T-16562: state machine returning the new state: original `addiu v0,t7,2; andi t8,v0,0xff; move v0,t8; sb t8`, IDO keeps the state in other registers (126-226 lines, left INCLUDE_ASM) |
+
+Update (T-16562): the rows for TACO `func_801432F0` and `func_80154820` above are matched in plain C (the character or record word is read as `*s` / `*p` in every expression instead of a local copy, [[matching-notes]] "T-16562"). `func_80133870` (`s32` without return) was a delay-slot case, not a T-0018 row.
