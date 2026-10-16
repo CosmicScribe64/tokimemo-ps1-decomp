@@ -15515,3 +15515,7 @@ Created [[tickets/T-17300-types-first-etc]] (wave 3, [[speedup-research-2026-10-
 ## [2026-10-16] ticket | T-17300 Done
 
 [[tickets/T-17300-types-first-etc]] In Review to Done after the code review against `CODING_STANDARDS.md`: 3 functions matched (1,572 bytes: `func_80144AC0`, `func_8013E524`, `func_80145318`, all sibling ports), ETC types in `include/ovl/ETC.h`, 40 redrafts in `drafts/T-17300/`. No findings. ETC sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK.
+
+## [2026-10-16] ticket | T-17600 Types-first: GYOZI In Progress
+
+Created [[tickets/T-17600-types-first-gyozi]] (wave 3 types-first pass for GYOZI, branch `w3-gyozi-types` from `w2-good`), card in In Progress on [[kanban]], line in [[index]].
