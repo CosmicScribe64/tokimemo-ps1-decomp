@@ -15258,3 +15258,7 @@ Filed in [[speedup-research-2026-10-16]].
 ## [2026-10-16] ticket | T-16552 Done
 
 [[tickets/T-16552-pt-taiiku-p2]] In Review to Done after code review against `CODING_STANDARDS.md`: 3 functions matched (`func_80139FE4`, `func_80138DF8`, `func_80138AA8`, 3,000 bytes). One finding fixed (local `p` of `func_80138AA8` marked FAKE, comment only) and a stale intro in [[matching-notes]] refreshed. TAIIKU sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK.
+
+## [2026-10-16] ticket | T-16564 opened
+
+[[tickets/T-16564-taco-types-first-p4]] In Progress: types-first pilot package pt-taco-p4 (TACO `src/ovl/TACO/80154960.c`, `80137A60.c`, `80138890.c`; 8 functions from the [[tickets/T-16560-taco-types-first]] redrafts), branch `pt-taco-p4` from `w2-good`.
