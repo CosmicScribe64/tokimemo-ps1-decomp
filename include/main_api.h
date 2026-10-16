@@ -2413,8 +2413,12 @@ void func_80084E4C(void);
 s32 func_80084E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 s32 func_800850D4();
 void func_80085234();
+#ifndef MAIN_API_OVERRIDE_func_80085368
 void func_80085368(void);
+#endif
+#ifndef MAIN_API_OVERRIDE_func_800853FC
 void func_800853FC(void);
+#endif
 void event_face0(void);
 void event_face1(void);
 void func_800854C8();
