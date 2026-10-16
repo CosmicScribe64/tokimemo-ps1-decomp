@@ -1,0 +1,1532 @@
+{
+ "detail": [
+  {
+   "findings": [
+    {
+     "detail": "\u30d1\\x83\\\\\u30b3\u30f3\u5360\u3044 -> \u30d1\u30bd\u30b3\u30f3\u5360\u3044",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 26,
+     "n": 0
+    }
+   ],
+   "scope": "BUNKAKEN:func_80145844"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_21: 3 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 56,
+     "n": 0
+    },
+    {
+     "detail": "block_48: 3 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 132,
+     "n": 1
+    }
+   ],
+   "scope": "BUNKASAI:func_80135C4C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_15: 3 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 39,
+     "n": 0
+    },
+    {
+     "detail": "block_38: 3 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 104,
+     "n": 1
+    }
+   ],
+   "scope": "BUNKASAI:func_8013B25C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "\u30d1\\x83\\\\\u30b3\u30f3\u5360\u3044 -> \u30d1\u30bd\u30b3\u30f3\u5360\u3044",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 26,
+     "n": 0
+    }
+   ],
+   "scope": "BUNKASAI:func_801431D4"
+  },
+  {
+   "findings": [
+    {
+     "detail": "const of $v0 at instruction 133 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "BUNKASAI:func_801433C0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_24: 3 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 75,
+     "n": 0
+    }
+   ],
+   "scope": "BUNKASAI:func_80158764"
+  },
+  {
+   "findings": [
+    {
+     "detail": "\uff0a\u30d1\\x83\\\\\u30b3\u30f3\u3000\uff2e\uff2d\uff33\uff3f\uff19\uff10\uff10\uff10\uff0a -> \uff0a\u30d1\u30bd\u30b3\u30f3\u3000\uff2e\uff2d\uff33\uff3f\uff19\uff10\uff10\uff10\uff0a",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 89,
+     "n": 0
+    }
+   ],
+   "scope": "BUNKASAI:func_8015AF90"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 234 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "BUNKA_SD:func_80134D94"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 6 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "BUNKA_SD:func_80137890"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_35: 3 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 26,
+     "n": 0
+    },
+    {
+     "detail": "block_47: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 103,
+     "n": 1
+    }
+   ],
+   "scope": "BUNKA_SD:func_80139290"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 98 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "DATE:func_8014718C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_23: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 51,
+     "n": 0
+    }
+   ],
+   "scope": "DATE:func_801496C4"
+  },
+  {
+   "findings": [
+    {
+     "detail": "D_800E7384 += 1 compared before the store",
+     "fixed": false,
+     "kind": "postinc-compare",
+     "line": 12,
+     "n": 0
+    }
+   ],
+   "scope": "DATE:func_8014C20C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 545 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "DATE2:func_80133AF0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 97 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "DATE2:func_801348F0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 795 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "DATE2:func_801350A4"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 181 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "DATE2:func_80135E50"
+  },
+  {
+   "findings": [
+    {
+     "detail": "D_800E7384 += 1 compared before the store",
+     "fixed": false,
+     "kind": "postinc-compare",
+     "line": 12,
+     "n": 0
+    }
+   ],
+   "scope": "DATE2:func_80136860"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 84 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "DATE2:func_801388C0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 146 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "ENDING:func_80132420"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 17 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "ENDING:func_80132B04"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_17: 2 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 92,
+     "n": 0
+    }
+   ],
+   "scope": "ENDING:func_80134270"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 12 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "ENDING:func_80137730"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 24 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "EN_NICHI:func_8013358C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_51: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 48,
+     "n": 0
+    }
+   ],
+   "scope": "ETC:func_80142B80"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 33 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "ETC:func_80145318"
+  },
+  {
+   "findings": [
+    {
+     "detail": "\u7d50\u679c\u767a\\x95\\\\  -> \u7d50\u679c\u767a\u8868 ",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 16,
+     "n": 0
+    },
+    {
+     "detail": "\u4eca\u65e5\u306f\u3001\u8a66\u9a13\u7d50\u679c\u306e \u767a\\x95\\\\\u306e\u65e5\u3060\u3002\uff09 -> \u4eca\u65e5\u306f\u3001\u8a66\u9a13\u7d50\u679c\u306e \u767a\u8868\u306e\u65e5\u3060\u3002\uff09",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 18,
+     "n": 1
+    },
+    {
+     "detail": "copy of $v0 at instruction 14 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "ETC:func_8014790C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "\u9806\u4f4d\\x83\\\\\u30fc\u30c8\\n  -> \u9806\u4f4d\u30bd\u30fc\u30c8\\n ",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 89,
+     "n": 0
+    }
+   ],
+   "scope": "ETC:func_801480D0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 46 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "EVENT:func_801103A0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 96 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "EVENT:func_8011D5C4"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_13: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 11,
+     "n": 0
+    }
+   ],
+   "scope": "GEKO:func_801327AC"
+  },
+  {
+   "findings": [
+    {
+     "detail": "D_800E7384 += 1 compared before the store",
+     "fixed": false,
+     "kind": "postinc-compare",
+     "line": 16,
+     "n": 0
+    }
+   ],
+   "scope": "GEKO:func_80134228"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_13: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 12,
+     "n": 0
+    }
+   ],
+   "scope": "GEKO:func_801355E8"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_10: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 28,
+     "n": 0
+    },
+    {
+     "detail": "D_800E7384 += 1 compared before the store",
+     "fixed": false,
+     "kind": "postinc-compare",
+     "line": 16,
+     "n": 0
+    }
+   ],
+   "scope": "GEKO:func_80135AC8"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_42: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 148,
+     "n": 0
+    }
+   ],
+   "scope": "GEKO:func_80135DC0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_19: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 46,
+     "n": 0
+    }
+   ],
+   "scope": "GEKO:func_80137120"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 28 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "GEKO:func_801372D4"
+  },
+  {
+   "findings": [
+    {
+     "detail": "D_800E7384 += 1 compared before the store",
+     "fixed": false,
+     "kind": "postinc-compare",
+     "line": 14,
+     "n": 0
+    }
+   ],
+   "scope": "GEKO:func_80138E10"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_167: 3 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 245,
+     "n": 0
+    }
+   ],
+   "scope": "GEKO:func_80142C9C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "\\203\\113\\203\\140\\203\\203 -> \u30ac\u30c1\u30e3",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 7,
+     "n": 0
+    }
+   ],
+   "scope": "GYOZI:func_8013506C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "D_800F6474 += 1 compared before the store",
+     "fixed": false,
+     "kind": "postinc-compare",
+     "line": 37,
+     "n": 0
+    },
+    {
+     "detail": "zero of $v0 at instruction 35 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "GYOZI:func_80135118"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 35 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "GYOZI:func_80135280"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 78 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "GYOZI:func_801368B8"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_23: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 37,
+     "n": 0
+    },
+    {
+     "detail": "zero of $v0 at instruction 10 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "GYOZI:func_8013907C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_13: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 11,
+     "n": 0
+    }
+   ],
+   "scope": "GYOZI:func_80139E4C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_19: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 23,
+     "n": 0
+    }
+   ],
+   "scope": "GYOZI:func_8013E824"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 33 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "GYOZI:func_80140464"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 138 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "GYOZI:func_801421B4"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 104 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "GYOZI:func_80143160"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 15 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "GYOZI:func_80144018"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_29: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 39,
+     "n": 0
+    }
+   ],
+   "scope": "MASTER:func_8013B448"
+  },
+  {
+   "findings": [
+    {
+     "detail": "const of $v0 at instruction 142 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "NAME_ENT:func_801357F4"
+  },
+  {
+   "findings": [
+    {
+     "detail": "const of $v0 at instruction 143 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "NAME_ENT:func_80135F74"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 5 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "NAME_ENT:func_80139684"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 20 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "NAME_ENT:func_8013DAC4"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 22 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "NAME_ENT:func_8013F454"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 8 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "NAME_ENT:func_80140F90"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 8 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "NAME_ENT:func_80141820"
+  },
+  {
+   "findings": [
+    {
+     "detail": "\u7d20\u6575\u306a\\x97\\\\\u611f\u3000\u305d\u3088\u98a8\u306b\u4e57\u305b -> \u7d20\u6575\u306a\u4e88\u611f\u3000\u305d\u3088\u98a8\u306b\u4e57\u305b",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 30,
+     "n": 0
+    }
+   ],
+   "scope": "NAME_ENT:func_80142A80"
+  },
+  {
+   "findings": [
+    {
+     "detail": "\u6587\u5b57\\x95\\\\\u793a\u901f\u5ea6 -> \u6587\u5b57\u8868\u793a\u901f\u5ea6",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 46,
+     "n": 0
+    },
+    {
+     "detail": "\u30ab\u30fc\\x83\\\\\u30eb\u901f\u5ea6 -> \u30ab\u30fc\u30bd\u30eb\u901f\u5ea6",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 50,
+     "n": 1
+    }
+   ],
+   "scope": "OPTION:func_80132BA8"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_13: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 66,
+     "n": 0
+    }
+   ],
+   "scope": "OPTION:func_80133718"
+  },
+  {
+   "findings": [
+    {
+     "detail": "\u3000\u30ab\u30fc\\x83\\\\\u30eb\u304c\u3001\u65b9\u5411\u30ad\u30fc\u306e\u4e0a\u4e0b\u5de6\u53f3\u306b -> \u3000\u30ab\u30fc\u30bd\u30eb\u304c\u3001\u65b9\u5411\u30ad\u30fc\u306e\u4e0a\u4e0b\u5de6\u53f3\u306b",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 74,
+     "n": 0
+    },
+    {
+     "detail": "\u30e1\u30cb\u30e5\u30fc\u30a2\u30a4\u30c6\u30e0\u306e\u9806\u756a\u901a\u308a\u306b\u30ab\u30fc\\x83\\\\\u30eb -> \u30e1\u30cb\u30e5\u30fc\u30a2\u30a4\u30c6\u30e0\u306e\u9806\u756a\u901a\u308a\u306b\u30ab\u30fc\u30bd\u30eb",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 78,
+     "n": 1
+    },
+    {
+     "detail": "\u305d\u306e\u65b9\u5411\u306e\u30e1\u30cb\u30e5\u30fc\u30a2\u30a4\u30c6\u30e0\u306b\u30ab\u30fc\\x83\\\\\u30eb -> \u305d\u306e\u65b9\u5411\u306e\u30e1\u30cb\u30e5\u30fc\u30a2\u30a4\u30c6\u30e0\u306b\u30ab\u30fc\u30bd\u30eb",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 81,
+     "n": 2
+    }
+   ],
+   "scope": "OPTION:func_8013554C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 65 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "OPTION:func_801376A8"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 75 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "OPTION:func_801383C4"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 153 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "OPTION:func_801394F4"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_7: 2 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 69,
+     "n": 0
+    }
+   ],
+   "scope": "RPG_BAT:func_80134E78"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 212 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "RPG_BAT:func_8014ADD0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "\u30ed\u30dc\u300c\u30ac\u30ac\u30c3\u30fb\u30fb\u7406\u89e3\u4e0d\\x94\\\\  -> \u30ed\u30dc\u300c\u30ac\u30ac\u30c3\u30fb\u30fb\u7406\u89e3\u4e0d\u80fd ",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 92,
+     "n": 0
+    }
+   ],
+   "scope": "RPG_BAT:func_801505B8"
+  },
+  {
+   "findings": [
+    {
+     "detail": "\u3000\u3000\u3000\u3000\u3000\\x96\\\\\u308c\u3093\u574a\u982d\u7a81\u304d\u3000\u3000\u3000\u3000\u3000 -> \u3000\u3000\u3000\u3000\u3000\u66b4\u308c\u3093\u574a\u982d\u7a81\u304d\u3000\u3000\u3000\u3000\u3000",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 14,
+     "n": 0
+    }
+   ],
+   "scope": "RPG_BAT:func_80152080"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_15: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 19,
+     "n": 0
+    }
+   ],
+   "scope": "RPG_BAT:func_801525B0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_10: 7 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 17,
+     "n": 0
+    }
+   ],
+   "scope": "RPG_BAT:func_80152F30"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 5 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "RPG_BAT:func_80153784"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 94 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "SHOUGATU:func_801350F8"
+  },
+  {
+   "findings": [
+    {
+     "detail": "D_800E7380 += 1 compared before the store",
+     "fixed": false,
+     "kind": "postinc-compare",
+     "line": 17,
+     "n": 0
+    }
+   ],
+   "scope": "SHOUGATU:func_80137144"
+  },
+  {
+   "findings": [
+    {
+     "detail": "D_800E7384 += 1 compared before the store",
+     "fixed": false,
+     "kind": "postinc-compare",
+     "line": 16,
+     "n": 0
+    }
+   ],
+   "scope": "SHOUGATU:func_8013737C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "D_800E7384 += 1 compared before the store",
+     "fixed": false,
+     "kind": "postinc-compare",
+     "line": 23,
+     "n": 0
+    }
+   ],
+   "scope": "SHOUGATU:func_80139334"
+  },
+  {
+   "findings": [
+    {
+     "detail": "D_800E7384 += 1 compared before the store",
+     "fixed": false,
+     "kind": "postinc-compare",
+     "line": 13,
+     "n": 0
+    }
+   ],
+   "scope": "SHOUGATU:func_8013BA7C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 154 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "SHOUGATU:func_8013FB28"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 96 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "SHOUGATU:func_80140DC0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 15 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "SHOUGATU:func_80141D20"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_14: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 37,
+     "n": 0
+    }
+   ],
+   "scope": "SHUGAKU:func_8013282C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 75 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "SHUGAKU:func_80138E40"
+  },
+  {
+   "findings": [
+    {
+     "detail": "D_800E7384 += 1 compared before the store",
+     "fixed": false,
+     "kind": "postinc-compare",
+     "line": 12,
+     "n": 0
+    },
+    {
+     "detail": "zero of $v0 at instruction 44 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "SHUGAKU:func_8013ABAC"
+  },
+  {
+   "findings": [
+    {
+     "detail": "const of $v0 at instruction 209 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "TACO:func_80134A18"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 15 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "TACO:func_801357B0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 120 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "TACO:func_80135A04"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 7 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "TACO:func_8013760C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 17 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "TACO:func_8013C1F4"
+  },
+  {
+   "findings": [
+    {
+     "detail": "const of $v0 at instruction 16 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "TACO:func_8013C440"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_55: 2 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 148,
+     "n": 0
+    }
+   ],
+   "scope": "TACO:func_8013C6D4"
+  },
+  {
+   "findings": [
+    {
+     "detail": "const of $v0 at instruction 160 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "TACO:func_8013DEE4"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 121 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "TAIIKU:func_80132BD0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 2 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "TAIIKU:func_8013F948"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 42 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "TT:func_80136AD8"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 241 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "TT:func_801392A0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 20 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "TT:func_8013F040"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 143 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "TT:func_801410A0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_28: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 36,
+     "n": 0
+    }
+   ],
+   "scope": "VALEN:func_80132D0C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 55 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "VALEN:func_80133728"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_13: 1 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 11,
+     "n": 0
+    }
+   ],
+   "scope": "VALEN:func_80134030"
+  },
+  {
+   "findings": [
+    {
+     "detail": "const of $v0 at instruction 149 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "main:func_800430C0"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_16: 3 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 97,
+     "n": 0
+    },
+    {
+     "detail": "copy of $v0 at instruction 602 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "main:func_80046AC8"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 17 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "main:func_8004B358"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 164 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "main:get_fnt"
+  },
+  {
+   "findings": [
+    {
+     "detail": "const of $v0 at instruction 41 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "main:srn_vram_set"
+  },
+  {
+   "findings": [
+    {
+     "detail": "const of $v0 at instruction 106 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "main:func_8004E58C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "const of $v0 at instruction 35 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "main:func_80056070"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 49 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "main:func_80056BA8"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 5 reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "main:func_8005A410"
+  },
+  {
+   "findings": [
+    {
+     "detail": "\u30ab\u30fc\\x83\\\\\u30eb\u901f\u5ea6 -> \u30ab\u30fc\u30bd\u30eb\u901f\u5ea6",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 13,
+     "n": 0
+    },
+    {
+     "detail": "\u30ab\u30fc\\x83\\\\\u30eb\u306e\u79fb\u52d5\u901f\u5ea6\u3092\u8a2d\u5b9a\u3057\u307e\u3059 -> \u30ab\u30fc\u30bd\u30eb\u306e\u79fb\u52d5\u901f\u5ea6\u3092\u8a2d\u5b9a\u3057\u307e\u3059",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 54,
+     "n": 1
+    }
+   ],
+   "scope": "main:func_8005F730"
+  },
+  {
+   "findings": [
+    {
+     "detail": "\\x95\\\\\u793a\u3057\u306a\u3044 -> \u8868\u793a\u3057\u306a\u3044",
+     "fixed": false,
+     "kind": "sjis-escape",
+     "line": 27,
+     "n": 0
+    }
+   ],
+   "scope": "main:func_80060178"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 18 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "main:func_8006190C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 5 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "main:func_80072998"
+  },
+  {
+   "findings": [
+    {
+     "detail": "copy of $v0 at instruction 5 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "main:func_80076C7C"
+  },
+  {
+   "findings": [
+    {
+     "detail": "zero of $v0 at instruction 218 (delay slot) reaches the return unread",
+     "fixed": false,
+     "kind": "s32-no-return",
+     "line": 0,
+     "n": 0
+    }
+   ],
+   "scope": "main:func_80078C48"
+  },
+  {
+   "findings": [
+    {
+     "detail": "block_57: 4 jumps share 1 stores",
+     "fixed": false,
+     "kind": "goto-shared-store",
+     "line": 32,
+     "n": 0
+    }
+   ],
+   "scope": "main:func_80079070"
+  }
+ ],
+ "summary": {
+  "archive": "drafts/T-14500",
+  "asm_missing": 0,
+  "bodies": 1066,
+  "detectors": {
+   "goto-shared-store": {
+    "bodies": 27,
+    "findings": 30
+   },
+   "goto-shared-store-blocked": {
+    "bodies": 263,
+    "findings": 602
+   },
+   "postinc-compare": {
+    "bodies": 11,
+    "findings": 11
+   },
+   "s32-no-return": {
+    "bodies": 71,
+    "findings": 71
+   },
+   "sjis-escape": {
+    "bodies": 13,
+    "findings": 18
+   }
+  },
+  "goto_blocked_reasons": {
+   "break-leaves-another-construct": 3,
+   "empty-tail": 8,
+   "loop-label": 188,
+   "tail-not-store": 10,
+   "tail-not-straight-line": 384,
+   "tail-reads-temporary-assigned-in-switch": 4,
+   "temporary-not-assigned-at-jump": 3,
+   "temporary-used-elsewhere": 1,
+   "value-has-side-effects": 1
+  }
+ }
+}
