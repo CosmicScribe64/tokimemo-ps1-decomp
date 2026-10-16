@@ -15910,3 +15910,7 @@ Created [[tickets/T-18700-types-first-bunkasai]] (branch `w3-bunkasai-types` fro
 ## [2026-10-16] ticket | T-19024 In Review
 
 [[tickets/T-19024-w3-d-p24]] In Progress to In Review: wave 3 package w3-d-p24 (TACO `src/ovl/TACO/80141DE0.c`), 2 of 3 functions matched (1,164 bytes), `func_801424A8` stays `INCLUDE_ASM`. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-16] ticket | T-19024 Done
+
+[[tickets/T-19024-w3-d-p24]] In Review to Done after the code review: wave 3 package w3-d-p24 (TACO `src/ovl/TACO/80141DE0.c`, `include/ovl/TACO.h`), 2 of 3 functions matched (1,164 bytes: `func_80142220`, `func_80141DE0` with one ticketed FAKE), `func_801424A8` stays `INCLUDE_ASM` (81 rows, draft archived in `drafts/T-19024/TACO/func_801424A8/`). No findings. TACO SHA1 OK, headers, globals and proto checks OK.
