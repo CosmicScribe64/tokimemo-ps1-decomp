@@ -15013,3 +15013,22 @@ Merged branch w1-p13 (club_list_menu and func_80067C28 matched) onto w2-good in 
 ## [2026-10-16] ticket | T-11690 Done
 
 Code review of w2-r13 against CODING_STANDARDS.md: 4 findings (unmarked fakematches in `func_80067C28` and `func_8006A2CC`, a FAKE ticket reference, an indentation slip), all fixed in the worktree, build checks OK. [[tickets/T-11690-w1-main-800674b0]] moved to Done with 3 functions matched (`club_list_menu`, `func_80067C28`, `func_8006A2CC`); guarded drafts `func_8006BC28` and `func_800676AC`.
+## [2026-10-15] ticket | T-11640 created
+
+Created [[tickets/T-11640-w1-ovl-taiiku-80138950]] (In Progress) in worktree w1-p08: wave 1 package for src/ovl/TAIIKU/80138950.c.
+
+## [2026-10-15] ticket | T-11640 resumed in wave 2 (w2-r08)
+
+Merged branch w1-p08 into w2-r08 (7 TAIIKU matches; main's func_80139330 kept and renamed to the TaiikuBall layout); TAIIKU sha1 OK. [[tickets/T-11640-w1-ovl-taiiku-80138950]] stays In Progress under [[tickets/T-16200-matching-wave-2]].
+
+## [2026-10-15] ticket | T-11640 to In Review (wave 2, w2-r08)
+
+[[tickets/T-11640-w1-ovl-taiiku-80138950]]: 8 more TAIIKU 80138950.c functions matched in wave 2 (15 with the merged wave-1 work), 2 guarded drafts, 7 rows in [[data/t0018-cases]], section "T-11640 wave 2" in [[matching-notes]]. Status In Review.
+
+## [2026-10-15] build | T-11640: func_8013BEF8 and func_8013C0E4 matched
+
+[[tickets/T-11640-w1-ovl-taiiku-80138950]]: the D_801499A2 counter functions match with u16 pointer views of the counter and the flag (no volatile flag); 10 wave-2 matches in total. Notes in [[matching-notes]], one more row in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-11640 Done
+
+Reviewed [[tickets/T-11640-w1-ovl-taiiku-80138950]] against `CODING_STANDARDS.md`: one finding (FAKE explanations for the s16 tmp/halfword views, fixed, comments only), no open findings. 10 wave-2 functions matched in `src/ovl/TAIIKU/80138950.c` (6,876 bytes), 6 more from the merged wave-1 branch, 4 guarded drafts. TAIIKU sha1 OK, headers OK, globals OK, `sync_protos.py --check-branch` OK. Moved to Done on the kanban board.
