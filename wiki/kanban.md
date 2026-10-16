@@ -24,6 +24,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-20003-rpg-timer-callees|T-20003 Match RPG battle timer callbacks with the required callee views]]
+
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]

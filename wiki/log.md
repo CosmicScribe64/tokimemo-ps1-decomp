@@ -16278,3 +16278,11 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17101 Done
 
 [[tickets/T-17101-w3-rpg-bat-p01]] In Review to Done after the code review: wave 3 package w3-rpg-bat-p01 (RPG_BAT `src/ovl/RPG_BAT/80145CC0.c`, `src/ovl/RPG_BAT/80151FC0.c`, `include/ovl/RPG_BAT.h`, `include/main_api.h`), 4 of 4 functions matched (4,564 bytes: `func_80152080`, `func_80145CC0`, `func_80152384`, `func_80146578`; three ticketed FAKEs). One finding fixed: the `RPG_BAT.h` comment for the override wrappers now covers `func_8013F15C`. 27 of 27 units sha1 OK; headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-20003 RPG timer follow-up In Progress
+
+Created [[tickets/T-20003-rpg-timer-callees]] from upstream main 68650e14. The T-17101 section of [[matching-notes]] explicitly suggests func_80138F6C, func_80146C30 and func_80157158 for the newly confirmed integer-return callee-view test. T-17101 is Done and no follow-up package tickets for these files are present in fetched upstream. Inspecting existing typed drafts and original assembly before compiling candidates.
+
+## [2026-10-16] build | T-20003 RPG callback func_80157158 matched
+
+Actual default funcdiff --resolve proves 1,256 linked bytes for RPG_BAT func_80157158; RPG_BAT.bin SHA1 passes. Use integer-return caller views of func_8013D030 and func_8013F15C, reread the state selector after calls, update timer globals directly and split the flag mask/or into two in-place operations. Two unused frame words are explicitly FAKE and ticketed. Other target callbacks stay scratch-only. See [[tickets/T-20003-rpg-timer-callees]].
