@@ -23,13 +23,13 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-19001-w3-d-p01|T-19001]] Wave 3 package w3-d-p01: TAIIKU `80140810.c`, `func_80140A90` stays guarded (33 instructions); block-copy temporary rule measured, looks like a ugen difference (In Review).
+- [[tickets/T-19001-w3-d-p01|T-19001]] Wave 3 package w3-d-p01: TAIIKU `80140810.c`, `func_80140A90` stays guarded (33 instructions); block-copy temporary rule measured, looks like a ugen difference (Done).
 - [[tickets/T-16990-wave-3-conveyor|T-16990]] Wave 3 conveyor: types-first passes on 19 units feeding a 7-worker matcher pool (In Progress).
 - [[tickets/T-16564-taco-types-first-p4|T-16564]] Types-first pilot package pt-taco-p4: TACO `80154960.c`, `80137A60.c`, `80138890.c`, 6 of 8 functions matched (5,852 B), 2 guarded register near misses (Done).
 - [[tickets/T-16554-pt-taiiku-p4|T-16554]] Types-first pilot package pt-taiiku-p4: TAIIKU `80132000.c`, `80140810.c`, `80142240.c`, 4 of 7 functions matched (3,208 B), 2 guarded, 1 left (Done).
 - [[tickets/T-16552-pt-taiiku-p2|T-16552]] Types-first pilot package pt-taiiku-p2: TAIIKU 80138950.c, 9 functions from the T-16550 redrafts: `func_80139FE4`, `func_80138DF8` and `func_80138AA8` matched (3,000 B, the last two in the Opus closer pass), bit-order colouring, phantom-spill, goto-into-loop and implicit-int findings (Done).
 - [[tickets/T-16553-pt-taiiku-p3|T-16553]] Types-first pilot package pt-taiiku-p3: TAIIKU game C (`801452D0.c`), 10 functions matched (6,324 bytes), 3 guarded, idioms in [[matching-notes]] (Done).
-- [[tickets/T-16551-pt-taiiku-p1|T-16551]] Types-first pilot package pt-taiiku-p1: TAIIKU `80133C80.c`, 5 of 8 functions matched (4,480 B), 2 guarded drafts, idioms: unit-defined data for `lui at`, unrolled runner loops (In Review).
+- [[tickets/T-16551-pt-taiiku-p1|T-16551]] Types-first pilot package pt-taiiku-p1: TAIIKU `80133C80.c`, 5 of 8 functions matched (4,480 B), 2 guarded drafts, idioms: unit-defined data for `lui at`, unrolled runner loops (Done).
 - [[tickets/T-16550-taiiku-types-first|T-16550]] Types-first pilot: TAIIKU: runner records of three games and 28 stack tables typed, all 64 functions redrafted (27 better), `func_80141CDC` matched, packages T-16551..T-16554 (Done).
 - [[tickets/T-16563-taco-types-first-p3|T-16563]] Types-first pilot package pt-taco-p3: TACO `80151C30.c`, `8015ABF0.c`, 10 functions matched (4,740 B; 9 of the 10 listed) in about 80 minutes, `func_8015B1B8` guarded, idioms in [[matching-notes]] (Done).
 - [[tickets/T-16560-taco-types-first|T-16560]] Types-first pilot: TACO: actor/coordinate/matrix types, 126 redrafts (48 better than the census, none 0), 5 matches / 2,032 bytes, packages T-16561..T-16564 (Done).
@@ -51,13 +51,13 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-15500-bunkasai-character-flags|T-15500]] BUNKASAI record-ten flag match (In Review; 820 bytes).
 - [[tickets/T-15400-bunkasai-label-draft|T-15400]] BUNKASAI label encoding recovery (In Review; 440 coverage bytes).
 - [[tickets/T-15300-fresh-structural-near-matches|T-15300]] Fresh structural near matches: BUNKASAI func_801438E4 matched, 852 coverage/literal bytes; TACO probes continue (In Progress).
-- [[tickets/T-15800-compile-remaining-overlay-drafts|T-15800]] All 23 assigned failed overlay scopes now compile as source-only alternatives, with exact contexts and evidence (In Review).
+- [[tickets/T-15800-compile-remaining-overlay-drafts|T-15800]] All 23 assigned failed overlay scopes now compile as source-only alternatives, with exact contexts and evidence (Done).
 
-- [[tickets/T-15300-fresh-structural-near-matches|T-15300]] Fresh structural matches: BUNKASAI 852 + BUNKAKEN 440 coverage/literal bytes; unfinished TACO draft archived with context (In Review).
+- [[tickets/T-15300-fresh-structural-near-matches|T-15300]] Fresh structural matches: BUNKASAI 852 + BUNKAKEN 440 coverage/literal bytes; unfinished TACO draft archived with context (Done).
 
-- [[tickets/T-15000-kangei-near-match|T-15000]] KANGEI func_80135CE0 matched: ordinary duplicated branch stores, 432 coverage/literal bytes (In Review).
+- [[tickets/T-15000-kangei-near-match|T-15000]] KANGEI func_80135CE0 matched: ordinary duplicated branch stores, 432 coverage/literal bytes (Done).
 
-- [[tickets/T-14501-remaining-draft-proof|T-14501]] Verify exhaustive draft candidates: 30 literal matches / 19,220 inventory coverage bytes in 9 units (In Review).
+- [[tickets/T-14501-remaining-draft-proof|T-14501]] Verify exhaustive draft candidates: 30 literal matches / 19,220 inventory coverage bytes in 9 units (Done).
 - [[tickets/T-13500-incremental-build-dependencies|T-13500]] Incremental build dependencies (Done; 27/27 checks, ETC rebuilds 13 objects instead of 443).
 - [[tickets/T-13701-name-ent-record-types|T-13701]] NAME_ENT record and actor type recovery (In Review; coherent typed draft, no match).
 - [[tickets/T-13700-name-ent-families|T-13700]] NAME_ENT family reconstruction (In Review; zero accepted bytes).
@@ -72,9 +72,9 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-12500-largest-dialogue|T-12500]] Largest dialogue matching pass (In Review; diagnostic pass, zero new bytes).
 
 - [[tickets/T-11830-tt-wave1-handoff|T-11830]] TT: the seven wave-1 TT matches handed over by the maintainer (Done; TT 65.3%).
-- [[tickets/T-12010-codex-cx1|T-12010]] Codex cx1 main helper matching (In Review).
-- [[tickets/T-12020-codex-cx2|T-12020]] Codex cx2 TAIIKU matching pass (In Review).
-- [[tickets/T-12030-codex-cx3|T-12030]] Codex cx3 main menu functions (In Review).
+- [[tickets/T-12010-codex-cx1|T-12010]] Codex cx1 main helper matching (Done).
+- [[tickets/T-12020-codex-cx2|T-12020]] Codex cx2 TAIIKU matching pass (Done).
+- [[tickets/T-12030-codex-cx3|T-12030]] Codex cx3 main menu functions (Done).
 - [[tickets/T-12040-codex-cx4|T-12040]] Codex cx4 RPG battle matching (In Review;7 matches,6068 linked bytes).
 - [[tickets/T-12050-codex-cx5|T-12050]] Codex cx5 main menu matching pass (In Review; 208 verified bytes).
 - [[tickets/T-12090-codex-cx9|T-12090]] Codex cx9 BUNKA_SD matching pass (In Progress).
@@ -82,7 +82,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-12200-acceleration-audit|T-12200]] Measured acceleration investigation in an isolated worktree (Done; 18.29x stripping speedup, 229 tests).
 - [[tickets/T-12070-codex-cx7|T-12070]] Codex cx7 TACO actor matching (In Review; three matches, 4,252 linked bytes).
 - [[tickets/T-12090-codex-cx9|T-12090]] Codex cx9 BUNKA_SD matching pass (In Review; six matches, 4172 text bytes plus 124 table bytes).
-- [[tickets/T-12100-codex-cx10|T-12100]] Codex cx10 DATE movie/effect functions (In Review).
+- [[tickets/T-12100-codex-cx10|T-12100]] Codex cx10 DATE movie/effect functions (Done).
 - [[tickets/T-11820-tt-batch-9|T-11820]] TT batch 9: never-attempted functions and func_801333D4 (Done; 3 matches, TT 60.6%).
 - [[tickets/T-11810-tt-batch-8|T-11810]] TT batch 8: Opus on untried pipeline drafts and the closest guarded drafts (Done; 7 matches, TT 59.1%).
 - [[tickets/T-11800-tt-batch-7|T-11800]] TT batch 7: bulk_m2c rerun and two Opus passes (Done; 10 matches, TT 56.7%).
@@ -107,7 +107,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-11530-order-search-tool|T-11530]] Tooling: order_search.py, statement and operand order search (Done; validated on two TT matches).
 - [[tickets/T-11510-tt-batch-3|T-11510]] TT batch 3 (Done; Opus near-miss pass + 14-function Sonnet list, 4 matches / 2,996 bytes, TT 41.6%).
 - [[tickets/T-11500-tt-batch-2|T-11500]] TT batch 2 (Done; Opus near-miss pass + Sonnet list, 12 matches / 7,160 bytes, TT 38.9%).
-- [[tickets/T-11100-big-functions-gemini-33|T-11100]] Big functions (Gemini) 33 (In Review).
+- [[tickets/T-11100-big-functions-gemini-33|T-11100]] Big functions (Gemini) 33 (Done).
 - [[tickets/T-11140-small-functions-gemini-38|T-11140]] Small functions (Gemini) 38 (Done; 11 matches / 3,444 linked bytes (3,652 list bytes), 5 guarded near misses).
 - [[tickets/T-11130-big-functions-gemini-37|T-11130]] Big functions (Gemini) 37 (In Progress).
 - [[tickets/T-11110-small-functions-gemini-34|T-11110]] Small functions (Gemini) 34 (In Progress).
@@ -382,7 +382,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-14000-ending-en-nichi-families|T-14000]] ENDING and EN_NICHI family matching (In Progress).
 - [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction.
 
-- [[tickets/T-13800-taco-families|T-13800]] TACO family reconstruction; [[tickets/T-13801-taco-actor-family|T-13801]] actor/table experiments (In Review).
+- [[tickets/T-13800-taco-families|T-13800]] TACO family reconstruction; [[tickets/T-13801-taco-actor-family|T-13801]] actor/table experiments (Done).
 - [[taco-family-results]] — bounded TACO boss transform reconstruction; zero accepted bytes, 497EC one-row and 4A480 three-row near misses (T-13800/T-13801).
 - [[tickets/T-14300-event-families|T-14300]] Remaining EVENT family reconstruction (In Progress).
 - [[tickets/T-14200-main-source-families|T-14200]] MAIN source-family recovery (In Progress).
@@ -395,14 +395,14 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[exhaustive-drafts]] — T-14500 exhaustive game-function drafts and scoring census (In Progress).
 - [[tickets/T-14400-option-menu-families|T-14400]] OPTION menu/state family matching (Done; 6 functions / 5868 literal verified bytes).
 - [[tickets/T-14600-date-draft-repairs|T-14600]] Repair nine DATE draft failures (In Review; all nine compile, no zero comparisons).
-- [[tickets/T-14800-etc-801447b0|T-14800]] ETC func_801447B0: 648 literal linked bytes, ETC SHA1 passes (In Review).
+- [[tickets/T-14800-etc-801447b0|T-14800]] ETC func_801447B0: 648 literal linked bytes, ETC SHA1 passes (Done).
 
 - [[tickets/T-14700-reserved-type-repairs|T-14700]] Reserved aggregate and callback draft repairs (Done; 15/15 compile, no zero candidates, reviewed draft-only archive).
-- [[tickets/T-14900-rpg-near-matches|T-14900]] RPG_BAT motion aggregate match: 1,128 linked bytes, two bounded counter blockers (In Review).
-- [[tickets/T-15100-unaligned-draft-repairs|T-15100]] Nine unaligned aggregate-copy drafts compile; no zero comparisons (In Review).
-- [[tickets/T-15600-fresh-near-matches|T-15600]] RENSYU/SHOUGATU: 1,256 literal linked bytes; RPG NOP gap archived (In Review).
+- [[tickets/T-14900-rpg-near-matches|T-14900]] RPG_BAT motion aggregate match: 1,128 linked bytes, two bounded counter blockers (Done).
+- [[tickets/T-15100-unaligned-draft-repairs|T-15100]] Nine unaligned aggregate-copy drafts compile; no zero comparisons (Done).
+- [[tickets/T-15600-fresh-near-matches|T-15600]] RENSYU/SHOUGATU: 1,256 literal linked bytes; RPG NOP gap archived (Done).
 - [[tickets/T-14700-reserved-type-repairs|T-14700]] Reserved aggregate and callback draft repairs (In Review; 15/15 compile, no zero candidates).
 - [[tickets/T-15200-event-large|T-15200]] Large EVENT dispatcher and reusable types (In Review; independent drafts and type evidence, zero new matching bytes).
 
 - [[tickets/T-15900-remaining-draft-compile-repairs|T-15900]] — Remaining mixed-overlay compile repairs (13 scopes, In Progress).
-- [[tickets/T-15700-taco-taiiku-draft-repairs|T-15700]] All28 TACO/TAIIKU failed drafts now compile; no zeros (In Review).
+- [[tickets/T-15700-taco-taiiku-draft-repairs|T-15700]] All28 TACO/TAIIKU failed drafts now compile; no zeros (Done).

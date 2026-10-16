@@ -15393,3 +15393,7 @@ Measured the ugen temporary count of the 0x44-byte block copy in `func_80140A90`
 ## [2026-10-16] ticket | T-19001 to In Review
 
 [[tickets/T-19001-w3-d-p01]] In Progress to In Review: 0 of 1 functions matched. `func_80140A90` stays a `NON_MATCHING` draft at 33 differing instructions (66 diff lines); comment in `src/ovl/TAIIKU/80140810.c` updated. Clean rebuild 27/27 (`rm -rf build && configure.py && ninja`), `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK. About 50 minutes.
+
+## [2026-10-16] ticket | T-19001 Done
+
+[[tickets/T-19001-w3-d-p01]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 0 of 1 functions matched; `func_80140A90` stays a guarded `NON_MATCHING` draft at 33 differing instructions (66 diff lines). Merge via the wave 3 merge script.
