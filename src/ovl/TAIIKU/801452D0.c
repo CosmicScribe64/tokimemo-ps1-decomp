@@ -232,7 +232,81 @@ void func_80145A78(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80145C28);
+void func_80145C28(void) {
+    s32 i;
+    s32 j; /* declared before p: the spill slot of p and the 0x48 frame depend on it (T-16553) */
+    u8 *p;
+
+    Scroll(0, 0xF, 0, 0xF0, 0x280);
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80044750(0x50B);
+        Fade_In_Init();
+        func_8004284C();
+        break;
+    case 1:
+        if (Fade_In_Main() != 0) {
+            if ((D_8014A3D8[0] == 1) || (D_8014A3D8[1] == 1)) {
+                func_80044750(0x205);
+            } else {
+                func_80044750(0x206);
+            }
+            func_8004284C();
+        }
+        break;
+    case 2:
+        if (func_801485C4() != 0) {
+            func_8004284C();
+        }
+        break;
+    case 3:
+        if (func_80148678() != 0) {
+            func_8004284C();
+        }
+        break;
+    case 4:
+        func_801487B4();
+        p = D_8014A3D8;
+        for (i = 0; i < 4; i++) {
+            if (*p == 1) {
+                func_8013384C(0xB, i & 0xFF);
+            }
+            p++;
+        }
+        func_8004284C();
+        break;
+    case 5:
+        func_80148820();
+        break;
+    case 6:
+        Vblnk_Timer_Init();
+        func_8004284C();
+        break;
+    case 7:
+        if (Vblnk_Timer() >= 0xF1) {
+            Fade_Out_Init();
+            func_8004284C();
+        }
+        break;
+    case 8:
+        if (Fade_Out_Main() != 0) {
+            if (D_8014A3D8[0] == 1) {
+                for (j = 0; j < 13; j++) {
+                    D_800E6280.unk_1BC[j].unk_02 += 5;
+                }
+            } else if (D_8014A3D8[1] == 1) {
+                for (j = 0; j < 13; j++) {
+                    D_800E6280.unk_1BC[j].unk_02 += 3;
+                }
+            }
+            func_80042808();
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 void func_80145EF4(void) {
     s32 i;
