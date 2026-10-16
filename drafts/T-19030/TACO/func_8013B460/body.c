@@ -1,7 +1,7 @@
 s32 func_8013B460(s32 arg0) {
-    s32 pad;
+    s32 pad; /* FAKE: unused word gives the frame home slot of the original; real source unknown. T-19030 */
     POLY_FT4 *p;
-    s16 gray;
+    s16 gray; /* FAKE: folded 0x80 local reserves a home word; real source unknown. T-19030 */
 
     gray = 0x80;
     p = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
