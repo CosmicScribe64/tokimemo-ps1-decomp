@@ -15153,3 +15153,6 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 
 [[tickets/T-16561-taco-types-first-p1]]: the Opus closer matched TACO `func_80133738` (312 bytes) by reading `D_8015E238` as flat words (`&D_8015E238[idx * 2]`, header type now `s32[]`). `func_801472D4` (20 lines) and `func_801471D0` (4 lines) stay guarded; their comments, [[matching-notes]] and [[register-cheatsheet]] record the struct-copy temporary rule and the copy-propagation dead end. Also updated: [[taco-family-results]], [[data/t0018-cases]]. Ticket stays In Review.
 
+## [2026-10-16] ticket | T-16561 Done
+
+[[tickets/T-16561-taco-types-first-p1]] reviewed against `CODING_STANDARDS.md`: three findings (`FAKE` marker position in `func_80147928`, unmarked one-line store pairs in `func_80159878`, a typo in the `func_801472D4` guard comment; stale 8-function counts in ticket and [[index]]), fixed; TACO sha1 OK, headers, globals and prototype checks OK. 9 TACO functions matched (5,924 bytes).

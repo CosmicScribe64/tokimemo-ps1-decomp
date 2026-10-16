@@ -51,8 +51,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
-- [ ] [[tickets/T-16561-taco-types-first-p1|T-16561 Types-first pilot package pt-taco-p1]]
-
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
@@ -360,6 +358,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-1200-fix-conflicting-extern-declarations|T-1200 Fix conflicting extern declarations after batch merges]]
 
 - [ ] [[tickets/T-16560-taco-types-first|T-16560 Types-first pilot: TACO]]
+
+- [ ] [[tickets/T-16561-taco-types-first-p1|T-16561 Types-first pilot package pt-taco-p1]]
 
 %% kanban:settings
 ```

@@ -120,6 +120,7 @@ s32 func_80159878(s32 arg0) {
     sp48.x = 0;
     sp48.z = 0;
     sp50.z = -0x4E20;
+    /* FAKE: each `sp48.y = ..; sp50.x = ..;` pair shares a source line; as1 orders the sh stores by line and only this layout gives the original order. T-16561 */
     switch (arg0) {
     case 0:
     case 2:

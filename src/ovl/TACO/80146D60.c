@@ -99,7 +99,7 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_801471D0);
 #endif
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-16561, 20 differing lines (10 rows); frame and body match (local MATRIX at sp+0x2C, `s32 pad` declared first for the 4 spare bytes, one-line inner `for` keeps the increments in the original order); the ugen temporaries of the block copy are $t7/$t8 against the original $t8/$t9, one temporary short (T-10520, T-18 rows in wiki/data/t0018-cases.md).
+/* NON_MATCHING: T-16561, 20 differing lines (10 rows); frame and body match (local MATRIX at sp+0x2C, `s32 pad` declared first for the 4 spare bytes, one-line inner `for` keeps the increments in the original order); the ugen temporaries of the block copy are $t7/$t8 against the original $t8/$t9, one temporary short (T-10520, rows in wiki/data/t0018-cases.md).
  * T-16561 closer: the struct copy skips one ugen register after its address registers when the last store before it
  * went through a pointer register (the loop stores here), two after a store through $sp or a global, after a call or
  * at function entry; the original has two. Copy, record and loop spellings, labels and no-op blocks do not change it */
@@ -229,7 +229,8 @@ void func_801478F8(s32 arg0, s16 *arg1) {
     p->y = arg1[0];
 }
 
-/* The empty do-while adds a basic block after `base = arg2 + 4`: arg2 then gets an allocated range ($a3: `lw a3,72(sp); addiu a0,a3,4`) as in the original; found by the permuter. FAKE (T-16561): real source unknown, probably an empty macro. */
+/* FAKE: the empty do-while adds a basic block after `base = arg2 + 4`, so arg2 gets an allocated range ($a3: `lw a3,72(sp); addiu a0,a3,4`) as in the original;
+   found by the permuter, real source unknown (probably an empty macro). T-16561 */
 void func_80147928(s32 arg0, s32 arg1, s32 arg2, void *arg3, void *arg4, s32 arg5) {
     u8 *p;
     TcPos *pos;
