@@ -1,6 +1,8 @@
+#define MAIN_API_OVERRIDE_cd_read_sectors /* arg1 is a RAM address: matched as u32 (main_api.h: s32), T-16552 */
 #include "common.h"
 #include "ovl/TAIIKU.h"
 #include "psx_types.h"
+void cd_read_sectors(u8 arg0, u32 arg1, s32 arg2);
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149940);
@@ -154,13 +156,18 @@ void func_80138AA8(void) {
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138AA8);
 #endif
 
-/* NON_MATCHING: T-11640, 30 differing lines: the stack tables sit 4 bytes higher than the original's (the
- * original has 12 bytes above rect and no rounding gap above its spill slot), the loop counter is cleared after
- * the case 0 pointer constants instead of in the branch delay slot, and case 0 shares 0x801F0000 with case 1. */
+/* NON_MATCHING: T-16552, 3 differing lines (was 30, T-11640): stack frame, tables and registers now agree. Left:
+ * as1 puts `move s0,zero` (i = 0 of the first loop) in the delay slot of the `beqz` after the cd_read_sync_status
+ * test; here it fills the slot with the first pointer constant and places the move after two lui. The A[f()] = v
+ * stores go through idx: with the call inside the index IDO reserves a second, unused spill slot and the
+ * tables sit 4 bytes high (T-16552). cd_read_sectors takes its address as u32 here (see the override at the top):
+ * with s32 IDO builds 0x801F8000 of case 0 through a hoisted 0x801F0000 in $s0. p is the buffer address of
+ * case 1. */
 #ifdef NON_MATCHING
 void func_80138DF8(void) {
-    s32 pad; /* FAKE: T-11640, frame slot */
+    s32 p;
     s32 i;
+    s32 idx;
     RECT rect;
     TaiWords11 tblA;
     TaiWords11 tblB;
@@ -170,8 +177,10 @@ void func_80138DF8(void) {
     switch (D_800E6280.unk_110A) {
     case 0:
         if (cd_read_sync_status() & 1) {
-            for (i = 0; i < 18; i++) {
-                D_800E6280.unk_1228[search_load_tpage_buf_lock(D_80149DAC[i], 1)] = i + 0x80000100;
+            i = 0;
+            for (; i < 18; i++) {
+                idx = search_load_tpage_buf_lock(D_80149DAC[i], 1);
+                D_800E6280.unk_1228[idx] = i + 0x80000100;
                 D_80149DAC[i] = i + 0x80000100;
             }
             rect.x = 0x300;
@@ -181,7 +190,8 @@ void func_80138DF8(void) {
             func_8009C884(&rect, (void *)0x801BB000);
             D_800E6280.unk_1228[44] = 8;
             for (i = 0; i < 5; i++) {
-                D_800E6280.unk_1228[search_load_tpage_buf_lock(D_80149DF4[i], 1)] = i + 0x80000200;
+                idx = search_load_tpage_buf_lock(D_80149DF4[i], 1);
+                D_800E6280.unk_1228[idx] = i + 0x80000200;
                 D_80149DF4[i] = i + 0x80000200;
             }
             cd_read_sectors(3, 0x801F8000, 0xBE2A);
@@ -197,8 +207,9 @@ void func_80138DF8(void) {
                 func_8014045C();
                 func_801404DC();
                 func_8014064C();
-                func_801406A8(0x801F8000);
-                func_80140738(0x801F8000, 0);
+                p = 0x801F8000;
+                func_801406A8(p);
+                func_80140738(p, 0);
                 func_8004284C();
             }
         }

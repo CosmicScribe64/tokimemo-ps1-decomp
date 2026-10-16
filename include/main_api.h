@@ -1854,7 +1854,9 @@ void func_800462BC(u8 arg0, s32 arg1, s32 *arg2);
 #ifndef MAIN_API_OVERRIDE_func_800462C8
 void func_800462C8(u8 arg0, s32 arg1, s32 arg2);
 #endif
+#ifndef MAIN_API_OVERRIDE_cd_read_sectors
 void cd_read_sectors(u8 arg0, s32 arg1, s32 arg2);
+#endif
 s32 file_checksum_ok();
 s32 func_80046500(void);
 void func_800469F4();
