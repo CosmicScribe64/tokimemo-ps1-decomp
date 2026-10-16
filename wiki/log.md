@@ -15505,3 +15505,6 @@ Code review of w3-d-p03 against `CODING_STANDARDS.md`: no open findings; two fix
 
 ## [2026-10-16] build | T-19009 final checks
 Clean build 27/27 (all unit sha1 OK, TACO `1419e93c...`), `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK on branch w3-d-p09. See [[tickets/T-19009-w3-d-p09]].
+
+## [2026-10-16] ticket | T-19009 Done
+[[tickets/T-19009-w3-d-p09]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 3 of 4 functions matched (1,956 bytes): TACO `func_801428DC`, `func_80144430` and `func_80142AF0`, all plain C with two marked FAKE locals; `func_80144094` stays `INCLUDE_ASM` with its draft archived. Rebuild 27/27 OK on the branch. Merge via the wave 3 merge script.
