@@ -158,6 +158,8 @@ void func_801449A0(void);
 void func_80144B40(void);
 void func_80144C70(void);
 extern u8 D_8014A4F4;
+extern s32 D_8014A4F8[12]; /* tpage buffer ids, loaded in func_80145640. T-16553 */
+extern s32 D_8014A528[9];
 extern u8 D_8014A1FC;
 void func_80146B8C(void);
 void func_801488F0(s16 *);
