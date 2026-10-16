@@ -15748,3 +15748,7 @@ Opus closer pass on [[tickets/T-19013-w3-d-p13]] (branch w3-d-p13): no new match
 ## [2026-10-16] ticket | T-19013 Done
 
 [[tickets/T-19013-w3-d-p13]] In Review to Done after the code review: wave 3 package w3-d-p13 (TACO `src/ovl/TACO/801480B0.c`), 2 of 3 functions matched (1,336 bytes: `func_80148184` 388, `func_801487A4` 948, both plain C), `func_801484E4` guarded at 6 rows (counter web, FAKE `pad[2]` and FAKE volatile final increment, ticketed). No findings in code; two stale wiki lines (index, [[matching-notes]]) fixed. TACO SHA1 OK, headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-19018 In Progress
+
+[[tickets/T-19018-w3-d-p18]] created and started: wave 3 package w3-d-p18, TACO `src/ovl/TACO/8013D1E0.c` and `src/ovl/TACO/80153AA0.c`, three functions from the T-15700/T-16100 drafts. Branch w3-d-p18, base w2-good.
