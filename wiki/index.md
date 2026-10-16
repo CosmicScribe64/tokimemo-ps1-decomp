@@ -35,6 +35,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 - [[tickets/T-20000-first-contribution|T-20000]] Scoped work queues bypass whole-tree cache validation; 52 tests pass, identical real-query output at 53.402 s before / 5.312 s after on Windows/WSL (In Review).
 - [[tickets/T-19032-w3-d-p32|T-19032]] Wave 3 package w3-d-p32: TAIIKU `80141280.c`, 1 of 1 matched (`func_80141280`, 1,764 B intro state machine: auto-array initialiser as `.data` island, rolled 16-record zero loop with a reassigned counter, two FAKE views for a masked byte test and the nested selector in `$v1`) (Done).
+- [[tickets/T-11850-tt-batch-11|T-11850]] TT batch 11: one long Opus run per file group (Done, PR #35 merged; 12 of 15 matched, TT 274/303 functions, 82.7% of bytes).
 - [[tickets/T-11840-tt-batch-10|T-11840]] TT batch 10: one long Opus run per large function (Done, PR #34 merged; 10 of 12 matched, TT 262/303 functions, 78.6% of bytes).
 
 - [[tickets/T-19025-w3-d-p25|T-19025]] Wave 3 package w3-d-p25: TACO `80132220.c`, 4 of 4 matched (`func_8013356C`, `func_801328B0` 1,848 B with FAKE pads and a pointer local; closer pass: `func_8013240C` as K&R `s32` with no `return`, `func_80132FE8` with a live `btn` local and one FAKE empty test) (Done)
@@ -70,6 +71,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-18000-types-first-shugaku|T-18000]] Types-first: SHUGAKU: callback tables in `SHUGAKU.h`, 25 redrafts (9 better than the census), 5 matches / 2,292 bytes, packages T-18001..T-18004 (Done).
 - [[tickets/T-17700-types-first-geko|T-17700]] Types-first: GEKO: stack-copied tables typed in `GEKO.h`, 35 redrafts (14 better than the census), 1 match / 484 bytes, 5 guarded drafts, packages T-17701..T-17708 (Done).
 - [[tickets/T-19005-w3-d-p05|T-19005]] Wave 3 package w3-d-p05: OLH `80135AC0.c`, `80132000.c`, `func_80135B8C` (sibling clone) and `func_80132114` (chain through a local) both matched, 680 B (Done).
+- [[tickets/T-17206-w3-date-p06|T-17206]] Wave 3 package w3-date-p06: DATE `8014B1F0.c`, `80156600.c`, both functions matched (1,136 B: `func_80157698`, `func_8014C20C`; callee arity, constant webs, `D_800CA154` as `u16`) (Done).
 - [[tickets/T-19010-w3-d-p10|T-19010]] Wave 3 package w3-d-p10: TAIIKU `80142240.c` (game B), 4 of 5 functions matched (2,752 B: `func_80144464`, `func_80143814`, `func_80142FB8`, `func_80144E54`; three FAKE dead statements), `func_8014357C` guarded at 34 lines (Done).
 - [[tickets/T-19006-w3-d-p06|T-19006]] Wave 3 package w3-d-p06: TACO `8013B990.c`, all 5 functions matched (2,636 B), branch-over guard and `s32`-without-return idioms (Done).
 - [[tickets/T-19001-w3-d-p01|T-19001]] Wave 3 package w3-d-p01: TAIIKU `80140810.c`, `func_80140A90` stays guarded (33 instructions); block-copy temporary rule measured, looks like a ugen difference (Done).

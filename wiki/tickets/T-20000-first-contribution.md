@@ -20,11 +20,11 @@ Make file-scoped work-queue queries usable on slow bind mounts by avoiding valid
 - [x] Real scoped query output is identical before/after; measured 53.402 s before and 5.312 s after on this Windows/WSL bind mount.
 - [x] Untouched game-source baseline: all 27 binaries SHA1 OK, symbols/headers/globals OK.
 - [x] Local review against CODING_STANDARDS.md; awaiting maintainer review.
-- [ ] Submit the pull request with the communication question.
+- [x] Submit the pull request with the communication question: https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/36.
 
 ## Notes
 
-Started from upstream main a4c75a6373aadeb2e2b67634510dc5ce4d6bdc4a on branch codex/first-contribution. Windows host with an existing Ubuntu-24.04 WSL Docker daemon; no host toolchain or dependency installation. The Docker image is being built from tools/Dockerfile. The game image stays under gitignored game/.
+Started from upstream main a4c75a6373aadeb2e2b67634510dc5ce4d6bdc4a on branch codex/first-contribution. Windows host with an existing Ubuntu-24.04 WSL Docker daemon; no host toolchain or dependency installation. The Docker image was built from tools/Dockerfile. The game image stays under gitignored game/.
 
 The first bounded SHOUGATU/DATE2 selector probes did not match and were kept under gitignored build/T-20000/. No production C or header changed. During candidate selection, even a scoped queue call spent substantial time before its first progress message: Cache.__init__ computed tree_signature before the --files scope was considered. The fix computes the scope first and disables the whole-tree cache for a narrow load. This deliberately rereads the requested functions; it neither trusts an unvalidated full cache nor rewrites that cache with partial results.
 
@@ -35,3 +35,5 @@ Verification: tools/docker.sh python3 tools/test_queue.py (52 tests); the two sc
 ## Comments
 
 2026-10-16 local review against CODING_STANDARDS.md: no findings. Python-only CLI change; no compiler passes, game C, headers, configs or generated data changed. Tests cover missing/existing cache, unchanged output, edited asm visibility, preservation of cache contents, and global-mode validation. No unverified match claims. Ticket remains In Review for upstream review.
+
+PR #36 submitted; upstream main 639693d2 merged into the contribution branch. The append-only wiki log conflict was resolved by retaining both sides. Before integration, ninja had no work and sync_protos --check-branch reported 0 new / 15 known disagreements.

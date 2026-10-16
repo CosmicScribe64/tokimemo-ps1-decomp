@@ -25,7 +25,10 @@ void func_8013A040(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-11810, 16 lines: the 0x40 argument of the t+0xC handler call is rematerialized (li a0) where the original reuses the hoisted 0x40 in a0, and the pad word *(u16 *)(g + 0x14) is a uopt CSE in v0 where the original keeps a ugen temp. */
+/* NON_MATCHING: T-11850, 2 lines: the 0x40 argument of the t+0xC handler call is rematerialized (li a0) where the original
+ * reuses the dispatch's hoisted 0x40 in a0 (load delay slot nop). IDO 5.3 never joins a call-argument constant with a
+ * hoisted constant range in scratch tests (also not with a use of 0x40 in the call's own block, typed/K&R/u16/u32
+ * arguments, constant locals, an if-chain with a variable). The pad word is fixed by the u32 offset local o. */
 void func_8013A0DC(void) {
     u8 *g;
     u8 *s;
@@ -33,7 +36,9 @@ void func_8013A0DC(void) {
     u8 *t;
     u8 *q;
     u8 *e;
+    u32 o; /* FAKE: second spelling of the pad offset keeps the pad word in a ugen temp (t2) instead of a uopt CSE. T-11850 */
 
+    o = 0x14;
     g = D_80158A60;
     c = D_80158A6C;
     t = (u8 *)D_80158A70;
@@ -110,7 +115,7 @@ void func_8013A0DC(void) {
         }
         break;
     }
-    if (s[0x22] != 0 && g[0x52] == 0xFF && ((*(u16 *)(g + 0x14) & 0x800) || (*(u16 *)(g + 0x14) & 0x20))) {
+    if (s[0x22] != 0 && g[0x52] == 0xFF && ((*(u16 *)(g + o) & 0x800) || (*(u16 *)(g + 0x14) & 0x20))) {
         *(s16 *)s = 1;
         *(s16 *)(s + 6) = 0;
         *(s16 *)(s + 4) = 0;

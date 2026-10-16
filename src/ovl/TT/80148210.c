@@ -118,12 +118,10 @@ void func_80148714(u16 arg0, s32 arg1) {
     p[7] = arg0 % 10;
 }
 
-/* NON_MATCHING: T-11560, 9 lines (registers only): $v0/$v1 swapped; the original keeps the pointer in $v1 and the constant 3 in $v0, uopt colours the unconstrained global range first (bit order). volatile makes uopt reload p[5] in the second test as the original does (plain u8 is CSEd, 18 lines). Tried: a local for 3, a result local, else-if, switch. */
-#ifdef NON_MATCHING
 s32 func_80148764(void) {
-    volatile u8 *p; /* FAKE: volatile forces the p[5] reload. T-11560 */
+    u8 *p;
 
-    p = D_801569E8;
+    p = D_801569E8[0];
     if (p[5] == 0 && p[6] == 0) {
         return 1;
     }
@@ -132,6 +130,3 @@ s32 func_80148764(void) {
     }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148210", func_80148764);
-#endif
