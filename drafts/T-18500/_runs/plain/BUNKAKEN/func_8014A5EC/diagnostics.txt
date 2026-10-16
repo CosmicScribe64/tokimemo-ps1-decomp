@@ -1,0 +1,13 @@
+python3 failed:
+ ------------------^
+cfe: Warning 681: drafts/T-18500/_runs/plain/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c, line 3331: '&' before array or function; ignored
+     *(M2cBlock128 *)(&sp28) = *(M2cBlock128 *)(&D_8015633C);
+ ---------------------^
+cfe: Warning 681: drafts/T-18500/_runs/plain/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c, line 3332: '&' before array or function; ignored
+     *(u8 *)((unsigned char *)(&sp28 + 0x120) + (8)) = (u8) *(u8 *)((unsigned char *)(&D_8015633C.text[2][2][0x18]) + (8));
+ ------------------------------^
+cfe: Warning 681: drafts/T-18500/_runs/plain/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c, line 3333: '&' before array or function; ignored
+     func_800AE0F0(D_800CA25C, (&sp28 + (D_800E62BE * 0x63) + (D_80122CDC * 0x21)) - 0x24BD);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18500/_runs/plain/BUNKAKEN/func_8014A5EC/work -o drafts/T-18500/_runs/plain/BUNKAKEN/func_8014A5EC/work/guarded.o /tmp/asm_processorv7g5kj3o/preprocessed_7f3aea0341ce49c0bba81b1f7fb0af5b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibha53einv/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18500/_runs/plain/BUNKAKEN/func_8014A5EC/work/guarded.o drafts/T-18500/_runs/plain/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c

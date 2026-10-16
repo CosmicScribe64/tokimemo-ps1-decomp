@@ -1,0 +1,8 @@
+{
+ "base": "",
+ "files": {
+  "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+  "include/main_api.h": "f85487790c8f5b6f619918520062461de5f39ff93dcc832f36db2c3d54be037d",
+  "include/ovl/BUNKAKEN.h": "de16d9cc53cd7fbd72d5ca34813e4b395c24b6d5c997d2438184d07e9b692c9e"
+ }
+}

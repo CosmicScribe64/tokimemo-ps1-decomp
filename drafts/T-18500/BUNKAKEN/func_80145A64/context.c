@@ -1,0 +1,184 @@
+#include "common.h"
+#include "ovl/BUNKAKEN.h"
+
+INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80144F70", func_80144F70);
+
+void func_80145500(void) {
+    if (D_800E6280.unk_110A != 0) {
+        D_800E6280.unk_110A = 0;
+        D_80122EC0 += 1;
+    }
+}
+
+void func_80145530(void) {
+    D_800E6280.unk_1109 = 0;
+    D_800E6280.unk_110A = 0;
+    D_80122EC0 = 8;
+}
+
+INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80144F70", func_80145550);
+
+void func_80145844(void) {
+    k_reset(0);
+    switch (D_80122EB8) {
+    case 0:
+        switch (D_800E6280.unk_03E) {
+        case 0x5F:
+            func_8006612C((s32) "詩集展示");
+            break;
+        case 0x60:
+            func_8006612C((s32) "文集展示");
+            break;
+        case 0x61:
+            func_8006612C((s32) "弁論大会");
+            break;
+        }
+        break;
+    case 1:
+        func_8006612C((s32) "演劇部公演");
+        break;
+    case 2:
+        func_8006612C((s32) "実験ショー");
+        break;
+    case 3:
+        switch (D_800E6280.unk_03E) {
+        case 0x5F:
+            func_8006612C((s32) "パソコン占い");
+            break;
+        case 0x60:
+            func_8006612C((s32) "ゲーム");
+            break;
+        case 0x61:
+            func_8006612C((s32) "実験ショー");
+            break;
+        }
+        break;
+    case 4:
+        switch (D_800E6280.unk_03E) {
+        case 0x5F:
+            func_8006612C((s32) "似顔絵");
+            break;
+        case 0x60:
+            func_8006612C((s32) "公開デッサン");
+            break;
+        case 0x61:
+            func_8006612C((s32) "油絵展示");
+            break;
+        }
+        break;
+    case 5:
+        func_8006612C((s32) "演奏会");
+        break;
+    }
+    k_disp_start(1);
+}
+
+INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/80144F70.rodata", D_80154B84);
+
+void func_801459FC(void) {
+    k_reset(0);
+    func_8006612C(&D_80154B84);
+    k_disp_start(1);
+}
+
+INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/80144F70.rodata", D_80154B8C);
+
+void func_80145A30(void) {
+    k_reset(0);
+    func_8006612C(&D_80154B8C);
+    func_80065F34(0);
+}
+
+void func_80145A64(void) {
+    GameState *g = &D_800E6280;
+    u8 sp2B;
+    u8 temp_t8;
+    u8 var_a1;
+
+    if (func_8008667C(D_80122EBC) != 4) {
+        if (D_80122EA4 != D_80122EBC) {
+            switch (D_80122EB8) {
+            case 0:
+                if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 0) && (D_80122EBC == 0)) {
+                    var_a1 = 3;
+                } else {
+                    var_a1 = 4;
+                    if ((((u8) g->unk_1BC[1].unk_0C.b[2] >> 4) == 0) && (D_80122EBC == 1)) {
+                        var_a1 = 3;
+                    }
+                }
+block_45:
+                sp2B = var_a1;
+                break;
+            case 1:
+                if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 1) && (D_80122EBC == 0)) {
+                    var_a1 = 7;
+                } else {
+                    var_a1 = 8;
+                    if ((((u8) g->unk_1BC[1].unk_0C.b[2] >> 4) == 1) && (D_80122EBC == 1)) {
+                        var_a1 = 7;
+                    }
+                }
+                goto block_45;
+            case 2:
+                if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 2) && (D_80122EBC == 0)) {
+                    var_a1 = 0xB;
+                } else {
+                    var_a1 = 0xC;
+                    if ((((u8) g->unk_1BC[2].unk_0C.b[2] >> 4) == 2) && (D_80122EBC == 2)) {
+                        var_a1 = 0xB;
+                    }
+                }
+                goto block_45;
+            case 3:
+                if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 3) && (D_80122EBC == 0)) {
+                    var_a1 = 0xF;
+                } else {
+                    var_a1 = 0x10;
+                    if ((((u8) g->unk_1BC[2].unk_0C.b[2] >> 4) == 3) && (D_80122EBC == 2)) {
+                        var_a1 = 0xF;
+                    }
+                }
+                goto block_45;
+            case 4:
+                if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 4) && (D_80122EBC == 0)) {
+                    var_a1 = 0x13;
+                } else {
+                    var_a1 = 0x14;
+                    if ((((u8) g->unk_1BC[3].unk_0C.b[2] >> 4) == 4) && (D_80122EBC == 3)) {
+                        var_a1 = 0x13;
+                    }
+                }
+                goto block_45;
+            case 5:
+                if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 5) && (D_80122EBC == 0)) {
+                    var_a1 = 0x17;
+                } else {
+                    var_a1 = 0x18;
+                    if ((((u8) g->unk_1BC[3].unk_0C.b[2] >> 4) == 5) && (D_80122EBC == 3)) {
+                        var_a1 = 0x17;
+                    }
+                }
+                goto block_45;
+            }
+            if (D_80122EBC == 0xB) {
+                g->unk_75E[g->unk_F5E].unk_00 = 0;
+                g->unk_75E[g->unk_F5E].unk_03 = get_g_zyotai_h(0, sp2B);
+            } else {
+                g->unk_75E[g->unk_F5E].unk_00 = (u8) D_80122EBC;
+                g->unk_75E[g->unk_F5E].unk_03 = get_g_zyotai_h(D_80122EBC, sp2B);
+            }
+            g->unk_75E[g->unk_F5E].unk_02 = 0x14;
+            g->unk_75E[g->unk_F5E].unk_01 = sp2B;
+            g->unk_75E[g->unk_F5E].unk_04 = g->unk_03E;
+            g->unk_75E[g->unk_F5E].unk_05 = g->unk_03F;
+            g->unk_75E[g->unk_F5E].unk_06 = g->unk_040;
+            g->unk_75E[g->unk_F5E].unk_07 = g->unk_041;
+            temp_t8 = g->unk_F5E + 1;
+            g->unk_F5E = temp_t8;
+            if ((u32) (temp_t8 & 0xFF) >= 0xFFU) {
+                g->unk_F5E = 0xFE;
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+python3 failed:
+ -----------------------^
+cfe: Warning 681: drafts/T-18500/_runs/plain/BUNKAKEN/func_80145550/work/guarded.o.sjis.c, line 2842: '&' before array or function; ignored
+             var_v0_2 = *(&spA4 + (D_80122EBC * 6) + D_80122EB8);
+ -------------------------^
+cfe: Warning 681: drafts/T-18500/_runs/plain/BUNKAKEN/func_80145550/work/guarded.o.sjis.c, line 2845: '&' before array or function; ignored
+             var_v0_2 = *(&sp60 + (D_80122EBC * 6) + D_80122EB8);
+ -------------------------^
+cfe: Warning 681: drafts/T-18500/_runs/plain/BUNKAKEN/func_80145550/work/guarded.o.sjis.c, line 2848: '&' before array or function; ignored
+             var_v0_2 = *(&sp1C + (D_80122EBC * 6) + D_80122EB8);
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18500/_runs/plain/BUNKAKEN/func_80145550/work -o drafts/T-18500/_runs/plain/BUNKAKEN/func_80145550/work/guarded.o /tmp/asm_processorbg0h49r8/preprocessed_448bf4fde24549caa0e163fd28044baf.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibk0jk11u5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18500/_runs/plain/BUNKAKEN/func_80145550/work/guarded.o drafts/T-18500/_runs/plain/BUNKAKEN/func_80145550/work/guarded.o.sjis.c
