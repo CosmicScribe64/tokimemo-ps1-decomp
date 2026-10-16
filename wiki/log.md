@@ -15795,3 +15795,7 @@ Opened [[tickets/T-18200-types-first-en_nichi]] (In Progress) under [[tickets/T-
 ## [2026-10-16] ticket | T-19015 Done
 
 [[tickets/T-19015-w3-d-p15]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues (match count still 1 of 5 in the index, the ticket and the [[matching-notes]] intro after the closer pass; no source comment for the mixed actor addressing in `func_801585D0`), both fixed. 2 of 5 functions matched (1,252 bytes): TACO `func_801585D0` and `func_801471D0` in plain C; `func_801472D4` and `func_80138B2C` stay guarded, `func_80147B24` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19019 In Progress
+
+[[tickets/T-19019-w3-d-p19]] created and In Progress: Wave 3 package w3-d-p19, TACO `src/ovl/TACO/80148FE0.c` (`func_80149538`, `func_801497EC`). Worktree `w3-d-p19` from `w2-good`.
