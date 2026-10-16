@@ -16313,3 +16313,7 @@ GYOZI func_8013506C now passes actual default funcdiff --resolve: 172 linked byt
 ## [2026-10-16] build | T-20001 final verification and PR #37
 
 After integrating upstream main 9e74085b, actual default funcdiff again proves the 172 GYOZI func_8013506C linked bytes; the 8-step incremental build passes GYOZI and DATE SHA1. Explicit binary verification passes 27/27; sync_protos --check-branch passes with 0 new / 15 known disagreements. Opened PR #37. [[tickets/T-20001-gyozi-helper]] remains In Review for upstream review; no generated files or game data committed.
+
+## [2026-10-16] build | T-20001 PR #37 refreshed and reverified
+
+Integrated upstream main 81095a46, preserving all sides of the shared index, append-only log and matching-note conflicts. Actual default linked funcdiff still matches GYOZI func_8013506C (172 bytes); the full 490-step rebuild and explicit binary SHA1 verifier pass 27/27. Production GYOZI code/header are unchanged from the submitted match. [[tickets/T-20001-gyozi-helper]] remains In Review; GitHub reports the updated PR mergeable.
