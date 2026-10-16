@@ -15872,3 +15872,6 @@ Created [[tickets/T-18700-types-first-bunkasai]] (branch `w3-bunkasai-types` fro
 
 [[tickets/T-18700-types-first-bunkasai]] In Review to Done after code review against `CODING_STANDARDS.md`: one finding (wrong byte counts in `drafts/T-18700/README.md`), fixed. 2 functions matched (`func_80147F8C`, `func_8015AF90`; 2,376 bytes), no FAKE; BUNKASAI sha1, header, globals and prototype checks pass. Card moved to Done.
 
+
+## [2026-10-16] ticket | T-19022 In Progress
+[[tickets/T-19022-w3-d-p22]] created and In Progress: Wave 3 package w3-d-p22, TEL `func_80134FE4` and `func_80136724` in `src/ovl/TEL/80132000.c`, worktree `w3-d-p22`.
