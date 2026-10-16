@@ -78,9 +78,6 @@ extern s32 D_8014A148;
 extern u32 D_8014A14C;
 extern s32 D_801491E8;
 extern s32 D_8014A3D4;
-extern u32 D_8014A3F0;
-extern s32 D_8014A3F4;
-extern s32 D_8014A3F8;
 extern s32 D_8014A370;
 extern s32 D_8014A374;
 extern s32 D_8014A378;
@@ -112,7 +109,6 @@ extern s32 D_8014A3B0;
 extern s32 D_8014A3B4;
 extern s32 D_8014A3B8;
 
-extern u8 D_8014A454[];
 extern s32 D_80149940;
 typedef struct TaiikuPair {
     /* 0x0 */ s16 unk0;
@@ -189,11 +185,8 @@ void func_8013C978(void);
 
 extern u8 D_8014A3C4;
 extern s32 D_8014A3D0;
-extern u32 D_8014A3EC;
-extern u8 D_8014A460;
 extern s32 D_8014A3E0;
 extern s32 D_8014A3DC;
-extern s16 D_8014A3FE;
 void func_80146C20(void);
 extern u8 D_8014A3D8[];
 /* Four s16 values added to the D_8011ECD0 records (func_8014038C copies them to a local). */
@@ -300,17 +293,23 @@ typedef union TaiikuPosition {
     /* 0x00 */ s32 w;
     /* 0x00 */ s16 h[2];
 } TaiikuPosition; /* size 0x04; word at 0x8014A3FC, signed high half at +2. T-9570 */
+/* Game C runner records (801452D0.c): D_8014A3E4 is the player, D_8014A400[3] the three other
+ * runners, two objects: func_801482BC indexes D_8014A400 by runner - 1 and the loops of
+ * func_801470A0/func_80147120 by i; written as one 4-element array they compile differently.
+ * T-9570, T-16550. */
 typedef struct TaiikuController {
     /* 0x00 */ u8 unk_00;
-    /* 0x01 */ u8 pad_01[3];
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u16 unk_02;
     /* 0x04 */ u32 unk_04;
     /* 0x08 */ u32 unk_08;
     /* 0x0C */ u32 unk_0C;
     /* 0x10 */ s32 unk_10;
     /* 0x14 */ s32 unk_14;
     /* 0x18 */ TaiikuPosition position;
-} TaiikuController; /* size 0x1C; extends TkCnt through the fixed-point position. T-9570 */
+} TaiikuController; /* size 0x1C */
 extern TaiikuController D_8014A3E4;
+extern TaiikuController D_8014A400[3];
 typedef struct TaiikuScene44 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
@@ -414,6 +413,7 @@ void func_80144768(void);
 
 #ifndef OVL_TAIIKU_SLOT_T10020
 #define OVL_TAIIKU_SLOT_T10020
+/* Game C runner sprite records D_8014A454[4], one per runner of D_8014A3E4 (T-10020, T-10850, T-16550). */
 typedef struct TaiikuSlot1C {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;
@@ -422,13 +422,15 @@ typedef struct TaiikuSlot1C {
     /* 0x08 */ s32 unk_08;
     /* 0x0C */ u8 unk_0C;
     /* 0x0D */ u8 unk_0D;
-    /* 0x0E */ u8 pad_0E[6];
+    /* 0x0E */ u8 unk_0E;
+    /* 0x0F */ u8 unk_0F;
+    /* 0x10 */ u8 pad_10[4];
     /* 0x14 */ u16 unk_14;
     /* 0x16 */ u16 unk_16;
-    /* 0x18 */ u8 pad_18[4];
-} TaiikuSlot1C; /* size 0x1C; D_8014A454 record stride, T-10020. */
-/* Three 0x1C controller records; byte view retained for existing users. */
-extern u8 D_8014A400[];
+    /* 0x18 */ u16 unk_18;
+    /* 0x1A */ u8 pad_1A[2];
+} TaiikuSlot1C; /* size 0x1C */
+extern TaiikuSlot1C D_8014A454[4];
 #endif
 
 #ifndef OVL_TAIIKU_T10010_SCROLL_POSITION
@@ -560,25 +562,6 @@ extern s32 D_80149960;
 
 #ifndef OVL_TAIIKU_T10850_TYPES
 #define OVL_TAIIKU_T10850_TYPES
-/* T-10850: clock fields updated by func_8014666C. */
-typedef struct TaiikuTickController {
-    /* 0x00 */ u8 pad_00[2];
-    /* 0x02 */ u16 unk_02;
-    /* 0x04 */ u32 unk_04;
-    /* 0x08 */ u32 unk_08;
-    /* 0x0C */ u32 unk_0C;
-} TaiikuTickController; /* size 0x10 */
-typedef struct TaiikuTick1C {
-    /* 0x00 */ u8 pad_00[0xD];
-    /* 0x0D */ u8 unk_0D;
-    /* 0x0E */ u8 pad_0E;
-    /* 0x0F */ u8 unk_0F;
-    /* 0x10 */ u8 pad_10[4];
-    /* 0x14 */ u16 unk_14;
-    /* 0x16 */ u16 unk_16;
-    /* 0x18 */ u16 unk_18;
-    /* 0x1A */ u8 pad_1A[2];
-} TaiikuTick1C; /* size 0x1C */
 
 /* T-10850: stack copies in func_80147B14, two 0x14 and two 0x10 byte tables. */
 typedef struct TaiikuHalf10 {

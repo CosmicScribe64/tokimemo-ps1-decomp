@@ -12,8 +12,8 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3D8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3DC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3E0);
 TaiikuController D_8014A3E4 = { 0 };
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A400);
-u8 D_8014A454[0x70] = { 0 };
+TaiikuController D_8014A400[3] = { 0 };
+TaiikuSlot1C D_8014A454[4] = { 0 };
 
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A4C4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A4D4);
@@ -50,16 +50,6 @@ typedef struct {
     s32 v[3];
 } Lim3; /* size 0xC */
 
-typedef struct Tk1C {
-    /* 0x00 */ u8 unk_00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 pad02[0xA];
-    /* 0x0C */ u32 unk_0C;
-    /* 0x10 */ s32 unk_10;
-    /* 0x14 */ s32 unk_14;
-    /* 0x18 */ s32 unk_18;
-} Tk1C; /* size 0x1C */
-
 typedef struct TkPl {
     /* 0x00 */ u8 pad0[2];
     /* 0x02 */ s16 unk_02;
@@ -75,9 +65,6 @@ typedef struct TkPl {
 } TkPl; /* size 0x1C */
 extern Lim3 D_8014A5FC;
 extern Lim3 D_8014A608;
-extern u8 D_8014A401;
-extern u8 D_8014A41D;
-extern u8 D_8014A439;
 
 void func_801452D0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -182,42 +169,42 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146338);
 /* NON_MATCHING: T-10850, 4 differing listing lines; regdiff evidence in the ticket scratch. */
 #ifdef NON_MATCHING
 s32 func_8014666C(void) {
-    TaiikuTickController *controller;
+    TaiikuController *controller;
     TaiikuController *work;
     TaiikuController *end;
 
-    controller = (TaiikuTickController *)&D_8014A3E4;
+    controller = &D_8014A3E4;
     controller->unk_0C++;
     controller->unk_08++;
     controller->unk_04++;
     controller->unk_02++;
-    end = (TaiikuController *)D_8014A454;
-    work = (TaiikuController *)D_8014A400;
+    end = &D_8014A400[3];
+    work = D_8014A400;
     do {
         work[0].unk_0C++;
         work[0].unk_04++;
         work++;
     } while (work < end);
-    ((TaiikuTick1C *)D_8014A454)[0].unk_18++;
-    ((TaiikuTick1C *)D_8014A454)[0].unk_14++;
-    ((TaiikuTick1C *)D_8014A454)[0].unk_16++;
-    ((TaiikuTick1C *)D_8014A454)[0].unk_0D++;
-    ((TaiikuTick1C *)D_8014A454)[0].unk_0F++;
-    ((TaiikuTick1C *)D_8014A454)[1].unk_18++;
-    ((TaiikuTick1C *)D_8014A454)[1].unk_14++;
-    ((TaiikuTick1C *)D_8014A454)[1].unk_16++;
-    ((TaiikuTick1C *)D_8014A454)[1].unk_0D++;
-    ((TaiikuTick1C *)D_8014A454)[1].unk_0F++;
-    ((TaiikuTick1C *)D_8014A454)[2].unk_18++;
-    ((TaiikuTick1C *)D_8014A454)[2].unk_14++;
-    ((TaiikuTick1C *)D_8014A454)[2].unk_16++;
-    ((TaiikuTick1C *)D_8014A454)[2].unk_0D++;
-    ((TaiikuTick1C *)D_8014A454)[2].unk_0F++;
-    ((TaiikuTick1C *)D_8014A454)[3].unk_18++;
-    ((TaiikuTick1C *)D_8014A454)[3].unk_14++;
-    ((TaiikuTick1C *)D_8014A454)[3].unk_16++;
-    ((TaiikuTick1C *)D_8014A454)[3].unk_0D++;
-    ((TaiikuTick1C *)D_8014A454)[3].unk_0F++;
+    D_8014A454[0].unk_18++;
+    D_8014A454[0].unk_14++;
+    D_8014A454[0].unk_16++;
+    D_8014A454[0].unk_0D++;
+    D_8014A454[0].unk_0F++;
+    D_8014A454[1].unk_18++;
+    D_8014A454[1].unk_14++;
+    D_8014A454[1].unk_16++;
+    D_8014A454[1].unk_0D++;
+    D_8014A454[1].unk_0F++;
+    D_8014A454[2].unk_18++;
+    D_8014A454[2].unk_14++;
+    D_8014A454[2].unk_16++;
+    D_8014A454[2].unk_0D++;
+    D_8014A454[2].unk_0F++;
+    D_8014A454[3].unk_18++;
+    D_8014A454[3].unk_14++;
+    D_8014A454[3].unk_16++;
+    D_8014A454[3].unk_0D++;
+    D_8014A454[3].unk_0F++;
 }
 #else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_8014666C);
@@ -231,44 +218,44 @@ void func_8014684C(void) {
 }
 
 void func_80146884(void) {
-    if (D_8014A460 != 0) {
-        D_8014A3F4 = -0x300;
+    if (D_8014A454[0].unk_0C != 0) {
+        D_8014A3E4.unk_10 = -0x300;
         return;
     }
     if (D_800E6280.unk_F88 & 0x20) {
         D_8014A3C4 = 1;
         return;
     }
-    if (D_8014A3EC >= 0x10) {
+    if (D_8014A3E4.unk_08 >= 0x10) {
         if (D_8014A3C4 != 0) {
-            if (D_8014A3F8 < 0) {
-                D_8014A3F8 = 0;
+            if (D_8014A3E4.unk_14 < 0) {
+                D_8014A3E4.unk_14 = 0;
             }
-            D_8014A3F4 = D_8014A3D0;
+            D_8014A3E4.unk_10 = D_8014A3D0;
         } else {
-            D_8014A3F4 = -0x300;
+            D_8014A3E4.unk_10 = -0x300;
         }
-        D_8014A3EC = 0;
+        D_8014A3E4.unk_08 = 0;
         D_8014A3C4 = 0;
     }
 }
 
 void func_8014692C(void) {
-    if ((u32)D_8014A3F0 >= 0xB) {
-        D_8014A3F8 += D_8014A3F4;
-        if (D_8014A3F8 < -0x10000) {
-            D_8014A3F8 = -0x10000;
+    if ((u32)D_8014A3E4.unk_0C >= 0xB) {
+        D_8014A3E4.unk_14 += D_8014A3E4.unk_10;
+        if (D_8014A3E4.unk_14 < -0x10000) {
+            D_8014A3E4.unk_14 = -0x10000;
         }
-        if (D_8014A3D4 < D_8014A3F8) {
-            D_8014A3F8 = D_8014A3D4;
+        if (D_8014A3D4 < D_8014A3E4.unk_14) {
+            D_8014A3E4.unk_14 = D_8014A3D4;
         }
-        D_8014A3F0 = 0;
+        D_8014A3E4.unk_0C = 0;
     }
 }
 
 void func_80146994(void) {
-    if ((D_80120668 != 3) && ((D_8014A460 == 0) || (D_8014A3E0 != 0))) {
-        if ((D_8014A3F4 < 0) || (D_8014A3DE == 0)) {
+    if ((D_80120668 != 3) && ((D_8014A454[0].unk_0C == 0) || (D_8014A3E0 != 0))) {
+        if ((D_8014A3E4.unk_10 < 0) || (D_8014A3DE == 0)) {
             D_8014A3E4.position.w -= D_8014A3E0;
         } else {
             D_8014A3E4.position.w += 0x8000;
@@ -290,7 +277,7 @@ void func_80146B8C(void) {
         D_8014A3E4.unk_00 = 0;
         return;
     }
-    if (((u32)D_8014A3E4.unk_04 >= 6 && D_8014A3F4 > 0) || ((u32)D_8014A3E4.unk_04 >= 0xB && D_8014A3F8 != 0)) {
+    if (((u32)D_8014A3E4.unk_04 >= 6 && D_8014A3E4.unk_10 > 0) || ((u32)D_8014A3E4.unk_04 >= 0xB && D_8014A3E4.unk_14 != 0)) {
         if (D_8014A3E4.unk_00 >= 7) {
             D_8014A3E4.unk_00 = 2;
             D_8014A3E4.unk_04 = 0;
@@ -302,11 +289,11 @@ void func_80146B8C(void) {
 }
 
 void func_80146C20(void) {
-    D_8014A3E0 += D_8014A3F4;
+    D_8014A3E0 += D_8014A3E4.unk_10;
     if (D_8014A3D4 < D_8014A3E0) {
         D_8014A3E0 = D_8014A3D4;
     }
-    if (D_8014A3E0 < 0 || (D_8014A3F4 < 0 && D_8014A3FE < -0x9F)) {
+    if (D_8014A3E0 < 0 || (D_8014A3E4.unk_10 < 0 && D_8014A3E4.position.h[1] < -0x9F)) {
         D_8014A3E0 = 0;
     }
     D_8014A3DC += D_8014A3E0; /* the fixed-point high half (+2) is read as an s16 below */
@@ -322,21 +309,21 @@ s32 func_80146FA0(void) {
     s32 i;
 
     for (i = 0; i < 3; i++) {
-        if (D_8014A400[i * 0x1C + 1] == 0) {
+        if (D_8014A400[i].unk_01 == 0) {
             v[i] = *(s16 *)(D_8011ECD0 + i * 0x44 + 0x19EA);
         } else {
             v[i] = -0xF00;
         }
     }
     if (v[0] >= v[1] && v[0] >= v[2]) {
-        D_8014A401 = 1;
+        D_8014A400[0].unk_01 = 1;
         return 2;
     }
     if (v[1] >= v[2]) {
-        D_8014A41D = 1;
+        D_8014A400[1].unk_01 = 1;
         return 3;
     }
-    D_8014A439 = 1;
+    D_8014A400[2].unk_01 = 1;
     return 4;
 }
 
@@ -353,10 +340,10 @@ void func_801470A0(void) {
 
     lim = D_8014A5FC;
     for (i = 0; i < 3; i++) {
-        if (D_8014A454[i * 0x1C + 0x28] != 0) {
-            *(s32 *)(D_8014A400 + i * 0x1C + 0x10) = -0x4000;
+        if (D_8014A454[i + 1].unk_0C != 0) {
+            D_8014A400[i].unk_10 = -0x4000;
         } else {
-            *(s32 *)(D_8014A400 + i * 0x1C + 0x10) = lim.v[i];
+            D_8014A400[i].unk_10 = lim.v[i];
         }
     }
 }
@@ -367,17 +354,17 @@ void func_80147120(void) {
 
     lim = D_8014A608;
     for (i = 0; i < 3; i++) {
-        if (((Tk1C *)D_8014A400)[i].unk_01 == 1 && D_80120896 + 0x140 < *(s16 *)(D_8011ECD0 + i * 0x44 + 0x19EA)) {
-            ((Tk1C *)D_8014A400)[i].unk_14 = 0;
-        } else if (((Tk1C *)D_8014A400)[i].unk_0C >= 0xB) {
-            ((Tk1C *)D_8014A400)[i].unk_14 += ((Tk1C *)D_8014A400)[i].unk_10;
-            if (((Tk1C *)D_8014A400)[i].unk_14 < 0) {
-                ((Tk1C *)D_8014A400)[i].unk_14 = 0;
+        if (D_8014A400[i].unk_01 == 1 && D_80120896 + 0x140 < *(s16 *)(D_8011ECD0 + i * 0x44 + 0x19EA)) {
+            D_8014A400[i].unk_14 = 0;
+        } else if (D_8014A400[i].unk_0C >= 0xB) {
+            D_8014A400[i].unk_14 += D_8014A400[i].unk_10;
+            if (D_8014A400[i].unk_14 < 0) {
+                D_8014A400[i].unk_14 = 0;
             }
-            if (lim.v[i] < ((Tk1C *)D_8014A400)[i].unk_14) {
-                ((Tk1C *)D_8014A400)[i].unk_14 = lim.v[i];
+            if (lim.v[i] < D_8014A400[i].unk_14) {
+                D_8014A400[i].unk_14 = lim.v[i];
             }
-            ((Tk1C *)D_8014A400)[i].unk_0C = 0;
+            D_8014A400[i].unk_0C = 0;
         }
     }
 }
@@ -391,7 +378,7 @@ void func_80147210(void) {
     s32 d;
     s32 x;
 
-    for (i = 0, v = D_8014A400, a = D_8011ECD0, d = D_8014A3DE; i < 3; i++, v += 0x1C, a += 0x44) {
+    for (i = 0, v = (u8 *)D_8014A400, a = D_8011ECD0, d = D_8014A3DE; i < 3; i++, v += 0x1C, a += 0x44) {
         *(s32 *)(v + 0x18) += *(s32 *)(v + 0x14);
         x = *(s16 *)(v + 0x1A) - d;
         *(s16 *)(a + 0x19EA) = x - 0xA0;
@@ -441,11 +428,11 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147928);
 void func_80147A6C(s32 index) {
     TaiikuSlot1C *slot;
 
-    slot = &((TaiikuSlot1C *)D_8014A454)[index];
+    slot = &D_8014A454[index];
     /* FAKE: this empty test preserves the slot pointer's register range. T-10020. */
     if (!slot) {
     }
-    if (slot->unk_0C == 0 && (index != 0 || D_8014A3F4 > 0 || D_8014A3E0 != 0) && slot->unk_16 >= 6) {
+    if (slot->unk_0C == 0 && (index != 0 || D_8014A3E4.unk_10 > 0 || D_8014A3E0 != 0) && slot->unk_16 >= 6) {
         if (slot->unk_08 > 0) {
             slot->unk_02++;
             slot->unk_16 = 0;
@@ -476,7 +463,7 @@ void func_80148194(s32 arg0) {
     u8 *temp_v0;
     u8 *temp_v1;
 
-    temp_v1 = (arg0 * 0x1C) + D_8014A454;
+    temp_v1 = (u8 *)&D_8014A454[arg0];
     temp_v0 = (arg0 * 0x44) + D_8011ECD0;
     *(u8 *)(temp_v1 + 0xC) = 1;
     *(u8 *)(temp_v1 + 0xD) = 0;
@@ -494,7 +481,7 @@ void func_80148228(s32 arg0) {
     u8 *temp_v0;
     u8 *temp_v1;
 
-    temp_v1 = (arg0 * 0x1C) + D_8014A454;
+    temp_v1 = (u8 *)&D_8014A454[arg0];
     temp_v0 = (arg0 * 0x44) + D_8011ECD0;
     *(u8 *)(temp_v1 + 0xC) = 2;
     *(u8 *)(temp_v1 + 0xD) = 0;
@@ -512,7 +499,7 @@ void func_801482BC(s32 index) {
     TaiikuController *controller;
     TaiikuSlot1C *slot;
 
-    slot = &((TaiikuSlot1C *)D_8014A454)[index];
+    slot = &D_8014A454[index];
     if (slot->unk_0C != 0 && slot->unk_0D >= 0x65U) {
         slot->unk_0C = 0;
         if (index == 0) {
@@ -522,7 +509,7 @@ void func_801482BC(s32 index) {
             D_8014A3E4.unk_04 = 0;
             D_8014A3E4.unk_14 = 0;
         } else {
-            controller = &((TaiikuController *)D_8014A400)[index - 1];
+            controller = &D_8014A400[index - 1];
             controller->unk_00 = 0;
             controller->unk_08 = 0;
             controller->unk_0C = 0;
