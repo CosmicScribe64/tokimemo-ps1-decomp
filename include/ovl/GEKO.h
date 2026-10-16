@@ -789,14 +789,12 @@ extern GekoShorts10 D_801472C4;
 extern GekoShorts10 D_801472D8;
 extern GekoShorts10 D_801472EC;
 
-/* func_801420E4: three words of -1 and six halfwords of 1, 1, 1, 0, 0, 0 (only 0xC bytes are copied). */
-typedef struct GekoWords3 {
-    /* 0x00 */ s32 v[3];
-} GekoWords3; /* size 0xC */
+/* func_801420E4: six halfwords of -1 and six of 1, 1, 1, 0, 0, 0 (the second label is 0x18 bytes, only 0xC
+ * are copied); the draft reads both copies as s16. */
 typedef struct GekoShorts6 {
     /* 0x00 */ s16 v[6];
 } GekoShorts6; /* size 0xC */
-extern GekoWords3 D_8014760C;
+extern GekoShorts6 D_8014760C;
 extern GekoShorts6 D_80147618;
 
 /* Byte and text tables of func_80142C9C, func_80143F48 and func_80144270. */
