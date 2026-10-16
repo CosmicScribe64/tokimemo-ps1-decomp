@@ -42,9 +42,8 @@ void func_801322AC(void) {
     D_8015EDD4 = 0;
 }
 
-/* NON_MATCHING: T-19025, 10 differing lines; the result variable r takes $a0 (copies from the loaded values), the original keeps r in $v0 and the switch copy in $v1; the expression temporaries of the unk7A load outrank r for $v0 (regdiff priority 3 against 1.2) */
-#ifdef NON_MATCHING
-u32 func_8013240C(void) {
+/* An int function with no return statement (K&R): with it the switch operands sit in $v0 as in the original; a returned result variable moves them to $a0. */
+s32 func_8013240C() {
     /* FAKE: pad1..pad4 are unused locals that reserve the original's four extra frame words (m1 at sp+0x30, m2 at sp+0x2C); real source unknown. T-19025 */
     s32 pad1;
     s32 pad2;
@@ -101,8 +100,7 @@ u32 func_8013240C(void) {
     if (p->unk76 > 0x180) {
         p->unk76 = 0x180;
     }
-    r = D_8015EDDC % 3;
-    switch (r) {
+    switch (D_8015EDDC % 3) {
     case 0:
         m1 = 5;
         m2 = 0xA;
@@ -163,24 +161,19 @@ u32 func_8013240C(void) {
         }
     }
     if (p->unk2 & 4) {
-        r = D_8015EDB4->unk7A--;
-        switch (r) {
+        switch (D_8015EDB4->unk7A--) {
         case 2:
         case 10:
         case 14:
         case 15:
-            r = func_801430B0();
+            func_801430B0();
             break;
         case 0:
             D_8015EDB4->unk2 &= 0xFB;
             break;
         }
     }
-    return r;
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_8013240C);
-#endif
 
 void func_801328B0(void) {
     /* FAKE: pad1..pad4 are unused locals that reserve the original's extra frame words (idx at sp+0x70, in/out vectors at sp+0x58/0x48, flags at sp+0x40, dist at sp+0x38); real source unknown. T-19025 */
