@@ -221,9 +221,8 @@ void func_80155E08(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-17205, 6 differing instructions; schedule only: the original sets up a1=0x44 and the record base before the counter clear (the draft clears the counter first), and does not move the second loop's counter clear above the byte test */
-#ifdef NON_MATCHING
-void func_80155E40(void) {
+/* int result, no return statement (K&R): $v0 stays live at the exit, so as1 keeps the second loop's counter clear below the byte test. T-17205 */
+s32 func_80155E40(void) {
     GameState *g = &D_800E6280;
     s16 i;
     FnTbl45 tbl;
@@ -250,9 +249,6 @@ void func_80155E40(void) {
         func_801560E0();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_80155E40);
-#endif
 
 void func_80156024(void) {
     func_8014C5C8();
