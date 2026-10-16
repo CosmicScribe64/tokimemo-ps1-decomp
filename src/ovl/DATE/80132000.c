@@ -1,8 +1,10 @@
 #define MAIN_API_OVERRIDE_D_80121808 /* byte store here (main_api.h: s32, EVENT) */
+#define MAIN_API_OVERRIDE_func_80085A60 /* int view: the original keeps $v0 busy after the call, func_8013E6A4 (T-17202; main_api.h: void) */
 #include "common.h"
 #include "ovl/DATE.h"
 
 extern u8 D_80121808;
+extern s32 func_80085A60();
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B520);
@@ -287,8 +289,6 @@ void func_801324A8(void) {
     D_8015B650 = 0x801B0170;
 }
 
-/* NON_MATCHING: T-11580, 1 differing instruction; the original adds the two products in the other operand order */
-#ifdef NON_MATCHING
 void func_801324DC(void) {
     u8 t;
     u8 six;
@@ -302,7 +302,9 @@ void func_801324DC(void) {
     }
     D_800CA14C = 0;
     t = func_80051A68(D_800E6280.unk_F5F) & 0x7F;
-    D_8015BF04 = date_arrival * six + ((t >= 2) + (t >= 3)) * ((date_arrival == 0) + 1) - (date_arrival == 2) * 3;
+    /* FAKE: T-17202, `date_arrival * 0` mentions the promoted global before `t`, so its load
+     * (lui a0) is scheduled before the andi of the call result; the sum keeps the original order */
+    D_8015BF04 = date_arrival * 0 + ((t >= 2) + (t >= 3)) * ((date_arrival == 0) + 1) + date_arrival * six - (date_arrival == 2) * 3;
     D_8015BF08 = 0;
     *(s16 *)&D_800CA15C = 0;
     D_8015BF18 = 0;
@@ -329,9 +331,6 @@ void func_801324DC(void) {
     D_8015B67C = 0;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801324DC);
-#endif
 
 void date_event_trigger(s16 arg0, s16 arg1, u8 arg2) {
     D_80122CD0 = arg0;
@@ -1718,9 +1717,8 @@ void func_80137D1C(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11580, 4 differing instructions; D_80122CDC at the entry takes $v1, the original $v0 */
-#ifdef NON_MATCHING
 s32 func_80137DF4(void) {
+    /* No return statement: $v0 is live at the exit, so uopt keeps D_80122CDC in $v0 (T-17202). */
     s32 text;
 
     if (D_80122CDC == 0) {
@@ -1764,15 +1762,11 @@ s32 func_80137DF4(void) {
     func_80085B3C(0, D_80122D08);
     func_80136F2C();
     if ((D_800E6280.unk_F5F == 8) && ((u8)D_8015B68C == 3) && (D_800E6280.unk_1BC[8].unk_14[0x18] != 0)) {
-        (&D_80122CDC)[0] = 1;
-        return (&D_80122CDC)[0];
+        D_80122CDC = 1;
+    } else {
+        D_80122CDC = 0;
     }
-    D_80122CDC = 0;
-    return 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137DF4);
-#endif
 
 void func_80137FAC(void) {
     func_800AE0F0(D_800CA1DC, "ナイトパレード");
@@ -2293,14 +2287,15 @@ void func_801395B4(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11580, 9 differing instructions; the post-call unk_110A update takes $v1 (the original keeps it in $v0 with an ugen andi), and the entry F5F lui is scheduled one slot later */
-#ifdef NON_MATCHING
 s32 func_80139664(void) {
     /* FAKE: unused byte local puts prev at 0x28(sp) as in the original. T-11580 */
     u8 pad;
     s32 prev;
 
     if (D_80122CDC == 1) {
+        /* FAKE: evaluates the F5F byte into $v0 before D_800CA148 = 9 (EVENT twin func_80116940, T-11110). T-17202 */
+        if (D_800E6280.unk_F5F + 0) {
+        }
         D_800CA148 = 9;
         if (D_800E6280.unk_F5F == 7) {
             D_800CA148 = 0xA;
@@ -2332,55 +2327,53 @@ s32 func_80139664(void) {
         func_80085A60();
         if (prev != D_800E6280.unk_110A) {
             D_800CA148 = 8;
-            D_800E6280.unk_110A += 0x11;
+            /* FAKE: T-17202, the element view keeps the new byte in a register (andi t8; move v0,t8)
+             * for $v0, which is live at the exit of this s32 function with no return value */
+            (&D_800E6280.unk_110A)[0] += 0x11;
         }
-        return D_800E6280.unk_110A;
+        /* no value on purpose: `return unk_110A` splits the byte into two ranges (T-17202) */
+        return;
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80139664);
-#endif
 
-/* NON_MATCHING: T-11580, 7 differing instructions; the tail load of unk_110A takes $v1 with its lui hoisted, the original reloads it into $v0 */
-#ifdef NON_MATCHING
 s32 func_80139834(void) {
     /* FAKE: 4 spare bytes reproduce prev's stack home at 0x2A(sp). T-11140 */
     s32 pad;
     s16 prev;
-    u8 g;
 
     if (D_80122CDC == 1) {
-        g = D_800E6280.unk_F5F;
-        if (g == 7) {
+        if (D_800E6280.unk_F5F == 7) {
             prev = D_800E6280.unk_110A;
             func_80085A60();
-            g = D_800E6280.unk_110A;
-            if (prev != g) {
+            if (prev != D_800E6280.unk_110A) {
                 D_800CA148 = 0xA;
-                D_800E6280.unk_110A = g + 0xC;
+                D_800E6280.unk_110A += 0xC;
             }
             return 0;
         }
         D_800CA148 = 9;
-        if (g == 9) {
+        if (D_800E6280.unk_F5F == 9) {
             D_800CA148 = 8;
-        } else if ((g == 4) || (g == 8) || (g == 5)) {
+        } else if ((D_800E6280.unk_F5F == 4) || (D_800E6280.unk_F5F == 8) || (D_800E6280.unk_F5F == 5)) {
             D_800CA148 = 7;
+        }
+        /* FAKE: dead test gives the unk_110A byte a second use in this block so uopt allocates $v0
+           (EVENT twin func_80116AA8, T-11110). T-17202 */
+        if ((s32)D_800E6280.unk_110A) {
         }
         D_800E6280.unk_110A += 0xC;
     } else {
-        g = D_800E6280.unk_F5F;
-        if (g == 7) {
+        /* FAKE: dead test gives the F5F byte a second use so uopt allocates $v0 for it. T-17202 */
+        if ((s32)D_800E6280.unk_F5F) {
+        }
+        if (D_800E6280.unk_F5F == 7) {
             D_800CA148 += 1;
         }
         D_8015B67C = 1;
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80139834);
-#endif
 
 void func_80139944(void) {
     /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing g->unk_F5F * 0x24 across stores. T-11140 */
@@ -3116,9 +3109,9 @@ void func_8013BE98(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11140, 8 diff lines (chain assignment store scheduling and $t4 vs $v0 for second = 3 chain) */
-#ifdef NON_MATCHING
 void func_8013BEB8(void) {
+    s32 x;
+
     if (D_800E6280.unk_F5F != 6) {
         func_8004284C();
         D_800E6280.unk_110A += 8;
@@ -3129,14 +3122,14 @@ void func_8013BEB8(void) {
         func_80042940(0x2D);
         return;
     }
-    D_800CA234[0] = D_800CA22C[2] = D_800CA22C[0] = D_800CA22C[3] = 2;
+    x = D_800CA22C[0] = D_800CA22C[3] = 2;
     D_800CA21C[0] = D_800CA21C[1] = D_800CA21C[2] = 3;
-    D_800CA224[0] = D_800CA224[1] = D_800CA224[2] = 3;
+    D_800CA22C[2] = x;
+    D_800CA234[0] = x;
+    /* FAKE: the u16 view of the row gives its constant 3 the original's $v0 (autotweak, T-17202). */
+    ((u16 *)D_800CA224)[0] = ((u16 *)D_800CA224)[1] = ((u16 *)D_800CA224)[2] = 3;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013BEB8);
-#endif
 
 void func_8013BF94(void) {
     if (D_800CA2F8 == 0x12) {
@@ -3954,25 +3947,19 @@ void func_8013E614(void) {
     }
 }
 
-/* NON_MATCHING: T-10510, T-11580, 12 funcdiff lines left: post-increment compare, a0/v1 vs v1/v0 */
-#ifdef NON_MATCHING
 void func_8013E6A4(void) {
-    s32 d;
+    /* FAKE: unused word local above x puts x at 0x2B(sp) as in the original. T-17202 */
+    s32 pad;
     u8 x;
 
     x = func_80051B48(D_800E6280.unk_F5F);
     func_80085A60();
-    d = D_800E6280.unk_1104.w;
-    D_800E6280.unk_1104.w = d + 1;
-    if (d == 1) {
+    if (D_800E6280.unk_1104.w++ == 1) {
         if (D_800CA14C == 2) {
             func_80083440(x);
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013E6A4);
-#endif
 
 void func_8013E710(void) {
     if (D_80122CDC == 0) {

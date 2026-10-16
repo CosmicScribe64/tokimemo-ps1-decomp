@@ -1,8 +1,13 @@
+#define RPG_BAT_OVERRIDE_func_8013E7C0 /* implicit int view: the call's $v0 moves the D_8015EC74 counter to $v1 (func_801387F0, T-17103) */
+#define RPG_BAT_OVERRIDE_D_8015EE8C /* pointer view: func_8013A034 reads the asset table through it (header: s32, defined in 8014E780.c) */
 #define MAIN_API_OVERRIDE_D_80121317 /* stores 0x80 as a positive constant (main_api.h: s8) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
 extern u8 D_80121317;
+s32 func_8013E7C0();
+
+extern s32 *D_8015EE8C;
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_80137280(void) {
@@ -435,9 +440,202 @@ void func_80138170(void) {
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80138324);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_801387F0);
+/* FAKE: pad1/pad2 are unused locals that reproduce the 16 extra frame bytes above sp34; the
+ * unsigned lvalue view of D_8015EBAC is the actor-index promotion of func_80138170 (T-9760);
+ * func_8013E7C0 is called with the implicit int view (file-level override). T-17103 */
+void func_801387F0(void) {
+    s32 pad1;
+    s32 pad2;
+    s32 sp34;
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80138B9C);
+    switch (D_8015EDD8) {
+    case 0:
+        switch ((*(u32 *) &D_8015EBAC)) {
+        case 0:
+            func_800AE0F0(D_8015E828, "不良Ａの攻撃");
+            break;
+        case 1:
+            func_800AE0F0(D_8015E828, "不良Ｂの攻撃");
+            break;
+        case 2:
+            func_800AE0F0(D_8015E828, "不良Ｃの攻撃");
+            break;
+        }
+        func_800AE0F0(D_8015E850, "不良パンチ");
+        func_8014D11C(D_8015E878, D_800E6280.unk_0D4, "は", D_8015EBB0, "のダメージを受けた");
+        func_8014B738(D_8015E8F0, 3, 0x3C);
+        func_8013E810((*(u32 *) &D_8015EBAC) + 0x3B, 1, 5, 1);
+        func_8013F15C(0x505, 1, 0);
+        func_8014EF3C();
+        return;
+    case 1:
+        func_8014F0F8((*(u32 *) &D_8015EBAC) + 0x3B);
+        return;
+    case 2:
+        func_8013E810((*(u32 *) &D_8015EBAC) + 0x3B, 0, 1, 1);
+        func_8014EF3C();
+        return;
+    case 3:
+        func_8014F178(1);
+        return;
+    case 4:
+        if (D_8015ED98 & 0x100) {
+            func_8013E7C0(0x30, 3, 1, 1);
+        } else {
+            func_8013E7C0(0x30, 5, 1, 1);
+        }
+        D_80121531 = 3;
+        func_8013E7C0(0x38, 0xC, 5, 1);
+        D_8015EC74 = func_8013E9A8(4) + 1;
+        sp34 = func_8013E9A8(0x14);
+        func_8013E97C(0x38, sp34 - 5, func_8013E9A8(0x14) - 5);
+        func_8013F15C(0x506, 1, 0);
+        func_8014EF3C();
+        return;
+    case 5:
+        if (func_8013E90C(0x38) != 0) {
+            func_8013F15C(0x506, 1, 0);
+            sp34 = func_8013E9A8(0x14);
+            func_8013E97C(0x38, sp34 - 5, func_8013E9A8(0x14) - 5);
+            func_8013E7C0(0x38, 0xC, 5, 1);
+            D_8015EC74 -= 1;
+            if (D_8015EC74 == 0) {
+                func_8014EF3C();
+                return;
+            }
+        }
+    default:
+        return;
+    case 6:
+        if (func_8013E90C(0x38) != 0) {
+            func_8013E7C0(0x38, 0xFF, 5, 0);
+            func_8014EF3C();
+            return;
+        }
+        break;
+    case 7:
+        func_8014F178(2);
+        return;
+    case 8:
+        func_8013EA60(0, 0x21, D_8015EBB0, 1);
+        if (D_8015ED94 == 0) {
+            func_8014EF8C();
+            D_8015EDC4 = 0x100007;
+            return;
+        }
+        func_8014EF3C();
+        return;
+    case 9:
+        func_8014F178(0);
+        return;
+    case 10:
+        func_8014F080(0x14);
+        return;
+    case 11:
+        D_8015ED98 &= ~0x1000;
+        func_8014EF8C();
+        break;
+    }
+}
+
+/* FAKE: pad1/pad2, the u32 view of D_8015EBAC and the implicit int func_8013E7C0 are the same
+ * three tricks as in func_801387F0 (this function is its sibling). T-17103 */
+void func_80138B9C(void) {
+    s32 pad1;
+    s32 pad2;
+    s32 sp34;
+
+    switch (D_8015EDD8) {
+    case 0:
+        switch ((*(u32 *) &D_8015EBAC)) {
+        case 0:
+            func_800AE0F0(D_8015E828, "不良Ａの攻撃");
+            break;
+        case 1:
+            func_800AE0F0(D_8015E828, "不良Ｂの攻撃");
+            break;
+        case 2:
+            func_800AE0F0(D_8015E828, "不良Ｃの攻撃");
+            break;
+        }
+        func_800AE0F0(D_8015E850, "不良パンチ");
+        func_8014D11C(D_8015E878, D_800E6280.unk_0D4, "は", D_8015EBB0, "のダメージを受けた");
+        func_8014B738(D_8015E8F0, 3, 0x3C);
+        func_8013E810((*(u32 *) &D_8015EBAC) + 0x3B, 1, 5, 1);
+        func_8013F15C(0x505, 1, 0);
+        func_8014EF3C();
+        return;
+    case 1:
+        func_8014F0F8((*(u32 *) &D_8015EBAC) + 0x3B);
+        return;
+    case 2:
+        func_8013E810((*(u32 *) &D_8015EBAC) + 0x3B, 0, 1, 1);
+        func_8014EF3C();
+        return;
+    case 3:
+        func_8014F178(1);
+        return;
+    case 4:
+        func_8013E7C0(0x30, 4, 1, 1);
+        D_8015ED98 |= 0x1000;
+        if (D_8015ED98 & 0x10000) {
+            D_8015ED9C = 0;
+            D_8015ED98 &= ~0x10000;
+            D_8015EE50.unk_00 = 4;
+        }
+        D_80121531 = 3;
+        func_8013E7C0(0x38, 0xC, 5, 1);
+        D_8015EC74 = func_8013E9A8(4) + 1;
+        sp34 = func_8013E9A8(0x14);
+        func_8013E97C(0x38, sp34 - 5, func_8013E9A8(0x14) - 5);
+        func_8013F15C(0x506, 1, 0);
+        func_8014EF3C();
+        return;
+    case 5:
+        if (func_8013E90C(0x38) != 0) {
+            func_8013F15C(0x506, 1, 0);
+            sp34 = func_8013E9A8(0x14);
+            func_8013E97C(0x38, sp34 - 5, func_8013E9A8(0x14) - 5);
+            func_8013E7C0(0x38, 0xC, 5, 1);
+            D_8015EC74 -= 1;
+            if (D_8015EC74 == 0) {
+                func_8014EF3C();
+                return;
+            }
+        }
+    default:
+        return;
+    case 6:
+        if (func_8013E90C(0x38) != 0) {
+            func_8013E7C0(0x38, 0xFF, 5, 0);
+            func_8014EF3C();
+            return;
+        }
+        break;
+    case 7:
+        func_8014F178(2);
+        return;
+    case 8:
+        func_8013EA60(0, 0x21, D_8015EBB0, 1);
+        if (D_8015ED94 == 0) {
+            func_8014EF8C();
+            D_8015EDC4 = 0x100007;
+            return;
+        }
+        func_8014EF3C();
+        return;
+    case 9:
+        func_8014F178(0);
+        return;
+    case 10:
+        func_8014F080(0x14);
+        return;
+    case 11:
+        D_8015ED98 = D_8015ED98 & ~0x1000 & 0xFFFFFF;
+        func_8014EF8C();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80138F6C);
 
@@ -472,9 +670,126 @@ INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/80137280.rodata", D_8015B718);
 
 INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/80137280.rodata", D_8015B728);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80139E88);
+void func_80139E88(void) {
+    /* the three scalars sit between the tables: they set flags at sp+0x64 (T-17103) */
+    RpgStrTbl4 names;
+    s32 n;
+    s32 count;
+    s32 i;
+    RpgWordTbl4 flags;
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_8013A034);
+    names = D_8015E530;
+    flags = D_8015E540;
+    n = 0;
+    if (func_8013E9A8(5) == 0) {
+        count = 3;
+    } else {
+        count = 2;
+    }
+    for (i = 0; i < count; i++) {
+        switch (func_8013E9A8(0xA)) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+            flags.v[0] = 1;
+            break;
+        case 4:
+        case 5:
+        case 6:
+            flags.v[1] = 1;
+            break;
+        case 7:
+        case 8:
+            flags.v[2] = 1;
+            break;
+        case 9:
+            flags.v[3] = 1;
+            break;
+        }
+    }
+    for (i = 0; i < 4; i++) {
+        if (flags.v[i] == 1) {
+            func_800AE0F0(*(void **)(D_8015EB70 + n * 4 + 12), "おたから：");
+            func_800AE100(*(void **)(D_8015EB70 + n * 4 + 12), names.s[i]);
+            n++;
+        }
+    }
+    D_8015ED14 = n + 3;
+}
+
+void func_8013A034(void) {
+    s32 i;
+
+    switch (D_8015EE30.unk_04) {
+    case 0:
+        cd_read_sectors(0x2B, 0x801B1000, 0x3E8C);
+        func_8014F524();
+    default:
+        break;
+    case 1:
+        if (D_8015EBFC.unk_28 == 0) {
+            func_8014F500();
+        }
+        if (cd_read_sync_status() & 1) {
+            D_8015EBFC.unk_28 = 0;
+            func_8014F524();
+        }
+        break;
+    case 2:
+        /* FAKE: the three constants are stored through their addresses (T-17103). A plain assignment
+         * makes uopt promote the globals to registers and sink the stores below the -1 stores
+         * (original: stores in source order, all three still read from memory later); the real
+         * source is unknown. */
+        *(s32 **) &D_8015EE8C = (s32 *) 0x801C5DC8;
+        *(s32 *) &D_8015EEA4 = 0x801C5DDC;
+        *(s32 *) &D_8015EEBC = 0x801C5EE4;
+        D_800E6280.unk_1228[0x15] = -1;
+        D_800E6280.unk_1228[0x16] = -1;
+        D_800E6280.unk_1228[0x17] = -1;
+        D_800E6280.unk_1228[0x18] = -1;
+        D_800E6280.unk_1228[0x19] = -1;
+        load_tpage_buf_lock(0x15, D_8015EE8C[0], 1);
+        load_tpage_buf_lock(0x16, D_8015EE8C[1], 1);
+        load_tpage_buf_lock(0x17, D_8015EE8C[2], 1);
+        load_tpage_buf_lock(0x18, D_8015EE8C[3], 1);
+        load_tpage_buf_lock(0x19, D_8015EE8C[4], 1);
+        for (i = 0; i < 72; i++) {
+            ((DisplayActor44 *) D_8011ECD0)[64 + i].unk_0C = (u8 *) D_8015EEA4;
+            ((DisplayActor44 *) D_8011ECD0)[64 + i].unk_10 = (u8 *) D_8015EEBC;
+            ((DisplayActor44 *) D_8011ECD0)[64 + i].unk_34 = (u8 *) D_8015EE8C;
+        }
+        if (D_8015EB9C != 0xE) {
+            for (i = 29; i < 31; i++) {
+                ((DisplayActor44 *) D_8011ECD0)[96 + i].unk_0C = (u8 *) D_8015EEB8;
+                ((DisplayActor44 *) D_8011ECD0)[96 + i].unk_10 = (u8 *) D_8015EED0;
+                ((DisplayActor44 *) D_8011ECD0)[96 + i].unk_34 = (u8 *) D_8015EEA0;
+                ((DisplayActor44 *) D_8011ECD0)[96 + i].unk_43 = 0x1C;
+            }
+        }
+        func_8014F524();
+        break;
+    case 3:
+        D_800E6280.unk_F5F = 0xE;
+        func_80046290(0x1C0000A8, 0x0F0000B7, 0xE);
+        func_80044750(0x300);
+        func_8014F524();
+        break;
+    case 4:
+        func_80044750(0xE4);
+        func_8014F524();
+        break;
+    case 5:
+        D_8015EE30.unk_0C += 1;
+        if (D_8015EE30.unk_0C >= 0xB5) {
+            func_8014F500();
+        }
+        if (func_800460EC() & 4) {
+            func_8014F500();
+        }
+        break;
+    }
+}
 
 void func_8013A464();
 

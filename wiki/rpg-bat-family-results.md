@@ -79,3 +79,15 @@ As in the pilots, the headers alone change nothing; the display-record view and 
 ### Packages
 
 19 packages `w3-rpg-bat-p01`..`p19` (T-17101..T-17119), 62 functions, 64,940 bytes, built by the wave-3 inventory scripts from this branch; each list names the T-17100 draft as the starting point.
+
+## Package w3-rpg-bat-p01 (T-17101)
+
+[[tickets/T-17101-w3-rpg-bat-p01]]: `src/ovl/RPG_BAT/80145CC0.c` and `80151FC0.c`, all four functions matched in plain C (4,564 bytes): `func_80152080` (812 B; FAKE homes `home0`/`home1` above the `sp34` spill), `func_80145CC0` (2,372 B; `func_8013E7C0` and `func_8013E97C` as implicit int), `func_80152384` (556 B; strcpy `func_800AE0F0` returning its destination in that file), `func_80146578` (824 B; `func_8013F15C` implicit int, FAKE one-word `zero[1]`). Details and the new register idioms: [[matching-notes]] (section T-17101), [[register-cheatsheet]] (six rows).
+
+Types: `RpgObjectRecord44.unk_40` (record 155 +0x40, the byte of `D_8012163C`), `RPG_BAT_OVERRIDE_func_8013F15C` wrapper in `RPG_BAT.h`, `MAIN_API_OVERRIDE_func_800AE0F0` wrapper in `main_api.h`. Other unmatched RPG_BAT step functions that keep `D_8015EDE0` in `$v1` (`func_80138F6C`, `func_80146C30`, `func_80157158`) should be tested with the same `--proto 's32 f();'` views.
+### Package results (T-17104)
+
+`w3-rpg-bat-p04`: `func_80146C30` (2,992 bytes) matched in plain C with one FAKE ([[matching-notes]], "T-17104"): implicit `s32` views of `func_8013E7C0` and `func_8013E97C` colour the `D_8015EDE0` counter web `$v1`, and a rolled 3-trip loop over `D_8015ECEC`. The same two overrides make the guarded `func_80145CC0` (T-12300) match under `funcdiff --proto`; its file still needs the edit.
+### Wave 3 results
+
+- `w3-rpg-bat-p03` ([[tickets/T-17103-w3-rpg-bat-p03]]): 4 of 4 matched, `80137280.c` (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`, 3,048 bytes). Details and the FAKE tricks in [[matching-notes]] ("T-17103"). Findings for the rest of the unit: the asset-pointer scalars `D_8015EE8C`..`D_8015EED0` are one array of 0x18-byte records (defined as scalars in `8014E780.c`, stores through their address keep the original order); two unused `s32` above a spill slot add the 8 frame bytes that `func_80152080` lacks (try `s32 pad1; s32 pad2;` before its spill local); the enemy-message scenes `func_80138170`, `func_801387F0`, `func_80138B9C` share the `u32` view of `D_8015EBAC` and the implicit-int `func_8013E7C0`.

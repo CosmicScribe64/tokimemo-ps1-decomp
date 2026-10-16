@@ -16206,6 +16206,98 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 
 [[tickets/T-17207-w3-date-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues in the drafts (missing inline `FAKE` comments on the frame and `sel` locals, `g` called unused), both fixed. 0 of 2 functions matched (`func_801449D4`, `func_80144E20`); no C changed. Merge via the wave 3 merge script.
 
+## [2026-10-16] ticket | T-17202 started
+[[tickets/T-17202-w3-date-p02]] (17:14 UTC): wave 3 package w3-date-p02, DATE `src/ovl/DATE/80132000.c`, six guarded drafts from the T-17200 list. Branch `w3-date-p02` from `w2-good`.
+
+## [2026-10-16] build | T-17202 DATE 80132000.c, 3 of 6 matched
+[[tickets/T-17202-w3-date-p02]] (17:14-18:36 UTC, Opus): matched `func_80139834` (EVENT twin form with dead selector tests, commit `fd316964`), `func_8013E6A4` (`D.w++ == 1` with `func_80085A60` as an `s32` file override, commit `a7301dea`) and `func_80137DF4` (`s32` function without `return`, commit `261ec214`), 820 bytes in plain C. Guarded: `func_80139664` 7 lines, `func_8013BEB8` 4, `func_801324DC` 1. Notes in [[matching-notes]] (T-17202), rows in [[data/t0018-cases]] and [[register-cheatsheet]], summary on [[date-family-results]]. Checks: clean build 27/27 sha1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known). Ticket In Review.
+
+
+## [2026-10-16] build | T-17202 closer pass, DATE 80132000.c 6 of 6
+[[tickets/T-17202-w3-date-p02]] (18:37-19:08 UTC, Opus closer): matched the three guarded drafts, so the package is 6 of 6 (1,972 bytes). `func_801324DC` (commit `a5497073`): FAKE `date_arrival * 0 +` in front of `P + a*six - T`. ugen emits the promoted global's load and the deferred mask of `t` in first-mention order. `func_8013BEB8` (commit `6887ca7f`): `s32 x` takes the first chain's value, and `D_800CA22C[2] = x; D_800CA234[0] = x;` follow the `21C` chain. `func_80139664` (commit `2263cba4`): `return;` instead of `return unk_110A` plus the FAKE element view `(&D_800E6280.unk_110A)[0] += 0x11;`. Candidates were scored with a scratch harness on the `permute.py setup` base, about 2 s each, with `cc -S` for ugen order. Clean rebuild 27/27 sha1 OK (`ninja -t clean`, then `ninja -j2`), check_headers, `migrate_globals.py --check` and `sync_protos.py --check-branch` (0 new, 15 known) pass. Notes in [[matching-notes]], rows in [[data/t0018-cases]] and [[register-cheatsheet]]. The ticket stays In Review.
+
+## [2026-10-16] ticket | T-17202 Done
+[[tickets/T-17202-w3-date-p02]] reviewed against `CODING_STANDARDS.md` and moved to Done: 6 of 6 DATE functions matched in plain C (1,972 bytes, `src/ovl/DATE/80132000.c`), all FAKEs marked and ticketed. One finding fixed: the value-less `return;` of `func_80139664` had no explaining comment (comment only). DATE.bin SHA1 OK, check_headers, migrate_globals --check and sync_protos --check-branch pass.
+## [2026-10-16] ticket | T-17204 In Progress
+[[tickets/T-17204-w3-date-p04]] created and started: Wave 3 package for DATE `src/ovl/DATE/80151460.c` (`func_801518B8`, `func_80152E34`, `func_80152060`, `func_80152268`), worktree `tokimemo-wt/w3-date-p04`, branch `w3-date-p04` from `w2-good`.
+
+## [2026-10-16] build | T-17204 matches
+[[tickets/T-17204-w3-date-p04]] on branch `w3-date-p04` (matcher, 17:25-18:55 UTC): DATE `src/ovl/DATE/80151460.c`, 2 of 4 functions matched. `func_80152060` (520 bytes, new `DateWords2` in `include/ovl/DATE.h`) and `func_80152268` (1,052 bytes, FAKE unread copies `j = v`, `void func_80152684();` in `DATE.h`); `func_801518B8` stays guarded (14 rows), `func_80152E34` open (draft `drafts/T-17204/DATE/func_80152E34`). Notes in [[matching-notes]] (section T-17204), [[register-cheatsheet]], [[data/t0018-cases]], [[date-family-results]].
+
+## [2026-10-16] ticket | T-17204 In Review
+[[tickets/T-17204-w3-date-p04]] In Progress to In Review: 2 of 4 matched; clean build, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` to be run before merge.
+
+## [2026-10-16] ticket | T-17204 closer pass
+[[tickets/T-17204-w3-date-p04]] closer pass (Opus, 18:55-19:11 UTC) on branch `w3-date-p04`, scope `func_801518B8` in `src/ovl/DATE/80151460.c`: still guarded at 14 rows. A `cc -S` harness placed the copy in ugen's T-19001 "F" state after the loop's back-edge branch; calls with stack arguments, struct argument forms, register locals and `Blk44` views keep it, and only a direct memory store after the loop (always new code) gives the original's "B" state. Notes in [[matching-notes]] (T-17204), [[register-cheatsheet]] (block-copy row), [[data/t0018-cases]]. Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17204 Done
+[[tickets/T-17204-w3-date-p04]] In Review to Done: code review against `CODING_STANDARDS.md` found one out-of-order declaration (`func_80152684` in `include/ovl/DATE.h`, moved) and one stale `wiki/data/t0018-cases.md` row (reworded), both fixed without a code change (unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 2 of 4 functions matched (`func_80152060`, `func_80152268`; 1,572 bytes), `func_801518B8` guarded at 14 rows, `func_80152E34` still `INCLUDE_ASM`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17208 In Progress
+
+[[tickets/T-17208-w3-date-p08]] created and started: wave 3 package for DATE `src/ovl/DATE/8014A1B0.c`, `8015A640.c`, `8015A7E0.c`, `8015A980.c` (5 functions), from [[tickets/T-17200-types-first-date]].
+
+## [2026-10-16] ticket | T-17208 In Progress to In Review
+
+[[tickets/T-17208-w3-date-p08]] In Progress to In Review: 1 of 5 functions matched (`func_8014AF88`), `func_8014A8FC` guarded at 34 lines (light fade register gap, same as TACO `func_80134A18`), the three libgte rotation helpers stay `INCLUDE_ASM` (probe: 86 of 104 rows). Notes in [[matching-notes]], rows in [[register-cheatsheet]] and [[data/t0018-cases]], family page [[date-family-results]] updated.
+
+## [2026-10-16] build | T-17208 clean rebuild and checks
+Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17208-w3-date-p08]].
+
+## [2026-10-16] ticket | T-17208 Done
+
+[[tickets/T-17208-w3-date-p08]] In Review to Done: code review against `CODING_STANDARDS.md` found one item, fixed (a comment for the `dop` pointer-variable idiom in `func_8014AF88`); rebuild of DATE OK (headers OK, globals OK, sha1 OK). 1 of 5 functions matched (`func_8014AF88`, 248 bytes); `func_8014A8FC` stays a guarded draft (34 lines), the three libgte rotation helpers stay `INCLUDE_ASM`. Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17205 In Progress
+
+[[tickets/T-17205-w3-date-p05]] started: wave 3 package w3-date-p05 (DATE `src/ovl/DATE/80149310.c`, `src/ovl/DATE/801552B0.c`; `func_80149F48`, `func_80155E40`, `func_801560E0`, `func_801556D8`, `func_801496C4`), worktree `w3-date-p05` from `w2-good`.
+
+## [2026-10-16] ticket | T-17205 In Review
+
+[[tickets/T-17205-w3-date-p05]] In Progress to In Review: 4 of 5 functions matched (DATE `func_801496C4`, `func_801556D8`, `func_801560E0`, `func_80155E40`, 2,960 bytes), `func_80149F48` stays guarded at 11 lines. New types `DateMover44`, `DateFix32` and the arrays `D_8015F9A0`/`D_8015F9A8` in `include/ovl/DATE.h`; sources `src/ovl/DATE/80149310.c`, `src/ovl/DATE/801552B0.c`. Notes in [[matching-notes]] ("T-17205"), [[date-family-results]], [[register-cheatsheet]] and [[data/t0018-cases]]. Clean-build and header checks are recorded in the ticket.
+
+## [2026-10-16] build | T-17205 final checks
+
+[[tickets/T-17205-w3-date-p05]]: clean rebuild 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` pass on branch `w3-date-p05`; 4 of 5 functions matched, `src/ovl/DATE/80149310.c` keeps `func_80149F48` guarded at 11 lines.
+
+## [2026-10-16] build | T-17205 closer pass: func_80149F48 matched
+
+[[tickets/T-17205-w3-date-p05]]: DATE `func_80149F48` matched in plain C in `src/ovl/DATE/80149310.c` (`(s16)(D_8015D084 * 3) + D_8015D090`, placed before the second group of copies), so the package is 5 of 5. Clean rebuild 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check`, `tools/sync_protos.py --check-branch` pass. Notes in [[matching-notes]], [[register-cheatsheet]], [[data/t0018-cases]], [[date-family-results]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17205 Done
+
+[[tickets/T-17205-w3-date-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found 2 minor items (the `(u8)` cast in `func_801496C4` and the `(s16)` cast in `func_80149F48` had no explanatory comment), fixed with comments only in `src/ovl/DATE/80149310.c`, bytes unchanged. Headers OK, globals OK, sync_protos OK, DATE sha1 OK. 5 of 5 functions matched (3,136 bytes). Card moved in [[kanban]], line in [[index]].
+## [2026-10-16] ticket | T-17101 In Progress
+
+[[tickets/T-17101-w3-rpg-bat-p01]] created and In Progress: wave 3 package w3-rpg-bat-p01 (RPG_BAT `src/ovl/RPG_BAT/80145CC0.c`, `src/ovl/RPG_BAT/80151FC0.c`; `func_80152080`, `func_80145CC0`, `func_80152384`, `func_80146578`). Branch `w3-rpg-bat-p01` from `w2-good`. Links [[tickets/T-17100-types-first-rpg_bat]].
+
+## [2026-10-16] ticket | T-17101 In Review
+
+[[tickets/T-17101-w3-rpg-bat-p01]] In Progress to In Review: wave 3 package w3-rpg-bat-p01 (RPG_BAT `src/ovl/RPG_BAT/80145CC0.c`, `src/ovl/RPG_BAT/80151FC0.c`, `include/ovl/RPG_BAT.h`, `include/main_api.h`), 4 of 4 functions matched (4,564 bytes): `func_80152080`, `func_80145CC0`, `func_80152384`, `func_80146578`. Findings in [[matching-notes]] (section T-17101), six rows in [[register-cheatsheet]], update paragraph in [[data/t0018-cases]], section in [[rpg-bat-family-results]]. Review pending.
+
+## [2026-10-16] ticket | T-17101 Done
+
+[[tickets/T-17101-w3-rpg-bat-p01]] In Review to Done after the code review: wave 3 package w3-rpg-bat-p01 (RPG_BAT `src/ovl/RPG_BAT/80145CC0.c`, `src/ovl/RPG_BAT/80151FC0.c`, `include/ovl/RPG_BAT.h`, `include/main_api.h`), 4 of 4 functions matched (4,564 bytes: `func_80152080`, `func_80145CC0`, `func_80152384`, `func_80146578`; three ticketed FAKEs). One finding fixed: the `RPG_BAT.h` comment for the override wrappers now covers `func_8013F15C`. 27 of 27 units sha1 OK; headers, globals and proto checks OK.
+## [2026-10-16] ticket | T-17104 started
+[[tickets/T-17104-w3-rpg-bat-p04]] created In Progress (branch `w3-rpg-bat-p04`, base `w2-good`): wave 3 package for `src/ovl/RPG_BAT/801468B0.c`, one function `func_80146C30` (draft score 329). Board: [[kanban]].
+
+## [2026-10-16] ticket | T-17104 In Review
+[[tickets/T-17104-w3-rpg-bat-p04]] In Progress to In Review: 1 of 1 function matched, `func_80146C30` (2,992 bytes of code) in `src/ovl/RPG_BAT/801468B0.c`, plain C with one FAKE (`(&D_8015ECEC)[i]` in a rolled 3-trip loop). Cause: the `D_8015EDE0` register web; `RPG_BAT_OVERRIDE_func_8013E7C0` and `RPG_BAT_OVERRIDE_func_8013E97C` (implicit `s32` calls) move it to `$v1`. Side result: the same two protos make the guarded `func_80145CC0` (T-12300) MATCH under `funcdiff --proto`; `src/ovl/RPG_BAT/80145CC0.c` was not in this package and is not edited. Notes in [[matching-notes]], [[register-cheatsheet]], [[data/t0018-cases]], [[rpg-bat-family-results]]. Board: [[kanban]].
+
+## [2026-10-16] ticket | T-17104 Done
+[[tickets/T-17104-w3-rpg-bat-p04]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing (only `src/ovl/RPG_BAT/801468B0.c` changed, one marked FAKE, overrides explained; unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 1 of 1 matched (`func_80146C30`, 2,992 bytes). Follow-up noted in the ticket: the guarded `func_80145CC0` (T-12300) matches under the same two overrides. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17103 In Progress
+
+[[tickets/T-17103-w3-rpg-bat-p03]] created and In Progress: wave 3 package w3-rpg-bat-p03, four RPG_BAT functions in `src/ovl/RPG_BAT/80137280.c` (links [[tickets/T-17100-types-first-rpg_bat]]).
+
+## [2026-10-16] ticket | T-17103 In Review
+
+[[tickets/T-17103-w3-rpg-bat-p03]] In Progress to In Review: 4 of 4 functions matched in `src/ovl/RPG_BAT/80137280.c` (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`), unit sha1 OK. New: `RPG_BAT_OVERRIDE_D_8015EE8C` (header wrapper) and `RPG_BAT_OVERRIDE_func_8013E7C0` in the file; notes in [[matching-notes]], rows in [[register-cheatsheet]], section in [[rpg-bat-family-results]]. Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] ticket | T-17103 Done
+
+[[tickets/T-17103-w3-rpg-bat-p03]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues, both fixed (three [[register-cheatsheet]] rows sat outside the table, moved in; three stray triple blank lines in `src/ovl/RPG_BAT/80137280.c`). 4 of 4 functions matched (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`), unit sha1 OK. Merge via the wave 3 merge script.
+
 ## [2026-10-16] ticket | T-20001 GYOZI helper In Progress
 
 Created [[tickets/T-20001-gyozi-helper]] on codex/match-gyozi-helper from upstream main 639693d2. Whole-tree dupes report identifies GYOZI func_8013506C (172 bytes, guarded T-10850 draft) and matched SHOUGATU func_8013315C as a fillable pair including string data. Inspecting the two sources and the original function assembly before adapting the source. PR #36 independently contains the scoped queue fix and communication-platform question.
