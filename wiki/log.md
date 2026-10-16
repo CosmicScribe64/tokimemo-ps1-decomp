@@ -16652,3 +16652,7 @@ Clean rebuild of the w3-main-p05 worktree: 27/27 sha1 OK (`build/SLPM_86.053.bin
 ## [2026-10-16] ticket | T-17005 Done
 
 [[tickets/T-17005-w3-main-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found one issue, fixed (the two new rows in [[data/t0018-cases]] lacked the closing table pipe). Rebuild OK (sha1 OK, 27/27, headers OK, globals OK, `sync_protos --check-branch` OK). 3 of 5 functions matched (`pre_syogatu1`, `func_80060178`, `func_8005C14C`; 1,708 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17009 In Progress
+
+[[tickets/T-17009-w3-main-p09]] created and started: Wave 3 package for main `src/main/80042A00.c` (`func_80043448`, `func_80043010`, `func_800430C0`, `func_80042CB0`), worktree tokimemo-wt/w3-main-p09, branch w3-main-p09 from w2-good.
