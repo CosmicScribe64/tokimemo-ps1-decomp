@@ -650,12 +650,11 @@ void func_80136B18(void) {
     D_80120676 = state->unk_20.halves.high;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-16551, 4 differing lines (2 instructions; was T-12020); the f03 byte store and the f0C clear schedule in reverse order (a real local for the new f03 value, 130+ statement variants and autotweak's 297 edits did not change it). */
 void func_80136BB4(void) {
     u16 limit;
     TaiikuU11 limits;
     u8 temp;
+    u16 count;
 
     limits = D_801497DC;
     if (D_80122E94 == 1) {
@@ -671,7 +670,8 @@ void func_80136BB4(void) {
         }
         D_80149208.player.unk_0E = 0;
     }
-    if (((D_80149208.player.unk_0C >= 6U) && (D_80149208.player.unk_10 > 0)) || ((D_80149208.player.unk_0C >= 8U) && (((s32) D_801491E8 >> 1) < D_80149208.player.unk_18)) || ((D_80149208.player.unk_0C >= 11U) && (D_80149208.player.unk_18 != 0))) {
+    count = D_80149208.player.unk_0C;
+    if (((count >= 6U) && (D_80149208.player.unk_10 > 0)) || ((count >= 8U) && (((s32) D_801491E8 >> 1) < D_80149208.player.unk_18)) || ((count >= 11U) && (D_80149208.player.unk_18 != 0))) {
         temp = D_80149208.player.unk_03;
         if (temp >= 5U) {
             D_80149208.player.unk_03 = 0;
@@ -686,9 +686,6 @@ void func_80136BB4(void) {
         ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0x90;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80136BB4);
-#endif
 
 s32 func_80136DA4() {
     s32 temp;
