@@ -36,8 +36,7 @@ void func_80156D78(void) {
         }
         func_8013D030();
     }
-    /* FAKE: s32 view of the selector; the plain global is allocated $v0 here, the original $v1. T-17102 */
-    switch (*(s32 *)&D_8015EDD8) {
+    switch (D_8015EDD8) {
     case 0x0:
         func_800AE0F0(D_8015E828, "宇宙人「ЮΩ▽☆§◎");
         func_8014B738((s32) D_8015E8F0, 1, 0x3C);
@@ -131,7 +130,7 @@ void func_80157158(void) {
     if ((D_8015EDD8 >= 4) && (D_8015EDD8 < 0x51)) {
         func_8013F15C(0x507, 8, 3);
     }
-    switch (*(s32 *)&D_8015EDD8) {
+    switch (D_8015EDD8) {
     case 0x0:
         func_800AE0F0(D_8015E828, "宇宙人「ЛΦΘζ□Э℃¢Λ");
         func_8014B738((s32) D_8015E8F0, 1, 0x3C);
