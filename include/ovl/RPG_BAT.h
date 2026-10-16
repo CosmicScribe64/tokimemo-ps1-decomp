@@ -593,6 +593,7 @@ extern RpgStrTbl4 D_8015EFC0;   /* func_80152384 */
 extern RpgWordTbl4 D_8015EFD0;  /* func_80152384 */
 extern RpgStrTbl4 D_8015EFE0;   /* func_80159B40 */
 extern RpgStrTbl4 D_8015EFF0;   /* func_80159B40 */
+extern RpgWordTbl4 D_8015F000;  /* func_80159B40 (the first 16 bytes of a zero block) */
 /* T-17100: called by func_801498C0 before their definitions. */
 void func_80149AA8(void);
 void func_8014A16C(void);

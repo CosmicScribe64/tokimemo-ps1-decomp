@@ -662,4 +662,54 @@ INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/80157AE0.rodata", D_8015E190);
 
 INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/80157AE0.rodata", D_8015E19C);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_80159B40);
+s32 func_80159B40(void) {
+    RpgStrTbl4 sp88;
+    RpgStrTbl4 sp78;
+    s32 count;
+    s32 n;
+    s32 i;
+    RpgWordTbl4 sp5C;
+
+    sp88 = D_8015EFE0;
+    sp78 = D_8015EFF0;
+    sp5C = D_8015F000;
+    count = 0;
+    if (func_8013E9A8(5) == 0) {
+        n = 3;
+    } else {
+        n = 2;
+    }
+    for (i = 0; i < n; i++) {
+        switch (func_8013E9A8(0xA)) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+            sp5C.v[0] = 1;
+            break;
+        case 4:
+        case 5:
+        case 6:
+            sp5C.v[1] = 1;
+            break;
+        case 7:
+        case 8:
+            sp5C.v[2] = 1;
+            break;
+        case 9:
+            sp5C.v[3] = 1;
+            break;
+        }
+    }
+    for (i = 0; i < 4; i++) {
+        if (sp5C.v[i] == 1) {
+            func_800AE0F0(((void **)D_8015EB70)[count + 3], "おたから：");
+            func_800AE100(((void **)D_8015EB70)[count + 3], sp88.s[i]);
+            count++;
+        }
+    }
+    func_800AE0F0(((void **)D_8015EB70)[count + 3], "獲得称号：");
+    func_800AE100(((void **)D_8015EB70)[count + 3], sp78.s[func_8013E9A8(4)]);
+    D_8015ED14 = count + 4;
+}
+
