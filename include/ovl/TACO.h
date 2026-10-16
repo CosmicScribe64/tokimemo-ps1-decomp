@@ -240,6 +240,8 @@ extern s32 D_8015F494;
 extern s32 D_8015F498;
 extern s32 D_8015F49C;
 extern s32 D_8015F4A0;
+extern s32 D_8015F4A4;
+extern s32 D_8015F4A8;
 void func_80153AA0(s32 arg0, s32 arg1, s32 arg2);
 void func_80153E78(s32 arg0, u8 arg1, u8 arg2, u8 arg3);
 extern Tc14 D_8015E270[];
