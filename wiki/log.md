@@ -15646,3 +15646,6 @@ Code review of [[tickets/T-17800-types-first-option]] against `CODING_STANDARDS.
 
 ## [2026-10-16] ticket | T-19010 Done
 [[tickets/T-19010-w3-d-p10]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 functions matched (2,752 bytes: TAIIKU `func_80144464`, `func_80143814`, `func_80142FB8`, `func_80144E54`), `func_8014357C` stays guarded at 34 lines. Two review findings in `src/ovl/TAIIKU/80142240.c`, fixed: an unmarked dead `i = 0;` in `func_80142FB8` and four redundant `(u8)` casts of the `u8` flag in the new bodies; rebuild OK (globals, headers, protos, TAIIKU.bin SHA1).
+
+## [2026-10-16] ticket | T-19014 In Progress
+[[tickets/T-19014-w3-d-p14]] started: wave 3 package w3-d-p14, TACO `src/ovl/TACO/8013F250.c`, five functions (`func_801404FC`, `func_80140364`, `func_8013F9C0`, `func_801407D4`, `func_80140ADC`). Worktree `tokimemo-wt/w3-d-p14`, base `w2-good`.
