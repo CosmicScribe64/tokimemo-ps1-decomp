@@ -333,7 +333,35 @@ void func_8014EF6C() {
     D_8015EDE4 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014E780", func_8014EF8C);
+/* FAKE: same loops as func_8014EBEC (shared counter, flat word views of the
+ * legacy scalar D_8015EC74 and the 2-D D_8015ED64, record loop on one line), and
+ * D_8015EDD0, D_8015EDC8 are reached through D_8015EDC4 (an unrecovered
+ * four-word table; the view also keeps the first store ahead of the load in the
+ * schedule). T-17108. */
+void func_8014EF8C(void) {
+    s32 i;
+
+    (&D_8015EDC4)[3] = 0;
+    D_8015EDC4 &= 0xFFFF0000;
+    (&D_8015EDC4)[1] = 0;
+    D_8015EDD8 = 0;
+    D_8015EDE0 = 0;
+    D_8015EDDC = 0;
+    D_8015EDE4 = 0;
+    for (i = 0; i < 50; i++) {
+        (&D_8015EC74)[i] = 0;
+    }
+    for (i = 0; i < 10; i++) {
+        D_8015ED3C[i] = 0;
+    }
+    for (i = 0; i < 12; i++) {
+        (&D_8015ED64[0][0])[i] = 0;
+    }
+    for (i = 40; i < 64; i++) ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 5;
+    if (D_8015EB98 != 0x80000000) {
+        ((DisplayActor44 *)D_8011ECD0)[125].unk_01 = 5;
+    }
+}
 
 void func_8014F080(s32 arg0) {
     s32 temp_v0;
