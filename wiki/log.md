@@ -16167,3 +16167,6 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 ## [2026-10-16] ticket | T-17208 In Progress to In Review
 
 [[tickets/T-17208-w3-date-p08]] In Progress to In Review: 1 of 5 functions matched (`func_8014AF88`), `func_8014A8FC` guarded at 34 lines (light fade register gap, same as TACO `func_80134A18`), the three libgte rotation helpers stay `INCLUDE_ASM` (probe: 86 of 104 rows). Notes in [[matching-notes]], rows in [[register-cheatsheet]] and [[data/t0018-cases]], family page [[date-family-results]] updated.
+
+## [2026-10-16] build | T-17208 clean rebuild and checks
+Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17208-w3-date-p08]].
