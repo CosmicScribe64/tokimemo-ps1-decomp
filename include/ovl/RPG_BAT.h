@@ -593,6 +593,9 @@ extern RpgStrTbl4 D_8015EFC0;   /* func_80152384 */
 extern RpgWordTbl4 D_8015EFD0;  /* func_80152384 */
 extern RpgStrTbl4 D_8015EFE0;   /* func_80159B40 */
 extern RpgStrTbl4 D_8015EFF0;   /* func_80159B40 */
+/* T-17100: called by func_801498C0 before their definitions. */
+void func_80149AA8(void);
+void func_8014A16C(void);
 #endif
 
 #endif
