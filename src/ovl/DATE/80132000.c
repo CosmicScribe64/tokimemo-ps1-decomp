@@ -2331,6 +2331,7 @@ s32 func_80139664(void) {
              * for $v0, which is live at the exit of this s32 function with no return value */
             (&D_800E6280.unk_110A)[0] += 0x11;
         }
+        /* no value on purpose: `return unk_110A` splits the byte into two ranges (T-17202) */
         return;
     }
     func_8004284C();
