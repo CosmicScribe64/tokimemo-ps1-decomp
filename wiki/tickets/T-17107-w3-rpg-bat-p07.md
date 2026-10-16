@@ -1,7 +1,7 @@
 ---
 id: T-17107
 title: "Wave 3 package w3-rpg-bat-p07"
-status: In Progress
+status: In Review
 assignee: claude
 created: 2026-10-16
 updated: 2026-10-16
@@ -14,12 +14,20 @@ Match the RPG_BAT functions of package w3-rpg-bat-p07 (`src/ovl/RPG_BAT/8013E4D0
 
 ## Acceptance criteria
 
-- [ ] each function matched, or its draft stays guarded with a current differing-line count (or restored `INCLUDE_ASM` over 30 lines)
-- [ ] unit sha1 OK, clean rebuild 27/27, `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch` OK
-- [ ] wiki: matching notes section, t0018 rows where needed, log, kanban, index
+- [x] each function matched, or its draft stays guarded with a current differing-line count (or restored `INCLUDE_ASM` over 30 lines): 2 of 4 matched (`func_8013BBF8`, `func_8013EA60`); `func_8013B5B0` guarded at 25 lines, `func_8013E54C` guarded at 16 lines
+- [x] unit sha1 OK, clean rebuild 27/27, `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch` OK
+- [x] wiki: matching notes section, t0018 rows where needed, cheat sheet rows, family page, log, kanban, index
 
 ## Notes
 
-Worktree `w3-rpg-bat-p07` (branch `w3-rpg-bat-p07`, from `w2-good`). Started 2026-10-16 19:29 UTC.
+Worktree `w3-rpg-bat-p07` (branch `w3-rpg-bat-p07`, from `w2-good`). Started 2026-10-16 19:29 UTC, about 80 minutes of work. Result: 2 of 4 matched (1,788 bytes by the census sizes of `func_8013BBF8` 688 and `func_8013EA60` 1,100 linked).
 
 ## Comments
+
+### 2026-10-16 matcher run (claude-opus, branch `w3-rpg-bat-p07`)
+
+- `func_8013BBF8` matched: hand-written from the asm (sequence matcher, two `switch (D_8015EB98)` blocks), struct `RpgPadSeq` at `D_8015EBEC` (four words) fixed the load/store order, FAKE `s32 ten = 10;` for the `bne` operand order.
+- `func_8013EA60` matched: direct global compound updates plus `RpgGauge` struct view over `D_8015EBC0..D_8015EBD4` (`RPG_GAUGE`). Follow-up (not done, other files): migrate 801504E0.c, 8014DF60.c, 80154430.c and `func_8013C1CC` to a real `RpgGauge D_8015EBC0` and drop the macro.
+- `func_8013B5B0` guarded, 25 lines: promoted `unk_1109` in `$v0` instead of `$v1` (T-0018 `U1` family, row added).
+- `func_8013E54C` guarded, 16 lines: loop bodies match in the byte-array form, preheader `lui`/`addiu` order differs (row added).
+- Code review against `CODING_STANDARDS.md`: pending (ticket stays In Review until then).

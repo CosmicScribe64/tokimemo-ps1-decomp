@@ -16271,3 +16271,11 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17107 In Progress
 
 [[tickets/T-17107-w3-rpg-bat-p07]] created and started: wave-3 package w3-rpg-bat-p07 (RPG_BAT `func_8013B5B0`, `func_8013EA60`, `func_8013BBF8`, `func_8013E54C`), worktree `w3-rpg-bat-p07` from `w2-good`. Links [[tickets/T-17100-types-first-rpg_bat]].
+
+## [2026-10-16] build | T-17107 RPG_BAT package w3-rpg-bat-p07: 2 of 4 matched
+
+[[tickets/T-17107-w3-rpg-bat-p07]]: `func_8013BBF8` (688 B) and `func_8013EA60` (1,100 B) matched in plain C in `src/ovl/RPG_BAT/8013B5B0.c` and `src/ovl/RPG_BAT/8013E4D0.c`; `func_8013B5B0` (25 lines, promoted state byte `$v0` vs `$v1`) and `func_8013E54C` (16 lines, loop preheader order) guarded. New types `RpgPadSeq` (`D_8015EBEC`, four words) and `RpgGauge` (view over `D_8015EBC0..D_8015EBD4`) in `include/ovl/RPG_BAT.h`. Notes in [[matching-notes]], [[register-cheatsheet]], [[rpg-bat-family-results]], rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-17107 In Review
+
+[[tickets/T-17107-w3-rpg-bat-p07]] In Progress to In Review (kanban card moved); matched count 2 of 4. Review against `CODING_STANDARDS.md` pending.

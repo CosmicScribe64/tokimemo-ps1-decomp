@@ -79,3 +79,7 @@ As in the pilots, the headers alone change nothing; the display-record view and 
 ### Packages
 
 19 packages `w3-rpg-bat-p01`..`p19` (T-17101..T-17119), 62 functions, 64,940 bytes, built by the wave-3 inventory scripts from this branch; each list names the T-17100 draft as the starting point.
+
+### Package w3-rpg-bat-p07 (T-17107)
+
+`func_8013BBF8` and `func_8013EA60` matched (types `RpgPadSeq` at `D_8015EBEC`, four words; `RpgGauge` over `D_8015EBC0..D_8015EBD4`, six words, reached through `RPG_GAUGE` until the other users migrate); `func_8013B5B0` (25 rows, promoted state byte in `$v0` instead of `$v1`) and `func_8013E54C` (16 rows, loop preheader order) stay guarded. Notes: [[matching-notes]], section "T-17107".

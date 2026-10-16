@@ -24,7 +24,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-17107-w3-rpg-bat-p07|T-17107 Wave 3 package w3-rpg-bat-p07]]
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
@@ -54,6 +53,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
+- [ ] [[tickets/T-17107-w3-rpg-bat-p07|T-17107 Wave 3 package w3-rpg-bat-p07]]
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
