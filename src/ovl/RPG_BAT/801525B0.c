@@ -129,7 +129,78 @@ s32 func_801535E4(void) {
     }
 }
 
+/* NON_MATCHING: T-17112, 23 differing lines; case 1 schedules the D_8015EC40 and D_8015ED30 loads earlier than the original */
+#ifdef NON_MATCHING
+s32 func_80153784(void) {
+    s32 pad[3]; /* FAKE: unused words above the RECTs, the original frame has them (real source unknown). T-17112 */
+    RECT r0;
+    RECT r1;
+    RECT r2;
+    RECT r3;
+    s32 i;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        r0.x = 0x240; r0.y = 0x100;
+        r0.w = 0x40; r0.h = 0x28;
+        func_8009C93C(&r0, 0x180, 0x180);
+        r1.x = 0x240; r1.y = 0x128;
+        r1.w = 0x40; r1.h = 0x28;
+        func_8009C93C(&r1, 0x1C0, 0x180);
+        r2.x = 0x220; r2.y = 0x100;
+        r2.w = 0x40; r2.h = 0x28;
+        func_8009C93C(&r2, 0x200, 0x180);
+        r3.x = 0x21F; r3.y = 0x100;
+        r3.w = 1; r3.h = 0x80;
+        func_8009C93C(&r3, 0x220, 0x100);
+        D_8015EC40 = 0x20;
+        D_8015EC44 = 0x40;
+        D_8015EC48 = 1;
+        D_8015ED2C = -0x80;
+        D_8015ED30 = 0x20;
+        D_8015ED34 = 0x40;
+        D_8015ED38 = 1;
+        D_8015EC38 = 0;
+        D_8015EC3C = 0x80;
+        D_8015ED28 = 0;
+        func_8004284C();
+        break;
+    case 1:
+        D_8015EC38 += D_8015EC48;
+        D_8015ED28 += D_8015ED38;
+        if (D_8015EC38 >= D_8015EC40) {
+            D_8015EC38 = 0;
+        }
+        if (D_8015ED28 >= D_8015ED30) {
+            D_8015ED28 = 0;
+        }
+        func_80153B08();
+        func_80153D20();
+        func_80153A60();
+        D_8015ED2C += 1;
+        D_8015EC3C -= 1;
+        if (D_8015EC3C == 0) {
+            func_8004284C();
+        }
+        break;
+    case 2:
+        r2.x = 0x200; r2.y = 0x180;
+        r2.w = 1; r2.h = 0x28;
+        func_8009C93C(&r2, 0x220, 0x100);
+        func_8013E7C0(0x1F, 0, 1, 1);
+        func_8004284C();
+        break;
+    case 3:
+        D_8015EC74 = 0;
+        D_8015EC78 = 0;
+        for (i = 0; i < 48; i++) (&D_8015EC7C)[i] = 0;
+        func_80042808();
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80153784);
+#endif
 
 void func_80153A60(void) {
     int dead; /* FAKE: dead copy of *p; only reserves $v0 so the table pointer lands in $v1. Found with decomp-permuter. T-10910 */
