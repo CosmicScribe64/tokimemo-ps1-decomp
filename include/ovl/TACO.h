@@ -138,7 +138,7 @@ void func_8013788C();
 void func_8014F210(void);
 void func_8015185C(void);
 s32 func_801335A0();
-void func_80134A18();
+s32 func_80134A18();
 void func_80134EBC(void);
 void func_8013506C();
 void func_80135220(void);
@@ -206,8 +206,7 @@ void func_8014F044(void);
 void func_80146D60(s32 arg0);
 void func_801471D0(s32 arg0);
 void func_80147488(s32 arg0, s16 *arg1, s32 arg2);
-extern s32 D_8015F3E0;
-extern s32 D_8015F3E4;
+extern s32 D_8015F3E0[2]; /* two model slots, T-19011 */
 extern s16 *D_8015F82C[2]; /* model data pointers for func_80147488, T-19002 */
 extern s16 D_8015F3E8;
 

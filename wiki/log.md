@@ -15688,3 +15688,17 @@ Created [[tickets/T-18000-types-first-shugaku]] (wave 3 types-first pass for SHU
 ## [2026-10-16] ticket | T-18000 Done
 
 [[tickets/T-18000-types-first-shugaku]] In Review to Done: code review against `CODING_STANDARDS.md` found 2 minor items (missing comments on the callback-index and variable-reuse idioms in `func_80134B94` and `func_80139054`), fixed in comments only; SHUGAKU sha1 OK, headers OK. 5 functions matched (2,292 bytes). Card moved in [[kanban]], line in [[index]].
+## [2026-10-16] ticket | T-19011 In Progress
+[[tickets/T-19011-w3-d-p11]] created for wave 3 package w3-d-p11 (TACO `src/ovl/TACO/80133870.c`, `src/ovl/TACO/80134930.c`: `func_8013506C`, `func_80134A18`, `func_80133E98`). Worktree `w3-d-p11` from `w2-good`.
+
+## [2026-10-16] build | T-19011 guarded drafts and tooling notes
+`src/ovl/TACO/80134930.c`: `func_8013506C` (29 differing lines) and `func_80134A18` (36 lines, 18 instructions) kept as `NON_MATCHING` drafts with comments; `func_80133E98` stays `INCLUDE_ASM` (226 lines, four spellings). `include/ovl/TACO.h`: `D_8015F3E0[2]`, `s32 func_80134A18();`. Findings in [[matching-notes]] ("T-19011"), rows in [[data/t0018-cases]] and [[register-cheatsheet]]. Default build: unit TACO sha1 OK.
+
+## [2026-10-16] ticket | T-19011 In Review
+[[tickets/T-19011-w3-d-p11]] In Progress to In Review: 0 of 3 functions matched, 2 guarded drafts, 1 left. Awaiting the code review against `CODING_STANDARDS.md` and the final checks.
+
+## [2026-10-16] build | T-19011 final checks
+Clean build 27/27 (all unit sha1 OK, TACO included), `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK on branch w3-d-p11. See [[tickets/T-19011-w3-d-p11]].
+
+## [2026-10-16] ticket | T-19011 Done
+[[tickets/T-19011-w3-d-p11]] In Review to Done: code review against `CODING_STANDARDS.md` found one low-severity item (matching-driven spellings in the two guarded drafts had no in-source note), fixed with three comments; rebuild 6/6 and TACO sha1 OK. 0 of 3 functions matched: `func_8013506C` (29 lines) and `func_80134A18` (36 lines) stay guarded drafts, `func_80133E98` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
