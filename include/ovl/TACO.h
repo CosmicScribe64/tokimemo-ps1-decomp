@@ -235,6 +235,7 @@ extern s32 D_8015F4F0;
 extern s32 D_80160460;
 extern s32 D_80160464;
 extern s32 D_80160470;
+extern u16 *D_801FAA84;
 extern s32 D_8015F490;
 extern s32 D_8015F494;
 extern s32 D_8015F498;

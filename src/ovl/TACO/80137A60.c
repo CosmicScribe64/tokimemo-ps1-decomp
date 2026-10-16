@@ -76,7 +76,47 @@ void func_80137CBC(s32 arg0) {
     func_80044750(0x300);
 }
 
+#ifdef NON_MATCHING
+void func_80137D00(void) {
+    u16 *p;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        if (D_8015EDEC < 3) {
+            func_80137CBC(D_8015EDEC);
+            D_8015EDEC += 1;
+            D_800E6280.unk_110D += 1;
+        } else {
+            func_8004284C();
+            p = D_801FAA84;
+            p[5] = 0x28;
+            p[11] = 0xFF00;
+            p[18] = 0xFF00;
+            p[25] = 0xFF00;
+            p[32] = 0xFF00;
+            func_80137B14(2);
+            D_8011ED3E -= 0x30;
+        }
+        break;
+    case 1:
+        if (func_800460EC() & 4) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 2:
+        if (func_800460EC() & 2) {
+            D_800E6280.unk_110D = 0;
+        }
+        break;
+    }
+    func_800578F4(2);
+    if (D_800E6280.unk_10F8 & 1) {
+        D_8011ED3E -= 1;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80137A60", func_80137D00);
+#endif
 
 void func_80137E48(void) {
     switch (D_800E6280.unk_110D) {
