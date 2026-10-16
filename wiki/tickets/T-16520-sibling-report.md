@@ -1,7 +1,7 @@
 ---
 id: T-16520
 title: Matched-sibling report for work packages
-status: In Review   # Backlog | Ready | In Progress | In Review | Done  (must match column in wiki/kanban.md)
+status: Done   # Backlog | Ready | In Progress | In Review | Done  (must match column in wiki/kanban.md)
 assignee: claude-tooling
 created: 2026-10-16
 updated: 2026-10-16
@@ -26,7 +26,7 @@ New tool `tools/siblings.py`; branch `t16520-siblings`. No file under `src/` is 
 
 ## Notes
 
-Tool: `tools/siblings.py` (docstring has the usage), tests `tools/test_siblings.py` (44 tests), docs: section "Matched siblings for work packages" and step 3a in [[decompile-workflow]]. One refactor outside the new file: `dupes.asm_sources` (stale-file and matched/guarded rules of `load_funcs`, now shared; `load_funcs` returns the same list, `tools/test_dupes.py` has a test for it). No file under `src/` or `drafts/` touched.
+Tool: `tools/siblings.py` (docstring has the usage), tests `tools/test_siblings.py` (45 tests), docs: section "Matched siblings for work packages" and step 3a in [[decompile-workflow]]. One refactor outside the new file: `dupes.asm_sources` (stale-file and matched/guarded rules of `load_funcs`, now shared; `load_funcs` returns the same list, `tools/test_dupes.py` has a test for it). No file under `src/` or `drafts/` touched.
 
 Design decisions
 - Score = difflib ratio of register/immediate/branch-offset/jump-target-erased opcode sequences (own `op_token`; `regdiff.key_shape` keeps branch offsets, jump targets and shift amounts, `neardupes`/`queue.compute_groups` are hash groups).
@@ -58,3 +58,24 @@ Spot check by eye (notes written with `--package`, both listings read)
 5. BUNKAKEN/func_80140F60 <- BUNKASAI/func_8013B190, 0.704: both read the `D_80122EB8` mode struct, store 2 to its second word and branch on its first; the target has more statements around it. Weakest tier, still the right family.
 
 ## Comments
+
+### Code review, 2026-10-16 (against CODING_STANDARDS.md and the ticket)
+
+Result: no blocking findings; 2 documentation fixes and 1 test added, all committed (`T-16520: review fixes ...`).
+
+Checked
+- Diff `w2-good...t16520-siblings`: only `tools/dupes.py`, `tools/siblings.py`, `tools/test_dupes.py`, `tools/test_siblings.py` and wiki files. Nothing under `src/` or `drafts/`; no asm, game data or binaries staged (`build/` and `asm/` are gitignored; the notes the tool writes go to `build/siblings/`).
+- Tests in Docker: `tools/test_siblings.py` 45 OK (44 plus the new one), whole suite `unittest discover -s tools` 1062 tests OK (3 skipped; 1061 before the new test).
+- `dupes.asm_sources` refactor: `load_funcs` old (w2-good) against new on the real tree, with and without `near`, and with `units=['TACO']`: same functions, same keys, paths, relocs and order (6,958 / 6,958 / 406).
+- Tool run: whole tree (warm cache 19 s, `--no-cache` 28 s, JSON of both byte-identical); tier table, clone counts and cluster figures equal the ticket (46 / 24,616 / 12, 36 / 19,676, 68 / 28,556, 855 / 748,888; 59 clusters, 139 functions, 102,340 bytes, 42 without a sibling, 55 functions / 45,348 bytes). `--check-recall 300 --recall-max-insns 100000`: 50 of 50 best sibling and top 3 agree. `--package` on named functions, a `file:` entry, a bare name, a missing name (reported, exit 1 when nothing resolves) and the JSON of `queue.py --plan 2 --json`: notes and INDEX.md as documented. Spot-check numbers of pairs 1 to 5 reproduced (28 / 53 / 0 for pair 1, the note listings match the prose).
+- Standards: Python 3, stdlib only, docstring with usage, paths as arguments, non-zero exit on `--check-recall` mismatch or an empty `--package`; tests use synthetic asm and C only; commits small with ticket id and the Co-Authored-By trailer; wiki: ticket, kanban, index and log consistent.
+
+Findings fixed
+1. The `--package` examples in the `tools/siblings.py` docstring and in `wiki/decompile-workflow.md` named `TACO/func_8013C0A8` (no such function in TACO) and `file:src/ovl/TACO.c` (the tree has `src/ovl/TACO/<address>.c`), so neither resolved. Replaced by `TACO/func_80135638`, `BUNKAKEN/func_80140F60`, `file:src/ovl/TACO/80134930.c` (also `file:TACO/80134930`, `file:80134930`), run and checked. New test `test_resolve_file_entries_in_the_per_object_layout` covers the real layout (the older tests used a flat `src/ovl/<NAME>.c`).
+2. Docs: a cluster's `min_ratio` is the lowest ratio of any member pair found, not the weakest chain link; `INDEX.md` lists the last `--package` run only and older notes stay in the folder.
+
+Not blocking, left as is
+- Branch base is an older `w2-good` (7f081d79); a trial merge into the current `w2-good` (9a960bdf) conflicts only in `wiki/log.md` (both sides append): keep both entries.
+- `--out-dir` accepts any path; notes contain game asm, so it should stay under `build/` (documented).
+- `--unit` and `--skip-unit` are ignored with `--package` (documented in `--help`).
+

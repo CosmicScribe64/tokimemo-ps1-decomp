@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # Wiki Index
@@ -21,7 +21,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
-- [[tickets/T-16520-sibling-report|T-16520]] Matched-sibling report for work packages: closest matched functions for every unmatched one: 150 of 1,005 have a sibling >= 0.70, 59 unmatched clusters (In Review).
+- [[tickets/T-16520-sibling-report|T-16520]] Matched-sibling report for work packages: closest matched functions for every unmatched one: 150 of 1,005 have a sibling >= 0.70, 59 unmatched clusters (Done).
 - [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210]] Wave 2 package w2-p01: RPG_BAT census drafts, 5 of 5 matched (Done).
 - [[tickets/T-16200-matching-wave-2|T-16200]] Matching wave 2: 24 new packages and four resumed wave-1 packages (In Progress).
 - [[tickets/T-11920-local-storage-cleanup|T-11920]] Local storage cleanup with verified backups (In Review; cleanup complete).
