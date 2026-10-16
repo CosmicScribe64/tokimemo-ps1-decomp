@@ -149,3 +149,7 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ### Matching stage, package p4 (T-16564)
 
 [[tickets/T-16564-taco-types-first-p4]]: from the redrafts, 6 of 8 functions matched in about an hour (`func_801563E4`, `func_80154960`, `func_80138D08`, `func_801557E8`, `func_80138964`, `func_801553AC`, 5,852 bytes), two register-only near misses left (`func_80138B2C`, `func_80137D00`). The types that carried them: `POLY_F4` for the fade packet in `func_80154960`, the `TcPos` by-value arguments (`func_801563E4`, `func_801553AC`), a 10-entry selector table of `GameState.unk_110D`, and `D_8015F490[5]` (the five score words) with `D_8015F4A4`/`D_8015F4A8` (target and shown score) as scalars. Details and the idioms (m2c temporaries inlined, `case 8: case 9: default:`, per-statement `idx + base` spelling, a reset arm without a value) in [[matching-notes]], "T-16564". The T-16560 numbers hold: the remaining distance of these handlers was register allocation and local layout, and for the functions with no sibling it took 8 to 15 minutes each once the draft's temporaries were removed.
+
+## Matching stage, package w3-d-p02 (T-19002)
+
+[[tickets/T-19002-w3-d-p02]] (`801447D0.c`, `80137A60.c`): `func_801449D8` (star-field packets, FAKE frame pad), `func_80145DC4` (eight model-select loops over `s16 *D_8015F82C[2]`) and `func_80137D00` (pointer loaded through its absolute address, FAKE) matched, 2,008 bytes; `func_8014616C` stays a 3-row draft (frame counter promoted by IDO, T-0018 `reverse` row). Notes: [[matching-notes]], "T-19002".

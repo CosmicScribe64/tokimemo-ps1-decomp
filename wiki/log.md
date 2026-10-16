@@ -15384,3 +15384,6 @@ pool; merges run in parallel through a locked, self-cleaning merge script.
 
 ## [2026-10-16] ticket | T-19002 Wave 3 package w3-d-p02 started
 Opened [[tickets/T-19002-w3-d-p02]] (In Progress): TACO `src/ovl/TACO/801447D0.c` and `src/ovl/TACO/80137A60.c`, work list `func_801449D8`, `func_80137D00`, `func_80145DC4`, `func_8014616C`. Part of [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-16] ticket | T-19002 In Review, 3 of 4 functions matched
+[[tickets/T-19002-w3-d-p02]] moved to In Review: TACO `src/ovl/TACO/801447D0.c` and `src/ovl/TACO/80137A60.c`. Matched `func_801449D8`, `func_80145DC4` and `func_80137D00` (2,008 bytes); `func_8014616C` stays a 3-row NON_MATCHING draft. New FAKEs: `u8 pad[0x130]` frame reserve, absolute-address pointer load in `func_80137D00`, absolute-address read in the guarded `func_8014616C`. Notes in [[matching-notes]], rows in [[data/t0018-cases]], cheat sheet rows in [[register-cheatsheet]], package line in [[taco-family-results]].

@@ -23,7 +23,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-19002-w3-d-p02|T-19002]] Wave 3 package w3-d-p02: TACO `801447D0.c`, `80137A60.c`, 4 listed functions (In Progress).
+- [[tickets/T-19002-w3-d-p02|T-19002]] Wave 3 package w3-d-p02: TACO `801447D0.c`, `80137A60.c`, 3 of 4 functions matched (2,008 B), `func_8014616C` a 3-row draft (In Review).
 - [[tickets/T-16990-wave-3-conveyor|T-16990]] Wave 3 conveyor: types-first passes on 19 units feeding a 7-worker matcher pool (In Progress).
 - [[tickets/T-16564-taco-types-first-p4|T-16564]] Types-first pilot package pt-taco-p4: TACO `80154960.c`, `80137A60.c`, `80138890.c`, 6 of 8 functions matched (5,852 B), 2 guarded register near misses (Done).
 - [[tickets/T-16554-pt-taiiku-p4|T-16554]] Types-first pilot package pt-taiiku-p4: TAIIKU `80132000.c`, `80140810.c`, `80142240.c`, 4 of 7 functions matched (3,208 B), 2 guarded, 1 left (Done).
