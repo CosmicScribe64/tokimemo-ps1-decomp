@@ -162,3 +162,11 @@ signed nine-byte rows, `D_800C6200[8]`, `D_800C62C0[32]`, `D_80125DA0`/`D_80125E
 pass (T-17000)").
   the 30 highest proposals are step-table copies, not records ([[date-family-results]], T-17200); the same in EVENT
   ([[event-family-results]], T-17400).
+
+## BUNKA_SD types-first pass (T-18100)
+
+`BsdEvent` (frame, command word) and the three scenes' event-list tables (`BsdEvent *[]`) and text tables,
+plus seven loaded picture sets typed as `s32 *` page table, two `u8 *` images and a palette word, all in
+`include/ovl/BUNKA_SD.h`. The scene control words stay separate scalars (matched code). Evidence for a
+main-exe aggregate around `D_80122EA8`: `func_80135F38` compares `D_80122EAC` with the constant first,
+which IDO gives only for a non-plain operand. Details: [[bunka-sd-family-results]].

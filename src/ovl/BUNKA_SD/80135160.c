@@ -144,7 +144,7 @@ void func_80135630(void) {
     D_80120653 = 0x80;
     D_8012065C = D_8013C724;
     D_80120660 = D_8013C728;
-    D_80120684 = D_8013C720;
+    D_80120684 = (u8 *)D_8013C720;
     D_80120666 = (s16) D_80122EAC;
     D_80120656 = 1;
     D_80120657 = 0;
@@ -188,14 +188,14 @@ void func_80135630(void) {
     D_801206DD = 0x80;
     D_8012071B = 0;
     D_801206DC = 0;
-    load_tpage_buf_lock(5, (*(s32 *)D_8013C720), 1);
-    load_tpage_buf_lock(6, *(s32 *)((unsigned char *)D_8013C720 + (4)), 1);
-    load_tpage_buf_lock(7, *(s32 *)((unsigned char *)D_8013C720 + (8)), 1);
-    load_tpage_buf_lock(8, *(s32 *)((unsigned char *)D_8013C720 + (12)), 1);
-    load_tpage_buf_lock(9, *(s32 *)((unsigned char *)D_8013C720 + (16)), 1);
-    load_tpage_buf_lock(0xA, *(s32 *)((unsigned char *)D_8013C720 + (20)), 1);
-    load_tpage_buf_lock(0x25, *(s32 *)((unsigned char *)D_8013C720 + (24)), 1);
-    load_tpage_buf_lock(0x26, *(s32 *)((unsigned char *)D_8013C720 + (28)), 1);
-    load_tpage_buf_lock(0x27, *(s32 *)((unsigned char *)D_8013C720 + (32)), 1);
-    load_tpage_buf_lock(0x28, *(s32 *)((unsigned char *)D_8013C720 + (36)), 1);
+    load_tpage_buf_lock(5, D_8013C720[0], 1);
+    load_tpage_buf_lock(6, D_8013C720[1], 1);
+    load_tpage_buf_lock(7, D_8013C720[2], 1);
+    load_tpage_buf_lock(8, D_8013C720[3], 1);
+    load_tpage_buf_lock(9, D_8013C720[4], 1);
+    load_tpage_buf_lock(0xA, D_8013C720[5], 1);
+    load_tpage_buf_lock(0x25, D_8013C720[6], 1);
+    load_tpage_buf_lock(0x26, D_8013C720[7], 1);
+    load_tpage_buf_lock(0x27, D_8013C720[8], 1);
+    load_tpage_buf_lock(0x28, D_8013C720[9], 1);
 }

@@ -1,0 +1,8 @@
+{
+ "base": "",
+ "files": {
+  "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+  "include/main_api.h": "deb6d883ad1d5497d298912e64da1749a08bbd0e55203309bd77bf4523f16fc5",
+  "include/ovl/BUNKA_SD.h": "1bb962ea96cffd626bd1932c64f50366ca2152dca9a7bf08be56e4238e567bf1"
+ }
+}

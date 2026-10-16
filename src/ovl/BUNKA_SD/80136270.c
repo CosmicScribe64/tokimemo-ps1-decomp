@@ -102,7 +102,7 @@ void func_80136578(void) {
     D_80120653 = 0x80;
     D_8012065C = D_8013C744;
     D_80120660 = D_8013C748;
-    D_80120684 = D_8013C740;
+    D_80120684 = (u8 *)D_8013C740;
     D_80120666 = (s16) D_80122EAC;
     D_80120656 = 1;
     D_80120657 = 0;
@@ -142,18 +142,18 @@ void func_80136578(void) {
     D_801206DD = 0x80;
     D_8012071B = 0;
     D_801206DC = 0;
-    load_tpage_buf_lock(5, ((s32 *)D_8013C740)[0], 1);
-    load_tpage_buf_lock(6, ((s32 *)D_8013C740)[1], 1);
-    load_tpage_buf_lock(7, ((s32 *)D_8013C740)[2], 1);
-    load_tpage_buf_lock(8, ((s32 *)D_8013C740)[3], 1);
-    load_tpage_buf_lock(9, ((s32 *)D_8013C740)[4], 1);
-    load_tpage_buf_lock(0xA, ((s32 *)D_8013C740)[5], 1);
-    load_tpage_buf_lock(0x25, ((s32 *)D_8013C740)[6], 1);
-    load_tpage_buf_lock(0x26, ((s32 *)D_8013C740)[7], 1);
-    load_tpage_buf_lock(0x27, ((s32 *)D_8013C740)[8], 1);
-    load_tpage_buf_lock(0x28, ((s32 *)D_8013C740)[9], 1);
-    load_tpage_buf_lock(0x29, ((s32 *)D_8013C740)[10], 1);
-    load_tpage_buf_lock(0x2A, ((s32 *)D_8013C740)[11], 1);
+    load_tpage_buf_lock(5, D_8013C740[0], 1);
+    load_tpage_buf_lock(6, D_8013C740[1], 1);
+    load_tpage_buf_lock(7, D_8013C740[2], 1);
+    load_tpage_buf_lock(8, D_8013C740[3], 1);
+    load_tpage_buf_lock(9, D_8013C740[4], 1);
+    load_tpage_buf_lock(0xA, D_8013C740[5], 1);
+    load_tpage_buf_lock(0x25, D_8013C740[6], 1);
+    load_tpage_buf_lock(0x26, D_8013C740[7], 1);
+    load_tpage_buf_lock(0x27, D_8013C740[8], 1);
+    load_tpage_buf_lock(0x28, D_8013C740[9], 1);
+    load_tpage_buf_lock(0x29, D_8013C740[10], 1);
+    load_tpage_buf_lock(0x2A, D_8013C740[11], 1);
 }
 
 void func_80136904(void) {

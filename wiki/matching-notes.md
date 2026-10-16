@@ -5947,3 +5947,16 @@ Idioms for [[register-cheatsheet]] (five rows) and [[data/t0018-cases]] (three r
 - **Tooling.** Loaded machine (load average over 30): one `funcdiff` call took 16 s alone and minutes behind other jobs. A private dump script (compile the guarded file with `funcdiff_verify.compile_guarded`, print the function with relocation symbols joined to their instruction) made the store-order experiments quick. Never put a bare `cat > file` in a one-liner that has no heredoc for it.
 
 Cheat sheet rows: [[register-cheatsheet]] (chain stores, call-saved quotient, range order). Open rows: [[data/t0018-cases]].
+## BUNKA_SD types-first pass (T-18100)
+
+- **Display-record loops** (five loaders matched): `for (i = 0; i < n; i++) { func_80048F64(i + 0x60); ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_01 = 4; ... }`.
+  m2c prints a pointer from `D_8011ECD0` with offsets 0x1981.. and the step in the middle of the stores; the
+  redraft rewrite `record-walk` (`drafts/T-18100/redraft.py`) prints `p[96].f` with the step at the end.
+- **A word global compared with the constant first** (`beq a0,v1` with 3 in `a0`): uopt only keeps that order when
+  the global is not a plain variable. `func_80135F38` matched with `(&D_80122EAC)[0] != 3` (FAKE); the real source
+  reads a field of an undeclared aggregate. The other way round, GameState fields are non-plain, so a draft that
+  matched an old scalar name (`D_800E7384`) can lose rows when it is migrated to `D_800E6280.unk_1104`
+  (`func_80139290`: 133 to 157).
+- `(u8)D_80122EB0` on an `s32` global gives the `lbu` the original has (`func_80137890`).
+- Open: the event interpreters (`func_80133D54` and two copies) compute `(cmd & 0xFF0000) >> 16` once before the
+  image test; every C form tried lets IDO sink it into both call branches (57 rows). Details: [[bunka-sd-family-results]].

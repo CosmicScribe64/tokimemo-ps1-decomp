@@ -1,0 +1,137 @@
+[
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/80133540.c",
+  "func": "func_80133D54",
+  "size": 592,
+  "guarded": false,
+  "source_hash": "3e4bef087d071ad58feb45c2b5f12cad3c2a18ed1e56b43f758fc0b9c83bd5e2",
+  "scope": "BUNKA_SD:func_80133D54"
+ },
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/80134260.c",
+  "func": "func_80134418",
+  "size": 144,
+  "guarded": true,
+  "source_hash": "ef5954f0ba50cf38fb0a044b30b9edb755a5152b30b9e6326661fbb660ae1388",
+  "scope": "BUNKA_SD:func_80134418"
+ },
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/80134260.c",
+  "func": "func_801344A8",
+  "size": 148,
+  "guarded": false,
+  "source_hash": "ef5954f0ba50cf38fb0a044b30b9edb755a5152b30b9e6326661fbb660ae1388",
+  "scope": "BUNKA_SD:func_801344A8"
+ },
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/80134540.c",
+  "func": "func_80134850",
+  "size": 232,
+  "guarded": false,
+  "source_hash": "79607d077b9095a47dec5247dba1a53fddf202692b0b6ef4331a3bc9cbfac3bb",
+  "scope": "BUNKA_SD:func_80134850"
+ },
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/80134540.c",
+  "func": "func_80134938",
+  "size": 592,
+  "guarded": false,
+  "source_hash": "79607d077b9095a47dec5247dba1a53fddf202692b0b6ef4331a3bc9cbfac3bb",
+  "scope": "BUNKA_SD:func_80134938"
+ },
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/80134540.c",
+  "func": "func_80134D94",
+  "size": 960,
+  "guarded": false,
+  "source_hash": "79607d077b9095a47dec5247dba1a53fddf202692b0b6ef4331a3bc9cbfac3bb",
+  "scope": "BUNKA_SD:func_80134D94"
+ },
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/80135160.c",
+  "func": "func_801355AC",
+  "size": 132,
+  "guarded": false,
+  "source_hash": "2559437b29ef47bdda5a8f92f6eb7f68abd5ce239a83554e9be249712928214a",
+  "scope": "BUNKA_SD:func_801355AC"
+ },
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/801359B0.c",
+  "func": "func_80135CD4",
+  "size": 612,
+  "guarded": false,
+  "source_hash": "08f13efea80d389454e5ab9a5993eaca6a863a83c5d25044b7dbc4fa7b875bb4",
+  "scope": "BUNKA_SD:func_80135CD4"
+ },
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/801359B0.c",
+  "func": "func_80135F38",
+  "size": 640,
+  "guarded": false,
+  "source_hash": "08f13efea80d389454e5ab9a5993eaca6a863a83c5d25044b7dbc4fa7b875bb4",
+  "scope": "BUNKA_SD:func_80135F38"
+ },
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/801369D0.c",
+  "func": "func_80136F3C",
+  "size": 640,
+  "guarded": false,
+  "source_hash": "1440c962fb7f59db9f1a9bd959888e0a945b95e1c305620297a76e093174f821",
+  "scope": "BUNKA_SD:func_80136F3C"
+ },
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/801369D0.c",
+  "func": "func_801373D0",
+  "size": 592,
+  "guarded": false,
+  "source_hash": "1440c962fb7f59db9f1a9bd959888e0a945b95e1c305620297a76e093174f821",
+  "scope": "BUNKA_SD:func_801373D0"
+ },
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/80137890.c",
+  "func": "func_80137890",
+  "size": 676,
+  "guarded": false,
+  "source_hash": "cea08aa02428e0a7f7f4e911a016ae70d564720a29ba8af8419ae0b69c7000da",
+  "scope": "BUNKA_SD:func_80137890"
+ },
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/80137B40.c",
+  "func": "func_8013842C",
+  "size": 592,
+  "guarded": false,
+  "source_hash": "ef1c66ae74bac628c9aeb713653c314b6bd41f79e4b8357aa03a329febfeb890",
+  "scope": "BUNKA_SD:func_8013842C"
+ },
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/801388D0.c",
+  "func": "func_80139290",
+  "size": 1516,
+  "guarded": false,
+  "source_hash": "73ddab660878f674ca7dc321535cbf3651222f164f6ecdd47f35a8e3e8bb8520",
+  "scope": "BUNKA_SD:func_80139290"
+ },
+ {
+  "unit": "BUNKA_SD",
+  "src": "src/ovl/BUNKA_SD/801388D0.c",
+  "func": "func_8013987C",
+  "size": 148,
+  "guarded": true,
+  "source_hash": "73ddab660878f674ca7dc321535cbf3651222f164f6ecdd47f35a8e3e8bb8520",
+  "scope": "BUNKA_SD:func_8013987C"
+ }
+]
