@@ -136,3 +136,7 @@ Eight file-disjoint packages from the orchestrator's `mklists3.py` (lists in its
 ### Wave 3 result: w3-date-p01 (T-17201)
 
 `func_80147958` (4,044 bytes) matched in plain C; the old guard was four fade rows, fixed by comparing the `u8` local `value` instead of its masked copy (two FAKE entries stay from T-12100: the `s32` type with bare returns, the unused header view). `func_8014718C` (1,996 bytes) was rewritten by hand in the shape of `func_80147958` (the same movie player with 19 steps) and stays guarded at 26 differing lines, down from 672 rows; its declaration in `DATE.h` is now `s32`. Details and the two left-over register gaps: [[matching-notes]], "T-17201".
+
+### Wave 3 result: w3-date-p08 (T-17208)
+
+`func_8014AF88` (248 bytes) matched in plain C: the argument of `func_8009B3C0` and the loop calls is the pointer variable `dop` (`0x801F8000` plus steps), as in TACO `func_801471D0`. `func_8014A8FC` (1,140 bytes, a frame timeline with the light fade, the step loops and the ordering-table clear) was rewritten by hand and stays guarded at 34 differing lines, all of them register choices in the two light blocks (T-0018 row, same gap as TACO `func_80134A18`); two FAKE entries (byte view of `D_8012276C`, `s32` return with no `return`, and `func_8014A8FC` is `s32` in `DATE.h`). The three 416-byte rotation helpers stay `INCLUDE_ASM` (hand-written libgte, probe: 86 of 104 rows differ). Details: [[matching-notes]], "T-17208".

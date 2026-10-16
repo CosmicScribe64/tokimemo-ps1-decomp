@@ -16163,3 +16163,7 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 ## [2026-10-16] ticket | T-17208 In Progress
 
 [[tickets/T-17208-w3-date-p08]] created and started: wave 3 package for DATE `src/ovl/DATE/8014A1B0.c`, `8015A640.c`, `8015A7E0.c`, `8015A980.c` (5 functions), from [[tickets/T-17200-types-first-date]].
+
+## [2026-10-16] ticket | T-17208 In Progress to In Review
+
+[[tickets/T-17208-w3-date-p08]] In Progress to In Review: 1 of 5 functions matched (`func_8014AF88`), `func_8014A8FC` guarded at 34 lines (light fade register gap, same as TACO `func_80134A18`), the three libgte rotation helpers stay `INCLUDE_ASM` (probe: 86 of 104 rows). Notes in [[matching-notes]], rows in [[register-cheatsheet]] and [[data/t0018-cases]], family page [[date-family-results]] updated.
