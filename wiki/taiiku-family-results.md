@@ -98,6 +98,6 @@ Worktree `pt-taiiku-p2`, 9 functions from the redrafts, about 2 hours. Result: `
 | `func_8013B78C` | 448 | redraft 136 | draft 45 lines, not kept |
 | `func_8013BCEC` | 524 | redraft 113 | draft 49 lines, not kept |
 | `func_80139AB0` | 812 | redraft 237 | draft 99 lines, not kept |
-| `func_8013B94C` | 496 | redraft 149 | not tried beyond the asm |
+| `func_8013B94C` | 496 | redraft 149 | draft 80 lines (60 with a volatile counter view, address kept in a register), not kept |
 
 What the types did and did not do here: the new `TaiikuBall`, `TaiikuA0`, `TaiikuCamera0C` and `TaiHalves` fields made the hand drafts of the counter family short, but none of the failures there was a type problem: they are promotion and ugen-temporary gaps (the original reloads the counter at every test; IDO promotes it). The wins came from compiler behaviour found with `regdiff` and a frame probe: bit-order colouring of leaf functions, the phantom spill slot of `A[f()] = v`, and the parameter type of a callee.

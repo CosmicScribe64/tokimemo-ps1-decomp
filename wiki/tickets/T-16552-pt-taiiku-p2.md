@@ -31,7 +31,7 @@ Worktree `tokimemo-wt/pt-taiiku-p2`, branch `pt-taiiku-p2` from `w2-good`. Owner
 | `func_80138DF8` | 1,336 | `NON_MATCHING`, 3 differing lines (was 30) |
 | `func_80138AA8` | 848 | `NON_MATCHING`, 22 differing lines, both FAKE pads replaced by `idx` |
 | `func_8013B608`, `func_8013B3B0`, `func_8013B78C`, `func_8013BCEC`, `func_80139AB0` | 2,700 | drafts of 33 to 111 lines, not kept (`INCLUDE_ASM`); rows in [[data/t0018-cases]] |
-| `func_8013B94C` | 496 | not tried beyond the asm (same family as `func_8013B3B0`) |
+| `func_8013B94C` | 496 | draft 80 lines (IDO promotes the counter in $a0 as in `func_8013B3B0`); with a `volatile u16` view of the counter 60 lines, but then uopt keeps `0x801499A0` in $a1 and addresses `2(a1)`; not kept |
 
 Also: `cd_read_sectors` gets a file-local `u32` view in `80138950.c` (`MAIN_API_OVERRIDE_cd_read_sectors`, guarded in `include/main_api.h`); the tree builds with `u32` in the definition too, which would remove the override (needs a main-exe owner). Notes: [[matching-notes]] "T-16552", [[taiiku-family-results]], [[register-cheatsheet]].
 
