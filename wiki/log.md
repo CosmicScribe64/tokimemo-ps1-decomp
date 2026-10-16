@@ -14932,3 +14932,7 @@ T-11690). TT stays excluded (issue #2).
 ## [2026-10-15] ticket | T-16230 Wave 2 package w2-p03 opened
 
 Opened [[tickets/T-16230-w2-date-80150010]] (In Progress) under [[tickets/T-16200-matching-wave-2]]: branch `w2-p03` from `w2-good`, owned file `src/ovl/DATE/80150010.c`, work list DATE `func_801511B4`, `func_80150460`, `func_80150ED4`, `func_80150C78`.
+
+## [2026-10-16] ticket | T-16230 Wave 2 package w2-p03 to In Review
+
+[[tickets/T-16230-w2-date-80150010]] moved to In Review: 4 of 4 functions matched in plain C (DATE `func_801511B4`, `func_80150460`, `func_80150ED4`, `func_80150C78`; 1,620 bytes), so `src/ovl/DATE/80150010.c` has no `INCLUDE_ASM` left. Keys: real aggregates (`D_801217D0[57]`, display records 96/98 of `D_8011ECD0`), a chain assignment through record elements, a `GameState *g` pointer, and `order_search` over the declarations for a spilled local's stack home. Notes in [[matching-notes]] ("T-16230"), update line in [[data/t0018-cases]].
