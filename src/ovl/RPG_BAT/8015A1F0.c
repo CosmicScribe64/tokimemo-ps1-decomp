@@ -111,7 +111,7 @@ void func_8015A6D4(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-12040, two dead register copies ($a1 = v, $a0 = x) and the order of the D_8015EC54 store differ, 17 lines */
+/* NON_MATCHING: T-17105, 12 differing lines; the original keeps two dead copies ($a1 = v, $a0 = x) of the values stored to D_8015EC54 and D_8015EC68 and stores x from $a0 */
 void func_8015A744(void) {
     u8 *p;
     RpgMotion20 *m;
@@ -134,8 +134,8 @@ void func_8015A744(void) {
                 r = func_8013E9A8(8) + 5;
                 m->dx = r;
                 v = func_8013E9A8(r);
-                p[0x2423] = 0x94;
                 n = -m->dx;
+                p[0x2423] = 0x94;
                 *(s16 *)(p + 0x244E) = n;
                 *(s16 *)(p + 0x2452) = v;
                 x = *(s16 *)(p + 0x2446);
@@ -165,10 +165,8 @@ void func_8015A8B4(void) {
     s32 i;
     s32 v;
     s32 x;
-    s32 dead;
 
     for (i = 0; i < 8; i++) {
-        dead = D_8015EC68;
         x = ((RpgObjectRecord44 *)D_8011ECD0)[i + 136].unk_26;
         if ((x < -0xB4) || (((RpgObjectRecord44 *)D_8011ECD0)[i + 136].unk_2A >= 0x8D)) {
             func_8013E810(i + 0x28, 7, 1, 0);
@@ -177,7 +175,7 @@ void func_8015A8B4(void) {
         v = ((0x70 - x) << 0xC) / 240;
         ((RpgObjectRecord44 *)D_8011ECD0)[i + 136].unk_1A = v;
         ((RpgObjectRecord44 *)D_8011ECD0)[i + 136].unk_1C = v;
-        D_8015EC68 = x;
+        D_8015EC58.unk_10 = x;
     }
 }
 #else
