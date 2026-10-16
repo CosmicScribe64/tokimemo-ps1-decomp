@@ -92,7 +92,52 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013F250", func_80140028);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013F250", func_80140364);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013F250", func_801404FC);
+s32 func_801404FC(s32 arg0, s32 arg1) {
+    /* FAKE: the unused k and j reserve two of the original's frame homes (dist sits at 0x3C,
+     * the frame is 0x48). T-19014. */
+    s32 i;
+    s32 k;
+    s32 dist;
+    TcActor *actor;
+    Tc14 *table;
+    s32 j;
+    Tc14 *rec;
+
+    if (arg0 == 0) {
+        actor = D_8015EDB4;
+        table = D_8015E4F0;
+    } else {
+        table = D_8015E630;
+        actor = &D_8015EDB4[8];
+    }
+    if (arg1 & 0x20) {
+        rec = table;
+        for (i = 0; i < 0x140; i += 0x14) {
+            if (!(rec->unk13 & 0x80)) {
+                break;
+            }
+            rec++;
+        }
+        if (i >= 0x140) {
+            return -1;
+        }
+        if (arg0 == 0) {
+            func_801335A0(1, 0x503);
+        }
+        rec->unk13 = 0x91;
+        rec->unk0 = actor->unk74;
+        rec->unk2 = actor->unk76 + 0x40;
+        rec->unk4 = actor->unk78 + 0x40;
+        rec->unk8 = 0;
+        rec->unkA = 0;
+        rec->unkC = -0x100;
+        rec->unk12 = 0;
+        func_801407D4(&dist, *(TcPos *)rec);
+        rec->unk11 = dist;
+        return 1;
+    }
+    return 0;
+}
 
 s32 func_80140638(s32 *arg0) {
     /* FAKE: explicit groups and first count placement preserve the unrolled

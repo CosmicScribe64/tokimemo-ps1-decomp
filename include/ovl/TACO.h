@@ -110,6 +110,7 @@ typedef struct TcActor {
 extern TcActor *D_8015EDB4;
 
 void func_80140028(s32 arg0);
+s32 func_801407D4(s32 *arg0, TcPos arg1);
 void func_80140E18(s32 arg0);
 void func_8015ABF0(void);
 void func_801563E4(s32 arg0);
