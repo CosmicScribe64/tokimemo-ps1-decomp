@@ -1,8 +1,10 @@
+#define MAIN_API_OVERRIDE_func_80053418 /* this object calls it as void (no v0 result in the call block, func_8006EA40); main_api.h has s32 */
 #define MAIN_API_OVERRIDE_func_80066104 /* the original callers pass a string the callee ignores; main_api.h has (void) */
 #include "common.h"
 #include "game.h"
 
 void func_80066104();
+void func_80053418();
 
 void schedule_init(void) {
     if (D_800E6280.unk_1109 == 0) {
@@ -177,13 +179,71 @@ void func_8006D52C(s32 *arg0, s32 arg1, s32 arg2) {
     }
 }
 
+/* NON_MATCHING: T-11670, 5 differing lines; the original keeps the second loop's start index as a copy (move v1,v0), IDO folds it into the promoted unk_71C. */
+#ifdef NON_MATCHING
+void func_8006D6E0(void) {
+    GameState *gs;
+    s32 n;
+    s32 i;
+
+    gs = &D_800E6280;
+    n = D_800E6280.unk_041;
+    for (i = 0; i < 32; i++) {
+        if (D_800E6280.unk_69C[i].unk_00 == 0xFB) {
+            if (n == 0) {
+                gs->unk_71C = i;
+                if (D_800E6280.unk_69C[i - 1].unk_00 != 0x25) {
+                    D_800E6280.unk_71C--;
+                    if (D_800E6280.unk_69C[i - 2].unk_00 != 0x25) {
+                        D_800E6280.unk_71C--;
+                    }
+                }
+                break;
+            }
+            n--;
+        }
+    }
+    if (gs->unk_71C != 0) {
+        gs->unk_71C--;
+    }
+    for (i = gs->unk_71C; i < 32; i++) {
+        if (D_800E6280.unk_69C[i].unk_00 == 0x25) {
+            D_800E6280.unk_69C[i].unk_00 = 0;
+        }
+        if (D_800E6280.unk_69C[i].unk_00 == 0xFF) {
+            break;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D6E0);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D7EC);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006EA40);
+s32 func_8006EA40(void) {
+    s32 count;
+    s32 i;
+    /* FAKE: the helper writes 16 bytes; four extra bytes reproduce the original frame and buffer slots. T-11670. */
+    u8 rank[20];
+    s16 points[16];
 
-/* NON_MATCHING: T-10880, four flag-word register substitutions. */
+    func_80053418(rank, points);
+    count = 0;
+    for (i = 0; i != 11; i++) {
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && points[i] >= 0x1F5) {
+            count++;
+        }
+    }
+    if (D_800E6280.unk_03E == 0x62 && D_800E6280.unk_03F == 2 && D_800E6280.unk_040 == 0xF && count >= 2 &&
+        D_800E6280.unk_1BC[11].unk_0C.f.f9 >= 4 && D_800E6280.unk_56C[0x4C] != 0 && D_800E6280.unk_56C[0x4E] != 0 &&
+        !((u32)(D_800E6280.unk_54C[0].w << 2) >> 31) && (rand() & 0xF) < 5) {
+        return 1;
+    }
+    return 0;
+}
+
+/* NON_MATCHING: T-10880 (rechecked in T-11670), 8 differing lines; four flag-word register substitutions. */
 #ifdef NON_MATCHING
 s32 func_8006EB64(u8 *arg0, u8 *arg1) {
     u32 variant;
@@ -264,7 +324,7 @@ s32 func_8006EB64(u8 *arg0, u8 *arg1) {
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006EB64);
 #endif
 
-/* NON_MATCHING: T-10880, four flag-word register substitutions. */
+/* NON_MATCHING: T-10880 (rechecked in T-11670), 8 differing lines; four flag-word register substitutions. */
 #ifdef NON_MATCHING
 s32 func_8006EEC4(u8 *arg0, u8 *arg1) {
     u32 variant;
@@ -829,7 +889,29 @@ s32 special_event_select(char *arg0, char *arg1) {
 }
 
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", geko_judge);
+s32 geko_judge(s8 *arg0) {
+    s32 i;
+    s32 idx;
+    s32 n;
+    /* FAKE: buffer sizes chosen to reproduce the original frame and the 0x5C/0x7C slots; real sizes unknown. T-11670 */
+    u8 sp7C[0x18];
+    u8 sp5C[0x20];
+
+    *arg0 = 0;
+    n = (u32)D_800E7D10 % 11;
+    func_80053418(sp7C, sp5C);
+    for (i = 0, idx = n; i != 11; i++, idx++) {
+        n = idx % 11;
+        if ((D_800E6280.unk_1BC[n].unk_0C.f.b1 != 0) && (D_800E6280.unk_1BC[n].unk_0A < 0x3C) && (get_g_zyotai_s(n) != 4) && (sp7C[n] >= 0x11) && ((rand() % 100) < 0x32)) {
+            if (D_800B6740 != n) {
+                *arg0 = n;
+                D_800B6740 = n;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 s32 date_sasoi_judge(s8 *arg0) {
     s32 i;
@@ -874,7 +956,36 @@ s32 date_sasoi_judge(s8 *arg0) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", schedule_girls_gakko);
+void schedule_girls_gakko(void) {
+    u8 cnt;
+    s32 i;
+    char girl;
+    char arg;
+
+    cnt = 0;
+    for (i = 0; i < 32; i++) {
+        if (D_800E6280.unk_69C[i].unk_00 == 0x44) {
+            if (D_800E6280.unk_69C[i + 1].unk_00 == 0x33 || D_800E6280.unk_69C[i + 1].unk_00 == 0x32 || D_800E6280.unk_69C[i + 1].unk_00 == 0x47) {
+                D_800E6280.unk_69C[i].unk_00 = 0xFA;
+            } else if ((D_800E6280.unk_0F4.b[1] & 0xF) == 3) {
+                D_800E6280.unk_69C[i].unk_00 = 0xFA;
+            } else if (special_event_select(&girl, &arg)) {
+                D_800E6280.unk_69C[i].unk_00 = 0x45;
+                D_800E6280.unk_69C[i].unk_01 = girl;
+                D_800E6280.unk_69C[i].unk_02 = arg;
+            } else if (date_sasoi_judge(&girl) == 1 && cnt == 0) {
+                cnt++;
+                D_800E6280.unk_69C[i].unk_00 = 0x46;
+                D_800E6280.unk_69C[i].unk_01 = girl;
+            } else if (geko_judge(&girl)) {
+                D_800E6280.unk_69C[i].unk_01 = girl;
+            } else {
+                D_800E6280.unk_69C[i].unk_00 = 0xFA;
+            }
+        }
+    }
+    func_8004284C();
+}
 
 void yuukou_down(void) {
     s32 i;
@@ -1154,7 +1265,54 @@ void func_800725B0(void) {
     func_80067870();
     func_80066C08(0);
 }
+/* NON_MATCHING: T-11670, 20 differing lines; the original stores 1/2/3 to unk_03D from $v1 (the flag kept in a register, T-0018 promotion); IDO uses t7/t8/t9. A u8 h with D = h = k gets the v1 stores but moves the load to v0 (26 lines). */
+#ifdef NON_MATCHING
+void func_800726F0(void) {
+    s32 h;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8004E58C();
+        func_80066104("ダミー");
+        func_80065F34(0);
+        gnsx(&D_800E6280.unk_0D4);
+        h = D_800E6280.unk_03D;
+        if (h != 0 && D_800E6280.unk_040 == 2) {
+            D_800E6280.unk_03D = 0;
+            sndisp("明日から新学期だ）", 0, 0x1F);
+        } else if (h != 0) {
+            D_800E6280.unk_03D = 0;
+            sndisp("明日から新学期だ）", 0, 0x1F);
+        } else if (D_800E6280.unk_03F == 7) {
+            sndisp("明日から夏休みだ）", 0, 0x1F);
+            D_800E6280.unk_03D = 1;
+        } else if (D_800E6280.unk_03F == 0xC) {
+            sndisp("明日から冬休みだ）", 0, 0x1F);
+            D_800E6280.unk_03D = 2;
+        } else if (D_800E6280.unk_03F == 3) {
+            sndisp("明日から春休みだ）", 0, 0x1F);
+            D_800E6280.unk_03D = 3;
+        } else {
+            D_800E6280.unk_03D = 0;
+        }
+        func_800674B0();
+        k_disp_start(3);
+        func_8004284C();
+        break;
+    case 1:
+        if (func_80044E8C() == 1) {
+            func_8004500C(0, 0);
+            func_80042808();
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800726F0);
+#endif
 
 void func_800728A4(void) {
     switch (D_800E6280.unk_1109) {
@@ -1185,7 +1343,47 @@ s32 func_80072944(void) {
     }
 }
 
+/* NON_MATCHING: T-11670, 16 differing lines; the year/month arguments of func_80068938 are scheduled a0-first (original a1-first), and the month reloaded after the call sits in v0 with 9 in v1 (original a1 and v0). */
+#ifdef NON_MATCHING
+s32 func_80072998(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        cd_read_sectors(0x95, 0x801A0000, 0x9B94);
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        if (cd_read_sync_status() & 1) {
+            func_80068938(D_800E6280.unk_03E, D_800E6280.unk_03F, 1);
+            if (D_800E6280.unk_03F % 3 == 0) {
+                if (D_800E6280.unk_03F == 9 && D_800E6280.unk_040 == 1 && D_800E6280.unk_03E == 0x60) {
+                    func_80042808();
+                } else if (D_800E6280.unk_03F == 9) {
+                    func_8004E58C();
+                    func_80066104("ダミー");
+                    func_80065F34(0);
+                    gnsx(&D_800E6280.unk_0D4);
+                    sndisp("明日から新学期だ）", 0, 0x1F);
+                    k_disp_start(3);
+                    func_80044750(0xC1);
+                    func_800674B0();
+                    func_8004284C();
+                } else {
+                    func_80044750(0xC1);
+                    func_800674B0();
+                    func_8004284C();
+                }
+                func_8006D00C();
+                D_800B5BC8 = 0xEF;
+            } else {
+                func_80042808();
+            }
+        }
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072998);
+#endif
 
 void func_80072B20(void) {
     if (func_80044E8C() == 1) {
@@ -1265,116 +1463,114 @@ void func_80072CA0(void) {
     }
 }
 
-/* NON_MATCHING: T-11020, control flow equal (265/266 insns); locals s0/s1/s2 allocate differently, frame 0x40 vs 0x50 (original loads D_800E639A straight into s1) */
+/* NON_MATCHING: T-11670, 22 differing lines; the original loads D_800E639A straight into lim's s1 and the selector byte into v1, IDO keeps the 0x800E0000 base in v0 and the selector in a0 (constant 11 holds v1). */
 #ifdef NON_MATCHING
 s32 func_80072D70(void) {
-    s32 sp3C;
-    s32 sp38;
-    s32 s0;
-    s32 s1;
-    s32 s2;
+    s32 state;
+    s32 lim;
+    s32 i;
+    s32 k;
+    s32 flag;
+    s32 start;
 
-    sp3C = 0;
-    s1 = ((s16) D_800E6280.unk_118.unk_02 / 8) + 0xCC;
-    if (s1 >= 0xFF) {
-        s1 = 0xFE;
+    flag = 0;
+    lim = D_800E6280.unk_118.unk_02;
+    lim = lim / 8 + 0xCC;
+    if (lim >= 0xFF) {
+        lim = 0xFE;
     }
     switch (D_800E6280.unk_0F4.b[1] & 0xF) {
     case 0:
-        s0 = 0;
+        state = 0;
         if ((D_800E6280.unk_0F6.b[0] >> 5) == 0) {
-            if ((D_800E6280.unk_0FC.unk_02 < 0x14) && (s1 < (rand() & 0xFF))) {
-                s0 = 1;
-                sp3C = 1;
+            if ((D_800E6280.unk_0FC.unk_02 < 0x14) && (lim < (rand() & 0xFF))) {
+                state = 1;
+                flag = 1;
             } else if (D_800E6280.unk_0FC.unk_02 == 0) {
-                s0 = 1;
-                sp3C = 1;
+                state = 1;
+                flag = 1;
             }
-            if ((D_800E6280.unk_11C.unk_02 >= 0x51) && ((u32) s1 < (u32) (D_800E7D10 & 0xFF))) {
-                s0 += 2;
-                sp3C = 1;
+            if ((D_800E6280.unk_11C.unk_02 >= 0x51) && ((u32) lim < (u32) (D_800E7D10 & 0xFF))) {
+                state += 2;
+                flag = 1;
             }
         }
-        if (s0 == 1) {
+        if (state == 1) {
             func_80042940(1);
         }
-        if (s0 == 2) {
+        if (state == 2) {
             func_80042940(2);
         }
-        if (s0 == 3) {
+        if (state == 3) {
             func_80042940(3);
         }
         break;
     case 1:
-        s0 = 1;
-        if ((D_800E6280.unk_11C.unk_02 >= 0x51) && ((u32) s1 < (u32) (D_800E7D10 & 0xFF))) {
-            s0 = 3;
-            sp3C = 1;
+        state = 1;
+        if ((D_800E6280.unk_11C.unk_02 >= 0x51) && ((u32) lim < (u32) (D_800E7D10 & 0xFF))) {
+            state = 3;
+            flag = 1;
         }
         if (D_800E6280.unk_0FC.unk_02 >= 0x1F) {
-            s0 = 0;
-            sp3C = 1;
+            state = 0;
+            flag = 1;
         }
-        if (s0 == 3) {
+        if (state == 3) {
             func_80042940(3);
         }
-        if (s0 == 0) {
+        if (state == 0) {
             func_80042940(5);
         }
         break;
     case 2:
-        s0 = 2;
-        if ((D_800E6280.unk_0FC.unk_02 < 0x14) && (s1 < (rand() & 0xFF))) {
-            s0 = 3;
-            sp3C = 1;
+        state = 2;
+        if ((D_800E6280.unk_0FC.unk_02 < 0x14) && (lim < (rand() & 0xFF))) {
+            state = 3;
+            flag = 1;
         } else if (D_800E6280.unk_0FC.unk_02 == 0) {
-            s0 = 3;
-            sp3C = 1;
+            state = 3;
+            flag = 1;
         }
         if (D_800E6280.unk_11C.unk_02 < 0x46) {
-            s0 = 0;
-            sp3C = 1;
+            state = 0;
+            flag = 1;
         }
-        if (s0 == 3) {
+        if (state == 3) {
             func_80042940(3);
         }
-        if (s0 == 0) {
+        if (state == 0) {
             func_80042940(6);
         }
         break;
     case 3:
-        s0 = 3;
+        state = 3;
         if ((D_800E6280.unk_11C.unk_02 < 0x46) && (D_800E6280.unk_0FC.unk_02 >= 0x1F)) {
-            s0 = 0;
-            sp3C = 1;
+            state = 0;
+            flag = 1;
         }
-        if (s0 == 0) {
+        if (state == 0) {
             func_80042940(7);
             break;
         }
         if (((u8 *) D_800E6280.unk_044)[D_800E6280.unk_040] == 0) {
-            sp38 = rand() % 11;
-            s0 = 0;
-            s1 = sp38;
-            do {
-                s2 = s1 % 11;
-                if (D_800E6280.unk_1BC[s2].unk_0C.f.b1 && (get_h_tokimeki(s2) >= 0x33U) && (get_g_zyotai_s(sp38) != 4)) {
+            start = rand() % 11;
+            for (i = 0; i != 11; i++) {
+                k = (start + i) % 11;
+                if (D_800E6280.unk_1BC[k].unk_0C.f.b1 && (get_h_tokimeki(k) >= 0x33U) && (get_g_zyotai_s(start) != 4)) {
                     if ((rand() & 0xFF) < 0x3F) {
-                        D_800E6280.unk_75D = s2;
+                        D_800E6280.unk_75D = k;
                         main_state_set(0x62);
                         return 1;
                     }
                 }
-                s0 += 1;
-                s1 += 1;
-            } while (s0 != 0xB);
+            }
         }
         break;
     default:
         D_800E6280.unk_0F4.b[1] &= 0xFFF0;
         break;
     }
-    if (sp3C == 0) {
+    if (flag == 0) {
         func_80042908(0xFF);
     }
 }

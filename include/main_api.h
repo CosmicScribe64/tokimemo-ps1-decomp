@@ -2215,8 +2215,10 @@ s32 func_8006CDD4(void);
 void func_8006D038(void);
 void func_8006D138(void);
 void func_8006D6E0();
+void func_8006D7EC(void);
 s32 func_8006EB64(u8 *arg0, u8 *arg1);
 s32 func_8006EEC4(u8 *arg0, u8 *arg1);
+void schedule_girls_gakko(void);
 void yuukou_down(void);
 void syoushin_up(void);
 void func_80070F80(void);
@@ -2227,7 +2229,7 @@ void func_8007259C(u8 arg0);
 void func_800726F0(void);
 void func_80072734();
 s32 func_80072944(void);
-void func_80072998(void);
+s32 func_80072998(void);
 void func_80072B20(void);
 s32 func_80072B5C(s32 arg0);
 void func_80072C68(void);
@@ -2599,7 +2601,9 @@ void func_800BCE10();
 s32 func_800BDC20();
 void func_801040F0(void);
 s32 func_80067DFC(void);
+#ifndef MAIN_API_OVERRIDE_func_80053418
 s32 func_80053418();
+#endif
 s32 func_800463E8(void);
 #ifndef MAIN_API_OVERRIDE_func_80049FF0
 s32 func_80049FF0();
