@@ -363,6 +363,8 @@ void func_80141B18(Tc14 *arg0, s32 arg1) {
     func_800A1070(&m);
     sgn = 1 - arg1;
     j = 0;
+    /* The loop test is written on the address expression: it gives the original's sltu against &v.vz (bne with a counter
+     * compare); see wiki/matching-notes.md, T-19017. */
     do {
         v.vz = arg0[j].unk4 + (sgn << 11);
         v.vy = arg0[j].unk2 + (sgn << 8);
