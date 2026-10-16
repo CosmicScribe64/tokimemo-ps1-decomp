@@ -16251,3 +16251,11 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17105 In Progress
 
 [[tickets/T-17105-w3-rpg-bat-p05]] created and started: wave 3 package w3-rpg-bat-p05 (RPG_BAT `src/ovl/RPG_BAT/80157AE0.c`, `src/ovl/RPG_BAT/8015A1F0.c`; work list `func_8015A8B4`, `func_8015A744`, `func_80159B40`, `func_80158C4C`, `func_80159214`). Card in [[kanban]].
+
+## [2026-10-16] build | T-17105 clean rebuild
+
+Clean rebuild of the w3-rpg-bat-p05 worktree (`rm -rf build && configure.py && ninja`): 27/27 sha1 OK, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17105-w3-rpg-bat-p05]].
+
+## [2026-10-16] ticket | T-17105 In Review
+
+[[tickets/T-17105-w3-rpg-bat-p05]] In Progress to In Review: 1 of 5 functions matched (`func_80159B40`, 528 bytes, frame order of the stack tables); `func_80158C4C` (4 lines), `func_8015A744` (12), `func_80159214` (16) and `func_8015A8B4` (28) stay under `NON_MATCHING` with T-17105 comments. Notes in [[matching-notes]], rows in [[data/t0018-cases]], three rows in [[register-cheatsheet]]. Card moved in [[kanban]], index line in [[index]]. Code review against `CODING_STANDARDS.md` still to do.

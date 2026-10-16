@@ -884,6 +884,7 @@ INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/80157AE0.rodata", D_8015E190);
 
 INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/80157AE0.rodata", D_8015E19C);
 
+/* The declaration order sets the frame layout (T-17105): the original has three scalar slots between the second string table and the flag table, and one counter serves both loops. */
 s32 func_80159B40(void) {
     RpgStrTbl4 sp88;
     RpgStrTbl4 sp78;
