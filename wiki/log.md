@@ -15235,3 +15235,7 @@ duplicate T-16200 line removed from [[index]]. Tickets [[tickets/T-16900-compile
 ## [2026-10-16] ticket | T-16563 In Review
 
 [[tickets/T-16563-taco-types-first-p3]] moved to In Review after about 60 minutes of agent time: 9 of 10 listed functions matched. Clean build 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] build | T-16563 func_8015BD30
+
+[[tickets/T-16563-taco-types-first-p3]]: `func_8015BD30` (576 bytes, not on the work list) matched in `src/ovl/TACO/8015ABF0.c` after a 1-second scratch compile loop (`tools/cc.py` on one function, diffed against `expected/`): actor addressed by byte offset, `n = 0` before the key search, one local declared before the spilled `val`, a `FAKE` empty test on `i`. In all 10 functions, 4,740 bytes. `func_8015ACCC` rewritten once by hand (437 lines left) and `func_8015B1B8` (8 lines) stay open; rows in [[data/t0018-cases]], idioms in [[matching-notes]] and [[register-cheatsheet]].

@@ -25,7 +25,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 - [[tickets/T-16554-pt-taiiku-p4|T-16554]] Types-first pilot package pt-taiiku-p4: TAIIKU `80132000.c`, `80140810.c`, `80142240.c`, 4 of 7 functions matched (3,208 B), 2 guarded, 1 left (Done).
 - [[tickets/T-16550-taiiku-types-first|T-16550]] Types-first pilot: TAIIKU: runner records of three games and 28 stack tables typed, all 64 functions redrafted (27 better), `func_80141CDC` matched, packages T-16551..T-16554 (Done).
-- [[tickets/T-16563-taco-types-first-p3|T-16563]] Types-first pilot package pt-taco-p3: TACO `80151C30.c`, `8015ABF0.c`, 9 of 10 functions matched (4,164 B) in about 60 minutes, `func_8015B1B8` guarded, idioms in [[matching-notes]] (In Review).
+- [[tickets/T-16563-taco-types-first-p3|T-16563]] Types-first pilot package pt-taco-p3: TACO `80151C30.c`, `8015ABF0.c`, 10 functions matched (4,740 B; 9 of the 10 listed) in about 90 minutes, `func_8015B1B8` guarded, idioms in [[matching-notes]] (In Review).
 - [[tickets/T-16560-taco-types-first|T-16560]] Types-first pilot: TACO: actor/coordinate/matrix types, 126 redrafts (48 better than the census, none 0), 5 matches / 2,032 bytes, packages T-16561..T-16564 (Done).
 - [[tickets/T-16510-m2c-defect-rewrites|T-16510]] Detect and rewrite recurring m2c draft defects (Done): `tools/draft_fixes.py`; 50 T-14500 drafts changed, 34 better, 3 at score 0; results in `drafts/T-16510/`.
 - [[tickets/T-16520-sibling-report|T-16520]] Matched-sibling report for work packages: closest matched functions for every unmatched one: 150 of 1,005 have a sibling >= 0.70, 59 unmatched clusters (Done).

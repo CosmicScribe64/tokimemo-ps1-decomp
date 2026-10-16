@@ -90,6 +90,8 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 | two tables read at `i * 2 - 2`-style offsets, one `sll v0,a0,1` shared by both pointer walks | Index both through words and bytes, `((s32 *)A)[i * 2 - 2]`, `((u8 *)B)[i * 2 - 2]`, not as records at `i - 1` (one product for two walks). TACO `func_801521EC` (T-16563). |
 | a constant store `n = 0` fills the delay slot of the first `if` in the original, the draft schedules it ahead of the pointer copy | Write `n = 0;` after that `if` (the join block donates the delay-slot instruction). TACO `func_8015BF70` (T-16563). |
 | a pointer walk starts at `T + 4 * i0` with displacement 0, the draft at `T' + 4 * i0` with a negative displacement (`D_80160444[i - 0x1C]`) | uopt keeps the address symbol and moves every constant into the displacement; use the symbol whose address is `start - 4 * i0` (`D_801603D4[i]`, FAKE view). TACO `func_80152808` (T-16563). |
+| the frame is 16 bytes too large with the same saved registers, a spilled local (`val`) sits 4 bytes too high when it is the first declared | Every declared local reserves a 4-byte slot (promoted or not). Declare one local before the spilled one; remove declared locals that are only expression temporaries (`tbl`, `rec`, `base2`) in big functions. TACO `func_8015BD30`, `func_8015ACCC` frame (T-16563). |
+| two live ranges swap their colours and the original's loop counter `i` is reused as the key-search index | An empty `if (i) {}` in the branch where the search ends (FAKE) lowers the priority of `i`; `tools/autotweak.py` finds it (`emptytest`). TACO `func_8015BD30` (T-16563). |
 
 ## Do not
 

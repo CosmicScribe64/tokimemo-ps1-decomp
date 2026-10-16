@@ -26,6 +26,8 @@ Update (T-9000): re-tested under K&R with the wave agents' drafts ([[matching-no
 
 Update (T-16230): rows for DATE `func_801511B4`, `func_80150460` and `func_80150C78` (T-4010, T-9110, T-9320, T-9580, T-9780) are now matched in plain C, with `func_80150ED4`, by naming the real aggregates (`D_801217D0[57]`, display records 96 and 98 of `D_8011ECD0`), a chain assignment through record elements, and a `GameState *g` pointer ([[matching-notes]], "T-16230").
 
+Update (T-16563): the row for TACO `func_8015BD30` (T-16563, appended below) is matched in plain C with a FAKE empty test; rows for `func_8015C0A0` (T-10620, T-10710, T-10850) and `func_8015BF70` are matched without a local actor pointer (`(arg1 + D_8015EDB4)->field`, see [[matching-notes]], "T-16563: TACO package p3").
+
 | file | function | category | symptom |
 |---|---|---|---|
 | TEL | `func_8013A40C` | promo | compare chain on a global, original loads it into $v1, IDO $v0 (batch B) |
