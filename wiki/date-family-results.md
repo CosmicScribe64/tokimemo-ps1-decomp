@@ -132,3 +132,7 @@ Eight file-disjoint packages from the orchestrator's `mklists3.py` (lists in its
 | w3-date-p06 | T-17206 | `8014B1F0.c`, `80156600.c` | 2 | 1,136 |
 | w3-date-p07 | T-17207 | `80141EE0.c` | 2 | 4,464 |
 | w3-date-p08 | T-17208 | `8014A1B0.c`, `8015A640.c`, `8015A7E0.c`, `8015A980.c` | 5 | 2,636 |
+
+### w3-date-p04 (T-17204)
+
+`80151460.c`, 4 functions (2,328 bytes): `func_80152060` matched (520 bytes: `DateWords2` stack table, a real element pointer local that moves the table 4 bytes, `s32` with no `return` so the last call's result stays in `$v0`); `func_801518B8` guarded at 14 rows (copy end pointer `t6` against `t7`, the old ugen-temporary gap); `func_80152E34` (POLY_G3 builder, colours of six uopt ranges) and `func_80152268` (twelve `func_80152684` position calls, result variable kept in `$s0`) left as `INCLUDE_ASM` with drafts in `drafts/T-17204/DATE/`. Details: [[matching-notes]], section T-17204.
