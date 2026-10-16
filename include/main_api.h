@@ -2487,7 +2487,9 @@ void func_80085678();
 void func_8008585C();
 void don_wait(void);
 void normal_date_speak_1line();
+#ifndef MAIN_API_OVERRIDE_func_80085A60
 void func_80085A60();
+#endif
 void normal_date_speak(void);
 s32 func_80085B3C();
 void func_80085CD4(u8 a);
@@ -2652,7 +2654,9 @@ s32 rand();
 s32 func_800BCE40();
 s32 func_800AE0E0(void *arg0);
 s32 strlen(u8 *s);
+#ifndef MAIN_API_OVERRIDE_func_800AE0F0
 void func_800AE0F0(void *dst, void *src);  /* strcpy (SDK libc) */
+#endif
 void strcpy(u8 *dst, u8 *src);
 void strcat(u8 *dst, u8 *src);
 void func_800AE120(s32 arg0);

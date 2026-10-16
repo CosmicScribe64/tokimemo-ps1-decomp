@@ -130,7 +130,95 @@ void func_80149698(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80149310", func_801496C4);
+s32 func_801496C4(void) {
+    GameState *g = &D_800E6280;
+
+    if (!g->unk_1BC[g->unk_F5F].unk_0C.f.b6) {
+        g->unk_110A += 0x11;
+        return 0;
+    }
+    if (g->unk_F5F == 0) {
+        g->unk_71E |= 1;
+    } else {
+        g->unk_71E |= 2;
+    }
+    if (((D_800CA2F8 == 0) || (D_800CA2F8 == 0x12)) && (g->unk_F5E < 0xFE)) {
+        g->unk_F5E -= 1;
+    }
+    func_80085B3C(0xA, D_80122D08);
+    D_8015D094 = D_80122CDC;
+    D_8015D084 = 0x1D;
+    D_8015D088 = 0;
+    func_800847B8(g->unk_F5F);
+    switch (g->unk_F5F) {
+    case 0:
+        D_8015D06C = D_8015CFD4;
+        D_8015D070 = D_8015D008;
+        D_8015D074 = D_8015D03C;
+        break;
+    case 1:
+        D_8015D06C = D_8015CFE4;
+        D_8015D070 = D_8015D018;
+        D_8015D074 = D_8015D04C;
+        break;
+    case 2:
+        D_8015D06C = D_8015CFD8;
+        D_8015D070 = D_8015D00C;
+        D_8015D074 = D_8015D040;
+        break;
+    case 3:
+        D_8015D06C = D_8015CFDC;
+        D_8015D070 = D_8015D010;
+        D_8015D074 = D_8015D044;
+        break;
+    case 4:
+        D_8015D06C = D_8015CFF8;
+        D_8015D070 = D_8015D02C;
+        D_8015D074 = D_8015D060;
+        break;
+    case 5:
+        D_8015D06C = D_8015CFE8;
+        D_8015D070 = D_8015D01C;
+        D_8015D074 = D_8015D050;
+        break;
+    case 6:
+        D_8015D06C = D_8015CFF0;
+        D_8015D070 = D_8015D024;
+        D_8015D074 = D_8015D058;
+        /* (u8) as in the SHUGAKU twin func_8013282C: a plain compare gives slti and moves every later temporary. T-17205 */
+        if ((u8)(get_g_zyotai_s(6) & 0x7F) < 2) {
+            D_8015D06C = D_8015CFEC;
+            D_8015D070 = D_8015D020;
+            D_8015D074 = D_8015D054;
+        }
+        break;
+    case 7:
+        D_8015D06C = D_8015CFE0;
+        D_8015D070 = D_8015D014;
+        D_8015D074 = D_8015D048;
+        break;
+    case 8:
+        D_8015D06C = D_8015CFD0;
+        D_8015D070 = D_8015D004;
+        D_8015D074 = D_8015D038;
+        break;
+    case 9:
+        D_8015D06C = D_8015CFF4;
+        D_8015D070 = D_8015D028;
+        D_8015D074 = D_8015D05C;
+        break;
+    case 10:
+        D_8015D06C = D_8015D000;
+        D_8015D070 = D_8015D034;
+        D_8015D074 = D_8015D068;
+    }
+    if (g->unk_03F >= 4) {
+        D_8015D090 = g->unk_03E - 0x5F;
+    } else {
+        D_8015D090 = g->unk_03E - 0x60;
+    }
+    func_8004284C();
+}
 
 void func_80149AC0(void) {
     u32 v;
@@ -222,26 +310,19 @@ void func_80149ED0(void) {
     func_80082764(0xFF, 1, 0);
 }
 
-/* NON_MATCHING: T-10910, own data defined, instruction order and shared lui at match (43 of 43); the first copy takes $v0 with the double assignment of D_8015D084; the three constant-pointer loads take t9/t0/t1 where the original has t5/t6/t7, 15 lines */
-#ifdef NON_MATCHING
 void func_80149F48(void) {
-    u8 new_var;
-
     D_8015D08C = D_8015D084;
     D_8015D078 = D_8015D06C;
     D_8015D07C = D_8015D070;
     D_8015D080 = D_8015D074;
+    D_8015D084 = D_800E6280.unk_F5F;
+    /* (s16) leaves the ugen temporary between sll and subu unused, as in the original; the product sits before the last three copies so their constant loads take t5/t6/t7. T-17205 */
+    D_8015D084 = (s16)(D_8015D084 * 3) + D_8015D090;
     D_8015D06C = D_8015CFFC;
     D_8015D070 = D_8015D030;
     D_8015D074 = D_8015D064;
-    new_var = D_800E6280.unk_F5F;
-    D_8015D084 = new_var;
-    D_8015D084 = (D_8015D084 * 3) + D_8015D090;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80149310", func_80149F48);
-#endif
 
 void func_80149FF8(void) {
     func_80083440(D_80122CDC + 1);
