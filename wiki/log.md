@@ -15875,3 +15875,9 @@ Created [[tickets/T-18700-types-first-bunkasai]] (branch `w3-bunkasai-types` fro
 
 ## [2026-10-16] ticket | T-19022 In Progress
 [[tickets/T-19022-w3-d-p22]] created and In Progress: Wave 3 package w3-d-p22, TEL `func_80134FE4` and `func_80136724` in `src/ovl/TEL/80132000.c`, worktree `w3-d-p22`.
+
+## [2026-10-16] build | T-19022 results
+[[tickets/T-19022-w3-d-p22]]: 0 of 2 matched (TEL `func_80134FE4` and `func_80136724` in `src/ovl/TEL/80132000.c`). `func_80134FE4`: structure exact, 70 register rows (the global `D_801405E4` coloured `$t0`, original `$v1`), autotweak found nothing usable. `func_80136724`: frame, dispatch and instruction count agree, 452 register rows and 78 scheduling places left. Both back to `INCLUDE_ASM`; drafts in `drafts/T-19022/TEL/`. Notes in [[matching-notes]] ("T-19022"), rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-19022 In Review
+[[tickets/T-19022-w3-d-p22]] In Progress to In Review (0 matched; drafts kept in `drafts/T-19022/`).
