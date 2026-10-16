@@ -160,3 +160,7 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p09 (T-19009)
 
 [[tickets/T-19009-w3-d-p09]] (`80142820.c`, `80143E80.c`): `func_801428DC` (the settings writer, 532 bytes), `func_80144430` (672) and `func_80142AF0` (752) matched, 1,956 bytes; `func_80144094` (924) stays `INCLUDE_ASM`. New types and declarations: `TcSetAll`/`TcSetBits` (the 0x58-byte settings block at `D_800E7D10`, file-local in `80142820.c` with `MAIN_API_OVERRIDE_D_800E7D10`; the loader's view is `TcSave` in `80133870.c`), `void func_800A1070(MATRIX *)` in `main_api.h`, `case 0xFF:` and a `GameState *gs` for the memory-card state machine. The rules that matter beyond TACO (declared scalars own stack slots, one struct instead of splat names for scheduling, `void` for lib calls) are in [[matching-notes]], "T-19009", and [[register-cheatsheet]].
+
+## Matching stage, package w3-d-p14 (T-19014)
+
+[[tickets/T-19014-w3-d-p14]] (`8013F250.c`): `func_801404FC` (316 bytes), `func_80140364` (408), `func_8013F9C0` (560) and `func_801407D4` (776) matched, 2,060 bytes; `func_80140ADC` (788) stays guarded at 6 lines (one register tie). New declaration in `TACO.h`: `s32 func_801407D4(s32 *arg0, TcPos arg1);` (the first eight bytes of the particle record by value). FAKEs: unused locals for frame homes, a one-line pair of UV stores, byte-offset element address (index first) and an empty `if (count) {}`. Details and idioms: [[matching-notes]], "T-19014".

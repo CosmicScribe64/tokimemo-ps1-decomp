@@ -15649,3 +15649,6 @@ Code review of [[tickets/T-17800-types-first-option]] against `CODING_STANDARDS.
 
 ## [2026-10-16] ticket | T-19014 In Progress
 [[tickets/T-19014-w3-d-p14]] started: wave 3 package w3-d-p14, TACO `src/ovl/TACO/8013F250.c`, five functions (`func_801404FC`, `func_80140364`, `func_8013F9C0`, `func_801407D4`, `func_80140ADC`). Worktree `tokimemo-wt/w3-d-p14`, base `w2-good`.
+
+## [2026-10-16] ticket | T-19014 In Review, 4 of 5 functions matched
+[[tickets/T-19014-w3-d-p14]] moved to In Review: TACO `src/ovl/TACO/8013F250.c`. Matched `func_801404FC`, `func_80140364`, `func_8013F9C0` and `func_801407D4` (2,060 bytes, the last one was the T-0018 row "narrow param / unrolled"); `func_80140ADC` stays guarded at 6 lines (a register tie). FAKEs: unused locals for frame homes, one-line UV stores, index-first byte arithmetic, an empty `if (count) {}`. New `func_801407D4` prototype in `include/ovl/TACO.h`. Notes: [[matching-notes]] (T-19014), [[register-cheatsheet]] (five rows), [[data/t0018-cases]], [[taco-family-results]].
