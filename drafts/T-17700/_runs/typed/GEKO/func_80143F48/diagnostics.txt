@@ -1,0 +1,27 @@
+m2c.py: argument counts from the callees' asm: func_80144198 1
+python3 failed:
+ ---------------^
+cfe: Warning 709: drafts/T-17700/_runs/typed/GEKO/func_80143F48/work/guarded.c, line 3556: Incompatible pointer type assignment
+     D_800CA138 = &D_801476DC;
+ ---------------^
+cfe: Error: drafts/T-17700/_runs/typed/GEKO/func_80143F48/work/guarded.c, line 3657: Bad type name for cast operator
+         func_8006B5BC((GsWord) (s32) sp48);
+ -----------------------^
+cfe: Error: drafts/T-17700/_runs/typed/GEKO/func_80143F48/work/guarded.c, line 3658: 'sp' undefined; reoccurrences will not be reported.
+         temp_v1 = *(u8 *)((unsigned char *)(sp + D_801476E0) + (48));
+ --------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17700/_runs/typed/GEKO/func_80143F48/work -o drafts/T-17700/_runs/typed/GEKO/func_80143F48/work/guarded.o /tmp/asm_processorvsdorhqo/preprocessed_83bf06569c994a8b9f2c6148595a2a03.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib7vs26pmd/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17700/_runs/typed/GEKO/func_80143F48/work/guarded.o drafts/T-17700/_runs/typed/GEKO/func_80143F48/work/guarded.c
+python3 failed:
+ ---------------^
+cfe: Warning 709: drafts/T-17700/_runs/typed/GEKO/func_80143F48/work/guarded.c, line 3555: Incompatible pointer type assignment
+     D_800CA134 = &D_801476D8;
+ ---------------^
+cfe: Warning 709: drafts/T-17700/_runs/typed/GEKO/func_80143F48/work/guarded.c, line 3556: Incompatible pointer type assignment
+     D_800CA138 = &D_801476DC;
+ ---------------^
+cfe: Error: drafts/T-17700/_runs/typed/GEKO/func_80143F48/work/guarded.c, line 3658: Bad type name for cast operator
+         func_8006B5BC((GsWord) (s32) sp48);
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17700/_runs/typed/GEKO/func_80143F48/work -o drafts/T-17700/_runs/typed/GEKO/func_80143F48/work/guarded.o /tmp/asm_processordwp1lvqa/preprocessed_71b8673fdab44482afe22eceb48ea1b3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibolm_yhx9/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17700/_runs/typed/GEKO/func_80143F48/work/guarded.o drafts/T-17700/_runs/typed/GEKO/func_80143F48/work/guarded.c
