@@ -16159,3 +16159,14 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 ## [2026-10-16] ticket | T-17201 Done
 
 [[tickets/T-17201-w3-date-p01]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a missing `FAKE` prefix on a one-line scheduling trick in the guarded `func_8014718C`, a broken table row in [[data/t0018-cases]]); rebuild of DATE OK (headers OK, globals OK, sha1 OK). 1 of 2 functions matched (`func_80147958`, 4,044 bytes); `func_8014718C` stays a guarded draft (26 lines). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17206 In Progress
+
+[[tickets/T-17206-w3-date-p06]] created and In Progress: wave 3 package w3-date-p06 (DATE `src/ovl/DATE/8014B1F0.c`, `src/ovl/DATE/80156600.c`), 2 functions (`func_80157698`, `func_8014C20C`), worktree `tokimemo-wt/w3-date-p06`, branch `w3-date-p06`. Links [[tickets/T-17200-types-first-date]].
+
+## [2026-10-16] ticket | T-17206 In Review
+
+[[tickets/T-17206-w3-date-p06]] In Progress to In Review: wave 3 package w3-date-p06 (DATE `src/ovl/DATE/8014B1F0.c`, `src/ovl/DATE/80156600.c`, `include/main_api.h`), 2 of 2 functions matched (1,136 bytes: `func_80157698`, `func_8014C20C`), about 50 minutes of agent time. `D_800CA154` is `u16` in `main_api.h` (no override); three FAKE locals (`one`, `seven`, `cur`). Findings (callee arity, constant webs, the two-variable `& 0x7F` shape) in [[matching-notes]] (section T-17206) and four rows in [[register-cheatsheet]]. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-16] ticket | T-17206 Done
+
+[[tickets/T-17206-w3-date-p06]] In Review to Done after the code review: wave 3 package w3-date-p06 (DATE `src/ovl/DATE/8014B1F0.c`, `src/ovl/DATE/80156600.c`, `include/main_api.h`), 2 of 2 functions matched (1,136 bytes: `func_80157698`, `func_8014C20C`, three ticketed FAKE locals). One finding fixed: the redundant `(u16)` casts on `D_800CA154` in `func_80157698` removed (the unit still matches). Headers, globals and proto checks OK.
