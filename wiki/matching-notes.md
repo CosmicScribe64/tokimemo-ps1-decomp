@@ -5791,7 +5791,7 @@ Conclusion: plain C reaches the original only through a separate symbol for the 
 
 ## T-19008: TAIIKU 80138950.c, the D_801499A2 counter family again (wave 3 package w3-d-p08)
 
-[[tickets/T-19008-w3-d-p08]], direct package of wave 3: `func_8013B608`, `func_8013B200`, `func_8013B78C`, `func_8013B94C`, `func_8013BCEC` (2,288 bytes), all with T-0018 rows from T-11640 and T-16552. Result: `func_8013B200` matched (432 bytes); `func_8013BCEC` and `func_8013B608` are guarded drafts of 18 differing lines each; `func_8013B78C` and `func_8013B94C` stay `INCLUDE_ASM`. About 85 minutes.
+[[tickets/T-19008-w3-d-p08]], direct package of wave 3: `func_8013B608`, `func_8013B200`, `func_8013B78C`, `func_8013B94C`, `func_8013BCEC` (2,288 bytes), all with T-0018 rows from T-11640 and T-16552. Result after the closer pass: `func_8013B200` (432 bytes) and `func_8013B608` (388 bytes) matched, 820 bytes; `func_8013BCEC` is a guarded draft with 2 instructions missing; `func_8013B78C` and `func_8013B94C` stay `INCLUDE_ASM`. About 130 minutes (85 first pass, 45 closer pass; the first pass left `func_8013B608` and `func_8013BCEC` as guarded drafts of 18 lines each, see below).
 
 - **`func_8013B200` matched** with the family's views plus four changes to the T-16550 redraft (131 rows to 0):
   - **no local `x` for `D_80149968.unk_1C[0] >> 3`**. With `x = ... >> 3;` uopt makes the shift expression and the local two separate ranges (`$a0` for the expression, `$v0` for `x`), the counter loses `$a1` to a hoisted `li 40` and the frame grows by 8. The expression written out at its three uses is one range and gives the original's `$v0`, `$a1`, `$a2`, `$a3` at once (79 rows to 43);

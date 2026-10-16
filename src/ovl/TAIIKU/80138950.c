@@ -957,9 +957,9 @@ void func_8013B104(void) {
 
 /* FAKE: T-19008. The counter D_801499A0.unk_02 and the flag D_801499B0[0].val are read through u16 pointer
  * views, as in func_8013BEF8 (the plain field gets a CVT copy of the promoted counter; with the volatile
- * D_801499B2 the lui of the flag load takes the delay slot the original gives to lw ra). tmp is a stack word whose halves are
- * written and read through s16 views (the 16.16 position of the sibling functions); the x >> 3 term is
- * written out at each use, a local x gets a range of its own. Real source unknown. */
+ * D_801499B2 the lui of the flag load takes the delay slot the original gives to lw ra). tmp is a stack
+ * word whose halves are written and read through s16 views (the 16.16 position of the sibling functions);
+ * the x >> 3 term is written out at each use, a local x gets a range of its own. Real source unknown. */
 void func_8013B200(void) {
     s32 tmp;
 
@@ -1097,8 +1097,9 @@ void func_8013BB3C(void) {
  * path to it changes the counter. A self-assignment of the counter there brings the store back, but its u16
  * normalisation takes one more ugen temporary before the cnt & 8 test and moves the counter reload of the
  * cnt & 8 block to the join; no form without the temporary was found.
- * FAKE: the counter and the flag are read through u16 pointer views as in func_8013BEF8. v takes x >> 3 first
- * and adds the x * 79 / 48 term in a second statement (the ugen temporary the original has before the chain). */
+ * FAKE (T-19008): the counter and the flag are read through u16 pointer views as in func_8013BEF8. v takes
+ * x >> 3 first and adds the x * 79 / 48 term in a second statement (the ugen temporary the original has
+ * before the chain). */
 #ifdef NON_MATCHING
 void func_8013BCEC(void) {
     s16 v;
