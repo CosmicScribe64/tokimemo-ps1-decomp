@@ -15499,3 +15499,6 @@ Code review of w3-d-p03 against `CODING_STANDARDS.md`: no open findings; two fix
 ## [2026-10-16] ticket | T-19009 In Progress
 
 [[tickets/T-19009-w3-d-p09]] created and In Progress: wave 3 package w3-d-p09, TACO `func_801428DC`, `func_80144430`, `func_80142AF0` and `func_80144094` (`src/ovl/TACO/80142820.c`, `src/ovl/TACO/80143E80.c`).
+
+## [2026-10-16] ticket | T-19009 In Review
+[[tickets/T-19009-w3-d-p09]] In Progress to In Review: 3 of 4 functions matched (1,956 bytes, about 75 minutes), TACO sha1 OK. `func_80142AF0` (`gs` pointer, `case 0xFF:`, one FAKE autotweak local), `func_80144430` (scalar declaration order gives the original stack slots, `void func_800A1070` in `main_api.h`, FAKE `pad[2]`) and `func_801428DC` (settings block as one struct at `D_800E7D10`, `int` view of `func_800AE090`). `func_80144094` is back to `INCLUDE_ASM` (about 110 compare rows, `D_8011ECA0` kept in `$a1`), typed draft in `drafts/T-19009/TACO/func_80144094/`. New: [[matching-notes]] section "T-19009", three [[register-cheatsheet]] rows, row in [[data/t0018-cases]], section in [[taco-family-results]]. Changed: `src/ovl/TACO/80142820.c`, `src/ovl/TACO/80143E80.c`, `include/main_api.h`.
