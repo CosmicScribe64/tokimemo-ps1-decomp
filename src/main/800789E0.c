@@ -304,20 +304,20 @@ void ovl_load_verify(void) {
     }
 }
 
-/* NON_MATCHING: T-17003, 14 differing lines; frame, switch and saves equal. as1 puts the `sb zero` of
- * ovl_load_state above the four byte loads, the original keeps it below them. A separate symbol for the
- * unk_1108 store gets the loads right but leaves `lui at` before `lbu a0` (original after); GameState is
- * one object (wiki/game-state.md), so no such view is used. */
+/* NON_MATCHING: T-17003, 4 differing lines (2 instructions); frame, switch, saves and schedule equal.
+ * The original loads the call argument straight into $a0 (`lui a0; lbu a0`); IDO keeps `arg` in $v0
+ * and folds the copy (`lui v0; lbu a0,(v0)`), the T-0018 regorder class of GYOZI func_801361D4. */
 #ifdef NON_MATCHING
 void func_80079070(void) {
-    s32 unused0; /* FAKE: unused locals above the saves give the original frame (0x38, saves at sp+0x2F..0x32); T-17003 */
-    u8 unused1;
+    GameState *gs; /* FAKE: T-17003, a store through gs keeps the arg load above it and the selector in $v1 */
+    u8 arg;
     u8 sp32;
     u8 sp31;
     u8 sp30;
     u8 sp2F;
 
-    switch (*(u8 *)&D_800E6280.unk_110E) { /* FAKE: byte view keeps the selector in $v1, the TEL idiom of T-10630; T-17003 */
+    gs = &D_800E6280;
+    switch (gs->unk_110E) {
     case 0x3A:
         D_80123110 = (u32) &D_80132000;
         break;
@@ -463,13 +463,14 @@ void func_80079070(void) {
         D_80123110 = (u32) &D_80132000;
         break;
     }
+    ovl_load_state = 0;
     sp32 = D_800E6280.unk_110A;
     sp31 = D_800E6280.unk_110D;
     sp2F = *(u8 *)&D_800E6280.unk_110C;
-    ovl_load_state = 0;
-    D_800E6280.unk_1108 = D_800E6280.unk_110E;
     sp30 = *(u8 *)&D_800E6280.unk_110B;
-    func_80042908((s32) D_800E6280.unk_1109);
+    arg = gs->unk_1109;
+    gs->unk_1108 = gs->unk_110E;
+    func_80042908((s32) arg);
     func_80042940((s32) sp32);
     D_800E6280.unk_110D = sp31;
     D_800E6280.unk_110C = sp2F;
