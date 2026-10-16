@@ -527,7 +527,6 @@ void func_801355B8(void) {
 /* NON_MATCHING: T-17700, the SHOUGATU func_8013BDE0 switch form; control flow and opcodes match, but the temporaries rotate from $t6 where the original starts at $t0 (constant 1 in $t0, %hi of unk_71E in $v0), so 224 funcdiff rows differ in register numbers throughout */
 #ifdef NON_MATCHING
 void func_801355E8(void) {
-
     D_80145060 = 1;
     D_80145064 = 0;
     D_800E6280.unk_71E |= 0x44;
