@@ -524,7 +524,7 @@ void func_801355B8(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-17700, the switch matches (SHOUGATU func_8013BDE0 form); 4 instructions differ in the first block: the original puts the constant 1 in $t0 and the %hi of unk_71E in $v0 (ours $t6, $t7) */
+/* NON_MATCHING: T-17700, the SHOUGATU func_8013BDE0 switch form; control flow and opcodes match, but the temporaries rotate from $t6 where the original starts at $t0 (constant 1 in $t0, %hi of unk_71E in $v0), so 224 funcdiff rows differ in register numbers throughout */
 #ifdef NON_MATCHING
 void func_801355E8(void) {
 
@@ -611,7 +611,40 @@ s32 func_80135A6C(void) {
     }
 }
 
+/* NON_MATCHING: T-17700, the census draft's merged store of unk_110D as a u8 local; 8 instructions differ: the original loads each unk_110D into $v0 with its %hi in $v0, IDO here uses $v1 */
+#ifdef NON_MATCHING
+s32 func_80135AC8(void) {
+    u8 state;
+
+    if (D_800E6280.unk_71E & 0x20) {
+        func_80044750(0xCF);
+        main_state_set(0x52);
+        return 0;
+    }
+    state = D_800E6280.unk_110D;
+    if (state == 0) {
+        func_800674B0();
+        state = D_800E6280.unk_110D + 1;
+    }
+    D_800E6280.unk_110D = state;
+    if (state == 1) {
+        if ((u32)D_800E6280.unk_1104.w++ >= 0x400) {
+            func_800452C4();
+            func_8004482C();
+            D_800E6280.unk_110D = 0;
+        }
+        if (func_80044E8C() == 1) {
+            D_800E6280.unk_110D += 1;
+        } else {
+            return 0;
+        }
+    }
+    D_80122D4C = 0;
+    return func_80072B5C(1);
+}
+#else
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80135AC8);
+#endif
 
 void func_80135BC4(void) {
     D_800B3D60 = 0;
