@@ -15105,3 +15105,7 @@ Merged [[tickets/T-16500-twin-sweep]], [[tickets/T-16510-m2c-defect-rewrites]], 
 and [[tickets/T-16530-proto-override]] into `w2-int` (each clean 27/27; tool suite 1,184 tests OK). The whole-tree twin
 sweep matched TAIIKU `func_801406A8` (144 bytes); the defect-rewrite follow-up matched GEKO `func_801327AC` (672
 bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,958, 1,484,732 bytes (65.1%).
+
+## [2026-10-16] ticket | T-16550 opened
+
+[[tickets/T-16550-taiiku-types-first]] (In Progress): types-first pilot on the TAIIKU overlay, per [[speedup-research-2026-10-16]]. Recover shared types in `include/ovl/TAIIKU.h`, redraft every unmatched TAIIKU function into `drafts/T-16550/`, define packages T-16551..T-16554. Worktree branch `pt-taiiku` from `w2-good`.
