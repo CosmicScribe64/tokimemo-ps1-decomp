@@ -16,7 +16,59 @@ void func_80145530(void) {
     D_80122EC0 = 8;
 }
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80144F70", func_80145550);
+void func_80145550(void) {
+    GameState *g = &D_800E6280;
+    u8 pad; /* FAKE: T-18500, an unused byte above v puts v at sp+0xDA, the home its uninitialized default read uses */
+    u8 v;
+    BunkakenBytes9x6 a;
+    BunkakenBytes11x6 b;
+    BunkakenBytes11x6 c;
+    s32 sel;
+
+    a = D_80155F9C;
+    b = D_80155FD4;
+    c = D_80156018;
+    sel = (g->unk_03E - 0x5F) & 0xFF;
+    if (D_80122EBC == 0xB) {
+        g->unk_1BC[0].unk_06 += 2;
+        switch (sel) {
+        case 0:
+            v = a.b[0][D_80122EB8];
+            break;
+        case 1:
+            v = b.b[0][D_80122EB8];
+            break;
+        case 2:
+            v = c.b[0][D_80122EB8];
+            break;
+        }
+        if (v != 0) {
+            v--;
+        }
+        g->unk_1BC[0].unk_02 += v;
+    } else if (D_80122EBC < 0xB) {
+        g->unk_1BC[D_80122EBC].unk_06 += 2;
+        switch (sel) {
+        case 0:
+            v = a.b[D_80122EBC][D_80122EB8];
+            break;
+        case 1:
+            v = b.b[D_80122EBC][D_80122EB8];
+            break;
+        case 2:
+            v = c.b[D_80122EBC][D_80122EB8];
+            break;
+        }
+        if (v != 0) {
+            v--;
+        }
+        g->unk_1BC[D_80122EBC].unk_02 += v;
+    }
+    if (D_80122EA4 != 0xFF) {
+        g->unk_1BC[D_80122EA4].unk_06 -= 0xA;
+        g->unk_1BC[D_80122EA4].unk_0A += 0xA;
+    }
+}
 
 void func_80145844(void) {
     k_reset(0);
