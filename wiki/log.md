@@ -16403,3 +16403,6 @@ Clean rebuild of the w3-rpg-bat-p06 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.
 
 ## [2026-10-16] ticket | T-17111 Done
 [[tickets/T-17111-w3-rpg-bat-p11]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 2 of 2 functions matched (`func_80144010`, `func_801505B8`, 2,572 bytes). Rebuild: RPG_BAT unit sha1 OK, headers OK, globals OK, protos OK. Card moved to Done.
+
+## [2026-10-16] ticket | T-17115 In Progress
+Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG_BAT/801498C0.c`, `src/ovl/RPG_BAT/801321D0.c`, four functions) and moved it to In Progress. Card on [[kanban]], line in [[index]]. Worktree `tokimemo-wt/w3-rpg-bat-p15`, started 21:00 UTC.
