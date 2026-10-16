@@ -261,8 +261,6 @@ void func_80138278(void) {
 
 void func_8013855C(void) {
     u32 remainder;
-    s16 one; /* FAKE: narrow constant keeps the compare operands in order (T-9410). */
-    one = 1;
     if (D_8013C35C == 1) {
         if (D_8013C360 == 0) {
             *(s16 *)&D_8011ECD0[0x852] = 7;
@@ -280,7 +278,7 @@ void func_8013855C(void) {
             D_80122D0C = 1;
         } else if (D_8013C360 == 0x64) {
             func_801396A4(3, 5);
-        } else if (D_8011F4DE == 3 && one == D_8011F4E0 && one == D_8011F4D0) {
+        } else if (D_8011F4DE == 3 && *(s16 *)&D_8011ECD0[0x810] == 1 && *(s16 *)&D_8011ECD0[0x800] == 1) {
             func_801396A4(4, 1);
             D_80122D0C = 0;
         }

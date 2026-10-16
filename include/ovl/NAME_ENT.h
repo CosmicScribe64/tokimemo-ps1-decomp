@@ -197,7 +197,8 @@ typedef struct NameRecord44 {
     /* 0x05 */ u8 unk_05;
     /* 0x06 */ u8 pad06;
     /* 0x07 */ u8 unk_07;
-    /* 0x08 */ u8 pad08[4];
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ u8 pad0A[2];
     /* 0x0C */ s32 unk_0C;
     /* 0x10 */ s32 unk_10;
     /* 0x14 */ u8 pad14[2];

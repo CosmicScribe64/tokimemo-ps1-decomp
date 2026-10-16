@@ -164,19 +164,20 @@ void func_801325E8(void) {
 }
 
 void func_8013261C(void) {
+    s16 *state = &D_801206F0;
+
     if (D_800E6280.unk_1104.w == 1) {
         D_8013B808 = 0;
         D_801206DB = 0x84;
         D_801206DA = 5;
     }
-    /* FAKE: the ^ 0 keeps the constant as the left operand of the bne (decomp-permuter); real source unknown. T-8060 */
-    if ((D_80122EAC != 4) && (0x14 == (D_801206F0 ^ 0))) {
+    if ((D_80122EAC != 4) && (*state == 0x14)) {
         D_8013B808 += 1;
         if (D_8013B808 == 0x14) {
             func_80044750(0x501);
         }
     }
-    if ((D_80122EAC == 4) && (D_801206F0 == 5)) {
+    if ((D_80122EAC == 4) && (*state == 5)) {
         D_8013B808 += 1;
         if (D_8013B808 == 0x14) {
             func_80044750(0x501);

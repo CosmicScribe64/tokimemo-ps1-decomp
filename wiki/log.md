@@ -15001,3 +15001,6 @@ Opened [[tickets/T-16920-gamestate-1093-type]] (In Progress), the follow-up of [
 
 ## [2026-10-15] decision | T-16920 +0x1093 stays a member; no zcopy rule; ticket to In Review
 As `s8 unk_1093[2]`, 15 matched `switch` functions change (selector `$v1` against the original's `$v0`), so +0x1093/+0x1094 stay members. Kept-copy census: used `move` copies of global loads in 42 functions for aggregate members (12 matched) and 47 for scalars (27 matched), all matched ones from ordinary C. Copy propagation off for every procedure changes 737 of 5,967 matched functions, so no zcopy rule. Notes in [[matching-notes]], [[game-state]], [[register-cheatsheet]], [[toolchain]]; T-11570's "copy-propagation gap" note in [[matching-notes]] corrected. [[tickets/T-16920-gamestate-1093-type]] moved In Progress to In Review.
+
+## [2026-10-15] ticket | T-16930 pointer reads for kept copies opened
+Opened [[tickets/T-16930-pointer-read-kept-copies]] (In Progress), the follow-up of [[tickets/T-16920-gamestate-1093-type]]: try a local `GameState *g` or record pointer on the 23 other unmatched functions of the [[tickets/T-16910-cpw-census]] census that keep a `move` copy of an aggregate member, and on the five matched constant-first compares that still need a `FAKE` or cast.

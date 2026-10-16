@@ -21,6 +21,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
+- [[tickets/T-16930-pointer-read-kept-copies|T-16930]] Pointer reads for the 23 other kept-copy census functions and the five constant-first tricks (In Progress).
 - [[tickets/T-16920-gamestate-1093-type|T-16920]] NAME_ENT selector-copy family matched as C through a `GameState *g` read (7 functions, 2,332 bytes); +0x1093/+0x1094 stay members; no zcopy rule (In Review).
 - [[tickets/T-16910-cpw-census|T-16910]] Census of the original for the T-16900 `cpw` rule: negative, constant-first compares follow aggregate membership, not copies (In Review).
 - [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210]] Wave 2 package w2-p01: RPG_BAT census drafts, 5 of 5 matched (Done).
