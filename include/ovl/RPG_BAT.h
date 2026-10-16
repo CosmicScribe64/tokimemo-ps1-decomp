@@ -95,7 +95,9 @@ void func_8014F080(s32 arg0);
 void func_8014EF3C(void);
 
 void func_8013F0F4(s32 a, s32 b, s32 c);
+#ifndef RPG_BAT_OVERRIDE_func_8013F15C
 void func_8013F15C(s32 a, s32 b, s32 c);
+#endif
 s32 func_8013E90C(s32 i);
 s32 func_80156870(void);
 
