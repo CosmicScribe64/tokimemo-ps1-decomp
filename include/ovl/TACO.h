@@ -546,6 +546,7 @@ void func_801573C8(void);
 void func_80157AE0(void);
 void func_8015800C(void);
 void func_80158AB0(void);
+void func_801589B0(void);
 #endif
 
 #ifndef OVL_TACO_DIRECTIONS_T9780

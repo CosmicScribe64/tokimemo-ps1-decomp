@@ -406,7 +406,81 @@ void func_8015800C(void) {
     func_8015ACCC(0xC, 0x11, D_801604D4, D_801604DC, b, 2, 0x10);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801585D0);
+void func_801585D0(s32 arg0) {
+    s32 ang;
+    s32 rad;
+    TcPos pos;
+
+    switch ((arg0 + D_8015EDB4)->unk7C) {
+    case 0:
+        if ((arg0 + D_8015EDB4)->unk6A & 1) {
+            (arg0 + D_8015EDB4)->unk74 = -0x1770;
+        } else {
+            (arg0 + D_8015EDB4)->unk74 = 0x1770;
+        }
+        if ((arg0 + D_8015EDB4)->unk6A & 0x10) {
+            (arg0 + D_8015EDB4)->unk76 = -0x898;
+        } else {
+            (arg0 + D_8015EDB4)->unk76 = 0x320;
+        }
+        D_8015EDB4[arg0].unk78 = 0;
+        (arg0 + D_8015EDB4)->unk7C += 1;
+        break;
+    case 1:
+        if ((arg0 + D_8015EDB4)->unk6A & 1) {
+            (arg0 + D_8015EDB4)->unk74 = (arg0 + D_8015EDB4)->unk7A * 0x1E - 0x1770;
+        } else {
+            (arg0 + D_8015EDB4)->unk74 = 0x1770 - (arg0 + D_8015EDB4)->unk7A * 0x1E;
+        }
+        if ((arg0 + D_8015EDB4)->unk6A & 0x10) {
+            (arg0 + D_8015EDB4)->unk76 = (arg0 + D_8015EDB4)->unk7A * 5 - 0x898;
+        } else {
+            (arg0 + D_8015EDB4)->unk76 = 0x320 - (arg0 + D_8015EDB4)->unk7A * 5;
+        }
+        (arg0 + D_8015EDB4)->unk78 = -(arg0 + D_8015EDB4)->unk7A * 0x1E;
+        if ((arg0 + D_8015EDB4)->unk7A >= 0xC9) {
+            (arg0 + D_8015EDB4)->unk7A = 0;
+            (arg0 + D_8015EDB4)->unk7C += 1;
+        }
+        break;
+    case 2:
+        switch ((arg0 + D_8015EDB4)->unk6A) {
+        case 0:
+            /* ang is stored before rad: the load delay slot of the unk7A read then takes the rad store, as in the original */
+            ang = (arg0 + D_8015EDB4)->unk7A * 0x14;
+            rad = -0x1F4;
+            break;
+        case 1:
+            ang = -(arg0 + D_8015EDB4)->unk7A * 0x14;
+            rad = -0x1F4;
+            break;
+        case 0x10:
+            ang = -(arg0 + D_8015EDB4)->unk7A * 0x14;
+            rad = 0x1F4;
+            break;
+        case 0x11:
+            ang = (arg0 + D_8015EDB4)->unk7A * 0x14;
+            rad = 0x1F4;
+            break;
+        }
+        D_8015EDB4[arg0].unk74 = (func_800A0070(ang) * rad) >> 12;
+        D_8015EDB4[arg0].unk76 = ((func_800A0140(ang) * -rad) >> 12) - 0x2BC;
+        if (((arg0 + D_8015EDB4)->unk7A % 20) == 0) {
+            pos.x = (arg0 + D_8015EDB4)->unk74;
+            pos.y = (arg0 + D_8015EDB4)->unk76;
+            pos.z = (arg0 + D_8015EDB4)->unk78;
+            func_8013DB80(pos, 0x100, 0xC0);
+        }
+        if ((arg0 + D_8015EDB4)->unk7A >= 0x19A) {
+            (arg0 + D_8015EDB4)->unk7C += 1;
+        }
+        break;
+    case 3:
+        func_801589B0();
+        D_8015EDB4[arg0].unk2 = 0xFE;
+        break;
+    }
+}
 
 void func_801589B0(void) {
     s32 i;
