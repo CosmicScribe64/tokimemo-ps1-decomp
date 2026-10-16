@@ -32,6 +32,6 @@ Worktree `tokimemo-wt/w3-rpg-bat-p13`, branch `w3-rpg-bat-p13`, base `w2-good`. 
 | `func_801447E0` | 924 | draft T-14500 (score 216) | `INCLUDE_ASM`, 154 rows: `D_8015EB98`/`D_8015ED98` colours (`$v1`/`$a1` against `$a1`/`$a0`), second spill slot; draft in `drafts/T-17113/` |
 | `func_80144C84` | 1,276 | draft T-17100 (score 360) | `INCLUDE_ASM`, 252 rows: four promoted `D_8015EBFC` fields tie, frame 0x30 against 0x38; draft in `drafts/T-17113/` |
 
-1 of 4 matched (1,024 bytes of code), 1 guarded draft, about 90 minutes. Notes: [[matching-notes]] (section T-17113), rows in [[data/t0018-cases]] (3), [[rpg-bat-family-results]].
+1 of 4 matched (1,024 bytes of code), 1 guarded draft, about 75 minutes. Notes: [[matching-notes]] (section T-17113), rows in [[data/t0018-cases]] (3), [[rpg-bat-family-results]].
 
 ## Comments
