@@ -1242,35 +1242,37 @@ void func_800725B0(void) {
     func_80067870();
     func_80066C08(0);
 }
-/* NON_MATCHING: T-11670, 20 differing lines; the original stores 1/2/3 to unk_03D from $v1 (the flag kept in a register, T-0018 promotion); IDO uses t7/t8/t9. A u8 h with D = h = k gets the v1 stores but moves the load to v0 (26 lines). */
-#ifdef NON_MATCHING
 void func_800726F0(void) {
-    s32 h;
+    GameState *g = &D_800E6280;
+    /* FAKE: the first test reads unk_03D through a local copy and the second re-reads the field (found by autotweak).
+     * With both tests on the field, unk_03D is promoted into $v0 (sharing it with the month range) instead of the
+     * original's $v1; the real source is unknown. T-17004 */
+    s32 flag;
 
-    switch (D_800E6280.unk_110A) {
+    switch (g->unk_110A) {
     case 0:
         func_8004E58C();
         func_80066104("ダミー");
         func_80065F34(0);
-        gnsx(&D_800E6280.unk_0D4);
-        h = D_800E6280.unk_03D;
-        if (h != 0 && D_800E6280.unk_040 == 2) {
-            D_800E6280.unk_03D = 0;
+        gnsx(&g->unk_0D4);
+        flag = g->unk_03D;
+        if (flag != 0 && g->unk_040 == 2) {
+            g->unk_03D = 0;
             sndisp("明日から新学期だ）", 0, 0x1F);
-        } else if (h != 0) {
-            D_800E6280.unk_03D = 0;
+        } else if (g->unk_03D != 0) {
+            g->unk_03D = 0;
             sndisp("明日から新学期だ）", 0, 0x1F);
-        } else if (D_800E6280.unk_03F == 7) {
+        } else if (g->unk_03F == 7) {
             sndisp("明日から夏休みだ）", 0, 0x1F);
-            D_800E6280.unk_03D = 1;
-        } else if (D_800E6280.unk_03F == 0xC) {
+            g->unk_03D = 1;
+        } else if (g->unk_03F == 0xC) {
             sndisp("明日から冬休みだ）", 0, 0x1F);
-            D_800E6280.unk_03D = 2;
-        } else if (D_800E6280.unk_03F == 3) {
+            g->unk_03D = 2;
+        } else if (g->unk_03F == 3) {
             sndisp("明日から春休みだ）", 0, 0x1F);
-            D_800E6280.unk_03D = 3;
+            g->unk_03D = 3;
         } else {
-            D_800E6280.unk_03D = 0;
+            g->unk_03D = 0;
         }
         func_800674B0();
         k_disp_start(3);
@@ -1287,9 +1289,6 @@ void func_800726F0(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800726F0);
-#endif
 
 void func_800728A4(void) {
     switch (D_800E6280.unk_1109) {
