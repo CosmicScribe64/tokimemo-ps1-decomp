@@ -22,6 +22,7 @@ Read this first. Update on every ingest or new page.
 - [[date-family-results]] - DATE step tables (`FnTblNN`) and stack tables, the types-first redraft and its numbers, sibling ports, near misses, packages (T-17200)
 - [[bunka-sd-family-results]] - BUNKA_SD type map (scene event lists, text tables, picture sets), display-record loop and compare-operand idioms, the types-first redraft, near misses, packages (T-18100)
 - [[option-family-results]] - OPTION type map (menu rows, word tables, `OptActor44`), the types-first redraft and its numbers, near misses, packages (T-17800)
+- [[kangei-family-results]] - KANGEI type map (picture-set tables, MASTER streak effect, club name tables), the types-first redraft and its numbers, near misses, packages (T-18400)
 - [[shugaku-family-results]] - SHUGAKU type map (callback tables, location tables left as scalars), the types-first redraft and its numbers, sibling ports, packages (T-18000)
 - [[shougatu-family-results]] - SHOUGATU type map (step tables, stack tables, work arrays), the types-first redraft and its numbers, GYOZI twin ports, packages (T-17500)
 - [[rpg-bat-family-results]] - RPG_BAT type map (stack tables, `RpgStat`), the types-first redraft and its numbers, idioms (`default:` + `case 0:`, reread globals), packages (T-17100)
@@ -30,7 +31,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 
-- [[tickets/T-18400-types-first-kangei|T-18400]] Types-first: KANGEI: recover the unit's shared types, redraft every unmatched function, packages (In Progress).
+- [[tickets/T-18400-types-first-kangei|T-18400]] Types-first: KANGEI: picture-set tables, MASTER streak types and club name tables in `KANGEI.h`, 11 redrafts (7 better than the census), 4 matches / 2,596 bytes, packages T-18401..T-18403 (In Review).
 - [[tickets/T-18100-types-first-bunka_sd|T-18100]] Types-first: BUNKA_SD: scene event lists (`BsdEvent`), text tables and picture sets in `BUNKA_SD.h`, 15 redrafts (6 better than the census), 9 matches / 4,820 bytes, packages T-18101..T-18103 (Done).
 - [[tickets/T-17800-types-first-option|T-17800]] Types-first: OPTION: menu rows, word tables and the `OptActor44` record view in `OPTION.h`, 32 redrafts (19 better than the census), 4 matches / 1,548 bytes, packages T-17801..T-17803 (Done).
 - [[tickets/T-19012-w3-d-p12|T-19012]] Wave 3 package w3-d-p12: OMIMAI `801320A0.c`, `801331B0.c`, 2 of 3 matched (`func_80132670` with a scalar-view FAKE, `func_80134628` from its KANGEI sibling, 928 B), `func_8013388C` back to `INCLUDE_ASM` (Done).

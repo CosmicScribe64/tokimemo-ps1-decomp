@@ -5960,3 +5960,12 @@ Cheat sheet rows: [[register-cheatsheet]] (chain stores, call-saved quotient, ra
 - `(u8)D_80122EB0` on an `s32` global gives the `lbu` the original has (`func_80137890`).
 - Open: the event interpreters (`func_80133D54` and two copies) compute `(cmd & 0xFF0000) >> 16` once before the
   image test; every C form tried lets IDO sink it into both call branches (57 rows). Details: [[bunka-sd-family-results]].
+
+## KANGEI types-first pass (T-18400)
+
+[[tickets/T-18400-types-first-kangei]], details on [[kangei-family-results]]. Four functions matched (2,596 bytes):
+- `func_801370A0`: MASTER `func_80137BF4` ported with the two table symbols changed (siblings.py ratio 1.000).
+- `func_80132C24`: `func_8013454C` form plus a month check that overrides six stack-table entries.
+- `func_80136630`: ugen temporaries are numbered in source order. Updating `D_80139E00` first in each arm gave
+  the original's `$t6` for its `andi`; the state stores then matched once placed where as1 schedules their `li`.
+- `func_80135838` (FAKE): typed draft plus four m2c fixes; the date checks read through `GameState *g`.
