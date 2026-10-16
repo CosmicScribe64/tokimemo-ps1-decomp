@@ -16482,3 +16482,9 @@ Clean rebuild of the w3-rpg-bat-p05 worktree (`rm -rf build && configure.py && n
 
 ## [2026-10-16] ticket | T-17117 In Progress
 [[tickets/T-17117-w3-rpg-bat-p17]] created and started: RPG_BAT `func_8013CC90` (`src/ovl/RPG_BAT/8013CC90.c`), worktree `w3-rpg-bat-p17`.
+
+## [2026-10-16] build | T-17117 matches
+[[tickets/T-17117-w3-rpg-bat-p17]], worktree `w3-rpg-bat-p17`, 21:19-21:35 UTC. Matched `func_8013CC90` (928 bytes, 1 of 1) in `src/ovl/RPG_BAT/8013CC90.c`, plain C, no FAKE, one commit. From the 157-row typed draft: wrong field in one arm, local replaced by in-place updates of `D_8015EBFC.unk_34`, `switch (sel = ...)`, `u32` file view of `D_8015ED98` (`RPG_BAT_OVERRIDE_D_8015ED98`), scalar-view scrutinee found by `autotweak`. Notes in [[matching-notes]], four rows in [[register-cheatsheet]], update in [[data/t0018-cases]], [[rpg-bat-family-results]].
+
+## [2026-10-16] ticket | T-17117 In Review
+[[tickets/T-17117-w3-rpg-bat-p17]] In Progress to In Review: 1 of 1 matched. Clean rebuild (`rm -rf build && configure.py && ninja`) 27/27 SHA1 OK (26 overlays and the main executable), `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Code review against `CODING_STANDARDS.md` pending.
