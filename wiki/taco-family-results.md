@@ -118,7 +118,7 @@ best expected bytes first (expected bytes = size / (1 + score / 30)); the gcc-bu
 
 ## Matching stage, package p1 (T-16561)
 
-[[tickets/T-16561-taco-types-first-p1]] took the best redrafts of `801335A0.c`, `80137590.c`, `80159090.c` and `80146D60.c` from [[tickets/T-16560-taco-types-first]] and worked them to the byte: 7 of 12 functions matched (5,104 bytes, about 1 hour 45 minutes, 4 of them within 10 minutes of the first compile). The pattern: the new types fix the data flow, the rest is the shape of the locals.
+[[tickets/T-16561-taco-types-first-p1]] took the best redrafts of `801335A0.c`, `80137590.c`, `80159090.c` and `80146D60.c` from [[tickets/T-16560-taco-types-first]] and worked them to the byte: 8 of 12 functions matched (5,612 bytes, about 2 hours, 4 of them within 10 minutes of the first compile). The pattern: the new types fix the data flow, the rest is the shape of the locals.
 
 | Function | Bytes | Result | What decided it |
 | --- | ---: | --- | --- |
@@ -129,7 +129,7 @@ best expected bytes first (expected bytes = size / (1 + score / 30)); the gcc-bu
 | `func_80159878` | 1,768 | matched | `default: break;` (keeps `arg0` out of `$s0`), FAKE unused `TcPos`, one-line `sp48.y = ..; sp50.x = ..;` pairs |
 | `func_8013788C` | 468 | matched | range tests as `D_800E6280.unk_F80 |= k;` on the global instead of a local accumulator |
 | `func_8013760C` | 640 | matched | `s32` without return, `*(u8 *)&` selector, empty `default`, FAKE `(u8 *)i + (u32)ptr` operand order |
-| `func_80147928` | 508 | 4 lines | arg2 reload register (`$a3` against `$a0`) |
+| `func_80147928` | 508 | matched | `p`, `pos`, `slot`, `base` locals, index-first sums, and a FAKE empty `do { } while (0);` that gives arg2 its `$a3` range (found by the permuter) |
 | `func_80133738` | 312 | 8 lines | lookup temporaries one ugen register low |
 | `func_801472D4` | 300 | 20 lines | block-copy temporaries one ugen register low |
 | `func_801471D0` | 260 | 4 lines (T-11300) | `move s4,s3` copy of the second loop base |

@@ -26,6 +26,8 @@ Update (T-9000): re-tested under K&R with the wave agents' drafts ([[matching-no
 
 Update (T-16230): rows for DATE `func_801511B4`, `func_80150460` and `func_80150C78` (T-4010, T-9110, T-9320, T-9580, T-9780) are now matched in plain C, with `func_80150ED4`, by naming the real aggregates (`D_801217D0[57]`, display records 96 and 98 of `D_8011ECD0`), a chain assignment through record elements, and a `GameState *g` pointer ([[matching-notes]], "T-16230").
 
+Update (T-16561): TACO `func_80147928` (row below, 4 lines left at the time) is matched in plain C with an empty `do { } while (0);` after `base = arg2 + 4;` and the declaration order `p, pos, slot, base` (FAKE, found by `tools/permute.py` in 150 s); `func_80159878`, `func_8013788C`, `func_8013760C`, `func_80147C98`, `func_80146F74`, `func_80147674` and `func_80147488` are matched as well ([[matching-notes]], T-16561).
+
 | file | function | category | symptom |
 |---|---|---|---|
 | TEL | `func_8013A40C` | promo | compare chain on a global, original loads it into $v1, IDO $v0 (batch B) |
