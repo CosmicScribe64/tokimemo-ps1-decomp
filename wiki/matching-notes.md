@@ -5988,3 +5988,16 @@ Process notes: `tools/siblings.py --package` needs the list file inside the work
 - A block-scope `extern GameState D_800E6280;` redeclaration is the same uopt variable (65 rows, as plain). autotweak 120 s on the volatile draft: 285 to 285, none.
 
 Reading of the evidence: the original's first and last accesses are two different uopt variables at the same address, both addressed directly. In plain C that is a separate symbol for the counter (as `func_8014616C`, T-19002), which `migrate_globals --check` rejects without a hoisted pair. The open decision is the same as T-19002's follow-up: whether a `keep` line may cite a uopt live-range proof like this one.
+
+## BUNKAKEN types-first pass (T-18500)
+
+- **Uninitialized `u8` with a stack home** (`func_80145550`, `func_80145A64`): a switch arm that sets nothing
+  and an `lbu v0,N(sp)` afterwards is the original reading `v` uninitialized; IDO gives such a local a home.
+  Write one `u8 v;` with no `default`; m2c and the census synthesized `spDA`/`sp2B` locals instead.
+- **`GameState *g = &D_800E6280;` owns a stack word** even when `g` lives in a register: it shifts the stack
+  tables declared after it by 4 (`func_8014A5EC` matched with it, where a FAKE pad was the alternative).
+- **K&R views per object**: `func_8014A0E0` needs `func_800847B8()` and `func_80083440()` without prototypes
+  (no `andi` in the caller); `func_80145A64` calls `get_g_zyotai_h(girl, v)` with two arguments
+  (`MAIN_API_OVERRIDE_get_g_zyotai_h`, new in `main_api.h`).
+- Open: `func_80144F70` stores `D_80122EBC` back with its own value before each `func_8008667C(D_80122EBC)`
+  call; details and the other near misses in [[bunka-family-results]] ("Types-first pass (T-18500)").

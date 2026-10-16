@@ -1,7 +1,7 @@
 ---
 id: T-18500
 title: "Types-first: BUNKAKEN"
-status: In Progress
+status: In Review
 assignee: claude (w3-bunkaken-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -16,12 +16,12 @@ adapted from T-16550, T-16560 and T-18100 into `drafts/T-18500/redraft.py`), and
 
 ## Acceptance criteria
 
-- [ ] Survey: `tools/type_recovery.py --unit BUNKAKEN`, siblings, census drafts.
-- [ ] Recovered structs, arrays and tables declared in `include/ovl/BUNKAKEN.h`; every matched BUNKAKEN function still matches.
-- [ ] Every unmatched BUNKAKEN function redrafted and scored full-TU; drafts in `drafts/T-18500/BUNKAKEN/<func>/`.
-- [ ] Score-0 or near-zero drafts finished and matched where possible.
-- [ ] Packages computed; "Types-first pass (T-18500)" section on the family page.
-- [ ] Clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` pass.
+- [x] Survey: `tools/type_recovery.py --unit BUNKAKEN`, siblings, census drafts.
+- [x] Recovered structs, arrays and tables declared in `include/ovl/BUNKAKEN.h`; every matched BUNKAKEN function still matches.
+- [x] Every unmatched BUNKAKEN function redrafted and scored full-TU; drafts in `drafts/T-18500/BUNKAKEN/<func>/`.
+- [x] Score-0 or near-zero drafts finished and matched where possible.
+- [x] Packages computed; "Types-first pass (T-18500)" section on the family page.
+- [x] Clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` pass.
 
 ## Notes
 
@@ -29,3 +29,21 @@ Ownership: `src/ovl/BUNKAKEN/*.c`, `include/ovl/BUNKAKEN.h`; additions only in `
 Start: 12 unmatched BUNKAKEN functions (14,256 bytes by `tools/siblings.py`), 1 of them a guarded draft (`func_801428D0`).
 
 ## Comments
+
+### 2026-10-16 claude (w3-bunkaken-types): pass done, In Review
+
+- Types in `include/ovl/BUNKAKEN.h`: `s32 D_801562A0[3][13]` (39 scalars absorbed; `func_80148ED0` rewritten as
+  elements, same bytes), the per-heroine tables `D_80155EA0`/`D_80155ED0`/`D_80155F00`/`D_80155F0C`/`D_80155F3C`,
+  the stack-copied tables `BunkakenBytes11`, `BunkakenBytes9x6`, `BunkakenBytes11x6`, `BunkakenNames3x3`,
+  prototypes of `func_80145500`/`func_80145550`/`func_80145A64`. `include/main_api.h`: `get_g_zyotai_h`
+  wrapped in `#ifndef MAIN_API_OVERRIDE_get_g_zyotai_h` (no declaration changed).
+- Redraft (`drafts/T-18500/`, 12 functions): 5 better than the census, 6 the same, 1 worse; median 210 to 191
+  rows; one score 0 (`func_8014A5EC`).
+- Matched (6 functions, 6,232 bytes, BUNKAKEN sha1 OK): `func_80147914`, `func_80151A78` (sibling ports),
+  `func_8014A0E0` (K&R overrides in `80148ED0.c`), `func_8014A5EC` (GameState local), `func_80145550`
+  (FAKE unused byte for the home of an uninitialized local), `func_80145A64`.
+- FAKEs: `func_80145550` `u8 pad;` (named in the comment).
+- Packages: T-18501 `w3-bunkaken-p01` (`80144F70.c`, `80143DD0.c`, `801428D0.c`, 3 functions, 5,368 B),
+  T-18502 `w3-bunkaken-p02` (`80140F60.c`, `8013B510.c`, 3 functions, 3,236 B).
+- Details: [[bunka-family-results]] ("Types-first pass (T-18500)"), [[matching-notes]].
+

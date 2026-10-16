@@ -15768,3 +15768,11 @@ Created [[tickets/T-18300-types-first-ending]] (wave 3, [[tickets/T-16990-wave-3
 ## [2026-10-16] ticket | T-18500 Types-first: BUNKAKEN, In Progress
 
 Created [[tickets/T-18500-types-first-bunkaken]] (branch `w3-bunkaken-types` from `w2-good`), In Progress: survey BUNKAKEN's types, declare them in `include/ovl/BUNKAKEN.h`, redraft every unmatched function into `drafts/T-18500/`, cut packages. Card in [[kanban]], line in [[index]].
+
+## [2026-10-16] build | T-18500 BUNKAKEN: types, redraft, 6 matches
+
+[[tickets/T-18500-types-first-bunkaken]]: `include/ovl/BUNKAKEN.h` gets `s32 D_801562A0[3][13]` (39 scalars absorbed, `src/ovl/BUNKAKEN/80148ED0.c` rewritten as elements), the per-heroine tables of the date loaders, the stack-copied byte tables (`BunkakenBytes11`, `BunkakenBytes9x6`, `BunkakenBytes11x6`, `BunkakenNames3x3`) and three forward prototypes; `include/main_api.h` wraps `get_g_zyotai_h` in `MAIN_API_OVERRIDE_get_g_zyotai_h`. Driver `drafts/T-18500/redraft.py` (T-18100 plus T-18300 rewrites, new `header-arrays`, `array-symbols`, `gs-local`) and `hand.py`: 12 redrafts, 5 better than the census, 1 worse, one zero. Matched `func_80147914`, `func_80151A78`, `func_8014A0E0`, `func_8014A5EC`, `func_80145550` (FAKE unused byte), `func_80145A64`: 6,232 bytes, BUNKAKEN sha1 OK. Section "Types-first pass (T-18500)" on [[bunka-family-results]], entry in [[matching-notes]].
+
+## [2026-10-16] ticket | T-18500 In Review
+
+[[tickets/T-18500-types-first-bunkaken]] In Progress to In Review: packages T-18501 (`w3-bunkaken-p01`) and T-18502 (`w3-bunkaken-p02`) cut by `inventory2.py`/`mklists3.py`; clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], line in [[index]].
