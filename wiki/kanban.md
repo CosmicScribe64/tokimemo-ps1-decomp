@@ -357,6 +357,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-0007-write-coding-standards|T-0007 Write CODING_STANDARDS.md]]
 - [ ] [[tickets/T-1200-fix-conflicting-extern-declarations|T-1200 Fix conflicting extern declarations after batch merges]]
 
+- [ ] [[tickets/T-16560-taco-types-first|T-16560 Types-first pilot: TACO]]
+
 %% kanban:settings
 ```
 {"kanban-plugin":"board","list-collapse":[false,false,false,false,false]}

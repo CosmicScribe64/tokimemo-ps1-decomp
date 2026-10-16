@@ -1,0 +1,13 @@
+python3 failed:
+ ---------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16560/_runs/plain/TACO/func_801472D4/work/guarded.c, line 3542: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)temp_t4 + (28)) = (s32) *(s32 *)((unsigned char *)(&sp2C) + (24));
+ ---------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16560/_runs/plain/TACO/func_801472D4/work/guarded.c, line 3543: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)temp_t4 + (32)) = (s32) *(s32 *)((unsigned char *)(&sp2C) + (28));
+ ---------------------------------------------------------------------------------^
+cfe: Error: drafts/T-16560/_runs/plain/TACO/func_801472D4/work/guarded.c, line 3544: Selector requires struct/union pointer as left hand side
+     temp_v0->unk4[0]->unk0 = 0;
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/plain/TACO/func_801472D4/work -o drafts/T-16560/_runs/plain/TACO/func_801472D4/work/guarded.o /tmp/asm_processord6y4_0xf/preprocessed_ebe1ed3a1db6453aa88ca4e4bbab0a08.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibn9t5pyxc/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/plain/TACO/func_801472D4/work/guarded.o drafts/T-16560/_runs/plain/TACO/func_801472D4/work/guarded.c

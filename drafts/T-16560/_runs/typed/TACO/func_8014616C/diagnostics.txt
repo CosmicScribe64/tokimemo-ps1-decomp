@@ -1,0 +1,11 @@
+m2c.py: argument counts from the callees' asm: func_801335A0 2, func_801449D8 3, func_80144DF8 1, func_8014559C 6
+python3 failed:
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_8014616C/work/guarded.c, line 3549: redeclaration of 'func_8014616C'; previous declaration at line 3456 in file 'drafts/T-16560/_runs/typed/TACO/func_8014616C/work/guarded.c'
+ void func_8014616C(void) {
+ -----^
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_8014616C/work/guarded.c, line 3549: Incompatible function return type for this function.
+ void func_8014616C(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/typed/TACO/func_8014616C/work -o drafts/T-16560/_runs/typed/TACO/func_8014616C/work/guarded.o /tmp/asm_processorc35niukb/preprocessed_a309c7a5220c45268cf23db1f9334573.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibjgw5ud3c/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/typed/TACO/func_8014616C/work/guarded.o drafts/T-16560/_runs/typed/TACO/func_8014616C/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return

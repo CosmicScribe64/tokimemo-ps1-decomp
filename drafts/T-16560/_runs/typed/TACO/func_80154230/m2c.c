@@ -1,0 +1,28 @@
+void func_80154230(void *arg0, s32 arg1) {
+    s32 *var_s0;
+    s32 temp_s1;
+    s32 temp_v0;
+    s32 temp_v0_2;
+    u32 temp_s2;
+
+    temp_s1 = *(s32 *)((unsigned char *)arg0 + (4));
+    temp_s2 = *(u32 *)((unsigned char *)arg0 + (12));
+    var_s0 = arg0 + 0x24;
+loop_1:
+    if (func_8015431C((s32) var_s0) != 0) {
+        temp_v0 = var_s0->unk0;
+        if ((temp_v0 == 0x24000507) || (temp_v0 == 0x34000609)) {
+            temp_v0_2 = *(s32 *)((unsigned char *)var_s0 + (8));
+            var_s0 += 8;
+            *var_s0 = (temp_v0_2 & 0xFFFF) + (temp_v0_2 & 0x01E00000) + ((arg1 & 0xFFFF & 0x1F) << 0x10);
+        }
+        var_s0 += 4;
+        if ((temp_s1 == 0) || (temp_s2 >= (u32) var_s0)) {
+            if ((temp_s1 == 0) && ((u32) ((temp_s2 * 4) + var_s0 + 0xC) < (u32) var_s0)) {
+
+            } else {
+                goto loop_1;
+            }
+        }
+    }
+}

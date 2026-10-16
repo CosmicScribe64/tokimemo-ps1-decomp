@@ -216,6 +216,52 @@ void func_8013546C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_8013555C);
+/* The menu index D_8015EDE8 is an s8 elsewhere (compared < 0); these switches read it as the unsigned byte the original uses. T-16560 */
+s32 func_8013555C(void) {
+    switch (*(u8 *)&D_8015EDE8) {
+    case 0:
+        func_801432F0("GAME START", -0x40, 0x48, 2);
+        break;
+    case 1:
+        func_801432F0("  OPTION  ", -0x40, 0x48, 3);
+        break;
+    case 2:
+        func_801432F0("  SCORES  ", -0x40, 0x48, 5);
+        break;
+    case 3:
+        func_801432F0("OPERATIONS", -0x40, 0x48, 6);
+        break;
+    case 4:
+        func_801432F0("   EXIT   ", -0x40, 0x48, 0);
+        break;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_80135638);
+/* The switch reads D_8015EDE8 as an unsigned byte, as func_8013555C does. T-16560 */
+s32 func_80135638(void) {
+    if ((u32) D_800E6280.unk_1104.u >= 0x41U) {
+        switch (*(u8 *)&D_8015EDE8) {
+        case 0:
+            func_80042908(0xA);
+            break;
+        case 1:
+            func_80042908(4);
+            break;
+        case 2:
+            func_80042908(5);
+            break;
+        case 3:
+            func_80042908(7);
+            break;
+        case 4:
+            func_80042908(0x2E);
+            break;
+        }
+    }
+    if (D_800E6280.unk_1109 != 3) {
+        func_80048DAC(0);
+    }
+    if (D_800E6280.unk_1104.u & 4) {
+        func_8013555C();
+    }
+}

@@ -1,0 +1,12 @@
+python3 failed:
+cfe: Warning 709: drafts/T-16560/_runs/typed/TACO/func_801472D4/work/guarded.c, line 3514: Incompatible pointer type assignment
+     var_a1 = &sp2C;
+ -----------^
+cfe: Warning 681: drafts/T-16560/_runs/typed/TACO/func_801472D4/work/guarded.c, line 3533: '&' before array or function; ignored
+     } while (var_a1 != &sp38);
+ -----------------------^
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_801472D4/work/guarded.c, line 3537: Selector requires struct/union pointer as left hand side
+     temp_v0->unk4[0]->unk0 = 0;
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/typed/TACO/func_801472D4/work -o drafts/T-16560/_runs/typed/TACO/func_801472D4/work/guarded.o /tmp/asm_processorh_eobfsf/preprocessed_1df00306c33a4acabd47fb9ff97aec22.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibc557ec5p/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/typed/TACO/func_801472D4/work/guarded.o drafts/T-16560/_runs/typed/TACO/func_801472D4/work/guarded.c

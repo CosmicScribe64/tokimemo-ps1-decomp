@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-10
+updated: 2026-10-16
 sources: ["tools/type_recovery.py", "tools/test_type_recovery.py", "include/main_api.h", "config/symbol_addrs_types.txt", "wiki/matching-notes.md", "tools/migrate_globals.py", "tools/aggregate_audit.py"]
 ---
 
@@ -131,3 +131,10 @@ twelve bytes, with two command words.
 ## MASTER held-out table pilot (T-13001)
 
 [[master-types-pilot]] verifies three additional 13-s16 copies at D_8013C7E8/C804/C820 using the existing MasterHalfwords13 type. Reusing MasterSprite44 preserves ordered accesses at +03/+07/+16 in the two later handlers. Three full-TU matches add 3,648 literal bytes; source-level register/stack idioms remain FAKE-labelled, distinct from the demonstrated layouts. No shared type migration.
+
+## TACO types-first pass (T-16560)
+
+`TcActor` (0x88) now has its object handle (`Tc10`, GsDOBJ2 layout) at +0x04 and its coordinate object
+(`TcObj50`, GsCOORDINATE2 layout, complete) at +0x14; `Tc14` has no holes; `D_8015EC70` is a `Tc14[16]`
+table; `D_80129C40` is a `MATRIX` in `main_api.h` (which now includes `libgte.h`). Map, evidence and the
+draft rewrites built on them: [[taco-family-results]] ("Types-first pass").

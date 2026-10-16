@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # TACO boss actor transform family
@@ -36,3 +36,82 @@ Best evidence: a480-storeorders.diff and 97ec-nocache.diff. Broader failures rem
 ## Final validation and review
 
 The saved reprobe script reproduces the one-row and three-row results without compile errors. The restored default TACO build then exits 0 with SHA1 OK, 1419e93cbad6c0df790577701181be04e0747969; header/global checks pass. Evidence: build/t13801/final-default.log and final-verified.log. No whole-game rebuild/checksum claim is made. Independent standards review found no issues. Spec review confirms the primary matching goal is unmet; both tickets remain In Review for integration disposition. Source/header diff against 97ec697f is empty.
+
+## Types-first pass (T-16560)
+
+Pilot of the types-first idea in [[speedup-research-2026-10-16]]: recover TACO's shared types first, then
+redraft every unmatched function ([[tickets/T-16560-taco-types-first]], branch `pt-taco`). The drafts and the
+driver are in `drafts/T-16560/` (README there).
+
+### Type map
+
+| Type / global | Layout and evidence |
+| --- | --- |
+| `TcActor` (0x88), 79 records at `TcActor *D_8015EDB4` | `unk0[2]` (byte 1: flag bits 0x80, 0x40), `unk2`, `unk3`; `Tc10 unk4` at +0x04 (object handle); `TcObj50 unk14` at +0x14 (coordinate object: `func_8013801C` passes `actor + 0x14` to `func_80099E30`); s16 `unk64`..`unk82`; `u8 unk84[4]`. The old `pad4[0x60]` had no users. `unk74`..`unk7A` and `unk7C`..`unk82` are copied as two 8-byte `TcPos` (lwl/lwr pairs) into by-value arguments; they stay s16 members because 245 matched lines read them one by one (310 uses). |
+| `TcObj50` (0x50), `D_80127480[64]` and `actor->unk14` | GsCOORDINATE2 layout: flag word `unk0`, matrix rotation `s16 unk4[3][3]`, translation `unk18`/`unk1C`/`unk20` (kept as scalars, matched code reads them so), world `MATRIX unk24`, `unk44`, super/sub links `unk48`/`unk4C`. |
+| `Tc10` (0x10), `D_80127080[64]` and `actor->unk4` | GsDOBJ2 layout: attribute (`0x80000000` hides it), `unk4[0]` the coordinate object, model, id; filled by `func_8009B430` (GsLinkObject4). |
+| `Tc14` (0x14), nine 16-record tables `D_8015E270`..`D_8015EC70` | same record as `TacoParticle14`: two `TcPos` (copied whole with lwl/lwr), then four bytes. Holes filled (`unk6`, `unkE`, `unk10`, `unk11`). `D_8015EC70` is the ninth table (`Tc14[16]`), also the end address of the walks over `D_8015EB30`. |
+| `MATRIX D_80129C40` (main bss, in `main_api.h`, which now includes `libgte.h`) | copied whole to the stack in 13 TACO functions; only TACO uses it. |
+
+Not changed: the `TcPos` view of actor +0x74/+0x7C (245 matched lines would change); the
+pair tables `D_8015FEF0`/`D_8015FFE0` and their siblings (matched code indexes them as `s32[]`/`u8[]` with
+`i * 2 - 2`; they are `TcPair8`/`TcPair2` records read at `i - 1`); the `D_8015EDB0`..`D_8015EDF0`
+scalars (type_recovery's 0x44-byte struct proposal rests on two ordered pairs only; not audited); the GPU packets from `GetWorkBase`, whose
+shared prototype returns `s32`.
+
+### Draft rewrites the types made possible
+
+`drafts/T-16560/redraft.py` scores two drafts per function through the T-14500 census path: `plain` (m2c
+with the new headers, nothing else) and `typed` (plain plus these rewrites), then `tools/draft_fixes.py`.
+
+- **pointer-step**: m2c prints pointer steps in bytes for every pointer type: `Tc14 *p; p += 0x14`,
+  `s16 **q; q += 4`, `s32 *r; r += 8`. In C that is 20, 4 and 8 elements. Written as element steps.
+  46 chosen drafts. This m2c defect is not TACO-specific: a detector in `tools/draft_fixes.py` would help
+  every unit.
+- **actor-offset**: `*(u8 *)((unsigned char *)D_8015EDB4 + (1090))` is `D_8015EDB4[8].unk2`; the same for
+  the other typed tables. A store keeps no signedness cast (`*(s8 *)&...` on a byte store changes the
+  schedule; dropping it matched `func_8013822C`).
+- **matrix-copy**: eight word copies from `D_80129C40`, `D_80125C60`, a stack matrix or a coordinate
+  object, in any order: one struct copy (`m = *(MATRIX *)D_80125C60;`, `*(MATRIX *)o->unk4 = m;`).
+  Up to 67 rows less per function.
+- **tcpos-args**: m2c splits a by-value `TcPos` into two words and loses the source of the register
+  words (`subroutine_arg2`). The asm names the source of each copy (stack local, global, or the register
+  m2c named `temp_s0`); `func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0)` with `TcPos sp50, sp48`.
+  `func_80159878` 595 to 147 rows, `func_801563E4` 435 to 108, `func_80159260` 308 to 34.
+- **field-symbols**: splat names inside a declared aggregate (`D_8015F5F2` in `TacoCam D_8015F5F0`,
+  GameState fields) written as fields, as `tools/migrate_globals.py` does for `src/`.
+
+### Idioms found while matching
+
+- A `switch` on `s8 D_8015EDE8` reads it with `lbu`: write `switch (*(u8 *)&D_8015EDE8)`. m2c's
+  `(u8) D_8015EDE8` gives `lb` + `andi`. Matched `func_8013555C` and `func_80135638`.
+- `func_8015A948` masks its first argument on entry and switches on it: a `u8` parameter
+  (`void func_8015A948(u8 arg0, s32 arg1)`), not m2c's `s32` plus `& 0xFF`. It has no prototype in the
+  header; a `u8` prototype may change the matched caller in `8015ABF0.c` (not tried).
+- `func_80159260`: the tcpos-args draft matched once one unused `TcPos` was declared after the two
+  position locals (FAKE, the same frame idiom as `func_80156F50`).
+- `func_8013822C` is an implicit-int function (called before its definition): `s32` with no return.
+- `func_80133870` (18 rows): `func_801430D0(D_8015EDEC--, 0, 0x32, 6)`; only the slot of `move a1,zero`
+  differs (`drafts/T-16560/TACO/func_80133870/hand.c`).
+- `func_80147488` is a clone of matched `func_8015B3B0` (same opcodes, locals 4 bytes higher): with
+  `s16 *arg1` in the prototype and the MATRIX declared first, 10 rows remain, all the spill homes of the
+  object and position pointers (`drafts/T-16560/TACO/func_80147488/sibling.c`).
+- `func_80147928` (32 rows): with the coordinate and position pointers declared before `slot` and `base`
+  the frame and the spill homes of those two match; one temporary home and the tail registers differ
+  (`drafts/T-16560/TACO/func_80147928/hand.c`).
+
+### What the redraft changed
+
+Against the census (`drafts/T-14500/best-quality-catalog.jsonl`), over the 116 functions without a guarded
+draft (the census scored the hand-written guard body of the other 10): 103 fresh drafts compile (the
+census had 116, 13 only after manual repair); 48 score better, 53 the same, 2 worse; median 166 to 150
+diff rows, sum 21,752 to 19,983 (-8%). The headers alone changed 7 of 98 scores (3 better, 4 worse);
+the rewrites gave the rest and made 5 more drafts compile. No draft scored 0; five matched after a
+small hand edit (2,032 bytes, about 25 minutes of hand work): `func_8013822C`, `func_8013555C`,
+`func_80135638`, `func_8015A948` and `func_80159260` (1,048 bytes, a tcpos-args draft). The 67%-zero rate of
+the BUNKA families (T-12700) did not repeat: TACO's remaining functions are large handlers whose distance
+comes from register allocation, loop shape and local layout, not from missing types.
+
+Work packages for the matching stage: T-16561..T-16564 (`pt-taco-p1`..`p4`), about 170 minutes each,
+best expected bytes first (expected bytes = size / (1 + score / 30)); the gcc-built
+`8015CF30.c`, `8015D0D0.c` and `8015D270.c` are left out.

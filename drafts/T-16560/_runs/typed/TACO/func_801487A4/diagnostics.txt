@@ -1,0 +1,24 @@
+m2c.py: argument counts from the callees' asm: func_8015CF30 2, func_8015D0D0 2, func_8015D270 2
+python3 failed:
+ -----^
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_801487A4/work/guarded.c, line 3532: Incompatible function return type for this function.
+ void func_801487A4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+ ------------------^
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_801487A4/work/guarded.c, line 3578: 'sp4E' undefined; reoccurrences will not be reported.
+     *(s16 *)((unsigned char *)(&D_8015EDB4->unk0[sp3C]) + (118)) = (s16) (D_80127480[0].unk1C + sp4E + sp40);
+ ------------------------------------------------------------------------------------------------^
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_801487A4/work/guarded.c, line 3579: 'sp50' undefined; reoccurrences will not be reported.
+     *(s16 *)((unsigned char *)(&D_8015EDB4->unk0[sp3C]) + (120)) = (s16) (D_80127480[0].unk20 + sp50);
+ ------------------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/typed/TACO/func_801487A4/work -o drafts/T-16560/_runs/typed/TACO/func_801487A4/work/guarded.o /tmp/asm_processor6p7a9nad/preprocessed_0bef9580fc464ccd9eb0b544a9c97225.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib27hszdbb/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/typed/TACO/func_801487A4/work/guarded.o drafts/T-16560/_runs/typed/TACO/func_801487A4/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_801487A4/work/guarded.c, line 3532: redeclaration of 'func_801487A4'; previous declaration at line 3489 in file 'drafts/T-16560/_runs/typed/TACO/func_801487A4/work/guarded.c'
+ void func_801487A4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+ -----^
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_801487A4/work/guarded.c, line 3532: Incompatible function return type for this function.
+ void func_801487A4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/typed/TACO/func_801487A4/work -o drafts/T-16560/_runs/typed/TACO/func_801487A4/work/guarded.o /tmp/asm_processorx9tnwqo5/preprocessed_2180a8464739456ba43fbc3e7a50da3f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib40ghmdsp/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/typed/TACO/func_801487A4/work/guarded.o drafts/T-16560/_runs/typed/TACO/func_801487A4/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return

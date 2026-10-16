@@ -1,0 +1,19 @@
+m2c.py: argument counts from the callees' asm: func_800AA460 2, func_801407D4 3, func_80140ADC 2
+python3 failed:
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_80140028/work/guarded.c, line 3574: 'sp6C' undefined; reoccurrences will not be reported.
+                             var_s0->unkA = (s16) ((s32) (var_s0->unkA + (sp6C / 64)) / 2);
+ -------------------------------------------------------------------------^
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_80140028/work/guarded.c, line 3580: 'subroutine_arg1' undefined; reoccurrences will not be reported.
+                         func_801407D4((s32) &sp8C, subroutine_arg1, subroutine_arg2);
+ ---------------------------------------------------^
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_80140028/work/guarded.c, line 3580: 'subroutine_arg2' undefined; reoccurrences will not be reported.
+                         func_801407D4((s32) &sp8C, subroutine_arg1, subroutine_arg2);
+ --------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/typed/TACO/func_80140028/work -o drafts/T-16560/_runs/typed/TACO/func_80140028/work/guarded.o /tmp/asm_processorp5gw8pbp/preprocessed_bf2ec4864f7041de809e2f96471db9cb.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibmd6ltv7q/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/typed/TACO/func_80140028/work/guarded.o drafts/T-16560/_runs/typed/TACO/func_80140028/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_80140028/work/guarded.c, line 3576: 'sp6C' undefined; reoccurrences will not be reported.
+                             var_s0->unkA = (s16) ((s32) (var_s0->unkA + (sp6C / 64)) / 2);
+ -------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/typed/TACO/func_80140028/work -o drafts/T-16560/_runs/typed/TACO/func_80140028/work/guarded.o /tmp/asm_processoru1hut_2u/preprocessed_771b093e9819499fba4a9ebdcce3a344.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibek98p80h/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/typed/TACO/func_80140028/work/guarded.o drafts/T-16560/_runs/typed/TACO/func_80140028/work/guarded.c

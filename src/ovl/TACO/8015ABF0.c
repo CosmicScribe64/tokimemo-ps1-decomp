@@ -11,7 +11,7 @@ void func_8015ABF0(void) {
     }
     for (i = 16; i != 63; i++) {
         func_80143B34(i);
-        *(s32 *) D_8015EDB4[i].pad4 = 0x80000000;
+        D_8015EDB4[i].unk4.unk0 = 0x80000000;
         D_8015EDB4[i].unk84[2] = 1;
     }
     D_801604C0 = 0;
@@ -65,7 +65,7 @@ void func_8015B2AC(s32 arg0, s16 *arg1) {
     pos = &D_80128880[arg0];
     pos->x = arg1[3];
     pos->z = arg1[4];
-    q = &o->pad0[4];
+    q = (u8 *)o->unk4;
     pos->y = arg1[5];
     func_8015D0D0((pos->x << 12) / 360, q);
     func_8015CF30((pos->z << 12) / 360, q);
@@ -226,7 +226,7 @@ s32 arg1;
   if (((!a) && (!a)) && (!a))
   {
   }
-  if (a->pad0[1] & 0x80)
+  if (a->unk0[1] & 0x80)
   {
     if (arg0 == 1)
     {
@@ -270,7 +270,7 @@ void func_8015C208(s32 arg0) {
     s32 i;
 
     func_8015C0A0(0, arg0);
-    D_8015EDB4[arg0].pad0[1] = 0;
+    D_8015EDB4[arg0].unk0[1] = 0;
     D_8015EDB4[arg0].unk84[2] = 0;
     for (i = 0; i < 0x40; i++) {
         if (arg0 == D_80161D9C[i]) {
@@ -471,7 +471,7 @@ s32 arg0;
     n = 0;
     for (i = 16; i != 63; i++) {
         if (((TcActor *)(i * 0x88 + (u8 *)D_8015EDB4))->unk84[1] != 0) {
-            if (!(((TcActor *)(i * 0x88 + (u8 *)D_8015EDB4))->pad0[1] & 0x80)) {
+            if (!(((TcActor *)(i * 0x88 + (u8 *)D_8015EDB4))->unk0[1] & 0x80)) {
                 ((TcActor *)(i * 0x88 + (u8 *)D_8015EDB4))->unk84[1] = 0;
             }
         }
