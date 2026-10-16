@@ -59,7 +59,57 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014ADD0", func_8014BB80);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014ADD0", func_8014BFE4);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014ADD0", func_8014C360);
+void func_8014C360(s32 arg0, s32 arg1, s32 arg2) {
+    s32 t;
+    s32 u;
+    s32 i;
+    DisplayActor44 *rec;
+
+    arg1 -= 0x9E;
+    arg2 -= 0x78;
+    switch (arg0) {
+    case 0:
+        D_8015EE5C = 0;
+        D_8015EE60 = 1;
+        D_8015EE64 = 0;
+        break;
+    case 1:
+        D_8015EE68 = 0;
+        D_8015EE6C = 1;
+        D_8015EE70 = 0;
+        break;
+    case 2:
+        D_8015EE74 = 0;
+        D_8015EE78 = 1;
+        D_8015EE7C = 0;
+        break;
+    case 3:
+        D_8015EE80 = 0;
+        D_8015EE84 = 1;
+        D_8015EE88 = 0;
+        break;
+    }
+    rec = (DisplayActor44 *) D_8011ECD0;
+    t = arg0 * 12;
+    u = t + 0x40;
+    rec[64 + t].unk_26 = arg1;
+    rec[64 + t].unk_2A = arg2;
+    rec[68 + t].unk_26 = arg1;
+    rec[68 + t].unk_2A = arg2;
+    rec[72 + t].unk_26 = arg1;
+    rec[72 + t].unk_2A = arg2;
+    func_8013E864(u, 0x34, 0);
+    func_8013E864(u + 4, 0x35, 0);
+    func_8013E864(u + 8, 0x35, 0);
+    for (i = 1; i < 4; i++) {
+        rec[64 + t + i].unk_26 = 0xA0;
+        rec[64 + t + i].unk_2A = 0x78;
+        rec[68 + t + i].unk_26 = 0xA0;
+        rec[68 + t + i].unk_2A = 0x78;
+        rec[72 + t + i].unk_26 = 0xA0;
+        rec[72 + t + i].unk_2A = 0x78;
+    }
+}
 
 void func_8014C4FC(void) {
     s32 half;

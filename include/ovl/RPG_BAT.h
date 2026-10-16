@@ -119,9 +119,14 @@ void func_80155868(s32, s32, s32, s32, s32, s32, s32, s32, s32);
 s32 func_8013EA00(s32 arg0, s32 arg1);
 
 extern s16 D_8015E5A0[][12];
+extern s32 D_8015EE5C;
 extern s32 D_8015EE60;
+extern s32 D_8015EE68;
+extern s32 D_8015EE74;
+extern s32 D_8015EE80;
 extern s32 D_8015EE64;
 void func_8013E8B8(s32 a0, s32 a1, s32 a2);
+void func_8013E864(s32 arg0, s32 arg1, s32 arg2);
 extern s32 D_8015EE6C;
 extern s32 D_8015EE70;
 extern s32 D_8015EE78;
