@@ -16087,3 +16087,6 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 
 ## [2026-10-16] ticket | T-19028 Done
 [[tickets/T-19028-w3-d-p28]] In Review to Done after code review against `CODING_STANDARDS.md`: 4 findings, all fixed (`func_8013DEE4` is 1,344 bytes of code, 1,416 with its jump tables; stale `NON_MATCHING` acceptance wording; double blank line before the notes heading; board card placement). 3 of 5 functions matched (`func_8013E778`, `func_8013E424`, `func_8013DB80`, 1,640 bytes), `func_8013DEE4` and `func_8015CF30` still `INCLUDE_ASM`. Rebuild: TACO unit sha1 OK. Card moved to Done.
+
+## [2026-10-16] ticket | T-11860 TT batch 12 started
+Created [[tickets/T-11860-tt-batch-12]] (In Progress), stacked on T-11850 (PR #35). Eleven file groups covering every remaining TT function except `func_8014D260`; one Opus agent each, two at a time.

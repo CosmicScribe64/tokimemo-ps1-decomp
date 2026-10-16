@@ -33,6 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
+- [[tickets/T-11860-tt-batch-12|T-11860]] TT batch 12: the TT remainder, one long Opus run per file group (In Progress).
 - [[tickets/T-11850-tt-batch-11|T-11850]] TT batch 11: one long Opus run per file group (Done; 12 of 15 matched, TT 82.7% of bytes).
 - [[tickets/T-11840-tt-batch-10|T-11840]] TT batch 10: one long Opus run per large function (Done; 10 of 12 matched, TT 78.6% of bytes).
 - [[tickets/T-11840-tt-batch-10|T-11840]] TT batch 10: one long Opus run per large function (Done, PR #34 merged; 10 of 12 matched, TT 262/303 functions, 78.6% of bytes).
