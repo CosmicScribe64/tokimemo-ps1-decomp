@@ -1,14 +1,9 @@
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
-typedef struct {
-    void (*f[16])();
-} FnTbl16; /* size 0x40 */
-extern FnTbl16 D_8013C930;
-
 void func_80138A60(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl16 tbl;
+    ShFnTbl16 tbl;
 
     tbl = D_8013C930;
     idx = D_800E6280.unk_110A;
@@ -310,14 +305,9 @@ INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_801398E8);
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_801399F4);
 
-typedef struct {
-    void (*f[18])();
-} FnTbl18; /* size 0x48 */
-extern FnTbl18 D_8013CAA0;
-
 void func_80139C80(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl18 tbl;
+    ShFnTbl18 tbl;
 
     tbl = D_8013CAA0;
     idx = D_800E6280.unk_110A;
