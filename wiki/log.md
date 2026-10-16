@@ -15125,3 +15125,7 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16550 Done
 
 [[tickets/T-16550-taiiku-types-first]] reviewed against `CODING_STANDARDS.md` and moved to Done: 1 function matched (`func_80141CDC`, 1,120 bytes), TAIIKU types recovered, 64 functions redrafted into `drafts/T-16550/`. Review fixes: two stale FAKE comments removed, `func_80147210`, `func_80148194` and `func_80148228` converted to fields (still match), FAKE comments on the byte views of `func_8013732C`, `func_801448D4`, `func_80144C70` and `func_80138680`, a misplaced header comment moved. Headers, globals and prototype checks OK, TAIIKU sha1 OK.
+
+## [2026-10-16] ticket | T-16551 In Progress
+
+[[tickets/T-16551-pt-taiiku-p1]] started: pilot stage B, package pt-taiiku-p1 (`src/ovl/TAIIKU/80133C80.c`, 8 functions from the [[tickets/T-16550-taiiku-types-first]] redrafts), worktree `tokimemo-wt/pt-taiiku-p1`.
