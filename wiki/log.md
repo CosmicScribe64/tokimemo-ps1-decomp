@@ -15381,3 +15381,6 @@ Pilot T-16550/T-16560 done: 64 matches / 41.4 KB in about 20 agent-hours (types 
 closers 4 h Opus with 10 matches), 2.0 KB per agent-hour, at or above wave 2 (Opus). Main 6,076/6,958 (67.2%).
 Opened [[tickets/T-16990-wave-3-conveyor]]: types-first passes on 19 units and 32 direct packages feeding a 7-worker
 pool; merges run in parallel through a locked, self-cleaning merge script.
+
+## [2026-10-16] ticket | T-19003 Wave 3 package w3-d-p03 In Progress
+Opened [[tickets/T-19003-w3-d-p03]] on branch w3-d-p03 (base w2-good): TACO `src/ovl/TACO/80149F90.c`, work list `func_8014F5F0`, `func_801511C0`, `func_8014E5F8`, `func_8014F820`, `func_8014A480`. Part of [[tickets/T-16990-wave-3-conveyor]].
