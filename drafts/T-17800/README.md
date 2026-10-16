@@ -4,11 +4,11 @@ Fresh drafts of the OPTION functions that were unmatched at `w2-good`, made afte
 (wiki page `option-family-results`, section "Types-first pass (T-17800)").
 
 - `redraft.py`: the driver (run it in Docker from the repo root; its docstring lists the rewrites). It is
-  `drafts/T-17500/redraft.py` with three OPTION changes: the display records are written through the header's
-  full view `OptActor44` instead of `DisplayActor44`; the `menu-arrays` rewrite types the four row arrays handed
-  to `menu_set` (`func_8004F870`) as `s16 spXX[n]` or as one `Arrs4x8`; and two repairs of m2c output
-  (`raw-display`: a folded label that m2c printed as a number; `return-type`: `void` printed for an `s32 f(void)`
-  of the header).
+  `drafts/T-17500/redraft.py` with three OPTION changes. The display records are written through the header's
+  full view `OptActor44` instead of `DisplayActor44`. The `menu-arrays` rewrite types the four row arrays handed
+  to `menu_set` (`func_8004F870`) as `s16 spXX[n]` or as one `Arrs4x8`. Two repairs of m2c output were added:
+  `raw-display` for a folded label that m2c printed as a number, and `return-type` for `void` printed in an
+  `s32 f(void)` of the header.
 - `inventory.json`, `environment.json`: the 32 functions still unmatched when the final run started, and the
   header hashes of that run.
 - `_runs/<variant>/OPTION/<func>/`: one census-path run per variant (the full-unit `context.c` files are pruned):

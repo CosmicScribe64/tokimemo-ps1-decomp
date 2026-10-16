@@ -15547,3 +15547,11 @@ Code review of [[tickets/T-17500-types-first-shougatu]] against `CODING_STANDARD
 ## [2026-10-16] ticket | T-17800 Types-first: OPTION opened
 
 Opened [[tickets/T-17800-types-first-option]] (In Progress) on branch `w3-option-types` from `w2-good`: recover OPTION's shared types, redraft every unmatched function with the pilot drivers, package the rest for wave 3.
+
+## [2026-10-16] build | T-17800 OPTION types and redraft
+
+[[tickets/T-17800-types-first-option]]: menu rows, word tables, `OptActor44` and the moved record and bit-field views declared in `include/ovl/OPTION.h` (now one include guard, includes `game.h`), `D_800E7D37` added to `include/main_api.h`; `drafts/T-17800/redraft.py` redrafted the 32 still-unmatched functions (19 of 30 unguarded better than the census). Matched `func_8013A09C`, `func_8013A1BC`, `func_80136434`, `func_80137040` (1,548 bytes). New page [[option-family-results]].
+
+## [2026-10-16] ticket | T-17800 In Review
+
+[[tickets/T-17800-types-first-option]] In Progress to In Review. Packages T-17801..T-17803 (`w3-option-p01`..`p03`, 12 functions, 6,636 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]).
