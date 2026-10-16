@@ -1,7 +1,7 @@
 ---
 id: T-16500
 title: Whole-tree twin sweep after every merge
-status: In Review
+status: Done
 assignee: claude-tooling
 created: 2026-10-16
 updated: 2026-10-16
@@ -18,7 +18,7 @@ default), and applies only to the C files it is given, each copy verified with t
 ## Acceptance criteria
 
 - [x] `tools/twin_sweep.py` prints `target <- donor`, mode (exact / near / lenient) and bytes for every planned copy
-- [x] `--apply --files <list>` writes only into the listed C files and keeps a copy only when the unit sha1 holds
+- [x] `--apply --files <list>` writes only into the listed C files (plus the header declarations a copy needs) and keeps a copy only when the unit sha1 holds
 - [x] known candidates confirmed or explained: TAIIKU func_801406A8, GYOZI func_8013506C, GEKO func_8013E22C, TACO func_801347F4
 - [x] unit tests in `tools/test_twin_sweep.py`; full tool test suite passes
 - [x] short section in `wiki/decompile-workflow.md`; nothing under `src/` or `drafts/` edited
@@ -59,3 +59,5 @@ All four known candidates confirmed. Near: 0 plans (`neardupes.py --report` agre
 Tests: `tools/docker.sh python3 -m unittest discover -s tools -p 'test_*.py'` 1048 tests OK (pytest is not in the image).
 
 ## Comments
+
+- 2026-10-16 (review, CODING_STANDARDS.md checklist): diff w2-good...t16500-twin-sweep touches only `tools/` (`twin_sweep.py`, `test_twin_sweep.py`, small changes in `dupes.py` and `neardupes.py`) and wiki pages; nothing under `src/`, `drafts/`, `asm/` or `disc/`; no game data, asm or binaries (the tests use the synthetic repos of `test_dupes.py`/`test_neardupes.py`). Python 3 only, runs through `tools/docker.sh`, docstring with usage and limits on every new function that matters. Checked: (1) tests: `test_twin_sweep.py` 32 OK, whole tool suite 1048 OK (3 skipped), `test_dupes`/`test_neardupes`/`test_check_headers` OK; (2) dry run on the branch reproduces the report: 6958 functions, 4 plans / 944 B (exact 2 / 316 B, lenient 2 / 628 B), 4 functions without a plan, `--apply` without `--files` exits 2, the tree stays clean; (3) apply in a scratch clone with `--apply --files ALL --unit TAIIKU`: `OK TAIIKU: 1 copies`, `applied 1 of 1 copies (144 bytes)`, the 26-line NON_MATCHING block of `func_801406A8` is replaced by the donor C, `check_headers.py` passes, one prototype added to `include/ovl/TAIIKU.h` (clone deleted, branch `src/` untouched); (4) ticket, kanban card and `wiki/log.md` agree, log is append-only. Findings and fixes: (a) the docstring said a run takes minutes (measured 10 s idle, about a minute under load) -> corrected; (b) with `--unit`/`--files` the summary lines "groups without a matched member" and "wider shape" are whole-tree numbers and read as filtered -> labelled "whole tree"; (c) the workflow page said `--apply` never edits "a file" by accident and pointed to "the last section" -> says "C file", names the headers a copy edits (`include/ovl/<NAME>.h`, `include/main_api.h`) and names the section; (d) the acceptance line "writes only into the listed C files" now says "plus the header declarations a copy needs". Not findings, noted: the tool exits 0 when copies are rejected or a unit is skipped (both are printed in the `applied N of M ...` line; the orchestrator should read it); pre-existing duplicate `sources:` keys in the frontmatter of `wiki/decompile-workflow.md` are not part of this ticket. Result: tool works as the ticket says; the real gain on w2-good is TAIIKU `func_801406A8` (144 B), the other three plans need hand work (see Notes). Status Done.
