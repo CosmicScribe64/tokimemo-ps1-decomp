@@ -15563,3 +15563,19 @@ Clean build 27/27 (all unit sha1 OK, TACO `1419e93c...`), `check_headers`, `migr
 
 ## [2026-10-16] ticket | T-19009 Done
 [[tickets/T-19009-w3-d-p09]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 3 of 4 functions matched (1,956 bytes): TACO `func_801428DC`, `func_80144430` and `func_80142AF0`, all plain C with two marked FAKE locals; `func_80144094` stays `INCLUDE_ASM` with its draft archived. Rebuild 27/27 OK on the branch. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19007 started
+
+[[tickets/T-19007-w3-d-p07]]: wave 3 package w3-d-p07 opened in worktree `w3-d-p07` (branch `w3-d-p07` from `w2-good`). Scope: `src/ovl/TAIIKU/801452D0.c`, `func_8014607C`, `func_80146D18`, `func_80145370`, `func_80147B14`. Status In Progress.
+
+## [2026-10-16] ticket | T-19007 In Review
+
+[[tickets/T-19007-w3-d-p07]] In Progress to In Review: 1 of 4 functions matched (648 bytes): TAIIKU `func_80146D18` in plain C (plain `for`/`while` loops over the index replace the draft's `do`/`while` shapes). `func_8014607C` (20 lines) and `func_80145370` (22 lines) stay guarded with extended comments, `func_80147B14` stays `INCLUDE_ASM` with a typed draft under `drafts/T-19007/`. Notes in [[matching-notes]] (T-19007), [[data/t0018-cases]] and [[taiiku-family-results]]. Review pending.
+
+## [2026-10-16] build | T-19007 closer pass (func_8014607C)
+
+[[tickets/T-19007-w3-d-p07]]: the Opus closer pass on TAIIKU `func_8014607C`. It is still guarded at 20 lines and nothing new matched. `cc -S` shows that uopt reads each copy's source (the masked byte, the promoted s16) in the later blocks, so as1 keeps the `move`s. A dead redefinition of a raw-byte local stops the mask swap but reverses the colour order (74 lines). Comment updated in `src/ovl/TAIIKU/801452D0.c`; notes in [[matching-notes]] and [[data/t0018-cases]]. The ticket stays In Review.
+
+## [2026-10-16] ticket | T-19007 Done
+
+[[tickets/T-19007-w3-d-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 1 of 4 functions matched (648 bytes): TAIIKU `func_80146D18` in plain C. `func_8014607C` and `func_80145370` stay guarded, `func_80147B14` stays `INCLUDE_ASM` with a typed draft. Merge via the wave 3 merge script.

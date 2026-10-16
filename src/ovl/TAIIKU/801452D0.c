@@ -80,7 +80,7 @@ void func_801452D0(void) {
     tbl.f[idx]();
 }
 
-/* NON_MATCHING: T-16553, 22 differing lines; in the two loops that store 8 the original keeps the constant 8 in v0 and the loop pointer in v1, the build has them the other way round (registers only) */
+/* NON_MATCHING: T-16553, 22 differing lines; in the two loops that store 8 the original keeps the constant 8 in v0 and the loop pointer in v1, the build has them the other way round (registers only). T-19007: regdiff colours the pointer start constant (priority 41) before the hoisted 8 (15.5) and gives it v0; autotweak, explicit pointer loops, i = 5..16, do-while forms and a named constant do not flip it */
 #ifdef NON_MATCHING
 void func_80145370(void) {
     s32 i;
@@ -416,7 +416,13 @@ void func_80145F8C(void) {
 /* NON_MATCHING: T-16553, 20 differing lines; the tail loads D_800E638E into a1 and the masked D_800E6375 into t5, the original loads it into v0 (the variable itself) and keeps the mask in v1.
  * IDO propagates both local copies into their uses after the ||: with a then-arm that does not read var_v0_2 the lh goes straight into v0, and a volatile access between the
  * definitions and the if stops the propagation (mask in v1) but materializes the address. Statement order (order_search, 720 orders), local types, labels, if/else forms and
- * record-view stores do not change it. */
+ * record-view stores do not change it. T-19007: a u8 nibble bit-field view of the byte (`lo : 4`) puts the raw lbu in a0 like the original, but the mask stays a ugen temporary (20 lines).
+ * T-19007 closer: `cc -S` shows that uopt keeps both copies and swaps the source in for the copy in later blocks: `move v1,a0` for temp_v1, but the
+ * second test reads a0 (the masked byte) and the then-arm reads a1 (the promoted s16), so as1 cannot fold the moves. A dead redefinition of a
+ * raw-byte local (`raw = byte; temp_v1 = raw & 0xF; raw = 0;`) stops the mask swap (both tests read temp_v1, temporaries from t5 as in the
+ * original) but colours raw first (priority 2 against 1.5: raw v1, temp_v1 a0, 74 lines). Reusing i for raw gives the exact `lbu a0; andi v1`
+ * but stops the second loop's unrolling (166 lines). No form keeps the s16 out of the then-arm (local chains, ?:, the definition after the stores,
+ * absolute-address stores). */
 #ifdef NON_MATCHING
 void func_8014607C(void) {
     s32 i;
@@ -682,13 +688,10 @@ void func_80146C20(void) {
     func_80085F0C(((s16 *)&D_8014A3DC)[1] % 128, 0xF, 0x70, 0x80, 0x80);
 }
 
-/* NON_MATCHING: T-16553, 31 differing lines; the table-copy loop stores before the record pointer is advanced (offset 7110 against 7042), and the zero-search at the end keeps its index in v1 where the original uses a0 (everything before matches) */
-#ifdef NON_MATCHING
 s32 func_80146D18(void) {
     s32 i;
     s32 k;
     TkS16x4 tbl;
-    u8 *p;
 
     tbl = D_8014A5F4;
     if (DISP(104).unk_02 == 0 && D_8014A3DE >= 0x781) {
@@ -709,11 +712,9 @@ s32 func_80146D18(void) {
             DISP(105).unk_02 = 0;
         }
     }
-    k = 0;
-    do {
+    for (k = 0; &tbl.v[k] < &tbl.v[4]; k++) {
         DISP(104 + k).unk_26 = tbl.v[k] - D_8014A3DE * 2 - 0xA0;
-        k++;
-    } while (&tbl.v[k] < &tbl.v[4]);
+    }
     if (DISP(107).unk_26 < -0xDC && DISP(107).unk_03 != 0) {
         DISP(107).unk_03 = 0;
     }
@@ -726,26 +727,18 @@ s32 func_80146D18(void) {
             DISP(105).unk_18 = 0x4F;
             DISP(105).unk_26 = DISP(106).unk_26 + 0x20;
         }
-        i = 0;
-        if (D_8014A3D8[0] != 0) {
-            do {
-                i++;
-            } while (D_8014A3D8[i] != 0);
+        k = 0;
+        while (D_8014A3D8[k] != 0) {
+            k++;
         }
-        D_8014A3D8[i] = 1;
-        if (i + 1 < 4) {
-            p = &D_8014A3D8[i + 1];
-            do {
-                *p++ = func_80146FA0();
-            } while (p != (u8 *)&D_8014A3DC);
+        D_8014A3D8[k] = 1;
+        for (i = k + 1; i < 4; i++) {
+            D_8014A3D8[i] = func_80146FA0();
         }
         return 1;
     }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146D18);
-#endif
 
 /* FAKE: v[6] as in func_8013815C. T-0016 */
 s32 func_80146FA0(void) {
