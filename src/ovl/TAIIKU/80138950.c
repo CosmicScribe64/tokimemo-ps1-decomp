@@ -1006,7 +1006,52 @@ void func_8013BB3C(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013BCEC);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013BEF8);
+/* FAKE: T-11640. The counter D_801499A0.unk_02 and the flag D_801499B0[0].val are read through u16 pointer
+ * views: with the plain field IDO keeps a CVT copy of the promoted counter in a second register, and the
+ * volatile D_801499B2 of func_8013C33C stops the lui of the flag load from moving into the branch delay slot.
+ * Real source unknown (same family as func_8013BB3C/func_8013C33C). */
+void func_8013BEF8(void) {
+    s32 tmp;
+
+    func_8013C5C8(0x15000);
+    func_8013C694();
+    if (!(((u16 *)&D_801499A0)[1] & 4)) {
+        func_8013C4E4(0xF000);
+    }
+    if (!(((u16 *)&D_801499A0)[1] & 0xC)) {
+        ((s16 *)&tmp)[0] = 0;
+        ((s16 *)&tmp)[1] = D_80149968.unk_1C[0] >> 3;
+        tmp += D_80149968.unk_0C * 80;
+        D_801499A0.unk_04 = ((s16 *)&tmp)[1];
+        D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
+    }
+    if (((u16 *)D_801499B0)[1] != 0 && ((u16 *)&D_801499A0)[1] > 64) {
+        ((u16 *)D_801499B0)[1] = 0;
+    }
+    if (D_80149990.unk_00 == 0 && !(((u16 *)&D_801499A0)[1] & 0x1F) && ((u16 *)D_801499B0)[1] == 0) {
+        if (D_80149968.unk_0C > 0) {
+            if (D_801206BA < (D_80149968.unk_1C[0] >> 3) - 0x18) {
+                ((u16 *)D_801499B0)[1] = 1;
+                ((u16 *)&D_801499A0)[1] = 0;
+                func_80044750(0x802);
+            } else {
+                func_80044750(0x801);
+            }
+        } else if (D_80149968.unk_0C < 0) {
+            if ((D_80149968.unk_1C[0] >> 3) + 0x18 < D_801206BA) {
+                ((u16 *)D_801499B0)[1] = 1;
+                ((u16 *)&D_801499A0)[1] = 0;
+                func_80044750(0x802);
+            } else {
+                func_80044750(0x800);
+            }
+        }
+        ((u16 *)&D_801499A0)[1]++;
+    }
+    if (((u16 *)&D_801499A0)[1] > 128) {
+        ((u16 *)&D_801499A0)[1] = 64;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013C0E4);
 

@@ -800,6 +800,7 @@ void func_801404DC(void);
 void func_8014064C(void);
 void func_801406A8(); /* K&R definition */
 void func_80140738(s32 arg0, s32 arg1);
+void func_8013BEF8(void);
 /* Tables func_80138DF8 copies to the stack and indexes by D_80149940. */
 extern TaiWords11 D_80149E90;
 extern TaiWords11 D_80149EBC;
