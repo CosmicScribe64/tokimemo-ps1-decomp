@@ -46,7 +46,88 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_8013240C);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_801328B0);
 
+/* NON_MATCHING: T-19025, 10 differing lines; the two hoisted lui 0x8016 ranges of D_8015EDE4 take $v0, the original $a0 (an interfering range holds $v0 in the original), which also moves the hoisted move a0,zero */
+#ifdef NON_MATCHING
+void func_80132FE8(s32 arg0, s32 arg1) {
+    /* FAKE: pad1..pad4 are unused locals that reserve the original's four extra frame words (flags at sp+0x30, actor at sp+0x2C); real source unknown. T-19025 */
+    s32 pad1;
+    s32 pad2;
+    s32 pad3;
+    s32 flags;
+    TcActor *actor;
+    s32 pad4;
+    s32 m80;
+    s32 m40;
+    s32 m20;
+
+    actor = D_8015EDB4;
+    if (actor->unk2 & 0x40) {
+    } else {
+        func_8013240C(arg0, arg1);
+        func_801328B0();
+        func_80140000();
+        func_80140DF0();
+        flags = 0;
+        if (D_8015EDD8 != 0) {
+            if ((D_800E6280.unk_F80 & 0x20) && (D_8015EDE0 % 3 == 0) && !(D_800E6280.unk_10F8 & 3)) {
+                flags = 0x20;
+            }
+            if ((D_800E6280.unk_F80 & 0x40) && (D_8015EDE0 % 3 == 1) && !(D_800E6280.unk_10F8 & 3)) {
+                flags |= 0x20;
+            }
+            if ((D_800E6280.unk_F80 & 0x80) && (D_8015EDE0 % 3 == 2) && !(D_800E6280.unk_10F8 & 3)) {
+                flags |= 0x20;
+            }
+            m80 = D_800E6280.unk_F88 & 0x80;
+            m40 = D_800E6280.unk_F88 & 0x40;
+            m20 = D_800E6280.unk_F88 & 0x20;
+        } else {
+            m20 = D_800E6280.unk_F88 & 0x20;
+            m40 = D_800E6280.unk_F88 & 0x40;
+            if (m20 && (D_8015EDE0 % 3 == 0)) {
+                flags = 0x20;
+            }
+            if (m40 && (D_8015EDE0 % 3 == 1)) {
+                flags |= 0x20;
+            }
+            m80 = D_800E6280.unk_F88 & 0x80;
+            if (m80 && (D_8015EDE0 % 3 == 2)) {
+                flags |= 0x20;
+            }
+        }
+        if (m40 && (D_8015EDE4 % 3 == 0)) {
+            flags |= 0x40;
+        }
+        if (m80 && (D_8015EDE4 % 3 == 1)) {
+            flags |= 0x40;
+        }
+        if (m20 && (D_8015EDE4 % 3 == 2)) {
+            flags |= 0x40;
+        }
+        if (actor->unk72 == 0) {
+            func_80141170(0, flags);
+        } else if (actor->unk72 == 1) {
+            func_80141290(0, flags);
+        } else {
+            func_80141050(0, flags);
+        }
+        if (actor->unk82 == 0) {
+            func_801404FC(0, flags);
+        } else if (actor->unk82 == 1) {
+            func_80140364(0, flags);
+        }
+    }
+    func_80141DE0(flags);
+    func_8013B990();
+    func_8013D348();
+    func_8013D3F4();
+    func_8013DDE4();
+    func_8013C6D4();
+    func_8013E4FC();
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_80132FE8);
+#endif
 
 void func_80133374(void) {
     if (D_8015EDCC < 3U) {
