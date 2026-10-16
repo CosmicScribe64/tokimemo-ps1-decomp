@@ -273,6 +273,10 @@ s32 func_80140638(s32 *arg0) {
     return var_v1;
 }
 
+/* FAKE (T-19014): f1..f4 are unused locals that reserve four of the original's frame homes (dist sits
+ * 0x14 below the frame top); the byte arithmetic `index * 0x88 + base` keeps the original's add order
+ * (index first); the empty `if (count) {}` splits the live range of count. The real source is unknown.
+ * dist is read uninitialised, as in the original (sp+0x24). */
 s32 func_801407D4(s32 *arg0, TcPos pos) {
     s32 f1;
     s32 f2;
