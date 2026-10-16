@@ -382,9 +382,11 @@ void func_80134D94(void) {
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80134F98);
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-16551, 22 differing lines (11 instructions): the original keeps `t` in $v1 and loads `v` straight into $v0;
+/* NON_MATCHING: T-19004, 22 differing lines (11 instructions): the original keeps `t` in $v1 and loads `v` straight into $v0;
  * here `t` is a ugen temporary ($t3) and `v` comes through a promoted range of the global ($a1, then move v0,a1). Frame: i and t
- * declared above sp38 reproduce its offset (0x38) and the 0x58 frame; unused/promoted word locals take slots. */
+ * declared above sp38 reproduce its offset (0x38) and the 0x58 frame; unused/promoted word locals take slots. Tried in T-19004
+ * without effect: `t` read before `v`, `t` as the repeated expression `(b & 0xF) & k`, both reads through a `GameState *` local
+ * (frame 8 bytes larger), the field read in each arm of the `if`, autotweak (278 edits). */
 void func_80135480(void) {
     s32 i;
     s32 t;
@@ -487,7 +489,61 @@ void func_80135778(void) {
     D_80120656 = 2;
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135830);
+void func_80135830(void) {
+    s32 i;
+    TaiShorts20 sp84;
+    TaiShorts20 sp5C;
+
+    sp84 = D_80149508;
+    sp5C = D_80149530;
+    for (i = 0; i < 20; i++) {
+        func_80048F64(i + 0x60);
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_38 = 0x01000000;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_07 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_0C = (u8 *)D_80149FB8;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_10 = (u8 *)D_80149FF0;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_34 = (u8 *)D_801492DC;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_14 = D_8014A028;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_2A = sp84.v[i];
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_18 = sp5C.v[i];
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_04 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_05 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_1A = 0x1000;
+        *(s16 *)((DisplayActor44 *)D_8011ECD0)[96 + i].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_06 = 2;
+    }
+    for (i = 0; i < 4; i++) {
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 = -0xA0 + i * 8;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_01 = i + 4;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_02 = 0x40;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_03 = 0xA4;
+    }
+    for (i = 0; i < 4; i++) {
+        ((DisplayActor44 *)D_8011ECD0)[100 + i].unk_01 = 8;
+        ((DisplayActor44 *)D_8011ECD0)[100 + i].unk_26 = 0xE8;
+        ((DisplayActor44 *)D_8011ECD0)[100 + i].unk_02 = 0x40;
+        ((DisplayActor44 *)D_8011ECD0)[100 + i].unk_03 = 0xA4;
+    }
+    /* FAKE: dead store; with `i` assigned again IDO keeps the 4-trip loop above rolled and replaces its test by the
+     * record-walk compare (`sltu` against D_8011EDE0, walk in $s0). Real source unknown. T-19004 */
+    i = 0;
+    ((DisplayActor44 *)D_8011ECD0)[104].unk_01 = 3;
+    ((DisplayActor44 *)D_8011ECD0)[105].unk_01 = 2;
+    ((DisplayActor44 *)D_8011ECD0)[106].unk_01 = 1;
+    ((DisplayActor44 *)D_8011ECD0)[107].unk_01 = 4;
+    ((DisplayActor44 *)D_8011ECD0)[108].unk_01 = 5;
+    ((DisplayActor44 *)D_8011ECD0)[109].unk_01 = 6;
+    ((DisplayActor44 *)D_8011ECD0)[110].unk_01 = 7;
+    ((DisplayActor44 *)D_8011ECD0)[111].unk_01 = 9;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_01 = 8;
+    ((DisplayActor44 *)D_8011ECD0)[113].unk_01 = 9;
+    ((DisplayActor44 *)D_8011ECD0)[114].unk_01 = 9;
+    ((DisplayActor44 *)D_8011ECD0)[114].unk_26 = -0x30;
+    ((DisplayActor44 *)D_8011ECD0)[114].unk_02 = 0x40;
+    ((DisplayActor44 *)D_8011ECD0)[114].unk_03 = 0xA4;
+    ((DisplayActor44 *)D_8011ECD0)[0].unk_26 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[0].unk_2A = 0;
+}
 
 void func_80135AD0(void) {
     s32 i;
@@ -796,7 +852,33 @@ void func_80137090(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137228);
+void func_80137228(void) {
+    s32 i;
+    s32 k;
+
+    for (i = 0; i < 3; i++) {
+        D_80149208.cpu[i].unk_20.word += D_80149208.cpu[i].unk_18;
+        if (((DisplayActor44 *)D_8011ECD0)[111].unk_26 + (i + 1) * 8 < D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high - 0x60 && D_80149208.cpu[i].unk_06 == 0) {
+            ((DisplayActor44 *)D_8011ECD0)[112].unk_18 = 0x8D;
+            if (D_80149208.cpu[i].unk_06 == 0) {
+                k = 0;
+                if (D_801491E0[0] != 0) {
+                    do {
+                        k += 1;
+                    } while (D_801491E0[k] != 0);
+                }
+                D_801491E0[k] = i + 2;
+            }
+            D_80149208.cpu[i].unk_06 = 1;
+        }
+        ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_26 = D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high - 0xA0;
+        if (D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high >= 0x1E1 || D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high < -0xA0) {
+            ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_03 = 0;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_03 = 0xA4;
+        }
+    }
+}
 
 /* FAKE: byte-offset walk over the cpu runners of D_80149208; written as TaiRunnerA fields (p = &D_80149208.cpu[i],
  * or the byte base plus 0x24 * i cast to TaiRunnerA *) the code differs (checked in the T-16550 review). T-16550 */
@@ -864,9 +946,11 @@ s32 func_80137440(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-16551, 26 differing lines (13 instructions, registers only): the loop counter i takes $a3 and the hoisted
+/* NON_MATCHING: T-19004, 26 differing lines (13 instructions, registers only): the loop counter i takes $a3 and the hoisted
  * D_8012091E + 11 takes $a2, the original has them the other way round (regdiff: the hoisted constant outranks i, priority 7
- * against 6.4); the ugen temporaries t8/t3 against t9/t5 follow. Declaration order, initialisation order and autotweak's 628 edits did not move it. */
+ * against 6.4); the ugen temporaries t8/t3 against t9/t5 follow. Declaration order, initialisation order and autotweak's 628 edits
+ * (T-16551) and `register`, no `pos` local, D_8012091E/D_80120922 as fields of display record 106, a for/while loop (T-19004) did
+ * not move it: a loop with the init next to it gives i priority 10.67 and $a0 before a and b, the original needs 7 to 8.2. */
 void func_80137544(void) {
     u8 sel;
     s32 i;

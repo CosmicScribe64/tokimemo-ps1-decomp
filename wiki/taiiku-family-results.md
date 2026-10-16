@@ -121,3 +121,7 @@ What the types did and did not do here: the new `TaiikuBall`, `TaiikuA0`, `Taiik
 - A table that the original defines in the unit has to be defined in the unit (`s32 D_801492F8[10] = {...}` in `80133C80.c`, three `INCLUDE_RODATA` pieces replaced) for two stores to share one `lui at`.
 - A long run of identical statements over the four runners is a loop that IDO unrolls with the first iteration peeled (`func_801368B8`, `(&D_80149208.player)[i]`, FAKE). The "untested explanation" of T-16550 (separate player and cpu objects) was tested and is wrong: it hoists the loads of the next group above the stores.
 - `D_801492C4` is a word (`s32`); the byte view made the three-word copy in `func_80133CFC` an `sb`.
+
+## Package w3-d-p04 (T-19004, `80133C80.c`)
+
+[[tickets/T-19004-w3-d-p04]], wave 3: `func_80137228` matched (260 bytes) once `D_80120A72` and `D_80120AA8` were read as fields of display records 111 and 112 (the loop's record stores then force the reload the original has); `func_80135830` (672 bytes) matched in the closer pass (index loop plus a FAKE dead `i = 0;`), `func_80137544` (26 lines) and `func_80135480` (22) unchanged, `func_80137C44` left `INCLUDE_ASM`. Details in [[matching-notes]], section T-19004.

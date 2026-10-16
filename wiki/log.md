@@ -15466,3 +15466,18 @@ Opened [[tickets/T-17000-types-first-main]] (In Progress) on branch `w3-main-typ
 ## [2026-10-16] ticket | T-17000 Done
 
 Code review of [[tickets/T-17000-types-first-main]] against `CODING_STANDARDS.md`: no findings. 5 functions matched (1,948 bytes), 27/27 SHA1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. In Review to Done; branch `w3-main-types` goes to the integration merge.
+## [2026-10-16] ticket | T-19004 Wave 3 package w3-d-p04 started
+
+[[tickets/T-19004-w3-d-p04]] In Progress: 5 TAIIKU game A functions in `src/ovl/TAIIKU/80133C80.c`, worktree `tokimemo-wt/w3-d-p04` (branch `w3-d-p04`, base `w2-good`). Part of [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-16] ticket | T-19004 In Review
+
+[[tickets/T-19004-w3-d-p04]] In Progress to In Review: 1 of 5 listed TAIIKU functions matched (`func_80137228`, 260 bytes, plain C). `func_80135830` is a new guarded draft at 18 lines (FAKE `i` as record address), `func_80137544` (26 lines) and `func_80135480` (22 lines) keep their guards, `func_80137C44` stays `INCLUDE_ASM`. The reload of `D_80120A72` is explained by its being display record 111 `unk_26`; notes in [[matching-notes]] (T-19004), three rows in [[register-cheatsheet]], four rows and an update line in [[data/t0018-cases]], section in [[taiiku-family-results]]. Branch `w3-d-p04`, code review pending.
+
+## [2026-10-16] build | T-19004 closer pass
+
+[[tickets/T-19004-w3-d-p04]] closer: TAIIKU `func_80135830` matched (672 bytes, plain index loop C plus a dead `i = 0;`, FAKE), commit `a33af760`. Notes in [[matching-notes]], [[register-cheatsheet]] and [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19004 Done
+
+[[tickets/T-19004-w3-d-p04]] In Review to Done after the code review: 2 of 5 listed TAIIKU functions matched (932 bytes: `func_80137228` 260, `func_80135830` 672 with a FAKE dead `i = 0;`), `func_80137544` and `func_80135480` guarded, `func_80137C44` left `INCLUDE_ASM`. Two findings fixed: the `NON_MATCHING` comments of the two guarded drafts had lost their T-19004 notes (commit `112cfc10`), and the index, [[taiiku-family-results]] and [[matching-notes]] still called `func_80135830` a guarded draft. Unit sha1 OK, headers, globals and proto checks OK.
