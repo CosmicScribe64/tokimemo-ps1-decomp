@@ -15074,3 +15074,15 @@ blockers in [[tickets/T-16200-matching-wave-2]].
 ## [2026-10-16] ticket | T-16510 Done
 
 [[tickets/T-16510-m2c-defect-rewrites]] reviewed against `CODING_STANDARDS.md` and moved to Done: only `tools/`, new `drafts/T-16510/` folders and wiki pages changed, nothing under `src/`; all 51 tool test files pass in Docker (37 new tests). Review fixes: the ticket now counts 13 worse `goto` rewrites (7 in the top 30), the `rescore` docs state the two-to-six rule, [[decompile-workflow]] gives the post-increment count of the wider scan (207 of 6,958 asm functions, 83 before). The branch is 101 commits behind `w2-good`; merging conflicts only in `wiki/log.md` and `wiki/matching-notes.md`. Not merged or pushed.
+
+## [2026-10-16] ticket | T-16520 matched-sibling report started
+
+[[tickets/T-16520-sibling-report]] (In Progress, under [[tickets/T-16200-matching-wave-2]]): new tool `tools/siblings.py` finds the closest matched functions for every unmatched one by register-erased opcode similarity, plus unmatched-unmatched clusters, and writes per-target sibling notes for work packages. Branch `t16520-siblings`. No `src/` edits.
+
+## [2026-10-16] ticket | T-16520 to In Review
+
+[[tickets/T-16520-sibling-report]]: `tools/siblings.py` (tests `tools/test_siblings.py`, 44) and `dupes.asm_sources` (shared file selection, test in `tools/test_dupes.py`); docs in [[decompile-workflow]]. On the tree (1,005 unmatched, 5,953 matched): best sibling >= 0.90 for 46 functions / 24,616 bytes (12 clones), 0.80-0.90 for 36 / 19,676, 0.70-0.80 for 68 / 28,556; 855 / 748,888 bytes have none. 59 unmatched clusters at >= 0.90 (139 functions, 102,340 bytes), 42 without a matched sibling (matching one member of each opens 55 functions, 45,348 bytes). Index recall against brute force on 300 targets: 50 of 50. Runtime 30 s cold, 2-25 s warm. Five pairs checked by eye. Full tool test suite passes.
+
+## [2026-10-16] ticket | T-16520 Done
+
+[[tickets/T-16520-sibling-report]] reviewed against `CODING_STANDARDS.md` and moved to Done: `tools/siblings.py` (matched-sibling report, `--package` notes) and `dupes.asm_sources`. Verified: 45 sibling tests and the whole tool suite (1062) pass in Docker, `load_funcs` unchanged on the real tree, tier and cluster figures reproduced, recall 50 of 50. Review fixes: `--package` examples in the docstring and [[decompile-workflow]] named a function and a C path that do not exist; new test for `file:` entries in the per-object layout. Branch `t16520-siblings`, not merged.
