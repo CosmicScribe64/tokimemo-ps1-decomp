@@ -40,8 +40,6 @@ void func_80143CC0(void);
 void func_8014756C(void);
 
 extern s32 D_8014A128;
-extern s32 D_8014A144;
-extern s32 D_8014A158;
 extern s32 D_80148F00;
 extern s32 D_80148F04;
 extern s32 D_80148F08;
@@ -74,8 +72,6 @@ extern s32 D_8014A0B4;
 extern s32 D_8014A0B8;
 extern s32 D_8014A0BC;
 extern s32 D_8014A12C;
-extern s32 D_8014A148;
-extern u32 D_8014A14C;
 extern s32 D_801491E8;
 extern s32 D_8014A3D4;
 extern s32 D_8014A370;
@@ -144,7 +140,6 @@ extern s8 D_8014A110;
 void func_80143D24(void);
 void func_80143DD0(void);
 void func_80143F50(void);
-extern u16 D_8014A154;
 typedef struct TaiikuRec {
     /* 0x0 */ s32 unk0;
     /* 0x4 */ s32 unk4;
@@ -502,6 +497,28 @@ typedef struct TaiRunnerA {
 /* D_80149208..D_80149297: the player and three other runners, one object. Every access in the
  * original goes through %lo(D_80149208); the matched loops index the other runners by i from 0
  * (cpu[i]), and func_80138680 indexes all four by runner number. T-16550. */
+/* Game B runner record (80142240.c), 0x24 bytes: a second layout for the same roles as
+ * TaiRunnerA (speed 0x08, accumulated speed 0x0C, timers 0x10/0x18/0x1A, 16.16 position 0x14). T-16550. */
+typedef struct TaiRunnerB {
+    /* 0x00 */ u8 unk_00; /* animation frame */
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 pad_03;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08; /* speed */
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ u32 unk_10;
+    /* 0x14 */ TaiHalves unk_14; /* 16.16 position */
+    /* 0x18 */ u16 unk_18;
+    /* 0x1A */ u16 unk_1A;
+    /* 0x1C */ s32 unk_1C;
+    /* 0x20 */ s32 unk_20;
+} TaiRunnerB; /* size 0x24 */
+/* D_8014A13C[4]: [0] the player, [1..3] the other runners; every access goes through
+ * %lo(D_8014A13C). The u8 view it had made IDO keep the array base in a register for the
+ * constant-index clamps of func_80143D24, which a struct member does not; a 4-element array does. T-16550. */
+extern TaiRunnerB D_8014A13C[4];
+
 typedef struct TaiRunnersA {
     /* 0x00 */ TaiRunnerA player;
     /* 0x24 */ TaiRunnerA cpu[3];
