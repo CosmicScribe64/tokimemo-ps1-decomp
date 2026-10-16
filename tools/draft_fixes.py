@@ -765,9 +765,13 @@ def survey(archive, json_out=None, callers=True, root="."):
         asm_text = asm_for(row["scope"], files)
         missing += asm_text is None
         results.append((row["scope"], analyze(body, asm_text, rewrite=False, callers=index, scope=row["scope"])))
-    summary = dict(archive=archive, bodies=len(rows), asm_missing=missing, detectors=summarize(results))
+    blocked = collections.Counter(f.detail.split(": ", 1)[1] for _, r in results for f in r.findings
+                                  if f.kind == "goto-shared-store-blocked")
+    summary = dict(archive=archive, bodies=len(rows), asm_missing=missing, detectors=summarize(results),
+                   goto_blocked_reasons=dict(sorted(blocked.items())))
     if json_out:
-        detail = [dict(scope=s, findings=[f._asdict() for f in r.findings]) for s, r in results if r.findings]
+        detail = [dict(scope=s, findings=[f._asdict() for f in r.findings if not f.kind.endswith("-blocked")])
+                  for s, r in results if any(not f.kind.endswith("-blocked") for f in r.findings)]
         with open(json_out, "w") as fh:
             json.dump(dict(summary=summary, detail=detail), fh, indent=1, sort_keys=True)
             fh.write("\n")
@@ -879,8 +883,9 @@ def rescore(archive, top, out, jobs=2, root=".", only=None):
         n, (row, body, result) = item
         folder = pathlib.Path(row["selected_path"])
         context = (folder / "context.c").read_text()
-        record = dict(scope=row["scope"], unit=row["scope"].split(":")[0], func=row["scope"].split(":")[1],
-                      src=row["src"], archived_score=row["score"], source_path=str(folder),
+        record = dict(rank=n + 1, scope=row["scope"], unit=row["scope"].split(":")[0],
+                      func=row["scope"].split(":")[1], src=row["src"], archived_score=row["score"],
+                      source_path=str(folder),
                       draft_hash=digest(body), tool=TICKET + " tools/draft_fixes.py",
                       harness_hash=digest(read_asm(os.path.abspath(__file__))))
         if body not in context:
