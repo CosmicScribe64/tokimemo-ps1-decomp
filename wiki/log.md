@@ -16675,3 +16675,7 @@ Opus closer on [[tickets/T-17004-w3-main-p04]]: `func_8006D6E0` matched in plain
 ## [2026-10-16] ticket | T-17004 Done
 
 [[tickets/T-17004-w3-main-p04]] In Review to Done after the code review: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`), 5 of 5 functions matched (2,812 bytes: `func_8006EB64`, `func_8006EEC4`, `func_80072998`, `func_800726F0`, `func_8006D6E0`). One finding, fixed: the `NON_MATCHING` comment of the still guarded `func_80072D70` now names T-17004. Clean build sha1 OK; headers and globals checks OK.
+
+## [2026-10-16] ticket | T-17012 In Progress
+
+Created [[tickets/T-17012-w3-main-p12]]: wave 3 package w3-main-p12, six functions of `src/main/80079B10.c` from drafts under `drafts/T-16000`, `drafts/T-14500/main`, `drafts/T-17000/main`. Worktree `tokimemo-wt/w3-main-p12`, branch `w3-main-p12`. Card in In Progress on [[kanban]].
