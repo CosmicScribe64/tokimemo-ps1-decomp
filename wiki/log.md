@@ -15428,3 +15428,14 @@ Opened [[tickets/T-17100-types-first-rpg_bat]] (In Progress) under [[tickets/T-1
 ## [2026-10-16] ticket | T-17100 Done
 
 [[tickets/T-17100-types-first-rpg_bat]] In Review to Done after the code review against `CODING_STANDARDS.md`: 4 functions matched (3,168 bytes: `func_80157640`, `func_8014F88C`, `func_801525B0`, `func_801498C0`), 74 redrafts, 19 packages. One finding fixed (comment on the `u16` view of `DisplayActor44.unk_18` in `src/ovl/RPG_BAT/8014F790.c`, no byte change). RPG_BAT unit sha1 OK after the rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+## [2026-10-16] ticket | T-19002 Wave 3 package w3-d-p02 started
+Opened [[tickets/T-19002-w3-d-p02]] (In Progress): TACO `src/ovl/TACO/801447D0.c` and `src/ovl/TACO/80137A60.c`, work list `func_801449D8`, `func_80137D00`, `func_80145DC4`, `func_8014616C`. Part of [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-16] ticket | T-19002 In Review, 3 of 4 functions matched
+[[tickets/T-19002-w3-d-p02]] moved to In Review: TACO `src/ovl/TACO/801447D0.c` and `src/ovl/TACO/80137A60.c`. Matched `func_801449D8`, `func_80145DC4` and `func_80137D00` (2,008 bytes); `func_8014616C` stays a 3-row NON_MATCHING draft. New FAKEs: `u8 pad[0x130]` frame reserve, absolute-address pointer load in `func_80137D00`, absolute-address read in the guarded `func_8014616C`. Notes in [[matching-notes]], rows in [[data/t0018-cases]], cheat sheet rows in [[register-cheatsheet]], package line in [[taco-family-results]].
+
+## [2026-10-16] build | T-19002 closer pass on func_8014616C
+Opus closer pass on [[tickets/T-19002-w3-d-p02]] (branch w3-d-p02): no new match. TACO `func_8014616C` stays a 3-row NON_MATCHING draft in `src/ovl/TACO/801447D0.c`, and its comment now records the live-range finding. A volatile `&D_800E6280` access in the last block takes it out of the counter's range but adds an address instruction (7 lines). Folded forms give 242 lines, two constants 12, and autotweak 120 s none. Notes in [[matching-notes]] and [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19002 Done
+[[tickets/T-19002-w3-d-p02]] reviewed against `CODING_STANDARDS.md` and moved to Done: 3 functions matched (2,008 bytes: TACO `func_801449D8`, `func_80145DC4`, `func_80137D00`), `func_8014616C` a 3-row NON_MATCHING draft. One review finding (missing ticket id on a FAKE comment in `src/ovl/TACO/801447D0.c`), fixed; rebuild OK (globals, headers, TACO.bin SHA1).

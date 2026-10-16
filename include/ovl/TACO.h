@@ -206,8 +206,7 @@ void func_801471D0(s32 arg0);
 void func_80147488(s32 arg0, s16 *arg1, s32 arg2);
 extern s32 D_8015F3E0;
 extern s32 D_8015F3E4;
-extern s32 D_8015F82C;
-extern s32 D_8015F830;
+extern s16 *D_8015F82C[2]; /* model data pointers for func_80147488, T-19002 */
 extern s16 D_8015F3E8;
 
 void func_80144CC0(u8 *arg0);
