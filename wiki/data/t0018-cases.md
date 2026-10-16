@@ -28,6 +28,8 @@ Update (T-16230): rows for DATE `func_801511B4`, `func_80150460` and `func_80150
 
 Update (T-16553): TAIIKU `func_80146A60` (rows T-4100 and w7-6: flag word in `$v0`, masks in `$v1`) is matched in plain C by copying the flag word into a local before the mask tests; `func_80147928` (same flag word) matches too ([[matching-notes]], "T-16553").
 
+Update (T-16553 closer pass): TAIIKU `func_80145640` (counter spill slot one word too high) is matched in plain C: the call result goes into a declared local `slot`, declared before the counter, instead of nesting the call in the chain assignment. `func_8014607C` stays guarded; the closer pass found that IDO propagates both local copies (`var = D_800E638E`, `mask = D_800E6375 & 0xF`) into their uses after the `||`, and the original does not ([[matching-notes]], T-16553).
+
 | file | function | category | symptom |
 |---|---|---|---|
 | TEL | `func_8013A40C` | promo | compare chain on a global, original loads it into $v1, IDO $v0 (batch B) |

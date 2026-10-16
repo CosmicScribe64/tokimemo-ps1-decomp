@@ -15133,3 +15133,7 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16553 to In Review
 
 [[tickets/T-16553-pt-taiiku-p3]]: 9 functions of `src/ovl/TAIIKU/801452D0.c` matched (`func_8014666C`, `func_80145C28`, `func_80147318`, `func_80147928`, `func_80146A60`, `func_80147F58`, `func_80148370`, `func_80146338`, `func_80147594`; 5,244 bytes), four guarded (`func_80145640` 8 lines, `func_8014607C` 20, `func_80145370` 22, `func_80146D18` 31), `func_80147B14` not started. New section in [[matching-notes]], four rows and an update line in [[data/t0018-cases]], results in [[taiiku-family-results]]. Waiting for the code review.
+
+## [2026-10-16] build | T-16553 closer pass
+
+[[tickets/T-16553-pt-taiiku-p3]]: Opus closer on the two guarded near misses in `src/ovl/TAIIKU/801452D0.c`. `func_80145640` matched (1,080 bytes): the call result goes into a declared local before the counter, which moves the counter's home from sp+0x3C to sp+0x38. `func_8014607C` stays guarded at 20 lines: IDO propagates the tail's two local copies of globals past the `||`. Notes in [[matching-notes]] (T-16553), [[data/t0018-cases]] and [[taiiku-family-results]]. Ticket stays In Review.
