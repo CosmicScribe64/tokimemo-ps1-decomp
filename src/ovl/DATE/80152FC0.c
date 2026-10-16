@@ -374,4 +374,25 @@ void func_801540E0(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-17203, 8 differing lines; the code is identical, only the frame is 8 bytes larger (0x70, not 0x68): the second use of D_800CA2F8 makes IDO reserve a 4-byte temp slot below tbl on top of the 4-byte g slot */
+#ifdef NON_MATCHING
+void func_80154118(void) {
+    GameState *g = &D_800E6280; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl15 tbl;
+
+    tbl = D_8015F4DC;
+    if (g->unk_110A < 0xC) {
+        if (((g->unk_03E == 0x5F && g->unk_03F == 7 && g->unk_040 == 0x17) ||
+             (g->unk_03E == 0x60 && g->unk_03F == 7 && g->unk_040 == 0x1C) ||
+             (g->unk_03E == 0x61 && g->unk_03F == 7 && g->unk_040 == 0x1B)) &&
+            D_800B593C == 0x80) {
+            func_8006B900();
+        } else if (D_800CA2F8 == 0x11 || D_800CA2F8 == 0x10) {
+            func_8006B900();
+        }
+    }
+    tbl.f[g->unk_110A](0x80);
+}
+#else
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80152FC0", func_80154118);
+#endif
