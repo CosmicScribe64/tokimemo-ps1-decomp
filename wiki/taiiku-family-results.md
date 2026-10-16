@@ -138,3 +138,7 @@ Closer pass: `func_8013B608` matched by splitting the result assignment (`v = x 
 ## Package w3-d-p10 (T-19010, `80142240.c`)
 
 [[tickets/T-19010-w3-d-p10]], wave 3: `func_80144464` (572 B), `func_80143814` (692 B), `func_80142FB8` (992 B) and `func_80144E54` (496 B) matched, `func_8014357C` guarded at 34 lines. Game B now has no `INCLUDE_ASM` left among the 80142240.c functions except `func_80142400`. The T-16554 gap of `func_80142FB8` (spills of the pointer and constants) was an index loop with `<`; `D_8014A110` is `u8`. Details in [[matching-notes]], section T-19010.
+
+### Package w3-d-p31 (T-19031, `80132000.c`, `80132BD0.c`)
+
+[[tickets/T-19031-w3-d-p31]], wave 3: all four listed functions matched in plain C (4,244 bytes, about 65 minutes): `func_80133258` (display-record initialiser, one FAKE `(u8)` narrowing), `func_80132BD0` (23-record initialiser from four stack tables, FAKE unused word locals for the frame), `func_80132E20` (K&R `s16` parameter, IDO unrolls the loops, FAKE unused locals) and `func_80132000` (folk dance state machine, `D_80148EC0` defined in the unit for the shared `lui at`, one FAKE empty test). The `80132BD0.c` file now has no `INCLUDE_ASM` left among its game-A helpers. Method and numbers in [[matching-notes]], section T-19031.
