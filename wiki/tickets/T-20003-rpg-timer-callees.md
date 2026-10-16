@@ -40,3 +40,5 @@ Integrated upstream main 81095a46 (T-17103), including the new func_8013E7C0 cal
 ## Comments
 
 Local self-review against CODING_STANDARDS.md: C89 declarations and comments, fixed-width locals, existing SDK headers and DisplayActor44 view, original symbols and source placement, and explicit caller-view guards checked. All four fakematches (three frame pads and one selector pointer read) carry reasons and T-20003. No assembly, compiler pass, symbol rename or unrelated source change. Only source/header/wiki files are intended for staging. Upstream review remains pending; keep this ticket In Review.
+
+Post-integration prototype guard completed successfully: integrated-protos.log reports 0 new disagreements, 15 known and branch check OK. PR #38 is mergeable as of this verification; GitHub exposes no CI check results. Local validation above is independent of CI.

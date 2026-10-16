@@ -16318,3 +16318,7 @@ RPG_BAT func_80156D78 matches 992 actual default linked bytes, bringing T-20003 
 ## [2026-10-16] ticket | T-20003 PR #38 opened
 
 Opened https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/38 for the three RPG_BAT callbacks (3,516 bytes). Integrated upstream main 81095a46 and retained all T-17103 source/wiki work. All three actual default linked comparisons still match despite the upstream caller-view change in their shared source; full RPG_BAT/globals and 27/27 binary SHA1 checks pass again. [[tickets/T-20003-rpg-timer-callees]] stays In Review for the maintainer.
+
+## [2026-10-16] build | T-20003 final prototype guard passed
+
+After integrating upstream main 81095a46, sync_protos --check-branch reports 0 new disagreements, 15 known and branch check OK. The integrated three-function linked proof, RPG_BAT checksum and 27/27 binary checks remain successful. PR #38 is mergeable; no GitHub CI check results are exposed. [[tickets/T-20003-rpg-timer-callees]] stays In Review.
