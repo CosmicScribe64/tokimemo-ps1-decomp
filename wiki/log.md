@@ -16068,3 +16068,6 @@ DATE `func_8014718C` (1,996 bytes) rewritten by hand from the `func_80147958` sh
 
 ## [2026-10-16] ticket | T-17201 In Review
 [[tickets/T-17201-w3-date-p01]] In Progress to In Review: 1 of 2 functions matched (`func_80147958`), `func_8014718C` guarded at 26 lines. Notes in [[matching-notes]], rows in [[register-cheatsheet]] and [[data/t0018-cases]], family page [[date-family-results]] updated.
+
+## [2026-10-16] build | T-17201 clean rebuild and checks
+Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK, `sync_protos --check-branch` OK. Recorded in [[tickets/T-17201-w3-date-p01]].
