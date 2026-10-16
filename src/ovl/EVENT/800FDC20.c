@@ -314,7 +314,27 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FEDC8);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FEF74);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FF320);
+void func_800FF320(arg0, arg1, arg2)
+    s16 arg0;
+    s16 arg1;
+    s16 arg2;
+{
+    /* Port of the DATE clone func_80152684 (T-17400). FAKE: 8 unused bytes above tbl give the original's frame and tbl offset, as in the clone (T-9310). */
+    s32 pad[2];
+    EvTbl tbl;
+
+    tbl = D_80121AD8;
+    if (arg0 < 0x140) {
+        func_800FFA4C(0x140, -0x118, 0xA0 - arg0, 0x28, (0xA0 - arg0) + (s16)(arg0 / 32 + 0xA), 0x28, tbl.e[*(u8 *)&D_801218DC[arg1]].a, tbl.e[*(u8 *)&D_801218DC[arg1]].b, arg2, 1);
+        return;
+    }
+    if (arg0 < 0x154) {
+        func_800FFA4C(0x140, -0x118, -0xA0, 0x28 - (s16)((arg0 * 7 - 0x8C0) / 8), -0xA0, 0x28, tbl.e[*(u8 *)&D_801218DC[arg1]].a, tbl.e[*(u8 *)&D_801218DC[arg1]].b, arg2, 1);
+        func_800FFA4C(0x140, -0x118, -0xA0, 0x28, (s16)(arg0 / 32 + 0xA) - arg0 + 0xA0, 0x28, tbl.e[*(u8 *)&D_801218DC[arg1]].a, tbl.e[*(u8 *)&D_801218DC[arg1]].b, arg2, 1);
+        return;
+    }
+    func_800FFA4C(0x140, -0x118, -0xA0, 0x28 - (s16)((arg0 * 7 - 0x8C0) / 8), -0xA0, (0x28 - (s16)((arg0 * 7 - 0x8C0) / 8)) + (s16)(0xF - (arg0 - 0x140) / 32), tbl.e[*(u8 *)&D_801218DC[arg1]].a, tbl.e[*(u8 *)&D_801218DC[arg1]].b, arg2, 1);
+}
 
 void func_800FF5E4(void) {
     func_80015D28(0x3D, 0x801B0000, 0x7F67);
