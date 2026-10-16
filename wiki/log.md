@@ -15189,3 +15189,7 @@ current source, 7 still fail): 59 of 250 first register divergences are ugen tem
 
 [[tickets/T-16900-compiler-experiments]] moved to In Review with both results. No `src/` or `tools/` change on the
 branch; only wiki pages ([[uopt-register-allocation]], [[matching-breakthroughs]], [[kanban]], [[index]]).
+
+## [2026-10-16] ticket | T-16910, T-16920, T-16930, T-16900 merged onto w2-good (side-int)
+
+Merged `claude/pensive-montalcini-7151d4` ([[tickets/T-16910-cpw-census]], [[tickets/T-16920-gamestate-1093-type]], [[tickets/T-16930-pointer-read-kept-copies]]), `t16930-a` (T-16930 agent A) and `claude/blissful-fermi-43d29a` ([[tickets/T-16900-compiler-experiments]], wiki only) into branch `side-int` (based on `w2-good`). Wiki conflicts kept both sides; `include/main_api.h` kept `D_800B5A68[][3]` and ENDING `func_80137730` indexes it as `[unk_F5F][i]`. Clean rebuild 27/27 sha1 OK; headers, globals and `sync_protos.py --check-branch` OK. `funcdiff.py --resolve` MATCH for all 15 claimed matches (NAME_ENT x7, main `func_80042AC8` and `func_80078C48`, GEKO, RPG_BAT, ENDING `func_80137730`, OPTION x2, SHUGAKU) and the four rewritten functions. Total 6018/6958 functions, 1,494,640/2,279,368 bytes (65.6%). Statuses unchanged: T-16900, T-16910, T-16920 In Review; T-16930 In Progress.

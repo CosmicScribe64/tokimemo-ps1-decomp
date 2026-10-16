@@ -28,7 +28,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-16510-m2c-defect-rewrites|T-16510]] Detect and rewrite recurring m2c draft defects (Done): `tools/draft_fixes.py`; 50 T-14500 drafts changed, 34 better, 3 at score 0; results in `drafts/T-16510/`.
 - [[tickets/T-16520-sibling-report|T-16520]] Matched-sibling report for work packages: closest matched functions for every unmatched one: 150 of 1,005 have a sibling >= 0.70, 59 unmatched clusters (Done).
 - [[tickets/T-16530-proto-override|T-16530]] `--proto` override for regdiff and funcdiff, clearer missing-traced-uopt message (Done).
-- [[tickets/T-16930-pointer-read-kept-copies|T-16930]] Pointer reads for the 23 other kept-copy census functions and the five constant-first tricks (In Progress).
+- [[tickets/T-16930-pointer-read-kept-copies|T-16930]] Pointer reads for the 23 other kept-copy census functions and the five constant-first tricks: 8 functions matched (main `func_80042AC8`, `func_80078C48`, GEKO, RPG_BAT, ENDING, OPTION x2, SHUGAKU), four constant-first tricks dropped (In Progress).
 - [[tickets/T-16920-gamestate-1093-type|T-16920]] NAME_ENT selector-copy family matched as C through a `GameState *g` read (7 functions, 2,332 bytes); +0x1093/+0x1094 stay members; no zcopy rule (In Review).
 - [[tickets/T-16910-cpw-census|T-16910]] Census of the original for the T-16900 `cpw` rule: negative, constant-first compares follow aggregate membership, not copies (In Review).
 - [[tickets/T-16900-compiler-experiments|T-16900]] Compiler experiments (In Review): coupled selector-copy rule matches 3 of 7 NAME_ENT drafts with 0 matched changes but fires in no matched function; ugen first-difference share 23.6%, no ugen trace.
