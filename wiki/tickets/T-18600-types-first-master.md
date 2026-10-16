@@ -1,7 +1,7 @@
 ---
 id: T-18600
 title: "Types-first: MASTER"
-status: In Review
+status: Done
 assignee: claude (w3-master-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -48,3 +48,16 @@ Result ([[master-family-results]], section "Types-first pass (T-18600)"):
 
 - 2026-10-16: work done on branch `w3-master-types`; In Review, waiting for the code review against `CODING_STANDARDS.md`.
 - 2026-10-16: final checks: clean `rm -rf build && configure.py && ninja` 665/665, all 27 sha1 OK; `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` 0 new disagreements (15 known).
+- 2026-10-16 review (code review against `CODING_STANDARDS.md` and the ticket): diff `w2-good...w3-master-types`
+  touches only `src/ovl/MASTER/80132140.c`, `80133680.c`, `80138490.c`, `80139000.c`, `include/ovl/MASTER.h`,
+  wiki pages, and the new folder `drafts/T-18600/` (no existing drafts archive changed; the m2c/context files
+  follow the T-18300 precedent). No inline asm, `.word` or `NON_MATCHING` block; both matches are plain C;
+  the one FAKE (`func_80135CF4`) starts with `FAKE`, says what it does and names T-18600; headers consistent
+  (`check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` 0 new, 15 known); no game
+  data, asm or binaries.
+- Finding (fixed): the declaration-order comment of `func_8013348C` (`sel` above `kind`) named no ticket;
+  added `T-18600`. Comment-only.
+- Finding (fixed): `wiki/matching-notes.md` ended with an extra blank line; removed.
+- Rebuilt with `tools/docker.sh ninja` after the fixes (forced rebuild of all MASTER objects), MASTER sha1 OK.
+  No other findings. Result: 2 functions matched (1,208 bytes), 11 redrafted, packages T-18601..T-18603
+  handed on.

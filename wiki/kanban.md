@@ -52,7 +52,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
-- [ ] [[tickets/T-18600-types-first-master|T-18600 Types-first: MASTER]]
 
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
@@ -138,6 +137,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-18600-types-first-master|T-18600 Types-first: MASTER]]
 - [ ] [[tickets/T-18100-types-first-bunka_sd|T-18100 Types-first: BUNKA_SD]]
 - [ ] [[tickets/T-19014-w3-d-p14|T-19014 Wave 3 package w3-d-p14]]
 - [ ] [[tickets/T-18300-types-first-ending|T-18300 Types-first: ENDING]]

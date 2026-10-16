@@ -15788,3 +15788,7 @@ Opened [[tickets/T-18200-types-first-en_nichi]] (In Progress) under [[tickets/T-
 ## [2026-10-16] build | T-18600 final checks
 
 Branch `w3-master-types`: clean build 665/665 with all 27 sha1 OK; `tools/check_headers.py`, `tools/migrate_globals.py --check` OK; `tools/sync_protos.py --check-branch` 0 new disagreements (15 known). [[tickets/T-18600-types-first-master]] stays In Review.
+
+## [2026-10-16] ticket | T-18600 Done
+
+[[tickets/T-18600-types-first-master]] In Review to Done: code review against `CODING_STANDARDS.md` found 2 minor items (a ticket id missing from the `func_8013348C` slot comment, a trailing blank line in [[matching-notes]]), both fixed; MASTER sha1 OK, headers OK. 2 functions matched (1,208 bytes). Card moved in [[kanban]], line in [[index]].
