@@ -16514,3 +16514,9 @@ Clean rebuild of the w3-rpg-bat-p05 worktree (`rm -rf build && configure.py && n
 
 ## [2026-10-16] ticket | T-17119 In Progress
 [[tickets/T-17119-w3-rpg-bat-p19]] created and In Progress: Wave 3 package for RPG_BAT `func_80148F70` (1,756 B) and `func_80141060` (2,668 B), worktree `w3-rpg-bat-p19`, base `w2-good`. Part of [[tickets/T-17100-types-first-rpg_bat]].
+
+## [2026-10-16] build | T-17119 matches
+`src/ovl/RPG_BAT/80148F70.c` and `src/ovl/RPG_BAT/80141060.c`: `func_80148F70` (1,644 B) and `func_80141060` (2,564 B) matched in plain C, no FAKE and no guard left. Both first matched with a `u8 pad[4]` frame word, then with a named local that uopt folds (`flag`, `sel`). Header: `void func_801495DC(void);` in `include/ovl/RPG_BAT.h`. Notes in [[matching-notes]] (section T-17119), five rows in [[register-cheatsheet]], [[rpg-bat-family-results]].
+
+## [2026-10-16] ticket | T-17119 In Review
+[[tickets/T-17119-w3-rpg-bat-p19]] In Progress to In Review: 2 of 2 matched. Clean rebuild (`rm -rf build && configure.py && ninja`) 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Code review against `CODING_STANDARDS.md` pending.

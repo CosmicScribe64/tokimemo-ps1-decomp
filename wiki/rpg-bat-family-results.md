@@ -115,3 +115,7 @@ Types and header: `D_8015E740` is `u8 **` (a table of string pointers), `func_80
 ### Package w3-rpg-bat-p07 (T-17107)
 
 `func_8013BBF8` and `func_8013EA60` matched (types `RpgPadSeq` at `D_8015EBEC`, four words; `RpgGauge` over `D_8015EBC0..D_8015EBD4`, six words, reached through `RPG_GAUGE` until the other users migrate); `func_8013B5B0` (25 rows, promoted state byte in `$v0` instead of `$v1`) and `func_8013E54C` (16 rows, loop preheader order) stay guarded. Notes: [[matching-notes]], section "T-17107".
+
+### Package w3-rpg-bat-p19 (T-17119)
+
+[[tickets/T-17119-w3-rpg-bat-p19]]: `src/ovl/RPG_BAT/80148F70.c` and `80141060.c`, 2 of 2 matched in plain C (`func_80148F70` 1,644 B, `func_80141060` 2,564 B linked; 4,208 B). `func_80148F70` is the m2c draft rewritten as plain per-arm assignments (uopt promotes `D_8015EBB0` to `$a3` by itself); `func_80141060` uses typed `DisplayActor44` records for the call loops and byte-array index loops for the unrolled 40..63 groups. Both frames need one named local that uopt folds (`flag`, `sel`), no pad. Types: `D_800E6280.unk_66C[D_8015EBA0].unk_00` (a `GsRec66C` halfword) for the clamped value. Details in [[matching-notes]] ("T-17119").
