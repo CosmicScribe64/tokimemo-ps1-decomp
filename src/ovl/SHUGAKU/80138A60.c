@@ -299,7 +299,65 @@ void func_801398B8(void) {
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_801398E8);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_801399F4);
+void func_801399F4(void) {
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        D_800CA2D0 = D_8013C424;
+        D_800CA2D4 = D_8013C458;
+        D_800CA2D8 = D_8013C48C;
+        break;
+    case 1:
+        D_800CA2D0 = D_8013C434;
+        D_800CA2D4 = D_8013C468;
+        D_800CA2D8 = D_8013C49C;
+        break;
+    case 2:
+        D_800CA2D0 = D_8013C428;
+        D_800CA2D4 = D_8013C45C;
+        D_800CA2D8 = D_8013C490;
+        break;
+    case 3:
+        D_800CA2D0 = D_8013C42C;
+        D_800CA2D4 = D_8013C460;
+        D_800CA2D8 = D_8013C494;
+        break;
+    case 4:
+        D_800CA2D0 = D_8013C448;
+        D_800CA2D4 = D_8013C47C;
+        D_800CA2D8 = D_8013C4B0;
+        break;
+    case 5:
+        D_800CA2D0 = D_8013C438;
+        D_800CA2D4 = D_8013C46C;
+        D_800CA2D8 = D_8013C4A0;
+        break;
+    case 6:
+        D_800CA2D0 = D_8013C440;
+        D_800CA2D4 = D_8013C474;
+        D_800CA2D8 = D_8013C4A8;
+        if ((u8)(get_g_zyotai_s(6) & 0x7F) < 2) {
+            D_800CA2D0 = D_8013C43C;
+            D_800CA2D4 = D_8013C470;
+            D_800CA2D8 = D_8013C4A4;
+        }
+        break;
+    case 7:
+        D_800CA2D0 = D_8013C430;
+        D_800CA2D4 = D_8013C464;
+        D_800CA2D8 = D_8013C498;
+        break;
+    case 8:
+        D_800CA2D0 = D_8013C420;
+        D_800CA2D4 = D_8013C454;
+        D_800CA2D8 = D_8013C488;
+        break;
+    case 9:
+        D_800CA2D0 = D_8013C444;
+        D_800CA2D4 = D_8013C478;
+        D_800CA2D8 = D_8013C4AC;
+        break;
+    }
+}
 
 void func_80139C80(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
