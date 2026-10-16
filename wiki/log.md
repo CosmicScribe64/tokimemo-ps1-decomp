@@ -16232,3 +16232,6 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 
 ## [2026-10-16] ticket | T-17204 Done
 [[tickets/T-17204-w3-date-p04]] In Review to Done: code review against `CODING_STANDARDS.md` found one out-of-order declaration (`func_80152684` in `include/ovl/DATE.h`, moved) and one stale `wiki/data/t0018-cases.md` row (reworded), both fixed without a code change (unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 2 of 4 functions matched (`func_80152060`, `func_80152268`; 1,572 bytes), `func_801518B8` guarded at 14 rows, `func_80152E34` still `INCLUDE_ASM`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17104 started
+[[tickets/T-17104-w3-rpg-bat-p04]] created In Progress (branch `w3-rpg-bat-p04`, base `w2-good`): wave 3 package for `src/ovl/RPG_BAT/801468B0.c`, one function `func_80146C30` (draft score 329). Board: [[kanban]].
