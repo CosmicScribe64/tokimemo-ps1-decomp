@@ -1452,7 +1452,52 @@ void func_8013EBEC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013EE7C);
+void func_8013EE7C(void) {
+    u8 state;
+    s32 result;
+    u8 text[256];
+
+    state = D_800E6280.unk_110D;
+    switch (state) {
+    case 0:
+        func_8004E58C();
+        func_800AE0F0(text, D_800B32CC[D_800E6280.unk_1118 - 1]);
+        strcat(text, "番アルバム　を、");
+        func_8004E788(-0x40, 0x20, 0xF, (s32) text, 0);
+        func_8004E788(-0x40, 0x30, 0xF, (s32) "作成しています。", 0);
+        func_8004E884(2);
+        D_800E6280.unk_110D += 1;
+    default:
+        break;
+    case 1:
+        if ((result = func_80054694((s32) D_800E6280.unk_1118)) == 1) {
+            D_800E6280.unk_110D += 1;
+        } else {
+            func_80042908(4);
+        }
+        break;
+    case 2:
+        func_80053CE0();
+        func_80041878();
+        func_80042058();
+        D_800E6280.unk_110D += 1;
+        break;
+    case 3:
+        if ((result = func_80054590()) == 0x14) {
+            D_800E7D14[D_800E6280.unk_1118] = 1;
+            D_800E6280.unk_110D += 1;
+        } else if (((u32) (*(u32 *)&D_800E6280.unk_1120) >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
+            func_80053D10();
+            func_80056284();
+            func_80042908(1);
+        }
+        break;
+    case 4:
+        func_8013B77C();
+        main_state_set(0x14);
+        break;
+    }
+}
 
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80139740.rodata", D_8014BCB4);
 
