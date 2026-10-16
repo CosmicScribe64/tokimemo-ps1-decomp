@@ -306,7 +306,63 @@ s32 func_80152060(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152268);
+/* Result is the last call's $v0 (s32, no return). T-17204 */
+s32 func_80152268(void) {
+    s16 i;
+    s32 v;
+    s32 j;
+    u32 n;
+
+    if (D_800E6280.unk_10F8 % 51 == 0) {
+        for (i = 0; i < 12; ) {
+            D_8015EE24[i] = func_800AE0D0() % 4;
+            ++i;
+        }
+    }
+    n = 1000;
+    /* FAKE: the dead copies `j = v` after each call keep `v` live across the call, so uopt promotes it to $s0 (with its
+     * narrowing and the copy `move s0,tN`) and puts the divisor constants in $s1, as the original has; without them the
+     * variable is folded away and `n` takes $s0. The original's real use of `v` after the calls is unknown. T-17204 */
+    v = (s16)((D_800E6280.unk_10F8 * 16) % n);
+    func_80152684((s16)v, 0, 9);
+    j = v;
+    v = (s16)((D_800E6280.unk_10F8 * 16) % n);
+    func_80152684((s16)(v - 0xA), 1, 9);
+    j = v;
+    v = (s16)((D_800E6280.unk_10F8 * 16) % n);
+    func_80152684((s16)(v - 0x14), 2, 9);
+    j = v;
+    v = (s16)((D_800E6280.unk_10F8 * 16 + 0x1F4) % n);
+    func_80152684((s16)v, 6, 9);
+    j = v;
+    v = (s16)((D_800E6280.unk_10F8 * 16 + 0x1F4) % n);
+    func_80152684((s16)(v - 0xA), 7, 9);
+    j = v;
+    v = (s16)((D_800E6280.unk_10F8 * 16 + 0x1F4) % n);
+    func_80152684((s16)(v - 0x14), 8, 9);
+    j = v;
+    dtd_on_tpage(0, 0, 9, 3, 0);
+    n = 0x320;
+    v = (s16)(n - (D_800E6280.unk_10F8 * 16) % n);
+    func_80152684((s16)v, 3, 0xD);
+    j = v;
+    v = (s16)(n - (D_800E6280.unk_10F8 * 16) % n);
+    func_80152684((s16)(v + 0xA), 4, 0xD);
+    j = v;
+    v = (s16)(n - (D_800E6280.unk_10F8 * 16) % n);
+    func_80152684((s16)(v + 0x14), 5, 0xD);
+    j = v;
+    v = (s16)(n - (D_800E6280.unk_10F8 * 16 + 0x190) % n);
+    func_80152684((s16)v, 9, 0xD);
+    j = v;
+    v = (s16)(n - (D_800E6280.unk_10F8 * 16 + 0x190) % n);
+    func_80152684((s16)(v + 0xA), 0xA, 0xD);
+    j = v;
+    v = (s16)(n - (D_800E6280.unk_10F8 * 16 + 0x190) % n);
+    func_80152684((s16)(v + 0x14), 0xB, 0xD);
+    j = v;
+    dtd_on_tpage(0, 0, 0xD, 3, 0);
+}
 
 typedef struct {
     s32 a;
