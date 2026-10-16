@@ -75,7 +75,25 @@ void func_80134B64(void) {
     func_80042908((D_800E6280.unk_721 + 1) & 0xFF);
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_80134B94);
+void func_80134B94(void) {
+    u8 index;
+    ShFnTbl41 table;
+
+    table = D_8013C228;
+    index = D_800E6280.unk_110A;
+    table.f[index](0x80);
+    index = D_800E6280.unk_110A;
+    if (D_80085368 == table.f[index]) {
+        ((DisplayActor44 *)D_8011ECD0)[98].unk_03 |= 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[98].unk_07 = ((DisplayActor44 *)D_8011ECD0)[96].unk_07;
+    }
+    if (func_800853FC == table.f[index]) {
+        ((DisplayActor44 *)D_8011ECD0)[98].unk_07 = ((DisplayActor44 *)D_8011ECD0)[96].unk_07;
+        if (((DisplayActor44 *)D_8011ECD0)[96].unk_07 < 9) {
+            ((DisplayActor44 *)D_8011ECD0)[98].unk_03 &= 0xFF7F;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_80134C98);
 
