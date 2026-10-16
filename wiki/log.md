@@ -14936,3 +14936,7 @@ Created [[tickets/T-11690-w1-main-800674b0]] (In Progress): wave 1 package w1-p1
 ## [2026-10-15] ticket | T-11690 resumed in wave 2 as w2-r13
 
 Merged branch w1-p13 (club_list_menu and func_80067C28 matched) onto w2-good in worktree w2-r13 under [[tickets/T-16200-matching-wave-2]]. Conflicts only in wiki index, kanban and log; all 27 sha1 OK after the merge. [[tickets/T-11690-w1-main-800674b0]] stays In Progress.
+
+## [2026-10-15] ticket | T-11690 to In Review (w2-r13)
+
+[[tickets/T-11690-w1-main-800674b0]] moved to In Review. Wave 2 matched 1 function, `func_8006A2CC` (3112 bytes), for 3 in total with the wave 1 matches `club_list_menu` and `func_80067C28`. Guarded drafts: `func_8006BC28` (17 lines), `func_800676AC` (11 lines). Notes in [[matching-notes]] ("T-11690"), new rows in [[data/t0018-cases]].
