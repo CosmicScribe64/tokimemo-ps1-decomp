@@ -16045,3 +16045,11 @@ TACO `func_80137264` (812 B, `src/ovl/TACO/80136B40.c`) matches in plain C, TACO
 ## [2026-10-16] ticket | T-19032 In Progress
 
 Created [[tickets/T-19032-w3-d-p32]] (Wave 3 package w3-d-p32, branch w3-d-p32 from w2-good): TAIIKU `src/ovl/TAIIKU/80141280.c`, `func_80141280` (1840 B). Starting from the T-14500 draft (score 446).
+
+## [2026-10-16] build | T-19032 matched func_80141280
+
+TAIIKU `func_80141280` (1,764 B, `src/ovl/TAIIKU/80141280.c`) matches in plain C, TAIIKU.bin sha1 OK, after about 59 minutes from the T-14500 draft (score 446). Data island for `.data` 0x8014A070-0x8014A0A0 (`config/overlays/TAIIKU.yaml`), `D_8014A070` defined in C, the table `D_8014A088` is the auto array initialiser `tbl`. Two FAKE comments (`(u8)` mask test, `*(u32 *)&D_80122CDC` selector). Notes in [[matching-notes]] (T-19032), five rows in [[register-cheatsheet]], section in [[taiiku-family-results]], and a correction in [[decompile-workflow]]: the rolled loop with a hoisted end pointer has a C form.
+
+## [2026-10-16] ticket | T-19032 In Review
+
+[[tickets/T-19032-w3-d-p32]] In Progress to In Review: 1 of 1 functions matched (`func_80141280`). Clean rebuild 667 steps, 27/27 sha1 OK; `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` OK (0 new, 15 known). Code review against `CODING_STANDARDS.md` still to do.
