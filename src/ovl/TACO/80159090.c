@@ -18,7 +18,6 @@ void func_80159090(void) {
         func_80159878(D_801604C4);
         func_8015A900();
     default:
-        /* the empty default adds the basic blocks that keep arg0 out of $s0 (uopt allocation cost); the original reloads it from its home. T-16561 */
         break;
     case 1:
     case 2:
@@ -66,7 +65,6 @@ s32 func_80159260(void) {
     TcPos vel;
     TcPos pos;
     /* FAKE: unused TcPos below the two positions reproduces the frame and their offsets; real locals unknown. T-16560 */
-    /* FAKE: unused TcPos above the two positions reproduces the frame (0x60) and their offsets; real locals unknown. T-16561 */
     TcPos pad;
     s32 r;
     u32 kind;
@@ -113,6 +111,7 @@ void func_80159678(s32 arg0) {
 }
 
 s32 func_80159878(s32 arg0) {
+    /* FAKE: unused TcPos above the two positions reproduces the frame (0x60) and their offsets; real locals unknown. T-16561 */
     TcPos pad;
     TcPos sp50;
     TcPos sp48;
@@ -162,6 +161,7 @@ s32 func_80159878(s32 arg0) {
         func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0);
         return;
     default:
+        /* the empty default adds the basic blocks that keep arg0 out of $s0 (uopt allocation cost); the original reloads it from its home. T-16561 */
         break;
     }
 }
