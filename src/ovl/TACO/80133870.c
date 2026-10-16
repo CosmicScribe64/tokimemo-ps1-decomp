@@ -231,9 +231,10 @@ s32 func_80134500(void) {
     }
 }
 
-/* NON_MATCHING: T-16562, 12 differing lines; the true path matches. In the else path the original keeps the address of D_800E7D10 in $v0 for the byte read-modify-write at +0x40 (lbu/ori/sb through v0), IDO folds it into two lui/%lo addresses because a single access type makes it a plain global variable there */
-#ifdef NON_MATCHING
-/* Settings word at 0x800E7D50 (= D_800E7D10 + 0x40), one view per load width of the original. T-16562 */
+/* Settings word at 0x800E7D50 (= D_800E7D10 + 0x40), one view per load width of the original.
+   The flag test reads the word through base too: uopt then sees the byte read-modify-write
+   of the else path overlap a word access and keeps &D_800E7D10 in $v0 (with D_800E7D50 in
+   the test it makes the byte a plain global with lui/%lo addresses). T-16562 */
 typedef struct TcSetW {
     u32 pad0 : 2;
     u32 mode : 1;
@@ -255,7 +256,7 @@ void func_801345D4(void) {
     u8 *base;
 
     base = (u8 *)&D_800E7D10;
-    if (D_800E7D50 & 1) {
+    if (*(s32 *)(base + 0x40) & 1) {
         D_8015EDF8 = *(s32 *)((u8 *)&D_800E7D50 + 0xC);
         D_8015EDFC = *(s32 *)((u8 *)&D_800E7D50 + 0x10);
         D_8015EE00 = *(s32 *)((u8 *)&D_800E7D50 + 0x14);
@@ -276,9 +277,6 @@ void func_801345D4(void) {
     func_800AE0F0(D_8015EE08, "K.T");
     func_800AE0F0(D_8015EE0C, "N.S");
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_801345D4);
-#endif
 
 void func_8013474C(void) {
     TcObj50 *p;
