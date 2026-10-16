@@ -23,9 +23,9 @@ void func_8015ABF0(void) {
 
 #ifdef NON_MATCHING
 s32 func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g) {
-    s32 id;
     s32 i;
     s32 base;
+    s32 id;
     u32 n;
     s32 *pair;
     u8 *p;
@@ -41,22 +41,20 @@ s32 func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g) {
     if (id == 0) {
         return -1;
     }
-    i = 0;
-    p = D_80161D9C;
-    do {
+    for (i = 0, p = D_80161D9C; p < D_80161D9C + 0x40; i++, p++) {
         if (*p == 0) {
             n++;
         }
-        i++;
-        p++;
-    } while (p < (u8 *)D_80161DDC);
+    }
     if (n < D_80161E20[a]) {
         return -1;
     }
-    base = D_80161DDC[a] + 4;
+    base = D_80161DDC[a];
+    base += 4;
     func_8009B3C0(base);
     base += 8;
     func_80143B34(id);
+    if (b) {}
     func_80099E30(0, &(id + D_8015EDB4)->unk14);
     if (a == 0xA) {
         func_8009B430(base, (u8 *)&(id + D_8015EDB4)->unk4, 1);
@@ -64,47 +62,52 @@ s32 func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g) {
         func_8009B430(base, (u8 *)&(id + D_8015EDB4)->unk4, 0);
     }
     n = D_80161E20[a];
-    p = D_80161D9C;
-    for (i = 0; n != 0; i++, p++) {
-        if (*p == 0) {
-            func_80099E30((s32)&(id + D_8015EDB4)->unk14, &D_80127480[i]);
-            *p = id;
-            if (a == 0xF || a == 0x10) {
-                pair = D_80161E60[a] + (D_80161E20[a] - n) * 2;
-                func_8015B1B8(i, pair[0], pair[1], 0);
-            } else {
-                func_8015B2AC(i, D_80161E60[a][D_80161E20[a] - n]);
+    i = 0;
+    if (n != 0) {
+        p = (u8 *)D_80161DDC - 0x40;
+        do {
+            if (*p == 0) {
+                func_80099E30((s32)&(id + D_8015EDB4)->unk14, &D_80127480[i]);
+                *p = id;
+                if (a == 0xF || a == 0x10) {
+                    pair = D_80161E60[a] + (D_80161E20[a] - n) * 2;
+                    func_8015B1B8(i, pair[0], pair[1], 0);
+                } else {
+                    func_8015B2AC(i, D_80161E60[a][D_80161E20[a] - n]);
+                }
+                func_8009B430(base, (u8 *)&D_80127080[i], D_80161E20[a] - n);
+                n--;
+                D_80127080[i].unk4[0] = (s32)&D_80127480[i];
+                D_80127080[i].unk0 = 0x80000000;
             }
-            func_8009B430(base, (u8 *)&D_80127080[i], D_80161E20[a] - n);
-            n--;
-            D_80127080[i].unk4[0] = (s32)&D_80127480[i];
-            D_80127080[i].unk0 = 0x80000000;
-        }
+            i++;
+            p++;
+        } while (n != 0);
     }
-    (id + D_8015EDB4)->unk4.unk0 = 0x80000000;
-    (id + D_8015EDB4)->unk2 = b;
-    (id + D_8015EDB4)->unk7A = 0x7FFF;
-    (id + D_8015EDB4)->unk84[2] = a;
-    (id + D_8015EDB4)->unk3 = 1;
-    (id + D_8015EDB4)->unk82 = 0;
-    (id + D_8015EDB4)->unk72 = 0;
-    (id + D_8015EDB4)->unk7C = c.x;
-    (id + D_8015EDB4)->unk7E = c.y;
-    (id + D_8015EDB4)->unk80 = c.z;
-    (id + D_8015EDB4)->unk0[1] = 0x80;
-    (id + D_8015EDB4)->unk74 = d.x;
-    (id + D_8015EDB4)->unk76 = d.y;
-    (id + D_8015EDB4)->unk78 = d.z;
-    (id + D_8015EDB4)->unk64 = e.x;
-    (id + D_8015EDB4)->unk66 = e.y;
-    (id + D_8015EDB4)->unk68 = e.z;
-    (id + D_8015EDB4)->unk6A = e.unk6;
-    (id + D_8015EDB4)->unk6C = D_80161EA4[a];
-    (id + D_8015EDB4)->unk6E = D_80161EA4[a];
-    (id + D_8015EDB4)->unk70 = D_80161EA4[a];
-    (id + D_8015EDB4)->unk84[1] = f;
-    (id + D_8015EDB4)->unk84[0] = D_80161EC8[a];
-    (id + D_8015EDB4)->unk84[3] = g | 1;
+    (D_8015EDB4 + id)->unk4.unk0 = 0x80000000;
+    (D_8015EDB4 + id)->unk2 = b;
+    (D_8015EDB4 + id)->unk7A = 0x7FFF;
+    (D_8015EDB4 + id)->unk84[2] = a;
+    (D_8015EDB4 + id)->unk3 = 1;
+    (D_8015EDB4 + id)->unk82 = 0;
+    (D_8015EDB4 + id)->unk72 = 0;
+    (D_8015EDB4 + id)->unk7C = c.x;
+    (D_8015EDB4 + id)->unk7E = c.y;
+    (D_8015EDB4 + id)->unk80 = c.z;
+    (D_8015EDB4 + id)->unk0[1] = 0x80;
+    (D_8015EDB4 + id)->unk74 = d.x;
+    (D_8015EDB4 + id)->unk76 = d.y;
+    (D_8015EDB4 + id)->unk78 = d.z;
+    (D_8015EDB4 + id)->unk64 = e.x;
+    (D_8015EDB4 + id)->unk66 = e.y;
+    (D_8015EDB4 + id)->unk68 = e.z;
+    (D_8015EDB4 + id)->unk6A = e.unk6;
+    (D_8015EDB4 + id)->unk6C = D_80161EA4[a];
+    (D_8015EDB4 + id)->unk6E = D_80161EA4[a];
+    (D_8015EDB4 + id)->unk70 = D_80161EA4[a];
+    (D_8015EDB4 + id)->unk84[1] = f;
+    (D_8015EDB4 + id)->unk84[0] = D_80161EC8[a];
+    (D_8015EDB4 + id)->unk84[3] = g | 1;
     (id + D_8015EDB4)->unk4.unk4[0] = (s32)&(id + D_8015EDB4)->unk14;
     return id;
 }
