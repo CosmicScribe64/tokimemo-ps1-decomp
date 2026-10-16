@@ -5354,3 +5354,30 @@ Ticket [[tickets/T-16220-w2-main-8007c030]]. Three matches, 804 bytes: `func_800
   second, which makes brute-force searches over statement order and line grouping practical (2 workers). The
   regdiff trace shows uopt colours (1=v0, 2=v1, 3=a0, ...). The final register can still differ when ugen
   retargets a reload, as with `p` above.
+
+## Constant-first compares follow aggregate membership, not copies (T-16910)
+
+Census for the T-16900 `cpw` rule (zcopy off plus constant first, only where a procedure copies a narrow signed global
+into a local and compares it with a constant). Ticket [[tickets/T-16910-cpw-census]] has the method and the lists.
+Scope: 6958 game functions of the split asm, a forward dataflow over registers; compares with the constant in `$at` are
+ugen's and left out.
+
+- Narrow signed globals (`lb`/`lh`) compared `==`/`!=` with a register constant: 72 compares in 23 functions. Coupled
+  shape (a used `move` copy plus a constant-first compare of the same global): 7 functions, all in NAME_ENT
+  `80139740.c` on GameState +0x1093 (the T-11570 family). Constant-first without a copy: 15 functions, 50 compares.
+  Variable-first: 6 functions, 8 compares, none with a copy. 10 more functions copy a narrow signed global without
+  comparing it with a register constant.
+- The order follows aggregate membership: 64 of 64 constant-first compares are on members of GameState, the
+  `D_8011ECD0` record table or an indexed array; 8 of 8 variable-first ones are on the two `s16` scalars ENDING
+  `D_8013C35C` and SHOUGATU `D_80144E0C`. Other widths lean the same way: `lbu` GameState members 332:10, `lw` scalars
+  12:82 (constant-first:variable-first).
+- IDO already does this when the C reads through the aggregate. ENDING's table fields compare constant-first only
+  through `*(s16 *)&D_8011ECD0[...]` (T-9020) and DATE's `D_800CA22C[]` is an array; the other 5 matched functions with
+  this shape declare a scalar and carry a `FAKE` or `(u32)` trick (ENDING `func_8013855C`, NAME_ENT `func_80148C20`,
+  BUNKA_SD `func_8013261C`, EVENT `func_80117004`, RPG_BAT `func_80150CD8`).
+- The NAME_ENT drafts with the selector read as an element (`(&D_800E6280.unk_1093)[0]`) get the constant-first
+  compares from IDO; with copy propagation off for the file (scratch only) `func_8013DAC4`, `func_8013F454`,
+  `func_8013FB8C` reach 0 lines, `func_8013D4CC` 6, `func_8013E430` 4, `func_8013F0DC` 8, `func_8013CEC8` 10.
+- Verdict: no `cpw` step in `tools/cvt_pass.py`. Open: the type of GameState +0x1093/+0x1094 (element access for these
+  compares against the three matched `switch` selectors that need members, [[game-state]]), and a separate census for
+  the kept copy (the original keeps `idx = sel` in its own register here; IDO folds it).

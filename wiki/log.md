@@ -14983,3 +14983,12 @@ Opened [[tickets/T-16220-w2-main-8007c030]] (In Progress) under [[tickets/T-1620
 
 ## [2026-10-16] ticket | T-16220 Done
 [[tickets/T-16220-w2-main-8007c030]]: review against CODING_STANDARDS.md found one issue (the `_sprite_set_box_shade_tarao` draft tricks lacked a `FAKE` mark), fixed in a comment-only commit. 3 functions matched (`func_800422C8`, `make_three_select`, `junban_init`, 804 bytes); unit sha1 OK, headers, globals and proto checks OK. Moved In Review to Done.
+
+## [2026-10-15] ticket | T-16910 cpw census opened
+Opened [[tickets/T-16910-cpw-census]] (In Progress): count the coupled selector-copy shape of [[tickets/T-16900-compiler-experiments]] in the original asm, then either make `cpw` a uniform step of `tools/cvt_pass.py` or record a negative result. Branch `claude/quizzical-swanson-a4bc82`.
+
+## [2026-10-15] query | T-16910 cpw census of the original asm
+Dataflow census of the 6958 game functions in the split asm for [[tickets/T-16910-cpw-census]]. Narrow signed globals compared `==`/`!=` with a register constant: 72 compares in 23 functions. The `cpw` coupled shape (used `move` copy plus constant-first compare) is only the 7 NAME_ENT `80139740.c` functions on GameState +0x1093; 15 functions compare constant-first with no copy, 6 compare variable-first, none with a copy. The order follows aggregate membership (64/64 constant-first on GameState, record-table or indexed-array members; 8/8 variable-first on the scalars ENDING `D_8013C35C`, SHOUGATU `D_80144E0C`). Scratch experiment: the NAME_ENT drafts with the selector read as an element get the constant-first compares from IDO; with zcopy off for the file `func_8013DAC4`, `func_8013F454`, `func_8013FB8C` reach 0 lines. Notes in [[matching-notes]], [[toolchain]], [[game-state]]. Scratch scripts in the session group's shared notes folder (`t16910/`).
+
+## [2026-10-15] decision | T-16910 no cpw step; ticket to In Review
+`cpw` does not meet CODING_STANDARDS 7a: its coupling selects one family, and the constant-first order it adds is an aggregate-member effect that C reading through the aggregate already gives (section 8). `tools/cvt_pass.py` unchanged; nothing matched. [[tickets/T-16910-cpw-census]] moved In Progress to In Review. Open follow-ups: the type of GameState +0x1093/+0x1094, a census for the kept local copy, and the 5 `FAKE`/cast compares that could become aggregate reads.
