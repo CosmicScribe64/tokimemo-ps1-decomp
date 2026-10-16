@@ -54,7 +54,6 @@ kanban-plugin: board
 
 ## In Review
 
-
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
@@ -142,6 +141,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-17117-w3-rpg-bat-p17|T-17117 Wave 3 package w3-rpg-bat-p17]]
 - [ ] [[tickets/T-20000-first-contribution|T-20000 Avoid whole-tree cache scans for scoped queues]]
 - [ ] [[tickets/T-17115-w3-rpg-bat-p15|T-17115 Wave 3 package w3-rpg-bat-p15]]
+- [ ] [[tickets/T-17114-w3-rpg-bat-p14|T-17114 Wave 3 package w3-rpg-bat-p14]]
 - [ ] [[tickets/T-20003-rpg-timer-callees|T-20003 Match RPG battle callback func_80138F6C (1,268 bytes)]]
 - [ ] [[tickets/T-17113-w3-rpg-bat-p13|T-17113 Wave 3 package w3-rpg-bat-p13]]
 - [ ] [[tickets/T-17109-w3-rpg-bat-p09|T-17109 Wave 3 package w3-rpg-bat-p09]]

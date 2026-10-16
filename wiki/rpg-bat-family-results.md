@@ -13,6 +13,10 @@ Scope: the RPG_BAT overlay (`src/ovl/RPG_BAT/`, `include/ovl/RPG_BAT.h`), a batt
 
 Older RPG_BAT notes are spread over [[matching-notes]], [[data-types]] (`RpgRec18`, the display-record byte view) and [[data/t0018-cases]] (89 rows).
 
+## Package w3-rpg-bat-p14 (T-17114)
+
+All four functions of `801368B0.c` and `8013F4F0.c` matched in plain C ([[tickets/T-17114-w3-rpg-bat-p14]], 4,320 bytes): `func_80136A9C`, `func_80140E70`, `func_8013F82C`, `func_80140204`. What carried over to the rest of the unit: the display-record globals `D_80120786`..`D_8012089A` are fields of `D_8011ECD0` records 100..104 (`unk_26`/`unk_2A`); a 0x44-stride loop over five records is peeled and unrolled by IDO (`for (i = 0; i < 5; i++)`); the grey level `c * 0x101 * 0x101` is two `c + (c << 8)` steps; an inner `switch (D_8015EBAC)` selector in `$v1` is `switch (*(s32 *)&D_8015EBAC)` (try it on `func_80154760`, `func_80154DD8`); `RPG_BAT_OVERRIDE_func_8013E7C0` also fixes `$v0`/`$v1` of a `0x10`-scaled value after the call. Details: [[matching-notes]], section T-17114.
+
 ## Types-first pass (T-17100)
 
 Wave-3 types-first pass ([[tickets/T-16990-wave-3-conveyor]], method from [[speedup-research-2026-10-16]] and the pilots [[taiiku-family-results]] and [[taco-family-results]]). About 75 minutes of agent time for the types, the redraft and the matches below.

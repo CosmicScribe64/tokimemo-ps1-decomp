@@ -1332,6 +1332,10 @@ extern s32 D_8012076C;
 extern s32 D_80120770;
 extern s16 D_80120776;
 extern s16 D_80120778;
+extern s16 D_8012077A;
+#ifndef MAIN_API_OVERRIDE_D_8012077C
+extern s32 D_8012077C;
+#endif
 extern s16 D_80120786;
 extern s16 D_8012078A;
 extern s32 D_80120794;
@@ -1438,6 +1442,7 @@ extern u8 D_801210F2;
 extern s16 D_8012114C;
 extern u8 D_8012117A;
 extern u8 D_801211BE;
+extern s16 D_801211E6;
 extern u8 D_80121202;
 extern s16 D_8012121A;
 #ifndef MAIN_API_OVERRIDE_D_8012121C
@@ -1485,15 +1490,19 @@ extern s8 D_801214F3;
 extern s32 D_80121524;
 extern s8 D_8012152F;
 extern u8 D_80121531;
+extern u8 D_80121532;
 extern u8 D_80121533;
 extern s16 D_80121548;
 extern s16 D_80121556;
 extern s16 D_8012155A;
+extern s8 D_80121575;
 extern s16 D_8012158C;
 extern u8 D_801215BA;
 extern s8 D_801215FD;
+extern s8 D_801215FE;
 extern u8 D_801215FF;
 extern s8 D_80121603;
+extern s16 D_80121614;
 extern s32 D_80121634;
 extern s8 D_8012163F;
 extern s8 D_80121647;
