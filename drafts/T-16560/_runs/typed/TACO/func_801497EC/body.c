@@ -46,7 +46,7 @@ void func_801497EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
         temp_v0_2->unk84[1] = *(s32 *)(sp4C + arg4);
         temp_v0_3 = &D_8015EDB4[sp5C];
         temp_v0_3->unk82 += 1;
-        *(s8 *)&D_8015EDB4[17].unk84[2] = 1;
+        D_8015EDB4[17].unk84[2] = 1;
         var_a0 = D_8015EDB4[sp5C].unk84[1];
     }
     if (var_a0 == 0) {

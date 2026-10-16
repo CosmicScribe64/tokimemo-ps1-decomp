@@ -40,7 +40,7 @@ void func_8013760C(void) {
             func_8015ABF0();
             D_8015EDB0 = 0x80;
             D_8015EDB4->unk84[1] = 0xFF;
-            *(s8 *)&D_8015EDB4[8].unk84[1] = 0xFF;
+            D_8015EDB4[8].unk84[1] = 0xFF;
             temp_t9 = D_800E7378 & 3;
             switch (temp_t9) {
             case 0:

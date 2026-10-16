@@ -80,7 +80,7 @@ void func_8014AB50(s32 arg0) {
             var_s1_2 += 2;
             var_s2_2 += 2;
         } while (var_s0_2 != 0x1F);
-        *(s8 *)&D_8015EDB4[17].unk2 = 1;
+        D_8015EDB4[17].unk2 = 1;
         D_8015EDB4[17].unk84[2] = 1U;
     } else if ((arg0 >= 0x28A) && (arg0 < 0x32A)) {
         func_80147674(0, (s16 *)0x801E5BD0, 0x10, 0x14, 0xC8);

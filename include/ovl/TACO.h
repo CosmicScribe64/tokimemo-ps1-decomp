@@ -72,7 +72,7 @@ extern TcObj50 D_80127480[];
 /*
  * Actor record, 79 of them at D_8015EDB4 (loops stop at byte offset 0x29F8). T-16560: unk0[1] holds
  * flag bits (0x80, 0x40); +0x04 is the actor's object handle and +0x14 its coordinate object
- * (func_80134884 passes &actor->unk14 to func_80099E30). unk74..unk7A and unk7C..unk82 are copied
+ * (func_8013801C passes &actor->unk14 to func_80099E30). unk74..unk7A and unk7C..unk82 are copied
  * as two eight-byte TcPos values (lwl/lwr pairs) into by-value TcPos arguments.
  */
 typedef struct TcActor {

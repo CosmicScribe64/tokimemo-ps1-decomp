@@ -46,7 +46,7 @@ s32 func_80151D1C(u32 arg0) {
             var_s2_2 += 2;
         } while (var_s0_2 != 0x1C);
         if (D_8015EDB4[17].unk84[2] == 1) {
-            *(s8 *)&D_8015EDB4[16].unk84[2] = 1;
+            D_8015EDB4[16].unk84[2] = 1;
         }
     } else {
         D_8015EDB4[16].unk3 = (u8) (D_8015EDB4[16].unk3 + 1);

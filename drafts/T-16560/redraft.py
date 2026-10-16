@@ -142,7 +142,10 @@ def actor_offsets(body):
             expr = element(sym, None, k) + path
         if kind == "ptr" and k == 0 and idx is None:
             expr = sym + "->" + path[1:]
-        return expr if lt.name == ctype else "*(%s *)&%s" % (ctype, expr)
+        store = re.match(r"\s*=(?!=)", m.string[m.end():]) is not None
+        if lt.name == ctype or (store and lt.kind == "scalar" and lt.size == SIZES[ctype]):
+            return expr                           # a store does not depend on the signedness
+        return "*(%s *)&%s" % (ctype, expr)
     body = OFF_RE.sub(repl, body)
 
     def plus(m):
@@ -573,7 +576,11 @@ def finish(rows, only):
         else:
             v = min(scored, key=lambda k: (scored[k][0]["score"], k != "typed"))
             got, folder = scored[v]
-            body, context = (folder / "body.c").read_text(), (folder / "context.c").read_text()
+            body = (folder / "body.c").read_text()
+            if (folder / "context.c").exists():
+                context = (folder / "context.c").read_text()
+            else:                                  # pruned run folder: rebuild the unit from src
+                context = draft_fixes.fresh_context(dict(row), body, folder)
             record.update(variant=v, score=got["score"])
             if got["score"] > 0:
                 scorer = draft_fixes.make_scorer(dict(row))
@@ -596,9 +603,17 @@ def finish(rows, only):
         record["vs_census"] = None if s is None or c is None else ("better" if s < c else "same" if s == c else "worse")
         (dest / "result.json").write_text(json.dumps(record, sort_keys=True) + "\n")
         summary.append(record)
+    merged = {}
+    if (OUT / "catalog.jsonl").exists():
+        for line in (OUT / "catalog.jsonl").read_text().splitlines():
+            r = json.loads(line)
+            merged[r["func"]] = r
+    for r in summary:
+        merged[r["func"]] = r
     with open(OUT / "catalog.jsonl", "w") as fh:
-        for r in summary:
-            fh.write(json.dumps(r, sort_keys=True) + "\n")
+        for row in rows:
+            if row["func"] in merged:
+                fh.write(json.dumps(merged[row["func"]], sort_keys=True) + "\n")
     shutil.rmtree(OUT / "_work", ignore_errors=True)
     return summary
 

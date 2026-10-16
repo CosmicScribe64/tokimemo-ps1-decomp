@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_801335A0 2, func_801407D4 3
+python3 failed:
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_801404FC/work/guarded.c, line 3570: 'subroutine_arg1' undefined; reoccurrences will not be reported.
+         func_801407D4((s32) &sp3C, subroutine_arg1, subroutine_arg2);
+ -----------------------------------^
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_801404FC/work/guarded.c, line 3570: 'subroutine_arg2' undefined; reoccurrences will not be reported.
+         func_801407D4((s32) &sp3C, subroutine_arg1, subroutine_arg2);
+ ----------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/typed/TACO/func_801404FC/work -o drafts/T-16560/_runs/typed/TACO/func_801404FC/work/guarded.o /tmp/asm_processor8ny06rwx/preprocessed_89a75f0224674972b309140d5454d0df.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibzjew32c4/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/typed/TACO/func_801404FC/work/guarded.o drafts/T-16560/_runs/typed/TACO/func_801404FC/work/guarded.c

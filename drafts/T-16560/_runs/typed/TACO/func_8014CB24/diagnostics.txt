@@ -1,0 +1,23 @@
+m2c.py: argument counts from the callees' asm: func_8015CF30 2, func_8015D0D0 2, func_8015D270 2
+python3 failed:
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_8014CB24/work/guarded.c, line 3971: redeclaration of 'func_8014CB24'; previous declaration at line 3947 in file 'drafts/T-16560/_runs/typed/TACO/func_8014CB24/work/guarded.c'
+ void func_8014CB24(s32 arg0) {
+ -----^
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_8014CB24/work/guarded.c, line 3971: Incompatible function return type for this function.
+ void func_8014CB24(s32 arg0) {
+ ------------------^
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_8014CB24/work/guarded.c, line 4142: 'sp52' undefined; reoccurrences will not be reported.
+         D_8015EDB4[20].unk76 = (s16) (D_80127480[0].unk1C + sp52);
+ ------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/typed/TACO/func_8014CB24/work -o drafts/T-16560/_runs/typed/TACO/func_8014CB24/work/guarded.o /tmp/asm_processorhv6w56uq/preprocessed_bd6da251e25640ceab30ad5114e4d6e8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibk4pyrq6g/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/typed/TACO/func_8014CB24/work/guarded.o drafts/T-16560/_runs/typed/TACO/func_8014CB24/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_8014CB24/work/guarded.c, line 3971: redeclaration of 'func_8014CB24'; previous declaration at line 3947 in file 'drafts/T-16560/_runs/typed/TACO/func_8014CB24/work/guarded.c'
+ void func_8014CB24(s32 arg0) {
+ -----^
+cfe: Error: drafts/T-16560/_runs/typed/TACO/func_8014CB24/work/guarded.c, line 3971: Incompatible function return type for this function.
+ void func_8014CB24(s32 arg0) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/typed/TACO/func_8014CB24/work -o drafts/T-16560/_runs/typed/TACO/func_8014CB24/work/guarded.o /tmp/asm_processorc_ontqji/preprocessed_1e99c25334664c9dad1b51a51fa35e93.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibrev6idly/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/typed/TACO/func_8014CB24/work/guarded.o drafts/T-16560/_runs/typed/TACO/func_8014CB24/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return

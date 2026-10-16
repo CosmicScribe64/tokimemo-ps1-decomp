@@ -32,7 +32,7 @@ block_4:
         }
     }
     temp_s0 = &D_8015EDB4[8];
-    *(s8 *)&D_8015EDB4[8].unk0[1] = 0x80;
+    D_8015EDB4[8].unk0[1] = 0x80;
     temp_v0_2 = temp_s0->unk72;
     temp_s0->unk84[3] = 1;
     temp_s0->unk84[0] = 2;
