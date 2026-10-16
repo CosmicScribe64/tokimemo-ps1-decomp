@@ -16001,3 +16001,7 @@ Opus closer pass on [[tickets/T-19019-w3-d-p19]] (branch w3-d-p19): no new match
 ## [2026-10-16] build | T-19030 closer pass
 
 [[tickets/T-19030-w3-d-p30]]: Opus closer on TACO `func_8013B2A0`, no match. The 20-instruction gap is ugen's block-copy state: B in the original, F in the draft, because the copy follows the `bnez`. A probe global store gives B and all of the original's registers, and no C form without an added store was found. Updated the NON_MATCHING comment in `src/ovl/TACO/8013B170.c`, [[matching-notes]], [[data/t0018-cases]] and [[register-cheatsheet]]. Clean rebuild 27/27 and all checks OK. The ticket stays In Review.
+
+## [2026-10-16] ticket | T-19030 Done
+
+[[tickets/T-19030-w3-d-p30]] In Review to Done: code review against `CODING_STANDARDS.md` found 1 minor item (the two unused locals of the archived `func_8013B460` draft had no `FAKE` comment), fixed in the draft only (bytes unchanged); headers OK, globals OK, sync_protos OK. 0 of 4 functions matched (`func_8013B2A0` stays a guarded draft at 20 instructions, `func_8013B460`, `func_8015D0D0`, `func_8015D270` stay `INCLUDE_ASM`). Card moved in [[kanban]], line in [[index]].
