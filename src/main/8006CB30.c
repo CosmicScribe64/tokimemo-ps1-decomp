@@ -243,15 +243,10 @@ s32 func_8006EA40(void) {
     return 0;
 }
 
-/* NON_MATCHING: T-10880 (rechecked in T-11670), 8 differing lines; four flag-word register substitutions. */
-#ifdef NON_MATCHING
 s32 func_8006EB64(u8 *arg0, u8 *arg1) {
-    u32 variant;
-    /* FAKE: unsigned locals preserve the original comparison operand order.
-     * Direct literals reverse the three bne operands. T-10880. */
-    u32 one = 1;
-    u32 two = 2;
-    u32 three = 3;
+    /* The flag word's f9 field is read through a pointer: an indirect load is not a plain variable for uopt, so the
+     * compares keep their constant-first order and no phantom local holds $v1 (T-17004). */
+    GameState *g = &D_800E6280;
 
     *arg0 = 0;
     *arg1 = 0;
@@ -289,25 +284,22 @@ s32 func_8006EB64(u8 *arg0, u8 *arg1) {
         return 1;
     }
     if (!(D_800E6280.unk_1BC[8].unk_0C.f.b1)) {
-        variant = D_800E6280.unk_1BC[8].unk_0C.f.f9;
-        if ((variant == 0) && (D_800E6280.unk_110.unk_02 >= 0x24)) {
+        if ((g->unk_1BC[8].unk_0C.f.f9 == 0) && (D_800E6280.unk_110.unk_02 >= 0x24)) {
             *arg0 = 8;
-            /* FAKE: zero-valued comparison preserves the variant live range
-             * and the original delay-slot nop. T-10880. */
-            *arg1 = (one == variant) * 0;
+            *arg1 = 0;
             return 1;
         }
-        if ((one == variant) && (D_800E6280.unk_110.unk_02 >= 0x38)) {
+        if ((g->unk_1BC[8].unk_0C.f.f9 == 1) && (D_800E6280.unk_110.unk_02 >= 0x38)) {
             *arg0 = 8;
             *arg1 = 1;
             return 1;
         }
-        if ((two == variant) && (D_800E6280.unk_110.unk_02 >= 0x4C)) {
+        if ((g->unk_1BC[8].unk_0C.f.f9 == 2) && (D_800E6280.unk_110.unk_02 >= 0x4C)) {
             *arg0 = 8;
             *arg1 = 2;
             return 1;
         }
-        if ((three == variant) && (((u32)D_800E6280.unk_F68.w & 0xF) == 5) && (D_800E6280.unk_110.unk_02 >= 0x5B)) {
+        if ((g->unk_1BC[8].unk_0C.f.f9 == 3) && (((u32)D_800E6280.unk_F68.w & 0xF) == 5) && (D_800E6280.unk_110.unk_02 >= 0x5B)) {
             *arg0 = 8;
             *arg1 = 3;
             return 1;
@@ -320,9 +312,6 @@ s32 func_8006EB64(u8 *arg0, u8 *arg1) {
     }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006EB64);
-#endif
 
 /* NON_MATCHING: T-10880 (rechecked in T-11670), 8 differing lines; four flag-word register substitutions. */
 #ifdef NON_MATCHING
