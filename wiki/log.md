@@ -16552,3 +16552,6 @@ Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG
 
 ## [2026-10-16] build | T-17003 closer pass
 [[tickets/T-17003-w3-main-p03]]: `func_80079070` from 14 to 4 differing lines, still guarded. A `GameState *gs` pointer store with the argument loaded into a local first, and `ovl_load_state = 0` before the saves, give the original's tail schedule; left is the call-argument colour (`lui v0; lbu a0,(v0)` against `lui a0; lbu a0`). [[data/t0018-cases]] row now `regorder`, notes in [[matching-notes]]. Clean build 27/27, header, globals and prototype checks OK. `src/main/800789E0.c`.
+
+## [2026-10-16] ticket | T-17003 Done
+[[tickets/T-17003-w3-main-p03]] reviewed against `CODING_STANDARDS.md`: 2 findings fixed (FAKE mark on the u8 views of the s8 fields in the guarded `func_80079070` draft, an unfinished sentence in the [[data/t0018-cases]] row), no others. In Review to Done (kanban card moved). Matched 1 of 2 (`func_80079800`, 784 B); `func_80079070` stays guarded at 4 lines, `regorder`.
