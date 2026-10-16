@@ -146,9 +146,10 @@ s32 func_8013D528(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-19018, 14 differing lines; the first load of arg3 in the UV stores takes $v1 where the original
- * has $t4 (the rest is that rename). poly and dist are declared before m: the original has two scalar slots above
- * the MATRIX, and t, o, j, size fill the six below pt (spill slots 0x58/0x64/0x78 then match). */
+/* NON_MATCHING: T-19018, 10 differing lines; the first load of arg3 in the UV stores takes $v1 and the shifted value
+ * $t4 where the original has $t4 and $t5 (the other rows are that rename). poly and dist are declared before m: the
+ * original has two scalar slots above the MATRIX, and size, o, j, t fill the six below pt (spill slots 0x58/0x64/0x78
+ * then match). Layout notes: matching-notes, "T-19018". */
 s32 func_8013D838(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
     POLY_FT4 *poly;
     s32 dist;
@@ -194,8 +195,8 @@ s32 func_8013D838(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
             poly->b0 = 0x80;
             poly->tpage = func_8009ECB0(0, 1, 0x380, 0x100);
             poly->clut = func_8009ED74(0, 0x1E5);
-            t = (arg3 & 4) << 4;
-            poly->u0 = arg3 << 6, poly->v0 = t + 0x80, poly->u1 = (arg3 << 6) + 0x3F, poly->v1 = t + 0x80, poly->u2 = arg3 << 6, poly->v2 = t + 0x80 + 0x3F, poly->u3 = (arg3 << 6) + 0x3F, poly->v3 = t + 0x80 + 0x3F;
+            t = arg3 & 4;
+            poly->u0 = arg3 << 6, poly->v0 = (t << 4) + 0x80, poly->u1 = (arg3 << 6) + 0x3F, poly->v1 = (t << 4) + 0x80, poly->u2 = arg3 << 6, poly->v2 = (t << 4) + 0x80 + 0x3F, poly->u3 = (arg3 << 6) + 0x3F, poly->v3 = (t << 4) + 0x80 + 0x3F;
             poly->x0 = ((s16 *)pt)[0];
             poly->y0 = ((s16 *)pt)[1];
             poly->x1 = ((s16 *)pt)[2];
