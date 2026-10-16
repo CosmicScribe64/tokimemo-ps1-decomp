@@ -16102,3 +16102,6 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 
 ## [2026-10-16] ticket | T-17204 In Review
 [[tickets/T-17204-w3-date-p04]] In Progress to In Review: 2 of 4 matched; clean build, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` to be run before merge.
+
+## [2026-10-16] ticket | T-17204 closer pass
+[[tickets/T-17204-w3-date-p04]] closer pass (Opus, 18:55-19:20 UTC) on branch `w3-date-p04`, scope `func_801518B8` in `src/ovl/DATE/80151460.c`: still guarded at 14 rows. A `cc -S` harness placed the copy in ugen's T-19001 "F" state after the loop's back-edge branch; calls with stack arguments, struct argument forms, register locals and `Blk44` views keep it, and only a direct memory store after the loop (always new code) gives the original's "B" state. Notes in [[matching-notes]] (T-17204), [[register-cheatsheet]] (block-copy row), [[data/t0018-cases]]. Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Ticket stays In Review.

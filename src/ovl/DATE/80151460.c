@@ -101,7 +101,11 @@ void func_801517C8(void) {
 }
 
 /* NON_MATCHING: T-17204, 14 differing lines; the copy's end pointer takes $t6 where the original has $t7 (one ugen
- * temporary more is consumed before it), which shifts the later constant temporaries by one. */
+ * temporary more is consumed before it), which shifts the later constant temporaries by one. Closer pass: in our
+ * ugen the copy skips two temporaries only when a direct memory store (global or stack local) is the last store or
+ * branch before it; here the loop's back-edge branch is last, and calls, stack arguments, register locals and copy
+ * spellings do not change that. A dead store to a local array after the loop does, but adds a `sw` and 8 bytes of
+ * frame. */
 #ifdef NON_MATCHING
 void func_801518B8(void) {
     s16 i;
