@@ -384,6 +384,7 @@ typedef struct TcPair8 {
     s32 b;
 } TcPair8;
 extern TcPair8 D_8015FAE0[];
+extern TcPair8 D_8015E238[];
 typedef struct TcPair2 {
     u8 a;
     u8 b;
