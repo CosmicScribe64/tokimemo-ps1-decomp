@@ -178,6 +178,7 @@ void func_8014B294(void);
 void func_8014B79C(void);
 void func_8014C4FC(void);
 void func_8014C804(void);
+void func_801495DC(void);
 void func_8014CB0C(void);
 void func_8014CE14(void);
 /* Pad-sequence matcher state of func_8013BBF8, one aggregate. The original keeps the store of unk_00 in front
