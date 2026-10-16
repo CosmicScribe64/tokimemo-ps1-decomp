@@ -1,5 +1,8 @@
+#define RPG_BAT_OVERRIDE_func_8013E97C /* implicit int view: the call's $v0 moves the D_8015EC68 - (h - D_8015EC6C) * 2 range of func_80135358 to $v1 (T-17116) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
+
+s32 func_8013E97C();
 
 void func_80134D30(void) {
     switch (D_8015EDAC) {
@@ -48,13 +51,9 @@ void func_80134D30(void) {
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80134D30", func_80134E78);
 
-/* NON_MATCHING: T-17116, 10 differing lines (5 instructions, registers only). The value D_8015EC68 - (h - D_8015EC6C) * 2 (compared
- * with cx at three places, recomputed in both arms of the second block) sits in $v0 here, the original has it in $v1 (the slt, the
- * bne and both recomputations); no variant (named local, operand order, shift form, void type, call-result locals, order_search,
- * autotweak, permuter) moved it. Frame size and the spill slot at sp+0x34 match with three declared locals.
- * FAKE: h + -h is the unfolded (h - h) of the original (subu s1,s1: uopt folds a plain h - h); the words at D_8015EBAC + 4 * (i + 60,
- * 70, 80) are three 10-word rows (from x, to x, y) reached through the first symbol, the real aggregate is unknown. T-17116 */
-#ifdef NON_MATCHING
+/* FAKE: h + -h is the unfolded (h - h) of the original (subu s1,s1: uopt folds a plain h - h); the words at D_8015EBAC + 4 * (i + 60,
+ * 70, 80) are three 10-word rows (from x, to x, y) reached through the first symbol, the real aggregate is unknown. Frame size and the
+ * spill slot at sp+0x34 match only with these three declared locals. T-17116 */
 s32 func_80135358(void) {
     s32 cx;
     s32 h;
@@ -118,9 +117,6 @@ s32 func_80135358(void) {
         func_8014EBA8();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80134D30", func_80135358);
-#endif
 
 void func_801359FC(void) {
     switch (D_8015EDB0.unk_00) {
