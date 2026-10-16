@@ -51,6 +51,8 @@ target's data must all be in its own function file and hold no relocated words. 
 applied only with --check; the others are listed as "needs data check" and never applied. Lines in
 the function text that are neither instructions nor labels still keep a function out
 ("data in function text").
+T-16500: tools/twin_sweep.py runs this planner and neardupes.py over the whole tree and applies the
+copies of the files it is given.
 Tests: tools/test_dupes.py.
 """
 import argparse
@@ -860,7 +862,7 @@ def plan_copy(root, src, tgt, cache):
     """Plan the copy of matched src to unmatched tgt.
 
     Returns (plan, reason). plan = dict(text, tgtfile, name, decls=[(header, line)], local=[(kind, text)],
-    retype=[(header, function, old return type, new)], src). local: 'define' lines go before the first
+    retype=[(header, function, old return type, new)], src, src_unit). local: 'define' lines go before the first
     #include of the target file (MAIN_API_OVERRIDE_ of a view the source was matched with), 'block'
     texts (file-local typedefs and declarations the source file carries) after its last #include,
     'late' texts right above the function (a declaration that needs a typedef the target .c defines
@@ -1072,7 +1074,7 @@ def plan_copy(root, src, tgt, cache):
                 dest = 'include/ovl/%s.h' % tgt.unit
             decls.append((dest, proto))
     return dict(text=text, tgtfile=tfile, name=tgt.name, decls=decls, local=local, retype=retype,
-                src=src.name, jtbl=tgt.jtbl_home, data=tgt.data_home), None
+                src=src.name, src_unit=src.unit, jtbl=tgt.jtbl_home, data=tgt.data_home), None
 
 
 def add_local(text, local):
@@ -1097,13 +1099,14 @@ def add_local(text, local):
 
 
 def apply_plan(root, plan):
-    """Write one plan; returns {path: previous text} for rollback."""
+    """Write one plan; returns {path: previous text} for rollback. plan['pattern'] (a compiled regex,
+    optional) says what the copy replaces instead of the INCLUDE_ASM line (twin_sweep.py, T-16500)."""
     saved = {}
     tp = os.path.join(root, plan['tgtfile'])
     with open(tp) as fh:
         t = fh.read()
     saved[plan['tgtfile']] = t
-    pat = re.compile(r'^INCLUDE_ASM\("[^"]*",\s*%s\);[ \t]*$' % re.escape(plan['name']), re.M)
+    pat = plan.get('pattern') or re.compile(r'^INCLUDE_ASM\("[^"]*",\s*%s\);[ \t]*$' % re.escape(plan['name']), re.M)
     late = [b for kind, b in plan.get('local', ()) if kind == 'late' and b not in t]
     body = '\n'.join(late) + '\n\n' + plan['text'].rstrip('\n') if late else plan['text'].rstrip('\n')
     t = pat.sub(lambda m: body, t, count=1)
@@ -1221,13 +1224,16 @@ def sync_headers(root, plans, log=print, before=None):
     return 'sync_protos reports %d risky view change(s)' % risky if risky else None
 
 
+NINJA_ARGS = []          # extra ninja arguments for build_ok, e.g. ['-j2'] (twin_sweep.py --jobs, T-16500)
+
+
 def build_ok(root, unit):
     tgt = 'build/SLPM_86.053.ok' if unit == 'main' else 'build/ovl/%s.ok' % unit
     try:
         os.remove(os.path.join(root, tgt))
     except OSError:
         pass
-    r = subprocess.run(['ninja', tgt], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    r = subprocess.run(['ninja'] + NINJA_ARGS + [tgt], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
     return r.returncode == 0, r.stdout
 
 

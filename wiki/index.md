@@ -23,7 +23,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 - [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210]] Wave 2 package w2-p01: RPG_BAT census drafts, 5 of 5 matched (Done).
 - [[tickets/T-16200-matching-wave-2|T-16200]] Matching wave 2: 24 new packages and four resumed wave-1 packages (In Progress).
-- [[tickets/T-16500-twin-sweep|T-16500]] Whole-tree twin sweep (`tools/twin_sweep.py`): plan and apply exact, near and lenient copies across all units (In Progress).
+- [[tickets/T-16500-twin-sweep|T-16500]] Whole-tree twin sweep (`tools/twin_sweep.py`): plan and apply exact, near and lenient copies across all units (In Review; 4 plans / 944 B on w2-good, 1 kept by the sha1 check).
 - [[tickets/T-11920-local-storage-cleanup|T-11920]] Local storage cleanup with verified backups (In Review; cleanup complete).
 - [[tickets/T-15500-bunkasai-character-flags|T-15500]] BUNKASAI record-ten flag match (In Review; 820 bytes).
 - [[tickets/T-15400-bunkasai-label-draft|T-15400]] BUNKASAI label encoding recovery (In Review; 440 coverage bytes).
@@ -273,6 +273,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - `tools/sync_protos.py` (T-3340): lists, generates and checks `include/main_api.h`, the one declaration of every main-exe symbol; overrides, `--prune`, `--snapshot/--compare`; tests `tools/test_sync_protos.py`; rules in CODING_STANDARDS 8a and [[decompile-workflow]]
 - T-5030 tooling fixes: `tools/funcloc.py` (find the C file by definition; used by `funcdiff.py`, `permute.py`), `funcdiff.py --unit` and string/rename resolution, `permute.py all`/K&R, `sync_protos.py` speed-up and `--check-branch`, `queue.py` cache; tests `tools/test_funcloc.py` and the tests of each tool; details in [[matching-notes]] ("Tooling fixes T-5030"), [[decompile-workflow]] ("Before finishing")
 - T-7030 tooling wave-4 fixes: `sync_protos.py` keeps comments, `dupes.py`/`neardupes.py` copy game-state fields, overrides, file-local types, address literals and prototypes (163 + 25 functions applied), `funcdiff.py` builds `expected/` itself, `permute.py` time limit and build verification, `m2c.py` callee argument counts and post-increment order; tests `tools/test_dupes.py`, `test_neardupes.py`, `test_funcdiff.py`, `test_permute.py`, `test_sync_protos.py`, `test_m2c_args.py`; details in [[matching-notes]] ("Tooling fixes, wave 4 (T-7030)") and [[decompile-workflow]]
+- `tools/twin_sweep.py` (T-16500): whole-tree plan of every exact, near and lenient copy of matched C onto an unmatched twin (dry run by default); `--apply --files` writes only the given C files, each copy verified by the unit sha1, and replaces stale NON_MATCHING drafts; tests `tools/test_twin_sweep.py`; [[decompile-workflow]].
 - `tools/queue.py` (T-1320, T-3340): `--by bytes`, `--plan N --agents K`, retuned R/V/U/T flags; calibration in [[matching-notes]]
 - `tools/queue.py` (T-1320, T-3340, T-5010): `--by bytes`, `--plan N --agents K`, retuned R/V/U/T flags (entry rule in `tools/entry_rule.py`, tests `tools/test_entry_rule.py`); calibration in [[matching-notes]]
 
