@@ -2,16 +2,6 @@
 #include "common.h"
 #include "ovl/DATE.h"
 
-typedef struct {
-    void (*f[47])();
-} FnTbl47; /* size 0xBC */
-extern FnTbl47 D_80160150;
-
-typedef struct {
-    void (*f[42])();
-} FnTbl42; /* size 0xA8 */
-extern FnTbl42 D_80160308;
-
 extern u32 D_80122CD0;
 
 void func_80157880(void) {
@@ -228,7 +218,19 @@ void func_80158300(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80157880", func_80158338);
+void func_80158338(void) {
+    GameState *g = &D_800E6280; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl63 tbl;
+
+    tbl = D_8016020C;
+    if (((g->unk_03E == 0x5F && g->unk_03F == 7 && g->unk_040 == 0x17) ||
+         (g->unk_03E == 0x60 && g->unk_03F == 7 && g->unk_040 == 0x1C) ||
+         (g->unk_03E == 0x61 && g->unk_03F == 7 && g->unk_040 == 0x1B)) &&
+        D_800B593C == 0x80 && D_80122D04 == 0) {
+        func_8006B900();
+    }
+    tbl.f[g->unk_110A](0x80);
+}
 
 void func_80158444(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8B0A);
@@ -275,11 +277,6 @@ void func_801585B8(void) {
     func_801579E0();
     func_8004284C();
 }
-
-typedef struct {
-    void (*f[36])();
-} FnTbl36; /* size 0x90 */
-extern FnTbl36 D_801603B0;
 
 void func_801585F0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

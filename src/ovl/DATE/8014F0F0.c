@@ -211,11 +211,6 @@ void func_8014FA30(void) {
     func_8014B1F0();
 }
 
-typedef struct {
-    void (*f[41])();
-} FnTbl41; /* size 0xA4 */
-extern FnTbl41 D_8015E730;
-
 void func_8014FAE0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl41 tbl;
@@ -230,11 +225,6 @@ void func_8014FB68(void) {
     func_8014F0F0();
     func_8004284C();
 }
-
-typedef struct {
-    void (*f[43])();
-} FnTbl43; /* size 0xAC */
-extern FnTbl43 D_8015E7D4;
 
 void func_8014FBA0(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
@@ -252,11 +242,6 @@ void func_8014FC48(void) {
     func_8014F1A0();
     func_8004284C();
 }
-
-typedef struct {
-    void (*f[65])();
-} FnTbl65; /* size 0x104 */
-extern FnTbl65 D_8015E880;
 
 void func_8014FC80(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -311,11 +296,6 @@ void func_8014FE5C(void) {
     func_800AE0F0(D_800CA1DC, "観覧車");
     func_8004284C();
 }
-
-typedef struct {
-    void (*f[45])();
-} FnTbl45; /* size 0xB4 */
-extern FnTbl45 D_8015E984;
 
 void func_8014FE90(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

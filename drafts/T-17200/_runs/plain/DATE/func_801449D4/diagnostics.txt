@@ -1,0 +1,25 @@
+python3 failed:
+cfe: Error: drafts/T-17200/_runs/plain/DATE/func_801449D4/work/guarded.c, line 5020: 'sp2C' undefined; reoccurrences will not be reported.
+     *(M2cBlock12C *)(&sp2C[0]) = *(M2cBlock12C *)(&D_8015BF50);
+ ----------------------^
+cfe: Warning 689: drafts/T-17200/_runs/plain/DATE/func_801449D4/work/guarded.c, line 5023: Unacceptable operand of == or !=
+     if (&func_80133DE8 == *var_v0) {
+ -----------------------^
+cfe: Error: drafts/T-17200/_runs/plain/DATE/func_801449D4/work/guarded.c, line 5121: Non-function name referenced in function call.
+     *var_v0(0x80);
+ -----------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/plain/DATE/func_801449D4/work -o drafts/T-17200/_runs/plain/DATE/func_801449D4/work/guarded.o /tmp/asm_processor0iniw0os/preprocessed_9c0fbdf2358240e99ed231c1a43ae9fc.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibmgm1vhmn/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/plain/DATE/func_801449D4/work/guarded.o drafts/T-17200/_runs/plain/DATE/func_801449D4/work/guarded.c
+python3 failed:
+ -----------------------^
+cfe: Warning 709: drafts/T-17200/_runs/plain/DATE/func_801449D4/work/guarded.c, line 5113: Incompatible pointer type assignment
+                 var_v0 = &(&sp2C[0])[D_800E738A];
+ -----------------------^
+cfe: Warning 709: drafts/T-17200/_runs/plain/DATE/func_801449D4/work/guarded.c, line 5117: Incompatible pointer type assignment
+                 var_v0 = &(&sp2C[0])[D_800E738A];
+ -----------------------^
+cfe: Error: drafts/T-17200/_runs/plain/DATE/func_801449D4/work/guarded.c, line 5122: Non-function name referenced in function call.
+     *var_v0(0x80);
+ -----------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/plain/DATE/func_801449D4/work -o drafts/T-17200/_runs/plain/DATE/func_801449D4/work/guarded.o /tmp/asm_processorjd4srg1x/preprocessed_eaaaf2961e934096962e3b78604e915f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibrchtrpx4/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/plain/DATE/func_801449D4/work/guarded.o drafts/T-17200/_runs/plain/DATE/func_801449D4/work/guarded.c

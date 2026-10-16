@@ -59,10 +59,6 @@ typedef struct {
     u8 s[0xCC3];
 } DateTxt; /* size 0xCC3 */
 
-typedef struct {
-    void (*f[28])();
-} FnTbl28; /* size 0x70 */
-
 void func_80149310(void) {
     D_8015CFD0 = 0x801B0478;
     D_8015CFD4 = 0x801B13A4;
@@ -104,8 +100,6 @@ void func_80149310(void) {
     D_8015D064 = 0x801BA2C8;
     D_8015D068 = 0x801BAB90;
 }
-
-extern FnTbl28 D_8015D098;
 
 void func_80149584(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

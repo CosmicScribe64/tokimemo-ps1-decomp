@@ -1,0 +1,13 @@
+python3 failed:
+ ---------------^
+cfe: Warning 709: drafts/T-17200/_runs/plain/DATE/func_8013FD6C/work/guarded.o.sjis.c, line 6829: Incompatible pointer type assignment
+     D_800CA138 = &D_8015BF40;
+ ---------------^
+cfe: Error: drafts/T-17200/_runs/plain/DATE/func_8013FD6C/work/guarded.o.sjis.c, line 7897: Bad operand type for += or -=
+                 var_t1 -= &D_7FFF + 1;
+ -----------------------^
+cfe: Error: drafts/T-17200/_runs/plain/DATE/func_8013FD6C/work/guarded.o.sjis.c, line 7960: Bad operand type for += or -=
+                             var_t2 -= &D_7FFF + 1;
+ -----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/plain/DATE/func_8013FD6C/work -o drafts/T-17200/_runs/plain/DATE/func_8013FD6C/work/guarded.o /tmp/asm_processorp_toihl5/preprocessed_448091156c1a4146aa0440fedace3b02.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib3nq8b85c/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/plain/DATE/func_8013FD6C/work/guarded.o drafts/T-17200/_runs/plain/DATE/func_8013FD6C/work/guarded.o.sjis.c

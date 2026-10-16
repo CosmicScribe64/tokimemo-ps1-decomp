@@ -2,11 +2,6 @@
 #include "common.h"
 #include "ovl/DATE.h"
 
-typedef struct {
-    void (*f[44])();
-} FnTbl44; /* size 0xB0 */
-extern FnTbl44 D_801609F8;
-
 extern u32 D_80122CD0;
 
 void func_8015A190(void) {
@@ -84,11 +79,6 @@ void func_8015A414(void) {
     func_8004284C();
 }
 
-typedef struct {
-    void (*f[20])();
-} FnTbl20; /* size 0x50 */
-extern FnTbl20 D_80160B80;
-
 void func_8015A4A8(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl20 tbl;
@@ -108,8 +98,6 @@ void func_8015A564(void) {
     func_80062CD0(0x6BAB);
     func_8004284C();
 }
-
-extern FnTbl20 D_80160BD0;
 
 void func_8015A58C(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

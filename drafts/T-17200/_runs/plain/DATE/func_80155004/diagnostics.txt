@@ -1,0 +1,18 @@
+python3 failed:
+cfe: Error: drafts/T-17200/_runs/plain/DATE/func_80155004/work/guarded.o.sjis.c, line 4522: 'sp2C' undefined; reoccurrences will not be reported.
+     *(M2cBlockD4 *)(&sp2C[0]) = *(M2cBlockD4 *)(&D_8015F82C);
+ ---------------------^
+cfe: Warning 709: drafts/T-17200/_runs/plain/DATE/func_80155004/work/guarded.o.sjis.c, line 4543: Incompatible pointer type assignment
+                 temp_v0 = D_801217D0 + temp_lo;
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/plain/DATE/func_80155004/work -o drafts/T-17200/_runs/plain/DATE/func_80155004/work/guarded.o /tmp/asm_processorjydev4bs/preprocessed_61d7783b60a1478faee221fafa35ed0f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibyhh_p9ei/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/plain/DATE/func_80155004/work/guarded.o drafts/T-17200/_runs/plain/DATE/func_80155004/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17200/_runs/plain/DATE/func_80155004/work/guarded.o.sjis.c, line 4524: Non-function name referenced in function call.
+     (&sp2C[0])[D_800E738A](0x80);
+ --------------------------^
+cfe: Warning 709: drafts/T-17200/_runs/plain/DATE/func_80155004/work/guarded.o.sjis.c, line 4544: Incompatible pointer type assignment
+                 temp_v0 = D_801217D0 + temp_lo;
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/plain/DATE/func_80155004/work -o drafts/T-17200/_runs/plain/DATE/func_80155004/work/guarded.o /tmp/asm_processorzp17schf/preprocessed_deb9251456f046638c77994c675bf064.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibzs6r5jgi/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/plain/DATE/func_80155004/work/guarded.o drafts/T-17200/_runs/plain/DATE/func_80155004/work/guarded.o.sjis.c

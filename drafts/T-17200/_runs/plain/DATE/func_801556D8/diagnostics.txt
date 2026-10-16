@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_800850D4 4
+python3 failed:
+ ----^
+cfe: Warning 749: drafts/T-17200/_runs/plain/DATE/func_801556D8/work/guarded.c, line 4359: structure has no member named 'unk0'
+     sp58[0].unk0 = (s32) D_8015F9C0.unk0;
+ -----------------------------------^
+cfe: Warning 709: drafts/T-17200/_runs/plain/DATE/func_801556D8/work/guarded.c, line 4378: Incompatible pointer type assignment
+         temp_t5 = &D_8015F9A0 + var_s0;
+ ----------------^
+cfe: Warning 709: drafts/T-17200/_runs/plain/DATE/func_801556D8/work/guarded.c, line 4389: Incompatible pointer type assignment
+         temp_t2 = &D_8015F9A8 + var_s0_2;
+ ----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/plain/DATE/func_801556D8/work -o drafts/T-17200/_runs/plain/DATE/func_801556D8/work/guarded.o /tmp/asm_processor9r1x1ip_/preprocessed_1d4d2c82a03a402a8ba946340de76b30.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibs4odfdlm/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/plain/DATE/func_801556D8/work/guarded.o drafts/T-17200/_runs/plain/DATE/func_801556D8/work/guarded.c

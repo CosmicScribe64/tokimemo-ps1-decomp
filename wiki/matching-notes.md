@@ -5711,3 +5711,15 @@ What this pass added is a measured model of the block copy's temporaries, from a
 - **Nothing in C reaches B after the loop without adding code.** Tried at the copy site, each with the loop code unchanged or the state unchanged: `for` / `while` / `do while` / `!(i == 2)` / `i != 2` / `i += 1` / count-down loops, index and pointer loops, the loop on one source line with the copy, eight copy spellings (`DisplayActor44`, `DisplayRecord44`, `TaiikuScene44`, `TaiikuActor44`, separate-symbol views, byte-address casts, `volatile` views; cfe emits `mov` in all of them, never `movv`), 20 statements after the loop (13 emit no code: `(void)i`, `if (i) {}`, `switch (i) {}`, `goto L; L:;`, a label, `while (0) {}`, a dead block local; the others add one instruction), a bit-field `|=` in the loop, and six forms of the tail store that might add a temporary. None changes the state. Only a global store between the loop and the copy does, and it adds an instruction.
 - **The original is not the same machine as our ugen.** Matched twins show B after a global store (ETC `func_80137A14`, DATE `func_801572E4`), but SHUGAKU `func_801357AC` (same four byte stores, same copy, T-9330 row) has F in the original after them, and MASTER `func_801344E0`, `func_801363F4` and ENDING `func_80134270` show F after global byte stores in the original listings (asm scan; our compiler's state for them was not measured). So the state is not a function of the C context alone in the original; this fits the "older frame layout, newer register allocation" ugen of [[ido-52-evaluation]], not a source property. Nothing further can be done from C; a test needs the older ugen builds of that page.
 - Two small facts for the next probe: the draft's `i` lives in `$a0` and its dead initial `move $a0,$zero` is deleted by as1, so a `$t` register held by uopt for it is not the cause (making `$a0`..`$a3` live across the loop only moves the dead initial move to `$v0` and changes nothing); and a uopt-held `$t2` is not visible anywhere in the original's listing (`$t2` is an ordinary ugen temporary at row 493).
+## T-17200: DATE types-first pass
+
+Details in [[date-family-results]] ("Types-first pass (T-17200)"). Matched: DATE `func_8014AD9C` (TACO clone
+`func_80147488`: index the record at each use), `func_8013B208` (EVENT twin `func_80117D80`: `GameState *g`
+declared above two stack shorts sets their slots; the twin's FAKE entry assignment fixes the first compare),
+`func_80159FAC` and `func_80158338` (step-table handlers in the `func_80150ED4` shape).
+- Step-table handler with a three-place condition: `GameState *g = &D_800E6280;` above `FnTblNN tbl;` and
+  every field through `g`; the `s32 idx` form gave the right frame only for handlers without other code.
+- The locals above a step table pack: two `s16` counters take one word, so the "two words before" layout of
+  T-3330 needs `s32` counters or a third local (`func_80155E40`, `func_80155004`).
+- Sibling ports find guarded near misses fast: `tools/siblings.py --unit X` lists clones in other overlays
+  (TACO, EVENT) whose matched C already carries the fix.

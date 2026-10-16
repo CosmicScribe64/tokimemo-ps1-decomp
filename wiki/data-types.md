@@ -39,6 +39,8 @@ Limits: the pass is linear (no control flow), so a register state survives a lab
 | `TaiRunnerB[4]` (0x24) | `D_8014A13C` | `include/ovl/TAIIKU.h` (T-16550) | 8 globals | 0 (FAKE byte views kept in `func_801449A0`, `func_801448D4`, `func_80144C70`) |
 | `TaiikuController` player + `D_8014A400[3]`, `TaiikuSlot1C[4]` (0x1C) | `D_8014A3E4`, `D_8014A400`, `D_8014A454` | `include/ovl/TAIIKU.h` (T-16550) | 9 globals, `Tk1C`, `TaiikuTick1C` | 0 |
 | 28 stack-copied constant tables as one-array structs | `D_80148F28`..`D_8014A5F4` | `include/ovl/TAIIKU.h` (T-16550) | none (new declarations) | 0 |
+| `FnTblNN` step tables (35 sizes, `void (*f[NN])()`) | 68 tables `D_8015BF50`..`D_80160BD0` | `include/ovl/DATE.h` (T-17200) | 39 local typedefs and externs of 16 DATE `.c` files | 0 |
+| DATE stack-copied tables `DateBytes11x21`, `DateWords21`, `DateShorts8`, `DatePairs8`, `Tbl21` | `D_8015B7A0`, `D_8015B888`/`8DC`/`930`, `D_8015B984`, `D_8015F9B0`/`9C0`, `D_8015FB1C`/`B2C`/`B3C` | `include/ovl/DATE.h` (T-17200) | none (new declarations) | 0 |
 
 33 `FAKE` comments of the "first symbol" family are gone (117 to 84 in `src/`). The `Work80125D10` conversion is the strongest single test: 96 uses in already-matched functions moved to one symbol and none changed bytes.
 
@@ -138,3 +140,5 @@ twelve bytes, with two command words.
 (`TcObj50`, GsCOORDINATE2 layout, complete) at +0x14; `Tc14` has no holes; `D_8015EC70` is a `Tc14[16]`
 table; `D_80129C40` is a `MATRIX` in `main_api.h` (which now includes `libgte.h`). Map, evidence and the
 draft rewrites built on them: [[taco-family-results]] ("Types-first pass").
+- `type_recovery.py` reads every struct copy that IDO emits as a three-word loop as a stride-0xC array: in DATE
+  the 30 highest proposals are step-table copies, not records ([[date-family-results]], T-17200).

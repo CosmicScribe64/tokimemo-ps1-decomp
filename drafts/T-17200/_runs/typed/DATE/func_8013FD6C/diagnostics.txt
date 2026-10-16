@@ -1,0 +1,26 @@
+python3 failed:
+ ---------------^
+cfe: Error: drafts/T-17200/_runs/typed/DATE/func_8013FD6C/work/guarded.o.sjis.c, line 7864: 'D_7FFF' undefined; reoccurrences will not be reported.
+             var_t1 = temp_v0_2 & (s32) &D_7FFF;
+ ----------------------------------------^
+cfe: Warning 709: drafts/T-17200/_runs/typed/DATE/func_8013FD6C/work/guarded.o.sjis.c, line 7879: Incompatible pointer type assignment
+             temp_s0 = (DisplayActor44 *)((u8 *)D_8011ECD0 + temp_lo);
+ --------------------^
+cfe: Error: drafts/T-17200/_runs/typed/DATE/func_8013FD6C/work/guarded.o.sjis.c, line 7927: 'D_7FFF' undefined; reoccurrences will not be reported.
+                         var_t2 = temp_v0_5 & (s32) &D_7FFF;
+ ----------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/typed/DATE/func_8013FD6C/work -o drafts/T-17200/_runs/typed/DATE/func_8013FD6C/work/guarded.o /tmp/asm_processorg4l6vft_/preprocessed_c2245b6863354767a885d5c00be89894.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib5b86q00n/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/typed/DATE/func_8013FD6C/work/guarded.o drafts/T-17200/_runs/typed/DATE/func_8013FD6C/work/guarded.o.sjis.c
+python3 failed:
+ ---------------^
+cfe: Error: drafts/T-17200/_runs/typed/DATE/func_8013FD6C/work/guarded.o.sjis.c, line 7867: Bad operand type for += or -=
+                 var_t1 -= &D_7FFF + 1;
+ -----------------------^
+cfe: Warning 709: drafts/T-17200/_runs/typed/DATE/func_8013FD6C/work/guarded.o.sjis.c, line 7880: Incompatible pointer type assignment
+             temp_s0 = (DisplayActor44 *)((u8 *)D_8011ECD0 + temp_lo);
+ --------------------^
+cfe: Error: drafts/T-17200/_runs/typed/DATE/func_8013FD6C/work/guarded.o.sjis.c, line 7930: Bad operand type for += or -=
+                             var_t2 -= &D_7FFF + 1;
+ -----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/typed/DATE/func_8013FD6C/work -o drafts/T-17200/_runs/typed/DATE/func_8013FD6C/work/guarded.o /tmp/asm_processorg7ebkf6p/preprocessed_02ccd381501f48a79719a8d72aebe39b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibdk2a2m20/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/typed/DATE/func_8013FD6C/work/guarded.o drafts/T-17200/_runs/typed/DATE/func_8013FD6C/work/guarded.o.sjis.c

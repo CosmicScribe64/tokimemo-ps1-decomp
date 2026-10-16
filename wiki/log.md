@@ -15397,3 +15397,23 @@ Measured the ugen temporary count of the 0x44-byte block copy in `func_80140A90`
 ## [2026-10-16] ticket | T-19001 Done
 
 [[tickets/T-19001-w3-d-p01]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 0 of 1 functions matched; `func_80140A90` stays a guarded `NON_MATCHING` draft at 33 differing instructions (66 diff lines). Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17200 Types-first: DATE opened
+
+[[tickets/T-17200-types-first-date]] created In Progress on branch `w3-date-types` (from `w2-good`), part of
+[[tickets/T-16990-wave-3-conveyor]]: types-first pass for DATE following [[speedup-research-2026-10-16]].
+
+## [2026-10-16] ticket | T-17200 Types-first: DATE to In Review
+
+[[tickets/T-17200-types-first-date]] In Progress to In Review. Types in `include/ovl/DATE.h`: 68 step tables as
+`FnTblNN` (local typedefs and externs of 16 `.c` files moved), 9 stack-copied data tables, one prototype.
+Redraft of all 49 unmatched functions with `drafts/T-17200/redraft.py` (T-16560 driver + T-16550 fold +
+stack-table, fptab, record-temp rewrites): of the 32 unguarded functions still open, 28 compile, 7 better
+than the census, sum 7,498 to 7,230 rows, none 0. Matched 4 functions / 1,760 bytes (`func_8014AD9C`,
+`func_8013B208`, `func_80159FAC`, `func_80158338`), two of them from sibling ports found by
+`tools/siblings.py`. New page [[date-family-results]]; rows in [[data-types]] and [[matching-notes]].
+Packages T-17201..T-17208 (`w3-date-p01`..`p08`, 30 functions, 23,468 bytes). Clean build 27/27 OK,
+`check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known).
+
+## [2026-10-16] ticket | T-17200 Done
+
+[[tickets/T-17200-types-first-date]] In Review to Done after the code review against `CODING_STANDARDS.md`: 4 functions matched (1,760 bytes: `func_8014AD9C`, `func_8013B208`, `func_80159FAC`, `func_80158338`), 13 guarded drafts unchanged. No code findings. Two wording findings: commit messages of `8e4eb55c` and `2bdd2567` carry interim numbers (39 typedef blocks, not 47; 32 unguarded, 7 better, 5 worse), recorded on the ticket, history left as is; `wiki/index.md` stack-table count fixed to 10. DATE sha1 OK, `check_headers` and `sync_protos --check-branch` OK.

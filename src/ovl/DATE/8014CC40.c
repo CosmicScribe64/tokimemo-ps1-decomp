@@ -69,11 +69,6 @@ INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E31C);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E3C4);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E460);
 
-typedef struct {
-    void (*f[43])();
-} FnTbl43; /* size 0xAC */
-extern FnTbl43 D_8015E530;
-
 void func_8014CC40(void) {
     D_8015E220 = 0x801CE0F4;
     D_8015E224 = 0x801CE0F8;
@@ -250,7 +245,6 @@ void func_8014D298(void) {
     func_8004284C();
 }
 
-
 void func_8014D57C(void) {
     D_8015E310 = 0;
     D_8015E314 = 3;
@@ -363,11 +357,6 @@ void func_8014DAE0(void) {
     func_8004284C();
 }
 
-typedef struct {
-    void (*f[42])();
-} FnTbl42; /* size 0xA8 */
-extern FnTbl42 D_8015E31C;
-
 void func_8014DB08(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl42 tbl;
@@ -407,11 +396,6 @@ void func_8014DC94(void) {
     func_8014CC40();
     func_8004284C();
 }
-
-typedef struct {
-    void (*f[39])();
-} FnTbl39; /* size 0x9C */
-extern FnTbl39 D_8015E3C4;
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-10320 / T-12100, sixteen register/operand rows remain.
@@ -527,11 +511,6 @@ void func_8014E108(void) {
     func_8014EF1C(-0x84, -0x78, -0x89, -0x78, -0x3C, 0x28, -0x46, 0x28, 0xFFFFFF, 0xFFFFFF, 0xD, 1);
     dtd_on_tpage(0, 0, 0xD, 3, 0);
 }
-
-typedef struct {
-    void (*f[44])();
-} FnTbl44; /* size 0xB0 */
-extern FnTbl44 D_8015E460;
 
 void func_8014E2E8(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -650,11 +629,6 @@ void func_8014ECB8(void) {
     func_8014CE50();
     func_8004284C();
 }
-
-typedef struct {
-    void (*f[44])();
-} FnTbl44; /* size 0xB0 */
-extern FnTbl44 D_8015E5DC;
 
 void func_8014ECF0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

@@ -1,0 +1,13 @@
+python3 failed:
+ ---------------^
+cfe: Warning 709: drafts/T-17200/_runs/typed/DATE/func_8013C190/work/guarded.o.sjis.c, line 6800: Incompatible pointer type assignment
+     D_800CA134 = &D_8015BF3C;
+ ---------------^
+cfe: Warning 709: drafts/T-17200/_runs/typed/DATE/func_8013C190/work/guarded.o.sjis.c, line 6801: Incompatible pointer type assignment
+     D_800CA138 = &D_8015BF40;
+ ---------------^
+cfe: Error: drafts/T-17200/_runs/typed/DATE/func_8013C190/work/guarded.o.sjis.c, line 6927: Unacceptable operand of '+'.
+     D_800E6280.unk_1BC[D_800E6280.unk_F5F] = (s32) (D_800E6280.unk_1BC[D_800E6280.unk_F5F] + ((s32) (((3 - D_800CA22C[D_80122CDC]) * sp58 * sp54) << 0x10) / 16));
+ -------------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17200/_runs/typed/DATE/func_8013C190/work -o drafts/T-17200/_runs/typed/DATE/func_8013C190/work/guarded.o /tmp/asm_processor6inytqcw/preprocessed_b8493275e7d24d42a4f76ebf979910b8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibgcn2idds/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17200/_runs/typed/DATE/func_8013C190/work/guarded.o drafts/T-17200/_runs/typed/DATE/func_8013C190/work/guarded.o.sjis.c
