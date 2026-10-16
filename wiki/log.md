@@ -15969,3 +15969,7 @@ Opus closer pass on [[tickets/T-19019-w3-d-p19]] (branch w3-d-p19): no new match
 ## [2026-10-16] ticket | T-19019 Done
 
 [[tickets/T-19019-w3-d-p19]] In Review to Done: code review against `CODING_STANDARDS.md` found documentation issues only (stale "4 lines" for `func_801497EC` after the closer pass in the index, the ticket and the [[matching-notes]] intro; a wrong "table below" pointer in [[taco-family-results]]; a plain path and a missing blank line in this log), all fixed. 0 of 2 functions matched: TACO `func_80149538` (10 lines, volatile tail FAKE) and `func_801497EC` (2 lines) stay guarded drafts in `src/ovl/TACO/80148FE0.c`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19029 In Progress
+
+Created [[tickets/T-19029-w3-d-p29]] (Wave 3 package w3-d-p29, branch w3-d-p29 from w2-good): TACO `src/ovl/TACO/80136B40.c`, `func_80137264` (812 B). Starting from the T-15700 draft (score 172).
