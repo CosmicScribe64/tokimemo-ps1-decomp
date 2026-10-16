@@ -15137,3 +15137,7 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16552 to In Review
 
 [[tickets/T-16552-pt-taiiku-p2]] In Progress to In Review: 1 function matched (816 bytes), 2 guarded drafts improved. Clean rebuild, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` run before this entry.
+
+## [2026-10-16] lint | T-16552 final verification
+
+[[tickets/T-16552-pt-taiiku-p2]]: clean `rm -rf build && python3 configure.py && ninja` 665/665, all 27 units sha1 OK; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK. One commit (AA8 `idx`) had overwritten the DF8 and `func_80139FE4` work with an older copy of `src/ovl/TAIIKU/80138950.c`; restored in the next commit and re-checked (`func_80139FE4` MATCH in the default build, DF8 3 lines, AA8 22 lines).
