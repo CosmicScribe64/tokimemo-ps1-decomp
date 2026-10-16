@@ -33,6 +33,7 @@ void func_8014F258(void);
 void func_8014F500(void);
 void func_8014F524(void);
 
+void func_80140E70(void);
 void func_80141C70(void);
 void func_80141E38(void);
 s32 func_80137280(void);
