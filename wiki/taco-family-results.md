@@ -180,4 +180,4 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 
 ## Matching stage, package w3-d-p28 (T-19028)
 
-[[tickets/T-19028-w3-d-p28]] (`8013DB80.c`, `8015CF30.c`, the particle quads): `func_8013E778` (812 bytes) matched in plain C from the sibling `func_8013D528`; `func_8013E424` (18 rows) and `func_8013DB80` (15 rows) stay guarded with their frames solved; `func_8013DEE4` (draft in `drafts/T-19028/TACO/`) and the libgte `RotMatrixZ` `func_8015CF30` stay `INCLUDE_ASM`. Details and idioms in [[matching-notes]] (T-19028).
+[[tickets/T-19028-w3-d-p28]] (`8013DB80.c`, `8015CF30.c`, the particle quads): `func_8013E778` (812 bytes) matched in plain C from the sibling `func_8013D528`; `func_8013E424` and `func_8013DB80` matched in the closer pass (index the record array, no pointer local, so the stack loads are `.noalias` and hoisted); `func_8013DEE4` (draft in `drafts/T-19028/TACO/`) and the libgte `RotMatrixZ` `func_8015CF30` stay `INCLUDE_ASM`. Details and idioms in [[matching-notes]] (T-19028).

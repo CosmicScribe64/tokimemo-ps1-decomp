@@ -15958,3 +15958,6 @@ The T-19023 In Review entry above says 2,048 bytes; the three functions are 204 
 
 ## [2026-10-16] ticket | T-19028 In Review
 [[tickets/T-19028-w3-d-p28]] In Progress to In Review (1 of 5 matched).
+
+## [2026-10-16] build | T-19028 closer pass
+[[tickets/T-19028-w3-d-p28]]: Opus closer matched TACO `func_8013E424` (216 bytes) and `func_8013DB80` (612 bytes) in `src/ovl/TACO/8013DB80.c`, now 3 of 5. Fix: index the record array in the free-slot loop and in every store (no pointer local), so the strength-reduced address is `.noalias` against `$sp` and as1 hoists the stack loads. Notes in [[matching-notes]], row in [[register-cheatsheet]], rows in [[data/t0018-cases]]; [[taco-family-results]] and [[index]] updated. Ticket stays In Review.
