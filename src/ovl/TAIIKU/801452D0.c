@@ -1,5 +1,8 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
+
+/* Display record n of the runner sprites (D_8011ECD0 is an array of 0x44-byte records). */
+#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3B0);
@@ -864,8 +867,6 @@ void func_80147F10(void) {
     } while (var_s0 != 4);
 }
 
-/* Display record n of the runner sprites (D_8011ECD0 is an array of 0x44-byte records). */
-#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
 void func_80147F58(s32 arg0) {
     s32 i; /* declared before tbl: the stack table sits 4 bytes below the locals area top (T-3330, T-16553) */
     TaiikuHalf8 tbl;
@@ -910,7 +911,6 @@ void func_80147F58(s32 arg0) {
         } while ((u16 *)&D_8014A4F4 != &D_8014A4E8[i]);
     }
 }
-#undef DISP
 
 void func_80148194(s32 arg0) {
     u8 *temp_v0;
@@ -978,7 +978,43 @@ void func_801482BC(s32 index) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80148370);
+s32 func_80148370(void) {
+    s32 i;
+
+    func_80048E78();
+    for (i = 0; i < 9; i++) {
+        DISP(96 + i).unk_38 = 0x01000000;
+        DISP(96 + i).unk_07 = 0x80;
+        DISP(96 + i).unk_02 = 0x40;
+        DISP(96 + i).unk_03 = 0xA4;
+        DISP(96 + i).unk_0C = (u8 *)D_80149FD8;
+        DISP(96 + i).unk_10 = (u8 *)D_8014A010;
+        DISP(96 + i).unk_34 = (u8 *)&D_8014A528;
+        DISP(96 + i).unk_14 = D_8014A048;
+        DISP(96 + i).unk_04 = 0;
+        DISP(96 + i).unk_05 = 0x80;
+        DISP(96 + i).unk_1A = 0x1000;
+        *(s16 *)DISP(96 + i).pad_1C = 0x1000;
+        DISP(96 + i).unk_06 = 2;
+    }
+    for (i = 0; i < 4; i++) {
+        DISP(96 + i).unk_01 = 3;
+        DISP(96 + i).unk_18 = D_8014A3D8[i] * 5 + 0x1D;
+        DISP(96 + i).unk_2A = -8;
+        DISP(96 + i).unk_26 = i * 0x30 - 0x70;
+    }
+    for (i = 0; i < 4; i++) {
+        DISP(100 + i).unk_01 = 3;
+        DISP(100 + i).unk_18 = D_8014A3D8[i] * 5 + 0xD;
+        DISP(100 + i).unk_26 = DISP(96 + i).unk_26;
+        DISP(100 + i).unk_2A = DISP(96 + i).unk_2A;
+    }
+    DISP(104).unk_01 = 3;
+    DISP(104).unk_16 = 9;
+    DISP(104).unk_26 = 0xC0;
+    DISP(104).unk_2A = -0x20;
+    DISP(104).unk_02 = 1;
+}
 
 s32 func_801485C4(void) {
     s32 index;
