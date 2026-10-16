@@ -15795,3 +15795,18 @@ Opened [[tickets/T-18200-types-first-en_nichi]] (In Progress) under [[tickets/T-
 ## [2026-10-16] ticket | T-19015 Done
 
 [[tickets/T-19015-w3-d-p15]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues (match count still 1 of 5 in the index, the ticket and the [[matching-notes]] intro after the closer pass; no source comment for the mixed actor addressing in `func_801585D0`), both fixed. 2 of 5 functions matched (1,252 bytes): TACO `func_801585D0` and `func_801471D0` in plain C; `func_801472D4` and `func_80138B2C` stay guarded, `func_80147B24` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-18400 In Progress
+
+[[tickets/T-18400-types-first-kangei]] created and claimed (branch `w3-kangei-types` from `w2-good`): types-first pass on KANGEI, redraft of every unmatched function, packages for wave 3 ([[tickets/T-16990-wave-3-conveyor]]).
+
+## [2026-10-16] build | T-18400 KANGEI types and redraft
+
+[[tickets/T-18400-types-first-kangei]]: picture-set tables (`D_80139950`, `D_80139A50`, `D_80139A5C`, `D_8013A170`) as arrays, `KangeiSprite44` extended to MASTER's layout, streak and club name tables, image records and callee prototypes in `include/ovl/KANGEI.h`; `drafts/T-18400/redraft.py` (T-18000 driver plus multi-dimensional fold and `gamestate-words`) and `hand.py` redrafted the 11 remaining functions (7 better than the census). Matched 4 functions / 2,596 bytes, one FAKE (`func_80135838`, date checks through `GameState *g`). New page [[kangei-family-results]]; notes in [[matching-notes]] and [[data-types]].
+
+## [2026-10-16] ticket | T-18400 In Review
+
+[[tickets/T-18400-types-first-kangei]] In Progress to In Review. Packages T-18401..T-18403 (`w3-kangei-p01`..`p03`, 9 functions, 6,836 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]). Clean build 27/27, header, globals and prototype checks pass.
+
+## [2026-10-16] ticket | T-18400 Done
+
+[[tickets/T-18400-types-first-kangei]] reviewed against `CODING_STANDARDS.md`: one finding (the family page said 11 callee prototypes, the header has 12), fixed; KANGEI sha1 OK, headers, globals and prototype checks pass. 4 functions matched (2,596 bytes). In Review to Done, card moved to Done.

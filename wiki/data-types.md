@@ -171,3 +171,13 @@ plus seven loaded picture sets typed as `s32 *` page table, two `u8 *` images an
 `include/ovl/BUNKA_SD.h`. The scene control words stay separate scalars (matched code). Evidence for a
 main-exe aggregate around `D_80122EA8`: `func_80135F38` compares `D_80122EAC` with the constant first,
 which IDO gives only for a non-plain operand. Details: [[bunka-sd-family-results]].
+
+## KANGEI types-first pass (T-18400)
+
+Picture-set tables as arrays, one row per component of the current set (`D_80139AD0`/`AD4`/`AD8`):
+`s32 D_80139950[3][8]`, `D_80139A50[3]`, `D_80139A5C[3][8]`, `D_8013A170[2][3][13]` (129 scalars absorbed);
+`KangeiSprite44` extended to MASTER's display-record layout with `KangeiFixed32`; the MASTER streak tables
+(`KangeiPoint2 D_80139F10[10]`, `s16 D_80139F38[10]`); club name tables `KangeiNames20`/`KangeiNames21`
+(`u8 name[11][20]`, `[11][21]`, stack copies); `KangeiImage10 D_80139D10[2]`; the `KangeiWords11`/`KangeiWords2`
+summer tables at `D_80139A08`. type_recovery's 0xC-stride arrays at `D_801399A8` and `D_80139F44` are artefacts
+of these neighbouring tables. Details: [[kangei-family-results]].

@@ -6025,3 +6025,11 @@ Closer pass (Opus, about 40 minutes): `func_801471D0` matched (260 bytes); `func
 - Tooling: a 0.5-second scratch loop (`/opt/ido/5.3/cc -S` and `-c` on a stand-alone copy of the function, then a normalising compare against the `.s` that drops `$sp` rows and maps `%hi`/`%lo` and branch targets) found the walker shape in about 25 variants. `funcdiff` still shows one `lui` row on the matched function (the `D_80127480+5120` HI16 pairing); ninja's sha1 is what decides.
 
 Idiom for [[register-cheatsheet]]: a parameter copy before a second loop (`move s4,s3; lw 4(s4); addiu s4,s4,8`) where the first loop already used `arg0 + 8`: restart the walker from a pointer parameter.
+## KANGEI types-first pass (T-18400)
+
+[[tickets/T-18400-types-first-kangei]], details on [[kangei-family-results]]. Four functions matched (2,596 bytes):
+- `func_801370A0`: MASTER `func_80137BF4` ported with the two table symbols changed (siblings.py ratio 1.000).
+- `func_80132C24`: `func_8013454C` form plus a month check that overrides six stack-table entries.
+- `func_80136630`: ugen temporaries are numbered in source order. Updating `D_80139E00` first in each arm gave
+  the original's `$t6` for its `andi`; the state stores then matched once placed where as1 schedules their `li`.
+- `func_80135838` (FAKE): typed draft plus four m2c fixes; the date checks read through `GameState *g`.

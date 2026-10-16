@@ -1,0 +1,101 @@
+[
+ {
+  "unit": "KANGEI",
+  "src": "src/ovl/KANGEI/80132090.c",
+  "func": "func_801327DC",
+  "size": 1096,
+  "guarded": false,
+  "source_hash": "8c06e02e1fe12334331e6f5f5d6b0a5347ff3b21c5c7de1cdc4b35029c572dec",
+  "scope": "KANGEI:func_801327DC"
+ },
+ {
+  "unit": "KANGEI",
+  "src": "src/ovl/KANGEI/80132E40.c",
+  "func": "func_80132FF8",
+  "size": 1448,
+  "guarded": false,
+  "source_hash": "8b239699ee78baef3bea7fbd8f405257690b688a601fe80c353cc332eeb6a4d6",
+  "scope": "KANGEI:func_80132FF8"
+ },
+ {
+  "unit": "KANGEI",
+  "src": "src/ovl/KANGEI/80132E40.c",
+  "func": "func_80133A54",
+  "size": 436,
+  "guarded": false,
+  "source_hash": "8b239699ee78baef3bea7fbd8f405257690b688a601fe80c353cc332eeb6a4d6",
+  "scope": "KANGEI:func_80133A54"
+ },
+ {
+  "unit": "KANGEI",
+  "src": "src/ovl/KANGEI/80134120.c",
+  "func": "func_80134724",
+  "size": 688,
+  "guarded": false,
+  "source_hash": "39328d88e794c6f64f42c19f894cd0425d54c00f7a3d173e937abdb5c35925f4",
+  "scope": "KANGEI:func_80134724"
+ },
+ {
+  "unit": "KANGEI",
+  "src": "src/ovl/KANGEI/80134120.c",
+  "func": "func_80135004",
+  "size": 220,
+  "guarded": false,
+  "source_hash": "39328d88e794c6f64f42c19f894cd0425d54c00f7a3d173e937abdb5c35925f4",
+  "scope": "KANGEI:func_80135004"
+ },
+ {
+  "unit": "KANGEI",
+  "src": "src/ovl/KANGEI/801355F0.c",
+  "func": "func_80135838",
+  "size": 648,
+  "guarded": false,
+  "source_hash": "e25bbf77928616598e228f4453fef3e416a48b202bb3de57e6954efdf686392a",
+  "scope": "KANGEI:func_80135838"
+ },
+ {
+  "unit": "KANGEI",
+  "src": "src/ovl/KANGEI/80135F10.c",
+  "func": "func_801362F0",
+  "size": 420,
+  "guarded": false,
+  "source_hash": "86b1d3792a6a4e2202718a02adbae017d4fdec283be9eb74fc35d3038fef8fca",
+  "scope": "KANGEI:func_801362F0"
+ },
+ {
+  "unit": "KANGEI",
+  "src": "src/ovl/KANGEI/80135F10.c",
+  "func": "func_80136630",
+  "size": 480,
+  "guarded": false,
+  "source_hash": "86b1d3792a6a4e2202718a02adbae017d4fdec283be9eb74fc35d3038fef8fca",
+  "scope": "KANGEI:func_80136630"
+ },
+ {
+  "unit": "KANGEI",
+  "src": "src/ovl/KANGEI/80135F10.c",
+  "func": "func_8013769C",
+  "size": 1256,
+  "guarded": false,
+  "source_hash": "86b1d3792a6a4e2202718a02adbae017d4fdec283be9eb74fc35d3038fef8fca",
+  "scope": "KANGEI:func_8013769C"
+ },
+ {
+  "unit": "KANGEI",
+  "src": "src/ovl/KANGEI/80137B90.c",
+  "func": "func_8013852C",
+  "size": 180,
+  "guarded": false,
+  "source_hash": "fc341e93d2881daf340ecf8bd90f8f585cb6e23f28efd06f1267117dd68fdbbe",
+  "scope": "KANGEI:func_8013852C"
+ },
+ {
+  "unit": "KANGEI",
+  "src": "src/ovl/KANGEI/80137B90.c",
+  "func": "func_80138F88",
+  "size": 844,
+  "guarded": false,
+  "source_hash": "fc341e93d2881daf340ecf8bd90f8f585cb6e23f28efd06f1267117dd68fdbbe",
+  "scope": "KANGEI:func_80138F88"
+ }
+]
