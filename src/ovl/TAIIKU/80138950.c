@@ -1092,13 +1092,13 @@ void func_8013BB3C(void) {
     }
 }
 
-/* NON_MATCHING: T-19008, 18 differing lines; x >> 3 and the result swap v0/v1 (the counter outranks them in
- * the original), and the original computes cnt & 0xF into the delay slot of the cnt & 8 test, which the
- * self-assignment below loses. The original also hands out one more ugen temporary between the conditions
- * and the x * 79 chain (nothing visible uses it), so its later temporaries are one higher than here.
- * FAKE: the self-assignment of the counter before the first call of the last path reproduces uopt's
- * write-back sh v0 (without it the write-back is missing); the counter and the flag are read through
- * u16 pointer views as in func_8013BEF8. */
+/* NON_MATCHING: T-19008, 2 instructions missing (12 differing lines with the shifted branch offsets): the
+ * original writes the counter back (lui at; sh v0,D_801499A2) before the call to func_8013C5C8, although no
+ * path to it changes the counter. A self-assignment of the counter there brings the store back, but its u16
+ * normalisation takes one more ugen temporary before the cnt & 8 test and moves the counter reload of the
+ * cnt & 8 block to the join; no form without the temporary was found.
+ * FAKE: the counter and the flag are read through u16 pointer views as in func_8013BEF8. v takes x >> 3 first
+ * and adds the x * 79 / 48 term in a second statement (the ugen temporary the original has before the chain). */
 #ifdef NON_MATCHING
 void func_8013BCEC(void) {
     s16 v;
@@ -1139,14 +1139,14 @@ void func_8013BCEC(void) {
         ((u16 *)&D_801499A0)[1] = 0;
         return;
     }
-    ((u16 *)&D_801499A0)[1] = ((u16 *)&D_801499A0)[1];
     func_8013C5C8(0x12000);
     func_8013C694();
     if (!(((u16 *)&D_801499A0)[1] & 8)) {
         func_8013C4E4(0xE000);
     }
     if (!(((u16 *)&D_801499A0)[1] & 0xF)) {
-        v = (D_80149968.unk_1C[0] >> 3) + (D_80149968.unk_1C[0] >> 3) * 79 / 48;
+        v = D_80149968.unk_1C[0] >> 3;
+        v += (D_80149968.unk_1C[0] >> 3) * 79 / 48;
         if (D_80122EC4 % 3 != 0 && (D_80149968.unk_1C[0] >= 0 || D_80149968.unk_0C > 0)) {
             v = (D_80149968.unk_1C[0] >> 3) + 0x20;
         }
