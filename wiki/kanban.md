@@ -24,6 +24,7 @@ kanban-plugin: board
 
 ## In Progress
 - [ ] [[tickets/T-16200-matching-wave-2|T-16200 Matching wave 2]]
+- [ ] [[tickets/T-16510-m2c-defect-rewrites|T-16510 Detect and rewrite recurring m2c draft defects]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 

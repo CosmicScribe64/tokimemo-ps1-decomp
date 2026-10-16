@@ -14964,3 +14964,7 @@ functions matched (5,072 bytes), no blocking findings. One fix: section 8a of `C
 ## [2026-10-16] ticket | T-11670 Done
 
 [[tickets/T-11670-w1-main-8006cb30]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 functions matched in `src/main/8006CB30.c` (`_schedule_init`, `geko_judge`, `schedule_girls_gakko`, `func_8006EA40`). Review fixes: `FAKE` note on the `geko_judge` frame buffers, line counts on the two T-10880 guards. Build in the worktree: globals OK, headers OK, unit sha1 OK.
+
+## [2026-10-16] ticket | T-16510 started
+
+[[tickets/T-16510-m2c-defect-rewrites]] (In Progress, under [[tickets/T-16200-matching-wave-2]]): detectors and mechanical rewrites for recurring m2c draft defects (shared-store goto, Shift-JIS hex escapes, post-increment compare; report-only void/s32 candidates), run over the `drafts/T-14500` selected bodies. Branch `t16510-m2c-defects`.
