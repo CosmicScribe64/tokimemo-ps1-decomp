@@ -32,7 +32,7 @@ their rodata labels (`D_8014C4F0`..`D_8014C6F4`, declared in its `declarations.h
 raw m2c outputs were removed; the scores were measured with the string literals.
 
 Scores are the resolved full-unit diff rows of `tools/exhaustive_drafts.py`, the measure of
-`drafts/T-14500/best-quality-catalog.jsonl`. The census used the hand-written guarded body for the 9 guarded
+`drafts/T-14500/best-quality-catalog.jsonl`. The census scored the hand-written guarded body for 6 of the 9 guarded
 functions, so compare the other functions.
 
 Results (21 unguarded functions not matched here): all compile (the census needed manual repair for
