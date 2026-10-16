@@ -61,7 +61,41 @@ void func_80159090(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80159090", func_80159260);
+s32 func_80159260(void) {
+    TcPos vel;
+    TcPos pos;
+    /* FAKE: unused TcPos below the two positions reproduces the frame and their offsets; real locals unknown. T-16560 */
+    TcPos pad;
+    s32 r;
+    u32 kind;
+
+    func_800AE120(D_801604C0);
+    r = func_800AE0D0();
+    pos.x = ((func_800AE0D0() % 2500) + (r % 1500)) - 0x7D0;
+    r = func_800AE0D0();
+    pos.y = ((func_800AE0D0() % 2000) + (r % 1000)) - 0x7D0;
+    pos.z = (func_800AE0D0() % 5000) - 0x61A8;
+    vel.x = (func_800AE0D0() % 200) - 0x64;
+    vel.y = (func_800AE0D0() % 200) - 0x64;
+    kind = func_800AE0D0() % 5U;
+    switch (kind) {
+    case 0:
+        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0x10);
+        return;
+    case 1:
+        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0x10);
+        return;
+    case 2:
+        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0);
+        return;
+    case 3:
+        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0);
+        return;
+    case 4:
+        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0);
+        return;
+    }
+}
 
 void func_80159678(s32 arg0) {
     (arg0 + D_8015EDB4)->unk74 -= (((((arg0 + D_8015EDB4)->unk78 << 5) / 25000) * func_800A0140((arg0 + D_8015EDB4)->unk7A << 5)) >> 0xC);
