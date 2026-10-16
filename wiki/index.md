@@ -26,6 +26,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
+- [[tickets/T-19011-w3-d-p11|T-19011]] Wave 3 package w3-d-p11: TACO `80134930.c`, `80133870.c`, `func_8013506C`, `func_80134A18`, `func_80133E98` (In Progress).
 - [[tickets/T-17500-types-first-shougatu|T-17500]] Types-first: SHOUGATU: 49 step tables (`FnTblNN`) and 4 stack-table types in `SHOUGATU.h`, 38 redrafts (15 better than the census), 4 matches / 1,516 bytes, packages T-17501..T-17507 (Done).
 - [[tickets/T-19009-w3-d-p09|T-19009]] Wave 3 package w3-d-p09: TACO `80142820.c`, `80143E80.c`, `func_801428DC` (one-struct settings block), `func_80144430` (stack-slot order, `void` lib call) and `func_80142AF0` matched, 1,956 B; `func_80144094` back to `INCLUDE_ASM` (Done).
 - [[tickets/T-19005-w3-d-p05|T-19005]] Wave 3 package w3-d-p05: OLH `80135AC0.c`, `80132000.c`, `func_80135B8C` (sibling clone) and `func_80132114` (chain through a local) both matched, 680 B (Done).

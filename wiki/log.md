@@ -15563,3 +15563,6 @@ Clean build 27/27 (all unit sha1 OK, TACO `1419e93c...`), `check_headers`, `migr
 
 ## [2026-10-16] ticket | T-19009 Done
 [[tickets/T-19009-w3-d-p09]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 3 of 4 functions matched (1,956 bytes): TACO `func_801428DC`, `func_80144430` and `func_80142AF0`, all plain C with two marked FAKE locals; `func_80144094` stays `INCLUDE_ASM` with its draft archived. Rebuild 27/27 OK on the branch. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19011 In Progress
+[[tickets/T-19011-w3-d-p11]] created for wave 3 package w3-d-p11 (TACO `src/ovl/TACO/80133870.c`, `src/ovl/TACO/80134930.c`: `func_8013506C`, `func_80134A18`, `func_80133E98`). Worktree `w3-d-p11` from `w2-good`.
