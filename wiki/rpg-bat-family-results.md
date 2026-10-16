@@ -100,3 +100,7 @@ Types: `RpgObjectRecord44.unk_40` (record 155 +0x40, the byte of `D_8012163C`), 
 ## Package w3-rpg-bat-p08 (T-17108)
 
 [[tickets/T-17108-w3-rpg-bat-p08]]: `src/ovl/RPG_BAT/8014E780.c` and `8014A660.c`, all six functions matched in plain C (1,844 bytes): `func_8014E994`, `func_8014EBEC`, `func_8014EF8C`, `func_8014F278` (one shared loop counter for the clear loops, the `i + 96` record loop, `(&D_8015EDC4)[3]` / `(&D_8015EDF0)[3]` first-symbol stores) and `func_8014AB84`, `func_8014AC74` (element-index and typed-record accesses instead of byte-offset casts). No header change. The "loop shape, not the type, is the open problem" note above is solved: the loops need one counter. Method and idioms: [[matching-notes]] (section T-17108), [[register-cheatsheet]] (five rows).
+
+### Package results (T-17109)
+
+`w3-rpg-bat-p09`: `func_8013D834`, `func_8013DC60` (`8013D780.c`) and `func_80147930` (`801477E0.c`) all matched in plain C, 4,268 bytes ([[matching-notes]], "T-17109"). The two CD-load state machines read the state byte as `D_800E6280.unk_110D` after every call and write the `+ 2` / `+ 3` arms as 2 / 3 single increments (ugen takes a temporary per step); `func_8013DC60` is `s32` without a return. `func_80147930` needed its return values (the draft had none), `D_8015EBFC.unk_10`/`unk_14` for the two promoted counters, an empty `case 14:` and a scalar view of `D_8015EBCC` (`RPG_BAT_OVERRIDE_D_8015EBCC`). Four new rows in [[register-cheatsheet]].
