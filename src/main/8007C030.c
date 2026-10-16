@@ -6,6 +6,7 @@
 #define MAIN_API_OVERRIDE_select_girl_init /* K&R byte parameter is narrowed in the callee. T-10900. */
 #include "common.h"
 #include "game.h"
+#include "psx_types.h"
 s32 func_80049FF0(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, s32 arg6);
 s32 SsVabTransCompleted();
 s32 dialogue_render();
@@ -2699,7 +2700,38 @@ void ev_me_on_continue(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-16220, 30 differing lines: registers and colours match the original; as1 still
+ * schedules the r2 store first and loads arg6 before arg5 (the original loads arg5 first and
+ * stores r2 after g2). */
+#ifdef NON_MATCHING
+void _sprite_set_box_shade_tarao(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u32 arg5, u32 arg6) {
+    GameState *gs;
+    POLY_G4 *p;
+
+    p = (POLY_G4 *)GetWorkBase(0x24, D_8011ECA0);
+    func_8009F054(p);
+    SetSemiTrans(p, 0);
+    gs = &D_800E6280;
+    /* The masks leave the shifts in ugen temporaries (t6..t9) as in the original; a bare
+     * shift or a chain gets uopt registers. One line per group because as1 schedules by source
+     * line. r2 is written before b0 so that uopt colours and(arg6) after the arg5 red value,
+     * which puts arg6 in a1 and p in a2 as in the original. */
+    p->r0 = (arg6 >> 16) & 0xFF; p->g0 = (arg6 >> 8) & 0xFF; p->r2 = (arg5 >> 16) & 0xFF; p->b0 = arg6 & 0xFF;
+    p->r1 = (arg6 >> 16) & 0xFF; p->g1 = (arg6 >> 8) & 0xFF; p->b1 = arg6 & 0xFF;
+    p->g2 = (arg5 >> 8) & 0xFF; p->b2 = arg5 & 0xFF; p->r3 = (arg5 >> 16) & 0xFF; p->g3 = (arg5 >> 8) & 0xFF; p->b3 = arg5 & 0xFF;
+    p->x0 = gs->unk_014[D_8011ECA0] + arg0;
+    p->y0 = gs->unk_018[D_8011ECA0] + arg1;
+    p->x1 = gs->unk_014[D_8011ECA0] + arg0 + arg2;
+    p->y1 = gs->unk_018[D_8011ECA0] + arg1;
+    p->x2 = gs->unk_014[D_8011ECA0] + arg0;
+    p->y2 = gs->unk_018[D_8011ECA0] + arg1 + arg3;
+    p->x3 = gs->unk_014[D_8011ECA0] + arg0 + arg2;
+    p->y3 = gs->unk_018[D_8011ECA0] + arg1 + arg3;
+    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg4 * 4, (s32)p);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", _sprite_set_box_shade_tarao);
+#endif
 
 void func_8008585C(void) {
     s16 i;
