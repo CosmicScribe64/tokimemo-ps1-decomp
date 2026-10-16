@@ -31,3 +31,13 @@ Worktree `w3-rpg-bat-p07` (branch `w3-rpg-bat-p07`, from `w2-good`). Started 202
 - `func_8013B5B0` guarded, 25 lines: promoted `unk_1109` in `$v0` instead of `$v1` (T-0018 `U1` family, row added).
 - `func_8013E54C` guarded, 16 lines: loop bodies match in the byte-array form, preheader `lui`/`addiu` order differs (row added).
 - Code review against `CODING_STANDARDS.md`: pending (ticket stays In Review until then).
+
+### 2026-10-16 closer pass (claude-opus, branch `w3-rpg-bat-p07`, about 35 minutes)
+
+Scope: `func_8013E54C` only. Result: still guarded at 16 lines, no new match.
+
+- `autotweak --time 120 --score-jobs 2`: 512 candidates, no improvement.
+- Cause found: ugen hands as1 `la start` (the strength-reduction init, `D_8011ECD0 + 0x110`) before `la limit` (the hoisted loop-test constant `+ 0x440`, followed by the other hoisted constants and the three loads in descending register order). Swapping only those two binasm records and running as1 again reproduces the original's case 3 exactly. `.loc` line changes, the dead `li v1,4` of the counter and the relocation symbols do not change the order. So the gap is in uopt's preheader order.
+- About 60 source shapes keep the build's order: base pointer locals (in the case, before the switch, in the `for` head), counter types (`s16`/`u8`/`u16`/`s8` stop the strength reduction), separate or block-scoped counters, `arg0` as counter, labels, `goto` loops, `do { } while (0)`, if-chain, `return`/`default`, a manual 4x body, dead reassignments of `i`, address-expression tests (no unroll), pointer loops (no unroll, no hoisted loads), the `D_8011EDE0` alias base.
+- Survey: all 443 C files compiled with a binasm dump. None of the 190 matched loops whose start and limit both come from `la` has the limit first. In the original's unmatched asm, 12 loops in 8 functions show the original's `addiu` order. EN_NICHI `func_80132EE8` has the same one-block preheader, with the limit `lui` in a delay slot.
+- Diagnostic scripts: `drafts/T-17107/binasm-order/` (binasm dump, decoder, record editor plus as1, loop scan).
