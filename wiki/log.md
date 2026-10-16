@@ -16056,3 +16056,6 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 ## [2026-10-16] ticket | T-19026 Done
 
 [[tickets/T-19026-w3-d-p26]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of TACO OK (headers OK, globals OK, sha1 OK), `sync_protos.py --check-branch` OK. 1 of 2 functions matched (`func_8015ACCC`, 1,260 bytes, FAKE), `func_8015B1B8` stays a guarded draft (8 lines). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17201 started
+[[tickets/T-17201-w3-date-p01]] created In Progress: Wave 3 package w3-date-p01, DATE `src/ovl/DATE/801461B0.c`, two functions (`func_80147958`, `func_8014718C`). Branch w3-date-p01 from w2-good. Links [[tickets/T-17200-types-first-date]].
