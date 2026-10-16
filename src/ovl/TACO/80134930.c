@@ -216,6 +216,24 @@ void func_8013546C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_8013555C);
+s32 func_8013555C(void) {
+    switch (*(u8 *)&D_8015EDE8) {
+    case 0:
+        func_801432F0("GAME START", -0x40, 0x48, 2);
+        break;
+    case 1:
+        func_801432F0("  OPTION  ", -0x40, 0x48, 3);
+        break;
+    case 2:
+        func_801432F0("  SCORES  ", -0x40, 0x48, 5);
+        break;
+    case 3:
+        func_801432F0("OPERATIONS", -0x40, 0x48, 6);
+        break;
+    case 4:
+        func_801432F0("   EXIT   ", -0x40, 0x48, 0);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_80135638);
