@@ -1058,7 +1058,18 @@ void func_801359D0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135A48);
+/* Implicit int in the original (no return value): as1 then leaves the nop after the second test. T-18200 */
+s32 func_80135A48(s32 arg0, s32 arg1) {
+    if (D_80139278[D_801392A0] <= 0 || D_80139278[D_801392A0] >= 10) {
+        D_801392A0++;
+        if (D_801392A0 >= 10) {
+            D_801392A0 = 0;
+        }
+        D_80139228[D_801392A0][1] = arg0 + 0xA0;
+        D_80139228[D_801392A0][3] = arg1 + 0x78;
+        D_80139278[D_801392A0] = 1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135ACC);
 

@@ -50,7 +50,7 @@ void func_80133F00(); /* K&R definition */
 void func_80133924(void);
 void func_80133CA8(void);
 void func_801330D0(void);
-void func_80135A48(s32 arg0, s32 arg1);
+s32 func_80135A48(s32 arg0, s32 arg1); /* implicit int, no return value */
 void func_80135600(void);
 void func_801359D0(void);
 void func_80135F54(void);
