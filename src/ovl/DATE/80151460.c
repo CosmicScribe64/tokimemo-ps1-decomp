@@ -1,6 +1,7 @@
 #define MAIN_API_OVERRIDE_D_80122CD0 /* switched as u32: selector in $v1 (main_api.h: s32) */
 #include "common.h"
 #include "ovl/DATE.h"
+#include "psx_types.h"
 
 extern u32 D_80122CD0;
 
@@ -527,4 +528,23 @@ void func_80152DF8(void) {
     func_800833A0();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152E34);
+s32 func_80152E34(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1, s32 z, s32 trans) {
+    GameState *g;
+    POLY_G3 *poly;
+
+    g = &D_800E6280;
+    poly = func_800490F0(0x1C, D_8011ECA0);
+    func_8009F004(poly);
+    SetSemiTrans(poly, trans);
+    /* setRGBn-style comma lines: each colour is one expression range, as in the original (T-20600) */
+    poly->r0 = (c0 >> 16) & 0xFF, poly->g0 = (c0 >> 8) & 0xFF, poly->b0 = c0 & 0xFF;
+    poly->r1 = (c1 >> 16) & 0xFF, poly->g1 = (c1 >> 8) & 0xFF, poly->b1 = c1 & 0xFF;
+    poly->r2 = (c1 >> 16) & 0xFF, poly->g2 = (c1 >> 8) & 0xFF, poly->b2 = c1 & 0xFF;
+    poly->x0 = g->unk_014[D_8011ECA0] + x0;
+    poly->y0 = g->unk_018[D_8011ECA0] + y0;
+    poly->x1 = g->unk_014[D_8011ECA0] + x1;
+    poly->y1 = g->unk_018[D_8011ECA0] + y1;
+    poly->x2 = g->unk_014[D_8011ECA0] + x2;
+    poly->y2 = g->unk_018[D_8011ECA0] + y2;
+    func_8009EED0(&D_800E8CA0[(D_8011ECA0 << 10) + z * 4], poly);
+}
