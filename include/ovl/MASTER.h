@@ -189,6 +189,9 @@ typedef struct MasterClubBits {
 /* T-10630: eleven resource IDs copied by the neighboring selector. */
 extern MasterWords11 D_8013C678;
 
+/* T-18600: called by func_80133374 before its definition. */
+void func_8013348C(void);
+
 /* T-13001: later helpers called by the typed-table scene handlers. */
 void func_8013B354(void);
 void func_8013B804(void);
