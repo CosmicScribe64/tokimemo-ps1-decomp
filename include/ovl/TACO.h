@@ -389,6 +389,8 @@ typedef struct TcPair2 {
     u8 b;
 } TcPair2;
 extern TcPair2 D_8015FBF8[];
+extern TcPair8 D_80160290[]; /* read at i - 1, T-16563 */
+extern TcPair2 D_801603A8[]; /* read at i - 1, T-16563 */
 void func_801490B4(void);
 
 void func_80149B7C(void);

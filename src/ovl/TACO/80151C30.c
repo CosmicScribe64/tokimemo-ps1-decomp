@@ -18,7 +18,39 @@ void func_80151C30(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80151D1C);
+s32 func_80151D1C(u32 arg0) {
+    s32 i;
+    s32 r;
+
+    if (arg0 < D_8015EDB4[16].unk3) {
+        for (i = 0x16; i != 0x1C; i++) {
+            func_801472D4(i, D_8015EDB4[16].unk2, D_80160290[i - 1].a, D_80160290[i - 1].b, D_801603A8[i - 1].a, D_801603A8[i - 1].b);
+        }
+        if (D_8015EDB4[16].unk2 % 10 == 0) {
+            func_801335A0(0, 0x502);
+        }
+        D_8015EDB4[16].unk2 = D_8015EDB4[16].unk2 + 1;
+        D_8015EDB4[16].unk3 = 0;
+        if (D_8015EDB4[16].unk2 % 3 == 0) {
+            r = func_800AE0D0();
+            func_80147C98(0, 0x16, (s16)((r & 0x1FF) - 0x100), (s16)((func_800AE0D0() & 0x1FF) - 0x100), 0x3E8, 0xC8, 0xC4);
+            r = func_800AE0D0();
+            func_80147C98(0, 0x17, (s16)((r & 0x1FF) - 0x100), (s16)((func_800AE0D0() & 0x1FF) - 0x100), 0x3E8, 0xC8, 0xC4);
+        }
+    }
+    if (D_8015EDB4[16].unk2 >= 0x1E) {
+        D_8015EDB4[16].unk2 = 0;
+        D_8015EDB4[16].unk3 = D_8015EDB4[16].unk2;
+        for (i = 0x16; i != 0x1C; i++) {
+            func_801472D4(i, 0, D_80160290[i - 1].a, D_80160290[i - 1].b, D_801603A8[i - 1].a, D_801603A8[i - 1].b);
+        }
+        if (D_8015EDB4[17].unk84[2] == 1) {
+            D_8015EDB4[16].unk84[2] = 1;
+        }
+    } else {
+        D_8015EDB4[16].unk3 = D_8015EDB4[16].unk3 + 1;
+    }
+}
 
 void func_80151F94(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 pad[15]; /* FAKE: unused slots above idx, the original frame is 56 bytes larger (T-3330 idiom, real source unknown). T-9370 */
