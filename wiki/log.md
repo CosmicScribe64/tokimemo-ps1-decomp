@@ -15207,3 +15207,19 @@ duplicate T-16200 line removed from [[index]]. Tickets [[tickets/T-16900-compile
 [[tickets/T-16910-cpw-census]], [[tickets/T-16920-gamestate-1093-type]] and
 [[tickets/T-16930-pointer-read-kept-copies]] moved to Done on [[kanban]]; the open misses and the functions not attempted
 (listed in the T-16930 ticket) go to the next inventory.
+
+## [2026-10-16] ticket | T-16554 In Progress
+
+[[tickets/T-16554-pt-taiiku-p4]] started (pilot stage B): package pt-taiiku-p4 of [[tickets/T-16550-taiiku-types-first]], 7 TAIIKU functions in `src/ovl/TAIIKU/80140810.c`, `80132000.c`, `80142240.c`, worktree `pt-taiiku-p4`.
+
+## [2026-10-16] ticket | T-16554 In Review
+
+[[tickets/T-16554-pt-taiiku-p4]]: 4 of 7 functions matched (`func_80132970`, `func_80143DD0`, `func_80143F50`, `func_8014280C`, 3,208 bytes), 2 guarded drafts in `src/ovl/TAIIKU/80140810.c` and `80142240.c` (33 and 20 differing instructions), `func_80142FB8` left as `INCLUDE_ASM`. Notes in [[matching-notes]] ("T-16554"), rows in [[data/t0018-cases]], rows added to [[register-cheatsheet]], results in [[taiiku-family-results]]. New header declarations in `include/ovl/TAIIKU.h`, two `MAIN_API_OVERRIDE_*` in `src/ovl/TAIIKU/80140810.c` with the matching guards in `include/main_api.h`.
+
+## [2026-10-16] build | T-16554 final checks
+
+[[tickets/T-16554-pt-taiiku-p4]]: clean rebuild 27/27, `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` OK on branch `pt-taiiku-p4` (about 83 minutes of agent time, 4 of 7 functions matched).
+
+## [2026-10-16] ticket | T-16554 Done
+
+[[tickets/T-16554-pt-taiiku-p4]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 of 7 functions matched (`func_80132970`, `func_80143DD0`, `func_80143F50`, `func_8014280C`, 3,208 bytes), 2 guarded drafts, `func_80142FB8` left as `INCLUDE_ASM`. Review fixes: ignored `&` before an array removed from the `pad_28` cast and the cast marked FAKE, `D_8014A1E8` typed `s16[]` (plain element access, still matches), override reason spelled out, FAKE comment tidied. Headers, globals and prototype checks OK, TAIIKU sha1 OK.

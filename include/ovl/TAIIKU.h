@@ -39,6 +39,7 @@ void func_80143C84(void);
 void func_80143CC0(void);
 void func_8014756C(void);
 
+extern s32 D_8014A124;
 extern s32 D_8014A128;
 extern s32 D_80148F00;
 extern s32 D_80148F04;
@@ -53,8 +54,10 @@ extern s32 D_8014A0D0;
 extern s32 D_8014A0D4;
 extern s32 D_8014A0D8;
 extern u8 D_801499D8;
+extern u8 D_8014A064;
 extern u8 D_8014A11C;
 
+extern u8 D_80148EC0[];
 extern s32 D_80148EF0;
 extern s32 D_80148EF4;
 extern s32 D_80148EF8;
@@ -192,6 +195,9 @@ extern TkS16x4 D_80149F8C;
 extern TkS16x4 D_8014A360;
 extern u8 D_801492AC[];
 extern u8 D_8014A1D4[];
+extern s32 D_8014A208[8]; /* tpage buffer ids, func_8014280C */
+extern s32 D_8014A228[11]; /* tpage buffer ids, func_8014280C */
+extern s16 D_8014A1E8[]; /* s16 table paired with D_8014A1D4 (func_80143DD0) */
 void func_801452D0(void);
 
 typedef struct {
@@ -771,6 +777,9 @@ void func_801400D8(void);
 void func_80140338(void);
 void func_8014038C(void);
 void func_80140414(void);
+void func_80145044(void);
+void func_801450C0(void);
+void func_80145148(void);
 void func_8013384C(); /* K&R definition in 80132BD0.c (u8 second parameter) */
 void func_80139FE4(void);
 void func_8013A314(void);
