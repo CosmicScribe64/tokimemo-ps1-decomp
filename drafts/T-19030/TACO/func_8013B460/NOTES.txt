@@ -1,0 +1,3 @@
+T-19030 best draft of TACO func_8013B460 (typed POLY_FT4, 332/332 instructions, 41 differing rows).
+Needs in src/ovl/TACO/8013B170.c: the body below under #ifdef NON_MATCHING. Left to match: s5/s6/s7 order
+(0x80, w, h), constants 0xFF/0xF0 in v0/v1, one store (y3) placement. See wiki/matching-notes.md, T-19030.
