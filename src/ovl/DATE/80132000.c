@@ -289,7 +289,7 @@ void func_801324A8(void) {
     D_8015B650 = 0x801B0170;
 }
 
-/* NON_MATCHING: T-11580, 1 differing instruction; the original adds the two products in the other operand order */
+/* NON_MATCHING: T-17202, 1 differing line; the original adds the two products in the other operand order (`P + a*six` fixes it but schedules andi before the lui of date_arrival) */
 #ifdef NON_MATCHING
 void func_801324DC(void) {
     u8 t;
@@ -2290,7 +2290,7 @@ void func_801395B4(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-17202, 4 differing instructions; the post-call unk_110A load and its sum take $v1/$a0 (the original keeps them in $v0/$t8) */
+/* NON_MATCHING: T-17202, 7 differing lines; the post-call unk_110A load takes $v1 (the original keeps it in $v0, the sum in $v0 and the andi in $t8, then `move v0,t8`) */
 #ifdef NON_MATCHING
 s32 func_80139664(void) {
     /* FAKE: unused byte local puts prev at 0x28(sp) as in the original. T-11580 */
@@ -2332,9 +2332,9 @@ s32 func_80139664(void) {
         func_80085A60();
         if (prev != D_800E6280.unk_110A) {
             D_800CA148 = 8;
-            return D_800E6280.unk_110A += 0x11;
+            D_800E6280.unk_110A += 0x11;
         }
-        return;
+        return D_800E6280.unk_110A;
     }
     func_8004284C();
 }
@@ -3114,7 +3114,7 @@ void func_8013BE98(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11140, 8 diff lines (chain assignment store scheduling and $t4 vs $v0 for second = 3 chain) */
+/* NON_MATCHING: T-17202, 4 differing lines; the stores of the 21C pair come after the 230/234 pair in the draft, before it in the original */
 #ifdef NON_MATCHING
 void func_8013BEB8(void) {
     if (D_800E6280.unk_F5F != 6) {
@@ -3129,7 +3129,8 @@ void func_8013BEB8(void) {
     }
     D_800CA234[0] = D_800CA22C[2] = D_800CA22C[0] = D_800CA22C[3] = 2;
     D_800CA21C[0] = D_800CA21C[1] = D_800CA21C[2] = 3;
-    D_800CA224[0] = D_800CA224[1] = D_800CA224[2] = 3;
+    /* FAKE: the u16 view of the row gives its constant 3 the original's $v0 (autotweak, T-17202). */
+    ((u16 *)D_800CA224)[0] = ((u16 *)D_800CA224)[1] = ((u16 *)D_800CA224)[2] = 3;
     func_8004284C();
 }
 #else
