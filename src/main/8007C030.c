@@ -1056,7 +1056,7 @@ void wait_sub_sub(s16 arg0) {
     }
 }
 
-/* NON_MATCHING: T-17001, 16 differing lines (T-10870): the original puts li a0,-40 before the sra of the incremented Y (as1 here schedules sra, sw, sw, li); T-17001 retried 144 source forms of the two sites (increment, casts, constant, separators), a separate y local and an s32 temp_s1 (s1 is lost), no gain. */
+/* NON_MATCHING: T-17001, 16 differing lines (T-10870): the original puts li a0,-40 before the sra of the incremented Y (as1 here schedules sra, sw, sw, li). as1 breaks ties by source line before readiness, so the original's -40 carries an earlier line than the narrowing and the string stores; the IDO 5.3 and 7.1 front ends give one statement one line. T-17001 tried 144 source forms in the function and 8 in a toy (constant locals, a second use, no assignment, an int y), no gain. */
 #ifdef NON_MATCHING
 s32 dialogue_speak_part(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 u8 *arg0;
