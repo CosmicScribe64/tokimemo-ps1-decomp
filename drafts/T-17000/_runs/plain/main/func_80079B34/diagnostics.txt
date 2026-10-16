@@ -1,0 +1,36 @@
+m2c.py: argument counts from the callees' asm: func_80079E4C 1, func_8007A008 0, func_8007A080 1, func_8007A6AC 1, func_8007ADD8 1, func_8007B358 1, func_8007B64C 0
+python3 failed:
+ -----^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.c, line 3080: Incompatible function return type for this function.
+ void func_8007B460(u16 arg0) {
+ ------------------^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.c, line 3089: redeclaration of 'func_8007B4E4'; previous declaration at line 2709 in file 'drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.c'
+ void func_8007B4E4(u16 arg0) {
+ -----^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.c, line 3089: Incompatible function return type for this function.
+ void func_8007B4E4(u16 arg0) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/plain/main/func_80079B34/work -o drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.o /tmp/asm_processorw1d6xjcc/preprocessed_231bc8ff40274049a5d50f24a1c8b9d1.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibi9ty6lb9/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.o drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.c, line 3072: Incompatible function return type for this function.
+ void func_8007B3DC(u16 arg0) {
+ ------------------^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.c, line 3081: redeclaration of 'func_8007B460'; previous declaration at line 2707 in file 'drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.c'
+ void func_8007B460(u16 arg0) {
+ -----^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.c, line 3081: Incompatible function return type for this function.
+ void func_8007B460(u16 arg0) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/plain/main/func_80079B34/work -o drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.o /tmp/asm_processoru7fsgeo_/preprocessed_4a58c3b1b27e4707b62ae3d67dc320ac.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibcxo5j_ay/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.o drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.c, line 3073: redeclaration of 'func_8007B3DC'; previous declaration at line 2705 in file 'drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.c'
+ void func_8007B3DC(u16 arg0) {
+ -----^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.c, line 3073: Incompatible function return type for this function.
+ void func_8007B3DC(u16 arg0) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/plain/main/func_80079B34/work -o drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.o /tmp/asm_processor1zqcwazi/preprocessed_593a15ce20994aa2aad0d65ed16af69f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhxe8orsq/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.o drafts/T-17000/_runs/plain/main/func_80079B34/work/guarded.c

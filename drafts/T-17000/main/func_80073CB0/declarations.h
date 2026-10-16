@@ -1,0 +1,14 @@
+extern s32 D_800B68C0;
+extern s32 D_800B68C2;
+extern s32 D_800B68C4;
+extern s32 D_800B68C6;
+extern s32 D_800B68C9;
+extern s32 D_800B68CB;
+extern s32 D_800B68D0;
+extern s32 D_800B68D2;
+extern s32 D_800B68D4;
+extern s32 D_800B68D6;
+extern s32 D_800B68D9;
+extern s32 D_800B68DB;
+extern u8 D_800B68CD;
+extern u8 D_800B68DD;

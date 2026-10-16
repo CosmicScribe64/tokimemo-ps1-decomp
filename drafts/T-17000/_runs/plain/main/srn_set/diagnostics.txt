@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: mod_set_gpu 7
+python3 failed:
+cfe: Error: drafts/T-17000/_runs/plain/main/srn_set/work/guarded.c, line 2735: 'NULL' undefined; reoccurrences will not be reported.
+                     var_v0 = NULL;
+ -----------------------------^
+cfe: Error: drafts/T-17000/_runs/plain/main/srn_set/work/guarded.c, line 2748: 'NULL' undefined; reoccurrences will not be reported.
+                         var_v0 = NULL;
+ ---------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/plain/main/srn_set/work -o drafts/T-17000/_runs/plain/main/srn_set/work/guarded.o /tmp/asm_processory2bsblgl/preprocessed_cbb77a6e20d642c49bb83d09217f85c8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibq_ffjqb5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/plain/main/srn_set/work/guarded.o drafts/T-17000/_runs/plain/main/srn_set/work/guarded.c

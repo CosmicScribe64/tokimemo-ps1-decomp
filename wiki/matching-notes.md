@@ -5767,3 +5767,14 @@ Conclusion: plain C reaches the original only through a separate symbol for the 
 - **Frame model used** (OLH functions with ten saved registers, frame pass included): the lowest local sits at `base0 = 0x74`; locals take words top-down in declaration order, an array below the scalars declared before it; a chain's hidden temporary is the lowest word; F is `base0 + hidden + locals` rounded up to 8. So `i, r, col` plus 64 bytes of arrays give F = 0xC0 and `d` at 0x74; the same without `col` and with a hidden temporary gives F = 0xC0 and `d` at 0x78.
 - **Method.** A scratch file under `build/scratch/` with many copies of the function, compiled with `python3 tools/cc.py <file> <out.o> ido 5.3` and read with `mips-linux-gnu-objdump -d` (grep `addiu sp,sp,-`, the array `addiu s5,sp,` and the `sb` lines), shows frame, array offsets and store registers for 12 to 72 variants per 30-second run. Faster than ninja plus funcdiff per variant.
 - `func_80132114` is declared `void func_80132114(void);` in `include/ovl/OLH.h` (it had no prototype; the caller's implicit `int` declaration clashed with the definition) and `D_80139EE0` is declared there as `s32` next to `D_8013A700`.
+## T-17000: main types-first pass
+
+- Switch on a `u8` GameState field whose original keeps the selector in `$v1` (IDO adds `move v0,v1`): the
+  byte view `switch (*(u8 *)&D_800E6280.unk_XXXX)` with the FAKE comment of TEL (T-10630) matched
+  `func_80075320`, `func_80053F04`, `func_80077E30`.
+- `func_80077E30`: the original's five-entry jump table needs `case 4:` written out next to `default:`.
+- `func_80075AF8`: `GameState *p; p += 4;` in the draft is a byte walk; the loop over the 11 girls of
+  `unk_66C` matches, with `*(u8 *)&D_800E6280.unk_F6C` for the unsigned read of the `s8` field.
+- `func_8007959C`: `D_800E7D4F |= 1` is a bit-field store (separate address and value registers); the
+  `Flags7D4F` view in `main_api.h` matches.
+- Details and the type map: [[main-family-results]] ("Types-first pass (T-17000)").

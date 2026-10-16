@@ -1,0 +1,1 @@
+m2c.py: argument counts from the callees' asm: get_h_yuukou_table 1, main_state_set 1, sndisp 3

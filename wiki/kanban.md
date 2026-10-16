@@ -142,6 +142,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-17200-types-first-date|T-17200 Types-first: DATE]]
 - [ ] [[tickets/T-17100-types-first-rpg_bat|T-17100 Types-first: RPG_BAT]]
 - [ ] [[tickets/T-19002-w3-d-p02|T-19002 Wave 3 package w3-d-p02]]
+- [ ] [[tickets/T-17000-types-first-main|T-17000 Types-first: main]]
 - [ ] [[tickets/T-16564-taco-types-first-p4|T-16564 Types-first pilot package pt-taco-p4]]
 - [ ] [[tickets/T-16930-pointer-read-kept-copies|T-16930 Read aggregate fields through a local pointer]]
 - [ ] [[tickets/T-16920-gamestate-1093-type|T-16920 GameState +0x1093 type and kept-copy census]]

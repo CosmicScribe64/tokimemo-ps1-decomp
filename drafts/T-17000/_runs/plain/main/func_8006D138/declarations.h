@@ -1,0 +1,11 @@
+extern s8 D_800E63A1;
+extern s8 D_800E63A3;
+extern s8 D_800E63A5;
+extern s8 D_800E63A6;
+extern s8 D_800E63A7;
+extern s8 D_800E63AA;
+extern s8 D_800E63AB;
+extern s8 D_800E63AD;
+extern s8 D_800E63AE;
+extern u8 D_800E62BE;
+extern u8 D_800E62BF;

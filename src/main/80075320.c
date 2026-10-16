@@ -1,7 +1,51 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075320);
+void func_80075320(void) {
+    /* FAKE: byte view of the u8 field avoids the redundant selector copy (move v0,v1), as in TEL
+     * (T-10630). T-17000 */
+    switch (*(u8 *)&D_800E6280.unk_1109) {
+    case 0x0:
+        func_80075468();
+        break;
+    case 0x1:
+        func_80075BE8();
+        break;
+    case 0x5:
+        func_80076F48();
+        break;
+    case 0x6:
+        holiday_club();
+        break;
+    case 0x7:
+        func_8007894C();
+        break;
+    case 0x10:
+        holiday_tel();
+        break;
+    case 0x20:
+        func_80077BE0();
+        break;
+    case 0x30:
+        func_8005B798();
+        break;
+    case 0x40:
+        func_8005D9B4();
+        break;
+    case 0xFE:
+        func_80076EC0();
+        break;
+    }
+    if (((DisplayActor44 *)D_8011ECD0)[27].unk_03 & 0x80) {
+        func_80067870();
+    }
+    message_window_show();
+    func_800578F4(0);
+    hizuke_show();
+    parameter_show();
+    func_8006BA40();
+    func_80066C08(1);
+}
 
 void func_80075468(void) {
     switch (D_800E6280.unk_110A) {
@@ -34,7 +78,32 @@ void func_80075A64(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075AF8);
+void func_80075AF8(void) {
+    s32 i;
+    s32 n;
+
+    if (appointment_find_today(D_800E6280.unk_03E, D_800E6280.unk_03F, D_800E6280.unk_040) <= 0) {
+        icon_can_use_set(9, 0);
+    }
+    icon_can_use_set(0xD, 0);
+    /* the original reads the s8 field unsigned here (lbu), as 8005A0B0.c does */
+    if (*(u8 *)&D_800E6280.unk_F6C == 2) {
+        icon_can_use_set(0xE, 0);
+    }
+    if (D_800E6280.unk_041 == 6) {
+        n = 0;
+        for (i = 0; i < 11; i++) {
+            if (D_800E6280.unk_66C[i].unk_03 & 1) {
+                n++;
+            }
+        }
+        if (n >= 11) {
+            icon_can_use_set(4, 0);
+        }
+    } else if ((D_800E6280.unk_0F4.h >> 12) == 11) {
+        icon_can_use_set(4, 0);
+    }
+}
 
 void func_80075BE8(void) {
     if (D_800E6280.unk_110A == 0) {
@@ -270,7 +339,37 @@ void func_80077C50(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077CA8);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077E30);
+void func_80077E30(void) {
+    magazine_base_show();
+    /* FAKE: byte view of the u8 field avoids the redundant selector copy (move v0,v1), as in TEL
+     * (T-10630) on the same field. T-17000 */
+    switch (*(u8 *)&D_800E6280.unk_110D) {
+    case 0:
+        xa_wait();
+        return;
+    case 1:
+        if (D_800B3CFC != 0) {
+            D_800E6280.unk_110D += 1;
+            return;
+        }
+        func_8004284C();
+        return;
+    case 2:
+        k_sub_reset();
+        k_sub_disp_start(0);
+        gnsx(D_800E6280.unk_0D4);
+        sndisp(D_800B6CF8[func_80077CA8()], 0, 0x1F);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 3:
+        xa_wait();
+        return;
+    case 4:
+    default:
+        func_8004284C();
+        return;
+    }
+}
 
 void magazine_exit(void) {
     func_8006D138();

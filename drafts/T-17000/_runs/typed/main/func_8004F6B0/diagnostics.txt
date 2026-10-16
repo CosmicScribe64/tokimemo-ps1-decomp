@@ -1,0 +1,20 @@
+m2c.py: argument counts from the callees' asm: func_80042A00 0, func_8009AC20 0, func_800AD950 1
+python3 failed:
+cfe: Error: drafts/T-17000/_runs/typed/main/func_8004F6B0/work/guarded.c, line 15: 'D_800E6280' undefined; reoccurrences will not be reported.
+     D_800E6280.unk_F88 = 0x80000;
+ ----^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/typed/main/func_8004F6B0/work -o drafts/T-17000/_runs/typed/main/func_8004F6B0/work/guarded.o /tmp/asm_processorxp_xxqej/preprocessed_585a4de1d8b740dab1921435ec5e38f9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibnqos65a4/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/typed/main/func_8004F6B0/work/guarded.o drafts/T-17000/_runs/typed/main/func_8004F6B0/work/guarded.c
+python3 failed:
+ ----------------------------------^
+cfe: Error: drafts/T-17000/_runs/typed/main/func_8004F6B0/work/guarded.c, line 55: Selector requires struct/union as left hand side
+     func_80097D90((s32) D_800E6280.unk_000, (s32) D_800E6280.unk_002, (s32) D_800E6280.unk_004, 0, 0);
+ ------------------------------------------------------------^
+cfe: Error: drafts/T-17000/_runs/typed/main/func_8004F6B0/work/guarded.c, line 55: Selector requires struct/union as left hand side
+     func_80097D90((s32) D_800E6280.unk_000, (s32) D_800E6280.unk_002, (s32) D_800E6280.unk_004, 0, 0);
+ --------------------------------------------------------------------------------------^
+cfe: Error: drafts/T-17000/_runs/typed/main/func_8004F6B0/work/guarded.c, line 57: Selector requires struct/union as left hand side
+     func_80098490(0, 0, 0, (s32) D_800E6280.unk_002);
+ -------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/typed/main/func_8004F6B0/work -o drafts/T-17000/_runs/typed/main/func_8004F6B0/work/guarded.o /tmp/asm_processor9mu0z197/preprocessed_d3a7f61e9a6c4d589a8fb41a681a352f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibc9x1nlhg/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/typed/main/func_8004F6B0/work/guarded.o drafts/T-17000/_runs/typed/main/func_8004F6B0/work/guarded.c

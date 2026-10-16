@@ -1,0 +1,13 @@
+m2c.py: argument counts from the callees' asm: appointment_find_today 3, func_8004500C 2, func_80053564 1, func_8006BDA8 1, get_icon_can_use 1
+python3 failed:
+cfe: Error: drafts/T-17000/_runs/typed/main/func_80076000/work/guarded.o.sjis.c, line 2741: 'NULL' undefined; reoccurrences will not be reported.
+             func_80045414(9, 0, NULL);
+ --------------------------------^
+cfe: Warning 749: drafts/T-17000/_runs/typed/main/func_80076000/work/guarded.o.sjis.c, line 2758: structure has no member named 'unk0'
+                         *(&D_800E6280.unk_69C[0].unk_01 + (D_800E6280.unk_71C * 4)) = D_800E6280.unk0;
+ ------------------------------------------------------------------------------------------------^
+cfe: Warning 749: drafts/T-17000/_runs/typed/main/func_80076000/work/guarded.o.sjis.c, line 2772: structure has no member named 'unk0'
+                     *(&D_800E6280.unk_69C[0].unk_01 + (D_800E6280.unk_71C * 4)) = D_800E6280.unk0;
+ --------------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/typed/main/func_80076000/work -o drafts/T-17000/_runs/typed/main/func_80076000/work/guarded.o /tmp/asm_processorej6sjyha/preprocessed_9e39d34b0c664203843b0b581773cfbb.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib3six501q/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/typed/main/func_80076000/work/guarded.o drafts/T-17000/_runs/typed/main/func_80076000/work/guarded.o.sjis.c

@@ -1,0 +1,19 @@
+m2c.py: argument counts from the callees' asm: memcpy 3
+python3 failed:
+cfe: Error: drafts/T-17000/_runs/typed/main/func_800552DC/work/guarded.c, line 3139: redeclaration of 'func_800552DC'; previous declaration at line 1823 in file 'drafts/T-17000/_runs/typed/main/func_800552DC/work/guarded.c'
+ void func_800552DC(s32 arg0) {
+ -----^
+cfe: Error: drafts/T-17000/_runs/typed/main/func_800552DC/work/guarded.c, line 3139: Incompatible function return type for this function.
+ void func_800552DC(s32 arg0) {
+ ------------------^
+cfe: Error: drafts/T-17000/_runs/typed/main/func_800552DC/work/guarded.c, line 3144: Unacceptable operand of a multiplicative operator.
+     temp_s0 = (D_800E6280 * 0xF00) + 0x200 + D_80123120;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/typed/main/func_800552DC/work -o drafts/T-17000/_runs/typed/main/func_800552DC/work/guarded.o /tmp/asm_processoriw9jq6jx/preprocessed_5d74f40df1004d569c8a09130b10d50b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhr9en_0c/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/typed/main/func_800552DC/work/guarded.o drafts/T-17000/_runs/typed/main/func_800552DC/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17000/_runs/typed/main/func_800552DC/work/guarded.c, line 3144: Unacceptable operand of a multiplicative operator.
+     temp_s0 = (D_800E6280 * 0xF00) + 0x200 + D_80123120;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/typed/main/func_800552DC/work -o drafts/T-17000/_runs/typed/main/func_800552DC/work/guarded.o /tmp/asm_processor1zme6jnu/preprocessed_f9ecd640140c4a1d9522ce72e430351b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibq333qybm/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/typed/main/func_800552DC/work/guarded.o drafts/T-17000/_runs/typed/main/func_800552DC/work/guarded.c

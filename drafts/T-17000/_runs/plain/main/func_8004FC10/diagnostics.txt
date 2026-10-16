@@ -1,0 +1,1 @@
+m2c.py: argument counts from the callees' asm: func_80050324 2, get_near_menu 3

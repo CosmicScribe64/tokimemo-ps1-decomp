@@ -1,0 +1,2 @@
+m2c.py: argument counts from the callees' asm: sprintf 4, strncpy 3
+RuntimeError: m2c-error: M2C_LWL

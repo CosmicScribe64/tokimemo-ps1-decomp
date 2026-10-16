@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: appointment_find_today 3, func_8006B014 1, func_8006B0C8 0, func_8006CF80 0, func_8006D00C 0, func_80071038 0, func_80071110 0, func_80071280 0, main_state_set 1, rand 0
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17000/_runs/typed/main/func_8007132C/work/guarded.o.sjis.c, line 3928: Type struct GsRec66C  of rhs of assignment expression is incompatible with type unsigned char  of lhs
+         temp_v0_4 = (&D_800E6280.unk_66C[0xB])[D_800E6280.unk0];
+ ------------------^
+cfe: Warning 749: drafts/T-17000/_runs/typed/main/func_8007132C/work/guarded.o.sjis.c, line 3928: structure has no member named 'unk0'
+         temp_v0_4 = (&D_800E6280.unk_66C[0xB])[D_800E6280.unk0];
+ ---------------------------------------------------------^
+cfe: Error: drafts/T-17000/_runs/typed/main/func_8007132C/work/guarded.o.sjis.c, line 3937: Unacceptable operand of &.
+         if (!(*(&D_800E6280.unk_1BC[0].unk_0C + (*(u8 *)((unsigned char *)var_a1_2 + (1693)) * 0x38)) & 2)) {
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/typed/main/func_8007132C/work -o drafts/T-17000/_runs/typed/main/func_8007132C/work/guarded.o /tmp/asm_processorzpkxp3ki/preprocessed_4d769ab5077a40e2a50c5e7e14910549.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibilej65wl/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/typed/main/func_8007132C/work/guarded.o drafts/T-17000/_runs/typed/main/func_8007132C/work/guarded.o.sjis.c

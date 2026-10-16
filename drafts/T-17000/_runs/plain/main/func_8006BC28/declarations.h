@@ -1,0 +1,10 @@
+extern s16 D_8011ECE4;
+extern s16 D_8011ECE6;
+extern s32 D_8011ED08;
+extern s8 D_8011ECD1;
+extern s8 D_8011ECD2;
+extern s8 D_8011ECD4;
+extern s8 D_8011ECD5;
+extern u8 *D_8011ECDC;
+extern u8 *D_8011ECE0;
+extern u8 *D_8011ED04;
