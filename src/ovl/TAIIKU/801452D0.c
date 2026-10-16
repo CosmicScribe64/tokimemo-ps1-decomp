@@ -643,7 +643,49 @@ void func_80147210(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147318);
+void func_80147318(void) {
+    s32 i;
+    s32 off;
+    DisplayActor44 *rec;
+
+    for (i = 0; i < 3; i++) {
+        switch (D_8014A454[i + 1].unk_0C) {
+        case 0:
+            if (D_8014A400[i].unk_04 >= 6) {
+                rec = &((DisplayActor44 *)D_8011ECD0)[i];
+                off = i * 0x13 + 0x13;
+                if (D_8014A400[i].unk_00 >= 7) {
+                    D_8014A400[i].unk_00 = 2;
+                    D_8014A400[i].unk_04 = 0;
+                } else {
+                    D_8014A400[i].unk_00 += 1;
+                    D_8014A400[i].unk_04 = 0;
+                }
+                if (D_8014A454[i + 1].unk_08 > 0) {
+                    rec[97].unk_18 = D_8014A4D4[D_8014A400[i].unk_00] + off;
+                } else if (D_8014A454[i + 1].unk_08 < 0) {
+                    rec[97].unk_18 = D_8014A4E4[D_8014A400[i].unk_00] + off;
+                } else {
+                    rec[97].unk_18 = D_8014A4C4[D_8014A400[i].unk_00] + off;
+                }
+            }
+            break;
+        case 1:
+            if (D_8014A454[i + 1].unk_0D < 0x32) {
+                ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_18 = i * 2 + 0x53;
+            }
+            break;
+        case 2:
+            if (D_8014A454[i + 1].unk_0D < 0x32) {
+                ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_18 = i * 2 + 0x54;
+            }
+            break;
+        default:
+            func_80046500();
+            break;
+        }
+    }
+}
 
 void func_80147520(void) {
     s32 var_s0;

@@ -578,6 +578,7 @@ extern TaiikuHalf8 D_8014A648;
 extern TaiikuHalf8 D_8014A658;
 extern u16 D_8014A4C4[8];
 extern u16 D_8014A4D8[6];
+extern u16 D_8014A4D4[8]; /* with D_8014A4C4 and D_8014A4E4: sprite frame offsets by animation step. T-16553 */
 extern u16 D_8014A4E4[8];
 #endif
 
