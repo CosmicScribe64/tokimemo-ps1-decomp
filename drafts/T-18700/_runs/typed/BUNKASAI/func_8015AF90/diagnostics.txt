@@ -1,0 +1,26 @@
+python3 failed:
+ ---------------------^
+cfe: Error: drafts/T-18700/_runs/typed/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 2923: 'sp3C' undefined; reoccurrences will not be reported.
+     sp3C[0].unk0 = (s32) D_80160B3C.text[0];
+ ----^
+cfe: Warning 689: drafts/T-18700/_runs/typed/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 2946: Unacceptable operand of == or !=
+         } while (var_v0 != &D_800E6280.unk_1BC[3].unk_04);
+ ------------------------^
+cfe: Error: drafts/T-18700/_runs/typed/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 3005: 'sp' undefined; reoccurrences will not be reported.
+         set_kanji_string(-0x48, 0x42, 0, *(s32 *)((unsigned char *)(sp + (D_80122EBC * 4)) + (120)), 0);
+ --------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18700/_runs/typed/BUNKASAI/func_8015AF90/work -o drafts/T-18700/_runs/typed/BUNKASAI/func_8015AF90/work/guarded.o /tmp/asm_processoratvft9ib/preprocessed_14a43e5a9eaf46ceb5d21206b56725d8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib45xq2uxu/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18700/_runs/typed/BUNKASAI/func_8015AF90/work/guarded.o drafts/T-18700/_runs/typed/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c
+python3 failed:
+ --------------------^
+cfe: Error: drafts/T-18700/_runs/typed/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 2923: 'sp4C' undefined; reoccurrences will not be reported.
+     *(M2cBlock2C *)(&sp4C[0]) = *(M2cBlock2C *)(&D_80160B10);
+ ---------------------^
+cfe: Error: drafts/T-18700/_runs/typed/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 2924: 'sp3C' undefined; reoccurrences will not be reported.
+     sp3C[0].unk0 = (s32) D_80160B3C.text[0];
+ ----^
+cfe: Warning 689: drafts/T-18700/_runs/typed/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 2947: Unacceptable operand of == or !=
+         } while (var_v0 != &D_800E6280.unk_1BC[3].unk_04);
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18700/_runs/typed/BUNKASAI/func_8015AF90/work -o drafts/T-18700/_runs/typed/BUNKASAI/func_8015AF90/work/guarded.o /tmp/asm_processoruhey1h5o/preprocessed_4f337e9e6e5e4bbdb52ff888d44390fc.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib6jw83im6/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18700/_runs/typed/BUNKASAI/func_8015AF90/work/guarded.o drafts/T-18700/_runs/typed/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c

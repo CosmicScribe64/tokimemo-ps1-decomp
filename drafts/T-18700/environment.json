@@ -1,0 +1,8 @@
+{
+ "base": "",
+ "files": {
+  "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+  "include/main_api.h": "f85487790c8f5b6f619918520062461de5f39ff93dcc832f36db2c3d54be037d",
+  "include/ovl/BUNKASAI.h": "09caa08081801210e3a2582b285b930c17a798d48b2513695db696b658e92081"
+ }
+}
