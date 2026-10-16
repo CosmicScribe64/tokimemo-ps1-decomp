@@ -428,4 +428,53 @@ void func_8014CE14(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014ADD0", func_8014D11C);
+void func_8014D11C(u8 *dst, u8 *name, u8 *label, s32 num, u8 *suffix) {
+    u32 quot;
+    s32 place;
+    s32 base;
+
+    func_800AE0F0(dst, name);
+    func_800AE100(dst, label);
+    if (num == 0) {
+        func_800AE100(dst, "０");
+    }
+    base = 10;
+    for (place = 0x3E8; place > 0; place = place / base) {
+        quot = num / place;
+        if (quot != 0) {
+            switch (quot % base) {
+            case 0:
+                func_800AE100(dst, "０");
+                break;
+            case 1:
+                func_800AE100(dst, "１");
+                break;
+            case 2:
+                func_800AE100(dst, "２");
+                break;
+            case 3:
+                func_800AE100(dst, "３");
+                break;
+            case 4:
+                func_800AE100(dst, "４");
+                break;
+            case 5:
+                func_800AE100(dst, "５");
+                break;
+            case 6:
+                func_800AE100(dst, "６");
+                break;
+            case 7:
+                func_800AE100(dst, "７");
+                break;
+            case 8:
+                func_800AE100(dst, "８");
+                break;
+            case 9:
+                func_800AE100(dst, "９");
+                break;
+            }
+        }
+    }
+    func_800AE100(dst, suffix);
+}
