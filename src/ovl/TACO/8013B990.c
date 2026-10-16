@@ -25,7 +25,56 @@ void func_8013B990(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B990", func_8013BAC4);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B990", func_8013C1F4);
+/* FAKE: s32 with no return keeps the loop counter init (v0) live at the exit (void drops two
+ * instructions); the hit in the second loop returns before it. T-19006. */
+s32 func_8013C1F4(void) {
+    u32 i;
+    s32 a;
+    s32 b;
+    u8 value;
+    u8 value2;
+    D_8015F500 = 0;
+    if (!(D_8015EDB4->unk2 & 0x80)) {
+        for (i = 0; i < 16; i++) {
+            if (D_8015EB30[i].unk13 & 0x80) {
+                a = func_800AE0C0(D_8015EB30[i].unk0 - D_8015EDB4->unk74);
+                b = func_800AE0C0(D_8015EB30[i].unk2 - D_8015EDB4->unk76);
+                if (func_800AE0C0(D_8015EB30[i].unk4 - D_8015EDB4->unk78) < 0x100 && b < 0x80 && a < 0x80) {
+                    D_8015EB30[i].unk13 = 0;
+                    func_801335A0(1, 0x506);
+                    D_8015EDB4->unk2 |= 4;
+                    value = D_8015EDB4->unk84[1];
+                    if (value >= 5) {
+                        D_8015EDB4->unk84[1] = value - 4;
+                    } else {
+                        D_8015EDB4->unk84[1] = 0;
+                    }
+                    D_8015EDB4->unk7A = 0x10;
+                    break;
+                }
+            }
+        }
+    }
+    if (!(D_8015EDB4[8].unk2 & 0x80)) {
+        for (i = 0; i < 16; i++) {
+            if (D_8015EB30[i].unk13 & 0x80) {
+                a = func_800AE0C0(D_8015EB30[i].unk0 - D_8015EDB4[8].unk74);
+                b = func_800AE0C0(D_8015EB30[i].unk2 - D_8015EDB4[8].unk76);
+                if (func_800AE0C0(D_8015EB30[i].unk4 - D_8015EDB4[8].unk78) < 0x100 && b < 0x80 && a < 0x80) {
+                    D_8015EB30[i].unk13 = 0;
+                    value2 = D_8015EDB4[8].unk84[1];
+                    if (value2 >= 5) {
+                        D_8015EDB4[8].unk84[1] = value2 - 4;
+                    } else {
+                        D_8015EDB4[8].unk84[1] = 0;
+                    }
+                    D_8015EDB4[8].unk7A = 0x10;
+                    return;
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B990", func_8013C440);
 
@@ -58,13 +107,13 @@ void func_8013CE70(void) {
  * original result/address registers. T-10010. */
 s32 func_8013CE78(void) {
     u32 i;
-    u8 value;
+    u8 value2;
     for (i = 16; i < 64; i++) {
         if (((i + D_8015EDB4)->unk0[1] & 0x80) && ((i + D_8015EDB4)->unk84[3] & 1)) {
-            value = (i + D_8015EDB4)->unk84[1];
-            if (value != 0 && (i + D_8015EDB4)->unk84[0] != 0) {
-                if (value >= 3U) {
-                    (i + D_8015EDB4)->unk84[1] = value - 2;
+            value2 = (i + D_8015EDB4)->unk84[1];
+            if (value2 != 0 && (i + D_8015EDB4)->unk84[0] != 0) {
+                if (value2 >= 3U) {
+                    (i + D_8015EDB4)->unk84[1] = value2 - 2;
                 } else {
                     (i + D_8015EDB4)->unk84[1] = 0;
                 }
