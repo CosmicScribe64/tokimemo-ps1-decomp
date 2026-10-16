@@ -26,5 +26,6 @@ adapted from T-16550, T-16560 and T-18100 into `drafts/T-18500/redraft.py`), and
 ## Notes
 
 Ownership: `src/ovl/BUNKAKEN/*.c`, `include/ovl/BUNKAKEN.h`; additions only in `include/game.h` and `include/main_api.h`.
+Start: 12 unmatched BUNKAKEN functions (14,256 bytes by `tools/siblings.py`), 1 of them a guarded draft (`func_801428D0`).
 
 ## Comments
