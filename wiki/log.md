@@ -16479,3 +16479,23 @@ Clean rebuild of the w3-rpg-bat-p05 worktree (`rm -rf build && configure.py && n
 ## [2026-10-16] ticket | T-17105 Done
 
 [[tickets/T-17105-w3-rpg-bat-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a stray blank line at the end of `src/ovl/RPG_BAT/80157AE0.c`; stale counts in [[index]] and [[matching-notes]]); rebuild of RPG_BAT OK (sha1 OK, headers OK, globals OK, protos OK). 3 of 5 functions matched (`func_80159B40` 528 bytes, `func_80158C4C` 1,056 bytes, `func_80159214` 1,036 bytes); `func_8015A744` (12 rows) and `func_8015A8B4` (28 rows) stay guarded. Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17107 In Progress
+
+[[tickets/T-17107-w3-rpg-bat-p07]] created and started: wave-3 package w3-rpg-bat-p07 (RPG_BAT `func_8013B5B0`, `func_8013EA60`, `func_8013BBF8`, `func_8013E54C`), worktree `w3-rpg-bat-p07` from `w2-good`. Links [[tickets/T-17100-types-first-rpg_bat]].
+
+## [2026-10-16] build | T-17107 RPG_BAT package w3-rpg-bat-p07: 2 of 4 matched
+
+[[tickets/T-17107-w3-rpg-bat-p07]]: `func_8013BBF8` (688 B) and `func_8013EA60` (1,100 B) matched in plain C in `src/ovl/RPG_BAT/8013B5B0.c` and `src/ovl/RPG_BAT/8013E4D0.c`; `func_8013B5B0` (25 lines, promoted state byte `$v0` vs `$v1`) and `func_8013E54C` (16 lines, loop preheader order) guarded. New types `RpgPadSeq` (`D_8015EBEC`, four words) and `RpgGauge` (view over `D_8015EBC0..D_8015EBD4`) in `include/ovl/RPG_BAT.h`. Notes in [[matching-notes]], [[register-cheatsheet]], [[rpg-bat-family-results]], rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-17107 In Review
+
+[[tickets/T-17107-w3-rpg-bat-p07]] In Progress to In Review (kanban card moved); matched count 2 of 4. Review against `CODING_STANDARDS.md` pending.
+
+## [2026-10-16] ticket | T-17107 closer pass on func_8013E54C
+
+[[tickets/T-17107-w3-rpg-bat-p07]] stays In Review. RPG_BAT `func_8013E54C` is still guarded at 16 lines (`src/ovl/RPG_BAT/8013E4D0.c`, comment updated). ugen emits the strength-reduction init `la start` before the hoisted `la limit`; swapping only those two binasm records reproduces the original's case 3, so the gap is uopt's preheader order. About 60 source shapes and a 120-second autotweak kept the order. No matched two-`la` loop in the tree (190) has the limit first. Notes in [[matching-notes]], [[data/t0018-cases]] and [[register-cheatsheet]]; scripts in `drafts/T-17107/binasm-order/`.
+
+## [2026-10-16] ticket | T-17107 Done
+
+[[tickets/T-17107-w3-rpg-bat-p07]] reviewed against `CODING_STANDARDS.md`: one finding (the `FAKE` note of `RPG_GAUGE` in `include/ovl/RPG_BAT.h` now starts its own comment), fixed. In Review to Done (kanban card moved). Matched 2 of 4 (`func_8013BBF8`, `func_8013EA60`); `func_8013B5B0` and `func_8013E54C` stay guarded.

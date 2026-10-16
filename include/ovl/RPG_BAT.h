@@ -158,6 +158,8 @@ extern s32 D_8015EE40;
 s32 func_8013C1CC(void);
 void func_8013C2A0(void);
 void func_8013C32C(void);
+void func_8013BEA8(void);
+s32 func_8013B910(void);
 void func_8013C890(void);
 void func_8013CC90(void);
 void func_801439E0();
@@ -167,9 +169,15 @@ void func_8014C4FC(void);
 void func_8014C804(void);
 void func_8014CB0C(void);
 void func_8014CE14(void);
-extern s32 D_8015EBF0;
-extern s32 D_8015EBF4;
-extern s32 D_8015EBF8;
+/* Pad-sequence matcher state of func_8013BBF8, one aggregate. The original keeps the store of unk_00 in front
+ * of the load of unk_04; four separate scalars let the build sink that store into the branch delay slot (T-17107). */
+typedef struct RpgPadSeq {
+    /* 0x00 */ s32 unk_00; /* pad word read this frame (D_8015EBEC) */
+    /* 0x04 */ s32 unk_04; /* pad word of the previous change (D_8015EBF0) */
+    /* 0x08 */ s32 unk_08; /* position in the D_8015E578 sequence (D_8015EBF4) */
+    /* 0x0C */ s32 unk_0C; /* position in the D_8015E550 sequence (D_8015EBF8) */
+} RpgPadSeq; /* size 0x10 */
+extern RpgPadSeq D_8015EBEC;
 void func_8013BBF8();
 /* Battle counters; one struct because as1 then keeps the access order of the original (T-4030, func_801452C0). */
 typedef struct RpgStat {
@@ -329,6 +337,16 @@ extern s32 D_8015EBC0;
 extern s32 D_8015EBC4;
 extern s32 D_8015EBC8;
 #ifndef RPG_BAT_OVERRIDE_D_8015EDAC
+/* The six words D_8015EBC0..D_8015EBD4 are one aggregate; func_8013EA60 only matches when it reads them through
+ * one struct (the original loads the counter above the flag-byte store, scalars give the other order; T-17107). */
+typedef struct RpgGauge {
+    /* 0x00 */ s32 cur[3];  /* D_8015EBC0, D_8015EBC4, D_8015EBC8 */
+    /* 0x0C */ s32 flag[3]; /* D_8015EBCC, D_8015EBD0, D_8015EBD4 */
+} RpgGauge; /* size 0x18 */
+/* FAKE: interim view. The scalar names above stay for the files that still use them (801504E0.c, 8014DF60.c,
+ * 80154430.c, func_8013C1CC), so RPG_GAUGE reaches the aggregate through the first symbol until those are
+ * migrated to a real `RpgGauge D_8015EBC0`. T-17107 */
+#define RPG_GAUGE ((RpgGauge *)&D_8015EBC0)
 extern u32 D_8015EDAC;
 #endif
 void func_80136A9C(void);
