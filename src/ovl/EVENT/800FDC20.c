@@ -342,7 +342,24 @@ void func_800FF5E4(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FF61C);
+void func_800FF61C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl48 tbl;
+
+    tbl = D_80121AF8;
+    func_80078950("%d\n", D_800B1AF6);
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+    if (D_800EECE0 != 0) {
+        D_800EB02B |= 0x80;
+        D_800EB02F = D_800F19AB;
+    } else {
+        D_800EB02B &= 0xFF7F;
+    }
+    if (D_800B1AF6 >= 0x10 && D_800B1AF6 < 0x13) {
+        func_8010AFE4();
+    }
+}
 
 void func_800FF710(void) {
     func_80015D28(0x45, 0x801B0000, 0x7FA4);
