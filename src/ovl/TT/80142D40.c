@@ -762,9 +762,7 @@ void func_80144854(void) {
     }
 }
 
-/* NON_MATCHING: T-11500, T-11620, 3 instructions (6 diff lines): the two stores of the constant 9 (sb 0x55 and sb 0x92 via D_80158A78) use $v0 here, the original holds 9 in $a0. T-11510: the 9 is a ugen temp (used twice), which takes the lowest free of v0/v1/a0, so the original has v0/v1 busy in that block for an unknown reason; the return type makes no difference (void == s32). */
-#ifdef NON_MATCHING
-s32 func_80144A04(u8 *arg0) {
+void func_80144A04(u8 *arg0) {
     u8 *p;
     u8 *w;
     s32 i;
@@ -789,12 +787,9 @@ s32 func_80144A04(u8 *arg0) {
             *(s32 *)(arg0 + 0x28) = 0;
             *(s16 *)(arg0 + 0x62) = 0;
             *(u16 *)(arg0 + 4) = 0x90;
-            arg0[0xD] = 0;
-            arg0[0xE] = 0;
-            arg0[0xF] = 0;
-            *(s16 *)(arg0 + 6) = 0;
-            *(s16 *)(arg0 + 8) = 0;
-            *(s16 *)(arg0 + 0xA) = 0;
+            /* FAKE: chained stores; the reloads keep dead ranges in v0/v1 (no code, as the function is void), so the shared 9 lands in a0 as in the original. T-11850 */
+            arg0[0xD] = arg0[0xE] = arg0[0xF] = 0;
+            *(u16 *)(arg0 + 6) = *(u16 *)(arg0 + 8) = *(u16 *)(arg0 + 0xA) = 0; /* FAKE: u16 view, see above. T-11850 */
             break;
         case 2:
             func_80133AD0(0x602);
@@ -877,9 +872,6 @@ s32 func_80144A04(u8 *arg0) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80144A04);
-#endif
 
 void func_80144CA8(void) {
     u8 *q;
