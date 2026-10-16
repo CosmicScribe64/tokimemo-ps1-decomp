@@ -3111,9 +3111,9 @@ void func_8013BE98(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-17202, 4 differing lines; the stores of the 21C pair come after the 230/234 pair in the draft, before it in the original */
-#ifdef NON_MATCHING
 void func_8013BEB8(void) {
+    s32 x;
+
     if (D_800E6280.unk_F5F != 6) {
         func_8004284C();
         D_800E6280.unk_110A += 8;
@@ -3124,15 +3124,14 @@ void func_8013BEB8(void) {
         func_80042940(0x2D);
         return;
     }
-    D_800CA234[0] = D_800CA22C[2] = D_800CA22C[0] = D_800CA22C[3] = 2;
+    x = D_800CA22C[0] = D_800CA22C[3] = 2;
     D_800CA21C[0] = D_800CA21C[1] = D_800CA21C[2] = 3;
+    D_800CA22C[2] = x;
+    D_800CA234[0] = x;
     /* FAKE: the u16 view of the row gives its constant 3 the original's $v0 (autotweak, T-17202). */
     ((u16 *)D_800CA224)[0] = ((u16 *)D_800CA224)[1] = ((u16 *)D_800CA224)[2] = 3;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013BEB8);
-#endif
 
 void func_8013BF94(void) {
     if (D_800CA2F8 == 0x12) {
