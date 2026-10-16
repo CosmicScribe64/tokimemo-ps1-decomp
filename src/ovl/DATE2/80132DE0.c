@@ -1,5 +1,23 @@
 #include "common.h"
 #include "ovl/DATE2.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80132DE0.data", D_8013A4C0);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80132DE0.data", D_8013A4C4);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80132DE0.data", D_8013A4C8);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80132DE0.data", D_8013A5B0);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80132DE0.data", D_8013A5B4);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80132DE0.data", D_8013A5B8);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80132DE0.data", D_8013A5BC);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80132DE0.data", D_8013A5C0);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80132DE0.data", D_8013A5C4);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80132DE0.data", D_8013A5C8);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80132DE0.data", D_8013A5CC);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80132DE0.data", D_8013A5D0);
+s16 D_8013A5D4[3] = { 0, 0, 0 };
+s16 D_8013A5DC[3] = { 0, 0, 0 };
+s16 D_8013A5E4[3] = { 0, 0, 0 };
+s16 D_8013A5EC[3] = { 0, 0, 0 };
 
 typedef struct {
     void (*f[44])();

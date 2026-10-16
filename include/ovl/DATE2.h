@@ -43,11 +43,12 @@ extern s32 D_8013A5B0, D_8013A5B4, D_8013A5B8, D_8013A5BC, D_8013A5C0, D_8013A5C
 extern s32 D_8013A404, D_8013A408, D_8013A40C;
 
 void func_801370E4(void);
+void func_801365DC(s32 arg0);
 
 void func_801348F0();
 void func_80133AF0();
 void func_801350A4();
-void func_80135E50();
+s32 func_80135E50();
 extern s32 D_8013A380;
 extern s32 D_8013A388;
 extern s32 D_8013A38C;
