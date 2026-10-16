@@ -15374,3 +15374,10 @@ Opus closer on [[tickets/T-16564-taco-types-first-p4]]: `func_80137D00` stays gu
 ## [2026-10-16] ticket | T-16564 Done
 
 [[tickets/T-16564-taco-types-first-p4]] In Review to Done after the code review against `CODING_STANDARDS.md`: 6 functions matched (5,852 bytes), 2 guarded. One finding fixed (the `func_801557E8` operand-order comment in `src/ovl/TACO/80154960.c` now starts with `FAKE`). TACO unit sha1 OK after the rebuild.
+
+## [2026-10-16] ticket | T-16990 Wave 3 conveyor opened
+
+Pilot T-16550/T-16560 done: 64 matches / 41.4 KB in about 20 agent-hours (types passes 2 h Opus; packages 14 h Sonnet;
+closers 4 h Opus with 10 matches), 2.0 KB per agent-hour, at or above wave 2 (Opus). Main 6,076/6,958 (67.2%).
+Opened [[tickets/T-16990-wave-3-conveyor]]: types-first passes on 19 units and 32 direct packages feeding a 7-worker
+pool; merges run in parallel through a locked, self-cleaning merge script.
