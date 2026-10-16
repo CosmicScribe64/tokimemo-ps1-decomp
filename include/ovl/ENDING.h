@@ -187,7 +187,7 @@ extern s32 D_8013CAE0;
 extern s32 D_8013CAE4;
 extern s32 D_8013CAE8;
 extern s32 D_8013CAEC;
-extern s32 D_8013CAF0;
+extern s32 **D_8013CAF0; /* T-18300: points at a block whose first word is a message pointer table (func_8013A2E8 reads (*D_8013CAF0)[k]) */
 extern s32 D_8013CAF4;
 extern s32 D_8013CAF8;
 extern s32 D_8013CAFC;
@@ -509,6 +509,17 @@ extern s32 D_8013C348;
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 void func_80132400(void);
 
+/* T-18300: tables that unmatched functions copy whole to the stack (lw/sw runs); the element type comes
+ * from the reads of the copy (lh with a halfword index). */
+typedef struct EdShorts14 {
+    s16 v[14];
+} EdShorts14; /* size 0x1C */
+typedef struct EdShorts18 {
+    s16 v[18];
+} EdShorts18; /* size 0x24 */
+extern EdShorts18 D_8013C3B0; /* func_801330E4: chance per level 0..0x11, compared with rand() % 256 */
+extern EdShorts14 D_8013CA60; /* func_80135F4C: x positions of the 14 sprites */
+extern EdShorts14 D_8013CA7C; /* func_80135F4C: y positions of the 14 sprites */
 #endif /* OVL_ENDING_H */
 
 #ifndef OVL_ENDING_TIMER_T9780
