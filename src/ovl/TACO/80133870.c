@@ -235,7 +235,54 @@ s32 func_80134500(void) {
     }
 }
 
+/* NON_MATCHING: T-16562, 12 differing lines; the true path matches. In the else path the original keeps the address of D_800E7D10 in $v0 for the byte read-modify-write at +0x40 (lbu/ori/sb through v0), IDO folds it into two lui/%lo addresses because a single access type makes it a plain global variable there */
+#ifdef NON_MATCHING
+/* Settings word at 0x800E7D50 (= D_800E7D10 + 0x40), one view per load width of the original. T-16562 */
+typedef struct TcSetW {
+    u32 pad0 : 2;
+    u32 mode : 1;
+    u32 sel : 2;
+} TcSetW;
+typedef struct TcSetH {
+    u16 pad0 : 12;
+    u16 hi : 4;
+} TcSetH;
+typedef struct TcSetB {
+    u8 b0;
+    u8 lo : 4;
+} TcSetB;
+typedef struct TcSetF {
+    u8 flag : 1;
+} TcSetF;
+
+void func_801345D4(void) {
+    u8 *base;
+
+    base = (u8 *)&D_800E7D10;
+    if (D_800E7D50 & 1) {
+        D_8015EDF8 = *(s32 *)((u8 *)&D_800E7D50 + 0xC);
+        D_8015EDFC = *(s32 *)((u8 *)&D_800E7D50 + 0x10);
+        D_8015EE00 = *(s32 *)((u8 *)&D_800E7D50 + 0x14);
+        D_8015EDD8 = ((TcSetW *)(base + 0x40))->mode;
+        D_8015EDDC = ((TcSetW *)(base + 0x40))->sel;
+        D_8015EDE0 = ((TcSetH *)(base + 0x40))->hi;
+        D_8015EDE4 = ((TcSetB *)(base + 0x40))->lo;
+        func_800AE090(D_8015EE04, (u8 *)&D_800E7D50 + 2, 3);
+        func_800AE090(D_8015EE08, (u8 *)&D_800E7D50 + 5, 3);
+        func_800AE090(D_8015EE0C, (u8 *)&D_800E7D50 + 8, 3);
+        return;
+    }
+    ((TcSetF *)(base + 0x40))->flag = 1;
+    D_8015EDF8 = 0x2EA694;
+    D_8015EDFC = 0x1F6454;
+    D_8015EE00 = 0x102214;
+    func_800AE0F0(D_8015EE04, "K.K");
+    func_800AE0F0(D_8015EE08, "K.T");
+    func_800AE0F0(D_8015EE0C, "N.S");
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_801345D4);
+#endif
 
 void func_8013474C(void) {
     TcObj50 *p;
