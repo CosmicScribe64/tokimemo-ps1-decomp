@@ -1048,6 +1048,7 @@ extern u8 D_800F5AB1;
 extern u8 D_800F5AB2;
 extern u8 D_800F5ACD;
 extern u8 D_800F62CF;
+extern s32 D_800F62F0; /* T-17600: GYOZI func_8013C774 tests bits 0x100 and 0x800 */
 extern s8 D_800F6412;
 extern s32 D_800F6458;
 extern s32 D_800F6468;
