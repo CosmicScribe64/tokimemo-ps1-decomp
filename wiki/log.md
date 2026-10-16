@@ -14940,3 +14940,7 @@ Merged branch w1-p13 (club_list_menu and func_80067C28 matched) onto w2-good in 
 ## [2026-10-15] ticket | T-11690 to In Review (w2-r13)
 
 [[tickets/T-11690-w1-main-800674b0]] moved to In Review. Wave 2 matched 1 function, `func_8006A2CC` (3112 bytes), for 3 in total with the wave 1 matches `club_list_menu` and `func_80067C28`. Guarded drafts: `func_8006BC28` (17 lines), `func_800676AC` (11 lines). Notes in [[matching-notes]] ("T-11690"), new rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-11690 Done
+
+Code review of w2-r13 against CODING_STANDARDS.md: 4 findings (unmarked fakematches in `func_80067C28` and `func_8006A2CC`, a FAKE ticket reference, an indentation slip), all fixed in the worktree, build checks OK. [[tickets/T-11690-w1-main-800674b0]] moved to Done with 3 functions matched (`club_list_menu`, `func_80067C28`, `func_8006A2CC`); guarded drafts `func_8006BC28` and `func_800676AC`.
