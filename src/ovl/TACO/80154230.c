@@ -149,8 +149,7 @@ loop_1:
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154230", func_8015443C);
 #endif
 
-/* NON_MATCHING: T-16562, 8 differing lines (earlier T-10310); same entry copy of the pointer parameter as func_80154230 */
-#ifdef NON_MATCHING
+/* Header walked in two steps for the entry copy, as in func_80154230. T-16562 */
 void func_801546FC(arg0, arg1, arg2, arg3)
 u32 *arg0;
 u16 arg1;
@@ -164,11 +163,12 @@ s32 arg3;
     s32 count;
     u32 limit;
 
-    count = arg0[1];
-    limit = arg0[3];
+    arg0++;
+    count = arg0[0];
+    limit = arg0[2];
     command0 = 0x24000507;
     command1 = 0x34000609;
-    arg0 += 9;
+    arg0 += 8;
 loop_1:
     if (func_8015431C((u32)arg0) != 0) {
         command = arg0[0];
@@ -187,9 +187,6 @@ loop_1:
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154230", func_801546FC);
-#endif
 
 /* The record word is read as *p each time (no local copy) and r/g/b are first the raw shifted/masked word, then the clamped sum: the shifts stay uopt values in $v1/$a0/$a1 as in the original. T-16562 */
 void func_80154820(s32 arg0, s32 arg1) {
