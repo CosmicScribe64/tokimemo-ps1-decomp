@@ -14,7 +14,7 @@ void func_8013CC90(void) {
     }
     if (!(D_8015ED98 & 0xFF) && !(D_8015EDC4 & 0xFF) && !(D_8015EE1C & 0xFF) && !(D_8015EDF0 & 0xFF) && ((D_8015ED98 >> 0x18) != 0)) {
         func_8013D030();
-        /* scalar view of the word: a plain read here takes $v0 where the original has $v1 for the hi constant (T-17117) */
+        /* FAKE: u32 view through the address; a plain read takes $v0 for the lui constant where the original has $v1; source unknown. T-17117 */
         switch (*(u32 *)&D_8015ED98 & 0xFF000000) {
         case 0x1000000:
             D_8015ED98 = 1;
