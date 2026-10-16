@@ -15572,3 +15572,6 @@ Clean build 27/27 (all unit sha1 OK, TACO `1419e93c...`), `check_headers`, `migr
 
 ## [2026-10-16] ticket | T-19011 In Review
 [[tickets/T-19011-w3-d-p11]] In Progress to In Review: 0 of 3 functions matched, 2 guarded drafts, 1 left. Awaiting the code review against `CODING_STANDARDS.md` and the final checks.
+
+## [2026-10-16] build | T-19011 final checks
+Clean build 27/27 (all unit sha1 OK, TACO included), `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK on branch w3-d-p11. See [[tickets/T-19011-w3-d-p11]].
