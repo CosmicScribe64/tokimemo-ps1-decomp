@@ -263,7 +263,31 @@ void func_80150BCC(void) {
     D_800B5BD4 = 0xF;
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80150C78);
+/* Sixteen grey lines through func_80049FF0. All nine s-registers are taken, so uopt keeps col1 in
+ * memory: its stack home (0x64) and the frame size follow the declaration order. */
+void func_80150C78(void) {
+    s32 col0;
+    s16 i;
+    s32 col1;
+    GameState *g = &D_800E6280;
+    u32 grey;
+    s32 offset;
+
+    grey = D_800B593C / 10;
+    offset = 0;
+    col1 = col0 = (grey * 19 << 16) | (grey * 19 << 8) | (grey * 19);
+    if (g->unk_10F8 % 45 < 15) {
+        offset = 0xAA;
+    } else if (g->unk_10F8 % 45 < 30) {
+        offset = 0x155;
+    }
+    for (i = 0; i < 16; i++) {
+        func_80049FF0((s16)(func_800A0140((i << 8) + offset) / 20),
+                      (s16)(func_800A0070((i << 8) + offset) / 20 - 30),
+                      (s16)(func_800A0140((i << 8) + offset) / 60),
+                      (s16)(func_800A0070((i << 8) + offset) / 60 - 30), col0, col1, 10);
+    }
+}
 
 void func_80150E9C(void) {
     cd_read_sectors(0x35, 0x801B0000, 0x8144);
