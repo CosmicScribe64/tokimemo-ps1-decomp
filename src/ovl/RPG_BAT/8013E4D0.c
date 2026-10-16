@@ -129,7 +129,135 @@ void func_8013EA30(s32 arg0) {
     }
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-17107, WIP */
+void func_8013EA60(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+
+    switch (arg1) {
+    case 0:
+        ((DisplayActor44 *)D_8011ECD0)[155].unk_03 &= 0xFFFE;
+        D_8015EBCC[0] = 0;
+        D_8015EBC0 -= arg2;
+        if (D_8015EBC0 < 0) {
+            D_8015EBC0 = 0;
+        }
+        if (arg2 == 0) {
+            func_8014C360(0, 0x6C, 0x77);
+            return;
+        }
+        func_8014BFE4(arg0, 0x74, 0x77, arg2, arg3);
+        return;
+    case 1:
+        ((DisplayActor44 *)D_8011ECD0)[156].unk_03 &= 0xFFFE;
+        D_8015EBD0 = 0;
+        D_8015EBC4 -= arg2;
+        if (D_8015EBC4 < 0) {
+            D_8015EBC4 = 0;
+        }
+        if (arg2 == 0) {
+            func_8014C360(0, 0x33, 0x67);
+            return;
+        }
+        func_8014BFE4(arg0, 0x3B, 0x67, arg2, arg3);
+        return;
+    case 2:
+        ((DisplayActor44 *)D_8011ECD0)[157].unk_03 &= 0xFFFE;
+        D_8015EBD4 = 0;
+        D_8015EBC8 -= arg2;
+        if (D_8015EBC8 < 0) {
+            D_8015EBC8 = 0;
+        }
+        if (arg2 == 0) {
+            func_8014C360(0, 0x30, 0x97);
+            return;
+        }
+        func_8014BFE4(arg0, 0x34, 0x97, arg2, arg3);
+        return;
+    case 3:
+        D_8015EDC0 -= arg2;
+        if (D_8015EDC0 < 0) {
+            D_8015EDC0 = 0;
+        }
+        if (arg2 == 0) {
+            func_8014C360(0, 0x38, 0x98);
+            return;
+        }
+        func_8014BFE4(arg0, 0x40, 0x98, arg2, arg3);
+        return;
+    case 4:
+        D_8015EDC0 -= arg2;
+        if (D_8015EDC0 < 0) {
+            D_8015EDC0 = 0;
+        }
+        if (arg2 == 0) {
+            func_8014C360(0, 0x38, 0x98);
+            return;
+        }
+        func_8014BFE4(arg0, 0x40, 0x98, arg2, arg3);
+        return;
+    case 5:
+        D_8015EDC0 -= arg2;
+        if (D_8015EDC0 < 0) {
+            D_8015EDC0 = 0;
+        }
+        if (arg2 == 0) {
+            func_8014C360(0, 0x38, 0x95);
+            return;
+        }
+        func_8014BFE4(arg0, 0x40, 0x95, arg2, arg3);
+        return;
+    case 16:
+        if (arg2 == 0) {
+            func_8014C360(0, 0x40, 0x97);
+            return;
+        }
+        func_8014BFE4(arg0, 0x48, 0x97, arg2, arg3);
+        return;
+    case 17:
+        if (arg2 == 0) {
+            func_8014C360(0, 0x40, 0x85);
+            return;
+        }
+        func_8014BFE4(arg0, 0x48, 0x85, arg2, arg3);
+        return;
+    case 18:
+        if (arg2 == 0) {
+            func_8014C360(0, 0x48, 0x8D);
+            return;
+        }
+        func_8014BFE4(arg0, 0x50, 0x8D, arg2, arg3);
+        return;
+    case 32:
+        D_8015ED94 -= arg2;
+        if (D_8015ED94 < 0) {
+            D_8015ED94 = 0;
+        }
+        func_8014BFE4(arg0, 0xF4, 0x96, arg2, arg3);
+        return;
+    case 33:
+        if (arg3 == 1) {
+            D_8015ED94 -= arg2;
+            if (D_8015ED94 < 0) {
+                D_8015ED94 = 0;
+            }
+        } else {
+            D_8015ED94 += arg2;
+            if (D_8015EDA0 < D_8015ED94) {
+                D_8015ED94 = D_8015EDA0;
+            }
+        }
+        func_8014BFE4(arg0, 0x10C, 0x66, arg2, arg3);
+        return;
+    case 35:
+        func_8014BFE4(arg0, 0x114, 0x96, arg2, arg3);
+        /* fallthrough */
+    default:
+        return;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013EA60);
+#endif
 
 void func_8013EEAC(u32 arg0) {
     switch (arg0) {
