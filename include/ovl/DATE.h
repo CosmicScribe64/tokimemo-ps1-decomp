@@ -1802,3 +1802,8 @@ typedef struct DatePairs8 {
 } DatePairs8; /* size 0x20; func_801560E0 reads v[i][1] */
 extern DatePairs8 D_8015FB3C;
 #endif
+
+#ifndef OVL_DATE_PROTOS_T17200
+#define OVL_DATE_PROTOS_T17200
+void func_8015A170(void);
+#endif
