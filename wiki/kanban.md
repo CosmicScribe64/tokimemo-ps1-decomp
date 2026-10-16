@@ -24,7 +24,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-17207-w3-date-p07|T-17207 Wave 3 package w3-date-p07]]
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
@@ -55,6 +54,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-17207-w3-date-p07|T-17207 Wave 3 package w3-date-p07]]
 
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 

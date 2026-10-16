@@ -1,0 +1,6 @@
+T-17207 best draft of DATE func_80144E20 (3,200 B; 794 against 797 instructions, 210 differing rows; the T-14500 repair draft did
+not compile). Needs in src/ovl/DATE/80141EE0.c: the body below under #ifdef NON_MATCHING; in include/ovl/DATE.h: extern u8 D_8015BF48,
+void func_8013FD6C(void), void func_80140788(void), void func_801407D0(void), s32 func_80140D38(void). Frame 0xE38 and all 21 table
+offsets are exact (the unused GameState *g above the tables is the 4 bytes above; base lives at sp+0x30 under them).
+Left: base (21 defs, priority 1.1) is coloured after three short ranges that take $v0, so base is $v1 where the original has $v0 and
+every later register is shifted. See wiki/matching-notes.md, T-17207.
