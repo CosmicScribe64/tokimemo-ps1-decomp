@@ -15952,3 +15952,9 @@ The T-19023 In Review entry above says 2,048 bytes; the three functions are 204 
 
 ## [2026-10-16] ticket | T-19028 In Progress
 [[tickets/T-19028-w3-d-p28]] created and In Progress: Wave 3 package w3-d-p28, five TACO functions in `src/ovl/TACO/8013DB80.c` and `src/ovl/TACO/8015CF30.c`, worktree `w3-d-p28`.
+
+## [2026-10-16] build | T-19028 results
+[[tickets/T-19028-w3-d-p28]]: 1 of 5 matched. TACO `func_8013E778` (812 bytes) matched in plain C from the sibling `func_8013D528` (FAKE pad[2], FAKE one-line UV stores). `func_8013E424` (18 rows) and `func_8013DB80` (15 rows) guarded in `src/ovl/TACO/8013DB80.c`; `func_8013DEE4` (370 rows) back to `INCLUDE_ASM` with its draft in `drafts/T-19028/TACO/`; `func_8015CF30` is the libgte `RotMatrixZ` in hand assembly, not attempted. Notes in [[matching-notes]], rows in [[data/t0018-cases]] and [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-19028 In Review
+[[tickets/T-19028-w3-d-p28]] In Progress to In Review (1 of 5 matched).

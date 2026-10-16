@@ -177,3 +177,7 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p23 (T-19023)
 
 [[tickets/T-19023-w3-d-p23]] (`80135720.c`, the SETTING screen): `func_801357B0` (string drawer, 204 bytes), `func_80136988` (cursor handler, 440) and `func_80135A04` (SETTING screen draw, 1,384) matched in plain C, 2,028 bytes. `func_801357B0` and `func_80135A04` are now `s32` in `TACO.h` (implicit-int, no `return`); details in [[matching-notes]] (T-19023).
+
+## Matching stage, package w3-d-p28 (T-19028)
+
+[[tickets/T-19028-w3-d-p28]] (`8013DB80.c`, `8015CF30.c`, the particle quads): `func_8013E778` (812 bytes) matched in plain C from the sibling `func_8013D528`; `func_8013E424` (18 rows) and `func_8013DB80` (15 rows) stay guarded with their frames solved; `func_8013DEE4` (draft in `drafts/T-19028/TACO/`) and the libgte `RotMatrixZ` `func_8015CF30` stay `INCLUDE_ASM`. Details and idioms in [[matching-notes]] (T-19028).
