@@ -1,7 +1,7 @@
 ---
 id: T-17101
 title: Wave 3 package w3-rpg-bat-p01
-status: In Review
+status: Done
 assignee: claude-opus
 created: 2026-10-16
 updated: 2026-10-16
@@ -41,3 +41,12 @@ Worktree `tokimemo-wt/w3-rpg-bat-p01`, branch `w3-rpg-bat-p01`, base `w2-good`. 
 - Siblings: none above ratio 0.70 for any of the four.
 - The `--proto` option of `funcdiff.py` found the implicit-int views in seconds; see the matching notes.
 - Awaiting code review against `CODING_STANDARDS.md`.
+
+### 2026-10-16 code review (claude-opus, against `CODING_STANDARDS.md` section 13)
+
+- Scope: only `80145CC0.c` and `80151FC0.c` changed among the C files; no `drafts/` change; no inline asm, `.word` or `//` comments; no game data or binaries; four of four matches are plain C, no `NON_MATCHING` block left.
+- FAKEs: `zero[1]` and the `zero[0] = 0` argument store in `func_80146578`, `home0`/`home1` in `func_80152080`; each has a `FAKE` comment with reason and T-17101. The three `*_OVERRIDE_*` defines sit before the first include with a reason; the `#ifndef` wrappers match the declarations (`RpgObjectRecord44` still 0x44 bytes: `pad3C[4]`, `unk_40`, `pad41[3]`).
+- Verified in the worktree: forced rebuild of all 27 units sha1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known).
+- Finding (fixed): the comment above the `func_8013E7C0`/`func_8013E97C` wrappers in `RPG_BAT.h` named two prototypes; a one-line comment now covers the `func_8013F15C` wrapper too. Header comment only, build unchanged.
+- Noted, not a finding: `((u8 **)D_8015EB70)[count + 4]` views the unrecovered text-window object as a pointer table, as `DATE2` and `SHOUGATU` do for their windows; the struct is still to be recovered.
+- Result: no open findings, ticket Done.
