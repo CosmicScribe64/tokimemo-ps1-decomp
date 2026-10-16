@@ -34,6 +34,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-17117-w3-rpg-bat-p17|T-17117]] Wave 3 package w3-rpg-bat-p17: RPG_BAT `8013CC90.c`, `func_8013CC90` matched, 1 of 1 (928 B; promoted global updated in place, `u32` file view of `D_8015ED98`, one FAKE; Done)
+- [[tickets/T-17001-w3-main-p01|T-17001]] Wave 3 package w3-main-p01: main `8007C030.c`, `_sprite_set_box_shade_tarao` and `dialogue_speak_part` (In Progress).
 - [[tickets/T-17115-w3-rpg-bat-p15|T-17115]] Wave 3 package w3-rpg-bat-p15: RPG_BAT `801498C0.c`, `801321D0.c`, 2 of 4 matched (`func_801328C4`, `func_8014A3DC`, 1,136 B; counter declared before the stack table, `s32` return of an implicit-int definition; `func_80132B34`, `func_80149C5C` left as T-0018 rows) (Done)
 - [[tickets/T-20003-rpg-timer-callees|T-20003]] RPG_BAT func_80138F6C matched (1,268 bytes); two other independent matches dropped after upstream T-17102 landed (Done, PR #38 merged).
 - [[tickets/T-17111-w3-rpg-bat-p11|T-17111]] Wave 3 package w3-rpg-bat-p11: RPG_BAT `80144010.c`, `801504E0.c`, 2 of 2 matched (`func_80144010`, `func_801505B8`, 2,572 B; global as loop result, `s32` selector override, record-field views) (Done)

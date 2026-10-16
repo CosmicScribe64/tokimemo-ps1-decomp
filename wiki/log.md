@@ -16523,3 +16523,6 @@ Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG
 
 ## [2026-10-16] ticket | T-17115 Done
 [[tickets/T-17115-w3-rpg-bat-p15]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 2 of 4 functions matched (`func_801328C4`, `func_8014A3DC`, 1,136 bytes); `func_80132B34` and `func_80149C5C` stay `INCLUDE_ASM`. Rebuild: RPG_BAT unit sha1 OK, 27/27 binaries OK, headers OK, globals OK, protos OK. Card moved to Done.
+
+## [2026-10-16] ticket | T-17001 In Progress
+Created [[tickets/T-17001-w3-main-p01]] (Wave 3 package, main `src/main/8007C030.c`, two functions: `_sprite_set_box_shade_tarao`, `dialogue_speak_part`) and moved it to In Progress. Card on [[kanban]], line in [[index]]. Worktree `tokimemo-wt/w3-main-p01`, started 21:52 UTC.
