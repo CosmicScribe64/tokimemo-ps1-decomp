@@ -15293,3 +15293,23 @@ Filed in [[speedup-research-2026-10-16]].
 ## [2026-10-16] ticket | T-16562 Done
 
 [[tickets/T-16562-taco-types-first-p2]] reviewed against `CODING_STANDARDS.md`: no findings; TACO.bin sha1 OK, headers, globals and prototype checks OK. 11 TACO functions matched (4,728 bytes).
+
+## [2026-10-16] ticket | T-16551 In Progress
+
+[[tickets/T-16551-pt-taiiku-p1]] started: pilot stage B, package pt-taiiku-p1 (`src/ovl/TAIIKU/80133C80.c`, 8 functions from the [[tickets/T-16550-taiiku-types-first]] redrafts), worktree `tokimemo-wt/pt-taiiku-p1`.
+
+## [2026-10-16] build | T-16551 package pt-taiiku-p1
+
+[[tickets/T-16551-pt-taiiku-p1]]: 3 functions matched in `src/ovl/TAIIKU/80133C80.c` (`func_80138224`, `func_80133CFC`, `func_801368B8`; 2,296 bytes), guarded drafts `func_801346FC` (8 lines), `func_80136BB4` (4), `func_80135480` (22), `func_80137544` (26), `func_80134060` not started. New findings in [[matching-notes]] (T-16551): a table defined in the unit gives the shared `lui at`; a run of identical statements over the four runners is a loop IDO unrolls with the first iteration peeled; word-local slot layouts found by printing the offset of the stack table. Rows appended to [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-16551 to In Review
+
+[[tickets/T-16551-pt-taiiku-p1]] moved to In Review with 3 functions matched; code review (against `CODING_STANDARDS.md`) still to run.
+
+## [2026-10-16] build | T-16551 closer pass: func_801346FC and func_80136BB4 matched
+
+[[tickets/T-16551-pt-taiiku-p1]], Opus closer on the two short guarded drafts of `src/ovl/TAIIKU/80133C80.c`: `func_801346FC` (1,688 B; `func_801365C8` declared `void` in `include/ovl/TAIIKU.h`, its `s32` prototype blocked `$v0`) and `func_80136BB4` (496 B; `u16` copy of the f0C counter, so its clear is a store-back after the f03 store-back). Plain C, TAIIKU sha1 OK, one commit each. Package total 5 functions, 4,480 bytes; `func_80135480` and `func_80137544` stay guarded. Notes in [[matching-notes]] (T-16551), rows in [[register-cheatsheet]], update line in [[data/t0018-cases]], [[taiiku-family-results]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16551 Done
+
+[[tickets/T-16551-pt-taiiku-p1]] reviewed against `CODING_STANDARDS.md` and moved to Done: 5 functions matched (`func_80138224`, `func_80133CFC`, `func_801368B8`, `func_801346FC`, `func_80136BB4`; 4,480 bytes), `func_80135480` and `func_80137544` guarded, `func_80134060` not started. Review fixes: comments for the peeled copy and the two unit-defined data pieces in `src/ovl/TAIIKU/80133C80.c`, stale counts in [[index]], [[taiiku-family-results]] and [[matching-notes]]. Clean rebuild 27/27, headers, globals and prototype checks OK.

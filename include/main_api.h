@@ -1348,6 +1348,7 @@ extern s16 D_801208CC;
 extern s16 D_801208DE;
 extern u8 D_801208FB;
 extern s16 D_80120912[];
+extern s16 D_8012091E;
 extern s16 D_80120922;
 extern u8 D_8012093F;
 extern s16 D_80120966;

@@ -152,7 +152,7 @@ typedef struct TaiikuRec {
 extern s32 D_80149944;
 
 void func_801339C4();
-extern u8 D_801492C4;
+extern s32 D_801492C4;
 void func_8013DDB8(void);
 s8 func_8013FE44();
 void func_80144834(void);
@@ -251,16 +251,22 @@ typedef union {
 extern TaiHalves D_80149298; /* defined in 80133C80.c */
 void func_80133438(void);
 void func_801345A4(void);
-s32 func_801365C8();
+void func_801365C8(void);
 s32 func_801368B8();
 void func_801369F0(void);
 s32 func_80136DA4();
 void func_80136E80(void);
+void func_80137544(void);
+void func_80135480(void);
 s32 func_80137440();
 s32 func_80137C44();
 s32 func_80137EA8();
 void func_80134D94(void);
 void func_80138224();
+s32 func_80138680();
+void func_801356E0(void);
+void func_80135778(void);
+s16 func_801388E4();
 
 #ifndef OVL_TAIIKU_W8_3_TYPES_H
 #define OVL_TAIIKU_W8_3_TYPES_H
@@ -287,6 +293,9 @@ extern TaiWords4 D_801498AC;
 extern TaiWords11 D_801498BC;
 extern s16 D_80149320[];
 extern s32 D_8014929C;
+extern s16 D_801492A0; /* func_80135480 */
+extern u8 D_801492A4[2]; /* func_80135480 */
+extern u8 D_801492A8[4]; /* func_80135480 */
 #endif /* OVL_TAIIKU_W8_3_TYPES_H */
 #ifndef TAIIKU_W8_CONTROLLER_TYPES_H
 #define TAIIKU_W8_CONTROLLER_TYPES_H
@@ -865,8 +874,10 @@ extern TaiBytes10 D_80148FE8; /* func_80133258 */
 extern TaiikuHalf10 D_80148FF4; /* func_80133258 */
 extern TaiikuHalf10 D_80149008; /* func_80133258 */
 extern TaiikuHalf10 D_8014901C; /* func_80133258 */
+extern s32 D_80149364; /* func_80133CFC */
 extern TaiikuW5 D_80149368; /* func_80133CFC */
 extern TaiWords7 D_8014937C; /* func_80133CFC */
+extern TaiWords10 D_80149398; /* func_80133CFC */
 extern TaiWords10 D_801494C4; /* func_80134F98 */
 extern TaiikuS11 D_801494F0; /* func_80135480 */
 extern TaiShorts20 D_80149508; /* func_80135830 */
