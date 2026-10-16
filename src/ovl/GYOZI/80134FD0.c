@@ -1,7 +1,5 @@
-#define GYOZI_OVERRIDE_func_801343A4 /* Matched integer-return caller view; T-20001. */
 #include "common.h"
 #include "ovl/GYOZI.h"
-s32 func_801343A4(void);
 
 typedef struct {
     void (*f[60])();
@@ -22,7 +20,7 @@ void func_80135044(void) {
     func_8004DE1C();
 }
 
-/* The integer-return setup-call view reproduces the counter-test registers,
+/* The setup callee's integer return type reproduces the counter-test registers,
  * as in the SHOUGATU sibling func_8013315C. T-20001. */
 s32 func_8013506C(void) {
     func_801343A4();
