@@ -53,7 +53,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-19002-w3-d-p02|T-19002 Wave 3 package w3-d-p02]]
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
@@ -138,6 +137,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-19002-w3-d-p02|T-19002 Wave 3 package w3-d-p02]]
 - [ ] [[tickets/T-16564-taco-types-first-p4|T-16564 Types-first pilot package pt-taco-p4]]
 - [ ] [[tickets/T-16930-pointer-read-kept-copies|T-16930 Read aggregate fields through a local pointer]]
 - [ ] [[tickets/T-16920-gamestate-1093-type|T-16920 GameState +0x1093 type and kept-copy census]]

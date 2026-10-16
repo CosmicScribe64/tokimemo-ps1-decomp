@@ -15390,3 +15390,6 @@ Opened [[tickets/T-19002-w3-d-p02]] (In Progress): TACO `src/ovl/TACO/801447D0.c
 
 ## [2026-10-16] build | T-19002 closer pass on func_8014616C
 Opus closer pass on [[tickets/T-19002-w3-d-p02]] (branch w3-d-p02): no new match. TACO `func_8014616C` stays a 3-row NON_MATCHING draft in `src/ovl/TACO/801447D0.c`, and its comment now records the live-range finding. A volatile `&D_800E6280` access in the last block takes it out of the counter's range but adds an address instruction (7 lines). Folded forms give 242 lines, two constants 12, and autotweak 120 s none. Notes in [[matching-notes]] and [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19002 Done
+[[tickets/T-19002-w3-d-p02]] reviewed against `CODING_STANDARDS.md` and moved to Done: 3 functions matched (2,008 bytes: TACO `func_801449D8`, `func_80145DC4`, `func_80137D00`), `func_8014616C` a 3-row NON_MATCHING draft. One review finding (missing ticket id on a FAKE comment in `src/ovl/TACO/801447D0.c`), fixed; rebuild OK (globals, headers, TACO.bin SHA1).
