@@ -43,7 +43,7 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A37C);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A380);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A384);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A388);
-extern u8 D_8014A13C[]; /* func_801446A0: same shape as D_80149208 */
+extern u8 D_8014A13C[]; /* func_801446A0: player and three runners, like D_80149208 */
 extern u8 D_8014A161;
 extern u8 D_8014A185;
 extern u8 D_8014A1A9;

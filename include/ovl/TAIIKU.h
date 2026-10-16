@@ -265,18 +265,6 @@ typedef struct TaiWords4 {
 typedef struct TaiWords11 {
     /* 0x00 */ s32 value[11];
 } TaiWords11; /* size 0x2C */
-typedef struct TaiSlot24 {
-    /* 0x00 */ u8 pad_00[2];
-    /* 0x02 */ u8 index;
-    /* 0x03 */ u8 pad_03[0x1D];
-    /* 0x20 */ union {
-        s32 word;
-        struct {
-            s16 low;
-            s16 high;
-        } halves;
-    } unk_20;
-} TaiSlot24; /* size 0x24 */
 typedef struct TaiValue44 {
     /* 0x00 */ u8 pad_00[0x16];
     /* 0x16 */ s16 unk_16;
@@ -489,45 +477,36 @@ extern Taiiku3s32 D_80149990;
 
 
 
-typedef struct {
-    /* 0x00 */ u8 pad00[3];
-    /* 0x03 */ u8 f03;
-    /* 0x04 */ u8 pad04[3];
-    /* 0x07 */ u8 f07;
-    /* 0x08 */ u8 pad08[4];
-    /* 0x0C */ u16 f0C;
-    /* 0x0E */ u16 f0E;
-    /* 0x10 */ s32 f10;
-    /* 0x14 */ u32 f14;
-    /* 0x18 */ s32 f18;
-    /* 0x1C */ u32 f1C;
-    /* 0x20 */ u8 pad20[2];
-    /* 0x22 */ s16 f22;
-    /* 0x24 */ u8 pad24[0xC];
-    /* 0x30 */ u16 f30;
-    /* 0x32 */ u16 f32;
-    /* 0x34 */ s32 f34;
-    /* 0x38 */ s32 f38;
-    /* 0x3C */ s32 f3C;
-    /* 0x40 */ s32 f40;
-    /* 0x44 */ u8 pad44[0x10];
-    /* 0x54 */ u16 f54;
-    /* 0x56 */ u16 f56;
-    /* 0x58 */ s32 f58;
-    /* 0x5C */ s32 f5C;
-    /* 0x60 */ s32 f60;
-    /* 0x64 */ s32 f64;
-    /* 0x68 */ s32 f68;
-    /* 0x6C */ u8 pad6C[0xC];
-    /* 0x78 */ u16 f78;
-    /* 0x7A */ u16 f7A;
-    /* 0x7C */ s32 f7C;
-    /* 0x80 */ s32 f80;
-    /* 0x84 */ s32 f84;
-    /* 0x88 */ s32 f88;
-    /* 0x8C */ s32 f8C;
-} TaiikuSlots; /* size 0x90, D_80149208..D_80149297 */
-extern TaiikuSlots D_80149208;
+/* Game A runner record (80133C80.c), 0x24 bytes. The 16.16 word at 0x20 is the track position,
+ * read by its signed high half. Game C's TaiikuController has the same roles at other offsets
+ * (speed 0x10, timers, position). T-16550. */
+typedef struct TaiRunnerA {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02; /* index of the runner's display record (D_8011ECD0 record 46 + n) */
+    /* 0x03 */ u8 unk_03; /* animation frame */
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05; /* state of the start sequence */
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ u16 unk_08;
+    /* 0x0A */ u16 unk_0A;
+    /* 0x0C */ u16 unk_0C;
+    /* 0x0E */ u16 unk_0E;
+    /* 0x10 */ s32 unk_10; /* speed */
+    /* 0x14 */ u32 unk_14;
+    /* 0x18 */ s32 unk_18;
+    /* 0x1C */ u32 unk_1C;
+    /* 0x20 */ TaiHalves unk_20; /* 16.16 position */
+} TaiRunnerA; /* size 0x24 */
+/* D_80149208..D_80149297: the player and three other runners, one object. Every access in the
+ * original goes through %lo(D_80149208); the matched loops index the other runners by i from 0
+ * (cpu[i]), and func_80138680 indexes all four by runner number. T-16550. */
+typedef struct TaiRunnersA {
+    /* 0x00 */ TaiRunnerA player;
+    /* 0x24 */ TaiRunnerA cpu[3];
+} TaiRunnersA; /* size 0x90 */
+extern TaiRunnersA D_80149208;
 
 #endif
 
