@@ -25,3 +25,9 @@ unguarded ones.
 The run started before the T-17000 table declarations were added to `include/main_api.h`; the
 functions that read those tables were rerun afterwards (`--only`), so their `_runs` and `main/` folders
 use the final header. The `environment.json` hashes are those of the first run.
+
+## Matched from these drafts
+
+Five drafts became matches with a small hand edit and are in `src/` (`status: matched` in their
+result.json): `func_80075320`, `func_80053F04`, `func_80075AF8`, `func_8007959C`, `func_80077E30`
+(1,948 bytes). `main/func_8007866C/hand.c` is a hand edit of the redraft at 14 funcdiff rows.
