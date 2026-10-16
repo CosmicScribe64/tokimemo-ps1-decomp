@@ -561,7 +561,7 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_800552DC);
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005557C);
 
-/* NON_MATCHING: T-10850, 8 differing listing lines; regdiff evidence in the ticket scratch. */
+/* NON_MATCHING: T-17007, 4 differing lines; the hoisted starts come out b, r, q where the original has q, r, b (`move v1,zero` and `addiu a2` swapped); T-10850 */
 #ifdef NON_MATCHING
 /* FAKE: dead initial assignments preserve induction-register numbering. T-10850 */
 s32 func_80055A38(s32 arg0) {
@@ -592,8 +592,8 @@ s32 func_80055A38(s32 arg0) {
             D_800E6280.unk_1117 = b;
             return 1;
         }
-        q += 0xF00;
         r += 0xF00;
+        q += 0xF00;
     }
     return -1;
 }
