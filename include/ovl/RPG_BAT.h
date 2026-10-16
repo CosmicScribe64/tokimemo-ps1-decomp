@@ -158,8 +158,8 @@ void func_8014C4FC(void);
 void func_8014C804(void);
 void func_8014CB0C(void);
 void func_8014CE14(void);
-/* Pad-sequence matcher state of func_8013BBF8, one aggregate: as1 never hoists a load over a store to the
- * same aggregate, and the original keeps the store of unk_00 before the load of unk_04 (T-17107). */
+/* Pad-sequence matcher state of func_8013BBF8, one aggregate. The original keeps the store of unk_00 in front
+ * of the load of unk_04; four separate scalars let the build sink that store into the branch delay slot (T-17107). */
 typedef struct RpgPadSeq {
     /* 0x00 */ s32 unk_00; /* pad word read this frame (D_8015EBEC) */
     /* 0x04 */ s32 unk_04; /* pad word of the previous change (D_8015EBF0) */
@@ -313,10 +313,11 @@ extern u8 D_8015E8F0[];
 extern s32 D_8015EBC0;
 extern s32 D_8015EBC4;
 extern s32 D_8015EBC8;
-/* The six words D_8015EBC0..D_8015EBD4 are one aggregate: as1 keeps loads and stores of one symbol in
- * program order, and the original loads the counter before the flag-byte store in func_8013EA60 (T-17107).
- * The scalar names above stay for the files that still use them (801504E0.c, 8014DF60.c, 80154430.c,
- * func_8013C1CC); func_8013EA60 reaches the aggregate through RPG_GAUGE until they are migrated. */
+/* The six words D_8015EBC0..D_8015EBD4 are one aggregate; func_8013EA60 only matches when it reads them through
+ * one struct (the original loads the counter above the flag-byte store, scalars give the other order; T-17107).
+ * FAKE (interim view): the scalar names above stay for the files that still use them (801504E0.c,
+ * 8014DF60.c, 80154430.c, func_8013C1CC), so RPG_GAUGE reaches the aggregate through the first symbol until
+ * those are migrated to a real `RpgGauge D_8015EBC0`. T-17107 */
 typedef struct RpgGauge {
     /* 0x00 */ s32 cur[3];  /* D_8015EBC0, D_8015EBC4, D_8015EBC8 */
     /* 0x0C */ s32 flag[3]; /* D_8015EBCC, D_8015EBD0, D_8015EBD4 */
