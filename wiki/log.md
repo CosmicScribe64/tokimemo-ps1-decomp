@@ -16593,3 +16593,7 @@ User idea: start phase 2 renames and constants now, with agents using a PS1 emul
 Held off while the wave 3 conveyor uses the CPU. Plan notes in [[tickets/T-20500-emulator-assisted-naming]]: open
 BIOS only (no proprietary BIOS), Docker, GameState names and enums first, rename in a quiet window or via the merge-time
 rename table.
+
+## [2026-10-16] ticket | T-20620 Scheduling family: as1 ordering (In Progress)
+
+New ticket [[tickets/T-20620-as1-scheduling]], card in In Progress of [[kanban]]. Compiler-gap family agent for the `sched`/`schedule`/`hoist` rows of [[data/t0018-cases]] (instruction order from as1 or ugen), following [[speedup-research-2026-10-16]]. Worktree `tokimemo-wt/cg-sched`, branch `cg-sched` from `w2-good`.
