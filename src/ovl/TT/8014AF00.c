@@ -726,23 +726,15 @@ void func_8014C580(u8 *arg0) {
     arg0[0xD] = 0;
 }
 
-/* NON_MATCHING: T-10850, 16 differing listing lines; regdiff evidence in the ticket scratch. */
-#ifdef NON_MATCHING
-/* FAKE: shared zero local preserves constant allocation. T-10850 */
 void func_8014C5F8(u8 *arg0) {
     u8 *p;
-    s32 zero;
 
     p = (u8 *)func_8014AF00(D_80158A98, D_80158A98 + 0x1E00);
     if (p != 0) {
-        zero = 0;
         p[0] = 1;
         *(s16 *)(p + 4) = 0x71;
-        p[0xD] = p[0xE] = zero;
-        *(s16 *)(p + 0xA) = 0;
-        *(s16 *)(p + 8) = 0;
-        *(s16 *)(p + 6) = 0;
-        p[0xF] = 0;
+        /* FAKE: both chains on one line; as1 then emits the 0xE/0xD byte stores (zero kept in a0) first. T-11850 */
+        *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 0xA) = 0; p[0xD] = p[0xE] = p[0xF] = 0;
         *(s32 *)(p + 0x20) = *(s32 *)(arg0 + 0xC);
         *(s32 *)(p + 0x24) = *(s32 *)(arg0 + 0x10);
         *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
@@ -750,9 +742,6 @@ void func_8014C5F8(u8 *arg0) {
         func_8014C580(p);
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014C5F8);
-#endif
 
 /* FAKE: permuter source layout preserves branch operand order; original source unknown. T-9710. */
 void func_8014C680(void)
