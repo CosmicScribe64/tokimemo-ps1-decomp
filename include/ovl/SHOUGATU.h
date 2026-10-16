@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "main_api.h"
+#include "game.h"
 
 /* SHOUGATU data. */
 extern u8 D_80146160;
