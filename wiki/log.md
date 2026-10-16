@@ -15481,3 +15481,7 @@ Code review of [[tickets/T-17000-types-first-main]] against `CODING_STANDARDS.md
 ## [2026-10-16] ticket | T-19004 Done
 
 [[tickets/T-19004-w3-d-p04]] In Review to Done after the code review: 2 of 5 listed TAIIKU functions matched (932 bytes: `func_80137228` 260, `func_80135830` 672 with a FAKE dead `i = 0;`), `func_80137544` and `func_80135480` guarded, `func_80137C44` left `INCLUDE_ASM`. Two findings fixed: the `NON_MATCHING` comments of the two guarded drafts had lost their T-19004 notes (commit `112cfc10`), and the index, [[taiiku-family-results]] and [[matching-notes]] still called `func_80135830` a guarded draft. Unit sha1 OK, headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-19008 In Progress
+
+[[tickets/T-19008-w3-d-p08]] created and In Progress: wave 3 package w3-d-p08, TAIIKU `func_8013B608`, `func_8013B200`, `func_8013B78C`, `func_8013B94C`, `func_8013BCEC` (`src/ovl/TAIIKU/80138950.c`).
