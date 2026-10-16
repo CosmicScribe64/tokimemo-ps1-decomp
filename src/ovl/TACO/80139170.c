@@ -104,7 +104,32 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80139170", func_80139BCC);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80139170", func_80139FB8);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80139170", func_8013A580);
+/* The y offset stays an expression: a fourth named temporary adds a frame word that moves the four
+   spilled call values down by 4 (T-19021). */
+void func_8013A580(s32 arg0) {
+    s32 k;
+    s32 a;
+    s32 b;
+    s32 c;
+
+    switch (D_8015F4D8) {
+    case 0:
+        k = 1;
+        break;
+    case 1:
+        k = 4;
+        break;
+    case 2:
+        k = 3;
+        break;
+    }
+    a = (arg0 << 7) / 480;
+    b = (arg0 * 0x7000) / 480;
+    c = (b * 12) / 4096;
+    func_80139424(D_8015EE04[D_8015F4D8 * 4], k, 3, a, -c, -0x28 - arg0 / 16, b, b, 0);
+    func_80139424(D_8015EE04[D_8015F4D8 * 4 + 1], k, 3, a, 0, -0x28 - arg0 / 16, b, b, 0);
+    func_80139424(D_8015EE04[D_8015F4D8 * 4 + 2], k, 3, a, c, -0x28 - arg0 / 16, b, b, 0);
+}
 
 void func_8013A764(void) {
     D_8015F4DC = 0;
