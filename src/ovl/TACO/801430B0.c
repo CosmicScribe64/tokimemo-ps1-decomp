@@ -54,8 +54,7 @@ s32 arg3;
     }
 }
 
-/* NON_MATCHING: T-16562, 8 differing lines (4 rows); the original keeps `c - 0x30` of the digit path in $a0 (a uopt colour) and the y sum in a ugen temp $t6, here the sum needs the `temp` local (autotweak) to leave $t6 free and `c - 0x30` stays a ugen temp */
-#ifdef NON_MATCHING
+/* The character is read as *s in every test (no local copy): uopt then keeps the load in $v1 and the `*s - 0x30` / `*s - 0x41` values in $a0, as the original does. T-16562 */
 void func_801432F0(arg0, arg1, arg2, arg3)
 u8 *arg0;
 s32 arg1;
@@ -64,10 +63,8 @@ s32 arg3;
 {
     SPRT *sprite;
     u8 *s;
-    u8 c;
     u8 idx;
     s32 x;
-    s32 temp;
 
     s = arg0;
     x = arg1;
@@ -81,25 +78,23 @@ s32 arg3;
             sprite->b0 = 0x80;
             sprite->x0 = D_800E6280.unk_014[D_8011ECA0] + x;
             x += 0xC;
-            temp = D_800E6280.unk_018[D_8011ECA0] + arg2;
-            sprite->y0 = temp;
-            c = *s;
-            if (c >= 0x30 && c < 0x3A) {
-                idx = c - 0x30;
+            sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2;
+            if (*s >= 0x30 && *s < 0x3A) {
+                idx = *s - 0x30;
                 sprite->u0 = D_8015F5A0[idx * 2] + 0x80;
                 sprite->v0 = D_8015F5A0[idx * 2 + 1];
             } else {
-                idx = c - 0x41;
+                idx = *s - 0x41;
                 if (idx < 0x1A) {
                     sprite->u0 = D_8015F5B4[idx * 2] + 0x80;
                     sprite->v0 = D_8015F5B4[idx * 2 + 1];
-                } else if (c == 0x2E) {
+                } else if (*s == 0x2E) {
                     sprite->u0 = D_8015F5E8 + 0x80;
                     sprite->v0 = D_8015F5E9;
-                } else if (c == 0x2D) {
+                } else if (*s == 0x2D) {
                     sprite->u0 = D_8015F5EA + 0x80;
                     sprite->v0 = D_8015F5EB;
-                } else if (c == 0x20) {
+                } else if (*s == 0x20) {
                     sprite->u0 = D_8015F5EC + 0x80;
                     sprite->v0 = D_8015F5ED;
                 } else {
@@ -107,6 +102,7 @@ s32 arg3;
                     sprite->v0 = D_8015F5EF;
                 }
             }
+            /* FAKE: w and h on one source line give the original's store order (h first) and the register for 0xC. T-16562 */
             sprite->w = 0xC; sprite->h = 0x10;
             sprite->clut = func_8009ED74(arg3 << 4, 0x1EF);
             AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, (s32)sprite);
@@ -114,9 +110,6 @@ s32 arg3;
     }
     dtd_on_tpage(0x340, 0x180, 1, 0, 0);
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801432F0);
-#endif
 
 void func_80143574(s32 arg0, s32 arg1, s32 arg2) {
     s32 pad; /* FAKE: unused local declared first puts p at sp+0x28 as in the original; real source unknown. T-6070 */
