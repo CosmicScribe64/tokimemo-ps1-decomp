@@ -218,7 +218,45 @@ void func_8014EBD0(void) {
     D_8015EDB0.unk_08 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014E780", func_8014EBEC);
+/* FAKE: the three clear loops and the record loop reuse one counter, the clear
+ * loops walk the legacy scalar D_8015EC74 and the 2-D D_8015ED64 as flat word
+ * arrays (func_8014E994 has the same loops), the record loop shares its for line
+ * to keep the store order, and D_8015ED9C is reached through D_8015ED98 to share
+ * its $at (aggregate not recovered). T-17108. */
+void func_8014EBEC(void) {
+    s32 i;
+
+    D_8015EDA4 = 0;
+    D_8015ED98 = 0;
+    (&D_8015ED98)[1] = 0;
+    D_8015EDA8[1] = 0;
+    D_8015EDB0.unk_04 = 0;
+    D_8015EDB0.unk_00 = 0;
+    D_8015EDB0.unk_08 = 0;
+    for (i = 0; i < 50; i++) {
+        (&D_8015EC74)[i] = 0;
+    }
+    for (i = 0; i < 10; i++) {
+        D_8015ED3C[i] = 0;
+    }
+    for (i = 0; i < 12; i++) {
+        (&D_8015ED64[0][0])[i] = 0;
+    }
+    if (D_8015EB98 != 0x80000000) {
+        for (i = 0x28; i < 0x30; i++) {
+            func_8013E7C0(i, 0xFF, 1, 0);
+        }
+    }
+    i = 0x32;
+    do {
+        func_8013E7C0(i, 0xFF, 1, 0);
+        i++;
+    } while (i < 0x38);
+    for (i = 40; i < 64; i++) ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 5;
+    if (D_8015EB98 != 0x80000000) {
+        ((DisplayActor44 *)D_8011ECD0)[125].unk_01 = 5;
+    }
+}
 
 void func_8014ED44(s32 arg0) {
     s32 temp_v0;
