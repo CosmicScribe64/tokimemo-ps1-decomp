@@ -20,7 +20,38 @@ void func_80042A00(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80042AC8);
+s32 func_80042AC8(void) {
+    GameState *g = &D_800E6280;
+    u8 old;
+
+    old = g->unk_F74;
+    if (D_800E8BF0[0] == 0) {
+        if ((D_800E8BF0[1] & 0xF) * 2 <= 0x40) {
+            if ((D_800E8BF0[1] & 0xF0) == 0x10) {
+                g->unk_F74 = 0;
+                g->unk_1092 = 0;
+            } else {
+                g->unk_F74 = 1;
+            }
+        }
+    } else if (D_800E8BF0[0] != 0xFF || g->unk_035 == 0) {
+        g->unk_F74 = 0xFF;
+    }
+    if (old != g->unk_F74 && (g->unk_F74 != 0xFF || old != 0xFF)) {
+        if (g->unk_F74 == 0) {
+            func_80042C30();
+            func_80042C74();
+            func_80042BD4();
+            return 1;
+        }
+        if (g->unk_F74 == 1) {
+            func_80042C74();
+            func_80042C30();
+        }
+        return 1;
+    }
+    return 0;
+}
 
 void func_80042BD4(void) {
     InitMouse(D_800E8BF0, D_800E8C30);

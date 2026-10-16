@@ -1,7 +1,41 @@
 #include "common.h"
 #include "ovl/GEKO.h"
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_80134040);
+void func_801341A0(void);
+
+void func_80134040(void) {
+    func_80083808();
+    if (D_800E6280.unk_1109 == 0) {
+        func_801341A0();
+    } else {
+        func_80046500();
+    }
+    check_k_scroll();
+    k_disp_inc2();
+    if (D_80122D38 == 0) {
+        func_80066C08(2);
+    }
+    message_window_show();
+    func_80066334();
+    hizuke_show();
+    if (D_80122D38 == 0) {
+        func_80083A10();
+    }
+    if (D_80122D38 != 0) {
+        func_80066C08(1);
+        func_800578F4(0);
+        parameter_show();
+        if ((D_80122D2C == 0) && (D_80122D04 == 0) && ((D_800E6280.unk_F80 & 0xF000F000) || (D_80122D30 == 1))) {
+            D_8011ECD3 |= 0x80;
+        }
+        if (D_80122D04 != 0) {
+            D_8011ECD3 &= 0x7F;
+        }
+        if (D_8011ECD3 & 0x80) {
+            func_8006BA40();
+        }
+    }
+}
 
 typedef struct {
     void (*f[29])();
