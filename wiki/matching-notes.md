@@ -4810,6 +4810,9 @@ Twelve guarded NAME_ENT drafts, all previously tried; no match. Ticket [[tickets
   original's narrow signed global loads carried a widening (and whether a local copy of a global is never propagated),
   then extend `tools/cvt_pass.py` and re-verify every matched function. Only 7 unmatched functions show the exact
   `lb v1; ... or v0,v1,zero` shape (the 6 above plus OPTION 80132000 `func_80134110`), none matched.
+  **Update (T-16920): it is a C form.** Read through a local `GameState *g = &D_800E6280;` (`idx = g->unk_1093;
+  if (g->unk_1093 != -1)`), all 7 match with the pass as built: the indirect load is not a plain variable, so uopt
+  puts the constant first and keeps `idx`. See "GameState +0x1093 and the selector-copy family (T-16920)" below.
 - **IDO frame rule with locals** (measured on `func_8013BE18`): locals are placed from the frame top in declaration
   order (first declared highest) and the frame keeps 8 spare bytes below them (`raw frame = end of saves + 8 +
   locals`, 8-aligned; no locals, no spare). A 5-argument call puts the saves at 0x18..0x1F, so the locals start at
@@ -5424,3 +5427,52 @@ What blocked the rest (rows in [[data/t0018-cases]]): the rest of the D_801499A2
 - **Shared-store `goto`**: a coin flip (13 better, 13 worse of 26 bodies); try both. Direct stores won where each case stores its own constant or address (`main func_80079070` 450 to 35, `BUNKA_SD func_80139290` 509 to 133). The per-case initializer tables with `var = D_a; D_b = ...; block: D_c = var;` (the load moves behind another store) split 5 to 7: `GEKO func_801327AC` 223 to 2 and `SHUGAKU func_8013282C` 183 to 116 gain, `GEKO func_801355E8` and `VALEN func_80134030` lose. A loser keeps the early load and one shared store, as the TT block of `func_80132000` does; nothing in the C text tells which.
 - **Near match from this pass**: `GEKO func_801327AC` is one row (`sb` for `sh`) after the `goto` rewrite; `*(s16 *)&D_80144C40 = 0;`, the line the initializer in the same file already has (T-9510), gives a full-unit score of 0 (`drafts/T-16510/follow-up/`). Not promoted: no linked-byte proof yet.
 - **`s32` without a return**: a dead copy or constant in `$v0` at an exit is in 207 of 334 matched `s32` functions that return no value and in 32 of 5,383 matched `void` ones. Of the 71 T-14500 drafts that show it, a signature-only change to `s32` improved 3, tied 29, worsened 12 and 27 did not compile (mostly a redeclaration against the existing `void` prototype or call); change the header too before judging. Callers that read `$v0` after a `void` draft do not occur in the archive (0 of 1,066).
+
+## Constant-first compares follow aggregate membership, not copies (T-16910)
+
+Census for the T-16900 `cpw` rule (zcopy off plus constant first, only where a procedure copies a narrow signed global
+into a local and compares it with a constant). Ticket [[tickets/T-16910-cpw-census]] has the method and the lists.
+Scope: 6958 game functions of the split asm, a forward dataflow over registers; compares with the constant in `$at` are
+ugen's and left out.
+
+- Narrow signed globals (`lb`/`lh`) compared `==`/`!=` with a register constant: 72 compares in 23 functions. Coupled
+  shape (a used `move` copy plus a constant-first compare of the same global): 7 functions, all in NAME_ENT
+  `80139740.c` on GameState +0x1093 (the T-11570 family). Constant-first without a copy: 15 functions, 50 compares.
+  Variable-first: 6 functions, 8 compares, none with a copy. 10 more functions copy a narrow signed global without
+  comparing it with a register constant.
+- The order follows aggregate membership: 64 of 64 constant-first compares are on members of GameState, the
+  `D_8011ECD0` record table or an indexed array; 8 of 8 variable-first ones are on the two `s16` scalars ENDING
+  `D_8013C35C` and SHOUGATU `D_80144E0C`. Other widths lean the same way: `lbu` GameState members 332:10, `lw` scalars
+  12:82 (constant-first:variable-first).
+- IDO already does this when the C reads through the aggregate. ENDING's table fields compare constant-first only
+  through `*(s16 *)&D_8011ECD0[...]` (T-9020) and DATE's `D_800CA22C[]` is an array; the other 5 matched functions with
+  this shape declare a scalar and carry a `FAKE` or `(u32)` trick (ENDING `func_8013855C`, NAME_ENT `func_80148C20`,
+  BUNKA_SD `func_8013261C`, EVENT `func_80117004`, RPG_BAT `func_80150CD8`).
+- The NAME_ENT drafts with the selector read as an element (`(&D_800E6280.unk_1093)[0]`) get the constant-first
+  compares from IDO; with copy propagation off for the file (scratch only) `func_8013DAC4`, `func_8013F454`,
+  `func_8013FB8C` reach 0 lines, `func_8013D4CC` 6, `func_8013E430` 4, `func_8013F0DC` 8, `func_8013CEC8` 10.
+- Verdict: no `cpw` step in `tools/cvt_pass.py`. Open: the type of GameState +0x1093/+0x1094 (element access for these
+  compares against the three matched `switch` selectors that need members, [[game-state]]), and a separate census for
+  the kept copy (the original keeps `idx = sel` in its own register here; IDO folds it).
+
+## GameState +0x1093 and the selector-copy family (T-16920)
+
+Ticket [[tickets/T-16920-gamestate-1093-type]]. The 7 NAME_ENT selector-copy functions (T-11570, the `cpw` targets of
+T-16900/T-16910) match as C with `tools/cvt_pass.py` as built, 2,332 bytes.
+
+- **Read the field through a local GameState pointer.** `GameState *g = &D_800E6280; idx = g->unk_1093; if
+  (g->unk_1093 != -1) { ... idx / 7 ... }` gives both of the original's features that looked like compiler
+  differences: the constant-first compare (`beq a1,v1`) and the kept copy (`move v0,v1`). `g->field` is an indirect
+  load, not a plain variable: uopt puts the constant first and does not fold `idx` into the field. DAC4, F454 and
+  FB8C match with no other change; D4CC and CEC8 also need the operand order `g->unk_1118 == idx + 1` /
+  `D_800E7D36 == n + 1`; E430, CEC8 and F0DC need a `FAKE` `s32 pad[2]` for the original's 0x38 frame (8 bytes above
+  the spill slot when the copy lives across a call; T-11120 frame rule). Register row in [[register-cheatsheet]].
+- **+0x1093/+0x1094 stay members.** As `s8 unk_1093[2]`, 15 matched functions change: every `switch` on the element
+  gets its selector in `$v1` (original `$v0`), in ETC with an extra `move v0,v1`. For IDO a constant-index element is
+  an indirect load like `g->field`; the original's switches compile like the plain member.
+- **`D_800E7D15` is a `u8` array** (`lbu`, indexed by the selector in all 7 functions); it replaces the drafts'
+  `(u8)(&D_800E7D15)[idx]`.
+- **Kept copies in the original** (T-16910 census): used `move` copies of a global load in 42 functions for aggregate
+  members (12 matched) and 47 for scalars (27 matched). The matched copies come from ordinary C (4 through
+  `GameState *g`, 3 read-modify-write, 5 direct). Copy propagation off for every procedure changes 737 of 5,967
+  matched functions, so no zcopy rule: the kept copies are a C matter.

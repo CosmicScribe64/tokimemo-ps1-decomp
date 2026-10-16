@@ -1641,14 +1641,15 @@ void func_80116EF0(void) {
 }
 
 void func_80117004(void) {
-    /* FAKE: (u32) casts give D_8012439C a CVT so uopt puts the register-held constant 3 first in bne; T-11110 */
+    s16 *res = &D_8012439C;
+
     switch (D_800B1746) {
     case 0:
     case 1:
     case 7:
-        if ((u32)D_8012439C == 4) {
+        if (*res == 4) {
             D_80094730 += 1;
-        } else if ((u32)D_8012439C == 2) {
+        } else if (*res == 2) {
             D_80094730 += 2;
         }
         break;
@@ -1656,25 +1657,25 @@ void func_80117004(void) {
     case 3:
     case 8:
     case 10:
-        if ((u32)D_8012439C == 4) {
+        if (*res == 4) {
             D_80094730 += 1;
-        } else if ((u32)D_8012439C == 3) {
+        } else if (*res == 3) {
             D_80094730 += 2;
         }
         break;
     case 4:
     case 6:
     case 9:
-        if (((u32)D_8012439C == 3) && ((u32)D_8012439C == 2)) {
+        if ((*res == 3) && (*res == 2)) {
             D_80094730 += 1;
-        } else if (((u32)D_8012439C == 3) && ((u32)D_8012439C == 3)) {
+        } else if ((*res == 3) && (*res == 3)) {
             D_80094730 += 2;
         }
         break;
     case 5:
-        if ((u32)D_8012439C == 3) {
+        if (*res == 3) {
             D_80094730 += 1;
-        } else if ((u32)D_8012439C == 2) {
+        } else if (*res == 2) {
             D_80094730 += 2;
         }
         break;

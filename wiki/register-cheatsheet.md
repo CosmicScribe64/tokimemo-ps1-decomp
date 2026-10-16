@@ -76,6 +76,7 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 | regdiff: "not allocated ... global X (-ve save)" for a narrow selector the original reloads after every call | A dead read of X at the very top of the function (`i = unk_03F; n = unk_03E;`, both overwritten later, no code emitted). It must come before the first call, and both selectors are needed. FAKE. `func_8006A2CC` (T-11690). Made `func_80067870` worse, so check with regdiff. |
 | the w/h stores of a SPRT drawer are in the other order | `setWH(sprite, 8, 0x10);` instead of two statements. NAME_ENT `func_80137CA0` (T-11650). |
 | the original unrolls a small loop (one peeled store plus groups of four) | Write the plain loop over array-indexed records, `(&D_800E6280.unk_0FC)[i]`; IDO unrolls it the same way, including the copy order 1, 2, 3, 0 of the 12-record initializer. NAME_ENT `func_8013635C` (T-11650). |
+| a struct or table field compared constant-first (`beq a1,v1`, constant in a register) and a `move` copy of it kept in another register | Read the field through a local pointer: `GameState *g = &D_800E6280; idx = g->field; if (g->field != -1)`. An indirect load is not a plain variable, so uopt puts the constant first and does not fold `idx` into the field. NAME_ENT selector-copy family, 7 functions (T-16920). |
 | constant or pointer in a1/a2/v1 in a small K&R function (TT, GEKO, TACO) | Known unsolved. Spend 10 minutes at most, then guard it and log the row. |
 
 ## Do not

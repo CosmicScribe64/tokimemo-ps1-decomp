@@ -15136,3 +15136,27 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16560 Done
 
 [[tickets/T-16560-taco-types-first]] reviewed against `CODING_STANDARDS.md`: one finding (unexplained `*(u8 *)&D_8015EDE8` view cast, comments added to `func_8013555C` and `func_80135638`), fixed; TACO sha1 OK, headers, globals and prototype checks OK. 5 TACO functions matched (2,032 bytes). Packages T-16561..T-16564 follow.
+
+## [2026-10-15] ticket | T-16910 cpw census opened
+Opened [[tickets/T-16910-cpw-census]] (In Progress): count the coupled selector-copy shape of [[tickets/T-16900-compiler-experiments]] in the original asm, then either make `cpw` a uniform step of `tools/cvt_pass.py` or record a negative result. Branch `claude/quizzical-swanson-a4bc82`.
+
+## [2026-10-15] query | T-16910 cpw census of the original asm
+Dataflow census of the 6958 game functions in the split asm for [[tickets/T-16910-cpw-census]]. Narrow signed globals compared `==`/`!=` with a register constant: 72 compares in 23 functions. The `cpw` coupled shape (used `move` copy plus constant-first compare) is only the 7 NAME_ENT `80139740.c` functions on GameState +0x1093; 15 functions compare constant-first with no copy, 6 compare variable-first, none with a copy. The order follows aggregate membership (64/64 constant-first on GameState, record-table or indexed-array members; 8/8 variable-first on the scalars ENDING `D_8013C35C`, SHOUGATU `D_80144E0C`). Scratch experiment: the NAME_ENT drafts with the selector read as an element get the constant-first compares from IDO; with zcopy off for the file `func_8013DAC4`, `func_8013F454`, `func_8013FB8C` reach 0 lines. Notes in [[matching-notes]], [[toolchain]], [[game-state]]. Scratch scripts in the session group's shared notes folder (`t16910/`).
+
+## [2026-10-15] decision | T-16910 no cpw step; ticket to In Review
+`cpw` does not meet CODING_STANDARDS 7a: its coupling selects one family, and the constant-first order it adds is an aggregate-member effect that C reading through the aggregate already gives (section 8). `tools/cvt_pass.py` unchanged; nothing matched. [[tickets/T-16910-cpw-census]] moved In Progress to In Review. Open follow-ups: the type of GameState +0x1093/+0x1094, a census for the kept local copy, and the 5 `FAKE`/cast compares that could become aggregate reads.
+
+## [2026-10-15] ticket | T-16920 GameState +0x1093 type and kept-copy census opened
+Opened [[tickets/T-16920-gamestate-1093-type]] (In Progress), the follow-up of [[tickets/T-16910-cpw-census]]: test an array type for GameState +0x1093/+0x1094 against the matched build, and count where the original keeps a local copy of an aggregate element in its own register.
+
+## [2026-10-15] build | T-16920 NAME_ENT selector-copy family matched
+[[tickets/T-16920-gamestate-1093-type]]: the 7 NAME_ENT selector-copy functions (`func_8013CEC8`, `func_8013D4CC`, `func_8013DAC4`, `func_8013E430`, `func_8013F0DC`, `func_8013F454`, `func_8013FB8C`; 2,332 bytes) match with `tools/cvt_pass.py` as built when the C reads GameState through a local `GameState *g`: the indirect load gives the constant-first compare and the kept copy. Three carry a `FAKE` `s32 pad[2]` for the 0x38 frame. `D_800E7D15` is now `extern u8 D_800E7D15[]`. Rebuild: 27/27 sha1 OK, NAME_ENT.bin OK, headers and globals OK; `uopt_eval regress` on the two touched files 116/116.
+
+## [2026-10-15] decision | T-16920 +0x1093 stays a member; no zcopy rule; ticket to In Review
+As `s8 unk_1093[2]`, 15 matched `switch` functions change (selector `$v1` against the original's `$v0`), so +0x1093/+0x1094 stay members. Kept-copy census: used `move` copies of global loads in 42 functions for aggregate members (12 matched) and 47 for scalars (27 matched), all matched ones from ordinary C. Copy propagation off for every procedure changes 737 of 5,967 matched functions, so no zcopy rule. Notes in [[matching-notes]], [[game-state]], [[register-cheatsheet]], [[toolchain]]; T-11570's "copy-propagation gap" note in [[matching-notes]] corrected. [[tickets/T-16920-gamestate-1093-type]] moved In Progress to In Review.
+
+## [2026-10-15] ticket | T-16930 pointer reads for kept copies opened
+Opened [[tickets/T-16930-pointer-read-kept-copies]] (In Progress), the follow-up of [[tickets/T-16920-gamestate-1093-type]]: try a local `GameState *g` or record pointer on the 23 other unmatched functions of the [[tickets/T-16910-cpw-census]] census that keep a `move` copy of an aggregate member, and on the five matched constant-first compares that still need a `FAKE` or cast.
+
+## [2026-10-15] build | T-16930 pointer reads: 4 tricks removed, 8 matches, stopped for hand-over
+[[tickets/T-16930-pointer-read-kept-copies]]: EVENT `func_80117004`, BUNKA_SD `func_8013261C`, NAME_ENT `func_80148C20`, ENDING `func_8013855C` lose their constant-first tricks through aggregate reads (RPG_BAT `func_80150CD8`'s `(u32)` is a type and stays). Matched on this branch: main `func_80042AC8` (through `GameState *g`), GEKO `func_80134040`, RPG_BAT `func_801495DC`, ENDING `func_80137730`; on unmerged branch `t16930-a`: main `func_80078C48`, OPTION `func_80137C1C`, `func_801383C4`, SHUGAKU `func_80137490`. Stopped on the user's request; ticket stays In Progress for the main thread.

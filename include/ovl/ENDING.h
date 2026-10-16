@@ -25,7 +25,7 @@ extern s32 D_8013C33C;
 extern s32 D_8013C34C;
 extern s32 D_8013C350;
 extern s32 D_8013C354;
-extern s32 D_8013C358;
+extern s16 D_8013C358;
 extern s16 D_8013C35C; /* read with lh/sh only (T-8080, T-9020) */
 void func_80132B04(s32 arg0, s32 arg1, s32 arg2);
 extern u8 D_8013CA38;
@@ -457,7 +457,7 @@ typedef struct {
 extern FnTbl6 D_8013CAA4;
 void func_80132D98();
 void func_80132F18();
-void func_80137730();
+s32 func_80137730();
 void func_80137AA8();
 
 extern u8 D_8013CAA0;

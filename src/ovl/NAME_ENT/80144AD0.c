@@ -1648,8 +1648,7 @@ void func_80148BF4(void) {
 }
 
 void func_80148C20(void) {
-    /* FAKE: a byte constant preserves the original bne operand order. T-10860. */
-    u8 one = 1;
+    NameRecord44 *rec = &((NameRecord44 *)D_8011ECD0)[96];
 
     switch (D_800E6280.unk_110D) {
     case 0:
@@ -1669,7 +1668,7 @@ void func_80148C20(void) {
         }
         break;
     case 3:
-        if ((D_80120668 == one) && (D_80120658 == one)) {
+        if ((rec->unk_18 == 1) && (rec->unk_08 == 1)) {
             func_80044750(0x604);
             D_800E6280.unk_110D += 1;
         }
