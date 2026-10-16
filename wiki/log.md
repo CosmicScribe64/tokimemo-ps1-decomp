@@ -15810,3 +15810,18 @@ Opened [[tickets/T-18200-types-first-en_nichi]] (In Progress) under [[tickets/T-
 ## [2026-10-16] ticket | T-18400 Done
 
 [[tickets/T-18400-types-first-kangei]] reviewed against `CODING_STANDARDS.md`: one finding (the family page said 11 callee prototypes, the header has 12), fixed; KANGEI sha1 OK, headers, globals and prototype checks pass. 4 functions matched (2,596 bytes). In Review to Done, card moved to Done.
+
+## [2026-10-16] ticket | T-19016 In Progress
+[[tickets/T-19016-w3-d-p16]] created and In Progress: Wave 3 package w3-d-p16, VALEN `func_80133670`, `func_80133728`, `func_80134030`, `func_80132D0C`, `func_80133088` in `src/ovl/VALEN/80132760.c` and `src/ovl/VALEN/80133C70.c`.
+
+## [2026-10-16] build | T-19016 matches and findings
+`src/ovl/VALEN/80132760.c`: `func_80133670` and `func_80133728` matched in plain C by reading the selected girl through a local `GameState *g = &D_800E6280;`; `src/ovl/VALEN/80133C70.c`: `func_80134030` kept as a `NON_MATCHING` draft (27 lines, the default block's `lui` hoisting); `func_80132D0C` and `func_80133088` back to `INCLUDE_ASM` with drafts in `drafts/T-19016/`. Findings in [[matching-notes]] ("T-19016"), rows in [[data/t0018-cases]], row in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-19016 In Review
+[[tickets/T-19016-w3-d-p16]] In Progress to In Review: 2 of 5 functions matched. Awaiting the code review against `CODING_STANDARDS.md` and the final checks.
+
+## [2026-10-16] build | T-19016 final checks
+Clean build 27/27 (all unit sha1 OK, VALEN included), `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK on branch w3-d-p16; comment-only edits afterwards rebuilt incrementally with VALEN sha1 OK. See [[tickets/T-19016-w3-d-p16]].
+
+## [2026-10-16] ticket | T-19016 Done
+[[tickets/T-19016-w3-d-p16]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of the VALEN units OK (headers OK, sha1 OK). 2 of 5 functions matched (`func_80133670`, `func_80133728`), `func_80134030` stays a guarded draft (27 lines), `func_80132D0C` and `func_80133088` stay `INCLUDE_ASM`. Merge via the wave 3 merge script.
