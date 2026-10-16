@@ -15973,3 +15973,11 @@ Opus closer pass on [[tickets/T-19019-w3-d-p19]] (branch w3-d-p19): no new match
 ## [2026-10-16] ticket | T-19029 In Progress
 
 Created [[tickets/T-19029-w3-d-p29]] (Wave 3 package w3-d-p29, branch w3-d-p29 from w2-good): TACO `src/ovl/TACO/80136B40.c`, `func_80137264` (812 B). Starting from the T-15700 draft (score 172).
+
+## [2026-10-16] build | T-19029 matched func_80137264
+
+TACO `func_80137264` (812 B, `src/ovl/TACO/80136B40.c`) matches in plain C, TACO.bin sha1 OK. Draft from T-15700 retyped; `base` is one variable for the threshold and the radix, `TacoDigits` types the `D_8015F428` copy (FAKE stand-in for an unused local array), declaration order `place; digits; base`. Notes in [[matching-notes]] (T-19029), rows in [[register-cheatsheet]], section in [[taco-family-results]].
+
+## [2026-10-16] ticket | T-19029 In Review
+
+[[tickets/T-19029-w3-d-p29]] In Progress to In Review: 1 of 1 functions matched (`func_80137264`). Clean rebuild and the header, globals and prototype checks run (results in the ticket Notes). Code review against `CODING_STANDARDS.md` still to do.

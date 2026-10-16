@@ -150,17 +150,18 @@ void func_801371B4(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     }
 }
 
-/* Right-aligns num (at most 8 digits) in a 8-character field at str: spaces for the missing
+/* Right-aligns num (at most 8 digits) in an 8-character field at str: spaces for the missing
  * digits, then the digits from the left. `base` is one variable on purpose: 10000000 for the
  * first threshold and the copy into `place`, then 10 as the radix; IDO keeps it in a register
- * and divides by it with the zero checks, as the original does. `digits` is the original's unused
- * local "0123456789" array; its initializer is copied here from the data symbol, because the
- * overlay's .data is not part of this object. T-19029 */
+ * and divides by it with the zero checks, as the original does. T-19029 */
 void func_80137264(u8 *str, s32 num) {
     s32 place;
     TacoDigits digits;
     s32 base;
 
+    /* FAKE: stands in for the original's unused local char digits[] = "0123456789" (11 bytes,
+     * copied with lw/lw/lwl); its initializer lives in the overlay .data, not in this object,
+     * so the copy reads the data symbol. Declaration order sets the frame offset. T-19029 */
     digits = D_8015F428;
     if (num >= 0x5F5E100) {
         num = 0x5F5E0FF;
