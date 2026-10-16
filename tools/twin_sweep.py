@@ -15,7 +15,7 @@ Modes (a target gets the first that plans it):
            can say whether such a copy is right, so it is only worth applying with the sha1 check
            (which --apply always does).
 
-Usage (inside Docker, from the repo root, after a build so asm/ exists; a run takes some minutes):
+Usage (inside Docker, from the repo root, after a build so asm/ exists; a plan takes 10 s idle, about a minute under load):
   tools/docker.sh python3 tools/twin_sweep.py                 # dry run: plan, by mode, and summary
   tools/docker.sh python3 tools/twin_sweep.py -v              # + every target that stays unmatched, with its reason
   tools/docker.sh python3 tools/twin_sweep.py --list-files    # only the target files of the plan, comma separated
@@ -268,9 +268,9 @@ def report(rows, skipped, stats, verbose, log=print):
     for c, (n, b) in sorted(cls.items(), key=lambda kv: -kv[1][0])[:6]:
         log('  no plan: %3d fn %6d B  %s' % (n, b, c))
     ng, nm, nb = stats.get('levers', (0, 0, 0))
-    log('groups without a matched member (matching one gets the rest): %d groups, %d functions, %d bytes' % (ng, nm, nb))
+    log('groups without a matched member (whole tree; matching one gets the rest): %d groups, %d functions, %d bytes' % (ng, nm, nb))
     wide = stats.get('wide', [])
-    log('wider shape (load/store offsets and shifts masked too): %d more unmatched functions, %d bytes, have a '
+    log('wider shape (whole tree; load/store offsets and shifts masked too): %d more unmatched functions, %d bytes, have a '
         'matched twin (a field or scale differs; copy by hand)' % (len(wide), sum(w[2] for w in wide)))
     for r in rows:
         log('PLAN ' + describe(r))
