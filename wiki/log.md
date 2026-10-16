@@ -15661,3 +15661,7 @@ Code review of [[tickets/T-17800-types-first-option]] against `CODING_STANDARDS.
 ## [2026-10-16] ticket | T-19012 Done
 
 [[tickets/T-19012-w3-d-p12]] In Review to Done: code review against `CODING_STANDARDS.md` found one documentation issue (the Goal listed `func_80134628` as 692 B, correct 648 B), fixed. 2 of 3 functions matched (928 bytes): OMIMAI `func_80132670` (one `FAKE`) and `func_80134628` in plain C; `func_8013388C` stays `INCLUDE_ASM` with its typed draft in `drafts/T-19012/OMIMAI/func_8013388C/`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19015 In Progress
+
+[[tickets/T-19015-w3-d-p15]] created and started: wave 3 package w3-d-p15, TACO `src/ovl/TACO/80146D60.c`, `src/ovl/TACO/80156A80.c`, `src/ovl/TACO/80138890.c` (`func_801471D0`, `func_801472D4`, `func_80138B2C`, `func_80147B24`, `func_801585D0`). Worktree `w3-d-p15` from `w2-good`.
