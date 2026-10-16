@@ -16109,3 +16109,7 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 ## [2026-10-16] ticket | T-19030 Done
 
 [[tickets/T-19030-w3-d-p30]] In Review to Done: code review against `CODING_STANDARDS.md` found 1 minor item (the two unused locals of the archived `func_8013B460` draft had no `FAKE` comment), fixed in the draft only (bytes unchanged); headers OK, globals OK, sync_protos OK. 0 of 4 functions matched (`func_8013B2A0` stays a guarded draft at 20 instructions, `func_8013B460`, `func_8015D0D0`, `func_8015D270` stay `INCLUDE_ASM`). Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-17205 In Progress
+
+[[tickets/T-17205-w3-date-p05]] started: wave 3 package w3-date-p05 (DATE `src/ovl/DATE/80149310.c`, `src/ovl/DATE/801552B0.c`; `func_80149F48`, `func_80155E40`, `func_801560E0`, `func_801556D8`, `func_801496C4`), worktree `w3-date-p05` from `w2-good`.
