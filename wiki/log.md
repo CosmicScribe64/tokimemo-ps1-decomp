@@ -15463,3 +15463,7 @@ Opus closer pass on [[tickets/T-19002-w3-d-p02]] (branch w3-d-p02): no new match
 ## [2026-10-16] build | T-19007 closer pass (func_8014607C)
 
 [[tickets/T-19007-w3-d-p07]]: the Opus closer pass on TAIIKU `func_8014607C`. It is still guarded at 20 lines and nothing new matched. `cc -S` shows that uopt reads each copy's source (the masked byte, the promoted s16) in the later blocks, so as1 keeps the `move`s. A dead redefinition of a raw-byte local stops the mask swap but reverses the colour order (74 lines). Comment updated in `src/ovl/TAIIKU/801452D0.c`; notes in [[matching-notes]] and [[data/t0018-cases]]. The ticket stays In Review.
+
+## [2026-10-16] ticket | T-19007 Done
+
+[[tickets/T-19007-w3-d-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 1 of 4 functions matched (648 bytes): TAIIKU `func_80146D18` in plain C. `func_8014607C` and `func_80145370` stay guarded, `func_80147B14` stays `INCLUDE_ASM` with a typed draft. Merge via the wave 3 merge script.
