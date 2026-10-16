@@ -16499,3 +16499,6 @@ Clean rebuild of the w3-rpg-bat-p05 worktree (`rm -rf build && configure.py && n
 ## [2026-10-16] ticket | T-17107 Done
 
 [[tickets/T-17107-w3-rpg-bat-p07]] reviewed against `CODING_STANDARDS.md`: one finding (the `FAKE` note of `RPG_GAUGE` in `include/ovl/RPG_BAT.h` now starts its own comment), fixed. In Review to Done (kanban card moved). Matched 2 of 4 (`func_8013BBF8`, `func_8013EA60`); `func_8013B5B0` and `func_8013E54C` stay guarded.
+
+## [2026-10-16] ticket | T-17118 In Progress
+[[tickets/T-17118-w3-rpg-bat-p18]] created and started: RPG_BAT `func_80133108` (`src/ovl/RPG_BAT/80132FE0.c`), worktree `w3-rpg-bat-p18`.

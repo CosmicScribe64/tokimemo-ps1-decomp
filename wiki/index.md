@@ -34,6 +34,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-20003-rpg-timer-callees|T-20003]] RPG_BAT func_80138F6C matched (1,268 bytes); two other independent matches dropped after upstream T-17102 landed (Done, PR #38 merged).
+- [[tickets/T-17118-w3-rpg-bat-p18|T-17118]] Wave 3 package w3-rpg-bat-p18: RPG_BAT `80132FE0.c`, `func_80133108` (4,192 B; In Progress)
 - [[tickets/T-17111-w3-rpg-bat-p11|T-17111]] Wave 3 package w3-rpg-bat-p11: RPG_BAT `80144010.c`, `801504E0.c`, 2 of 2 matched (`func_80144010`, `func_801505B8`, 2,572 B; global as loop result, `s32` selector override, record-field views) (Done)
 - [[tickets/T-20000-first-contribution|T-20000]] Scoped work queues bypass whole-tree cache validation; review fixes drop empty filters and correct progress/docs, 54 tests pass (Done, PR #36 merged).
 - [[tickets/T-17110-w3-rpg-bat-p10|T-17110]] Wave 3 package w3-rpg-bat-p10: RPG_BAT `8014ADD0.c`, 3 of 4 matched (`func_8014C360`, `func_8014B79C`, `func_8014D11C`; `func_8014BFE4` stays `INCLUDE_ASM`, 128 rows; In Review)
