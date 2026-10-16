@@ -15381,3 +15381,7 @@ Pilot T-16550/T-16560 done: 64 matches / 41.4 KB in about 20 agent-hours (types 
 closers 4 h Opus with 10 matches), 2.0 KB per agent-hour, at or above wave 2 (Opus). Main 6,076/6,958 (67.2%).
 Opened [[tickets/T-16990-wave-3-conveyor]]: types-first passes on 19 units and 32 direct packages feeding a 7-worker
 pool; merges run in parallel through a locked, self-cleaning merge script.
+
+## [2026-10-16] ticket | T-17100 Types-first: RPG_BAT started
+
+Opened [[tickets/T-17100-types-first-rpg_bat]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover RPG_BAT's shared types, redraft its unmatched functions with the T-16550/T-16560 drivers, then cut packages. Branch `w3-rpg-bat-types` from `w2-good`.
