@@ -1,0 +1,7 @@
+m2c.py: argument counts from the callees' asm: func_8004ADAC 1, func_8004ADD4 0, func_80056BA8 3, func_8006C760 1, func_80088070 0, main_state_set 1
+python3 failed:
+cfe: Error: drafts/T-17900/_runs/typed/NAME_ENT/func_80142A80/work/guarded.o.sjis.c, line 3362: 'NULL' undefined; reoccurrences will not be reported.
+     func_80045414(9, 0, NULL);
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17900/_runs/typed/NAME_ENT/func_80142A80/work -o drafts/T-17900/_runs/typed/NAME_ENT/func_80142A80/work/guarded.o /tmp/asm_processor88982wll/preprocessed_a7fe6df69f5543ac8ec37bd1b7b55b20.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibze50j4ll/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17900/_runs/typed/NAME_ENT/func_80142A80/work/guarded.o drafts/T-17900/_runs/typed/NAME_ENT/func_80142A80/work/guarded.o.sjis.c

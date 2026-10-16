@@ -1,0 +1,25 @@
+python3 failed:
+ ----------------------------------^
+cfe: Error: drafts/T-17900/_runs/plain/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c, line 3467: 'sp' undefined; reoccurrences will not be reported.
+     *(s32 *)((unsigned char *)(sp + (((s32) D_8014D0D4 % 3) * 4)) + (28)) = 1;
+ -------------------------------^
+cfe: Error: drafts/T-17900/_runs/plain/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c, line 3474: 'sp20' undefined; reoccurrences will not be reported.
+     if (sp20 != 0) {
+ --------^
+cfe: Error: drafts/T-17900/_runs/plain/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c, line 3479: 'sp24' undefined; reoccurrences will not be reported.
+     if (sp24 != 0) {
+ --------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17900/_runs/plain/NAME_ENT/func_8013AF78/work -o drafts/T-17900/_runs/plain/NAME_ENT/func_8013AF78/work/guarded.o /tmp/asm_processorzqi30x97/preprocessed_644d9aabad7a49b6878e5e4d13896d32.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib1htnu1fi/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17900/_runs/plain/NAME_ENT/func_8013AF78/work/guarded.o drafts/T-17900/_runs/plain/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c
+python3 failed:
+cfe: Warning 681: drafts/T-17900/_runs/plain/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c, line 3454: '&' before array or function; ignored
+     } while ((u32) var_v1 < (u32) &sp28);
+ ----------------------------------^
+cfe: Error: drafts/T-17900/_runs/plain/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c, line 3475: 'sp20' undefined; reoccurrences will not be reported.
+     if (sp20 != 0) {
+ --------^
+cfe: Error: drafts/T-17900/_runs/plain/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c, line 3480: 'sp24' undefined; reoccurrences will not be reported.
+     if (sp24 != 0) {
+ --------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17900/_runs/plain/NAME_ENT/func_8013AF78/work -o drafts/T-17900/_runs/plain/NAME_ENT/func_8013AF78/work/guarded.o /tmp/asm_processormhaoyf5m/preprocessed_483d15bf5df44eae94eb723a12749228.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib53h3zqh7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17900/_runs/plain/NAME_ENT/func_8013AF78/work/guarded.o drafts/T-17900/_runs/plain/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c
