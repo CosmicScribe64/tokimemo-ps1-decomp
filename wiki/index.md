@@ -20,12 +20,13 @@ Read this first. Update on every ingest or new page.
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 - [[date-family-results]] - DATE step tables (`FnTblNN`) and stack tables, the types-first redraft and its numbers, sibling ports, near misses, packages (T-17200)
+- [[shougatu-family-results]] - SHOUGATU type map (step tables, stack tables, work arrays), the types-first redraft and its numbers, GYOZI twin ports, packages (T-17500)
 - [[rpg-bat-family-results]] - RPG_BAT type map (stack tables, `RpgStat`), the types-first redraft and its numbers, idioms (`default:` + `case 0:`, reread globals), packages (T-17100)
 - [[taiiku-family-results]] - TAIIKU type map (runner records of three games, stack tables), idioms, the types-first redraft and its numbers, packages (T-16550)
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-17500-types-first-shougatu|T-17500]] Types-first: SHOUGATU: recover the overlay's shared types, redraft every unmatched function, package the rest (In Progress).
+- [[tickets/T-17500-types-first-shougatu|T-17500]] Types-first: SHOUGATU: 49 step tables (`FnTblNN`) and 4 stack-table types in `SHOUGATU.h`, 38 redrafts (15 better than the census), 4 matches / 1,516 bytes, packages T-17501..T-17507 (In Review).
 - [[tickets/T-19005-w3-d-p05|T-19005]] Wave 3 package w3-d-p05: OLH `80135AC0.c`, `80132000.c`, `func_80135B8C` (sibling clone) and `func_80132114` (chain through a local) both matched, 680 B (Done).
 - [[tickets/T-19001-w3-d-p01|T-19001]] Wave 3 package w3-d-p01: TAIIKU `80140810.c`, `func_80140A90` stays guarded (33 instructions); block-copy temporary rule measured, looks like a ugen difference (Done).
 - [[tickets/T-17200-types-first-date|T-17200]] Types-first: DATE: 68 step tables (`FnTblNN`) and 10 stack tables typed in `DATE.h`, 49 redrafts (7 better than the census), 4 matches / 1,760 bytes, packages T-17201..T-17208 (Done).

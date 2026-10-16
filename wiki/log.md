@@ -15470,3 +15470,11 @@ Code review of [[tickets/T-17000-types-first-main]] against `CODING_STANDARDS.md
 ## [2026-10-16] ticket | T-17500 Types-first: SHOUGATU opened
 
 Opened [[tickets/T-17500-types-first-shougatu]] (In Progress) on branch `w3-shougatu-types` from `w2-good`: recover SHOUGATU's shared types, redraft every unmatched function with the pilot drivers, package the rest for wave 3.
+
+## [2026-10-16] build | T-17500 SHOUGATU types and redraft
+
+[[tickets/T-17500-types-first-shougatu]]: step tables, stack-table types and work arrays declared in `include/ovl/SHOUGATU.h` (which now includes `game.h`), `D_800CA248` added to `include/main_api.h`; `drafts/T-17500/redraft.py` redrafted all 38 unmatched functions (15 of the 32 still unmatched better than the census). Matched `func_801419D0`, `func_80132A34`, `func_80133760`, `func_8013AFEC` (1,516 bytes). New page [[shougatu-family-results]].
+
+## [2026-10-16] ticket | T-17500 In Review
+
+[[tickets/T-17500-types-first-shougatu]] In Progress to In Review. Packages T-17501..T-17507 (`w3-shougatu-p01`..`p07`, 33 functions, 18,404 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]).
