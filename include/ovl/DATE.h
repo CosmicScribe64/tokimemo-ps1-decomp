@@ -1256,7 +1256,7 @@ void func_8014A360(void);
 /* Forward declarations for the original object, T-10040. */
 void func_801461B0(void);
 u16 func_801462B0(void);
-void func_8014718C(void);
+s32 func_8014718C(void);
 s32 func_80147958(void);
 s32 func_80148924(s16 a0);
 s32 func_801489D0(void);

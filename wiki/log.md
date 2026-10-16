@@ -16140,3 +16140,22 @@ TAIIKU `func_80141280` (1,764 B, `src/ovl/TAIIKU/80141280.c`) matches in plain C
 ## [2026-10-16] ticket | T-19032 Done
 
 [[tickets/T-19032-w3-d-p32]] In Review to Done: code review against `CODING_STANDARDS.md` found two small documentation issues (the zero loop's record view and store order were unexplained in the source; a delay-slot remark in [[register-cheatsheet]] named the wrong field), both fixed. 1 of 1 functions matched: TAIIKU `func_80141280` (1,764 B, two FAKE comments). TAIIKU unit sha1 OK after a rebuild. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17201 started
+[[tickets/T-17201-w3-date-p01]] created In Progress: Wave 3 package w3-date-p01, DATE `src/ovl/DATE/801461B0.c`, two functions (`func_80147958`, `func_8014718C`). Branch w3-date-p01 from w2-good. Links [[tickets/T-17200-types-first-date]].
+
+## [2026-10-16] build | T-17201 DATE func_80147958 matched
+DATE `func_80147958` (4,044 bytes) matched in plain C, unit sha1 OK (`src/ovl/DATE/801461B0.c`, commit "T-17201: match DATE:func_80147958"). The guarded draft had four fade rows; comparing the `u8` local `value` (not the masked `color`) in the fade-in and fade-out steps gives the original registers and keeps the ugen temporary numbering. Found by a 42-variant grid. See [[matching-notes]] ("T-17201").
+
+## [2026-10-16] build | T-17201 DATE func_8014718C guarded at 26 lines
+DATE `func_8014718C` (1,996 bytes) rewritten by hand from the `func_80147958` shape (672 rows before, 26 differing lines now), kept under `#ifdef NON_MATCHING` in `src/ovl/DATE/801461B0.c`. Left: fade-step sum in v0 (original a1) and the tail timer web. Row in [[data/t0018-cases]]; `include/ovl/DATE.h` declares it `s32`.
+
+## [2026-10-16] ticket | T-17201 In Review
+[[tickets/T-17201-w3-date-p01]] In Progress to In Review: 1 of 2 functions matched (`func_80147958`), `func_8014718C` guarded at 26 lines. Notes in [[matching-notes]], rows in [[register-cheatsheet]] and [[data/t0018-cases]], family page [[date-family-results]] updated.
+
+## [2026-10-16] build | T-17201 clean rebuild and checks
+Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK, `sync_protos --check-branch` OK. Recorded in [[tickets/T-17201-w3-date-p01]].
+
+## [2026-10-16] ticket | T-17201 Done
+
+[[tickets/T-17201-w3-date-p01]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a missing `FAKE` prefix on a one-line scheduling trick in the guarded `func_8014718C`, a broken table row in [[data/t0018-cases]]); rebuild of DATE OK (headers OK, globals OK, sha1 OK). 1 of 2 functions matched (`func_80147958`, 4,044 bytes); `func_8014718C` stays a guarded draft (26 lines). Card moved in [[kanban]]. Merge via the wave 3 merge script.
