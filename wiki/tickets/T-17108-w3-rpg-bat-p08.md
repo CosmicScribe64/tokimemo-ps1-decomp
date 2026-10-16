@@ -1,7 +1,7 @@
 ---
 id: T-17108
 title: Wave 3 package w3-rpg-bat-p08
-status: In Review
+status: Done
 assignee: claude-opus
 created: 2026-10-16
 updated: 2026-10-16
@@ -44,3 +44,13 @@ Worktree `tokimemo-wt/w3-rpg-bat-p08`, branch `w3-rpg-bat-p08`, base `w2-good`. 
 - The two register-only functions fell to a one-run variant tester (many edits of one function compiled in a single container run, 0.5 s each) after `autotweak` (202 variants) and `regdiff` had not moved `func_8014AB84`.
 - Verified in the worktree: clean `rm -rf build && configure.py && ninja` 27/27 sha1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known).
 - Awaiting code review against `CODING_STANDARDS.md`.
+
+### 2026-10-16 code review (claude-opus, reviewer)
+
+Reviewed `w2-good...w3-rpg-bat-p08` against `CODING_STANDARDS.md`: no findings.
+
+- Only `src/ovl/RPG_BAT/8014E780.c` and `src/ovl/RPG_BAT/8014A660.c` changed in `src`; no header, config, `drafts/` or asm change. No `NON_MATCHING`, `INCLUDE_ASM`, inline asm or `.word` left in the two files; all six functions are plain C.
+- The six FAKE comments state what each trick does and name T-17108 (shared loop counter, flat word views, first-symbol element stores, one-line loop bodies). The unrecovered aggregates (`D_8015EBAC` slot table, `D_8015EDC4`, `D_8015EDF0`) are called out as such, per section 8.
+- C89 (declarations at block top, `/* */` only), ASCII, fixed-width types, typed `DisplayActor44` fields instead of byte-offset casts.
+- Rebuild in the worktree: `ninja` up to date, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known). Clean 27/27 sha1 OK reported by the matcher; the merge script repeats a clean configure and full ninja.
+- Ticket status matches the kanban column (Done).
