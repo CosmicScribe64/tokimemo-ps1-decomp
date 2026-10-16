@@ -1,8 +1,10 @@
 #define MAIN_API_OVERRIDE_D_80121808 /* byte store here (main_api.h: s32, EVENT) */
+#define MAIN_API_OVERRIDE_func_80085A60 /* int view: the original keeps $v0 busy after the call, func_8013E6A4 (T-17202; main_api.h: void) */
 #include "common.h"
 #include "ovl/DATE.h"
 
 extern u8 D_80121808;
+extern s32 func_80085A60();
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B520);
@@ -2293,7 +2295,7 @@ void func_801395B4(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11580, 9 differing instructions; the post-call unk_110A update takes $v1 (the original keeps it in $v0 with an ugen andi), and the entry F5F lui is scheduled one slot later */
+/* NON_MATCHING: T-17202, 4 differing instructions; the post-call unk_110A load and its sum take $v1/$a0 (the original keeps them in $v0/$t8) */
 #ifdef NON_MATCHING
 s32 func_80139664(void) {
     /* FAKE: unused byte local puts prev at 0x28(sp) as in the original. T-11580 */
@@ -2301,6 +2303,9 @@ s32 func_80139664(void) {
     s32 prev;
 
     if (D_80122CDC == 1) {
+        /* FAKE: evaluates the F5F byte into $v0 before D_800CA148 = 9 (EVENT twin func_80116940, T-11110). T-17202 */
+        if (D_800E6280.unk_F5F + 0) {
+        }
         D_800CA148 = 9;
         if (D_800E6280.unk_F5F == 7) {
             D_800CA148 = 0xA;
@@ -2332,9 +2337,9 @@ s32 func_80139664(void) {
         func_80085A60();
         if (prev != D_800E6280.unk_110A) {
             D_800CA148 = 8;
-            D_800E6280.unk_110A += 0x11;
+            return D_800E6280.unk_110A += 0x11;
         }
-        return D_800E6280.unk_110A;
+        return;
     }
     func_8004284C();
 }
@@ -3952,25 +3957,19 @@ void func_8013E614(void) {
     }
 }
 
-/* NON_MATCHING: T-10510, T-11580, 12 funcdiff lines left: post-increment compare, a0/v1 vs v1/v0 */
-#ifdef NON_MATCHING
 void func_8013E6A4(void) {
-    s32 d;
+    /* FAKE: unused word local above x puts x at 0x2B(sp) as in the original. T-17202 */
+    s32 pad;
     u8 x;
 
     x = func_80051B48(D_800E6280.unk_F5F);
     func_80085A60();
-    d = D_800E6280.unk_1104.w;
-    D_800E6280.unk_1104.w = d + 1;
-    if (d == 1) {
+    if (D_800E6280.unk_1104.w++ == 1) {
         if (D_800CA14C == 2) {
             func_80083440(x);
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013E6A4);
-#endif
 
 void func_8013E710(void) {
     if (D_80122CDC == 0) {

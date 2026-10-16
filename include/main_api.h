@@ -2484,7 +2484,9 @@ void func_80085678();
 void func_8008585C();
 void don_wait(void);
 void normal_date_speak_1line();
+#ifndef MAIN_API_OVERRIDE_func_80085A60
 void func_80085A60();
+#endif
 void normal_date_speak(void);
 s32 func_80085B3C();
 void func_80085CD4(u8 a);
