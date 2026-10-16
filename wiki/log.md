@@ -15925,3 +15925,6 @@ Created [[tickets/T-18800-types-first-date2]] (branch `w3-date2-types` from `w2-
 ## [2026-10-16] ticket | T-18800 Done
 
 [[tickets/T-18800-types-first-date2]] In Review to Done: code review against `CODING_STANDARDS.md`, one minor finding (undocumented implicit-int return of `func_80135E50`, comment added); DATE2 sha1 OK, headers OK, `migrate_globals --check` OK, `sync_protos --check-branch` 0 new disagreements. 1 function matched (1,932 bytes). Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-19026 started
+[[tickets/T-19026-w3-d-p26]] created In Progress: Wave 3 direct package w3-d-p26, TACO `src/ovl/TACO/8015ABF0.c`, two functions (`func_8015B1B8`, `func_8015ACCC`). Branch w3-d-p26 from w2-good.
