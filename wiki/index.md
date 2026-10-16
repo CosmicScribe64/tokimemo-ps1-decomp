@@ -19,12 +19,13 @@ Read this first. Update on every ingest or new page.
 - Repo-root `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`, `LICENSE` (CC0) - public face of the project (T-0901)
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
+- [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
 - [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210]] Wave 2 package w2-p01: RPG_BAT census drafts, 5 of 5 matched (Done).
 - [[tickets/T-16230-w2-date-80150010|T-16230]] Wave 2 package w2-p03: DATE 80150010.c, 4 of 4 functions matched, 1,620 bytes (Done).
 - [[tickets/T-16220-w2-main-8007c030|T-16220]] Wave 2 package w2-p02: main 8007C030.c and 800420D0.c, 3 matches / 804 bytes (Done).
-- [[tickets/T-16200-matching-wave-2|T-16200]] Matching wave 2: 24 new packages and four resumed wave-1 packages (In Progress).
+- [[tickets/T-16200-matching-wave-2|T-16200]] Matching wave 2: closed early, 7 packages merged, +50 functions / 31.7 KB, 65.1% (Done).
 - [[tickets/T-11920-local-storage-cleanup|T-11920]] Local storage cleanup with verified backups (In Review; cleanup complete).
 - [[tickets/T-15500-bunkasai-character-flags|T-15500]] BUNKASAI record-ten flag match (In Review; 820 bytes).
 - [[tickets/T-15400-bunkasai-label-draft|T-15400]] BUNKASAI label encoding recovery (In Review; 440 coverage bytes).

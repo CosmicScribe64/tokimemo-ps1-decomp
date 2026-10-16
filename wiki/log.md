@@ -15036,3 +15036,17 @@ Reviewed [[tickets/T-11640-w1-ovl-taiiku-80138950]] against `CODING_STANDARDS.md
 ## [2026-10-16] ingest | Register cheat sheet: wave 2 tricks
 
 Folded the wave-2 FAKE tricks and the wave-2 sections of [[matching-notes]] (T-11640, T-11650, T-11670, T-11690, T-16210, T-16220, T-16230; no notes exist yet for T-16240 to T-16440) into [[register-cheatsheet]]: 21 new rows (callee `int`/`void`/unprototyped views, delay-slot `lui` fixed by implicit int, absolute-address `lui`/`lw` split, strength-reduced `(start + i) % n`, spill-slot and frame rules, chain assignment with a call index, single `&&` return chain, narrow-field decrement through `GameState`, record copy through one array, `GameState *g` colouring, field types and register sharing, peeled copy, empty last switch case, `(u8)` narrowing, `u16`/`s16` pointer views of the TAIIKU counter family, dead selector reads, `setWH`, plain unrolled loops) and 8 existing rows extended with the wave-2 variants. Tricks already on the page from T-16220 (assign to the global, masked byte stores) were not repeated.
+
+## [2026-10-16] query | Compiler reverse engineering and faster source recovery
+
+Two read-only research passes (readers, analyst, one skeptic per idea) answered the user's questions; filed as
+[[speedup-research-2026-10-16]]. Compiler RE: the paying work is already in the build; estimate 5-10% of remaining
+bytes compiler-limited. Source recovery: types-first family passes are the strongest lever; tooling round
+T-16500..T-16530 and a two-unit types-first pilot follow. Compiler experiments run as T-16900 in a separate session.
+
+## [2026-10-16] ticket | T-16200 Done
+
+Wave 2 closed early by user decision (Sonnet first with an Opus closer from wave 3). Seven packages merged and pushed,
+each reviewed by its merge agent; 21 packages never started and return to the inventory. 5,945 -> 5,995/6,958
+functions, 63.7% -> 65.1% of bytes. Final `w2-int` check clean (27/27, headers, globals, prototypes). Results and
+blockers in [[tickets/T-16200-matching-wave-2]].
