@@ -228,7 +228,48 @@ s32 func_80156244(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_801563E4);
+void func_801563E4(s32 arg0) {
+    TcPos sp58;
+    TcPos sp50;
+    TcPos sp48;
+    /* FAKE: reserves the unused word under the position locals (the spill temporary sits one word lower); real local unknown. T-16564 */
+    u8 pad[4];
+
+    func_800AE120(D_801604C0);
+    if (arg0 == 0) {
+        sp50.x = ((func_800AE0D0() % 2000) + ((func_800AE0D0() % 4000) + D_8015EDB4->unk74)) - 0xBB8;
+        sp50.y = ((func_800AE0D0() % 1500) + ((func_800AE0D0() % 2500) + D_8015EDB4->unk76)) - 0x7D0;
+        sp50.z = (func_800AE0D0() % 20000) + 0x8000;
+        sp58.x = (func_800AE0D0() % 30) + 0x28;
+        sp48.y = 0x800;
+        sp48.x = 0;
+        sp48.z = 0;
+        sp58.y = func_800AE0D0() % 2;
+        if (D_801604C0 < 0xF0) {
+            func_8015ACCC(7, 7, sp58, sp50, sp48, 5, 0x50);
+            return;
+        }
+        func_8015ACCC(7, 7, sp58, sp50, sp48, 5, 0);
+        return;
+    }
+    sp50.y = -0x384;
+    sp50.z = -0x6590;
+    sp48.y = 0x800;
+    sp48.x = 0;
+    sp48.z = 0;
+    sp58.x = (func_800AE0D0() % 20) + 0x1E;
+    sp50.x = 0;
+    sp58.y = func_800AE0D0() % 2;
+    D_8015EDB4[func_8015ACCC(7, 7, sp58, sp50, sp48, 0x14, 0)].unk84[0] = 4;
+    sp58.x = (func_800AE0D0() % 20) + 0x1E;
+    sp50.x = -0x3E8;
+    sp58.y = func_800AE0D0() % 2;
+    D_8015EDB4[func_8015ACCC(7, 7, sp58, sp50, sp48, 0x14, 0)].unk84[0] = 4;
+    sp58.x = (func_800AE0D0() % 20) + 0x1E;
+    sp50.x = 0x3E8;
+    sp58.y = func_800AE0D0() % 2;
+    D_8015EDB4[func_8015ACCC(7, 7, sp58, sp50, sp48, 0x14, 0)].unk84[0] = 4;
+}
 
 void func_80156924(s32 arg0) {
     (arg0 + D_8015EDB4)->unk78 += 0xFA;
