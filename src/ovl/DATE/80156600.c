@@ -1,8 +1,10 @@
 #define MAIN_API_OVERRIDE_D_80122CD0 /* switched as u32: selector in $v1 (main_api.h: s32) */
+#define MAIN_API_OVERRIDE_D_800CA154 /* matched as u16: lhu, one load shared by the compares (main_api.h: s16) */
 #include "common.h"
 #include "ovl/DATE.h"
 
 extern u32 D_80122CD0;
+extern u16 D_800CA154;
 
 void func_80156600(void) {
     D_8015FCE0 = 0x801CE0DC;
@@ -350,7 +352,27 @@ void func_8015761C(void) {
     tbl.f[idx](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_80157698);
+void func_80157698(void) {
+    u8 x;
+    u32 t;
+    /* FAKE: constant-1 local keeps the original bne operand order (constant register first); T-17206 */
+    s32 one;
+
+    one = 1;
+    func_8014C5C8();
+    x = func_80051A68(6);
+    t = x & 0x7F;
+    if ((t >= 2U) && ((u16) D_800CA154 == 8) && (one == D_800E6280.unk_1104.w)) {
+        func_80083440(2);
+    } else if ((t >= 2U) && ((u16) D_800CA154 == 0xA) && (one == D_800E6280.unk_1104.w)) {
+        func_80083440(3);
+    } else if ((t >= 2U) && ((u16) D_800CA154 == 6) && (one == D_800E6280.unk_1104.w)) {
+        func_80083440(1);
+    } else if ((t >= 2U) && ((u16) D_800CA154 == 0xC) && (one == D_800E6280.unk_1104.w)) {
+        func_80083440(1);
+    }
+    D_800E6280.unk_1104.w += 1;
+}
 
 void func_801577C4(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8A4B);
