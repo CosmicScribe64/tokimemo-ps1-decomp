@@ -741,3 +741,9 @@ typedef struct TtCore36 {
     /* 0x34 */ s16 unk_34;
 } TtCore36; /* accessed prefix size 0x36 */
 #endif
+
+#ifndef OVL_TT_T11840_80136C64
+#define OVL_TT_T11840_80136C64
+/* Table stored at D_80158A64 + 0x18 by func_80136C64. T-11840 */
+extern u8 D_80156494[];
+#endif
