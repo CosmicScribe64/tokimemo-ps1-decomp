@@ -15711,3 +15711,6 @@ Clean build 27/27 (all unit sha1 OK, TACO included), `check_headers`, `migrate_g
 
 ## [2026-10-16] ticket | T-19016 In Review
 [[tickets/T-19016-w3-d-p16]] In Progress to In Review: 2 of 5 functions matched. Awaiting the code review against `CODING_STANDARDS.md` and the final checks.
+
+## [2026-10-16] build | T-19016 final checks
+Clean build 27/27 (all unit sha1 OK, VALEN included), `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK on branch w3-d-p16; comment-only edits afterwards rebuilt incrementally with VALEN sha1 OK. See [[tickets/T-19016-w3-d-p16]].

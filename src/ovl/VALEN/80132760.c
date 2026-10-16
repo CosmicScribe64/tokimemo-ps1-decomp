@@ -81,6 +81,7 @@ s32 func_80133670(void) {
     return normal_date_girl_out();
 }
 
+/* s32: the first exit returns 0 (or v0,zero,zero in its branch delay slot), the second is a bare return and the last call falls off the end. T-19016 */
 s32 func_80133728(void) {
     GameState *g; /* the selected girl is read through a state pointer (lui v0 base for the call argument), T-19016 */
 

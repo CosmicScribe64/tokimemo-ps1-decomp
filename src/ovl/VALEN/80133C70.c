@@ -83,6 +83,7 @@ void func_80133FD0(void) {
 /* NON_MATCHING: T-19016, 27 differing lines (2 instructions plus branch offsets); as1 hoists two lui of the default block above the range check, the original keeps them in the block. A second label on the default block stops it but changes the bound. */
 void func_80134030(void) {
     func_80133C70();
+    /* two statements: the single expression (x & 0xFFF7) | 4 takes $t6/$t7/$t8 where the original has $v0, $t7, $t9 */
     D_800E6280.unk_71E &= 0xFFF7;
     D_800E6280.unk_71E |= 4;
     switch (D_800E6280.unk_F5F) {
