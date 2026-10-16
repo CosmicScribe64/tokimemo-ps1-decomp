@@ -24,6 +24,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-16554-pt-taiiku-p4|T-16554]] Types-first pilot package pt-taiiku-p4: TAIIKU `80132000.c`, `80140810.c`, `80142240.c`, 4 of 7 functions matched (3,208 B), 2 guarded, 1 left (Done).
+- [[tickets/T-16552-pt-taiiku-p2|T-16552]] Types-first pilot package pt-taiiku-p2: TAIIKU 80138950.c, 9 functions from the T-16550 redrafts: `func_80139FE4`, `func_80138DF8` and `func_80138AA8` matched (3,000 B, the last two in the Opus closer pass), bit-order colouring, phantom-spill, goto-into-loop and implicit-int findings (Done).
 - [[tickets/T-16550-taiiku-types-first|T-16550]] Types-first pilot: TAIIKU: runner records of three games and 28 stack tables typed, all 64 functions redrafted (27 better), `func_80141CDC` matched, packages T-16551..T-16554 (Done).
 - [[tickets/T-16560-taco-types-first|T-16560]] Types-first pilot: TACO: actor/coordinate/matrix types, 126 redrafts (48 better than the census, none 0), 5 matches / 2,032 bytes, packages T-16561..T-16564 (Done).
 - [[tickets/T-16510-m2c-defect-rewrites|T-16510]] Detect and rewrite recurring m2c draft defects (Done): `tools/draft_fixes.py`; 50 T-14500 drafts changed, 34 better, 3 at score 0; results in `drafts/T-16510/`.

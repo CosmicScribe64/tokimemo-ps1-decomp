@@ -1858,7 +1858,9 @@ void func_800462BC(u8 arg0, s32 arg1, s32 *arg2);
 #ifndef MAIN_API_OVERRIDE_func_800462C8
 void func_800462C8(u8 arg0, s32 arg1, s32 arg2);
 #endif
+#ifndef MAIN_API_OVERRIDE_cd_read_sectors
 void cd_read_sectors(u8 arg0, s32 arg1, s32 arg2);
+#endif
 s32 file_checksum_ok();
 s32 func_80046500(void);
 void func_800469F4();
@@ -2435,7 +2437,9 @@ void func_80085A60();
 void normal_date_speak(void);
 s32 func_80085B3C();
 void func_80085CD4(u8 a);
+#ifndef MAIN_API_OVERRIDE_func_80085E30
 void func_80085E30(s32 arg0, s32 arg1);
+#endif
 void Vblnk_Timer_Init(void);
 s32 Vblnk_Timer(void);
 void Scroll(s32, s32, s32, s32, s32);

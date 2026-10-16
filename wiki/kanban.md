@@ -147,6 +147,7 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-16510-m2c-defect-rewrites|T-16510 Detect and rewrite recurring m2c draft defects]]
 - [ ] [[tickets/T-16520-sibling-report|T-16520 Matched-sibling report for work packages]]
+- [ ] [[tickets/T-16552-pt-taiiku-p2|T-16552 Types-first pilot package pt-taiiku-p2]]
 
 - [ ] [[tickets/T-16530-proto-override|T-16530 Prototype override option for regdiff and funcdiff]]
 

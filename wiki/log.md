@@ -15230,3 +15230,31 @@ Yield tables for all recorded Codex and Claude matching sessions, compared with 
 controlled, skeptic-checked. Astra's byte rate comes mostly from larger functions (about 1,070 vs 410 bytes per match)
 and from family overlays (78-84% of its big-session bytes); matches per hour are similar; no clean model comparison.
 Filed in [[speedup-research-2026-10-16]].
+
+## [2026-10-16] ticket | T-16552 started
+
+[[tickets/T-16552-pt-taiiku-p2]] created and In Progress: pilot stage B, package pt-taiiku-p2 (`src/ovl/TAIIKU/80138950.c`, 9 functions) from the [[tickets/T-16550-taiiku-types-first]] redrafts, worktree `tokimemo-wt/pt-taiiku-p2`.
+
+## [2026-10-16] build | T-16552 TAIIKU 80138950.c results
+
+[[tickets/T-16552-pt-taiiku-p2]]: matched `func_80139FE4` (816 bytes; FAKE dead assignments `m = rec[96 + i].unk_26; cnt = D_800E6280.unk_F80;` renumber the uopt ranges of a leaf function). `func_80138DF8` 30 to 3 differing lines (local `idx` for `A[f()] = v` removes a phantom spill slot; `u32` address parameter of `cd_read_sectors` via a file-local override in `src/ovl/TAIIKU/80138950.c`, guard in `include/main_api.h`); `func_80138AA8` keeps 22 lines without its FAKE pads. Counter family and `func_80139AB0` stay `INCLUDE_ASM`; rows in [[data/t0018-cases]], findings in [[matching-notes]] (T-16552), [[taiiku-family-results]] and [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-16552 to In Review
+
+[[tickets/T-16552-pt-taiiku-p2]] In Progress to In Review: 1 function matched (816 bytes), 2 guarded drafts improved. Clean rebuild, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` run before this entry.
+
+## [2026-10-16] lint | T-16552 final verification
+
+[[tickets/T-16552-pt-taiiku-p2]]: clean `rm -rf build && python3 configure.py && ninja` 665/665, all 27 units sha1 OK; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK. One commit (AA8 `idx`) had overwritten the DF8 and `func_80139FE4` work with an older copy of `src/ovl/TAIIKU/80138950.c`; restored in the next commit and re-checked (`func_80139FE4` MATCH in the default build, DF8 3 lines, AA8 22 lines).
+
+## [2026-10-16] build | T-16552 closer pass: func_80138DF8 and func_80138AA8 matched
+
+[[tickets/T-16552-pt-taiiku-p2]]: Opus closer matched TAIIKU `func_80138DF8` (1,336 B; FAKE `i = 0` before the test and `goto` into the first loop) and `func_80138AA8` (848 B; `MAIN_API_OVERRIDE_func_80085E30` with `s32 func_80085E30();` in `src/ovl/TAIIKU/80138950.c`, guard in `include/main_api.h`; local `p` replaces the last frame pad). Updated [[matching-notes]] "T-16552", [[register-cheatsheet]], [[taiiku-family-results]], [[data/t0018-cases]], [[index]]. Ticket stays In Review.
+
+## [2026-10-16] lint | T-16552 closer verification
+
+[[tickets/T-16552-pt-taiiku-p2]]: clean `rm -rf build && python3 configure.py && ninja` 665/665, 27 binaries sha1 OK (main + 26 overlays); `tools/check_headers.py` OK, `tools/migrate_globals.py --check` OK, `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] ticket | T-16552 Done
+
+[[tickets/T-16552-pt-taiiku-p2]] In Review to Done after code review against `CODING_STANDARDS.md`: 3 functions matched (`func_80139FE4`, `func_80138DF8`, `func_80138AA8`, 3,000 bytes). One finding fixed (local `p` of `func_80138AA8` marked FAKE, comment only) and a stale intro in [[matching-notes]] refreshed. TAIIKU sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK.

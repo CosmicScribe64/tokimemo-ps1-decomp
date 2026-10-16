@@ -87,3 +87,20 @@ Left for later waves: the rest of `80133C80.c` (8), `80138950.c` (8), `801452D0.
 ### Package p4 results (T-16554)
 
 `80132000.c`, `80140810.c`, `80142240.c`, seven functions from the redraft (6,884 bytes). Four matched in about 70 minutes of agent time: `func_80132970` (456 B), `func_80143DD0` (384 B), `func_80143F50` (956 B), `func_8014280C` (1,412 B). Guarded drafts: `func_80140A90` (2,020 B, 33 instructions differ in register numbers only) and `func_8014357C` (664 B, 20); `func_80142FB8` (992 B) left as `INCLUDE_ASM`. The redraft scores (30, 107, 230, 260) did not predict the order of difficulty: the 260-score `func_8014280C` matched after fixing three m2c artifacts (chain assignment, folded loop start, spill slots), the 118-score `func_80140A90` stops at a ugen temporary count. Method, idioms and the compiler-gap rows are in [[matching-notes]] ("T-16554") and [[data/t0018-cases]]. Type changes: `D_80148EC0[]`, `D_8014A064`, `D_8014A124`, `D_8014A1E8[]`, `D_8014A208[8]`, `D_8014A228[11]` declared; `func_80145044`, `func_801450C0`, `func_80145148` prototyped; `MAIN_API_OVERRIDE_func_80085368` and `func_800853FC` (`s32` view of two `void` callees) in `80140810.c`.
+## Package pt-taiiku-p2 (T-16552): `80138950.c`
+
+Worktree `pt-taiiku-p2`, 9 functions from the redrafts, about 2 hours. Result: `func_80139FE4` matched (816 bytes, FAKE dead assignments, see below); `func_80138DF8` (1,336 bytes) from 30 to 3 differing lines; `func_80138AA8` stays at 22 lines but loses both FAKE pads; the Opus closer pass then matched both (`func_80138DF8` with a FAKE `goto` into its first loop, `func_80138AA8` by calling `func_80085E30` as an implicit int function); `func_8013B3B0`, `func_8013B608`, `func_8013BCEC`, `func_8013B78C`, `func_8013B94C` and `func_80139AB0` stay `INCLUDE_ASM` (drafts of 33 to 111 lines, rows in [[data/t0018-cases]]). Details and evidence: [[matching-notes]], "T-16552".
+
+| Function | Bytes | Start | End |
+|---|---:|---|---|
+| `func_80139FE4` | 816 | guarded 33 lines | matched |
+| `func_80138DF8` | 1,336 | guarded 30 lines | matched (closer: FAKE `goto` into the loop) |
+| `func_80138AA8` | 848 | guarded 22 lines | matched (closer: implicit int `func_80085E30`, local `p`) |
+| `func_8013B608` | 388 | redraft 81 | draft 33 register + 9 structure lines, not kept |
+| `func_8013B3B0` | 528 | redraft 99 | draft 111 lines, not kept |
+| `func_8013B78C` | 448 | redraft 136 | draft 45 lines, not kept |
+| `func_8013BCEC` | 524 | redraft 113 | draft 49 lines, not kept |
+| `func_80139AB0` | 812 | redraft 237 | draft 99 lines, not kept |
+| `func_8013B94C` | 496 | redraft 149 | draft 80 lines (60 with a volatile counter view, address kept in a register), not kept |
+
+What the types did and did not do here: the new `TaiikuBall`, `TaiikuA0`, `TaiikuCamera0C` and `TaiHalves` fields made the hand drafts of the counter family short, but none of the failures there was a type problem: they are promotion and ugen-temporary gaps (the original reloads the counter at every test; IDO promotes it). The wins came from compiler behaviour found with `regdiff` and a frame probe: bit-order colouring of leaf functions, the phantom spill slot of `A[f()] = v`, and the parameter type of a callee.
