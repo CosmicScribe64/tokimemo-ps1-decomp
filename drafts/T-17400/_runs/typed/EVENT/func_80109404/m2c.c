@@ -1,0 +1,63 @@
+void func_80109404(void) {
+    DisplayActor44 *temp_a3;
+    DisplayActor44 *temp_v0;
+    s16 temp_t3;
+    s16 temp_t5;
+    s16 temp_t9;
+    s16 var_v1;
+    s16 var_v1_2;
+    s32 temp_a0;
+    u8 *temp_t2;
+
+    sp6C[0].unk0 = (s32) D_80123B7C.unk0;
+    *(s32 *)((unsigned char *)(&sp6C[0]) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80123B7C) + (4));
+    *(s32 *)((unsigned char *)(&sp6C[0]) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_80123B7C) + (8));
+    *(s32 *)((unsigned char *)(&sp6C[0]) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_80123B7C) + (12));
+    *(s32 *)((unsigned char *)(&sp6C[0]) + (16)) = (s32) *(s32 *)((unsigned char *)(&D_80123B7C) + (16));
+    sp58[0].unk0 = (s32) D_80123B90.unk0;
+    *(s32 *)((unsigned char *)(&sp58[0]) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80123B90) + (4));
+    *(s32 *)((unsigned char *)(&sp58[0]) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_80123B90) + (8));
+    *(s32 *)((unsigned char *)(&sp58[0]) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_80123B90) + (12));
+    *(s32 *)((unsigned char *)(&sp58[0]) + (16)) = (s32) *(s32 *)((unsigned char *)(&D_80123B90) + (16));
+    sp44[0].unk0 = (s32) D_80123BA4.unk0;
+    *(s32 *)((unsigned char *)(&sp44[0]) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80123BA4) + (4));
+    *(s32 *)((unsigned char *)(&sp44[0]) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_80123BA4) + (8));
+    *(s32 *)((unsigned char *)(&sp44[0]) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_80123BA4) + (12));
+    *(s32 *)((unsigned char *)(&sp44[0]) + (16)) = (s32) *(s32 *)((unsigned char *)(&D_80123BA4) + (16));
+    func_80108330();
+    func_80012D64(D_8012396C, 0x11, 1, 2, 0);
+    func_8004C46C(D_80123970, D_80123974, D_80123978, D_8012397C, D_80123980, D_80123984);
+    var_v1 = 0;
+    do {
+        temp_t2 = &D_800B0860[var_v1];
+        var_v1 += 1;
+        *(s8 *)((unsigned char *)temp_t2 + (4241)) = 0xC;
+    } while (var_v1 < 6);
+    func_8004C6B0(D_80123960, D_80123964, D_8012395C, (s32) D_80123968);
+    *(s8 *)((unsigned char *)D_800E9620 + (6600)) = 8;
+    *(s8 *)((unsigned char *)D_800E9620 + (6532)) = 8;
+    *(s8 *)((unsigned char *)D_800E9620 + (6597)) = 0xC;
+    temp_a3 = D_800E9620 + 0x1A08;
+    *(s8 *)((unsigned char *)D_800E9620 + (6529)) = 0xC;
+    M2C_MEMCPY_ALIGNED(temp_a3, D_800E9620 + 0x1980, 0x44);
+    *(s8 *)((unsigned char *)D_800E9620 + (6665)) = 0xB;
+    *(s8 *)((unsigned char *)D_800E9620 + (6666)) = 0x40;
+    *(s16 *)((unsigned char *)D_800E9620 + (6688)) = 0x14;
+    *(s16 *)((unsigned char *)D_800E9620 + (6702)) = -6;
+    *(s16 *)((unsigned char *)D_800E9620 + (6706)) = -0x30;
+    *(s8 *)((unsigned char *)D_800E9620 + (6671)) = 0x80;
+    var_v1_2 = 0;
+    do {
+        temp_a0 = var_v1_2 * 2;
+        temp_v0 = &D_800E9620[var_v1_2];
+        M2C_MEMCPY_ALIGNED(temp_v0 + 0x1A4C, temp_a3, 0x44);
+        temp_t3 = (&sp6C[0])[var_v1_2];
+        temp_t5 = (&sp58[0])[var_v1_2];
+        temp_t9 = (&sp44[0])[var_v1_2];
+        var_v1_2 += 1;
+        *(s16 *)((unsigned char *)temp_v0 + (6770)) = (s16) (temp_t5 - 0xA0);
+        *(s16 *)((unsigned char *)temp_v0 + (6774)) = (s16) (temp_t9 - 0x78);
+        *(s16 *)((unsigned char *)temp_v0 + (6756)) = temp_t3;
+    } while (var_v1_2 < 0xA);
+    func_80011DFC(temp_a0, D_800E9620, 0x44, temp_a3);
+}

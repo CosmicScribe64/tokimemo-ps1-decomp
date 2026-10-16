@@ -1,18 +1,6 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
-typedef struct {
-    void (*f[39])();
-} FnTbl39; /* size 0x9C */
-
-typedef struct {
-    void (*f[67])();
-} FnTbl67; /* size 0x10C */
-
-typedef struct {
-    void (*f[46])();
-} FnTbl46; /* size 0xB8 */
-
 void func_801011A0(void) {
     D_801221D0 = 0x801CE0EC;
     D_801221D4 = 0x801CE0F0;
@@ -114,8 +102,6 @@ void func_801015B0(void) {
     }
     func_80015FE0();
 }
-
-extern FnTbl39 D_801222AC;
 
 void func_80101610(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -299,8 +285,6 @@ void func_80101EFC(void) {
     func_80011DFC();
 }
 
-extern FnTbl67 D_80122348;
-
 void func_80101F24(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
     FnTbl67 tbl;
@@ -342,8 +326,6 @@ void func_801020E4(void) {
     func_80011DFC();
 }
 
-extern FnTbl39 D_80122454;
-
 void func_80102118(void) {
     s32 idx;
     FnTbl39 tbl;
@@ -362,8 +344,6 @@ void func_801021C4(void) {
     func_80101300();
     func_80011DFC();
 }
-
-extern FnTbl46 D_801224F0;
 
 void func_801021FC(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */

@@ -291,7 +291,6 @@ void func_80112750(void) {
     func_80011DFC();
 }
 
-
 void func_80112930(void) {
     EventStateView *g;
     s32 temp_v0;
@@ -478,7 +477,6 @@ void func_801130F0(void) {
     func_80011DFC();
 }
 
-
 void func_80113300(void) {
     EventStateView *g;
     s32 temp_t7;
@@ -513,7 +511,6 @@ void func_80113300(void) {
     func_800469F4(0x4442);
     func_80011DFC();
 }
-
 
 void func_80113520(void) {
     EventStateView *g;
@@ -574,7 +571,6 @@ void func_801136FC(void) {
     func_800469F4(0x457F);
     func_80011DFC();
 }
-
 
 void func_801138D8(void) {
     EventStateView *g;
@@ -841,7 +837,6 @@ void func_801144AC(void) {
     func_800469F4(0x450F);
     func_80011DFC();
 }
-
 
 void func_801146B4(void) {
     D_8009473C = D_80124210;
@@ -1472,7 +1467,6 @@ void func_801166A8(void) {
     func_80011DFC();
 }
 
-
 void func_80116888(void) {
     u32 v;
 
@@ -1944,7 +1938,6 @@ void func_80117D80(void) {
         func_80011DFC();
     }
 }
-
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118010);
 
@@ -2755,11 +2748,6 @@ s32 func_8011A874(void) {
 }
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011A8E4);
-
-typedef struct {
-    u16 v[21];
-} U16x21; /* size 0x2A */
-extern U16x21 D_801254D8;
 
 void func_8011AB00(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

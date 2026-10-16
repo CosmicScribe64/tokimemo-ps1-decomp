@@ -1,0 +1,26 @@
+python3 failed:
+ -----^
+cfe: Error: drafts/T-17400/_runs/plain/EVENT/func_8010F55C/work/guarded.c, line 5345: Incompatible function return type for this function.
+ void func_8010F55C(void) {
+ ------------------^
+cfe: Error: drafts/T-17400/_runs/plain/EVENT/func_8010F55C/work/guarded.c, line 5349: 'sp30' undefined; reoccurrences will not be reported.
+     *(M2cBlockF0 *)(&sp30[0]) = *(M2cBlockF0 *)(&D_801243B8);
+ ---------------------^
+cfe: Warning 689: drafts/T-17400/_runs/plain/EVENT/func_8010F55C/work/guarded.c, line 5353: Unacceptable operand of == or !=
+     if (&func_80111E60 == var_v1) {
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/plain/EVENT/func_8010F55C/work -o drafts/T-17400/_runs/plain/EVENT/func_8010F55C/work/guarded.o /tmp/asm_processorppwe5r5t/preprocessed_a73e528cdd87400fba89456c542d697f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibp_0l34b5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/plain/EVENT/func_8010F55C/work/guarded.o drafts/T-17400/_runs/plain/EVENT/func_8010F55C/work/guarded.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-17400/_runs/plain/EVENT/func_8010F55C/work/guarded.c, line 5345: Incompatible function return type for this function.
+ void func_8010F55C(void) {
+ ------------------^
+cfe: Warning 709: drafts/T-17400/_runs/plain/EVENT/func_8010F55C/work/guarded.c, line 5351: Incompatible pointer type assignment
+     temp_v0 = &(&sp30[0])[D_800B1AF6];
+ ------------^
+cfe: Warning 689: drafts/T-17400/_runs/plain/EVENT/func_8010F55C/work/guarded.c, line 5354: Unacceptable operand of == or !=
+     if (&func_80111E60 == var_v1) {
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/plain/EVENT/func_8010F55C/work -o drafts/T-17400/_runs/plain/EVENT/func_8010F55C/work/guarded.o /tmp/asm_processorwusorkjk/preprocessed_d62733458724419883e679bf46d26315.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibyzru7qog/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/plain/EVENT/func_8010F55C/work/guarded.o drafts/T-17400/_runs/plain/EVENT/func_8010F55C/work/guarded.c

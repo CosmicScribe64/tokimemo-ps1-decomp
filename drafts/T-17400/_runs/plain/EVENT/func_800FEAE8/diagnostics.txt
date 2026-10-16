@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_800FEDC8 0
+python3 failed:
+ -------------------------------^
+cfe: Error: drafts/T-17400/_runs/plain/EVENT/func_800FEAE8/work/guarded.o.sjis.c, line 4686: 'spD4' undefined; reoccurrences will not be reported.
+         func_80015C34(spD0, spD4, 0xF);
+ ----------------------------^
+cfe: Warning 709: drafts/T-17400/_runs/plain/EVENT/func_800FEAE8/work/guarded.o.sjis.c, line 4704: Incompatible pointer type assignment
+                 temp_v1 = var_t6 + &sp2C;
+ ------------------------^
+cfe: Warning 681: drafts/T-17400/_runs/plain/EVENT/func_800FEAE8/work/guarded.o.sjis.c, line 4704: '&' before array or function; ignored
+                 temp_v1 = var_t6 + &sp2C;
+ -----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/plain/EVENT/func_800FEAE8/work -o drafts/T-17400/_runs/plain/EVENT/func_800FEAE8/work/guarded.o /tmp/asm_processor0lv5n5pp/preprocessed_b9ea3493d3b441dd819a543a0c2f9e58.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibcsifymr6/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/plain/EVENT/func_800FEAE8/work/guarded.o drafts/T-17400/_runs/plain/EVENT/func_800FEAE8/work/guarded.o.sjis.c

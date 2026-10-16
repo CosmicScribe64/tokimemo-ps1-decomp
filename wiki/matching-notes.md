@@ -5821,3 +5821,16 @@ incremented step stays in `v0`; the ETC.h prototype became s32).
 - Near miss `func_8013C700` (4 rows): the `func_8013C330` shape gives everything except the order of
   `or v0,zero,zero` and the `sw zero` of `D_80150070 = 0;` around the branch delay slot (an explicit
   `return 0;` changes nothing).
+## T-17400: EVENT types-first pass
+
+Details in [[event-family-results]] ("Types-first pass (T-17400)"). Matched: EVENT `func_800FF320` and
+`func_80104C3C` (ports of DATE clones), `func_800FF61C` (typed redraft, step-table shape), `func_8010AE7C` (port
+of GEKO `func_80141760`); 4 functions, 1,416 bytes.
+
+- EVENT step handlers read the step from `D_800B1AF6`, not `GameState.unk_110A`; the DATE shapes port with that
+  swap and the extra `func_80078950("%d\n", ...)` debug print.
+- Chained stores: IDO stores the innermost target first. In EVENT `func_800FD00C` the order `30E, 30D, 30C, 02F`
+  comes from `D_800EB02F = D_800EC30C = D_800EC30D = D_800EC30E = v;`.
+- `func_8010F340`: display-record stores through one base (`*(s32 *)(D_800E9620 + 0x874) |= ...`) are 25 rows
+  closer than the splat scalars (`D_800E9E94`); same in DATE's `func_80144720`.
+

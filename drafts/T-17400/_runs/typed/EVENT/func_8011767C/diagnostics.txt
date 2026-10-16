@@ -1,0 +1,13 @@
+python3 failed:
+ --------------------------^
+cfe: Warning 681: drafts/T-17400/_runs/typed/EVENT/func_8011767C/work/guarded.o.sjis.c, line 5186: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Warning 681: drafts/T-17400/_runs/typed/EVENT/func_8011767C/work/guarded.o.sjis.c, line 5212: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Error: drafts/T-17400/_runs/typed/EVENT/func_8011767C/work/guarded.o.sjis.c, line 6036: Subscripting a non-array.
+     sp6B = func_8002328C(D_800B1746, D_800EECBC, 0, (s16 (*)[]) &sp54[0]) & 0x7F;
+ ---------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/typed/EVENT/func_8011767C/work -o drafts/T-17400/_runs/typed/EVENT/func_8011767C/work/guarded.o /tmp/asm_processorp8aw4byr/preprocessed_319c3547b9ef470abf00ddf5a0a1bde1.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibx9djr6gg/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/typed/EVENT/func_8011767C/work/guarded.o drafts/T-17400/_runs/typed/EVENT/func_8011767C/work/guarded.o.sjis.c

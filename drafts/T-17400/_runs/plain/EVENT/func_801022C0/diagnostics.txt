@@ -1,0 +1,12 @@
+python3 failed:
+cfe: Warning 681: drafts/T-17400/_runs/plain/EVENT/func_801022C0/work/guarded.o.sjis.c, line 4715: '&' before array or function; ignored
+     *(M2cBlockD0 *)(&sp2C) = *(M2cBlockD0 *)(&D_801225A8);
+ --------------------^
+cfe: Warning 681: drafts/T-17400/_runs/plain/EVENT/func_801022C0/work/guarded.o.sjis.c, line 4716: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp2C + 0xCC) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_801225A8.f[0x33]) + (4));
+ -------------------------------^
+cfe: Error: drafts/T-17400/_runs/plain/EVENT/func_801022C0/work/guarded.o.sjis.c, line 4718: 'sp' undefined; reoccurrences will not be reported.
+     (*(s32 (**)(s32))((unsigned char *)(sp + (D_800B1AF6 * 4)) + (44)))(0x80);
+ ----------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17400/_runs/plain/EVENT/func_801022C0/work -o drafts/T-17400/_runs/plain/EVENT/func_801022C0/work/guarded.o /tmp/asm_processor9m8dftsv/preprocessed_4944eb764ed144bc8fe1e7cfa36806d1.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibcm8psiod/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17400/_runs/plain/EVENT/func_801022C0/work/guarded.o drafts/T-17400/_runs/plain/EVENT/func_801022C0/work/guarded.o.sjis.c

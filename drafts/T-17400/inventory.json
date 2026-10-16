@@ -1,0 +1,344 @@
+[
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/800F9680.c",
+  "func": "func_800F9730",
+  "size": 464,
+  "guarded": false,
+  "source_hash": "4e43f5202b27e5642c9f973e212c07cc7633b4dc5116095b4d5f5cc244d281b6",
+  "scope": "EVENT:func_800F9730"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/800F9680.c",
+  "func": "func_800FA25C",
+  "size": 808,
+  "guarded": false,
+  "source_hash": "4e43f5202b27e5642c9f973e212c07cc7633b4dc5116095b4d5f5cc244d281b6",
+  "scope": "EVENT:func_800FA25C"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/800F9680.c",
+  "func": "func_800FAA04",
+  "size": 508,
+  "guarded": false,
+  "source_hash": "4e43f5202b27e5642c9f973e212c07cc7633b4dc5116095b4d5f5cc244d281b6",
+  "scope": "EVENT:func_800FAA04"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/800FBBF0.c",
+  "func": "func_800FC040",
+  "size": 324,
+  "guarded": false,
+  "source_hash": "965bfc9fec6f5c5a0a4abb1104c47a346ca07a3fec2dbebed1362cb6b40e4740",
+  "scope": "EVENT:func_800FC040"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/800FBBF0.c",
+  "func": "func_800FD00C",
+  "size": 340,
+  "guarded": false,
+  "source_hash": "965bfc9fec6f5c5a0a4abb1104c47a346ca07a3fec2dbebed1362cb6b40e4740",
+  "scope": "EVENT:func_800FD00C"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/800FDC20.c",
+  "func": "func_800FEAE8",
+  "size": 736,
+  "guarded": false,
+  "source_hash": "67e9af269d1debc36b7af6485bdf27d4b97d09a5bb61b0954ebeefedf3fb372b",
+  "scope": "EVENT:func_800FEAE8"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/800FDC20.c",
+  "func": "func_800FEDC8",
+  "size": 428,
+  "guarded": false,
+  "source_hash": "67e9af269d1debc36b7af6485bdf27d4b97d09a5bb61b0954ebeefedf3fb372b",
+  "scope": "EVENT:func_800FEDC8"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/800FDC20.c",
+  "func": "func_800FEF74",
+  "size": 940,
+  "guarded": false,
+  "source_hash": "67e9af269d1debc36b7af6485bdf27d4b97d09a5bb61b0954ebeefedf3fb372b",
+  "scope": "EVENT:func_800FEF74"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/800FDC20.c",
+  "func": "func_800FF61C",
+  "size": 244,
+  "guarded": false,
+  "source_hash": "67e9af269d1debc36b7af6485bdf27d4b97d09a5bb61b0954ebeefedf3fb372b",
+  "scope": "EVENT:func_800FF61C"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/800FDC20.c",
+  "func": "func_800FFA4C",
+  "size": 392,
+  "guarded": false,
+  "source_hash": "67e9af269d1debc36b7af6485bdf27d4b97d09a5bb61b0954ebeefedf3fb372b",
+  "scope": "EVENT:func_800FFA4C"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/801011A0.c",
+  "func": "func_801022C0",
+  "size": 308,
+  "guarded": false,
+  "source_hash": "e4247ca1e1184e492086c36b4d569794596ac64030993daa5af95b427088af13",
+  "scope": "EVENT:func_801022C0"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/801024B0.c",
+  "func": "func_80102E54",
+  "size": 672,
+  "guarded": false,
+  "source_hash": "c6436127a2fd3d45ce3c76048ee4bb91f698904124293d06152b235b7a998dd4",
+  "scope": "EVENT:func_80102E54"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/801024B0.c",
+  "func": "func_801035BC",
+  "size": 344,
+  "guarded": false,
+  "source_hash": "c6436127a2fd3d45ce3c76048ee4bb91f698904124293d06152b235b7a998dd4",
+  "scope": "EVENT:func_801035BC"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/801024B0.c",
+  "func": "func_80103774",
+  "size": 628,
+  "guarded": false,
+  "source_hash": "c6436127a2fd3d45ce3c76048ee4bb91f698904124293d06152b235b7a998dd4",
+  "scope": "EVENT:func_80103774"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/801050D0.c",
+  "func": "func_80105DF8",
+  "size": 856,
+  "guarded": false,
+  "source_hash": "d3d54a372bef6f07d2824bd9785f9c36a41bfee1b9b2edf7b46d41d4185c9055",
+  "scope": "EVENT:func_80105DF8"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/80107FC0.c",
+  "func": "func_80108B24",
+  "size": 476,
+  "guarded": false,
+  "source_hash": "675cddbf19c9f0926ee6a9d59f311a8c413d5d7e1c1d61b262b087c52da6e5f2",
+  "scope": "EVENT:func_80108B24"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/80107FC0.c",
+  "func": "func_80109404",
+  "size": 768,
+  "guarded": false,
+  "source_hash": "675cddbf19c9f0926ee6a9d59f311a8c413d5d7e1c1d61b262b087c52da6e5f2",
+  "scope": "EVENT:func_80109404"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010A210.c",
+  "func": "func_8010AE7C",
+  "size": 196,
+  "guarded": false,
+  "source_hash": "d2141bea79bb34d014fb5ba25965155f4eed54a65174c20cbc4c4bf771684e9d",
+  "scope": "EVENT:func_8010AE7C"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010B360.c",
+  "func": "func_8010B614",
+  "size": 100,
+  "guarded": true,
+  "source_hash": "934a0ed6cb9181269cb9f81f3120361bf4a5ca9cbe075f12291a80564c555e9e",
+  "scope": "EVENT:func_8010B614"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010BB90.c",
+  "func": "func_8010F340",
+  "size": 376,
+  "guarded": false,
+  "source_hash": "0a0e44248e46c1fdc1b7c9dfd34a9681727cef5916b82dcf29c206d45fc69813",
+  "scope": "EVENT:func_8010F340"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010BB90.c",
+  "func": "func_8010F55C",
+  "size": 496,
+  "guarded": false,
+  "source_hash": "0a0e44248e46c1fdc1b7c9dfd34a9681727cef5916b82dcf29c206d45fc69813",
+  "scope": "EVENT:func_8010F55C"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010BB90.c",
+  "func": "func_8010F74C",
+  "size": 1728,
+  "guarded": false,
+  "source_hash": "0a0e44248e46c1fdc1b7c9dfd34a9681727cef5916b82dcf29c206d45fc69813",
+  "scope": "EVENT:func_8010F74C"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010FE10.c",
+  "func": "func_801103A0",
+  "size": 6848,
+  "guarded": false,
+  "source_hash": "b5c51a6911cc1684242082141ae196cddb3499c512584ba22b9c7dc44cb8250e",
+  "scope": "EVENT:func_801103A0"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010FE10.c",
+  "func": "func_80114B0C",
+  "size": 240,
+  "guarded": true,
+  "source_hash": "b5c51a6911cc1684242082141ae196cddb3499c512584ba22b9c7dc44cb8250e",
+  "scope": "EVENT:func_80114B0C"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010FE10.c",
+  "func": "func_80114C5C",
+  "size": 1732,
+  "guarded": false,
+  "source_hash": "b5c51a6911cc1684242082141ae196cddb3499c512584ba22b9c7dc44cb8250e",
+  "scope": "EVENT:func_80114C5C"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010FE10.c",
+  "func": "func_8011767C",
+  "size": 916,
+  "guarded": false,
+  "source_hash": "b5c51a6911cc1684242082141ae196cddb3499c512584ba22b9c7dc44cb8250e",
+  "scope": "EVENT:func_8011767C"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010FE10.c",
+  "func": "func_80118010",
+  "size": 680,
+  "guarded": false,
+  "source_hash": "b5c51a6911cc1684242082141ae196cddb3499c512584ba22b9c7dc44cb8250e",
+  "scope": "EVENT:func_80118010"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010FE10.c",
+  "func": "func_80118868",
+  "size": 232,
+  "guarded": true,
+  "source_hash": "b5c51a6911cc1684242082141ae196cddb3499c512584ba22b9c7dc44cb8250e",
+  "scope": "EVENT:func_80118868"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010FE10.c",
+  "func": "func_80118B4C",
+  "size": 608,
+  "guarded": false,
+  "source_hash": "b5c51a6911cc1684242082141ae196cddb3499c512584ba22b9c7dc44cb8250e",
+  "scope": "EVENT:func_80118B4C"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010FE10.c",
+  "func": "func_80119110",
+  "size": 608,
+  "guarded": false,
+  "source_hash": "b5c51a6911cc1684242082141ae196cddb3499c512584ba22b9c7dc44cb8250e",
+  "scope": "EVENT:func_80119110"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010FE10.c",
+  "func": "func_8011A8E4",
+  "size": 540,
+  "guarded": false,
+  "source_hash": "b5c51a6911cc1684242082141ae196cddb3499c512584ba22b9c7dc44cb8250e",
+  "scope": "EVENT:func_8011A8E4"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010FE10.c",
+  "func": "func_8011B60C",
+  "size": 572,
+  "guarded": false,
+  "source_hash": "b5c51a6911cc1684242082141ae196cddb3499c512584ba22b9c7dc44cb8250e",
+  "scope": "EVENT:func_8011B60C"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010FE10.c",
+  "func": "func_8011B848",
+  "size": 1408,
+  "guarded": false,
+  "source_hash": "b5c51a6911cc1684242082141ae196cddb3499c512584ba22b9c7dc44cb8250e",
+  "scope": "EVENT:func_8011B848"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8010FE10.c",
+  "func": "func_8011C164",
+  "size": 656,
+  "guarded": false,
+  "source_hash": "b5c51a6911cc1684242082141ae196cddb3499c512584ba22b9c7dc44cb8250e",
+  "scope": "EVENT:func_8011C164"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8011C650.c",
+  "func": "func_8011C750",
+  "size": 3700,
+  "guarded": false,
+  "source_hash": "3a203f6ba1107a861cadddd796a54b0380002aa119705563eb54764a6e8a71b2",
+  "scope": "EVENT:func_8011C750"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8011C650.c",
+  "func": "func_8011D5C4",
+  "size": 2036,
+  "guarded": false,
+  "source_hash": "3a203f6ba1107a861cadddd796a54b0380002aa119705563eb54764a6e8a71b2",
+  "scope": "EVENT:func_8011D5C4"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8011C650.c",
+  "func": "func_8011DDB8",
+  "size": 3992,
+  "guarded": false,
+  "source_hash": "3a203f6ba1107a861cadddd796a54b0380002aa119705563eb54764a6e8a71b2",
+  "scope": "EVENT:func_8011DDB8"
+ },
+ {
+  "unit": "EVENT",
+  "src": "src/ovl/EVENT/8011C650.c",
+  "func": "func_8011EDFC",
+  "size": 1836,
+  "guarded": true,
+  "source_hash": "3a203f6ba1107a861cadddd796a54b0380002aa119705563eb54764a6e8a71b2",
+  "scope": "EVENT:func_8011EDFC"
+ }
+]
