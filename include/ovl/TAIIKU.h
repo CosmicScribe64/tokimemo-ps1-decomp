@@ -238,6 +238,7 @@ s32 func_801368B8();
 void func_801369F0(void);
 s32 func_80136DA4();
 void func_80136E80(void);
+void func_80137544(void);
 s32 func_80137440();
 s32 func_80137C44();
 s32 func_80137EA8();

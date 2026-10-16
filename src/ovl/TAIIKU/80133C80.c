@@ -810,7 +810,81 @@ s32 func_80137440(void) {
     }
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-16551, 13 differing rows (registers only): the loop counter i takes $a3 and the hoisted
+ * D_8012091E + 11 takes $a2, the original has them the other way round (hint: the hoisted constant outranks i,
+ * priority 7 against 6.4); ugen temporaries t8/t3 vs t9/t5 follow. */
+void func_80137544(void) {
+    u8 sel;
+    s32 i;
+    s32 a;
+    s32 b;
+    s16 lo;
+    s16 hi;
+    s32 pos;
+    s32 one; /* FAKE: names the constant 1 so that it is the first operand of the three compares (bne v0,t8); real source unknown. T-16551 */
+
+    one = 1;
+    func_800863D4(0x6A);
+    if (D_800B3CFC != 0 && D_80122E94 == 0xFF) {
+        if (one == D_80122EA0) {
+            func_80044750(0x60E);
+        } else {
+            func_80044750(0x50E);
+        }
+        D_80122E94 = 1;
+    } else if (D_800E6280.unk_F88 & 0x20) {
+        if (D_80149208.player.unk_07 >= 0x29U) {
+            i = 0;
+            a = -0xA0;
+            b = -0x80;
+            if (D_80120922 < 0 && D_80120922 >= -0x30) {
+                sel = 0;
+            } else if (D_80120922 < -0x30 && D_80120922 >= -0x40) {
+                sel = 0xA;
+            } else if (D_80120922 < -0x40 && D_80120922 >= -0x50) {
+                sel = 0x14;
+            } else {
+                sel = 0x80;
+            }
+            pos = D_8012091E + 0xB;
+            do {
+                lo = a;
+                hi = b;
+                if (sel == 10) {
+                    lo = a + 0x10;
+                    hi = b + 0x10;
+                }
+                a += 0x20;
+                if (lo < pos && pos < hi) {
+                    sel = sel + (s8) i; /* FAKE: the cast only moves the ugen temporaries (andi t7); autotweak. T-16551 */
+                    break;
+                }
+                i++;
+                b += 0x20;
+            } while (i != 10);
+            if (one == D_80122E94 && sel == D_801491D8 && D_801491DC != 0xFF) {
+                if (one == D_80122EA0) {
+                    func_80044750(0x60C);
+                } else {
+                    func_80044750(0x50C);
+                }
+                D_80149208.player.unk_01 = 1;
+            } else if (sel == D_80149208.player.unk_02) {
+                func_80044750(0x601);
+                D_80149208.player.unk_01 = 1;
+                D_80122E94 = 0xFF;
+                D_801491DC = 0xFF;
+            } else {
+                func_80044750(0x600);
+            }
+            D_80149208.player.unk_07 = 0;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137544);
+#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137784);
 
