@@ -2855,6 +2855,7 @@ void func_8005F6E4(void);
 void func_8005FDA0(void);
 void func_8005FF68(void);
 void func_80060104(void);
+void func_80060178(void);
 void func_80060504(void);
 void func_80060150(void);
 
