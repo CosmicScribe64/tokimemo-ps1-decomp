@@ -15834,3 +15834,6 @@ RENSYU `func_80133CB8` (420 bytes) matched, unit sha1 OK (`src/ovl/RENSYU/801320
 
 ## [2026-10-16] ticket | T-19020 In Review
 [[tickets/T-19020-w3-d-p20]] In Progress to In Review: RENSYU package, 1 of 4 functions matched (`func_80133CB8`, 420 bytes, FAKE: empty test and same-line loop give the original's block boundary and `lui` order). `func_80133628` stays a guarded draft (21 lines), `func_80133990` (78 lines) and `func_8013325C` (about 100) are back to `INCLUDE_ASM` with drafts in `drafts/T-19020/RENSYU/`. New: bit-field counter `RensyuClubCount`, stack table layout rule, block-boundary idiom in [[register-cheatsheet]]; notes in [[matching-notes]], rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-19020 Done
+[[tickets/T-19020-w3-d-p20]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of RENSYU OK (headers OK, globals OK, sha1 OK). 1 of 4 functions matched (`func_80133CB8`, 420 bytes, FAKE), `func_80133628` stays a guarded draft (21 lines), `func_80133990` and `func_8013325C` stay `INCLUDE_ASM`. Merge via the wave 3 merge script.
