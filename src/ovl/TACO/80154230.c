@@ -192,4 +192,46 @@ loop_1:
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154230", func_801546FC);
 #endif
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154230", func_80154820);
+/* The record word is read as *p each time (no local copy) and r/g/b are first the raw shifted/masked word, then the clamped sum: the shifts stay uopt values in $v1/$a0/$a1 as in the original. T-16562 */
+void func_80154820(s32 arg0, s32 arg1) {
+    u32 **bounds;
+    u32 *p;
+    u32 command0;
+    u32 command1;
+    u32 command2;
+    s32 r;
+    s32 g;
+    s32 b;
+
+    command0 = 0x21010001;
+    command1 = 0x21010002;
+    command2 = 0x21010304;
+    bounds = (u32 **)(D_8015F290 + arg0);
+    p = bounds[0];
+loop_1:
+    if (func_8015431C((u32)p) != 0) {
+        if (command0 == p[0] || command1 == p[0] || command2 == p[0]) {
+            p += 1;
+            r = *p >> 16;
+            g = *p >> 8;
+            b = *p & 0xFF;
+            r = (r & 0xFF) + arg1;
+            g = (g & 0xFF) + arg1;
+            b = b + arg1;
+            if (r >= 0x100) {
+                r = 0xFF;
+            }
+            if (g >= 0x100) {
+                g = 0xFF;
+            }
+            if (b >= 0x100) {
+                b = 0xFF;
+            }
+            *p = (*p & 0xFF000000) + ((r & 0xFF) << 16) + ((g & 0xFF) << 8) + (b & 0xFF);
+        }
+        p++;
+        if ((u32)p < (u32)bounds[1]) {
+            goto loop_1;
+        }
+    }
+}
