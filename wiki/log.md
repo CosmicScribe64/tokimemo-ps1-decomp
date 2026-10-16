@@ -16286,3 +16286,7 @@ Created [[tickets/T-20003-rpg-timer-callees]] from upstream main 68650e14. The T
 ## [2026-10-16] build | T-20003 RPG callback func_80157158 matched
 
 Actual default funcdiff --resolve proves 1,256 linked bytes for RPG_BAT func_80157158; RPG_BAT.bin SHA1 passes. Use integer-return caller views of func_8013D030 and func_8013F15C, reread the state selector after calls, update timer globals directly and split the flag mask/or into two in-place operations. Two unused frame words are explicitly FAKE and ticketed. Other target callbacks stay scratch-only. See [[tickets/T-20003-rpg-timer-callees]].
+
+## [2026-10-16] build | T-20003 RPG callback func_80138F6C matched
+
+Actual default funcdiff --resolve proves 1,268 linked bytes for RPG_BAT func_80138F6C. Reused canonical timer updates, removed the unused m2c tail local, kept two explicitly FAKE frame words and used a documented FAKE signed-word selector view for the remaining v0/v1 difference. Added the missing text-buffer declaration in the overlay header. Upstream fa1dffb4 independently matched the third target (func_80146C30, T-17104); its scratch probes are discarded from production. See [[tickets/T-20003-rpg-timer-callees]].

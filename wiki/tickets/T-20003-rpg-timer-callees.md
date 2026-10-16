@@ -26,6 +26,10 @@ First result: func_80157158 matches 1,256 linked bytes in the actual default bui
 
 Evidence: build/T-20003/func57158-proof.log and rpg-check.log (gitignored); actual default funcdiff MATCH, 1,256 bytes, RPG_BAT.bin SHA1 OK. Other callbacks remain scratch-only while evaluated.
 
+Second result: func_80138F6C matches 1,268 actual default linked bytes. Canonical in-place timer increments and reading the timer again remove m2c's stale locals; the only remaining 28 differing listing lines were D_8015EBAC in v0 rather than v1. A same-width signed-word pointer read in the inner switch makes the complete selector web use v1 (explicit FAKE, original spelling unknown). Two unused frame words preserve the 0x40 frame and spill home (FAKE); an unused m2c tail variable was removed without changing the match. The text destination D_8015E8A0 is declared once as an unsized byte array in RPG_BAT.h, like the neighboring buffers. No callee override is needed for this callback.
+
+While this work ran, upstream main advanced to fa1dffb4 and matched the third target, func_80146C30, in T-17104. Its local probes were not retained or submitted; integrate the upstream match instead of duplicating it.
+
 ## Comments
 
 Implementation and verification pending.
