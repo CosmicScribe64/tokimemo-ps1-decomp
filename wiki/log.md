@@ -16041,3 +16041,7 @@ TACO `func_80137264` (812 B, `src/ovl/TACO/80136B40.c`) matches in plain C, TACO
 ## [2026-10-16] ticket | T-19029 Done
 
 [[tickets/T-19029-w3-d-p29]] In Review to Done: code review against `CODING_STANDARDS.md` found documentation issues only (the family page named siblings of `func_80136FBC` as callers when it is the only caller, a 25 against 27 minutes mismatch in [[matching-notes]], a stale In Review in the index), all fixed. 1 of 1 functions matched: TACO `func_80137264` (812 B, one FAKE for the `digits` copy). TACO unit sha1 OK after a rebuild. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19032 In Progress
+
+Created [[tickets/T-19032-w3-d-p32]] (Wave 3 package w3-d-p32, branch w3-d-p32 from w2-good): TAIIKU `src/ovl/TAIIKU/80141280.c`, `func_80141280` (1840 B). Starting from the T-14500 draft (score 446).
