@@ -1,0 +1,101 @@
+[
+ {
+  "unit": "MASTER",
+  "src": "src/ovl/MASTER/80132140.c",
+  "func": "func_80132444",
+  "size": 624,
+  "guarded": false,
+  "source_hash": "0f1079f1c249b97e5deb18870e6f579750cb04a81885e92008676a1768166ad9",
+  "scope": "MASTER:func_80132444"
+ },
+ {
+  "unit": "MASTER",
+  "src": "src/ovl/MASTER/80132140.c",
+  "func": "func_801326B4",
+  "size": 3264,
+  "guarded": false,
+  "source_hash": "0f1079f1c249b97e5deb18870e6f579750cb04a81885e92008676a1768166ad9",
+  "scope": "MASTER:func_801326B4"
+ },
+ {
+  "unit": "MASTER",
+  "src": "src/ovl/MASTER/80132140.c",
+  "func": "func_8013348C",
+  "size": 500,
+  "guarded": false,
+  "source_hash": "0f1079f1c249b97e5deb18870e6f579750cb04a81885e92008676a1768166ad9",
+  "scope": "MASTER:func_8013348C"
+ },
+ {
+  "unit": "MASTER",
+  "src": "src/ovl/MASTER/80133680.c",
+  "func": "func_801344E0",
+  "size": 2912,
+  "guarded": false,
+  "source_hash": "5f44cf74b8f4b08cfe4cad719e87b322a752cb59f9229f0654c0a36ca9b2fdbf",
+  "scope": "MASTER:func_801344E0"
+ },
+ {
+  "unit": "MASTER",
+  "src": "src/ovl/MASTER/80133680.c",
+  "func": "func_80135CF4",
+  "size": 708,
+  "guarded": false,
+  "source_hash": "5f44cf74b8f4b08cfe4cad719e87b322a752cb59f9229f0654c0a36ca9b2fdbf",
+  "scope": "MASTER:func_80135CF4"
+ },
+ {
+  "unit": "MASTER",
+  "src": "src/ovl/MASTER/80133680.c",
+  "func": "func_80135FB8",
+  "size": 1084,
+  "guarded": false,
+  "source_hash": "5f44cf74b8f4b08cfe4cad719e87b322a752cb59f9229f0654c0a36ca9b2fdbf",
+  "scope": "MASTER:func_80135FB8"
+ },
+ {
+  "unit": "MASTER",
+  "src": "src/ovl/MASTER/80133680.c",
+  "func": "func_801363F4",
+  "size": 2608,
+  "guarded": false,
+  "source_hash": "5f44cf74b8f4b08cfe4cad719e87b322a752cb59f9229f0654c0a36ca9b2fdbf",
+  "scope": "MASTER:func_801363F4"
+ },
+ {
+  "unit": "MASTER",
+  "src": "src/ovl/MASTER/80139000.c",
+  "func": "func_801391E4",
+  "size": 1580,
+  "guarded": false,
+  "source_hash": "e3f280bd4ffda04dafff6983154660143fd1c7b5da33985a7f8e0bef39e44e40",
+  "scope": "MASTER:func_801391E4"
+ },
+ {
+  "unit": "MASTER",
+  "src": "src/ovl/MASTER/80139000.c",
+  "func": "func_80139CC8",
+  "size": 2748,
+  "guarded": false,
+  "source_hash": "e3f280bd4ffda04dafff6983154660143fd1c7b5da33985a7f8e0bef39e44e40",
+  "scope": "MASTER:func_80139CC8"
+ },
+ {
+  "unit": "MASTER",
+  "src": "src/ovl/MASTER/80139000.c",
+  "func": "func_8013B448",
+  "size": 956,
+  "guarded": false,
+  "source_hash": "e3f280bd4ffda04dafff6983154660143fd1c7b5da33985a7f8e0bef39e44e40",
+  "scope": "MASTER:func_8013B448"
+ },
+ {
+  "unit": "MASTER",
+  "src": "src/ovl/MASTER/80139000.c",
+  "func": "func_8013B804",
+  "size": 420,
+  "guarded": false,
+  "source_hash": "e3f280bd4ffda04dafff6983154660143fd1c7b5da33985a7f8e0bef39e44e40",
+  "scope": "MASTER:func_8013B804"
+ }
+]
