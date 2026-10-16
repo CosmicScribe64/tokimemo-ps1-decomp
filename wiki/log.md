@@ -15937,3 +15937,6 @@ The T-19023 In Review entry above says 2,048 bytes; the three functions are 204 
 
 ## [2026-10-16] ticket | T-19023 Done
 [[tickets/T-19023-w3-d-p23]] reviewed against `CODING_STANDARDS.md` and moved to Done: 3 of 3 functions matched (2,028 bytes: TACO `func_801357B0`, `func_80136988`, `func_80135A04`), nothing guarded. Two wiki findings fixed: the two new [[register-cheatsheet]] rows were outside the table (moved in), and two stray trailing blank lines were removed. The one FAKE (second induction variable in `func_801357B0`) is commented and ticketed. TACO.bin SHA1 OK.
+
+## [2026-10-16] ticket | T-19027 started
+[[tickets/T-19027-w3-d-p27]] (Wave 3 package, 15:28 UTC): TEL `src/ovl/TEL/8013CCD0.c`, `func_8013CCD0` and `func_8013D03C`, worktree `tokimemo-wt/w3-d-p27`, base `w2-good`.
