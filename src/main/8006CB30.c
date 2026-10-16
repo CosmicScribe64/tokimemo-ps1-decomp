@@ -1320,25 +1320,27 @@ s32 func_80072944(void) {
     }
 }
 
-/* NON_MATCHING: T-11670, 16 differing lines; the year/month arguments of func_80068938 are scheduled a0-first (original a1-first), and the month reloaded after the call sits in v0 with 9 in v1 (original a1 and v0). */
-#ifdef NON_MATCHING
 s32 func_80072998(void) {
-    switch (D_800E6280.unk_110D) {
+    /* Fields are read through a pointer, as in func_8006EB64: the month byte keeps the original's a1/v0 allocation across
+     * the call and the argument loads keep the original order (T-17004). */
+    GameState *g = &D_800E6280;
+
+    switch (g->unk_110D) {
     case 0:
         cd_read_sectors(0x95, 0x801A0000, 0x9B94);
-        D_800E6280.unk_110D++;
+        g->unk_110D++;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_80068938(D_800E6280.unk_03E, D_800E6280.unk_03F, 1);
-            if (D_800E6280.unk_03F % 3 == 0) {
-                if (D_800E6280.unk_03F == 9 && D_800E6280.unk_040 == 1 && D_800E6280.unk_03E == 0x60) {
+            func_80068938(g->unk_03E, g->unk_03F, 1);
+            if (g->unk_03F % 3 == 0) {
+                if (g->unk_03F == 9 && g->unk_040 == 1 && g->unk_03E == 0x60) {
                     func_80042808();
-                } else if (D_800E6280.unk_03F == 9) {
+                } else if (g->unk_03F == 9) {
                     func_8004E58C();
                     func_80066104("ダミー");
                     func_80065F34(0);
-                    gnsx(&D_800E6280.unk_0D4);
+                    gnsx(&g->unk_0D4);
                     sndisp("明日から新学期だ）", 0, 0x1F);
                     k_disp_start(3);
                     func_80044750(0xC1);
@@ -1358,9 +1360,6 @@ s32 func_80072998(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072998);
-#endif
 
 void func_80072B20(void) {
     if (func_80044E8C() == 1) {
