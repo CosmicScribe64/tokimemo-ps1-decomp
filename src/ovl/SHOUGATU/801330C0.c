@@ -1,3 +1,4 @@
+#define MAIN_API_OVERRIDE_func_800847B8 /* Word argument at this call (func_80133760); T-17500. */
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
@@ -64,7 +65,37 @@ void func_80133738(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_80133760);
+s32 func_80133760(void) {
+    s32 girl;
+    u8 previous;
+
+    if (D_80122CDC == 0xB) {
+        func_8013397C();
+        return 0;
+    }
+    girl = D_80122CDC;
+    previous = D_800E6280.unk_F5F;
+    if (previous == girl && D_80143B14 != 0) {
+        func_8004284C();
+        return 0;
+    }
+    if (D_800E6280.unk_1BC[D_80122CDC].unk_0C.f.b3 == 0) {
+        D_80143B00 = 0;
+        D_80143AF4 = D_80143A78;
+        D_80143AF8 = D_80143AB4;
+        D_80143AFC = D_80143AF0;
+        func_800847B8(D_80122CDC);
+        func_8004284C();
+        return 0;
+    }
+    D_800E6280.unk_F5F = (u8)girl;
+    func_80132A34();
+    func_800847B8(D_800E6280.unk_F5F);
+    D_80143B00 = 9;
+    func_8004284C();
+    func_8004284C();
+    func_8004284C();
+}
 
 void func_80133874(void) {
     D_80143B00 = 7;
