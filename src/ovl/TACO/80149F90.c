@@ -929,7 +929,7 @@ void func_8014E4A4(void) {
     }
 }
 
-/* NON_MATCHING: T-19003, 16 differing lines; as1 hoists the constants in the other order: original li v1,0x800 (delay slot) then li v0,0x40 after the first load, IDO li v0,0x40 first (T-0018, same as func_8014B8B4); the 0x80 stores likewise */
+/* NON_MATCHING: T-19003, 16 differing lines; as1 hoists the constants in the other order: original li v1,0x800 (delay slot) then li v0,0x40 after the first load, IDO the reverse (T-0018, as func_8014B8B4) */
 #ifdef NON_MATCHING
 void func_8014E5F8(s32 arg0) {
     if (arg0 < 0x13) {
@@ -1216,7 +1216,7 @@ void func_8014F2A0(void) {
     }
 }
 
-/* NON_MATCHING: T-19003, 14 differing lines; the original keeps the loaded unk_038 in $a1 and the chain value in $v0 (uopt range) with the unk_038 store after the D_800E6280.unk_1104 store-back, IDO gives $v0 and the ugen temporary $t8 */
+/* NON_MATCHING: T-19003, 14 differing lines; the original keeps the loaded unk_038 in $a1 and the chain value in $v0 (a uopt range, stored before the unk_1104 store-back), IDO gives $v0 and the ugen temporary $t8 */
 #ifdef NON_MATCHING
 void func_8014F5F0(void) {
     if (D_800E6280.unk_1104.u < 0x64U) {

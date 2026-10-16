@@ -15384,3 +15384,9 @@ pool; merges run in parallel through a locked, self-cleaning merge script.
 
 ## [2026-10-16] ticket | T-19003 Wave 3 package w3-d-p03 In Progress
 Opened [[tickets/T-19003-w3-d-p03]] on branch w3-d-p03 (base w2-good): TACO `src/ovl/TACO/80149F90.c`, work list `func_8014F5F0`, `func_801511C0`, `func_8014E5F8`, `func_8014F820`, `func_8014A480`. Part of [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-16] ticket | T-19003 In Progress -> In Review
+Wave 3 package w3-d-p03 on `src/ovl/TACO/80149F90.c`: 0 of 5 functions matched. `func_8014F5F0` (14 lines), `func_8014E5F8` (16), `func_8014A480` (16) guarded with typed drafts, `func_801511C0` (10) unchanged, `func_8014F820` back to `INCLUDE_ASM`. Five rows in [[data/t0018-cases]], section "T-19003" in [[matching-notes]]. Ticket [[tickets/T-19003-w3-d-p03]], part of [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-16] build | T-19003 final checks
+Clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` all OK on branch w3-d-p03. See [[tickets/T-19003-w3-d-p03]].
