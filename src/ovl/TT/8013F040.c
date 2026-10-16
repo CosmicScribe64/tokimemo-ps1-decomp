@@ -770,4 +770,105 @@ void func_80140CBC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_80140D84);
+void func_80140D84(void) {
+    u8 *s;
+    u8 *t;
+    u8 *p;
+    u8 *e;
+
+    p = D_80158A8C;
+    s = D_80158A64;
+    e = D_80158A74;
+    switch (*(u16 *)(p + 4)) {
+    case 0:
+        func_80142570();
+        if (*(u16 *)(s + 4) == 0) {
+            func_80044750(0xB1);
+            func_800451E0(0x8019A000);
+            func_80044750(0x12);
+            func_80044750(0x23);
+            func_80044750(0x2E);
+            func_80044750(0x21);
+            func_80044750(4);
+            func_80044750(0x200);
+        }
+        *(s16 *)(s + 0x32) = 0;
+        *(s16 *)(s + 0x34) = 0x1000;
+        func_8013F3B4();
+        *(s16 *)(p + 4) = 0x20;
+        break;
+    case 0x20:
+        if (*(s32 *)D_80158A6C == 0) {
+            s[0x1C] = 0x10;
+        }
+        func_8013F588();
+        func_8013F878();
+        break;
+    case 0x30:
+        if (*(s32 *)D_80158A6C == 0) {
+            s[0x1C] = 0x10;
+        }
+        func_8013F5F8();
+        func_8013F878();
+        break;
+    case 0x40:
+        if (*(s32 *)D_80158A6C == 0) {
+            s[0x1C] = 0x10;
+        }
+        func_8013F7B0();
+        func_8013F878();
+        func_80140CBC();
+        if (*(s16 *)(p + 0x30C) < 0) {
+            switch (*(u16 *)(p + 0x30E)) {
+            case 0:
+                if (*(u16 *)(p + 6) == 2) {
+                    if (*(u16 *)(p + 8) < 0x80) {
+                        *(u16 *)(p + 8) = 0x80;
+                    }
+                } else {
+                    *(u16 *)(p + 0x30E) = 0x10;
+                    *(u16 *)(p + 0x366) = 0;
+                    *(u16 *)(p + 8) = 0;
+                }
+                break;
+            case 1:
+                p[0x327] = 0;
+                p[0x344] = 1;
+                func_80142774();
+                /* FAKE: zero-store chains (TT house idiom); their dead reloads keep the constant 1 in a0. T-11860 */
+                *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 0xA) = 0;
+                p[0xD] = p[0xE] = p[0xF] = 0;
+                *(s16 *)(p + 4) = 0x50;
+                break;
+            case 0x10:
+                if (*(u16 *)(p + 0x366) >= 0x3C) {
+                    *(s16 *)(p + 0x30C) = 0x100;
+                    *(u16 *)(p + 0x30E) = 1;
+                } else {
+                    *(u16 *)(p + 0x366) += 1;
+                }
+                break;
+            }
+        }
+        break;
+    case 0x50:
+        func_8013F9E0();
+        func_8013F878();
+        break;
+    case 0x80:
+        func_80044750(0xC1);
+        e[0x52] = 1;
+        s[0x1C] = 0x11;
+        func_8013FBD0();
+        break;
+    case 0xA0:
+        func_80044750(0xB1);
+        p[0] = 0;
+        s[0x12] = 0;
+        t = (u8 *)D_80158A70;
+        *(u16 *)(t + 0x1E) = 1;
+        *(s16 *)(s + 2) = 0xA0;
+        break;
+    }
+    func_8013F040();
+}
