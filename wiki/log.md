@@ -16081,3 +16081,15 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 
 ## [2026-10-16] ticket | T-19028 Done
 [[tickets/T-19028-w3-d-p28]] In Review to Done after code review against `CODING_STANDARDS.md`: 4 findings, all fixed (`func_8013DEE4` is 1,344 bytes of code, 1,416 with its jump tables; stale `NON_MATCHING` acceptance wording; double blank line before the notes heading; board card placement). 3 of 5 functions matched (`func_8013E778`, `func_8013E424`, `func_8013DB80`, 1,640 bytes), `func_8013DEE4` and `func_8015CF30` still `INCLUDE_ASM`. Rebuild: TACO unit sha1 OK. Card moved to Done.
+
+## [2026-10-16] ticket | T-19025 In Progress
+[[tickets/T-19025-w3-d-p25]] created and started: Wave 3 package for TACO `src/ovl/TACO/80132220.c` (`func_8013356C`, `func_80132FE8`, `func_8013240C`, `func_801328B0`), worktree `tokimemo-wt/w3-d-p25`, branch `w3-d-p25`.
+
+## [2026-10-16] ticket | T-19025 In Review
+[[tickets/T-19025-w3-d-p25]] In Progress to In Review: TACO `src/ovl/TACO/80132220.c`, 2 of 4 functions matched (`func_8013356C` 48 bytes, `func_801328B0` 1,848 bytes, FAKE unused locals for four frame words and the pointer local `q` in a pad slot). `func_80132FE8` and `func_8013240C` stay guarded drafts at 10 differing lines each (register of two `D_8015EDE4` constant ranges; result variable `r` in `$a0`). Notes in [[matching-notes]] (T-19025), two rows in [[register-cheatsheet]], rows in [[data/t0018-cases]], section in [[taco-family-results]]. Tool finding: `funcdiff` can report a size difference from guarded neighbours in the same unit; make the function plain and let the unit sha1 decide.
+
+## [2026-10-16] build | T-19025 closer pass
+[[tickets/T-19025-w3-d-p25]] closer pass (Opus, 16:38-17:11 UTC) on branch `w3-d-p25`: both guarded drafts of `src/ovl/TACO/80132220.c` matched, so the whole file is C (4 of 4). `func_8013240C` (1,188 bytes): K&R `s32` with no `return` and no result variable. `func_80132FE8` (908 bytes): `D_800E6280.unk_F88` read into a local `btn` that stays live in `$v0` across the `D_8015EDE4` tests, plus one FAKE empty test from `autotweak`. Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Notes in [[matching-notes]] (section T-19025), two rows in [[register-cheatsheet]], two rows in [[data/t0018-cases]], [[taco-family-results]], [[index]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19025 Done
+[[tickets/T-19025-w3-d-p25]] In Review to Done: code review against `CODING_STANDARDS.md` found one missing `FAKE` comment (`btn` in `func_80132FE8`) and one undocumented unset `flags` path, both fixed with comments only (unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 4 of 4 functions matched (`func_8013356C`, `func_801328B0`, `func_8013240C`, `func_80132FE8`; 3,992 bytes), `src/ovl/TACO/80132220.c` is all C. Merge via the wave 3 merge script.

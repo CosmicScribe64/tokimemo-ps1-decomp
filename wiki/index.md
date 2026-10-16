@@ -34,6 +34,8 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-11840-tt-batch-10|T-11840]] TT batch 10: one long Opus run per large function (Done, PR #34 merged; 10 of 12 matched, TT 262/303 functions, 78.6% of bytes).
+
+- [[tickets/T-19025-w3-d-p25|T-19025]] Wave 3 package w3-d-p25: TACO `80132220.c`, 4 of 4 matched (`func_8013356C`, `func_801328B0` 1,848 B with FAKE pads and a pointer local; closer pass: `func_8013240C` as K&R `s32` with no `return`, `func_80132FE8` with a live `btn` local and one FAKE empty test) (Done)
 - [[tickets/T-18700-types-first-bunkasai|T-18700]] Types-first: BUNKASAI: name, text and per-girl tables in `BUNKASAI.h`, 10 redrafts (4 better than the census), 2 matches / 2,376 bytes, packages T-18701..T-18703 (Done).
 - [[tickets/T-19026-w3-d-p26|T-19026]] Wave 3 package w3-d-p26: TACO `8015ABF0.c`, 1 of 2 matched (`func_8015ACCC`, 1,260 B, FAKE: empty test as a block in the range of a parameter), `func_8015B1B8` guarded (8 rows); priority reading from the trace, shared strength-reduced pointer, order_search on a shifted temporary
 - [[tickets/T-19020-w3-d-p20|T-19020]] Wave 3 package w3-d-p20: RENSYU `80132040.c`, 1 of 4 matched (`func_80133CB8`, FAKE: empty test as a basic block boundary), `func_80133628` guarded (21 lines), `func_80133990` and `func_8013325C` back to `INCLUDE_ASM`; stack table layout rule
