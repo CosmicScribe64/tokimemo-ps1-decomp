@@ -775,6 +775,9 @@ void func_801400D8(void);
 void func_80140338(void);
 void func_8014038C(void);
 void func_80140414(void);
+void func_80145044(void);
+void func_801450C0(void);
+void func_80145148(void);
 void func_8013384C(); /* K&R definition in 80132BD0.c (u8 second parameter) */
 void func_80139FE4(void);
 void func_8013A314(void);
