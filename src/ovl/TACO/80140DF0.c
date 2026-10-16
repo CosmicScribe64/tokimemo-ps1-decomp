@@ -157,8 +157,8 @@ s32 func_80141290(s32 arg0, s32 arg1) {
     return 0;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-19017 */
+/* FAKE: pad and k are unused locals; they reproduce the original frame (208 bytes: eight above m, one word below tbl). Real
+ * source unknown, same idiom as func_80140ADC. T-19017 */
 void func_801413B8(Tc14 *arg0, s32 arg1) {
     s32 pad[2];
     MATRIX m;
@@ -173,7 +173,6 @@ void func_801413B8(Tc14 *arg0, s32 arg1) {
     s32 o;
     s32 j;
     u8 tbl[2];
-    s32 rot;
     s32 k;
 
     *(u16 *)tbl = D_8015F580;
@@ -182,14 +181,12 @@ void func_801413B8(Tc14 *arg0, s32 arg1) {
     func_800A1070(&m);
     rec = &arg0[arg1];
     v.vz = rec->unk4;
-    rot = 0;
     for (o = 0; o < 2; o++) {
-        v.vy = rec->unk2 + rot - 0x28;
+        v.vy = rec->unk2 + o * 0x50 - 0x28;
         for (j = 0; j < 2; j++) {
             v.vx = rec->unk0 + j * 0x50 - 0x28;
             func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
         }
-        rot += 0x50;
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
         if (((s16 *)pt)[3] >= D_800E6280.unk_018[D_8011ECA0] - 0x200
@@ -222,9 +219,6 @@ void func_801413B8(Tc14 *arg0, s32 arg1) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_801413B8);
-#endif
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_801416E8);
 
