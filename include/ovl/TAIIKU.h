@@ -795,3 +795,62 @@ extern TaiikuH16 D_80149F00;
 extern TaiikuH16 D_80149F20;
 extern TaiikuB16 D_80149F40;
 #endif
+
+#ifndef OVL_TAIIKU_STACK_TABLES_T16550
+#define OVL_TAIIKU_STACK_TABLES_T16550
+/* Constant tables that unmatched functions copy to the stack as one struct (lw/sw runs in the
+ * asm, plus lh/sh for a halfword tail). Element type from the drafts' use of the stack copy,
+ * length from the copy. T-16550. */
+typedef struct TaiBytes10 {
+    /* 0x00 */ u8 v[10];
+} TaiBytes10; /* size 0xA */
+typedef struct TaiShorts12x {
+    /* 0x00 */ s16 v[12];
+} TaiShorts12x; /* size 0x18 */
+typedef struct TaiShorts20 {
+    /* 0x00 */ s16 v[20];
+} TaiShorts20; /* size 0x28 */
+typedef struct TaiShorts23 {
+    /* 0x00 */ s16 v[23];
+} TaiShorts23; /* size 0x2E */
+typedef struct TaiWords6 {
+    /* 0x00 */ s32 v[6];
+} TaiWords6; /* size 0x18 */
+typedef struct TaiWords7 {
+    /* 0x00 */ s32 v[7];
+} TaiWords7; /* size 0x1C */
+typedef struct TaiWords8 {
+    /* 0x00 */ s32 v[8];
+} TaiWords8; /* size 0x20 */
+typedef struct TaiWords10 {
+    /* 0x00 */ s32 v[10];
+} TaiWords10; /* size 0x28 */
+extern TaiShorts23 D_80148F28; /* func_80132BD0 */
+extern TaiShorts23 D_80148F58; /* func_80132BD0 */
+extern TaiShorts23 D_80148F88; /* func_80132BD0 */
+extern TaiBytes10 D_80148FE8; /* func_80133258 */
+extern TaiikuHalf10 D_80148FF4; /* func_80133258 */
+extern TaiikuHalf10 D_80149008; /* func_80133258 */
+extern TaiikuHalf10 D_8014901C; /* func_80133258 */
+extern TaiikuW5 D_80149368; /* func_80133CFC */
+extern TaiWords7 D_8014937C; /* func_80133CFC */
+extern TaiWords10 D_801494C4; /* func_80134F98 */
+extern TaiikuS11 D_801494F0; /* func_80135480 */
+extern TaiShorts20 D_80149508; /* func_80135830 */
+extern TaiShorts20 D_80149530; /* func_80135830 */
+extern TkS16x4 D_8014985C; /* func_80137EA8 */
+extern TaiBytes10 D_80149864; /* func_80138224 */
+extern TaiikuHalf10 D_80149870; /* func_80138224 */
+extern TaiikuHalf10 D_80149884; /* func_80138224 */
+extern TaiikuHalf10 D_80149898; /* func_80138224 */
+extern TaiWords6 D_8014A088; /* func_80141280 */
+extern TaiikuHalf10 D_8014A27C; /* func_80142400 */
+extern TaiikuHalf10 D_8014A290; /* func_80142400 */
+extern TaiWords8 D_8014A2A4; /* func_80142400 */
+extern TaiShorts12 D_8014A2F0; /* func_80143814 */
+extern TaiShorts12 D_8014A304; /* func_80143814 */
+extern TkS16x4 D_8014A318; /* func_80144464 */
+extern TaiShorts12x D_8014A5C4; /* func_80146338 */
+extern TaiShorts12x D_8014A5DC; /* func_80146338 */
+extern TkS16x4 D_8014A5F4; /* func_80146D18 */
+#endif
