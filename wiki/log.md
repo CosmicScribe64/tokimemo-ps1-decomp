@@ -16084,3 +16084,9 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 
 ## [2026-10-16] ticket | T-17203 In Progress
 [[tickets/T-17203-w3-date-p03]] created and In Progress: Wave 3 package w3-date-p03, four DATE functions in `src/ovl/DATE/80154260.c`, `src/ovl/DATE/80152FC0.c` and `src/ovl/DATE/8014CC40.c`, worktree `w3-date-p03`.
+
+## [2026-10-16] build | T-17203 results
+[[tickets/T-17203-w3-date-p03]]: 3 of 4 matched (1,064 bytes). DATE `func_8014EF1C` (468 bytes) in plain C: `s32 unused` before the `POLY_G4 *p`, colour shifts inline with `& 0xFF`, the three stores of a vertex on one source line in the order `r, g, b` (FAKE). `func_80154118` (328 bytes): the last 8 diff lines were `tools/cvt_pass.py` (a retained-`CVT` CSE temporary of `D_800CA2F8` costs a frame slot; with the `uopt` shim removed the draft matches), fixed by reading the byte through `DateSelectionView` (FAKE). `func_8014DCCC` (268 bytes): no function-pointer local, the table entry read three times. `func_80155004` stays `INCLUDE_ASM` (46 lines, register names only, draft in `drafts/T-17203/DATE/func_80155004/body.c`). Notes in [[matching-notes]] (section T-17203), three rows in [[register-cheatsheet]], three rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-17203 In Review
+[[tickets/T-17203-w3-date-p03]] In Progress to In Review (3 of 4 matched).

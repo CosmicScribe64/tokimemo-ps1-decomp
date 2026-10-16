@@ -132,3 +132,5 @@ Eight file-disjoint packages from the orchestrator's `mklists3.py` (lists in its
 | w3-date-p06 | T-17206 | `8014B1F0.c`, `80156600.c` | 2 | 1,136 |
 | w3-date-p07 | T-17207 | `80141EE0.c` | 2 | 4,464 |
 | w3-date-p08 | T-17208 | `8014A1B0.c`, `8015A640.c`, `8015A7E0.c`, `8015A980.c` | 5 | 2,636 |
+
+Result of w3-date-p03 ([[tickets/T-17203-w3-date-p03]]): 3 of 4 matched (`func_8014EF1C`, `func_80154118`, `func_8014DCCC`, 1,064 bytes); `func_80155004` is back to `INCLUDE_ASM` with a draft in `drafts/T-17203/` (46 lines, register names only). Notes in [[matching-notes]], section T-17203.
