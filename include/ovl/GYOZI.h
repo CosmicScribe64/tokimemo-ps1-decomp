@@ -220,7 +220,9 @@ typedef struct GyoziWork {
     /* 0x1A8 */ GyoziGirl girl[11];
     /* 0x410 */ u8 unk_410[0xB1F];
     /* 0xF2F */ u8 unk_F2F;   /* D_800F62CF, the girl index; read as a member where the original reloads it after a girl[] store (T-9210) */
-} GyoziWork;
+    /* 0xF30 */ u8 unk_F30[0x188];
+    /* 0x10B8 */ s32 unk_10B8; /* D_800F6458; a member where a later girl[] bit-field load stays below its store (T-17600) */
+} GyoziWork; /* size 0x10BC; the object goes on (D_800F6474 and up are still main_api.h scalars) */
 extern GyoziWork D_800F53A0;
 void func_8013D5B0();
 void func_8013D62C();
