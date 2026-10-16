@@ -15428,3 +15428,7 @@ Opened [[tickets/T-17100-types-first-rpg_bat]] (In Progress) under [[tickets/T-1
 ## [2026-10-16] ticket | T-17100 Done
 
 [[tickets/T-17100-types-first-rpg_bat]] In Review to Done after the code review against `CODING_STANDARDS.md`: 4 functions matched (3,168 bytes: `func_80157640`, `func_8014F88C`, `func_801525B0`, `func_801498C0`), 74 redrafts, 19 packages. One finding fixed (comment on the `u16` view of `DisplayActor44.unk_18` in `src/ovl/RPG_BAT/8014F790.c`, no byte change). RPG_BAT unit sha1 OK after the rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] ticket | T-17400 Types-first: EVENT started
+
+Opened [[tickets/T-17400-types-first-event]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover EVENT's shared types, redraft its 40 unmatched functions with the T-16550/T-16560/T-17200 drivers, then cut packages. Branch `w3-event-types` from `w2-good`.
