@@ -487,12 +487,6 @@ void func_80135778(void) {
     D_80120656 = 2;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-19004, 18 differing lines (8 instructions, registers only): loop C walks one pointer in $s0 (the same
- * register as the loops' record base) where this draft keeps it in $s1, the register of `i`. Frame, loops A and B (rolled
- * because `i` is assigned again in loop C), the copy loops and all stores match. Index forms of loop C keep two induction
- * registers (compare and stores) where the original has one; a pointer local makes the frame 8 bytes larger and IDO unrolls
- * that loop with a remainder. */
 void func_80135830(void) {
     s32 i;
     TaiShorts20 sp84;
@@ -522,16 +516,15 @@ void func_80135830(void) {
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_02 = 0x40;
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_03 = 0xA4;
     }
-    /* FAKE: `i` holds the record address in loop C; signed against an unsigned bound IDO neither counts nor unrolls the loop,
-     * and no second local fits the frame. The original has a separate pointer. T-19004 */
-    i = (s32) D_8011ECD0;
-    do {
-        i += 0x44;
-        ((DisplayActor44 *)i)[99].unk_01 = 8;
-        ((DisplayActor44 *)i)[99].unk_26 = 0xE8;
-        ((DisplayActor44 *)i)[99].unk_02 = 0x40;
-        ((DisplayActor44 *)i)[99].unk_03 = 0xA4;
-    } while ((u32) i < (u32) D_8011EDE0);
+    for (i = 0; i < 4; i++) {
+        ((DisplayActor44 *)D_8011ECD0)[100 + i].unk_01 = 8;
+        ((DisplayActor44 *)D_8011ECD0)[100 + i].unk_26 = 0xE8;
+        ((DisplayActor44 *)D_8011ECD0)[100 + i].unk_02 = 0x40;
+        ((DisplayActor44 *)D_8011ECD0)[100 + i].unk_03 = 0xA4;
+    }
+    /* FAKE: dead store; with `i` assigned again IDO keeps the 4-trip loop above rolled and replaces its test by the
+     * record-walk compare (`sltu` against D_8011EDE0, walk in $s0). Real source unknown. T-19004 */
+    i = 0;
     ((DisplayActor44 *)D_8011ECD0)[104].unk_01 = 3;
     ((DisplayActor44 *)D_8011ECD0)[105].unk_01 = 2;
     ((DisplayActor44 *)D_8011ECD0)[106].unk_01 = 1;
@@ -549,9 +542,6 @@ void func_80135830(void) {
     ((DisplayActor44 *)D_8011ECD0)[0].unk_26 = 0;
     ((DisplayActor44 *)D_8011ECD0)[0].unk_2A = 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135830);
-#endif
 
 void func_80135AD0(void) {
     s32 i;
