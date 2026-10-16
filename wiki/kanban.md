@@ -138,6 +138,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-16200-matching-wave-2|T-16200 Matching wave 2]]
 - [ ] [[tickets/T-16220-w2-main-8007c030|T-16220 Wave 2 package w2-p02]]
 
+- [ ] [[tickets/T-16500-twin-sweep|T-16500 Whole-tree twin sweep after every merge]]
+
 - [ ] [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210 Wave 2 package w2-p01]]
 
 - [ ] [[tickets/T-11670-w1-main-8006cb30|T-11670 Wave 1 package w1-p11]]
