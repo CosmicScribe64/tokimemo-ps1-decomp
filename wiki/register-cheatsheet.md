@@ -55,6 +55,7 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 | frame size or local stack offsets differ | Arrays sit lowest in the locals area; scalars declared before an array go above it. Add unused locals ("homes") to reserve slots and mark them FAKE. |
 | bit test compiles as `sll 30; srl 31` in the original | Bit-fields are allocated from the least significant bit: `struct { u32 low : 1; u32 f : 1; u32 rest : 30; }`. |
 | reloads appear at a block start after about 20 references | uopt ends a block after 20 variable references (`varreflimit`). Split or join statements to move the boundary. |
+| a struct or table field compared constant-first (`beq a1,v1`, constant in a register) and a `move` copy of it kept in another register | Read the field through a local pointer: `GameState *g = &D_800E6280; idx = g->field; if (g->field != -1)`. An indirect load is not a plain variable, so uopt puts the constant first and does not fold `idx` into the field. NAME_ENT selector-copy family, 7 functions (T-16920). |
 | constant or pointer in a1/a2/v1 in a small K&R function (TT, GEKO, TACO) | Known unsolved. Spend 10 minutes at most, then guard it and log the row. |
 
 ## Do not

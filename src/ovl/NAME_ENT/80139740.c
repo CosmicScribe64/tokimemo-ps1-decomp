@@ -717,7 +717,39 @@ s32 func_8013C9F0(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CB44);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CEC8);
+void func_8013CEC8(void) {
+    s32 pad[2]; /* FAKE: unused, gives the original's 0x38 frame; real source unknown. T-16920 */
+    s32 n;
+    GameState *g = &D_800E6280;
+
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    g->unk_F88 &= ~0x100;
+    func_8004FC10(0);
+    n = g->unk_1093;
+    if (g->unk_1093 != -1) {
+        D_80120C6F |= 0x80;
+        D_80120C92 = n / 7 * 0x1F - 0x82;
+        D_80120C96 = n % 7 * 0x10 - 0xB;
+    }
+    if ((g->unk_F88 & 0x820) && (g->unk_1093 != -1) && D_800E7D15[n] == 1) {
+        if (D_800E7D36 == n + 1) {
+            func_80044750(0x501);
+            func_80042940(3);
+            g->unk_1118 = D_800E7D36;
+        } else {
+            D_800E7D36 = g->unk_1093 + 1;
+            func_8004E58C();
+            func_80139CB4();
+            func_8004EA98();
+            func_8004EAD4(0);
+            func_8013B51C(n);
+        }
+    }
+    func_8013AF78(1);
+    func_8013B1D8();
+    func_80139C24();
+    func_80142880();
+}
 
 void func_8013D054(void) {
     u8 state;
@@ -780,26 +812,25 @@ void func_8013D054(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013D2AC);
 
-/* NON_MATCHING: T-11570, 33 lines. Selector-copy family: the original divides and indexes a copy of the s8 selector (`move v0,v1`) and compares the selector constant-first (`beq a1,v1`); IDO copy-propagates `idx` into the global. With uopt global copy propagation off (`-zcopy:0` for this procedure, experiment only) this draft is 10 lines off, all compare operand order. See matching-notes T-11570. */
-#ifdef NON_MATCHING
 void func_8013D4CC(void) {
     s32 idx;
+    GameState *g = &D_800E6280;
 
     menu_check(0, D_8011ECF6, D_8011ECFA);
-    D_800E6280.unk_F88 &= ~0x100;
+    g->unk_F88 &= ~0x100;
     func_8004FC10(0);
-    idx = D_800E6280.unk_1093;
-    if (D_800E6280.unk_1093 != -1) {
+    idx = g->unk_1093;
+    if (g->unk_1093 != -1) {
         D_80120C6F |= 0x80;
         D_80120C92 = idx / 7 * 0x1F - 0x82;
         D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
-    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1) && (u8)(&D_800E7D15)[idx] == 1) {
-        if (idx + 1 == D_800E6280.unk_1118) {
+    if ((g->unk_F88 & 0x820) && (g->unk_1093 != -1) && D_800E7D15[idx] == 1) {
+        if (g->unk_1118 == idx + 1) {
             func_80042940(0x24);
         } else {
             func_80042940(0x22);
-            D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
+            g->unk_1118 = g->unk_1093 + 1;
         }
     }
     func_8013AF78(1);
@@ -807,9 +838,6 @@ void func_8013D4CC(void) {
     func_80139C24();
     func_80142880();
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013D4CC);
-#endif
 
 void func_8013D62C(void) {
     s32 pad; /* FAKE: unused, declared before buf for its stack slot (T-3330) */
@@ -927,28 +955,24 @@ void func_8013DA40(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11570, 27 lines. Selector-copy family: the original divides and indexes a copy of the s8 selector (`move v0,v1`) and compares the selector constant-first (`beq a1,v1`); IDO copy-propagates `idx` into the global. With uopt global copy propagation off (`-zcopy:0` for this procedure, experiment only) this draft is 4 lines off, all compare operand order. See matching-notes T-11570. */
-#ifdef NON_MATCHING
 void func_8013DAC4(void) {
     s32 idx;
+    GameState *g = &D_800E6280;
 
     menu_check(0, D_8011ECF6, D_8011ECFA);
-    D_800E6280.unk_F88 &= ~0x100;
+    g->unk_F88 &= ~0x100;
     func_8004FC10(0);
-    idx = D_800E6280.unk_1093;
-    if (D_800E6280.unk_1093 != -1) {
+    idx = g->unk_1093;
+    if (g->unk_1093 != -1) {
         D_80120C6F |= 0x80;
         D_80120C92 = idx / 7 * 0x1F - 0x82;
         D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
-    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1)) {
+    if ((g->unk_F88 & 0x820) && (g->unk_1093 != -1)) {
         func_8004284C();
-        D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
+        g->unk_1118 = g->unk_1093 + 1;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013DAC4);
-#endif
 
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80139740.rodata", D_8014BAA4);
 
@@ -1161,26 +1185,26 @@ void func_8013E3C8(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11570, 28 lines. Selector-copy family (see func_8013DAC4): IDO copy-propagates `n` into the global and gives the global $v0; with global copy propagation off (experiment) the draft is 8 lines off (compare operand order, frame 0x30 vs 0x38). */
-#ifdef NON_MATCHING
 void func_8013E430(void) {
+    s32 pad[2]; /* FAKE: unused, gives the original's 0x38 frame; real source unknown. T-16920 */
     s32 n;
+    GameState *g = &D_800E6280;
 
     menu_check(0, D_8011ECF6, D_8011ECFA);
-    D_800E6280.unk_F88 &= ~0x100;
+    g->unk_F88 &= ~0x100;
     func_8004FC10(0);
-    n = D_800E6280.unk_1093;
-    if (D_800E6280.unk_1093 != -1) {
+    n = g->unk_1093;
+    if (g->unk_1093 != -1) {
         D_80120C6F |= 0x80;
         D_80120C92 = n / 7 * 0x1F - 0x82;
         D_80120C96 = n % 7 * 0x10 - 0xB;
     }
-    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1)) {
+    if ((g->unk_F88 & 0x820) && (g->unk_1093 != -1)) {
         func_80044750(0x501);
-        D_800E6280.unk_1118 = n + 1;
-        if ((u8)(&D_800E7D15)[n] != 0) {
+        g->unk_1118 = n + 1;
+        if (D_800E7D15[n] != 0) {
             func_8004284C();
-            D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
+            g->unk_1118 = g->unk_1093 + 1;
         } else if (D_800E8BEE != 0) {
             func_80042940(0xA8);
         } else {
@@ -1189,9 +1213,6 @@ void func_8013E430(void) {
     }
     func_80142880();
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013E430);
-#endif
 
 void func_8013E59C(void) {
     s32 pad; /* FAKE: unused, declared before buf for its stack slot (T-3330) */
@@ -1421,36 +1442,27 @@ void func_8013F058(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11370, 18 rows off. The `++idx` keeps the selector copy (`move` in the first delay slot, spill at
- * sp+0x2C), but IDO gives the loaded selector $v0 and the copy $v1 where the original has them the other way round,
- * and the increment lands in the copy's register instead of a temporary. T-11570: selector-copy family (see
- * func_8013DAC4); the plain `idx = global` form scores 34 here but 8 with global copy propagation off. */
-#ifdef NON_MATCHING
 void func_8013F0DC(void) {
-    s32 sel;
-    s32 pad; /* FAKE: third local slot for the 0x38 frame (T-11370) */
+    s32 pad[2]; /* FAKE: unused, gives the original's 0x38 frame; real source unknown. T-16920 */
     s32 idx;
+    GameState *g = &D_800E6280;
 
     menu_check(0, D_8011ECF6, D_8011ECFA);
-    D_800E6280.unk_F88 &= ~0x100;
+    g->unk_F88 &= ~0x100;
     func_8004FC10(0);
-    sel = D_800E6280.unk_1093;
-    idx = sel;
-    if (sel != -1) {
+    idx = g->unk_1093;
+    if (g->unk_1093 != -1) {
         D_80120C6F |= 0x80;
         D_80120C92 = idx / 7 * 0x1F - 0x82;
         D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
-    if ((D_800E6280.unk_F88 & 0x820) && (sel != -1) && (u8)(&D_800E7D15)[idx] == 1) {
+    if ((g->unk_F88 & 0x820) && (g->unk_1093 != -1) && D_800E7D15[idx] == 1) {
         func_80044750(0x501);
         func_8004284C();
-        D_800E6280.unk_1118 = ++idx;
+        g->unk_1118 = idx + 1;
     }
     func_80142880();
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F0DC);
-#endif
 
 /* Falls through without a return statement. */
 /* Falls through without a return statement. */
@@ -1522,27 +1534,26 @@ s32 func_8013F208(void) {
 }
 
 
-/* NON_MATCHING: T-11570, 23 lines. Selector-copy family: the original divides and indexes a copy of the s8 selector (`move v0,v1`) and compares the selector constant-first (`beq a1,v1`); IDO copy-propagates `idx` into the global. With uopt global copy propagation off (`-zcopy:0` for this procedure, experiment only) this draft is 4 lines off, all compare operand order. See matching-notes T-11570. */
-#ifdef NON_MATCHING
 void func_8013F454(void) {
     s32 idx;
+    GameState *g = &D_800E6280;
 
     func_80142880();
     menu_check(0, D_8011ECF6, D_8011ECFA);
-    D_800E6280.unk_F88 &= ~0x100;
+    g->unk_F88 &= ~0x100;
     func_8004FC10(0);
-    idx = D_800E6280.unk_1093;
-    if (D_800E6280.unk_1093 != -1) {
+    idx = g->unk_1093;
+    if (g->unk_1093 != -1) {
         D_80120C6F |= 0x80;
         D_80120C92 = idx / 7 * 0x1F - 0x82;
         D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
-    if (D_800E6280.unk_F88 & 0x820) {
-        if (D_800E6280.unk_1093 != -1) {
-            D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
-            if ((u8)(&D_800E7D15)[idx] != 0) {
+    if (g->unk_F88 & 0x820) {
+        if (g->unk_1093 != -1) {
+            g->unk_1118 = g->unk_1093 + 1;
+            if (D_800E7D15[idx] != 0) {
                 func_8004284C();
-            } else if (func_80054694(D_800E6280.unk_1118) == 1) {
+            } else if (func_80054694(g->unk_1118) == 1) {
                 func_80044750(0x501);
                 func_80042940(0xC6);
             } else {
@@ -1551,9 +1562,6 @@ void func_8013F454(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F454);
-#endif
 
 void func_8013F5B0(void) {
     u8 buf[0x108]; /* FAKE: 8 bytes more than the neighbours give the original frame (0x140). T-9170 */
@@ -1687,30 +1695,26 @@ void func_8013FB08(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11570, 27 lines. Selector-copy family: the original divides and indexes a copy of the s8 selector (`move v0,v1`) and compares the selector constant-first (`beq a1,v1`); IDO copy-propagates `idx` into the global. With uopt global copy propagation off (`-zcopy:0` for this procedure, experiment only) this draft is 4 lines off, all compare operand order. See matching-notes T-11570. */
-#ifdef NON_MATCHING
 void func_8013FB8C(void) {
     s32 idx;
+    GameState *g = &D_800E6280;
 
     menu_check(0, D_8011ECF6, D_8011ECFA);
-    D_800E6280.unk_F88 &= ~0x100;
+    g->unk_F88 &= ~0x100;
     func_8004FC10(0);
-    idx = D_800E6280.unk_1093;
-    if (D_800E6280.unk_1093 != -1) {
+    idx = g->unk_1093;
+    if (g->unk_1093 != -1) {
         D_80120C6F |= 0x80;
         D_80120C92 = idx / 7 * 0x1F - 0x82;
         D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
-    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1) && (u8)(&D_800E7D15)[idx] != 0) {
+    if ((g->unk_F88 & 0x820) && (g->unk_1093 != -1) && D_800E7D15[idx] != 0) {
         func_8004284C();
         func_80044750(0x501);
-        D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
+        g->unk_1118 = g->unk_1093 + 1;
     }
     func_80142880();
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013FB8C);
-#endif
 
 void func_8013FCBC(void) {
     s32 pad; /* FAKE: unused, declared before buf for its stack slot (T-3330) */

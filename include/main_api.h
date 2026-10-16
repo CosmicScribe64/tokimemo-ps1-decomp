@@ -863,7 +863,7 @@ extern s32 D_800E7D10;
 extern u8 D_800E7D11[];
 extern u8 D_800E7D13[];
 extern u8 D_800E7D14[];
-extern s8 D_800E7D15;
+extern u8 D_800E7D15[];
 extern s8 D_800E7D16;
 extern u8 D_800E7D1F;
 extern u8 D_800E7D2C;

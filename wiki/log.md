@@ -14992,3 +14992,12 @@ Dataflow census of the 6958 game functions in the split asm for [[tickets/T-1691
 
 ## [2026-10-15] decision | T-16910 no cpw step; ticket to In Review
 `cpw` does not meet CODING_STANDARDS 7a: its coupling selects one family, and the constant-first order it adds is an aggregate-member effect that C reading through the aggregate already gives (section 8). `tools/cvt_pass.py` unchanged; nothing matched. [[tickets/T-16910-cpw-census]] moved In Progress to In Review. Open follow-ups: the type of GameState +0x1093/+0x1094, a census for the kept local copy, and the 5 `FAKE`/cast compares that could become aggregate reads.
+
+## [2026-10-15] ticket | T-16920 GameState +0x1093 type and kept-copy census opened
+Opened [[tickets/T-16920-gamestate-1093-type]] (In Progress), the follow-up of [[tickets/T-16910-cpw-census]]: test an array type for GameState +0x1093/+0x1094 against the matched build, and count where the original keeps a local copy of an aggregate element in its own register.
+
+## [2026-10-15] build | T-16920 NAME_ENT selector-copy family matched
+[[tickets/T-16920-gamestate-1093-type]]: the 7 NAME_ENT selector-copy functions (`func_8013CEC8`, `func_8013D4CC`, `func_8013DAC4`, `func_8013E430`, `func_8013F0DC`, `func_8013F454`, `func_8013FB8C`; 2,332 bytes) match with `tools/cvt_pass.py` as built when the C reads GameState through a local `GameState *g`: the indirect load gives the constant-first compare and the kept copy. Three carry a `FAKE` `s32 pad[2]` for the 0x38 frame. `D_800E7D15` is now `extern u8 D_800E7D15[]`. Rebuild: 27/27 sha1 OK, NAME_ENT.bin OK, headers and globals OK; `uopt_eval regress` on the two touched files 116/116.
+
+## [2026-10-15] decision | T-16920 +0x1093 stays a member; no zcopy rule; ticket to In Review
+As `s8 unk_1093[2]`, 15 matched `switch` functions change (selector `$v1` against the original's `$v0`), so +0x1093/+0x1094 stay members. Kept-copy census: used `move` copies of global loads in 42 functions for aggregate members (12 matched) and 47 for scalars (27 matched), all matched ones from ordinary C. Copy propagation off for every procedure changes 737 of 5,967 matched functions, so no zcopy rule. Notes in [[matching-notes]], [[game-state]], [[register-cheatsheet]], [[toolchain]]; T-11570's "copy-propagation gap" note in [[matching-notes]] corrected. [[tickets/T-16920-gamestate-1093-type]] moved In Progress to In Review.

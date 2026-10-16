@@ -52,6 +52,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
+- [ ] [[tickets/T-16920-gamestate-1093-type|T-16920 GameState +0x1093 type and kept-copy census]]
 - [ ] [[tickets/T-16910-cpw-census|T-16910 Census the original for the T-16900 cpw rule]]
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 

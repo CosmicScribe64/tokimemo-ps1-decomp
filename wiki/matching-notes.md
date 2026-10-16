@@ -4810,6 +4810,9 @@ Twelve guarded NAME_ENT drafts, all previously tried; no match. Ticket [[tickets
   original's narrow signed global loads carried a widening (and whether a local copy of a global is never propagated),
   then extend `tools/cvt_pass.py` and re-verify every matched function. Only 7 unmatched functions show the exact
   `lb v1; ... or v0,v1,zero` shape (the 6 above plus OPTION 80132000 `func_80134110`), none matched.
+  **Update (T-16920): it is a C form.** Read through a local `GameState *g = &D_800E6280;` (`idx = g->unk_1093;
+  if (g->unk_1093 != -1)`), all 7 match with the pass as built: the indirect load is not a plain variable, so uopt
+  puts the constant first and keeps `idx`. See "GameState +0x1093 and the selector-copy family (T-16920)" below.
 - **IDO frame rule with locals** (measured on `func_8013BE18`): locals are placed from the frame top in declaration
   order (first declared highest) and the frame keeps 8 spare bytes below them (`raw frame = end of saves + 8 +
   locals`, 8-aligned; no locals, no spare). A 5-argument call puts the saves at 0x18..0x1F, so the locals start at
@@ -5381,3 +5384,25 @@ ugen's and left out.
 - Verdict: no `cpw` step in `tools/cvt_pass.py`. Open: the type of GameState +0x1093/+0x1094 (element access for these
   compares against the three matched `switch` selectors that need members, [[game-state]]), and a separate census for
   the kept copy (the original keeps `idx = sel` in its own register here; IDO folds it).
+
+## GameState +0x1093 and the selector-copy family (T-16920)
+
+Ticket [[tickets/T-16920-gamestate-1093-type]]. The 7 NAME_ENT selector-copy functions (T-11570, the `cpw` targets of
+T-16900/T-16910) match as C with `tools/cvt_pass.py` as built, 2,332 bytes.
+
+- **Read the field through a local GameState pointer.** `GameState *g = &D_800E6280; idx = g->unk_1093; if
+  (g->unk_1093 != -1) { ... idx / 7 ... }` gives both of the original's features that looked like compiler
+  differences: the constant-first compare (`beq a1,v1`) and the kept copy (`move v0,v1`). `g->field` is an indirect
+  load, not a plain variable: uopt puts the constant first and does not fold `idx` into the field. DAC4, F454 and
+  FB8C match with no other change; D4CC and CEC8 also need the operand order `g->unk_1118 == idx + 1` /
+  `D_800E7D36 == n + 1`; E430, CEC8 and F0DC need a `FAKE` `s32 pad[2]` for the original's 0x38 frame (8 bytes above
+  the spill slot when the copy lives across a call; T-11120 frame rule). Register row in [[register-cheatsheet]].
+- **+0x1093/+0x1094 stay members.** As `s8 unk_1093[2]`, 15 matched functions change: every `switch` on the element
+  gets its selector in `$v1` (original `$v0`), in ETC with an extra `move v0,v1`. For IDO a constant-index element is
+  an indirect load like `g->field`; the original's switches compile like the plain member.
+- **`D_800E7D15` is a `u8` array** (`lbu`, indexed by the selector in all 7 functions); it replaces the drafts'
+  `(u8)(&D_800E7D15)[idx]`.
+- **Kept copies in the original** (T-16910 census): used `move` copies of a global load in 42 functions for aggregate
+  members (12 matched) and 47 for scalars (27 matched). The matched copies come from ordinary C (4 through
+  `GameState *g`, 3 read-modify-write, 5 direct). Copy propagation off for every procedure changes 737 of 5,967
+  matched functions, so no zcopy rule: the kept copies are a C matter.

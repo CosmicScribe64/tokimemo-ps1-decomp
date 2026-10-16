@@ -156,3 +156,7 @@ Census script, aggregation scripts and the element-access targets: shared notes 
 game data into the repository.
 
 ## Comments
+
+- 2026-10-15, T-16920: the open questions are settled. Read through a local `GameState *g`, all 7 NAME_ENT
+  functions match with the pass as built (constant-first compare and kept copy both follow from the indirect load).
+  An `s8[2]` type for +0x1093 changes 15 matched switches, so the members stay. [[tickets/T-16920-gamestate-1093-type]].
