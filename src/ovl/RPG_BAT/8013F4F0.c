@@ -338,10 +338,10 @@ void func_801401D0(s32 i) {
     *(s16 *)(p + 0x1ABA) -= 1;
 }
 
+/* returns int without a value, as func_8013F4F0: its call above is a statement call of an implicit int function (T-17114) */
 s32 func_80140204(void) {
     s32 i;
     s32 *p;
-    s32 t;
 
     switch (D_8015EDDC) {
     case 0:
@@ -382,14 +382,13 @@ s32 func_80140204(void) {
         func_8014EF6C();
         break;
     case 5:
-        t = D_8015EDE4 % 2;
-        if (t == 0) {
+        if (D_8015EDE4 % 2 == 0) {
             ((DisplayActor44 *)D_8011ECD0)[101].unk_26 -= 1;
             ((DisplayActor44 *)D_8011ECD0)[103].unk_26 -= 2;
             ((DisplayActor44 *)D_8011ECD0)[102].unk_2A += 1;
             ((DisplayActor44 *)D_8011ECD0)[104].unk_2A += 2;
         }
-        if (t == 0) {
+        if (D_8015EDE4 % 2 == 0) {
             for (i = 0; i < 5; i++) {
                 ((DisplayActor44 *)D_8011ECD0)[i + 100].unk_26 += 1;
                 ((DisplayActor44 *)D_8011ECD0)[i + 100].unk_2A -= 1;
