@@ -322,8 +322,7 @@ void func_80142FB8(void) {
     case 3:
         if (Vblnk_Timer() >= 0x3D) {
             func_801450C0();
-            i = 0;
-            if ((u8) D_8014A110 != 0) {
+            if (D_8014A110 != 0) {
                 for (i = 0; i < 4; i++) {
                     if (D_8014A120[i] == 1) {
                         func_8013384C(1, (u8) i);
@@ -355,7 +354,7 @@ void func_80142FB8(void) {
                 for (j = 0; j < 13; j++) {
                     D_800E6280.unk_1BC[j].unk_02 += 4;
                 }
-                if ((u8) D_8014A110 != 0) {
+                if (D_8014A110 != 0) {
                     D_800E6280.unk_1BC[1].unk_02 += 2;
                     D_800E6280.unk_1BC[1].unk_06 += 0xA;
                 } else {
@@ -366,7 +365,7 @@ void func_80142FB8(void) {
                 for (j = 0; j < 13; j++) {
                     D_800E6280.unk_1BC[j].unk_02 += 2;
                 }
-                if ((u8) D_8014A110 != 0) {
+                if (D_8014A110 != 0) {
                     D_800E6280.unk_1BC[1].unk_02 += 1;
                     D_800E6280.unk_1BC[1].unk_06 += 5;
                 } else {
@@ -559,7 +558,7 @@ void func_80143814(void) {
         DISP(96 + i).unk_2A = a.value[i];
         DISP(96 + i).unk_18 = b.value[i];
     }
-    if ((u8) D_8014A110 != 0) {
+    if (D_8014A110 != 0) {
         DISP(96).unk_18 = 0xE;
     }
     DISP(96).unk_01 = 2;
