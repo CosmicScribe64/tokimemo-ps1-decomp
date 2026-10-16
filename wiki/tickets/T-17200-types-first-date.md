@@ -1,7 +1,7 @@
 ---
 id: T-17200
 title: "Types-first: DATE"
-status: In Review
+status: Done
 assignee: claude (w3-date-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -47,3 +47,25 @@ the twin: discarded entry assignment, T-14300), `func_80159FAC`, `func_80158338`
 
 Packages T-17201..T-17208 (`w3-date-p01`..`p08`, 30 functions, 23,468 bytes). Checks: clean build 27/27,
 `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` (results in the log entry).
+
+### 2026-10-16 (claude, code review against `CODING_STANDARDS.md`)
+
+Reviewed `git diff w2-good...w3-date-types` (src, include, wiki, drafts). Checked: only `src/ovl/DATE/*.c` and
+`include/ovl/DATE.h` changed outside `wiki/` and `drafts/T-17200/`; `drafts/` has new files only (875 added, none
+changed); no inline asm, `.word` or `//` comments added; the four matches are plain C (the two sibling ports
+carry no extra tricks; `func_8013B208` has one `FAKE` comment with reason and `T-17200`, copied from the EVENT twin
+`func_80117D80`); every one of the 13 remaining `#ifdef NON_MATCHING` blocks in DATE has a `NON_MATCHING` comment
+with a ticket and the rows left; header guards keep each declaration once (`check_headers` OK, `sync_protos
+--check-branch` OK: 0 new, 15 known); no game data, asm dumps or binaries staged (drafts hold source, logs, JSON
+as in earlier waves). DATE sha1 OK after a forced rebuild of the overlay.
+
+Findings:
+- Commit message of `8e4eb55c` says "47 local FnTblNN typedefs"; the real count is 39 typedef blocks in 16 files
+  (this ticket and [[date-family-results]] have it right). Commit `2bdd2567` quotes interim redraft numbers (34
+  unguarded, 10 better, 4 worse); the final numbers are 32 unguarded still open, 7 better, 16 same, 5 worse.
+  Not fixed in history (rewriting the commits was refused); the corrected numbers are recorded here and on the
+  results page.
+- `wiki/index.md` said "9 stack tables"; the header declares 10 symbols (9 with new types plus `Tbl21`
+  `D_8015B984`). Fixed in the index; the older log entry keeps "9" (new-type tables only).
+
+No other findings. Code changes: none. Matched: 4 functions / 1,760 bytes.

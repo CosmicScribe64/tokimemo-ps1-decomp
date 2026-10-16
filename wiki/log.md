@@ -15398,3 +15398,7 @@ than the census, sum 7,498 to 7,230 rows, none 0. Matched 4 functions / 1,760 by
 `tools/siblings.py`. New page [[date-family-results]]; rows in [[data-types]] and [[matching-notes]].
 Packages T-17201..T-17208 (`w3-date-p01`..`p08`, 30 functions, 23,468 bytes). Clean build 27/27 OK,
 `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known).
+
+## [2026-10-16] ticket | T-17200 Done
+
+[[tickets/T-17200-types-first-date]] In Review to Done after the code review against `CODING_STANDARDS.md`: 4 functions matched (1,760 bytes: `func_8014AD9C`, `func_8013B208`, `func_80159FAC`, `func_80158338`), 13 guarded drafts unchanged. No code findings. Two wording findings: commit messages of `8e4eb55c` and `2bdd2567` carry interim numbers (39 typedef blocks, not 47; 32 unguarded, 7 better, 5 worse), recorded on the ticket, history left as is; `wiki/index.md` stack-table count fixed to 10. DATE sha1 OK, `check_headers` and `sync_protos --check-branch` OK.
