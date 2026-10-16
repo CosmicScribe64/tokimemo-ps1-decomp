@@ -2342,45 +2342,43 @@ s32 func_80139664(void) {
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80139664);
 #endif
 
-/* NON_MATCHING: T-11580, 7 differing instructions; the tail load of unk_110A takes $v1 with its lui hoisted, the original reloads it into $v0 */
-#ifdef NON_MATCHING
 s32 func_80139834(void) {
     /* FAKE: 4 spare bytes reproduce prev's stack home at 0x2A(sp). T-11140 */
     s32 pad;
     s16 prev;
-    u8 g;
 
     if (D_80122CDC == 1) {
-        g = D_800E6280.unk_F5F;
-        if (g == 7) {
+        if (D_800E6280.unk_F5F == 7) {
             prev = D_800E6280.unk_110A;
             func_80085A60();
-            g = D_800E6280.unk_110A;
-            if (prev != g) {
+            if (prev != D_800E6280.unk_110A) {
                 D_800CA148 = 0xA;
-                D_800E6280.unk_110A = g + 0xC;
+                D_800E6280.unk_110A += 0xC;
             }
             return 0;
         }
         D_800CA148 = 9;
-        if (g == 9) {
+        if (D_800E6280.unk_F5F == 9) {
             D_800CA148 = 8;
-        } else if ((g == 4) || (g == 8) || (g == 5)) {
+        } else if ((D_800E6280.unk_F5F == 4) || (D_800E6280.unk_F5F == 8) || (D_800E6280.unk_F5F == 5)) {
             D_800CA148 = 7;
+        }
+        /* FAKE: dead test gives the unk_110A byte a second use in this block so uopt allocates $v0
+           (EVENT twin func_80116AA8, T-11110). T-17202 */
+        if ((s32)D_800E6280.unk_110A) {
         }
         D_800E6280.unk_110A += 0xC;
     } else {
-        g = D_800E6280.unk_F5F;
-        if (g == 7) {
+        /* FAKE: dead test gives the F5F byte a second use so uopt allocates $v0 for it. T-17202 */
+        if ((s32)D_800E6280.unk_F5F) {
+        }
+        if (D_800E6280.unk_F5F == 7) {
             D_800CA148 += 1;
         }
         D_8015B67C = 1;
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80139834);
-#endif
 
 void func_80139944(void) {
     /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing g->unk_F5F * 0x24 across stores. T-11140 */
