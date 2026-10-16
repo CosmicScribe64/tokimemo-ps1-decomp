@@ -98,7 +98,82 @@ void func_80133C80(void) {
     tbl.f[idx]();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-16551, 11 differing lines; the two peeled stores D_801492F8[0] and [1] take two `lui at`, the original shares one and loads both words first. */
+void func_80133CFC(void) {
+    s32 i;
+    s32 j; /* FAKE: unused local; the original frame has a second word above the tables (the offsets of sp9C.. only match with it), real source unknown. T-16551 */
+    s32 sp9C;
+    TaiikuW5 sp88;
+    TaiWords7 sp6C;
+    TaiWords10 sp44;
+
+    sp9C = D_80149364;
+    sp88 = D_80149368;
+    sp6C = D_8014937C;
+    sp44 = D_80149398;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80085E30(1, 1);
+        func_80048EB8(0);
+        func_8006BD6C(0);
+        for (i = 0; i < 11; i++) {
+            D_800E6280.unk_1228[i + 5] = 8;
+        }
+        for (i = 0; i < 3; i++) {
+            D_800E6280.unk_1228[i + 0x25] = 8;
+        }
+        D_800E6280.unk_1228[28] = 8;
+        D_800E6280.unk_1228[63] = 8;
+        D_801492C4 = sp9C;
+        for (i = 0; i < 5; i++) {
+            D_801492C8[i] = sp88.v[i];
+        }
+        for (i = 0; i < 7; i++) {
+            D_801492DC[i] = sp6C.v[i];
+        }
+        D_801492F8[0] = sp44.v[0];
+        D_801492F8[1] = sp44.v[1];
+        for (i = 2; i < 10; i++) {
+            D_801492F8[i] = sp44.v[i];
+        }
+        func_8004284C();
+        break;
+    case 1:
+        cd_read_sectors(0x1E, 0x80180000, 0xBAD0);
+        Fade_Out_Init();
+        func_8004284C();
+        break;
+    case 2:
+        Fade_Out_Main();
+        if (cd_read_sync_status() & 1) {
+            cd_read_sectors(0x1F, 0x8018F000, 0xB79F);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        if (Fade_Out_Main() != 0 && (cd_read_sync_status() & 1)) {
+            func_80140810();
+            func_801407C0();
+            search_load_tpage_buf_lock(D_801492C4, 1);
+            for (i = 0; i < 16; i++) {
+                load_palette(D_80149FA4, (u8) (i + 0x10), 1, 1, i);
+            }
+            func_80135480();
+            func_801356E0();
+            func_80135778();
+            cd_read_sectors(0xC1, 0x8018F000, 0xB6DE);
+            func_80042808();
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80133CFC);
+#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80134060);
 
