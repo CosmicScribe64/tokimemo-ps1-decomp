@@ -15381,3 +15381,8 @@ Pilot T-16550/T-16560 done: 64 matches / 41.4 KB in about 20 agent-hours (types 
 closers 4 h Opus with 10 matches), 2.0 KB per agent-hour, at or above wave 2 (Opus). Main 6,076/6,958 (67.2%).
 Opened [[tickets/T-16990-wave-3-conveyor]]: types-first passes on 19 units and 32 direct packages feeding a 7-worker
 pool; merges run in parallel through a locked, self-cleaning merge script.
+
+## [2026-10-16] ticket | T-17200 Types-first: DATE opened
+
+[[tickets/T-17200-types-first-date]] created In Progress on branch `w3-date-types` (from `w2-good`), part of
+[[tickets/T-16990-wave-3-conveyor]]: types-first pass for DATE following [[speedup-research-2026-10-16]].
