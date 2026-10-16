@@ -157,7 +157,7 @@ void func_801448D4(void);
 void func_801449A0(void);
 void func_80144B40(void);
 void func_80144C70(void);
-extern u8 D_8014A4F4;
+extern s32 D_8014A4F4;
 extern s32 D_8014A4F8[12]; /* tpage buffer ids, loaded in func_80145640. T-16553 */
 extern s32 D_8014A528[9];
 s32 func_801485C4(void);
@@ -165,6 +165,9 @@ s32 func_80148678(void);
 void func_801487B4(void);
 void func_80148820(void);
 void func_80148194(s32 arg0);
+void func_80145EF4(void);
+void func_80145F8C(void);
+void func_8014607C(void);
 void func_80148228(s32 arg0);
 extern u8 D_8014A1FC;
 void func_80146B8C(void);
@@ -836,6 +839,15 @@ typedef struct TaiWords8 {
 typedef struct TaiWords10 {
     /* 0x00 */ s32 v[10];
 } TaiWords10; /* size 0x28 */
+typedef struct TaiWords9 {
+    /* 0x00 */ s32 v[9];
+} TaiWords9; /* size 0x24 */
+typedef struct TaiWords12 {
+    /* 0x00 */ s32 v[12];
+} TaiWords12; /* size 0x30 */
+extern s32 D_8014A56C; /* func_80145370 */
+extern TaiWords12 D_8014A570; /* func_80145370 */
+extern TaiWords9 D_8014A5A0; /* func_80145370 */
 extern TaiShorts23 D_80148F28; /* func_80132BD0 */
 extern TaiShorts23 D_80148F58; /* func_80132BD0 */
 extern TaiShorts23 D_80148F88; /* func_80132BD0 */

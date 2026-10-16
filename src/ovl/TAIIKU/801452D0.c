@@ -75,7 +75,74 @@ void func_801452D0(void) {
     tbl.f[idx]();
 }
 
+/* NON_MATCHING: T-16553, 22 differing lines; in the two loops that store 8 the original keeps the constant 8 in v0 and the loop pointer in v1, the build has them the other way round (registers only) */
+#ifdef NON_MATCHING
+void func_80145370(void) {
+    s32 i;
+    s32 j;
+    s32 a[1];
+    TaiWords12 b;
+    TaiWords9 c;
+
+    a[0] = D_8014A56C;
+    b = D_8014A570;
+    c = D_8014A5A0;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80085E30(1, 1);
+        for (i = 0; i < 11; i++) {
+            D_800E6280.unk_1228[i + 5] = 8;
+        }
+        for (i = 0; i < 3; i++) {
+            D_800E6280.unk_1228[i + 0x25] = 8;
+        }
+        D_8014A4F4 = a[0];
+        for (i = 0; i < 12; i++) {
+            D_8014A4F8[i] = b.v[i];
+        }
+        D_8014A528[0] = c.v[0];
+        for (i = 1; i < 9; i++) {
+            D_8014A528[i] = c.v[i];
+        }
+        func_80048EB8(0);
+        func_8006BD6C(0);
+        func_8004284C();
+        break;
+    case 1:
+        cd_read_sectors(0x1E, 0x80180000, 0xBAD0);
+        func_800862D0();
+        func_8004284C();
+        break;
+    case 2:
+        func_800862F0();
+        if (cd_read_sync_status() & 1) {
+            cd_read_sectors(0x26, 0x8018F000, 0xB969);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        if ((func_800862F0() != 0) && (cd_read_sync_status() & 1)) {
+            func_80140810();
+            func_80132B40();
+            search_load_tpage_buf_lock(D_8014A4F4, 1);
+            for (j = 0; j < 0x10; j++) {
+                load_palette(D_80148EF4, (j + 0x10) & 0xFF, 1, 1, j);
+            }
+            func_8014607C();
+            func_80145EF4();
+            func_80145F8C();
+            cd_read_sectors(0xB9, 0x8018F000, 0xB8B0);
+            func_80042808();
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80145370);
+#endif
 
 /* NON_MATCHING: T-16553, 8 differing lines; the loop counter i is spilled at sp+0x3C, the original spills it at sp+0x38 (everything else matches) */
 #ifdef NON_MATCHING
@@ -331,7 +398,7 @@ void func_80145F8C(void) {
     D_80120657 = 0x80;
     D_8012065C = (u8 *) D_80149FD0;
     D_80120660 = (u8 *) D_8014A008;
-    D_80120684 = &D_8014A4F4;
+    D_80120684 = (u8 *)&D_8014A4F4;
     D_80120664 = D_8014A040;
     D_80120654 = 0;
     D_80120655 = 0x80;
