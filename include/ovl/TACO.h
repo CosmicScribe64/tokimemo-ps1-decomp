@@ -315,7 +315,7 @@ extern s32 D_8015FEF0[];
 extern u8 D_8015FFE0[];
 s32 func_801472D4(); /* Returns -1 for unaligned input buffers; T-9610. */
 void func_8014B2A4(s32 arg0);
-void func_8014B8B4(s32 arg0, s32 arg1, s32 arg2);
+s32 func_8014B8B4(s32 arg0, s32 arg1, s32 arg2);
 void func_8014B790(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, u32 arg4);
 void func_8014DA6C(s32 arg0);
 s32 func_8014E5F8(s32 arg0);
