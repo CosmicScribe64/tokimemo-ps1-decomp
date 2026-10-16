@@ -140,6 +140,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-16920-gamestate-1093-type|T-16920 GameState +0x1093 type and kept-copy census]]
 - [ ] [[tickets/T-16910-cpw-census|T-16910 Census the original for the T-16900 cpw rule]]
 - [ ] [[tickets/T-16900-compiler-experiments|T-16900 Compiler experiments: selector-copy rule and ugen survey]]
+- [ ] [[tickets/T-16553-pt-taiiku-p3|T-16553 Types-first pilot package pt-taiiku-p3]]
 - [ ] [[tickets/T-16200-matching-wave-2|T-16200 Matching wave 2]]
 - [ ] [[tickets/T-16220-w2-main-8007c030|T-16220 Wave 2 package w2-p02]]
 

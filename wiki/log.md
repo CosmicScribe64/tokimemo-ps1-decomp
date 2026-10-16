@@ -15258,3 +15258,19 @@ Filed in [[speedup-research-2026-10-16]].
 ## [2026-10-16] ticket | T-16552 Done
 
 [[tickets/T-16552-pt-taiiku-p2]] In Review to Done after code review against `CODING_STANDARDS.md`: 3 functions matched (`func_80139FE4`, `func_80138DF8`, `func_80138AA8`, 3,000 bytes). One finding fixed (local `p` of `func_80138AA8` marked FAKE, comment only) and a stale intro in [[matching-notes]] refreshed. TAIIKU sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK.
+
+## [2026-10-16] ticket | T-16553 opened
+
+[[tickets/T-16553-pt-taiiku-p3]] (In Progress): pt-taiiku-p3, the TAIIKU `src/ovl/TAIIKU/801452D0.c` package of [[tickets/T-16550-taiiku-types-first]]; branch `pt-taiiku-p3` from `w2-good`, nine functions, measured pilot (start 02:25 UTC).
+
+## [2026-10-16] ticket | T-16553 to In Review
+
+[[tickets/T-16553-pt-taiiku-p3]]: 9 functions of `src/ovl/TAIIKU/801452D0.c` matched (`func_8014666C`, `func_80145C28`, `func_80147318`, `func_80147928`, `func_80146A60`, `func_80147F58`, `func_80148370`, `func_80146338`, `func_80147594`; 5,244 bytes), four guarded (`func_80145640` 8 lines, `func_8014607C` 20, `func_80145370` 22, `func_80146D18` 31), `func_80147B14` not started. New section in [[matching-notes]], four rows and an update line in [[data/t0018-cases]], results in [[taiiku-family-results]]. Waiting for the code review.
+
+## [2026-10-16] build | T-16553 closer pass
+
+[[tickets/T-16553-pt-taiiku-p3]]: Opus closer on the two guarded near misses in `src/ovl/TAIIKU/801452D0.c`. `func_80145640` matched (1,080 bytes): the call result goes into a declared local before the counter, which moves the counter's home from sp+0x3C to sp+0x38. `func_8014607C` stays guarded at 20 lines: IDO propagates the tail's two local copies of globals past the `||`. Notes in [[matching-notes]] (T-16553), [[data/t0018-cases]] and [[taiiku-family-results]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16553 Done
+
+[[tickets/T-16553-pt-taiiku-p3]]: code review against `CODING_STANDARDS.md` passed after three small fixes (an ignored `&` before an array in `func_80148370`, comments on two next-symbol loop bounds, stale counts in [[index]], [[matching-notes]] and [[taiiku-family-results]]). 10 functions matched in `src/ovl/TAIIKU/801452D0.c` (6,324 bytes), 3 guarded, `func_80147B14` open. Card moved to Done.
