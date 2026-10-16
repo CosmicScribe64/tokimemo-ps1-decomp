@@ -1,0 +1,41 @@
+void func_80135630(void) {
+    RECT sp2C;
+
+    draw2d3d(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_8006BD6C(0);
+    back_clear_switch(1);
+    tpage_buf_clear();
+    func_8004E58C();
+    func_8008585C();
+    k_reset(1);
+    sp2C.x = 0x140;
+    sp2C.y = 0x1A0;
+    sp2C.w = 0x140;
+    sp2C.h = 0x58;
+    func_8009C7F8(&sp2C, 8, 0, 0);
+    sp2C.x = 0x2C0;
+    sp2C.y = 0xA0;
+    func_8009C7F8(&sp2C, 8, 0, 0);
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    D_800E6280.unk_F5F = 2;
+    func_800847B8(2U);
+    addr_init_bustup();
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    hizuke_init();
+    message_window_init();
+    func_80084E4C();
+    D_8013C2E4 = 0;
+    D_8013C2E8 = 0;
+    D_8013C2EC = (u8) D_80122CE0;
+    D_80122CE0 = 0xFF;
+    func_801365F4();
+    D_8013BFFC = D_8013C508;
+    D_8013C000 = D_8013C644;
+    D_8013C004 = D_8013C780;
+    func_8004284C();
+}

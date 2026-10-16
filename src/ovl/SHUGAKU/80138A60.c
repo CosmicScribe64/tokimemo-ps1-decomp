@@ -1,14 +1,9 @@
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
-typedef struct {
-    void (*f[16])();
-} FnTbl16; /* size 0x40 */
-extern FnTbl16 D_8013C930;
-
 void func_80138A60(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl16 tbl;
+    ShFnTbl16 tbl;
 
     tbl = D_8013C930;
     idx = D_800E6280.unk_110A;
@@ -121,34 +116,30 @@ void func_80139018(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-10850, 8 differing listing lines; regdiff evidence in the ticket scratch. */
-#ifdef NON_MATCHING
 void func_80139054(void) {
-    s16 selector;
+    u8 n;
 
-    selector = D_800CA2CC;
-    switch (selector) {
+    n = D_800CA2CC;
+    switch (n) {
     case 0:
-        bg_read_sub2(0x425E);
+        func_8007ED84(0x425E);
         func_800AE0F0(D_800CA19C, "社寺巡り");
         break;
     case 1:
-        bg_read_sub2(0x424B);
+        func_8007ED84(0x424B);
         func_800AE0F0(D_800CA19C, "守礼門");
         break;
     default:
-        bg_read_sub2(0x4271);
+        func_8007ED84(0x4271);
         func_800AE0F0(D_800CA19C, "時計台前");
         break;
     }
     if (D_800CA2EC == 0) {
-        func_80085B3C(3, D_800CA2CC);
+        n = D_800CA2CC; /* reload into the switch variable: its reuse gives the original's a1 selector (T-18000) */
+        func_80085B3C(3, n);
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80139054);
-#endif
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80139118);
 
@@ -308,16 +299,69 @@ void func_801398B8(void) {
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_801398E8);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_801399F4);
-
-typedef struct {
-    void (*f[18])();
-} FnTbl18; /* size 0x48 */
-extern FnTbl18 D_8013CAA0;
+void func_801399F4(void) {
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        D_800CA2D0 = D_8013C424;
+        D_800CA2D4 = D_8013C458;
+        D_800CA2D8 = D_8013C48C;
+        break;
+    case 1:
+        D_800CA2D0 = D_8013C434;
+        D_800CA2D4 = D_8013C468;
+        D_800CA2D8 = D_8013C49C;
+        break;
+    case 2:
+        D_800CA2D0 = D_8013C428;
+        D_800CA2D4 = D_8013C45C;
+        D_800CA2D8 = D_8013C490;
+        break;
+    case 3:
+        D_800CA2D0 = D_8013C42C;
+        D_800CA2D4 = D_8013C460;
+        D_800CA2D8 = D_8013C494;
+        break;
+    case 4:
+        D_800CA2D0 = D_8013C448;
+        D_800CA2D4 = D_8013C47C;
+        D_800CA2D8 = D_8013C4B0;
+        break;
+    case 5:
+        D_800CA2D0 = D_8013C438;
+        D_800CA2D4 = D_8013C46C;
+        D_800CA2D8 = D_8013C4A0;
+        break;
+    case 6:
+        D_800CA2D0 = D_8013C440;
+        D_800CA2D4 = D_8013C474;
+        D_800CA2D8 = D_8013C4A8;
+        if ((u8)(get_g_zyotai_s(6) & 0x7F) < 2) {
+            D_800CA2D0 = D_8013C43C;
+            D_800CA2D4 = D_8013C470;
+            D_800CA2D8 = D_8013C4A4;
+        }
+        break;
+    case 7:
+        D_800CA2D0 = D_8013C430;
+        D_800CA2D4 = D_8013C464;
+        D_800CA2D8 = D_8013C498;
+        break;
+    case 8:
+        D_800CA2D0 = D_8013C420;
+        D_800CA2D4 = D_8013C454;
+        D_800CA2D8 = D_8013C488;
+        break;
+    case 9:
+        D_800CA2D0 = D_8013C444;
+        D_800CA2D4 = D_8013C478;
+        D_800CA2D8 = D_8013C4AC;
+        break;
+    }
+}
 
 void func_80139C80(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl18 tbl;
+    ShFnTbl18 tbl;
 
     tbl = D_8013CAA0;
     idx = D_800E6280.unk_110A;

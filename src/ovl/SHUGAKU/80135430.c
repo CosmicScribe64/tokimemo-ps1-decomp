@@ -23,7 +23,49 @@ void func_80135610(void) {
     func_80042940(0x1F);
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_80135630);
+void func_80135630(void) {
+    s32 pad; /* FAKE: unused scalar puts the RECT at +0x2C, as in GEKO func_8013B3C0 (T-9770); original local unknown. T-18000 */
+    RECT r;
+
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_8006BD6C(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    func_8008585C();
+    func_8004E9F4(1);
+    r.x = 0x140;
+    r.y = 0x1A0;
+    r.w = 0x140;
+    r.h = 0x58;
+    func_8009C7F8(&r, 8, 0, 0);
+    r.x = 0x2C0;
+    r.y = 0xA0;
+    func_8009C7F8(&r, 8, 0, 0);
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    /* FAKE: byte store then member read shares the constant in a0, as in GEKO func_8013B3C0 (T-9770). T-18000 */
+    *(u8 *)&D_800E6280.unk_F5F = 2;
+    func_800847B8(D_800E6280.unk_F5F);
+    func_8007C740();
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    D_8013C2E4 = 0;
+    D_8013C2E8 = 0;
+    D_8013C2EC = D_80122CE0;
+    D_80122CE0 = 0xFF;
+    func_801365F4();
+    D_8013BFFC = D_8013C508;
+    D_8013C000 = D_8013C644;
+    D_8013C004 = D_8013C780;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_801357AC);
 
@@ -131,13 +173,9 @@ void func_80135CC8(void) {
     func_8004284C();
 }
 
-typedef struct {
-    s32 w[17];
-} Blk44; /* size 0x44 */
-
 void func_80135CF8(void) {
     D_8013C2E4 = 1;
-    *(Blk44 *) &D_80120650[0xCC] = *(Blk44 *) D_80120650;
+    *(DisplayActor44 *) &D_80120650[0xCC] = *(DisplayActor44 *) D_80120650;
     D_80120650[0xCD] = 0xB;
     D_80120650[0xCF] |= 0x80;
     *(s16 *) &D_80120650[0xE2] = 5;

@@ -15673,3 +15673,18 @@ Opened [[tickets/T-17900-types-first-name_ent]] (In Progress) under [[tickets/T-
 ## [2026-10-16] ticket | T-17900 Done
 
 [[tickets/T-17900-types-first-name_ent]] In Review to Done after the code review against `CODING_STANDARDS.md`: no findings. 2 functions matched (904 bytes: `func_80139740`, `func_8013EE7C`), 30 redrafts, 4 packages (T-17901..T-17904). NAME_ENT sha1 OK after a forced rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+## [2026-10-16] ticket | T-18000 Types-first: SHUGAKU In Progress
+
+Created [[tickets/T-18000-types-first-shugaku]] (wave 3 types-first pass for SHUGAKU, branch `w3-shugaku-types` from `w2-good`; 25 unmatched functions, 9,908 bytes), card in In Progress on [[kanban]], line in [[index]].
+
+## [2026-10-16] build | T-18000 SHUGAKU types, redraft and matches
+
+[[tickets/T-18000-types-first-shugaku]]: SHUGAKU callback tables in `include/ovl/SHUGAKU.h` (`ShFnTblNN`, eight moved from the `.c` files, `D_8013C008` and `D_8013C228` added), display-record copies as `DisplayActor44`, `D_8013C2E4` as `u8`; `void D_80085368(void);` added to `include/main_api.h`. `drafts/T-18000/redraft.py` (from T-17700, plus `rect-local`) redrafted all 25 unmatched functions: over the 22 unguarded ones 9 better than the census (3,368 bytes), 13 the same, none worse, none 0. Matched 5 functions / 2,292 bytes: `func_8013282C`, `func_801399F4`, `func_80135630`, `func_80134B94`, `func_80139054`. Packages T-18001..T-18004 (20 functions). Details on [[shugaku-family-results]] (new page), rows in [[data-types]] and [[matching-notes]].
+
+## [2026-10-16] ticket | T-18000 In Review
+
+[[tickets/T-18000-types-first-shugaku]] In Progress to In Review: clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], lines in [[index]].
+
+## [2026-10-16] ticket | T-18000 Done
+
+[[tickets/T-18000-types-first-shugaku]] In Review to Done: code review against `CODING_STANDARDS.md` found 2 minor items (missing comments on the callback-index and variable-reuse idioms in `func_80134B94` and `func_80139054`), fixed in comments only; SHUGAKU sha1 OK, headers OK. 5 functions matched (2,292 bytes). Card moved in [[kanban]], line in [[index]].

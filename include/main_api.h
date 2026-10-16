@@ -2468,6 +2468,9 @@ void func_80085234();
 #ifndef MAIN_API_OVERRIDE_func_80085368
 void func_80085368(void);
 #endif
+/* T-18000: the same address as func_80085368; SHUGAKU compares callback entries with it, and its
+ * asm names the address D_80085368 (a %hi/%lo pair, not a jal), so only that name links there. */
+void D_80085368(void);
 #ifndef MAIN_API_OVERRIDE_func_800853FC
 void func_800853FC(void);
 #endif

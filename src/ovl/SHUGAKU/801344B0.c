@@ -1,11 +1,6 @@
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
-typedef struct {
-    void (*f[38])();
-} FnTbl38; /* size 0x98 */
-extern FnTbl38 D_8013C0EC;
-
 void func_801344B0(void) {
     D_8013C0C0 = (u8 *)0x801D22B8;
     D_8013C0C4 = (u8 *)0x801D22C0;
@@ -22,7 +17,7 @@ void func_801344B0(void) {
 
 void func_80134560(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl38 tbl;
+    ShFnTbl38 tbl;
 
     tbl = D_8013C0EC;
     idx = D_800E6280.unk_110A;
