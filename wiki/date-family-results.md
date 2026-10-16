@@ -132,3 +132,7 @@ Eight file-disjoint packages from the orchestrator's `mklists3.py` (lists in its
 | w3-date-p06 | T-17206 | `8014B1F0.c`, `80156600.c` | 2 | 1,136 |
 | w3-date-p07 | T-17207 | `80141EE0.c` | 2 | 4,464 |
 | w3-date-p08 | T-17208 | `8014A1B0.c`, `8015A640.c`, `8015A7E0.c`, `8015A980.c` | 5 | 2,636 |
+
+### Package w3-date-p05 (T-17205)
+
+Result: 4 of 5 matched in plain C (`func_801496C4` 1,020 B, `func_801556D8` 744 B, `func_801560E0` 712 B, `func_80155E40` 484 B; 2,960 bytes), `func_80149F48` guarded at 11 lines (was 15). New in `DATE.h`: `DateFix32`, `DateMover44` (display records 98..105 as the eight-object scene uses them), `D_8015F9A0[8]` (state) and `D_8015F9A8[8]` (idle counters), `void func_801560E0(void);`, and `s32 func_80155E40(void);`. What fixed each function, and the register-cheatsheet rows it added, are in [[matching-notes]], "T-17205". The eight objects: `func_801556D8` sets them up, `func_801560E0` updates them and is called from the step-table handler `func_80155E40` when `unk_110A` is 0x11..0x13.

@@ -309,7 +309,7 @@ void func_80149ED0(void) {
     func_80082764(0xFF, 1, 0);
 }
 
-/* NON_MATCHING: T-10910, own data defined, instruction order and shared lui at match (43 of 43); the first copy takes $v0 with the double assignment of D_8015D084; the three constant-pointer loads take t9/t0/t1 where the original has t5/t6/t7, 15 lines */
+/* NON_MATCHING: T-17205 (was T-10910), 11 differing lines; instruction order and shared lui at match (43 of 43); the product statement before the last copy puts the D_8015D090 load and the sum in the original's t2/t4; left: the three constant-pointer loads take t9/t0/t5 where the original has t5/t6/t7 and the shift and subtract take t1 where it has t9/t1 */
 #ifdef NON_MATCHING
 void func_80149F48(void) {
     u8 new_var;
@@ -320,10 +320,10 @@ void func_80149F48(void) {
     D_8015D080 = D_8015D074;
     D_8015D06C = D_8015CFFC;
     D_8015D070 = D_8015D030;
-    D_8015D074 = D_8015D064;
     new_var = D_800E6280.unk_F5F;
     D_8015D084 = new_var;
     D_8015D084 = (D_8015D084 * 3) + D_8015D090;
+    D_8015D074 = D_8015D064;
     func_8004284C();
 }
 #else
