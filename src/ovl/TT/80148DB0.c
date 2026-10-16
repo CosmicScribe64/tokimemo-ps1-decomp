@@ -264,7 +264,7 @@ void func_80149704(void) {
     q[0x3B] = 0x65;
     *(s16 *)(q + 0x10) = 0;
     q += 0x64;
-    q[0] = q[1] = 0;
+    q[0] = q[1] = 0; /* FAKE: two-store chain; it uses up ugen temp t9, so 0x20/0x40/0x30 get t1/t2/t3 as in the original. T-11850 */
     *(s16 *)(q + 0x44) = 0;
     *(s16 *)(q + 0x14) = 0x20;
     *(s16 *)(q + 0x16) = 0x38;

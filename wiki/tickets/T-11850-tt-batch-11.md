@@ -48,3 +48,19 @@ Inline review against `CODING_STANDARDS.md`: every fake trick carries a `FAKE ..
 covered by one comment above the pair); one guarded header block (`TtSpr*` types); one existing declaration changed
 (`D_801569E8[]`); no `main_api.h` changes; guard comments current. Clean rebuild 27/27 OK, headers/globals OK,
 `sync_protos.py --check-branch` and `migrate_globals.py --check` clean. No open findings.
+
+## Comments
+
+### 2026-10-16 independent review and merge (PR #35, integration branch `pr35-int`)
+Reviewed `git diff w2-good...pr35-int` (src, include, then wiki) against the `CODING_STANDARDS.md` checklist.
+
+- Matches: integrator ran `funcdiff --resolve` on all 12 claimed functions (`func_8014C5F8`, `func_8014C84C`, `func_80147FD0`, `func_80148764`, `func_80134874`, `func_80134768`, `func_80134BBC`, `func_80148E7C`, `func_80149704`, `func_80144A04`, `func_801436BC`, `func_801437F0`): all MATCH. Clean rebuild 667/667 steps, 27/27 sha1 OK; `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` (0 new disagreements) clean.
+- Guards: `func_80147A18`, `func_8013A0DC` and `func_8014A2B4` stay under `#ifdef NON_MATCHING` with a `T-11850` comment; the default build does not see them.
+- C89 and content: no `//`, inline asm, `.word`, `volatile` or non-ASCII in the added lines; declarations sit at block tops. No game data, asm or binaries; changes are limited to `src/ovl/TT`, `include/ovl/TT.h` and `wiki/`.
+- Headers: `D_801569E8` is now `u8 *D_801569E8[]`. Its only C user is `func_80148764` (reads `D_801569E8[0]`, matches); all other users are `INCLUDE_ASM` bodies that reference the symbol address only. `TtSprPart`/`TtSprSeq`/`TtSprFrame`/`TtSprSet` carry offsets and sizes.
+- Fakematches: every new trick carries a `FAKE` comment with `T-11850` and the reason.
+- Finding 1 (fixed in the merge): in `func_80149704`, `q[0] = q[1] = 0;` is a trick (it uses up ugen temp t9, per [[matching-notes]]) but had no `FAKE` mark, while the same idiom is marked elsewhere in this batch. Added a `FAKE` comment on the line; no code change.
+- Notes, not findings: `func_80148E7C` (split `&&` into `continue` tests, ticket says no FAKE) and `func_8014C84C` (casts of `buf` at each use) read as plausible source, so they stay unmarked.
+- Bookkeeping: ticket status Done matches the card in the Done column of [[kanban]] (one card); [[index]] line updated. The ticket's grand total (6208/6958, 70.8%) was measured on the contributor's base; after this merge it is 6233/6958 functions, 1639244/2279368 bytes, 71.9%.
+
+Result: 12 of 15 functions matched, TT 274/303 functions, 92080/111376 bytes (82.7%). Review complete, one finding fixed, none open.

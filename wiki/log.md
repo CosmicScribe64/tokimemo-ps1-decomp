@@ -16165,3 +16165,6 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 ## [2026-10-16] ticket | T-17201 Done
 
 [[tickets/T-17201-w3-date-p01]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a missing `FAKE` prefix on a one-line scheduling trick in the guarded `func_8014718C`, a broken table row in [[data/t0018-cases]]); rebuild of DATE OK (headers OK, globals OK, sha1 OK). 1 of 2 functions matched (`func_80147958`, 4,044 bytes); `func_8014718C` stays a guarded draft (26 lines). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-11850 Done (PR #35 merged)
+[[tickets/T-11850-tt-batch-11]] reviewed on integration branch `pr35-int` against `CODING_STANDARDS.md`: one finding fixed (missing `FAKE` mark on the two-store chain `q[0] = q[1] = 0;` in `func_80149704`, comment only), none open. 12 of 15 functions matched (4,520 bytes; 3 guarded: `func_80147A18`, `func_8013A0DC`, `func_8014A2B4`), clean rebuild 27/27 sha1 OK, headers OK, globals OK, `sync_protos --check-branch` OK. TT 274/303 functions, 92080/111376 bytes (82.7%); grand total 6233/6958 functions, 1639244/2279368 bytes, 71.9%. The earlier "started" entry's "PR #34, still open" is outdated: [[tickets/T-11840-tt-batch-10]] is merged. Merge via the wave 3 merge script.
