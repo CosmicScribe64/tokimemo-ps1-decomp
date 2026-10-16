@@ -16502,3 +16502,9 @@ Clean rebuild of the w3-rpg-bat-p05 worktree (`rm -rf build && configure.py && n
 
 ## [2026-10-16] ticket | T-17118 In Progress
 [[tickets/T-17118-w3-rpg-bat-p18]] created and started: RPG_BAT `func_80133108` (`src/ovl/RPG_BAT/80132FE0.c`), worktree `w3-rpg-bat-p18`.
+
+## [2026-10-16] build | T-17118 match
+[[tickets/T-17118-w3-rpg-bat-p18]]: `func_80133108` (`src/ovl/RPG_BAT/80132FE0.c`, 4,192 B) matched in plain C from the 863-row T-14500 draft: `ang` computed once before the loops and `ang + i * 0x200` at the calls, one shared `tmp` local (priority tie with the counter, case 19's call result in `$s2`), case 9 records as `[i + 64]`, only `RPG_BAT_OVERRIDE_func_8013F15C` kept. Notes in [[matching-notes]], two rows in [[register-cheatsheet]], [[rpg-bat-family-results]].
+
+## [2026-10-16] ticket | T-17118 In Review
+[[tickets/T-17118-w3-rpg-bat-p18]] In Progress to In Review (1 of 1 matched). Card moved.
