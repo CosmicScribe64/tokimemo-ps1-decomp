@@ -337,7 +337,7 @@ void func_80143470(void) {
     D_80120656 = 2;
 }
 
-/* NON_MATCHING: T-16554, 19 differing instructions (38 diff lines), one window: the original keeps the
+/* NON_MATCHING: T-19010, 34 differing lines (T-16554: 38; statement order from tools/order_search.py), one window: the original keeps the
  * masked flags byte in $v1 (a uopt variable), loads the s16 rating straight into $v0 and loads the three
  * constants 0x7E0000/0x7F0000/0x7D0000 together before three stores that share one `lui at`; IDO leaves the
  * flags in a ugen temporary, promotes the rating field into $a1 with a move and emits each constant
@@ -407,9 +407,11 @@ void func_8014357C(void) {
     D_8014A1D0 = 0;
     D_8014A1CC.w = 0;
     D_8014A118 = 0;
-    temp_v1 = gs->unk_0F4.b[1] & 0xF;
+    D_8014A130[0] = 0x7E0000;
+    D_8014A130[1] = 0x7F0000;
     var_v0 = gs->unk_10C.unk_02;
-    D_8014A130[0] = 0x7E0000; D_8014A130[1] = 0x7F0000; D_8014A130[2] = 0x7D0000;
+    D_8014A130[2] = 0x7D0000;
+    temp_v1 = gs->unk_0F4.b[1] & 0xF;
     if ((temp_v1 & 1) || (temp_v1 & 2)) {
         var_v0 = (s16) (var_v0 >> 1);
     }
