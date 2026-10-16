@@ -16330,3 +16330,35 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 
 ## [2026-10-16] ticket | T-17109 Done
 [[tickets/T-17109-w3-rpg-bat-p09]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing that blocks (only `src/ovl/RPG_BAT/8013D780.c` and `src/ovl/RPG_BAT/801477E0.c` changed; `s32` without a return, the single-increment arms and the one-line decrement judged plain C with comments; `RPG_BAT_OVERRIDE_D_8015EBCC` follows 8a). Review edits: a doubled and a trailing blank line removed; the "about 35 minutes" of the In Review entry is 39 minutes (19:46:13 to 20:24:57 UTC), fixed in the ticket and [[matching-notes]]. Unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 3 of 3 matched (`func_8013D834`, `func_80147930`, `func_8013DC60`, 4,268 bytes). Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-20003 RPG timer follow-up In Progress
+
+Created [[tickets/T-20003-rpg-timer-callees]] from upstream main 68650e14. The T-17101 section of [[matching-notes]] explicitly suggests func_80138F6C, func_80146C30 and func_80157158 for the newly confirmed integer-return callee-view test. T-17101 is Done and no follow-up package tickets for these files are present in fetched upstream. Inspecting existing typed drafts and original assembly before compiling candidates.
+
+## [2026-10-16] build | T-20003 RPG callback func_80157158 matched
+
+Actual default funcdiff --resolve proves 1,256 linked bytes for RPG_BAT func_80157158; RPG_BAT.bin SHA1 passes. Use integer-return caller views of func_8013D030 and func_8013F15C, reread the state selector after calls, update timer globals directly and split the flag mask/or into two in-place operations. Two unused frame words are explicitly FAKE and ticketed. Other target callbacks stay scratch-only. See [[tickets/T-20003-rpg-timer-callees]].
+
+## [2026-10-16] build | T-20003 RPG callback func_80138F6C matched
+
+Actual default funcdiff --resolve proves 1,268 linked bytes for RPG_BAT func_80138F6C. Reused canonical timer updates, removed the unused m2c tail local, kept two explicitly FAKE frame words and used a documented FAKE signed-word selector view for the remaining v0/v1 difference. Added the missing text-buffer declaration in the overlay header. Upstream fa1dffb4 independently matched the third target (func_80146C30, T-17104); its scratch probes are discarded from production. See [[tickets/T-20003-rpg-timer-callees]].
+
+## [2026-10-16] build | T-20003 third RPG callback matched; In Review
+
+RPG_BAT func_80156D78 matches 992 actual default linked bytes, bringing T-20003 to three callbacks / 3,516 bytes. The draw width needs the original word-argument caller view; one unused frame word is explicitly FAKE. Default linked funcdiff also rechecks its sibling func_80157158. Full build and header/global guards pass, as do all 27 binary SHA1 checks and sync_protos --check-branch (0 new, 15 known disagreements). Local self-review against CODING_STANDARDS.md recorded; upstream review pending. Updated matching notes, family results and the T-0018 superseding update without changing historical rows. [[tickets/T-20003-rpg-timer-callees]] moves to In Review, with the board/index synchronized.
+
+## [2026-10-16] ticket | T-20003 PR #38 opened
+
+Opened https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/38 for the three RPG_BAT callbacks (3,516 bytes). Integrated upstream main 81095a46 and retained all T-17103 source/wiki work. All three actual default linked comparisons still match despite the upstream caller-view change in their shared source; full RPG_BAT/globals and 27/27 binary SHA1 checks pass again. [[tickets/T-20003-rpg-timer-callees]] stays In Review for the maintainer.
+
+## [2026-10-16] build | T-20003 final prototype guard passed
+
+After integrating upstream main 81095a46, sync_protos --check-branch reports 0 new disagreements, 15 known and branch check OK. The integrated three-function linked proof, RPG_BAT checksum and 27/27 binary checks remain successful. PR #38 is mergeable; no GitHub CI check results are exposed. [[tickets/T-20003-rpg-timer-callees]] stays In Review.
+
+## [2026-10-16] decision | T-20003 narrow PR #38 after upstream overlap
+
+Upstream main a8591fb8 merged T-17102's independent matches for func_80156D78 and func_80157158 during final checks. Retained its complete 80156CC0.c verbatim and removed our now-unused func_8013D030 header guard. PR #38 now contributes only func_80138F6C (1,268 bytes) plus its missing text-buffer declaration; all earlier investigation/check results remain as history. Updated the PR scope, ticket, board, index and matching notes. No duplicate upstream matches are counted. [[tickets/T-20003-rpg-timer-callees]] stays In Review.
+
+## [2026-10-16] build | T-20003 final single-callback verification passed
+
+On upstream main a8591fb8, actual default funcdiff proves all 1,268 linked bytes of func_80138F6C match. The 39-step incremental build passes RPG_BAT/GYOZI SHA1 and globals, explicit binary checks pass 27/27, and sync_protos --check-branch passes (0 new / 15 known). Final production scope is one C callback plus its missing D_8015E8A0 declaration; upstream 80156CC0.c remains verbatim. Two FAKE sites are marked and locally reviewed. [[tickets/T-20003-rpg-timer-callees]] and PR #38 remain In Review for the maintainer.

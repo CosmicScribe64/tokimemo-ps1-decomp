@@ -237,6 +237,7 @@ extern u8 D_8015E774[];
 extern u8 D_8015E79C[];
 extern u8 D_8015E850[];
 extern u8 D_8015E878[];
+extern u8 D_8015E8A0[];
 extern u8 D_8015EA08[];
 extern u8 D_8015EA30[];
 extern u8 D_8015EA58[];

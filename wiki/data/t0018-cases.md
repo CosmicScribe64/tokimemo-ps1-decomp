@@ -6,6 +6,8 @@ sources: ["wiki/matching-notes.md", "tools/queue.py"]
 
 # T-0018 cases (register promotion of globals and related register-order gaps)
 
+Update (T-20003): RPG_BAT `func_80138F6C` matches 1,268 actual default linked bytes with direct timer updates/decrement and two marked FAKE sites (frame padding and selector word read). Full RPG_BAT and all 27 binary SHA1 checks pass. Historical rows below remain unchanged; [[tickets/T-20003-rpg-timer-callees]] supersedes its unmatched status. Independent matches for `func_80157158` and `func_80156D78` were dropped from this contribution after upstream T-17102 landed.
+
 Data file of [[tickets/T-1321-register-promotion-build-step]]. One row per function skipped (left `INCLUDE_ASM` or `NON_MATCHING`) because of the T-0018 gap ([[matching-notes]], section "Register promotion of globals"). `tools/queue.py --calibrate` reads this table to measure the blocker detector, so keep the format.
 
 Rules for batch agents (decompile-workflow step 7): append one row per skipped case, never edit or delete a row.

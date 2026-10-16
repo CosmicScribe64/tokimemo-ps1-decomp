@@ -6,6 +6,10 @@ sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 
 # Matching notes
 
+## RPG_BAT timer callbacks (T-20003)
+
+`func_80138F6C` matches 1,268 default linked bytes: direct timer updates/decrement replace stale draft snapshots; a same-width selector pointer read and two frame words are marked FAKE with their reasons. The missing text-buffer declaration is added to the overlay header. No compiler-pass change. Two other independently matched callbacks (`func_80157158`, `func_80156D78`) were dropped when upstream T-17102 landed; its implementation and caller views are retained. Evidence, full RPG_BAT/27-binary checks and local review: [[tickets/T-20003-rpg-timer-callees]].
+
 ## Wave 13-15 tooling reliability (T-10840)
 
 [[tickets/T-10840-wave-13-15-tool-fixes]] addresses the five wave reports. The

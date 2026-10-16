@@ -54,6 +54,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-20003-rpg-timer-callees|T-20003 Match RPG battle callback func_80138F6C (1,268 bytes)]]
+
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
