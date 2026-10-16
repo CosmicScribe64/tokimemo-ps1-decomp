@@ -14964,3 +14964,7 @@ functions matched (5,072 bytes), no blocking findings. One fix: section 8a of `C
 ## [2026-10-16] ticket | T-11670 Done
 
 [[tickets/T-11670-w1-main-8006cb30]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 functions matched in `src/main/8006CB30.c` (`_schedule_init`, `geko_judge`, `schedule_girls_gakko`, `func_8006EA40`). Review fixes: `FAKE` note on the `geko_judge` frame buffers, line counts on the two T-10880 guards. Build in the worktree: globals OK, headers OK, unit sha1 OK.
+
+## [2026-10-16] ticket | T-16530 opened
+
+[[tickets/T-16530-proto-override]] (In Progress, under [[tickets/T-16200-matching-wave-2]]): add a repeatable `--proto` prototype override to `tools/regdiff.py` and `tools/funcdiff.py` and a clearer missing-traced-uopt message. Worktree branch `t16530-proto-override`; no `src/` edits.
