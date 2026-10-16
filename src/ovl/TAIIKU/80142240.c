@@ -1,5 +1,6 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
+#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A110);
@@ -439,7 +440,62 @@ void func_8014357C(void) {
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_8014357C);
 #endif
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80143814);
+/* FAKE: the dead `i = 0;` at the end keeps `i` live after the loop, so IDO tests the loop with
+ * `slti` like the original and not as `i != 9`. T-19010 */
+void func_80143814(void) {
+    s32 i;
+    TaiShorts12 a;
+    TaiShorts12 b;
+
+    a = D_8014A2F0;
+    b = D_8014A304;
+    for (i = 0; i < 9; i++) {
+        func_80048F64(i + 0x60);
+        DISP(96 + i).unk_38 = 0x01000000;
+        DISP(96 + i).unk_07 = 0x80;
+        DISP(96 + i).unk_0C = (u8 *)D_80149FC4;
+        DISP(96 + i).unk_10 = (u8 *)D_80149FFC;
+        DISP(96 + i).unk_34 = (u8 *)D_8014A208;
+        DISP(96 + i).unk_14 = D_8014A034;
+        DISP(96 + i).unk_04 = 0;
+        DISP(96 + i).unk_05 = 0x80;
+        DISP(96 + i).unk_1A = 0x1000;
+        *(s16 *)DISP(96 + i).pad_1C = 0x1000;
+        DISP(96 + i).unk_06 = 2;
+        DISP(96 + i).unk_2A = a.value[i];
+        DISP(96 + i).unk_18 = b.value[i];
+    }
+    if ((u8) D_8014A110 != 0) {
+        DISP(96).unk_18 = 0xE;
+    }
+    DISP(96).unk_01 = 2;
+    DISP(96).unk_26 = -0xA0;
+    DISP(96).unk_02 = 0x40;
+    DISP(96).unk_03 = 0xA4;
+    DISP(97).unk_01 = 3;
+    DISP(97).unk_26 = -0x98;
+    DISP(97).unk_02 = 0x40;
+    DISP(97).unk_03 = 0xA4;
+    DISP(98).unk_01 = 4;
+    DISP(98).unk_26 = -0x90;
+    DISP(98).unk_02 = 0x40;
+    DISP(98).unk_03 = 0xA4;
+    DISP(99).unk_01 = 5;
+    DISP(99).unk_26 = -0x88;
+    DISP(99).unk_02 = 0x40;
+    DISP(99).unk_03 = 0xA4;
+    DISP(100).unk_01 = 1;
+    DISP(100).unk_26 = DISP(96).unk_26;
+    DISP(100).unk_2A = DISP(96).unk_2A;
+    DISP(101).unk_01 = 7;
+    DISP(102).unk_01 = 5;
+    DISP(103).unk_01 = 6;
+    DISP(104).unk_01 = 7;
+    DISP(104).unk_26 = -0x30;
+    DISP(104).unk_02 = 0x40;
+    DISP(104).unk_03 = 0xA4;
+    i = 0;
+}
 
 void func_80143AC8(void) {
     s32 i;
@@ -682,8 +738,6 @@ void func_8014430C(void) {
     Scroll((s32) ((s16) D_8014A1CC.h[1] / 2) % 128, 0xF, 0x70, 0x80, 0x80);
     func_8004B19C(D_8014A1D0, 0, -0x3C);
 }
-
-#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
 
 s32 func_80144464(void) {
     s32 i;
