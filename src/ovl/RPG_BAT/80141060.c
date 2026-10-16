@@ -179,6 +179,9 @@ void func_80141060(void) {
     for (i = 0; i < 0x30; i++) {
         func_8013E8B8(i, 0x27, 0);
     }
+    /* The record loops below index D_8011ECD0 as bytes (fields 0x0C, 0x10, 0x34, 0x43, 0x01 of record 96 + i), like
+     * the other RPG_BAT record loops: the typed DisplayActor44 index folds 0x1980 into the start pointer and builds
+     * a different loop preheader (T-17119, wiki/register-cheatsheet.md). */
     if (D_8015EB9C != 0xE) {
         for (i = 29; i < 31; i++) {
             *(s32 *) &D_8011ECD0[0x198C + i * 0x44] = D_8015EEB8;
