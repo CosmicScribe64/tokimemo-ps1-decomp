@@ -67,7 +67,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-18000-types-first-shugaku|T-18000]] Types-first: SHUGAKU: callback tables in `SHUGAKU.h`, 25 redrafts (9 better than the census), 5 matches / 2,292 bytes, packages T-18001..T-18004 (Done).
 - [[tickets/T-17700-types-first-geko|T-17700]] Types-first: GEKO: stack-copied tables typed in `GEKO.h`, 35 redrafts (14 better than the census), 1 match / 484 bytes, 5 guarded drafts, packages T-17701..T-17708 (Done).
 - [[tickets/T-19005-w3-d-p05|T-19005]] Wave 3 package w3-d-p05: OLH `80135AC0.c`, `80132000.c`, `func_80135B8C` (sibling clone) and `func_80132114` (chain through a local) both matched, 680 B (Done).
-- [[tickets/T-17206-w3-date-p06|T-17206]] Wave 3 package w3-date-p06: DATE `8014B1F0.c`, `80156600.c`, 2 functions (`func_80157698`, `func_8014C20C`) (In Progress).
+- [[tickets/T-17206-w3-date-p06|T-17206]] Wave 3 package w3-date-p06: DATE `8014B1F0.c`, `80156600.c`, both functions matched (1,136 B: `func_80157698`, `func_8014C20C`; callee arity, constant webs, `D_800CA154` as `u16`) (In Review).
 - [[tickets/T-19010-w3-d-p10|T-19010]] Wave 3 package w3-d-p10: TAIIKU `80142240.c` (game B), 4 of 5 functions matched (2,752 B: `func_80144464`, `func_80143814`, `func_80142FB8`, `func_80144E54`; three FAKE dead statements), `func_8014357C` guarded at 34 lines (Done).
 - [[tickets/T-19006-w3-d-p06|T-19006]] Wave 3 package w3-d-p06: TACO `8013B990.c`, all 5 functions matched (2,636 B), branch-over guard and `s32`-without-return idioms (Done).
 - [[tickets/T-19001-w3-d-p01|T-19001]] Wave 3 package w3-d-p01: TAIIKU `80140810.c`, `func_80140A90` stays guarded (33 instructions); block-copy temporary rule measured, looks like a ugen difference (Done).
