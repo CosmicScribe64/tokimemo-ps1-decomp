@@ -1,7 +1,7 @@
 ---
 id: T-17900
 title: "Types-first: NAME_ENT"
-status: In Review
+status: Done
 assignee: claude (w3-name-ent-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -43,3 +43,16 @@ Start: 32 unmatched NAME_ENT functions (30,504 bytes) in 4 files, 9 of them guar
 - Matched: `func_80139740` (port of main `func_8004B19C`) and `func_8013EE7C` (sibling `func_8013EBEC`), 904 bytes.
 - Packages: T-17901..T-17904 (17 functions, 11,316 bytes), table in [[name-ent-family-results]].
 - `func_80142A80`'s drafts write its song lines as rodata labels, so the song text is not copied into the repo.
+
+### 2026-10-16 code review (claude, w3-name-ent-types)
+
+Reviewed `git diff w2-good...w3-name-ent-types` against the `CODING_STANDARDS.md` checklist: no findings, no fixes needed.
+
+- Scope: C and header changes only in the owned files (`src/ovl/NAME_ENT/80139740.c`, `include/ovl/NAME_ENT.h`); the other changes are wiki pages and the new folder `drafts/T-17900/` (every `drafts/` path is an added file, no existing archive touched). No game data, asm, binaries or `.s` files.
+- Matches (`func_80139740`, `func_8013EE7C`, 904 bytes): plain C89, no inline asm or `.word`, no `//`, declarations at block top, no new `FAKE` or `NON_MATCHING`. NAME_ENT sha1 OK, also after a forced rebuild of the unit.
+- Existing guarded drafts in NAME_ENT (9 `#ifdef NON_MATCHING` blocks) each carry a `NON_MATCHING` comment with a ticket and the lines left; the one `FAKE` comment (`func_801455E4`) names T-10030. None changed in this diff.
+- Header: `D_8014D060[16]`, `D_8014D158[16]`, `D_8014D0F4[10][2]` are new, `D_8014CC74[8]`/`D_8014CC7C[8]` are sized like their definitions; no duplicate or conflicting declaration in `include/`; the main-exe records stay in the m2c context only (CODING_STANDARDS 8a). `tools/check_headers.py` OK, `tools/migrate_globals.py --check` OK, `tools/sync_protos.py --check-branch` OK (0 new, 15 known).
+- Drafts: the `.word` and `asm(` hits in `drafts/T-17900/*/context.c` are struct fields of the compile context, not inline asm. The song text of `func_80142A80` is not in its drafts (rodata labels).
+- Wiki: ticket status and kanban column match (In Review to Done), index line and log appended.
+
+Matched in this ticket: 2 functions (904 bytes). Done.
