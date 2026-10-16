@@ -15554,3 +15554,6 @@ Opened [[tickets/T-19006-w3-d-p06]] (In Progress): TACO `src/ovl/TACO/8013B990.c
 
 ## [2026-10-16] ticket | T-19010 In Progress
 [[tickets/T-19010-w3-d-p10]] created and started: Wave 3 package w3-d-p10, TAIIKU `src/ovl/TAIIKU/80142240.c` (game B): `func_8014357C`, `func_80144E54`, `func_80144464`, `func_80143814`, `func_80142FB8`. Worktree `tokimemo-wt/w3-d-p10`, branch `w3-d-p10`.
+
+## [2026-10-16] ticket | T-19010 In Review, 4 of 5 functions matched
+[[tickets/T-19010-w3-d-p10]] moved to In Review: TAIIKU `src/ovl/TAIIKU/80142240.c`. Matched `func_80144464`, `func_80143814`, `func_80142FB8` and `func_80144E54` (2,752 bytes); `func_8014357C` stays guarded at 34 lines (was 38). Three FAKE dead statements (`i = 0;` x2, `i = D_8014A110;`), `D_8014A110` is `u8` in `include/ovl/TAIIKU.h`, new prototypes for `func_80143814` and `func_80144E54`. Findings: the `func_80142FB8` spill allocation is an index loop with `<` (the T-16554 note was wrong); `tools/cvt_pass.py`'s entry rule can be met by a dead entry read; store-sinking direction decides which of two equal constant stores goes to the exit. See [[matching-notes]] ("T-19010"), [[register-cheatsheet]], [[data/t0018-cases]] and [[taiiku-family-results]].
