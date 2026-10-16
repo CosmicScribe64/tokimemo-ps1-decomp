@@ -472,7 +472,53 @@ INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/80137280.rodata", D_8015B718);
 
 INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/80137280.rodata", D_8015B728);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80139E88);
+void func_80139E88(void) {
+    /* the three scalars sit between the tables: they set flags at sp+0x64 (T-17103) */
+    RpgStrTbl4 names;
+    s32 n;
+    s32 count;
+    s32 i;
+    RpgWordTbl4 flags;
+
+    names = D_8015E530;
+    flags = D_8015E540;
+    n = 0;
+    if (func_8013E9A8(5) == 0) {
+        count = 3;
+    } else {
+        count = 2;
+    }
+    for (i = 0; i < count; i++) {
+        switch (func_8013E9A8(0xA)) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+            flags.v[0] = 1;
+            break;
+        case 4:
+        case 5:
+        case 6:
+            flags.v[1] = 1;
+            break;
+        case 7:
+        case 8:
+            flags.v[2] = 1;
+            break;
+        case 9:
+            flags.v[3] = 1;
+            break;
+        }
+    }
+    for (i = 0; i < 4; i++) {
+        if (flags.v[i] == 1) {
+            func_800AE0F0(*(void **)(D_8015EB70 + n * 4 + 12), "おたから：");
+            func_800AE100(*(void **)(D_8015EB70 + n * 4 + 12), names.s[i]);
+            n++;
+        }
+    }
+    D_8015ED14 = n + 3;
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_8013A034);
 
