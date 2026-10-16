@@ -15981,3 +15981,7 @@ TACO `func_80137264` (812 B, `src/ovl/TACO/80136B40.c`) matches in plain C, TACO
 ## [2026-10-16] ticket | T-19029 In Review
 
 [[tickets/T-19029-w3-d-p29]] In Progress to In Review: 1 of 1 functions matched (`func_80137264`). Clean rebuild and the header, globals and prototype checks run (results in the ticket Notes). Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] ticket | T-19029 Done
+
+[[tickets/T-19029-w3-d-p29]] In Review to Done: code review against `CODING_STANDARDS.md` found documentation issues only (the family page named siblings of `func_80136FBC` as callers when it is the only caller, a 25 against 27 minutes mismatch in [[matching-notes]], a stale In Review in the index), all fixed. 1 of 1 functions matched: TACO `func_80137264` (812 B, one FAKE for the `digits` copy). TACO unit sha1 OK after a rebuild. Merge via the wave 3 merge script.
