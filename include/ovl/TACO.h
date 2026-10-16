@@ -386,7 +386,7 @@ typedef struct TacoRnd {
 } TacoRnd;
 extern TacoRnd *D_8015F4EC;
 extern u8 D_8015EDD8;
-void func_801357B0();
+s32 func_801357B0();
 extern s8 D_8015EDB8;
 
 void func_8013873C(void);
