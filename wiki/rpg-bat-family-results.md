@@ -5,6 +5,10 @@ updated: 2026-10-16
 
 # RPG_BAT family results
 
+## Timer callback follow-up (T-20003)
+
+Three further callbacks match 3,516 actual default linked bytes: `func_80138F6C` (1,268), `func_80157158` (1,256) and adjacent sibling `func_80156D78` (992). Selector rereads, direct timer updates, split flag updates and the correct callee views close the archived drafts. Explicit FAKE annotations cover the three frame pads and the `func_80138F6C` selector word view. The draw width remains a full word via a guarded caller override. Full RPG_BAT and 27/27 binary SHA1 checks pass. See [[tickets/T-20003-rpg-timer-callees]] for verification and local review. `func_80146C30`, initially targeted here, was matched independently in upstream T-17104 and is not counted in this batch.
+
 Scope: the RPG_BAT overlay (`src/ovl/RPG_BAT/`, `include/ovl/RPG_BAT.h`), a battle scene (its strings are battle messages: damage taken, running away, enemy names). At the start of [[tickets/T-17100-types-first-rpg_bat]] it had 74 unmatched functions (77,064 bytes, census sizes) in 33 C files, five of them guarded (`func_80145CC0`, `func_8014AB84`, `func_8014AC74`, `func_8014E994`, `func_8015A744`). Matched siblings are scarce: `tools/siblings.py --unit RPG_BAT` finds no function at a ratio of 0.80 or more, two at 0.70-0.80, and two unmatched twin clusters (`func_801387F0`/`func_80138B9C`, `func_8014EF8C`/`func_8014F278`, 0.939).
 
 Older RPG_BAT notes are spread over [[matching-notes]], [[data-types]] (`RpgRec18`, the display-record byte view) and [[data/t0018-cases]] (89 rows).

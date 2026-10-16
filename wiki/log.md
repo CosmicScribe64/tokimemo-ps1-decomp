@@ -16298,3 +16298,7 @@ Actual default funcdiff --resolve proves 1,256 linked bytes for RPG_BAT func_801
 ## [2026-10-16] build | T-20003 RPG callback func_80138F6C matched
 
 Actual default funcdiff --resolve proves 1,268 linked bytes for RPG_BAT func_80138F6C. Reused canonical timer updates, removed the unused m2c tail local, kept two explicitly FAKE frame words and used a documented FAKE signed-word selector view for the remaining v0/v1 difference. Added the missing text-buffer declaration in the overlay header. Upstream fa1dffb4 independently matched the third target (func_80146C30, T-17104); its scratch probes are discarded from production. See [[tickets/T-20003-rpg-timer-callees]].
+
+## [2026-10-16] build | T-20003 third RPG callback matched; In Review
+
+RPG_BAT func_80156D78 matches 992 actual default linked bytes, bringing T-20003 to three callbacks / 3,516 bytes. The draw width needs the original word-argument caller view; one unused frame word is explicitly FAKE. Default linked funcdiff also rechecks its sibling func_80157158. Full build and header/global guards pass, as do all 27 binary SHA1 checks and sync_protos --check-branch (0 new, 15 known disagreements). Local self-review against CODING_STANDARDS.md recorded; upstream review pending. Updated matching notes, family results and the T-0018 superseding update without changing historical rows. [[tickets/T-20003-rpg-timer-callees]] moves to In Review, with the board/index synchronized.

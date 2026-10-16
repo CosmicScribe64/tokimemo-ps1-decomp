@@ -6,6 +6,10 @@ sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 
 # Matching notes
 
+## RPG_BAT timer callbacks (T-20003)
+
+`func_80138F6C`, `func_80157158` and `func_80156D78` now match 3,516 default linked bytes. Rereading the selector after calls, in-place timer operations and split flag mask/set statements replace stale draft snapshots. The alien callbacks require integer-return caller views of `func_8013D030` and `func_8013F15C`; the draw call also requires the original word arguments via an explicit `MAIN_API_OVERRIDE_func_80049A40`. Three frame pads and one same-width selector pointer view are marked FAKE with their reasons. No compiler-pass change. Full RPG_BAT and all 27 binary SHA1 checks pass; evidence and local review: [[tickets/T-20003-rpg-timer-callees]].
+
 ## Wave 13-15 tooling reliability (T-10840)
 
 [[tickets/T-10840-wave-13-15-tool-fixes]] addresses the five wave reports. The
