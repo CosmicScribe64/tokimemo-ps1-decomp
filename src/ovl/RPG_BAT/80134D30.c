@@ -51,6 +51,7 @@ void func_80134D30(void) {
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80134D30", func_80134E78);
 
+/* s32 without a return: func_80134D30 calls this function earlier as an implicit int, a void definition does not build. */
 /* FAKE: h + -h is the unfolded (h - h) of the original (subu s1,s1: uopt folds a plain h - h); the words at D_8015EBAC + 4 * (i + 60,
  * 70, 80) are three 10-word rows (from x, to x, y) reached through the first symbol, the real aggregate is unknown. Frame size and the
  * spill slot at sp+0x34 match only with these three declared locals. T-17116 */

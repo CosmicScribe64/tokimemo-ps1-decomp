@@ -98,6 +98,7 @@ void func_80155E80(void) {
     }
 }
 
+/* s32 without a return: func_80155CC0 calls this function earlier as an implicit int, a void definition does not build. */
 /* FAKE: the twelve words at D_8015EBAC + 4 * (i + 50) are reached through the first symbol (the loop pointer starts at D_8015EBBC); the
  * real work-block aggregate is unknown. The records are D_8011ECD0 elements i + 96, the rolled loops start at i = 4. T-17116 */
 s32 func_80156064(void) {
