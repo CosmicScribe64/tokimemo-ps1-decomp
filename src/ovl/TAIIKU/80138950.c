@@ -955,7 +955,46 @@ void func_8013B104(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B200);
+/* FAKE: T-19008. The counter D_801499A0.unk_02 and the flag D_801499B0[0].val are read through u16 pointer
+ * views, as in func_8013BEF8 (the plain field gets a CVT copy of the promoted counter; with the volatile
+ * D_801499B2 the lui of the flag load takes the delay slot the original gives to lw ra). tmp is a stack word whose halves are
+ * written and read through s16 views (the 16.16 position of the sibling functions); the x >> 3 term is
+ * written out at each use, a local x gets a range of its own. Real source unknown. */
+void func_8013B200(void) {
+    s32 tmp;
+
+    func_8013C5C8(0x18000);
+    func_8013C694();
+    if (!(((u16 *)&D_801499A0)[1] & 4)) {
+        func_8013C4E4(0x10000);
+    }
+    if (((u16 *)&D_801499A0)[1] % 6 == 0) {
+        ((s16 *)&tmp)[0] = 0;
+        ((s16 *)&tmp)[1] = D_80149968.unk_1C[0] >> 3;
+        tmp += D_80149968.unk_0C * 40;
+        ((s16 *)&tmp)[1] += (D_80149968.unk_1C[0] >> 3) * 40 / 48;
+        if (D_80122EC4 % 3 != 0 && (D_80149968.unk_1C[0] >= 0 || D_80149968.unk_0C > 0)) {
+            ((s16 *)&tmp)[1] = (D_80149968.unk_1C[0] >> 3) + 0x20;
+        }
+        D_801499A0.unk_04 = ((s16 *)&tmp)[1];
+        D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
+    }
+    if (((u16 *)&D_801499A0)[1] >= 0x23A) {
+        ((u16 *)D_801499B0)[1] = 0;
+        func_80044750(0x802);
+        ((u16 *)&D_801499A0)[1] = 0;
+    }
+    if (((u16 *)&D_801499A0)[1] != 0 && ((u16 *)&D_801499A0)[1] % 30 == 0) {
+        if (((u16 *)D_801499B0)[1] == 0) {
+            ((u16 *)D_801499B0)[1] = 1;
+            func_80044750(0x800);
+        } else {
+            ((u16 *)D_801499B0)[1] = 0;
+            func_80044750(0x801);
+        }
+        ((u16 *)&D_801499A0)[1]++;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B3B0);
 
