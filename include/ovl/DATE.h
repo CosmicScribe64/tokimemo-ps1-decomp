@@ -1129,7 +1129,8 @@ void func_8014EBB8(void);
 void func_8015761C(void);
 void func_801592A0(void);
 void func_80155D80(void);
-void func_80155E40(void);
+s32 func_80155E40(void);
+void func_801560E0(void);
 void func_801563A8(void);
 void func_80156494(void);
 void func_80155530(void);
@@ -1807,6 +1808,33 @@ typedef struct DatePairs8 {
     /* 0x00 */ s16 v[8][2];
 } DatePairs8; /* size 0x20; func_801560E0 reads v[i][1] */
 extern DatePairs8 D_8015FB3C;
+
+/* func_801560E0 and func_801556D8: eight moving objects (display records 98..105). D_8015F9A0 holds their
+ * state (0 idle, 1 armed, 2 moving), D_8015F9A8 the idle counters (T-17205). */
+extern u8 D_8015F9A0[8];
+extern u8 D_8015F9A8[8];
+
+/* Display record 98..105 as func_801560E0 uses it: a fixed-point word at 0x28 whose signed high half is
+ * the y position, and a velocity word at 0x30. */
+typedef union DateFix32 {
+    /* 0x00 */ s32 w;
+    /* 0x00 */ s16 h[2];
+} DateFix32; /* size 0x04 */
+typedef struct DateMover44 {
+    /* 0x00 */ u8 pad00[2];
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 pad04[3];
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ u8 pad0A[0xE];
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ u8 pad1A[0xE];
+    /* 0x28 */ DateFix32 unk_28;
+    /* 0x2C */ u8 pad2C[4];
+    /* 0x30 */ s32 unk_30;
+    /* 0x34 */ u8 pad34[0x10];
+} DateMover44; /* size 0x44 */
 #endif
 
 #ifndef OVL_DATE_PROTOS_T17200

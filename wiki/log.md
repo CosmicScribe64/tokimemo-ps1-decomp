@@ -16247,3 +16247,23 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17208 Done
 
 [[tickets/T-17208-w3-date-p08]] In Review to Done: code review against `CODING_STANDARDS.md` found one item, fixed (a comment for the `dop` pointer-variable idiom in `func_8014AF88`); rebuild of DATE OK (headers OK, globals OK, sha1 OK). 1 of 5 functions matched (`func_8014AF88`, 248 bytes); `func_8014A8FC` stays a guarded draft (34 lines), the three libgte rotation helpers stay `INCLUDE_ASM`. Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17205 In Progress
+
+[[tickets/T-17205-w3-date-p05]] started: wave 3 package w3-date-p05 (DATE `src/ovl/DATE/80149310.c`, `src/ovl/DATE/801552B0.c`; `func_80149F48`, `func_80155E40`, `func_801560E0`, `func_801556D8`, `func_801496C4`), worktree `w3-date-p05` from `w2-good`.
+
+## [2026-10-16] ticket | T-17205 In Review
+
+[[tickets/T-17205-w3-date-p05]] In Progress to In Review: 4 of 5 functions matched (DATE `func_801496C4`, `func_801556D8`, `func_801560E0`, `func_80155E40`, 2,960 bytes), `func_80149F48` stays guarded at 11 lines. New types `DateMover44`, `DateFix32` and the arrays `D_8015F9A0`/`D_8015F9A8` in `include/ovl/DATE.h`; sources `src/ovl/DATE/80149310.c`, `src/ovl/DATE/801552B0.c`. Notes in [[matching-notes]] ("T-17205"), [[date-family-results]], [[register-cheatsheet]] and [[data/t0018-cases]]. Clean-build and header checks are recorded in the ticket.
+
+## [2026-10-16] build | T-17205 final checks
+
+[[tickets/T-17205-w3-date-p05]]: clean rebuild 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` pass on branch `w3-date-p05`; 4 of 5 functions matched, `src/ovl/DATE/80149310.c` keeps `func_80149F48` guarded at 11 lines.
+
+## [2026-10-16] build | T-17205 closer pass: func_80149F48 matched
+
+[[tickets/T-17205-w3-date-p05]]: DATE `func_80149F48` matched in plain C in `src/ovl/DATE/80149310.c` (`(s16)(D_8015D084 * 3) + D_8015D090`, placed before the second group of copies), so the package is 5 of 5. Clean rebuild 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check`, `tools/sync_protos.py --check-branch` pass. Notes in [[matching-notes]], [[register-cheatsheet]], [[data/t0018-cases]], [[date-family-results]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17205 Done
+
+[[tickets/T-17205-w3-date-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found 2 minor items (the `(u8)` cast in `func_801496C4` and the `(s16)` cast in `func_80149F48` had no explanatory comment), fixed with comments only in `src/ovl/DATE/80149310.c`, bytes unchanged. Headers OK, globals OK, sync_protos OK, DATE sha1 OK. 5 of 5 functions matched (3,136 bytes). Card moved in [[kanban]], line in [[index]].
