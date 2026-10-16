@@ -292,29 +292,31 @@ void func_8013FF64(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-10310, near miss */
+/* NON_MATCHING: T-10310, T-17700: the EVENT sibling func_80108DD4 form (do-while second loop); 7 rows remain at the tail: the original branches over the call to a block that loads $ra after D_801470AC, IDO fills the branch delay slot with the $ra load */
 #ifdef NON_MATCHING
 void func_80140040(void) {
     s16 i;
     s32 any;
 
     for (i = 0; i < 0xA; i++) {
-        if (D_801470AC >= (u32)(i * 0x1E)) {
-            *(s16 *)&D_8011ECD0[i * 0x44 + 0x1A7A] = -1;
-            *(s16 *)&D_8011ECD0[i * 0x44 + 0x1A7E] = 1;
+        if ((u32) D_801470AC >= (u32) (i * 0x1E)) {
+            *(s16 *) &D_8011ECD0[i * 0x44 + 0x1A7A] = -1;
+            *(s16 *) &D_8011ECD0[i * 0x44 + 0x1A7E] = 1;
         }
-        *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A70] += *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A78];
-        *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A74] += *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A7C];
-        if (*(s16 *)&D_8011ECD0[i * 0x44 + 0x1A76] >= 0xA1) {
+        *(s32 *) &D_8011ECD0[i * 0x44 + 0x1A70] += *(s32 *) &D_8011ECD0[i * 0x44 + 0x1A78];
+        *(s32 *) &D_8011ECD0[i * 0x44 + 0x1A74] += *(s32 *) &D_8011ECD0[i * 0x44 + 0x1A7C];
+        if (*(s16 *) &D_8011ECD0[i * 0x44 + 0x1A76] > 0xA0) {
             D_8011ECD0[i * 0x44 + 0x1A4F] &= ~0x80;
         }
     }
     any = 0;
-    for (i = 0; i < 0xA; i++) {
+    i = 0;
+    do {
         if (D_8011ECD0[i * 0x44 + 0x1A4F] & 0x80) {
             any = 1;
         }
-    }
+        i++;
+    } while (i < 0xA);
     if (any == 0) {
         func_800AE0D0();
     }

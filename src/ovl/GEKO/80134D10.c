@@ -524,7 +524,75 @@ void func_801355B8(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-17700, the switch matches (SHOUGATU func_8013BDE0 form); 4 instructions differ in the first block: the original puts the constant 1 in $t0 and the %hi of unk_71E in $v0 (ours $t6, $t7) */
+#ifdef NON_MATCHING
+void func_801355E8(void) {
+
+    D_80145060 = 1;
+    D_80145064 = 0;
+    D_800E6280.unk_71E |= 0x44;
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        D_80145048 = D_80144FB0;
+        D_8014504C = D_80144FE4;
+        D_80145050 = D_80145018;
+        break;
+    case 1:
+        D_80145048 = D_80144FC4;
+        D_8014504C = D_80144FF8;
+        D_80145050 = D_8014502C;
+        break;
+    case 2:
+        D_80145048 = D_80144FB8;
+        D_8014504C = D_80144FEC;
+        D_80145050 = D_80145020;
+        break;
+    case 3:
+        D_80145048 = D_80144FBC;
+        D_8014504C = D_80144FF0;
+        D_80145050 = D_80145024;
+        break;
+    case 4:
+        D_80145048 = D_80144FD4;
+        D_8014504C = D_80145008;
+        D_80145050 = D_8014503C;
+        break;
+    case 5:
+        D_80145048 = D_80144FC8;
+        D_8014504C = D_80144FFC;
+        D_80145050 = D_80145030;
+        break;
+    case 6:
+        D_80145048 = D_80144FCC;
+        D_8014504C = D_80145000;
+        D_80145050 = D_80145034;
+        break;
+    case 7:
+        D_80145048 = D_80144FC0;
+        D_8014504C = D_80144FF4;
+        D_80145050 = D_80145028;
+        break;
+    case 8:
+        D_80145048 = D_80144FAC;
+        D_8014504C = D_80144FE0;
+        D_80145050 = D_80145014;
+        break;
+    case 9:
+        D_80145048 = D_80144FD0;
+        D_8014504C = D_80145004;
+        D_80145050 = D_80145038;
+        break;
+    case 10:
+        D_80145048 = D_80144FDC;
+        D_8014504C = D_80145010;
+        D_80145050 = D_80145044;
+        break;
+    }
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_801355E8);
+#endif
 
 void func_80135894(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
