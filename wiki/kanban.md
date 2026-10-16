@@ -25,6 +25,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-20004-gyozi-dialogue-followup|T-20004 Match remaining GYOZI 80134FD0 dialogue helpers]]
+
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
