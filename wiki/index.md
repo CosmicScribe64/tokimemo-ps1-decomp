@@ -19,11 +19,12 @@ Read this first. Update on every ingest or new page.
 - Repo-root `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`, `LICENSE` (CC0) - public face of the project (T-0901)
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
+- [[date-family-results]] - DATE step tables (`FnTblNN`) and stack tables, the types-first redraft and its numbers, sibling ports, near misses, packages (T-17200)
 - [[taiiku-family-results]] - TAIIKU type map (runner records of three games, stack tables), idioms, the types-first redraft and its numbers, packages (T-16550)
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-17200-types-first-date|T-17200]] Types-first: DATE: recover DATE's shared types, redraft every unmatched function, packages (In Progress).
+- [[tickets/T-17200-types-first-date|T-17200]] Types-first: DATE: 68 step tables (`FnTblNN`) and 9 stack tables typed in `DATE.h`, 49 redrafts (7 better than the census), 4 matches / 1,760 bytes, packages T-17201..T-17208 (In Review).
 - [[tickets/T-16990-wave-3-conveyor|T-16990]] Wave 3 conveyor: types-first passes on 19 units feeding a 7-worker matcher pool (In Progress).
 - [[tickets/T-16564-taco-types-first-p4|T-16564]] Types-first pilot package pt-taco-p4: TACO `80154960.c`, `80137A60.c`, `80138890.c`, 6 of 8 functions matched (5,852 B), 2 guarded register near misses (Done).
 - [[tickets/T-16554-pt-taiiku-p4|T-16554]] Types-first pilot package pt-taiiku-p4: TAIIKU `80132000.c`, `80140810.c`, `80142240.c`, 4 of 7 functions matched (3,208 B), 2 guarded, 1 left (Done).

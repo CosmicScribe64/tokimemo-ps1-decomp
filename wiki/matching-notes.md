@@ -5699,3 +5699,16 @@ Closer pass (Opus, about 25 minutes of exploring, 06:05-06:30 UTC): `func_80137D
 - ugen loads the shared value straight into the register variable (`lui t9; lw v1,lo(t9)`, the original's form) in two cases only: the variable is read after a branch target (TT `func_801367C0`), or it has at least three in-place `p += k` updates in the same stretch (TT `func_80149B20`; two updates are not enough). A label that no branch targets, as from `do { } while (0)`, does not count.
 - The in-place form (`p[5] = 0x28; p += 11; *p = 0xFF00; p += 7; ...`) puts the pointer in `$v1` with the original's stores, but ugen writes back the last update before the switch join (`addiu v1,v1,64`, or `addiu v1,v1,0` when the walk returns to the base), one instruction too many. The last row (`addiu t9,t8,-1` against `t0`) also stays, because the address temporary `$t9` is freed only after `$t0` in both forms; the original frees it first.
 - Also tried without effect: the store order `p[11]` before `p[5]`, a 14-byte record struct with the base at +8, `(p = D_801FAA84)[5] = ...`, a chained `=` for the four `0xFF00` stores, a `const` global without a local (reloaded after each store), labels before or after the stores, autotweak 120 s (16 to 16).
+
+## T-17200: DATE types-first pass
+
+Details in [[date-family-results]] ("Types-first pass (T-17200)"). Matched: DATE `func_8014AD9C` (TACO clone
+`func_80147488`: index the record at each use), `func_8013B208` (EVENT twin `func_80117D80`: `GameState *g`
+declared above two stack shorts sets their slots; the twin's FAKE entry assignment fixes the first compare),
+`func_80159FAC` and `func_80158338` (step-table handlers in the `func_80150ED4` shape).
+- Step-table handler with a three-place condition: `GameState *g = &D_800E6280;` above `FnTblNN tbl;` and
+  every field through `g`; the `s32 idx` form gave the right frame only for handlers without other code.
+- The locals above a step table pack: two `s16` counters take one word, so the "two words before" layout of
+  T-3330 needs `s32` counters or a third local (`func_80155E40`, `func_80155004`).
+- Sibling ports find guarded near misses fast: `tools/siblings.py --unit X` lists clones in other overlays
+  (TACO, EVENT) whose matched C already carries the fix.

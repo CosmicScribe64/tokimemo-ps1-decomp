@@ -15386,3 +15386,15 @@ pool; merges run in parallel through a locked, self-cleaning merge script.
 
 [[tickets/T-17200-types-first-date]] created In Progress on branch `w3-date-types` (from `w2-good`), part of
 [[tickets/T-16990-wave-3-conveyor]]: types-first pass for DATE following [[speedup-research-2026-10-16]].
+
+## [2026-10-16] ticket | T-17200 Types-first: DATE to In Review
+
+[[tickets/T-17200-types-first-date]] In Progress to In Review. Types in `include/ovl/DATE.h`: 68 step tables as
+`FnTblNN` (local typedefs and externs of 16 `.c` files moved), 9 stack-copied data tables, one prototype.
+Redraft of all 49 unmatched functions with `drafts/T-17200/redraft.py` (T-16560 driver + T-16550 fold +
+stack-table, fptab, record-temp rewrites): of the 32 unguarded functions still open, 28 compile, 7 better
+than the census, sum 7,498 to 7,230 rows, none 0. Matched 4 functions / 1,760 bytes (`func_8014AD9C`,
+`func_8013B208`, `func_80159FAC`, `func_80158338`), two of them from sibling ports found by
+`tools/siblings.py`. New page [[date-family-results]]; rows in [[data-types]] and [[matching-notes]].
+Packages T-17201..T-17208 (`w3-date-p01`..`p08`, 30 functions, 23,468 bytes). Clean build 27/27 OK,
+`check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known).
