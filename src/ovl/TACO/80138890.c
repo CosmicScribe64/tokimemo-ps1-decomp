@@ -53,6 +53,7 @@ s32 func_80138964(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
+/* NON_MATCHING: T-16564, 30 differing instruction rows (60 funcdiff lines), registers only: the original colours the u8 count D_8015EDCC $a0, the second local $a1 and the sum $a0; IDO gives $v0, $a0 and $a1. */
 #ifdef NON_MATCHING
 s32 func_80138B2C(void) {
     s32 var_a1;

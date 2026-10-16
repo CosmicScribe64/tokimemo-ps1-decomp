@@ -76,6 +76,7 @@ void func_80137CBC(s32 arg0) {
     func_80044750(0x300);
 }
 
+/* NON_MATCHING: T-16564, 8 differing instruction rows (16 funcdiff lines): the pointer loaded from D_801FAA84 sits in $v1 in the original, IDO takes the ugen temporary $t9 (the final -1 temporary follows). Known gap, T-9180. */
 #ifdef NON_MATCHING
 void func_80137D00(void) {
     u16 *p;
