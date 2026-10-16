@@ -283,7 +283,81 @@ void func_801365F4(void) {
     D_8013C86C = 0x8019B494;
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80136380", func_80137490);
+void func_80137490(void) {
+    GameState *g = &D_800E6280;
+
+    func_80083808();
+    if ((g->unk_1109 == 0) && (g->unk_110A < 0x11)) {
+        func_80065B0C(1);
+    }
+    switch (g->unk_1109) {
+    case 0:
+        func_801378F0();
+        break;
+    case 1:
+        func_80138A60();
+        break;
+    case 2:
+        func_80138B20();
+        break;
+    case 3:
+        func_80139C80();
+        break;
+    case 4:
+        func_80139D40();
+        break;
+    case 5:
+        func_8013AA70();
+        break;
+    case 6:
+        func_80132274();
+        break;
+    case 7:
+        func_801336A4();
+        break;
+    case 8:
+        func_80135480();
+        break;
+    case 9:
+        func_80133E10();
+        break;
+    case 10:
+        func_80134930();
+        break;
+    case 11:
+        func_80134560();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    check_k_scroll();
+    k_disp_inc2();
+    if (D_80122CE0 == 0xFF) {
+        if ((g->unk_1109 == 0) && (g->unk_110A < 0x11)) {
+            func_80066C08(1);
+            func_800578F4(0);
+            parameter_show();
+        } else {
+            func_80083A10();
+            func_80066C08(2);
+            parameter_show();
+        }
+        if ((D_80122D2C == 0) && (D_80122D04 == 0) && ((g->unk_F80 & 0xF000F000) || (D_80122D30 == 1))) {
+            D_8011ECD3 |= 0x80;
+        }
+        if (D_80122D04 != 0) {
+            D_8011ECD3 &= 0x7F;
+        }
+        if (D_8011ECD3 & 0x80) {
+            func_8006BA40();
+        }
+    }
+    func_80066334();
+    message_window_show();
+    hizuke_show();
+    func_80047560();
+}
 
 void func_80137700(void) {
     switch (D_800E6280.unk_F5F) {

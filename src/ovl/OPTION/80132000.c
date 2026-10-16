@@ -775,7 +775,54 @@ void func_80137864(void) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801378DC);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80137C1C);
+void func_80137C1C(void) {
+    GameState *g = &D_800E6280;
+    u32 *e;
+    s32 sel;
+    s32 i;
+    s32 j;
+
+    for (i = 0; i < 14; i++) {
+        if (D_800E7D10.flags[i] != 0 || g->unk_53C[i] != 0) {
+            D_80120650[0x3FF + i * 0x44] = 0x80;
+        }
+    }
+    /* one table: as1 keeps the loads after the stores only when both go through D_8011ECD0 (T-9020, T-16930) */
+    D_8011ECD0[0x2A3F] = 0x80;
+    *(s16 *)&D_8011ECD0[0x2A56] = 0x1000;
+    *(s16 *)&D_8011ECD0[0x2A58] = 0x1000;
+    func_8004F984(1, *(s16 *)&D_8011ECD0[0x26], *(s16 *)&D_8011ECD0[0x2A]);
+    func_8004FC10(1);
+    for (i = 0, j = 0; i < 14; i++, j += 2) {
+        if (i == g->unk_1094) {
+            ((OptSpr44 *)D_80120650)[i + 15].unk_18 = j + 0x3F;
+        } else {
+            ((OptSpr44 *)D_80120650)[i + 15].unk_18 = j + 0x40;
+        }
+    }
+    if (g->unk_F88 & 0x40) {
+        func_80044750(0x74);
+        g->unk_1094 = -1;
+        func_80042940((g->unk_110A + 2) & 0xFF);
+    } else if (g->unk_F88 & 0x20) {
+        sel = g->unk_1094;
+        if (D_800E7D10.flags[sel] != 0 || g->unk_53C[sel] != 0) {
+            if ((func_800460EC() & 2) && sel >= 0 && sel < 14) {
+                e = D_8013D2C4[sel];
+                if (e[0] != 0) {
+                    D_801230D0 = 1;
+                    D_8013D2FC = 0;
+                    func_80046290(e[1], e[2], sel);
+                    func_80044750(0x300);
+                    func_8004284C();
+                }
+            }
+        } else {
+            func_80044750(0x74);
+        }
+    }
+    func_801320C0();
+}
 
 void func_80137E38(void) {
     u32 **e;
@@ -829,7 +876,58 @@ void func_80137FA0(void) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80138080);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801383C4);
+void func_801383C4(void) {
+    GameState *g = &D_800E6280;
+    s32 i;
+    s32 j;
+    s32 sel;
+
+    for (i = 0; i < 14; i++) {
+        if (D_800E7D10.flags[i] != 0 || g->unk_53C[i] != 0) {
+            D_80120650[0x3FF + i * 0x44] = 0x80;
+        }
+    }
+    /* one table: as1 keeps the loads after the stores only when both go through D_8011ECD0 (T-9020, T-16930) */
+    D_8011ECD0[0x2A3F] = 0x80;
+    *(s16 *)&D_8011ECD0[0x2A56] = 0x1000;
+    *(s16 *)&D_8011ECD0[0x2A58] = 0x1000;
+    func_8004F984(1, *(s16 *)&D_8011ECD0[0x26], *(s16 *)&D_8011ECD0[0x2A]);
+    func_8004FC10(1);
+    func_801320C0();
+    for (i = 0, j = 0; i < 14; i++, j += 2) {
+        if (i == g->unk_1094) {
+            ((OptSpr44 *)D_80120650)[i + 15].unk_18 = j + 0x5B;
+        } else {
+            ((OptSpr44 *)D_80120650)[i + 15].unk_18 = j + 0x5C;
+        }
+    }
+    if (g->unk_F88 & 0x20) {
+        sel = g->unk_1094;
+        if (D_800E7D10.flags[sel] != 0 || g->unk_53C[sel] != 0) {
+            if (sel >= 0 && sel < 14) {
+                g->unk_69C[0].unk_01 = sel;
+                g->unk_71C = 0;
+                g->unk_F5F = sel;
+                if (g->unk_F5F < 0xD) {
+                    func_80048EB8(0);
+                    func_8004E58C();
+                    func_80044890(1, 0xBF98, 0xBF79, 0xCE6D, 0xCE33, 0xCE1E);
+                    func_80044750(0x501);
+                    func_80042940(0x21);
+                } else {
+                    func_80048EB8(0);
+                    func_8004E58C();
+                    func_80044750(0x501);
+                    func_80042940(0x23);
+                }
+            }
+        }
+    }
+    if (g->unk_F88 & 0x40) {
+        g->unk_1094 = -1;
+        func_80042940((g->unk_110A + 1) & 0xFF);
+    }
+}
 
 void func_801385F0(void) {
     s32 i;
