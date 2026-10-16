@@ -24,6 +24,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 - [[tickets/T-16510-m2c-defect-rewrites|T-16510]] Detect and rewrite recurring m2c draft defects (Done): `tools/draft_fixes.py`; 50 T-14500 drafts changed, 34 better, 3 at score 0; results in `drafts/T-16510/`.
 - [[tickets/T-16520-sibling-report|T-16520]] Matched-sibling report for work packages: closest matched functions for every unmatched one: 150 of 1,005 have a sibling >= 0.70, 59 unmatched clusters (Done).
+- [[tickets/T-16530-proto-override|T-16530]] `--proto` override for regdiff and funcdiff, clearer missing-traced-uopt message (Done).
 - [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210]] Wave 2 package w2-p01: RPG_BAT census drafts, 5 of 5 matched (Done).
 - [[tickets/T-16230-w2-date-80150010|T-16230]] Wave 2 package w2-p03: DATE 80150010.c, 4 of 4 functions matched, 1,620 bytes (Done).
 - [[tickets/T-16220-w2-main-8007c030|T-16220]] Wave 2 package w2-p02: main 8007C030.c and 800420D0.c, 3 matches / 804 bytes (Done).

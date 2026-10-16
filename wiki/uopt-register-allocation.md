@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-13
+updated: 2026-10-16
 ticket: T-9800
 sources: ["tools/ido-ecvt.patch", "tools/uopt_eval.py", "tools/regdiff.py"]
 ---
@@ -434,7 +434,7 @@ all findings are resolved. No commits, stashes or branches were created.
 compiles the full translation unit through `tools/cc.py` (T-10840: retain file-scope data and helpers) with the traced uopt, links each
 register difference to a live range of the trace and prints the range's priority, order and colour against the
 competing range, with a hint from the rules above. Nothing about the traced uopt enters the repository; the default
-path is `/scratch/r9-uopt/variants/trace`, built with the recipe at the top of this page, and it runs in the normal image.
+path is `/scratch/r9-uopt/variants/trace`, built with the recipe at the top of this page, and it runs in the normal image. When the binary is missing regdiff lists the paths it tried and how to provide it (T-16530, [[decompile-workflow]], "Where regdiff looks for the traced uopt"); `--proto` replaces a callee's declaration for one run without a scratch copy of the file.
 
 How an instruction is linked to a range: the draft's code is split into register webs (reaching definitions per
 register, a call clobbers the caller-saved registers after its delay slot, `sw`/`lw` of the same stack slot join

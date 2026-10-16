@@ -5278,6 +5278,9 @@ BUNKASAI func_801431D4 had a two-row resolved difference entirely in one label r
   stored value in `$v1` where the draft has `$v0`, after a call to a header-`void` function) is worth this test first:
   copy the C file and `include/ovl/RPG_BAT.h` to `build/scratch/`, change the prototype in the copy and run
   `regdiff.py --src` on the copy.
+  Since T-16530 no copy is needed: `regdiff.py RPG_BAT:func_801454F0 --proto 's32 func_8013E97C();'` (and the same
+  option on `funcdiff.py`) compiles the file with that declaration in place of the header's; on the pre-override
+  file it turns the `$v0`/`$v1` divergence into MATCH ([[decompile-workflow]], "Trying another prototype").
 - **`func_80155A70`: `s32` with no return.** The single `nop` in a `bgez` delay slot (T-15600 left it as a gap) is the
   K&R implicit-int shape: `v0` is live at the exit, so as1 does not move the next block's `lui v0` into the slot.
 - **`func_8013AF1C`:** both scroll cases written as `D_8015EDB4 += 3; if (D_8015EDB4 >= 0x21)` keep the first load of

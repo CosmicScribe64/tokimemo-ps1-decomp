@@ -2,7 +2,7 @@
 """Explain why a C draft gets other registers than the original (T-10400).
 
 Usage (in Docker, repo root as cwd, TOKIMEMO_SCRATCH set; wiki/decompile-workflow.md):
-    python3 tools/regdiff.py [UNIT:]func_80114B0C [--unit UNIT] [--src draft.c] [-v] [--uopt PATH]
+    python3 tools/regdiff.py [UNIT:]func_80114B0C [--unit UNIT] [--src draft.c] [--proto DECL ...] [-v] [--uopt PATH]
 
 The draft is the function's C definition in its source file (a `#ifdef NON_MATCHING` draft counts,
 `--src` names a scratch copy of the file). The complete translation unit is retained, including
@@ -22,12 +22,19 @@ the original (funcdiff's resolved words, register fields masked for the alignmen
   - other instructions: the first structural difference is printed and the register analysis runs on
     the aligned parts only. Fix the structure first (funcdiff.py shows the full diff).
 
+--proto 'void func_80012345(s32 a0);' (repeatable) replaces the declaration of a function the file calls, for
+this compile only (tools/protoverride.py, T-16530): test void against implicit int (`s32 f();`) against typed
+arguments without editing a header or a src/ file. The report names each replaced declaration and, on a MATCH,
+the `*_OVERRIDE_<symbol>` guard that keeps the view in the tree.
+
 The report ends with the time spent. Exit status 0 for an identical function, 1 when something
 differs, 2 for an error (no traced uopt, the draft does not compile, function not found).
 
 The instrumented uopt is not in the repository (no compiler binaries, no reconstruction source).
 Build it as wiki/uopt-register-allocation.md describes and pass --uopt PATH, or set REGDIFF_UOPT;
-the default is /scratch/r9-uopt/variants/trace. Run time: about 1.5 to 2 s for the traced compile of a
+the default is /scratch/r9-uopt/variants/trace, i.e. $TOKIMEMO_SCRATCH/r9-uopt/variants/trace
+(tools/docker.sh mounts TOKIMEMO_SCRATCH at /scratch); a missing binary is reported with the paths tried
+(find_uopt). Run time: about 1.5 to 2 s for the traced compile of a
 function plus 1 to 2 s of start-up and original-side lookup (cached); more on a loaded machine.
 
 The names of variables come from the ucode (stack offset or symbol, line numbers) and the
@@ -51,8 +58,12 @@ import queue  # noqa: F401,E402  (stdlib)
 if _tools_path:
     sys.path.insert(0, _tools_path)
 
+import protoverride  # noqa: E402
+
 DEFAULT_UOPT = "/scratch/r9-uopt/variants/trace"
 SCRATCH = "build/scratch/regdiff"
+UOPT_RECIPE = "wiki/uopt-register-allocation.md"
+UOPT_REL = "r9-uopt/variants/trace"
 
 REG_NAMES = ("zero at v0 v1 a0 a1 a2 a3 t0 t1 t2 t3 t4 t5 t6 t7 "
              "s0 s1 s2 s3 s4 s5 s6 s7 t8 t9 k0 k1 gp sp fp ra").split()
@@ -65,6 +76,38 @@ REG_COLOUR = {}
 for _c, _r in sorted(COLOUR_REG.items(), reverse=True):
     REG_COLOUR[_r] = _c
 UGEN_SCRATCH = {1, 14, 15, 24, 25}      # at, t6, t7, t8, t9: ugen/assembler temporaries, not uopt colours
+
+
+def find_uopt(explicit=None, env=None, exists=os.path.exists, isdir=os.path.isdir, access=os.access):
+    """(path, None) for the traced uopt to use, or (None, message) that says where it looked and how
+    to provide it (T-16530). Order: --uopt, $REGDIFF_UOPT (a path that is given is never replaced by
+    another: a typo must not pick up a different binary), then the default /scratch/r9-uopt/variants/trace
+    and, if the container has TOKIMEMO_SCRATCH set, $TOKIMEMO_SCRATCH/r9-uopt/variants/trace."""
+    env = os.environ if env is None else env
+    if explicit:
+        tried = [(explicit, "--uopt")]
+    elif env.get("REGDIFF_UOPT"):
+        tried = [(env["REGDIFF_UOPT"], "$REGDIFF_UOPT")]
+    else:
+        tried = [(DEFAULT_UOPT, "default; tools/docker.sh mounts TOKIMEMO_SCRATCH at /scratch")]
+        if env.get("TOKIMEMO_SCRATCH"):
+            tried.append((os.path.join(env["TOKIMEMO_SCRATCH"], UOPT_REL), "$TOKIMEMO_SCRATCH"))
+    unusable = []
+    for path, how in tried:
+        if exists(path):
+            if access(path, os.X_OK):
+                return path, None
+            unusable.append("%s (%s) exists but is not executable" % (path, how))
+    lines = ["regdiff: the instrumented (traced) uopt was not found."]
+    lines += ["  looked at: %s  [%s]" % (p, how) for p, how in tried]
+    lines += ["  " + u for u in unusable]
+    if not explicit and not env.get("REGDIFF_UOPT") and not isdir("/scratch"):
+        lines.append("  /scratch is not mounted: start the tool as `TOKIMEMO_SCRATCH=<dir> tools/docker.sh python3 "
+                     "tools/regdiff.py ...`, <dir> being the folder that holds %s." % UOPT_REL)
+    lines.append("  provide it: build the traced uopt once (tools/ido-ecvt.patch + tools/uopt_patch.py trace; recipe in "
+                 "%s) into $TOKIMEMO_SCRATCH/%s, or pass --uopt PATH / set REGDIFF_UOPT=PATH (a path as seen "
+                 "inside the container)." % (UOPT_RECIPE, UOPT_REL))
+    return None, "\n".join(lines)
 
 
 def rname(r):
@@ -1170,12 +1213,16 @@ class Compiled:
     pass
 
 
-def compile_draft(root, func, src, uopt, workdir, unit=None):
-    """Compile the complete draft TU with traced uopt; retain file-scope ownership/aliasing."""
+def compile_draft(root, func, src, uopt, workdir, unit=None, protos=()):
+    """Compile the complete draft TU with traced uopt; retain file-scope ownership/aliasing.
+    `protos` (protoverride.Proto) replace the declarations of those functions in the unit (T-16530)."""
     from funcdiff_verify import preprocess_draft
     workdir = os.path.abspath(workdir)
     os.makedirs(workdir, exist_ok=True)
     text = preprocess_draft(src)
+    notes = []
+    if protos:
+        text, notes = protoverride.apply(text, protos)
     base = os.path.join(workdir, "draft.c")
     with open(base, "w") as f:
         f.write(text)
@@ -1196,6 +1243,7 @@ def compile_draft(root, func, src, uopt, workdir, unit=None):
         rc = subprocess.run(cmd, stdout=lf, stderr=subprocess.STDOUT, env=env, cwd=root).returncode
     c = Compiled()
     c.obj, c.base, c.base_text, c.log_path = obj, base, text, log
+    c.protos, c.proto_notes = list(protos), notes
     c.returncode = rc
     c.log = _read(log, "r")
     c.listing = _read(obj + ".trace", "r")
@@ -1248,11 +1296,14 @@ def run(args, out=print):
         out("regdiff: %s" % e)
         return 2
     src = args.src or str(c.src)
-    uopt = args.uopt or os.environ.get("REGDIFF_UOPT") or DEFAULT_UOPT
-    if not os.path.exists(uopt):
-        out("regdiff: the instrumented uopt %s does not exist. Build it as wiki/uopt-register-allocation.md "
-            "describes (tools/ido-ecvt.patch + tools/uopt_patch.py trace), then pass --uopt PATH or set "
-            "REGDIFF_UOPT; /scratch is TOKIMEMO_SCRATCH inside tools/docker.sh." % uopt)
+    try:
+        protos = protoverride.parse(getattr(args, "proto", None))
+    except protoverride.ProtoError as e:
+        out("regdiff: %s" % e)
+        return 2
+    uopt, problem = find_uopt(args.uopt)
+    if problem:
+        out(problem)
         return 2
     expected, problem = funcdiff.expected_object(c)
     if problem:
@@ -1260,7 +1311,7 @@ def run(args, out=print):
         return 2
     t1 = time.time()
     try:
-        comp = compile_draft(root, name, src, uopt, os.path.join(args.scratch, name))
+        comp = compile_draft(root, name, src, uopt, os.path.join(args.scratch, name), protos=protos)
     except (SystemExit, OSError, ValueError) as e:
         out("regdiff: %s" % e)
         return 2
@@ -1294,9 +1345,15 @@ def report(args, name, c, src, comp, got, want, times, out):
     dkeys, tkeys = [k for k, _d in got], [k for k, _d in want]
     out("regdiff %s [%s]  draft: %s%s" % (name, c.unit, os.path.relpath(src),
                                           "" if args.src else " (the NON_MATCHING variant if the function is guarded)"))
+    for note in getattr(comp, "proto_notes", ()):
+        out("  " + note)
     out("  %d draft / %d original instructions" % (len(dkeys), len(tkeys)))
     if dkeys == tkeys:
         out("  MATCH: identical instructions, no divergence.")
+        if getattr(comp, "protos", None):
+            out("  (with the prototype override above; nothing on disk changed)")
+            for line in protoverride.commit_hint(comp.protos):
+                out("  " + line)
         _timing(out, times)
         return 0
     pairs, structural, left = align(dkeys, tkeys)
@@ -1390,6 +1447,7 @@ def main(argv=None):
     ap.add_argument("--unit", help="unit (main or an overlay name) or C path that holds the function")
     ap.add_argument("--src", help="C file with the draft (default: the function's source file)")
     ap.add_argument("--uopt", help="instrumented uopt (default $REGDIFF_UOPT or %s)" % DEFAULT_UOPT)
+    protoverride.add_argument(ap)
     ap.add_argument("--scratch", default=SCRATCH, help="work directory (default %(default)s)")
     ap.add_argument("-v", "--verbose", action="store_true", help="also list every live range")
     args = ap.parse_args(argv)

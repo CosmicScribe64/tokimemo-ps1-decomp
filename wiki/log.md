@@ -15086,3 +15086,15 @@ blockers in [[tickets/T-16200-matching-wave-2]].
 ## [2026-10-16] ticket | T-16520 Done
 
 [[tickets/T-16520-sibling-report]] reviewed against `CODING_STANDARDS.md` and moved to Done: `tools/siblings.py` (matched-sibling report, `--package` notes) and `dupes.asm_sources`. Verified: 45 sibling tests and the whole tool suite (1062) pass in Docker, `load_funcs` unchanged on the real tree, tier and cluster figures reproduced, recall 50 of 50. Review fixes: `--package` examples in the docstring and [[decompile-workflow]] named a function and a C path that do not exist; new test for `file:` entries in the per-object layout. Branch `t16520-siblings`, not merged.
+
+## [2026-10-16] ticket | T-16530 opened
+
+[[tickets/T-16530-proto-override]] (In Progress, under [[tickets/T-16200-matching-wave-2]]): add a repeatable `--proto` prototype override to `tools/regdiff.py` and `tools/funcdiff.py` and a clearer missing-traced-uopt message. Worktree branch `t16530-proto-override`; no `src/` edits.
+
+## [2026-10-16] ticket | T-16530 to In Review
+
+[[tickets/T-16530-proto-override]]: `--proto DECL` (repeatable) in `tools/regdiff.py` and `tools/funcdiff.py` replaces the declaration of a called function for one compile (`tools/protoverride.py`, `tools/funcdiff_verify.py` `compile_unit`), no file under `src/` or `include/` edited; regdiff's missing-traced-uopt message lists the paths tried and how to provide the binary (`regdiff.find_uopt`). Validated on the T-16210 case (RPG_BAT `func_801454F0`, `func_8013E97C`): the void view gives the `$v0`/`$v1` divergence at insn 89, `--proto 's32 func_8013E97C();'` gives MATCH 498/498 from a copy without the override, funcdiff MATCH (2,000 linked bytes) and DIFF for the two views. 50 new tests; full tool suite 1,066 OK (3 skipped) without the scratch mount; three `test_bulk_m2c` tests fail only when the traced uopt is mounted, same at the base commit. Sweep: 443 `src` units scanned, 6,081 definitions, 1,769 real declarations round-tripped unchanged. Docs: [[decompile-workflow]] ("Trying another prototype", "Where regdiff looks for the traced uopt"), pointers in [[matching-notes]] and [[uopt-register-allocation]]. Awaiting code review before Done.
+
+## [2026-10-16] ticket | T-16530 Done
+
+[[tickets/T-16530-proto-override]] reviewed against `CODING_STANDARDS.md` and moved to Done. No change under `src/`, `include/` or `drafts/`; 50 new tests and the full tool suite pass in Docker; `tools/funcdiff.py` and `tools/regdiff.py` run with `--proto` on RPG_BAT `func_801454F0` (MATCH with `s32`, DIFF with `void`, refusals checked). One fix: an unused import in `tools/test_protoverride.py`.
