@@ -52,7 +52,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
-- [ ] [[tickets/T-19028-w3-d-p28|T-19028 Wave 3 package w3-d-p28]]
 
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
@@ -138,6 +137,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-19028-w3-d-p28|T-19028 Wave 3 package w3-d-p28]]
 - [ ] [[tickets/T-19023-w3-d-p23|T-19023 Wave 3 package w3-d-p23]]
 - [ ] [[tickets/T-19022-w3-d-p22|T-19022 Wave 3 package w3-d-p22]]
 - [ ] [[tickets/T-18700-types-first-bunkasai|T-18700 Types-first: BUNKASAI]]

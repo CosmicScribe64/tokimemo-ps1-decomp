@@ -15961,3 +15961,6 @@ The T-19023 In Review entry above says 2,048 bytes; the three functions are 204 
 
 ## [2026-10-16] build | T-19028 closer pass
 [[tickets/T-19028-w3-d-p28]]: Opus closer matched TACO `func_8013E424` (216 bytes) and `func_8013DB80` (612 bytes) in `src/ovl/TACO/8013DB80.c`, now 3 of 5. Fix: index the record array in the free-slot loop and in every store (no pointer local), so the strength-reduced address is `.noalias` against `$sp` and as1 hoists the stack loads. Notes in [[matching-notes]], row in [[register-cheatsheet]], rows in [[data/t0018-cases]]; [[taco-family-results]] and [[index]] updated. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19028 Done
+[[tickets/T-19028-w3-d-p28]] In Review to Done after code review against `CODING_STANDARDS.md`: 4 findings, all fixed (`func_8013DEE4` is 1,344 bytes of code, 1,416 with its jump tables; stale `NON_MATCHING` acceptance wording; double blank line before the notes heading; board card placement). 3 of 5 functions matched (`func_8013E778`, `func_8013E424`, `func_8013DB80`, 1,640 bytes), `func_8013DEE4` and `func_8015CF30` still `INCLUDE_ASM`. Rebuild: TACO unit sha1 OK. Card moved to Done.

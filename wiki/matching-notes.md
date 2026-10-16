@@ -6153,10 +6153,9 @@ Tried without effect on the `v0`/`v1` swap of `func_80133628`: an empty test in 
   - `goto block_108/109` of the m2c draft of case 0x40 is `var = 0xC` in two `else if` arms; `D_80141134` is `u8 [][21]` and `D_80141D80[idx]` is an element, not a byte offset.
   What is left: 452 register rows, the first being a `cvt(unk_F5F)` range that takes `$a2` where the original has the `lui` of `D_80140558`. Not attempted further (cap for a one-off function over 3 KB). Row in [[data/t0018-cases]].
 
-
 ## T-19028: TACO package w3-d-p28 (8013DB80.c, 8015CF30.c)
 
-[[tickets/T-19028-w3-d-p28]], wave 3 direct package of [[tickets/T-16990-wave-3-conveyor]], worktree `w3-d-p28`. Five functions: `func_8013E778` (812 bytes) matched in plain C; `func_8013E424` (216 bytes) and `func_8013DB80` (612 bytes) matched in the closer pass (below); `func_8013DEE4` (1,416 bytes) and `func_8015CF30` (416 bytes) stay `INCLUDE_ASM`.
+[[tickets/T-19028-w3-d-p28]], wave 3 direct package of [[tickets/T-16990-wave-3-conveyor]], worktree `w3-d-p28`. Five functions: `func_8013E778` (812 bytes) matched in plain C; `func_8013E424` (216 bytes) and `func_8013DB80` (612 bytes) matched in the closer pass (below); `func_8013DEE4` (1,344 bytes of code, 1,416 with its three jump tables) and `func_8015CF30` (416 bytes) stay `INCLUDE_ASM`.
 
 - **`func_8013E778` matched (about 25 minutes from the first compile).** The sibling `func_8013D528` (ratio 0.817) gave the whole shape: `MATRIX` copy of `D_80129C40`, `func_800A1100/1070`, the 2x2 `func_800AB170(&w, &pt[j * 2 + o], &depth, &flag)` loop, the `((s16 *)pt)[n]` range tests, the packet fill. What the sibling did not give, found with `funcdiff --resolve`:
   - Frame: the sibling's declaration order plus the new locals in the places the stack offsets name: `s32 pad[2]` (FAKE, eight bytes above `m`), `m`, `w` (the loop's input `SVECTOR`), `pt[4]`, `v` (the record's position), `poly`, `dist`, `depth`, `flag`, `o`, `kind`, `sel`, `j`, `rot`. Every scalar owns a slot, so `kind` and `sel` (the two values read from the record and kept across the calls) are declared among the other scalars, not at the end.
