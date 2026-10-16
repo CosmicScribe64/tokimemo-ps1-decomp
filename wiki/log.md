@@ -16081,3 +16081,6 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 
 ## [2026-10-16] ticket | T-19028 Done
 [[tickets/T-19028-w3-d-p28]] In Review to Done after code review against `CODING_STANDARDS.md`: 4 findings, all fixed (`func_8013DEE4` is 1,344 bytes of code, 1,416 with its jump tables; stale `NON_MATCHING` acceptance wording; double blank line before the notes heading; board card placement). 3 of 5 functions matched (`func_8013E778`, `func_8013E424`, `func_8013DB80`, 1,640 bytes), `func_8013DEE4` and `func_8015CF30` still `INCLUDE_ASM`. Rebuild: TACO unit sha1 OK. Card moved to Done.
+
+## [2026-10-16] ticket | T-17203 In Progress
+[[tickets/T-17203-w3-date-p03]] created and In Progress: Wave 3 package w3-date-p03, four DATE functions in `src/ovl/DATE/80154260.c`, `src/ovl/DATE/80152FC0.c` and `src/ovl/DATE/8014CC40.c`, worktree `w3-date-p03`.
