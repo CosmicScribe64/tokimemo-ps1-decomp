@@ -107,9 +107,120 @@ void func_801493D4(void) {
     D_800E6280.unk_1104.u++;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80148FE0", func_80149538);
+/* NON_MATCHING: T-19019, 10 differing lines (5 rows); only the final `+= 1` address form is left: the original reads and writes the counter as `lui t8; lw t8,%lo(D_800E7384)(t8)` / `lui at; sw t9,%lo(D_800E7384)(at)`, the volatile view builds `lui v0; addiu v0,%lo(D_800E6280)` with the offset 0x1104 in the lw and sw.
+ * Plain `+= 1` is 61 lines: IDO keeps the chain's shared load in $v0, reloads it at the end of every arm that calls (`lui v0; lw v0; b end; lw ra`) where the original has `b L; nop` to one shared tail. The volatile access removes that. The absolute address `*(s32 *)0x800E7384` gives the right form, but as1 then fills the branch delay slots with the tail's `lui` (32 lines). The loop is the plain loop over the records (IDO peels records 1-3, as the original).
+ * Closer pass: the tail matches byte for byte when its access goes through a second base symbol (tested with `((s32 *)&D_800E7D10)[-0x263] += 1`, not kept: CODING_STANDARDS section 8 forbids reaching a GameState field through another symbol). So the original's tail is a different uopt variable from the chain's read: uopt identifies a global access by symbol and offset (`.u`, casts and bit-fields stay one variable). The chain read through the absolute address `*(s32 *)0x800E7384` with a plain tail gives the tail's exact form, but the chain load becomes `lui t6; lw v0,0x7384(t6)` (original `lui v0; lw v0`) and every later ugen temporary moves one step (110 lines). A volatile read with an absolute store keeps the `addiu` address form. */
+#ifdef NON_MATCHING
+void func_80149538(void) {
+    s32 i;
+    u8 shade;
 
+    func_80146F74(0, 3, 5, -0x14, 0, 0, 0, 0, 0);
+    if ((D_800E6280.unk_1104.w >= 0xB4) && (D_800E6280.unk_1104.w < 0xC7)) {
+        func_80153E78(1, 0xE0, 0xE0, 0xE0);
+    } else if (D_800E6280.unk_1104.w == 0xC7) {
+        func_801335A0(0, 0x504);
+    } else if ((D_800E6280.unk_1104.w >= 0xC8) && (D_800E6280.unk_1104.w < 0x140)) {
+        if ((D_800E6280.unk_1104.w % 3) == 0) {
+            func_80153E78(1, 0xF0, 0xF0, 0xF0);
+        }
+    } else if ((D_800E6280.unk_1104.w >= 0x140) && (D_800E6280.unk_1104.w < 0x1B8)) {
+        shade = (D_800E6280.unk_1104.w * 2) - 0x280;
+        func_80153E78(2, shade, shade, shade);
+    } else if (D_800E6280.unk_1104.w == 0x1B8) {
+        i = 1;
+        do {
+            D_80127080[i++].unk0 = 0x80000000;
+        } while (i != 36);
+        load_csr_tp(0x80162000, 0xC, 1, 0, 0, 0x100, 0x100);
+        func_80143730(0x80172000, 0xE);
+        D_80122760 = 0x14;
+        D_80122764 = 0x64;
+        D_80122768 = -0x64;
+        D_8012276C = 0xB0;
+        D_8012276D = 0xB0;
+        D_8012276E = 0xB0;
+        func_8009AD70(0, &D_80122760);
+        D_80122770 = 0x14;
+        D_80122774 = -0x64;
+        D_80122778 = 0x64;
+        D_8012277C = 0x80;
+        D_8012277D = 0x80;
+        D_8012277E = 0x80;
+        func_8009AD70(1, &D_80122770);
+        D_80122780 = -0x14;
+        D_80122784 = 0x14;
+        D_80122788 = -0x64;
+        D_8012278C = 0x60;
+        D_8012278D = 0x60;
+        D_8012278E = 0x60;
+        func_8009AD70(2, &D_80122780);
+        func_80042908(0x1F);
+    }
+    /* FAKE: the volatile access keeps the tail out of the counter's register range (the original has plain ugen code here); real source unknown. T-19019 */
+    *(volatile s32 *)&D_800E6280.unk_1104.w += 1;
+}
+#else
+INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80148FE0", func_80149538);
+#endif
+
+/* NON_MATCHING: T-19019, 2 differing lines (1 row, row 182): the reload of the selector in the `if` body is `addu t2,v1,t3` (index first), the original has `addu t2,t3,v1` (base first). Frame, spill slot (0x4C) and every other instruction match.
+ * Without a selector local, uopt merges the two reads of `unk84[1]` itself (PRE): the first test's load stays in $a0 on the paths that skip the body, and uopt inserts a reload at the end of the body. The PRE temporary takes the frame word below the `arg1 * 2` spill that the original has (a declared `u8 st` takes a word above it: spill 0x48, the earlier 4-line draft). `(idx + D_8015EDB4)` and `(D_8015EDB4 + idx)` compile alike (uopt orders the sum itself, index first); the inserted reload copies that order. A `D_8015EDB4[idx]` read is a different expression, so mixing the forms ends the merge (89 to 132 lines). With `st` and one loop counter every offset is right relative to the frame top, but the frame is 8 bytes short. Tried without effect on the frame: `st` in a nested block, `obj` as an expression (operands of the address compares must then be swapped), `<` loop tests, `do`/`while` loops, the first store through `idx`, a ternary for the merged value (its temporary sits above the spill, 21 lines). autotweak (437 tries) reaches 4 lines. */
+#ifdef NON_MATCHING
+s32 func_801497EC(s32 arg0, s32 arg1, s16 *arg2, u8 *arg3, u8 *arg4) {
+    MATRIX mtx;
+    TcPos in;
+    TcPos out;
+    s32 i;
+    s32 j;
+    s32 idx;
+    s32 offX;
+    s32 offY;
+    TcObj50 *obj;
+
+    idx = arg1 + 0x10;
+    offX = arg2[arg1 * 2];
+    offY = arg2[arg1 * 2 + 1];
+    D_8015EDB4[arg1 + 16].unk84[0] = arg3[arg1];
+    mtx = *(MATRIX *)D_80125C60;
+    func_8015D0D0((D_80128880[0].x << 0xC) / 360, &mtx);
+    func_8015CF30((D_80128880[0].z << 0xC) / 360, &mtx);
+    func_8015D270((D_80128880[0].y << 0xC) / 360, &mtx);
+    obj = &D_80127480[arg0];
+    in.x = obj->unk18;
+    in.y = obj->unk1C;
+    in.z = obj->unk20;
+    func_800A0ECC(&mtx, &in, &out);
+    D_8015EDB4[idx].unk74 = D_80127480[0].unk18 + out.x + offX;
+    D_8015EDB4[idx].unk76 = D_80127480[0].unk1C + out.y + offY;
+    D_8015EDB4[idx].unk78 = D_80127480[0].unk20 + out.z;
+    if ((idx + D_8015EDB4)->unk84[1] < 0x15U && (idx + D_8015EDB4)->unk82 < (idx + D_8015EDB4)->unk7A) {
+        (idx + D_8015EDB4)->unk84[1] = arg4[arg1 * 2];
+        (idx + D_8015EDB4)->unk82 += 1;
+        D_8015EDB4[17].unk84[2] = 1;
+    }
+    if ((idx + D_8015EDB4)->unk84[1] == 0) {
+        func_8015435C(arg0, 9);
+        if (obj == &D_801274D0) {
+            for (i = 4; i != 0x16; i += 3) {
+                func_8015435C(i, 9);
+            }
+        }
+        if (obj == &D_80127520) {
+            for (j = 5; j != 0x17; j += 3) {
+                func_8015435C(j, 9);
+            }
+        }
+        if (obj == &D_80127570) {
+            for (j = 6; j != 0x18; j += 3) {
+                func_8015435C(j, 9);
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80148FE0", func_801497EC);
+#endif
 
 void func_80149B7C(void) {
     s32 i;
