@@ -119,22 +119,6 @@ void func_80134ED4(void) {
     func_8004284C();
 }
 
-typedef struct {
-    s32 w[17];
-} Words17; /* size 0x44 */
-
-typedef struct {
-    s32 w[17];
-} Words17; /* size 0x44 */
-
-typedef struct {
-    s32 w[17];
-} Words17; /* size 0x44 */
-
-typedef struct {
-    s32 w[17];
-} Words17; /* size 0x44 */
-
 void func_80134F18(void) {
     func_801365F4();
     D_8013BFFC = D_8013C5C4;
@@ -148,7 +132,7 @@ void func_80134F18(void) {
     D_80120654 = 8;
     D_801206AC = 3;
     /* FAKE: D_80120650 and D_801206D8 (+0x88) are one object in the original: the loads stay behind the stores. T-9310 */
-    *(Words17 *)&D_80120650[0x88] = *(Words17 *)D_80120650;
+    *(DisplayActor44 *)&D_80120650[0x88] = *(DisplayActor44 *)D_80120650;
     D_80120650[0x8A] = 0x40;
     *(s16 *)&D_80120650[0xA0] = 0x28;
     D_80120650[0x89] -= 1;

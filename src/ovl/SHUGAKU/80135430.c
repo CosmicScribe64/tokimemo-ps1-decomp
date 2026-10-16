@@ -131,13 +131,9 @@ void func_80135CC8(void) {
     func_8004284C();
 }
 
-typedef struct {
-    s32 w[17];
-} Blk44; /* size 0x44 */
-
 void func_80135CF8(void) {
     D_8013C2E4 = 1;
-    *(Blk44 *) &D_80120650[0xCC] = *(Blk44 *) D_80120650;
+    *(DisplayActor44 *) &D_80120650[0xCC] = *(DisplayActor44 *) D_80120650;
     D_80120650[0xCD] = 0xB;
     D_80120650[0xCF] |= 0x80;
     *(s16 *) &D_80120650[0xE2] = 5;
