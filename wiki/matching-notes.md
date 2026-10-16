@@ -6046,3 +6046,15 @@ Idiom for [[register-cheatsheet]]: a parameter copy before a second loop (`move 
 - **Tooling.** `tools/siblings.py --package` reads the list file inside the container: a list in the scratchpad (outside the worktree) is taken for a package entry and reports "no unmatched function"; copy it under `build/`. A `funcdiff` run whose C fails to compile leaves the original-side object in the build path, so a disassembly taken afterwards shows the original, not the draft (it fooled one experiment here); check the funcdiff line count before reading the object.
 
 Cheat sheet row: [[register-cheatsheet]] ("base register of a call argument load"). Open rows: [[data/t0018-cases]].
+## BUNKAKEN types-first pass (T-18500)
+
+- **Uninitialized `u8` with a stack home** (`func_80145550`, `func_80145A64`): a switch arm that sets nothing
+  and an `lbu v0,N(sp)` afterwards is the original reading `v` uninitialized; IDO gives such a local a home.
+  Write one `u8 v;` with no `default`; m2c and the census synthesized `spDA`/`sp2B` locals instead.
+- **`GameState *g = &D_800E6280;` owns a stack word** even when `g` lives in a register: it shifts the stack
+  tables declared after it by 4 (`func_8014A5EC` matched with it, where a FAKE pad was the alternative).
+- **K&R views per object**: `func_8014A0E0` needs `func_800847B8()` and `func_80083440()` without prototypes
+  (no `andi` in the caller); `func_80145A64` calls `get_g_zyotai_h(girl, v)` with two arguments
+  (`MAIN_API_OVERRIDE_get_g_zyotai_h`, new in `main_api.h`).
+- Open: `func_80144F70` stores `D_80122EBC` back with its own value before each `func_8008667C(D_80122EBC)`
+  call; details and the other near misses in [[bunka-family-results]] ("Types-first pass (T-18500)").

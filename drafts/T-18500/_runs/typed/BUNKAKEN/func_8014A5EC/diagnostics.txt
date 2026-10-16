@@ -1,0 +1,10 @@
+python3 failed:
+cfe: Error: drafts/T-18500/_runs/typed/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c, line 3327: redeclaration of 'func_8014A5EC'; previous declaration at line 3206 in file 'drafts/T-18500/_runs/typed/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c'
+ void func_8014A5EC(void) {
+ -----^
+cfe: Error: drafts/T-18500/_runs/typed/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c, line 3327: Incompatible function return type for this function.
+ void func_8014A5EC(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18500/_runs/typed/BUNKAKEN/func_8014A5EC/work -o drafts/T-18500/_runs/typed/BUNKAKEN/func_8014A5EC/work/guarded.o /tmp/asm_processorcmz5zg_7/preprocessed_d97568e63d1c4a32b1562652576ade35.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibra81uexb/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18500/_runs/typed/BUNKAKEN/func_8014A5EC/work/guarded.o drafts/T-18500/_runs/typed/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c
+repair: existing earlier unprototyped call implies s32 return

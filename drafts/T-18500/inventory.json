@@ -1,0 +1,110 @@
+[
+ {
+  "unit": "BUNKAKEN",
+  "src": "src/ovl/BUNKAKEN/8013B510.c",
+  "func": "func_8013B510",
+  "size": 2164,
+  "guarded": false,
+  "source_hash": "0561753ddfc300e1a40af5fc64884b51d70529fad3d6b0741858c9e6b6029bcb",
+  "scope": "BUNKAKEN:func_8013B510"
+ },
+ {
+  "unit": "BUNKAKEN",
+  "src": "src/ovl/BUNKAKEN/8013B510.c",
+  "func": "func_8013BD84",
+  "size": 540,
+  "guarded": false,
+  "source_hash": "0561753ddfc300e1a40af5fc64884b51d70529fad3d6b0741858c9e6b6029bcb",
+  "scope": "BUNKAKEN:func_8013BD84"
+ },
+ {
+  "unit": "BUNKAKEN",
+  "src": "src/ovl/BUNKAKEN/80140F60.c",
+  "func": "func_80140F60",
+  "size": 296,
+  "guarded": false,
+  "source_hash": "8a5d71c6e696343b1eadc9f58b25f507ad35769468f6ab892fe3dd24b6ae5014",
+  "scope": "BUNKAKEN:func_80140F60"
+ },
+ {
+  "unit": "BUNKAKEN",
+  "src": "src/ovl/BUNKAKEN/801428D0.c",
+  "func": "func_801428D0",
+  "size": 368,
+  "guarded": true,
+  "source_hash": "d149f2df3ffe75e948a1f25a96595b3b652fad2e5c0d7bc1db3e183078fc715b",
+  "scope": "BUNKAKEN:func_801428D0"
+ },
+ {
+  "unit": "BUNKAKEN",
+  "src": "src/ovl/BUNKAKEN/80143DD0.c",
+  "func": "func_80143DD0",
+  "size": 3232,
+  "guarded": false,
+  "source_hash": "98d16a8093926961f70793d81d74384e0c795a9a5cf96f06429b654f676433c6",
+  "scope": "BUNKAKEN:func_80143DD0"
+ },
+ {
+  "unit": "BUNKAKEN",
+  "src": "src/ovl/BUNKAKEN/80144F70.c",
+  "func": "func_80144F70",
+  "size": 1424,
+  "guarded": false,
+  "source_hash": "47417fa9c49ec6a5d7539e38a0712a46cb1c4587d6c645d1341fdfee9c19f631",
+  "scope": "BUNKAKEN:func_80144F70"
+ },
+ {
+  "unit": "BUNKAKEN",
+  "src": "src/ovl/BUNKAKEN/80144F70.c",
+  "func": "func_80145550",
+  "size": 756,
+  "guarded": false,
+  "source_hash": "47417fa9c49ec6a5d7539e38a0712a46cb1c4587d6c645d1341fdfee9c19f631",
+  "scope": "BUNKAKEN:func_80145550"
+ },
+ {
+  "unit": "BUNKAKEN",
+  "src": "src/ovl/BUNKAKEN/80144F70.c",
+  "func": "func_80145A64",
+  "size": 976,
+  "guarded": false,
+  "source_hash": "47417fa9c49ec6a5d7539e38a0712a46cb1c4587d6c645d1341fdfee9c19f631",
+  "scope": "BUNKAKEN:func_80145A64"
+ },
+ {
+  "unit": "BUNKAKEN",
+  "src": "src/ovl/BUNKAKEN/80146560.c",
+  "func": "func_80147914",
+  "size": 1920,
+  "guarded": false,
+  "source_hash": "a105d1c673ac594d9edadbda6bb526ef101ab34c7ad6166d77f103fb46591b0e",
+  "scope": "BUNKAKEN:func_80147914"
+ },
+ {
+  "unit": "BUNKAKEN",
+  "src": "src/ovl/BUNKAKEN/80148ED0.c",
+  "func": "func_8014A0E0",
+  "size": 1292,
+  "guarded": false,
+  "source_hash": "131eae803fde2d6dbddb3ee44d5977a7e2d0bfcfcf84a8f035f8ec7603f6e2b8",
+  "scope": "BUNKAKEN:func_8014A0E0"
+ },
+ {
+  "unit": "BUNKAKEN",
+  "src": "src/ovl/BUNKAKEN/80148ED0.c",
+  "func": "func_8014A5EC",
+  "size": 176,
+  "guarded": false,
+  "source_hash": "131eae803fde2d6dbddb3ee44d5977a7e2d0bfcfcf84a8f035f8ec7603f6e2b8",
+  "scope": "BUNKAKEN:func_8014A5EC"
+ },
+ {
+  "unit": "BUNKAKEN",
+  "src": "src/ovl/BUNKAKEN/80150D30.c",
+  "func": "func_80151A78",
+  "size": 1096,
+  "guarded": false,
+  "source_hash": "ea78f82f4a92281fee48684c224f5c989091879fe5b83e832319b1e828769957",
+  "scope": "BUNKAKEN:func_80151A78"
+ }
+]

@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_80063668 0, func_800866A0 1, func_8013BD84 0, func_8013BFA0 0
+python3 failed:
+ --------------------------------^
+cfe: Warning 749: drafts/T-18500/_runs/typed/BUNKAKEN/func_8013B510/work/guarded.c, line 3034: structure has no member named 'unk0'
+             if (((u8) D_800E6280.unk0 >> 4) == 2) {
+ --------------------------------^
+cfe: Warning 749: drafts/T-18500/_runs/typed/BUNKAKEN/func_8013B510/work/guarded.c, line 3041: structure has no member named 'unk0'
+             if (((u8) D_800E6280.unk0 >> 4) == 4) {
+ --------------------------------^
+cfe: Error: drafts/T-18500/_runs/typed/BUNKAKEN/func_8013B510/work/guarded.c, line 3078: More than one default label in the same switch statement
+     default:
+ ----^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18500/_runs/typed/BUNKAKEN/func_8013B510/work -o drafts/T-18500/_runs/typed/BUNKAKEN/func_8013B510/work/guarded.o /tmp/asm_processorrqik4lrz/preprocessed_cef3fca09bd94c3ca2df7363a0a4d22c.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib_51vj_8m/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18500/_runs/typed/BUNKAKEN/func_8013B510/work/guarded.o drafts/T-18500/_runs/typed/BUNKAKEN/func_8013B510/work/guarded.c

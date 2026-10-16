@@ -1,46 +1,51 @@
+#define MAIN_API_OVERRIDE_func_800847B8 /* T-18500: func_8014A0E0 passes the full word without a prototype. */
+#define MAIN_API_OVERRIDE_func_80083440 /* T-18500: K&R call in func_8014A0E0; the callee narrows the argument. */
 #include "common.h"
 #include "ovl/BUNKAKEN.h"
 
+void func_800847B8();
+void func_80083440();
+
 void func_80148ED0(void) {
-    D_801562A0 = 0x801B00DC;
-    D_801562A4 = 0x801B02AC;
-    D_801562A8 = 0x801B03C8;
-    D_801562AC = 0x801B04C4;
-    D_801562B0 = 0x801B0668;
-    D_801562B4 = 0x801B0808;
-    D_801562B8 = 0x801B09DC;
-    D_801562BC = 0x801B0BE8;
-    D_801562C0 = 0x801B0D8C;
-    D_801562C4 = 0x801B0F5C;
-    D_801562C8 = 0x801B1164;
-    D_801562CC = 0x801B12D8;
-    D_801562D0 = 0x801B1454;
-    D_801562D4 = 0x801B00F4;
-    D_801562D8 = 0x801B02C8;
-    D_801562DC = 0x801B03D0;
-    D_801562E0 = 0x801B04DC;
-    D_801562E4 = 0x801B0680;
-    D_801562E8 = 0x801B0820;
-    D_801562EC = 0x801B09F8;
-    D_801562F0 = 0x801B0C00;
-    D_801562F4 = 0x801B0DA4;
-    D_801562F8 = 0x801B0F78;
-    D_801562FC = 0x801B1180;
-    D_80156300 = 0x801B12E0;
-    D_80156304 = 0x801B1470;
-    D_80156308 = 0x801B01A8;
-    D_8015630C = 0x801B0398;
-    D_80156310 = 0x801B03F0;
-    D_80156314 = 0x801B0590;
-    D_80156318 = 0x801B0734;
-    D_8015631C = 0x801B08D4;
-    D_80156320 = 0x801B0AE4;
-    D_80156324 = 0x801B0CB4;
-    D_80156328 = 0x801B0E58;
-    D_8015632C = 0x801B1064;
-    D_80156330 = 0x801B126C;
-    D_80156334 = 0x801B1338;
-    D_80156338 = 0x801B155C;
+    D_801562A0[0][0] = 0x801B00DC;
+    D_801562A0[0][1] = 0x801B02AC;
+    D_801562A0[0][2] = 0x801B03C8;
+    D_801562A0[0][3] = 0x801B04C4;
+    D_801562A0[0][4] = 0x801B0668;
+    D_801562A0[0][5] = 0x801B0808;
+    D_801562A0[0][6] = 0x801B09DC;
+    D_801562A0[0][7] = 0x801B0BE8;
+    D_801562A0[0][8] = 0x801B0D8C;
+    D_801562A0[0][9] = 0x801B0F5C;
+    D_801562A0[0][10] = 0x801B1164;
+    D_801562A0[0][11] = 0x801B12D8;
+    D_801562A0[0][12] = 0x801B1454;
+    D_801562A0[1][0] = 0x801B00F4;
+    D_801562A0[1][1] = 0x801B02C8;
+    D_801562A0[1][2] = 0x801B03D0;
+    D_801562A0[1][3] = 0x801B04DC;
+    D_801562A0[1][4] = 0x801B0680;
+    D_801562A0[1][5] = 0x801B0820;
+    D_801562A0[1][6] = 0x801B09F8;
+    D_801562A0[1][7] = 0x801B0C00;
+    D_801562A0[1][8] = 0x801B0DA4;
+    D_801562A0[1][9] = 0x801B0F78;
+    D_801562A0[1][10] = 0x801B1180;
+    D_801562A0[1][11] = 0x801B12E0;
+    D_801562A0[1][12] = 0x801B1470;
+    D_801562A0[2][0] = 0x801B01A8;
+    D_801562A0[2][1] = 0x801B0398;
+    D_801562A0[2][2] = 0x801B03F0;
+    D_801562A0[2][3] = 0x801B0590;
+    D_801562A0[2][4] = 0x801B0734;
+    D_801562A0[2][5] = 0x801B08D4;
+    D_801562A0[2][6] = 0x801B0AE4;
+    D_801562A0[2][7] = 0x801B0CB4;
+    D_801562A0[2][8] = 0x801B0E58;
+    D_801562A0[2][9] = 0x801B1064;
+    D_801562A0[2][10] = 0x801B126C;
+    D_801562A0[2][11] = 0x801B1338;
+    D_801562A0[2][12] = 0x801B155C;
 }
 
 void func_80149144(void) {
@@ -239,9 +244,9 @@ void func_80149144(void) {
             func_80148ED0();
             D_800CA148 = 1;
             D_800CA14C = 0;
-            D_800CA160 = D_801562A4;
-            D_800CA164 = D_801562D8;
-            D_800CA168 = D_8015630C;
+            D_800CA160 = D_801562A0[0][1];
+            D_800CA164 = D_801562A0[1][1];
+            D_800CA168 = D_801562A0[2][1];
             func_8004284C();
         }
         break;
@@ -546,6 +551,151 @@ void func_80149144(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80148ED0", func_8014A0E0);
+void func_8014A0E0(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8004284C();
+        break;
+    case 1:
+        k_reset(0);
+        func_8006612C((s32) "　");
+        func_80065F34(0);
+        dec_bg_reset();
+        set_dec_bri(0);
+        D_800E6280.unk_71E |= 4;
+        func_80044750(0xCF);
+        Vblnk_Timer_Init();
+        cd_read_sectors(3U, 0x801E8000, 0x49B7);
+        func_8004284C();
+        break;
+    case 2:
+        if (Vblnk_Timer() >= 0x15) {
+            if (cd_read_sync_status() & 1) {
+                func_80044890(1, 0xC478, 0xC44B, 0xCA95, 0xCA4F, 0xCA3E);
+                if (D_80122EBC == 0xB) {
+                    D_800E6280.unk_F5F = 0;
+                    func_800847B8(0U);
+                } else {
+                    D_800E6280.unk_F5F = D_80122EBC;
+                    func_800847B8(D_80122EBC);
+                }
+                func_8013257C();
+                D_800CA148 = 0x25;
+                D_800CA14C = 0;
+                D_800CA160 = (s32) D_80155E90;
+                D_800CA164 = (s32) D_80155E94;
+                D_800CA168 = (s32) D_80155E98;
+                func_8004284C();
+            }
+        }
+        break;
+    case 3:
+        normal_date_speak();
+        break;
+    case 4:
+        if (func_80044E8C() == 1) {
+            dec_bg_cd_read(0x42D8, 1);
+            func_8004284C();
+        }
+        break;
+    case 5:
+        if (cd_read_sync_status() & 1) {
+            func_80083440(get_g_zyotai_h(D_800E6280.unk_F5F) & 0x7F);
+            func_80044750(0x200);
+            k_reset(0);
+            func_8006612C((s32) "近所の公園");
+            D_80125CA0 = 0xC0;
+            dec_bg_show_set(1, func_8005751C(1));
+            cd_read_sectors(3U, 0x801B0000, 0xAF43);
+            func_8004284C();
+        }
+        break;
+    case 6:
+        normal_date_bggirl_fadein();
+        break;
+    case 7:
+        if (cd_read_sync_status() & 1) {
+            func_80148ED0();
+            if (D_80122EBC == 0xB) {
+                D_800E6280.unk_F5F = 0;
+                func_800847B8(0U);
+            } else {
+                D_800E6280.unk_F5F = D_80122EBC;
+                func_800847B8(D_80122EBC);
+            }
+            D_800CA148 = 1;
+            D_800CA14C = 0;
+            switch (D_80122EBC) {
+            case 11:
+                D_800CA160 = D_801562A0[0][1];
+                D_800CA164 = D_801562A0[1][1];
+                D_800CA168 = D_801562A0[2][1];
+                break;
+            case 4:
+                D_800CA160 = D_801562A0[0][10];
+                D_800CA164 = D_801562A0[1][10];
+                D_800CA168 = D_801562A0[2][10];
+                break;
+            case 5:
+                D_800CA160 = D_801562A0[0][7];
+                D_800CA164 = D_801562A0[1][7];
+                D_800CA168 = D_801562A0[2][7];
+                break;
+            case 6:
+                D_800CA160 = D_801562A0[0][8];
+                D_800CA164 = D_801562A0[1][8];
+                D_800CA168 = D_801562A0[2][8];
+                break;
+            case 7:
+                D_800CA160 = D_801562A0[0][5];
+                D_800CA164 = D_801562A0[1][5];
+                D_800CA168 = D_801562A0[2][5];
+                break;
+            case 8:
+                D_800CA160 = D_801562A0[0][0];
+                D_800CA164 = D_801562A0[1][0];
+                D_800CA168 = D_801562A0[2][0];
+                break;
+            case 9:
+                D_800CA160 = D_801562A0[0][9];
+                D_800CA164 = D_801562A0[1][9];
+                D_800CA168 = D_801562A0[2][9];
+                break;
+            case 10:
+                D_800CA160 = D_801562A0[0][12];
+                D_800CA164 = D_801562A0[1][12];
+                D_800CA168 = D_801562A0[2][12];
+                break;
+            default:
+                func_80046500();
+                break;
+            }
+            func_8004284C();
+        }
+        break;
+    case 8:
+        normal_date_speak();
+        break;
+    case 9:
+        normal_date_speak();
+        break;
+    case 10:
+        normal_date_bggirl_fadeout();
+        break;
+    case 11:
+        func_80085B3C(0x14, 0x19);
+        func_80145530();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80148ED0", func_8014A5EC);
+s32 func_8014A5EC(void) {
+    GameState *g = &D_800E6280;
+    BunkakenNames3x3 names;
+
+    names = D_8015633C;
+    func_800AE0F0(D_800CA25C, names.text[g->unk_03E - 0x5F][D_80122CDC]);
+}
