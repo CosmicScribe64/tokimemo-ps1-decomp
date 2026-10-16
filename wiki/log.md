@@ -15466,3 +15466,7 @@ Opened [[tickets/T-17000-types-first-main]] (In Progress) on branch `w3-main-typ
 ## [2026-10-16] ticket | T-17000 Done
 
 Code review of [[tickets/T-17000-types-first-main]] against `CODING_STANDARDS.md`: no findings. 5 functions matched (1,948 bytes), 27/27 SHA1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. In Review to Done; branch `w3-main-types` goes to the integration merge.
+
+## [2026-10-16] ticket | T-17500 Types-first: SHOUGATU opened
+
+Opened [[tickets/T-17500-types-first-shougatu]] (In Progress) on branch `w3-shougatu-types` from `w2-good`: recover SHOUGATU's shared types, redraft every unmatched function with the pilot drivers, package the rest for wave 3.
