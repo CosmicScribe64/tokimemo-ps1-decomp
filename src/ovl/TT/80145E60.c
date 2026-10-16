@@ -63,6 +63,7 @@ void func_80146000(void) {
     a[0] = 1;
     *(u16 *)(a + 6) = 8;
     *(s16 *)(a + 0x10) = 0;
+    /* Reusing a for the second record keeps its range in v0, so the shared 8 gets v1 and c a0. T-11860 */
     a = D_80158AA4;
     a[0] = 1;
     a[1] = 0;
@@ -293,4 +294,104 @@ void func_8014687C(void) {
     func_80146224();
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80145E60", func_80146924);
+/* a4 and a8 (declared around c) give the original frame: c at sp+0x3C, col at sp+0x37. The colour is stored with one
+ * chain so it is loaded once at the join; three separate stores keep it in v0 and move r and 0x80. T-11860 */
+void func_80146924(void) {
+    u8 *s;
+    u8 *a4;
+    u8 *c;
+    u8 *a8;
+    u8 col;
+    u8 *r;
+
+    s = D_80158A64;
+    c = D_80158A6C;
+    switch (*(u16 *)(s + 2)) {
+    case 0:
+        func_80044750(0x22);
+        func_80044750(0x2F);
+        func_80044750(4);
+        func_80044750(0x206);
+        s[0x1C] = 1;
+        func_8014CBD0();
+        func_80148210();
+        func_80143570();
+        func_8014A7E0();
+        func_80146BE0();
+        func_80148DB0();
+        func_80147CE0();
+        func_8014AF3C();
+        func_80132F4C();
+        func_80133B70();
+        func_8013BD4C();
+        func_801473BC();
+        func_801426F0();
+        s[0x11] = 0;
+        if (func_80145E60() != 0) {
+            s[0x1D] = 0;
+            s[0x1E] = 0;
+            s[0x1F] = 0;
+            func_80146000();
+            func_80132198(2, 6, 4);
+            func_8013230C(0xC, 1);
+            *(s16 *)(c + 0x1E) = 0;
+        } else {
+            s[9] = 1;
+        }
+        *(u16 *)(s + 0x26) = 0xE10;
+        *(u16 *)(s + 2) = 0x20;
+        break;
+    case 0x20:
+        func_801462AC();
+        break;
+    case 0x40:
+        func_80146224();
+        func_80146348();
+        if (s[0xA] != 0 || --*(u16 *)(s + 0x26) == 0) {
+            a8 = D_80158AA8;
+            r = a8 + *(u16 *)(c + 0x18) * 0x3C;
+            a4 = D_80158AA4;
+            a4[0] = 0;
+            s[0xA] = 0;
+            *(u16 *)(s + 4) = 0;
+            *(u16 *)(s + 2) = 0x80;
+            *(u16 *)(s + 0x28) = 0x3C;
+            switch (*(u16 *)(c + 0x18)) {
+            case 0:
+                col = 2;
+                break;
+            case 1:
+                col = 6;
+                break;
+            case 2:
+                col = 4;
+                break;
+            }
+            r[2] = r[0x16] = r[0x2A] = col;
+            *(u16 *)(s + 2) = 0x70;
+        }
+        break;
+    case 0x70:
+        func_80146224();
+        if (--*(u16 *)(s + 0x28) == 0) {
+            s[0x1D] = 0x80;
+            s[0x1E] = 0x80;
+            s[0x1F] = 0x80;
+            *(u16 *)(s + 2) = 0x80;
+        }
+        break;
+    case 0x80:
+        func_8014687C();
+        break;
+    }
+    if (s[9] != 0) {
+        *(u16 *)(s + 0) = 7;
+        *(u16 *)(s + 6) = 0;
+        *(u16 *)(s + 4) = 0;
+        *(u16 *)(s + 2) = 0;
+        s[0xB] = 0;
+        s[0xA] = 0;
+        s[9] = 0;
+    }
+    func_80148714(*(u16 *)(s + 0x26) / 60, 0x26);
+}
