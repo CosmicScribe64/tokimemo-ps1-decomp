@@ -89,7 +89,10 @@ void func_801483B0(void) {
     D_800E6280.unk_1104.w += 1;
 }
 
-/* NON_MATCHING: T-19013, 10 differing lines; the original ends the counter's register web at the first call (raw load in $v0, copy in $t0) and re-reads it at the end into $t2/$t3 temporaries. The absolute read below gets the web and the frame right, but leaves the sum in $v0, hoists the final lui into the three branch delay slots and spills $v0 instead of $t0 at the first call. */
+/* NON_MATCHING: T-19013, 6 differing lines; the original ends the counter's register range at the first call (raw load in $v0, copy in $t0) and re-reads it at the end with plain `lui t2; lw t2` / `lui at; sw t3` code.
+ * The volatile access below keeps the last block out of the range (temporaries $t2/$t3, nop delay slots and size right), but IDO builds its address as `lui v0; addiu v0,%lo(D_800E6280)` with the offset 0x1104 in the lw and sw (rows 90-95).
+ * The first spill stores $v0 instead of $t0 (row 15) in every spelling tried: copy local, `.u` read, `register`, `(t = ...)` in the if, fewer chain tests, store-back after the read.
+ * Only a separate symbol for the counter gives both direct accesses (see func_8014616C, T-19002); migrate_globals has no keep line for it. */
 #ifdef NON_MATCHING
 void func_801484E4(void) {
     s32 pad[2]; /* FAKE: reserves the 8 bytes of frame the original has below the spill slot; real local unknown. T-19013 */
@@ -121,8 +124,8 @@ void func_801484E4(void) {
         func_80143730(0x80172000, 0xC);
         func_80042908(0x15);
     }
-    /* FAKE: the absolute read ends the counter web at the first call (as in func_8014616C, T-19002); real source unknown. T-19013 */
-    D_800E6280.unk_1104.w = *(s32 *)0x800E7384 + 1;
+    /* FAKE: the volatile access keeps this block out of the counter's register range (the original has plain ugen code here); real source unknown. T-19013 */
+    *(volatile s32 *)&D_800E6280.unk_1104.w += 1;
 }
 #else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_801484E4);
