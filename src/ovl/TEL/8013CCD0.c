@@ -5,9 +5,9 @@
 /* Display record n of the D_8011ECD0 pool. */
 #define REC(n) (((DisplayRecord44 *)D_8011ECD0)[n])
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-19027, 20 differing lines; ugen temp numbering and the store order of the three record
- * fields in the three blocks of the second loop, and the registers of the quotient chain (v1/at versus t3..t7). */
+/* Frame and position of display record n, one source line (as1 schedules the three stores by line). */
+#define SET_REC(n, frame, px, py) (REC(n).unk_18 = (frame), REC(n).unk_26 = (px), REC(n).unk_2A = (py))
+
 void func_8013CCD0(void) {
     DisplayRecord44 *rec;
     s32 i;
@@ -45,9 +45,7 @@ void func_8013CCD0(void) {
             x = (i / 6) * 0x82;
             y = (i % 6) * 0x10;
             set_kanji_string(x - 0x82, y - 0x48, 3, D_800B3538[i], 0);
-            REC(idx).unk_18 = 0x61;
-            REC(idx).unk_26 = x - 0x32;
-            REC(idx).unk_2A = y - 0x44;
+            SET_REC(idx, 0x61, x - 0x32, y - 0x44);
             idx++;
             if (points[i] >= 0x1F4) {
                 stars = 0;
@@ -64,17 +62,14 @@ void func_8013CCD0(void) {
             } else {
                 stars = 1;
             }
-            REC(idx).unk_18 = stars + 0x59;
-            REC(idx).unk_26 = x - 0x22;
-            REC(idx).unk_2A = y - 0x44;
+            SET_REC(idx, stars + 0x59, x - 0x22, y - 0x44);
             idx++;
             if (D_800E6280.unk_1BC[i].unk_0A >= 0x3C) {
-                if ((REC(idx).unk_06 = (func_800AE0C0(D_800E6280.unk_1BC[i].unk_0A - 0x3C) / 10) * -2 + 8) == 0) {
+                REC(idx).unk_06 = -(func_800AE0C0(D_800E6280.unk_1BC[i].unk_0A - 0x3C) / 10) * 2 + 8;
+                if (REC(idx).unk_06 == 0) {
                     REC(idx).unk_06 = 1;
                 }
-                REC(idx).unk_18 = 0x60;
-                REC(idx).unk_26 = x - 0x12;
-                REC(idx).unk_2A = y - 0x44;
+                SET_REC(idx, 0x60, x - 0x12, y - 0x44);
                 idx++;
             }
             D_800E6280.unk_1BC[0xF].unk_14[i] = stars + 1;
@@ -82,9 +77,6 @@ void func_8013CCD0(void) {
     }
     D_801230D4 = set_kanji_string(-0x80, -0x62, 4, "女の子からの評価", 0);
 }
-#else
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/8013CCD0", func_8013CCD0);
-#endif
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/8013CCD0", func_8013D03C);
 
