@@ -16093,3 +16093,19 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 
 ## [2026-10-16] ticket | T-19025 Done
 [[tickets/T-19025-w3-d-p25]] In Review to Done: code review against `CODING_STANDARDS.md` found one missing `FAKE` comment (`btn` in `func_80132FE8`) and one undocumented unset `flags` path, both fixed with comments only (unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 4 of 4 functions matched (`func_8013356C`, `func_801328B0`, `func_8013240C`, `func_80132FE8`; 3,992 bytes), `src/ovl/TACO/80132220.c` is all C. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19030 started
+
+[[tickets/T-19030-w3-d-p30]] created and In Progress: Wave 3 direct package w3-d-p30 (TACO `func_8013B2A0`, `func_8015D0D0`, `func_8015D270`, `func_8013B460`), worktree `w3-d-p30` from `w2-good`. Card in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-19030 In Progress -> In Review
+
+[[tickets/T-19030-w3-d-p30]] In Review: wave 3 direct package w3-d-p30, 0 of 4 matched. TACO `func_8013B2A0` stays a guarded draft (20 differing instructions, registers only; the element chain `(&D_800E6280.unk_036)[0] = [1] = [2] = 0x10` and one pad word close the old store and frame blockers), `func_8013B460` typed redraft at 41 rows is back to `INCLUDE_ASM` (draft in `drafts/T-19030/TACO/func_8013B460/body.c`), `func_8015D0D0` and `func_8015D270` are hand-written libgte and stay `INCLUDE_ASM`. Rebuild 27/27, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK. Notes in [[matching-notes]] ("T-19030"), rows in [[data/t0018-cases]] and [[register-cheatsheet]]; card moved in [[kanban]], line in [[index]]. Header change: `include/ovl/TACO.h` declares `func_8013B404`.
+
+## [2026-10-16] build | T-19030 closer pass
+
+[[tickets/T-19030-w3-d-p30]]: Opus closer on TACO `func_8013B2A0`, no match. The 20-instruction gap is ugen's block-copy state: B in the original, F in the draft, because the copy follows the `bnez`. A probe global store gives B and all of the original's registers, and no C form without an added store was found. Updated the NON_MATCHING comment in `src/ovl/TACO/8013B170.c`, [[matching-notes]], [[data/t0018-cases]] and [[register-cheatsheet]]. Clean rebuild 27/27 and all checks OK. The ticket stays In Review.
+
+## [2026-10-16] ticket | T-19030 Done
+
+[[tickets/T-19030-w3-d-p30]] In Review to Done: code review against `CODING_STANDARDS.md` found 1 minor item (the two unused locals of the archived `func_8013B460` draft had no `FAKE` comment), fixed in the draft only (bytes unchanged); headers OK, globals OK, sync_protos OK. 0 of 4 functions matched (`func_8013B2A0` stays a guarded draft at 20 instructions, `func_8013B460`, `func_8015D0D0`, `func_8015D270` stay `INCLUDE_ASM`). Card moved in [[kanban]], line in [[index]].

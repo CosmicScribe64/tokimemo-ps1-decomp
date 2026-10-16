@@ -549,6 +549,7 @@ typedef struct TcTransformObj50 {
 void func_8013B2A0(void);
 void func_8013B398(void);
 void func_8013B3C4(void);
+void func_8013B404(void);
 #endif
 
 /* Position and velocity copies/loads use two existing eight-byte TcPos records. */
