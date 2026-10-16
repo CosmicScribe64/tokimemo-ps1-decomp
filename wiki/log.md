@@ -15223,3 +15223,7 @@ duplicate T-16200 line removed from [[index]]. Tickets [[tickets/T-16900-compile
 ## [2026-10-16] ticket | T-16554 Done
 
 [[tickets/T-16554-pt-taiiku-p4]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 of 7 functions matched (`func_80132970`, `func_80143DD0`, `func_80143F50`, `func_8014280C`, 3,208 bytes), 2 guarded drafts, `func_80142FB8` left as `INCLUDE_ASM`. Review fixes: ignored `&` before an array removed from the `pad_28` cast and the cast marked FAKE, `D_8014A1E8` typed `s16[]` (plain element access, still matches), override reason spelled out, FAKE comment tidied. Headers, globals and prototype checks OK, TAIIKU sha1 OK.
+
+## [2026-10-16] ticket | T-16563 In Progress
+
+[[tickets/T-16563-taco-types-first-p3]]: matching stage of the TACO types-first pilot, package 3 (`src/ovl/TACO/80151C30.c`, `src/ovl/TACO/8015ABF0.c`, 10 functions) on branch `pt-taco-p3`. Follows [[tickets/T-16560-taco-types-first]].
