@@ -52,13 +52,13 @@ void func_80146224(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801461B0", func_801462B0);
 
+/* NON_MATCHING: T-17201, 26 differing lines; the fade colour sum of cases 6, 7 and 9 is in v0 (original a1), and the tail timer keeps a v1 copy of the narrowed value (original: sum in t0, narrowing temp t8). */
 #ifdef NON_MATCHING
 s32 func_8014718C(void) {
     /* FAKE: unused RECT reserves the observed frame words. T-17201. */
     RECT rect;
     GameState *g;
     u32 sp30;
-    s16 col;
     u32 timer;
     s16 var_v1;
     DateMovieWork *movie;
@@ -80,8 +80,8 @@ s32 func_8014718C(void) {
         movie->unk_0A = 0;
         movie->unk_1A = 0;
         func_8006492C(0);
-        D_8015CF9C = 0;
-        for (var_v1 = 0; var_v1 < 2; var_v1++) {
+        /* one source line: as1 keeps the original store order. T-17201 */
+        D_8015CF9C = 0; for (var_v1 = 0; var_v1 < 2; var_v1++) {
             D_801217D0[var_v1 + 10].unk_08 = (var_v1 << 6) + 0x80;
             D_801217D0[var_v1 + 10].unk_00 = 0x82000000;
             D_801217D0[var_v1 + 10].unk_0A = 0xa0;
