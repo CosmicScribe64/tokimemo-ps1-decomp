@@ -15702,3 +15702,6 @@ Clean build 27/27 (all unit sha1 OK, TACO included), `check_headers`, `migrate_g
 
 ## [2026-10-16] ticket | T-19011 Done
 [[tickets/T-19011-w3-d-p11]] In Review to Done: code review against `CODING_STANDARDS.md` found one low-severity item (matching-driven spellings in the two guarded drafts had no in-source note), fixed with three comments; rebuild 6/6 and TACO sha1 OK. 0 of 3 functions matched: `func_8013506C` (29 lines) and `func_80134A18` (36 lines) stay guarded drafts, `func_80133E98` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19016 In Progress
+[[tickets/T-19016-w3-d-p16]] created and In Progress: Wave 3 package w3-d-p16, VALEN `func_80133670`, `func_80133728`, `func_80134030`, `func_80132D0C`, `func_80133088` in `src/ovl/VALEN/80132760.c` and `src/ovl/VALEN/80133C70.c`.
