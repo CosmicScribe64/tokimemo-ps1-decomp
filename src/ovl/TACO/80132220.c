@@ -182,7 +182,148 @@ u32 func_8013240C(void) {
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_8013240C);
 #endif
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_801328B0);
+void func_801328B0(void) {
+    /* FAKE: pad1..pad4 are unused locals that reserve the original's extra frame words (idx at sp+0x70, in/out vectors at sp+0x58/0x48, flags at sp+0x40, dist at sp+0x38); real source unknown. T-19025 */
+    TcActor *act;
+    u32 len;
+    s32 pad1;
+    s32 idx;
+    s32 pad2;
+    TcActor *q;
+    VECTOR in;
+    VECTOR out;
+    s32 pad3;
+    s32 flags;
+    s32 pad4;
+    s32 dist;
+
+    dist = func_80140638(&idx);
+    flags = 0;
+    if (dist != 0) {
+        if (!(D_800E6280.unk_10F8 & 7)) {
+            flags = 0x20;
+        } else if (!(D_800E6280.unk_10F8 & 0xF)) {
+            flags = 0x20;
+        }
+    }
+    act = &D_8015EDB4[8];
+    D_8015EDB4[8].unk0[1] = 0x80;
+    act->unk84[3] = 1;
+    act->unk84[0] = 2;
+    if (act->unk72 == 0) {
+        func_80141170(1, flags);
+    } else if (act->unk72 == 1) {
+        func_80141290(1, flags);
+    } else {
+        func_80141050(1, flags);
+    }
+    if (act->unk82 == 0) {
+        func_801404FC(1, flags);
+    } else if (act->unk82 == 1) {
+        func_80140364(1, flags);
+    }
+    if ((u32)dist < 8) {
+        in.vx = D_8015EDB4->unk74 - act->unk74;
+        in.vy = D_8015EDB4->unk76 - act->unk76;
+        in.vz = 0;
+        len = func_800AA460(&in, &out);
+        switch (act->unk2) {
+        default:
+            act->unk2 = 0;
+        case 0:
+            act->unk0[1] = 0x80;
+            act->unk2 += 1;
+        case 1:
+            if (len >= 0x10001) {
+                act->unk74 += out.vx / 103;
+                act->unk76 += out.vy / 103;
+            }
+            break;
+        case 2:
+            act->unk2 += 1;
+        case 3:
+            if (len >= 0x10001) {
+                act->unk74 += out.vy / 103;
+                act->unk76 += out.vx / 103;
+            }
+            break;
+        case 4:
+            act->unk0[1] = 0x80;
+            act->unk2 += 1;
+        case 5:
+            in.vx = D_8015EDB4->unk74 - act->unk74;
+            in.vy = D_8015EDB4->unk76 - act->unk76 + 0x80;
+            in.vz = 0;
+            len = func_800AA460(&in, &out);
+            if (len >= 0x641) {
+                act->unk74 += out.vy / 103;
+                act->unk76 += out.vx / 103;
+            }
+            break;
+        case 6:
+            act->unk0[1] = 0x90;
+            act->unk7C = 3 - (func_800AE0D0() & 7);
+            act->unk7E = 3 - (func_800AE0D0() & 7);
+            act->unk2 += 1;
+        case 7:
+            if (D_8015EDB4->unk78 + 0x21 < act->unk78) {
+                act->unk80 = -0x20;
+            }
+            if (act->unk78 < 0x29) {
+                act->unk80 = 0x20;
+            }
+            break;
+        case 8:
+            act->unk0[1] = 0x90;
+            in.vx = 0xF - (func_800AE0D0() & 0x1F);
+            in.vy = 0xF - (func_800AE0D0() & 0x1F);
+            in.vz = 0xF - (func_800AE0D0() & 0x1F);
+            func_800AA460(&in, &out);
+            act->unk7C = out.vx / 103;
+            act->unk7E = out.vy / 103;
+            act->unk80 = out.vz / 103;
+            act->unk2 += 1;
+        case 9:
+            if (!(func_800AE0D0() & 0x7F)) {
+                act->unk2 = 8;
+            }
+            break;
+        }
+    } else {
+        q = &D_8015EDB4[idx];
+        in.vx = q->unk74 - act->unk74;
+        in.vy = q->unk76 - act->unk76;
+        in.vz = 0;
+        func_800AA460(&in, &out);
+        act->unk74 += out.vx / 103;
+        act->unk76 += out.vy / 103;
+    }
+    act->unk78 += act->unk80;
+    if (act->unk74 > 0x1000) {
+        act->unk74 = 0x1000;
+    }
+    if (act->unk74 < -0x1000) {
+        act->unk74 = -0x1000;
+    }
+    if (act->unk76 > 0x180) {
+        act->unk76 = 0x180;
+    }
+    if (act->unk76 < -0x800) {
+        act->unk76 = -0x800;
+    }
+    if (!(func_800AE0D0() & 0x3F)) {
+        act->unk80 = 0xF - (func_800AE0D0() & 0x1F);
+    }
+    if (D_8015EDB4->unk78 + 0x200 < act->unk78) {
+        act->unk80 = -(func_800AE0D0() & 0xF);
+    }
+    if (act->unk78 < -0x1000) {
+        act->unk80 = func_800AE0D0() & 0xF;
+    }
+    act->unk6C = 0x400;
+    act->unk6E = 0x400;
+    act->unk70 = 0x400;
+}
 
 /* NON_MATCHING: T-19025, 10 differing lines; the two hoisted lui 0x8016 ranges of D_8015EDE4 take $v0, the original $a0 (an interfering range holds $v0 in the original), which also moves the hoisted move a0,zero */
 #ifdef NON_MATCHING
