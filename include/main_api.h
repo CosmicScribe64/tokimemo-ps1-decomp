@@ -760,6 +760,7 @@ extern s32 D_800C5FD0;
 extern u8 D_800C5FD4[];
 extern u8 D_800C6010[];
 extern s16 D_800C6014;
+extern s32 D_800C6020;
 /* T-17000: word tables walked by func_80059EF0 (and func_8006509C) up to the next symbol: eight words
  * ending at D_800C6220, 32 words ending at D_800C6340. */
 extern s32 D_800C6200[8];
@@ -2228,6 +2229,7 @@ void func_80064FA4(s32);
 void icon_disp_switch(s32 a);
 void icon_can_use_set(s32 idx, s32 on);
 void func_8006509C(void);
+void func_80059EF0(void);
 void func_80065900(u8 arg0);
 void func_80065B0C(s32 a);
 void func_80065F34(s32 arg0);

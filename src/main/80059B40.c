@@ -45,7 +45,42 @@ s32 func_80059E00(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80059B40", func_80059EF0);
+void func_80059EF0(void) {
+    s32 i;
+    s32 j;
+
+    for (i = 0; i < 16; i++) {
+        for (j = 0; j < 32; j++) {
+            if (D_800C62C0[j] & 0x7FFF0000) {
+                D_800C62C0[j] |= 0x80000000;
+            }
+            if (D_800C62C0[j] & 0x7FFF) {
+                D_800C62C0[j] |= 0x8000;
+            }
+        }
+        for (j = 0; j < 8; j++) {
+            if (D_800C6200[j] & 0x7FFF0000) {
+                D_800C6200[j] |= 0x80000000;
+            }
+            if (D_800C6200[j] & 0x7FFF) {
+                D_800C6200[j] |= 0x8000;
+            }
+        }
+        load_palette(&D_800C6020, i & 0xFF, 1, 1, i & 0xFF);
+    }
+    hizuke_init();
+    hizuke_disp_switch(0);
+    parameter_show_init();
+    parameter_show_init();
+    parameter_disp_switch(0);
+    func_8006509C();
+    icon_disp_switch(0);
+    message_window_init();
+    message_disp_switch(0);
+    func_800673B8();
+    func_8006764C(0);
+    func_80065F34(0);
+}
 
 void func_8005A06C(void) {
     if (D_800E6280.unk_1109 == 0) {
