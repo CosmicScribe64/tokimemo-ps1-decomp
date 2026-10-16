@@ -228,4 +228,81 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_801413B8);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_801416E8);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-19017 */
+void func_80141B18(Tc14 *arg0, s32 arg1) {
+    s32 pad[2];
+    MATRIX m;
+    SVECTOR v;
+    s16 pt[8];
+    u32 j;
+    POLY_G4 *poly;
+    s32 k1;
+    s32 k7;
+    s32 k8;
+    s32 sgn;
+    s32 i;
+    s32 depth;
+    s32 flag;
+    s32 k2;
+    s16 t;
+    u8 fade;
+    s32 k3;
+    s32 k4;
+
+    if (arg0->unk12 > 0x80) {
+        fade = 0xFF - arg0->unk12;
+    } else {
+        fade = arg0->unk12;
+    }
+    m = D_80129C40;
+    func_800A1100(&m);
+    func_800A1070(&m);
+    sgn = 1 - arg1;
+    j = 0;
+    do {
+        v.vz = arg0[j].unk4 + (sgn << 11);
+        v.vy = arg0[j].unk2 + (sgn << 8);
+        v.vx = arg0[j].unk0;
+        func_800AB170(&v, &pt[j * 4], &depth, &flag);
+        v.vz = -0x7FFF;
+        v.vy = arg0[j].unk2 + 0x100;
+        v.vx = arg0[j].unk0;
+        func_800AB170(&v, &pt[j * 4 + 2], &depth, &flag);
+        j++;
+    } while (&pt[j * 4 + 2] < &v.vz);
+    poly = func_800490F0(0x24, D_8011ECA0);
+    func_8009F054(poly);
+    SetSemiTrans(poly, 1);
+    poly->r0 = fade + 0x20;
+    poly->g0 = 0x10;
+    poly->b0 = 0xC0;
+    poly->r1 = fade + 0x20;
+    poly->g1 = fade + 0x10;
+    poly->b1 = 0xC0;
+    poly->r2 = 0x20;
+    poly->g2 = fade + 0x10;
+    poly->b2 = 0xC0;
+    poly->r3 = fade + 0x20;
+    poly->g3 = fade + 0x10;
+    poly->b3 = 0xC0;
+    for (i = 0; i < 2; i++) {
+        t = pt[i * 2 + 4];
+        if (t == pt[i * 2]) {
+            pt[i * 2 + 4] = t + 1;
+        }
+    }
+    poly->x0 = pt[2];
+    poly->y0 = pt[3];
+    poly->x1 = pt[0];
+    poly->y1 = pt[1];
+    poly->x2 = pt[6];
+    poly->y2 = pt[7];
+    poly->x3 = pt[4];
+    poly->y3 = pt[5];
+    AddPrim((D_8011ECA0 << 10) + 0x10 + D_800E8CA0, poly);
+    dtd_on_tpage(0x340, 0x100, 4, 1, 0);
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_80141B18);
+#endif
