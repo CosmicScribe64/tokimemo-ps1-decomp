@@ -483,7 +483,7 @@ extern s32 D_80145EA0;
 extern s32 D_80145EA4;
 extern u8 D_801460C4[];
 extern u8 D_80148818;
-extern u8 D_80148828[];
+extern u8 D_80148828[4]; /* T-17600: D_8014882C follows */
 extern volatile s16 D_8012B920; /* volatile: func_801427E4 only matches with it (decomp-permuter, T-4090) */
 
 extern s32 D_8012E668;
@@ -1006,6 +1006,7 @@ extern s32 D_80148BF0[50];
 extern s32 D_80148CB8[50]; /* 16.16 fixed point: the s16 at +2 is also read alone */
 extern s32 D_80148D80[50];
 extern s16 D_80148E48[50];
+extern s32 D_80148EB0; /* T-17600: frame counter of the dumpling scene, next to the count D_80148EAC */
 /* T-17600: two s16 tables of 8, indexed by the same value (func_80140E0C, func_80140F90, func_801412A4);
  * D_8014877C follows the second. */
 extern s16 D_8014875C[8];
