@@ -15748,3 +15748,19 @@ Opus closer pass on [[tickets/T-19013-w3-d-p13]] (branch w3-d-p13): no new match
 ## [2026-10-16] ticket | T-19013 Done
 
 [[tickets/T-19013-w3-d-p13]] In Review to Done after the code review: wave 3 package w3-d-p13 (TACO `src/ovl/TACO/801480B0.c`), 2 of 3 functions matched (1,336 bytes: `func_80148184` 388, `func_801487A4` 948, both plain C), `func_801484E4` guarded at 6 rows (counter web, FAKE `pad[2]` and FAKE volatile final increment, ticketed). No findings in code; two stale wiki lines (index, [[matching-notes]]) fixed. TACO SHA1 OK, headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-18300 Types-first: ENDING, In Progress
+
+Created [[tickets/T-18300-types-first-ending]] (wave 3, [[tickets/T-16990-wave-3-conveyor]]), branch `w3-ending-types` from `w2-good`: recover ENDING's shared types into `include/ovl/ENDING.h`, redraft every unmatched ENDING function (drivers from T-16550, T-16560, T-18000), cut packages. Card in [[kanban]] In Progress, line in [[index]].
+
+## [2026-10-16] build | T-18300 ENDING: sibling port, types, redraft
+
+[[tickets/T-18300-types-first-ending]]: matched `func_80132F18` as a port of main `check_k_scroll` (FAKE unused `get_k_work` result for the frame). `include/ovl/ENDING.h`: `EdShorts18 D_8013C3B0`, `EdShorts14 D_8013CA60`/`D_8013CA7C`, `s32 **D_8013CAF0`, `MAIN_API_OVERRIDE_dialogue_render`; every ENDING file includes `game.h` after `ovl/ENDING.h`. Redraft driver `drafts/T-18300/redraft.py` (from T-18000, plus a scaled stack-table index and the `struct-bytes` rewrite) and `hand.py`: 13 functions, 7 better than the census (7,268 bytes), none worse, no zero. New page [[ending-family-results]] ("Types-first pass (T-18300)"), line in [[index]].
+
+## [2026-10-16] ticket | T-18300 In Review
+
+[[tickets/T-18300-types-first-ending]] In Progress to In Review: packages T-18301..T-18305 (`w3-ending-p01`..`p05`) cut by `inventory2.py`/`mklists3.py`; clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-18300 Done
+
+[[tickets/T-18300-types-first-ending]] In Review to Done: code review against `CODING_STANDARDS.md` found 1 minor item (the FAKE note of `func_80132F18` did not start its comment), fixed in comments only; ENDING sha1 OK, headers OK. 1 function matched (280 bytes). Card moved in [[kanban]], line in [[index]].

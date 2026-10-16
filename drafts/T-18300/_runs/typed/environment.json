@@ -1,0 +1,8 @@
+{
+ "base": "",
+ "files": {
+  "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+  "include/main_api.h": "f85487790c8f5b6f619918520062461de5f39ff93dcc832f36db2c3d54be037d",
+  "include/ovl/ENDING.h": "63ee23841a3c1cec8fa46b26e64d625fc19edc42ee40188cf0e55ca62408ff73"
+ }
+}

@@ -1,0 +1,11 @@
+extern s32 D_8013BF04;
+extern s32 D_8013BF08;
+extern s32 D_8013BF14;
+extern s32 D_8013BF1C;
+extern s32 D_8013BF20;
+extern s32 D_8013BF28;
+extern s32 D_8013BF2C;
+extern s32 D_8013BF30;
+extern s32 D_8013BF34;
+extern s32 D_8013BF38;
+extern s32 D_8013BF3C;
