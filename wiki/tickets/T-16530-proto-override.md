@@ -1,7 +1,7 @@
 ---
 id: T-16530
 title: Prototype override option for regdiff and funcdiff
-status: In Review
+status: Done
 assignee: agent t16530
 created: 2026-10-16
 updated: 2026-10-16
@@ -26,7 +26,7 @@ it (`TOKIMEMO_SCRATCH/r9-uopt/variants/trace`, recipe in [[uopt-register-allocat
 - [x] A clear message for a missing traced uopt (paths tried, `TOKIMEMO_SCRATCH`, `--uopt`, `REGDIFF_UOPT`, recipe page).
 - [x] Documented in `wiki/decompile-workflow.md` (what it does, how to run, limits).
 - [x] Validated on one real T-16210 case if it can be reproduced without editing `src/`.
-- [ ] Code review against `CODING_STANDARDS.md` before Done.
+- [x] Code review against `CODING_STANDARDS.md` before Done.
 
 ## Notes
 
@@ -44,3 +44,23 @@ it (`TOKIMEMO_SCRATCH/r9-uopt/variants/trace`, recipe in [[uopt-register-allocat
 - **Follow-ups:** data views (`MAIN_API_OVERRIDE_D_...`) are not covered (function declarations only); `test_bulk_m2c` should isolate itself from `REGDIFF_UOPT`/the scratch mount; funcdiff has no `--src` for a scratch copy (regdiff does).
 
 ## Comments
+
+### Code review (2026-10-16)
+
+Reviewed `git diff w2-good...t16530-proto-override` against `CODING_STANDARDS.md` (checklist, section 13).
+
+- **Scope:** 12 files, all under `tools/` and `wiki/`. No file under `src/`, `include/` or `drafts/` changed; no game data, asm, object or binary committed; added text is ASCII with no `//` comments. Four implementer commits plus one review commit, ticket id in every message, `Co-Authored-By` trailer present.
+- **Tests:** `tools/docker.sh python3 -m unittest -q tools/test_protoverride.py`: 50 tests OK. Full suite without `TOKIMEMO_SCRATCH`: `python3 -m unittest discover -s tools -p 'test_*.py'` OK (3 skipped, 90 s). Tests use synthetic text only.
+- **Tool run on real input** (RPG_BAT `func_801454F0`, callee `func_8013E97C`; worktree stayed clean after every run):
+  - `funcdiff.py --resolve ... --proto 's32 func_8013E97C();'`: MATCH, 2000 linked bytes, with the keep-it hint naming `RPG_BAT_OVERRIDE_func_8013E97C`.
+  - the same with `--proto 'void func_8013E97C(s32 a, s32 b, s32 c);'`: DIFF at rows 89 to 94 (`lui v1` expected, `lui v0` built), the T-16210 symptom.
+  - refusals: a function the file defines (`func_801454F0`), an unknown name, a data declaration, and `--built` each give a clear message and no verdict.
+  - `regdiff.py ... --proto 's32 func_8013E97C();'` with the traced uopt mounted: MATCH 498/498; with the void declaration: 10 instructions differ, `$v0->$v1 x14`, first divergence at draft insn 89. The two-option example from `wiki/decompile-workflow.md` runs as written.
+  - `regdiff.py` without a scratch mount: exit message lists the path tried with its source, says `/scratch` is not mounted, names the recipe page.
+- **Edge cases tried on `protoverride.apply`:** function-pointer parameters, a callee only mentioned in `INCLUDE_ASM(...)` or `#pragma weak`, a string that holds `f(`, a shared declarator statement (refused), trailing text after the declaration (refused). All behave as the docs say.
+- **Docs:** the new `wiki/decompile-workflow.md` sections match the code (options, output lines, limits, lookup order); the pointers in `wiki/matching-notes.md` and `wiki/uopt-register-allocation.md` are correct; index, kanban card and log were consistent with status In Review before this review.
+- **Finding 1 (fixed, 178b4619):** `tools/test_protoverride.py` imported `argparse` without using it.
+- **Notes, no action needed:** (a) the keep-it hint still says to add the `#define` when the file already has the override; harmless. (b) `autotweak.py` has its own uopt lookup that does not use `regdiff.find_uopt` (default path only, same order). (c) `wiki/decompile-workflow.md` front matter has three `sources:` keys; this predates the ticket. (d) A `static` or struct-typed declaration is replaced by the plain `--proto` text; not reachable for real units because a static function is defined in the file and so refused.
+- **Follow-ups already in Notes:** the three `test_bulk_m2c` tests that fail only with the traced uopt mounted (they fail the same at the base commit), data views, funcdiff `--src`.
+
+Result: no open findings; ticket moved to Done.
