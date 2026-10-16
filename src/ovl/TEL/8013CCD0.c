@@ -65,6 +65,8 @@ void func_8013CCD0(void) {
             SET_REC(idx, stars + 0x59, x - 0x22, y - 0x44);
             idx++;
             if (D_800E6280.unk_1BC[i].unk_0A >= 0x3C) {
+                /* Store, then test the field (not the assignment): the value stays a ugen temporary and ugen
+                 * forwards the stored byte with andi 0xff. T-19027 */
                 REC(idx).unk_06 = -(func_800AE0C0(D_800E6280.unk_1BC[i].unk_0A - 0x3C) / 10) * 2 + 8;
                 if (REC(idx).unk_06 == 0) {
                     REC(idx).unk_06 = 1;
