@@ -27,7 +27,106 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80138890", func_80138964);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80138890", func_80138B2C);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80138890", func_80138D08);
+s32 func_80138D08(void) {
+    switch (D_800E6280.unk_110D) {
+    case 8:
+    case 9:
+    default:
+        func_801432F0("TOTAL", -0xE4, 0x48, 1);
+    case 6:
+    case 7:
+        func_801432F0("SHIELD BONUS", -0xE4, 0x18, 5);
+    case 4:
+    case 5:
+        func_801432F0("BOMB   BONUS", -0xE4, -8, 2);
+    case 2:
+    case 3:
+        func_801432F0("TIME   BONUS", -0xE4, -0x28, 3);
+        break;
+    case 0:
+    case 1:
+        break;
+    }
+    func_801432F0("SCORE", -0xE4, -0x48, 6);
+    switch (D_800E6280.unk_110D) {
+    case 10:
+    default:
+        func_801430D0(D_8015F4A0, -0x40, 0x58, 0);
+    case 8:
+    case 9:
+        func_801430D0(D_8015F494, -0x40, 0x28, 0);
+    case 6:
+    case 7:
+        func_801430D0(D_8015F498, -0x40, 8, 0);
+    case 4:
+    case 5:
+        func_801430D0(D_8015F49C, -0x40, -0x18, 0);
+    case 2:
+    case 3:
+        func_801430D0(D_8015F490, -0x40, -0x38, 0);
+        break;
+    case 0:
+    case 1:
+        break;
+    }
+    /* FAKE: u8 view of the selector keeps it a plain ugen temporary for the third switch; with the field it is promoted to a register (the 0xA test and the stores below). T-16564 */
+    switch (*(u8 *)&D_800E6280.unk_110D) {
+    case 0:
+        func_80138964(D_8015F490, -0x40, -0x38, 0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (func_80138964(D_8015F490, -0x40, -0x38, 1) == D_8015F490) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 2:
+        func_80138964(D_8015F49C, -0x40, -0x18, 0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 3:
+        if (func_80138964(D_8015F49C, -0x40, -0x18, 1) == D_8015F49C) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 4:
+        func_80138964(D_8015F498, -0x40, 8, 0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 5:
+        if (func_80138964(D_8015F498, -0x40, 8, 1) == D_8015F498) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 6:
+        func_80138964(D_8015F494, -0x40, 0x28, 0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 7:
+        if (func_80138964(D_8015F494, -0x40, 0x28, 1) == D_8015F494) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 8:
+        func_80138964(D_8015F4A0, -0x40, 0x58, 0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 9:
+        if (func_80138964(D_8015F4A0, -0x40, 0x58, 1) == D_8015F4A0) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        if ((u8) D_800E6280.unk_110D < 0xAU) {
+            D_800E6280.unk_110D = 0xA;
+        } else {
+            D_8015EDF0 = D_8015F4A0;
+            func_80059308();
+            func_8004284C();
+        }
+    }
+}
 
 void func_80139118(void) {
     func_800591D8(0);
