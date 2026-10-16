@@ -876,7 +876,100 @@ void func_8014E4A4(void) {
     }
 }
 
+/* NON_MATCHING: T-19003, 16 differing lines; as1 hoists the constants in the other order: original li v1,0x800 (delay slot) then li v0,0x40 after the first load, IDO li v0,0x40 first (T-0018, same as func_8014B8B4); the 0x80 stores likewise */
+#ifdef NON_MATCHING
+void func_8014E5F8(s32 arg0) {
+    if (arg0 < 0x13) {
+        func_80146F74(0, 0, 0, -0x190, 0, 0, 0, 0x32, 0x32);
+    }
+    if (arg0 == 0x13) {
+        D_8015EDB4[22].unk84[2] = 1;
+        func_8014C2E4();
+    }
+    if (arg0 >= 0x14 && arg0 < 0x27) {
+        if (D_8015EDB4[22].unk84[2] != 0) {
+            func_8014BF38(0);
+        }
+    }
+    if (arg0 == 0x27) {
+        D_80122760 = 0;
+        D_80122764 = 0;
+        D_80122768 = -0x64;
+        D_8012276C = 0xFF;
+        D_8012276D = 0xFF;
+        D_8012276E = 0xFF;
+        func_8009AD70(0, &D_80122760);
+        D_80122770 = 0;
+        D_80122774 = 0;
+        D_80122778 = -0x64;
+        D_8012277C = 0xFF;
+        D_8012277D = 0xFF;
+        D_8012277E = 0xFF;
+        func_8009AD70(1, &D_80122770);
+        D_80122780 = 0;
+        D_80122784 = 0;
+        D_80122788 = -0x64;
+        D_8012278C = 0xFF;
+        D_8012278D = 0xFF;
+        D_8012278E = 0xFF;
+        func_8009AD70(2, &D_80122780);
+    }
+    if (arg0 >= 0x28 && arg0 < 0x43) {
+        func_80146F74(0, 0, 0, 0x320, 0, 0, 0, 0x14, 0x1E);
+    }
+    if (arg0 >= 0x46 && arg0 < 0x64) {
+        func_80146F74(0, 0, 0, -0x1E0, 0, 0, 0, 0x32, 0x32);
+    }
+    if (arg0 == 0x64) {
+        D_8015EDB4[23].unk84[2] = 1;
+        D_8015EDB4[22].unk2 = 0;
+        D_8015EDB4[22].unk3 = D_8015EDB4[22].unk2;
+        D_80122760 = -0x64;
+        D_80122764 = 0x1E;
+        D_80122768 = -0x1E;
+        D_8012276C = 0xE0;
+        D_8012276D = 0xE0;
+        D_8012276E = 0xE0;
+        func_8009AD70(0, &D_80122760);
+        D_80122770 = 0x28;
+        D_80122774 = 0x32;
+        D_80122778 = -0x64;
+        D_8012277C = 0x40;
+        D_8012277D = 0x40;
+        D_8012277E = 0x40;
+        func_8009AD70(1, &D_80122770);
+        D_80122780 = 0xA;
+        D_80122784 = -0x14;
+        D_80122788 = -0x64;
+        D_8012278C = 0x30;
+        D_8012278D = 0x30;
+        D_8012278E = 0x30;
+        func_8009AD70(2, &D_80122780);
+    }
+    if (arg0 >= 0x65 && arg0 < 0x79) {
+        if (D_8015EDB4[22].unk84[2] != 0) {
+            func_8014BF38(0);
+        }
+    }
+    if (arg0 >= 0x42 && arg0 < 0x48) {
+        D_8015EDB4[16].unk0[1] = 0x40;
+        D_8015EDB4[16].unk78 = 0x800;
+        D_8015EDB4[16].unk84[0] = 0xA;
+        D_8015EDB4[17].unk0[1] = 0x40;
+        D_8015EDB4[17].unk78 = 0x800;
+        D_8015EDB4[17].unk84[0] = 0x1E;
+        D_8015EDB4[18].unk0[1] = 0x40;
+        D_8015EDB4[18].unk78 = 0x800;
+        D_8015EDB4[18].unk84[0] = 0x1E;
+    } else if (arg0 == 0x48) {
+        D_8015EDB4[16].unk0[1] = 0x80;
+        D_8015EDB4[17].unk0[1] = 0x80;
+        D_8015EDB4[18].unk0[1] = 0x80;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014E5F8);
+#endif
 
 void func_8014EA4C(void) {
     if (D_8015EDB4[16].unk3 >= 3U) {
@@ -1070,7 +1163,54 @@ void func_8014F2A0(void) {
     }
 }
 
+/* NON_MATCHING: T-19003, 14 differing lines; the original keeps the loaded unk_038 in $a1 and the chain value in $v0 (uopt range) with the unk_038 store after the D_800E6280.unk_1104 store-back, IDO gives $v0 and the ugen temporary $t8 */
+#ifdef NON_MATCHING
+void func_8014F5F0(void) {
+    if (D_800E6280.unk_1104.u < 0x64U) {
+        func_8014FBD4(1);
+        func_80151264(5U);
+        func_8015443C(0x801A7000, 0xA, 0x100, 0x1EF);
+    } else if (D_800E6280.unk_1104.u >= 0x64U && D_800E6280.unk_1104.u < 0x1F4U) {
+        func_80151264(5U);
+        func_8014FBD4((D_800E6280.unk_1104.u - 0x3C) / 40U);
+    } else if (D_800E6280.unk_1104.u >= 0x226U) {
+        if (D_800E6280.unk_036 < 0xFFU) {
+            D_800E6280.unk_036 = D_800E6280.unk_037 = D_800E6280.unk_038 += 1;
+            func_801517AC(D_800E6280.unk_1104.u - 0x226);
+        } else {
+            D_80122760 = 0x64;
+            D_80122764 = 0x32;
+            D_80122768 = -0x64;
+            D_8012276C = 0x70;
+            D_8012276D = 0x70;
+            D_8012276E = 0x80;
+            func_8009AD70(0, &D_80122760);
+            D_80122770 = 0;
+            D_80122774 = -0x64;
+            D_80122778 = -0x64;
+            D_8012277C = 0x40;
+            D_8012277D = 0x40;
+            D_8012277E = 0x40;
+            func_8009AD70(1, &D_80122770);
+            D_80122780 = -0x64;
+            D_80122784 = 0x32;
+            D_80122788 = -0x64;
+            D_8012278C = 0x80;
+            D_8012278D = 0x80;
+            D_8012278E = 0x90;
+            func_8009AD70(2, &D_80122780);
+            D_800E6280.unk_1104.u = 0;
+            func_8004284C();
+        }
+    }
+    if (D_800E6280.unk_1104.u == 0x258) {
+        func_801335A0(0, 0x502);
+    }
+    D_800E6280.unk_1104.u += 1;
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014F5F0);
+#endif
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014F820);
 
