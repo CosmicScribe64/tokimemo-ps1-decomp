@@ -209,7 +209,49 @@ INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80133628);
 
 INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80133990);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-19020, 9 differing lines; the address of the unk_66C counter is in v1 (original: v0, shared with the
+ * loop pointer), so the loop-setup luis come in another order */
+void func_80133CB8(void) {
+    s32 i;
+    u32 temp_t8;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80044750(0xBF);
+        func_800674B0();
+        func_8004284C();
+        break;
+    case 1:
+        if (func_80044E8C() == 1) {
+            if (D_801342C4 >= 3U) {
+                temp_t8 = (u16) D_800E6280.unk_0F4.h >> 0xC;
+                ((RensyuClubCount *)&D_800E6280.unk_66C[temp_t8])->count++;
+                D_800E6280.unk_1BC[0].unk_02 += 2;
+                for (i = 1; i < 13; i++) {
+                    D_800E6280.unk_1BC[i].unk_02 += 2;
+                }
+            } else {
+                D_800E6280.unk_118.unk_02 += 0xA;
+                D_800E6280.unk_11C.unk_02 += 0xA;
+            }
+            if (D_801342D0 != 0xFF) {
+                D_800E6280.unk_1BC[D_801342D0].unk_06 += 2;
+            }
+            func_8008585C();
+            set_dec_bri(0);
+            func_80072B5C(1);
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    Default_Disp();
+}
+#else
 INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80133CB8);
+#endif
 
 void func_80133E5C(void) {
     switch (D_801342D0) {
