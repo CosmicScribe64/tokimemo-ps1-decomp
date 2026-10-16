@@ -15243,3 +15243,7 @@ duplicate T-16200 line removed from [[index]]. Tickets [[tickets/T-16900-compile
 ## [2026-10-16] build | T-16563 closer pass
 
 [[tickets/T-16563-taco-types-first-p3]]: Opus closer on `func_8015B1B8` in `src/ovl/TACO/8015ABF0.c`, about 40 minutes, no new match (still guarded at 8 lines). Found the rule that picks ugen's struct-copy temporary: one free temporary is skipped after a store through a pointer, two after a direct stack or global store or at function entry. Notes in [[matching-notes]] (T-16563 section), new row in [[register-cheatsheet]], row in [[data/t0018-cases]]. Clean build 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16563 Done
+
+[[tickets/T-16563-taco-types-first-p3]] reviewed against `CODING_STANDARDS.md` and moved to Done: 10 functions matched (4,740 bytes), `func_8015B1B8` guarded, `func_8015ACCC` left as `INCLUDE_ASM`. Review fixes in `src/ovl/TACO/80151C30.c` and `src/ovl/TACO/8015ABF0.c`: two unmarked cast views (`func_801521EC`, `func_8015BD30`) marked FAKE, a dead `i = 0;` removed, blank lines tidied, stale ticket line corrected. Headers, globals and prototype checks OK, TACO sha1 OK.

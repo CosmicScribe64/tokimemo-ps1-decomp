@@ -52,7 +52,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-16563-taco-types-first-p3|T-16563 Types-first pilot package pt-taco-p3]]
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
@@ -154,6 +153,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-16550-taiiku-types-first|T-16550 Types-first pilot: TAIIKU]]
 
 - [ ] [[tickets/T-16554-pt-taiiku-p4|T-16554 Types-first pilot package pt-taiiku-p4]]
+
+- [ ] [[tickets/T-16563-taco-types-first-p3|T-16563 Types-first pilot package pt-taco-p3]]
 
 - [ ] [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210 Wave 2 package w2-p01]]
 
