@@ -26,6 +26,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 - [[tickets/T-19001-w3-d-p01|T-19001]] Wave 3 package w3-d-p01: TAIIKU `80140810.c`, `func_80140A90` stays guarded (33 instructions); block-copy temporary rule measured, looks like a ugen difference (Done).
 - [[tickets/T-17200-types-first-date|T-17200]] Types-first: DATE: 68 step tables (`FnTblNN`) and 10 stack tables typed in `DATE.h`, 49 redrafts (7 better than the census), 4 matches / 1,760 bytes, packages T-17201..T-17208 (Done).
+- [[tickets/T-17300-types-first-etc|T-17300]] Types-first: ETC: recover ETC shared types into `ETC.h`, redraft every unmatched ETC function, packages (In Progress).
 - [[tickets/T-16990-wave-3-conveyor|T-16990]] Wave 3 conveyor: types-first passes on 19 units feeding a 7-worker matcher pool (In Progress).
 - [[tickets/T-16564-taco-types-first-p4|T-16564]] Types-first pilot package pt-taco-p4: TACO `80154960.c`, `80137A60.c`, `80138890.c`, 6 of 8 functions matched (5,852 B), 2 guarded register near misses (Done).
 - [[tickets/T-16554-pt-taiiku-p4|T-16554]] Types-first pilot package pt-taiiku-p4: TAIIKU `80132000.c`, `80140810.c`, `80142240.c`, 4 of 7 functions matched (3,208 B), 2 guarded, 1 left (Done).

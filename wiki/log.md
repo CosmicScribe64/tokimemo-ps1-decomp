@@ -15417,3 +15417,7 @@ Packages T-17201..T-17208 (`w3-date-p01`..`p08`, 30 functions, 23,468 bytes). Cl
 ## [2026-10-16] ticket | T-17200 Done
 
 [[tickets/T-17200-types-first-date]] In Review to Done after the code review against `CODING_STANDARDS.md`: 4 functions matched (1,760 bytes: `func_8014AD9C`, `func_8013B208`, `func_80159FAC`, `func_80158338`), 13 guarded drafts unchanged. No code findings. Two wording findings: commit messages of `8e4eb55c` and `2bdd2567` carry interim numbers (39 typedef blocks, not 47; 32 unguarded, 7 better, 5 worse), recorded on the ticket, history left as is; `wiki/index.md` stack-table count fixed to 10. DATE sha1 OK, `check_headers` and `sync_protos --check-branch` OK.
+
+## [2026-10-16] ticket | T-17300 Types-first: ETC, In Progress
+
+Created [[tickets/T-17300-types-first-etc]] (wave 3, [[speedup-research-2026-10-16]]): types-first pass for ETC on branch `w3-etc-types` from `w2-good`. Card in In Progress.
