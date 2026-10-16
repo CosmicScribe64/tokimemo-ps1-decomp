@@ -16621,3 +16621,18 @@ rename table.
 
 ## [2026-10-16] ticket | T-17003 Done
 [[tickets/T-17003-w3-main-p03]] reviewed against `CODING_STANDARDS.md`: 2 findings fixed (FAKE mark on the u8 views of the s8 fields in the guarded `func_80079070` draft, an unfinished sentence in the [[data/t0018-cases]] row), no others. In Review to Done (kanban card moved). Matched 1 of 2 (`func_80079800`, 784 B); `func_80079070` stays guarded at 4 lines, `regorder`.
+
+## [2026-10-16] ticket | T-17001 In Progress
+Created [[tickets/T-17001-w3-main-p01]] (Wave 3 package, main `src/main/8007C030.c`, two functions: `_sprite_set_box_shade_tarao`, `dialogue_speak_part`) and moved it to In Progress. Card on [[kanban]], line in [[index]]. Worktree `tokimemo-wt/w3-main-p01`, started 21:52 UTC.
+
+## [2026-10-16] build | T-17001 matches
+[[tickets/T-17001-w3-main-p01]]: `_sprite_set_box_shade_tarao` (484 B) matched in plain C with one FAKE local (`u32 v4 = (arg5 >> 16) & 0xFF;`, read once by the `r2` store); unit sha1 OK, committed as "T-17001: match main:_sprite_set_box_shade_tarao". `dialogue_speak_part` stays `NON_MATCHING` at 16 lines (guard comment now T-17001). New: as1 scheduler trace recipe (`-R -xbbdbg 8`) and its pick rule in [[matching-notes]], a [[register-cheatsheet]] row, two rows in [[data/t0018-cases]], section in [[main-family-results]]. Matched count 1 of 2 (484 bytes).
+
+## [2026-10-16] ticket | T-17001 In Review
+[[tickets/T-17001-w3-main-p01]] In Progress to In Review (1 of 2 matched). Card moved to In Review on [[kanban]]. Elapsed about 75 minutes.
+
+## [2026-10-16] query | T-17001 closer pass
+[[tickets/T-17001-w3-main-p01]]: Opus closer pass on `dialogue_speak_part`, still 16 lines. A toy shows the `li a0,-40` needs a source line strictly below the string stores. IDO 7.1 behaves like 5.3, and 8 more source forms all propagate the constant. `NON_MATCHING` comment in `src/main/8007C030.c` updated; notes in [[matching-notes]] (T-17001, "Closer pass"). Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17001 Done
+[[tickets/T-17001-w3-main-p01]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 1 of 2 functions matched (`_sprite_set_box_shade_tarao`, 484 bytes); `dialogue_speak_part` stays `NON_MATCHING` at 16 lines. Rebuild: headers OK, globals OK, protos OK, main exe sha1 OK. Card moved to Done.

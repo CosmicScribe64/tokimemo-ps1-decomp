@@ -1056,7 +1056,7 @@ void wait_sub_sub(s16 arg0) {
     }
 }
 
-/* NON_MATCHING: T-10870, 16 differing lines: two four-word scheduling rotations (li a0,-40) remain at the incremented-Y calls; T-11590 retried same-line, inline +=, casts and split arguments. */
+/* NON_MATCHING: T-17001, 16 differing lines (T-10870): the original puts li a0,-40 before the sra of the incremented Y (as1 here schedules sra, sw, sw, li). as1 breaks ties by source line before readiness, so the original's -40 carries an earlier line than the narrowing and the string stores; the IDO 5.3 and 7.1 front ends give one statement one line. T-17001 tried 144 source forms in the function and 8 in a toy (constant locals, a second use, no assignment, an int y), no gain. */
 #ifdef NON_MATCHING
 s32 dialogue_speak_part(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 u8 *arg0;
@@ -2700,25 +2700,25 @@ void ev_me_on_continue(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-16220, 30 differing lines: registers and colours match the original; as1 still
- * schedules the r2 store first and loads arg6 before arg5 (the original loads arg5 first and
- * stores r2 after g2). */
-#ifdef NON_MATCHING
+/* FAKE: the explicit "& 0xFF" masks leave the colour shifts in ugen temporaries (t6..t9), and each
+ * colour trio shares one source line because as1 schedules stores by source line. The local v4 holds
+ * the red byte of arg5 and is read once (the r3 store repeats the expression): it numbers that
+ * uopt range first, so it takes $a0 and the blue byte of arg6 takes $a1 (p moves to $a2), and it
+ * makes arg5 the first stack argument loaded. The real source is unknown. T-17001 */
 void _sprite_set_box_shade_tarao(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u32 arg5, u32 arg6) {
     GameState *gs;
     POLY_G4 *p;
+    u32 v4;
 
     p = (POLY_G4 *)GetWorkBase(0x24, D_8011ECA0);
     func_8009F054(p);
     SetSemiTrans(p, 0);
     gs = &D_800E6280;
-    /* FAKE: the explicit masks leave the shifts in ugen temporaries (t6..t9) as in the original
-     * (a bare shift or a chain gets uopt registers); one line per group because as1 schedules by
-     * source line; r2 is written before b0 so that uopt colours and(arg6) after the arg5 red
-     * value, which puts arg6 in a1 and p in a2. The real source is unknown. T-16220 */
-    p->r0 = (arg6 >> 16) & 0xFF; p->g0 = (arg6 >> 8) & 0xFF; p->r2 = (arg5 >> 16) & 0xFF; p->b0 = arg6 & 0xFF;
+    v4 = (arg5 >> 16) & 0xFF;
+    p->r0 = (arg6 >> 16) & 0xFF; p->g0 = (arg6 >> 8) & 0xFF; p->b0 = arg6 & 0xFF;
     p->r1 = (arg6 >> 16) & 0xFF; p->g1 = (arg6 >> 8) & 0xFF; p->b1 = arg6 & 0xFF;
-    p->g2 = (arg5 >> 8) & 0xFF; p->b2 = arg5 & 0xFF; p->r3 = (arg5 >> 16) & 0xFF; p->g3 = (arg5 >> 8) & 0xFF; p->b3 = arg5 & 0xFF;
+    p->r2 = v4; p->g2 = (arg5 >> 8) & 0xFF; p->b2 = arg5 & 0xFF;
+    p->r3 = (arg5 >> 16) & 0xFF; p->g3 = (arg5 >> 8) & 0xFF; p->b3 = arg5 & 0xFF;
     p->x0 = gs->unk_014[D_8011ECA0] + arg0;
     p->y0 = gs->unk_018[D_8011ECA0] + arg1;
     p->x1 = gs->unk_014[D_8011ECA0] + arg0 + arg2;
@@ -2729,9 +2729,6 @@ void _sprite_set_box_shade_tarao(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
     p->y3 = gs->unk_018[D_8011ECA0] + arg1 + arg3;
     AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg4 * 4, (s32)p);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", _sprite_set_box_shade_tarao);
-#endif
 
 void func_8008585C(void) {
     s16 i;
