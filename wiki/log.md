@@ -14941,3 +14941,6 @@ T-11690). TT stays excluded (issue #2).
 
 [[tickets/T-11670-w1-main-8006cb30]] (wave 2 package w2-r11): 1 new match in `src/main/8006CB30.c` (`func_8006EA40`, 292 bytes; 4 on the ticket with wave 1). New guarded draft `func_8006D6E0` (5 lines), `func_80072D70` cut to 22 lines; others unchanged or left `INCLUDE_ASM`. Finding: a value-returning call used as a statement keeps later ranges in its block out of `v0`; a `void` override fixed `func_8006EA40`. Notes in [[matching-notes]] (T-11670), 5 rows in [[data/t0018-cases]].
 
+## [2026-10-16] ticket | T-11670 Done
+
+[[tickets/T-11670-w1-main-8006cb30]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 functions matched in `src/main/8006CB30.c` (`_schedule_init`, `geko_judge`, `schedule_girls_gakko`, `func_8006EA40`). Review fixes: `FAKE` note on the `geko_judge` frame buffers, line counts on the two T-10880 guards. Build in the worktree: globals OK, headers OK, unit sha1 OK.
