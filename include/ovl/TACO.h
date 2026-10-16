@@ -557,6 +557,7 @@ void func_8015266C(u32 arg0);
 void func_80152764(s32 arg0);
 void func_80152944(s32 arg0, s32 arg1);
 void func_80152DB4(s32 arg0, s32 arg1, s32 arg2);
+void func_801523D0(s32 arg0, s32 arg1, s32 arg2);
 extern s16 *D_80160444[]; /* six pointers: [0] 0x23's model, [1..4] the walk of func_80152944; T-16563 */
 #endif
 

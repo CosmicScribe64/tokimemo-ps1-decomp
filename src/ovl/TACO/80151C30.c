@@ -138,7 +138,52 @@ void func_801522B0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3) {
     *arg0 = (u8)((*arg0 & 0xFF) + 1);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_801523D0);
+void func_801523D0(s32 arg0, s32 arg1, s32 arg2) {
+    s32 i;
+    s32 pad[15]; /* FAKE: unused slots above k; the original frame is 0x40 larger and k sits at sp+0x4C (real source unknown). T-16563 */
+    s32 k;
+    s32 pad2; /* FAKE: one more unused slot below k, T-16563 */
+
+    if (arg2 < 8) {
+        for (i = 0; i < 7; i++) {
+            func_80147674(arg0 + i * 3, D_801603F0[arg1], 3, 0, 0);
+            arg1++;
+        }
+    } else if (arg2 >= 8 && arg2 < 0x10) {
+        for (i = 0; i < 7; i++) {
+            func_80147674(arg0 + i * 3, D_801603F0[arg1], 4, 0, 0);
+            arg1++;
+        }
+    } else if (arg2 >= 0x10 && arg2 < 0x1A) {
+        for (i = 0; i < 7; i++) {
+            func_80147674(arg0 + i * 3, D_801603F0[arg1], 5, 0, 0);
+            arg1++;
+        }
+    } else if (arg2 == 0x1D) {
+        func_801335A0(0, 0x501);
+    } else if (arg2 >= 0x1E && arg2 < 0x23) {
+        for (i = 0; i < 7; i++) {
+            func_80147674(arg0 + i * 3, D_801603F0[arg1], 6, 0, 0);
+            arg1++;
+        }
+        if (arg0 == 1) {
+            k = 0x10;
+        } else if (arg0 == 2) {
+            k = 0x11;
+        } else if (arg0 == 3) {
+            k = 0x12;
+        }
+        if ((k + D_8015EDB4)->unk84[1] != 0) {
+            func_80147C98(0, arg0, 0, 0x64, 0x3E8, 0xC8, 0x83);
+        }
+    } else if (arg2 >= 0x23 && arg2 < 0x2D) {
+        for (i = 0; i < 7; i++) {
+            func_80147674(arg0 + i * 3, D_801603F0[arg1], 7, 0, 0);
+            arg1++;
+        }
+    }
+}
+
 
 void func_8015266C(u32 arg0) {
     if (arg0 < D_8015EDB4[17].unk3) {
