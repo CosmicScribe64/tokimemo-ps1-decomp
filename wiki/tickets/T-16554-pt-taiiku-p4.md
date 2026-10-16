@@ -16,7 +16,7 @@ Match the TAIIKU functions of package pt-taiiku-p4 starting from the T-16550 typ
 
 - [x] Each function matched (unit sha1 OK, no guard) or kept under `#ifdef NON_MATCHING` (< about 30 differing lines) with a ticket comment, else plain `INCLUDE_ASM`.
 - [x] Types extended in `include/ovl/TAIIKU.h` instead of byte-offset casts where the build allows.
-- [ ] Clean rebuild 27/27, `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch` OK.
+- [x] Clean rebuild 27/27, `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch` OK.
 - [x] Short T-16554 section in [[matching-notes]]; compiler-gap rows in `wiki/data/t0018-cases.md`.
 
 ## Notes
@@ -28,3 +28,5 @@ Worktree `tokimemo-wt/pt-taiiku-p4`, branch `pt-taiiku-p4` from `w2-good`. Time 
 Four of seven matched (3,208 bytes), unit sha1 OK after each: `func_80132970`, `func_80143DD0`, `func_80143F50`, `func_8014280C`. Guarded drafts: `func_80140A90` (33 differing instructions, ugen temporary numbering after a block copy; the two callee prototype overrides and one FAKE selector view are in the tree), `func_8014357C` (20 instructions, flags and rating register allocation). `func_80142FB8` stays `INCLUDE_ASM` (loop variables in caller-saved registers with spills in the original, `$s1..$s3` here). FAKE comments: `*(u8 *)&D_8014A110` views (`func_80143F50`, `func_8014280C`), `u8 pad[4]` (`func_8014280C`), `*(s32 *)&D_80122CDC` selector (`func_80140A90`, guarded). Notes: [[matching-notes]] "T-16554"; rows in [[data/t0018-cases]]; cheat sheet rows added.
 
 ## Comments
+
+- 2026-10-16: agent time about 83 minutes (02:25-03:48 UTC). Clean rebuild 27/27 (`rm -rf build && configure.py && ninja`), `check_headers.py` OK, `migrate_globals.py --check` OK, `sync_protos.py --check-branch` OK (0 new, 15 known). Code review against `CODING_STANDARDS.md` still to do before Done: FAKE comments in `80142240.c` (`func_80143F50`, `func_8014280C`) and `80140810.c` (guarded `func_80140A90`).
