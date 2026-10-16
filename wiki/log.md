@@ -16318,3 +16318,7 @@ Opened PR #36 with the scoped queue fix and the requested communication-platform
 ## [2026-10-16] build | T-20000 shared-wiki conflict resolved
 
 Integrated upstream main 9e74085b into PR #36, preserving both sides of the [[index]], [[kanban]] and append-only [[log]] conflicts. All 52 queue tests pass again in Docker. PR #37 independently contains the verified GYOZI helper; its final post-integration checks pass 27/27 binary SHA1 values and the prototype guard (0 new / 15 known). See [[tickets/T-20000-first-contribution]].
+
+## [2026-10-16] build | T-20000 PR #36 refreshed
+
+Integrated upstream main 81095a46 into PR #36. Preserved both sides of the shared index and append-only log conflicts; source merged without conflicts. All 52 synthetic queue tests pass again in Docker (build/T-20000/refreshed-tests.log, gitignored). [[tickets/T-20000-first-contribution]] remains In Review.
