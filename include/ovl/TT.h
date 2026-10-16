@@ -731,3 +731,13 @@ typedef struct TtSprXform {
     /* 0x0C */ s32 angle;
 } TtSprXform; /* size 0x10 */
 #endif
+
+#ifndef OVL_TT_T11840_8013D988
+#define OVL_TT_T11840_8013D988
+/* D_80158A64 viewed up to the two fields func_8013D988 reads (0x32: angle step, 0x34: divisor of the grid). T-11840 */
+typedef struct TtCore36 {
+    /* 0x00 */ u8 pad0[0x32];
+    /* 0x32 */ u16 unk_32;
+    /* 0x34 */ s16 unk_34;
+} TtCore36; /* accessed prefix size 0x36 */
+#endif
