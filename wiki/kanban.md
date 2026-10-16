@@ -370,6 +370,8 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-16560-taco-types-first|T-16560 Types-first pilot: TACO]]
 
+- [ ] [[tickets/T-16561-taco-types-first-p1|T-16561 Types-first pilot package pt-taco-p1]]
+
 %% kanban:settings
 ```
 {"kanban-plugin":"board","list-collapse":[false,false,false,false,false]}

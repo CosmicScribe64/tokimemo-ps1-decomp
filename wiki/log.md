@@ -15313,3 +15313,22 @@ Filed in [[speedup-research-2026-10-16]].
 ## [2026-10-16] ticket | T-16551 Done
 
 [[tickets/T-16551-pt-taiiku-p1]] reviewed against `CODING_STANDARDS.md` and moved to Done: 5 functions matched (`func_80138224`, `func_80133CFC`, `func_801368B8`, `func_801346FC`, `func_80136BB4`; 4,480 bytes), `func_80135480` and `func_80137544` guarded, `func_80134060` not started. Review fixes: comments for the peeled copy and the two unit-defined data pieces in `src/ovl/TAIIKU/80133C80.c`, stale counts in [[index]], [[taiiku-family-results]] and [[matching-notes]]. Clean rebuild 27/27, headers, globals and prototype checks OK.
+## [2026-10-16] ticket | T-16561 opened
+
+[[tickets/T-16561-taco-types-first-p1]] (In Progress): matching stage for the pt-taco-p1 package of [[tickets/T-16560-taco-types-first]] (9 functions in `src/ovl/TACO/801335A0.c`, `80137590.c`, `80159090.c`, `80146D60.c`), worktree pt-taco-p1 from w2-good.
+
+## [2026-10-16] ticket | T-16561 to In Review
+
+[[tickets/T-16561-taco-types-first-p1]]: matching stage of the TACO types-first pilot, package p1 (`src/ovl/TACO/801335A0.c`, `80137590.c`, `80159090.c`, `80146D60.c`). 7 functions matched (5,104 bytes: `func_80147488`, `func_80159878`, `func_8013788C`, `func_8013760C`, `func_80147C98`, `func_80146F74`, `func_80147674`), 3 guarded (`func_80147928` 4 lines, `func_80133738` 8, `func_801472D4` 20), `func_80147B24` left as `INCLUDE_ASM` (63 lines). Idioms (pointer locals add stack homes, `default: break;` changes s-register allocation, the parameter as walking pointer, accumulate in the promoted global) in [[matching-notes]]; rows in [[data/t0018-cases]]; summary table in [[taco-family-results]]. Board, ticket and index updated.
+
+## [2026-10-16] ticket | T-16561 permuter match
+
+[[tickets/T-16561-taco-types-first-p1]]: `func_80147928` (508 bytes) matched after a 150-second `tools/permute.py` run found an empty `do { } while (0);` after `base = arg2 + 4;` (FAKE) and the declaration order `p, pos, slot, base`; the package is now 8 matched functions, 5,612 bytes. See [[matching-notes]] (T-16561 section) and [[data/t0018-cases]].
+
+## [2026-10-16] build | T-16561 closer pass
+
+[[tickets/T-16561-taco-types-first-p1]]: the Opus closer matched TACO `func_80133738` (312 bytes) by reading `D_8015E238` as flat words (`&D_8015E238[idx * 2]`, header type now `s32[]`). `func_801472D4` (20 lines) and `func_801471D0` (4 lines) stay guarded; their comments, [[matching-notes]] and [[register-cheatsheet]] record the struct-copy temporary rule and the copy-propagation dead end. Also updated: [[taco-family-results]], [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16561 Done
+
+[[tickets/T-16561-taco-types-first-p1]] reviewed against `CODING_STANDARDS.md`: three findings (`FAKE` marker position in `func_80147928`, unmarked one-line store pairs in `func_80159878`, a typo in the `func_801472D4` guard comment; stale 8-function counts in ticket and [[index]]), fixed; TACO sha1 OK, headers, globals and prototype checks OK. 9 TACO functions matched (5,924 bytes).

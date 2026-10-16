@@ -119,3 +119,25 @@ best expected bytes first (expected bytes = size / (1 + score / 30)); the gcc-bu
 ## Matching stage, package 2 (T-16562)
 
 [[tickets/T-16562-taco-types-first-p2]] worked the first ten functions of the T-16560 list for `80154230.c`, `801430B0.c` and `80133870.c`: seven matched in plain C (`func_801430D0`, `func_801347F4`, `func_80143B58`, `func_801342CC`, `func_80133870`, `func_801432F0`, `func_80154820`, 3,120 bytes, about one and a half hours), three guarded (the entry-copy trio) plus `func_801345D4` guarded and `func_80133E98` left. Method and blockers: [[matching-notes]], "T-16562". New types and declarations: the font UV tables `D_8015F5A0[20]`, `D_8015F5B4[52]` and eight scalar glyph bytes (`D_8015F5E8`..`D_8015F5EF`), prototypes for the loading-screen state handlers (`func_80133980`, `func_80133AF4`, `func_80133C08`, `func_80133E98`, `func_80134500`), `func_801347F4(s32 *)`. The three functions with the entry copy (`func_80154230`, `func_801546FC`, `func_8015443C`) stay at 8-9 lines each. Closer pass: those three and `func_801345D4` matched too (two-step header walk; flag test read through the same base), 11 functions and 4,728 bytes in all; only `func_80133E98` is left.
+## Matching stage, package p1 (T-16561)
+
+[[tickets/T-16561-taco-types-first-p1]] took the best redrafts of `801335A0.c`, `80137590.c`, `80159090.c` and `80146D60.c` from [[tickets/T-16560-taco-types-first]] and worked them to the byte: 8 of 12 functions matched (5,612 bytes, about 2 hours, 4 of them within 10 minutes of the first compile). The pattern: the new types fix the data flow, the rest is the shape of the locals.
+
+| Function | Bytes | Result | What decided it |
+| --- | ---: | --- | --- |
+| `func_80147488` | 492 | matched | clone of `func_8015B3B0`: MATRIX first, `pos` local, no `obj` local (a pointer local adds a home, spills move 4 bytes) |
+| `func_80146F74` | 604 | matched | same shape plus the interpolation `m.t[0] += (D_8015EDB4->unk74 - m.t[0]) / arg7` |
+| `func_80147674` | 644 | matched | same shape; the parameter itself walks the table (`arg1 += 3; *arg1; arg1++`), which gives `$s0` |
+| `func_80147C98` | 488 | matched | no pointer locals at all; declaration order MATRIX, SVECTOR in, SVECTOR out, TcPos out |
+| `func_80159878` | 1,768 | matched | `default: break;` (keeps `arg0` out of `$s0`), FAKE unused `TcPos`, one-line `sp48.y = ..; sp50.x = ..;` pairs |
+| `func_8013788C` | 468 | matched | range tests as `D_800E6280.unk_F80 |= k;` on the global instead of a local accumulator |
+| `func_8013760C` | 640 | matched | `s32` without return, `*(u8 *)&` selector, empty `default`, FAKE `(u8 *)i + (u32)ptr` operand order |
+| `func_80147928` | 508 | matched | `p`, `pos`, `slot`, `base` locals, index-first sums, and a FAKE empty `do { } while (0);` that gives arg2 its `$a3` range (found by the permuter) |
+| `func_80133738` | 312 | matched (closer) | the pair table read as flat words: `p = &D_8015E238[idx * 2]; func_80046290(p[0], p[1], 8);` (`D_8015E238` is an `s32[]`); the `TcPair8` element form allocates one ugen temporary less |
+| `func_801472D4` | 300 | 20 lines | block-copy temporaries one ugen register low |
+| `func_801471D0` | 260 | 4 lines (T-11300) | `move s4,s3` copy of the second loop base |
+| `func_80147B24` | 372 | 63 lines | unrolled loop: pointer-end test instead of the counter |
+
+The closer pass (Opus, about 35 minutes) matched `func_80133738`: 9 of 12 functions, 5,924 bytes. `func_801472D4` and `func_801471D0` stay guarded with unchanged line counts; what the closer learned is in their `NON_MATCHING` comments and in [[matching-notes]].
+
+Idioms and dead ends are in [[matching-notes]] (T-16561 section); the open rows are in [[data/t0018-cases]].

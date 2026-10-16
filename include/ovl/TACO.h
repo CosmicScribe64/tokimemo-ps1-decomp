@@ -128,7 +128,7 @@ void func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 a
 void func_8014F820(void);
 void func_8013AFDC(void);
 void func_8013A790(s32 arg0, s32 arg1);
-void func_8013760C();
+s32 func_8013760C();
 void func_8013788C();
 void func_8014F210(void);
 void func_8015185C(void);
@@ -198,7 +198,7 @@ void func_8014EF14(s32 arg0);
 void func_8014F044(void);
 void func_80146D60(s32 arg0);
 void func_801471D0(s32 arg0);
-void func_80147488(s32 arg0, s32 arg1, s32 arg2);
+void func_80147488(s32 arg0, s16 *arg1, s32 arg2);
 extern s32 D_8015F3E0;
 extern s32 D_8015F3E4;
 extern s32 D_8015F82C;
@@ -391,6 +391,7 @@ typedef struct TcPair8 {
     s32 b;
 } TcPair8;
 extern TcPair8 D_8015FAE0[];
+extern s32 D_8015E238[]; /* word pairs, read as a flat table by func_80133738 (T-16561) */
 typedef struct TcPair2 {
     u8 a;
     u8 b;
