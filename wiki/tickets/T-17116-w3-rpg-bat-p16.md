@@ -31,7 +31,7 @@ Worktree `tokimemo-wt/w3-rpg-bat-p16`, branch `w3-rpg-bat-p16`, base `w2-good`. 
 | `func_80135358` | 1,700 | `INCLUDE_ASM` (T-17100 draft, score 521) | guarded draft, 10 differing lines (5 instructions: one range in `$v0` where the original has `$v1`); FAKE `h + -h` and first-symbol words |
 | `func_80134E78` | 1,268 | `INCLUDE_ASM` (T-17100 draft, score 254) | restored to `INCLUDE_ASM`; best draft in `drafts/T-17116/RPG_BAT/func_80134E78` (about 128 rows; constant stored and passed gap) |
 
-1 of 3 matched (about 22 minutes for the match). Method and findings: [[matching-notes]] (section T-17116), six new rows in [[register-cheatsheet]], two rows in [[data/t0018-cases]], [[rpg-bat-family-results]]. Header change: `RPG_BAT.h` (`#ifndef RPG_BAT_OVERRIDE_func_8013F0F4` wrapper).
+1 of 3 matched (about 22 minutes for the match). Method and findings: [[matching-notes]] (section T-17116), six new rows in [[register-cheatsheet]], two rows in [[data/t0018-cases]], [[rpg-bat-family-results]]. Header changes: `RPG_BAT.h` (`#ifndef RPG_BAT_OVERRIDE_func_8013F0F4` wrapper; externs `D_8015ECB8`, `D_8015ECE0`, `D_8015ED08`).
 
 ## Comments
 
