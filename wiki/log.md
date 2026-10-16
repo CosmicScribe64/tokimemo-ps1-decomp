@@ -16449,3 +16449,14 @@ The user-supplied PlayStation the Best CHD passed release identification; disc e
 ## [2026-10-16] ticket | T-20000 Done (PR #36 merged)
 
 Maintainer review of PR #36 (KakarottoCake): both review points addressed (empty --files entries dropped; load_cached docstring and progress note describe the scoped path), 54 queue tests. Verified on the integration base: clean rebuild 27/27, headers, globals and prototypes OK, 1,189 tool tests OK. The three mid-file T-20000 entries were moved here unchanged. [[tickets/T-20000-first-contribution]] Done.
+## [2026-10-16] ticket | T-17110 In Progress
+
+[[tickets/T-17110-w3-rpg-bat-p10]] created and In Progress: wave 3 package w3-rpg-bat-p10, four RPG_BAT functions in `src/ovl/RPG_BAT/8014ADD0.c` (links [[tickets/T-17100-types-first-rpg_bat]]).
+
+## [2026-10-16] ticket | T-17110 In Review
+
+[[tickets/T-17110-w3-rpg-bat-p10]] In Progress to In Review: 3 of 4 functions matched in `src/ovl/RPG_BAT/8014ADD0.c` (`func_8014C360`, `func_8014B79C`, `func_8014D11C`; 1,800 bytes), unit sha1 OK; `func_8014BFE4` back to `INCLUDE_ASM` with the hand draft in `drafts/T-17110/RPG_BAT/func_8014BFE4/hand.c` (128 rows). Notes in [[matching-notes]] ("T-17110"), four rows in [[register-cheatsheet]], section in [[rpg-bat-family-results]], update line in [[data/t0018-cases]]. Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] ticket | T-17110 Done
+
+[[tickets/T-17110-w3-rpg-bat-p10]] In Review to Done: code review against `CODING_STANDARDS.md` found two issues, both fixed: wrong byte counts in the ticket Goal and notes (the matched total is 1,788 bytes, not the 1,800 of the In Review entry; `func_8014D11C` is 600 B, `func_8014B79C` 776 B) and missing comments for the matching tricks in `src/ovl/RPG_BAT/8014ADD0.c`. 3 of 4 functions matched (`func_8014C360`, `func_8014B79C`, `func_8014D11C`), unit sha1 OK; `func_8014BFE4` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
