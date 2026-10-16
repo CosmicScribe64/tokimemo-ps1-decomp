@@ -16586,3 +16586,7 @@ Clean rebuild of the w3-rpg-bat-p14 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.
 ## [2026-10-16] ticket | T-17119 Done
 
 [[tickets/T-17119-w3-rpg-bat-p19]] In Review to Done: code review against `CODING_STANDARDS.md` found one item, fixed (a comment explaining the byte-index record loops in `src/ovl/RPG_BAT/80141060.c`, comment only). Rebuild OK (globals, headers, `RPG_BAT.bin` sha1 OK, `sync_protos --check-branch` OK). 2 of 2 functions matched (`func_80148F70` 1,644 B, `func_80141060` 2,564 B). Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17006 In Progress
+
+[[tickets/T-17006-w3-main-p06]] created and In Progress: wave 3 package w3-main-p06, six functions in `src/main/80075320.c` (`func_800754C0`, `func_80076C7C`, `func_8007866C`, `func_80077CA8`, `appointment_launch`, `func_80076630`). Worktree `tokimemo-wt/w3-main-p06` from `w2-good`.
