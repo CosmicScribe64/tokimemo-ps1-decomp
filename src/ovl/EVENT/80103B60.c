@@ -1,4 +1,3 @@
-#define MAIN_API_OVERRIDE_D_80122EC8 /* EVENT table of 40 function pointers (main_api.h: s32, used by TAIIKU) */
 #include "common.h"
 #include "ovl/EVENT.h"
 
@@ -132,11 +131,6 @@ void func_80104090(void) {
     }
     func_80015FE0();
 }
-
-typedef struct {
-    void (*f[29])();
-} FnTbl29; /* size 0x74 */
-extern FnTbl29 D_80122C0C;
 
 void func_801040F0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -305,11 +299,6 @@ void func_8010498C(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    void (*f[50])();
-} FnTbl50; /* size 0xC8 */
-extern FnTbl50 D_80122C80;
-
 void func_801049B4(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl50 tbl;
@@ -348,11 +337,6 @@ void func_80104B00(void) {
     }
     func_80011DFC();
 }
-
-typedef struct {
-    void (*f[55])();
-} FnTbl55; /* size 0xDC */
-extern FnTbl55 D_80122D48;
 
 void func_80104B50(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -401,11 +385,6 @@ void func_80104DB4(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    void (*f[41])();
-} FnTbl41; /* size 0xA4 */
-extern FnTbl41 D_80122E24;
-
 void func_80104E64(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl41 tbl;
@@ -429,11 +408,6 @@ void func_80104F30(void) {
     }
     func_80011DFC();
 }
-
-typedef struct {
-    void (*f[40])();
-} FnTbl40; /* size 0xA0 */
-extern FnTbl40 D_80122EC8;
 
 void func_80104F80(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

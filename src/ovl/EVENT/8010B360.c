@@ -28,11 +28,6 @@ void func_8010B430(void) {
     }
 }
 
-typedef struct {
-    void (*f[42])();
-} FnTbl42; /* size 0xA8 */
-extern FnTbl42 D_80124120;
-
 void func_8010B490(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl42 tbl;

@@ -57,7 +57,6 @@ void func_8010A3D0(void) {
     }
 }
 
-
 void func_8010A430(void) {
     func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
     if (D_800B1AF5 == 0) {
@@ -66,7 +65,6 @@ void func_8010A430(void) {
         func_80015FE0();
     }
 }
-
 
 void func_8010A490(void) {
     func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
@@ -77,12 +75,6 @@ void func_8010A490(void) {
     }
 }
 
-
-typedef struct {
-    void (*f[22])();
-} FnTbl22; /* size 0x58 */
-extern FnTbl22 D_80123ED8;
-
 void func_8010A4F0(void) {
     s32 idx; /* unused: its stack slot sits above tbl (T-3330) */
     FnTbl22 tbl;
@@ -92,16 +84,10 @@ void func_8010A4F0(void) {
     tbl.f[D_800B1AF6]();
 }
 
-
 void func_8010A584(void) {
     func_800433D0(0x500);
     func_80011DFC();
 }
-
-typedef struct {
-    void (*f[25])();
-} FnTbl25; /* size 0x64 */
-extern FnTbl25 D_80123F30;
 
 void func_8010A5AC(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -241,7 +227,6 @@ void func_8010A91C(void) {
     func_80011DFC();
 }
 
-
 void func_8010AAAC(void) {
     D_80120678 = D_8012062C;
     D_8012067C = D_8012064C;
@@ -302,11 +287,6 @@ void func_8010AD48(void) {
     func_800469F4(0x4678);
     func_80011DFC();
 }
-
-typedef struct {
-    void (*f[14])();
-} FnTbl14; /* size 0x38 */
-extern FnTbl14 D_80123F94;
 
 void func_8010AD70(void) {
     s32 idx; /* unused: its stack slot sits above tbl (T-3330) */
@@ -376,8 +356,6 @@ void func_8010B268(void) {
     D_800EECCC = 0;
     func_80011DFC();
 }
-
-extern FnTbl14 D_801240AC;
 
 void func_8010B29C(void) {
     s32 idx; /* unused: its stack slot sits above tbl (T-3330) */

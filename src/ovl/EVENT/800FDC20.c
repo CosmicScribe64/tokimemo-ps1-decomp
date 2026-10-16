@@ -105,14 +105,9 @@ void func_800FE030(void) {
     func_80015FE0();
 }
 
-typedef struct {
-    u8 b[0x80];
-} Blob80; /* size 0x80 */
-extern Blob80 D_801218E8;
-
 void func_800FE090(void) {
     s32 pad; /* FAKE: unused local above tmp; the original frame is 4 bytes larger, real source unknown. T-4080 */
-    Blob80 tmp;
+    FnTbl32 tmp;
 
     tmp = D_801218E8;
     func_80078950("s%d\n", D_800B1AF6);
@@ -301,11 +296,6 @@ void func_800FEA10(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    void (*f[49])();
-} FnTbl49; /* size 0xC4 */
-extern FnTbl49 D_80121968;
-
 void func_800FEA38(void) {
     s32 idx; /* FAKE: unused local declared before the table, the original frame has the table 4 bytes lower (T-3330) */
     FnTbl49 tbl;
@@ -345,11 +335,6 @@ void func_800FF748(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    void (*f[42])();
-} FnTbl42; /* size 0xA8 */
-extern FnTbl42 D_80121BB8;
-
 void func_800FF770(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl42 tbl;
@@ -365,11 +350,6 @@ void func_800FF7F4(void) {
     func_800FDE30();
     func_80011DFC();
 }
-
-typedef struct {
-    void (*f[45])();
-} FnTbl45; /* size 0xB4 */
-extern FnTbl45 D_80121C60;
 
 void func_800FF82C(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

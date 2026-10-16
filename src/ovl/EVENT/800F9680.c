@@ -141,11 +141,6 @@ void func_800F9DBC(void) {
     func_80015FE0();
 }
 
-typedef struct {
-    void (*f[39])();
-} FnTbl39; /* size 0x9C */
-extern FnTbl39 D_80120D30;
-
 void func_800F9DF8(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl39 tbl;
@@ -272,11 +267,6 @@ void func_800FA584(void) {
     }
     func_80015FE0();
 }
-
-typedef struct {
-    void (*f[22])();
-} FnTbl22; /* size 0x58 */
-extern FnTbl22 D_80120DCC;
 
 void func_800FA5C0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -442,10 +432,6 @@ void func_800FAD28(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    s32 w[0x11];
-} Ev44; /* size 0x44: record of D_800EAFA0 */
-
 void func_800FAE6C(void) {
     func_800F9C4C();
     func_80012D64(D_80120CD4, 0x11, 1, 2, 0);
@@ -604,11 +590,6 @@ void func_800FB5CC(void) {
     func_800F6000();
 }
 
-typedef struct {
-    void (*f[45])();
-} FnTbl45; /* size 0xB4 */
-extern FnTbl45 D_80120EE0;
-
 void func_800FB67C(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl45 tbl;
@@ -624,11 +605,6 @@ void func_800FB6F0(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    void (*f[44])();
-} FnTbl44; /* size 0xB0 */
-extern FnTbl44 D_80120F94;
-
 void func_800FB728(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl44 tbl;
@@ -643,11 +619,6 @@ void func_800FB7B0(void) {
     func_800F9A7C();
     func_80011DFC();
 }
-
-typedef struct {
-    void (*f[58])();
-} FnTbl58; /* size 0xE8 */
-extern FnTbl58 D_80121044;
 
 void func_800FB7E8(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -676,8 +647,6 @@ void func_800FB8EC(void) {
     func_80078970(D_800947C4, "観覧車");
     func_80011DFC();
 }
-
-extern FnTbl45 D_8012112C;
 
 void func_800FB920(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

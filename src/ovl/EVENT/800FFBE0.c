@@ -1,18 +1,6 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
-typedef struct {
-    void (*f[15])();
-} FnTbl15; /* size 0x3C */
-
-typedef struct {
-    void (*f[42])();
-} FnTbl42; /* size 0xA8 */
-
-typedef struct {
-    void (*f[38])();
-} FnTbl38; /* size 0x98 */
-
 void func_800FFBE0(void) {
     D_80121D20 = 0x801CE218;
     D_80121D24 = 0x801CE21C;
@@ -121,8 +109,6 @@ void func_80100010(void) {
     func_80015FE0();
 }
 
-extern FnTbl38 D_80121DFC;
-
 void func_80100070(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
     FnTbl38 tbl;
@@ -164,11 +150,6 @@ void func_801001F4(void) {
     }
     func_80015FE0();
 }
-
-typedef struct {
-    void (*f[21])();
-} FnTbl21; /* size 0x54 */
-extern FnTbl21 D_80121E94;
 
 void func_80100254(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -391,11 +372,6 @@ void func_80100CC4(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    void (*f[40])();
-} FnTbl40; /* size 0xA0 */
-extern FnTbl40 D_80121EE8;
-
 void func_80100CEC(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
     FnTbl40 tbl;
@@ -425,8 +401,6 @@ void func_80100DD8(void) {
     func_80011DFC();
 }
 
-extern FnTbl38 D_80121F88;
-
 void func_80100E30(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
     FnTbl38 tbl;
@@ -441,11 +415,6 @@ void func_80100ECC(void) {
     func_800FFD40();
     func_80011DFC();
 }
-
-typedef struct {
-    void (*f[51])();
-} FnTbl51; /* size 0xCC */
-extern FnTbl51 D_80122020;
 
 void func_80100F04(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
@@ -489,8 +458,6 @@ void func_801010B4(void) {
     }
     func_80011DFC();
 }
-
-extern FnTbl15 D_80122194;
 
 void func_80101104(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */

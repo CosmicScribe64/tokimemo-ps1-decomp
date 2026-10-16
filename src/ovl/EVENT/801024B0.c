@@ -1,30 +1,6 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
-typedef struct {
-    void (*f[56])();
-} FnTbl56; /* size 0xE0 */
-extern FnTbl56 D_80122A50;
-
-typedef struct {
-    void (*f[40])();
-} FnTbl40; /* size 0xA0 */
-extern FnTbl40 D_801229B0;
-
-typedef struct {
-    void (*f[38])();
-} FnTbl38; /* size 0x98 */
-extern FnTbl38 D_80122848;
-
-typedef struct {
-    void (*f[32])();
-} FnTbl32; /* size 0x80 */
-
-typedef struct {
-    void (*f[19])();
-} FnTbl19; /* size 0x4C */
-extern FnTbl19 D_801227FC;
-
 void func_801024B0(void) {
     D_80122680 = 0x801CE0F4;
     D_80122684 = 0x801CE0F8;
