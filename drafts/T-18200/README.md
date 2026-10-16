@@ -1,9 +1,9 @@
 # T-18200: EN_NICHI redraft after the types-first pass
 
 Fresh drafts of the 19 EN_NICHI functions that were unmatched at `w2-good`, made after the types-first pass of
-T-18200 (wiki page `en-nichi-family-results`, section "Types-first pass (T-18200)"). None scored 0; four matched
+T-18200 (wiki page `en-nichi-family-results`, section "Types-first pass (T-18200)"). None scored 0; five matched
 after hand edits and are in `src/` (`status: matched` and a `hand.c` with the matched body in their result
-folder): `func_80132834`, `func_80136B74`, `func_80134258`, `func_80133CA8` (2,368 bytes).
+folder): `func_80132834`, `func_80136B74`, `func_80134258`, `func_80133CA8`, `func_80135A48` (2,500 bytes).
 
 - `redraft.py`: the driver, copied from `drafts/T-17900/redraft.py` (itself from T-16550 and T-16560) and adapted
   to EN_NICHI (run it in Docker from the repo root; its docstring lists the rewrites).
