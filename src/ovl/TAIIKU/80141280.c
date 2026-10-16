@@ -202,6 +202,8 @@ void func_80141280(void) {
         if (func_80044E8C() == 1) {
             dec_bg_reset();
             set_dec_bri(0);
+            /* D_80122DD0 is a u8[0x100] in main_api.h (main bzeroes it); here it is 16 records of 4 words, and
+             * the store order below is the original's: the last one lands in the bne delay slot (T-19032) */
             for (j = 0; j != 16; j++) {
                 ((TaiRec16 *)D_80122DD0)[j].unk_04 = 0;
                 ((TaiRec16 *)D_80122DD0)[j].unk_08 = 0;

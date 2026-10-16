@@ -16053,3 +16053,7 @@ TAIIKU `func_80141280` (1,764 B, `src/ovl/TAIIKU/80141280.c`) matches in plain C
 ## [2026-10-16] ticket | T-19032 In Review
 
 [[tickets/T-19032-w3-d-p32]] In Progress to In Review: 1 of 1 functions matched (`func_80141280`). Clean rebuild 667 steps, 27/27 sha1 OK; `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` OK (0 new, 15 known). Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] ticket | T-19032 Done
+
+[[tickets/T-19032-w3-d-p32]] In Review to Done: code review against `CODING_STANDARDS.md` found two small documentation issues (the zero loop's record view and store order were unexplained in the source; a delay-slot remark in [[register-cheatsheet]] named the wrong field), both fixed. 1 of 1 functions matched: TAIIKU `func_80141280` (1,764 B, two FAKE comments). TAIIKU unit sha1 OK after a rebuild. Merge via the wave 3 merge script.
