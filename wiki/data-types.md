@@ -34,6 +34,8 @@ Limits: the pass is linear (no control flow), so a register state survives a lab
 | `Work80125D10` (0x50 bytes, one work area) | `D_80125D10` | `main_api.h` | 33 globals of main `80079B10`/`8007C030` | 1 |
 | `RpgRec18` (six words) | `D_8015EC58` | `include/ovl/RPG_BAT.h` | 5 globals | 1 |
 | byte view of the 0x44-byte record table | `D_8011ECD0` | existing `u8 D_8011ECD0[]` | uses only | 6 (ENDING 2, DATE 1, RPG_BAT 2, main 1) |
+| stack tables `RpgDirTable`, `RpgStrTbl4`, `RpgWordTbl4`, `RpgWordTbl10`, `RpgHalfTbl12` | `D_8015E4F0`, `D_8015E530`..`D_8015E578`, `D_8015E720`, `D_8015EFA0`..`D_8015EFF0` | `include/ovl/RPG_BAT.h` (T-17100) | 12 undeclared tables | 0 |
+| `RpgStat` pad named (`unk_0C`..`unk_34`) | `D_8015EBFC` | `include/ovl/RPG_BAT.h` (T-17100) | pad cast in `func_801447E0` | 0 |
 | byte view of EVENT's 0x44-byte table | `D_800EAFA0` (new) | `main_api.h` | uses only | 1 |
 | `TaiRunnersA` (`player`, `cpu[3]` of `TaiRunnerA`, 0x24) | `D_80149208` | `include/ovl/TAIIKU.h` (T-16550) | `TaiikuSlots`, `TaiSlot24` views | 0 |
 | `TaiRunnerB[4]` (0x24) | `D_8014A13C` | `include/ovl/TAIIKU.h` (T-16550) | 8 globals | 0 (FAKE byte views kept in `func_801449A0`, `func_801448D4`, `func_80144C70`) |

@@ -25,7 +25,59 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80156CC0", func_80156D78);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80156CC0", func_80157158);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80156CC0", func_80157640);
+void func_80157640(void) {
+    switch (D_8015EDD8) {
+    case 0:
+        D_8015EC38 = 0x110 - D_8015EDE0;
+        D_8015EDF0 = 0;
+        D_8015EDE0 += 4;
+        func_8013E97C(0x1D, 0, 0);
+        func_8013E7C0(0x1D, 0x18, 1, 1);
+        if (D_8015EDE0 >= 0xD1) {
+            func_8014EF3C();
+        }
+        break;
+    case 1:
+        D_8015EDF0 = 0;
+        func_8013E97C(0x1D, 0, 0);
+        func_8013E7C0(0x1D, 0x18, 1, 1);
+        func_8014EF3C();
+        break;
+    case 2:
+        func_8014F080(0x1E);
+        break;
+    case 3:
+        func_800AE0F0(D_8015E828, D_800E6280.unk_0D4);
+        func_800AE100(D_8015E828, "達は逃げ出した。");
+        func_8014B738(D_8015E8F0, 1, 0x5A);
+        func_8014EF3C();
+        break;
+    case 4:
+        func_8014F178(0);
+        break;
+    case 5:
+        ((DisplayActor44 *)D_8011ECD0)[125].unk_03 = 0x81;
+        func_8013E7C0(0x30, 2, 1, 1);
+        func_8013F15C(0x503, 1, 0);
+        func_8014EF3C();
+        break;
+    case 6:
+        ((DisplayActor44 *)D_8011ECD0)[125].unk_26 += 4;
+        ((DisplayActor44 *)D_8011ECD0)[144].unk_26 += 4;
+        D_8015EDE0 += 1;
+        if (D_8015EDE0 >= 0x21) {
+            func_8014EF3C();
+        }
+        break;
+    case 7:
+        func_8014F080(0x3C);
+        break;
+    case 8:
+        D_8015EBFC.unk_18 = 1;
+        func_80042808();
+        break;
+    }
+}
 
 void func_8015785C(void) {
     func_8013E97C(0x2F, D_8015EC38, D_8015EC3C);

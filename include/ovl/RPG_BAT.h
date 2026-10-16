@@ -165,7 +165,17 @@ typedef struct RpgStat {
     /* 0x00 */ s32 unk_00;
     /* 0x04 */ s32 unk_04;
     /* 0x08 */ s32 unk_08;
-    /* 0x0C */ u8 pad_0C[0x2C];
+    /* 0x0C */ s32 unk_0C; /* T-17100: the words between are the scalars D_8015EC08..D_8015EC30 */
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ s32 unk_14;
+    /* 0x18 */ s32 unk_18;
+    /* 0x1C */ s32 unk_1C;
+    /* 0x20 */ s32 unk_20;
+    /* 0x24 */ s32 unk_24;
+    /* 0x28 */ s32 unk_28;
+    /* 0x2C */ s32 unk_2C;
+    /* 0x30 */ s32 unk_30;
+    /* 0x34 */ s32 unk_34;
     /* 0x38 */ s32 unk_38;
 } RpgStat; /* size 0x3C */
 extern RpgStat D_8015EBFC;
@@ -551,5 +561,41 @@ extern s32 D_8015ECF8;
 /* Existing guarded definitions later in 8014A660.c. */
 void func_8014AB84(s32 arg0, s32 arg1, s32 arg2);
 void func_8014AC74(void);
+
+#ifndef OVL_RPG_BAT_T17100_TABLES
+#define OVL_RPG_BAT_T17100_TABLES
+/* T-17100: constant tables that unmatched functions copy whole to the stack
+ * (an lw/sw run, written in C as one struct assignment, like StrTbl41). */
+typedef struct RpgDirTable {
+    /* 0x00 */ s32 v[16]; /* eight (x, y) unit steps at 45 degrees, 0x100 = 1.0 */
+} RpgDirTable; /* size 0x40 */
+typedef struct RpgStrTbl4 {
+    /* 0x00 */ u8 *s[4];
+} RpgStrTbl4; /* size 0x10 */
+typedef struct RpgWordTbl4 {
+    /* 0x00 */ s32 v[4];
+} RpgWordTbl4; /* size 0x10 */
+typedef struct RpgWordTbl10 {
+    /* 0x00 */ s32 v[10];
+} RpgWordTbl10; /* size 0x28 */
+typedef struct RpgHalfTbl12 {
+    /* 0x00 */ s16 v[12]; /* six (x, y) offsets */
+} RpgHalfTbl12; /* size 0x18 */
+extern RpgDirTable D_8015E4F0;  /* func_801328C4 */
+extern RpgStrTbl4 D_8015E530;   /* func_80139E88 */
+extern RpgWordTbl4 D_8015E540;  /* func_80139E88 */
+extern RpgWordTbl10 D_8015E550; /* func_8013BBF8 */
+extern RpgWordTbl10 D_8015E578; /* func_8013BBF8 */
+extern RpgHalfTbl12 D_8015E720; /* func_8014BB80 */
+extern RpgStrTbl4 D_8015EFA0;   /* func_80152384 */
+extern RpgStrTbl4 D_8015EFB0;   /* func_80152384 */
+extern RpgStrTbl4 D_8015EFC0;   /* func_80152384 */
+extern RpgWordTbl4 D_8015EFD0;  /* func_80152384 */
+extern RpgStrTbl4 D_8015EFE0;   /* func_80159B40 */
+extern RpgStrTbl4 D_8015EFF0;   /* func_80159B40 */
+/* T-17100: called by func_801498C0 before their definitions. */
+void func_80149AA8(void);
+void func_8014A16C(void);
+#endif
 
 #endif

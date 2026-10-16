@@ -5723,3 +5723,12 @@ declared above two stack shorts sets their slots; the twin's FAKE entry assignme
   T-3330 needs `s32` counters or a third local (`func_80155E40`, `func_80155004`).
 - Sibling ports find guarded near misses fast: `tools/siblings.py --unit X` lists clones in other overlays
   (TACO, EVENT) whose matched C already carries the fix.
+## RPG_BAT types-first pass (T-17100)
+
+Details and the type map in [[rpg-bat-family-results]]. Four matches from the redraft (`func_80157640`, `func_8014F88C`, `func_801525B0`, `func_801498C0`, 3,168 bytes):
+
+- `switch (x) { default: case 0: ...` when m2c prints `default:` first and the range check jumps to the arm of jump-table slot 0 (`func_801498C0`).
+- Read a global again where m2c kept a temp: the second switch on `D_8015EE00.unk_04` (`func_8014F88C`), the second test of `D_8015EB98` (`func_801525B0`), `D_8015EDE0 += 1; if (D_8015EDE0 >= 0x21)` (`func_80157640`; the temp moved the promoted global to `$a3`).
+- A `b` to the next label after a then-block is an `else` whose single assignment IDO moved into the branch delay slot (`func_801525B0`).
+- `func_8015A8B4`: m2c printed the after-loop store of the last `unk_26` as a read of record `i + 1`; a loop-carried local (`last = ...` in the loop, the store after it) gives the original's `move a0, v1`.
+

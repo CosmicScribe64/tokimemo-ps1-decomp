@@ -1,0 +1,16 @@
+extern s32 D_8011F484;
+extern s32 D_8011F50C;
+extern s32 D_8011F770;
+extern s32 D_8011F990;
+extern s32 D_8011FA18;
+extern s32 D_8011FBB0;
+extern s32 D_8011FDD0;
+extern s32 D_801213A4;
+extern s32 D_801213A8;
+extern s32 D_801213CC;
+extern s32 D_801213E8;
+extern s32 D_801213EC;
+extern s32 D_80121410;
+extern s32 NULL;
+extern s8 D_801213DB;
+extern s8 D_8012141F;

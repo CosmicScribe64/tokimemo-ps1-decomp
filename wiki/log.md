@@ -15417,3 +15417,14 @@ Packages T-17201..T-17208 (`w3-date-p01`..`p08`, 30 functions, 23,468 bytes). Cl
 ## [2026-10-16] ticket | T-17200 Done
 
 [[tickets/T-17200-types-first-date]] In Review to Done after the code review against `CODING_STANDARDS.md`: 4 functions matched (1,760 bytes: `func_8014AD9C`, `func_8013B208`, `func_80159FAC`, `func_80158338`), 13 guarded drafts unchanged. No code findings. Two wording findings: commit messages of `8e4eb55c` and `2bdd2567` carry interim numbers (39 typedef blocks, not 47; 32 unguarded, 7 better, 5 worse), recorded on the ticket, history left as is; `wiki/index.md` stack-table count fixed to 10. DATE sha1 OK, `check_headers` and `sync_protos --check-branch` OK.
+## [2026-10-16] ticket | T-17100 Types-first: RPG_BAT started
+
+Opened [[tickets/T-17100-types-first-rpg_bat]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover RPG_BAT's shared types, redraft its unmatched functions with the T-16550/T-16560 drivers, then cut packages. Branch `w3-rpg-bat-types` from `w2-good`.
+
+## [2026-10-16] ticket | T-17100 Types-first: RPG_BAT to In Review
+
+[[tickets/T-17100-types-first-rpg_bat]]: stack-table types and `RpgStat` fields in `include/ovl/RPG_BAT.h`; 74 redrafts with `drafts/T-17100/redraft.py` (20 better than the census, sum 17,474 to 16,558 rows); 4 matches / 3,168 bytes (`func_80157640`, `func_8014F88C`, `func_801525B0`, `func_801498C0`); 19 packages T-17101..T-17119 (62 functions). New page [[rpg-bat-family-results]]; idioms in [[matching-notes]], type rows in [[data-types]]. In Review, waiting for the code review.
+
+## [2026-10-16] ticket | T-17100 Done
+
+[[tickets/T-17100-types-first-rpg_bat]] In Review to Done after the code review against `CODING_STANDARDS.md`: 4 functions matched (3,168 bytes: `func_80157640`, `func_8014F88C`, `func_801525B0`, `func_801498C0`), 74 redrafts, 19 packages. One finding fixed (comment on the `u16` view of `DisplayActor44.unk_18` in `src/ovl/RPG_BAT/8014F790.c`, no byte change). RPG_BAT unit sha1 OK after the rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
