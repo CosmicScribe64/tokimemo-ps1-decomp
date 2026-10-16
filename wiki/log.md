@@ -15919,3 +15919,6 @@ RENSYU `func_80133CB8` (420 bytes) matched, unit sha1 OK (`src/ovl/RENSYU/801320
 
 ## [2026-10-16] build | T-19025 closer pass
 [[tickets/T-19025-w3-d-p25]] closer pass (Opus, 16:38-17:11 UTC) on branch `w3-d-p25`: both guarded drafts of `src/ovl/TACO/80132220.c` matched, so the whole file is C (4 of 4). `func_8013240C` (1,188 bytes): K&R `s32` with no `return` and no result variable. `func_80132FE8` (908 bytes): `D_800E6280.unk_F88` read into a local `btn` that stays live in `$v0` across the `D_8015EDE4` tests, plus one FAKE empty test from `autotweak`. Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Notes in [[matching-notes]] (section T-19025), two rows in [[register-cheatsheet]], two rows in [[data/t0018-cases]], [[taco-family-results]], [[index]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19025 Done
+[[tickets/T-19025-w3-d-p25]] In Review to Done: code review against `CODING_STANDARDS.md` found one missing `FAKE` comment (`btn` in `func_80132FE8`) and one undocumented unset `flags` path, both fixed with comments only (unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 4 of 4 functions matched (`func_8013356C`, `func_801328B0`, `func_8013240C`, `func_80132FE8`; 3,992 bytes), `src/ovl/TACO/80132220.c` is all C. Merge via the wave 3 merge script.
