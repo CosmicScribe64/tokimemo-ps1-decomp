@@ -905,6 +905,15 @@ extern u8 D_800E7D49;
 extern u8 D_800E7D4A;
 extern u8 D_800E7D4B;
 extern s32 D_800E7D4C;
+/* T-17000: bit-field view of the flag byte D_800E7D4F. `lui rA; lbu rB,%lo(D_800E7D4F)(rA); ori; sb` with
+ * rB != rA is a bit-field store (T-7010); func_8007959C sets b0 so. BUNKASAI's BunkaReturnFlags
+ * (T-10630) is the same view. */
+typedef struct Flags7D4F {
+    u8 b0 : 1;
+    u8 b1 : 1;
+    u8 unk_2_4 : 3;
+    u8 unk_5_7 : 3;
+} Flags7D4F; /* size 0x01 */
 extern u8 D_800E7D4F;
 extern s32 D_800E7D50;
 extern u8 D_800E7D68;
