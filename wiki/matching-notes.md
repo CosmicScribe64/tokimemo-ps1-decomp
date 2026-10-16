@@ -6015,4 +6015,3 @@ Two matches (1,208 bytes) from hand edits of the redraft; details in [[master-fa
   The T-18600 driver's `reroll` rewrite writes them back as index loops (up to 254 rows less per function).
 - A port of a matched twin (`func_80133F80` into `func_80135FB8`) reaches 132 lines; IDO keeps the array base in
   `s2` for the whole case where the original loads it only before the shuffle loop.
-

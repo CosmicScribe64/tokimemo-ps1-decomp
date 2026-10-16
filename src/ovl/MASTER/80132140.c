@@ -112,7 +112,7 @@ void func_80133374(void) {
 }
 
 void func_8013348C(void) {
-    u32 sel; /* declared before kind: its slot sits above kind's stack home (sp+0x2B) */
+    u32 sel; /* declared before kind: its slot sits above kind's stack home (sp+0x2B), T-18600 */
     u8 kind;
 
     sel = (u16) D_800E6280.unk_0F4.h >> 0xC;
