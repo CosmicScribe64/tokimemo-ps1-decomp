@@ -141,6 +141,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-18400-types-first-kangei|T-18400 Types-first: KANGEI]]
 - [ ] [[tickets/T-18500-types-first-bunkaken|T-18500 Types-first: BUNKAKEN]]
 - [ ] [[tickets/T-18600-types-first-master|T-18600 Types-first: MASTER]]
+- [ ] [[tickets/T-19017-w3-d-p17|T-19017 Wave 3 package w3-d-p17]]
 - [ ] [[tickets/T-18100-types-first-bunka_sd|T-18100 Types-first: BUNKA_SD]]
 - [ ] [[tickets/T-19014-w3-d-p14|T-19014 Wave 3 package w3-d-p14]]
 - [ ] [[tickets/T-18300-types-first-ending|T-18300 Types-first: ENDING]]

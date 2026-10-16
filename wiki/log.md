@@ -15872,3 +15872,14 @@ Created [[tickets/T-18700-types-first-bunkasai]] (branch `w3-bunkasai-types` fro
 
 [[tickets/T-18700-types-first-bunkasai]] In Review to Done after code review against `CODING_STANDARDS.md`: one finding (wrong byte counts in `drafts/T-18700/README.md`), fixed. 2 functions matched (`func_80147F8C`, `func_8015AF90`; 2,376 bytes), no FAKE; BUNKASAI sha1, header, globals and prototype checks pass. Card moved to Done.
 
+## [2026-10-16] ticket | T-19017 In Progress
+[[tickets/T-19017-w3-d-p17]] started: wave 3 package w3-d-p17, TACO `src/ovl/TACO/80140DF0.c`, five functions (`func_80141050`, `func_80141170`, `func_80141B18`, `func_801413B8`, `func_801416E8`). Worktree `tokimemo-wt/w3-d-p17`, base `w2-good`.
+
+## [2026-10-16] ticket | T-19017 In Review, 2 of 5 functions matched
+[[tickets/T-19017-w3-d-p17]] moved to In Review: TACO `src/ovl/TACO/80140DF0.c`, 12:40-14:18 UTC (clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK). Matched `func_80141B18` (712 bytes) and `func_801413B8` (816 bytes), 1,528 bytes in all; `func_80141050` and `func_80141170` stay guarded at 10 lines each (the result variable lands in `$a0`), `func_801416E8` at 28 lines (an extra `D_8011ECA0` reload in the original). FAKEs: unused frame-home locals in the two matched functions and in `func_801416E8`, hand-expanded `setUVWH` one-liners. Notes in [[matching-notes]] (section T-19017), four rows in [[register-cheatsheet]], three rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-19017 closer pass, 2 more functions matched
+[[tickets/T-19017-w3-d-p17]] closer pass (Opus, 14:17-14:40 UTC): TACO `func_80141050` and `func_80141170` matched (576 bytes; commits `d73d8d54`, `818deda3`) by removing the pointer local (`base[i].f` everywhere, literal returns, `unk4` stored after `unk2`, FAKE `pad` for the frame). Package now 4 of 5 (2,104 bytes); `func_801416E8` stays guarded at 28 lines. Notes in [[matching-notes]], row in [[register-cheatsheet]], update paragraph in [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19017 Done
+[[tickets/T-19017-w3-d-p17]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 functions matched (2,104 bytes: TACO `func_80141B18`, `func_801413B8`, `func_80141050`, `func_80141170`), `func_801416E8` stays guarded at 28 lines. Two review findings in `src/ovl/TACO/80140DF0.c` and the wiki, fixed: the pointer-compare loop test in `func_80141B18` got an explanatory comment (comment only), and the stale "guarded" lines for `func_80141050`/`func_80141170` in [[index]], [[data/t0018-cases]] and [[matching-notes]] were refreshed (TACO.bin SHA1 OK, globals and headers OK).
