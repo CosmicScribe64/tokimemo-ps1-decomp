@@ -538,7 +538,6 @@ void func_801387F0(void) {
     }
 }
 
-
 /* FAKE: pad1/pad2, the u32 view of D_8015EBAC and the implicit int func_8013E7C0 are the same
  * three tricks as in func_801387F0 (this function is its sibling). T-17103 */
 void func_80138B9C(void) {
@@ -637,7 +636,6 @@ void func_80138B9C(void) {
         break;
     }
 }
-
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80138F6C);
 
@@ -792,7 +790,6 @@ void func_8013A034(void) {
         break;
     }
 }
-
 
 void func_8013A464();
 
