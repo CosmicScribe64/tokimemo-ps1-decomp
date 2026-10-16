@@ -24,7 +24,7 @@ Every change keeps the EN_NICHI sha1.
 
 | Type / global | Replaces | Evidence |
 | --- | --- | --- |
-| `EnObj D_8013984C[10]` (0x30 records, ends at `D_80139A2C`) | `u8 D_8013984C[]` and `Rec30 D_80139868[]` (a 0x30-stride view of `unk_1C`) | type_recovery: stride 0x30 x10, 19 functions; splat labels `D_80139862`..`D_801398AC` are fields of records 0..2. Matched users now read `D_8013984C[i].unk_00`, `&D_8013984C[arg0]`, or `(u8 *)D_8013984C` where they walk bytes; all still match. |
+| `EnObj D_8013984C[10]` (0x30 records, ends at `D_80139A2C`) | `u8 D_8013984C[]` and `Rec30 D_80139868[]` (a 0x30-stride view of `unk_1C`) | type_recovery: stride 0x30 x10, 19 functions; splat labels `D_80139862`..`D_801398AC` are fields of records 0..2. Matched users now read `D_8013984C[i].unk_00` or `&D_8013984C[arg0]` (the review turned the three `(u8 *)D_8013984C` byte walks of `func_80133F00`, `func_801340CC` and `func_8013515C` into fields); all still match. |
 | `s16 D_80139A34[16][6]` | undeclared | `func_80133CA8`: six halfword frames per row, row `func_80134008(i)` for kinds 1..3 and row 8 + `func_80134008(i)` for kind 4 (+0x60); one base register for both, so one object. |
 | `u8 D_80139A2C[8]` | `u8 D_80139A2C[]` | the sprite flag per object kind, read as `D_80139A2C[unk_00 & 0x7F]`; also the end of the records. |
 | `s16 D_80139228[10][4]`, `s32 D_80139278[10]` | unsized | the pop-up ring buffer of `func_80135A48` (ten slots up to `D_80139278` and `D_801392A0`). |

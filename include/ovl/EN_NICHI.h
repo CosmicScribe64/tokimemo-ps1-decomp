@@ -63,7 +63,6 @@ void func_80136A2C(void);
 void func_801338EC(void);
 void func_80132ADC(void);
 
-
 extern s32 D_801391E0;
 extern s32 D_801391E4;
 extern s32 D_801391E8;

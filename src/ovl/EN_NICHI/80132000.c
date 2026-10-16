@@ -610,7 +610,7 @@ s32 arg1;
 {
     u8 *rec;
     s32 j;
-    u8 *e;
+    EnObj *e;
     s16 x;
     s16 y;
 
@@ -619,11 +619,11 @@ s32 arg1;
     rec[0x1983] = 4;
     rec[0x19C7] = 5;
     if (arg1 == 1) {
-        e = (u8 *)D_8013984C + arg0 * 0x30;
-        if (*(s32 *) e == 4) {
-            if (!(*(s32 *) (e + 0xC) & 1)) {
-                x = *(s16 *) (e + 0x16);
-                y = *(s16 *) (e + 0x1A);
+        e = &D_8013984C[arg0];
+        if (e->unk_00 == 4) {
+            if (!(e->unk_0C & 1)) {
+                x = e->unk_16;
+                y = e->unk_1A;
                 rec[0x1983] |= 0x80;
                 rec[0x19C7] |= 0x80;
                 *(s16 *) (rec + 0x19A6) = x - 0x10;
@@ -631,9 +631,9 @@ s32 arg1;
                 *(s16 *) (rec + 0x19EA) = x + 0x10;
                 *(s16 *) (rec + 0x19EE) = y + 7;
             }
-        } else if (!(*(s32 *) (e + 0xC) & 1)) {
-            x = *(s16 *) (e + 0x16);
-            y = *(s16 *) (e + 0x1A);
+        } else if (!(e->unk_0C & 1)) {
+            x = e->unk_16;
+            y = e->unk_1A;
             rec[0x1983] |= 0x80;
             rec[0x19C7] |= 0x80;
             *(s16 *) (rec + 0x19A6) = x - 0x10;
@@ -681,7 +681,7 @@ void func_801340CC(void) {
     s32 y;
 
     /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-    for (i = 0; i < 10; i++) if (*(s16 *) &((u8 *)D_8013984C)[i * 0x30 + 0x16] < -0xC0 || *(s16 *) &((u8 *)D_8013984C)[i * 0x30 + 0x16] >= 0xC1 || *(s16 *) &((u8 *)D_8013984C)[i * 0x30 + 0x1A] < -0x98 || *(s16 *) &((u8 *)D_8013984C)[i * 0x30 + 0x1A] >= 0x99) *(s32 *) &((u8 *)D_8013984C)[i * 0x30] = 0;
+    for (i = 0; i < 10; i++) if (D_8013984C[i].unk_16 < -0xC0 || D_8013984C[i].unk_16 >= 0xC1 || D_8013984C[i].unk_1A < -0x98 || D_8013984C[i].unk_1A >= 0x99) D_8013984C[i].unk_00 = 0;
 }
 
 void func_80134258(s32 arg0) {
@@ -967,31 +967,31 @@ void func_80135044(s32 arg0, s32 arg1) {
 }
 
 void func_8013515C(s32 arg0, s32 arg1) {
-    u8 *p;
+    EnObj *p;
 
-    p = (u8 *)D_8013984C + arg0 * 0x30;
-    if (*(s32 *) (p + 0x28) < 3) {
-        switch (*(s32 *) (p + 4)) {
+    p = &D_8013984C[arg0];
+    if (p->unk_28 < 3) {
+        switch (p->unk_04) {
         case 1:
             if (arg1 < 0xC4) {
                 if (!(func_800AE0D0() & 1)) {
-                    *(s32 *) (p + 0x2C) = 0;
+                    p->unk_2C = 0;
                 } else {
-                    *(s32 *) (p + 0x2C) = 1;
+                    p->unk_2C = 1;
                 }
-                *(s32 *) (p + 0x28) = *(s32 *) (p + 8) * 2 + 4;
-                *(s32 *) (p + 0x24) = func_800AE0D0() % 15 + 0x1E;
+                p->unk_28 = p->unk_08 * 2 + 4;
+                p->unk_24 = func_800AE0D0() % 15 + 0x1E;
             }
             break;
         case 2:
             if (arg1 < 0x384) {
                 if (!(func_800AE0D0() & 1)) {
-                    *(s32 *) (p + 0x2C) = 0;
+                    p->unk_2C = 0;
                 } else {
-                    *(s32 *) (p + 0x2C) = 1;
+                    p->unk_2C = 1;
                 }
-                *(s32 *) (p + 0x28) = *(s32 *) (p + 8) * 2 + 4;
-                *(s32 *) (p + 0x24) = func_800AE0D0() % 15 + 0x1E;
+                p->unk_28 = p->unk_08 * 2 + 4;
+                p->unk_24 = func_800AE0D0() % 15 + 0x1E;
             }
             break;
         }
