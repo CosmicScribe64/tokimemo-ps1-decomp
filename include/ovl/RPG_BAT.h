@@ -313,6 +313,15 @@ extern u8 D_8015E8F0[];
 extern s32 D_8015EBC0;
 extern s32 D_8015EBC4;
 extern s32 D_8015EBC8;
+/* The six words D_8015EBC0..D_8015EBD4 are one aggregate: as1 keeps loads and stores of one symbol in
+ * program order, and the original loads the counter before the flag-byte store in func_8013EA60 (T-17107).
+ * The scalar names above stay for the files that still use them (801504E0.c, 8014DF60.c, 80154430.c,
+ * func_8013C1CC); func_8013EA60 reaches the aggregate through RPG_GAUGE until they are migrated. */
+typedef struct RpgGauge {
+    /* 0x00 */ s32 cur[3];  /* D_8015EBC0, D_8015EBC4, D_8015EBC8 */
+    /* 0x0C */ s32 flag[3]; /* D_8015EBCC, D_8015EBD0, D_8015EBD4 */
+} RpgGauge; /* size 0x18 */
+#define RPG_GAUGE ((RpgGauge *)&D_8015EBC0)
 extern u32 D_8015EDAC;
 void func_80136A9C(void);
 void func_80136BD8(void);

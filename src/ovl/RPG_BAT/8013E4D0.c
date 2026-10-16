@@ -129,17 +129,14 @@ void func_8013EA30(s32 arg0) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-17107, 15 differing lines; cases 0-2 (flag byte, D_8015EBCC zero, D_8015EBC0 counter): the original loads the counter before the flag byte store (lw v0 above sb), the build after it; statement order, same-line groups, scalar byte global, array view, local copy tried */
 void func_8013EA60(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-
     switch (arg1) {
     case 0:
         ((DisplayActor44 *)D_8011ECD0)[155].unk_03 &= 0xFFFE;
-        D_8015EBCC[0] = 0;
-        D_8015EBC0 -= arg2;
-        if (D_8015EBC0 < 0) {
-            D_8015EBC0 = 0;
+        RPG_GAUGE->flag[0] = 0;
+        RPG_GAUGE->cur[0] -= arg2;
+        if (RPG_GAUGE->cur[0] < 0) {
+            RPG_GAUGE->cur[0] = 0;
         }
         if (arg2 == 0) {
             func_8014C360(0, 0x6C, 0x77);
@@ -149,10 +146,10 @@ void func_8013EA60(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         return;
     case 1:
         ((DisplayActor44 *)D_8011ECD0)[156].unk_03 &= 0xFFFE;
-        D_8015EBD0 = 0;
-        D_8015EBC4 -= arg2;
-        if (D_8015EBC4 < 0) {
-            D_8015EBC4 = 0;
+        RPG_GAUGE->flag[1] = 0;
+        RPG_GAUGE->cur[1] -= arg2;
+        if (RPG_GAUGE->cur[1] < 0) {
+            RPG_GAUGE->cur[1] = 0;
         }
         if (arg2 == 0) {
             func_8014C360(0, 0x33, 0x67);
@@ -162,10 +159,10 @@ void func_8013EA60(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         return;
     case 2:
         ((DisplayActor44 *)D_8011ECD0)[157].unk_03 &= 0xFFFE;
-        D_8015EBD4 = 0;
-        D_8015EBC8 -= arg2;
-        if (D_8015EBC8 < 0) {
-            D_8015EBC8 = 0;
+        RPG_GAUGE->flag[2] = 0;
+        RPG_GAUGE->cur[2] -= arg2;
+        if (RPG_GAUGE->cur[2] < 0) {
+            RPG_GAUGE->cur[2] = 0;
         }
         if (arg2 == 0) {
             func_8014C360(0, 0x30, 0x97);
@@ -255,9 +252,6 @@ void func_8013EA60(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         return;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013EA60);
-#endif
 
 void func_8013EEAC(u32 arg0) {
     switch (arg0) {
