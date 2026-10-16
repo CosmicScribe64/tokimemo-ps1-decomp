@@ -5821,3 +5821,17 @@ incremented step stays in `v0`; the ETC.h prototype became s32).
 - Near miss `func_8013C700` (4 rows): the `func_8013C330` shape gives everything except the order of
   `or v0,zero,zero` and the `sw zero` of `D_80150070 = 0;` around the branch delay slot (an explicit
   `return 0;` changes nothing).
+
+## T-17600: GYOZI types-first pass
+
+Details in [[event-family-results]] ("Types-first pass (T-17600)"). Matched: GYOZI `func_8013E308` (SHOUGATU clone
+`func_8013B758`), `func_8013DC2C` (GYOZI sibling `func_8013AC38`), `func_8013B0C4` (redraft plus the T-3330 slot).
+- A store that the original keeps above a later bit-field load of another field (`D_800F6458 = 1;` then the
+  girl[10] bit-3 store) needs both as members of one object: with the `main_api.h` scalar IDO hoists the load
+  above the store. `D_800F53A0.unk_10B8` (`GyoziWork` grows to 0x10BC) is the same field SHOUGATU writes as
+  `D_800E6280.unk_10E8`.
+- A stack copy of a callback table sits 4 bytes too high (sp+0x38 for sp+0x34) when the call indexes the table
+  with the global directly; an `s32 idx` declared before the table takes the slot above it (T-3330), also when
+  the call is the last statement (`func_8013B0C4`).
+- `func_8014206C` (6 rows): `x != 0 && x != 7` on a `u8` global loaded once gives `beq v1,v0` where the
+  original has `beq v0,v1`; a local, the swapped constant, a negated `||` and a switch do not change it.
