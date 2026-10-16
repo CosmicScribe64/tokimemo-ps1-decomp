@@ -1,7 +1,7 @@
 ---
 id: T-16560
 title: "Types-first pilot: TACO"
-status: In Review
+status: Done
 assignee: claude (pt-taco)
 created: 2026-10-16
 updated: 2026-10-16
@@ -57,3 +57,11 @@ Review notes: `TcObj50`/`Tc10` are the SDK's GsCOORDINATE2/GsDOBJ2 under TACO na
 completed here); a shared `libgs.h` with the SDK names would be the CODING_STANDARDS 3 fix, outside this
 ticket's files. Follow-up worth a ticket: m2c's byte-step pointer arithmetic (`pointer-step`) as a
 `tools/draft_fixes.py` detector for every unit.
+
+### 2026-10-16 (claude, review): Done
+
+Reviewed `w2-good...pt-taco` against CODING_STANDARDS.md. Checked: only the 12 owned `src/ovl/TACO/*.c`, `include/ovl/TACO.h` and the two additions in `include/main_api.h` changed; `drafts/` has new files only, all under `drafts/T-16560/`; no inline asm, `.word`, `//`, non-ASCII or tabs in added C; the 5 matches are plain C (u8 selector view, `u8` parameter, byte store); `func_80159260` carries a `FAKE` comment with this ticket; no new `NON_MATCHING` block; `main_api.h` gains one `extern MATRIX D_80129C40;` plus `libgte.h` (no duplicate declaration); no game data, asm or binaries staged; ticket and kanban agree.
+
+Finding 1 (fixed): the `*(u8 *)&D_8015EDE8` switch selector in `func_8013555C` and `func_80135638` is a view cast of an `s8` global with no explanation (section 9). Added a comment on both. Comment-only, TACO sha1 still OK.
+
+Rebuild after the fix: `tools/docker.sh ninja` TACO.bin OK; `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new disagreements). Matched in this ticket: 5 functions, 2,032 bytes. The `TcObj50`/`Tc10` versus SDK `GsCOORDINATE2`/`GsDOBJ2` note stays open as a follow-up (shared `libgs.h`), as does the `draft_fixes.py` pointer-step detector.

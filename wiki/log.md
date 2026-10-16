@@ -15113,3 +15113,7 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16560 to In Review
 
 [[tickets/T-16560-taco-types-first]]: types-first pilot on TACO, about one hour of the three planned. Types in `include/ovl/TACO.h`: `TcActor` +0x04 object handle (`Tc10`, GsDOBJ2 layout) and +0x14 coordinate object (`TcObj50`, GsCOORDINATE2 layout, completed), `Tc14` holes filled, `D_8015EC70` as `Tc14[16]`; `extern MATRIX D_80129C40;` added to `include/main_api.h` (now includes `libgte.h`). Redraft of all 126 unmatched functions in `drafts/T-16560/` (driver `redraft.py`; rewrites pointer-step, actor-offset, matrix-copy, tcpos-args, field-symbols): over the 116 unguarded ones 48 better than the T-14500 census, 53 same, 2 worse, median 166 to 150 diff rows, sum -8%; headers alone changed 7 of 98 scores; no draft scored 0. Five matches after small hand edits, 2,032 bytes: `func_8013822C`, `func_8013555C`, `func_80135638`, `func_8015A948`, `func_80159260`. Packages T-16561..T-16564 (`pt-taco-p1`..`p4`), about 170 minutes each. Findings and idioms: [[taco-family-results]] ("Types-first pass"), pointer in [[data-types]].
+
+## [2026-10-16] ticket | T-16560 Done
+
+[[tickets/T-16560-taco-types-first]] reviewed against `CODING_STANDARDS.md`: one finding (unexplained `*(u8 *)&D_8015EDE8` view cast, comments added to `func_8013555C` and `func_80135638`), fixed; TACO sha1 OK, headers, globals and prototype checks OK. 5 TACO functions matched (2,032 bytes). Packages T-16561..T-16564 follow.

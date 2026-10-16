@@ -216,6 +216,7 @@ void func_8013546C(void) {
     }
 }
 
+/* The menu index D_8015EDE8 is an s8 elsewhere (compared < 0); these switches read it as the unsigned byte the original uses. T-16560 */
 s32 func_8013555C(void) {
     switch (*(u8 *)&D_8015EDE8) {
     case 0:
@@ -236,6 +237,7 @@ s32 func_8013555C(void) {
     }
 }
 
+/* The switch reads D_8015EDE8 as an unsigned byte, as func_8013555C does. T-16560 */
 s32 func_80135638(void) {
     if ((u32) D_800E6280.unk_1104.u >= 0x41U) {
         switch (*(u8 *)&D_8015EDE8) {
