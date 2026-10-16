@@ -119,4 +119,4 @@ What the types did and did not do here: the new `TaiikuBall`, `TaiikuA0`, `Taiik
 
 ## Package w3-d-p04 (T-19004, `80133C80.c`)
 
-[[tickets/T-19004-w3-d-p04]], wave 3: `func_80137228` matched (260 bytes) once `D_80120A72` and `D_80120AA8` were read as fields of display records 111 and 112 (the loop's record stores then force the reload the original has); `func_80135830` guarded at 18 lines, `func_80137544` (26) and `func_80135480` (22) unchanged, `func_80137C44` left `INCLUDE_ASM`. Details in [[matching-notes]], section T-19004.
+[[tickets/T-19004-w3-d-p04]], wave 3: `func_80137228` matched (260 bytes) once `D_80120A72` and `D_80120AA8` were read as fields of display records 111 and 112 (the loop's record stores then force the reload the original has); `func_80135830` (672 bytes) matched in the closer pass (index loop plus a FAKE dead `i = 0;`), `func_80137544` (26 lines) and `func_80135480` (22) unchanged, `func_80137C44` left `INCLUDE_ASM`. Details in [[matching-notes]], section T-19004.

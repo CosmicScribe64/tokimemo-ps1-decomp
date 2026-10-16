@@ -15393,3 +15393,7 @@ pool; merges run in parallel through a locked, self-cleaning merge script.
 ## [2026-10-16] build | T-19004 closer pass
 
 [[tickets/T-19004-w3-d-p04]] closer: TAIIKU `func_80135830` matched (672 bytes, plain index loop C plus a dead `i = 0;`, FAKE), commit `a33af760`. Notes in [[matching-notes]], [[register-cheatsheet]] and [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19004 Done
+
+[[tickets/T-19004-w3-d-p04]] In Review to Done after the code review: 2 of 5 listed TAIIKU functions matched (932 bytes: `func_80137228` 260, `func_80135830` 672 with a FAKE dead `i = 0;`), `func_80137544` and `func_80135480` guarded, `func_80137C44` left `INCLUDE_ASM`. Two findings fixed: the `NON_MATCHING` comments of the two guarded drafts had lost their T-19004 notes (commit `112cfc10`), and the index, [[taiiku-family-results]] and [[matching-notes]] still called `func_80135830` a guarded draft. Unit sha1 OK, headers, globals and proto checks OK.
