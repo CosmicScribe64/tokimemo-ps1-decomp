@@ -15673,3 +15673,7 @@ Code review of [[tickets/T-17800-types-first-option]] against `CODING_STANDARDS.
 ## [2026-10-16] ticket | T-19015 In Review
 
 [[tickets/T-19015-w3-d-p15]] In Progress to In Review: 1 of 5 functions matched (992 bytes). Review pending.
+
+## [2026-10-16] build | T-19015 closer pass
+
+[[tickets/T-19015-w3-d-p15]]: Opus closer matched TACO `func_801471D0` (260 bytes) in plain C: a pointer parameter and one `dop` walker restarted for the second pass; callers keep the `s32` view through `TACO_OVERRIDE_func_801471D0` (`include/ovl/TACO.h`). `func_801472D4` stays at 20 lines (block-copy state rule). Notes in [[matching-notes]], rows in [[data/t0018-cases]], new [[register-cheatsheet]] row, [[taco-family-results]] updated. Ticket stays In Review.
