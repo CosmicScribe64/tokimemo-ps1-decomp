@@ -51,7 +51,40 @@ void func_801331D0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_80133258);
+void func_80133258(void) {
+    s32 i;
+    TaiBytes10 sp88;
+    TaiikuHalf10 sp74;
+    TaiikuHalf10 sp60;
+    TaiikuHalf10 sp4C;
+
+    sp88 = D_80148FE8;
+    sp74 = D_80148FF4;
+    sp60 = D_80149008;
+    sp4C = D_8014901C;
+    for (i = 0; i < 0x17; i++) {
+        func_80048F64(i + 1);
+    }
+    for (i = 0; i < 10; i++) {
+        /* FAKE: the (u8) narrowing takes one ugen temporary and emits no code; the original's temporaries (t6 first in the loop) need it, real source unknown. T-19031 */
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_38 = ((u8)(i & 1) << 0x1E) | 0x01000000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_05 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_06 = 2;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_0C = (u8 *)D_80149FCC;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_10 = (u8 *)D_8014A004;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_34 = (u8 *)D_8014A070;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_14 = D_8014A03C;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_1A = 0x1000;
+        *(s16 *)((DisplayActor44 *)D_8011ECD0)[i + 1].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_07 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_02 = 1;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_03 = 0xA4;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_01 = sp88.v[i];
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_26 = sp74.h[i];
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_2A = sp60.h[i];
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_16 = sp4C.h[i];
+    }
+}
 
 void func_80133438(void) {
     func_80132E20(0, 1);
