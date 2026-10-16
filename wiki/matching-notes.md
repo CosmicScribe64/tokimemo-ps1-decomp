@@ -5264,7 +5264,7 @@ BUNKASAI func_801431D4 had a two-row resolved difference entirely in one label r
 
 ## T-11650: NAME_ENT 80132000 (wave 1 w1-p09, resumed in wave 2 as w2-r09)
 
-[[tickets/T-11650-w1-ovl-name_ent-80132000]]. Wave 1 matched 8 functions (`func_80132A38`, `func_80132E80`, `func_80135168`, `func_801357F4`, `func_80135F74`, `func_80136688`, `func_801377E8`, `func_80138488`); they were merged onto the wave-2 base unchanged (NAME_ENT sha1 OK). Wave 2 matched 7 more, all rewritten by hand from the census drafts: `func_80139684`, `func_80135650`, `func_80137CA0`, `func_80139440`, `func_80132B78`, `func_80133510`, `func_8013635C`.
+[[tickets/T-11650-w1-ovl-name_ent-80132000]]. Wave 1 matched 8 functions (`func_80132A38`, `func_80132E80`, `func_80135168`, `func_801357F4`, `func_80135F74`, `func_80136688`, `func_801377E8`, `func_80138488`); they were merged onto the wave-2 base unchanged (NAME_ENT sha1 OK). Wave 2 matched 8 more, all rewritten by hand from the census drafts: `func_80139684`, `func_80135650`, `func_80137CA0`, `func_80139440`, `func_80132B78`, `func_80133510`, `func_801338DC`, `func_8013635C`.
 
 What worked:
 - **Pointer position is actor 0 of the record pool.** `D_8011ECF6`/`D_8011ECFA` are `((DisplayActor44 *)D_8011ECD0)[0].unk_26`/`.unk_2A`, and the scalar-looking `D_80120xxx` bytes and halfwords are fields of records 96..124. Written through the record pool, the original's load order comes back by itself (`func_80135650`: the cursor load stays above the six record stores; the T-10320 row on it was a separate-symbol artefact).
@@ -5275,11 +5275,11 @@ What worked:
 - **Promoted selection byte**: `func_80132B78` reads and writes `D_8014CC70` directly in every statement; IDO promotes it to `$a3` with the store before the call and the reload at the loop end, exactly like the original. The only gap was the frame (one more home), kept as a marked `FAKE` unused local.
 - **strncpy without its length** (`func_80133510`): the original calls `func_800AE090` with two arguments at the last two levels of the help-text splitter, so the original had no prototype. The file now overrides it (`MAIN_API_OVERRIDE_func_800AE090`, `void func_800AE090();`), and the matched callers still match.
 - **Frames of local buffers**: locals get homes in reverse declaration order (first declared highest). `func_80133510`: `s32 i; u8 *p; u8 *text;` above six `u8 line[0x24]` buffers reproduces the 0x130 frame; `text` must be the last scalar so it sits right above the first buffer.
+- **A pointer local can move the spill slot** (`func_801338DC`, the same splitter with a `switch` head): with `p = text + 0x20` the spill of the line address lands 4 bytes too low; writing `text + 0x20` in each call (a compiler temporary) puts it where the original has it. The frame was then 8 bytes short: an unused two-word local marked `FAKE` restores 0x110.
 
 Left open (guarded unless noted):
 - `func_80132320` (14 lines): masked byte in a ugen temporary, T-0018 row.
 - `func_80134B94` (10 lines): implicit int fixed the loop-init hoisting; the third name's end-pointer register remains (T-0018 row).
-- `func_801338DC` (20 lines): same text splitter as `func_80133510` with a `switch` head; the frame is 8 bytes short and the line-pointer spill lands at 0x40 instead of 0x44. Unused homes above `text` fix the frame but not the spill slot (spill slots look 8-aligned in our build).
 - `func_80138C1C` (INCLUDE_ASM, about 200 lines): frame solved (`u8 buf[0x18]` declared after five scalars, counter reused so the second clear loop stays rolled, third copy loop `p != D_8014CC84 + 10`, u16-style bit-field masks come out of the u32 `GsDateBits`-like view); blocked by the hoisted second space byte (T-0018 row). Draft kept in the session scratch only.
 - `func_80138F60` (INCLUDE_ASM): the new-game type assignment needs `CharFlags.f20` writes, a signed `(day * 3 + month) % 11`, and a bits 9-10 field of the date word (`GsDateBits` has none yet; `NameDate` in 80139740.c calls it `week`). Store order of the `f20` byte against the three table stores is still wrong (about 460 lines).
 - `func_80134110`: the actor-pool view does not change the known `$v0`/`$v1` gap.
