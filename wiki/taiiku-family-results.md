@@ -86,7 +86,7 @@ Left for later waves: the rest of `80133C80.c` (8), `80138950.c` (8), `801452D0.
 
 ## Package pt-taiiku-p1 (T-16551, `80133C80.c`)
 
-[[tickets/T-16551-pt-taiiku-p1]]: 3 of the 8 listed functions matched (`func_80138224`, `func_80133CFC`, `func_801368B8`, 2,296 bytes), `func_80137544` is a 26-line guarded draft, `func_80135480` and `func_80134060` stay `INCLUDE_ASM`. Details and idioms in [[matching-notes]], section T-16551.
+[[tickets/T-16551-pt-taiiku-p1]]: 3 of the 8 listed functions matched (`func_80138224`, `func_80133CFC`, `func_801368B8`, 2,296 bytes), `func_80137544` (26 lines) and `func_80135480` (22 lines) are guarded drafts, `func_80134060` stays `INCLUDE_ASM`. Details and idioms in [[matching-notes]], section T-16551.
 
 - Display-record initialisers (`func_80138224`): the fold draft was one store-order permutation and two frame words away from the match; the best starting scores (240) did not predict that, the structure did.
 - A table that the original defines in the unit has to be defined in the unit (`s32 D_801492F8[10] = {...}` in `80133C80.c`, three `INCLUDE_RODATA` pieces replaced) for two stores to share one `lui at`.
