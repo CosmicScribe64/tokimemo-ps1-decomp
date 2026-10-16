@@ -927,7 +927,7 @@ void func_801341A8(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10890, character-page selection. */
+/* NON_MATCHING: T-10890, about 455 differing lines (T-11650 probe made it worse), character-page selection */
 void func_80134248(s32 arg0) {
     s32 selected;
     u32 index;
@@ -1216,6 +1216,7 @@ void func_80134F6C(void) {
 void func_80135168(void) {
     u8 *p;
 
+    /* u8 view of the s8 flag D_8014D0A4 (unsigned compare against 2). T-11650 */
     if (*(u8 *)&D_8014D0A4 < 2) {
         if (*(u8 *)&D_8014D0A4 == 1) {
             func_800AE0A0(D_8014CC74, D_8014D070, 8);
@@ -1297,6 +1298,7 @@ void func_80135434(s32 arg0) {
     }
 }
 
+/* Implicit int in the original (no return value): v0 stays live at the exit, which changes how as1 fills the delay slots. T-11650 */
 s32 func_80135650(void) {
     if (D_8014CCC8 == 2 || D_8014CCC8 == 3) {
         ((DisplayActor44 *)D_8011ECD0)[121].unk_18 = 0x19;
@@ -1348,6 +1350,7 @@ void func_801357F4(void) {
     }
     func_80135650();
     if (D_800E6280.unk_F88 & 0x40) {
+        /* FAKE: address-taken u8 view of the (already u8) selector keeps it in $v0 as in the original; real source unknown. T-11650 */
         if (*(u8 *)&D_8014CC70 == 0xC) {
             *(u8 *)&D_8014CC70 = 2;
         } else if (*(u8 *)&D_8014CC70 != 0) {
@@ -1557,6 +1560,7 @@ void func_80135F74(void) {
     }
     func_80135650();
     if (D_800E6280.unk_F88 & 0x40) {
+        /* FAKE: same u8 view of the selector as in func_801357F4. T-11650 */
         if (*(u8 *)&D_8014CC70 == 0xC) {
             *(u8 *)&D_8014CC70 = 0xA;
         } else if (*(u8 *)&D_8014CC70 >= 7) {
@@ -2397,6 +2401,7 @@ void func_80139440(void) {
     }
 }
 
+/* Implicit int like func_80135650. FAKE: the address-taken u8 views of the u8 fields give the original $v1/$a0 chain (a member access does not); real source unknown. T-11650 */
 s32 func_80139684(void) {
     switch (*(u8 *)&D_800E6280.unk_110D) {
     case 0:

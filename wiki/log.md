@@ -14940,3 +14940,7 @@ Created [[tickets/T-11650-w1-ovl-name_ent-80132000]] (In Progress): wave 1 packa
 ## [2026-10-15] ticket | T-11650 to In Review (w2-r09)
 
 [[tickets/T-11650-w1-ovl-name_ent-80132000]]: wave 2 package w2-r09 matched 8 functions in `src/ovl/NAME_ENT/80132000.c` (func_80139684, func_80135650, func_80137CA0, func_80139440, func_80132B78, func_80133510, func_801338DC, func_8013635C), 16 for the ticket with wave 1. Guarded: func_80132320, func_80134B94. Three [[data/t0018-cases]] rows; notes in [[matching-notes]]. Clean build 27/27 sha1 OK; header, globals and prototype checks pass. Awaiting code review.
+
+## [2026-10-16] ticket | T-11650 Done
+
+[[tickets/T-11650-w1-ovl-name_ent-80132000]] reviewed against `CODING_STANDARDS.md` and moved to Done: 8 functions matched in wave 2 (16 for the ticket) in `src/ovl/NAME_ENT/80132000.c`. Review fixes were comments only (lines left on the func_80134248 guard, `FAKE` marks on the u8-view casts, implicit-int notes). Clean build 27/27 sha1 OK.
