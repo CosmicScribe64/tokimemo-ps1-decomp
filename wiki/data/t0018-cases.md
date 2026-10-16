@@ -8,6 +8,8 @@ sources: ["wiki/matching-notes.md", "tools/queue.py"]
 
 Update (T-20003): RPG_BAT `func_80138F6C` matches 1,268 actual default linked bytes with direct timer updates/decrement and two marked FAKE sites (frame padding and selector word read). Full RPG_BAT and all 27 binary SHA1 checks pass. Historical rows below remain unchanged; [[tickets/T-20003-rpg-timer-callees]] supersedes its unmatched status. Independent matches for `func_80157158` and `func_80156D78` were dropped from this contribution after upstream T-17102 landed.
 
+Update (T-17114): RPG_BAT `func_80136A9C` (three `promo`/`selector` rows below) is matched in plain C with one FAKE: each arm of the flag test stores `D_8015EC6C` itself (no `var_v0`), and the inner selector is read through an address-taken view, `switch (*(s32 *)&D_8015EBAC)` (`autotweak` found it; `s32`/`u32` declarations and casts do nothing). The same shape is in the unmatched `func_80154760` and `func_80154DD8` (T-17106 rows). See [[matching-notes]], section T-17114.
+
 Data file of [[tickets/T-1321-register-promotion-build-step]]. One row per function skipped (left `INCLUDE_ASM` or `NON_MATCHING`) because of the T-0018 gap ([[matching-notes]], section "Register promotion of globals"). `tools/queue.py --calibrate` reads this table to measure the blocker detector, so keep the format.
 
 Rules for batch agents (decompile-workflow step 7): append one row per skipped case, never edit or delete a row.

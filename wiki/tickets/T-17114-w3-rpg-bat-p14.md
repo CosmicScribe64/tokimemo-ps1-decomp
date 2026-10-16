@@ -1,7 +1,7 @@
 ---
 id: T-17114
 title: Wave 3 package w3-rpg-bat-p14
-status: In Progress
+status: In Review
 assignee: claude-opus
 created: 2026-10-16
 updated: 2026-10-16
@@ -14,10 +14,10 @@ Match the four listed RPG_BAT functions of `src/ovl/RPG_BAT/8013F4F0.c` and `src
 
 ## Acceptance criteria
 
-- [ ] Matched functions are plain C (FAKE statements commented), unit sha1 OK, committed
-- [ ] Unmatched drafts under 30 differing lines stay under `#ifdef NON_MATCHING` with a T-17114 comment, others restored to `INCLUDE_ASM`
-- [ ] Notes in [[matching-notes]] (section T-17114); compiler-gap rows in [[data/t0018-cases]] if any
-- [ ] Clean build 27/27, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK
+- [x] Matched functions are plain C (FAKE statements commented), unit sha1 OK, committed
+- [x] Unmatched drafts under 30 differing lines stay under `#ifdef NON_MATCHING` with a T-17114 comment, others restored to `INCLUDE_ASM`
+- [x] Notes in [[matching-notes]] (section T-17114); compiler-gap rows in [[data/t0018-cases]] if any
+- [x] Clean build 27/27, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK
 
 ## Notes
 
@@ -25,6 +25,13 @@ Worktree `tokimemo-wt/w3-rpg-bat-p14`, branch `w3-rpg-bat-p14`, base `w2-good`. 
 
 ## Results
 
-(filled in at the end)
+| Function | Bytes | Start | End |
+|---|---:|---|---|
+| `func_80136A9C` | 316 | draft T-14500 (score 114), old T-0018 `selector` rows | matched in plain C with one FAKE: arm stores to `D_8015EC6C` itself, `switch (*(s32 *)&D_8015EBAC)` (found by `autotweak`) |
+| `func_80140E70` | 496 | draft T-14500 (score 77) | matched in plain C: the counter updated and read as the global itself (no local), prototype in `RPG_BAT.h` |
+| `func_8013F82C` | 1,376 | draft T-14500 (score 248) | matched in plain C: grey level as two `c + (c << 8)` steps, `RPG_BAT_OVERRIDE_func_8013E7C0`, `s16 h`, display-record index forms, `D_8012077C` s16 view |
+| `func_80140204` | 2,132 | draft T-14500 (score 508) | matched in plain C: records 100..104 as `DisplayActor44` fields, the five-iteration record loop (IDO peels and unrolls it), `p[50]` walk in case 8 |
+
+4 of 4 matched (4,320 bytes of code, about 70 minutes). One FAKE (`func_80136A9C`, the address-taken selector view). New main-exe externs in `main_api.h`: `D_801211E6`, `D_80121532`, `D_80121575`, `D_801215FE`, `D_80121614`, `D_8012077A`, `D_8012077C` (moved from `EVENT.h`, with `MAIN_API_OVERRIDE_D_8012077C` in `8013F4F0.c`). `RPG_BAT.h`: prototype `func_80140E70`. Overrides: `RPG_BAT_OVERRIDE_func_8013E7C0` (existing mechanism) in `8013F4F0.c`. Notes: [[matching-notes]] (section T-17114), [[register-cheatsheet]] (four rows), [[data/t0018-cases]] (update), [[rpg-bat-family-results]].
 
 ## Comments

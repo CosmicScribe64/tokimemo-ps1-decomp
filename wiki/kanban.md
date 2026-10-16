@@ -24,7 +24,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-17114-w3-rpg-bat-p14|T-17114 Wave 3 package w3-rpg-bat-p14]]
 
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
@@ -56,6 +55,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-17114-w3-rpg-bat-p14|T-17114 Wave 3 package w3-rpg-bat-p14]]
 
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 

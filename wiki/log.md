@@ -16396,3 +16396,11 @@ Clean rebuild of the w3-rpg-bat-p06 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.
 ## [2026-10-16] ticket | T-17114 In Progress
 
 [[tickets/T-17114-w3-rpg-bat-p14]] created and In Progress: wave 3 package for RPG_BAT `src/ovl/RPG_BAT/8013F4F0.c` and `src/ovl/RPG_BAT/801368B0.c` (4 functions: `func_80136A9C`, `func_80140E70`, `func_8013F82C`, `func_80140204`). Types-first parent: [[tickets/T-17100-types-first-rpg_bat]].
+
+## [2026-10-16] ticket | T-17114 In Progress to In Review
+
+[[tickets/T-17114-w3-rpg-bat-p14]] In Progress to In Review: 4 of 4 functions matched in plain C (`func_80136A9C` with one FAKE address-taken selector view, `func_80140E70`, `func_8013F82C`, `func_80140204`; 4,320 bytes, about 70 minutes). Notes in [[matching-notes]] (section T-17114), four rows in [[register-cheatsheet]], an update line in [[data/t0018-cases]], a package section in [[rpg-bat-family-results]]. New externs in `include/main_api.h` (`D_801211E6`, `D_80121532`, `D_80121575`, `D_801215FE`, `D_80121614`, `D_8012077A`, `D_8012077C` moved from `include/ovl/EVENT.h`), prototype in `include/ovl/RPG_BAT.h`. Code review pending.
+
+## [2026-10-16] build | T-17114 clean rebuild and checks
+
+Clean rebuild of the w3-rpg-bat-p14 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.bin: OK` with the four functions as C), `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17114-w3-rpg-bat-p14]].
