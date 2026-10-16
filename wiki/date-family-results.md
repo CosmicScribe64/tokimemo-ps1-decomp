@@ -114,6 +114,7 @@ Matched during the pass (1,760 bytes):
 - `func_80139834`: the EVENT twin's form (no `u8` local, dead `if ((s32)unk_110A) {}` before `+= 0xC`) fixes
   the first branch but the else branch's `unk_F5F` load then takes `t5` for `v0` (18 rows, worse than the
   guard's 7); left guarded.
+- `func_801449D4` and `func_80144E20` (T-17207, `80141EE0.c`): neither matched. The first reaches the original's structure (71 rows) with the global as the table index and a `u8 sel` copy of `D_800CA2F8`, but the shape reserves one slot more under the table than the original; the second has the exact frame and table offsets (one `void (**base)()` under the 21 tables, one unused scalar above) and about 180 register rows from the colour order of `base`. Details: [[matching-notes]], "DATE `80141EE0.c`: the two step-table dispatchers (T-17207)".
 - m2c on folded asm printed `D_800E6280.unk0` for a `%lo(D_800E6280+0x10F8)` paired with a bare `%hi`
   (`func_80155004`); the field is `unk_10F8`. Check fold output for `.unk0` on `GameState`.
 
@@ -130,7 +131,7 @@ Eight file-disjoint packages from the orchestrator's `mklists3.py` (lists in its
 | w3-date-p04 | T-17204 | `80151460.c` | 4 | 2,328 |
 | w3-date-p05 | T-17205 | `80149310.c`, `801552B0.c` | 5 | 3,180 |
 | w3-date-p06 | T-17206 | `8014B1F0.c`, `80156600.c` | 2 | 1,136 |
-| w3-date-p07 | T-17207 | `80141EE0.c` | 2 | 4,464 |
+| w3-date-p07 | T-17207 | `80141EE0.c` | 2 | 4,464 (none matched) |
 | w3-date-p08 | T-17208 | `8014A1B0.c`, `8015A640.c`, `8015A7E0.c`, `8015A980.c` | 5 | 2,636 |
 
 ### Wave 3 result: w3-date-p01 (T-17201)

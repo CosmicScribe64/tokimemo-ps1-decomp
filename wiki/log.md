@@ -16190,3 +16190,18 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 
 ## [2026-10-16] ticket | T-17203 Done
 [[tickets/T-17203-w3-date-p03]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 3 of 4 functions matched (`func_8014EF1C`, `func_80154118`, `func_8014DCCC`, 1,064 bytes), `func_80155004` still `INCLUDE_ASM` with its draft in `drafts/T-17203/`. Rebuild: DATE unit sha1 OK, headers OK, globals OK. Card moved to Done.
+## [2026-10-16] ticket | T-17207 In Progress
+
+[[tickets/T-17207-w3-date-p07]] created and In Progress: DATE `src/ovl/DATE/80141EE0.c`, `func_801449D4` (draft 312) and `func_80144E20` (draft 628), branch `w3-date-p07`.
+
+## [2026-10-16] build | T-17207 DATE 80141EE0: two dispatchers, no match
+
+[[tickets/T-17207-w3-date-p07]]: `func_801449D4` (draft 312 to 71 rows, structure equal) and `func_80144E20` (draft did not compile, now exact frame and 21 table offsets, about 180 register rows) did not match; both stay `INCLUDE_ASM`. Findings, drafts (`drafts/T-17207/DATE/`) and two T-0018 rows in [[matching-notes]] and `wiki/data/t0018-cases.md`.
+
+## [2026-10-16] ticket | T-17207 In Review
+
+[[tickets/T-17207-w3-date-p07]] In Progress to In Review: 0 of 2 functions matched (`func_801449D4`, `func_80144E20`). Documentation and drafts only, no C changed. Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] ticket | T-17207 Done
+
+[[tickets/T-17207-w3-date-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues in the drafts (missing inline `FAKE` comments on the frame and `sel` locals, `g` called unused), both fixed. 0 of 2 functions matched (`func_801449D4`, `func_80144E20`); no C changed. Merge via the wave 3 merge script.
