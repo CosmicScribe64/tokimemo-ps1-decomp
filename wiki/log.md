@@ -16664,3 +16664,11 @@ Inspected both claimed helpers and archived T-17600 drafts against assembly. The
 ## [2026-10-16] query | T-20004 shared byte-store gap isolated
 
 Both helpers reach the same 15-line difference with structured control flow and the natural byte postincrement test. The original includes an unchanged-byte store before the sound call. Direct self-assignment disappears; address/normalization forms preserve it but shift subsequent temporary registers by one. Testing bounded equivalent forms in gitignored scratch. No production source/header changes or verified-byte claim. [[tickets/T-20004-gyozi-dialogue-followup]] remains In Progress.
+
+## [2026-10-16] build | T-20004 two GYOZI default linked matches
+
+Actual default funcdiff --resolve proves func_80135118 (360 bytes) and func_80135280 (416 bytes), 776 new bytes. Byte-table/counter declarations live once in main_api.h; shared setup return type follows PR #37 with no override. Each helper carries one FAKE for the unchanged-byte store before the sound call. No volatile or compiler-pass changes. Full build/prototype checks are running. Updated matching/family notes; [[tickets/T-20004-gyozi-dialogue-followup]] remains In Progress until final checks/review.
+
+## [2026-10-16] build | T-20004 final checks and In Review
+
+Both actual default linked matches total 776 bytes. Full 490-step Docker build completes; GYOZI SHA1, all 27 explicit binary SHA1 checks, header/global gates and prototype branch guard pass (0 new / 15 known). Local CODING_STANDARDS review complete: two marked FAKE unchanged-byte stores, shared declarations only, no generated game data or toolchain changes. [[tickets/T-20004-gyozi-dialogue-followup]] moves to In Review with index/board synchronized; maintainer acceptance pending.

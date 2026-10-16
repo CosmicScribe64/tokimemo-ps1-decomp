@@ -27,7 +27,7 @@ extern s16 D_80147220;
 extern u8 D_80147240;
 extern s16 D_8014723C;
 extern u8 D_80145F60;
-void func_801343A4(void);
+s32 func_801343A4(void);
 extern u8 D_80145EC8;
 extern u8 D_80148110;
 void func_8013E148(void);

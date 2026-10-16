@@ -754,6 +754,8 @@ extern u8 ovl_load_sectors;
 extern s32 ovl_load_buf;
 extern s32 ovl_load_lba;
 extern u8 font_glyphs[];
+/* T-20004: byte loads indexed by girl * 7 + (step >> 3). */
+extern u8 D_800C3370[];
 extern s8 D_800C51C4;
 extern s32 D_800C5FCC;
 extern s32 D_800C5FD0;
@@ -1057,6 +1059,7 @@ extern s32 D_800F6468;
 extern s32 D_800F6474;
 extern u8 D_800F6479;
 extern u8 D_800F647A;
+extern u8 D_800F647D;
 extern s32 D_800F65C0;
 extern s32 D_800F6600;
 extern s32 D_800F6680;
