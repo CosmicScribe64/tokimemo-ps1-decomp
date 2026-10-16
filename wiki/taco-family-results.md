@@ -115,3 +115,7 @@ comes from register allocation, loop shape and local layout, not from missing ty
 Work packages for the matching stage: T-16561..T-16564 (`pt-taco-p1`..`p4`), about 170 minutes each,
 best expected bytes first (expected bytes = size / (1 + score / 30)); the gcc-built
 `8015CF30.c`, `8015D0D0.c` and `8015D270.c` are left out.
+
+### Matching stage, package p4 (T-16564)
+
+[[tickets/T-16564-taco-types-first-p4]]: from the redrafts, 6 of 8 functions matched in about an hour (`func_801563E4`, `func_80154960`, `func_80138D08`, `func_801557E8`, `func_80138964`, `func_801553AC`, 5,852 bytes), two register-only near misses left (`func_80138B2C`, `func_80137D00`). The types that carried them: `POLY_F4` for the fade packet in `func_80154960`, the `TcPos` by-value arguments (`func_801563E4`, `func_801553AC`), a 10-entry selector table of `GameState.unk_110D`, and `D_8015F490[5]` (the five score words) with `D_8015F4A4`/`D_8015F4A8` (target and shown score) as scalars. Details and the idioms (m2c temporaries inlined, `case 8: case 9: default:`, per-statement `idx + base` spelling, a reset arm without a value) in [[matching-notes]], "T-16564". The T-16560 numbers hold: the remaining distance of these handlers was register allocation and local layout, and for the functions with no sibling it took 8 to 15 minutes each once the draft's temporaries were removed.
