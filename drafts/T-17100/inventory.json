@@ -1,0 +1,668 @@
+[
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801321D0.c",
+  "func": "func_801328C4",
+  "size": 464,
+  "guarded": false,
+  "source_hash": "76bd32f93d9377ba5f6840b603568f9ee3e53317df87845b9e129eda106b3dc5",
+  "scope": "RPG_BAT:func_801328C4"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801321D0.c",
+  "func": "func_80132B34",
+  "size": 432,
+  "guarded": false,
+  "source_hash": "76bd32f93d9377ba5f6840b603568f9ee3e53317df87845b9e129eda106b3dc5",
+  "scope": "RPG_BAT:func_80132B34"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80132FE0.c",
+  "func": "func_80133108",
+  "size": 4068,
+  "guarded": false,
+  "source_hash": "d60101b412822b895d35e11571f7879a9d501805b9a17db115dd8639c73bb5f0",
+  "scope": "RPG_BAT:func_80133108"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80134D30.c",
+  "func": "func_80134E78",
+  "size": 1248,
+  "guarded": false,
+  "source_hash": "87b00a2180e72e79bc947959f45b33f18ac1e5654c90e06fed1380ee1cb055cd",
+  "scope": "RPG_BAT:func_80134E78"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80134D30.c",
+  "func": "func_80135358",
+  "size": 1700,
+  "guarded": false,
+  "source_hash": "87b00a2180e72e79bc947959f45b33f18ac1e5654c90e06fed1380ee1cb055cd",
+  "scope": "RPG_BAT:func_80135358"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801368B0.c",
+  "func": "func_80136A9C",
+  "size": 316,
+  "guarded": false,
+  "source_hash": "90acf8ce1e32df0acd1909e979b412cd5c1e34d667a33f40e2fb5cd5e0c230df",
+  "scope": "RPG_BAT:func_80136A9C"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80137280.c",
+  "func": "func_80138324",
+  "size": 1228,
+  "guarded": false,
+  "source_hash": "d41f74ed6b7ed8397003eafaa537abcb71c4e5bfcf4568c6bbb667797f02d3a7",
+  "scope": "RPG_BAT:func_80138324"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80137280.c",
+  "func": "func_801387F0",
+  "size": 940,
+  "guarded": false,
+  "source_hash": "d41f74ed6b7ed8397003eafaa537abcb71c4e5bfcf4568c6bbb667797f02d3a7",
+  "scope": "RPG_BAT:func_801387F0"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80137280.c",
+  "func": "func_80138B9C",
+  "size": 976,
+  "guarded": false,
+  "source_hash": "d41f74ed6b7ed8397003eafaa537abcb71c4e5bfcf4568c6bbb667797f02d3a7",
+  "scope": "RPG_BAT:func_80138B9C"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80137280.c",
+  "func": "func_80138F6C",
+  "size": 1268,
+  "guarded": false,
+  "source_hash": "d41f74ed6b7ed8397003eafaa537abcb71c4e5bfcf4568c6bbb667797f02d3a7",
+  "scope": "RPG_BAT:func_80138F6C"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80137280.c",
+  "func": "func_80139510",
+  "size": 2424,
+  "guarded": false,
+  "source_hash": "d41f74ed6b7ed8397003eafaa537abcb71c4e5bfcf4568c6bbb667797f02d3a7",
+  "scope": "RPG_BAT:func_80139510"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80137280.c",
+  "func": "func_80139E88",
+  "size": 428,
+  "guarded": false,
+  "source_hash": "d41f74ed6b7ed8397003eafaa537abcb71c4e5bfcf4568c6bbb667797f02d3a7",
+  "scope": "RPG_BAT:func_80139E88"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80137280.c",
+  "func": "func_8013A034",
+  "size": 704,
+  "guarded": false,
+  "source_hash": "d41f74ed6b7ed8397003eafaa537abcb71c4e5bfcf4568c6bbb667797f02d3a7",
+  "scope": "RPG_BAT:func_8013A034"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8013B5B0.c",
+  "func": "func_8013B5B0",
+  "size": 864,
+  "guarded": false,
+  "source_hash": "dc0ed215147c0e4dd8d4af749065ffae8713c9595d408224f06a82e213302bba",
+  "scope": "RPG_BAT:func_8013B5B0"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8013B5B0.c",
+  "func": "func_8013BBF8",
+  "size": 688,
+  "guarded": false,
+  "source_hash": "dc0ed215147c0e4dd8d4af749065ffae8713c9595d408224f06a82e213302bba",
+  "scope": "RPG_BAT:func_8013BBF8"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8013C890.c",
+  "func": "func_8013C890",
+  "size": 1012,
+  "guarded": false,
+  "source_hash": "c0bfd4dc09d2d0b64213ececbdfc2ca2ccb16321c41647f85c9938428b54f986",
+  "scope": "RPG_BAT:func_8013C890"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8013CC90.c",
+  "func": "func_8013CC90",
+  "size": 928,
+  "guarded": false,
+  "source_hash": "a21e8bb6a43a4051d96a118e14b87550fbf76e2965512b2222161fef0abfe5d4",
+  "scope": "RPG_BAT:func_8013CC90"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8013D780.c",
+  "func": "func_8013D834",
+  "size": 1068,
+  "guarded": false,
+  "source_hash": "71e13119bae4e929b2888db2cec5829ae7e32051090042761a90de7eca66e63b",
+  "scope": "RPG_BAT:func_8013D834"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8013D780.c",
+  "func": "func_8013DC60",
+  "size": 1692,
+  "guarded": false,
+  "source_hash": "71e13119bae4e929b2888db2cec5829ae7e32051090042761a90de7eca66e63b",
+  "scope": "RPG_BAT:func_8013DC60"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8013E4D0.c",
+  "func": "func_8013E54C",
+  "size": 628,
+  "guarded": false,
+  "source_hash": "8b862cb669d8e7d30ab6336c169bf484422db22a363491840f0e95f0f082cebd",
+  "scope": "RPG_BAT:func_8013E54C"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8013E4D0.c",
+  "func": "func_8013EA60",
+  "size": 1100,
+  "guarded": false,
+  "source_hash": "8b862cb669d8e7d30ab6336c169bf484422db22a363491840f0e95f0f082cebd",
+  "scope": "RPG_BAT:func_8013EA60"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8013F4F0.c",
+  "func": "func_8013F82C",
+  "size": 1376,
+  "guarded": false,
+  "source_hash": "9d0ef586eb271eea20cbdccd884fe573c5f019e4fa68ec2f8b1bb8d23f23295c",
+  "scope": "RPG_BAT:func_8013F82C"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8013F4F0.c",
+  "func": "func_80140204",
+  "size": 2132,
+  "guarded": false,
+  "source_hash": "9d0ef586eb271eea20cbdccd884fe573c5f019e4fa68ec2f8b1bb8d23f23295c",
+  "scope": "RPG_BAT:func_80140204"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8013F4F0.c",
+  "func": "func_80140E70",
+  "size": 492,
+  "guarded": false,
+  "source_hash": "9d0ef586eb271eea20cbdccd884fe573c5f019e4fa68ec2f8b1bb8d23f23295c",
+  "scope": "RPG_BAT:func_80140E70"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80141060.c",
+  "func": "func_80141060",
+  "size": 2564,
+  "guarded": false,
+  "source_hash": "e2ed6a6bc10f30a5f8b91e97c709de2f0a7f78b9dba4339e3f146fd0a1271345",
+  "scope": "RPG_BAT:func_80141060"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80144010.c",
+  "func": "func_80144010",
+  "size": 1136,
+  "guarded": false,
+  "source_hash": "143e2f3364e7705ec3e260bd32886f44f6e2d9c18539a0af9a12de82b2e2da59",
+  "scope": "RPG_BAT:func_80144010"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801447E0.c",
+  "func": "func_801447E0",
+  "size": 924,
+  "guarded": false,
+  "source_hash": "c0a79193945a0a6569dffdca338cc74b1e06bfca96467d2a60c62e97a9d66b94",
+  "scope": "RPG_BAT:func_801447E0"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801447E0.c",
+  "func": "func_80144C84",
+  "size": 1276,
+  "guarded": false,
+  "source_hash": "c0a79193945a0a6569dffdca338cc74b1e06bfca96467d2a60c62e97a9d66b94",
+  "scope": "RPG_BAT:func_80144C84"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80145CC0.c",
+  "func": "func_80145CC0",
+  "size": 2232,
+  "guarded": true,
+  "source_hash": "8609bdade14401abd21fc26e5c0f204ca41b3818ef21eab07775234dcf643ac9",
+  "scope": "RPG_BAT:func_80145CC0"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80145CC0.c",
+  "func": "func_80146578",
+  "size": 812,
+  "guarded": false,
+  "source_hash": "8609bdade14401abd21fc26e5c0f204ca41b3818ef21eab07775234dcf643ac9",
+  "scope": "RPG_BAT:func_80146578"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801468B0.c",
+  "func": "func_80146C30",
+  "size": 2984,
+  "guarded": false,
+  "source_hash": "24edb3e0a2fbf46e4b72c95df6345be2828369eb0ba38cfbfbcc4161803b001f",
+  "scope": "RPG_BAT:func_80146C30"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801477E0.c",
+  "func": "func_80147930",
+  "size": 1500,
+  "guarded": false,
+  "source_hash": "380c1a86848124094207a506fc46e81221b15ce85400c8394d1a4e9ceb7ffc7f",
+  "scope": "RPG_BAT:func_80147930"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801484E0.c",
+  "func": "func_80148714",
+  "size": 1012,
+  "guarded": false,
+  "source_hash": "511971e443fac8eb255f86885801d48f36ae807ed74295ada276cfd8d616f2dc",
+  "scope": "RPG_BAT:func_80148714"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80148F70.c",
+  "func": "func_80148F70",
+  "size": 1644,
+  "guarded": false,
+  "source_hash": "efb85234a7649ca26d7981ac338bb281db12f025e78b89664d87990d09acc2cd",
+  "scope": "RPG_BAT:func_80148F70"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801498C0.c",
+  "func": "func_801498C0",
+  "size": 488,
+  "guarded": false,
+  "source_hash": "638147186528db5dde88c246e4be9fec5ea26c2c50350e7dfbe7c7a5b9f03f2b",
+  "scope": "RPG_BAT:func_801498C0"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801498C0.c",
+  "func": "func_80149C5C",
+  "size": 1296,
+  "guarded": false,
+  "source_hash": "638147186528db5dde88c246e4be9fec5ea26c2c50350e7dfbe7c7a5b9f03f2b",
+  "scope": "RPG_BAT:func_80149C5C"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801498C0.c",
+  "func": "func_8014A3DC",
+  "size": 632,
+  "guarded": false,
+  "source_hash": "638147186528db5dde88c246e4be9fec5ea26c2c50350e7dfbe7c7a5b9f03f2b",
+  "scope": "RPG_BAT:func_8014A3DC"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8014A660.c",
+  "func": "func_8014AB84",
+  "size": 240,
+  "guarded": true,
+  "source_hash": "b8f201d6693ea4af3202a6ac87eb0f4285f3236f0bb88a697e3e0ae9a00d1fa0",
+  "scope": "RPG_BAT:func_8014AB84"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8014A660.c",
+  "func": "func_8014AC74",
+  "size": 348,
+  "guarded": true,
+  "source_hash": "b8f201d6693ea4af3202a6ac87eb0f4285f3236f0bb88a697e3e0ae9a00d1fa0",
+  "scope": "RPG_BAT:func_8014AC74"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8014ADD0.c",
+  "func": "func_8014ADD0",
+  "size": 1212,
+  "guarded": false,
+  "source_hash": "f3284fd455ed6b781dceaa2f287106d49fad104faca882a3474020f54c77f4ee",
+  "scope": "RPG_BAT:func_8014ADD0"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8014ADD0.c",
+  "func": "func_8014B294",
+  "size": 1188,
+  "guarded": false,
+  "source_hash": "f3284fd455ed6b781dceaa2f287106d49fad104faca882a3474020f54c77f4ee",
+  "scope": "RPG_BAT:func_8014B294"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8014ADD0.c",
+  "func": "func_8014B79C",
+  "size": 776,
+  "guarded": false,
+  "source_hash": "f3284fd455ed6b781dceaa2f287106d49fad104faca882a3474020f54c77f4ee",
+  "scope": "RPG_BAT:func_8014B79C"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8014ADD0.c",
+  "func": "func_8014BB80",
+  "size": 1124,
+  "guarded": false,
+  "source_hash": "f3284fd455ed6b781dceaa2f287106d49fad104faca882a3474020f54c77f4ee",
+  "scope": "RPG_BAT:func_8014BB80"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8014ADD0.c",
+  "func": "func_8014BFE4",
+  "size": 892,
+  "guarded": false,
+  "source_hash": "f3284fd455ed6b781dceaa2f287106d49fad104faca882a3474020f54c77f4ee",
+  "scope": "RPG_BAT:func_8014BFE4"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8014ADD0.c",
+  "func": "func_8014C360",
+  "size": 412,
+  "guarded": false,
+  "source_hash": "f3284fd455ed6b781dceaa2f287106d49fad104faca882a3474020f54c77f4ee",
+  "scope": "RPG_BAT:func_8014C360"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8014ADD0.c",
+  "func": "func_8014D11C",
+  "size": 600,
+  "guarded": false,
+  "source_hash": "f3284fd455ed6b781dceaa2f287106d49fad104faca882a3474020f54c77f4ee",
+  "scope": "RPG_BAT:func_8014D11C"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8014E780.c",
+  "func": "func_8014E994",
+  "size": 452,
+  "guarded": true,
+  "source_hash": "31dce73950e66b1387f6480f109b476691400b1a9ab698b3c7365c536b9690b5",
+  "scope": "RPG_BAT:func_8014E994"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8014E780.c",
+  "func": "func_8014EBEC",
+  "size": 344,
+  "guarded": false,
+  "source_hash": "31dce73950e66b1387f6480f109b476691400b1a9ab698b3c7365c536b9690b5",
+  "scope": "RPG_BAT:func_8014EBEC"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8014E780.c",
+  "func": "func_8014EF8C",
+  "size": 244,
+  "guarded": false,
+  "source_hash": "31dce73950e66b1387f6480f109b476691400b1a9ab698b3c7365c536b9690b5",
+  "scope": "RPG_BAT:func_8014EF8C"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8014E780.c",
+  "func": "func_8014F278",
+  "size": 216,
+  "guarded": false,
+  "source_hash": "31dce73950e66b1387f6480f109b476691400b1a9ab698b3c7365c536b9690b5",
+  "scope": "RPG_BAT:func_8014F278"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8014F790.c",
+  "func": "func_8014F88C",
+  "size": 1328,
+  "guarded": false,
+  "source_hash": "05521df829df6a1f43002badcc6e80b9243ff9efc491d464874f91d5503ceac7",
+  "scope": "RPG_BAT:func_8014F88C"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801504E0.c",
+  "func": "func_801505B8",
+  "size": 1260,
+  "guarded": false,
+  "source_hash": "aef114fcb644ec3a9835be8080afbe0d66b02c1f6cf6de86c30321b69fe026ff",
+  "scope": "RPG_BAT:func_801505B8"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80151C10.c",
+  "func": "func_80151C10",
+  "size": 808,
+  "guarded": false,
+  "source_hash": "ffeef69e8d0cc7ae638c6c0498a6a080d801ce9aa4e601f4e7fd312c260253c5",
+  "scope": "RPG_BAT:func_80151C10"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80151FC0.c",
+  "func": "func_80152080",
+  "size": 772,
+  "guarded": false,
+  "source_hash": "972cffc59b6eee3e7016f7bc018b49d5dbea475af9dd6fe8e5c0c9d169e35d27",
+  "scope": "RPG_BAT:func_80152080"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80151FC0.c",
+  "func": "func_80152384",
+  "size": 544,
+  "guarded": false,
+  "source_hash": "972cffc59b6eee3e7016f7bc018b49d5dbea475af9dd6fe8e5c0c9d169e35d27",
+  "scope": "RPG_BAT:func_80152384"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801525B0.c",
+  "func": "func_801525B0",
+  "size": 812,
+  "guarded": false,
+  "source_hash": "debfa085a070f91ca27d7e296c3d4583c72ebca130380bd0da8e9ab4c770f05b",
+  "scope": "RPG_BAT:func_801525B0"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801525B0.c",
+  "func": "func_801529B4",
+  "size": 1404,
+  "guarded": false,
+  "source_hash": "debfa085a070f91ca27d7e296c3d4583c72ebca130380bd0da8e9ab4c770f05b",
+  "scope": "RPG_BAT:func_801529B4"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801525B0.c",
+  "func": "func_80152F30",
+  "size": 1716,
+  "guarded": false,
+  "source_hash": "debfa085a070f91ca27d7e296c3d4583c72ebca130380bd0da8e9ab4c770f05b",
+  "scope": "RPG_BAT:func_80152F30"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801525B0.c",
+  "func": "func_80153784",
+  "size": 732,
+  "guarded": false,
+  "source_hash": "debfa085a070f91ca27d7e296c3d4583c72ebca130380bd0da8e9ab4c770f05b",
+  "scope": "RPG_BAT:func_80153784"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801525B0.c",
+  "func": "func_80153F3C",
+  "size": 740,
+  "guarded": false,
+  "source_hash": "debfa085a070f91ca27d7e296c3d4583c72ebca130380bd0da8e9ab4c770f05b",
+  "scope": "RPG_BAT:func_80153F3C"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801525B0.c",
+  "func": "func_80154220",
+  "size": 524,
+  "guarded": false,
+  "source_hash": "debfa085a070f91ca27d7e296c3d4583c72ebca130380bd0da8e9ab4c770f05b",
+  "scope": "RPG_BAT:func_80154220"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80154430.c",
+  "func": "func_80154760",
+  "size": 1656,
+  "guarded": false,
+  "source_hash": "7a528cd71429176df440bced8a408f9d0254068252f94d8608ec8307dd760b8d",
+  "scope": "RPG_BAT:func_80154760"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80154430.c",
+  "func": "func_80154DD8",
+  "size": 1204,
+  "guarded": false,
+  "source_hash": "7a528cd71429176df440bced8a408f9d0254068252f94d8608ec8307dd760b8d",
+  "scope": "RPG_BAT:func_80154DD8"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80154430.c",
+  "func": "func_8015528C",
+  "size": 1500,
+  "guarded": false,
+  "source_hash": "7a528cd71429176df440bced8a408f9d0254068252f94d8608ec8307dd760b8d",
+  "scope": "RPG_BAT:func_8015528C"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80154430.c",
+  "func": "func_80155868",
+  "size": 516,
+  "guarded": false,
+  "source_hash": "7a528cd71429176df440bced8a408f9d0254068252f94d8608ec8307dd760b8d",
+  "scope": "RPG_BAT:func_80155868"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80155CC0.c",
+  "func": "func_80156064",
+  "size": 828,
+  "guarded": false,
+  "source_hash": "de64b50ca530ca08b9c0988504090527749504df3e73c9fd120a8c3e8c1e760c",
+  "scope": "RPG_BAT:func_80156064"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80156CC0.c",
+  "func": "func_80156D78",
+  "size": 992,
+  "guarded": false,
+  "source_hash": "363e97d5f7f5d19980c0dabfee1ce19e27fbdadb8285775bf675666c18ebb8e4",
+  "scope": "RPG_BAT:func_80156D78"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80156CC0.c",
+  "func": "func_80157158",
+  "size": 1256,
+  "guarded": false,
+  "source_hash": "363e97d5f7f5d19980c0dabfee1ce19e27fbdadb8285775bf675666c18ebb8e4",
+  "scope": "RPG_BAT:func_80157158"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80156CC0.c",
+  "func": "func_80157640",
+  "size": 540,
+  "guarded": false,
+  "source_hash": "363e97d5f7f5d19980c0dabfee1ce19e27fbdadb8285775bf675666c18ebb8e4",
+  "scope": "RPG_BAT:func_80157640"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80157AE0.c",
+  "func": "func_80158C4C",
+  "size": 1056,
+  "guarded": false,
+  "source_hash": "9b075039d7d8d7aad50037cfc133809aa8a63f5ef2b1933e992ac54d70fc21a4",
+  "scope": "RPG_BAT:func_80158C4C"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80157AE0.c",
+  "func": "func_80159214",
+  "size": 1036,
+  "guarded": false,
+  "source_hash": "9b075039d7d8d7aad50037cfc133809aa8a63f5ef2b1933e992ac54d70fc21a4",
+  "scope": "RPG_BAT:func_80159214"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80157AE0.c",
+  "func": "func_80159B40",
+  "size": 516,
+  "guarded": false,
+  "source_hash": "9b075039d7d8d7aad50037cfc133809aa8a63f5ef2b1933e992ac54d70fc21a4",
+  "scope": "RPG_BAT:func_80159B40"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8015A1F0.c",
+  "func": "func_8015A744",
+  "size": 368,
+  "guarded": true,
+  "source_hash": "172374a7d93e68c35312cc359d9d8ac176e9fa1a3b67f4bd1aad2b4d8fbbff53",
+  "scope": "RPG_BAT:func_8015A744"
+ },
+ {
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8015A1F0.c",
+  "func": "func_8015A8B4",
+  "size": 232,
+  "guarded": false,
+  "source_hash": "172374a7d93e68c35312cc359d9d8ac176e9fa1a3b67f4bd1aad2b4d8fbbff53",
+  "scope": "RPG_BAT:func_8015A8B4"
+ }
+]

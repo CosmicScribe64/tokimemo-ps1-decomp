@@ -1,0 +1,7 @@
+extern s16 D_80121622;
+extern s16 D_80121666;
+extern s16 D_801216AA;
+extern s32 D_800E6354;
+extern s32 D_8015EBD8;
+s32 func_800AE100();
+void func_8013A2F4();
