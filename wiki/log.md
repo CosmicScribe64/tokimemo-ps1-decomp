@@ -16310,6 +16310,18 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17102 Done
 [[tickets/T-17102-w3-rpg-bat-p02]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 3 of 3 functions matched (`func_80151C10`, `func_80156D78`, `func_80157158`, 3,056 bytes). Rebuild: RPG_BAT unit sha1 OK, headers OK, globals OK. Card moved to Done.
 
+## [2026-10-16] ticket | T-17108 In Progress
+
+[[tickets/T-17108-w3-rpg-bat-p08]] created and In Progress: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`; `func_8014E994`, `func_8014AB84`, `func_8014AC74`, `func_8014F278`, `func_8014EF8C`, `func_8014EBEC`). Branch `w3-rpg-bat-p08` from `w2-good`, worktree `tokimemo-wt/w3-rpg-bat-p08`.
+
+## [2026-10-16] ticket | T-17108 In Review
+
+[[tickets/T-17108-w3-rpg-bat-p08]] In Progress to In Review: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`), 6 of 6 functions matched (1,844 bytes): `func_8014E994`, `func_8014EBEC`, `func_8014EF8C`, `func_8014F278`, `func_8014AC74`, `func_8014AB84`. One shared counter for the word-clear loops, the `i + 96` record loop, first-symbol element views for the shared-`$at` stores, typed `DisplayActor44` records and element indexes instead of byte-offset casts; seven old T-0018 rows solved. Notes in [[matching-notes]] (section T-17108), five rows in [[register-cheatsheet]], update in [[data/t0018-cases]], section in [[rpg-bat-family-results]]. Awaiting code review.
+
+## [2026-10-16] ticket | T-17108 Done
+
+[[tickets/T-17108-w3-rpg-bat-p08]] In Review to Done after the code review: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`), 6 of 6 functions matched (1,844 bytes: `func_8014E994`, `func_8014EBEC`, `func_8014EF8C`, `func_8014F278`, `func_8014AC74`, `func_8014AB84`; six ticketed FAKE comments). No findings. Headers, globals and proto checks OK, build up to date.
+
 
 ## [2026-10-16] ticket | T-20003 RPG timer follow-up In Progress
 
@@ -16342,3 +16354,7 @@ Upstream main a8591fb8 merged T-17102's independent matches for func_80156D78 an
 ## [2026-10-16] build | T-20003 final single-callback verification passed
 
 On upstream main a8591fb8, actual default funcdiff proves all 1,268 linked bytes of func_80138F6C match. The 39-step incremental build passes RPG_BAT/GYOZI SHA1 and globals, explicit binary checks pass 27/27, and sync_protos --check-branch passes (0 new / 15 known). Final production scope is one C callback plus its missing D_8015E8A0 declaration; upstream 80156CC0.c remains verbatim. Two FAKE sites are marked and locally reviewed. [[tickets/T-20003-rpg-timer-callees]] and PR #38 remain In Review for the maintainer.
+
+## [2026-10-16] setup | T-20003 follow unrelated upstream RPG work
+
+Integrated main 0925704e (T-17108). Only the append-only log conflicted; preserved both histories. Upstream changed other RPG_BAT source files and wiki, leaving this PR's func_80138F6C, its source-file caller views and the buffer declaration unchanged. The final narrowed proof/build/prototype evidence on a8591fb8 remains recorded above. [[tickets/T-20003-rpg-timer-callees]] stays In Review.
