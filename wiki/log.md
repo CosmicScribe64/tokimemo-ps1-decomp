@@ -16578,3 +16578,7 @@ Clean rebuild of the w3-rpg-bat-p14 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.
 ## [2026-10-16] ticket | T-17005 In Progress
 
 Opened [[tickets/T-17005-w3-main-p05]]: wave 3 package for `src/main/8005A0B0.c` (`pre_syogatu1`, `func_8005CA94`, `func_80060178`, `func_8005C14C`, `func_8005CC40`), parent [[tickets/T-17000-types-first-main]]. Worktree `tokimemo-wt/w3-main-p05`, branch `w3-main-p05`.
+
+## [2026-10-16] ticket | T-17005 In Review
+
+[[tickets/T-17005-w3-main-p05]] In Progress to In Review: 3 of 5 functions matched in plain C (`pre_syogatu1` by an index loop, `func_80060178` by statement order x, y, w, h and a FAKE `pad` local, `func_8005C14C` copied from the NAME_ENT sibling), 1,708 bytes. `func_8005CA94` (51 rows at best) and `func_8005CC40` (54 rows) restored to `INCLUDE_ASM` with rows in [[data/t0018-cases]]. Notes in [[matching-notes]] (section T-17005). Code changes in `src/main/8005A0B0.c` and `include/main_api.h` (`func_80060178` declaration).
