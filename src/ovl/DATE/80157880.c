@@ -218,7 +218,19 @@ void func_80158300(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80157880", func_80158338);
+void func_80158338(void) {
+    GameState *g = &D_800E6280; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl63 tbl;
+
+    tbl = D_8016020C;
+    if (((g->unk_03E == 0x5F && g->unk_03F == 7 && g->unk_040 == 0x17) ||
+         (g->unk_03E == 0x60 && g->unk_03F == 7 && g->unk_040 == 0x1C) ||
+         (g->unk_03E == 0x61 && g->unk_03F == 7 && g->unk_040 == 0x1B)) &&
+        D_800B593C == 0x80 && D_80122D04 == 0) {
+        func_8006B900();
+    }
+    tbl.f[g->unk_110A](0x80);
+}
 
 void func_80158444(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8B0A);
