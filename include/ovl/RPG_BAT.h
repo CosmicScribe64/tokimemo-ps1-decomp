@@ -164,7 +164,9 @@ void func_8013C2A0(void);
 void func_8013C32C(void);
 void func_8013BEA8(void);
 s32 func_8013B910(void);
+#ifndef RPG_BAT_OVERRIDE_func_8013C890
 void func_8013C890(void);
+#endif
 void func_8013CC90(void);
 void func_801439E0();
 void func_8014B294(void);
@@ -321,6 +323,8 @@ extern s32 D_8015EDF8;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 extern s32 D_8015EDB4;
+extern s32 D_8015ECC4;
+void func_80148714(void);
 extern s32 D_8015EE4C;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */

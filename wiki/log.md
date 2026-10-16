@@ -16523,3 +16523,11 @@ Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG
 
 ## [2026-10-16] ticket | T-17115 Done
 [[tickets/T-17115-w3-rpg-bat-p15]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 2 of 4 functions matched (`func_801328C4`, `func_8014A3DC`, 1,136 bytes); `func_80132B34` and `func_80149C5C` stay `INCLUDE_ASM`. Rebuild: RPG_BAT unit sha1 OK, 27/27 binaries OK, headers OK, globals OK, protos OK. Card moved to Done.
+## [2026-10-16] ticket | T-17113 In Progress
+[[tickets/T-17113-w3-rpg-bat-p13]] created and started: Wave 3 package w3-rpg-bat-p13 of [[tickets/T-17100-types-first-rpg_bat]], four RPG_BAT functions in `src/ovl/RPG_BAT/801447E0.c`, `src/ovl/RPG_BAT/8013C890.c`, `src/ovl/RPG_BAT/801484E0.c` (`func_801447E0`, `func_80148714`, `func_8013C890`, `func_80144C84`). Worktree `tokimemo-wt/w3-rpg-bat-p13`, base `w2-good`.
+
+## [2026-10-16] ticket | T-17113 In Review
+[[tickets/T-17113-w3-rpg-bat-p13]] In Progress to In Review: 1 of 4 functions matched (`func_8013C890`, 1,024 bytes of code, plain C in `src/ovl/RPG_BAT/8013C890.c`), `func_80148714` kept as a `NON_MATCHING` draft with 28 differing lines in `src/ovl/RPG_BAT/801484E0.c`, `func_801447E0` (154 rows) and `func_80144C84` (252 rows) left `INCLUDE_ASM` with drafts in `drafts/T-17113/`. Notes in [[matching-notes]] (section T-17113), three rows in [[data/t0018-cases]], new `RPG_BAT_OVERRIDE_func_8013C890` in `include/ovl/RPG_BAT.h`. Started 20:31 UTC, about 75 minutes.
+
+## [2026-10-16] ticket | T-17113 Done
+[[tickets/T-17113-w3-rpg-bat-p13]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/ovl/RPG_BAT/8013C890.c`, `src/ovl/RPG_BAT/801484E0.c` and `include/ovl/RPG_BAT.h` changed in code, `drafts/T-17113/` is new. One finding fixed: the guarded `func_80148714` draft reached the `D_8015EBAC` and `D_8015EC70` tables through their first symbol without a mark, now a `FAKE` comment with the ticket (comment only). `s32` without a return (`RPG_BAT_OVERRIDE_func_8013C890`) judged plain C with a comment, as in T-17109. Unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 1 of 4 matched (`func_8013C890`, 1,024 bytes). Merge via the wave 3 merge script.
