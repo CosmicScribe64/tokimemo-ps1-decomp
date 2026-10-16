@@ -1,10 +1,11 @@
-#define MAIN_API_OVERRIDE_set_dec_bri /* called as implicit int (T-19032) */
+#define MAIN_API_OVERRIDE_set_dec_bri /* the original calls it as implicit int: the zero loop's pointer takes $v1, its end $v0 (T-19032) */
 #include "common.h"
 #include "ovl/TAIIKU.h"
 
 s32 set_dec_bri();
 
-#ifdef NON_MATCHING
+/* Defined here, as in the original: the two stores in the copy loop share one lui $at (T-9010). The auto
+ * array `tbl` below also puts its initialiser in this object's .data, right after this table. */
 s32 D_8014A070[6] = { 0 };
 
 void func_80141280(void) {
@@ -72,6 +73,7 @@ void func_80141280(void) {
             func_80132B90();
             func_80141B70();
             D_800CA148 = 0;
+            /* FAKE: the (u8) narrowing adds the ugen temporary the original has for this test (T-19032) */
             if ((u8)(D_800E6280.unk_0F4.b[1] & 2)) {
                 D_800CA148 = 6;
             }
@@ -103,6 +105,7 @@ void func_80141280(void) {
     case 8:
         func_801419F8();
         if (D_800E6280.unk_110A != 0) {
+            /* FAKE: u32 view through the address gives the selector $v1, as in the original (T-19032) */
             switch (*(u32 *)&D_80122CDC) {
             case 0:
                 D_80122EC8 = 0xC;
@@ -132,6 +135,7 @@ void func_80141280(void) {
     case 10:
         func_801419F8();
         if (D_800E6280.unk_110A != 0) {
+            /* FAKE: u32 view through the address gives the selector $v1, as in the original (T-19032) */
             switch (*(u32 *)&D_80122CDC) {
             case 0:
                 D_80122EC8 = 0xE;
@@ -204,6 +208,7 @@ void func_80141280(void) {
                 ((TaiRec16 *)D_80122DD0)[j].unk_0C = 0;
                 ((TaiRec16 *)D_80122DD0)[j].unk_00 = 0;
             }
+            /* the counter is assigned again: IDO then keeps the loop rolled, as the original is (T-5020) */
             j = 1;
             func_80072B5C(j);
         }
@@ -214,9 +219,6 @@ void func_80141280(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80141280", func_80141280);
-#endif
 
 void func_80141964(void) {
     s32 pad; /* FAKE: unused word above the arrays, the original frame has it (T-9020) */
