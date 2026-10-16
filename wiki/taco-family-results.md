@@ -160,3 +160,7 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p09 (T-19009)
 
 [[tickets/T-19009-w3-d-p09]] (`80142820.c`, `80143E80.c`): `func_801428DC` (the settings writer, 532 bytes), `func_80144430` (672) and `func_80142AF0` (752) matched, 1,956 bytes; `func_80144094` (924) stays `INCLUDE_ASM`. New types and declarations: `TcSetAll`/`TcSetBits` (the 0x58-byte settings block at `D_800E7D10`, file-local in `80142820.c` with `MAIN_API_OVERRIDE_D_800E7D10`; the loader's view is `TcSave` in `80133870.c`), `void func_800A1070(MATRIX *)` in `main_api.h`, `case 0xFF:` and a `GameState *gs` for the memory-card state machine. The rules that matter beyond TACO (declared scalars own stack slots, one struct instead of splat names for scheduling, `void` for lib calls) are in [[matching-notes]], "T-19009", and [[register-cheatsheet]].
+
+## Matching stage, package w3-d-p11 (T-19011)
+
+[[tickets/T-19011-w3-d-p11]] (`80134930.c`, `80133870.c`): no function matched. `func_8013506C` (29 lines) and `func_80134A18` (36 lines) stay as guarded drafts, `func_80133E98` stays `INCLUDE_ASM` (226 lines, four forms tried). New declarations in `TACO.h`: `D_8015F3E0[2]` (replaces the scalars `D_8015F3E0`/`D_8015F3E4`) and `s32 func_80134A18()`. Findings (chain stores, pointer-with-offset loops, call-saved quotient): [[matching-notes]], "T-19011".

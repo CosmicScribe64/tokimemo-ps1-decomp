@@ -28,9 +28,6 @@ void func_80134930(void) {
 s32 func_80134A18(void) {
     s32 i;
     s32 frame;
-    u8 r;
-    u8 g;
-    u8 b;
 
     frame = D_8015F3E8;
     if (frame < 0x20) {

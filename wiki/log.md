@@ -15566,3 +15566,9 @@ Clean build 27/27 (all unit sha1 OK, TACO `1419e93c...`), `check_headers`, `migr
 
 ## [2026-10-16] ticket | T-19011 In Progress
 [[tickets/T-19011-w3-d-p11]] created for wave 3 package w3-d-p11 (TACO `src/ovl/TACO/80133870.c`, `src/ovl/TACO/80134930.c`: `func_8013506C`, `func_80134A18`, `func_80133E98`). Worktree `w3-d-p11` from `w2-good`.
+
+## [2026-10-16] build | T-19011 guarded drafts and tooling notes
+`src/ovl/TACO/80134930.c`: `func_8013506C` (29 differing lines) and `func_80134A18` (36 lines, 18 instructions) kept as `NON_MATCHING` drafts with comments; `func_80133E98` stays `INCLUDE_ASM` (226 lines, four spellings). `include/ovl/TACO.h`: `D_8015F3E0[2]`, `s32 func_80134A18();`. Findings in [[matching-notes]] ("T-19011"), rows in [[data/t0018-cases]] and [[register-cheatsheet]]. Default build: unit TACO sha1 OK.
+
+## [2026-10-16] ticket | T-19011 In Review
+[[tickets/T-19011-w3-d-p11]] In Progress to In Review: 0 of 3 functions matched, 2 guarded drafts, 1 left. Awaiting the code review against `CODING_STANDARDS.md` and the final checks.
