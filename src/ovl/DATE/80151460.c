@@ -100,6 +100,8 @@ void func_801517C8(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-17204, 14 differing lines; the copy's end pointer takes $t6 where the original has $t7 (one ugen
+ * temporary more is consumed before it), which shifts the later constant temporaries by one. */
 #ifdef NON_MATCHING
 void func_801518B8(void) {
     s16 i;
