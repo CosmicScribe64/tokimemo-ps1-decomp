@@ -15714,3 +15714,6 @@ Clean build 27/27 (all unit sha1 OK, TACO included), `check_headers`, `migrate_g
 
 ## [2026-10-16] build | T-19016 final checks
 Clean build 27/27 (all unit sha1 OK, VALEN included), `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK on branch w3-d-p16; comment-only edits afterwards rebuilt incrementally with VALEN sha1 OK. See [[tickets/T-19016-w3-d-p16]].
+
+## [2026-10-16] ticket | T-19016 Done
+[[tickets/T-19016-w3-d-p16]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of the VALEN units OK (headers OK, sha1 OK). 2 of 5 functions matched (`func_80133670`, `func_80133728`), `func_80134030` stays a guarded draft (27 lines), `func_80132D0C` and `func_80133088` stay `INCLUDE_ASM`. Merge via the wave 3 merge script.
