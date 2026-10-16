@@ -16159,3 +16159,7 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 ## [2026-10-16] ticket | T-17201 Done
 
 [[tickets/T-17201-w3-date-p01]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a missing `FAKE` prefix on a one-line scheduling trick in the guarded `func_8014718C`, a broken table row in [[data/t0018-cases]]); rebuild of DATE OK (headers OK, globals OK, sha1 OK). 1 of 2 functions matched (`func_80147958`, 4,044 bytes); `func_8014718C` stays a guarded draft (26 lines). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17208 In Progress
+
+[[tickets/T-17208-w3-date-p08]] created and started: wave 3 package for DATE `src/ovl/DATE/8014A1B0.c`, `8015A640.c`, `8015A7E0.c`, `8015A980.c` (5 functions), from [[tickets/T-17200-types-first-date]].
