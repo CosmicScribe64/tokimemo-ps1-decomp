@@ -157,3 +157,6 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p06 (T-19006)
 
 [[tickets/T-19006-w3-d-p06]] (`8013B990.c`): all five listed functions matched, 2,636 bytes (`func_8013B990`, `func_8013CFD8`, `func_8013CC40`, `func_8013C1F4`, `func_8013C440`), three with an `s32`-without-return FAKE and one with a branch-over guard FAKE. New declarations in `TACO.h`: `func_8013BAC4(Tc14 *, s32, s32)`, `func_8013C1F4`, `func_8013C440`, `D_8015F500`. Idioms and the preheader-load finding: [[matching-notes]], "T-19006".
+## Matching stage, package w3-d-p09 (T-19009)
+
+[[tickets/T-19009-w3-d-p09]] (`80142820.c`, `80143E80.c`): `func_801428DC` (the settings writer, 532 bytes), `func_80144430` (672) and `func_80142AF0` (752) matched, 1,956 bytes; `func_80144094` (924) stays `INCLUDE_ASM`. New types and declarations: `TcSetAll`/`TcSetBits` (the 0x58-byte settings block at `D_800E7D10`, file-local in `80142820.c` with `MAIN_API_OVERRIDE_D_800E7D10`; the loader's view is `TcSave` in `80133870.c`), `void func_800A1070(MATRIX *)` in `main_api.h`, `case 0xFF:` and a `GameState *gs` for the memory-card state machine. The rules that matter beyond TACO (declared scalars own stack slots, one struct instead of splat names for scheduling, `void` for lib calls) are in [[matching-notes]], "T-19009", and [[register-cheatsheet]].
