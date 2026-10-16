@@ -16170,3 +16170,7 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 ## [2026-10-16] ticket | T-17206 Done
 
 [[tickets/T-17206-w3-date-p06]] In Review to Done after the code review: wave 3 package w3-date-p06 (DATE `src/ovl/DATE/8014B1F0.c`, `src/ovl/DATE/80156600.c`, `include/main_api.h`), 2 of 2 functions matched (1,136 bytes: `func_80157698`, `func_8014C20C`, three ticketed FAKE locals). One finding fixed: the redundant `(u16)` casts on `D_800CA154` in `func_80157698` removed (the unit still matches). Headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-17101 In Progress
+
+[[tickets/T-17101-w3-rpg-bat-p01]] created and In Progress: wave 3 package w3-rpg-bat-p01 (RPG_BAT `src/ovl/RPG_BAT/80145CC0.c`, `src/ovl/RPG_BAT/80151FC0.c`; `func_80152080`, `func_80145CC0`, `func_80152384`, `func_80146578`). Branch `w3-rpg-bat-p01` from `w2-good`. Links [[tickets/T-17100-types-first-rpg_bat]].
