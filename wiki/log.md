@@ -16535,3 +16535,6 @@ Created [[tickets/T-17001-w3-main-p01]] (Wave 3 package, main `src/main/8007C030
 
 ## [2026-10-16] query | T-17001 closer pass
 [[tickets/T-17001-w3-main-p01]]: Opus closer pass on `dialogue_speak_part`, still 16 lines. A toy shows the `li a0,-40` needs a source line strictly below the string stores. IDO 7.1 behaves like 5.3, and 8 more source forms all propagate the constant. `NON_MATCHING` comment in `src/main/8007C030.c` updated; notes in [[matching-notes]] (T-17001, "Closer pass"). Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17001 Done
+[[tickets/T-17001-w3-main-p01]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 1 of 2 functions matched (`_sprite_set_box_shade_tarao`, 484 bytes); `dialogue_speak_part` stays `NON_MATCHING` at 16 lines. Rebuild: headers OK, globals OK, protos OK, main exe sha1 OK. Card moved to Done.
