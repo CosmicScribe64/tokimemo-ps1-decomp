@@ -15062,3 +15062,15 @@ blockers in [[tickets/T-16200-matching-wave-2]].
 ## [2026-10-16] ticket | T-16500 Done
 
 [[tickets/T-16500-twin-sweep]] reviewed against `CODING_STANDARDS.md` and moved to Done: only `tools/` and wiki pages changed (nothing under `src/`, `drafts/`, `asm/`), 1048 tool tests OK, dry run reproduces the 4 plans / 944 B on w2-good, and an apply in a scratch clone kept TAIIKU func_801406A8 (144 B, sha1 and `check_headers.py` OK). Review fixes: docstring timing, "whole tree" labels on two summary lines, [[decompile-workflow]] names the header edits a copy makes. The tool exits 0 when copies are rejected; read its `applied N of M` line.
+
+## [2026-10-16] ticket | T-16510 started
+
+[[tickets/T-16510-m2c-defect-rewrites]] (In Progress, under [[tickets/T-16200-matching-wave-2]]): detectors and mechanical rewrites for recurring m2c draft defects (shared-store goto, Shift-JIS hex escapes, post-increment compare; report-only void/s32 candidates), run over the `drafts/T-14500` selected bodies. Branch `t16510-m2c-defects`.
+
+## [2026-10-16] ticket | T-16510 to In Review
+
+[[tickets/T-16510-m2c-defect-rewrites]]: `tools/draft_fixes.py` (detectors, mechanical rewrites, `survey`, `rescore`), `tools/m2c.py --fix-defects`, in-place post-increment fix in `tools/m2c_args.py`, tests `tools/test_draft_fixes.py`, section in [[decompile-workflow]], notes in [[matching-notes]]. Survey of the 1,066 selected T-14500 bodies: 27 rewritable shared-store `goto` bodies (263 labels left alone), 13 Shift-JIS escape bodies, 11 post-increment bodies, 71 `s32-no-return` candidates, 0 void-callers-read-v0. Rescore of the 50 changed drafts in the full unit: 3 at score 0 (BUNKAKEN `func_80145844`, BUNKASAI `func_801431D4`, SHOUGATU `func_80137144`, all already matched by hand), 31 better, 3 equal, 13 worse (original kept); 1,499 rows removed. Output in `drafts/T-16510/` (`GEKO:func_801327AC` 223 to 2, score 0 with one more line). No change under `src/`. Waiting for code review.
+
+## [2026-10-16] ticket | T-16510 Done
+
+[[tickets/T-16510-m2c-defect-rewrites]] reviewed against `CODING_STANDARDS.md` and moved to Done: only `tools/`, new `drafts/T-16510/` folders and wiki pages changed, nothing under `src/`; all 51 tool test files pass in Docker (37 new tests). Review fixes: the ticket now counts 13 worse `goto` rewrites (7 in the top 30), the `rescore` docs state the two-to-six rule, [[decompile-workflow]] gives the post-increment count of the wider scan (207 of 6,958 asm functions, 83 before). The branch is 101 commits behind `w2-good`; merging conflicts only in `wiki/log.md` and `wiki/matching-notes.md`. Not merged or pushed.

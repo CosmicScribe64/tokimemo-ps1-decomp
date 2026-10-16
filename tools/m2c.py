@@ -28,6 +28,9 @@ What it adds over a bare `m2c <file>.s`:
 - turns m2c's `D += 1; if (D >= N)` into `if (D++ >= N)` where the asm compares the register that
   holds the value from before the increment (m2c compares the variable after the store, the other
   order; matching-notes, post-increment compares). Listed on stderr; `--no-postinc` turns it off.
+- `--fix-defects` (T-16510) runs tools/draft_fixes.py on the draft: shared-store `goto`s written as direct
+  stores, Shift-JIS escapes as text, `D++` compares by the asm (listed on stderr; each is a candidate:
+  score it, tools/draft_fixes.py rescore).
 The draft goes to stdout (body only); declarations m2c invented for symbols missing from the
 headers go to stderr, so the C can be pasted into src/ without the noise. Output is a starting
 point: upstream can collapse distinct LO16 table stores sharing one HI16 (InitMouse);
@@ -415,6 +418,15 @@ def build_context(root, heads, out_path, drop=None, asm_text=None, overlay=None,
         f.write(out)
 
 
+def function_start(lines, name):
+    """Index of the first line that defines `name`, or None."""
+    start = re.compile(r"^[A-Za-z_][^;{}]*\b%s\(.*\)\s*\{" % re.escape(name))
+    for i, line in enumerate(lines):
+        if start.match(line):
+            return i
+    return None
+
+
 def split_draft(text, name):
     """Split m2c output into (declarations before the function, function text).
 
@@ -422,11 +434,24 @@ def split_draft(text, name):
     the function; the function starts at the first line that defines `name`.
     """
     lines = text.splitlines()
-    start = re.compile(r"^[A-Za-z_][^;{}]*\b%s\(.*\)\s*\{" % re.escape(name))
-    for i, line in enumerate(lines):
-        if start.match(line):
-            return "\n".join(lines[:i]).strip(), "\n".join(lines[i:]).strip() + "\n"
-    return "", text
+    i = function_start(lines, name)
+    if i is None:
+        return "", text
+    return "\n".join(lines[:i]).strip(), "\n".join(lines[i:]).strip() + "\n"
+
+
+def fix_defects(text, name, asm_text, log):
+    """`text` with the mechanical rewrites of tools/draft_fixes.py applied to the function `name`
+    (the declarations before it stay as they are); each rewrite is passed to `log`."""
+    import draft_fixes
+    lines = text.splitlines()
+    i = function_start(lines, name)
+    if i is None:
+        return text
+    result = draft_fixes.analyze("\n".join(lines[i:]) + "\n", asm_text, rewrite=True)
+    for f in result.applied:
+        log("m2c.py: %s (line %d of the function): %s" % (f.kind, f.line, f.detail))
+    return ("\n".join(lines[:i]) + "\n" if i else "") + result.body
 
 
 def func_name(arg):
@@ -435,9 +460,10 @@ def func_name(arg):
 
 
 def run_m2c(root, name, target=DEFAULT_TARGET, context=True, rodata=True, extra=(), blind=False,
-            unit=None, callee_args=True, postinc=True, log=None):
+            unit=None, callee_args=True, postinc=True, log=None, fixes=False):
     """Return m2c's output for function `name` (`unit`: see locate()), with the argument counts and the
-    post-increment order fixed unless `callee_args`/`postinc` are off."""
+    post-increment order fixed unless `callee_args`/`postinc` are off; `fixes`: also the mechanical
+    rewrites of tools/draft_fixes.py (T-16510)."""
     log = log or (lambda msg: sys.stderr.write(msg + "\n"))
     asm, overlay = locate(root, name, unit)
     sys.stderr.write("m2c.py: %s (%s)\n" % (os.path.relpath(asm, root), overlay or "main"))
@@ -474,6 +500,8 @@ def run_m2c(root, name, target=DEFAULT_TARGET, context=True, rodata=True, extra=
             if done:
                 log("m2c.py: the asm compares the value from before the increment of %s: wrote `%s++` "
                     "in the condition (m2c compared the variable after the store)" % (", ".join(done), done[0]))
+        if fixes:
+            out = fix_defects(out, name, func_text, log)
         return out
 
 
@@ -498,11 +526,14 @@ def main(argv):
                     help="keep m2c's own guess of the argument counts of callees the headers do not prototype")
     ap.add_argument("--no-postinc", action="store_true",
                     help="do not rewrite m2c's `D += 1; if (D ...)` to the old-value compare `D++`")
+    ap.add_argument("--fix-defects", action="store_true",
+                    help="apply the mechanical rewrites of tools/draft_fixes.py (shared-store gotos, "
+                    "Shift-JIS escapes, old-value post-increment compares); each is only a candidate")
     args = ap.parse_args(argv)
     try:
         text = run_m2c(args.root, args.func, args.target, not args.no_context,
                        not args.no_rodata, extra, args.blind, args.unit,
-                       not args.no_callee_args, not args.no_postinc)
+                       not args.no_callee_args, not args.no_postinc, None, args.fix_defects)
     except (LookupError, RuntimeError) as e:
         sys.exit("m2c.py: %s" % e)
     if args.raw:

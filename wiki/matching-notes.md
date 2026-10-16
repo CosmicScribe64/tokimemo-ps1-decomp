@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-15
+updated: 2026-10-16
 sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 ---
 
@@ -5411,3 +5411,13 @@ What worked:
 - **The D_801499A2 counter family: no volatile flag.** `func_8013BEF8` and `func_8013C0E4` match with u16 pointer views of both the counter (`((u16 *)&D_801499A0)[1]`, which IDO promotes without the extra CVT copy of the plain field) and the flag (`((u16 *)D_801499B0)[1]`). The FAKE `volatile D_801499B2` of `func_8013C33C` stops the `lui` of the next flag load from moving into the branch delay slot and costs a match wherever the flag is read after a block. Both views are marked FAKE. `func_8013B78C` gets to 50 lines this way (the original promotes the counter before `D_801206BA`); `func_8013BCEC` to 80 (the else-path writeback `sh $v0` is missing).
 
 What blocked the rest (rows in [[data/t0018-cases]]): the rest of the D_801499A2 counter family (`func_8013BCEC` writes the promoted counter back on a path IDO does not; `func_8013B3B0`, `func_8013B94C`, `func_8013B608` reload it with hoisted `lui`s, while the view is promoted and a volatile alias loses the `lui`s; `func_8013B78C`, `func_8013B200` keep it in `$v1`/`$a1` where IDO colours other globals first); the `flags` prologue of `func_8013D2B4`/`func_8013D788` (uopt register in the original, ugen temporary in IDO, every later temporary one off; `func_8013D788` also does not promote D_80149960 in the original); the 20x4 grid loops of `func_80139AB0`/`func_8013DDB8` (inner loop unrolled by 2 with `multu` in the original, fully unrolled by IDO); `func_8013F3A4` (IDO hoists `&D_8011ECD0` into `$a3`). `func_801406A8` and `func_80139FE4` keep their wave-1 guarded drafts. Not attempted: `func_8013E894`, `func_8013E1FC`, `func_8013EC60`.
+
+## T-16510: recurring m2c defects, rewritten and rescored
+
+[[tickets/T-16510-m2c-defect-rewrites]]: `tools/draft_fixes.py` (also `tools/m2c.py --fix-defects`) writes the fixes of [[decompile-workflow]] "Recurring m2c defects" as alternatives; `rescore` compiled them in the full unit for the 50 T-14500 drafts it changes (results in `drafts/T-16510/README.md`). What the numbers say for a draft you are about to match:
+
+- **Shift-JIS as escapes**: the text form always helped or tied (13 bodies; `BUNKAKEN func_80145844` and `BUNKASAI func_801431D4` reach 0, as T-15300 and T-15400 found by hand). Octal escapes and the text compile the same, since `cc.py` turns the text into octal; only the `\x` hex form changes the bytes. Do it first.
+- **Old-value post-increment compare**: `D++` in the condition helped every time (11 bodies, `SHOUGATU func_80137144` 14 to 0). m2c.py's own pass missed the case where the asm adds in place (`addiu $v1, $v1, 1` after the compare); it now sees it.
+- **Shared-store `goto`**: a coin flip (13 better, 13 worse of 26 bodies); try both. Direct stores won where each case stores its own constant or address (`main func_80079070` 450 to 35, `BUNKA_SD func_80139290` 509 to 133). The per-case initializer tables with `var = D_a; D_b = ...; block: D_c = var;` (the load moves behind another store) split 5 to 7: `GEKO func_801327AC` 223 to 2 and `SHUGAKU func_8013282C` 183 to 116 gain, `GEKO func_801355E8` and `VALEN func_80134030` lose. A loser keeps the early load and one shared store, as the TT block of `func_80132000` does; nothing in the C text tells which.
+- **Near match from this pass**: `GEKO func_801327AC` is one row (`sb` for `sh`) after the `goto` rewrite; `*(s16 *)&D_80144C40 = 0;`, the line the initializer in the same file already has (T-9510), gives a full-unit score of 0 (`drafts/T-16510/follow-up/`). Not promoted: no linked-byte proof yet.
+- **`s32` without a return**: a dead copy or constant in `$v0` at an exit is in 207 of 334 matched `s32` functions that return no value and in 32 of 5,383 matched `void` ones. Of the 71 T-14500 drafts that show it, a signature-only change to `s32` improved 3, tied 29, worsened 12 and 27 did not compile (mostly a redeclaration against the existing `void` prototype or call); change the header too before judging. Callers that read `$v0` after a `void` draft do not occur in the archive (0 of 1,066).
