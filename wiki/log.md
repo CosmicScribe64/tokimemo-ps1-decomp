@@ -15946,3 +15946,6 @@ The T-19023 In Review entry above says 2,048 bytes; the three functions are 204 
 
 ## [2026-10-16] build | T-19027 closer pass, TEL func_8013CCD0 matched
 [[tickets/T-19027-w3-d-p27]] (16:56-17:15 UTC, Opus): `func_8013CCD0` matched in plain C (commit `a056d1c5`): the `unk_06` clamp as a store followed by a test of the field (ugen forwards the stored byte), `-(q) * 2 + 8`, and each record's three field stores on one source line (`SET_REC` macro). Notes in [[matching-notes]], row in [[register-cheatsheet]] and [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19027 Done
+[[tickets/T-19027-w3-d-p27]] reviewed against `CODING_STANDARDS.md` and moved to Done: 1 of 2 functions matched (TEL `func_8013CCD0`, 876 bytes, plain C, no FAKE); `func_8013D03C` stays `INCLUDE_ASM` with its draft archived in `drafts/T-19027/`. One finding fixed: the store-then-test `unk_06` clamp had no explaining comment (added, comment only). The closer pass entry above gives 17:15 UTC as its end; the ticket now says 17:10 UTC, the actual end. The "20 rows left" label in [[matching-notes]] now points to the closer match. TEL.bin SHA1 OK, 27/27.
