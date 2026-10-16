@@ -48,7 +48,7 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_801328B0);
 
 /* NON_MATCHING: T-19025, 10 differing lines; the two hoisted lui 0x8016 ranges of D_8015EDE4 take $v0, the original $a0 (an interfering range holds $v0 in the original), which also moves the hoisted move a0,zero */
 #ifdef NON_MATCHING
-void func_80132FE8(s32 arg0, s32 arg1) {
+void func_80132FE8(void) {
     /* FAKE: pad1..pad4 are unused locals that reserve the original's four extra frame words (flags at sp+0x30, actor at sp+0x2C); real source unknown. T-19025 */
     s32 pad1;
     s32 pad2;
@@ -63,7 +63,7 @@ void func_80132FE8(s32 arg0, s32 arg1) {
     actor = D_8015EDB4;
     if (actor->unk2 & 0x40) {
     } else {
-        func_8013240C(arg0, arg1);
+        func_8013240C();
         func_801328B0();
         func_80140000();
         func_80140DF0();
