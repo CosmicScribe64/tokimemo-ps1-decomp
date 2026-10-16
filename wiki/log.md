@@ -16392,3 +16392,7 @@ Clean rebuild of the w3-rpg-bat-p06 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.
 ## [2026-10-16] ticket | T-17106 Done
 
 [[tickets/T-17106-w3-rpg-bat-p06]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of RPG_BAT OK (headers OK, globals OK, sha1 OK, `sync_protos --check-branch` OK). 1 of 3 functions matched (`func_80155868`, 520 bytes); `func_80154760` and `func_80154DD8` stay `INCLUDE_ASM` with drafts in `drafts/T-17106/`. Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17114 In Progress
+
+[[tickets/T-17114-w3-rpg-bat-p14]] created and In Progress: wave 3 package for RPG_BAT `src/ovl/RPG_BAT/8013F4F0.c` and `src/ovl/RPG_BAT/801368B0.c` (4 functions: `func_80136A9C`, `func_80140E70`, `func_8013F82C`, `func_80140204`). Types-first parent: [[tickets/T-17100-types-first-rpg_bat]].
