@@ -68,6 +68,8 @@ typedef struct TkPl {
 } TkPl; /* size 0x1C */
 extern Lim3 D_8014A5FC;
 extern Lim3 D_8014A608;
+extern Lim3 D_8014A614;
+extern TaiikuSlot1C D_8014A4A8; /* slot 3, the end of the first slot loop in func_80147594. T-16553 */
 
 void func_801452D0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -841,7 +843,71 @@ void func_8014756C(void) {
     func_80147928();
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147594);
+void func_80147594(void) {
+    s32 k;
+    s32 i; /* i, k and r are declared before thr: it sits 12 bytes below the frame top */
+    s32 r;
+    Lim3 thr;
+
+    thr = D_8014A614;
+    i = 0;
+    do {
+        if (D_8014A454[i + 1].unk_14 >= 0x65) {
+            r = func_800AE0D0() & 0x1F;
+            if (r < 0xA) {
+                D_8014A454[i + 1].unk_08 = -0x64;
+            } else if (r < 0x14) {
+                D_8014A454[i + 1].unk_08 = 0x64;
+            } else {
+                D_8014A454[i + 1].unk_08 = 0;
+            }
+            D_8014A454[i + 1].unk_14 = 0;
+        }
+        i++;
+    } while (&D_8014A4A8 != &D_8014A454[i]);
+    k = 0; do { /* one line: as1 schedules the move after the hoisted table addresses (T-16553) */
+        if (D_8014A454[k + 1].unk_18 >= 0xB) {
+            i = 0;
+            do {
+                if (DISP(97 + k).unk_18 == D_8014A4D8[i] + (k * 0x13 + 0x13)) {
+                    if (DISP(97 + k).unk_26 + 0x4F < DISP(101 + k).unk_26 && (func_800AE0D0() & 0xFF) < thr.v[k]) {
+                        D_8014A454[k + 1].unk_08 -= 0x22;
+                    }
+                    if (DISP(101 + k).unk_26 < DISP(97 + k).unk_26 + 0x40 && (func_800AE0D0() & 0xFF) < thr.v[k]) {
+                        D_8014A454[k + 1].unk_08 += 0x22;
+                    }
+                }
+                i++;
+            } while (&D_8014A4D8[i] < D_8014A4E4);
+            i = 0;
+            do {
+                if (DISP(97 + k).unk_18 == D_8014A4E8[i] + (k * 0x13 + 0x13)) {
+                    if (DISP(97 + k).unk_26 + 0x2D < DISP(101 + k).unk_26 && (func_800AE0D0() & 0xFF) < thr.v[k]) {
+                        D_8014A454[k + 1].unk_08 -= 0x22;
+                    }
+                    if (DISP(101 + k).unk_26 < DISP(97 + k).unk_26 + 0x28 && (func_800AE0D0() & 0xFF) < thr.v[k]) {
+                        D_8014A454[k + 1].unk_08 += 0x22;
+                    }
+                }
+                i++;
+            } while (&D_8014A4E8[i] < (u16 *)&D_8014A4F4);
+            i = 0;
+            do {
+                if (DISP(97 + k).unk_18 == D_8014A4C4[i] + (k * 0x13 + 0x13)) {
+                    if (DISP(97 + k).unk_26 + 0x2D < DISP(101 + k).unk_26 && (func_800AE0D0() & 0xFF) < thr.v[k]) {
+                        D_8014A454[k + 1].unk_08 -= 0x22;
+                    }
+                    if (DISP(101 + k).unk_26 < DISP(97 + k).unk_26 + 0x28 && (func_800AE0D0() & 0xFF) < thr.v[k]) {
+                        D_8014A454[k + 1].unk_08 += 0x22;
+                    }
+                }
+                i++;
+            } while (D_8014A4D4 != &D_8014A4C4[i]);
+            D_8014A454[k + 1].unk_18 = 0;
+        }
+        k++;
+    } while (k != 3);
+}
 
 void func_80147928(void) {
     s32 r;
