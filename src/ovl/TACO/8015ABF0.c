@@ -21,15 +21,108 @@ void func_8015ABF0(void) {
     D_801604D0 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015ACCC);
+/* The two table walks are index loops over D_80161D9C (uopt shares one strength-reduced pointer between them, which
+ * is why n, i and that pointer get s2, s0 and s1); the count loop compares the element address against the table
+ * end. HYPOTHESIS: base is a model data address (+4, then +8 more for the link call). T-19026 */
+s32 func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g) {
+    s32 i;
+    s32 base;
+    s32 id;
+    u32 n;
+    s32 *pair;
 
-/* NON_MATCHING: T-16563, 8 differing lines; frame and MATRIX offset match (declare i, j before matrix: later-declared
+    id = 0;
+    n = 0;
+    for (i = 16; i < 63; i++) {
+        if (!((i + D_8015EDB4)->unk0[1] & 0x80)) {
+            id = i;
+            break;
+        }
+    }
+    if (id == 0) {
+        return -1;
+    }
+    for (i = 0; &D_80161D9C[i] < &D_80161D9C[0x40]; i++) {
+        if (D_80161D9C[i] == 0) {
+            n++;
+        }
+    }
+    if (n < D_80161E20[a]) {
+        return -1;
+    }
+    base = D_80161DDC[a];
+    base += 4;
+    func_8009B3C0(base);
+    base += 8;
+    func_80143B34(id);
+    /* FAKE: the empty test adds one basic block to the live range of a, which lowers its priority below base's, so base
+     * gets $fp and a stays in its stack home as in the original; no code. T-19026 */
+    if (b) {}
+    func_80099E30(0, &(id + D_8015EDB4)->unk14);
+    if (a == 0xA) {
+        func_8009B430(base, (u8 *)&(id + D_8015EDB4)->unk4, 1);
+    } else {
+        func_8009B430(base, (u8 *)&(id + D_8015EDB4)->unk4, 0);
+    }
+    n = D_80161E20[a];
+    for (i = 0; n != 0; i++) {
+        if (D_80161D9C[i] == 0) {
+            func_80099E30((s32)&(id + D_8015EDB4)->unk14, &D_80127480[i]);
+            D_80161D9C[i] = id;
+            if (a == 0xF || a == 0x10) {
+                pair = (D_80161E20[a] - n) * 2 + D_80161E60[a];
+                func_8015B1B8(i, pair[0], pair[1], 0);
+            } else {
+                func_8015B2AC(i, D_80161E60[a][D_80161E20[a] - n]);
+            }
+            func_8009B430(base, (u8 *)&D_80127080[i], D_80161E20[a] - n);
+            n--;
+            D_80127080[i].unk4[0] = (s32)&D_80127480[i];
+            D_80127080[i].unk0 = 0x80000000;
+        }
+    }
+    (D_8015EDB4 + id)->unk4.unk0 = 0x80000000;
+    (D_8015EDB4 + id)->unk2 = b;
+    (D_8015EDB4 + id)->unk7A = 0x7FFF;
+    (D_8015EDB4 + id)->unk84[2] = a;
+    (D_8015EDB4 + id)->unk3 = 1;
+    (D_8015EDB4 + id)->unk82 = 0;
+    (D_8015EDB4 + id)->unk72 = 0;
+    (D_8015EDB4 + id)->unk7C = c.x;
+    (D_8015EDB4 + id)->unk7E = c.y;
+    (D_8015EDB4 + id)->unk80 = c.z;
+    (D_8015EDB4 + id)->unk0[1] = 0x80;
+    (D_8015EDB4 + id)->unk74 = d.x;
+    (D_8015EDB4 + id)->unk76 = d.y;
+    (D_8015EDB4 + id)->unk78 = d.z;
+    (D_8015EDB4 + id)->unk64 = e.x;
+    (D_8015EDB4 + id)->unk66 = e.y;
+    (D_8015EDB4 + id)->unk68 = e.z;
+    (D_8015EDB4 + id)->unk6A = e.unk6;
+    (D_8015EDB4 + id)->unk6C = D_80161EA4[a];
+    (D_8015EDB4 + id)->unk6E = D_80161EA4[a];
+    (D_8015EDB4 + id)->unk70 = D_80161EA4[a];
+    (D_8015EDB4 + id)->unk84[1] = f;
+    (D_8015EDB4 + id)->unk84[0] = D_80161EC8[a];
+    (D_8015EDB4 + id)->unk84[3] = g | 1;
+    (id + D_8015EDB4)->unk4.unk4[0] = (s32)&(id + D_8015EDB4)->unk14;
+    return id;
+}
+
+/* NON_MATCHING: T-19026 (T-16563), 8 differing lines; frame and MATRIX offset match (declare i, j before matrix: later-declared
  * locals sit lower), only the struct-copy temporary differs (ugen t2 against t3, T-0018).
  * Closer pass: before the copy's data register ugen skips one free temporary when the last store it emitted went
  * through a pointer (here the loop's stores to matrix), two after a direct stack or global store or at function entry.
  * The original copy register is t3, as if it skipped two (t9, t2). A stack store such as `matrix.m[0][0] = 0;` before
  * the copy gives t3 but adds code; a uopt range in t2 gives t3 but moves the loop registers. No form without extra
- * code found; TACO func_801472D4 has the same miss. */
+ * code found; TACO func_801472D4 has the same miss. T-19026: empty tests on the parameters (removed by uopt or they
+ * change the frame), swapped operands of the two multiplies and both orders of the copy and the flag store do not
+ * move it either. T-19026 closer: still 8 lines. In `cc -S` ugen loads &matrix into its own temporary t2
+ * (`addu t2,sp,16; move v1,t2; move t0,t2`, which as1 folds to `addiu t0,sp,32; or v1,t0,zero`), so t2 is used once
+ * before the loop. The original's temporaries (t3/t4 in the loop, t5..t8 after it, copy t3) are exactly what IDO gives
+ * when t2 is a uopt register and &matrix is held in it. No C form found that does this: counter and parameter
+ * types, table-typed parameters, pointer walks, a MATRIX pointer in obj's slot, do/while and != loops (about 110 more
+ * variants) give 16 to 80 listing lines. */
 #ifdef NON_MATCHING
 void func_8015B1B8(arg0, arg1, arg2, arg3)
     s32 arg0;

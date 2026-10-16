@@ -1,0 +1,13 @@
+m2c.py: argument counts from the callees' asm: func_80085B3C 2, func_801338F8 0
+python3 failed:
+cfe: Error: drafts/T-18800/_runs/plain/DATE2/func_801330D4/work/guarded.o.sjis.c, line 3022: 'sp38' undefined; reoccurrences will not be reported.
+         temp_v1 = &(&sp38[0])[var_a1];
+ ---------------------^
+cfe: Error: drafts/T-18800/_runs/plain/DATE2/func_801330D4/work/guarded.o.sjis.c, line 3039: 'sp38' undefined; reoccurrences will not be reported.
+         temp_v1_2 = &sp38[0] + var_t6;
+ ---------------------^
+cfe: Warning 681: drafts/T-18800/_runs/plain/DATE2/func_801330D4/work/guarded.o.sjis.c, line 3142: '&' before array or function; ignored
+     get_p_name(&D_800CA17C, 0);
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18800/_runs/plain/DATE2/func_801330D4/work -o drafts/T-18800/_runs/plain/DATE2/func_801330D4/work/guarded.o /tmp/asm_processor36mt12xi/preprocessed_52967bcae07f4373b8566d0f97c5a594.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibe7e4jmof/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18800/_runs/plain/DATE2/func_801330D4/work/guarded.o drafts/T-18800/_runs/plain/DATE2/func_801330D4/work/guarded.o.sjis.c

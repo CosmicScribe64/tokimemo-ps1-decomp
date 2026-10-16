@@ -75,6 +75,10 @@ typedef struct TcObj50 {
 extern TcPos D_80128880[];
 extern Tc10 D_80127080[];
 extern TcObj50 D_80127480[];
+/* coordinate objects 1-3 of D_80127480, named separately because func_801497EC compares against their addresses (T-19019) */
+extern TcObj50 D_801274D0;
+extern TcObj50 D_80127520;
+extern TcObj50 D_80127570;
 
 /*
  * Actor record, 79 of them at D_8015EDB4 (loops stop at byte offset 0x29F8). T-16560: unk0[1] holds
@@ -127,7 +131,7 @@ extern u8 D_8015EDC0;
 
 void func_80135F6C(void);
 void func_80136988(void);
-void func_80135A04(void);
+s32 func_80135A04(void);
 s32 func_8013515C(void);
 void func_80134FB8(void);
 s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5);
@@ -168,6 +172,13 @@ void func_80139FB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8013A580(s32 arg0);
 void func_80132220(void);
 void func_801334BC(void);
+void func_8013356C(void);
+s32 func_8013CE78(void);
+s32 func_8013CFD8(void);
+s32 func_80154014(void);
+s32 func_80142220(s32 arg0);
+s16 func_801420DC();
+s32 func_801423B0(void);
 extern s32 D_8015F400;
 extern u8 D_8015EDC4;
 
@@ -196,6 +207,7 @@ void func_8015163C(s32 arg0, s32 arg1);
 void func_80151264(u32 arg0);
 void func_801517AC(s32 arg0);
 void func_8014927C(void);
+void func_80149538(void);
 void func_8014A79C(void);
 void func_8014D2E0(void);
 s32 func_80147B24(s32 arg0, void *arg1);
@@ -379,6 +391,7 @@ extern u8 D_8015EE04[];
 extern u8 D_8015EE08[];
 extern u8 D_8015EE0C[];
 extern s32 D_8015F4D8;
+extern u8 D_8015F4B0[];
 void func_8013A764(void);
 typedef struct TacoRnd {
     s32 a;
@@ -386,7 +399,7 @@ typedef struct TacoRnd {
 } TacoRnd;
 extern TacoRnd *D_8015F4EC;
 extern u8 D_8015EDD8;
-void func_801357B0();
+s32 func_801357B0();
 extern s8 D_8015EDB8;
 
 void func_8013873C(void);
@@ -476,7 +489,11 @@ void func_80148B58();
 extern u8 D_8015F404[];
 extern u8 D_8015F410[];
 extern u8 D_8015F41C[];
-void func_80137264();
+void func_80137264(u8 *arg0, s32 arg1);
+typedef struct TacoDigits {
+    /* 0x00 */ u8 s[11];
+} TacoDigits; /* size 0xB: "0123456789" */
+extern TacoDigits D_8015F428;
 void func_801371B4(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 void func_80152110(s32 arg0, s32 arg1, s32 arg2);
 void func_801531E8();
@@ -635,3 +652,8 @@ extern s32 D_8016024C[];
 extern s32 D_80160264;
 extern u8 D_80161E20[]; /* trigger count per kind (T-10810) */
 extern s32 *D_80161E60[]; /* per kind: table of (s32, s32) pairs (T-10810) */
+extern s32 D_80161DDC[]; /* per kind: base handle of the kind's objects (T-19026) */
+extern s16 D_80161EA4[]; /* per kind: initial value of actor unk6C..unk70 (T-19026) */
+extern u8 D_80161EC8[]; /* per kind: initial value of actor unk84[0] (T-19026) */
+void func_8015B1B8();
+void func_8015B2AC(s32 arg0, s16 *arg1);

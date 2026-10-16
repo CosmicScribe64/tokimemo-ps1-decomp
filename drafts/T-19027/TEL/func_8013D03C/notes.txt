@@ -1,0 +1,21 @@
+T-19027, TEL:func_8013D03C. Typed draft (body.c), built in src/ovl/TEL/8013CCD0.c under #ifdef NON_MATCHING with the
+declarations in declarations.h. Best state at the end of the session: 49 differing rows (funcdiff --resolve), so it was not kept
+in src/. Frame, stack slots, the loops, the icon records and the code up to the days table match.
+Findings:
+- D_800E7CBC/CCC/CDC/CEC are D_800E6280.unk_1A3C/1A4C/1A5C/1A6C; D_800E62C2 is unk_042; D_800E66EC is unk_1BC[12].unk_10.w.
+- D_80120668.. are DisplayRecord44 fields of records 0x60..0x68 (+0x18, +0x26, +0x2A); use REC(n).
+- The flag ORs match as bit-fields: p->unk_0C.f.b3 = 1; f.b6 = 1; f.b2 = 1; f.b7 = 1 (not |= on b[0]).
+- Frame: a FAKE unused u8 pad[32] declared first, then n, buf[32], i, j, day, v, notes, TelSignDays days, then Rec38 *p, then q.
+  Rec38 *p = &D_800E6280.unk_1BC[n] (a variable, not a direct expression) gives the original's sw v0,0x50(sp) of the base
+  without +0x1BC and keeps the base out of a seventh saved register.
+- The original reloads that base at every later use (lw t7,0x50(sp); lw t8,0x1CC(t7)) with s1 = BWH index and s2 = the constant 10.
+  A plain p is promoted to s1 after the second loop and shifts j and the 10 up one register (111 rows). The FAKE here:
+  GameState *volatile q = (GameState *)((u8 *)p - 0x1BC); declared after p, assigned right after the four flag stores, and used
+  for every later record access as q->unk_1BC[0].unk_10 / .unk_0C. That reproduces the reloads and the s1/s2 assignment (111 -> 49 rows).
+  The same q assigned from &D_800E6280 + n * 0x38 computes the base twice and breaks the head.
+- Order of the stores in the second record loop: 14 (unk_14 = 0) before 04, 05 and 34 was found with tools/order_search.py.
+- Open (49 rows): (1) sw v0,0x50(sp) sits earlier than in the original (before the D_800E7CBC stores);
+  (2) the days table: the original loads the birthday word once (lw v0,0x1CC(t0), v0 = word, v1 = month - 1) and uses it for
+  the month and the day field; with a volatile q every access reloads, and an extra word local (u32 w, before or after v, or the
+  existing day) changes the temporaries of the whole function (the head then differs: lbu t2 for t1), so it was not kept.
+  The remaining rows are temporary numbering that follows from (2).

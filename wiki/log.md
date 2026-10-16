@@ -15928,9 +15928,162 @@ RENSYU `func_80133CB8` (420 bytes) matched, unit sha1 OK (`src/ovl/RENSYU/801320
 
 ## [2026-10-16] ticket | T-19020 Done
 [[tickets/T-19020-w3-d-p20]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of RENSYU OK (headers OK, globals OK, sha1 OK). 1 of 4 functions matched (`func_80133CB8`, 420 bytes, FAKE), `func_80133628` stays a guarded draft (21 lines), `func_80133990` and `func_8013325C` stay `INCLUDE_ASM`. Merge via the wave 3 merge script.
-
 ## [2026-10-16] ticket | T-11850 TT batch 11 started
 Created [[tickets/T-11850-tt-batch-11]] (In Progress), stacked on T-11840 (PR #34, still open). Merged upstream `main` (252 commits, no TT changes) into `tt-batch11`; clean rebuild 27/27 OK. Seven file groups, one Opus agent each, two at a time.
 
 ## [2026-10-16] ticket | T-11850 TT batch 11 Done
 Seven file groups, one Opus agent each, two at a time: 12 of 15 matched (4,520 bytes), 3 guarded (`func_80147A18`, `func_8013A0DC`, `func_8014A2B4`). The zero-store chain pair matched seven functions. Clean rebuild 27/27 OK, checks clean; TT 274/303 (82.7%). Inline review against CODING_STANDARDS.md: no open findings. Moved [[tickets/T-11850-tt-batch-11]] to Done. Notes in [[matching-notes]] ("TT overlay, batch 11"), 15 rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-18800 Types-first: DATE2, In Progress
+
+Created [[tickets/T-18800-types-first-date2]] (branch `w3-date2-types` from `w2-good`), In Progress: survey DATE2's types, declare them in `include/ovl/DATE2.h`, redraft every unmatched function into `drafts/T-18800/`, cut packages. Card in [[kanban]], line in [[index]].
+
+## [2026-10-16] build | T-18800 DATE2: types, data island, redraft, 1 match
+
+[[tickets/T-18800-types-first-date2]]: `include/ovl/DATE2.h` gets the dot arrays `D_8013A5D4`/`DC`/`E4`/`EC` (`s16[3]`), `D_8013A5CC`, `D_8013A5D0`, the label widths `s16 D_8013B5E4[4]`, the stack-copied labels `Date2Labels4x21 D_8013B634`, `#include "game.h"`, `s32 func_80135E50()` and the `func_801365DC` prototype; `tools/data_island.py DATE2/80132DE0` cut a `.data` island (`config/overlays/DATE2.yaml`) and `src/ovl/DATE2/80132DE0.c` defines the four arrays. Driver `drafts/T-18800/redraft.py` (T-18500 plus the `Rec24` fold, `rect-view`, `array-views`, 2-D `stack-elements`) and `hand.py`: 10 redrafts, 9 better than the census (5,067 to 4,380 rows). Matched `func_80135E50` (1,932 bytes, FAKE empty test), DATE2 sha1 OK. Section "Types-first pass (T-18800)" on [[scenes-family-results]], entry in [[matching-notes]].
+
+## [2026-10-16] ticket | T-18800 In Review
+
+[[tickets/T-18800-types-first-date2]] In Progress to In Review: packages T-18801 (`w3-date2-p01`) and T-18802 (`w3-date2-p02`) cut by `inventory2.py`/`mklists3.py`; clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-18800 Done
+
+[[tickets/T-18800-types-first-date2]] In Review to Done: code review against `CODING_STANDARDS.md`, one minor finding (undocumented implicit-int return of `func_80135E50`, comment added); DATE2 sha1 OK, headers OK, `migrate_globals --check` OK, `sync_protos --check-branch` 0 new disagreements. 1 function matched (1,932 bytes). Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-19023 started
+[[tickets/T-19023-w3-d-p23]] In Progress (worktree `w3-d-p23`, base `w2-good`, 14:39 UTC): TACO `src/ovl/TACO/80135720.c`, `func_801357B0`, `func_80136988`, `func_80135A04`.
+
+## [2026-10-16] ticket | T-19023 In Review, 3 of 3 matched
+[[tickets/T-19023-w3-d-p23]] (14:39-15:20 UTC): TACO `func_801357B0`, `func_80136988` and `func_80135A04` matched in plain C (2,048 bytes; commits `35c8f6a9`, `b6891d0f`, `7d5c9809`). Idioms in [[matching-notes]] (T-19023), two rows in [[register-cheatsheet]], package note in [[taco-family-results]]. `func_801357B0` and `func_80135A04` are `s32` in `include/ovl/TACO.h`. Ticket moved to In Review.
+
+## [2026-10-16] lint | T-19023 byte count corrected
+The T-19023 In Review entry above says 2,048 bytes; the three functions are 204 + 440 + 1,384 = 2,028 bytes (`func_80136988` is 0x1B8 bytes). [[tickets/T-19023-w3-d-p23]], [[matching-notes]], [[taco-family-results]] and [[index]] now say 2,028.
+
+## [2026-10-16] ticket | T-19023 Done
+[[tickets/T-19023-w3-d-p23]] reviewed against `CODING_STANDARDS.md` and moved to Done: 3 of 3 functions matched (2,028 bytes: TACO `func_801357B0`, `func_80136988`, `func_80135A04`), nothing guarded. Two wiki findings fixed: the two new [[register-cheatsheet]] rows were outside the table (moved in), and two stray trailing blank lines were removed. The one FAKE (second induction variable in `func_801357B0`) is commented and ticketed. TACO.bin SHA1 OK.
+
+## [2026-10-16] ticket | T-19022 In Progress
+[[tickets/T-19022-w3-d-p22]] created and In Progress: Wave 3 package w3-d-p22, TEL `func_80134FE4` and `func_80136724` in `src/ovl/TEL/80132000.c`, worktree `w3-d-p22`.
+
+## [2026-10-16] build | T-19022 results
+[[tickets/T-19022-w3-d-p22]]: 0 of 2 matched (TEL `func_80134FE4` and `func_80136724` in `src/ovl/TEL/80132000.c`). `func_80134FE4`: structure exact, 70 register rows (the global `D_801405E4` coloured `$t0`, original `$v1`), autotweak found nothing usable. `func_80136724`: frame, dispatch and instruction count agree, 452 register rows and 78 scheduling places left. Both back to `INCLUDE_ASM`; drafts in `drafts/T-19022/TEL/`. Notes in [[matching-notes]] ("T-19022"), rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-19022 In Review
+[[tickets/T-19022-w3-d-p22]] In Progress to In Review (0 matched; drafts kept in `drafts/T-19022/`).
+
+## [2026-10-16] ticket | T-19022 Done
+[[tickets/T-19022-w3-d-p22]] In Review to Done after code review against `CODING_STANDARDS.md`: 4 findings, all fixed (nested comments made the type definitions in `drafts/T-19022/TEL/func_80136724.c` invalid C; `func_80136724` is 6,580 bytes of code, 7,044 with its jump tables; missing blank line before the matching-notes heading; board card placement). 0 of 2 matched, both functions still `INCLUDE_ASM`, `src/ovl/TEL/80132000.c` unchanged. Rebuild: ninja up to date, unit sha1 OK. Card moved to Done.
+
+## [2026-10-16] ticket | T-19019 In Progress
+
+[[tickets/T-19019-w3-d-p19]] created and In Progress: Wave 3 package w3-d-p19, TACO `src/ovl/TACO/80148FE0.c` (`func_80149538`, `func_801497EC`). Worktree `w3-d-p19` from `w2-good`.
+
+## [2026-10-16] build | T-19019 package w3-d-p19 worked
+
+[[tickets/T-19019-w3-d-p19]]: TACO `src/ovl/TACO/80148FE0.c`, 0 of 2 matched. `func_80149538` is a guarded draft at 10 funcdiff lines (a volatile tail increment, FAKE, removes the per-arm reload; the loop is a `do`/`while` from 1 to 36), `func_801497EC` a guarded draft at 4 lines (frame and spill layout explained by the declaration order; the three compared objects are separate externs in `include/ovl/TACO.h`). Findings in [[matching-notes]] ("T-19019"), two rows in [[data/t0018-cases]], five rows in [[register-cheatsheet]], a section in [[taco-family-results]].
+
+## [2026-10-16] ticket | T-19019 In Review
+
+[[tickets/T-19019-w3-d-p19]] In Progress to In Review: 0 of 2 functions matched (both guarded, 10 and 4 lines), clean rebuild, `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` run (results in the ticket Notes). Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] build | T-19019 closer pass on func_801497EC and func_80149538
+
+Opus closer pass on [[tickets/T-19019-w3-d-p19]] (branch w3-d-p19): no new match, both stay guarded in `src/ovl/TACO/80148FE0.c`. `func_801497EC` goes from 4 to 2 lines: without the `u8 st` local uopt merges the two selector reads (PRE) and its temporary gives the frame word below the `arg1 * 2` spill; left is the operand order of the reload it inserts. `func_80149538` stays at 10 lines; a second base symbol for the tail matches byte for byte (tested only, CODING_STANDARDS section 8), so the original tail is a separate uopt variable. Updated: NON_MATCHING comments, [[matching-notes]], [[data/t0018-cases]], [[register-cheatsheet]], ticket comments. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19019 Done
+
+[[tickets/T-19019-w3-d-p19]] In Review to Done: code review against `CODING_STANDARDS.md` found documentation issues only (stale "4 lines" for `func_801497EC` after the closer pass in the index, the ticket and the [[matching-notes]] intro; a wrong "table below" pointer in [[taco-family-results]]; a plain path and a missing blank line in this log), all fixed. 0 of 2 functions matched: TACO `func_80149538` (10 lines, volatile tail FAKE) and `func_801497EC` (2 lines) stay guarded drafts in `src/ovl/TACO/80148FE0.c`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19021 In Progress
+
+[[tickets/T-19021-w3-d-p21]] created and In Progress: wave 3 package w3-d-p21 (TACO `src/ovl/TACO/80139170.c`: `func_8013A580`, `func_8013AD64`, `func_80139BCC`, `func_80139FB8`), worktree `w3-d-p21` from `w2-good`.
+
+## [2026-10-16] build | T-19021 matches
+
+[[tickets/T-19021-w3-d-p21]]: `func_8013A580` (484 B) and `func_8013AD64` (632 B) of TACO `src/ovl/TACO/80139170.c` matched in plain C (commits "T-19021: match TACO:func_8013A580" and "...func_8013AD64"); `func_80139BCC` stays a 14-line `NON_MATCHING` draft, `func_80139FB8` is `INCLUDE_ASM` again (402 lines). Both frame rows of [[data/t0018-cases]] (T-9130, T-9330) were a count of named locals. Findings: [[matching-notes]] ("T-19021"), [[register-cheatsheet]], [[taco-family-results]].
+
+## [2026-10-16] ticket | T-19021 In Review
+
+[[tickets/T-19021-w3-d-p21]] In Progress to In Review: 2 of 4 functions matched (1,116 bytes), one 14-line guard, one `INCLUDE_ASM`. Kanban card moved to In Review.
+
+## [2026-10-16] build | T-19021 closer pass: func_80139BCC matched
+
+[[tickets/T-19021-w3-d-p21]] closer pass (Opus): TACO `func_80139BCC` (1,004 B) of `src/ovl/TACO/80139170.c` matched in plain C, no FAKE (commit "T-19021: match TACO:func_80139BCC"). A `pad` local re-tested in the zero-speed block raises the pad range to five uses (priority 0.667), and assigning the `0x8000` mask before the `0x2000` mask fixes the order of the two masks. Package now 3 of 4 (2,120 B); `func_80139FB8` stays `INCLUDE_ASM`. Updated [[matching-notes]], [[register-cheatsheet]] (new row), [[data/t0018-cases]], [[taco-family-results]], [[index]]. Clean rebuild 665/665 with 27/27 sha1 OK; `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch` OK (0 new, 15 known). Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19021 Done
+
+[[tickets/T-19021-w3-d-p21]] In Review to Done: code review against `CODING_STANDARDS.md` found 1 minor item (the `pad` local and mask order in `func_80139BCC` had no source comment), fixed with a comment (bytes unchanged); TACO sha1 OK, headers OK. 3 functions matched (2,120 bytes: `func_8013A580`, `func_8013AD64`, `func_80139BCC`), `func_80139FB8` stays `INCLUDE_ASM`. Card moved in [[kanban]], line in [[index]].
+## [2026-10-16] ticket | T-19024 In Progress
+
+[[tickets/T-19024-w3-d-p24]] created and started: wave 3 package w3-d-p24, TACO `src/ovl/TACO/80141DE0.c` (`func_80142220`, `func_80141DE0`, `func_801424A8`). Worktree `w3-d-p24` from `w2-good`.
+
+## [2026-10-16] build | T-19024 matches
+
+[[tickets/T-19024-w3-d-p24]]: TACO `src/ovl/TACO/80141DE0.c`, 2 of 3 functions matched in plain C (`func_80142220`, 400 bytes; `func_80141DE0`, 764 bytes, one FAKE index temporary), 1,164 bytes. `func_801424A8` (888 bytes) restored to `INCLUDE_ASM` after a sibling port of `func_801413B8` (81 rows of registers, draft archived in `drafts/T-19024/TACO/func_801424A8/`). New prototypes in `include/ovl/TACO.h`. Notes in [[matching-notes]], row in [[data/t0018-cases]], three rows in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-19024 In Review
+
+[[tickets/T-19024-w3-d-p24]] In Progress to In Review: wave 3 package w3-d-p24 (TACO `src/ovl/TACO/80141DE0.c`), 2 of 3 functions matched (1,164 bytes), `func_801424A8` stays `INCLUDE_ASM`. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-16] ticket | T-19024 Done
+
+[[tickets/T-19024-w3-d-p24]] In Review to Done after the code review: wave 3 package w3-d-p24 (TACO `src/ovl/TACO/80141DE0.c`, `include/ovl/TACO.h`), 2 of 3 functions matched (1,164 bytes: `func_80142220`, `func_80141DE0` with one ticketed FAKE), `func_801424A8` stays `INCLUDE_ASM` (81 rows, draft archived in `drafts/T-19024/TACO/func_801424A8/`). No findings. TACO SHA1 OK, headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-11840 Done (PR #34 merged)
+
+Integration review of diman8's PR #34 ([[tickets/T-11840-tt-batch-10]]) against CODING_STANDARDS.md: no findings. Merged onto the integration base (clean rebuild 27/27, headers, globals and `sync_protos.py --check-branch` clean). 10 TT functions matched (15,564 bytes), 2 guarded; the only change outside `src/ovl/TT/`, `include/ovl/TT.h` and the wiki is the `MAIN_API_OVERRIDE_func_800AE080` guard in `include/main_api.h`. TT 262/303 functions, 87564/111376 bytes, 78.6%; grand total 6205/6958 functions, 1616160/2279368 bytes, 70.9% (overlays 5533/6128, 1468928/1994940, 73.6%).
+## [2026-10-16] ticket | T-19029 In Progress
+
+Created [[tickets/T-19029-w3-d-p29]] (Wave 3 package w3-d-p29, branch w3-d-p29 from w2-good): TACO `src/ovl/TACO/80136B40.c`, `func_80137264` (812 B). Starting from the T-15700 draft (score 172).
+
+## [2026-10-16] build | T-19029 matched func_80137264
+
+TACO `func_80137264` (812 B, `src/ovl/TACO/80136B40.c`) matches in plain C, TACO.bin sha1 OK. Draft from T-15700 retyped; `base` is one variable for the threshold and the radix, `TacoDigits` types the `D_8015F428` copy (FAKE stand-in for an unused local array), declaration order `place; digits; base`. Notes in [[matching-notes]] (T-19029), rows in [[register-cheatsheet]], section in [[taco-family-results]].
+
+## [2026-10-16] ticket | T-19029 In Review
+
+[[tickets/T-19029-w3-d-p29]] In Progress to In Review: 1 of 1 functions matched (`func_80137264`). Clean rebuild and the header, globals and prototype checks run (results in the ticket Notes). Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] ticket | T-19029 Done
+
+[[tickets/T-19029-w3-d-p29]] In Review to Done: code review against `CODING_STANDARDS.md` found documentation issues only (the family page named siblings of `func_80136FBC` as callers when it is the only caller, a 25 against 27 minutes mismatch in [[matching-notes]], a stale In Review in the index), all fixed. 1 of 1 functions matched: TACO `func_80137264` (812 B, one FAKE for the `digits` copy). TACO unit sha1 OK after a rebuild. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-19026 started
+[[tickets/T-19026-w3-d-p26]] created In Progress: Wave 3 direct package w3-d-p26, TACO `src/ovl/TACO/8015ABF0.c`, two functions (`func_8015B1B8`, `func_8015ACCC`). Branch w3-d-p26 from w2-good.
+
+## [2026-10-16] build | T-19026 TACO func_8015ACCC matched
+TACO `func_8015ACCC` (1,260 bytes) matched, unit sha1 OK (`src/ovl/TACO/8015ABF0.c`, commit "T-19026: match TACO:func_8015ACCC"). One FAKE: `if (b) {}` after `func_80143B34(id)` (a block in the live range of the parameter `a`, so `base` wins `$fp`). Found by reading the allocator trace (`R9SAVE`/`R9UNIT` priorities 2.6 against 2.571), index loops with one shared strength-reduced pointer, a declared-local order for the `id` slot, and `order_search` on the pair address (76 rows to 0). [[matching-notes]], [[register-cheatsheet]], [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-19026 In Review
+[[tickets/T-19026-w3-d-p26]] In Progress to In Review: TACO package, 1 of 2 functions matched (`func_8015ACCC`, 1,260 bytes, FAKE). `func_8015B1B8` stays guarded at 8 rows (T-0018). Notes in [[matching-notes]] ("T-19026"), cheat sheet rows in [[register-cheatsheet]], rows in [[data/t0018-cases]], line in [[taco-family-results]]. Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] build | T-19026 closer pass on TACO func_8015B1B8
+Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded at 8 rows; nothing new matched. About 110 variants were scored with `cc -S` on a stand-alone copy of the function (scratch only). New finding: ugen puts `&matrix` in its own temporary `t2` before the loop, and as1 folds it away. The original's temporaries are IDO's when `t2` is a uopt register that holds `&matrix`. Only pointer stores sit between the loop and the copy, so the skip rule cannot help. Updated: the NON_MATCHING comment in `src/ovl/TACO/8015ABF0.c`, [[matching-notes]] (T-19026 closer pass), [[data/t0018-cases]], [[register-cheatsheet]] (struct-copy row), [[tickets/T-19026-w3-d-p26]] (stays In Review).
+
+## [2026-10-16] ticket | T-19026 Done
+
+[[tickets/T-19026-w3-d-p26]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of TACO OK (headers OK, globals OK, sha1 OK), `sync_protos.py --check-branch` OK. 1 of 2 functions matched (`func_8015ACCC`, 1,260 bytes, FAKE), `func_8015B1B8` stays a guarded draft (8 lines). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-19027 started
+[[tickets/T-19027-w3-d-p27]] (Wave 3 package, 15:28 UTC): TEL `src/ovl/TEL/8013CCD0.c`, `func_8013CCD0` and `func_8013D03C`, worktree `tokimemo-wt/w3-d-p27`, base `w2-good`.
+
+## [2026-10-16] ticket | T-19027 In Review, 0 of 2 matched
+[[tickets/T-19027-w3-d-p27]] (15:28-16:45 UTC): TEL `func_8013CCD0` is a guarded draft at 20 differing lines (commit `bb5eed8a`), `func_8013D03C` went back to `INCLUDE_ASM` (49 rows at best, typed draft archived) in `drafts/T-19027/TEL/func_8013D03C/` (commit `ec3052f7`). Findings in [[matching-notes]] (T-19027): `DisplayRecord44` and bit-field flag stores, six scalar locals before the arrays for the frame, `D_800E7CBC..` are `unk_1A3C..`; two `regorder` rows in [[data/t0018-cases]]
+
+## [2026-10-16] build | T-19027 closer pass, TEL func_8013CCD0 matched
+[[tickets/T-19027-w3-d-p27]] (16:56-17:15 UTC, Opus): `func_8013CCD0` matched in plain C (commit `a056d1c5`): the `unk_06` clamp as a store followed by a test of the field (ugen forwards the stored byte), `-(q) * 2 + 8`, and each record's three field stores on one source line (`SET_REC` macro). Notes in [[matching-notes]], row in [[register-cheatsheet]] and [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19027 Done
+[[tickets/T-19027-w3-d-p27]] reviewed against `CODING_STANDARDS.md` and moved to Done: 1 of 2 functions matched (TEL `func_8013CCD0`, 876 bytes, plain C, no FAKE); `func_8013D03C` stays `INCLUDE_ASM` with its draft archived in `drafts/T-19027/`. One finding fixed: the store-then-test `unk_06` clamp had no explaining comment (added, comment only). The closer pass entry above gives 17:15 UTC as its end; the ticket now says 17:10 UTC, the actual end. The "20 rows left" label in [[matching-notes]] now points to the closer match. TEL.bin SHA1 OK, 27/27.
+## [2026-10-16] ticket | T-19028 In Progress
+[[tickets/T-19028-w3-d-p28]] created and In Progress: Wave 3 package w3-d-p28, five TACO functions in `src/ovl/TACO/8013DB80.c` and `src/ovl/TACO/8015CF30.c`, worktree `w3-d-p28`.
+
+## [2026-10-16] build | T-19028 results
+[[tickets/T-19028-w3-d-p28]]: 1 of 5 matched. TACO `func_8013E778` (812 bytes) matched in plain C from the sibling `func_8013D528` (FAKE pad[2], FAKE one-line UV stores). `func_8013E424` (18 rows) and `func_8013DB80` (15 rows) guarded in `src/ovl/TACO/8013DB80.c`; `func_8013DEE4` (370 rows) back to `INCLUDE_ASM` with its draft in `drafts/T-19028/TACO/`; `func_8015CF30` is the libgte `RotMatrixZ` in hand assembly, not attempted. Notes in [[matching-notes]], rows in [[data/t0018-cases]] and [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-19028 In Review
+[[tickets/T-19028-w3-d-p28]] In Progress to In Review (1 of 5 matched).
+
+## [2026-10-16] build | T-19028 closer pass
+[[tickets/T-19028-w3-d-p28]]: Opus closer matched TACO `func_8013E424` (216 bytes) and `func_8013DB80` (612 bytes) in `src/ovl/TACO/8013DB80.c`, now 3 of 5. Fix: index the record array in the free-slot loop and in every store (no pointer local), so the strength-reduced address is `.noalias` against `$sp` and as1 hoists the stack loads. Notes in [[matching-notes]], row in [[register-cheatsheet]], rows in [[data/t0018-cases]]; [[taco-family-results]] and [[index]] updated. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19028 Done
+[[tickets/T-19028-w3-d-p28]] In Review to Done after code review against `CODING_STANDARDS.md`: 4 findings, all fixed (`func_8013DEE4` is 1,344 bytes of code, 1,416 with its jump tables; stale `NON_MATCHING` acceptance wording; double blank line before the notes heading; board card placement). 3 of 5 functions matched (`func_8013E778`, `func_8013E424`, `func_8013DB80`, 1,640 bytes), `func_8013DEE4` and `func_8015CF30` still `INCLUDE_ASM`. Rebuild: TACO unit sha1 OK. Card moved to Done.

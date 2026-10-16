@@ -150,4 +150,80 @@ void func_801371B4(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80136B40", func_80137264);
+/* Right-aligns num (at most 8 digits) in an 8-character field at str: spaces for the missing
+ * digits, then the digits from the left. `base` is one variable on purpose: 10000000 for the
+ * first threshold and the copy into `place`, then 10 as the radix; IDO keeps it in a register
+ * and divides by it with the zero checks, as the original does. T-19029 */
+void func_80137264(u8 *str, s32 num) {
+    s32 place;
+    TacoDigits digits;
+    s32 base;
+
+    /* FAKE: stands in for the original's unused local char digits[] = "0123456789" (11 bytes,
+     * copied with lw/lw/lwl); its initializer lives in the overlay .data, not in this object,
+     * so the copy reads the data symbol. Declaration order sets the frame offset. T-19029 */
+    digits = D_8015F428;
+    if (num >= 0x5F5E100) {
+        num = 0x5F5E0FF;
+    }
+    base = 0x989680;
+    if (num >= base) {
+        strcpy(str, "");
+    } else if (num >= 0xF4240) {
+        strcpy(str, " ");
+    } else if (num >= 0x186A0) {
+        strcpy(str, "  ");
+    } else if (num >= 0x2710) {
+        strcpy(str, "   ");
+    } else if (num >= 0x3E8) {
+        strcpy(str, "    ");
+    } else if (num >= 0x64) {
+        strcpy(str, "     ");
+    } else if (num >= 0xA) {
+        strcpy(str, "      ");
+    } else {
+        strcpy(str, "       ");
+    }
+    if (num == 0) {
+        strcat(str, "0");
+    }
+    place = base;
+    base = 10;
+    do {
+        if (num / place != 0) {
+            switch ((u32)(num / place) % base) {
+            case 0:
+                strcat(str, "0");
+                break;
+            case 1:
+                strcat(str, "1");
+                break;
+            case 2:
+                strcat(str, "2");
+                break;
+            case 3:
+                strcat(str, "3");
+                break;
+            case 4:
+                strcat(str, "4");
+                break;
+            case 5:
+                strcat(str, "5");
+                break;
+            case 6:
+                strcat(str, "6");
+                break;
+            case 7:
+                strcat(str, "7");
+                break;
+            case 8:
+                strcat(str, "8");
+                break;
+            case 9:
+                strcat(str, "9");
+                break;
+            }
+        }
+        place = place / base;
+    } while (place > 0);
+}

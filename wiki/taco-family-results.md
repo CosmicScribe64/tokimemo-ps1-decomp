@@ -174,3 +174,24 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p18 (T-19018)
 
 [[tickets/T-19018-w3-d-p18]] (`8013D1E0.c`, `80153AA0.c`): `func_8013D528` (the billboard quad, 784 bytes) matched, a clone of `func_80140ADC` (FAKE `pad[2]` and a one-line `setUVWH` expansion); `func_8013D838` (its large twin, 840 bytes) stays a 10-row guarded draft; `func_80153B38` (the 40-triangle fan, 832 bytes) stays `INCLUDE_ASM` at 175 rows. The frame rule refined there (declared scalars before the aggregates are the bytes above them) and the counter, store-order and colour-byte findings are in [[matching-notes]], "T-19018".
+## Matching stage, package w3-d-p23 (T-19023)
+
+[[tickets/T-19023-w3-d-p23]] (`80135720.c`, the SETTING screen): `func_801357B0` (string drawer, 204 bytes), `func_80136988` (cursor handler, 440) and `func_80135A04` (SETTING screen draw, 1,384) matched in plain C, 2,028 bytes. `func_801357B0` and `func_80135A04` are now `s32` in `TACO.h` (implicit-int, no `return`); details in [[matching-notes]] (T-19023).
+## Matching stage, package w3-d-p19 (T-19019)
+
+[[tickets/T-19019-w3-d-p19]] (`80148FE0.c`, the 2ST BOSS scene): neither function matched. `func_80149538` (the scene's last state, 692 bytes) is a guarded draft at 10 lines: the counter tail needs a volatile access (FAKE) to keep the original's shared tail, and its address form is the last gap. `func_801497EC` (the per-slot transform shared with `func_8014927C` and `func_801493D4`, 912 bytes) is a guarded draft at 2 lines (1 row) after the closer pass: without a selector local uopt merges the two `unk84[1]` reads and gets the original frame; only the reload it inserts in the `if` body adds index first where the original adds base first (the "Measured boundaries" table above lists it). Details and variants: [[matching-notes]] ("T-19019"), [[data/t0018-cases]]. `func_801497EC` has no prototype in `include/ovl/TACO.h` on purpose (the callers see the implicit `int`); `func_80149538` is declared `void`. The three compared objects are named `D_801274D0`, `D_80127520` and `D_80127570` in the overlay header.
+## Matching stage, package w3-d-p21 (T-19021)
+
+[[tickets/T-19021-w3-d-p21]] (`80139170.c`, the name entry screens): `func_8013A580` (484 bytes, three 9-argument calls) and `func_8013AD64` (632, colour dot packet) matched, 1,116 bytes; both were old frame rows of [[data/t0018-cases]] and needed a different number of named locals (three temporaries beside `k`; two single-use shifts), no pad or FAKE. `func_80139BCC` (1,004, cursor and character table) matched in the closer pass (a `pad` local re-tested in the zero-speed block, masks assigned `0x8000` first), so 3 of 4 and 2,120 bytes. `func_80139FB8` (1,480, character carousel) stays `INCLUDE_ASM` (402 lines, the sine values take `$s1` first). New declaration in `TACO.h`: `u8 D_8015F4B0[]` (the 40-character table). `D_800E7200`/`D_800E7208` are `D_800E6280.unk_F80`/`unk_F88`. Notes: [[matching-notes]], "T-19021".
+
+## Matching stage, package w3-d-p29 (T-19029)
+
+[[tickets/T-19029-w3-d-p29]] (`80136B40.c`, the PLAYERS RANKING screen): `func_80137264`, the 812-byte number formatter (spaces by magnitude, then up to 8 digits through a switch), matched in plain C. The radix is one variable that first holds the 10000000 threshold (so IDO divides by a register with the full checks), and the unused `char digits[]` local is copied from the data symbol typed as `TacoDigits` (FAKE stand-in). `func_80136FBC` (its only caller, three calls) now passes `(u8 *, s32)`. Details: [[matching-notes]], "T-19029".
+
+## Matching stage, package w3-d-p26 (T-19026)
+
+[[tickets/T-19026-w3-d-p26]] (`8015ABF0.c`): `func_8015ACCC` (the effect spawner, 1,260 bytes, the last open function of the file but `func_8015B1B8`) matched in plain C with one FAKE, after the hand rewrite of T-16563 had stopped at 437 lines. Types added to `TACO.h`: `D_80161DDC[]` (`s32`, per-kind model address), `D_80161EA4[]` (`s16`), `D_80161EC8[]` (`u8`) and the prototypes of `func_8015B1B8` / `func_8015B2AC`. `func_8015B1B8` stays guarded at 8 rows. How: [[matching-notes]], "T-19026".
+
+## Matching stage, package w3-d-p28 (T-19028)
+
+[[tickets/T-19028-w3-d-p28]] (`8013DB80.c`, `8015CF30.c`, the particle quads): `func_8013E778` (812 bytes) matched in plain C from the sibling `func_8013D528`; `func_8013E424` and `func_8013DB80` matched in the closer pass (index the record array, no pointer local, so the stack loads are `.noalias` and hoisted); `func_8013DEE4` (draft in `drafts/T-19028/TACO/`) and the libgte `RotMatrixZ` `func_8015CF30` stay `INCLUDE_ASM`. Details and idioms in [[matching-notes]] (T-19028).

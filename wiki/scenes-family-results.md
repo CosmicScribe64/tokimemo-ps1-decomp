@@ -137,3 +137,84 @@ Eight file-disjoint packages from the orchestrator's `mklists3.py` (lists in its
 | w3-geko-p06 | T-17706 | `80139910.c`, `8013AF80.c` | 5 | 2,524 |
 | w3-geko-p07 | T-17707 | `8013DF70.c`, `80142760.c`, `80140A00.c` | 5 | 3,116 |
 | w3-geko-p08 | T-17708 | `80141AF0.c` | 1 | 1,260 |
+
+## Types-first pass (T-18800)
+
+Wave-3 types-first pass for DATE2 ([[tickets/T-18800-types-first-date2]], [[speedup-research-2026-10-16]]), branch
+`w3-date2-types` from `w2-good`. Start: 10 unmatched functions (15,752 bytes, none guarded), 7 in `80132DE0.c`
+and 3 in `80137D50.c`. About one hour of agent time for the survey, the types, the redraft and one match.
+
+### Survey
+
+- `tools/type_recovery.py --unit DATE2`: the "high" proposals are 0xC-stride arrays over the step tables
+  (`D_8013B5F8`, `D_8013A814`, `D_8013A438`): IDO's three-word struct-copy loops, not records (as in DATE). The
+  useful ones are small: `D_8013A5D4` (0xC, s16 fields) and `D_8013B5E4` (s16 x 4).
+- Census drafts: most byte-offset casts sit on `Rec24` temporaries (`D_801217D0 + i * 0x24`) and on the labels
+  inside `D_801217D0` (`D_80121874` is `[4].unk_14`), which the driver now folds; the DATE2-local ones are the
+  dot arrays of `func_80135E50` (`*(s16 *)((unsigned char *)(&D_8013A5D4) + (2))`), the label widths
+  `D_8013B5E4` and the stack copy of `D_8013B634` (`M2cBlock54`, with `sp65`, `sp7A`, `sp8F` as separate locals).
+- `tools/siblings.py --unit DATE2`: `func_80135E50` has the matched DATE twin `func_801489D0` (0.88),
+  `func_80136794` the matched DATE2 sibling `func_801366E8` (0.83); nothing else above 0.70.
+
+### Type map
+
+All changes keep DATE2's sha1.
+
+| Type / global | Evidence |
+| --- | --- |
+| `s16 D_8013A5D4[3]`, `D_8013A5DC[3]`, `D_8013A5E4[3]`, `D_8013A5EC[3]` | the three dots of `func_80135E50` (x, y, x step, y step), stride 8, as DATE's `D_8015CFA4`..`D_8015CFBC`. Defined in `80132DE0.c` in a new `.data` island (`tools/data_island.py DATE2/80132DE0`): the original stores `[0]`..`[2]` through one `lui $at`, which IDO gives only for a variable defined in the file. |
+| `u16 D_8013A5CC`, `s16 D_8013A5D0` | the dot counter (sh/lhu) and the timer of `func_80133AF0` (sh/lh) |
+| `s16 D_8013B5E4[4]` | label widths of `func_801385CC` (passed to `menu_set`) and `func_801388C0` (tested in a loop) |
+| `Date2Labels4x21 D_8013B634` (`u8 v[4][21]`, 0x54) | the four menu labels copied to the stack whole by `func_801385CC` (labels at sp+0x50 + 21 * i) |
+| `#include "game.h"` in `DATE2.h` | `DisplayActor44` for the folded display-record drafts (they did not compile without it) |
+| `s32 func_80135E50()`, `void func_801365DC(s32)` | implicit int (`return 0` on the header-error path, as the DATE twin); prototype of the callee defined after its user |
+
+Not changed: the s32 scalar runs `D_8013A380`..`D_8013A418`, `D_8013A6B0`..`D_8013A80C` and `D_8013B540`..`D_8013B5C0`
+(no unmatched function reads them); `D_800B5920` stays `s32[4]` in `main_api.h` (read as two `RECT`s by the
+drafts, as DATE's matched code does).
+
+### Redraft
+
+`drafts/T-18800/redraft.py` is the T-18500 driver with the `Rec24` table `D_801217D0` added to the fold and three
+new rewrites: `rect-view` (`D_800B5922` becomes `((RECT *)D_800B5920)[0].y`), `array-views` (`(&D_X)[i]`, byte
+offsets, `D_X->unk0` and scalar reads of a header array written as elements) and a two-dimensional case of
+`stack-elements` (`&sp65` is `sp50.v[1]`). The header-table regex now accepts a size comment and an offset comment.
+
+| | value |
+| --- | --- |
+| functions | 10 (9 with a compiling fresh draft; `func_801395C8` keeps its repaired census body) |
+| better than the census | 9 functions, 13,104 bytes (with the two hand drafts) |
+| diff rows, sum (median) | 5,067 to 4,380 (308.5 to 192.5) |
+| typed vs plain | better in 7 of 9, worse in 1 (`func_80136860`, 186 to 192) |
+| rewrites used (typed / census runs) | struct-bytes 5, rect-view 4/4, record-temp 3/3, array-views 2/2, stack-table and stack-elements 1/1, field-symbols 9 (census) |
+| largest gains | `func_80133AF0` 1441 to 1287, `func_801350A4` 1196 to 1116, `func_801385CC` 252 to 221, `func_801388C0` 81 to 57, `func_80136860` 186 to 164 |
+| `tools/draft_fixes.py` | no score changed |
+| score 0 | none |
+
+### Matches and near misses
+
+- `func_80135E50` (1,932 B) matched: the DATE twin's C with the DATE2 names, the dot arrays defined in the data
+  island (without them every `[1]`/`[2]` store re-emits `lui $at`), `s32` with `return 0` on the header-error path
+  (the `move v0,zero`), and a FAKE empty `if (var_s3) {}` before `if (D_8013A5CC++ == 0x96)`. Without that empty
+  test IDO keeps the old count in `a1` and branches with `xori; bnez`; the original (and the DATE twin, where real
+  code precedes the test) has `v1` and `xori; sltiu; beqz`. A dead `if (D_8013A5CC >= 0x8000) {}` gives the
+  `sltiu` form but leaves `a1` (8 rows); the same counter defined in C changes nothing.
+- `func_80136794` (204 B, 38 rows, `hand.c`): the sibling `func_801366E8` with `func_80051A68(unk_F5F)` (one
+  argument: the census's `&D_800E71DF` second argument is only the `%hi` left in `a1`). Open: the original loads
+  both call arguments through `a1` (`lui a1; lbu a0,(a1)`) and keeps `unk_71E` in `v0` in both branches.
+- `func_801388C0` (380 B, 57 rows): the typed draft. A loop rewrite is worse (77): the original computes `i << 4`
+  for the `unk_F90` pair records separately from `i << 1` for `D_8013B5E4`, and reuses `v0` for `D_800B3CFC`,
+  `D_8013B5CC + 1` and the constant 1.
+
+### Packages
+
+Two file-disjoint packages from the orchestrator's `mklists3.py` (lists in its scratchpad,
+`w3-date2-p01-list.txt` and `w3-date2-p02-list.txt`):
+
+| Package | Ticket | Files | Functions | Bytes |
+| --- | --- | --- | ---: | ---: |
+| w3-date2-p01 | T-18801 | `80137D50.c` | 3 | 3,784 |
+| w3-date2-p02 | T-18802 | `80132DE0.c` | 4 | 3,200 |
+
+Left for later: `func_80133AF0` (3,584 B, 1,287 rows) and `func_801350A4` (3,328 B, 1,116 rows), the two large
+scene handlers of `80132DE0.c`.

@@ -65,3 +65,16 @@ fixed during the batch: `TT.h` declarations had been appended inside an earlier 
 guarded block, and the merge conflicts that causes were resolved by keeping both blocks. No open findings.
 
 ## Comments
+
+### 2026-10-16 - integration review (PR #34, diman8)
+
+Reviewed `git diff w2-good...pr34-int` (src, include, then wiki) against the CODING_STANDARDS.md checklist. No findings.
+
+- Matches: the integrator's clean rebuild (asm/ and build/ removed) gave 666/666 with 27 `: OK`; all ten functions (`func_80146348`, `func_80143A44`, `func_80144D70`, `func_801441BC`, `func_801400B0`, `func_80137C20`, `func_80141450`, `func_8013D988`, `func_8013230C`, `func_80136C64`) verified. `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` clean.
+- Plain C: the diff has no inline asm, `.word`, `//` comments, `register`/`inline`/`volatile` or non-ASCII text. The only `goto` sits inside the guarded `func_801455C8` draft.
+- Guards: the two near misses (`func_801455C8`, `func_8014A2B4`) are under `#ifdef NON_MATCHING` with `INCLUDE_ASM` in the `#else`, each with `T-11840` and the diff size in the comment.
+- FAKE: every new FAKE comment gives the reason and `T-11840` (the multi-line one in `func_80141450` carries the ticket on its second line).
+- Headers: `MAIN_API_OVERRIDE_func_800AE080` follows section 8a. `src/ovl/TT/80144D70.c` defines it on line 1, before the includes, with the reason (implicit-int view; the `void` prototype moves the reload of `ctl` to v0), and `include/main_api.h` wraps the prototype in `#ifndef`. The TT.h additions are `OVL_TT_T11840_*` guarded blocks with fields marked `unk_XX`.
+- No game data: only `.c`, `.h` and `.md` files changed. The ticket and kanban column (Done) agree, and the card appears once.
+- Integration: merge of `pr34` onto `w2-good` (commit 7825c84f); the only conflict was `wiki/kanban.md` (both sides kept). The splat "Unable to determine a segment" messages during the overlay splits name main-exe symbols and are not caused by this PR.
+- After the merge: 6205/6958 functions, 1616160/2279368 bytes, 70.9% (overlays 5533/6128, 1468928/1994940, 73.6%; TT 262/303, 87564/111376, 78.6%).
