@@ -64,15 +64,11 @@ void func_80140E18(s32 arg0) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-19017, 10 differing lines; the result variable ret lands in $a0 (a final move to $v0) where the original returns
- * with li $v0,N, and three scheduling pairs follow from it. With ret, p, i and arg0 take the original registers. */
 s32 func_80141050(s32 arg0, s32 arg1) {
-    s32 ret;
+    s32 pad; /* FAKE: unused local; it gives the original 64-byte frame (pointer spill at sp+0x2C). T-19017 */
     s32 i;
     TcActor *act;
     Tc14 *base;
-    Tc14 *p;
 
     if (arg0 == 0) {
         act = D_8015EDB4;
@@ -82,8 +78,8 @@ s32 func_80141050(s32 arg0, s32 arg1) {
         act = D_8015EDB4 + 8;
     }
     if (arg1 & 0x20) {
-        for (i = 0, p = base; i < 16; i++, p++) {
-            if (!(p->unk13 & 0x80)) {
+        for (i = 0; i < 16; i++) {
+            if (!(base[i].unk13 & 0x80)) {
                 break;
             }
         }
@@ -93,23 +89,18 @@ s32 func_80141050(s32 arg0, s32 arg1) {
         if (arg0 == 0) {
             func_801335A0(1, 0x500);
         }
-        p->unk13 = 0x94;
-        p->unk0 = act->unk74 + ((i & 1) << 7) - 0x40;
-        p->unk2 = act->unk76 - (arg0 << 7) + 0x80;
-        p->unk8 = 0;
-        p->unkA = 0;
-        p->unkC = -0x200;
-        p->unk12 = 0;
-        p->unk4 = act->unk78;
-        ret = 1;
-    } else {
-        ret = 0;
+        base[i].unk13 = 0x94;
+        base[i].unk0 = act->unk74 + ((i & 1) << 7) - 0x40;
+        base[i].unk2 = act->unk76 - (arg0 << 7) + 0x80;
+        base[i].unk4 = act->unk78;
+        base[i].unk8 = 0;
+        base[i].unkA = 0;
+        base[i].unkC = -0x200;
+        base[i].unk12 = 0;
+        return 1;
     }
-    return ret;
+    return 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_80141050);
-#endif
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-19017, 10 differing lines; same shape and remainder as func_80141050 (ret lands in $a0) */
