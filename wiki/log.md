@@ -15436,3 +15436,7 @@ Opened [[tickets/T-17400-types-first-event]] (In Progress) under [[tickets/T-169
 ## [2026-10-16] ticket | T-17400 Types-first: EVENT to In Review
 
 [[tickets/T-17400-types-first-event]]: 90 step tables (`FnTblNN`) and 12 stack tables typed in `include/ovl/EVENT.h`; 38 redrafts with `drafts/T-17400/redraft.py` (9 better than the census, sum 11,600 to 11,395 rows over the unguarded functions, none 0); 4 matches / 1,416 bytes (`func_800FF320`, `func_80104C3C`, `func_800FF61C`, `func_8010AE7C`); 7 packages T-17401..T-17407 (27 functions). New section "Types-first pass (T-17400)" on [[event-family-results]]; rows in [[data-types]], notes in [[matching-notes]]. In Review, waiting for the code review.
+
+## [2026-10-16] ticket | T-17400 Done
+
+[[tickets/T-17400-types-first-event]] In Review to Done after the code review against `CODING_STANDARDS.md`: 4 functions matched (1,416 bytes: `func_800FF320`, `func_80104C3C`, `func_800FF61C`, `func_8010AE7C`), 38 redrafts, 7 packages (T-17401..T-17407). Two findings fixed, comment-only: the `FAKE` comment of `func_800FF320` now starts with `FAKE` (`src/ovl/EVENT/800FDC20.c`), and the guard of `func_8010B614` names its 33 remaining diff rows (`src/ovl/EVENT/8010B360.c`). EVENT unit sha1 OK after the rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.

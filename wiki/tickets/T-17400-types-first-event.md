@@ -1,7 +1,7 @@
 ---
 id: T-17400
 title: "Types-first: EVENT"
-status: In Review
+status: Done
 assignee: claude (w3-event-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -49,3 +49,30 @@ Matched (4 functions, 1,416 bytes): `func_800FF320` (708, DATE clone), `func_801
 
 Packages: T-17401..T-17407 (w3-event-p01..p07, 27 functions, 18,224 bytes). Details: [[event-family-results]].
 
+### 2026-10-16 (claude, code review against CODING_STANDARDS.md)
+
+Scope: `git diff w2-good...w3-event-types` (9 commits). Only `src/ovl/EVENT/*.c`, `include/ovl/EVENT.h`, `drafts/T-17400/`
+(690 new files, nothing in an existing `drafts/` folder changed) and wiki pages changed; `main_api.h`, `game.h` and the other
+overlays are untouched. No `//` comment, no inline asm or `.word`, no non-ASCII text in the added source; every reported
+match (`func_800FF320`, `func_80104C3C`, `func_800FF61C`, `func_8010AE7C`) is plain C with the `INCLUDE_ASM` removed; the
+drafts folder holds C, text, JSON and logs only (no asm, binaries or game data). Header: no duplicated extern, no local
+`FnTblNN`/`Ev44`/`EvTbl`/`U16x21` definition left in the `.c` files; the `D_80122EC8` override sits in the header before
+`common.h`.
+
+Findings, both fixed (comment-only, commit `6d84b5df`):
+
+1. `func_800FF320`: the `FAKE` comment (the 8 unused bytes `s32 pad[2]`) began with "Port of the DATE clone" and sat on the
+   function's first line; section 7 wants a comment that starts with `FAKE`. Split into the port note and a `FAKE: ... T-9310`
+   comment on the `pad[2]` declaration. The fakematch is the clone's own (DATE `func_80152684`); it stays tracked under
+   T-9310 and is listed here for T-17400.
+2. `func_8010B614` (`src/ovl/EVENT/8010B360.c`, guarded draft of package T-17407): the `NON_MATCHING: T-10610` comment did not
+   say how much is left. Added "33 diff rows left (T-17400 score)". The other three guards (`func_80114B0C` 4 lines,
+   `func_80118868` 8 lines, `func_8011EDFC` 13 lines) already name a ticket and the lines left.
+
+Accepted without change: the cast views of the display records (`D_800EAFA0` as `Ev44`, `Rec24` over `D_800EC190`) are the
+same views that the matched DATE ports and the existing EVENT code use; `main_api.h` types those symbols as `u8[]`, and the
+views are described in the Survey of [[event-family-results]].
+
+Verification after the fixes (Docker): `tools/docker.sh ninja` rebuilt EVENT, `build/ovl/EVENT.bin: OK`; `check_headers`
+(headers OK), `migrate_globals.py --check` (globals OK) and `sync_protos.py --check-branch` (0 new disagreements, 15 known)
+pass. The merge script runs the clean configure plus the full 27/27 build.
