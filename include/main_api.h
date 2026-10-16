@@ -690,6 +690,11 @@ extern s16 D_800B59F0;
 extern s16 D_800B59F4;
 extern u8 D_800B5A60;
 extern u8 D_800B5A64;
+/* T-17000: two tables of (x, y) halfword pairs that func_8006509C copies pair by pair into the pair
+ * table at D_80125C10 (`lh`/`sh` at +0 and +2, step 4); the copy of the second table from D_800B5AF0
+ * (pair 3) runs to D_800B5B20, its end. 16 + 15 pairs fill 0x800B5AA4..0x800B5B20. */
+extern s16 D_800B5AA4[16][2];
+extern s16 D_800B5AE4[15][2];
 extern s16 D_800B5B24;
 extern u32 D_800B5B28[4][8];
 extern u32 D_800B5BA8[8];
@@ -732,6 +737,14 @@ extern s32 D_800B6758;
 extern s32 D_800B6760[];
 extern s32 D_800B6780[];
 extern s32 D_800B6810[];
+/* T-17000: parameter tables of func_80076FDC, func_80073CB0 and parameter_up_down. func_80076FDC
+ * reads byte [row][col] of two 12-row, two-byte tables in an 11-case switch (`lbu %lo(D_800B6892)` after
+ * `addu` of the column); func_80073CB0 starts the next table at D_800B68C0. parameter_up_down walks
+ * signed nine-byte rows (`lb`, row index * 9): eight rows at D_800B68E0 end where D_800B6928 starts. */
+extern u8 D_800B6890[12][2];
+extern u8 D_800B68A8[12][2];
+extern s8 D_800B68E0[8][9];
+extern s8 D_800B6928[][9];
 extern s32 D_800B69E0[];
 extern u8 D_800B6D30;
 extern u8 ovl_load_state;
@@ -745,6 +758,10 @@ extern s32 D_800C5FD0;
 extern u8 D_800C5FD4[];
 extern u8 D_800C6010[];
 extern s16 D_800C6014;
+/* T-17000: word tables walked by func_80059EF0 (and func_8006509C) up to the next symbol: eight words
+ * ending at D_800C6220, 32 words ending at D_800C6340. */
+extern s32 D_800C6200[8];
+extern s32 D_800C62C0[32];
 extern u8 D_800C6220[];
 extern u8 D_800C9730[];
 extern s32 D_800C9734;
@@ -1705,6 +1722,11 @@ extern s32 D_80125D90;
 extern s32 D_80125D94;
 extern s32 D_80125D98;
 extern s32 D_80125D9C;
+/* T-17000: per-channel tables of func_8007BBE8 and func_8007AF0C, indexed by channel << 6 and
+ * channel << 5: 0x40-byte rows of words and 0x20-byte rows of halfwords (two rows each would end at
+ * D_80125E20 and D_80125E60). */
+extern s32 D_80125DA0[][16];
+extern s16 D_80125E20[][16];
 extern u16 D_80125E60;
 extern u16 D_80125E62;
 extern s16 D_80125E64;
