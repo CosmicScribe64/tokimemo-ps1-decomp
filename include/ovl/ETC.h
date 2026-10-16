@@ -876,7 +876,8 @@ void func_80148BC8(void);
 void func_80148E98(void);
 void func_80148EE8(void);
 extern s32 D_80150144;
-extern s32 D_8015014C;
+/* Two words indexed by D_80150148 (func_80143A88, func_80144224; T-17300). */
+extern s32 D_8015014C[2];
 extern s32 D_80150E98;
 extern s32 D_80151358[];
 void func_8014354C(void);
@@ -1055,7 +1056,8 @@ extern u8 D_801500F0[];
 extern u8 D_8015010C[];
 extern s16 D_80150130;
 extern s16 D_80150134;
-extern s16 D_8015013C;
+/* Rotation angles for RotMatrix (func_801433E4); vy and vz move in func_80143A88 (T-17300). */
+extern SVECTOR D_8015013C;
 #ifndef ETC_STATE_FLAGS_VIEW_DEFINED
 #define ETC_STATE_FLAGS_VIEW_DEFINED 1
 /* T-9580: the strided flag reads start at GameState +0x694, two slots
@@ -1193,5 +1195,45 @@ void func_8013D2C0(void);
 void func_8013EE28(void);
 void func_8013EEFC(void);
 s32 func_8013C330(s32 arg0, s32 arg1);
+
+/* T-17300: overlay data typed from the access patterns of the unmatched functions. */
+#ifndef OVL_ETC_TYPES_T17300
+#define OVL_ETC_TYPES_T17300
+/* Exam ranking of the 13 girls and the player (index 13): func_801480D0 fills it, func_8014790C and
+ * func_80148BC8 draw it. D_801506F0 above is rank[13]. */
+typedef struct EtcExamRank {
+    /* 0x00 */ s16 value[14];
+    /* 0x1C */ s32 order[14];
+    /* 0x54 */ s32 rank[14];
+} EtcExamRank; /* size 0x8C */
+extern EtcExamRank D_80150668;
+/* Screen x and y of the 14 ranking rows (func_8014790C, func_80148BC8). */
+extern s16 D_80150630[14];
+extern s16 D_8015064C[14];
+/* Per-girl base score and spread of the exam ranking (func_801480D0). */
+extern u8 D_80150728[13];
+extern u8 D_80150738[13];
+/* Two words per girl passed to func_80046290 (func_8013CF2C, func_8013FFAC). */
+extern s32 D_8014DB90[13][2];
+extern s32 D_8014DBF8[13][2];
+/* Per-girl pointers to word pairs of the same shape (func_8013FFAC). */
+extern s32 *D_8014E070[13];
+/* Per-girl counts for the random pick of func_8013C8EC. */
+extern u8 D_8014E0A4[13];
+/* CD file tables per scene: dec_bg_cd_read(D_8014EA18[scene][i]) (func_80132FB0). */
+extern s32 *D_8014EA18[22];
+extern s32 D_8014DB80;
+extern s32 D_80150078;
+extern s32 D_801500C0;
+extern s32 D_801500DC;
+extern s32 D_80150148;
+extern s32 D_80150188;
+extern s32 D_80150390;
+extern s32 D_801503C4;
+extern s32 D_80150EA4;
+extern u8 D_801500B4;
+extern u8 D_801500B5;
+extern u8 D_80150748[10];
+#endif /* OVL_ETC_TYPES_T17300 */
 
 #endif
