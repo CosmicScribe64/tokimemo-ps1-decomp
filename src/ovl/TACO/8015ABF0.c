@@ -109,13 +109,15 @@ s32 func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g) {
     return id;
 }
 
-/* NON_MATCHING: T-16563, 8 differing lines; frame and MATRIX offset match (declare i, j before matrix: later-declared
+/* NON_MATCHING: T-19026 (T-16563), 8 differing lines; frame and MATRIX offset match (declare i, j before matrix: later-declared
  * locals sit lower), only the struct-copy temporary differs (ugen t2 against t3, T-0018).
  * Closer pass: before the copy's data register ugen skips one free temporary when the last store it emitted went
  * through a pointer (here the loop's stores to matrix), two after a direct stack or global store or at function entry.
  * The original copy register is t3, as if it skipped two (t9, t2). A stack store such as `matrix.m[0][0] = 0;` before
  * the copy gives t3 but adds code; a uopt range in t2 gives t3 but moves the loop registers. No form without extra
- * code found; TACO func_801472D4 has the same miss. */
+ * code found; TACO func_801472D4 has the same miss. T-19026: empty tests on the parameters (removed by uopt or they
+ * change the frame), swapped operands of the two multiplies and both orders of the copy and the flag store do not
+ * move it either. */
 #ifdef NON_MATCHING
 void func_8015B1B8(arg0, arg1, arg2, arg3)
     s32 arg0;
