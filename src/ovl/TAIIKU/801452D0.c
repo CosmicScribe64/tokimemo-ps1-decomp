@@ -149,19 +149,20 @@ void func_80145370(void) {
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80145370);
 #endif
 
-/* NON_MATCHING: T-16553, 8 differing lines; the loop counter i is spilled at sp+0x3C, the original spills it at sp+0x38 (everything else matches) */
-#ifdef NON_MATCHING
 void func_80145640(void) {
+    s32 slot;
     s32 i;
 
     switch (D_800E6280.unk_110A) {
     case 0:
         if (cd_read_sync_status() & 1) {
             for (i = 0; i < 0xC; i++) {
-                D_8014A4F8[i] = D_800E6280.unk_1228[search_load_tpage_buf_lock(D_8014A4F8[i], 1)] = i + 0x80000100;
+                slot = search_load_tpage_buf_lock(D_8014A4F8[i], 1);
+                D_8014A4F8[i] = D_800E6280.unk_1228[slot] = i + 0x80000100;
             }
             for (i = 5; i < 9; i++) {
-                D_8014A528[i] = D_800E6280.unk_1228[search_load_tpage_buf_lock(D_8014A528[i], 1)] = i + 0x80000200;
+                slot = search_load_tpage_buf_lock(D_8014A528[i], 1);
+                D_8014A528[i] = D_800E6280.unk_1228[slot] = i + 0x80000200;
             }
             func_8004284C();
         }
@@ -254,9 +255,6 @@ void func_80145640(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80145640);
-#endif
 
 void func_80145A78(void) {
     switch (D_800E6280.unk_110A) {
