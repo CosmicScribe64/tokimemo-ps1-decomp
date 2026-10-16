@@ -8,6 +8,8 @@ sources: ["wiki/matching-notes.md", "tools/queue.py"]
 
 Data file of [[tickets/T-1321-register-promotion-build-step]]. One row per function skipped (left `INCLUDE_ASM` or `NON_MATCHING`) because of the T-0018 gap ([[matching-notes]], section "Register promotion of globals"). `tools/queue.py --calibrate` reads this table to measure the blocker detector, so keep the format.
 
+Update (T-20001): GYOZI `func_8013506C` is now matched (172 bytes), superseding its T-8030, T-9370, T-9740, T-10320 and T-10850 rows below. Port the nested post-increment test and pointer-table accesses from SHOUGATU `func_8013315C`, then declare the setup callee `func_801343A4` as `s32` in this caller via an explicit overlay override. Its normal `void` view leaves the counter/boolean in v1/v0; the integer-return view gives the original a0/v1. Actual default linked function proof and GYOZI SHA1 pass. See [[tickets/T-20001-gyozi-helper]] and [[matching-notes]].
+
 Rules for batch agents (decompile-workflow step 7): append one row per skipped case, never edit or delete a row.
 - `file`: main address stem (`8005A0B0`) or overlay name (`TEL`), as in the `file` column of `tools/queue.py`.
 - `function`: name in backticks.

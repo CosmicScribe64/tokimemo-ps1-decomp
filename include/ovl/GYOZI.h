@@ -27,7 +27,9 @@ extern s16 D_80147220;
 extern u8 D_80147240;
 extern s16 D_8014723C;
 extern u8 D_80145F60;
+#ifndef GYOZI_OVERRIDE_func_801343A4
 void func_801343A4(void);
+#endif
 extern u8 D_80145EC8;
 extern u8 D_80148110;
 void func_8013E148(void);

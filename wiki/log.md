@@ -16179,3 +16179,15 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 
 ## [2026-10-16] ticket | T-11850 Done (PR #35 merged)
 [[tickets/T-11850-tt-batch-11]] reviewed on integration branch `pr35-int` against `CODING_STANDARDS.md`: one finding fixed (missing `FAKE` mark on the two-store chain `q[0] = q[1] = 0;` in `func_80149704`, comment only), none open. 12 of 15 functions matched (4,520 bytes; 3 guarded: `func_80147A18`, `func_8013A0DC`, `func_8014A2B4`), clean rebuild 27/27 sha1 OK, headers OK, globals OK, `sync_protos --check-branch` OK. TT 274/303 functions, 92080/111376 bytes (82.7%); grand total 6233/6958 functions, 1639244/2279368 bytes, 71.9%. The earlier "started" entry's "PR #34, still open" is outdated: [[tickets/T-11840-tt-batch-10]] is merged. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-20001 GYOZI helper In Progress
+
+Created [[tickets/T-20001-gyozi-helper]] on codex/match-gyozi-helper from upstream main 639693d2. Whole-tree dupes report identifies GYOZI func_8013506C (172 bytes, guarded T-10850 draft) and matched SHOUGATU func_8013315C as a fillable pair including string data. Inspecting the two sources and the original function assembly before adapting the source. PR #36 independently contains the scoped queue fix and communication-platform question.
+
+## [2026-10-16] query | T-20001 GYOZI caller declaration identified
+
+The direct sibling adaptation still differed in six counter-allocation rows. Bounded counter pointer/union/aggregate views did not remove them. An in-memory s32 prototype for the setup callee func_801343A4 made funcdiff --resolve prove all 172 linked function bytes equal the target; changing the sound callee return type alone did not help. Added the explicit overlay-local caller-view override required by CODING_STANDARDS.md section 8a, preserving the existing void definition and other callers. Actual source and full-unit verification are now running. See [[tickets/T-20001-gyozi-helper]].
+
+## [2026-10-16] ticket | T-20001 matched and In Review
+
+GYOZI func_8013506C now passes actual default funcdiff --resolve: 172 linked bytes equal the target, with GYOZI unit SHA1 OK. The full build completed 490 steps after upstream header changes; explicit checks passed all 27 binary SHA1 values. Local standards review found no issues. Moved [[tickets/T-20001-gyozi-helper]] In Progress to In Review; [[matching-notes]] records the return-view evidence and [[data/t0018-cases]] supersedes the historical rows without deleting them. Final prototype guard and PR submission are pending.
