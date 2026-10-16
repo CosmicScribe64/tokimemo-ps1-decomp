@@ -1,7 +1,7 @@
 ---
 id: T-17110
 title: "Wave 3 package w3-rpg-bat-p10"
-status: In Progress
+status: In Review
 assignee: claude-opus (w3-rpg-bat-p10)
 created: 2026-10-16
 updated: 2026-10-16
@@ -14,13 +14,17 @@ Match as many as possible of four RPG_BAT functions in `src/ovl/RPG_BAT/8014ADD0
 
 ## Acceptance criteria
 
-- [ ] Each matched function is plain C, unit sha1 OK, committed on its own.
-- [ ] Unmatched drafts under 30 differing lines stay under `#ifdef NON_MATCHING` with a ticketed comment; others restored to `INCLUDE_ASM`.
-- [ ] T-17110 section in `wiki/matching-notes.md`; T-0018 rows where a compiler gap shows.
-- [ ] Clean build 27/27, `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch` pass.
+- [x] Each matched function is plain C, unit sha1 OK, committed on its own.
+- [x] Unmatched drafts under 30 differing lines stay under `#ifdef NON_MATCHING` with a ticketed comment; others restored to `INCLUDE_ASM`.
+- [x] T-17110 section in `wiki/matching-notes.md`; T-0018 rows where a compiler gap shows.
+- [x] Clean build 27/27, `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch` pass.
 
 ## Notes
 
 Owned C file: `src/ovl/RPG_BAT/8014ADD0.c`. Work list in the scratchpad (`w3-rpg-bat-p10-list.txt`). Start 20:09 UTC.
 
+Result: 3 of 4 matched (about 60 minutes), nothing guarded. `func_8014C360` (parameters changed in place, local `u = t + 0x40`), `func_8014B79C` (scalar aliases `D_8015EE48`/`D_8015EE4C`, empty `case 3`, FAKE `s32 pad`; `D_8015E740` is `u8 **`), `func_8014D11C` (radix in a variable, loop start in the `for` head). `func_8014BFE4` back to `INCLUDE_ASM` (128 rows at best, hand draft in `drafts/T-17110/RPG_BAT/func_8014BFE4/hand.c`). Notes in [[matching-notes]] ("T-17110"), four rows in [[register-cheatsheet]], section in [[rpg-bat-family-results]], update line in [[data/t0018-cases]].
+
 ## Comments
+
+- 2026-10-16: In Review. Code review against `CODING_STANDARDS.md` still to do.

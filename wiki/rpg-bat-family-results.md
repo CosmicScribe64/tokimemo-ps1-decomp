@@ -91,3 +91,9 @@ Types: `RpgObjectRecord44.unk_40` (record 155 +0x40, the byte of `D_8012163C`), 
 ### Wave 3 results
 
 - `w3-rpg-bat-p03` ([[tickets/T-17103-w3-rpg-bat-p03]]): 4 of 4 matched, `80137280.c` (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`, 3,048 bytes). Details and the FAKE tricks in [[matching-notes]] ("T-17103"). Findings for the rest of the unit: the asset-pointer scalars `D_8015EE8C`..`D_8015EED0` are one array of 0x18-byte records (defined as scalars in `8014E780.c`, stores through their address keep the original order); two unused `s32` above a spill slot add the 8 frame bytes that `func_80152080` lacks (try `s32 pad1; s32 pad2;` before its spill local); the enemy-message scenes `func_80138170`, `func_801387F0`, `func_80138B9C` share the `u32` view of `D_8015EBAC` and the implicit-int `func_8013E7C0`.
+
+## Package w3-rpg-bat-p10 (T-17110)
+
+[[tickets/T-17110-w3-rpg-bat-p10]]: `src/ovl/RPG_BAT/8014ADD0.c`, 3 of 4 matched in plain C (`func_8014C360`, `func_8014B79C`, `func_8014D11C`, 1,800 bytes); `func_8014BFE4` stays `INCLUDE_ASM` (hand draft, 128 rows, `drafts/T-17110/RPG_BAT/func_8014BFE4/hand.c`). Details in [[matching-notes]] ("T-17110"), four rows in [[register-cheatsheet]].
+
+Types and header: `D_8015E740` is `u8 **` (a table of string pointers), `func_8014B79C` is `void`, prototypes for `func_8013E864` and `func_8014EB58`, externs for the four triple heads `D_8015EE5C/68/74/80`. The state triple `D_8015EE44` is read as scalars (`D_8015EE48` state, `D_8015EE4C` counter) in the state machine, which lets uopt promote the state into `$a0`; keep that in the other functions of the family that touch it. The `D_8015EE5C`..`D_8015EE88` triples are four 0xC-byte records (`func_8014C360` and `func_8014BFE4` clear one by `switch (slot)`); they stay scalars because the original writes them with separate `lui` per store.

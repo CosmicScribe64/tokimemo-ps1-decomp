@@ -16301,3 +16301,7 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17110 In Progress
 
 [[tickets/T-17110-w3-rpg-bat-p10]] created and In Progress: wave 3 package w3-rpg-bat-p10, four RPG_BAT functions in `src/ovl/RPG_BAT/8014ADD0.c` (links [[tickets/T-17100-types-first-rpg_bat]]).
+
+## [2026-10-16] ticket | T-17110 In Review
+
+[[tickets/T-17110-w3-rpg-bat-p10]] In Progress to In Review: 3 of 4 functions matched in `src/ovl/RPG_BAT/8014ADD0.c` (`func_8014C360`, `func_8014B79C`, `func_8014D11C`; 1,800 bytes), unit sha1 OK; `func_8014BFE4` back to `INCLUDE_ASM` with the hand draft in `drafts/T-17110/RPG_BAT/func_8014BFE4/hand.c` (128 rows). Notes in [[matching-notes]] ("T-17110"), four rows in [[register-cheatsheet]], section in [[rpg-bat-family-results]], update line in [[data/t0018-cases]]. Code review against `CODING_STANDARDS.md` still to do.
