@@ -33,7 +33,28 @@ void func_80135AC0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80135AC0", func_80135B8C);
+void func_80135B8C(void) {
+    s32 i;
+    s32 r;
+    s32 pad[1]; /* FAKE: unused local above the arrays reproduces the original frame 0xC0; same as OLH func_801324EC. T-19005 */
+    s16 a[8];
+    s16 b[8];
+    s16 c[8];
+    s16 d[8];
+
+    func_8004EAAC();
+    func_8004E788(-0x50, -0x40, 0xF, (s32)"ミニ知識", 0);
+    for (i = 0; i < 7; i++) {
+        a[i] = -0x60;
+        b[i] = i * 0x10 - 0x32;
+        c[i] = 0xE8;
+        d[i] = 0x10;
+        r = func_8004E788(a[i], b[i], 0xF, (s32)(&D_8013CEA0)[i], 0);
+    }
+    func_8004F870(0, 7, a, b, c, d);
+    func_8004E884(r);
+    func_8004284C();
+}
 
 void func_80135CB4(void) {
     func_8004F984(0, D_8011ECF6, D_8011ECFA);

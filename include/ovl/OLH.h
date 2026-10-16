@@ -99,6 +99,7 @@ extern s32 D_8013AF2C;
 extern s32 D_8013AF30;
 extern s32 D_8013AF34;
 extern s32 D_8013AF38;
+extern s32 D_80139EE0;
 extern s32 D_8013A700;
 extern s32 D_8013A708;
 extern s32 D_8013A710;
@@ -115,6 +116,7 @@ extern s32 D_8013D6C0;
 extern s32 D_8013AF3C;
 extern s32 D_8013C79C;
 /* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80132114(void);
 void func_80132294(void);
 void func_801323AC(void);
 void func_801323CC(void);
