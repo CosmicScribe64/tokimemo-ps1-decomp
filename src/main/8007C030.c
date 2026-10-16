@@ -2712,10 +2712,10 @@ void _sprite_set_box_shade_tarao(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
     func_8009F054(p);
     SetSemiTrans(p, 0);
     gs = &D_800E6280;
-    /* The masks leave the shifts in ugen temporaries (t6..t9) as in the original; a bare
-     * shift or a chain gets uopt registers. One line per group because as1 schedules by source
-     * line. r2 is written before b0 so that uopt colours and(arg6) after the arg5 red value,
-     * which puts arg6 in a1 and p in a2 as in the original. */
+    /* FAKE: the explicit masks leave the shifts in ugen temporaries (t6..t9) as in the original
+     * (a bare shift or a chain gets uopt registers); one line per group because as1 schedules by
+     * source line; r2 is written before b0 so that uopt colours and(arg6) after the arg5 red
+     * value, which puts arg6 in a1 and p in a2. The real source is unknown. T-16220 */
     p->r0 = (arg6 >> 16) & 0xFF; p->g0 = (arg6 >> 8) & 0xFF; p->r2 = (arg5 >> 16) & 0xFF; p->b0 = arg6 & 0xFF;
     p->r1 = (arg6 >> 16) & 0xFF; p->g1 = (arg6 >> 8) & 0xFF; p->b1 = arg6 & 0xFF;
     p->g2 = (arg5 >> 8) & 0xFF; p->b2 = arg5 & 0xFF; p->r3 = (arg5 >> 16) & 0xFF; p->g3 = (arg5 >> 8) & 0xFF; p->b3 = arg5 & 0xFF;
