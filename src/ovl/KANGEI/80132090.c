@@ -183,4 +183,51 @@ void func_8013260C(void) {
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132090", func_801327DC);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132090", func_80132C24);
+void func_80132C24(void) {
+    u8 girl;
+    KangeiWords11 all;
+    KangeiWords2 first;
+    KangeiWords2 second;
+    KangeiWords2 third;
+
+    all = D_80139A08;
+    first = D_80139A34;
+    second = D_80139A3C;
+    third = D_80139A44;
+    if ((D_800E6280.unk_03F < 6) || (D_800E6280.unk_03F >= 10)) {
+        all.unk_00[0] = 0x544A;
+        all.unk_00[3] = 0x544A;
+        all.unk_00[5] = 0x544A;
+        first.unk_00[0] = 0x5D41;
+        second.unk_00[1] = 0x522E;
+        third.unk_00[1] = 0x58AF;
+    }
+    girl = D_800E6280.unk_F5F;
+    switch (girl) {
+    case 0:
+        func_80062CD0(all.unk_00[D_800E6280.unk_0F4.h >> 12]);
+        break;
+    case 1:
+        func_80062CD0(first.unk_00[D_800E6280.unk_0F4.h >> 12]);
+        break;
+    case 2:
+        func_80062CD0(second.unk_00[(D_800E6280.unk_0F4.h >> 12) - 2]);
+        break;
+    case 3:
+        func_80062CD0(third.unk_00[(D_800E6280.unk_0F4.h >> 12) - 4]);
+        break;
+    case 4:
+        func_80062CD0(0x66EC);
+        break;
+    case 5:
+        func_80062CD0(0x5FE4);
+        break;
+    case 6:
+        func_80062CD0(0x625A);
+        break;
+    default:
+        func_80062CD0(0x6962);
+        break;
+    }
+    func_8004284C();
+}

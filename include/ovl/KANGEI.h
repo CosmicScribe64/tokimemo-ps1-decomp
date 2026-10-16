@@ -261,6 +261,11 @@ extern KangeiWords11 D_80139BA8;
 extern KangeiWords2 D_80139BD4;
 extern KangeiWords2 D_80139BDC;
 extern KangeiWords2 D_80139BE4;
+/* T-18400: the same four tables for func_80132C24 (summer variant of func_8013454C). */
+extern KangeiWords11 D_80139A08;
+extern KangeiWords2 D_80139A34;
+extern KangeiWords2 D_80139A3C;
+extern KangeiWords2 D_80139A44;
 extern s8 D_80139ABC;
 
 /* T-9580: bits 25..26 of the packed +0x66C record word. */
