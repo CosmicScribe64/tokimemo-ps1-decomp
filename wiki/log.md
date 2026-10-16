@@ -16152,3 +16152,7 @@ TAIIKU `func_80141280` (1,764 B, `src/ovl/TAIIKU/80141280.c`) matches in plain C
 ## [2026-10-16] ticket | T-17207 In Review
 
 [[tickets/T-17207-w3-date-p07]] In Progress to In Review: 0 of 2 functions matched (`func_801449D4`, `func_80144E20`). Documentation and drafts only, no C changed. Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] ticket | T-17207 Done
+
+[[tickets/T-17207-w3-date-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues in the drafts (missing inline `FAKE` comments on the frame and `sel` locals, `g` called unused), both fixed. 0 of 2 functions matched (`func_801449D4`, `func_80144E20`); no C changed. Merge via the wave 3 merge script.

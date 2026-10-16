@@ -1,5 +1,5 @@
 void func_80144E20(void) {
-    GameState *g = &D_800E6280;
+    GameState *g = &D_800E6280; /* FAKE: its home word is the 4 bytes above the tables (frame 0xE38); real source unknown. T-17207 */
     FnTbl18 spDEC;
     FnTbl35 spD60;
     FnTbl48 spCA0;

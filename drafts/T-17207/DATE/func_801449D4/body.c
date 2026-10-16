@@ -1,6 +1,6 @@
 void func_801449D4(void) {
-    s32 pad0, pad1, pad2;
-    u8 sel;
+    s32 pad0, pad1, pad2; /* FAKE: unused words give the frame of the original; real source unknown. T-17207 */
+    u8 sel; /* FAKE: copy of D_800CA2F8 reproduces the hoisted lbu; real source unknown. T-17207 */
     FnTbl76 tbl;
 
     tbl = D_8015BF50;
