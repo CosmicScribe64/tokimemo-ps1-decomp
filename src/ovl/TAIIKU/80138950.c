@@ -528,15 +528,13 @@ void func_80139E34(void) {
     ((DisplayActor44 *)D_8011ECD0)[0].unk_2A = 0;
 }
 
-/* NON_MATCHING: T-16552, 27 differing lines (T-11640: 33), registers only: every opcode, the frame and the
- * loops match (the second loop is one 11-trip loop; IDO peels i = 0 and unrolls the rest by 2 like the original).
- * This leaf function is coloured in bit order, and bits follow the first surviving mention in the ucode: cnt is
- * numbered first (cnt = 0 in the first for-init gave cnt $a0 and flags $a2 as in the original), then the loop
- * pointer (D_800E6280 + i * 0x38, numbered in the first loop) takes $a1 and the record address $a3; the original
- * has record $a1, pointer $a3. Mentions in dead code do not renumber. FAKE: m only reproduces the fourth scalar
- * slot (sp1C at sp+0x1C), real local unknown. */
-#ifdef NON_MATCHING
-
+/* FAKE: T-16552. This leaf function is coloured in bit order and the bits follow the first mention in the
+ * ucode: the loop pointer (D_800E6280 + i * 0x38) is numbered in the first loop and so takes a lower register than
+ * the record address and the unk_F80 copy, while the original has cnt $a0, record $a1, flags $a2, pointer $a3.
+ * The two dead assignments at the top of the first loop (m = a field of record 96 + i, cnt = unk_F80) are
+ * overwritten before any use and generate no code; they number the record address and unk_F80 first. Mentions
+ * in code that cfe drops (if (0), unused locals, an address without a load, two adjacent assignments to one
+ * local) do not renumber. m also reproduces the fourth scalar slot (sp1C at sp+0x1C), real local unknown. */
 void func_80139FE4(void) {
     s32 n;
     s32 i;
@@ -546,6 +544,8 @@ void func_80139FE4(void) {
 
     n = 0;
     for (i = 0, cnt = 0; i < 0xB; i++) {
+        m = ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26;
+        cnt = D_800E6280.unk_F80;
         if (((TaiikuBit1 *)&D_800E6280.unk_1BC[i].unk_0C)->f == 1) {
             sp1C[n] = i;
             n++;
@@ -570,9 +570,6 @@ void func_80139FE4(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139FE4);
-#endif
 
 void func_8013A314(void) {
     s32 i;
