@@ -170,43 +170,35 @@ void func_8014AB84(s32 arg0, s32 arg1, s32 arg2) {
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014A660", func_8014AB84);
 #endif
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10320, temp numbering only: the original builds the D_8015EBAC base in $t0 before the i*8 product, 16 lines */
+/* FAKE: the slot table at D_8015EBAC (flag words at +0xC8, x/y pairs at +0xDC)
+ * is not recovered and other files use its words as scalars, so it is read
+ * through the first symbol, written inline at every use. The display records
+ * use the typed DisplayActor44 view; an `ent` pointer local and byte-offset
+ * record casts made the base address a ugen temporary (every later t-register
+ * one too low). T-17108. */
 void func_8014AC74(void) {
     s32 i;
-    s32 *p;
-    u8 *rec;
     s32 t;
     s32 t5;
-    u8 *ent;
     s32 v;
 
-    p = &D_8015EBAC;
-    i = 0;
-    do {
-        if (p[0x32] == 1) {
+    for (i = 0; i < 4; i++) {
+        if ((&D_8015EBAC)[i + 0x32] == 1) {
             t = i * 3;
-            rec = D_8011ECD0 + t * 0x44;
             t5 = t + 5;
-            ent = (u8 *)&D_8015EBAC + i * 8;
-            if (!(rec[0x1A92] & 1)) {
+            if (!(((DisplayActor44 *)D_8011ECD0)[t + 100].unk_02 & 1)) {
                 func_8013E810(t + 4, 7, 1, 1);
             }
-            v = *(s16 *)(rec + 0x1B30);
+            v = ((DisplayActor44 *)D_8011ECD0)[t + 102].unk_18;
             if (v >= 0x10) {
                 v = 0x1E - v;
             }
-            func_8013E97C(t5, *(s32 *)(ent + 0xDC), *(s32 *)(ent + 0xE0) - v * 8);
-            if (!(rec[0x1B1A] & 1)) {
+            func_8013E97C(t5, (&D_8015EBAC)[i * 2 + 55], (&D_8015EBAC)[i * 2 + 56] - v * 8);
+            if (!(((DisplayActor44 *)D_8011ECD0)[t + 102].unk_02 & 1)) {
                 func_8013E810(t + 4, 0xFF, 1, 0);
                 func_8013E810(t5, 0xFF, 1, 0);
                 func_8013E810(t + 6, 0xFF, 1, 0);
             }
         }
-        i++;
-        p++;
-    } while (i != 4);
+    }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014A660", func_8014AC74);
-#endif
