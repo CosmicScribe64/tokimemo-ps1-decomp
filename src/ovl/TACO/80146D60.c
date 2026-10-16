@@ -222,8 +222,7 @@ void func_801478F8(s32 arg0, s16 *arg1) {
     p->y = arg1[0];
 }
 
-/* NON_MATCHING: T-16561, 4 differing lines (2 rows); the original reloads arg2 into a3 (`lw a3,72(sp); addiu a0,a3,4`), the draft into a0 (`lw a0,72(sp); addiu a0,a0,4`); everything else matches */
-#ifdef NON_MATCHING
+/* The empty do-while adds a basic block after `base = arg2 + 4`: arg2 then gets an allocated range ($a3: `lw a3,72(sp); addiu a0,a3,4`) as in the original; found by the permuter. FAKE (T-16561): real source unknown, probably an empty macro. */
 void func_80147928(s32 arg0, s32 arg1, s32 arg2, void *arg3, void *arg4, s32 arg5) {
     u8 *p;
     TcPos *pos;
@@ -233,6 +232,7 @@ void func_80147928(s32 arg0, s32 arg1, s32 arg2, void *arg3, void *arg4, s32 arg
     slot = arg1 + 0x10;
     func_80143B34(slot);
     base = arg2 + 4;
+    do { } while (0);
     func_8009B3C0(base);
     func_8009B430(base + 8, (u8 *)&D_8015EDB4[slot].unk4, arg0 - 1, base);
     D_8015EDB4[slot].unk4.unk0 = 0x80000000;
@@ -252,9 +252,6 @@ void func_80147928(s32 arg0, s32 arg1, s32 arg2, void *arg3, void *arg4, s32 arg
     D_8015EDB4[slot].unk84[3] = 1;
     D_8015EDB4[slot].unk4.unk4[0] = (s32)&D_80127480[arg0];
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_80147928);
-#endif
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_80147B24);
 
