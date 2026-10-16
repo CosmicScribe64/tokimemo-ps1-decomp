@@ -16093,3 +16093,6 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 
 ## [2026-10-16] ticket | T-19025 Done
 [[tickets/T-19025-w3-d-p25]] In Review to Done: code review against `CODING_STANDARDS.md` found one missing `FAKE` comment (`btn` in `func_80132FE8`) and one undocumented unset `flags` path, both fixed with comments only (unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 4 of 4 functions matched (`func_8013356C`, `func_801328B0`, `func_8013240C`, `func_80132FE8`; 3,992 bytes), `src/ovl/TACO/80132220.c` is all C. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17204 In Progress
+[[tickets/T-17204-w3-date-p04]] created and started: Wave 3 package for DATE `src/ovl/DATE/80151460.c` (`func_801518B8`, `func_80152E34`, `func_80152060`, `func_80152268`), worktree `tokimemo-wt/w3-date-p04`, branch `w3-date-p04` from `w2-good`.
