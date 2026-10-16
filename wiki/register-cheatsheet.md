@@ -77,6 +77,12 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 | the w/h stores of a SPRT drawer are in the other order | `setWH(sprite, 8, 0x10);` instead of two statements. NAME_ENT `func_80137CA0` (T-11650). |
 | the original unrolls a small loop (one peeled store plus groups of four) | Write the plain loop over array-indexed records, `(&D_800E6280.unk_0FC)[i]`; IDO unrolls it the same way, including the copy order 1, 2, 3, 0 of the 12-record initializer. NAME_ENT `func_8013635C` (T-11650). |
 | constant or pointer in a1/a2/v1 in a small K&R function (TT, GEKO, TACO) | Known unsolved. Spend 10 minutes at most, then guard it and log the row. |
+| a global field and a hoisted `x & k` test of the same field swap `$v0`/`$v1` (regdiff: "bit 8 outranks bit 6"), the field is read in two regions | Read the field into a local at the top of each region (`bits = D_800E6280.unk_F88;`) and test the local. The field keeps the first colour. TAIIKU `func_80143F50` (T-16554). |
+| an `s8` flag compared with `!= 0` gives `lb` where the original has `lbu`, but `(u8) flag` and a `u8` declaration both lose the original's register allocation | The scalar view `*(u8 *)&D_8014A110 != 0` keeps the `lbu` and the allocation. FAKE. TAIIKU `func_80143F50`, `func_8014280C` (T-16554). |
+| a promoted field is cleared or stored in both arms of an `if/else` with the store in the branch delay slot, or the write-back is missing | Write the clear inside both arms and do not add a self-assignment; uopt writes the promoted field back at the end of each arm by itself. TAIIKU `func_80143DD0` (T-16554). |
+| a pointer that starts at the struct base with a large displacement (`lui v0; addiu v0,v0,%lo(Base)`, `sw v1,0x1278(v0)`), the draft starts the pointer at base + k | Keep the constant in the subscript, `for (i = 0; i < 3; i++) g.arr[0x15 + i] = -1;`, not in the loop start (`i = 0x15`). Taking `&Base` anywhere in the function hoists the base into `$s0`. TAIIKU `func_8014280C` (T-16554). |
+| two stores `A[f(x[i])] = v; x[i] = v` come out in the other order | Two statements, each with the expression `i + const` written out, not a chain assignment. TAIIKU `func_8014280C` (T-16554). |
+| spilled loop variables sit 4 bytes too high (`sw a2,0x3C(sp)` against `0x38`) with the same frame size | A FAKE `u8 pad[4];` declared first reserves the top local word. TAIIKU `func_8014280C` (T-16554). |
 
 ## Do not
 

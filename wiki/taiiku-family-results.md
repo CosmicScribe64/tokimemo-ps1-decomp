@@ -83,3 +83,7 @@ Four file-disjoint work packages, best expected bytes first (expected bytes: siz
 | pt-taiiku-p4 | T-16554 | `80140810.c`, `80132000.c`, `80142240.c` | 7 | 6,884 | 160 |
 
 Left for later waves: the rest of `80133C80.c` (8), `80138950.c` (8), `801452D0.c` (5), `80142240.c` (4), `80132000.c` (`func_80132000`), `80132BD0.c` (3) and `80141280.c` (1).
+
+### Package p4 results (T-16554)
+
+`80132000.c`, `80140810.c`, `80142240.c`, seven functions from the redraft (6,884 bytes). Four matched in about 70 minutes of agent time: `func_80132970` (456 B), `func_80143DD0` (384 B), `func_80143F50` (956 B), `func_8014280C` (1,412 B). Guarded drafts: `func_80140A90` (2,020 B, 33 instructions differ in register numbers only) and `func_8014357C` (664 B, 20); `func_80142FB8` (992 B) left as `INCLUDE_ASM`. The redraft scores (30, 107, 230, 260) did not predict the order of difficulty: the 260-score `func_8014280C` matched after fixing three m2c artifacts (chain assignment, folded loop start, spill slots), the 118-score `func_80140A90` stops at a ugen temporary count. Method, idioms and the compiler-gap rows are in [[matching-notes]] ("T-16554") and [[data/t0018-cases]]. Type changes: `D_80148EC0[]`, `D_8014A064`, `D_8014A124`, `D_8014A1E8[]`, `D_8014A208[8]`, `D_8014A228[11]` declared; `func_80145044`, `func_801450C0`, `func_80145148` prototyped; `MAIN_API_OVERRIDE_func_80085368` and `func_800853FC` (`s32` view of two `void` callees) in `80140810.c`.

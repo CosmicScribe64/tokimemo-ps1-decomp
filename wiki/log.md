@@ -15129,3 +15129,7 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16554 In Progress
 
 [[tickets/T-16554-pt-taiiku-p4]] started (pilot stage B): package pt-taiiku-p4 of [[tickets/T-16550-taiiku-types-first]], 7 TAIIKU functions in `src/ovl/TAIIKU/80140810.c`, `80132000.c`, `80142240.c`, worktree `pt-taiiku-p4`.
+
+## [2026-10-16] ticket | T-16554 In Review
+
+[[tickets/T-16554-pt-taiiku-p4]]: 4 of 7 functions matched (`func_80132970`, `func_80143DD0`, `func_80143F50`, `func_8014280C`, 3,208 bytes), 2 guarded drafts in `src/ovl/TAIIKU/80140810.c` and `80142240.c` (33 and 20 differing instructions), `func_80142FB8` left as `INCLUDE_ASM`. Notes in [[matching-notes]] ("T-16554"), rows in [[data/t0018-cases]], rows added to [[register-cheatsheet]], results in [[taiiku-family-results]]. New header declarations in `include/ovl/TAIIKU.h`, two `MAIN_API_OVERRIDE_*` in `src/ovl/TAIIKU/80140810.c` with the matching guards in `include/main_api.h`.
