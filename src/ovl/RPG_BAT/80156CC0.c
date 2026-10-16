@@ -1,10 +1,9 @@
-#define MAIN_API_OVERRIDE_func_80049A40 /* Original word arguments, without narrow caller conversions; T-20003. */
-#define RPG_BAT_OVERRIDE_func_8013D030 /* Integer-return caller view preserves the selector in v1; T-20003. */
-#define RPG_BAT_OVERRIDE_func_8013F15C /* Integer-return caller view preserves timer reloads; T-20003. */
+#define RPG_BAT_OVERRIDE_func_8013F15C /* implicit int view: the call's $v0 moves D_8015EDE0 of func_80157158 to $v1 (T-17102) */
+#define MAIN_API_OVERRIDE_func_80049A40 /* the original passes the coordinates as promoted words (T-17102) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
+
 void func_80049A40();
-s32 func_8013D030();
 s32 func_8013F15C();
 
 void func_80156CC0(void) {
@@ -28,9 +27,8 @@ void func_80156CC0(void) {
 }
 
 void func_80156D78(void) {
-    /* FAKE: one unused word reproduces the 0x40-byte frame and width home at sp+0x38. T-20003. */
-    s32 frame_pad[1];
-    s32 width;
+    s32 unused; /* FAKE: unused slot above sp38; without it sp38 sits at 0x3C instead of 0x38. T-17102 */
+    s32 sp38;
 
     if (D_8015EDD8 < 0x50) {
         if (D_8015ED98 == 0x02000000) {
@@ -58,10 +56,10 @@ void func_80156D78(void) {
         func_8014F0F8(0x3B);
         return;
     case 0x4:
-        width = D_8015EDE0;
+        sp38 = D_8015EDE0;
         func_8013E7C0(0x3B, 0, 1, 1);
-        ((DisplayActor44 *)D_8011ECD0)[144].unk_01 = 6;
-        func_80049A40(-0x26, -0x1A, width, 2, 5, 0xBFBF00, 0x81);
+        D_80121311 = 6;
+        func_80049A40(-0x26, -0x1A, sp38, 2, 5, 0xBFBF00, 0x81);
         dtd_on_tpage(0, 0, 5, 1, 0);
         D_8015EDE0 += 2;
         if (D_8015EDE0 < 0x72) {
@@ -119,11 +117,9 @@ void func_80156D78(void) {
     }
 }
 
-
 void func_80157158(void) {
-    /* FAKE: two unused words reproduce the original 0x40-byte frame and spill home. T-20003. */
-    s32 frame_pad[2];
-    s32 random_value;
+    s32 unused[2]; /* FAKE: two unused words above sp34 give the original 0x40 frame. T-17102 */
+    s32 sp34;
 
     if (D_8015EDD8 < 0x50) {
         if (D_8015ED98 == 0x02000000) {
@@ -172,8 +168,8 @@ void func_80157158(void) {
         if (D_8015ED98 != 0x100) {
             func_8013E7C0(0x30, 5, 1, 1);
         }
-        random_value = func_8013E9A8(0x10);
-        func_8013E97C(0x29, random_value + 0x108, func_8013E9A8(0x10) + 0x50);
+        sp34 = func_8013E9A8(0x10);
+        func_8013E97C(0x29, sp34 + 0x108, func_8013E9A8(0x10) + 0x50);
         func_8013E810(0x29, 5, 5, 1);
         func_8013F15C(0x508, 1, 0);
         D_8015EDD8 = 0x50;
@@ -181,14 +177,15 @@ void func_80157158(void) {
     case 0x50:
         if (!(((DisplayActor44 *)D_8011ECD0)[137].unk_02 & 1)) {
             func_8013F15C(0x508, 1, 0);
-            if (--D_8015EC74 == 0) {
+            D_8015EC74 -= 1;
+            if (D_8015EC74 == 0) {
                 ((DisplayActor44 *)D_8011ECD0)[136].unk_38 = 0x41000000;
                 func_8013E810(0x28, 0xFF, 1, 0);
                 func_8013E810(0x29, 0xFF, 1, 0);
                 func_8014EF3C();
             } else {
-                random_value = func_8013E9A8(0x10);
-                func_8013E97C(0x29, random_value + 0x108, func_8013E9A8(0x10) + 0x50);
+                sp34 = func_8013E9A8(0x10);
+                func_8013E97C(0x29, sp34 + 0x108, func_8013E9A8(0x10) + 0x50);
                 func_8013E810(0x29, 5, 5, 1);
             }
         }
@@ -232,7 +229,6 @@ void func_80157158(void) {
         break;
     }
 }
-
 
 void func_80157640(void) {
     switch (D_8015EDD8) {

@@ -33,7 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-20003-rpg-timer-callees|T-20003]] Three RPG_BAT callbacks matched, 3,516 bytes; caller views, direct timer updates and four marked fakematches (In Review).
+- [[tickets/T-20003-rpg-timer-callees|T-20003]] RPG_BAT func_80138F6C matched (1,268 bytes); two other independent matches dropped after upstream T-17102 landed (In Review).
 - [[tickets/T-17103-w3-rpg-bat-p03|T-17103]] Wave 3 package w3-rpg-bat-p03: RPG_BAT `80137280.c`, 4 of 4 matched (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`; Done)
 - [[tickets/T-17207-w3-date-p07|T-17207]] Wave 3 package w3-date-p07: DATE `80141EE0.c`, `func_801449D4` (312 to 71 rows) and `func_80144E20` (exact frame, about 180 register rows), 0 of 2 matched, drafts in `drafts/T-17207/` (Done).
 - [[tickets/T-17208-w3-date-p08|T-17208]] Wave 3 package w3-date-p08: DATE `8014A1B0.c`, `8015A640.c`, `8015A7E0.c`, `8015A980.c`, 1 of 5 matched (`func_8014AF88`, 248 B: pointer variable for the call argument), `func_8014A8FC` hand rewrite guarded at 34 lines, three libgte rotation helpers stay `INCLUDE_ASM` (Done).
@@ -482,3 +482,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-19028-w3-d-p28|T-19028]] Wave 3 package w3-d-p28: TACO `8013DB80.c`, `8015CF30.c`, 3 of 5 matched (`func_8013E778`, 812 B, from the sibling `func_8013D528`; `func_8013E424` and `func_8013DB80`, 828 B, in the closer pass), `func_8013DEE4` draft in `drafts/T-19028/`, `func_8015CF30` is libgte hand asm (Done).
 - [[tickets/T-17203-w3-date-p03|T-17203]] Wave 3 package w3-date-p03: DATE `80154260.c`, `80152FC0.c`, `8014CC40.c`, 3 of 4 matched (`func_8014EF1C` POLY_G4 builder, `func_80154118` where `tools/cvt_pass.py` cost a frame slot, `func_8014DCCC` without a function-pointer local), `func_80155004` draft in `drafts/T-17203/` (register names only) (Done)
 - [[tickets/T-17202-w3-date-p02|T-17202]] Wave 3 package w3-date-p02: DATE `80132000.c`, 6 of 6 matched (1,972 B: `func_80139834`, `func_8013E6A4` with an `s32` view of `func_80085A60`, `func_80137DF4` as an `s32` function without `return`; closer pass: `func_801324DC`, `func_8013BEB8`, `func_80139664`) (Done).
+- [[tickets/T-17102-w3-rpg-bat-p02|T-17102]] Wave 3 package w3-rpg-bat-p02: RPG_BAT `80151C10.c`, `80156CC0.c`, 3 of 3 functions matched (3,056 B: `func_80151C10`, `func_80156D78`, `func_80157158`); the `$v1`-selector miss fixed by an int-returning callee view (Done).

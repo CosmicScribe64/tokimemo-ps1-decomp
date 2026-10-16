@@ -16298,6 +16298,18 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 
 [[tickets/T-17103-w3-rpg-bat-p03]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues, both fixed (three [[register-cheatsheet]] rows sat outside the table, moved in; three stray triple blank lines in `src/ovl/RPG_BAT/80137280.c`). 4 of 4 functions matched (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`), unit sha1 OK. Merge via the wave 3 merge script.
 
+## [2026-10-16] ticket | T-17102 In Progress
+[[tickets/T-17102-w3-rpg-bat-p02]] created and started: RPG_BAT `func_80151C10`, `func_80156D78`, `func_80157158` (files `src/ovl/RPG_BAT/80151C10.c`, `src/ovl/RPG_BAT/80156CC0.c`), worktree `tokimemo-wt/w3-rpg-bat-p02` from `w2-good`.
+
+## [2026-10-16] build | T-17102 matches
+[[tickets/T-17102-w3-rpg-bat-p02]]: `func_80151C10` (`src/ovl/RPG_BAT/80151C10.c`), `func_80156D78` and `func_80157158` (`src/ovl/RPG_BAT/80156CC0.c`) matched in plain C, RPG_BAT sha1 OK. The `$v1`-selector miss of all three was an int-returning callee view (`RPG_BAT_OVERRIDE_func_8013E7C0`, `RPG_BAT_OVERRIDE_func_8013F15C`); notes in [[matching-notes]], rows in [[register-cheatsheet]] and [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-17102 In Review
+[[tickets/T-17102-w3-rpg-bat-p02]] In Progress to In Review (3 of 3 matched).
+
+## [2026-10-16] ticket | T-17102 Done
+[[tickets/T-17102-w3-rpg-bat-p02]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 3 of 3 functions matched (`func_80151C10`, `func_80156D78`, `func_80157158`, 3,056 bytes). Rebuild: RPG_BAT unit sha1 OK, headers OK, globals OK. Card moved to Done.
+
 
 ## [2026-10-16] ticket | T-20003 RPG timer follow-up In Progress
 
@@ -16322,3 +16334,7 @@ Opened https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/38 for the thr
 ## [2026-10-16] build | T-20003 final prototype guard passed
 
 After integrating upstream main 81095a46, sync_protos --check-branch reports 0 new disagreements, 15 known and branch check OK. The integrated three-function linked proof, RPG_BAT checksum and 27/27 binary checks remain successful. PR #38 is mergeable; no GitHub CI check results are exposed. [[tickets/T-20003-rpg-timer-callees]] stays In Review.
+
+## [2026-10-16] decision | T-20003 narrow PR #38 after upstream overlap
+
+Upstream main a8591fb8 merged T-17102's independent matches for func_80156D78 and func_80157158 during final checks. Retained its complete 80156CC0.c verbatim and removed our now-unused func_8013D030 header guard. PR #38 now contributes only func_80138F6C (1,268 bytes) plus its missing text-buffer declaration; all earlier investigation/check results remain as history. Updated the PR scope, ticket, board, index and matching notes. No duplicate upstream matches are counted. [[tickets/T-20003-rpg-timer-callees]] stays In Review.
