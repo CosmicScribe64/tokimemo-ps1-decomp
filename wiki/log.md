@@ -15665,3 +15665,11 @@ Code review of [[tickets/T-17800-types-first-option]] against `CODING_STANDARDS.
 ## [2026-10-16] ticket | T-19015 In Progress
 
 [[tickets/T-19015-w3-d-p15]] created and started: wave 3 package w3-d-p15, TACO `src/ovl/TACO/80146D60.c`, `src/ovl/TACO/80156A80.c`, `src/ovl/TACO/80138890.c` (`func_801471D0`, `func_801472D4`, `func_80138B2C`, `func_80147B24`, `func_801585D0`). Worktree `w3-d-p15` from `w2-good`.
+
+## [2026-10-16] build | T-19015 matches
+
+[[tickets/T-19015-w3-d-p15]]: TACO `func_801585D0` (992 bytes) matched in plain C in `src/ovl/TACO/80156A80.c`; unit sha1 OK. `func_801471D0` (8 funcdiff lines), `func_801472D4` (20 lines) and `func_80138B2C` (60 funcdiff lines) keep their guards; `func_80147B24` stays `INCLUDE_ASM` (63 lines). Analysis and variants in [[matching-notes]] ("T-19015"), rows in [[data/t0018-cases]], two rows in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-19015 In Review
+
+[[tickets/T-19015-w3-d-p15]] In Progress to In Review: 1 of 5 functions matched (992 bytes). Review pending.
