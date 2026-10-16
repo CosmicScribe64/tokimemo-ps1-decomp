@@ -1,7 +1,7 @@
 ---
 id: T-18100
 title: "Types-first: BUNKA_SD"
-status: In Review
+status: Done
 assignee: claude-opus (w3-bunka-sd-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -35,3 +35,12 @@ Branch `w3-bunka-sd-types` from `w2-good`. Owns `src/ovl/BUNKA_SD/`, `include/ov
 - Packages: T-18101..T-18103 (`w3-bunka-sd-p01`..`p03`), 11 functions, 5,908 bytes.
 - Checks: clean build 27/27, `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch` (0 new) pass.
 - Details: [[bunka-sd-family-results]], "Types-first pass (T-18100)".
+
+### 2026-10-16 code review (claude-opus, against CODING_STANDARDS.md and the ticket)
+
+- Scope: `git diff w2-good...w3-bunka-sd-types`. Changed C and header files are only `src/ovl/BUNKA_SD/*.c` and `include/ovl/BUNKA_SD.h`; `drafts/` has new files under `drafts/T-18100/` only (no existing archive touched, no asm, no binaries); the rest is wiki.
+- Matches: the 9 reported functions are plain C (no inline asm, no `.word`). Rebuilt in the worktree: BUNKA_SD sha1 OK, `globals OK`, `headers OK`; `sync_protos.py --check-branch` reports 0 new disagreements.
+- Fakematches: `func_80135F38` carries a `FAKE:` comment with reason and T-18100. The `(u32)` switch selector and the `(u8 *)` casts onto `u8 *` display-record fields are type fixes with no effect on the bytes, not fakematches. No new `NON_MATCHING` block; the existing ones (`80134260.c`, `801388D0.c`) still name T-12090 and a row count.
+- Headers: one type per symbol, `BsdEvent` layout documented with offsets and size, the removed `D_8013C814[]`, `D_8013C720`, `D_8013C740` declarations replaced by the new typed ones in the same header, no second declaration anywhere. C89 and ASCII in the added code.
+- Finding 1 (fixed): two double blank lines in `include/ovl/BUNKA_SD.h` left by the removed declaration blocks; collapsed. Rebuilt, BUNKA_SD sha1 OK.
+- No other findings. Status Done.
