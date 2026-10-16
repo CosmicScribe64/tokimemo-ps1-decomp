@@ -5,7 +5,6 @@ Synthetic text only; no compiler and no game data.
 
 Run: tools/docker.sh python3 -m unittest -q tools/test_protoverride.py   (pytest is not in the image)
 """
-import argparse
 import contextlib
 import io
 import os
