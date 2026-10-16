@@ -15989,3 +15989,7 @@ Opus closer pass on [[tickets/T-19019-w3-d-p19]] (branch w3-d-p19): no new match
 ## [2026-10-16] ticket | T-19021 Done
 
 [[tickets/T-19021-w3-d-p21]] In Review to Done: code review against `CODING_STANDARDS.md` found 1 minor item (the `pad` local and mask order in `func_80139BCC` had no source comment), fixed with a comment (bytes unchanged); TACO sha1 OK, headers OK. 3 functions matched (2,120 bytes: `func_8013A580`, `func_8013AD64`, `func_80139BCC`), `func_80139FB8` stays `INCLUDE_ASM`. Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-19030 started
+
+[[tickets/T-19030-w3-d-p30]] created and In Progress: Wave 3 direct package w3-d-p30 (TACO `func_8013B2A0`, `func_8015D0D0`, `func_8015D270`, `func_8013B460`), worktree `w3-d-p30` from `w2-good`. Card in [[kanban]], line in [[index]].
