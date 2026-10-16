@@ -16464,3 +16464,7 @@ Maintainer review of PR #36 (KakarottoCake): both review points addressed (empty
 ## [2026-10-16] ticket | T-17116 In Progress
 
 [[tickets/T-17116-w3-rpg-bat-p16]] created and In Progress: wave 3 package w3-rpg-bat-p16, three RPG_BAT functions in `src/ovl/RPG_BAT/80155CC0.c` and `src/ovl/RPG_BAT/80134D30.c` (links [[tickets/T-17100-types-first-rpg_bat]]).
+
+## [2026-10-16] ticket | T-17116 In Review
+
+[[tickets/T-17116-w3-rpg-bat-p16]] In Progress to In Review: 1 of 3 functions matched in `src/ovl/RPG_BAT/80155CC0.c` (`func_80156064`, 828 bytes), unit sha1 OK; `func_80135358` is a guarded draft at 10 differing lines in `src/ovl/RPG_BAT/80134D30.c`, `func_80134E78` back to `INCLUDE_ASM` with the best draft in `drafts/T-17116/RPG_BAT/func_80134E78/`. Notes in [[matching-notes]] (section T-17116), [[register-cheatsheet]] (six rows), [[data/t0018-cases]] (two rows), [[rpg-bat-family-results]].
