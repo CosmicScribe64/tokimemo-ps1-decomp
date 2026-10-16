@@ -32,6 +32,8 @@ Typed rewrites (each is a candidate; the compiler decides):
   work-prim     (T-17300) a local set from GetWorkBase(size, ...) is a pointer to the libgpu primitive of
                 that size (0x28 POLY_FT4, 0x14 SPRT, 0x18 POLY_F4, ...); its byte offsets become fields, also
                 through a pointer-to-pointer that stores it (`*var_s0 = temp_v0;`).
+  work-view     (T-17300) m2c sees the shared work area D_801230D0 as the ETC view EtcWork40 (fold
+                included); its fields are written through `((EtcWork40 *)&D_801230D0)->`.
   display-base  (T-17300) a local set to the D_8011ECD0 display records themselves is a DisplayActor44 *.
 Nothing under src/ or include/ is edited.
 """
@@ -192,6 +194,7 @@ def aggregate_ranges():
             out.append((int(addr, 16), int(addr, 16) + size, base))
     out.append((0x800E6280, 0x800E6280 + 0x1A90, "D_800E6280"))
     out.append((0x801217D0, 0x801217D0 + 0x24 * 12, "D_801217D0"))
+    out.append((0x801230D0, 0x801230D0 + 0x40, "D_801230D0"))
     out.append((DISPLAY[0], DISPLAY[0] + DISPLAY[1], "D_8011ECD0"))
     return sorted(out)
 
@@ -200,8 +203,41 @@ RANGES = aggregate_ranges()
 SYM_RE = re.compile(r"%(hi|lo)\(\s*(D_([0-9A-F]{8}))\s*(?:([+-])\s*(0x[0-9A-Fa-f]+|\d+)\s*)?\)")
 
 
+LUI_RE = re.compile(r"\blui\s+(\$\w+),\s*%hi\(\s*(D_[0-9A-F]{8})")
+
+
+def hi_exact(text):
+    """Line indexes of each `lui $r, %hi(X)` whose %lo uses (until $r is set again) all name X.
+
+    m2c reads a lui %hi(sym+k) as the address sym+k for every %lo paired with it, also across a branch.
+    With the hi folded to the bare base, a %lo in the next block printed field 0 (`D_800E6280.unk0`), so
+    a lui whose %lo uses all name its own symbol keeps the full offset (T-17300)."""
+    lines = text.split("\n")
+    exact = set()
+    for i, line in enumerate(lines):
+        m = LUI_RE.search(line)
+        if not m:
+            continue
+        reg, sym = m.group(1), m.group(2)
+        r = re.escape(reg)
+        uses = []
+        for later in lines[i + 1:i + 40]:
+            for u in re.finditer(r"%%lo\(\s*(D_[0-9A-F]{8})[^)]*\)\(%s\)|\$\w+,\s*%s,\s*%%lo\(\s*(D_[0-9A-F]{8})" % (r, r),
+                                 later):
+                uses.append(u.group(1) or u.group(2))
+            if re.search(r"\b(?:lui|lw|lh|lhu|lb|lbu|addiu|addu|subu|or|sll|srl|sra|andi|ori|slt|slti|sltiu|sltu)\s+%s\s*," % r,
+                         later) and "%lo" not in later:
+                break
+        if uses and all(u == sym for u in uses):
+            exact.add(i)
+    return exact
+
+
 def fold(text):
-    def rep(m):
+    exact = hi_exact(text)
+    lines = text.split("\n")
+
+    def rep(m, keep):
         addr = int(m.group(3), 16)
         if m.group(4):
             addr += int(m.group(5), 0) * (-1 if m.group(4) == "-" else 1)
@@ -209,11 +245,11 @@ def fold(text):
             if start <= addr < end and m.group(2) != base:
                 off = addr - start
                 # m2c reads a lui %hi(sym+k) as the whole address sym+k for every %lo paired with it
-                if m.group(1) == "hi" and (start + 0x8000) >> 16 == (addr + 0x8000) >> 16:
+                if m.group(1) == "hi" and not keep and (start + 0x8000) >> 16 == (addr + 0x8000) >> 16:
                     off = 0
                 return "%%%s(%s+0x%X)" % (m.group(1), base, off) if off else "%%%s(%s)" % (m.group(1), base)
         return m.group(0)
-    return SYM_RE.sub(rep, text)
+    return "\n".join(SYM_RE.sub(lambda m, k=(i in exact): rep(m, k), line) for i, line in enumerate(lines))
 
 
 def display_records(body):
@@ -547,8 +583,13 @@ def pre_rewrites(body, log=None):
     return new
 
 
+def work_view(body):
+    """T-17300: m2c prints the EtcWork40 view of D_801230D0 as a struct; the headers declare an s32."""
+    return re.sub(r"(&?)\bD_801230D0\.", lambda m: m.group(1) + "((EtcWork40 *)&D_801230D0)->", body)
+
+
 def typed_rewrites(body, known, log=None):
-    for name, fn in (("work-prim", work_prims), ("record-temp", record_temps), ("actor-offset", actor_offsets),
+    for name, fn in (("work-view", work_view), ("work-prim", work_prims), ("record-temp", record_temps), ("actor-offset", actor_offsets),
                      ("pointer-step", pointer_steps)):
         new = fn(body)
         if new != body and log is not None:
@@ -575,6 +616,8 @@ def install_typed(applied):
         orig_ctx(root, heads, out_path, *a, **k)
         s = open(out_path).read()
         s = re.sub(r"\bextern\s+u8\s+D_8011ECD0\s*\[\s*\]\s*;", "", s) + "\nextern DisplayActor44 D_8011ECD0[];\n"
+        # work-view (T-17300): ETC reads the shared work area D_801230D0 as EtcWork40
+        s = re.sub(r"\bextern\s+s32\s+D_801230D0\s*;", "extern EtcWork40 D_801230D0;", s)
         open(out_path, "w").write(s)
     m2c.build_context = build_context
     orig_split = m2c.split_draft

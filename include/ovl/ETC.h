@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "game.h"
+#include "psx_types.h" /* GetWorkBase primitives: POLY_FT4, SPRT, POLY_F4 (T-17300) */
 
 /* Overlay-local externs (T-1300). */
 extern u8 D_80150108[];
@@ -876,8 +877,9 @@ void func_80148BC8(void);
 void func_80148E98(void);
 void func_80148EE8(void);
 extern s32 D_80150144;
-/* Two words indexed by D_80150148 (func_80143A88, func_80144224; T-17300). */
-extern s32 D_8015014C[2];
+/* Word 0 is a flag (func_80142B80, func_80143334); words 1..15 are the order of the girls that
+ * func_80143A88 and func_80144224 step through with D_80150148 (T-17300). */
+extern s32 D_8015014C[16];
 extern s32 D_80150E98;
 extern s32 D_80151358[];
 void func_8014354C(void);
@@ -1227,13 +1229,21 @@ extern s32 D_80150078;
 extern s32 D_801500C0;
 extern s32 D_801500DC;
 extern s32 D_80150148;
-extern s32 D_80150188;
 extern s32 D_80150390;
 extern s32 D_801503C4;
 extern s32 D_80150EA4;
 extern u8 D_801500B4;
 extern u8 D_801500B5;
 extern u8 D_80150748[10];
+/* ETC view of the shared work area D_801230D0 (0x40 bytes): the two six-word arrays are also walked by
+ * func_801465F8; func_80146D4C writes the day's score to unk_28[subject] and its grade to unk_10[subject],
+ * unk_28[5] is the running total. Other overlays use the first word as a scalar. T-10030, T-17300. */
+typedef struct EtcWork40 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ u8 pad_04[0xC];
+    /* 0x10 */ s32 unk_10[6];
+    /* 0x28 */ s32 unk_28[6];
+} EtcWork40; /* size 0x40 */
 #endif /* OVL_ETC_TYPES_T17300 */
 
 #endif
