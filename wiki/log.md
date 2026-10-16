@@ -15136,3 +15136,7 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16560 Done
 
 [[tickets/T-16560-taco-types-first]] reviewed against `CODING_STANDARDS.md`: one finding (unexplained `*(u8 *)&D_8015EDE8` view cast, comments added to `func_8013555C` and `func_80135638`), fixed; TACO sha1 OK, headers, globals and prototype checks OK. 5 TACO functions matched (2,032 bytes). Packages T-16561..T-16564 follow.
+
+## [2026-10-16] ticket | T-16561 opened
+
+[[tickets/T-16561-taco-types-first-p1]] (In Progress): matching stage for the pt-taco-p1 package of [[tickets/T-16560-taco-types-first]] (9 functions in `src/ovl/TACO/801335A0.c`, `80137590.c`, `80159090.c`, `80146D60.c`), worktree pt-taco-p1 from w2-good.
