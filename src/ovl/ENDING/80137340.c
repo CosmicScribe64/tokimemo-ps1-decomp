@@ -1,5 +1,6 @@
 #include "common.h"
 #include "ovl/ENDING.h"
+#include "game.h"
 
 s32 func_80137340(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -65,7 +66,107 @@ void func_801376FC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80137340", func_80137730);
+s32 func_80137730(void) {
+    GameState *g = &D_800E6280;
+    s16 *cnt;
+    s16 i;
+    s32 best;
+    s32 imax;
+    s32 lvl;
+    u32 tick;
+    s32 b;
+    u8 v;
+    Entry8 *e;
+
+    cnt = (s16 *)func_8004E99C();
+    if (D_8013C35C <= 0) {
+        return 0;
+    }
+    b = ((u8 **)D_8013C350)[D_8013C358][D_8013C35C - 1];
+    if ((b == 0) || (b == 6)) {
+        for (i = 1; i <= *cnt; i++) {
+            e = (Entry8 *)func_8004E970(i);
+            e->unk_07 = 1;
+        }
+        D_8011F524 = 0;
+        return 0;
+    }
+    if (func_800460EC() & 4) {
+        best = func_8007C51C();
+    } else {
+        best = 0;
+    }
+    tick = g->unk_10F8;
+    D_80125C80[tick & 3] = best;
+    best = D_80125C80[0];
+    imax = 0;
+    if (best < D_80125C80[1]) {
+        best = D_80125C80[1];
+        imax = 1;
+    }
+    if (best < D_80125C80[2]) {
+        best = D_80125C80[2];
+        imax = 2;
+    }
+    if (best < D_80125C80[3]) {
+        best = D_80125C80[3];
+        imax = 3;
+    }
+    i = 0;
+    lvl = 0;
+    best = 0;
+    for (; i < 4; i++) {
+        if ((i != imax) && (best < D_80125C80[i])) {
+            best = D_80125C80[i];
+        }
+    }
+    for (i = 0; i < 3; i++) {
+        v = D_800B5A68[g->unk_F5F * 3 + i];
+        if (i == 0) {
+            v = 8;
+        }
+        if (v < best) {
+            lvl = i + 1;
+        }
+    }
+    D_800B5A60 = 0;
+    if ((g->unk_F5F == 0) && (D_8011F522 == 8)) {
+        D_800B5A60 = 1;
+    }
+    if (lvl >= 4) {
+        lvl = 3;
+    }
+    if (lvl != 0) {
+        if (D_800B5A60 != 0) {
+            lvl = 3 - lvl;
+        }
+    }
+    if ((D_8011F524 != 0) && (tick & 1)) {
+    } else if (best == 0) {
+        D_8011F524 = 0;
+    } else if (lvl == 0) {
+        D_8011F524 = 0;
+    } else if (lvl == 1) {
+        D_8011F524 = 1;
+    } else if (lvl == 2) {
+        D_8011F524 = 2;
+    } else if (lvl >= 3) {
+        D_8011F524 = 3;
+    }
+    if (g->unk_F80 != 0) {
+        for (i = 1; i <= *cnt; i++) {
+            e = (Entry8 *)func_8004E970(i);
+            if (e->unk_02 >= 0x48) {
+                e->unk_07 = 1;
+            }
+        }
+        return 0;
+    }
+    for (i = 1; i <= *cnt; i++) {
+        e = (Entry8 *)func_8004E970(i);
+        e->unk_07 = 0;
+    }
+}
 
 void func_80137AA8(void) {
     switch (D_800E6280.unk_F5F) {

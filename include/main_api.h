@@ -688,6 +688,7 @@ extern s16 D_800B59F0;
 extern s16 D_800B59F4;
 extern u8 D_800B5A60;
 extern u8 D_800B5A64;
+extern u8 D_800B5A68[]; /* 3 bytes per entry, indexed by GameState.unk_F5F * 3 + i (ENDING func_80137730) */
 extern s16 D_800B5B24;
 extern u32 D_800B5B28[4][8];
 extern u32 D_800B5BA8[8];
@@ -1659,6 +1660,7 @@ extern u8 D_80125C54;
 extern u8 D_80125C55;
 extern u8 *D_80125C58;
 extern u8 D_80125C60[];
+extern s16 D_80125C80[]; /* four s16 slots, written at index (tick & 3) (ENDING func_80137730) */
 extern u8 D_80125C90[];
 extern s16 D_80125CA0;
 extern s32 D_80125CA4;
