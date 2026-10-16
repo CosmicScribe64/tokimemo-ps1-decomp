@@ -16331,6 +16331,7 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17109 Done
 [[tickets/T-17109-w3-rpg-bat-p09]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing that blocks (only `src/ovl/RPG_BAT/8013D780.c` and `src/ovl/RPG_BAT/801477E0.c` changed; `s32` without a return, the single-increment arms and the one-line decrement judged plain C with comments; `RPG_BAT_OVERRIDE_D_8015EBCC` follows 8a). Review edits: a doubled and a trailing blank line removed; the "about 35 minutes" of the In Review entry is 39 minutes (19:46:13 to 20:24:57 UTC), fixed in the ticket and [[matching-notes]]. Unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 3 of 3 matched (`func_8013D834`, `func_80147930`, `func_8013DC60`, 4,268 bytes). Merge via the wave 3 merge script.
 
+
 ## [2026-10-16] ticket | T-20003 RPG timer follow-up In Progress
 
 Created [[tickets/T-20003-rpg-timer-callees]] from upstream main 68650e14. The T-17101 section of [[matching-notes]] explicitly suggests func_80138F6C, func_80146C30 and func_80157158 for the newly confirmed integer-return callee-view test. T-17101 is Done and no follow-up package tickets for these files are present in fetched upstream. Inspecting existing typed drafts and original assembly before compiling candidates.
@@ -16368,3 +16369,11 @@ On upstream main a8591fb8, actual default funcdiff proves all 1,268 linked bytes
 Contributor KakarottoCake's PR #38 narrowed to RPG_BAT `func_80138F6C` (1,268 bytes) after T-17102 matched the other
 two callbacks on main. Review: no findings; one doubled blank line removed. Clean rebuild 27/27, headers, globals and
 prototypes OK, funcdiff MATCH. [[tickets/T-20003-rpg-timer-callees]] Done.
+## [2026-10-16] setup | T-20003 follow unrelated upstream RPG work
+
+Integrated main 0925704e (T-17108). Only the append-only log conflicted; preserved both histories. Upstream changed other RPG_BAT source files and wiki, leaving this PR's func_80138F6C, its source-file caller views and the buffer declaration unchanged. The final narrowed proof/build/prototype evidence on a8591fb8 remains recorded above. [[tickets/T-20003-rpg-timer-callees]] stays In Review.
+
+
+## [2026-10-16] setup | T-20003 final upstream refresh
+
+Integrated main dee64939 (T-17109), preserving both shared wiki histories. This upstream batch changes other RPG_BAT functions and adds unrelated declarations/guards; the contribution's function bodies and caller views are unchanged. Recorded validation bases and results remain explicit in the ticket. Ticket stays In Review.
