@@ -53,7 +53,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-19031-w3-d-p31|T-19031 Wave 3 package w3-d-p31]]
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
@@ -138,6 +137,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-19031-w3-d-p31|T-19031 Wave 3 package w3-d-p31]]
 - [ ] [[tickets/T-19023-w3-d-p23|T-19023 Wave 3 package w3-d-p23]]
 - [ ] [[tickets/T-19022-w3-d-p22|T-19022 Wave 3 package w3-d-p22]]
 - [ ] [[tickets/T-19024-w3-d-p24|T-19024 Wave 3 package w3-d-p24]]

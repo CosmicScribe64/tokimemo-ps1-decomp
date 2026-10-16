@@ -16017,3 +16017,6 @@ Opus closer pass on [[tickets/T-19019-w3-d-p19]] (branch w3-d-p19): no new match
 
 [[tickets/T-19031-w3-d-p31]] In Progress to In Review: wave 3 package w3-d-p31 (TAIIKU `80132000.c`, `80132BD0.c`), 4 of 4 functions matched (4,412 bytes), about 70 minutes of agent time. Awaiting code review against `CODING_STANDARDS.md`.
 
+## [2026-10-16] ticket | T-19031 Done
+
+[[tickets/T-19031-w3-d-p31]] In Review to Done after the code review: wave 3 package w3-d-p31 (TAIIKU `src/ovl/TAIIKU/80132000.c`, `src/ovl/TAIIKU/80132BD0.c`, `include/ovl/TAIIKU.h`, `include/main_api.h`, `config/overlays/TAIIKU.yaml`), 4 of 4 functions matched (4,412 bytes: `func_80133258`, `func_80132BD0`, `func_80132E20`, `func_80132000`, four ticketed FAKEs). One finding fixed: `D_80122E90` moved into address order in `include/main_api.h`. Full build 27/27 sha1 OK, headers, globals and proto checks OK.
