@@ -1,3 +1,4 @@
+#define MAIN_API_OVERRIDE_D_800E7D10 /* settings block as a struct, T-19009 */
 #define MAIN_API_OVERRIDE_func_800AE090 /* matched as int: the call's $v0 result range (main_api.h: void), T-19009 */
 #include "common.h"
 #include "ovl/TACO.h"
@@ -33,8 +34,10 @@ void func_80142820(void) {
     }
 }
 
-/* Settings block at D_800E7D50 (+0x40 of D_800E7D10, see TcSave in 80133870.c): byte 0 holds the
- * "saved" flag, the sound mode and the selector, byte 1 two more selectors. */
+/* Settings block at D_800E7D10 (the loader func_801345D4 in 80133870.c has its own view of it, T-16562): byte 0 holds
+ * the "saved" flag, the mode and the selector, byte 1 two more selectors. Declared as one struct at D_800E7D10 so
+ * that every access relocates against the same symbol: as1 then hoists the flag byte load over the word stores,
+ * as the original does (separate symbols D_800E7D50/D_800E7D5C keep it after them). T-19009 */
 typedef struct TcSetBits {
     u8 flag : 1;
     u8 pad0 : 1;
@@ -44,20 +47,32 @@ typedef struct TcSetBits {
     u8 lo : 4;
     u8 hi : 4;
 } TcSetBits;
+typedef struct TcSetAll {
+    /* 0x00 */ u8 pad00[0x40];
+    /* 0x40 */ TcSetBits bits;
+    /* 0x42 */ u8 name0[3];
+    /* 0x45 */ u8 name1[3];
+    /* 0x48 */ u8 name2[3];
+    /* 0x4B */ u8 pad4B;
+    /* 0x4C */ s32 w0;
+    /* 0x50 */ s32 w1;
+    /* 0x54 */ s32 w2;
+} TcSetAll; /* size 0x58 */
+extern TcSetAll D_800E7D10;
 
-#ifdef NON_MATCHING
 void func_801428DC(void) {
-    ((TcSetBits *)&D_800E7D50)->flag = 1;
-    D_800E7D5C = D_8015EDF8;
-    D_800E7D60 = D_8015EDFC;
-    D_800E7D64 = D_8015EE00;
-    func_800AE090((u8 *)&D_800E7D50 + 2, D_8015EE04, 3);
-    func_800AE090(D_800E7D55, D_8015EE08, 3);
-    func_800AE090(D_800E7D58, D_8015EE0C, 3);
-    ((TcSetBits *)&D_800E7D50)->mode = D_8015EDD8 % 2;
-    ((TcSetBits *)&D_800E7D50)->sel = D_8015EDDC % 3;
-    ((TcSetBits *)&D_800E7D50)->hi = D_8015EDE0 % 3;
-    ((TcSetBits *)&D_800E7D50)->lo = D_8015EDE4 % 3;
+    D_800E7D10.bits.flag = 1;
+    D_800E7D10.w0 = D_8015EDF8;
+    D_800E7D10.w1 = D_8015EDFC;
+    D_800E7D10.w2 = D_8015EE00;
+    func_800AE090(D_800E7D10.name0, D_8015EE04, 3);
+    func_800AE090(D_800E7D10.name1, D_8015EE08, 3);
+    func_800AE090(D_800E7D10.name2, D_8015EE0C, 3);
+    /* the % 2 folds away, but keeps the extra copy of the value that the original has */
+    D_800E7D10.bits.mode = D_8015EDD8 % 2;
+    D_800E7D10.bits.sel = D_8015EDDC % 3;
+    D_800E7D10.bits.hi = D_8015EDE0 % 3;
+    D_800E7D10.bits.lo = D_8015EDE4 % 3;
     func_80041584();
     draw2d3d(0, 0);
     D_800E6280.unk_014[0] = 0xA0;
@@ -75,9 +90,6 @@ void func_801428DC(void) {
     func_80048DAC(0);
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80142820", func_801428DC);
-#endif
 
 void func_80142AF0(void) {
     GameState *gs = &D_800E6280;

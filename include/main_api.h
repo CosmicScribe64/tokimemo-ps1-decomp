@@ -918,11 +918,6 @@ typedef struct Flags7D4F {
 } Flags7D4F; /* size 0x01 */
 extern u8 D_800E7D4F;
 extern s32 D_800E7D50;
-extern u8 D_800E7D55[];
-extern u8 D_800E7D58[];
-extern s32 D_800E7D5C;
-extern s32 D_800E7D60;
-extern s32 D_800E7D64;
 extern u8 D_800E7D68;
 #ifndef MAIN_API_OVERRIDE_D_800E8BEE
 extern s8 D_800E8BEE;
