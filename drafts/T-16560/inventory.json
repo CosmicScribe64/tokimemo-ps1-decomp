@@ -1,0 +1,1136 @@
+[
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80132220.c",
+  "func": "func_8013240C",
+  "size": 1188,
+  "guarded": false,
+  "source_hash": "2d2ba4effed59b82b670b56d8e17597af978586f3a4c6b74d56d6d78f9911c5f",
+  "scope": "TACO:func_8013240C"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80132220.c",
+  "func": "func_801328B0",
+  "size": 1848,
+  "guarded": false,
+  "source_hash": "2d2ba4effed59b82b670b56d8e17597af978586f3a4c6b74d56d6d78f9911c5f",
+  "scope": "TACO:func_801328B0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80132220.c",
+  "func": "func_80132FE8",
+  "size": 908,
+  "guarded": false,
+  "source_hash": "2d2ba4effed59b82b670b56d8e17597af978586f3a4c6b74d56d6d78f9911c5f",
+  "scope": "TACO:func_80132FE8"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80132220.c",
+  "func": "func_8013356C",
+  "size": 48,
+  "guarded": false,
+  "source_hash": "2d2ba4effed59b82b670b56d8e17597af978586f3a4c6b74d56d6d78f9911c5f",
+  "scope": "TACO:func_8013356C"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/801335A0.c",
+  "func": "func_80133738",
+  "size": 308,
+  "guarded": false,
+  "source_hash": "dd05ef9672a0f7427b163b5d5e51a6439a6bd340e8dca07ffdbc8ea1aa2c5bee",
+  "scope": "TACO:func_80133738"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80133870.c",
+  "func": "func_80133870",
+  "size": 272,
+  "guarded": false,
+  "source_hash": "072c89bd4df5ac83103473d747635d3a1d152d22de1d0ebabbf8e79afc31df88",
+  "scope": "TACO:func_80133870"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80133870.c",
+  "func": "func_80133E98",
+  "size": 1076,
+  "guarded": false,
+  "source_hash": "072c89bd4df5ac83103473d747635d3a1d152d22de1d0ebabbf8e79afc31df88",
+  "scope": "TACO:func_80133E98"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80133870.c",
+  "func": "func_801342CC",
+  "size": 388,
+  "guarded": false,
+  "source_hash": "072c89bd4df5ac83103473d747635d3a1d152d22de1d0ebabbf8e79afc31df88",
+  "scope": "TACO:func_801342CC"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80133870.c",
+  "func": "func_801345D4",
+  "size": 376,
+  "guarded": false,
+  "source_hash": "072c89bd4df5ac83103473d747635d3a1d152d22de1d0ebabbf8e79afc31df88",
+  "scope": "TACO:func_801345D4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80133870.c",
+  "func": "func_801347F4",
+  "size": 144,
+  "guarded": true,
+  "source_hash": "072c89bd4df5ac83103473d747635d3a1d152d22de1d0ebabbf8e79afc31df88",
+  "scope": "TACO:func_801347F4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80134930.c",
+  "func": "func_80134A18",
+  "size": 884,
+  "guarded": false,
+  "source_hash": "52bcfbb4ddc3b9cc9cacfcc3ff919c0d5768b6cb20662fe65c05e23072c84cf9",
+  "scope": "TACO:func_80134A18"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80134930.c",
+  "func": "func_8013506C",
+  "size": 240,
+  "guarded": false,
+  "source_hash": "52bcfbb4ddc3b9cc9cacfcc3ff919c0d5768b6cb20662fe65c05e23072c84cf9",
+  "scope": "TACO:func_8013506C"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80134930.c",
+  "func": "func_8013555C",
+  "size": 220,
+  "guarded": false,
+  "source_hash": "52bcfbb4ddc3b9cc9cacfcc3ff919c0d5768b6cb20662fe65c05e23072c84cf9",
+  "scope": "TACO:func_8013555C"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80134930.c",
+  "func": "func_80135638",
+  "size": 220,
+  "guarded": false,
+  "source_hash": "52bcfbb4ddc3b9cc9cacfcc3ff919c0d5768b6cb20662fe65c05e23072c84cf9",
+  "scope": "TACO:func_80135638"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80135720.c",
+  "func": "func_801357B0",
+  "size": 204,
+  "guarded": true,
+  "source_hash": "474e9442297aa702f43e083baa74cc97ee0b6f4fb143f52e9d4bed92a67d3f01",
+  "scope": "TACO:func_801357B0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80135720.c",
+  "func": "func_80135A04",
+  "size": 1384,
+  "guarded": false,
+  "source_hash": "474e9442297aa702f43e083baa74cc97ee0b6f4fb143f52e9d4bed92a67d3f01",
+  "scope": "TACO:func_80135A04"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80135720.c",
+  "func": "func_80136988",
+  "size": 440,
+  "guarded": false,
+  "source_hash": "474e9442297aa702f43e083baa74cc97ee0b6f4fb143f52e9d4bed92a67d3f01",
+  "scope": "TACO:func_80136988"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80136B40.c",
+  "func": "func_80137264",
+  "size": 812,
+  "guarded": false,
+  "source_hash": "33dd9da89adb9a842d019816471825e58ffe327e399e44bbd13096fe44eaf0d7",
+  "scope": "TACO:func_80137264"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80137590.c",
+  "func": "func_8013760C",
+  "size": 640,
+  "guarded": false,
+  "source_hash": "cc12a6f145fc889492916fb2eeef9b75ad45a538f8ef363a986bf020977a84c0",
+  "scope": "TACO:func_8013760C"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80137590.c",
+  "func": "func_8013788C",
+  "size": 456,
+  "guarded": false,
+  "source_hash": "cc12a6f145fc889492916fb2eeef9b75ad45a538f8ef363a986bf020977a84c0",
+  "scope": "TACO:func_8013788C"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80137A60.c",
+  "func": "func_80137D00",
+  "size": 328,
+  "guarded": false,
+  "source_hash": "eb85e41a293ca1ea28114ea9686bc8a779ad83508936ac3415a46c3a2e847b18",
+  "scope": "TACO:func_80137D00"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80137F90.c",
+  "func": "func_8013822C",
+  "size": 80,
+  "guarded": false,
+  "source_hash": "8cebc1ede2b95f004dcf4689dbfc6666dd828cf3f4c41d3ef66abed9f1e96618",
+  "scope": "TACO:func_8013822C"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80138890.c",
+  "func": "func_80138964",
+  "size": 456,
+  "guarded": false,
+  "source_hash": "5203ee3b5b282b6be13270bba5e12a0179be8784e2d0fe58878c699b16388cb8",
+  "scope": "TACO:func_80138964"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80138890.c",
+  "func": "func_80138B2C",
+  "size": 476,
+  "guarded": false,
+  "source_hash": "5203ee3b5b282b6be13270bba5e12a0179be8784e2d0fe58878c699b16388cb8",
+  "scope": "TACO:func_80138B2C"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80138890.c",
+  "func": "func_80138D08",
+  "size": 1040,
+  "guarded": false,
+  "source_hash": "5203ee3b5b282b6be13270bba5e12a0179be8784e2d0fe58878c699b16388cb8",
+  "scope": "TACO:func_80138D08"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80139170.c",
+  "func": "func_80139424",
+  "size": 1676,
+  "guarded": false,
+  "source_hash": "f737d68e2dba269c8bc2708ef311802b1f3f1ffc4b116730e40fc3b2c8101590",
+  "scope": "TACO:func_80139424"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80139170.c",
+  "func": "func_80139BCC",
+  "size": 1004,
+  "guarded": false,
+  "source_hash": "f737d68e2dba269c8bc2708ef311802b1f3f1ffc4b116730e40fc3b2c8101590",
+  "scope": "TACO:func_80139BCC"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80139170.c",
+  "func": "func_80139FB8",
+  "size": 1480,
+  "guarded": false,
+  "source_hash": "f737d68e2dba269c8bc2708ef311802b1f3f1ffc4b116730e40fc3b2c8101590",
+  "scope": "TACO:func_80139FB8"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80139170.c",
+  "func": "func_8013A580",
+  "size": 484,
+  "guarded": false,
+  "source_hash": "f737d68e2dba269c8bc2708ef311802b1f3f1ffc4b116730e40fc3b2c8101590",
+  "scope": "TACO:func_8013A580"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80139170.c",
+  "func": "func_8013A790",
+  "size": 1492,
+  "guarded": false,
+  "source_hash": "f737d68e2dba269c8bc2708ef311802b1f3f1ffc4b116730e40fc3b2c8101590",
+  "scope": "TACO:func_8013A790"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80139170.c",
+  "func": "func_8013AD64",
+  "size": 632,
+  "guarded": false,
+  "source_hash": "f737d68e2dba269c8bc2708ef311802b1f3f1ffc4b116730e40fc3b2c8101590",
+  "scope": "TACO:func_8013AD64"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013B170.c",
+  "func": "func_8013B2A0",
+  "size": 248,
+  "guarded": false,
+  "source_hash": "683ff43b918f9b13063eeb0a4aa3347533ea4279d6d4e71ea639188e44c24e82",
+  "scope": "TACO:func_8013B2A0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013B170.c",
+  "func": "func_8013B460",
+  "size": 1328,
+  "guarded": false,
+  "source_hash": "683ff43b918f9b13063eeb0a4aa3347533ea4279d6d4e71ea639188e44c24e82",
+  "scope": "TACO:func_8013B460"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013B990.c",
+  "func": "func_8013B990",
+  "size": 308,
+  "guarded": false,
+  "source_hash": "19a460d1186f54974cb4926a107db4055c9be98c8147946c2205eed7e224f057",
+  "scope": "TACO:func_8013B990"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013B990.c",
+  "func": "func_8013BAC4",
+  "size": 1840,
+  "guarded": false,
+  "source_hash": "19a460d1186f54974cb4926a107db4055c9be98c8147946c2205eed7e224f057",
+  "scope": "TACO:func_8013BAC4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013B990.c",
+  "func": "func_8013C1F4",
+  "size": 588,
+  "guarded": false,
+  "source_hash": "19a460d1186f54974cb4926a107db4055c9be98c8147946c2205eed7e224f057",
+  "scope": "TACO:func_8013C1F4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013B990.c",
+  "func": "func_8013C440",
+  "size": 660,
+  "guarded": false,
+  "source_hash": "19a460d1186f54974cb4926a107db4055c9be98c8147946c2205eed7e224f057",
+  "scope": "TACO:func_8013C440"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013B990.c",
+  "func": "func_8013C6D4",
+  "size": 1388,
+  "guarded": false,
+  "source_hash": "19a460d1186f54974cb4926a107db4055c9be98c8147946c2205eed7e224f057",
+  "scope": "TACO:func_8013C6D4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013B990.c",
+  "func": "func_8013CC40",
+  "size": 560,
+  "guarded": false,
+  "source_hash": "19a460d1186f54974cb4926a107db4055c9be98c8147946c2205eed7e224f057",
+  "scope": "TACO:func_8013CC40"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013B990.c",
+  "func": "func_8013CFD8",
+  "size": 516,
+  "guarded": false,
+  "source_hash": "19a460d1186f54974cb4926a107db4055c9be98c8147946c2205eed7e224f057",
+  "scope": "TACO:func_8013CFD8"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013D1E0.c",
+  "func": "func_8013D528",
+  "size": 784,
+  "guarded": false,
+  "source_hash": "0e9cb8a8f0c10640d84ebffdde8c6ba8f03e2ad08ea4321e428ff0a56679de4f",
+  "scope": "TACO:func_8013D528"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013D1E0.c",
+  "func": "func_8013D838",
+  "size": 832,
+  "guarded": false,
+  "source_hash": "0e9cb8a8f0c10640d84ebffdde8c6ba8f03e2ad08ea4321e428ff0a56679de4f",
+  "scope": "TACO:func_8013D838"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013DB80.c",
+  "func": "func_8013DB80",
+  "size": 612,
+  "guarded": false,
+  "source_hash": "5c5ef02deb15e905f1fd643eb5bb8fd6bf09b0b0dc83bcb6c733a2c5be508e02",
+  "scope": "TACO:func_8013DB80"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013DB80.c",
+  "func": "func_8013DEE4",
+  "size": 1336,
+  "guarded": false,
+  "source_hash": "5c5ef02deb15e905f1fd643eb5bb8fd6bf09b0b0dc83bcb6c733a2c5be508e02",
+  "scope": "TACO:func_8013DEE4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013DB80.c",
+  "func": "func_8013E424",
+  "size": 216,
+  "guarded": false,
+  "source_hash": "5c5ef02deb15e905f1fd643eb5bb8fd6bf09b0b0dc83bcb6c733a2c5be508e02",
+  "scope": "TACO:func_8013E424"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013DB80.c",
+  "func": "func_8013E778",
+  "size": 812,
+  "guarded": false,
+  "source_hash": "5c5ef02deb15e905f1fd643eb5bb8fd6bf09b0b0dc83bcb6c733a2c5be508e02",
+  "scope": "TACO:func_8013E778"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013DB80.c",
+  "func": "func_8013EAA4",
+  "size": 1948,
+  "guarded": false,
+  "source_hash": "5c5ef02deb15e905f1fd643eb5bb8fd6bf09b0b0dc83bcb6c733a2c5be508e02",
+  "scope": "TACO:func_8013EAA4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013F250.c",
+  "func": "func_8013F468",
+  "size": 880,
+  "guarded": false,
+  "source_hash": "1efb9069a5735cff49e9077290c89618718ce29e76ed44422672a951f1d6ecd8",
+  "scope": "TACO:func_8013F468"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013F250.c",
+  "func": "func_8013F9C0",
+  "size": 560,
+  "guarded": false,
+  "source_hash": "1efb9069a5735cff49e9077290c89618718ce29e76ed44422672a951f1d6ecd8",
+  "scope": "TACO:func_8013F9C0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013F250.c",
+  "func": "func_8013FBF0",
+  "size": 1040,
+  "guarded": false,
+  "source_hash": "1efb9069a5735cff49e9077290c89618718ce29e76ed44422672a951f1d6ecd8",
+  "scope": "TACO:func_8013FBF0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013F250.c",
+  "func": "func_80140028",
+  "size": 828,
+  "guarded": false,
+  "source_hash": "1efb9069a5735cff49e9077290c89618718ce29e76ed44422672a951f1d6ecd8",
+  "scope": "TACO:func_80140028"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013F250.c",
+  "func": "func_80140364",
+  "size": 408,
+  "guarded": false,
+  "source_hash": "1efb9069a5735cff49e9077290c89618718ce29e76ed44422672a951f1d6ecd8",
+  "scope": "TACO:func_80140364"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013F250.c",
+  "func": "func_801404FC",
+  "size": 316,
+  "guarded": false,
+  "source_hash": "1efb9069a5735cff49e9077290c89618718ce29e76ed44422672a951f1d6ecd8",
+  "scope": "TACO:func_801404FC"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013F250.c",
+  "func": "func_801407D4",
+  "size": 776,
+  "guarded": false,
+  "source_hash": "1efb9069a5735cff49e9077290c89618718ce29e76ed44422672a951f1d6ecd8",
+  "scope": "TACO:func_801407D4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8013F250.c",
+  "func": "func_80140ADC",
+  "size": 780,
+  "guarded": false,
+  "source_hash": "1efb9069a5735cff49e9077290c89618718ce29e76ed44422672a951f1d6ecd8",
+  "scope": "TACO:func_80140ADC"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80140DF0.c",
+  "func": "func_80141050",
+  "size": 288,
+  "guarded": false,
+  "source_hash": "ab42c1887590ab2136c429b554ca77c87703a3c6adc3cf5b94cfa6d534f056b1",
+  "scope": "TACO:func_80141050"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80140DF0.c",
+  "func": "func_80141170",
+  "size": 288,
+  "guarded": false,
+  "source_hash": "ab42c1887590ab2136c429b554ca77c87703a3c6adc3cf5b94cfa6d534f056b1",
+  "scope": "TACO:func_80141170"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80140DF0.c",
+  "func": "func_801413B8",
+  "size": 816,
+  "guarded": false,
+  "source_hash": "ab42c1887590ab2136c429b554ca77c87703a3c6adc3cf5b94cfa6d534f056b1",
+  "scope": "TACO:func_801413B8"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80140DF0.c",
+  "func": "func_801416E8",
+  "size": 1072,
+  "guarded": false,
+  "source_hash": "ab42c1887590ab2136c429b554ca77c87703a3c6adc3cf5b94cfa6d534f056b1",
+  "scope": "TACO:func_801416E8"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80140DF0.c",
+  "func": "func_80141B18",
+  "size": 708,
+  "guarded": false,
+  "source_hash": "ab42c1887590ab2136c429b554ca77c87703a3c6adc3cf5b94cfa6d534f056b1",
+  "scope": "TACO:func_80141B18"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80141DE0.c",
+  "func": "func_80141DE0",
+  "size": 764,
+  "guarded": false,
+  "source_hash": "d9ed89fe7c196fc8f5a0e0310bb68f2f5edd5e04a03e21ede160fc36f01f3c72",
+  "scope": "TACO:func_80141DE0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80141DE0.c",
+  "func": "func_80142220",
+  "size": 400,
+  "guarded": false,
+  "source_hash": "d9ed89fe7c196fc8f5a0e0310bb68f2f5edd5e04a03e21ede160fc36f01f3c72",
+  "scope": "TACO:func_80142220"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80141DE0.c",
+  "func": "func_801424A8",
+  "size": 880,
+  "guarded": false,
+  "source_hash": "d9ed89fe7c196fc8f5a0e0310bb68f2f5edd5e04a03e21ede160fc36f01f3c72",
+  "scope": "TACO:func_801424A8"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80142820.c",
+  "func": "func_801428DC",
+  "size": 532,
+  "guarded": false,
+  "source_hash": "8640a3bca22345bf48677d3695566a1b0fe23f623dfe5be971e35add6f18af57",
+  "scope": "TACO:func_801428DC"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80142820.c",
+  "func": "func_80142AF0",
+  "size": 752,
+  "guarded": false,
+  "source_hash": "8640a3bca22345bf48677d3695566a1b0fe23f623dfe5be971e35add6f18af57",
+  "scope": "TACO:func_80142AF0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/801430B0.c",
+  "func": "func_801430D0",
+  "size": 544,
+  "guarded": false,
+  "source_hash": "533b5dbd7c91817cce50e95d1edb499b5531ca71e1ac4ad6f6fce565a5cf1211",
+  "scope": "TACO:func_801430D0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/801430B0.c",
+  "func": "func_801432F0",
+  "size": 644,
+  "guarded": false,
+  "source_hash": "533b5dbd7c91817cce50e95d1edb499b5531ca71e1ac4ad6f6fce565a5cf1211",
+  "scope": "TACO:func_801432F0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/801430B0.c",
+  "func": "func_80143B58",
+  "size": 804,
+  "guarded": false,
+  "source_hash": "533b5dbd7c91817cce50e95d1edb499b5531ca71e1ac4ad6f6fce565a5cf1211",
+  "scope": "TACO:func_80143B58"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80143E80.c",
+  "func": "func_80144094",
+  "size": 924,
+  "guarded": false,
+  "source_hash": "a1053d26ecdcf7fc494539ba97be9cb762fd9402fb942b425b527bddab76a5b6",
+  "scope": "TACO:func_80144094"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80143E80.c",
+  "func": "func_80144430",
+  "size": 672,
+  "guarded": false,
+  "source_hash": "a1053d26ecdcf7fc494539ba97be9cb762fd9402fb942b425b527bddab76a5b6",
+  "scope": "TACO:func_80144430"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/801447D0.c",
+  "func": "func_801449D8",
+  "size": 744,
+  "guarded": false,
+  "source_hash": "14ba129998bc3d6b8f92dccdc9afe84bf190d0afb9a23a8a834b34bd6661d728",
+  "scope": "TACO:func_801449D8"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/801447D0.c",
+  "func": "func_80144E3C",
+  "size": 1888,
+  "guarded": false,
+  "source_hash": "14ba129998bc3d6b8f92dccdc9afe84bf190d0afb9a23a8a834b34bd6661d728",
+  "scope": "TACO:func_80144E3C"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/801447D0.c",
+  "func": "func_80145650",
+  "size": 1908,
+  "guarded": false,
+  "source_hash": "14ba129998bc3d6b8f92dccdc9afe84bf190d0afb9a23a8a834b34bd6661d728",
+  "scope": "TACO:func_80145650"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/801447D0.c",
+  "func": "func_80145DC4",
+  "size": 936,
+  "guarded": false,
+  "source_hash": "14ba129998bc3d6b8f92dccdc9afe84bf190d0afb9a23a8a834b34bd6661d728",
+  "scope": "TACO:func_80145DC4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/801447D0.c",
+  "func": "func_8014616C",
+  "size": 1512,
+  "guarded": false,
+  "source_hash": "14ba129998bc3d6b8f92dccdc9afe84bf190d0afb9a23a8a834b34bd6661d728",
+  "scope": "TACO:func_8014616C"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/801447D0.c",
+  "func": "func_80146754",
+  "size": 1540,
+  "guarded": false,
+  "source_hash": "14ba129998bc3d6b8f92dccdc9afe84bf190d0afb9a23a8a834b34bd6661d728",
+  "scope": "TACO:func_80146754"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80146D60.c",
+  "func": "func_80146F74",
+  "size": 604,
+  "guarded": false,
+  "source_hash": "b4640eaa24b162a84d5957d33b217d056d13d5ae9e2e0df1231ae73f1155cdd0",
+  "scope": "TACO:func_80146F74"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80146D60.c",
+  "func": "func_801471D0",
+  "size": 260,
+  "guarded": true,
+  "source_hash": "b4640eaa24b162a84d5957d33b217d056d13d5ae9e2e0df1231ae73f1155cdd0",
+  "scope": "TACO:func_801471D0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80146D60.c",
+  "func": "func_801472D4",
+  "size": 300,
+  "guarded": true,
+  "source_hash": "b4640eaa24b162a84d5957d33b217d056d13d5ae9e2e0df1231ae73f1155cdd0",
+  "scope": "TACO:func_801472D4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80146D60.c",
+  "func": "func_80147488",
+  "size": 492,
+  "guarded": false,
+  "source_hash": "b4640eaa24b162a84d5957d33b217d056d13d5ae9e2e0df1231ae73f1155cdd0",
+  "scope": "TACO:func_80147488"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80146D60.c",
+  "func": "func_80147674",
+  "size": 644,
+  "guarded": false,
+  "source_hash": "b4640eaa24b162a84d5957d33b217d056d13d5ae9e2e0df1231ae73f1155cdd0",
+  "scope": "TACO:func_80147674"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80146D60.c",
+  "func": "func_80147928",
+  "size": 508,
+  "guarded": false,
+  "source_hash": "b4640eaa24b162a84d5957d33b217d056d13d5ae9e2e0df1231ae73f1155cdd0",
+  "scope": "TACO:func_80147928"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80146D60.c",
+  "func": "func_80147B24",
+  "size": 372,
+  "guarded": false,
+  "source_hash": "b4640eaa24b162a84d5957d33b217d056d13d5ae9e2e0df1231ae73f1155cdd0",
+  "scope": "TACO:func_80147B24"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80146D60.c",
+  "func": "func_80147C98",
+  "size": 488,
+  "guarded": false,
+  "source_hash": "b4640eaa24b162a84d5957d33b217d056d13d5ae9e2e0df1231ae73f1155cdd0",
+  "scope": "TACO:func_80147C98"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/801480B0.c",
+  "func": "func_80148184",
+  "size": 388,
+  "guarded": false,
+  "source_hash": "58f068bd2afdee3306d7bc7f3d76d386fe56e06c4c38ca6f166b3d7744888cb2",
+  "scope": "TACO:func_80148184"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/801480B0.c",
+  "func": "func_801484E4",
+  "size": 392,
+  "guarded": false,
+  "source_hash": "58f068bd2afdee3306d7bc7f3d76d386fe56e06c4c38ca6f166b3d7744888cb2",
+  "scope": "TACO:func_801484E4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/801480B0.c",
+  "func": "func_801487A4",
+  "size": 948,
+  "guarded": false,
+  "source_hash": "58f068bd2afdee3306d7bc7f3d76d386fe56e06c4c38ca6f166b3d7744888cb2",
+  "scope": "TACO:func_801487A4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80148FE0.c",
+  "func": "func_80149538",
+  "size": 692,
+  "guarded": false,
+  "source_hash": "3c145ff38a9b2866dc22ef56f8adf0e7c47cc61d04434b4933ecdd7abcce2df9",
+  "scope": "TACO:func_80149538"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80148FE0.c",
+  "func": "func_801497EC",
+  "size": 912,
+  "guarded": false,
+  "source_hash": "3c145ff38a9b2866dc22ef56f8adf0e7c47cc61d04434b4933ecdd7abcce2df9",
+  "scope": "TACO:func_801497EC"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80149F90.c",
+  "func": "func_8014A480",
+  "size": 796,
+  "guarded": false,
+  "source_hash": "b4d9e8229416fdd148e731b63cc05bc944eedd830be92e74fe29124e382beb6c",
+  "scope": "TACO:func_8014A480"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80149F90.c",
+  "func": "func_8014AB50",
+  "size": 1876,
+  "guarded": false,
+  "source_hash": "b4d9e8229416fdd148e731b63cc05bc944eedd830be92e74fe29124e382beb6c",
+  "scope": "TACO:func_8014AB50"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80149F90.c",
+  "func": "func_8014B8B4",
+  "size": 972,
+  "guarded": false,
+  "source_hash": "b4d9e8229416fdd148e731b63cc05bc944eedd830be92e74fe29124e382beb6c",
+  "scope": "TACO:func_8014B8B4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80149F90.c",
+  "func": "func_8014CB24",
+  "size": 1756,
+  "guarded": false,
+  "source_hash": "b4d9e8229416fdd148e731b63cc05bc944eedd830be92e74fe29124e382beb6c",
+  "scope": "TACO:func_8014CB24"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80149F90.c",
+  "func": "func_8014E5F8",
+  "size": 1108,
+  "guarded": false,
+  "source_hash": "b4d9e8229416fdd148e731b63cc05bc944eedd830be92e74fe29124e382beb6c",
+  "scope": "TACO:func_8014E5F8"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80149F90.c",
+  "func": "func_8014F5F0",
+  "size": 560,
+  "guarded": false,
+  "source_hash": "b4d9e8229416fdd148e731b63cc05bc944eedd830be92e74fe29124e382beb6c",
+  "scope": "TACO:func_8014F5F0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80149F90.c",
+  "func": "func_8014F820",
+  "size": 400,
+  "guarded": false,
+  "source_hash": "b4d9e8229416fdd148e731b63cc05bc944eedd830be92e74fe29124e382beb6c",
+  "scope": "TACO:func_8014F820"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80149F90.c",
+  "func": "func_8014FFDC",
+  "size": 2292,
+  "guarded": false,
+  "source_hash": "b4d9e8229416fdd148e731b63cc05bc944eedd830be92e74fe29124e382beb6c",
+  "scope": "TACO:func_8014FFDC"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80149F90.c",
+  "func": "func_801511C0",
+  "size": 164,
+  "guarded": true,
+  "source_hash": "b4d9e8229416fdd148e731b63cc05bc944eedd830be92e74fe29124e382beb6c",
+  "scope": "TACO:func_801511C0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80151C30.c",
+  "func": "func_80151D1C",
+  "size": 632,
+  "guarded": false,
+  "source_hash": "8f176f8bf58ecc0d106bcfe5efaf5e2f9a0426697d27218a0d0c2055e74c6818",
+  "scope": "TACO:func_80151D1C"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80151C30.c",
+  "func": "func_801521EC",
+  "size": 196,
+  "guarded": false,
+  "source_hash": "8f176f8bf58ecc0d106bcfe5efaf5e2f9a0426697d27218a0d0c2055e74c6818",
+  "scope": "TACO:func_801521EC"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80151C30.c",
+  "func": "func_801523D0",
+  "size": 668,
+  "guarded": false,
+  "source_hash": "8f176f8bf58ecc0d106bcfe5efaf5e2f9a0426697d27218a0d0c2055e74c6818",
+  "scope": "TACO:func_801523D0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80151C30.c",
+  "func": "func_80152808",
+  "size": 316,
+  "guarded": false,
+  "source_hash": "8f176f8bf58ecc0d106bcfe5efaf5e2f9a0426697d27218a0d0c2055e74c6818",
+  "scope": "TACO:func_80152808"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80151C30.c",
+  "func": "func_80152944",
+  "size": 796,
+  "guarded": false,
+  "source_hash": "8f176f8bf58ecc0d106bcfe5efaf5e2f9a0426697d27218a0d0c2055e74c6818",
+  "scope": "TACO:func_80152944"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80151C30.c",
+  "func": "func_80152DB4",
+  "size": 692,
+  "guarded": false,
+  "source_hash": "8f176f8bf58ecc0d106bcfe5efaf5e2f9a0426697d27218a0d0c2055e74c6818",
+  "scope": "TACO:func_80152DB4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80153AA0.c",
+  "func": "func_80153B38",
+  "size": 832,
+  "guarded": false,
+  "source_hash": "da2495c8366d09aea4ec0073ed07117bcc925e8ec1643db50cd6f5f6e00f1da2",
+  "scope": "TACO:func_80153B38"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80154230.c",
+  "func": "func_80154230",
+  "size": 236,
+  "guarded": true,
+  "source_hash": "6fb86210de1df642b27adf1754e915a51664db9eca79f7112c8bde5a3715c074",
+  "scope": "TACO:func_80154230"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80154230.c",
+  "func": "func_8015443C",
+  "size": 704,
+  "guarded": false,
+  "source_hash": "6fb86210de1df642b27adf1754e915a51664db9eca79f7112c8bde5a3715c074",
+  "scope": "TACO:func_8015443C"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80154230.c",
+  "func": "func_801546FC",
+  "size": 292,
+  "guarded": true,
+  "source_hash": "6fb86210de1df642b27adf1754e915a51664db9eca79f7112c8bde5a3715c074",
+  "scope": "TACO:func_801546FC"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80154230.c",
+  "func": "func_80154820",
+  "size": 312,
+  "guarded": false,
+  "source_hash": "6fb86210de1df642b27adf1754e915a51664db9eca79f7112c8bde5a3715c074",
+  "scope": "TACO:func_80154820"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80154960.c",
+  "func": "func_80154960",
+  "size": 1556,
+  "guarded": false,
+  "source_hash": "813c3cee528df62127c902e6faf0436945d0423cc3d47356fde4673984780eb8",
+  "scope": "TACO:func_80154960"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80154960.c",
+  "func": "func_801553AC",
+  "size": 1084,
+  "guarded": false,
+  "source_hash": "813c3cee528df62127c902e6faf0436945d0423cc3d47356fde4673984780eb8",
+  "scope": "TACO:func_801553AC"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80154960.c",
+  "func": "func_801557E8",
+  "size": 372,
+  "guarded": false,
+  "source_hash": "813c3cee528df62127c902e6faf0436945d0423cc3d47356fde4673984780eb8",
+  "scope": "TACO:func_801557E8"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80154960.c",
+  "func": "func_801563E4",
+  "size": 1344,
+  "guarded": false,
+  "source_hash": "813c3cee528df62127c902e6faf0436945d0423cc3d47356fde4673984780eb8",
+  "scope": "TACO:func_801563E4"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80156A80.c",
+  "func": "func_801585D0",
+  "size": 992,
+  "guarded": false,
+  "source_hash": "c75f76466b2678c81c94bed7e617bd2561693b8a307cd8cbea6d6729e49cc231",
+  "scope": "TACO:func_801585D0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80159090.c",
+  "func": "func_80159260",
+  "size": 1048,
+  "guarded": false,
+  "source_hash": "203b418b4b819247718e8711bd90a04018f74e6d8ff58ab9df9ed114cc6b02b5",
+  "scope": "TACO:func_80159260"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/80159090.c",
+  "func": "func_80159878",
+  "size": 1768,
+  "guarded": false,
+  "source_hash": "203b418b4b819247718e8711bd90a04018f74e6d8ff58ab9df9ed114cc6b02b5",
+  "scope": "TACO:func_80159878"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8015A900.c",
+  "func": "func_8015A948",
+  "size": 464,
+  "guarded": false,
+  "source_hash": "00f1e75159b0ddab63e1a0b6993ec2605c9ed64cb3e1862a3cd54bc08905277b",
+  "scope": "TACO:func_8015A948"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8015ABF0.c",
+  "func": "func_8015ACCC",
+  "size": 1260,
+  "guarded": false,
+  "source_hash": "0a9636f64c77be88e5dbe7f761de9113e6c3baa374470728dd2e6e4e9bd85574",
+  "scope": "TACO:func_8015ACCC"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8015ABF0.c",
+  "func": "func_8015B1B8",
+  "size": 244,
+  "guarded": true,
+  "source_hash": "0a9636f64c77be88e5dbe7f761de9113e6c3baa374470728dd2e6e4e9bd85574",
+  "scope": "TACO:func_8015B1B8"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8015ABF0.c",
+  "func": "func_8015BD30",
+  "size": 576,
+  "guarded": false,
+  "source_hash": "0a9636f64c77be88e5dbe7f761de9113e6c3baa374470728dd2e6e4e9bd85574",
+  "scope": "TACO:func_8015BD30"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8015ABF0.c",
+  "func": "func_8015BF70",
+  "size": 304,
+  "guarded": true,
+  "source_hash": "0a9636f64c77be88e5dbe7f761de9113e6c3baa374470728dd2e6e4e9bd85574",
+  "scope": "TACO:func_8015BF70"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8015ABF0.c",
+  "func": "func_8015C0A0",
+  "size": 360,
+  "guarded": true,
+  "source_hash": "0a9636f64c77be88e5dbe7f761de9113e6c3baa374470728dd2e6e4e9bd85574",
+  "scope": "TACO:func_8015C0A0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8015ABF0.c",
+  "func": "func_8015CE64",
+  "size": 200,
+  "guarded": false,
+  "source_hash": "0a9636f64c77be88e5dbe7f761de9113e6c3baa374470728dd2e6e4e9bd85574",
+  "scope": "TACO:func_8015CE64"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8015CF30.c",
+  "func": "func_8015CF30",
+  "size": 408,
+  "guarded": false,
+  "source_hash": "9ec2dff0c6de3c6342f91c0aa4575e186738575f72c04032cb9743a5c2af30e5",
+  "scope": "TACO:func_8015CF30"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8015D0D0.c",
+  "func": "func_8015D0D0",
+  "size": 408,
+  "guarded": false,
+  "source_hash": "7c591032c9da84117aef24ef62ef9e24533a3a93fd9f19c866181c81ea24f10d",
+  "scope": "TACO:func_8015D0D0"
+ },
+ {
+  "unit": "TACO",
+  "src": "src/ovl/TACO/8015D270.c",
+  "func": "func_8015D270",
+  "size": 408,
+  "guarded": false,
+  "source_hash": "c73084e900fb3aa93c166dfb2f1cf3eee0c4867fe993b325692434209731e378",
+  "scope": "TACO:func_8015D270"
+ }
+]

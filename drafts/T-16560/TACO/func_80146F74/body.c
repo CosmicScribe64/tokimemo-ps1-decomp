@@ -1,0 +1,33 @@
+void func_80146F74(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
+    s32 sp54;
+    s32 sp50;
+    s32 sp4C;
+    MATRIX sp38;
+    TcObj50 *sp30;
+    TcPos *sp2C;
+    TcObj50 *temp_v1;
+    TcPos *temp_v0;
+    s32 temp_t5;
+
+    sp38 = *(MATRIX *)D_80125C60;
+    temp_v1 = &D_80127480[arg0];
+    temp_t5 = temp_v1->unk18 + arg1;
+    sp4C = temp_t5;
+    sp50 = temp_v1->unk1C + arg2;
+    sp54 = temp_v1->unk20 + arg3;
+    if ((arg7 != 0) && (arg8 != 0)) {
+        sp4C = temp_t5 + ((s32) (D_8015EDB4->unk74 - temp_t5) / arg7);
+        sp50 += (s32) (D_8015EDB4->unk76 - sp50) / arg8;
+    }
+    temp_v0 = &D_80128880[arg0];
+    temp_v0->x += arg4;
+    sp2C = temp_v0;
+    sp30 = temp_v1;
+    func_8015D0D0((s32) (temp_v0->x << 0xC) / 360, (s32) &sp38);
+    sp2C->z += arg6;
+    func_8015CF30((s32) (sp2C->z << 0xC) / 360, (s32) &sp38);
+    sp2C->y += arg5;
+    func_8015D270((s32) (sp2C->y << 0xC) / 360, (s32) &sp38);
+    *(MATRIX *)sp30->unk4 = sp38;
+    sp30->unk0 = 0;
+}

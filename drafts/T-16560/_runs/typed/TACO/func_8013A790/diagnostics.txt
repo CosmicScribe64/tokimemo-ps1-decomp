@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_8013AD64 4
+python3 failed:
+ ---------------------^
+cfe: Warning 709: drafts/T-16560/_runs/typed/TACO/func_8013A790/work/guarded.c, line 3703: Incompatible pointer type assignment
+                 var_v0_8 = D_8015F4EC + var_s0_3;
+ -------------------------^
+cfe: Warning 709: drafts/T-16560/_runs/typed/TACO/func_8013A790/work/guarded.c, line 3708: Incompatible pointer type assignment
+             var_v0_8 = D_8015F4EC + var_s0_3;
+ ---------------------^
+cfe: Warning 709: drafts/T-16560/_runs/typed/TACO/func_8013A790/work/guarded.c, line 3712: Incompatible pointer type assignment
+                 var_v0_8 = D_8015F4EC + var_s0_3;
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16560/_runs/typed/TACO/func_8013A790/work -o drafts/T-16560/_runs/typed/TACO/func_8013A790/work/guarded.o /tmp/asm_processordlivy2hy/preprocessed_bf55a9e264684195b489c60f05f49447.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib8v9fwfg6/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16560/_runs/typed/TACO/func_8013A790/work/guarded.o drafts/T-16560/_runs/typed/TACO/func_8013A790/work/guarded.c
