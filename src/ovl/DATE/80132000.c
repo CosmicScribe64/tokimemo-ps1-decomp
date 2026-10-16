@@ -289,8 +289,6 @@ void func_801324A8(void) {
     D_8015B650 = 0x801B0170;
 }
 
-/* NON_MATCHING: T-17202, 1 differing line; the original adds the two products in the other operand order (`P + a*six` fixes it but schedules andi before the lui of date_arrival) */
-#ifdef NON_MATCHING
 void func_801324DC(void) {
     u8 t;
     u8 six;
@@ -304,7 +302,9 @@ void func_801324DC(void) {
     }
     D_800CA14C = 0;
     t = func_80051A68(D_800E6280.unk_F5F) & 0x7F;
-    D_8015BF04 = date_arrival * six + ((t >= 2) + (t >= 3)) * ((date_arrival == 0) + 1) - (date_arrival == 2) * 3;
+    /* FAKE: T-17202, `date_arrival * 0` mentions the promoted global before `t`, so its load
+     * (lui a0) is scheduled before the andi of the call result; the sum keeps the original order */
+    D_8015BF04 = date_arrival * 0 + ((t >= 2) + (t >= 3)) * ((date_arrival == 0) + 1) + date_arrival * six - (date_arrival == 2) * 3;
     D_8015BF08 = 0;
     *(s16 *)&D_800CA15C = 0;
     D_8015BF18 = 0;
@@ -331,9 +331,6 @@ void func_801324DC(void) {
     D_8015B67C = 0;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801324DC);
-#endif
 
 void date_event_trigger(s16 arg0, s16 arg1, u8 arg2) {
     D_80122CD0 = arg0;
