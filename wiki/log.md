@@ -16283,3 +16283,7 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17107 closer pass on func_8013E54C
 
 [[tickets/T-17107-w3-rpg-bat-p07]] stays In Review. RPG_BAT `func_8013E54C` is still guarded at 16 lines (`src/ovl/RPG_BAT/8013E4D0.c`, comment updated). ugen emits the strength-reduction init `la start` before the hoisted `la limit`; swapping only those two binasm records reproduces the original's case 3, so the gap is uopt's preheader order. About 60 source shapes and a 120-second autotweak kept the order. No matched two-`la` loop in the tree (190) has the limit first. Notes in [[matching-notes]], [[data/t0018-cases]] and [[register-cheatsheet]]; scripts in `drafts/T-17107/binasm-order/`.
+
+## [2026-10-16] ticket | T-17107 Done
+
+[[tickets/T-17107-w3-rpg-bat-p07]] reviewed against `CODING_STANDARDS.md`: one finding (the `FAKE` note of `RPG_GAUGE` in `include/ovl/RPG_BAT.h` now starts its own comment), fixed. In Review to Done (kanban card moved). Matched 2 of 4 (`func_8013BBF8`, `func_8013EA60`); `func_8013B5B0` and `func_8013E54C` stay guarded.
