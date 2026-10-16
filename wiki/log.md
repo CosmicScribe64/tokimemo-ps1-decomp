@@ -16132,3 +16132,7 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 ## [2026-10-16] ticket | T-17206 In Review
 
 [[tickets/T-17206-w3-date-p06]] In Progress to In Review: wave 3 package w3-date-p06 (DATE `src/ovl/DATE/8014B1F0.c`, `src/ovl/DATE/80156600.c`, `include/main_api.h`), 2 of 2 functions matched (1,136 bytes: `func_80157698`, `func_8014C20C`), about 50 minutes of agent time. `D_800CA154` is `u16` in `main_api.h` (no override); three FAKE locals (`one`, `seven`, `cur`). Findings (callee arity, constant webs, the two-variable `& 0x7F` shape) in [[matching-notes]] (section T-17206) and four rows in [[register-cheatsheet]]. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-16] ticket | T-17206 Done
+
+[[tickets/T-17206-w3-date-p06]] In Review to Done after the code review: wave 3 package w3-date-p06 (DATE `src/ovl/DATE/8014B1F0.c`, `src/ovl/DATE/80156600.c`, `include/main_api.h`), 2 of 2 functions matched (1,136 bytes: `func_80157698`, `func_8014C20C`, three ticketed FAKE locals). One finding fixed: the redundant `(u16)` casts on `D_800CA154` in `func_80157698` removed (the unit still matches). Headers, globals and proto checks OK.
