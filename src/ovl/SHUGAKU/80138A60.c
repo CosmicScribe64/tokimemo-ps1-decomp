@@ -135,7 +135,7 @@ void func_80139054(void) {
         break;
     }
     if (D_800CA2EC == 0) {
-        n = D_800CA2CC;
+        n = D_800CA2CC; /* reload into the switch variable: its reuse gives the original's a1 selector (T-18000) */
         func_80085B3C(3, n);
     }
     func_8004284C();

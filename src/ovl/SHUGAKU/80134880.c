@@ -76,7 +76,7 @@ void func_80134B64(void) {
 }
 
 void func_80134B94(void) {
-    u8 index;
+    u8 index; /* declared above table and reread after the call: same callback idiom as EVENT func_800FA6A0 (T-18000) */
     ShFnTbl41 table;
 
     table = D_8013C228;
