@@ -15129,3 +15129,11 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16552 started
 
 [[tickets/T-16552-pt-taiiku-p2]] created and In Progress: pilot stage B, package pt-taiiku-p2 (`src/ovl/TAIIKU/80138950.c`, 9 functions) from the [[tickets/T-16550-taiiku-types-first]] redrafts, worktree `tokimemo-wt/pt-taiiku-p2`.
+
+## [2026-10-16] build | T-16552 TAIIKU 80138950.c results
+
+[[tickets/T-16552-pt-taiiku-p2]]: matched `func_80139FE4` (816 bytes; FAKE dead assignments `m = rec[96 + i].unk_26; cnt = D_800E6280.unk_F80;` renumber the uopt ranges of a leaf function). `func_80138DF8` 30 to 3 differing lines (local `idx` for `A[f()] = v` removes a phantom spill slot; `u32` address parameter of `cd_read_sectors` via a file-local override in `src/ovl/TAIIKU/80138950.c`, guard in `include/main_api.h`); `func_80138AA8` keeps 22 lines without its FAKE pads. Counter family and `func_80139AB0` stay `INCLUDE_ASM`; rows in [[data/t0018-cases]], findings in [[matching-notes]] (T-16552), [[taiiku-family-results]] and [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-16552 to In Review
+
+[[tickets/T-16552-pt-taiiku-p2]] In Progress to In Review: 1 function matched (816 bytes), 2 guarded drafts improved. Clean rebuild, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` run before this entry.
