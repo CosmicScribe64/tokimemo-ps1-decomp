@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game.h"
 #include "ovl/ENDING.h"
 
 typedef struct {

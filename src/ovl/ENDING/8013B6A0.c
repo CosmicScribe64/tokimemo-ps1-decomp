@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game.h"
 #include "ovl/ENDING.h"
 
 void func_8013B6A0(void) {
