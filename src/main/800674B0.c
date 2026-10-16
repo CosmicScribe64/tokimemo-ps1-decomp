@@ -1079,9 +1079,8 @@ void func_8006B900(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BA40);
 
-/* NON_MATCHING: T-11690, 17 differing lines; the original loads D_800B6708 once into $v0 in the dispatch block
- * (arg0 reloaded into $v1), IDO loads it at the top of each arm; a local copy (s32, s16, u16, s8) is sunk the same way. */
-#ifdef NON_MATCHING
+/* FAKE: the empty `if ((s32)D_800B6708) {}` gives the byte a use in the dispatch block, so uopt promotes it and loads it
+ * once into $v0 before the arg0 tests; without it each arm loads it. The test emits no code. T-17002 */
 void func_8006BC28(s32 arg0) {
     s16 sp2E;
     s16 sp2C;
@@ -1100,6 +1099,8 @@ void func_8006BC28(s32 arg0) {
     D_8011ECD0[0].unk_04 = 8;
     D_8011ECD0[0].unk_05 = 1;
     D_8011ECD0[0].unk_16 = 0;
+    if ((s32)D_800B6708) {
+    }
     switch (arg0) {
     case 0:
     default:
@@ -1116,9 +1117,6 @@ void func_8006BC28(s32 arg0) {
     D_8011ECD0[0].unk_26 = sp2E;
     D_8011ECD0[0].unk_2A = sp2C;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BC28);
-#endif
 
 void func_8006BD6C(s32 arg0) {
     if (arg0 == 1) {
