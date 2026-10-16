@@ -237,7 +237,69 @@ void func_801436BC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_801437F0);
+/* No prototype: func_801441BC calls it with two arguments the body never reads (declared parameters would be homed to the stack). */
+void func_801437F0() {
+    u8 *p;
+    u8 *q;
+    u8 *r;
+    s32 i;
+    s32 x;
+
+    p = D_80158A74;
+    switch (*(u16 *)(p + 6)) {
+    case 0:
+        func_80133AD0(0x60E);
+        p[0] = 1;
+        *(s32 *)(p + 0x20) = 0;
+        *(s32 *)(p + 0x24) = 0xF80000;
+        *(s32 *)(p + 0x28) = 0;
+        *(s32 *)(p + 0x2C) = 0xFFFE0000;
+        *(s16 *)(p + 0x14) = 0;
+        *(s16 *)(p + 0x16) = 0xF8;
+        *(u8 **)(p + 0x38) = D_80151A50;
+        p[0x3C] = 0;
+        p[0x3D] = 0;
+        p[0x3E] = 0;
+        p[0x40] = 0x60;
+        p[0x48] = 0;
+        *(u16 *)(p + 0x50) |= 2;
+        p[0x52] = 1;
+        p[0x56] = 1;
+        *(u16 *)(p + 6) = 0x40;
+        q = D_80158A7C;
+        /* the counter i (reused by the next loop) is LFTR'd into x, giving the original slti 15 test */
+        for (i = 0; i < 2; i++) {
+            x = i * 5 + 5;
+            q[0x3E] = x;
+            q += 0x60;
+            q[-0x60] = 1;
+            *(s16 *)(q - 0x5E) = 0;
+            *(s16 *)(q - 0x5C) = 0;
+            q[-0x54] = 0;
+            /* FAKE: chained zero stores (u16 view); their reloads keep dead ranges in v1/a0 (no code), so x, 1, D_80151A50, 0x60 and 2 land in a1, a2, a3, t0, t1 as in the original. T-11850 */
+            *(u16 *)(q - 0x5A) = *(u16 *)(q - 0x58) = *(u16 *)(q - 0x56) = 0;
+            q[-0x53] = q[-0x52] = q[-0x51] = 0;
+            *(s16 *)(q - 0x50) = 2;
+            *(u8 **)(q - 0x28) = D_80151A50;
+            q[-0x24] = 0;
+            q[-0x23] = 0;
+            q[-0x20] = 0x60;
+        }
+        r = D_80158A78;
+        for (i = 0; i != 3; i++, r += 0xA4) {
+            func_80147FD0(r);
+        }
+        break;
+    case 0x40:
+        if (*(s32 *)(D_80158A74 + 0x24) < 0xC00000) {
+            *(s32 *)(p + 0x24) = 0xC00000;
+            p[0x56] = 0;
+            *(u16 *)(p + 6) = 0;
+            p[0xD] = 1;
+        }
+        break;
+    }
+}
 
 void func_80143970(void) {
 }
