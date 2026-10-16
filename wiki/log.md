@@ -16406,3 +16406,9 @@ Clean rebuild of the w3-rpg-bat-p06 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.
 
 ## [2026-10-16] ticket | T-17115 In Progress
 Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG_BAT/801498C0.c`, `src/ovl/RPG_BAT/801321D0.c`, four functions) and moved it to In Progress. Card on [[kanban]], line in [[index]]. Worktree `tokimemo-wt/w3-rpg-bat-p15`, started 21:00 UTC.
+
+## [2026-10-16] build | T-17115 matches
+[[tickets/T-17115-w3-rpg-bat-p15]]: `func_801328C4` matched (declare `s32 i` before the `RpgDirTable` local; prototype in `RPG_BAT.h`) and `func_8014A3DC` matched (`s32` return type, as1 no longer hoists the second `lui`). `func_80132B34` and `func_80149C5C` restored to `INCLUDE_ASM` after the time box; rows in [[data/t0018-cases]], findings in [[matching-notes]] (section T-17115), two new rows in [[register-cheatsheet]], draft `drafts/T-17115/RPG_BAT/func_80149C5C/body.c`.
+
+## [2026-10-16] ticket | T-17115 In Review
+[[tickets/T-17115-w3-rpg-bat-p15]] In Progress to In Review (2 of 4 matched, 1,136 bytes). Card moved to In Review.
