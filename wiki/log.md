@@ -16121,3 +16121,7 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 ## [2026-10-16] build | T-17205 final checks
 
 [[tickets/T-17205-w3-date-p05]]: clean rebuild 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` pass on branch `w3-date-p05`; 4 of 5 functions matched, `src/ovl/DATE/80149310.c` keeps `func_80149F48` guarded at 11 lines.
+
+## [2026-10-16] build | T-17205 closer pass: func_80149F48 matched
+
+[[tickets/T-17205-w3-date-p05]]: DATE `func_80149F48` matched in plain C in `src/ovl/DATE/80149310.c` (`(s16)(D_8015D084 * 3) + D_8015D090`, placed before the second group of copies), so the package is 5 of 5. Clean rebuild 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check`, `tools/sync_protos.py --check-branch` pass. Notes in [[matching-notes]], [[register-cheatsheet]], [[data/t0018-cases]], [[date-family-results]]. Ticket stays In Review.
