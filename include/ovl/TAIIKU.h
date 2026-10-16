@@ -825,6 +825,8 @@ typedef struct TaiWords8 {
 typedef struct TaiWords10 {
     /* 0x00 */ s32 v[10];
 } TaiWords10; /* size 0x28 */
+/* Three runner indices walked by func_80132970 (the fourth byte is padding). */
+extern u8 D_80148EC0[4];
 extern TaiShorts23 D_80148F28; /* func_80132BD0 */
 extern TaiShorts23 D_80148F58; /* func_80132BD0 */
 extern TaiShorts23 D_80148F88; /* func_80132BD0 */
