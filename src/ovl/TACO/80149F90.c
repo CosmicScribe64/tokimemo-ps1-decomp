@@ -929,9 +929,8 @@ void func_8014E4A4(void) {
     }
 }
 
-/* NON_MATCHING: T-19003, 16 differing lines; as1 hoists the constants in the other order: original li v1,0x800 (delay slot) then li v0,0x40 after the first load, IDO the reverse (T-0018, as func_8014B8B4) */
-#ifdef NON_MATCHING
-void func_8014E5F8(s32 arg0) {
+/* s32 with no return (implicit int in the original): v0 is live at the exit, so as1 cannot put li v0,0x40 or li v0,0x80 in the branch delay slots and the constants stay after the first load, as in the original. T-19003 */
+s32 func_8014E5F8(s32 arg0) {
     if (arg0 < 0x13) {
         func_80146F74(0, 0, 0, -0x190, 0, 0, 0, 0x32, 0x32);
     }
@@ -1020,9 +1019,6 @@ void func_8014E5F8(s32 arg0) {
         D_8015EDB4[18].unk0[1] = 0x80;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014E5F8);
-#endif
 
 void func_8014EA4C(void) {
     if (D_8015EDB4[16].unk3 >= 3U) {
