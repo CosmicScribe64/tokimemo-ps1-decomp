@@ -548,4 +548,10 @@ void func_80149144(void) {
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80148ED0", func_8014A0E0);
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80148ED0", func_8014A5EC);
+s32 func_8014A5EC(void) {
+    s32 pad; /* FAKE: T-18500, an unused word above the table puts it at sp+0x28 as in the original */
+    BunkakenNames3x3 names;
+
+    names = D_8015633C;
+    func_800AE0F0(D_800CA25C, names.text[D_800E6280.unk_03E - 0x5F][D_80122CDC]);
+}
