@@ -54,8 +54,6 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801461B0", func_801462B0);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801461B0", func_8014718C);
 
-/* NON_MATCHING: T-12100, four fade addiu/andi register rows remain. */
-#ifdef NON_MATCHING
 /* FAKE: s32 with normal bare returns preserves the original v0 liveness;
  * only the decoder-error path returns zero. Real return type unknown. T-12100. */
 s32 func_80147958(void) {
@@ -246,7 +244,7 @@ s32 func_80147958(void) {
         D_801217D0[4].unk_15 = color;
         D_801217D0[4].unk_14 = color;
 
-        if (color == 0x80) {
+        if (value == 0x80) {
             g->unk_1104.u++;
             return;
         }
@@ -435,7 +433,7 @@ s32 func_80147958(void) {
         D_801217D0[4].unk_15 = color;
         D_801217D0[4].unk_14 = color;
 
-        if (color < 4U) {
+        if (value < 4U) {
             g->unk_1104.u += 1;
             return;
         }
@@ -516,9 +514,6 @@ s32 func_80147958(void) {
     }
     return;
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801461B0", func_80147958);
-#endif
 
 s32 func_80148924(s16 a0) {
     D_801217D0[4].unk_06 += a0;
