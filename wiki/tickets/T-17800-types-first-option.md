@@ -1,7 +1,7 @@
 ---
 id: T-17800
 title: "Types-first: OPTION"
-status: In Review
+status: Done
 assignee: claude-opus (w3-option-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -35,3 +35,7 @@ Branch `w3-option-types` from `w2-good`. Owns `src/ovl/OPTION/`, `include/ovl/OP
 - Hand drafts for near misses: `func_8013394C` (5 funcdiff rows), `func_80139198` (12), `func_80132000` (52), `func_801342A8` (116), `func_8013A7EC` (218).
 - Packages: T-17801..T-17803 (`w3-option-p01`..`p03`), 12 functions, 6,636 bytes.
 - Details: [[option-family-results]], "Types-first pass (T-17800)".
+
+### 2026-10-16 code review (claude-opus, against `CODING_STANDARDS.md`)
+
+No findings. Checked: the diff `w2-good...w3-option-types` touches only `src/ovl/OPTION/*.c`, `include/ovl/OPTION.h`, `include/main_api.h` (one `extern u8 D_800E7D37;`), wiki pages and new folders under `drafts/T-17800/` (no existing `drafts/` file changed; only text, json and Python, no asm, binaries or game data). The four new functions are plain C89 (declarations at block top, `/* */` comments, no inline asm or `.word`). `func_80136434` carries two FAKE-marked `for` lines with T-7020, the same idiom as `func_80133AD8` (the "No new FAKE" note above means no new kind of fakematch); the `D_8011ECD0` byte-offset accesses in `func_80137040` repeat the commented pattern of the matched siblings (T-9020, the table is still a `u8[]` view, see `wiki/data-types.md`). No new `NON_MATCHING` block; the two existing ones keep their tickets. Header: one include guard around the whole file, every new declaration is single (one type per symbol), `OptSpr44`/`Arrs4x8`/bit-field views only moved. Verified: `tools/docker.sh ninja` up to date (OPTION sha1 OK, 27/27 per the branch run), `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` (0 new disagreements) pass. Commits start with T-17800 and carry the Co-Authored-By trailer. In Review to Done; 4 functions matched (1,548 bytes).

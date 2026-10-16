@@ -15555,3 +15555,7 @@ Opened [[tickets/T-17800-types-first-option]] (In Progress) on branch `w3-option
 ## [2026-10-16] ticket | T-17800 In Review
 
 [[tickets/T-17800-types-first-option]] In Progress to In Review. Packages T-17801..T-17803 (`w3-option-p01`..`p03`, 12 functions, 6,636 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]).
+
+## [2026-10-16] ticket | T-17800 Done
+
+Code review of [[tickets/T-17800-types-first-option]] against `CODING_STANDARDS.md`: no findings. 4 functions matched (1,548 bytes: `func_8013A09C`, `func_8013A1BC`, `func_80136434`, `func_80137040`), OPTION sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. In Review to Done; branch `w3-option-types` goes to the integration merge.

@@ -27,7 +27,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-17800-types-first-option|T-17800]] Types-first: OPTION: menu rows, word tables and the `OptActor44` record view in `OPTION.h`, 32 redrafts (19 better than the census), 4 matches / 1,548 bytes, packages T-17801..T-17803 (In Review).
+- [[tickets/T-17800-types-first-option|T-17800]] Types-first: OPTION: menu rows, word tables and the `OptActor44` record view in `OPTION.h`, 32 redrafts (19 better than the census), 4 matches / 1,548 bytes, packages T-17801..T-17803 (Done).
 - [[tickets/T-17500-types-first-shougatu|T-17500]] Types-first: SHOUGATU: 49 step tables (`FnTblNN`) and 4 stack-table types in `SHOUGATU.h`, 38 redrafts (15 better than the census), 4 matches / 1,516 bytes, packages T-17501..T-17507 (Done).
 - [[tickets/T-19005-w3-d-p05|T-19005]] Wave 3 package w3-d-p05: OLH `80135AC0.c`, `80132000.c`, `func_80135B8C` (sibling clone) and `func_80132114` (chain through a local) both matched, 680 B (Done).
 - [[tickets/T-19001-w3-d-p01|T-19001]] Wave 3 package w3-d-p01: TAIIKU `80140810.c`, `func_80140A90` stays guarded (33 instructions); block-copy temporary rule measured, looks like a ugen difference (Done).
