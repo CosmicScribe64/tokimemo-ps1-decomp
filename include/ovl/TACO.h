@@ -384,7 +384,7 @@ typedef struct TcPair8 {
     s32 b;
 } TcPair8;
 extern TcPair8 D_8015FAE0[];
-extern TcPair8 D_8015E238[];
+extern s32 D_8015E238[]; /* word pairs, read as a flat table by func_80133738 (T-16561) */
 typedef struct TcPair2 {
     u8 a;
     u8 b;
