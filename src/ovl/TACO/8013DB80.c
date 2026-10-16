@@ -102,7 +102,7 @@ void func_8013E4FC(void) {
     i = 0;
     do {
         if (p->unk13 & 0x80) {
-            if (p->padE[3] < 2) {
+            if (p->unk11 < 2) {
                 func_8013E778(i);
             } else {
                 func_8013EAA4(i);

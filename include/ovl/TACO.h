@@ -213,14 +213,16 @@ typedef struct Tc14 {
     /* 0x00 */ s16 unk0;
     /* 0x02 */ s16 unk2;
     /* 0x04 */ s16 unk4;
-    /* 0x06 */ s16 pad6;
+    /* 0x06 */ s16 unk6;
     /* 0x08 */ s16 unk8;
     /* 0x0A */ s16 unkA;
     /* 0x0C */ s16 unkC;
-    /* 0x0E */ u8 padE[4];
+    /* 0x0E */ s16 unkE;
+    /* 0x10 */ u8 unk10;
+    /* 0x11 */ u8 unk11;
     /* 0x12 */ u8 unk12;
     /* 0x13 */ u8 unk13;
-} Tc14; /* size 0x14 */
+} Tc14; /* size 0x14; same record as TacoParticle14 (two TcPos, four bytes), T-16560 */
 void func_80151F94(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_801522B0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3);
 void func_80152C60(s32 arg0);
