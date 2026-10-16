@@ -16511,3 +16511,15 @@ Clean rebuild of the w3-rpg-bat-p05 worktree (`rm -rf build && configure.py && n
 ## [2026-10-16] ticket | T-17117 Done
 
 [[tickets/T-17117-w3-rpg-bat-p17]] In Review to Done: code review against `CODING_STANDARDS.md` found one item, fixed (the `*(u32 *)&D_8015ED98` switch scrutinee is a fakematch and now carries a `FAKE` comment; wiki pages say "one FAKE"). Rebuild OK (globals, headers, `RPG_BAT.bin` sha1 OK). 1 of 1 function matched (`func_8013CC90`, 928 bytes). Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17115 In Progress
+Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG_BAT/801498C0.c`, `src/ovl/RPG_BAT/801321D0.c`, four functions) and moved it to In Progress. Card on [[kanban]], line in [[index]]. Worktree `tokimemo-wt/w3-rpg-bat-p15`, started 21:00 UTC.
+
+## [2026-10-16] build | T-17115 matches
+[[tickets/T-17115-w3-rpg-bat-p15]]: `func_801328C4` matched (declare `s32 i` before the `RpgDirTable` local; prototype in `RPG_BAT.h`) and `func_8014A3DC` matched (`s32` return type, as1 no longer hoists the second `lui`). `func_80132B34` and `func_80149C5C` restored to `INCLUDE_ASM` after the time box; rows in [[data/t0018-cases]], findings in [[matching-notes]] (section T-17115), two new rows in [[register-cheatsheet]], draft `drafts/T-17115/RPG_BAT/func_80149C5C/body.c`.
+
+## [2026-10-16] ticket | T-17115 In Review
+[[tickets/T-17115-w3-rpg-bat-p15]] In Progress to In Review (2 of 4 matched, 1,136 bytes). Card moved to In Review.
+
+## [2026-10-16] ticket | T-17115 Done
+[[tickets/T-17115-w3-rpg-bat-p15]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 2 of 4 functions matched (`func_801328C4`, `func_8014A3DC`, 1,136 bytes); `func_80132B34` and `func_80149C5C` stay `INCLUDE_ASM`. Rebuild: RPG_BAT unit sha1 OK, 27/27 binaries OK, headers OK, globals OK, protos OK. Card moved to Done.

@@ -142,6 +142,7 @@ kanban-plugin: board
 ## Done
 - [ ] [[tickets/T-17117-w3-rpg-bat-p17|T-17117 Wave 3 package w3-rpg-bat-p17]]
 - [ ] [[tickets/T-20000-first-contribution|T-20000 Avoid whole-tree cache scans for scoped queues]]
+- [ ] [[tickets/T-17115-w3-rpg-bat-p15|T-17115 Wave 3 package w3-rpg-bat-p15]]
 - [ ] [[tickets/T-20003-rpg-timer-callees|T-20003 Match RPG battle callback func_80138F6C (1,268 bytes)]]
 - [ ] [[tickets/T-17109-w3-rpg-bat-p09|T-17109 Wave 3 package w3-rpg-bat-p09]]
 - [ ] [[tickets/T-17111-w3-rpg-bat-p11|T-17111 Wave 3 package w3-rpg-bat-p11]]
