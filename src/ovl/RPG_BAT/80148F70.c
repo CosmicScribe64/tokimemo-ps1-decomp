@@ -2,9 +2,7 @@
 #include "ovl/RPG_BAT.h"
 
 void func_80148F70(void) {
-    /* FAKE: unused top local word; the original's frame has one more word than IDO gives the
-     * spill of `base` (sp+0x2C, not sp+0x28). Real source unknown. T-17119 */
-    u8 pad[4];
+    s32 flag;
     u16 stat;
     s32 base;
     s32 half;
@@ -24,11 +22,12 @@ void func_80148F70(void) {
     if (D_8015EB98 & 0x80000000) {
         func_801495DC();
     }
-    if ((D_8015EDC4 & 0x100000) || (D_8015EDC4 & 0x600000) || (D_8015EDC4 & 0x08000000)) {
+    flag = D_8015EDC4 & 0x100000;
+    if (flag || (D_8015EDC4 & 0x600000) || (D_8015EDC4 & 0x08000000)) {
         if (D_8015ED98 & 2) {
             switch (D_8015EBA0) {
             case 2:
-                if (D_8015EDC4 & 0x100000) {
+                if (flag) {
                     D_8015EBB0 = func_8013EA00(2500, 2500) + 2500;
                     D_8015EBB4 = func_8013EA00(2500, 2500) + 2500;
                     D_8015EBB8 = func_8013EA00(2500, 2500) + 2500;
@@ -46,7 +45,7 @@ void func_80148F70(void) {
                 }
                 break;
             case 5:
-                if (D_8015EDC4 & 0x100000) {
+                if (flag) {
                     D_8015EBB0 = func_8013EA00(2500, 1000) + 2000;
                     D_8015EBB4 = func_8013EA00(2500, 1000) + 2000;
                     D_8015EBB8 = func_8013EA00(2500, 1000) + 2000;
@@ -64,7 +63,7 @@ void func_80148F70(void) {
                 }
                 break;
             case 6:
-                if (D_8015EDC4 & 0x100000) {
+                if (flag) {
                     D_8015EBB0 = func_8013E9A8(50) * 100 + 2000;
                     D_8015EBB4 = func_8013E9A8(50) * 100 + 1000;
                     D_8015EBB8 = func_8013E9A8(50) * 100 + 1000;
@@ -73,7 +72,7 @@ void func_80148F70(void) {
                 }
                 break;
             case 1:
-                if (D_8015EDC4 & 0x100000) {
+                if (flag) {
                     D_8015EBB0 = func_8013EA00(6000, base);
                     D_8015EBB4 = func_8013EA00(6000, base);
                     D_8015EBB8 = func_8013EA00(6000, base);
@@ -82,7 +81,7 @@ void func_80148F70(void) {
                 }
                 break;
             case 4:
-                if (D_8015EDC4 & 0x100000) {
+                if (flag) {
                     if (func_8013E9A8(100) < 20) {
                         D_8015EBB0 = 1000;
                     } else {
@@ -147,7 +146,7 @@ void func_80148F70(void) {
                     break;
                 default:
                     D_8015EC34 = 5;
-                    if (D_8015EDC4 & 0x100000) {
+                    if (flag) {
                         D_8015EBB0 = 9999;
                     } else {
                         D_8015EDC0 -= 30000;
