@@ -12,6 +12,14 @@ extern u32 D_801604F8;
 
 extern s32 D_8015D774;
 
+/* T-18700: 33-byte strings by school year (95..97) and D_80122CDC, copied to the stack and
+ * passed to strcpy by func_80147F8C (DATE2 func_80137A2C form). */
+typedef struct BunkasaiNameTable {
+    /* 0x000 */ u8 s[3][3][33];
+} BunkasaiNameTable; /* size 0x129 */
+extern BunkasaiNameTable D_801606DC;
+void func_80147F8C(void);
+
 /* defined in C in one object, called from another (T-0500) */
 void func_80132000(void);
 void func_80132034(void);
