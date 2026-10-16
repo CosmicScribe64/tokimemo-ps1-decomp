@@ -16286,3 +16286,6 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 
 ## [2026-10-16] ticket | T-17104 Done
 [[tickets/T-17104-w3-rpg-bat-p04]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing (only `src/ovl/RPG_BAT/801468B0.c` changed, one marked FAKE, overrides explained; unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 1 of 1 matched (`func_80146C30`, 2,992 bytes). Follow-up noted in the ticket: the guarded `func_80145CC0` (T-12300) matches under the same two overrides. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17109 started
+[[tickets/T-17109-w3-rpg-bat-p09]] created In Progress (branch `w3-rpg-bat-p09`, base `w2-good`): wave 3 package for `src/ovl/RPG_BAT/8013D780.c` and `src/ovl/RPG_BAT/801477E0.c`, three functions `func_8013D834`, `func_80147930`, `func_8013DC60` (draft scores 158, 396, 319).
