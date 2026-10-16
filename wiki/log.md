@@ -14936,3 +14936,7 @@ Opened [[tickets/T-16230-w2-date-80150010]] (In Progress) under [[tickets/T-1620
 ## [2026-10-16] ticket | T-16230 Wave 2 package w2-p03 to In Review
 
 [[tickets/T-16230-w2-date-80150010]] moved to In Review: 4 of 4 functions matched in plain C (DATE `func_801511B4`, `func_80150460`, `func_80150ED4`, `func_80150C78`; 1,620 bytes), so `src/ovl/DATE/80150010.c` has no `INCLUDE_ASM` left. Keys: real aggregates (`D_801217D0[57]`, display records 96/98 of `D_8011ECD0`), a chain assignment through record elements, a `GameState *g` pointer, and `order_search` over the declarations for a spilled local's stack home. Notes in [[matching-notes]] ("T-16230"), update line in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-16230 Done
+
+[[tickets/T-16230-w2-date-80150010]] reviewed against `CODING_STANDARDS.md` with no findings and moved to Done: 4 of 4 functions matched (DATE `func_801511B4`, `func_80150460`, `func_80150ED4`, `func_80150C78`; 1,620 bytes), DATE sha1 OK in the package worktree. Merge into `w2-good` follows.
