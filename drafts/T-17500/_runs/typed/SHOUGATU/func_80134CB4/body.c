@@ -1,0 +1,56 @@
+void func_80134CB4(void) {
+    s16 var_s0;
+    s32 temp_lo;
+    DisplayActor44 *temp_v0;
+
+    D_80143DDC = 0;
+    func_80134890();
+    load_palette(D_80143DD0, 0x11, 1, 2, 0);
+    var_s0 = 0;
+    do {
+        func_80048F64(var_s0 + 0x60);
+        temp_lo = var_s0 * 0x44;
+        var_s0 += 1;
+        temp_v0 = (DisplayActor44 *)((u8 *)D_8011ECD0 + temp_lo);
+        temp_v0[96].unk_01 = 0xA;
+        temp_v0[96].unk_02 = 0;
+        temp_v0[96].unk_38 = 0x01000000;
+        temp_v0[96].unk_03 = 4;
+        *(s32 *)&temp_v0[96].unk_0C = (s32) D_80143DB8;
+        *(s32 *)&temp_v0[96].unk_10 = (s32) D_80143DC0;
+        *(s32 *)&temp_v0[96].unk_34 = (s32) D_80143DB0;
+        temp_v0[96].unk_16 = 0;
+        temp_v0[96].unk_18 = 0;
+        temp_v0[96].unk_06 = 1;
+        temp_v0[96].unk_43 = 0x11;
+        temp_v0[96].unk_26 = -0xA0;
+        temp_v0[96].unk_2A = -0x78;
+        temp_v0[96].unk_07 = 0x80;
+        temp_v0[96].unk_05 = 0;
+        temp_v0[96].unk_04 = 0;
+        temp_v0[96].unk_14 = (s16) D_80143DC8;
+    } while (var_s0 < 3);
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[97].unk_16 = 3;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_16 = 4;
+    load_palette(D_80143DD4, 0x12, 0, 0, 2);
+    func_80048F64(0x63);
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_01 = 0xD;
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_02 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_38 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_03 = 4;
+    *(s32 *)&((DisplayActor44 *)D_8011ECD0)[99].unk_0C = (s32) D_80143DBC;
+    *(s32 *)&((DisplayActor44 *)D_8011ECD0)[99].unk_10 = (s32) D_80143DC4;
+    *(s32 *)&((DisplayActor44 *)D_8011ECD0)[99].unk_34 = (s32) D_80143DB4;
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_14 = (s16) D_80143DCC;
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_16 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_18 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_06 = 1;
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_43 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_26 = -0xA0;
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_2A = -0x78;
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_07 = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_05 = 0x81;
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_04 = 0;
+    func_8004284C();
+}

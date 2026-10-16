@@ -5,6 +5,8 @@ updated: 2026-10-15
 
 # GYOZI and SHOUGATU event families
 
+SHOUGATU types-first pass (T-17500): [[shougatu-family-results]].
+
 Scope: [[tickets/T-13200-event-family-transfer]], isolated codex/events-13200 from aa2b3158. The original checkout stayed read-only; ignored inputs came from integration, and all analysis/compilation ran in the existing Docker image. No generated assembly edits or metrics changes.
 
 ## Accepted C

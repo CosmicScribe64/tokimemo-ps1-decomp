@@ -1,0 +1,13 @@
+python3 failed:
+ ----------------------------------------^
+cfe: Warning 709: drafts/T-17500/_runs/typed/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3802: Incompatible pointer type assignment
+             temp_s0 = (Rec24 *)((u8 *)D_801217D0 + temp_lo);
+ --------------------^
+cfe: Error: drafts/T-17500/_runs/typed/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3840: Type int  of rhs of assignment expression is incompatible with type struct GameState  of lhs
+                     *(&D_800E6280 + var_s2_2) = 0xC;
+ ----------------------------------------------^
+cfe: Error: drafts/T-17500/_runs/typed/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3843: Type int  of rhs of assignment expression is incompatible with type struct GameState  of lhs
+                     *(&D_800E6280 + var_s2_2) = 9;
+ ----------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/typed/SHOUGATU/func_8014288C/work -o drafts/T-17500/_runs/typed/SHOUGATU/func_8014288C/work/guarded.o /tmp/asm_processorswboh1p7/preprocessed_f3338b3c33964405b1bccb126f1048d2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibx1ws7745/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/typed/SHOUGATU/func_8014288C/work/guarded.o drafts/T-17500/_runs/typed/SHOUGATU/func_8014288C/work/guarded.o.sjis.c

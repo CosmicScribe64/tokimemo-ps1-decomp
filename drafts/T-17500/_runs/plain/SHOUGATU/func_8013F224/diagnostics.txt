@@ -1,0 +1,19 @@
+m2c.py: argument counts from the callees' asm: func_80140314 0, func_80140698 0
+python3 failed:
+cfe: Error: drafts/T-17500/_runs/plain/SHOUGATU/func_8013F224/work/guarded.c, line 3602: 'sp28' undefined; reoccurrences will not be reported.
+     *(M2cBlock6C *)(&sp28[0]) = *(M2cBlock6C *)(&D_8014616C);
+ ---------------------^
+cfe: Error: drafts/T-17500/_runs/plain/SHOUGATU/func_8013F224/work/guarded.c, line 3636: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80140698();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/plain/SHOUGATU/func_8013F224/work -o drafts/T-17500/_runs/plain/SHOUGATU/func_8013F224/work/guarded.o /tmp/asm_processor4p8ehwye/preprocessed_9e1e693d8c214a66b02032e550852b7e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibty8n1xqm/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/plain/SHOUGATU/func_8013F224/work/guarded.o drafts/T-17500/_runs/plain/SHOUGATU/func_8013F224/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17500/_runs/plain/SHOUGATU/func_8013F224/work/guarded.c, line 3604: Non-function name referenced in function call.
+     var_v0 = (&sp28[0])[D_800E738A](0x80);
+ -----------------------------------^
+cfe: Error: drafts/T-17500/_runs/plain/SHOUGATU/func_8013F224/work/guarded.c, line 3637: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80140698();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/plain/SHOUGATU/func_8013F224/work -o drafts/T-17500/_runs/plain/SHOUGATU/func_8013F224/work/guarded.o /tmp/asm_processorvo9wfgpo/preprocessed_de049e6fff394ff3b6d7a059911cad15.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliby5vpggbu/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/plain/SHOUGATU/func_8013F224/work/guarded.o drafts/T-17500/_runs/plain/SHOUGATU/func_8013F224/work/guarded.c

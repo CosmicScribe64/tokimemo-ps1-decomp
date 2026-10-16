@@ -1,11 +1,6 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-typedef struct {
-    void (*f[33])();
-} FnTbl33; /* size 0x84 */
-extern FnTbl33 D_80145F40;
-
 void func_8013D660(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl33 tbl;

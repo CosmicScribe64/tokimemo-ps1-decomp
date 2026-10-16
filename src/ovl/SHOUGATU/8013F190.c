@@ -2,31 +2,6 @@
 #include "game.h"
 #include "ovl/SHOUGATU.h"
 
-typedef struct {
-    void (*f[11])();
-} FnTbl11; /* size 0x2C */
-extern FnTbl11 D_80146454;
-
-typedef struct {
-    void (*f[10])();
-} FnTbl10; /* size 0x28 */
-extern FnTbl10 D_8014633C;
-
-typedef struct {
-    void (*f[14])();
-} FnTbl14; /* size 0x38 */
-extern FnTbl14 D_80146304;
-
-typedef struct {
-    void (*f[17])();
-} FnTbl17; /* size 0x44 */
-extern FnTbl17 D_801462C0;
-
-typedef struct {
-    void (*f[12])();
-} FnTbl12; /* size 0x30 */
-extern FnTbl12 D_8014639C;
-
 void func_8013F190(void) {
     D_80146130 = (u8 *)0x801D6360;
     D_80146134 = (u8 *)0x801D6384;
@@ -287,11 +262,6 @@ void func_80140780(void) {
     D_80146240 = 0x801B0000;
 }
 
-typedef struct {
-    void (*f[31])();
-} FnTbl31; /* size 0x7C */
-extern FnTbl31 D_80146244;
-
 void func_801407C0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl31 tbl;
@@ -487,8 +457,6 @@ void func_801411FC(void) {
     func_8004284C();
 }
 
-extern FnTbl14 D_80146364;
-
 void func_80141224(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl14 tbl;
@@ -530,8 +498,6 @@ void func_801413CC(void) {
     func_8004284C();
 }
 
-extern FnTbl17 D_801463CC;
-
 void func_801413F4(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl17 tbl;
@@ -551,8 +517,6 @@ void func_801414B8(void) {
     func_80044750(0x505);
     func_8004284C();
 }
-
-extern FnTbl17 D_80146410;
 
 void func_801414E0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -588,8 +552,6 @@ void func_80141650(void) {
     D_80145F2C = 3;
     func_8004284C();
 }
-
-extern FnTbl12 D_80146480;
 
 void func_80141678(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

@@ -14,11 +14,6 @@ void func_80134890(void) {
     D_80143DD4 = 0x801C2000;
 }
 
-typedef struct {
-    void (*f[31])();
-} FnTbl31; /* size 0x7C */
-extern FnTbl31 D_80143DE0;
-
 void func_80134930(void) {
     u16 idx; /* FAKE: u16 and the second call argument put idx in $a1 as the original does (permuter); real prototype unknown. T-8080 */
     FnTbl31 tbl;

@@ -15527,3 +15527,19 @@ Opened [[tickets/T-17400-types-first-event]] (In Progress) under [[tickets/T-169
 ## [2026-10-16] ticket | T-17400 Done
 
 [[tickets/T-17400-types-first-event]] In Review to Done after the code review against `CODING_STANDARDS.md`: 4 functions matched (1,416 bytes: `func_800FF320`, `func_80104C3C`, `func_800FF61C`, `func_8010AE7C`), 38 redrafts, 7 packages (T-17401..T-17407). Two findings fixed, comment-only: the `FAKE` comment of `func_800FF320` now starts with `FAKE` (`src/ovl/EVENT/800FDC20.c`), and the guard of `func_8010B614` names its 33 remaining diff rows (`src/ovl/EVENT/8010B360.c`). EVENT unit sha1 OK after the rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] ticket | T-17500 Types-first: SHOUGATU opened
+
+Opened [[tickets/T-17500-types-first-shougatu]] (In Progress) on branch `w3-shougatu-types` from `w2-good`: recover SHOUGATU's shared types, redraft every unmatched function with the pilot drivers, package the rest for wave 3.
+
+## [2026-10-16] build | T-17500 SHOUGATU types and redraft
+
+[[tickets/T-17500-types-first-shougatu]]: step tables, stack-table types and work arrays declared in `include/ovl/SHOUGATU.h` (which now includes `game.h`), `D_800CA248` added to `include/main_api.h`; `drafts/T-17500/redraft.py` redrafted all 38 unmatched functions (15 of the 32 still unmatched better than the census). Matched `func_801419D0`, `func_80132A34`, `func_80133760`, `func_8013AFEC` (1,516 bytes). New page [[shougatu-family-results]].
+
+## [2026-10-16] ticket | T-17500 In Review
+
+[[tickets/T-17500-types-first-shougatu]] In Progress to In Review. Packages T-17501..T-17507 (`w3-shougatu-p01`..`p07`, 33 functions, 18,404 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]).
+
+## [2026-10-16] ticket | T-17500 Done
+
+Code review of [[tickets/T-17500-types-first-shougatu]] against `CODING_STANDARDS.md`: 3 small findings fixed (missing local declaration beside the `MAIN_API_OVERRIDE_func_800847B8` define in `src/ovl/SHOUGATU/801330C0.c`, a redundant `(u8)` cast in `func_801419D0`, an idiom comment in `func_8013AFEC`). 4 functions matched (1,516 bytes), SHOUGATU sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. In Review to Done; branch `w3-shougatu-types` goes to the integration merge.

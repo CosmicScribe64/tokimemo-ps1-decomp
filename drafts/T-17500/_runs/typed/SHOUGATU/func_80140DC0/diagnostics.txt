@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_80141224 0, func_801413F4 0, func_801414E0 0, func_80141678 0
+python3 failed:
+cfe: Warning 689: drafts/T-17500/_runs/typed/SHOUGATU/func_80140DC0/work/guarded.c, line 3822: Unacceptable operand of == or !=
+     if (normal_date_bg_fadein == tbl.f[j] || normal_date_bg_fadeout == tbl.f[j]) {
+ ------------------------------^
+cfe: Error: drafts/T-17500/_runs/typed/SHOUGATU/func_80140DC0/work/guarded.c, line 3939: Type int  of rhs of assignment expression is incompatible with type struct GameState  of lhs
+         *(&D_800E6280 + (D_800E6280.unk_F5F * 0x38)) = 0x46;
+ -----------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/typed/SHOUGATU/func_80140DC0/work -o drafts/T-17500/_runs/typed/SHOUGATU/func_80140DC0/work/guarded.o /tmp/asm_processor50tt8q26/preprocessed_2561d4eec851469eb5fb3b6294a807e3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibujf9e8xn/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/typed/SHOUGATU/func_80140DC0/work/guarded.o drafts/T-17500/_runs/typed/SHOUGATU/func_80140DC0/work/guarded.c

@@ -1,0 +1,62 @@
+extern s32 D_80146800;
+
+void func_80142DA0(void) {
+    Rec24 *temp_s0;
+    s16 temp_s1;
+    s16 var_s1;
+    s32 *temp_v1;
+    s32 temp_hi;
+
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    func_8007C740();
+    func_8013C2E4();
+    func_800847B8(D_800E6280.unk_F5F);
+    func_80141850();
+    func_80043914(D_801464F4, 0x11, 1, 2, 0);
+    func_80084E90(D_801464F8, D_801464FC, D_80146500, D_80146504, D_80146508, D_8014650C);
+    func_800850D4(D_801464E8, D_801464EC, D_801464E4, (s32) D_801464F0);
+    *(s8 *)((unsigned char *)D_8011ECD0 + (6532)) = 8;
+    *(s8 *)((unsigned char *)D_8011ECD0 + (6600)) = 8;
+    func_8013C2E4();
+    D_80145F34 = D_80145BFC;
+    D_80145F38 = D_80145D38;
+    D_80145F3C = D_80145E74;
+    func_800AE0F0(D_800CA19C, "伊集院邸");
+    func_80043914(D_801464C4, 0x12, 1, 3, 0);
+    var_s1 = 4;
+    do {
+        temp_s0 = &D_801217D0[var_s1];
+        temp_s0->unk_00 = -0x3F000000;
+        temp_hi = func_800AE0D0() % 320;
+        temp_v1 = &D_80146608[var_s1];
+        *(s16 *)((unsigned char *)temp_v1 + (-16)) = 0;
+        temp_s0->unk_04 = temp_hi - 0x9F;
+        *(s16 *)((unsigned char *)temp_v1 + (-14)) = (s16) temp_s0->unk_04;
+        D_80146608[var_s1].unk0 = (s32) *(s16 *)((unsigned char *)temp_v1 + (-16));
+        temp_s0->unk_06 = -0x78;
+        temp_s0->unk_08 = 8;
+        temp_s0->unk_0A = 8;
+        temp_s0->unk_0C = 0xA;
+        temp_s0->unk_0E = 0;
+        temp_s0->unk_0F = 0;
+        temp_s0->unk_10 = 0;
+        temp_s0->unk_12 = 0x1F2;
+        temp_s0->unk_14 = 0x80;
+        temp_s0->unk_15 = 0x80;
+        temp_s0->unk_16 = 0x80;
+        temp_s0->unk_18 = 0;
+        temp_s0->unk_1A = 0;
+        temp_s0->unk_1C = 0x1000;
+        temp_s0->unk_1E = 0x1000;
+        temp_s0->unk_20 = 0;
+        *(&D_800E6280 + var_s1) = 9;
+        *(D_801466D0 + (var_s1 * 2)) = 2;
+        temp_s1 = var_s1 + 1;
+        (&D_80146530)[var_s1] = (u8 *)0x8000;
+        var_s1 = temp_s1;
+    } while (temp_s1 < 0x36);
+    D_801467FC = 0;
+    D_80146800 = 0;
+    func_8004284C();
+}

@@ -1,0 +1,12 @@
+python3 failed:
+cfe: Warning 709: drafts/T-17500/_runs/typed/SHOUGATU/func_80136204/work/guarded.c, line 3758: Incompatible pointer type assignment
+             tbl.f[D_800E6280.unk_110A] = func_8004284C;
+ ---------------------------------------^
+cfe: Error: drafts/T-17500/_runs/typed/SHOUGATU/func_80136204/work/guarded.c, line 3786: Type struct GameState  of rhs of assignment expression is incompatible with type int  of lhs
+     temp_v1 = *(&D_800E6280 + (D_800E6280.unk_F5F * 0x38));
+ ------------^
+cfe: Warning 749: drafts/T-17500/_runs/typed/SHOUGATU/func_80136204/work/guarded.c, line 3795: structure has no member named 'unk0'
+             D_800E6280.unk_71E = D_800E6280.unk0 | 8;
+ -------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/typed/SHOUGATU/func_80136204/work -o drafts/T-17500/_runs/typed/SHOUGATU/func_80136204/work/guarded.o /tmp/asm_processorhdwu89b3/preprocessed_03f2b86bb5ab460f92056ba4ee539898.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibgjsoxr_z/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/typed/SHOUGATU/func_80136204/work/guarded.o drafts/T-17500/_runs/typed/SHOUGATU/func_80136204/work/guarded.c

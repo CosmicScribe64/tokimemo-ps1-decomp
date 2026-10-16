@@ -1,16 +1,6 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-typedef struct {
-    void (*f[22])();
-} FnTbl22; /* size 0x58 */
-extern FnTbl22 D_80145170;
-
-typedef struct {
-    void (*f[20])();
-} FnTbl20; /* size 0x50 */
-extern FnTbl20 D_801451C8;
-
 void func_80138B40(void) {
     u8 sel = D_80144E14; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
 
@@ -44,8 +34,6 @@ void func_80138C1C(void) {
     idx = D_800E6280.unk_110A;
     tbl.f[idx]();
 }
-
-extern FnTbl20 D_80145218;
 
 void func_80138CA4(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

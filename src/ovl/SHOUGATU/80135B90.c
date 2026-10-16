@@ -92,10 +92,6 @@ typedef struct {
     u8 s[0xCC3];
 } DateTxt; /* size 0xCC3 */
 extern DateTxt D_801440C0;
-typedef struct {
-    void (*f[50])();
-} FnTbl50; /* size 0xC8 */
-extern FnTbl50 D_80143FF8;
 
 void func_80083440(s32 arg0);
 
