@@ -511,7 +511,31 @@ void func_80146994(void) {
     D_80120676 = D_8014A3E4.position.h[1];
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146A60);
+void func_80146A60(void) {
+    s32 flags;
+
+    if (D_8014A454[0].unk_0C == 0) {
+        func_80146B8C();
+        flags = D_800E6280.unk_F80;
+        if ((flags & 0xA) && !(flags & 5)) {
+            if (D_8014A3E4.unk_02 >= 0x15 && D_8014A3E0 > 0) {
+                func_80044750(0x507);
+                D_8014A3E4.unk_02 = 0;
+            }
+            D_80120668 = D_8014A4D4[D_8014A3E4.unk_00];
+            return;
+        }
+        if ((flags & 5) && (flags & 0xA) == 0) {
+            if (D_8014A3E4.unk_02 >= 0x15 && D_8014A3E0 > 0) {
+                func_80044750(0x508);
+                D_8014A3E4.unk_02 = 0;
+            }
+            D_80120668 = D_8014A4E4[D_8014A3E4.unk_00];
+            return;
+        }
+        D_80120668 = D_8014A4C4[D_8014A3E4.unk_00];
+    }
+}
 
 void func_80146B8C(void) {
     if (D_8014A3E0 == 0) {
