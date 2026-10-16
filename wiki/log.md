@@ -15459,3 +15459,7 @@ Opus closer pass on [[tickets/T-19002-w3-d-p02]] (branch w3-d-p02): no new match
 ## [2026-10-16] ticket | T-19007 In Review
 
 [[tickets/T-19007-w3-d-p07]] In Progress to In Review: 1 of 4 functions matched (648 bytes): TAIIKU `func_80146D18` in plain C (plain `for`/`while` loops over the index replace the draft's `do`/`while` shapes). `func_8014607C` (20 lines) and `func_80145370` (22 lines) stay guarded with extended comments, `func_80147B14` stays `INCLUDE_ASM` with a typed draft under `drafts/T-19007/`. Notes in [[matching-notes]] (T-19007), [[data/t0018-cases]] and [[taiiku-family-results]]. Review pending.
+
+## [2026-10-16] build | T-19007 closer pass (func_8014607C)
+
+[[tickets/T-19007-w3-d-p07]]: the Opus closer pass on TAIIKU `func_8014607C`. It is still guarded at 20 lines and nothing new matched. `cc -S` shows that uopt reads each copy's source (the masked byte, the promoted s16) in the later blocks, so as1 keeps the `move`s. A dead redefinition of a raw-byte local stops the mask swap but reverses the colour order (74 lines). Comment updated in `src/ovl/TAIIKU/801452D0.c`; notes in [[matching-notes]] and [[data/t0018-cases]]. The ticket stays In Review.
