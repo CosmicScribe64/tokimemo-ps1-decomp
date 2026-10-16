@@ -15688,3 +15688,7 @@ Created [[tickets/T-18000-types-first-shugaku]] (wave 3 types-first pass for SHU
 ## [2026-10-16] ticket | T-18000 Done
 
 [[tickets/T-18000-types-first-shugaku]] In Review to Done: code review against `CODING_STANDARDS.md` found 2 minor items (missing comments on the callback-index and variable-reuse idioms in `func_80134B94` and `func_80139054`), fixed in comments only; SHUGAKU sha1 OK, headers OK. 5 functions matched (2,292 bytes). Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-18300 Types-first: ENDING, In Progress
+
+Created [[tickets/T-18300-types-first-ending]] (wave 3, [[tickets/T-16990-wave-3-conveyor]]), branch `w3-ending-types` from `w2-good`: recover ENDING's shared types into `include/ovl/ENDING.h`, redraft every unmatched ENDING function (drivers from T-16550, T-16560, T-18000), cut packages. Card in [[kanban]] In Progress, line in [[index]].
