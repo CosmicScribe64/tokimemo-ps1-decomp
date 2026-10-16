@@ -1332,6 +1332,10 @@ extern s32 D_8012076C;
 extern s32 D_80120770;
 extern s16 D_80120776;
 extern s16 D_80120778;
+extern s16 D_8012077A;
+#ifndef MAIN_API_OVERRIDE_D_8012077C
+extern s32 D_8012077C;
+#endif
 extern s16 D_80120786;
 extern s16 D_8012078A;
 extern s32 D_80120794;
