@@ -6,6 +6,7 @@
 
 #include "common.h"
 #include "main_api.h"
+#include "game.h"
 
 s32 set_kanji_string();
 
