@@ -16672,3 +16672,7 @@ Actual default funcdiff --resolve proves func_80135118 (360 bytes) and func_8013
 ## [2026-10-16] build | T-20004 final checks and In Review
 
 Both actual default linked matches total 776 bytes. Full 490-step Docker build completes; GYOZI SHA1, all 27 explicit binary SHA1 checks, header/global gates and prototype branch guard pass (0 new / 15 known). Local CODING_STANDARDS review complete: two marked FAKE unchanged-byte stores, shared declarations only, no generated game data or toolchain changes. [[tickets/T-20004-gyozi-dialogue-followup]] moves to In Review with index/board synchronized; maintainer acceptance pending.
+
+## [2026-10-16] ticket | T-20004 PR #40 opened
+
+Opened https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/40 for the two claimed GYOZI helpers (776 verified bytes). Claim issue #39 links to the scoped work; the PR documents the shared setup-type dependency on #37 and both marked no-op store fakematches. Actual linked proofs, full 490-step build, 27/27 checksums and prototype guard pass. [[tickets/T-20004-gyozi-dialogue-followup]] stays In Review for the maintainer. No repeated main merges, per maintainer guidance.
