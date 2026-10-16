@@ -374,8 +374,9 @@ void func_801540E0(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-17203, 8 differing lines; the code is identical, only the frame is 8 bytes larger (0x70, not 0x68): the second use of D_800CA2F8 makes IDO reserve a 4-byte temp slot below tbl on top of the 4-byte g slot */
-#ifdef NON_MATCHING
+/* FAKE: D_800CA2F8 is read through its DateSelectionView; a direct read of the u8 keeps cvt_pass's
+ * widening CVT, whose CSE temporary (two compares) costs a 4-byte frame slot the original does not
+ * have (0x70 against 0x68). Same words otherwise. T-17203 */
 void func_80154118(void) {
     GameState *g = &D_800E6280; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl15 tbl;
@@ -387,12 +388,10 @@ void func_80154118(void) {
              (g->unk_03E == 0x61 && g->unk_03F == 7 && g->unk_040 == 0x1B)) &&
             D_800B593C == 0x80) {
             func_8006B900();
-        } else if (D_800CA2F8 == 0x11 || D_800CA2F8 == 0x10) {
+        } else if (((DateSelectionView *)&D_800CA2F8)->place == 0x11 ||
+                   ((DateSelectionView *)&D_800CA2F8)->place == 0x10) {
             func_8006B900();
         }
     }
     tbl.f[g->unk_110A](0x80);
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80152FC0", func_80154118);
-#endif
