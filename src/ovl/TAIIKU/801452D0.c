@@ -343,7 +343,73 @@ void func_80145F8C(void) {
     D_80120656 = 2;
 }
 
+/* NON_MATCHING: T-16553, 22 differing lines; the tail loads D_800E638E into a1 and the masked D_800E6375 into t5, the original loads it into v0 (the variable itself) and keeps the mask in v1 */
+#ifdef NON_MATCHING
+void func_8014607C(void) {
+    s32 i;
+    s32 var_v0_2;
+    s32 temp_v1;
+
+    D_8014A3E4.unk_00 = 0;
+    D_8014A3E4.unk_08 = 0;
+    D_8014A3E4.unk_0C = 0;
+    D_8014A3E4.unk_04 = 0;
+    D_8014A3E4.position.h[0] = 0;
+    D_8014A3E4.unk_14 = 0;
+    D_8014A3E4.unk_01 = 0;
+    D_8014A3E4.unk_02 = 0;
+    for (i = 0; i < 3; i++) {
+        D_8014A400[i].position.h[1] = (i + 1) * 8;
+        D_8014A400[i].unk_0C = 0;
+        D_8014A400[i].unk_04 = 0;
+        D_8014A400[i].unk_00 = 0;
+        D_8014A400[i].unk_14 = 0;
+        D_8014A400[i].position.h[0] = 0;
+        D_8014A400[i].unk_01 = 0;
+    }
+    for (i = 0; i < 4; i++) {
+        D_8014A3D8[i] = 0;
+        D_8014A454[i].unk_18 = 0;
+        D_8014A454[i].unk_02 = 0x37;
+        D_8014A454[i].unk_06 = 0x19;
+        D_8014A454[i].unk_08 = 0;
+        D_8014A454[i].unk_14 = 0;
+        D_8014A454[i].unk_16 = 0;
+        D_8014A454[i].unk_0C = 0;
+        D_8014A454[i].unk_0D = 0;
+        D_8014A454[i].unk_0E = 0;
+        D_8014A454[i].unk_0F = 0;
+    }
+    D_8014A3E4.position.h[1] = -0xA0;
+    D_8014A3E0 = 0;
+    D_8014A3DC = 0;
+    var_v0_2 = D_800E6280.unk_10C.unk_02;
+    temp_v1 = D_800E6280.unk_0F4.b[1] & 0xF;
+    D_8014A3C4 = 0;
+    if ((temp_v1 & 1) || (temp_v1 & 2)) {
+        var_v0_2 = (s16) (var_v0_2 >> 1);
+    }
+    if (var_v0_2 >= 0xA0) {
+        D_8014A3D0 = 0x280;
+        D_8014A3D4 = 0x20000;
+    } else if (var_v0_2 >= 0x7D) {
+        D_8014A3D0 = 0x220;
+        D_8014A3D4 = 0x1E000;
+    } else if (var_v0_2 >= 0x64) {
+        D_8014A3D0 = 0x1C0;
+        D_8014A3D4 = 0x1C000;
+    } else if (var_v0_2 >= 0x4B) {
+        D_8014A3D0 = 0x160;
+        D_8014A3D4 = 0x1A000;
+    } else {
+        D_8014A3D0 = 0x100;
+        D_8014A3D4 = 0x18000;
+    }
+    func_800AE120(D_800E6280.unk_10F4);
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_8014607C);
+#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146338);
 
