@@ -68,8 +68,9 @@ for container: unexpected EOF"). Nothing else was wrong: output is a few KB and 
 80 MB. Now the loaded functions and the groups are cached in build/queue-cache.json, keyed on the
 size and mtime of every asm, source and config file and of queue.py, dupes.py and neardupes.py, so a
 repeat run takes about a second and any edit or regenerated asm invalidates it (--no-cache ignores it).
-Without --by bytes / --plan, --files also limits what is read to those files. Progress lines go to
-stderr, so a long first run is not silent.
+Without --by bytes / --plan / --calibrate, --files also limits function loading to those files.
+These scoped queries bypass the whole-tree cache: validating its signature would still stat every
+asm, source and config file, even for a one-file query (T-20000). Progress lines go to stderr.
 
 Byte-weighted ranking (--by bytes): score = expected bytes / effort.
   expected bytes = size * P(match) * (1 + credit), credit = 0.9 per byte-identical twin and 0.6 per near
@@ -842,11 +843,12 @@ def main(argv=None):
     ap.add_argument("--no-cache", action="store_true", help="ignore and do not write build/queue-cache.json")
     a = ap.parse_args(argv)
     root = Path(a.root)
-    cache = Cache(root, not a.no_cache)
     wanted = a.files.split(",") if a.files else []
     # only --by bytes / --plan need the whole project (duplicate groups, balancing); otherwise a
     # --files list limits what is read
     narrow = wanted if not (a.calibrate or a.plan or a.by == "bytes") else []
+    # A scoped load never writes the full cache. Do not pay for its whole-tree signature either.
+    cache = Cache(root, not a.no_cache and not narrow)
     remaining, matched = load_cached(root, legacy=a.calibrate and a.legacy, cache=cache, files=narrow)
     if not remaining and not narrow:
         print("error: no INCLUDE_ASM functions found (run ninja first to generate asm/)", file=sys.stderr)

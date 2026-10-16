@@ -33,6 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
+- [[tickets/T-20000-first-contribution|T-20000]] Scoped work queues bypass whole-tree cache validation; 52 tests pass, identical real-query output at 53.402 s before / 5.312 s after on Windows/WSL (In Review).
 - [[tickets/T-19032-w3-d-p32|T-19032]] Wave 3 package w3-d-p32: TAIIKU `80141280.c`, 1 of 1 matched (`func_80141280`, 1,764 B intro state machine: auto-array initialiser as `.data` island, rolled 16-record zero loop with a reassigned counter, two FAKE views for a masked byte test and the nested selector in `$v1`) (Done).
 - [[tickets/T-11840-tt-batch-10|T-11840]] TT batch 10: one long Opus run per large function (Done, PR #34 merged; 10 of 12 matched, TT 262/303 functions, 78.6% of bytes).
 
