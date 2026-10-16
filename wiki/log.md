@@ -15776,3 +15776,7 @@ Created [[tickets/T-18500-types-first-bunkaken]] (branch `w3-bunkaken-types` fro
 ## [2026-10-16] ticket | T-18500 In Review
 
 [[tickets/T-18500-types-first-bunkaken]] In Progress to In Review: packages T-18501 (`w3-bunkaken-p01`) and T-18502 (`w3-bunkaken-p02`) cut by `inventory2.py`/`mklists3.py`; clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-18500 Done
+
+[[tickets/T-18500-types-first-bunkaken]] In Review to Done: code review against `CODING_STANDARDS.md`, no findings; BUNKAKEN sha1 OK, headers OK, `migrate_globals --check` OK, `sync_protos --check-branch` 0 new disagreements. 6 functions matched (6,232 bytes). Card moved in [[kanban]], line in [[index]].

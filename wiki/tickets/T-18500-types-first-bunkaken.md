@@ -1,7 +1,7 @@
 ---
 id: T-18500
 title: "Types-first: BUNKAKEN"
-status: In Review
+status: Done
 assignee: claude (w3-bunkaken-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -47,3 +47,20 @@ Start: 12 unmatched BUNKAKEN functions (14,256 bytes by `tools/siblings.py`), 1 
   T-18502 `w3-bunkaken-p02` (`80140F60.c`, `8013B510.c`, 3 functions, 3,236 B).
 - Details: [[bunka-family-results]] ("Types-first pass (T-18500)"), [[matching-notes]].
 
+### 2026-10-16 claude (review): code review against `CODING_STANDARDS.md`, no findings
+
+- Scope: `git diff w2-good...w3-bunkaken-types`. Outside `drafts/T-18500/` (new folder only; no existing `drafts/`
+  archive touched) and the wiki, only `include/main_api.h`, `include/ovl/BUNKAKEN.h` and four
+  `src/ovl/BUNKAKEN/*.c` files changed (`80144F70.c`, `80146560.c`, `80148ED0.c`, `80150D30.c`).
+- Checked: C89 (declarations at block top, `/* */` only), no inline asm, `.word` or bit hacks, all six reported
+  matches are plain C, the one new FAKE (`func_80145550` `u8 pad;`) starts its comment with `FAKE` and names
+  T-18500, the only `NON_MATCHING` block in the owned files (`801428D0.c`, T-10320) is unchanged and ticketed,
+  header changes are additions or a `#ifndef MAIN_API_OVERRIDE_get_g_zyotai_h` wrap (no declaration changed),
+  struct layouts carry offsets and sizes, the K&R overrides sit before the includes with their reason, no game
+  data, asm or binaries in the diff, commits small and prefixed with the ticket id.
+- Re-verified in the worktree after touching the BUNKAKEN sources: `tools/docker.sh ninja -j2` rebuilt the
+  overlay, `build/ovl/BUNKAKEN.bin: OK`; `check_headers.py` headers OK; `migrate_globals.py --check` globals OK;
+  `sync_protos.py --check-branch` 0 new disagreements.
+- Observation, not a finding: `func_8014A5EC` is `s32` without a return statement because its first use
+  (`func_80149144`) precedes the definition and no header prototype exists, so the implicit `int` view needs
+  the same type; changing it is outside this ticket's matching scope.
