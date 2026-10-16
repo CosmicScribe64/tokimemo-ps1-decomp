@@ -15931,3 +15931,6 @@ RENSYU `func_80133CB8` (420 bytes) matched, unit sha1 OK (`src/ovl/RENSYU/801320
 
 ## [2026-10-16] ticket | T-11850 TT batch 11 started
 Created [[tickets/T-11850-tt-batch-11]] (In Progress), stacked on T-11840 (PR #34, still open). Merged upstream `main` (252 commits, no TT changes) into `tt-batch11`; clean rebuild 27/27 OK. Seven file groups, one Opus agent each, two at a time.
+
+## [2026-10-16] ticket | T-11850 TT batch 11 Done
+Seven file groups, one Opus agent each, two at a time: 12 of 15 matched (4,520 bytes), 3 guarded (`func_80147A18`, `func_8013A0DC`, `func_8014A2B4`). The zero-store chain pair matched seven functions. Clean rebuild 27/27 OK, checks clean; TT 274/303 (82.7%). Inline review against CODING_STANDARDS.md: no open findings. Moved [[tickets/T-11850-tt-batch-11]] to Done. Notes in [[matching-notes]] ("TT overlay, batch 11"), 15 rows in [[data/t0018-cases]].
