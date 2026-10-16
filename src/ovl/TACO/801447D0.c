@@ -246,7 +246,8 @@ s32 func_80145DC4(void) {
 
 /* NON_MATCHING: T-19002, 3 differing instruction rows (6 funcdiff lines): the final `+= 1` of the frame counter loads into $v0 and stores from it, the original uses the ugen temporaries $t1 and $t2.
  * Draft with the plain `D_800E6280.unk_1104.w += 1;` is 242 rows off: IDO keeps the counter (the chain's shared load in $v0) in a register across all arms and reloads it after each call, the original reloads it only at the end. T-0018 `reverse` row.
- * FAKE: the absolute-address read at the end is a different expression to uopt, so it does not promote the counter across the calls; real source unknown. */
+ * FAKE: the absolute-address read at the end is a different expression to uopt, so it does not promote the counter across the calls; real source unknown.
+ * Closer pass (T-19002): the final store still joins the counter's live range (regdiff: 26 uses, 1 def), so the sum takes $v0. Only a volatile access through `&D_800E6280` in the last block drops it (0 defs), at one extra address instruction (7 lines either way). Forms that fold back to the counter (pointer, index, `.u`) give 242 lines. */
 #ifdef NON_MATCHING
 s32 func_8014616C(void) {
     s32 t;

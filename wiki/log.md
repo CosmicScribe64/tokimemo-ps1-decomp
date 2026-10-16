@@ -15387,3 +15387,6 @@ Opened [[tickets/T-19002-w3-d-p02]] (In Progress): TACO `src/ovl/TACO/801447D0.c
 
 ## [2026-10-16] ticket | T-19002 In Review, 3 of 4 functions matched
 [[tickets/T-19002-w3-d-p02]] moved to In Review: TACO `src/ovl/TACO/801447D0.c` and `src/ovl/TACO/80137A60.c`. Matched `func_801449D8`, `func_80145DC4` and `func_80137D00` (2,008 bytes); `func_8014616C` stays a 3-row NON_MATCHING draft. New FAKEs: `u8 pad[0x130]` frame reserve, absolute-address pointer load in `func_80137D00`, absolute-address read in the guarded `func_8014616C`. Notes in [[matching-notes]], rows in [[data/t0018-cases]], cheat sheet rows in [[register-cheatsheet]], package line in [[taco-family-results]].
+
+## [2026-10-16] build | T-19002 closer pass on func_8014616C
+Opus closer pass on [[tickets/T-19002-w3-d-p02]] (branch w3-d-p02): no new match. TACO `func_8014616C` stays a 3-row NON_MATCHING draft in `src/ovl/TACO/801447D0.c`, and its comment now records the live-range finding. A volatile `&D_800E6280` access in the last block takes it out of the counter's range but adds an address instruction (7 lines). Folded forms give 242 lines, two constants 12, and autotweak 120 s none. Notes in [[matching-notes]] and [[data/t0018-cases]]. Ticket stays In Review.
