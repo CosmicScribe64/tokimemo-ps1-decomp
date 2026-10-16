@@ -841,6 +841,9 @@ extern TaiikuB16 D_80149F40;
 typedef struct TaiBytes10 {
     /* 0x00 */ u8 v[10];
 } TaiBytes10; /* size 0xA */
+typedef struct TaiBytes23 {
+    /* 0x00 */ u8 v[23];
+} TaiBytes23; /* size 0x17 */
 typedef struct TaiShorts12x {
     /* 0x00 */ s16 v[12];
 } TaiShorts12x; /* size 0x18 */
@@ -871,6 +874,7 @@ typedef struct TaiWords12 {
 extern s32 D_8014A56C; /* func_80145370 */
 extern TaiWords12 D_8014A570; /* func_80145370 */
 extern TaiWords9 D_8014A5A0; /* func_80145370 */
+extern TaiBytes23 D_80148F10; /* func_80132BD0 */
 extern TaiShorts23 D_80148F28; /* func_80132BD0 */
 extern TaiShorts23 D_80148F58; /* func_80132BD0 */
 extern TaiShorts23 D_80148F88; /* func_80132BD0 */

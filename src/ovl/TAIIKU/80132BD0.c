@@ -1,7 +1,45 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_80132BD0);
+#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
+
+void func_80132BD0(void) {
+    s32 i;
+    s32 j; /* FAKE: five unused word locals reproduce the original frame (arrays at 0x68, frame 0x128); real locals unknown. T-19031 */
+    s32 k;
+    s32 l;
+    s32 m;
+    s32 n;
+    TaiBytes23 spF8;
+    TaiShorts23 spC8;
+    TaiShorts23 sp98;
+    TaiShorts23 sp68;
+
+    spF8 = D_80148F10;
+    spC8 = D_80148F28;
+    sp98 = D_80148F58;
+    sp68 = D_80148F88;
+    for (i = 0; i < 0x17; i++) {
+        func_80048F64(i + 1);
+        DISP(i + 1).unk_38 = 0x01000000;
+        DISP(i + 1).unk_04 = 0;
+        DISP(i + 1).unk_05 = 0x80;
+        DISP(i + 1).unk_01 = spF8.v[i];
+        DISP(i + 1).unk_06 = 2;
+        DISP(i + 1).unk_08 = 0;
+        DISP(i + 1).unk_0C = (u8 *)D_80149FCC;
+        DISP(i + 1).unk_10 = (u8 *)D_8014A004;
+        DISP(i + 1).unk_34 = (u8 *)D_8014A070;
+        DISP(i + 1).unk_14 = D_8014A03C;
+        DISP(i + 1).unk_1A = 0x1000;
+        *(s16 *)DISP(i + 1).pad_1C = 0x1000;
+        DISP(i + 1).unk_07 = 0x80;
+        DISP(i + 1).unk_26 = spC8.v[i] - 0xA0;
+        DISP(i + 1).unk_2A = sp98.v[i] - 0x78;
+        DISP(i + 1).unk_18 = 0;
+        DISP(i + 1).unk_16 = sp68.v[i];
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_80132E20);
 
