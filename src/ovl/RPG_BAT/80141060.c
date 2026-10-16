@@ -4,9 +4,7 @@
 #define ACT(i) (((DisplayActor44 *) D_8011ECD0)[i])
 
 void func_80141060(void) {
-    /* FAKE: unused top local word; the original's frame has one more word than IDO gives the
-     * spill of the record pointer (sp+0x3C, not sp+0x38). Real source unknown. T-17119 */
-    u8 pad[4];
+    s32 sel; /* a named copy of the switch value: its home word is the extra frame word (T-17119) */
     s32 i;
     s32 j;
 
@@ -47,7 +45,8 @@ void func_80141060(void) {
     load_tpage_buf_lock(0x19, ((s32 *) D_8015EE8C)[4], 1);
     load_tpage_buf_lock(0x35, ((s32 *) D_8015EE98)[0], 1);
     load_tpage_buf_lock(0x39, ((s32 *) D_8015EE98)[1], 1);
-    switch (D_8015EB98) {
+    sel = D_8015EB98;
+    switch (sel) {
     case 0x10000:
         load_tpage_buf_lock(0xB, ((s32 *) D_8015EE94)[1], 1);
         load_tpage_buf_lock(0xC, ((s32 *) D_8015EE94)[2], 1);
