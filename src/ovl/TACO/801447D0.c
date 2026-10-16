@@ -173,7 +173,6 @@ void func_8014559C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801447D0", func_80145650);
 
-#ifdef NON_MATCHING
 s32 func_80145DC4(void) {
     s32 t;
     s32 i;
@@ -244,9 +243,6 @@ s32 func_80145DC4(void) {
     }
     D_800E6280.unk_1104.w += 1;
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801447D0", func_80145DC4);
-#endif
 
 #ifdef NON_MATCHING
 s32 func_8014616C(void) {
