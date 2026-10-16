@@ -79,7 +79,81 @@ void func_801428DC(void) {
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80142820", func_801428DC);
 #endif
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80142820", func_80142AF0);
+void func_80142AF0(void) {
+    GameState *gs = &D_800E6280;
+    s32 temp;
+
+    switch (gs->unk_110D) {
+    case 0:
+        if (func_80053F04() != 0) {
+            /* FAKE: the first read of unk_1115 goes through a local so the three tests share a
+             * register range that takes $v1 (found by tools/autotweak.py); T-19009 */
+            temp = gs->unk_1115;
+            if (temp == 1) {
+                gs->unk_110D += 1;
+            } else if (gs->unk_1115 == 0xF1) {
+                gs->unk_110D += 1;
+            } else if (gs->unk_1115 == 0xFF) {
+                gs->unk_110D += 1;
+            }
+        } else if ((u32)gs->unk_1120 >= 0x201U) {
+            gs->unk_110D += 1;
+        }
+        break;
+    case 1:
+        func_80053D10();
+        if (gs->unk_1115 == 1) {
+            if (func_80054AF4(0) == 1) {
+                gs->unk_110D += 1;
+                func_80053CE0();
+                func_8005C4CC(0);
+            } else {
+                gs->unk_110D = 0xFF;
+            }
+        } else {
+            gs->unk_110D = 0xFF;
+        }
+        break;
+    case 2:
+        if (func_80054284() == 3) {
+            func_80053D10();
+            gs->unk_110D += 1;
+        } else if (((u32)gs->unk_1120 >= 0x201U) || (gs->unk_1115 == 0xF0)) {
+            func_80053D10();
+            gs->unk_110D = 0xFF;
+        }
+        break;
+    case 3:
+        if (func_800552DC(0) == -1) {
+            func_8005C4CC(1);
+            gs->unk_110D = 0xFF;
+        } else {
+            func_8005C4CC(1);
+            gs->unk_110D += 1;
+        }
+        break;
+    case 4:
+        func_80053CE0();
+        D_800E7D36 = 0;
+        gs->unk_110D += 1;
+        break;
+    case 5:
+        if (func_80054388() == 0x13) {
+            func_80044750(0x50F);
+            func_80053D10();
+            gs->unk_110D += 1;
+        } else if (((u32)gs->unk_1120 >= 0x201U) || (gs->unk_1115 == 0xF0)) {
+            func_80044750(0x502);
+            func_80053D10();
+            gs->unk_110D += 1;
+        }
+        break;
+    case 0xFF:
+    default:
+        func_8004284C();
+        break;
+    }
+}
 
 typedef struct {
     u32 pad0 : 1;
