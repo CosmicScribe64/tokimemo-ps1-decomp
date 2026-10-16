@@ -143,6 +143,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-19027-w3-d-p27|T-19027 Wave 3 package w3-d-p27]]
 - [ ] [[tickets/T-19028-w3-d-p28|T-19028 Wave 3 package w3-d-p28]]
 - [ ] [[tickets/T-19030-w3-d-p30|T-19030 Wave 3 package w3-d-p30]]
+- [ ] [[tickets/T-19031-w3-d-p31|T-19031 Wave 3 package w3-d-p31]]
 - [ ] [[tickets/T-19023-w3-d-p23|T-19023 Wave 3 package w3-d-p23]]
 - [ ] [[tickets/T-19022-w3-d-p22|T-19022 Wave 3 package w3-d-p22]]
 - [ ] [[tickets/T-19024-w3-d-p24|T-19024 Wave 3 package w3-d-p24]]

@@ -58,7 +58,7 @@ extern u8 D_801499D8;
 extern u8 D_8014A064;
 extern u8 D_8014A11C;
 
-extern u8 D_80148EC0[];
+extern u8 D_80148EC0[4];
 extern s32 D_80148EF0;
 extern s32 D_80148EF4;
 extern s32 D_80148EF8;
@@ -138,7 +138,9 @@ void func_801482BC(s32);
 void func_80147A6C(s32);
 void func_80147B14(s32);
 s32 func_80141CDC();
-void func_80132E20(s32, s32);
+void func_80132E20(); /* K&R definition in 80132BD0.c (s16 first parameter) */
+void func_80132970(void);
+void func_80133BF0(void);
 s32 func_80140A90();
 extern u8 D_8014A110;
 void func_80143D24(void);
@@ -841,6 +843,9 @@ extern TaiikuB16 D_80149F40;
 typedef struct TaiBytes10 {
     /* 0x00 */ u8 v[10];
 } TaiBytes10; /* size 0xA */
+typedef struct TaiBytes23 {
+    /* 0x00 */ u8 v[23];
+} TaiBytes23; /* size 0x17 */
 typedef struct TaiShorts12x {
     /* 0x00 */ s16 v[12];
 } TaiShorts12x; /* size 0x18 */
@@ -871,6 +876,9 @@ typedef struct TaiWords12 {
 extern s32 D_8014A56C; /* func_80145370 */
 extern TaiWords12 D_8014A570; /* func_80145370 */
 extern TaiWords9 D_8014A5A0; /* func_80145370 */
+extern TaiWords11 D_80148EC4; /* func_80132000 */
+extern TaiBytes23 D_80148F10; /* func_80132BD0 */
+extern TaiShorts23 D_80148FB8; /* func_80132E20 */
 extern TaiShorts23 D_80148F28; /* func_80132BD0 */
 extern TaiShorts23 D_80148F58; /* func_80132BD0 */
 extern TaiShorts23 D_80148F88; /* func_80132BD0 */

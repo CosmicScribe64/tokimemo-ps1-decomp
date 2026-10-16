@@ -16109,3 +16109,18 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 ## [2026-10-16] ticket | T-19030 Done
 
 [[tickets/T-19030-w3-d-p30]] In Review to Done: code review against `CODING_STANDARDS.md` found 1 minor item (the two unused locals of the archived `func_8013B460` draft had no `FAKE` comment), fixed in the draft only (bytes unchanged); headers OK, globals OK, sync_protos OK. 0 of 4 functions matched (`func_8013B2A0` stays a guarded draft at 20 instructions, `func_8013B460`, `func_8015D0D0`, `func_8015D270` stay `INCLUDE_ASM`). Card moved in [[kanban]], line in [[index]].
+## [2026-10-16] ticket | T-19031 In Progress
+
+[[tickets/T-19031-w3-d-p31]] created and In Progress: wave 3 package w3-d-p31, TAIIKU `src/ovl/TAIIKU/80132000.c` and `src/ovl/TAIIKU/80132BD0.c`, 4 functions (`func_80133258`, `func_80132BD0`, `func_80132E20`, `func_80132000`), worktree tokimemo-wt/w3-d-p31.
+
+## [2026-10-16] build | T-19031 matches
+
+[[tickets/T-19031-w3-d-p31]]: TAIIKU `src/ovl/TAIIKU/80132BD0.c` and `src/ovl/TAIIKU/80132000.c`, 4 of 4 functions matched in plain C (4,412 bytes): `func_80133258` (480 B, FAKE `(u8)` narrowing), `func_80132BD0` (592 B, five FAKE unused word locals), `func_80132E20` (692 B, K&R `s16` parameter, two FAKE unused word locals) and `func_80132000` (2,648 B, `D_80148EC0` defined in the unit through the data island of `80132000.c`, one FAKE empty test). New in `include/`: `TaiBytes23`, `D_80148F10`, `D_80148EC4`, `D_80148FB8`, `func_80132970`/`func_80133BF0` prototypes, `func_80132E20` unprototyped, `D_80122E90` in `main_api.h`; `config/overlays/TAIIKU.yaml` data island. Notes in [[matching-notes]] (T-19031), [[register-cheatsheet]], [[taiiku-family-results]]. Clean build 27/27, `tools/check_headers.py` OK, `tools/migrate_globals.py --check` OK, `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] ticket | T-19031 In Review
+
+[[tickets/T-19031-w3-d-p31]] In Progress to In Review: wave 3 package w3-d-p31 (TAIIKU `80132000.c`, `80132BD0.c`), 4 of 4 functions matched (4,412 bytes), about 70 minutes of agent time. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-16] ticket | T-19031 Done
+
+[[tickets/T-19031-w3-d-p31]] In Review to Done after the code review: wave 3 package w3-d-p31 (TAIIKU `src/ovl/TAIIKU/80132000.c`, `src/ovl/TAIIKU/80132BD0.c`, `include/ovl/TAIIKU.h`, `include/main_api.h`, `config/overlays/TAIIKU.yaml`), 4 of 4 functions matched (4,412 bytes: `func_80133258`, `func_80132BD0`, `func_80132E20`, `func_80132000`, four ticketed FAKEs). One finding fixed: `D_80122E90` moved into address order in `include/main_api.h`. Full build 27/27 sha1 OK, headers, globals and proto checks OK.
