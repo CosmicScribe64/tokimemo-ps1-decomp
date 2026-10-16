@@ -15478,3 +15478,7 @@ Opened [[tickets/T-17500-types-first-shougatu]] (In Progress) on branch `w3-shou
 ## [2026-10-16] ticket | T-17500 In Review
 
 [[tickets/T-17500-types-first-shougatu]] In Progress to In Review. Packages T-17501..T-17507 (`w3-shougatu-p01`..`p07`, 33 functions, 18,404 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]).
+
+## [2026-10-16] ticket | T-17500 Done
+
+Code review of [[tickets/T-17500-types-first-shougatu]] against `CODING_STANDARDS.md`: 3 small findings fixed (missing local declaration beside the `MAIN_API_OVERRIDE_func_800847B8` define in `src/ovl/SHOUGATU/801330C0.c`, a redundant `(u8)` cast in `func_801419D0`, an idiom comment in `func_8013AFEC`). 4 functions matched (1,516 bytes), SHOUGATU sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. In Review to Done; branch `w3-shougatu-types` goes to the integration merge.

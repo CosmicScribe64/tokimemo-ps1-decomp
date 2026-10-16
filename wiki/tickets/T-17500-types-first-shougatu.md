@@ -1,7 +1,7 @@
 ---
 id: T-17500
 title: "Types-first: SHOUGATU"
-status: In Review
+status: Done
 assignee: claude-opus (w3-shougatu-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -34,3 +34,15 @@ Branch `w3-shougatu-types` from `w2-good`. Owns `src/ovl/SHOUGATU/`, `include/ov
 - Matched (4 functions, 1,516 bytes): `func_801419D0` (typed draft, score 0), `func_80132A34` and `func_80133760` (ports of GYOZI `func_80134938`, `func_80135518`), `func_8013AFEC` (typed draft plus the sibling `func_80137E54` idioms). No FAKE.
 - Packages: T-17501..T-17507 (`w3-shougatu-p01`..`p07`), 33 functions, 18,404 bytes.
 - Details: [[shougatu-family-results]], "Types-first pass (T-17500)".
+
+### 2026-10-16 code review (claude-opus)
+
+Review of `w2-good...w3-shougatu-types` against `CODING_STANDARDS.md` (section 13 checklist). Only SHOUGATU `.c` files, `include/ovl/SHOUGATU.h` and one line in `include/main_api.h` changed; `drafts/` has new files under `drafts/T-17500/` only, with no earlier archive touched; no inline asm, `.word`, game data or binaries; no `NON_MATCHING` block added (the two earlier ones, T-11310 and T-10910, are untouched); no new FAKE and no `//` comment. All four new matches are plain C. The 49 `FnTblNN` externs and 26 typedefs are declared once, and the stray early `#endif` in `SHOUGATU.h` now sits at the end of the file, so the whole header is guarded.
+
+Findings, all fixed in commit `093c1307`:
+
+1. `801330C0.c` defined `MAIN_API_OVERRIDE_func_800847B8` but declared no type of its own (section 8a); now `void func_800847B8();` as in the twin `80134120.c`.
+2. `func_801419D0` had a redundant `(u8)` cast on `D_800E6280.unk_110A`, which is already `u8`; the unit still matches without it, so the cast is gone.
+3. `func_8013AFEC`: the byte-view chain store is a documented idiom (T-9150, three earlier users) but had no comment; one added.
+
+Checks after the fixes: `tools/docker.sh ninja` SHOUGATU sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. 4 functions matched (1,516 bytes). Result: no open findings.
