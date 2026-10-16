@@ -5702,7 +5702,7 @@ Closer pass (Opus, about 25 minutes of exploring, 06:05-06:30 UTC): `func_80137D
 
 ## T-19001: TAIIKU package w3-d-p01 (80140810.c)
 
-[[tickets/T-19001-w3-d-p01]], direct package of wave 3: one function, `func_80140A90` (2,020 bytes), the guarded draft from [[tickets/T-16554-pt-taiiku-p4]]. Not matched; the guarded draft keeps its 33 differing instructions (66 diff lines). Time: about 55 minutes. The siblings tool found no matched function above ratio 0.70, and `autotweak` (150 s, 686 edits) found nothing.
+[[tickets/T-19001-w3-d-p01]], direct package of wave 3: one function, `func_80140A90` (2,020 bytes), the guarded draft from [[tickets/T-16554-pt-taiiku-p4]]. Not matched; the guarded draft keeps its 33 differing instructions (66 diff lines). Time: about 50 minutes. The siblings tool found no matched function above ratio 0.70, and `autotweak` (150 s, 686 edits) found nothing.
 
 What this pass added is a measured model of the block copy's temporaries, from about 80 variants of the real function and about 120 isolated contexts in a scratch harness (not committed):
 - **Method.** An isolated function `test(u8 *p, s32 n) { <context> *(R *)(A + 0x1a08) = *(R *)(A + 0x1980); }` with `R` a 17-word struct, compiled with `/opt/ido/5.3/cc -S` (0.3 s) so the listing shows ugen's own registers and its `.set noat` lines. The real unit was also compiled with an extra `ugen` shim (`cc.ido_frame_env(..., extra_shims={"ugen": ...})`) that saves ugen's input, which `cvt_pass.parse` prints as ucode. Both reproduce the 66-line miss of the real function.

@@ -90,7 +90,7 @@ Left for later waves: the rest of `80133C80.c` (8), `80138950.c` (8), `801452D0.
 
 ### Package w3-d-p01 results (T-19001)
 
-`func_80140A90` (2,020 B) re-worked for about 55 minutes in wave 3: not matched, 33 instructions still differ. The block copy's temporary count was measured as a two-state rule of ugen and no code-neutral C reaches the original's state; the original disagrees with the same rule in SHUGAKU, MASTER and ENDING, so the gap looks like a ugen difference. Evidence and the variants tried: [[matching-notes]], "T-19001".
+`func_80140A90` (2,020 B) re-worked for about 50 minutes in wave 3: not matched, 33 instructions still differ. The block copy's temporary count was measured as a two-state rule of ugen and no code-neutral C reaches the original's state; the original disagrees with the same rule in SHUGAKU, MASTER and ENDING, so the gap looks like a ugen difference. Evidence and the variants tried: [[matching-notes]], "T-19001".
 
 ## Package pt-taiiku-p2 (T-16552): `80138950.c`
 
