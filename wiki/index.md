@@ -115,6 +115,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-16551-pt-taiiku-p1|T-16551]] Types-first pilot package pt-taiiku-p1: TAIIKU `80133C80.c`, 5 of 8 functions matched (4,480 B), 2 guarded drafts, idioms: unit-defined data for `lui at`, unrolled runner loops (Done).
 - [[tickets/T-16550-taiiku-types-first|T-16550]] Types-first pilot: TAIIKU: runner records of three games and 28 stack tables typed, all 64 functions redrafted (27 better), `func_80141CDC` matched, packages T-16551..T-16554 (Done).
 - [[tickets/T-16563-taco-types-first-p3|T-16563]] Types-first pilot package pt-taco-p3: TACO `80151C30.c`, `8015ABF0.c`, 10 functions matched (4,740 B; 9 of the 10 listed) in about 80 minutes, `func_8015B1B8` guarded, idioms in [[matching-notes]] (Done).
+- [[tickets/T-17008-w3-main-p08|T-17008]] Wave 3 package w3-main-p08: main `80059B40.c` and `8004F6B0.c`, 3 drafts from the types-first pass (In Progress).
 - [[tickets/T-17003-w3-main-p03|T-17003]] Wave 3 package w3-main-p03: main `800789E0.c`, `func_80079800` matched (784 B), `func_80079070` guarded at 4 lines after the closer pass (Done).
 - [[tickets/T-17000-types-first-main|T-17000]] Types-first: main: main-only tables, `Flags7D4F`, 163 redrafts (45 better than the census, none 0), 5 matches / 1,948 bytes, packages T-17001..T-17027 (Done).
 - [[tickets/T-16560-taco-types-first|T-16560]] Types-first pilot: TACO: actor/coordinate/matrix types, 126 redrafts (48 better than the census, none 0), 5 matches / 2,032 bytes, packages T-16561..T-16564 (Done).
