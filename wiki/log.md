@@ -15799,3 +15799,11 @@ Opened [[tickets/T-18200-types-first-en_nichi]] (In Progress) under [[tickets/T-
 ## [2026-10-16] ticket | T-19019 In Progress
 
 [[tickets/T-19019-w3-d-p19]] created and In Progress: Wave 3 package w3-d-p19, TACO `src/ovl/TACO/80148FE0.c` (`func_80149538`, `func_801497EC`). Worktree `w3-d-p19` from `w2-good`.
+
+## [2026-10-16] build | T-19019 package w3-d-p19 worked
+
+[[tickets/T-19019-w3-d-p19]]: TACO `src/ovl/TACO/80148FE0.c`, 0 of 2 matched. `func_80149538` is a guarded draft at 10 funcdiff lines (a volatile tail increment, FAKE, removes the per-arm reload; the loop is a `do`/`while` from 1 to 36), `func_801497EC` a guarded draft at 4 lines (frame and spill layout explained by the declaration order; the three compared objects are separate externs in `include/ovl/TACO.h`). Findings in [[matching-notes]] ("T-19019"), two rows in `wiki/data/t0018-cases.md`, five rows in [[register-cheatsheet]], a section in [[taco-family-results]].
+
+## [2026-10-16] ticket | T-19019 In Review
+
+[[tickets/T-19019-w3-d-p19]] In Progress to In Review: 0 of 2 functions matched (both guarded, 10 and 4 lines), clean rebuild, `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` run (results in the ticket Notes). Code review against `CODING_STANDARDS.md` still to do.
