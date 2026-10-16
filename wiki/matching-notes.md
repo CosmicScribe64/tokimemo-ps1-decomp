@@ -5908,3 +5908,12 @@ Details in [[event-family-results]] ("Types-first pass (T-17600)"). Matched: GYO
   the call is the last statement (`func_8013B0C4`).
 - `func_8014206C` (6 rows): `x != 0 && x != 7` on a `u8` global loaded once gives `beq v1,v0` where the
   original has `beq v0,v1`; a local, the swapped constant, a negated `||` and a switch do not change it.
+
+## Types-first SHUGAKU (T-18000)
+
+[[tickets/T-18000-types-first-shugaku]], details on [[shugaku-family-results]]. Five functions matched (2,292 bytes).
+
+- Location-table switch (SHUGAKU `func_8013282C`, `func_801399F4`, clones of GEKO `func_801327AC` and GYOZI `func_80134938`): `if ((u8)(get_g_zyotai_s(6) & 0x7F) < 2)`; the m2c form `(u32)(... & 0x7F) < 2U` uses one temporary less after the call and shifts every later register.
+- Callback-table dispatcher (SHUGAKU `func_80134B94`, EVENT `func_800FA6A0` idiom): `u8 index;` above the table copy, `index` reread after the call. An overlay that takes a main function's address with `%hi/%lo` links only to splat's `D_` name: declare `void D_80085368(void);` in `main_api.h` (precedent `D_800896E0`).
+- One variable for two live ranges (SHUGAKU `func_80139054`): a selector in `a1` comes from reusing the switch variable for a later reload passed as the second argument.
+

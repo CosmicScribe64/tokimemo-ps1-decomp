@@ -15625,3 +15625,11 @@ Created [[tickets/T-17600-types-first-gyozi]] (wave 3 types-first pass for GYOZI
 ## [2026-10-16] ticket | T-18000 Types-first: SHUGAKU In Progress
 
 Created [[tickets/T-18000-types-first-shugaku]] (wave 3 types-first pass for SHUGAKU, branch `w3-shugaku-types` from `w2-good`; 25 unmatched functions, 9,908 bytes), card in In Progress on [[kanban]], line in [[index]].
+
+## [2026-10-16] build | T-18000 SHUGAKU types, redraft and matches
+
+[[tickets/T-18000-types-first-shugaku]]: SHUGAKU callback tables in `include/ovl/SHUGAKU.h` (`ShFnTblNN`, eight moved from the `.c` files, `D_8013C008` and `D_8013C228` added), display-record copies as `DisplayActor44`, `D_8013C2E4` as `u8`; `void D_80085368(void);` added to `include/main_api.h`. `drafts/T-18000/redraft.py` (from T-17700, plus `rect-local`) redrafted all 25 unmatched functions: over the 22 unguarded ones 9 better than the census (3,368 bytes), 13 the same, none worse, none 0. Matched 5 functions / 2,292 bytes: `func_8013282C`, `func_801399F4`, `func_80135630`, `func_80134B94`, `func_80139054`. Packages T-18001..T-18004 (20 functions). Details on [[shugaku-family-results]] (new page), rows in [[data-types]] and [[matching-notes]].
+
+## [2026-10-16] ticket | T-18000 In Review
+
+[[tickets/T-18000-types-first-shugaku]] In Progress to In Review: clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], lines in [[index]].
