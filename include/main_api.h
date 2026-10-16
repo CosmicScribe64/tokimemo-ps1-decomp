@@ -2270,7 +2270,7 @@ void restore_bgm(void);
 s32 func_8006CDD4(void);
 void func_8006D038(void);
 void func_8006D138(void);
-void func_8006D6E0();
+s32 func_8006D6E0();
 void func_8006D7EC(void);
 s32 func_8006EB64(u8 *arg0, u8 *arg1);
 s32 func_8006EEC4(u8 *arg0, u8 *arg1);
