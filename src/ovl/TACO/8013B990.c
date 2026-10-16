@@ -31,7 +31,25 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B990", func_8013C440);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B990", func_8013C6D4);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B990", func_8013CC40);
+/* FAKE: s32 with no return keeps v0 live at the exit (void changes one instruction), as in
+ * func_8013CE78. The i == 8 test is dead (the loop starts at 16) but the original has it. T-19006. */
+s32 func_8013CC40(void) {
+    u32 i;
+    for (i = 16; i < 64; i++) {
+        if (((i + D_8015EDB4)->unk84[1] == 0) && ((i + D_8015EDB4)->unk0[1] & 0x80)) {
+            if (!(D_800E6280.unk_10F8 & 0x1F)) {
+                func_801335A0(1, 0x508);
+            }
+            func_8013D1E0(*(TcPos *)&(i + D_8015EDB4)->unk74, *(TcPos *)&(i + D_8015EDB4)->unk7C, 0);
+            func_8013D1E0(*(TcPos *)&(i + D_8015EDB4)->unk74, *(TcPos *)&(i + D_8015EDB4)->unk7C, 0);
+            if (i == 8) {
+                (D_8015EDB4 + i)->unk84[1] = func_800AE0D0() & 0x3F;
+                (D_8015EDB4 + i)->unk74 = func_800AE0D0() % 100;
+                (D_8015EDB4 + i)->unk76 = func_800AE0D0() % 100;
+            }
+        }
+    }
+}
 
 void func_8013CE70(void) {
 }
