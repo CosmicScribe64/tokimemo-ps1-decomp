@@ -145,3 +145,7 @@ Result of w3-date-p03 ([[tickets/T-17203-w3-date-p03]]): 3 of 4 matched (`func_8
 ### w3-date-p04 (T-17204)
 
 `80151460.c`, 4 functions (2,328 bytes): `func_80152060` matched (520 bytes: `DateWords2` stack table, a real element pointer local that moves the table 4 bytes, `s32` with no `return` so the last call's result stays in `$v0`); `func_80152268` matched (1,052 bytes: FAKE unread copies `j = v` keep the result variable live across the twelve `func_80152684` calls, `for` loop with a trailing `++i`); `func_801518B8` guarded at 14 rows (copy end pointer `t6` against `t7`, the old ugen-temporary gap); `func_80152E34` (POLY_G3 builder, colours of six uopt ranges) left as `INCLUDE_ASM` with a draft in `drafts/T-17204/DATE/`. Details: [[matching-notes]], section T-17204.
+
+### Wave 3 result: w3-date-p08 (T-17208)
+
+`func_8014AF88` (248 bytes) matched in plain C: the argument of `func_8009B3C0` and the loop calls is the pointer variable `dop` (`0x801F8000` plus steps), as in TACO `func_801471D0`. `func_8014A8FC` (1,140 bytes, a frame timeline with the light fade, the step loops and the ordering-table clear) was rewritten by hand and stays guarded at 34 differing lines, all of them register choices in the two light blocks (T-0018 row, same gap as TACO `func_80134A18`); two FAKE entries (byte view of `D_8012276C`, `s32` return with no `return`, and `func_8014A8FC` is `s32` in `DATE.h`). The three 416-byte rotation helpers stay `INCLUDE_ASM` (hand-written libgte, probe: 86 of 104 rows differ). Details: [[matching-notes]], "T-17208".

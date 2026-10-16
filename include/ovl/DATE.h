@@ -564,7 +564,7 @@ extern u8 D_8015B69C;
 void func_8013BFF8(void);
 void func_8013C0A4(void);
 void func_8014A810(void);
-void func_8014A8FC(void);
+s32 func_8014A8FC(void);
 void func_8014AD70(void);
 extern u8 D_8015B658;
 s32 func_8013AE5C();

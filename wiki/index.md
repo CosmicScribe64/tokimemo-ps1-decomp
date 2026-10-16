@@ -34,6 +34,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-17207-w3-date-p07|T-17207]] Wave 3 package w3-date-p07: DATE `80141EE0.c`, `func_801449D4` (312 to 71 rows) and `func_80144E20` (exact frame, about 180 register rows), 0 of 2 matched, drafts in `drafts/T-17207/` (Done).
+- [[tickets/T-17208-w3-date-p08|T-17208]] Wave 3 package w3-date-p08: DATE `8014A1B0.c`, `8015A640.c`, `8015A7E0.c`, `8015A980.c`, 1 of 5 matched (`func_8014AF88`, 248 B: pointer variable for the call argument), `func_8014A8FC` hand rewrite guarded at 34 lines, three libgte rotation helpers stay `INCLUDE_ASM` (Done).
 - [[tickets/T-19032-w3-d-p32|T-19032]] Wave 3 package w3-d-p32: TAIIKU `80141280.c`, 1 of 1 matched (`func_80141280`, 1,764 B intro state machine: auto-array initialiser as `.data` island, rolled 16-record zero loop with a reassigned counter, two FAKE views for a masked byte test and the nested selector in `$v1`) (Done).
 - [[tickets/T-11850-tt-batch-11|T-11850]] TT batch 11: one long Opus run per file group (Done, PR #35 merged; 12 of 15 matched, TT 274/303 functions, 82.7% of bytes).
 - [[tickets/T-11840-tt-batch-10|T-11840]] TT batch 10: one long Opus run per large function (Done, PR #34 merged; 10 of 12 matched, TT 262/303 functions, 78.6% of bytes).
