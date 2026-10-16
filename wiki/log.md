@@ -15433,3 +15433,7 @@ Created [[tickets/T-17300-types-first-etc]] (wave 3, [[speedup-research-2026-10-
 ## [2026-10-16] ticket | T-17300 In Review
 
 [[tickets/T-17300-types-first-etc]] In Progress to In Review: clean build, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` results on the ticket. Card moved in [[kanban]].
+
+## [2026-10-16] ticket | T-17300 Done
+
+[[tickets/T-17300-types-first-etc]] In Review to Done after the code review against `CODING_STANDARDS.md`: 3 functions matched (1,572 bytes: `func_80144AC0`, `func_8013E524`, `func_80145318`, all sibling ports), ETC types in `include/ovl/ETC.h`, 40 redrafts in `drafts/T-17300/`. No findings. ETC sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK.

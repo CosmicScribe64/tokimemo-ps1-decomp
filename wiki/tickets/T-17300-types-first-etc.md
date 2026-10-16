@@ -1,7 +1,7 @@
 ---
 id: T-17300
 title: "Types-first: ETC"
-status: In Review
+status: Done
 assignee: claude (w3-etc-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -49,3 +49,21 @@ Matched 3 functions / 1,572 bytes, all sibling ports: `func_80144AC0` (main `fun
 
 Checks: clean build 27/27 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK
 (0 new, 15 known). Moved to In Review.
+
+### 2026-10-16 (claude, review)
+
+Code review of `w2-good...w3-etc-types` against `CODING_STANDARDS.md`: no findings, no fixes needed.
+- C files changed: `src/ovl/ETC/8013BEF0.c`, `80143240.c`, `80146400.c` only (all owned); no other C, tools or config
+  file. `drafts/` gained only the new folder `drafts/T-17300/` (no existing archive touched); no asm, `.word`,
+  inline asm, disc data or binaries in it.
+- The three matches (`func_80144AC0`, `func_8013E524`, `func_80145318`; 516 + 392 + 664 = 1,572 bytes) are plain
+  C89 sibling ports with no FAKE, no `NON_MATCHING` and no new guard; `func_80145318` is s32 without a return like
+  its NAME_ENT sibling `func_80142028`, and the comment says so. Existing guards (`80146400.c`, T-10850) unchanged.
+- `include/ovl/ETC.h`: every new symbol is declared once, `D_8015014C[16]` and `SVECTOR D_8015013C` carry comments,
+  `EtcWork40` moved from `80146400.c` into the header, `func_80145318` prototype is s32 and matches the definition.
+- Package totals (29 functions, 22,400 bytes), the redraft split (11 better, 20 same, 5 worse of 36) and the
+  matched bytes agree between ticket, family page, catalog and log. Wiki links resolve.
+- Re-run on the branch: ETC rebuild after touching the sources and header, `build/ovl/ETC.bin: OK`;
+  `check_headers` OK; `migrate_globals --check` OK; `sync_protos --check-branch` OK (0 new, 15 known).
+
+Moved to Done.
