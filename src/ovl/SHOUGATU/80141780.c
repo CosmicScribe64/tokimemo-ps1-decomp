@@ -2,11 +2,6 @@
 #include "ovl/SHOUGATU.h"
 #include "game.h"
 
-typedef struct {
-    void (*f[51])();
-} FnTbl51; /* size 0xCC */
-extern FnTbl51 D_801468A4;
-
 void func_80141780(void) {
     D_801464B0 = 0x801DA680;
     D_801464B4 = 0x801DA68C;

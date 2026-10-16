@@ -676,7 +676,6 @@ typedef struct SjisStr3 {
 extern SjisStr3 D_80143D88;
 void func_80136770(void);
 
-#endif /* OVL_SHOUGATU_H */
 extern u8 D_80143DDC;
 extern s32 D_801464B0;
 extern s32 D_801464B4;
@@ -783,3 +782,179 @@ void func_801377CC(void);
 void func_80137818(void);
 void func_80137A04(void);
 #endif
+
+#ifndef OVL_SHOUGATU_STEP_TABLES_T17500
+#define OVL_SHOUGATU_STEP_TABLES_T17500
+/* Step tables (T-3330, T-17500): one handler per scene step copies its table to the stack whole and
+ * calls tbl.f[D_800E6280.unk_110A]. The typedefs and externs were local to each .c file before. */
+typedef struct {
+    void (*f[10])();
+} FnTbl10; /* size 0x28 */
+typedef struct {
+    void (*f[11])();
+} FnTbl11; /* size 0x2C */
+typedef struct {
+    void (*f[12])();
+} FnTbl12; /* size 0x30 */
+typedef struct {
+    void (*f[13])();
+} FnTbl13; /* size 0x34 */
+typedef struct {
+    void (*f[14])();
+} FnTbl14; /* size 0x38 */
+typedef struct {
+    void (*f[17])();
+} FnTbl17; /* size 0x44 */
+typedef struct {
+    void (*f[19])();
+} FnTbl19; /* size 0x4C */
+typedef struct {
+    void (*f[20])();
+} FnTbl20; /* size 0x50 */
+typedef struct {
+    void (*f[22])();
+} FnTbl22; /* size 0x58 */
+typedef struct {
+    void (*f[23])();
+} FnTbl23; /* size 0x5C */
+typedef struct {
+    void (*f[24])();
+} FnTbl24; /* size 0x60 */
+typedef struct {
+    void (*f[25])();
+} FnTbl25; /* size 0x64 */
+typedef struct {
+    void (*f[26])();
+} FnTbl26; /* size 0x68 */
+typedef struct {
+    void (*f[27])();
+} FnTbl27; /* size 0x6C */
+typedef struct {
+    void (*f[30])();
+} FnTbl30; /* size 0x78 */
+typedef struct {
+    void (*f[31])();
+} FnTbl31; /* size 0x7C */
+typedef struct {
+    void (*f[33])();
+} FnTbl33; /* size 0x84 */
+typedef struct {
+    void (*f[34])();
+} FnTbl34; /* size 0x88 */
+typedef struct {
+    void (*f[37])();
+} FnTbl37; /* size 0x94 */
+typedef struct {
+    void (*f[40])();
+} FnTbl40; /* size 0xA0 */
+typedef struct {
+    void (*f[42])();
+} FnTbl42; /* size 0xA8 */
+typedef struct {
+    void (*f[48])();
+} FnTbl48; /* size 0xC0 */
+typedef struct {
+    void (*f[50])();
+} FnTbl50; /* size 0xC8 */
+typedef struct {
+    void (*f[51])();
+} FnTbl51; /* size 0xCC */
+typedef struct {
+    void (*f[60])();
+} FnTbl60; /* size 0xF0 */
+typedef struct {
+    void (*f[62])();
+} FnTbl62; /* size 0xF8 */
+extern FnTbl13 D_80143B28;
+extern FnTbl23 D_80143B60;
+extern FnTbl60 D_80143BC4;
+extern FnTbl23 D_80143CC0;
+extern FnTbl25 D_80143D24;
+extern FnTbl31 D_80143DE0;
+extern FnTbl50 D_80143FF8;
+extern FnTbl24 D_80144E20;
+extern FnTbl34 D_80144E80;
+extern FnTbl20 D_80144F14;
+extern FnTbl20 D_80144F64;
+extern FnTbl37 D_80144FB4;
+extern FnTbl30 D_80145048;
+extern FnTbl24 D_801450C0;
+extern FnTbl20 D_80145120;
+extern FnTbl22 D_80145170;
+extern FnTbl20 D_801451C8;
+extern FnTbl20 D_80145218;
+extern FnTbl62 D_801452B8;
+extern FnTbl20 D_801453F8;
+extern FnTbl20 D_80145448;
+extern FnTbl25 D_80145498;
+extern FnTbl20 D_801454FC;
+extern FnTbl37 D_8014554C;
+extern FnTbl26 D_801455E0;
+extern FnTbl19 D_80145648;
+extern FnTbl27 D_801456A0;
+extern FnTbl20 D_8014570C;
+extern FnTbl42 D_80145760;
+extern FnTbl20 D_80145808;
+extern FnTbl20 D_80145858;
+extern FnTbl42 D_801458B0;
+extern FnTbl25 D_80145A14;
+extern FnTbl19 D_80145A80;
+extern FnTbl33 D_80145F40;
+extern FnTbl27 D_8014616C;
+extern FnTbl31 D_80146244;
+extern FnTbl17 D_801462C0;
+extern FnTbl14 D_80146304;
+extern FnTbl10 D_8014633C;
+extern FnTbl14 D_80146364;
+extern FnTbl12 D_8014639C;
+extern FnTbl17 D_801463CC;
+extern FnTbl17 D_80146410;
+extern FnTbl11 D_80146454;
+extern FnTbl12 D_80146480;
+extern FnTbl40 D_80146804;
+extern FnTbl51 D_801468A4;
+extern FnTbl48 D_80146970;
+#endif
+
+#ifndef OVL_SHOUGATU_STACK_TABLES_T17500
+#define OVL_SHOUGATU_STACK_TABLES_T17500
+/* Constant tables that one function copies to the stack whole (T-17500). The copy is lw/sw pairs
+ * plus an lh/sh or lwl/swl tail, so the element type sets the tail. */
+typedef struct ShoShorts7 {
+    /* 0x00 */ s16 v[7];
+} ShoShorts7; /* size 0xE */
+/* {0x46, 0x80, 0xA0, 0xC0, 0xE0, 0x100, 0x3E8} and {0, 3, 5, 7, 9, 0xB, 0x10}: two per function */
+extern ShoShorts7 D_801460CC; /* func_8013E50C */
+extern ShoShorts7 D_801460DC;
+extern ShoShorts7 D_801460EC; /* func_8013E6E4 */
+extern ShoShorts7 D_801460FC;
+extern ShoShorts7 D_8014610C; /* func_8013EA98 */
+extern ShoShorts7 D_8014611C;
+
+/* Seven 5-byte Shift-JIS strings (35 bytes: the copy ends with lwl/swl); read as s[i]. */
+typedef struct ShoStr7x5 {
+    /* 0x00 */ u8 s[7][5];
+} ShoStr7x5; /* size 0x23 */
+extern ShoStr7x5 D_80143E5C; /* func_801350F8 */
+extern ShoStr7x5 D_80143E80; /* func_801359FC */
+
+/* Six pairs of colour words passed by value to func_80140510 (`*8` index), and a 3 x 12 byte
+ * selector table indexed [D_800E62BE][...]; both copied by func_80140314. */
+typedef struct ShoColors6x2 {
+    /* 0x00 */ u32 v[6][2];
+} ShoColors6x2; /* size 0x30 */
+typedef struct ShoBytes3x12 {
+    /* 0x00 */ u8 v[3][12];
+} ShoBytes3x12; /* size 0x24 */
+extern ShoColors6x2 D_801461D8;
+extern ShoBytes3x12 D_80146208;
+
+/* Work arrays of the func_80141D20 family, 50 entries each (counter D_801467FC < 0x32). The
+ * original writes D_80146540[i - 1] as %lo(D_8014653C)+i*4; D_8014653C itself is a separate u8. */
+extern s32 D_80146540[50];
+extern s32 D_80146608[50];
+extern s32 D_801466D0[50];
+extern s16 D_80146798[50];
+#endif
+
+#endif /* OVL_SHOUGATU_H */

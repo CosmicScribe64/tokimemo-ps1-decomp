@@ -1,11 +1,6 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-typedef struct {
-    void (*f[42])();
-} FnTbl42; /* size 0xA8 */
-extern FnTbl42 D_801458B0;
-
 void func_8013AF10(void) {
     func_8013AF30();
 }

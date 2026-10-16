@@ -3,11 +3,6 @@
 #include "ovl/SHOUGATU.h"
 void func_800847B8();
 
-typedef struct {
-    void (*f[25])();
-} FnTbl25; /* size 0x64 */
-extern FnTbl25 D_80143D24;
-
 void func_80134120(void) {
     void (**p)();
     FnTbl25 tbl;

@@ -1,11 +1,6 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-typedef struct {
-    void (*f[20])();
-} FnTbl20; /* size 0x50 */
-extern FnTbl20 D_8014570C;
-
 void func_8013A500(void) {
     if (D_80144E14 == 0) {
         func_8013A53C();
@@ -13,11 +8,6 @@ void func_8013A500(void) {
     }
     func_8013A600();
 }
-
-typedef struct {
-    void (*f[27])();
-} FnTbl27; /* size 0x6C */
-extern FnTbl27 D_801456A0;
 
 void func_8013A53C(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -75,7 +65,6 @@ void func_8013A688(void) {
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2 = 1;
     func_8004284C();
 }
-
 
 void func_8013A7B0(void) {
     D_80144E08 = 0;

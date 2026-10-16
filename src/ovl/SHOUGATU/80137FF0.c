@@ -2,21 +2,6 @@
 #include "game.h"
 #include "ovl/SHOUGATU.h"
 
-typedef struct {
-    void (*f[24])();
-} FnTbl24; /* size 0x60 */
-extern FnTbl24 D_801450C0;
-
-typedef struct {
-    void (*f[20])();
-} FnTbl20; /* size 0x50 */
-extern FnTbl20 D_80144F14;
-
-typedef struct {
-    void (*f[30])();
-} FnTbl30; /* size 0x78 */
-extern FnTbl30 D_80145048;
-
 void func_80137FF0(void) {
     switch (D_80144E14) {
     case 0:
@@ -65,8 +50,6 @@ s32 func_80138158(void) {
         }
     }
 }
-
-extern FnTbl20 D_80144F64;
 
 void func_801381B8(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -122,8 +105,6 @@ void func_801384B0(void) {
     idx = D_800E6280.unk_110A;
     tbl.f[idx]();
 }
-
-extern FnTbl20 D_80145120;
 
 void func_80138524(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
