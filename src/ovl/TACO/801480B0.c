@@ -89,7 +89,44 @@ void func_801483B0(void) {
     D_800E6280.unk_1104.w += 1;
 }
 
+/* NON_MATCHING: T-19013, 10 differing lines; the original ends the counter's register web at the first call (raw load in $v0, copy in $t0) and re-reads it at the end into $t2/$t3 temporaries. The absolute read below gets the web and the frame right, but leaves the sum in $v0, hoists the final lui into the three branch delay slots and spills $v0 instead of $t0 at the first call. */
+#ifdef NON_MATCHING
+void func_801484E4(void) {
+    s32 pad[2]; /* FAKE: reserves the 8 bytes of frame the original has below the spill slot; real local unknown. T-19013 */
+    s32 t;
+    u8 a;
+    u8 b;
+    s32 i;
+
+    t = D_800E6280.unk_1104.w;
+    if (t < 0x78) {
+        if (t % 60 == 0) {
+            func_801335A0(0, 0x508);
+        }
+        func_80147E80(0);
+    }
+    if (t == 0x64) {
+        for (i = 1; i < 0x1F; i++) D_80127080[i].unk0 = 0x80000000;
+    }
+    if (t < 0x78) {
+        func_80153E78(1, 0xE0, 0xE0, 0xE0);
+    } else if (t >= 0x78 && t < 0xB0) {
+        a = 0x2C0 - t * 4;
+        func_80153E78(1, a, a, a);
+    } else if (t >= 0xB0 && t < 0xF0) {
+        b = t * 4 - 0x2C0;
+        func_80153E78(2, b, b, b);
+    } else if (t == 0xF0) {
+        func_80143730(0x80162000, 0xE);
+        func_80143730(0x80172000, 0xC);
+        func_80042908(0x15);
+    }
+    /* FAKE: the absolute read ends the counter web at the first call (as in func_8014616C, T-19002); real source unknown. T-19013 */
+    D_800E6280.unk_1104.w = *(s32 *)0x800E7384 + 1;
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_801484E4);
+#endif
 
 void func_8014866C(void) {
     D_80122760 = -0x64;

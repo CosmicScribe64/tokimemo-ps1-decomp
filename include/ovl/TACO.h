@@ -464,6 +464,7 @@ void func_80158DBC(s16 arg0, s16 arg1, s16 arg2);
 extern s8 D_8015EDE8;
 void func_80148184(void);
 void func_80148308(void);
+void func_801484E4(void);
 void func_8014866C(void);
 void func_8014AB50();
 void func_80148B58();
