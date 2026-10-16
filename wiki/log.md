@@ -15655,3 +15655,6 @@ Code review of [[tickets/T-17800-types-first-option]] against `CODING_STANDARDS.
 
 ## [2026-10-16] ticket | T-19014 closer pass, func_80140ADC matched (5 of 5)
 [[tickets/T-19014-w3-d-p14]] closer pass (Opus, 12:23-12:33 UTC) on branch `w3-d-p14`: TACO `func_80140ADC` (788 bytes) matched in `src/ovl/TACO/8013F250.c` (commit `9c96363b`). The 6-line register tie went away once the UV stores were written on one line in the order of the PsyQ `setUVWH(poly, side << 5, 0x60, 0x20, 0x20)` expansion. Package result 5 of 5 (2,848 bytes). Updated [[matching-notes]], [[register-cheatsheet]] (one row), [[data/t0018-cases]] (row SOLVED), [[taco-family-results]], [[index]]. Clean rebuild 27/27 SHA1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` (0 new disagreements) OK. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19014 Done
+[[tickets/T-19014-w3-d-p14]] reviewed against `CODING_STANDARDS.md` and moved to Done: 5 functions matched (2,848 bytes: TACO `func_801404FC`, `func_80140364`, `func_8013F9C0`, `func_801407D4`, `func_80140ADC`), nothing left guarded. One review finding in `src/ovl/TACO/8013F250.c`, fixed: the hand-expanded `setUVWH` line in `func_80140ADC` had a plain comment and now starts with `FAKE` (comment only; TACO.bin SHA1 OK, globals and headers OK).
