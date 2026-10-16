@@ -16282,3 +16282,7 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17108 In Progress
 
 [[tickets/T-17108-w3-rpg-bat-p08]] created and In Progress: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`; `func_8014E994`, `func_8014AB84`, `func_8014AC74`, `func_8014F278`, `func_8014EF8C`, `func_8014EBEC`). Branch `w3-rpg-bat-p08` from `w2-good`, worktree `tokimemo-wt/w3-rpg-bat-p08`.
+
+## [2026-10-16] ticket | T-17108 In Review
+
+[[tickets/T-17108-w3-rpg-bat-p08]] In Progress to In Review: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`), 6 of 6 functions matched (1,844 bytes): `func_8014E994`, `func_8014EBEC`, `func_8014EF8C`, `func_8014F278`, `func_8014AC74`, `func_8014AB84`. One shared counter for the word-clear loops, the `i + 96` record loop, first-symbol element views for the shared-`$at` stores, typed `DisplayActor44` records and element indexes instead of byte-offset casts; seven old T-0018 rows solved. Notes in [[matching-notes]] (section T-17108), five rows in [[register-cheatsheet]], update in [[data/t0018-cases]], section in [[rpg-bat-family-results]]. Awaiting code review.
