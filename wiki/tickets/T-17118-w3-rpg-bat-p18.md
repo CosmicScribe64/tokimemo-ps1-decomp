@@ -1,7 +1,7 @@
 ---
 id: T-17118
 title: Wave 3 package w3-rpg-bat-p18
-status: In Review
+status: Done
 assignee: claude-opus
 created: 2026-10-16
 updated: 2026-10-16
@@ -36,3 +36,7 @@ Worktree `tokimemo-wt/w3-rpg-bat-p18`, branch `w3-rpg-bat-p18`, base `w2-good`. 
 ### 2026-10-16 start and finish (claude-opus, branch `w3-rpg-bat-p18`)
 
 Started 21:29 UTC, matched by 21:44 UTC (draft 1,035 instructions to 1,017, then the registers). Clean rebuild 27/27, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK. Moved to In Review; code review against `CODING_STANDARDS.md` pending.
+
+### 2026-10-16 code review (claude-opus, against `CODING_STANDARDS.md`)
+
+No findings. Checked: the only C file changed is the owned `src/ovl/RPG_BAT/80132FE0.c` (no header, config or `drafts/` change); `func_80133108` is plain C89 (declarations at the block top, `/* */` comments, no inline asm, no `.word`, no `FAKE` statement); no `NON_MATCHING` block left, so none needs a ticket comment; the `RPG_BAT_OVERRIDE_func_8013F15C` define carries its reason and ticket, the header already wraps the declaration in the matching `#ifndef` (section 8a), and the same override is used by other RPG_BAT files; the Shift-JIS text literals follow the file's existing convention; no game data, asm or binaries staged; wiki, log and index entries are consistent. Rebuild after touching the file: globals OK, headers OK, `build/ovl/RPG_BAT.bin: OK` (sha1). Review passed, In Review to Done, kanban card moved.
