@@ -683,7 +683,54 @@ void func_8014430C(void) {
     func_8004B19C(D_8014A1D0, 0, -0x3C);
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144464);
+#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
+
+s32 func_80144464(void) {
+    s32 i;
+    s32 j;
+    TkS16x4 t;
+
+    t = D_8014A318;
+    for (i = 0; i < 3; i++) {
+        DISP(101 + i).unk_02 = 0x40;
+        DISP(101 + i).unk_03 = 0xA4;
+    }
+    for (i = 0; i < 3; i++) {
+        if (D_8014A13C[i + 1].unk_01 == 1 && DISP(101).unk_26 + 0x30 < DISP(97 + i).unk_26 + 0x40) {
+            DISP(102).unk_03 = 0;
+            DISP(102).unk_02 = 0;
+        }
+    }
+    for (i = 0; i < 4; i++) {
+        DISP(101 + i).unk_26 = t.v[i] - D_8014A1CE - 0xA0;
+    }
+    if (DISP(102).unk_18 == 0x32) {
+        DISP(102).unk_03 |= 0x40;
+        DISP(102).unk_26 = DISP(101).unk_26 + 0x20;
+    }
+    if (DISP(104).unk_26 < -0xDC && DISP(104).unk_03 != 0) {
+        DISP(104).unk_03 = 0;
+    }
+    if (DISP(96).unk_26 + 0x40 >= DISP(101).unk_26) {
+        if (D_8014A120[0] == 0) {
+            DISP(102).unk_03 = 0xE4;
+            DISP(102).unk_18 = 0x32;
+            DISP(102).unk_26 = DISP(101).unk_26 + 0x20;
+        }
+        i = 0;
+        if (D_8014A120[0] != 0) {
+            do {
+                i++;
+            } while (D_8014A120[i] != 0);
+        }
+        D_8014A120[i] = 1;
+        for (j = i + 1; j < 4; j++) {
+            D_8014A120[j] = func_801446A0();
+        }
+        return 1;
+    }
+    return 0;
+}
 
 /* FAKE: v[6] as in func_8013815C. T-0016 */
 s32 func_801446A0(void) {
