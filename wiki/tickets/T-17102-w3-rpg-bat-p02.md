@@ -1,7 +1,7 @@
 ---
 id: T-17102
 title: Wave 3 package w3-rpg-bat-p02
-status: In Review
+status: Done
 assignee: claude-opus
 created: 2026-10-16
 updated: 2026-10-16
@@ -36,3 +36,5 @@ Worktree `tokimemo-wt/w3-rpg-bat-p02`, branch `w3-rpg-bat-p02`, base `w2-good`. 
 ## Comments
 
 Verification (2026-10-16, 20:13 UTC): clean build `rm -rf build && python3 configure.py && ninja` exit 0 (667/667, every `.bin: OK`, 27 of 27 units), `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known). Matches verified with `funcdiff --resolve` on the default build (`MATCH (linked function bytes equal target)`) for `func_80151C10` (808 bytes), `func_80156D78` (992) and `func_80157158` (1,256). FAKEs, each commented in the source: `*(u32 *)&D_8015EC74` (`func_80151C10`), `s32 unused;` (`func_80156D78`), `s32 unused[2];` (`func_80157158`). Overrides: `RPG_BAT_OVERRIDE_func_8013E7C0` (`80151C10.c`), `RPG_BAT_OVERRIDE_func_8013F15C` and `MAIN_API_OVERRIDE_func_80049A40` (`80156CC0.c`). Awaiting code review against `CODING_STANDARDS.md`.
+
+Code review (2026-10-16), against `CODING_STANDARDS.md` and the ticket: no findings. Checked: only the two owned C files and `include/ovl/RPG_BAT.h` changed, no `drafts/` change, no inline asm or `.word`, no `NON_MATCHING` block left in the two files, all three matches are plain C, the three FAKEs carry `FAKE` and T-17102, the overrides (`RPG_BAT_OVERRIDE_func_8013E7C0`, `RPG_BAT_OVERRIDE_func_8013F15C`, `MAIN_API_OVERRIDE_func_80049A40`) are defined with a reason before the includes, declared next to the file declarations and wrapped in the headers (section 8a), `func_80151F38(void)` declared once in `include/ovl/RPG_BAT.h`, C89 and ASCII comments (the Japanese text is string literals, as in the other RPG_BAT files), no game data or binaries, wiki edits append-only. Rebuild in the worktree: up to date, unit sha1 OK.
