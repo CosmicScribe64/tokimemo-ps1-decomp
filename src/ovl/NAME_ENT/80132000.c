@@ -759,17 +759,15 @@ void func_80133510(u8 *arg0) {
     }
 }
 
-/* NON_MATCHING: T-11650, 20 differing lines: frame 8 bytes short (two more homes above text in the original) and the line-pointer spill at sp+0x40 (original 0x44) */
-#ifdef NON_MATCHING
 void func_801338DC(s32 arg0) {
     s32 i;
+    s32 pad[2]; /* FAKE: unused; its home gives the original 0x110-byte frame. T-11650 */
     u8 *text;
     u8 line0[0x24];
     u8 line1[0x24];
     u8 line2[0x24];
     u8 line3[0x24];
     u8 line4[0x24];
-    u8 *p;
 
     switch (arg0) {
     case 0:
@@ -822,26 +820,22 @@ void func_801338DC(s32 arg0) {
             func_800AE0F0(line0, text);
         } else {
             func_800AE090(line0, text, 0x20);
-            p = text + 0x20;
-            if (func_800AE0E0(p) < 0x20) {
-                func_800AE0F0(line1, p);
+            if (func_800AE0E0(text + 0x20) < 0x20) {
+                func_800AE0F0(line1, text + 0x20);
             } else {
-                func_800AE090(line1, p, 0x20);
-                p = text + 0x40;
-                if (func_800AE0E0(p) < 0x20) {
-                    func_800AE0F0(line2, p);
+                func_800AE090(line1, text + 0x20, 0x20);
+                if (func_800AE0E0(text + 0x40) < 0x20) {
+                    func_800AE0F0(line2, text + 0x40);
                 } else {
-                    func_800AE090(line2, p, 0x20);
-                    p = text + 0x60;
-                    if (func_800AE0E0(p) < 0x20) {
-                        func_800AE0F0(line3, p);
+                    func_800AE090(line2, text + 0x40, 0x20);
+                    if (func_800AE0E0(text + 0x60) < 0x20) {
+                        func_800AE0F0(line3, text + 0x60);
                     } else {
-                        func_800AE090(line3, p, 0x20);
-                        p = text + 0x80;
-                        if (func_800AE0E0(p) < 0x20) {
-                            func_800AE0F0(line4, p);
+                        func_800AE090(line3, text + 0x60, 0x20);
+                        if (func_800AE0E0(text + 0x80) < 0x20) {
+                            func_800AE0F0(line4, text + 0x80);
                         } else {
-                            func_800AE090(line4, p);
+                            func_800AE090(line4, text + 0x80);
                         }
                     }
                 }
@@ -865,9 +859,6 @@ void func_801338DC(s32 arg0) {
     }
     func_80132FD4();
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801338DC);
-#endif
 
 void func_80133D94(void) {
     s32 x;
