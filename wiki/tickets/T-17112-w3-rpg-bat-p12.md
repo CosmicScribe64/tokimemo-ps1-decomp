@@ -1,7 +1,7 @@
 ---
 id: T-17112
 title: Wave 3 package w3-rpg-bat-p12
-status: In Review
+status: Done
 assignee: claude-opus
 created: 2026-10-16
 updated: 2026-10-16
@@ -39,3 +39,9 @@ Worktree `tokimemo-wt/w3-rpg-bat-p12`, branch `w3-rpg-bat-p12`, base `w2-good`. 
 ### 2026-10-16 Closer pass (Opus)
 
 Took `func_80153784` from the guarded draft at 19 rows to a match in plain C (commit `86f57b06`, RPG_BAT unit sha1 OK). The case 1 difference was as1 alias order: as1 keeps a load and a store of one symbol in source order and treats other symbols as disjoint. With `D_8015ED28`, `D_8015ED30` and `D_8015ED38` reached through the `D_8015EC38` symbol (`(&D_8015EC38)[60]`, `[62]`, `[64]`), the `D_8015ED28`/`D_8015ED38` loads stay above the `D_8015EC38` store, the `D_8015ED30` load stays below the `D_8015ED28` store (the `nop`), and the `lui` of `D_8015ED30` fills the `D_8015EC40` load delay from the block after the join. The case 0 store `D_8015ED28 = 0` needs the same view, or it moves above the `D_8015EC38` store. The views are FAKE (T-17112 comments): the original probably has one aggregate over `D_8015EC38`..`D_8015ED3B`, not recovered. The case 3 first-symbol loop got its FAKE comment too. Notes: [[matching-notes]] (section T-17112, closer bullet), [[register-cheatsheet]] (one row), [[data/t0018-cases]] (update line). Ticket stays In Review.
+
+### 2026-10-16 Code review (Opus)
+
+Reviewed `w2-good...w3-rpg-bat-p12` against `CODING_STANDARDS.md` and the ticket: 4 of 4 functions matched (3,404 bytes), only `src/ovl/RPG_BAT/801525B0.c` changed among the C files, no `drafts/` archive touched, no inline asm or `.word`, no remaining `NON_MATCHING` block, no game data staged, C89 and `/* */` comments only, every first-symbol view and padding word carries FAKE and T-17112, header changes consistent (`D_80120E93` `u8` once in `main_api.h`; four prototypes in `RPG_BAT.h`; `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK, 0 new disagreements).
+
+One finding, fixed: `func_80154220` wrote the quad primitive as `u8 *p` with `p[4]` and `*(s16 *)(p + 0xE)` byte offsets, although `POLY_FT4` is in `psx_types.h` (section 3, use the packet type; section 8, no invented layout). Rewritten with `POLY_FT4 *p` and field stores (`#include "psx_types.h"`, as `DATE/8014CC40.c` and `TAIIKU/80138950.c` do); the RPG_BAT unit sha1 is still OK (commit `864035a9`). Wiki text for the function updated. No other findings. Status Done.

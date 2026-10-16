@@ -16333,3 +16333,7 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] build | T-17112 closer pass
 
 [[tickets/T-17112-w3-rpg-bat-p12]] closer pass (Opus): RPG_BAT `func_80153784` matched in plain C (732 bytes, commit `86f57b06`; package now 4 of 4, 3,404 bytes). The case 1 schedule was as1 alias order: every access to `D_8015EC40` and `D_8015ED28`..`D_8015ED38` goes through the `D_8015EC38` symbol (FAKE first-symbol views, aggregate not recovered), so the loads stay above the `D_8015EC38` store and the `D_8015ED30` `lui` fills the `D_8015EC40` load delay; the case 0 `D_8015ED28` store needs the same view. Notes in [[matching-notes]] (section T-17112), a row in [[register-cheatsheet]], an update line in [[data/t0018-cases]], [[rpg-bat-family-results]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17112 Done
+
+[[tickets/T-17112-w3-rpg-bat-p12]] In Review to Done after the code review: wave 3 package w3-rpg-bat-p12 (RPG_BAT `src/ovl/RPG_BAT/801525B0.c`), 4 of 4 functions matched (3,404 bytes: `func_80154220`, `func_80153F3C`, `func_801529B4`, `func_80153784`). One finding, fixed: `func_80154220` used byte-offset casts on a `u8 *` where `POLY_FT4` from `include/psx_types.h` fits; rewritten with the same bytes (RPG_BAT sha1 OK). Headers, globals and proto checks OK.
