@@ -495,3 +495,27 @@ Limits: the tool explains one decision at a time and is only as good as the link
 know the original's C. Splitting after a failed colour check is reported as a piece of the parent range. ugen's t6..t9 and
 `$at` are shown as a sequence only. Rules the tool cannot yet turn into a C change (TT `func_801475C8`, GYOZI
 `func_8013E638`) stay open.
+
+## Selector-copy rule and ugen survey (T-16900)
+
+Two time-boxed experiments; numbers and lists in [[tickets/T-16900-compiler-experiments]].
+
+**Signed narrow selector-copy rule.** The 7 NAME_ENT selector-copy drafts of [[tickets/T-11570-w1-ovl-name_ent-80139740]]
+were frozen and compiled with a scratch variant of `tools/cvt_pass.py`. Copy preservation (zcopy off) leaves 4 lines in
+three of them, all `beq v1,a1` where the original has `beq a1,v1`. A widening record does not produce that order: uopt
+folds `CVT J<-J`, and `CVT J<-L` gives the load a temporary of its own and makes most drafts worse. Putting the constant
+first after uopt does produce it, if a register operand is classified by its latest definition (the pass's
+`_constant_first` gives up when the constant's register also passes a call argument). Copy preservation plus constant
+first matches `func_8013DAC4`, `func_8013F454` and `func_8013FB8C` (NAME_ENT.bin sha1 OK with the drafts active).
+Applied to every procedure with a narrow signed global copied into a local, zcopy off changes 12 matched functions;
+constant first against every narrow signed global changes 5. The coupled form (both, only where the procedure copies
+global G into a local and compares G with a constant) changes none: clean rebuild 27/27 sha1. It also fires in no
+matched function, so that result shows the rule is harmless to the matched set, not that it is right. It meets the
+experiment's bar (3 of 7, 0 changed). Before a uniform pass, the coupled shape needs a census in the original asm with
+its exceptions (CODING_STANDARDS 7a).
+
+**ugen survey.** regdiff over the 262 unmatched T-14500 drafts that are 21 to 100 lines from matching (no TT):
+250 first register divergences, 59 of them in a ugen temporary on the draft side (23.6%, against 49 of 138 in the
+T-10400 sample). Only 23 (9.2%) have ugen temporaries on both sides, the case where ugen's own order decides; in the
+rest one side holds the value in a uopt colour, which the existing trace covers. Below the 25% bar: no 3-day ugen
+trace.

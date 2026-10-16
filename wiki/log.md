@@ -15160,3 +15160,32 @@ Opened [[tickets/T-16930-pointer-read-kept-copies]] (In Progress), the follow-up
 
 ## [2026-10-15] build | T-16930 pointer reads: 4 tricks removed, 8 matches, stopped for hand-over
 [[tickets/T-16930-pointer-read-kept-copies]]: EVENT `func_80117004`, BUNKA_SD `func_8013261C`, NAME_ENT `func_80148C20`, ENDING `func_8013855C` lose their constant-first tricks through aggregate reads (RPG_BAT `func_80150CD8`'s `(u32)` is a type and stays). Matched on this branch: main `func_80042AC8` (through `GameState *g`), GEKO `func_80134040`, RPG_BAT `func_801495DC`, ENDING `func_80137730`; on unmerged branch `t16930-a`: main `func_80078C48`, OPTION `func_80137C1C`, `func_801383C4`, SHUGAKU `func_80137490`. Stopped on the user's request; ticket stays In Progress for the main thread.
+
+## [2026-10-15] ticket | T-16900 created, In Progress
+
+[[tickets/T-16900-compiler-experiments]]: two time-boxed compiler experiments on branch `claude/blissful-fermi-43d29a`
+(cut from `w2-good`). 1. The signed narrow selector-copy rule of [[tickets/T-11570-w1-ovl-name_ent-80139740]] in a
+scratch copy of `tools/cvt_pass.py` (item 4 of [[matching-breakthroughs]]). 2. A regdiff survey of the 21-100 line
+drafts of `drafts/T-14500/best-quality-catalog.jsonl` to decide on a ugen trace. No `src/` changes.
+
+## [2026-10-15] query | T-16900 selector-copy rule (experiment 1)
+
+[[tickets/T-16900-compiler-experiments]], item 4 of [[matching-breakthroughs]]. Scratch variant of `tools/cvt_pass.py`
+(outside the repository) on the 7 frozen NAME_ENT drafts of [[tickets/T-11570-w1-ovl-name_ent-80139740]]. Widening
+records (`CVT J<-J`, `CVT J<-L`) do not give the original's constant-first compare. Zcopy off plus constant first after
+uopt (register operands classified by their latest definition) matches `func_8013DAC4`, `func_8013F454`,
+`func_8013FB8C`. Uncoupled, zcopy off changes 12 matched functions and constant first changes 5. The coupled rule
+changes none: clean rebuild 27/27 sha1, and NAME_ENT.bin sha1 OK with the three drafts active (both via temporary,
+reverted working-tree edits). It fires in no matched function, so the zero is not evidence for it. Meets the bar;
+a uniform pass needs a census of the shape in the original first. Section in [[uopt-register-allocation]].
+
+## [2026-10-15] query | T-16900 ugen survey (experiment 2)
+
+regdiff over the 262 unmatched T-14500 drafts 21 to 100 lines from matching (no TT; 31 stale TUs rebuilt from the
+current source, 7 still fail): 59 of 250 first register divergences are ugen temporaries on the draft side (23.6%),
+23 (9.2%) on both sides. Below 25%: no 3-day ugen trace. [[uopt-register-allocation]], [[tickets/T-16900-compiler-experiments]].
+
+## [2026-10-15] ticket | T-16900 In Review
+
+[[tickets/T-16900-compiler-experiments]] moved to In Review with both results. No `src/` or `tools/` change on the
+branch; only wiki pages ([[uopt-register-allocation]], [[matching-breakthroughs]], [[kanban]], [[index]]).
