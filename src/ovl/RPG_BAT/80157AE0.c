@@ -930,4 +930,3 @@ s32 func_80159B40(void) {
     func_800AE100(((void **)D_8015EB70)[count + 3], sp78.s[func_8013E9A8(4)]);
     D_8015ED14 = count + 4;
 }
-
