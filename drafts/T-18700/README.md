@@ -2,8 +2,8 @@
 
 Fresh drafts of the 10 BUNKASAI functions that were unmatched after the types-first pass of T-18700 (wiki page
 `bunka-family-results`, section "Types-first pass (T-18700)"). Two functions matched during the pass:
-`func_80147F8C` (180 bytes, `BunkasaiNameTable` stack copy with a named string pointer; no draft here) and
-`func_8015AF90` (2,328 bytes, from its `hand.c` below; `status: matched` in its result.json).
+`func_80147F8C` (176 bytes, `BunkasaiNameTable` stack copy with a named string pointer; no draft here) and
+`func_8015AF90` (2,200 bytes, from its `hand.c` below; `status: matched` in its result.json).
 
 - `redraft.py`: the driver, copied from `drafts/T-18400/redraft.py` (itself from T-18000, T-17700, T-17400,
   T-17200, T-16560 and T-16550) with BUNKASAI paths; the rewrites are unchanged. Run it in Docker from the

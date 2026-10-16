@@ -1,7 +1,7 @@
 ---
 id: T-18700
 title: "Types-first: BUNKASAI"
-status: In Review
+status: Done
 assignee: claude-opus (w3-bunkasai-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -42,3 +42,22 @@ Branch `w3-bunkasai-types` from `w2-good`. Owns `src/ovl/BUNKASAI/`, `include/ov
 - Packages (wave-3 scripts): T-18701 `w3-bunkasai-p01` (4 functions, 3,604 bytes), T-18702 `w3-bunkasai-p02`
   (2, 3,468), T-18703 `w3-bunkasai-p03` (3, 3,700).
 - Checks: clean build 27/27, `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch`.
+
+### 2026-10-16 code review (claude-opus, against CODING_STANDARDS.md section 13)
+
+- Scope: `git diff w2-good...w3-bunkasai-types`. C changes only in `src/ovl/BUNKASAI/80146FA0.c` and
+  `src/ovl/BUNKASAI/8015AF90.c`; `include/ovl/BUNKASAI.h` additions only; no `config/`, `tools/` or `include/main_api.h`
+  change; `drafts/` has only the new `drafts/T-18700/` folder (no existing archive touched); no game data, asm or
+  binaries.
+- Matches: forced rebuild of both files and the header, BUNKASAI sha1 OK; `check_headers.py`, `migrate_globals.py --check`
+  and `sync_protos.py --check-branch` pass (0 new disagreements). Both matches are plain C: no inline asm, no `.word`,
+  no `volatile`, no `NON_MATCHING` guard added, no FAKE needed. `func_80147F8C` uses a named `u8 *name` local that
+  is a plausible source variable (DATE2's clone needs a FAKE pad for the same slot). `func_8015AF90`'s undeclared
+  `func_80132410` call and `MAIN_API_OVERRIDE_func_800847B8` repeat BUNKAKEN's `func_80132548` and T-9960 forms and are
+  explained in comments. The call to `func_80132410` is C89 implicit int, as in BUNKAKEN.
+- Header: struct sizes check (`0x129`, `0x30`, `0x2C`, `0x10`, `0x0B`, `0x06`, `0x4E`, `0x2C`), offsets documented, no
+  existing declaration changed, each new symbol declared once.
+- Finding 1 (fixed): `drafts/T-18700/README.md` gave 180 and 2,328 bytes for `func_80147F8C` and `func_8015AF90`;
+  inventory, ticket, family page and link map say 176 and 2,200 (sum 2,376). README corrected.
+- No other findings. Ticket status matches the kanban column (Done).
+
