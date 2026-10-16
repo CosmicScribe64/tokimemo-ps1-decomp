@@ -1859,6 +1859,7 @@ void func_80047550(void);
 void func_80047560();
 void tpage_buf_clear_all(void);
 void func_80048390();
+s32 func_800486A4();
 void tpage_buf_clear(void);
 void _sys_default_tpage_set(void);
 void load_tpage_buf_lock();
@@ -2563,7 +2564,9 @@ s32 _card_auto(s32 arg0);
 s32 _card_status(s32 chan);
 void bzero(void *p, s32 n);
 void func_800AE080(u8 *arg0, s32 arg1);
+#ifndef MAIN_API_OVERRIDE_func_800AE090
 void func_800AE090(void *dst, void *src, s32 n);
+#endif
 void func_800AE0A0(void *arg0, s32 arg1, s32 arg2);
 void memcpy();
 void func_800AE0B0(void *arg0, ...); /* printf-like (SDK libc) */

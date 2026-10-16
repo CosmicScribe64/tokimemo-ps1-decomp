@@ -14983,3 +14983,18 @@ Opened [[tickets/T-16220-w2-main-8007c030]] (In Progress) under [[tickets/T-1620
 
 ## [2026-10-16] ticket | T-16220 Done
 [[tickets/T-16220-w2-main-8007c030]]: review against CODING_STANDARDS.md found one issue (the `_sprite_set_box_shade_tarao` draft tricks lacked a `FAKE` mark), fixed in a comment-only commit. 3 functions matched (`func_800422C8`, `make_three_select`, `junban_init`, 804 bytes); unit sha1 OK, headers, globals and proto checks OK. Moved In Review to Done.
+## [2026-10-15] ticket | T-11650 created
+
+Created [[tickets/T-11650-w1-ovl-name_ent-80132000]] (In Progress): wave 1 package w1-p09, NAME_ENT `src/ovl/NAME_ENT/80132000.c`.
+
+## [2026-10-15] ticket | T-11650 resumed in wave 2 (w2-r09)
+
+[[tickets/T-11650-w1-ovl-name_ent-80132000]] resumed under [[tickets/T-16200-matching-wave-2]] as package w2-r09. Merged branch w1-p09 (8 matched functions in `src/ovl/NAME_ENT/80132000.c`) onto the wave-2 base; NAME_ENT sha1 OK. Status stays In Progress.
+
+## [2026-10-15] ticket | T-11650 to In Review (w2-r09)
+
+[[tickets/T-11650-w1-ovl-name_ent-80132000]]: wave 2 package w2-r09 matched 8 functions in `src/ovl/NAME_ENT/80132000.c` (func_80139684, func_80135650, func_80137CA0, func_80139440, func_80132B78, func_80133510, func_801338DC, func_8013635C), 16 for the ticket with wave 1. Guarded: func_80132320, func_80134B94. Three [[data/t0018-cases]] rows; notes in [[matching-notes]]. Clean build 27/27 sha1 OK; header, globals and prototype checks pass. Awaiting code review.
+
+## [2026-10-16] ticket | T-11650 Done
+
+[[tickets/T-11650-w1-ovl-name_ent-80132000]] reviewed against `CODING_STANDARDS.md` and moved to Done: 8 functions matched in wave 2 (16 for the ticket) in `src/ovl/NAME_ENT/80132000.c`. Review fixes were comments only (lines left on the func_80134248 guard, `FAKE` marks on the u8-view casts, implicit-int notes). Clean build 27/27 sha1 OK.
