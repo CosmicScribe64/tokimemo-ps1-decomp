@@ -203,6 +203,7 @@ void func_8014B738();
 void func_8014ED80();
 void func_8014EE98();
 void func_80150F84();
+void func_80151F38(void);
 extern u8 D_8015E814;
 extern s32 D_8015EC18;
 void func_8013F1C4();
