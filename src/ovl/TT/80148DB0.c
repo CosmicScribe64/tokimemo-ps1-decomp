@@ -530,10 +530,13 @@ void func_8014A198(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-11840, 28 lines (registers only, case 7): the original's ugen emits the constants 0x180, 0x1A, 0x3D04
- * and 2 first in the block (t2..t5, then 0x100000 in t6), this draft at their stores (t5..t8 after 0x100000 in t2); the
- * stores themselves are in the original's order. Not uopt colours (those would leave t2..t5 out of every ugen rotation).
- * Tried: autotweak 300 s, an empty if at every line of case 7, store orders, u16 stores, constant locals. */
+/* NON_MATCHING: T-11840/T-11850, 28 lines (registers only, case 7): the original loads the constants 0x180, 0x1A, 0x3D04
+ * and 2 into t2..t5 before every other value of the block (0x100000 then gets t6), this draft at their stores. ugen
+ * hands out temporaries first-in first-out by free order (scratch test), so four ugen temps loaded first would make
+ * 0x1000 t6, not the original's t2; the original behaves as if t2..t5 were uopt colours of four hoisted constants
+ * (needs each constant to be worth a register and v0..t1 busy). Tried: autotweak 300 s, an empty if at every line of
+ * case 7, store orders, u16 stores (all 64 s16/u16 combinations), constant locals (s16/s32/u16/u32, chained or not),
+ * self-chains, duplicate stores, empty compares, zero-store chains. */
 void func_8014A2B4(void) {
     u8 *s;
     u8 *e;
