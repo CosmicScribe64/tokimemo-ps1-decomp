@@ -975,3 +975,25 @@ extern s8 D_8014881C;
 extern u8 D_80148754;
 extern u8 D_80148758;
 #endif
+
+#ifndef OVL_GYOZI_T17600_TYPES
+#define OVL_GYOZI_T17600_TYPES
+/* T-17600: scene-step callback tables. Each is copied whole to the stack (an lw/sw loop of the struct
+ * size) and called through the step byte D_800F647A, like D_80148904. */
+typedef struct GzCallbacks68 {
+    /* 0x00 */ GzCallback callbacks[26];
+} GzCallbacks68; /* size 0x68 */
+typedef struct GzCallbacks90 {
+    /* 0x00 */ GzCallback callbacks[36];
+} GzCallbacks90; /* size 0x90 */
+typedef struct GzCallbacksBC {
+    /* 0x00 */ GzCallback callbacks[47];
+} GzCallbacksBC; /* size 0xBC */
+extern GzCallbacks90 D_801476F4; /* func_8013B0C4 */
+extern GzCallbacks90 D_80147C6C; /* func_8013C774 */
+extern GzCallbacks68 D_80148880; /* func_80141944 */
+extern GzCallbacksBC D_8014901C; /* func_80145384 */
+/* T-17600: 0x24-byte records indexed with stride 0x24 (func_80144018, func_80144B70): the field widths of
+ * main's Rec24 table D_801217D0, 0xB270 above it as the display records D_80129F40 are above D_8011ECD0. */
+extern Rec24 D_8012CA40[];
+#endif /* OVL_GYOZI_T17600_TYPES */
