@@ -21,7 +21,96 @@ void func_8015ABF0(void) {
     D_801604D0 = 0;
 }
 
+#ifdef NON_MATCHING
+s32 func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g) {
+    s32 id;
+    s32 i;
+    s32 base;
+    u32 n;
+    s32 *pair;
+    u8 *p;
+
+    id = 0;
+    n = 0;
+    for (i = 16; i < 63; i++) {
+        if (!((i + D_8015EDB4)->unk0[1] & 0x80)) {
+            id = i;
+            break;
+        }
+    }
+    if (id == 0) {
+        return -1;
+    }
+    i = 0;
+    p = D_80161D9C;
+    do {
+        if (*p == 0) {
+            n++;
+        }
+        i++;
+        p++;
+    } while (p < (u8 *)D_80161DDC);
+    if (n < D_80161E20[a]) {
+        return -1;
+    }
+    base = D_80161DDC[a] + 4;
+    func_8009B3C0(base);
+    base += 8;
+    func_80143B34(id);
+    func_80099E30(0, &(id + D_8015EDB4)->unk14);
+    if (a == 0xA) {
+        func_8009B430(base, (u8 *)&(id + D_8015EDB4)->unk4, 1);
+    } else {
+        func_8009B430(base, (u8 *)&(id + D_8015EDB4)->unk4, 0);
+    }
+    n = D_80161E20[a];
+    p = D_80161D9C;
+    for (i = 0; n != 0; i++, p++) {
+        if (*p == 0) {
+            func_80099E30((s32)&(id + D_8015EDB4)->unk14, &D_80127480[i]);
+            *p = id;
+            if (a == 0xF || a == 0x10) {
+                pair = D_80161E60[a] + (D_80161E20[a] - n) * 2;
+                func_8015B1B8(i, pair[0], pair[1], 0);
+            } else {
+                func_8015B2AC(i, D_80161E60[a][D_80161E20[a] - n]);
+            }
+            func_8009B430(base, (u8 *)&D_80127080[i], D_80161E20[a] - n);
+            n--;
+            D_80127080[i].unk4[0] = (s32)&D_80127480[i];
+            D_80127080[i].unk0 = 0x80000000;
+        }
+    }
+    (id + D_8015EDB4)->unk4.unk0 = 0x80000000;
+    (id + D_8015EDB4)->unk2 = b;
+    (id + D_8015EDB4)->unk7A = 0x7FFF;
+    (id + D_8015EDB4)->unk84[2] = a;
+    (id + D_8015EDB4)->unk3 = 1;
+    (id + D_8015EDB4)->unk82 = 0;
+    (id + D_8015EDB4)->unk72 = 0;
+    (id + D_8015EDB4)->unk7C = c.x;
+    (id + D_8015EDB4)->unk7E = c.y;
+    (id + D_8015EDB4)->unk80 = c.z;
+    (id + D_8015EDB4)->unk0[1] = 0x80;
+    (id + D_8015EDB4)->unk74 = d.x;
+    (id + D_8015EDB4)->unk76 = d.y;
+    (id + D_8015EDB4)->unk78 = d.z;
+    (id + D_8015EDB4)->unk64 = e.x;
+    (id + D_8015EDB4)->unk66 = e.y;
+    (id + D_8015EDB4)->unk68 = e.z;
+    (id + D_8015EDB4)->unk6A = e.unk6;
+    (id + D_8015EDB4)->unk6C = D_80161EA4[a];
+    (id + D_8015EDB4)->unk6E = D_80161EA4[a];
+    (id + D_8015EDB4)->unk70 = D_80161EA4[a];
+    (id + D_8015EDB4)->unk84[1] = f;
+    (id + D_8015EDB4)->unk84[0] = D_80161EC8[a];
+    (id + D_8015EDB4)->unk84[3] = g | 1;
+    (id + D_8015EDB4)->unk4.unk4[0] = (s32)&(id + D_8015EDB4)->unk14;
+    return id;
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015ACCC);
+#endif
 
 /* NON_MATCHING: T-16563, 8 differing lines; frame and MATRIX offset match (declare i, j before matrix: later-declared
  * locals sit lower), only the struct-copy temporary differs (ugen t2 against t3, T-0018).

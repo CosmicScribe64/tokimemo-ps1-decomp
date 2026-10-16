@@ -635,3 +635,8 @@ extern s32 D_8016024C[];
 extern s32 D_80160264;
 extern u8 D_80161E20[]; /* trigger count per kind (T-10810) */
 extern s32 *D_80161E60[]; /* per kind: table of (s32, s32) pairs (T-10810) */
+extern s32 D_80161DDC[]; /* per kind: base handle of the kind's objects (T-19026) */
+extern s16 D_80161EA4[]; /* per kind: initial value of actor unk6C..unk70 (T-19026) */
+extern u8 D_80161EC8[]; /* per kind: initial value of actor unk84[0] (T-19026) */
+void func_8015B1B8();
+void func_8015B2AC(s32 arg0, s16 *arg1);
