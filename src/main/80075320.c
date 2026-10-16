@@ -78,7 +78,32 @@ void func_80075A64(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075AF8);
+void func_80075AF8(void) {
+    s32 i;
+    s32 n;
+
+    if (appointment_find_today(D_800E6280.unk_03E, D_800E6280.unk_03F, D_800E6280.unk_040) <= 0) {
+        icon_can_use_set(9, 0);
+    }
+    icon_can_use_set(0xD, 0);
+    /* the original reads the s8 field unsigned here (lbu), as 8005A0B0.c does */
+    if (*(u8 *)&D_800E6280.unk_F6C == 2) {
+        icon_can_use_set(0xE, 0);
+    }
+    if (D_800E6280.unk_041 == 6) {
+        n = 0;
+        for (i = 0; i < 11; i++) {
+            if (D_800E6280.unk_66C[i].unk_03 & 1) {
+                n++;
+            }
+        }
+        if (n >= 11) {
+            icon_can_use_set(4, 0);
+        }
+    } else if ((D_800E6280.unk_0F4.h >> 12) == 11) {
+        icon_can_use_set(4, 0);
+    }
+}
 
 void func_80075BE8(void) {
     if (D_800E6280.unk_110A == 0) {
