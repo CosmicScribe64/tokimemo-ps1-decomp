@@ -52,7 +52,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
-- [ ] [[tickets/T-18200-types-first-en_nichi|T-18200 Types-first: EN_NICHI]]
 
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
@@ -142,6 +141,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-19010-w3-d-p10|T-19010 Wave 3 package w3-d-p10]]
 - [ ] [[tickets/T-19012-w3-d-p12|T-19012 Wave 3 package w3-d-p12]]
 - [ ] [[tickets/T-17900-types-first-name_ent|T-17900 Types-first: NAME_ENT]]
+- [ ] [[tickets/T-18200-types-first-en_nichi|T-18200 Types-first: EN_NICHI]]
 - [ ] [[tickets/T-17500-types-first-shougatu|T-17500 Types-first: SHOUGATU]]
 - [ ] [[tickets/T-19009-w3-d-p09|T-19009 Wave 3 package w3-d-p09]]
 - [ ] [[tickets/T-19007-w3-d-p07|T-19007 Wave 3 package w3-d-p07]]

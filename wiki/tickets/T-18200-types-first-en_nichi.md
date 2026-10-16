@@ -1,7 +1,7 @@
 ---
 id: T-18200
 title: "Types-first: EN_NICHI"
-status: In Review
+status: Done
 assignee: claude (w3-en-nichi-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -45,3 +45,10 @@ Start: 19 unmatched EN_NICHI functions (15,464 bytes) in 2 files, 2 of them guar
 - Packages: w3-en-nichi-p01 (T-18201, `80132000.c`, 5 functions, 2,700 B) and w3-en-nichi-p02 (T-18202,
   `80136B10.c`, 3 functions, 4,808 B).
 - In Review: waiting for the code review against `CODING_STANDARDS.md`.
+
+### 2026-10-16 review (claude, `CODING_STANDARDS.md` checklist)
+
+- Scope: only `src/ovl/EN_NICHI/80132000.c`, `src/ovl/EN_NICHI/80136B10.c` and `include/ovl/EN_NICHI.h` changed; `drafts/T-18200/` is new (no existing archive touched); no game data, asm or binaries; no inline asm, `.word` or `#pragma`; the five reported matches are plain C. The two `NON_MATCHING` blocks in `80132000.c` (T-10610, T-10850) are old and keep their ticket and remaining lines. The one new fakematch (`func_80132834`, peeled iterations) carries `FAKE` and `T-18200`. Header declarations agree (`check_headers` OK).
+- Finding 1 (section 8, fixed): `func_80133F00`, `func_801340CC` and `func_8013515C` reached the records through `(u8 *)D_8013984C` byte offsets although `EnObj` is declared. They match as `EnObj *` / field accesses; rewritten, wiki line on the family page adjusted. EN_NICHI sha1 OK after the change.
+- Finding 2 (style, fixed): a stray double blank line in `EN_NICHI.h` where `u8 D_8013984C[]` was removed.
+- Checks after the fixes: EN_NICHI sha1 OK after a forced rebuild, `tools/check_headers.py` OK (in ninja), `tools/migrate_globals.py --check` OK, `tools/sync_protos.py --check-branch` OK (0 new, 15 known). Result: 5 functions matched, 2,500 bytes. Findings resolved, ticket Done.
