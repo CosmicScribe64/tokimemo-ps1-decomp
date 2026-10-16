@@ -21,14 +21,15 @@ void func_8015ABF0(void) {
     D_801604D0 = 0;
 }
 
-#ifdef NON_MATCHING
+/* The two table walks are index loops over D_80161D9C (uopt shares one strength-reduced pointer between them, which
+ * is why n, i and that pointer get s2, s0 and s1); the count loop compares the element address against the table
+ * end. HYPOTHESIS: base is a model data address (+4, then +8 more for the link call). T-19026 */
 s32 func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g) {
     s32 i;
     s32 base;
     s32 id;
     u32 n;
     s32 *pair;
-    u8 *p;
 
     id = 0;
     n = 0;
@@ -41,8 +42,8 @@ s32 func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g) {
     if (id == 0) {
         return -1;
     }
-    for (i = 0, p = D_80161D9C; p < D_80161D9C + 0x40; i++, p++) {
-        if (*p == 0) {
+    for (i = 0; &D_80161D9C[i] < &D_80161D9C[0x40]; i++) {
+        if (D_80161D9C[i] == 0) {
             n++;
         }
     }
@@ -54,6 +55,8 @@ s32 func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g) {
     func_8009B3C0(base);
     base += 8;
     func_80143B34(id);
+    /* FAKE: the empty test adds one basic block to the live range of a, which lowers its priority below base's, so base
+     * gets $fp and a stays in its stack home as in the original; no code. T-19026 */
     if (b) {}
     func_80099E30(0, &(id + D_8015EDB4)->unk14);
     if (a == 0xA) {
@@ -62,27 +65,21 @@ s32 func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g) {
         func_8009B430(base, (u8 *)&(id + D_8015EDB4)->unk4, 0);
     }
     n = D_80161E20[a];
-    i = 0;
-    if (n != 0) {
-        p = (u8 *)D_80161DDC - 0x40;
-        do {
-            if (*p == 0) {
-                func_80099E30((s32)&(id + D_8015EDB4)->unk14, &D_80127480[i]);
-                *p = id;
-                if (a == 0xF || a == 0x10) {
-                    pair = D_80161E60[a] + (D_80161E20[a] - n) * 2;
-                    func_8015B1B8(i, pair[0], pair[1], 0);
-                } else {
-                    func_8015B2AC(i, D_80161E60[a][D_80161E20[a] - n]);
-                }
-                func_8009B430(base, (u8 *)&D_80127080[i], D_80161E20[a] - n);
-                n--;
-                D_80127080[i].unk4[0] = (s32)&D_80127480[i];
-                D_80127080[i].unk0 = 0x80000000;
+    for (i = 0; n != 0; i++) {
+        if (D_80161D9C[i] == 0) {
+            func_80099E30((s32)&(id + D_8015EDB4)->unk14, &D_80127480[i]);
+            D_80161D9C[i] = id;
+            if (a == 0xF || a == 0x10) {
+                pair = (D_80161E20[a] - n) * 2 + D_80161E60[a];
+                func_8015B1B8(i, pair[0], pair[1], 0);
+            } else {
+                func_8015B2AC(i, D_80161E60[a][D_80161E20[a] - n]);
             }
-            i++;
-            p++;
-        } while (n != 0);
+            func_8009B430(base, (u8 *)&D_80127080[i], D_80161E20[a] - n);
+            n--;
+            D_80127080[i].unk4[0] = (s32)&D_80127480[i];
+            D_80127080[i].unk0 = 0x80000000;
+        }
     }
     (D_8015EDB4 + id)->unk4.unk0 = 0x80000000;
     (D_8015EDB4 + id)->unk2 = b;
@@ -111,9 +108,6 @@ s32 func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g) {
     (id + D_8015EDB4)->unk4.unk4[0] = (s32)&(id + D_8015EDB4)->unk14;
     return id;
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015ACCC);
-#endif
 
 /* NON_MATCHING: T-16563, 8 differing lines; frame and MATRIX offset match (declare i, j before matrix: later-declared
  * locals sit lower), only the struct-copy temporary differs (ugen t2 against t3, T-0018).
