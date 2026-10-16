@@ -16297,3 +16297,7 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17103 Done
 
 [[tickets/T-17103-w3-rpg-bat-p03]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues, both fixed (three [[register-cheatsheet]] rows sat outside the table, moved in; three stray triple blank lines in `src/ovl/RPG_BAT/80137280.c`). 4 of 4 functions matched (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`), unit sha1 OK. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17110 In Progress
+
+[[tickets/T-17110-w3-rpg-bat-p10]] created and In Progress: wave 3 package w3-rpg-bat-p10, four RPG_BAT functions in `src/ovl/RPG_BAT/8014ADD0.c` (links [[tickets/T-17100-types-first-rpg_bat]]).
