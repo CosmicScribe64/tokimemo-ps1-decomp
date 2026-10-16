@@ -95,44 +95,37 @@ void func_8013DDE4(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013DB80", func_8013DEE4);
 
-/* NON_MATCHING: T-19028, 18 differing lines; the original loads x, y and z first (lh, lh, lh) and stores in the jal delay slot; IDO interleaves lh/nop/sh */
-#ifdef NON_MATCHING
 s32 func_8013E424(pos, kind)
 TcPos pos;
 s32 kind;
 {
     s32 pad3;
     s32 i;
-    /* FAKE: 48 unused bytes around i reproduce the original frame (0x60, p at sp+0x28, i at sp+0x58); real locals unknown. T-19028 */
+    /* FAKE: 48 unused bytes around i reproduce the original frame (0x60, i at sp+0x58, the strength-reduced
+     * D_8015EC70[i] pointer spilled at sp+0x28); real locals unknown. T-19028 */
     Tc14 pad0;
     Tc14 pad1;
     s32 pad2;
-    Tc14 *p;
 
-    p = D_8015EC70;
     for (i = 0; i < 16; i++) {
-        if (!(p->unk13 & 0x80)) {
+        if (!(D_8015EC70[i].unk13 & 0x80)) {
             break;
         }
-        p++;
     }
     if (i >= 16) {
         return -1;
     }
-    p->unk13 = 0x80;
-    p->unk0 = pos.x;
-    p->unk2 = pos.y;
-    p->unk4 = pos.z;
-    p->unk12 = 0;
-    p->unk8 = 0x3F - (func_800AE0D0() & 0x7F);
-    p->unkA = 0x3F - (func_800AE0D0() & 0x7F);
-    p->unkC = 0x50;
-    p->unk11 = kind;
+    D_8015EC70[i].unk12 = 0;
+    D_8015EC70[i].unk13 = 0x80;
+    D_8015EC70[i].unk0 = pos.x;
+    D_8015EC70[i].unk2 = pos.y;
+    D_8015EC70[i].unk4 = pos.z;
+    D_8015EC70[i].unk8 = 0x3F - (func_800AE0D0() & 0x7F);
+    D_8015EC70[i].unkA = 0x3F - (func_800AE0D0() & 0x7F);
+    D_8015EC70[i].unkC = 0x50;
+    D_8015EC70[i].unk11 = kind;
     return i;
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013DB80", func_8013E424);
-#endif
 
 void func_8013E4FC(void) {
     Tc14 *p;
