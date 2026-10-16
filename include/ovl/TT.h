@@ -674,9 +674,6 @@ extern s16 D_80156C9C[];
 extern u16 D_80156CA4[];
 extern s16 D_80156CAC[];
 extern u16 D_80156CB0[];
-/* Previous and current page (*D_80158A6C / 0x8000) of func_80136830. T-11820 */
-extern s32 D_80152AF0;
-extern s32 D_80152AF4;
 /* Record tables of func_8013F3B4 (indices 0..10) and its three work pointers. T-11820 */
 extern u8 D_80155E14[];
 extern u8 D_80155E20[];

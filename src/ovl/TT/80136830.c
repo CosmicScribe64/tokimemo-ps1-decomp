@@ -1,21 +1,24 @@
 #include "common.h"
 #include "ovl/TT.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/TT/data/TT/80136830.data", D_80151A80);
+INCLUDE_RODATA("asm/ovl/TT/data/TT/80136830.data", D_80151AC8);
+INCLUDE_RODATA("asm/ovl/TT/data/TT/80136830.data", D_80151AF0);
+/* Previous and current page (*D_80158A6C / 0x8000) of func_80136830. File-static in the
+ * original: uopt keeps both in registers between the stores and the compare. T-11860 */
+static s32 D_80152AF0 = 0;
+static s32 D_80152AF4 = 0;
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11820, 17 lines: the head (old D_80152AF4 value, *D_80158A6C, page) differs; the original loads the old value straight into v0 and keeps the page in the ugen temp t7, here uopt copies the old value through t7 into a0 and gives the page v0. The unrolled six-record loop (i + 1 compare) matches. Tried: old/t/v locals in all orders, compare against the globals, assignment in the condition. */
 void func_80136830(void) {
     u8 *c;
     u8 *p;
     s32 i;
-    s32 old;
-    s32 v;
 
     c = D_80158A6C;
-    v = *(s32 *)c;
-    old = D_80152AF4;
-    D_80152AF0 = old;
-    D_80152AF4 = v / 0x8000;
-    if (old != v / 0x8000) {
+    D_80152AF0 = D_80152AF4;
+    D_80152AF4 = *(s32 *)c / 0x8000;
+    if (D_80152AF0 != D_80152AF4) {
         func_80133AD0(0x611);
     }
     if (*(s32 *)c == 0) {
@@ -32,9 +35,6 @@ void func_80136830(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80136830", func_80136830);
-#endif
 
 void func_801369F4(void) {
     s32 *p;
