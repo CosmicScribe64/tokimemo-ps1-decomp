@@ -15270,3 +15270,7 @@ Filed in [[speedup-research-2026-10-16]].
 ## [2026-10-16] ticket | T-16564 to In Review
 
 [[tickets/T-16564-taco-types-first-p4]] In Progress to In Review: 6 of 8 functions matched. Clean rebuild 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] query | T-16564 closer pass on func_80137D00
+
+Opus closer on [[tickets/T-16564-taco-types-first-p4]]: `func_80137D00` stays guarded at 8 rows. Cause found from uopt's output ucode: the copy-propagated first store shares the `D_801FAA84` load, and ugen keeps it in a temporary for every use of `p`. Notes in [[matching-notes]] (T-16564 closer pass), row updated in [[data/t0018-cases]]. Ticket stays In Review.

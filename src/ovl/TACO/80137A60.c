@@ -76,7 +76,8 @@ void func_80137CBC(s32 arg0) {
     func_80044750(0x300);
 }
 
-/* NON_MATCHING: T-16564, 8 differing instruction rows (16 funcdiff lines): the pointer loaded from D_801FAA84 sits in $v1 in the original, IDO takes the ugen temporary $t9 (the final -1 temporary follows). Known gap, T-9180. */
+/* NON_MATCHING: T-16564, 8 differing instruction rows (16 funcdiff lines): the pointer loaded from D_801FAA84 sits in $v1 in the original, IDO takes the ugen temporary $t9 (the final -1 temporary follows). Known gap, T-9180.
+ * Closer pass: uopt does colour p $v1, but copy-propagates `lod D_801FAA84` into the first store, and ugen then keeps the shared load in a temporary and reads every `p` use from it, so $v1 is never written. ugen loads into $v1 only when p is used after a branch target or has at least three in-place `p += k` updates; the updates cost an `addiu v1` before the join, and the address temporary $t9 is still freed after $t0, so the last row stays $t0. */
 #ifdef NON_MATCHING
 void func_80137D00(void) {
     u16 *p;
