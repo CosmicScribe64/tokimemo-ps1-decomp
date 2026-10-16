@@ -16298,6 +16298,18 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 
 [[tickets/T-17103-w3-rpg-bat-p03]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues, both fixed (three [[register-cheatsheet]] rows sat outside the table, moved in; three stray triple blank lines in `src/ovl/RPG_BAT/80137280.c`). 4 of 4 functions matched (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`), unit sha1 OK. Merge via the wave 3 merge script.
 
+## [2026-10-16] ticket | T-17102 In Progress
+[[tickets/T-17102-w3-rpg-bat-p02]] created and started: RPG_BAT `func_80151C10`, `func_80156D78`, `func_80157158` (files `src/ovl/RPG_BAT/80151C10.c`, `src/ovl/RPG_BAT/80156CC0.c`), worktree `tokimemo-wt/w3-rpg-bat-p02` from `w2-good`.
+
+## [2026-10-16] build | T-17102 matches
+[[tickets/T-17102-w3-rpg-bat-p02]]: `func_80151C10` (`src/ovl/RPG_BAT/80151C10.c`), `func_80156D78` and `func_80157158` (`src/ovl/RPG_BAT/80156CC0.c`) matched in plain C, RPG_BAT sha1 OK. The `$v1`-selector miss of all three was an int-returning callee view (`RPG_BAT_OVERRIDE_func_8013E7C0`, `RPG_BAT_OVERRIDE_func_8013F15C`); notes in [[matching-notes]], rows in [[register-cheatsheet]] and [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-17102 In Review
+[[tickets/T-17102-w3-rpg-bat-p02]] In Progress to In Review (3 of 3 matched).
+
+## [2026-10-16] ticket | T-17102 Done
+[[tickets/T-17102-w3-rpg-bat-p02]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 3 of 3 functions matched (`func_80151C10`, `func_80156D78`, `func_80157158`, 3,056 bytes). Rebuild: RPG_BAT unit sha1 OK, headers OK, globals OK. Card moved to Done.
+
 ## [2026-10-16] ticket | T-20001 GYOZI helper In Progress
 
 Created [[tickets/T-20001-gyozi-helper]] on codex/match-gyozi-helper from upstream main 639693d2. Whole-tree dupes report identifies GYOZI func_8013506C (172 bytes, guarded T-10850 draft) and matched SHOUGATU func_8013315C as a fillable pair including string data. Inspecting the two sources and the original function assembly before adapting the source. PR #36 independently contains the scoped queue fix and communication-platform question.
@@ -16317,3 +16329,7 @@ After integrating upstream main 9e74085b, actual default funcdiff again proves t
 ## [2026-10-16] build | T-20001 PR #37 refreshed and reverified
 
 Integrated upstream main 81095a46, preserving all sides of the shared index, append-only log and matching-note conflicts. Actual default linked funcdiff still matches GYOZI func_8013506C (172 bytes); the full 490-step rebuild and explicit binary SHA1 verifier pass 27/27. Production GYOZI code/header are unchanged from the submitted match. [[tickets/T-20001-gyozi-helper]] remains In Review; GitHub reports the updated PR mergeable.
+
+## [2026-10-16] setup | T-20001 follow upstream RPG merge
+
+Integrated main a8591fb8 into PR #37, retaining both append-only log and matching-note histories. The upstream delta affects RPG_BAT and wiki only; GYOZI code/header and the reviewed caller view are unchanged, so its recorded 172-byte linked proof remains applicable. [[tickets/T-20001-gyozi-helper]] remains In Review.

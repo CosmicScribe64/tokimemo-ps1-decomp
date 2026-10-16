@@ -146,6 +146,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-17207-w3-date-p07|T-17207 Wave 3 package w3-date-p07]]
 - [ ] [[tickets/T-17208-w3-date-p08|T-17208 Wave 3 package w3-date-p08]]
 - [ ] [[tickets/T-17101-w3-rpg-bat-p01|T-17101 Wave 3 package w3-rpg-bat-p01]]
+- [ ] [[tickets/T-17102-w3-rpg-bat-p02|T-17102 Wave 3 package w3-rpg-bat-p02]]
 - [ ] [[tickets/T-19032-w3-d-p32|T-19032 Wave 3 package w3-d-p32]]
 - [ ] [[tickets/T-17201-w3-date-p01|T-17201 Wave 3 package w3-date-p01]]
 - [ ] [[tickets/T-17206-w3-date-p06|T-17206 Wave 3 package w3-date-p06]]
