@@ -15825,3 +15825,6 @@ Clean build 27/27 (all unit sha1 OK, VALEN included), `check_headers`, `migrate_
 
 ## [2026-10-16] ticket | T-19016 Done
 [[tickets/T-19016-w3-d-p16]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of the VALEN units OK (headers OK, sha1 OK). 2 of 5 functions matched (`func_80133670`, `func_80133728`), `func_80134030` stays a guarded draft (27 lines), `func_80132D0C` and `func_80133088` stay `INCLUDE_ASM`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19020 started
+[[tickets/T-19020-w3-d-p20]] created In Progress: Wave 3 direct package w3-d-p20, RENSYU `src/ovl/RENSYU/80132040.c`, four functions (`func_80133CB8`, `func_80133990`, `func_80133628`, `func_8013325C`). Branch w3-d-p20 from w2-good.
