@@ -185,8 +185,6 @@ void func_80143580(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10320, T-11620, constants 2 and D_80151A50 sit in $a1/$a2, the original keeps them in $t0/$t1 (26 diff lines; a counter loop gives the 5/15 order but not the registers, T-11620) */
 void func_801436BC(void) {
     u8 *p;
     u8 *q;
@@ -197,12 +195,9 @@ void func_801436BC(void) {
     *(s16 *)(p + 2) = 0;
     p[12] = 0;
     *(s16 *)(p + 4) = 0;
-    p[13] = 0;
-    p[14] = 0;
-    p[15] = 0;
-    *(s16 *)(p + 6) = 0;
-    *(s16 *)(p + 8) = 0;
-    *(s16 *)(p + 10) = 0;
+    /* FAKE: chained zero stores; their reloads keep dead ranges (no code) that push the hoisted 2 and D_80151A50 into t0/t1 as in the original. T-11850 */
+    p[13] = p[14] = p[15] = 0;
+    *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 10) = 0; /* FAKE: u16 view, see above. T-11850 */
     *(s16 *)(p + 16) = 2;
     *(u8 **)(p + 56) = D_80151A50;
     p[60] = 0;
@@ -222,38 +217,25 @@ void func_801436BC(void) {
     p[95] = 0;
     p[96] = 0;
     *(s16 *)(p + 4) = 0x20;
-    *(s16 *)(p + 10) = 0;
-    *(s16 *)(p + 8) = 0;
-    *(s16 *)(p + 6) = 0;
-    p[15] = 0;
-    p[14] = 0;
-    p[13] = 0;
+    *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 10) = 0; /* FAKE: chained, see above. T-11850 */
+    p[13] = p[14] = p[15] = 0;
     q = D_80158A7C;
-    n = 5;
-    do {
+    for (n = 5; n < 15; n += 5) {
         q[62] = n;
-        n += 5;
         q += 0x60;
         q[-96] = 0;
         *(s16 *)(q - 94) = 0;
         *(s16 *)(q - 92) = 0;
         q[-84] = 0;
-        *(s16 *)(q - 86) = 0;
-        *(s16 *)(q - 88) = 0;
-        *(s16 *)(q - 90) = 0;
-        q[-81] = 0;
-        q[-82] = 0;
-        q[-83] = 0;
+        *(u16 *)(q - 90) = *(u16 *)(q - 88) = *(u16 *)(q - 86) = 0; /* FAKE: chained, see above. T-11850 */
+        q[-83] = q[-82] = q[-81] = 0;
         *(s16 *)(q - 80) = 2;
         *(u8 **)(q - 40) = D_80151A50;
         q[-36] = 0;
         q[-35] = 0;
         q[-32] = 0x60;
-    } while (n != 0xF);
+    }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_801436BC);
-#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_801437F0);
 
