@@ -21,6 +21,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 - [[date-family-results]] - DATE step tables (`FnTblNN`) and stack tables, the types-first redraft and its numbers, sibling ports, near misses, packages (T-17200)
 - [[option-family-results]] - OPTION type map (menu rows, word tables, `OptActor44`), the types-first redraft and its numbers, near misses, packages (T-17800)
+- [[ending-family-results]] - ENDING type map (stack tables, location records left as scalars), the types-first redraft and its numbers, the `check_k_scroll` port, scene-script hand drafts, packages (T-18300)
 - [[shugaku-family-results]] - SHUGAKU type map (callback tables, location tables left as scalars), the types-first redraft and its numbers, sibling ports, packages (T-18000)
 - [[shougatu-family-results]] - SHOUGATU type map (step tables, stack tables, work arrays), the types-first redraft and its numbers, GYOZI twin ports, packages (T-17500)
 - [[rpg-bat-family-results]] - RPG_BAT type map (stack tables, `RpgStat`), the types-first redraft and its numbers, idioms (`default:` + `case 0:`, reread globals), packages (T-17100)
@@ -35,7 +36,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-19009-w3-d-p09|T-19009]] Wave 3 package w3-d-p09: TACO `80142820.c`, `80143E80.c`, `func_801428DC` (one-struct settings block), `func_80144430` (stack-slot order, `void` lib call) and `func_80142AF0` matched, 1,956 B; `func_80144094` back to `INCLUDE_ASM` (Done).
 - [[tickets/T-19007-w3-d-p07|T-19007]] Wave 3 package w3-d-p07: TAIIKU `801452D0.c`, 1 of 4 matched (`func_80146D18`, 648 B); `func_8014607C` and `func_80145370` stay guarded, typed draft for `func_80147B14` (Done).
 - [[tickets/T-19008-w3-d-p08|T-19008]] Wave 3 package w3-d-p08: TAIIKU `80138950.c`, counter family: `func_8013B200` matched (FAKE views, no local `x`, flag u16 view), closer pass matched `func_8013B608` (split `v = x >> 3; v += ...` for the missing ugen temporary), `func_8013BCEC` guarded at 2 missing instructions (counter write-back), `func_8013B78C`, `func_8013B94C` stay `INCLUDE_ASM`; `ugen -S` method for temporaries (Done).
-- [[tickets/T-18300-types-first-ending|T-18300]] Types-first: ENDING: recover the overlay types, redraft every unmatched ENDING function, packages (In Progress).
+- [[tickets/T-18300-types-first-ending|T-18300]] Types-first: ENDING: stack tables and `D_8013CAF0` typed in `ENDING.h`, `dialogue_render` override, 13 redrafts (7 better than the census), 1 match / 280 bytes, packages T-18301..T-18305 (In Review).
 - [[tickets/T-18000-types-first-shugaku|T-18000]] Types-first: SHUGAKU: callback tables in `SHUGAKU.h`, 25 redrafts (9 better than the census), 5 matches / 2,292 bytes, packages T-18001..T-18004 (Done).
 - [[tickets/T-17700-types-first-geko|T-17700]] Types-first: GEKO: stack-copied tables typed in `GEKO.h`, 35 redrafts (14 better than the census), 1 match / 484 bytes, 5 guarded drafts, packages T-17701..T-17708 (Done).
 - [[tickets/T-19005-w3-d-p05|T-19005]] Wave 3 package w3-d-p05: OLH `80135AC0.c`, `80132000.c`, `func_80135B8C` (sibling clone) and `func_80132114` (chain through a local) both matched, 680 B (Done).

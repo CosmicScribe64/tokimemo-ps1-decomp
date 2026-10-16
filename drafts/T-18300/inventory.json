@@ -1,0 +1,119 @@
+[
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80132000.c",
+  "func": "func_80132420",
+  "size": 1764,
+  "guarded": false,
+  "source_hash": "64123f9f5d124ba8edf1c86b66265cf9340d89d73b4a8d3d0a7c7bb741993ddd",
+  "scope": "ENDING:func_80132420"
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80132000.c",
+  "func": "func_80132B04",
+  "size": 660,
+  "guarded": false,
+  "source_hash": "64123f9f5d124ba8edf1c86b66265cf9340d89d73b4a8d3d0a7c7bb741993ddd",
+  "scope": "ENDING:func_80132B04"
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80133030.c",
+  "func": "func_801330E4",
+  "size": 796,
+  "guarded": false,
+  "source_hash": "fe9b2c71e30a0d83d3119b3b00712982f532e9003dfe277eb849e5563f54f899",
+  "scope": "ENDING:func_801330E4"
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80133C10.c",
+  "func": "func_80134270",
+  "size": 1848,
+  "guarded": false,
+  "source_hash": "667fe656cdc3cd298185452be6cee92d0e2e165bc4bf6e33e4e61661fda1d40b",
+  "scope": "ENDING:func_80134270"
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80133C10.c",
+  "func": "func_80134B18",
+  "size": 208,
+  "guarded": true,
+  "source_hash": "667fe656cdc3cd298185452be6cee92d0e2e165bc4bf6e33e4e61661fda1d40b",
+  "scope": "ENDING:func_80134B18"
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80133C10.c",
+  "func": "func_80134C2C",
+  "size": 240,
+  "guarded": false,
+  "source_hash": "667fe656cdc3cd298185452be6cee92d0e2e165bc4bf6e33e4e61661fda1d40b",
+  "scope": "ENDING:func_80134C2C"
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80134D20.c",
+  "func": "func_80135F4C",
+  "size": 3220,
+  "guarded": false,
+  "source_hash": "0d12d6a5c1f9b4ffebc2c4459f1a848a2645bf3326399a2e66d1df1ba5c70ab6",
+  "scope": "ENDING:func_80135F4C"
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80137340.c",
+  "func": "func_8013759C",
+  "size": 352,
+  "guarded": false,
+  "source_hash": "f049159704efd773c53335cfb440ca99c6fce765763681b6d95d33404d30717d",
+  "scope": "ENDING:func_8013759C"
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80137340.c",
+  "func": "func_80137BB4",
+  "size": 652,
+  "guarded": false,
+  "source_hash": "f049159704efd773c53335cfb440ca99c6fce765763681b6d95d33404d30717d",
+  "scope": "ENDING:func_80137BB4"
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80137340.c",
+  "func": "func_80137E40",
+  "size": 292,
+  "guarded": false,
+  "source_hash": "f049159704efd773c53335cfb440ca99c6fce765763681b6d95d33404d30717d",
+  "scope": "ENDING:func_80137E40"
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80137340.c",
+  "func": "func_801387B0",
+  "size": 748,
+  "guarded": false,
+  "source_hash": "f049159704efd773c53335cfb440ca99c6fce765763681b6d95d33404d30717d",
+  "scope": "ENDING:func_801387B0"
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/801396E0.c",
+  "func": "func_80139B48",
+  "size": 476,
+  "guarded": false,
+  "source_hash": "536c694858fdd8c6d0eb7b2055c96457f2b9f9c980929604fb9fec5719f428e4",
+  "scope": "ENDING:func_80139B48"
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/801396E0.c",
+  "func": "func_8013A2E8",
+  "size": 4648,
+  "guarded": false,
+  "source_hash": "536c694858fdd8c6d0eb7b2055c96457f2b9f9c980929604fb9fec5719f428e4",
+  "scope": "ENDING:func_8013A2E8"
+ }
+]

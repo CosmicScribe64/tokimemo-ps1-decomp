@@ -15692,3 +15692,11 @@ Created [[tickets/T-18000-types-first-shugaku]] (wave 3 types-first pass for SHU
 ## [2026-10-16] ticket | T-18300 Types-first: ENDING, In Progress
 
 Created [[tickets/T-18300-types-first-ending]] (wave 3, [[tickets/T-16990-wave-3-conveyor]]), branch `w3-ending-types` from `w2-good`: recover ENDING's shared types into `include/ovl/ENDING.h`, redraft every unmatched ENDING function (drivers from T-16550, T-16560, T-18000), cut packages. Card in [[kanban]] In Progress, line in [[index]].
+
+## [2026-10-16] build | T-18300 ENDING: sibling port, types, redraft
+
+[[tickets/T-18300-types-first-ending]]: matched `func_80132F18` as a port of main `check_k_scroll` (FAKE unused `get_k_work` result for the frame). `include/ovl/ENDING.h`: `EdShorts18 D_8013C3B0`, `EdShorts14 D_8013CA60`/`D_8013CA7C`, `s32 **D_8013CAF0`, `MAIN_API_OVERRIDE_dialogue_render`; every ENDING file includes `game.h` after `ovl/ENDING.h`. Redraft driver `drafts/T-18300/redraft.py` (from T-18000, plus a scaled stack-table index and the `struct-bytes` rewrite) and `hand.py`: 13 functions, 7 better than the census (7,268 bytes), none worse, no zero. New page [[ending-family-results]] ("Types-first pass (T-18300)"), line in [[index]].
+
+## [2026-10-16] ticket | T-18300 In Review
+
+[[tickets/T-18300-types-first-ending]] In Progress to In Review: packages T-18301..T-18305 (`w3-ending-p01`..`p05`) cut by `inventory2.py`/`mklists3.py`; clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], line in [[index]].
