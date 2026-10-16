@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # MAIN source family recovery
@@ -136,3 +136,11 @@ Largest gains: `parameter_show` 362 to 61, `parameter_up_down` 408 to 177, `func
 The fold helps main less than TAIIKU: most census drafts already compiled the GameState labels as separate
 scalars, which compile like members except for the load-after-store order, and the large shared objects
 above could not be typed.
+
+## Wave 3 package w3-main-p01 (T-17001)
+
+`src/main/8007C030.c`, two long-standing guarded drafts ([[tickets/T-17001-w3-main-p01]]). `_sprite_set_box_shade_tarao` (484 B) is
+matched: natural one-trio-per-line colour stores plus one local that holds the red byte of `arg5` and is read once (FAKE; it
+numbers an invisible uopt range first, which shifts the register choices and the stack-argument load order, see
+[[register-cheatsheet]]). `dialogue_speak_part` stays guarded at 16 lines; the as1 scheduler trace shows that the original needs
+the first-argument constant and the narrowing on an earlier source line than the string stores ([[matching-notes]], T-17001).

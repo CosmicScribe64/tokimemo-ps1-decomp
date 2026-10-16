@@ -16526,3 +16526,9 @@ Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG
 
 ## [2026-10-16] ticket | T-17001 In Progress
 Created [[tickets/T-17001-w3-main-p01]] (Wave 3 package, main `src/main/8007C030.c`, two functions: `_sprite_set_box_shade_tarao`, `dialogue_speak_part`) and moved it to In Progress. Card on [[kanban]], line in [[index]]. Worktree `tokimemo-wt/w3-main-p01`, started 21:52 UTC.
+
+## [2026-10-16] build | T-17001 matches
+[[tickets/T-17001-w3-main-p01]]: `_sprite_set_box_shade_tarao` (484 B) matched in plain C with one FAKE local (`u32 v4 = (arg5 >> 16) & 0xFF;`, read once by the `r2` store); unit sha1 OK, committed as "T-17001: match main:_sprite_set_box_shade_tarao". `dialogue_speak_part` stays `NON_MATCHING` at 16 lines (guard comment now T-17001). New: as1 scheduler trace recipe (`-R -xbbdbg 8`) and its pick rule in [[matching-notes]], a [[register-cheatsheet]] row, two rows in [[data/t0018-cases]], section in [[main-family-results]]. Matched count 1 of 2 (484 bytes).
+
+## [2026-10-16] ticket | T-17001 In Review
+[[tickets/T-17001-w3-main-p01]] In Progress to In Review (1 of 2 matched). Card moved to In Review on [[kanban]]. Elapsed about 75 minutes.

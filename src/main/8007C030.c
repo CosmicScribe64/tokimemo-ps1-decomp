@@ -1056,7 +1056,7 @@ void wait_sub_sub(s16 arg0) {
     }
 }
 
-/* NON_MATCHING: T-10870, 16 differing lines: two four-word scheduling rotations (li a0,-40) remain at the incremented-Y calls; T-11590 retried same-line, inline +=, casts and split arguments. */
+/* NON_MATCHING: T-17001, 16 differing lines (T-10870): the original puts li a0,-40 before the sra of the incremented Y (as1 here schedules sra, sw, sw, li); T-17001 retried 144 source forms of the two sites (increment, casts, constant, separators), a separate y local and an s32 temp_s1 (s1 is lost), no gain. */
 #ifdef NON_MATCHING
 s32 dialogue_speak_part(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 u8 *arg0;
