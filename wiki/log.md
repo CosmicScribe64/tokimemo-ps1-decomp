@@ -15883,6 +15883,21 @@ Created [[tickets/T-18700-types-first-bunkasai]] (branch `w3-bunkasai-types` fro
 
 ## [2026-10-16] ticket | T-19017 Done
 [[tickets/T-19017-w3-d-p17]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 functions matched (2,104 bytes: TACO `func_80141B18`, `func_801413B8`, `func_80141050`, `func_80141170`), `func_801416E8` stays guarded at 28 lines. Two review findings in `src/ovl/TACO/80140DF0.c` and the wiki, fixed: the pointer-compare loop test in `func_80141B18` got an explanatory comment (comment only), and the stale "guarded" lines for `func_80141050`/`func_80141170` in [[index]], [[data/t0018-cases]] and [[matching-notes]] were refreshed (TACO.bin SHA1 OK, globals and headers OK).
+## [2026-10-16] ticket | T-19018 In Progress
+
+[[tickets/T-19018-w3-d-p18]] created and started: wave 3 package w3-d-p18, TACO `src/ovl/TACO/8013D1E0.c` and `src/ovl/TACO/80153AA0.c`, three functions from the T-15700/T-16100 drafts. Branch w3-d-p18, base w2-good.
+
+## [2026-10-16] ticket | T-19018 In Review
+
+[[tickets/T-19018-w3-d-p18]] In Progress to In Review: wave 3 package w3-d-p18 (TACO `src/ovl/TACO/8013D1E0.c`, `src/ovl/TACO/80153AA0.c`), 1 of 3 functions matched (`func_8013D528`, 784 bytes, plain C with two FAKE marks); `func_8013D838` guarded at 10 differing lines; `func_80153B38` stays `INCLUDE_ASM` (175 rows). Notes in [[matching-notes]] (T-19018), [[register-cheatsheet]], [[data/t0018-cases]], [[taco-family-results]]. Branch w3-d-p18, about 88 minutes.
+
+## [2026-10-16] query | T-19018 closer pass
+
+[[tickets/T-19018-w3-d-p18]] Opus closer pass on `func_8013D838` (`src/ovl/TACO/8013D1E0.c`): no match, still 10 differing lines, ticket stays In Review. The uopt trace ties the first `arg3` load to the range `shl(arg3, 6)`, which gets colour 2 where the original needs 11. Autotweak and about 30 C variants made no improvement. Notes in [[matching-notes]] (T-19018), [[data/t0018-cases]] and the ticket Comments.
+
+## [2026-10-16] ticket | T-19018 Done
+
+[[tickets/T-19018-w3-d-p18]] In Review to Done after the code review: wave 3 package w3-d-p18 (TACO `src/ovl/TACO/8013D1E0.c`, `src/ovl/TACO/80153AA0.c`), 1 of 3 functions matched (784 bytes: `func_8013D528`, plain C with two FAKE marks, ticketed), `func_8013D838` guarded at 10 rows (NON_MATCHING comment with T-19018), `func_80153B38` stays `INCLUDE_ASM` (175 rows). No findings. TACO SHA1 OK, headers, globals and proto checks OK.
 
 ## [2026-10-15] ticket | T-11840 TT batch 10 opened
 
