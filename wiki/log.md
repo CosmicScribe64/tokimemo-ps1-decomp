@@ -16318,3 +16318,6 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 
 ## [2026-10-16] ticket | T-17111 In Review
 [[tickets/T-17111-w3-rpg-bat-p11]] In Progress to In Review (2 of 2 matched). Card moved.
+
+## [2026-10-16] ticket | T-17111 Done
+[[tickets/T-17111-w3-rpg-bat-p11]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 2 of 2 functions matched (`func_80144010`, `func_801505B8`, 2,572 bytes). Rebuild: RPG_BAT unit sha1 OK, headers OK, globals OK, protos OK. Card moved to Done.

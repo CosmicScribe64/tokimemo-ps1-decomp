@@ -1,7 +1,7 @@
 ---
 id: T-17111
 title: Wave 3 package w3-rpg-bat-p11
-status: In Review
+status: Done
 assignee: claude-opus
 created: 2026-10-16
 updated: 2026-10-16
@@ -37,3 +37,7 @@ Worktree `tokimemo-wt/w3-rpg-bat-p11`, branch `w3-rpg-bat-p11`, base `w2-good`. 
 ### 2026-10-16 start and finish (claude-opus, branch `w3-rpg-bat-p11`)
 
 Started 20:21 UTC, both functions matched by 20:51 UTC. Clean rebuild 27/27, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK. Moved to In Review; code review against `CODING_STANDARDS.md` pending.
+
+### 2026-10-16 code review (claude-opus)
+
+Reviewed `w2-good...w3-rpg-bat-p11` against `CODING_STANDARDS.md`: no findings. Only the two owned C files (`src/ovl/RPG_BAT/80144010.c`, `src/ovl/RPG_BAT/801504E0.c`), `include/ovl/RPG_BAT.h` and wiki pages changed; no `drafts/`, `config/` or `asm/` change; no inline asm, `.word` or `NON_MATCHING` guard; no FAKE statement (none needed); both matches are plain C and the new `RPG_BAT_OVERRIDE_D_8015EDAC` is explained and wrapped in the header; the `ScheduleClubFlags` and `DisplayActor44` casts follow existing uses (DATE `80132000.c`, other RPG_BAT units); header additions are declared once. Forced rebuild: RPG_BAT unit sha1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK. Status In Review to Done, card moved to Done.
