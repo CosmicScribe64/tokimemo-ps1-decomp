@@ -107,7 +107,61 @@ void func_801493D4(void) {
     D_800E6280.unk_1104.u++;
 }
 
+/* NON_MATCHING: T-19019, 10 differing lines (5 rows); only the final `+= 1` address form is left: the original reads and writes the counter as `lui t8; lw t8,%lo(D_800E7384)(t8)` / `lui at; sw t9,%lo(D_800E7384)(at)`, the volatile view builds `lui v0; addiu v0,%lo(D_800E6280)` with the offset 0x1104 in the lw and sw.
+ * Plain `+= 1` is 61 lines: IDO keeps the chain's shared load in $v0, reloads it at the end of every arm that calls (`lui v0; lw v0; b end; lw ra`) where the original has `b L; nop` to one shared tail. The volatile access removes that. The absolute address `*(s32 *)0x800E7384` gives the right form, but as1 then fills the branch delay slots with the tail's `lui` (32 lines). The loop is the plain loop over the records (IDO peels records 1-3, as the original). */
+#ifdef NON_MATCHING
+void func_80149538(void) {
+    s32 i;
+    u8 shade;
+
+    func_80146F74(0, 3, 5, -0x14, 0, 0, 0, 0, 0);
+    if ((D_800E6280.unk_1104.w >= 0xB4) && (D_800E6280.unk_1104.w < 0xC7)) {
+        func_80153E78(1, 0xE0, 0xE0, 0xE0);
+    } else if (D_800E6280.unk_1104.w == 0xC7) {
+        func_801335A0(0, 0x504);
+    } else if ((D_800E6280.unk_1104.w >= 0xC8) && (D_800E6280.unk_1104.w < 0x140)) {
+        if ((D_800E6280.unk_1104.w % 3) == 0) {
+            func_80153E78(1, 0xF0, 0xF0, 0xF0);
+        }
+    } else if ((D_800E6280.unk_1104.w >= 0x140) && (D_800E6280.unk_1104.w < 0x1B8)) {
+        shade = (D_800E6280.unk_1104.w * 2) - 0x280;
+        func_80153E78(2, shade, shade, shade);
+    } else if (D_800E6280.unk_1104.w == 0x1B8) {
+        i = 1;
+        do {
+            D_80127080[i++].unk0 = 0x80000000;
+        } while (i != 36);
+        load_csr_tp(0x80162000, 0xC, 1, 0, 0, 0x100, 0x100);
+        func_80143730(0x80172000, 0xE);
+        D_80122760 = 0x14;
+        D_80122764 = 0x64;
+        D_80122768 = -0x64;
+        D_8012276C = 0xB0;
+        D_8012276D = 0xB0;
+        D_8012276E = 0xB0;
+        func_8009AD70(0, &D_80122760);
+        D_80122770 = 0x14;
+        D_80122774 = -0x64;
+        D_80122778 = 0x64;
+        D_8012277C = 0x80;
+        D_8012277D = 0x80;
+        D_8012277E = 0x80;
+        func_8009AD70(1, &D_80122770);
+        D_80122780 = -0x14;
+        D_80122784 = 0x14;
+        D_80122788 = -0x64;
+        D_8012278C = 0x60;
+        D_8012278D = 0x60;
+        D_8012278E = 0x60;
+        func_8009AD70(2, &D_80122780);
+        func_80042908(0x1F);
+    }
+    /* FAKE: the volatile access keeps the tail out of the counter's register range (the original has plain ugen code here); real source unknown. T-19019 */
+    *(volatile s32 *)&D_800E6280.unk_1104.w += 1;
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80148FE0", func_80149538);
+#endif
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80148FE0", func_801497EC);
 
