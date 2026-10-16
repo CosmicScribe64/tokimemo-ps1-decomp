@@ -138,7 +138,7 @@ void func_801482BC(s32);
 void func_80147A6C(s32);
 void func_80147B14(s32);
 s32 func_80141CDC();
-void func_80132E20(s32, s32);
+void func_80132E20(); /* K&R definition in 80132BD0.c (s16 first parameter) */
 s32 func_80140A90();
 extern u8 D_8014A110;
 void func_80143D24(void);
@@ -875,6 +875,7 @@ extern s32 D_8014A56C; /* func_80145370 */
 extern TaiWords12 D_8014A570; /* func_80145370 */
 extern TaiWords9 D_8014A5A0; /* func_80145370 */
 extern TaiBytes23 D_80148F10; /* func_80132BD0 */
+extern TaiShorts23 D_80148FB8; /* func_80132E20 */
 extern TaiShorts23 D_80148F28; /* func_80132BD0 */
 extern TaiShorts23 D_80148F58; /* func_80132BD0 */
 extern TaiShorts23 D_80148F88; /* func_80132BD0 */

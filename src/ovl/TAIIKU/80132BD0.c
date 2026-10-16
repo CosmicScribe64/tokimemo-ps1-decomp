@@ -41,7 +41,43 @@ void func_80132BD0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_80132E20);
+void func_80132E20(arg0, arg1)
+s16 arg0;
+s32 arg1;
+{
+    s32 i;
+    s32 j;
+    s32 t;
+    s32 k; /* FAKE: k and l are unused word locals; the original frame has two more scalar slots (one above, one below the arrays), real locals unknown. T-19031 */
+    s16 spA8[4];
+    TaiShorts23 sp78;
+    s32 l;
+
+    sp78 = D_80148FB8;
+    for (i = 0; i < 0x17; i++) {
+        for (j = 0; j < arg1; j++) {
+            spA8[j] = sp78.v[i] + j * 0x500 - arg0 - 0xA0;
+        }
+        for (j = 0; j < arg1; j++) {
+            t = func_800AE0C0(spA8[j]);
+            if (t < func_800AE0C0(spA8[0])) {
+                spA8[0] = spA8[j];
+            }
+        }
+        DISP(i + 1).unk_26 = spA8[0];
+    }
+    for (i = 0; i < 0x17; i++) {
+        if ((DISP(i + 1).unk_26 < 0xB1) && (DISP(i + 1).unk_26 >= -0x127)) {
+            DISP(i + 1).unk_02 = 1;
+            DISP(i + 1).unk_03 = 0xA4;
+        } else {
+            DISP(i + 1).unk_02 = 0;
+            DISP(i + 1).unk_03 = 0;
+            DISP(i + 1).unk_18 = 0;
+            DISP(i + 1).unk_08 = 0;
+        }
+    }
+}
 
 void func_801330D4(void) {
     func_801330FC();
