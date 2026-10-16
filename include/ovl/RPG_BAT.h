@@ -272,6 +272,11 @@ void func_8013D030();
 void func_801420EC();
 s32 func_801446F8();
 s32 func_801447B8(void);
+void func_80150AA4(void);
+void func_80151108(void);
+void func_80151380(s32 arg0);
+s32 func_801513C8(void);
+s32 func_801515F0(void);
 s32 func_80147930();
 void func_801481C8();
 void func_8014DF60();
@@ -312,7 +317,9 @@ extern u8 D_8015E8F0[];
 extern s32 D_8015EBC0;
 extern s32 D_8015EBC4;
 extern s32 D_8015EBC8;
+#ifndef RPG_BAT_OVERRIDE_D_8015EDAC
 extern u32 D_8015EDAC;
+#endif
 void func_80136A9C(void);
 void func_80136BD8(void);
 void func_80136CCC(void);
