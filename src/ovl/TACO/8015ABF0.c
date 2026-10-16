@@ -173,7 +173,53 @@ void func_8015B59C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015BD30);
+/* The actor is addressed by byte offset in the loop: one pointer then serves the field loads and &unk14, the array form builds a second one. T-16563 */
+void func_8015BD30(s32 arg0, s16 *arg1) {
+    s32 i;
+    s32 val;
+    s16 frame;
+    s32 phase;
+    s32 j;
+    s32 n;
+    s32 last;
+    u8 *id;
+
+    frame = D_8015EDB4[arg0].unk82;
+    if (frame >= arg1[3]) {
+        D_8015EDB4[arg0].unk82 = 0;
+        frame = D_8015EDB4[arg0].unk82;
+    }
+    phase = frame % arg1[2];
+    n = 0;
+    for (i = 0;; i++) {
+        if (phase < arg1[4 + i * 2]) {
+            if (i) {} /* FAKE: the empty test splits the live range of i at the found key, so i and j * 4 get s1 and s0 as in the original. T-16563 */
+            val = arg1[5 + i * 2];
+            break;
+        }
+    }
+    i = 0;
+    id = D_80161D9C;
+    j = arg1[0];
+    last = arg1[1];
+    for (i = 0; i != 0x40; i++, id++) {
+        if (arg0 == *id) {
+            if (n >= j) {
+                if (((TcActor *)((u8 *)D_8015EDB4 + arg0 * 0x88))->unk82 % arg1[2] == 0) {
+                    func_80099E30((s32)&((TcActor *)((u8 *)D_8015EDB4 + arg0 * 0x88))->unk14, (i + D_80127480));
+                    func_8015B2AC(i, D_80161E60[D_8015EDB4[arg0].unk84[2]][j]);
+                } else {
+                    func_8015B3B0(i, D_80161E60[((TcActor *)((u8 *)D_8015EDB4 + arg0 * 0x88))->unk84[2]][j], val);
+                }
+                j++;
+            }
+            n++;
+        }
+        if (last < j) {
+            break;
+        }
+    }
+}
 
 /* No local actor pointer (see func_8015C0A0); `n = 0` after the first test lands in its branch delay slot as in the original. T-16563 */
 void func_8015BF70(s32 arg0) {
