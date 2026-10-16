@@ -30,7 +30,7 @@ Worktree `pt-taco-p3` (branch `pt-taco-p3`, from `w2-good`). Owns `src/ovl/TACO/
 
 ### 2026-10-16 (claude, pt-taco-p3): matching stage finished, In Review
 
-Branch `pt-taco-p3` (from `w2-good`), about 60 minutes of agent time (03:55 to 04:55 UTC). 9 of the 10 listed functions matched in plain C, 4,164 bytes, one commit each, then the unlisted `func_8015BD30` (576 bytes, 4,740 in all): `func_8015C0A0` (360), `func_80151D1C` (632), `func_80152944` (796), `func_8015BF70` (304), `func_80152808` (316), `func_80152DB4` (692), `func_801523D0` (668), `func_801521EC` (196), `func_8015CE64` (200). `func_80151D1C` matched at the first build of a hand-written body, `func_80152944` and `func_801521EC` at the second; none matched from the printed m2c draft.
+Branch `pt-taco-p3` (from `w2-good`), about 60 minutes of agent time for the listed functions (03:55 to 04:55 UTC), about 80 minutes with the extras (to 05:15 UTC). 9 of the 10 listed functions matched in plain C, 4,164 bytes, one commit each, then the unlisted `func_8015BD30` (576 bytes, 4,740 in all): `func_8015C0A0` (360), `func_80151D1C` (632), `func_80152944` (796), `func_8015BF70` (304), `func_80152808` (316), `func_80152DB4` (692), `func_801523D0` (668), `func_801521EC` (196), `func_8015CE64` (200). `func_80151D1C` matched at the first build of a hand-written body, `func_80152944` and `func_801521EC` at the second; none matched from the printed m2c draft.
 
 Fakematches (marked `FAKE` with this ticket): `func_801523D0` (`s32 pad[15]` and `pad2` reproduce the frame and the slot of `k`), `func_80152808` (pointer table read from the base `D_801603D4`, declared `s16 *D_801603D4[]` in `TACO.h`), `func_8015BD30` (`if (i) {}` splits the live range of `i`).
 
