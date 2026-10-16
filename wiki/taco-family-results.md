@@ -173,5 +173,5 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 
 ## Matching stage, package w3-d-p23 (T-19023)
 
-[[tickets/T-19023-w3-d-p23]] (`80135720.c`, the SETTING screen): `func_801357B0` (string drawer, 204 bytes), `func_80136988` (cursor handler, 460) and `func_80135A04` (SETTING screen draw, 1,384) matched in plain C, 2,048 bytes. `func_801357B0` and `func_80135A04` are now `s32` in `TACO.h` (implicit-int, no `return`); details in [[matching-notes]] (T-19023).
+[[tickets/T-19023-w3-d-p23]] (`80135720.c`, the SETTING screen): `func_801357B0` (string drawer, 204 bytes), `func_80136988` (cursor handler, 440) and `func_80135A04` (SETTING screen draw, 1,384) matched in plain C, 2,028 bytes. `func_801357B0` and `func_80135A04` are now `s32` in `TACO.h` (implicit-int, no `return`); details in [[matching-notes]] (T-19023).
 
