@@ -24,7 +24,54 @@ void func_8013E4D0(void) {
     }
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-17107, 16 differing lines; all four unrolled loop bodies match (byte-array index form, i = 4..15 like func_8013E7C0's D_8011ECD0[k + i * 0x44]); left: the loop preheader, where the original computes the iv start pointer (v0) before the limit (t0) and the build the reverse, so the lui/addiu pairs are swapped */
+void func_8013E54C(s32 arg0) {
+    s32 i;
+
+    switch (arg0) {
+    case 3:
+        for (i = 4; i < 16; i++) {
+            *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEB4;
+            *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EECC;
+            *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE9C;
+            D_8011ECD0[0x1981 + i * 0x44] = 5;
+            D_8011ECD0[0x19C3 + i * 0x44] = 0x1D;
+        }
+        break;
+    case 4:
+        for (i = 4; i < 16; i++) {
+            *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEA8;
+            *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EEC0;
+            *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE90;
+            D_8011ECD0[0x1981 + i * 0x44] = 5;
+            D_8011ECD0[0x19C3 + i * 0x44] = 0x12;
+        }
+        break;
+    case 5:
+        for (i = 4; i < 16; i++) {
+            *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEB8;
+            *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EED0;
+            *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EEA0;
+            D_8011ECD0[0x1981 + i * 0x44] = 5;
+            D_8011ECD0[0x19C3 + i * 0x44] = 0x1C;
+        }
+        break;
+    case 0xFF:
+        for (i = 4; i < 16; i++) {
+            *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEA4;
+            *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EEBC;
+            *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE8C;
+            D_8011ECD0[0x19C3 + i * 0x44] = 0;
+            D_8011ECD0[0x1981 + i * 0x44] = 3;
+            D_8011ECD0[0x1983 + i * 0x44] = 0;
+        }
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013E54C);
+#endif
 
 void func_8013E7C0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     u8 *temp_v0;
