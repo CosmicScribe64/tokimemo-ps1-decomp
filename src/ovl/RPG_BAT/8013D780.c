@@ -114,7 +114,6 @@ void func_8013D834(void) {
     }
 }
 
-
 /* s32 without a return: v0 live at the exit keeps as1 from filling the branch delay slots with the next block's lui,
  * as in the original (T-17109). */
 s32 func_8013DC60(void) {
@@ -260,4 +259,3 @@ s32 func_8013DC60(void) {
         func_80042808();
     }
 }
-
