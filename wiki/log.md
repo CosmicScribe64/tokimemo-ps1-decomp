@@ -15893,3 +15893,5 @@ Created [[tickets/T-18700-types-first-bunkasai]] (branch `w3-bunkasai-types` fro
 ## [2026-10-16] lint | T-19023 byte count corrected
 The T-19023 In Review entry above says 2,048 bytes; the three functions are 204 + 440 + 1,384 = 2,028 bytes (`func_80136988` is 0x1B8 bytes). [[tickets/T-19023-w3-d-p23]], [[matching-notes]], [[taco-family-results]] and [[index]] now say 2,028.
 
+## [2026-10-16] ticket | T-19023 Done
+[[tickets/T-19023-w3-d-p23]] reviewed against `CODING_STANDARDS.md` and moved to Done: 3 of 3 functions matched (2,028 bytes: TACO `func_801357B0`, `func_80136988`, `func_80135A04`), nothing guarded. Two wiki findings fixed: the two new [[register-cheatsheet]] rows were outside the table (moved in), and two stray trailing blank lines were removed. The one FAKE (second induction variable in `func_801357B0`) is commented and ticketed. TACO.bin SHA1 OK.
