@@ -117,31 +117,22 @@ void func_8014E8F4(void) {
     func_80042940((s32) D_800E6280.unk_722);
 }
 
-/* NON_MATCHING: T-10850, 8 differing listing lines; see the ticket scratch evidence. */
-#ifdef NON_MATCHING
-/* FAKE: first-symbol views bridge unresolved aggregate declarations; the
- * offset bound prevents address CSE and the same-line loop preserves scheduling.
- * T-10850. */
+/* FAKE: the three clear loops share one counter (it keeps the first two rolled
+ * and lets the last unroll by four, as in func_8014F540) and walk the legacy
+ * scalar D_8015EBAC and the 2-D D_8015ED64 as flat word arrays; the third loop
+ * body shares its for line to keep the store scheduling. The `(&X)[k]` stores
+ * reach the later words of the shared-$at groups through their first symbol
+ * (the aggregates are not recovered). T-17108. */
 s32 func_8014E994(void) {
-    s32 *end;
     s32 i;
-    s32 *var_v1;
-    s32 *var_v1_2;
 
-    end = (s32 *)((u8 *)D_8015ED64 - 0x28);
-    var_v1 = &D_8015EBAC;
-    do {
-        var_v1++;
-        var_v1[-1] = 0;
-    } while ((u32) var_v1 < (u32) end);
-    end = (s32 *)D_8015ED64;
-    var_v1_2 = D_8015ED3C;
-    do {
-        var_v1_2++;
-        var_v1_2[-1] = 0;
-    } while ((u32) var_v1_2 < (u32) end);
-    for (i = 0; i < 12; i++) { (&D_8015ED64[0][0])[i] = 0;
+    for (i = 0; i < 100; i++) {
+        (&D_8015EBAC)[i] = 0;
     }
+    for (i = 0; i < 10; i++) {
+        D_8015ED3C[i] = 0;
+    }
+    for (i = 0; i < 12; i++) (&D_8015ED64[0][0])[i] = 0;
     D_8015EE44.unk_00 = 0;
     D_8015EE44.unk_04 = 0;
     D_8015EE44.unk_08 = 0;
@@ -150,36 +141,36 @@ s32 func_8014E994(void) {
     D_8015EE50.unk_08 = 0;
     D_8015EE5C = 0;
     D_8015EE60 = 0;
-    *(s32 *)((u8 *)(&D_8015EE60) + (4)) = 0;
+    (&D_8015EE60)[1] = 0;
     D_8015EE68 = 0;
-    *(s32 *)((u8 *)(&D_8015EE68) + (4)) = 0;
+    (&D_8015EE68)[1] = 0;
     D_8015EE70 = 0;
     D_8015EE74 = 0;
-    *(s32 *)((u8 *)(&D_8015EE74) + (4)) = 0;
-    *(s32 *)((u8 *)(&D_8015EE74) + (8)) = 0;
+    (&D_8015EE74)[1] = 0;
+    (&D_8015EE74)[2] = 0;
     D_8015EE80 = 0;
-    *(s32 *)((u8 *)(&D_8015EE80) + (4)) = 0;
-    *(s32 *)((u8 *)(&D_8015EE80) + (8)) = 0;
+    (&D_8015EE80)[1] = 0;
+    (&D_8015EE80)[2] = 0;
     D_8015ED94 = 0;
-    *(s32 *)((u8 *)(&D_8015ED94) + (4)) = 0;
-    *(s32 *)((u8 *)(&D_8015ED94) + (8)) = 0;
+    (&D_8015ED94)[1] = 0;
+    (&D_8015ED94)[2] = 0;
     D_8015EDA0 = 0;
-    *(s32 *)((u8 *)(&D_8015EDA0) + (4)) = 0;
+    (&D_8015EDA0)[1] = 0;
     D_8015EDEC = 0;
     D_8015EDF0 = 0;
-    *(s32 *)((u8 *)(&D_8015EDF0) + (4)) = 0;
-    *(s32 *)((u8 *)(&D_8015EDF0) + (8)) = 0;
-    *(s32 *)((u8 *)(&D_8015EDF0) + (12)) = 0;
+    (&D_8015EDF0)[1] = 0;
+    (&D_8015EDF0)[2] = 0;
+    (&D_8015EDF0)[3] = 0;
     D_8015EDC0 = 0;
-    *(s32 *)((u8 *)(&D_8015EDC0) + (4)) = 0;
-    *(s32 *)((u8 *)(&D_8015EDC0) + (8)) = 0;
-    *(s32 *)((u8 *)(&D_8015EDC0) + (12)) = 0;
+    (&D_8015EDC0)[1] = 0;
+    (&D_8015EDC0)[2] = 0;
+    (&D_8015EDC0)[3] = 0;
     D_8015EDD0 = 0;
     D_8015EE18 = 0;
-    *(s32 *)((u8 *)(&D_8015EE18) + (4)) = 0;
+    (&D_8015EE18)[1] = 0;
     D_8015EE20 = 0;
-    *(s32 *)((u8 *)(&D_8015EE20) + (4)) = 0;
-    *(s32 *)((u8 *)(&D_8015EE20) + (8)) = 0;
+    (&D_8015EE20)[1] = 0;
+    (&D_8015EE20)[2] = 0;
     D_8015EDA8[0] = 0;
     D_8015EDA8[1] = 0;
     D_8015EDB0.unk_04 = 0;
@@ -189,9 +180,9 @@ s32 func_8014E994(void) {
     D_8015EE00.unk_0C = 0;
     D_8015EE10 = 0;
     D_8015EDD4 = 0;
-    *(s32 *)((u8 *)(&D_8015EDD4) + (4)) = 0;
+    (&D_8015EDD4)[1] = 0;
     D_8015EDE0 = 0;
-    *(s32 *)((u8 *)(&D_8015EDE0) + (4)) = 0;
+    (&D_8015EDE0)[1] = 0;
     D_8015EE2C = 0;
     D_8015EE30.unk_00 = 0;
     D_8015EE30.unk_08 = 0;
@@ -201,9 +192,6 @@ s32 func_8014E994(void) {
     D_8015EDDC = 0;
     D_8015EE30.unk_04 = 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014E780", func_8014E994);
-#endif
 
 void func_8014EB58(s32 arg0) {
     switch (arg0) {
@@ -230,7 +218,45 @@ void func_8014EBD0(void) {
     D_8015EDB0.unk_08 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014E780", func_8014EBEC);
+/* FAKE: the three clear loops and the record loop reuse one counter, the clear
+ * loops walk the legacy scalar D_8015EC74 and the 2-D D_8015ED64 as flat word
+ * arrays (func_8014E994 has the same loops), the record loop shares its for line
+ * to keep the store order, and D_8015ED9C is reached through D_8015ED98 to share
+ * its $at (aggregate not recovered). T-17108. */
+void func_8014EBEC(void) {
+    s32 i;
+
+    D_8015EDA4 = 0;
+    D_8015ED98 = 0;
+    (&D_8015ED98)[1] = 0;
+    D_8015EDA8[1] = 0;
+    D_8015EDB0.unk_04 = 0;
+    D_8015EDB0.unk_00 = 0;
+    D_8015EDB0.unk_08 = 0;
+    for (i = 0; i < 50; i++) {
+        (&D_8015EC74)[i] = 0;
+    }
+    for (i = 0; i < 10; i++) {
+        D_8015ED3C[i] = 0;
+    }
+    for (i = 0; i < 12; i++) {
+        (&D_8015ED64[0][0])[i] = 0;
+    }
+    if (D_8015EB98 != 0x80000000) {
+        for (i = 0x28; i < 0x30; i++) {
+            func_8013E7C0(i, 0xFF, 1, 0);
+        }
+    }
+    i = 0x32;
+    do {
+        func_8013E7C0(i, 0xFF, 1, 0);
+        i++;
+    } while (i < 0x38);
+    for (i = 40; i < 64; i++) ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 5;
+    if (D_8015EB98 != 0x80000000) {
+        ((DisplayActor44 *)D_8011ECD0)[125].unk_01 = 5;
+    }
+}
 
 void func_8014ED44(s32 arg0) {
     s32 temp_v0;
@@ -307,7 +333,35 @@ void func_8014EF6C() {
     D_8015EDE4 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014E780", func_8014EF8C);
+/* FAKE: same loops as func_8014EBEC (shared counter, flat word views of the
+ * legacy scalar D_8015EC74 and the 2-D D_8015ED64, record loop on one line), and
+ * D_8015EDD0, D_8015EDC8 are reached through D_8015EDC4 (an unrecovered
+ * four-word table; the view also keeps the first store ahead of the load in the
+ * schedule). T-17108. */
+void func_8014EF8C(void) {
+    s32 i;
+
+    (&D_8015EDC4)[3] = 0;
+    D_8015EDC4 &= 0xFFFF0000;
+    (&D_8015EDC4)[1] = 0;
+    D_8015EDD8 = 0;
+    D_8015EDE0 = 0;
+    D_8015EDDC = 0;
+    D_8015EDE4 = 0;
+    for (i = 0; i < 50; i++) {
+        (&D_8015EC74)[i] = 0;
+    }
+    for (i = 0; i < 10; i++) {
+        D_8015ED3C[i] = 0;
+    }
+    for (i = 0; i < 12; i++) {
+        (&D_8015ED64[0][0])[i] = 0;
+    }
+    for (i = 40; i < 64; i++) ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 5;
+    if (D_8015EB98 != 0x80000000) {
+        ((DisplayActor44 *)D_8011ECD0)[125].unk_01 = 5;
+    }
+}
 
 void func_8014F080(s32 arg0) {
     s32 temp_v0;
@@ -375,7 +429,34 @@ void func_8014F258(void) {
     D_8015EE10 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014E780", func_8014F278);
+/* FAKE: same loops as func_8014EBEC (shared counter, flat word views of the
+ * legacy scalar D_8015EC74 and the 2-D D_8015ED64, record loop on one line), and
+ * D_8015EDFC, D_8015EDF4 are reached through D_8015EDF0 to share its $at (the
+ * four-word table is not recovered). T-17108. */
+void func_8014F278(void) {
+    s32 i;
+
+    (&D_8015EDF0)[3] = 0;
+    D_8015EDF0 = 0;
+    (&D_8015EDF0)[1] = 0;
+    D_8015EE00.unk_04 = 0;
+    D_8015EE00.unk_0C = 0;
+    D_8015EE00.unk_08 = 0;
+    D_8015EE10 = 0;
+    for (i = 0; i < 50; i++) {
+        (&D_8015EC74)[i] = 0;
+    }
+    for (i = 0; i < 10; i++) {
+        D_8015ED3C[i] = 0;
+    }
+    for (i = 0; i < 12; i++) {
+        (&D_8015ED64[0][0])[i] = 0;
+    }
+    for (i = 40; i < 64; i++) ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 5;
+    if (D_8015EB98 != 0x80000000) {
+        ((DisplayActor44 *)D_8011ECD0)[125].unk_01 = 5;
+    }
+}
 
 void func_8014F350(s32 arg0) {
     s32 temp_v0;

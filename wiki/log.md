@@ -16323,6 +16323,18 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17102 Done
 [[tickets/T-17102-w3-rpg-bat-p02]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 3 of 3 functions matched (`func_80151C10`, `func_80156D78`, `func_80157158`, 3,056 bytes). Rebuild: RPG_BAT unit sha1 OK, headers OK, globals OK. Card moved to Done.
 
+## [2026-10-16] ticket | T-17108 In Progress
+
+[[tickets/T-17108-w3-rpg-bat-p08]] created and In Progress: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`; `func_8014E994`, `func_8014AB84`, `func_8014AC74`, `func_8014F278`, `func_8014EF8C`, `func_8014EBEC`). Branch `w3-rpg-bat-p08` from `w2-good`, worktree `tokimemo-wt/w3-rpg-bat-p08`.
+
+## [2026-10-16] ticket | T-17108 In Review
+
+[[tickets/T-17108-w3-rpg-bat-p08]] In Progress to In Review: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`), 6 of 6 functions matched (1,844 bytes): `func_8014E994`, `func_8014EBEC`, `func_8014EF8C`, `func_8014F278`, `func_8014AC74`, `func_8014AB84`. One shared counter for the word-clear loops, the `i + 96` record loop, first-symbol element views for the shared-`$at` stores, typed `DisplayActor44` records and element indexes instead of byte-offset casts; seven old T-0018 rows solved. Notes in [[matching-notes]] (section T-17108), five rows in [[register-cheatsheet]], update in [[data/t0018-cases]], section in [[rpg-bat-family-results]]. Awaiting code review.
+
+## [2026-10-16] ticket | T-17108 Done
+
+[[tickets/T-17108-w3-rpg-bat-p08]] In Review to Done after the code review: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`), 6 of 6 functions matched (1,844 bytes: `func_8014E994`, `func_8014EBEC`, `func_8014EF8C`, `func_8014F278`, `func_8014AC74`, `func_8014AB84`; six ticketed FAKE comments). No findings. Headers, globals and proto checks OK, build up to date.
+
 ## [2026-10-16] build | T-20000 PR submitted and upstream integrated
 
 Opened PR #36 with the scoped queue fix and the requested communication-platform question. The final pre-integration ninja had no work; sync_protos --check-branch reported 0 new / 15 known disagreements. Integrated upstream main 639693d2 (DATE and TT contributions); resolved only the append-only [[log]] conflict by preserving both sides. Ticket remains In Review. See [[tickets/T-20000-first-contribution]].
@@ -16338,3 +16350,7 @@ Integrated upstream main 81095a46 into PR #36. Preserved both sides of the share
 ## [2026-10-16] setup | T-20000 follow upstream RPG merge
 
 Integrated main a8591fb8 into PR #36, preserving both append-only log histories. This upstream change affects RPG_BAT and wiki only; tools/queue.py and its tests are unchanged, so the recorded 52-test result still applies. [[tickets/T-20000-first-contribution]] remains In Review.
+
+## [2026-10-16] setup | T-20000 follow unrelated RPG batch
+
+Integrated main 0925704e into PR #36, preserving both log histories. The upstream delta changes other RPG_BAT files and wiki only; queue implementation/tests are unchanged. The recorded 52 passing synthetic tests remain applicable. [[tickets/T-20000-first-contribution]] stays In Review.
