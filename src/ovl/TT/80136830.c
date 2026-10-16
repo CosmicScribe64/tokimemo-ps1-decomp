@@ -72,8 +72,6 @@ void func_801369F4(void) {
     }
 }
 
-/* T-11000 near miss: 0xFF compare constant is in $t0 in the original, $at here; all later constants shift one register (about 40 lines). */
-#ifdef NON_MATCHING
 void func_80136AD8(void) {
     u8 *a;
     u8 *b;
@@ -96,6 +94,7 @@ void func_80136AD8(void) {
             *(s16 *)(p + 0x10) = 0;
         }
         switch (a[0x52]) {
+        case 0xFF:
         default:
             *(u8 **)(a + 0x4C) = D_80150A50;
             *(s16 *)(c + 8) = 0;
@@ -139,9 +138,6 @@ void func_80136AD8(void) {
         c[0xD] = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80136830", func_80136AD8);
-#endif
 
 void func_80136C64(void) {
     u8 *a;
