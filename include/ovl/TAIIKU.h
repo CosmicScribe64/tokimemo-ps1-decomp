@@ -233,7 +233,7 @@ typedef union {
 extern TaiHalves D_80149298; /* defined in 80133C80.c */
 void func_80133438(void);
 void func_801345A4(void);
-s32 func_801365C8();
+void func_801365C8(void);
 s32 func_801368B8();
 void func_801369F0(void);
 s32 func_80136DA4();

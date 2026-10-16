@@ -209,9 +209,6 @@ void func_801345A4(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-16551, 8 differing lines (4 instructions; was T-12020); the lh/addiu chain of D_80120676 in case 0 takes $v1, the original $v0 (bit 5, the switch
- * temporary, outranks the selector; selector locals, byte views and autotweak's 339 edits did not move it). */
 void func_801346FC(void) {
     s16 text_x;
     s16 panel_x;
@@ -318,9 +315,6 @@ void func_801346FC(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_801346FC);
-#endif
 
 void func_80134D94(void) {
     s32 var_s0;
