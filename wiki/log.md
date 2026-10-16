@@ -16070,3 +16070,7 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 
 ## [2026-10-16] ticket | T-17202 started
 [[tickets/T-17202-w3-date-p02]] (17:14 UTC): wave 3 package w3-date-p02, DATE `src/ovl/DATE/80132000.c`, six guarded drafts from the T-17200 list. Branch `w3-date-p02` from `w2-good`.
+
+## [2026-10-16] build | T-17202 DATE 80132000.c, 3 of 6 matched
+[[tickets/T-17202-w3-date-p02]] (17:14-18:36 UTC, Opus): matched `func_80139834` (EVENT twin form with dead selector tests, commit `fd316964`), `func_8013E6A4` (`D.w++ == 1` with `func_80085A60` as an `s32` file override, commit `a7301dea`) and `func_80137DF4` (`s32` function without `return`, commit `261ec214`), 820 bytes in plain C. Guarded: `func_80139664` 7 lines, `func_8013BEB8` 4, `func_801324DC` 1. Notes in [[matching-notes]] (T-17202), rows in [[data/t0018-cases]] and [[register-cheatsheet]], summary on [[date-family-results]]. Checks: clean build 27/27 sha1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known). Ticket In Review.
+

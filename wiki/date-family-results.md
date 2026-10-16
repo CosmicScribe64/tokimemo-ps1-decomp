@@ -132,3 +132,8 @@ Eight file-disjoint packages from the orchestrator's `mklists3.py` (lists in its
 | w3-date-p06 | T-17206 | `8014B1F0.c`, `80156600.c` | 2 | 1,136 |
 | w3-date-p07 | T-17207 | `80141EE0.c` | 2 | 4,464 |
 | w3-date-p08 | T-17208 | `8014A1B0.c`, `8015A640.c`, `8015A7E0.c`, `8015A980.c` | 5 | 2,636 |
+
+### Package w3-date-p02 (T-17202)
+
+`80132000.c`, six guarded drafts: 3 matched (`func_80139834`, `func_8013E6A4`, `func_80137DF4`, 820 bytes), 3 guarded at 7, 4 and 1 lines (`func_80139664`, `func_8013BEB8`, `func_801324DC`). New idioms: the callee view `s32 func_80085A60();` (file override), `s32` without `return` for a flag read at the entry, and the dead selector test in the else arm. Details and the remaining differences in [[matching-notes]] (T-17202) and [[data/t0018-cases]].
+
