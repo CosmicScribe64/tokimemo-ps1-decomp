@@ -170,3 +170,8 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p13 (T-19013)
 
 [[tickets/T-19013-w3-d-p13]] (`801480B0.c`, the 1ST BOSS scene): `func_80148184` (init, 388 bytes) matched in plain C from its 2ST BOSS twin `func_801490B4`; 1,336 bytes matched in all; `func_801484E4` (state 3 handler, 392 bytes) is a 6-row guarded draft after the closer pass (counter web, two FAKEs; the volatile final access leaves the address and one spill register); `func_801487A4` (actor transform, 948 bytes) matched too: the typed draft had the frame and all 237 instructions with 140 register rows, one ugen temporary short, until the `arg2` records were indexed as `((s16 *)arg2)[arg1 * 4 + k]` (two-step scaling) and the `arg4` pair index-first. New tables: `TcPair8 D_8015F840[]` and `TcPair2 D_8015F930[]` (both read at `i - 1`, linker symbols in `config/symbols_TACO.txt`). Notes: [[matching-notes]], "T-19013"; open rows in [[data/t0018-cases]].
+
+## Matching stage, package w3-d-p23 (T-19023)
+
+[[tickets/T-19023-w3-d-p23]] (`80135720.c`, the SETTING screen): `func_801357B0` (string drawer, 204 bytes), `func_80136988` (cursor handler, 460) and `func_80135A04` (SETTING screen draw, 1,384) matched in plain C, 2,048 bytes. `func_801357B0` and `func_80135A04` are now `s32` in `TACO.h` (implicit-int, no `return`); details in [[matching-notes]] (T-19023).
+

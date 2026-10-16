@@ -15886,3 +15886,7 @@ Created [[tickets/T-18700-types-first-bunkasai]] (branch `w3-bunkasai-types` fro
 
 ## [2026-10-16] ticket | T-19023 started
 [[tickets/T-19023-w3-d-p23]] In Progress (worktree `w3-d-p23`, base `w2-good`, 14:39 UTC): TACO `src/ovl/TACO/80135720.c`, `func_801357B0`, `func_80136988`, `func_80135A04`.
+
+## [2026-10-16] ticket | T-19023 In Review, 3 of 3 matched
+[[tickets/T-19023-w3-d-p23]] (14:39-15:20 UTC): TACO `func_801357B0`, `func_80136988` and `func_80135A04` matched in plain C (2,048 bytes; commits `35c8f6a9`, `b6891d0f`, `7d5c9809`). Idioms in [[matching-notes]] (T-19023), two rows in [[register-cheatsheet]], package note in [[taco-family-results]]. `func_801357B0` and `func_80135A04` are `s32` in `include/ovl/TACO.h`. Ticket moved to In Review.
+
