@@ -26,6 +26,8 @@ Update (T-9000): re-tested under K&R with the wave agents' drafts ([[matching-no
 
 Update (T-16230): rows for DATE `func_801511B4`, `func_80150460` and `func_80150C78` (T-4010, T-9110, T-9320, T-9580, T-9780) are now matched in plain C, with `func_80150ED4`, by naming the real aggregates (`D_801217D0[57]`, display records 96 and 98 of `D_8011ECD0`), a chain assignment through record elements, and a `GameState *g` pointer ([[matching-notes]], "T-16230").
 
+Update (T-16553): TAIIKU `func_80146A60` (rows T-4100 and w7-6: flag word in `$v0`, masks in `$v1`) is matched in plain C by copying the flag word into a local before the mask tests; `func_80147928` (same flag word) matches too ([[matching-notes]], "T-16553").
+
 | file | function | category | symptom |
 |---|---|---|---|
 | TEL | `func_8013A40C` | promo | compare chain on a global, original loads it into $v1, IDO $v0 (batch B) |
@@ -2044,3 +2046,7 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TAIIKU/80138950 | `func_80139AB0` | other | T-11640 (wave 2): the 20x4 grid loop: the original unrolls the 4-trip inner loop by 2 and keeps `multu W, j`; IDO unrolls it completely and folds the products (226 lines; four source forms tried) |
 | TAIIKU/80138950 | `func_8013F3A4` | other | T-11640 (wave 2): the original rebuilds `&D_8011ECD0` with `lui/addiu` temporaries in every case; IDO hoists the address into `$a3` for the whole switch (539 lines; per-case record pointer does not change it) |
 | TAIIKU/80138950 | `func_8013B78C` | promo | T-11640 (wave 2): with the u16 counter/flag views of `func_8013BEF8` (no volatile flag) and a `u16` copy for the reset, 50 lines: the original colours the promoted counter (`$v1`) before D_801206BA (`$a0`); IDO gives D_801206BA `$v1` (priority 0.5 against 0.4) and the counter `$a1` |
+| TAIIKU/801452D0 | `func_80145640` | other | T-16553: a2 (counter) and a3 (element pointer) spill around `search_load_tpage_buf_lock` as in the original, but the counter's slot is `sp+0x3C` against the original `sp+0x38`; any second declared local grows the frame to 0x48 (8 lines) |
+| TAIIKU/801452D0 | `func_8014607C` | promo | T-16553: `D_800E638E` (s16 field) is loaded into a separate global range (`$a1`, then `move v0,a1`) because IDO propagates the copy into `>> 1`; the original loads into the variable in `$v0` and keeps `D_800E6375 & 0xF` in `$v1` (20 lines, locals and statement orders tried) |
+| TAIIKU/801452D0 | `func_80145370` | regorder | T-16553: two loops storing 8 (pointer over `D_800E6280`): constant 8 in `$v0` and pointer in `$v1` in the original, the reverse in IDO; the pointer constant has the higher priority (22 lines; order search, pointer variable, named constant tried) |
+| TAIIKU/801452D0 | `func_80146D18` | schedule | T-16553: the 4-entry table-copy loop stores before the record pointer is advanced (offset 7110 against 7042) and the final zero-search keeps its index in `$v1` instead of `$a0` (31 lines) |

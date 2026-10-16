@@ -15129,3 +15129,7 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16553 opened
 
 [[tickets/T-16553-pt-taiiku-p3]] (In Progress): pt-taiiku-p3, the TAIIKU `src/ovl/TAIIKU/801452D0.c` package of [[tickets/T-16550-taiiku-types-first]]; branch `pt-taiiku-p3` from `w2-good`, nine functions, measured pilot (start 02:25 UTC).
+
+## [2026-10-16] ticket | T-16553 to In Review
+
+[[tickets/T-16553-pt-taiiku-p3]]: 9 functions of `src/ovl/TAIIKU/801452D0.c` matched (`func_8014666C`, `func_80145C28`, `func_80147318`, `func_80147928`, `func_80146A60`, `func_80147F58`, `func_80148370`, `func_80146338`, `func_80147594`; 5,244 bytes), four guarded (`func_80145640` 8 lines, `func_8014607C` 20, `func_80145370` 22, `func_80146D18` 31), `func_80147B14` not started. New section in [[matching-notes]], four rows and an update line in [[data/t0018-cases]], results in [[taiiku-family-results]]. Waiting for the code review.
