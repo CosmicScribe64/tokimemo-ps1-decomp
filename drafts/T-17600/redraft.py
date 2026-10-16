@@ -535,7 +535,8 @@ class TypedAggregate(mg.Aggregate):
 def aggregates():
     aggs, _keep = mg.load_config(".")
     for sym, (t, kind) in GLOBALS.items():
-        if kind == "obj":
+        # T-17600: not the GyoziWork view of main bss; its scalars keep their main_api.h names
+        if kind == "obj" and sym != "D_800F53A0":
             aggs.append(TypedAggregate(sym, t, HEADER))
     return aggs
 

@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "main_api.h"
+#include "game.h" /* T-17600: DisplayActor44 for the display records D_80129F40 */
 
 /* GYOZI data. */
 extern u8 D_801474B8;
