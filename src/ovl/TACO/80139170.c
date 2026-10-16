@@ -100,14 +100,12 @@ void func_80139B54(void) {
     }
 }
 
-/* NON_MATCHING: T-19021, 14 differing lines (7 rows); the pad-word range gets $a2 and `right` $v1 (original: pad $v1, `right` $a2), a priority tie
-   (regdiff: the pad range is 0.4, the two button masks 0.5); everything else including the frame and slot matches. */
-#ifdef NON_MATCHING
 void func_80139BCC(void) {
     s32 temp_lo;
     s32 scale;
     s32 right;
     s32 left;
+    s32 pad;
 
     if (D_8015F4E4 < 0) {
         scale = D_8015F4E4 + 0x50;
@@ -119,8 +117,9 @@ void func_80139BCC(void) {
     func_80139424(D_8015F4B0[D_8015F4E0 % 40], 6, 4, 0x80, 0, 0x3C, temp_lo, temp_lo, 1);
     func_8013A580(0x1E0);
     func_8013A790(0, 0);
-    right = D_800E6280.unk_F80 & 0x2000;
-    left = D_800E6280.unk_F80 & 0x8000;
+    pad = D_800E6280.unk_F80;
+    left = pad & 0x8000;
+    right = pad & 0x2000;
     if (right != 0 && D_8015F4E8 < 0) {
         D_8015F4E8 = 1;
     }
@@ -142,13 +141,13 @@ void func_80139BCC(void) {
         break;
     }
     if (D_8015F4E4 == 0) {
-        if (!(D_800E6280.unk_F80 & 0xA000)) {
+        if (!(pad & 0xA000)) {
             D_8015F4E8 = 0;
         }
-        if (right != 0) {
+        if (pad & 0x2000) {
             D_8015F4E8 += 1;
         }
-        if (left != 0) {
+        if (pad & 0x8000) {
             D_8015F4E8 -= 1;
         }
         if (D_8015F4E8 >= 3) {
@@ -191,9 +190,6 @@ void func_80139BCC(void) {
         D_8015F4DC -= 1;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80139170", func_80139BCC);
-#endif
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80139170", func_80139FB8);
 
