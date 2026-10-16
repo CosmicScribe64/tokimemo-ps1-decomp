@@ -19,7 +19,7 @@ TaiHalves D_80149298 = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_8014929C);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492A0);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492A4);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492A8);
+u8 D_801492A8[4] = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492AC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492B8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492C4);
@@ -382,7 +382,81 @@ void func_80134D94(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80134F98);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-16551, 22 differing lines (11 instructions): the original keeps `t` in $v1 and loads `v` straight into $v0;
+ * here `t` is a ugen temporary ($t3) and `v` comes through a promoted range of the global ($a1, then move v0,a1). Frame: i and t
+ * declared above sp38 reproduce its offset (0x38) and the 0x58 frame; unused/promoted word locals take slots. */
+void func_80135480(void) {
+    s32 i;
+    s32 t;
+    TaiikuS11 sp38;
+    s32 v;
+
+    sp38 = D_801494F0;
+    for (i = 0; i < 11; i++) {
+        D_80149320[i] = sp38.v[i];
+    }
+    /* FAKE: indexes the four runners (player, cpu[3]) from the player record, as in func_801368B8. T-16551 */
+    for (i = 0; i < 4; i++) {
+        D_801491E0[i] = 0;
+        (&D_80149208.player)[i].unk_20.halves.high = i * 8;
+        (&D_80149208.player)[i].unk_00 = 0;
+        (&D_80149208.player)[i].unk_01 = 0;
+        (&D_80149208.player)[i].unk_02 = 0;
+        (&D_80149208.player)[i].unk_06 = 0;
+        (&D_80149208.player)[i].unk_03 = 0;
+        (&D_80149208.player)[i].unk_04 = 0;
+        (&D_80149208.player)[i].unk_0C = 0;
+        (&D_80149208.player)[i].unk_0E = 0;
+        (&D_80149208.player)[i].unk_10 = 0;
+        (&D_80149208.player)[i].unk_14 = 0;
+        (&D_80149208.player)[i].unk_18 = 0;
+        (&D_80149208.player)[i].unk_1C = 0;
+        (&D_80149208.player)[i].unk_20.halves.low = 0;
+        (&D_80149208.player)[i].unk_05 = 0;
+        (&D_80149208.player)[i].unk_08 = 0;
+        (&D_80149208.player)[i].unk_0A = 0;
+        (&D_80149208.player)[i].unk_07 = 0;
+    }
+    D_80149208.player.unk_20.halves.high = -0xA0;
+    D_80149204 = 0;
+    D_801491D4 = 0;
+    D_8014929C = 0;
+    D_80149298.word = 0;
+    v = D_800E6280.unk_10C.unk_02;
+    t = D_800E6280.unk_0F4.b[1] & 0xF;
+    D_801492A0 = 0;
+    if ((t & 1) || (t & 2)) {
+        v = (s16) (v >> 1);
+    }
+    if (v >= 0xA0) {
+        D_801491E4 = 0x280;
+        D_801491E8 = 0x20000;
+    } else if (v >= 0x7D) {
+        D_801491E4 = 0x220;
+        D_801491E8 = 0x1E000;
+    } else if (v >= 0x64) {
+        D_801491E4 = 0x1C0;
+        D_801491E8 = 0x1C000;
+    } else if (v >= 0x4B) {
+        D_801491E4 = 0x160;
+        D_801491E8 = 0x1A000;
+    } else {
+        D_801491E4 = 0x100;
+        D_801491E8 = 0x18000;
+    }
+    func_800AE120(D_800E6280.unk_10F4);
+    for (i = 0; i < 2; i++) {
+        D_801492A4[i] = 0xFF;
+    }
+    D_801492A8[0] = 0;
+    D_801492A8[1] = 0x3C;
+    D_80122E94 = 0xFF;
+    D_801491DC = 0xFF;
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135480);
+#endif
 
 void func_801356E0(void) {
     s32 i;

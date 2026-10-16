@@ -239,6 +239,7 @@ void func_801369F0(void);
 s32 func_80136DA4();
 void func_80136E80(void);
 void func_80137544(void);
+void func_80135480(void);
 s32 func_80137440();
 s32 func_80137C44();
 s32 func_80137EA8();
@@ -274,6 +275,9 @@ extern TaiWords4 D_801498AC;
 extern TaiWords11 D_801498BC;
 extern s16 D_80149320[];
 extern s32 D_8014929C;
+extern s16 D_801492A0; /* func_80135480 */
+extern u8 D_801492A4[2]; /* func_80135480 */
+extern u8 D_801492A8[4]; /* func_80135480 */
 #endif /* OVL_TAIIKU_W8_3_TYPES_H */
 #ifndef TAIIKU_W8_CONTROLLER_TYPES_H
 #define TAIIKU_W8_CONTROLLER_TYPES_H
