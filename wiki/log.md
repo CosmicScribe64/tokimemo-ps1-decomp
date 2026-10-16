@@ -15137,3 +15137,7 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] build | T-16554 final checks
 
 [[tickets/T-16554-pt-taiiku-p4]]: clean rebuild 27/27, `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` OK on branch `pt-taiiku-p4` (about 83 minutes of agent time, 4 of 7 functions matched).
+
+## [2026-10-16] ticket | T-16554 Done
+
+[[tickets/T-16554-pt-taiiku-p4]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 of 7 functions matched (`func_80132970`, `func_80143DD0`, `func_80143F50`, `func_8014280C`, 3,208 bytes), 2 guarded drafts, `func_80142FB8` left as `INCLUDE_ASM`. Review fixes: ignored `&` before an array removed from the `pad_28` cast and the cast marked FAKE, `D_8014A1E8` typed `s16[]` (plain element access, still matches), override reason spelled out, FAKE comment tidied. Headers, globals and prototype checks OK, TAIIKU sha1 OK.

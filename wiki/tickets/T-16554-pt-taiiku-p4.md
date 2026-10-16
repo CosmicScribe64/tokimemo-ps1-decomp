@@ -1,7 +1,7 @@
 ---
 id: T-16554
 title: "Types-first pilot package pt-taiiku-p4"
-status: In Review
+status: Done
 assignee: claude
 created: 2026-10-16
 updated: 2026-10-16
@@ -30,3 +30,10 @@ Four of seven matched (3,208 bytes), unit sha1 OK after each: `func_80132970`, `
 ## Comments
 
 - 2026-10-16: agent time about 83 minutes (02:25-03:48 UTC). Clean rebuild 27/27 (`rm -rf build && configure.py && ninja`), `check_headers.py` OK, `migrate_globals.py --check` OK, `sync_protos.py --check-branch` OK (0 new, 15 known). Code review against `CODING_STANDARDS.md` still to do before Done: FAKE comments in `80142240.c` (`func_80143F50`, `func_8014280C`) and `80140810.c` (guarded `func_80140A90`).
+- 2026-10-16: code review against `CODING_STANDARDS.md` (checklist, plus owned-file, drafts, inline-asm, guard and header checks). Findings and fixes:
+  1. `func_8014280C`: `*(s32 *)&...[96].pad_28` made the compiler warn "'&' before array or function; ignored" (`pad_28` is an array). The `&` was dropped (same bytes) and the cast now carries a `FAKE` comment (s32 view of the 16.16 y position at 0x28, high half `unk_2A`, ticket id).
+  2. `func_80143DD0`: `*(s16 *)&D_8014A1E8[unk_00 * 2]` reached an s16 table through a `u8` array (section 8). `D_8014A1E8` is now `extern s16 D_8014A1E8[]` in `include/ovl/TAIIKU.h` and the access is `D_8014A1E8[unk_00]`; unit sha1 still OK.
+  3. `MAIN_API_OVERRIDE_func_800853FC` reason said only "same"; now states the reason itself. `func_80143F50` FAKE comment split from the `bits` explanation.
+  No finding: C89, no inline asm or `.word`, only the three owned C files changed, no `drafts/` change, no game data; both `NON_MATCHING` blocks and the `FAKE` selector view in the guarded `func_80140A90` carry T-16554 and the line counts; header edits consistent (`check_headers.py` OK); `MAIN_API_OVERRIDE_func_80085368` and `_800853FC` are explained and declared next to the file's other declarations (they are used only by the guarded draft; `sync_protos.py --prune` would drop them while the draft is guarded, re-add them when it is enabled).
+  Observation, not changed: `D_8014A208[8]` and `D_8014A228[11]` are contiguous; `type_recovery.py` proposes one array `D_8014A204` (ambiguous, `func_80142400` still `INCLUDE_ASM`); revisit when that function is decompiled.
+  After fixes: clean build, headers OK, globals OK, `sync_protos.py --check-branch` OK (0 new, 15 known), TAIIKU sha1 OK. Moved to Done.
