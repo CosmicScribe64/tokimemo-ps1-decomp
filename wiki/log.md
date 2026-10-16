@@ -16190,3 +16190,6 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 
 ## [2026-10-16] ticket | T-17203 Done
 [[tickets/T-17203-w3-date-p03]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 3 of 4 functions matched (`func_8014EF1C`, `func_80154118`, `func_8014DCCC`, 1,064 bytes), `func_80155004` still `INCLUDE_ASM` with its draft in `drafts/T-17203/`. Rebuild: DATE unit sha1 OK, headers OK, globals OK. Card moved to Done.
+
+## [2026-10-16] ticket | T-17102 In Progress
+[[tickets/T-17102-w3-rpg-bat-p02]] created and started: RPG_BAT `func_80151C10`, `func_80156D78`, `func_80157158` (files `src/ovl/RPG_BAT/80151C10.c`, `src/ovl/RPG_BAT/80156CC0.c`), worktree `tokimemo-wt/w3-rpg-bat-p02` from `w2-good`.
