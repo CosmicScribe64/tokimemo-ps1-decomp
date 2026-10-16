@@ -15599,3 +15599,7 @@ Clean build 27/27 (all unit sha1 OK, TACO `1419e93c...`), `check_headers`, `migr
 ## [2026-10-16] ticket | T-19013 In Progress
 
 [[tickets/T-19013-w3-d-p13]] started: wave 3 package w3-d-p13 in worktree `w3-d-p13` (from `w2-good`), TACO `src/ovl/TACO/801480B0.c`: `func_80148184`, `func_801484E4`, `func_801487A4`.
+
+## [2026-10-16] ticket | T-19013 In Review
+
+[[tickets/T-19013-w3-d-p13]] In Progress to In Review: wave 3 package w3-d-p13 (TACO `src/ovl/TACO/801480B0.c`), 1 of 3 functions matched (388 bytes). `func_80148184` matched in plain C (`TcPair8 D_8015F840[]`, `TcPair2 D_8015F930[]`, `(void *)` on the later `0x80162000`); `func_801484E4` guarded at 10 rows (FAKE `pad[2]`, absolute final counter read, counter-web family of T-19002); `func_801487A4` back to `INCLUDE_ASM` with the typed draft in `drafts/T-19013/TACO/func_801487A4/` (237 of 237 instructions, 140 register rows, ugen temporary rotation one step off). Notes in [[matching-notes]] ("T-19013"), rows in [[data/t0018-cases]], cheat sheet rows in [[register-cheatsheet]], [[taco-family-results]]. Branch `w3-d-p13`, commits `T-19013: match TACO:func_80148184` and `T-19013: guard TACO:func_801484E4 (10 lines), archive func_801487A4 typed draft`.
