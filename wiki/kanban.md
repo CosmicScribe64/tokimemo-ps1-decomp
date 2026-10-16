@@ -136,6 +136,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-16564-taco-types-first-p4|T-16564 Types-first pilot package pt-taco-p4]]
 - [ ] [[tickets/T-16930-pointer-read-kept-copies|T-16930 Read aggregate fields through a local pointer]]
 - [ ] [[tickets/T-16920-gamestate-1093-type|T-16920 GameState +0x1093 type and kept-copy census]]
 - [ ] [[tickets/T-16910-cpw-census|T-16910 Census the original for the T-16900 cpw rule]]

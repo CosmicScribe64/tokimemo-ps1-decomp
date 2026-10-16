@@ -76,7 +76,49 @@ void func_80137CBC(s32 arg0) {
     func_80044750(0x300);
 }
 
+/* NON_MATCHING: T-16564, 8 differing instruction rows (16 funcdiff lines): the pointer loaded from D_801FAA84 sits in $v1 in the original, IDO takes the ugen temporary $t9 (the final -1 temporary follows). Known gap, T-9180.
+ * Closer pass: uopt does colour p $v1, but copy-propagates `lod D_801FAA84` into the first store, and ugen then keeps the shared load in a temporary and reads every `p` use from it, so $v1 is never written. ugen loads into $v1 only when p is used after a branch target or has at least three in-place `p += k` updates; the updates cost an `addiu v1` before the join, and the address temporary $t9 is still freed after $t0, so the last row stays $t0. */
+#ifdef NON_MATCHING
+void func_80137D00(void) {
+    u16 *p;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        if (D_8015EDEC < 3) {
+            func_80137CBC(D_8015EDEC);
+            D_8015EDEC += 1;
+            D_800E6280.unk_110D += 1;
+        } else {
+            func_8004284C();
+            p = D_801FAA84;
+            p[5] = 0x28;
+            p[11] = 0xFF00;
+            p[18] = 0xFF00;
+            p[25] = 0xFF00;
+            p[32] = 0xFF00;
+            func_80137B14(2);
+            D_8011ED3E -= 0x30;
+        }
+        break;
+    case 1:
+        if (func_800460EC() & 4) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 2:
+        if (func_800460EC() & 2) {
+            D_800E6280.unk_110D = 0;
+        }
+        break;
+    }
+    func_800578F4(2);
+    if (D_800E6280.unk_10F8 & 1) {
+        D_8011ED3E -= 1;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80137A60", func_80137D00);
+#endif
 
 void func_80137E48(void) {
     switch (D_800E6280.unk_110D) {

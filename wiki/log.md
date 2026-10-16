@@ -15355,3 +15355,22 @@ Filed in [[speedup-research-2026-10-16]].
 ## [2026-10-16] ticket | T-16563 Done
 
 [[tickets/T-16563-taco-types-first-p3]] reviewed against `CODING_STANDARDS.md` and moved to Done: 10 functions matched (4,740 bytes), `func_8015B1B8` guarded, `func_8015ACCC` left as `INCLUDE_ASM`. Review fixes in `src/ovl/TACO/80151C30.c` and `src/ovl/TACO/8015ABF0.c`: two unmarked cast views (`func_801521EC`, `func_8015BD30`) marked FAKE, a dead `i = 0;` removed, blank lines tidied, stale ticket line corrected. Headers, globals and prototype checks OK, TACO sha1 OK.
+## [2026-10-16] ticket | T-16564 opened
+
+[[tickets/T-16564-taco-types-first-p4]] In Progress: types-first pilot package pt-taco-p4 (TACO `src/ovl/TACO/80154960.c`, `80137A60.c`, `80138890.c`; 8 functions from the [[tickets/T-16560-taco-types-first]] redrafts), branch `pt-taco-p4` from `w2-good`.
+
+## [2026-10-16] build | T-16564 matches
+
+[[tickets/T-16564-taco-types-first-p4]]: TACO `func_801563E4`, `func_80154960`, `func_80138D08`, `func_801557E8`, `func_80138964` and `func_801553AC` matched (5,852 bytes, `src/ovl/TACO/80154960.c`, `80138890.c`), each unit sha1 OK. `func_80138B2C` (30 rows) and `func_80137D00` (8 rows) stay guarded register near misses. Notes in [[matching-notes]] and [[data/t0018-cases]], five rows in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-16564 to In Review
+
+[[tickets/T-16564-taco-types-first-p4]] In Progress to In Review: 6 of 8 functions matched. Clean rebuild 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] query | T-16564 closer pass on func_80137D00
+
+Opus closer on [[tickets/T-16564-taco-types-first-p4]]: `func_80137D00` stays guarded at 8 rows. Cause found from uopt's output ucode: the copy-propagated first store shares the `D_801FAA84` load, and ugen keeps it in a temporary for every use of `p`. Notes in [[matching-notes]] (T-16564 closer pass), row updated in [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16564 Done
+
+[[tickets/T-16564-taco-types-first-p4]] In Review to Done after the code review against `CODING_STANDARDS.md`: 6 functions matched (5,852 bytes), 2 guarded. One finding fixed (the `func_801557E8` operand-order comment in `src/ovl/TACO/80154960.c` now starts with `FAKE`). TACO unit sha1 OK after the rebuild.
