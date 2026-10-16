@@ -85,7 +85,7 @@ void func_80138A34(void) {
  * priority 41, is coloured first and takes $v0). The call result goes through idx: A[f()] = v with the call in
  * the index reserves a second spill slot (see func_80138DF8). T-16552. */
 void func_80138AA8(void) {
-    s32 p;
+    s32 p; /* FAKE: T-16552, case 2 buffer address; its only job is the third scalar frame slot, real local unknown */
     s32 i;
     s32 idx;
     TaiikuW2 tpage;
