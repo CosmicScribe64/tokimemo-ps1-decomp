@@ -16267,3 +16267,7 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17205 Done
 
 [[tickets/T-17205-w3-date-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found 2 minor items (the `(u8)` cast in `func_801496C4` and the `(s16)` cast in `func_80149F48` had no explanatory comment), fixed with comments only in `src/ovl/DATE/80149310.c`, bytes unchanged. Headers OK, globals OK, sync_protos OK, DATE sha1 OK. 5 of 5 functions matched (3,136 bytes). Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-17107 In Progress
+
+[[tickets/T-17107-w3-rpg-bat-p07]] created and started: wave-3 package w3-rpg-bat-p07 (RPG_BAT `func_8013B5B0`, `func_8013EA60`, `func_8013BBF8`, `func_8013E54C`), worktree `w3-rpg-bat-p07` from `w2-good`. Links [[tickets/T-17100-types-first-rpg_bat]].
