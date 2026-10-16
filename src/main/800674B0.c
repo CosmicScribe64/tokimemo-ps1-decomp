@@ -233,6 +233,8 @@ void func_80067870(void) {
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067870);
 #endif
 
+/* FAKE: the second `max` loop is dead (max is never read) and the u8 view of the s8 field unk_03C gives the original lbu;
+ * both are needed for the bytes, real source unknown. T-11690 */
 void func_80067C28(void) {
     s32 max;
     s32 level;
@@ -704,13 +706,13 @@ INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_800696DC);
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A044);
 
-/* Each record triple (unk_18/unk_26/unk_2A) after the loop is written on one line, as from a macro: the line
- * grouping sets the store order in each branch. */
+/* FAKE: each record triple (unk_18/unk_26/unk_2A) after the loop is written on one line, as from a macro (none is known):
+ * as1 schedules by source line and the grouping sets the store order in each branch. T-11690 */
 void func_8006A2CC(void) {
     u8 eight; /* FAKE: a named 8 gives the original `beq a1,t0` in cases 8-10 (a literal gives `beq t0,a1`). T-11690 */
     s32 i;
     s32 n;
-    s32 pad; /* FAKE: keeps the original frame slot between n and kind; real local unknown. T-11100 */
+    s32 pad; /* FAKE: keeps the original frame slot between n and kind; real local unknown. T-11690 */
     s32 kind;
 
     eight = 8;
@@ -1115,7 +1117,7 @@ void func_8006BC28(s32 arg0) {
     D_8011ECD0[0].unk_2A = sp2C;
 }
 #else
- INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BC28);
+INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BC28);
 #endif
 
 void func_8006BD6C(s32 arg0) {
