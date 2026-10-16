@@ -319,12 +319,13 @@ void func_801328B0(void) {
 }
 
 void func_80132FE8(void) {
-    /* FAKE: pad1..pad3 are unused locals that reserve the original's three frame words above flags (flags at sp+0x30, actor at sp+0x2C, btn at sp+0x28); real source unknown. T-19025 */
+    /* FAKE: pad1..pad3 are unused locals that reserve the original's three frame words above flags (flags at sp+0x30, actor at sp+0x2C, btn at sp+0x28); real source unknown. flags is left unset on the unk2 & 0x40 path and passed to func_80141DE0 as is, as in the original. T-19025 */
     s32 pad1;
     s32 pad2;
     s32 pad3;
     s32 flags;
     TcActor *actor;
+    /* FAKE: btn copies D_800E6280.unk_F88 in both arms (the first arm reads it after the flag tests) and all six mask tests use it; it stays live in $v0 across the D_8015EDE4 tests so those take $a0 as in the original. Matches, real source unknown. T-19025 */
     s32 btn;
 
     actor = D_8015EDB4;
