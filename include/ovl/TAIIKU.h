@@ -215,6 +215,11 @@ extern s32 D_8014A208[8]; /* tpage buffer ids, func_8014280C */
 extern s32 D_8014A228[11]; /* tpage buffer ids, func_8014280C */
 extern s16 D_8014A1E8[]; /* s16 table paired with D_8014A1D4 (func_80143DD0) */
 void func_801452D0(void);
+void func_80141964(void);
+s32 func_801419F8(void);
+void func_80141AE8(void);
+void func_80141B28(void);
+void func_80141B70(void);
 
 typedef struct {
     s32 v[11];
@@ -853,6 +858,12 @@ typedef struct TaiShorts23 {
 typedef struct TaiWords6 {
     /* 0x00 */ s32 v[6];
 } TaiWords6; /* size 0x18 */
+typedef struct TaiRec16 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+} TaiRec16; /* size 0x10 */
 typedef struct TaiWords7 {
     /* 0x00 */ s32 v[7];
 } TaiWords7; /* size 0x1C */
