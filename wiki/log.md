@@ -16247,3 +16247,7 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17208 Done
 
 [[tickets/T-17208-w3-date-p08]] In Review to Done: code review against `CODING_STANDARDS.md` found one item, fixed (a comment for the `dop` pointer-variable idiom in `func_8014AF88`); rebuild of DATE OK (headers OK, globals OK, sha1 OK). 1 of 5 functions matched (`func_8014AF88`, 248 bytes); `func_8014A8FC` stays a guarded draft (34 lines), the three libgte rotation helpers stay `INCLUDE_ASM`. Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17105 In Progress
+
+[[tickets/T-17105-w3-rpg-bat-p05]] created and started: wave 3 package w3-rpg-bat-p05 (RPG_BAT `src/ovl/RPG_BAT/80157AE0.c`, `src/ovl/RPG_BAT/8015A1F0.c`; work list `func_8015A8B4`, `func_8015A744`, `func_80159B40`, `func_80158C4C`, `func_80159214`). Card in [[kanban]].
