@@ -1,8 +1,9 @@
 # T-18700: BUNKASAI redraft with the recovered types
 
-Fresh drafts of the 10 BUNKASAI functions still unmatched after the types-first pass of T-18700 (wiki page
-`bunka-family-results`, section "Types-first pass (T-18700)"). One more function matched during the pass and
-has no draft here: `func_80147F8C` (180 bytes, `BunkasaiNameTable` stack copy with a named string pointer).
+Fresh drafts of the 10 BUNKASAI functions that were unmatched after the types-first pass of T-18700 (wiki page
+`bunka-family-results`, section "Types-first pass (T-18700)"). Two functions matched during the pass:
+`func_80147F8C` (180 bytes, `BunkasaiNameTable` stack copy with a named string pointer; no draft here) and
+`func_8015AF90` (2,328 bytes, from its `hand.c` below; `status: matched` in its result.json).
 
 - `redraft.py`: the driver, copied from `drafts/T-18400/redraft.py` (itself from T-18000, T-17700, T-17400,
   T-17200, T-16560 and T-16550) with BUNKASAI paths; the rewrites are unchanged. Run it in Docker from the
@@ -17,14 +18,15 @@ has no draft here: `func_80147F8C` (180 bytes, `BunkasaiNameTable` stack copy wi
   `hand_score`, `vs_census` and provenance. `catalog.jsonl` has one line per function (written before the
   hand drafts; the result.json files are current).
 - `hand.c` drafts:
-  - `func_8015AF90` (21 rows; census 400): port of the matched BUNKAKEN clone `func_80152680` (0.976
-    opcode ratio) with the BUNKASAI tables, no `D_80122EA4` terms in cases 1 and 25, `0x508` in case 22 and
-    `func_80044750(0x50C)` added to case 23. Built as the whole file with BUNKAKEN's
-    `MAIN_API_OVERRIDE_func_800847B8` (unprototyped call, no `andi`), the instructions are identical and
-    the only difference is a v0/v1 swap: the target keeps the `player_blood_types` base (`sp+0x3C`) in v0
-    and the promoted `D_80122EBC` in v1; IDO swaps them. Not closed by struct views of `D_80122EBC`,
-    `GameState *g` removal (per case), a self-store, pointer locals or a 7-minute permuter run. The
-    full-unit score includes the `andi` of the prototyped call because the scorer has no file prelude.
+  - `func_8015AF90` (21 rows; census 400; now matched): port of the matched BUNKAKEN clone `func_80152680`
+    (0.976 opcode ratio) with the BUNKASAI tables, no `D_80122EA4` terms in cases 1 and 25, `0x508` in
+    case 22 and `func_80044750(0x50C)` added to case 23. With BUNKAKEN's file-level
+    `MAIN_API_OVERRIDE_func_800847B8` the instructions were identical and only v0/v1 were swapped (the
+    `player_blood_types` base `sp+0x3C` against the promoted `D_80122EBC`). Struct views, `GameState *g`
+    removal, self-stores and a 7-minute permuter run did not close it; the cause was the callee
+    declaration: BUNKAKEN calls `func_80132548` undeclared (implicit `int`), and calling `func_80132410`
+    undeclared as well gives the match. The full-unit score of 21 includes the `andi` of the prototyped
+    `func_800847B8` call because the scorer has no file prelude.
   - `func_80142BE8` (688; census 445, whose hand repair stays a valid starting point): the switch on the
     school year with three copies of the girl loop, as the target has; `(u8)(x >> 1)` gives the target's
     `andi`. Still 8 instructions short (the target indexes `unk_1BC[D_80122EBC]` with `multu` by a
