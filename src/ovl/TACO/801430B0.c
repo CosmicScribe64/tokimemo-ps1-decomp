@@ -5,7 +5,54 @@ void func_801430B0(void) {
     func_8004ACC8(0x800000);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801430D0);
+void func_801430D0(arg0, arg1, arg2, arg3)
+s32 arg0;
+s32 arg1;
+s32 arg2;
+s32 arg3;
+{
+    s32 n;
+    s32 sign;
+    s32 xoff;
+    SPRT *sprite;
+    u8 *uv;
+
+    if (arg0 < 0) {
+        n = -arg0;
+        sign = -1;
+    } else {
+        n = arg0;
+        sign = 1;
+    }
+    if (sign != -1 || !(D_800E6280.unk_10F8 & 4)) {
+        xoff = 0;
+        if (n >= 0) {
+            do {
+                sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+                func_8009F0A4(sprite);
+                sprite->w = 0xC;
+                sprite->h = 0x10;
+                SetSemiTrans(sprite, 0);
+                sprite->r0 = 0x80;
+                sprite->g0 = 0x80;
+                sprite->b0 = 0x80;
+                sprite->x0 = D_800E6280.unk_014[D_8011ECA0] + arg1 - xoff;
+                sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2;
+                uv = &D_8015F5A0[n % 10 * 2];
+                sprite->u0 = uv[0] + 0x80;
+                sprite->v0 = uv[1];
+                sprite->clut = func_8009ED74(arg3 * 0x10, 0x1EF);
+                AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, (s32)sprite);
+                if (n < 10) {
+                    break;
+                }
+                xoff += 0xC;
+                n = n / 10;
+            } while (n >= 0);
+        }
+        dtd_on_tpage(0x340, 0x180, 1, 0, 0);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801432F0);
 

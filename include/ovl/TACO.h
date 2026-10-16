@@ -560,6 +560,7 @@ void func_8013546C(void);
 
 #ifndef OVL_TACO_T10010_SCORE_TABLE
 #define OVL_TACO_T10010_SCORE_TABLE
+extern u8 D_8015F5A0[20]; /* digit UV pairs (u, v), T-16562 */
 extern s32 D_8015F504[]; /* Word score table indexed modulo 17. T-10010. */
 
 extern Tc14 D_8015EB30[16];
