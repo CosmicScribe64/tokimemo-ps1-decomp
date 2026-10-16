@@ -164,3 +164,6 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p11 (T-19011)
 
 [[tickets/T-19011-w3-d-p11]] (`80134930.c`, `80133870.c`): no function matched. `func_8013506C` (29 lines) and `func_80134A18` (36 lines) stay as guarded drafts, `func_80133E98` stays `INCLUDE_ASM` (226 lines, four forms tried). New declarations in `TACO.h`: `D_8015F3E0[2]` (replaces the scalars `D_8015F3E0`/`D_8015F3E4`) and `s32 func_80134A18()`. Findings (chain stores, pointer-with-offset loops, call-saved quotient): [[matching-notes]], "T-19011".
+## Matching stage, package w3-d-p14 (T-19014)
+
+[[tickets/T-19014-w3-d-p14]] (`8013F250.c`): `func_801404FC` (316 bytes), `func_80140364` (408), `func_8013F9C0` (560) and `func_801407D4` (776) matched, 2,060 bytes; `func_80140ADC` (788) matched in the closer pass (the UV stores on one line in `setUVWH` order). New declaration in `TACO.h`: `s32 func_801407D4(s32 *arg0, TcPos arg1);` (the first eight bytes of the particle record by value). FAKEs: unused locals for frame homes, a one-line pair of UV stores, byte-offset element address (index first) and an empty `if (count) {}`. Details and idioms: [[matching-notes]], "T-19014".

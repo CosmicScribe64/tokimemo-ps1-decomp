@@ -138,6 +138,7 @@ kanban-plugin: board
 
 ## Done
 - [ ] [[tickets/T-18100-types-first-bunka_sd|T-18100 Types-first: BUNKA_SD]]
+- [ ] [[tickets/T-19014-w3-d-p14|T-19014 Wave 3 package w3-d-p14]]
 - [ ] [[tickets/T-17800-types-first-option|T-17800 Types-first: OPTION]]
 - [ ] [[tickets/T-19010-w3-d-p10|T-19010 Wave 3 package w3-d-p10]]
 - [ ] [[tickets/T-19012-w3-d-p12|T-19012 Wave 3 package w3-d-p12]]
