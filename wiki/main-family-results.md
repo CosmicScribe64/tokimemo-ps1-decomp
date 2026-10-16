@@ -56,3 +56,83 @@ An initial duplicate SPRT declaration in libgpu.h was rejected by the complete M
 Both code-review skill axes (GPT-6.1 Sol medium) pass after removing redundant signed RGB casts. The final source passes all five full-TU default literal proofs (build/main14200/final-proof.log) and **27/27 freshly rerun binary SHA1 checks** (final-confirm-build.log). The complete shared-header build also passes (final-build.log). Headers/globals pass on final source; prototypes report 0 new / 15 known disagreements and branch check OK. All 22 old C bodies remain verbatim. No reserved-file, overlay-source, generated-ASM, compiler or coverage changes; no push/PR.
 
 Final isolated-branch census: 5887/6958 game functions, 1414152/2279368 game bytes (62.0%). Accepted gain is 6624 literal bytes: 2536 without new FAKE and 4088 with the two labeled frame-home locals. This bounded checkpoint is complete; the broader 80% goal and remaining MAIN work are ongoing. Integrate the entire T-14200 commit chain, including the final review corrections, before relying on the source-plausibility result.
+
+## Types-first pass (T-17000)
+
+Types-first pass of [[speedup-research-2026-10-16]] on the main executable ([[tickets/T-17000-types-first-main]],
+branch `w3-main-types` from `w2-good`): recover the shared types, redraft all 163 unmatched `src/main`
+functions (140 unguarded, 23 guarded; 139 KB), then cut packages T-17001..T-17027. Drafts and driver:
+`drafts/T-17000/` (README there). About 1.5 hours of agent time to the packages.
+
+Main is the hub of the game's data. Its large aggregates (the `D_800E7D10` object, the `D_80125C00` table,
+`D_801230D0`, the 0x50-byte coordinate records) are declared in `main_api.h` as scalars or byte arrays that
+overlay C files read under their own views. The ticket could change only `src/main` and `main_api.h`, so
+those declarations stay; they are listed below for a cross-unit ticket. What changed are main-only tables
+(no C users, no overlay declarations) and the draft-time views of the aggregates that are already typed.
+
+### Type map
+
+| Type / global | Evidence | Users |
+| --- | --- | --- |
+| `u8 D_800B6890[12][2]`, `u8 D_800B68A8[12][2]` | an 11-case switch reads `lbu %lo(D_800B6892 + 2k)` after adding the column; the next table starts at `D_800B68C0` (`func_80073CB0`) | `func_80076FDC`, `func_80073CB0` |
+| `s8 D_800B68E0[8][9]`, `s8 D_800B6928[][9]` | `lb` rows, row index times 9; eight rows end where `D_800B6928` starts | `parameter_up_down` (408 to 177 rows) |
+| `s32 D_800C6200[8]`, `s32 D_800C62C0[32]` | word walks that end at the next symbol (`D_800C6220`, `D_800C6340`) | `func_80059EF0`, `func_8006509C` |
+| `s32 D_80125DA0[][16]`, `s16 D_80125E20[][16]` | rows indexed by `channel << 6` and `channel << 5` | `func_8007BBE8`, `func_8007AF0C` |
+| `s16 D_800B5AA4[16][2]`, `s16 D_800B5AE4[15][2]` | (x, y) halfword pairs copied pair by pair into the pair table at `D_80125C10`; the copy from pair 3 runs to `D_800B5B20` | `func_8006509C` |
+| `Flags7D4F` bit-field view of `D_800E7D4F` | `lui rA; lbu rB; ori; sb` with rB != rA is a bit-field store (T-7010); BUNKASAI's `BunkaReturnFlags` is the same view | `func_8007959C` (matched) |
+| `u8 *D_800B6CF8[]` | message table indexed by `func_80077CA8()`, passed to `sndisp` | `func_80077E30` (matched) |
+| seven `void` prototypes (`func_80075468` ..) and `s32 holiday_club(void)` | defined later in `80075320.c`, called earlier by `func_80075320` | `func_80075320` (matched) |
+| draft-time only: `GameState D_800E6280`, `Rec34`, `Rec24`, `Ring18`, `Work80125D10`, `MATRIX D_80129C40`, every sized array of `main_api.h`, `D_8011ECD0` as `DisplayActor44[160]` | the T-16550 fold: a label inside one of them becomes base + offset in the asm handed to m2c | all redrafts |
+
+Left for a cross-unit ticket (each needs overlay C edits):
+
+- `D_800E7D10` object, 0xEE0 bytes (`func_800420D0` clears it with `bzero`): 30 of its labels are read by 14
+  unmatched main functions and by C in ETC, TACO, NAME_ENT, BUNKAKEN, BUNKASAI, DATE, ENDING, OLH, OPTION, TT.
+- `D_80125C00`: 13 records of 0x10 bytes; `D_80125C10` is a table of (x, y) halfword pairs. 22 unmatched
+  main functions, C users in 13 overlays.
+- `D_801230D0` (`s32[17]` by type_recovery; TEL and NAME_ENT read it as a counter, ETC as `EtcWork40`).
+- `TaiikuBig` (0x50) has the GsCOORDINATE2 layout of TACO's `TcObj50`; `D_80122750` is a table of 17 of them.
+- `D_80125D60`..`D_80125D9C`: four `s32[4]` channel arrays. Main-only, but matched `80079B10.c` reads the
+  scalars and one `(u8 *) D_80125D60 + off` view; not converted.
+
+### Idioms found on the way
+
+- Switch on a `u8` GameState field: the original keeps the selector in `$v1`, IDO copies it (`move v0,v1`).
+  The byte view `switch (*(u8 *)&D_800E6280.unk_1109)` (FAKE, the TEL idiom of T-10630) matched
+  `func_80075320`, `func_80053F04` and `func_80077E30`. It did not help the compare-chain functions
+  (`func_80077CA8`, 34 rows; `func_80044C98`, 35 rows, a global kept in `$v1`).
+- A jump table needs every case: `func_80077E30` switches through five entries; its draft had `case 4`
+  folded into `default`.
+- m2c indexes a word table in bytes (`*(&D_800B6CF8 + (i * 4))`); declare the table and write `D[i]`.
+- `GameState *p; p += 4;` (19 census drafts): m2c types a byte walk over the game state with the struct
+  pointer. The new `struct-walk` rewrite gives a byte pointer; `func_80075AF8` matched as the 11-girl loop
+  over `unk_66C` with the `s8` flag `unk_F6C` read unsigned through its address, as `8005A0B0.c` does.
+- `func_8007866C`: a 72-byte name buffer and the `& 0xFF` argument mask give 14 rows
+  (`main/func_8007866C/hand.c`); the rest is a temporary-register offset in the club flag update.
+- Not closed in the time box: `Fade_In_Main` and `Fade_Out_Main` (the original sets the return value 1
+  in `$v0` before the compare and keeps the byte in `$v1`; six return/flag spellings gave 20 to 40 rows).
+
+### Redraft
+
+`drafts/T-17000/redraft.py` scores two drafts per function through the T-14500 census path: `plain` (m2c with
+the current headers) and `typed` (the T-16550 fold over all typed main aggregates and sized arrays, the
+`DisplayActor44` view, and the T-16560 rewrites plus `struct-walk`), then `tools/draft_fixes.py`. Baseline:
+the census score of `drafts/T-14500/best-quality-catalog.jsonl`.
+
+| | value |
+| --- | --- |
+| functions redrafted | 163 (140 unguarded, 23 guarded) |
+| unguarded with a compiling draft | 126 (14 failed: m2c errors, `M2C_LWL`, invalid casts; the census had hand repairs for some) |
+| against the census (unguarded) | 45 better (34,208 bytes), 72 same, 9 worse |
+| median over the 126 | 153.5 to 151; sum 33,099 to 31,966 rows |
+| typed against plain | 50 better, 18 worse, 70 same; the typed draft was chosen for 108 of 126 |
+| rewrites in the chosen typed drafts | pointer-step 28, actor-offset 13, struct-walk 4, matrix-copy 2 |
+| guarded (regenerated m2c against the hand drafts) | 16 worse, 5 same, 1 better |
+| score 0 | none |
+| matched from the redrafts | 5 functions, 1,948 bytes: `func_80075320` (7 rows), `func_80053F04` (12), `func_80075AF8` (27), `func_8007959C` (30), `func_80077E30` (37) |
+
+Largest gains: `parameter_show` 362 to 61, `parameter_up_down` 408 to 177, `func_80076000` 354 to 231,
+`func_80073CB0` 488 to 380, `get_h_tokimeki` 844 to 742, `func_8008647C` 206 to 128, `func_8005CA94` 122 to 61.
+The fold helps main less than TAIIKU: most census drafts already compiled the GameState labels as separate
+scalars, which compile like members except for the load-after-store order, and the large shared objects
+above could not be typed.

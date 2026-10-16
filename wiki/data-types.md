@@ -138,3 +138,12 @@ twelve bytes, with two command words.
 (`TcObj50`, GsCOORDINATE2 layout, complete) at +0x14; `Tc14` has no holes; `D_8015EC70` is a `Tc14[16]`
 table; `D_80129C40` is a `MATRIX` in `main_api.h` (which now includes `libgte.h`). Map, evidence and the
 draft rewrites built on them: [[taco-family-results]] ("Types-first pass").
+
+## Main types-first pass (T-17000)
+
+Main-only tables declared in `main_api.h` (`D_800B6890`/`D_800B68A8` two-byte rows, `D_800B68E0`/`D_800B6928`
+signed nine-byte rows, `D_800C6200[8]`, `D_800C62C0[32]`, `D_80125DA0`/`D_80125E20` channel rows,
+`D_800B5AA4`/`D_800B5AE4` halfword pairs, `u8 *D_800B6CF8[]`) and the `Flags7D4F` bit-field view of
+`D_800E7D4F`. The shared main aggregates that need overlay edits (`D_800E7D10` object, `D_80125C00` table,
+`D_801230D0`, the GsCOORDINATE2 layout of `TaiikuBig`) are listed in [[main-family-results]] ("Types-first
+pass (T-17000)").
