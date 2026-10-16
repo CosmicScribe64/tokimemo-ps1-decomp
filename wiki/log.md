@@ -15881,3 +15881,6 @@ Created [[tickets/T-18700-types-first-bunkasai]] (branch `w3-bunkasai-types` fro
 
 ## [2026-10-16] ticket | T-19022 In Review
 [[tickets/T-19022-w3-d-p22]] In Progress to In Review (0 matched; drafts kept in `drafts/T-19022/`).
+
+## [2026-10-16] ticket | T-19022 Done
+[[tickets/T-19022-w3-d-p22]] In Review to Done after code review against `CODING_STANDARDS.md`: 4 findings, all fixed (nested comments made the type definitions in `drafts/T-19022/TEL/func_80136724.c` invalid C; `func_80136724` is 6,580 bytes of code, 7,044 with its jump tables; missing blank line before the matching-notes heading; board card placement). 0 of 2 matched, both functions still `INCLUDE_ASM`, `src/ovl/TEL/80132000.c` unchanged. Rebuild: ninja up to date, unit sha1 OK. Card moved to Done.

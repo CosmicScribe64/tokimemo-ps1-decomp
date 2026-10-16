@@ -1,31 +1,30 @@
-/* T-19022 draft of TEL func_80136724 (frame matches, 1645 of 1644 instructions, about 450 register-only differences).
- * Needs these types in include/ovl/TEL.h (and `case 0xFF:` before `default:`):
- *
- * #ifndef OVL_TEL_APPT_WORD_H
- * #define OVL_TEL_APPT_WORD_H
- * /* The packed appointment word of GameState.unk_54C (see TelEntryFlags), written field by field
- *  * before func_8006B5BC takes it by value. T-19022. */
- * typedef struct TelApptBits {
- *     /* bits 0..4 */ u32 place : 5;
- *     /* bits 5..11 */ u32 f5 : 7;
- *     /* bits 12..15 */ u32 month : 4;
- *     /* bits 16..20 */ u32 day : 5;
- *     /* bits 21..23 */ u32 f21 : 3;
- *     /* bit 24 */ u32 b24 : 1;
- *     /* bits 25..28 */ u32 girl : 4;
- *     /* bit 29 */ u32 b29 : 1;
- *     /* bits 30..31 */ u32 rest : 2;
- * } TelApptBits; /* size 4 */
- *
- * typedef union TelApptWord {
- *     GsWord w;
- *     TelApptBits b;
- * } TelApptWord; /* size 4 */
- * #endif
+/* T-19022 draft of TEL func_80136724 (frame matches, 1645 of 1644 instructions, about 450 register-only
+ * differences). It needs the two types below in include/ovl/TEL.h (guard OVL_TEL_APPT_WORD_H) and
+ * `case 0xFF:` before `default:` in the switch.
  * Frame: IDO gives every declared local a slot, last declared lowest; the original has seven words above
  * sp78 (total at +0x17C is the spilled one) and nothing declared below sp44. Day and month are read from the
  * globals (no locals), the packed word is built field by field.
  */
+
+/* The packed appointment word of GameState.unk_54C (see TelEntryFlags), written field by field
+ * before func_8006B5BC takes it by value. T-19022. */
+typedef struct TelApptBits {
+    u32 place : 5; /* bits 0..4 */
+    u32 f5 : 7;    /* bits 5..11 */
+    u32 month : 4; /* bits 12..15 */
+    u32 day : 5;   /* bits 16..20 */
+    u32 f21 : 3;   /* bits 21..23 */
+    u32 b24 : 1;   /* bit 24 */
+    u32 girl : 4;  /* bits 25..28 */
+    u32 b29 : 1;   /* bit 29 */
+    u32 rest : 2;  /* bits 30..31 */
+} TelApptBits; /* size 4 */
+
+typedef union TelApptWord {
+    GsWord w;
+    TelApptBits b;
+} TelApptWord; /* size 4 */
+
 void func_80136724(void) {
     s32 pad_month; /* FAKE: frame slot of a promoted local of the original, T-19022 */
     u8 *text;
