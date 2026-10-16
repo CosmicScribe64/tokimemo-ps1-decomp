@@ -73,7 +73,7 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_801471D0);
 #endif
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, frame and body match (local MATRIX at sp+0x2C, `s32 pad` declared first for the 4 spare bytes); ugen temporaries of the block copy are $t7/$t8 against $t8/$t9 and one addiu of the first loop is scheduled a slot apart, about 12 lines */
+/* NON_MATCHING: T-16561, 20 differing lines (10 rows); frame and body match (local MATRIX at sp+0x2C, `s32 pad` declared first for the 4 spare bytes, one-line inner `for` keeps the increments in the original order); the ugen temporaries of the block copy are $t7/$t8 against the original $t8/$t9, one temporary short (T-10520, T-18 rows in wiki/data/t0018-cases.md) */
 s32 func_801472D4(arg0, arg1, arg2, arg3, arg4, arg5)
 s32 arg0;
 s32 arg1;
@@ -98,14 +98,12 @@ u8 arg5;
         arg3 += arg1 * 9;
     }
     for (i = 0; i != 3; i++) {
-        for (j = 0; j != 3; j++) {
-            m.m[i][j] = *arg3++;
-        }
+        for (j = 0; j != 3; j++) m.m[i][j] = *arg3++;
         m.t[i] = *arg2++;
     }
     rec = &D_80127080[arg0];
-    *(MATRIX *)((u8 *)rec->unk4[0] + 4) = m;
-    *(s32 *)rec->unk4[0] = 0;
+    ((TcTransformObj50 *)rec->unk4[0])->transform = m;
+    ((TcTransformObj50 *)rec->unk4[0])->unk_00 = 0;
     return (s32)rec;
 }
 #else
