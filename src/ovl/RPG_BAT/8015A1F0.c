@@ -111,7 +111,7 @@ void func_8015A6D4(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-17105, 12 differing lines; the original keeps two dead copies ($a1 = v, $a0 = x) of the values stored to D_8015EC54 and D_8015EC68 and stores x from $a0 */
+/* NON_MATCHING: T-17105, 12 differing lines; the original keeps two dead copies ($a1 = v, $a0 = x) of the values stored to D_8015EC54 and D_8015EC68 and stores x from $a0. Closer pass: no effect from chain assignments, reused or retyped locals, dead local copies, a second store or a read-back of the global (scalar or RpgMotion20 view) */
 void func_8015A744(void) {
     u8 *p;
     RpgMotion20 *m;
