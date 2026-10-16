@@ -2652,7 +2652,9 @@ s32 rand();
 s32 func_800BCE40();
 s32 func_800AE0E0(void *arg0);
 s32 strlen(u8 *s);
+#ifndef MAIN_API_OVERRIDE_func_800AE0F0
 void func_800AE0F0(void *dst, void *src);  /* strcpy (SDK libc) */
+#endif
 void strcpy(u8 *dst, u8 *src);
 void strcat(u8 *dst, u8 *src);
 void func_800AE120(s32 arg0);
