@@ -29,24 +29,37 @@ def guarded(source, name):
 
 def compile_guarded(c, directory):
     """Preprocess the complete TU, retaining data and active asm includes."""
+    return compile_unit(c, directory)[0]
+
+
+def compile_unit(c, directory, protos=(), non_matching=True):
+    """(object path, notes): the complete TU of `c` compiled like the build (tools/cc.py, trailing pad,
+    trim to the file's extent). `non_matching` selects the guarded C variants; `protos`
+    (protoverride.Proto) replace the declarations of those functions in the preprocessed unit
+    without touching a header or the source (T-16530)."""
     import cc
     import object_layout
+    import protoverride
     source = directory / "guarded.c"
-    pre = preprocess_draft(c.src)
+    pre = preprocess_draft(c.src, non_matching)
+    notes = []
+    if protos:
+        pre, notes = protoverride.apply(pre, protos)
     source.write_text(pre)
     obj = directory / "guarded.o"
     command(["python3", "tools/cc.py", str(source), str(obj), "ido", "5.3"])
     includes = {name for _, name in cc.INCLUDE_ASM_RE.findall(pre)}
     trailing_pad.pad_functions(str(obj), str(c.src), includes)
     obj.write_bytes(object_layout.trim(obj.read_bytes(), object_layout.source_extent(c.src)))
-    return str(obj)
+    return str(obj), notes
 
 
-def preprocess_draft(source):
-    """Keep full-file data, helper functions and active asm while selecting guarded C."""
-    return command(["gcc", "-E", "-P", "-Iinclude", "-D__sgi", "-DNON_MATCHING",
-                   "-D__attribute__(x)=", "-DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N)",
-                   "-DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N)", str(source)])
+def preprocess_draft(source, non_matching=True):
+    """Keep full-file data, helper functions and active asm while selecting guarded C
+    (`non_matching` False selects the production variant of the guards)."""
+    return command(["gcc", "-E", "-P", "-Iinclude", "-D__sgi"] + (["-DNON_MATCHING"] if non_matching else []) +
+                   ["-D__attribute__(x)=", "-DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N)",
+                    "-DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N)", str(source)])
 
 
 def target_span(c, name):

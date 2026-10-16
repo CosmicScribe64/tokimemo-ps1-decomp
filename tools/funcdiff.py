@@ -15,7 +15,7 @@ occur; `--refresh-expected` forces a rebuild, and `--expected OBJ` names an obje
 addresses and absolute branch targets are stripped, so only instructions,
 relocations and symbol-relative targets are compared.
 
-Usage (in Docker): python3 tools/funcdiff.py [--unit UNIT|PATH] [--built OBJ] [--expected OBJ] [--refresh-expected] [--resolve] [--no-build] [UNIT:]func_80042400 [func_...]
+Usage (in Docker): python3 tools/funcdiff.py [--unit UNIT|PATH] [--built OBJ] [--expected OBJ] [--refresh-expected] [--resolve] [--no-build] [--proto DECL ...] [UNIT:]func_80042400 [func_...]
 The function is looked up by definition, not by mention: the C file with its INCLUDE_ASM or its
 body. Overlays all load at 0x80132000, so a name such as func_8013xxxx exists in several of them;
 `--unit` (`main`, an overlay name, or a C/asm path such as src/ovl/TT/80147380.c; also a `UNIT:`
@@ -42,6 +42,11 @@ function additionally requires a private link with that exact object: the functi
 size and literal bytes (including original padding) must equal the immutable disc target.
 Scratch objects without a unit layout can MATCH only exact, fully resolved instruction words;
 unknown section/string/table addresses require unit layout and fail closed.
+--proto 'void func_80012345(s32 a0);' (repeatable, T-16530; tools/protoverride.py) replaces the declaration of a
+function the file calls for this comparison only: the file's complete translation unit is compiled like the
+build, with that declaration in place of the header's, and nothing under src/ or include/ is edited. The verdict
+names the override; on a MATCH it says which `*_OVERRIDE_<symbol>` guard keeps the view in the tree. A function
+that the file defines is refused, and --proto cannot be combined with --built.
 The built object is checked first: `ninja <object>` is run (skipped with --no-build or without
 build.ninja), and an object that is missing, older than its C source or than any header it
 includes, or whose build fails, is an error, never a MATCH. The check also applies to `--built`
@@ -61,6 +66,7 @@ import tempfile
 from pathlib import Path
 
 import funcloc
+import protoverride
 import srcscan
 
 # internal labels: stay inside the current function
@@ -688,11 +694,18 @@ def _main(argv, directory):
                     help="do not run ninja on the built object (it still fails if it is stale)")
     ap.add_argument("--version", choices=("auto", "c", "default"), default="auto",
                     help="auto compiles NON_MATCHING C when guarded; c forces it; default compares the normal build")
+    protoverride.add_argument(ap)
     args = ap.parse_args(argv)
     if shutil.which("mips-linux-gnu-objdump") is None:
         sys.exit(NO_DOCKER)
     if not args.built and not os.path.isdir("config"):
         sys.exit("funcdiff.py: run it from the repository root")
+    try:
+        protos = protoverride.parse(args.proto)
+    except protoverride.ProtoError as err:
+        sys.exit("funcdiff.py: %s" % err)
+    if protos and args.built:
+        sys.exit("funcdiff.py: --proto changes how the C file is compiled; it cannot be combined with --built")
     get = resolved_functions if args.resolve else functions
     bad = 0
     refreshed, noted = set(), set()
@@ -711,7 +724,7 @@ def _main(argv, directory):
             continue
         inputs = [c.src, *sorted(funcloc.includes_of(c.src))] if c is not None else []
         before = {str(p): hashlib.sha256(Path(p).read_bytes()).digest() for p in inputs}
-        if c is not None:   # an object of the build: its source and headers must not be newer
+        if c is not None and not protos:   # an object of the build: its source and headers must not be newer
             problem = check_fresh(b, c.src, not args.no_build, sorted(funcloc.includes_of(c.src)))
             if problem:
                 print("%s: ERROR %s" % (n, problem))
@@ -720,9 +733,16 @@ def _main(argv, directory):
         # Each comparison owns its snapshots, even when several names share an object.
         job = Path(tempfile.mkdtemp(dir=directory))
         version = "explicit object" if args.built else "default build"
+        notes = []
         try:
-            if not args.built and c is not None and (args.version == "c" or
-                    (args.version == "auto" and proof.guarded(c.src, name))):
+            use_c = c is not None and not args.built and (args.version == "c" or
+                                                          (args.version == "auto" and proof.guarded(c.src, name)))
+            if protos and not args.built and c is not None:
+                b, notes = proof.compile_unit(c, job, protos, non_matching=use_c)
+                version = "%s with --proto %s" % (
+                    "NON_MATCHING C (full translation unit)" if use_c else "default build (full translation unit)",
+                    protoverride.describe(protos))
+            elif use_c:
                 b = proof.compile_guarded(c, job)
                 version = "NON_MATCHING C (full translation unit)"
             else:
@@ -734,6 +754,8 @@ def _main(argv, directory):
             bad += 1
             continue
         print("%s: compared %s" % (n, version))
+        for note in notes:
+            print("  " + note)
         e = args.expected
         if e is None:
             if c is None:       # a scratch object: the original side is that of the file holding the function
@@ -790,6 +812,10 @@ def _main(argv, directory):
             except (OSError, ValueError, subprocess.CalledProcessError, SystemExit) as err:
                 equal, reason = False, "literal-byte proof unavailable: %s" % err
             print("%s: %s (%s)" % (n, "MATCH" if equal else "DIFF", reason))
+            if equal and protos:
+                print("  (with the prototype override above; nothing on disk changed)")
+                for line in protoverride.commit_hint(protos):
+                    print("  " + line)
             bad += not equal
         else:
             verdict = ("real", diff_lines(want, got)) if args.resolve else resolved_verdict(b, e, name, c)
