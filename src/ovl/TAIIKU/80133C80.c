@@ -19,6 +19,7 @@ TaiHalves D_80149298 = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_8014929C);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492A0);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492A4);
+/* Defined in the unit (not an island piece) so that stores to it share one lui at; T-16551, func_80135480. */
 u8 D_801492A8[4] = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492AC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492B8);
@@ -26,6 +27,7 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492C4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492C8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492DC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492F4);
+/* Defined in the unit (not an island piece) so that stores to it share one lui at; T-16551, func_80133CFC. */
 s32 D_801492F8[10] = { 0x801BB000, 0x801BF000, 0x801C3000, 0x801C7000, 0x801CB000, 0x801D3000, 0x801D7000, 0x801DB000, 0x801DF000, 0x801E3000 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_80149320);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_8014933C);
@@ -128,6 +130,9 @@ void func_80133CFC(void) {
         for (i = 0; i < 7; i++) {
             D_801492DC[i] = sp6C.v[i];
         }
+        /* The first two words are written out and the loop starts at 2: IDO unrolls the 8-word copy by four, and this split
+         * gives the original's single shared lui at for the two stores (D_801492F8 is defined in this unit for the same
+         * reason, see matching-notes T-16551). */
         D_801492F8[0] = sp44.v[0];
         D_801492F8[1] = sp44.v[1];
         for (i = 2; i < 10; i++) {
