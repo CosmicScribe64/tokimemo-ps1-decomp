@@ -130,7 +130,7 @@ void func_8013EA30(s32 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-17107, WIP */
+/* NON_MATCHING: T-17107, 15 differing lines; cases 0-2 (flag byte, D_8015EBCC zero, D_8015EBC0 counter): the original loads the counter before the flag byte store (lw v0 above sb), the build after it; statement order, same-line groups, scalar byte global, array view, local copy tried */
 void func_8013EA60(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
     switch (arg1) {
