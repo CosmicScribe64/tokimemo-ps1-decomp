@@ -100,7 +100,28 @@ void func_801517C8(void) {
     func_8004284C();
 }
 
+#ifdef NON_MATCHING
+void func_801518B8(void) {
+    s16 i;
+
+    for (i = 0; i < 6; i++) {
+        load_tpage_buf_lock(i + 5, ((s32 *)D_8015ED70)[i], 1);
+    }
+    func_80151460();
+    load_palette(D_8015ED80, 0x11, 1, 2, 0);
+    func_80084E90(D_8015ED84, D_8015ED88, D_8015ED8C, D_8015ED90, D_8015ED94, D_8015ED98);
+    func_800850D4(D_8015ED74, D_8015ED78, D_8015ED70, D_8015ED7C);
+    ((DisplayActor44 *)D_8011ECD0)[97] = ((DisplayActor44 *)D_8011ECD0)[96];
+    ((DisplayActor44 *)D_8011ECD0)[97].unk_16 = 3;
+    D_80122D10 = 2;
+    D_80122D0C = 1;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 3;
+    ((DisplayActor44 *)D_8011ECD0)[97].unk_18 = 3;
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_801518B8);
+#endif
 
 void func_80151A20(void) {
     D_8015E208 = D_8015DEB8;
@@ -227,7 +248,61 @@ void func_80152024(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152060);
+/* The last call's result stays in $v0 as the return value: s32 with no final return (T-17204). */
+s32 func_80152060(void) {
+    s16 i;
+    s32 found;
+    s16 *rec;
+    DateWords2 tbl;
+
+    tbl = D_8015EF0C;
+    if (D_800E6280.unk_1104.u == 0) {
+        D_80120696 = 1;
+        func_80046290(tbl.v[0], tbl.v[1], 0xF);
+        func_80044750(0xBF);
+        func_80044750(0x300);
+        D_800E6280.unk_1104.u += 1;
+    } else {
+        if (func_80046094() == 9 && D_800E6280.unk_1104.u >= 0x3D) {
+            D_80120696 = 0;
+            func_8004284C();
+            func_80044750(0x202);
+            return 0;
+        }
+        if ((D_800E6280.unk_F88 & 0x400040) && D_800E6280.unk_1104.u >= 0x3D) {
+            D_80120696 = 0;
+            func_8004284C();
+            D_80120668 = 3;
+            func_80044750(0xB4);
+            func_80044750(0x202);
+            return 0;
+        }
+        found = 0;
+        i = 0;
+        do {
+            rec = &((s16 *)D_8015EE20)[i * 3];
+            if (D_800E6280.unk_1104.u >= rec[0]) {
+                if (rec[1] >= D_800E6280.unk_1104.u) {
+                    found = 1;
+                    D_80120668 = rec[2];
+                }
+            }
+            i++;
+        } while (i < 0xA7);
+        if (found == 0) {
+            D_80120668 = 3;
+        }
+    }
+    if (D_800E6280.unk_1104.u >= 0x67C) {
+        D_80120696 = 0;
+    }
+    if (D_800E6280.unk_1104.u < 0x18E3) {
+        D_80120696 = 1;
+    }
+    if (func_800460EC() & 4) {
+        D_800E6280.unk_1104.u += 1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152268);
 

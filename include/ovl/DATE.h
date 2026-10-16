@@ -1789,6 +1789,11 @@ extern DateWords21 D_8015B8DC;
 extern DateWords21 D_8015B930;
 extern Tbl21 D_8015B984; /* func_8013EB8C reads [D_800CA2F8] with lhu */
 
+typedef struct DateWords2 {
+    /* 0x00 */ s32 v[2];
+} DateWords2; /* size 0x08; func_80152060 copies it to the stack */
+extern DateWords2 D_8015EF0C;
+
 typedef struct DateShorts8 {
     /* 0x00 */ s16 v[8];
 } DateShorts8; /* size 0x10; screen x or y lists of func_801556D8 and func_801560E0 */
