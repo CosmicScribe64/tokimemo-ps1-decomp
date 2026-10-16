@@ -16338,3 +16338,7 @@ After integrating upstream main 81095a46, sync_protos --check-branch reports 0 n
 ## [2026-10-16] decision | T-20003 narrow PR #38 after upstream overlap
 
 Upstream main a8591fb8 merged T-17102's independent matches for func_80156D78 and func_80157158 during final checks. Retained its complete 80156CC0.c verbatim and removed our now-unused func_8013D030 header guard. PR #38 now contributes only func_80138F6C (1,268 bytes) plus its missing text-buffer declaration; all earlier investigation/check results remain as history. Updated the PR scope, ticket, board, index and matching notes. No duplicate upstream matches are counted. [[tickets/T-20003-rpg-timer-callees]] stays In Review.
+
+## [2026-10-16] build | T-20003 final single-callback verification passed
+
+On upstream main a8591fb8, actual default funcdiff proves all 1,268 linked bytes of func_80138F6C match. The 39-step incremental build passes RPG_BAT/GYOZI SHA1 and globals, explicit binary checks pass 27/27, and sync_protos --check-branch passes (0 new / 15 known). Final production scope is one C callback plus its missing D_8015E8A0 declaration; upstream 80156CC0.c remains verbatim. Two FAKE sites are marked and locally reviewed. [[tickets/T-20003-rpg-timer-callees]] and PR #38 remain In Review for the maintainer.
