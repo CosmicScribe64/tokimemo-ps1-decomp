@@ -79,3 +79,5 @@ As in the pilots, the headers alone change nothing; the display-record view and 
 ### Packages
 
 19 packages `w3-rpg-bat-p01`..`p19` (T-17101..T-17119), 62 functions, 64,940 bytes, built by the wave-3 inventory scripts from this branch; each list names the T-17100 draft as the starting point.
+
+- `w3-rpg-bat-p02` ([[tickets/T-17102-w3-rpg-bat-p02]]): 3 of 3 matched, `func_80151C10`, `func_80156D78`, `func_80157158` (3,056 bytes). The `$v1`-selector miss of all three was fixed by an int-returning view of one callee (`func_8013E7C0` in `80151C10.c`, `func_8013F15C` in `80156CC0.c`, file-wide `RPG_BAT_OVERRIDE_` guards); details in [[matching-notes]], "T-17102".

@@ -16193,3 +16193,9 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 
 ## [2026-10-16] ticket | T-17102 In Progress
 [[tickets/T-17102-w3-rpg-bat-p02]] created and started: RPG_BAT `func_80151C10`, `func_80156D78`, `func_80157158` (files `src/ovl/RPG_BAT/80151C10.c`, `src/ovl/RPG_BAT/80156CC0.c`), worktree `tokimemo-wt/w3-rpg-bat-p02` from `w2-good`.
+
+## [2026-10-16] build | T-17102 matches
+[[tickets/T-17102-w3-rpg-bat-p02]]: `func_80151C10` (`src/ovl/RPG_BAT/80151C10.c`), `func_80156D78` and `func_80157158` (`src/ovl/RPG_BAT/80156CC0.c`) matched in plain C, RPG_BAT sha1 OK. The `$v1`-selector miss of all three was an int-returning callee view (`RPG_BAT_OVERRIDE_func_8013E7C0`, `RPG_BAT_OVERRIDE_func_8013F15C`); notes in [[matching-notes]], rows in [[register-cheatsheet]] and [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-17102 In Review
+[[tickets/T-17102-w3-rpg-bat-p02]] In Progress to In Review (3 of 3 matched).
