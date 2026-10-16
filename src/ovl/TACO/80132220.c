@@ -17,12 +17,12 @@ void func_80132220(void) {
 
 void func_801322AC(void) {
     func_801438F0(0x8019C800, 0, D_8015EDB4);
-    D_8015EDB4->pad0[1] = 0x80;
+    D_8015EDB4->unk0[1] = 0x80;
     D_8015EDB4->unk6C = 0x400;
     D_8015EDB4->unk6E = 0x400;
     D_8015EDB4->unk70 = 0x400;
     func_801438F0(0x8019C800, 1, &D_8015EDB4[8]);
-    D_8015EDB4[8].pad0[1] = 0x80;
+    D_8015EDB4[8].unk0[1] = 0x80;
     D_8015EDB4[8].unk6C = 0x400;
     D_8015EDB4[8].unk6E = 0x400;
     D_8015EDB4[8].unk70 = 0x400;

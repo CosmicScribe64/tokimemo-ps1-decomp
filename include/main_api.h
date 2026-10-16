@@ -21,6 +21,7 @@
 
 #include "common.h"
 #include "libgpu.h"
+#include "libgte.h"
 
 /* T-12010: D_801255D0 is saved as a word and read as four bytes. */
 typedef union WordBytes4 {
@@ -1712,6 +1713,7 @@ extern u8 D_80125E70[];
 extern s16 D_80126080[]; /* two 0x200-entry s16 tables (+0, +0x400), SD_CalcCDAve */
 extern s32 D_8012749C;
 extern s32 D_801274A0;
+extern MATRIX D_80129C40; /* bss matrix copied whole by TACO (T-16560) */
 extern s32 D_80129F10;
 extern u8 D_80129F40[];
 extern s32 D_800B699C[];

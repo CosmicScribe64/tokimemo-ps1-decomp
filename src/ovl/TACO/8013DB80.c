@@ -23,8 +23,8 @@ void func_8013DDE4(void) {
             p->unk4 = p->unk4 + p->unkC;
         }
         p++;
-    } while (p < &D_8015EC70);
-    p = (Tc14 *)((u8 *)&D_8015EC70 - 0x140);
+    } while (p < D_8015EC70);
+    p = (Tc14 *)((u8 *)D_8015EC70 - 0x140);
     i = 0;
     do {
         if (p->unk13 & 0x80) {
@@ -45,7 +45,7 @@ void func_8013E4FC(void) {
 
     /* FAKE: the loop entry is written on one source line; as1 schedules by line and this orders the
      * end-pointer and base setup as the original does. T-10320 */
-    p = &D_8015EC70; do { p->unk12 += 1; if (p->unk12 == 0xFF) { p->unk12 = 0;
+    p = D_8015EC70; do { p->unk12 += 1; if (p->unk12 == 0xFF) { p->unk12 = 0;
             p->unk13 += 1;
         }
         if (p->unk13 == 0x85) {

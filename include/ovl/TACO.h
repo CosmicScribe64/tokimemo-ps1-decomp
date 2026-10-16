@@ -39,28 +39,48 @@ typedef struct TcPos {
     /* 0x06 */ s16 unk6;
 } TcPos; /* size 0x08 */
 
+/* Object handle (T-16560): GsDOBJ2 layout; unk0 attribute (0x80000000 hides it), unk4[0] the
+ * TcObj50 coordinate object, unk4[1] the model, unk4[2] the id. func_8009B430 (GsLinkObject4) fills it. */
 typedef struct Tc10 {
     /* 0x00 */ s32 unk0;
     /* 0x04 */ s32 unk4[3];
 } Tc10; /* size 0x10 */
 
+/*
+ * Coordinate object (T-16560). Same layout as libgs GsCOORDINATE2: a flag word (0 marks the local
+ * matrix as changed), the local matrix (rotation unk4, translation unk18..unk20), the world matrix
+ * the library computes, and the param/super/sub links. func_80099E30 (GsInitCoordinate2) takes
+ * a pointer to one. The translation stays three scalars because matched code reads them as such.
+ */
 typedef struct TcObj50 {
-    /* 0x00 */ u8 pad0[0x18];
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s16 unk4[3][3];
+    /* 0x16 */ s16 unk16;
     /* 0x18 */ s32 unk18;
     /* 0x1C */ s32 unk1C;
     /* 0x20 */ s32 unk20;
-    /* 0x24 */ u8 pad24[0x2C];
+    /* 0x24 */ MATRIX unk24;
+    /* 0x44 */ s32 unk44;
+    /* 0x48 */ struct TcObj50 *unk48;
+    /* 0x4C */ struct TcObj50 *unk4C;
 } TcObj50; /* size 0x50 */
 
 extern TcPos D_80128880[];
 extern Tc10 D_80127080[];
 extern TcObj50 D_80127480[];
 
+/*
+ * Actor record, 79 of them at D_8015EDB4 (loops stop at byte offset 0x29F8). T-16560: unk0[1] holds
+ * flag bits (0x80, 0x40); +0x04 is the actor's object handle and +0x14 its coordinate object
+ * (func_80134884 passes &actor->unk14 to func_80099E30). unk74..unk7A and unk7C..unk82 are copied
+ * as two eight-byte TcPos values (lwl/lwr pairs) into by-value TcPos arguments.
+ */
 typedef struct TcActor {
-    /* 0x00 */ u8 pad0[2];
+    /* 0x00 */ u8 unk0[2];
     /* 0x02 */ u8 unk2;
     /* 0x03 */ u8 unk3;
-    /* 0x04 */ u8 pad4[0x60];
+    /* 0x04 */ Tc10 unk4;
+    /* 0x14 */ TcObj50 unk14;
     /* 0x64 */ s16 unk64;
     /* 0x66 */ s16 unk66;
     /* 0x68 */ s16 unk68;
@@ -539,7 +559,7 @@ void func_8013546C(void);
 extern s32 D_8015F504[]; /* Word score table indexed modulo 17. T-10010. */
 
 extern Tc14 D_8015EB30[16];
-extern Tc14 D_8015EC70;
+extern Tc14 D_8015EC70[16]; /* the table after D_8015EB30; also its end address (T-16560) */
 void func_8013DEE4();
 extern u8 D_8015FA80[];
 void func_801483B0(void);
