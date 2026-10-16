@@ -16558,3 +16558,7 @@ Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG
 ## [2026-10-16] ticket | T-17112 Done
 
 [[tickets/T-17112-w3-rpg-bat-p12]] In Review to Done after the code review: wave 3 package w3-rpg-bat-p12 (RPG_BAT `src/ovl/RPG_BAT/801525B0.c`), 4 of 4 functions matched (3,404 bytes: `func_80154220`, `func_80153F3C`, `func_801529B4`, `func_80153784`). One finding, fixed: `func_80154220` used byte-offset casts on a `u8 *` where `POLY_FT4` from `include/psx_types.h` fits; rewritten with the same bytes (RPG_BAT sha1 OK). Headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-17004 In Progress
+
+[[tickets/T-17004-w3-main-p04]] created and started: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`, five guarded drafts: `func_8006D6E0`, `func_8006EEC4`, `func_8006EB64`, `func_80072998`, `func_800726F0`), worktree `tokimemo-wt/w3-main-p04`, base `w2-good`. Parent [[tickets/T-17000-types-first-main]].
