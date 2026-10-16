@@ -64,7 +64,49 @@ void func_80140E18(s32 arg0) {
     }
 }
 
+#ifdef NON_MATCHING
+s32 func_80141050(s32 arg0, s32 arg1) {
+    s32 ret;
+    s32 i;
+    TcActor *act;
+    Tc14 *base;
+    Tc14 *p;
+
+    if (arg0 == 0) {
+        act = D_8015EDB4;
+        base = D_8015E270;
+    } else {
+        base = D_8015E3B0;
+        act = D_8015EDB4 + 8;
+    }
+    ret = 0;
+    if (arg1 & 0x20) {
+        for (i = 0, p = base; i < 16; i++, p++) {
+            if (!(p->unk13 & 0x80)) {
+                break;
+            }
+        }
+        if (i >= 16) {
+            return -1;
+        }
+        if (arg0 == 0) {
+            func_801335A0(1, 0x500);
+        }
+        p->unk13 = 0x94;
+        p->unk0 = act->unk74 + ((i & 1) << 7) - 0x40;
+        p->unk2 = act->unk76 - (arg0 << 7) + 0x80;
+        p->unk8 = 0;
+        p->unkA = 0;
+        p->unkC = -0x200;
+        p->unk12 = 0;
+        p->unk4 = act->unk78;
+        ret = 1;
+    }
+    return ret;
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_80141050);
+#endif
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_80141170);
 
