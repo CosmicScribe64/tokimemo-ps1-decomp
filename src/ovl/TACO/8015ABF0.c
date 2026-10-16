@@ -449,4 +449,17 @@ s32 arg0;
     return n;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015CE64);
+/* Index first, as in func_8015C0A0: the global then gets the later colour. T-16563 */
+s32 func_8015CE64(void) {
+    s32 n;
+    s32 i;
+
+    n = 0;
+    for (i = 0x10; i != 0x3F; i++) {
+        if ((i + D_8015EDB4)->unk0[1] & 0x80) {
+            n++;
+        }
+    }
+    return n;
+}
+
