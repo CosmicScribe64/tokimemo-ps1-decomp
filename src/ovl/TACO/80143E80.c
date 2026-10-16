@@ -63,22 +63,101 @@ void func_80143FF4(void) {
     func_80099540(&D_80122740);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80143E80", func_80144094);
-
 #ifdef NON_MATCHING
+void func_80144094(void) {
+    MATRIX m;
+    SVECTOR v;
+    s32 sxy[13][9];
+    TcTex4 ut;
+    TcTex4 vt;
+    s32 depth;
+    s32 flag;
+    s32 ang;
+    s32 x;
+    s32 i;
+    s32 j;
+    s16 *q;
+    s32 idx;
+    POLY_FT4 *poly;
+
+    ut = D_8015F5F8;
+    vt = D_8015F5FC;
+    m = D_80129C40;
+    func_800A1100(&m);
+    func_800A1070(&m);
+    v.vy = D_8015F5F0.b;
+    ang = 0;
+    for (i = 0; i < 9; i++) {
+        x = 0x3000;
+        if (i == 8) {
+            v.vz = ang;
+        } else {
+            v.vz = ang + D_8015F5F0.c;
+        }
+        for (j = 0; j < 13; j++) {
+            v.vx = x + D_8015F5F0.a;
+            func_800AB170(&v, &sxy[j][i], &depth, &flag);
+            x -= 0x800;
+        }
+        ang -= 0x1000;
+    }
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 12; j++) {
+            q = (s16 *)&sxy[j][i];
+            if (q[20] >= 0 && q[2] < 0x201) {
+                if (q[1] >= D_800E6280.unk_018[D_8011ECA0] - 0x200 && D_800E6280.unk_018[D_8011ECA0] + 0x400 >= q[3]) {
+                    poly = func_800490F0(0x28, D_8011ECA0);
+                    func_8009F040(poly);
+                    poly->r0 = 0x80;
+                    poly->g0 = 0x80;
+                    poly->b0 = 0x80;
+                    poly->tpage = func_8009ECB0(1, 0, 0x200, 0x100);
+                    poly->clut = func_8009ED74(0, 0x1ED);
+                    idx = (j + i + D_8015F5F0.d) & 7;
+                    if (idx >= 4) {
+                        idx = 0;
+                    }
+                    poly->u0 = ut.b[idx];
+                    poly->v0 = vt.b[idx];
+                    poly->u1 = ut.b[idx] + 0x3F;
+                    poly->v1 = vt.b[idx];
+                    poly->u2 = ut.b[idx];
+                    poly->v2 = vt.b[idx] + 0x3F;
+                    poly->u3 = ut.b[idx] + 0x3F;
+                    poly->v3 = vt.b[idx] + 0x3F;
+                    poly->x0 = q[0];
+                    poly->y0 = q[1];
+                    poly->x1 = q[2];
+                    poly->y1 = q[3];
+                    poly->x2 = q[18];
+                    poly->y2 = q[19];
+                    poly->x3 = q[20];
+                    poly->y3 = q[21];
+                    func_8009EED0(D_800E8CA0 + (D_8011ECA0 << 10) + 0x3F8, poly);
+                }
+            }
+        }
+    }
+}
+#else
+INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80143E80", func_80144094);
+#endif
+
 void func_80144430(void) {
-    s32 padA[2];
+    s32 pad[2]; /* FAKE: eight unused bytes above m reproduce the original frame (216); T-19009 */
     MATRIX m;
     SVECTOR v;
     s32 pt[10];
-    s32 depth;
-    s32 flag;
-    s32 rot;
+    /* The scalars are declared in this order because IDO gives each a stack slot (register
+     * resident or not) and the original's slots for rot, flag and depth are 0x60, 0x68, 0x6C. T-19009 */
     s32 o;
-    s32 j;
     s16 *q;
     POLY_FT4 *poly;
     s32 t;
+    s32 depth;
+    s32 flag;
+    s32 j;
+    s32 rot;
 
     m = D_80129C40;
     func_800A1100(&m);
@@ -124,9 +203,6 @@ void func_80144430(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80143E80", func_80144430);
-#endif
 
 void func_801446D0(void) {
 }

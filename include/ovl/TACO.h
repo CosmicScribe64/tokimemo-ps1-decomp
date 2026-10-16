@@ -452,6 +452,11 @@ typedef struct TacoCam {
     /* 0x6 */ s16 d;
 } TacoCam; /* size 0x8 */
 extern TacoCam D_8015F5F0;
+typedef struct TcTex4 {
+    /* 0x0 */ u8 b[4];
+} TcTex4; /* size 0x4 */
+extern TcTex4 D_8015F5F8;
+extern TcTex4 D_8015F5FC;
 void func_80139118(void);
 void func_80158CDC(s16 arg0, s16 arg1, s16 arg2);
 void func_80158DBC(s16 arg0, s16 arg1, s16 arg2);
