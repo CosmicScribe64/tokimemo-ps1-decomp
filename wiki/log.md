@@ -15807,3 +15807,6 @@ Opened [[tickets/T-18200-types-first-en_nichi]] (In Progress) under [[tickets/T-
 ## [2026-10-16] ticket | T-19019 In Review
 
 [[tickets/T-19019-w3-d-p19]] In Progress to In Review: 0 of 2 functions matched (both guarded, 10 and 4 lines), clean rebuild, `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` run (results in the ticket Notes). Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] build | T-19019 closer pass on func_801497EC and func_80149538
+Opus closer pass on [[tickets/T-19019-w3-d-p19]] (branch w3-d-p19): no new match, both stay guarded in `src/ovl/TACO/80148FE0.c`. `func_801497EC` goes from 4 to 2 lines: without the `u8 st` local uopt merges the two selector reads (PRE) and its temporary gives the frame word below the `arg1 * 2` spill; left is the operand order of the reload it inserts. `func_80149538` stays at 10 lines; a second base symbol for the tail matches byte for byte (tested only, CODING_STANDARDS section 8), so the original tail is a separate uopt variable. Updated: NON_MATCHING comments, [[matching-notes]], [[data/t0018-cases]], [[register-cheatsheet]], ticket comments. Ticket stays In Review.
