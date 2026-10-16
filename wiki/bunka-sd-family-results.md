@@ -103,4 +103,10 @@ operand form above). BUNKA_SD sha1 OK after each.
 
 ### Packages
 
-See the T-18100 ticket for the package list built with the wave-3 inventory scripts.
+Built with the wave-3 inventory scripts (11 functions, 5,908 bytes by their size measure):
+
+| Package | Ticket | Files | Functions | Bytes |
+| --- | --- | --- | --- | --- |
+| `w3-bunka-sd-p01` | T-18101 | `80137890.c`, `80133540.c`, `801369D0.c`, `80137B40.c` | 4: `func_80137890` and the three event interpreters | 2,524 |
+| `w3-bunka-sd-p02` | T-18102 | `801388D0.c`, `80134540.c` | 4 | 2,956 |
+| `w3-bunka-sd-p03` | T-18103 | `80134260.c`, `80135160.c` | 3 | 428 |

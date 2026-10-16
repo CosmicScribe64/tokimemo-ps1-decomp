@@ -15641,3 +15641,11 @@ Code review of [[tickets/T-17800-types-first-option]] against `CODING_STANDARDS.
 ## [2026-10-16] ticket | T-18100 Types-first: BUNKA_SD opened
 
 Opened [[tickets/T-18100-types-first-bunka_sd]] (In Progress) on branch `w3-bunka-sd-types` from `w2-good`: recover BUNKA_SD's shared types, redraft every unmatched function with the pilot drivers, package the rest for wave 3.
+
+## [2026-10-16] build | T-18100 BUNKA_SD types and redraft
+
+[[tickets/T-18100-types-first-bunka_sd]]: `BsdEvent`, the scene event-list and text tables and seven picture sets typed in `include/ovl/BUNKA_SD.h` (now includes `game.h`); `drafts/T-18100/redraft.py` (T-17800 driver plus `pointer-index` and `record-walk`) redrafted the 15 functions unmatched at that point (6 better than the census). Matched 9 functions / 4,820 bytes, one FAKE (`func_80135F38`, non-plain compare operand). New page [[bunka-sd-family-results]]; notes in [[matching-notes]] and [[data-types]].
+
+## [2026-10-16] ticket | T-18100 In Review
+
+[[tickets/T-18100-types-first-bunka_sd]] In Progress to In Review. Packages T-18101..T-18103 (`w3-bunka-sd-p01`..`p03`, 11 functions, 5,908 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]). Clean build 27/27, header, globals and prototype checks pass.
