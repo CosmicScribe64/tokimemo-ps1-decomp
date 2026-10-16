@@ -832,4 +832,6 @@ extern GekoBytes21 D_80147C6C;
  * relocations name D_801463D8 and D_801463F8 (func_8013E22C, func_80139E1C, func_8013E950). */
 extern s16 D_801463E0[12];
 extern s16 D_80146400[16];
+
+extern u8 D_80145090; /* func_80136C20: zero picks func_80084150 (read_bustup_uniform) */
 #endif
