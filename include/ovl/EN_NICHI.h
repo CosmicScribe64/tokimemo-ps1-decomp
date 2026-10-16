@@ -29,6 +29,13 @@ extern EnObj D_8013984C[10];
 extern s32 D_80139B1C;
 extern s32 D_80139B14;
 extern s32 D_80139210;
+/* T-18200: asset addresses read by func_80132450 and func_80132834; D_80139204 points at three tpage addresses. */
+extern s32 D_80139200;
+extern s32 *D_80139204;
+extern s32 D_80139208;
+extern s32 D_8013920C;
+extern s32 D_80139214;
+extern s32 D_80139218;
 
 /* EN_NICHI functions */
 void func_801320C0(void);
@@ -133,7 +140,7 @@ extern EnResetSlot8 D_801392AC[15][12];
 #ifndef OVL_EN_NICHI_DISTANCE_T10020
 #define OVL_EN_NICHI_DISTANCE_T10020
 extern s32 D_80139B00;
-extern u8 D_80139B08[];
+extern u8 D_80139B08[12];
 /* Exclusive end of the ten status bytes beginning at D_80139B08. */
 extern u8 D_80139B12[];
 #endif
@@ -165,4 +172,32 @@ typedef union EnWords64 {
     /* 0x000 */ s32 value[8][8]; /* matrix access in func_80135600, T-14000 */
 } EnWords64; /* size 0x100 */
 extern EnWords64 D_80139B28;
+#endif
+
+#ifndef OVL_EN_NICHI_T18200_TYPES
+#define OVL_EN_NICHI_T18200_TYPES
+/* T-18200: sprite frames of the objects, six halfwords per row; func_80133CA8 reads row
+ * func_80134008(i) for kinds 1..3 and row 8 + func_80134008(i) for kind 4. Ends at D_80139AF4. */
+extern s16 D_80139A34[16][6];
+
+/* T-18200: tables that func_80136DEC and func_80138CCC copy to the stack as one block
+ * (lw/sw runs, then an lhu/sh tail for the odd sizes); element type from the drafts' reads. */
+typedef struct EnHalf22 {
+    /* 0x00 */ s16 value[22];
+} EnHalf22; /* size 0x2C */
+typedef struct EnBytes22 {
+    /* 0x00 */ u8 value[22];
+} EnBytes22; /* size 0x16 */
+typedef struct EnHalf64 {
+    /* 0x00 */ s16 value[64];
+} EnHalf64; /* size 0x80 */
+typedef struct EnHalf13 {
+    /* 0x00 */ s16 value[13];
+} EnHalf13; /* size 0x1A */
+extern EnHalf22 D_80139C68; /* func_80136DEC: 22 display records, +0x14 */
+extern EnHalf22 D_80139C94; /* func_80136DEC: +0x22 */
+extern EnHalf22 D_80139CC0; /* func_80136DEC: +0x26 */
+extern EnBytes22 D_80139CEC; /* func_80136DEC: +0x01 */
+extern EnHalf64 D_80139DA0; /* func_80138CCC: picked by rand() & 0x3F */
+extern EnHalf13 D_80139E20; /* func_80138CCC: one value per girl, 13 */
 #endif
