@@ -141,7 +141,53 @@ void func_8013A764(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80139170", func_8013A790);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80139170", func_8013AD64);
+/* r_sh and g_sh are single-use named shifts: they reserve the two frame words above the four spilled values
+   that the original has (T-19021). */
+void func_8013AD64(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 r_sh;
+    s32 g_sh;
+    s32 r;
+    s32 g;
+    s32 b;
+    s32 x;
+    s32 y;
+    u8 *p;
+
+    r_sh = arg2 >> 16;
+    g_sh = arg2 >> 8;
+    r = r_sh & 0xFF;
+    g = g_sh & 0xFF;
+    b = arg2 & 0xFF;
+    if (arg3 < 2) {
+        if (arg1 < 0x80) {
+            r = r * arg1 / 128;
+            g = g * arg1 / 128;
+            b = b * arg1 / 128;
+        }
+        r = r * D_8015F4F0 / 128;
+        g = g * D_8015F4F0 / 128;
+        b = b * D_8015F4F0 / 128;
+    }
+    p = func_800490F0(0xC, D_8011ECA0);
+    func_8009F0B8(p);
+    func_8009EF84(p, 0);
+    p[4] = r;
+    p[5] = g;
+    p[6] = b;
+    x = (arg1 * func_800A0070(arg0) >> 12) + D_800E6280.unk_014[D_8011ECA0];
+    if (arg3 == 0) {
+        y = (arg1 * func_800A0140(arg0) >> 12) + D_800E6280.unk_018[D_8011ECA0] - 0x28;
+    } else {
+        y = (arg1 * func_800A0140(arg0) >> 12) + D_800E6280.unk_018[D_8011ECA0];
+    }
+    *(s16 *)(p + 8) = x;
+    *(s16 *)(p + 0xA) = y;
+    if (arg3 < 2) {
+        func_8009EED0((D_8011ECA0 << 10) + 0x3F8 + D_800E8CA0, p);
+        return;
+    }
+    func_8009EED0((D_8011ECA0 << 10) + 0x40 + D_800E8CA0, p);
+}
 
 void func_8013AFDC(void) {
     s32 i;
