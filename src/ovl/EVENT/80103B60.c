@@ -359,7 +359,22 @@ void func_80104C14(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80103B60", func_80104C3C);
+void func_80104C3C(void) {
+    /* Port of the DATE clone func_801572E4 (T-17400). */
+    s16 i;
+
+    *(Ev44 *)&D_800EAFA0[0x88] = *(Ev44 *)D_800EAFA0;
+    D_800EB03E = 4;
+    D_800EB02A = 9;
+    for (i = 0; i < 6; i++) {
+        ((Rec24 *)D_800EC190)[i + 4].unk_00 |= 0x80000000;
+    }
+    D_800EAFA0[3] &= 0xFF7F;
+    D_800EAFA0[0x47] &= 0xFF7F;
+    D_800EECD4 = 0;
+    D_800B0860[6] = D_800B0860[7] = D_800B0860[8] = 0x7F;
+    func_80011DFC();
+}
 
 s32 func_80104D48(void) {
     D_800B0860[6] += 0x10;
