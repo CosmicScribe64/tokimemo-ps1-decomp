@@ -243,7 +243,7 @@ s32 func_8006EA40(void) {
     return 0;
 }
 
-/* NON_MATCHING: T-10880, four flag-word register substitutions. */
+/* NON_MATCHING: T-10880 (rechecked in T-11670), 8 differing lines; four flag-word register substitutions. */
 #ifdef NON_MATCHING
 s32 func_8006EB64(u8 *arg0, u8 *arg1) {
     u32 variant;
@@ -324,7 +324,7 @@ s32 func_8006EB64(u8 *arg0, u8 *arg1) {
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006EB64);
 #endif
 
-/* NON_MATCHING: T-10880, four flag-word register substitutions. */
+/* NON_MATCHING: T-10880 (rechecked in T-11670), 8 differing lines; four flag-word register substitutions. */
 #ifdef NON_MATCHING
 s32 func_8006EEC4(u8 *arg0, u8 *arg1) {
     u32 variant;
@@ -893,6 +893,7 @@ s32 geko_judge(s8 *arg0) {
     s32 i;
     s32 idx;
     s32 n;
+    /* FAKE: buffer sizes chosen to reproduce the original frame and the 0x5C/0x7C slots; real sizes unknown. T-11670 */
     u8 sp7C[0x18];
     u8 sp5C[0x20];
 
