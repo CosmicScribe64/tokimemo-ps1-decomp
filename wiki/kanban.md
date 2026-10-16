@@ -141,10 +141,12 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-17207-w3-date-p07|T-17207 Wave 3 package w3-date-p07]]
 - [ ] [[tickets/T-19032-w3-d-p32|T-19032 Wave 3 package w3-d-p32]]
 - [ ] [[tickets/T-17201-w3-date-p01|T-17201 Wave 3 package w3-date-p01]]
 - [ ] [[tickets/T-17206-w3-date-p06|T-17206 Wave 3 package w3-date-p06]]
 - [ ] [[tickets/T-11850-tt-batch-11|T-11850 TT batch 11]]
+- [ ] [[tickets/T-17203-w3-date-p03|T-17203 Wave 3 package w3-date-p03]]
 - [ ] [[tickets/T-19029-w3-d-p29|T-19029 Wave 3 package w3-d-p29]]
 - [ ] [[tickets/T-19027-w3-d-p27|T-19027 Wave 3 package w3-d-p27]]
 - [ ] [[tickets/T-19028-w3-d-p28|T-19028 Wave 3 package w3-d-p28]]

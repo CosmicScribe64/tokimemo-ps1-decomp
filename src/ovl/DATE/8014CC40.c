@@ -1,5 +1,6 @@
 #include "common.h"
 #include "ovl/DATE.h"
+#include "psx_types.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E220);
@@ -397,24 +398,22 @@ void func_8014DC94(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10320 / T-12100, sixteen register/operand rows remain.
- * A byte-field pointer restores the original table offset and frame size. */
+/* FAKE: the byte pointer stands for the 4-byte stack slot above tbl (T-3330) and keeps the selector
+ * reads as pointer loads; the table entry is read three times (no function-pointer local), so it is
+ * one CSE value and the selector range outranks the table address in uopt. T-10320, T-12100, T-17203 */
 void func_8014DCCC(void) {
     u8 *selector;
     FnTbl39 tbl;
-    void (*fn)();
 
     selector = &D_800E6280.unk_110A;
     tbl = D_8015E3C4;
-    fn = tbl.f[*selector];
-    if (place_init2 == fn) {
+    if (place_init2 == tbl.f[*selector]) {
         D_80120653 |= 0x80;
     }
-    if (normal_date_bg_out == fn) {
+    if (normal_date_bg_out == tbl.f[*selector]) {
         D_80120653 &= 0xFF7F;
     }
-    fn(0x80);
+    tbl.f[*selector](0x80);
     if (D_80122D04 != 0) {
         func_8014E010();
     }
@@ -425,9 +424,6 @@ void func_8014DCCC(void) {
         func_80140D38();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014DCCC);
-#endif
 
 void func_8014DDD8(void) {
     cd_read_sectors(0x1D, 0x801B0000, 0xBD41);
@@ -678,4 +674,27 @@ void func_8014EEC8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014EF1C);
+/* FAKE: the explicit "& 0xFF" masks leave the colour shifts in ugen temporaries (t6..t9), and each
+ * colour trio shares one source line because as1 schedules stores by source line; the real source
+ * is unknown (same trick as main _sprite_set_box_shade_tarao, T-16220). T-17203 */
+void func_8014EF1C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10, s32 arg11) {
+    s32 unused; /* FAKE: unused local, only its 4-byte frame slot above p is observed (KANGEI func_80136810; T-17203) */
+    POLY_G4 *p;
+
+    p = (POLY_G4 *)GetWorkBase(0x24, D_8011ECA0);
+    func_8009F054(p);
+    SetSemiTrans(p, arg11);
+    p->r0 = (((u32)arg8 >> 16) & 0xFF); p->g0 = (((u32)arg8 >> 8) & 0xFF); p->b0 = ((u32)arg8 & 0xFF);
+    p->r1 = (((u32)arg8 >> 16) & 0xFF); p->g1 = (((u32)arg8 >> 8) & 0xFF); p->b1 = ((u32)arg8 & 0xFF);
+    p->r2 = (((u32)arg9 >> 16) & 0xFF); p->g2 = (((u32)arg9 >> 8) & 0xFF); p->b2 = ((u32)arg9 & 0xFF);
+    p->r3 = (((u32)arg9 >> 16) & 0xFF); p->g3 = (((u32)arg9 >> 8) & 0xFF); p->b3 = ((u32)arg9 & 0xFF);
+    p->x0 = D_800E6280.unk_014[D_8011ECA0] + arg0;
+    p->y0 = D_800E6280.unk_018[D_8011ECA0] + arg1;
+    p->x1 = D_800E6280.unk_014[D_8011ECA0] + arg2;
+    p->y1 = D_800E6280.unk_018[D_8011ECA0] + arg3;
+    p->x2 = D_800E6280.unk_014[D_8011ECA0] + arg4;
+    p->y2 = D_800E6280.unk_018[D_8011ECA0] + arg5;
+    p->x3 = D_800E6280.unk_014[D_8011ECA0] + arg6;
+    p->y3 = D_800E6280.unk_018[D_8011ECA0] + arg7;
+    AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + (arg10 * 4)], (s32)p);
+}
