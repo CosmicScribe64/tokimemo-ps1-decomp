@@ -16404,3 +16404,7 @@ Clean rebuild of the w3-rpg-bat-p06 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.
 ## [2026-10-16] build | T-17114 clean rebuild and checks
 
 Clean rebuild of the w3-rpg-bat-p14 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.bin: OK` with the four functions as C), `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17114-w3-rpg-bat-p14]].
+
+## [2026-10-16] ticket | T-17114 Done
+
+[[tickets/T-17114-w3-rpg-bat-p14]] In Review to Done: code review against `CODING_STANDARDS.md` found one issue, fixed (FAKE marks on the first-symbol accesses to the slot table `D_8015EBAC` in `func_8013F82C` and `func_80140204`, comment-only). Rebuild OK (headers OK, globals OK, sha1 OK, `sync_protos --check-branch` OK). 4 of 4 functions matched (`func_80136A9C`, `func_80140E70`, `func_8013F82C`, `func_80140204`; 4,320 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
