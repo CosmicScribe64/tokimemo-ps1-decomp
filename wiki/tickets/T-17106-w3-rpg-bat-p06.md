@@ -1,7 +1,7 @@
 ---
 id: T-17106
 title: Wave 3 package w3-rpg-bat-p06
-status: In Review
+status: Done
 assignee: w3-rpg-bat-p06 agent
 created: 2026-10-16
 updated: 2026-10-16
@@ -32,3 +32,5 @@ Worktree `tokimemo-wt/w3-rpg-bat-p06`, branch `w3-rpg-bat-p06` from `w2-good`. O
 | `func_80154DD8` | 1,204 | draft 113 rows | about 216 rows, restored to `INCLUDE_ASM` (opcodes 97 percent; inner selector in `$v1`, constant 1 in `$a3`, quotient webs) |
 
 ## Comments
+
+2026-10-16 review against `CODING_STANDARDS.md` (checklist sections 1-13): no findings. Only `src/ovl/RPG_BAT/80154430.c` changed among C files; `drafts/T-17106/` is a new folder and no existing archive changed; no inline asm, `.word` or `NON_MATCHING` block left (the two unmatched functions are plain `INCLUDE_ASM`); the one matched function `func_80155868` (520 bytes) is plain C89 with each of its three fakematches marked `FAKE` and naming T-17106; no header changed (the `func_80155868` prototype in `include/ovl/RPG_BAT.h` already agrees); no game data. Rebuild of RPG_BAT: headers OK, globals OK, `build/ovl/RPG_BAT.bin: OK`; `sync_protos --check-branch` OK (0 new, 15 known). 1 of 3 functions matched.
