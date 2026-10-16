@@ -770,7 +770,7 @@ s32 func_8013815C(void) {
 
 void func_80138224(void) {
     s32 i;
-    s32 j;
+    s32 j; /* FAKE: unused local; the original frame is 8 bytes larger, two words above spA4 (a second counter?), real source unknown. T-16551 */
     TaiBytes10 spA4;
     TaiikuHalf10 sp90;
     TaiikuHalf10 sp7C;
