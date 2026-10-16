@@ -103,6 +103,7 @@ s32 func_8013E90C(s32 i);
 s32 func_80156870(void);
 
 void func_80153F3C(s32, s32, s32, s32, s32, s32);
+void func_80154220(s32 *xy, s32 *uv, s32 arg2, s32 arg3, s32 arg4); /* four (x, y) and four (u, v) words */
 extern s32 D_8015EC38;
 extern s32 D_8015EC3C;
 extern s32 D_8015EC40;

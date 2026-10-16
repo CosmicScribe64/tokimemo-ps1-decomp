@@ -185,4 +185,43 @@ void func_80153D20(void) {
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80153F3C);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80154220);
+void func_80154220(s32 *arg0, s32 *arg1, s32 arg2, s32 arg3, s32 arg4) {
+    u8 *p;
+    s32 y;
+
+    p = (u8 *)GetWorkBase(0x28, D_8011ECA0);
+    func_8009F040(p);
+    SetShadeTex(p, 0);
+    if (arg3 != 0) {
+        SetSemiTrans(p, 1);
+    } else {
+        SetSemiTrans(p, 0);
+    }
+    p[4] = arg2;
+    p[5] = arg2;
+    p[6] = arg2;
+    if (arg3 != 0) {
+        *(s16 *)(p + 0xE) = func_8009ED74(0, 0x1F7);
+    } else {
+        *(s16 *)(p + 0xE) = func_8009ED74(0, 0x1F5);
+    }
+    *(s16 *)(p + 0x16) = func_8009ECB0(1, arg3 + 4, (arg4 << 6) + 0x140, 0x100);
+    y = -D_8011ECA0 * 0xF0 + 0xF0;
+    *(s16 *)(p + 8) = arg0[0];
+    *(s16 *)(p + 0xA) = arg0[1] + y;
+    *(s16 *)(p + 0x10) = arg0[2] + 1;
+    *(s16 *)(p + 0x12) = arg0[3] + y;
+    *(s16 *)(p + 0x18) = arg0[4];
+    *(s16 *)(p + 0x1A) = arg0[5] + y + 1;
+    *(s16 *)(p + 0x20) = arg0[6] + 1;
+    *(s16 *)(p + 0x22) = arg0[7] + y + 1;
+    p[0xC] = arg1[0];
+    p[0xD] = arg1[1];
+    p[0x14] = arg1[2] + 1;
+    p[0x15] = arg1[3];
+    p[0x1C] = arg1[4];
+    p[0x1D] = arg1[5] + 1;
+    p[0x24] = arg1[6] + 1;
+    p[0x25] = arg1[7] + 1;
+    AddPrim((D_8011ECA0 << 0xA) + 0x20 + D_800E8CA0, (s32)p);
+}
