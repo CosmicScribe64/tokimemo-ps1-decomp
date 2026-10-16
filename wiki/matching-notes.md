@@ -6144,6 +6144,37 @@ ones had with short timeboxes. Ticket [[tickets/T-11840-tt-batch-10]].
 - Open: the ugen emission order of four constants in `func_8014A2B4` case 7, and the a1 register of the state value in
   `func_801455C8` (v0/v1/a0 busy in the original for no visible reason).
 
+## TT overlay, batch 11: one long Opus run per file group (T-11850)
+
+Seven file groups of guarded near misses and mid-size leftovers, one Opus agent each, two at a time in separate
+worktrees: 12 of 15 matched (`func_8014C5F8`, `func_8014C84C`, `func_80147FD0`, `func_80148764`, `func_80134874`,
+`func_80134768`, `func_80134BBC`, `func_80148E7C`, `func_80149704`, `func_80144A04`, `func_801436BC`, `func_801437F0`;
+4,520 bytes), 3 guarded (`func_80147A18` 58 lines, `func_8013A0DC` 2 lines, `func_8014A2B4` 28 lines). Each agent got
+the earlier agents' findings as tips, which carried the zero-chain idiom through five files. Ticket
+[[tickets/T-11850-tt-batch-11]].
+
+- **The zero-store chain pair is TT's house idiom** (seven functions): `*(u16 *)(p + 6) = *(u16 *)(p + 8) =
+  *(u16 *)(p + 0xA) = 0;` plus `p[0xD] = p[0xE] = p[0xF] = 0;`, three stores each, ascending offsets. The reloads leave
+  dead uopt ranges (no code) that push shared constants (1, 2, 9, globals) into the original's registers. Two-store or
+  s16 chains, or descending order, fail. Which chain comes first, and whether both share one source line (as1 order),
+  varies per function; try all four. A two-store chain `q[0] = q[1] = 0;` costs one ugen temp and shifts later temps
+  (`func_80149704`).
+- **Check the data before blaming the allocator:** `D_801569E8` was a pointer table; `extern u8 *D_801569E8[]` plus
+  `D_801569E8[0]` replaced a volatile FAKE and fixed a v0/v1 swap (`func_80148764`).
+- **Return type matters for dead code:** with an `s32` return, a chain's reload stayed as real code (v0 live at
+  return); `void` let it vanish (`func_80144A04`). A definition with `()` avoids parameter home stores when the callee
+  never reads its arguments (`func_801437F0`).
+- **Hoisted constants:** an unused hoisted constant in a saved register comes from an empty test at the loop head,
+  `if (i == 0x80 || i == 0x40) {}` (`func_80134BBC`); splitting an `&&` test into separate `if (...) continue;`
+  statements changes the order uopt numbers hoisted loop constants (`func_80148E7C`).
+- **Loops:** IDO unrolls a plain `for` over 10 elements itself (peel 2, step 4), so hand-unrolled drafts are wrong
+  (`func_80147FD0`); a `slti` loop test can come from a counter reused by the next loop (`func_801437F0`).
+- **Siblings:** two drafts were written from scratch by following matched siblings in other files (`func_80135148` for
+  `func_8014C84C`).
+- Open: the ugen t6/t7 order around a K&R u16 parameter conversion (`func_80147A18`); IDO never reusing a hoisted
+  constant register for a call argument (`func_8013A0DC`, contradicts the T-11810 note); four ugen-looking constants in
+  t2..t5 that behave like uopt registers (`func_8014A2B4`).
+
 ## T-19020: RENSYU package w3-d-p20 (80132040.c)
 
 [[tickets/T-19020-w3-d-p20]], wave 3 direct package of [[tickets/T-16990-wave-3-conveyor]], worktree `w3-d-p20`. Four functions, one matched (FAKE): `func_80133CB8` (420 B). `func_80133628` (900 B) stays a guarded draft (21 lines); `func_80133990` (844 B) and `func_8013325C` (972 B) are back to `INCLUDE_ASM` (drafts in `drafts/T-19020/RENSYU/`). `tools/siblings.py --package` found no matched relative above 0.70 for any of them.

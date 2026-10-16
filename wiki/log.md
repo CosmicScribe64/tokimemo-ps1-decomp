@@ -15928,6 +15928,12 @@ RENSYU `func_80133CB8` (420 bytes) matched, unit sha1 OK (`src/ovl/RENSYU/801320
 
 ## [2026-10-16] ticket | T-19020 Done
 [[tickets/T-19020-w3-d-p20]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of RENSYU OK (headers OK, globals OK, sha1 OK). 1 of 4 functions matched (`func_80133CB8`, 420 bytes, FAKE), `func_80133628` stays a guarded draft (21 lines), `func_80133990` and `func_8013325C` stay `INCLUDE_ASM`. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-11850 TT batch 11 started
+Created [[tickets/T-11850-tt-batch-11]] (In Progress), stacked on T-11840 (PR #34, still open). Merged upstream `main` (252 commits, no TT changes) into `tt-batch11`; clean rebuild 27/27 OK. Seven file groups, one Opus agent each, two at a time.
+
+## [2026-10-16] ticket | T-11850 TT batch 11 Done
+Seven file groups, one Opus agent each, two at a time: 12 of 15 matched (4,520 bytes), 3 guarded (`func_80147A18`, `func_8013A0DC`, `func_8014A2B4`). The zero-store chain pair matched seven functions. Clean rebuild 27/27 OK, checks clean; TT 274/303 (82.7%). Inline review against CODING_STANDARDS.md: no open findings. Moved [[tickets/T-11850-tt-batch-11]] to Done. Notes in [[matching-notes]] ("TT overlay, batch 11"), 15 rows in [[data/t0018-cases]].
+
 ## [2026-10-16] ticket | T-18800 Types-first: DATE2, In Progress
 
 Created [[tickets/T-18800-types-first-date2]] (branch `w3-date2-types` from `w2-good`), In Progress: survey DATE2's types, declare them in `include/ovl/DATE2.h`, redraft every unmatched function into `drafts/T-18800/`, cut packages. Card in [[kanban]], line in [[index]].

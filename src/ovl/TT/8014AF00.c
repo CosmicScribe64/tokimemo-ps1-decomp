@@ -726,23 +726,15 @@ void func_8014C580(u8 *arg0) {
     arg0[0xD] = 0;
 }
 
-/* NON_MATCHING: T-10850, 16 differing listing lines; regdiff evidence in the ticket scratch. */
-#ifdef NON_MATCHING
-/* FAKE: shared zero local preserves constant allocation. T-10850 */
 void func_8014C5F8(u8 *arg0) {
     u8 *p;
-    s32 zero;
 
     p = (u8 *)func_8014AF00(D_80158A98, D_80158A98 + 0x1E00);
     if (p != 0) {
-        zero = 0;
         p[0] = 1;
         *(s16 *)(p + 4) = 0x71;
-        p[0xD] = p[0xE] = zero;
-        *(s16 *)(p + 0xA) = 0;
-        *(s16 *)(p + 8) = 0;
-        *(s16 *)(p + 6) = 0;
-        p[0xF] = 0;
+        /* FAKE: both chains on one line; as1 then emits the 0xE/0xD byte stores (zero kept in a0) first. T-11850 */
+        *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 0xA) = 0; p[0xD] = p[0xE] = p[0xF] = 0;
         *(s32 *)(p + 0x20) = *(s32 *)(arg0 + 0xC);
         *(s32 *)(p + 0x24) = *(s32 *)(arg0 + 0x10);
         *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
@@ -750,9 +742,6 @@ void func_8014C5F8(u8 *arg0) {
         func_8014C580(p);
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014C5F8);
-#endif
 
 /* FAKE: permuter source layout preserves branch operand order; original source unknown. T-9710. */
 void func_8014C680(void)
@@ -855,7 +844,92 @@ void func_8014C680(void)
     while (var_s1 != 0x40);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014C84C);
+void func_8014C84C(void) {
+    u8 *buf;
+    u8 *q;
+    u8 *p;
+    u8 *v;
+    s32 i;
+
+    buf = *(s32 *)(D_80158A68 + 8) * 0x80B8 + D_80158AB4;
+    q = D_80158AB0;
+    p = D_80158A98;
+    for (i = 0; i != 0x40; i++, p += 0x78) {
+        if (*p == 0) {
+            continue;
+        }
+        if (*(u16 *)(p + 4) == 0x71) {
+            func_80147A18(p + 0x14, p + 0x38, *(u16 *)(p + 0x10));
+        } else if (*(u16 *)(p + 2) == 0x47) {
+            v = *(u8 **)(buf + 4);
+            *(u8 **)(buf + 4) += 0x30;
+            *(s16 *)(q + 4) = *(s16 *)(p + 0x14);
+            *(s16 *)(q + 6) = *(s16 *)(p + 0x16);
+            *(s16 *)(v + 8) = *(s16 *)(p + 0x14) - 8;
+            *(s16 *)(v + 0xA) = *(s16 *)(p + 0x16) - 8;
+            v[0x29] = 0;
+            v[0x2A] = 1;
+            *(s16 *)(v + 0x10) = 0x10;
+            *(s16 *)(v + 0x12) = 0x10;
+            v[0x28] = p[0x3C];
+            v[0xC] = p[0x5C];
+            v[0xD] = p[0x5D];
+            *(u16 *)(v + 0x16) = *(u16 *)(p + 0x58);
+            *(u16 *)(v + 0xE) = *(u16 *)(p + 0x5A);
+            v[0x2C] = 0;
+            if (*(u16 *)(p + 6) == 2) {
+                v[0x2B] = 0;
+                func_80141EBC(&((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)], v, q);
+            } else {
+                v[0x2B] = 1;
+                *(s16 *)(q + 0) = *(s16 *)(q + 2) = ((u32)(*(u16 *)(p + 0x6E) - 0x400) >> 1) + 0xC00;
+                if (*(s16 *)(q + 0) > 0x1000) {
+                    v[0x2B] = 0;
+                }
+                func_80141EBC(&((TtDrawBuffer80B8 *)buf)->ordering[7], v, q);
+            }
+        } else {
+            v = *(u8 **)(buf + 4);
+            *(u8 **)(buf + 4) += 0x30;
+            *(s16 *)(q + 4) = *(s16 *)(p + 0x14);
+            *(s16 *)(q + 6) = *(s16 *)(p + 0x16);
+            if (*(u16 *)(p + 2) == 0x42) {
+                *(s16 *)(v + 8) = *(s16 *)(p + 0x14) - 8;
+                *(s16 *)(v + 0xA) = *(s16 *)(p + 0x16) - 0x10;
+            } else {
+                *(s16 *)(v + 8) = *(s16 *)(p + 0x14) - 8;
+                *(s16 *)(v + 0xA) = *(s16 *)(p + 0x16) - 8;
+            }
+            v[0xC] = p[0x5C];
+            v[0xD] = p[0x5D];
+            v[0x28] = p[0x3C];
+            v[0x29] = 0;
+            v[0x2A] = 1;
+            *(u16 *)(v + 0x16) = *(u16 *)(p + 0x58);
+            *(u16 *)(v + 0xE) = *(u16 *)(p + 0x5A);
+            v[0x2C] = 0;
+            v[0x2B] = 0;
+            func_80141C6C(&((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)], v, q);
+            if (*(u16 *)(p + 2) == 0x42) {
+                v = *(u8 **)(buf + 4);
+                *(u8 **)(buf + 4) += 0x30;
+                *(s16 *)(q + 4) = *(s16 *)(p + 0x14);
+                *(s16 *)(q + 6) = *(s16 *)(p + 0x16);
+                *(s16 *)(v + 8) = *(s16 *)(p + 0x14) - 8;
+                *(s16 *)(v + 0xA) = *(s16 *)(p + 0x16);
+                v[0xC] = 0xD0; v[0xD] = 0x10; /* FAKE: one line keeps as1's store order of the two uv bytes. T-11850 */
+                v[0x28] = p[0x3C];
+                v[0x29] = 0;
+                v[0x2A] = 1;
+                *(u16 *)(v + 0x16) = *(u16 *)(p + 0x58);
+                *(u16 *)(v + 0xE) = *(u16 *)(p + 0x5A);
+                v[0x2C] = 0;
+                v[0x2B] = 0;
+                func_80141C6C(&((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)], v, q);
+            }
+        }
+    }
+}
 
 void func_8014CBD0(void) {
     s32 i;

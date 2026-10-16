@@ -27,8 +27,6 @@ void func_80148DE4(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10720/T-11800, 7 lines (registers only): the hoisted loop constants 0x40/0x20 sit in t0/t1 where the original has t1/t0 (unconstrained ranges coloured in bit order; 0x40 is created first). T-11800 (order_search): writing the hit-branch stores as 0x20, 0x1C, 0x44, then p[0x64] fixes the li/sh order (was 11 lines). Tried: do/while loops, for (i = 0, p = ...) heads. */
 void func_80148E7C(arg0, arg1)
 u8 *arg0;
 s32 arg1;
@@ -50,22 +48,23 @@ s32 arg1;
         i = 0;
         p = D_80158A9C;
         for (; i != 0x20; i++, p += 0x78) {
-            if (p[0] != 0 && *(u16 *)(p + 4) == 0x40 && p[0x64] == 0) {
-                d = *(s16 *)(src + 0x16) - *(s16 *)(p + 0x16);
-                if (d < 0x60 && d >= 0x11) {
-                    e = *(s16 *)(p + 0x14) - *(s16 *)(src + 0x14);
-                    if (e < 0) {
-                        dx = -e;
-                    } else {
-                        dx = e;
-                    }
-                    if (dx < 0x20) {
-                        *(s32 *)(arg0 + 0x20) = *(s32 *)(p + 0x20);
-                        *(s32 *)(arg0 + 0x1C) = *(s32 *)(p + 0x1C);
-                        *(s16 *)(arg0 + 0x44) = i;
-                        p[0x64] = 1;
-                        break;
-                    }
+            if (p[0] == 0) continue;
+            if (*(u16 *)(p + 4) != 0x40) continue;
+            if (p[0x64] != 0) continue;
+            d = *(s16 *)(src + 0x16) - *(s16 *)(p + 0x16);
+            if (d < 0x60 && d >= 0x11) {
+                e = *(s16 *)(p + 0x14) - *(s16 *)(src + 0x14);
+                if (e < 0) {
+                    dx = -e;
+                } else {
+                    dx = e;
+                }
+                if (dx < 0x20) {
+                    *(s32 *)(arg0 + 0x20) = *(s32 *)(p + 0x20);
+                    *(s32 *)(arg0 + 0x1C) = *(s32 *)(p + 0x1C);
+                    *(s16 *)(arg0 + 0x44) = i;
+                    p[0x64] = 1;
+                    break;
                 }
             }
         }
@@ -74,9 +73,8 @@ s32 arg1;
         *(s32 *)(arg0 + 0x20) = *(s16 *)(src + 0x14) << 16;
         *(s32 *)(arg0 + 0x1C) = *pp - ((*(s16 *)(src + 0x16) - 0x60) << 16);
         *(u16 *)(arg0 + 0x44) = 0xFFFF;
-        i = 0;
         p = D_80158A9C;
-        for (; i != 0x20; i++, p += 0x78) {
+        for (i = 0; i != 0x20; i++, p += 0x78) {
             if (p[0] != 0 && p[0x64] == 0) {
                 d = *(s16 *)(src + 0x16) - *(s16 *)(p + 0x16);
                 if (d < 0x60 && d >= 0x11) {
@@ -101,9 +99,6 @@ s32 arg1;
     *(s32 *)(arg0 + 0x2C) = 0;
     *(s16 *)(arg0 + 0x46) = 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80148E7C);
-#endif
 
 void func_80149098(u8 *arg0) {
     if ((u32)(u16)++*(u16 *)(arg0 + 0x46) >= 0x79) {
@@ -215,8 +210,6 @@ void func_80149400(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801494D8);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11820, 6 lines (registers only): the record-2 constants 0x20/0x40/0x30 get ugen temps t9/t1/t2 where the original has t1/t2/t3 (t9 busy there). The empty if before the 0x65 store (FAKE) splits the block so the 0x65 constant can take v0. */
 void func_80149704(void) {
     u8 *scene;
     u8 *q;
@@ -267,12 +260,11 @@ void func_80149704(void) {
     q[0x47] = 0;
     *(s16 *)(q + 0x40) = 0xB;
     *(s16 *)(q + 0x42) = 0x3C20;
-    if (q) {} /* FAKE: splits the uopt block so 0x65 can take v0. T-11820 */
+    if (q) {} /* FAKE: splits the uopt block so 0x65 can take v0. T-11820, still needed T-11850 */
     q[0x3B] = 0x65;
     *(s16 *)(q + 0x10) = 0;
     q += 0x64;
-    q[0] = 0;
-    q[1] = 0;
+    q[0] = q[1] = 0;
     *(s16 *)(q + 0x44) = 0;
     *(s16 *)(q + 0x14) = 0x20;
     *(s16 *)(q + 0x16) = 0x38;
@@ -285,9 +277,6 @@ void func_80149704(void) {
     q[0x3B] = 0x65;
     *(s16 *)(q + 0x10) = 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149704);
-#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801498C8);
 
@@ -541,10 +530,13 @@ void func_8014A198(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-11840, 28 lines (registers only, case 7): the original's ugen emits the constants 0x180, 0x1A, 0x3D04
- * and 2 first in the block (t2..t5, then 0x100000 in t6), this draft at their stores (t5..t8 after 0x100000 in t2); the
- * stores themselves are in the original's order. Not uopt colours (those would leave t2..t5 out of every ugen rotation).
- * Tried: autotweak 300 s, an empty if at every line of case 7, store orders, u16 stores, constant locals. */
+/* NON_MATCHING: T-11840/T-11850, 28 lines (registers only, case 7): the original loads the constants 0x180, 0x1A, 0x3D04
+ * and 2 into t2..t5 before every other value of the block (0x100000 then gets t6), this draft at their stores. ugen
+ * hands out temporaries first-in first-out by free order (scratch test), so four ugen temps loaded first would make
+ * 0x1000 t6, not the original's t2; the original behaves as if t2..t5 were uopt colours of four hoisted constants
+ * (needs each constant to be worth a register and v0..t1 busy). Tried: autotweak 300 s, an empty if at every line of
+ * case 7, store orders, u16 stores (all 64 s16/u16 combinations), constant locals (s16/s32/u16/u32, chained or not),
+ * self-chains, duplicate stores, empty compares, zero-store chains. */
 void func_8014A2B4(void) {
     u8 *s;
     u8 *e;

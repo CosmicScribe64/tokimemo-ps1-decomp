@@ -185,8 +185,6 @@ void func_80143580(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10320, T-11620, constants 2 and D_80151A50 sit in $a1/$a2, the original keeps them in $t0/$t1 (26 diff lines; a counter loop gives the 5/15 order but not the registers, T-11620) */
 void func_801436BC(void) {
     u8 *p;
     u8 *q;
@@ -197,12 +195,9 @@ void func_801436BC(void) {
     *(s16 *)(p + 2) = 0;
     p[12] = 0;
     *(s16 *)(p + 4) = 0;
-    p[13] = 0;
-    p[14] = 0;
-    p[15] = 0;
-    *(s16 *)(p + 6) = 0;
-    *(s16 *)(p + 8) = 0;
-    *(s16 *)(p + 10) = 0;
+    /* FAKE: chained zero stores; their reloads keep dead ranges (no code) that push the hoisted 2 and D_80151A50 into t0/t1 as in the original. T-11850 */
+    p[13] = p[14] = p[15] = 0;
+    *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 10) = 0; /* FAKE: u16 view, see above. T-11850 */
     *(s16 *)(p + 16) = 2;
     *(u8 **)(p + 56) = D_80151A50;
     p[60] = 0;
@@ -222,40 +217,89 @@ void func_801436BC(void) {
     p[95] = 0;
     p[96] = 0;
     *(s16 *)(p + 4) = 0x20;
-    *(s16 *)(p + 10) = 0;
-    *(s16 *)(p + 8) = 0;
-    *(s16 *)(p + 6) = 0;
-    p[15] = 0;
-    p[14] = 0;
-    p[13] = 0;
+    *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 10) = 0; /* FAKE: chained, see above. T-11850 */
+    p[13] = p[14] = p[15] = 0;
     q = D_80158A7C;
-    n = 5;
-    do {
+    for (n = 5; n < 15; n += 5) {
         q[62] = n;
-        n += 5;
         q += 0x60;
         q[-96] = 0;
         *(s16 *)(q - 94) = 0;
         *(s16 *)(q - 92) = 0;
         q[-84] = 0;
-        *(s16 *)(q - 86) = 0;
-        *(s16 *)(q - 88) = 0;
-        *(s16 *)(q - 90) = 0;
-        q[-81] = 0;
-        q[-82] = 0;
-        q[-83] = 0;
+        *(u16 *)(q - 90) = *(u16 *)(q - 88) = *(u16 *)(q - 86) = 0; /* FAKE: chained, see above. T-11850 */
+        q[-83] = q[-82] = q[-81] = 0;
         *(s16 *)(q - 80) = 2;
         *(u8 **)(q - 40) = D_80151A50;
         q[-36] = 0;
         q[-35] = 0;
         q[-32] = 0x60;
-    } while (n != 0xF);
+    }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_801436BC);
-#endif
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_801437F0);
+/* No prototype: func_801441BC calls it with two arguments the body never reads (declared parameters would be homed to the stack). */
+void func_801437F0() {
+    u8 *p;
+    u8 *q;
+    u8 *r;
+    s32 i;
+    s32 x;
+
+    p = D_80158A74;
+    switch (*(u16 *)(p + 6)) {
+    case 0:
+        func_80133AD0(0x60E);
+        p[0] = 1;
+        *(s32 *)(p + 0x20) = 0;
+        *(s32 *)(p + 0x24) = 0xF80000;
+        *(s32 *)(p + 0x28) = 0;
+        *(s32 *)(p + 0x2C) = 0xFFFE0000;
+        *(s16 *)(p + 0x14) = 0;
+        *(s16 *)(p + 0x16) = 0xF8;
+        *(u8 **)(p + 0x38) = D_80151A50;
+        p[0x3C] = 0;
+        p[0x3D] = 0;
+        p[0x3E] = 0;
+        p[0x40] = 0x60;
+        p[0x48] = 0;
+        *(u16 *)(p + 0x50) |= 2;
+        p[0x52] = 1;
+        p[0x56] = 1;
+        *(u16 *)(p + 6) = 0x40;
+        q = D_80158A7C;
+        /* the counter i (reused by the next loop) is LFTR'd into x, giving the original slti 15 test */
+        for (i = 0; i < 2; i++) {
+            x = i * 5 + 5;
+            q[0x3E] = x;
+            q += 0x60;
+            q[-0x60] = 1;
+            *(s16 *)(q - 0x5E) = 0;
+            *(s16 *)(q - 0x5C) = 0;
+            q[-0x54] = 0;
+            /* FAKE: chained zero stores (u16 view); their reloads keep dead ranges in v1/a0 (no code), so x, 1, D_80151A50, 0x60 and 2 land in a1, a2, a3, t0, t1 as in the original. T-11850 */
+            *(u16 *)(q - 0x5A) = *(u16 *)(q - 0x58) = *(u16 *)(q - 0x56) = 0;
+            q[-0x53] = q[-0x52] = q[-0x51] = 0;
+            *(s16 *)(q - 0x50) = 2;
+            *(u8 **)(q - 0x28) = D_80151A50;
+            q[-0x24] = 0;
+            q[-0x23] = 0;
+            q[-0x20] = 0x60;
+        }
+        r = D_80158A78;
+        for (i = 0; i != 3; i++, r += 0xA4) {
+            func_80147FD0(r);
+        }
+        break;
+    case 0x40:
+        if (*(s32 *)(D_80158A74 + 0x24) < 0xC00000) {
+            *(s32 *)(p + 0x24) = 0xC00000;
+            p[0x56] = 0;
+            *(u16 *)(p + 6) = 0;
+            p[0xD] = 1;
+        }
+        break;
+    }
+}
 
 void func_80143970(void) {
 }
@@ -762,9 +806,7 @@ void func_80144854(void) {
     }
 }
 
-/* NON_MATCHING: T-11500, T-11620, 3 instructions (6 diff lines): the two stores of the constant 9 (sb 0x55 and sb 0x92 via D_80158A78) use $v0 here, the original holds 9 in $a0. T-11510: the 9 is a ugen temp (used twice), which takes the lowest free of v0/v1/a0, so the original has v0/v1 busy in that block for an unknown reason; the return type makes no difference (void == s32). */
-#ifdef NON_MATCHING
-s32 func_80144A04(u8 *arg0) {
+void func_80144A04(u8 *arg0) {
     u8 *p;
     u8 *w;
     s32 i;
@@ -789,12 +831,9 @@ s32 func_80144A04(u8 *arg0) {
             *(s32 *)(arg0 + 0x28) = 0;
             *(s16 *)(arg0 + 0x62) = 0;
             *(u16 *)(arg0 + 4) = 0x90;
-            arg0[0xD] = 0;
-            arg0[0xE] = 0;
-            arg0[0xF] = 0;
-            *(s16 *)(arg0 + 6) = 0;
-            *(s16 *)(arg0 + 8) = 0;
-            *(s16 *)(arg0 + 0xA) = 0;
+            /* FAKE: chained stores; the reloads keep dead ranges in v0/v1 (no code, as the function is void), so the shared 9 lands in a0 as in the original. T-11850 */
+            arg0[0xD] = arg0[0xE] = arg0[0xF] = 0;
+            *(u16 *)(arg0 + 6) = *(u16 *)(arg0 + 8) = *(u16 *)(arg0 + 0xA) = 0; /* FAKE: u16 view, see above. T-11850 */
             break;
         case 2:
             func_80133AD0(0x602);
@@ -877,9 +916,6 @@ s32 func_80144A04(u8 *arg0) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80144A04);
-#endif
 
 void func_80144CA8(void) {
     u8 *q;
