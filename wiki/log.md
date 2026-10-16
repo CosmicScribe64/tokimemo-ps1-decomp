@@ -16660,3 +16660,6 @@ Clean rebuild of the w3-main-p05 worktree: 27/27 sha1 OK (`build/SLPM_86.053.bin
 
 ## [2026-10-16] ticket | T-17002 Done
 [[tickets/T-17002-w3-main-p02]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/main/800674B0.c` changed in code, `drafts/T-17002/` is new, no header or config change. Findings fixed (comments and two casts, bytes unchanged): the `(s32)` cast on the two two-argument `strncat` calls of `func_800696DC` removed and the calls commented, the `selected_slot` view marked `FAKE`. Unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 3 of 4 matched (`func_8006BC28`, `func_800676AC`, `func_800696DC`, 3,184 bytes). Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17011 In Progress
+[[tickets/T-17011-w3-main-p11]] created and started: wave 3 package w3-main-p11, five functions of `src/main/80062CD0.c` (`func_8006612C`, `func_80063668`, `parameter_show`, `func_80065964`, `func_80065F34`), worktree `tokimemo-wt/w3-main-p11`, base `w2-good`. Follows [[tickets/T-17000-types-first-main]].
