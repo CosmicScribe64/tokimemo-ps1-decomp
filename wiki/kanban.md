@@ -52,7 +52,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
-- [ ] [[tickets/T-16510-m2c-defect-rewrites|T-16510 Detect and rewrite recurring m2c draft defects]]
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
@@ -138,6 +137,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-16510-m2c-defect-rewrites|T-16510 Detect and rewrite recurring m2c draft defects]]
 - [ ] [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210 Wave 2 package w2-p01]]
 
 - [ ] [[tickets/T-11670-w1-main-8006cb30|T-11670 Wave 1 package w1-p11]]
