@@ -101,4 +101,6 @@ segments:
       - [0x1B730, .rodata, TT/80148DB0]
       - [0x1B7F0, .rodata, TT/8014AF00]
       - [0x1B860, data, TT_data]
+      - [0x1FA80, .data, TT/80136830]
+      - [0x20B00, data, TT_data_80152B00]
   - [0x30000]
