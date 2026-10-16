@@ -1,8 +1,9 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-/* NON_MATCHING: T-16562, 8 differing lines (earlier T-10510); IDO folds the entry copy of the pointer parameter (move s0,a0 at entry in the original) */
-#ifdef NON_MATCHING
+/* The header is walked in two steps (arg0++, then arg0 += 8): as1 turns the first add into the
+   entry copy `move s0,a0` and moves its offset into the loads and the second add. One add of 9
+   is folded into `addiu s0,a0,36` with the loads on a0. T-16562 */
 void func_80154230(arg0, arg1)
 u32 *arg0;
 u16 arg1;
@@ -14,11 +15,12 @@ u16 arg1;
     s32 count;
     u32 limit;
 
-    count = arg0[1];
-    limit = arg0[3];
+    arg0++;
+    count = arg0[0];
+    limit = arg0[2];
     command0 = 0x24000507;
     command1 = 0x34000609;
-    arg0 += 9;
+    arg0 += 8;
 loop_1:
     if (func_8015431C((u32)arg0) != 0) {
         command = arg0[0];
@@ -36,9 +38,6 @@ loop_1:
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154230", func_80154230);
-#endif
 
 s32 func_8015431C(u32 arg0) {
     if (arg0 < 0x8018A000U) {
