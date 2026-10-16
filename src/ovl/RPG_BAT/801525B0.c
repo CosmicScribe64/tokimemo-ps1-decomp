@@ -1,5 +1,6 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
+#include "psx_types.h"
 
 void func_801525B0(void) {
     s32 sp28; /* FAKE (T-17100): dead copy of the column; without it the 0x28 spill of var_a3 and the frame change */
@@ -447,10 +448,10 @@ void func_80153F3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 }
 
 void func_80154220(s32 *arg0, s32 *arg1, s32 arg2, s32 arg3, s32 arg4) {
-    u8 *p;
+    POLY_FT4 *p;
     s32 y;
 
-    p = (u8 *)GetWorkBase(0x28, D_8011ECA0);
+    p = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
     func_8009F040(p);
     SetShadeTex(p, 0);
     if (arg3 != 0) {
@@ -458,31 +459,31 @@ void func_80154220(s32 *arg0, s32 *arg1, s32 arg2, s32 arg3, s32 arg4) {
     } else {
         SetSemiTrans(p, 0);
     }
-    p[4] = arg2;
-    p[5] = arg2;
-    p[6] = arg2;
+    p->r0 = arg2;
+    p->g0 = arg2;
+    p->b0 = arg2;
     if (arg3 != 0) {
-        *(s16 *)(p + 0xE) = func_8009ED74(0, 0x1F7);
+        p->clut = func_8009ED74(0, 0x1F7);
     } else {
-        *(s16 *)(p + 0xE) = func_8009ED74(0, 0x1F5);
+        p->clut = func_8009ED74(0, 0x1F5);
     }
-    *(s16 *)(p + 0x16) = func_8009ECB0(1, arg3 + 4, (arg4 << 6) + 0x140, 0x100);
+    p->tpage = func_8009ECB0(1, arg3 + 4, (arg4 << 6) + 0x140, 0x100);
     y = -D_8011ECA0 * 0xF0 + 0xF0;
-    *(s16 *)(p + 8) = arg0[0];
-    *(s16 *)(p + 0xA) = arg0[1] + y;
-    *(s16 *)(p + 0x10) = arg0[2] + 1;
-    *(s16 *)(p + 0x12) = arg0[3] + y;
-    *(s16 *)(p + 0x18) = arg0[4];
-    *(s16 *)(p + 0x1A) = arg0[5] + y + 1;
-    *(s16 *)(p + 0x20) = arg0[6] + 1;
-    *(s16 *)(p + 0x22) = arg0[7] + y + 1;
-    p[0xC] = arg1[0];
-    p[0xD] = arg1[1];
-    p[0x14] = arg1[2] + 1;
-    p[0x15] = arg1[3];
-    p[0x1C] = arg1[4];
-    p[0x1D] = arg1[5] + 1;
-    p[0x24] = arg1[6] + 1;
-    p[0x25] = arg1[7] + 1;
+    p->x0 = arg0[0];
+    p->y0 = arg0[1] + y;
+    p->x1 = arg0[2] + 1;
+    p->y1 = arg0[3] + y;
+    p->x2 = arg0[4];
+    p->y2 = arg0[5] + y + 1;
+    p->x3 = arg0[6] + 1;
+    p->y3 = arg0[7] + y + 1;
+    p->u0 = arg1[0];
+    p->v0 = arg1[1];
+    p->u1 = arg1[2] + 1;
+    p->v1 = arg1[3];
+    p->u2 = arg1[4];
+    p->v2 = arg1[5] + 1;
+    p->u3 = arg1[6] + 1;
+    p->v3 = arg1[7] + 1;
     AddPrim((D_8011ECA0 << 0xA) + 0x20 + D_800E8CA0, (s32)p);
 }

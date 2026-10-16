@@ -27,7 +27,7 @@ Worktree `tokimemo-wt/w3-rpg-bat-p12`, branch `w3-rpg-bat-p12`, base `w2-good`. 
 
 | Function | Bytes | Start | End |
 |---|---:|---|---|
-| `func_80154220` | 528 | `INCLUDE_ASM` (T-14500 draft score 135) | matched; `s32 *xy`/`s32 *uv`, `u8 *p` with element stores, `y` computed first as `-D_8011ECA0 * 0xF0 + 0xF0` (unary minus reuses the operand register) |
+| `func_80154220` | 528 | `INCLUDE_ASM` (T-14500 draft score 135) | matched; `s32 *xy`/`s32 *uv`, `POLY_FT4 *p` with field stores (`psx_types.h`, review edit), `y` computed first as `-D_8011ECA0 * 0xF0 + 0xF0` (unary minus reuses the operand register) |
 | `func_80153F3C` | 740 | `INCLUDE_ASM` (T-14500 draft score 249) | matched; `s32 xy[8]`, `s32 uv[8]`, five `func_80154220` calls, the x pair of each point on one source line (FAKE comment), `D_80120E93` is `u8` in `main_api.h` |
 | `func_801529B4` | 1404 | `INCLUDE_ASM` (T-14500 draft score 183) | matched; compare `switch` with stacked labels for the shared arm, jump table inside `if (D_8015EB9C != 0xE)` |
 | `func_80153784` | 732 | `INCLUDE_ASM` (T-17100 draft score 192) | matched in the closer pass; frame (FAKE `pad[3]`), RECT stores (two per line), selector `move` (`s32` return), the 48-word clear, and every access to `D_8015EC40`/`D_8015ED28`..`D_8015ED38` through the `D_8015EC38` symbol (FAKE) for the case 1 load schedule |
