@@ -16067,3 +16067,6 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 
 ## [2026-10-16] ticket | T-19027 Done
 [[tickets/T-19027-w3-d-p27]] reviewed against `CODING_STANDARDS.md` and moved to Done: 1 of 2 functions matched (TEL `func_8013CCD0`, 876 bytes, plain C, no FAKE); `func_8013D03C` stays `INCLUDE_ASM` with its draft archived in `drafts/T-19027/`. One finding fixed: the store-then-test `unk_06` clamp had no explaining comment (added, comment only). The closer pass entry above gives 17:15 UTC as its end; the ticket now says 17:10 UTC, the actual end. The "20 rows left" label in [[matching-notes]] now points to the closer match. TEL.bin SHA1 OK, 27/27.
+
+## [2026-10-16] ticket | T-17202 started
+[[tickets/T-17202-w3-date-p02]] (17:14 UTC): wave 3 package w3-date-p02, DATE `src/ovl/DATE/80132000.c`, six guarded drafts from the T-17200 list. Branch `w3-date-p02` from `w2-good`.
