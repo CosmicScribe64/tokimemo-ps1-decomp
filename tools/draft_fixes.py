@@ -42,8 +42,9 @@ Usage (in Docker, repo root as cwd):
   python3 tools/draft_fixes.py rescore --list                                       # the hits, no compile
 `tools/m2c.py --fix-defects` runs the rewrites on its output. Without an asm file the asm-driven
 detectors (postinc, s32/void reports) are skipped. `rescore` takes the archive's selected bodies, tries
-all rewrites of a body, each alone and a greedy build-up, compiles each full translation unit (the
-exhaustive_drafts scoring path, at most --jobs at once), and saves bodies that beat the unmodified one under
+all rewrites of a body together (with two to six: also each alone and a greedy build-up), compiles each
+full translation unit (the exhaustive_drafts scoring path, at most --jobs at once), and saves bodies that
+beat the unmodified one under
 --out with provenance. Limits: line-oriented (one statement per line, as m2c prints it); the callers scan
 follows the fall-through path of the call only and does not see indirect calls; nothing here proves a match.
 """

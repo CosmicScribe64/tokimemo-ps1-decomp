@@ -61,7 +61,7 @@ Score = differing rows of the function in the full unit (`exhaustive_drafts.py` 
 - New score-0 drafts: `BUNKAKEN:func_80145844`, `BUNKASAI:func_801431D4`, `SHOUGATU:func_80137144` (all three are already matched in `src/` by T-15300, T-15400 and T-15600: the tool reproduces the hand fixes; paths `drafts/T-16510/BUNKAKEN/func_80145844/`, `.../BUNKASAI/func_801431D4/`, `.../SHOUGATU/func_80137144/`). No other mechanical zero.
 - Biggest gains: `main:func_80079070` 450 to 35, `GEKO:func_801327AC` 223 to 2, `BUNKA_SD:func_80139290` 509 to 133, `SHUGAKU:func_8013282C` 183 to 116, `BUNKASAI:func_8013B25C` 183 to 122, `RPG_BAT:func_801525B0` 35 to 20 (a call value moved into the one store). Total 1,499 differing rows removed over 34 bodies.
 - Candidate for matching agents (not promoted, unverified): `GEKO:func_801327AC` (`INCLUDE_ASM` in `src/ovl/GEKO/801323E0.c`): after the rewrite one row differs (`sb` for `sh`); `*(s16 *)&D_80144C40 = 0;` (the initializer's line, T-9510) gives score 0: `drafts/T-16510/follow-up/GEKO/func_801327AC/`.
-- Seven drafts got worse with the `goto` removal and keep the original: the "shared block" in m2c's output is often real.
+- Thirteen drafts got worse with the `goto` removal (seven of ranks 1 to 30) and keep the original: the "shared block" in m2c's output is often real.
 - `SHOUGATU:func_8013737C`: the archived unit no longer compiles (another function of the file was matched since); baseline and rewrite were scored in a unit rebuilt from the current source, 208 to 194.
 - Experiment, not part of the tool: signature-only change to `s32` on the 71 `s32-no-return` drafts: 3 better, 29 same, 12 worse, 27 do not compile against the existing `void` prototype.
 
