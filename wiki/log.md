@@ -15556,3 +15556,16 @@ Opened [[tickets/T-19006-w3-d-p06]] (In Progress): TACO `src/ovl/TACO/8013B990.c
 
 Opened [[tickets/T-11840-tt-batch-10]] (In Progress), stacked on T-11830 (PR #33): one long Opus run per large TT
 function, two at a time in worktrees, and bulk_m2c with a 900 s autotweak budget on the mid-size functions.
+
+## [2026-10-16] build | T-11840 TT batch 10: 10 large functions matched
+
+One Opus agent per large TT function (about 90-120 minutes each, two at a time in worktrees): 10 of 12 matched
+(15,564 bytes): `func_80146348`, `func_80143A44`, `func_80144D70`, `func_801441BC`, `func_801400B0`, `func_80137C20`,
+`func_80141450`, `func_8013D988`, `func_8013230C`, `func_80136C64`; `func_8014A2B4` and `func_801455C8` guarded. The
+bulk_m2c rerun (900 s per draft) found nothing. Merged upstream main (849 commits) at the end; clean rebuild 27/27, all
+ten MATCH, checks clean. TT 262/303 (78.6%); grand total `6123/6958   1566432/2279368  68.7%`. Notes in [[matching-notes]]
+("TT overlay, batch 10"), rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-11840 Done
+
+Inline review against CODING_STANDARDS.md: no open findings. Moved [[tickets/T-11840-tt-batch-10]] to Done.

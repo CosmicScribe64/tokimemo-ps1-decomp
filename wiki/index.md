@@ -26,6 +26,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
+- [[tickets/T-11840-tt-batch-10|T-11840]] TT batch 10: one long Opus run per large function (Done; 10 of 12 matched, TT 78.6% of bytes).
 - [[tickets/T-17500-types-first-shougatu|T-17500]] Types-first: SHOUGATU: 49 step tables (`FnTblNN`) and 4 stack-table types in `SHOUGATU.h`, 38 redrafts (15 better than the census), 4 matches / 1,516 bytes, packages T-17501..T-17507 (Done).
 - [[tickets/T-19005-w3-d-p05|T-19005]] Wave 3 package w3-d-p05: OLH `80135AC0.c`, `80132000.c`, `func_80135B8C` (sibling clone) and `func_80132114` (chain through a local) both matched, 680 B (Done).
 - [[tickets/T-19006-w3-d-p06|T-19006]] Wave 3 package w3-d-p06: TACO `8013B990.c`, all 5 functions matched (2,636 B), branch-over guard and `s32`-without-return idioms (Done).

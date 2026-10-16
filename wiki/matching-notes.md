@@ -5845,3 +5845,44 @@ of GEKO `func_80141760`); 4 functions, 1,416 bytes.
 - **`func_8013C440`** (the same scans against all actors, `limit = unk84[0] << 4`): two findings. (1) `(s32)(i + D_8015EDB4)->unk84[0] << 4` needs the `s32` cast (K&R: the `u8` shift is unsigned, `sltu` instead of `slt`), and the limit must be computed into a local before the `c < 0x100 && b < limit && a < limit` test, as the original loads `unk84[0]` ahead of the first branch; with the load inside the `&&` chain IDO never builds the strength-reduced pointer (`lw v1,D_8015EDB4; addiu v1,v1,0x880` before the loop, `addiu v1,v1,0x88` in the loop branch delay slot) and recomputes `lui; lw; addu` in every iteration (195 lines). (2) The guard of each scan is `if (D_8015EDB4->unk2 & 0x80) goto skip1;` (block 1) and `if (D_8015EDB4[8].unk2 & 0x80) return;` (block 2), not an enclosing `if (!(...)) { for ... }`: with the enclosing `if` uopt reuses the guard's load of `D_8015EDB4` for the pointer (`addiu v1,t6,0x880`), the original loads it again after the branch (`lui v1; lw v1`). Measured on `func_8013CFD8` first: wrapping its loop in the `if` gives `addiu v1,t6,2176`, a `goto` over the loop gives the fresh `lw v1` (a `break` in the loop does not matter; it changes the pointer register from `v1` to `v0` because the counter init disappears). FAKE comment in the source.
 
 Idioms for [[register-cheatsheet]]: the strength-reduced actor pointer needs an unconditional evaluation of `(i + D_8015EDB4)` before the latch (a speculated load of the last field), and a fresh preheader load needs a branch-over guard instead of an enclosing `if`. Tools: the scratch harnesses that replaced a function body, built it with `NON_MATCHING` defined and counted diff lines or grepped the disassembly took 12 to 15 seconds per variant and found both findings in 20 variants.
+
+## TT overlay, batch 10: one long Opus run per large function (T-11840)
+
+Twelve large TT functions (1.1-2.2 KB), one Opus agent each with about 90-120 minutes, two at a time in separate
+worktrees: 10 matched (`func_80146348`, `func_80143A44`, `func_80144D70`, `func_801441BC`, `func_801400B0`,
+`func_80137C20`, `func_80141450`, `func_8013D988`, `func_8013230C`, `func_80136C64`; 15,564 bytes), 2 guarded
+(`func_8014A2B4` 28 lines, `func_801455C8` 24 lines). The bulk_m2c rerun with a 900 s autotweak budget on the 18 mid-size
+functions matched none. The large functions converted far better with long single-function sessions than the mid-size
+ones had with short timeboxes. Ticket [[tickets/T-11840-tt-batch-10]].
+
+- **u16 vs s16 stores of a constant decide which register range it joins** (biggest single lever in four functions):
+  a `u16` store can join a later compare or switch case constant (`func_801441BC`, `func_801400B0`, `func_8013230C`,
+  `func_80137C20`), or the other way round (`func_80143A44`). Try both on every constant store.
+- **Chained stores leave invisible traces.** `x[k] = x[k+1] = 0` costs one ugen temp (as1 later forwards it to
+  `sb zero`), shifting the FIFO t-numbering; 3+ chains keep the reloaded value as a uopt range that takes a register
+  without code (`func_80136C64`); u16 chains keep a phantom a1 range (`func_80143A44`). Byte chains that the original
+  stores as $zero each time must be separate stores (`func_8013230C`).
+- **ugen temporaries are FIFO by free order** (t6..t9, t0..t5, then freed registers in free order); `cc -S`
+  (`me/ugen.py`) recovers the source order of first loads and last uses (`func_80144D70`).
+- **Frame:** every declared local gets a slot in declaration order (first declared = highest address); count the
+  original's slots; FAKE pads keep slots of variables the original had. A spill slot below the arrays is a hoisted
+  expression, not a local (write it inline). A dead `move sN,zero` before a reload of sN at a loop head means the inner
+  counter is reused from an earlier loop (`func_8013D988`).
+- **Selectors and calls:** one `u32` local reused for several switch selectors and a call result gets v1 above a busy
+  pointer (`(s32)` casts for signed compares); a local reused for a call argument pulls its range into the call block
+  where a0..aN are forbidden (use a separate local); an implicit-int view of a `void` callee (file-local
+  `MAIN_API_OVERRIDE_` plus a guard in `main_api.h`) moves a post-call reload from v0 to v1.
+- **Loops:** IDO's loop-test variable follows the address spelling (2D-array casts `((T (*)[N])(base))[i][j]` give the
+  i*sizeof(T) counter); identical address spellings in two loops share one uopt range; `p += stride` in the for-header vs
+  the body places pointer increments differently; uopt does not strength-reduce `i << 3`; hoisted invariants and the li
+  order before a loop follow the first use order in the body.
+- **Operand order of sums:** `base + table[idx]` loads the table entry first; `b + a * 10` vs `a * 10 + b` changes the
+  addu order and ugen numbering.
+- **as1 schedules by source line**: in blocks ending at a branch, lines come out reversed and stores within a line too;
+  one-line groups (FAKE comment) for stores the original keeps adjacent; one-line load pairs fix lui/lw order.
+- A pointer parameter used directly can earn a callee-saved register; two names for one object (parameter vs local)
+  give separate uopt expression bits that break priority ties (`func_80141450`).
+- **Process:** long `tools/permute.py -j 4` runs (900 s) found the decisive lever in three functions once the structure
+  matched; `regdiff -v` (`R9COST`/`R9SAVE`) and register-normalized side-by-side diffs did the rest.
+- Open: the ugen emission order of four constants in `func_8014A2B4` case 7, and the a1 register of the state value in
+  `func_801455C8` (v0/v1/a0 busy in the original for no visible reason).
