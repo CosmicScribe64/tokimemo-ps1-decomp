@@ -459,8 +459,6 @@ void func_80158B70(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-17105, 4 differing lines; case 10 loads D_8015EDC4 after the first lui of D_8015EDD8 instead of before it (as1 order of lw v0 and lui at) */
 void func_80158C4C(void) {
     switch (D_8015EDD8) {
     case 0:
@@ -554,7 +552,9 @@ void func_80158C4C(void) {
         func_8013EA60(0, 0x21, D_8015EBB0, 1);
         if (D_8015ED94 == 0) {
             D_8015ED98 = 0x1000;
-            D_8015EDD8 = 0;
+            /* FAKE: T-17105, D_8015EDD8 written through the base symbol of D_8015EDC4 (the
+               aggregate is not declared yet); as1 then keeps the D_8015EDC4 load above this store */
+            (&D_8015EDC4)[5] = 0;
             D_8015EDC4 &= 0xFFFF0000;
             D_8015EDC4 |= 5;
             func_8013E7C0(0x30, 7, 1, 1);
@@ -572,9 +572,6 @@ void func_80158C4C(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_80158C4C);
-#endif
 
 void func_8015906C(void) {
     switch (D_8015EDD8) {
