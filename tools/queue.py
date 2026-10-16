@@ -467,8 +467,9 @@ class Cache:
 
 
 def load_cached(root=".", legacy=False, cache=None, files=None):
-    """load() through the cache. A request limited to `files` is served from a full cache but does
-    not write one."""
+    """Load through the cache without writing partial results. main() disables the cache for
+    scoped --files queries, which read only the selected files. An explicit full-cache caller
+    can also filter cached results by `files`."""
     cache = cache or Cache(root, False)
     key = "legacy" if legacy else "rules"
     hit = cache.get(key)
@@ -479,7 +480,8 @@ def load_cached(root=".", legacy=False, cache=None, files=None):
             rem = [f for f in rem if file_wanted(f.file, files)]
             mat = [f for f in mat if file_wanted(f.file, files)]
         return rem, mat
-    note("reading the asm of the project%s" % (" (cached afterwards)" if cache.enabled and not files else ""))
+    scope = "selected files" if files else "the project"
+    note("reading the asm of %s%s" % (scope, " (cached afterwards)" if cache.enabled and not files else ""))
     rem, mat = load(root, legacy=legacy, files=files)
     if not files:
         cache.put(key, {"remaining": [func_to_json(f) for f in rem], "matched": [func_to_json(f) for f in mat]})
@@ -843,7 +845,7 @@ def main(argv=None):
     ap.add_argument("--no-cache", action="store_true", help="ignore and do not write build/queue-cache.json")
     a = ap.parse_args(argv)
     root = Path(a.root)
-    wanted = a.files.split(",") if a.files else []
+    wanted = [f for f in a.files.split(",") if f] if a.files else []
     # only --by bytes / --plan need the whole project (duplicate groups, balancing); otherwise a
     # --files list limits what is read
     narrow = wanted if not (a.calibrate or a.plan or a.by == "bytes") else []

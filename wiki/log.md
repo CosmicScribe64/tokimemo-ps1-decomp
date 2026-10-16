@@ -16368,3 +16368,7 @@ Integrated main 0925704e into PR #36, preserving both log histories. The upstrea
 ## [2026-10-16] setup | T-20000 final upstream refresh
 
 Integrated main dee64939 (T-17109), preserving both shared wiki histories. This upstream batch changes other RPG_BAT functions and adds unrelated declarations/guards; the contribution's function bodies and caller views are unchanged. Recorded validation bases and results remain explicit in the ticket. Ticket stays In Review.
+
+## [2026-10-16] build | T-20000 address PR #36 review
+
+Dropped empty --files entries before scope/cache selection and final filtering, corrected the load_cached docstring and scoped progress message. Two new synthetic regressions fail before the fix; all 54 queue tests pass afterward in Docker. Local standards review found no issues. Maintainer requested GitHub issues for work claims, Discussions for questions, and no repeated main merges because they handle wiki conflicts. [[tickets/T-20000-first-contribution]] stays In Review for acceptance.

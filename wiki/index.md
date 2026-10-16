@@ -33,7 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-20000-first-contribution|T-20000]] Scoped work queues bypass whole-tree cache validation; 52 tests pass, identical real-query output at 53.402 s before / 5.312 s after on Windows/WSL (In Review).
+- [[tickets/T-20000-first-contribution|T-20000]] Scoped work queues bypass whole-tree cache validation; review fixes drop empty filters and correct progress/docs, 54 tests pass (In Review).
 - [[tickets/T-17103-w3-rpg-bat-p03|T-17103]] Wave 3 package w3-rpg-bat-p03: RPG_BAT `80137280.c`, 4 of 4 matched (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`; Done)
 - [[tickets/T-17207-w3-date-p07|T-17207]] Wave 3 package w3-date-p07: DATE `80141EE0.c`, `func_801449D4` (312 to 71 rows) and `func_80144E20` (exact frame, about 180 register rows), 0 of 2 matched, drafts in `drafts/T-17207/` (Done).
 - [[tickets/T-17208-w3-date-p08|T-17208]] Wave 3 package w3-date-p08: DATE `8014A1B0.c`, `8015A640.c`, `8015A7E0.c`, `8015A980.c`, 1 of 5 matched (`func_8014AF88`, 248 B: pointer variable for the call argument), `func_8014A8FC` hand rewrite guarded at 34 lines, three libgte rotation helpers stay `INCLUDE_ASM` (Done).

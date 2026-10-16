@@ -16,7 +16,7 @@ Make file-scoped work-queue queries usable on slow bind mounts by avoiding valid
 
 - [x] Scoped queries skip the whole-tree signature scan and leave the shared cache untouched.
 - [x] Global ranking, planning and calibration continue to validate the full cache.
-- [x] Synthetic regressions reproduce the bug before the fix; all 52 queue tests pass afterward in Docker.
+- [x] Synthetic regressions reproduce the bugs before the fixes; all 54 queue tests pass afterward in Docker, including the review follow-up.
 - [x] Real scoped query output is identical before/after; measured 53.402 s before and 5.312 s after on this Windows/WSL bind mount.
 - [x] Untouched game-source baseline: all 27 binaries SHA1 OK, symbols/headers/globals OK.
 - [x] Local review against CODING_STANDARDS.md; awaiting maintainer review.
@@ -37,3 +37,7 @@ Verification: tools/docker.sh python3 tools/test_queue.py (52 tests); the two sc
 2026-10-16 local review against CODING_STANDARDS.md: no findings. Python-only CLI change; no compiler passes, game C, headers, configs or generated data changed. Tests cover missing/existing cache, unchanged output, edited asm visibility, preservation of cache contents, and global-mode validation. No unverified match claims. Ticket remains In Review for upstream review.
 
 PR #36 submitted; upstream main 639693d2 merged into the contribution branch. The append-only wiki log conflict was resolved by retaining both sides. Before integration, ninja had no work and sync_protos --check-branch reported 0 new / 15 known disagreements.
+
+Maintainer review follow-up (2026-10-16): empty comma-separated --files entries now drop before scope/cache selection and final filtering. Leading/trailing/repeated commas no longer broaden a valid or unknown prefix to every file; an all-empty list uses the normal whole-project cache. Two new regressions fail before the fix and pass afterward. Updated load_cached's docstring to distinguish main's uncached scoped path from explicit full-cache callers, and its progress message now names selected files for a scoped load. Docker tools/test_queue.py: 54 tests pass (build/T-20000/review-tests.log); both pre-fix failures recorded in review-regressions-before.log. Local standards review: no findings; only intended Python/wiki edits, no game data. Awaiting maintainer acceptance.
+
+Coordination response: claim new files/function groups through a GitHub issue before starting; use Discussions for questions/general coordination. The maintainer handles wiki conflicts when merging, so no further main merges are needed on this PR.

@@ -620,6 +620,26 @@ class CacheTest(unittest.TestCase):
         self.assertIn("func_80041000", out)
         self.assertFalse((self.r / wq.CACHE).exists())
 
+    def test_empty_file_entries_do_not_broaden_a_scoped_query(self):
+        for prefix in ("ZZZ", "80041000"):
+            rc, expected, _err = self.run_cli("--files", prefix, "--next", "5")
+            self.assertEqual(rc, 0)
+            for names in (prefix + ",", "," + prefix, ",," + prefix + ",,"):
+                with self.subTest(files=names), mock.patch.object(
+                        wq, "tree_signature", side_effect=AssertionError("whole-tree scan")):
+                    rc, actual, err = self.run_cli("--files", names, "--next", "5")
+                self.assertEqual((rc, actual), (0, expected))
+                self.assertIn("selected files", err)
+                self.assertNotIn("cached afterwards", err)
+
+    def test_only_empty_file_entries_use_the_full_cache(self):
+        rc, expected, _err = self.run_cli("--next", "5")
+        self.assertEqual(rc, 0)
+        with mock.patch.object(wq, "analyze", side_effect=AssertionError("cached asm reread")):
+            rc, actual, err = self.run_cli("--files", ",,", "--next", "5")
+        self.assertEqual((rc, actual), (0, expected))
+        self.assertEqual(err, "")
+
     def test_global_modes_with_files_still_validate_full_cache(self):
         for args in (("--by", "bytes", "--no-groups", "--next", "2"),
                      ("--plan", "2", "--no-groups"), ("--calibrate",)):
