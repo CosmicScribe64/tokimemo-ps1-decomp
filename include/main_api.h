@@ -746,6 +746,8 @@ extern u8 D_800B68A8[12][2];
 extern s8 D_800B68E0[8][9];
 extern s8 D_800B6928[][9];
 extern s32 D_800B69E0[];
+/* T-17000: message table of func_80077E30, indexed by func_80077CA8() and passed to sndisp. */
+extern u8 *D_800B6CF8[];
 extern u8 D_800B6D30;
 extern u8 ovl_load_state;
 extern u8 ovl_load_sectors;
