@@ -1,0 +1,8 @@
+T-17106, RPG_BAT func_80154760 (1,656 bytes), about 197 differing rows of 414 (opcodes 96 percent).
+Needs before the includes: #define RPG_BAT_OVERRIDE_func_8013E97C and s32 func_8013E97C(); (implicit int view: D_8015EDB8
+then sits in $v1 like the original). Third load_palette argument 1U keeps the constant out of the shared one.
+D_8015EBCC[1] and [2] instead of D_8015EBD0 and D_8015EBD4 fix the bne operand order.
+Open: the post-loop flag block. The original keeps "li s3,2" and builds s0 = D_8011ECD0 + s3 * 0x44 with sll/addu (not
+folded), then reads records 138..141 at s0 + 0x2423.. (with 136 and 137 through absolute symbols). A for (i = 2; i < 6; i++)
+loop is fully unrolled and folded by IDO, an "i = 2; p = &rec[i]" form is folded too. The inner selector D_8015EBAC and
+the palette record index are in $v1 in the original ($v0 in the draft), the loop pointer is $s0 and i is $s3.

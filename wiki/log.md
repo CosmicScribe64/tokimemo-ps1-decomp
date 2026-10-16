@@ -16251,3 +16251,11 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17106 created and started
 
 [[tickets/T-17106-w3-rpg-bat-p06]] created and started: wave 3 package for RPG_BAT `src/ovl/RPG_BAT/80154430.c` (`func_80154DD8`, `func_80155868`, `func_80154760`), from [[tickets/T-17100-types-first-rpg_bat]].
+
+## [2026-10-16] ticket | T-17106 In Progress to In Review
+
+[[tickets/T-17106-w3-rpg-bat-p06]] In Progress to In Review: 1 of 3 functions matched (`func_80155868`, 520 bytes, plain C with three FAKE marks: unused frame local, `0x2FU`, four `(unused - unused)` references that move uopt's 20-reference block boundary). `func_80154760` (197 rows) and `func_80154DD8` (216 rows) restored to `INCLUDE_ASM`, drafts in `drafts/T-17106/`. Notes in [[matching-notes]], rows in [[data/t0018-cases]], two rows in [[register-cheatsheet]].
+
+## [2026-10-16] build | T-17106 clean rebuild and checks
+
+Clean rebuild of the w3-rpg-bat-p06 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.bin: OK` with `func_80155868` as C), `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17106-w3-rpg-bat-p06]].

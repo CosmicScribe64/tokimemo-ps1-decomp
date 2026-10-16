@@ -1,0 +1,7 @@
+T-17106, RPG_BAT func_80154DD8 (1,204 bytes), about 216 differing rows of 299 (frame size right, opcodes 97 percent).
+Needs in include/ovl/RPG_BAT.h: extern s32 D_8015EC5C, D_8015EC64, D_8015EC9C; void func_8015528C(nine s32).
+The four unused s32 locals (FAKE) give the original frame; x and y are the spilled negated arguments.
+Open: the original keeps the inner selector D_8015EBAC in $v1 and the shared constant 1 in $a3 (draft: $v0 and $v1),
+the quotients of the two divisions in $v0/$v1 ("mflo v0; negu a1,v0"; draft: "mflo a1; negu a1,a1"), D_8015EC68 in $t0
+(draft: $v0). Tried: void/s32 return, int callees, locals for the quotients, 0 - expr, sel copy, autotweak 150 s.
+Late finding: with q, r, x, y as locals and eight to ten no-op (u - u) references in the q statement, q stays a web (mflo v0; negu a1,v0) as in the original (20-reference block boundary, see matching-notes T-17106); 205 rows, the rest is open.
