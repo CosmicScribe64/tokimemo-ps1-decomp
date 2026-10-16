@@ -15860,3 +15860,11 @@ Branch `w3-master-types`: clean build 665/665 with all 27 sha1 OK; `tools/check_
 ## [2026-10-16] ticket | T-19021 In Progress
 
 [[tickets/T-19021-w3-d-p21]] created and In Progress: wave 3 package w3-d-p21 (TACO `src/ovl/TACO/80139170.c`: `func_8013A580`, `func_8013AD64`, `func_80139BCC`, `func_80139FB8`), worktree `w3-d-p21` from `w2-good`.
+
+## [2026-10-16] build | T-19021 matches
+
+[[tickets/T-19021-w3-d-p21]]: `func_8013A580` (484 B) and `func_8013AD64` (632 B) of TACO `src/ovl/TACO/80139170.c` matched in plain C (commits "T-19021: match TACO:func_8013A580" and "...func_8013AD64"); `func_80139BCC` stays a 14-line `NON_MATCHING` draft, `func_80139FB8` is `INCLUDE_ASM` again (402 lines). Both frame rows of [[data/t0018-cases]] (T-9130, T-9330) were a count of named locals. Findings: [[matching-notes]] ("T-19021"), [[register-cheatsheet]], [[taco-family-results]].
+
+## [2026-10-16] ticket | T-19021 In Review
+
+[[tickets/T-19021-w3-d-p21]] In Progress to In Review: 2 of 4 functions matched (1,116 bytes), one 14-line guard, one `INCLUDE_ASM`. Kanban card moved to In Review.

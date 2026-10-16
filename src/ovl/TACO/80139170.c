@@ -174,6 +174,7 @@ void func_80139BCC(void) {
     }
     if ((D_800E6280.unk_F88 & 0x20) && !(D_800E6280.unk_F88 & 0x40)) {
         if (D_8015F4E0 == 0x27) {
+            /* the original passes the byte itself as the destination (a lost &); T-19021 */
             func_800AE090((void *)D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC], "", 1);
             func_8004284C();
         } else if (D_8015F4DC != 3) {
