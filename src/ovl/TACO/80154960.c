@@ -173,7 +173,26 @@ void func_80155230(s32 arg0) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_801553AC);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_801557E8);
+/* The operand order of the actor address (idx + base or base + idx) differs between the statements of the original; the two spellings reproduce it. T-16564 */
+void func_801557E8(s32 arg0) {
+    s32 t;
+
+    t = ((arg0 + D_8015EDB4)->unk7A - (arg0 + D_8015EDB4)->unk6A) * 7;
+    (D_8015EDB4 + arg0)->unk78 = (func_800A0070(t) * -0x3A98) >> 0xC;
+    (D_8015EDB4 + arg0)->unk74 = (((func_800A0140(t) << 0xB) >> 0xC) * (D_8015EDB4 + arg0)->unk7E) + (D_8015EDB4 + arg0)->unk7C;
+    (arg0 + D_8015EDB4)->unk76 = (arg0 + D_8015EDB4)->unk80;
+    (D_8015EDB4 + arg0)->unk64 = 0;
+    if ((arg0 + D_8015EDB4)->unk7E == 1) {
+        (arg0 + D_8015EDB4)->unk66 = t;
+        (D_8015EDB4 + arg0)->unk68 = 0xC00;
+    } else {
+        (arg0 + D_8015EDB4)->unk66 = 0x1000 - t;
+        (D_8015EDB4 + arg0)->unk68 = 0x400;
+    }
+    if (t >= 0xA01) {
+        func_8015C208(arg0);
+    }
+}
 
 void func_8015595C(void) {
     /* FAKE: unused TcPos local reproduces the frame and the offsets of pos and vel (see func_80156F50); real locals unknown. T-9180 */
