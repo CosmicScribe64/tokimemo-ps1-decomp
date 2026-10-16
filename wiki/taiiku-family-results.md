@@ -138,3 +138,7 @@ Closer pass: `func_8013B608` matched by splitting the result assignment (`v = x 
 ## Package w3-d-p10 (T-19010, `80142240.c`)
 
 [[tickets/T-19010-w3-d-p10]], wave 3: `func_80144464` (572 B), `func_80143814` (692 B), `func_80142FB8` (992 B) and `func_80144E54` (496 B) matched, `func_8014357C` guarded at 34 lines. Game B now has no `INCLUDE_ASM` left among the 80142240.c functions except `func_80142400`. The T-16554 gap of `func_80142FB8` (spills of the pointer and constants) was an index loop with `<`; `D_8014A110` is `u8`. Details in [[matching-notes]], section T-19010.
+
+## Package w3-d-p32 (T-19032, `80141280.c`)
+
+[[tickets/T-19032-w3-d-p32]], wave 3: `func_80141280` (1,764 bytes, the intro state machine of the sports festival) matched, the last open function of the file. The table `D_8014A088` is the initialiser of an auto array; the object's `.data` (0x8014A070-0x8014A0A0) is now a data island with `s32 D_8014A070[6]` defined in C, and `D_8014A088` stays declared for `func_80145640`'s loop bound. Three tricks, two of them FAKE (a `(u8)` narrowing of a mask test, a `u32` address view of the selector), one declaration view (`set_dec_bri` as implicit int), plus a rolled 16-record zero loop that needs a counter assigned again. Details in [[matching-notes]] ("T-19032"), rows in [[register-cheatsheet]].

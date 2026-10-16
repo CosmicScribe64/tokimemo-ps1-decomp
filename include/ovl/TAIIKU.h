@@ -902,7 +902,7 @@ extern TaiBytes10 D_80149864; /* func_80138224 */
 extern TaiikuHalf10 D_80149870; /* func_80138224 */
 extern TaiikuHalf10 D_80149884; /* func_80138224 */
 extern TaiikuHalf10 D_80149898; /* func_80138224 */
-extern TaiWords6 D_8014A088; /* func_80141280 */
+extern TaiWords6 D_8014A088; /* initialiser of the auto array tbl in func_80141280 (its .data, after D_8014A070), end bound in func_80145640 */
 extern TaiikuHalf10 D_8014A27C; /* func_80142400 */
 extern TaiikuHalf10 D_8014A290; /* func_80142400 */
 extern TaiWords8 D_8014A2A4; /* func_80142400 */
