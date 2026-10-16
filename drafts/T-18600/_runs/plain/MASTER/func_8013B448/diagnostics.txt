@@ -1,0 +1,13 @@
+python3 failed:
+ -----^
+cfe: Error: drafts/T-18600/_runs/plain/MASTER/func_8013B448/work/guarded.o.sjis.c, line 3440: Incompatible function return type for this function.
+ void func_8013B448(void) {
+ ------------------^
+cfe: Warning 709: drafts/T-18600/_runs/plain/MASTER/func_8013B448/work/guarded.o.sjis.c, line 3476: Incompatible pointer type assignment
+         var_t6 = &D_800E6280 + (D_800E71DE * 8);
+ ---------------^
+cfe: Warning 709: drafts/T-18600/_runs/plain/MASTER/func_8013B448/work/guarded.o.sjis.c, line 3515: Incompatible pointer type assignment
+         var_t6 = &D_800E6280 + (D_800E71DE * 8);
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18600/_runs/plain/MASTER/func_8013B448/work -o drafts/T-18600/_runs/plain/MASTER/func_8013B448/work/guarded.o /tmp/asm_processor7xw_5eoo/preprocessed_1a6be7fa486f4e28a4dc6d9fb100b45e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibcm_bg5q2/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18600/_runs/plain/MASTER/func_8013B448/work/guarded.o drafts/T-18600/_runs/plain/MASTER/func_8013B448/work/guarded.o.sjis.c

@@ -176,7 +176,7 @@ void func_80138F10(void);
 
 #ifndef OVL_MASTER_T10630_CLUB_BITS_H
 #define OVL_MASTER_T10630_CLUB_BITS_H
-/* Word read / byte write at GameState.unk_66C[6], T-10630. */
+/* Word of GameState.unk_66C[]: read as a word, bit 30 set as a flag (T-10630, T-18600). */
 typedef struct MasterClubBits {
     u32 unk_00_24 : 25;
     u32 count : 2;
@@ -189,6 +189,51 @@ typedef struct MasterClubBits {
 /* T-10630: eleven resource IDs copied by the neighboring selector. */
 extern MasterWords11 D_8013C678;
 
+/* T-18600: called by func_80133374 before its definition. */
+void func_8013348C(void);
+
 /* T-13001: later helpers called by the typed-table scene handlers. */
 void func_8013B354(void);
 void func_8013B804(void);
+
+#ifndef OVL_MASTER_T18600_H
+#define OVL_MASTER_T18600_H
+/* T-18600: tables copied whole into a local frame and called or indexed there (T-3330 idiom). */
+typedef struct FnTbl4 {
+    /* 0x00 */ void (*f[4])();
+} FnTbl4; /* size 0x10 */
+typedef struct FnTbl7 {
+    /* 0x00 */ void (*f[7])();
+} FnTbl7; /* size 0x1C */
+typedef struct FnTbl30 {
+    /* 0x00 */ void (*f[30])();
+} FnTbl30; /* size 0x78 */
+typedef struct PtrTbl3 {
+    /* 0x00 */ void *p[3];
+} PtrTbl3; /* size 0x0C */
+/* Thirteen words indexed by D_8013C2E0 or D_8013C790: text ids and thresholds. */
+typedef struct MasterWords13 {
+    /* 0x00 */ s32 v[13];
+} MasterWords13; /* size 0x34 */
+
+extern FnTbl4 D_8013C2E4;        /* func_80132140's scene states */
+extern FnTbl30 D_8013C5C8;       /* func_80133A2C's scene states */
+extern PtrTbl3 D_8013C700;
+extern FnTbl7 D_8013C798;        /* func_80139150's scene states */
+/* func_801326B4's eight stack tables, in frame order sp1A8..sp3C */
+extern MasterWords13 D_8013C2F4;
+extern MasterWords13 D_8013C328;
+extern MasterWords13 D_8013C35C;
+extern MasterWords13 D_8013C390;
+extern MasterWords13 D_8013C3C4;
+extern MasterWords13 D_8013C3F8;
+extern MasterWords13 D_8013C42C;
+extern MasterWords13 D_8013C460; /* followed by three zero words of padding */
+extern MasterWords13 D_8013C7B4; /* func_80139810 */
+extern MasterHalfwords13 D_8013C6A4; /* func_80135CF4 */
+
+/* Second baseball event (func_80139CC8), the twin of D_8013C574..D_8013C584. */
+extern u8 D_8013C780;
+extern u8 D_8013C788[5];         /* like D_8013C57C[5]; D_8013C78C is element 4 */
+extern s16 D_8013C794;
+#endif
