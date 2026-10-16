@@ -18,7 +18,7 @@ Match GYOZI func_8013506C (172 bytes) in src/ovl/GYOZI/80134FD0.c using the alre
 - [x] All 27 binary checksums pass; header/global checks pass.
 - [x] Prototype branch guard: 0 new disagreements, 15 known.
 - [x] Local review against CODING_STANDARDS.md; awaiting upstream review.
-- [ ] Submit a focused upstream PR without generated files or game data.
+- [x] Submit a focused upstream PR without generated files or game data: https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/37.
 
 ## Notes
 
@@ -34,4 +34,4 @@ Verification in Docker: tools/funcdiff.py GYOZI:func_8013506C --resolve reports 
 
 2026-10-16 local review against CODING_STANDARDS.md: no findings. C89, existing fixed-width types and symbols retained, no generated asm edits, no game data staged. The local overlay prototype override uses the documented section 8a shape and explains its evidence. The existing s32 fall-through function shape matches the sibling. The full-unit SHA1 verifies the literal's placement and the other functions in the translation unit as well as the matched callback. Historical T-0018 rows are retained and superseded by a new update. Ticket remains In Review for upstream review.
 
-Integrated upstream main 9e74085b (DATE package merges); shared wiki conflicts were resolved by retaining both sides. Before that integration, sync_protos --check-branch passed with 0 new / 15 known disagreements. Final incremental build and checksum verification follow integration.
+Integrated upstream main 9e74085b (DATE package merges); shared wiki conflicts were resolved by retaining both sides. Final verification after integration: actual default funcdiff MATCH (172 linked bytes), 8-step incremental ninja build with GYOZI and DATE SHA1 OK, explicit 27/27 binary SHA1 checks, and sync_protos --check-branch OK (0 new / 15 known disagreements). Submitted PR #37; maintainer review pending.

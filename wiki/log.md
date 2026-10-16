@@ -16217,3 +16217,7 @@ The direct sibling adaptation still differed in six counter-allocation rows. Bou
 ## [2026-10-16] ticket | T-20001 matched and In Review
 
 GYOZI func_8013506C now passes actual default funcdiff --resolve: 172 linked bytes equal the target, with GYOZI unit SHA1 OK. The full build completed 490 steps after upstream header changes; explicit checks passed all 27 binary SHA1 values. Local standards review found no issues. Moved [[tickets/T-20001-gyozi-helper]] In Progress to In Review; [[matching-notes]] records the return-view evidence and [[data/t0018-cases]] supersedes the historical rows without deleting them. Final prototype guard and PR submission are pending.
+
+## [2026-10-16] build | T-20001 final verification and PR #37
+
+After integrating upstream main 9e74085b, actual default funcdiff again proves the 172 GYOZI func_8013506C linked bytes; the 8-step incremental build passes GYOZI and DATE SHA1. Explicit binary verification passes 27/27; sync_protos --check-branch passes with 0 new / 15 known disagreements. Opened PR #37. [[tickets/T-20001-gyozi-helper]] remains In Review for upstream review; no generated files or game data committed.
