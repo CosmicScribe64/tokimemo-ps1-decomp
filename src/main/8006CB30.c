@@ -179,7 +179,7 @@ void func_8006D52C(s32 *arg0, s32 arg1, s32 arg2) {
     }
 }
 
-/* NON_MATCHING: T-11670, 5 differing lines; the original keeps the second loop's start index as a copy (move v1,v0), IDO folds it into the promoted unk_71C. */
+/* NON_MATCHING: T-11670, T-17004, 5 differing lines; the original keeps the second loop's start index as a copy (move v1,v0), IDO folds it into the promoted unk_71C. */
 #ifdef NON_MATCHING
 void func_8006D6E0(void) {
     GameState *gs;

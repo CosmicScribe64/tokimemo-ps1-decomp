@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # MAIN source family recovery
@@ -136,3 +136,7 @@ Largest gains: `parameter_show` 362 to 61, `parameter_up_down` 408 to 177, `func
 The fold helps main less than TAIIKU: most census drafts already compiled the GameState labels as separate
 scalars, which compile like members except for the load-after-store order, and the large shared objects
 above could not be typed.
+
+### Wave 3 package w3-main-p04 (T-17004)
+
+[[tickets/T-17004-w3-main-p04]] took five guarded drafts of `src/main/8006CB30.c` and matched four in plain C: `func_8006EB64`, `func_8006EEC4`, `func_80072998` and `func_800726F0` (2,544 bytes). The first three needed only a local `GameState *g = &D_800E6280;` for the reads (no FAKE left in the first two); `func_800726F0` also needs a marked `FAKE` local copy of the first `unk_03D` read, found by autotweak. `func_8006D6E0` stays guarded at 5 lines (the kept `move v1,v0` copy). Details in [[matching-notes]], section T-17004.
