@@ -15109,3 +15109,15 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16550 opened
 
 [[tickets/T-16550-taiiku-types-first]] (In Progress): types-first pilot on the TAIIKU overlay, per [[speedup-research-2026-10-16]]. Recover shared types in `include/ovl/TAIIKU.h`, redraft every unmatched TAIIKU function into `drafts/T-16550/`, define packages T-16551..T-16554. Worktree branch `pt-taiiku` from `w2-good`.
+
+## [2026-10-16] decision | T-16550 TAIIKU types
+
+[[tickets/T-16550-taiiku-types-first]]: TAIIKU's three games hold the same runner-update code with three record layouts, and the build chose a different shape for each: game A `TaiRunnersA D_80149208` (struct `player` + `cpu[3]`), game B `TaiRunnerB D_8014A13C[4]` (array; a struct member breaks `func_80143D24`), game C player `D_8014A3E4` and `D_8014A400[3]` as two objects (a `[4]` array breaks three functions) plus `TaiikuSlot1C D_8014A454[4]`. 28 stack-copied constant tables declared as one-array structs. All matched code rewritten to the fields; TAIIKU sha1 OK. Overlay aggregates stay out of `config/migrate_globals.txt` (shared overlay addresses). Type map in [[taiiku-family-results]], rows in [[data-types]].
+
+## [2026-10-16] build | T-16550 redraft and match
+
+`drafts/T-16550/redraft.py` redrafted all 64 unmatched TAIIKU functions (full-translation-unit scores as in the census) with five variants; every distinct body was rescored with the final header. Median score 241.5 (census) / 234.5 (census or guarded) to 183 for the 58 new drafts, best starting point median 203; 27 better (21,632 bytes), 10 worse, 21 equal, 6 without a compiling draft, no zero. 25 of the 27 gains come from folding splat labels into `base + offset` before m2c (pointer in [[decompile-workflow]]). Matched `func_80141CDC` (1,120 bytes) from its 18-row draft by writing the display-record flag loop as an index loop.
+
+## [2026-10-16] ticket | T-16550 to In Review
+
+[[tickets/T-16550-taiiku-types-first]]: types, redraft (`drafts/T-16550/`), one match and four packages: pt-taiiku-p1 T-16551 `80133C80.c` (8 functions, 7,012 B), pt-taiiku-p2 T-16552 `80138950.c` (9, 6,196 B), pt-taiiku-p3 T-16553 `801452D0.c` (9, 5,412 B), pt-taiiku-p4 T-16554 `80140810.c`, `80132000.c`, `80142240.c` (7, 6,884 B). Family page [[taiiku-family-results]]. Awaiting code review.

@@ -1,0 +1,13 @@
+extern s8 D_80120871;
+extern s8 D_801208B5;
+extern s8 D_801208F9;
+extern s8 D_8012093D;
+extern s8 D_80120981;
+extern s8 D_801209C5;
+extern s8 D_80120A09;
+extern s8 D_80120A4D;
+extern s8 D_80120A91;
+extern s8 D_80120AD5;
+extern s8 D_80120B19;
+extern s8 D_80120B1A;
+extern s8 D_80120B1B;

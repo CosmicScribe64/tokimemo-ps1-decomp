@@ -1,0 +1,31 @@
+{
+ "census_path": "drafts/T-14500/TAIIKU/func_8013F3A4",
+ "census_score": 525,
+ "context_hash": "cab921773deaa41378445d66a80ea47fa87349b9865c0e262f8154b46ea6e35b",
+ "delta": -6,
+ "draft_hash": "d61d31bf7132530c9d649fe0c5805a47f67d6f2bfda4f69f96ac72642e7ff65d",
+ "func": "func_8013F3A4",
+ "guarded": false,
+ "provenance": {
+  "driver": "drafts/T-16550/redraft.py",
+  "generated_by": [
+   "fold",
+   "fold+fixes",
+   "fold-mainonly"
+  ],
+  "rescored_with_headers_at": "81da4c6b",
+  "scoring": "tools/exhaustive_drafts.py process(): full translation unit, funcdiff diff lines (0 = candidate match)",
+  "ticket": "T-16550"
+ },
+ "scope": "TAIIKU:func_8013F3A4",
+ "score": 519,
+ "size": 1444,
+ "src": "src/ovl/TAIIKU/80138950.c",
+ "status": "scored",
+ "unit": "TAIIKU",
+ "variants": [
+  "fold",
+  "fold+fixes",
+  "fold-mainonly"
+ ]
+}

@@ -35,6 +35,10 @@ Limits: the pass is linear (no control flow), so a register state survives a lab
 | `RpgRec18` (six words) | `D_8015EC58` | `include/ovl/RPG_BAT.h` | 5 globals | 1 |
 | byte view of the 0x44-byte record table | `D_8011ECD0` | existing `u8 D_8011ECD0[]` | uses only | 6 (ENDING 2, DATE 1, RPG_BAT 2, main 1) |
 | byte view of EVENT's 0x44-byte table | `D_800EAFA0` (new) | `main_api.h` | uses only | 1 |
+| `TaiRunnersA` (`player`, `cpu[3]` of `TaiRunnerA`, 0x24) | `D_80149208` | `include/ovl/TAIIKU.h` (T-16550) | `TaiikuSlots`, `TaiSlot24` views | 0 |
+| `TaiRunnerB[4]` (0x24) | `D_8014A13C` | `include/ovl/TAIIKU.h` (T-16550) | 8 globals | 0 (one FAKE byte view kept) |
+| `TaiikuController` player + `D_8014A400[3]`, `TaiikuSlot1C[4]` (0x1C) | `D_8014A3E4`, `D_8014A400`, `D_8014A454` | `include/ovl/TAIIKU.h` (T-16550) | 9 globals, `Tk1C`, `TaiikuTick1C` | 0 |
+| 28 stack-copied constant tables as one-array structs | `D_80148F28`..`D_8014A5F4` | `include/ovl/TAIIKU.h` (T-16550) | none (new declarations) | 0 |
 
 33 `FAKE` comments of the "first symbol" family are gone (117 to 84 in `src/`). The `Work80125D10` conversion is the strongest single test: 96 uses in already-matched functions moved to one symbol and none changed bytes.
 
@@ -55,6 +59,7 @@ Linking: a base that no original instruction names has no label. Overlays get su
 - The main bss block is `GameState D_800E6280` (0x800E6280..0x800E7D10, T-5100): [[game-state]] has the layout, the evidence and what is still unknown. Its old `D_` names are rejected by ninja; `tools/migrate_globals.py --apply` rewrites them, also in new code. Every unit reaches it through the base symbol (T-7010, [[game-state]] "Views").
 - `Rec38` +0x0C and +0x10 are `GsWord` unions (word and byte views of bit-field words); a bit-field struct that fits every user is still open.
 - Main `D_80121818`, `D_8012183C`, `D_80121860`, `D_80121864`, `D_80121884` stay declared because EVENT has its own data at those addresses.
+- Overlay aggregates (TAIIKU, T-16550) are not in `config/migrate_globals.txt`: the tool rewrites every `src` file and all overlays share the address 0x80132000 up, so an overlay range would claim other overlays' names. Their absorbed names are rewritten by hand; [[taiiku-family-results]] has the layouts and why each is an array, a struct or two objects.
 
 ## Aggregates and old names (T-5100)
 

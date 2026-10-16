@@ -19,10 +19,11 @@ Read this first. Update on every ingest or new page.
 - Repo-root `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`, `LICENSE` (CC0) - public face of the project (T-0901)
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
+- [[taiiku-family-results]] - TAIIKU type map (runner records of three games, stack tables), idioms, the types-first redraft and its numbers, packages (T-16550)
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-16550-taiiku-types-first|T-16550]] Types-first pilot: TAIIKU: recover shared types before matching, redraft every unmatched function, define four packages (In Progress).
+- [[tickets/T-16550-taiiku-types-first|T-16550]] Types-first pilot: TAIIKU: runner records of three games and 28 stack tables typed, all 64 functions redrafted (27 better), `func_80141CDC` matched, packages T-16551..T-16554 (In Review).
 - [[tickets/T-16510-m2c-defect-rewrites|T-16510]] Detect and rewrite recurring m2c draft defects (Done): `tools/draft_fixes.py`; 50 T-14500 drafts changed, 34 better, 3 at score 0; results in `drafts/T-16510/`.
 - [[tickets/T-16520-sibling-report|T-16520]] Matched-sibling report for work packages: closest matched functions for every unmatched one: 150 of 1,005 have a sibling >= 0.70, 59 unmatched clusters (Done).
 - [[tickets/T-16530-proto-override|T-16530]] `--proto` override for regdiff and funcdiff, clearer missing-traced-uopt message (Done).

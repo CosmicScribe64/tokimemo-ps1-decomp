@@ -1,0 +1,60 @@
+s32 func_80148370(void) {
+    DisplayActor44 *var_v0;
+    DisplayActor44 *var_v0_2;
+    s16 var_a0;
+    s32 temp_lo;
+    u8 *var_a1;
+
+    func_80048E78();
+    var_v0 = ((DisplayActor44 *)D_8011ECD0);
+    do {
+        var_v0 += 1;
+        *(s32 *)((unsigned char *)var_v0 + (6516)) = 0x01000000;
+        *(s8 *)((unsigned char *)var_v0 + (6467)) = 0x80;
+        *(s8 *)((unsigned char *)var_v0 + (6462)) = 0x40;
+        *(s8 *)((unsigned char *)var_v0 + (6463)) = 0xA4;
+        *(s32 *)((unsigned char *)var_v0 + (6472)) = (s32) D_80149FD8;
+        *(s32 *)((unsigned char *)var_v0 + (6476)) = (s32) D_8014A010;
+        *(s32 **)((unsigned char *)var_v0 + (6512)) = &D_8014A528;
+        *(s16 *)((unsigned char *)var_v0 + (6480)) = (s16) D_8014A048;
+        *(s8 *)((unsigned char *)var_v0 + (6464)) = 0;
+        *(s8 *)((unsigned char *)var_v0 + (6465)) = 0x80;
+        *(s16 *)((unsigned char *)var_v0 + (6486)) = 0x1000;
+        *(s16 *)((unsigned char *)var_v0 + (6488)) = 0x1000;
+        *(s8 *)((unsigned char *)var_v0 + (6466)) = 2;
+    } while ((u32) var_v0 < (u32) (((DisplayActor44 *)D_8011ECD0) + 0x264));
+    var_a1 = D_8014A3D8;
+    var_v0_2 = ((DisplayActor44 *)D_8011ECD0);
+    var_a0 = -0x70;
+    do {
+        *(s16 *)((unsigned char *)var_v0_2 + (6566)) = var_a0;
+        temp_lo = *var_a1 * 5;
+        var_a0 += 0x30;
+        var_v0_2 += 1;
+        var_a1 += 1;
+        *(s8 *)((unsigned char *)var_v0_2 + (6461)) = 3;
+        *(s16 *)((unsigned char *)var_v0_2 + (6502)) = -8;
+        *(s16 *)((unsigned char *)var_v0_2 + (6484)) = (s16) (temp_lo + 0x1D);
+    } while (var_a0 < 0x50);
+    *(s8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6801)) = 3;
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6824)) = (s16) ((*D_8014A3D8 * 5) + 0xD);
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6838)) = (s16) *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6566));
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6842)) = (s16) *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6570));
+    *(s8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6869)) = 3;
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6892)) = (s16) ((D_8014A3D9 * 5) + 0xD);
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6906)) = (s16) *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6634));
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6910)) = (s16) *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6638));
+    *(s8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6937)) = 3;
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6960)) = (s16) ((D_8014A3DA * 5) + 0xD);
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6974)) = (s16) *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6702));
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6978)) = (s16) *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6706));
+    *(s8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (7005)) = 3;
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (7028)) = (s16) ((D_8014A3DB * 5) + 0xD);
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (7042)) = (s16) *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6770));
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (7046)) = (s16) *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6774));
+    *(s8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (7073)) = 3;
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (7094)) = 9;
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (7110)) = 0xC0;
+    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (7114)) = -0x20;
+    *(s8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (7074)) = 1;
+}

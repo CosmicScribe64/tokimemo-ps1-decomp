@@ -1,0 +1,30 @@
+{
+ "census_path": "drafts/T-14500/TAIIKU/func_80141CDC",
+ "census_score": 98,
+ "context_hash": "eaa94f54266ff1d958b1a08f8e2a9e2779ee926cddc05402e750b7b6fc6ed325",
+ "delta": -80,
+ "draft_hash": "90b7c560f208beb18b3d1fae5e8289bf6c6c1234f2e4c19f259ab7c54daa730e",
+ "func": "func_80141CDC",
+ "guarded": false,
+ "matched": "src/ovl/TAIIKU/80141C00.c (index loop for the D_8011ECD0 flag loop, hand edit after this draft)",
+ "provenance": {
+  "driver": "drafts/T-16550/redraft.py",
+  "generated_by": [
+   "fold",
+   "fold+fixes"
+  ],
+  "rescored_with_headers_at": "81da4c6b",
+  "scoring": "tools/exhaustive_drafts.py process(): full translation unit, funcdiff diff lines (0 = candidate match)",
+  "ticket": "T-16550"
+ },
+ "scope": "TAIIKU:func_80141CDC",
+ "score": 18,
+ "size": 1120,
+ "src": "src/ovl/TAIIKU/80141C00.c",
+ "status": "scored",
+ "unit": "TAIIKU",
+ "variants": [
+  "fold",
+  "fold+fixes"
+ ]
+}
