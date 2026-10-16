@@ -1,9 +1,9 @@
 # T-16560: TACO redraft with the recovered types
 
 Fresh drafts of the 126 TACO functions that were unmatched at `w2-good`, made after the types-first pass
-of T-16560 (wiki page `taco-family-results`, section "Types-first pass"). None scored 0; three became
+of T-16560 (wiki page `taco-family-results`, section "Types-first pass"). None scored 0; five became
 matches with a small hand edit and are in `src/` (`status: matched` in their result.json):
-`func_8013822C`, `func_8013555C`, `func_80135638`.
+`func_8013822C`, `func_8013555C`, `func_80135638`, `func_8015A948`, `func_80159260` (2,032 bytes).
 
 - `redraft.py`: the driver (run it in Docker from the repo root; its docstring lists the rewrites).
 - `inventory.json`, `environment.json`: the functions and the header hashes the run used.
@@ -15,6 +15,7 @@ matches with a small hand edit and are in `src/` (`status: matched` in their res
   `vs_census`). `catalog.jsonl` has one line per function.
 - `TACO/func_80147488/sibling.c`: a hand copy of the matched clone `func_8015B3B0`, 10 rows from a match.
 - `TACO/func_80133870/hand.c`: the redraft with the post-decrement in the call argument, 18 rows.
+- `TACO/func_80147928/hand.c`: the redraft with named locals and byte reads, 32 funcdiff rows.
 
 Scores are the resolved full-unit diff rows of `tools/exhaustive_drafts.py`, the same measure as
 `drafts/T-14500/best-quality-catalog.jsonl`. The census used the hand-written guarded body for the

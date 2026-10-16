@@ -85,12 +85,20 @@ with the new headers, nothing else) and `typed` (plain plus these rewrites), the
 
 - A `switch` on `s8 D_8015EDE8` reads it with `lbu`: write `switch (*(u8 *)&D_8015EDE8)`. m2c's
   `(u8) D_8015EDE8` gives `lb` + `andi`. Matched `func_8013555C` and `func_80135638`.
+- `func_8015A948` masks its first argument on entry and switches on it: a `u8` parameter
+  (`void func_8015A948(u8 arg0, s32 arg1)`), not m2c's `s32` plus `& 0xFF`. It has no prototype in the
+  header; a `u8` prototype may change the matched caller in `8015ABF0.c` (not tried).
+- `func_80159260`: the tcpos-args draft matched once one unused `TcPos` was declared after the two
+  position locals (FAKE, the same frame idiom as `func_80156F50`).
 - `func_8013822C` is an implicit-int function (called before its definition): `s32` with no return.
 - `func_80133870` (18 rows): `func_801430D0(D_8015EDEC--, 0, 0x32, 6)`; only the slot of `move a1,zero`
   differs (`drafts/T-16560/TACO/func_80133870/hand.c`).
 - `func_80147488` is a clone of matched `func_8015B3B0` (same opcodes, locals 4 bytes higher): with
   `s16 *arg1` in the prototype and the MATRIX declared first, 10 rows remain, all the spill homes of the
   object and position pointers (`drafts/T-16560/TACO/func_80147488/sibling.c`).
+- `func_80147928` (32 rows): with the coordinate and position pointers declared before `slot` and `base`
+  the frame and the spill homes of those two match; one temporary home and the tail registers differ
+  (`drafts/T-16560/TACO/func_80147928/hand.c`).
 
 ### What the redraft changed
 
@@ -98,8 +106,9 @@ Against the census (`drafts/T-14500/best-quality-catalog.jsonl`), over the 116 f
 draft (the census scored the hand-written guard body of the other 10): 103 fresh drafts compile (the
 census had 116, 13 only after manual repair); 48 score better, 53 the same, 2 worse; median 166 to 150
 diff rows, sum 21,752 to 19,983 (-8%). The headers alone changed 7 of 98 scores (3 better, 4 worse);
-the rewrites gave the rest and made 5 more drafts compile. No draft scored 0; three matched after a
-one-line hand edit (520 bytes): `func_8013822C`, `func_8013555C`, `func_80135638`. The 67%-zero rate of
+the rewrites gave the rest and made 5 more drafts compile. No draft scored 0; five matched after a
+small hand edit (2,032 bytes, about 25 minutes of hand work): `func_8013822C`, `func_8013555C`,
+`func_80135638`, `func_8015A948` and `func_80159260` (1,048 bytes, a tcpos-args draft). The 67%-zero rate of
 the BUNKA families (T-12700) did not repeat: TACO's remaining functions are large handlers whose distance
 comes from register allocation, loop shape and local layout, not from missing types.
 
