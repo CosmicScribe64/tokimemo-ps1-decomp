@@ -15531,3 +15531,7 @@ Opened [[tickets/T-17400-types-first-event]] (In Progress) under [[tickets/T-169
 ## [2026-10-16] ticket | T-17700 Types-first: GEKO started
 
 Opened [[tickets/T-17700-types-first-geko]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover GEKO's shared types, redraft its unmatched functions with the T-16550/T-16560/T-17400 drivers, then cut packages. Branch `w3-geko-types` from `w2-good`.
+
+## [2026-10-16] ticket | T-17700 Types-first: GEKO to In Review
+
+[[tickets/T-17700-types-first-geko]]: GEKO's stack-copied tables typed in `include/ovl/GEKO.h` (`GekoMonthDays`, `GekoNames12`, `GekoWords11`/`GekoWords2`, `GekoFnTbl42`, `GekoShorts10`, `GekoShorts6`, byte and text tables, the `Rec24` side arrays); 35 redrafts with `drafts/T-17700/redraft.py` (14 better than the census, sum 6,067 to 5,536 rows over the unguarded functions, none 0); the driver's fold now runs after `fix_shared_hi` (the old order printed `D_800E6280.unk0` for GameState bytes); 1 match / 484 bytes (`func_8013E22C`, EVENT clone), 5 guarded drafts; 8 packages T-17701..T-17708. New section "Types-first pass (T-17700)" on [[scenes-family-results]], a row in [[data-types]]. In Review, waiting for the code review.
