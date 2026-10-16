@@ -15606,3 +15606,7 @@ Opened [[tickets/T-17700-types-first-geko]] (In Progress) under [[tickets/T-1699
 ## [2026-10-16] ticket | T-17700 Done
 
 [[tickets/T-17700-types-first-geko]] In Review to Done after the code review against `CODING_STANDARDS.md`: 1 function matched (484 bytes: `func_8013E22C`), 5 guarded drafts, 35 redrafts, 8 packages (T-17701..T-17708). Two style findings fixed (cast spacing in the `func_80140040` draft, a blank line in the `func_801355E8` draft; `src/ovl/GEKO/8013F360.c`, `src/ovl/GEKO/80134D10.c`). GEKO unit sha1 OK after the rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] ticket | T-17900 Types-first: NAME_ENT started
+
+Opened [[tickets/T-17900-types-first-name_ent]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover NAME_ENT's shared types, redraft its unmatched functions with the T-16550/T-16560/T-17700 drivers, then cut packages. Branch `w3-name-ent-types` from `w2-good`.
