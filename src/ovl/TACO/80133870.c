@@ -1,9 +1,8 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-/* NON_MATCHING: T-16562, 18 differing lines; only the slot of `move a1,zero` differs (the original fills the delay slot of the `beqz` before the second call with it, IDO puts it after the decrement store) */
-#ifdef NON_MATCHING
-void func_80133870(void) {
+/* s32 with no return (the caller uses it as implicit int): v0 is live at the exit, so as1 cannot fill the delay slot of the branch before the last call with lui v0 and takes the move a1,zero instead. T-16562 */
+s32 func_80133870(void) {
     D_800E6280.unk_1104.u += 1;
     switch (D_800E6280.unk_110A) {
     case 0:
@@ -29,9 +28,6 @@ void func_80133870(void) {
         func_801430D0(D_8015EDEC--, 0, 0x32, 6);
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_80133870);
-#endif
 
 s32 func_80133980(void) {
     switch (D_800E6280.unk_110D) {
