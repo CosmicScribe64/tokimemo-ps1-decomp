@@ -391,6 +391,9 @@ typedef struct TcPair2 {
 extern TcPair2 D_8015FBF8[];
 extern TcPair8 D_80160290[]; /* read at i - 1, T-16563 */
 extern TcPair2 D_801603A8[]; /* read at i - 1, T-16563 */
+/* FAKE: not data of its own. D_801603D4 + 4 * i is D_80160444 + 4 * (i - 0x1C); IDO keeps the symbol as the
+ * induction base, so only this base gives func_80152808 its zero-offset pointer walk (D_80160448). T-16563 */
+extern s16 *D_801603D4[];
 void func_801490B4(void);
 
 void func_80149B7C(void);
@@ -552,6 +555,7 @@ extern u8 D_801603EC;
 extern u8 D_801603ED;
 void func_8015266C(u32 arg0);
 void func_80152764(s32 arg0);
+void func_80152944(s32 arg0, s32 arg1);
 extern s16 *D_80160444[]; /* six pointers: [0] 0x23's model, [1..4] the walk of func_80152944; T-16563 */
 #endif
 

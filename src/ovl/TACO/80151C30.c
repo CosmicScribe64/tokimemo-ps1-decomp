@@ -170,7 +170,27 @@ void func_80152764(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80152808);
+s32 func_80152808(u32 arg0) {
+    s32 i;
+
+    if (arg0 < D_8015EDB4[21].unk3) {
+        func_80152944(0x1D, D_8015EDB4[21].unk2);
+        D_8015EDB4[21].unk2 = D_8015EDB4[21].unk2 + 1;
+        D_8015EDB4[21].unk3 = 0;
+    }
+    if (D_8015EDB4[21].unk2 >= 0x46) {
+        D_8015EDB4[21].unk2 = 0;
+        D_8015EDB4[21].unk3 = D_8015EDB4[21].unk2;
+        i = 0x1D;
+        for (; i != 0x21; i++) {
+            func_801472D4(i, 0, D_80160290[i - 1].a, D_80160290[i - 1].b, D_801603A8[i - 1].a, D_801603A8[i - 1].b);
+            /* FAKE: pointer table read from the base D_801603D4 (see TACO.h); D_80160444[i - 0x1C] gives another offset. T-16563 */
+            func_801478F8(i, D_801603D4[i]);
+        }
+    } else {
+        D_8015EDB4[21].unk3 = D_8015EDB4[21].unk3 + 1;
+    }
+}
 
 void func_80152944(s32 arg0, s32 arg1) {
     s32 i;
