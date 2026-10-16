@@ -63,7 +63,38 @@ void func_801368B0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801368B0", func_80136A9C);
+void func_80136A9C(void) {
+    switch (D_8015EDB0.unk_00) {
+    case 0:
+        if (D_8015EDC4 & 0x100000) {
+            D_8015EC6C = D_8015EC2C - 0xA0;
+        } else {
+            D_8015EC6C = D_8015EC2C - 0x78;
+        }
+        /* FAKE: the address-taken view keeps the selector load in place ($v1, after the D_8015EC6C store); the plain switch (D_8015EBAC) puts it in $v0. Real source unknown. T-17114 */
+        switch (*(s32 *)&D_8015EBAC) {
+        case 0:
+            D_80121685 = 4;
+            break;
+        case 1:
+            D_801215FD = 4;
+            D_80121685 = 4;
+            break;
+        }
+        func_8013E97C(0x2B, D_8015EC28, -0xC4);
+        func_8013E810(0x2B, 4, 1, 1);
+        func_8013F0F4(0x503, 0, 3);
+        func_8014EBD0();
+        break;
+    case 1:
+        D_801211E6 += 4;
+        if (D_8015EC6C < D_801211E6) {
+            D_801211E6 = D_8015EC6C;
+            func_8014EBA8();
+        }
+        break;
+    }
+}
 
 void func_80136BD8(void) {
     func_8013F0F4(0x504, 0, 4);
