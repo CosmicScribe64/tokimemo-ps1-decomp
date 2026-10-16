@@ -65,7 +65,68 @@ void func_80143FF4(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80143E80", func_80144094);
 
+#ifdef NON_MATCHING
+void func_80144430(void) {
+    s32 padA[2];
+    MATRIX m;
+    SVECTOR v;
+    s32 pt[10];
+    s32 depth;
+    s32 flag;
+    s32 rot;
+    s32 o;
+    s32 j;
+    s16 *q;
+    POLY_FT4 *poly;
+    s32 t;
+
+    m = D_80129C40;
+    func_800A1100(&m);
+    func_800A1070(&m);
+    v.vz = -0x7FFF;
+    rot = 0;
+    for (o = 0; o < 2; o++) {
+        v.vy = D_8015F5F0.b + rot / 4 + 0x80;
+        for (j = 0; j < 5; j++) {
+            v.vx = 0x4000 - j * 0x2000 + D_8012274C;
+            func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
+        }
+        rot -= 0x1000;
+    }
+    for (o = 0; o < 1; o++) {
+        for (j = 0; j < 4; j++) {
+            q = (s16 *)&pt[j * 2 + o];
+            poly = func_800490F0(0x28, D_8011ECA0);
+            func_8009F040(poly);
+            poly->r0 = 0x80;
+            poly->g0 = 0x80;
+            poly->b0 = 0x80;
+            poly->tpage = func_8009ECB0(1, 0, 0x200, 0x100);
+            t = (j & 1) << 6;
+            poly->clut = func_8009ED74(0, 0x1EE);
+            poly->v0 = t + 0x3F;
+            poly->v2 = t + 0x3F;
+            poly->v1 = t;
+            poly->v3 = t;
+            poly->u0 = 0;
+            poly->u1 = 0;
+            poly->u2 = 0xFF;
+            poly->u3 = 0xFF;
+            poly->x0 = q[0];
+            poly->y0 = q[1];
+            poly->x1 = q[2];
+            poly->y1 = q[3];
+            poly->x2 = q[4];
+            poly->y2 = q[5];
+            poly->x3 = q[6];
+            poly->y3 = q[7];
+            func_8009EED0(D_800E8CA0 + (D_8011ECA0 << 10) + 0x3F4, poly);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80143E80", func_80144430);
+#endif
 
 void func_801446D0(void) {
 }
