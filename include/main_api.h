@@ -894,6 +894,7 @@ extern u8 D_800E7D1F;
 extern u8 D_800E7D2C;
 extern u8 D_800E7D34;
 extern u8 D_800E7D36;
+extern u8 D_800E7D37;
 extern u16 D_800E7D3C;
 extern u16 D_800E7D3E;
 extern u16 D_800E7D40;
