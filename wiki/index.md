@@ -436,4 +436,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-15900-remaining-draft-compile-repairs|T-15900]] — Remaining mixed-overlay compile repairs (13 scopes, In Progress).
 - [[tickets/T-15700-taco-taiiku-draft-repairs|T-15700]] All28 TACO/TAIIKU failed drafts now compile; no zeros (Done).
 - [[tickets/T-19014-w3-d-p14|T-19014]] Wave 3 package w3-d-p14: TACO `8013F250.c`, 5 of 5 functions matched (2,848 B: `func_801404FC`, `func_80140364`, `func_8013F9C0`, `func_801407D4`, `func_80140ADC` in the closer pass; FAKE frame-home locals) (Done).
-- [[tickets/T-19017-w3-d-p17|T-19017]] Wave 3 package w3-d-p17: TACO `80140DF0.c`, 5 functions (`func_80141050`, `func_80141170`, `func_80141B18`, `func_801413B8`, `func_801416E8`) (In Progress).
+- [[tickets/T-19017-w3-d-p17|T-19017]] Wave 3 package w3-d-p17: TACO `80140DF0.c`, 2 of 5 functions matched (1,528 B: `func_80141B18`, `func_801413B8`; FAKE frame-home locals), `func_80141050`/`func_80141170` guarded at 10 lines, `func_801416E8` at 28 (In Review).

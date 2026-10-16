@@ -15732,3 +15732,6 @@ Opened [[tickets/T-18100-types-first-bunka_sd]] (In Progress) on branch `w3-bunk
 
 ## [2026-10-16] ticket | T-19017 In Progress
 [[tickets/T-19017-w3-d-p17]] started: wave 3 package w3-d-p17, TACO `src/ovl/TACO/80140DF0.c`, five functions (`func_80141050`, `func_80141170`, `func_80141B18`, `func_801413B8`, `func_801416E8`). Worktree `tokimemo-wt/w3-d-p17`, base `w2-good`.
+
+## [2026-10-16] ticket | T-19017 In Review, 2 of 5 functions matched
+[[tickets/T-19017-w3-d-p17]] moved to In Review: TACO `src/ovl/TACO/80140DF0.c`, 12:40-14:15 UTC. Matched `func_80141B18` (712 bytes) and `func_801413B8` (816 bytes), 1,528 bytes in all; `func_80141050` and `func_80141170` stay guarded at 10 lines each (the result variable lands in `$a0`), `func_801416E8` at 28 lines (an extra `D_8011ECA0` reload in the original). FAKEs: unused frame-home locals in the two matched functions and in `func_801416E8`, hand-expanded `setUVWH` one-liners. Notes in [[matching-notes]] (section T-19017), four rows in [[register-cheatsheet]], three rows in [[data/t0018-cases]].
