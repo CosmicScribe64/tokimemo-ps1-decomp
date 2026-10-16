@@ -1,7 +1,7 @@
 ---
 id: T-16561
 title: "Types-first pilot package pt-taco-p1"
-status: In Progress
+status: In Review
 assignee: claude (pt-taco-p1)
 created: 2026-10-16
 updated: 2026-10-16
@@ -16,11 +16,11 @@ scratchpad `pt-taco-p1-list.txt`) and match as many as possible in about 2.5 hou
 
 ## Acceptance criteria
 
-- [ ] Every matched function committed on its own ("T-16561: match UNIT:func"), unit sha1 OK
-- [ ] Unmatched drafts under 30 differing lines kept under `#ifdef NON_MATCHING` with a T-16561 comment
-- [ ] Compiler-gap rows added to `wiki/data/t0018-cases.md`
-- [ ] T-16561 section in `wiki/matching-notes.md`
-- [ ] Clean build 27/27, check_headers, migrate_globals --check, sync_protos --check-branch OK
+- [x] Every matched function committed on its own ("T-16561: match UNIT:func"), unit sha1 OK (7 functions, 5,104 bytes)
+- [x] Unmatched drafts under 30 differing lines kept under `#ifdef NON_MATCHING` with a T-16561 comment (`func_80147928` 4 lines, `func_80133738` 8, `func_801472D4` 20; `func_80147B24` at 63 lines is `INCLUDE_ASM` again)
+- [x] Compiler-gap rows added to `wiki/data/t0018-cases.md`
+- [x] T-16561 section in `wiki/matching-notes.md`
+- [x] Clean build 27/27, check_headers, migrate_globals --check, sync_protos --check-branch OK
 
 ## Notes
 
@@ -28,3 +28,11 @@ Worktree `pt-taco-p1` (branch `pt-taco-p1`, from `w2-good`). Owns the four C fil
 and `wiki/` edits where needed. Started 2026-10-16 02:40 UTC.
 
 ## Comments
+
+### 2026-10-16 (claude, pt-taco-p1): matching stage finished, In Review
+
+Matched (unit sha1 OK after each, one commit each): `func_80147488` (492 bytes), `func_80159878` (1,768), `func_8013788C` (468), `func_8013760C` (640), `func_80147C98` (488), `func_80146F74` (604), `func_80147674` (644) = 5,104 bytes. The last two and `func_80147B24` were not on the list (same files, same clone family as `func_80147488`). Guarded: `func_80147928` (4 lines), `func_80133738` (8), `func_801472D4` (20). `func_801471D0` keeps its T-11300 guard (4 lines). `func_80147B24` back to `INCLUDE_ASM` (63 lines, unrolled loop test).
+
+Header edits: `func_80147488` takes `s16 *arg1`, `func_8013760C` returns `s32`, `D_8015E238` is a `TcPair8[]`. FAKE: unused `TcPos` in `func_80159878`, `(u8 *)i + (u32)ptr` operand order in `func_8013760C`; the `default: break;` and `s32`-without-return idioms are commented in place.
+
+Review checklist for the code review: FAKE comments carry T-16561; no inline asm; guarded drafts carry the row count; the 80146D60.c comments on pointer locals are explanations, not fakematches.

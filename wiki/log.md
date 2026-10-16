@@ -15140,3 +15140,7 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16561 opened
 
 [[tickets/T-16561-taco-types-first-p1]] (In Progress): matching stage for the pt-taco-p1 package of [[tickets/T-16560-taco-types-first]] (9 functions in `src/ovl/TACO/801335A0.c`, `80137590.c`, `80159090.c`, `80146D60.c`), worktree pt-taco-p1 from w2-good.
+
+## [2026-10-16] ticket | T-16561 to In Review
+
+[[tickets/T-16561-taco-types-first-p1]]: matching stage of the TACO types-first pilot, package p1 (`src/ovl/TACO/801335A0.c`, `80137590.c`, `80159090.c`, `80146D60.c`). 7 functions matched (5,104 bytes: `func_80147488`, `func_80159878`, `func_8013788C`, `func_8013760C`, `func_80147C98`, `func_80146F74`, `func_80147674`), 3 guarded (`func_80147928` 4 lines, `func_80133738` 8, `func_801472D4` 20), `func_80147B24` left as `INCLUDE_ASM` (63 lines). Idioms (pointer locals add stack homes, `default: break;` changes s-register allocation, the parameter as walking pointer, accumulate in the promoted global) in [[matching-notes]]; rows in [[data/t0018-cases]]; summary table in [[taco-family-results]]. Board, ticket and index updated.
