@@ -241,7 +241,53 @@ void func_801560B8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_801560E0);
+void func_801560E0(void) {
+    DateMover44 *m = (DateMover44 *)D_8011ECD0;
+    u8 *st;
+    DateShorts8 sp98;
+    DateShorts8 sp88;
+    DatePairs8 sp68;
+    s16 i;
+
+    sp98 = D_8015FB1C;
+    sp88 = D_8015FB2C;
+    sp68 = D_8015FB3C;
+    for (i = 0; i < 8; i++) {
+        st = i + D_8015F9A0;
+        m[98 + i].unk_07 = m[96].unk_07;
+        if (*st == 0) {
+            D_8015F9A8[i]++;
+        }
+        if (*st == 0 && D_8015F9A8[i] >= 0x79 && (u32)(0xB4 - D_8015F9A8[i]) < (u32)(func_800AE0D0() % 60)) {
+            m[98 + i].unk_03 |= 0x80;
+            m[98 + i].unk_02 = 5;
+            *st = 1;
+        }
+        if (i == 0) {
+            if (*st == 1 && m[98 + i].unk_18 == 7 && m[98 + i].unk_08 == 0) {
+                m[98 + i].unk_30 = 0;
+                *st = 2;
+            }
+        } else if (*st == 1 && m[98 + i].unk_18 == 3 && m[98 + i].unk_08 == 7) {
+            m[98 + i].unk_30 = 0;
+            *st = 2;
+        }
+        if (*st == 2) {
+            m[98 + i].unk_30 += 0x4000;
+            m[98 + i].unk_28.w += m[98 + i].unk_30;
+            if (sp68.v[i][1] - 0x78 < m[98 + i].unk_28.h[1]) {
+                m[98 + i].unk_02 = 0;
+                m[98 + i].unk_03 &= 0x7F;
+                m[98 + i].unk_28.h[1] = sp88.v[i] - 0x78;
+                m[98 + i].unk_28.h[0] = 0;
+                m[98 + i].unk_18 = 0;
+                m[98 + i].unk_08 = 0;
+                *st = 0;
+                D_8015F9A8[i] = 0;
+            }
+        }
+    }
+}
 
 void func_801563A8(void) {
     s32 pad; /* FAKE: unused slot above tbl, the original frame has it (T-3330 idiom, real source unknown). T-8010 */
