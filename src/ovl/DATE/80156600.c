@@ -1,10 +1,8 @@
 #define MAIN_API_OVERRIDE_D_80122CD0 /* switched as u32: selector in $v1 (main_api.h: s32) */
-#define MAIN_API_OVERRIDE_D_800CA154 /* matched as u16: lhu, one load shared by the compares (main_api.h: s16) */
 #include "common.h"
 #include "ovl/DATE.h"
 
 extern u32 D_80122CD0;
-extern u16 D_800CA154;
 
 void func_80156600(void) {
     D_8015FCE0 = 0x801CE0DC;
