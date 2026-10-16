@@ -406,6 +406,7 @@ void func_8015800C(void) {
     func_8015ACCC(0xC, 0x11, D_801604D4, D_801604DC, b, 2, 0x10);
 }
 
+/* The mixed spellings (arg0 + D_8015EDB4)-> and D_8015EDB4[arg0]. are deliberate: they give the original's addu operand order (T-19015) */
 void func_801585D0(s32 arg0) {
     s32 ang;
     s32 rad;
