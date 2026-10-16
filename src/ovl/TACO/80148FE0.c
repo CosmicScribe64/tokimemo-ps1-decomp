@@ -163,7 +163,62 @@ void func_80149538(void) {
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80148FE0", func_80149538);
 #endif
 
+/* NON_MATCHING: T-19019, 4 differing lines (2 rows); the actor address `addu` of the first test and of `unk82 += 1` has the operands as (index, base) in the original and (base, index) here. */
+#ifdef NON_MATCHING
+s32 func_801497EC(s32 arg0, s32 arg1, s16 *arg2, u8 *arg3, u8 *arg4) {
+    MATRIX mtx;
+    TcPos in;
+    TcPos out;
+    s32 i;
+    s32 j;
+    s32 idx;
+    s32 offX;
+    s32 offY;
+    TcObj50 *obj;
+
+    idx = arg1 + 0x10;
+    offX = arg2[arg1 * 2];
+    offY = arg2[arg1 * 2 + 1];
+    D_8015EDB4[arg1 + 16].unk84[0] = arg3[arg1];
+    mtx = *(MATRIX *)D_80125C60;
+    func_8015D0D0((D_80128880[0].x << 0xC) / 360, &mtx);
+    func_8015CF30((D_80128880[0].z << 0xC) / 360, &mtx);
+    func_8015D270((D_80128880[0].y << 0xC) / 360, &mtx);
+    obj = &D_80127480[arg0];
+    in.x = obj->unk18;
+    in.y = obj->unk1C;
+    in.z = obj->unk20;
+    func_800A0ECC(&mtx, &in, &out);
+    D_8015EDB4[idx].unk74 = D_80127480[0].unk18 + out.x + offX;
+    D_8015EDB4[idx].unk76 = D_80127480[0].unk1C + out.y + offY;
+    D_8015EDB4[idx].unk78 = D_80127480[0].unk20 + out.z;
+    if (D_8015EDB4[idx].unk84[1] < 0x15U && D_8015EDB4[idx].unk82 < D_8015EDB4[idx].unk7A) {
+        D_8015EDB4[idx].unk84[1] = arg4[arg1 * 2];
+        D_8015EDB4[idx].unk82 += 1;
+        D_8015EDB4[17].unk84[2] = 1;
+    }
+    if (D_8015EDB4[idx].unk84[1] == 0) {
+        func_8015435C(arg0, 9);
+        if (obj == &D_801274D0) {
+            for (i = 4; i != 0x16; i += 3) {
+                func_8015435C(i, 9);
+            }
+        }
+        if (obj == &D_80127520) {
+            for (j = 5; j != 0x17; j += 3) {
+                func_8015435C(j, 9);
+            }
+        }
+        if (obj == &D_80127570) {
+            for (j = 6; j != 0x18; j += 3) {
+                func_8015435C(j, 9);
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80148FE0", func_801497EC);
+#endif
 
 void func_80149B7C(void) {
     s32 i;

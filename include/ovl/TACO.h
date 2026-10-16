@@ -75,6 +75,10 @@ typedef struct TcObj50 {
 extern TcPos D_80128880[];
 extern Tc10 D_80127080[];
 extern TcObj50 D_80127480[];
+/* coordinate objects 1-3 of D_80127480, named separately because func_801497EC compares against their addresses (T-19019) */
+extern TcObj50 D_801274D0;
+extern TcObj50 D_80127520;
+extern TcObj50 D_80127570;
 
 /*
  * Actor record, 79 of them at D_8015EDB4 (loops stop at byte offset 0x29F8). T-16560: unk0[1] holds
