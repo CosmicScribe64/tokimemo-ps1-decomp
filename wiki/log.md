@@ -16330,3 +16330,6 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 
 ## [2026-10-16] ticket | T-17109 Done
 [[tickets/T-17109-w3-rpg-bat-p09]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing that blocks (only `src/ovl/RPG_BAT/8013D780.c` and `src/ovl/RPG_BAT/801477E0.c` changed; `s32` without a return, the single-increment arms and the one-line decrement judged plain C with comments; `RPG_BAT_OVERRIDE_D_8015EBCC` follows 8a). Review edits: a doubled and a trailing blank line removed; the "about 35 minutes" of the In Review entry is 39 minutes (19:46:13 to 20:24:57 UTC), fixed in the ticket and [[matching-notes]]. Unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 3 of 3 matched (`func_8013D834`, `func_80147930`, `func_8013DC60`, 4,268 bytes). Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17113 In Progress
+[[tickets/T-17113-w3-rpg-bat-p13]] created and started: Wave 3 package w3-rpg-bat-p13 of [[tickets/T-17100-types-first-rpg_bat]], four RPG_BAT functions in `src/ovl/RPG_BAT/801447E0.c`, `src/ovl/RPG_BAT/8013C890.c`, `src/ovl/RPG_BAT/801484E0.c` (`func_801447E0`, `func_80148714`, `func_8013C890`, `func_80144C84`). Worktree `tokimemo-wt/w3-rpg-bat-p13`, base `w2-good`.
