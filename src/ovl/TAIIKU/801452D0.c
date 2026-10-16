@@ -681,7 +681,70 @@ void func_80146C20(void) {
     func_80085F0C(((s16 *)&D_8014A3DC)[1] % 128, 0xF, 0x70, 0x80, 0x80);
 }
 
+/* NON_MATCHING: T-16553, 31 differing lines; the table-copy loop stores before the record pointer is advanced (offset 7110 against 7042), and the zero-search at the end keeps its index in v1 where the original uses a0 (everything before matches) */
+#ifdef NON_MATCHING
+s32 func_80146D18(void) {
+    s32 i;
+    s32 k;
+    TkS16x4 tbl;
+    u8 *p;
+
+    tbl = D_8014A5F4;
+    if (DISP(104).unk_02 == 0 && D_8014A3DE >= 0x781) {
+        for (k = 0; k < 3; k++) {
+            DISP(104 + k).unk_02 = 0x40;
+            DISP(104 + k).unk_03 = 0xA4;
+            if (D_8014A400[k].unk_01 == 1) {
+                DISP(105).unk_03 = 0;
+            }
+        }
+    }
+    if (DISP(105).unk_18 == 0x4F) {
+        DISP(105).unk_03 |= 0x40;
+    }
+    for (k = 0; k < 3; k++) {
+        if (D_8014A400[k].unk_01 == 1 && DISP(97 + k).unk_26 >= DISP(105).unk_26 + 0x30) {
+            DISP(105).unk_03 = 0;
+            DISP(105).unk_02 = 0;
+        }
+    }
+    k = 0;
+    do {
+        DISP(104 + k).unk_26 = tbl.v[k] - D_8014A3DE * 2 - 0xA0;
+        k++;
+    } while (&tbl.v[k] < &tbl.v[4]);
+    if (DISP(107).unk_26 < -0xDC && DISP(107).unk_03 != 0) {
+        DISP(107).unk_03 = 0;
+    }
+    if (DISP(105).unk_18 == 0x4F) {
+        DISP(105).unk_26 = DISP(104).unk_26 + 0x20;
+    }
+    if (DISP(96).unk_26 + 0x40 >= DISP(104).unk_26) {
+        if (D_8014A3D8[0] == 0) {
+            DISP(105).unk_03 = 0xE4;
+            DISP(105).unk_18 = 0x4F;
+            DISP(105).unk_26 = DISP(106).unk_26 + 0x20;
+        }
+        i = 0;
+        if (D_8014A3D8[0] != 0) {
+            do {
+                i++;
+            } while (D_8014A3D8[i] != 0);
+        }
+        D_8014A3D8[i] = 1;
+        if (i + 1 < 4) {
+            p = &D_8014A3D8[i + 1];
+            do {
+                *p++ = func_80146FA0();
+            } while (p != (u8 *)&D_8014A3DC);
+        }
+        return 1;
+    }
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146D18);
+#endif
 
 /* FAKE: v[6] as in func_8013815C. T-0016 */
 s32 func_80146FA0(void) {
