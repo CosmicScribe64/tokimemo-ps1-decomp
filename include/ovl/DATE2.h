@@ -7,6 +7,7 @@
 #include "common.h"
 #include "libgpu.h"
 #include "main_api.h"
+#include "game.h"
 
 extern u8 D_800B5938;
 void func_80138048(void);
