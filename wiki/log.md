@@ -14936,3 +14936,7 @@ Created [[tickets/T-11640-w1-ovl-taiiku-80138950]] (In Progress) in worktree w1-
 ## [2026-10-15] ticket | T-11640 resumed in wave 2 (w2-r08)
 
 Merged branch w1-p08 into w2-r08 (7 TAIIKU matches; main's func_80139330 kept and renamed to the TaiikuBall layout); TAIIKU sha1 OK. [[tickets/T-11640-w1-ovl-taiiku-80138950]] stays In Progress under [[tickets/T-16200-matching-wave-2]].
+
+## [2026-10-15] ticket | T-11640 to In Review (wave 2, w2-r08)
+
+[[tickets/T-11640-w1-ovl-taiiku-80138950]]: 8 more TAIIKU 80138950.c functions matched in wave 2 (15 with the merged wave-1 work), 2 guarded drafts, 7 rows in [[data/t0018-cases]], section "T-11640 wave 2" in [[matching-notes]]. Status In Review.
