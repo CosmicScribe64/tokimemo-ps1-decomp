@@ -18,6 +18,9 @@ void func_80132DB8(u32 arg0);
 void func_80132DFC(void);
 
 /* BUNKA_SD functions called across the overlay. */
+void func_8013376C(void);
+void func_80136BFC(void);
+void func_80137D6C(void);
 void func_80132940(void);
 void func_80134938(void);
 void func_80135630(void);
