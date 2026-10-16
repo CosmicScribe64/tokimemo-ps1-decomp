@@ -1,0 +1,13 @@
+python3 failed:
+ -------------^
+cfe: Warning 681: drafts/T-18200/_runs/plain/EN_NICHI/func_80138CCC/work/guarded.c, line 3529: '&' before array or function; ignored
+         *(&sp4C + var_v1) = 0xB;
+ ----------^
+cfe: Warning 681: drafts/T-18200/_runs/plain/EN_NICHI/func_80138CCC/work/guarded.c, line 3533: '&' before array or function; ignored
+         *(&sp4C + var_v1) = 0xC;
+ ----------^
+cfe: Warning 681: drafts/T-18200/_runs/plain/EN_NICHI/func_80138CCC/work/guarded.c, line 3540: '&' before array or function; ignored
+     } while ((u32) var_s0 < (u32) &spD8);
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18200/_runs/plain/EN_NICHI/func_80138CCC/work -o drafts/T-18200/_runs/plain/EN_NICHI/func_80138CCC/work/guarded.o /tmp/asm_processor5h7jev32/preprocessed_30f8bf0ba79a47fb82bc934ac8b39a86.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibks404bqt/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18200/_runs/plain/EN_NICHI/func_80138CCC/work/guarded.o drafts/T-18200/_runs/plain/EN_NICHI/func_80138CCC/work/guarded.c

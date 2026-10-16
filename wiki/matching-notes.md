@@ -5988,3 +5988,18 @@ Process notes: `tools/siblings.py --package` needs the list file inside the work
 - A block-scope `extern GameState D_800E6280;` redeclaration is the same uopt variable (65 rows, as plain). autotweak 120 s on the volatile draft: 285 to 285, none.
 
 Reading of the evidence: the original's first and last accesses are two different uopt variables at the same address, both addressed directly. In plain C that is a separate symbol for the counter (as `func_8014616C`, T-19002), which `migrate_globals --check` rejects without a hoisted pair. The open decision is the same as T-19002's follow-up: whether a `keep` line may cite a uopt live-range proof like this one.
+
+## T-18200: EN_NICHI types-first pass
+
+Five matches (2,500 bytes) from hand edits of the redraft; details in [[en-nichi-family-results]].
+
+- Write record loops in index form (`D_8013984C[i].f`), not as m2c's pointer walk. IDO then knows the stores hit
+  the global: it moves loads of address-taken locals above them (`func_80134258`) and keeps global counters in
+  registers across the loop (`func_8013358C`, `func_80132EE8`, both register-only near misses as `hand.c`).
+- A six-trip loop whose first two iterations the original stores through absolute addresses
+  (`D_800E6280.unk_1228[5..10]` and `[37..42]`): the natural loop matches in `func_80136B74` (counter shared with
+  an earlier loop in `$s0`); `func_80132834` needs the two iterations written out (FAKE).
+- `switch (x & 0x7F)` with a five-entry jump table needs `case 0: default:` (`func_80133CA8`).
+- Statement order sets t-register numbers even when the stores keep their order: compute the table lookup
+  before the plain field copy (`func_80133CA8`).
+- `func_80135A48` (T-0018 regorder since T-0750) matched in index form as an implicit-int function.

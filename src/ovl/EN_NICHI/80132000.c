@@ -184,7 +184,55 @@ void func_8013275C(void) {
     D_80139B18 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132834);
+s32 func_80132834(void) {
+    s32 i;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        D_800E6280.unk_03A = 0;
+        func_8004E44C(0, (u32 *) D_80139218, D_80139200);
+        srn_init(0, (u32 *) D_80139214, 0);
+        srn_vram_set(0, 5, 0x580, 0xF0);
+        Fade_In_Init();
+        func_8004284C();
+        break;
+    case 1:
+        if (func_800460EC() == 2) {
+            func_8004284C();
+        }
+        break;
+    case 2:
+        Fade_In_Main();
+        if (D_800E6280.unk_F88 & 0x60) {
+            func_80044750(0x74);
+            Fade_Out_Init();
+            func_8004284C();
+        }
+        Scroll(0, 0xF, 0, 0xF0, 0x280);
+        break;
+    case 3:
+        if (Fade_Out_Main() != 0) {
+            /* FAKE: the first two of six iterations written out: the original stores them through absolute
+             * addresses with one constant each, then runs the loop from 2; one 6-trip loop unrolls the other
+             * way in this IDO. T-18200 */
+            D_800E6280.unk_1228[5] = -1;
+            D_800E6280.unk_1228[37] = -1;
+            D_800E6280.unk_1228[6] = -1;
+            D_800E6280.unk_1228[38] = -1;
+            for (i = 2; i < 6; i++) {
+                D_800E6280.unk_1228[i + 5] = -1;
+                D_800E6280.unk_1228[i + 37] = -1;
+            }
+            func_80044750(0x201);
+            func_80042808();
+        }
+        Scroll(0, 0xF, 0, 0xF0, 0x280);
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 void func_80132A0C(void) {
     s32 v;
@@ -450,7 +498,7 @@ void func_801337E0(void) {
     }
     radius *= radius;
     /* FAKE: this shared line preserves the loop-setup load schedule. T-10020. */
-    object = (EnObj *)D_8013984C; status = D_80139B08; do {
+    object = D_8013984C; status = D_80139B08; do {
         distance = func_80132A74((s32) object->unk_16, (s32) object->unk_1A, (s32) D_8011ECF6, (s32) D_8011ECFA);
         if (object->unk_00 != 0) {
             if (distance < radius) {
@@ -497,7 +545,64 @@ void func_80133924(void) {
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801339D4);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80133CA8);
+void func_80133CA8(void) {
+    s32 i;
+    s16 v;
+
+    for (i = 0; i != 10; i++) {
+        if (D_8013984C[i].unk_00 & 0x80) {
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_01 = 3;
+            D_8013984C[i].unk_10 += 4;
+            func_80133F00(i, 1);
+        } else {
+            D_8013984C[i].unk_10 += 1;
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_01 = 7;
+            func_80133F00(i, 0);
+        }
+        if (D_8013984C[i].unk_10 >= 15) {
+            D_8013984C[i].unk_10 = 0;
+            D_8013984C[i].unk_0C++;
+        }
+        switch (D_8013984C[i].unk_00 & 0x7F) {
+        case 0:
+        default:
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_03 = 0;
+            break;
+        case 1:
+        case 2:
+        case 3:
+            if (D_8013984C[i].unk_0C >= 6) {
+                D_8013984C[i].unk_0C = 0;
+            }
+            v = D_80139A34[func_80134008(i)][D_8013984C[i].unk_0C];
+            if (v & 0x80) {
+                ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_03 = 0x85;
+            } else {
+                ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_03 = 0x84;
+            }
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_18 = v & 0x7F;
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_43 = D_80139A2C[D_8013984C[i].unk_00 & 0x7F];
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_26 = D_8013984C[i].unk_16;
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_2A = D_8013984C[i].unk_1A;
+            break;
+        case 4:
+            if (D_8013984C[i].unk_0C >= 4) {
+                D_8013984C[i].unk_0C = 0;
+            }
+            v = D_80139A34[func_80134008(i) + 8][D_8013984C[i].unk_0C];
+            if (v & 0x80) {
+                ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_03 = 0x85;
+            } else {
+                ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_03 = 0x84;
+            }
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_18 = v & 0x7F;
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_43 = D_80139A2C[D_8013984C[i].unk_00 & 0x7F];
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_26 = D_8013984C[i].unk_16;
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_2A = D_8013984C[i].unk_1A;
+            break;
+        }
+    }
+}
 
 void func_80133F00(arg0, arg1)
 s32 arg0;
@@ -505,7 +610,7 @@ s32 arg1;
 {
     u8 *rec;
     s32 j;
-    u8 *e;
+    EnObj *e;
     s16 x;
     s16 y;
 
@@ -514,11 +619,11 @@ s32 arg1;
     rec[0x1983] = 4;
     rec[0x19C7] = 5;
     if (arg1 == 1) {
-        e = D_8013984C + arg0 * 0x30;
-        if (*(s32 *) e == 4) {
-            if (!(*(s32 *) (e + 0xC) & 1)) {
-                x = *(s16 *) (e + 0x16);
-                y = *(s16 *) (e + 0x1A);
+        e = &D_8013984C[arg0];
+        if (e->unk_00 == 4) {
+            if (!(e->unk_0C & 1)) {
+                x = e->unk_16;
+                y = e->unk_1A;
                 rec[0x1983] |= 0x80;
                 rec[0x19C7] |= 0x80;
                 *(s16 *) (rec + 0x19A6) = x - 0x10;
@@ -526,9 +631,9 @@ s32 arg1;
                 *(s16 *) (rec + 0x19EA) = x + 0x10;
                 *(s16 *) (rec + 0x19EE) = y + 7;
             }
-        } else if (!(*(s32 *) (e + 0xC) & 1)) {
-            x = *(s16 *) (e + 0x16);
-            y = *(s16 *) (e + 0x1A);
+        } else if (!(e->unk_0C & 1)) {
+            x = e->unk_16;
+            y = e->unk_1A;
             rec[0x1983] |= 0x80;
             rec[0x19C7] |= 0x80;
             *(s16 *) (rec + 0x19A6) = x - 0x10;
@@ -542,7 +647,7 @@ s32 arg1;
 s32 func_80134008(s32 arg0) {
     s32 v;
 
-    v = D_80139868[arg0].val;
+    v = D_8013984C[arg0].unk_1C;
     if (v < 0x100) {
         return 0;
     }
@@ -576,10 +681,51 @@ void func_801340CC(void) {
     s32 y;
 
     /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-    for (i = 0; i < 10; i++) if (*(s16 *) &D_8013984C[i * 0x30 + 0x16] < -0xC0 || *(s16 *) &D_8013984C[i * 0x30 + 0x16] >= 0xC1 || *(s16 *) &D_8013984C[i * 0x30 + 0x1A] < -0x98 || *(s16 *) &D_8013984C[i * 0x30 + 0x1A] >= 0x99) *(s32 *) &D_8013984C[i * 0x30] = 0;
+    for (i = 0; i < 10; i++) if (D_8013984C[i].unk_16 < -0xC0 || D_8013984C[i].unk_16 >= 0xC1 || D_8013984C[i].unk_1A < -0x98 || D_8013984C[i].unk_1A >= 0x99) D_8013984C[i].unk_00 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134258);
+void func_80134258(s32 arg0) {
+    s32 n;
+    s32 m;
+    s32 r;
+    s32 i;
+
+    func_80134784(&n, &m);
+    for (i = 0; i != 10; i++) {
+        if (D_8013984C[i].unk_00 == 0 && n * 10 < func_800AE0D0() % 100) {
+            r = func_800AE0D0();
+            if (m == 0 && r % 100 >= 61) {
+                D_8013984C[i].unk_00 = 4;
+                m++;
+            } else {
+                D_8013984C[i].unk_00 = func_800AE0D0() % 3 + 1;
+                n++;
+            }
+            r = func_800AE0D0() % 100;
+            if (r < 20) {
+                D_8013984C[i].unk_04 = 0;
+            } else if (r < 60) {
+                D_8013984C[i].unk_04 = 1;
+            } else {
+                D_8013984C[i].unk_04 = 2;
+            }
+            r = func_800AE0D0() % 100;
+            if (r < 20) {
+                D_8013984C[i].unk_08 = 0;
+            } else if (r < 60) {
+                D_8013984C[i].unk_08 = 1;
+            } else {
+                D_8013984C[i].unk_08 = 2;
+            }
+            if (D_8013984C[i].unk_00 == 4) {
+                D_8013984C[i].unk_04 = 0;
+            }
+            D_8013984C[i].unk_0C = 0;
+            D_8013984C[i].unk_10 = 0;
+            func_801344F0(i, arg0);
+        }
+    }
+}
 
 void func_801344F0(s32 arg0, s32 arg1) {
     s32 temp_hi;
@@ -591,37 +737,37 @@ void func_801344F0(s32 arg0, s32 arg1) {
         temp_v1 = func_800AE0D0() % 4;
         switch (temp_v1) {
         default:
-            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            var_s0 = &D_8013984C[arg0];
             break;
         case 0:
             temp_hi = func_800AE0D0() % 320 - 0xA0;
-            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            var_s0 = &D_8013984C[arg0];
             var_s0->unk_16 = temp_hi;
             var_s0->unk_1A = -0x96;
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0x200);
             break;
         case 1:
-            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            var_s0 = &D_8013984C[arg0];
             var_s0->unk_16 = 0xBE;
             var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0x600);
             break;
         case 2:
             temp_hi_2 = func_800AE0D0() % 320 - 0xA0;
-            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            var_s0 = &D_8013984C[arg0];
             var_s0->unk_16 = temp_hi_2;
             var_s0->unk_1A = 0x96;
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0xA00);
             break;
         case 3:
-            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            var_s0 = &D_8013984C[arg0];
             var_s0->unk_16 = -0xBE;
             var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0xE00);
             break;
         }
     } else {
-        var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+        var_s0 = &D_8013984C[arg0];
         var_s0->unk_16 = (s16) ((func_800AE0D0() % 320) - 0xA0);
         var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
         var_s0->unk_1C = (s32) (func_800AE0D0() % 4096);
@@ -641,7 +787,7 @@ void func_80134784(s32 *arg0, s32 *arg1) {
     *arg0 = 0;
     *arg1 = 0;
     for (i = 0; i < 10; i++) {
-        switch (*(s32 *)(D_8013984C + i * 0x30)) {
+        switch (D_8013984C[i].unk_00) {
         case 0:
             break;
         case 1:
@@ -659,7 +805,7 @@ void func_80134784(s32 *arg0, s32 *arg1) {
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134800);
 
 /* FAKE: the record pointer stays an expression; as a local it is spilled to another stack slot than the original's (T-3330, T-9330) */
-#define EN_OBJ(i) ((EnObj *) (D_8013984C + (i) * 0x30))
+#define EN_OBJ(i) (&D_8013984C[i])
 void func_80134C1C(arg0)
 s32 arg0;
 {
@@ -821,31 +967,31 @@ void func_80135044(s32 arg0, s32 arg1) {
 }
 
 void func_8013515C(s32 arg0, s32 arg1) {
-    u8 *p;
+    EnObj *p;
 
-    p = D_8013984C + arg0 * 0x30;
-    if (*(s32 *) (p + 0x28) < 3) {
-        switch (*(s32 *) (p + 4)) {
+    p = &D_8013984C[arg0];
+    if (p->unk_28 < 3) {
+        switch (p->unk_04) {
         case 1:
             if (arg1 < 0xC4) {
                 if (!(func_800AE0D0() & 1)) {
-                    *(s32 *) (p + 0x2C) = 0;
+                    p->unk_2C = 0;
                 } else {
-                    *(s32 *) (p + 0x2C) = 1;
+                    p->unk_2C = 1;
                 }
-                *(s32 *) (p + 0x28) = *(s32 *) (p + 8) * 2 + 4;
-                *(s32 *) (p + 0x24) = func_800AE0D0() % 15 + 0x1E;
+                p->unk_28 = p->unk_08 * 2 + 4;
+                p->unk_24 = func_800AE0D0() % 15 + 0x1E;
             }
             break;
         case 2:
             if (arg1 < 0x384) {
                 if (!(func_800AE0D0() & 1)) {
-                    *(s32 *) (p + 0x2C) = 0;
+                    p->unk_2C = 0;
                 } else {
-                    *(s32 *) (p + 0x2C) = 1;
+                    p->unk_2C = 1;
                 }
-                *(s32 *) (p + 0x28) = *(s32 *) (p + 8) * 2 + 4;
-                *(s32 *) (p + 0x24) = func_800AE0D0() % 15 + 0x1E;
+                p->unk_28 = p->unk_08 * 2 + 4;
+                p->unk_24 = func_800AE0D0() % 15 + 0x1E;
             }
             break;
         }
@@ -912,7 +1058,18 @@ void func_801359D0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135A48);
+/* Implicit int in the original (no return value): as1 then leaves the nop after the second test. T-18200 */
+s32 func_80135A48(s32 arg0, s32 arg1) {
+    if (D_80139278[D_801392A0] <= 0 || D_80139278[D_801392A0] >= 10) {
+        D_801392A0++;
+        if (D_801392A0 >= 10) {
+            D_801392A0 = 0;
+        }
+        D_80139228[D_801392A0][1] = arg0 + 0xA0;
+        D_80139228[D_801392A0][3] = arg1 + 0x78;
+        D_80139278[D_801392A0] = 1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135ACC);
 
@@ -1006,31 +1163,31 @@ void func_80136A2C(void)
   {
     for (i = 0; i < 5; i++)
     {
-      if ((((EnObj *) D_8013984C)[i * 2].unk_00 > 0) && (((EnObj *) D_8013984C)[i * 2].unk_00 < 4))
+      if ((D_8013984C[i * 2].unk_00 > 0) && (D_8013984C[i * 2].unk_00 < 4))
       {
         if (D_80139B18 < 3)
         {
-          ((EnObj *) D_8013984C)[i * 2].unk_00 = ((EnObj *) D_8013984C)[i * 2].unk_04 + 1;
+          D_8013984C[i * 2].unk_00 = D_8013984C[i * 2].unk_04 + 1;
         }
         else
         {
-          ((EnObj *) D_8013984C)[i * 2].unk_00 = 4;
-          ((EnObj *) D_8013984C)[i * 2].unk_04 = 0;
+          D_8013984C[i * 2].unk_00 = 4;
+          D_8013984C[i * 2].unk_04 = 0;
         }
       }
-      if ((((EnObj *) D_8013984C)[(i * 2) + 1].unk_00 > 0) && (((EnObj *) D_8013984C)[(i * 2) + 1].unk_00 < 4))
+      if ((D_8013984C[(i * 2) + 1].unk_00 > 0) && (D_8013984C[(i * 2) + 1].unk_00 < 4))
       {
         if (D_80139B18 < 3)
         {
           if (!i)
           {
           }
-          ((EnObj *) D_8013984C)[(i * 2) + 1].unk_00 = ((EnObj *) D_8013984C)[(i * 2) + 1].unk_04 + 1;
+          D_8013984C[(i * 2) + 1].unk_00 = D_8013984C[(i * 2) + 1].unk_04 + 1;
         }
         else
         {
-          ((EnObj *) D_8013984C)[(i * 2) + 1].unk_00 = 4;
-          ((EnObj *) D_8013984C)[(i * 2) + 1].unk_04 = 0;
+          D_8013984C[(i * 2) + 1].unk_00 = 4;
+          D_8013984C[(i * 2) + 1].unk_04 = 0;
         }
       }
     }

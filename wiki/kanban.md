@@ -147,6 +147,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-18000-types-first-shugaku|T-18000 Types-first: SHUGAKU]]
 - [ ] [[tickets/T-19011-w3-d-p11|T-19011 Wave 3 package w3-d-p11]]
 - [ ] [[tickets/T-19013-w3-d-p13|T-19013 Wave 3 package w3-d-p13]]
+- [ ] [[tickets/T-18200-types-first-en_nichi|T-18200 Types-first: EN_NICHI]]
 - [ ] [[tickets/T-17500-types-first-shougatu|T-17500 Types-first: SHOUGATU]]
 - [ ] [[tickets/T-19009-w3-d-p09|T-19009 Wave 3 package w3-d-p09]]
 - [ ] [[tickets/T-19007-w3-d-p07|T-19007 Wave 3 package w3-d-p07]]

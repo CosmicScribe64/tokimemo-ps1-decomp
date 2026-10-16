@@ -33,6 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-18100-types-first-bunka_sd|T-18100]] Types-first: BUNKA_SD: scene event lists (`BsdEvent`), text tables and picture sets in `BUNKA_SD.h`, 15 redrafts (6 better than the census), 9 matches / 4,820 bytes, packages T-18101..T-18103 (Done).
 - [[tickets/T-17800-types-first-option|T-17800]] Types-first: OPTION: menu rows, word tables and the `OptActor44` record view in `OPTION.h`, 32 redrafts (19 better than the census), 4 matches / 1,548 bytes, packages T-17801..T-17803 (Done).
 - [[tickets/T-19012-w3-d-p12|T-19012]] Wave 3 package w3-d-p12: OMIMAI `801320A0.c`, `801331B0.c`, 2 of 3 matched (`func_80132670` with a scalar-view FAKE, `func_80134628` from its KANGEI sibling, 928 B), `func_8013388C` back to `INCLUDE_ASM` (Done).
+- [[tickets/T-18200-types-first-en_nichi|T-18200]] Types-first: EN_NICHI: `EnObj D_8013984C[10]`, sprite frames, ring buffer and stack tables typed in `EN_NICHI.h`, 19 redrafts (6 better than the census, none 0), 5 hand matches / 2,500 bytes, packages T-18201..T-18202 (Done).
 - [[tickets/T-17900-types-first-name_ent|T-17900]] Types-first: NAME_ENT: flag-counter, digit and name-buffer tables in `NAME_ENT.h`, typed views of the main-exe records in the redraft, 30 redrafts (14 better than the census), 2 matches / 904 bytes, packages T-17901..T-17904 (Done).
 - [[tickets/T-19011-w3-d-p11|T-19011]] Wave 3 package w3-d-p11: TACO `func_8013506C` (29 lines) and `func_80134A18` (36 lines) stay guarded drafts, `func_80133E98` stays `INCLUDE_ASM`; chain-assignment store order and the call-saved quotient rule found (Done).
 - [[tickets/T-19013-w3-d-p13|T-19013]] Wave 3 package w3-d-p13: TACO `801480B0.c`, `func_80148184` and `func_801487A4` matched (1,336 B; pointer-cast constant, `[i - 1]` pair tables, two-step `s16` index for the missing ugen temporary), `func_801484E4` guarded at 6 rows after the closer pass (counter web, two FAKEs) (Done).
@@ -402,6 +403,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[etc-family-results]]: eleven ETC matches / 5900 literal bytes, positive and negative transfer evidence; the T-17300 types-first pass (ETC types, redraft numbers, sibling ports, near misses, packages).
 
+- [[en-nichi-family-results]] - EN_NICHI types-first pass (type map, index-form and peeled-loop idioms, redraft numbers, packages; T-18200).
 - [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction; NAME_ENT types-first pass (type map, redraft numbers, near misses, packages; T-17900).
 
 - [[tickets/T-13600-taiiku-families|T-13600]] TAIIKU source-family recovery (In Progress).
