@@ -616,8 +616,7 @@ void func_8015906C(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-17105, 16 differing lines; case 7: the original keeps `li v1,0x1000` in the delay slot of the first bnez (a hoisted constant range), here it sits before the last store. `sh` holds each shifted value so that addu takes (value, shifted) in the original operand order. */
+/* `sh` holds each shifted value so that addu takes (value, shifted) in the original operand order (T-17105) */
 void func_80159214(void) {
     s32 temp;
     s32 color;
@@ -702,10 +701,12 @@ void func_80159214(void) {
     case 7:
         func_8013EA60(0, 0x21, D_8015EBB0, 1);
         if (D_8015ED94 == 0) {
-            D_8015EDD8 = 0;
+            D_8015ED98 = 0x1000;
+            /* FAKE: T-17105, D_8015EDD8 written through the base symbol of D_8015EDC4 (the
+               aggregate is not declared yet); as1 then keeps the D_8015EDC4 load above this store */
+            (&D_8015EDC4)[5] = 0;
             D_8015EDC4 &= 0xFFFF0000;
             D_8015EDC4 |= 5;
-            D_8015ED98 = 0x1000;
             func_8013E7C0(0x30, 7, 1, 1);
         }
         func_8014EF3C();
@@ -721,9 +722,6 @@ void func_80159214(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_80159214);
-#endif
 
 void func_80159620(void) {
     switch (D_8015EDD8) {
