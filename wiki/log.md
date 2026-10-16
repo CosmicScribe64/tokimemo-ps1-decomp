@@ -16534,3 +16534,6 @@ Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG
 
 ## [2026-10-16] ticket | T-17002 In Progress
 [[tickets/T-17002-w3-main-p02]] created and started: wave 3 package w3-main-p02, four functions of `src/main/800674B0.c` (`func_8006BC28`, `func_800676AC`, `func_80067870`, `func_800696DC`), worktree `tokimemo-wt/w3-main-p02`, base `w2-good`. Follows [[tickets/T-17000-types-first-main]].
+
+## [2026-10-16] ticket | T-17002 In Review
+[[tickets/T-17002-w3-main-p02]] In Progress to In Review: 3 of 4 functions matched (`func_8006BC28`, `func_800676AC`, `func_800696DC`, 3,184 bytes, plain C in `src/main/800674B0.c`); `func_80067870` back to `INCLUDE_ASM` at 244 rows (draft `drafts/T-17002/main/func_80067870/body.c`). All three matches use marked FAKE empty tests that give a promoted global or parameter a second use (`if ((s32)D_800B6708) {}` before the dispatch, `if (arg0) {}` between store and call, `KEEP_UNK_1117();` before each call-free stretch of the else arm), `func_800696DC` also two unused frame locals and no `s32` pointer casts. Clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Notes in [[matching-notes]] (T-17002), update line and one row in [[data/t0018-cases]], six rows in [[register-cheatsheet]].
