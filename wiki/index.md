@@ -36,6 +36,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-11850-tt-batch-11|T-11850]] TT batch 11: one long Opus run per file group (In Progress).
 - [[tickets/T-11840-tt-batch-10|T-11840]] TT batch 10: one long Opus run per large function (Done; 10 of 12 matched, TT 78.6% of bytes).
 - [[tickets/T-18700-types-first-bunkasai|T-18700]] Types-first: BUNKASAI: name, text and per-girl tables in `BUNKASAI.h`, 10 redrafts (4 better than the census), 2 matches / 2,376 bytes, packages T-18701..T-18703 (Done).
+- [[tickets/T-19020-w3-d-p20|T-19020]] Wave 3 package w3-d-p20: RENSYU `80132040.c`, 1 of 4 matched (`func_80133CB8`, FAKE: empty test as a basic block boundary), `func_80133628` guarded (21 lines), `func_80133990` and `func_8013325C` back to `INCLUDE_ASM`; stack table layout rule
 - [[tickets/T-18400-types-first-kangei|T-18400]] Types-first: KANGEI: picture-set tables, MASTER streak types and club name tables in `KANGEI.h`, 11 redrafts (7 better than the census), 4 matches / 2,596 bytes, packages T-18401..T-18403 (Done).
 - [[tickets/T-18100-types-first-bunka_sd|T-18100]] Types-first: BUNKA_SD: scene event lists (`BsdEvent`), text tables and picture sets in `BUNKA_SD.h`, 15 redrafts (6 better than the census), 9 matches / 4,820 bytes, packages T-18101..T-18103 (Done).
 - [[tickets/T-17800-types-first-option|T-17800]] Types-first: OPTION: menu rows, word tables and the `OptActor44` record view in `OPTION.h`, 32 redrafts (19 better than the census), 4 matches / 1,548 bytes, packages T-17801..T-17803 (Done).
@@ -453,3 +454,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-15700-taco-taiiku-draft-repairs|T-15700]] All28 TACO/TAIIKU failed drafts now compile; no zeros (Done).
 - [[tickets/T-19014-w3-d-p14|T-19014]] Wave 3 package w3-d-p14: TACO `8013F250.c`, 5 of 5 functions matched (2,848 B: `func_801404FC`, `func_80140364`, `func_8013F9C0`, `func_801407D4`, `func_80140ADC` in the closer pass; FAKE frame-home locals) (Done).
 - [[tickets/T-19017-w3-d-p17|T-19017]] Wave 3 package w3-d-p17: TACO `80140DF0.c`, 4 of 5 functions matched (2,104 B: `func_80141B18`, `func_801413B8`, `func_80141050`, `func_80141170` in the closer pass; FAKE frame-home locals), `func_801416E8` guarded at 28 lines (Done).
+- [[tickets/T-19018-w3-d-p18|T-19018]] Wave 3 package w3-d-p18: TACO `8013D1E0.c`, `80153AA0.c`, 1 of 3 matched (`func_8013D528` 784 B, FAKE pad and UV line), `func_8013D838` guarded at 10 rows, `func_80153B38` open (175 rows) (Done).

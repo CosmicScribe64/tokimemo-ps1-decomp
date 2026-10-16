@@ -2,7 +2,7 @@
 #include "ovl/TACO.h"
 
 void func_80153AA0(s32 arg0, s32 arg1, s32 arg2) {
-    u8 buf[0xA0]; /* FAKE: size reproduces the original frame (locals 0xA0 bytes); the real type behind func_80153B38's out-buffer is unknown. T-8040 */
+    POLY_G3 *buf[0x28]; /* func_80153B38 fills one POLY_G3 pointer per fan triangle (0xA0 bytes, the original frame). T-19018 */
     s32 x;
     s32 p;
 
