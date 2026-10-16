@@ -16362,3 +16362,9 @@ Upstream main a8591fb8 merged T-17102's independent matches for func_80156D78 an
 ## [2026-10-16] build | T-20003 final single-callback verification passed
 
 On upstream main a8591fb8, actual default funcdiff proves all 1,268 linked bytes of func_80138F6C match. The 39-step incremental build passes RPG_BAT/GYOZI SHA1 and globals, explicit binary checks pass 27/27, and sync_protos --check-branch passes (0 new / 15 known). Final production scope is one C callback plus its missing D_8015E8A0 declaration; upstream 80156CC0.c remains verbatim. Two FAKE sites are marked and locally reviewed. [[tickets/T-20003-rpg-timer-callees]] and PR #38 remain In Review for the maintainer.
+
+## [2026-10-16] ticket | T-20003 Done (PR #38 merged)
+
+Contributor KakarottoCake's PR #38 narrowed to RPG_BAT `func_80138F6C` (1,268 bytes) after T-17102 matched the other
+two callbacks on main. Review: no findings; one doubled blank line removed. Clean rebuild 27/27, headers, globals and
+prototypes OK, funcdiff MATCH. [[tickets/T-20003-rpg-timer-callees]] Done.

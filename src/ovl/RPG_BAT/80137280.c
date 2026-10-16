@@ -747,7 +747,6 @@ void func_80138F6C(void) {
     }
 }
 
-
 void func_80139460(void) {
     switch (D_8015EDD8) {
     case 0:

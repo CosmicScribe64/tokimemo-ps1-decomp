@@ -1,7 +1,7 @@
 ---
 id: T-20003
 title: Match RPG battle callback func_80138F6C
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-16
 updated: 2026-10-16
@@ -48,3 +48,8 @@ Post-integration prototype guard completed successfully: integrated-protos.log r
 Final narrowed-scope verification on main a8591fb8: narrowed-proof.log proves the actual default func_80138F6C linked bytes match (1,268 bytes); narrowed-build.log passes the 39-step incremental build, including RPG_BAT/GYOZI SHA1 and globals; narrowed-checksums.log reports 27/27 binary SHA1 checks passed. Only func_80138F6C and D_8015E8A0's declaration remain in the production diff; upstream 80156CC0.c is unchanged.
 
 Final narrowed-scope prototype guard also passes: narrowed-protos.log reports 0 new disagreements, 15 known and branch check OK. Final local standards review confirms two FAKE sites and only the intended function/header/wiki diff. Maintainer review remains pending.
+
+2026-10-16, maintainer review (PR #38): no findings against CODING_STANDARDS.md. Both FAKE comments name T-20003 and
+give the reason. Verified on the current integration base: clean rebuild 27/27, headers, globals and prototype
+checks OK, `funcdiff --resolve RPG_BAT:func_80138F6C` MATCH (1,268 bytes). Removed one doubled blank line after the
+function. Status Done.
