@@ -427,27 +427,23 @@ void func_8013D150(void) {
     }
 }
 
-/* NON_MATCHING: T-11630, 20 differing lines, registers only: the original leaves a0 unused (v in a1, base in a2, tag in a3) */
-#ifdef NON_MATCHING
+/* The cursor is read again for the increment (as in func_8013D508); with v + 1 IDO puts v in $a0, the original in $a1. T-11860 */
 void func_8013D2E0(void) {
     u8 *c;
     TtDrawBuffer80B8 *p;
     TILE *v;
 
     c = D_80158A64;
-    p = ((TtDrawSelect0C *)D_80158A68)->index + (TtDrawBuffer80B8 *)D_80158AB4;
+    p = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
     v = (TILE *)p->cursor;
-    p->cursor = (DR_MODE *)(v + 1);
+    p->cursor = (DR_MODE *)((u8 *)p->cursor + 0x10);
     ((TtOtTag *)v)->len = 3, v->code = 0x61;
     v->r0 = c[0x13], v->g0 = c[0x14], v->b0 = c[0x15];
     v->x0 = -0x80, v->y0 = 8;
     v->w = 0x100, v->h = 0xE8;
-    ((TtOtTag *)v)->addr = *(u32 *)&p->ordering[15];
-    (&p->ordering[15])->addr = (u32)v;
+    ((TtOtTag *)v)->addr = p->ordering[15].addr;
+    p->ordering[15].addr = (u32)v;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D2E0);
-#endif
 
 void func_8013D3C0(void) {
     u8 *c;
