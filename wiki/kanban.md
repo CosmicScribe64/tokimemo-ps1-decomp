@@ -23,8 +23,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-16520-sibling-report|T-16520 Matched-sibling report for work packages]]
-
 - [ ] [[tickets/T-16200-matching-wave-2|T-16200 Matching wave 2]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
@@ -54,6 +52,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
+- [ ] [[tickets/T-16520-sibling-report|T-16520 Matched-sibling report for work packages]]
+
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
