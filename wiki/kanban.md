@@ -23,7 +23,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-19026-w3-d-p26|T-19026 Wave 3 package w3-d-p26]]
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
@@ -54,6 +53,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-19026-w3-d-p26|T-19026 Wave 3 package w3-d-p26]]
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]

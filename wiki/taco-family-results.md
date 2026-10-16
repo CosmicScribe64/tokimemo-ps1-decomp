@@ -174,3 +174,7 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p18 (T-19018)
 
 [[tickets/T-19018-w3-d-p18]] (`8013D1E0.c`, `80153AA0.c`): `func_8013D528` (the billboard quad, 784 bytes) matched, a clone of `func_80140ADC` (FAKE `pad[2]` and a one-line `setUVWH` expansion); `func_8013D838` (its large twin, 840 bytes) stays a 10-row guarded draft; `func_80153B38` (the 40-triangle fan, 832 bytes) stays `INCLUDE_ASM` at 175 rows. The frame rule refined there (declared scalars before the aggregates are the bytes above them) and the counter, store-order and colour-byte findings are in [[matching-notes]], "T-19018".
+
+## Matching stage, package w3-d-p26 (T-19026)
+
+[[tickets/T-19026-w3-d-p26]] (`8015ABF0.c`): `func_8015ACCC` (the effect spawner, 1,260 bytes, the last open function of the file but `func_8015B1B8`) matched in plain C with one FAKE, after the hand rewrite of T-16563 had stopped at 437 lines. Types added to `TACO.h`: `D_80161DDC[]` (`s32`, per-kind model address), `D_80161EA4[]` (`s16`), `D_80161EC8[]` (`u8`) and the prototypes of `func_8015B1B8` / `func_8015B2AC`. `func_8015B1B8` stays guarded at 8 rows. How: [[matching-notes]], "T-19026".

@@ -15928,3 +15928,9 @@ Created [[tickets/T-18800-types-first-date2]] (branch `w3-date2-types` from `w2-
 
 ## [2026-10-16] ticket | T-19026 started
 [[tickets/T-19026-w3-d-p26]] created In Progress: Wave 3 direct package w3-d-p26, TACO `src/ovl/TACO/8015ABF0.c`, two functions (`func_8015B1B8`, `func_8015ACCC`). Branch w3-d-p26 from w2-good.
+
+## [2026-10-16] build | T-19026 TACO func_8015ACCC matched
+TACO `func_8015ACCC` (1,260 bytes) matched, unit sha1 OK (`src/ovl/TACO/8015ABF0.c`, commit "T-19026: match TACO:func_8015ACCC"). One FAKE: `if (b) {}` after `func_80143B34(id)` (a block in the live range of the parameter `a`, so `base` wins `$fp`). Found by reading the allocator trace (`R9SAVE`/`R9UNIT` priorities 2.6 against 2.571), index loops with one shared strength-reduced pointer, a declared-local order for the `id` slot, and `order_search` on the pair address (76 rows to 0). [[matching-notes]], [[register-cheatsheet]], [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-19026 In Review
+[[tickets/T-19026-w3-d-p26]] In Progress to In Review: TACO package, 1 of 2 functions matched (`func_8015ACCC`, 1,260 bytes, FAKE). `func_8015B1B8` stays guarded at 8 rows (T-0018). Notes in [[matching-notes]] ("T-19026"), cheat sheet rows in [[register-cheatsheet]], rows in [[data/t0018-cases]], line in [[taco-family-results]]. Card moved in [[kanban]], line in [[index]].
