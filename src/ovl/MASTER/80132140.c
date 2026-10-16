@@ -1,10 +1,5 @@
 #include "ovl/MASTER.h"
 
-typedef struct {
-    void (*f[4])();
-} FnTbl4; /* size 0x10 */
-extern FnTbl4 D_8013C2E4;
-
 void func_80132140(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl4 tbl;
@@ -96,14 +91,6 @@ INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80132140", func_80132444);
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80132140", func_801326B4);
 
-typedef struct {
-    u32 pad0 : 25;
-    u32 grade : 2;
-    u32 pad1 : 3;
-    u32 flag : 1;
-    u32 pad2 : 1;
-} MasterSlot; /* word of GameState.unk_66C[]: bit 30 is the flag */
-
 void func_80133374(void) {
     s32 i;
 
@@ -115,7 +102,7 @@ void func_80133374(void) {
     if (D_8013C2E0 != 0xFF) {
         D_800E6280.unk_1BC[D_8013C2E0].unk_06 += 2;
     }
-    ((MasterSlot *)&D_800E6280.unk_66C[(u32)D_800E6280.unk_0F4.h >> 0xC])->flag = 1;
+    ((MasterClubBits *)&D_800E6280.unk_66C[(u32)D_800E6280.unk_0F4.h >> 0xC])->b30 = 1;
     func_8008585C();
     func_800573AC();
     func_80057390(0);
@@ -124,4 +111,50 @@ void func_80133374(void) {
     func_80086424();
 }
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80132140", func_8013348C);
+void func_8013348C(void) {
+    u32 sel; /* declared before kind: its slot sits above kind's stack home (sp+0x2B), T-18600 */
+    u8 kind;
+
+    sel = (u16) D_800E6280.unk_0F4.h >> 0xC;
+    switch (sel) {
+    case 0:
+        kind = 0;
+        break;
+    case 1:
+        if ((((u8) D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4) == 1) && (D_8013C2E0 == 0)) {
+            kind = 0xB;
+        } else if (((u8) D_800E6280.unk_1BC[1].unk_0C.b[2] >> 4) == 1) {
+            kind = 1;
+            if (D_8013C2E0 == 1) {
+                kind = 0xC;
+            }
+        } else {
+            kind = 1;
+        }
+        break;
+    case 2:
+        kind = 2;
+        break;
+    case 3:
+        kind = 3;
+        break;
+    case 4:
+        kind = 4;
+        break;
+    case 5:
+        kind = 5;
+        break;
+    }
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_00 = D_8013C2E0;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_02 = 0x15;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_01 = kind;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = get_g_zyotai_h(D_8013C2E0);
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_04 = D_800E6280.unk_03E;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_05 = D_800E6280.unk_03F;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_06 = D_800E6280.unk_040;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_07 = D_800E6280.unk_041;
+    D_800E6280.unk_F5E++;
+    if (D_800E6280.unk_F5E >= 0xFF) {
+        D_800E6280.unk_F5E = 0xFE;
+    }
+}

@@ -15564,6 +15564,325 @@ Clean build 27/27 (all unit sha1 OK, TACO `1419e93c...`), `check_headers`, `migr
 ## [2026-10-16] ticket | T-19009 Done
 [[tickets/T-19009-w3-d-p09]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 3 of 4 functions matched (1,956 bytes): TACO `func_801428DC`, `func_80144430` and `func_80142AF0`, all plain C with two marked FAKE locals; `func_80144094` stays `INCLUDE_ASM` with its draft archived. Rebuild 27/27 OK on the branch. Merge via the wave 3 merge script.
 
+## [2026-10-16] ticket | T-19007 started
+
+[[tickets/T-19007-w3-d-p07]]: wave 3 package w3-d-p07 opened in worktree `w3-d-p07` (branch `w3-d-p07` from `w2-good`). Scope: `src/ovl/TAIIKU/801452D0.c`, `func_8014607C`, `func_80146D18`, `func_80145370`, `func_80147B14`. Status In Progress.
+
+## [2026-10-16] ticket | T-19007 In Review
+
+[[tickets/T-19007-w3-d-p07]] In Progress to In Review: 1 of 4 functions matched (648 bytes): TAIIKU `func_80146D18` in plain C (plain `for`/`while` loops over the index replace the draft's `do`/`while` shapes). `func_8014607C` (20 lines) and `func_80145370` (22 lines) stay guarded with extended comments, `func_80147B14` stays `INCLUDE_ASM` with a typed draft under `drafts/T-19007/`. Notes in [[matching-notes]] (T-19007), [[data/t0018-cases]] and [[taiiku-family-results]]. Review pending.
+
+## [2026-10-16] build | T-19007 closer pass (func_8014607C)
+
+[[tickets/T-19007-w3-d-p07]]: the Opus closer pass on TAIIKU `func_8014607C`. It is still guarded at 20 lines and nothing new matched. `cc -S` shows that uopt reads each copy's source (the masked byte, the promoted s16) in the later blocks, so as1 keeps the `move`s. A dead redefinition of a raw-byte local stops the mask swap but reverses the colour order (74 lines). Comment updated in `src/ovl/TAIIKU/801452D0.c`; notes in [[matching-notes]] and [[data/t0018-cases]]. The ticket stays In Review.
+
+## [2026-10-16] ticket | T-19007 Done
+
+[[tickets/T-19007-w3-d-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 1 of 4 functions matched (648 bytes): TAIIKU `func_80146D18` in plain C. `func_8014607C` and `func_80145370` stay guarded, `func_80147B14` stays `INCLUDE_ASM` with a typed draft. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19008 In Progress
+
+[[tickets/T-19008-w3-d-p08]] created and In Progress: wave 3 package w3-d-p08, TAIIKU `func_8013B608`, `func_8013B200`, `func_8013B78C`, `func_8013B94C`, `func_8013BCEC` (`src/ovl/TAIIKU/80138950.c`).
+
+## [2026-10-16] ticket | T-19008 In Review
+
+[[tickets/T-19008-w3-d-p08]] In Progress to In Review: 1 of 5 TAIIKU functions matched (`func_8013B200`, 432 bytes, FAKE u16 views; commit `f40d9f27`), `func_8013BCEC` and `func_8013B608` guarded (18 differing lines each, `src/ovl/TAIIKU/80138950.c`, prototype in `include/ovl/TAIIKU.h`), `func_8013B78C`, `func_8013B94C` left `INCLUDE_ASM`. Notes in [[matching-notes]] (T-19008, includes the `ugen -S` method), [[register-cheatsheet]], [[data/t0018-cases]] and [[taiiku-family-results]]. About 85 minutes.
+
+## [2026-10-16] build | T-19008 closer pass
+
+[[tickets/T-19008-w3-d-p08]] Opus closer pass on the two guarded drafts in `src/ovl/TAIIKU/80138950.c`: `func_8013B608` matched (388 bytes, commit `d37b5187`) by splitting the result assignment, `v = x >> 3; v += (x >> 3) * 80 / 48;`, whose s16 narrowing gives the missing ugen temporary and leaves no instruction. `func_8013BCEC` is now 2 instructions short (counter write-back before `func_8013C5C8`) and stays guarded. Updated [[matching-notes]] (T-19008), [[data/t0018-cases]], [[register-cheatsheet]], [[taiiku-family-results]], the ticket and [[index]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19008 Done
+
+[[tickets/T-19008-w3-d-p08]] In Review to Done after the code review: 2 of 5 listed TAIIKU functions matched (820 bytes: `func_8013B200` 432, `func_8013B608` 388, FAKE views), `func_8013BCEC` guarded (2 instructions missing), `func_8013B78C` and `func_8013B94C` left `INCLUDE_ASM`. Three findings fixed: a stray edit of the T-16554 time in [[taiiku-family-results]], stale lead statements (guarded `func_8013B608`, 85 minutes) in the ticket, [[taiiku-family-results]] and [[matching-notes]], and the missing ticket id in the `func_8013BCEC` FAKE comment. Unit sha1 OK, headers, globals and proto checks OK.
+## [2026-10-16] ticket | T-17700 Types-first: GEKO started
+
+Opened [[tickets/T-17700-types-first-geko]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover GEKO's shared types, redraft its unmatched functions with the T-16550/T-16560/T-17400 drivers, then cut packages. Branch `w3-geko-types` from `w2-good`.
+
+## [2026-10-16] ticket | T-17700 Types-first: GEKO to In Review
+
+[[tickets/T-17700-types-first-geko]]: GEKO's stack-copied tables typed in `include/ovl/GEKO.h` (`GekoMonthDays`, `GekoNames12`, `GekoWords11`/`GekoWords2`, `GekoFnTbl42`, `GekoShorts10`, `GekoShorts6`, byte and text tables, the `Rec24` side arrays); 35 redrafts with `drafts/T-17700/redraft.py` (14 better than the census, sum 6,067 to 5,536 rows over the unguarded functions, none 0); the driver's fold now runs after `fix_shared_hi` (the old order printed `D_800E6280.unk0` for GameState bytes); 1 match / 484 bytes (`func_8013E22C`, EVENT clone), 5 guarded drafts; 8 packages T-17701..T-17708. New section "Types-first pass (T-17700)" on [[scenes-family-results]], a row in [[data-types]]. In Review, waiting for the code review. Clean build 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] ticket | T-17700 Done
+
+[[tickets/T-17700-types-first-geko]] In Review to Done after the code review against `CODING_STANDARDS.md`: 1 function matched (484 bytes: `func_8013E22C`), 5 guarded drafts, 35 redrafts, 8 packages (T-17701..T-17708). Two style findings fixed (cast spacing in the `func_80140040` draft, a blank line in the `func_801355E8` draft; `src/ovl/GEKO/8013F360.c`, `src/ovl/GEKO/80134D10.c`). GEKO unit sha1 OK after the rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+## [2026-10-16] ticket | T-17600 Types-first: GYOZI In Progress
+
+Created [[tickets/T-17600-types-first-gyozi]] (wave 3 types-first pass for GYOZI, branch `w3-gyozi-types` from `w2-good`), card in In Progress on [[kanban]], line in [[index]].
+
+## [2026-10-16] build | T-17600 GYOZI types, redraft and matches
+
+[[tickets/T-17600-types-first-gyozi]]: GYOZI types in `include/ovl/GYOZI.h` (callback tables, dumpling arrays, `Rec24 D_8012CA40`, `GyoziGirl.unk_14`, `GyoziWork.unk_10B8`; `game.h` included), `D_800F62F0` added to `include/main_api.h`. `drafts/T-17600/redraft.py` redrafted all 37 unmatched functions: 7 better than the census (5,416 bytes), 19 the same, 3 worse, none 0. Matched 3 functions / 908 bytes: `func_8013E308`, `func_8013DC2C`, `func_8013B0C4`. Packages T-17601..T-17608 (33 functions, 19,180 bytes). Details on [[event-family-results]], rows in [[data-types]] and [[matching-notes]].
+
+## [2026-10-16] ticket | T-17600 In Review
+
+[[tickets/T-17600-types-first-gyozi]] In Progress to In Review: clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]].
+
+## [2026-10-16] ticket | T-17600 Done
+
+[[tickets/T-17600-types-first-gyozi]] In Review to Done after the code review against `CODING_STANDARDS.md`: 3 functions matched (908 bytes: `func_8013E308`, `func_8013DC2C`, `func_8013B0C4`), GYOZI types in `include/ovl/GYOZI.h`, 37 redrafts in `drafts/T-17600/`. One finding, fixed: the three fakematch idioms in `func_8013DC2C` now carry `FAKE` comments (comment-only, GYOZI sha1 OK). `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-17800 Types-first: OPTION opened
+
+Opened [[tickets/T-17800-types-first-option]] (In Progress) on branch `w3-option-types` from `w2-good`: recover OPTION's shared types, redraft every unmatched function with the pilot drivers, package the rest for wave 3.
+
+## [2026-10-16] build | T-17800 OPTION types and redraft
+
+[[tickets/T-17800-types-first-option]]: menu rows, word tables, `OptActor44` and the moved record and bit-field views declared in `include/ovl/OPTION.h` (now one include guard, includes `game.h`), `D_800E7D37` added to `include/main_api.h`; `drafts/T-17800/redraft.py` redrafted the 32 still-unmatched functions (19 of 30 unguarded better than the census). Matched `func_8013A09C`, `func_8013A1BC`, `func_80136434`, `func_80137040` (1,548 bytes). New page [[option-family-results]].
+
+## [2026-10-16] ticket | T-17800 In Review
+
+[[tickets/T-17800-types-first-option]] In Progress to In Review. Packages T-17801..T-17803 (`w3-option-p01`..`p03`, 12 functions, 6,636 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]).
+
+## [2026-10-16] ticket | T-17800 Done
+
+Code review of [[tickets/T-17800-types-first-option]] against `CODING_STANDARDS.md`: no findings. 4 functions matched (1,548 bytes: `func_8013A09C`, `func_8013A1BC`, `func_80136434`, `func_80137040`), OPTION sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. In Review to Done; branch `w3-option-types` goes to the integration merge.
+
+## [2026-10-16] ticket | T-19010 In Progress
+[[tickets/T-19010-w3-d-p10]] created and started: Wave 3 package w3-d-p10, TAIIKU `src/ovl/TAIIKU/80142240.c` (game B): `func_8014357C`, `func_80144E54`, `func_80144464`, `func_80143814`, `func_80142FB8`. Worktree `tokimemo-wt/w3-d-p10`, branch `w3-d-p10`.
+
+## [2026-10-16] ticket | T-19010 In Review, 4 of 5 functions matched
+[[tickets/T-19010-w3-d-p10]] moved to In Review: TAIIKU `src/ovl/TAIIKU/80142240.c`. Matched `func_80144464`, `func_80143814`, `func_80142FB8` and `func_80144E54` (2,752 bytes); `func_8014357C` stays guarded at 34 lines (was 38). Three FAKE dead statements (`i = 0;` x2, `i = D_8014A110;`), `D_8014A110` is `u8` in `include/ovl/TAIIKU.h`, new prototypes for `func_80143814` and `func_80144E54`. Findings: the `func_80142FB8` spill allocation is an index loop with `<` (the T-16554 note was wrong); `tools/cvt_pass.py`'s entry rule can be met by a dead entry read; store-sinking direction decides which of two equal constant stores goes to the exit. See [[matching-notes]] ("T-19010"), [[register-cheatsheet]], [[data/t0018-cases]] and [[taiiku-family-results]].
+
+## [2026-10-16] ticket | T-19010 Done
+[[tickets/T-19010-w3-d-p10]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 functions matched (2,752 bytes: TAIIKU `func_80144464`, `func_80143814`, `func_80142FB8`, `func_80144E54`), `func_8014357C` stays guarded at 34 lines. Two review findings in `src/ovl/TAIIKU/80142240.c`, fixed: an unmarked dead `i = 0;` in `func_80142FB8` and four redundant `(u8)` casts of the `u8` flag in the new bodies; rebuild OK (globals, headers, protos, TAIIKU.bin SHA1).
+## [2026-10-16] ticket | T-19012 started
+
+[[tickets/T-19012-w3-d-p12]]: wave 3 package w3-d-p12 opened in worktree `w3-d-p12` (branch `w3-d-p12` from `w2-good`). Scope: `src/ovl/OMIMAI/801320A0.c`, `src/ovl/OMIMAI/801331B0.c`, `func_80132670`, `func_80134628`, `func_8013388C`. Status In Progress.
+
+## [2026-10-16] build | T-19012 matches
+
+[[tickets/T-19012-w3-d-p12]]: OMIMAI `func_80134628` (648 bytes, from the KANGEI sibling) and `func_80132670` (280 bytes, scalar view of the first `unk_75D` read, FAKE) matched; unit sha1 OK. `func_8013388C` (2,000 bytes) stays `INCLUDE_ASM`: typed draft in `drafts/T-19012/OMIMAI/func_8013388C/`, row in [[data/t0018-cases]]. `if (rand() % 2)` keeps the signed remainder, only `!= 0` folds ([[matching-notes]], [[register-cheatsheet]]).
+
+## [2026-10-16] ticket | T-19012 In Review
+
+[[tickets/T-19012-w3-d-p12]] In Progress to In Review: 2 of 3 functions matched (928 bytes). Clean rebuild, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Review pending.
+
+## [2026-10-16] ticket | T-19012 Done
+
+[[tickets/T-19012-w3-d-p12]] In Review to Done: code review against `CODING_STANDARDS.md` found one documentation issue (the Goal listed `func_80134628` as 692 B, correct 648 B), fixed. 2 of 3 functions matched (928 bytes): OMIMAI `func_80132670` (one `FAKE`) and `func_80134628` in plain C; `func_8013388C` stays `INCLUDE_ASM` with its typed draft in `drafts/T-19012/OMIMAI/func_8013388C/`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17900 Types-first: NAME_ENT started
+
+Opened [[tickets/T-17900-types-first-name_ent]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover NAME_ENT's shared types, redraft its unmatched functions with the T-16550/T-16560/T-17700 drivers, then cut packages. Branch `w3-name-ent-types` from `w2-good`.
+
+## [2026-10-16] ticket | T-17900 Types-first: NAME_ENT to In Review
+
+[[tickets/T-17900-types-first-name_ent]]: NAME_ENT's flag counters (`D_8014D060`, `D_8014D158`), digit sprite table `D_8014D0F4[10][2]` and name-entry buffers typed in `include/ovl/NAME_ENT.h`; the main-exe records (`NameMetricWork` at `D_800E7D10`, `NameRecordF00[]` at `D_80123120`, `DisplayActor44[]` at `D_8011ECD0`) typed in the m2c context of `drafts/T-17900/redraft.py` (from T-17700) and read through casts; 30 redrafts, 14 of 21 unguarded better than the census (sum 7,056 to 6,107 rows), none 0; 2 matches / 904 bytes (`func_80139740`, `func_8013EE7C`, sibling ports); packages T-17901..T-17904 (17 functions, 11,316 bytes). New section "Types-first pass (T-17900)" on [[name-ent-family-results]], a row in [[data-types]]; the duplicate index line of [[name-ent-family-results]] merged. In Review, waiting for the code review.
+
+## [2026-10-16] ticket | T-17900 Done
+
+[[tickets/T-17900-types-first-name_ent]] In Review to Done after the code review against `CODING_STANDARDS.md`: no findings. 2 functions matched (904 bytes: `func_80139740`, `func_8013EE7C`), 30 redrafts, 4 packages (T-17901..T-17904). NAME_ENT sha1 OK after a forced rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+## [2026-10-16] ticket | T-18000 Types-first: SHUGAKU In Progress
+
+Created [[tickets/T-18000-types-first-shugaku]] (wave 3 types-first pass for SHUGAKU, branch `w3-shugaku-types` from `w2-good`; 25 unmatched functions, 9,908 bytes), card in In Progress on [[kanban]], line in [[index]].
+
+## [2026-10-16] build | T-18000 SHUGAKU types, redraft and matches
+
+[[tickets/T-18000-types-first-shugaku]]: SHUGAKU callback tables in `include/ovl/SHUGAKU.h` (`ShFnTblNN`, eight moved from the `.c` files, `D_8013C008` and `D_8013C228` added), display-record copies as `DisplayActor44`, `D_8013C2E4` as `u8`; `void D_80085368(void);` added to `include/main_api.h`. `drafts/T-18000/redraft.py` (from T-17700, plus `rect-local`) redrafted all 25 unmatched functions: over the 22 unguarded ones 9 better than the census (3,368 bytes), 13 the same, none worse, none 0. Matched 5 functions / 2,292 bytes: `func_8013282C`, `func_801399F4`, `func_80135630`, `func_80134B94`, `func_80139054`. Packages T-18001..T-18004 (20 functions). Details on [[shugaku-family-results]] (new page), rows in [[data-types]] and [[matching-notes]].
+
+## [2026-10-16] ticket | T-18000 In Review
+
+[[tickets/T-18000-types-first-shugaku]] In Progress to In Review: clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], lines in [[index]].
+
+## [2026-10-16] ticket | T-18000 Done
+
+[[tickets/T-18000-types-first-shugaku]] In Review to Done: code review against `CODING_STANDARDS.md` found 2 minor items (missing comments on the callback-index and variable-reuse idioms in `func_80134B94` and `func_80139054`), fixed in comments only; SHUGAKU sha1 OK, headers OK. 5 functions matched (2,292 bytes). Card moved in [[kanban]], line in [[index]].
+## [2026-10-16] ticket | T-19011 In Progress
+[[tickets/T-19011-w3-d-p11]] created for wave 3 package w3-d-p11 (TACO `src/ovl/TACO/80133870.c`, `src/ovl/TACO/80134930.c`: `func_8013506C`, `func_80134A18`, `func_80133E98`). Worktree `w3-d-p11` from `w2-good`.
+
+## [2026-10-16] build | T-19011 guarded drafts and tooling notes
+`src/ovl/TACO/80134930.c`: `func_8013506C` (29 differing lines) and `func_80134A18` (36 lines, 18 instructions) kept as `NON_MATCHING` drafts with comments; `func_80133E98` stays `INCLUDE_ASM` (226 lines, four spellings). `include/ovl/TACO.h`: `D_8015F3E0[2]`, `s32 func_80134A18();`. Findings in [[matching-notes]] ("T-19011"), rows in [[data/t0018-cases]] and [[register-cheatsheet]]. Default build: unit TACO sha1 OK.
+
+## [2026-10-16] ticket | T-19011 In Review
+[[tickets/T-19011-w3-d-p11]] In Progress to In Review: 0 of 3 functions matched, 2 guarded drafts, 1 left. Awaiting the code review against `CODING_STANDARDS.md` and the final checks.
+
+## [2026-10-16] build | T-19011 final checks
+Clean build 27/27 (all unit sha1 OK, TACO included), `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK on branch w3-d-p11. See [[tickets/T-19011-w3-d-p11]].
+
+## [2026-10-16] ticket | T-19011 Done
+[[tickets/T-19011-w3-d-p11]] In Review to Done: code review against `CODING_STANDARDS.md` found one low-severity item (matching-driven spellings in the two guarded drafts had no in-source note), fixed with three comments; rebuild 6/6 and TACO sha1 OK. 0 of 3 functions matched: `func_8013506C` (29 lines) and `func_80134A18` (36 lines) stay guarded drafts, `func_80133E98` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-18100 Types-first: BUNKA_SD opened
+
+Opened [[tickets/T-18100-types-first-bunka_sd]] (In Progress) on branch `w3-bunka-sd-types` from `w2-good`: recover BUNKA_SD's shared types, redraft every unmatched function with the pilot drivers, package the rest for wave 3.
+
+## [2026-10-16] build | T-18100 BUNKA_SD types and redraft
+
+[[tickets/T-18100-types-first-bunka_sd]]: `BsdEvent`, the scene event-list and text tables and seven picture sets typed in `include/ovl/BUNKA_SD.h` (now includes `game.h`); `drafts/T-18100/redraft.py` (T-17800 driver plus `pointer-index` and `record-walk`) redrafted the 15 functions unmatched at that point (6 better than the census). Matched 9 functions / 4,820 bytes, one FAKE (`func_80135F38`, non-plain compare operand). New page [[bunka-sd-family-results]]; notes in [[matching-notes]] and [[data-types]].
+
+## [2026-10-16] ticket | T-18100 In Review
+
+[[tickets/T-18100-types-first-bunka_sd]] In Progress to In Review. Packages T-18101..T-18103 (`w3-bunka-sd-p01`..`p03`, 11 functions, 5,908 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]). Clean build 27/27, header, globals and prototype checks pass.
+
+## [2026-10-16] ticket | T-18100 Done
+
+[[tickets/T-18100-types-first-bunka_sd]] reviewed against `CODING_STANDARDS.md`: one cosmetic finding (two double blank lines in `include/ovl/BUNKA_SD.h`), fixed; BUNKA_SD sha1 OK. 9 functions matched (4,820 bytes). In Review to Done, card moved to Done.
+
+## [2026-10-16] ticket | T-19014 In Progress
+[[tickets/T-19014-w3-d-p14]] started: wave 3 package w3-d-p14, TACO `src/ovl/TACO/8013F250.c`, five functions (`func_801404FC`, `func_80140364`, `func_8013F9C0`, `func_801407D4`, `func_80140ADC`). Worktree `tokimemo-wt/w3-d-p14`, base `w2-good`.
+
+## [2026-10-16] ticket | T-19014 In Review, 4 of 5 functions matched
+[[tickets/T-19014-w3-d-p14]] moved to In Review: TACO `src/ovl/TACO/8013F250.c`. Matched `func_801404FC`, `func_80140364`, `func_8013F9C0` and `func_801407D4` (2,060 bytes, the last one was the T-0018 row "narrow param / unrolled"); `func_80140ADC` stays guarded at 6 lines (a register tie). FAKEs: unused locals for frame homes, one-line UV stores, index-first byte arithmetic, an empty `if (count) {}`. New `func_801407D4` prototype in `include/ovl/TACO.h`. Notes: [[matching-notes]] (T-19014), [[register-cheatsheet]] (five rows), [[data/t0018-cases]], [[taco-family-results]].
+
+## [2026-10-16] ticket | T-19014 closer pass, func_80140ADC matched (5 of 5)
+[[tickets/T-19014-w3-d-p14]] closer pass (Opus, 12:23-12:33 UTC) on branch `w3-d-p14`: TACO `func_80140ADC` (788 bytes) matched in `src/ovl/TACO/8013F250.c` (commit `9c96363b`). The 6-line register tie went away once the UV stores were written on one line in the order of the PsyQ `setUVWH(poly, side << 5, 0x60, 0x20, 0x20)` expansion. Package result 5 of 5 (2,848 bytes). Updated [[matching-notes]], [[register-cheatsheet]] (one row), [[data/t0018-cases]] (row SOLVED), [[taco-family-results]], [[index]]. Clean rebuild 27/27 SHA1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` (0 new disagreements) OK. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19014 Done
+[[tickets/T-19014-w3-d-p14]] reviewed against `CODING_STANDARDS.md` and moved to Done: 5 functions matched (2,848 bytes: TACO `func_801404FC`, `func_80140364`, `func_8013F9C0`, `func_801407D4`, `func_80140ADC`), nothing left guarded. One review finding in `src/ovl/TACO/8013F250.c`, fixed: the hand-expanded `setUVWH` line in `func_80140ADC` had a plain comment and now starts with `FAKE` (comment only; TACO.bin SHA1 OK, globals and headers OK).
+
+## [2026-10-16] ticket | T-19013 In Progress
+
+[[tickets/T-19013-w3-d-p13]] started: wave 3 package w3-d-p13 in worktree `w3-d-p13` (from `w2-good`), TACO `src/ovl/TACO/801480B0.c`: `func_80148184`, `func_801484E4`, `func_801487A4`.
+
+## [2026-10-16] ticket | T-19013 In Review
+
+[[tickets/T-19013-w3-d-p13]] In Progress to In Review: wave 3 package w3-d-p13 (TACO `src/ovl/TACO/801480B0.c`), 1 of 3 functions matched (388 bytes). `func_80148184` matched in plain C (`TcPair8 D_8015F840[]`, `TcPair2 D_8015F930[]`, `(void *)` on the later `0x80162000`); `func_801484E4` guarded at 10 rows (FAKE `pad[2]`, absolute final counter read, counter-web family of T-19002); `func_801487A4` back to `INCLUDE_ASM` with the typed draft in `drafts/T-19013/TACO/func_801487A4/` (237 of 237 instructions, 140 register rows, ugen temporary rotation one step off). Notes in [[matching-notes]] ("T-19013"), rows in [[data/t0018-cases]], cheat sheet rows in [[register-cheatsheet]], [[taco-family-results]]. Branch `w3-d-p13`, commits `T-19013: match TACO:func_80148184` and `T-19013: guard TACO:func_801484E4 (10 lines), archive func_801487A4 typed draft`.
+
+## [2026-10-16] ticket | T-19013 closer: func_801487A4 matched
+
+[[tickets/T-19013-w3-d-p13]]: `func_801487A4` (948 bytes) matched in plain C, commit `T-19013: match TACO:func_801487A4`. The register rotation miss (140 rows) was one ugen temporary; indexing the 8-byte records as `((s16 *)arg2)[arg1 * 4 + k]` consumes it, `*(arg1 * 2 + (u8 *)arg4)` fixed the last 8 rows. The ticket now counts 2 of 3 matched (1,336 bytes); `drafts/T-19013/` removed, [[register-cheatsheet]], [[matching-notes]] ("T-19013"), [[data/t0018-cases]] and [[taco-family-results]] updated.
+
+## [2026-10-16] build | T-19013 closer pass on func_801484E4
+Opus closer pass on [[tickets/T-19013-w3-d-p13]] (branch w3-d-p13): no new match. TACO `func_801484E4` in `src/ovl/TACO/801480B0.c` goes from 10 to 6 differing rows. The final increment is now a volatile access through `&D_800E6280` (FAKE, replaces the absolute read). It keeps the last block out of the counter's register range, with the right temporaries, delay slots and size. Left: the address form (`lui; addiu` plus 0x1104) and the first spill register (`$v0` for `$t0`). autotweak 120 s: none. The evidence points to a separate symbol, which has no `keep` evidence. Notes in [[matching-notes]], [[register-cheatsheet]], [[data/t0018-cases]] and [[taco-family-results]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19013 Done
+
+[[tickets/T-19013-w3-d-p13]] In Review to Done after the code review: wave 3 package w3-d-p13 (TACO `src/ovl/TACO/801480B0.c`), 2 of 3 functions matched (1,336 bytes: `func_80148184` 388, `func_801487A4` 948, both plain C), `func_801484E4` guarded at 6 rows (counter web, FAKE `pad[2]` and FAKE volatile final increment, ticketed). No findings in code; two stale wiki lines (index, [[matching-notes]]) fixed. TACO SHA1 OK, headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-18300 Types-first: ENDING, In Progress
+
+Created [[tickets/T-18300-types-first-ending]] (wave 3, [[tickets/T-16990-wave-3-conveyor]]), branch `w3-ending-types` from `w2-good`: recover ENDING's shared types into `include/ovl/ENDING.h`, redraft every unmatched ENDING function (drivers from T-16550, T-16560, T-18000), cut packages. Card in [[kanban]] In Progress, line in [[index]].
+
+## [2026-10-16] build | T-18300 ENDING: sibling port, types, redraft
+
+[[tickets/T-18300-types-first-ending]]: matched `func_80132F18` as a port of main `check_k_scroll` (FAKE unused `get_k_work` result for the frame). `include/ovl/ENDING.h`: `EdShorts18 D_8013C3B0`, `EdShorts14 D_8013CA60`/`D_8013CA7C`, `s32 **D_8013CAF0`, `MAIN_API_OVERRIDE_dialogue_render`; every ENDING file includes `game.h` after `ovl/ENDING.h`. Redraft driver `drafts/T-18300/redraft.py` (from T-18000, plus a scaled stack-table index and the `struct-bytes` rewrite) and `hand.py`: 13 functions, 7 better than the census (7,268 bytes), none worse, no zero. New page [[ending-family-results]] ("Types-first pass (T-18300)"), line in [[index]].
+
+## [2026-10-16] ticket | T-18300 In Review
+
+[[tickets/T-18300-types-first-ending]] In Progress to In Review: packages T-18301..T-18305 (`w3-ending-p01`..`p05`) cut by `inventory2.py`/`mklists3.py`; clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-18300 Done
+
+[[tickets/T-18300-types-first-ending]] In Review to Done: code review against `CODING_STANDARDS.md` found 1 minor item (the FAKE note of `func_80132F18` did not start its comment), fixed in comments only; ENDING sha1 OK, headers OK. 1 function matched (280 bytes). Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-18200 Types-first: EN_NICHI started
+
+Opened [[tickets/T-18200-types-first-en_nichi]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover EN_NICHI's shared types, redraft its unmatched functions with the T-16550/T-16560 drivers, then cut packages. Branch `w3-en-nichi-types` from `w2-good`.
+
+## [2026-10-16] ticket | T-18200 Types-first: EN_NICHI to In Review
+
+[[tickets/T-18200-types-first-en_nichi]]: EN_NICHI's objects typed as `EnObj D_8013984C[10]` (the `Rec30 D_80139868[]` view folded in), sprite frames `s16 D_80139A34[16][6]`, ring buffer and status tables sized, four stack-table types and the asset pointers declared in `include/ovl/EN_NICHI.h`; 19 redrafts with `drafts/T-18200/redraft.py` (from T-17900), 6 of 17 unguarded better than the census (sum 3,816 to 3,674), none 0; 5 hand matches / 2,500 bytes (`func_80133CA8`, `func_80134258`, `func_80136B74`, `func_80135A48`, `func_80132834` with one FAKE); packages T-18201..T-18202 (8 functions, 7,508 bytes). New page [[en-nichi-family-results]], a row in [[data-types]], a section in [[matching-notes]]. In Review, waiting for the code review.
+
+## [2026-10-16] ticket | T-18200 Done
+
+[[tickets/T-18200-types-first-en_nichi]] In Review to Done after the code review against `CODING_STANDARDS.md`: 2 findings, both fixed (three `(u8 *)D_8013984C` byte walks rewritten as `EnObj` fields, a stray blank line in `include/ovl/EN_NICHI.h`). 5 functions matched (2,500 bytes: `func_80132834` with one FAKE, `func_80136B74`, `func_80134258`, `func_80133CA8`, `func_80135A48`), 19 redrafts, 2 packages (T-18201..T-18202). EN_NICHI sha1 OK after a forced rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+## [2026-10-16] ticket | T-19015 In Progress
+
+[[tickets/T-19015-w3-d-p15]] created and started: wave 3 package w3-d-p15, TACO `src/ovl/TACO/80146D60.c`, `src/ovl/TACO/80156A80.c`, `src/ovl/TACO/80138890.c` (`func_801471D0`, `func_801472D4`, `func_80138B2C`, `func_80147B24`, `func_801585D0`). Worktree `w3-d-p15` from `w2-good`.
+
+## [2026-10-16] build | T-19015 matches
+
+[[tickets/T-19015-w3-d-p15]]: TACO `func_801585D0` (992 bytes) matched in plain C in `src/ovl/TACO/80156A80.c`; unit sha1 OK. `func_801471D0` (8 funcdiff lines), `func_801472D4` (20 lines) and `func_80138B2C` (60 funcdiff lines) keep their guards; `func_80147B24` stays `INCLUDE_ASM` (63 lines). Analysis and variants in [[matching-notes]] ("T-19015"), rows in [[data/t0018-cases]], two rows in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-19015 In Review
+
+[[tickets/T-19015-w3-d-p15]] In Progress to In Review: 1 of 5 functions matched (992 bytes). Review pending.
+
+## [2026-10-16] build | T-19015 closer pass
+
+[[tickets/T-19015-w3-d-p15]]: Opus closer matched TACO `func_801471D0` (260 bytes) in plain C: a pointer parameter and one `dop` walker restarted for the second pass; callers keep the `s32` view through `TACO_OVERRIDE_func_801471D0` (`include/ovl/TACO.h`). `func_801472D4` stays at 20 lines (block-copy state rule). Notes in [[matching-notes]], rows in [[data/t0018-cases]], new [[register-cheatsheet]] row, [[taco-family-results]] updated. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19015 Done
+
+[[tickets/T-19015-w3-d-p15]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues (match count still 1 of 5 in the index, the ticket and the [[matching-notes]] intro after the closer pass; no source comment for the mixed actor addressing in `func_801585D0`), both fixed. 2 of 5 functions matched (1,252 bytes): TACO `func_801585D0` and `func_801471D0` in plain C; `func_801472D4` and `func_80138B2C` stay guarded, `func_80147B24` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-18400 In Progress
+
+[[tickets/T-18400-types-first-kangei]] created and claimed (branch `w3-kangei-types` from `w2-good`): types-first pass on KANGEI, redraft of every unmatched function, packages for wave 3 ([[tickets/T-16990-wave-3-conveyor]]).
+
+## [2026-10-16] build | T-18400 KANGEI types and redraft
+
+[[tickets/T-18400-types-first-kangei]]: picture-set tables (`D_80139950`, `D_80139A50`, `D_80139A5C`, `D_8013A170`) as arrays, `KangeiSprite44` extended to MASTER's layout, streak and club name tables, image records and callee prototypes in `include/ovl/KANGEI.h`; `drafts/T-18400/redraft.py` (T-18000 driver plus multi-dimensional fold and `gamestate-words`) and `hand.py` redrafted the 11 remaining functions (7 better than the census). Matched 4 functions / 2,596 bytes, one FAKE (`func_80135838`, date checks through `GameState *g`). New page [[kangei-family-results]]; notes in [[matching-notes]] and [[data-types]].
+
+## [2026-10-16] ticket | T-18400 In Review
+
+[[tickets/T-18400-types-first-kangei]] In Progress to In Review. Packages T-18401..T-18403 (`w3-kangei-p01`..`p03`, 9 functions, 6,836 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]). Clean build 27/27, header, globals and prototype checks pass.
+
+## [2026-10-16] ticket | T-18400 Done
+
+[[tickets/T-18400-types-first-kangei]] reviewed against `CODING_STANDARDS.md`: one finding (the family page said 11 callee prototypes, the header has 12), fixed; KANGEI sha1 OK, headers, globals and prototype checks pass. 4 functions matched (2,596 bytes). In Review to Done, card moved to Done.
+
+## [2026-10-16] ticket | T-19016 In Progress
+[[tickets/T-19016-w3-d-p16]] created and In Progress: Wave 3 package w3-d-p16, VALEN `func_80133670`, `func_80133728`, `func_80134030`, `func_80132D0C`, `func_80133088` in `src/ovl/VALEN/80132760.c` and `src/ovl/VALEN/80133C70.c`.
+
+## [2026-10-16] build | T-19016 matches and findings
+`src/ovl/VALEN/80132760.c`: `func_80133670` and `func_80133728` matched in plain C by reading the selected girl through a local `GameState *g = &D_800E6280;`; `src/ovl/VALEN/80133C70.c`: `func_80134030` kept as a `NON_MATCHING` draft (27 lines, the default block's `lui` hoisting); `func_80132D0C` and `func_80133088` back to `INCLUDE_ASM` with drafts in `drafts/T-19016/`. Findings in [[matching-notes]] ("T-19016"), rows in [[data/t0018-cases]], row in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-19016 In Review
+[[tickets/T-19016-w3-d-p16]] In Progress to In Review: 2 of 5 functions matched. Awaiting the code review against `CODING_STANDARDS.md` and the final checks.
+
+## [2026-10-16] build | T-19016 final checks
+Clean build 27/27 (all unit sha1 OK, VALEN included), `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK on branch w3-d-p16; comment-only edits afterwards rebuilt incrementally with VALEN sha1 OK. See [[tickets/T-19016-w3-d-p16]].
+
+## [2026-10-16] ticket | T-19016 Done
+[[tickets/T-19016-w3-d-p16]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of the VALEN units OK (headers OK, sha1 OK). 2 of 5 functions matched (`func_80133670`, `func_80133728`), `func_80134030` stays a guarded draft (27 lines), `func_80132D0C` and `func_80133088` stay `INCLUDE_ASM`. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-18500 Types-first: BUNKAKEN, In Progress
+
+Created [[tickets/T-18500-types-first-bunkaken]] (branch `w3-bunkaken-types` from `w2-good`), In Progress: survey BUNKAKEN's types, declare them in `include/ovl/BUNKAKEN.h`, redraft every unmatched function into `drafts/T-18500/`, cut packages. Card in [[kanban]], line in [[index]].
+
+## [2026-10-16] build | T-18500 BUNKAKEN: types, redraft, 6 matches
+
+[[tickets/T-18500-types-first-bunkaken]]: `include/ovl/BUNKAKEN.h` gets `s32 D_801562A0[3][13]` (39 scalars absorbed, `src/ovl/BUNKAKEN/80148ED0.c` rewritten as elements), the per-heroine tables of the date loaders, the stack-copied byte tables (`BunkakenBytes11`, `BunkakenBytes9x6`, `BunkakenBytes11x6`, `BunkakenNames3x3`) and three forward prototypes; `include/main_api.h` wraps `get_g_zyotai_h` in `MAIN_API_OVERRIDE_get_g_zyotai_h`. Driver `drafts/T-18500/redraft.py` (T-18100 plus T-18300 rewrites, new `header-arrays`, `array-symbols`, `gs-local`) and `hand.py`: 12 redrafts, 5 better than the census, 1 worse, one zero. Matched `func_80147914`, `func_80151A78`, `func_8014A0E0`, `func_8014A5EC`, `func_80145550` (FAKE unused byte), `func_80145A64`: 6,232 bytes, BUNKAKEN sha1 OK. Section "Types-first pass (T-18500)" on [[bunka-family-results]], entry in [[matching-notes]].
+
+## [2026-10-16] ticket | T-18500 In Review
+
+[[tickets/T-18500-types-first-bunkaken]] In Progress to In Review: packages T-18501 (`w3-bunkaken-p01`) and T-18502 (`w3-bunkaken-p02`) cut by `inventory2.py`/`mklists3.py`; clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-18500 Done
+
+[[tickets/T-18500-types-first-bunkaken]] In Review to Done: code review against `CODING_STANDARDS.md`, no findings; BUNKAKEN sha1 OK, headers OK, `migrate_globals --check` OK, `sync_protos --check-branch` 0 new disagreements. 6 functions matched (6,232 bytes). Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-18600 In Progress
+
+[[tickets/T-18600-types-first-master]] created and claimed (branch `w3-master-types` from `w2-good`): types-first pass for MASTER, drivers adapted from T-16550/T-16560 and their descendants into `drafts/T-18600/redraft.py`. Links [[speedup-research-2026-10-16]], [[master-types-pilot]].
+
+## [2026-10-16] ticket | T-18600 In Review
+
+[[tickets/T-18600-types-first-master]]: MASTER's stack tables typed in `include/ovl/MASTER.h` (nine `MasterWords13`, `MasterHalfwords13 D_8013C6A4`), the step tables `FnTbl4/7/30` and `PtrTbl3` moved from four `.c` files, the second mini-event counters sized (`u8 D_8013C788[5]`), one `MasterClubBits` for two local copies; redraft driver `drafts/T-18600/redraft.py` (from T-18300) with MasterSprite44 views, an innermost-range fold and the new `club-bits`, `record-copy` and `reroll` rewrites; 11 redrafts, 8 better than the census (sum 4,793 to 3,044 rows), none 0; 2 matches / 1,208 bytes (`func_80135CF4` with one FAKE, `func_8013348C`); 3 hand drafts; packages T-18601..T-18603 (7 functions, 10,872 bytes). New page [[master-family-results]], a row in [[data-types]], a section in [[matching-notes]]. In Review, waiting for the code review.
+
+## [2026-10-16] build | T-18600 final checks
+
+Branch `w3-master-types`: clean build 665/665 with all 27 sha1 OK; `tools/check_headers.py`, `tools/migrate_globals.py --check` OK; `tools/sync_protos.py --check-branch` 0 new disagreements (15 known). [[tickets/T-18600-types-first-master]] stays In Review.
+
+## [2026-10-16] ticket | T-18600 Done
+
+[[tickets/T-18600-types-first-master]] In Review to Done: code review against `CODING_STANDARDS.md` found 2 minor items (a ticket id missing from the `func_8013348C` slot comment, a trailing blank line in [[matching-notes]]), both fixed; MASTER sha1 OK, headers OK. 2 functions matched (1,208 bytes). Card moved in [[kanban]], line in [[index]].
+## [2026-10-16] ticket | T-18700 Types-first: BUNKASAI, In Progress
+
+Created [[tickets/T-18700-types-first-bunkasai]] (branch `w3-bunkasai-types` from `w2-good`, wave 3, [[tickets/T-16990-wave-3-conveyor]]): recover BUNKASAI's shared types in `include/ovl/BUNKASAI.h`, redraft the unmatched functions with the adapted drivers into `drafts/T-18700/`, then cut packages. Card in In Progress.
+
+## [2026-10-16] build | T-18700 BUNKASAI types and redraft
+
+[[tickets/T-18700-types-first-bunkasai]]: name table `BunkasaiNameTable D_801606DC`, text-pointer tables `BunkasaiTexts12/11/4`, per-girl tables (`BunkasaiGirlBytes`, `BunkasaiColumns`, three `BunkasaiGirlColumns`) and `BunkasaiGirlList D_80160AA4` in `include/ovl/BUNKASAI.h`; `drafts/T-18700/redraft.py` (T-18400 driver with BUNKASAI paths) and `hand.py` redrafted the 10 remaining functions (4 better than the census). Matched 2 functions / 2,376 bytes, no FAKE: `func_80147F8C` and `func_8015AF90` (BUNKAKEN port; calling `func_80132410` undeclared, implicit `int`, fixed a v0/v1 swap). New page [[bunkasai-family-results]]; notes in [[matching-notes]], [[data-types]], [[register-cheatsheet]]; pointer from [[bunka-family-results]].
+
+## [2026-10-16] ticket | T-18700 In Review
+
+[[tickets/T-18700-types-first-bunkasai]] In Progress to In Review. Packages T-18701..T-18703 (`w3-bunkasai-p01`..`p03`, 9 functions, 10,772 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]). Clean build 27/27, header, globals and prototype checks pass.
+
+## [2026-10-16] ticket | T-18700 Done
+
+[[tickets/T-18700-types-first-bunkasai]] In Review to Done after code review against `CODING_STANDARDS.md`: one finding (wrong byte counts in `drafts/T-18700/README.md`), fixed. 2 functions matched (`func_80147F8C`, `func_8015AF90`; 2,376 bytes), no FAKE; BUNKASAI sha1, header, globals and prototype checks pass. Card moved to Done.
+
+## [2026-10-16] ticket | T-19017 In Progress
+[[tickets/T-19017-w3-d-p17]] started: wave 3 package w3-d-p17, TACO `src/ovl/TACO/80140DF0.c`, five functions (`func_80141050`, `func_80141170`, `func_80141B18`, `func_801413B8`, `func_801416E8`). Worktree `tokimemo-wt/w3-d-p17`, base `w2-good`.
+
+## [2026-10-16] ticket | T-19017 In Review, 2 of 5 functions matched
+[[tickets/T-19017-w3-d-p17]] moved to In Review: TACO `src/ovl/TACO/80140DF0.c`, 12:40-14:18 UTC (clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK). Matched `func_80141B18` (712 bytes) and `func_801413B8` (816 bytes), 1,528 bytes in all; `func_80141050` and `func_80141170` stay guarded at 10 lines each (the result variable lands in `$a0`), `func_801416E8` at 28 lines (an extra `D_8011ECA0` reload in the original). FAKEs: unused frame-home locals in the two matched functions and in `func_801416E8`, hand-expanded `setUVWH` one-liners. Notes in [[matching-notes]] (section T-19017), four rows in [[register-cheatsheet]], three rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-19017 closer pass, 2 more functions matched
+[[tickets/T-19017-w3-d-p17]] closer pass (Opus, 14:17-14:40 UTC): TACO `func_80141050` and `func_80141170` matched (576 bytes; commits `d73d8d54`, `818deda3`) by removing the pointer local (`base[i].f` everywhere, literal returns, `unk4` stored after `unk2`, FAKE `pad` for the frame). Package now 4 of 5 (2,104 bytes); `func_801416E8` stays guarded at 28 lines. Notes in [[matching-notes]], row in [[register-cheatsheet]], update paragraph in [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19017 Done
+[[tickets/T-19017-w3-d-p17]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 functions matched (2,104 bytes: TACO `func_80141B18`, `func_801413B8`, `func_80141050`, `func_80141170`), `func_801416E8` stays guarded at 28 lines. Two review findings in `src/ovl/TACO/80140DF0.c` and the wiki, fixed: the pointer-compare loop test in `func_80141B18` got an explanatory comment (comment only), and the stale "guarded" lines for `func_80141050`/`func_80141170` in [[index]], [[data/t0018-cases]] and [[matching-notes]] were refreshed (TACO.bin SHA1 OK, globals and headers OK).
 
 ## [2026-10-15] ticket | T-11840 TT batch 10 opened
 

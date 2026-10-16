@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "main_api.h"
+#include "game.h" /* T-17600: DisplayActor44 for the display records D_80129F40 */
 
 /* GYOZI data. */
 extern u8 D_801474B8;
@@ -206,7 +207,9 @@ typedef struct GyoziGirl {
     /* 0x0A */ s16 unk_0A;
     /* 0x0C */ u8 unk_0C[2];
     /* 0x0E */ s16 unk_0E;
-    /* 0x10 */ u8 unk_10[0x28];
+    /* 0x10 */ u8 unk_10[4];
+    /* 0x14 */ s32 unk_14; /* T-17600: lw in func_801378D0 and func_80140464 */
+    /* 0x18 */ u8 unk_18[0x20];
 } GyoziGirl; /* size 0x38 */
 
 typedef struct GyoziWork {
@@ -217,7 +220,9 @@ typedef struct GyoziWork {
     /* 0x1A8 */ GyoziGirl girl[11];
     /* 0x410 */ u8 unk_410[0xB1F];
     /* 0xF2F */ u8 unk_F2F;   /* D_800F62CF, the girl index; read as a member where the original reloads it after a girl[] store (T-9210) */
-} GyoziWork;
+    /* 0xF30 */ u8 unk_F30[0x188];
+    /* 0x10B8 */ s32 unk_10B8; /* D_800F6458; a member where a later girl[] bit-field load stays below its store (T-17600) */
+} GyoziWork; /* size 0x10BC; the object goes on (D_800F6474 and up are still main_api.h scalars) */
 extern GyoziWork D_800F53A0;
 void func_8013D5B0();
 void func_8013D62C();
@@ -481,7 +486,7 @@ extern s32 D_80145EA0;
 extern s32 D_80145EA4;
 extern u8 D_801460C4[];
 extern u8 D_80148818;
-extern u8 D_80148828[];
+extern u8 D_80148828[4]; /* T-17600: D_8014882C follows */
 extern volatile s16 D_8012B920; /* volatile: func_801427E4 only matches with it (decomp-permuter, T-4090) */
 
 extern s32 D_8012E668;
@@ -975,3 +980,38 @@ extern s8 D_8014881C;
 extern u8 D_80148754;
 extern u8 D_80148758;
 #endif
+
+#ifndef OVL_GYOZI_T17600_TYPES
+#define OVL_GYOZI_T17600_TYPES
+/* T-17600: scene-step callback tables. Each is copied whole to the stack (an lw/sw loop of the struct
+ * size) and called through the step byte D_800F647A, like D_80148904. */
+typedef struct GzCallbacks68 {
+    /* 0x00 */ GzCallback callbacks[26];
+} GzCallbacks68; /* size 0x68 */
+typedef struct GzCallbacks90 {
+    /* 0x00 */ GzCallback callbacks[36];
+} GzCallbacks90; /* size 0x90 */
+typedef struct GzCallbacksBC {
+    /* 0x00 */ GzCallback callbacks[47];
+} GzCallbacksBC; /* size 0xBC */
+extern GzCallbacks90 D_801476F4; /* func_8013B0C4 */
+extern GzCallbacks90 D_80147C6C; /* func_8013C774 */
+extern GzCallbacks68 D_80148880; /* func_80141944 */
+extern GzCallbacksBC D_8014901C; /* func_80145384 */
+/* T-17600: 0x24-byte records indexed with stride 0x24 (func_80144018, func_80144B70): the field widths of
+ * main's Rec24 table D_801217D0, 0xB270 above it as the display records D_80129F40 are above D_8011ECD0. */
+extern Rec24 D_8012CA40[];
+/* T-17600: one entry per falling dumpling (func_80144018, func_801444CC, func_80144B70, func_80145084). The
+ * dumpling count D_80148EAC stops at 50 and the arrays end where the next begins; the record index i of
+ * D_8012CA40 starts at 4, and the [i - 4] accesses fold into %lo, so splat names D_80148BE0, D_80148D70 and
+ * D_80148E40 at the bases minus 0x10 / 8. */
+extern s32 D_80148BF0[50];
+extern s32 D_80148CB8[50]; /* 16.16 fixed point: the s16 at +2 is also read alone */
+extern s32 D_80148D80[50];
+extern s16 D_80148E48[50];
+extern s32 D_80148EB0; /* T-17600: frame counter of the dumpling scene, next to the count D_80148EAC */
+/* T-17600: two s16 tables of 8, indexed by the same value (func_80140E0C, func_80140F90, func_801412A4);
+ * D_8014877C follows the second. */
+extern s16 D_8014875C[8];
+extern s16 D_8014876C[8];
+#endif /* OVL_GYOZI_T17600_TYPES */

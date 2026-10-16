@@ -1,0 +1,1 @@
+m2c.py: the asm compares the value from before the increment of D_800F6474: wrote `D_800F6474++` in the condition (m2c compared the variable after the store)

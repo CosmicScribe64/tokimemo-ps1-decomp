@@ -33,7 +33,43 @@ void func_8013E2CC(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013E1D0", func_8013E308);
+void func_8013E308(void) {
+    s16 i;
+
+    func_8004EDE0(1, 0);
+    func_80054864(1);
+    func_8004C670();
+    func_8005493C(0);
+    func_8004EDF4(1);
+    func_80053EFC();
+    func_8005ABC0();
+    func_800BCE10(&D_800D92A0, "廊下");
+    D_800F6412 = 0;
+    D_800F6458 = 1;
+    func_8009068C();
+    D_800F53DA = 0x80;
+    D_801317EB = 0;
+    D_800C51C4 = 0;
+    func_80089200();
+    func_800744A0();
+    func_80074950();
+    func_8008FC10();
+    /* FAKE: the byte-typed store as the argument keeps the constant in $a0 (T-9020 idiom, as SHOUGATU func_8013B758); T-17600 */
+    func_8008F618(*(u8 *)&D_800F62CF = 0xC);
+    func_8013DE30();
+    D_801480FC = D_8014806C;
+    D_80148100 = D_801480A0;
+    D_80148104 = D_801480D4;
+    D_80148108 = 0;
+    D_8014810C = 0;
+    D_80148110 = 0;
+    for (i = 0; i < 0xB; i++) {
+        if (D_800F53A0.girl[i].unk_10[1] & 1) {
+            D_80148110 = 1;
+        }
+    }
+    func_8004DE1C();
+}
 
 void func_8013E47C(void) {
     func_80090960(7, 0);

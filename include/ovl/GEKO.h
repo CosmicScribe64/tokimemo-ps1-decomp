@@ -740,3 +740,96 @@ void func_8013A668(void);
 void func_80134A14(void);
 
 #endif
+
+#ifndef OVL_GEKO_TYPES_T17700
+#define OVL_GEKO_TYPES_T17700
+/* T-17700 types-first pass. The tables below are copied whole to a stack local by an unmatched function
+ * (lw/sw runs or a copy loop in the asm); the copy is one struct assignment. Element types come from the data
+ * and the reads of the copy; the size comment is the size the copy moves. */
+
+/* Days per month (31, 28, 31, 30, ...) or a per-month value; the February entry is patched for leap years. */
+typedef struct GekoMonthDays {
+    /* 0x00 */ s16 day[12];
+} GekoMonthDays; /* size 0x18 */
+extern GekoThresholds D_80144CF8; /* func_80132B24; the same values as D_80144CE0 */
+extern GekoMonthDays D_80144D10;  /* func_80132B24 */
+extern GekoMonthDays D_80144D28;  /* func_80133024 */
+extern GekoMonthDays D_80147838;  /* func_80142C9C */
+extern GekoMonthDays D_80147C54;  /* func_80144198 */
+
+/* Twelve SJIS strings of 20 bytes, picked by D_800E6374 >> 12 (func_80133C50). */
+typedef struct GekoNames12 {
+    /* 0x00 */ u8 name[12][20];
+} GekoNames12; /* size 0xF0 */
+extern GekoNames12 D_80144D8C;
+
+/* Picture ids passed to func_80062CD0 (func_80136C20). */
+typedef struct GekoWords11 {
+    /* 0x00 */ s32 v[11];
+} GekoWords11; /* size 0x2C */
+typedef struct GekoWords2 {
+    /* 0x00 */ s32 v[2];
+} GekoWords2; /* size 0x8 */
+extern GekoWords11 D_801451B8;
+extern GekoWords2 D_801451E4;
+extern GekoWords2 D_801451EC;
+extern GekoWords2 D_801451F4;
+
+/* Step table of func_8013B10C, indexed by D_800E738A. */
+typedef struct GekoFnTbl42 {
+    /* 0x00 */ void (*f[42])();
+} GekoFnTbl42; /* size 0xA8 */
+extern GekoFnTbl42 D_80146630;
+
+/* Three coordinate rows of func_801406CC. */
+typedef struct GekoShorts10 {
+    /* 0x00 */ s16 v[10];
+} GekoShorts10; /* size 0x14 */
+extern GekoShorts10 D_801472C4;
+extern GekoShorts10 D_801472D8;
+extern GekoShorts10 D_801472EC;
+
+/* func_801420E4: six halfwords of -1 and six of 1, 1, 1, 0, 0, 0 (the second label is 0x18 bytes, only 0xC
+ * are copied); the draft reads both copies as s16. */
+typedef struct GekoShorts6 {
+    /* 0x00 */ s16 v[6];
+} GekoShorts6; /* size 0xC */
+extern GekoShorts6 D_8014760C;
+extern GekoShorts6 D_80147618;
+
+/* Byte and text tables of func_80142C9C, func_80143F48 and func_80144270. */
+typedef struct GekoBytes209 {
+    /* 0x00 */ u8 v[209];
+} GekoBytes209; /* size 0xD1 */
+typedef struct GekoBytes132 {
+    /* 0x00 */ u8 v[132];
+} GekoBytes132; /* size 0x84 */
+typedef struct GekoBytes24 {
+    /* 0x00 */ u8 v[24];
+} GekoBytes24; /* size 0x18 */
+typedef struct GekoText626 {
+    /* 0x00 */ u8 v[626];
+} GekoText626; /* size 0x272 */
+typedef struct GekoBytes36 {
+    /* 0x00 */ u8 v[36];
+} GekoBytes36; /* size 0x24 */
+typedef struct GekoBytes21 {
+    /* 0x00 */ u8 v[21];
+} GekoBytes21; /* size 0x15 */
+extern GekoBytes209 D_80147764;
+extern GekoBytes132 D_80147850;
+extern GekoBytes24 D_80147958;
+extern GekoBytes24 D_80147970;
+extern GekoText626 D_80147988;
+extern GekoBytes36 D_80147BFC;
+extern GekoBytes24 D_80147C24;
+extern GekoBytes21 D_80147C3C;
+extern GekoBytes21 D_80147C6C;
+
+/* Per-record halfwords of the Rec24 records 4..13 (D_801217D0); the code indexes them with i - 4, so the
+ * relocations name D_801463D8 and D_801463F8 (func_8013E22C, func_80139E1C, func_8013E950). */
+extern s16 D_801463E0[12];
+extern s16 D_80146400[16];
+
+extern u8 D_80145090; /* func_80136C20: zero picks read_bustup_uniform (read_bustup_uniform) */
+#endif

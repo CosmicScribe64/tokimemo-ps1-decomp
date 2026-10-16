@@ -1,0 +1,317 @@
+[
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/801323E0.c",
+  "func": "func_80132B24",
+  "size": 480,
+  "guarded": false,
+  "source_hash": "9bde039e93af2f73cab9b8101feb193110168553c64f207cb5576881e3f13497",
+  "scope": "GEKO:func_80132B24"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/801323E0.c",
+  "func": "func_80132D04",
+  "size": 800,
+  "guarded": false,
+  "source_hash": "9bde039e93af2f73cab9b8101feb193110168553c64f207cb5576881e3f13497",
+  "scope": "GEKO:func_80132D04"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/801323E0.c",
+  "func": "func_80133024",
+  "size": 280,
+  "guarded": false,
+  "source_hash": "9bde039e93af2f73cab9b8101feb193110168553c64f207cb5576881e3f13497",
+  "scope": "GEKO:func_80133024"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/801323E0.c",
+  "func": "func_80133308",
+  "size": 656,
+  "guarded": false,
+  "source_hash": "9bde039e93af2f73cab9b8101feb193110168553c64f207cb5576881e3f13497",
+  "scope": "GEKO:func_80133308"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/801323E0.c",
+  "func": "func_80133598",
+  "size": 452,
+  "guarded": false,
+  "source_hash": "9bde039e93af2f73cab9b8101feb193110168553c64f207cb5576881e3f13497",
+  "scope": "GEKO:func_80133598"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/801338F0.c",
+  "func": "func_80133AA0",
+  "size": 432,
+  "guarded": false,
+  "source_hash": "c2754d61bddcfa0b050cf040cf474d82a458453b9ccee8ad77656305f7fb3097",
+  "scope": "GEKO:func_80133AA0"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/801338F0.c",
+  "func": "func_80133C50",
+  "size": 836,
+  "guarded": false,
+  "source_hash": "c2754d61bddcfa0b050cf040cf474d82a458453b9ccee8ad77656305f7fb3097",
+  "scope": "GEKO:func_80133C50"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80134040.c",
+  "func": "func_80134228",
+  "size": 244,
+  "guarded": true,
+  "source_hash": "f35dce92aa6537a48a9b3f84aa14fff2a3b38f90b1fa5e9ea9b167e90bc05739",
+  "scope": "GEKO:func_80134228"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80134040.c",
+  "func": "func_80134808",
+  "size": 432,
+  "guarded": false,
+  "source_hash": "09e719ae485a27f863f9229a8a99d2ba32d95f5ed5add2d7a8a4d1f7743b8071",
+  "scope": "GEKO:func_80134808"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80134D10.c",
+  "func": "func_801355E8",
+  "size": 684,
+  "guarded": true,
+  "source_hash": "4063c034ad8d347c479befc14c4f44139fdc8c1c136d2136f5401727dfeebdd7",
+  "scope": "GEKO:func_801355E8"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80134D10.c",
+  "func": "func_801358CC",
+  "size": 416,
+  "guarded": false,
+  "source_hash": "124dba880772db6caa13c27e8dd820bfd276e2ea0bd12bd31449e311777e626a",
+  "scope": "GEKO:func_801358CC"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80134D10.c",
+  "func": "func_80135AC8",
+  "size": 252,
+  "guarded": true,
+  "source_hash": "4063c034ad8d347c479befc14c4f44139fdc8c1c136d2136f5401727dfeebdd7",
+  "scope": "GEKO:func_80135AC8"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80134D10.c",
+  "func": "func_80135DC0",
+  "size": 2260,
+  "guarded": false,
+  "source_hash": "124dba880772db6caa13c27e8dd820bfd276e2ea0bd12bd31449e311777e626a",
+  "scope": "GEKO:func_80135DC0"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80134D10.c",
+  "func": "func_801367EC",
+  "size": 832,
+  "guarded": false,
+  "source_hash": "124dba880772db6caa13c27e8dd820bfd276e2ea0bd12bd31449e311777e626a",
+  "scope": "GEKO:func_801367EC"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80134D10.c",
+  "func": "func_80136C20",
+  "size": 604,
+  "guarded": true,
+  "source_hash": "4063c034ad8d347c479befc14c4f44139fdc8c1c136d2136f5401727dfeebdd7",
+  "scope": "GEKO:func_80136C20"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80134D10.c",
+  "func": "func_80137120",
+  "size": 436,
+  "guarded": false,
+  "source_hash": "124dba880772db6caa13c27e8dd820bfd276e2ea0bd12bd31449e311777e626a",
+  "scope": "GEKO:func_80137120"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80134D10.c",
+  "func": "func_801372D4",
+  "size": 468,
+  "guarded": false,
+  "source_hash": "124dba880772db6caa13c27e8dd820bfd276e2ea0bd12bd31449e311777e626a",
+  "scope": "GEKO:func_801372D4"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80134D10.c",
+  "func": "func_80137580",
+  "size": 176,
+  "guarded": true,
+  "source_hash": "124dba880772db6caa13c27e8dd820bfd276e2ea0bd12bd31449e311777e626a",
+  "scope": "GEKO:func_80137580"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80134D10.c",
+  "func": "func_80138E10",
+  "size": 364,
+  "guarded": false,
+  "source_hash": "124dba880772db6caa13c27e8dd820bfd276e2ea0bd12bd31449e311777e626a",
+  "scope": "GEKO:func_80138E10"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80139910.c",
+  "func": "func_80139E1C",
+  "size": 808,
+  "guarded": false,
+  "source_hash": "7306634f938e0d072a755952c65089322f49808fe5071e2661adc96f84f7ecd2",
+  "scope": "GEKO:func_80139E1C"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80139910.c",
+  "func": "func_8013A3C4",
+  "size": 416,
+  "guarded": false,
+  "source_hash": "7306634f938e0d072a755952c65089322f49808fe5071e2661adc96f84f7ecd2",
+  "scope": "GEKO:func_8013A3C4"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80139910.c",
+  "func": "func_8013A820",
+  "size": 508,
+  "guarded": false,
+  "source_hash": "7306634f938e0d072a755952c65089322f49808fe5071e2661adc96f84f7ecd2",
+  "scope": "GEKO:func_8013A820"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80139910.c",
+  "func": "func_8013AB4C",
+  "size": 404,
+  "guarded": false,
+  "source_hash": "7306634f938e0d072a755952c65089322f49808fe5071e2661adc96f84f7ecd2",
+  "scope": "GEKO:func_8013AB4C"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/8013AF80.c",
+  "func": "func_8013B10C",
+  "size": 388,
+  "guarded": false,
+  "source_hash": "b272b2bfe6e47f286d3070bafd0b46e10d36e8a56b5ccfa18d3b5f7e86429a6c",
+  "scope": "GEKO:func_8013B10C"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/8013DF70.c",
+  "func": "func_8013E950",
+  "size": 856,
+  "guarded": false,
+  "source_hash": "49c20a446ff167a2298cc3adf0d0e945f9da79aeca91cecb634921ca77220bc7",
+  "scope": "GEKO:func_8013E950"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/8013F360.c",
+  "func": "func_8013FD88",
+  "size": 476,
+  "guarded": false,
+  "source_hash": "d5ebc4f2836791898c487bb057dcd3317703d20707881e58e6b5f4d3206f58dd",
+  "scope": "GEKO:func_8013FD88"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/8013F360.c",
+  "func": "func_80140040",
+  "size": 300,
+  "guarded": true,
+  "source_hash": "aad3fe960938cd12c31eb8c2a4b53b576ce0941e9c494ce3825fb5402270d6c9",
+  "scope": "GEKO:func_80140040"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/8013F360.c",
+  "func": "func_801404FC",
+  "size": 464,
+  "guarded": false,
+  "source_hash": "d5ebc4f2836791898c487bb057dcd3317703d20707881e58e6b5f4d3206f58dd",
+  "scope": "GEKO:func_801404FC"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/8013F360.c",
+  "func": "func_801406CC",
+  "size": 780,
+  "guarded": false,
+  "source_hash": "d5ebc4f2836791898c487bb057dcd3317703d20707881e58e6b5f4d3206f58dd",
+  "scope": "GEKO:func_801406CC"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80140A00.c",
+  "func": "func_80141870",
+  "size": 268,
+  "guarded": false,
+  "source_hash": "100e32c39b51450ec2525ba3a5ffba4114eb92e4d6c6dad0f7e34d587a3d3435",
+  "scope": "GEKO:func_80141870"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80141AF0.c",
+  "func": "func_801420E4",
+  "size": 1256,
+  "guarded": false,
+  "source_hash": "10925008ab82c6d8f347f0cf8bb59e674ce1875a7e6c1b613fb00d455f515af1",
+  "scope": "GEKO:func_801420E4"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80142760.c",
+  "func": "func_80142C9C",
+  "size": 3656,
+  "guarded": false,
+  "source_hash": "f8be9e80299986b8534fb0f43e30c4d9a50927083fb46e5d52ad6660a607adfd",
+  "scope": "GEKO:func_80142C9C"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80142760.c",
+  "func": "func_80143F48",
+  "size": 592,
+  "guarded": false,
+  "source_hash": "f8be9e80299986b8534fb0f43e30c4d9a50927083fb46e5d52ad6660a607adfd",
+  "scope": "GEKO:func_80143F48"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80142760.c",
+  "func": "func_80144198",
+  "size": 216,
+  "guarded": false,
+  "source_hash": "f8be9e80299986b8534fb0f43e30c4d9a50927083fb46e5d52ad6660a607adfd",
+  "scope": "GEKO:func_80144198"
+ },
+ {
+  "unit": "GEKO",
+  "src": "src/ovl/GEKO/80142760.c",
+  "func": "func_80144270",
+  "size": 1172,
+  "guarded": false,
+  "source_hash": "f8be9e80299986b8534fb0f43e30c4d9a50927083fb46e5d52ad6660a607adfd",
+  "scope": "GEKO:func_80144270"
+ }
+]

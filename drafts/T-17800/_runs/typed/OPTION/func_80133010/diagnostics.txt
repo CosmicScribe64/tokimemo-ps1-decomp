@@ -1,0 +1,11 @@
+m2c.py: argument counts from the callees' asm: func_801328C0 0
+python3 failed:
+cfe: Error: drafts/T-17800/_runs/typed/OPTION/func_80133010/work/guarded.c, line 2986: redeclaration of 'func_80133010'; previous declaration at line 2975 in file 'drafts/T-17800/_runs/typed/OPTION/func_80133010/work/guarded.c'
+ void func_80133010(void) {
+ -----^
+cfe: Error: drafts/T-17800/_runs/typed/OPTION/func_80133010/work/guarded.c, line 2986: Incompatible function return type for this function.
+ void func_80133010(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17800/_runs/typed/OPTION/func_80133010/work -o drafts/T-17800/_runs/typed/OPTION/func_80133010/work/guarded.o /tmp/asm_processorwe746go9/preprocessed_5c6ef81ebb414e0abc8f248201f2e528.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib16wrsfg_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17800/_runs/typed/OPTION/func_80133010/work/guarded.o drafts/T-17800/_runs/typed/OPTION/func_80133010/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return

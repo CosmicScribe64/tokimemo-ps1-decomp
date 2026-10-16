@@ -10,12 +10,12 @@ void func_80134930(void) {
     func_80146D60(-0xFA0);
     initModelingData_init(0x8019C800);
     func_801471D0(0x8019C800);
-    func_80147488(1, D_8015F3E0, 0);
+    func_80147488(1, D_8015F3E0[0], 0);
     D_80127090.unk0 = 0;
     D_80128880[1].x = 0x32;
     D_80128880[1].z = 0x32;
     D_80128880[1].y = 0xD2;
-    func_80147488(2, D_8015F3E4, 0);
+    func_80147488(2, D_8015F3E0[1], 0);
     D_801270A0.unk0 = 0;
     D_80128880[2].x = 0x4B;
     D_80128880[2].z = -0x32;
@@ -23,7 +23,63 @@ void func_80134930(void) {
     D_8015F3E8 = 0;
 }
 
+/* NON_MATCHING: T-19011, 36 differing lines; light block register allocation only: the original keeps the three loaded bytes in $v1/$a2/$a3 and the third sum in $v0, IDO gives $v0/$v1/$a2 and $t9. */
+#ifdef NON_MATCHING
+s32 func_80134A18(void) {
+    s32 i;
+    s32 frame;
+
+    frame = D_8015F3E8;
+    if (frame < 0x20) {
+        if (D_8012276C < 0xC0) {
+            /* Chained stores: IDO stores the middle and left targets first and the read one last, the original order. */
+            D_8012276C = D_8012276D = D_8012276E = D_8012276E + 6;
+            D_8012277C = D_8012277D = D_8012277E = D_8012277E + 1;
+            D_8012278C = D_8012278D = D_8012278E = D_8012278E + 1;
+            func_8009AD70(0, (s32) &D_80122760);
+            func_8009AD70(1, (s32) &D_80122770);
+            func_8009AD70(2, (s32) &D_80122780);
+        }
+        if (frame < 0xF) {
+            D_800E6280.unk_038 += 1;
+        }
+    } else if (frame >= 0x20 && frame < 0x54) {
+        for (i = 0; i < 2; i++) {
+            func_80147488(i + 1, D_8015F3E0[i], 1);
+        }
+    } else if (frame >= 0x54 && frame < 0x68) {
+        for (i = 0; i < 2; i++) {
+            func_80147488(i + 1, D_8015F3E0[i], 2);
+        }
+    } else if (frame >= 0x68 && frame < 0x72) {
+        for (i = 0; i < 2; i++) {
+            func_80147488(i + 1, D_8015F3E0[i], 3);
+        }
+    } else if (frame >= 0x72 && frame < 0x7C) {
+        for (i = 0; i < 2; i++) {
+            func_80147488(i + 1, D_8015F3E0[i], 4);
+        }
+    } else if (frame >= 0x7C && frame < 0x9A) {
+        for (i = 0; i < 2; i++) {
+            func_80147488(i + 1, D_8015F3E0[i], 5);
+        }
+    } else if (frame >= 0x9A && frame < 0xAE) {
+        for (i = 0; i < 2; i++) {
+            func_80147488(i + 1, D_8015F3E0[i], 6);
+        }
+    } else if (frame >= 0xAE && frame < 0xEA) {
+        for (i = 0; i < 2; i++) {
+            func_80147488(i + 1, D_8015F3E0[i], 7);
+        }
+    } else if (frame >= 0xF0) {
+        return 1;
+    }
+    D_8015F3E8 = D_8015F3E8 + 1;
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_80134A18);
+#endif
 
 void func_80134D8C(void) {
     D_800E6280.unk_1104.w += 1;
@@ -104,7 +160,36 @@ void func_80134FB8(void) {
     D_8011ED3E = -0x64;
 }
 
+/* NON_MATCHING: T-19011, 29 differing lines; frame 0x38 against 0x48: the original keeps the first quotient in $a3 saved around the second call (x of loop 2 is also $a3) and the loop 2 values in y=$v0, v=$v1, x=$a3; IDO puts the quotient in $s1 and gives x=$v1, v=$a3. */
+#ifdef NON_MATCHING
+void func_8013506C(void) {
+    s32 i;
+    s32 t;
+    u32 v;
+    u32 x;
+    u32 y;
+
+    for (i = 0; i < 0x80; i++) {
+        if (D_800E6280.unk_163C[128 + i] == 0) {
+            /* Own statement: written inline, IDO calls both functions first. */
+            t = func_800AE0D0() % 320;
+            D_800E6280.unk_163C[128 + i] = (t << 16) + func_800AE0D0() % 240;
+            break;
+        }
+    }
+    for (i = 0; i < 0x80; i++) {
+        v = D_800E6280.unk_163C[128 + i];
+        /* y before x: the mask range gets $v0 as in the original. */
+        y = v & 0xFFFF;
+        x = v >> 16;
+        if (v != 0) {
+            func_80143574(x - 0xA0, y - 0x78, (x * y + D_800E6280.unk_10F8) & 0xFFFFFF);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_8013506C);
+#endif
 
 s32 func_8013515C(void) {
     s32 i;

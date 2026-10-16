@@ -135,7 +135,7 @@ best expected bytes first (expected bytes = size / (1 + score / 30)); the gcc-bu
 | `func_80147928` | 508 | matched | `p`, `pos`, `slot`, `base` locals, index-first sums, and a FAKE empty `do { } while (0);` that gives arg2 its `$a3` range (found by the permuter) |
 | `func_80133738` | 312 | matched (closer) | the pair table read as flat words: `p = &D_8015E238[idx * 2]; func_80046290(p[0], p[1], 8);` (`D_8015E238` is an `s32[]`); the `TcPair8` element form allocates one ugen temporary less |
 | `func_801472D4` | 300 | 20 lines | block-copy temporaries one ugen register low |
-| `func_801471D0` | 260 | 4 lines (T-11300) | `move s4,s3` copy of the second loop base |
+| `func_801471D0` | 260 | matched (T-19015 closer) | pointer parameter and one `dop` walker restarted from it for the second pass (libgs model-setup shape); callers keep an `s32` view through `TACO_OVERRIDE_func_801471D0` |
 | `func_80147B24` | 372 | 63 lines | unrolled loop: pointer-end test instead of the counter |
 
 The closer pass (Opus, about 35 minutes) matched `func_80133738`: 9 of 12 functions, 5,924 bytes. `func_801472D4` and `func_801471D0` stay guarded with unchanged line counts; what the closer learned is in their `NON_MATCHING` comments and in [[matching-notes]].
@@ -160,3 +160,13 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p09 (T-19009)
 
 [[tickets/T-19009-w3-d-p09]] (`80142820.c`, `80143E80.c`): `func_801428DC` (the settings writer, 532 bytes), `func_80144430` (672) and `func_80142AF0` (752) matched, 1,956 bytes; `func_80144094` (924) stays `INCLUDE_ASM`. New types and declarations: `TcSetAll`/`TcSetBits` (the 0x58-byte settings block at `D_800E7D10`, file-local in `80142820.c` with `MAIN_API_OVERRIDE_D_800E7D10`; the loader's view is `TcSave` in `80133870.c`), `void func_800A1070(MATRIX *)` in `main_api.h`, `case 0xFF:` and a `GameState *gs` for the memory-card state machine. The rules that matter beyond TACO (declared scalars own stack slots, one struct instead of splat names for scheduling, `void` for lib calls) are in [[matching-notes]], "T-19009", and [[register-cheatsheet]].
+
+## Matching stage, package w3-d-p11 (T-19011)
+
+[[tickets/T-19011-w3-d-p11]] (`80134930.c`, `80133870.c`): no function matched. `func_8013506C` (29 lines) and `func_80134A18` (36 lines) stay as guarded drafts, `func_80133E98` stays `INCLUDE_ASM` (226 lines, four forms tried). New declarations in `TACO.h`: `D_8015F3E0[2]` (replaces the scalars `D_8015F3E0`/`D_8015F3E4`) and `s32 func_80134A18()`. Findings (chain stores, pointer-with-offset loops, call-saved quotient): [[matching-notes]], "T-19011".
+## Matching stage, package w3-d-p14 (T-19014)
+
+[[tickets/T-19014-w3-d-p14]] (`8013F250.c`): `func_801404FC` (316 bytes), `func_80140364` (408), `func_8013F9C0` (560) and `func_801407D4` (776) matched, 2,060 bytes; `func_80140ADC` (788) matched in the closer pass (the UV stores on one line in `setUVWH` order). New declaration in `TACO.h`: `s32 func_801407D4(s32 *arg0, TcPos arg1);` (the first eight bytes of the particle record by value). FAKEs: unused locals for frame homes, a one-line pair of UV stores, byte-offset element address (index first) and an empty `if (count) {}`. Details and idioms: [[matching-notes]], "T-19014".
+## Matching stage, package w3-d-p13 (T-19013)
+
+[[tickets/T-19013-w3-d-p13]] (`801480B0.c`, the 1ST BOSS scene): `func_80148184` (init, 388 bytes) matched in plain C from its 2ST BOSS twin `func_801490B4`; 1,336 bytes matched in all; `func_801484E4` (state 3 handler, 392 bytes) is a 6-row guarded draft after the closer pass (counter web, two FAKEs; the volatile final access leaves the address and one spill register); `func_801487A4` (actor transform, 948 bytes) matched too: the typed draft had the frame and all 237 instructions with 140 register rows, one ugen temporary short, until the `arg2` records were indexed as `((s16 *)arg2)[arg1 * 4 + k]` (two-step scaling) and the `arg4` pair index-first. New tables: `TcPair8 D_8015F840[]` and `TcPair2 D_8015F930[]` (both read at `i - 1`, linker symbols in `config/symbols_TACO.txt`). Notes: [[matching-notes]], "T-19013"; open rows in [[data/t0018-cases]].

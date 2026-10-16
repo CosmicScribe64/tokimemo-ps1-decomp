@@ -1,0 +1,6 @@
+python3 failed:
+cfe: Error: drafts/T-18700/_runs/plain/BUNKASAI/func_801509A4/work/guarded.o.sjis.c, line 2891: 'sp30' undefined; reoccurrences will not be reported.
+     *(M2cBlock2C *)(&sp30[0]) = *(M2cBlock2C *)(&D_80160AA4);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18700/_runs/plain/BUNKASAI/func_801509A4/work -o drafts/T-18700/_runs/plain/BUNKASAI/func_801509A4/work/guarded.o /tmp/asm_processort1x7ku0h/preprocessed_79ca1287aa304348bb88d12943b1f91d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibokuowevl/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18700/_runs/plain/BUNKASAI/func_801509A4/work/guarded.o drafts/T-18700/_runs/plain/BUNKASAI/func_801509A4/work/guarded.o.sjis.c

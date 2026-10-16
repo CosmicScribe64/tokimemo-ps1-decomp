@@ -1,0 +1,11 @@
+extern KObj *D_80139A74;
+extern KObj *D_8013A19C;
+extern s32 D_800E6448;
+extern s32 D_800E7368;
+extern s32 D_80139A94;
+extern s32 D_80139AB4;
+extern s32 D_8013A1D0;
+extern s32 D_8013A204;
+extern s8 D_800E7322;
+extern u8 D_800E71DF;
+extern u8 D_800E738A;

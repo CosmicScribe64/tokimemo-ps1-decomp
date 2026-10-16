@@ -1,5 +1,8 @@
+#define TACO_OVERRIDE_func_801471D0 /* pointer definition, s32 view for the callers: with u32 * in the header the caller in 80148FE0.c loses its shared constant register (T-19015) */
 #include "common.h"
 #include "ovl/TACO.h"
+
+void func_801471D0(u32 *arg0);
 
 void func_80146D60(s32 arg0) {
     TcObj50 *q;
@@ -69,40 +72,44 @@ void func_80146F74(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     ((TcTransformObj50 *)&D_80127480[arg0])->unk_00 = 0;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11300, 4 lines: before the second loop the original copies arg0 to $s4 (`move s4,s3; lw s6,4(s4); addiu s4,s4,8`), IDO folds the copy and reads 4(s3); a pointer local for it is folded too (funcdiff also shows one lui row from its HI16 pairing, not a real difference).
- * T-16561 closer: separate walker locals (s32, u32, u32 *, the parameter as walker, base reused for the loop-2 pointer) are
- * copy-propagated into the load and their +8 is CSE'd with the loop-1 temporary; one `dop` variable incremented in place
- * (the libgs sample-code shape) gives every instruction but the move, in one register: the move looks like a uopt
- * live-range split of that variable, which no tried source shape triggers */
-void func_801471D0(s32 arg0) {
+/* libgs model setup (GsMapModelingData, GsLinkObject4) walking the TMD header with dop. The second pass
+ * restarts dop from arg0, which keeps the copy and the two in-place steps of the original
+ * (`move s4,s3; lw s6,4(s4); addiu s4,s4,8`); a walker that is not restarted is folded into arg0 + 8.
+ * arg0 must be a pointer: with an s32 parameter uopt keeps the first-pass copy as well (T-19015). */
+void func_801471D0(u32 *arg0) {
+    u32 *dop;
     s32 i;
     u32 n;
 
-    arg0 += 4;
-    func_8009B3C0(arg0);
+    dop = arg0;
+    dop++;
+    func_8009B3C0((s32)dop);
+    dop += 2;
     for (i = 0; i < 64; i++) {
-        func_8009B430(arg0 + 8, (u8 *)&D_80127080[i], 0);
+        func_8009B430((s32)dop, (u8 *)&D_80127080[i], 0);
         D_80127080[i].unk4[0] = (s32)&D_80127480[i];
         D_80127080[i].unk0 = 0x80000000;
     }
-    func_8009B3C0(arg0);
-    n = *(u32 *)(arg0 + 4);
+    dop = arg0;
+    dop++;
+    func_8009B3C0((s32)dop);
+    dop++;
+    n = *dop;
+    dop++;
     for (i = 0; i < n; i++) {
-        func_8009B430(arg0 + 8, (u8 *)&D_80127080[i + 1], i);
+        func_8009B430((s32)dop, (u8 *)&D_80127080[i + 1], i);
         D_80127080[i + 1].unk4[0] = (s32)&D_80127480[i + 1];
         D_80127080[i + 1].unk0 = 0x80000000;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_801471D0);
-#endif
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-16561, 20 differing lines (10 rows); frame and body match (local MATRIX at sp+0x2C, `s32 pad` declared first for the 4 spare bytes, one-line inner `for` keeps the increments in the original order); the ugen temporaries of the block copy are $t7/$t8 against the original $t8/$t9, one temporary short (T-10520, rows in wiki/data/t0018-cases.md).
+/* NON_MATCHING: T-19015 (T-16561), 20 differing lines (10 rows); frame and body match (local MATRIX at sp+0x2C, `s32 pad` declared first for the 4 spare bytes, one-line inner `for` keeps the increments in the original order); the ugen temporaries of the block copy are $t7/$t8 against the original $t8/$t9, one temporary short (T-10520, rows in wiki/data/t0018-cases.md).
  * T-16561 closer: the struct copy skips one ugen register after its address registers when the last store before it
  * went through a pointer register (the loop stores here), two after a store through $sp or a global, after a call or
- * at function entry; the original has two. Copy, record and loop spellings, labels and no-op blocks do not change it */
+ * at function entry; the original has two. Copy, record and loop spellings, labels and no-op blocks do not change it.
+ * T-19015 closer: still 20 lines. A global store after the loops gives the original's $t8 (one `.set noat` in cc -S)
+ * but adds 3 instructions; `if (i) {}`, `arg4 = arg4;` and `*(MATRIX *)` casts on both sides keep $t7 */
 s32 func_801472D4(arg0, arg1, arg2, arg3, arg4, arg5)
 s32 arg0;
 s32 arg1;

@@ -1,0 +1,22 @@
+python3 failed:
+ --------^
+cfe: Error: drafts/T-17800/_runs/census/OPTION/func_80133718/work/guarded.c, line 3061: 'D_80120914' undefined; reoccurrences will not be reported.
+         D_80120914 = 0x7FFF;
+ --------^
+cfe: Error: drafts/T-17800/_runs/census/OPTION/func_80133718/work/guarded.c, line 3073: 'D_80120914' undefined; reoccurrences will not be reported.
+     D_80120914 = ((s16) D_80120914 / 17) * 0x10;
+ ------------------------^
+cfe: Error: drafts/T-17800/_runs/census/OPTION/func_80133718/work/guarded.c, line 3098: 'D_8012071C' undefined; reoccurrences will not be reported.
+         } while (var_v0 != &D_8012071C);
+ ----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17800/_runs/census/OPTION/func_80133718/work -o drafts/T-17800/_runs/census/OPTION/func_80133718/work/guarded.o /tmp/asm_processorug752hrx/preprocessed_3a5a9c9ad83243279e170a044ecea50e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4isr0mf4/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17800/_runs/census/OPTION/func_80133718/work/guarded.o drafts/T-17800/_runs/census/OPTION/func_80133718/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17800/_runs/census/OPTION/func_80133718/work/guarded.c, line 3059: 'D_80120910' undefined; reoccurrences will not be reported.
+         D_80120910 = 1;
+ --------^
+cfe: Warning 689: drafts/T-17800/_runs/census/OPTION/func_80133718/work/guarded.c, line 3100: Unacceptable operand of == or !=
+         } while (var_v0 != &D_8012071C);
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17800/_runs/census/OPTION/func_80133718/work -o drafts/T-17800/_runs/census/OPTION/func_80133718/work/guarded.o /tmp/asm_processorwtfbg8z7/preprocessed_143df533044b4df8b155a2b1580fd30d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibi6qtzfhf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17800/_runs/census/OPTION/func_80133718/work/guarded.o drafts/T-17800/_runs/census/OPTION/func_80133718/work/guarded.c

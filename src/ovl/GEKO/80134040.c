@@ -49,7 +49,39 @@ void func_801341A0(void) {
     tbl.f[idx](0x80);
 }
 
+/* NON_MATCHING: T-17700, the census draft's merged store of unk_110D as a u8 local; 8 instructions differ: the original loads each unk_110D into $v0 with its %hi in $v0, IDO here uses $v1 */
+#ifdef NON_MATCHING
+s32 func_80134228(void) {
+    u8 state;
+
+    if (D_800E6280.unk_71E & 0x40) {
+        func_80044750(0xCF);
+        main_state_set(0x52);
+        return 0;
+    }
+    state = D_800E6280.unk_110D;
+    if (state == 0) {
+        func_800674B0();
+        state = D_800E6280.unk_110D + 1;
+    }
+    D_800E6280.unk_110D = state;
+    if (state == 1) {
+        if ((u32)D_800E6280.unk_1104.w++ >= 0x400) {
+            func_800452C4();
+            func_8004482C();
+            D_800E6280.unk_110D = 0;
+        }
+        if (func_80044E8C() == 1) {
+            D_800E6280.unk_110D += 1;
+        } else {
+            return 0;
+        }
+    }
+    return func_80072B5C(1);
+}
+#else
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_80134228);
+#endif
 
 s32 func_8013431C(void) {
     if (D_800E6280.unk_044[0].unk_20[D_800E6280.unk_040] == 5) {

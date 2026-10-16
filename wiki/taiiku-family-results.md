@@ -92,6 +92,10 @@ Left for later waves: the rest of `80133C80.c` (8), `80138950.c` (8), `801452D0.
 
 `func_80140A90` (2,020 B) re-worked for about 50 minutes in wave 3: not matched, 33 instructions still differ. The block copy's temporary count was measured as a two-state rule of ugen and no code-neutral C reaches the original's state; the original disagrees with the same rule in SHUGAKU, MASTER and ENDING, so the gap looks like a ugen difference. Evidence and the variants tried: [[matching-notes]], "T-19001".
 
+### Package w3-d-p07 results (T-19007)
+
+Game C, the four open functions of `801452D0.c` (3,088 bytes), about 75 minutes: `func_80146D18` (648 B) matched in plain C; `func_8014607C` (20 lines) and `func_80145370` (22 lines) stay guarded; `func_80147B14` (1,020 B) stays `INCLUDE_ASM` with a typed draft in `drafts/T-19007/TAIIKU/func_80147B14/`. The match came from replacing the draft's hand-shaped `do`/`while` and pointer-walk loops by plain `for`/`while` loops over the index (the two gaps of T-16553 were artifacts of those shapes). The `func_80147B14` draft has the original's 255 instructions and its three table loops (two over `u16[8]` tables from index 2, the third unrolled by IDO only when it has a loop variable of its own); registers and the frame (144 against 128) are open. Details: [[matching-notes]], T-19007.
+
 ## Package pt-taiiku-p2 (T-16552): `80138950.c`
 
 Worktree `pt-taiiku-p2`, 9 functions from the redrafts, about 2 hours. Result: `func_80139FE4` matched (816 bytes, FAKE dead assignments, see below); `func_80138DF8` (1,336 bytes) from 30 to 3 differing lines; `func_80138AA8` stays at 22 lines but loses both FAKE pads; the Opus closer pass then matched both (`func_80138DF8` with a FAKE `goto` into its first loop, `func_80138AA8` by calling `func_80085E30` as an implicit int function); `func_8013B3B0`, `func_8013B608`, `func_8013BCEC`, `func_8013B78C`, `func_8013B94C` and `func_80139AB0` stay `INCLUDE_ASM` (drafts of 33 to 111 lines, rows in [[data/t0018-cases]]). Details and evidence: [[matching-notes]], "T-16552".
@@ -101,10 +105,10 @@ Worktree `pt-taiiku-p2`, 9 functions from the redrafts, about 2 hours. Result: `
 | `func_80139FE4` | 816 | guarded 33 lines | matched |
 | `func_80138DF8` | 1,336 | guarded 30 lines | matched (closer: FAKE `goto` into the loop) |
 | `func_80138AA8` | 848 | guarded 22 lines | matched (closer: implicit int `func_80085E30`, local `p`) |
-| `func_8013B608` | 388 | redraft 81 | draft 33 register + 9 structure lines, not kept |
+| `func_8013B608` | 388 | redraft 81 | draft 33 register + 9 structure lines, not kept; matched in T-19008 (closer) |
 | `func_8013B3B0` | 528 | redraft 99 | draft 111 lines, not kept |
 | `func_8013B78C` | 448 | redraft 136 | draft 45 lines, not kept |
-| `func_8013BCEC` | 524 | redraft 113 | draft 49 lines, not kept |
+| `func_8013BCEC` | 524 | redraft 113 | draft 49 lines, not kept; T-19008: guarded, 2 instructions missing |
 | `func_80139AB0` | 812 | redraft 237 | draft 99 lines, not kept |
 | `func_8013B94C` | 496 | redraft 149 | draft 80 lines (60 with a volatile counter view, address kept in a register), not kept |
 
@@ -125,3 +129,12 @@ What the types did and did not do here: the new `TaiikuBall`, `TaiikuA0`, `Taiik
 ## Package w3-d-p04 (T-19004, `80133C80.c`)
 
 [[tickets/T-19004-w3-d-p04]], wave 3: `func_80137228` matched (260 bytes) once `D_80120A72` and `D_80120AA8` were read as fields of display records 111 and 112 (the loop's record stores then force the reload the original has); `func_80135830` (672 bytes) matched in the closer pass (index loop plus a FAKE dead `i = 0;`), `func_80137544` (26 lines) and `func_80135480` (22) unchanged, `func_80137C44` left `INCLUDE_ASM`. Details in [[matching-notes]], section T-19004.
+
+### Package w3-d-p08 results (T-19008)
+
+`80138950.c`, the rest of the D_801499A2 counter family (five functions, 2,288 bytes, about 130 minutes of agent time with the closer pass): `func_8013B200` (432 B) matched in the first pass; the closer pass matched `func_8013B608` (388 B). `func_8013BCEC` (524 B) is a guarded draft (2 instructions missing); `func_8013B78C` (448 B, 79 rows) and `func_8013B94C` (496 B) stay `INCLUDE_ASM`. The first match came from removing a local, ordering two stores and reading the flag through a u16 view; the gap of `func_8013B608` and `func_8013BCEC` was located in the first pass (one extra ugen temporary between the condition and the chain in the original) and closed by the closer pass. Details, the `ugen -S` method and the probes tried: [[matching-notes]], "T-19008"; rows in [[data/t0018-cases]].
+
+Closer pass: `func_8013B608` matched by splitting the result assignment (`v = x >> 3; v += (x >> 3) * 80 / 48;`), which gives the extra ugen temporary with no instruction; the same split leaves `func_8013BCEC` 2 instructions short (the counter write-back before `func_8013C5C8`). Package total: 2 of 5 functions, 820 bytes.
+## Package w3-d-p10 (T-19010, `80142240.c`)
+
+[[tickets/T-19010-w3-d-p10]], wave 3: `func_80144464` (572 B), `func_80143814` (692 B), `func_80142FB8` (992 B) and `func_80144E54` (496 B) matched, `func_8014357C` guarded at 34 lines. Game B now has no `INCLUDE_ASM` left among the 80142240.c functions except `func_80142400`. The T-16554 gap of `func_80142FB8` (spills of the pointer and constants) was an index loop with `<`; `D_8014A110` is `u8`. Details in [[matching-notes]], section T-19010.

@@ -21,9 +21,6 @@ void func_80133C84(void);
 extern s8 D_80139AC4;
 extern s32 D_80139DFC;
 extern s16 D_801D4094;
-extern s32 D_80139A50;
-extern s32 D_80139A54;
-extern s32 D_80139A58;
 extern s8 D_80139DF0;
 typedef struct KSub {
     /* 0x00 */ u8 unk_00[8];
@@ -39,9 +36,6 @@ typedef struct KObj {
 extern KObj *D_80139AD0;
 extern s32 D_80139AD4;
 extern s32 D_80139AD8;
-extern s32 D_8013A210;
-extern s32 D_8013A244;
-extern s32 D_8013A278;
 
 extern s32 D_801398B0;
 extern s32 D_801398E0;
@@ -67,14 +61,6 @@ void func_80133EF8(void);
 void func_801349D4(void);
 void func_801392D4(void);
 
-extern s32 D_80139D10;
-extern s32 D_80139D14;
-extern s32 D_80139D18;
-extern s16 D_80139D1C;
-extern s32 D_80139D20;
-extern s32 D_80139D24;
-extern s32 D_80139D28;
-extern s16 D_80139D2C;
 extern s32 D_8013980C;
 void func_80135438(void);
 
@@ -109,107 +95,8 @@ void func_801325D0();
 
 /* defined in C in one object, called from another (T-0500) */
 void func_80132E40(void);
-extern s32 D_8013A170;
-extern s32 D_8013A174;
-extern s32 D_8013A178;
-extern s32 D_8013A17C;
-extern s32 D_8013A180;
-extern s32 D_8013A184;
-extern s32 D_8013A188;
-extern s32 D_8013A18C;
-extern s32 D_8013A190;
-extern s32 D_8013A194;
-extern s32 D_8013A198;
-extern s32 D_8013A19C;
-extern s32 D_8013A1A0;
-extern s32 D_8013A1A4;
-extern s32 D_8013A1A8;
-extern s32 D_8013A1AC;
-extern s32 D_8013A1B0;
-extern s32 D_8013A1B4;
-extern s32 D_8013A1B8;
-extern s32 D_8013A1BC;
-extern s32 D_8013A1C0;
-extern s32 D_8013A1C4;
-extern s32 D_8013A1C8;
-extern s32 D_8013A1CC;
-extern s32 D_8013A1D0;
-extern s32 D_8013A1D4;
-extern s32 D_8013A1D8;
-extern s32 D_8013A1DC;
-extern s32 D_8013A1E0;
-extern s32 D_8013A1E4;
-extern s32 D_8013A1E8;
-extern s32 D_8013A1EC;
-extern s32 D_8013A1F0;
-extern s32 D_8013A1F4;
-extern s32 D_8013A1F8;
-extern s32 D_8013A1FC;
-extern s32 D_8013A200;
-extern s32 D_8013A204;
-extern s32 D_8013A208;
-extern s32 D_8013A20C;
-extern s32 D_8013A214;
-extern s32 D_8013A218;
-extern s32 D_8013A21C;
-extern s32 D_8013A220;
-extern s32 D_8013A224;
-extern s32 D_8013A228;
-extern s32 D_8013A22C;
-extern s32 D_8013A230;
-extern s32 D_8013A234;
-extern s32 D_8013A238;
-extern s32 D_8013A23C;
-extern s32 D_8013A240;
-extern s32 D_8013A248;
-extern s32 D_8013A24C;
-extern s32 D_8013A250;
-extern s32 D_8013A254;
-extern s32 D_8013A258;
-extern s32 D_8013A25C;
-extern s32 D_8013A260;
-extern s32 D_8013A264;
-extern s32 D_8013A268;
-extern s32 D_8013A26C;
-extern s32 D_8013A270;
-extern s32 D_8013A274;
-extern s32 D_8013A27C;
-extern s32 D_8013A280;
-extern s32 D_8013A284;
-extern s32 D_8013A288;
-extern s32 D_8013A28C;
-extern s32 D_8013A290;
-extern s32 D_8013A294;
-extern s32 D_8013A298;
-extern s32 D_8013A29C;
-extern s32 D_8013A2A0;
-extern s32 D_8013A2A4;
 
 void func_80134374(void);
-extern s32 D_80139950;
-extern s32 D_80139954;
-extern s32 D_80139958;
-extern s32 D_8013995C;
-extern s32 D_80139960;
-extern s32 D_80139964;
-extern s32 D_80139968;
-extern s32 D_8013996C;
-extern s32 D_80139970;
-extern s32 D_80139974;
-extern s32 D_80139978;
-extern s32 D_8013997C;
-extern s32 D_80139980;
-extern s32 D_80139984;
-extern s32 D_80139988;
-extern s32 D_8013998C;
-extern s32 D_80139990;
-extern s32 D_80139994;
-extern s32 D_80139998;
-extern s32 D_8013999C;
-extern s32 D_801399A0;
-extern s32 D_801399A4;
-extern s32 D_801399A8;
-extern s32 D_801399AC;
 
 void func_801370A0(void);
 extern u8 D_80139DF4[];
@@ -219,30 +106,6 @@ void func_80136630();
 void func_801365C4(void);
 void func_80136FDC(void);
 void func_80136520(void);
-extern s32 D_80139A5C;
-extern s32 D_80139A60;
-extern s32 D_80139A64;
-extern s32 D_80139A68;
-extern s32 D_80139A6C;
-extern s32 D_80139A70;
-extern s32 D_80139A74;
-extern s32 D_80139A78;
-extern s32 D_80139A7C;
-extern s32 D_80139A80;
-extern s32 D_80139A84;
-extern s32 D_80139A88;
-extern s32 D_80139A8C;
-extern s32 D_80139A90;
-extern s32 D_80139A94;
-extern s32 D_80139A98;
-extern s32 D_80139A9C;
-extern s32 D_80139AA0;
-extern s32 D_80139AA4;
-extern s32 D_80139AA8;
-extern s32 D_80139AAC;
-extern s32 D_80139AB0;
-extern s32 D_80139AB4;
-extern s32 D_80139AB8;
 void func_801383D0(void);
 s32 func_80132290(void);
 extern u8 D_8013A2AC;
@@ -257,10 +120,21 @@ typedef struct KangeiWords11 {
 typedef struct KangeiWords2 {
     /* 0x00 */ s32 unk_00[2];
 } KangeiWords2; /* size 0x08 */
+/* T-18400: picture sets. Each set is three pointers into loaded data (D_80139AD0, D_80139AD4,
+ * D_80139AD8 get the three components of the current one); the tables hold one row per component. */
+extern s32 D_80139950[3][8]; /* size 0x60, filled by func_80132090 */
+extern s32 D_80139A50[3]; /* size 0x0C, filled by func_80132E40 */
+extern s32 D_80139A5C[3][8]; /* size 0x60, filled by func_80132E40 */
+extern s32 D_8013A170[2][3][13]; /* size 0x138, filled by func_80137B90 */
 extern KangeiWords11 D_80139BA8;
 extern KangeiWords2 D_80139BD4;
 extern KangeiWords2 D_80139BDC;
 extern KangeiWords2 D_80139BE4;
+/* T-18400: the same four tables for func_80132C24 (summer variant of func_8013454C). */
+extern KangeiWords11 D_80139A08;
+extern KangeiWords2 D_80139A34;
+extern KangeiWords2 D_80139A3C;
+extern KangeiWords2 D_80139A44;
 extern s8 D_80139ABC;
 
 /* T-9580: bits 25..26 of the packed +0x66C record word. */
@@ -276,6 +150,44 @@ typedef struct KangeiStateView {
     /* 0x66C */ KangeiModeFlags modes[12];
 } KangeiStateView; /* size 0x69C */
 
+/* T-18400: overlay callees of the unmatched functions, called before their definitions. */
+void func_801335A0(void);
+void func_801335F0(void);
+void func_801337B4(void);
+s32 func_801338EC(void);
+void func_80133A14(void);
+void func_80133C10(void);
+void func_80134120(void);
+s32 func_80135678(void);
+void func_80136018(void);
+void func_80136D58(void);
+void func_80138078(void);
+void func_80136810(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 arg6, s32 arg7, s32 arg8);
+/* T-18400: club name tables that func_8013769C copies to the stack whole and passes
+ * name[D_800E6280.unk_0F4.h >> 12] to func_800AE0F0 (as EVENT's EventTableE7, T-9940). */
+typedef struct KangeiNames20 {
+    /* 0x00 */ u8 name[11][20];
+} KangeiNames20; /* size 0xDC */
+typedef struct KangeiNames21 {
+    /* 0x00 */ u8 name[11][21];
+} KangeiNames21; /* size 0xE7; the inline copy ends with a three-byte tail */
+extern KangeiNames20 D_80139FAC;
+extern KangeiNames21 D_8013A088;
+/* T-18400: two image records copied into display record 96 by func_80135CE0
+ * (unk_00 to +0x34, unk_04 to +0x0C, unk_08 to +0x10, unk_0C to +0x14); filled by func_801355F0. */
+typedef struct KangeiImage10 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s16 unk_0C;
+    /* 0x0E */ u8 pad_0E[2];
+} KangeiImage10; /* size 0x10 */
+extern KangeiImage10 D_80139D10[2];
+/* T-18400: fade colour of func_80136630 (byte loads and stores, one word apart). */
+extern u8 D_80139E00;
+extern u8 D_80139E04;
+extern u8 D_80139E08;
+
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 void func_80138158(void);
 
@@ -285,15 +197,37 @@ void func_80138D40(void);
 
 #ifndef OVL_KANGEI_SPRITE_T9740
 #define OVL_KANGEI_SPRITE_T9740
-/* T-9740: 0x44-byte D_8011ECD0 records used by func_80137484. */
+/* 16.16 position: word arithmetic, signed high halfword coordinate (MASTER's MasterFixed32, T-18400). */
+typedef union KangeiFixed32 {
+    /* 0x00 */ s32 w;
+    /* 0x00 */ s16 h[2];
+} KangeiFixed32; /* size 0x04 */
+
+/* T-9740: 0x44-byte D_8011ECD0 records used by func_80137484; T-18400: fields of the
+ * MASTER clone func_801370A0 (MasterSprite44 layout). */
 typedef struct KangeiSprite44 {
     /* 0x00 */ u8 pad_00[2];
     /* 0x02 */ u8 unk_02;
     /* 0x03 */ u8 unk_03;
     /* 0x04 */ u8 pad_04[3];
     /* 0x07 */ u8 unk_07;
-    /* 0x08 */ u8 pad_08[0x3C];
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ u8 pad_0A[0xC];
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ u8 pad_1A[0xC];
+    /* 0x26 */ s16 unk_26;
+    /* 0x28 */ KangeiFixed32 unk_28;
+    /* 0x2C */ u8 pad_2C[0x18];
 } KangeiSprite44; /* size 0x44 */
+
+/* T-18400: the ten falling streaks of func_801370A0 (MASTER's D_8013C58C/D_8013C5B4). */
+typedef struct KangeiPoint2 {
+    /* 0x00 */ s16 x;
+    /* 0x02 */ s16 y;
+} KangeiPoint2; /* size 0x04 */
+extern KangeiPoint2 D_80139F10[10];
+extern s16 D_80139F38[10];
 void func_80137484(void);
 #endif
 

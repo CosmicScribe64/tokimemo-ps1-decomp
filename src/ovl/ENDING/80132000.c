@@ -1,5 +1,6 @@
 #include "common.h"
 #include "ovl/ENDING.h"
+#include "game.h"
 
 void func_80132000(void) {
     D_8013C280 = 0x801F00B8;
@@ -128,4 +129,57 @@ void func_80132EF0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80132000", func_80132F18);
+/* Port of main check_k_scroll (src/main/8007C030.c), with ENDING's own limits. The unsigned
+ * compare keeps the operand order of the bne (as in check_k_scroll). */
+/* FAKE: sp40 keeps the unused result of the second get_k_work call; without it the frame is 8
+ * bytes smaller and both spill homes move. Real source unknown. T-18300 */
+void func_80132F18(void) {
+    s32 sp3C;
+    Entry8 *sp50;
+    s32 sp40;
+    s16 temp_v1;
+    s32 temp_a0;
+    s32 temp_v0;
+    s32 var_a0;
+    s32 var_s0;
+    u32 temp_s2;
+    Entry8 *temp_v0_2;
+    Entry8 *temp_v0_3;
+
+    get_ksys();
+    temp_v0 = get_now_k();
+    temp_s2 = temp_v0 & 0xFF;
+    sp50 = (Entry8 *) get_k_work(temp_v0);
+    temp_a0 = (var_a0 = temp_s2 + 1);
+    sp3C = temp_a0;
+    sp40 = get_k_work(temp_a0);
+    if (sp50->unk_02 >= 0x68) {
+        var_a0 = sp3C;
+        if (D_800CA2BC != 0) {
+            var_s0 = 1;
+            if (temp_s2 >= 2U) {
+                do {
+                    temp_v0_2 = (Entry8 *) get_k_work(var_s0);
+                    temp_v1 = temp_v0_2->unk_02;
+                    if ((u32) temp_v1 == 0x48U) {
+                        temp_v0_2->unk_02 = (s16) (temp_v1 - 0x10);
+                        temp_v0_2->unk_07 = 0;
+                    } else {
+                        temp_v0_2->unk_02 = (s16) (temp_v1 - 0x10);
+                    }
+                    var_s0 = (s32) ((s16) (var_s0 + 1));
+                }
+                while (((u32) var_s0) < temp_s2);
+            }
+            D_800CA2BC = 0;
+            sp50->unk_02 = 0x58;
+            sp50->unk_07 = 1;
+            var_a0 = sp3C;
+        }
+    }
+    temp_v0_3 = (Entry8 *) get_k_work(var_a0);
+    if (temp_v0_3->unk_02 >= 0x68) {
+        D_800CA2BC = 1;
+        temp_v0_3->unk_07 = 0;
+    }
+}

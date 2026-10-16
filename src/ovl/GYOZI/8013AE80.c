@@ -71,7 +71,20 @@ void func_8013B03C(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013AE80", func_8013B0C4);
+void func_8013B0C4(void) {
+    s32 idx; /* declared before table: its stack slot sits above it (T-3330) */
+    GzCallbacks90 table;
+
+    table = D_801476F4;
+    if (D_80147650 == 0 && D_800F647A >= 0x13 && D_800F647A < 0x1C) {
+        func_80056574(0x60, -0x10, 0x30, 8, 8, 0xD);
+    }
+    if (D_80147650 == 1 && D_800F647A >= 0x13 && D_800F647A < 0x1C) {
+        func_80056574(-0x3C, -0x20, 0x20, 8, 8, 0xD);
+    }
+    idx = D_800F647A;
+    table.callbacks[idx]();
+}
 
 void func_8013B1D0(void) {
     func_8013A820();

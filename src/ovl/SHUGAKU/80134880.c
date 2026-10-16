@@ -1,11 +1,6 @@
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
-typedef struct {
-    void (*f[25])();
-} FnTbl25; /* size 0x64 */
-extern FnTbl25 D_8013C1C4;
-
 void func_80134880(void) {
     D_8013C190 = (u8 *)0x801EA87C;
     D_8013C194 = (u8 *)0x801EA89C;
@@ -30,7 +25,7 @@ void func_80134930(void) {
 
 void func_80134970(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl25 tbl;
+    ShFnTbl25 tbl;
 
     tbl = D_8013C1C4;
     idx = D_800E6280.unk_110A;
@@ -80,7 +75,25 @@ void func_80134B64(void) {
     func_80042908((D_800E6280.unk_721 + 1) & 0xFF);
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_80134B94);
+void func_80134B94(void) {
+    u8 index; /* declared above table and reread after the call: same callback idiom as EVENT func_800FA6A0 (T-18000) */
+    ShFnTbl41 table;
+
+    table = D_8013C228;
+    index = D_800E6280.unk_110A;
+    table.f[index](0x80);
+    index = D_800E6280.unk_110A;
+    if (D_80085368 == table.f[index]) {
+        ((DisplayActor44 *)D_8011ECD0)[98].unk_03 |= 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[98].unk_07 = ((DisplayActor44 *)D_8011ECD0)[96].unk_07;
+    }
+    if (func_800853FC == table.f[index]) {
+        ((DisplayActor44 *)D_8011ECD0)[98].unk_07 = ((DisplayActor44 *)D_8011ECD0)[96].unk_07;
+        if (((DisplayActor44 *)D_8011ECD0)[96].unk_07 < 9) {
+            ((DisplayActor44 *)D_8011ECD0)[98].unk_03 &= 0xFF7F;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_80134C98);
 
@@ -124,22 +137,6 @@ void func_80134ED4(void) {
     func_8004284C();
 }
 
-typedef struct {
-    s32 w[17];
-} Words17; /* size 0x44 */
-
-typedef struct {
-    s32 w[17];
-} Words17; /* size 0x44 */
-
-typedef struct {
-    s32 w[17];
-} Words17; /* size 0x44 */
-
-typedef struct {
-    s32 w[17];
-} Words17; /* size 0x44 */
-
 void func_80134F18(void) {
     func_801365F4();
     D_8013BFFC = D_8013C5C4;
@@ -153,7 +150,7 @@ void func_80134F18(void) {
     D_80120654 = 8;
     D_801206AC = 3;
     /* FAKE: D_80120650 and D_801206D8 (+0x88) are one object in the original: the loads stay behind the stores. T-9310 */
-    *(Words17 *)&D_80120650[0x88] = *(Words17 *)D_80120650;
+    *(DisplayActor44 *)&D_80120650[0x88] = *(DisplayActor44 *)D_80120650;
     D_80120650[0x8A] = 0x40;
     *(s16 *)&D_80120650[0xA0] = 0x28;
     D_80120650[0x89] -= 1;

@@ -1,0 +1,173 @@
+[
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_80132450",
+  "size": 780,
+  "guarded": false,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_80132450"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_80132834",
+  "size": 472,
+  "guarded": false,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_80132834"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_80132EE8",
+  "size": 488,
+  "guarded": false,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_80132EE8"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_801330D0",
+  "size": 736,
+  "guarded": true,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_801330D0"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_8013358C",
+  "size": 596,
+  "guarded": false,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_8013358C"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_801339D4",
+  "size": 724,
+  "guarded": false,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_801339D4"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_80133CA8",
+  "size": 600,
+  "guarded": false,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_80133CA8"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_80134258",
+  "size": 664,
+  "guarded": false,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_80134258"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_80134800",
+  "size": 1052,
+  "guarded": false,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_80134800"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_80135274",
+  "size": 620,
+  "guarded": false,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_80135274"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_80135A48",
+  "size": 132,
+  "guarded": false,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_80135A48"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_80135ACC",
+  "size": 1160,
+  "guarded": false,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_80135ACC"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_80135FBC",
+  "size": 744,
+  "guarded": false,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_80135FBC"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_801362A4",
+  "size": 1116,
+  "guarded": false,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_801362A4"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80132000.c",
+  "func": "func_80136A2C",
+  "size": 228,
+  "guarded": true,
+  "source_hash": "7ef60d702443007bc01d6acfd0497aa4fb09120cb6657e24824a3bb3e95491ff",
+  "scope": "EN_NICHI:func_80136A2C"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80136B10.c",
+  "func": "func_80136B74",
+  "size": 632,
+  "guarded": false,
+  "source_hash": "7301e9ecf03ca967c541c1118fc9863e1d7a894a7cd3b03850a176fbd125ed6d",
+  "scope": "EN_NICHI:func_80136B74"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80136B10.c",
+  "func": "func_80136DEC",
+  "size": 1392,
+  "guarded": false,
+  "source_hash": "7301e9ecf03ca967c541c1118fc9863e1d7a894a7cd3b03850a176fbd125ed6d",
+  "scope": "EN_NICHI:func_80136DEC"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80136B10.c",
+  "func": "func_8013735C",
+  "size": 2300,
+  "guarded": false,
+  "source_hash": "7301e9ecf03ca967c541c1118fc9863e1d7a894a7cd3b03850a176fbd125ed6d",
+  "scope": "EN_NICHI:func_8013735C"
+ },
+ {
+  "unit": "EN_NICHI",
+  "src": "src/ovl/EN_NICHI/80136B10.c",
+  "func": "func_80138CCC",
+  "size": 1028,
+  "guarded": false,
+  "source_hash": "7301e9ecf03ca967c541c1118fc9863e1d7a894a7cd3b03850a176fbd125ed6d",
+  "scope": "EN_NICHI:func_80138CCC"
+ }
+]

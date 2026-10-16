@@ -110,6 +110,7 @@ typedef struct TcActor {
 extern TcActor *D_8015EDB4;
 
 void func_80140028(s32 arg0);
+s32 func_801407D4(s32 *arg0, TcPos arg1);
 void func_80140E18(s32 arg0);
 void func_8015ABF0(void);
 void func_801563E4(s32 arg0);
@@ -138,7 +139,7 @@ void func_8013788C();
 void func_8014F210(void);
 void func_8015185C(void);
 s32 func_801335A0();
-void func_80134A18();
+s32 func_80134A18();
 void func_80134EBC(void);
 void func_8013506C();
 void func_80135220(void);
@@ -204,10 +205,11 @@ void func_8014EB24(s32 arg0);
 void func_8014EF14(s32 arg0);
 void func_8014F044(void);
 void func_80146D60(s32 arg0);
+#ifndef TACO_OVERRIDE_func_801471D0 /* 80146D60.c defines it with a pointer parameter (T-19015) */
 void func_801471D0(s32 arg0);
+#endif
 void func_80147488(s32 arg0, s16 *arg1, s32 arg2);
-extern s32 D_8015F3E0;
-extern s32 D_8015F3E4;
+extern s32 D_8015F3E0[2]; /* two model slots, T-19011 */
 extern s16 *D_8015F82C[2]; /* model data pointers for func_80147488, T-19002 */
 extern s16 D_8015F3E8;
 
@@ -256,6 +258,8 @@ s32 func_8013C1F4(void);
 s32 func_8013C440(void);
 void func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2);
 extern Tc14 D_8015E3B0[];
+extern u16 D_8015F580;
+extern u16 D_8015F584;
 void func_801413B8(Tc14 *arg0, s32 arg1);
 void func_801416E8(Tc14 *arg0, s32 arg1);
 void func_80141B18(Tc14 *arg0, s32 arg1);
@@ -414,6 +418,8 @@ typedef struct TcPair2 {
 extern TcPair2 D_8015FBF8[];
 extern TcPair8 D_80160290[]; /* read at i - 1, T-16563 */
 extern TcPair2 D_801603A8[]; /* read at i - 1, T-16563 */
+extern TcPair8 D_8015F840[]; /* read at i - 1, T-19013 */
+extern TcPair2 D_8015F930[]; /* read at i - 1, T-19013 */
 /* FAKE: not data of its own. D_801603D4 + 4 * i is D_80160444 + 4 * (i - 0x1C); IDO keeps the symbol as the
  * induction base, so only this base gives func_80152808 its zero-offset pointer walk (D_80160448). T-16563 */
 extern s16 *D_801603D4[];
@@ -460,7 +466,11 @@ void func_80139118(void);
 void func_80158CDC(s16 arg0, s16 arg1, s16 arg2);
 void func_80158DBC(s16 arg0, s16 arg1, s16 arg2);
 extern s8 D_8015EDE8;
+void func_80148184(void);
 void func_80148308(void);
+void func_801484E4(void);
+void func_8014866C(void);
+void func_801487A4(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4);
 void func_8014AB50();
 void func_80148B58();
 extern u8 D_8015F404[];
@@ -546,6 +556,7 @@ void func_801573C8(void);
 void func_80157AE0(void);
 void func_8015800C(void);
 void func_80158AB0(void);
+void func_801589B0(void);
 #endif
 
 #ifndef OVL_TACO_DIRECTIONS_T9780

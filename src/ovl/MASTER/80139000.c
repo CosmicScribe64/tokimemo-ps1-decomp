@@ -32,11 +32,6 @@ void func_801390FC(void) {
     D_8013C770 = 0x80197000;
 }
 
-typedef struct {
-    void (*f[7])();
-} FnTbl7; /* size 0x1C */
-extern FnTbl7 D_8013C798;
-
 void func_80139150(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl7 tbl;
@@ -48,15 +43,10 @@ void func_80139150(void) {
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80139000", func_801391E4);
 
-typedef struct {
-    s32 v[13];
-} Tbl13; /* size 0x34 */
-extern Tbl13 D_8013C7B4;
-
 void func_80139810(void) {
     s32 pad1; /* FAKE: two unused locals declared before tbl reproduce the original frame (0x68); T-8020 */
     s32 pad2;
-    Tbl13 tbl;
+    MasterWords13 tbl;
 
     tbl = D_8013C7B4;
     switch (D_800E6280.unk_110A) {
@@ -528,14 +518,6 @@ void func_8013ACF0(void) {
 }
 
 
-typedef struct {
-    u32 pad0 : 25;
-    u32 grade : 2;
-    u32 pad1 : 3;
-    u32 flag : 1;
-    u32 pad2 : 1;
-} MasterSlot; /* word of GameState.unk_66C[]: bit 30 is the flag */
-
 s32 func_8013B20C(void) {
     switch (D_800E6280.unk_110A) {
     case 0:
@@ -560,7 +542,7 @@ s32 func_8013B20C(void) {
             D_800E6280.unk_71E |= 0x10;
             func_8008585C();
             if (D_8013C784 >= 3U) {
-                ((MasterSlot *)&D_800E6280.unk_66C[(u32)D_800E6280.unk_0F4.h >> 0xC])->flag = 1;
+                ((MasterClubBits *)&D_800E6280.unk_66C[(u32)D_800E6280.unk_0F4.h >> 0xC])->b30 = 1;
             }
             func_80057390(0);
             func_80072B5C(1);

@@ -1,0 +1,16 @@
+extern s16 D_800C6014;
+extern s16 D_8013D366;
+extern s16 D_8013D368;
+extern s16 D_8013D36A;
+extern s16 D_8013D36C;
+extern s16 D_8013D36E;
+extern s16 D_8013D370;
+extern s16 D_8013D374;
+extern s16 D_8013D376;
+extern s16 D_8013D378;
+extern s16 D_8013D37A;
+extern s16 D_8013D37C;
+extern s16 D_8013D37E;
+extern s32 D_800C5FD4;
+extern s32 D_800C6010;
+extern s32 D_800E7318;

@@ -1,0 +1,92 @@
+[
+ {
+  "unit": "BUNKASAI",
+  "src": "src/ovl/BUNKASAI/801354B0.c",
+  "func": "func_80135C4C",
+  "size": 1508,
+  "guarded": false,
+  "source_hash": "96fbec3904af354f2f1380d80d926757e1d8d5e2b8b1f653378aedde79a991b0",
+  "scope": "BUNKASAI:func_80135C4C"
+ },
+ {
+  "unit": "BUNKASAI",
+  "src": "src/ovl/BUNKASAI/8013B190.c",
+  "func": "func_8013B25C",
+  "size": 1068,
+  "guarded": false,
+  "source_hash": "cdc1d1e0e26a5008d7729243276d9b3aae057ecebb2d78fcceb81e9707cc670d",
+  "scope": "BUNKASAI:func_8013B25C"
+ },
+ {
+  "unit": "BUNKASAI",
+  "src": "src/ovl/BUNKASAI/80142700.c",
+  "func": "func_80142700",
+  "size": 1176,
+  "guarded": false,
+  "source_hash": "4829628b75ed4b9259a00d4599025bfc41f4ac5c5de0a7103d57384723fd0471",
+  "scope": "BUNKASAI:func_80142700"
+ },
+ {
+  "unit": "BUNKASAI",
+  "src": "src/ovl/BUNKASAI/80142700.c",
+  "func": "func_80142BE8",
+  "size": 1516,
+  "guarded": false,
+  "source_hash": "4829628b75ed4b9259a00d4599025bfc41f4ac5c5de0a7103d57384723fd0471",
+  "scope": "BUNKASAI:func_80142BE8"
+ },
+ {
+  "unit": "BUNKASAI",
+  "src": "src/ovl/BUNKASAI/80142700.c",
+  "func": "func_801433C0",
+  "size": 932,
+  "guarded": false,
+  "source_hash": "4829628b75ed4b9259a00d4599025bfc41f4ac5c5de0a7103d57384723fd0471",
+  "scope": "BUNKASAI:func_801433C0"
+ },
+ {
+  "unit": "BUNKASAI",
+  "src": "src/ovl/BUNKASAI/80150930.c",
+  "func": "func_801509A4",
+  "size": 472,
+  "guarded": false,
+  "source_hash": "9e089c58d82ca06e18ba7723e08ed187af18c4ca79daaa3ee1de75fdc4a792eb",
+  "scope": "BUNKASAI:func_801509A4"
+ },
+ {
+  "unit": "BUNKASAI",
+  "src": "src/ovl/BUNKASAI/80150930.c",
+  "func": "func_80150B7C",
+  "size": 932,
+  "guarded": false,
+  "source_hash": "9e089c58d82ca06e18ba7723e08ed187af18c4ca79daaa3ee1de75fdc4a792eb",
+  "scope": "BUNKASAI:func_80150B7C"
+ },
+ {
+  "unit": "BUNKASAI",
+  "src": "src/ovl/BUNKASAI/801511E0.c",
+  "func": "func_80151364",
+  "size": 844,
+  "guarded": true,
+  "source_hash": "c23ca3cad5198bff68cc6f19763c29cb8cca274385897e9f9eb7d035068a9dac",
+  "scope": "BUNKASAI:func_80151364"
+ },
+ {
+  "unit": "BUNKASAI",
+  "src": "src/ovl/BUNKASAI/80154018.c",
+  "func": "func_80158764",
+  "size": 1652,
+  "guarded": false,
+  "source_hash": "3157531e720b4518c61005c169d4e42ed29bc6e69b0eb47368bf54f8b86d96f7",
+  "scope": "BUNKASAI:func_80158764"
+ },
+ {
+  "unit": "BUNKASAI",
+  "src": "src/ovl/BUNKASAI/8015AF90.c",
+  "func": "func_8015AF90",
+  "size": 2200,
+  "guarded": false,
+  "source_hash": "6276c766033c3c8011d5959798e3f29f976d211c4a3ce16a933b13df3c7f3d8d",
+  "scope": "BUNKASAI:func_8015AF90"
+ }
+]

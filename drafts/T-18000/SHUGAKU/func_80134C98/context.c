@@ -1,0 +1,245 @@
+#include "common.h"
+#include "ovl/SHUGAKU.h"
+
+void func_80134880(void) {
+    D_8013C190 = (u8 *)0x801EA87C;
+    D_8013C194 = (u8 *)0x801EA89C;
+    D_8013C198 = (u8 *)0x801EA940;
+    D_8013C19C = *(s16 *)0x801EA968;
+    D_8013C1A0 = (u8 *)0x801B0000;
+    D_8013C1A4 = (u8 *)0x801B2000;
+    D_8013C1A8 = (u8 *)0x801B6000;
+    D_8013C1AC = (u8 *)0x801BA000;
+    D_8013C1B0 = (u8 *)0x801BE000;
+    D_8013C1B4 = (u8 *)0x801C2000;
+    D_8013C1B8 = (u8 *)0x801C6000;
+}
+
+void func_80134930(void) {
+    if (D_800E6280.unk_721 == 3) {
+        func_80134970();
+        return;
+    }
+    func_80134B94();
+}
+
+void func_80134970(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    ShFnTbl25 tbl;
+
+    tbl = D_8013C1C4;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
+
+void func_801349EC(void) {
+    D_800E6280.unk_F5F = D_800E6280.unk_75D;
+    func_800847B8(D_800E6280.unk_75D);
+    func_8004284C();
+}
+
+void func_80134A20(void) {
+    if (D_8013C1BC != 0) {
+        normal_date_move_place();
+        return;
+    }
+    if (D_800E6280.unk_110D == 0) {
+        dec_bg_show_switch(1);
+        D_800E6280.unk_110D += 1;
+    }
+    func_8007C8A4();
+}
+
+void func_80134A8C(void) {
+    func_800AE0F0(D_800CA19C, "ホテル・廊下");
+    func_801365F4();
+    D_8013BFFC = D_8013C5C4;
+    D_8013C000 = D_8013C700;
+    D_8013C004 = D_8013C83C;
+    D_800CA2E4 = 0;
+    D_800CA2E8 = 0;
+    if (D_800B593C != 0) {
+        D_8013C1BC = 1;
+    } else {
+        D_8013C1BC = 0;
+    }
+    func_8004284C();
+}
+
+void func_80134B2C(void) {
+    func_80042908(D_800E6280.unk_721);
+    func_80042940(D_800E6280.unk_722);
+}
+
+void func_80134B64(void) {
+    func_80042908((D_800E6280.unk_721 + 1) & 0xFF);
+}
+
+INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_80134B94);
+
+void func_80134C98(void) {
+    s32 temp_v1;
+    s32 temp_v1_2;
+    u8 temp_v0;
+
+    temp_v1 = D_800E6280.unk_1BC[0].unk_10.w;
+    temp_v0 = D_800E6280.unk_03F;
+    if ((temp_v0 == (temp_v1 & 0xF)) && (D_800E6280.unk_040 == ((u32) (temp_v1 << 0x17) >> 0x1B))) {
+        D_800E6280.unk_721 = 5;
+        D_800E6280.unk_722 = 0;
+        D_800E6280.unk_75D = D_800E6280.unk_F5F;
+        D_800E6280.unk_F5F = 0;
+        func_80042908(6);
+        return;
+    }
+    temp_v1_2 = D_800E6280.unk_0F8;
+    if (((temp_v1_2 & 0xF) == temp_v0) && (((u32) (temp_v1_2 << 0x17) >> 0x1B) == D_800E6280.unk_040)) {
+        D_800E6280.unk_721 = 5;
+        D_800E6280.unk_722 = 0;
+        D_800E6280.unk_75D = D_800E6280.unk_F5F;
+        D_800E6280.unk_71E = D_800E6280.unk_71E | 8;
+        func_80042908(7);
+        return;
+    }
+    func_8004284C();
+}
+
+s32 func_80134D8C(void) {
+    func_801343B0();
+    if ((D_800E6280.unk_1104.w++ == 1) && (D_800CA2E8 == 2)) {
+        D_80122D0C = 0;
+        func_80067DD4();
+    }
+}
+
+s32 func_80134DE8(void) {
+    if (D_800E6280.unk_110D == 0) {
+        func_8004E9F4(0);
+        func_8006612C("ホテル・廊下");
+        D_800E6280.unk_110D += 1;
+    }
+    func_801343B0();
+    if (D_800CA2E8 == 1) {
+        if (D_800E6280.unk_1104.u++ == 1) {
+            func_80044750(0x503);
+        }
+    }
+}
+
+void func_80134E74(void) {
+    func_80044750(0x205);
+    func_8004284C();
+}
+
+void func_80134E9C(void) {
+    cd_read_sectors(0x76, 0x801B0000, 0x8D47);
+    func_80134880();
+    func_8004284C();
+}
+
+void func_80134ED4(void) {
+    D_800E6280.unk_75D = D_800E6280.unk_F5F;
+    D_800E6280.unk_F5F = 0xD;
+    func_800847B8(0xD);
+    func_8004284C();
+}
+
+void func_80134F18(void) {
+    func_801365F4();
+    D_8013BFFC = D_8013C5C4;
+    D_8013C000 = D_8013C700;
+    D_8013C004 = D_8013C83C;
+    func_80134880();
+    func_80043914(D_8013C1A0, 0x11, 1, 2, 0);
+    func_80084E90(D_8013C1A4, D_8013C1A8, D_8013C1AC, D_8013C1B0, D_8013C1B4, D_8013C1B8);
+    func_800850D4(D_8013C194, D_8013C198, D_8013C190, D_8013C19C);
+    D_80120698 = 8;
+    D_80120654 = 8;
+    D_801206AC = 3;
+    /* FAKE: D_80120650 and D_801206D8 (+0x88) are one object in the original: the loads stay behind the stores. T-9310 */
+    *(DisplayActor44 *)&D_80120650[0x88] = *(DisplayActor44 *)D_80120650;
+    D_80120650[0x8A] = 0x40;
+    *(s16 *)&D_80120650[0xA0] = 0x28;
+    D_80120650[0x89] -= 1;
+    D_800CA2E4 = 3;
+    D_800CA2E8 = 0;
+    D_800E6280.unk_1228[5] = -1;
+    D_800E6280.unk_1228[6] = -1;
+    D_800E6280.unk_1228[7] = -1;
+    D_800E6280.unk_1228[8] = -1;
+    D_800E6280.unk_1228[9] = -1;
+    D_80122D0C = 1;
+    D_8013C1C0 = *(u8 *)&D_800E6280.unk_03C;
+    func_8004284C();
+}
+
+void func_801350F4(void) {
+    if (D_80122CDC != 0) {
+        D_800E6280.unk_110A += 0x1D;
+        D_800CA2DC += 1;
+        return;
+    }
+    func_80085B3C(2, 0x20);
+    func_8004284C();
+    D_800CA2F4 = 1;
+    D_800E6280.unk_56C[0x20] = 1;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 5;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 2;
+    func_80084D3C();
+}
+
+void func_801351CC(void) {
+    func_80137C3C();
+    if ((D_800E6280.unk_1BC[0].unk_10.w & 0xF) == D_800E6280.unk_03F && ((u32) (D_800E6280.unk_1BC[0].unk_10.w << 0x17) >> 0x1B) == D_800E6280.unk_040) {
+        D_800E6280.unk_721 += 1;
+        D_800E6280.unk_722 = 0;
+        D_800E6280.unk_75D = D_800E6280.unk_F5F;
+        D_800E6280.unk_F5F = 0;
+        func_80042908(6);
+        return;
+    }
+    func_80042908((D_800E6280.unk_721 + 1) & 0xFF);
+}
+
+void func_80135278(void) {
+    D_800E6280.unk_03C = D_8013C1C0;
+    D_800CA2DC = 0x29;
+    func_8004284C();
+}
+
+/* NON_MATCHING: T-11310, about 20 rows: frame is 8 bytes short (page spills to sp+0x28, original sp+0x30) and count takes $v0 where the original has $v1. */
+#ifdef NON_MATCHING
+void func_801352B0(void) {
+    s32 count;
+    s32 page;
+
+    if (*(u8 *)&D_800E6280.unk_03C == 2) {
+        *(u8 *)&D_800E6280.unk_03C = 1;
+    }
+    count = D_800E6280.unk_1104.w;
+    page = D_800E6280.unk_110A;
+    if (!(D_800E6280.unk_F88 & 0x600060) || (D_801206FE < -0xBF)) {
+        func_801343B0();
+    }
+    D_800E6280.unk_1104.w = count + 1;
+    if (D_801206FE >= -0xBF) {
+        if (!(D_800E6280.unk_1104.w & 1) && (func_8004ECB4() != 0)
+            && ((*(u8 *)&D_800E6280.unk_03C == 0) || (func_80046094() == 9))) {
+            D_801206FE--;
+        }
+        D_8011ED5B &= 0x7F;
+    }
+    if (page != D_800E6280.unk_1104.w) {
+        if (D_801206FE >= -0xBF) {
+            D_800E6280.unk_110A = page;
+            D_800CA2E4 = 9;
+            D_800CA2E8 = 0;
+        } else {
+            D_800CA2E4 = 9;
+            D_800CA2E8 = 1;
+        }
+    }
+}
+#else
+INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_801352B0);
+#endif

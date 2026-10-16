@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_8008585C 0, func_80085B3C 2, func_80142760 0, func_80144198 1, func_80144270 0
+python3 failed:
+ ---------------^
+cfe: Warning 709: drafts/T-17700/_runs/typed/GEKO/func_80142C9C/work/guarded.o.sjis.c, line 3855: Incompatible pointer type assignment
+     D_800CA138 = &D_801476DC;
+ ---------------^
+cfe: Warning 709: drafts/T-17700/_runs/typed/GEKO/func_80142C9C/work/guarded.o.sjis.c, line 3862: Incompatible pointer type assignment
+     D_800CA134 = &D_801476D8;
+ ---------------^
+cfe: Warning 709: drafts/T-17700/_runs/typed/GEKO/func_80142C9C/work/guarded.o.sjis.c, line 3863: Incompatible pointer type assignment
+     D_800CA138 = &D_801476DC;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17700/_runs/typed/GEKO/func_80142C9C/work -o drafts/T-17700/_runs/typed/GEKO/func_80142C9C/work/guarded.o /tmp/asm_processorre1nmkgt/preprocessed_1fed11ef60a94468bc77ebfd538be5d9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib77fxvl9w/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17700/_runs/typed/GEKO/func_80142C9C/work/guarded.o drafts/T-17700/_runs/typed/GEKO/func_80142C9C/work/guarded.o.sjis.c

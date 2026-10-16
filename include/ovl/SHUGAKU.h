@@ -6,7 +6,7 @@
 
 /* SHUGAKU overlay (load address 0x80132000): externs and types. */
 
-extern s8 D_8013C2E4;
+extern u8 D_8013C2E4;
 extern u8 D_8013C2EC;
 
 extern u8 D_8013C1C0;
@@ -524,4 +524,29 @@ typedef struct ShFnTbl74 { void (*f[74])(); } ShFnTbl74;
 extern ShFnTbl74 D_8013C2F0;
 s32 func_80135A80(void);
 s32 func_801360B0();
+#endif
+
+#ifndef OVL_SHUGAKU_FNTBL_T18000
+#define OVL_SHUGAKU_FNTBL_T18000
+/* T-18000: callback tables. Each dispatcher copies its table whole to the stack and calls one
+ * entry through the copy (T-3330). The typedefs were local to the .c files before T-18000;
+ * D_8013C008 (func_80133E10) and D_8013C228 (func_80134B94) are new. ShFnTbl74 is above. */
+typedef struct ShFnTbl16 { void (*f[16])(); } ShFnTbl16; /* size 0x40 */
+typedef struct ShFnTbl18 { void (*f[18])(); } ShFnTbl18; /* size 0x48 */
+typedef struct ShFnTbl25 { void (*f[25])(); } ShFnTbl25; /* size 0x64 */
+typedef struct ShFnTbl38 { void (*f[38])(); } ShFnTbl38; /* size 0x98 */
+typedef struct ShFnTbl41 { void (*f[41])(); } ShFnTbl41; /* size 0xA4 */
+typedef struct ShFnTbl43 { void (*f[43])(); } ShFnTbl43; /* size 0xAC */
+typedef struct ShFnTbl44 { void (*f[44])(); } ShFnTbl44; /* size 0xB0 */
+typedef struct ShFnTbl70 { void (*f[70])(); } ShFnTbl70; /* size 0x118 */
+extern ShFnTbl70 D_8013B094;
+extern ShFnTbl43 D_8013BF20;
+extern ShFnTbl44 D_8013C008;
+extern ShFnTbl38 D_8013C0EC;
+extern ShFnTbl25 D_8013C1C4;
+extern ShFnTbl41 D_8013C228;
+extern ShFnTbl41 D_8013C884;
+extern ShFnTbl16 D_8013C930;
+extern ShFnTbl18 D_8013CAA0;
+extern ShFnTbl25 D_8013CC20;
 #endif

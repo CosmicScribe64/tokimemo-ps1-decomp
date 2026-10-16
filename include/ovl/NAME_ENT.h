@@ -57,8 +57,8 @@ extern u8 D_8014B7C8[];
 void func_80144FDC(void);
 void func_80145378(void);
 void func_80144F98(void);
-extern u8 D_8014CC74[];
-extern u8 D_8014CC7C[];
+extern u8 D_8014CC74[8]; /* name-entry buffers 0 and 1 (D_8014CC84 is buffer 2); sized like their definitions, T-17900 */
+extern u8 D_8014CC7C[8];
 extern u8 D_8014CC84[];
 extern u8 D_8014BA60[];
 extern u8 D_8014BA78[];
@@ -460,3 +460,15 @@ void func_8013A9C8(void);
 /* T-11120 forward declarations. */
 void func_80142A3C(void);
 s32 func_801429BC(void);
+
+#ifndef OVL_NAME_ENT_T17900_TABLES
+#define OVL_NAME_ENT_T17900_TABLES
+/* T-17900: sixteen flag counters, cleared and counted four at a time (end address D_8014D070) and
+ * copied into NameMetricWork.flags by func_80140F90 and func_80141820. */
+extern u8 D_8014D060[16];
+/* T-17900: second sixteen-byte flag table of func_80140F90 (walked four at a time up to D_8014D168). */
+extern u8 D_8014D158[16];
+/* T-17900: sprite (u, v) of each decimal digit, indexed by value % 10 in func_80139740; the label
+ * covers 0x64 bytes, the rest is zero. */
+extern u8 D_8014D0F4[10][2];
+#endif

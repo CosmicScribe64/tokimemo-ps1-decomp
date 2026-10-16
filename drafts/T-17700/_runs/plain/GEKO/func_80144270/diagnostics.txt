@@ -1,0 +1,53 @@
+m2c.py: argument counts from the callees' asm: func_80144198 1
+python3 failed:
+ -----------------------------^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c, line 3722: 'sp3B' undefined; reoccurrences will not be reported.
+                 D_801476E0 = sp3B;
+ -----------------------------^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c, line 3727: 'sp38' undefined; reoccurrences will not be reported.
+             D_801476E0 = sp38;
+ -------------------------^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c, line 3736: 'sp34' undefined; reoccurrences will not be reported.
+             D_801476E0 = sp34;
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17700/_runs/plain/GEKO/func_80144270/work -o drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.o /tmp/asm_processora96nj2g2/preprocessed_5f48fef93d3243dd8a729e67fefa7fc7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibd_jc8y80/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.o drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c
+python3 failed:
+ -------------------------^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c, line 3692: 'sp31' undefined; reoccurrences will not be reported.
+                 D_801476E0 = sp31;
+ -----------------------------^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c, line 3703: 'sp36' undefined; reoccurrences will not be reported.
+                 D_801476E0 = sp36;
+ -----------------------------^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c, line 3714: 'sp37' undefined; reoccurrences will not be reported.
+                 D_801476E0 = sp37;
+ -----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17700/_runs/plain/GEKO/func_80144270/work -o drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.o /tmp/asm_processordun5so3u/preprocessed_8269e7a5635f454d9378884d2c4902e9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib9tfkunrx/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.o drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c
+python3 failed:
+ ---------------------^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c, line 3672: 'sp2E' undefined; reoccurrences will not be reported.
+         D_801476E0 = sp2E;
+ ---------------------^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c, line 3678: 'sp39' undefined; reoccurrences will not be reported.
+                 D_801476E0 = sp39;
+ -----------------------------^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c, line 3685: 'sp2F' undefined; reoccurrences will not be reported.
+             D_801476E0 = sp2F;
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17700/_runs/plain/GEKO/func_80144270/work -o drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.o /tmp/asm_processorvw4ui8wn/preprocessed_01a1c638f3354511bf55339b1cbe690d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibc19ij2f8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.o drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c
+python3 failed:
+ ------------------------------^
+cfe: Warning 681: drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c, line 3661: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp2C) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_80147C6C) + (12));
+ -------------------------------^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c, line 3663: 'sp3A' undefined; reoccurrences will not be reported.
+         D_801476E0 = sp3A;
+ ---------------------^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c, line 3667: 'sp33' undefined; reoccurrences will not be reported.
+         D_801476E0 = sp33;
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17700/_runs/plain/GEKO/func_80144270/work -o drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.o /tmp/asm_processorbhm0k9hd/preprocessed_1d5bff079b09485bbd503bf0a9222511.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibpg05gmen/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.o drafts/T-17700/_runs/plain/GEKO/func_80144270/work/guarded.c

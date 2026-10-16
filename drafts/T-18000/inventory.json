@@ -1,0 +1,227 @@
+[
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80132000.c",
+  "func": "func_8013243C",
+  "size": 388,
+  "guarded": false,
+  "source_hash": "7dfccd72830b81959ad0002af17f6918f688f445fa230f610cf021df176056ef",
+  "scope": "SHUGAKU:func_8013243C"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80132000.c",
+  "func": "func_8013282C",
+  "size": 804,
+  "guarded": false,
+  "source_hash": "7dfccd72830b81959ad0002af17f6918f688f445fa230f610cf021df176056ef",
+  "scope": "SHUGAKU:func_8013282C"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80132000.c",
+  "func": "func_80133038",
+  "size": 176,
+  "guarded": true,
+  "source_hash": "7dfccd72830b81959ad0002af17f6918f688f445fa230f610cf021df176056ef",
+  "scope": "SHUGAKU:func_80133038"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80133430.c",
+  "func": "func_801337FC",
+  "size": 620,
+  "guarded": false,
+  "source_hash": "1984a3148551767808ea3774dd70e2c14ff51679b4823d9d0bccd69634e915ee",
+  "scope": "SHUGAKU:func_801337FC"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80133D60.c",
+  "func": "func_80133E10",
+  "size": 348,
+  "guarded": false,
+  "source_hash": "9ec3cb905b2342226c05686deac16022dca842a6fcb49df0a966207a780d5cc1",
+  "scope": "SHUGAKU:func_80133E10"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/801344B0.c",
+  "func": "func_80134658",
+  "size": 368,
+  "guarded": false,
+  "source_hash": "14c64dd0c0c4a0621254ed1ee3d88c6847ad7b8ef181b68f5068f85c49b9a206",
+  "scope": "SHUGAKU:func_80134658"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80134880.c",
+  "func": "func_80134B94",
+  "size": 260,
+  "guarded": false,
+  "source_hash": "f4521df97189c967ed5c1e2adeae37eb254670ce0b2182d23eccaecbc63ac046",
+  "scope": "SHUGAKU:func_80134B94"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80134880.c",
+  "func": "func_80134C98",
+  "size": 244,
+  "guarded": false,
+  "source_hash": "f4521df97189c967ed5c1e2adeae37eb254670ce0b2182d23eccaecbc63ac046",
+  "scope": "SHUGAKU:func_80134C98"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80134880.c",
+  "func": "func_801352B0",
+  "size": 372,
+  "guarded": true,
+  "source_hash": "f4521df97189c967ed5c1e2adeae37eb254670ce0b2182d23eccaecbc63ac046",
+  "scope": "SHUGAKU:func_801352B0"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80135430.c",
+  "func": "func_80135480",
+  "size": 340,
+  "guarded": false,
+  "source_hash": "76db3f46ad360f431b06c6a042731925393400e2bedda9c8313f24b2f13b75c5",
+  "scope": "SHUGAKU:func_80135480"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80135430.c",
+  "func": "func_80135630",
+  "size": 380,
+  "guarded": false,
+  "source_hash": "76db3f46ad360f431b06c6a042731925393400e2bedda9c8313f24b2f13b75c5",
+  "scope": "SHUGAKU:func_80135630"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80135430.c",
+  "func": "func_801357AC",
+  "size": 396,
+  "guarded": false,
+  "source_hash": "76db3f46ad360f431b06c6a042731925393400e2bedda9c8313f24b2f13b75c5",
+  "scope": "SHUGAKU:func_801357AC"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80135430.c",
+  "func": "func_80135EA4",
+  "size": 524,
+  "guarded": false,
+  "source_hash": "76db3f46ad360f431b06c6a042731925393400e2bedda9c8313f24b2f13b75c5",
+  "scope": "SHUGAKU:func_80135EA4"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80135430.c",
+  "func": "func_801360B0",
+  "size": 708,
+  "guarded": false,
+  "source_hash": "76db3f46ad360f431b06c6a042731925393400e2bedda9c8313f24b2f13b75c5",
+  "scope": "SHUGAKU:func_801360B0"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/801378B0.c",
+  "func": "func_80137CFC",
+  "size": 520,
+  "guarded": false,
+  "source_hash": "b66fe1098285507be6e0cf0fabdd8daa2a84c1b512c42ccc2717d97f68214586",
+  "scope": "SHUGAKU:func_80137CFC"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/801378B0.c",
+  "func": "func_80138740",
+  "size": 408,
+  "guarded": false,
+  "source_hash": "b66fe1098285507be6e0cf0fabdd8daa2a84c1b512c42ccc2717d97f68214586",
+  "scope": "SHUGAKU:func_80138740"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/801378B0.c",
+  "func": "func_801388D8",
+  "size": 384,
+  "guarded": false,
+  "source_hash": "b66fe1098285507be6e0cf0fabdd8daa2a84c1b512c42ccc2717d97f68214586",
+  "scope": "SHUGAKU:func_801388D8"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80138A60.c",
+  "func": "func_80138E40",
+  "size": 364,
+  "guarded": false,
+  "source_hash": "d4f5093469e352d875d82073eacd7096355049b469c48605dead6c5effa22747",
+  "scope": "SHUGAKU:func_80138E40"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80138A60.c",
+  "func": "func_80139054",
+  "size": 196,
+  "guarded": true,
+  "source_hash": "d4f5093469e352d875d82073eacd7096355049b469c48605dead6c5effa22747",
+  "scope": "SHUGAKU:func_80139054"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80138A60.c",
+  "func": "func_80139118",
+  "size": 412,
+  "guarded": false,
+  "source_hash": "d4f5093469e352d875d82073eacd7096355049b469c48605dead6c5effa22747",
+  "scope": "SHUGAKU:func_80139118"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80138A60.c",
+  "func": "func_801392B4",
+  "size": 272,
+  "guarded": false,
+  "source_hash": "d4f5093469e352d875d82073eacd7096355049b469c48605dead6c5effa22747",
+  "scope": "SHUGAKU:func_801392B4"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80138A60.c",
+  "func": "func_801398E8",
+  "size": 268,
+  "guarded": false,
+  "source_hash": "d4f5093469e352d875d82073eacd7096355049b469c48605dead6c5effa22747",
+  "scope": "SHUGAKU:func_801398E8"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80138A60.c",
+  "func": "func_801399F4",
+  "size": 652,
+  "guarded": false,
+  "source_hash": "d4f5093469e352d875d82073eacd7096355049b469c48605dead6c5effa22747",
+  "scope": "SHUGAKU:func_801399F4"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/80139D00.c",
+  "func": "func_8013A1D4",
+  "size": 160,
+  "guarded": false,
+  "source_hash": "35c5bd247cce77805ad0f479cb79b0aec82d443d432c3c887e0b08a259f52356",
+  "scope": "SHUGAKU:func_8013A1D4"
+ },
+ {
+  "unit": "SHUGAKU",
+  "src": "src/ovl/SHUGAKU/8013AA70.c",
+  "func": "func_8013ABAC",
+  "size": 344,
+  "guarded": false,
+  "source_hash": "4031472983fec811b61c97e29090c2f7228d56c7687dc4f870a638d0ec9319a1",
+  "scope": "SHUGAKU:func_8013ABAC"
+ }
+]

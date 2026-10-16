@@ -1,5 +1,6 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
+#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A110);
@@ -98,8 +99,8 @@ void func_801423A4(void) {
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80142400);
 
 /* FAKE: `pad` reserves the top local word: the original keeps the two loop spills of the
- * tpage loops at 0x38 and 0x30 (sp). The u8 views of the s8 flag D_8014A110 keep its lbu loads
- * (as in func_80143F50). T-16554 */
+ * tpage loops at 0x38 and 0x30 (sp). The u8 views of the flag D_8014A110 keep its lbu loads and
+ * stop uopt from promoting it (as in func_80143F50; D_8014A110 is `u8` since T-19010). T-16554 */
 void func_8014280C(void) {
     u8 pad[4];
     s32 i;
@@ -290,7 +291,96 @@ void func_80142D90(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80142FB8);
+void func_80142FB8(void) {
+    s32 i;
+    s32 j;
+
+    Scroll(0, 0xF, 0, 0xF0, 0x280);
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80086350();
+        func_8004284C();
+        break;
+    case 1:
+        if (func_80086370() != 0) {
+            if (D_8014A120[0] == 1 || D_8014A120[1] == 1) {
+                func_80044750(0x205);
+            } else {
+                func_80044750(0x206);
+            }
+            Vblnk_Timer_Init();
+            func_8004284C();
+        }
+        break;
+    case 2:
+        if (Vblnk_Timer() >= 0x3D) {
+            func_80145044();
+            Vblnk_Timer_Init();
+            func_8004284C();
+        }
+        break;
+    case 3:
+        if (Vblnk_Timer() >= 0x3D) {
+            func_801450C0();
+            if (D_8014A110 != 0) {
+                for (i = 0; i < 4; i++) {
+                    if (D_8014A120[i] == 1) {
+                        func_8013384C(1, (u8) i);
+                    }
+                }
+            } else {
+                for (i = 0; i < 4; i++) {
+                    if (D_8014A120[i] == 1) {
+                        func_8013384C(0, (u8) i);
+                    }
+                }
+            }
+            Vblnk_Timer_Init();
+            D_8014A11C = 0;
+            func_8004284C();
+        }
+        break;
+    case 4:
+        D_8014A11C += 1;
+        func_80145148();
+        if (Vblnk_Timer() >= 0xF1) {
+            Fade_Out_Init();
+            func_8004284C();
+        }
+        break;
+    case 5:
+        if (Fade_Out_Main() != 0) {
+            if (D_8014A120[0] == 1) {
+                for (j = 0; j < 13; j++) {
+                    D_800E6280.unk_1BC[j].unk_02 += 4;
+                }
+                if (D_8014A110 != 0) {
+                    D_800E6280.unk_1BC[1].unk_02 += 2;
+                    D_800E6280.unk_1BC[1].unk_06 += 0xA;
+                } else {
+                    D_800E6280.unk_1BC[0].unk_02 += 2;
+                    D_800E6280.unk_1BC[0].unk_06 += 0xA;
+                }
+            } else if (D_8014A120[1] == 1) {
+                for (j = 0; j < 13; j++) {
+                    D_800E6280.unk_1BC[j].unk_02 += 2;
+                }
+                if (D_8014A110 != 0) {
+                    D_800E6280.unk_1BC[1].unk_02 += 1;
+                    D_800E6280.unk_1BC[1].unk_06 += 5;
+                } else {
+                    D_800E6280.unk_1BC[0].unk_02 += 1;
+                    D_800E6280.unk_1BC[0].unk_06 += 5;
+                }
+            }
+            func_80042808();
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 void func_80143398(void) {
     s32 i;
@@ -336,11 +426,13 @@ void func_80143470(void) {
     D_80120656 = 2;
 }
 
-/* NON_MATCHING: T-16554, 19 differing instructions (38 diff lines), one window: the original keeps the
+/* NON_MATCHING: T-19010, 34 differing lines (T-16554: 38; statement order from tools/order_search.py), one window: the original keeps the
  * masked flags byte in $v1 (a uopt variable), loads the s16 rating straight into $v0 and loads the three
  * constants 0x7E0000/0x7F0000/0x7D0000 together before three stores that share one `lui at`; IDO leaves the
  * flags in a ugen temporary, promotes the rating field into $a1 with a move and emits each constant
- * next to its store. Same family as TAIIKU func_8013D2B4 (wiki/data/t0018-cases.md). */
+ * next to its store. Same family as TAIIKU func_8013D2B4 (wiki/data/t0018-cases.md). T-19010 also tried, no
+ * gain: a raw byte local, separate rating and speed locals, direct access instead of `gs`, the doubled
+ * flags expression instead of `temp_v1`. */
 #ifdef NON_MATCHING
 void func_8014357C(void) {
     GameState *gs;
@@ -406,9 +498,11 @@ void func_8014357C(void) {
     D_8014A1D0 = 0;
     D_8014A1CC.w = 0;
     D_8014A118 = 0;
-    temp_v1 = gs->unk_0F4.b[1] & 0xF;
+    D_8014A130[0] = 0x7E0000;
+    D_8014A130[1] = 0x7F0000;
     var_v0 = gs->unk_10C.unk_02;
-    D_8014A130[0] = 0x7E0000; D_8014A130[1] = 0x7F0000; D_8014A130[2] = 0x7D0000;
+    D_8014A130[2] = 0x7D0000;
+    temp_v1 = gs->unk_0F4.b[1] & 0xF;
     if ((temp_v1 & 1) || (temp_v1 & 2)) {
         var_v0 = (s16) (var_v0 >> 1);
     }
@@ -439,7 +533,62 @@ void func_8014357C(void) {
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_8014357C);
 #endif
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80143814);
+/* FAKE: the dead `i = 0;` at the end keeps `i` live after the loop, so IDO tests the loop with
+ * `slti` like the original and not as `i != 9`. T-19010 */
+void func_80143814(void) {
+    s32 i;
+    TaiShorts12 a;
+    TaiShorts12 b;
+
+    a = D_8014A2F0;
+    b = D_8014A304;
+    for (i = 0; i < 9; i++) {
+        func_80048F64(i + 0x60);
+        DISP(96 + i).unk_38 = 0x01000000;
+        DISP(96 + i).unk_07 = 0x80;
+        DISP(96 + i).unk_0C = (u8 *)D_80149FC4;
+        DISP(96 + i).unk_10 = (u8 *)D_80149FFC;
+        DISP(96 + i).unk_34 = (u8 *)D_8014A208;
+        DISP(96 + i).unk_14 = D_8014A034;
+        DISP(96 + i).unk_04 = 0;
+        DISP(96 + i).unk_05 = 0x80;
+        DISP(96 + i).unk_1A = 0x1000;
+        *(s16 *)DISP(96 + i).pad_1C = 0x1000;
+        DISP(96 + i).unk_06 = 2;
+        DISP(96 + i).unk_2A = a.value[i];
+        DISP(96 + i).unk_18 = b.value[i];
+    }
+    if (D_8014A110 != 0) {
+        DISP(96).unk_18 = 0xE;
+    }
+    DISP(96).unk_01 = 2;
+    DISP(96).unk_26 = -0xA0;
+    DISP(96).unk_02 = 0x40;
+    DISP(96).unk_03 = 0xA4;
+    DISP(97).unk_01 = 3;
+    DISP(97).unk_26 = -0x98;
+    DISP(97).unk_02 = 0x40;
+    DISP(97).unk_03 = 0xA4;
+    DISP(98).unk_01 = 4;
+    DISP(98).unk_26 = -0x90;
+    DISP(98).unk_02 = 0x40;
+    DISP(98).unk_03 = 0xA4;
+    DISP(99).unk_01 = 5;
+    DISP(99).unk_26 = -0x88;
+    DISP(99).unk_02 = 0x40;
+    DISP(99).unk_03 = 0xA4;
+    DISP(100).unk_01 = 1;
+    DISP(100).unk_26 = DISP(96).unk_26;
+    DISP(100).unk_2A = DISP(96).unk_2A;
+    DISP(101).unk_01 = 7;
+    DISP(102).unk_01 = 5;
+    DISP(103).unk_01 = 6;
+    DISP(104).unk_01 = 7;
+    DISP(104).unk_26 = -0x30;
+    DISP(104).unk_02 = 0x40;
+    DISP(104).unk_03 = 0xA4;
+    i = 0;
+}
 
 void func_80143AC8(void) {
     s32 i;
@@ -544,8 +693,8 @@ void func_80143DD0(void) {
     ((DisplayActor44 *)D_8011ECD0)[100].unk_2A = ((DisplayActor44 *)D_8011ECD0)[96].unk_2A;
 }
 
-/* FAKE: the u8 view of the s8 flag D_8014A110 keeps the lbu loads and the register shape of the
- * original; the plain s8 or a (u8) cast changes the allocation. T-16554
+/* FAKE: the u8 view of the flag D_8014A110 keeps the lbu loads and the register shape of the
+ * original; a plain read (promoted) changes the allocation. T-16554
  *
  * `bits` (GameState unk_F88) is read per region into a local: reading the field
  * directly lets the hoisted `& 5` test outrank it and take $v0. */
@@ -683,7 +832,52 @@ void func_8014430C(void) {
     func_8004B19C(D_8014A1D0, 0, -0x3C);
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144464);
+s32 func_80144464(void) {
+    s32 i;
+    s32 j;
+    TkS16x4 t;
+
+    t = D_8014A318;
+    for (i = 0; i < 3; i++) {
+        DISP(101 + i).unk_02 = 0x40;
+        DISP(101 + i).unk_03 = 0xA4;
+    }
+    for (i = 0; i < 3; i++) {
+        if (D_8014A13C[i + 1].unk_01 == 1 && DISP(101).unk_26 + 0x30 < DISP(97 + i).unk_26 + 0x40) {
+            DISP(102).unk_03 = 0;
+            DISP(102).unk_02 = 0;
+        }
+    }
+    for (i = 0; i < 4; i++) {
+        DISP(101 + i).unk_26 = t.v[i] - D_8014A1CE - 0xA0;
+    }
+    if (DISP(102).unk_18 == 0x32) {
+        DISP(102).unk_03 |= 0x40;
+        DISP(102).unk_26 = DISP(101).unk_26 + 0x20;
+    }
+    if (DISP(104).unk_26 < -0xDC && DISP(104).unk_03 != 0) {
+        DISP(104).unk_03 = 0;
+    }
+    if (DISP(96).unk_26 + 0x40 >= DISP(101).unk_26) {
+        if (D_8014A120[0] == 0) {
+            DISP(102).unk_03 = 0xE4;
+            DISP(102).unk_18 = 0x32;
+            DISP(102).unk_26 = DISP(101).unk_26 + 0x20;
+        }
+        i = 0;
+        if (D_8014A120[0] != 0) {
+            do {
+                i++;
+            } while (D_8014A120[i] != 0);
+        }
+        D_8014A120[i] = 1;
+        for (j = i + 1; j < 4; j++) {
+            D_8014A120[j] = func_801446A0();
+        }
+        return 1;
+    }
+    return 0;
+}
 
 /* FAKE: v[6] as in func_8013815C. T-0016 */
 s32 func_801446A0(void) {
@@ -890,7 +1084,52 @@ void func_80144C70(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144E54);
+/* FAKE: the dead `i = D_8014A110;` before the first call puts the flag in the entry set of
+ * tools/cvt_pass.py, which then strips the widening of the flag test in the second loop (promoted
+ * `lbu a1`, flag compared first); the dead `i = 0;` at the end keeps the second loop rolled with the
+ * walk compare, as in func_80135830. D_8014A110 is `u8` (was `s8`; the matched uses are unchanged). T-19010 */
+void func_80144E54(void) {
+    s32 i;
+
+    i = D_8014A110;
+    func_80048E78();
+    for (i = 0; i < 8; i++) {
+        DISP(96 + i).unk_03 = 0xA4;
+        DISP(96 + i).unk_02 = 0x40;
+        DISP(96 + i).unk_05 = 0x80;
+        DISP(96 + i).unk_01 = 3;
+        DISP(96 + i).unk_38 = 0x01000000;
+        DISP(96 + i).unk_07 = 0x80;
+        DISP(96 + i).unk_0C = (u8 *)D_80149FC8;
+        DISP(96 + i).unk_10 = (u8 *)D_8014A000;
+        DISP(96 + i).unk_34 = (u8 *)D_8014A228;
+        DISP(96 + i).unk_14 = D_8014A038;
+        DISP(96 + i).unk_1A = 0x1000;
+        *(s16 *)DISP(96 + i).pad_1C = 0x1000;
+        DISP(96 + i).unk_06 = 2;
+    }
+    for (i = 0; i < 4; i++) {
+        DISP(96 + i).unk_26 = i * 0x40 - 0x78;
+        DISP(96 + i).unk_18 = D_8014A120[i] * 8 + 0x1A;
+        DISP(96 + i).unk_2A = -8;
+        if (DISP(96 + i).unk_18 == 0x22 && D_8014A110 == 1) {
+            DISP(96 + i).unk_18 = 0x42;
+        }
+    }
+    DISP(100).unk_26 = -0x78;
+    DISP(100).unk_2A = -8;
+    DISP(100).unk_18 = D_8014A120[0] * 5 + 0xD;
+    DISP(101).unk_26 = -0x38;
+    DISP(101).unk_2A = -8;
+    DISP(101).unk_18 = D_8014A120[1] * 5 + 0xD;
+    DISP(102).unk_26 = 8;
+    DISP(102).unk_2A = -8;
+    DISP(102).unk_18 = D_8014A120[2] * 5 + 0xD;
+    DISP(103).unk_26 = 0x48;
+    DISP(103).unk_2A = -8;
+    DISP(103).unk_18 = D_8014A120[3] * 5 + 0xD;
+    i = 0;
+}
 
 void func_80145044(void) {
     s32 i;

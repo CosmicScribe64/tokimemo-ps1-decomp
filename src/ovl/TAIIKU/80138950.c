@@ -955,7 +955,46 @@ void func_8013B104(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B200);
+/* FAKE: T-19008. The counter D_801499A0.unk_02 and the flag D_801499B0[0].val are read through u16 pointer
+ * views, as in func_8013BEF8 (the plain field gets a CVT copy of the promoted counter; with the volatile
+ * D_801499B2 the lui of the flag load takes the delay slot the original gives to lw ra). tmp is a stack
+ * word whose halves are written and read through s16 views (the 16.16 position of the sibling functions);
+ * the x >> 3 term is written out at each use, a local x gets a range of its own. Real source unknown. */
+void func_8013B200(void) {
+    s32 tmp;
+
+    func_8013C5C8(0x18000);
+    func_8013C694();
+    if (!(((u16 *)&D_801499A0)[1] & 4)) {
+        func_8013C4E4(0x10000);
+    }
+    if (((u16 *)&D_801499A0)[1] % 6 == 0) {
+        ((s16 *)&tmp)[0] = 0;
+        ((s16 *)&tmp)[1] = D_80149968.unk_1C[0] >> 3;
+        tmp += D_80149968.unk_0C * 40;
+        ((s16 *)&tmp)[1] += (D_80149968.unk_1C[0] >> 3) * 40 / 48;
+        if (D_80122EC4 % 3 != 0 && (D_80149968.unk_1C[0] >= 0 || D_80149968.unk_0C > 0)) {
+            ((s16 *)&tmp)[1] = (D_80149968.unk_1C[0] >> 3) + 0x20;
+        }
+        D_801499A0.unk_04 = ((s16 *)&tmp)[1];
+        D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
+    }
+    if (((u16 *)&D_801499A0)[1] >= 0x23A) {
+        ((u16 *)D_801499B0)[1] = 0;
+        func_80044750(0x802);
+        ((u16 *)&D_801499A0)[1] = 0;
+    }
+    if (((u16 *)&D_801499A0)[1] != 0 && ((u16 *)&D_801499A0)[1] % 30 == 0) {
+        if (((u16 *)D_801499B0)[1] == 0) {
+            ((u16 *)D_801499B0)[1] = 1;
+            func_80044750(0x800);
+        } else {
+            ((u16 *)D_801499B0)[1] = 0;
+            func_80044750(0x801);
+        }
+        ((u16 *)&D_801499A0)[1]++;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B3B0);
 
@@ -969,7 +1008,46 @@ void func_8013B5C0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B608);
+/* FAKE: T-19008. The counter and the flag are read through u16 pointer views and the halves of tmp are
+ * written through s16 views, as in func_8013BEF8. v takes x >> 3 first and adds the x * 80 / 48 term in a
+ * second statement: the in-place add gives the ugen temporary the original has before that chain (as1
+ * drops the redundant sign extension of the first assignment). */
+void func_8013B608(void) {
+    s32 tmp;
+    s16 v;
+
+    if (((u16 *)&D_801499A0)[1] >= 0x258) {
+        ((u16 *)D_801499B0)[1] = 0;
+        func_80044750(0x802);
+        ((u16 *)&D_801499A0)[1] = 0;
+    }
+    func_8013C5C8(0x10000);
+    func_8013C694();
+    if (!(((u16 *)&D_801499A0)[1] & 8)) {
+        func_8013C4E4(0x9000);
+    }
+    if (!(((u16 *)&D_801499A0)[1] & 0xF)) {
+        ((s16 *)&tmp)[0] = 0;
+        v = D_80149968.unk_1C[0] >> 3;
+        v += (D_80149968.unk_1C[0] >> 3) * 80 / 48;
+        if (D_80122EC4 % 3 != 0 && (D_80149968.unk_1C[0] >= 0 || D_80149968.unk_0C > 0)) {
+            v = (D_80149968.unk_1C[0] >> 3) + 0x20;
+        }
+        D_801499A0.unk_04 = v;
+        D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
+        ((s16 *)&tmp)[1] = v;
+    }
+    if (((u16 *)&D_801499A0)[1] != 0 && ((u16 *)&D_801499A0)[1] % 45 == 0) {
+        if (((u16 *)D_801499B0)[1] == 0) {
+            ((u16 *)D_801499B0)[1] = 1;
+            func_80044750(0x800);
+        } else {
+            ((u16 *)D_801499B0)[1] = 0;
+            func_80044750(0x801);
+        }
+        ((u16 *)&D_801499A0)[1]++;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B78C);
 
@@ -1014,7 +1092,72 @@ void func_8013BB3C(void) {
     }
 }
 
+/* NON_MATCHING: T-19008, 2 instructions missing (12 differing lines with the shifted branch offsets): the
+ * original writes the counter back (lui at; sh v0,D_801499A2) before the call to func_8013C5C8, although no
+ * path to it changes the counter. A self-assignment of the counter there brings the store back, but its u16
+ * normalisation takes one more ugen temporary before the cnt & 8 test and moves the counter reload of the
+ * cnt & 8 block to the join; no form without the temporary was found.
+ * FAKE (T-19008): the counter and the flag are read through u16 pointer views as in func_8013BEF8. v takes
+ * x >> 3 first and adds the x * 79 / 48 term in a second statement (the ugen temporary the original has
+ * before the chain). */
+#ifdef NON_MATCHING
+void func_8013BCEC(void) {
+    s16 v;
+
+    if (((u16 *)&D_801499A0)[1] == 0x12C) {
+        ((u16 *)D_801499B0)[0] = 1;
+        if (((u16 *)D_801499B0)[1] == 0) {
+            ((u16 *)D_801499B0)[1] = 1;
+            func_80044750(0x800);
+        } else {
+            ((u16 *)D_801499B0)[1] = 0;
+            func_80044750(0x801);
+        }
+        D_801499A0.unk_08 = 0;
+        D_801499A0.unk_0C = 0;
+        ((u16 *)&D_801499A0)[1]++;
+        D_801206AC = 0x7C;
+        func_8013C694();
+        return;
+    }
+    if (((u16 *)&D_801499A0)[1] == 0x12F) {
+        D_801206AC = 0x7D;
+        func_8013C694();
+        return;
+    }
+    if (((u16 *)&D_801499A0)[1] == 0x131) {
+        D_801206AC = 0x7E;
+        func_8013C694();
+        return;
+    }
+    if (((u16 *)&D_801499A0)[1] < 0x1A5 && ((u16 *)&D_801499A0)[1] >= 0x12D) {
+        func_8013C694();
+        return;
+    }
+    if (((u16 *)&D_801499A0)[1] >= 0x1A5) {
+        func_8013C694();
+        ((u16 *)D_801499B0)[0] = 0;
+        ((u16 *)&D_801499A0)[1] = 0;
+        return;
+    }
+    func_8013C5C8(0x12000);
+    func_8013C694();
+    if (!(((u16 *)&D_801499A0)[1] & 8)) {
+        func_8013C4E4(0xE000);
+    }
+    if (!(((u16 *)&D_801499A0)[1] & 0xF)) {
+        v = D_80149968.unk_1C[0] >> 3;
+        v += (D_80149968.unk_1C[0] >> 3) * 79 / 48;
+        if (D_80122EC4 % 3 != 0 && (D_80149968.unk_1C[0] >= 0 || D_80149968.unk_0C > 0)) {
+            v = (D_80149968.unk_1C[0] >> 3) + 0x20;
+        }
+        D_801499A0.unk_04 = v;
+        D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013BCEC);
+#endif
 
 /* FAKE: T-11640. The counter D_801499A0.unk_02 and the flag D_801499B0[0].val are read through u16 pointer
  * views: with the plain field IDO keeps a CVT copy of the promoted counter in a second register, and the

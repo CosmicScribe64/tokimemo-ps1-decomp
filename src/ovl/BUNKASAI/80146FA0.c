@@ -477,4 +477,11 @@ void func_80147214(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80146FA0", func_80147F8C);
+void func_80147F8C(void) {
+    u8 *name;
+    BunkasaiNameTable tbl;
+
+    tbl = D_801606DC;
+    name = tbl.s[D_800E6280.unk_03E - 95][D_80122CDC];
+    func_800AE0F0(D_800CA25C, name);
+}

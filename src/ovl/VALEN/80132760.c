@@ -70,20 +70,34 @@ void func_80133640(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, only the base register of the argument load differs ($a0 here, $v0 in the original; ugen temporary), 2 lines */
 s32 func_80133670(void) {
-    if ((D_800E6280.unk_040 == ((u32)(D_800E6280.unk_0F8 << 0x17) >> 0x1B)) && (D_800E6280.unk_03F == (D_800E6280.unk_0F8 & 0xF)) && (get_h_tokimeki(D_800E6280.unk_F5F) >= 0x46U) && ((D_80134540 == D_800E6280.unk_F5F) || (D_80134541 == D_800E6280.unk_F5F) || (D_80134542 == D_800E6280.unk_F5F)) && (D_800E6280.unk_F5F == 9)) {
+    GameState *g; /* the selected girl is read through a state pointer (lui v0 base for the call argument), T-19016 */
+
+    g = &D_800E6280;
+    if ((D_800E6280.unk_040 == ((u32)(D_800E6280.unk_0F8 << 0x17) >> 0x1B)) && (D_800E6280.unk_03F == (D_800E6280.unk_0F8 & 0xF)) && (get_h_tokimeki(g->unk_F5F) >= 0x46U) && ((D_80134540 == g->unk_F5F) || (D_80134541 == g->unk_F5F) || (D_80134542 == g->unk_F5F)) && (g->unk_F5F == 9)) {
         func_8004284C();
         return 0;
     }
     return normal_date_girl_out();
 }
-#else
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80133670);
-#endif
 
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80133728);
+/* s32: the first exit returns 0 (or v0,zero,zero in its branch delay slot), the second is a bare return and the last call falls off the end. T-19016 */
+s32 func_80133728(void) {
+    GameState *g; /* the selected girl is read through a state pointer (lui v0 base for the call argument), T-19016 */
+
+    g = &D_800E6280;
+    if ((D_800E6280.unk_040 == ((u32)(D_800E6280.unk_0F8 << 0x17) >> 0x1B)) && (D_800E6280.unk_03F == (D_800E6280.unk_0F8 & 0xF)) && (((get_h_tokimeki(g->unk_F5F) >= 0x46U) && (g->unk_F5F != 0)) || ((D_800E6280.unk_1BC[0].unk_02 >= 0x46) && (g->unk_F5F == 0))) && ((D_80134540 == g->unk_F5F) || (D_80134541 == g->unk_F5F) || (D_80134542 == g->unk_F5F))) {
+        D_800E6280.unk_721 = D_800E6280.unk_1109;
+        D_800E6280.unk_722 = D_800E6280.unk_110A + 1;
+        func_80042908(3);
+        return 0;
+    }
+    if (((get_h_tokimeki(g->unk_F5F) >= 0x46U) && (g->unk_F5F != 0)) || ((D_800E6280.unk_1BC[0].unk_02 >= 0x46) && (g->unk_F5F == 0))) {
+        func_80132348();
+        return;
+    }
+    func_8004284C();
+}
 
 void func_8013387C(void) {
     s16 n;

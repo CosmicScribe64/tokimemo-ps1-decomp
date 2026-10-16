@@ -1,0 +1,19 @@
+m2c.py: argument counts from the callees' asm: func_80145520 0
+python3 failed:
+cfe: Error: drafts/T-17600/_runs/plain/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3594: 'sp28' undefined; reoccurrences will not be reported.
+     *(M2cBlockBC *)(&sp28[0]) = *(M2cBlockBC *)(&D_8014901C);
+ ---------------------^
+cfe: Error: drafts/T-17600/_runs/plain/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3611: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80145520();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17600/_runs/plain/GYOZI/func_80145384/work -o drafts/T-17600/_runs/plain/GYOZI/func_80145384/work/guarded.o /tmp/asm_processoryx_tc2z9/preprocessed_d817a685d8554cbaa065646c3c59fa9e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqa24t514/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17600/_runs/plain/GYOZI/func_80145384/work/guarded.o drafts/T-17600/_runs/plain/GYOZI/func_80145384/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17600/_runs/plain/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3596: Non-function name referenced in function call.
+     var_v0 = (&sp28[0])[D_800F647A](0x3C);
+ -----------------------------------^
+cfe: Error: drafts/T-17600/_runs/plain/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3612: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80145520();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17600/_runs/plain/GYOZI/func_80145384/work -o drafts/T-17600/_runs/plain/GYOZI/func_80145384/work/guarded.o /tmp/asm_processorjqgm0zpk/preprocessed_6926f6e14297454c82410cdb7a26fa66.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibvfo73zeu/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17600/_runs/plain/GYOZI/func_80145384/work/guarded.o drafts/T-17600/_runs/plain/GYOZI/func_80145384/work/guarded.o.sjis.c

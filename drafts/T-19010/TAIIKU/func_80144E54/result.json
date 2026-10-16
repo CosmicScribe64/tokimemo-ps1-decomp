@@ -1,0 +1,12 @@
+{
+ "func": "func_80144E54",
+ "unit": "TAIIKU",
+ "size": 496,
+ "score": 100,
+ "guarded": false,
+ "scope": "TAIIKU:func_80144E54",
+ "src": "src/ovl/TAIIKU/80142240.c",
+ "ticket": "T-19010",
+ "status": "scored",
+ "note": "typed-field draft with index loops; the flag D_8014A110 compare is not hoisted into the loop 2 preheader (lbu a1 in the original), every later register is shifted; about 100 diff rows"
+}

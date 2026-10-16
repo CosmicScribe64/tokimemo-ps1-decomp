@@ -1,0 +1,25 @@
+extern s8 D_800B3D00;
+extern s8 D_800E62BA;
+extern s32 NULL;
+/* T-17900: the lyric strings are written as their rodata labels */
+extern u8 D_8014C4F0[];
+extern u8 D_8014C4FC[];
+extern u8 D_8014C510[];
+extern u8 D_8014C534[];
+extern u8 D_8014C554[];
+extern u8 D_8014C578[];
+extern u8 D_8014C5A4[];
+extern u8 D_8014C5B8[];
+extern u8 D_8014C5D8[];
+extern u8 D_8014C5F0[];
+extern u8 D_8014C60C[];
+extern u8 D_8014C62C[];
+extern u8 D_8014C63C[];
+extern u8 D_8014C65C[];
+extern u8 D_8014C668[];
+extern u8 D_8014C684[];
+extern u8 D_8014C6A0[];
+extern u8 D_8014C6B0[];
+extern u8 D_8014C6D0[];
+extern u8 D_8014C6E0[];
+extern u8 D_8014C6F4[];

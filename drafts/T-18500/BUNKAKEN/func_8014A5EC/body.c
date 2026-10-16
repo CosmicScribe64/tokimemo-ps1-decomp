@@ -1,0 +1,8 @@
+s32 func_8014A5EC(void) {
+    GameState *g = &D_800E6280;
+    typedef struct ByteTable297 { /* 0x00 */ u8 b[297]; } ByteTable297; /* size 0x129 */
+    BunkakenNames3x3 sp28;
+
+    sp28 = D_8015633C;
+    func_800AE0F0(D_800CA25C, (sp28.b + (g->unk_03E * 0x63) + (D_80122CDC * 0x21)) - 0x24BD);
+}

@@ -1,0 +1,55 @@
+? func_800639D8();                                  /* extern */
+? func_80065048(s16, ?);                            /* extern */
+static ? D_80144AE4;                                /* unable to generate initializer: unknown type; const */
+
+void func_801404FC(void) {
+    s16 var_a0;
+    s16 var_s0;
+    u8 temp_t4;
+
+    D_800E6280.unk_F5F = 0xA;
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    func_8006612C((s32) &D_80144AE4);
+    *(s8 *)((unsigned char *)D_8011ECD0 + (207)) = 0;
+    *(s8 *)((unsigned char *)D_8011ECD0 + (275)) = 0;
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    func_8007C740();
+    func_80137990();
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    D_80122D38 = 1;
+    func_8006509C();
+    var_s0 = 0;
+    var_a0 = 0;
+    do {
+        func_80065048(var_a0, 0);
+        var_s0 += 1;
+        var_a0 = var_s0;
+    } while (var_s0 < 0xF);
+    func_80065B0C(1);
+    func_800639D8();
+    func_800639D8();
+    D_800B593C = 0x80;
+    D_801470A8 = 0;
+    D_801470AC = 0;
+    func_800847B8(D_800E6280.unk_F5F);
+    func_80137990();
+    D_80146274 = D_80145FE4;
+    D_80146278 = D_80146120;
+    D_8014627C = D_8014625C;
+    func_800AE0F0(D_800CA19C, "玄関");
+    func_800AE0F0(D_800CA1DC, "自宅前");
+    temp_t4 = D_800E6280.unk_F5F;
+    D_800E6280.unk_1BC[temp_t4].unk_06 += 2;
+    func_80084D3C();
+    D_800CA368 = 0x49;
+    func_8004284C();
+}

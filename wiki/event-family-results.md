@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # GYOZI and SHOUGATU event families
@@ -130,3 +130,62 @@ Matched during the pass (4 functions, 1,416 bytes):
 `inventory2.py` / `mklists3.py`: seven packages T-17401..T-17407 (27 functions, 18,224 bytes):
 w3-event-p01 `8011C650.c` (2), p02 `8010BB90.c` + `800FBBF0.c` (5), p03 `8010FE10.c` (5), p04 `801011A0.c` +
 `800FDC20.c` (5), p05 `800F9680.c` + `801050D0.c` (4), p06 `801024B0.c` + `80107FC0.c` (5), p07 `8010B360.c` (1).
+## Types-first pass (T-17600)
+
+Wave 3 types-first pass for GYOZI ([[tickets/T-17600-types-first-gyozi]], branch `w3-gyozi-types`, method of
+[[speedup-research-2026-10-16]]). Types in `include/ovl/GYOZI.h`, redrafts in `drafts/T-17600/` (README there).
+GYOZI sha1 OK after every step.
+
+### Type map
+
+| Type / global | Evidence |
+| --- | --- |
+| `GzCallbacks90` `D_801476F4`, `D_80147C6C`; `GzCallbacks68` `D_80148880`; `GzCallbacksBC` `D_8014901C` | step-callback tables, each copied whole to the stack by an lw/sw loop (`func_8013B0C4`, `func_8013C774`, `func_80141944`, `func_80145384`) and called through `D_800F647A`, as `D_80148904`. These copies are most of `type_recovery.py`'s stride-0xC proposals (as in DATE). |
+| `Rec24 D_8012CA40[]` | 0x24-byte records indexed `i * 0x24` in the dumpling functions with the field widths of main's Rec24 table; `D_8012CA40` is `D_801217D0 + 0xB270`, the same shift as the display records `D_80129F40` (`D_8011ECD0 + 0xB270`). |
+| `s32 D_80148BF0[50]`, `D_80148CB8[50]`, `D_80148D80[50]`, `s16 D_80148E48[50]`, `s32 D_80148EB0` | one entry per falling dumpling (`func_80144018`, `func_801444CC`, `func_80144B70`, `func_80145084`); the count `D_80148EAC` stops at 50 and each array ends where the next starts. Records `D_8012CA40[i]` start at `i = 4`, and the `[i - 4]` accesses fold into `%lo`, so splat names `D_80148BE0`, `D_80148D70`, `D_80148E40`. |
+| `s16 D_8014875C[8]`, `D_8014876C[8]` | indexed with the same `i * 2` (`func_80140E0C`, `func_80140F90`, `func_801412A4`); m2c printed `*(&D_8014876C + i * 2)` on an undeclared symbol, a wrong scale. |
+| `GyoziGirl.unk_14` (s32), `unk_10[4]`, `unk_18[0x20]` | `lw` at +0x14 in `func_801378D0` and `func_80140464`; matched code reads `unk_10[0..3]` only. |
+| `GyoziWork.unk_10B8` (`D_800F6458`), size 0x10BC | `func_8013DC2C` matches only with the store as a member of `D_800F53A0`: then the following girl[10] bit-field load stays below it (SHOUGATU writes the same field as `D_800E6280.unk_10E8`). The other scalars past 0xF30 (`D_800F6474`, ...) stay `main_api.h` scalars. |
+| `u8 D_80148828[4]`, `extern s32 D_800F62F0` (main_api.h) | sized so the fold reaches `D_80148829`..`2B`; `D_800F62F0` had no declaration (`func_8013C774`). |
+| `GYOZI.h` includes `game.h` | `DisplayActor44` for the display records `D_80129F40`; drafts in files without `game.h` failed on the cast. |
+
+Not changed: the pointer tables `D_80146220`..`D_80146354` and `D_801470F0`..`D_80147188` (rows of 13 words
+selected by constant index, saved and restored through the triples `D_80146358`, `D_8014718C`, ...; 155 matched
+lines use the scalar names and the [6][13] / [3][13] shape is not proven); the byte table read at
+`D_801483E8 + i` (matched code stores a pointer at that address); `D_80147224` (read as `lh` and `lbu`).
+
+### Redraft
+
+`drafts/T-17600/redraft.py` (T-17300 driver adapted, see the README): `plain` (headers only), `typed` (fold,
+stack tables, record-temp, display-base, work-prim with `func_80054B60`, pointer steps, field symbols) and
+`typed1`, then `tools/draft_fixes.py`. 32 of 37 functions got a compiling redraft; over the 29 unguarded ones
+7 are better than the census (5,416 bytes: `func_80144B70` 516 to 474, `func_801428EC` 176 to 138,
+`func_801421B4` 407 to 393, ...), 19 the same, 3 worse (`func_80144018` 461 to 540, `func_80138C9C` 302 to
+326, `func_80145084` 116 to 123); sum 4,710 to 4,715 rows, median 124 to 123. The headers alone changed 10
+of 28 plain scores (5 better); the typed rewrites beat plain in 4 of 26 and lost in 5. As in the pilots, the
+header types moved little; the dumpling arrays fix a wrong scale in the drafts but did not lower their rows.
+
+### Matched (908 bytes)
+
+- `func_8013E308` (372 B): port of SHOUGATU `func_8013B758` (`tools/siblings.py` ratio 1.0, clone); the
+  byte-typed store as the call argument is the marked T-9020 FAKE idiom (`D_800F62CF = 0xC` as the argument
+  gives other registers).
+- `func_8013DC2C` (268 B): port of GYOZI `func_8013AC38`, with the bit-3 store `GyoziBit3` on
+  `girl[10].unk_10[0]` and `D_800F53A0.unk_10B8 = 1` (see the type map).
+- `func_8013B0C4` (268 B): the 29-row redraft with `GzCallbacks90 table` and an index local declared before it
+  (T-3330: its slot sits above the table, moving the table from sp+0x38 to sp+0x34).
+
+### Near misses and leads
+
+- `func_8014206C` (6 rows, `drafts/T-17600/GYOZI/func_8014206C/hand.c`): only the three `beq v0,v1` come out
+  as `beq v1,v0`; a local copy, `7 != x`, `!(x == 0 || x == 7)` and a switch did not change it.
+- `func_8013C774` (14 rows, `hand.c`): the table slot matches with the index local; the literals `"S\n"`,
+  `"T\n"` (rodata `D_80145BB0`/`BB4`) shift the data by 0x10, and the original keeps nops where IDO fills the
+  delay slots with the `D_800F53DF` loads.
+- Sibling leads for the packages: `func_8013E824`, `func_80139E4C`, `func_8013907C` against SHOUGATU
+  `func_8013BDE0` (0.93, 0.94, 0.86; earlier probes reached 24-27 rows, see "Failed probes"),
+  `func_80141944`/`func_80145384` against `func_80140780` (0.80/0.75).
+
+### Packages
+
+T-17601..T-17608 (`w3-gyozi-p01`..`p08`): 33 functions, 19,180 bytes.

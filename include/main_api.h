@@ -894,6 +894,7 @@ extern u8 D_800E7D1F;
 extern u8 D_800E7D2C;
 extern u8 D_800E7D34;
 extern u8 D_800E7D36;
+extern u8 D_800E7D37;
 extern u16 D_800E7D3C;
 extern u16 D_800E7D3E;
 extern u16 D_800E7D40;
@@ -1049,6 +1050,7 @@ extern u8 D_800F5AB1;
 extern u8 D_800F5AB2;
 extern u8 D_800F5ACD;
 extern u8 D_800F62CF;
+extern s32 D_800F62F0; /* T-17600: GYOZI func_8013C774 tests bits 0x100 and 0x800 */
 extern s8 D_800F6412;
 extern s32 D_800F6458;
 extern s32 D_800F6468;
@@ -2030,7 +2032,9 @@ void get_p_name();
 s32 func_80051A68();
 s32 get_g_zyotai_s(s32 arg0);
 u32 func_80051B48();
+#ifndef MAIN_API_OVERRIDE_get_g_zyotai_h
 s32 get_g_zyotai_h(s32 arg0);
+#endif
 void func_80051DBC();
 void xa_wait(void);
 void func_80051DD8();
@@ -2466,6 +2470,9 @@ void func_80085234();
 #ifndef MAIN_API_OVERRIDE_func_80085368
 void func_80085368(void);
 #endif
+/* T-18000: the same address as func_80085368; SHUGAKU compares callback entries with it, and its
+ * asm names the address D_80085368 (a %hi/%lo pair, not a jal), so only that name links there. */
+void D_80085368(void);
 #ifndef MAIN_API_OVERRIDE_func_800853FC
 void func_800853FC(void);
 #endif

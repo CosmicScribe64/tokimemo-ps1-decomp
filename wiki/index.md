@@ -20,23 +20,50 @@ Read this first. Update on every ingest or new page.
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 - [[date-family-results]] - DATE step tables (`FnTblNN`) and stack tables, the types-first redraft and its numbers, sibling ports, near misses, packages (T-17200)
+- [[bunka-sd-family-results]] - BUNKA_SD type map (scene event lists, text tables, picture sets), display-record loop and compare-operand idioms, the types-first redraft, near misses, packages (T-18100)
+- [[option-family-results]] - OPTION type map (menu rows, word tables, `OptActor44`), the types-first redraft and its numbers, near misses, packages (T-17800)
+- [[master-family-results]] - MASTER type map (stack and step tables, second mini-event counters), the types-first redraft with re-rolled record loops, idioms, packages (T-18600)
+- [[ending-family-results]] - ENDING type map (stack tables, location records left as scalars), the types-first redraft and its numbers, the `check_k_scroll` port, scene-script hand drafts, packages (T-18300)
+- [[kangei-family-results]] - KANGEI type map (picture-set tables, MASTER streak effect, club name tables), the types-first redraft and its numbers, near misses, packages (T-18400)
+- [[shugaku-family-results]] - SHUGAKU type map (callback tables, location tables left as scalars), the types-first redraft and its numbers, sibling ports, packages (T-18000)
 - [[shougatu-family-results]] - SHOUGATU type map (step tables, stack tables, work arrays), the types-first redraft and its numbers, GYOZI twin ports, packages (T-17500)
 - [[rpg-bat-family-results]] - RPG_BAT type map (stack tables, `RpgStat`), the types-first redraft and its numbers, idioms (`default:` + `case 0:`, reread globals), packages (T-17100)
 - [[taiiku-family-results]] - TAIIKU type map (runner records of three games, stack tables), idioms, the types-first redraft and its numbers, packages (T-16550)
+- [[bunkasai-family-results]] - BUNKASAI type map (name, text and per-girl tables), the implicit-int v0/v1 fix of the BUNKAKEN port, the types-first redraft and its numbers, packages (T-18700)
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
 - [[tickets/T-11840-tt-batch-10|T-11840]] TT batch 10: one long Opus run per large function (Done; 10 of 12 matched, TT 78.6% of bytes).
+- [[tickets/T-18700-types-first-bunkasai|T-18700]] Types-first: BUNKASAI: name, text and per-girl tables in `BUNKASAI.h`, 10 redrafts (4 better than the census), 2 matches / 2,376 bytes, packages T-18701..T-18703 (Done).
+- [[tickets/T-18400-types-first-kangei|T-18400]] Types-first: KANGEI: picture-set tables, MASTER streak types and club name tables in `KANGEI.h`, 11 redrafts (7 better than the census), 4 matches / 2,596 bytes, packages T-18401..T-18403 (Done).
+- [[tickets/T-18100-types-first-bunka_sd|T-18100]] Types-first: BUNKA_SD: scene event lists (`BsdEvent`), text tables and picture sets in `BUNKA_SD.h`, 15 redrafts (6 better than the census), 9 matches / 4,820 bytes, packages T-18101..T-18103 (Done).
+- [[tickets/T-17800-types-first-option|T-17800]] Types-first: OPTION: menu rows, word tables and the `OptActor44` record view in `OPTION.h`, 32 redrafts (19 better than the census), 4 matches / 1,548 bytes, packages T-17801..T-17803 (Done).
+- [[tickets/T-19015-w3-d-p15|T-19015]] Wave 3 package w3-d-p15: TACO `80146D60.c`, `80156A80.c`, `80138890.c`, 2 of 5 matched (`func_801585D0`, 992 B, sibling addressing idioms and statement order of two stack stores; `func_801471D0`, 260 B, restarted `dop` walker with a pointer parameter and an overlay override), two guards re-measured, `func_80147B24` stays `INCLUDE_ASM` (Done).
+- [[tickets/T-19016-w3-d-p16|T-19016]] Wave 3 package w3-d-p16: VALEN `80132760.c` and `80133C70.c`, 2 of 5 matched (`func_80133670`, `func_80133728`: call argument read through a `GameState *g` local), `func_80134030` guarded (27 lines), 2 left `INCLUDE_ASM` (Done).
+- [[tickets/T-19012-w3-d-p12|T-19012]] Wave 3 package w3-d-p12: OMIMAI `801320A0.c`, `801331B0.c`, 2 of 3 matched (`func_80132670` with a scalar-view FAKE, `func_80134628` from its KANGEI sibling, 928 B), `func_8013388C` back to `INCLUDE_ASM` (Done).
+- [[tickets/T-18200-types-first-en_nichi|T-18200]] Types-first: EN_NICHI: `EnObj D_8013984C[10]`, sprite frames, ring buffer and stack tables typed in `EN_NICHI.h`, 19 redrafts (6 better than the census, none 0), 5 hand matches / 2,500 bytes, packages T-18201..T-18202 (Done).
+- [[tickets/T-17900-types-first-name_ent|T-17900]] Types-first: NAME_ENT: flag-counter, digit and name-buffer tables in `NAME_ENT.h`, typed views of the main-exe records in the redraft, 30 redrafts (14 better than the census), 2 matches / 904 bytes, packages T-17901..T-17904 (Done).
+- [[tickets/T-19011-w3-d-p11|T-19011]] Wave 3 package w3-d-p11: TACO `func_8013506C` (29 lines) and `func_80134A18` (36 lines) stay guarded drafts, `func_80133E98` stays `INCLUDE_ASM`; chain-assignment store order and the call-saved quotient rule found (Done).
+- [[tickets/T-19013-w3-d-p13|T-19013]] Wave 3 package w3-d-p13: TACO `801480B0.c`, `func_80148184` and `func_801487A4` matched (1,336 B; pointer-cast constant, `[i - 1]` pair tables, two-step `s16` index for the missing ugen temporary), `func_801484E4` guarded at 6 rows after the closer pass (counter web, two FAKEs) (Done).
 - [[tickets/T-17500-types-first-shougatu|T-17500]] Types-first: SHOUGATU: 49 step tables (`FnTblNN`) and 4 stack-table types in `SHOUGATU.h`, 38 redrafts (15 better than the census), 4 matches / 1,516 bytes, packages T-17501..T-17507 (Done).
 - [[tickets/T-19009-w3-d-p09|T-19009]] Wave 3 package w3-d-p09: TACO `80142820.c`, `80143E80.c`, `func_801428DC` (one-struct settings block), `func_80144430` (stack-slot order, `void` lib call) and `func_80142AF0` matched, 1,956 B; `func_80144094` back to `INCLUDE_ASM` (Done).
+- [[tickets/T-19007-w3-d-p07|T-19007]] Wave 3 package w3-d-p07: TAIIKU `801452D0.c`, 1 of 4 matched (`func_80146D18`, 648 B); `func_8014607C` and `func_80145370` stay guarded, typed draft for `func_80147B14` (Done).
+- [[tickets/T-19008-w3-d-p08|T-19008]] Wave 3 package w3-d-p08: TAIIKU `80138950.c`, counter family: `func_8013B200` matched (FAKE views, no local `x`, flag u16 view), closer pass matched `func_8013B608` (split `v = x >> 3; v += ...` for the missing ugen temporary), `func_8013BCEC` guarded at 2 missing instructions (counter write-back), `func_8013B78C`, `func_8013B94C` stay `INCLUDE_ASM`; `ugen -S` method for temporaries (Done).
+- [[tickets/T-18500-types-first-bunkaken|T-18500]] Types-first: BUNKAKEN: heroine and text tables, stack-copied byte tables in `BUNKAKEN.h`, 12 redrafts (5 better than the census), 6 matches / 6,232 bytes, packages T-18501..T-18502 (Done).
+- [[tickets/T-18600-types-first-master|T-18600]] Types-first: MASTER: nine `MasterWords13` stack tables and the step tables in `MASTER.h`, redraft driver with `reroll`/`record-copy`, 11 redrafts (8 better than the census), 2 matches / 1,208 bytes, packages T-18601..T-18603 (In Review).
+- [[tickets/T-18300-types-first-ending|T-18300]] Types-first: ENDING: stack tables and `D_8013CAF0` typed in `ENDING.h`, `dialogue_render` override, 13 redrafts (7 better than the census), 1 match / 280 bytes, packages T-18301..T-18305 (Done).
+- [[tickets/T-18000-types-first-shugaku|T-18000]] Types-first: SHUGAKU: callback tables in `SHUGAKU.h`, 25 redrafts (9 better than the census), 5 matches / 2,292 bytes, packages T-18001..T-18004 (Done).
+- [[tickets/T-17700-types-first-geko|T-17700]] Types-first: GEKO: stack-copied tables typed in `GEKO.h`, 35 redrafts (14 better than the census), 1 match / 484 bytes, 5 guarded drafts, packages T-17701..T-17708 (Done).
 - [[tickets/T-19005-w3-d-p05|T-19005]] Wave 3 package w3-d-p05: OLH `80135AC0.c`, `80132000.c`, `func_80135B8C` (sibling clone) and `func_80132114` (chain through a local) both matched, 680 B (Done).
+- [[tickets/T-19010-w3-d-p10|T-19010]] Wave 3 package w3-d-p10: TAIIKU `80142240.c` (game B), 4 of 5 functions matched (2,752 B: `func_80144464`, `func_80143814`, `func_80142FB8`, `func_80144E54`; three FAKE dead statements), `func_8014357C` guarded at 34 lines (Done).
 - [[tickets/T-19006-w3-d-p06|T-19006]] Wave 3 package w3-d-p06: TACO `8013B990.c`, all 5 functions matched (2,636 B), branch-over guard and `s32`-without-return idioms (Done).
 - [[tickets/T-19001-w3-d-p01|T-19001]] Wave 3 package w3-d-p01: TAIIKU `80140810.c`, `func_80140A90` stays guarded (33 instructions); block-copy temporary rule measured, looks like a ugen difference (Done).
 - [[tickets/T-17400-types-first-event|T-17400]] Types-first: EVENT: 90 step tables (`FnTblNN`) and 12 stack tables typed in `EVENT.h`, 38 redrafts (9 better than the census), 4 matches / 1,416 bytes, packages T-17401..T-17407 (Done).
 - [[tickets/T-17200-types-first-date|T-17200]] Types-first: DATE: 68 step tables (`FnTblNN`) and 10 stack tables typed in `DATE.h`, 49 redrafts (7 better than the census), 4 matches / 1,760 bytes, packages T-17201..T-17208 (Done).
-- [[tickets/T-17100-types-first-rpg_bat|T-17100]] Types-first: RPG_BAT: stack-table types and `RpgStat` fields, 74 redrafts (20 better than the census), 4 matches / 3,168 bytes, packages T-17101..T-17119 (In Review).
+- [[tickets/T-17100-types-first-rpg_bat|T-17100]] Types-first: RPG_BAT: stack-table types and `RpgStat` fields, 74 redrafts (20 better than the census), 4 matches / 3,168 bytes, packages T-17101..T-17119 (Done).
 - [[tickets/T-19002-w3-d-p02|T-19002]] Wave 3 package w3-d-p02: TACO `801447D0.c`, `80137A60.c`, 3 of 4 functions matched (2,008 B), `func_8014616C` a 3-row draft (Done).
 - [[tickets/T-19004-w3-d-p04|T-19004]] Wave 3 package w3-d-p04: TAIIKU `80133C80.c`, 2 of 5 functions matched (`func_80137228` 260 B, `func_80135830` 672 B with a FAKE dead `i = 0;`), 2 guarded, 1 left as `INCLUDE_ASM` (Done).
+- [[tickets/T-17600-types-first-gyozi|T-17600]] Types-first: GYOZI: callback tables, dumpling arrays, `Rec24 D_8012CA40`, `GyoziWork.unk_10B8` in `GYOZI.h`, 37 redrafts (7 better than the census), 3 matches / 908 bytes, packages T-17601..T-17608 (Done).
 - [[tickets/T-17300-types-first-etc|T-17300]] Types-first: ETC: `EtcExamRank`, per-girl tables, `SVECTOR`, `EtcWork40` view typed in `ETC.h`, 40 redrafts (11 better than the census), 3 sibling-port matches / 1,572 bytes, packages T-17301..T-17308 (Done).
 - [[tickets/T-16990-wave-3-conveyor|T-16990]] Wave 3 conveyor: types-first passes on 19 units feeding a 7-worker matcher pool (In Progress).
 - [[tickets/T-19003-w3-d-p03|T-19003]] Wave 3 package w3-d-p03: TACO `80149F90.c`, 5 drafts from the T-14500 and T-16560 runs, 1 matched (`func_8014E5F8`, 1,108 B), 3 guarded (10-12 lines), `func_8014F820` back to `INCLUDE_ASM` (Done).
@@ -347,7 +374,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-12700-bunka-families|T-12700]] BUNKAKEN/BUNKASAI family reconstruction (Done; 41 matches, 40,252 bytes).
 - [[tickets/T-12701-bunkaken-address-family|T-12701]] BUNKAKEN source families (Done; 35 matches, 33,716 bytes).
 - [[tickets/T-12702-bunkasai-family|T-12702]] BUNKASAI remaining source families (Done; two matches, 2,520 bytes).
-- [[bunka-family-results]] — BUNKAKEN aggregate-address and BUNKASAI state-reload experiments (T-12700).
+- [[bunka-family-results]] — BUNKAKEN aggregate-address and BUNKASAI state-reload experiments (T-12700); BUNKAKEN types-first pass, redraft numbers and packages (T-18500).
 - [[tickets/T-12703-bunkasai-heldout-family|T-12703]] BUNKASAI held-out family transfer (In Progress).
 
 - [[tickets/T-12800-large-event-tel|T-12800]] Large EVENT TEL and main matching (Done).
@@ -381,22 +408,23 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13203-event-particle-family|T-13203]] Particle initialization family experiment.
 
 - [[event-family-results]] GYOZI/SHOUGATU bounded family transfer:3 functions /3424 literal bytes, failed-probe ledger and review; EVENT overlay types-first pass (step tables, stack tables, redraft numbers, near misses, packages; T-17400).
+- [[event-family-results]] GYOZI/SHOUGATU bounded family transfer:3 functions /3424 literal bytes, failed-probe ledger and review; the T-17600 GYOZI types-first pass (type map, redraft numbers, 3 matches, near misses, packages).
 - [[tickets/T-13103-etc-memory-card-family|T-13103]] ETC memory-card state family.
 
 - [[etc-family-results]]: eleven ETC matches / 5900 literal bytes, positive and negative transfer evidence; the T-17300 types-first pass (ETC types, redraft numbers, sibling ports, near misses, packages).
 
-- [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction.
+- [[en-nichi-family-results]] - EN_NICHI types-first pass (type map, index-form and peeled-loop idioms, redraft numbers, packages; T-18200).
+- [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction; NAME_ENT types-first pass (type map, redraft numbers, near misses, packages; T-17900).
 
 - [[tickets/T-13600-taiiku-families|T-13600]] TAIIKU source-family recovery (In Progress).
 
 - [[data/t13600-remaining-census]]: baseline TAIIKU remaining functions and unit-tagged historical evidence (T-13600).
 - [[tickets/T-14000-ending-en-nichi-families|T-14000]] ENDING and EN_NICHI family matching (In Progress).
-- [[scenes-family-results]] - GEKO/DATE2 family work, [[tickets/T-13900-scenes-families|T-13900]].
+- [[scenes-family-results]] - GEKO/DATE2 family work, [[tickets/T-13900-scenes-families|T-13900]]; GEKO types-first pass (stack tables, redraft numbers, near misses, packages; T-17700).
 - [[tickets/T-14100-date-near-matches|T-14100]] DATE retained near matches and new-family hypotheses (In Progress).
 - [[tickets/T-14100-date-near-matches|T-14100]] DATE retained near matches and new-family hypotheses (In Review; three matches, 636 bytes).
 - [[tickets/T-13500-incremental-build-dependencies|T-13500]] Compiler include dependencies reused for DATE experiments.
 - [[tickets/T-14000-ending-en-nichi-families|T-14000]] ENDING and EN_NICHI family matching (In Progress).
-- [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction.
 
 - [[tickets/T-13800-taco-families|T-13800]] TACO family reconstruction; [[tickets/T-13801-taco-actor-family|T-13801]] actor/table experiments (Done).
 - [[taco-family-results]] — bounded TACO boss transform reconstruction; zero accepted bytes, 497EC one-row and 4A480 three-row near misses (T-13800/T-13801).
@@ -422,3 +450,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[tickets/T-15900-remaining-draft-compile-repairs|T-15900]] — Remaining mixed-overlay compile repairs (13 scopes, In Progress).
 - [[tickets/T-15700-taco-taiiku-draft-repairs|T-15700]] All28 TACO/TAIIKU failed drafts now compile; no zeros (Done).
+- [[tickets/T-19014-w3-d-p14|T-19014]] Wave 3 package w3-d-p14: TACO `8013F250.c`, 5 of 5 functions matched (2,848 B: `func_801404FC`, `func_80140364`, `func_8013F9C0`, `func_801407D4`, `func_80140ADC` in the closer pass; FAKE frame-home locals) (Done).
+- [[tickets/T-19017-w3-d-p17|T-19017]] Wave 3 package w3-d-p17: TACO `80140DF0.c`, 4 of 5 functions matched (2,104 B: `func_80141B18`, `func_801413B8`, `func_80141050`, `func_80141170` in the closer pass; FAKE frame-home locals), `func_801416E8` guarded at 28 lines (Done).

@@ -1,0 +1,1 @@
+m2c.py: argument counts from the callees' asm: text_set_advance 1

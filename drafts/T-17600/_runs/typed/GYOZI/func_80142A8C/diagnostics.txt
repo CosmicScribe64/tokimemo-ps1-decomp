@@ -1,0 +1,6 @@
+python3 failed:
+cfe: Error: drafts/T-17600/_runs/typed/GYOZI/func_80142A8C/work/guarded.c, line 3810: Syntax Error
+     temp_v0 = (POLY_G3 *)func_80054B60(0x1C, D_80129F10);
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17600/_runs/typed/GYOZI/func_80142A8C/work -o drafts/T-17600/_runs/typed/GYOZI/func_80142A8C/work/guarded.o /tmp/asm_processor21teo6ug/preprocessed_0e4be2a41d9247289699ed317b57a7a6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib9pl32nm1/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17600/_runs/typed/GYOZI/func_80142A8C/work/guarded.o drafts/T-17600/_runs/typed/GYOZI/func_80142A8C/work/guarded.c

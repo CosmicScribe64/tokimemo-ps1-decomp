@@ -1,0 +1,14 @@
+extern s8 D_800E62B6;
+extern s8 D_800E62B7;
+extern s8 D_800E62B8;
+extern s8 D_800E71DE;
+extern u8 D_800E62BA;
+extern u8 D_800E62BE;
+extern u8 D_800E62BF;
+extern u8 D_800E62C0;
+extern u8 D_800E66EB;
+extern u8 D_800E67C8;
+extern u8 D_800E6839;
+extern u8 D_800E738D;
+extern u8 D_800E7D30;
+void func_80140B20(void);

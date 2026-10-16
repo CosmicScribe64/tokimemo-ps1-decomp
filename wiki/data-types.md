@@ -46,6 +46,12 @@ Limits: the pass is linear (no control flow), so a register state survives a lab
 | ETC overlay data: `EtcExamRank` (0x8C), ranking row positions `s16[14]`, per-girl tables `u8[13]`, `s32[13][2]`, `s32 *[13]`, CD file table `s32 *[22]`, `SVECTOR`, `s32[16]`, `EtcWork40` view moved to the header | `D_80150668`, `D_80150630`/`64C`, `D_80150728`/`738`, `D_8014E0A4`, `D_8014DB90`/`BF8`, `D_8014E070`, `D_8014EA18`, `D_8015013C`, `D_8015014C`, `D_801230D0` | `include/ovl/ETC.h` (T-17300) | `D_80150150`, `D_80150188` (into `D_8015014C`); `D_8015013E`, `D_80150140` and `D_80150668`'s 18 splat labels stay data labels | 0 |
 | `FnTblNN` step tables (36 sizes, `void (*f[NN])()`) | 90 tables `D_801207B8`..`D_8012514C` | `include/ovl/EVENT.h` (T-17400) | 63 local typedefs and externs of 15 EVENT `.c` files, `Blob80` of `D_801218E8` | 0 |
 | EVENT stack-copied tables `U16x21`, `EvPairs8`, `EvShorts82`, `EvShorts10`, `EvShorts11`, `EvShorts5`; views `Ev44`, `EvTbl` | `D_80125454`..`D_801254D8`, `D_80122990`, `D_80121A34`, `D_80123B7C`/`B90`/`BA4`, `D_80125330`/`348`, `D_80125360`, `D_80120A74`, `D_80121AD8` | `include/ovl/EVENT.h` (T-17400) | local `U16x21`, `Ev44`, `EvEnt`/`EvTbl` typedefs | 0 |
+| GEKO stack-copied tables `GekoMonthDays`, `GekoNames12`, `GekoWords11`/`GekoWords2`, `GekoFnTbl42`, `GekoShorts10`, `GekoShorts6`, `GekoBytes21`/`24`/`36`/`132`/`209`, `GekoText626`; existing `GekoThresholds` for `D_80144CF8`; `s16 D_801463E0[12]`, `s16 D_80146400[16]` | `D_80144CF8`..`D_80144D8C`, `D_801451B8`..`D_801451F4`, `D_80146630`, `D_801472C4`/`D8`/`EC`, `D_8014760C`/`618`, `D_80147764`..`D_80147C6C`, `D_801463E0`, `D_80146400` | `include/ovl/GEKO.h` (T-17700) | none (new declarations) | 0 |
+| `ShFnTblNN` callback tables (8 sizes, `void (*f[NN])()`); `u8 D_8013C2E4`; `void D_80085368(void)` (main_api.h, address of `func_80085368`) | 10 tables `D_8013B094`..`D_8013CC20` | `include/ovl/SHUGAKU.h` (T-18000) | 8 local typedefs and externs of 7 SHUGAKU `.c` files; `Blk44`/`Tb44`/`Words17` copies now `DisplayActor44` | 0 |
+| GYOZI overlay data: step-callback tables `GzCallbacks68/90/BC`, dumpling arrays `s32[50]` x3 and `s16[50]`, `s16[8]` x2, `Rec24 D_8012CA40[]`, `GyoziGirl.unk_14`, `GyoziWork.unk_10B8`, `u8 D_80148828[4]`; `GYOZI.h` includes `game.h` | `D_801476F4`, `D_80147C6C`, `D_80148880`, `D_8014901C`, `D_80148BF0`/`CB8`/`D80`/`E48`, `D_8014875C`/`76C`, `D_8012CA40`, `D_800F53A0` | `include/ovl/GYOZI.h` (T-17600); `D_800F62F0` added to `main_api.h` | `D_800F6458` written as `D_800F53A0.unk_10B8` in `func_8013DC2C` only; the other users keep the scalar | 0 |
+| NAME_ENT tables: flag counters `u8 D_8014D060[16]` and `u8 D_8014D158[16]`, digit sprite (u, v) `u8 D_8014D0F4[10][2]`, name-entry buffers `D_8014CC74[8]`/`D_8014CC7C[8]` sized; main-exe records read through views in the redraft (`NameMetricWork` at `D_800E7D10`, `NameRecordF00[]` at `D_80123120`, `DisplayActor44[]` at `D_8011ECD0`) | `D_8014D060`, `D_8014D158`, `D_8014D0F4`, `D_8014CC74`, `D_8014CC7C` | `include/ovl/NAME_ENT.h` (T-17900) | none (new declarations) | 0 |
+| EN_NICHI objects `EnObj D_8013984C[10]` (0x30), sprite frames `s16 D_80139A34[16][6]`, ring buffer `s16 D_80139228[10][4]`/`s32 D_80139278[10]`, stack tables `EnHalf22` x3, `EnBytes22`, `EnHalf64`, `EnHalf13`, asset pointer `s32 *D_80139204`; status and sprite bytes sized | `D_8013984C`, `D_80139A34`, `D_80139A2C`, `D_80139228`, `D_80139278`, `D_80139C68`/`C94`/`CC0`/`CEC`, `D_80139DA0`, `D_80139E20`, `D_80139200`..`D_80139218` | `include/ovl/EN_NICHI.h` (T-18200) | `u8 D_8013984C[]`, `Rec30 D_80139868[]` | 1 (`func_80132834`, peeled loop) |
+| MASTER stack tables `MasterWords13` (`s32 v[13]`) x9 and `MasterHalfwords13 D_8013C6A4`; step tables `FnTbl4/7/30`, `PtrTbl3` moved into the header; second mini-event counters `u8 D_8013C788[5]`, `D_8013C780`, `s16 D_8013C794`; the local `MasterSlot` copies unified as `MasterClubBits` | `D_8013C2F4`..`D_8013C460`, `D_8013C7B4`, `D_8013C6A4`, `D_8013C2E4`, `D_8013C5C8`, `D_8013C700`, `D_8013C798`, `D_8013C788` | `include/ovl/MASTER.h` (T-18600) | `Tbl13`, two `MasterSlot` typedefs, `D_8013C78C` | 0 |
 
 33 `FAKE` comments of the "first symbol" family are gone (117 to 84 in `src/`). The `Work80125D10` conversion is the strongest single test: 96 uses in already-matched functions moved to one symbol and none changed bytes.
 
@@ -158,3 +164,31 @@ signed nine-byte rows, `D_800C6200[8]`, `D_800C62C0[32]`, `D_80125DA0`/`D_80125E
 pass (T-17000)").
   the 30 highest proposals are step-table copies, not records ([[date-family-results]], T-17200); the same in EVENT
   ([[event-family-results]], T-17400).
+
+## BUNKA_SD types-first pass (T-18100)
+
+`BsdEvent` (frame, command word) and the three scenes' event-list tables (`BsdEvent *[]`) and text tables,
+plus seven loaded picture sets typed as `s32 *` page table, two `u8 *` images and a palette word, all in
+`include/ovl/BUNKA_SD.h`. The scene control words stay separate scalars (matched code). Evidence for a
+main-exe aggregate around `D_80122EA8`: `func_80135F38` compares `D_80122EAC` with the constant first,
+which IDO gives only for a non-plain operand. Details: [[bunka-sd-family-results]].
+
+## BUNKASAI types-first pass (T-18700)
+
+Stack-copied tables as one-array structs: `BunkasaiNameTable D_801606DC` (`u8 s[3][3][33]`, strings by school
+year and `D_80122CDC`), the text-pointer tables `BunkasaiTexts12/11/4` (`D_80160AE0`, `D_80160B10`,
+`D_80160B3C`, BUNKAKEN's `D_80156470`.. shape), per-girl bytes `BunkasaiGirlBytes D_80160520` (`u8 v[11]`),
+the column selector `BunkasaiColumns D_8016052C` (`u8 v[6]`), the per-year `BunkasaiGirlColumns` tables
+(`u8 v[13][6]` at `D_80160534`, `D_80160584`, `D_801605D4`) and `BunkasaiGirlList D_80160AA4` (`s32 v[11]`).
+type_recovery's 0xC-stride arrays at `D_80160808`, `D_80160A9C`, `D_8016052C` and `D_801606D4` are artefacts
+of these tables and of the dispatch table `D_80160810`. Details: [[bunkasai-family-results]].
+
+## KANGEI types-first pass (T-18400)
+
+Picture-set tables as arrays, one row per component of the current set (`D_80139AD0`/`AD4`/`AD8`):
+`s32 D_80139950[3][8]`, `D_80139A50[3]`, `D_80139A5C[3][8]`, `D_8013A170[2][3][13]` (129 scalars absorbed);
+`KangeiSprite44` extended to MASTER's display-record layout with `KangeiFixed32`; the MASTER streak tables
+(`KangeiPoint2 D_80139F10[10]`, `s16 D_80139F38[10]`); club name tables `KangeiNames20`/`KangeiNames21`
+(`u8 name[11][20]`, `[11][21]`, stack copies); `KangeiImage10 D_80139D10[2]`; the `KangeiWords11`/`KangeiWords2`
+summer tables at `D_80139A08`. type_recovery's 0xC-stride arrays at `D_801399A8` and `D_80139F44` are artefacts
+of these neighbouring tables. Details: [[kangei-family-results]].
