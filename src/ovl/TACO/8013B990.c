@@ -60,4 +60,44 @@ s32 func_8013CE78(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B990", func_8013CFD8);
+/* FAKE: s32 with no return keeps v0 live at the exit, as in func_8013CE78 (void changes one
+ * instruction). T-19006. */
+s32 func_8013CFD8(void) {
+    u32 i;
+    s16 x;
+    s16 y;
+    s32 a;
+    s32 b;
+    s32 d;
+    s32 t;
+    s32 u;
+    x = D_8015E770[0].unk0;
+    y = D_8015E770[0].unk2;
+    for (i = 16; i < 64; i++) {
+        if (((i + D_8015EDB4)->unk0[1] & 0x80) && ((i + D_8015EDB4)->unk84[3] & 1) && ((i + D_8015EDB4)->unk84[1] != 0) && ((i + D_8015EDB4)->unk84[0] != 0)) {
+            t = func_800AE0C0(x - (i + D_8015EDB4)->unk74);
+            u = func_800AE0C0(y - (i + D_8015EDB4)->unk76);
+            a = 0x1000 - t;
+            if (a < 0) {
+                a = 0;
+            }
+            b = 0x1000 - u;
+            if (b < 0) {
+                b = 0;
+            }
+            d = (a + b) / 256;
+            if (d != 0) {
+                func_8013D2A0((s32)(i + D_8015EDB4)->unk74, (s32)(i + D_8015EDB4)->unk76, (s32)(s16)((i + D_8015EDB4)->unk78 - 0x200));
+            }
+            if ((u32)d < (i + D_8015EDB4)->unk84[1]) {
+                (i + D_8015EDB4)->unk84[1] -= d;
+            } else {
+                (i + D_8015EDB4)->unk84[1] = 0;
+            }
+            if ((i + D_8015EDB4)->unk84[1] == 0) {
+                func_801335A0(1, 0x508);
+                D_8015EDF0 += D_8015F504[(D_8015EDB4 + i)->unk84[2] % 17U];
+            }
+        }
+    }
+}
