@@ -1,6 +1,7 @@
 #define MAIN_API_OVERRIDE_func_800847B8 /* Word argument at this call (func_80133760); T-17500. */
 #include "common.h"
 #include "ovl/SHOUGATU.h"
+void func_800847B8();
 
 void func_801330C0(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

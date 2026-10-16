@@ -58,7 +58,7 @@ void func_801419D0(void) {
     tbl = D_80146804;
     idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
-    if ((u8)D_800E6280.unk_110A < 0x10U) {
+    if (D_800E6280.unk_110A < 0x10U) {
         ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = (u8)D_800B593C;
         if (((DisplayActor44 *)D_8011ECD0)[96].unk_18 == 0 && ((DisplayActor44 *)D_8011ECD0)[96].unk_08 == 0) {
             n = ((DisplayActor44 *)D_8011ECD0)[96].unk_16 + 1;

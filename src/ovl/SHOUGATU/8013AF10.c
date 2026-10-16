@@ -42,6 +42,7 @@ void func_8013AFEC(void) {
     hizuke_init();
     message_window_init();
     func_80084E4C();
+    /* Chain store through byte views keeps one li for both stores and the argument (T-9150 idiom). */
     *(u8 *)&D_800E6280.unk_75D = *(u8 *)&D_800E6280.unk_F5F = 0xA;
     func_800847B8(*(u8 *)&D_800E6280.unk_F5F);
     func_800AE130(D_800CA17C, "%sさん", D_800E6280.unk_0D4);
