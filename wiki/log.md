@@ -16460,3 +16460,22 @@ Maintainer review of PR #36 (KakarottoCake): both review points addressed (empty
 ## [2026-10-16] ticket | T-17110 Done
 
 [[tickets/T-17110-w3-rpg-bat-p10]] In Review to Done: code review against `CODING_STANDARDS.md` found two issues, both fixed: wrong byte counts in the ticket Goal and notes (the matched total is 1,788 bytes, not the 1,800 of the In Review entry; `func_8014D11C` is 600 B, `func_8014B79C` 776 B) and missing comments for the matching tricks in `src/ovl/RPG_BAT/8014ADD0.c`. 3 of 4 functions matched (`func_8014C360`, `func_8014B79C`, `func_8014D11C`), unit sha1 OK; `func_8014BFE4` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17105 In Progress
+
+[[tickets/T-17105-w3-rpg-bat-p05]] created and started: wave 3 package w3-rpg-bat-p05 (RPG_BAT `src/ovl/RPG_BAT/80157AE0.c`, `src/ovl/RPG_BAT/8015A1F0.c`; work list `func_8015A8B4`, `func_8015A744`, `func_80159B40`, `func_80158C4C`, `func_80159214`). Card in [[kanban]].
+
+## [2026-10-16] build | T-17105 clean rebuild
+
+Clean rebuild of the w3-rpg-bat-p05 worktree (`rm -rf build && configure.py && ninja`): 27/27 sha1 OK, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17105-w3-rpg-bat-p05]].
+
+## [2026-10-16] ticket | T-17105 In Review
+
+[[tickets/T-17105-w3-rpg-bat-p05]] In Progress to In Review: 1 of 5 functions matched (`func_80159B40`, 528 bytes, frame order of the stack tables); `func_80158C4C` (4 lines), `func_8015A744` (12), `func_80159214` (16) and `func_8015A8B4` (28) stay under `NON_MATCHING` with T-17105 comments. Notes in [[matching-notes]], rows in [[data/t0018-cases]], three rows in [[register-cheatsheet]]. Card moved in [[kanban]], index line in [[index]]. Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] build | T-17105 closer pass
+
+[[tickets/T-17105-w3-rpg-bat-p05]], Opus closer, worktree `w3-rpg-bat-p05`, 20:43-21:20 UTC. Matched `func_80158C4C` (1,056 bytes) and `func_80159214` (1,036 bytes) in `src/ovl/RPG_BAT/80157AE0.c`, one commit each. The shared 4-row gap was as1 load scheduling; a FAKE store through the load's base symbol, `(&D_8015EDC4)[5] = 0;`, closes it. `func_8015A744` stays guarded at 12 rows, and its comment now lists the forms tried. Notes in [[matching-notes]], rows in [[data/t0018-cases]], one row in [[register-cheatsheet]]. Clean rebuild 27/27 sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK (0 new, 15 known). The ticket stays In Review.
+
+## [2026-10-16] ticket | T-17105 Done
+
+[[tickets/T-17105-w3-rpg-bat-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a stray blank line at the end of `src/ovl/RPG_BAT/80157AE0.c`; stale counts in [[index]] and [[matching-notes]]); rebuild of RPG_BAT OK (sha1 OK, headers OK, globals OK, protos OK). 3 of 5 functions matched (`func_80159B40` 528 bytes, `func_80158C4C` 1,056 bytes, `func_80159214` 1,036 bytes); `func_8015A744` (12 rows) and `func_8015A8B4` (28 rows) stay guarded. Card moved in [[kanban]]. Merge via the wave 3 merge script.
