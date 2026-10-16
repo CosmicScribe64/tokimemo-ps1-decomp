@@ -15729,3 +15729,7 @@ Opened [[tickets/T-18100-types-first-bunka_sd]] (In Progress) on branch `w3-bunk
 ## [2026-10-16] ticket | T-18400 In Review
 
 [[tickets/T-18400-types-first-kangei]] In Progress to In Review. Packages T-18401..T-18403 (`w3-kangei-p01`..`p03`, 9 functions, 6,836 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]). Clean build 27/27, header, globals and prototype checks pass.
+
+## [2026-10-16] ticket | T-18400 Done
+
+[[tickets/T-18400-types-first-kangei]] reviewed against `CODING_STANDARDS.md`: one finding (the family page said 11 callee prototypes, the header has 12), fixed; KANGEI sha1 OK, headers, globals and prototype checks pass. 4 functions matched (2,596 bytes). In Review to Done, card moved to Done.

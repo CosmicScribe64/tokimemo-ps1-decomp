@@ -33,7 +33,7 @@ All conversions keep KANGEI's sha1. Header: `include/ovl/KANGEI.h`.
 | `KangeiNames20 D_80139FAC` (`u8 name[11][20]`), `KangeiNames21 D_8013A088` (`u8 name[11][21]`) | club name tables | undeclared | copied to the stack whole by `func_8013769C` (lw/sw loop, three-byte lwl/lwr tail as EVENT's `EventTableE7`); `name[club]` goes to `func_800AE0F0` (strcpy) |
 | `KangeiImage10 D_80139D10[2]` | image records | eight scalars | `func_80135CE0` copies `unk_00`, `unk_04`, `unk_08`, `unk_0C` into display record 96 (+0x34, +0x0C, +0x10, +0x14) |
 | `u8 D_80139E00`, `D_80139E04`, `D_80139E08` | fade colour | undeclared | byte loads and stores one word apart |
-| prototypes | 11 overlay callees of `func_80132FF8`, `func_80136810` | implicit | called before their definitions |
+| prototypes | 12 overlay callees (11 called by `func_80132FF8`, plus `func_80136810`) | implicit | called before their definitions |
 
 Left alone: `D_80139DCC`..`D_80139DEC` (pairs for display records 96 and 97 interleaved field by field, with
 two `s16` one word apart; no clean struct), `D_80139DB0`..`D_80139DC8` (palette and six image pointers, read
