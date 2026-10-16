@@ -34,7 +34,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 
-- [[tickets/T-19025-w3-d-p25|T-19025]] Wave 3 package w3-d-p25: TACO `80132220.c`, 2 of 4 matched (`func_8013356C`, `func_801328B0` 1,848 B with FAKE pads and a pointer local), `func_80132FE8` and `func_8013240C` guarded at 10 rows each (In Review)
+- [[tickets/T-19025-w3-d-p25|T-19025]] Wave 3 package w3-d-p25: TACO `80132220.c`, 4 of 4 matched (`func_8013356C`, `func_801328B0` 1,848 B with FAKE pads and a pointer local; closer pass: `func_8013240C` as K&R `s32` with no `return`, `func_80132FE8` with a live `btn` local and one FAKE empty test) (In Review)
 - [[tickets/T-18700-types-first-bunkasai|T-18700]] Types-first: BUNKASAI: name, text and per-girl tables in `BUNKASAI.h`, 10 redrafts (4 better than the census), 2 matches / 2,376 bytes, packages T-18701..T-18703 (Done).
 - [[tickets/T-19020-w3-d-p20|T-19020]] Wave 3 package w3-d-p20: RENSYU `80132040.c`, 1 of 4 matched (`func_80133CB8`, FAKE: empty test as a basic block boundary), `func_80133628` guarded (21 lines), `func_80133990` and `func_8013325C` back to `INCLUDE_ASM`; stack table layout rule
 - [[tickets/T-18400-types-first-kangei|T-18400]] Types-first: KANGEI: picture-set tables, MASTER streak types and club name tables in `KANGEI.h`, 11 redrafts (7 better than the census), 4 matches / 2,596 bytes, packages T-18401..T-18403 (Done).
