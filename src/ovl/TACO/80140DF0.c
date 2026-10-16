@@ -228,8 +228,8 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_801413B8);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_801416E8);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-19017 */
+/* FAKE: pad, k1, k7, k8, k2, t, k3 and k4 are unused locals; they reproduce the original frame (224 bytes: eight above m,
+ * three words below pt, the homes of depth, flag and fade). Real source unknown. T-19017 */
 void func_80141B18(Tc14 *arg0, s32 arg1) {
     s32 pad[2];
     MATRIX m;
@@ -274,22 +274,21 @@ void func_80141B18(Tc14 *arg0, s32 arg1) {
     poly = func_800490F0(0x24, D_8011ECA0);
     func_8009F054(poly);
     SetSemiTrans(poly, 1);
-    poly->r0 = fade + 0x20;
     poly->g0 = 0x10;
+    poly->r0 = fade + 0x20;
     poly->b0 = 0xC0;
     poly->r1 = fade + 0x20;
     poly->g1 = fade + 0x10;
     poly->b1 = 0xC0;
-    poly->r2 = 0x20;
     poly->g2 = fade + 0x10;
+    poly->r2 = 0x20;
     poly->b2 = 0xC0;
     poly->r3 = fade + 0x20;
     poly->g3 = fade + 0x10;
     poly->b3 = 0xC0;
     for (i = 0; i < 2; i++) {
-        t = pt[i * 2 + 4];
-        if (t == pt[i * 2]) {
-            pt[i * 2 + 4] = t + 1;
+        if (pt[i * 2] == pt[i * 2 + 4]) {
+            pt[i * 2 + 4] = pt[i * 2 + 4] + 1;
         }
     }
     poly->x0 = pt[2];
@@ -303,6 +302,3 @@ void func_80141B18(Tc14 *arg0, s32 arg1) {
     AddPrim((D_8011ECA0 << 10) + 0x10 + D_800E8CA0, poly);
     dtd_on_tpage(0x340, 0x100, 4, 1, 0);
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_80141B18);
-#endif
