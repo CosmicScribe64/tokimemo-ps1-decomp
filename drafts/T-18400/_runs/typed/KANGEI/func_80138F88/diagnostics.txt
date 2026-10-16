@@ -1,0 +1,7 @@
+m2c.py: argument counts from the callees' asm: func_8008585C 0, func_80085B3C 2
+python3 failed:
+cfe: Error: drafts/T-18400/_runs/typed/KANGEI/func_80138F88/work/guarded.c, line 3312: Unacceptable operand of &.
+         if ((*(&D_800E6280.unk_1BC[0].unk_0C + ((var_t6 - var_s0) * 8)) & 2) && ((temp_v1 = get_g_zyotai_s(var_s0) & 0x7F, temp_a0 = temp_v1 & 0xFF, ((temp_a0 < var_s6) != 0)) || ((temp_a0 == var_s6) && (temp_s2 = get_h_yuukou(var_s0) & 0xFF, temp_s3 = get_h_tokimeki(var_s0) & 0xFF, temp_s4 = get_h_tokimeki(var_s7) & 0xFF, (((u32) (get_h_yuukou(var_s7) + temp_s4) < (u32) (temp_s3 + temp_s2)) != 0))))) {
+ -------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18400/_runs/typed/KANGEI/func_80138F88/work -o drafts/T-18400/_runs/typed/KANGEI/func_80138F88/work/guarded.o /tmp/asm_processordiv2ji5j/preprocessed_150088e99d0c49ba8b65123218bb94f1.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib3akzkpnf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18400/_runs/typed/KANGEI/func_80138F88/work/guarded.o drafts/T-18400/_runs/typed/KANGEI/func_80138F88/work/guarded.c
