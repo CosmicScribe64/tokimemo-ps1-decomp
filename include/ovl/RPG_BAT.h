@@ -152,7 +152,9 @@ extern s32 D_8015EE40;
 s32 func_8013C1CC(void);
 void func_8013C2A0(void);
 void func_8013C32C(void);
+#ifndef RPG_BAT_OVERRIDE_func_8013C890
 void func_8013C890(void);
+#endif
 void func_8013CC90(void);
 void func_801439E0();
 void func_8014B294(void);
