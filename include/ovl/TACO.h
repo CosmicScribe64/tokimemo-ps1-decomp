@@ -481,7 +481,11 @@ void func_80148B58();
 extern u8 D_8015F404[];
 extern u8 D_8015F410[];
 extern u8 D_8015F41C[];
-void func_80137264();
+void func_80137264(u8 *arg0, s32 arg1);
+typedef struct TacoDigits {
+    /* 0x00 */ u8 s[11];
+} TacoDigits; /* size 0xB: "0123456789" */
+extern TacoDigits D_8015F428;
 void func_801371B4(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 void func_80152110(s32 arg0, s32 arg1, s32 arg2);
 void func_801531E8();
