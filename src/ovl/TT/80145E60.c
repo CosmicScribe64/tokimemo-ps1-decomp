@@ -37,8 +37,6 @@ s32 func_80145E60(void) {
     return 1;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11820, 7 instructions (registers only): the D_80158A6C local c gets a1 and the record constant 8 (u16 stores) a0 where the original has a0/v1; regdiff: the 8 web (priority 2) is coloured before c (priority 1). The u16 view of the three record stores splits the constant 8 from the s16 one in s6. Tried: empty if (c) uses, other assignment and declaration orders. */
 void func_80146000(void) {
     u8 *src;
     u8 *p;
@@ -46,7 +44,6 @@ void func_80146000(void) {
     s32 angle;
     u8 *c;
     u8 *a;
-    u8 *b;
 
     c = D_80158A6C;
     src = D_80158AB0;
@@ -66,20 +63,20 @@ void func_80146000(void) {
     a[0] = 1;
     *(u16 *)(a + 6) = 8;
     *(s16 *)(a + 0x10) = 0;
-    b = D_80158AA4;
-    b[0] = 1;
-    b[1] = 0;
-    *(u16 *)(b + 0x44) = 8;
-    *(s16 *)(b + 0x14) = 0x34;
-    *(s16 *)(b + 0x16) = *(u16 *)(c + 0x18) * 16 + 0x7E;
-    *(s16 *)(b + 0x3C) = 8;
-    *(s16 *)(b + 0x3E) = 8;
-    b[0x46] = 0x30;
-    b[0x47] = 0x10;
-    *(s16 *)(b + 0x40) = 0xA;
-    *(s16 *)(b + 0x42) = 0x3C0F;
-    b[0x3B] = 0x65;
-    *(s16 *)(b + 0x10) = 0;
+    a = D_80158AA4;
+    a[0] = 1;
+    a[1] = 0;
+    *(u16 *)(a + 0x44) = 8;
+    *(s16 *)(a + 0x14) = 0x34;
+    *(s16 *)(a + 0x16) = *(u16 *)(c + 0x18) * 16 + 0x7E;
+    *(s16 *)(a + 0x3C) = 8;
+    *(s16 *)(a + 0x3E) = 8;
+    a[0x46] = 0x30;
+    a[0x47] = 0x10;
+    *(s16 *)(a + 0x40) = 0xA;
+    *(s16 *)(a + 0x42) = 0x3C0F;
+    a[0x3B] = 0x65;
+    *(s16 *)(a + 0x10) = 0;
     for (i = 0, angle = 0, p = D_80158AA4 + 0x1900; i < 3; i++, angle += 0x55, p += 0x64) {
         p[0] = 1;
         p[1] = 0;
@@ -106,9 +103,6 @@ void func_80146000(void) {
         *(s16 *)(p + 0x10) = 0xD;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80145E60", func_80146000);
-#endif
 
 void func_80146224(void) {
     u8 *p = D_80158A6C;
