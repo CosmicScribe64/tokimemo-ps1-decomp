@@ -171,7 +171,33 @@ void func_80155230(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_801553AC);
+void func_801553AC(void) {
+    TcPos sp50;
+    /* FAKE: unused TcPos between the two reproduces the original frame (see func_80156F50); real local unknown. T-16564 */
+    TcPos sp48;
+    TcPos sp40;
+
+    func_800AE120(D_801604C0);
+    sp50.x = D_8015EDB4->unk74;
+    sp50.y = (D_8015EDB4->unk74 > 0) ? 1 : -1;
+    sp50.z = -0x2BC;
+    sp40.unk6 = 0;
+    if ((D_801604CC % 3) == 0) {
+        func_8015ACCC(4, 2, sp50, D_801604D4, sp40, 6, 0xE0);
+    } else {
+        func_8015ACCC(4, 2, sp50, D_801604D4, sp40, 6, 0x50);
+    }
+    /* FAKE: both stores on one line so as1 orders them z, unk6 like the original (T-11690 idiom); real source unknown. T-16564 */
+    sp40.unk6 = 0x14; sp50.z = -0x384;
+    func_8015ACCC(4, 2, sp50, D_801604D4, sp40, 6, 0);
+    sp40.unk6 = 0x14; sp50.z = -0x1F4;
+    func_8015ACCC(4, 2, sp50, D_801604D4, sp40, 6, 0);
+    sp40.unk6 = 0x28; sp50.z = -0x44C;
+    func_8015ACCC(4, 2, sp50, D_801604D4, sp40, 6, 0);
+    sp40.unk6 = 0x28; sp50.z = -0x12C;
+    func_8015ACCC(4, 2, sp50, D_801604D4, sp40, 6, 0);
+    D_801604CC += 1;
+}
 
 /* The operand order of the actor address (idx + base or base + idx) differs between the statements of the original; the two spellings reproduce it. T-16564 */
 void func_801557E8(s32 arg0) {

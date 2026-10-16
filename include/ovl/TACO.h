@@ -108,6 +108,7 @@ void func_8015ABF0(void);
 void func_801563E4(s32 arg0);
 s32 func_80156178(void);
 void func_80154F74(void);
+void func_801553AC(void);
 void func_8015595C(void);
 void func_80137CBC(s32 arg0);
 extern Tc10 D_80127090;
