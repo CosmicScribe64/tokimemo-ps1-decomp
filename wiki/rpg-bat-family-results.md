@@ -120,3 +120,6 @@ Types and header: `D_8015E740` is `u8 **` (a table of string pointers), `func_80
 ### Package w3-rpg-bat-p18 (T-17118)
 
 `func_80133108` (4,192 B, the 30-case Salmon Boomerang cutscene script) matched from the 863-row T-14500 draft: angle computed once before the sine loops, one shared `tmp` local, the case 9 record loop indexed `[i + 64]`, `RPG_BAT_OVERRIDE_func_8013F15C` only. Details in [[matching-notes]] (section T-17118).
+## Package w3-rpg-bat-p12 (T-17112)
+
+[[tickets/T-17112-w3-rpg-bat-p12]]: `src/ovl/RPG_BAT/801525B0.c`, four of four matched in plain C (3,404 bytes): `func_80154220` (quad primitive with `xy`/`uv` word tables and a unary-minus offset), `func_80153F3C` (two `s32[8]` tables, the x pair of each point on one line; `D_80120E93` is `u8`) and `func_801529B4` (compare switch with a stacked shared arm, jump table inside `if (D_8015EB9C != 0xE)`). `func_80153784` matched in the closer pass (case 1 load schedule: every access to `D_8015EC40`/`D_8015ED28`..`D_8015ED38` through the `D_8015EC38` symbol, so as1 keeps the loads and stores in source order; FAKE until the aggregate is known). Types: `D_80120E93` `u8` in `main_api.h`, four prototypes in `RPG_BAT.h`. Details and idioms: [[matching-notes]] (section T-17112), [[register-cheatsheet]] (eight rows).

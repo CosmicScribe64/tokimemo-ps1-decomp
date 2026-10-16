@@ -1,5 +1,6 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
+#include "psx_types.h"
 
 void func_801525B0(void) {
     s32 sp28; /* FAKE (T-17100): dead copy of the column; without it the 0x28 spill of var_a3 and the frame change */
@@ -87,7 +88,126 @@ void func_801528DC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_801529B4);
+void func_801529B4(void) {
+    func_8014B79C();
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8004500C(1, 0x200);
+        switch (D_8015EB98) {
+        case 0x10000:
+            func_800AE0F0(D_8015E9E0, "ハブ・ロードが襲ってきた！");
+            break;
+        case 0x20000:
+            func_800AE0F0(D_8015E9E0, "鹿・グレートが襲ってきた！");
+            break;
+        case 0x40000:
+            func_800AE0F0(D_8015E9E0, "キラーヒグマが襲ってきた！");
+            break;
+        case 0x100000:
+            func_800AE0F0(D_8015E9E0, "不良達が襲ってきた！");
+            break;
+        }
+        if (D_8015EB98 != 0x08000000) {
+            func_8014B738((s32) D_8015EB70, 1, 0x5A);
+        }
+        func_8013E810(0x30, 1, 1, 1);
+        switch (D_8015EB98) {
+        case 0x10000:
+        case 0x20000:
+        case 0x40000:
+        case 0x08000000:
+            func_8013E810(0x3B, 0, 1, 1);
+            break;
+        case 0x100000:
+            func_8013E810(0x3B, 0, 1, 1);
+            func_8013E810(0x3C, 0, 1, 1);
+            func_8013E810(0x3D, 0, 1, 1);
+            break;
+        }
+        if (D_8015EB9C != 0xE) {
+            switch (D_8015EB9C) {
+            case 0:
+                func_8013E810(0x1D, 2, 1, 1);
+                break;
+            case 1:
+                func_8013E810(0x1D, 2, 1, 1);
+                break;
+            case 2:
+                func_8013E810(0x1D, 9, 1, 1);
+                break;
+            case 3:
+                func_8013E810(0x1D, 2, 1, 1);
+                break;
+            case 4:
+                func_8013E810(0x1D, 1, 1, 1);
+                break;
+            case 5:
+                func_8013E810(0x1D, 0, 1, 1);
+                break;
+            case 6:
+                func_8013E810(0x1D, 1, 1, 1);
+                break;
+            case 7:
+                func_8013E810(0x1D, 1, 1, 1);
+                break;
+            case 8:
+                func_8013E810(0x1D, 1, 1, 1);
+                break;
+            case 9:
+                func_8013E810(0x1D, 1, 1, 1);
+                break;
+            case 10:
+                func_8013E810(0x1D, 1, 1, 1);
+                break;
+            case 13:
+                func_8013E810(0x1D, 1, 1, 1);
+                break;
+            }
+        }
+        func_8013E97C(0x30, 0x160, 0x58);
+        func_8013E97C(0x1D, 0x168, 0x88);
+        func_8013E97C(0x3B, -0x58, 0x60);
+        if (D_8015EB98 == 0x100000) {
+            func_8013E97C(0x3B, -0x28, 0x68);
+            func_8013E97C(0x3C, -0x60, 0x58);
+            func_8013E97C(0x3D, -0x68, 0x88);
+        }
+        if (D_8015EB98 == 0x08000000) {
+            func_8013E97C(0x3B, -0x58, 0x70);
+        }
+        func_8004284C();
+        break;
+    case 1:
+        func_8013E97C(0x30, 0x160 - D_800E6280.unk_1104.u, 0x58);
+        func_8013E97C(0x1D, 0x168 - D_800E6280.unk_1104.u, 0x88);
+        func_8013E97C(0x3B, (D_800E6280.unk_1104.u * 2) - 0x58, 0x60);
+        if (D_8015EB98 == 0x100000) {
+            func_8013E97C(0x3B, (D_800E6280.unk_1104.u * 2) - 0x28, 0x68);
+            func_8013E97C(0x3C, (D_800E6280.unk_1104.u * 2) - 0x60, 0x58);
+            func_8013E97C(0x3D, (D_800E6280.unk_1104.u * 2) - 0x68, 0x88);
+        }
+        if (D_8015EB98 == 0x08000000) {
+            func_8013E97C(0x3B, (D_800E6280.unk_1104.u * 2) - 0x58, 0x70);
+        }
+        D_800E6280.unk_1104.u += 4;
+        if (D_800E6280.unk_1104.u >= 0x51) {
+            func_8013E97C(0x30, 0, 0);
+            func_8013E7C0(0x30, 0, 1, 1);
+            func_8013E97C(0x1D, 0, 0);
+            if (D_8015EB9C != 0xE) {
+                func_8013E7C0(0x1D, 0, 1, 1);
+            }
+            func_8004284C();
+        }
+        break;
+    case 2:
+        D_800E6280.unk_1104.u += 1;
+        if (D_800E6280.unk_1104.u >= 0x3D) {
+            func_80042808();
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80152F30);
 
@@ -129,7 +249,79 @@ s32 func_801535E4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80153784);
+s32 func_80153784(void) {
+    s32 pad[3]; /* FAKE: unused words above the RECTs, the original frame has them (real source unknown). T-17112 */
+    RECT r0;
+    RECT r1;
+    RECT r2;
+    RECT r3;
+    s32 i;
+
+    /* FAKE: x/y and w/h of each RECT share a source line; as1 then stores y, x, h, w as the original does. T-17112 */
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        r0.x = 0x240; r0.y = 0x100;
+        r0.w = 0x40; r0.h = 0x28;
+        func_8009C93C(&r0, 0x180, 0x180);
+        r1.x = 0x240; r1.y = 0x128;
+        r1.w = 0x40; r1.h = 0x28;
+        func_8009C93C(&r1, 0x1C0, 0x180);
+        r2.x = 0x220; r2.y = 0x100;
+        r2.w = 0x40; r2.h = 0x28;
+        func_8009C93C(&r2, 0x200, 0x180);
+        r3.x = 0x21F; r3.y = 0x100;
+        r3.w = 1; r3.h = 0x80;
+        func_8009C93C(&r3, 0x220, 0x100);
+        D_8015EC40 = 0x20;
+        D_8015EC44 = 0x40;
+        D_8015EC48 = 1;
+        D_8015ED2C = -0x80;
+        D_8015ED30 = 0x20;
+        D_8015ED34 = 0x40;
+        D_8015ED38 = 1;
+        D_8015EC38 = 0;
+        D_8015EC3C = 0x80;
+        /* FAKE: D_8015ED28 through the D_8015EC38 symbol as in case 1; under its own name uopt moves this store above the D_8015EC38 store. T-17112 */
+        (&D_8015EC38)[60] = 0;
+        func_8004284C();
+        break;
+    case 1:
+        /* FAKE: D_8015EC40 and D_8015ED28..D_8015ED38 (+0x08, +0xF0..+0x100) are reached through the D_8015EC38 symbol; the original
+         * relocations probably name one aggregate over these words that is not recovered yet. as1 keeps a load and a store of one
+         * symbol in source order: the D_8015ED28/D_8015ED38 loads stay above the D_8015EC38 store, the D_8015EC40 and D_8015ED30
+         * loads below the stores, and the D_8015ED30 lui fills the load delay of D_8015EC40. T-17112 */
+        D_8015EC38 += D_8015EC48;
+        (&D_8015EC38)[60] += (&D_8015EC38)[64];
+        if (D_8015EC38 >= (&D_8015EC38)[2]) {
+            D_8015EC38 = 0;
+        }
+        if ((&D_8015EC38)[60] >= (&D_8015EC38)[62]) {
+            (&D_8015EC38)[60] = 0;
+        }
+        func_80153B08();
+        func_80153D20();
+        func_80153A60();
+        D_8015ED2C += 1;
+        D_8015EC3C -= 1;
+        if (D_8015EC3C == 0) {
+            func_8004284C();
+        }
+        break;
+    case 2:
+        r2.x = 0x200; r2.y = 0x180;
+        r2.w = 1; r2.h = 0x28;
+        func_8009C93C(&r2, 0x220, 0x100);
+        func_8013E7C0(0x1F, 0, 1, 1);
+        func_8004284C();
+        break;
+    case 3:
+        D_8015EC74 = 0;
+        /* FAKE: the 48 words from D_8015EC7C through the first symbol, with D_8015EC78 on the loop's line to keep its store behind the loop setup. T-17112 */
+        D_8015EC78 = 0; for (i = 0; i < 48; i++) (&D_8015EC7C)[i] = 0;
+        func_80042808();
+        break;
+    }
+}
 
 void func_80153A60(void) {
     int dead; /* FAKE: dead copy of *p; only reserves $v0 so the table pointer lands in $v1. Found with decomp-permuter. T-10910 */
@@ -183,6 +375,115 @@ void func_80153D20(void) {
     } while (var_s0 != 0xAA);
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80153F3C);
+/* FAKE: the two x stores of each point pair share a source line; as1 schedules the stores by source line and only then reproduces the original order (T-17112). */
+void func_80153F3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    s32 xy[8];
+    s32 uv[8];
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80154220);
+    xy[0] = arg0; xy[2] = arg0 + 0x7F;
+    xy[1] = arg2;
+    xy[3] = arg2;
+    xy[4] = arg1; xy[6] = arg1 + 0x7F;
+    xy[5] = arg3;
+    xy[7] = arg3;
+    uv[0] = 0; uv[2] = 0x7F;
+    uv[1] = arg2;
+    uv[3] = arg2;
+    uv[4] = 0; uv[6] = 0x7F;
+    uv[5] = arg3;
+    uv[7] = arg3;
+    func_80154220(xy, uv, (D_80120E93 + arg4) >> 1, arg5, 1);
+    xy[0] = arg0 + 0x80; xy[2] = arg0 + 0xFF;
+    xy[1] = arg2;
+    xy[3] = arg2;
+    xy[4] = arg1 + 0x80; xy[6] = arg1 + 0xFF;
+    xy[5] = arg3;
+    xy[7] = arg3;
+    uv[0] = 0; uv[2] = 0x7F;
+    uv[1] = arg2;
+    uv[3] = arg2;
+    uv[4] = 0; uv[6] = 0x7F;
+    uv[5] = arg3;
+    uv[7] = arg3;
+    func_80154220(xy, uv, (D_80120E93 + arg4) >> 1, arg5, 2);
+    xy[0] = arg0 + 0x100; xy[2] = arg0 + 0x13F;
+    xy[1] = arg2;
+    xy[3] = arg2;
+    xy[4] = arg1 + 0x100; xy[6] = arg1 + 0x13F;
+    xy[5] = arg3;
+    xy[7] = arg3;
+    uv[0] = 0; uv[2] = 0x3F;
+    uv[1] = arg2;
+    uv[3] = arg2;
+    uv[4] = 0; uv[6] = 0x3F;
+    uv[5] = arg3;
+    uv[7] = arg3;
+    func_80154220(xy, uv, (D_80120E93 + arg4) >> 1, arg5, 3);
+    xy[0] = arg0; xy[2] = arg0 - 0x7F;
+    xy[1] = arg2;
+    xy[3] = arg2;
+    xy[4] = arg1; xy[6] = arg1 - 0x7F;
+    xy[5] = arg3;
+    xy[7] = arg3;
+    uv[0] = 0; uv[2] = 0x7F;
+    uv[1] = arg2;
+    uv[3] = arg2;
+    uv[4] = 0; uv[6] = 0x7F;
+    uv[5] = arg3;
+    uv[7] = arg3;
+    func_80154220(xy, uv, (D_80120E93 + arg4) >> 1, arg5, 1);
+    xy[0] = arg0 + 0x17F; xy[2] = arg0 + 0x13F;
+    xy[1] = arg2;
+    xy[3] = arg2;
+    xy[4] = arg1 + 0x17F; xy[6] = arg1 + 0x13F;
+    xy[5] = arg3;
+    xy[7] = arg3;
+    uv[0] = 0; uv[2] = 0x3F;
+    uv[1] = arg2;
+    uv[3] = arg2;
+    uv[4] = 0; uv[6] = 0x3F;
+    uv[5] = arg3;
+    uv[7] = arg3;
+    func_80154220(xy, uv, (D_80120E93 + arg4) >> 1, arg5, 3);
+}
+
+void func_80154220(s32 *arg0, s32 *arg1, s32 arg2, s32 arg3, s32 arg4) {
+    POLY_FT4 *p;
+    s32 y;
+
+    p = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    func_8009F040(p);
+    SetShadeTex(p, 0);
+    if (arg3 != 0) {
+        SetSemiTrans(p, 1);
+    } else {
+        SetSemiTrans(p, 0);
+    }
+    p->r0 = arg2;
+    p->g0 = arg2;
+    p->b0 = arg2;
+    if (arg3 != 0) {
+        p->clut = func_8009ED74(0, 0x1F7);
+    } else {
+        p->clut = func_8009ED74(0, 0x1F5);
+    }
+    p->tpage = func_8009ECB0(1, arg3 + 4, (arg4 << 6) + 0x140, 0x100);
+    y = -D_8011ECA0 * 0xF0 + 0xF0;
+    p->x0 = arg0[0];
+    p->y0 = arg0[1] + y;
+    p->x1 = arg0[2] + 1;
+    p->y1 = arg0[3] + y;
+    p->x2 = arg0[4];
+    p->y2 = arg0[5] + y + 1;
+    p->x3 = arg0[6] + 1;
+    p->y3 = arg0[7] + y + 1;
+    p->u0 = arg1[0];
+    p->v0 = arg1[1];
+    p->u1 = arg1[2] + 1;
+    p->v1 = arg1[3];
+    p->u2 = arg1[4];
+    p->v2 = arg1[5] + 1;
+    p->u3 = arg1[6] + 1;
+    p->v3 = arg1[7] + 1;
+    AddPrim((D_8011ECA0 << 0xA) + 0x20 + D_800E8CA0, (s32)p);
+}
