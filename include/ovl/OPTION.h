@@ -219,4 +219,41 @@ typedef struct OptionDateBits {
     /* 0x00 */ u32 unk_11 : 21;
 } OptionDateBits; /* size 0x04 */
 
+/* The 0x44-byte display records of D_8011ECD0 as the option menus use them: DisplayActor44 (game.h) with
+ * s16 fields where it has padding (+0x1C is the pair partner of +0x1A, D_80120914; +0x2C..+0x32 are set
+ * from func_800AE0D0 in func_80139198). Record 96 is D_80120650 (T-17800). */
+typedef struct OptActor44 {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ u8 *unk_0C;
+    /* 0x10 */ u8 *unk_10;
+    /* 0x14 */ s16 unk_14;
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ s16 unk_1E;
+    /* 0x20 */ s16 unk_20;
+    /* 0x22 */ s16 unk_22;
+    /* 0x24 */ s16 unk_24;
+    /* 0x26 */ s16 unk_26;
+    /* 0x28 */ s16 unk_28;
+    /* 0x2A */ s16 unk_2A;
+    /* 0x2C */ s16 unk_2C;
+    /* 0x2E */ s16 unk_2E;
+    /* 0x30 */ s16 unk_30;
+    /* 0x32 */ s16 unk_32;
+    /* 0x34 */ s32 *unk_34;
+    /* 0x38 */ s32 unk_38;
+    /* 0x3C */ u8 pad3C[8];
+} OptActor44; /* size 0x44 */
+
 #endif /* OVL_OPTION_H */

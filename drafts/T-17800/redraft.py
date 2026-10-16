@@ -69,10 +69,10 @@ def typedef_block(text, name):
 
 
 def header_types():
-    """name -> mg.Type for the OPTION header's typedefs plus Rec24 and DisplayActor44."""
+    """name -> mg.Type for the OPTION header's typedefs plus Rec24 and OptActor44."""
     text = mg.read(HEADER)
     game = mg.read("include/game.h") + "\n" + mg.read("include/main_api.h")
-    text += "\n" + typedef_block(game, "Rec24") + "\n" + typedef_block(game, "DisplayActor44") + "\n"
+    text += "\n" + typedef_block(game, "Rec24") + "\n"
     text = re.sub(r"\bstruct\s+(\w+)\s*\*", r"\1 *", mg.strip_comments_keep_offsets(text))
     # the layout parser does not read function-pointer arrays: model them as pointer arrays
     text = re.sub(r"void \(\*(\w+)\[(\d+)\]\)\(\);", r"void *\1[\2];", text)
@@ -195,20 +195,20 @@ def fold(text):
 
 
 def display_records(body):
-    """m2c prints D_8011ECD0 arithmetic in bytes; write records of the DisplayActor44 view."""
-    body = re.sub(r"\bD_8011ECD0 \+ \(([^()]+) \* 0x44\)", r"&((DisplayActor44 *)D_8011ECD0)[\1]", body)
+    """m2c prints D_8011ECD0 arithmetic in bytes; write records of the OptActor44 view."""
+    body = re.sub(r"\bD_8011ECD0 \+ \(([^()]+) \* 0x44\)", r"&((OptActor44 *)D_8011ECD0)[\1]", body)
     # a byte offset computed into a temporary first (`temp_lo = i * 0x44; p = D_8011ECD0 + temp_lo;`)
     for name in re.findall(r"^\s+(\w+) = [^;]+ \* 0x44;$", body, re.M):
-        body = re.sub(r"\bD_8011ECD0 \+ %s\b" % name, "(DisplayActor44 *)((u8 *)@@DISP@@ + %s)" % name, body)
+        body = re.sub(r"\bD_8011ECD0 \+ %s\b" % name, "(OptActor44 *)((u8 *)@@DISP@@ + %s)" % name, body)
 
     def disp(m):
         n = int(m.group(1), 0)
         return "@@REC%d@@" % (n // 0x44) if n % 0x44 == 0 else "@@BYTE%d@@" % n
     body = re.sub(r"\bD_8011ECD0 \+ (0x[0-9A-Fa-f]+|\d+)\b", disp, body)
-    body = re.sub(r"(?<!\*)\bD_8011ECD0\b(?!\)\[)", "((DisplayActor44 *)D_8011ECD0)", body)
-    body = re.sub(r"@@REC(\d+)@@", r"&((DisplayActor44 *)D_8011ECD0)[\1]", body)
+    body = re.sub(r"(?<!\*)\bD_8011ECD0\b(?!\)\[)", "((OptActor44 *)D_8011ECD0)", body)
+    body = re.sub(r"@@REC(\d+)@@", r"&((OptActor44 *)D_8011ECD0)[\1]", body)
     body = body.replace("@@DISP@@", "D_8011ECD0")
-    body = re.sub(r"@@BYTE(\d+)@@", lambda m: "(DisplayActor44 *)(D_8011ECD0 + 0x%X)" % int(m.group(1)), body)
+    body = re.sub(r"@@BYTE(\d+)@@", lambda m: "(OptActor44 *)(D_8011ECD0 + 0x%X)" % int(m.group(1)), body)
     return body
 
 
@@ -301,16 +301,16 @@ def fptab(body, locals_):
 
 # ------------------------------------------------------------------------------------------ record pointers
 
-RECORDS = {"D_801217D0": "Rec24", "D_8011ECD0": "DisplayActor44"}
+RECORDS = {"D_801217D0": "Rec24", "D_8011ECD0": "OptActor44"}
 OFF_PTR_RE = r"\*\((u8|s8|u16|s16|u32|s32) \*\)\(\(unsigned char \*\)%s \+ \((\d+)\)\)"
 
 
-DISP_OFF_RE = re.compile(r"\*\((u8|s8|u16|s16|u32|s32) \*\)\(\(unsigned char \*\)\(\(DisplayActor44 \*\)D_8011ECD0\) \+ \((\d+)\)\)")
+DISP_OFF_RE = re.compile(r"\*\((u8|s8|u16|s16|u32|s32) \*\)\(\(unsigned char \*\)\(\(OptActor44 \*\)D_8011ECD0\) \+ \((\d+)\)\)")
 
 
 def display_offsets(body):
-    """`*(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6535))` is record 96's field."""
-    t = TYPES.get("DisplayActor44")
+    """`*(u8 *)((unsigned char *)((OptActor44 *)D_8011ECD0) + (6535))` is record 96's field."""
+    t = TYPES.get("OptActor44")
 
     def repl(m):
         ctype, n = m.group(1), int(m.group(2))
@@ -318,7 +318,7 @@ def display_offsets(body):
         path, lt = leaf_at(t, r, SIZES[ctype])
         if path is None:
             return m.group(0)
-        expr = "((DisplayActor44 *)D_8011ECD0)[%d]%s" % (k, path)
+        expr = "((OptActor44 *)D_8011ECD0)[%d]%s" % (k, path)
         store = re.match(r"\s*=(?!=)", m.string[m.end():]) is not None
         if lt.name == ctype or (store and lt.kind == "scalar" and lt.size == SIZES[ctype]):
             return expr
@@ -345,7 +345,7 @@ def record_temps(body):
             if m:
                 body = re.sub(r"^(\s+)%s = %s \+ %s;$" % (var, sym, lo), r"\1%s = &%s[%s];" % (var, sym, m.group(1)),
                               body, flags=re.M)
-        view = "((DisplayActor44 *)D_8011ECD0)" if sym == "D_8011ECD0" else sym
+        view = "((OptActor44 *)D_8011ECD0)" if sym == "D_8011ECD0" else sym
         byte_form = "(%s *)((u8 *)%s + " % (tname, sym)
         ptrs = set(re.findall(r"^\s+(\w+) = &%s\[" % re.escape(view), body, re.M))
         ptrs |= set(re.findall(r"^\s+(\w+) = %s" % re.escape(byte_form), body, re.M))
@@ -438,11 +438,22 @@ def pointer_steps(body):
 
 # ------------------------------------------------------------------------------------------ menu arrays (T-17800)
 
-MENU_RE = re.compile(r"\bmenu_set\(([^,()]+), ([^,()]+), ((?:&sp[0-9A-F]+(?:\[0\])?(?:, )?){4})\)")
+MENU_RE = re.compile(r"\b(?:menu_set|func_8004F870)\(([^,()]+), ([^,()]+), ((?:&sp[0-9A-F]+(?:\[0\])?(?:, )?){4})\)")
 
 
 def menu_arrays(body):
     """The four row arrays of a menu_set call as s16 arrays (or one Arrs4x8 filled by func_801325A0)."""
+    # m2c already typed the local from func_801325A0's prototype: write the rows, not their first elements
+    for sp in re.findall(r"^\s+Arrs4x8 (sp[0-9A-F]+);$", body, re.M):
+        body = re.sub(r"&%s\.([abcd])\[0\]" % sp, r"%s.\1" % sp, body)
+        body = re.sub(r"(\b(?:menu_set|func_8004F870)\([^,()]+, [^,()]+, )&%s, " % sp, r"\g<1>%s.a, " % sp, body)
+        body = re.sub(r"(?:\(s16\) )?\b%s\b(?![.\[])(?=[,;)])" % sp, "%s.a[0]" % sp, body)
+        body = body.replace("func_801325A0(&%s.a[0])" % sp, "func_801325A0(&%s)" % sp)
+        body = body.replace("Arrs4x8 %s.a[0];" % sp, "Arrs4x8 %s;" % sp)
+        # m2c reads row a as structs (`.a[i].unk0`) and the other rows as byte offsets from it
+        body = re.sub(r"\b%s\.a\[([^\[\]]+)\]\.unk0\b" % sp, r"%s.a[\1]" % sp, body)
+        body = re.sub(r"\*\(s16 \*\)\(\(unsigned char \*\)\(&%s\.a\[([^\[\]]+)\]\) \+ \((16|32|48)\)\)" % sp,
+                      lambda k: "%s.%s[%s]" % (sp, "xbcd"[int(k.group(2)) // 16], k.group(1)), body)
     m = MENU_RE.search(body)
     if not m:
         return body
@@ -463,7 +474,7 @@ def menu_arrays(body):
         head = re.search(r"\)\s*\{\n", body)
         body = body[:head.end()] + "    Arrs4x8 %s;\n" % sp + body[head.end():]
         body = re.sub(r"\bfunc_801325A0\((?:\([^()]*\) )?&%s(?:\[0\])?\)" % sp, "func_801325A0(&%s)" % sp, body)
-        body = MENU_RE.sub(lambda k: "menu_set(%s, %s, %s.a, %s.b, %s.c, %s.d)" % (k.group(1), k.group(2), sp, sp, sp, sp),
+        body = MENU_RE.sub(lambda k: "func_8004F870(%s, %s, %s.a, %s.b, %s.c, %s.d)" % (k.group(1), k.group(2), sp, sp, sp, sp),
                            body, count=1)
         return body
     if gap <= 0 or gap % 2:
@@ -532,8 +543,45 @@ def pre_rewrites(body, log=None):
     return new
 
 
+RAW_RE = re.compile(r"\*\((void|u8|s8|u16|s16|u32|s32) \*\)0x(8011[EF][0-9A-F]{3}|8012[01][0-9A-F]{3})\b(\s*=\s*\((u8|s8|u16|s16|u32|s32)\))?")
+
+
+def raw_display(body):
+    """T-17800: `*(void *)0x80120653 = (u8) ...` (a folded label m2c printed as a number) is a record field."""
+    t = TYPES.get("OptActor44")
+    if t is None:
+        return body
+
+    def repl(m):
+        ctype = m.group(1) if m.group(1) != "void" else m.group(4)
+        n = int(m.group(2), 16) - DISPLAY[0]
+        if ctype is None or not (0 <= n < DISPLAY[1]):
+            return m.group(0)
+        k, r = divmod(n, t.size)
+        path, lt = leaf_at(t, r, SIZES[ctype])
+        tail = m.group(3) or ""
+        if path is None:
+            return "*(%s *)&D_8011ECD0[0x%X]%s" % (ctype, n, tail)
+        expr = "((OptActor44 *)D_8011ECD0)[%d]%s" % (k, path)
+        return (expr if lt.name == ctype else "*(%s *)&%s" % (ctype, expr)) + tail
+    return RAW_RE.sub(repl, body)
+
+
+PROTO_RE = re.compile(r"^(s32|u8|s8|u16|s16|u32) (func_[0-9A-F]{8})\(void\);$", re.M)
+
+
+def return_type(body):
+    """T-17800: m2c prints `void` for an `s32 f(void)` of the header that falls off its end."""
+    m = re.match(r"void (func_[0-9A-F]{8})\(void\) \{", body)
+    if m:
+        for rt, name in PROTO_RE.findall(mg.read(HEADER)):
+            if name == m.group(1):
+                return rt + body[4:]
+    return body
+
+
 def typed_rewrites(body, known, log=None):
-    for name, fn in (("menu-arrays", menu_arrays), ("record-temp", record_temps), ("actor-offset", actor_offsets),
+    for name, fn in (("raw-display", raw_display), ("return-type", return_type), ("menu-arrays", menu_arrays), ("record-temp", record_temps), ("actor-offset", actor_offsets),
                      ("pointer-step", pointer_steps)):
         new = fn(body)
         if new != body and log is not None:
@@ -559,7 +607,7 @@ def install_typed(applied):
     def build_context(root, heads, out_path, *a, **k):
         orig_ctx(root, heads, out_path, *a, **k)
         s = open(out_path).read()
-        s = re.sub(r"\bextern\s+u8\s+D_8011ECD0\s*\[\s*\]\s*;", "", s) + "\nextern DisplayActor44 D_8011ECD0[];\n"
+        s = re.sub(r"\bextern\s+u8\s+D_8011ECD0\s*\[\s*\]\s*;", "", s) + "\nextern OptActor44 D_8011ECD0[];\n"
         open(out_path, "w").write(s)
     m2c.build_context = build_context
     orig_split = m2c.split_draft
