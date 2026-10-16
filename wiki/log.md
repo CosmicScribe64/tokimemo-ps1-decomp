@@ -15591,3 +15591,7 @@ Clean build 27/27 (all unit sha1 OK, TACO `1419e93c...`), `check_headers`, `migr
 ## [2026-10-16] ticket | T-19012 In Review
 
 [[tickets/T-19012-w3-d-p12]] In Progress to In Review: 2 of 3 functions matched (928 bytes). Clean rebuild, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Review pending.
+
+## [2026-10-16] ticket | T-19012 Done
+
+[[tickets/T-19012-w3-d-p12]] In Review to Done: code review against `CODING_STANDARDS.md` found one documentation issue (the Goal listed `func_80134628` as 692 B, correct 648 B), fixed. 2 of 3 functions matched (928 bytes): OMIMAI `func_80132670` (one `FAKE`) and `func_80134628` in plain C; `func_8013388C` stays `INCLUDE_ASM` with its typed draft in `drafts/T-19012/OMIMAI/func_8013388C/`. Merge via the wave 3 merge script.
