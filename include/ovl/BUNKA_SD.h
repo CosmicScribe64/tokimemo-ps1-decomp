@@ -147,7 +147,6 @@ void func_801364B4(void);
 void func_801364F0(void);
 void func_801363BC(void);
 
-
 /* T-12090: typed display setup data and pending dispatcher callees. */
 void func_80139290(void);
 void func_80132FF0(void);
@@ -160,7 +159,6 @@ extern u8 *D_8013D9C0;
 extern u8 *D_8013D9C4;
 extern u8 *D_8013D9C8;
 extern u8 *D_8013D9CC;
-
 
 /* T-18100: scene scripts. The three scenes (A: 80133540.c, B: 801369D0.c, C: 80137B40.c) each
  * keep a table of event lists, one list per script, and a table of the text each script opens with
