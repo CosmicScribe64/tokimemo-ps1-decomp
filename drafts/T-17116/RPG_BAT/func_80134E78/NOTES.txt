@@ -1,0 +1,13 @@
+T-17116, RPG_BAT func_80134E78 (1,268 bytes), about 128 differing rows of 312 in the full-unit diff (opcodes 99 percent, 4
+instructions more in the original than in the draft).
+Needs declarations.h in the overlay header (the 20 extern s32 words D_8015EC9C..D_8015ED08, separate symbols: the original uses
+one lui at per store) and D_8015EC68/D_8015EC6C/D_801215FD/D_80121685 as scalars, not the RpgRec18 or DisplayActor44 views.
+Two open problems, both in the first third of the function:
+1. The original keeps one li a1,0x300 for the store to D_8015EC74 and the first func_8013E97C argument (store, then the call
+   reads the global back). IDO emits two li (a t register for the store, a1 for the argument), which moves every later
+   ugen temporary (t3, t4 ...) one register up: this is the known "constant stored and passed" gap (matching-notes
+   T-0018 list; D_8015EC74 = 0x300 then f(0x32, D_8015EC74), f(0x32, D_8015EC74 = 0x300), a local v do not change it).
+2. addiu v1,v0,16 / addiu t6,v1,784 / addiu t7,v1,-368: the original does not fold (v0 + 16) + 784. The draft folds it to
+   v0 + 800 / v0 - 352 for temp_v1 = temp_v0 + 0x10, expression-level forms, order swaps, "temp_v0 * 1 + 0x10".
+Also: the original has its own li 3 in the then branch of the flag test (D_80121685) besides the hoisted one for the else
+branch; the draft shares one li t1,3.
