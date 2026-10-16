@@ -5699,3 +5699,13 @@ Closer pass (Opus, about 25 minutes of exploring, 06:05-06:30 UTC): `func_80137D
 - ugen loads the shared value straight into the register variable (`lui t9; lw v1,lo(t9)`, the original's form) in two cases only: the variable is read after a branch target (TT `func_801367C0`), or it has at least three in-place `p += k` updates in the same stretch (TT `func_80149B20`; two updates are not enough). A label that no branch targets, as from `do { } while (0)`, does not count.
 - The in-place form (`p[5] = 0x28; p += 11; *p = 0xFF00; p += 7; ...`) puts the pointer in `$v1` with the original's stores, but ugen writes back the last update before the switch join (`addiu v1,v1,64`, or `addiu v1,v1,0` when the walk returns to the base), one instruction too many. The last row (`addiu t9,t8,-1` against `t0`) also stays, because the address temporary `$t9` is freed only after `$t0` in both forms; the original frees it first.
 - Also tried without effect: the store order `p[11]` before `p[5]`, a 14-byte record struct with the base at +8, `(p = D_801FAA84)[5] = ...`, a chained `=` for the four `0xFF00` stores, a `const` global without a local (reloaded after each store), labels before or after the stores, autotweak 120 s (16 to 16).
+
+## RPG_BAT types-first pass (T-17100)
+
+Details and the type map in [[rpg-bat-family-results]]. Four matches from the redraft (`func_80157640`, `func_8014F88C`, `func_801525B0`, `func_801498C0`, 3,168 bytes):
+
+- `switch (x) { default: case 0: ...` when m2c prints `default:` first and the range check jumps to the arm of jump-table slot 0 (`func_801498C0`).
+- Read a global again where m2c kept a temp: the second switch on `D_8015EE00.unk_04` (`func_8014F88C`), the second test of `D_8015EB98` (`func_801525B0`), `D_8015EDE0 += 1; if (D_8015EDE0 >= 0x21)` (`func_80157640`; the temp moved the promoted global to `$a3`).
+- A `b` to the next label after a then-block is an `else` whose single assignment IDO moved into the branch delay slot (`func_801525B0`).
+- `func_8015A8B4`: m2c printed the after-loop store of the last `unk_26` as a read of record `i + 1`; a loop-carried local (`last = ...` in the loop, the store after it) gives the original's `move a0, v1`.
+
