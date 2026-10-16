@@ -418,7 +418,9 @@ void func_80150120(void);
 #ifndef OVL_RPG_ASSET_WORDS_T9720
 #define OVL_RPG_ASSET_WORDS_T9720
 /* Word values copied into 0x44-byte draw records by func_8013E54C. */
+#ifndef RPG_BAT_OVERRIDE_D_8015EE8C
 extern s32 D_8015EE8C;
+#endif
 extern s32 D_8015EE90;
 extern s32 D_8015EE9C;
 extern s32 D_8015EEA0;
