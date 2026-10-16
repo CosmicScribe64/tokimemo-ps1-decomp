@@ -361,8 +361,9 @@ void func_80140ADC(Tc14 *arg0, s32 arg1) {
             poly->b0 = 0x80;
             poly->tpage = func_8009ECB0(1, 1, 0x3C0, 0x100);
             poly->clut = func_8009ED74(0x100, 0x1F8);
-            /* One line, as the expansion of setUVWH(poly, side << 5, 0x60, 0x20, 0x20): as1 schedules
-             * the eight stores of one line together, and the macro's order gives the sum its register. T-19014 */
+            /* FAKE: hand expansion of the PsyQ macro setUVWH(poly, side << 5, 0x60, 0x20, 0x20), which
+             * include/libgpu.h lacks, on one line: as1 schedules the eight stores of one line together, and
+             * the macro's store order gives the sum its register. T-19014 */
             poly->u0 = side << 5, poly->v0 = 0x60, poly->u1 = (side << 5) + 0x20, poly->v1 = 0x60, poly->u2 = side << 5, poly->v2 = 0x60 + 0x20, poly->u3 = (side << 5) + 0x20, poly->v3 = 0x60 + 0x20;
             poly->x0 = ((s16 *)pt)[0];
             poly->y0 = ((s16 *)pt)[1];
