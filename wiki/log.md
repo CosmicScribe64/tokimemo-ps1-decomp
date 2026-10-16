@@ -14964,3 +14964,7 @@ functions matched (5,072 bytes), no blocking findings. One fix: section 8a of `C
 ## [2026-10-16] ticket | T-11670 Done
 
 [[tickets/T-11670-w1-main-8006cb30]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 functions matched in `src/main/8006CB30.c` (`_schedule_init`, `geko_judge`, `schedule_girls_gakko`, `func_8006EA40`). Review fixes: `FAKE` note on the `geko_judge` frame buffers, line counts on the two T-10880 guards. Build in the worktree: globals OK, headers OK, unit sha1 OK.
+
+## [2026-10-16] ticket | T-16520 matched-sibling report started
+
+[[tickets/T-16520-sibling-report]] (In Progress, under [[tickets/T-16200-matching-wave-2]]): new tool `tools/siblings.py` finds the closest matched functions for every unmatched one by register-erased opcode similarity, plus unmatched-unmatched clusters, and writes per-target sibling notes for work packages. Branch `t16520-siblings`. No `src/` edits.
