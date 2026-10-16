@@ -24,7 +24,30 @@ void func_801480B0(void) {
     func_80133374();
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_80148184);
+void func_80148184(void) {
+    s32 i;
+
+    if (D_8015EDBC == 0) {
+        D_8015EDBC = 0x20;
+        func_80143730(0x80162000, 0xE);
+        func_80143730(0x80172000, 0xC);
+        func_8014866C();
+        func_80146D60(0);
+        func_801471D0(0x8018D000);
+        /* pointer argument: as an int constant it is shared with the func_80143730 argument in a callee-saved register */
+        load_csr_tp((void *)0x80162000, 8, 1, 0, 0, 0x100, 0x100);
+        func_80146F74(0, D_8015EDB4->unk74 - 0xBB8, D_8015EDB4->unk76 + 0x3E8, -0x109A0, 0, 0xBE, 0, 0, 0);
+        for (i = 1; i < 0x1F; i++) {
+            func_801472D4(i, 0, D_8015F840[i - 1].a, D_8015F840[i - 1].b, D_8015F930[i - 1].a, D_8015F930[i - 1].b);
+            D_80127080[i].unk0 = 0;
+        }
+        D_80128880[0].x = 0;
+        D_80128880[0].y = 0xBE;
+        D_80128880[0].z = 0;
+        func_80148B58(0);
+        func_8004284C();
+    }
+}
 
 void func_80148308(void) {
     s32 i;
@@ -66,7 +89,47 @@ void func_801483B0(void) {
     D_800E6280.unk_1104.w += 1;
 }
 
+/* NON_MATCHING: T-19013, 6 differing lines; the original ends the counter's register range at the first call (raw load in $v0, copy in $t0) and re-reads it at the end with plain `lui t2; lw t2` / `lui at; sw t3` code.
+ * The volatile access below keeps the last block out of the range (temporaries $t2/$t3, nop delay slots and size right), but IDO builds its address as `lui v0; addiu v0,%lo(D_800E6280)` with the offset 0x1104 in the lw and sw (rows 90-95).
+ * The first spill stores $v0 instead of $t0 (row 15) in every spelling tried: copy local, `.u` read, `register`, `(t = ...)` in the if, fewer chain tests, store-back after the read.
+ * Only a separate symbol for the counter gives both direct accesses (see func_8014616C, T-19002); migrate_globals has no keep line for it. */
+#ifdef NON_MATCHING
+void func_801484E4(void) {
+    s32 pad[2]; /* FAKE: reserves the 8 bytes of frame the original has below the spill slot; real local unknown. T-19013 */
+    s32 t;
+    u8 a;
+    u8 b;
+    s32 i;
+
+    t = D_800E6280.unk_1104.w;
+    if (t < 0x78) {
+        if (t % 60 == 0) {
+            func_801335A0(0, 0x508);
+        }
+        func_80147E80(0);
+    }
+    if (t == 0x64) {
+        for (i = 1; i < 0x1F; i++) D_80127080[i].unk0 = 0x80000000;
+    }
+    if (t < 0x78) {
+        func_80153E78(1, 0xE0, 0xE0, 0xE0);
+    } else if (t >= 0x78 && t < 0xB0) {
+        a = 0x2C0 - t * 4;
+        func_80153E78(1, a, a, a);
+    } else if (t >= 0xB0 && t < 0xF0) {
+        b = t * 4 - 0x2C0;
+        func_80153E78(2, b, b, b);
+    } else if (t == 0xF0) {
+        func_80143730(0x80162000, 0xE);
+        func_80143730(0x80172000, 0xC);
+        func_80042908(0x15);
+    }
+    /* FAKE: the volatile access keeps this block out of the counter's register range (the original has plain ugen code here); real source unknown. T-19013 */
+    *(volatile s32 *)&D_800E6280.unk_1104.w += 1;
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_801484E4);
+#endif
 
 void func_8014866C(void) {
     D_80122760 = -0x64;
@@ -94,7 +157,60 @@ void func_8014866C(void) {
     func_8009B340(0);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_801487A4);
+/* arg2: 8-byte position records of four s16; arg3, arg4: byte pairs, all indexed by arg1. The s16 index `arg1 * 4 + k` is a two-step scaling (the original's extra ugen temporary, T-19013); the index-first sums for arg3 and arg4 set the operand order. */
+void func_801487A4(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4) {
+    u8 st;
+    MATRIX m;
+    SVECTOR vec;
+    SVECTOR rot;
+    s32 sel;
+    s32 px;
+    s32 py;
+
+    sel = arg1 + 0x10;
+    if (D_8015EDB4[17].unk2 == 1) {
+        px = ((s16 *)arg2)[arg1 * 4];
+        py = ((s16 *)arg2)[arg1 * 4 + 1];
+        D_8015EDB4[sel].unk84[0] = *(arg1 * 2 + (u8 *)arg3);
+        if (arg0 == 0x1C && D_8015EDB4[16].unk84[2] == 1) {
+            D_8015EDB4[sel].unk84[0] = *(arg1 * 2 + (u8 *)arg3 + 1);
+        }
+        if ((arg0 == 0x1C || arg0 == 0x1B || arg0 == 0x15) && D_8015EDB4[21].unk84[2] == 1) {
+            D_8015EDB4[sel].unk84[0] = *(arg1 * 2 + (u8 *)arg3 + 1);
+        }
+    } else if (D_8015EDB4[17].unk2 == 0x1D) {
+        px = ((s16 *)arg2)[arg1 * 4 + 2];
+        py = ((s16 *)arg2)[arg1 * 4 + 3];
+        D_8015EDB4[sel].unk84[0] = *(arg1 * 2 + (u8 *)arg3 + 1);
+        if ((arg0 == 0x1B || arg0 == 0x1C) && D_8015EDB4[22].unk84[2] != 0 && D_8015EDB4[23].unk84[2] == 0) {
+            D_8015EDB4[sel].unk84[0] = 0;
+        }
+    }
+    m = *(MATRIX *)D_80125C60;
+    func_8015D0D0((D_80128880[0].x << 12) / 360, &m);
+    func_8015CF30((D_80128880[0].z << 12) / 360, &m);
+    func_8015D270((D_80128880[0].y << 12) / 360, &m);
+    vec.vx = D_80127480[arg0].unk18;
+    vec.vy = D_80127480[arg0].unk1C;
+    vec.vz = D_80127480[arg0].unk20;
+    func_800A0ECC(&m, &vec, &rot);
+    D_8015EDB4[sel].unk74 = D_80127480[0].unk18 + rot.vx + px;
+    D_8015EDB4[sel].unk76 = D_80127480[0].unk1C + rot.vy + py;
+    D_8015EDB4[sel].unk78 = D_80127480[0].unk20 + rot.vz;
+    st = (sel + D_8015EDB4)->unk84[1];
+    if (st < 0x15U && (sel + D_8015EDB4)->unk82 < (sel + D_8015EDB4)->unk7A) {
+        (sel + D_8015EDB4)->unk84[1] = *(arg1 * 2 + (u8 *)arg4);
+        (sel + D_8015EDB4)->unk82 += 1;
+        st = D_8015EDB4[sel].unk84[1];
+    }
+    if (st == 0) {
+        if ((D_800E6280.unk_1104.w & 1) == 0) {
+            D_80127080[arg0].unk0 = 0x40000000;
+        } else {
+            D_80127080[arg0].unk0 = 0x80000000;
+        }
+    }
+}
 
 void func_80148B58(s32 arg0) {
     s32 index;

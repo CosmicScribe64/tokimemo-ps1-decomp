@@ -15729,3 +15729,22 @@ Opened [[tickets/T-18100-types-first-bunka_sd]] (In Progress) on branch `w3-bunk
 
 ## [2026-10-16] ticket | T-19014 Done
 [[tickets/T-19014-w3-d-p14]] reviewed against `CODING_STANDARDS.md` and moved to Done: 5 functions matched (2,848 bytes: TACO `func_801404FC`, `func_80140364`, `func_8013F9C0`, `func_801407D4`, `func_80140ADC`), nothing left guarded. One review finding in `src/ovl/TACO/8013F250.c`, fixed: the hand-expanded `setUVWH` line in `func_80140ADC` had a plain comment and now starts with `FAKE` (comment only; TACO.bin SHA1 OK, globals and headers OK).
+
+## [2026-10-16] ticket | T-19013 In Progress
+
+[[tickets/T-19013-w3-d-p13]] started: wave 3 package w3-d-p13 in worktree `w3-d-p13` (from `w2-good`), TACO `src/ovl/TACO/801480B0.c`: `func_80148184`, `func_801484E4`, `func_801487A4`.
+
+## [2026-10-16] ticket | T-19013 In Review
+
+[[tickets/T-19013-w3-d-p13]] In Progress to In Review: wave 3 package w3-d-p13 (TACO `src/ovl/TACO/801480B0.c`), 1 of 3 functions matched (388 bytes). `func_80148184` matched in plain C (`TcPair8 D_8015F840[]`, `TcPair2 D_8015F930[]`, `(void *)` on the later `0x80162000`); `func_801484E4` guarded at 10 rows (FAKE `pad[2]`, absolute final counter read, counter-web family of T-19002); `func_801487A4` back to `INCLUDE_ASM` with the typed draft in `drafts/T-19013/TACO/func_801487A4/` (237 of 237 instructions, 140 register rows, ugen temporary rotation one step off). Notes in [[matching-notes]] ("T-19013"), rows in [[data/t0018-cases]], cheat sheet rows in [[register-cheatsheet]], [[taco-family-results]]. Branch `w3-d-p13`, commits `T-19013: match TACO:func_80148184` and `T-19013: guard TACO:func_801484E4 (10 lines), archive func_801487A4 typed draft`.
+
+## [2026-10-16] ticket | T-19013 closer: func_801487A4 matched
+
+[[tickets/T-19013-w3-d-p13]]: `func_801487A4` (948 bytes) matched in plain C, commit `T-19013: match TACO:func_801487A4`. The register rotation miss (140 rows) was one ugen temporary; indexing the 8-byte records as `((s16 *)arg2)[arg1 * 4 + k]` consumes it, `*(arg1 * 2 + (u8 *)arg4)` fixed the last 8 rows. The ticket now counts 2 of 3 matched (1,336 bytes); `drafts/T-19013/` removed, [[register-cheatsheet]], [[matching-notes]] ("T-19013"), [[data/t0018-cases]] and [[taco-family-results]] updated.
+
+## [2026-10-16] build | T-19013 closer pass on func_801484E4
+Opus closer pass on [[tickets/T-19013-w3-d-p13]] (branch w3-d-p13): no new match. TACO `func_801484E4` in `src/ovl/TACO/801480B0.c` goes from 10 to 6 differing rows. The final increment is now a volatile access through `&D_800E6280` (FAKE, replaces the absolute read). It keeps the last block out of the counter's register range, with the right temporaries, delay slots and size. Left: the address form (`lui; addiu` plus 0x1104) and the first spill register (`$v0` for `$t0`). autotweak 120 s: none. The evidence points to a separate symbol, which has no `keep` evidence. Notes in [[matching-notes]], [[register-cheatsheet]], [[data/t0018-cases]] and [[taco-family-results]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19013 Done
+
+[[tickets/T-19013-w3-d-p13]] In Review to Done after the code review: wave 3 package w3-d-p13 (TACO `src/ovl/TACO/801480B0.c`), 2 of 3 functions matched (1,336 bytes: `func_80148184` 388, `func_801487A4` 948, both plain C), `func_801484E4` guarded at 6 rows (counter web, FAKE `pad[2]` and FAKE volatile final increment, ticketed). No findings in code; two stale wiki lines (index, [[matching-notes]]) fixed. TACO SHA1 OK, headers, globals and proto checks OK.
