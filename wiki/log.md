@@ -15764,3 +15764,7 @@ Created [[tickets/T-18300-types-first-ending]] (wave 3, [[tickets/T-16990-wave-3
 ## [2026-10-16] ticket | T-18300 Done
 
 [[tickets/T-18300-types-first-ending]] In Review to Done: code review against `CODING_STANDARDS.md` found 1 minor item (the FAKE note of `func_80132F18` did not start its comment), fixed in comments only; ENDING sha1 OK, headers OK. 1 function matched (280 bytes). Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-18500 Types-first: BUNKAKEN, In Progress
+
+Created [[tickets/T-18500-types-first-bunkaken]] (branch `w3-bunkaken-types` from `w2-good`), In Progress: survey BUNKAKEN's types, declare them in `include/ovl/BUNKAKEN.h`, redraft every unmatched function into `drafts/T-18500/`, cut packages. Card in [[kanban]], line in [[index]].
