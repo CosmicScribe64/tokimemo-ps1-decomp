@@ -15098,3 +15098,10 @@ blockers in [[tickets/T-16200-matching-wave-2]].
 ## [2026-10-16] ticket | T-16530 Done
 
 [[tickets/T-16530-proto-override]] reviewed against `CODING_STANDARDS.md` and moved to Done. No change under `src/`, `include/` or `drafts/`; 50 new tests and the full tool suite pass in Docker; `tools/funcdiff.py` and `tools/regdiff.py` run with `--proto` on RPG_BAT `func_801454F0` (MATCH with `s32`, DIFF with `void`, refusals checked). One fix: an unused import in `tools/test_protoverride.py`.
+
+## [2026-10-16] build | Tooling round T-16500..T-16530 merged; two matches
+
+Merged [[tickets/T-16500-twin-sweep]], [[tickets/T-16510-m2c-defect-rewrites]], [[tickets/T-16520-sibling-report]]
+and [[tickets/T-16530-proto-override]] into `w2-int` (each clean 27/27; tool suite 1,184 tests OK). The whole-tree twin
+sweep matched TAIIKU `func_801406A8` (144 bytes); the defect-rewrite follow-up matched GEKO `func_801327AC` (672
+bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,958, 1,484,732 bytes (65.1%).
