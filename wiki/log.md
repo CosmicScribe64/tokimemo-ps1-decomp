@@ -16329,3 +16329,7 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17112 In Review
 
 [[tickets/T-17112-w3-rpg-bat-p12]] In Progress to In Review: wave 3 package w3-rpg-bat-p12 (RPG_BAT `src/ovl/RPG_BAT/801525B0.c`), 3 of 4 functions matched (2,672 bytes): `func_80154220`, `func_80153F3C`, `func_801529B4`; `func_80153784` stays a guarded draft at 19 differing lines (case 1 load schedule). Unary-minus offset (`-D * 0xF0 + 0xF0`), same-line pairs for the RECT and table stores, a compare switch with stacked labels and a guarded jump table, a 2 + 48 word clear; `D_80120E93` is `u8` in `include/main_api.h`. Notes in [[matching-notes]] (section T-17112), eight rows in [[register-cheatsheet]], one row in [[data/t0018-cases]], section in [[rpg-bat-family-results]]. Awaiting code review.
+
+## [2026-10-16] build | T-17112 closer pass
+
+[[tickets/T-17112-w3-rpg-bat-p12]] closer pass (Opus): RPG_BAT `func_80153784` matched in plain C (732 bytes, commit `86f57b06`; package now 4 of 4, 3,404 bytes). The case 1 schedule was as1 alias order: every access to `D_8015EC40` and `D_8015ED28`..`D_8015ED38` goes through the `D_8015EC38` symbol (FAKE first-symbol views, aggregate not recovered), so the loads stay above the `D_8015EC38` store and the `D_8015ED30` `lui` fills the `D_8015EC40` load delay; the case 0 `D_8015ED28` store needs the same view. Notes in [[matching-notes]] (section T-17112), a row in [[register-cheatsheet]], an update line in [[data/t0018-cases]], [[rpg-bat-family-results]]. Ticket stays In Review.
