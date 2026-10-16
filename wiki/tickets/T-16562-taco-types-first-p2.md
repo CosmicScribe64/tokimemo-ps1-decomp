@@ -1,7 +1,7 @@
 ---
 id: T-16562
 title: "Types-first pilot package pt-taco-p2"
-status: In Review
+status: Done
 assignee: claude (pt-taco-p2)
 created: 2026-10-16
 updated: 2026-10-16
@@ -40,3 +40,7 @@ All four guarded near misses now match in plain C (unit sha1 OK), each in its ow
 - `func_801345D4`: reading the flag test through the same base as the else path's byte read-modify-write (`TcSave` view of `D_800E7D10`, word at +0x40) keeps `&D_800E7D10` in `$v0`; a follow-up commit replaced the byte-offset casts with that one view (same bytes).
 - Lead for later: TACO `func_801471D0` (other file) has the same as1 shape before its second loop.
 Details: [[matching-notes]], "T-16562", "Closer pass"; [[register-cheatsheet]] (two rows); [[data/t0018-cases]] (update paragraph).
+
+### Review (2026-10-16)
+
+Reviewed `w2-good...pt-taco-p2` against `CODING_STANDARDS.md` (checklist, section 13). No findings. Checked: only the three owned C files changed (`80154230.c`, `801430B0.c`, `80133870.c`) plus `include/ovl/TACO.h` and wiki pages; no `drafts/` archive touched; no inline asm, `.word`, `//` comments or non-ASCII text; no `NON_MATCHING` guard left (only `func_80133E98` stays `INCLUDE_ASM`); the one fakematch (`sprite->w`/`h` on one line in `func_801432F0`) carries `FAKE` and the ticket; the `TcSave` view of `D_800E7D10` in `80133870.c` is explained in its comment, with bit-fields only where the load widths need them; new `TACO.h` declarations match the definitions; no game data, asm or binaries added. Rebuild in the worktree: `TACO.bin: OK`, `headers OK`, `globals OK`, `sync_protos --check-branch` OK. 11 TACO functions matched (4,728 bytes).
