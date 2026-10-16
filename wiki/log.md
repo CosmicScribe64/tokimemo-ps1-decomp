@@ -16113,3 +16113,11 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 ## [2026-10-16] ticket | T-17205 In Progress
 
 [[tickets/T-17205-w3-date-p05]] started: wave 3 package w3-date-p05 (DATE `src/ovl/DATE/80149310.c`, `src/ovl/DATE/801552B0.c`; `func_80149F48`, `func_80155E40`, `func_801560E0`, `func_801556D8`, `func_801496C4`), worktree `w3-date-p05` from `w2-good`.
+
+## [2026-10-16] ticket | T-17205 In Review
+
+[[tickets/T-17205-w3-date-p05]] In Progress to In Review: 4 of 5 functions matched (DATE `func_801496C4`, `func_801556D8`, `func_801560E0`, `func_80155E40`, 2,960 bytes), `func_80149F48` stays guarded at 11 lines. New types `DateMover44`, `DateFix32` and the arrays `D_8015F9A0`/`D_8015F9A8` in `include/ovl/DATE.h`; sources `src/ovl/DATE/80149310.c`, `src/ovl/DATE/801552B0.c`. Notes in [[matching-notes]] ("T-17205"), [[date-family-results]], [[register-cheatsheet]] and [[data/t0018-cases]]. Clean-build and header checks are recorded in the ticket.
+
+## [2026-10-16] build | T-17205 final checks
+
+[[tickets/T-17205-w3-date-p05]]: clean rebuild 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` pass on branch `w3-date-p05`; 4 of 5 functions matched, `src/ovl/DATE/80149310.c` keeps `func_80149F48` guarded at 11 lines.
