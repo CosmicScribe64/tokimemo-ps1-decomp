@@ -5732,3 +5732,16 @@ Details and the type map in [[rpg-bat-family-results]]. Four matches from the re
 - A `b` to the next label after a then-block is an `else` whose single assignment IDO moved into the branch delay slot (`func_801525B0`).
 - `func_8015A8B4`: m2c printed the after-loop store of the last `unk_26` as a read of record `i + 1`; a loop-carried local (`last = ...` in the loop, the store after it) gives the original's `move a0, v1`.
 
+## T-17400: EVENT types-first pass
+
+Details in [[event-family-results]] ("Types-first pass (T-17400)"). Matched: EVENT `func_800FF320` and
+`func_80104C3C` (ports of DATE clones), `func_800FF61C` (typed redraft, step-table shape), `func_8010AE7C` (port
+of GEKO `func_80141760`); 4 functions, 1,416 bytes.
+
+- EVENT step handlers read the step from `D_800B1AF6`, not `GameState.unk_110A`; the DATE shapes port with that
+  swap and the extra `func_80078950("%d\n", ...)` debug print.
+- Chained stores: IDO stores the innermost target first. In EVENT `func_800FD00C` the order `30E, 30D, 30C, 02F`
+  comes from `D_800EB02F = D_800EC30C = D_800EC30D = D_800EC30E = v;`.
+- `func_8010F340`: display-record stores through one base (`*(s32 *)(D_800E9620 + 0x874) |= ...`) are 25 rows
+  closer than the splat scalars (`D_800E9E94`); same in DATE's `func_80144720`.
+

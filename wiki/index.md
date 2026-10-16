@@ -26,7 +26,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-19001-w3-d-p01|T-19001]] Wave 3 package w3-d-p01: TAIIKU `80140810.c`, `func_80140A90` stays guarded (33 instructions); block-copy temporary rule measured, looks like a ugen difference (Done).
-- [[tickets/T-17400-types-first-event|T-17400]] Types-first: EVENT: shared types in `EVENT.h`, redraft of the 40 unmatched functions, packages (In Progress).
+- [[tickets/T-17400-types-first-event|T-17400]] Types-first: EVENT: 90 step tables (`FnTblNN`) and 12 stack tables typed in `EVENT.h`, 38 redrafts (9 better than the census), 4 matches / 1,416 bytes, packages T-17401..T-17407 (In Review).
 - [[tickets/T-17200-types-first-date|T-17200]] Types-first: DATE: 68 step tables (`FnTblNN`) and 10 stack tables typed in `DATE.h`, 49 redrafts (7 better than the census), 4 matches / 1,760 bytes, packages T-17201..T-17208 (Done).
 - [[tickets/T-17100-types-first-rpg_bat|T-17100]] Types-first: RPG_BAT: stack-table types and `RpgStat` fields, 74 redrafts (20 better than the census), 4 matches / 3,168 bytes, packages T-17101..T-17119 (In Review).
 - [[tickets/T-16990-wave-3-conveyor|T-16990]] Wave 3 conveyor: types-first passes on 19 units feeding a 7-worker matcher pool (In Progress).
@@ -369,7 +369,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13300-rpg-families|T-13300]] RPG_BAT source-family diagnostics (In Review; zero accepted bytes).
 - [[tickets/T-13203-event-particle-family|T-13203]] Particle initialization family experiment.
 
-- [[event-family-results]] GYOZI/SHOUGATU bounded family transfer:3 functions /3424 literal bytes, failed-probe ledger and review.
+- [[event-family-results]] GYOZI/SHOUGATU bounded family transfer:3 functions /3424 literal bytes, failed-probe ledger and review; EVENT overlay types-first pass (step tables, stack tables, redraft numbers, near misses, packages; T-17400).
 - [[tickets/T-13103-etc-memory-card-family|T-13103]] ETC memory-card state family.
 
 - [[etc-family-results]]: eleven ETC matches / 5900 literal bytes, positive and negative transfer evidence.

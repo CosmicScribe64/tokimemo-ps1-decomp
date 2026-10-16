@@ -15432,3 +15432,7 @@ Opened [[tickets/T-17100-types-first-rpg_bat]] (In Progress) under [[tickets/T-1
 ## [2026-10-16] ticket | T-17400 Types-first: EVENT started
 
 Opened [[tickets/T-17400-types-first-event]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover EVENT's shared types, redraft its 40 unmatched functions with the T-16550/T-16560/T-17200 drivers, then cut packages. Branch `w3-event-types` from `w2-good`.
+
+## [2026-10-16] ticket | T-17400 Types-first: EVENT to In Review
+
+[[tickets/T-17400-types-first-event]]: 90 step tables (`FnTblNN`) and 12 stack tables typed in `include/ovl/EVENT.h`; 38 redrafts with `drafts/T-17400/redraft.py` (9 better than the census, sum 11,600 to 11,395 rows over the unguarded functions, none 0); 4 matches / 1,416 bytes (`func_800FF320`, `func_80104C3C`, `func_800FF61C`, `func_8010AE7C`); 7 packages T-17401..T-17407 (27 functions). New section "Types-first pass (T-17400)" on [[event-family-results]]; rows in [[data-types]], notes in [[matching-notes]]. In Review, waiting for the code review.

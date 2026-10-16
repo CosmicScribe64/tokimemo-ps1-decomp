@@ -43,6 +43,8 @@ Limits: the pass is linear (no control flow), so a register state survives a lab
 | 28 stack-copied constant tables as one-array structs | `D_80148F28`..`D_8014A5F4` | `include/ovl/TAIIKU.h` (T-16550) | none (new declarations) | 0 |
 | `FnTblNN` step tables (35 sizes, `void (*f[NN])()`) | 68 tables `D_8015BF50`..`D_80160BD0` | `include/ovl/DATE.h` (T-17200) | 39 local typedefs and externs of 16 DATE `.c` files | 0 |
 | DATE stack-copied tables `DateBytes11x21`, `DateWords21`, `DateShorts8`, `DatePairs8`, `Tbl21` | `D_8015B7A0`, `D_8015B888`/`8DC`/`930`, `D_8015B984`, `D_8015F9B0`/`9C0`, `D_8015FB1C`/`B2C`/`B3C` | `include/ovl/DATE.h` (T-17200) | none (new declarations) | 0 |
+| `FnTblNN` step tables (36 sizes, `void (*f[NN])()`) | 90 tables `D_801207B8`..`D_8012514C` | `include/ovl/EVENT.h` (T-17400) | 63 local typedefs and externs of 15 EVENT `.c` files, `Blob80` of `D_801218E8` | 0 |
+| EVENT stack-copied tables `U16x21`, `EvPairs8`, `EvShorts82`, `EvShorts10`, `EvShorts11`, `EvShorts5`; views `Ev44`, `EvTbl` | `D_80125454`..`D_801254D8`, `D_80122990`, `D_80121A34`, `D_80123B7C`/`B90`/`BA4`, `D_80125330`/`348`, `D_80125360`, `D_80120A74`, `D_80121AD8` | `include/ovl/EVENT.h` (T-17400) | local `U16x21`, `Ev44`, `EvEnt`/`EvTbl` typedefs | 0 |
 
 33 `FAKE` comments of the "first symbol" family are gone (117 to 84 in `src/`). The `Work80125D10` conversion is the strongest single test: 96 uses in already-matched functions moved to one symbol and none changed bytes.
 
@@ -143,4 +145,5 @@ twelve bytes, with two command words.
 table; `D_80129C40` is a `MATRIX` in `main_api.h` (which now includes `libgte.h`). Map, evidence and the
 draft rewrites built on them: [[taco-family-results]] ("Types-first pass").
 - `type_recovery.py` reads every struct copy that IDO emits as a three-word loop as a stride-0xC array: in DATE
-  the 30 highest proposals are step-table copies, not records ([[date-family-results]], T-17200).
+  the 30 highest proposals are step-table copies, not records ([[date-family-results]], T-17200); the same in EVENT
+  ([[event-family-results]], T-17400).

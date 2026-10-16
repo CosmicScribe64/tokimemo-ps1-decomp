@@ -39,3 +39,92 @@ Final all27 Docker build passes (build/events13200/all27-build.log). Independent
 Probe ledger: 47 full-TU scoring attempts across6 distinct targets; 44 nonzero/error outcomes and3 zero-score outcomes. These include repeated diagnostic controls and exclude draft-only inspections. Accepted gain remains the three unique functions above. Detailed source forms and scores are in build/events13200/scores.jsonl.
 
 Final handoff: codex/events-13200. Source gains are21df4fe7 and63d90035; final declaration/guard review repairs and this evidence are committed separately. Both review axes clear the source changes. Closure review confirms the negative particle result and excluded ASM controls; its stale pending-validation wording is corrected here. All744 baseline C bodies are unchanged.
+
+## Types-first pass (T-17400)
+
+This section is about the EVENT overlay (`src/ovl/EVENT`), not the GYOZI/SHOUGATU event scenes above. Wave-3
+types-first pass ([[tickets/T-17400-types-first-event]], [[speedup-research-2026-10-16]]), branch `w3-event-types`
+from `w2-good`. Start: 40 unmatched functions (39,712 bytes), 4 of them guarded. About one hour of agent time for
+the survey, the types and the redraft.
+
+### Survey
+
+- `tools/type_recovery.py --unit EVENT`: as in DATE, the top "high" proposals are 0xC-stride arrays that are really
+  step-table copies (IDO copies a struct in a loop of three words). `D_801205A8` (0xD4 struct, 75 functions) is the
+  run of scalar resource addresses the scene setup handlers write; not converted.
+- Census drafts (`drafts/T-14500/EVENT`): the byte-offset casts sit on m2c temporaries holding a `Rec24` record
+  (`D_800EC190 + i * 0x24`), a display record (`D_800E9620 + i * 0x44`; `D_800EAFA0` is record 96), the
+  `D_800B0860 + D_800B1746 * 0x34` records, and on the stack copies of step tables and data tables (`M2cBlock`
+  copies, `sp + i * 4` calls). The step index is `D_800B1AF6` (DATE uses `D_800E6280.unk_110A`).
+- `tools/siblings.py --unit EVENT`: two clones of matched DATE functions (`func_800FF320` of `func_80152684`,
+  `func_80104C3C` of `func_801572E4`), and close siblings `func_800FD00C` (DATE `func_801511B4`, 0.94),
+  `func_8010F340` (DATE `func_80144720`, 0.91), `func_8010AE7C` (GEKO `func_80141760`, 0.98),
+  `func_8011EDFC` (DATE `func_801489D0`, 0.83).
+
+### Type map
+
+All changes keep EVENT's sha1.
+
+| Type | Symbols | Evidence |
+| --- | --- | --- |
+| `FnTblNN` (`void (*f[NN])()`), 36 sizes from 14 to 103 | 90 step tables `D_801207B8`..`D_8012514C` | each handler copies its table to the stack whole and calls `tbl.f[D_800B1AF6](0x80)`. The 63 local typedefs and externs of 15 `.c` files moved to `include/ovl/EVENT.h`; 27 tables of unmatched handlers got declarations (21 of them `func_8010F74C`'s); the `D_80122EC8` override moved from `80103B60.c` to the header. `NN` is the run of code pointers in the data (trailing zero words dropped). |
+| `D_801218E8` as `FnTbl32` | was `Blob80` (`u8 b[0x80]`) | it is a step table; the copy compiles the same |
+| `Ev44`, `EvEnt`/`EvTbl` | `D_80120A74`, `D_80121AD8` | local views moved to the header; `D_80121AD8` is the (a, b) pair table of `func_800FF320` |
+| `U16x21` (moved), `EvPairs8` (`s16 v[8][2]`), `EvShorts82`, `EvShorts10`, `EvShorts11`, `EvShorts5` | `D_80125454`/`480`/`4AC`/`4D8`, `D_80122990`, `D_80121A34`, `D_80123B7C`/`B90`/`BA4`, `D_80125330`/`348`, `D_80125360` | data tables the unmatched handlers copy to the stack (lw/sw runs plus an lh/sh tail); element width from the reads of the copy (`func_80103774` reads `lh 0x6A + 4 * i`, the `[i][1]` of `EvPairs8`) |
+| `void func_8010AFE4(void)` | | defined after its first caller in `8010A210.c` |
+
+Not changed: `D_801220EC` (FnTbl42) and `D_8012277C` (FnTbl32) stay `main_api.h` scalars read through a cast,
+because `main_api.h` has no `MAIN_API_OVERRIDE` guard for them (adding one changes an existing declaration);
+`EvFnTbl44`, `EvFnTbl53` and `EventCallbackTable47` keep their names (same shape as `FnTblNN`, matched code
+uses them); `D_800B0860` (`EventStateView`, cast views in matched code) and the 0x34-byte records in it.
+
+### Redraft
+
+`drafts/T-17400/redraft.py` is the T-17200 driver adapted to EVENT: the fold ranges and record views are
+`D_800E9620` (display records, `DisplayActor44`) and `D_800EC190` (`Rec24`), both `u8[]` in `main_api.h`, so m2c
+sees them typed and the draft writes `((DisplayActor44 *)D_800E9620)` and `((Rec24 *)D_800EC190)`.
+
+| | value |
+| --- | --- |
+| unguarded functions | 34 |
+| compiling drafts | 32 (`func_8010F74C`, `func_8011B848` do not; census: 34, some after manual repair) |
+| better than the census | 9 functions, 7,560 bytes |
+| same / worse | 21 / 2 (`func_800FD00C`, `func_800FEAE8`: hand-repaired census drafts) |
+| sum of diff rows | 11,600 to 11,395 |
+| typed vs plain run | typed better in 9 of 30, worse in 7; typed compiles 5 that plain does not |
+| `tools/draft_fixes.py` | no score changed |
+| score 0 | none |
+| guarded functions | fresh drafts worse in 3 of 4 (census = hand guard body) |
+
+Largest gains: `func_8011A8E4` 142 to 61 (the three `U16x21` stack tables), `func_80118B4C` 276 to 225,
+`func_801022C0` 86 to 52, `func_8010F340` 38 to 13 (display records through one base), `func_800FF61C` 8 to 2,
+`func_8011C750` 1285 to 1271.
+
+Matched during the pass (4 functions, 1,416 bytes):
+
+| Function | Bytes | How |
+| --- | ---: | --- |
+| `func_800FF320` | 708 | port of the DATE clone `func_80152684` (`EvTbl tbl`, the clone's FAKE `s32 pad[2]` above it) |
+| `func_80104C3C` | 268 | port of the DATE clone `func_801572E4`; `D_800EB02A` is a byte store (`sb`), not the `s16` the record suggests |
+| `func_800FF61C` | 244 | typed redraft in the `func_800FD1C0` shape: `s32 idx` above `FnTbl48 tbl`, both range checks in one `if` |
+| `func_8010AE7C` | 196 | port of the GEKO sibling `func_80141760`: `u8 index` read twice, `FnTbl56 table` |
+
+### Near misses (hand drafts in `drafts/T-17400/EVENT/<func>/hand.c`)
+
+- `func_800FD00C` (6 rows): the DATE `func_801511B4` shape plus the EVENT `printf`; the frame (0xD0, table at
+  0x30) comes right with an unused `u8` local declared after the table, and the store chain must be written
+  `D_800EB02F = D_800EC30C = D_800EC30D = D_800EC30E = D_800F19AB;` to store `30E` first. Left: the `%hi` of
+  `D_800F19AB` in `$v0` instead of `$v1`.
+- `func_8010F340` (11 rows): the DATE `func_80144720` shape with the display records written through
+  `D_800E9620` (`((DisplayActor44 *)D_800E9620)[31].unk_07 = 0;`, `*(s32 *)(D_800E9620 + 0x874) |= ...`) and the
+  two `Rec24` flags; the census scalars cost 25 rows. Needs `D_800B086A`, `D_800B1888`, `D_800B18D0`,
+  `D_80080714` in `main_api.h`. Left: `D_800B0F30` lives in `$v0` instead of `$a0`; a local for it does not help.
+- `func_801022C0` (14 rows): `s16 i; u8 c; s32 idx;` above the table gives the frame and table offset (the T-3330
+  two-words-before form). Left: the loaded `D_800F19AB` and `c` in `$t8` instead of `$a3`.
+- `func_800FC040` (55 rows): the step-table shape does not fix the `var_v1` (`func_800458E0` result) flow.
+
+### Packages
+
+`inventory2.py` / `mklists3.py`: seven packages T-17401..T-17407 (27 functions, 18,224 bytes):
+w3-event-p01 `8011C650.c` (2), p02 `8010BB90.c` + `800FBBF0.c` (5), p03 `8010FE10.c` (5), p04 `801011A0.c` +
+`800FDC20.c` (5), p05 `800F9680.c` + `801050D0.c` (4), p06 `801024B0.c` + `80107FC0.c` (5), p07 `8010B360.c` (1).
