@@ -80,7 +80,7 @@ s32 func_8014718C(void) {
         movie->unk_0A = 0;
         movie->unk_1A = 0;
         func_8006492C(0);
-        /* one source line: as1 keeps the original store order. T-17201 */
+        /* FAKE: one source line keeps the as1 store order of the original. T-17201. */
         D_8015CF9C = 0; for (var_v1 = 0; var_v1 < 2; var_v1++) {
             D_801217D0[var_v1 + 10].unk_08 = (var_v1 << 6) + 0x80;
             D_801217D0[var_v1 + 10].unk_00 = 0x82000000;
