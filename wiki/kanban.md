@@ -144,6 +144,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-17001-w3-main-p01|T-17001 Wave 3 package w3-main-p01]]
 - [ ] [[tickets/T-17005-w3-main-p05|T-17005 Wave 3 package w3-main-p05]]
 - [ ] [[tickets/T-17002-w3-main-p02|T-17002 Wave 3 package w3-main-p02]]
+- [ ] [[tickets/T-17004-w3-main-p04|T-17004 Wave 3 package w3-main-p04]]
 - [ ] [[tickets/T-17117-w3-rpg-bat-p17|T-17117 Wave 3 package w3-rpg-bat-p17]]
 - [ ] [[tickets/T-17116-w3-rpg-bat-p16|T-17116 Wave 3 package w3-rpg-bat-p16]]
 - [ ] [[tickets/T-20000-first-contribution|T-20000 Avoid whole-tree cache scans for scoped queues]]

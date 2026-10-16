@@ -179,9 +179,9 @@ void func_8006D52C(s32 *arg0, s32 arg1, s32 arg2) {
     }
 }
 
-/* NON_MATCHING: T-11670, 5 differing lines; the original keeps the second loop's start index as a copy (move v1,v0), IDO folds it into the promoted unk_71C. */
-#ifdef NON_MATCHING
-void func_8006D6E0(void) {
+/* s32 with no return (T-17004): $v0 is live at the exit of an int function, so as1 keeps
+ * the second loop's start-index copy (move v1,v0) instead of folding it into the sll. */
+s32 func_8006D6E0(void) {
     GameState *gs;
     s32 n;
     s32 i;
@@ -215,9 +215,6 @@ void func_8006D6E0(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D6E0);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D7EC);
 
@@ -243,15 +240,10 @@ s32 func_8006EA40(void) {
     return 0;
 }
 
-/* NON_MATCHING: T-10880 (rechecked in T-11670), 8 differing lines; four flag-word register substitutions. */
-#ifdef NON_MATCHING
 s32 func_8006EB64(u8 *arg0, u8 *arg1) {
-    u32 variant;
-    /* FAKE: unsigned locals preserve the original comparison operand order.
-     * Direct literals reverse the three bne operands. T-10880. */
-    u32 one = 1;
-    u32 two = 2;
-    u32 three = 3;
+    /* The flag word's f9 field is read through a pointer: an indirect load is not a plain variable for uopt, so the
+     * compares keep their constant-first order and no phantom local holds $v1 (T-17004). */
+    GameState *g = &D_800E6280;
 
     *arg0 = 0;
     *arg1 = 0;
@@ -289,25 +281,22 @@ s32 func_8006EB64(u8 *arg0, u8 *arg1) {
         return 1;
     }
     if (!(D_800E6280.unk_1BC[8].unk_0C.f.b1)) {
-        variant = D_800E6280.unk_1BC[8].unk_0C.f.f9;
-        if ((variant == 0) && (D_800E6280.unk_110.unk_02 >= 0x24)) {
+        if ((g->unk_1BC[8].unk_0C.f.f9 == 0) && (D_800E6280.unk_110.unk_02 >= 0x24)) {
             *arg0 = 8;
-            /* FAKE: zero-valued comparison preserves the variant live range
-             * and the original delay-slot nop. T-10880. */
-            *arg1 = (one == variant) * 0;
+            *arg1 = 0;
             return 1;
         }
-        if ((one == variant) && (D_800E6280.unk_110.unk_02 >= 0x38)) {
+        if ((g->unk_1BC[8].unk_0C.f.f9 == 1) && (D_800E6280.unk_110.unk_02 >= 0x38)) {
             *arg0 = 8;
             *arg1 = 1;
             return 1;
         }
-        if ((two == variant) && (D_800E6280.unk_110.unk_02 >= 0x4C)) {
+        if ((g->unk_1BC[8].unk_0C.f.f9 == 2) && (D_800E6280.unk_110.unk_02 >= 0x4C)) {
             *arg0 = 8;
             *arg1 = 2;
             return 1;
         }
-        if ((three == variant) && (((u32)D_800E6280.unk_F68.w & 0xF) == 5) && (D_800E6280.unk_110.unk_02 >= 0x5B)) {
+        if ((g->unk_1BC[8].unk_0C.f.f9 == 3) && (((u32)D_800E6280.unk_F68.w & 0xF) == 5) && (D_800E6280.unk_110.unk_02 >= 0x5B)) {
             *arg0 = 8;
             *arg1 = 3;
             return 1;
@@ -320,19 +309,10 @@ s32 func_8006EB64(u8 *arg0, u8 *arg1) {
     }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006EB64);
-#endif
 
-/* NON_MATCHING: T-10880 (rechecked in T-11670), 8 differing lines; four flag-word register substitutions. */
-#ifdef NON_MATCHING
 s32 func_8006EEC4(u8 *arg0, u8 *arg1) {
-    u32 variant;
-    /* FAKE: unsigned locals preserve the original comparison operand order.
-     * Direct literals reverse the three bne operands. T-10880. */
-    u32 one = 1;
-    u32 two = 2;
-    u32 three = 3;
+    /* Read through a pointer like func_8006EB64 (T-17004). */
+    GameState *g = &D_800E6280;
 
     if (rand() & 7) {
         return 0;
@@ -370,25 +350,22 @@ s32 func_8006EEC4(u8 *arg0, u8 *arg1) {
         return 1;
     }
     if (!(D_800E6280.unk_1BC[8].unk_0C.f.b1)) {
-        variant = D_800E6280.unk_1BC[8].unk_0C.f.f9;
-        if ((variant == 0) && (D_800E6280.unk_110.unk_02 >= 0x24)) {
+        if ((g->unk_1BC[8].unk_0C.f.f9 == 0) && (D_800E6280.unk_110.unk_02 >= 0x24)) {
             *arg0 = 8;
-            /* FAKE: zero-valued comparison preserves the variant live range
-             * and the original delay-slot nop. T-10880. */
-            *arg1 = (one == variant) * 0;
+            *arg1 = 0;
             return 1;
         }
-        if ((one == variant) && (D_800E6280.unk_110.unk_02 >= 0x38)) {
+        if ((g->unk_1BC[8].unk_0C.f.f9 == 1) && (D_800E6280.unk_110.unk_02 >= 0x38)) {
             *arg0 = 8;
             *arg1 = 1;
             return 1;
         }
-        if ((two == variant) && (D_800E6280.unk_110.unk_02 >= 0x4C)) {
+        if ((g->unk_1BC[8].unk_0C.f.f9 == 2) && (D_800E6280.unk_110.unk_02 >= 0x4C)) {
             *arg0 = 8;
             *arg1 = 2;
             return 1;
         }
-        if ((three == variant) && (((u32)D_800E6280.unk_F68.w & 0xF) == 5) && (D_800E6280.unk_110.unk_02 >= 0x5B)) {
+        if ((g->unk_1BC[8].unk_0C.f.f9 == 3) && (((u32)D_800E6280.unk_F68.w & 0xF) == 5) && (D_800E6280.unk_110.unk_02 >= 0x5B)) {
             *arg0 = 8;
             *arg1 = 3;
             return 1;
@@ -401,9 +378,6 @@ s32 func_8006EEC4(u8 *arg0, u8 *arg1) {
     }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006EEC4);
-#endif
 
 s32 func_8006F218(u8 *arg0, u8 *arg1) {
     GameState *g;
@@ -1265,35 +1239,37 @@ void func_800725B0(void) {
     func_80067870();
     func_80066C08(0);
 }
-/* NON_MATCHING: T-11670, 20 differing lines; the original stores 1/2/3 to unk_03D from $v1 (the flag kept in a register, T-0018 promotion); IDO uses t7/t8/t9. A u8 h with D = h = k gets the v1 stores but moves the load to v0 (26 lines). */
-#ifdef NON_MATCHING
 void func_800726F0(void) {
-    s32 h;
+    GameState *g = &D_800E6280;
+    /* FAKE: the first test reads unk_03D through a local copy and the second re-reads the field (found by autotweak).
+     * With both tests on the field, unk_03D is promoted into $v0 (sharing it with the month range) instead of the
+     * original's $v1; the real source is unknown. T-17004 */
+    s32 flag;
 
-    switch (D_800E6280.unk_110A) {
+    switch (g->unk_110A) {
     case 0:
         func_8004E58C();
         func_80066104("ダミー");
         func_80065F34(0);
-        gnsx(&D_800E6280.unk_0D4);
-        h = D_800E6280.unk_03D;
-        if (h != 0 && D_800E6280.unk_040 == 2) {
-            D_800E6280.unk_03D = 0;
+        gnsx(&g->unk_0D4);
+        flag = g->unk_03D;
+        if (flag != 0 && g->unk_040 == 2) {
+            g->unk_03D = 0;
             sndisp("明日から新学期だ）", 0, 0x1F);
-        } else if (h != 0) {
-            D_800E6280.unk_03D = 0;
+        } else if (g->unk_03D != 0) {
+            g->unk_03D = 0;
             sndisp("明日から新学期だ）", 0, 0x1F);
-        } else if (D_800E6280.unk_03F == 7) {
+        } else if (g->unk_03F == 7) {
             sndisp("明日から夏休みだ）", 0, 0x1F);
-            D_800E6280.unk_03D = 1;
-        } else if (D_800E6280.unk_03F == 0xC) {
+            g->unk_03D = 1;
+        } else if (g->unk_03F == 0xC) {
             sndisp("明日から冬休みだ）", 0, 0x1F);
-            D_800E6280.unk_03D = 2;
-        } else if (D_800E6280.unk_03F == 3) {
+            g->unk_03D = 2;
+        } else if (g->unk_03F == 3) {
             sndisp("明日から春休みだ）", 0, 0x1F);
-            D_800E6280.unk_03D = 3;
+            g->unk_03D = 3;
         } else {
-            D_800E6280.unk_03D = 0;
+            g->unk_03D = 0;
         }
         func_800674B0();
         k_disp_start(3);
@@ -1310,9 +1286,6 @@ void func_800726F0(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800726F0);
-#endif
 
 void func_800728A4(void) {
     switch (D_800E6280.unk_1109) {
@@ -1343,25 +1316,27 @@ s32 func_80072944(void) {
     }
 }
 
-/* NON_MATCHING: T-11670, 16 differing lines; the year/month arguments of func_80068938 are scheduled a0-first (original a1-first), and the month reloaded after the call sits in v0 with 9 in v1 (original a1 and v0). */
-#ifdef NON_MATCHING
 s32 func_80072998(void) {
-    switch (D_800E6280.unk_110D) {
+    /* Fields are read through a pointer, as in func_8006EB64: the month byte keeps the original's a1/v0 allocation across
+     * the call and the argument loads keep the original order (T-17004). */
+    GameState *g = &D_800E6280;
+
+    switch (g->unk_110D) {
     case 0:
         cd_read_sectors(0x95, 0x801A0000, 0x9B94);
-        D_800E6280.unk_110D++;
+        g->unk_110D++;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_80068938(D_800E6280.unk_03E, D_800E6280.unk_03F, 1);
-            if (D_800E6280.unk_03F % 3 == 0) {
-                if (D_800E6280.unk_03F == 9 && D_800E6280.unk_040 == 1 && D_800E6280.unk_03E == 0x60) {
+            func_80068938(g->unk_03E, g->unk_03F, 1);
+            if (g->unk_03F % 3 == 0) {
+                if (g->unk_03F == 9 && g->unk_040 == 1 && g->unk_03E == 0x60) {
                     func_80042808();
-                } else if (D_800E6280.unk_03F == 9) {
+                } else if (g->unk_03F == 9) {
                     func_8004E58C();
                     func_80066104("ダミー");
                     func_80065F34(0);
-                    gnsx(&D_800E6280.unk_0D4);
+                    gnsx(&g->unk_0D4);
                     sndisp("明日から新学期だ）", 0, 0x1F);
                     k_disp_start(3);
                     func_80044750(0xC1);
@@ -1381,9 +1356,6 @@ s32 func_80072998(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072998);
-#endif
 
 void func_80072B20(void) {
     if (func_80044E8C() == 1) {
@@ -1463,7 +1435,7 @@ void func_80072CA0(void) {
     }
 }
 
-/* NON_MATCHING: T-11670, 22 differing lines; the original loads D_800E639A straight into lim's s1 and the selector byte into v1, IDO keeps the 0x800E0000 base in v0 and the selector in a0 (constant 11 holds v1). */
+/* NON_MATCHING: T-11670 (rechecked in T-17004), 22 differing lines; the original loads D_800E639A straight into lim's s1 and the selector byte into v1, IDO keeps the 0x800E0000 base in v0 and the selector in a0 (constant 11 holds v1). */
 #ifdef NON_MATCHING
 s32 func_80072D70(void) {
     s32 state;

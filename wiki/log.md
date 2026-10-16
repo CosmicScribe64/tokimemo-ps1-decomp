@@ -16660,3 +16660,18 @@ Clean rebuild of the w3-main-p05 worktree: 27/27 sha1 OK (`build/SLPM_86.053.bin
 
 ## [2026-10-16] ticket | T-17002 Done
 [[tickets/T-17002-w3-main-p02]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/main/800674B0.c` changed in code, `drafts/T-17002/` is new, no header or config change. Findings fixed (comments and two casts, bytes unchanged): the `(s32)` cast on the two two-argument `strncat` calls of `func_800696DC` removed and the calls commented, the `selected_slot` view marked `FAKE`. Unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 3 of 4 matched (`func_8006BC28`, `func_800676AC`, `func_800696DC`, 3,184 bytes). Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17004 In Progress
+
+[[tickets/T-17004-w3-main-p04]] created and started: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`, five guarded drafts: `func_8006D6E0`, `func_8006EEC4`, `func_8006EB64`, `func_80072998`, `func_800726F0`), worktree `tokimemo-wt/w3-main-p04`, base `w2-good`. Parent [[tickets/T-17000-types-first-main]].
+
+## [2026-10-16] ticket | T-17004 In Review
+
+[[tickets/T-17004-w3-main-p04]] In Progress to In Review: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`), 4 of 5 functions matched in plain C (2,544 bytes: `func_8006EB64`, `func_8006EEC4`, `func_80072998`, `func_800726F0`), `func_8006D6E0` stays guarded at 5 lines. The first three matched by reading the struct fields through a local `GameState *g = &D_800E6280;` (the two 8-line ones lost their FAKE locals and compare); `func_800726F0` needs a marked FAKE local copy found by autotweak. Notes in [[matching-notes]] (section T-17004), a row in [[register-cheatsheet]], two rows and an update in [[data/t0018-cases]], [[main-family-results]] updated. Commits `bcf3c783`, `90864652`, `469023e8`, `46795e4a`.
+
+## [2026-10-16] ticket | T-17004 closer pass
+
+Opus closer on [[tickets/T-17004-w3-main-p04]]: `func_8006D6E0` matched in plain C (268 bytes, commit `1694e986`; package 5 of 5, 2,812 bytes). The missing `move v1,v0` is folded by as1's global optimisation, not uopt (uopt's output ucode and `cc -S` keep it); as1 keeps it when `$v0` is live at the exit, so the definition is `s32` with no `return` and `include/main_api.h` declares `s32 func_8006D6E0();`. Notes in [[matching-notes]] (T-17004 closer pass), a row in [[register-cheatsheet]], an update line in [[data/t0018-cases]], [[main-family-results]] and [[index]] updated. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17004 Done
+
+[[tickets/T-17004-w3-main-p04]] In Review to Done after the code review: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`), 5 of 5 functions matched (2,812 bytes: `func_8006EB64`, `func_8006EEC4`, `func_80072998`, `func_800726F0`, `func_8006D6E0`). One finding, fixed: the `NON_MATCHING` comment of the still guarded `func_80072D70` now names T-17004. Clean build sha1 OK; headers and globals checks OK.
