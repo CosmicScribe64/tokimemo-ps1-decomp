@@ -3,6 +3,7 @@
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
 #define MAIN_API_OVERRIDE_set_kanji_string /* matched with s32(s16,s32,s32,void*,s32): the result is passed on (main_api.h: void) */
+#define MAIN_API_OVERRIDE_dialogue_render /* T-18300: func_8013A2E8 stores the result in D_80122CD0 (main_api.h: void), as main k_disp_start does */
 
 #include "common.h"
 #include "libgpu.h"
@@ -10,6 +11,7 @@
 
 extern u8 D_8013C3E0;
 s32 set_kanji_string(s16 arg0, s32 arg1, s32 arg2, void *arg3, s32 arg4);
+s32 dialogue_render(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5, void *arg6, s32 arg7);
 extern u32 D_8013C360; /* compares take their own constant register: unsigned (T-9020) */
 extern s8 D_8013C364;
 void func_80132000(void);

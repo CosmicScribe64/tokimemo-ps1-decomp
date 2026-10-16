@@ -1,6 +1,6 @@
 #include "common.h"
-#include "game.h"
 #include "ovl/ENDING.h"
+#include "game.h"
 
 void func_80132000(void) {
     D_8013C280 = 0x801F00B8;

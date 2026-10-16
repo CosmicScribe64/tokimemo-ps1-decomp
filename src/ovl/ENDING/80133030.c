@@ -1,6 +1,6 @@
 #include "common.h"
-#include "game.h"
 #include "ovl/ENDING.h"
+#include "game.h"
 
 typedef struct {
     void (*f[16])();
