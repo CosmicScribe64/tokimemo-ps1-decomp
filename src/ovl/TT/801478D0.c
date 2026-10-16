@@ -47,7 +47,92 @@ void func_801478D0(TtAnimState *arg0) {
     }
 }
 
+/* NON_MATCHING: T-11850, 58 funcdiff lines (29 instructions), registers only: the ugen temporaries t6 and t7 are swapped
+ * from the arg1[6] load on (the original frees the K&R conversion temporary of arg2 after the D_80158A68 index load, IDO
+ * at entry); every uopt register, the schedule and the frame match. Draft: K&R u16 arg2, flags and tile code share one
+ * local (v1), idx = tile >> 6 in its own local (a2). */
+#ifdef NON_MATCHING
+void func_80147A18(arg0, arg1, arg2)
+    u8 *arg0;
+    u8 *arg1;
+    u16 arg2;
+{
+    s32 pad[2]; /* FAKE: unused, sizes the 0x78 frame with the call spill at sp+0x50. T-11850 */
+    TtDrawBuffer80B8 *buf;
+    u8 *q;
+    TtSprSet **sets;
+    TtSprSet *set;
+    TtSprFrame *fr;
+    TtSprSeq *seq;
+    TtSprPart *part;
+    u8 *pal;
+    u16 clut;
+    s32 n;
+    u8 *v;
+    u8 *c;
+    s32 code;
+    s32 idx;
+    s32 x;
+    s32 y;
+    u8 b;
+
+    buf = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    q = D_80158AB0;
+    sets = *(TtSprSet ***)arg1;
+    if (sets != 0) {
+        set = sets[arg1[5]];
+        fr = &set->frames[arg1[6]];
+        seq = &set->seqs[fr->seq];
+        part = set->parts + seq->start + seq->count - 1;
+        pal = set->attr;
+        clut = set->clut;
+        *(s16 *)(q + 4) = *(s16 *)(arg0 + 0);
+        *(s16 *)(q + 6) = *(s16 *)(arg0 + 2);
+        if (arg1[0x10] != 0) {
+            *(s16 *)(q + 0) = *(s16 *)(arg1 + 0xC);
+            *(s16 *)(q + 2) = *(s16 *)(arg1 + 0xE);
+        }
+        for (n = seq->count; n > 0; n--, part--) {
+            v = (u8 *)buf->cursor;
+            buf->cursor = (DR_MODE *)(v + 0x30);
+            v[0x28] = part->flags ^ arg1[4];
+            code = arg1[4];
+            if (code & 1) {
+                y = *(s16 *)(arg0 + 2) - part->y - 0x10;
+            } else {
+                y = part->y + *(s16 *)(arg0 + 2);
+            }
+            if (code & 2) {
+                x = *(s16 *)(arg0 + 0) - part->x - 0x10;
+            } else {
+                x = part->x + *(s16 *)(arg0 + 0);
+            }
+            *(s16 *)(v + 8) = x;
+            *(s16 *)(v + 0xA) = y;
+            idx = part->tile >> 6;
+            c = pal + idx;
+            code = part->tile & 0x3F;
+            v[0xC] = (*c & 0x80) + (code & 7) * 16;
+            v[0xD] = (*c & 0x40) * 2 + (code >> 3) * 16;
+            v[0x29] = 0;
+            v[0x2A] = 1;
+            *(s16 *)(v + 0x16) = *c & 0x1F;
+            if (arg1[0xA] != 0) {
+                b = arg1[0xB];
+                *(s16 *)(v + 0xE) = clut + (b & 0xF) + (b & 0xF0) * 4;
+            } else {
+                b = part->clut;
+                *(s16 *)(v + 0xE) = clut + (b & 0xF) + (b & 0xF0) * 4;
+            }
+            v[0x2C] = 0;
+            v[0x2B] = arg1[0x10];
+            func_80141C6C(&buf->ordering[arg2], v, q);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801478D0", func_80147A18);
+#endif
 
 void func_80147CE0(void) {
     s32 i = 0;
@@ -127,44 +212,24 @@ void func_80147F14(u8 *arg0) {
     *(s16 *)(arg0 + 0x16) = *(s16 *)(arg0 + 0x70);
 }
 
-/* NON_MATCHING: T-10610, the original keeps the zero of the byte and halfword store pairs in registers (move v1,zero; move a1,zero) and the loop counter/pointer in v1/a1; ~14 lines */
-#ifdef NON_MATCHING
+/* Three-store chains (u16 6, 8, A; bytes D, E, F) keep their zero in v1/a1 like the original; two-store chains or s16
+ * give $zero stores. The loop is unrolled by IDO (T-11850). */
 void func_80147FD0(u8 *arg0) {
     s32 i;
-    u8 *p;
     u8 *src;
 
     src = D_80158A74;
     arg0[0] = 1;
     *(s16 *)(arg0 + 4) = 0x40;
-    arg0[0xE] = arg0[0xD] = 0;
-    *(u16 *)(arg0 + 8) = *(u16 *)(arg0 + 6) = 0;
-    arg0[0xF] = 0;
-    *(s16 *)(arg0 + 0xA) = 0;
-    p = arg0 + 4;
+    /* FAKE: both chains on one line give the original store order (as1 schedules by source line). T-11850 */
+    *(u16 *)(arg0 + 6) = *(u16 *)(arg0 + 8) = *(u16 *)(arg0 + 0xA) = 0; arg0[0xD] = arg0[0xE] = arg0[0xF] = 0;
     *(s16 *)(arg0 + 0x14) = *(s16 *)(src + 0x14);
-    i = 2;
     *(s16 *)(arg0 + 0x16) = *(s16 *)(src + 0x16);
-    *(s16 *)(arg0 + 0x50) = *(s16 *)(src + 0x14);
-    *(s16 *)(arg0 + 0x70) = *(s16 *)(src + 0x16);
-    *(s16 *)(arg0 + 0x52) = *(s16 *)(src + 0x14);
-    *(s16 *)(arg0 + 0x72) = *(s16 *)(src + 0x16);
-    do {
-        i += 4;
-        *(s16 *)(p + 0x50) = *(s16 *)(src + 0x14);
-        p += 8;
-        *(s16 *)(p + 0x68) = *(s16 *)(src + 0x16);
-        *(s16 *)(p + 0x4A) = *(s16 *)(src + 0x14);
-        *(s16 *)(p + 0x6A) = *(s16 *)(src + 0x16);
-        *(s16 *)(p + 0x4C) = *(s16 *)(src + 0x14);
-        *(s16 *)(p + 0x6C) = *(s16 *)(src + 0x16);
-        *(s16 *)(p + 0x4E) = *(s16 *)(src + 0x14);
-        *(s16 *)(p + 0x6E) = *(s16 *)(src + 0x16);
-    } while (i != 0xA);
+    for (i = 0; i < 10; i++) {
+        ((s16 *)(arg0 + 0x50))[i] = *(s16 *)(src + 0x14);
+        ((s16 *)(arg0 + 0x70))[i] = *(s16 *)(src + 0x16);
+    }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801478D0", func_80147FD0);
-#endif
 
 void func_801480BC(void) {
     s32 i;
