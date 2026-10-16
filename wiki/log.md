@@ -16314,3 +16314,7 @@ Actual default funcdiff --resolve proves 1,268 linked bytes for RPG_BAT func_801
 ## [2026-10-16] build | T-20003 third RPG callback matched; In Review
 
 RPG_BAT func_80156D78 matches 992 actual default linked bytes, bringing T-20003 to three callbacks / 3,516 bytes. The draw width needs the original word-argument caller view; one unused frame word is explicitly FAKE. Default linked funcdiff also rechecks its sibling func_80157158. Full build and header/global guards pass, as do all 27 binary SHA1 checks and sync_protos --check-branch (0 new, 15 known disagreements). Local self-review against CODING_STANDARDS.md recorded; upstream review pending. Updated matching notes, family results and the T-0018 superseding update without changing historical rows. [[tickets/T-20003-rpg-timer-callees]] moves to In Review, with the board/index synchronized.
+
+## [2026-10-16] ticket | T-20003 PR #38 opened
+
+Opened https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/38 for the three RPG_BAT callbacks (3,516 bytes). Integrated upstream main 81095a46 and retained all T-17103 source/wiki work. All three actual default linked comparisons still match despite the upstream caller-view change in their shared source; full RPG_BAT/globals and 27/27 binary SHA1 checks pass again. [[tickets/T-20003-rpg-timer-callees]] stays In Review for the maintainer.

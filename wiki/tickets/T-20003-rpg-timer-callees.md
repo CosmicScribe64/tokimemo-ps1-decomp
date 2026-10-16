@@ -17,7 +17,7 @@ Match RPG_BAT callbacks func_80138F6C (src/ovl/RPG_BAT/80137280.c), func_8015715
 - [x] Only verified default linked matches replace production INCLUDE_ASM.
 - [x] Full RPG_BAT checksum and all 27 binaries pass, with header/global/prototype checks.
 - [x] Local standards review recorded below.
-- [ ] Focused upstream PR containing verified work.
+- [x] Focused upstream PR containing verified work: https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/38.
 
 ## Notes
 
@@ -34,6 +34,8 @@ While this work ran, upstream main advanced to fa1dffb4 and matched the third ta
 Third result: the adjacent func_80156D78 matches 992 actual default linked bytes. It shares the setup/effect caller views and split flag update with func_80157158. Its draw-call width is a full word in the original caller; the default narrow prototype adds conversions, so an explicit MAIN_API_OVERRIDE_func_80049A40 uses the original unprototyped void caller view. The existing main header guard is reused. One unused frame word reproduces the 0x40 frame and width home at sp+0x38 (FAKE, T-20003).
 
 Final evidence (all Docker, gitignored build/T-20003/): func38F6C-proof.log gives actual default MATCH 1,268 bytes; alien-proof.log gives actual default MATCH 992 and 1,256 bytes. final-build.log passes the full RPG_BAT checksum and build guards; final-checksums.log reports 27/27 binary SHA1 checks passed. final-protos.log reports 0 new disagreements, 15 known and branch check OK. No nonmatching draft, generated output or game data is submitted.
+
+Integrated upstream main 81095a46 (T-17103), including the new func_8013E7C0 caller view in 80137280.c. No additional source adjustment was needed: integrated-proof.log repeats all three actual default linked matches, integrated-build.log passes RPG_BAT SHA1/globals, and integrated-checksums.log reports 27/27. The earlier func_80138F6C result above describes its original baseline before this upstream caller-view change.
 
 ## Comments
 
