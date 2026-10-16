@@ -609,7 +609,61 @@ s32 func_8005BE8C(void) {
     k_disp_inc();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005C14C);
+s32 func_8005C14C(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 0xF, "未初期化のメモリーカードです。", 0);
+        k_disp_start(1);
+        D_800E6280.unk_110D++;
+    default:
+        break;
+    case 1:
+        if (D_800E6280.unk_F88 & 0x860) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 2:
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 0xF, "初期化していいですか？", 0);
+        set_kanji_string(-0x80, 0x42, 0, D_800B3C70, 0);
+        set_kanji_string(-0x2C, 0x42, 1, func_8006CA9C(), 0);
+        set_kanji_string(-0x80, 0x52, 0, D_800B3C88, 0);
+        set_kanji_string(-0x2C, 0x52, 2, func_8006CAE0(), 0);
+        k_sub_disp_start(5);
+        D_800E6280.unk_110D++;
+        break;
+    case 3:
+        if (D_800E6280.unk_F88 & 0x20) {
+            if (func_80054108() == 1) {
+                func_80042940(0);
+            } else {
+                func_8005C4CC(1);
+                func_80042908(0);
+                func_80042940(2);
+            }
+        } else if (D_800E6280.unk_F88 & 0x40) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 4:
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 0xF, "別のメモリーカードを", 0);
+        set_kanji_string(-0x80, 0x42, 1, "差し込み口１", 0);
+        set_kanji_string(-0x80, 0x42, 0xF, "　　　　　　にセットして、", 0);
+        set_kanji_string(-0x80, 0x52, 0xF, "○ボタンを押してください。", 0);
+        k_sub_disp_start(4);
+        D_800E6280.unk_110D++;
+        break;
+    case 5:
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_8005C4CC(1);
+            func_80042908(0);
+            func_80042940(2);
+        }
+        break;
+    }
+}
 
 void func_8005C414(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);
