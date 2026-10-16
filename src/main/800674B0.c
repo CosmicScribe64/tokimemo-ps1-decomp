@@ -93,10 +93,8 @@ void func_8006764C(s32 arg0) {
     }
 }
 
-/* NON_MATCHING: T-11690, 11 differing lines; IDO keeps arg0 in $a1 (move a1,a0 at entry) and hoists li a0,27
- * into the bnez delay slot, the original stores arg0 to D_800B5C08 straight from $a0. Index local, if/else and
- * goto spellings give the same (T-9730 tried void/s32 and a 300-second permuter). */
-#ifdef NON_MATCHING
+/* FAKE: the empty `if (arg0) {}` after the store gives the parameter a second use, so uopt leaves it in $a0 (without it
+ * IDO copies it to $a1 at entry and hoists `li a0,27` into the bnez delay slot). The test emits no code. T-17002 */
 void func_800676AC(s32 arg0) {
     if (arg0 == 0 || arg0 >= 0xE) {
         D_80125C50 = 0x78;
@@ -108,6 +106,8 @@ void func_800676AC(s32 arg0) {
         return;
     }
     D_800B5C08 = arg0;
+    if (arg0) {
+    }
     func_80048F64(0x1B);
     D_8011ECD0[0x1B].unk_01 = 1;
     D_8011ECD0[0x1B].unk_02 = 0x40;
@@ -135,9 +135,6 @@ void func_800676AC(s32 arg0) {
     D_8011ECD0[0x1C].unk_16 = 0;
     D_8011ECD0[0x1C].unk_18 = 0xD;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_800676AC);
-#endif
 
 /* NON_MATCHING: T-11100, 142 words differ in registers (14 structural): the original loads D_800B5C08 into $a3 and
  * passes it with `move a0,a3`, and keeps D_80125C54 in $a2 and the D_80125C5x values in other temporaries (T-0018 style
