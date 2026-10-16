@@ -1,7 +1,7 @@
 ---
 id: T-16553
 title: "Types-first pilot package pt-taiiku-p3"
-status: In Review
+status: Done
 assignee: claude
 created: 2026-10-16
 updated: 2026-10-16
@@ -19,7 +19,7 @@ Match the TAIIKU functions of `src/ovl/TAIIKU/801452D0.c` (game C) from the T-16
 - [x] Compiler-gap rows in [[data/t0018-cases]] (four new rows and an update line for `func_80146A60`).
 - [x] Clean rebuild 27/27, `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch` OK.
 - [x] Short T-16553 section in [[matching-notes]]; family page [[taiiku-family-results]] updated.
-- [ ] Code review against `CODING_STANDARDS.md` (required before Done).
+- [x] Code review against `CODING_STANDARDS.md` (required before Done). Done 2026-10-16, see Comments.
 
 ## Notes
 
@@ -42,3 +42,14 @@ What carried over from the pilot: the typed records made the m2c byte offsets re
 - `func_80145640` matched in plain C (1,080 bytes, commit "T-16553: match TAIIKU:func_80145640"). The call result goes into a declared local, `slot = search_load_tpage_buf_lock(D_8014A4F8[i], 1);`, declared before `i`, and the chain stores through it. With the call nested in the chain, uopt allocates three spill temporaries below the locals and the counter's home sits at sp+0x3C. With `slot` taking the top local slot, the counter's home is sp+0x38 and the pointer temporary stays at sp+0x30, as in the original. The matcher found that "a second local grows the frame" because they tried unused locals. A local that replaces a nested call result does not grow it.
 - `func_8014607C` stays guarded at 20 lines. Both local copies in the tail are propagated by IDO into their uses after the `||`: `var_v0_2 = D_800E638E` into `>> 1` (hence the separate `$a1` range) and `temp_v1 = D_800E6375 & 0xF` into the two bit tests (hence `$t5` and not `$v1`). Evidence: with a then-arm that does not read `var_v0_2`, the `lh` goes straight into `$v0`. A volatile access between the definitions and the `if` stops the propagation (the mask moves to `$v1`) but makes ugen materialize the address. These did not help: `order_search` over the six tail statements (720 orders, best 20), `s16`/`u8`/`u16`/`u32` locals, a `u16` view with an `s16` local, labels and `goto` before the `if`, an `if`/`else` with the global read in both arms or through a `raw` local (uopt sinks the load into each arm), the assignment inside the condition, record-view and absolute-address stores, a bit-field view, dead tests, and `autotweak` (120 s, 753 variants, no gain).
 - `autotweak` (120 s) on `func_80145640` before the match found nothing either. Ticket stays In Review until the code review.
+
+### Code review (Opus, 2026-10-16)
+
+Reviewed `git diff w2-good...pt-taiiku-p3` (`include/ovl/TAIIKU.h`, `src/ovl/TAIIKU/801452D0.c`, wiki pages) against the checklist in `CODING_STANDARDS.md`. Scope checks: only the owned C file changed, no `drafts/` or `asm/` change, no inline asm or `.word`, no `//` comments, no non-ASCII, no game data. The 10 matched functions are plain C and the default build is 27/27 OK (clean build in the merge). The three guarded drafts (`func_80145370`, `func_8014607C`, `func_80146D18`) sit under `#ifdef NON_MATCHING` with a `NON_MATCHING: T-16553` comment naming the lines left; `func_80147B14` stays `INCLUDE_ASM`. `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` pass. No fakematch was added: the pointer-bound loops, the declaration order of locals and the one-line `k = 0; do {` are matching idioms with an explanation in `wiki/matching-notes.md` (T-16553).
+
+Findings and fixes:
+- Compiler warning 681 (`&` before an array ignored) on `unk_34 = (u8 *)&D_8014A528;` in `func_80148370`: dropped the `&` (identical code, build still OK).
+- The next-table-symbol loop bounds of `func_80145640` and `func_80147594` had no comment (the other two functions did): added a trailing comment on the first loop of each (no line added, so no `.loc` shift).
+- Stale counts after the closer pass in `wiki/index.md` (9 matched, 4 guarded), `wiki/matching-notes.md` (T-16553 header paragraph, the `func_80145640` bullets) and `wiki/taiiku-family-results.md`: corrected to 10 matched (6,324 bytes) and 3 guarded.
+
+All findings resolved. Status Done.

@@ -51,7 +51,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
-- [ ] [[tickets/T-16553-pt-taiiku-p3|T-16553 Types-first pilot package pt-taiiku-p3]]
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
@@ -136,6 +135,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-16553-pt-taiiku-p3|T-16553 Types-first pilot package pt-taiiku-p3]]
 - [ ] [[tickets/T-16200-matching-wave-2|T-16200 Matching wave 2]]
 - [ ] [[tickets/T-16220-w2-main-8007c030|T-16220 Wave 2 package w2-p02]]
 

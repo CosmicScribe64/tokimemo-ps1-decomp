@@ -15137,3 +15137,7 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] build | T-16553 closer pass
 
 [[tickets/T-16553-pt-taiiku-p3]]: Opus closer on the two guarded near misses in `src/ovl/TAIIKU/801452D0.c`. `func_80145640` matched (1,080 bytes): the call result goes into a declared local before the counter, which moves the counter's home from sp+0x3C to sp+0x38. `func_8014607C` stays guarded at 20 lines: IDO propagates the tail's two local copies of globals past the `||`. Notes in [[matching-notes]] (T-16553), [[data/t0018-cases]] and [[taiiku-family-results]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16553 Done
+
+[[tickets/T-16553-pt-taiiku-p3]]: code review against `CODING_STANDARDS.md` passed after three small fixes (an ignored `&` before an array in `func_80148370`, comments on two next-symbol loop bounds, stale counts in [[index]], [[matching-notes]] and [[taiiku-family-results]]). 10 functions matched in `src/ovl/TAIIKU/801452D0.c` (6,324 bytes), 3 guarded, `func_80147B14` open. Card moved to Done.
