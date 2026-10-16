@@ -4,10 +4,6 @@
 
 extern u32 D_80122CD0;
 
-typedef struct {
-    void (*f[40])();
-} FnTbl40; /* size 0xA0 */
-
 void func_80150010(void) {
     D_8015EA40 = 0x801B0000;
     D_8015EA44 = 0x801B2000;
@@ -246,8 +242,6 @@ void func_80150B9C(void) {
     func_8004284C();
 }
 
-extern FnTbl40 D_8015EAE8;
-
 void func_80150BCC(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl40 tbl;
@@ -294,12 +288,6 @@ void func_80150E9C(void) {
     func_80150010();
     func_8004284C();
 }
-
-typedef struct {
-    void (*f[39])();
-} FnTbl39; /* size 0x9C */
-
-extern FnTbl39 D_8015EB88;
 
 void func_80150ED4(void) {
     GameState *g = &D_800E6280; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -361,8 +349,6 @@ void func_8015118C(void) {
     func_8004284C();
 }
 
-extern FnTbl40 D_8015EC24;
-
 /* D_80121FD4 is record 57 of the Rec24 table and D_801206D8 record 98 of the D_8011ECD0 display
  * records; the chain assignment keeps the loaded byte in one register for all four stores. */
 void func_801511B4(void) {
@@ -397,8 +383,6 @@ void func_80151328(void) {
     func_80150130();
     func_8004284C();
 }
-
-extern FnTbl40 D_8015ECC4;
 
 void func_80151360(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

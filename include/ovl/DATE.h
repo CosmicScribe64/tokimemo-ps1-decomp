@@ -1593,3 +1593,182 @@ void date_fill_sections_yuina(void);
 /* T-12100: calls recovered in DATE startup state dispatch. */
 void func_8014AF88(void);
 void func_8014B080(void);
+
+#ifndef OVL_DATE_STEP_TABLES_T17200
+#define OVL_DATE_STEP_TABLES_T17200
+/* Step tables (T-3330, T-17200): one handler per scene step; each handler copies its table to the
+ * stack whole and calls tbl.f[D_800E6280.unk_110A]. The types were local to each .c file before. */
+typedef struct {
+    void (*f[15])();
+} FnTbl15; /* size 0x3C */
+typedef struct {
+    void (*f[18])();
+} FnTbl18; /* size 0x48 */
+typedef struct {
+    void (*f[20])();
+} FnTbl20; /* size 0x50 */
+typedef struct {
+    void (*f[28])();
+} FnTbl28; /* size 0x70 */
+typedef struct {
+    void (*f[29])();
+} FnTbl29; /* size 0x74 */
+typedef struct {
+    void (*f[31])();
+} FnTbl31; /* size 0x7C */
+typedef struct {
+    void (*f[32])();
+} FnTbl32; /* size 0x80 */
+typedef struct {
+    void (*f[34])();
+} FnTbl34; /* size 0x88 */
+typedef struct {
+    void (*f[35])();
+} FnTbl35; /* size 0x8C */
+typedef struct {
+    void (*f[36])();
+} FnTbl36; /* size 0x90 */
+typedef struct {
+    void (*f[37])();
+} FnTbl37; /* size 0x94 */
+typedef struct {
+    void (*f[38])();
+} FnTbl38; /* size 0x98 */
+typedef struct {
+    void (*f[39])();
+} FnTbl39; /* size 0x9C */
+typedef struct {
+    void (*f[40])();
+} FnTbl40; /* size 0xA0 */
+typedef struct {
+    void (*f[41])();
+} FnTbl41; /* size 0xA4 */
+typedef struct {
+    void (*f[42])();
+} FnTbl42; /* size 0xA8 */
+typedef struct {
+    void (*f[43])();
+} FnTbl43; /* size 0xAC */
+typedef struct {
+    void (*f[44])();
+} FnTbl44; /* size 0xB0 */
+typedef struct {
+    void (*f[45])();
+} FnTbl45; /* size 0xB4 */
+typedef struct {
+    void (*f[46])();
+} FnTbl46; /* size 0xB8 */
+typedef struct {
+    void (*f[47])();
+} FnTbl47; /* size 0xBC */
+typedef struct {
+    void (*f[48])();
+} FnTbl48; /* size 0xC0 */
+typedef struct {
+    void (*f[50])();
+} FnTbl50; /* size 0xC8 */
+typedef struct {
+    void (*f[51])();
+} FnTbl51; /* size 0xCC */
+typedef struct {
+    void (*f[53])();
+} FnTbl53; /* size 0xD4 */
+typedef struct {
+    void (*f[55])();
+} FnTbl55; /* size 0xDC */
+typedef struct {
+    void (*f[56])();
+} FnTbl56; /* size 0xE0 */
+typedef struct {
+    void (*f[57])();
+} FnTbl57; /* size 0xE4 */
+typedef struct {
+    void (*f[61])();
+} FnTbl61; /* size 0xF4 */
+typedef struct {
+    void (*f[63])();
+} FnTbl63; /* size 0xFC */
+typedef struct {
+    void (*f[65])();
+} FnTbl65; /* size 0x104 */
+typedef struct {
+    void (*f[67])();
+} FnTbl67; /* size 0x10C */
+typedef struct {
+    void (*f[74])();
+} FnTbl74; /* size 0x128 */
+typedef struct {
+    void (*f[76])();
+} FnTbl76; /* size 0x130 */
+typedef struct {
+    void (*f[104])();
+} FnTbl104; /* size 0x1A0 */
+extern FnTbl76 D_8015BF50;
+extern FnTbl18 D_8015C080;
+extern FnTbl35 D_8015C0C8;
+extern FnTbl48 D_8015C154;
+extern FnTbl32 D_8015C214;
+extern FnTbl35 D_8015C294;
+extern FnTbl34 D_8015C320;
+extern FnTbl36 D_8015C3A8;
+extern FnTbl37 D_8015C438;
+extern FnTbl50 D_8015C4CC;
+extern FnTbl39 D_8015C594;
+extern FnTbl32 D_8015C630;
+extern FnTbl34 D_8015C6B0;
+extern FnTbl104 D_8015C738;
+extern FnTbl29 D_8015C8D8;
+extern FnTbl45 D_8015C94C;
+extern FnTbl41 D_8015CA00;
+extern FnTbl35 D_8015CAA4;
+extern FnTbl76 D_8015CB30;
+extern FnTbl74 D_8015CC60;
+extern FnTbl31 D_8015CD88;
+extern FnTbl31 D_8015CE04;
+extern FnTbl15 D_8015CF3C;
+extern FnTbl28 D_8015D098;
+extern FnTbl42 D_8015E31C;
+extern FnTbl39 D_8015E3C4;
+extern FnTbl44 D_8015E460;
+extern FnTbl43 D_8015E530;
+extern FnTbl44 D_8015E5DC;
+extern FnTbl41 D_8015E730;
+extern FnTbl43 D_8015E7D4;
+extern FnTbl65 D_8015E880;
+extern FnTbl45 D_8015E984;
+extern FnTbl40 D_8015EAE8;
+extern FnTbl39 D_8015EB88;
+extern FnTbl40 D_8015EC24;
+extern FnTbl40 D_8015ECC4;
+extern FnTbl55 D_8015EE30;
+extern FnTbl42 D_8015EFF4;
+extern FnTbl47 D_8015F09C;
+extern FnTbl41 D_8015F210;
+extern FnTbl57 D_8015F350;
+extern FnTbl15 D_8015F4DC;
+extern FnTbl67 D_8015F5D4;
+extern FnTbl42 D_8015F6E0;
+extern FnTbl41 D_8015F788;
+extern FnTbl53 D_8015F82C;
+extern FnTbl38 D_8015F9D0;
+extern FnTbl45 D_8015FA68;
+extern FnTbl40 D_8015FB5C;
+extern FnTbl56 D_8015FBFC;
+extern FnTbl50 D_8015FD90;
+extern FnTbl61 D_8015FE58;
+extern FnTbl41 D_8015FF4C;
+extern FnTbl43 D_8015FFF0;
+extern FnTbl47 D_80160150;
+extern FnTbl63 D_8016020C;
+extern FnTbl42 D_80160308;
+extern FnTbl36 D_801603B0;
+extern FnTbl38 D_801604F0;
+extern FnTbl56 D_80160588;
+extern FnTbl43 D_80160668;
+extern FnTbl51 D_80160714;
+extern FnTbl44 D_80160890;
+extern FnTbl46 D_80160940;
+extern FnTbl44 D_801609F8;
+extern FnTbl20 D_80160B80;
+extern FnTbl20 D_80160BD0;
+#endif

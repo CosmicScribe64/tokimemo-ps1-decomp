@@ -710,7 +710,6 @@ void func_80144720(void) {
     func_8004284C();
 }
 
-
 void func_801448D4(void) {
     func_80083808();
     switch (D_800E6280.unk_1109) {

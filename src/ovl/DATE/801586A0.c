@@ -4,11 +4,6 @@
 
 extern u32 D_80122CD0;
 
-typedef struct {
-    void (*f[43])();
-} FnTbl43; /* size 0xAC */
-extern FnTbl43 D_80160668;
-
 void func_801586A0(void) {
     D_80160440 = 0x801CE124;
     D_80160444 = 0x801CE128;
@@ -208,11 +203,6 @@ void func_8015905C(void) {
     func_8004284C();
 }
 
-typedef struct {
-    void (*f[38])();
-} FnTbl38; /* size 0x98 */
-extern FnTbl38 D_801604F0;
-
 void func_8015908C(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
     FnTbl38 tbl;
@@ -237,11 +227,6 @@ void func_80159174(void) {
     }
     func_8004284C();
 }
-
-typedef struct {
-    void (*f[56])();
-} FnTbl56; /* size 0xE0 */
-extern FnTbl56 D_80160588;
 
 void func_801591BC(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
@@ -274,11 +259,6 @@ void func_8015931C(void) {
     func_80158800();
     func_8004284C();
 }
-
-typedef struct {
-    void (*f[51])();
-} FnTbl51; /* size 0xCC */
-extern FnTbl51 D_80160714;
 
 void func_80159354(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

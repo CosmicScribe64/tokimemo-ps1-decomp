@@ -184,7 +184,6 @@ void func_8014A4DC(void) {
     }
 }
 
-
 void func_8014A810(void) {
     s32 i;
     s32 j;

@@ -4,11 +4,6 @@
 
 extern u32 D_80122CD0;
 
-typedef struct {
-    void (*f[44])();
-} FnTbl44; /* size 0xB0 */
-extern FnTbl44 D_80160890;
-
 void func_801594B0(void) {
     D_801607E0 = 0x801CE0F4;
     D_801607E4 = 0x801CE0F8;
