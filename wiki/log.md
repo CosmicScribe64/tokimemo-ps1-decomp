@@ -15810,3 +15810,7 @@ Opened [[tickets/T-18200-types-first-en_nichi]] (In Progress) under [[tickets/T-
 ## [2026-10-16] ticket | T-18400 Done
 
 [[tickets/T-18400-types-first-kangei]] reviewed against `CODING_STANDARDS.md`: one finding (the family page said 11 callee prototypes, the header has 12), fixed; KANGEI sha1 OK, headers, globals and prototype checks pass. 4 functions matched (2,596 bytes). In Review to Done, card moved to Done.
+
+## [2026-10-16] ticket | T-18700 Types-first: BUNKASAI, In Progress
+
+Created [[tickets/T-18700-types-first-bunkasai]] (branch `w3-bunkasai-types` from `w2-good`, wave 3, [[tickets/T-16990-wave-3-conveyor]]): recover BUNKASAI's shared types in `include/ovl/BUNKASAI.h`, redraft the unmatched functions with the adapted drivers into `drafts/T-18700/`, then cut packages. Card in In Progress.
