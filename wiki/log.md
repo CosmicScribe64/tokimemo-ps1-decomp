@@ -16377,3 +16377,18 @@ Integrated main 0925704e (T-17108). Only the append-only log conflicted; preserv
 ## [2026-10-16] setup | T-20003 final upstream refresh
 
 Integrated main dee64939 (T-17109), preserving both shared wiki histories. This upstream batch changes other RPG_BAT functions and adds unrelated declarations/guards; the contribution's function bodies and caller views are unchanged. Recorded validation bases and results remain explicit in the ticket. Ticket stays In Review.
+## [2026-10-16] ticket | T-17106 created and started
+
+[[tickets/T-17106-w3-rpg-bat-p06]] created and started: wave 3 package for RPG_BAT `src/ovl/RPG_BAT/80154430.c` (`func_80154DD8`, `func_80155868`, `func_80154760`), from [[tickets/T-17100-types-first-rpg_bat]].
+
+## [2026-10-16] ticket | T-17106 In Progress to In Review
+
+[[tickets/T-17106-w3-rpg-bat-p06]] In Progress to In Review: 1 of 3 functions matched (`func_80155868`, 520 bytes, plain C with three FAKE marks: unused frame local, `0x2FU`, four `(unused - unused)` references that move uopt's 20-reference block boundary). `func_80154760` (197 rows) and `func_80154DD8` (216 rows) restored to `INCLUDE_ASM`, drafts in `drafts/T-17106/`. Notes in [[matching-notes]], rows in [[data/t0018-cases]], two rows in [[register-cheatsheet]].
+
+## [2026-10-16] build | T-17106 clean rebuild and checks
+
+Clean rebuild of the w3-rpg-bat-p06 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.bin: OK` with `func_80155868` as C), `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17106-w3-rpg-bat-p06]].
+
+## [2026-10-16] ticket | T-17106 Done
+
+[[tickets/T-17106-w3-rpg-bat-p06]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of RPG_BAT OK (headers OK, globals OK, sha1 OK, `sync_protos --check-branch` OK). 1 of 3 functions matched (`func_80155868`, 520 bytes); `func_80154760` and `func_80154DD8` stay `INCLUDE_ASM` with drafts in `drafts/T-17106/`. Card moved in [[kanban]]. Merge via the wave 3 merge script.
