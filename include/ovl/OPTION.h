@@ -151,4 +151,72 @@ extern s32 D_8013D308;
 /* Four pointers walked up to the next label, D_8013D360 (func_8013554C, T-17800). */
 extern u8 *D_8013D350[4];
 
+/* Views of shared records, moved here from the .c files (T-17800). */
+/* View of the 0x44-byte sprite records of the D_8011ECD0 table that the option menus number
+ * (D_80120650 is record 96; the menus write the s16 at +0x18 of records 107-113). T-9020 */
+typedef struct OptSpr44 {
+    /* 0x00 */ s32 unk_00[6];
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ u8 pad1A[0x2A];
+} OptSpr44; /* size 0x44 */
+
+/* Four s16 rows filled by func_801325A0 for func_8004F870. */
+typedef struct Arrs4x8 {
+    /* 0x00 */ s16 a[8];
+    /* 0x10 */ s16 b[8];
+    /* 0x20 */ s16 c[8];
+    /* 0x30 */ s16 d[8];
+} Arrs4x8; /* size 0x40 */
+
+void func_801325A0(Arrs4x8 *p);
+
+/* Packed Rec38 settings fields, T-14400. */
+typedef struct OptionCharBits {
+    /* 0x00 */ u32 b0 : 1;
+    /* 0x00 */ u32 b1 : 1;
+    /* 0x00 */ u32 b2 : 1;
+    /* 0x00 */ u32 b3 : 1;
+    /* 0x00 */ u32 unk_04 : 2;
+    /* 0x00 */ u32 b6 : 1;
+    /* 0x00 */ u32 b7 : 1;
+    /* 0x00 */ u32 b8 : 1;
+    /* 0x00 */ u32 f9 : 3;
+    /* 0x00 */ u32 b12 : 1;
+    /* 0x00 */ u32 b13 : 1;
+    /* 0x00 */ u32 unk_14 : 6;
+    /* 0x00 */ u32 f20 : 4;
+    /* 0x00 */ u32 f24 : 8;
+} OptionCharBits; /* size 0x04 */
+
+/* Packed player word at GameState +0xF4; byte/halfword bitfield accesses, T-14400. */
+typedef struct OptionPlayerBits {
+    /* 0x00 */ u32 unk_00 : 8;
+    /* 0x00 */ u32 f8 : 4;
+    /* 0x00 */ u32 f12 : 4;
+    /* 0x00 */ u32 b16 : 1;
+    /* 0x00 */ u32 b17 : 1;
+    /* 0x00 */ u32 b18 : 1;
+    /* 0x00 */ u32 b19 : 1;
+    /* 0x00 */ u32 b20 : 1;
+    /* 0x00 */ u32 unk_21 : 11;
+} OptionPlayerBits; /* size 0x04 */
+
+/* Packed schedule word at GameState +0x54C, T-14400. */
+typedef struct OptionScheduleBits {
+    /* 0x00 */ u32 f0 : 5;
+    /* 0x00 */ u32 unk_05 : 19;
+    /* 0x00 */ u32 b24 : 1;
+    /* 0x00 */ u32 f25 : 4;
+    /* 0x00 */ u32 unk_29 : 3;
+} OptionScheduleBits; /* size 0x04 */
+
+/* Packed date word at GameState +0xF8 and Rec38 +0x10: GsDateBits (main_api.h) plus the two bits at 9-10,
+ * read as `& 0xF`, `<< 0x17 >> 0x1B`, `<< 0x15 >> 0x1E` (func_8013A7EC, T-17800). */
+typedef struct OptionDateBits {
+    /* 0x00 */ u32 f0 : 4;
+    /* 0x00 */ u32 f4 : 5;
+    /* 0x00 */ u32 f9 : 2;
+    /* 0x00 */ u32 unk_11 : 21;
+} OptionDateBits; /* size 0x04 */
+
 #endif /* OVL_OPTION_H */

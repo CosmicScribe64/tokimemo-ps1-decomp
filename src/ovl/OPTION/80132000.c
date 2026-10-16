@@ -4,14 +4,6 @@
 /* FAKE: scoped minimum aggregate view of the word and adjacent flags, based on observed +0x14 indexing. T-9540 */
 extern FlagsWork24 D_800E7D10;
 
-/* View of the 0x44-byte sprite records of the D_8011ECD0 table that the option menus number
- * (D_80120650 is record 96; the menus write the s16 at +0x18 of records 107-113). T-9020 */
-typedef struct OptSpr44 {
-    /* 0x00 */ s32 unk_00[6];
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad1A[0x2A];
-} OptSpr44; /* size 0x44 */
-
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132000);
 
 void func_801320B0(void) {
@@ -50,13 +42,6 @@ void func_801324E8(void) {
         i = n;
     } while (n != 8);
 }
-
-typedef struct {
-    s16 a[8];
-    s16 b[8];
-    s16 c[8];
-    s16 d[8];
-} Arrs4x8; /* size 0x40 */
 
 void func_801325A0(Arrs4x8 *p) {
     s32 i;
