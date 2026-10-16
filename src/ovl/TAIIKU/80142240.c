@@ -247,8 +247,7 @@ void func_80143CC0(void) {
     }
 }
 
-/* FAKE: overlapping word/halfword views use the existing byte data island;
- * its coordinate record layout remains incomplete. T-9550 */
+/* D_8014A13C has to be an array here (not a struct) so that the base stays in a register; see TaiRunnerB. T-16550 */
 void func_80143D24(void) {
     if (D_8014A13C[0].unk_08 < 0 || D_8014A1CE == 0) {
         if (D_8014A1D0 != 0) {
@@ -273,8 +272,6 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80143F50);
 void func_8014430C(void) {
 
     if ((u8) D_8014A118 >= 0xBU) {
-        /* FAKE: word view of the existing byte-record array; its full
-         * structure is not recovered yet. T-10010. */
         D_8014A1D0 += (D_8014A13C[0].unk_08);
         D_8014A118 = 0;
     }
@@ -366,6 +363,8 @@ void func_80144834(void) {
 
 extern Tri3 D_8014A334;
 
+/* FAKE: byte-offset walk over the TaiRunnerB records; with r = &D_8014A13C[i + 1] or the byte base plus 0x24 * i
+ * cast to TaiRunnerB *, the fields give different code (checked in the T-16550 review). T-16550 */
 void func_801448D4(void) {
     s32 i; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     Tri3 tbl;
@@ -463,6 +462,8 @@ void func_80144B40(void) {
 
 extern Tri3S D_8014A358;
 
+/* FAKE: byte-offset walk over the TaiRunnerB records, same as func_801448D4 (the field form was checked in the
+ * T-16550 review and differs). T-16550 */
 void func_80144C70(void) {
     s32 i; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     Tri3S tbl;

@@ -494,9 +494,6 @@ typedef struct TaiRunnerA {
     /* 0x1C */ u32 unk_1C;
     /* 0x20 */ TaiHalves unk_20; /* 16.16 position */
 } TaiRunnerA; /* size 0x24 */
-/* D_80149208..D_80149297: the player and three other runners, one object. Every access in the
- * original goes through %lo(D_80149208); the matched loops index the other runners by i from 0
- * (cpu[i]), and func_80138680 indexes all four by runner number. T-16550. */
 /* Game B runner record (80142240.c), 0x24 bytes: a second layout for the same roles as
  * TaiRunnerA (speed 0x08, accumulated speed 0x0C, timers 0x10/0x18/0x1A, 16.16 position 0x14). T-16550. */
 typedef struct TaiRunnerB {
@@ -519,6 +516,9 @@ typedef struct TaiRunnerB {
  * constant-index clamps of func_80143D24, which a struct member does not; a 4-element array does. T-16550. */
 extern TaiRunnerB D_8014A13C[4];
 
+/* D_80149208..D_80149297: the player and three other runners, one object. Every access in the
+ * original goes through %lo(D_80149208); the matched loops index the other runners by i from 0
+ * (cpu[i]), and func_80138680 indexes all four by runner number. T-16550. */
 typedef struct TaiRunnersA {
     /* 0x00 */ TaiRunnerA player;
     /* 0x24 */ TaiRunnerA cpu[3];

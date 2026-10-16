@@ -670,6 +670,8 @@ void func_80137090(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137228);
 
+/* FAKE: byte-offset walk over the cpu runners of D_80149208; written as TaiRunnerA fields (p = &D_80149208.cpu[i],
+ * or the byte base plus 0x24 * i cast to TaiRunnerA *) the code differs (checked in the T-16550 review). T-16550 */
 void func_8013732C(void) {
     s32 i;
     u8 *p;
@@ -796,6 +798,8 @@ s32 func_80138680(s32 arg0, s32 arg1) {
         if (D_80122E94 == 1 && slot == 4) {
             slot += large.value[D_80149320[D_801491DC]];
         } else {
+            /* FAKE: indexes the four runners (player, cpu[3]) of D_80149208 from the player record; the
+             * object is player + cpu[3], not one array (see TaiRunnersA). T-16550 */
             slot += large.value[((TaiValue44 *)D_8011ECD0)[(&D_80149208.player)[arg0].unk_02 + 46].unk_16 >> 3];
         }
     }

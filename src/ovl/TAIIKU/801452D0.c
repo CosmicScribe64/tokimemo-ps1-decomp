@@ -373,16 +373,16 @@ void func_80147120(void) {
 void func_80147210(void) {
     s32 i;
     s32 k;
-    u8 *v;
+    TaiikuController *v;
     u8 *a;
     s32 d;
     s32 x;
 
-    for (i = 0, v = (u8 *)D_8014A400, a = D_8011ECD0, d = D_8014A3DE; i < 3; i++, v += 0x1C, a += 0x44) {
-        *(s32 *)(v + 0x18) += *(s32 *)(v + 0x14);
-        x = *(s16 *)(v + 0x1A) - d;
+    for (i = 0, v = D_8014A400, a = D_8011ECD0, d = D_8014A3DE; i < 3; i++, v++, a += 0x44) {
+        v->position.w += v->unk_14;
+        x = v->position.h[1] - d;
         *(s16 *)(a + 0x19EA) = x - 0xA0;
-        if (D_80120896 + (i + 1) * 8 < *(s16 *)(a + 0x19EA) + 0x40 && v[1] == 0) {
+        if (D_80120896 + (i + 1) * 8 < *(s16 *)(a + 0x19EA) + 0x40 && v->unk_01 == 0) {
             D_801208CC = 0x4F;
             k = 0;
             if (D_8014A3D8[0] != 0) {
@@ -391,8 +391,8 @@ void func_80147210(void) {
                 } while (D_8014A3D8[k] != 0);
             }
             D_8014A3D8[k] = i + 2;
-            v[1] = 1;
-            x = *(s16 *)(v + 0x1A) - d;
+            v->unk_01 = 1;
+            x = v->position.h[1] - d;
         }
         if (x >= 0x1E1 || x < -0xA0) {
             a[0x19C7] = 0;
@@ -461,17 +461,17 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147F58);
 
 void func_80148194(s32 arg0) {
     u8 *temp_v0;
-    u8 *temp_v1;
+    TaiikuSlot1C *temp_v1;
 
-    temp_v1 = (u8 *)&D_8014A454[arg0];
+    temp_v1 = &D_8014A454[arg0];
     temp_v0 = (arg0 * 0x44) + D_8011ECD0;
-    *(u8 *)(temp_v1 + 0xC) = 1;
-    *(u8 *)(temp_v1 + 0xD) = 0;
+    temp_v1->unk_0C = 1;
+    temp_v1->unk_0D = 0;
     *(s16 *)(temp_v0 + 0x1998) = (s16) ((arg0 * 2) + 0x51);
     *(s16 *)(temp_v0 + 0x1AB6) = (s16) (*(s16 *)(temp_v0 + 0x19A6) + 0x74);
     *(s16 *)(temp_v0 + 0x1ABA) = (s16) (*(s16 *)(temp_v0 + 0x19AA) + 0x32);
-    *(s16 *)(temp_v1 + 0x2) = 0x6A;
-    *(s16 *)(temp_v1 + 0x6) = 0x32;
+    temp_v1->unk_02 = 0x6A;
+    temp_v1->unk_06 = 0x32;
     if (arg0 == 0) {
         func_80044750(0x503);
     }
@@ -479,17 +479,17 @@ void func_80148194(s32 arg0) {
 
 void func_80148228(s32 arg0) {
     u8 *temp_v0;
-    u8 *temp_v1;
+    TaiikuSlot1C *temp_v1;
 
-    temp_v1 = (u8 *)&D_8014A454[arg0];
+    temp_v1 = &D_8014A454[arg0];
     temp_v0 = (arg0 * 0x44) + D_8011ECD0;
-    *(u8 *)(temp_v1 + 0xC) = 2;
-    *(u8 *)(temp_v1 + 0xD) = 0;
+    temp_v1->unk_0C = 2;
+    temp_v1->unk_0D = 0;
     *(s16 *)(temp_v0 + 0x1998) = (s16) ((arg0 * 2) + 0x52);
     *(s16 *)(temp_v0 + 0x1AB6) = (s16) (*(s16 *)(temp_v0 + 0x19A6) - 0x17);
     *(s16 *)(temp_v0 + 0x1ABA) = (s16) (*(s16 *)(temp_v0 + 0x19AA) + 0x32);
-    *(s16 *)(temp_v1 + 0x2) = -0x17;
-    *(s16 *)(temp_v1 + 0x6) = 0x32;
+    temp_v1->unk_02 = -0x17;
+    temp_v1->unk_06 = 0x32;
     if (arg0 == 0) {
         func_80044750(0x503);
     }
