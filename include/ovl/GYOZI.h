@@ -206,7 +206,9 @@ typedef struct GyoziGirl {
     /* 0x0A */ s16 unk_0A;
     /* 0x0C */ u8 unk_0C[2];
     /* 0x0E */ s16 unk_0E;
-    /* 0x10 */ u8 unk_10[0x28];
+    /* 0x10 */ u8 unk_10[4];
+    /* 0x14 */ s32 unk_14; /* T-17600: lw in func_801378D0 and func_80140464 */
+    /* 0x18 */ u8 unk_18[0x20];
 } GyoziGirl; /* size 0x38 */
 
 typedef struct GyoziWork {
