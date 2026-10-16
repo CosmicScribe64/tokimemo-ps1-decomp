@@ -15776,3 +15776,7 @@ Opened [[tickets/T-18200-types-first-en_nichi]] (In Progress) under [[tickets/T-
 ## [2026-10-16] ticket | T-18200 Done
 
 [[tickets/T-18200-types-first-en_nichi]] In Review to Done after the code review against `CODING_STANDARDS.md`: 2 findings, both fixed (three `(u8 *)D_8013984C` byte walks rewritten as `EnObj` fields, a stray blank line in `include/ovl/EN_NICHI.h`). 5 functions matched (2,500 bytes: `func_80132834` with one FAKE, `func_80136B74`, `func_80134258`, `func_80133CA8`, `func_80135A48`), 19 redrafts, 2 packages (T-18201..T-18202). EN_NICHI sha1 OK after a forced rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] ticket | T-18600 In Progress
+
+[[tickets/T-18600-types-first-master]] created and claimed (branch `w3-master-types` from `w2-good`): types-first pass for MASTER, drivers adapted from T-16550/T-16560 and their descendants into `drafts/T-18600/redraft.py`. Links [[speedup-research-2026-10-16]], [[master-types-pilot]].
