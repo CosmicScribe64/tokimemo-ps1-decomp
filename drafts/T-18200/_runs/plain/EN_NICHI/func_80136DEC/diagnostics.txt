@@ -1,0 +1,13 @@
+python3 failed:
+ ----------------------------------------------------------------------------^
+cfe: Error: drafts/T-18200/_runs/plain/EN_NICHI/func_80136DEC/work/guarded.c, line 3005: Selector requires struct/union as left hand side
+     *(s32 *)((unsigned char *)(&sp6C) + (36)) = (s32) D_80139CC0.value[0x12].unk0;
+ ----------------------------------------------------------------------------^
+cfe: Warning 749: drafts/T-18200/_runs/plain/EN_NICHI/func_80136DEC/work/guarded.c, line 3007: structure has no member named 'unk0'
+     sp54 = (s32) D_80139CEC.unk0;
+ ---------------------------^
+cfe: Warning 689: drafts/T-18200/_runs/plain/EN_NICHI/func_80136DEC/work/guarded.c, line 3099: Unacceptable operand of == or !=
+         } while (var_v0_3 != &D_8011F2A8);
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18200/_runs/plain/EN_NICHI/func_80136DEC/work -o drafts/T-18200/_runs/plain/EN_NICHI/func_80136DEC/work/guarded.o /tmp/asm_processorfaq9eobr/preprocessed_a70752336f2d46ebbf4808982643492e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib3y8dxx0s/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18200/_runs/plain/EN_NICHI/func_80136DEC/work/guarded.o drafts/T-18200/_runs/plain/EN_NICHI/func_80136DEC/work/guarded.c

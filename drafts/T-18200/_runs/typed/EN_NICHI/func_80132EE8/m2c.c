@@ -1,0 +1,66 @@
+void func_80132EE8(void) {
+    EnObj *var_v0;
+    EnObj *var_v0_2;
+    s32 temp_t0;
+    s32 temp_t7;
+    s32 temp_v1;
+    s32 var_a0;
+    s32 var_a1;
+
+    temp_t7 = D_80139AFC + 1;
+    D_80139AFC = temp_t7;
+    if ((D_80139AF4 >= 0x50) && (temp_t7 >= 0x1E)) {
+        var_a0 = D_80139B04;
+        var_a1 = D_80139B00;
+        var_v0 = D_8013984C;
+        do {
+            temp_v1 = var_v0->unk_00;
+            temp_t0 = temp_v1 & 0x7F;
+            if (temp_v1 & 0x80) {
+                var_v0->unk_00 = temp_t0;
+                if (temp_t0 == 4) {
+                    var_a0 -= 1;
+                } else {
+                    var_a1 -= 1;
+                }
+            }
+            var_v0 += 0x30;
+        } while (var_v0 != D_80139A2C);
+        D_80139B00 = var_a1;
+        D_80139B04 = var_a0;
+        D_800E6280.unk_F7A = *(s16 *)((unsigned char *)D_8011ECD0 + (10374));
+        D_800E6280.unk_F7C = *(s16 *)((unsigned char *)D_8011ECD0 + (10378));
+        func_80135A48((s32) D_8011ECD0->unk_26, (s32) D_8011ECD0->unk_2A);
+        func_801369F4(0x502);
+        D_80139AF8 = 3;
+    }
+    if (D_80139AFC >= 0x3C) {
+        D_800E6280.unk_F7A = *(s16 *)((unsigned char *)D_8011ECD0 + (10374));
+        D_800E6280.unk_F7C = *(s16 *)((unsigned char *)D_8011ECD0 + (10378));
+        D_80139AFC = 0;
+        D_80139AF8 = 0;
+        func_801369F4(0x50D);
+        if (D_8013984C->unk_00 & 0x80) {
+            D_8013984C->unk_00 = 0;
+        }
+        var_v0_2 = &D_8013984C[2];
+        if (D_8013984C[1].unk_00 & 0x80) {
+            D_8013984C[1].unk_00 = 0;
+        }
+        do {
+            if (var_v0_2->unk_00 & 0x80) {
+                var_v0_2->unk_00 = 0;
+            }
+            if (*(s32 *)((unsigned char *)var_v0_2 + (48)) & 0x80) {
+                *(s32 *)((unsigned char *)var_v0_2 + (48)) = 0;
+            }
+            if (*(s32 *)((unsigned char *)var_v0_2 + (96)) & 0x80) {
+                *(s32 *)((unsigned char *)var_v0_2 + (96)) = 0;
+            }
+            if (*(s32 *)((unsigned char *)var_v0_2 + (144)) & 0x80) {
+                *(s32 *)((unsigned char *)var_v0_2 + (144)) = 0;
+            }
+            var_v0_2 += 0xC0;
+        } while (var_v0_2 != D_80139A2C);
+    }
+}
