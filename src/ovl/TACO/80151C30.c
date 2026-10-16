@@ -103,7 +103,17 @@ void func_80152110(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_801521EC);
+/* The pair tables are read as words and bytes at i * 2 - 2 (one shared multiply), not as TcPair records at i - 1: the pointer walks then start from one product. T-16563 */
+void func_801521EC(s32 arg0, s32 arg1) {
+    s32 i;
+
+    for (i = arg0; i < arg0 + 0x13; i += 3) {
+        func_801472D4(i, 0, ((s32 *)D_80160290)[i * 2 - 2], ((s32 *)D_80160290)[i * 2 - 1], ((u8 *)D_801603A8)[i * 2 - 2], ((u8 *)D_801603A8)[i * 2 - 1]);
+        func_801478F8(i, D_801603F0[arg1]);
+        arg1++;
+    }
+}
+
 
 void func_801522B0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3) {
     u8 var_v0;
