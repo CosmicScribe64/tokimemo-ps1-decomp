@@ -1,7 +1,7 @@
 ---
 id: T-20000
 title: Avoid whole-tree cache scans for scoped queues
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-16
 updated: 2026-10-16
@@ -41,3 +41,5 @@ PR #36 submitted; upstream main 639693d2 merged into the contribution branch. Th
 Maintainer review follow-up (2026-10-16): empty comma-separated --files entries now drop before scope/cache selection and final filtering. Leading/trailing/repeated commas no longer broaden a valid or unknown prefix to every file; an all-empty list uses the normal whole-project cache. Two new regressions fail before the fix and pass afterward. Updated load_cached's docstring to distinguish main's uncached scoped path from explicit full-cache callers, and its progress message now names selected files for a scoped load. Docker tools/test_queue.py: 54 tests pass (build/T-20000/review-tests.log); both pre-fix failures recorded in review-regressions-before.log. Local standards review: no findings; only intended Python/wiki edits, no game data. Awaiting maintainer acceptance.
 
 Coordination response: claim new files/function groups through a GitHub issue before starting; use Discussions for questions/general coordination. The maintainer handles wiki conflicts when merging, so no further main merges are needed on this PR.
+
+2026-10-16, maintainer review (PR #36): review points addressed; verified clean rebuild 27/27, headers, globals, prototypes and 1,189 tool tests OK. Status Done.
