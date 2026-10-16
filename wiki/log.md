@@ -16310,6 +16310,18 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17102 Done
 [[tickets/T-17102-w3-rpg-bat-p02]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 3 of 3 functions matched (`func_80151C10`, `func_80156D78`, `func_80157158`, 3,056 bytes). Rebuild: RPG_BAT unit sha1 OK, headers OK, globals OK. Card moved to Done.
 
+## [2026-10-16] ticket | T-17108 In Progress
+
+[[tickets/T-17108-w3-rpg-bat-p08]] created and In Progress: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`; `func_8014E994`, `func_8014AB84`, `func_8014AC74`, `func_8014F278`, `func_8014EF8C`, `func_8014EBEC`). Branch `w3-rpg-bat-p08` from `w2-good`, worktree `tokimemo-wt/w3-rpg-bat-p08`.
+
+## [2026-10-16] ticket | T-17108 In Review
+
+[[tickets/T-17108-w3-rpg-bat-p08]] In Progress to In Review: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`), 6 of 6 functions matched (1,844 bytes): `func_8014E994`, `func_8014EBEC`, `func_8014EF8C`, `func_8014F278`, `func_8014AC74`, `func_8014AB84`. One shared counter for the word-clear loops, the `i + 96` record loop, first-symbol element views for the shared-`$at` stores, typed `DisplayActor44` records and element indexes instead of byte-offset casts; seven old T-0018 rows solved. Notes in [[matching-notes]] (section T-17108), five rows in [[register-cheatsheet]], update in [[data/t0018-cases]], section in [[rpg-bat-family-results]]. Awaiting code review.
+
+## [2026-10-16] ticket | T-17108 Done
+
+[[tickets/T-17108-w3-rpg-bat-p08]] In Review to Done after the code review: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`), 6 of 6 functions matched (1,844 bytes: `func_8014E994`, `func_8014EBEC`, `func_8014EF8C`, `func_8014F278`, `func_8014AC74`, `func_8014AB84`; six ticketed FAKE comments). No findings. Headers, globals and proto checks OK, build up to date.
+
 ## [2026-10-16] ticket | T-20001 GYOZI helper In Progress
 
 Created [[tickets/T-20001-gyozi-helper]] on codex/match-gyozi-helper from upstream main 639693d2. Whole-tree dupes report identifies GYOZI func_8013506C (172 bytes, guarded T-10850 draft) and matched SHOUGATU func_8013315C as a fillable pair including string data. Inspecting the two sources and the original function assembly before adapting the source. PR #36 independently contains the scoped queue fix and communication-platform question.
@@ -16333,3 +16345,7 @@ Integrated upstream main 81095a46, preserving all sides of the shared index, app
 ## [2026-10-16] setup | T-20001 follow upstream RPG merge
 
 Integrated main a8591fb8 into PR #37, retaining both append-only log and matching-note histories. The upstream delta affects RPG_BAT and wiki only; GYOZI code/header and the reviewed caller view are unchanged, so its recorded 172-byte linked proof remains applicable. [[tickets/T-20001-gyozi-helper]] remains In Review.
+
+## [2026-10-16] setup | T-20001 follow unrelated RPG batch
+
+Integrated main 0925704e into PR #37, retaining both log and matching-note histories. Upstream changes other RPG_BAT files and wiki only; GYOZI source/header and caller views are unchanged. The recorded actual linked proof and full checksum verification remain applicable to this contribution. [[tickets/T-20001-gyozi-helper]] stays In Review.
