@@ -4,6 +4,7 @@
 #include "common.h"
 #include "psx_types.h"
 #include "main_api.h"
+#include "game.h" /* DisplayActor44 view of D_8011ECD0 (T-18200) */
 
 typedef struct EnObj {
     /* 0x00 */ s32 unk_00;
@@ -43,6 +44,8 @@ void func_80135FBC(s32 arg0, s32 arg1);
 void func_80136B10(void);
 void func_801340CC(void);
 void func_80134258(s32 arg0);
+void func_801344F0(s32 arg0, s32 arg1);
+void func_80134784(s32 *arg0, s32 *arg1);
 void func_80133924(void);
 void func_80133CA8(void);
 void func_801330D0(void);
