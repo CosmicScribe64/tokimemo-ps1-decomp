@@ -15856,3 +15856,7 @@ Branch `w3-master-types`: clean build 665/665 with all 27 sha1 OK; `tools/check_
 ## [2026-10-16] ticket | T-18600 Done
 
 [[tickets/T-18600-types-first-master]] In Review to Done: code review against `CODING_STANDARDS.md` found 2 minor items (a ticket id missing from the `func_8013348C` slot comment, a trailing blank line in [[matching-notes]]), both fixed; MASTER sha1 OK, headers OK. 2 functions matched (1,208 bytes). Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-19021 In Progress
+
+[[tickets/T-19021-w3-d-p21]] created and In Progress: wave 3 package w3-d-p21 (TACO `src/ovl/TACO/80139170.c`: `func_8013A580`, `func_8013AD64`, `func_80139BCC`, `func_80139FB8`), worktree `w3-d-p21` from `w2-good`.
