@@ -15997,3 +15997,7 @@ Opus closer pass on [[tickets/T-19019-w3-d-p19]] (branch w3-d-p19): no new match
 ## [2026-10-16] ticket | T-19030 In Progress -> In Review
 
 [[tickets/T-19030-w3-d-p30]] In Review: wave 3 direct package w3-d-p30, 0 of 4 matched. TACO `func_8013B2A0` stays a guarded draft (20 differing instructions, registers only; the element chain `(&D_800E6280.unk_036)[0] = [1] = [2] = 0x10` and one pad word close the old store and frame blockers), `func_8013B460` typed redraft at 41 rows is back to `INCLUDE_ASM` (draft in `drafts/T-19030/TACO/func_8013B460/body.c`), `func_8015D0D0` and `func_8015D270` are hand-written libgte and stay `INCLUDE_ASM`. Rebuild 27/27, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK. Notes in [[matching-notes]] ("T-19030"), rows in [[data/t0018-cases]] and [[register-cheatsheet]]; card moved in [[kanban]], line in [[index]]. Header change: `include/ovl/TACO.h` declares `func_8013B404`.
+
+## [2026-10-16] build | T-19030 closer pass
+
+[[tickets/T-19030-w3-d-p30]]: Opus closer on TACO `func_8013B2A0`, no match. The 20-instruction gap is ugen's block-copy state: B in the original, F in the draft, because the copy follows the `bnez`. A probe global store gives B and all of the original's registers, and no C form without an added store was found. Updated the NON_MATCHING comment in `src/ovl/TACO/8013B170.c`, [[matching-notes]], [[data/t0018-cases]] and [[register-cheatsheet]]. Clean rebuild 27/27 and all checks OK. The ticket stays In Review.

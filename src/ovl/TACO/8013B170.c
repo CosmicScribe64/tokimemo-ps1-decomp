@@ -31,7 +31,11 @@ void func_8013B170(void) {
 }
 
 /* NON_MATCHING: T-19030, 20 differing instructions (registers only): the original hands out one more
- * ugen temporary before the second word of the struct copy ($t0 unused, every later $t0-$t5 one higher). */
+ * ugen temporary before the second word of the struct copy ($t0 unused, every later $t0-$t5 one higher).
+ * That is ugen's block-copy state (wiki/register-cheatsheet.md): the original copies in state B (two
+ * skips), this draft in state F (one skip), because the copy follows the bnez and no store comes
+ * between them. A probe store to a global before the copy gives state B and then every register
+ * of the original, so only the state is missing. No C form without an added store was found. */
 #ifdef NON_MATCHING
 void func_8013B2A0(void) {
     s32 pad; /* FAKE: unused 4-byte local gives frame 0x40 and puts flag at sp+0x38; real source unknown. T-19030 */
