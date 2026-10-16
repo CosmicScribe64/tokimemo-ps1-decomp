@@ -82,6 +82,7 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 | a promoted field is cleared or stored in both arms of an `if/else` with the store in the branch delay slot, or the write-back is missing | Write the clear inside both arms and do not add a self-assignment; uopt writes the promoted field back at the end of each arm by itself. TAIIKU `func_80143DD0` (T-16554). |
 | a pointer that starts at the struct base with a large displacement (`lui v0; addiu v0,v0,%lo(Base)`, `sw v1,0x1278(v0)`), the draft starts the pointer at base + k | Keep the constant in the subscript, `for (i = 0; i < 3; i++) g.arr[0x15 + i] = -1;`, not in the loop start (`i = 0x15`). Taking `&Base` anywhere in the function hoists the base into `$s0`. TAIIKU `func_8014280C` (T-16554). |
 | two stores `A[f(x[i])] = v; x[i] = v` come out in the other order | Two statements, each with the expression `i + const` written out, not a chain assignment. TAIIKU `func_8014280C` (T-16554). |
+| two constant stores come out in the other order and with the constants in swapped temporaries (`li t7,1; li t8,8` for `li t7,8; li t8,1`) | Both stores on one source line, in the order the constants should be numbered (`D_8014A13C[1].unk_14.halves.high = 8; D_8014A13C[1].unk_1C = 1;`), as1 then orders the stores the original's way. TAIIKU `func_8014357C` (T-16554). |
 | spilled loop variables sit 4 bytes too high (`sw a2,0x3C(sp)` against `0x38`) with the same frame size | A FAKE `u8 pad[4];` declared first reserves the top local word. TAIIKU `func_8014280C` (T-16554). |
 
 ## Do not

@@ -334,10 +334,11 @@ void func_80143470(void) {
     D_80120656 = 2;
 }
 
-/* NON_MATCHING: T-16554, 20 differing instructions (40 diff lines); register allocation only: the original
- * keeps the masked flags byte in $v1 (a uopt variable) and loads the s16 rating straight into $v0,
- * IDO leaves the flags in a ugen temporary and promotes the rating field into $a1 with a move.
- * Same family as TAIIKU func_8013D2B4 (wiki/data/t0018-cases.md). */
+/* NON_MATCHING: T-16554, 19 differing instructions (38 diff lines), one window: the original keeps the
+ * masked flags byte in $v1 (a uopt variable), loads the s16 rating straight into $v0 and loads the three
+ * constants 0x7E0000/0x7F0000/0x7D0000 together before three stores that share one `lui at`; IDO leaves the
+ * flags in a ugen temporary, promotes the rating field into $a1 with a move and emits each constant
+ * next to its store. Same family as TAIIKU func_8013D2B4 (wiki/data/t0018-cases.md). */
 #ifdef NON_MATCHING
 void func_8014357C(void) {
     GameState *gs;
@@ -364,8 +365,7 @@ void func_8014357C(void) {
     D_8014A13C[1].unk_04 = 0;
     D_8014A13C[1].unk_08 = 0;
     D_8014A13C[1].unk_0C = 0;
-    D_8014A13C[1].unk_14.halves.high = 8;
-    D_8014A13C[1].unk_1C = 1;
+    D_8014A13C[1].unk_14.halves.high = 8; D_8014A13C[1].unk_1C = 1;
     D_8014A13C[1].unk_10 = 0;
     D_8014A13C[1].unk_14.halves.low = 0;
     D_8014A13C[1].unk_20 = 0;
