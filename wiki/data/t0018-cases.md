@@ -41,6 +41,8 @@ Update (T-16563): the row for TACO `func_8015BD30` (T-16563, appended below) is 
 
 Update (T-16564): TACO `func_801557E8` (T-9180 row, spill homes) is matched: no `off`/pointer locals, one shared value, `(idx + D_8015EDB4)` and `(D_8015EDB4 + idx)` spelled per statement as the original's `addu` order shows. TACO `func_80138964` (promoted target/counter pair) is matched with the globals updated directly and the reset arm ending without a value. Two rows below are added for the package; `func_80137D00` (T-9180, T-10020) got more negative evidence.
 
+Update (T-19005): rows for OLH `func_80132114` (T-9350, T-9780) and `func_80135B8C` (T-9780) are matched in plain C (one FAKE `pad` and one FAKE `col` local). `func_80135B8C` is a direct port of its three 1.000-ratio siblings (`tools/siblings.py`); `func_80132114` needs the element chain through a declared local, see [[register-cheatsheet]] and [[matching-notes]], "T-19005".
+
 | file | function | category | symptom |
 |---|---|---|---|
 | TEL | `func_8013A40C` | promo | compare chain on a global, original loads it into $v1, IDO $v0 (batch B) |
