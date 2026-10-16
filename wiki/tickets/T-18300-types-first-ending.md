@@ -1,7 +1,7 @@
 ---
 id: T-18300
 title: "Types-first: ENDING"
-status: In Review
+status: Done
 assignee: claude (w3-ending-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -43,3 +43,19 @@ Start: 14 unmatched ENDING functions (16,188 bytes by `tools/siblings.py`), 1 of
   draft scored 0.
 - Packages: T-18301..T-18305 (`w3-ending-p01`..`p05`, 13 functions, 16,240 bytes in the package lists).
 - Checks: clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch`.
+
+### 2026-10-16 claude (review, w3-ending-types)
+
+Code review against `CODING_STANDARDS.md` (checklist in section 13), diff `w2-good...w3-ending-types`.
+
+- Scope: C and header changes only in `src/ovl/ENDING/*.c` and `include/ovl/ENDING.h`; `include/game.h`,
+  `include/main_api.h` and `config/` unchanged; `drafts/` has new files under `drafts/T-18300/` only (no existing
+  archive touched, no `.o`, asm, binaries or game data); no inline asm or `.word` in `src/`.
+- Match: `func_80132F18` is plain C (no `INCLUDE_ASM`, no `NON_MATCHING`); ENDING sha1 OK. No new `NON_MATCHING`
+  block; the one existing guard (`func_80134B18`, T-10520) is unchanged and the default build matches.
+- Headers: `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. The
+  `MAIN_API_OVERRIDE_dialogue_render` define sits before the includes with its reason, as for `set_kanji_string`.
+- Finding (fixed): the FAKE note of `func_80132F18` was the second line of a comment that began "Port of main
+  check_k_scroll", so it did not start with `FAKE` (section 7). Split into the port note and a separate
+  `/* FAKE: ... T-18300 */` comment. Comment-only; rebuilt with `tools/docker.sh ninja`, ENDING sha1 OK.
+- No other findings. Result: 1 function matched (280 bytes), 13 redrafted, packages T-18301..T-18305 handed on.

@@ -15700,3 +15700,7 @@ Created [[tickets/T-18300-types-first-ending]] (wave 3, [[tickets/T-16990-wave-3
 ## [2026-10-16] ticket | T-18300 In Review
 
 [[tickets/T-18300-types-first-ending]] In Progress to In Review: packages T-18301..T-18305 (`w3-ending-p01`..`p05`) cut by `inventory2.py`/`mklists3.py`; clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-18300 Done
+
+[[tickets/T-18300-types-first-ending]] In Review to Done: code review against `CODING_STANDARDS.md` found 1 minor item (the FAKE note of `func_80132F18` did not start its comment), fixed in comments only; ENDING sha1 OK, headers OK. 1 function matched (280 bytes). Card moved in [[kanban]], line in [[index]].
