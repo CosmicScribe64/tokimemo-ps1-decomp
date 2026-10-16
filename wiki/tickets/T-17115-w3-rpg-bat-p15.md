@@ -1,7 +1,7 @@
 ---
 id: T-17115
 title: Wave 3 package w3-rpg-bat-p15
-status: In Review
+status: Done
 assignee: claude-opus
 created: 2026-10-16
 updated: 2026-10-16
@@ -40,3 +40,6 @@ Worktree `tokimemo-wt/w3-rpg-bat-p15`, branch `w3-rpg-bat-p15`, base `w2-good`. 
 
 Started 21:00 UTC. `func_801328C4` matched 21:08, `func_8014A3DC` 21:19, the other two attempted until about 21:45 and restored to `INCLUDE_ASM`.
 
+### 2026-10-16 code review (claude-opus)
+
+Reviewed `w2-good...w3-rpg-bat-p15` against `CODING_STANDARDS.md`: no findings. Only the two owned C files (`src/ovl/RPG_BAT/801321D0.c`, `src/ovl/RPG_BAT/801498C0.c`), `include/ovl/RPG_BAT.h` and wiki pages changed; the only `drafts/` change is the new folder `drafts/T-17115/RPG_BAT/func_80149C5C/` (no existing archive touched); no `config/` or `asm/` change; no inline asm, `.word` or `NON_MATCHING` guard; no FAKE statement (none needed). Both matches are plain C and C89 (declarations at block top, `/* */` comments, no non-ASCII added). The `s32` return type of `func_8014A3DC` with bare `return;` statements is explained in the comment above it. The header adds one prototype per function (`func_801328C4`, `func_8014A3DC`), each declared once, consistent with the definitions and callers. The two unmatched functions stay `INCLUDE_ASM` in address order with T-0018 rows. Rebuild: RPG_BAT unit sha1 OK (forced recheck), all 27 binaries OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK. Ticket status and kanban column match. 2 of 4 functions matched (1,136 bytes).

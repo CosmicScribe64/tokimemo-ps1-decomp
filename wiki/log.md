@@ -16412,3 +16412,6 @@ Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG
 
 ## [2026-10-16] ticket | T-17115 In Review
 [[tickets/T-17115-w3-rpg-bat-p15]] In Progress to In Review (2 of 4 matched, 1,136 bytes). Card moved to In Review.
+
+## [2026-10-16] ticket | T-17115 Done
+[[tickets/T-17115-w3-rpg-bat-p15]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 2 of 4 functions matched (`func_801328C4`, `func_8014A3DC`, 1,136 bytes); `func_80132B34` and `func_80149C5C` stay `INCLUDE_ASM`. Rebuild: RPG_BAT unit sha1 OK, 27/27 binaries OK, headers OK, globals OK, protos OK. Card moved to Done.
