@@ -15149,3 +15149,7 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] lint | T-16552 closer verification
 
 [[tickets/T-16552-pt-taiiku-p2]]: clean `rm -rf build && python3 configure.py && ninja` 665/665, 27 binaries sha1 OK (main + 26 overlays); `tools/check_headers.py` OK, `tools/migrate_globals.py --check` OK, `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] ticket | T-16552 Done
+
+[[tickets/T-16552-pt-taiiku-p2]] In Review to Done after code review against `CODING_STANDARDS.md`: 3 functions matched (`func_80139FE4`, `func_80138DF8`, `func_80138AA8`, 3,000 bytes). One finding fixed (local `p` of `func_80138AA8` marked FAKE, comment only) and a stale intro in [[matching-notes]] refreshed. TAIIKU sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK.

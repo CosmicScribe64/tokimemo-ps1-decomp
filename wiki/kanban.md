@@ -52,8 +52,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-16552-pt-taiiku-p2|T-16552 Types-first pilot package pt-taiiku-p2]]
-
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
@@ -145,6 +143,7 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-16510-m2c-defect-rewrites|T-16510 Detect and rewrite recurring m2c draft defects]]
 - [ ] [[tickets/T-16520-sibling-report|T-16520 Matched-sibling report for work packages]]
+- [ ] [[tickets/T-16552-pt-taiiku-p2|T-16552 Types-first pilot package pt-taiiku-p2]]
 
 - [ ] [[tickets/T-16530-proto-override|T-16530 Prototype override option for regdiff and funcdiff]]
 
