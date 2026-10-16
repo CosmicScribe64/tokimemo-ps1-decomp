@@ -25,7 +25,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-19006-w3-d-p06|T-19006]] Wave 3 package w3-d-p06: TACO `8013B990.c`, five functions from `func_8013B990` to `func_8013C440` (In Progress).
+- [[tickets/T-19006-w3-d-p06|T-19006]] Wave 3 package w3-d-p06: TACO `8013B990.c`, all 5 functions matched (2,636 B), branch-over guard and `s32`-without-return idioms (In Review).
 - [[tickets/T-19001-w3-d-p01|T-19001]] Wave 3 package w3-d-p01: TAIIKU `80140810.c`, `func_80140A90` stays guarded (33 instructions); block-copy temporary rule measured, looks like a ugen difference (Done).
 - [[tickets/T-17200-types-first-date|T-17200]] Types-first: DATE: 68 step tables (`FnTblNN`) and 10 stack tables typed in `DATE.h`, 49 redrafts (7 better than the census), 4 matches / 1,760 bytes, packages T-17201..T-17208 (Done).
 - [[tickets/T-17100-types-first-rpg_bat|T-17100]] Types-first: RPG_BAT: stack-table types and `RpgStat` fields, 74 redrafts (20 better than the census), 4 matches / 3,168 bytes, packages T-17101..T-17119 (In Review).

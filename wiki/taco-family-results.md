@@ -153,3 +153,7 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p02 (T-19002)
 
 [[tickets/T-19002-w3-d-p02]] (`801447D0.c`, `80137A60.c`): `func_801449D8` (star-field packets, FAKE frame pad), `func_80145DC4` (eight model-select loops over `s16 *D_8015F82C[2]`) and `func_80137D00` (pointer loaded through its absolute address, FAKE) matched, 2,008 bytes; `func_8014616C` stays a 3-row draft (frame counter promoted by IDO, T-0018 `reverse` row). Notes: [[matching-notes]], "T-19002".
+
+## Matching stage, package w3-d-p06 (T-19006)
+
+[[tickets/T-19006-w3-d-p06]] (`8013B990.c`): all five listed functions matched, 2,636 bytes (`func_8013B990`, `func_8013CFD8`, `func_8013CC40`, `func_8013C1F4`, `func_8013C440`), three with an `s32`-without-return FAKE and one with a branch-over guard FAKE. New declarations in `TACO.h`: `func_8013BAC4(Tc14 *, s32, s32)`, `func_8013C1F4`, `func_8013C440`, `D_8015F500`. Idioms and the preheader-load finding: [[matching-notes]], "T-19006".
