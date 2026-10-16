@@ -235,4 +235,23 @@ extern Date2LoadPairs4 D_8013B688;
 extern Date2LoadPair D_8013B6A8, D_8013B6B0;
 extern u8 D_8013B5CC;
 
+/* T-18800: func_80135E50's three moving dots, as in its DATE twin func_801489D0 (D_8015CFA4..):
+ * x and y positions and their steps, three s16 each at a stride of 8 bytes. D_8013A5CC is the
+ * step counter (sh/lhu), D_8013A5D0 the scene timer of func_80133AF0 (sh/lh). */
+extern u16 D_8013A5CC;
+extern s16 D_8013A5D0;
+extern s16 D_8013A5D4[3];
+extern s16 D_8013A5DC[3];
+extern s16 D_8013A5E4[3];
+extern s16 D_8013A5EC[3];
+
+/* T-18800: the four menu labels of func_801385CC and func_801388C0: their widths (passed to
+ * menu_set as one s16[4], tested in a loop) and the 21-byte strings copied to the stack whole
+ * (0x54 bytes, the label at 0x50 + 21 * i). */
+extern s16 D_8013B5E4[4];
+typedef struct Date2Labels4x21 { /* size 0x54 */
+    /* 0x00 */ u8 v[4][21];
+} Date2Labels4x21;
+extern Date2Labels4x21 D_8013B634;
+
 #endif /* OVL_DATE2_H */
