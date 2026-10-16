@@ -1,5 +1,5 @@
-#define RPG_BAT_OVERRIDE_func_8013E7C0 /* implicit int view: the calls' $v0 moves the D_8015EDE0 web to $v1 (T-17104) */
-#define RPG_BAT_OVERRIDE_func_8013E97C /* same */
+#define RPG_BAT_OVERRIDE_func_8013E7C0 /* implicit int view: the call's $v0 moves the D_8015EDE0 web of func_80146C30 to $v1 (T-17104) */
+#define RPG_BAT_OVERRIDE_func_8013E97C /* implicit int view, same reason (T-17104) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 

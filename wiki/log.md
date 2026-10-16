@@ -16235,3 +16235,6 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 
 ## [2026-10-16] ticket | T-17104 started
 [[tickets/T-17104-w3-rpg-bat-p04]] created In Progress (branch `w3-rpg-bat-p04`, base `w2-good`): wave 3 package for `src/ovl/RPG_BAT/801468B0.c`, one function `func_80146C30` (draft score 329). Board: [[kanban]].
+
+## [2026-10-16] ticket | T-17104 In Review
+[[tickets/T-17104-w3-rpg-bat-p04]] In Progress to In Review: 1 of 1 function matched, `func_80146C30` (2,992 bytes of code) in `src/ovl/RPG_BAT/801468B0.c`, plain C with one FAKE (`(&D_8015ECEC)[i]` in a rolled 3-trip loop). Cause: the `D_8015EDE0` register web; `RPG_BAT_OVERRIDE_func_8013E7C0` and `RPG_BAT_OVERRIDE_func_8013E97C` (implicit `s32` calls) move it to `$v1`. Side result: the same two protos make the guarded `func_80145CC0` (T-12300) MATCH under `funcdiff --proto`; `src/ovl/RPG_BAT/80145CC0.c` was not in this package and is not edited. Notes in [[matching-notes]], [[register-cheatsheet]], [[data/t0018-cases]], [[rpg-bat-family-results]]. Board: [[kanban]].
