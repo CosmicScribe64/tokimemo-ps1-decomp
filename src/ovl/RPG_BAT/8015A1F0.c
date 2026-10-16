@@ -157,4 +157,25 @@ void func_8015A744(void) {
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8015A1F0", func_8015A744);
 #endif
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-17105, 28 differing lines; the original computes i + 0x28 before the first compare (addiu a0 in the lh delay slot) and stores D_8015EC68 from a $a0 copy of the halfword */
+void func_8015A8B4(void) {
+    s32 i;
+    s32 v;
+    s32 x;
+
+    for (i = 0; i < 8; i++) {
+        x = ((RpgObjectRecord44 *)D_8011ECD0)[i + 136].unk_26;
+        if ((x < -0xB4) || (((RpgObjectRecord44 *)D_8011ECD0)[i + 136].unk_2A >= 0x8D)) {
+            func_8013E810(i + 0x28, 7, 1, 0);
+            x = ((RpgObjectRecord44 *)D_8011ECD0)[i + 136].unk_26;
+        }
+        v = ((0x70 - x) << 0xC) / 240;
+        ((RpgObjectRecord44 *)D_8011ECD0)[i + 136].unk_1A = v;
+        ((RpgObjectRecord44 *)D_8011ECD0)[i + 136].unk_1C = v;
+        D_8015EC68 = x;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8015A1F0", func_8015A8B4);
+#endif
