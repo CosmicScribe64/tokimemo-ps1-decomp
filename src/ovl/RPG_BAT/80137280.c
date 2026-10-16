@@ -1,8 +1,11 @@
+#define RPG_BAT_OVERRIDE_D_8015EE8C /* pointer view: func_8013A034 reads the asset table through it (header: s32, defined in 8014E780.c) */
 #define MAIN_API_OVERRIDE_D_80121317 /* stores 0x80 as a positive constant (main_api.h: s8) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
 extern u8 D_80121317;
+
+extern s32 *D_8015EE8C;
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_80137280(void) {
@@ -520,7 +523,79 @@ void func_80139E88(void) {
     D_8015ED14 = n + 3;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_8013A034);
+void func_8013A034(void) {
+    s32 i;
+
+    switch (D_8015EE30.unk_04) {
+    case 0:
+        cd_read_sectors(0x2B, 0x801B1000, 0x3E8C);
+        func_8014F524();
+    default:
+        break;
+    case 1:
+        if (D_8015EBFC.unk_28 == 0) {
+            func_8014F500();
+        }
+        if (cd_read_sync_status() & 1) {
+            D_8015EBFC.unk_28 = 0;
+            func_8014F524();
+        }
+        break;
+    case 2:
+        /* FAKE: the three constants are stored through their addresses (T-17103). A plain assignment
+         * makes uopt promote the globals to registers and sink the stores below the -1 stores
+         * (original: stores in source order, all three still read from memory later); the real
+         * source is unknown. */
+        *(s32 **) &D_8015EE8C = (s32 *) 0x801C5DC8;
+        *(s32 *) &D_8015EEA4 = 0x801C5DDC;
+        *(s32 *) &D_8015EEBC = 0x801C5EE4;
+        D_800E6280.unk_1228[0x15] = -1;
+        D_800E6280.unk_1228[0x16] = -1;
+        D_800E6280.unk_1228[0x17] = -1;
+        D_800E6280.unk_1228[0x18] = -1;
+        D_800E6280.unk_1228[0x19] = -1;
+        load_tpage_buf_lock(0x15, D_8015EE8C[0], 1);
+        load_tpage_buf_lock(0x16, D_8015EE8C[1], 1);
+        load_tpage_buf_lock(0x17, D_8015EE8C[2], 1);
+        load_tpage_buf_lock(0x18, D_8015EE8C[3], 1);
+        load_tpage_buf_lock(0x19, D_8015EE8C[4], 1);
+        for (i = 0; i < 72; i++) {
+            ((DisplayActor44 *) D_8011ECD0)[64 + i].unk_0C = (u8 *) D_8015EEA4;
+            ((DisplayActor44 *) D_8011ECD0)[64 + i].unk_10 = (u8 *) D_8015EEBC;
+            ((DisplayActor44 *) D_8011ECD0)[64 + i].unk_34 = (u8 *) D_8015EE8C;
+        }
+        if (D_8015EB9C != 0xE) {
+            for (i = 29; i < 31; i++) {
+                ((DisplayActor44 *) D_8011ECD0)[96 + i].unk_0C = (u8 *) D_8015EEB8;
+                ((DisplayActor44 *) D_8011ECD0)[96 + i].unk_10 = (u8 *) D_8015EED0;
+                ((DisplayActor44 *) D_8011ECD0)[96 + i].unk_34 = (u8 *) D_8015EEA0;
+                ((DisplayActor44 *) D_8011ECD0)[96 + i].unk_43 = 0x1C;
+            }
+        }
+        func_8014F524();
+        break;
+    case 3:
+        D_800E6280.unk_F5F = 0xE;
+        func_80046290(0x1C0000A8, 0x0F0000B7, 0xE);
+        func_80044750(0x300);
+        func_8014F524();
+        break;
+    case 4:
+        func_80044750(0xE4);
+        func_8014F524();
+        break;
+    case 5:
+        D_8015EE30.unk_0C += 1;
+        if (D_8015EE30.unk_0C >= 0xB5) {
+            func_8014F500();
+        }
+        if (func_800460EC() & 4) {
+            func_8014F500();
+        }
+        break;
+    }
+}
+
 
 void func_8013A464();
 
