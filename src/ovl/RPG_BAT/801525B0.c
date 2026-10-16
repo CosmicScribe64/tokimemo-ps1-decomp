@@ -248,7 +248,7 @@ s32 func_801535E4(void) {
     }
 }
 
-/* NON_MATCHING: T-17112, 23 differing lines; case 1 schedules the D_8015EC40 and D_8015ED30 loads earlier than the original */
+/* NON_MATCHING: T-17112, 21 differing lines (8 are branch offsets); everything else matches. Case 1: the original loads D_8015ED28/D_8015ED38 before the D_8015EC38 store and D_8015ED30 right before the compare (an extra nop); case 3: its sw to D_8015EC78 comes after the loop pointer setup. The (&D_8015EC38)[2] read keeps the D_8015EC40 load behind the store as in the original. */
 #ifdef NON_MATCHING
 s32 func_80153784(void) {
     s32 pad[3]; /* FAKE: unused words above the RECTs, the original frame has them (real source unknown). T-17112 */
@@ -287,7 +287,7 @@ s32 func_80153784(void) {
     case 1:
         D_8015EC38 += D_8015EC48;
         D_8015ED28 += D_8015ED38;
-        if (D_8015EC38 >= D_8015EC40) {
+        if (D_8015EC38 >= (&D_8015EC38)[2]) {
             D_8015EC38 = 0;
         }
         if (D_8015ED28 >= D_8015ED30) {
