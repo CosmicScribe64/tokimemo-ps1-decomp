@@ -83,3 +83,12 @@ Four file-disjoint work packages, best expected bytes first (expected bytes: siz
 | pt-taiiku-p4 | T-16554 | `80140810.c`, `80132000.c`, `80142240.c` | 7 | 6,884 | 160 |
 
 Left for later waves: the rest of `80133C80.c` (8), `80138950.c` (8), `801452D0.c` (5), `80142240.c` (4), `80132000.c` (`func_80132000`), `80132BD0.c` (3) and `80141280.c` (1).
+
+## Package pt-taiiku-p1 (T-16551, `80133C80.c`)
+
+[[tickets/T-16551-pt-taiiku-p1]]: 3 of the 8 listed functions matched (`func_80138224`, `func_80133CFC`, `func_801368B8`, 2,296 bytes), `func_80137544` is a 26-line guarded draft, `func_80135480` and `func_80134060` stay `INCLUDE_ASM`. Details and idioms in [[matching-notes]], section T-16551.
+
+- Display-record initialisers (`func_80138224`): the fold draft was one store-order permutation and two frame words away from the match; the best starting scores (240) did not predict that, the structure did.
+- A table that the original defines in the unit has to be defined in the unit (`s32 D_801492F8[10] = {...}` in `80133C80.c`, three `INCLUDE_RODATA` pieces replaced) for two stores to share one `lui at`.
+- A long run of identical statements over the four runners is a loop that IDO unrolls with the first iteration peeled (`func_801368B8`, `(&D_80149208.player)[i]`, FAKE). The "untested explanation" of T-16550 (separate player and cpu objects) was tested and is wrong: it hoists the loads of the next group above the stores.
+- `D_801492C4` is a word (`s32`); the byte view made the three-word copy in `func_80133CFC` an `sb`.
