@@ -16090,3 +16090,6 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 
 ## [2026-10-16] ticket | T-17203 In Review
 [[tickets/T-17203-w3-date-p03]] In Progress to In Review (3 of 4 matched).
+
+## [2026-10-16] ticket | T-17203 Done
+[[tickets/T-17203-w3-date-p03]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 3 of 4 functions matched (`func_8014EF1C`, `func_80154118`, `func_8014DCCC`, 1,064 bytes), `func_80155004` still `INCLUDE_ASM` with its draft in `drafts/T-17203/`. Rebuild: DATE unit sha1 OK, headers OK, globals OK. Card moved to Done.
