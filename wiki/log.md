@@ -15776,3 +15776,22 @@ Opened [[tickets/T-18200-types-first-en_nichi]] (In Progress) under [[tickets/T-
 ## [2026-10-16] ticket | T-18200 Done
 
 [[tickets/T-18200-types-first-en_nichi]] In Review to Done after the code review against `CODING_STANDARDS.md`: 2 findings, both fixed (three `(u8 *)D_8013984C` byte walks rewritten as `EnObj` fields, a stray blank line in `include/ovl/EN_NICHI.h`). 5 functions matched (2,500 bytes: `func_80132834` with one FAKE, `func_80136B74`, `func_80134258`, `func_80133CA8`, `func_80135A48`), 19 redrafts, 2 packages (T-18201..T-18202). EN_NICHI sha1 OK after a forced rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+## [2026-10-16] ticket | T-19015 In Progress
+
+[[tickets/T-19015-w3-d-p15]] created and started: wave 3 package w3-d-p15, TACO `src/ovl/TACO/80146D60.c`, `src/ovl/TACO/80156A80.c`, `src/ovl/TACO/80138890.c` (`func_801471D0`, `func_801472D4`, `func_80138B2C`, `func_80147B24`, `func_801585D0`). Worktree `w3-d-p15` from `w2-good`.
+
+## [2026-10-16] build | T-19015 matches
+
+[[tickets/T-19015-w3-d-p15]]: TACO `func_801585D0` (992 bytes) matched in plain C in `src/ovl/TACO/80156A80.c`; unit sha1 OK. `func_801471D0` (8 funcdiff lines), `func_801472D4` (20 lines) and `func_80138B2C` (60 funcdiff lines) keep their guards; `func_80147B24` stays `INCLUDE_ASM` (63 lines). Analysis and variants in [[matching-notes]] ("T-19015"), rows in [[data/t0018-cases]], two rows in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-19015 In Review
+
+[[tickets/T-19015-w3-d-p15]] In Progress to In Review: 1 of 5 functions matched (992 bytes). Review pending.
+
+## [2026-10-16] build | T-19015 closer pass
+
+[[tickets/T-19015-w3-d-p15]]: Opus closer matched TACO `func_801471D0` (260 bytes) in plain C: a pointer parameter and one `dop` walker restarted for the second pass; callers keep the `s32` view through `TACO_OVERRIDE_func_801471D0` (`include/ovl/TACO.h`). `func_801472D4` stays at 20 lines (block-copy state rule). Notes in [[matching-notes]], rows in [[data/t0018-cases]], new [[register-cheatsheet]] row, [[taco-family-results]] updated. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19015 Done
+
+[[tickets/T-19015-w3-d-p15]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues (match count still 1 of 5 in the index, the ticket and the [[matching-notes]] intro after the closer pass; no source comment for the mixed actor addressing in `func_801585D0`), both fixed. 2 of 5 functions matched (1,252 bytes): TACO `func_801585D0` and `func_801471D0` in plain C; `func_801472D4` and `func_80138B2C` stay guarded, `func_80147B24` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
