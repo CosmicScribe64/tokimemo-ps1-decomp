@@ -65,6 +65,8 @@ void func_80140E18(s32 arg0) {
 }
 
 #ifdef NON_MATCHING
+/* NON_MATCHING: T-19017, 10 differing lines; the result variable ret lands in $a0 (a final move to $v0) where the original returns
+ * with li $v0,N, and three scheduling pairs follow from it. With ret, p, i and arg0 take the original registers. */
 s32 func_80141050(s32 arg0, s32 arg1) {
     s32 ret;
     s32 i;
@@ -79,7 +81,6 @@ s32 func_80141050(s32 arg0, s32 arg1) {
         base = D_8015E3B0;
         act = D_8015EDB4 + 8;
     }
-    ret = 0;
     if (arg1 & 0x20) {
         for (i = 0, p = base; i < 16; i++, p++) {
             if (!(p->unk13 & 0x80)) {
@@ -101,6 +102,8 @@ s32 func_80141050(s32 arg0, s32 arg1) {
         p->unk12 = 0;
         p->unk4 = act->unk78;
         ret = 1;
+    } else {
+        ret = 0;
     }
     return ret;
 }
@@ -108,7 +111,51 @@ s32 func_80141050(s32 arg0, s32 arg1) {
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_80141050);
 #endif
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-19017, 10 differing lines; same shape and remainder as func_80141050 (ret lands in $a0) */
+s32 func_80141170(s32 arg0, s32 arg1) {
+    s32 ret;
+    s32 i;
+    TcActor *act;
+    Tc14 *base;
+    Tc14 *p;
+
+    if (arg0 == 0) {
+        act = D_8015EDB4;
+        base = D_8015E270;
+    } else {
+        base = D_8015E3B0;
+        act = D_8015EDB4 + 8;
+    }
+    if (arg1 & 0x20) {
+        for (i = 0, p = base; i < 16; i++, p++) {
+            if (!(p->unk13 & 0x80)) {
+                break;
+            }
+        }
+        if (i >= 16) {
+            return -1;
+        }
+        if (arg0 == 0) {
+            func_801335A0(1, 0x502);
+        }
+        p->unk13 = 0x98;
+        p->unk0 = act->unk74 + ((i & 1) << 7) - 0x40;
+        p->unk2 = act->unk76 - (arg0 << 6) + 0x40;
+        p->unk8 = 0;
+        p->unkA = 0;
+        p->unkC = -0x200;
+        p->unk12 = 0;
+        p->unk4 = act->unk78;
+        ret = 1;
+    } else {
+        ret = 0;
+    }
+    return ret;
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_80141170);
+#endif
 
 s32 func_80141290(s32 arg0, s32 arg1) {
     Tc14 *p;
@@ -206,6 +253,8 @@ void func_801413B8(Tc14 *arg0, s32 arg1) {
             poly->b0 = 0x80;
             poly->tpage = func_8009ECB0(0, 1, 0x380, 0x100);
             poly->clut = func_8009ED74(0x80, 0x1E4);
+            /* FAKE: hand expansion of the PsyQ macro setUVWH(poly, tbl[side], 1, 0xE, 0xE) on one line, as in func_80140ADC
+             * (as1 schedules the eight stores of one line together). T-19017 */
             poly->u0 = tbl[side], poly->v0 = 1, poly->u1 = tbl[side] + 0xE, poly->v1 = 1, poly->u2 = tbl[side], poly->v2 = 1 + 0xE, poly->u3 = tbl[side] + 0xE, poly->v3 = 1 + 0xE;
             poly->x0 = ((s16 *)pt)[0];
             poly->y0 = ((s16 *)pt)[1];
@@ -220,7 +269,84 @@ void func_801413B8(Tc14 *arg0, s32 arg1) {
     }
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-19017, 28 differing lines; the original reloads D_8011ECA0 (lui/lw $a1) for the func_800490F0 call, this
+ * draft reuses the earlier load ($t3), which shifts the registers of the rest. The UV ladder, loops and frame are exact. */
+void func_801416E8(Tc14 *arg0, s32 arg1) {
+    s32 pad[2]; /* FAKE: pad and k2 are unused; they reproduce the original frame (208 bytes). T-19017 */
+    MATRIX m;
+    SVECTOR v;
+    s32 pt[4];
+    Tc14 *rec;
+    POLY_FT4 *poly;
+    s32 size;
+    s32 o;
+    s32 depth;
+    s32 flag;
+    s32 j;
+    s32 dist;
+    u8 tbl[2];
+    s32 side;
+    s32 k2;
+
+    *(u16 *)tbl = D_8015F584;
+    m = D_80129C40;
+    func_800A1100(&m);
+    func_800A1070(&m);
+    rec = &arg0[arg1];
+    dist = (D_80122754 - rec->unk4) / 127;
+    if (dist >= 0x100) {
+        dist = 0xFF;
+    } else if (dist <= 0) {
+        dist = 1;
+    }
+    size = (dist * 5 * 8 + 0x280) / 16;
+    v.vz = rec->unk4;
+    for (o = 0; o < 2; o++) {
+        v.vy = rec->unk2 + o * size - size / 2;
+        for (j = 0; j < 2; j++) {
+            v.vx = rec->unk0 + j * size - size / 2;
+            func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
+        }
+    }
+    if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
+        if (((s16 *)pt)[3] >= D_800E6280.unk_018[D_8011ECA0] - 0x200
+            && D_800E6280.unk_018[D_8011ECA0] + 0x200 >= ((s16 *)pt)[7]) {
+            side = rec->unk12;
+            poly = func_800490F0(0x28, D_8011ECA0);
+            func_8009F040(poly);
+            SetSemiTrans(poly, 1);
+            poly->r0 = 0x80;
+            poly->g0 = 0x80;
+            poly->b0 = 0x80;
+            poly->tpage = func_8009ECB0(0, 1, 0x380, 0x100);
+            poly->clut = func_8009ED74((side % 14) << 4, 0x1EB);
+            /* FAKE: the four branches are hand expansions of setUVWH(poly, 0x80 + 0x20 * k, 0x20, 0x1E, 0x1E) on one line each
+             * (as1 schedules the eight stores of one line together). T-19017 */
+            if (dist < 0x20) {
+                poly->u0 = 0x80, poly->v0 = 0x20, poly->u1 = 0x80 + 0x1E, poly->v1 = 0x20, poly->u2 = 0x80, poly->v2 = 0x20 + 0x1E, poly->u3 = 0x80 + 0x1E, poly->v3 = 0x20 + 0x1E;
+            } else if (dist < 0x60) {
+                poly->u0 = 0xA0, poly->v0 = 0x20, poly->u1 = 0xA0 + 0x1E, poly->v1 = 0x20, poly->u2 = 0xA0, poly->v2 = 0x20 + 0x1E, poly->u3 = 0xA0 + 0x1E, poly->v3 = 0x20 + 0x1E;
+            } else if (dist < 0xA0) {
+                poly->u0 = 0xC0, poly->v0 = 0x20, poly->u1 = 0xC0 + 0x1E, poly->v1 = 0x20, poly->u2 = 0xC0, poly->v2 = 0x20 + 0x1E, poly->u3 = 0xC0 + 0x1E, poly->v3 = 0x20 + 0x1E;
+            } else {
+                poly->u0 = 0xE0, poly->v0 = 0x20, poly->u1 = 0xE0 + 0x1E, poly->v1 = 0x20, poly->u2 = 0xE0, poly->v2 = 0x20 + 0x1E, poly->u3 = 0xE0 + 0x1E, poly->v3 = 0x20 + 0x1E;
+            }
+            poly->x0 = ((s16 *)pt)[0];
+            poly->y0 = ((s16 *)pt)[1];
+            poly->x1 = ((s16 *)pt)[2];
+            poly->y1 = ((s16 *)pt)[3];
+            poly->x2 = ((s16 *)pt)[4];
+            poly->y2 = ((s16 *)pt)[5];
+            poly->x3 = ((s16 *)pt)[6];
+            poly->y3 = ((s16 *)pt)[7];
+            func_8009EED0((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_801416E8);
+#endif
 
 /* FAKE: pad, k1, k7, k8, k2, t, k3 and k4 are unused locals; they reproduce the original frame (224 bytes: eight above m,
  * three words below pt, the homes of depth, flag and fade). Real source unknown. T-19017 */
