@@ -187,3 +187,7 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p29 (T-19029)
 
 [[tickets/T-19029-w3-d-p29]] (`80136B40.c`, the PLAYERS RANKING screen): `func_80137264`, the 812-byte number formatter (spaces by magnitude, then up to 8 digits through a switch), matched in plain C. The radix is one variable that first holds the 10000000 threshold (so IDO divides by a register with the full checks), and the unused `char digits[]` local is copied from the data symbol typed as `TacoDigits` (FAKE stand-in). `func_80136FBC` (its only caller, three calls) now passes `(u8 *, s32)`. Details: [[matching-notes]], "T-19029".
+
+## Matching stage, package w3-d-p26 (T-19026)
+
+[[tickets/T-19026-w3-d-p26]] (`8015ABF0.c`): `func_8015ACCC` (the effect spawner, 1,260 bytes, the last open function of the file but `func_8015B1B8`) matched in plain C with one FAKE, after the hand rewrite of T-16563 had stopped at 437 lines. Types added to `TACO.h`: `D_80161DDC[]` (`s32`, per-kind model address), `D_80161EA4[]` (`s16`), `D_80161EC8[]` (`u8`) and the prototypes of `func_8015B1B8` / `func_8015B2AC`. `func_8015B1B8` stays guarded at 8 rows. How: [[matching-notes]], "T-19026".
