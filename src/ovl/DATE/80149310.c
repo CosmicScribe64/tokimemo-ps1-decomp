@@ -185,6 +185,7 @@ s32 func_801496C4(void) {
         D_8015D06C = D_8015CFF0;
         D_8015D070 = D_8015D024;
         D_8015D074 = D_8015D058;
+        /* (u8) as in the SHUGAKU twin func_8013282C: a plain compare gives slti and moves every later temporary. T-17205 */
         if ((u8)(get_g_zyotai_s(6) & 0x7F) < 2) {
             D_8015D06C = D_8015CFEC;
             D_8015D070 = D_8015D020;
@@ -315,6 +316,7 @@ void func_80149F48(void) {
     D_8015D07C = D_8015D070;
     D_8015D080 = D_8015D074;
     D_8015D084 = D_800E6280.unk_F5F;
+    /* (s16) leaves the ugen temporary between sll and subu unused, as in the original; the product sits before the last three copies so their constant loads take t5/t6/t7. T-17205 */
     D_8015D084 = (s16)(D_8015D084 * 3) + D_8015D090;
     D_8015D06C = D_8015CFFC;
     D_8015D070 = D_8015D030;

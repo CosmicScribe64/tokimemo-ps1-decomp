@@ -54,8 +54,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-17205-w3-date-p05|T-17205 Wave 3 package w3-date-p05]]
-
 
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
@@ -141,6 +139,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-17205-w3-date-p05|T-17205 Wave 3 package w3-date-p05]]
 - [ ] [[tickets/T-19029-w3-d-p29|T-19029 Wave 3 package w3-d-p29]]
 - [ ] [[tickets/T-19027-w3-d-p27|T-19027 Wave 3 package w3-d-p27]]
 - [ ] [[tickets/T-19028-w3-d-p28|T-19028 Wave 3 package w3-d-p28]]
