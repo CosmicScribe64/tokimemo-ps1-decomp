@@ -481,7 +481,50 @@ void func_8014607C(void) {
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_8014607C);
 #endif
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146338);
+void func_80146338(void) {
+    s32 i;
+    TaiShorts12x a;
+    TaiShorts12x b;
+
+    a = D_8014A5C4;
+    b = D_8014A5DC;
+    for (i = 0; i < 12; i++) {
+        func_80048F64(i + 0x60);
+        DISP(96 + i).unk_38 = 0x01000000;
+        DISP(96 + i).unk_07 = 0x80;
+        DISP(96 + i).unk_0C = (u8 *)D_80149FD4;
+        DISP(96 + i).unk_10 = (u8 *)D_8014A00C;
+        DISP(96 + i).unk_34 = (u8 *)D_8014A4F8;
+        DISP(96 + i).unk_14 = D_8014A044;
+        DISP(96 + i).unk_04 = 0;
+        DISP(96 + i).unk_05 = 0x80;
+        DISP(96 + i).unk_1A = 0x1000;
+        *(s16 *)DISP(96 + i).pad_1C = 0x1000;
+        DISP(96 + i).unk_06 = 2;
+        DISP(96 + i).unk_2A = a.v[i];
+        DISP(96 + i).unk_18 = b.v[i];
+    }
+    for (i = 0; i < 4; i++) {
+        DISP(96 + i).unk_01 = i * 2 + 3;
+        DISP(96 + i).unk_26 = i * 8 - 0xA0;
+        DISP(96 + i).unk_02 = 0x40;
+        DISP(96 + i).unk_03 = 0xA4;
+    }
+    for (i = 0; i < 4; i++) {
+        DISP(100 + i).unk_01 = i * 2 + 2;
+        DISP(100 + i).unk_26 = DISP(96 + i).unk_26 + 0x37;
+        DISP(100 + i).unk_2A = DISP(96 + i).unk_2A + 0x1C;
+        DISP(100 + i).unk_02 = 0x40;
+        DISP(100 + i).unk_03 = 0xA4;
+    }
+    DISP(104).unk_01 = 9;
+    DISP(105).unk_01 = 8;
+    DISP(106).unk_01 = 9;
+    DISP(107).unk_01 = 9;
+    DISP(107).unk_26 = -0x30;
+    DISP(107).unk_02 = 0x40;
+    DISP(107).unk_03 = 0xA4;
+}
 
 s32 func_8014666C(void) {
     TaiikuController *controller;
