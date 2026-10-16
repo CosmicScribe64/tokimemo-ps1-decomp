@@ -996,4 +996,16 @@ extern GzCallbacksBC D_8014901C; /* func_80145384 */
 /* T-17600: 0x24-byte records indexed with stride 0x24 (func_80144018, func_80144B70): the field widths of
  * main's Rec24 table D_801217D0, 0xB270 above it as the display records D_80129F40 are above D_8011ECD0. */
 extern Rec24 D_8012CA40[];
+/* T-17600: one entry per falling dumpling (func_80144018, func_801444CC, func_80144B70, func_80145084). The
+ * dumpling count D_80148EAC stops at 50 and the arrays end where the next begins; the record index i of
+ * D_8012CA40 starts at 4, and the [i - 4] accesses fold into %lo, so splat names D_80148BE0, D_80148D70 and
+ * D_80148E40 at the bases minus 0x10 / 8. */
+extern s32 D_80148BF0[50];
+extern s32 D_80148CB8[50]; /* 16.16 fixed point: the s16 at +2 is also read alone */
+extern s32 D_80148D80[50];
+extern s16 D_80148E48[50];
+/* T-17600: two s16 tables of 8, indexed by the same value (func_80140E0C, func_80140F90, func_801412A4);
+ * D_8014877C follows the second. */
+extern s16 D_8014875C[8];
+extern s16 D_8014876C[8];
 #endif /* OVL_GYOZI_T17600_TYPES */
