@@ -1,7 +1,7 @@
 ---
 id: T-16550
 title: "Types-first pilot: TAIIKU"
-status: In Review
+status: Done
 assignee: claude
 created: 2026-10-16
 updated: 2026-10-16
@@ -40,3 +40,9 @@ Packages (lists in the orchestrator scratchpad): pt-taiiku-p1 T-16551 `80133C80.
 ## Comments
 
 - 2026-10-16: In Review. Details, idioms and limits in [[taiiku-family-results]]; driver and drafts in `drafts/T-16550/`.
+- 2026-10-16: Code review against `CODING_STANDARDS.md` (all of `git diff w2-good...pt-taiiku`): changed C only under `src/ovl/TAIIKU/` and `include/ovl/TAIIKU.h`; `drafts/T-16550/` is a new folder (no existing archive touched, no asm, binaries or game data); no inline asm or `.word`; the only matched C added is `func_80141CDC` (plain C); the remaining `NON_MATCHING` blocks (`func_801346FC`, `func_801368B8`, `func_80136BB4`, `func_8014666C`) keep their ticket and row counts; `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK, TAIIKU sha1 OK. Findings and fixes (commit "review fixes"):
+  - `func_80143D24` and `func_8014430C` kept FAKE comments about a byte-record view that the typed `D_8014A13C` no longer is: removed, with a plain note on why the array is an array.
+  - Four functions still walked typed records with byte offsets and no FAKE mark. Field forms were tried: `func_80147210`, `func_80148194` and `func_80148228` match as fields and were converted; `func_8013732C`, `func_801448D4` and `func_80144C70` change the code as fields, so they carry a FAKE comment; `func_80138680` (`(&D_80149208.player)[arg0]`) got one too.
+  - The `D_80149208` layout comment in `TAIIKU.h` sat above `TaiRunnerB`: moved above `TaiRunnersA`. Wiki notes updated.
+  - Cosmetic, left as is: `TaiShorts12` holds nine halfwords (0x12 bytes) and `TaiShorts12x` twelve (0x18).
+  Matched in this ticket: 1 function, `func_80141CDC` (1,120 bytes). Status Done.
