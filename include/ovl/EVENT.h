@@ -1860,3 +1860,39 @@ typedef struct {
 extern EvTbl D_80120A74;
 extern EvTbl D_80121AD8;
 #endif
+
+#ifndef OVL_EVENT_STACK_TABLES_T17400
+#define OVL_EVENT_STACK_TABLES_T17400
+/* T-17400: constant tables that a handler copies to the stack whole (lw/sw runs plus an lh/sh tail) and
+ * then reads by index. Element widths from the reads of the copy (lh for the halfword tables). */
+typedef struct {
+    u16 v[21];
+} U16x21; /* size 0x2A */
+extern U16x21 D_80125454; /* func_8011A8E4 */
+extern U16x21 D_80125480; /* func_8011A8E4 */
+extern U16x21 D_801254AC; /* func_8011A8E4 */
+extern U16x21 D_801254D8; /* func_8011AB00 */
+typedef struct {
+    s16 v[8][2];
+} EvPairs8; /* size 0x20: func_80103774 reads v[i][1] (lh 0x6A + 4 * i) */
+extern EvPairs8 D_80122990;
+typedef struct {
+    s16 v[0x52];
+} EvShorts82; /* size 0xA4 */
+extern EvShorts82 D_80121A34; /* func_800FEAE8 */
+typedef struct {
+    s16 v[10];
+} EvShorts10; /* size 0x14 */
+extern EvShorts10 D_80123B7C; /* func_80109404, with the next two */
+extern EvShorts10 D_80123B90;
+extern EvShorts10 D_80123BA4;
+typedef struct {
+    s16 v[11];
+} EvShorts11; /* size 0x16 */
+extern EvShorts11 D_80125330; /* func_8011767C */
+extern EvShorts11 D_80125348;
+typedef struct {
+    s16 v[5];
+} EvShorts5; /* size 0x0A */
+extern EvShorts5 D_80125360; /* func_80118B4C */
+#endif

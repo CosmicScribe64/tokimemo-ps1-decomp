@@ -2749,11 +2749,6 @@ s32 func_8011A874(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011A8E4);
 
-typedef struct {
-    u16 v[21];
-} U16x21; /* size 0x2A */
-extern U16x21 D_801254D8;
-
 void func_8011AB00(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     U16x21 tbl;
