@@ -511,30 +511,19 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135F3C);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_801365C8);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-12020, 4 differing listing rows (2 positions); next-load lui schedules after the f1C store. */
 s32 func_801368B8() {
-    D_80149208.player.unk_0C += 1;
-    D_80149208.player.unk_0E += 1;
-    D_80149208.player.unk_14 += 1;
-    D_80149208.player.unk_1C += 1;
-    D_80149208.cpu[0].unk_0C += 1;
-    D_80149208.cpu[0].unk_0E += 1;
-    D_80149208.cpu[0].unk_14 += 1;
-    D_80149208.cpu[0].unk_1C += 1;
-    D_80149208.cpu[1].unk_0C += 1;
-    D_80149208.cpu[1].unk_0E += 1;
-    D_80149208.cpu[1].unk_14 += 1;
-    D_80149208.cpu[1].unk_1C += 1;
-    D_80149208.cpu[2].unk_0C += 1;
-    D_80149208.cpu[2].unk_0E += 1;
-    D_80149208.cpu[2].unk_14 += 1;
-    D_80149208.cpu[2].unk_1C += 1;
+    s32 i;
+
+    /* FAKE: indexes the four runners (player, cpu[3]) from the player record; the object is player + cpu[3], not one array.
+     * IDO unrolls the loop, and the peeled first runner is what makes the scheduling match. T-16551 */
+    for (i = 0; i < 4; i++) {
+        (&D_80149208.player)[i].unk_0C += 1;
+        (&D_80149208.player)[i].unk_0E += 1;
+        (&D_80149208.player)[i].unk_14 += 1;
+        (&D_80149208.player)[i].unk_1C += 1;
+    }
     D_80149208.player.unk_07 += 1;
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_801368B8);
-#endif
 
 void func_801369F0(void) {
     func_80136A28();
