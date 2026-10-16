@@ -141,3 +141,8 @@ best expected bytes first (expected bytes = size / (1 + score / 30)); the gcc-bu
 The closer pass (Opus, about 35 minutes) matched `func_80133738`: 9 of 12 functions, 5,924 bytes. `func_801472D4` and `func_801471D0` stay guarded with unchanged line counts; what the closer learned is in their `NON_MATCHING` comments and in [[matching-notes]].
 
 Idioms and dead ends are in [[matching-notes]] (T-16561 section); the open rows are in [[data/t0018-cases]].
+### Matching stage, package p3 (T-16563)
+
+[[tickets/T-16563-taco-types-first-p3]] (`80151C30.c`, `8015ABF0.c`): 9 of the 10 listed functions and the unlisted `func_8015BD30` matched from the T-16560 redrafts, 4,740 bytes: `func_8015BD30` (576 bytes, FAKE empty test), `func_8015C0A0`, `func_80151D1C`, `func_80152944`, `func_8015BF70`, `func_80152808`, `func_80152DB4`, `func_801523D0`, `func_801521EC`, `func_8015CE64`. The m2c drafts were not usable as printed; each match came from reading the asm for the loop the compiler turns into the draft's pointer variables, with the new types (`TcPair8`/`TcPair2` at `D_80160290`/`D_801603A8`, `D_80160444` as a pointer table). Idioms and misses: [[matching-notes]], "T-16563: TACO package p3". `func_8015B1B8` (8 lines, struct-copy temporary) stays guarded.
+
+New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read at `i - 1`; `D_80160444` is `s16 *[]` now (the scalar uses became `[0]`); `D_801603D4` as an `s16 *[]` view base (FAKE); prototypes of `func_80152944`, `func_80152DB4`, `func_801523D0`.

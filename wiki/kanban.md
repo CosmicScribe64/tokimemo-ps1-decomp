@@ -158,6 +158,8 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-16554-pt-taiiku-p4|T-16554 Types-first pilot package pt-taiiku-p4]]
 
+- [ ] [[tickets/T-16563-taco-types-first-p3|T-16563 Types-first pilot package pt-taco-p3]]
+
 - [ ] [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210 Wave 2 package w2-p01]]
 
 - [ ] [[tickets/T-11670-w1-main-8006cb30|T-11670 Wave 1 package w1-p11]]

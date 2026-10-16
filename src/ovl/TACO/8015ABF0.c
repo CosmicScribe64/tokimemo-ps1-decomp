@@ -23,7 +23,13 @@ void func_8015ABF0(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015ACCC);
 
-/* NON_MATCHING: T-10810, frame and MATRIX offset match now (declare i, j before matrix: later-declared locals sit lower); only the struct-copy temporary differs (ugen t2 against t3, 8 lines) */
+/* NON_MATCHING: T-16563, 8 differing lines; frame and MATRIX offset match (declare i, j before matrix: later-declared
+ * locals sit lower), only the struct-copy temporary differs (ugen t2 against t3, T-0018).
+ * Closer pass: before the copy's data register ugen skips one free temporary when the last store it emitted went
+ * through a pointer (here the loop's stores to matrix), two after a direct stack or global store or at function entry.
+ * The original copy register is t3, as if it skipped two (t9, t2). A stack store such as `matrix.m[0][0] = 0;` before
+ * the copy gives t3 but adds code; a uopt range in t2 gives t3 but moves the loop registers. No form without extra
+ * code found; TACO func_801472D4 has the same miss. */
 #ifdef NON_MATCHING
 void func_8015B1B8(arg0, arg1, arg2, arg3)
     s32 arg0;
@@ -173,98 +179,106 @@ void func_8015B59C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015BD30);
-
-/* NON_MATCHING: T-10810, loop, callee arguments and saved-register set match (78 vs 76 instructions); the local actor pointer and the type byte take s4/s2 where the original has s2/s4 (the CSE'd &D_8015EDB4[arg0] range is coloured before the local), plus a spill-order difference in the prologue */
-#ifdef NON_MATCHING
-void func_8015BF70(s32 arg0) {
-    TcActor *a;
-    u32 n;
+/* FAKE: the actor is addressed through a byte-offset view in the loop: one pointer then serves the field loads and
+ * &unk14, the array form builds a second one. Real source unknown. T-16563 */
+void func_8015BD30(s32 arg0, s16 *arg1) {
     s32 i;
+    s32 val;
+    s16 frame;
+    s32 phase;
+    s32 j;
+    s32 n;
+    s32 last;
     u8 *id;
-    u8 t;
-    s32 *rec;
 
-    a = &D_8015EDB4[arg0];
-    n = 0;
-    if (a->unk82 >= 0xF) {
-        a->unk82 = 0;
-        a = &D_8015EDB4[arg0];
+    frame = D_8015EDB4[arg0].unk82;
+    if (frame >= arg1[3]) {
+        D_8015EDB4[arg0].unk82 = 0;
+        frame = D_8015EDB4[arg0].unk82;
     }
-    t = a->unk84[2];
-    id = D_80161D9C;
-    i = 0;
-    do {
-        if (arg0 == *id) {
-            rec = D_80161E60[t] + n * 2;
-            func_8015B1B8(i, rec[0], rec[1], a->unk82);
-            n++;
-            a = &D_8015EDB4[arg0];
-            t = a->unk84[2];
-        }
-        i++;
-        if (n >= D_80161E20[t]) {
+    phase = frame % arg1[2];
+    n = 0;
+    for (i = 0;; i++) {
+        if (phase < arg1[4 + i * 2]) {
+            if (i) {} /* FAKE: the empty test splits the live range of i at the found key, so i and j * 4 get s1 and s0 as in the original. T-16563 */
+            val = arg1[5 + i * 2];
             break;
         }
-        id++;
-    } while (i != 0x40);
-}
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015BF70);
-#endif
-
-/* NON_MATCHING: T-10850, 9 differing listing lines; see the ticket scratch evidence. */
-#ifdef NON_MATCHING
-/* FAKE: repeated empty tests split the actor pointer live range. T-10850 */
-void func_8015C0A0(arg0, arg1)
-s32 arg0;
-s32 arg1;
-{
-  TcActor *a;
-  s32 i;
-  a = &D_8015EDB4[arg1];
-  if (((!a) && (!a)) && (!a))
-  {
-  }
-  if (a->unk0[1] & 0x80)
-  {
-    if (arg0 == 1)
-    {
-      if (a->unk84[2] < 0xB)
-      {
-        *((s32 *) (((u8 *) a) + 4)) = 0;
-        return;
-      }
-      *((s32 *) (((u8 *) a) + 4)) = 0x80000000;
-      for (i = 0; i < 0x40; i++)
-      {
-        if (arg1 == D_80161D9C[i])
-        {
-          D_80127080[i].unk0 = (u16) 0;
+    }
+    id = D_80161D9C;
+    j = arg1[0];
+    last = arg1[1];
+    for (i = 0; i != 0x40; i++, id++) {
+        if (arg0 == *id) {
+            if (n >= j) {
+                if (((TcActor *)((u8 *)D_8015EDB4 + arg0 * 0x88))->unk82 % arg1[2] == 0) {
+                    func_80099E30((s32)&((TcActor *)((u8 *)D_8015EDB4 + arg0 * 0x88))->unk14, (i + D_80127480));
+                    func_8015B2AC(i, D_80161E60[D_8015EDB4[arg0].unk84[2]][j]);
+                } else {
+                    func_8015B3B0(i, D_80161E60[((TcActor *)((u8 *)D_8015EDB4 + arg0 * 0x88))->unk84[2]][j], val);
+                }
+                j++;
+            }
+            n++;
         }
-      }
-
-      return;
+        if (last < j) {
+            break;
+        }
     }
-    if (a->unk84[2] < 9)
-    {
-      *((s32 *) (((u8 *) a) + 4)) = 0x80000000;
-      return;
-    }
-    *((s32 *) (((u8 *) a) + 4)) = 0x80000000;
-    for (i = 0; i < 0x40; i++)
-    {
-      if (arg1 == D_80161D9C[i])
-      {
-        D_80127080[i].unk0 = 0x80000000;
-      }
-    }
-
-  }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015C0A0);
-#endif
+
+/* No local actor pointer (see func_8015C0A0); `n = 0` after the first test lands in its branch delay slot as in the original. T-16563 */
+void func_8015BF70(s32 arg0) {
+    u32 n;
+    s32 i;
+    s32 *rec;
+
+    if ((arg0 + D_8015EDB4)->unk82 >= 0xF) {
+        (arg0 + D_8015EDB4)->unk82 = 0;
+    }
+    n = 0;
+    for (i = 0; i < 0x40; i++) {
+        if (arg0 == D_80161D9C[i]) {
+            rec = D_80161E60[(arg0 + D_8015EDB4)->unk84[2]] + n * 2;
+            func_8015B1B8(i, rec[0], rec[1], (arg0 + D_8015EDB4)->unk82);
+            n++;
+        }
+        if (n >= D_80161E20[(arg0 + D_8015EDB4)->unk84[2]]) {
+            break;
+        }
+    }
+}
+
+/* The actor is addressed as (arg1 + D_8015EDB4) in every use, no local: uopt then keeps it in $v0 and the index multiply comes first (T-16563). */
+void func_8015C0A0(s32 arg0, s32 arg1) {
+    s32 i;
+
+    if ((arg1 + D_8015EDB4)->unk0[1] & 0x80) {
+        if (arg0 == 1) {
+            if ((arg1 + D_8015EDB4)->unk84[2] < 0xB) {
+                (arg1 + D_8015EDB4)->unk4.unk0 = 0;
+                return;
+            }
+            (arg1 + D_8015EDB4)->unk4.unk0 = 0x80000000;
+            for (i = 0; i < 0x40; i++) {
+                if (arg1 == D_80161D9C[i]) {
+                    D_80127080[i].unk0 = 0;
+                }
+            }
+            return;
+        }
+        if ((arg1 + D_8015EDB4)->unk84[2] < 9) {
+            (arg1 + D_8015EDB4)->unk4.unk0 = 0x80000000;
+            return;
+        }
+        (arg1 + D_8015EDB4)->unk4.unk0 = 0x80000000;
+        for (i = 0; i < 0x40; i++) {
+            if (arg1 == D_80161D9C[i]) {
+                D_80127080[i].unk0 = 0x80000000;
+            }
+        }
+    }
+}
 
 void func_8015C208(s32 arg0) {
     s32 i;
@@ -486,4 +500,16 @@ s32 arg0;
     return n;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015CE64);
+/* Index first, as in func_8015C0A0: the global then gets the later colour. T-16563 */
+s32 func_8015CE64(void) {
+    s32 n;
+    s32 i;
+
+    n = 0;
+    for (i = 0x10; i != 0x3F; i++) {
+        if ((i + D_8015EDB4)->unk0[1] & 0x80) {
+            n++;
+        }
+    }
+    return n;
+}

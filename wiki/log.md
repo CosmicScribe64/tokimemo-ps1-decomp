@@ -15332,3 +15332,26 @@ Filed in [[speedup-research-2026-10-16]].
 ## [2026-10-16] ticket | T-16561 Done
 
 [[tickets/T-16561-taco-types-first-p1]] reviewed against `CODING_STANDARDS.md`: three findings (`FAKE` marker position in `func_80147928`, unmarked one-line store pairs in `func_80159878`, a typo in the `func_801472D4` guard comment; stale 8-function counts in ticket and [[index]]), fixed; TACO sha1 OK, headers, globals and prototype checks OK. 9 TACO functions matched (5,924 bytes).
+## [2026-10-16] ticket | T-16563 In Progress
+
+[[tickets/T-16563-taco-types-first-p3]]: matching stage of the TACO types-first pilot, package 3 (`src/ovl/TACO/80151C30.c`, `src/ovl/TACO/8015ABF0.c`, 10 functions) on branch `pt-taco-p3`. Follows [[tickets/T-16560-taco-types-first]].
+
+## [2026-10-16] build | T-16563 matches
+
+[[tickets/T-16563-taco-types-first-p3]]: 9 functions matched on branch `pt-taco-p3` in `src/ovl/TACO/80151C30.c` and `src/ovl/TACO/8015ABF0.c`: `func_8015C0A0`, `func_80151D1C`, `func_80152944`, `func_8015BF70`, `func_80152808`, `func_80152DB4`, `func_801523D0`, `func_801521EC`, `func_8015CE64` (4,164 bytes, two with a `FAKE`). `include/ovl/TACO.h` gains the pair tables, a pointer-table view and three prototypes. `func_8015B1B8` stays guarded (8 lines); `func_8015BD30` (65 rows) stays `INCLUDE_ASM`. Notes: [[matching-notes]], [[taco-family-results]], [[register-cheatsheet]], [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-16563 In Review
+
+[[tickets/T-16563-taco-types-first-p3]] moved to In Review after about 60 minutes of agent time: 9 of 10 listed functions matched. Clean build 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] build | T-16563 func_8015BD30
+
+[[tickets/T-16563-taco-types-first-p3]]: `func_8015BD30` (576 bytes, not on the work list) matched in `src/ovl/TACO/8015ABF0.c` after a 1-second scratch compile loop (`tools/cc.py` on one function, diffed against `expected/`): actor addressed by byte offset, `n = 0` before the key search, one local declared before the spilled `val`, a `FAKE` empty test on `i`. In all 10 functions, 4,740 bytes. `func_8015ACCC` rewritten once by hand (437 lines left) and `func_8015B1B8` (8 lines) stay open; rows in [[data/t0018-cases]], idioms in [[matching-notes]] and [[register-cheatsheet]].
+
+## [2026-10-16] build | T-16563 closer pass
+
+[[tickets/T-16563-taco-types-first-p3]]: Opus closer on `func_8015B1B8` in `src/ovl/TACO/8015ABF0.c`, about 40 minutes, no new match (still guarded at 8 lines). Found the rule that picks ugen's struct-copy temporary: one free temporary is skipped after a store through a pointer, two after a direct stack or global store or at function entry. Notes in [[matching-notes]] (T-16563 section), new row in [[register-cheatsheet]], row in [[data/t0018-cases]]. Clean build 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16563 Done
+
+[[tickets/T-16563-taco-types-first-p3]] reviewed against `CODING_STANDARDS.md` and moved to Done: 10 functions matched (4,740 bytes), `func_8015B1B8` guarded, `func_8015ACCC` left as `INCLUDE_ASM`. Review fixes in `src/ovl/TACO/80151C30.c` and `src/ovl/TACO/8015ABF0.c`: two unmarked cast views (`func_801521EC`, `func_8015BD30`) marked FAKE, a dead `i = 0;` removed, blank lines tidied, stale ticket line corrected. Headers, globals and prototype checks OK, TACO sha1 OK.
