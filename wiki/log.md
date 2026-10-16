@@ -15381,3 +15381,7 @@ Pilot T-16550/T-16560 done: 64 matches / 41.4 KB in about 20 agent-hours (types 
 closers 4 h Opus with 10 matches), 2.0 KB per agent-hour, at or above wave 2 (Opus). Main 6,076/6,958 (67.2%).
 Opened [[tickets/T-16990-wave-3-conveyor]]: types-first passes on 19 units and 32 direct packages feeding a 7-worker
 pool; merges run in parallel through a locked, self-cleaning merge script.
+
+## [2026-10-16] ticket | T-19001 opened
+
+[[tickets/T-19001-w3-d-p01]] In Progress: wave 3 direct package w3-d-p01 (TAIIKU `src/ovl/TAIIKU/80140810.c`, `func_80140A90`), worktree `w3-d-p01` from `w2-good`.
