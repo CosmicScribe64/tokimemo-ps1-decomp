@@ -207,7 +207,88 @@ void func_8014A810(void) {
     func_8014B1C4();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-17208, 34 differing lines (17 per light block); only registers differ in the two fade blocks: the original keeps the loaded bytes in $v1/$a2/$a3 and the third sum in $v0, IDO gives $v0/$v1/$a2 and $t9 (fade up) or $t5 (fade down); same gap as TACO func_80134A18 (T-0018). */
+/* FAKE: s32 without a return keeps the s16 counter in $v0 at the exit (sll/sra before the sh), the real return type is unknown. T-17208 */
+s32 func_8014A8FC(void) {
+    s32 frame;
+    s32 i;
+    s32 j;
+
+    message_window_show();
+    func_80066C08(2);
+    func_80066334();
+    frame = D_8015DE4C;
+    if (frame < 0x20) {
+        if (D_8012276C < 0xC0U) {
+            D_8012276C = D_8012276D = (D_8012276E += 6);
+            D_8012277C = D_8012277D = (D_8012277E += 1);
+            D_8012278C = D_8012278D = (D_8012278E += 1);
+            func_8009AD70(0, &D_80122760);
+            func_8009AD70(1, &D_80122770);
+            func_8009AD70(2, &D_80122780);
+        }
+        if (frame < 0xF) {
+            D_800E6280.unk_038 += 1;
+        }
+    } else if (frame >= 0x20 && frame < 0x54) {
+        for (i = 0; i != 2; i++) {
+            func_8014AD9C(i, D_8015DE34[i], 1);
+        }
+    } else if (frame >= 0x54 && frame < 0x68) {
+        for (i = 0; i != 2; i++) {
+            func_8014AD9C(i, D_8015DE34[i], 2);
+        }
+    } else if (frame >= 0x68 && frame < 0x72) {
+        for (i = 0; i != 2; i++) {
+            func_8014AD9C(i, D_8015DE34[i], 3);
+        }
+    } else if (frame >= 0x72 && frame < 0x7C) {
+        for (i = 0; i != 2; i++) {
+            func_8014AD9C(i, D_8015DE34[i], 4);
+        }
+    } else if (frame >= 0x7C && frame < 0x9A) {
+        for (i = 0; i != 2; i++) {
+            func_8014AD9C(i, D_8015DE34[i], 5);
+        }
+    } else if (frame >= 0x9A && frame < 0xAE) {
+        for (i = 0; i != 2; i++) {
+            func_8014AD9C(i, D_8015DE34[i], 6);
+        }
+    } else if (frame >= 0xAE && frame < 0xEA) {
+        for (i = 0; i != 2; i++) {
+            func_8014AD9C(i, D_8015DE34[i], 7);
+        }
+    } else if (frame >= 0x10E && frame < 0x12E) {
+        if (D_8012276C != 0) {
+            D_8012276C = D_8012276D = (D_8012276E -= 6);
+            D_8012277C = D_8012277D = (D_8012277E -= 1);
+            D_8012278C = D_8012278D = (D_8012278E -= 1);
+            func_8009AD70(0, &D_80122760);
+            func_8009AD70(1, &D_80122770);
+            func_8009AD70(2, &D_80122780);
+        }
+        if (frame < 0x11D) {
+            D_800E6280.unk_038 -= 1;
+        }
+        /* FAKE: the byte view makes this second read of D_8012276C a reload; with the plain global uopt promotes it into $v0 and the first test is no longer a $t2 load. T-17208 */
+        if (*(u8 *)&D_8012276C == 0) {
+            /* The nine ordering-table heads are addressed from D_80122660 (stride 0x10), not from D_80122640. */
+            for (i = 0; i < 9; i++) {
+                ((u32 *)D_80122660)[i * 4] = 0x80000000;
+            }
+        }
+    } else if (frame >= 0x138) {
+        func_8014B1C4();
+    }
+    for (i = 2, j = 9; i != 0xB; i++, j++) {
+        func_8014AD9C(i, D_8015DE3C, j);
+    }
+    D_8015DE4C = D_8015DE4C + 1;
+}
+#else
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014A1B0", func_8014A8FC);
+#endif
 
 void func_8014AD70(void) {
     draw2d3d(1, 0);
