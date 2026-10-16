@@ -16,6 +16,8 @@ extern s32 D_8015EC6C;
 extern s32 D_8015E744;
 extern s32 D_8015ED98;
 extern s32 D_8015EBDC;
+extern s32 D_8015EBD8;
+extern s32 D_8015EBE0;
 extern s32 D_8015EDC4;
 extern s32 D_8015EDF0;
 extern s32 D_8015EE1C;
@@ -226,7 +228,10 @@ void func_8013F220();
 extern u8 D_8015E74C[];
 extern s32 D_8015EC78;
 extern s32 D_8015EDB8;
+/* A file that reads the first word as a scalar (func_80147930, T-17109) defines RPG_BAT_OVERRIDE_D_8015EBCC and declares `extern s32 D_8015EBCC;` itself. */
+#ifndef RPG_BAT_OVERRIDE_D_8015EBCC
 extern s32 D_8015EBCC[3];
+#endif
 extern s32 D_8015EEE4;
 extern u8 D_8015E774[];
 extern u8 D_8015E79C[];
