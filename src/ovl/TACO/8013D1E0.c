@@ -149,7 +149,9 @@ s32 func_8013D528(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 /* NON_MATCHING: T-19018, 10 differing lines; the first load of arg3 in the UV stores takes $v1 and the shifted value
  * $t4 where the original has $t4 and $t5 (the other rows are that rename). poly and dist are declared before m: the
  * original has two scalar slots above the MATRIX, and size, o, j, t fill the six below pt (spill slots 0x58/0x64/0x78
- * then match). Layout notes: matching-notes, "T-19018". */
+ * then match). Closer pass, still 10 lines: that load carries the colour of the uopt range shl(arg3, 6), which gets
+ * $v1 (the call result holds $v0); the original needs $t4 while the four v/u1 ranges keep $a1..$t0, and no tie order
+ * gives that, because u1's range is numbered after the shift. Layout notes: matching-notes, "T-19018". */
 s32 func_8013D838(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
     POLY_FT4 *poly;
     s32 dist;
