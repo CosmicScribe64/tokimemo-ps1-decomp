@@ -523,6 +523,16 @@ class PackageTests(unittest.TestCase):
         self.assertEqual([t.key for t in sel], ['BBB/t_high', 'CCC/t_high', 'CCC/t_none'])
         self.assertEqual(bad, ['nope', 'AAA/m_base'])        # a matched function is not a target
 
+    def test_resolve_file_entries_in_the_per_object_layout(self):
+        """The real tree has one C file per object: src/ovl/<NAME>/<address>.c, src/main/<address>.c."""
+        ovl = types.SimpleNamespace(key='TACO/f', name='f', cfile='src/ovl/TACO/80134930.c')
+        main = types.SimpleNamespace(key='main/g', name='g', cfile='src/main/80041000.c')
+        for entry in ('file:src/ovl/TACO/80134930.c', 'file:TACO/80134930', 'file:80134930'):
+            self.assertEqual(siblings.resolve_entries([entry], [ovl, main]), ([ovl], []), entry)
+        for entry in ('file:src/main/80041000.c', 'file:80041000'):
+            self.assertEqual(siblings.resolve_entries([entry], [ovl, main]), ([main], []), entry)
+        self.assertEqual(siblings.resolve_entries(['file:src/ovl/TACO.c'], [ovl, main]), ([], ['file:src/ovl/TACO.c']))
+
     def test_note_has_c_listing_and_summary(self):
         t = next(f for f in self.targets if f.key == 'BBB/t_high')
         text = siblings.note_text(self.repo.root, t, self.sibs[self.targets.index(t)], self.args)

@@ -30,8 +30,8 @@ Report:
     only in constants and addresses: tools/neardupes.py territory), the largest per tier;
   - JSON (--json): per target the top 3 siblings (ratio, bytes, C file, function) and the
     unmatched-unmatched clusters at ratio >= 0.90 (single link: members chained by pairs at or
-    above the ratio; `min_ratio` is the weakest chain link), with the best matched sibling of the
-    cluster. Matching the cheapest member of a cluster without a matched sibling opens the rest.
+    above the ratio; `min_ratio` is the lowest ratio of any member pair found), with the best
+    matched sibling of the cluster. Matching the cheapest member of a cluster without a matched sibling opens the rest.
   - --package LIST: for each listed target a note file (default build/siblings/<unit>__<name>.md)
     with the sibling C and the two asm listings side by side, for the work package of an agent.
     The notes contain game asm: build/ is gitignored, never commit them.
@@ -40,13 +40,14 @@ Usage (inside Docker, from the repo root after `ninja` has generated asm/):
   tools/docker.sh python3 tools/siblings.py                       # summary + build/siblings.json
   tools/docker.sh python3 tools/siblings.py --skip-unit TT        # leave claimed units out of the targets
   tools/docker.sh python3 tools/siblings.py --unit TACO -v        # one unit, every target listed
-  tools/docker.sh python3 tools/siblings.py --package TACO/func_8013C0A8,func_80143A44
+  tools/docker.sh python3 tools/siblings.py --package TACO/func_80135638,BUNKAKEN/func_80140F60
   tools/docker.sh python3 tools/siblings.py --package list.txt    # one entry per line
   tools/docker.sh python3 tools/siblings.py --check-recall 40
 Package entries: `unit/name`, a bare `name` (every unmatched function of that name: overlays reuse
-addresses), `file:<C path or stem>` (every unmatched function of a C file, e.g. file:src/ovl/TACO.c
-or file:80041000), or the JSON of `tools/queue.py --plan N --json` (when it has one). `#` starts a
-comment in a list file.
+addresses), `file:<C path or stem>` (every unmatched function of a C file: file:src/ovl/TACO/80134930.c,
+file:TACO/80134930, file:80134930 or, for the main exe, file:80041000), or the JSON of
+`tools/queue.py --plan N --json` (when it has one). `#` starts a comment in a list file. INDEX.md in
+the notes folder lists the last run only; notes of earlier runs stay there.
 First run reads the asm of the tree (about a minute); build/siblings-cache.json keeps the tokens
 per file (keyed by size and mtime), later runs skip the reading.
 Tests: tools/test_siblings.py.
