@@ -16590,3 +16590,7 @@ Clean rebuild of the w3-rpg-bat-p14 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.
 ## [2026-10-16] ticket | T-17006 In Progress
 
 [[tickets/T-17006-w3-main-p06]] created and In Progress: wave 3 package w3-main-p06, six functions in `src/main/80075320.c` (`func_800754C0`, `func_80076C7C`, `func_8007866C`, `func_80077CA8`, `appointment_launch`, `func_80076630`). Worktree `tokimemo-wt/w3-main-p06` from `w2-good`.
+
+## [2026-10-16] ticket | T-17006 In Review
+
+[[tickets/T-17006-w3-main-p06]] In Progress to In Review: 0 of 6 matched (about 94 minutes). Guarded drafts: `func_800754C0` (9 rows), `func_80076C7C` (3), `func_80077CA8` (28), `func_8007866C` (14); `appointment_launch` and `func_80076630` not started. Four rows in [[data/t0018-cases]], notes in [[matching-notes]] (T-17006). Clean rebuild 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Waiting for the code review.
