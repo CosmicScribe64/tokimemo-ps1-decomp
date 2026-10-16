@@ -506,10 +506,10 @@ void func_8014F250(void);
 void func_80150010(void);
 void func_80150130(void);
 void func_80151460(void);
-void func_80152684(); /* old-style definition with s16 parameters, called before it (T-17204) */
 void func_80151510(void);
 void func_801515C0(void);
 void func_80151670(void);
+void func_80152684(); /* old-style definition with s16 parameters, called before it (T-17204) */
 void func_80152FC0(void);
 void func_80153070(void);
 void func_80153120(void);
