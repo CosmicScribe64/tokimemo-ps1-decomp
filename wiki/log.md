@@ -15901,3 +15901,6 @@ ten MATCH, checks clean. TT 262/303 (78.6%); grand total `6123/6958   1566432/22
 ## [2026-10-16] ticket | T-11840 Done
 
 Inline review against CODING_STANDARDS.md: no open findings. Moved [[tickets/T-11840-tt-batch-10]] to Done.
+
+## [2026-10-16] ticket | T-11850 TT batch 11 started
+Created [[tickets/T-11850-tt-batch-11]] (In Progress), stacked on T-11840 (PR #34, still open). Merged upstream `main` (252 commits, no TT changes) into `tt-batch11`; clean rebuild 27/27 OK. Seven file groups, one Opus agent each, two at a time.
