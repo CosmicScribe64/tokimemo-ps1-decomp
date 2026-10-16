@@ -15129,3 +15129,11 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16551 In Progress
 
 [[tickets/T-16551-pt-taiiku-p1]] started: pilot stage B, package pt-taiiku-p1 (`src/ovl/TAIIKU/80133C80.c`, 8 functions from the [[tickets/T-16550-taiiku-types-first]] redrafts), worktree `tokimemo-wt/pt-taiiku-p1`.
+
+## [2026-10-16] build | T-16551 package pt-taiiku-p1
+
+[[tickets/T-16551-pt-taiiku-p1]]: 3 functions matched in `src/ovl/TAIIKU/80133C80.c` (`func_80138224`, `func_80133CFC`, `func_801368B8`; 2,296 bytes), guarded drafts `func_801346FC` (8 lines), `func_80136BB4` (4), `func_80135480` (22), `func_80137544` (26), `func_80134060` not started. New findings in [[matching-notes]] (T-16551): a table defined in the unit gives the shared `lui at`; a run of identical statements over the four runners is a loop IDO unrolls with the first iteration peeled; word-local slot layouts found by printing the offset of the stack table. Rows appended to [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-16551 to In Review
+
+[[tickets/T-16551-pt-taiiku-p1]] moved to In Review with 3 functions matched; code review (against `CODING_STANDARDS.md`) still to run.

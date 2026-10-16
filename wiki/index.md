@@ -23,7 +23,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-16551-pt-taiiku-p1|T-16551]] Types-first pilot package pt-taiiku-p1: TAIIKU `80133C80.c`, 8 functions from the T-16550 redrafts (In Progress).
+- [[tickets/T-16551-pt-taiiku-p1|T-16551]] Types-first pilot package pt-taiiku-p1: TAIIKU `80133C80.c`, 3 of 8 functions matched (2,296 B), 4 guarded drafts, idioms: unit-defined data for `lui at`, unrolled runner loops (In Review).
 - [[tickets/T-16550-taiiku-types-first|T-16550]] Types-first pilot: TAIIKU: runner records of three games and 28 stack tables typed, all 64 functions redrafted (27 better), `func_80141CDC` matched, packages T-16551..T-16554 (Done).
 - [[tickets/T-16510-m2c-defect-rewrites|T-16510]] Detect and rewrite recurring m2c draft defects (Done): `tools/draft_fixes.py`; 50 T-14500 drafts changed, 34 better, 3 at score 0; results in `drafts/T-16510/`.
 - [[tickets/T-16520-sibling-report|T-16520]] Matched-sibling report for work packages: closest matched functions for every unmatched one: 150 of 1,005 have a sibling >= 0.70, 59 unmatched clusters (Done).
