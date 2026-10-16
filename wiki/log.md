@@ -15141,3 +15141,7 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] build | T-16551 closer pass: func_801346FC and func_80136BB4 matched
 
 [[tickets/T-16551-pt-taiiku-p1]], Opus closer on the two short guarded drafts of `src/ovl/TAIIKU/80133C80.c`: `func_801346FC` (1,688 B; `func_801365C8` declared `void` in `include/ovl/TAIIKU.h`, its `s32` prototype blocked `$v0`) and `func_80136BB4` (496 B; `u16` copy of the f0C counter, so its clear is a store-back after the f03 store-back). Plain C, TAIIKU sha1 OK, one commit each. Package total 5 functions, 4,480 bytes; `func_80135480` and `func_80137544` stay guarded. Notes in [[matching-notes]] (T-16551), rows in [[register-cheatsheet]], update line in [[data/t0018-cases]], [[taiiku-family-results]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16551 Done
+
+[[tickets/T-16551-pt-taiiku-p1]] reviewed against `CODING_STANDARDS.md` and moved to Done: 5 functions matched (`func_80138224`, `func_80133CFC`, `func_801368B8`, `func_801346FC`, `func_80136BB4`; 4,480 bytes), `func_80135480` and `func_80137544` guarded, `func_80134060` not started. Review fixes: comments for the peeled copy and the two unit-defined data pieces in `src/ovl/TAIIKU/80133C80.c`, stale counts in [[index]], [[taiiku-family-results]] and [[matching-notes]]. Clean rebuild 27/27, headers, globals and prototype checks OK.
