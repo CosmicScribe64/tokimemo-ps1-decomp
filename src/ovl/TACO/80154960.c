@@ -1,7 +1,115 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_80154960);
+void func_80154960(void) {
+    /* FAKE: reserves the word above poly's spill slot (poly sits at 0x30 in the original); real local unknown. T-16564 */
+    u8 pad[4];
+    POLY_F4 *poly;
+
+    D_801604C0 += 1;
+    func_8015B59C();
+    switch (D_801604C4) {
+    case 0:
+        if (D_801604C0 < 0x834) {
+            if ((D_801604C0 % 7) == 0) {
+                func_80154F74();
+            }
+        }
+        if (D_801604C0 < 0x4B0) {
+            if ((D_801604C0 % 50) == 0) {
+                func_801563E4(0);
+            }
+        }
+        if (D_801604C0 >= 0x259) {
+            if ((D_801604C0 < 0x708) && (func_8015CCC8(4) == 0)) {
+                func_801553AC();
+            }
+        }
+        if (D_801604C0 >= 0x709) {
+            func_8015A900();
+        }
+        break;
+    case 1:
+        D_80160470 = func_80156178();
+        func_8015A900();
+        break;
+    case 2:
+        if (D_801604C0 < 0x258) {
+            if ((D_801604C0 % 7) == 0) {
+                func_80154F74();
+            }
+        }
+        if ((D_801604C0 < 0x12C) && (func_8015CCC8(4) == 0)) {
+            func_801553AC();
+        }
+        if (D_801604C0 >= 0x1E1) {
+            if ((D_801604C0 % 110) == 0) {
+                func_801563E4(1);
+            }
+        }
+        if (D_801604C0 >= 0x12D) {
+            if ((D_801604C0 % 120) == 0) {
+                func_8015595C();
+            }
+        }
+        if (func_8015CCC8(6) == 0) {
+            func_8015A900();
+        }
+        if ((D_80160470 + D_8015EDB4)->unk3 == 2) {
+            func_8015A900();
+        }
+        break;
+    case 3:
+        func_8015C698();
+        func_8015A900();
+        break;
+    case 4:
+        poly = GetWorkBase(0x18, D_8011ECA0);
+        func_8009F02C(poly);
+        SetSemiTrans(poly, 1);
+        poly->r0 = D_801604C0;
+        poly->g0 = D_801604C0;
+        poly->b0 = D_801604C0;
+        poly->x0 = D_800E6280.unk_014[D_8011ECA0] - 0x100;
+        poly->y0 = D_800E6280.unk_018[D_8011ECA0] - 0x78;
+        poly->x1 = D_800E6280.unk_014[D_8011ECA0] + 0x100;
+        poly->y1 = D_800E6280.unk_018[D_8011ECA0] - 0x78;
+        poly->x2 = D_800E6280.unk_014[D_8011ECA0] - 0x100;
+        poly->y2 = D_800E6280.unk_018[D_8011ECA0] + 0x78;
+        poly->x3 = D_800E6280.unk_014[D_8011ECA0] + 0x100;
+        poly->y3 = D_800E6280.unk_018[D_8011ECA0] + 0x78;
+        AddPrim((D_8011ECA0 << 0xA) + D_800E8CA0, poly);
+        dtd_on_tpage(0, 0, 0, 1, 0);
+        D_801604C0 += 2;
+        if (D_801604C0 >= 0x80) {
+            func_8015A900();
+        }
+        break;
+    case 5:
+        poly = GetWorkBase(0x18, D_8011ECA0);
+        func_8009F02C(poly);
+        SetSemiTrans(poly, 1);
+        poly->r0 = 0x80 - D_801604C0;
+        poly->g0 = 0x80 - D_801604C0;
+        poly->b0 = 0x80 - D_801604C0;
+        poly->x0 = D_800E6280.unk_014[D_8011ECA0] - 0x100;
+        poly->y0 = D_800E6280.unk_018[D_8011ECA0] - 0x78;
+        poly->x1 = D_800E6280.unk_014[D_8011ECA0] + 0x100;
+        poly->y1 = D_800E6280.unk_018[D_8011ECA0] - 0x78;
+        poly->x2 = D_800E6280.unk_014[D_8011ECA0] - 0x100;
+        poly->y2 = D_800E6280.unk_018[D_8011ECA0] + 0x78;
+        poly->x3 = D_800E6280.unk_014[D_8011ECA0] + 0x100;
+        poly->y3 = D_800E6280.unk_018[D_8011ECA0] + 0x78;
+        AddPrim((D_8011ECA0 << 0xA) + D_800E8CA0, poly);
+        dtd_on_tpage(0, 0, 0, 1, 0);
+        D_801604C0 += 3;
+        if (D_801604C0 >= 0x80) {
+            func_8015ABF0();
+            func_8004284C();
+        }
+        break;
+    }
+}
 
 void func_80154F74(void) {
     /* FAKE: unused leading TcPos local reproduces the frame (see func_80156F50); real locals unknown. T-9180 */
@@ -177,7 +285,7 @@ void func_80155F98(s32 arg0) {
     }
 }
 
-void func_80156178(void) {
+s32 func_80156178(void) {
     TcPos p0;
     TcPos p2;
     TcPos pos;
