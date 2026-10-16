@@ -16264,3 +16264,6 @@ Clean rebuild of the w3-rpg-bat-p05 worktree (`rm -rf build && configure.py && n
 
 [[tickets/T-17105-w3-rpg-bat-p05]], Opus closer, worktree `w3-rpg-bat-p05`, 20:43-21:20 UTC. Matched `func_80158C4C` (1,056 bytes) and `func_80159214` (1,036 bytes) in `src/ovl/RPG_BAT/80157AE0.c`, one commit each. The shared 4-row gap was as1 load scheduling; a FAKE store through the load's base symbol, `(&D_8015EDC4)[5] = 0;`, closes it. `func_8015A744` stays guarded at 12 rows, and its comment now lists the forms tried. Notes in [[matching-notes]], rows in [[data/t0018-cases]], one row in [[register-cheatsheet]]. Clean rebuild 27/27 sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK (0 new, 15 known). The ticket stays In Review.
 
+## [2026-10-16] ticket | T-17105 Done
+
+[[tickets/T-17105-w3-rpg-bat-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a stray blank line at the end of `src/ovl/RPG_BAT/80157AE0.c`; stale counts in [[index]] and [[matching-notes]]); rebuild of RPG_BAT OK (sha1 OK, headers OK, globals OK, protos OK). 3 of 5 functions matched (`func_80159B40` 528 bytes, `func_80158C4C` 1,056 bytes, `func_80159214` 1,036 bytes); `func_8015A744` (12 rows) and `func_8015A8B4` (28 rows) stay guarded. Card moved in [[kanban]]. Merge via the wave 3 merge script.

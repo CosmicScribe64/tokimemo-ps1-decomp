@@ -33,7 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-17105-w3-rpg-bat-p05|T-17105]] Wave 3 package w3-rpg-bat-p05: RPG_BAT `80157AE0.c`, `8015A1F0.c`, 1 of 5 matched (`func_80159B40`, 528 B: scalar slots between the stack tables), four guarded near misses (4, 12, 16, 28 rows); In Review.
+- [[tickets/T-17105-w3-rpg-bat-p05|T-17105]] Wave 3 package w3-rpg-bat-p05: RPG_BAT `80157AE0.c`, `8015A1F0.c`, 3 of 5 matched (`func_80159B40`, 528 B: scalar slots between the stack tables; `func_80158C4C`, 1,056 B and `func_80159214`, 1,036 B: FAKE base-symbol store for as1 load order), two guarded near misses (`func_8015A744` 12 rows, `func_8015A8B4` 28 rows); Done.
 - [[tickets/T-17207-w3-date-p07|T-17207]] Wave 3 package w3-date-p07: DATE `80141EE0.c`, `func_801449D4` (312 to 71 rows) and `func_80144E20` (exact frame, about 180 register rows), 0 of 2 matched, drafts in `drafts/T-17207/` (Done).
 - [[tickets/T-17208-w3-date-p08|T-17208]] Wave 3 package w3-date-p08: DATE `8014A1B0.c`, `8015A640.c`, `8015A7E0.c`, `8015A980.c`, 1 of 5 matched (`func_8014AF88`, 248 B: pointer variable for the call argument), `func_8014A8FC` hand rewrite guarded at 34 lines, three libgte rotation helpers stay `INCLUDE_ASM` (Done).
 - [[tickets/T-19032-w3-d-p32|T-19032]] Wave 3 package w3-d-p32: TAIIKU `80141280.c`, 1 of 1 matched (`func_80141280`, 1,764 B intro state machine: auto-array initialiser as `.data` island, rolled 16-record zero loop with a reassigned counter, two FAKE views for a masked byte test and the nested selector in `$v1`) (Done).
