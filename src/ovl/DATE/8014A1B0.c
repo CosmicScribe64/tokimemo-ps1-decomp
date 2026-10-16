@@ -214,20 +214,15 @@ void func_8014AD70(void) {
     func_8014B194();
 }
 
-/* NON_MATCHING: T-12100, five saved-pointer stack-offset rows remain.
- * MATRIX and SVECTOR recover every instruction and register. */
-#ifdef NON_MATCHING
 void func_8014AD9C(s32 arg0, s16 *arg1, s32 arg2) {
     MATRIX matrix;
-    TaiikuBig *coord;
     SVECTOR *rotation;
 
     arg1 += arg2 * 6;
     matrix = *(MATRIX *)D_80125C60;
-    coord = &D_801227A0[arg0];
-    matrix.t[0] = ((MATRIX *)coord->unk4)->t[0] + arg1[0];
-    matrix.t[1] = ((MATRIX *)coord->unk4)->t[1] + arg1[1];
-    matrix.t[2] = ((MATRIX *)coord->unk4)->t[2] + arg1[2];
+    matrix.t[0] = ((MATRIX *)D_801227A0[arg0].unk4)->t[0] + arg1[0];
+    matrix.t[1] = ((MATRIX *)D_801227A0[arg0].unk4)->t[1] + arg1[1];
+    matrix.t[2] = ((MATRIX *)D_801227A0[arg0].unk4)->t[2] + arg1[2];
     rotation = &((SVECTOR *)D_8015DDD0)[arg0];
     rotation->vx += arg1[3];
     arg1 += 4;
@@ -237,12 +232,9 @@ void func_8014AD9C(s32 arg0, s16 *arg1, s32 arg2) {
     func_8015A7E0((rotation->vz << 12) / 360, &matrix);
     rotation->vy += *arg1;
     func_8015A980((rotation->vy << 12) / 360, &matrix);
-    *(MATRIX *)coord->unk4 = matrix;
-    coord->unk0 = 0;
+    *(MATRIX *)D_801227A0[arg0].unk4 = matrix;
+    D_801227A0[arg0].unk0 = 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014A1B0", func_8014AD9C);
-#endif
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-10320, seventeen instruction rows differ in saved constants and end-pointer allocation; T-12100 recheck retains the existing 3-argument func_8009B430 view */
