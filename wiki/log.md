@@ -16333,3 +16333,6 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 
 ## [2026-10-16] ticket | T-17113 In Progress
 [[tickets/T-17113-w3-rpg-bat-p13]] created and started: Wave 3 package w3-rpg-bat-p13 of [[tickets/T-17100-types-first-rpg_bat]], four RPG_BAT functions in `src/ovl/RPG_BAT/801447E0.c`, `src/ovl/RPG_BAT/8013C890.c`, `src/ovl/RPG_BAT/801484E0.c` (`func_801447E0`, `func_80148714`, `func_8013C890`, `func_80144C84`). Worktree `tokimemo-wt/w3-rpg-bat-p13`, base `w2-good`.
+
+## [2026-10-16] ticket | T-17113 In Review
+[[tickets/T-17113-w3-rpg-bat-p13]] In Progress to In Review: 1 of 4 functions matched (`func_8013C890`, 1,024 bytes of code, plain C in `src/ovl/RPG_BAT/8013C890.c`), `func_80148714` kept as a `NON_MATCHING` draft with 28 differing lines in `src/ovl/RPG_BAT/801484E0.c`, `func_801447E0` (154 rows) and `func_80144C84` (252 rows) left `INCLUDE_ASM` with drafts in `drafts/T-17113/`. Notes in [[matching-notes]] (section T-17113), three rows in [[data/t0018-cases]], new `RPG_BAT_OVERRIDE_func_8013C890` in `include/ovl/RPG_BAT.h`. Started 20:31 UTC, about 90 minutes.
