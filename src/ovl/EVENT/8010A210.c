@@ -312,7 +312,20 @@ void func_8010AE54(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010A210", func_8010AE7C);
+void func_8010AE7C(void) {
+    u8 index;
+    FnTbl56 table;
+
+    table = D_80123FCC;
+    index = D_800B1AF6;
+    table.f[index](0x80);
+    index = D_800B1AF6;
+    if (index >= 0x1E && index < 0x25) {
+        func_8003C2C0();
+    } else if (index == 0x2B) {
+        func_8010AFE4();
+    }
+}
 
 void func_8010AF40(void) {
     func_80015D28(0x3D, 0x801B0000, 0x8BD8);

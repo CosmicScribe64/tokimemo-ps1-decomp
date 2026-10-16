@@ -1896,3 +1896,8 @@ typedef struct {
 } EvShorts5; /* size 0x0A */
 extern EvShorts5 D_80125360; /* func_80118B4C */
 #endif
+
+#ifndef OVL_EVENT_PROTOS_T17400
+#define OVL_EVENT_PROTOS_T17400
+void func_8010AFE4(void); /* T-17400: defined in 8010A210.c after its first caller */
+#endif
