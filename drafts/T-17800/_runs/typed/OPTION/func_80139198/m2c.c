@@ -1,0 +1,66 @@
+? func_80050B00(?, ?, ?, ?);                        /* extern */
+
+void func_80139198(void) {
+    OptActor44 *var_s0;
+    s16 var_s1;
+
+    func_8004ADAC(4);
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(0);
+    func_80048390();
+    D_800E6280.unk_10A2 = 0;
+    *(s32 *)((unsigned char *)(&D_800E6280) + (4248)) = 0xA0;
+    func_8004E58C();
+    func_8006612C((s32) "オプション画面");
+    func_8004E884(1);
+    func_8004E788(D_8013D364->unk0, D_8013D372->unk0, 0, (s32) "ＸＡコール", 0);
+    func_8004E788(D_8013D364[1], D_8013D372[1], 0, (s32) "メインＶＡＢトランス", 0);
+    func_8004E788(D_8013D364[2], D_8013D372[2], 0, (s32) "サブＶＡＢトランス", 0);
+    func_8004E788(D_8013D364[3], D_8013D372[3], 0, (s32) "メインＳＥＱコール", 0);
+    func_8004E788(D_8013D364[4], D_8013D372[4], 0, (s32) "サブＳＥＱコール", 0);
+    func_8004E788(D_8013D364[5], D_8013D372[5], 0, (s32) "メインＳＥコール", 0);
+    func_8004E788(D_8013D364[6], D_8013D372[6], 3, (s32) "ＳＥＱーＮＵＭ", 0);
+    D_800E6280.unk_1093 = 0;
+    D_800E6280.unk_1094 = 0;
+    D_800E6280.unk_1092 = 0;
+    func_8006BC28(0);
+    D_8011ECD0->unk_03 |= 1;
+    D_8013D3B0 = 0;
+    D_8013D3B4 = 0;
+    D_801220E2 = 0;
+    D_801220E1 = 0;
+    D_801220E0 = 0;
+    D_800E6280.unk_03A = 0;
+    func_8004F870(0, 7, D_8013D364, D_8013D372, D_8013D380, D_8013D38E);
+    func_80050B00(0, 0x5F7F3F, 9, 8);
+    func_80050B00(1, 0x7F7F7F, 2, 1);
+    var_s0 = D_8011ECD0;
+    var_s1 = 0;
+    do {
+        func_80048F64(var_s1 + 0x60);
+        *(s8 *)((unsigned char *)var_s0 + (6529)) = 2;
+        *(s8 *)((unsigned char *)var_s0 + (6530)) = 0x40;
+        *(s32 *)((unsigned char *)var_s0 + (6584)) = 0x40000000;
+        *(s8 *)((unsigned char *)var_s0 + (6531)) = 0x94;
+        *(u8 **)((unsigned char *)var_s0 + (6540)) = D_800C5FD4;
+        *(u8 **)((unsigned char *)var_s0 + (6544)) = D_800C6010;
+        *(s32 **)((unsigned char *)var_s0 + (6580)) = &D_800C5FCC;
+        *(s8 *)((unsigned char *)var_s0 + (6532)) = 8;
+        *(s8 *)((unsigned char *)var_s0 + (6533)) = 1;
+        *(s16 *)((unsigned char *)var_s0 + (6550)) = 0;
+        *(s16 *)((unsigned char *)var_s0 + (6552)) = var_s1;
+        *(s16 *)((unsigned char *)var_s0 + (6548)) = (s16) D_800C6014;
+        *(s16 *)((unsigned char *)var_s0 + (6574)) = (s16) (3 - (func_800AE0D0() & 7));
+        *(s16 *)((unsigned char *)var_s0 + (6578)) = (s16) (4 - (func_800AE0D0() & 7));
+        *(s16 *)((unsigned char *)var_s0 + (6572)) = func_800AE0D0();
+        var_s1 += 1;
+        var_s0 += 0x44;
+        *(s16 *)((unsigned char *)var_s0 + (6508)) = func_800AE0D0();
+        *(s16 *)((unsigned char *)var_s0 + (6498)) = 0;
+        *(s16 *)((unsigned char *)var_s0 + (6502)) = 0;
+    } while (var_s1 != 0xD);
+    func_8004284C();
+}

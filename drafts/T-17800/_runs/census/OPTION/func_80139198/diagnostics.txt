@@ -1,0 +1,13 @@
+python3 failed:
+ ----------------------------------------------------^
+cfe: Warning 681: drafts/T-17800/_runs/census/OPTION/func_80139198/work/guarded.o.sjis.c, line 3186: '&' before array or function; ignored
+         *(s32 **)((unsigned char *)var_s0 + (6540)) = &D_800C5FD4;
+ ------------------------------------------------------^
+cfe: Warning 709: drafts/T-17800/_runs/census/OPTION/func_80139198/work/guarded.o.sjis.c, line 3187: Incompatible pointer type assignment
+         *(s32 **)((unsigned char *)var_s0 + (6544)) = &D_800C6010;
+ ----------------------------------------------------^
+cfe: Warning 681: drafts/T-17800/_runs/census/OPTION/func_80139198/work/guarded.o.sjis.c, line 3187: '&' before array or function; ignored
+         *(s32 **)((unsigned char *)var_s0 + (6544)) = &D_800C6010;
+ ------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17800/_runs/census/OPTION/func_80139198/work -o drafts/T-17800/_runs/census/OPTION/func_80139198/work/guarded.o /tmp/asm_processor5bbfoxuh/preprocessed_45b04050c7d344c0bd0df7e233fe0ea1.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibc1l_g9ib/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17800/_runs/census/OPTION/func_80139198/work/guarded.o drafts/T-17800/_runs/census/OPTION/func_80139198/work/guarded.o.sjis.c

@@ -15621,3 +15621,19 @@ Created [[tickets/T-17600-types-first-gyozi]] (wave 3 types-first pass for GYOZI
 ## [2026-10-16] ticket | T-17600 Done
 
 [[tickets/T-17600-types-first-gyozi]] In Review to Done after the code review against `CODING_STANDARDS.md`: 3 functions matched (908 bytes: `func_8013E308`, `func_8013DC2C`, `func_8013B0C4`), GYOZI types in `include/ovl/GYOZI.h`, 37 redrafts in `drafts/T-17600/`. One finding, fixed: the three fakematch idioms in `func_8013DC2C` now carry `FAKE` comments (comment-only, GYOZI sha1 OK). `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-17800 Types-first: OPTION opened
+
+Opened [[tickets/T-17800-types-first-option]] (In Progress) on branch `w3-option-types` from `w2-good`: recover OPTION's shared types, redraft every unmatched function with the pilot drivers, package the rest for wave 3.
+
+## [2026-10-16] build | T-17800 OPTION types and redraft
+
+[[tickets/T-17800-types-first-option]]: menu rows, word tables, `OptActor44` and the moved record and bit-field views declared in `include/ovl/OPTION.h` (now one include guard, includes `game.h`), `D_800E7D37` added to `include/main_api.h`; `drafts/T-17800/redraft.py` redrafted the 32 still-unmatched functions (19 of 30 unguarded better than the census). Matched `func_8013A09C`, `func_8013A1BC`, `func_80136434`, `func_80137040` (1,548 bytes). New page [[option-family-results]].
+
+## [2026-10-16] ticket | T-17800 In Review
+
+[[tickets/T-17800-types-first-option]] In Progress to In Review. Packages T-17801..T-17803 (`w3-option-p01`..`p03`, 12 functions, 6,636 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]).
+
+## [2026-10-16] ticket | T-17800 Done
+
+Code review of [[tickets/T-17800-types-first-option]] against `CODING_STANDARDS.md`: no findings. 4 functions matched (1,548 bytes: `func_8013A09C`, `func_8013A1BC`, `func_80136434`, `func_80137040`), OPTION sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. In Review to Done; branch `w3-option-types` goes to the integration merge.

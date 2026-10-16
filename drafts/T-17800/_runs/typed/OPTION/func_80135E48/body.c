@@ -1,0 +1,105 @@
+s32 func_80135E48(void) {
+    s16 sp70[6];
+    s16 sp64[6];
+    s16 sp58[6];
+    s16 sp4C[6];
+    OptActor44 *temp_v0;
+    s16 *temp_a0;
+    s16 *temp_a1;
+    s16 *temp_t0;
+    s16 *temp_t1;
+    s16 temp_a3;
+    s16 temp_t8;
+    s32 temp_v1;
+    u32 temp_hi;
+
+    if (D_800E6280.unk_110D == 0) {
+        ((OptActor44 *)D_8011ECD0)[106].unk_18 = 4;
+        ((OptActor44 *)D_8011ECD0)[106].unk_26 = -0xA0;
+        ((OptActor44 *)D_8011ECD0)[106].unk_2A = -0x78;
+        ((OptActor44 *)D_8011ECD0)[106].unk_03 = 0;
+        ((OptActor44 *)D_8011ECD0)[106].unk_1C = 0x7FFF;
+        D_800E6280.unk_110D = 1;
+        ((OptActor44 *)D_8011ECD0)[106].unk_1A = 0x7FFF;
+        return;
+    }
+    temp_a3 = 1 * 0x18;
+    temp_t8 = ((s16) ((OptActor44 *)D_8011ECD0)[106].unk_1A / 17) * 0x10;
+    ((OptActor44 *)D_8011ECD0)[106].unk_1C = (s16) (((s16) ((OptActor44 *)D_8011ECD0)->unk0 / 17) * 0x10);
+    ((OptActor44 *)D_8011ECD0)[106].unk_1A = temp_t8;
+    if (temp_t8 < 0x1001) {
+        ((OptActor44 *)D_8011ECD0)[106].unk_1C = 0x1000;
+        ((OptActor44 *)D_8011ECD0)[106].unk_1A = 0x1000;
+        ((OptActor44 *)D_8011ECD0)[107].unk_18 = 0xC;
+        ((OptActor44 *)D_8011ECD0)[107].unk_26 = 0x10;
+        ((OptActor44 *)D_8011ECD0)[107].unk_2A = -0x18;
+        sp58[0] = 0x30;
+        ((OptActor44 *)D_8011ECD0)[107].unk_03 = (u8) (((OptActor44 *)D_8011ECD0)[107].unk_03 | 0x80);
+        sp4C[0] = 0x10;
+        sp64[0] = -0x18;
+        temp_v1 = 1 * 2;
+        temp_a0 = &(sp70)[1];
+        sp70[0] = 0x10;
+        temp_v0 = &(&((OptActor44 *)D_8011ECD0)[96])[1];
+        temp_a1 = &(sp64)[1];
+        (*(s32 *)temp_a1) = temp_a3 - 0x18;
+        (*(s32 *)temp_a0) = 0x10;
+        *(s16 *)((unsigned char *)temp_v0 + (772)) = (s16) (temp_v1 + 0xC);
+        *(s16 *)((unsigned char *)temp_a0 + (2)) = 0x10;
+        *(s16 *)((unsigned char *)temp_v0 + (790)) = (s16) (*(s32 *)temp_a1);
+        *(u8 *)((unsigned char *)temp_v0 + (751)) = (u8) (*(u8 *)((unsigned char *)temp_v0 + (751)) | 0x80);
+        *(s16 *)((unsigned char *)temp_v0 + (786)) = (s16) (*(s32 *)temp_a0);
+        *(s16 *)((unsigned char *)temp_a1 + (2)) = temp_a3;
+        *(s16 *)((unsigned char *)temp_v0 + (840)) = (s16) (temp_v1 + 0xE);
+        *(s16 *)((unsigned char *)temp_v0 + (854)) = (s16) *(s16 *)((unsigned char *)temp_a0 + (2));
+        *(s16 *)((unsigned char *)temp_a0 + (4)) = 0x10;
+        *(s16 *)((unsigned char *)temp_a1 + (4)) = (s16) (temp_a3 + 0x18);
+        *(s16 *)((unsigned char *)temp_v0 + (858)) = (s16) *(s16 *)((unsigned char *)temp_a1 + (2));
+        *(s16 *)((unsigned char *)temp_v0 + (908)) = (s16) (temp_v1 + 0x10);
+        *(u8 *)((unsigned char *)temp_v0 + (819)) = (u8) (*(u8 *)((unsigned char *)temp_v0 + (819)) | 0x80);
+        *(s16 *)((unsigned char *)temp_v0 + (922)) = (s16) *(s16 *)((unsigned char *)temp_a0 + (4));
+        *(s16 *)((unsigned char *)temp_a1 + (6)) = (s16) (temp_a3 + 0x30);
+        temp_t1 = &(sp4C)[1];
+        *(u8 *)((unsigned char *)temp_v0 + (887)) = (u8) (*(u8 *)((unsigned char *)temp_v0 + (887)) | 0x80);
+        *(s16 *)((unsigned char *)temp_a0 + (6)) = 0x10;
+        temp_t0 = &(sp58)[1];
+        *(s16 *)((unsigned char *)temp_v0 + (926)) = (s16) *(s16 *)((unsigned char *)temp_a1 + (4));
+        *(s16 *)((unsigned char *)temp_v0 + (976)) = (s16) (temp_v1 + 0x12);
+        *(s16 *)((unsigned char *)temp_t1 + (2)) = 0x10;
+        *(s16 *)((unsigned char *)temp_t1 + (4)) = 0x10;
+        *(s16 *)((unsigned char *)temp_t1 + (6)) = 0x10;
+        (*(s32 *)temp_t1) = 0x10;
+        *(u8 *)((unsigned char *)temp_v0 + (955)) = (u8) (*(u8 *)((unsigned char *)temp_v0 + (955)) | 0x80);
+        *(s16 *)((unsigned char *)temp_t0 + (2)) = 0x30;
+        *(s16 *)((unsigned char *)temp_t0 + (4)) = 0x30;
+        *(s16 *)((unsigned char *)temp_t0 + (6)) = 0x30;
+        (*(s32 *)temp_t0) = 0x30;
+        *(s16 *)((unsigned char *)temp_v0 + (990)) = (s16) *(s16 *)((unsigned char *)temp_a0 + (6));
+        *(s16 *)((unsigned char *)temp_v0 + (994)) = (s16) *(s16 *)((unsigned char *)temp_a1 + (6));
+        menu_set(1, 5, sp70, sp64, sp58, sp4C);
+        temp_hi = (u8) D_800E6280.unk_F6F % 10U;
+        switch (temp_hi) {
+        default:
+            ((OptActor44 *)D_8011ECD0)[107].unk_18 = (s16) (((OptActor44 *)D_8011ECD0)[107].unk_18 + 1);
+            D_800E6280.unk_1094 = 0;
+            break;
+        case 2:
+            ((OptActor44 *)D_8011ECD0)[108].unk_18 = (s16) (((OptActor44 *)D_8011ECD0)[108].unk_18 + 1);
+            D_800E6280.unk_1094 = 1;
+            break;
+        case 3:
+            ((OptActor44 *)D_8011ECD0)[109].unk_18 = (s16) (((OptActor44 *)D_8011ECD0)[109].unk_18 + 1);
+            D_800E6280.unk_1094 = 1;
+            break;
+        case 4:
+            ((OptActor44 *)D_8011ECD0)[110].unk_18 = (s16) (((OptActor44 *)D_8011ECD0)[110].unk_18 + 1);
+            D_800E6280.unk_1094 = 1;
+            break;
+        case 6:
+            ((OptActor44 *)D_8011ECD0)[111].unk_18 = (s16) (((OptActor44 *)D_8011ECD0)[111].unk_18 + 1);
+            D_800E6280.unk_1094 = 1;
+            break;
+        }
+        func_8004284C();
+    }
+}

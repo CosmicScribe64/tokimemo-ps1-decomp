@@ -1,0 +1,51 @@
+python3 failed:
+ ----------------^
+cfe: Error: drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c, line 3433: 'D_80120998' undefined; reoccurrences will not be reported.
+                 D_80120998 -= 1;
+ ----------------^
+cfe: Error: drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c, line 3437: 'D_801209DC' undefined; reoccurrences will not be reported.
+                 D_801209DC -= 1;
+ ----------------^
+cfe: Error: drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c, line 3441: 'D_80120A20' undefined; reoccurrences will not be reported.
+                 D_80120A20 -= 1;
+ ----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17800/_runs/census/OPTION/func_8013554C/work -o drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o /tmp/asm_processor3b9b1vct/preprocessed_07135567850b4f48bc3d9bf15ff6aa95.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibd8c7j7ii/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c
+python3 failed:
+ --------^
+cfe: Warning 709: drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c, line 3409: Incompatible pointer type assignment
+             var_s3 = &D_8013D350;
+ -------------------^
+cfe: Warning 681: drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c, line 3409: '&' before array or function; ignored
+             var_s3 = &D_8013D350;
+ ---------------------^
+cfe: Error: drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c, line 3432: 'D_80120954' undefined; reoccurrences will not be reported.
+                 D_80120954 -= 1;
+ ----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17800/_runs/census/OPTION/func_8013554C/work -o drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o /tmp/asm_processormwx5cpgb/preprocessed_2ed80f22c2b94c1fa6aa514138adab1a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibf1hihb3s/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c
+python3 failed:
+ --------^
+cfe: Error: drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c, line 3398: 'D_80120914' undefined; reoccurrences will not be reported.
+         D_80120914 = 0x7FFF;
+ --------^
+cfe: Warning 709: drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c, line 3410: Incompatible pointer type assignment
+             var_s3 = &D_8013D350;
+ -------------------^
+cfe: Warning 681: drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c, line 3410: '&' before array or function; ignored
+             var_s3 = &D_8013D350;
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17800/_runs/census/OPTION/func_8013554C/work -o drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o /tmp/asm_processor6pwk9dtw/preprocessed_989f62e19f5d462bb59dbd13acb34592.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4du0qv55/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c, line 3395: 'D_80120910' undefined; reoccurrences will not be reported.
+         D_80120910 = 2;
+ --------^
+cfe: Warning 709: drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c, line 3411: Incompatible pointer type assignment
+             var_s3 = &D_8013D350;
+ -------------------^
+cfe: Warning 681: drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c, line 3411: '&' before array or function; ignored
+             var_s3 = &D_8013D350;
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17800/_runs/census/OPTION/func_8013554C/work -o drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o /tmp/asm_processorrdk5v7_a/preprocessed_7709831e1e0940eaa419f6ed3420e7cf.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibz3gdxur6/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o drafts/T-17800/_runs/census/OPTION/func_8013554C/work/guarded.o.sjis.c

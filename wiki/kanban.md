@@ -137,6 +137,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-17800-types-first-option|T-17800 Types-first: OPTION]]
 - [ ] [[tickets/T-17500-types-first-shougatu|T-17500 Types-first: SHOUGATU]]
 - [ ] [[tickets/T-19009-w3-d-p09|T-19009 Wave 3 package w3-d-p09]]
 - [ ] [[tickets/T-19007-w3-d-p07|T-19007 Wave 3 package w3-d-p07]]

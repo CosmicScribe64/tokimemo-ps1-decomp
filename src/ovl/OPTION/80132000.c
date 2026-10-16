@@ -4,14 +4,6 @@
 /* FAKE: scoped minimum aggregate view of the word and adjacent flags, based on observed +0x14 indexing. T-9540 */
 extern FlagsWork24 D_800E7D10;
 
-/* View of the 0x44-byte sprite records of the D_8011ECD0 table that the option menus number
- * (D_80120650 is record 96; the menus write the s16 at +0x18 of records 107-113). T-9020 */
-typedef struct OptSpr44 {
-    /* 0x00 */ s32 unk_00[6];
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad1A[0x2A];
-} OptSpr44; /* size 0x44 */
-
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132000);
 
 void func_801320B0(void) {
@@ -50,13 +42,6 @@ void func_801324E8(void) {
         i = n;
     } while (n != 8);
 }
-
-typedef struct {
-    s16 a[8];
-    s16 b[8];
-    s16 c[8];
-    s16 d[8];
-} Arrs4x8; /* size 0x40 */
 
 void func_801325A0(Arrs4x8 *p) {
     s32 i;
@@ -611,7 +596,30 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80135E48);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801361FC);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80136434);
+s32 func_80136434(void) {
+    s32 i;
+
+    if (D_800E6280.unk_110D == 0) {
+        /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
+        for (i = 0; i < 5; i++) D_8011ECD0[0x1C6F + i * 0x44] &= ~0x80;
+        D_80120912[0] = D_80120912[0] / 9 * 8;
+        if (D_80120912[0] < 9) {
+            D_800E6280.unk_110D = 1;
+        }
+    } else if (D_800E6280.unk_110D == 2) {
+        /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
+        for (i = 0; i < 5; i++) D_8011ECD0[0x1C6F + i * 0x44] &= ~0x80;
+        D_80120912[0] = D_80120912[0] * 9 / 8;
+        D_80120912[1] = D_80120912[1] * 9 / 8;
+        if (D_80120912[0] >= 0x4000) {
+            D_800E6280.unk_110D = 1;
+        }
+    } else {
+        func_80042908(0);
+        func_80042940(2);
+    }
+    D_801208FB = 0;
+}
 
 s32 func_8013661C(void) {
     switch (D_800E6280.unk_110A) {
@@ -727,7 +735,57 @@ s32 func_80136F3C(void) {
     return count;
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80137040);
+void func_80137040(void) {
+    s32 i;
+    s32 j;
+    s32 sel;
+
+    /* one table: as1 keeps the loads after the store only when both go through D_8011ECD0 (T-9020) */
+    D_8011ECD0[0x1C2B] = 0x80;
+    func_8004F984(1, *(s16 *)&D_8011ECD0[0x26], *(s16 *)&D_8011ECD0[0x2A]);
+    func_8004FC10(1);
+    func_801320C0();
+    sel = D_800E6280.unk_1094;
+    for (i = 0, j = 0; i < 4; i++, j += 2) {
+        if (i == sel) {
+            ((OptSpr44 *)D_80120650)[i + 11].unk_18 = j + 0x33;
+        } else {
+            ((OptSpr44 *)D_80120650)[i + 11].unk_18 = j + 0x34;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (sel) {
+        case 0:
+            if ((D_800E7D4F & 1) || (D_800E7D50 & 1)) {
+                func_80042940(0xA);
+                func_80044750(0x501);
+            }
+            break;
+        case 1:
+            if (func_80136F3C() != 0) {
+                func_80042940(0x14);
+                func_80044750(0x501);
+            }
+            break;
+        case 2:
+            if (func_80136F3C() != 0) {
+                func_80042940(0x1E);
+                func_80044750(0x501);
+            }
+            break;
+        case 3:
+            if (D_800E7D37 != 0) {
+                func_80042940(0x28);
+                func_80044750(0x501);
+            }
+            break;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_8004284C();
+        D_800E6280.unk_110D = 2;
+    }
+}
 
 void func_801371FC(void) {
     s32 i;
