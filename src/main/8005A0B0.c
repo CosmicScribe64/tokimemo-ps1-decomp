@@ -2374,17 +2374,14 @@ void pre_syogatu0(void) {
     }
 }
 
-/* NON_MATCHING: T-12030, 15 diff rows; one cached buffer address replaces separate target calculations. */
-#ifdef NON_MATCHING
 s32 pre_syogatu1(void) {
     s32 var_s0;
     s32 var_s1;
-    /* FAKE: two words recover the observed frame without moving the buffers. T-12030. */
+    /* FAKE: two words recover the observed frame without moving the buffers. T-17005 */
     s32 stack_home[2];
     u8 sp16C[0xC];
     u8 sp6C[0x100];
     u8 sp5C[0x10];
-    u8 *var_s2;
 
     switch (D_800E6280.unk_110D) {
     case 0:
@@ -2392,10 +2389,8 @@ s32 pre_syogatu1(void) {
         k_sub_reset();
         strcpy(sp6C, "やった！ ");
         var_s1 = 0;
-        var_s0 = 0;
-        var_s2 = sp16C;
-        do {
-            if (((u8) *var_s2 >= 0x4DU) && (D_800E6280.unk_1BC[var_s0].unk_0C.f.b1)) {
+        for (var_s0 = 0; var_s0 < 0xB; var_s0++) {
+            if ((sp16C[var_s0] >= 0x4DU) && (D_800E6280.unk_1BC[var_s0].unk_0C.f.b1)) {
                 if (var_s1 != 0) {
                     strcat(sp6C, "と、 ");
                 }
@@ -2403,9 +2398,7 @@ s32 pre_syogatu1(void) {
                 strcat(sp6C, sp5C);
                 var_s1 += 1;
             }
-            var_s0 += 1;
-            var_s2 += 1;
-        } while (var_s0 != 0xB);
+        }
         strcat(sp6C, "から、 年賀状をもらったラッキー。）");
         gnsx(D_800E6280.unk_0D4);
         sndisp(sp6C, 0, 0x1F);
@@ -2419,9 +2412,6 @@ s32 pre_syogatu1(void) {
         return;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_syogatu1);
-#endif
 
 s32 func_80061634(void) {
     switch (D_800E6280.unk_110A) {
