@@ -15943,3 +15943,6 @@ The T-19023 In Review entry above says 2,048 bytes; the three functions are 204 
 
 ## [2026-10-16] ticket | T-19027 In Review, 0 of 2 matched
 [[tickets/T-19027-w3-d-p27]] (15:28-16:45 UTC): TEL `func_8013CCD0` is a guarded draft at 20 differing lines (commit `bb5eed8a`), `func_8013D03C` went back to `INCLUDE_ASM` (49 rows at best, typed draft archived) in `drafts/T-19027/TEL/func_8013D03C/` (commit `ec3052f7`). Findings in [[matching-notes]] (T-19027): `DisplayRecord44` and bit-field flag stores, six scalar locals before the arrays for the frame, `D_800E7CBC..` are `unk_1A3C..`; two `regorder` rows in [[data/t0018-cases]]
+
+## [2026-10-16] build | T-19027 closer pass, TEL func_8013CCD0 matched
+[[tickets/T-19027-w3-d-p27]] (16:56-17:15 UTC, Opus): `func_8013CCD0` matched in plain C (commit `a056d1c5`): the `unk_06` clamp as a store followed by a test of the field (ugen forwards the stored byte), `-(q) * 2 + 8`, and each record's three field stores on one source line (`SET_REC` macro). Notes in [[matching-notes]], row in [[register-cheatsheet]] and [[data/t0018-cases]]. Ticket stays In Review.
