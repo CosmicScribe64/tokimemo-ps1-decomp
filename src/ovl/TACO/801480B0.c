@@ -24,7 +24,30 @@ void func_801480B0(void) {
     func_80133374();
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_80148184);
+void func_80148184(void) {
+    s32 i;
+
+    if (D_8015EDBC == 0) {
+        D_8015EDBC = 0x20;
+        func_80143730(0x80162000, 0xE);
+        func_80143730(0x80172000, 0xC);
+        func_8014866C();
+        func_80146D60(0);
+        func_801471D0(0x8018D000);
+        /* pointer argument: as an int constant it is shared with the func_80143730 argument in a callee-saved register */
+        load_csr_tp((void *)0x80162000, 8, 1, 0, 0, 0x100, 0x100);
+        func_80146F74(0, D_8015EDB4->unk74 - 0xBB8, D_8015EDB4->unk76 + 0x3E8, -0x109A0, 0, 0xBE, 0, 0, 0);
+        for (i = 1; i < 0x1F; i++) {
+            func_801472D4(i, 0, D_8015F840[i - 1].a, D_8015F840[i - 1].b, D_8015F930[i - 1].a, D_8015F930[i - 1].b);
+            D_80127080[i].unk0 = 0;
+        }
+        D_80128880[0].x = 0;
+        D_80128880[0].y = 0xBE;
+        D_80128880[0].z = 0;
+        func_80148B58(0);
+        func_8004284C();
+    }
+}
 
 void func_80148308(void) {
     s32 i;
