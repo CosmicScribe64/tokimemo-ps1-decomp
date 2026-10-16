@@ -466,6 +466,8 @@ void func_80079070(void) {
     ovl_load_state = 0;
     sp32 = D_800E6280.unk_110A;
     sp31 = D_800E6280.unk_110D;
+    /* FAKE: T-17003, unk_110B/unk_110C are s8 in GameState but the original loads them with lbu,
+     * so they are read through a u8 view (through gs they compile to lb). */
     sp2F = *(u8 *)&D_800E6280.unk_110C;
     sp30 = *(u8 *)&D_800E6280.unk_110B;
     arg = gs->unk_1109;
