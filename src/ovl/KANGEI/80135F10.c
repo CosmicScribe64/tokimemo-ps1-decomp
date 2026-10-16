@@ -333,7 +333,70 @@ void func_80137064(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_801370A0);
+/* Port of the MASTER clone func_80137BF4 (same opcodes, T-18400). */
+void func_801370A0(void) {
+    KangeiPoint2 *temp_s0_2;
+    s16 *temp_s1;
+    /* FAKE: wide X local plus a narrow third argument preserves the
+     * original sign-extension sequence (as MASTER func_80137BF4, T-10630). */
+    s32 temp_a0;
+    s16 temp_a1;
+    s16 temp_v0;
+    s16 temp_v0_2;
+    s16 var_s2;
+    s32 temp_hi;
+    KangeiSprite44 *temp_s0;
+
+    if ((((KangeiSprite44 *)D_80120650)->unk_16 == 0) && (((KangeiSprite44 *)D_80120650)->unk_18 == 7) && (((KangeiSprite44 *)D_80120650)->unk_08 == 2)) {
+        ((KangeiSprite44 *)D_80120650)->unk_16 = 1;
+        ((KangeiSprite44 *)D_80120650)->unk_18 = 0;
+        ((KangeiSprite44 *)D_80120650)->unk_08 = 0;
+        ((KangeiSprite44 *)D_80120650)->unk_02 = 1;
+    }
+    var_s2 = 0x61;
+    if ((((KangeiSprite44 *)D_80120650)->unk_16 == 2) && (((KangeiSprite44 *)D_80120650)->unk_18 == 1) && (((KangeiSprite44 *)D_80120650)->unk_08 == 4)) {
+        ((KangeiSprite44 *)D_80120650)->unk_16 = 3;
+        ((KangeiSprite44 *)D_80120650)->unk_18 = 0;
+        ((KangeiSprite44 *)D_80120650)->unk_08 = 0;
+        ((KangeiSprite44 *)D_80120650)->unk_02 = 1;
+    }
+    do {
+        temp_s0 = &((KangeiSprite44 *)D_8011ECD0)[var_s2];
+        temp_v0 = temp_s0->unk_18;
+        if ((temp_v0 < 2) || (temp_v0 >= 8)) {
+            temp_s0->unk_28.w = temp_s0->unk_28.w - ((((KangeiSprite44 *)D_80120650)->unk_16 == 3) * 0x50000) - 0x50000;
+        } else if ((temp_v0 == 4) || (temp_v0 == 7)) {
+            temp_s0->unk_28.w = temp_s0->unk_28.w - ((((KangeiSprite44 *)D_80120650)->unk_16 == 3) * 0x30000) - 0x30000;
+        } else {
+            temp_s0->unk_28.w = temp_s0->unk_28.w - ((((KangeiSprite44 *)D_80120650)->unk_16 == 3) * 0x20000) - 0x20000;
+        }
+        if (temp_s0->unk_28.h[1] < -0x9F) {
+            temp_hi = func_800AE0D0() % 320;
+            temp_s0->unk_26 = (s16) (temp_hi - 0xA0);
+            temp_s0->unk_28.h[1] = 0x3C;
+            temp_s0->unk_18 = (s16) (func_800AE0D0() % 10);
+        }
+        var_s2 += 1;
+    } while (var_s2 < 0x74);
+    var_s2 = 0;
+    if ((u8) ((KangeiSprite44 *)D_80120650)->unk_07 >= 0x78U) {
+        do {
+            temp_s0_2 = &D_80139F10[var_s2];
+            temp_s1 = &D_80139F38[var_s2];
+            temp_a0 = temp_s0_2->x;
+            temp_v0_2 = *temp_s1;
+            temp_s0_2->y -= temp_v0_2 * 4 * ((((KangeiSprite44 *)D_80120650)->unk_16 == 3) + 1);
+            temp_a1 = temp_s0_2->y;
+            func_80049FF0((s32) temp_a0, (s32) temp_a1, (s16) temp_a0, (s32) (s16) ((temp_v0_2 * 0x14) + temp_a1), 0xFFFFFF, 0xFFFFFF, 0xB);
+            if (temp_s0_2->y < -0xAA) {
+                temp_s0_2->y = 0x3C;
+                temp_s0_2->x = (func_800AE0D0() % 320) - 0xA0;
+                *temp_s1 = (func_800AE0D0() % 5) + 1;
+            }
+            var_s2 += 1;
+        } while (var_s2 < 0xA);
+    }
+}
 
 void func_80137440(void) {
     D_80120666 = 2;
