@@ -15389,3 +15389,7 @@ pool; merges run in parallel through a locked, self-cleaning merge script.
 ## [2026-10-16] ticket | T-19004 In Review
 
 [[tickets/T-19004-w3-d-p04]] In Progress to In Review: 1 of 5 listed TAIIKU functions matched (`func_80137228`, 260 bytes, plain C). `func_80135830` is a new guarded draft at 18 lines (FAKE `i` as record address), `func_80137544` (26 lines) and `func_80135480` (22 lines) keep their guards, `func_80137C44` stays `INCLUDE_ASM`. The reload of `D_80120A72` is explained by its being display record 111 `unk_26`; notes in [[matching-notes]] (T-19004), three rows in [[register-cheatsheet]], four rows and an update line in [[data/t0018-cases]], section in [[taiiku-family-results]]. Branch `w3-d-p04`, code review pending.
+
+## [2026-10-16] build | T-19004 closer pass
+
+[[tickets/T-19004-w3-d-p04]] closer: TAIIKU `func_80135830` matched (672 bytes, plain index loop C plus a dead `i = 0;`, FAKE), commit `a33af760`. Notes in [[matching-notes]], [[register-cheatsheet]] and [[data/t0018-cases]]. Ticket stays In Review.
