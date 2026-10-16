@@ -16311,6 +16311,18 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 
 [[tickets/T-17103-w3-rpg-bat-p03]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues, both fixed (three [[register-cheatsheet]] rows sat outside the table, moved in; three stray triple blank lines in `src/ovl/RPG_BAT/80137280.c`). 4 of 4 functions matched (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`), unit sha1 OK. Merge via the wave 3 merge script.
 
+## [2026-10-16] ticket | T-17102 In Progress
+[[tickets/T-17102-w3-rpg-bat-p02]] created and started: RPG_BAT `func_80151C10`, `func_80156D78`, `func_80157158` (files `src/ovl/RPG_BAT/80151C10.c`, `src/ovl/RPG_BAT/80156CC0.c`), worktree `tokimemo-wt/w3-rpg-bat-p02` from `w2-good`.
+
+## [2026-10-16] build | T-17102 matches
+[[tickets/T-17102-w3-rpg-bat-p02]]: `func_80151C10` (`src/ovl/RPG_BAT/80151C10.c`), `func_80156D78` and `func_80157158` (`src/ovl/RPG_BAT/80156CC0.c`) matched in plain C, RPG_BAT sha1 OK. The `$v1`-selector miss of all three was an int-returning callee view (`RPG_BAT_OVERRIDE_func_8013E7C0`, `RPG_BAT_OVERRIDE_func_8013F15C`); notes in [[matching-notes]], rows in [[register-cheatsheet]] and [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-17102 In Review
+[[tickets/T-17102-w3-rpg-bat-p02]] In Progress to In Review (3 of 3 matched).
+
+## [2026-10-16] ticket | T-17102 Done
+[[tickets/T-17102-w3-rpg-bat-p02]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 3 of 3 functions matched (`func_80151C10`, `func_80156D78`, `func_80157158`, 3,056 bytes). Rebuild: RPG_BAT unit sha1 OK, headers OK, globals OK. Card moved to Done.
+
 ## [2026-10-16] build | T-20000 PR submitted and upstream integrated
 
 Opened PR #36 with the scoped queue fix and the requested communication-platform question. The final pre-integration ninja had no work; sync_protos --check-branch reported 0 new / 15 known disagreements. Integrated upstream main 639693d2 (DATE and TT contributions); resolved only the append-only [[log]] conflict by preserving both sides. Ticket remains In Review. See [[tickets/T-20000-first-contribution]].
@@ -16322,3 +16334,7 @@ Integrated upstream main 9e74085b into PR #36, preserving both sides of the [[in
 ## [2026-10-16] build | T-20000 PR #36 refreshed
 
 Integrated upstream main 81095a46 into PR #36. Preserved both sides of the shared index and append-only log conflicts; source merged without conflicts. All 52 synthetic queue tests pass again in Docker (build/T-20000/refreshed-tests.log, gitignored). [[tickets/T-20000-first-contribution]] remains In Review.
+
+## [2026-10-16] setup | T-20000 follow upstream RPG merge
+
+Integrated main a8591fb8 into PR #36, preserving both append-only log histories. This upstream change affects RPG_BAT and wiki only; tools/queue.py and its tests are unchanged, so the recorded 52-test result still applies. [[tickets/T-20000-first-contribution]] remains In Review.
