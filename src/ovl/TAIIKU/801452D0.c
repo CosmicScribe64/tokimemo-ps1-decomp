@@ -797,7 +797,53 @@ void func_80147F10(void) {
     } while (var_s0 != 4);
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147F58);
+/* Display record n of the runner sprites (D_8011ECD0 is an array of 0x44-byte records). */
+#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
+void func_80147F58(s32 arg0) {
+    s32 i; /* declared before tbl: the stack table sits 4 bytes below the locals area top (T-3330, T-16553) */
+    TaiikuHalf8 tbl;
+
+    tbl = D_8014A668;
+    if (D_8014A454[arg0].unk_0C == 0) {
+        i = 0;
+        do {
+            if (DISP(arg0 + 96).unk_18 == D_8014A4C4[i] + arg0 * 0x13) {
+                if (tbl.h[i] + DISP(arg0 + 96).unk_26 + 0x46 < DISP(arg0 + 100).unk_26) {
+                    func_80148194(arg0);
+                }
+                if (DISP(arg0 + 100).unk_26 < tbl.h[i] + DISP(arg0 + 96).unk_26 + 0x23) {
+                    func_80148228(arg0);
+                }
+            }
+            i++;
+        } while (&D_8014A4C4[i] < D_8014A4D4); /* pointer bounds: the next table symbol, as in the original (sltu) */
+        i = 0;
+        do {
+            if (DISP(arg0 + 96).unk_18 == D_8014A4D8[i] + arg0 * 0x13) {
+                if (DISP(arg0 + 96).unk_26 + 0x5E < DISP(arg0 + 100).unk_26) {
+                    func_80148194(arg0);
+                }
+                if (DISP(arg0 + 100).unk_26 < DISP(arg0 + 96).unk_26 + 0x3B) {
+                    func_80148228(arg0);
+                }
+            }
+            i++;
+        } while (&D_8014A4D8[i] < D_8014A4E4);
+        i = 0;
+        do {
+            if (DISP(arg0 + 96).unk_18 == D_8014A4E8[i] + arg0 * 0x13) {
+                if (DISP(arg0 + 96).unk_26 + 0x3C < DISP(arg0 + 100).unk_26) {
+                    func_80148194(arg0);
+                }
+                if (DISP(arg0 + 100).unk_26 < DISP(arg0 + 96).unk_26 + 0x19) {
+                    func_80148228(arg0);
+                }
+            }
+            i++;
+        } while ((u16 *)&D_8014A4F4 != &D_8014A4E8[i]);
+    }
+}
+#undef DISP
 
 void func_80148194(s32 arg0) {
     u8 *temp_v0;

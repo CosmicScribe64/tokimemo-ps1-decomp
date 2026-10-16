@@ -164,6 +164,8 @@ s32 func_801485C4(void);
 s32 func_80148678(void);
 void func_801487B4(void);
 void func_80148820(void);
+void func_80148194(s32 arg0);
+void func_80148228(s32 arg0);
 extern u8 D_8014A1FC;
 void func_80146B8C(void);
 void func_801488F0(s16 *);
@@ -578,6 +580,8 @@ extern TaiikuHalf8 D_8014A648;
 extern TaiikuHalf8 D_8014A658;
 extern u16 D_8014A4C4[8];
 extern u16 D_8014A4D8[6];
+extern u16 D_8014A4E8[6];
+extern TaiikuHalf8 D_8014A668; /* copied to a stack table in func_80147F58. T-16553 */
 extern u16 D_8014A4D4[8]; /* with D_8014A4C4 and D_8014A4E4: sprite frame offsets by animation step. T-16553 */
 extern u16 D_8014A4E4[8];
 #endif
