@@ -16520,3 +16520,7 @@ Clean rebuild of the w3-rpg-bat-p05 worktree (`rm -rf build && configure.py && n
 
 ## [2026-10-16] ticket | T-17119 In Review
 [[tickets/T-17119-w3-rpg-bat-p19]] In Progress to In Review: 2 of 2 matched. Clean rebuild (`rm -rf build && configure.py && ninja`) 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Code review against `CODING_STANDARDS.md` pending.
+
+## [2026-10-16] ticket | T-17119 Done
+
+[[tickets/T-17119-w3-rpg-bat-p19]] In Review to Done: code review against `CODING_STANDARDS.md` found one item, fixed (a comment explaining the byte-index record loops in `src/ovl/RPG_BAT/80141060.c`, comment only). Rebuild OK (globals, headers, `RPG_BAT.bin` sha1 OK, `sync_protos --check-branch` OK). 2 of 2 functions matched (`func_80148F70` 1,644 B, `func_80141060` 2,564 B). Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.
