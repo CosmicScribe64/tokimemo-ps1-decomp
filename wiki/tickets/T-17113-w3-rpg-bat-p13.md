@@ -1,7 +1,7 @@
 ---
 id: T-17113
 title: Wave 3 package w3-rpg-bat-p13
-status: In Review
+status: Done
 assignee: claude-opus
 created: 2026-10-16
 updated: 2026-10-16
@@ -35,3 +35,10 @@ Worktree `tokimemo-wt/w3-rpg-bat-p13`, branch `w3-rpg-bat-p13`, base `w2-good`. 
 1 of 4 matched (1,024 bytes of code), 1 guarded draft, about 75 minutes. Notes: [[matching-notes]] (section T-17113), rows in [[data/t0018-cases]] (3), [[rpg-bat-family-results]].
 
 ## Comments
+
+Review 2026-10-16 (against `CODING_STANDARDS.md`; only `src/ovl/RPG_BAT/8013C890.c` and `src/ovl/RPG_BAT/801484E0.c` changed in `src/`, `src/ovl/RPG_BAT/801447E0.c` untouched; `drafts/T-17113/` is a new folder, no existing archive changed; no inline asm, `.word` or game data):
+- `func_8013C890` is plain C: `s32` without a return via `RPG_BAT_OVERRIDE_func_8013C890` (reason in the define, header wrapped per section 8a, same shape as T-17109), judged plain C with a comment, no `FAKE` needed.
+- `func_80148714` stays under `#ifdef NON_MATCHING` with a T-17113 comment (28 lines), the redundant `else` carries `FAKE` and T-17113, the default build keeps `INCLUDE_ASM`.
+- Finding fixed: the guarded draft reaches the `D_8015EBAC` and `D_8015EC70` tables through their first symbol (section 8) without a mark. Added a `FAKE` comment with T-17113 above the guard (comment only, no code change).
+- Header: `extern s32 D_8015ECC4;` and `void func_80148714(void);` are new and declared once; `check_headers` OK.
+- Verified: rebuilt in Docker after the edit, `build/ovl/RPG_BAT.bin: OK` (sha1), `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known). Result: 1 of 4 matched (`func_8013C890`, 1,024 bytes).

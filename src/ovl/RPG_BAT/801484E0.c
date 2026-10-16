@@ -72,6 +72,7 @@ void func_80148654(void) {
 }
 
 /* NON_MATCHING: T-17113, 28 differing lines; case 0 loads D_8015EBAC after the EC2C load (the original hoists it above the first store), the shift loop makes uopt store D_8015EDB4 back before it. */
+/* FAKE: draft only; the D_8015EBAC and D_8015EC70 tables are reached through their first symbol (aggregates not typed yet). Type them when the function is revisited. T-17113 */
 #ifdef NON_MATCHING
 void func_80148714(void) {
     s32 i;
