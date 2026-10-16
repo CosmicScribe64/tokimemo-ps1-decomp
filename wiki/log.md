@@ -14931,3 +14931,6 @@ T-11690). TT stays excluded (issue #2).
 
 ## [2026-10-15] ticket | T-16220 Wave 2 package w2-p02 opened
 Opened [[tickets/T-16220-w2-main-8007c030]] (In Progress) under [[tickets/T-16200-matching-wave-2]] on branch `w2-p02`: func_800422C8, make_three_select, dialogue_speak_part, junban_init, _sprite_set_box_shade_tarao.
+
+## [2026-10-16] ticket | T-16220 Wave 2 package w2-p02 to In Review
+[[tickets/T-16220-w2-main-8007c030]]: 3 of 5 matched (804 bytes): `func_800422C8`, `make_three_select` (FAKE frame pad), `junban_init`. The first and third were T-0018 rows; they match once the global is assigned and read directly. `_sprite_set_box_shade_tarao` is a guarded draft at 30 lines, and `dialogue_speak_part` stays at 16. Notes in [[matching-notes]] ("Wave 2 package w2-p02"), two rows in [[register-cheatsheet]]. Branch `w2-p02`.
