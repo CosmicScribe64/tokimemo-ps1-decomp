@@ -5447,7 +5447,8 @@ ugen's and left out.
 - IDO already does this when the C reads through the aggregate. ENDING's table fields compare constant-first only
   through `*(s16 *)&D_8011ECD0[...]` (T-9020) and DATE's `D_800CA22C[]` is an array; the other 5 matched functions with
   this shape declare a scalar and carry a `FAKE` or `(u32)` trick (ENDING `func_8013855C`, NAME_ENT `func_80148C20`,
-  BUNKA_SD `func_8013261C`, EVENT `func_80117004`, RPG_BAT `func_80150CD8`).
+  BUNKA_SD `func_8013261C`, EVENT `func_80117004`, RPG_BAT `func_80150CD8`). Update (T-16930): four of the five now read
+  through the aggregate and lost the trick; only RPG_BAT `func_80150CD8` keeps its `(u32)`.
 - The NAME_ENT drafts with the selector read as an element (`(&D_800E6280.unk_1093)[0]`) get the constant-first
   compares from IDO; with copy propagation off for the file (scratch only) `func_8013DAC4`, `func_8013F454`,
   `func_8013FB8C` reach 0 lines, `func_8013D4CC` 6, `func_8013E430` 4, `func_8013F0DC` 8, `func_8013CEC8` 10.
@@ -5476,3 +5477,46 @@ T-16900/T-16910) match as C with `tools/cvt_pass.py` as built, 2,332 bytes.
   members (12 matched) and 47 for scalars (27 matched). The matched copies come from ordinary C (4 through
   `GameState *g`, 3 read-modify-write, 5 direct). Copy propagation off for every procedure changes 737 of 5,967
   matched functions, so no zcopy rule: the kept copies are a C matter.
+
+## Pointer reads for kept copies and constant-first tricks (T-16930)
+
+Ticket [[tickets/T-16930-pointer-read-kept-copies]]: the T-16920 reading (a field read through a local pointer is an
+indirect load, so uopt keeps a `move` copy of it and compares it constant-first) applied to the other census functions
+and to the matched functions that carried a trick. Eight functions match as plain C (4,424 bytes), four tricks are gone.
+
+- **Matches.** main `func_80042AC8` (268 bytes), main `func_80078C48` (920), GEKO `func_80134040` (352), RPG_BAT
+  `func_801495DC` (276), ENDING `func_80137730` (888), OPTION `func_80137C1C` (540), OPTION `func_801383C4` (556),
+  SHUGAKU `func_80137490` (624). Control with plain member reads (`D_800E6280.unk_x`): main `func_80042AC8` 2 rows
+  (`bne v1,a1` where the original has `bne a1,v1`), main `func_80078C48` 21, ENDING `func_80137730` 46, OPTION
+  `func_801383C4` 49, SHUGAKU `func_80137490` 94, OPTION `func_80137C1C` 109. So `GameState *g = &D_800E6280;` decides
+  these, not a trick. GEKO `func_80134040` needs no pointer: it is the read-modify-write of `D_8011ECD3` that its
+  matched siblings (`func_801351F8`, `func_8013882C`) use.
+- **A global the original keeps in one register and stores from several branches is the variable itself.** uopt
+  promotes it and writes it back in each branch: `ovl_load_lba` in main `func_80078C48` (assigned in every `case`, read
+  after the `switch`; [[tickets/T-16220-w2-main-8007c030]]) and `D_800B5A60` in ENDING `func_80137730`. Do not add a local for it.
+- **s32 functions that end without a return.** `func_80078C48` and `func_80137730` are `s32` and the last path has no
+  `return` (K&R), which keeps `$v0` live at the exit (the "`s32` without a return" row above); their prototypes in
+  `include/main_api.h` and `include/ovl/ENDING.h` changed from `void`.
+- **A natural extra local closes an 8-byte frame.** RPG_BAT `func_801495DC` declares `rate` first
+  (`rate = D_800E6280.unk_10C.unk_02; lv = (rate > 300) ? 300 : rate;`): the copy and the original's 0x38 frame come
+  with it; without `rate` the frame is 0x30 and 14 rows differ. The three `FAKE` `s32 pad[2]` of T-16920 (NAME_ENT
+  `func_8013CEC8`, `func_8013E430`, `func_8013F0DC`) may be replaceable the same way; not tried.
+- **One base symbol for a record table.** In OPTION `func_80137C1C` and `func_801383C4` the three stores at
+  +0x2A3F, +0x2A56 and +0x2A58 and the two loads at +0x26 and +0x2A all go through `D_8011ECD0`; as1 keeps the loads
+  behind the stores only then (comment in the C). The per-record stores of the loops use `D_80120650`. Declaration
+  order `e, sel, i, j` sets the OPTION spill slot.
+- **The five constant-first tricks of T-16910.** Four are gone and each function stays byte-identical: EVENT
+  `func_80117004` (`s16 *res = &D_8012439C`), BUNKA_SD `func_8013261C` (`s16 *state = &D_801206F0`), NAME_ENT
+  `func_80148C20` (`NameRecord44 *rec` at record 96 of `D_8011ECD0`, +0x08 named `unk_08`), ENDING `func_8013855C` (the
+  file's table view of `D_8011ECD0`, T-9020). The two scalar globals have no known aggregate, so their pointer is
+  still a trick and carries a `FAKE` comment (T-16930); the other two read a real record table. RPG_BAT `func_80150CD8`
+  keeps `(u32)`: the original shares the constant 1 in `$v0` with the `case 1` of the `u32` switch, so the compare has
+  to be unsigned (through the table view the constant moves to `$at`; an `s32` switch moves the selector, 38 rows).
+  ENDING `func_8013855C` keeps its dead-test `FAKE` (T-9410); reading `unk_10F8` through `g` does not replace it.
+  The list of "5 matched functions with a FAKE or `(u32)`" in the T-16910 section above is therefore down to one.
+- **Misses** (drafts in the ticket's scratch folder): main `func_8007B64C` (52 rows; the count sits in `$v1` instead of
+  `$v0` with or without a pointer), TACO `func_801484E4` (65; plain local copied across calls, load in `$a1`, frame 0x30
+  against 0x38), EVENT `func_800FEDC8` (44; two register swaps), DATE `func_8013FAD0` (~123), VALEN `func_80133088`
+  (193), RPG_BAT `func_801447E0` (174; frame 0x48 against 0x40), main `func_80065B0C` (353). Not attempted: SHOUGATU
+  `func_8013FB28`, TACO `func_8014616C`, `func_80146754`, OPTION `func_8013A7EC`, KANGEI `func_80132FF8`, NAME_ENT
+  `func_80134248`, ENDING `func_8013A2E8`. They go to the next inventory.

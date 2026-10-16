@@ -1,10 +1,10 @@
 ---
 id: T-16900
 title: "Compiler experiments: selector-copy rule and ugen survey"
-status: In Review
+status: Done
 assignee: claude-opus (blissful-fermi-43d29a)
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-16
 links: [[[matching-breakthroughs]], [[uopt-register-allocation]], [[toolchain]], [[tickets/T-11570-w1-ovl-name_ent-80139740]], tools/cvt_pass.py, tools/regdiff.py]
 ---
 
@@ -125,8 +125,8 @@ a draft, and 7 still fail (ETC `func_8013D32C`, `func_8013E89C`; OPTION `func_80
 | no register difference (structure, operand order or constants only) | 5 |
 | regdiff error | 7 |
 
-Share: 59 of 250 first register divergences are ugen temporaries on the draft side, **23.6%**. That is the measure of
-the earlier 138-function sample (49 of 138, 36%). Other cuts: audit-clear drafts only 58/232 = 25.0%; ugen on either
+Share: 59 of 250 first register divergences are ugen temporaries on the draft side, **23.6%**, against 49 of 138
+(36%) in the earlier T-10400 sample. Other cuts: audit-clear drafts only 58/232 = 25.0%; ugen on either
 side 79/250 = 31.6%; ugen on both sides (the only case where ugen's own order alone decides) 23/250 = 9.2%. By score
 band: 21-40 lines 26.4%, 41-60 35.0%, 61-100 14.6%.
 
@@ -134,3 +134,12 @@ Verdict: below 25%, so no 3-day ugen trace. Where one side holds the value in a 
 value got a register, which the existing trace already shows. Only 9% are a ugen ordering question.
 
 ## Comments
+
+- 2026-10-16 review (CODING_STANDARDS.md checklist, diff w2-good...side-int): wiki pages only ([[uopt-register-allocation]],
+  [[matching-breakthroughs]], this ticket); no `src/`, `include/`, `tools/`, `config/` or `drafts/` change, no game data
+  (scratch pass and frozen drafts stay outside the repository). The arithmetic of the ugen table checks: the rows sum to
+  262 drafts, 250 after the 7 errors and 5 without a register difference; 59/250 = 23.6%, 58/232 = 25.0%, 79/250 = 31.6%,
+  23/250 = 9.2%. Finding, fixed: the sentence comparing 23.6% with the earlier sample was garbled; reworded. The
+  experiment 1 result is superseded by [[tickets/T-16910-cpw-census]] (no uniform rule) and
+  [[tickets/T-16920-gamestate-1093-type]] (the 7 targets match as C through `GameState *g`); a follow-up note was added
+  to [[uopt-register-allocation]]. Done.

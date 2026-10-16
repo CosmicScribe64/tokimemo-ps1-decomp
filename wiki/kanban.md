@@ -23,7 +23,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-16930-pointer-read-kept-copies|T-16930 Read aggregate fields through a local pointer]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
@@ -52,9 +51,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
-- [ ] [[tickets/T-16920-gamestate-1093-type|T-16920 GameState +0x1093 type and kept-copy census]]
-- [ ] [[tickets/T-16910-cpw-census|T-16910 Census the original for the T-16900 cpw rule]]
-- [ ] [[tickets/T-16900-compiler-experiments|T-16900 Compiler experiments: selector-copy rule and ugen survey]]
 
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
@@ -140,6 +136,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-16930-pointer-read-kept-copies|T-16930 Read aggregate fields through a local pointer]]
+- [ ] [[tickets/T-16920-gamestate-1093-type|T-16920 GameState +0x1093 type and kept-copy census]]
+- [ ] [[tickets/T-16910-cpw-census|T-16910 Census the original for the T-16900 cpw rule]]
+- [ ] [[tickets/T-16900-compiler-experiments|T-16900 Compiler experiments: selector-copy rule and ugen survey]]
 - [ ] [[tickets/T-16200-matching-wave-2|T-16200 Matching wave 2]]
 - [ ] [[tickets/T-16220-w2-main-8007c030|T-16220 Wave 2 package w2-p02]]
 

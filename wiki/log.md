@@ -15193,3 +15193,17 @@ branch; only wiki pages ([[uopt-register-allocation]], [[matching-breakthroughs]
 ## [2026-10-16] ticket | T-16910, T-16920, T-16930, T-16900 merged onto w2-good (side-int)
 
 Merged `claude/pensive-montalcini-7151d4` ([[tickets/T-16910-cpw-census]], [[tickets/T-16920-gamestate-1093-type]], [[tickets/T-16930-pointer-read-kept-copies]]), `t16930-a` (T-16930 agent A) and `claude/blissful-fermi-43d29a` ([[tickets/T-16900-compiler-experiments]], wiki only) into branch `side-int` (based on `w2-good`). Wiki conflicts kept both sides; `include/main_api.h` kept `D_800B5A68[][3]` and ENDING `func_80137730` indexes it as `[unk_F5F][i]`. Clean rebuild 27/27 sha1 OK; headers, globals and `sync_protos.py --check-branch` OK. `funcdiff.py --resolve` MATCH for all 15 claimed matches (NAME_ENT x7, main `func_80042AC8` and `func_80078C48`, GEKO, RPG_BAT, ENDING `func_80137730`, OPTION x2, SHUGAKU) and the four rewritten functions. Total 6018/6958 functions, 1,494,640/2,279,368 bytes (65.6%). Statuses unchanged: T-16900, T-16910, T-16920 In Review; T-16930 In Progress.
+
+## [2026-10-16] ticket | T-16900, T-16910, T-16920, T-16930 Done
+
+Code review of `git diff w2-good...side-int` against `CODING_STANDARDS.md` (12 C files, 4 headers). `funcdiff.py --resolve`
+MATCH for the 15 new matches (6,756 bytes) and the 5 changed matched functions; 27/27 sha1 after the fixes, `check_headers`,
+`migrate_globals --check` and `sync_protos --check-branch` OK. Fixes (comments and one prototype, no code bytes): `FAKE`
+comments on the scalar pointer reads in EVENT `func_80117004` and BUNKA_SD `func_8013261C`, reasons for the record
+pointer and table view in NAME_ENT `func_80148C20` and ENDING `func_8013855C`, a fall-through note on ENDING
+`func_80137730`, GEKO `func_801341A0` declared in `include/ovl/GEKO.h`. Wiki: T-16930 section in [[matching-notes]]
+(the findings of its hand-over), [[register-cheatsheet]] rows, follow-up note in [[uopt-register-allocation]], stale
+duplicate T-16200 line removed from [[index]]. Tickets [[tickets/T-16900-compiler-experiments]],
+[[tickets/T-16910-cpw-census]], [[tickets/T-16920-gamestate-1093-type]] and
+[[tickets/T-16930-pointer-read-kept-copies]] moved to Done on [[kanban]]; the open misses and the functions not attempted
+(listed in the T-16930 ticket) go to the next inventory.

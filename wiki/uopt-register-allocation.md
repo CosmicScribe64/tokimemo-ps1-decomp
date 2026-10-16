@@ -514,6 +514,10 @@ matched function, so that result shows the rule is harmless to the matched set, 
 experiment's bar (3 of 7, 0 changed). Before a uniform pass, the coupled shape needs a census in the original asm with
 its exceptions (CODING_STANDARDS 7a).
 
+Follow-up: the census ([[tickets/T-16910-cpw-census]]) was negative (the coupled shape is one NAME_ENT family, and the
+constant-first order follows aggregate membership), and [[tickets/T-16920-gamestate-1093-type]] matched all 7 targets
+as C by reading the field through a local `GameState *g`. The rule is not needed and was not added to `tools/cvt_pass.py`.
+
 **ugen survey.** regdiff over the 262 unmatched T-14500 drafts that are 21 to 100 lines from matching (no TT):
 250 first register divergences, 59 of them in a ugen temporary on the draft side (23.6%, against 49 of 138 in the
 T-10400 sample). Only 23 (9.2%) have ugen temporaries on both sides, the case where ugen's own order decides; in the

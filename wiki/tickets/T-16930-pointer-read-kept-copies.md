@@ -1,7 +1,7 @@
 ---
 id: T-16930
 title: "Read aggregate fields through a local pointer: kept copies and constant-first tricks"
-status: In Progress
+status: Done
 assignee: claude-opus (pensive-montalcini-7151d4)
 created: 2026-10-15
 updated: 2026-10-16
@@ -23,11 +23,11 @@ constant-first `==`/`!=` and the `move` copy of the field. Apply the same readin
 
 ## Acceptance criteria
 
-- [ ] The 23 functions listed with the census scripts; each tried with a pointer read; matches committed as plain C
-      (no new `FAKE` unless marked and ticketed).
-- [ ] The five tricks tried; each replaced only when the function stays byte-identical.
-- [ ] Unit sha1 and 27/27 sha1, headers and globals OK.
-- [ ] Results and misses here and in [[matching-notes]]; log entry; ticket In Review.
+- [x] The census functions listed with the census scripts (22 unmatched on this branch, not 23); 15 tried with a pointer
+      read, 8 matched as plain C (no new `FAKE`). The 7 not attempted go to the next inventory (Comments).
+- [x] The five tricks tried; four replaced, each function byte-identical; `func_80150CD8` keeps its `(u32)`.
+- [x] Unit sha1 and 27/27 sha1, headers and globals OK (re-checked at integration, Comments).
+- [x] Results and misses here and in [[matching-notes]] (section written at integration); log entry; reviewed, Done.
 
 ## Notes
 
@@ -81,7 +81,7 @@ Stopped on the user's request; the main thread merges and finishes the ticket.
   VALEN `func_80133088` (193), RPG_BAT `func_801447E0` (174, frame 0x48 vs 0x40), main `func_80065B0C` (353, agent A).
 - Not attempted: SHOUGATU `func_8013FB28`, TACO `func_8014616C`, `func_80146754`, OPTION `func_8013A7EC`, KANGEI
   `func_80132FF8`, NAME_ENT `func_80134248`, ENDING `func_8013A2E8`.
-- Findings for [[matching-notes]] (not yet written there): reading through `g` decided main `func_80042AC8` (control 2
+- Findings for [[matching-notes]] (written there at integration, 2026-10-16): reading through `g` decided main `func_80042AC8` (control 2
   rows) and ENDING `func_80137730` (control 46 rows); a global the original keeps in one register and stores from several
   branches is the variable itself (uopt promotes it); a natural extra local declared first closed an 8-byte frame
   (RPG_BAT `func_801495DC`), which may also replace T-16920's three `FAKE` `s32 pad[2]`.
@@ -102,4 +102,38 @@ NAME_ENT `func_80148C20`, ENDING `func_8013855C`) still MATCH. One header confli
 `func_80067C28`); ENDING `func_80137730` now indexes it as `[g->unk_F5F][i]` instead of the flat `[g->unk_F5F * 3 + i]` and still
 matches. Agent A wrote no wiki notes; its commit messages carry the findings (selector read through `GameState *g`; plain
 member reads leave 21 / 94 / 109 rows; `ovl_load_lba` assigned in every case is promoted, so `func_80078C48` returns `s32`;
-declaration order `e, sel, i, j` sets the OPTION spill slot). Status stays In Progress (open misses listed above).
+declaration order `e, sel, i, j` sets the OPTION spill slot). Status stayed In Progress at integration (open misses listed above).
+
+### Review and close (2026-10-16, side-int)
+
+Review of `git diff w2-good...side-int` against the CODING_STANDARDS.md checklist (12 C files, 4 headers, no `tools/`,
+`config/`, `drafts/`, asm or game data in the diff).
+
+- Matches: `funcdiff.py --resolve` MATCH for the 15 new matches of T-16920 and T-16930 (6,756 bytes: the 7 NAME_ENT
+  functions 2,332, the 8 above 4,424) and for the five changed matched functions (EVENT `func_80117004`, BUNKA_SD
+  `func_8013261C`, NAME_ENT `func_80148C20`, ENDING `func_8013855C`, main `func_80056284`). All 15 are C definitions; no
+  `INCLUDE_ASM` left for them, and the `NON_MATCHING` drafts of T-11570 are gone. Every `build/**/*.ok` removed and
+  `ninja` re-run: 27/27 sha1 OK; `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` OK.
+- C89 (declarations at block top, `/* */` only), no inline asm or `.word`; the three `s32 pad[2]` carry `FAKE` comments
+  with reason and ticket (T-16920); apart from the two added by finding 1, the `FAKE` changes in the diff are removals.
+- Findings, fixed in the integration branch (comments and one prototype only; no code bytes changed, sha1 re-checked):
+  1. EVENT `func_80117004` and BUNKA_SD `func_8013261C` read a scalar global through a local pointer with no
+     explanation: a trick while the aggregate is unknown (section 8). Marked `FAKE`, naming T-16930.
+  2. ENDING `func_80137730` ends without a `return` on its last path (K&R) and said nothing; comment added.
+  3. NAME_ENT `func_80148C20` (record pointer) and ENDING `func_8013855C` (table view) lacked the reason for the
+     view (section 9); comments added.
+  4. GEKO `func_80134040` carried a prototype of the overlay's own `func_801341A0` in the `.c`; moved to
+     `include/ovl/GEKO.h` (section 8a).
+  5. Wiki: the T-16930 findings were not in [[matching-notes]] (section added); the constant-local row of
+     [[register-cheatsheet]] and the T-16910 list of tricks were stale (updated); `wiki/index.md` held a duplicate
+     "In Progress" line for the finished T-16200 (removed).
+
+### Status and leftovers
+
+- 2026-10-16 review: no open findings. Status Done.
+- Left for the next inventory (not blockers): the misses with drafts, main `func_8007B64C` (52 rows), TACO
+  `func_801484E4` (65), EVENT `func_800FEDC8` (44), DATE `func_8013FAD0` (~123), VALEN `func_80133088` (193), RPG_BAT
+  `func_801447E0` (174), main `func_80065B0C` (353); and the functions not attempted: SHOUGATU `func_8013FB28`, TACO
+  `func_8014616C`, `func_80146754`, OPTION `func_8013A7EC`, KANGEI `func_80132FF8`, NAME_ENT `func_80134248`, ENDING
+  `func_8013A2E8`. Untried idea: replace the three `FAKE` `s32 pad[2]` of T-16920 by a natural first-declared local, as
+  `rate` does in RPG_BAT `func_801495DC`.

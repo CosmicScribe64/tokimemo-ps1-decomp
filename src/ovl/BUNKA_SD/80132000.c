@@ -164,6 +164,8 @@ void func_801325E8(void) {
 }
 
 void func_8013261C(void) {
+    /* FAKE: the read through a pointer makes uopt compare constant-first as the original does (its D_801206F0 is
+     * probably a member of an aggregate we do not know); real source unknown. T-16930 */
     s16 *state = &D_801206F0;
 
     if (D_800E6280.unk_1104.w == 1) {

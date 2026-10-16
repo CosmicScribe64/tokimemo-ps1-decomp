@@ -28,15 +28,14 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-16510-m2c-defect-rewrites|T-16510]] Detect and rewrite recurring m2c draft defects (Done): `tools/draft_fixes.py`; 50 T-14500 drafts changed, 34 better, 3 at score 0; results in `drafts/T-16510/`.
 - [[tickets/T-16520-sibling-report|T-16520]] Matched-sibling report for work packages: closest matched functions for every unmatched one: 150 of 1,005 have a sibling >= 0.70, 59 unmatched clusters (Done).
 - [[tickets/T-16530-proto-override|T-16530]] `--proto` override for regdiff and funcdiff, clearer missing-traced-uopt message (Done).
-- [[tickets/T-16930-pointer-read-kept-copies|T-16930]] Pointer reads for the 23 other kept-copy census functions and the five constant-first tricks: 8 functions matched (main `func_80042AC8`, `func_80078C48`, GEKO, RPG_BAT, ENDING, OPTION x2, SHUGAKU), four constant-first tricks dropped (In Progress).
-- [[tickets/T-16920-gamestate-1093-type|T-16920]] NAME_ENT selector-copy family matched as C through a `GameState *g` read (7 functions, 2,332 bytes); +0x1093/+0x1094 stay members; no zcopy rule (In Review).
-- [[tickets/T-16910-cpw-census|T-16910]] Census of the original for the T-16900 `cpw` rule: negative, constant-first compares follow aggregate membership, not copies (In Review).
-- [[tickets/T-16900-compiler-experiments|T-16900]] Compiler experiments (In Review): coupled selector-copy rule matches 3 of 7 NAME_ENT drafts with 0 matched changes but fires in no matched function; ugen first-difference share 23.6%, no ugen trace.
+- [[tickets/T-16930-pointer-read-kept-copies|T-16930]] Pointer reads for the 23 other kept-copy census functions and the five constant-first tricks: 8 functions matched (main `func_80042AC8`, `func_80078C48`, GEKO, RPG_BAT, ENDING, OPTION x2, SHUGAKU), four constant-first tricks dropped (Done).
+- [[tickets/T-16920-gamestate-1093-type|T-16920]] NAME_ENT selector-copy family matched as C through a `GameState *g` read (7 functions, 2,332 bytes); +0x1093/+0x1094 stay members; no zcopy rule (Done).
+- [[tickets/T-16910-cpw-census|T-16910]] Census of the original for the T-16900 `cpw` rule: negative, constant-first compares follow aggregate membership, not copies (Done).
+- [[tickets/T-16900-compiler-experiments|T-16900]] Compiler experiments (Done): coupled selector-copy rule matches 3 of 7 NAME_ENT drafts with 0 matched changes but fires in no matched function; ugen first-difference share 23.6%, no ugen trace.
 - [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210]] Wave 2 package w2-p01: RPG_BAT census drafts, 5 of 5 matched (Done).
 - [[tickets/T-16230-w2-date-80150010|T-16230]] Wave 2 package w2-p03: DATE 80150010.c, 4 of 4 functions matched, 1,620 bytes (Done).
 - [[tickets/T-16220-w2-main-8007c030|T-16220]] Wave 2 package w2-p02: main 8007C030.c and 800420D0.c, 3 matches / 804 bytes (Done).
 - [[tickets/T-16200-matching-wave-2|T-16200]] Matching wave 2: closed early, 7 packages merged, +50 functions / 31.7 KB, 65.1% (Done).
-- [[tickets/T-16200-matching-wave-2|T-16200]] Matching wave 2: 24 new packages and four resumed wave-1 packages (In Progress).
 - [[tickets/T-16500-twin-sweep|T-16500]] Whole-tree twin sweep (`tools/twin_sweep.py`): plan and apply exact, near and lenient copies across all units (Done; 4 plans / 944 B on w2-good, 1 kept by the sha1 check).
 - [[tickets/T-11920-local-storage-cleanup|T-11920]] Local storage cleanup with verified backups (In Review; cleanup complete).
 - [[tickets/T-15500-bunkasai-character-flags|T-15500]] BUNKASAI record-ten flag match (In Review; 820 bytes).

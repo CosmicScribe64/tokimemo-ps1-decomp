@@ -66,6 +66,7 @@ void func_801376FC(void) {
     func_8004284C();
 }
 
+/* Falls through without a return statement on the last path (K&R), as the original does. T-16930 */
 s32 func_80137730(void) {
     GameState *g = &D_800E6280;
     s16 *cnt;
@@ -360,6 +361,8 @@ void func_80138278(void) {
     D_8013C360 += 1;
 }
 
+/* The two table compares read D_8011ECD0 through the table view (T-9020), which gives the original's operand order
+ * without the former FAKE local. T-16930 */
 void func_8013855C(void) {
     u32 remainder;
     if (D_8013C35C == 1) {

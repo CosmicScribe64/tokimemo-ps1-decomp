@@ -1,10 +1,10 @@
 ---
 id: T-16910
 title: "Census the original for the T-16900 cpw rule"
-status: In Review
+status: Done
 assignee: claude-opus (quizzical-swanson-a4bc82)
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-16
 links: [[[tickets/T-16900-compiler-experiments]], [[uopt-register-allocation]], [[toolchain]], [[matching-notes]], [[tickets/T-11570-w1-ovl-name_ent-80139740]], tools/cvt_pass.py, tools/test_cvt_pass.py]
 ---
 
@@ -34,8 +34,8 @@ without any copy, and what decides the order is whether the global is a member o
 order when the C reads the value as an element. So the constant-first half of `cpw` is a question for the data types,
 not for the compiler. The copy half (copy propagation off) is a separate open question. `tools/cvt_pass.py` is unchanged.
 
-T-16900 (`wiki/tickets/T-16900-compiler-experiments.md`) is on branch `claude/blissful-fermi-43d29a`, not merged into
-this branch.
+T-16900 ([[tickets/T-16900-compiler-experiments]]) was on branch `claude/blissful-fermi-43d29a` while this was written;
+both are merged on `w2-good` now (2026-10-16).
 
 ### Method
 
@@ -160,3 +160,9 @@ game data into the repository.
 - 2026-10-15, T-16920: the open questions are settled. Read through a local `GameState *g`, all 7 NAME_ENT
   functions match with the pass as built (constant-first compare and kept copy both follow from the indirect load).
   An `s8[2]` type for +0x1093 changes 15 matched switches, so the members stay. [[tickets/T-16920-gamestate-1093-type]].
+- 2026-10-16 review (CODING_STANDARDS.md checklist, diff w2-good...side-int): the ticket changes wiki pages only
+  ([[matching-notes]], [[toolchain]], [[game-state]]); no `src/`, `include/`, `tools/` or `config/` file, so the match,
+  `INCLUDE_ASM`, `FAKE` and header items do not apply, and the negative result keeps `tools/cvt_pass.py` unchanged (7a:
+  no per-function rule). No game data: the census read `asm/` text and the scratch scripts and lists stay outside the
+  repository. The census numbers were not re-run in this review; the consistent follow-up evidence is T-16920 (all 7
+  coupled functions match as C) and T-16930 (the same reading decided 8 more). No finding. Done.

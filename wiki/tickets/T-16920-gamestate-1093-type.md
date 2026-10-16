@@ -1,10 +1,10 @@
 ---
 id: T-16920
 title: "GameState +0x1093 type and kept-copy census"
-status: In Review
+status: Done
 assignee: claude-opus (quizzical-swanson-a4bc82)
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-16
 links: [[[tickets/T-16910-cpw-census]], [[game-state]], [[matching-notes]], [[toolchain]], [[tickets/T-11570-w1-ovl-name_ent-80139740]], include/main_api.h, tools/cvt_pass.py]
 ---
 
@@ -118,3 +118,13 @@ read-modify-write, later stores), not of the compiler.
 - The 8-byte frame difference with a spilled copy (three `FAKE` pads here) belongs to the IDO frame rule (T-11120).
 
 ## Comments
+
+- 2026-10-16 review (CODING_STANDARDS.md checklist, diff w2-good...side-int, together with [[tickets/T-16930-pointer-read-kept-copies]]):
+  the 7 NAME_ENT functions are C definitions and `funcdiff.py --resolve` reports MATCH for each (2,332 bytes); the old
+  `NON_MATCHING` guards and their `INCLUDE_ASM` fallbacks are gone, no inline asm. The three `s32 pad[2]` carry `FAKE`
+  comments with reason and ticket. `D_800E7D15` is declared once, in `include/main_api.h` (`u8[]`, the type of its
+  users), and main `func_80056284` still MATCHes with `D_800E7D15[0] = 0`. 27/27 sha1, `check_headers.py`,
+  `migrate_globals.py --check` and `sync_protos.py --check-branch` OK. No finding in this ticket's scope. Done.
+- Still open from the Follow-ups above: the 23 functions were taken up in T-16930 (8 matched, the rest listed there);
+  the 8-byte frame rule (T-11120) is not settled, and the three pads may go the way of `rate` in RPG_BAT
+  `func_801495DC` (T-16930).

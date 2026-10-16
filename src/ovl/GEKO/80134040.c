@@ -1,8 +1,6 @@
 #include "common.h"
 #include "ovl/GEKO.h"
 
-void func_801341A0(void);
-
 void func_80134040(void) {
     func_80083808();
     if (D_800E6280.unk_1109 == 0) {

@@ -1641,6 +1641,8 @@ void func_80116EF0(void) {
 }
 
 void func_80117004(void) {
+    /* FAKE: the read through a pointer makes uopt compare constant-first as the original does (its D_8012439C is
+     * probably a member of an aggregate we do not know); real source unknown. T-16930 */
     s16 *res = &D_8012439C;
 
     switch (D_800B1746) {

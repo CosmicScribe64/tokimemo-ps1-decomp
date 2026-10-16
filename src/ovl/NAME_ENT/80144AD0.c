@@ -1647,6 +1647,8 @@ void func_80148BF4(void) {
     }
 }
 
+/* rec is record 96 of the D_8011ECD0 table (D_80120658 and D_80120668 are its +0x08 and +0x18): read through the
+ * record, uopt compares constant-first as the original does. T-16930 */
 void func_80148C20(void) {
     NameRecord44 *rec = &((NameRecord44 *)D_8011ECD0)[96];
 
