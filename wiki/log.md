@@ -15485,3 +15485,7 @@ Code review of [[tickets/T-17000-types-first-main]] against `CODING_STANDARDS.md
 ## [2026-10-16] ticket | T-19008 In Progress
 
 [[tickets/T-19008-w3-d-p08]] created and In Progress: wave 3 package w3-d-p08, TAIIKU `func_8013B608`, `func_8013B200`, `func_8013B78C`, `func_8013B94C`, `func_8013BCEC` (`src/ovl/TAIIKU/80138950.c`).
+
+## [2026-10-16] ticket | T-19008 In Review
+
+[[tickets/T-19008-w3-d-p08]] In Progress to In Review: 1 of 5 TAIIKU functions matched (`func_8013B200`, 432 bytes, FAKE u16 views; commit `f40d9f27`), `func_8013BCEC` guarded (18 differing lines, `src/ovl/TAIIKU/80138950.c`, prototype in `include/ovl/TAIIKU.h`), `func_8013B608`, `func_8013B78C`, `func_8013B94C` left `INCLUDE_ASM`. Notes in [[matching-notes]] (T-19008, includes the `ugen -S` method), [[register-cheatsheet]], [[data/t0018-cases]] and [[taiiku-family-results]]. About 70 minutes.

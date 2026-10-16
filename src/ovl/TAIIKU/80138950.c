@@ -1053,13 +1053,13 @@ void func_8013BB3C(void) {
     }
 }
 
-/* NON_MATCHING: T-19008, 18 differing lines; the draft is structurally equal to the original except that
- * ugen's temporary after the two condition temporaries is one off from the first temporary of the position
- * block (the original loads D_80149986 first, holds it in a temporary and uses it last; x >> 3 and the
- * result swap v0/v1 because the counter outranks them there).
- * FAKE: the self-assignment of the counter before the first call reproduces uopt's write-back sh v0
- * (without it the write-back is missing); the counter and the flag are read through u16 pointer views as
- * in func_8013BEF8. */
+/* NON_MATCHING: T-19008, 18 differing lines; x >> 3 and the result swap v0/v1 (the counter outranks them in
+ * the original), and the original computes cnt & 0xF into the delay slot of the cnt & 8 test, which the
+ * self-assignment below loses. The original also hands out one more ugen temporary between the conditions
+ * and the x * 79 chain (nothing visible uses it), so its later temporaries are one higher than here.
+ * FAKE: the self-assignment of the counter before the first call of the last path reproduces uopt's
+ * write-back sh v0 (without it the write-back is missing); the counter and the flag are read through
+ * u16 pointer views as in func_8013BEF8. */
 #ifdef NON_MATCHING
 void func_8013BCEC(void) {
     s16 v;

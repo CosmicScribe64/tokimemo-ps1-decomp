@@ -125,3 +125,7 @@ What the types did and did not do here: the new `TaiikuBall`, `TaiikuA0`, `Taiik
 ## Package w3-d-p04 (T-19004, `80133C80.c`)
 
 [[tickets/T-19004-w3-d-p04]], wave 3: `func_80137228` matched (260 bytes) once `D_80120A72` and `D_80120AA8` were read as fields of display records 111 and 112 (the loop's record stores then force the reload the original has); `func_80135830` (672 bytes) matched in the closer pass (index loop plus a FAKE dead `i = 0;`), `func_80137544` (26 lines) and `func_80135480` (22) unchanged, `func_80137C44` left `INCLUDE_ASM`. Details in [[matching-notes]], section T-19004.
+
+### Package w3-d-p08 results (T-19008)
+
+`80138950.c`, the rest of the D_801499A2 counter family (five functions, 2,288 bytes, about 70 minutes of agent time): `func_8013B200` (432 B) matched; `func_8013BCEC` (524 B) is a guarded draft of 18 differing lines; `func_8013B608` (388 B, 39 rows), `func_8013B78C` (448 B, 79 rows) and `func_8013B94C` (496 B) stay `INCLUDE_ASM`. The match came from removing a local, ordering two stores and reading the flag through a u16 view; the remaining gap of `func_8013B608` and `func_8013BCEC` is located (one extra ugen temporary between the condition and the chain in the original) but not closed. Details, the `ugen -S` method and the probes tried: [[matching-notes]], "T-19008"; rows in [[data/t0018-cases]].
