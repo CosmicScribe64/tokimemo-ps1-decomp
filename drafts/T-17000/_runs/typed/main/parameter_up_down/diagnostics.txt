@@ -1,0 +1,11 @@
+m2c.py: argument counts from the callees' asm: parameter_change 2
+python3 failed:
+cfe: Error: drafts/T-17000/_runs/typed/main/parameter_up_down/work/guarded.c, line 2857: redeclaration of 'parameter_up_down'; previous declaration at line 2836 in file 'drafts/T-17000/_runs/typed/main/parameter_up_down/work/guarded.c'
+ void parameter_up_down(s32 arg0, s32 arg1, s32 arg2) {
+ -----^
+cfe: Error: drafts/T-17000/_runs/typed/main/parameter_up_down/work/guarded.c, line 2857: Incompatible function return type for this function.
+ void parameter_up_down(s32 arg0, s32 arg1, s32 arg2) {
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/typed/main/parameter_up_down/work -o drafts/T-17000/_runs/typed/main/parameter_up_down/work/guarded.o /tmp/asm_processorb9b6l30l/preprocessed_a03b187ad7d347329ec14e0fe27cce40.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibix87nd8f/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/typed/main/parameter_up_down/work/guarded.o drafts/T-17000/_runs/typed/main/parameter_up_down/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return

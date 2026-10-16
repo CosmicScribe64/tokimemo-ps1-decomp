@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: main_state_set 1, rand 0
+python3 failed:
+ --------------------------------------------^
+cfe: Warning 749: drafts/T-17000/_runs/typed/main/func_80072D70/work/guarded.o.sjis.c, line 3801: structure has no member named 'unk0'
+         if (((u8) D_800E6280.unk0 >> 5) == 0) {
+ ----------------------------^
+cfe: Warning 749: drafts/T-17000/_runs/typed/main/func_80072D70/work/guarded.o.sjis.c, line 3871: structure has no member named 'unk0'
+         if (D_800E6280.unk_044[0].unk_00[D_800E6280.unk0] == 0) {
+ ---------------------------------------------------^
+cfe: Error: drafts/T-17000/_runs/typed/main/func_80072D70/work/guarded.o.sjis.c, line 3879: Unacceptable operand of shift operator.
+             if ((((u32) (*(&D_800E6280 + (temp_hi_2 * 0x38)) << 0x1E) >> 0x1F) != 0) && (var_v0 = get_h_tokimeki(temp_hi_2), (((u32) var_v0 < 0x33U) == 0)) && (var_v0 = get_g_zyotai_s(sp38), (var_v0 != 4))) {
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/typed/main/func_80072D70/work -o drafts/T-17000/_runs/typed/main/func_80072D70/work/guarded.o /tmp/asm_processorc_apduvh/preprocessed_da1e7986662e438286d7a59cc7eb2a14.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibg5jczjhh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/typed/main/func_80072D70/work/guarded.o drafts/T-17000/_runs/typed/main/func_80072D70/work/guarded.o.sjis.c

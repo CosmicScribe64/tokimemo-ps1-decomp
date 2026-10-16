@@ -1,0 +1,7 @@
+m2c.py: argument counts from the callees' asm: rand 0
+python3 failed:
+cfe: Error: drafts/T-17000/_runs/typed/main/func_80075C84/work/guarded.o.sjis.c, line 2781: Unacceptable operand of '+'.
+                         D_800E6280.unk_1BC[var_a2] = (s32) (D_800E6280.unk_1BC[var_a2] + (rand() & 0x7FFF));
+ ---------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/typed/main/func_80075C84/work -o drafts/T-17000/_runs/typed/main/func_80075C84/work/guarded.o /tmp/asm_processor4gs0fzls/preprocessed_7a687bc67a3e42f3a41649095043e99a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibxzxzknqt/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/typed/main/func_80075C84/work/guarded.o drafts/T-17000/_runs/typed/main/func_80075C84/work/guarded.o.sjis.c

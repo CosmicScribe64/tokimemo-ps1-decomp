@@ -1,0 +1,13 @@
+python3 failed:
+ ------------------^
+cfe: Warning 681: drafts/T-17000/_runs/plain/main/func_800764AC/work/guarded.o.sjis.c, line 2772: '&' before array or function; ignored
+         } while ((u32) var_v1 < (u32) &spAC);
+ --------------------------------------^
+cfe: Warning 681: drafts/T-17000/_runs/plain/main/func_800764AC/work/guarded.o.sjis.c, line 2799: '&' before array or function; ignored
+         } while ((u32) var_v1_3 < (u32) &spAC);
+ ----------------------------------------^
+cfe: Warning 689: drafts/T-17000/_runs/plain/main/func_800764AC/work/guarded.o.sjis.c, line 2810: Unacceptable operand of == or !=
+             if (var_v1_4 != &D_800E62A0) {
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/plain/main/func_800764AC/work -o drafts/T-17000/_runs/plain/main/func_800764AC/work/guarded.o /tmp/asm_processor6umd317q/preprocessed_356c7e6a41af4b88a03c22ab43c08c2b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibcx_cgury/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/plain/main/func_800764AC/work/guarded.o drafts/T-17000/_runs/plain/main/func_800764AC/work/guarded.o.sjis.c

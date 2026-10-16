@@ -1,0 +1,13 @@
+m2c.py: argument counts from the callees' asm: func_80053564 1, main_state_set 2, parameter_up_down 3
+python3 failed:
+cfe: Error: drafts/T-17000/_runs/plain/main/func_80077900/work/guarded.o.sjis.c, line 2856: Improper cast of non-scalar type expression.
+                 if ((temp_v0 == 0) && (temp_v1 = D_800E6280.unk_1BC[temp_v0].unk_0C.w, (temp_v1 & 4)) && (temp_v1 & 2) && !((s32) D_800E6280.unk_66C[temp_t1] & 0x20000000) && !(temp_v1 & 0x40000)) {
+ ----------------------------------------------------------------------------------------------------------------------------------------------------^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_80077900/work/guarded.o.sjis.c, line 2861: Improper cast of non-scalar type expression.
+                     if ((temp_v1_2 & 4) && (temp_v1_2 & 2) && !((s32) D_800E6280.unk_66C[temp_t1] & 0x20000000) && !(temp_v1_2 & 0x40000)) {
+ ----------------------------------------------------------------------------------------^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_80077900/work/guarded.o.sjis.c, line 2870: Improper cast of non-scalar type expression.
+                 if ((temp_v1_3 & 2) && (temp_v1_3 & 4) && !((s32) D_800E6280.unk_66C[temp_t1] & 0x20000000) && !(temp_v1_3 & 0x40000)) {
+ ------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/plain/main/func_80077900/work -o drafts/T-17000/_runs/plain/main/func_80077900/work/guarded.o /tmp/asm_processor7twcjyhc/preprocessed_a60d1146e78a422e90464dd31a6e60d9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibsa70rqq5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/plain/main/func_80077900/work/guarded.o drafts/T-17000/_runs/plain/main/func_80077900/work/guarded.o.sjis.c

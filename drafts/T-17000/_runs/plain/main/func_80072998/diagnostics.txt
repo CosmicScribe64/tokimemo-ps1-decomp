@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_80066104 1, func_8006D00C 0, sndisp 3
+python3 failed:
+cfe: Error: drafts/T-17000/_runs/plain/main/func_80072998/work/guarded.o.sjis.c, line 3702: redeclaration of 'func_80072998'; previous declaration at line 2041 in file 'drafts/T-17000/_runs/plain/main/func_80072998/work/guarded.o.sjis.c'
+ void func_80072998(void) {
+ -----^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_80072998/work/guarded.o.sjis.c, line 3702: Incompatible function return type for this function.
+ void func_80072998(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/plain/main/func_80072998/work -o drafts/T-17000/_runs/plain/main/func_80072998/work/guarded.o /tmp/asm_processorblgt4vez/preprocessed_02cdd0aaa851400c94471351beb8d8ea.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib8q80wxz5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/plain/main/func_80072998/work/guarded.o drafts/T-17000/_runs/plain/main/func_80072998/work/guarded.o.sjis.c

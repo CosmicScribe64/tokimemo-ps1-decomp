@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_80059B04 1, func_80079554 0, func_80079578 0, func_8007AD6C 0, func_8007B7E0 0, func_8008B750 2, func_8008C720 3, func_8008FF5C 2, func_800900A0 2, func_80090270 2, func_80090350 3
+python3 failed:
+cfe: Warning 681: drafts/T-17000/_runs/plain/main/func_8007AF0C/work/guarded.c, line 3018: '&' before array or function; ignored
+     func_80090270((s32) (s16) D_80125D4C, (s32) &sp2C);
+ ------------------------------------------------^
+cfe: Error: drafts/T-17000/_runs/plain/main/func_8007AF0C/work/guarded.c, line 3019: 'sp44' undefined; reoccurrences will not be reported.
+     temp_a3 = sp44 - 0x19;
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/plain/main/func_8007AF0C/work -o drafts/T-17000/_runs/plain/main/func_8007AF0C/work/guarded.o /tmp/asm_processordzeoodu0/preprocessed_a542b8196f5a411e8dc74a9db6853e1d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibox6oznre/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/plain/main/func_8007AF0C/work/guarded.o drafts/T-17000/_runs/plain/main/func_8007AF0C/work/guarded.c

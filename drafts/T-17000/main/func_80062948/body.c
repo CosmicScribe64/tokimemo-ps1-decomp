@@ -1,0 +1,58 @@
+s32 func_80062948(void) {
+    s16 spC4;
+    s16 spC2;
+    s16 spC0;
+    s32 spBC;
+    s32 spB8;
+    s32 spB4;
+    MATRIX spA0;
+    MATRIX sp80;
+    s32 sp78;
+    s32 sp74;
+    s32 sp70;
+    TaiikuBig *var_s6;
+    s32 *var_s0;
+    s32 temp_s1;
+    s32 temp_s2;
+    s32 temp_t0;
+    s32 temp_v0;
+    s32 temp_v1;
+    s32 var_s4;
+    u8 *var_s7;
+
+    var_s7 = D_801227A4;
+    var_s6 = D_801227A0;
+    var_s0 = &D_801230D0;
+    var_s4 = 0;
+    do {
+        temp_s2 = var_s4 & 3;
+        temp_s1 = temp_s2 + 1;
+        spC4 = (D_800E6280.unk_10F8 * (temp_s2 + 2) * -2) - 2;
+        spC0 = (rsin(D_800E6280.unk_10F8 * 0xA * temp_s1) / 12) + 0x7FD;
+        spC2 = (func_800A0140(D_800E6280.unk_10F8 * 0xA * temp_s1) / 12) - 5;
+        spA0 = *(MATRIX *)D_80125C60;
+        sp80 = *(MATRIX *)D_80125C60;
+        RotMatrix((s32) &spC0, (s32) &spA0);
+        spB4 = 0;
+        spB8 = 0;
+        spBC = 0;
+        sp70 = 0x1000;
+        sp74 = 0x1000;
+        sp78 = 0x1000;
+        ScaleMatrix((s32) &sp80, (s32) &sp70);
+        MulMatrix((s32) &spA0, (s32) &sp80);
+        spB4 = *(s32 *)((unsigned char *)var_s0 + (4));
+        temp_v1 = *(s32 *)((unsigned char *)var_s0 + (4));
+        spB8 = (rsin((D_800E6280.unk_10F8 & 0xFFF) * (temp_s2 + 0xA)) / 32) + ((s32) -temp_v1 / 2);
+        spBC = (temp_v1 * -4) - 0x190;
+        temp_v0 = abs(rsin((s32) D_800E6280.unk_10F8));
+        *(MATRIX *)var_s7 = spA0;
+        var_s4 += 1;
+        temp_t0 = (temp_v0 & 1) + *(s32 *)((unsigned char *)var_s0 + (4)) + 2;
+        var_s0 += 1;
+        var_s6 += 1;
+        var_s7 += 0x50;
+        *var_s0 = temp_t0;
+        *(s32 *)((unsigned char *)var_s6 + (-80)) = 0;
+    } while (var_s4 != 0xD);
+}

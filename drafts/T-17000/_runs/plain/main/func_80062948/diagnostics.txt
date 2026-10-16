@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: MulMatrix 2, RotMatrix 2, ScaleMatrix 2, abs 1, rsin 1
+python3 failed:
+ ------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-17000/_runs/plain/main/func_80062948/work/guarded.c, line 3013: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)var_s7 + (20)) = (s32) *(s32 *)((unsigned char *)(&spA0) + (20));
+ ------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-17000/_runs/plain/main/func_80062948/work/guarded.c, line 3014: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)var_s7 + (24)) = (s32) *(s32 *)((unsigned char *)(&spA0) + (24));
+ ------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-17000/_runs/plain/main/func_80062948/work/guarded.c, line 3017: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)var_s7 + (28)) = (s32) *(s32 *)((unsigned char *)(&spA0) + (28));
+ ------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/plain/main/func_80062948/work -o drafts/T-17000/_runs/plain/main/func_80062948/work/guarded.o /tmp/asm_processorhpi5go8c/preprocessed_485d1d2a724f46399a2068415cf3d405.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibcelrgts0/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/plain/main/func_80062948/work/guarded.o drafts/T-17000/_runs/plain/main/func_80062948/work/guarded.c

@@ -1,0 +1,9 @@
+{
+ "base": "",
+ "files": {
+  "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+  "include/libgte.h": "914456b688f1c510ee2406ff0f493d9adec3dc07394a39b04152883d8cba958d",
+  "include/main_api.h": "ab7bfa8090f8b505f5b41893037df3dc846afebc1af7db087e47174e98482dc3",
+  "include/psx_types.h": "c69b27b63733802c88d8f4bf403813fd072dd6da6aa0a59e741e85a82662d660"
+ }
+}

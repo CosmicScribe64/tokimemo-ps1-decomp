@@ -1,0 +1,1 @@
+m2c.py: argument counts from the callees' asm: main_state_set 1, rand 0

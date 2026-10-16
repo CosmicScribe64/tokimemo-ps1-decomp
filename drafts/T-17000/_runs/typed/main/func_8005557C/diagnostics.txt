@@ -1,0 +1,13 @@
+python3 failed:
+ --------------------^
+cfe: Warning 709: drafts/T-17000/_runs/typed/main/func_8005557C/work/guarded.c, line 3227: Incompatible pointer type assignment
+     var_v1_3 = temp_a3 + 0x698;
+ -------------^
+cfe: Warning 709: drafts/T-17000/_runs/typed/main/func_8005557C/work/guarded.c, line 3235: Incompatible pointer type assignment
+     var_v1_4 = temp_a3 + 0x6B8;
+ -------------^
+cfe: Error: drafts/T-17000/_runs/typed/main/func_8005557C/work/guarded.c, line 3237: Improper cast of non-scalar type expression.
+         temp_at_4 = (s32) *var_v0_3;
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/typed/main/func_8005557C/work -o drafts/T-17000/_runs/typed/main/func_8005557C/work/guarded.o /tmp/asm_processor7ra7zb75/preprocessed_f5834ccf74bb435abfa0b62d1d56a479.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib8e9huuja/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/typed/main/func_8005557C/work/guarded.o drafts/T-17000/_runs/typed/main/func_8005557C/work/guarded.c

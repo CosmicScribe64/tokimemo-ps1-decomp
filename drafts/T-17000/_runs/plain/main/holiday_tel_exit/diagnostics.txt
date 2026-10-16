@@ -1,0 +1,11 @@
+m2c.py: argument counts from the callees' asm: main_state_set 1
+python3 failed:
+cfe: Error: drafts/T-17000/_runs/plain/main/holiday_tel_exit/work/guarded.o.sjis.c, line 2913: redeclaration of 'holiday_tel_exit'; previous declaration at line 2865 in file 'drafts/T-17000/_runs/plain/main/holiday_tel_exit/work/guarded.o.sjis.c'
+ void holiday_tel_exit(void) {
+ -----^
+cfe: Error: drafts/T-17000/_runs/plain/main/holiday_tel_exit/work/guarded.o.sjis.c, line 2913: Incompatible function return type for this function.
+ void holiday_tel_exit(void) {
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17000/_runs/plain/main/holiday_tel_exit/work -o drafts/T-17000/_runs/plain/main/holiday_tel_exit/work/guarded.o /tmp/asm_processorqucm0iv3/preprocessed_e13b5bc525164514858169a29a6e5243.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib1el4zc8x/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17000/_runs/plain/main/holiday_tel_exit/work/guarded.o drafts/T-17000/_runs/plain/main/holiday_tel_exit/work/guarded.o.sjis.c
+repair: existing earlier unprototyped call implies s32 return
