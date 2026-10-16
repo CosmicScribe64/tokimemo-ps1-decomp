@@ -248,8 +248,6 @@ s32 func_801535E4(void) {
     }
 }
 
-/* NON_MATCHING: T-17112, 19 differing lines (8 are branch offsets); everything else matches. Case 1: the original loads D_8015ED28/D_8015ED38 before the D_8015EC38 store and D_8015ED30 right before the compare (an extra nop). The (&D_8015EC38)[2] read keeps the D_8015EC40 load behind the store as in the original; D_8015EC78 and the loop share a line for the scheduling. */
-#ifdef NON_MATCHING
 s32 func_80153784(void) {
     s32 pad[3]; /* FAKE: unused words above the RECTs, the original frame has them (real source unknown). T-17112 */
     RECT r0;
@@ -282,18 +280,22 @@ s32 func_80153784(void) {
         D_8015ED38 = 1;
         D_8015EC38 = 0;
         D_8015EC3C = 0x80;
-        D_8015ED28 = 0;
+        /* FAKE: D_8015ED28 through the D_8015EC38 symbol as in case 1; under its own name uopt moves this store above the D_8015EC38 store. T-17112 */
+        (&D_8015EC38)[60] = 0;
         func_8004284C();
         break;
     case 1:
+        /* FAKE: D_8015EC40 and D_8015ED28..D_8015ED38 (+0x08, +0xF0..+0x100) are reached through the D_8015EC38 symbol; the original
+         * relocations probably name one aggregate over these words that is not recovered yet. as1 keeps a load and a store of one
+         * symbol in source order: the D_8015ED28/D_8015ED38 loads stay above the D_8015EC38 store, the D_8015EC40 and D_8015ED30
+         * loads below the stores, and the D_8015ED30 lui fills the load delay of D_8015EC40. T-17112 */
         D_8015EC38 += D_8015EC48;
-        D_8015ED28 += D_8015ED38;
-        /* FAKE: first-symbol read keeps the D_8015EC40 load behind the D_8015EC38 store, as in the original. T-17112 */
+        (&D_8015EC38)[60] += (&D_8015EC38)[64];
         if (D_8015EC38 >= (&D_8015EC38)[2]) {
             D_8015EC38 = 0;
         }
-        if (D_8015ED28 >= D_8015ED30) {
-            D_8015ED28 = 0;
+        if ((&D_8015EC38)[60] >= (&D_8015EC38)[62]) {
+            (&D_8015EC38)[60] = 0;
         }
         func_80153B08();
         func_80153D20();
@@ -313,14 +315,12 @@ s32 func_80153784(void) {
         break;
     case 3:
         D_8015EC74 = 0;
+        /* FAKE: the 48 words from D_8015EC7C through the first symbol, with D_8015EC78 on the loop's line to keep its store behind the loop setup. T-17112 */
         D_8015EC78 = 0; for (i = 0; i < 48; i++) (&D_8015EC7C)[i] = 0;
         func_80042808();
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80153784);
-#endif
 
 void func_80153A60(void) {
     int dead; /* FAKE: dead copy of *p; only reserves $v0 so the table pointer lands in $v1. Found with decomp-permuter. T-10910 */
