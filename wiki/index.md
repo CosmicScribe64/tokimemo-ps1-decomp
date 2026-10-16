@@ -28,7 +28,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-17800-types-first-option|T-17800]] Types-first: OPTION: menu rows, word tables and the `OptActor44` record view in `OPTION.h`, 32 redrafts (19 better than the census), 4 matches / 1,548 bytes, packages T-17801..T-17803 (Done).
-- [[tickets/T-19015-w3-d-p15|T-19015]] Wave 3 package w3-d-p15: TACO `80146D60.c`, `80156A80.c`, `80138890.c`, 1 of 5 matched (`func_801585D0`, 992 B, sibling addressing idioms and statement order of two stack stores), three guards re-measured, `func_80147B24` stays `INCLUDE_ASM` (In Review).
+- [[tickets/T-19015-w3-d-p15|T-19015]] Wave 3 package w3-d-p15: TACO `80146D60.c`, `80156A80.c`, `80138890.c`, 2 of 5 matched (`func_801585D0`, 992 B, sibling addressing idioms and statement order of two stack stores; `func_801471D0`, 260 B, restarted `dop` walker with a pointer parameter and an overlay override), two guards re-measured, `func_80147B24` stays `INCLUDE_ASM` (Done).
 - [[tickets/T-19012-w3-d-p12|T-19012]] Wave 3 package w3-d-p12: OMIMAI `801320A0.c`, `801331B0.c`, 2 of 3 matched (`func_80132670` with a scalar-view FAKE, `func_80134628` from its KANGEI sibling, 928 B), `func_8013388C` back to `INCLUDE_ASM` (Done).
 - [[tickets/T-17500-types-first-shougatu|T-17500]] Types-first: SHOUGATU: 49 step tables (`FnTblNN`) and 4 stack-table types in `SHOUGATU.h`, 38 redrafts (15 better than the census), 4 matches / 1,516 bytes, packages T-17501..T-17507 (Done).
 - [[tickets/T-19009-w3-d-p09|T-19009]] Wave 3 package w3-d-p09: TACO `80142820.c`, `80143E80.c`, `func_801428DC` (one-struct settings block), `func_80144430` (stack-slot order, `void` lib call) and `func_80142AF0` matched, 1,956 B; `func_80144094` back to `INCLUDE_ASM` (Done).

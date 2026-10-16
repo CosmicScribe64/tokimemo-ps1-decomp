@@ -15677,3 +15677,7 @@ Code review of [[tickets/T-17800-types-first-option]] against `CODING_STANDARDS.
 ## [2026-10-16] build | T-19015 closer pass
 
 [[tickets/T-19015-w3-d-p15]]: Opus closer matched TACO `func_801471D0` (260 bytes) in plain C: a pointer parameter and one `dop` walker restarted for the second pass; callers keep the `s32` view through `TACO_OVERRIDE_func_801471D0` (`include/ovl/TACO.h`). `func_801472D4` stays at 20 lines (block-copy state rule). Notes in [[matching-notes]], rows in [[data/t0018-cases]], new [[register-cheatsheet]] row, [[taco-family-results]] updated. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19015 Done
+
+[[tickets/T-19015-w3-d-p15]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues (match count still 1 of 5 in the index, the ticket and the [[matching-notes]] intro after the closer pass; no source comment for the mixed actor addressing in `func_801585D0`), both fixed. 2 of 5 functions matched (1,252 bytes): TACO `func_801585D0` and `func_801471D0` in plain C; `func_801472D4` and `func_80138B2C` stay guarded, `func_80147B24` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
