@@ -210,7 +210,26 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_80147928);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_80147B24);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_80147C98);
+/* No pointer locals for D_80128880[arg0] / D_80127480[...]: each would add a stack home and move the locals 4 bytes. T-16561 */
+void func_80147C98(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6) {
+    MATRIX m;
+    SVECTOR vec;
+    SVECTOR rot;
+    TcPos out;
+
+    m = *(MATRIX *)D_80125C60;
+    func_8015D0D0((D_80128880[arg0].x << 12) / 360, &m);
+    func_8015CF30((D_80128880[arg0].z << 12) / 360, &m);
+    func_8015D270((D_80128880[arg0].y << 12) / 360, &m);
+    vec.vx = D_80127480[arg1].unk18;
+    vec.vy = D_80127480[arg1].unk1C;
+    vec.vz = D_80127480[arg1].unk20;
+    func_800A0ECC(&m, &vec, &rot);
+    out.x = D_80127480[arg0].unk18 + rot.vx + arg2;
+    out.y = D_80127480[arg0].unk1C + rot.vy + arg3;
+    out.z = D_80127480[arg0].unk20 + rot.vz + (s16)arg4;
+    func_8013DB80(out, arg5, arg6);
+}
 
 void func_80147E80(s32 arg0) {
     s16 var_s2;
