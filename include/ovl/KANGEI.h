@@ -61,14 +61,6 @@ void func_80133EF8(void);
 void func_801349D4(void);
 void func_801392D4(void);
 
-extern s32 D_80139D10;
-extern s32 D_80139D14;
-extern s32 D_80139D18;
-extern s16 D_80139D1C;
-extern s32 D_80139D20;
-extern s32 D_80139D24;
-extern s32 D_80139D28;
-extern s16 D_80139D2C;
 extern s32 D_8013980C;
 void func_80135438(void);
 
@@ -157,6 +149,44 @@ typedef struct KangeiStateView {
     /* 0x000 */ u8 pad_000[0x66C];
     /* 0x66C */ KangeiModeFlags modes[12];
 } KangeiStateView; /* size 0x69C */
+
+/* T-18400: overlay callees of the unmatched functions, called before their definitions. */
+void func_801335A0(void);
+void func_801335F0(void);
+void func_801337B4(void);
+s32 func_801338EC(void);
+void func_80133A14(void);
+void func_80133C10(void);
+void func_80134120(void);
+s32 func_80135678(void);
+void func_80136018(void);
+void func_80136D58(void);
+void func_80138078(void);
+void func_80136810(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 arg6, s32 arg7, s32 arg8);
+/* T-18400: club name tables that func_8013769C copies to the stack whole and passes
+ * name[D_800E6280.unk_0F4.h >> 12] to func_800AE0F0 (as EVENT's EventTableE7, T-9940). */
+typedef struct KangeiNames20 {
+    /* 0x00 */ u8 name[11][20];
+} KangeiNames20; /* size 0xDC */
+typedef struct KangeiNames21 {
+    /* 0x00 */ u8 name[11][21];
+} KangeiNames21; /* size 0xE7; the inline copy ends with a three-byte tail */
+extern KangeiNames20 D_80139FAC;
+extern KangeiNames21 D_8013A088;
+/* T-18400: two image records copied into display record 96 by func_80135CE0
+ * (unk_00 to +0x34, unk_04 to +0x0C, unk_08 to +0x10, unk_0C to +0x14); filled by func_801355F0. */
+typedef struct KangeiImage10 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s16 unk_0C;
+    /* 0x0E */ u8 pad_0E[2];
+} KangeiImage10; /* size 0x10 */
+extern KangeiImage10 D_80139D10[2];
+/* T-18400: fade colour of func_80136630 (byte loads and stores, one word apart). */
+extern u8 D_80139E00;
+extern u8 D_80139E04;
+extern u8 D_80139E08;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 void func_80138158(void);
