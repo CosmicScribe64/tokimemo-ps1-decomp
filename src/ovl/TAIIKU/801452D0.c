@@ -166,25 +166,22 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_8014607C);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146338);
 
-/* NON_MATCHING: T-10850, 4 differing listing lines; regdiff evidence in the ticket scratch. */
-#ifdef NON_MATCHING
 s32 func_8014666C(void) {
     TaiikuController *controller;
-    TaiikuController *work;
-    TaiikuController *end;
+    s32 i;
 
     controller = &D_8014A3E4;
     controller->unk_0C++;
     controller->unk_08++;
     controller->unk_04++;
     controller->unk_02++;
-    end = &D_8014A400[3];
-    work = D_8014A400;
+    i = 0;
+    /* the pointer bound keeps the original's sltu and lui order; `i < 3` gives bne (T-16553) */
     do {
-        work[0].unk_0C++;
-        work[0].unk_04++;
-        work++;
-    } while (work < end);
+        D_8014A400[i].unk_0C++;
+        D_8014A400[i].unk_04++;
+        i++;
+    } while (&D_8014A400[i] < (TaiikuController *)D_8014A454);
     D_8014A454[0].unk_18++;
     D_8014A454[0].unk_14++;
     D_8014A454[0].unk_16++;
@@ -206,9 +203,6 @@ s32 func_8014666C(void) {
     D_8014A454[3].unk_0D++;
     D_8014A454[3].unk_0F++;
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_8014666C);
-#endif
 
 void func_8014684C(void) {
     func_80146884();
