@@ -64,7 +64,84 @@ void func_80142774(void) {
     }
 }
 
+/* NON_MATCHING: T-11860, register-only (12 lines): only the hoisted constants of the third loop differ. They tie at
+ * priority 3.33 and IDO colours them in bit order (D_80155B30, 0x60, 0x30 in s2/s3/s4); the original has 0x30 in s2,
+ * D_80155B30 in s3, 0x60 in s4 (the tie family of func_801475C8, wiki/uopt-register-allocation.md). Without the
+ * FAKE loop init below, c takes s3 before the j counter and pointer (60 lines). */
+#ifdef NON_MATCHING
+u8 func_801427A8(void) {
+    u8 *b;
+    u8 *m;
+    u8 *c;
+    u8 *a;
+    u8 *r;
+    s32 i;
+    s32 j;
+    s32 k;
+    s8 ret; /* s8: an u8 ret = 1 would share the hoisted 1 (s0) of the 0x42 loop. T-11860 */
+
+    b = D_80158A64;
+    m = D_80158A6C;
+    c = D_80158A8C;
+    a = D_80158A74;
+    r = D_80158A80;
+    ret = 0;
+    /* FAKE: the dead load in the init (probably by keeping the loop guard) makes the third loop's preheader get
+     * frequency 1, so c (s5) ranks below the j counter and pointer (s3/s4). T-11860 */
+    for (i = (a[0x52] == 0) * 0; i < 12; i++, r += 0x54) {
+        if (r[0] != 0 && *(u16 *)(r + 4) == 0x40) {
+            for (j = 0; j < 4; j++) {
+                if (*(u8 **)(c + 0x218 + j * 4) != 0 && func_80145508(r + 0x14, &D_80155B36, c + 0x14, *(u8 **)(c + 0x218 + j * 4)) != 0) {
+                    b[0x25] = b[0x25] + 1;
+                    ret = 1;
+                    if (b[0x24] != 0 && !(b[0x25] & 3)) {
+                        if (m[0xB] < 2) {
+                            if (!(b[0x25] & 7)) {
+                                func_801342CC(*(s16 *)(r + 0x14), *(s16 *)(r + 0x16), 0x100, 0x20, 0xA0);
+                            } else {
+                                func_80133FB0(*(s16 *)(r + 0x14), *(s16 *)(r + 0x16), 0x100, 0x20, 0xA0);
+                            }
+                        } else {
+                            func_80133D14(*(s16 *)(r + 0x14), *(s16 *)(r + 0x16), 0x20, 0xA0);
+                        }
+                    }
+                    for (k = 0; k < 0x18; k++) {
+                        c[k * 0x14 + 0x42] = 1;
+                    }
+                    if (i >= 6) {
+                        *(s16 *)(c + 0x30C) -= 1;
+                    } else if (*(u16 *)(r + 2) == 9) {
+                        *(s16 *)(c + 0x30C) -= 4;
+                    } else {
+                        *(s16 *)(c + 0x30C) -= 2;
+                    }
+                    *(u16 *)(r + 4) = 0x80;
+                    *(u16 *)(r + 6) = *(u16 *)(r + 8) = *(u16 *)(r + 0xA) = 0;
+                    r[0xD] = r[0xE] = r[0xF] = 0;
+                }
+            }
+            for (j = 4; j < 8; j++) {
+                if (*(u8 **)(c + 0x218 + j * 4) != 0 && func_80145508(r + 0x14, &D_80155B36, c + 0x14, *(u8 **)(c + 0x218 + j * 4)) != 0) {
+                    *(u16 *)(r + 4) = 0x80;
+                    *(u16 *)(r + 6) = *(u16 *)(r + 8) = *(u16 *)(r + 0xA) = 0;
+                    r[0xD] = r[0xE] = r[0xF] = 0;
+                }
+            }
+        }
+    }
+    for (i = 4; i < 12; i++) {
+        if (*(u8 **)(c + 0x218 + i * 4) != 0 && a[0x52] == 0 && a[0] != 0 && func_80145508(a + 0x14, D_80155B30, c + 0x14, *(u8 **)(c + 0x218 + i * 4)) != 0) {
+            func_80144094();
+            *(u16 *)(a + 4) = 0x60;
+            *(u16 *)(a + 6) = *(u16 *)(a + 8) = *(u16 *)(a + 0xA) = 0;
+            a[0xD] = a[0xE] = a[0xF] = 0;
+        }
+    }
+    return ret;
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142570", func_801427A8);
+#endif
 
 void func_80142AF0(void *arg0, s32 arg1) {
     u8 *p = D_80158A8C;
