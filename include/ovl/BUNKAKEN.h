@@ -25,45 +25,9 @@ void func_801323DC(void);
 void func_80132444(void);
 void func_801324AC(void);
 void func_801324E0(void);
-extern s32 D_801562A0;
-extern s32 D_801562A4;
-extern s32 D_801562A8;
-extern s32 D_801562AC;
-extern s32 D_801562B0;
-extern s32 D_801562B4;
-extern s32 D_801562B8;
-extern s32 D_801562BC;
-extern s32 D_801562C0;
-extern s32 D_801562C4;
-extern s32 D_801562C8;
-extern s32 D_801562CC;
-extern s32 D_801562D0;
-extern s32 D_801562D4;
-extern s32 D_801562D8;
-extern s32 D_801562DC;
-extern s32 D_801562E0;
-extern s32 D_801562E4;
-extern s32 D_801562E8;
-extern s32 D_801562EC;
-extern s32 D_801562F0;
-extern s32 D_801562F4;
-extern s32 D_801562F8;
-extern s32 D_801562FC;
-extern s32 D_80156300;
-extern s32 D_80156304;
-extern s32 D_80156308;
-extern s32 D_8015630C;
-extern s32 D_80156310;
-extern s32 D_80156314;
-extern s32 D_80156318;
-extern s32 D_8015631C;
-extern s32 D_80156320;
-extern s32 D_80156324;
-extern s32 D_80156328;
-extern s32 D_8015632C;
-extern s32 D_80156330;
-extern s32 D_80156334;
-extern s32 D_80156338;
+/* T-18500: three 13-word tables of text addresses (in the loaded scene data at 0x801B0000), filled by
+ * func_80148ED0; func_8014A0E0 copies row k of each table into D_800CA160/164/168. */
+extern s32 D_801562A0[3][13];
 
 /* func_80152F4C copies a 4-by-4 word grid and indexes two two-bit fields. */
 typedef struct BunkakenGrid4 { /* size 0x40 */
@@ -152,4 +116,40 @@ void func_80144E9C(void);
 extern u8 D_80155F50;
 
 void func_8013CEC0(void);
+#endif
+
+#ifndef OVL_BUNKAKEN_T18500_H
+#define OVL_BUNKAKEN_T18500_H
+/* T-18500: per-heroine tables of the date loaders func_8013B510 and func_80143DD0, indexed by
+ * D_80122EBC (12 heroines). */
+extern s32 D_80155EA0[12];           /* argument of func_800866A0 */
+extern void (*D_80155ED0[12])(void); /* called once the scene data is loaded */
+extern u8 D_80155F00[12];            /* first argument of cd_read_sectors */
+extern s32 D_80155F0C[12];           /* sector of cd_read_sectors */
+extern u8 D_80155F3C[20];            /* argument of func_80083440; the last 8 bytes are zero */
+
+/* T-18500: 11-byte table copied to the stack by func_80144F70 (lw, lw, lwl/lwr), indexed by D_80122EC0. */
+typedef struct BunkakenBytes11 {
+    /* 0x00 */ u8 b[11];
+} BunkakenBytes11; /* size 0x0B */
+extern BunkakenBytes11 D_80155F90;
+
+/* T-18500: three byte tables copied to the stack by func_80145550 and read at
+ * [D_80122EBC][D_80122EB8]; the table is chosen by GameState.unk_03E - 0x5F. */
+typedef struct BunkakenBytes9x6 {
+    /* 0x00 */ u8 b[9][6];
+} BunkakenBytes9x6; /* size 0x36 */
+typedef struct BunkakenBytes11x6 {
+    /* 0x00 */ u8 b[11][6];
+} BunkakenBytes11x6; /* size 0x42 */
+extern BunkakenBytes9x6 D_80155F9C;
+extern BunkakenBytes11x6 D_80155FD4;
+extern BunkakenBytes11x6 D_80156018;
+
+/* T-18500: 3 x 3 strings of 33 bytes copied to the stack by func_8014A5EC and read at
+ * [GameState.unk_03E - 0x5F][D_80122CDC]. */
+typedef struct BunkakenNames3x3 {
+    /* 0x00 */ u8 text[3][3][33];
+} BunkakenNames3x3; /* size 0x129 */
+extern BunkakenNames3x3 D_8015633C;
 #endif
