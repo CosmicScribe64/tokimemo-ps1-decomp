@@ -620,6 +620,7 @@ void func_8015906C(void) {
 }
 
 #ifdef NON_MATCHING
+/* NON_MATCHING: T-17105, 16 differing lines; case 7: the original keeps `li v1,0x1000` in the delay slot of the first bnez (a hoisted constant range), here it sits before the last store. `sh` holds each shifted value so that addu takes (value, shifted) in the original operand order. */
 void func_80159214(void) {
     s32 temp;
     s32 color;
