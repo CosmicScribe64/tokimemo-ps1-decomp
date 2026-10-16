@@ -27,6 +27,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
+- [[tickets/T-18100-types-first-bunka_sd|T-18100]] Types-first: BUNKA_SD: recover the shared types, redraft every unmatched function, package the rest (In Progress).
 - [[tickets/T-17800-types-first-option|T-17800]] Types-first: OPTION: menu rows, word tables and the `OptActor44` record view in `OPTION.h`, 32 redrafts (19 better than the census), 4 matches / 1,548 bytes, packages T-17801..T-17803 (Done).
 - [[tickets/T-17500-types-first-shougatu|T-17500]] Types-first: SHOUGATU: 49 step tables (`FnTblNN`) and 4 stack-table types in `SHOUGATU.h`, 38 redrafts (15 better than the census), 4 matches / 1,516 bytes, packages T-17501..T-17507 (Done).
 - [[tickets/T-19009-w3-d-p09|T-19009]] Wave 3 package w3-d-p09: TACO `80142820.c`, `80143E80.c`, `func_801428DC` (one-struct settings block), `func_80144430` (stack-slot order, `void` lib call) and `func_80142AF0` matched, 1,956 B; `func_80144094` back to `INCLUDE_ASM` (Done).

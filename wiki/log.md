@@ -15637,3 +15637,7 @@ Opened [[tickets/T-17800-types-first-option]] (In Progress) on branch `w3-option
 ## [2026-10-16] ticket | T-17800 Done
 
 Code review of [[tickets/T-17800-types-first-option]] against `CODING_STANDARDS.md`: no findings. 4 functions matched (1,548 bytes: `func_8013A09C`, `func_8013A1BC`, `func_80136434`, `func_80137040`), OPTION sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. In Review to Done; branch `w3-option-types` goes to the integration merge.
+
+## [2026-10-16] ticket | T-18100 Types-first: BUNKA_SD opened
+
+Opened [[tickets/T-18100-types-first-bunka_sd]] (In Progress) on branch `w3-bunka-sd-types` from `w2-good`: recover BUNKA_SD's shared types, redraft every unmatched function with the pilot drivers, package the rest for wave 3.
