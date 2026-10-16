@@ -90,7 +90,54 @@ void func_80140000(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013F250", func_80140028);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013F250", func_80140364);
+s32 func_80140364(s32 arg0, s32 arg1) {
+    /* FAKE: the unused k reserves the original's top frame home (i sits at 0x38, the frame is
+     * 0x40). T-19014. */
+    s32 k;
+    s32 i;
+    TcActor *actor;
+    Tc14 *table;
+    Tc14 *rec;
+
+    if (arg0 == 0) {
+        actor = D_8015EDB4;
+        table = D_8015E4F0;
+    } else {
+        table = D_8015E630;
+        actor = &D_8015EDB4[8];
+    }
+    if (arg1 & 0x20) {
+        i = 0;
+        rec = table;
+        for (; i < 16; i++) {
+            if (!(rec->unk13 & 0x80)) {
+                break;
+            }
+            rec++;
+        }
+        if (i >= 16) {
+            return -1;
+        }
+        if (arg0 == 0) {
+            func_801335A0(1, 0x503);
+        }
+        rec->unk13 = 0x92;
+        rec->unk0 = actor->unk74;
+        rec->unk2 = actor->unk76 - (i & 1) * 0x60 + 0x40;
+        rec->unk4 = actor->unk78;
+        rec->unk8 = func_800A0070(actor->unk68) / 256;
+        if ((i & 1) != 0) {
+            rec->unkA = -func_800A0140(actor->unk68) / 256;
+        } else {
+            rec->unkA = func_800A0140(actor->unk68) / 256;
+        }
+        rec->unkC = -0x40;
+        rec->unk12 = 0;
+        rec->unk11 = 0;
+        return 1;
+    }
+    return 0;
+}
 
 s32 func_801404FC(s32 arg0, s32 arg1) {
     /* FAKE: the unused k and j reserve two of the original's frame homes (dist sits at 0x3C,
