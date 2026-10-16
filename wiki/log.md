@@ -15910,3 +15910,6 @@ RENSYU `func_80133CB8` (420 bytes) matched, unit sha1 OK (`src/ovl/RENSYU/801320
 
 ## [2026-10-16] ticket | T-19020 Done
 [[tickets/T-19020-w3-d-p20]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of RENSYU OK (headers OK, globals OK, sha1 OK). 1 of 4 functions matched (`func_80133CB8`, 420 bytes, FAKE), `func_80133628` stays a guarded draft (21 lines), `func_80133990` and `func_8013325C` stay `INCLUDE_ASM`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19025 In Progress
+[[tickets/T-19025-w3-d-p25]] created and started: Wave 3 package for TACO `src/ovl/TACO/80132220.c` (`func_8013356C`, `func_80132FE8`, `func_8013240C`, `func_801328B0`), worktree `tokimemo-wt/w3-d-p25`, branch `w3-d-p25`.
