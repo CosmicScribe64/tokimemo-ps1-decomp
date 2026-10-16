@@ -46,6 +46,7 @@ void func_801340CC(void);
 void func_80134258(s32 arg0);
 void func_801344F0(s32 arg0, s32 arg1);
 void func_80134784(s32 *arg0, s32 *arg1);
+void func_80133F00(); /* K&R definition */
 void func_80133924(void);
 void func_80133CA8(void);
 void func_801330D0(void);
