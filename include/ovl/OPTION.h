@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "main_api.h"
+#include "game.h"
 
 /* OPTION overlay data (bss, not in the overlay file). */
 extern u8 D_8013D3A8;
@@ -88,7 +89,6 @@ void func_8013A4FC(void);
 void func_80138DF8(void);
 void func_80138C20(void);
 void func_80138FC0(void);
-#endif /* OVL_OPTION_H */
 
 #ifndef T9540_OPT_DRAW44
 #define T9540_OPT_DRAW44
@@ -125,3 +125,30 @@ typedef struct OptionGrid80 {
 extern u32 *D_8013D2C4[];
 extern s32 D_8013D2FC;
 #endif
+
+/* Menu rows of func_80139198 as four parallel arrays (x, y, w, h), passed to menu_set (T-17800). */
+extern s16 D_8013D364[7];
+extern s16 D_8013D372[7];
+extern s16 D_8013D380[7];
+extern s16 D_8013D38E[7];
+
+/* Word tables indexed by `D_8013D3DC % 58` and by `D_8013D3A0 % 63` / `D_8013D3A4 % 63`, read with lw
+ * (func_8013A09C, func_8013A1BC); each ends where the next label starts (T-17800). */
+extern s32 D_8013D798[58];
+extern s32 D_8013D880[58];
+extern s32 D_8013E148[63];
+extern s32 D_8013E244[63];
+extern s32 D_8013E340[63];
+extern s32 D_8013E43C[63];
+extern s32 D_8013E538[63];
+extern s32 D_8013E634[63];
+
+/* Scroll state of func_801326BC (T-17800). */
+extern s32 D_8013D300;
+extern s32 D_8013D304;
+extern s32 D_8013D308;
+
+/* Four pointers walked up to the next label, D_8013D360 (func_8013554C, T-17800). */
+extern u8 *D_8013D350[4];
+
+#endif /* OVL_OPTION_H */
