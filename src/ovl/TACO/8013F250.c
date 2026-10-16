@@ -273,6 +273,40 @@ s32 func_80140638(s32 *arg0) {
     return var_v1;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013F250", func_801407D4);
+s32 func_801407D4(s32 *arg0, TcPos pos) {
+    s32 f1;
+    s32 f2;
+    s32 f3;
+    s32 f4;
+    s32 dist;
+    s32 count;
+    s32 best;
+    s32 start;
+    s32 i;
+    s32 idx;
+    s32 j;
+    TcActor *rec;
+
+    *arg0 = -1;
+    count = 0;
+    best = 0x09C40000;
+    start = D_800E6280.unk_10F8 % 48;
+    for (i = 0; i <= 48; i++) {
+        idx = (start + i) % 48;
+        j = idx + 16;
+        if (((TcActor *)((idx + 16) * 0x88 + (u8 *)D_8015EDB4))->unk0[1] & 0x80) {
+            rec = &D_8015EDB4[j];
+            if ((rec->unk84[3] & 1) && (((TcActor *)(i * 0x88 + (u8 *)D_8015EDB4))->unk84[2] != 0xE)) {
+                if (count) {}
+                count++;
+                if ((rec->unk78 < pos.z) && (dist < best)) {
+                    best = dist;
+                    *arg0 = j;
+                }
+            }
+        }
+    }
+    return count;
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013F250", func_80140ADC);
