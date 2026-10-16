@@ -15729,3 +15729,6 @@ Opened [[tickets/T-18100-types-first-bunka_sd]] (In Progress) on branch `w3-bunk
 
 ## [2026-10-16] ticket | T-19014 Done
 [[tickets/T-19014-w3-d-p14]] reviewed against `CODING_STANDARDS.md` and moved to Done: 5 functions matched (2,848 bytes: TACO `func_801404FC`, `func_80140364`, `func_8013F9C0`, `func_801407D4`, `func_80140ADC`), nothing left guarded. One review finding in `src/ovl/TACO/8013F250.c`, fixed: the hand-expanded `setUVWH` line in `func_80140ADC` had a plain comment and now starts with `FAKE` (comment only; TACO.bin SHA1 OK, globals and headers OK).
+
+## [2026-10-16] ticket | T-19017 In Progress
+[[tickets/T-19017-w3-d-p17]] started: wave 3 package w3-d-p17, TACO `src/ovl/TACO/80140DF0.c`, five functions (`func_80141050`, `func_80141170`, `func_80141B18`, `func_801413B8`, `func_801416E8`). Worktree `tokimemo-wt/w3-d-p17`, base `w2-good`.
