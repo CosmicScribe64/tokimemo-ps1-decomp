@@ -16205,3 +16205,7 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 ## [2026-10-16] ticket | T-17207 Done
 
 [[tickets/T-17207-w3-date-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues in the drafts (missing inline `FAKE` comments on the frame and `sel` locals, `g` called unused), both fixed. 0 of 2 functions matched (`func_801449D4`, `func_80144E20`); no C changed. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17103 In Progress
+
+[[tickets/T-17103-w3-rpg-bat-p03]] created and In Progress: wave 3 package w3-rpg-bat-p03, four RPG_BAT functions in `src/ovl/RPG_BAT/80137280.c` (links [[tickets/T-17100-types-first-rpg_bat]]).

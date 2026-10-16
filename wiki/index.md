@@ -33,6 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
+- [[tickets/T-17103-w3-rpg-bat-p03|T-17103]] Wave 3 package w3-rpg-bat-p03: RPG_BAT `80137280.c`, four functions (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`) from the T-17100 drafts (In Progress)
 - [[tickets/T-17207-w3-date-p07|T-17207]] Wave 3 package w3-date-p07: DATE `80141EE0.c`, `func_801449D4` (312 to 71 rows) and `func_80144E20` (exact frame, about 180 register rows), 0 of 2 matched, drafts in `drafts/T-17207/` (Done).
 - [[tickets/T-19032-w3-d-p32|T-19032]] Wave 3 package w3-d-p32: TAIIKU `80141280.c`, 1 of 1 matched (`func_80141280`, 1,764 B intro state machine: auto-array initialiser as `.data` island, rolled 16-record zero loop with a reassigned counter, two FAKE views for a masked byte test and the nested selector in `$v1`) (Done).
 - [[tickets/T-11850-tt-batch-11|T-11850]] TT batch 11: one long Opus run per file group (Done, PR #35 merged; 12 of 15 matched, TT 274/303 functions, 82.7% of bytes).
