@@ -16582,3 +16582,7 @@ Opened [[tickets/T-17005-w3-main-p05]]: wave 3 package for `src/main/8005A0B0.c`
 ## [2026-10-16] ticket | T-17005 In Review
 
 [[tickets/T-17005-w3-main-p05]] In Progress to In Review: 3 of 5 functions matched in plain C (`pre_syogatu1` by an index loop, `func_80060178` by statement order x, y, w, h and a FAKE `pad` local, `func_8005C14C` copied from the NAME_ENT sibling), 1,708 bytes. `func_8005CA94` (51 rows at best) and `func_8005CC40` (54 rows) restored to `INCLUDE_ASM` with rows in [[data/t0018-cases]]. Notes in [[matching-notes]] (section T-17005). Code changes in `src/main/8005A0B0.c` and `include/main_api.h` (`func_80060178` declaration).
+
+## [2026-10-16] build | T-17005 clean rebuild
+
+Clean rebuild of the w3-main-p05 worktree: 27/27 sha1 OK (`build/SLPM_86.053.bin: OK` with `pre_syogatu1`, `func_80060178` and `func_8005C14C` as C), `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17005-w3-main-p05]].
