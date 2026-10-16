@@ -6539,7 +6539,7 @@ Ticket [[tickets/T-17202-w3-date-p02]]. Six guarded drafts from the T-17200 list
 
 ## T-17109: RPG_BAT package w3-rpg-bat-p09 (8013D780.c, 801477E0.c)
 
-[[tickets/T-17109-w3-rpg-bat-p09]], wave 3 package of [[tickets/T-17100-types-first-rpg_bat]] ([[rpg-bat-family-results]]), worktree `w3-rpg-bat-p09`. Three functions, all matched in plain C (4,268 bytes of code by `funcdiff`'s linked size, 35 minutes in all, the machine was under a load of about 40): `func_8013D834` (1,068 B), `func_8013DC60` (1,696 B), `func_80147930` (1,504 B). `siblings.py --package` found no sibling above a 0.70 opcode ratio for any of the three.
+[[tickets/T-17109-w3-rpg-bat-p09]], wave 3 package of [[tickets/T-17100-types-first-rpg_bat]] ([[rpg-bat-family-results]]), worktree `w3-rpg-bat-p09`. Three functions, all matched in plain C (4,268 bytes of code by `funcdiff`'s linked size, 39 minutes in all, the machine was under a load of about 40): `func_8013D834` (1,068 B), `func_8013DC60` (1,696 B), `func_80147930` (1,504 B). `siblings.py --package` found no sibling above a 0.70 opcode ratio for any of the three.
 
 - **`func_8013D834` and `func_8013DC60` (CD-load state machines, same family as BUNKA_SD `func_80137B40`).**
   - *The state byte is `D_800E6280.unk_110D`.* The drafts named it `D_800E738D` (not declared anywhere). The original reloads it after every call (`lui v1; lbu v1; addiu t,v1,1; lui at; sb`), so each arm is `D_800E6280.unk_110D = D_800E6280.unk_110D + 1;`. m2c's `temp_v1` local lives across the calls and is spilled (`sb v0,55(sp)`, frame 56 against 48) and every reload turns into a copy.
