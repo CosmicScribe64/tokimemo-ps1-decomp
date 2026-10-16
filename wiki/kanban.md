@@ -54,6 +54,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-20000-first-contribution|T-20000 Avoid whole-tree cache scans for scoped queues]]
+
 
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 

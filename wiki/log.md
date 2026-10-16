@@ -16165,6 +16165,19 @@ Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK
 ## [2026-10-16] ticket | T-17201 Done
 
 [[tickets/T-17201-w3-date-p01]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a missing `FAKE` prefix on a one-line scheduling trick in the guarded `func_8014718C`, a broken table row in [[data/t0018-cases]]); rebuild of DATE OK (headers OK, globals OK, sha1 OK). 1 of 2 functions matched (`func_80147958`, 4,044 bytes); `func_8014718C` stays a guarded draft (26 lines). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] setup | T-20000 first external contribution
+
+Created [[tickets/T-20000-first-contribution]] In Progress on branch codex/first-contribution from upstream main a4c75a63. Read the project instructions, [[index]], [[kanban]], [[decompile-workflow]] and [[matching-notes]]. TT is claimed in upstream issue #2 and excluded from this contribution. Building the pinned Docker image through the existing WSL Docker daemon; the user-supplied CHD is copied into gitignored game/. No host dependencies installed.
+
+
+## [2026-10-16] build | T-20000 baseline verified
+
+The user-supplied PlayStation the Best CHD passed release identification; disc extraction produced 1,355 files (17 audio streams skipped). The unmodified upstream checkout completed 667 Docker build steps: all 27 binaries SHA1 OK, symbols OK, headers OK, globals OK. Initial bounded full-translation-unit probes for SHOUGATU func_801347E0 and DATE2 func_80136794 did not match; production sources are unchanged. The ranked queue and duplicate reports are being checked before selecting the final contribution. See [[tickets/T-20000-first-contribution]].
+
+## [2026-10-16] ticket | T-20000 scoped queue fix In Review
+
+[[tickets/T-20000-first-contribution]] now focuses on avoiding whole-tree cache validation for scoped queue queries. Two new synthetic regressions reproduce the original bug; all 52 queue tests pass with the fix in Docker. Global ranking/planning/calibration retain cache validation. A frozen pre-fix versus fixed real query (--files 800451D0 --next 10) gave identical stdout, 53.402 s before / 5.312 s after on this Windows/WSL mount. Production game sources are unchanged; the established baseline has all 27 SHA1 checks OK. Local standards review found no issues; status moved In Progress to In Review, with upstream review pending. [[decompile-workflow]] documents the cache tradeoff. TT remains excluded.
 ## [2026-10-16] ticket | T-17206 In Progress
 
 [[tickets/T-17206-w3-date-p06]] created and In Progress: wave 3 package w3-date-p06 (DATE `src/ovl/DATE/8014B1F0.c`, `src/ovl/DATE/80156600.c`), 2 functions (`func_80157698`, `func_8014C20C`), worktree `tokimemo-wt/w3-date-p06`, branch `w3-date-p06`. Links [[tickets/T-17200-types-first-date]].
@@ -16392,3 +16405,31 @@ Clean rebuild of the w3-rpg-bat-p06 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.
 ## [2026-10-16] ticket | T-17106 Done
 
 [[tickets/T-17106-w3-rpg-bat-p06]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of RPG_BAT OK (headers OK, globals OK, sha1 OK, `sync_protos --check-branch` OK). 1 of 3 functions matched (`func_80155868`, 520 bytes); `func_80154760` and `func_80154DD8` stay `INCLUDE_ASM` with drafts in `drafts/T-17106/`. Card moved in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-16] build | T-20000 PR submitted and upstream integrated
+
+Opened PR #36 with the scoped queue fix and the requested communication-platform question. The final pre-integration ninja had no work; sync_protos --check-branch reported 0 new / 15 known disagreements. Integrated upstream main 639693d2 (DATE and TT contributions); resolved only the append-only [[log]] conflict by preserving both sides. Ticket remains In Review. See [[tickets/T-20000-first-contribution]].
+
+## [2026-10-16] build | T-20000 shared-wiki conflict resolved
+
+Integrated upstream main 9e74085b into PR #36, preserving both sides of the [[index]], [[kanban]] and append-only [[log]] conflicts. All 52 queue tests pass again in Docker. PR #37 independently contains the verified GYOZI helper; its final post-integration checks pass 27/27 binary SHA1 values and the prototype guard (0 new / 15 known). See [[tickets/T-20000-first-contribution]].
+
+## [2026-10-16] build | T-20000 PR #36 refreshed
+
+Integrated upstream main 81095a46 into PR #36. Preserved both sides of the shared index and append-only log conflicts; source merged without conflicts. All 52 synthetic queue tests pass again in Docker (build/T-20000/refreshed-tests.log, gitignored). [[tickets/T-20000-first-contribution]] remains In Review.
+
+## [2026-10-16] setup | T-20000 follow upstream RPG merge
+
+Integrated main a8591fb8 into PR #36, preserving both append-only log histories. This upstream change affects RPG_BAT and wiki only; tools/queue.py and its tests are unchanged, so the recorded 52-test result still applies. [[tickets/T-20000-first-contribution]] remains In Review.
+
+## [2026-10-16] setup | T-20000 follow unrelated RPG batch
+
+Integrated main 0925704e into PR #36, preserving both log histories. The upstream delta changes other RPG_BAT files and wiki only; queue implementation/tests are unchanged. The recorded 52 passing synthetic tests remain applicable. [[tickets/T-20000-first-contribution]] stays In Review.
+
+
+## [2026-10-16] setup | T-20000 final upstream refresh
+
+Integrated main dee64939 (T-17109), preserving both shared wiki histories. This upstream batch changes other RPG_BAT functions and adds unrelated declarations/guards; the contribution's function bodies and caller views are unchanged. Recorded validation bases and results remain explicit in the ticket. Ticket stays In Review.
+
+## [2026-10-16] build | T-20000 address PR #36 review
+
+Dropped empty --files entries before scope/cache selection and final filtering, corrected the load_cached docstring and scoped progress message. Two new synthetic regressions fail before the fix; all 54 queue tests pass afterward in Docker. Local standards review found no issues. Maintainer requested GitHub issues for work claims, Discussions for questions, and no repeated main merges because they handle wiki conflicts. [[tickets/T-20000-first-contribution]] stays In Review for acceptance.

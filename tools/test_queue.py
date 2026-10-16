@@ -7,6 +7,7 @@ import importlib.util
 import io
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -596,6 +597,56 @@ class CacheTest(unittest.TestCase):
             wq.load = real
         self.assertEqual(seen, [["80041000"], []])
         self.assertIn("func_80041000", out)
+
+    def test_scoped_query_skips_full_tree_cache_and_reads_current_asm(self):
+        rc, full, _err = self.run_cli("--next", "5")
+        self.assertEqual(rc, 0)
+        cached = (self.r / wq.CACHE).read_bytes()
+        with mock.patch.object(wq, "tree_signature", side_effect=AssertionError("whole-tree scan")):
+            rc, scoped, _err = self.run_cli("--files", "80041000", "--next", "5")
+            self.assertEqual((rc, scoped), (0, full))
+            p = self.r / "asm/nonmatchings/main/80041000/func_80041000.s"
+            p.write_text(asm("func_80041000", ["addiu $v0, $zero, 7"] * 6 + ["jr $ra", " nop"]))
+            rc, changed, _err = self.run_cli("--files", "80041000", "--next", "5")
+        self.assertEqual(rc, 0)
+        self.assertIn("32", changed)
+        self.assertNotEqual(changed, scoped)
+        self.assertEqual((self.r / wq.CACHE).read_bytes(), cached)
+
+    def test_scoped_query_without_existing_cache_skips_signature(self):
+        with mock.patch.object(wq, "tree_signature", side_effect=AssertionError("whole-tree scan")):
+            rc, out, _err = self.run_cli("--files", "80041000", "--next", "2")
+        self.assertEqual(rc, 0)
+        self.assertIn("func_80041000", out)
+        self.assertFalse((self.r / wq.CACHE).exists())
+
+    def test_empty_file_entries_do_not_broaden_a_scoped_query(self):
+        for prefix in ("ZZZ", "80041000"):
+            rc, expected, _err = self.run_cli("--files", prefix, "--next", "5")
+            self.assertEqual(rc, 0)
+            for names in (prefix + ",", "," + prefix, ",," + prefix + ",,"):
+                with self.subTest(files=names), mock.patch.object(
+                        wq, "tree_signature", side_effect=AssertionError("whole-tree scan")):
+                    rc, actual, err = self.run_cli("--files", names, "--next", "5")
+                self.assertEqual((rc, actual), (0, expected))
+                self.assertIn("selected files", err)
+                self.assertNotIn("cached afterwards", err)
+
+    def test_only_empty_file_entries_use_the_full_cache(self):
+        rc, expected, _err = self.run_cli("--next", "5")
+        self.assertEqual(rc, 0)
+        with mock.patch.object(wq, "analyze", side_effect=AssertionError("cached asm reread")):
+            rc, actual, err = self.run_cli("--files", ",,", "--next", "5")
+        self.assertEqual((rc, actual), (0, expected))
+        self.assertEqual(err, "")
+
+    def test_global_modes_with_files_still_validate_full_cache(self):
+        for args in (("--by", "bytes", "--no-groups", "--next", "2"),
+                     ("--plan", "2", "--no-groups"), ("--calibrate",)):
+            with self.subTest(args=args), mock.patch.object(wq, "tree_signature", wraps=wq.tree_signature) as signature:
+                rc, _out, _err = self.run_cli("--files", "80041000", *args)
+                self.assertEqual(rc, 0)
+                signature.assert_called_once_with(self.r)
 
     def test_many_files_filter_matches_prefixes(self):
         names = ",".join(["80041000"] + ["NOPE%d" % i for i in range(30)])
