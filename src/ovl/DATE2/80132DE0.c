@@ -368,6 +368,8 @@ s32 func_80135DA4(s16 arg0) {
     D_801217D0[7].unk_0F -= arg0;
 }
 
+/* Returns int like the DATE twin func_801489D0: only the header-error path of case 2 sets a
+ * result (move v0,zero), the other paths leave v0 alone. T-18800 */
 s32 func_80135E50(void) {
     s16 *temp_a0;
     s16 *temp_v0;
