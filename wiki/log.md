@@ -15969,3 +15969,23 @@ Opus closer pass on [[tickets/T-19019-w3-d-p19]] (branch w3-d-p19): no new match
 ## [2026-10-16] ticket | T-19019 Done
 
 [[tickets/T-19019-w3-d-p19]] In Review to Done: code review against `CODING_STANDARDS.md` found documentation issues only (stale "4 lines" for `func_801497EC` after the closer pass in the index, the ticket and the [[matching-notes]] intro; a wrong "table below" pointer in [[taco-family-results]]; a plain path and a missing blank line in this log), all fixed. 0 of 2 functions matched: TACO `func_80149538` (10 lines, volatile tail FAKE) and `func_801497EC` (2 lines) stay guarded drafts in `src/ovl/TACO/80148FE0.c`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19021 In Progress
+
+[[tickets/T-19021-w3-d-p21]] created and In Progress: wave 3 package w3-d-p21 (TACO `src/ovl/TACO/80139170.c`: `func_8013A580`, `func_8013AD64`, `func_80139BCC`, `func_80139FB8`), worktree `w3-d-p21` from `w2-good`.
+
+## [2026-10-16] build | T-19021 matches
+
+[[tickets/T-19021-w3-d-p21]]: `func_8013A580` (484 B) and `func_8013AD64` (632 B) of TACO `src/ovl/TACO/80139170.c` matched in plain C (commits "T-19021: match TACO:func_8013A580" and "...func_8013AD64"); `func_80139BCC` stays a 14-line `NON_MATCHING` draft, `func_80139FB8` is `INCLUDE_ASM` again (402 lines). Both frame rows of [[data/t0018-cases]] (T-9130, T-9330) were a count of named locals. Findings: [[matching-notes]] ("T-19021"), [[register-cheatsheet]], [[taco-family-results]].
+
+## [2026-10-16] ticket | T-19021 In Review
+
+[[tickets/T-19021-w3-d-p21]] In Progress to In Review: 2 of 4 functions matched (1,116 bytes), one 14-line guard, one `INCLUDE_ASM`. Kanban card moved to In Review.
+
+## [2026-10-16] build | T-19021 closer pass: func_80139BCC matched
+
+[[tickets/T-19021-w3-d-p21]] closer pass (Opus): TACO `func_80139BCC` (1,004 B) of `src/ovl/TACO/80139170.c` matched in plain C, no FAKE (commit "T-19021: match TACO:func_80139BCC"). A `pad` local re-tested in the zero-speed block raises the pad range to five uses (priority 0.667), and assigning the `0x8000` mask before the `0x2000` mask fixes the order of the two masks. Package now 3 of 4 (2,120 B); `func_80139FB8` stays `INCLUDE_ASM`. Updated [[matching-notes]], [[register-cheatsheet]] (new row), [[data/t0018-cases]], [[taco-family-results]], [[index]]. Clean rebuild 665/665 with 27/27 sha1 OK; `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch` OK (0 new, 15 known). Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19021 Done
+
+[[tickets/T-19021-w3-d-p21]] In Review to Done: code review against `CODING_STANDARDS.md` found 1 minor item (the `pad` local and mask order in `func_80139BCC` had no source comment), fixed with a comment (bytes unchanged); TACO sha1 OK, headers OK. 3 functions matched (2,120 bytes: `func_8013A580`, `func_8013AD64`, `func_80139BCC`), `func_80139FB8` stays `INCLUDE_ASM`. Card moved in [[kanban]], line in [[index]].
