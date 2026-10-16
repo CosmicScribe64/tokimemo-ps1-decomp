@@ -1,9 +1,7 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-/* NON_MATCHING: T-19028, 15 differing lines; the original loads the flags word before the three position halfwords and fills the beqz delay slot with the z store, and loads all three vout words before the first division */
-#ifdef NON_MATCHING
-/* FAKE: pad_a, pad_e, pad_c and pad_d are unused locals; with div they reproduce the original frame (0x68: i at sp+0x60, vin at 0x4C, vout at 0x3C, h at 0x38, p at 0x2C); real locals unknown. T-19028 */
+/* FAKE: pad_a, pad_e and pad_c are unused locals; with div they reproduce the original frame (0x68: i at sp+0x60, vin at 0x4C, vout at 0x3C, h at 0x3A, the strength-reduced D_8015EB30[i] pointer spilled at 0x2C); real locals unknown. T-19028 */
 s32 func_8013DB80(TcPos pos, s32 speed, s32 flags) {
     s32 pad_a;
     s32 i;
@@ -13,28 +11,24 @@ s32 func_8013DB80(TcPos pos, s32 speed, s32 flags) {
     s16 h;
     s32 div;
     s32 pad_c;
-    Tc14 *p;
-    s32 pad_d;
 
     h = speed;
     if (h == 0) {
         h = 0x100;
     }
-    p = D_8015EB30;
     for (i = 0; i < 16; i++) {
-        if (!(p->unk13 & 0x80)) {
+        if (!(D_8015EB30[i].unk13 & 0x80)) {
             break;
         }
-        p++;
     }
     if (i >= 16) {
         return -1;
     }
-    p->unk12 = 0;
-    p->unk13 = 0x80;
-    p->unk0 = pos.x;
-    p->unk2 = pos.y;
-    p->unk4 = pos.z;
+    D_8015EB30[i].unk12 = 0;
+    D_8015EB30[i].unk13 = 0x80;
+    D_8015EB30[i].unk0 = pos.x;
+    D_8015EB30[i].unk2 = pos.y;
+    D_8015EB30[i].unk4 = pos.z;
     if (flags & 0x80) {
         vin.vx = D_8015EDB4->unk74 - pos.x;
         vin.vy = D_8015EDB4->unk76 - pos.y;
@@ -46,20 +40,17 @@ s32 func_8013DB80(TcPos pos, s32 speed, s32 flags) {
         }
         func_800AA460(&vin, &vout);
         div = 0x1000 / h + 1;
-        p->unk8 = vout.vx / div;
-        p->unkA = vout.vy / div;
-        p->unkC = vout.vz / div;
+        D_8015EB30[i].unk8 = vout.vx / div;
+        D_8015EB30[i].unkA = vout.vy / div;
+        D_8015EB30[i].unkC = vout.vz / div;
     } else {
-        p->unkC = h;
-        p->unk8 = 0;
-        p->unkA = 0;
+        D_8015EB30[i].unkC = h;
+        D_8015EB30[i].unk8 = 0;
+        D_8015EB30[i].unkA = 0;
     }
-    p->unk11 = flags;
+    D_8015EB30[i].unk11 = flags;
     return i;
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013DB80", func_8013DB80);
-#endif
 
 void func_8013DDE4(void) {
     Tc14 *p;
