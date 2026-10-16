@@ -117,6 +117,8 @@ void func_80139BCC(void) {
     func_80139424(D_8015F4B0[D_8015F4E0 % 40], 6, 4, 0x80, 0, 0x3C, temp_lo, temp_lo, 1);
     func_8013A580(0x1E0);
     func_8013A790(0, 0);
+    /* pad is tested again in the zero-speed block (five uses, so it is coloured before the masks),
+       and left is assigned before right; both are needed for the original's register split (T-19021) */
     pad = D_800E6280.unk_F80;
     left = pad & 0x8000;
     right = pad & 0x2000;
