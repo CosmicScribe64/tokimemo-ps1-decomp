@@ -16593,3 +16593,10 @@ User idea: start phase 2 renames and constants now, with agents using a PS1 emul
 Held off while the wave 3 conveyor uses the CPU. Plan notes in [[tickets/T-20500-emulator-assisted-naming]]: open
 BIOS only (no proprietary BIOS), Docker, GameState names and enums first, rename in a quiet window or via the merge-time
 rename table.
+
+## [2026-10-16] ticket | T-20600 In Progress
+
+[[tickets/T-20600-regorder-recipe-sweep]] created and In Progress: sweep the source recipes that solved single
+register-order gaps (int-return callee view, `GameState *g`, u16/s16 constants, one-line zero-store pairs, dead
+selector read, natural extra local, same-unit data) across the `regorder` rows of [[data/t0018-cases]]. Worktree
+`cg-regorder`, base `w2-good`. Links [[speedup-research-2026-10-16]].
