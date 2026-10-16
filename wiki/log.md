@@ -16531,3 +16531,6 @@ Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG
 
 ## [2026-10-16] ticket | T-17113 Done
 [[tickets/T-17113-w3-rpg-bat-p13]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/ovl/RPG_BAT/8013C890.c`, `src/ovl/RPG_BAT/801484E0.c` and `include/ovl/RPG_BAT.h` changed in code, `drafts/T-17113/` is new. One finding fixed: the guarded `func_80148714` draft reached the `D_8015EBAC` and `D_8015EC70` tables through their first symbol without a mark, now a `FAKE` comment with the ticket (comment only). `s32` without a return (`RPG_BAT_OVERRIDE_func_8013C890`) judged plain C with a comment, as in T-17109. Unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 1 of 4 matched (`func_8013C890`, 1,024 bytes). Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17002 In Progress
+[[tickets/T-17002-w3-main-p02]] created and started: wave 3 package w3-main-p02, four functions of `src/main/800674B0.c` (`func_8006BC28`, `func_800676AC`, `func_80067870`, `func_800696DC`), worktree `tokimemo-wt/w3-main-p02`, base `w2-good`. Follows [[tickets/T-17000-types-first-main]].
