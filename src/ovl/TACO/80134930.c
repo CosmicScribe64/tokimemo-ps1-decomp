@@ -32,6 +32,7 @@ s32 func_80134A18(void) {
     frame = D_8015F3E8;
     if (frame < 0x20) {
         if (D_8012276C < 0xC0) {
+            /* Chained stores: IDO stores the middle and left targets first and the read one last, the original order. */
             D_8012276C = D_8012276D = D_8012276E = D_8012276E + 6;
             D_8012277C = D_8012277D = D_8012277E = D_8012277E + 1;
             D_8012278C = D_8012278D = D_8012278E = D_8012278E + 1;
@@ -170,6 +171,7 @@ void func_8013506C(void) {
 
     for (i = 0; i < 0x80; i++) {
         if (D_800E6280.unk_163C[128 + i] == 0) {
+            /* Own statement: written inline, IDO calls both functions first. */
             t = func_800AE0D0() % 320;
             D_800E6280.unk_163C[128 + i] = (t << 16) + func_800AE0D0() % 240;
             break;
@@ -177,6 +179,7 @@ void func_8013506C(void) {
     }
     for (i = 0; i < 0x80; i++) {
         v = D_800E6280.unk_163C[128 + i];
+        /* y before x: the mask range gets $v0 as in the original. */
         y = v & 0xFFFF;
         x = v >> 16;
         if (v != 0) {
