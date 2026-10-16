@@ -15989,3 +15989,18 @@ Opus closer pass on [[tickets/T-19019-w3-d-p19]] (branch w3-d-p19): no new match
 ## [2026-10-16] ticket | T-19021 Done
 
 [[tickets/T-19021-w3-d-p21]] In Review to Done: code review against `CODING_STANDARDS.md` found 1 minor item (the `pad` local and mask order in `func_80139BCC` had no source comment), fixed with a comment (bytes unchanged); TACO sha1 OK, headers OK. 3 functions matched (2,120 bytes: `func_8013A580`, `func_8013AD64`, `func_80139BCC`), `func_80139FB8` stays `INCLUDE_ASM`. Card moved in [[kanban]], line in [[index]].
+## [2026-10-16] ticket | T-19024 In Progress
+
+[[tickets/T-19024-w3-d-p24]] created and started: wave 3 package w3-d-p24, TACO `src/ovl/TACO/80141DE0.c` (`func_80142220`, `func_80141DE0`, `func_801424A8`). Worktree `w3-d-p24` from `w2-good`.
+
+## [2026-10-16] build | T-19024 matches
+
+[[tickets/T-19024-w3-d-p24]]: TACO `src/ovl/TACO/80141DE0.c`, 2 of 3 functions matched in plain C (`func_80142220`, 400 bytes; `func_80141DE0`, 764 bytes, one FAKE index temporary), 1,164 bytes. `func_801424A8` (888 bytes) restored to `INCLUDE_ASM` after a sibling port of `func_801413B8` (81 rows of registers, draft archived in `drafts/T-19024/TACO/func_801424A8/`). New prototypes in `include/ovl/TACO.h`. Notes in [[matching-notes]], row in [[data/t0018-cases]], three rows in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-19024 In Review
+
+[[tickets/T-19024-w3-d-p24]] In Progress to In Review: wave 3 package w3-d-p24 (TACO `src/ovl/TACO/80141DE0.c`), 2 of 3 functions matched (1,164 bytes), `func_801424A8` stays `INCLUDE_ASM`. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-16] ticket | T-19024 Done
+
+[[tickets/T-19024-w3-d-p24]] In Review to Done after the code review: wave 3 package w3-d-p24 (TACO `src/ovl/TACO/80141DE0.c`, `include/ovl/TACO.h`), 2 of 3 functions matched (1,164 bytes: `func_80142220`, `func_80141DE0` with one ticketed FAKE), `func_801424A8` stays `INCLUDE_ASM` (81 rows, draft archived in `drafts/T-19024/TACO/func_801424A8/`). No findings. TACO SHA1 OK, headers, globals and proto checks OK.
