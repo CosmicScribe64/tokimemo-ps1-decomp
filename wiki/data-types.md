@@ -43,6 +43,7 @@ Limits: the pass is linear (no control flow), so a register state survives a lab
 | 28 stack-copied constant tables as one-array structs | `D_80148F28`..`D_8014A5F4` | `include/ovl/TAIIKU.h` (T-16550) | none (new declarations) | 0 |
 | `FnTblNN` step tables (35 sizes, `void (*f[NN])()`) | 68 tables `D_8015BF50`..`D_80160BD0` | `include/ovl/DATE.h` (T-17200) | 39 local typedefs and externs of 16 DATE `.c` files | 0 |
 | DATE stack-copied tables `DateBytes11x21`, `DateWords21`, `DateShorts8`, `DatePairs8`, `Tbl21` | `D_8015B7A0`, `D_8015B888`/`8DC`/`930`, `D_8015B984`, `D_8015F9B0`/`9C0`, `D_8015FB1C`/`B2C`/`B3C` | `include/ovl/DATE.h` (T-17200) | none (new declarations) | 0 |
+| ETC overlay data: `EtcExamRank` (0x8C), ranking row positions `s16[14]`, per-girl tables `u8[13]`, `s32[13][2]`, `s32 *[13]`, CD file table `s32 *[22]`, `SVECTOR`, `s32[16]`, `EtcWork40` view moved to the header | `D_80150668`, `D_80150630`/`64C`, `D_80150728`/`738`, `D_8014E0A4`, `D_8014DB90`/`BF8`, `D_8014E070`, `D_8014EA18`, `D_8015013C`, `D_8015014C`, `D_801230D0` | `include/ovl/ETC.h` (T-17300) | `D_80150150`, `D_80150188` (into `D_8015014C`); `D_8015013E`, `D_80150140` and `D_80150668`'s 18 splat labels stay data labels | 0 |
 
 33 `FAKE` comments of the "first symbol" family are gone (117 to 84 in `src/`). The `Work80125D10` conversion is the strongest single test: 96 uses in already-matched functions moved to one symbol and none changed bytes.
 

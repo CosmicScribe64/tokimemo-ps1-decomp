@@ -1,0 +1,125 @@
+m2c.py: argument counts from the callees' asm: func_80054388 0, func_80141ABC 0, main_state_set 1
+m2c failed:
+
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4416: redeclaration of 'main_state_set'; previous declaration at line 1618 in file 'drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c'
+ s32 main_state_set();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4416: Incompatible function return type for this function.
+ s32 main_state_set();
+ ------------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4440: Unacceptable operand of &.
+         if (*(&D_800E6280 + temp_t3) & 1) {
+ ------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80141BE8/work -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o /tmp/asm_processor26gsqyv4/preprocessed_092f28e27e7a460ab91b4fd63ae833dc.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibtvkjepda/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4414: redeclaration of 'func_800AE0B0'; previous declaration at line 2339 in file 'drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c'
+ s32 func_800AE0B0();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4414: Incompatible function return type for this function.
+ s32 func_800AE0B0();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4439: Unacceptable operand of &.
+         if (*(&D_800E6280 + temp_t3) & 1) {
+ ------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80141BE8/work -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o /tmp/asm_processor9740h9mw/preprocessed_4214b0af33b745e38a5d6858851bf744.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib82sddcdw/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4413: redeclaration of 'func_800578F4'; previous declaration at line 1843 in file 'drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c'
+ s32 func_800578F4();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4413: Incompatible function return type for this function.
+ s32 func_800578F4();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4438: Unacceptable operand of &.
+         if (*(&D_800E6280 + temp_t3) & 1) {
+ ------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80141BE8/work -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o /tmp/asm_processorue0f209_/preprocessed_1e0a6dd65fd447d783115578fbb43386.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibktfyknrs/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4411: redeclaration of 'func_80053D10'; previous declaration at line 1809 in file 'drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c'
+ s32 func_80053D10();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4411: Incompatible function return type for this function.
+ s32 func_80053D10();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4437: Unacceptable operand of &.
+         if (*(&D_800E6280 + temp_t3) & 1) {
+ ------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80141BE8/work -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o /tmp/asm_processornla2ma5_/preprocessed_5ad9bb91837d4377ae4a72acd144cc93.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibur8zoxfk/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4410: redeclaration of 'func_80053CE0'; previous declaration at line 1808 in file 'drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c'
+ s32 func_80053CE0();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4410: Incompatible function return type for this function.
+ s32 func_80053CE0();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4436: Unacceptable operand of &.
+         if (*(&D_800E6280 + temp_t3) & 1) {
+ ------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80141BE8/work -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o /tmp/asm_processorxca8ysol/preprocessed_04d5352c8e904a5ba44e82eeb595afb3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibh8c6_ly8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4409: redeclaration of 'func_80046290'; previous declaration at line 1662 in file 'drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c'
+ s32 func_80046290();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4409: Incompatible function return type for this function.
+ s32 func_80046290();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4435: Unacceptable operand of &.
+         if (*(&D_800E6280 + temp_t3) & 1) {
+ ------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80141BE8/work -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o /tmp/asm_processor2824834n/preprocessed_e5e651ed93e641898de64d88db18557b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib2g2bx3ey/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4408: redeclaration of 'func_800460EC'; previous declaration at line 1660 in file 'drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c'
+ s32 func_800460EC();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4408: Incompatible function return type for this function.
+ s32 func_800460EC();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4434: Unacceptable operand of &.
+         if (*(&D_800E6280 + temp_t3) & 1) {
+ ------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80141BE8/work -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o /tmp/asm_processorgi9wqi9n/preprocessed_d9e399b5509c41bbbdfdc49af04339d3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibui5kt0aw/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4407: redeclaration of 'func_8004482C'; previous declaration at line 1646 in file 'drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c'
+ s32 func_8004482C();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4407: Incompatible function return type for this function.
+ s32 func_8004482C();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4433: Unacceptable operand of &.
+         if (*(&D_800E6280 + temp_t3) & 1) {
+ ------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80141BE8/work -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o /tmp/asm_processorei1_lrnd/preprocessed_7492d71fc5374f68bd32cea9a4b58b99.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4eo89zif/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4402: redeclaration of 'D_800B37D4'; previous declaration at line 529 in file 'drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c'
+ extern s32 D_800B37D4;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4404: redeclaration of 'D_800E6280'; previous declaration at line 764 in file 'drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c'
+ extern s32 D_800E6280;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4432: Unacceptable operand of &.
+         if (*(&D_800E6280 + temp_t3) & 1) {
+ ------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80141BE8/work -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o /tmp/asm_processor33bt00en/preprocessed_610d9ae38cd84ae78e4588949267abbc.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibzk9d7kt6/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c, line 4430: Unacceptable operand of &.
+         if (*(&D_800E6280 + temp_t3) & 1) {
+ ------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80141BE8/work -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o /tmp/asm_processorh2h871pd/preprocessed_fd23e398caf34950abab906d771813d0.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibt38ypa11/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80141BE8/work/guarded.o.sjis.c

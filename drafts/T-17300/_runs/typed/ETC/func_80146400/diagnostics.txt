@@ -1,0 +1,27 @@
+m2c failed:
+
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o.sjis.c, line 4134: redeclaration of 'func_800AE0B0'; previous declaration at line 2339 in file 'drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o.sjis.c'
+ s32 func_800AE0B0();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o.sjis.c, line 4134: Incompatible function return type for this function.
+ s32 func_800AE0B0();
+ -----------------^
+cfe: Warning 681: drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o.sjis.c, line 4161: '&' before array or function; ignored
+     temp_v0 = (var_v1 * 4) + &D_801506F8;
+ -----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80146400/work -o drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o /tmp/asm_processorp_khi3nr/preprocessed_5afd006fd0fa4f08beafc15dfca94b62.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibahacg6mg/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o.sjis.c, line 4132: redeclaration of 'D_800E6280'; previous declaration at line 764 in file 'drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o.sjis.c'
+ extern s32 D_800E6280;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o.sjis.c, line 4133: redeclaration of 'D_801506F8'; previous declaration at line 4034 in file 'drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o.sjis.c'
+ extern s32 D_801506F8;
+ -----------^
+cfe: Warning 681: drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o.sjis.c, line 4160: '&' before array or function; ignored
+     temp_v0 = (var_v1 * 4) + &D_801506F8;
+ -----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80146400/work -o drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o /tmp/asm_processorm51upg9r/preprocessed_5dd02d7c39534e60ae3cc8f0841b4628.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib2sh4ie2g/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80146400/work/guarded.o.sjis.c

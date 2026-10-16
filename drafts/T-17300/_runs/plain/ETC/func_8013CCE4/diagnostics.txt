@@ -1,0 +1,23 @@
+m2c.py: argument counts from the callees' asm: func_8004A1A0 10, func_8013FA7C 0
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work/guarded.c, line 4283: redeclaration of 'func_8013CCE4'; previous declaration at line 4172 in file 'drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work/guarded.c'
+ void func_8013CCE4(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work/guarded.c, line 4283: Incompatible function return type for this function.
+ void func_8013CCE4(void) {
+ ------------------^
+cfe: Error: drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work/guarded.c, line 4313: 'sp54' undefined; reoccurrences will not be reported.
+             temp_v0 = &(&sp54[0])[2];
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work -o drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work/guarded.o /tmp/asm_processorf_ug3fds/preprocessed_c209d10e298148a08831f3b563468569.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibxidx8ncm/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work/guarded.o drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work/guarded.c, line 4283: redeclaration of 'func_8013CCE4'; previous declaration at line 4172 in file 'drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work/guarded.c'
+ void func_8013CCE4(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work/guarded.c, line 4283: Incompatible function return type for this function.
+ void func_8013CCE4(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work -o drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work/guarded.o /tmp/asm_processorc1vfhl80/preprocessed_e5f2d002b2dc455e8130012613e6d733.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibx3k244rm/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work/guarded.o drafts/T-17300/_runs/plain/ETC/func_8013CCE4/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return

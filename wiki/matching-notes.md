@@ -5806,3 +5806,18 @@ Tools: `tools/siblings.py --package` takes bare function names (not `UNIT:func`)
 - **`func_8014A480` (16 -> 12 lines)**: `s32` with no `return` also fixed the `lui at`/`lui v0` order of the second `0x40000000` branch (`TACO.h` declares it `s32` too). Left: the spill slots. With `o` inline the spills sit right under the four locals, as in the original, but the frame is 8 bytes short: the original has one more word below the spills (a third uopt spill slot or a ugen temporary), not above them. Chain assignments of `0x40000000` add front-end temporaries above the spills, which pushes them 8 low. Inlining `st` instead of `o` and `register` on `o` or `st` did not help.
 - **`func_8014F5F0` (14 -> 11 lines)**: `unk_037 = unk_038 + 1; unk_036 = unk_038 + 1; unk_038++;` gives `lbu a1`, the shared sum in `$v0` and the `unk_038` store-back after the `unk_1104` one. The `++` still adds 1 a second time (`addiu t8,a1,1; sb t8`), while the original stores `$v0` and still uses up `$t8`, so its constants start at `$t9`. `= unk_038 + 1` and `+= 1` share the sum but turn the store-back into a plain store (78 lines); `++unk_038` and `unk_038++ + 1` give the same 11 lines. Returning `s32` did not help.
 - **`func_801511C0` (10 lines, unchanged)**: uopt trace: the empty test `if (arg1) {}` gives `arg1` a split range in `$a1` for the first block (`live range 10 split out`), so uopt stores it back at the end of that block. Without the test, `arg1` stays in memory and the home store moves up to the original's place. But ugen then spends `$t6` on the home reload, so every temporary is one higher (12 lines). The natural forms (`D_8016024C[arg1 + i]`, `p[i]`, `*p++`, `for`/`do`) let IDO rewrite `arg1 != 0` as `p != D_8016024C` with a stack temporary (28-34 lines). A K&R definition (header made unprototyped for the test) and `s32` with no `return` did not help.
+
+## T-17300: ETC types-first pass
+
+Details in [[etc-family-results]] ("Types-first pass (T-17300)"). Matched: ETC `func_80144AC0` (main clone
+`func_8005C5BC`, only a state code differs), `func_8013E524` (TACO sibling `func_80153E78`: `POLY_F4` bar, colour
+stores in b, g, r order), `func_80145318` (NAME_ENT sibling `func_80142028`: s32 with no return, so the
+incremented step stays in `v0`; the ETC.h prototype became s32).
+- `tools/siblings.py --unit X` first: all three ETC matches of the pass were sibling ports, none needed
+  the new types.
+- An s32 function with no return statement keeps the value of its last expression in `v0` (`move v0,t7` after
+  `andi t7,v0,0xff`); a void definition drops those moves. Check the epilogue paths for `v0` writes before
+  choosing void.
+- Near miss `func_8013C700` (4 rows): the `func_8013C330` shape gives everything except the order of
+  `or v0,zero,zero` and the `sw zero` of `D_80150070 = 0;` around the branch delay slot (an explicit
+  `return 0;` changes nothing).

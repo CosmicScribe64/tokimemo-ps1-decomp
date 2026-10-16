@@ -1,0 +1,10 @@
+extern s32 D_800E7D10;
+extern s32 D_80150040;
+extern s32 D_80150044;
+extern s32 D_8015004C;
+extern s32 D_80150050;
+extern s32 D_80150054;
+extern s32 D_80150058;
+extern s32 D_8015005C;
+extern s32 D_80150060;
+extern s32 D_80150064;

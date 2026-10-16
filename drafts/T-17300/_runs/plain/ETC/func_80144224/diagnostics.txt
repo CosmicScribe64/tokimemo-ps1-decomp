@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_801436E4 1, func_80143968 0, func_801441DC 4
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/plain/ETC/func_80144224/work/guarded.o.sjis.c, line 4303: redeclaration of 'func_80144224'; previous declaration at line 4278 in file 'drafts/T-17300/_runs/plain/ETC/func_80144224/work/guarded.o.sjis.c'
+ void func_80144224(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/plain/ETC/func_80144224/work/guarded.o.sjis.c, line 4303: Incompatible function return type for this function.
+ void func_80144224(void) {
+ ------------------^
+cfe: Warning 709: drafts/T-17300/_runs/plain/ETC/func_80144224/work/guarded.o.sjis.c, line 4325: Incompatible pointer type assignment
+             temp_v0 = (temp_v1 * 4) + &D_80150150;
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/plain/ETC/func_80144224/work -o drafts/T-17300/_runs/plain/ETC/func_80144224/work/guarded.o /tmp/asm_processoril56xvjl/preprocessed_a5485a06223b4daea1e567e2be5e1592.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibmfp_qpvf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/plain/ETC/func_80144224/work/guarded.o drafts/T-17300/_runs/plain/ETC/func_80144224/work/guarded.o.sjis.c
+repair: existing earlier unprototyped call implies s32 return

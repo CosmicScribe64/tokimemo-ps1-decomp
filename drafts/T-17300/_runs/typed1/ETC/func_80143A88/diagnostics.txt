@@ -1,0 +1,51 @@
+m2c.py: argument counts from the callees' asm: func_801436E4 1, func_80143968 0
+m2c failed:
+
+python3 failed:
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c, line 4274: Incompatible function return type for this function.
+ s32 func_8004B19C();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c, line 4277: redeclaration of 'func_801436E4'; previous declaration at line 4225 in file 'drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c'
+ s32 func_801436E4();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c, line 4277: Incompatible function return type for this function.
+ s32 func_801436E4();
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80143A88/work -o drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o /tmp/asm_processorrnhuokmm/preprocessed_eb40924a00274ef58919e91ba29c5e68.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib_r3wu1ex/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c
+python3 failed:
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c, line 4273: Incompatible function return type for this function.
+ s32 func_800460EC();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c, line 4274: redeclaration of 'func_8004B19C'; previous declaration at line 1709 in file 'drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c'
+ s32 func_8004B19C();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c, line 4274: Incompatible function return type for this function.
+ s32 func_8004B19C();
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80143A88/work -o drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o /tmp/asm_processormf_o_qa1/preprocessed_7d1d4599351d42548ef1f05e56713217.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibh7w1795_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c, line 4271: redeclaration of 'D_8015014C'; previous declaration at line 3839 in file 'drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c'
+ extern s32 D_8015014C;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c, line 4273: redeclaration of 'func_800460EC'; previous declaration at line 1660 in file 'drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c'
+ s32 func_800460EC();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c, line 4273: Incompatible function return type for this function.
+ s32 func_800460EC();
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80143A88/work -o drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o /tmp/asm_processorht_yiswh/preprocessed_0a4fb9f7769b492ea7d7ac4ed7e385e7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibc0f6ztsr/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c, line 4268: redeclaration of 'D_800E6280'; previous declaration at line 764 in file 'drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c'
+ extern s32 D_800E6280;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c, line 4269: redeclaration of 'D_8015013C'; previous declaration at line 4006 in file 'drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c'
+ extern s32 D_8015013C;
+ -----------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80143A88/work -o drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o /tmp/asm_processoruoxfabp2/preprocessed_985ead15a226475d8f686c7282f867e2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibwtjy9a0y/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80143A88/work/guarded.o.sjis.c

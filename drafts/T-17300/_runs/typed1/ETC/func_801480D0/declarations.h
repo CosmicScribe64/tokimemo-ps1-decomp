@@ -1,0 +1,11 @@
+extern s16 D_80150668;
+extern s32 D_800E6280;
+extern s32 D_801230D0;
+extern s32 D_801506F4;
+extern u8 D_80150728;
+extern u8 D_80150738;
+s32 func_800A0140();
+s32 func_800AE0B0();
+s32 func_800AE0D0();
+s32 func_800AE120();
+s32 func_801464D4();

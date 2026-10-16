@@ -15495,3 +15495,23 @@ Opus closer on w3-d-p03: `func_8014E5F8` matched (`s32` with no `return`; the T-
 
 ## [2026-10-16] ticket | T-19003 Done
 Code review of w3-d-p03 against `CODING_STANDARDS.md`: no open findings; two fixed (the `D_80127610`/`D_801277F0` declarations moved into address order in `include/main_api.h`, stale 0-of-5 wording in the ticket, index and [[matching-notes]] corrected). 1 of 5 functions matched (`func_8014E5F8`), 3 guarded, 1 back to `INCLUDE_ASM`. Rebuild 27/27 OK, grand total 6077/6958 (67.3%). Ticket [[tickets/T-19003-w3-d-p03]], part of [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-16] ticket | T-17300 Types-first: ETC, In Progress
+
+Created [[tickets/T-17300-types-first-etc]] (wave 3, [[speedup-research-2026-10-16]]): types-first pass for ETC on branch `w3-etc-types` from `w2-good`. Card in In Progress.
+
+## [2026-10-16] decision | T-17300 ETC types in ETC.h
+
+[[tickets/T-17300-types-first-etc]]: `EtcExamRank` at `D_80150668` (0x8C), ranking row positions, per-girl tables (`D_80150728`, `D_80150738`, `D_8014E0A4`, `D_8014DB90`, `D_8014DBF8`, `D_8014E070`), the CD file table `D_8014EA18`, `SVECTOR D_8015013C`, `D_8015014C[16]`, 14 scalar widths, `EtcWork40` moved from `src/ovl/ETC/80146400.c` to `include/ovl/ETC.h`, which now includes `psx_types.h`. ETC sha1 OK after each step; rows in [[data-types]].
+
+## [2026-10-16] build | T-17300 ETC redraft and sibling ports
+
+`drafts/T-17300/redraft.py` (T-17200 driver plus work-prim, display-base, work-view, Rec24 fold, lui pairing): 36 of 38 unguarded drafts compile, 11 better than the census (8,316 bytes), sum 6,856 to 6,532 rows, none 0. Matched 3 functions / 1,572 bytes from `tools/siblings.py` ports: `func_80144AC0`, `func_8013E524`, `func_80145318`. Packages T-17301..T-17308 (29 functions, 22,400 bytes). Details on [[etc-family-results]], notes in [[matching-notes]].
+
+## [2026-10-16] ticket | T-17300 In Review
+
+[[tickets/T-17300-types-first-etc]] In Progress to In Review: clean build, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` results on the ticket. Card moved in [[kanban]].
+
+## [2026-10-16] ticket | T-17300 Done
+
+[[tickets/T-17300-types-first-etc]] In Review to Done after the code review against `CODING_STANDARDS.md`: 3 functions matched (1,572 bytes: `func_80144AC0`, `func_8013E524`, `func_80145318`, all sibling ports), ETC types in `include/ovl/ETC.h`, 40 redrafts in `drafts/T-17300/`. No findings. ETC sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK.

@@ -1,0 +1,13 @@
+extern s32 D_801220F4;
+extern s32 D_80150064;
+extern s32 D_8015006C;
+extern s32 D_80150070;
+extern s32 D_801500D4;
+extern s32 D_801500D8;
+extern s32 D_801500DC;
+extern s32 D_801500E0;
+s32 func_80042908();
+s32 func_80044750();
+s32 func_8013FA7C();
+void func_8013E1DC();
+void func_8013F320(s32 arg0);

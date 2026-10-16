@@ -1,0 +1,159 @@
+m2c.py: argument counts from the callees' asm: func_801369D4 0, func_80136AC8 0, func_80136BBC 0, func_80136CB0 0, func_80136DA4 0, func_80136E30 0, func_80136F4C 0, func_80137068 0, func_8013715C 0, func_80137250 0, func_80137344 0, func_80137438 0, func_8013752C 0, func_80137620 0, func_801376AC 0, func_80137738 0, func_8013782C 0, func_80137920 0, func_80137A14 0, func_80137B88 0, func_80137C7C 0, func_80137DC4 0, func_80137EC4 0, func_80137FB8 0, func_801380AC 0, func_80138268 0, func_8013835C 0, func_80138450 0, func_80138544 0, func_80138638 0, func_8013872C 0, func_80138974 0, func_80138A68 0, func_80138B5C 0, func_80138C78 0, func_80138D6C 0, func_80138DF8 0, func_80138F14 0, func_80139008 0, func_801390FC 0, func_801391F0 0, func_801392E4 0, func_801393D8 0, func_801394F4 0, func_801395E8 0, func_80139748 0, func_8013983C 0, func_80139930 0, func_80139A24 0, func_80139B40 0, func_80139C34 0, func_80139D28 0, func_80139E1C 0, func_80139F10 0, func_8013A004 0, func_8013A120 0, func_8013A214 0, func_8013A308 0, func_8013A3FC 0, func_8013A4F0 0, func_8013A5E4 0, func_8013A700 0, func_8013A7F4 0, func_8013A8E8 0, func_8013A9DC 0, func_8013AAD0 0, func_8013ABC4 0, func_8013ACB8 0, func_8013AD3C 0, func_8013AE58 0, func_8013AEE4 0, func_8013B078 0
+m2c failed:
+
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5539: redeclaration of 'func_80137620'; previous declaration at line 5090 in file 'drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c'
+ void func_80137620(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5539: Incompatible function return type for this function.
+ void func_80137620(void) {
+ ------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5545: Incompatible function return type for this function.
+ void func_801376AC(void) {
+ ------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80136448/work -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o /tmp/asm_processor3usgnrml/preprocessed_4e12b469eeb743c6bc8806f342762ad4.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib80ggrstq/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5538: redeclaration of 'func_80137620'; previous declaration at line 5191 in file 'drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c'
+ void func_80137620(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5538: Incompatible function return type for this function.
+ void func_80137620(void) {
+ ------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5544: Incompatible function return type for this function.
+ void func_801376AC(void) {
+ ------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80136448/work -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o /tmp/asm_processorh2_5l1xt/preprocessed_21bebea2ad224636b7696e0eb5d896cc.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibbl1mpwpl/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5545: redeclaration of 'func_801376AC'; previous declaration at line 5090 in file 'drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c'
+ void func_801376AC(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5545: Incompatible function return type for this function.
+ void func_801376AC(void) {
+ ------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5551: Incompatible function return type for this function.
+ void func_80137738(void) {
+ ------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80136448/work -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o /tmp/asm_processorsear99nv/preprocessed_aa84512ef0bb46d2b2fe1bf8a57df638.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqa_lkcx6/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5544: redeclaration of 'func_801376AC'; previous declaration at line 5194 in file 'drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c'
+ void func_801376AC(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5544: Incompatible function return type for this function.
+ void func_801376AC(void) {
+ ------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5550: Incompatible function return type for this function.
+ void func_80137738(void) {
+ ------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80136448/work -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o /tmp/asm_processor6_lx8rvf/preprocessed_b40004fac66747069125b63654a68453.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibsaq52vlu/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5551: redeclaration of 'func_80137738'; previous declaration at line 5090 in file 'drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c'
+ void func_80137738(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5551: Incompatible function return type for this function.
+ void func_80137738(void) {
+ ------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5563: Incompatible function return type for this function.
+ void func_8013782C(void) {
+ ------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80136448/work -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o /tmp/asm_processor8zj2e6ue/preprocessed_ab88799478c94b7caefcf80794a7efc6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibm45cki_t/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5550: redeclaration of 'func_80137738'; previous declaration at line 5197 in file 'drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c'
+ void func_80137738(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5550: Incompatible function return type for this function.
+ void func_80137738(void) {
+ ------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5562: Incompatible function return type for this function.
+ void func_8013782C(void) {
+ ------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80136448/work -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o /tmp/asm_processor03y_w3gl/preprocessed_99ede7d9b8224b4ba033978068981ba3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibl79z9bay/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5563: redeclaration of 'func_8013782C'; previous declaration at line 5090 in file 'drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c'
+ void func_8013782C(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5563: Incompatible function return type for this function.
+ void func_8013782C(void) {
+ ------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5575: Incompatible function return type for this function.
+ void func_80137920(void) {
+ ------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80136448/work -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o /tmp/asm_processorkc4gyv27/preprocessed_73137c7cf04b428cb2f2f1e08ef97f4e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibm4td080i/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5562: redeclaration of 'func_8013782C'; previous declaration at line 5200 in file 'drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c'
+ void func_8013782C(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5562: Incompatible function return type for this function.
+ void func_8013782C(void) {
+ ------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5574: Incompatible function return type for this function.
+ void func_80137920(void) {
+ ------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80136448/work -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o /tmp/asm_processorfnlu66ce/preprocessed_1c40f394e01f4542b936bb6f8f054eb9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib51k6e946/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5575: redeclaration of 'func_80137920'; previous declaration at line 5090 in file 'drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c'
+ void func_80137920(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5575: Incompatible function return type for this function.
+ void func_80137920(void) {
+ ------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5590: Incompatible function return type for this function.
+ void func_80137A14(void) {
+ ------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80136448/work -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o /tmp/asm_processorvwbg99mi/preprocessed_ff74eb4b2554489ab72cc8cd399adde9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibnsu42oec/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5574: redeclaration of 'func_80137920'; previous declaration at line 5203 in file 'drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c'
+ void func_80137920(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5574: Incompatible function return type for this function.
+ void func_80137920(void) {
+ ------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5589: Incompatible function return type for this function.
+ void func_80137A14(void) {
+ ------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80136448/work -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o /tmp/asm_processor6rokdi4w/preprocessed_78c028013a914740b950369d9aa4d7d9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib6l9nn8cl/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5590: redeclaration of 'func_80137A14'; previous declaration at line 5090 in file 'drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c'
+ void func_80137A14(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5590: Incompatible function return type for this function.
+ void func_80137A14(void) {
+ ------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5611: Incompatible function return type for this function.
+ void func_80137B88(void) {
+ ------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80136448/work -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o /tmp/asm_processorehsi90h2/preprocessed_1a0ae82150ca41b88a352e87b856adef.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibn61v7sqe/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5589: redeclaration of 'func_80137A14'; previous declaration at line 5206 in file 'drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c'
+ void func_80137A14(void) {
+ -----^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5589: Incompatible function return type for this function.
+ void func_80137A14(void) {
+ ------------------^
+cfe: Error: drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c, line 5610: Incompatible function return type for this function.
+ void func_80137B88(void) {
+ ------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed1/ETC/func_80136448/work -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o /tmp/asm_processori4sq8bd0/preprocessed_8da070107df24d988722f3d3b7d59d49.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibo50sih3a/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.o drafts/T-17300/_runs/typed1/ETC/func_80136448/work/guarded.c

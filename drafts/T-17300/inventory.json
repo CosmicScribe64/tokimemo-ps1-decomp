@@ -1,0 +1,380 @@
+[
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80132880.c",
+  "func": "func_801328A4",
+  "size": 920,
+  "guarded": false,
+  "source_hash": "8f3107773a6e1762d91b02b3aef291c58f1693a773d4f067b7a157518bc1e0f1",
+  "scope": "ETC:func_801328A4"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80132880.c",
+  "func": "func_80132C3C",
+  "size": 884,
+  "guarded": false,
+  "source_hash": "8f3107773a6e1762d91b02b3aef291c58f1693a773d4f067b7a157518bc1e0f1",
+  "scope": "ETC:func_80132C3C"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80132880.c",
+  "func": "func_80132FB0",
+  "size": 832,
+  "guarded": false,
+  "source_hash": "8f3107773a6e1762d91b02b3aef291c58f1693a773d4f067b7a157518bc1e0f1",
+  "scope": "ETC:func_80132FB0"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80132880.c",
+  "func": "func_80136448",
+  "size": 1280,
+  "guarded": false,
+  "source_hash": "8f3107773a6e1762d91b02b3aef291c58f1693a773d4f067b7a157518bc1e0f1",
+  "scope": "ETC:func_80136448"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013B1F0.c",
+  "func": "func_8013B1F0",
+  "size": 1948,
+  "guarded": false,
+  "source_hash": "d523858ed3b1ac1f0fb2ddb38970382cc259d30df735f0f009993f51f608343c",
+  "scope": "ETC:func_8013B1F0"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013BEF0.c",
+  "func": "func_8013BFFC",
+  "size": 820,
+  "guarded": false,
+  "source_hash": "8a1b6799d980a6e6956fb44599d57867aab445c292ccad733b0f39bd341fae46",
+  "scope": "ETC:func_8013BFFC"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013BEF0.c",
+  "func": "func_8013C700",
+  "size": 492,
+  "guarded": false,
+  "source_hash": "8a1b6799d980a6e6956fb44599d57867aab445c292ccad733b0f39bd341fae46",
+  "scope": "ETC:func_8013C700"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013BEF0.c",
+  "func": "func_8013C8EC",
+  "size": 904,
+  "guarded": false,
+  "source_hash": "8a1b6799d980a6e6956fb44599d57867aab445c292ccad733b0f39bd341fae46",
+  "scope": "ETC:func_8013C8EC"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013BEF0.c",
+  "func": "func_8013CCE4",
+  "size": 584,
+  "guarded": false,
+  "source_hash": "8a1b6799d980a6e6956fb44599d57867aab445c292ccad733b0f39bd341fae46",
+  "scope": "ETC:func_8013CCE4"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013BEF0.c",
+  "func": "func_8013CF2C",
+  "size": 824,
+  "guarded": false,
+  "source_hash": "8a1b6799d980a6e6956fb44599d57867aab445c292ccad733b0f39bd341fae46",
+  "scope": "ETC:func_8013CF2C"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013BEF0.c",
+  "func": "func_8013D32C",
+  "size": 580,
+  "guarded": false,
+  "source_hash": "8a1b6799d980a6e6956fb44599d57867aab445c292ccad733b0f39bd341fae46",
+  "scope": "ETC:func_8013D32C"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013BEF0.c",
+  "func": "func_8013D570",
+  "size": 2352,
+  "guarded": false,
+  "source_hash": "8a1b6799d980a6e6956fb44599d57867aab445c292ccad733b0f39bd341fae46",
+  "scope": "ETC:func_8013D570"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013BEF0.c",
+  "func": "func_8013E524",
+  "size": 392,
+  "guarded": false,
+  "source_hash": "8a1b6799d980a6e6956fb44599d57867aab445c292ccad733b0f39bd341fae46",
+  "scope": "ETC:func_8013E524"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013BEF0.c",
+  "func": "func_8013E6AC",
+  "size": 496,
+  "guarded": false,
+  "source_hash": "8a1b6799d980a6e6956fb44599d57867aab445c292ccad733b0f39bd341fae46",
+  "scope": "ETC:func_8013E6AC"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013BEF0.c",
+  "func": "func_8013E89C",
+  "size": 548,
+  "guarded": false,
+  "source_hash": "8a1b6799d980a6e6956fb44599d57867aab445c292ccad733b0f39bd341fae46",
+  "scope": "ETC:func_8013E89C"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013BEF0.c",
+  "func": "func_8013F054",
+  "size": 716,
+  "guarded": false,
+  "source_hash": "8a1b6799d980a6e6956fb44599d57867aab445c292ccad733b0f39bd341fae46",
+  "scope": "ETC:func_8013F054"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013F980.c",
+  "func": "func_8013F980",
+  "size": 252,
+  "guarded": false,
+  "source_hash": "8128885f6b3921f7598929512b9468603f46e74f16e5d517b78d07df4ddab94c",
+  "scope": "ETC:func_8013F980"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013F980.c",
+  "func": "func_8013FC64",
+  "size": 796,
+  "guarded": false,
+  "source_hash": "8128885f6b3921f7598929512b9468603f46e74f16e5d517b78d07df4ddab94c",
+  "scope": "ETC:func_8013FC64"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013FF80.c",
+  "func": "func_8013FFAC",
+  "size": 2116,
+  "guarded": false,
+  "source_hash": "f2e8dfac0cbe01d50d2b4618e6729f013b2d246065cc45d67333b6754fdeda91",
+  "scope": "ETC:func_8013FFAC"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/8013FF80.c",
+  "func": "func_80140AE4",
+  "size": 224,
+  "guarded": false,
+  "source_hash": "f2e8dfac0cbe01d50d2b4618e6729f013b2d246065cc45d67333b6754fdeda91",
+  "scope": "ETC:func_80140AE4"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80140F50.c",
+  "func": "func_80141ABC",
+  "size": 300,
+  "guarded": false,
+  "source_hash": "c7744d1aa7013152b49ceeea2dd120e6e61f8617d7a2e85c4d34306af6176d11",
+  "scope": "ETC:func_80141ABC"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80140F50.c",
+  "func": "func_80141BE8",
+  "size": 552,
+  "guarded": false,
+  "source_hash": "c7744d1aa7013152b49ceeea2dd120e6e61f8617d7a2e85c4d34306af6176d11",
+  "scope": "ETC:func_80141BE8"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80142B80.c",
+  "func": "func_80142B80",
+  "size": 1728,
+  "guarded": false,
+  "source_hash": "10f539c6bb9c302c67fa8aff5d4babc1c000306ede239067ee10d36c732df816",
+  "scope": "ETC:func_80142B80"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80143240.c",
+  "func": "func_8014354C",
+  "size": 248,
+  "guarded": false,
+  "source_hash": "79dbbcbec0aaae6c8499df6389705d55dba122c5f7b3cab30f4f67b2f1daaeb4",
+  "scope": "ETC:func_8014354C"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80143240.c",
+  "func": "func_80143758",
+  "size": 292,
+  "guarded": false,
+  "source_hash": "79dbbcbec0aaae6c8499df6389705d55dba122c5f7b3cab30f4f67b2f1daaeb4",
+  "scope": "ETC:func_80143758"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80143240.c",
+  "func": "func_80143968",
+  "size": 288,
+  "guarded": false,
+  "source_hash": "79dbbcbec0aaae6c8499df6389705d55dba122c5f7b3cab30f4f67b2f1daaeb4",
+  "scope": "ETC:func_80143968"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80143240.c",
+  "func": "func_80143A88",
+  "size": 1180,
+  "guarded": false,
+  "source_hash": "79dbbcbec0aaae6c8499df6389705d55dba122c5f7b3cab30f4f67b2f1daaeb4",
+  "scope": "ETC:func_80143A88"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80143240.c",
+  "func": "func_80143F24",
+  "size": 188,
+  "guarded": true,
+  "source_hash": "79dbbcbec0aaae6c8499df6389705d55dba122c5f7b3cab30f4f67b2f1daaeb4",
+  "scope": "ETC:func_80143F24"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80143240.c",
+  "func": "func_8014407C",
+  "size": 352,
+  "guarded": false,
+  "source_hash": "79dbbcbec0aaae6c8499df6389705d55dba122c5f7b3cab30f4f67b2f1daaeb4",
+  "scope": "ETC:func_8014407C"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80143240.c",
+  "func": "func_80144224",
+  "size": 780,
+  "guarded": false,
+  "source_hash": "79dbbcbec0aaae6c8499df6389705d55dba122c5f7b3cab30f4f67b2f1daaeb4",
+  "scope": "ETC:func_80144224"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80143240.c",
+  "func": "func_80144DF0",
+  "size": 388,
+  "guarded": false,
+  "source_hash": "79dbbcbec0aaae6c8499df6389705d55dba122c5f7b3cab30f4f67b2f1daaeb4",
+  "scope": "ETC:func_80144DF0"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80143240.c",
+  "func": "func_80144F74",
+  "size": 608,
+  "guarded": false,
+  "source_hash": "79dbbcbec0aaae6c8499df6389705d55dba122c5f7b3cab30f4f67b2f1daaeb4",
+  "scope": "ETC:func_80144F74"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80143240.c",
+  "func": "func_80145318",
+  "size": 664,
+  "guarded": false,
+  "source_hash": "79dbbcbec0aaae6c8499df6389705d55dba122c5f7b3cab30f4f67b2f1daaeb4",
+  "scope": "ETC:func_80145318"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80143240.c",
+  "func": "func_80145C00",
+  "size": 884,
+  "guarded": false,
+  "source_hash": "79dbbcbec0aaae6c8499df6389705d55dba122c5f7b3cab30f4f67b2f1daaeb4",
+  "scope": "ETC:func_80145C00"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80146400.c",
+  "func": "func_80146400",
+  "size": 212,
+  "guarded": true,
+  "source_hash": "08fb57ebcae1933546c7885885b9a4b162d9c7037a7fefeb58922f1aaab66eee",
+  "scope": "ETC:func_80146400"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80146400.c",
+  "func": "func_80146D4C",
+  "size": 1056,
+  "guarded": false,
+  "source_hash": "08fb57ebcae1933546c7885885b9a4b162d9c7037a7fefeb58922f1aaab66eee",
+  "scope": "ETC:func_80146D4C"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80146400.c",
+  "func": "func_8014790C",
+  "size": 1128,
+  "guarded": false,
+  "source_hash": "08fb57ebcae1933546c7885885b9a4b162d9c7037a7fefeb58922f1aaab66eee",
+  "scope": "ETC:func_8014790C"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80146400.c",
+  "func": "func_801480D0",
+  "size": 2808,
+  "guarded": false,
+  "source_hash": "08fb57ebcae1933546c7885885b9a4b162d9c7037a7fefeb58922f1aaab66eee",
+  "scope": "ETC:func_801480D0"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80146400.c",
+  "func": "func_80148BC8",
+  "size": 720,
+  "guarded": false,
+  "source_hash": "08fb57ebcae1933546c7885885b9a4b162d9c7037a7fefeb58922f1aaab66eee",
+  "scope": "ETC:func_80148BC8"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80146400.c",
+  "func": "func_80148F7C",
+  "size": 836,
+  "guarded": false,
+  "source_hash": "08fb57ebcae1933546c7885885b9a4b162d9c7037a7fefeb58922f1aaab66eee",
+  "scope": "ETC:func_80148F7C"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/801492C0.c",
+  "func": "func_80149F48",
+  "size": 568,
+  "guarded": false,
+  "source_hash": "18eac9e1c84b60f570e182112137d7a47358dc720b79654d56103055d54085ff",
+  "scope": "ETC:func_80149F48"
+ },
+ {
+  "unit": "ETC",
+  "src": "src/ovl/ETC/801492C0.c",
+  "func": "func_8014A360",
+  "size": 468,
+  "guarded": false,
+  "source_hash": "18eac9e1c84b60f570e182112137d7a47358dc720b79654d56103055d54085ff",
+  "scope": "ETC:func_8014A360"
+ }
+]

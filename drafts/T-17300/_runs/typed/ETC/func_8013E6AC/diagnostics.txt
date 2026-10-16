@@ -1,0 +1,27 @@
+m2c failed:
+
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work/guarded.c, line 4465: redeclaration of 'D_80150048'; previous declaration at line 3799 in file 'drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work/guarded.c'
+ extern u32 D_80150048;
+ -----------^
+cfe: Warning 709: drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work/guarded.c, line 4472: Incompatible pointer type assignment
+         temp_v0 = (D_80150064 * 8) + &D_800E6280;
+ ----------------^
+cfe: Warning 709: drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work/guarded.c, line 4505: Incompatible pointer type assignment
+         temp_v0_2 = (D_80150064 * 8) + &D_800E7D10;
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work -o drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work/guarded.o /tmp/asm_processortlcef8cj/preprocessed_087097c4ca094857bf379b1c1d0556af.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib9nfgyhu8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work/guarded.c, line 4454: redeclaration of 'D_800E6280'; previous declaration at line 1071 in file 'drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work/guarded.c'
+ extern s32 D_800E6280;
+ -----------^
+cfe: Warning 709: drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work/guarded.c, line 4471: Incompatible pointer type assignment
+         temp_v0 = (D_80150064 * 8) + &D_800E6280;
+ ----------------^
+cfe: Warning 709: drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work/guarded.c, line 4504: Incompatible pointer type assignment
+         temp_v0_2 = (D_80150064 * 8) + &D_800E7D10;
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work -o drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work/guarded.o /tmp/asm_processoryz34xxms/preprocessed_f905a434bfbc4c4da9d60bfdb46f7e2d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliboa56avar/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8013E6AC/work/guarded.c

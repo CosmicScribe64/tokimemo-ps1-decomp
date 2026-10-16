@@ -31,6 +31,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-17100-types-first-rpg_bat|T-17100]] Types-first: RPG_BAT: stack-table types and `RpgStat` fields, 74 redrafts (20 better than the census), 4 matches / 3,168 bytes, packages T-17101..T-17119 (In Review).
 - [[tickets/T-19002-w3-d-p02|T-19002]] Wave 3 package w3-d-p02: TACO `801447D0.c`, `80137A60.c`, 3 of 4 functions matched (2,008 B), `func_8014616C` a 3-row draft (Done).
 - [[tickets/T-19004-w3-d-p04|T-19004]] Wave 3 package w3-d-p04: TAIIKU `80133C80.c`, 2 of 5 functions matched (`func_80137228` 260 B, `func_80135830` 672 B with a FAKE dead `i = 0;`), 2 guarded, 1 left as `INCLUDE_ASM` (Done).
+- [[tickets/T-17300-types-first-etc|T-17300]] Types-first: ETC: `EtcExamRank`, per-girl tables, `SVECTOR`, `EtcWork40` view typed in `ETC.h`, 40 redrafts (11 better than the census), 3 sibling-port matches / 1,572 bytes, packages T-17301..T-17308 (Done).
 - [[tickets/T-16990-wave-3-conveyor|T-16990]] Wave 3 conveyor: types-first passes on 19 units feeding a 7-worker matcher pool (In Progress).
 - [[tickets/T-19003-w3-d-p03|T-19003]] Wave 3 package w3-d-p03: TACO `80149F90.c`, 5 drafts from the T-14500 and T-16560 runs, 1 matched (`func_8014E5F8`, 1,108 B), 3 guarded (10-12 lines), `func_8014F820` back to `INCLUDE_ASM` (Done).
 - [[tickets/T-16564-taco-types-first-p4|T-16564]] Types-first pilot package pt-taco-p4: TACO `80154960.c`, `80137A60.c`, `80138890.c`, 6 of 8 functions matched (5,852 B), 2 guarded register near misses (Done).
@@ -376,7 +377,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[event-family-results]] GYOZI/SHOUGATU bounded family transfer:3 functions /3424 literal bytes, failed-probe ledger and review.
 - [[tickets/T-13103-etc-memory-card-family|T-13103]] ETC memory-card state family.
 
-- [[etc-family-results]]: eleven ETC matches / 5900 literal bytes, positive and negative transfer evidence.
+- [[etc-family-results]]: eleven ETC matches / 5900 literal bytes, positive and negative transfer evidence; the T-17300 types-first pass (ETC types, redraft numbers, sibling ports, near misses, packages).
 
 - [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction.
 

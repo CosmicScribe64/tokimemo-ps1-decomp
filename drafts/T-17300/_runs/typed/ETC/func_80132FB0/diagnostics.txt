@@ -1,0 +1,8 @@
+m2c failed:
+
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_80132FB0/work/guarded.c, line 4141: redeclaration of 'D_8014EA18'; previous declaration at line 4114 in file 'drafts/T-17300/_runs/typed/ETC/func_80132FB0/work/guarded.c'
+ extern s32 D_8014EA18;
+ -----------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_80132FB0/work -o drafts/T-17300/_runs/typed/ETC/func_80132FB0/work/guarded.o /tmp/asm_processor82bf59fw/preprocessed_e6a8f3da142a42e58a867074089c3bd5.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibu1_t2mje/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_80132FB0/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_80132FB0/work/guarded.c

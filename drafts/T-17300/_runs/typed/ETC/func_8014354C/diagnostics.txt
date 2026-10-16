@@ -1,0 +1,59 @@
+m2c failed:
+
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c, line 4217: redeclaration of 'func_8009B430'; previous declaration at line 2292 in file 'drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c'
+ s32 func_8009B430();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c, line 4217: Incompatible function return type for this function.
+ s32 func_8009B430();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c, line 4233: This expression is not an lvalue.
+     D_80122640 = 0;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8014354C/work -o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o /tmp/asm_processorx31k4cnf/preprocessed_691dbde977c645ae9f7efd7ac9c5ef38.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib5c445rfb/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c, line 4216: redeclaration of 'func_8009B3C0'; previous declaration at line 2291 in file 'drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c'
+ s32 func_8009B3C0();
+ ----^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c, line 4216: Incompatible function return type for this function.
+ s32 func_8009B3C0();
+ -----------------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c, line 4232: This expression is not an lvalue.
+     D_80122640 = 0;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8014354C/work -o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o /tmp/asm_processorqm5jcth2/preprocessed_043fa19674a84d03b90bfeda0c065638.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliboiet236d/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c, line 4214: redeclaration of 'D_80122CA0'; previous declaration at line 1373 in file 'drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c'
+ extern s32 D_80122CA0;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c, line 4215: redeclaration of 'D_8015013C'; previous declaration at line 4006 in file 'drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c'
+ extern s32 D_8015013C;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c, line 4231: This expression is not an lvalue.
+     D_80122640 = 0;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8014354C/work -o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o /tmp/asm_processorclo6nees/preprocessed_4e1a8e2b468d447d8bf6c9a031fba53f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibeh3lrucw/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c, line 4212: redeclaration of 'D_80122640'; previous declaration at line 1374 in file 'drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c'
+ extern s32 D_80122640;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c, line 4213: redeclaration of 'D_801227A0'; previous declaration at line 1372 in file 'drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c'
+ extern s32 D_801227A0;
+ -----------^
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c, line 4229: This expression is not an lvalue.
+     D_80122640 = 0;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8014354C/work -o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o /tmp/asm_processorzgjib3k7/preprocessed_b0d55292a6ae48ff85ce978aef5b499e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib71b57yy6/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c, line 4227: This expression is not an lvalue.
+     D_80122640 = 0;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17300/_runs/typed/ETC/func_8014354C/work -o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o /tmp/asm_processorvp9l9dkl/preprocessed_51304acf64af4284a5e3debfe2c7ee84.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibc8dgd19u/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o drafts/T-17300/_runs/typed/ETC/func_8014354C/work/guarded.o.sjis.c

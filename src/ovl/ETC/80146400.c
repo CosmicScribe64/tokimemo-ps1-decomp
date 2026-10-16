@@ -1,15 +1,6 @@
 #include "common.h"
 #include "ovl/ETC.h"
 
-/* ETC view of shared work memory: the two six-word arrays are also walked
- * by func_801465F8. Other overlays use the first word as a scalar. T-10030. */
-typedef struct EtcWork40 {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ u8 pad_04[0xC];
-    /* 0x10 */ s32 unk_10[6];
-    /* 0x28 */ s32 unk_28[6];
-} EtcWork40; /* size 0x40 */
-
 /* NON_MATCHING: T-10850, 14 differing listing lines; see the ticket scratch evidence. */
 #ifdef NON_MATCHING
 /* FAKE: unused padding array preserves the frame layout. T-10850 */
