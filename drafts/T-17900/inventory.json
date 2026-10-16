@@ -1,0 +1,290 @@
+[
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80132000.c",
+  "func": "func_80132320",
+  "size": 396,
+  "guarded": true,
+  "source_hash": "7c5ce02746ab78ca348543ddef1302bef40f9420f839c62cdd59134fd7ae395a",
+  "scope": "NAME_ENT:func_80132320"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80132000.c",
+  "func": "func_80134110",
+  "size": 152,
+  "guarded": false,
+  "source_hash": "7c5ce02746ab78ca348543ddef1302bef40f9420f839c62cdd59134fd7ae395a",
+  "scope": "NAME_ENT:func_80134110"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80132000.c",
+  "func": "func_80134248",
+  "size": 2256,
+  "guarded": true,
+  "source_hash": "7c5ce02746ab78ca348543ddef1302bef40f9420f839c62cdd59134fd7ae395a",
+  "scope": "NAME_ENT:func_80134248"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80132000.c",
+  "func": "func_80134B94",
+  "size": 804,
+  "guarded": true,
+  "source_hash": "7c5ce02746ab78ca348543ddef1302bef40f9420f839c62cdd59134fd7ae395a",
+  "scope": "NAME_ENT:func_80134B94"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80132000.c",
+  "func": "func_80138C1C",
+  "size": 740,
+  "guarded": false,
+  "source_hash": "7c5ce02746ab78ca348543ddef1302bef40f9420f839c62cdd59134fd7ae395a",
+  "scope": "NAME_ENT:func_80138C1C"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80132000.c",
+  "func": "func_80138F60",
+  "size": 1248,
+  "guarded": false,
+  "source_hash": "7c5ce02746ab78ca348543ddef1302bef40f9420f839c62cdd59134fd7ae395a",
+  "scope": "NAME_ENT:func_80138F60"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_80139740",
+  "size": 428,
+  "guarded": false,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_80139740"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_801398EC",
+  "size": 492,
+  "guarded": false,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_801398EC"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_80139F30",
+  "size": 2712,
+  "guarded": false,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_80139F30"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_8013A9C8",
+  "size": 732,
+  "guarded": false,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_8013A9C8"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_8013AF78",
+  "size": 296,
+  "guarded": false,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_8013AF78"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_8013B1D8",
+  "size": 836,
+  "guarded": false,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_8013B1D8"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_8013B994",
+  "size": 380,
+  "guarded": true,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_8013B994"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_8013BB24",
+  "size": 756,
+  "guarded": true,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_8013BB24"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_8013BE18",
+  "size": 348,
+  "guarded": true,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_8013BE18"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_8013CB44",
+  "size": 900,
+  "guarded": false,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_8013CB44"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_8013D2AC",
+  "size": 544,
+  "guarded": false,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_8013D2AC"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_8013DF88",
+  "size": 900,
+  "guarded": true,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_8013DF88"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_8013EE7C",
+  "size": 476,
+  "guarded": false,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_8013EE7C"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_8014068C",
+  "size": 1172,
+  "guarded": false,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_8014068C"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_80140B20",
+  "size": 132,
+  "guarded": true,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_80140B20"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_80140F90",
+  "size": 2192,
+  "guarded": false,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_80140F90"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80139740.c",
+  "func": "func_80141820",
+  "size": 1924,
+  "guarded": false,
+  "source_hash": "a30aa8d7c3d4774f16a2f8caca6a3a8b70359af545097ff77f3a57b9dc1b441c",
+  "scope": "NAME_ENT:func_80141820"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80142A80.c",
+  "func": "func_80142A80",
+  "size": 932,
+  "guarded": false,
+  "source_hash": "7fffcc1c57e7b2896fc4bcd63b14ea61fdef252e1b18ce13a1dc14a54e62ad9f",
+  "scope": "NAME_ENT:func_80142A80"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80142A80.c",
+  "func": "func_80142E24",
+  "size": 1652,
+  "guarded": false,
+  "source_hash": "7fffcc1c57e7b2896fc4bcd63b14ea61fdef252e1b18ce13a1dc14a54e62ad9f",
+  "scope": "NAME_ENT:func_80142E24"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80142A80.c",
+  "func": "func_80143580",
+  "size": 4308,
+  "guarded": false,
+  "source_hash": "7fffcc1c57e7b2896fc4bcd63b14ea61fdef252e1b18ce13a1dc14a54e62ad9f",
+  "scope": "NAME_ENT:func_80143580"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80142A80.c",
+  "func": "func_8014472C",
+  "size": 476,
+  "guarded": false,
+  "source_hash": "7fffcc1c57e7b2896fc4bcd63b14ea61fdef252e1b18ce13a1dc14a54e62ad9f",
+  "scope": "NAME_ENT:func_8014472C"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80144AD0.c",
+  "func": "func_80145FB0",
+  "size": 296,
+  "guarded": false,
+  "source_hash": "3365d54834a09727f5609694507943f8f1c9e0983c091d9e3ee6464b70e8016f",
+  "scope": "NAME_ENT:func_80145FB0"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80144AD0.c",
+  "func": "func_801460D8",
+  "size": 432,
+  "guarded": true,
+  "source_hash": "3365d54834a09727f5609694507943f8f1c9e0983c091d9e3ee6464b70e8016f",
+  "scope": "NAME_ENT:func_801460D8"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80144AD0.c",
+  "func": "func_80149B08",
+  "size": 484,
+  "guarded": false,
+  "source_hash": "3365d54834a09727f5609694507943f8f1c9e0983c091d9e3ee6464b70e8016f",
+  "scope": "NAME_ENT:func_80149B08"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80144AD0.c",
+  "func": "prologue_line_run",
+  "size": 780,
+  "guarded": false,
+  "source_hash": "3365d54834a09727f5609694507943f8f1c9e0983c091d9e3ee6464b70e8016f",
+  "scope": "NAME_ENT:prologue_line_run"
+ },
+ {
+  "unit": "NAME_ENT",
+  "src": "src/ovl/NAME_ENT/80144AD0.c",
+  "func": "prologue_line_start",
+  "size": 328,
+  "guarded": false,
+  "source_hash": "3365d54834a09727f5609694507943f8f1c9e0983c091d9e3ee6464b70e8016f",
+  "scope": "NAME_ENT:prologue_line_start"
+ }
+]
