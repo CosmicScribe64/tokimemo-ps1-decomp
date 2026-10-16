@@ -174,3 +174,6 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p18 (T-19018)
 
 [[tickets/T-19018-w3-d-p18]] (`8013D1E0.c`, `80153AA0.c`): `func_8013D528` (the billboard quad, 784 bytes) matched, a clone of `func_80140ADC` (FAKE `pad[2]` and a one-line `setUVWH` expansion); `func_8013D838` (its large twin, 840 bytes) stays a 10-row guarded draft; `func_80153B38` (the 40-triangle fan, 832 bytes) stays `INCLUDE_ASM` at 175 rows. The frame rule refined there (declared scalars before the aggregates are the bytes above them) and the counter, store-order and colour-byte findings are in [[matching-notes]], "T-19018".
+## Matching stage, package w3-d-p23 (T-19023)
+
+[[tickets/T-19023-w3-d-p23]] (`80135720.c`, the SETTING screen): `func_801357B0` (string drawer, 204 bytes), `func_80136988` (cursor handler, 440) and `func_80135A04` (SETTING screen draw, 1,384) matched in plain C, 2,028 bytes. `func_801357B0` and `func_80135A04` are now `s32` in `TACO.h` (implicit-int, no `return`); details in [[matching-notes]] (T-19023).

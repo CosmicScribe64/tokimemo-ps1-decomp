@@ -22,9 +22,10 @@ s32 func_80135744(void) {
     }
 }
 
-/* NON_MATCHING: T-10310, near miss */
-#ifdef NON_MATCHING
-void func_801357B0(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+/* FAKE: k repeats the stride of i so that uopt strength-reduces arg5 + k and leaves k's initial 0 in v0
+   (live at the exit of this implicit-int function); the original source is unknown. T-19023.
+   "i = 0; do {" on one line orders the preheader moves as the original does. */
+s32 func_801357B0(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 u8 *arg0;
 s32 arg1;
 s32 arg2;
@@ -33,23 +34,21 @@ s32 arg4;
 s32 arg5;
 s32 arg6;
 {
-    u8 *p;
     s32 i;
-    s32 q;
-    s32 j;
+    s32 k;
+    u8 *p;
 
-    p = arg0;
-    i = j = 0;
-    q = arg5;
-    for (; i < 0x111 && *p != 0; i += 0xD) {
-        func_80139424(*p, arg3, 3, 0x80, q, arg6, arg1, arg2, arg4);
-        p++;
-        q += 0xD;
+    k = 0;
+    if (*arg0 != 0) {
+        p = arg0;
+        i = 0; do {
+            func_80139424(*p, arg3, 3, 0x80, arg5 + k, arg6, arg1, arg2, arg4);
+            i += 0xD;
+            p++;
+            k += 0xD;
+        } while (i < 0x111 && *p != 0);
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80135720", func_801357B0);
-#endif
 
 s32 func_8013587C(void) {
     switch (D_800E6280.unk_110D) {
@@ -97,7 +96,72 @@ void func_801359B4(void) {
     func_80135A04();
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80135720", func_80135A04);
+/* Implicit-int function without a return value (v0 stays live, which keeps the switch temporaries,
+   T-19023). i is declared before sp44 so that the array sits at 0x44; the loop body stays on the line of
+   the for so that IDO stores element 0 first. */
+s32 func_80135A04(void) {
+    s32 i;
+    s32 sp44[6];
+
+    for (i = 0; i < 6; i++) sp44[i] = 3;
+    sp44[D_8015F3F0] = 5;
+    func_80049A40(-0x88, -0x1C, 0x10E, 0x78, 4, 0x3F3F3F, 0x81);
+    func_801357B0("SETTING", 0x1000, 0x1000, sp44[5], 3, -0x30, -0x40);
+    func_801357B0("AUTO SHOT", 0x1000, 0x1000, sp44[0], 3, -0x78, -0x10);
+    func_801357B0("ROLL BUTTON", 0x1000, 0x1000, sp44[1], 3, -0x78, 8);
+    func_801357B0("SHOT BUTTON", 0x1000, 0x1000, sp44[2], 3, -0x78, 0x20);
+    func_801357B0("BOMB BUTTON", 0x1000, 0x1000, sp44[3], 3, -0x78, 0x38);
+    func_801357B0("EXIT", 0x1000, 0x1000, sp44[4], 3, -0x78, 0x50);
+    if (D_8015F3F4 != 1 || D_8015F3F0 != 0) {
+        switch (D_8015EDD8 & 1) {
+        case 0:
+            func_801357B0("OFF", 0x1000, 0x1000, sp44[0], 3, 0x2A, -0x10);
+            break;
+        case 1:
+            func_801357B0("ON", 0x1000, 0x1000, sp44[0], 3, 0x2A, -0x10);
+            break;
+        }
+    }
+    if (D_8015F3F4 != 1 || D_8015F3F0 != 1) {
+        switch (D_8015EDDC % 3) {
+        case 0:
+            func_801357B0("R12-L12", 0x1000, 0x1000, sp44[1], 3, 0x2A, 8);
+            break;
+        case 1:
+            func_801357B0("R1-L1", 0x1000, 0x1000, sp44[1], 3, 0x2A, 8);
+            break;
+        case 2:
+            func_801357B0("R2-L2", 0x1000, 0x1000, sp44[1], 3, 0x2A, 8);
+            break;
+        }
+    }
+    if (D_8015F3F4 != 1 || D_8015F3F0 != 2) {
+        switch (D_8015EDE0 % 3) {
+        case 0:
+            func_801357B0("@", 0x1000, 0x1000, sp44[2], 3, 0x2A, 0x20);
+            break;
+        case 1:
+            func_801357B0("*", 0x1000, 0x1000, sp44[2], 3, 0x2A, 0x20);
+            break;
+        case 2:
+            func_801357B0("#", 0x1000, 0x1000, sp44[2], 3, 0x2A, 0x20);
+            break;
+        }
+    }
+    if (D_8015F3F4 != 1 || D_8015F3F0 != 3) {
+        switch (D_8015EDE4 % 3) {
+        case 0:
+            func_801357B0("*", 0x1000, 0x1000, sp44[3], 3, 0x2A, 0x38);
+            break;
+        case 1:
+            func_801357B0("#", 0x1000, 0x1000, sp44[3], 3, 0x2A, 0x38);
+            break;
+        case 2:
+            func_801357B0("@", 0x1000, 0x1000, sp44[3], 3, 0x2A, 0x38);
+            break;
+        }
+    }
+}
 
 void func_80135F6C(void) {
     D_8015F3FC += 1;
@@ -274,4 +338,49 @@ void func_801368D8(u8 *arg0, u8 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80135720", func_80136988);
+void func_80136988(void) {
+    if (D_800E6280.unk_F88 & 0x5000) {
+        func_801335A0(0, 0x500);
+    }
+    if (D_800E6280.unk_F88 & 0x1000) {
+        D_8015F3F0 -= 1;
+    }
+    if (D_800E6280.unk_F88 & 0x4000) {
+        D_8015F3F0 += 1;
+    }
+    if (D_8015F3F0 < 0) {
+        D_8015F3F0 = 4;
+    }
+    if (D_8015F3F0 >= 5) {
+        D_8015F3F0 = 0;
+    }
+    if (D_800E6280.unk_F88 & 0xA020) {
+        if (D_8015F3F0 != 4) {
+            func_801335A0(0, 0x501);
+        }
+        switch (D_8015F3F0) {
+        case 0:
+            func_801368D8(&D_8015EDD8, 2);
+            break;
+        case 1:
+            func_801368D8(&D_8015EDDC, 3);
+            break;
+        case 2:
+            func_801368D8(&D_8015EDE0, 3);
+            break;
+        case 3:
+            func_801368D8(&D_8015EDE4, 3);
+            break;
+        case 4:
+            if (D_800E6280.unk_F88 & 0x20) {
+                func_801335A0(0, 0x502);
+                func_8004284C();
+            }
+            break;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x840) {
+        func_801335A0(0, 0x502);
+        func_8004284C();
+    }
+}

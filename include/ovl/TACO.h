@@ -127,7 +127,7 @@ extern u8 D_8015EDC0;
 
 void func_80135F6C(void);
 void func_80136988(void);
-void func_80135A04(void);
+s32 func_80135A04(void);
 s32 func_8013515C(void);
 void func_80134FB8(void);
 s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5);
@@ -386,7 +386,7 @@ typedef struct TacoRnd {
 } TacoRnd;
 extern TacoRnd *D_8015F4EC;
 extern u8 D_8015EDD8;
-void func_801357B0();
+s32 func_801357B0();
 extern s8 D_8015EDB8;
 
 void func_8013873C(void);

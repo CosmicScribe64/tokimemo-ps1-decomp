@@ -15925,3 +15925,15 @@ Created [[tickets/T-18800-types-first-date2]] (branch `w3-date2-types` from `w2-
 ## [2026-10-16] ticket | T-18800 Done
 
 [[tickets/T-18800-types-first-date2]] In Review to Done: code review against `CODING_STANDARDS.md`, one minor finding (undocumented implicit-int return of `func_80135E50`, comment added); DATE2 sha1 OK, headers OK, `migrate_globals --check` OK, `sync_protos --check-branch` 0 new disagreements. 1 function matched (1,932 bytes). Card moved in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-19023 started
+[[tickets/T-19023-w3-d-p23]] In Progress (worktree `w3-d-p23`, base `w2-good`, 14:39 UTC): TACO `src/ovl/TACO/80135720.c`, `func_801357B0`, `func_80136988`, `func_80135A04`.
+
+## [2026-10-16] ticket | T-19023 In Review, 3 of 3 matched
+[[tickets/T-19023-w3-d-p23]] (14:39-15:20 UTC): TACO `func_801357B0`, `func_80136988` and `func_80135A04` matched in plain C (2,048 bytes; commits `35c8f6a9`, `b6891d0f`, `7d5c9809`). Idioms in [[matching-notes]] (T-19023), two rows in [[register-cheatsheet]], package note in [[taco-family-results]]. `func_801357B0` and `func_80135A04` are `s32` in `include/ovl/TACO.h`. Ticket moved to In Review.
+
+## [2026-10-16] lint | T-19023 byte count corrected
+The T-19023 In Review entry above says 2,048 bytes; the three functions are 204 + 440 + 1,384 = 2,028 bytes (`func_80136988` is 0x1B8 bytes). [[tickets/T-19023-w3-d-p23]], [[matching-notes]], [[taco-family-results]] and [[index]] now say 2,028.
+
+## [2026-10-16] ticket | T-19023 Done
+[[tickets/T-19023-w3-d-p23]] reviewed against `CODING_STANDARDS.md` and moved to Done: 3 of 3 functions matched (2,028 bytes: TACO `func_801357B0`, `func_80136988`, `func_80135A04`), nothing guarded. Two wiki findings fixed: the two new [[register-cheatsheet]] rows were outside the table (moved in), and two stray trailing blank lines were removed. The one FAKE (second induction variable in `func_801357B0`) is commented and ticketed. TACO.bin SHA1 OK.
