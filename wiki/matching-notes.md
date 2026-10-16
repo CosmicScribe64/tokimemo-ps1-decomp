@@ -6003,3 +6003,16 @@ Five matches (2,500 bytes) from hand edits of the redraft; details in [[en-nichi
 - Statement order sets t-register numbers even when the stores keep their order: compute the table lookup
   before the plain field copy (`func_80133CA8`).
 - `func_80135A48` (T-0018 regorder since T-0750) matched in index form as an implicit-int function.
+
+## T-18600: MASTER types-first pass
+
+Two matches (1,208 bytes) from hand edits of the redraft; details in [[master-family-results]].
+
+- A local declared above a stack table or a spilled byte moves it down one slot: `func_80135CF4` needs an index
+  local declared before its `MasterHalfwords13` copy (as `func_80137044`), `func_8013348C` its switch selector
+  in a `u32` local declared before the spilled `u8` event kind.
+- IDO unrolls constant loops over records by four; m2c prints a pointer walk with temporaries and byte offsets.
+  The T-18600 driver's `reroll` rewrite writes them back as index loops (up to 254 rows less per function).
+- A port of a matched twin (`func_80133F80` into `func_80135FB8`) reaches 132 lines; IDO keeps the array base in
+  `s2` for the whole case where the original loads it only before the shuffle loop.
+

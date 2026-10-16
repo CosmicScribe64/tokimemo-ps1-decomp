@@ -22,6 +22,7 @@ Read this first. Update on every ingest or new page.
 - [[date-family-results]] - DATE step tables (`FnTblNN`) and stack tables, the types-first redraft and its numbers, sibling ports, near misses, packages (T-17200)
 - [[bunka-sd-family-results]] - BUNKA_SD type map (scene event lists, text tables, picture sets), display-record loop and compare-operand idioms, the types-first redraft, near misses, packages (T-18100)
 - [[option-family-results]] - OPTION type map (menu rows, word tables, `OptActor44`), the types-first redraft and its numbers, near misses, packages (T-17800)
+- [[master-family-results]] - MASTER type map (stack and step tables, second mini-event counters), the types-first redraft with re-rolled record loops, idioms, packages (T-18600)
 - [[ending-family-results]] - ENDING type map (stack tables, location records left as scalars), the types-first redraft and its numbers, the `check_k_scroll` port, scene-script hand drafts, packages (T-18300)
 - [[shugaku-family-results]] - SHUGAKU type map (callback tables, location tables left as scalars), the types-first redraft and its numbers, sibling ports, packages (T-18000)
 - [[shougatu-family-results]] - SHOUGATU type map (step tables, stack tables, work arrays), the types-first redraft and its numbers, GYOZI twin ports, packages (T-17500)
@@ -41,7 +42,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-19009-w3-d-p09|T-19009]] Wave 3 package w3-d-p09: TACO `80142820.c`, `80143E80.c`, `func_801428DC` (one-struct settings block), `func_80144430` (stack-slot order, `void` lib call) and `func_80142AF0` matched, 1,956 B; `func_80144094` back to `INCLUDE_ASM` (Done).
 - [[tickets/T-19007-w3-d-p07|T-19007]] Wave 3 package w3-d-p07: TAIIKU `801452D0.c`, 1 of 4 matched (`func_80146D18`, 648 B); `func_8014607C` and `func_80145370` stay guarded, typed draft for `func_80147B14` (Done).
 - [[tickets/T-19008-w3-d-p08|T-19008]] Wave 3 package w3-d-p08: TAIIKU `80138950.c`, counter family: `func_8013B200` matched (FAKE views, no local `x`, flag u16 view), closer pass matched `func_8013B608` (split `v = x >> 3; v += ...` for the missing ugen temporary), `func_8013BCEC` guarded at 2 missing instructions (counter write-back), `func_8013B78C`, `func_8013B94C` stay `INCLUDE_ASM`; `ugen -S` method for temporaries (Done).
-- [[tickets/T-18600-types-first-master|T-18600]] Types-first: MASTER (In Progress).
+- [[tickets/T-18600-types-first-master|T-18600]] Types-first: MASTER: nine `MasterWords13` stack tables and the step tables in `MASTER.h`, redraft driver with `reroll`/`record-copy`, 11 redrafts (8 better than the census), 2 matches / 1,208 bytes, packages T-18601..T-18603 (In Review).
 - [[tickets/T-18300-types-first-ending|T-18300]] Types-first: ENDING: stack tables and `D_8013CAF0` typed in `ENDING.h`, `dialogue_render` override, 13 redrafts (7 better than the census), 1 match / 280 bytes, packages T-18301..T-18305 (Done).
 - [[tickets/T-18000-types-first-shugaku|T-18000]] Types-first: SHUGAKU: callback tables in `SHUGAKU.h`, 25 redrafts (9 better than the census), 5 matches / 2,292 bytes, packages T-18001..T-18004 (Done).
 - [[tickets/T-17700-types-first-geko|T-17700]] Types-first: GEKO: stack-copied tables typed in `GEKO.h`, 35 redrafts (14 better than the census), 1 match / 484 bytes, 5 guarded drafts, packages T-17701..T-17708 (Done).
