@@ -6,7 +6,7 @@
 
 /* SHUGAKU overlay (load address 0x80132000): externs and types. */
 
-extern s8 D_8013C2E4;
+extern u8 D_8013C2E4;
 extern u8 D_8013C2EC;
 
 extern u8 D_8013C1C0;
