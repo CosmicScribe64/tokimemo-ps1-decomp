@@ -16004,3 +16004,7 @@ Opus closer pass on [[tickets/T-19019-w3-d-p19]] (branch w3-d-p19): no new match
 ## [2026-10-16] ticket | T-19024 Done
 
 [[tickets/T-19024-w3-d-p24]] In Review to Done after the code review: wave 3 package w3-d-p24 (TACO `src/ovl/TACO/80141DE0.c`, `include/ovl/TACO.h`), 2 of 3 functions matched (1,164 bytes: `func_80142220`, `func_80141DE0` with one ticketed FAKE), `func_801424A8` stays `INCLUDE_ASM` (81 rows, draft archived in `drafts/T-19024/TACO/func_801424A8/`). No findings. TACO SHA1 OK, headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-19031 In Progress
+
+[[tickets/T-19031-w3-d-p31]] created and In Progress: wave 3 package w3-d-p31, TAIIKU `src/ovl/TAIIKU/80132000.c` and `src/ovl/TAIIKU/80132BD0.c`, 4 functions (`func_80133258`, `func_80132BD0`, `func_80132E20`, `func_80132000`), worktree tokimemo-wt/w3-d-p31.
