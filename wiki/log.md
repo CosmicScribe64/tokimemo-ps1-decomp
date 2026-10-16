@@ -15439,3 +15439,6 @@ Opus closer pass on [[tickets/T-19002-w3-d-p02]] (branch w3-d-p02): no new match
 
 ## [2026-10-16] ticket | T-19002 Done
 [[tickets/T-19002-w3-d-p02]] reviewed against `CODING_STANDARDS.md` and moved to Done: 3 functions matched (2,008 bytes: TACO `func_801449D8`, `func_80145DC4`, `func_80137D00`), `func_8014616C` a 3-row NON_MATCHING draft. One review finding (missing ticket id on a FAKE comment in `src/ovl/TACO/801447D0.c`), fixed; rebuild OK (globals, headers, TACO.bin SHA1).
+
+## [2026-10-16] ticket | T-19006 Wave 3 package w3-d-p06 started
+Opened [[tickets/T-19006-w3-d-p06]] (In Progress): TACO `src/ovl/TACO/8013B990.c`, work list `func_8013B990`, `func_8013CFD8`, `func_8013CC40`, `func_8013C1F4`, `func_8013C440`. Part of [[tickets/T-16990-wave-3-conveyor]]. Branch w3-d-p06.
