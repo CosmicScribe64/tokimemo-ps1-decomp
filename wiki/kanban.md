@@ -50,6 +50,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-9940-wave-10-list-4|T-9940 Wave 10: list 4]]
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
+- [ ] [[tickets/T-16552-pt-taiiku-p2|T-16552 Types-first pilot package pt-taiiku-p2]]
+
 ## In Review
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
