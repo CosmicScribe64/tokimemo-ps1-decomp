@@ -2032,7 +2032,9 @@ void get_p_name();
 s32 func_80051A68();
 s32 get_g_zyotai_s(s32 arg0);
 u32 func_80051B48();
+#ifndef MAIN_API_OVERRIDE_get_g_zyotai_h
 s32 get_g_zyotai_h(s32 arg0);
+#endif
 void func_80051DBC();
 void xa_wait(void);
 void func_80051DD8();

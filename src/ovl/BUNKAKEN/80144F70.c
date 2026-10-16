@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_get_g_zyotai_h /* T-18500: func_80145A64 passes two arguments (main_api.h: one). */
 #include "common.h"
 #include "ovl/BUNKAKEN.h"
+
+s32 get_g_zyotai_h();
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80144F70", func_80144F70);
 
@@ -141,4 +144,83 @@ void func_80145A30(void) {
     func_80065F34(0);
 }
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80144F70", func_80145A64);
+void func_80145A64(void) {
+    GameState *g = &D_800E6280;
+    u8 v;
+
+    if ((func_8008667C(D_80122EBC) != 4) && (D_80122EA4 != D_80122EBC)) {
+        switch (D_80122EB8) {
+        case 0:
+            if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 0) && (D_80122EBC == 0)) {
+                v = 0x3;
+            } else if ((((u8) g->unk_1BC[1].unk_0C.b[2] >> 4) == 0) && (D_80122EBC == 1)) {
+                v = 0x3;
+            } else {
+                v = 0x4;
+            }
+            break;
+        case 1:
+            if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 1) && (D_80122EBC == 0)) {
+                v = 0x7;
+            } else if ((((u8) g->unk_1BC[1].unk_0C.b[2] >> 4) == 1) && (D_80122EBC == 1)) {
+                v = 0x7;
+            } else {
+                v = 0x8;
+            }
+            break;
+        case 2:
+            if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 2) && (D_80122EBC == 0)) {
+                v = 0xB;
+            } else if ((((u8) g->unk_1BC[2].unk_0C.b[2] >> 4) == 2) && (D_80122EBC == 2)) {
+                v = 0xB;
+            } else {
+                v = 0xC;
+            }
+            break;
+        case 3:
+            if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 3) && (D_80122EBC == 0)) {
+                v = 0xF;
+            } else if ((((u8) g->unk_1BC[2].unk_0C.b[2] >> 4) == 3) && (D_80122EBC == 2)) {
+                v = 0xF;
+            } else {
+                v = 0x10;
+            }
+            break;
+        case 4:
+            if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 4) && (D_80122EBC == 0)) {
+                v = 0x13;
+            } else if ((((u8) g->unk_1BC[3].unk_0C.b[2] >> 4) == 4) && (D_80122EBC == 3)) {
+                v = 0x13;
+            } else {
+                v = 0x14;
+            }
+            break;
+        case 5:
+            if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 5) && (D_80122EBC == 0)) {
+                v = 0x17;
+            } else if ((((u8) g->unk_1BC[3].unk_0C.b[2] >> 4) == 5) && (D_80122EBC == 3)) {
+                v = 0x17;
+            } else {
+                v = 0x18;
+            }
+            break;
+        }
+        if (D_80122EBC == 0xB) {
+            g->unk_75E[g->unk_F5E].unk_00 = 0;
+            g->unk_75E[g->unk_F5E].unk_03 = get_g_zyotai_h(0, v);
+        } else {
+            g->unk_75E[g->unk_F5E].unk_00 = D_80122EBC;
+            g->unk_75E[g->unk_F5E].unk_03 = get_g_zyotai_h(D_80122EBC, v);
+        }
+        g->unk_75E[g->unk_F5E].unk_02 = 0x14;
+        g->unk_75E[g->unk_F5E].unk_01 = v;
+        g->unk_75E[g->unk_F5E].unk_04 = g->unk_03E;
+        g->unk_75E[g->unk_F5E].unk_05 = g->unk_03F;
+        g->unk_75E[g->unk_F5E].unk_06 = g->unk_040;
+        g->unk_75E[g->unk_F5E].unk_07 = g->unk_041;
+        g->unk_F5E++;
+        if (g->unk_F5E >= 0xFF) {
+            g->unk_F5E = 0xFE;
+        }
+    }
+}
