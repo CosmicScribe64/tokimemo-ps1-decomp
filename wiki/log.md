@@ -15898,3 +15898,7 @@ Created [[tickets/T-18700-types-first-bunkasai]] (branch `w3-bunkasai-types` fro
 ## [2026-10-16] ticket | T-19018 Done
 
 [[tickets/T-19018-w3-d-p18]] In Review to Done after the code review: wave 3 package w3-d-p18 (TACO `src/ovl/TACO/8013D1E0.c`, `src/ovl/TACO/80153AA0.c`), 1 of 3 functions matched (784 bytes: `func_8013D528`, plain C with two FAKE marks, ticketed), `func_8013D838` guarded at 10 rows (NON_MATCHING comment with T-19018), `func_80153B38` stays `INCLUDE_ASM` (175 rows). No findings. TACO SHA1 OK, headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-19024 In Progress
+
+[[tickets/T-19024-w3-d-p24]] created and started: wave 3 package w3-d-p24, TACO `src/ovl/TACO/80141DE0.c` (`func_80142220`, `func_80141DE0`, `func_801424A8`). Worktree `w3-d-p24` from `w2-good`.
