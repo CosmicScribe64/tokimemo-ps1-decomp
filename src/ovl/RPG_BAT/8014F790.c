@@ -29,7 +29,7 @@ s32 func_8014F790(void) {
 }
 
 void func_8014F88C(void) {
-    s32 sp28;
+    s32 sp28; /* FAKE (T-17100): dead copy of the loop index; without it the 0x28 spill and the frame change */
     s32 var_a0;
 
     D_8015EE00.unk_00 += 1;
