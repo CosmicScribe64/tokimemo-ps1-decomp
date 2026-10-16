@@ -15579,3 +15579,7 @@ Clean build 27/27 (all unit sha1 OK, TACO `1419e93c...`), `check_headers`, `migr
 ## [2026-10-16] ticket | T-19007 Done
 
 [[tickets/T-19007-w3-d-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 1 of 4 functions matched (648 bytes): TAIIKU `func_80146D18` in plain C. `func_8014607C` and `func_80145370` stay guarded, `func_80147B14` stays `INCLUDE_ASM` with a typed draft. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19012 started
+
+[[tickets/T-19012-w3-d-p12]]: wave 3 package w3-d-p12 opened in worktree `w3-d-p12` (branch `w3-d-p12` from `w2-good`). Scope: `src/ovl/OMIMAI/801320A0.c`, `src/ovl/OMIMAI/801331B0.c`, `func_80132670`, `func_80134628`, `func_8013388C`. Status In Progress.
