@@ -26,6 +26,8 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
+- [ ] [[tickets/T-17206-w3-date-p06|T-17206 Wave 3 package w3-date-p06]]
+
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]

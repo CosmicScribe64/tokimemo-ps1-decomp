@@ -16124,3 +16124,7 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 ## [2026-10-16] ticket | T-19031 Done
 
 [[tickets/T-19031-w3-d-p31]] In Review to Done after the code review: wave 3 package w3-d-p31 (TAIIKU `src/ovl/TAIIKU/80132000.c`, `src/ovl/TAIIKU/80132BD0.c`, `include/ovl/TAIIKU.h`, `include/main_api.h`, `config/overlays/TAIIKU.yaml`), 4 of 4 functions matched (4,412 bytes: `func_80133258`, `func_80132BD0`, `func_80132E20`, `func_80132000`, four ticketed FAKEs). One finding fixed: `D_80122E90` moved into address order in `include/main_api.h`. Full build 27/27 sha1 OK, headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-17206 In Progress
+
+[[tickets/T-17206-w3-date-p06]] created and In Progress: wave 3 package w3-date-p06 (DATE `src/ovl/DATE/8014B1F0.c`, `src/ovl/DATE/80156600.c`), 2 functions (`func_80157698`, `func_8014C20C`), worktree `tokimemo-wt/w3-date-p06`, branch `w3-date-p06`. Links [[tickets/T-17200-types-first-date]].
