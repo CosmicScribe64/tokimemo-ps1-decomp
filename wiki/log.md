@@ -15495,3 +15495,7 @@ Opus closer on w3-d-p03: `func_8014E5F8` matched (`s32` with no `return`; the T-
 
 ## [2026-10-16] ticket | T-19003 Done
 Code review of w3-d-p03 against `CODING_STANDARDS.md`: no open findings; two fixed (the `D_80127610`/`D_801277F0` declarations moved into address order in `include/main_api.h`, stale 0-of-5 wording in the ticket, index and [[matching-notes]] corrected). 1 of 5 functions matched (`func_8014E5F8`), 3 guarded, 1 back to `INCLUDE_ASM`. Rebuild 27/27 OK, grand total 6077/6958 (67.3%). Ticket [[tickets/T-19003-w3-d-p03]], part of [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-16] ticket | T-19009 In Progress
+
+[[tickets/T-19009-w3-d-p09]] created and In Progress: wave 3 package w3-d-p09, TACO `func_801428DC`, `func_80144430`, `func_80142AF0` and `func_80144094` (`src/ovl/TACO/80142820.c`, `src/ovl/TACO/80143E80.c`).
