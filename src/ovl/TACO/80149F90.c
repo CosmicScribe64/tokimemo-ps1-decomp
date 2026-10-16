@@ -96,7 +96,60 @@ void func_8014A42C(void) {
     func_8014F820();
 }
 
+/* NON_MATCHING: T-19003, 12 differing lines; the spill slots of arg1 * 2 and &D_80127480[arg0] sit 4 bytes low (0x38/0x34, original 0x3C/0x38): the original has four slot-taking locals and one more word below the spills. With o inline the spills sit right under the locals but the frame is 8 bytes short; chain assignments put their temporaries above the spills. s32 with no return fixed the lui order of the second 0x40000000 branch. */
+#ifdef NON_MATCHING
+s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5) {
+    MATRIX m;
+    SVECTOR vec;
+    SVECTOR rot;
+    s32 sel;
+    s32 px;
+    s32 py;
+    u8 st;
+    TcObj50 *o;
+
+    sel = arg1 + 0x10;
+    px = ((s16 *)arg2)[arg1 * 2];
+    py = ((s16 *)arg2)[arg1 * 2 + 1];
+    D_8015EDB4[arg1 + 16].unk84[0] = ((u8 *)arg3)[arg1];
+    m = *(MATRIX *)D_80125C60;
+    func_8015D0D0((D_80128880[0].x << 12) / 360, &m);
+    func_8015CF30((D_80128880[0].z << 12) / 360, &m);
+    func_8015D270((D_80128880[0].y << 12) / 360, &m);
+    o = &D_80127480[arg0];
+    vec.vx = o->unk18;
+    vec.vy = o->unk1C;
+    vec.vz = o->unk20;
+    func_800A0ECC(&m, &vec, &rot);
+    D_8015EDB4[sel].unk74 = D_80127480[0].unk18 + rot.vx + px;
+    D_8015EDB4[sel].unk76 = D_80127480[0].unk1C + rot.vy + py;
+    D_8015EDB4[sel].unk78 = D_80127480[0].unk20 + rot.vz;
+    st = (sel + D_8015EDB4)->unk84[1];
+    if (st < 0x15U && (sel + D_8015EDB4)->unk82 < (sel + D_8015EDB4)->unk7A) {
+        (sel + D_8015EDB4)->unk84[1] = *(arg1 * 2 + (u8 *)arg4);
+        (sel + D_8015EDB4)->unk82 += 1;
+        st = D_8015EDB4[sel].unk84[1];
+    }
+    if (st == 0) {
+        if (arg0 != 0x19) {
+            func_8015163C(arg0, arg5);
+        }
+        if (o == (TcObj50 *)D_80127610) {
+            D_80127080[1].unk0 = 0x40000000;
+            D_80127080[2].unk0 = 0x40000000;
+            D_80127080[3].unk0 = 0x40000000;
+            D_80127080[4].unk0 = 0x40000000;
+        } else if (o == (TcObj50 *)D_801277F0) {
+            D_80127080[7].unk0 = 0x40000000;
+            D_80127080[8].unk0 = 0x40000000;
+            D_80127080[9].unk0 = 0x40000000;
+            D_80127080[10].unk0 = 0x40000000;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014A480);
+#endif
 
 void func_8014A79C(void) {
     s32 i;
@@ -876,7 +929,96 @@ void func_8014E4A4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014E5F8);
+/* s32 with no return (implicit int in the original): v0 is live at the exit, so as1 cannot put li v0,0x40 or li v0,0x80 in the branch delay slots and the constants stay after the first load, as in the original. T-19003 */
+s32 func_8014E5F8(s32 arg0) {
+    if (arg0 < 0x13) {
+        func_80146F74(0, 0, 0, -0x190, 0, 0, 0, 0x32, 0x32);
+    }
+    if (arg0 == 0x13) {
+        D_8015EDB4[22].unk84[2] = 1;
+        func_8014C2E4();
+    }
+    if (arg0 >= 0x14 && arg0 < 0x27) {
+        if (D_8015EDB4[22].unk84[2] != 0) {
+            func_8014BF38(0);
+        }
+    }
+    if (arg0 == 0x27) {
+        D_80122760 = 0;
+        D_80122764 = 0;
+        D_80122768 = -0x64;
+        D_8012276C = 0xFF;
+        D_8012276D = 0xFF;
+        D_8012276E = 0xFF;
+        func_8009AD70(0, &D_80122760);
+        D_80122770 = 0;
+        D_80122774 = 0;
+        D_80122778 = -0x64;
+        D_8012277C = 0xFF;
+        D_8012277D = 0xFF;
+        D_8012277E = 0xFF;
+        func_8009AD70(1, &D_80122770);
+        D_80122780 = 0;
+        D_80122784 = 0;
+        D_80122788 = -0x64;
+        D_8012278C = 0xFF;
+        D_8012278D = 0xFF;
+        D_8012278E = 0xFF;
+        func_8009AD70(2, &D_80122780);
+    }
+    if (arg0 >= 0x28 && arg0 < 0x43) {
+        func_80146F74(0, 0, 0, 0x320, 0, 0, 0, 0x14, 0x1E);
+    }
+    if (arg0 >= 0x46 && arg0 < 0x64) {
+        func_80146F74(0, 0, 0, -0x1E0, 0, 0, 0, 0x32, 0x32);
+    }
+    if (arg0 == 0x64) {
+        D_8015EDB4[23].unk84[2] = 1;
+        D_8015EDB4[22].unk2 = 0;
+        D_8015EDB4[22].unk3 = D_8015EDB4[22].unk2;
+        D_80122760 = -0x64;
+        D_80122764 = 0x1E;
+        D_80122768 = -0x1E;
+        D_8012276C = 0xE0;
+        D_8012276D = 0xE0;
+        D_8012276E = 0xE0;
+        func_8009AD70(0, &D_80122760);
+        D_80122770 = 0x28;
+        D_80122774 = 0x32;
+        D_80122778 = -0x64;
+        D_8012277C = 0x40;
+        D_8012277D = 0x40;
+        D_8012277E = 0x40;
+        func_8009AD70(1, &D_80122770);
+        D_80122780 = 0xA;
+        D_80122784 = -0x14;
+        D_80122788 = -0x64;
+        D_8012278C = 0x30;
+        D_8012278D = 0x30;
+        D_8012278E = 0x30;
+        func_8009AD70(2, &D_80122780);
+    }
+    if (arg0 >= 0x65 && arg0 < 0x79) {
+        if (D_8015EDB4[22].unk84[2] != 0) {
+            func_8014BF38(0);
+        }
+    }
+    if (arg0 >= 0x42 && arg0 < 0x48) {
+        D_8015EDB4[16].unk0[1] = 0x40;
+        D_8015EDB4[16].unk78 = 0x800;
+        D_8015EDB4[16].unk84[0] = 0xA;
+        D_8015EDB4[17].unk0[1] = 0x40;
+        D_8015EDB4[17].unk78 = 0x800;
+        D_8015EDB4[17].unk84[0] = 0x1E;
+        D_8015EDB4[18].unk0[1] = 0x40;
+        D_8015EDB4[18].unk78 = 0x800;
+        D_8015EDB4[18].unk84[0] = 0x1E;
+    } else if (arg0 == 0x48) {
+        D_8015EDB4[16].unk0[1] = 0x80;
+        D_8015EDB4[17].unk0[1] = 0x80;
+        D_8015EDB4[18].unk0[1] = 0x80;
+    }
+}
 
 void func_8014EA4C(void) {
     if (D_8015EDB4[16].unk3 >= 3U) {
@@ -1070,7 +1212,56 @@ void func_8014F2A0(void) {
     }
 }
 
+/* NON_MATCHING: T-19003, 11 differing lines; the two + 1 stores share $v0 and the unk_038++ store-back comes after the unk_1104 one, as in the original, but the ++ adds 1 again (addiu t8,a1,1) where the original stores $v0. Writing it as = unk_038 + 1 or += 1 shares the sum but drops the store-back (78 lines). */
+#ifdef NON_MATCHING
+void func_8014F5F0(void) {
+    if (D_800E6280.unk_1104.u < 0x64U) {
+        func_8014FBD4(1);
+        func_80151264(5U);
+        func_8015443C(0x801A7000, 0xA, 0x100, 0x1EF);
+    } else if (D_800E6280.unk_1104.u >= 0x64U && D_800E6280.unk_1104.u < 0x1F4U) {
+        func_80151264(5U);
+        func_8014FBD4((D_800E6280.unk_1104.u - 0x3C) / 40U);
+    } else if (D_800E6280.unk_1104.u >= 0x226U) {
+        if (D_800E6280.unk_036 < 0xFFU) {
+            D_800E6280.unk_037 = D_800E6280.unk_038 + 1;
+            D_800E6280.unk_036 = D_800E6280.unk_038 + 1;
+            D_800E6280.unk_038++;
+            func_801517AC(D_800E6280.unk_1104.u - 0x226);
+        } else {
+            D_80122760 = 0x64;
+            D_80122764 = 0x32;
+            D_80122768 = -0x64;
+            D_8012276C = 0x70;
+            D_8012276D = 0x70;
+            D_8012276E = 0x80;
+            func_8009AD70(0, &D_80122760);
+            D_80122770 = 0;
+            D_80122774 = -0x64;
+            D_80122778 = -0x64;
+            D_8012277C = 0x40;
+            D_8012277D = 0x40;
+            D_8012277E = 0x40;
+            func_8009AD70(1, &D_80122770);
+            D_80122780 = -0x64;
+            D_80122784 = 0x32;
+            D_80122788 = -0x64;
+            D_8012278C = 0x80;
+            D_8012278D = 0x80;
+            D_8012278E = 0x90;
+            func_8009AD70(2, &D_80122780);
+            D_800E6280.unk_1104.u = 0;
+            func_8004284C();
+        }
+    }
+    if (D_800E6280.unk_1104.u == 0x258) {
+        func_801335A0(0, 0x502);
+    }
+    D_800E6280.unk_1104.u += 1;
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014F5F0);
+#endif
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014F820);
 
@@ -1317,7 +1508,7 @@ void func_80150F44(s32 arg0) {
     }
 }
 
-/* NON_MATCHING: T-10850, 10 differing listing lines; see the ticket scratch evidence. */
+/* NON_MATCHING: T-10850, 10 differing lines; only the sw a1,0x3C(sp) home store sits after the inits. The empty test gives arg1 a split range in $a1 for the first block, so uopt stores it back at the end of that block; without it arg1 stays in memory, the home store moves up, but ugen spends $t6 on the home reload and every temporary is one higher. Comparing arg1 with the constant 0 lets IDO rewrite the test as p != D_8016024C (28-31 lines). T-19003 */
 #ifdef NON_MATCHING
 /* FAKE: split pointer setup and empty test preserve address temporaries. T-10850 */
 void func_801511C0(s32 arg0, s32 arg1)

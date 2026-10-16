@@ -32,6 +32,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-19002-w3-d-p02|T-19002]] Wave 3 package w3-d-p02: TACO `801447D0.c`, `80137A60.c`, 3 of 4 functions matched (2,008 B), `func_8014616C` a 3-row draft (Done).
 - [[tickets/T-19004-w3-d-p04|T-19004]] Wave 3 package w3-d-p04: TAIIKU `80133C80.c`, 2 of 5 functions matched (`func_80137228` 260 B, `func_80135830` 672 B with a FAKE dead `i = 0;`), 2 guarded, 1 left as `INCLUDE_ASM` (Done).
 - [[tickets/T-16990-wave-3-conveyor|T-16990]] Wave 3 conveyor: types-first passes on 19 units feeding a 7-worker matcher pool (In Progress).
+- [[tickets/T-19003-w3-d-p03|T-19003]] Wave 3 package w3-d-p03: TACO `80149F90.c`, 5 drafts from the T-14500 and T-16560 runs, 1 matched (`func_8014E5F8`, 1,108 B), 3 guarded (10-12 lines), `func_8014F820` back to `INCLUDE_ASM` (Done).
 - [[tickets/T-16564-taco-types-first-p4|T-16564]] Types-first pilot package pt-taco-p4: TACO `80154960.c`, `80137A60.c`, `80138890.c`, 6 of 8 functions matched (5,852 B), 2 guarded register near misses (Done).
 - [[tickets/T-16554-pt-taiiku-p4|T-16554]] Types-first pilot package pt-taiiku-p4: TAIIKU `80132000.c`, `80140810.c`, `80142240.c`, 4 of 7 functions matched (3,208 B), 2 guarded, 1 left (Done).
 - [[tickets/T-16552-pt-taiiku-p2|T-16552]] Types-first pilot package pt-taiiku-p2: TAIIKU 80138950.c, 9 functions from the T-16550 redrafts: `func_80139FE4`, `func_80138DF8` and `func_80138AA8` matched (3,000 B, the last two in the Opus closer pass), bit-order colouring, phantom-spill, goto-into-loop and implicit-int findings (Done).

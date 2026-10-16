@@ -15481,3 +15481,17 @@ Code review of [[tickets/T-17000-types-first-main]] against `CODING_STANDARDS.md
 ## [2026-10-16] ticket | T-19004 Done
 
 [[tickets/T-19004-w3-d-p04]] In Review to Done after the code review: 2 of 5 listed TAIIKU functions matched (932 bytes: `func_80137228` 260, `func_80135830` 672 with a FAKE dead `i = 0;`), `func_80137544` and `func_80135480` guarded, `func_80137C44` left `INCLUDE_ASM`. Two findings fixed: the `NON_MATCHING` comments of the two guarded drafts had lost their T-19004 notes (commit `112cfc10`), and the index, [[taiiku-family-results]] and [[matching-notes]] still called `func_80135830` a guarded draft. Unit sha1 OK, headers, globals and proto checks OK.
+## [2026-10-16] ticket | T-19003 Wave 3 package w3-d-p03 In Progress
+Opened [[tickets/T-19003-w3-d-p03]] on branch w3-d-p03 (base w2-good): TACO `src/ovl/TACO/80149F90.c`, work list `func_8014F5F0`, `func_801511C0`, `func_8014E5F8`, `func_8014F820`, `func_8014A480`. Part of [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-16] ticket | T-19003 In Progress -> In Review
+Wave 3 package w3-d-p03 on `src/ovl/TACO/80149F90.c`: 0 of 5 functions matched. `func_8014F5F0` (14 lines), `func_8014E5F8` (16), `func_8014A480` (16) guarded with typed drafts, `func_801511C0` (10) unchanged, `func_8014F820` back to `INCLUDE_ASM`. Five rows in [[data/t0018-cases]], section "T-19003" in [[matching-notes]]. Ticket [[tickets/T-19003-w3-d-p03]], part of [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-16] build | T-19003 final checks
+Clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` all OK on branch w3-d-p03. See [[tickets/T-19003-w3-d-p03]].
+
+## [2026-10-16] ticket | T-19003 closer pass
+Opus closer on w3-d-p03: `func_8014E5F8` matched (`s32` with no `return`; the T-0018 const-order case was a delay-slot effect). `func_8014A480` 16 -> 12 lines, `func_8014F5F0` 14 -> 11, `func_801511C0` unchanged at 10. `include/ovl/TACO.h` declares `func_8014E5F8` and `func_8014A480` as `s32`. Notes in [[matching-notes]] (T-19003, "Closer pass"), rows in [[data/t0018-cases]], comment in [[tickets/T-19003-w3-d-p03]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19003 Done
+Code review of w3-d-p03 against `CODING_STANDARDS.md`: no open findings; two fixed (the `D_80127610`/`D_801277F0` declarations moved into address order in `include/main_api.h`, stale 0-of-5 wording in the ticket, index and [[matching-notes]] corrected). 1 of 5 functions matched (`func_8014E5F8`), 3 guarded, 1 back to `INCLUDE_ASM`. Rebuild 27/27 OK, grand total 6077/6958 (67.3%). Ticket [[tickets/T-19003-w3-d-p03]], part of [[tickets/T-16990-wave-3-conveyor]].
