@@ -36,3 +36,12 @@ Matched (unit sha1 OK after each, one commit each): `func_80147488` (492 bytes),
 Header edits: `func_80147488` takes `s16 *arg1`, `func_8013760C` returns `s32`, `D_8015E238` is a `TcPair8[]`. FAKE: unused `TcPos` in `func_80159878`, `(u8 *)i + (u32)ptr` operand order in `func_8013760C`; the `default: break;` and `s32`-without-return idioms are commented in place.
 
 Review checklist for the code review: FAKE comments carry T-16561; no inline asm; guarded drafts carry the row count; the 80146D60.c comments on pointer locals are explanations, not fakematches.
+
+### 2026-10-16 (claude, Opus closer): Closer pass, still In Review
+
+About 35 minutes on the three guarded near misses.
+- Matched `func_80133738` (312 bytes, commit "T-16561: match TACO:func_80133738"): `D_8015E238` is now `extern s32 D_8015E238[];` and the lookup reads `p = &D_8015E238[idx * 2]; func_80046290(p[0], p[1], 8);`. The flat index allocates the ugen temporary the `TcPair8` element form was missing. No FAKE: the `s32 *p` local declared before `idx` keeps the spill slot. Package total 9 of 12, 5,924 bytes.
+- `func_801472D4` still 20 lines. Standalone probes show that IDO's struct copy skips one ugen register when the last store before it went through a pointer register (the loop stores), and two after a store through `$sp` or a global, after a call, or at entry. The original has two skips with no such store, so no source shape tried reaches it. The `NON_MATCHING` comment and [[register-cheatsheet]] carry the rule.
+- `func_801471D0` still 4 lines. Every separate walker local is copy-propagated and its `+8` CSE'd. The in-place `dop` shape gives everything but the `move`, so the move looks like a uopt live-range split. Comment updated.
+- autotweak (120 s, 2 jobs) found nothing on either. Final checks are in the commit; the ticket stays In Review for the code review.
+

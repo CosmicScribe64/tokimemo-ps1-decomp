@@ -15148,3 +15148,8 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16561 permuter match
 
 [[tickets/T-16561-taco-types-first-p1]]: `func_80147928` (508 bytes) matched after a 150-second `tools/permute.py` run found an empty `do { } while (0);` after `base = arg2 + 4;` (FAKE) and the declaration order `p, pos, slot, base`; the package is now 8 matched functions, 5,612 bytes. See [[matching-notes]] (T-16561 section) and [[data/t0018-cases]].
+
+## [2026-10-16] build | T-16561 closer pass
+
+[[tickets/T-16561-taco-types-first-p1]]: the Opus closer matched TACO `func_80133738` (312 bytes) by reading `D_8015E238` as flat words (`&D_8015E238[idx * 2]`, header type now `s32[]`). `func_801472D4` (20 lines) and `func_801471D0` (4 lines) stay guarded; their comments, [[matching-notes]] and [[register-cheatsheet]] record the struct-copy temporary rule and the copy-propagation dead end. Also updated: [[taco-family-results]], [[data/t0018-cases]]. Ticket stays In Review.
+

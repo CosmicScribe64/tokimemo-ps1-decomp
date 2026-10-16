@@ -130,9 +130,11 @@ best expected bytes first (expected bytes = size / (1 + score / 30)); the gcc-bu
 | `func_8013788C` | 468 | matched | range tests as `D_800E6280.unk_F80 |= k;` on the global instead of a local accumulator |
 | `func_8013760C` | 640 | matched | `s32` without return, `*(u8 *)&` selector, empty `default`, FAKE `(u8 *)i + (u32)ptr` operand order |
 | `func_80147928` | 508 | matched | `p`, `pos`, `slot`, `base` locals, index-first sums, and a FAKE empty `do { } while (0);` that gives arg2 its `$a3` range (found by the permuter) |
-| `func_80133738` | 312 | 8 lines | lookup temporaries one ugen register low |
+| `func_80133738` | 312 | matched (closer) | the pair table read as flat words: `p = &D_8015E238[idx * 2]; func_80046290(p[0], p[1], 8);` (`D_8015E238` is an `s32[]`); the `TcPair8` element form allocates one ugen temporary less |
 | `func_801472D4` | 300 | 20 lines | block-copy temporaries one ugen register low |
 | `func_801471D0` | 260 | 4 lines (T-11300) | `move s4,s3` copy of the second loop base |
 | `func_80147B24` | 372 | 63 lines | unrolled loop: pointer-end test instead of the counter |
+
+The closer pass (Opus, about 35 minutes) matched `func_80133738`: 9 of 12 functions, 5,924 bytes. `func_801472D4` and `func_801471D0` stay guarded with unchanged line counts; what the closer learned is in their `NON_MATCHING` comments and in [[matching-notes]].
 
 Idioms and dead ends are in [[matching-notes]] (T-16561 section); the open rows are in [[data/t0018-cases]].

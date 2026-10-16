@@ -28,6 +28,8 @@ Update (T-16230): rows for DATE `func_801511B4`, `func_80150460` and `func_80150
 
 Update (T-16561): TACO `func_80147928` (row below, 4 lines left at the time) is matched in plain C with an empty `do { } while (0);` after `base = arg2 + 4;` and the declaration order `p, pos, slot, base` (FAKE, found by `tools/permute.py` in 150 s); `func_80159878`, `func_8013788C`, `func_8013760C`, `func_80147C98`, `func_80146F74`, `func_80147674` and `func_80147488` are matched as well ([[matching-notes]], T-16561).
 
+Update (T-16561 closer): TACO `func_80133738` (row below, 8 lines at the time) is matched in plain C: the pair table `D_8015E238` is an `s32[]` read as `p = &D_8015E238[idx * 2]; p[0], p[1]`, which takes one more ugen temporary than the `TcPair8` element form ([[matching-notes]], T-16561 closer pass).
+
 | file | function | category | symptom |
 |---|---|---|---|
 | TEL | `func_8013A40C` | promo | compare chain on a global, original loads it into $v1, IDO $v0 (batch B) |
