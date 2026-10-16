@@ -15760,3 +15760,7 @@ Opus closer pass on [[tickets/T-19013-w3-d-p13]] (branch w3-d-p13): no new match
 ## [2026-10-16] query | T-19018 closer pass
 
 [[tickets/T-19018-w3-d-p18]] Opus closer pass on `func_8013D838` (`src/ovl/TACO/8013D1E0.c`): no match, still 10 differing lines, ticket stays In Review. The uopt trace ties the first `arg3` load to the range `shl(arg3, 6)`, which gets colour 2 where the original needs 11. Autotweak and about 30 C variants made no improvement. Notes in [[matching-notes]] (T-19018), [[data/t0018-cases]] and the ticket Comments.
+
+## [2026-10-16] ticket | T-19018 Done
+
+[[tickets/T-19018-w3-d-p18]] In Review to Done after the code review: wave 3 package w3-d-p18 (TACO `src/ovl/TACO/8013D1E0.c`, `src/ovl/TACO/80153AA0.c`), 1 of 3 functions matched (784 bytes: `func_8013D528`, plain C with two FAKE marks, ticketed), `func_8013D838` guarded at 10 rows (NON_MATCHING comment with T-19018), `func_80153B38` stays `INCLUDE_ASM` (175 rows). No findings. TACO SHA1 OK, headers, globals and proto checks OK.
