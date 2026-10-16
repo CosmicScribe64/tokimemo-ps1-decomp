@@ -5,6 +5,7 @@ kanban-plugin: board
 ---
 
 ## Backlog
+- [ ] [[tickets/T-20500-emulator-assisted-naming|T-20500 Emulator-assisted naming and constants pass]]
 
 - [ ] [[tickets/T-3000-rematch-rv-functions-with-cvt-pass|T-3000 Re-match R/V-flagged functions with cvt_pass.py and retune the T-0018 detector]]
 - [ ] [[tickets/T-3002-remaining-promotion-shapes|T-3002 Register shapes left after the unsigned-load conversion pass]]

@@ -16586,3 +16586,10 @@ Clean rebuild of the w3-rpg-bat-p14 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.
 ## [2026-10-16] ticket | T-17119 Done
 
 [[tickets/T-17119-w3-rpg-bat-p19]] In Review to Done: code review against `CODING_STANDARDS.md` found one item, fixed (a comment explaining the byte-index record loops in `src/ovl/RPG_BAT/80141060.c`, comment only). Rebuild OK (globals, headers, `RPG_BAT.bin` sha1 OK, `sync_protos --check-branch` OK). 2 of 2 functions matched (`func_80148F70` 1,644 B, `func_80141060` 2,564 B). Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-20500 Emulator-assisted naming pass (Backlog)
+
+User idea: start phase 2 renames and constants now, with agents using a PS1 emulator and debugger to find names.
+Held off while the wave 3 conveyor uses the CPU. Plan notes in [[tickets/T-20500-emulator-assisted-naming]]: open
+BIOS only (no proprietary BIOS), Docker, GameState names and enums first, rename in a quiet window or via the merge-time
+rename table.
