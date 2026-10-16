@@ -84,4 +84,70 @@ void func_80132864(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80132550", func_8013288C);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80132550", func_80132A34);
+void func_80132A34(void) {
+    u8 state;
+
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        D_80143AF4 = D_80143A48;
+        D_80143AF8 = D_80143A84;
+        D_80143AFC = D_80143AC0;
+        break;
+    case 1:
+        D_80143AF4 = D_80143A58;
+        D_80143AF8 = D_80143A94;
+        D_80143AFC = D_80143AD0;
+        break;
+    case 2:
+        D_80143AF4 = D_80143A4C;
+        D_80143AF8 = D_80143A88;
+        D_80143AFC = D_80143AC4;
+        break;
+    case 3:
+        D_80143AF4 = D_80143A50;
+        D_80143AF8 = D_80143A8C;
+        D_80143AFC = D_80143AC8;
+        break;
+    case 4:
+        D_80143AF4 = D_80143A6C;
+        D_80143AF8 = D_80143AA8;
+        D_80143AFC = D_80143AE4;
+        break;
+    case 5:
+        D_80143AF4 = D_80143A5C;
+        D_80143AF8 = D_80143A98;
+        D_80143AFC = D_80143AD4;
+        break;
+    case 6:
+        D_80143AF4 = D_80143A64;
+        D_80143AF8 = D_80143AA0;
+        D_80143AFC = D_80143ADC;
+        state = get_g_zyotai_s(6) & 0x7F;
+        if (state < 2) {
+            D_80143AF4 = D_80143A60;
+            D_80143AF8 = D_80143A9C;
+            D_80143AFC = D_80143AD8;
+        }
+        break;
+    case 7:
+        D_80143AF4 = D_80143A54;
+        D_80143AF8 = D_80143A90;
+        D_80143AFC = D_80143ACC;
+        break;
+    case 8:
+        D_80143AF4 = D_80143A44;
+        D_80143AF8 = D_80143A80;
+        D_80143AFC = D_80143ABC;
+        break;
+    case 9:
+        D_80143AF4 = D_80143A68;
+        D_80143AF8 = D_80143AA4;
+        D_80143AFC = D_80143AE0;
+        break;
+    case 10:
+        D_80143AF4 = D_80143A74;
+        D_80143AF8 = D_80143AB0;
+        D_80143AFC = D_80143AEC;
+        break;
+    }
+}
