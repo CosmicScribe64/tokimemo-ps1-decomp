@@ -164,13 +164,13 @@ void func_8013CE70(void) {
  * original result/address registers. T-10010. */
 s32 func_8013CE78(void) {
     u32 i;
-    u8 value2;
+    u8 value;
     for (i = 16; i < 64; i++) {
         if (((i + D_8015EDB4)->unk0[1] & 0x80) && ((i + D_8015EDB4)->unk84[3] & 1)) {
-            value2 = (i + D_8015EDB4)->unk84[1];
-            if (value2 != 0 && (i + D_8015EDB4)->unk84[0] != 0) {
-                if (value2 >= 3U) {
-                    (i + D_8015EDB4)->unk84[1] = value2 - 2;
+            value = (i + D_8015EDB4)->unk84[1];
+            if (value != 0 && (i + D_8015EDB4)->unk84[0] != 0) {
+                if (value >= 3U) {
+                    (i + D_8015EDB4)->unk84[1] = value - 2;
                 } else {
                     (i + D_8015EDB4)->unk84[1] = 0;
                 }
