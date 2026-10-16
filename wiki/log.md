@@ -15397,3 +15397,7 @@ Measured the ugen temporary count of the 0x44-byte block copy in `func_80140A90`
 ## [2026-10-16] ticket | T-19001 Done
 
 [[tickets/T-19001-w3-d-p01]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 0 of 1 functions matched; `func_80140A90` stays a guarded `NON_MATCHING` draft at 33 differing instructions (66 diff lines). Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19005 In Progress
+
+[[tickets/T-19005-w3-d-p05]] created and In Progress: wave 3 package w3-d-p05, OLH `func_80135B8C` and `func_80132114` (`src/ovl/OLH/80135AC0.c`, `src/ovl/OLH/80132000.c`).
