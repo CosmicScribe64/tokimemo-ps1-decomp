@@ -15583,3 +15583,11 @@ Clean build 27/27 (all unit sha1 OK, TACO `1419e93c...`), `check_headers`, `migr
 ## [2026-10-16] ticket | T-19012 started
 
 [[tickets/T-19012-w3-d-p12]]: wave 3 package w3-d-p12 opened in worktree `w3-d-p12` (branch `w3-d-p12` from `w2-good`). Scope: `src/ovl/OMIMAI/801320A0.c`, `src/ovl/OMIMAI/801331B0.c`, `func_80132670`, `func_80134628`, `func_8013388C`. Status In Progress.
+
+## [2026-10-16] build | T-19012 matches
+
+[[tickets/T-19012-w3-d-p12]]: OMIMAI `func_80134628` (648 bytes, from the KANGEI sibling) and `func_80132670` (280 bytes, scalar view of the first `unk_75D` read, FAKE) matched; unit sha1 OK. `func_8013388C` (2,000 bytes) stays `INCLUDE_ASM`: typed draft in `drafts/T-19012/OMIMAI/func_8013388C/`, row in [[data/t0018-cases]]. `if (rand() % 2)` keeps the signed remainder, only `!= 0` folds ([[matching-notes]], [[register-cheatsheet]]).
+
+## [2026-10-16] ticket | T-19012 In Review
+
+[[tickets/T-19012-w3-d-p12]] In Progress to In Review: 2 of 3 functions matched (928 bytes). Clean rebuild, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Review pending.
