@@ -15451,3 +15451,7 @@ Opus closer pass on [[tickets/T-19002-w3-d-p02]] (branch w3-d-p02): no new match
 ## [2026-10-16] ticket | T-19005 Done
 
 [[tickets/T-19005-w3-d-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 2 of 2 functions matched (680 bytes): OLH `func_80135B8C` and `func_80132114`, both plain C with two marked FAKE locals. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19007 started
+
+[[tickets/T-19007-w3-d-p07]]: wave 3 package w3-d-p07 opened in worktree `w3-d-p07` (branch `w3-d-p07` from `w2-good`). Scope: `src/ovl/TAIIKU/801452D0.c`, `func_8014607C`, `func_80146D18`, `func_80145370`, `func_80147B14`. Status In Progress.

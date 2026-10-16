@@ -23,6 +23,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+- [ ] [[tickets/T-19007-w3-d-p07|T-19007 Wave 3 package w3-d-p07]]
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]

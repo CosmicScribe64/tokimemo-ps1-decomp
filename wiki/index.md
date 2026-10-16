@@ -25,6 +25,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
+- [[tickets/T-19007-w3-d-p07|T-19007]] Wave 3 package w3-d-p07: TAIIKU `801452D0.c`, four functions of game C (In Progress).
 - [[tickets/T-19005-w3-d-p05|T-19005]] Wave 3 package w3-d-p05: OLH `80135AC0.c`, `80132000.c`, `func_80135B8C` (sibling clone) and `func_80132114` (chain through a local) both matched, 680 B (Done).
 - [[tickets/T-19001-w3-d-p01|T-19001]] Wave 3 package w3-d-p01: TAIIKU `80140810.c`, `func_80140A90` stays guarded (33 instructions); block-copy temporary rule measured, looks like a ugen difference (Done).
 - [[tickets/T-17200-types-first-date|T-17200]] Types-first: DATE: 68 step tables (`FnTblNN`) and 10 stack tables typed in `DATE.h`, 49 redrafts (7 better than the census), 4 matches / 1,760 bytes, packages T-17201..T-17208 (Done).
