@@ -42,7 +42,145 @@ void func_801322AC(void) {
     D_8015EDD4 = 0;
 }
 
+/* NON_MATCHING: T-19025, 10 differing lines; the result variable r takes $a0 (copies from the loaded values), the original keeps r in $v0 and the switch copy in $v1; the expression temporaries of the unk7A load outrank r for $v0 (regdiff priority 3 against 1.2) */
+#ifdef NON_MATCHING
+u32 func_8013240C(void) {
+    /* FAKE: pad1..pad4 are unused locals that reserve the original's four extra frame words (m1 at sp+0x30, m2 at sp+0x2C); real source unknown. T-19025 */
+    s32 pad1;
+    s32 pad2;
+    s32 pad3;
+    s32 m1;
+    s32 m2;
+    s32 pad4;
+    TcActor *p;
+    s32 step;
+    u32 r;
+
+    p = D_8015EDB4;
+    step = 0x20;
+    if ((D_800E6280.unk_F80 & 0xA000) && (D_800E6280.unk_F80 & 0x5000)) {
+        step = 0x2D;
+    }
+    if (D_800E6280.unk_F80 & 0x8000) {
+        if (D_8015EDB4->unk74 > 0x800) {
+            p->unk74 = p->unk74 + step * (0x1000 - p->unk74) / 2048;
+        } else {
+            p->unk74 = p->unk74 + step;
+        }
+    }
+    if (D_800E6280.unk_F80 & 0x2000) {
+        if (p->unk74 < -0x800) {
+            p->unk74 = p->unk74 + step * (-0x1000 - p->unk74) / 2048;
+        } else {
+            p->unk74 = p->unk74 - step;
+        }
+    }
+    if (D_800E6280.unk_F80 & 0x1000) {
+        if (p->unk76 < -0x700) {
+            p->unk76 = p->unk76 + step * (-0x800 - p->unk76) / 256;
+        } else {
+            p->unk76 = p->unk76 - step;
+        }
+    }
+    if (D_800E6280.unk_F80 & 0x4000) {
+        if (p->unk76 > 0x80) {
+            p->unk76 = p->unk76 + step * (0x180 - p->unk76) / 256;
+        } else {
+            p->unk76 = p->unk76 + step;
+        }
+    }
+    if (p->unk74 < -0x1000) {
+        p->unk74 = -0x1000;
+    }
+    if (p->unk74 > 0x1000) {
+        p->unk74 = 0x1000;
+    }
+    if (p->unk76 < -0x800) {
+        p->unk76 = -0x800;
+    }
+    if (p->unk76 > 0x180) {
+        p->unk76 = 0x180;
+    }
+    r = D_8015EDDC % 3;
+    switch (r) {
+    case 0:
+        m1 = 5;
+        m2 = 0xA;
+        break;
+    case 1:
+        m1 = 4;
+        m2 = 8;
+        break;
+    case 2:
+        m1 = 1;
+        m2 = 2;
+        break;
+    }
+    if (p->unk3 == 0) {
+        if (D_800E6280.unk_F88 & m1) {
+            D_8015EDB4[8].unk2 += 1;
+            p->unk2 = 0x81;
+            p->unk3 = 0x7F;
+        }
+        if (D_800E6280.unk_F88 & m2) {
+            D_8015EDB4[8].unk2 += 1;
+            p->unk2 = 0x82;
+            p->unk3 = 0x7F;
+        }
+    }
+    if (p->unk2 & 1) {
+        r = p->unk3;
+        p->unk68 += r;
+        p->unk74 += 8;
+        if (r < 0xF) {
+            if ((p->unk68 & 0xFFF) >= 0xFE1) {
+                p->unk3 = 0;
+                p->unk68 = 0;
+                p->unk2 = 0;
+            }
+        } else {
+            p->unk3 = p->unk3 - 1;
+            if (p->unk3 < 0x40) {
+                p->unk2 &= 0x7F;
+            }
+        }
+    }
+    if (p->unk2 & 2) {
+        r = p->unk3;
+        p->unk68 -= r;
+        p->unk74 -= 8;
+        if (r < 0xF) {
+            if ((p->unk68 & 0xFFF) < 0x1F) {
+                p->unk3 = 0;
+                p->unk68 = 0;
+                p->unk2 = 0;
+            }
+        } else {
+            p->unk3 = p->unk3 - 1;
+            if (p->unk3 < 0x40) {
+                p->unk2 &= 0x7F;
+            }
+        }
+    }
+    if (p->unk2 & 4) {
+        r = D_8015EDB4->unk7A--;
+        switch (r) {
+        case 2:
+        case 10:
+        case 14:
+        case 15:
+            r = func_801430B0();
+            break;
+        case 0:
+            D_8015EDB4->unk2 &= 0xFB;
+            break;
+        }
+    }
+    return r;
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_8013240C);
+#endif
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_801328B0);
 
