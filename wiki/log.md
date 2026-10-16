@@ -15828,3 +15828,9 @@ Clean build 27/27 (all unit sha1 OK, VALEN included), `check_headers`, `migrate_
 
 ## [2026-10-16] ticket | T-19020 started
 [[tickets/T-19020-w3-d-p20]] created In Progress: Wave 3 direct package w3-d-p20, RENSYU `src/ovl/RENSYU/80132040.c`, four functions (`func_80133CB8`, `func_80133990`, `func_80133628`, `func_8013325C`). Branch w3-d-p20 from w2-good.
+
+## [2026-10-16] build | T-19020 RENSYU func_80133CB8 matched
+RENSYU `func_80133CB8` (420 bytes) matched, unit sha1 OK (`src/ovl/RENSYU/80132040.c`, commit "T-19020: match RENSYU:func_80133CB8"). FAKE: `i = 1; if (i) {}` after the counter statement plus the loop on the previous line. The `unk_66C` counter is `RensyuClubCount` (`->count++`). Notes in [[matching-notes]] ("T-19020"), idiom in [[register-cheatsheet]], row in [[data/t0018-cases]]. Other three functions of [[tickets/T-19020-w3-d-p20]] not matched.
+
+## [2026-10-16] ticket | T-19020 In Review
+[[tickets/T-19020-w3-d-p20]] In Progress to In Review: RENSYU package, 1 of 4 functions matched (`func_80133CB8`, 420 bytes, FAKE: empty test and same-line loop give the original's block boundary and `lui` order). `func_80133628` stays a guarded draft (21 lines), `func_80133990` (78 lines) and `func_8013325C` (about 100) are back to `INCLUDE_ASM` with drafts in `drafts/T-19020/RENSYU/`. New: bit-field counter `RensyuClubCount`, stack table layout rule, block-boundary idiom in [[register-cheatsheet]]; notes in [[matching-notes]], rows in [[data/t0018-cases]].

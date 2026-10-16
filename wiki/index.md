@@ -32,7 +32,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 
-- [[tickets/T-19020-w3-d-p20|T-19020]] Wave 3 package w3-d-p20: RENSYU `80132040.c`, 4 functions (`func_80133CB8`, `func_80133990`, `func_80133628`, `func_8013325C`), in progress
+- [[tickets/T-19020-w3-d-p20|T-19020]] Wave 3 package w3-d-p20: RENSYU `80132040.c`, 1 of 4 matched (`func_80133CB8`, FAKE: empty test as a basic block boundary), `func_80133628` guarded (21 lines), `func_80133990` and `func_8013325C` back to `INCLUDE_ASM`; stack table layout rule
 - [[tickets/T-18400-types-first-kangei|T-18400]] Types-first: KANGEI: picture-set tables, MASTER streak types and club name tables in `KANGEI.h`, 11 redrafts (7 better than the census), 4 matches / 2,596 bytes, packages T-18401..T-18403 (Done).
 - [[tickets/T-18100-types-first-bunka_sd|T-18100]] Types-first: BUNKA_SD: scene event lists (`BsdEvent`), text tables and picture sets in `BUNKA_SD.h`, 15 redrafts (6 better than the census), 9 matches / 4,820 bytes, packages T-18101..T-18103 (Done).
 - [[tickets/T-17800-types-first-option|T-17800]] Types-first: OPTION: menu rows, word tables and the `OptActor44` record view in `OPTION.h`, 32 redrafts (19 better than the census), 4 matches / 1,548 bytes, packages T-17801..T-17803 (Done).
