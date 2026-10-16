@@ -262,7 +262,47 @@ void func_80152C60(s32 arg0) {
     D_8015EDB4[18].unk3 = D_8015EDB4[18].unk3 + 1;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80152DB4);
+/* arg1 walks the table (arg1++ after each call): it keeps the pointer walk and the 3-step counter apart, T-16563. */
+void func_80152DB4(s32 arg0, s32 arg1, s32 arg2) {
+    s32 i;
+    s32 r;
+
+    if (arg2 < 10) {
+        for (i = 0; i < 7; i++) {
+            func_80147674(arg0 + i * 3, D_801603F0[arg1], 8, 0, 0);
+            arg1++;
+        }
+    } else if (arg2 >= 10 && arg2 < 20) {
+        for (i = 0; i < 7; i++) {
+            func_80147674(arg0 + i * 3, D_801603F0[arg1], 9, 0, 0);
+            arg1++;
+        }
+    } else if (arg2 >= 20 && arg2 < 30) {
+        for (i = 0; i < 7; i++) {
+            func_80147674(arg0 + i * 3, D_801603F0[arg1], 10, 0, 0);
+            arg1++;
+        }
+    } else if (arg2 >= 30 && arg2 < 80) {
+        r = func_800AE0D0();
+        func_80147C98(0, 0x1C, (s16)((r & 0x3FF) - 0x200), (s16)((func_800AE0D0() & 0x3FF) - 0x200), 0x3E8, 0x1F4, 0x86);
+    } else if (arg2 >= 80 && arg2 < 90) {
+        for (i = 0; i < 7; i++) {
+            func_80147674(arg0 + i * 3, D_801603F0[arg1], 11, 0, 0);
+            arg1++;
+        }
+    } else if (arg2 >= 90 && arg2 < 100) {
+        for (i = 0; i < 7; i++) {
+            func_80147674(arg0 + i * 3, D_801603F0[arg1], 12, 0, 0);
+            arg1++;
+        }
+    } else if (arg2 >= 100 && arg2 < 110) {
+        for (i = 0; i < 7; i++) {
+            func_80147674(arg0 + i * 3, D_801603F0[arg1], 13, 0, 0);
+            arg1++;
+        }
+    }
+}
+
 
 void func_80153068(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 pad[15]; /* FAKE: unused slots above idx, the original frame is 64 bytes larger (T-3330 idiom, real source unknown). T-9370 */
