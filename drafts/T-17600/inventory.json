@@ -1,0 +1,335 @@
+[
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80134520.c",
+  "func": "func_801347D4",
+  "size": 356,
+  "guarded": false,
+  "source_hash": "09345fd23e9550a95644d32014f94e1b9b7c7987416428ab9234561171fb5f08",
+  "scope": "GYOZI:func_801347D4"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80134FD0.c",
+  "func": "func_8013506C",
+  "size": 172,
+  "guarded": true,
+  "source_hash": "021f7249a2a52c1ea2305d3220737b4d9f8c2b4e6aee7239986b889d5f3e3b1c",
+  "scope": "GYOZI:func_8013506C"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80134FD0.c",
+  "func": "func_80135118",
+  "size": 360,
+  "guarded": false,
+  "source_hash": "021f7249a2a52c1ea2305d3220737b4d9f8c2b4e6aee7239986b889d5f3e3b1c",
+  "scope": "GYOZI:func_80135118"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80134FD0.c",
+  "func": "func_80135280",
+  "size": 416,
+  "guarded": false,
+  "source_hash": "021f7249a2a52c1ea2305d3220737b4d9f8c2b4e6aee7239986b889d5f3e3b1c",
+  "scope": "GYOZI:func_80135280"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80136220.c",
+  "func": "func_80136488",
+  "size": 604,
+  "guarded": true,
+  "source_hash": "09b938a55ecf82af135a1ee4a5fdcd7b6e3f8e0176cd242609a6a1f7f03934a2",
+  "scope": "GYOZI:func_80136488"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80136220.c",
+  "func": "func_801368B8",
+  "size": 2256,
+  "guarded": false,
+  "source_hash": "09b938a55ecf82af135a1ee4a5fdcd7b6e3f8e0176cd242609a6a1f7f03934a2",
+  "scope": "GYOZI:func_801368B8"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80136220.c",
+  "func": "func_80137188",
+  "size": 176,
+  "guarded": true,
+  "source_hash": "09b938a55ecf82af135a1ee4a5fdcd7b6e3f8e0176cd242609a6a1f7f03934a2",
+  "scope": "GYOZI:func_80137188"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/801372B0.c",
+  "func": "func_801378D0",
+  "size": 316,
+  "guarded": false,
+  "source_hash": "afe58640b06820469dac0e253e1f64eef62959110611f96fa7b434e809d7e1fb",
+  "scope": "GYOZI:func_801378D0"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/801372B0.c",
+  "func": "func_80137F48",
+  "size": 164,
+  "guarded": false,
+  "source_hash": "afe58640b06820469dac0e253e1f64eef62959110611f96fa7b434e809d7e1fb",
+  "scope": "GYOZI:func_80137F48"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80138B50.c",
+  "func": "func_80138C9C",
+  "size": 992,
+  "guarded": false,
+  "source_hash": "3b711aeb370b158dc16da92d8bebec68ab14da04c2c1fb9ab0208dfd48e67c5b",
+  "scope": "GYOZI:func_80138C9C"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80138B50.c",
+  "func": "func_8013907C",
+  "size": 844,
+  "guarded": false,
+  "source_hash": "3b711aeb370b158dc16da92d8bebec68ab14da04c2c1fb9ab0208dfd48e67c5b",
+  "scope": "GYOZI:func_8013907C"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80138B50.c",
+  "func": "func_801393C8",
+  "size": 784,
+  "guarded": false,
+  "source_hash": "3b711aeb370b158dc16da92d8bebec68ab14da04c2c1fb9ab0208dfd48e67c5b",
+  "scope": "GYOZI:func_801393C8"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80139920.c",
+  "func": "func_80139E4C",
+  "size": 696,
+  "guarded": false,
+  "source_hash": "a34f91d10e5494073fb3becfa4dab2a6cb18bf5385cd875b017d78ea58ad8de8",
+  "scope": "GYOZI:func_80139E4C"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/8013A140.c",
+  "func": "func_8013A5F4",
+  "size": 376,
+  "guarded": false,
+  "source_hash": "2ecf78136ab85c8a237f30dbd4202e293da6840913b6a168abb6d1b7d7279cc1",
+  "scope": "GYOZI:func_8013A5F4"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/8013AE80.c",
+  "func": "func_8013B0C4",
+  "size": 268,
+  "guarded": false,
+  "source_hash": "08c34974d299d390c7d2b103828a1439d768cdc7d4f5174e7e5dbfd1f7c0cc90",
+  "scope": "GYOZI:func_8013B0C4"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/8013BD50.c",
+  "func": "func_8013C118",
+  "size": 504,
+  "guarded": false,
+  "source_hash": "1dd56ba81dbf249e0f0d0edf0a22b738707eee71d999884bdb4c70694472d2ce",
+  "scope": "GYOZI:func_8013C118"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/8013C3B0.c",
+  "func": "func_8013C774",
+  "size": 364,
+  "guarded": false,
+  "source_hash": "cf87ea6be827a5ccc2af52b690b259854164b9b9a06eeae09e15ecbcd75abc4c",
+  "scope": "GYOZI:func_8013C774"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/8013DB50.c",
+  "func": "func_8013DC2C",
+  "size": 268,
+  "guarded": false,
+  "source_hash": "d597c3fa7e5aa9cee3e7bebf4da20dde2f0783ed99dc3a04b47a7ec468686815",
+  "scope": "GYOZI:func_8013DC2C"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/8013E1D0.c",
+  "func": "func_8013E308",
+  "size": 372,
+  "guarded": false,
+  "source_hash": "bc494ac2663729f986756614a44099c27465b77f5a775f9a067308a265c0200e",
+  "scope": "GYOZI:func_8013E308"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/8013E5B0.c",
+  "func": "func_8013E638",
+  "size": 236,
+  "guarded": true,
+  "source_hash": "7cb993c08c35173cefd4c2d42989fa26f1ad1e23acf6af72fde2861be38dc2df",
+  "scope": "GYOZI:func_8013E638"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/8013E5B0.c",
+  "func": "func_8013E824",
+  "size": 740,
+  "guarded": false,
+  "source_hash": "7cb993c08c35173cefd4c2d42989fa26f1ad1e23acf6af72fde2861be38dc2df",
+  "scope": "GYOZI:func_8013E824"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/801400D0.c",
+  "func": "func_80140464",
+  "size": 576,
+  "guarded": false,
+  "source_hash": "71b4d17a61d234123ac5554cabd7b30884daabe2e36c62aa634ae0f6d397db0a",
+  "scope": "GYOZI:func_80140464"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80140C90.c",
+  "func": "func_80140E0C",
+  "size": 388,
+  "guarded": false,
+  "source_hash": "f018aadbe8788e4d596ea8cb67d984137db1c18d50125112d60b5e05ff70b7cb",
+  "scope": "GYOZI:func_80140E0C"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80140C90.c",
+  "func": "func_80140F90",
+  "size": 788,
+  "guarded": false,
+  "source_hash": "f018aadbe8788e4d596ea8cb67d984137db1c18d50125112d60b5e05ff70b7cb",
+  "scope": "GYOZI:func_80140F90"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80140C90.c",
+  "func": "func_801412A4",
+  "size": 684,
+  "guarded": false,
+  "source_hash": "f018aadbe8788e4d596ea8cb67d984137db1c18d50125112d60b5e05ff70b7cb",
+  "scope": "GYOZI:func_801412A4"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/801418B0.c",
+  "func": "func_80141944",
+  "size": 336,
+  "guarded": false,
+  "source_hash": "809c2ec74e6895ac86c994590c64dd184f51af81c5f4a172b4224b5644b19523",
+  "scope": "GYOZI:func_80141944"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/801418B0.c",
+  "func": "func_8014206C",
+  "size": 160,
+  "guarded": false,
+  "source_hash": "809c2ec74e6895ac86c994590c64dd184f51af81c5f4a172b4224b5644b19523",
+  "scope": "GYOZI:func_8014206C"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/801418B0.c",
+  "func": "func_801421B4",
+  "size": 1088,
+  "guarded": false,
+  "source_hash": "809c2ec74e6895ac86c994590c64dd184f51af81c5f4a172b4224b5644b19523",
+  "scope": "GYOZI:func_801421B4"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/801418B0.c",
+  "func": "func_801428EC",
+  "size": 416,
+  "guarded": false,
+  "source_hash": "809c2ec74e6895ac86c994590c64dd184f51af81c5f4a172b4224b5644b19523",
+  "scope": "GYOZI:func_801428EC"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/801418B0.c",
+  "func": "func_80142A8C",
+  "size": 392,
+  "guarded": false,
+  "source_hash": "809c2ec74e6895ac86c994590c64dd184f51af81c5f4a172b4224b5644b19523",
+  "scope": "GYOZI:func_80142A8C"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80143110.c",
+  "func": "func_80143160",
+  "size": 436,
+  "guarded": false,
+  "source_hash": "fd3eece851add8214cff35d03e9f4c8376f31359563a3cf495258829d094d102",
+  "scope": "GYOZI:func_80143160"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80143AD0.c",
+  "func": "func_80144018",
+  "size": 1204,
+  "guarded": false,
+  "source_hash": "b0d3eb65d1d1d27bc538104ef48b852046ea0090c51d12a14507aab83ee63a3c",
+  "scope": "GYOZI:func_80144018"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80143AD0.c",
+  "func": "func_801444CC",
+  "size": 752,
+  "guarded": false,
+  "source_hash": "b0d3eb65d1d1d27bc538104ef48b852046ea0090c51d12a14507aab83ee63a3c",
+  "scope": "GYOZI:func_801444CC"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80143AD0.c",
+  "func": "func_8014494C",
+  "size": 296,
+  "guarded": false,
+  "source_hash": "b0d3eb65d1d1d27bc538104ef48b852046ea0090c51d12a14507aab83ee63a3c",
+  "scope": "GYOZI:func_8014494C"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80143AD0.c",
+  "func": "func_80144B70",
+  "size": 1300,
+  "guarded": false,
+  "source_hash": "b0d3eb65d1d1d27bc538104ef48b852046ea0090c51d12a14507aab83ee63a3c",
+  "scope": "GYOZI:func_80144B70"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80143AD0.c",
+  "func": "func_80145084",
+  "size": 716,
+  "guarded": false,
+  "source_hash": "b0d3eb65d1d1d27bc538104ef48b852046ea0090c51d12a14507aab83ee63a3c",
+  "scope": "GYOZI:func_80145084"
+ },
+ {
+  "unit": "GYOZI",
+  "src": "src/ovl/GYOZI/80143AD0.c",
+  "func": "func_80145384",
+  "size": 372,
+  "guarded": false,
+  "source_hash": "b0d3eb65d1d1d27bc538104ef48b852046ea0090c51d12a14507aab83ee63a3c",
+  "scope": "GYOZI:func_80145384"
+ }
+]

@@ -1,0 +1,12 @@
+python3 failed:
+cfe: Error: drafts/T-17600/_runs/typed/GYOZI/func_80138C9C/work/guarded.c, line 3689: 'sp4C' undefined; reoccurrences will not be reported.
+             *(&sp4C[0] + var_t9) = var_s0;
+ ---------------^
+cfe: Error: drafts/T-17600/_runs/typed/GYOZI/func_80138C9C/work/guarded.c, line 3701: 'sp4C' undefined; reoccurrences will not be reported.
+             func_800BCDF0("%d ", *(&sp4C[0] + var_t1_2));
+ ------------------------------------^
+cfe: Error: drafts/T-17600/_runs/typed/GYOZI/func_80138C9C/work/guarded.c, line 3714: 'sp4C' undefined; reoccurrences will not be reported.
+             *temp_t8 = (&sp4C[0])[temp_hi];
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17600/_runs/typed/GYOZI/func_80138C9C/work -o drafts/T-17600/_runs/typed/GYOZI/func_80138C9C/work/guarded.o /tmp/asm_processorlm9clt42/preprocessed_fee13343bd634e06bc6fdc2ec55b9527.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib00lh9r2w/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17600/_runs/typed/GYOZI/func_80138C9C/work/guarded.o drafts/T-17600/_runs/typed/GYOZI/func_80138C9C/work/guarded.c

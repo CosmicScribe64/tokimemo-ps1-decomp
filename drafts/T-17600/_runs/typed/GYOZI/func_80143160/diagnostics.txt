@@ -1,0 +1,16 @@
+m2c.py: argument counts from the callees' asm: func_80052060 4, func_80143314 0, func_801433E0 0, func_80143520 0, func_801435C4 0, func_80143940 0, func_801439F0 0
+python3 failed:
+cfe: Error: drafts/T-17600/_runs/typed/GYOZI/func_80143160/work/guarded.c, line 3643: redeclaration of 'D_80148970'; previous declaration at line 3638 in file 'drafts/T-17600/_runs/typed/GYOZI/func_80143160/work/guarded.c'
+ extern s32 D_80148970;
+ -----------^
+cfe: Error: drafts/T-17600/_runs/typed/GYOZI/func_80143160/work/guarded.c, line 3653: Type s32  of rhs of assignment expression is incompatible with type struct   of lhs
+         D_80148970 = *(s32 *)((unsigned char *)(&D_800F53A0.girl[D_800F62CF]) + (8));
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17600/_runs/typed/GYOZI/func_80143160/work -o drafts/T-17600/_runs/typed/GYOZI/func_80143160/work/guarded.o /tmp/asm_processorq17jcg53/preprocessed_c0d8765611e94dcaa9a3016004978229.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib2ijngw2t/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17600/_runs/typed/GYOZI/func_80143160/work/guarded.o drafts/T-17600/_runs/typed/GYOZI/func_80143160/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-17600/_runs/typed/GYOZI/func_80143160/work/guarded.c, line 3652: Type s32  of rhs of assignment expression is incompatible with type struct   of lhs
+         D_80148970 = *(s32 *)((unsigned char *)(&D_800F53A0.girl[D_800F62CF]) + (8));
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17600/_runs/typed/GYOZI/func_80143160/work -o drafts/T-17600/_runs/typed/GYOZI/func_80143160/work/guarded.o /tmp/asm_processorj4xp762z/preprocessed_70b8de0b0ca44930a5eab02471d552d8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibmlgcpv96/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17600/_runs/typed/GYOZI/func_80143160/work/guarded.o drafts/T-17600/_runs/typed/GYOZI/func_80143160/work/guarded.c

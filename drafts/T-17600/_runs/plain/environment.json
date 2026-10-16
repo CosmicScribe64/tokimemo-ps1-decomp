@@ -1,0 +1,8 @@
+{
+ "base": "",
+ "files": {
+  "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+  "include/main_api.h": "c855358c2f8580ad04ca654f5e9b7ef885f4847b62323626214efaf0291de027",
+  "include/ovl/GYOZI.h": "04ebdea433694ba72580e2916afce20db951fe00d9208f9fa3e54a1a31957f2c"
+ }
+}

@@ -1,0 +1,12 @@
+python3 failed:
+cfe: Error: drafts/T-17600/_runs/plain/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3491: 'sp34' undefined; reoccurrences will not be reported.
+     *(M2cBlock90 *)(&sp34[0]) = *(M2cBlock90 *)(&D_80147C6C);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17600/_runs/plain/GYOZI/func_8013C774/work -o drafts/T-17600/_runs/plain/GYOZI/func_8013C774/work/guarded.o /tmp/asm_processor9iaag1s4/preprocessed_26adc711b9e84403807027ec14851f8c.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibjfln27fe/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17600/_runs/plain/GYOZI/func_8013C774/work/guarded.o drafts/T-17600/_runs/plain/GYOZI/func_8013C774/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17600/_runs/plain/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3493: Non-function name referenced in function call.
+     (&sp34[0])[D_800F647A]();
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17600/_runs/plain/GYOZI/func_8013C774/work -o drafts/T-17600/_runs/plain/GYOZI/func_8013C774/work/guarded.o /tmp/asm_processor7f_bt1o8/preprocessed_c4a2148a526640b6ba4ff89fab1ea37f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibvbzt9o5_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17600/_runs/plain/GYOZI/func_8013C774/work/guarded.o drafts/T-17600/_runs/plain/GYOZI/func_8013C774/work/guarded.o.sjis.c
