@@ -1937,7 +1937,44 @@ void func_80060150(void) {
     func_80042940(2);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060178);
+void func_80060178(void) {
+    s32 i;
+    s32 d;
+    s32 pad; /* FAKE: unused local reserves the third home word above the arrays (frame 0xE8); real source unknown. T-17005 */
+    s16 x[14];
+    s16 y[14];
+    s16 w[14];
+    s16 h[14];
+
+    func_8004E58C();
+    func_8006612C("マスコット");
+    func_8005DEA0(6);
+    d = 3;
+    for (i = 0; i < 14; i++) {
+        x[i] = (i % d) * 0x2B - 8;
+        y[i] = (i / d) * 0x10 - 0x40;
+        w[i] = 0x28;
+        h[i] = 0x10;
+        if (i == 13) {
+            w[i] = 0x46;
+            set_kanji_string(x[i], y[i], 5, "表示しない", 0);
+        } else if (((FlagsWork24 *)&D_800E7D10)->flags[i] != 0 || D_800E6280.unk_53C[i] != 0) {
+            set_kanji_string(x[i], y[i], 3, girl_short_name_table[i], 0);
+        } else {
+            w[i] = 0;
+        }
+    }
+    k_sub_reset_point_set();
+    set_kanji_string(-0x80, 0x32, 0, "マスコットを選びます", 0);
+    menu_set(1, 14, x, y, w, h);
+    if (D_800B5C08 == 0 || D_800B5C08 >= 14) {
+        D_800E6280.unk_1094 = 0;
+    } else {
+        D_800E6280.unk_1094 = D_800B5C08;
+    }
+    k_sub_disp_start(0);
+    func_8004284C();
+}
 
 s32 func_800603C0(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);
