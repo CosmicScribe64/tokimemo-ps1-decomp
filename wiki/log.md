@@ -16067,3 +16067,17 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 
 ## [2026-10-16] ticket | T-19027 Done
 [[tickets/T-19027-w3-d-p27]] reviewed against `CODING_STANDARDS.md` and moved to Done: 1 of 2 functions matched (TEL `func_8013CCD0`, 876 bytes, plain C, no FAKE); `func_8013D03C` stays `INCLUDE_ASM` with its draft archived in `drafts/T-19027/`. One finding fixed: the store-then-test `unk_06` clamp had no explaining comment (added, comment only). The closer pass entry above gives 17:15 UTC as its end; the ticket now says 17:10 UTC, the actual end. The "20 rows left" label in [[matching-notes]] now points to the closer match. TEL.bin SHA1 OK, 27/27.
+## [2026-10-16] ticket | T-19028 In Progress
+[[tickets/T-19028-w3-d-p28]] created and In Progress: Wave 3 package w3-d-p28, five TACO functions in `src/ovl/TACO/8013DB80.c` and `src/ovl/TACO/8015CF30.c`, worktree `w3-d-p28`.
+
+## [2026-10-16] build | T-19028 results
+[[tickets/T-19028-w3-d-p28]]: 1 of 5 matched. TACO `func_8013E778` (812 bytes) matched in plain C from the sibling `func_8013D528` (FAKE pad[2], FAKE one-line UV stores). `func_8013E424` (18 rows) and `func_8013DB80` (15 rows) guarded in `src/ovl/TACO/8013DB80.c`; `func_8013DEE4` (370 rows) back to `INCLUDE_ASM` with its draft in `drafts/T-19028/TACO/`; `func_8015CF30` is the libgte `RotMatrixZ` in hand assembly, not attempted. Notes in [[matching-notes]], rows in [[data/t0018-cases]] and [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-19028 In Review
+[[tickets/T-19028-w3-d-p28]] In Progress to In Review (1 of 5 matched).
+
+## [2026-10-16] build | T-19028 closer pass
+[[tickets/T-19028-w3-d-p28]]: Opus closer matched TACO `func_8013E424` (216 bytes) and `func_8013DB80` (612 bytes) in `src/ovl/TACO/8013DB80.c`, now 3 of 5. Fix: index the record array in the free-slot loop and in every store (no pointer local), so the strength-reduced address is `.noalias` against `$sp` and as1 hoists the stack loads. Notes in [[matching-notes]], row in [[register-cheatsheet]], rows in [[data/t0018-cases]]; [[taco-family-results]] and [[index]] updated. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19028 Done
+[[tickets/T-19028-w3-d-p28]] In Review to Done after code review against `CODING_STANDARDS.md`: 4 findings, all fixed (`func_8013DEE4` is 1,344 bytes of code, 1,416 with its jump tables; stale `NON_MATCHING` acceptance wording; double blank line before the notes heading; board card placement). 3 of 5 functions matched (`func_8013E778`, `func_8013E424`, `func_8013DB80`, 1,640 bytes), `func_8013DEE4` and `func_8015CF30` still `INCLUDE_ASM`. Rebuild: TACO unit sha1 OK. Card moved to Done.

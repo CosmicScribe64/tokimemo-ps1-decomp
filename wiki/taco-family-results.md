@@ -191,3 +191,7 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p26 (T-19026)
 
 [[tickets/T-19026-w3-d-p26]] (`8015ABF0.c`): `func_8015ACCC` (the effect spawner, 1,260 bytes, the last open function of the file but `func_8015B1B8`) matched in plain C with one FAKE, after the hand rewrite of T-16563 had stopped at 437 lines. Types added to `TACO.h`: `D_80161DDC[]` (`s32`, per-kind model address), `D_80161EA4[]` (`s16`), `D_80161EC8[]` (`u8`) and the prototypes of `func_8015B1B8` / `func_8015B2AC`. `func_8015B1B8` stays guarded at 8 rows. How: [[matching-notes]], "T-19026".
+
+## Matching stage, package w3-d-p28 (T-19028)
+
+[[tickets/T-19028-w3-d-p28]] (`8013DB80.c`, `8015CF30.c`, the particle quads): `func_8013E778` (812 bytes) matched in plain C from the sibling `func_8013D528`; `func_8013E424` and `func_8013DB80` matched in the closer pass (index the record array, no pointer local, so the stack loads are `.noalias` and hoisted); `func_8013DEE4` (draft in `drafts/T-19028/TACO/`) and the libgte `RotMatrixZ` `func_8015CF30` stay `INCLUDE_ASM`. Details and idioms in [[matching-notes]] (T-19028).
