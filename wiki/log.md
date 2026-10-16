@@ -15527,3 +15527,7 @@ Opened [[tickets/T-17400-types-first-event]] (In Progress) under [[tickets/T-169
 ## [2026-10-16] ticket | T-17400 Done
 
 [[tickets/T-17400-types-first-event]] In Review to Done after the code review against `CODING_STANDARDS.md`: 4 functions matched (1,416 bytes: `func_800FF320`, `func_80104C3C`, `func_800FF61C`, `func_8010AE7C`), 38 redrafts, 7 packages (T-17401..T-17407). Two findings fixed, comment-only: the `FAKE` comment of `func_800FF320` now starts with `FAKE` (`src/ovl/EVENT/800FDC20.c`), and the guard of `func_8010B614` names its 33 remaining diff rows (`src/ovl/EVENT/8010B360.c`). EVENT unit sha1 OK after the rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] ticket | T-17700 Types-first: GEKO started
+
+Opened [[tickets/T-17700-types-first-geko]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover GEKO's shared types, redraft its unmatched functions with the T-16550/T-16560/T-17400 drivers, then cut packages. Branch `w3-geko-types` from `w2-good`.

@@ -25,6 +25,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
+- [[tickets/T-17700-types-first-geko|T-17700]] Types-first: GEKO: recover GEKO's shared types, redraft its unmatched functions, cut packages (In Progress).
 - [[tickets/T-19005-w3-d-p05|T-19005]] Wave 3 package w3-d-p05: OLH `80135AC0.c`, `80132000.c`, `func_80135B8C` (sibling clone) and `func_80132114` (chain through a local) both matched, 680 B (Done).
 - [[tickets/T-19001-w3-d-p01|T-19001]] Wave 3 package w3-d-p01: TAIIKU `80140810.c`, `func_80140A90` stays guarded (33 instructions); block-copy temporary rule measured, looks like a ugen difference (Done).
 - [[tickets/T-17400-types-first-event|T-17400]] Types-first: EVENT: 90 step tables (`FnTblNN`) and 12 stack tables typed in `EVENT.h`, 38 redrafts (9 better than the census), 4 matches / 1,416 bytes, packages T-17401..T-17407 (Done).
