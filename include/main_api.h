@@ -809,6 +809,7 @@ extern u8 D_800CA188[];
 extern u8 girl_name_buf[];
 extern u8 D_800CA19C[];
 extern u8 D_800CA1DC[];
+extern u8 D_800CA248[]; /* text buffer (SHOUGATU func_801359FC, T-17500) */
 /* Four s16[4] rows (T-9020): DATE indexes each from its own base (D_800CA22C[i]) and sets a row
  * with one chain assignment, which gives the original's shared register only for array elements. */
 extern s16 D_800CA21C[4];
