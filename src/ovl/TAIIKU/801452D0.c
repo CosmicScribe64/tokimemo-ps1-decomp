@@ -413,7 +413,7 @@ void func_80145F8C(void) {
     D_80120656 = 2;
 }
 
-/* NON_MATCHING: T-16553, 22 differing lines; the tail loads D_800E638E into a1 and the masked D_800E6375 into t5, the original loads it into v0 (the variable itself) and keeps the mask in v1 */
+/* NON_MATCHING: T-16553, 20 differing lines; the tail loads D_800E638E into a1 and the masked D_800E6375 into t5, the original loads it into v0 (the variable itself) and keeps the mask in v1 */
 #ifdef NON_MATCHING
 void func_8014607C(void) {
     s32 i;
@@ -451,10 +451,10 @@ void func_8014607C(void) {
         D_8014A454[i].unk_0F = 0;
     }
     D_8014A3E4.position.h[1] = -0xA0;
-    D_8014A3E0 = 0;
-    D_8014A3DC = 0;
     var_v0_2 = D_800E6280.unk_10C.unk_02;
     temp_v1 = D_800E6280.unk_0F4.b[1] & 0xF;
+    D_8014A3E0 = 0;
+    D_8014A3DC = 0;
     D_8014A3C4 = 0;
     if ((temp_v1 & 1) || (temp_v1 & 2)) {
         var_v0_2 = (s16) (var_v0_2 >> 1);
