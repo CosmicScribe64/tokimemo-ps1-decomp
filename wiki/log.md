@@ -16071,3 +16071,7 @@ DATE `func_8014718C` (1,996 bytes) rewritten by hand from the `func_80147958` sh
 
 ## [2026-10-16] build | T-17201 clean rebuild and checks
 Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK, `sync_protos --check-branch` OK. Recorded in [[tickets/T-17201-w3-date-p01]].
+
+## [2026-10-16] ticket | T-17201 Done
+
+[[tickets/T-17201-w3-date-p01]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a missing `FAKE` prefix on a one-line scheduling trick in the guarded `func_8014718C`, a broken table row in [[data/t0018-cases]]); rebuild of DATE OK (headers OK, globals OK, sha1 OK). 1 of 2 functions matched (`func_80147958`, 4,044 bytes); `func_8014718C` stays a guarded draft (26 lines). Card moved in [[kanban]]. Merge via the wave 3 merge script.
