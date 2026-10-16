@@ -16511,3 +16511,6 @@ Clean rebuild of the w3-rpg-bat-p05 worktree (`rm -rf build && configure.py && n
 ## [2026-10-16] ticket | T-17117 Done
 
 [[tickets/T-17117-w3-rpg-bat-p17]] In Review to Done: code review against `CODING_STANDARDS.md` found one item, fixed (the `*(u32 *)&D_8015ED98` switch scrutinee is a fakematch and now carries a `FAKE` comment; wiki pages say "one FAKE"). Rebuild OK (globals, headers, `RPG_BAT.bin` sha1 OK). 1 of 1 function matched (`func_8013CC90`, 928 bytes). Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17119 In Progress
+[[tickets/T-17119-w3-rpg-bat-p19]] created and In Progress: Wave 3 package for RPG_BAT `func_80148F70` (1,756 B) and `func_80141060` (2,668 B), worktree `w3-rpg-bat-p19`, base `w2-good`. Part of [[tickets/T-17100-types-first-rpg_bat]].

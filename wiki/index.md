@@ -33,6 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
+- [[tickets/T-17119-w3-rpg-bat-p19|T-17119]] Wave 3 package w3-rpg-bat-p19: RPG_BAT `80148F70.c`, `80141060.c`, `func_80148F70`, `func_80141060` (In Progress)
 - [[tickets/T-17117-w3-rpg-bat-p17|T-17117]] Wave 3 package w3-rpg-bat-p17: RPG_BAT `8013CC90.c`, `func_8013CC90` matched, 1 of 1 (928 B; promoted global updated in place, `u32` file view of `D_8015ED98`, one FAKE; Done)
 - [[tickets/T-20003-rpg-timer-callees|T-20003]] RPG_BAT func_80138F6C matched (1,268 bytes); two other independent matches dropped after upstream T-17102 landed (Done, PR #38 merged).
 - [[tickets/T-17111-w3-rpg-bat-p11|T-17111]] Wave 3 package w3-rpg-bat-p11: RPG_BAT `80144010.c`, `801504E0.c`, 2 of 2 matched (`func_80144010`, `func_801505B8`, 2,572 B; global as loop result, `s32` selector override, record-field views) (Done)
