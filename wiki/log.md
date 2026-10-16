@@ -14940,3 +14940,7 @@ Merged branch w1-p08 into w2-r08 (7 TAIIKU matches; main's func_80139330 kept an
 ## [2026-10-15] ticket | T-11640 to In Review (wave 2, w2-r08)
 
 [[tickets/T-11640-w1-ovl-taiiku-80138950]]: 8 more TAIIKU 80138950.c functions matched in wave 2 (15 with the merged wave-1 work), 2 guarded drafts, 7 rows in [[data/t0018-cases]], section "T-11640 wave 2" in [[matching-notes]]. Status In Review.
+
+## [2026-10-15] build | T-11640: func_8013BEF8 and func_8013C0E4 matched
+
+[[tickets/T-11640-w1-ovl-taiiku-80138950]]: the D_801499A2 counter functions match with u16 pointer views of the counter and the flag (no volatile flag); 10 wave-2 matches in total. Notes in [[matching-notes]], one more row in [[data/t0018-cases]].
