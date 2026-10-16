@@ -184,7 +184,33 @@ void func_80147488(s32 arg0, s16 *arg1, s32 arg2) {
     ((TcTransformObj50 *)&D_80127480[arg0])->unk_00 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_80147674);
+/* Same shape as func_80147488 with an interpolation step. The record pointer is the parameter itself (a separate local is not kept in $s0). T-16561 */
+void func_80147674(s32 arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4) {
+    MATRIX matrix;
+    TcPos *pos;
+
+    arg1 += arg2 * 6;
+    matrix = *(MATRIX *)D_80125C60;
+    matrix.t[0] = ((TcTransformObj50 *)&D_80127480[arg0])->transform.t[0] + arg1[0];
+    matrix.t[1] = ((TcTransformObj50 *)&D_80127480[arg0])->transform.t[1] + arg1[1];
+    matrix.t[2] = ((TcTransformObj50 *)&D_80127480[arg0])->transform.t[2] + arg1[2];
+    arg1 += 3;
+    if (arg3 != 0 && arg4 != 0) {
+        matrix.t[0] += (D_8015EDB4->unk74 - matrix.t[0]) / arg3;
+        matrix.t[1] += (D_8015EDB4->unk76 - matrix.t[1]) / arg4;
+    }
+    pos = &D_80128880[arg0];
+    pos->x += *arg1;
+    arg1++;
+    func_8015D0D0((pos->x << 12) / 360, &matrix);
+    pos->z += *arg1;
+    arg1++;
+    func_8015CF30((pos->z << 12) / 360, &matrix);
+    pos->y += *arg1;
+    func_8015D270((pos->y << 12) / 360, &matrix);
+    ((TcTransformObj50 *)&D_80127480[arg0])->transform = matrix;
+    ((TcTransformObj50 *)&D_80127480[arg0])->unk_00 = 0;
+}
 
 void func_801478F8(s32 arg0, s16 *arg1) {
     TcPos *p;
