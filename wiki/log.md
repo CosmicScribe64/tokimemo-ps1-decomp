@@ -15274,3 +15274,7 @@ Filed in [[speedup-research-2026-10-16]].
 ## [2026-10-16] query | T-16564 closer pass on func_80137D00
 
 Opus closer on [[tickets/T-16564-taco-types-first-p4]]: `func_80137D00` stays guarded at 8 rows. Cause found from uopt's output ucode: the copy-propagated first store shares the `D_801FAA84` load, and ugen keeps it in a temporary for every use of `p`. Notes in [[matching-notes]] (T-16564 closer pass), row updated in [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-16564 Done
+
+[[tickets/T-16564-taco-types-first-p4]] In Review to Done after the code review against `CODING_STANDARDS.md`: 6 functions matched (5,852 bytes), 2 guarded. One finding fixed (the `func_801557E8` operand-order comment in `src/ovl/TACO/80154960.c` now starts with `FAKE`). TACO unit sha1 OK after the rebuild.
