@@ -159,14 +159,10 @@ void func_80138AA8(void) {
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138AA8);
 #endif
 
-/* NON_MATCHING: T-16552, 3 differing lines (was 30, T-11640): stack frame, tables and registers now agree. Left:
- * as1 puts `move s0,zero` (i = 0 of the first loop) in the delay slot of the `beqz` after the cd_read_sync_status
- * test; here it fills the slot with the first pointer constant and places the move after two lui. The A[f()] = v
- * stores go through idx: with the call inside the index IDO reserves a second, unused spill slot and the
- * tables sit 4 bytes high (T-16552). cd_read_sectors takes its address as u32 here (see the override at the top):
- * with s32 IDO builds 0x801F8000 of case 0 through a hoisted 0x801F0000 in $s0. p is the buffer address of
- * case 1. */
-#ifdef NON_MATCHING
+/* The A[f()] = v stores go through idx: with the call inside the index IDO reserves a second, unused spill slot
+ * and the tables sit 4 bytes high (T-16552). cd_read_sectors takes its address as u32 here (see the override at
+ * the top): with s32 IDO builds 0x801F8000 of case 0 through a hoisted 0x801F0000 in $s0. p is the buffer address
+ * of case 1. */
 void func_80138DF8(void) {
     s32 p;
     s32 i;
@@ -179,9 +175,15 @@ void func_80138DF8(void) {
     tblB = D_80149EBC;
     switch (D_800E6280.unk_110A) {
     case 0:
-        if (cd_read_sync_status() & 1) {
-            i = 0;
+        /* FAKE: T-16552. i = 0 between the call and the test puts `move s0,zero` in the beqz delay slot; the goto
+         * enters the loop without an entry test (with one, uopt leaves the pointer start as `sll t9,zero,2`) and
+         * keeps the increments on the for line, where as1 schedules them before the stores. Real source unknown. */
+        idx = cd_read_sync_status();
+        i = 0;
+        if (idx & 1) {
+            goto first;
             for (; i < 18; i++) {
+            first:
                 idx = search_load_tpage_buf_lock(D_80149DAC[i], 1);
                 D_800E6280.unk_1228[idx] = i + 0x80000100;
                 D_80149DAC[i] = i + 0x80000100;
@@ -282,9 +284,6 @@ void func_80138DF8(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138DF8);
-#endif
 
 void func_80139330(void) {
     switch (D_800E6280.unk_110A) {
