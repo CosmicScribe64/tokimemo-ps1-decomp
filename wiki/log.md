@@ -16289,3 +16289,6 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 
 ## [2026-10-16] ticket | T-17109 started
 [[tickets/T-17109-w3-rpg-bat-p09]] created In Progress (branch `w3-rpg-bat-p09`, base `w2-good`): wave 3 package for `src/ovl/RPG_BAT/8013D780.c` and `src/ovl/RPG_BAT/801477E0.c`, three functions `func_8013D834`, `func_80147930`, `func_8013DC60` (draft scores 158, 396, 319).
+
+## [2026-10-16] ticket | T-17109 In Review
+[[tickets/T-17109-w3-rpg-bat-p09]] In Progress to In Review: 3 of 3 functions matched (4,268 bytes of code, about 35 minutes), all plain C with no FAKE: `func_8013D834` and `func_8013DC60` in `src/ovl/RPG_BAT/8013D780.c` (state byte as `D_800E6280.unk_110D`, the `+ 3` / `+ 2` arms as 3 / 2 single increments because ugen takes a temporary per step, `func_8013DC60` `s32` without a return), `func_80147930` in `src/ovl/RPG_BAT/801477E0.c` (return codes restored, `D_8015EBFC.unk_10`/`unk_14`, `case 14: break;`, `RPG_BAT_OVERRIDE_D_8015EBCC` scalar view, decrement and return on one line). Notes in [[matching-notes]] (section T-17109), four rows in [[register-cheatsheet]], package results in [[rpg-bat-family-results]]. Waiting for the clean-build checks and code review.

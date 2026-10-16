@@ -88,3 +88,7 @@ Types: `RpgObjectRecord44.unk_40` (record 155 +0x40, the byte of `D_8012163C`), 
 ### Package results (T-17104)
 
 `w3-rpg-bat-p04`: `func_80146C30` (2,992 bytes) matched in plain C with one FAKE ([[matching-notes]], "T-17104"): implicit `s32` views of `func_8013E7C0` and `func_8013E97C` colour the `D_8015EDE0` counter web `$v1`, and a rolled 3-trip loop over `D_8015ECEC`. The same two overrides make the guarded `func_80145CC0` (T-12300) match under `funcdiff --proto`; its file still needs the edit.
+
+### Package results (T-17109)
+
+`w3-rpg-bat-p09`: `func_8013D834`, `func_8013DC60` (`8013D780.c`) and `func_80147930` (`801477E0.c`) all matched in plain C, 4,268 bytes ([[matching-notes]], "T-17109"). The two CD-load state machines read the state byte as `D_800E6280.unk_110D` after every call and write the `+ 2` / `+ 3` arms as 2 / 3 single increments (ugen takes a temporary per step); `func_8013DC60` is `s32` without a return. `func_80147930` needed its return values (the draft had none), `D_8015EBFC.unk_10`/`unk_14` for the two promoted counters, an empty `case 14:` and a scalar view of `D_8015EBCC` (`RPG_BAT_OVERRIDE_D_8015EBCC`). Four new rows in [[register-cheatsheet]].
