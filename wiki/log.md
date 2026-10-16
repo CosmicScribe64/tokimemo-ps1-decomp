@@ -15105,3 +15105,7 @@ Merged [[tickets/T-16500-twin-sweep]], [[tickets/T-16510-m2c-defect-rewrites]], 
 and [[tickets/T-16530-proto-override]] into `w2-int` (each clean 27/27; tool suite 1,184 tests OK). The whole-tree twin
 sweep matched TAIIKU `func_801406A8` (144 bytes); the defect-rewrite follow-up matched GEKO `func_801327AC` (672
 bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,958, 1,484,732 bytes (65.1%).
+
+## [2026-10-16] ticket | T-16560 opened
+
+[[tickets/T-16560-taco-types-first]] (In Progress): types-first pilot for TACO from [[speedup-research-2026-10-16]]. Recover the overlay's shared types in `include/ovl/TACO.h`, redraft every unmatched TACO function with them under `drafts/T-16560/`, and cut four work packages (T-16561..T-16564). Worktree branch `pt-taco` from `w2-good`.

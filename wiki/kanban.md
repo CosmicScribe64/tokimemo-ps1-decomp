@@ -24,6 +24,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-16560-taco-types-first|T-16560 Types-first pilot: TACO]]
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
