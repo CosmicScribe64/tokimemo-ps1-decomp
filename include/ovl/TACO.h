@@ -191,6 +191,7 @@ void func_8015131C(s32 arg0);
 
 void func_80146F74(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 void func_8014FBD4(s32 arg0);
+void func_8015163C(s32 arg0, s32 arg1);
 void func_80151264(u32 arg0);
 void func_801517AC(s32 arg0);
 void func_8014927C(void);

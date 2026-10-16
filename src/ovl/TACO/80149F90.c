@@ -96,7 +96,60 @@ void func_8014A42C(void) {
     func_8014F820();
 }
 
+/* NON_MATCHING: T-19003, 16 differing lines; the spill slots of arg1 * 2 and &D_80127480[arg0] sit 4 bytes low (0x38/0x34, original 0x3C/0x38) and the first `lui` of the second 0x40000000 branch is scheduled in the other order */
+#ifdef NON_MATCHING
+void func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5) {
+    MATRIX m;
+    SVECTOR vec;
+    SVECTOR rot;
+    s32 sel;
+    s32 px;
+    s32 py;
+    u8 st;
+    TcObj50 *o;
+
+    sel = arg1 + 0x10;
+    px = ((s16 *)arg2)[arg1 * 2];
+    py = ((s16 *)arg2)[arg1 * 2 + 1];
+    D_8015EDB4[arg1 + 16].unk84[0] = ((u8 *)arg3)[arg1];
+    m = *(MATRIX *)D_80125C60;
+    func_8015D0D0((D_80128880[0].x << 12) / 360, &m);
+    func_8015CF30((D_80128880[0].z << 12) / 360, &m);
+    func_8015D270((D_80128880[0].y << 12) / 360, &m);
+    o = &D_80127480[arg0];
+    vec.vx = o->unk18;
+    vec.vy = o->unk1C;
+    vec.vz = o->unk20;
+    func_800A0ECC(&m, &vec, &rot);
+    D_8015EDB4[sel].unk74 = D_80127480[0].unk18 + rot.vx + px;
+    D_8015EDB4[sel].unk76 = D_80127480[0].unk1C + rot.vy + py;
+    D_8015EDB4[sel].unk78 = D_80127480[0].unk20 + rot.vz;
+    st = (sel + D_8015EDB4)->unk84[1];
+    if (st < 0x15U && (sel + D_8015EDB4)->unk82 < (sel + D_8015EDB4)->unk7A) {
+        (sel + D_8015EDB4)->unk84[1] = *(arg1 * 2 + (u8 *)arg4);
+        (sel + D_8015EDB4)->unk82 += 1;
+        st = D_8015EDB4[sel].unk84[1];
+    }
+    if (st == 0) {
+        if (arg0 != 0x19) {
+            func_8015163C(arg0, arg5);
+        }
+        if (o == (TcObj50 *)D_80127610) {
+            D_80127080[1].unk0 = 0x40000000;
+            D_80127080[2].unk0 = 0x40000000;
+            D_80127080[3].unk0 = 0x40000000;
+            D_80127080[4].unk0 = 0x40000000;
+        } else if (o == (TcObj50 *)D_801277F0) {
+            D_80127080[7].unk0 = 0x40000000;
+            D_80127080[8].unk0 = 0x40000000;
+            D_80127080[9].unk0 = 0x40000000;
+            D_80127080[10].unk0 = 0x40000000;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014A480);
+#endif
 
 void func_8014A79C(void) {
     s32 i;
