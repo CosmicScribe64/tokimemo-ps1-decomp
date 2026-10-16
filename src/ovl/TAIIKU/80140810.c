@@ -54,10 +54,12 @@ void func_80140810(void) {
     D_8014A054 = *(s16 *)0x8018EC74;
 }
 
-/* NON_MATCHING: T-16554, 33 differing instructions (66 diff lines); only ugen temporary
- * numbering after the case 22 block copy: the draft's end pointer is $t3, the original's $t4,
- * and every later $t register is shifted. Needs one more unseen temp in that copy; see
- * wiki/matching-notes.md T-16554. */
+/* NON_MATCHING: T-19001 (T-16554), 33 differing instructions (66 diff lines); only ugen
+ * temporary numbering after the case 22 block copy: the draft's end pointer is $t3, the
+ * original's $t4, and every later $t register is shifted. The copy needs one more unseen temp.
+ * Probed in T-19001: after a loop or a pointer store ugen's copy skips one temp, after a
+ * global or stack store, a call or at function entry two; no C form that keeps the code gives
+ * the original's two skips here. See wiki/matching-notes.md, T-16554 and T-19001. */
 #ifdef NON_MATCHING
 s32 func_80140A90(void) {
     s32 i;

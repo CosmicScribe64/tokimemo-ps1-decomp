@@ -15385,3 +15385,11 @@ pool; merges run in parallel through a locked, self-cleaning merge script.
 ## [2026-10-16] ticket | T-19001 opened
 
 [[tickets/T-19001-w3-d-p01]] In Progress: wave 3 direct package w3-d-p01 (TAIIKU `src/ovl/TAIIKU/80140810.c`, `func_80140A90`), worktree `w3-d-p01` from `w2-good`.
+
+## [2026-10-16] query | T-19001 block-copy temporary rule
+
+Measured the ugen temporary count of the 0x44-byte block copy in `func_80140A90` ([[tickets/T-19001-w3-d-p01]]) with about 80 variants of the real function and about 120 isolated `cc -S` contexts: one rotation step is skipped after a loop or a pointer store, two after a global or stack store, a call or at entry, and no code-neutral C changes the state. The original disagrees with that rule in SHUGAKU, MASTER and ENDING, so the gap looks like a ugen difference. Notes in [[matching-notes]] ("T-19001"), row in [[data/t0018-cases]], cheat sheet row in [[register-cheatsheet]], summary in [[taiiku-family-results]].
+
+## [2026-10-16] ticket | T-19001 to In Review
+
+[[tickets/T-19001-w3-d-p01]] In Progress to In Review: 0 of 1 functions matched. `func_80140A90` stays a `NON_MATCHING` draft at 33 differing instructions (66 diff lines); comment in `src/ovl/TAIIKU/80140810.c` updated. Clean rebuild 27/27 (`rm -rf build && configure.py && ninja`), `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK. About 50 minutes.
