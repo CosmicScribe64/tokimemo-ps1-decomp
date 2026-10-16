@@ -466,6 +466,7 @@ void func_80148184(void);
 void func_80148308(void);
 void func_801484E4(void);
 void func_8014866C(void);
+void func_801487A4(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4);
 void func_8014AB50();
 void func_80148B58();
 extern u8 D_8015F404[];
