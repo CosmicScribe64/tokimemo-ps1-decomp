@@ -29,7 +29,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 - [[tickets/T-17800-types-first-option|T-17800]] Types-first: OPTION: menu rows, word tables and the `OptActor44` record view in `OPTION.h`, 32 redrafts (19 better than the census), 4 matches / 1,548 bytes, packages T-17801..T-17803 (Done).
 - [[tickets/T-19012-w3-d-p12|T-19012]] Wave 3 package w3-d-p12: OMIMAI `801320A0.c`, `801331B0.c`, 2 of 3 matched (`func_80132670` with a scalar-view FAKE, `func_80134628` from its KANGEI sibling, 928 B), `func_8013388C` back to `INCLUDE_ASM` (Done).
-- [[tickets/T-18200-types-first-en_nichi|T-18200]] Types-first: EN_NICHI: recover the overlay's shared types, redraft its unmatched functions, cut packages (In Progress).
+- [[tickets/T-18200-types-first-en_nichi|T-18200]] Types-first: EN_NICHI: `EnObj D_8013984C[10]`, sprite frames, ring buffer and stack tables typed in `EN_NICHI.h`, 19 redrafts (6 better than the census, none 0), 5 hand matches / 2,500 bytes, packages T-18201..T-18202 (In Review).
 - [[tickets/T-17900-types-first-name_ent|T-17900]] Types-first: NAME_ENT: flag-counter, digit and name-buffer tables in `NAME_ENT.h`, typed views of the main-exe records in the redraft, 30 redrafts (14 better than the census), 2 matches / 904 bytes, packages T-17901..T-17904 (Done).
 - [[tickets/T-17500-types-first-shougatu|T-17500]] Types-first: SHOUGATU: 49 step tables (`FnTblNN`) and 4 stack-table types in `SHOUGATU.h`, 38 redrafts (15 better than the census), 4 matches / 1,516 bytes, packages T-17501..T-17507 (Done).
 - [[tickets/T-19009-w3-d-p09|T-19009]] Wave 3 package w3-d-p09: TACO `80142820.c`, `80143E80.c`, `func_801428DC` (one-struct settings block), `func_80144430` (stack-slot order, `void` lib call) and `func_80142AF0` matched, 1,956 B; `func_80144094` back to `INCLUDE_ASM` (Done).
@@ -395,6 +395,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[etc-family-results]]: eleven ETC matches / 5900 literal bytes, positive and negative transfer evidence; the T-17300 types-first pass (ETC types, redraft numbers, sibling ports, near misses, packages).
 
+- [[en-nichi-family-results]] - EN_NICHI types-first pass (type map, index-form and peeled-loop idioms, redraft numbers, packages; T-18200).
 - [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction; NAME_ENT types-first pass (type map, redraft numbers, near misses, packages; T-17900).
 
 - [[tickets/T-13600-taiiku-families|T-13600]] TAIIKU source-family recovery (In Progress).

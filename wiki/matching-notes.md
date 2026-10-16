@@ -5929,3 +5929,18 @@ Idioms for [[register-cheatsheet]] (five rows) and [[data/t0018-cases]] (three r
 - **`rand() % 2`: only the `!= 0` form folds.** `if ((func_800AE0D0() % 2) != 0)` gives `andi 1; beqz` (IDO folds the compare), `if (func_800AE0D0() % 2)` gives the original's `bgez; andi 1; beqz; nop; addiu -2; beqz`. m2c prints the `!= 0` form for this asm; rewrite it as a plain truth test. This corrects the DATE2 `func_80136A90` note above.
 - **`func_8013388C` stays `INCLUDE_ASM`.** The typed rewrite (u8 `sp2B` local for the `get_g_zyotai_s(...) & 0x7F` value, an if-chain instead of m2c's `goto`, plain truth tests of `% 2`) has the original's control flow, 486 of 488 instructions and about 590 funcdiff lines, all registers. What differs and why, from `regdiff`: the original treats `D_800E71E8`, `D_800E6374`, `D_800E62BE/BF` as separate scalars (word promoted to `$v1` in every arm, masked selector `$v0` without a `move`, `D_800CA148` in `$a0`, `lui` of the next global inside the branch delay slot); the GameState members are a net-zero promotion, the shared base constant `0x800E0000` is coloured first and the `lui` of `unk_0F4` is hoisted above the case-1/case-3 branches. `*(s32 *)&D_800E6280.unk_F68` and `volatile` views, a selector local or repeated expressions, and an `s16` temporary for `(h >> 12) * 2 + 6` change nothing useful (the last also adds a store). `autotweak` (120 s, 176 tries) took the score from 3722 to 3283 with no structural change. Row in [[data/t0018-cases]].
 - Tooling note: `tools/siblings.py --package` does not read a list file that lies outside the repository (the container does not see the scratchpad); pass the targets as `UNIT/func,UNIT/func`.
+
+## T-18200: EN_NICHI types-first pass
+
+Five matches (2,500 bytes) from hand edits of the redraft; details in [[en-nichi-family-results]].
+
+- Write record loops in index form (`D_8013984C[i].f`), not as m2c's pointer walk. IDO then knows the stores hit
+  the global: it moves loads of address-taken locals above them (`func_80134258`) and keeps global counters in
+  registers across the loop (`func_8013358C`, `func_80132EE8`, both register-only near misses as `hand.c`).
+- A six-trip loop whose first two iterations the original stores through absolute addresses
+  (`D_800E6280.unk_1228[5..10]` and `[37..42]`): the natural loop matches in `func_80136B74` (counter shared with
+  an earlier loop in `$s0`); `func_80132834` needs the two iterations written out (FAKE).
+- `switch (x & 0x7F)` with a five-entry jump table needs `case 0: default:` (`func_80133CA8`).
+- Statement order sets t-register numbers even when the stores keep their order: compute the table lookup
+  before the plain field copy (`func_80133CA8`).
+- `func_80135A48` (T-0018 regorder since T-0750) matched in index form as an implicit-int function.

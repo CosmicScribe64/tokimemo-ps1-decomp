@@ -15677,3 +15677,7 @@ Opened [[tickets/T-17900-types-first-name_ent]] (In Progress) under [[tickets/T-
 ## [2026-10-16] ticket | T-18200 Types-first: EN_NICHI started
 
 Opened [[tickets/T-18200-types-first-en_nichi]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover EN_NICHI's shared types, redraft its unmatched functions with the T-16550/T-16560 drivers, then cut packages. Branch `w3-en-nichi-types` from `w2-good`.
+
+## [2026-10-16] ticket | T-18200 Types-first: EN_NICHI to In Review
+
+[[tickets/T-18200-types-first-en_nichi]]: EN_NICHI's objects typed as `EnObj D_8013984C[10]` (the `Rec30 D_80139868[]` view folded in), sprite frames `s16 D_80139A34[16][6]`, ring buffer and status tables sized, four stack-table types and the asset pointers declared in `include/ovl/EN_NICHI.h`; 19 redrafts with `drafts/T-18200/redraft.py` (from T-17900), 6 of 17 unguarded better than the census (sum 3,816 to 3,674), none 0; 5 hand matches / 2,500 bytes (`func_80133CA8`, `func_80134258`, `func_80136B74`, `func_80135A48`, `func_80132834` with one FAKE); packages T-18201..T-18202 (8 functions, 7,508 bytes). New page [[en-nichi-family-results]], a row in [[data-types]], a section in [[matching-notes]]. In Review, waiting for the code review.
