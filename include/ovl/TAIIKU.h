@@ -793,6 +793,16 @@ void func_80140338(void);
 void func_8014038C(void);
 void func_80140414(void);
 void func_8013384C(); /* K&R definition in 80132BD0.c (u8 second parameter) */
+void func_80139FE4(void);
+void func_8013A314(void);
+void func_8014045C(void);
+void func_801404DC(void);
+void func_8014064C(void);
+void func_801406A8(); /* K&R definition */
+void func_80140738(s32 arg0, s32 arg1);
+/* Tables func_80138DF8 copies to the stack and indexes by D_80149940. */
+extern TaiWords11 D_80149E90;
+extern TaiWords11 D_80149EBC;
 typedef struct {
     /* 0x00 */ s16 v[16];
 } TaiikuH16; /* size 0x20 */
