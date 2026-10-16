@@ -15856,3 +15856,19 @@ Branch `w3-master-types`: clean build 665/665 with all 27 sha1 OK; `tools/check_
 ## [2026-10-16] ticket | T-18600 Done
 
 [[tickets/T-18600-types-first-master]] In Review to Done: code review against `CODING_STANDARDS.md` found 2 minor items (a ticket id missing from the `func_8013348C` slot comment, a trailing blank line in [[matching-notes]]), both fixed; MASTER sha1 OK, headers OK. 2 functions matched (1,208 bytes). Card moved in [[kanban]], line in [[index]].
+## [2026-10-16] ticket | T-18700 Types-first: BUNKASAI, In Progress
+
+Created [[tickets/T-18700-types-first-bunkasai]] (branch `w3-bunkasai-types` from `w2-good`, wave 3, [[tickets/T-16990-wave-3-conveyor]]): recover BUNKASAI's shared types in `include/ovl/BUNKASAI.h`, redraft the unmatched functions with the adapted drivers into `drafts/T-18700/`, then cut packages. Card in In Progress.
+
+## [2026-10-16] build | T-18700 BUNKASAI types and redraft
+
+[[tickets/T-18700-types-first-bunkasai]]: name table `BunkasaiNameTable D_801606DC`, text-pointer tables `BunkasaiTexts12/11/4`, per-girl tables (`BunkasaiGirlBytes`, `BunkasaiColumns`, three `BunkasaiGirlColumns`) and `BunkasaiGirlList D_80160AA4` in `include/ovl/BUNKASAI.h`; `drafts/T-18700/redraft.py` (T-18400 driver with BUNKASAI paths) and `hand.py` redrafted the 10 remaining functions (4 better than the census). Matched 2 functions / 2,376 bytes, no FAKE: `func_80147F8C` and `func_8015AF90` (BUNKAKEN port; calling `func_80132410` undeclared, implicit `int`, fixed a v0/v1 swap). New page [[bunkasai-family-results]]; notes in [[matching-notes]], [[data-types]], [[register-cheatsheet]]; pointer from [[bunka-family-results]].
+
+## [2026-10-16] ticket | T-18700 In Review
+
+[[tickets/T-18700-types-first-bunkasai]] In Progress to In Review. Packages T-18701..T-18703 (`w3-bunkasai-p01`..`p03`, 9 functions, 10,772 bytes) listed for wave 3 ([[tickets/T-16990-wave-3-conveyor]]). Clean build 27/27, header, globals and prototype checks pass.
+
+## [2026-10-16] ticket | T-18700 Done
+
+[[tickets/T-18700-types-first-bunkasai]] In Review to Done after code review against `CODING_STANDARDS.md`: one finding (wrong byte counts in `drafts/T-18700/README.md`), fixed. 2 functions matched (`func_80147F8C`, `func_8015AF90`; 2,376 bytes), no FAKE; BUNKASAI sha1, header, globals and prototype checks pass. Card moved to Done.
+

@@ -1,0 +1,13 @@
+python3 failed:
+ -----------------^
+cfe: Warning 689: drafts/T-18700/_runs/typed/BUNKASAI/func_80142BE8/work/guarded.o.sjis.c, line 2956: Unacceptable operand of == or !=
+         } while (var_t2_2 != &D_800E6280.unk_1BC[5].unk_04);
+ --------------------------^
+cfe: Warning 681: drafts/T-18700/_runs/typed/BUNKASAI/func_80142BE8/work/guarded.o.sjis.c, line 2962: '&' before array or function; ignored
+         var_a0_2 = &sp2A;
+ -------------------^
+cfe: Warning 689: drafts/T-18700/_runs/typed/BUNKASAI/func_80142BE8/work/guarded.o.sjis.c, line 2975: Unacceptable operand of == or !=
+         } while (var_t2_3 != &D_800E6280.unk_1BC[5].unk_04);
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18700/_runs/typed/BUNKASAI/func_80142BE8/work -o drafts/T-18700/_runs/typed/BUNKASAI/func_80142BE8/work/guarded.o /tmp/asm_processor6p6y28x_/preprocessed_abeb30eb5d8f46039b0732346c333180.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibvsrpd80a/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18700/_runs/typed/BUNKASAI/func_80142BE8/work/guarded.o drafts/T-18700/_runs/typed/BUNKASAI/func_80142BE8/work/guarded.o.sjis.c

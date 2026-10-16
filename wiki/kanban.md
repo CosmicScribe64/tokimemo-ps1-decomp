@@ -137,6 +137,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-18700-types-first-bunkasai|T-18700 Types-first: BUNKASAI]]
 - [ ] [[tickets/T-18400-types-first-kangei|T-18400 Types-first: KANGEI]]
 - [ ] [[tickets/T-18500-types-first-bunkaken|T-18500 Types-first: BUNKAKEN]]
 - [ ] [[tickets/T-18600-types-first-master|T-18600 Types-first: MASTER]]

@@ -29,10 +29,12 @@ Read this first. Update on every ingest or new page.
 - [[shougatu-family-results]] - SHOUGATU type map (step tables, stack tables, work arrays), the types-first redraft and its numbers, GYOZI twin ports, packages (T-17500)
 - [[rpg-bat-family-results]] - RPG_BAT type map (stack tables, `RpgStat`), the types-first redraft and its numbers, idioms (`default:` + `case 0:`, reread globals), packages (T-17100)
 - [[taiiku-family-results]] - TAIIKU type map (runner records of three games, stack tables), idioms, the types-first redraft and its numbers, packages (T-16550)
+- [[bunkasai-family-results]] - BUNKASAI type map (name, text and per-girl tables), the implicit-int v0/v1 fix of the BUNKAKEN port, the types-first redraft and its numbers, packages (T-18700)
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
 
+- [[tickets/T-18700-types-first-bunkasai|T-18700]] Types-first: BUNKASAI: name, text and per-girl tables in `BUNKASAI.h`, 10 redrafts (4 better than the census), 2 matches / 2,376 bytes, packages T-18701..T-18703 (Done).
 - [[tickets/T-18400-types-first-kangei|T-18400]] Types-first: KANGEI: picture-set tables, MASTER streak types and club name tables in `KANGEI.h`, 11 redrafts (7 better than the census), 4 matches / 2,596 bytes, packages T-18401..T-18403 (Done).
 - [[tickets/T-18100-types-first-bunka_sd|T-18100]] Types-first: BUNKA_SD: scene event lists (`BsdEvent`), text tables and picture sets in `BUNKA_SD.h`, 15 redrafts (6 better than the census), 9 matches / 4,820 bytes, packages T-18101..T-18103 (Done).
 - [[tickets/T-17800-types-first-option|T-17800]] Types-first: OPTION: menu rows, word tables and the `OptActor44` record view in `OPTION.h`, 32 redrafts (19 better than the census), 4 matches / 1,548 bytes, packages T-17801..T-17803 (Done).
@@ -58,7 +60,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-19001-w3-d-p01|T-19001]] Wave 3 package w3-d-p01: TAIIKU `80140810.c`, `func_80140A90` stays guarded (33 instructions); block-copy temporary rule measured, looks like a ugen difference (Done).
 - [[tickets/T-17400-types-first-event|T-17400]] Types-first: EVENT: 90 step tables (`FnTblNN`) and 12 stack tables typed in `EVENT.h`, 38 redrafts (9 better than the census), 4 matches / 1,416 bytes, packages T-17401..T-17407 (Done).
 - [[tickets/T-17200-types-first-date|T-17200]] Types-first: DATE: 68 step tables (`FnTblNN`) and 10 stack tables typed in `DATE.h`, 49 redrafts (7 better than the census), 4 matches / 1,760 bytes, packages T-17201..T-17208 (Done).
-- [[tickets/T-17100-types-first-rpg_bat|T-17100]] Types-first: RPG_BAT: stack-table types and `RpgStat` fields, 74 redrafts (20 better than the census), 4 matches / 3,168 bytes, packages T-17101..T-17119 (In Review).
+- [[tickets/T-17100-types-first-rpg_bat|T-17100]] Types-first: RPG_BAT: stack-table types and `RpgStat` fields, 74 redrafts (20 better than the census), 4 matches / 3,168 bytes, packages T-17101..T-17119 (Done).
 - [[tickets/T-19002-w3-d-p02|T-19002]] Wave 3 package w3-d-p02: TACO `801447D0.c`, `80137A60.c`, 3 of 4 functions matched (2,008 B), `func_8014616C` a 3-row draft (Done).
 - [[tickets/T-19004-w3-d-p04|T-19004]] Wave 3 package w3-d-p04: TAIIKU `80133C80.c`, 2 of 5 functions matched (`func_80137228` 260 B, `func_80135830` 672 B with a FAKE dead `i = 0;`), 2 guarded, 1 left as `INCLUDE_ASM` (Done).
 - [[tickets/T-17600-types-first-gyozi|T-17600]] Types-first: GYOZI: callback tables, dumpling arrays, `Rec24 D_8012CA40`, `GyoziWork.unk_10B8` in `GYOZI.h`, 37 redrafts (7 better than the census), 3 matches / 908 bytes, packages T-17601..T-17608 (Done).

@@ -173,6 +173,16 @@ plus seven loaded picture sets typed as `s32 *` page table, two `u8 *` images an
 main-exe aggregate around `D_80122EA8`: `func_80135F38` compares `D_80122EAC` with the constant first,
 which IDO gives only for a non-plain operand. Details: [[bunka-sd-family-results]].
 
+## BUNKASAI types-first pass (T-18700)
+
+Stack-copied tables as one-array structs: `BunkasaiNameTable D_801606DC` (`u8 s[3][3][33]`, strings by school
+year and `D_80122CDC`), the text-pointer tables `BunkasaiTexts12/11/4` (`D_80160AE0`, `D_80160B10`,
+`D_80160B3C`, BUNKAKEN's `D_80156470`.. shape), per-girl bytes `BunkasaiGirlBytes D_80160520` (`u8 v[11]`),
+the column selector `BunkasaiColumns D_8016052C` (`u8 v[6]`), the per-year `BunkasaiGirlColumns` tables
+(`u8 v[13][6]` at `D_80160534`, `D_80160584`, `D_801605D4`) and `BunkasaiGirlList D_80160AA4` (`s32 v[11]`).
+type_recovery's 0xC-stride arrays at `D_80160808`, `D_80160A9C`, `D_8016052C` and `D_801606D4` are artefacts
+of these tables and of the dispatch table `D_80160810`. Details: [[bunkasai-family-results]].
+
 ## KANGEI types-first pass (T-18400)
 
 Picture-set tables as arrays, one row per component of the current set (`D_80139AD0`/`AD4`/`AD8`):
