@@ -15148,3 +15148,7 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16562 update: 7 functions matched
 
 [[tickets/T-16562-taco-types-first-p2]]: two more matches after the In Review entry, `func_801432F0` (644 bytes) and `func_80154820` (320 bytes), by reading `*s` / `*p` directly instead of a local copy; total 7 functions, 3,120 bytes. Remaining: `func_80154230`, `func_801546FC`, `func_8015443C` (entry copy, guarded), `func_801345D4` (guarded), `func_80133E98` (INCLUDE_ASM). Notes in [[matching-notes]] (T-16562), [[register-cheatsheet]], [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-16562 closer pass: 4 guarded near misses matched
+
+[[tickets/T-16562-taco-types-first-p2]]: the Opus closer matched `func_80154230`, `func_801546FC`, `func_8015443C` and `func_801345D4` in plain C (1,608 bytes; package total 11 functions, 4,728 bytes), one commit each, plus a follow-up commit with a file-local struct view (`TcSave`) for the settings block. The entry-copy fold is as1's copy propagation; a two-step header walk (`arg0++; ... arg0 += 8;`) keeps `move s0,a0`. The FAKE `s32 pad[2]` of `func_8015443C` became the named `command0`/`command1` constants. `func_801345D4` keeps `&D_800E7D10` in `$v0` once the flag test reads the word through the same base. Notes in [[matching-notes]] (T-16562, "Closer pass"), [[register-cheatsheet]] (two rows, frame row extended), [[data/t0018-cases]] (update paragraph), [[taco-family-results]], [[index]]. Ticket stays In Review.
