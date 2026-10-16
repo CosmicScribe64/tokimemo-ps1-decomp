@@ -15802,11 +15802,16 @@ Opened [[tickets/T-18200-types-first-en_nichi]] (In Progress) under [[tickets/T-
 
 ## [2026-10-16] build | T-19019 package w3-d-p19 worked
 
-[[tickets/T-19019-w3-d-p19]]: TACO `src/ovl/TACO/80148FE0.c`, 0 of 2 matched. `func_80149538` is a guarded draft at 10 funcdiff lines (a volatile tail increment, FAKE, removes the per-arm reload; the loop is a `do`/`while` from 1 to 36), `func_801497EC` a guarded draft at 4 lines (frame and spill layout explained by the declaration order; the three compared objects are separate externs in `include/ovl/TACO.h`). Findings in [[matching-notes]] ("T-19019"), two rows in `wiki/data/t0018-cases.md`, five rows in [[register-cheatsheet]], a section in [[taco-family-results]].
+[[tickets/T-19019-w3-d-p19]]: TACO `src/ovl/TACO/80148FE0.c`, 0 of 2 matched. `func_80149538` is a guarded draft at 10 funcdiff lines (a volatile tail increment, FAKE, removes the per-arm reload; the loop is a `do`/`while` from 1 to 36), `func_801497EC` a guarded draft at 4 lines (frame and spill layout explained by the declaration order; the three compared objects are separate externs in `include/ovl/TACO.h`). Findings in [[matching-notes]] ("T-19019"), two rows in [[data/t0018-cases]], five rows in [[register-cheatsheet]], a section in [[taco-family-results]].
 
 ## [2026-10-16] ticket | T-19019 In Review
 
 [[tickets/T-19019-w3-d-p19]] In Progress to In Review: 0 of 2 functions matched (both guarded, 10 and 4 lines), clean rebuild, `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` run (results in the ticket Notes). Code review against `CODING_STANDARDS.md` still to do.
 
 ## [2026-10-16] build | T-19019 closer pass on func_801497EC and func_80149538
+
 Opus closer pass on [[tickets/T-19019-w3-d-p19]] (branch w3-d-p19): no new match, both stay guarded in `src/ovl/TACO/80148FE0.c`. `func_801497EC` goes from 4 to 2 lines: without the `u8 st` local uopt merges the two selector reads (PRE) and its temporary gives the frame word below the `arg1 * 2` spill; left is the operand order of the reload it inserts. `func_80149538` stays at 10 lines; a second base symbol for the tail matches byte for byte (tested only, CODING_STANDARDS section 8), so the original tail is a separate uopt variable. Updated: NON_MATCHING comments, [[matching-notes]], [[data/t0018-cases]], [[register-cheatsheet]], ticket comments. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19019 Done
+
+[[tickets/T-19019-w3-d-p19]] In Review to Done: code review against `CODING_STANDARDS.md` found documentation issues only (stale "4 lines" for `func_801497EC` after the closer pass in the index, the ticket and the [[matching-notes]] intro; a wrong "table below" pointer in [[taco-family-results]]; a plain path and a missing blank line in this log), all fixed. 0 of 2 functions matched: TACO `func_80149538` (10 lines, volatile tail FAKE) and `func_801497EC` (2 lines) stay guarded drafts in `src/ovl/TACO/80148FE0.c`. Merge via the wave 3 merge script.
