@@ -86,13 +86,13 @@ Left for later waves: the rest of `80133C80.c` (8), `80138950.c` (8), `801452D0.
 
 ## Package pt-taiiku-p2 (T-16552): `80138950.c`
 
-Worktree `pt-taiiku-p2`, 9 functions from the redrafts, about 2 hours. Result: `func_80139FE4` matched (816 bytes, FAKE dead assignments, see below); `func_80138DF8` (1,336 bytes) from 30 to 3 differing lines; `func_80138AA8` stays at 22 lines but loses both FAKE pads; `func_8013B3B0`, `func_8013B608`, `func_8013BCEC`, `func_8013B78C`, `func_8013B94C` and `func_80139AB0` stay `INCLUDE_ASM` (drafts of 33 to 111 lines, rows in [[data/t0018-cases]]). Details and evidence: [[matching-notes]], "T-16552".
+Worktree `pt-taiiku-p2`, 9 functions from the redrafts, about 2 hours. Result: `func_80139FE4` matched (816 bytes, FAKE dead assignments, see below); `func_80138DF8` (1,336 bytes) from 30 to 3 differing lines; `func_80138AA8` stays at 22 lines but loses both FAKE pads; the Opus closer pass then matched both (`func_80138DF8` with a FAKE `goto` into its first loop, `func_80138AA8` by calling `func_80085E30` as an implicit int function); `func_8013B3B0`, `func_8013B608`, `func_8013BCEC`, `func_8013B78C`, `func_8013B94C` and `func_80139AB0` stay `INCLUDE_ASM` (drafts of 33 to 111 lines, rows in [[data/t0018-cases]]). Details and evidence: [[matching-notes]], "T-16552".
 
 | Function | Bytes | Start | End |
 |---|---:|---|---|
 | `func_80139FE4` | 816 | guarded 33 lines | matched |
-| `func_80138DF8` | 1,336 | guarded 30 lines | guarded 3 lines |
-| `func_80138AA8` | 848 | guarded 22 lines | guarded 22 lines (no FAKE pads) |
+| `func_80138DF8` | 1,336 | guarded 30 lines | matched (closer: FAKE `goto` into the loop) |
+| `func_80138AA8` | 848 | guarded 22 lines | matched (closer: implicit int `func_80085E30`, local `p`) |
 | `func_8013B608` | 388 | redraft 81 | draft 33 register + 9 structure lines, not kept |
 | `func_8013B3B0` | 528 | redraft 99 | draft 111 lines, not kept |
 | `func_8013B78C` | 448 | redraft 136 | draft 45 lines, not kept |

@@ -1,6 +1,6 @@
 ---
 type: data
-updated: 2026-10-15
+updated: 2026-10-16
 sources: ["wiki/matching-notes.md", "tools/queue.py"]
 ---
 
@@ -25,6 +25,8 @@ Update (T-7000): the build runs IDO in K&R mode with the widening of narrow glob
 Update (T-9000): re-tested under K&R with the wave agents' drafts ([[matching-notes]], "T-0018 rows under K&R: re-test, clusters, pass verdict (T-9000)"). Rows now matched in plain C: GYOZI `func_8013B6CC`, `func_8013B740`, `func_8013CAA4`, `func_8013BC40`, `func_8013BCB4`, `func_8013B644`, SHOUGATU `func_80138E60`, `func_80138ED4`, `func_80139E54` (bit-field flag store); SHUGAKU `func_80134024`, `func_8013A980`, GEKO `func_8013E56C`, `func_80140EBC`, SHOUGATU `func_80138158`, DATE `func_80148924`, TACO `func_8014E1A0`, OLH `func_80136210` (`s32` without a return value); EVENT `func_8010AC40` (chain assignment); RPG_BAT `func_80144640`, DATE `func_80145DF0` (draft unchanged). RPG_BAT `func_80142544` matches as `s32` but waits for the `D_8012121C` declaration. Before recording a new row, try `s32` without a return value and a bit-field store ([[decompile-workflow]]).
 
 Update (T-16230): rows for DATE `func_801511B4`, `func_80150460` and `func_80150C78` (T-4010, T-9110, T-9320, T-9580, T-9780) are now matched in plain C, with `func_80150ED4`, by naming the real aggregates (`D_801217D0[57]`, display records 96 and 98 of `D_8011ECD0`), a chain assignment through record elements, and a `GameState *g` pointer ([[matching-notes]], "T-16230").
+
+Update (T-16552 closer): rows for TAIIKU `func_80138DF8` and `func_80138AA8` (T-11640, T-16552) are now matched. `func_80138DF8`: `i = 0` between the `cd_read_sync_status()` call and its test, and a `goto` into the `for` loop so it has no entry test (FAKE). `func_80138AA8`: `func_80085E30` declared as an implicit int function in the file (`MAIN_API_OVERRIDE_func_80085E30`), and a real local `p` for the case 2 buffer address instead of the frame pad. See [[matching-notes]], "T-16552".
 
 | file | function | category | symptom |
 |---|---|---|---|

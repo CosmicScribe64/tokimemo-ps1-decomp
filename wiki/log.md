@@ -15141,3 +15141,11 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] lint | T-16552 final verification
 
 [[tickets/T-16552-pt-taiiku-p2]]: clean `rm -rf build && python3 configure.py && ninja` 665/665, all 27 units sha1 OK; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK. One commit (AA8 `idx`) had overwritten the DF8 and `func_80139FE4` work with an older copy of `src/ovl/TAIIKU/80138950.c`; restored in the next commit and re-checked (`func_80139FE4` MATCH in the default build, DF8 3 lines, AA8 22 lines).
+
+## [2026-10-16] build | T-16552 closer pass: func_80138DF8 and func_80138AA8 matched
+
+[[tickets/T-16552-pt-taiiku-p2]]: Opus closer matched TAIIKU `func_80138DF8` (1,336 B; FAKE `i = 0` before the test and `goto` into the first loop) and `func_80138AA8` (848 B; `MAIN_API_OVERRIDE_func_80085E30` with `s32 func_80085E30();` in `src/ovl/TAIIKU/80138950.c`, guard in `include/main_api.h`; local `p` replaces the last frame pad). Updated [[matching-notes]] "T-16552", [[register-cheatsheet]], [[taiiku-family-results]], [[data/t0018-cases]], [[index]]. Ticket stays In Review.
+
+## [2026-10-16] lint | T-16552 closer verification
+
+[[tickets/T-16552-pt-taiiku-p2]]: clean `rm -rf build && python3 configure.py && ninja` 665/665, 27 binaries sha1 OK (main + 26 overlays); `tools/check_headers.py` OK, `tools/migrate_globals.py --check` OK, `tools/sync_protos.py --check-branch` OK.
