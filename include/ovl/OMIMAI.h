@@ -6,6 +6,7 @@
 
 /* OMIMAI overlay (load address 0x80132000): externs and types. */
 
+void func_8013285C(void);
 void func_80132AD0();
 void func_80132EB0();
 void func_801331B0();
