@@ -29,6 +29,8 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
+
+- [[tickets/T-18400-types-first-kangei|T-18400]] Types-first: KANGEI: recover the unit's shared types, redraft every unmatched function, packages (In Progress).
 - [[tickets/T-18100-types-first-bunka_sd|T-18100]] Types-first: BUNKA_SD: scene event lists (`BsdEvent`), text tables and picture sets in `BUNKA_SD.h`, 15 redrafts (6 better than the census), 9 matches / 4,820 bytes, packages T-18101..T-18103 (Done).
 - [[tickets/T-17800-types-first-option|T-17800]] Types-first: OPTION: menu rows, word tables and the `OptActor44` record view in `OPTION.h`, 32 redrafts (19 better than the census), 4 matches / 1,548 bytes, packages T-17801..T-17803 (Done).
 - [[tickets/T-19012-w3-d-p12|T-19012]] Wave 3 package w3-d-p12: OMIMAI `801320A0.c`, `801331B0.c`, 2 of 3 matched (`func_80132670` with a scalar-view FAKE, `func_80134628` from its KANGEI sibling, 928 B), `func_8013388C` back to `INCLUDE_ASM` (Done).

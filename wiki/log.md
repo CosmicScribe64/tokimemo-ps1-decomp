@@ -15717,3 +15717,7 @@ Opened [[tickets/T-18100-types-first-bunka_sd]] (In Progress) on branch `w3-bunk
 ## [2026-10-16] ticket | T-18100 Done
 
 [[tickets/T-18100-types-first-bunka_sd]] reviewed against `CODING_STANDARDS.md`: one cosmetic finding (two double blank lines in `include/ovl/BUNKA_SD.h`), fixed; BUNKA_SD sha1 OK. 9 functions matched (4,820 bytes). In Review to Done, card moved to Done.
+
+## [2026-10-16] ticket | T-18400 In Progress
+
+[[tickets/T-18400-types-first-kangei]] created and claimed (branch `w3-kangei-types` from `w2-good`): types-first pass on KANGEI, redraft of every unmatched function, packages for wave 3 ([[tickets/T-16990-wave-3-conveyor]]).
