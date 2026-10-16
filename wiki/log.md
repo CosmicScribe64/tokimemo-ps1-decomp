@@ -15637,3 +15637,12 @@ Opened [[tickets/T-17800-types-first-option]] (In Progress) on branch `w3-option
 ## [2026-10-16] ticket | T-17800 Done
 
 Code review of [[tickets/T-17800-types-first-option]] against `CODING_STANDARDS.md`: no findings. 4 functions matched (1,548 bytes: `func_8013A09C`, `func_8013A1BC`, `func_80136434`, `func_80137040`), OPTION sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. In Review to Done; branch `w3-option-types` goes to the integration merge.
+
+## [2026-10-16] ticket | T-19010 In Progress
+[[tickets/T-19010-w3-d-p10]] created and started: Wave 3 package w3-d-p10, TAIIKU `src/ovl/TAIIKU/80142240.c` (game B): `func_8014357C`, `func_80144E54`, `func_80144464`, `func_80143814`, `func_80142FB8`. Worktree `tokimemo-wt/w3-d-p10`, branch `w3-d-p10`.
+
+## [2026-10-16] ticket | T-19010 In Review, 4 of 5 functions matched
+[[tickets/T-19010-w3-d-p10]] moved to In Review: TAIIKU `src/ovl/TAIIKU/80142240.c`. Matched `func_80144464`, `func_80143814`, `func_80142FB8` and `func_80144E54` (2,752 bytes); `func_8014357C` stays guarded at 34 lines (was 38). Three FAKE dead statements (`i = 0;` x2, `i = D_8014A110;`), `D_8014A110` is `u8` in `include/ovl/TAIIKU.h`, new prototypes for `func_80143814` and `func_80144E54`. Findings: the `func_80142FB8` spill allocation is an index loop with `<` (the T-16554 note was wrong); `tools/cvt_pass.py`'s entry rule can be met by a dead entry read; store-sinking direction decides which of two equal constant stores goes to the exit. See [[matching-notes]] ("T-19010"), [[register-cheatsheet]], [[data/t0018-cases]] and [[taiiku-family-results]].
+
+## [2026-10-16] ticket | T-19010 Done
+[[tickets/T-19010-w3-d-p10]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 functions matched (2,752 bytes: TAIIKU `func_80144464`, `func_80143814`, `func_80142FB8`, `func_80144E54`), `func_8014357C` stays guarded at 34 lines. Two review findings in `src/ovl/TAIIKU/80142240.c`, fixed: an unmarked dead `i = 0;` in `func_80142FB8` and four redundant `(u8)` casts of the `u8` flag in the new bodies; rebuild OK (globals, headers, protos, TAIIKU.bin SHA1).
