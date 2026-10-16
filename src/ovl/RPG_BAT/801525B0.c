@@ -258,6 +258,7 @@ s32 func_80153784(void) {
     RECT r3;
     s32 i;
 
+    /* FAKE: x/y and w/h of each RECT share a source line; as1 then stores y, x, h, w as the original does. T-17112 */
     switch (D_800E6280.unk_110A) {
     case 0:
         r0.x = 0x240; r0.y = 0x100;
@@ -287,6 +288,7 @@ s32 func_80153784(void) {
     case 1:
         D_8015EC38 += D_8015EC48;
         D_8015ED28 += D_8015ED38;
+        /* FAKE: first-symbol read keeps the D_8015EC40 load behind the D_8015EC38 store, as in the original. T-17112 */
         if (D_8015EC38 >= (&D_8015EC38)[2]) {
             D_8015EC38 = 0;
         }

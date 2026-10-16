@@ -96,3 +96,7 @@ Types: `RpgObjectRecord44.unk_40` (record 155 +0x40, the byte of `D_8012163C`), 
 ## Package w3-rpg-bat-p08 (T-17108)
 
 [[tickets/T-17108-w3-rpg-bat-p08]]: `src/ovl/RPG_BAT/8014E780.c` and `8014A660.c`, all six functions matched in plain C (1,844 bytes): `func_8014E994`, `func_8014EBEC`, `func_8014EF8C`, `func_8014F278` (one shared loop counter for the clear loops, the `i + 96` record loop, `(&D_8015EDC4)[3]` / `(&D_8015EDF0)[3]` first-symbol stores) and `func_8014AB84`, `func_8014AC74` (element-index and typed-record accesses instead of byte-offset casts). No header change. The "loop shape, not the type, is the open problem" note above is solved: the loops need one counter. Method and idioms: [[matching-notes]] (section T-17108), [[register-cheatsheet]] (five rows).
+
+## Package w3-rpg-bat-p12 (T-17112)
+
+[[tickets/T-17112-w3-rpg-bat-p12]]: `src/ovl/RPG_BAT/801525B0.c`, three of four matched in plain C (2,672 bytes): `func_80154220` (quad primitive with `xy`/`uv` word tables and a unary-minus offset), `func_80153F3C` (two `s32[8]` tables, the x pair of each point on one line; `D_80120E93` is `u8`) and `func_801529B4` (compare switch with a stacked shared arm, jump table inside `if (D_8015EB9C != 0xE)`). `func_80153784` stays a guarded draft at 19 rows (case 1 load schedule). Types: `D_80120E93` `u8` in `main_api.h`, four prototypes in `RPG_BAT.h`. Details and idioms: [[matching-notes]] (section T-17112), [[register-cheatsheet]] (eight rows).

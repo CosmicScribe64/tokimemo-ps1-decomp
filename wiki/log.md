@@ -16325,3 +16325,7 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17112 In Progress
 
 [[tickets/T-17112-w3-rpg-bat-p12]] created and In Progress: wave 3 package w3-rpg-bat-p12 (RPG_BAT `src/ovl/RPG_BAT/801525B0.c`; `func_80154220`, `func_80153784`, `func_80153F3C`, `func_801529B4`). Branch `w3-rpg-bat-p12` from `w2-good`, worktree `tokimemo-wt/w3-rpg-bat-p12`.
+
+## [2026-10-16] ticket | T-17112 In Review
+
+[[tickets/T-17112-w3-rpg-bat-p12]] In Progress to In Review: wave 3 package w3-rpg-bat-p12 (RPG_BAT `src/ovl/RPG_BAT/801525B0.c`), 3 of 4 functions matched (2,672 bytes): `func_80154220`, `func_80153F3C`, `func_801529B4`; `func_80153784` stays a guarded draft at 19 differing lines (case 1 load schedule). Unary-minus offset (`-D * 0xF0 + 0xF0`), same-line pairs for the RECT and table stores, a compare switch with stacked labels and a guarded jump table, a 2 + 48 word clear; `D_80120E93` is `u8` in `include/main_api.h`. Notes in [[matching-notes]] (section T-17112), eight rows in [[register-cheatsheet]], one row in [[data/t0018-cases]], section in [[rpg-bat-family-results]]. Awaiting code review.
