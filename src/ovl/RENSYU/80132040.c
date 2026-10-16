@@ -297,9 +297,6 @@ INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80133628);
 
 INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80133990);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-19020, 9 differing lines; the address of the unk_66C counter is in v1 (original: v0, shared with the
- * loop pointer), so the loop-setup luis come in another order */
 void func_80133CB8(void) {
     s32 i;
     u32 temp_t8;
@@ -315,8 +312,15 @@ void func_80133CB8(void) {
             if (D_801342C4 >= 3U) {
                 temp_t8 = (u16) D_800E6280.unk_0F4.h >> 0xC;
                 ((RensyuClubCount *)&D_800E6280.unk_66C[temp_t8])->count++;
-                D_800E6280.unk_1BC[0].unk_02 += 2;
-                for (i = 1; i < 13; i++) {
+                /* FAKE: T-19020. The empty test puts a basic block boundary between the counter update and the
+                 * loop setup; without it the loop pointer constant is defined in the counter's block and takes
+                 * v0 from the counter address (original: both in v0). The loop sits on the line of the
+                 * statement before it because as1 schedules by source line (the lui of the loop pointer then
+                 * comes before the lui of the store). The real source is unknown. */
+                i = 1;
+                if (i) {
+                }
+                D_800E6280.unk_1BC[0].unk_02 += 2; for (i = 1; i < 13; i++) {
                     D_800E6280.unk_1BC[i].unk_02 += 2;
                 }
             } else {
@@ -337,9 +341,6 @@ void func_80133CB8(void) {
     }
     Default_Disp();
 }
-#else
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80133CB8);
-#endif
 
 void func_80133E5C(void) {
     switch (D_801342D0) {
