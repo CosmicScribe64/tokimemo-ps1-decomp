@@ -231,10 +231,10 @@ s32 func_80134500(void) {
     }
 }
 
-/* Settings word at 0x800E7D50 (= D_800E7D10 + 0x40), one view per load width of the original.
-   The flag test reads the word through base too: uopt then sees the byte read-modify-write
-   of the else path overlap a word access and keeps &D_800E7D10 in $v0 (with D_800E7D50 in
-   the test it makes the byte a plain global with lui/%lo addresses). T-16562 */
+/* File-local view of the settings block at D_800E7D10 (0x800E7D50 = +0x40), T-16562.
+   The flag test reads the word at +0x40 through this view too: uopt then sees the byte
+   read-modify-write of the else path overlap a word access and keeps &D_800E7D10 in $v0
+   (with D_800E7D50 in the test it makes the byte a plain global with lui/%lo addresses). */
 typedef struct TcSetW {
     u32 pad0 : 2;
     u32 mode : 1;
@@ -251,25 +251,45 @@ typedef struct TcSetB {
 typedef struct TcSetF {
     u8 flag : 1;
 } TcSetF;
+typedef struct TcSave {
+    u8 pad00[0x40];
+    union {         /* 0x40: one view per load width of the original */
+        s32 word;
+        TcSetW w;
+        TcSetH h;
+        TcSetB b;
+        TcSetF f;
+        struct {
+            u8 pad[2];
+            u8 name0[3];    /* 0x42 */
+            u8 name1[3];    /* 0x45 */
+            u8 name2[3];    /* 0x48 */
+            u8 pad4B;
+            s32 unk4C;      /* 0x4C */
+            s32 unk50;      /* 0x50 */
+            s32 unk54;      /* 0x54 */
+        } s;
+    } set;
+} TcSave;
 
 void func_801345D4(void) {
-    u8 *base;
+    TcSave *save;
 
-    base = (u8 *)&D_800E7D10;
-    if (*(s32 *)(base + 0x40) & 1) {
-        D_8015EDF8 = *(s32 *)((u8 *)&D_800E7D50 + 0xC);
-        D_8015EDFC = *(s32 *)((u8 *)&D_800E7D50 + 0x10);
-        D_8015EE00 = *(s32 *)((u8 *)&D_800E7D50 + 0x14);
-        D_8015EDD8 = ((TcSetW *)(base + 0x40))->mode;
-        D_8015EDDC = ((TcSetW *)(base + 0x40))->sel;
-        D_8015EDE0 = ((TcSetH *)(base + 0x40))->hi;
-        D_8015EDE4 = ((TcSetB *)(base + 0x40))->lo;
-        func_800AE090(D_8015EE04, (u8 *)&D_800E7D50 + 2, 3);
-        func_800AE090(D_8015EE08, (u8 *)&D_800E7D50 + 5, 3);
-        func_800AE090(D_8015EE0C, (u8 *)&D_800E7D50 + 8, 3);
+    save = (TcSave *)&D_800E7D10;
+    if (save->set.word & 1) {
+        D_8015EDF8 = save->set.s.unk4C;
+        D_8015EDFC = save->set.s.unk50;
+        D_8015EE00 = save->set.s.unk54;
+        D_8015EDD8 = save->set.w.mode;
+        D_8015EDDC = save->set.w.sel;
+        D_8015EDE0 = save->set.h.hi;
+        D_8015EDE4 = save->set.b.lo;
+        func_800AE090(D_8015EE04, save->set.s.name0, 3);
+        func_800AE090(D_8015EE08, save->set.s.name1, 3);
+        func_800AE090(D_8015EE0C, save->set.s.name2, 3);
         return;
     }
-    ((TcSetF *)(base + 0x40))->flag = 1;
+    save->set.f.flag = 1;
     D_8015EDF8 = 0x2EA694;
     D_8015EDFC = 0x1F6454;
     D_8015EE00 = 0x102214;
