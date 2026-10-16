@@ -854,3 +854,6 @@ extern TaiShorts12x D_8014A5C4; /* func_80146338 */
 extern TaiShorts12x D_8014A5DC; /* func_80146338 */
 extern TkS16x4 D_8014A5F4; /* func_80146D18 */
 #endif
+
+/* Result of func_80141CDC: set to 1 by its last state. T-16550. */
+extern s32 D_8014A0C0;
