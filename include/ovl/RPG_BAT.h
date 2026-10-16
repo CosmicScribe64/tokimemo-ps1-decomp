@@ -333,7 +333,9 @@ typedef struct RpgObjectRecord44 {
     /* 0x2A */ s16 unk_2A;
     /* 0x2C */ u8 pad2C[0xC];
     /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 pad3C[8];
+    /* 0x3C */ u8 pad3C[4];
+    /* 0x40 */ u8 unk_40;
+    /* 0x41 */ u8 pad41[3];
 } RpgObjectRecord44; /* size 0x44; confirmed main object-table view, T-9520 */
 typedef struct RpgObjectBlock {
     /* 0x0000 */ RpgObjectRecord44 prefix[96];
