@@ -16056,3 +16056,14 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 ## [2026-10-16] ticket | T-19026 Done
 
 [[tickets/T-19026-w3-d-p26]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of TACO OK (headers OK, globals OK, sha1 OK), `sync_protos.py --check-branch` OK. 1 of 2 functions matched (`func_8015ACCC`, 1,260 bytes, FAKE), `func_8015B1B8` stays a guarded draft (8 lines). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-19027 started
+[[tickets/T-19027-w3-d-p27]] (Wave 3 package, 15:28 UTC): TEL `src/ovl/TEL/8013CCD0.c`, `func_8013CCD0` and `func_8013D03C`, worktree `tokimemo-wt/w3-d-p27`, base `w2-good`.
+
+## [2026-10-16] ticket | T-19027 In Review, 0 of 2 matched
+[[tickets/T-19027-w3-d-p27]] (15:28-16:45 UTC): TEL `func_8013CCD0` is a guarded draft at 20 differing lines (commit `bb5eed8a`), `func_8013D03C` went back to `INCLUDE_ASM` (49 rows at best, typed draft archived) in `drafts/T-19027/TEL/func_8013D03C/` (commit `ec3052f7`). Findings in [[matching-notes]] (T-19027): `DisplayRecord44` and bit-field flag stores, six scalar locals before the arrays for the frame, `D_800E7CBC..` are `unk_1A3C..`; two `regorder` rows in [[data/t0018-cases]]
+
+## [2026-10-16] build | T-19027 closer pass, TEL func_8013CCD0 matched
+[[tickets/T-19027-w3-d-p27]] (16:56-17:15 UTC, Opus): `func_8013CCD0` matched in plain C (commit `a056d1c5`): the `unk_06` clamp as a store followed by a test of the field (ugen forwards the stored byte), `-(q) * 2 + 8`, and each record's three field stores on one source line (`SET_REC` macro). Notes in [[matching-notes]], row in [[register-cheatsheet]] and [[data/t0018-cases]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19027 Done
+[[tickets/T-19027-w3-d-p27]] reviewed against `CODING_STANDARDS.md` and moved to Done: 1 of 2 functions matched (TEL `func_8013CCD0`, 876 bytes, plain C, no FAKE); `func_8013D03C` stays `INCLUDE_ASM` with its draft archived in `drafts/T-19027/`. One finding fixed: the store-then-test `unk_06` clamp had no explaining comment (added, comment only). The closer pass entry above gives 17:15 UTC as its end; the ticket now says 17:10 UTC, the actual end. The "20 rows left" label in [[matching-notes]] now points to the closer match. TEL.bin SHA1 OK, 27/27.
