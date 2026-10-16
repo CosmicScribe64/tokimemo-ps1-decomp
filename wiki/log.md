@@ -15610,3 +15610,7 @@ Clean build 27/27 (all unit sha1 OK, TACO `1419e93c...`), `check_headers`, `migr
 
 ## [2026-10-16] build | T-19013 closer pass on func_801484E4
 Opus closer pass on [[tickets/T-19013-w3-d-p13]] (branch w3-d-p13): no new match. TACO `func_801484E4` in `src/ovl/TACO/801480B0.c` goes from 10 to 6 differing rows. The final increment is now a volatile access through `&D_800E6280` (FAKE, replaces the absolute read). It keeps the last block out of the counter's register range, with the right temporaries, delay slots and size. Left: the address form (`lui; addiu` plus 0x1104) and the first spill register (`$v0` for `$t0`). autotweak 120 s: none. The evidence points to a separate symbol, which has no `keep` evidence. Notes in [[matching-notes]], [[register-cheatsheet]], [[data/t0018-cases]] and [[taco-family-results]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19013 Done
+
+[[tickets/T-19013-w3-d-p13]] In Review to Done after the code review: wave 3 package w3-d-p13 (TACO `src/ovl/TACO/801480B0.c`), 2 of 3 functions matched (1,336 bytes: `func_80148184` 388, `func_801487A4` 948, both plain C), `func_801484E4` guarded at 6 rows (counter web, FAKE `pad[2]` and FAKE volatile final increment, ticketed). No findings in code; two stale wiki lines (index, [[matching-notes]]) fixed. TACO SHA1 OK, headers, globals and proto checks OK.
