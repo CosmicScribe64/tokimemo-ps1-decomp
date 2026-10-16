@@ -34,7 +34,6 @@ extern BunkasaiTexts12 D_80160AE0;
 extern BunkasaiTexts11 D_80160B10;
 extern BunkasaiTexts4 D_80160B3C;
 extern u8 D_80160B4C; /* frame counter of func_8015AF90 */
-void func_80132410(void);
 s32 func_8015B828(void);
 
 /* T-18700: per-girl byte tables copied to the stack. func_80142700 reads one byte per girl
