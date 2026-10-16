@@ -99,9 +99,11 @@ void func_8013E97C(s32 a, s32 b, s32 c);
 void func_8014F080(s32 arg0);
 void func_8014EF3C(void);
 
+#ifndef RPG_BAT_OVERRIDE_func_8013F0F4
 void func_8013F0F4(s32 a, s32 b, s32 c);
 void func_801328C4(s32 a, s32 b);
 s32 func_8014A3DC(void);
+#endif
 /* Same override rule as the pair above (the definition in 8013E4D0.c is void; T-17101). */
 #ifndef RPG_BAT_OVERRIDE_func_8013F15C
 void func_8013F15C(s32 a, s32 b, s32 c);
@@ -616,6 +618,9 @@ extern s32 D_8015EE18;
 /* T-12300: word counters cleared by func_8014A660 (sw accesses). */
 extern s32 D_8015EC7C;
 extern s32 D_8015EC80;
+extern s32 D_8015ECB8;
+extern s32 D_8015ECE0;
+extern s32 D_8015ED08;
 extern s32 D_8015ECEC;
 extern s32 D_8015ECF0;
 extern s32 D_8015ECF4;

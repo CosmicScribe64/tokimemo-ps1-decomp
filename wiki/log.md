@@ -16593,3 +16593,19 @@ User idea: start phase 2 renames and constants now, with agents using a PS1 emul
 Held off while the wave 3 conveyor uses the CPU. Plan notes in [[tickets/T-20500-emulator-assisted-naming]]: open
 BIOS only (no proprietary BIOS), Docker, GameState names and enums first, rename in a quiet window or via the merge-time
 rename table.
+
+## [2026-10-16] ticket | T-17116 In Progress
+
+[[tickets/T-17116-w3-rpg-bat-p16]] created and In Progress: wave 3 package w3-rpg-bat-p16, three RPG_BAT functions in `src/ovl/RPG_BAT/80155CC0.c` and `src/ovl/RPG_BAT/80134D30.c` (links [[tickets/T-17100-types-first-rpg_bat]]).
+
+## [2026-10-16] ticket | T-17116 In Review
+
+[[tickets/T-17116-w3-rpg-bat-p16]] In Progress to In Review: 1 of 3 functions matched in `src/ovl/RPG_BAT/80155CC0.c` (`func_80156064`, 828 bytes), unit sha1 OK; `func_80135358` is a guarded draft at 10 differing lines in `src/ovl/RPG_BAT/80134D30.c`, `func_80134E78` back to `INCLUDE_ASM` with the best draft in `drafts/T-17116/RPG_BAT/func_80134E78/`. Notes in [[matching-notes]] (section T-17116), [[register-cheatsheet]] (six rows), [[data/t0018-cases]] (two rows), [[rpg-bat-family-results]].
+
+## [2026-10-16] ticket | T-17116 closer pass, func_80135358 matched
+
+[[tickets/T-17116-w3-rpg-bat-p16]] (22:32-22:45 UTC, Opus closer): `func_80135358` matched in `src/ovl/RPG_BAT/80134D30.c` with the file-local implicit int view `RPG_BAT_OVERRIDE_func_8013E97C` (`funcdiff --proto 's32 func_8013E97C();'` gave MATCH; the 10 lines were one range in `$v0` where the original has `$v1`). Package now 2 of 3 (2,528 bytes); `func_80134E78` stays `INCLUDE_ASM`. Updated [[matching-notes]] (T-17116 closer bullet), [[data/t0018-cases]], [[register-cheatsheet]] (row of the implicit int call result), [[rpg-bat-family-results]], [[index]]. Clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17116 Done
+
+[[tickets/T-17116-w3-rpg-bat-p16]] In Review to Done: code review against `CODING_STANDARDS.md` found two issues, both fixed: wrong byte counts in the ticket, [[matching-notes]], [[rpg-bat-family-results]] and `drafts/T-17116/RPG_BAT/func_80134E78/NOTES.txt` (the list sizes 856 B and 1,268 B include jump table words; the code is 828 B and 1,248 B) and missing comments for the `s32` return without `return` in `src/ovl/RPG_BAT/80155CC0.c` and `src/ovl/RPG_BAT/80134D30.c`. 2 of 3 functions matched (`func_80156064` 828 B, `func_80135358` 1,700 B; 2,528 B), unit sha1 OK; `func_80134E78` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
