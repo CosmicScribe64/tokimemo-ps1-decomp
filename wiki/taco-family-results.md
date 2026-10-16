@@ -115,3 +115,24 @@ comes from register allocation, loop shape and local layout, not from missing ty
 Work packages for the matching stage: T-16561..T-16564 (`pt-taco-p1`..`p4`), about 170 minutes each,
 best expected bytes first (expected bytes = size / (1 + score / 30)); the gcc-built
 `8015CF30.c`, `8015D0D0.c` and `8015D270.c` are left out.
+
+## Matching stage, package p1 (T-16561)
+
+[[tickets/T-16561-taco-types-first-p1]] took the best redrafts of `801335A0.c`, `80137590.c`, `80159090.c` and `80146D60.c` from [[tickets/T-16560-taco-types-first]] and worked them to the byte: 7 of 12 functions matched (5,104 bytes, about 1 hour 45 minutes, 4 of them within 10 minutes of the first compile). The pattern: the new types fix the data flow, the rest is the shape of the locals.
+
+| Function | Bytes | Result | What decided it |
+| --- | ---: | --- | --- |
+| `func_80147488` | 492 | matched | clone of `func_8015B3B0`: MATRIX first, `pos` local, no `obj` local (a pointer local adds a home, spills move 4 bytes) |
+| `func_80146F74` | 604 | matched | same shape plus the interpolation `m.t[0] += (D_8015EDB4->unk74 - m.t[0]) / arg7` |
+| `func_80147674` | 644 | matched | same shape; the parameter itself walks the table (`arg1 += 3; *arg1; arg1++`), which gives `$s0` |
+| `func_80147C98` | 488 | matched | no pointer locals at all; declaration order MATRIX, SVECTOR in, SVECTOR out, TcPos out |
+| `func_80159878` | 1,768 | matched | `default: break;` (keeps `arg0` out of `$s0`), FAKE unused `TcPos`, one-line `sp48.y = ..; sp50.x = ..;` pairs |
+| `func_8013788C` | 468 | matched | range tests as `D_800E6280.unk_F80 |= k;` on the global instead of a local accumulator |
+| `func_8013760C` | 640 | matched | `s32` without return, `*(u8 *)&` selector, empty `default`, FAKE `(u8 *)i + (u32)ptr` operand order |
+| `func_80147928` | 508 | 4 lines | arg2 reload register (`$a3` against `$a0`) |
+| `func_80133738` | 312 | 8 lines | lookup temporaries one ugen register low |
+| `func_801472D4` | 300 | 20 lines | block-copy temporaries one ugen register low |
+| `func_801471D0` | 260 | 4 lines (T-11300) | `move s4,s3` copy of the second loop base |
+| `func_80147B24` | 372 | 63 lines | unrolled loop: pointer-end test instead of the counter |
+
+Idioms and dead ends are in [[matching-notes]] (T-16561 section); the open rows are in [[data/t0018-cases]].

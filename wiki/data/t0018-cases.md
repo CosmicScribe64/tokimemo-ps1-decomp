@@ -1,6 +1,6 @@
 ---
 type: data
-updated: 2026-10-15
+updated: 2026-10-16
 sources: ["wiki/matching-notes.md", "tools/queue.py"]
 ---
 
@@ -2044,3 +2044,8 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TAIIKU/80138950 | `func_80139AB0` | other | T-11640 (wave 2): the 20x4 grid loop: the original unrolls the 4-trip inner loop by 2 and keeps `multu W, j`; IDO unrolls it completely and folds the products (226 lines; four source forms tried) |
 | TAIIKU/80138950 | `func_8013F3A4` | other | T-11640 (wave 2): the original rebuilds `&D_8011ECD0` with `lui/addiu` temporaries in every case; IDO hoists the address into `$a3` for the whole switch (539 lines; per-case record pointer does not change it) |
 | TAIIKU/80138950 | `func_8013B78C` | promo | T-11640 (wave 2): with the u16 counter/flag views of `func_8013BEF8` (no volatile flag) and a `u16` copy for the reset, 50 lines: the original colours the promoted counter (`$v1`) before D_801206BA (`$a0`); IDO gives D_801206BA `$v1` (priority 0.5 against 0.4) and the counter `$a1` |
+| TACO/80146D60 | `func_80147928` | regorder | T-16561: 4 lines left (2 rows). `base = arg2 + 4` before the first call: the original reloads arg2 into $a3 (`lw a3,72(sp); addiu a0,a3,4`, so arg2 has an allocated range), IDO reloads into $a0 (`lw a0; addiu a0,a0,4`); frame, spill slots (locals `p`, `pos`, `slot`, `base`, no `obj`) and the tail temporaries match. Base as pointer, inside the call, as CSE expression, copy of arg2, K&R definition, dead extra uses of arg2, autotweak: no change |
+| TACO/801335A0 | `func_80133738` | regorder | T-16561: 8 lines left (4 rows). `pair` declared before `var_v1` gives the spill slot 0x28; the final table lookup (`sll`, `lui`, `addu`) is $t0/$t1 in IDO and $t1/$t2 in the original: one more ugen temporary is consumed after the else-if test; pointer, array, explicit multiply and `%`/`&` spellings, nested else, autotweak: no change |
+| TACO/80146D60 | `func_801472D4` | regorder | T-16561: 20 lines left (10 rows) after a one-line inner `for` fixed the increment order; block copy temporaries `t7 t7 t7 t7 t8` against the original `t8 t8 t8 t8 t9` (regdiff ugen sequence), one temporary short; rec as multiply, typed or cast copy, real return variable instead of the pad, arg0 widths, autotweak: no change |
+| TACO/80146D60 | `func_80147B24` | other | T-16561: 63 lines. `sum1 += D_8015EDB4[i + 16].unk7A * ((TcPair2 *)arg1)[i].a;` (record first) makes uopt colour arg1 $a3, the record address $a1 and the arg1 pointer $t0 like the original and unrolls by 4 with the original's 92 instructions; the draft tests the arg1 pointer against an end pointer (`sll; addu` before the loop, no `addiu v0,v0,4`), the original keeps the counter (`bne v0,a0`) and post-increment offsets. Do/while, `!=`, `u32` counter, one-line body, pointer-walking (not unrolled, 111+ lines): no change |
+| TACO/80146D60 | `func_801471D0` | other | T-16561: 4 lines (T-11300 guard). Second `func_8009B430` loop: the original copies the base into $s4 again (`move s4,s3; lw s6,4(s4); addiu s4,s4,8`), IDO reuses the loop-1 temporary or folds the copy (pointer local, `u32 *p` for both loops, `arg0 + 8` in loop 1 and a local in phase 2: 8 to 59 lines); autotweak: no change |
