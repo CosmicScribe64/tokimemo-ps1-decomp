@@ -15937,3 +15937,7 @@ TACO `func_8015ACCC` (1,260 bytes) matched, unit sha1 OK (`src/ovl/TACO/8015ABF0
 
 ## [2026-10-16] build | T-19026 closer pass on TACO func_8015B1B8
 Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded at 8 rows; nothing new matched. About 110 variants were scored with `cc -S` on a stand-alone copy of the function (scratch only). New finding: ugen puts `&matrix` in its own temporary `t2` before the loop, and as1 folds it away. The original's temporaries are IDO's when `t2` is a uopt register that holds `&matrix`. Only pointer stores sit between the loop and the copy, so the skip rule cannot help. Updated: the NON_MATCHING comment in `src/ovl/TACO/8015ABF0.c`, [[matching-notes]] (T-19026 closer pass), [[data/t0018-cases]], [[register-cheatsheet]] (struct-copy row), [[tickets/T-19026-w3-d-p26]] (stays In Review).
+
+## [2026-10-16] ticket | T-19026 Done
+
+[[tickets/T-19026-w3-d-p26]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of TACO OK (headers OK, globals OK, sha1 OK), `sync_protos.py --check-branch` OK. 1 of 2 functions matched (`func_8015ACCC`, 1,260 bytes, FAKE), `func_8015B1B8` stays a guarded draft (8 lines). Card moved in [[kanban]]. Merge via the wave 3 merge script.
