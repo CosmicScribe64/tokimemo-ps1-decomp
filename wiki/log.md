@@ -16026,3 +16026,18 @@ Opus closer pass on [[tickets/T-19019-w3-d-p19]] (branch w3-d-p19): no new match
 ## [2026-10-16] ticket | T-11840 Done (PR #34 merged)
 
 Integration review of diman8's PR #34 ([[tickets/T-11840-tt-batch-10]]) against CODING_STANDARDS.md: no findings. Merged onto the integration base (clean rebuild 27/27, headers, globals and `sync_protos.py --check-branch` clean). 10 TT functions matched (15,564 bytes), 2 guarded; the only change outside `src/ovl/TT/`, `include/ovl/TT.h` and the wiki is the `MAIN_API_OVERRIDE_func_800AE080` guard in `include/main_api.h`. TT 262/303 functions, 87564/111376 bytes, 78.6%; grand total 6205/6958 functions, 1616160/2279368 bytes, 70.9% (overlays 5533/6128, 1468928/1994940, 73.6%).
+## [2026-10-16] ticket | T-19029 In Progress
+
+Created [[tickets/T-19029-w3-d-p29]] (Wave 3 package w3-d-p29, branch w3-d-p29 from w2-good): TACO `src/ovl/TACO/80136B40.c`, `func_80137264` (812 B). Starting from the T-15700 draft (score 172).
+
+## [2026-10-16] build | T-19029 matched func_80137264
+
+TACO `func_80137264` (812 B, `src/ovl/TACO/80136B40.c`) matches in plain C, TACO.bin sha1 OK. Draft from T-15700 retyped; `base` is one variable for the threshold and the radix, `TacoDigits` types the `D_8015F428` copy (FAKE stand-in for an unused local array), declaration order `place; digits; base`. Notes in [[matching-notes]] (T-19029), rows in [[register-cheatsheet]], section in [[taco-family-results]].
+
+## [2026-10-16] ticket | T-19029 In Review
+
+[[tickets/T-19029-w3-d-p29]] In Progress to In Review: 1 of 1 functions matched (`func_80137264`). Clean rebuild and the header, globals and prototype checks run (results in the ticket Notes). Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] ticket | T-19029 Done
+
+[[tickets/T-19029-w3-d-p29]] In Review to Done: code review against `CODING_STANDARDS.md` found documentation issues only (the family page named siblings of `func_80136FBC` as callers when it is the only caller, a 25 against 27 minutes mismatch in [[matching-notes]], a stale In Review in the index), all fixed. 1 of 1 functions matched: TACO `func_80137264` (812 B, one FAKE for the `digits` copy). TACO unit sha1 OK after a rebuild. Merge via the wave 3 merge script.

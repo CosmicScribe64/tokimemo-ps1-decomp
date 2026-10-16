@@ -137,6 +137,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-19029-w3-d-p29|T-19029 Wave 3 package w3-d-p29]]
 - [ ] [[tickets/T-19023-w3-d-p23|T-19023 Wave 3 package w3-d-p23]]
 - [ ] [[tickets/T-19022-w3-d-p22|T-19022 Wave 3 package w3-d-p22]]
 - [ ] [[tickets/T-19024-w3-d-p24|T-19024 Wave 3 package w3-d-p24]]

@@ -183,3 +183,7 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p21 (T-19021)
 
 [[tickets/T-19021-w3-d-p21]] (`80139170.c`, the name entry screens): `func_8013A580` (484 bytes, three 9-argument calls) and `func_8013AD64` (632, colour dot packet) matched, 1,116 bytes; both were old frame rows of [[data/t0018-cases]] and needed a different number of named locals (three temporaries beside `k`; two single-use shifts), no pad or FAKE. `func_80139BCC` (1,004, cursor and character table) matched in the closer pass (a `pad` local re-tested in the zero-speed block, masks assigned `0x8000` first), so 3 of 4 and 2,120 bytes. `func_80139FB8` (1,480, character carousel) stays `INCLUDE_ASM` (402 lines, the sine values take `$s1` first). New declaration in `TACO.h`: `u8 D_8015F4B0[]` (the 40-character table). `D_800E7200`/`D_800E7208` are `D_800E6280.unk_F80`/`unk_F88`. Notes: [[matching-notes]], "T-19021".
+
+## Matching stage, package w3-d-p29 (T-19029)
+
+[[tickets/T-19029-w3-d-p29]] (`80136B40.c`, the PLAYERS RANKING screen): `func_80137264`, the 812-byte number formatter (spaces by magnitude, then up to 8 digits through a switch), matched in plain C. The radix is one variable that first holds the 10000000 threshold (so IDO divides by a register with the full checks), and the unused `char digits[]` local is copied from the data symbol typed as `TacoDigits` (FAKE stand-in). `func_80136FBC` (its only caller, three calls) now passes `(u8 *, s32)`. Details: [[matching-notes]], "T-19029".
