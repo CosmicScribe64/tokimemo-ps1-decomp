@@ -16609,3 +16609,7 @@ rename table.
 ## [2026-10-16] ticket | T-17116 Done
 
 [[tickets/T-17116-w3-rpg-bat-p16]] In Review to Done: code review against `CODING_STANDARDS.md` found two issues, both fixed: wrong byte counts in the ticket, [[matching-notes]], [[rpg-bat-family-results]] and `drafts/T-17116/RPG_BAT/func_80134E78/NOTES.txt` (the list sizes 856 B and 1,268 B include jump table words; the code is 828 B and 1,248 B) and missing comments for the `s32` return without `return` in `src/ovl/RPG_BAT/80155CC0.c` and `src/ovl/RPG_BAT/80134D30.c`. 2 of 3 functions matched (`func_80156064` 828 B, `func_80135358` 1,700 B; 2,528 B), unit sha1 OK; `func_80134E78` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17007 In Progress
+
+[[tickets/T-17007-w3-main-p07]] created and started: wave 3 package w3-main-p07 of [[tickets/T-17000-types-first-main]], branch `w3-main-p07` from `w2-good`, owned file `src/main/80053650.c`, 5 functions.
