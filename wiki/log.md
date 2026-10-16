@@ -15844,3 +15844,11 @@ Created [[tickets/T-18500-types-first-bunkaken]] (branch `w3-bunkaken-types` fro
 ## [2026-10-16] ticket | T-18800 Types-first: DATE2, In Progress
 
 Created [[tickets/T-18800-types-first-date2]] (branch `w3-date2-types` from `w2-good`), In Progress: survey DATE2's types, declare them in `include/ovl/DATE2.h`, redraft every unmatched function into `drafts/T-18800/`, cut packages. Card in [[kanban]], line in [[index]].
+
+## [2026-10-16] build | T-18800 DATE2: types, data island, redraft, 1 match
+
+[[tickets/T-18800-types-first-date2]]: `include/ovl/DATE2.h` gets the dot arrays `D_8013A5D4`/`DC`/`E4`/`EC` (`s16[3]`), `D_8013A5CC`, `D_8013A5D0`, the label widths `s16 D_8013B5E4[4]`, the stack-copied labels `Date2Labels4x21 D_8013B634`, `#include "game.h"`, `s32 func_80135E50()` and the `func_801365DC` prototype; `tools/data_island.py DATE2/80132DE0` cut a `.data` island (`config/overlays/DATE2.yaml`) and `src/ovl/DATE2/80132DE0.c` defines the four arrays. Driver `drafts/T-18800/redraft.py` (T-18500 plus the `Rec24` fold, `rect-view`, `array-views`, 2-D `stack-elements`) and `hand.py`: 10 redrafts, 9 better than the census (5,067 to 4,380 rows). Matched `func_80135E50` (1,932 bytes, FAKE empty test), DATE2 sha1 OK. Section "Types-first pass (T-18800)" on [[scenes-family-results]], entry in [[matching-notes]].
+
+## [2026-10-16] ticket | T-18800 In Review
+
+[[tickets/T-18800-types-first-date2]] In Progress to In Review: packages T-18801 (`w3-date2-p01`) and T-18802 (`w3-date2-p02`) cut by `inventory2.py`/`mklists3.py`; clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], line in [[index]].

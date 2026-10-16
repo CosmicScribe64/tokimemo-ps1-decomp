@@ -6058,3 +6058,20 @@ Cheat sheet row: [[register-cheatsheet]] ("base register of a call argument load
   (`MAIN_API_OVERRIDE_get_g_zyotai_h`, new in `main_api.h`).
 - Open: `func_80144F70` stores `D_80122EBC` back with its own value before each `func_8008667C(D_80122EBC)`
   call; details and the other near misses in [[bunka-family-results]] ("Types-first pass (T-18500)").
+
+## DATE2 types-first pass (T-18800)
+
+[[tickets/T-18800-types-first-date2]], details in [[scenes-family-results]] ("Types-first pass (T-18800)").
+
+- **Port a twin with its data.** `func_80135E50` is DATE's matched `func_801489D0` with other names, but the
+  port kept extra `lui $at` rows at every element store until the dot arrays were defined in the C file (`tools/data_island.py DATE2/80132DE0`,
+  then `s16 D_8013A5D4[3] = { 0, 0, 0 };` in place of the two island lines of each array): the original stores
+  `[0]`..`[2]` through one `lui $at`, an `extern` array gets one `lui` per element. When the twin defines its data
+  in C, the port needs the island too.
+- **Empty test before a post-increment compare (FAKE).** `if (D++ == k)` right after a call compiled to
+  `xori; bnez` with the old value in `a1`; the original has `v1` and `xori; sltiu; beqz` (the implicit-int form,
+  already `s32`). An empty `if (var_s3) {}` in front (no code) gave the original's code; a dead
+  `if (D >= 0x8000) {}` gave the `sltiu` form with `a1` still (8 rows). In the DATE twin real statements precede
+  the test.
+- Open: `func_80136794` loads both call arguments through `a1` (`lui a1,%hi(X); lbu a0,%lo(X)(a1)`), where IDO
+  uses `a0` for both; m2c reads that `a1` as a second argument `&X`.

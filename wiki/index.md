@@ -46,7 +46,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-19009-w3-d-p09|T-19009]] Wave 3 package w3-d-p09: TACO `80142820.c`, `80143E80.c`, `func_801428DC` (one-struct settings block), `func_80144430` (stack-slot order, `void` lib call) and `func_80142AF0` matched, 1,956 B; `func_80144094` back to `INCLUDE_ASM` (Done).
 - [[tickets/T-19007-w3-d-p07|T-19007]] Wave 3 package w3-d-p07: TAIIKU `801452D0.c`, 1 of 4 matched (`func_80146D18`, 648 B); `func_8014607C` and `func_80145370` stay guarded, typed draft for `func_80147B14` (Done).
 - [[tickets/T-19008-w3-d-p08|T-19008]] Wave 3 package w3-d-p08: TAIIKU `80138950.c`, counter family: `func_8013B200` matched (FAKE views, no local `x`, flag u16 view), closer pass matched `func_8013B608` (split `v = x >> 3; v += ...` for the missing ugen temporary), `func_8013BCEC` guarded at 2 missing instructions (counter write-back), `func_8013B78C`, `func_8013B94C` stay `INCLUDE_ASM`; `ugen -S` method for temporaries (Done).
-- [[tickets/T-18800-types-first-date2|T-18800]] Types-first: DATE2: survey, types in `DATE2.h`, redraft, packages (In Progress).
+- [[tickets/T-18800-types-first-date2|T-18800]] Types-first: DATE2: dot and label arrays in `DATE2.h`, `80132DE0` data island, 10 redrafts (9 better than the census), 1 match / 1,932 bytes, packages T-18801..T-18802 (In Review).
 - [[tickets/T-18500-types-first-bunkaken|T-18500]] Types-first: BUNKAKEN: heroine and text tables, stack-copied byte tables in `BUNKAKEN.h`, 12 redrafts (5 better than the census), 6 matches / 6,232 bytes, packages T-18501..T-18502 (Done).
 - [[tickets/T-18300-types-first-ending|T-18300]] Types-first: ENDING: stack tables and `D_8013CAF0` typed in `ENDING.h`, `dialogue_render` override, 13 redrafts (7 better than the census), 1 match / 280 bytes, packages T-18301..T-18305 (Done).
 - [[tickets/T-18000-types-first-shugaku|T-18000]] Types-first: SHUGAKU: callback tables in `SHUGAKU.h`, 25 redrafts (9 better than the census), 5 matches / 2,292 bytes, packages T-18001..T-18004 (Done).
@@ -417,7 +417,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[data/t13600-remaining-census]]: baseline TAIIKU remaining functions and unit-tagged historical evidence (T-13600).
 - [[tickets/T-14000-ending-en-nichi-families|T-14000]] ENDING and EN_NICHI family matching (In Progress).
-- [[scenes-family-results]] - GEKO/DATE2 family work, [[tickets/T-13900-scenes-families|T-13900]]; GEKO types-first pass (stack tables, redraft numbers, near misses, packages; T-17700).
+- [[scenes-family-results]] - GEKO/DATE2 family work, [[tickets/T-13900-scenes-families|T-13900]]; GEKO types-first pass (stack tables, redraft numbers, near misses, packages; T-17700); DATE2 types-first pass (data island, dot and label arrays, redraft numbers, packages; T-18800).
 - [[tickets/T-14100-date-near-matches|T-14100]] DATE retained near matches and new-family hypotheses (In Progress).
 - [[tickets/T-14100-date-near-matches|T-14100]] DATE retained near matches and new-family hypotheses (In Review; three matches, 636 bytes).
 - [[tickets/T-13500-incremental-build-dependencies|T-13500]] Compiler include dependencies reused for DATE experiments.
