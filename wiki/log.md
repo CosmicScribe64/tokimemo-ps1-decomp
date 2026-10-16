@@ -16022,3 +16022,7 @@ Opus closer pass on [[tickets/T-19019-w3-d-p19]] (branch w3-d-p19): no new match
 ## [2026-10-16] ticket | T-19024 Done
 
 [[tickets/T-19024-w3-d-p24]] In Review to Done after the code review: wave 3 package w3-d-p24 (TACO `src/ovl/TACO/80141DE0.c`, `include/ovl/TACO.h`), 2 of 3 functions matched (1,164 bytes: `func_80142220`, `func_80141DE0` with one ticketed FAKE), `func_801424A8` stays `INCLUDE_ASM` (81 rows, draft archived in `drafts/T-19024/TACO/func_801424A8/`). No findings. TACO SHA1 OK, headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-11840 Done (PR #34 merged)
+
+Integration review of diman8's PR #34 ([[tickets/T-11840-tt-batch-10]]) against CODING_STANDARDS.md: no findings. Merged onto the integration base (clean rebuild 27/27, headers, globals and `sync_protos.py --check-branch` clean). 10 TT functions matched (15,564 bytes), 2 guarded; the only change outside `src/ovl/TT/`, `include/ovl/TT.h` and the wiki is the `MAIN_API_OVERRIDE_func_800AE080` guard in `include/main_api.h`. TT 262/303 functions, 87564/111376 bytes, 78.6%; grand total 6205/6958 functions, 1616160/2279368 bytes, 70.9% (overlays 5533/6128, 1468928/1994940, 73.6%).
