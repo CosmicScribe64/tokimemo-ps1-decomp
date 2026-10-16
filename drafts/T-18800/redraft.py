@@ -1,0 +1,1117 @@
+#!/usr/bin/env python3
+"""T-18800: redraft every unmatched DATE2 function with the recovered types and score it like T-14500.
+
+Copied from drafts/T-18500/redraft.py (BUNKAKEN; itself T-18100, T-17800, T-17500, T-16560 and T-16550
+joined) and adapted to DATE2. Changes against T-18500:
+  - UNIT, HEADER and OUT point at DATE2, include/ovl/DATE2.h and drafts/T-18800;
+  - the fold also covers the Rec24 table D_801217D0 (12 records, as drafts/T-17300/redraft.py), so m2c
+    prints `D_801217D0[4].unk_14` for the labels D_80121874 etc.;
+  - rect-view (new): the main-exe words D_800B5920[4] are two RECTs to DATE2 (as DATE's matched
+    `((RECT *)D_800B5920)[0].w`): the splat labels D_800B5922..D_800B592E become RECT fields;
+  - stack-elements also names the rows of a copied two-dimensional byte table (`&sp65` inside
+    `Date2Labels4x21 sp50` is `sp50.v[1]`).
+Run inside the project Docker image from the repo root:
+    python3 drafts/T-18800/redraft.py [--jobs 2] [--timeout 150] [--only func_X ...] [--finish-only]
+    python3 drafts/T-18800/redraft.py --rewrite BODY.c      # print the typed rewrites of one body
+
+The T-18500 changes against T-18100 (header-arrays, array-symbols, gs-local, and stack-elements,
+gamestate-records, struct-bytes from T-18300) are described in drafts/T-18500/redraft.py.
+
+The T-18100 docstring follows, with BUNKA_SD read as BUNKAKEN.
+
+
+Copied from drafts/T-17800/redraft.py (the OPTION driver, itself drafts/T-17500/redraft.py: the
+drivers of drafts/T-16560/redraft.py and drafts/T-16550/redraft.py joined, plus the census variant of
+drafts/T-17100/redraft.py), with OPTION's menu-arrays rewrite removed and the display records read
+through game.h's DisplayActor44. Run inside the project Docker image from the repo root:
+    python3 drafts/T-18100/redraft.py [--jobs 2] [--timeout 150] [--only func_X ...] [--finish-only]
+    python3 drafts/T-18100/redraft.py --rewrite BODY.c      # print the typed rewrites of one body
+
+Three drafts per function, each through the census path of tools/exhaustive_drafts.py (m2c with the
+default context, which now holds the T-18100 types; the bulk_m2c cleanup; full-translation-unit
+compile with the cheap declaration fixes; order_search's resolved diff as the score):
+  plain  the m2c draft as the census made it, only the headers differ;
+  typed  m2c on folded asm plus the rewrites below;
+  census the T-14500 census body (or a better T-16510 one) through the same rewrites (T-17100).
+The best of the three then goes through tools/draft_fixes.py (as T-16560). The best body, its full
+unit and a result.json with every score and the census score land in drafts/T-18100/BUNKA_SD/<func>/.
+
+Typed rewrites (each is a candidate; the compiler decides):
+  fold          (T-16550) a splat label inside a typed BUNKA_SD aggregate (the scene event and text
+                tables), GameState D_800E6280 or the D_8011ECD0 display records becomes
+                `base + offset` in the asm handed to m2c, so m2c prints fields and elements.
+  stack-table, fptab, record-temp  (T-16550, T-17500) as in drafts/T-17500/redraft.py.
+  raw-display, return-type  (T-17800) as in drafts/T-17800/redraft.py.
+  actor-offset, pointer-step, field-symbols  (T-16560) on the BUNKA_SD header's typed globals.
+Nothing under src/ or include/ is edited.
+"""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import shutil
+import signal
+import subprocess
+import sys
+import time
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools"))
+import bulk_m2c as bulk  # noqa: E402
+import draft_fixes  # noqa: E402
+import exhaustive_drafts as ex  # noqa: E402
+import m2c  # noqa: E402
+import migrate_globals as mg  # noqa: E402
+
+OUT = Path("drafts/T-18800")
+UNIT = "DATE2"
+HEADER = "include/ovl/DATE2.h"
+CENSUS = Path("drafts/T-14500/best-quality-catalog.jsonl")
+T16510 = Path("drafts/T-16510/results.jsonl")
+BIG = 10 ** 6
+VARIANTS = ("typed", "census", "plain")   # preference order on equal scores
+DISPLAY = (0x8011ECD0, 0x44 * 160)
+
+
+def digest(text):
+    return hashlib.sha256(text.encode()).hexdigest()
+
+
+# ------------------------------------------------------------------------------------------ types
+
+def typedef_block(text, name):
+    m = re.search(r"typedef struct(?: \w+)? \{.*?\} %s;" % name, text, re.S)
+    return m.group(0) if m else ""
+
+
+def header_types():
+    """name -> mg.Type for the OPTION header's typedefs plus Rec24 and DisplayActor44."""
+    text = mg.read(HEADER)
+    game = mg.read("include/game.h") + "\n" + mg.read("include/main_api.h")
+    text += "\n" + typedef_block(game, "Rec24") + "\n" + typedef_block(game, "DisplayActor44") + "\n"
+    text = re.sub(r"\bstruct\s+(\w+)\s*\*", r"\1 *", mg.strip_comments_keep_offsets(text))
+    # the layout parser does not read function-pointer arrays: model them as pointer arrays
+    text = re.sub(r"void \(\*(\w+)\[(\d+)\]\)\(\);", r"void *\1[\2];", text)
+    return {k: v for k, v in mg.parse_types(text).items() if not isinstance(v, mg.LayoutError)}
+
+
+TYPES = header_types()
+DECL_RE = re.compile(r"^\s*extern\s+(\w+)\s*(\*?)\s*(D_[0-9A-F]{8})\s*(\[(\w*)\])?\s*;", re.M)
+TABLE_RE = re.compile(r"typedef\s+struct\s+\w*\s*\{\s*(?:/\*[^*]*\*/\s*)*(\w+|void \(\*)\s*(\w+)((?:\[\w+\])+)\)?(?:\(\))?;\s*\}\s*(\w+)\s*;")
+
+
+def typed_globals():
+    """SYM -> (struct Type, 'ptr' | 'array' | 'obj') for the OPTION header's struct globals."""
+    out = {}
+    for m in DECL_RE.finditer(mg.read(HEADER)):
+        tname, star, sym, arr = m.group(1), m.group(2), m.group(3), m.group(4)
+        t = TYPES.get(tname)
+        if t is None or t.kind != "struct":
+            continue
+        out[sym] = (t, "ptr" if star else "array" if arr else "obj")
+    return out
+
+
+GLOBALS = typed_globals()
+ESIZE = {"u8": 1, "s8": 1, "u16": 2, "s16": 2, "u32": 4, "s32": 4, "void (*": 4}
+
+
+def table_types():
+    """sym -> (type name, field, dims, element size) for globals whose type is a one-array struct."""
+    text = mg.read(HEADER)
+    field = {}
+    for m in TABLE_RE.finditer(text):
+        dims = [int(d, 0) for d in re.findall(r"\[(\w+)\]", m.group(3))]
+        if m.group(1) in ESIZE:
+            field[m.group(4)] = (m.group(2), dims, ESIZE[m.group(1)])
+    out = {}
+    for m in DECL_RE.finditer(text):
+        tname, star, sym, arr = m.group(1), m.group(2), m.group(3), m.group(4)
+        if tname in field and not star and not arr:
+            out[sym] = (tname,) + field[tname]
+    return out
+
+
+TABLES = table_types()
+
+
+def leaf_at(t, rel, want_size):
+    """C path (".a.b[2]") of the scalar of `want_size` bytes that starts at `rel` inside `t`."""
+    for off, size, path, lt in mg.walk_layout(t):
+        if lt.kind == "array":
+            elem = lt.elem
+            while elem.kind == "array":
+                elem = elem.elem
+            if off <= rel < off + size and (rel - off) % elem.size == 0 and elem.size == want_size:
+                idx, rest = rel - off, []
+                dims, e = [], lt
+                while e.kind == "array":
+                    dims.append(e.count)
+                    e = e.elem
+                stride = [elem.size] * len(dims)
+                for i in range(len(dims) - 2, -1, -1):
+                    stride[i] = stride[i + 1] * dims[i + 1]
+                for s in stride:
+                    rest.append(idx // s)
+                    idx %= s
+                return path + "".join("[%d]" % i for i in rest), elem
+        elif off == rel and size == want_size and lt.kind in ("scalar", "ptr"):
+            return path, lt
+    return None, None
+
+
+SIZES = {"u8": 1, "s8": 1, "u16": 2, "s16": 2, "u32": 4, "s32": 4}
+
+
+# ------------------------------------------------------------------------------------------ fold (T-16550)
+
+def aggregate_ranges():
+    """(start, end, base) for each typed OPTION aggregate, GameState and the display records."""
+    text = mg.read(HEADER)
+    sizes = dict((n, int(v, 16)) for n, v in re.findall(r"\}\s*(\w+)\s*;\s*/\*\s*size\s+(0x[0-9A-Fa-f]+)", text))
+    out = []
+    for m in re.finditer(r"^\s*extern\s+(?:volatile\s+)?(\w+)\s+(D_([0-9A-F]{8}))\s*((?:\[(?:0x[0-9A-Fa-f]+|\d+)\])*)\s*;",
+                         text, re.M):
+        tname, base, addr, dims = m.groups()
+        count = None
+        for d in re.findall(r"\[(\w+)\]", dims):  # T-18500: every dimension of `s32 D_801562A0[3][13]`
+            count = str((int(count, 0) if count else 1) * int(d, 0))
+        size = sizes.get(tname)
+        if size is None:
+            if tname in TYPES:
+                size = TYPES[tname].size
+            else:
+                try:
+                    size = mg.base_type(tname, TYPES).size
+                except (mg.LayoutError, KeyError):
+                    continue
+        size *= int(count, 0) if count else 1
+        if size > 4 or count:
+            out.append((int(addr, 16), int(addr, 16) + size, base))
+    out.append((0x800E6280, 0x800E6280 + 0x1A90, "D_800E6280"))
+    out.append((0x801217D0, 0x801217D0 + 0x24 * 12, "D_801217D0"))  # T-18800, as T-17300
+    out.append((DISPLAY[0], DISPLAY[0] + DISPLAY[1], "D_8011ECD0"))
+    return sorted(out)
+
+
+RANGES = aggregate_ranges()
+SYM_RE = re.compile(r"%(hi|lo)\(\s*(D_([0-9A-F]{8}))\s*(?:([+-])\s*(0x[0-9A-Fa-f]+|\d+)\s*)?\)")
+
+
+def fold(text):
+    def rep(m):
+        addr = int(m.group(3), 16)
+        if m.group(4):
+            addr += int(m.group(5), 0) * (-1 if m.group(4) == "-" else 1)
+        for start, end, base in RANGES:
+            if start <= addr < end and m.group(2) != base:
+                off = addr - start
+                # m2c reads a lui %hi(sym+k) as the whole address sym+k for every %lo paired with it
+                if m.group(1) == "hi" and (start + 0x8000) >> 16 == (addr + 0x8000) >> 16:
+                    off = 0
+                return "%%%s(%s+0x%X)" % (m.group(1), base, off) if off else "%%%s(%s)" % (m.group(1), base)
+        return m.group(0)
+    return SYM_RE.sub(rep, text)
+
+
+def display_records(body):
+    """m2c prints D_8011ECD0 arithmetic in bytes; write records of the DisplayActor44 view."""
+    body = re.sub(r"\bD_8011ECD0 \+ \(([^()]+) \* 0x44\)", r"&((DisplayActor44 *)D_8011ECD0)[\1]", body)
+    # a byte offset computed into a temporary first (`temp_lo = i * 0x44; p = D_8011ECD0 + temp_lo;`)
+    for name in re.findall(r"^\s+(\w+) = [^;]+ \* 0x44;$", body, re.M):
+        body = re.sub(r"\bD_8011ECD0 \+ %s\b" % name, "(DisplayActor44 *)((u8 *)@@DISP@@ + %s)" % name, body)
+
+    def disp(m):
+        n = int(m.group(1), 0)
+        return "@@REC%d@@" % (n // 0x44) if n % 0x44 == 0 else "@@BYTE%d@@" % n
+    body = re.sub(r"\bD_8011ECD0 \+ (0x[0-9A-Fa-f]+|\d+)\b", disp, body)
+    body = re.sub(r"(?<!\*)\bD_8011ECD0\b(?!\)\[)", "((DisplayActor44 *)D_8011ECD0)", body)
+    body = re.sub(r"@@REC(\d+)@@", r"&((DisplayActor44 *)D_8011ECD0)[\1]", body)
+    body = body.replace("@@DISP@@", "D_8011ECD0")
+    body = re.sub(r"@@BYTE(\d+)@@", lambda m: "(DisplayActor44 *)(D_8011ECD0 + 0x%X)" % int(m.group(1)), body)
+    return body
+
+
+# ------------------------------------------------------------------------------------------ stack tables
+
+CAST = r"\*\((?:[^()]|\([^()]*\))*\)"
+
+
+def stack_tables(body):
+    """Copies of header tables into stack locals become one struct assignment; element reads too."""
+    locals_ = {}
+    for sym, (tname, fld, dims, esize) in TABLES.items():
+        lines = body.split("\n")
+        hits = []
+        for i, line in enumerate(lines):
+            if re.search(r"\b%s\b" % sym, line) and ("=" in line or "M2C_MEMCPY" in line):
+                m = re.search(r"\b(sp[0-9A-F]+)\b", line)
+                if m:
+                    hits.append((i, m.group(1)))
+        if not hits:
+            continue
+        sp = hits[0][1]
+        drop = {i for i, s in hits if s == sp}
+        indent = re.match(r"\s*", lines[hits[0][0]]).group(0)
+        out = []
+        for i, line in enumerate(lines):
+            if i == hits[0][0]:
+                out.append("%s%s = %s;" % (indent, sp, sym))
+            elif i not in drop:
+                out.append(line)
+        body = "\n".join(out)
+        body, n = re.subn(r"^(\s+)(?:\?|\w+) \*?%s(?:\[\d+\])*;$" % sp, r"\g<1>%s %s;" % (tname, sp), body,
+                          count=1, flags=re.M)
+        if not n:  # m2c printed no declaration (the bulk cleanup would synthesize an s32 array)
+            body = re.sub(r"^(.*\)\s*\{\n)", r"\g<1>    %s %s;\n" % (tname, sp), body, count=1)
+        locals_[sp] = (tname, fld, dims, esize)
+    for sp, (tname, fld, dims, esize) in locals_.items():
+        base = int(sp[2:], 16)
+        rows = [1] * len(dims)
+        for i in range(len(dims) - 2, -1, -1):
+            rows[i] = rows[i + 1] * dims[i + 1]
+        row = rows[0] * esize
+        total = row * dims[0]
+
+        def addr_elem(expr, k, off):
+            rel = off - base
+            if not (0 <= rel < total) or k != row:
+                return None
+            first, r = divmod(rel, row)
+            rest = []
+            for s in rows[1:]:
+                rest.append(r // (s * esize))
+                r %= s * esize
+            if r:
+                return None
+            head = "%s + %d" % (expr, first) if first else expr
+            return "%s.%s[%s]%s" % (sp, fld, head, "".join("[%d]" % i for i in rest))
+
+        def read(m):
+            got = addr_elem(m.group(1), int(m.group(2), 0), int(m.group(3), 0))
+            return got if got else m.group(0)
+        body = re.sub(CAST + r"\(\(unsigned char \*\)\(sp \+ \(([^()]+) \* (\d+)\)\) \+ \((\d+)\)\)", read, body)
+        if len(dims) == 2 and esize == 1:
+            body = re.sub(r"\*\(&%s \+ \(([^()]+) \* (0x[0-9A-Fa-f]+|\d+)\) \+ ([^()]+?)\)" % sp,
+                          lambda m: "%s.%s[%s][%s]" % (sp, fld, m.group(1), m.group(3))
+                          if int(m.group(2), 0) == dims[1] else m.group(0), body)
+        body = re.sub(r"\(&%s(?:\[0\])?\)\[" % sp, "%s.%s[" % (sp, fld), body)
+        # T-17500: m2c's array views of the copied struct (`&sp40[0]`, `((s16 *)sp30)[i]`)
+        body = re.sub(r"\(\(\w+ \*\)%s\)\[" % sp, "%s.%s[" % (sp, fld), body)
+        body = re.sub(r"&%s\[0\]" % sp, "%s.%s" % (sp, fld), body)
+        body = re.sub(r"(?<![.\w&])%s\[" % sp, "%s.%s[" % (sp, fld), body)
+        body = re.sub(r"&%s\b(?![.\[])" % sp, "%s.%s" % (sp, fld), body)
+    return body, locals_
+
+
+def stack_elements(body, locals_):
+    """T-17700: m2c names single elements of a copied table as their own stack locals (`s16 sp1A;` inside
+    `GekoMonthDays sp18`) and reaches a neighbour of an indexed element through a byte offset
+    (`*(s16 *)((unsigned char *)(&sp18.day[i]) + (-2))`); both are elements of the table."""
+    for sp, (tname, fld, dims, esize) in locals_.items():
+        if len(dims) == 2:  # T-18800: a row of a copied 2-D table named as its own local (`&sp65` = sp50.v[1])
+            row = dims[1] * esize
+            for m in list(re.finditer(r"^\s+(?:\w+|\?) (sp([0-9A-F]+))(?:\[\d*\])?;\n", body, re.M)):
+                off = int(m.group(2), 16) - int(sp[2:], 16)
+                if m.group(1) == sp or not (0 < off < dims[0] * row) or off % row:
+                    continue
+                body = body.replace(m.group(0), "", 1)
+                body = re.sub(r"\(&%s\)\[" % m.group(1), "%s.%s[%d][" % (sp, fld, off // row), body)
+                body = re.sub(r"&%s\b(?!\[)" % m.group(1), "%s.%s[%d]" % (sp, fld, off // row), body)
+            continue
+        if len(dims) != 1:
+            continue
+        base, total = int(sp[2:], 16), dims[0] * esize
+        for m in list(re.finditer(r"^\s+\w+ (sp([0-9A-F]+));\n", body, re.M)):
+            off = int(m.group(2), 16) - base
+            if m.group(1) == sp or not (0 < off < total) or off % esize:
+                continue
+            body = body.replace(m.group(0), "", 1)
+            body = re.sub(r"(?<![.\w&])%s\b" % m.group(1), "%s.%s[%d]" % (sp, fld, off // esize), body)
+
+        def shift(m):
+            k = int(m.group(3))
+            if SIZES[m.group(1)] != esize or k % esize:
+                return m.group(0)
+            n = k // esize
+            return "%s.%s[%s %s %d]" % (sp, fld, m.group(2), "-" if n < 0 else "+", abs(n))
+        body = re.sub(r"\*\((u8|s8|u16|s16|u32|s32) \*\)\(\(unsigned char \*\)\(&%s\.%s\[([^\[\]]+)\]\) \+ \((-?\d+)\)\)"
+                      % (sp, fld), shift, body)
+        if len(dims) == 1:
+            # the table's own name read as a value is its first element (`var_s0 = sp4C;`)
+            lines = body.split("\n")
+            for i, line in enumerate(lines):
+                if re.match(r"\s+(?:\w+ )?%s(?: = D_\w+)?;$" % sp, line):
+                    continue
+                lines[i] = re.sub(r"(?<![.\w&])%s\b(?![.\[\w])" % sp, "%s.%s[0]" % (sp, fld), line)
+            body = "\n".join(lines)
+    return body
+
+
+def fptab(body, locals_):
+    """T-3330: one scalar declared above the step table; the call indexes it through `idx`."""
+    for sp, (tname, fld, dims, esize) in locals_.items():
+        if not tname.startswith("FnTbl") and not tname.startswith("DateDispatch"):
+            continue
+        call = re.compile(r"^(\s+)\(?%s\.%s\[([^\[\]]+)\]\)?\((.*)\);$" % (sp, fld), re.M)
+        if not call.search(body) or re.search(r"\bidx\b", body):
+            continue
+        body = call.sub(lambda m: "%sidx = %s;\n%s%s.%s[idx](%s);" % (m.group(1), m.group(2), m.group(1), sp, fld,
+                                                                    m.group(3)), body)
+        body = re.sub(r"^(\s+)%s %s;$" % (tname, sp), r"\1s32 idx; /* declared before the table: T-3330 */\n\1%s %s;"
+                      % (tname, sp), body, count=1, flags=re.M)
+    return body
+
+
+# ------------------------------------------------------------------------------------------ record pointers
+
+RECORDS = {"D_801217D0": "Rec24", "D_8011ECD0": "DisplayActor44"}
+OFF_PTR_RE = r"\*\((u8|s8|u16|s16|u32|s32) \*\)\(\(unsigned char \*\)%s \+ \((\d+)\)\)"
+
+
+DISP_OFF_RE = re.compile(r"\*\((u8|s8|u16|s16|u32|s32) \*\)\(\(unsigned char \*\)\(\(DisplayActor44 \*\)D_8011ECD0\) \+ \((\d+)\)\)")
+
+
+def display_offsets(body):
+    """`*(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6535))` is record 96's field."""
+    t = TYPES.get("DisplayActor44")
+
+    def repl(m):
+        ctype, n = m.group(1), int(m.group(2))
+        k, r = divmod(n, t.size)
+        path, lt = leaf_at(t, r, SIZES[ctype])
+        if path is None:
+            return m.group(0)
+        expr = "((DisplayActor44 *)D_8011ECD0)[%d]%s" % (k, path)
+        store = re.match(r"\s*=(?!=)", m.string[m.end():]) is not None
+        if lt.name == ctype or (store and lt.kind == "scalar" and lt.size == SIZES[ctype]):
+            return expr
+        return "*(%s *)&%s" % (ctype, expr)
+    return DISP_OFF_RE.sub(repl, body) if t is not None else body
+
+
+def record_temps(body):
+    body = display_offsets(body)
+    for sym, tname in RECORDS.items():
+        t = TYPES.get(tname)
+        if t is None:
+            continue
+        # p = D_801217D0 + temp_lo; with temp_lo = i * 0x24
+        for var, lo in re.findall(r"^\s+(\w+) = %s \+ (\w+);$" % sym, body, re.M):
+            m = re.search(r"^\s+%s = (.+) \* 0x%X;$" % (lo, t.size), body, re.M)
+            use = re.search(r"^\s+%s = %s \+ %s;$" % (var, sym, lo), body, re.M)
+            # the index must not change between the product and its use (`lo = i * 0x24; i += 1;`)
+            if m and use and re.fullmatch(r"\w+", m.group(1)) and re.search(
+                    r"\b%s\s*(?:[-+*/|&]?=(?!=)|\+\+|--)" % m.group(1), body[m.end():use.start()]):
+                body = re.sub(r"^(\s+)%s = %s \+ %s;$" % (var, sym, lo),
+                              r"\1%s = (%s *)((u8 *)%s + %s);" % (var, tname, sym, lo), body, flags=re.M)
+                continue
+            if m:
+                body = re.sub(r"^(\s+)%s = %s \+ %s;$" % (var, sym, lo), r"\1%s = &%s[%s];" % (var, sym, m.group(1)),
+                              body, flags=re.M)
+        view = "((DisplayActor44 *)D_8011ECD0)" if sym == "D_8011ECD0" else sym
+        byte_form = "(%s *)((u8 *)%s + " % (tname, sym)
+        ptrs = set(re.findall(r"^\s+(\w+) = &%s\[" % re.escape(view), body, re.M))
+        ptrs |= set(re.findall(r"^\s+(\w+) = %s" % re.escape(byte_form), body, re.M))
+        for var in ptrs:
+            assigns = re.findall(r"^\s+%s = (.+);$" % var, body, re.M)
+            if any(not (a.startswith("&" + view + "[") or a.startswith(byte_form)) for a in assigns):
+                continue
+
+            def repl(m):
+                ctype, n = m.group(1), int(m.group(2))
+                k, r = divmod(n, t.size)
+                path, lt = leaf_at(t, r, SIZES[ctype])
+                store = re.match(r"\s*=(?!=)", m.string[m.end():]) is not None
+                if path is None:
+                    return "*(%s *)((u8 *)&%s[%d] + %d)" % (ctype, var, k, r) if k else m.group(0)
+                expr = "%s[%d]%s" % (var, k, path) if k else "%s->%s" % (var, path[1:])
+                if lt.name == ctype or (store and lt.kind == "scalar" and lt.size == SIZES[ctype]):
+                    return expr
+                return "*(%s *)&%s" % (ctype, expr)
+            new = re.sub(OFF_PTR_RE % re.escape(var), repl, body)
+            if new != body:
+                body = re.sub(r"^(\s+)(?:\?|\w+) \*?%s;$" % var, r"\1%s *%s;" % (tname, var), new, count=1, flags=re.M)
+    return body
+
+
+OFF_RE = re.compile(r"\*\((u8|s8|u16|s16|u32|s32) \*\)\(\(unsigned char \*\)\(?(&?)(D_[0-9A-F]{8})(?:\[([^\[\]]+)\])?\)? \+ \((\d+)\)\)")
+
+
+def actor_offsets(body):
+    def elem(sym, idx, k):
+        if idx is None:
+            return "%s[%d]" % (sym, k)
+        return "%s[%s + %d]" % (sym, idx, k) if k else "%s[%s]" % (sym, idx)
+
+    def repl(m):
+        ctype, amp, sym, idx, n = m.group(1), m.group(2), m.group(3), m.group(4), int(m.group(5))
+        if sym not in GLOBALS:
+            return m.group(0)
+        t, kind = GLOBALS[sym]
+        if idx is not None and not amp:
+            return m.group(0)
+        k, r = divmod(n, t.size)
+        path, lt = leaf_at(t, r, SIZES[ctype])
+        if path is None:
+            return m.group(0)
+        if idx is not None:
+            expr = elem(sym, idx, k) + path
+        elif amp and kind == "obj":
+            if k:
+                return m.group(0)
+            expr = sym + path
+        elif amp and kind == "ptr":
+            return m.group(0)
+        else:
+            expr = elem(sym, None, k) + path
+        if kind == "ptr" and k == 0 and idx is None:
+            expr = sym + "->" + path[1:]
+        store = re.match(r"\s*=(?!=)", m.string[m.end():]) is not None
+        if lt.name == ctype or (store and lt.kind == "scalar" and lt.size == SIZES[ctype]):
+            return expr
+        return "*(%s *)&%s" % (ctype, expr)
+    return OFF_RE.sub(repl, body)
+
+
+LOCAL_PTR_RE = re.compile(r"^\s*(\w+) (\*+)(\w+);\s*$", re.M)
+SCALAR_SIZES = {"s16": 2, "u16": 2, "s32": 4, "u32": 4}
+
+
+def pointer_steps(body):
+    """m2c prints pointer steps in bytes (`Rec24 *p; p += 0x24`); C counts elements."""
+    for tname, stars, name in LOCAL_PTR_RE.findall(body):
+        if len(stars) > 1:
+            size = 4
+        elif tname in SCALAR_SIZES:
+            size = SCALAR_SIZES[tname]
+        else:
+            t = TYPES.get(tname)
+            size = t.size if t is not None and t.kind == "struct" else 0
+        if size <= 1:
+            continue
+
+        def step(m, size=size):
+            n = int(m.group(3), 0)
+            if n % size:
+                return m.group(0)
+            return "%s %s %d" % (m.group(1), m.group(2), n // size)
+        body = re.sub(r"\b(%s) ([-+]=) (0x[0-9A-Fa-f]+|\d+)\b" % re.escape(name), step, body)
+    return body
+
+
+# ------------------------------------------------------------------------------------------ menu arrays (T-17800)
+
+MENU_RE = re.compile(r"\b(?:menu_set|func_8004F870)\(([^,()]+), ([^,()]+), ((?:&sp[0-9A-F]+(?:\[0\])?(?:, )?){4})\)")
+
+
+def menu_arrays(body):
+    """The four row arrays of a menu_set call as s16 arrays (or one Arrs4x8 filled by func_801325A0)."""
+    # m2c already typed the local from func_801325A0's prototype: write the rows, not their first elements
+    for sp in re.findall(r"^\s+Arrs4x8 (sp[0-9A-F]+);$", body, re.M):
+        body = re.sub(r"&%s\.([abcd])\[0\]" % sp, r"%s.\1" % sp, body)
+        body = re.sub(r"(\b(?:menu_set|func_8004F870)\([^,()]+, [^,()]+, )&%s, " % sp, r"\g<1>%s.a, " % sp, body)
+        body = re.sub(r"(?:\(s16\) )?\b%s\b(?![.\[])(?=[,;)])" % sp, "%s.a[0]" % sp, body)
+        body = body.replace("func_801325A0(&%s.a[0])" % sp, "func_801325A0(&%s)" % sp)
+        body = body.replace("Arrs4x8 %s.a[0];" % sp, "Arrs4x8 %s;" % sp)
+        # m2c reads row a as structs (`.a[i].unk0`) and the other rows as byte offsets from it
+        body = re.sub(r"\b%s\.a\[([^\[\]]+)\]\.unk0\b" % sp, r"%s.a[\1]" % sp, body)
+        body = re.sub(r"\*\(s16 \*\)\(\(unsigned char \*\)\(&%s\.a\[([^\[\]]+)\]\) \+ \((16|32|48)\)\)" % sp,
+                      lambda k: "%s.%s[%s]" % (sp, "xbcd"[int(k.group(2)) // 16], k.group(1)), body)
+    m = MENU_RE.search(body)
+    if not m:
+        return body
+    names = re.findall(r"&(sp[0-9A-F]+)", m.group(3))
+    offs = [int(n[2:], 16) for n in names]
+    gaps = {offs[i] - offs[i + 1] for i in range(3)}
+    if len(gaps) != 1:
+        return body
+    gap = gaps.pop()
+    decl = re.compile(r"^\s+(?:\?|\w+) \*?(%s)(?:\[\d+\])*;\n" % "|".join(names), re.M)
+    head = re.search(r"\)\s*\{\n", body)
+    if head is None:
+        return body
+    fill = re.search(r"\bfunc_801325A0\((?:\([^()]*\) )?&%s(?:\[0\])?\)" % names[0], body)
+    if gap == -0x10 and fill:
+        sp = names[0]
+        body = decl.sub("", body)
+        head = re.search(r"\)\s*\{\n", body)
+        body = body[:head.end()] + "    Arrs4x8 %s;\n" % sp + body[head.end():]
+        body = re.sub(r"\bfunc_801325A0\((?:\([^()]*\) )?&%s(?:\[0\])?\)" % sp, "func_801325A0(&%s)" % sp, body)
+        body = MENU_RE.sub(lambda k: "func_8004F870(%s, %s, %s.a, %s.b, %s.c, %s.d)" % (k.group(1), k.group(2), sp, sp, sp, sp),
+                           body, count=1)
+        return body
+    if gap <= 0 or gap % 2:
+        return body
+    n = gap // 2
+    body = decl.sub("", body)
+    head = re.search(r"\)\s*\{\n", body)
+    body = body[:head.end()] + "".join("    s16 %s[%d];\n" % (sp, n) for sp in names) + body[head.end():]
+    for sp in names:
+        body = re.sub(r"&%s\[0\]|&%s\b(?!\[)" % (sp, sp), sp, body)
+        # m2c wrote the first element as the scalar itself
+        body = re.sub(r"^(\s+)%s = " % sp, r"\g<1>%s[0] = " % sp, body, flags=re.M)
+        body = re.sub(r"\((s16|s32)\) %s\b(?!\[)" % sp, r"%s[0]" % sp, body)
+        # pointers that walk an array: m2c steps them in bytes, pointer-step turns that into elements
+        for var in re.findall(r"^\s+(\w+) = %s;$" % sp, body, re.M):
+            body = re.sub(r"^(\s+)(?:\?|\w+) \*%s;$" % var, r"\1s16 *%s;" % var, body, count=1, flags=re.M)
+    return body
+
+
+class TypedAggregate(mg.Aggregate):
+    """An aggregate built from a declaration instead of config/migrate_globals.txt."""
+
+    def __init__(self, base, typ, header):
+        self.base, self.tname, self.header = base, typ.spell(), header
+        self.addr = int(base[2:], 16)
+        self.types, self.type = TYPES, typ
+        self.end = self.addr + typ.size
+
+
+def aggregates():
+    aggs, _keep = mg.load_config(".")
+    for sym, (t, kind) in GLOBALS.items():
+        if kind == "obj":
+            aggs.append(TypedAggregate(sym, t, HEADER))
+    return aggs
+
+
+AGGS = aggregates()
+
+
+def field_symbols(body, known):
+    """(body, known) with splat names inside an aggregate written as fields; their declarations dropped."""
+    views = {}
+    for d in known.values():
+        views.update(mg.declarations(d.rstrip() + "\n"))
+    hdr = mg.declarations(mg.read(HEADER)) | mg.declarations(mg.read("include/main_api.h"))
+    try:
+        new, _problems = mg.rewrite_text(body, AGGS, set(), None, lambda s: views.get(s) or hdr.get(s))
+    except Exception:  # a layout the rewriter cannot read: keep the body
+        return body, known
+    used = set(re.findall(r"\bD_[0-9A-F]{8}\b", new))
+    known = {k: v for k, v in known.items() if not (k.startswith("D_") and k not in used)}
+    return new, known
+
+
+def pre_rewrites(body, log=None):
+    """Rewrites on m2c's raw function text (before the bulk cleanup)."""
+    new = display_records(body)
+    if new != body and log is not None:
+        log.append("display-records")
+    body = new
+    new, locals_ = stack_tables(body)
+    if new != body and log is not None:
+        log.append("stack-table")
+    body = new
+    new = stack_elements(body, locals_)
+    if new != body and log is not None:
+        log.append("stack-elements")
+    body = new
+    new = fptab(body, locals_)
+    if new != body and log is not None:
+        log.append("fptab")
+    return new
+
+
+RAW_RE = re.compile(r"\*\((void|u8|s8|u16|s16|u32|s32) \*\)0x(8011[EF][0-9A-F]{3}|8012[01][0-9A-F]{3})\b(\s*=\s*\((u8|s8|u16|s16|u32|s32)\))?")
+
+
+def raw_display(body):
+    """T-17800: `*(void *)0x80120653 = (u8) ...` (a folded label m2c printed as a number) is a record field."""
+    t = TYPES.get("DisplayActor44")
+    if t is None:
+        return body
+
+    def repl(m):
+        ctype = m.group(1) if m.group(1) != "void" else m.group(4)
+        n = int(m.group(2), 16) - DISPLAY[0]
+        if ctype is None or not (0 <= n < DISPLAY[1]):
+            return m.group(0)
+        k, r = divmod(n, t.size)
+        path, lt = leaf_at(t, r, SIZES[ctype])
+        tail = m.group(3) or ""
+        if path is None:
+            return "*(%s *)&D_8011ECD0[0x%X]%s" % (ctype, n, tail)
+        expr = "((DisplayActor44 *)D_8011ECD0)[%d]%s" % (k, path)
+        return (expr if lt.name == ctype else "*(%s *)&%s" % (ctype, expr)) + tail
+    return RAW_RE.sub(repl, body)
+
+
+PROTO_RE = re.compile(r"^(s32|u8|s8|u16|s16|u32) (func_[0-9A-F]{8})\(void\);$", re.M)
+
+
+def return_type(body):
+    """T-17800: m2c prints `void` for an `s32 f(void)` of the header that falls off its end."""
+    m = re.match(r"void (func_[0-9A-F]{8})\(void\) \{", body)
+    if m:
+        for rt, name in PROTO_RE.findall(mg.read(HEADER)):
+            if name == m.group(1):
+                return rt + body[4:]
+    return body
+
+
+# ------------------------------------------------------------------------------------------ T-18100
+
+PTR_DECL_RE = re.compile(r"^\s*extern\s+(u8|s8|u16|s16|u32|s32)\s*\*\s*(D_[0-9A-F]{8})\s*;", re.M)
+PTRS = {m.group(2): m.group(1) for m in PTR_DECL_RE.finditer(mg.read(HEADER))}
+
+
+def pointer_index(body):
+    """(T-18100) `*(s32 *)((unsigned char *)D_8013C730 + (8))`, `(*(s32 *)D_8013C730)` and
+    `D_8013C730->unk0` on a header global `s32 *D_8013C730`: `D_8013C730[2]`, `D_8013C730[0]`.
+    m2c keeps the byte offsets although the context gives the pointee type."""
+    for sym, ctype in PTRS.items():
+        size = SIZES[ctype]
+
+        def repl(m):
+            n = int(m.group(1))
+            return "%s[%d]" % (sym, n // size) if n % size == 0 else m.group(0)
+        body = re.sub(r"\*\(%s \*\)\(\(unsigned char \*\)%s \+ \((\d+)\)\)" % (ctype, sym), repl, body)
+        body = body.replace("(*(%s *)%s)" % (ctype, sym), "%s[0]" % sym)
+        body = re.sub(r"\b%s->unk0\b" % sym, "%s[0]" % sym, body)
+    return body
+
+
+WALK_DECL_RE = re.compile(r"^\s*DisplayActor44 \*(\w+);\s*$", re.M)
+WALK_OFF = r"\*\((u8|s8|u16|s16|u32|s32|void)( \*\*?)\)\(\(unsigned char \*\)%s \+ \((\d+)\)\)"
+
+
+def record_walk(body):
+    """(T-18100) A DisplayActor44 pointer that starts at D_8011ECD0 and steps one record per trip
+    of a do-while: m2c prints its fields as byte offsets past the pool and the step in the middle of
+    the body, where IDO scheduled it. The step (and a counter step right before it whose value no
+    later statement of the body reads) moves to the end of the body, the offsets after it gain
+    0x44, and the fields are printed as `p[96].unk_01` (the matched TAIIKU 80138950.c form)."""
+    t = TYPES.get("DisplayActor44")
+    if t is None:
+        return body
+    for var in WALK_DECL_RE.findall(body):
+        if not re.search(r"\b%s = (\(\(DisplayActor44 \*\))+D_8011ECD0\)+;" % var, body):
+            continue
+        lines = body.split("\n")
+        steps = [i for i, l in enumerate(lines) if l.strip() in ("%s += 1;" % var, "%s += 0x44;" % var)]
+        if len(steps) != 1:
+            continue
+        i = steps[0]
+        ind = len(lines[i]) - len(lines[i].lstrip())
+        end = next((j for j in range(i + 1, len(lines)) if lines[j].startswith(" " * (ind - 4) + "} while")), None)
+        if end is None:
+            continue
+        moved = [lines[i].replace("+= 0x44;", "+= 1;")]
+        k = i - 1
+        m = re.match(r"^\s*(\w+) \+= 1;$", lines[k])
+        if m and not any(re.search(r"\b%s\b" % m.group(1), l) for l in lines[i + 1:end]):
+            moved.insert(0, lines[k])
+        else:
+            k = i
+        tail = [re.sub(WALK_OFF % var, lambda mm: "*(%s%s)((unsigned char *)%s + (%d))" % (
+            mm.group(1), mm.group(2), var, int(mm.group(3)) + t.size), l) for l in lines[i + 1:end]]
+        lines = lines[:k] + tail + moved + lines[end:]
+        body = "\n".join(lines)
+
+        def repl(mm):
+            n = int(mm.group(3))
+            idx, r = divmod(n, t.size)
+            path, lt = leaf_at(t, r, 4 if mm.group(2) == " **" else SIZES.get(mm.group(1), 0))
+            if path is None:
+                return mm.group(0)
+            return "%s[%d]%s" % (var, idx, path)
+        body = re.sub(WALK_OFF % var, repl, body)
+        body = re.sub(r"\(s32 \*\) (D_[0-9A-F]{8})\b", r"(u8 *)\1", body)
+    return body
+
+
+REC38_RE = re.compile(r"\*\(&D_800E6280\.unk_1BC\[0\]\.(unk_\w+) \+ \(([^()]+) \* 0x38\)\)")
+
+
+def gamestate_records(body):
+    """T-17700: `*(&D_800E6280.unk_1BC[0].unk_0A + (i * 0x38))` is record i of GameState's Rec38 array (the
+    Rec38Flags union at +0x0C is read through its byte view)."""
+    return REC38_RE.sub(lambda m: "D_800E6280.unk_1BC[%s].%s%s" % (m.group(2), m.group(1),
+                                                                   ".b[0]" if m.group(1) == "unk_0C" else ""), body)
+
+
+
+
+
+def struct_bytes(body):
+    """T-18300: m2c prints a byte offset from GameState as `&D_800E6280 + i`, which C scales by the struct size;
+    the byte pointer is `(u8 *)&D_800E6280 + i`."""
+    return re.sub(r"(?<![)\w])&D_800E6280 \+ ", "(u8 *)&D_800E6280 + ", body)
+
+
+GS_DECL = "    GameState *g = &D_800E6280;\n"
+
+
+def gs_local(body):
+    """(T-18500) the BUNKA family form of T-12701: every GameState access through one local pointer."""
+    if "D_800E6280" not in body or re.search(r"\bg\b", body):
+        return body
+    new = re.sub(r"\(\*?&D_800E6280\)|&D_800E6280\b", "g", body)
+    new = new.replace("D_800E6280.", "g->")
+    new = re.sub(r"\bD_800E6280\b", "(*g)", new)
+    return re.sub(r"(\)\s*\{\n)", lambda m: m.group(1) + GS_DECL, new, count=1)
+
+
+ARR_DECL_RE = re.compile(r"^\s*extern\s+(u8|s8|u16|s16|u32|s32)\s+(D_[0-9A-F]{8})\s*\[\w+\]\s*;", re.M)
+FN_ARR_RE = re.compile(r"^\s*extern\s+void\s*\(\*\s*(D_[0-9A-F]{8})\s*\[\w*\]\)\s*\(void\)\s*;", re.M)
+ARRS = {m.group(2): m.group(1) for m in ARR_DECL_RE.finditer(mg.read(HEADER))}
+FN_ARRS = FN_ARR_RE.findall(mg.read(HEADER))
+SIMPLE = r"([\w.\[\]]+(?:->\w+)?)"
+
+
+def header_arrays(body):
+    """(T-18500) bodies written against scalar declarations of a header array (the census) index it
+    by hand: `*(&D_80155F0C + (i * 4))`, `*(&D_80155F00 + i)`, `((void (**)(void)) &D_80155ED0)[i]()`.
+    With `s32 D_80155F0C[12]` in the header these are `D_80155F0C[i]`."""
+    for sym, ctype in ARRS.items():
+        size = SIZES[ctype]
+        if size == 1:
+            body = re.sub(r"\*\(&%s \+ %s\)" % (sym, SIMPLE), r"%s[\1]" % sym, body)
+        else:
+            body = re.sub(r"\*\(&%s \+ \(%s \* %d\)\)" % (sym, SIMPLE, size), r"%s[\1]" % sym, body)
+        body = re.sub(r"\*\(&%s\)" % sym, "%s[0]" % sym, body)
+    for sym in FN_ARRS:
+        body = re.sub(r"\(\(void \(\*\*\)\(void\)\) ?&%s\)\[" % sym, "%s[" % sym, body)
+    return body
+
+
+ARR2_RE = re.compile(r"^\s*extern\s+(u8|s8|u16|s16|u32|s32)\s+(D_([0-9A-F]{8}))\s*((?:\[\w+\])+)\s*;", re.M)
+ARR_DIMS = [(m.group(2), int(m.group(3), 16), SIZES[m.group(1)], [int(d, 0) for d in re.findall(r"\[(\w+)\]", m.group(4))])
+            for m in ARR2_RE.finditer(mg.read(HEADER))]
+
+
+def array_symbols(body):
+    """(T-18500) a splat label inside a header array of scalars (`D_801562A4` in `s32 D_801562A0[3][13]`)
+    is that element (`D_801562A0[0][1]`); m2c prints the label when it reads a constant index."""
+    def repl(m):
+        addr = int(m.group(1), 16)
+        for base, start, size, dims in ARR_DIMS:
+            total = size
+            for d in dims:
+                total *= d
+            rel = addr - start
+            if 0 < rel < total and rel % size == 0:
+                k, idx = rel // size, []
+                for d in reversed(dims):
+                    idx.append(k % d)
+                    k //= d
+                return base + "".join("[%d]" % i for i in reversed(idx))
+        return m.group(0)
+    body = re.sub(r"\bD_([0-9A-F]{8})\b(?!\[)", repl, body)
+    for base, start, size, dims in ARR_DIMS:  # the base itself read as a scalar
+        if len(dims) > 1:
+            body = re.sub(r"\b%s\b(?!\[)" % base, base + "[0]" * len(dims), body)
+    return body
+
+
+RECT_FIELDS = ("x", "y", "w", "h")
+
+
+def rect_view(body):
+    """(T-18800) the main-exe words D_800B5920[4] are two RECTs to DATE2 (every access is a halfword
+    store); DATE's matched code writes `((RECT *)D_800B5920)[0].w`. m2c prints the splat labels."""
+    def lab(m):
+        k, r = divmod(int(m.group(1), 16) - 0x20, 8)
+        return "((RECT *)D_800B5920)[%d].%s" % (k, RECT_FIELDS[r // 2]) if r % 2 == 0 else m.group(0)
+    body = re.sub(r"\bD_800B59(2[2-9A-F])\b", lab, body)
+    return re.sub(r"\*D_800B5920\b(?!\s*\[)", "((RECT *)D_800B5920)[0].x", body)
+
+
+def array_views(body):
+    """(T-18800) m2c's views of a scalar header array (`s16 D_8013A5E4[3]`): `(&D_X)[i]` is `D_X[i]`,
+    and a byte offset on `&D_X` of the element size is that element."""
+    for sym, ctype in ARRS.items():
+        size = SIZES[ctype]
+        body = re.sub(r"\(&%s\)\[" % sym, "%s[" % sym, body)
+
+        def off(m, sym=sym, size=size):
+            n = int(m.group(2))
+            if SIZES[m.group(1)] != size or n % size:
+                return m.group(0)
+            store = re.match(r"\s*=(?!=)", m.string[m.end():]) is not None
+            if m.group(1) != ARRS[sym] and not store:
+                return "*(%s *)&%s[%d]" % (m.group(1), sym, n // size)
+            return "%s[%d]" % (sym, n // size)
+        body = re.sub(r"\*\((u8|s8|u16|s16|u32|s32) \*\)\(\(unsigned char \*\)\(&%s\) \+ \((\d+)\)\)" % sym, off, body)
+        # a byte offset from a constant element (`*(s16 *)((unsigned char *)(&D_X[1]) + (-2))`)
+        def shift(m, sym=sym, size=size):
+            n = int(m.group(3))
+            if SIZES[m.group(1)] != size or n % size:
+                return m.group(0)
+            return "%s[%d]" % (sym, int(m.group(2)) + n // size)
+        body = re.sub(r"\*\((u8|s8|u16|s16|u32|s32) \*\)\(\(unsigned char \*\)\(&%s\[(\d+)\]\) \+ \((-?\d+)\)\)" % sym,
+                      shift, body)
+        # `t = i * 2; p = t + &D_X;` is `p = &D_X[i]`
+        for var, idx in re.findall(r"^\s+(\w+) = (\w+) \* %d;$" % size, body, re.M):
+            body = re.sub(r"\b%s \+ &%s\b" % (var, sym), "&%s[%s]" % (sym, idx), body)
+        # m2c's first element (`D_X->unk0`, after the cleanup `(*(s32 *)D_X)`)
+        body = re.sub(r"\b%s->unk0\b" % sym, "%s[0]" % sym, body)
+        body = re.sub(r"\(\*\((?:u8|s8|u16|s16|u32|s32) \*\)%s\)" % sym, "%s[0]" % sym, body)
+        # a census body reads the array as a scalar (declared so): its first element, only where a
+        # scalar is meant (a store, a scalar cast, a compare), not where the array is a pointer
+        body = re.sub(r"^(\s+)%s( [-+*/|&^]?= )" % sym, r"\g<1>%s[0]\2" % sym, body, flags=re.M)
+        body = re.sub(r"(\((?:u8|s8|u16|s16|u32|s32)\) )%s\b(?!\s*\[)" % sym, r"\g<1>%s[0]" % sym, body)
+        body = re.sub(r"(?<![&\w*.>])%s( (?:==|!=|<=|>=|<|>) )" % sym, r"%s[0]\1" % sym, body)
+    return body
+
+
+def typed_rewrites(body, known, log=None):
+    for name, fn in (("rect-view", rect_view), ("header-arrays", header_arrays), ("array-symbols", array_symbols), ("array-views", array_views), ("struct-bytes", struct_bytes), ("gamestate-records", gamestate_records), ("raw-display", raw_display), ("pointer-index", pointer_index), ("record-walk", record_walk), ("return-type", return_type), ("record-temp", record_temps), ("actor-offset", actor_offsets),
+                     ("pointer-step", pointer_steps)):
+        new = fn(body)
+        if new != body and log is not None:
+            log.append(name)
+        body = new
+    new, known = field_symbols(body, known)
+    if new != body and log is not None:
+        log.append("field-symbols")
+    return new, known
+
+
+# ------------------------------------------------------------------------------------------ workers
+
+def inventory():
+    return [r for r in ex.census() if r["unit"] == UNIT]
+
+
+def install_typed(applied):
+    orig_hi = m2c.fix_shared_hi
+    m2c.fix_shared_hi = lambda t: orig_hi(fold(t))
+    orig_ctx = m2c.build_context
+
+    def build_context(root, heads, out_path, *a, **k):
+        orig_ctx(root, heads, out_path, *a, **k)
+        s = open(out_path).read()
+        s = re.sub(r"\bextern\s+u8\s+D_8011ECD0\s*\[\s*\]\s*;", "", s) + "\nextern DisplayActor44 D_8011ECD0[];\n"
+        open(out_path, "w").write(s)
+    m2c.build_context = build_context
+    orig_split = m2c.split_draft
+
+    def split_draft(text, name):
+        decls, body = orig_split(text, name)
+        return decls, pre_rewrites(body, applied)
+    m2c.split_draft = split_draft
+    plain_cleanup = bulk.cleanup
+
+    def cleanup(decls, body, glob=None):
+        body, known, problem = plain_cleanup(decls, body, glob)
+        if problem:
+            return body, known, problem
+        body, known = typed_rewrites(body, known, applied)
+        return body, known, None
+    bulk.cleanup = cleanup
+
+
+def worker(index, variant):
+    rows = json.loads((OUT / "inventory.json").read_text())
+    row = rows[index]
+    ex.BASE = OUT / "_runs" / variant
+    os.environ["TOKIMEMO_REGENERATE_GUARDS"] = "1"
+    applied = []
+    if variant == "census":
+        path = Path(census_scores()[row["func"]]["path"])
+        declared = set(mg.declarations(mg.read(HEADER)))
+
+        def run_census(root, name, *a, **k):
+            decls = (path / "declarations.h").read_text() if (path / "declarations.h").exists() else ""
+            # the census declared some table globals itself; the header now has their real type
+            decls = "\n".join(l for l in decls.splitlines()
+                              if not (set(re.findall(r"\bD_[0-9A-F]{8}\b", l)) & declared))
+            body = (path / "body.c").read_text()
+            # T-17500: a typedef of the census declarations (UnalignedBytes3) and the externs that
+            # use it go into the function body: the cleanup keeps only the plain declarations
+            local = [l for l in decls.splitlines() if l.startswith("typedef")]
+            names = [m.group(1) for l in local for m in [re.search(r"\}\s*(\w+)\s*;", l)] if m]
+            local += [l for l in decls.splitlines() if any(re.match(r"extern %s\b" % n, l) for n in names)]
+            if local:
+                decls = "\n".join(l for l in decls.splitlines() if l not in local)
+                body = re.sub(r"\{\n", "{\n" + "".join("    %s\n" % l for l in local), body, count=1)
+            return decls + "\n" + body
+        m2c.run_m2c = run_census
+    if variant in ("typed", "census"):
+        install_typed(applied)
+    got = ex.process(row)
+    if variant in ("typed", "census"):
+        got["rewrites"] = sorted(set(applied))
+        ex.save(ex.BASE / row["unit"] / row["func"] / "result.json", json.dumps(got, sort_keys=True) + "\n")
+
+
+def run_all(rows, variants, jobs, timeout, only):
+    todo = [(i, v) for v in variants for i, r in enumerate(rows) if not only or r["func"] in only]
+    todo = [(i, v) for i, v in todo if not (OUT / "_runs" / v / UNIT / rows[i]["func"] / "result.json").exists()]
+    running = []
+    while todo or running:
+        while todo and len(running) < jobs:
+            i, v = todo.pop(0)
+            folder = OUT / "_runs" / v / UNIT / rows[i]["func"]
+            folder.mkdir(parents=True, exist_ok=True)
+            log = open(folder / "worker.log", "w")
+            p = subprocess.Popen([sys.executable, __file__, "--worker", str(i), "--variant", v], stdout=log,
+                                 stderr=subprocess.STDOUT, start_new_session=True)
+            running.append((p, i, v, time.monotonic(), log))
+        time.sleep(0.2)
+        for item in list(running):
+            p, i, v, t0, log = item
+            if p.poll() is None and time.monotonic() - t0 < timeout:
+                continue
+            if p.poll() is None:
+                os.killpg(p.pid, signal.SIGKILL)
+                p.wait()
+            log.close()
+            running.remove(item)
+            res = OUT / "_runs" / v / UNIT / rows[i]["func"] / "result.json"
+            if not res.exists():
+                ex.save(res, json.dumps(dict(rows[i], status="timeout" if p.returncode < 0 else "worker-error",
+                                             score=None, variant=v)) + "\n")
+            got = json.loads(res.read_text())
+            print(v, rows[i]["func"], got.get("status"), got.get("score"), flush=True)
+
+
+# ------------------------------------------------------------------------------------------ final
+
+def census_scores():
+    out = {}
+    for line in CENSUS.read_text().splitlines():
+        r = json.loads(line)
+        if r["scope"].startswith(UNIT + ":"):
+            out[r["scope"].split(":")[1]] = dict(score=r["score"], path=r["selected_path"])
+    if T16510.exists():
+        for line in T16510.read_text().splitlines():
+            r = json.loads(line)
+            if r.get("unit") == UNIT and r.get("score") is not None and r["status"] in ("improved", "zero"):
+                if r["score"] < (out.get(r["func"], {}).get("score") or BIG):
+                    out[r["func"]] = dict(score=r["score"], path="drafts/T-16510/%s/%s" % (UNIT, r["func"]))
+    return out
+
+
+def finish(rows, only, fixes=True):
+    files = draft_fixes.asm_files(".")
+    census = census_scores()
+    summary = []
+    for row in rows:
+        func = row["func"]
+        if only and func not in only:
+            continue
+        runs = {}
+        for v in VARIANTS:
+            folder = OUT / "_runs" / v / UNIT / func
+            res = folder / "result.json"
+            if res.exists():
+                runs[v] = (json.loads(res.read_text()), folder)
+        scored = {v: r for v, r in runs.items() if r[0].get("score") is not None}
+        dest = OUT / UNIT / func
+        dest.mkdir(parents=True, exist_ok=True)
+        c = census.get(func, {})
+        record = dict(scope=row["scope"], func=func, src=row["src"], size=row["size"], unit=UNIT,
+                      guarded=row["guarded"], census_score=c.get("score"), census_path=c.get("path"),
+                      plain_score=runs.get("plain", ({},))[0].get("score"),
+                      typed_score=runs.get("typed", ({},))[0].get("score"),
+                      census_typed_score=runs.get("census", ({},))[0].get("score"),
+                      rewrites=runs.get("typed", ({},))[0].get("rewrites", []),
+                      tool="T-18800 drafts/T-18800/redraft.py", harness_hash=digest(Path(__file__).read_text()),
+                      created=time.strftime("%Y-%m-%d", time.gmtime()))
+        if not scored:
+            record.update(status="failed", score=None,
+                          reason=" | ".join(r[0].get("reason", "") for r in runs.values())[:300])
+            src = runs.get("typed") or runs.get("plain")
+            if src and (src[1] / "body.c").exists():
+                shutil.copy(src[1] / "body.c", dest / "body.c")
+        else:
+            v = min(scored, key=lambda k: (scored[k][0]["score"], VARIANTS.index(k)))
+            got, folder = scored[v]
+            body = (folder / "body.c").read_text()
+            if (folder / "context.c").exists():
+                context = (folder / "context.c").read_text()
+            else:
+                context = draft_fixes.fresh_context(dict(row), body, folder)
+            record.update(variant=v, score=got["score"])
+            if got["score"] > 0 and fixes:
+                scorer = draft_fixes.make_scorer(dict(row))
+                base, score, chosen, new_body, new_context, tried = draft_fixes.best_rewrite(
+                    row, body, draft_fixes.asm_for(row["scope"], files), context, scorer, OUT / "_work" / func)
+                record.update(draft_fixes_baseline=base, draft_fixes=["%s#%d" % c for c in chosen],
+                              draft_fixes_tried=tried)
+                if score < got["score"]:
+                    body, context = new_body, new_context
+                    record["score"] = score
+            if fixes and record["score"] > 0:
+                gbody = gs_local(body)
+                if gbody != body and body in context:
+                    work = OUT / "_work" / func / "gs"
+                    work.mkdir(parents=True, exist_ok=True)
+                    gctx = context.replace(body, gbody)
+                    gscore = draft_fixes.make_scorer(dict(row))(gctx, work)
+                    record["gs_local_score"] = gscore
+                    if gscore < record["score"]:
+                        body, context = gbody, gctx
+                        record["score"] = gscore
+                        record["variant"] = v + "+gs-local"
+            for name in ("declarations.h",):
+                if (folder / name).exists():
+                    shutil.copy(folder / name, dest / name)
+            (dest / "body.c").write_text(body)
+            (dest / "context.c").write_text(context)
+            record["status"] = "candidate-zero" if record["score"] == 0 else "scored"
+            record["draft_hash"], record["context_hash"] = digest(body), digest(context)
+        s, cs = record["score"], record["census_score"]
+        record["vs_census"] = None if s is None or cs is None else ("better" if s < cs else "same" if s == cs else "worse")
+        (dest / "result.json").write_text(json.dumps(record, sort_keys=True) + "\n")
+        summary.append(record)
+    merged = {}
+    if (OUT / "catalog.jsonl").exists():
+        for line in (OUT / "catalog.jsonl").read_text().splitlines():
+            r = json.loads(line)
+            merged[r["func"]] = r
+    for r in summary:
+        merged[r["func"]] = r
+    with open(OUT / "catalog.jsonl", "w") as fh:
+        for row in rows:
+            if row["func"] in merged:
+                fh.write(json.dumps(merged[row["func"]], sort_keys=True) + "\n")
+    shutil.rmtree(OUT / "_work", ignore_errors=True)
+    return summary
+
+
+def main():
+    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    p.add_argument("--worker", type=int)
+    p.add_argument("--variant", choices=VARIANTS)
+    p.add_argument("--jobs", type=int, default=2)
+    p.add_argument("--timeout", type=int, default=150)
+    p.add_argument("--only", nargs="*")
+    p.add_argument("--finish-only", action="store_true")
+    p.add_argument("--no-fixes", action="store_true", help="finish without the draft_fixes search")
+    p.add_argument("--rewrite", help="print the typed rewrites of one body file and exit")
+    a = p.parse_args()
+    if a.rewrite:
+        log = []
+        body = pre_rewrites(Path(a.rewrite).read_text(), log)
+        body, _ = typed_rewrites(body, {}, log)
+        sys.stdout.write(body)
+        print(log, file=sys.stderr)
+        return
+    if a.worker is not None:
+        worker(a.worker, a.variant)
+        return
+    OUT.mkdir(parents=True, exist_ok=True)
+    if not (OUT / "inventory.json").exists():
+        ex.save(OUT / "inventory.json", json.dumps(inventory(), indent=1) + "\n")
+    if not (OUT / "environment.json").exists():
+        env = dict(base=subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip(),
+                   files={h: digest(mg.read(h)) for h in (HEADER, "include/main_api.h", "include/game.h")})
+        ex.save(OUT / "environment.json", json.dumps(env, indent=1, sort_keys=True) + "\n")
+    rows = json.loads((OUT / "inventory.json").read_text())
+    for v in VARIANTS:
+        (OUT / "_runs" / v).mkdir(parents=True, exist_ok=True)
+        shutil.copy(OUT / "environment.json", OUT / "_runs" / v / "environment.json")
+    if not a.finish_only:
+        run_all(rows, VARIANTS, a.jobs, a.timeout, a.only)
+    summary = finish(rows, a.only, not a.no_fixes)
+    print("DONE", len(summary), sum(r["status"] == "candidate-zero" for r in summary), "zero", flush=True)
+
+
+if __name__ == "__main__":
+    main()
