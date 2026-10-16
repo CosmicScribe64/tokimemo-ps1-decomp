@@ -58,3 +58,26 @@ Ideas and the skeptic verdicts:
 
 Decision (user, 2026-10-16): run the tooling round T-16500..T-16530, then pilot types-first on two units, then
 wave 3 with Sonnet matchers and an Opus closer for near misses of about 20 rows or fewer.
+
+## Why Codex astra looked faster (2026-10-16)
+
+Per-session yield tables for every recorded Codex and Claude matching session, compared with confounds controlled,
+then a skeptic re-derived the key numbers from git and the tickets.
+
+- Astra's 4-hour big-function sessions (T-9960, T-10630..T-10900): about 196-222 matches, 206-241 KB in about 38-40
+  agent-hours, so about 5.5 KB/h, but at 1,050-1,090 bytes per match. Opus wave 1 (T-11570..T-11690): 80 matches,
+  32.8 KB, 13.7 h (commit spans), 410 bytes per match, about 2.4 KB/h. Matches per hour are similar (5.2-5.6 vs
+  5.8); the byte gap is mostly function size.
+- 78-84% of astra's big-session bytes came from four or five sessions on BUNKAKEN, BUNKASAI, MASTER, TEL and NAME_ENT,
+  where one recovered struct or idiom matched dozens of sibling functions. Outside those overlays astra made about
+  2.5 KB/h and Opus about 2.3 KB/h on comparable files.
+- Era: astra ran at 35-48% matched; Claude waves run at 55-65%, after the census zeros and easy families were taken.
+- Clocks differ: astra's hours are 4-hour minimum sessions; Claude wave-1 hours are short commit spans (85% of match
+  commits within the first hour), which favours Claude. No clean astra-vs-Claude comparison exists; confidence low.
+- Astra vs Sol (same day, same list type, wave 10): 18 vs 7 matches, 4,748 vs 2,064 bytes, but only two agents each, so
+  low to moderate confidence.
+
+Takeaways: family/types-first packaging and byte-weighted selection explain most of the gap (the pilot T-16550/T-16560
+tests the first); yields are front-loaded, so shorter sessions with repackaging should help; cap one-off dispatchers
+over 3 KB at about 30 minutes. A fair model comparison needs a controlled run (same base, overlays split evenly,
+launch/end times and tokens recorded), possible when Codex quota returns.

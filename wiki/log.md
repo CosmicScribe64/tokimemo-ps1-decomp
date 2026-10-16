@@ -15223,3 +15223,10 @@ duplicate T-16200 line removed from [[index]]. Tickets [[tickets/T-16900-compile
 ## [2026-10-16] ticket | T-16554 Done
 
 [[tickets/T-16554-pt-taiiku-p4]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 of 7 functions matched (`func_80132970`, `func_80143DD0`, `func_80143F50`, `func_8014280C`, 3,208 bytes), 2 guarded drafts, `func_80142FB8` left as `INCLUDE_ASM`. Review fixes: ignored `&` before an array removed from the `pad_28` cast and the cast marked FAKE, `D_8014A1E8` typed `s16[]` (plain element access, still matches), override reason spelled out, FAKE comment tidied. Headers, globals and prototype checks OK, TAIIKU sha1 OK.
+
+## [2026-10-16] query | Why Codex astra looked faster
+
+Yield tables for all recorded Codex and Claude matching sessions, compared with function size, overlay, era and clock
+controlled, skeptic-checked. Astra's byte rate comes mostly from larger functions (about 1,070 vs 410 bytes per match)
+and from family overlays (78-84% of its big-session bytes); matches per hour are similar; no clean model comparison.
+Filed in [[speedup-research-2026-10-16]].
