@@ -15633,3 +15633,7 @@ Created [[tickets/T-18000-types-first-shugaku]] (wave 3 types-first pass for SHU
 ## [2026-10-16] ticket | T-18000 In Review
 
 [[tickets/T-18000-types-first-shugaku]] In Progress to In Review: clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], lines in [[index]].
+
+## [2026-10-16] ticket | T-18000 Done
+
+[[tickets/T-18000-types-first-shugaku]] In Review to Done: code review against `CODING_STANDARDS.md` found 2 minor items (missing comments on the callback-index and variable-reuse idioms in `func_80134B94` and `func_80139054`), fixed in comments only; SHUGAKU sha1 OK, headers OK. 5 functions matched (2,292 bytes). Card moved in [[kanban]], line in [[index]].
