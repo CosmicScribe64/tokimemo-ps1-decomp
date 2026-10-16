@@ -141,6 +141,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-19005-w3-d-p05|T-19005 Wave 3 package w3-d-p05]]
 - [ ] [[tickets/T-17300-types-first-etc|T-17300 Types-first: ETC]]
 - [ ] [[tickets/T-17400-types-first-event|T-17400 Types-first: EVENT]]
+- [ ] [[tickets/T-19006-w3-d-p06|T-19006 Wave 3 package w3-d-p06]]
 - [ ] [[tickets/T-19001-w3-d-p01|T-19001 Wave 3 package w3-d-p01]]
 - [ ] [[tickets/T-17200-types-first-date|T-17200 Types-first: DATE]]
 - [ ] [[tickets/T-17100-types-first-rpg_bat|T-17100 Types-first: RPG_BAT]]

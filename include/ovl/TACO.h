@@ -251,6 +251,10 @@ extern s32 D_8015F4A8;
 void func_80153AA0(s32 arg0, s32 arg1, s32 arg2);
 void func_80153E78(s32 arg0, u8 arg1, u8 arg2, u8 arg3);
 extern Tc14 D_8015E270[];
+/* result screen (T-19006): counter and bonus drawers of 8013B990.c */
+s32 func_8013C1F4(void);
+s32 func_8013C440(void);
+void func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2);
 extern Tc14 D_8015E3B0[];
 void func_801413B8(Tc14 *arg0, s32 arg1);
 void func_801416E8(Tc14 *arg0, s32 arg1);
@@ -587,6 +591,7 @@ void func_8013546C(void);
 
 #ifndef OVL_TACO_T10010_SCORE_TABLE
 #define OVL_TACO_T10010_SCORE_TABLE
+extern s32 D_8015F500; /* T-19006 */
 extern s32 D_8015F504[]; /* Word score table indexed modulo 17. T-10010. */
 
 extern Tc14 D_8015EB30[16];
