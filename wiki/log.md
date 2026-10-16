@@ -15606,3 +15606,18 @@ Opened [[tickets/T-17700-types-first-geko]] (In Progress) under [[tickets/T-1699
 ## [2026-10-16] ticket | T-17700 Done
 
 [[tickets/T-17700-types-first-geko]] In Review to Done after the code review against `CODING_STANDARDS.md`: 1 function matched (484 bytes: `func_8013E22C`), 5 guarded drafts, 35 redrafts, 8 packages (T-17701..T-17708). Two style findings fixed (cast spacing in the `func_80140040` draft, a blank line in the `func_801355E8` draft; `src/ovl/GEKO/8013F360.c`, `src/ovl/GEKO/80134D10.c`). GEKO unit sha1 OK after the rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+## [2026-10-16] ticket | T-17600 Types-first: GYOZI In Progress
+
+Created [[tickets/T-17600-types-first-gyozi]] (wave 3 types-first pass for GYOZI, branch `w3-gyozi-types` from `w2-good`), card in In Progress on [[kanban]], line in [[index]].
+
+## [2026-10-16] build | T-17600 GYOZI types, redraft and matches
+
+[[tickets/T-17600-types-first-gyozi]]: GYOZI types in `include/ovl/GYOZI.h` (callback tables, dumpling arrays, `Rec24 D_8012CA40`, `GyoziGirl.unk_14`, `GyoziWork.unk_10B8`; `game.h` included), `D_800F62F0` added to `include/main_api.h`. `drafts/T-17600/redraft.py` redrafted all 37 unmatched functions: 7 better than the census (5,416 bytes), 19 the same, 3 worse, none 0. Matched 3 functions / 908 bytes: `func_8013E308`, `func_8013DC2C`, `func_8013B0C4`. Packages T-17601..T-17608 (33 functions, 19,180 bytes). Details on [[event-family-results]], rows in [[data-types]] and [[matching-notes]].
+
+## [2026-10-16] ticket | T-17600 In Review
+
+[[tickets/T-17600-types-first-gyozi]] In Progress to In Review: clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]].
+
+## [2026-10-16] ticket | T-17600 Done
+
+[[tickets/T-17600-types-first-gyozi]] In Review to Done after the code review against `CODING_STANDARDS.md`: 3 functions matched (908 bytes: `func_8013E308`, `func_8013DC2C`, `func_8013B0C4`), GYOZI types in `include/ovl/GYOZI.h`, 37 redrafts in `drafts/T-17600/`. One finding, fixed: the three fakematch idioms in `func_8013DC2C` now carry `FAKE` comments (comment-only, GYOZI sha1 OK). `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved in [[kanban]], line in [[index]].

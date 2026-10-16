@@ -142,6 +142,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-19007-w3-d-p07|T-19007 Wave 3 package w3-d-p07]]
 - [ ] [[tickets/T-19008-w3-d-p08|T-19008 Wave 3 package w3-d-p08]]
 - [ ] [[tickets/T-17700-types-first-geko|T-17700 Types-first: GEKO]]
+- [ ] [[tickets/T-17600-types-first-gyozi|T-17600 Types-first: GYOZI]]
 - [ ] [[tickets/T-19005-w3-d-p05|T-19005 Wave 3 package w3-d-p05]]
 - [ ] [[tickets/T-17300-types-first-etc|T-17300 Types-first: ETC]]
 - [ ] [[tickets/T-17400-types-first-event|T-17400 Types-first: EVENT]]

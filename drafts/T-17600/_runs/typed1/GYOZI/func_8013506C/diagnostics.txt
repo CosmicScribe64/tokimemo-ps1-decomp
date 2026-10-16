@@ -1,0 +1,7 @@
+m2c.py: the asm compares the value from before the increment of D_800F6474: wrote `D_800F6474++` in the condition (m2c compared the variable after the store)
+python3 failed:
+cfe: Error: drafts/T-17600/_runs/typed1/GYOZI/func_8013506C/work/guarded.o.sjis.c, line 3646: Dereferenced a non-pointer.
+         if (func_800BDC20(*(s32 *)((unsigned char *)(*(D_80145EA8 + temp_t6) + (D_80145EB8 * 4)) + (-4)), "\203\113\203\140\203\203") == 0) {
+ ------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17600/_runs/typed1/GYOZI/func_8013506C/work -o drafts/T-17600/_runs/typed1/GYOZI/func_8013506C/work/guarded.o /tmp/asm_processor41o3hil6/preprocessed_51f4f85aabdb4652b381e0dc4921ed2e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibykc62yeh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17600/_runs/typed1/GYOZI/func_8013506C/work/guarded.o drafts/T-17600/_runs/typed1/GYOZI/func_8013506C/work/guarded.o.sjis.c

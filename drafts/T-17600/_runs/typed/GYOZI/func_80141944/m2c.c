@@ -1,0 +1,45 @@
+s16 func_80141944(void) {
+    s16 var_v0;
+    s32 var_at;
+    s32 var_at_2;
+    u8 temp_v1;
+
+    M2C_MEMCPY_ALIGNED(&sp2C[0], &D_80148880, 0x68);
+    var_v0 = (&sp2C[0])[D_800F647A](0x80);
+    temp_v1 = D_800F647A;
+    if (temp_v1 < 8U) {
+        *(u8 *)((unsigned char *)D_80129F40 + (6535)) = (u8) D_801317EB;
+        var_at = temp_v1 < 0xAU;
+        if (*(s16 *)((unsigned char *)D_80129F40 + (6552)) == 0) {
+            var_at = temp_v1 < 0xAU;
+            if (*(s16 *)((unsigned char *)D_80129F40 + (6536)) == 0) {
+                var_v0 = *(s16 *)((unsigned char *)D_80129F40 + (6550)) + 1;
+                *(s16 *)((unsigned char *)D_80129F40 + (6550)) = var_v0;
+                if (var_v0 >= 3) {
+                    *(s16 *)((unsigned char *)D_80129F40 + (6550)) = 0;
+                    var_v0 = 0;
+                }
+                goto block_5;
+            }
+        }
+    } else {
+block_5:
+        var_at = temp_v1 < 0xAU;
+    }
+    if (var_at == 0) {
+        var_at_2 = temp_v1 < 0xAU;
+        if (D_80148820 != 0) {
+            var_v0 = func_801428EC();
+            goto block_9;
+        }
+    } else {
+block_9:
+        var_at_2 = temp_v1 < 0xAU;
+    }
+    if (var_at_2 == 0) {
+        if (D_80148824 != 0) {
+            var_v0 = func_80142C14();
+        }
+    }
+    return var_v0;
+}

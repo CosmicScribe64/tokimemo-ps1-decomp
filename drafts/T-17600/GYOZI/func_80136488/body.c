@@ -1,0 +1,56 @@
+s32 func_80136488(void) {
+    s16 var_s0;
+    s32 temp_lo;
+    DisplayActor44 *temp_v0;
+
+    D_801461A0 = 0;
+    func_80136220();
+    func_8004EE18(D_80146170, 0x11, 1, 2, 0);
+    var_s0 = 0;
+    do {
+        func_800549E8(var_s0 + 0x60);
+        temp_lo = var_s0 * 0x44;
+        var_s0 += 1;
+        temp_v0 = (DisplayActor44 *)((u8 *)D_80129F40 + temp_lo);
+        temp_v0[96].unk_01 = 0xA;
+        temp_v0[96].unk_02 = 0;
+        temp_v0[96].unk_38 = 0x01000000;
+        temp_v0[96].unk_03 = 4;
+        *(s32 **)((unsigned char *)temp_v0 + (6540)) = (s32 *) D_80146158;
+        *(s32 **)((unsigned char *)temp_v0 + (6544)) = (s32 *) D_80146160;
+        *(s32 **)((unsigned char *)temp_v0 + (6580)) = (s32 *) D_80146150;
+        temp_v0[96].unk_16 = 0;
+        temp_v0[96].unk_18 = 0;
+        temp_v0[96].unk_06 = 1;
+        temp_v0[96].unk_43 = 0x11;
+        temp_v0[96].unk_26 = -0xA0;
+        temp_v0[96].unk_2A = -0x78;
+        temp_v0[96].unk_07 = 0x80;
+        temp_v0[96].unk_05 = 0;
+        temp_v0[96].unk_04 = 0;
+        temp_v0[96].unk_14 = (s16) D_80146168;
+    } while (var_s0 < 3);
+    ((DisplayActor44 *)D_80129F40)[96].unk_26 = 0;
+    ((DisplayActor44 *)D_80129F40)[97].unk_16 = 3;
+    ((DisplayActor44 *)D_80129F40)[98].unk_16 = 4;
+    func_8004EE18(D_80146174, 0x12, 0, 0, 2);
+    func_800549E8(0x63);
+    ((DisplayActor44 *)D_80129F40)[99].unk_01 = 0xD;
+    ((DisplayActor44 *)D_80129F40)[99].unk_02 = 0;
+    ((DisplayActor44 *)D_80129F40)[99].unk_38 = 0;
+    ((DisplayActor44 *)D_80129F40)[99].unk_03 = 4;
+    *(s32 **)((unsigned char *)((DisplayActor44 *)D_80129F40) + (6744)) = (s32 *) D_8014615C;
+    *(s32 **)((unsigned char *)((DisplayActor44 *)D_80129F40) + (6748)) = (s32 *) D_80146164;
+    *(s32 **)((unsigned char *)((DisplayActor44 *)D_80129F40) + (6784)) = (s32 *) D_80146154;
+    ((DisplayActor44 *)D_80129F40)[99].unk_14 = (s16) D_8014616C;
+    ((DisplayActor44 *)D_80129F40)[99].unk_16 = 0;
+    ((DisplayActor44 *)D_80129F40)[99].unk_18 = 0;
+    ((DisplayActor44 *)D_80129F40)[99].unk_06 = 1;
+    ((DisplayActor44 *)D_80129F40)[99].unk_43 = 0;
+    ((DisplayActor44 *)D_80129F40)[99].unk_26 = -0xA0;
+    ((DisplayActor44 *)D_80129F40)[99].unk_2A = -0x78;
+    ((DisplayActor44 *)D_80129F40)[99].unk_07 = 0x80;
+    ((DisplayActor44 *)D_80129F40)[99].unk_05 = 0x81;
+    ((DisplayActor44 *)D_80129F40)[99].unk_04 = 0;
+    func_8004DE1C();
+}
