@@ -16468,3 +16468,7 @@ Maintainer review of PR #36 (KakarottoCake): both review points addressed (empty
 ## [2026-10-16] ticket | T-17116 In Review
 
 [[tickets/T-17116-w3-rpg-bat-p16]] In Progress to In Review: 1 of 3 functions matched in `src/ovl/RPG_BAT/80155CC0.c` (`func_80156064`, 828 bytes), unit sha1 OK; `func_80135358` is a guarded draft at 10 differing lines in `src/ovl/RPG_BAT/80134D30.c`, `func_80134E78` back to `INCLUDE_ASM` with the best draft in `drafts/T-17116/RPG_BAT/func_80134E78/`. Notes in [[matching-notes]] (section T-17116), [[register-cheatsheet]] (six rows), [[data/t0018-cases]] (two rows), [[rpg-bat-family-results]].
+
+## [2026-10-16] ticket | T-17116 closer pass, func_80135358 matched
+
+[[tickets/T-17116-w3-rpg-bat-p16]] (22:32-22:55 UTC, Opus closer): `func_80135358` matched in `src/ovl/RPG_BAT/80134D30.c` with the file-local implicit int view `RPG_BAT_OVERRIDE_func_8013E97C` (`funcdiff --proto 's32 func_8013E97C();'` gave MATCH; the 10 lines were one range in `$v0` where the original has `$v1`). Package now 2 of 3 (2,528 bytes); `func_80134E78` stays `INCLUDE_ASM`. Updated [[matching-notes]] (T-17116 closer bullet), [[data/t0018-cases]], [[register-cheatsheet]] (row of the implicit int call result), [[rpg-bat-family-results]], [[index]]. Clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Ticket stays In Review.
