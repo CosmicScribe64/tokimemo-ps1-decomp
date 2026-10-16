@@ -4,7 +4,34 @@
 
 void func_80049A40();
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80139740);
+s32 func_80139740(u32 arg0, s32 arg1, s32 arg2) {
+    u8 *p;
+    s32 n;
+    u32 x;
+    u8 *e;
+
+    x = arg0;
+    for (n = 0;; n += 8) {
+        p = (u8 *)GetWorkBase(0x10, D_8011ECA0);
+        func_8009F090(p);
+        SetSemiTrans(p, 0);
+        p[4] = 0x80;
+        p[5] = 0x80;
+        p[6] = 0x80;
+        *(s16 *)(p + 8) = D_800E6280.unk_014[D_8011ECA0] + arg1 - n;
+        *(s16 *)(p + 0xA) = D_800E6280.unk_018[D_8011ECA0] + arg2;
+        e = D_8014D0F4[x % 10];
+        p[0xC] = e[0];
+        p[0xD] = e[1];
+        *(s16 *)(p + 0xE) = func_8009ED74(0, 0x1F0);
+        AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + 0xC, p);
+        if (x < 10) {
+            dtd_on_tpage(0x200, 0, 3, 0, 1);
+            return 1;
+        }
+        x = x / 10;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_801398EC);
 
