@@ -1,0 +1,13 @@
+m2c.py: argument counts from the callees' asm: func_80085B3C 2
+python3 failed:
+cfe: Warning 749: drafts/T-17500/_runs/typed/SHOUGATU/func_8013E50C/work/guarded.c, line 3656: structure has no member named 'unk0'
+     D_800E6280.unk_1BC[D_800E6280.unk0].unk_02 += *(s16 *)((unsigned char *)(sp + var_v0) + (48));
+ ---------------------------------^
+cfe: Error: drafts/T-17500/_runs/typed/SHOUGATU/func_8013E50C/work/guarded.c, line 3656: 'sp' undefined; reoccurrences will not be reported.
+     D_800E6280.unk_1BC[D_800E6280.unk0].unk_02 += *(s16 *)((unsigned char *)(sp + var_v0) + (48));
+ -----------------------------------------------------------------------------^
+cfe: Warning 749: drafts/T-17500/_runs/typed/SHOUGATU/func_8013E50C/work/guarded.c, line 3657: structure has no member named 'unk0'
+     check_para_limit(&D_800E6280 + (D_800E6280.unk0 * 0x38), (s16 (*)[]) sp40.v, &D_800E6280, 0x38);
+ ----------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/typed/SHOUGATU/func_8013E50C/work -o drafts/T-17500/_runs/typed/SHOUGATU/func_8013E50C/work/guarded.o /tmp/asm_processorjljms4bl/preprocessed_60ddd6ddd3c74a19aa1563333b1474ac.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib6axzeg9k/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/typed/SHOUGATU/func_8013E50C/work/guarded.o drafts/T-17500/_runs/typed/SHOUGATU/func_8013E50C/work/guarded.c

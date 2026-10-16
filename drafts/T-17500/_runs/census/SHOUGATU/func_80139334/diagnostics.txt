@@ -1,0 +1,9 @@
+python3 failed:
+cfe: Error: drafts/T-17500/_runs/census/SHOUGATU/func_80139334/work/guarded.o.sjis.c, line 3650: 'D_800E7384' undefined; reoccurrences will not be reported.
+         D_800E7384 = 0;
+ --------^
+cfe: Error: drafts/T-17500/_runs/census/SHOUGATU/func_80139334/work/guarded.o.sjis.c, line 3652: 'D_800E7384' undefined; reoccurrences will not be reported.
+         if ((u32) D_800E7384++ >= 0x1AU) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/census/SHOUGATU/func_80139334/work -o drafts/T-17500/_runs/census/SHOUGATU/func_80139334/work/guarded.o /tmp/asm_processork2fclzx0/preprocessed_576e5e15523c4699846ee48edbbf2bde.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibifno_7yc/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/census/SHOUGATU/func_80139334/work/guarded.o drafts/T-17500/_runs/census/SHOUGATU/func_80139334/work/guarded.o.sjis.c

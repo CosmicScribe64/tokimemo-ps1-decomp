@@ -1,0 +1,13 @@
+python3 failed:
+cfe: Error: drafts/T-17500/_runs/plain/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3756: redeclaration of 'func_8014288C'; previous declaration at line 3712 in file 'drafts/T-17500/_runs/plain/SHOUGATU/func_8014288C/work/guarded.o.sjis.c'
+ void func_8014288C(void) {
+ -----^
+cfe: Error: drafts/T-17500/_runs/plain/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3756: Incompatible function return type for this function.
+ void func_8014288C(void) {
+ ------------------^
+cfe: Warning 709: drafts/T-17500/_runs/plain/SHOUGATU/func_8014288C/work/guarded.o.sjis.c, line 3822: Incompatible pointer type assignment
+             temp_s0 = D_801217D0 + temp_lo;
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/plain/SHOUGATU/func_8014288C/work -o drafts/T-17500/_runs/plain/SHOUGATU/func_8014288C/work/guarded.o /tmp/asm_processor18ccmgof/preprocessed_4370ec500063497c858bce80d505c838.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibfccrk9h1/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/plain/SHOUGATU/func_8014288C/work/guarded.o drafts/T-17500/_runs/plain/SHOUGATU/func_8014288C/work/guarded.o.sjis.c
+repair: existing earlier unprototyped call implies s32 return

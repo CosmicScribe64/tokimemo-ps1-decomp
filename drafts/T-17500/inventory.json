@@ -1,0 +1,344 @@
+[
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80132550.c",
+  "func": "func_8013288C",
+  "size": 424,
+  "guarded": false,
+  "source_hash": "2b2fb121c471702a6fc0fbb9ed53518db1fd96db1ef18c42560be2475c5603c4",
+  "scope": "SHOUGATU:func_8013288C"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80132550.c",
+  "func": "func_80132A34",
+  "size": 704,
+  "guarded": false,
+  "source_hash": "2b2fb121c471702a6fc0fbb9ed53518db1fd96db1ef18c42560be2475c5603c4",
+  "scope": "SHOUGATU:func_80132A34"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/801330C0.c",
+  "func": "func_80133208",
+  "size": 488,
+  "guarded": false,
+  "source_hash": "2f86d4558903afe218d91a011030cefffdc3e6ac2e65909b294cb5b7a9dce86f",
+  "scope": "SHOUGATU:func_80133208"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/801330C0.c",
+  "func": "func_801333F0",
+  "size": 544,
+  "guarded": false,
+  "source_hash": "2f86d4558903afe218d91a011030cefffdc3e6ac2e65909b294cb5b7a9dce86f",
+  "scope": "SHOUGATU:func_801333F0"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/801330C0.c",
+  "func": "func_80133760",
+  "size": 276,
+  "guarded": false,
+  "source_hash": "2f86d4558903afe218d91a011030cefffdc3e6ac2e65909b294cb5b7a9dce86f",
+  "scope": "SHOUGATU:func_80133760"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/801330C0.c",
+  "func": "func_80133B44",
+  "size": 408,
+  "guarded": false,
+  "source_hash": "2f86d4558903afe218d91a011030cefffdc3e6ac2e65909b294cb5b7a9dce86f",
+  "scope": "SHOUGATU:func_80133B44"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80134120.c",
+  "func": "func_801347E0",
+  "size": 164,
+  "guarded": true,
+  "source_hash": "0f22a96a8248d2102f0d60e589667945e8b58ca167cffa230022526b2b1f84af",
+  "scope": "SHOUGATU:func_801347E0"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80134890.c",
+  "func": "func_80134CB4",
+  "size": 604,
+  "guarded": false,
+  "source_hash": "dc40d755a0bb2a2b95586d082cbf70eb7c023b1af2eeebb308df01538e28f10e",
+  "scope": "SHOUGATU:func_80134CB4"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80134890.c",
+  "func": "func_801350F8",
+  "size": 2308,
+  "guarded": false,
+  "source_hash": "dc40d755a0bb2a2b95586d082cbf70eb7c023b1af2eeebb308df01538e28f10e",
+  "scope": "SHOUGATU:func_801350F8"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80134890.c",
+  "func": "func_801359FC",
+  "size": 276,
+  "guarded": false,
+  "source_hash": "dc40d755a0bb2a2b95586d082cbf70eb7c023b1af2eeebb308df01538e28f10e",
+  "scope": "SHOUGATU:func_801359FC"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80135B90.c",
+  "func": "func_80136204",
+  "size": 316,
+  "guarded": false,
+  "source_hash": "cce5d93e520af627d963fc39ddb2179ed4ee2e933770124c32b4d46bcbc6c7bc",
+  "scope": "SHOUGATU:func_80136204"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80135B90.c",
+  "func": "func_80136948",
+  "size": 164,
+  "guarded": true,
+  "source_hash": "cce5d93e520af627d963fc39ddb2179ed4ee2e933770124c32b4d46bcbc6c7bc",
+  "scope": "SHOUGATU:func_80136948"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80136F90.c",
+  "func": "func_8013737C",
+  "size": 744,
+  "guarded": false,
+  "source_hash": "6c8192e2a12a247056492024ad9c41a6571f542ef130399cc997fba869c5aaa7",
+  "scope": "SHOUGATU:func_8013737C"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80136F90.c",
+  "func": "func_80137664",
+  "size": 360,
+  "guarded": false,
+  "source_hash": "6c8192e2a12a247056492024ad9c41a6571f542ef130399cc997fba869c5aaa7",
+  "scope": "SHOUGATU:func_80137664"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80137FF0.c",
+  "func": "func_80138240",
+  "size": 276,
+  "guarded": false,
+  "source_hash": "aa4b8aae2a3d41291297d698608a6ea58cabea3567ed0f750e1244a9ad76e364",
+  "scope": "SHOUGATU:func_80138240"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80138B40.c",
+  "func": "func_80138FC0",
+  "size": 252,
+  "guarded": false,
+  "source_hash": "8c5db4f88bf4f6c1218da7bfadaa96c387bede57fb8caa168afa87c3ecfb00d0",
+  "scope": "SHOUGATU:func_80138FC0"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/801390C0.c",
+  "func": "func_80139334",
+  "size": 480,
+  "guarded": false,
+  "source_hash": "7e031f8b942d36a03efb35cfef0215bc509c552806c8bc2d1d04bb53f1ba2923",
+  "scope": "SHOUGATU:func_80139334"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/8013AF10.c",
+  "func": "func_8013AFEC",
+  "size": 296,
+  "guarded": false,
+  "source_hash": "f605753438d891da0159cb87e6011adcd529e0602f084d621e78a9a82e064869",
+  "scope": "SHOUGATU:func_8013AFEC"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/8013BA00.c",
+  "func": "func_8013BA7C",
+  "size": 432,
+  "guarded": false,
+  "source_hash": "eaa02259184cff4bdfd6ada57e092b84a51af4755cbb926242d07a26b3157e9e",
+  "scope": "SHOUGATU:func_8013BA7C"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/8013D660.c",
+  "func": "func_8013D820",
+  "size": 268,
+  "guarded": false,
+  "source_hash": "eabd19b95b2840e7c0dc04402bbe426bc5e4197abd75f57a624ae1225293e23f",
+  "scope": "SHOUGATU:func_8013D820"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/8013D660.c",
+  "func": "func_8013D92C",
+  "size": 304,
+  "guarded": false,
+  "source_hash": "eabd19b95b2840e7c0dc04402bbe426bc5e4197abd75f57a624ae1225293e23f",
+  "scope": "SHOUGATU:func_8013D92C"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/8013D660.c",
+  "func": "func_8013DAAC",
+  "size": 592,
+  "guarded": false,
+  "source_hash": "eabd19b95b2840e7c0dc04402bbe426bc5e4197abd75f57a624ae1225293e23f",
+  "scope": "SHOUGATU:func_8013DAAC"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/8013DD90.c",
+  "func": "func_8013DF14",
+  "size": 436,
+  "guarded": false,
+  "source_hash": "02529b0a5da79b99e05a29ac5929742e7e1c916e8cd68346c2f1b03774d771de",
+  "scope": "SHOUGATU:func_8013DF14"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/8013E330.c",
+  "func": "func_8013E50C",
+  "size": 472,
+  "guarded": false,
+  "source_hash": "c83fd1ad36be97382443450e6971b2d2222d83c97fc3b2dce574827864b30542",
+  "scope": "SHOUGATU:func_8013E50C"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/8013E330.c",
+  "func": "func_8013E6E4",
+  "size": 948,
+  "guarded": false,
+  "source_hash": "c83fd1ad36be97382443450e6971b2d2222d83c97fc3b2dce574827864b30542",
+  "scope": "SHOUGATU:func_8013E6E4"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/8013E330.c",
+  "func": "func_8013EA98",
+  "size": 920,
+  "guarded": false,
+  "source_hash": "c83fd1ad36be97382443450e6971b2d2222d83c97fc3b2dce574827864b30542",
+  "scope": "SHOUGATU:func_8013EA98"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/8013F190.c",
+  "func": "func_8013F224",
+  "size": 316,
+  "guarded": false,
+  "source_hash": "ee8a38fdbeb8737f443f729e465d0db796fca4299770afaed0f9124df952be91",
+  "scope": "SHOUGATU:func_8013F224"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/8013F190.c",
+  "func": "func_8013FB28",
+  "size": 1152,
+  "guarded": false,
+  "source_hash": "ee8a38fdbeb8737f443f729e465d0db796fca4299770afaed0f9124df952be91",
+  "scope": "SHOUGATU:func_8013FB28"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/8013F190.c",
+  "func": "func_80140314",
+  "size": 508,
+  "guarded": false,
+  "source_hash": "ee8a38fdbeb8737f443f729e465d0db796fca4299770afaed0f9124df952be91",
+  "scope": "SHOUGATU:func_80140314"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/8013F190.c",
+  "func": "func_80140510",
+  "size": 392,
+  "guarded": false,
+  "source_hash": "ee8a38fdbeb8737f443f729e465d0db796fca4299770afaed0f9124df952be91",
+  "scope": "SHOUGATU:func_80140510"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/8013F190.c",
+  "func": "func_80140DC0",
+  "size": 404,
+  "guarded": false,
+  "source_hash": "ee8a38fdbeb8737f443f729e465d0db796fca4299770afaed0f9124df952be91",
+  "scope": "SHOUGATU:func_80140DC0"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80141780.c",
+  "func": "func_801419D0",
+  "size": 240,
+  "guarded": false,
+  "source_hash": "095e12152dc111dad6c0f4455a28671446916b3554d4d983b99c2be52536771d",
+  "scope": "SHOUGATU:func_801419D0"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80141780.c",
+  "func": "func_80141D20",
+  "size": 1204,
+  "guarded": false,
+  "source_hash": "095e12152dc111dad6c0f4455a28671446916b3554d4d983b99c2be52536771d",
+  "scope": "SHOUGATU:func_80141D20"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80141780.c",
+  "func": "func_801421D4",
+  "size": 760,
+  "guarded": false,
+  "source_hash": "095e12152dc111dad6c0f4455a28671446916b3554d4d983b99c2be52536771d",
+  "scope": "SHOUGATU:func_801421D4"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80141780.c",
+  "func": "func_8014265C",
+  "size": 296,
+  "guarded": false,
+  "source_hash": "095e12152dc111dad6c0f4455a28671446916b3554d4d983b99c2be52536771d",
+  "scope": "SHOUGATU:func_8014265C"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80141780.c",
+  "func": "func_8014288C",
+  "size": 1300,
+  "guarded": false,
+  "source_hash": "095e12152dc111dad6c0f4455a28671446916b3554d4d983b99c2be52536771d",
+  "scope": "SHOUGATU:func_8014288C"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80141780.c",
+  "func": "func_80142DA0",
+  "size": 716,
+  "guarded": false,
+  "source_hash": "095e12152dc111dad6c0f4455a28671446916b3554d4d983b99c2be52536771d",
+  "scope": "SHOUGATU:func_80142DA0"
+ },
+ {
+  "unit": "SHOUGATU",
+  "src": "src/ovl/SHOUGATU/80141780.c",
+  "func": "func_801430A0",
+  "size": 352,
+  "guarded": false,
+  "source_hash": "095e12152dc111dad6c0f4455a28671446916b3554d4d983b99c2be52536771d",
+  "scope": "SHOUGATU:func_801430A0"
+ }
+]

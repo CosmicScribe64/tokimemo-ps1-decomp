@@ -1,0 +1,10 @@
+python3 failed:
+cfe: Error: drafts/T-17500/_runs/plain/SHOUGATU/func_80141D20/work/guarded.o.sjis.c, line 3700: redeclaration of 'func_80141D20'; previous declaration at line 3641 in file 'drafts/T-17500/_runs/plain/SHOUGATU/func_80141D20/work/guarded.o.sjis.c'
+ void func_80141D20(void) {
+ -----^
+cfe: Error: drafts/T-17500/_runs/plain/SHOUGATU/func_80141D20/work/guarded.o.sjis.c, line 3700: Incompatible function return type for this function.
+ void func_80141D20(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/plain/SHOUGATU/func_80141D20/work -o drafts/T-17500/_runs/plain/SHOUGATU/func_80141D20/work/guarded.o /tmp/asm_processorqi9p4ef2/preprocessed_623dde7212814e8a872e45f9699cf597.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibr4ubpbu1/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/plain/SHOUGATU/func_80141D20/work/guarded.o drafts/T-17500/_runs/plain/SHOUGATU/func_80141D20/work/guarded.o.sjis.c
+repair: existing earlier unprototyped call implies s32 return

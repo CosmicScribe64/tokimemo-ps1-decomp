@@ -1,0 +1,7 @@
+m2c.py: argument counts from the callees' asm: func_800850D4 4, func_80141780 0
+python3 failed:
+cfe: Error: drafts/T-17500/_runs/typed/SHOUGATU/func_801421D4/work/guarded.o.sjis.c, line 3727: Type int  of rhs of assignment expression is incompatible with type struct GameState  of lhs
+         *(&D_800E6280 + var_s1) = 9;
+ --------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/typed/SHOUGATU/func_801421D4/work -o drafts/T-17500/_runs/typed/SHOUGATU/func_801421D4/work/guarded.o /tmp/asm_processorqwn1vnib/preprocessed_07bc63b07df9444b98a8be6738818bef.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibtuh5frtj/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/typed/SHOUGATU/func_801421D4/work/guarded.o drafts/T-17500/_runs/typed/SHOUGATU/func_801421D4/work/guarded.o.sjis.c

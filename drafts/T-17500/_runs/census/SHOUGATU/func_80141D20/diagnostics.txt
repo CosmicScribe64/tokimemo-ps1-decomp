@@ -1,0 +1,13 @@
+python3 failed:
+ --------------------^
+cfe: Warning 681: drafts/T-17500/_runs/census/SHOUGATU/func_80141D20/work/guarded.o.sjis.c, line 3763: '&' before array or function; ignored
+             temp_s1 = &D_80146608 + temp_v0_3;
+ ----------------------^
+cfe: Warning 709: drafts/T-17500/_runs/census/SHOUGATU/func_80141D20/work/guarded.o.sjis.c, line 3764: Incompatible pointer type assignment
+             temp_s3 = temp_v0_3 + &D_801466D0;
+ --------------------^
+cfe: Warning 681: drafts/T-17500/_runs/census/SHOUGATU/func_80141D20/work/guarded.o.sjis.c, line 3764: '&' before array or function; ignored
+             temp_s3 = temp_v0_3 + &D_801466D0;
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17500/_runs/census/SHOUGATU/func_80141D20/work -o drafts/T-17500/_runs/census/SHOUGATU/func_80141D20/work/guarded.o /tmp/asm_processoroeuedloc/preprocessed_92453357c845408e873c5136d7f24587.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibcinuutx3/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17500/_runs/census/SHOUGATU/func_80141D20/work/guarded.o drafts/T-17500/_runs/census/SHOUGATU/func_80141D20/work/guarded.o.sjis.c
