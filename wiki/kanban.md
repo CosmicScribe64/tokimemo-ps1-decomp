@@ -25,6 +25,8 @@ kanban-plugin: board
 ## In Progress
 - [ ] [[tickets/T-16200-matching-wave-2|T-16200 Matching wave 2]]
 
+- [ ] [[tickets/T-16500-twin-sweep|T-16500 Whole-tree twin sweep after every merge]]
+
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
