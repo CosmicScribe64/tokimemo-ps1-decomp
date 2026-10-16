@@ -580,20 +580,21 @@ void data_save_load_class_init(void) {
     D_8012067A = -0x13;
 }
 
-/* NON_MATCHING: T-11100, 44 structural differences (603 against 602 instructions, frame 240 against 248): the original
- * keeps the clear counter in $s0 and the loop index in another register, and addresses the NameMetricWork/
- * NameRecordF00 slots through a different set of hoisted constants (lui a3 chain). Registers and frame do not follow
- * from the draft's locals yet. */
-#ifdef NON_MATCHING
+/* FAKE: KEEP_UNK_1117 is an empty test that gives the byte a second use in each call-free stretch of the else branch, so uopt
+ * promotes it to $a3 and reloads it after every call as the original does (register cheat sheet, "narrow selector the
+ * original reloads after every call"); the test emits no code. T-17002 */
+#define KEEP_UNK_1117() if ((s32)D_800E6280.unk_1117) { }
 void func_800696DC(s32 arg0, s32 arg1) {
     s32 i;
     s32 var_s0;
     s32 spEC;
+    s32 j; /* FAKE: unused; keeps the original frame slot between spEC and spC8 (every declared local reserves a slot), real local unknown. T-17002 */
     u8 spC8[32];
     u8 spA8[32];
     u8 sp88[32];
     u8 sp68[32];
     u8 sp48[32];
+    s32 sp44; /* FAKE: unused; keeps the original frame slot below sp48, real local unknown. T-17002 */
 
     if (arg1 != 0) {
         spEC = -0x8C;
@@ -601,7 +602,6 @@ void func_800696DC(s32 arg0, s32 arg1) {
         spEC = -8;
     }
     k_sub_reset();
-    var_s0 = 0;
     if ((u8) D_800E8BEE != 0) {
         var_s0 = 0;
         for (i = 0; i < 13; i++) {
@@ -610,9 +610,9 @@ void func_800696DC(s32 arg0, s32 arg1) {
             }
         }
         strcpy(spC8, D_800B3288[D_800E7D36]);
-        strncat((s32) spC8, (s32) "番アルバム", 2);
+        strncat(spC8, "番アルバム", 2);
         set_kanji_string((s16) (spEC + 0xC), -0x50, 0xFU, spC8, 0);
-        if (D_800E7D36 == 0) {
+        if (((NameMetricWork *)&D_800E7D10)->selected_slot == 0) {
             set_kanji_string((s16) spEC, -0x40, 0xFU, "システム", 0);
         } else {
             if (((NameMetricWork *)&D_800E7D10)->slot_status[D_800E7D36] == 0) {
@@ -621,21 +621,21 @@ void func_800696DC(s32 arg0, s32 arg1) {
                 set_kanji_string((s16) spEC, -0x40, 0xFU, "データ異常", 0);
             } else {
                 strcpy(spC8, D_800B3288[(u8) ((NameMetricWork *)&D_800E7D10)->year[D_800E7D36] / 10U]);
-                strncat((s32) spC8, (s32) D_800B3288[(u8) ((NameMetricWork *)&D_800E7D10)->year[D_800E7D36] % 10U], 2);
-                strncat((s32) spC8, (s32) "年", 2);
-                strncat((s32) spC8, (s32) D_800B3288[((NameMetricWork *)&D_800E7D10)->month[D_800E7D36]], 4);
-                strncat((s32) spC8, (s32) "月", 2);
+                strncat(spC8, D_800B3288[(u8) ((NameMetricWork *)&D_800E7D10)->year[D_800E7D36] % 10U], 2);
+                strncat(spC8, "年", 2);
+                strncat(spC8, D_800B3288[((NameMetricWork *)&D_800E7D10)->month[D_800E7D36]], 4);
+                strncat(spC8, "月", 2);
                 if (((NameMetricWork *)&D_800E7D10)->day[D_800E7D36] >= 0xAU) {
-                    strncat((s32) spC8, (s32) D_800B3288[((NameMetricWork *)&D_800E7D10)->day[D_800E7D36] / 10U], 2);
+                    strncat(spC8, D_800B3288[((NameMetricWork *)&D_800E7D10)->day[D_800E7D36] / 10U], 2);
                 }
-                strncat((s32) spC8, (s32) D_800B3288[((NameMetricWork *)&D_800E7D10)->day[D_800E7D36] % 10U], 2);
-                strncat((s32) spC8, (s32) "日", 2);
+                strncat(spC8, D_800B3288[((NameMetricWork *)&D_800E7D10)->day[D_800E7D36] % 10U], 2);
+                strncat(spC8, "日", 2);
                 set_kanji_string((s16) spEC, -0x40, 0xFU, spC8, 0);
                 strcpy(spA8, "名前…");
-                strncat((s32) spA8, (s32) ((NameMetricWork *)&D_800E7D10)->family_name[D_800E7D36], 6);
-                strncat((s32) spA8, (s32) ((NameMetricWork *)&D_800E7D10)->given_name[D_800E7D36], 6);
+                strncat(spA8, ((NameMetricWork *)&D_800E7D10)->family_name[D_800E7D36], 6);
+                strncat(spA8, ((NameMetricWork *)&D_800E7D10)->given_name[D_800E7D36], 6);
                 strcpy(sp88, "あだ名…");
-                strncat((s32) sp88, (s32) ((NameMetricWork *)&D_800E7D10)->nickname[D_800E7D36], 0xD);
+                strncat(sp88, ((NameMetricWork *)&D_800E7D10)->nickname[D_800E7D36], 0xD);
                 set_kanji_string((s16) spEC, -0x30, 0xFU, spA8, 0);
                 set_kanji_string((s16) spEC, -0x20, 0xFU, sp88, 0);
                 strcpy(sp68, "所属部‥");
@@ -646,13 +646,15 @@ void func_800696DC(s32 arg0, s32 arg1) {
                     var_s0 = 0x63;
                 }
                 if (var_s0 >= 0xA) {
-                    strncat((s32) sp48, (s32) D_800B3288[var_s0 / 10], 2);
+                    strncat(sp48, D_800B3288[var_s0 / 10], 2);
                 }
-                strncat((s32) sp48, (s32) D_800B3288[var_s0 % 10], 2);
+                strncat(sp48, D_800B3288[var_s0 % 10], 2);
                 set_kanji_string((s16) spEC, 0, 0xFU, sp48, 0);
             }
         }
     } else {
+        var_s0 = 0;
+        KEEP_UNK_1117();
         for (i = 0; i < 13; i++) {
             if (((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].flags[i] != 0) {
                 var_s0 += 1;
@@ -664,27 +666,35 @@ void func_800696DC(s32 arg0, s32 arg1) {
             set_kanji_string((s16) spEC, -0x40, 0xFU, "データ異常", 0);
         } else {
             strcpy(spC8, D_800B3288[D_800E6280.unk_1118]);
-            strncat((s32) spC8, (s32) "番アルバム", 2);
+            strncat(spC8, "番アルバム", 2);
             set_kanji_string((s16) (spEC + 0xC), -0x50, 0xFU, spC8, 0);
+            KEEP_UNK_1117();
             strcpy(spC8, D_800B3288[(u8) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].year / 10U]);
-            strncat((s32) spC8, (s32) D_800B3288[(u8) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].year % 10U], 2);
-            strncat((s32) spC8, (s32) "年", 2);
-            strncat((s32) spC8, (s32) D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].month], 4);
-            strncat((s32) spC8, (s32) "月", 2);
+            KEEP_UNK_1117();
+            strncat(spC8, D_800B3288[(u8) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].year % 10U], 2);
+            strncat(spC8, "年", 2);
+            KEEP_UNK_1117();
+            strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].month], 4);
+            strncat(spC8, "月", 2);
+            KEEP_UNK_1117();
             if (((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].day >= 0xAU) {
-                strncat((s32) spC8, (s32) D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].day / 10U], 2);
+                strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].day / 10U], 2);
             }
-            strncat((s32) spC8, (s32) D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].day % 10U], 2);
-            strncat((s32) spC8, (s32) "日", 2);
+            strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].day % 10U], 2);
+            strncat(spC8, "日", 2);
             set_kanji_string((s16) spEC, -0x40, 0xFU, spC8, 0);
             strcpy(spA8, "名前…");
-            strncat((s32) spA8, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].family_name, 6);
-            strncat((s32) spA8, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].given_name, 6);
+            KEEP_UNK_1117();
+            strncat(spA8, ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].family_name, 6);
+            KEEP_UNK_1117();
+            strncat(spA8, ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].given_name, 6);
             strcpy(sp88, "あだ名…");
-            strncat((s32) sp88, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].nickname, 0xD);
+            KEEP_UNK_1117();
+            strncat(sp88, ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].nickname, 0xD);
             set_kanji_string((s16) spEC, -0x30, 0xFU, spA8, 0);
             set_kanji_string((s16) spEC, -0x20, 0xFU, sp88, 0);
             strcpy(sp68, "所属部‥");
+            KEEP_UNK_1117();
             strncat((s32) sp68, club_name_table[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].club >> 12]);
             set_kanji_string((s16) spEC, -0x10, 0xFU, sp68, 0);
             strcpy(sp48, "クリア人数‥");
@@ -692,17 +702,14 @@ void func_800696DC(s32 arg0, s32 arg1) {
                 var_s0 = 0x63;
             }
             if (var_s0 >= 0xA) {
-                strncat((s32) sp48, (s32) D_800B3288[var_s0 / 10], 2);
+                strncat(sp48, D_800B3288[var_s0 / 10], 2);
             }
-            strncat((s32) sp48, (s32) D_800B3288[var_s0 % 10], 2);
+            strncat(sp48, D_800B3288[var_s0 % 10], 2);
             set_kanji_string((s16) spEC, 0, 0xFU, sp48, 0);
         }
     }
     k_sub_disp_start(6);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_800696DC);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A044);
 
