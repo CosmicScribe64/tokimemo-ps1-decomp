@@ -524,7 +524,74 @@ void func_801355B8(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-17700, the SHOUGATU func_8013BDE0 switch form; control flow and opcodes match, but the temporaries rotate from $t6 where the original starts at $t0 (constant 1 in $t0, %hi of unk_71E in $v0), so 224 funcdiff rows differ in register numbers throughout */
+#ifdef NON_MATCHING
+void func_801355E8(void) {
+    D_80145060 = 1;
+    D_80145064 = 0;
+    D_800E6280.unk_71E |= 0x44;
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        D_80145048 = D_80144FB0;
+        D_8014504C = D_80144FE4;
+        D_80145050 = D_80145018;
+        break;
+    case 1:
+        D_80145048 = D_80144FC4;
+        D_8014504C = D_80144FF8;
+        D_80145050 = D_8014502C;
+        break;
+    case 2:
+        D_80145048 = D_80144FB8;
+        D_8014504C = D_80144FEC;
+        D_80145050 = D_80145020;
+        break;
+    case 3:
+        D_80145048 = D_80144FBC;
+        D_8014504C = D_80144FF0;
+        D_80145050 = D_80145024;
+        break;
+    case 4:
+        D_80145048 = D_80144FD4;
+        D_8014504C = D_80145008;
+        D_80145050 = D_8014503C;
+        break;
+    case 5:
+        D_80145048 = D_80144FC8;
+        D_8014504C = D_80144FFC;
+        D_80145050 = D_80145030;
+        break;
+    case 6:
+        D_80145048 = D_80144FCC;
+        D_8014504C = D_80145000;
+        D_80145050 = D_80145034;
+        break;
+    case 7:
+        D_80145048 = D_80144FC0;
+        D_8014504C = D_80144FF4;
+        D_80145050 = D_80145028;
+        break;
+    case 8:
+        D_80145048 = D_80144FAC;
+        D_8014504C = D_80144FE0;
+        D_80145050 = D_80145014;
+        break;
+    case 9:
+        D_80145048 = D_80144FD0;
+        D_8014504C = D_80145004;
+        D_80145050 = D_80145038;
+        break;
+    case 10:
+        D_80145048 = D_80144FDC;
+        D_8014504C = D_80145010;
+        D_80145050 = D_80145044;
+        break;
+    }
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_801355E8);
+#endif
 
 void func_80135894(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
@@ -543,7 +610,40 @@ s32 func_80135A6C(void) {
     }
 }
 
+/* NON_MATCHING: T-17700, the census draft's merged store of unk_110D as a u8 local; 8 instructions differ: the original loads each unk_110D into $v0 with its %hi in $v0, IDO here uses $v1 */
+#ifdef NON_MATCHING
+s32 func_80135AC8(void) {
+    u8 state;
+
+    if (D_800E6280.unk_71E & 0x20) {
+        func_80044750(0xCF);
+        main_state_set(0x52);
+        return 0;
+    }
+    state = D_800E6280.unk_110D;
+    if (state == 0) {
+        func_800674B0();
+        state = D_800E6280.unk_110D + 1;
+    }
+    D_800E6280.unk_110D = state;
+    if (state == 1) {
+        if ((u32)D_800E6280.unk_1104.w++ >= 0x400) {
+            func_800452C4();
+            func_8004482C();
+            D_800E6280.unk_110D = 0;
+        }
+        if (func_80044E8C() == 1) {
+            D_800E6280.unk_110D += 1;
+        } else {
+            return 0;
+        }
+    }
+    D_80122D4C = 0;
+    return func_80072B5C(1);
+}
+#else
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80135AC8);
+#endif
 
 void func_80135BC4(void) {
     D_800B3D60 = 0;
@@ -653,7 +753,67 @@ void func_80136BA8(void) {
     func_80082764(0xFF, 1, 0);
 }
 
+/* NON_MATCHING: T-17700, the KANGEI func_8013454C form; one instruction pair differs: the original fills the delay slot of the D_80145088 branch with the lui of unk_F5F, IDO here puts it in the load delay of D_80145090 */
+#ifdef NON_MATCHING
+void func_80136C20(void) {
+    u8 girl;
+    GekoWords11 all;
+    GekoWords2 first;
+    GekoWords2 second;
+    GekoWords2 third;
+
+    all = D_801451B8;
+    first = D_801451E4;
+    second = D_801451EC;
+    third = D_801451F4;
+    if (D_800E6280.unk_03F < 6 || D_800E6280.unk_03F >= 10) {
+        all.v[0] = 0x544A;
+        all.v[3] = 0x544A;
+        all.v[5] = 0x544A;
+        first.v[0] = 0x5D41;
+        second.v[1] = 0x522E;
+        third.v[1] = 0x58AF;
+    }
+    if (D_80145088 == 0) {
+        girl = D_800E6280.unk_F5F;
+        if (D_80145090 == 0) {
+            read_bustup_uniform();
+            return;
+        }
+        switch (girl) {
+        case 0:
+            func_80062CD0(all.v[D_800E6280.unk_0F4.h >> 12]);
+            break;
+        case 1:
+            func_80062CD0(first.v[D_800E6280.unk_0F4.h >> 12]);
+            break;
+        case 2:
+            func_80062CD0(second.v[(D_800E6280.unk_0F4.h >> 12) - 2]);
+            break;
+        case 3:
+            func_80062CD0(third.v[(D_800E6280.unk_0F4.h >> 12) - 4]);
+            break;
+        case 4:
+            func_80062CD0(0x66EC);
+            break;
+        case 5:
+            func_80062CD0(0x5FE4);
+            break;
+        case 6:
+            func_80062CD0(0x625A);
+            break;
+        default:
+            func_80062CD0(0x6962);
+            break;
+        }
+        func_8004284C();
+        return;
+    }
+    read_bustup();
+}
+#else
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80136C20);
+#endif
 
 void func_80136E7C(void) {
     if (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b3) {

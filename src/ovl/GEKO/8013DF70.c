@@ -82,7 +82,40 @@ void func_8013E1A0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E22C);
+void func_8013E22C(void) {
+    s16 i;
+    Rec24 *p;
+
+    D_800E6280.unk_1228[5] = 1;
+    func_8004435C(0x140, 0, 0x40, 0x80, D_801463B0);
+    func_8013DF70();
+    func_80043914(D_80146394, 0x12, 1, 3, 0);
+    for (i = 4; i < 0xE; i++) {
+        p = &D_801217D0[i];
+        p->unk_00 = 0xC1000000;
+        p->unk_04 = func_800AE0D0() % 84 - 0x9F;
+        p->unk_06 = func_800AE0D0() % 130 - 0x5F;
+        p->unk_08 = 8;
+        p->unk_0A = 0x18;
+        p->unk_0C = 5;
+        p->unk_0E = 0;
+        p->unk_0F = 0;
+        p->unk_10 = 0;
+        p->unk_12 = 0x1F2;
+        p->unk_14 = 0;
+        p->unk_15 = 0;
+        p->unk_16 = 0;
+        p->unk_18 = 0;
+        p->unk_1A = 0;
+        p->unk_1C = 0x1000;
+        p->unk_1E = 0x1000;
+        p->unk_20 = 0;
+        D_800E6280.unk_10A5[i] = 0x8C;
+        D_801463E0[i - 4] = 0;
+        D_80146400[i - 4] = 0;
+    }
+    func_8004284C();
+}
 
 void func_8013E410(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8A88);

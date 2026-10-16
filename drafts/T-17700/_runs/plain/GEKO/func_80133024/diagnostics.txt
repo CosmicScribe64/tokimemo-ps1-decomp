@@ -1,0 +1,27 @@
+m2c.py: argument counts from the callees' asm: func_80132B24 0, func_80132D04 2
+python3 failed:
+ -----^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80133024/work/guarded.o.sjis.c, line 3603: Incompatible function return type for this function.
+ void func_80133024(void) {
+ ------------------^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80133024/work/guarded.o.sjis.c, line 3607: 'sp38' undefined; reoccurrences will not be reported.
+     sp38[0].unk0 = (s32) D_80144D28.unk0;
+ ----^
+cfe: Warning 749: drafts/T-17700/_runs/plain/GEKO/func_80133024/work/guarded.o.sjis.c, line 3607: structure has no member named 'unk0'
+     sp38[0].unk0 = (s32) D_80144D28.unk0;
+ -----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17700/_runs/plain/GEKO/func_80133024/work -o drafts/T-17700/_runs/plain/GEKO/func_80133024/work/guarded.o /tmp/asm_processor0ug6uep1/preprocessed_f35f4231348b4bbb86f02e4ba82991eb.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibo0k62c4m/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17700/_runs/plain/GEKO/func_80133024/work/guarded.o drafts/T-17700/_runs/plain/GEKO/func_80133024/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80133024/work/guarded.o.sjis.c, line 3603: redeclaration of 'func_80133024'; previous declaration at line 3509 in file 'drafts/T-17700/_runs/plain/GEKO/func_80133024/work/guarded.o.sjis.c'
+ void func_80133024(void) {
+ -----^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_80133024/work/guarded.o.sjis.c, line 3603: Incompatible function return type for this function.
+ void func_80133024(void) {
+ ------------------^
+cfe: Warning 749: drafts/T-17700/_runs/plain/GEKO/func_80133024/work/guarded.o.sjis.c, line 3608: structure has no member named 'unk0'
+     sp38[0] = (s32) D_80144D28.unk0;
+ ------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17700/_runs/plain/GEKO/func_80133024/work -o drafts/T-17700/_runs/plain/GEKO/func_80133024/work/guarded.o /tmp/asm_processoruig9gwxb/preprocessed_d45ec3e999d341c0a068e534845603c1.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhirameqm/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17700/_runs/plain/GEKO/func_80133024/work/guarded.o drafts/T-17700/_runs/plain/GEKO/func_80133024/work/guarded.o.sjis.c
+repair: existing earlier unprototyped call implies s32 return

@@ -15595,3 +15595,14 @@ Clean build 27/27 (all unit sha1 OK, TACO `1419e93c...`), `check_headers`, `migr
 ## [2026-10-16] ticket | T-19008 Done
 
 [[tickets/T-19008-w3-d-p08]] In Review to Done after the code review: 2 of 5 listed TAIIKU functions matched (820 bytes: `func_8013B200` 432, `func_8013B608` 388, FAKE views), `func_8013BCEC` guarded (2 instructions missing), `func_8013B78C` and `func_8013B94C` left `INCLUDE_ASM`. Three findings fixed: a stray edit of the T-16554 time in [[taiiku-family-results]], stale lead statements (guarded `func_8013B608`, 85 minutes) in the ticket, [[taiiku-family-results]] and [[matching-notes]], and the missing ticket id in the `func_8013BCEC` FAKE comment. Unit sha1 OK, headers, globals and proto checks OK.
+## [2026-10-16] ticket | T-17700 Types-first: GEKO started
+
+Opened [[tickets/T-17700-types-first-geko]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover GEKO's shared types, redraft its unmatched functions with the T-16550/T-16560/T-17400 drivers, then cut packages. Branch `w3-geko-types` from `w2-good`.
+
+## [2026-10-16] ticket | T-17700 Types-first: GEKO to In Review
+
+[[tickets/T-17700-types-first-geko]]: GEKO's stack-copied tables typed in `include/ovl/GEKO.h` (`GekoMonthDays`, `GekoNames12`, `GekoWords11`/`GekoWords2`, `GekoFnTbl42`, `GekoShorts10`, `GekoShorts6`, byte and text tables, the `Rec24` side arrays); 35 redrafts with `drafts/T-17700/redraft.py` (14 better than the census, sum 6,067 to 5,536 rows over the unguarded functions, none 0); the driver's fold now runs after `fix_shared_hi` (the old order printed `D_800E6280.unk0` for GameState bytes); 1 match / 484 bytes (`func_8013E22C`, EVENT clone), 5 guarded drafts; 8 packages T-17701..T-17708. New section "Types-first pass (T-17700)" on [[scenes-family-results]], a row in [[data-types]]. In Review, waiting for the code review. Clean build 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] ticket | T-17700 Done
+
+[[tickets/T-17700-types-first-geko]] In Review to Done after the code review against `CODING_STANDARDS.md`: 1 function matched (484 bytes: `func_8013E22C`), 5 guarded drafts, 35 redrafts, 8 packages (T-17701..T-17708). Two style findings fixed (cast spacing in the `func_80140040` draft, a blank line in the `func_801355E8` draft; `src/ovl/GEKO/8013F360.c`, `src/ovl/GEKO/80134D10.c`). GEKO unit sha1 OK after the rebuild; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.

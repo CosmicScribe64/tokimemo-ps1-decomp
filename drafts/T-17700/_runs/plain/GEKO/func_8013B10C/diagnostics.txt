@@ -1,0 +1,31 @@
+python3 failed:
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3488: redeclaration of 'func_8013B10C'; previous declaration at line 3474 in file 'drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o.sjis.c'
+ void func_8013B10C(void) {
+ -----^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3488: Incompatible function return type for this function.
+ void func_8013B10C(void) {
+ ------------------^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3491: 'sp28' undefined; reoccurrences will not be reported.
+     *(M2cBlockA8 *)(&sp28[0]) = *(M2cBlockA8 *)(&D_80146630);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work -o drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o /tmp/asm_processorsbht0h7u/preprocessed_b7d3fe6f410f4f47bd8a6161987d1d41.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliby1vz6i8_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3488: redeclaration of 'func_8013B10C'; previous declaration at line 3474 in file 'drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o.sjis.c'
+ void func_8013B10C(void) {
+ -----^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3488: Incompatible function return type for this function.
+ void func_8013B10C(void) {
+ ------------------^
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3493: Non-function name referenced in function call.
+     (&sp28[0])[D_800E738A](0x80);
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work -o drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o /tmp/asm_processorewwk3nye/preprocessed_f71dd15c6bea49739f08d2347e0c62d8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibn8y0b0r2/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o.sjis.c
+repair: existing earlier unprototyped call implies s32 return
+python3 failed:
+cfe: Error: drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3493: Non-function name referenced in function call.
+     (&sp28[0])[D_800E738A](0x80);
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work -o drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o /tmp/asm_processor7lzrl67h/preprocessed_ac2ae1e45ac0411cb6fb98c1926b99ab.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibjrikbrhf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o drafts/T-17700/_runs/plain/GEKO/func_8013B10C/work/guarded.o.sjis.c

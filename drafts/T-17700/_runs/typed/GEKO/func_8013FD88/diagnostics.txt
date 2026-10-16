@@ -1,0 +1,11 @@
+m2c.py: argument counts from the callees' asm: func_8009F054 1
+python3 failed:
+cfe: Error: drafts/T-17700/_runs/typed/GEKO/func_8013FD88/work/guarded.o.sjis.c, line 3674: redeclaration of 'func_8013FD88'; previous declaration at line 3671 in file 'drafts/T-17700/_runs/typed/GEKO/func_8013FD88/work/guarded.o.sjis.c'
+ void func_8013FD88(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s32 arg6) {
+ -----^
+cfe: Error: drafts/T-17700/_runs/typed/GEKO/func_8013FD88/work/guarded.o.sjis.c, line 3674: Incompatible function return type for this function.
+ void func_8013FD88(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s32 arg6) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-17700/_runs/typed/GEKO/func_8013FD88/work -o drafts/T-17700/_runs/typed/GEKO/func_8013FD88/work/guarded.o /tmp/asm_processorrq3jjz0j/preprocessed_c35eb634a3fb4300a1a56f351823d1d4.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibvv4gbe1s/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-17700/_runs/typed/GEKO/func_8013FD88/work/guarded.o drafts/T-17700/_runs/typed/GEKO/func_8013FD88/work/guarded.o.sjis.c
+repair: existing earlier unprototyped call implies s32 return
