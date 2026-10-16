@@ -16566,3 +16566,7 @@ Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG
 ## [2026-10-16] ticket | T-17004 In Review
 
 [[tickets/T-17004-w3-main-p04]] In Progress to In Review: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`), 4 of 5 functions matched in plain C (2,544 bytes: `func_8006EB64`, `func_8006EEC4`, `func_80072998`, `func_800726F0`), `func_8006D6E0` stays guarded at 5 lines. The first three matched by reading the struct fields through a local `GameState *g = &D_800E6280;` (the two 8-line ones lost their FAKE locals and compare); `func_800726F0` needs a marked FAKE local copy found by autotweak. Notes in [[matching-notes]] (section T-17004), a row in [[register-cheatsheet]], two rows and an update in [[data/t0018-cases]], [[main-family-results]] updated. Commits `bcf3c783`, `90864652`, `469023e8`, `46795e4a`.
+
+## [2026-10-16] ticket | T-17004 closer pass
+
+Opus closer on [[tickets/T-17004-w3-main-p04]]: `func_8006D6E0` matched in plain C (268 bytes, commit `1694e986`; package 5 of 5, 2,812 bytes). The missing `move v1,v0` is folded by as1's global optimisation, not uopt (uopt's output ucode and `cc -S` keep it); as1 keeps it when `$v0` is live at the exit, so the definition is `s32` with no `return` and `include/main_api.h` declares `s32 func_8006D6E0();`. Notes in [[matching-notes]] (T-17004 closer pass), a row in [[register-cheatsheet]], an update line in [[data/t0018-cases]], [[main-family-results]] and [[index]] updated. Ticket stays In Review.
