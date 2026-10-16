@@ -52,7 +52,7 @@ Independent standards and spec reviews of 0e670a13...1e2eb462 found no actionabl
 
 [[tickets/T-17700-types-first-geko]] recovered GEKO's shared types before function matching, redrafted the 35
 unmatched GEKO functions with them and cut the rest into eight packages (branch `w3-geko-types`, from `w2-good`).
-Drafts and drivers: `drafts/T-17700/` (README there). About 1 hour 45 minutes of agent time in all.
+Drafts and drivers: `drafts/T-17700/` (README there). About 70 minutes of agent time in all.
 
 ### Type map
 

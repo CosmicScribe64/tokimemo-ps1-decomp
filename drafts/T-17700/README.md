@@ -8,8 +8,8 @@ as a port of its EVENT clone `func_8010564C`, so it is not here.
   root; its docstring lists the rewrites). GEKO's display records are `D_8011ECD0` (`u8[]` in `main_api.h`, read
   through a `DisplayActor44` view) and its `Rec24` records `D_801217D0` (already `Rec24[]`).
   Changes against T-17400: the fold runs after `tools/m2c.py`'s `fix_shared_hi` and keeps the offset of a
-  `%hi` (folding first made m2c print `D_800E6280.unk0` for every GameState byte that shares a `%hi`, which
-  hit 11 typed drafts of the T-17200/T-17400 runs too); new rewrites `stack-elements` (a stack local m2c
+  `%hi`. Folding first made m2c print `D_800E6280.unk0` for every GameState byte that shares a `%hi`; 11 typed
+  drafts of the T-17200/T-17400 runs show it too. New rewrites: `stack-elements` (a stack local m2c
   names inside a copied table, a byte step from an indexed element, or the table's name read as a value, are
   elements of the table) and `gamestate-records` (`*(&D_800E6280.unk_1BC[0].F + (i * 0x38))` is
   `D_800E6280.unk_1BC[i].F`).
