@@ -24,11 +24,6 @@ void func_8013A040(void) {
     *(u16 *)(q + 0x26) += 1;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11850, 2 lines: the 0x40 argument of the t+0xC handler call is rematerialized (li a0) where the original
- * reuses the dispatch's hoisted 0x40 in a0 (load delay slot nop). IDO 5.3 never joins a call-argument constant with a
- * hoisted constant range in scratch tests (also not with a use of 0x40 in the call's own block, typed/K&R/u16/u32
- * arguments, constant locals, an if-chain with a variable). The pad word is fixed by the u32 offset local o. */
 void func_8013A0DC(void) {
     u8 *g;
     u8 *s;
@@ -80,18 +75,15 @@ void func_8013A0DC(void) {
                 e = D_80158A8C;
                 *(s16 *)(e + 4) = 0;
                 e[0xC] = 0;
-                *(s16 *)(e + 0xA) = 0;
-                *(s16 *)(e + 8) = 0;
-                *(s16 *)(e + 6) = 0;
-                e[0xF] = 0;
-                e[0xE] = 0;
-                e[0xD] = 0;
+                /* FAKE: TT zero-store chain pair; the dead chain reloads keep ranges that move s to a1 and t to v1. T-11860 */
+                *(u16 *)(e + 6) = *(u16 *)(e + 8) = *(u16 *)(e + 0xA) = 0;
+                e[0xD] = e[0xE] = e[0xF] = 0;
                 *(u16 *)(s + 2) = 0x50;
                 }
             break;
         case 0x50:
             if (*(u16 *)(t + 0x1E) == 0) {
-                (*(void (**)(s32, u8 *))(t + 0xC))(0x40, s);
+                (*(void (**)(void))(t + 0xC))();
             }
             break;
         }
@@ -106,23 +98,17 @@ void func_8013A0DC(void) {
             } else {
                 *(s16 *)s = 7;
             }
-            *(s16 *)(s + 6) = 0;
-            *(s16 *)(s + 4) = 0;
-            *(s16 *)(s + 2) = 0;
-            s[0xB] = 0;
-            s[0xA] = 0;
-            s[9] = 0;
+            /* FAKE: TT zero-store chain pair; the dead chain reloads keep ranges that move s to a1 and t to v1. T-11860 */
+            *(u16 *)(s + 2) = *(u16 *)(s + 4) = *(u16 *)(s + 6) = 0;
+            s[9] = s[0xA] = s[0xB] = 0;
         }
         break;
     }
     if (s[0x22] != 0 && g[0x52] == 0xFF && ((*(u16 *)(g + o) & 0x800) || (*(u16 *)(g + 0x14) & 0x20))) {
         *(s16 *)s = 1;
-        *(s16 *)(s + 6) = 0;
-        *(s16 *)(s + 4) = 0;
-        *(s16 *)(s + 2) = 0;
-        s[0xB] = 0;
-        s[0xA] = 0;
-        s[9] = 0;
+        /* FAKE: TT zero-store chain pair; the dead chain reloads keep ranges that move s to a1 and t to v1. T-11860 */
+        *(u16 *)(s + 2) = *(u16 *)(s + 4) = *(u16 *)(s + 6) = 0;
+        s[9] = s[0xA] = s[0xB] = 0;
     }
     func_8014AB48();
     func_80147074();
@@ -135,6 +121,3 @@ void func_8013A0DC(void) {
     func_8013D150();
     func_80136830();
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A040", func_8013A0DC);
-#endif

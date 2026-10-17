@@ -47,14 +47,9 @@ void func_801478D0(TtAnimState *arg0) {
     }
 }
 
-/* NON_MATCHING: T-11850, 58 funcdiff lines (29 instructions), registers only: the ugen temporaries t6 and t7 are swapped
- * from the arg1[6] load on (the original frees the K&R conversion temporary of arg2 after the D_80158A68 index load, IDO
- * at entry); every uopt register, the schedule and the frame match. Draft: K&R u16 arg2, flags and tile code share one
- * local (v1), idx = tile >> 6 in its own local (a2). */
-#ifdef NON_MATCHING
 void func_80147A18(arg0, arg1, arg2)
     u8 *arg0;
-    u8 *arg1;
+    TtSprAnim *arg1;
     u16 arg2;
 {
     s32 pad[2]; /* FAKE: unused, sizes the 0x78 frame with the call spill at sp+0x50. T-11850 */
@@ -78,25 +73,25 @@ void func_80147A18(arg0, arg1, arg2)
 
     buf = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
     q = D_80158AB0;
-    sets = *(TtSprSet ***)arg1;
+    sets = arg1->sets;
     if (sets != 0) {
-        set = sets[arg1[5]];
-        fr = &set->frames[arg1[6]];
+        set = sets[arg1->set];
+        fr = &set->frames[arg1->frame];
         seq = &set->seqs[fr->seq];
         part = set->parts + seq->start + seq->count - 1;
         pal = set->attr;
         clut = set->clut;
         *(s16 *)(q + 4) = *(s16 *)(arg0 + 0);
         *(s16 *)(q + 6) = *(s16 *)(arg0 + 2);
-        if (arg1[0x10] != 0) {
-            *(s16 *)(q + 0) = *(s16 *)(arg1 + 0xC);
-            *(s16 *)(q + 2) = *(s16 *)(arg1 + 0xE);
+        if (arg1->unk_10 != 0) {
+            *(s16 *)(q + 0) = arg1->x;
+            *(s16 *)(q + 2) = arg1->y;
         }
         for (n = seq->count; n > 0; n--, part--) {
             v = (u8 *)buf->cursor;
             buf->cursor = (DR_MODE *)(v + 0x30);
-            v[0x28] = part->flags ^ arg1[4];
-            code = arg1[4];
+            v[0x28] = part->flags ^ arg1->flip;
+            code = arg1->flip;
             if (code & 1) {
                 y = *(s16 *)(arg0 + 2) - part->y - 0x10;
             } else {
@@ -117,22 +112,19 @@ void func_80147A18(arg0, arg1, arg2)
             v[0x29] = 0;
             v[0x2A] = 1;
             *(s16 *)(v + 0x16) = *c & 0x1F;
-            if (arg1[0xA] != 0) {
-                b = arg1[0xB];
+            if (arg1->clutOverride != 0) {
+                b = arg1->clut;
                 *(s16 *)(v + 0xE) = clut + (b & 0xF) + (b & 0xF0) * 4;
             } else {
                 b = part->clut;
                 *(s16 *)(v + 0xE) = clut + (b & 0xF) + (b & 0xF0) * 4;
             }
             v[0x2C] = 0;
-            v[0x2B] = arg1[0x10];
+            v[0x2B] = arg1->unk_10;
             func_80141C6C(&buf->ordering[arg2], v, q);
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801478D0", func_80147A18);
-#endif
 
 void func_80147CE0(void) {
     s32 i = 0;

@@ -258,8 +258,6 @@ s32 func_80145508(u8 *arg0, u8 *arg1, u8 *arg2, u8 *arg3) {
     return 0;
 }
 
-/* NON_MATCHING: T-11840, 24 differing lines, registers only (structure, frame and schedule match). 1) The player state *(u16 *)(player + 4) tested after the loops over D_80158AA0 (two sites, one uopt range) sits in a1 in the original and in v1 here: the original has v0, v1 and a0 taken over that range, no visible value explains it (if/switch forms, u16/s32 locals, s16 stores tried). 2) The hoisted 0xAB (inner D_80158AA0 loop of the D_80158A78 block) and that loop's bound 0x80 tie (priority 12.5) and 0xAB is numbered first, so it gets s2 and the bound s6; the original has 0xAB in s6 (li before the beqz) and 0x80 in s2. A bound local n (for-init or before the loop) gives the registers but hoists the li too early. Permuter 900 s found nothing. */
-#ifdef NON_MATCHING
 void func_801455C8(void) {
     u8 *g;
     u8 *player;
@@ -271,7 +269,6 @@ void func_801455C8(void) {
     u8 *s;
     TtCollision6 box;
     s32 i;
-    s32 pad2[2]; /* FAKE: keeps the 0x98 frame with i at sp+0x6C, player at sp+0x90 and box at sp+0x70. T-11840 */
 
     g = D_80158A64;
     p = D_80158A98;
@@ -282,12 +279,9 @@ void func_801455C8(void) {
             if (*(u16 *)(player + 4) < 0x60) {
                 func_8014C580(p);
                 *(u16 *)(p + 4) = 0x71;
-                *(s16 *)(p + 0xA) = 0;
-                *(s16 *)(p + 8) = 0;
-                *(s16 *)(p + 6) = 0;
-                p[0xF] = 0;
-                p[0xE] = 0;
-                p[0xD] = 0;
+                /* FAKE: TT zero-store chain pair; dead reloads put the state in a1. T-11860 */
+                *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 0xA) = 0;
+                p[0xD] = p[0xE] = p[0xF] = 0;
             }
             if (player[0x52] == 0) {
                 func_80144094();
@@ -324,12 +318,9 @@ void func_801455C8(void) {
                 if (player[0x52] == 0) {
                     func_80144094();
                     *(u16 *)(player + 4) = 0x60;
-                    *(s16 *)(player + 0xA) = 0;
-                    *(s16 *)(player + 8) = 0;
-                    *(s16 *)(player + 6) = 0;
-                    player[0xF] = 0;
-                    player[0xE] = 0;
-                    player[0xD] = 0;
+                    /* FAKE: TT zero-store chain pair; dead reloads put the state in a1. T-11860 */
+                    *(u16 *)(player + 6) = *(u16 *)(player + 8) = *(u16 *)(player + 0xA) = 0;
+                    player[0xD] = player[0xE] = player[0xF] = 0;
                     break;
                 }
             }
@@ -370,24 +361,29 @@ void func_801455C8(void) {
                         && func_80145508(q + 0x14, (u8 *)&D_80155B36, p + 0x14, (u8 *)&D_80155B30[2])) {
                         func_8014C580(p);
                         *(u16 *)(p + 4) = 0x71;
-                        *(s16 *)(p + 0xA) = 0;
-                        *(s16 *)(p + 8) = 0;
-                        *(s16 *)(p + 6) = 0;
-                        p[0xF] = 0;
-                        p[0xE] = 0;
-                        p[0xD] = 0;
+                        /* FAKE: TT zero-store chain pair; dead reloads put the state in a1. T-11860 */
+                        *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 0xA) = 0;
+                        p[0xD] = p[0xE] = p[0xF] = 0;
                     }
                     p += 0x78;
                 }
                 e = D_80158AA0;
-                for (j = 0; j < 0x80; j++) {
-                    if (e[0] != 0 && (*(u16 *)(e + 4) == 0x40 || *(u16 *)(e + 4) == 0x50)) {
-                        if (*(u16 *)(e + 2) != 0xAB && *(u16 *)(e + 2) != 0xAD
-                            && func_80145508(q + 0x14, (u8 *)D_80155B30, e + 0x14, *(u8 **)(e + 0x4C))) {
-                            e[0] = 0;
-                        }
+                for (j = 0; j < 0x80; j++, e += 0x68) {
+                    if (e[0] == 0) {
+                        continue;
                     }
-                    e += 0x68;
+                    if (*(u16 *)(e + 4) != 0x40 && *(u16 *)(e + 4) != 0x50) {
+                        continue;
+                    }
+                    if (*(u16 *)(e + 2) == 0xAB) {
+                        continue;
+                    }
+                    if (*(u16 *)(e + 2) == 0xAD) {
+                        continue;
+                    }
+                    if (func_80145508(q + 0x14, (u8 *)D_80155B30, e + 0x14, *(u8 **)(e + 0x4C))) {
+                        e[0] = 0;
+                    }
                 }
             }
             q += 0xA4;
@@ -409,12 +405,9 @@ void func_801455C8(void) {
                         }
                     }
                     *(u16 *)(p + 4) = 0x70;
-                    *(s16 *)(p + 0xA) = 0;
-                    *(s16 *)(p + 8) = 0;
-                    *(s16 *)(p + 6) = 0;
-                    p[0xF] = 0;
-                    p[0xE] = 0;
-                    p[0xD] = 0;
+                    /* FAKE: TT zero-store chain pair; dead reloads put the state in a1. T-11860 */
+                    *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 0xA) = 0;
+                    p[0xD] = p[0xE] = p[0xF] = 0;
                     *(u16 *)(q + 4) = 0x80;
                     q[0xD] = 0;
                     q[0xE] = 0;
@@ -454,12 +447,9 @@ void func_801455C8(void) {
                             e[0] = 0;
                             func_8014C5F8(e + 0x14);
                             *(u16 *)(q + 4) = 0x80;
-                            *(s16 *)(q + 0xA) = 0;
-                            *(s16 *)(q + 8) = 0;
-                            *(s16 *)(q + 6) = 0;
-                            q[0xF] = 0;
-                            q[0xE] = 0;
-                            q[0xD] = 0;
+                            /* FAKE: TT zero-store chain pair; dead reloads put the state in a1. T-11860 */
+                            *(u16 *)(q + 6) = *(u16 *)(q + 8) = *(u16 *)(q + 0xA) = 0;
+                            q[0xD] = q[0xE] = q[0xF] = 0;
                         }
                         break;
                     }
@@ -474,12 +464,9 @@ void func_801455C8(void) {
                         && func_80145508(q + 0x14, (u8 *)&D_80155B36, o + 0x14, (u8 *)&D_80155B30[4])) {
                         func_8013C41C(o, *(s16 *)(q + 0x14) - *(s16 *)(o + 0x14));
                         *(u16 *)(q + 4) = 0x80;
-                        *(s16 *)(q + 0xA) = 0;
-                        *(s16 *)(q + 8) = 0;
-                        *(s16 *)(q + 6) = 0;
-                        q[0xF] = 0;
-                        q[0xE] = 0;
-                        q[0xD] = 0;
+                        /* FAKE: TT zero-store chain pair; dead reloads put the state in a1. T-11860 */
+                        *(u16 *)(q + 6) = *(u16 *)(q + 8) = *(u16 *)(q + 0xA) = 0;
+                        q[0xD] = q[0xE] = q[0xF] = 0;
                     }
                     o += 0x6C;
                 }
@@ -488,6 +475,3 @@ void func_801455C8(void) {
         q += 0x54;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80144D70", func_801455C8);
-#endif
