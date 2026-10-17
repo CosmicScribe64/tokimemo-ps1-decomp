@@ -29,8 +29,6 @@ void func_80059BC0(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-17008, 27 differing lines; the last four words (unk_1228[0x3C..0x3F]) are one straight-line block off a run-time scaled base (li a0,60; sll; addu; loads, then stores in reverse) in the original, IDO folds the index into loop or absolute-address code */
-#ifdef NON_MATCHING
 void func_80059BE8(void) {
     s32 i;
     s32 k;
@@ -64,15 +62,11 @@ void func_80059BE8(void) {
     for (i = 0x1B; i < 0x20; i++) {
         D_800E6280.unk_1228[i] += 0xFFF80000;
     }
-    D_800E6280.unk_1228[0x3B] += 0xFFF80000;
-    for (i = 0x3C; i < 0x40; i += 2) {
+    i = 0x3B;
+    do {
         D_800E6280.unk_1228[i] += 0xFFF80000;
-        D_800E6280.unk_1228[i + 1] += 0xFFF80000;
-    }
+    } while (++i < 0x40);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80059B40", func_80059BE8);
-#endif
 
 /* FAKE: u8 views give the original's global access (LOD): `andi`/`or v0` copy of the increment; the s32 return keeps that copy live (T-5010) */
 s32 func_80059E00(void) {
