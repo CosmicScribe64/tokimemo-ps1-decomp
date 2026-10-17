@@ -17719,3 +17719,7 @@ Clean rebuild 27/27, check_headers, migrate_globals --check and sync_protos --ch
 ## [2026-10-17] ticket | T-22012 Done
 
 Code review against CODING_STANDARDS.md found nothing to fix; 2 of 4 matched (`BUNKASAI:func_8013B25C`, `BUNKASAI:func_80150B7C`), `func_801509A4` (19 rows) and `func_80151364` (2 rows) stay guarded. [[tickets/T-22012-w4-p12]], [[kanban]].
+
+## [2026-10-18] ticket | T-11890 created (In Progress)
+
+Claim #56: TT `func_8014D260`, the last TT function, through the gcc/maspsx path. Created [[tickets/T-11890-tt-ratan2-aspsx]]. First step is measuring the three ASPSX behaviours of [[gcc-objects]] over the SDK asm of the main exe before writing any rule.
