@@ -16871,3 +16871,7 @@ Clean rebuild of the w3-main-p09 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-17007 Done
 
 [[tickets/T-17007-w3-main-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found three issues, all fixed: the one-pass write loop in the guarded `func_80054C74` draft lacked a `FAKE` comment, `func_80055A38` reached the bank through the old symbol `D_80123324` (now `D_80123320[0].data`, still matches; the checksum field form breaks the registers and is explained in the comment), and a stale "0 of 5" line in [[matching-notes]]. 1 of 5 functions matched (`func_80055A38`, 196 B), unit sha1 OK, `func_80054C74` stays guarded at 2 lines. Merge via the wave 3 merge script.
+
+## [2026-10-17] ticket | T-17016 In Progress
+
+[[tickets/T-17016-w3-main-p16]] created and started: wave 3 package w3-main-p16 of [[tickets/T-17000-types-first-main]], branch `w3-main-p16` from `w2-good`, owned file `src/main/800737A0.c`, 4 functions (`func_800741B8`, `func_8007505C`, `func_8007437C`, `parameter_up_down`).
