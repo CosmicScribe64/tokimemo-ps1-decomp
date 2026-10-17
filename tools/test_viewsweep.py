@@ -80,8 +80,17 @@ class Analysis(unittest.TestCase):
             r(); t = r();
         }"""
         callees = vs.body_calls(body, "g")
-        self.assertEqual(vs.ignored_results(body, callees),
-                         {"a", "d", "e", "f", "m", "n2", "q"})
+        self.assertEqual(vs.ignored_in_unit(body, callees), {"a", "d", "e", "f", "m", "n2", "q"})
+
+    def test_a_use_of_the_result_in_another_function_of_the_unit_rules_void_out(self):
+        text = """void c(void);
+void g(void) { c(); }
+s32 h(void) { return c(); }
+void k(void) { d(); }
+void d(void);
+"""
+        self.assertEqual(vs.ignored_in_unit(text, ["c", "d", "unused"]), {"d"})
+        self.assertEqual(vs.ignored_in_unit(UNIT, ["func_8013E97C", "func_8013E7C0", "helper"]), {"func_8013E97C", "helper"})
 
     def test_a_value_return_is_found(self):
         self.assertTrue(vs.has_value_return("{ return 1; }"))
@@ -150,7 +159,7 @@ class Lattice(unittest.TestCase):
         body = UNIT[UNIT.index("void target"):UNIT.index("void helper(s32 x) {")]
         callees = vs.body_calls(body, "target")
         self.assertEqual(callees, ["func_8013E97C", "func_8013E7C0", "func_8013E111", "helper", "asm_callee"])
-        ignored = vs.ignored_results(body, callees)
+        ignored = vs.ignored_in_unit(UNIT, callees)
         self.assertEqual(ignored, {"func_8013E97C", "func_8013E111", "helper", "asm_callee"})     # not func_8013E7C0: assigned
         own, per = vs.build_plan(UNIT, "target", callees, ignored)
         self.assertEqual(len(own), 2)
@@ -372,11 +381,12 @@ class Untested(unittest.TestCase):
         self.assertTrue(result["untested"][0][1].startswith("ProtoError"))
 
     def test_a_baseline_that_does_not_compile_still_sweeps_the_variants(self):
-        _s, fake, result = sweep({"s32 f();": 40, "s32 c1();": 30}, fail=["as is"])
+        _s, fake, result = sweep({"s32 f();": 40, L(OWN1, C1S): 30}, fail=["as is"])
         self.assertIsNone(result["baseline"])
         self.assertIn("build.ninja", result["baseline_error"])
         self.assertEqual(result["status"], "improved")
         self.assertEqual(result["best_rows"], 30)
+        self.assertEqual(result["anchor"], ["s32 f();"])
 
     def test_a_baseline_error_that_no_view_touches_ends_the_sweep(self):
         s = vs.Sweep(FakeScore({}, fail=["as is"], message="cfe: Error: unit, line 7: 'D_800E8C32' undefined"),
@@ -388,13 +398,23 @@ class Untested(unittest.TestCase):
 
     def test_a_baseline_error_about_a_lattice_symbol_is_what_the_variants_fix(self):
         message = "cfe: Error: unit, line 7: redeclaration of 'c1'; previous declaration at line 3"
-        _s, fake, result = sweep({"s32 c1();": 9}, fail=["as is"], message=message)
+        _s, fake, result = sweep({"s32 c1();": 9}, fail=["as is", "s32 f();", "s32 f(void);"], message=message)
         self.assertGreater(len(fake.calls), 3)
         self.assertEqual((result["status"], result["best_rows"]), ("improved", 9))
 
-    def test_when_the_unit_does_not_compile_the_own_edits_come_before_the_other_singles(self):
-        _s, fake, _r = sweep({"s32 f();": 40}, fail=["as is"])
-        self.assertEqual(fake.calls[:5], ["as is", "as is", "s32 f();", "s32 f(void);", "s32 c1();"])
+    def test_when_the_unit_does_not_compile_the_own_edits_come_first_and_the_best_one_is_the_base(self):
+        _s, fake, result = sweep({"s32 f();": 40, "s32 f(void);": 45}, fail=["as is"] + [L(e) for e in (C1S, C1V, C2S, C3S)])
+        self.assertEqual(fake.calls[:4], ["as is", "as is", "s32 f();", "s32 f(void);"])
+        # the callee edits alone would fail like the baseline: they are tried on top of the best own edit
+        self.assertEqual(fake.calls[4:8], [L(OWN1, e) for e in (C1S, C1V, C2S, C3S)])
+        self.assertNotIn(L(C1S), fake.calls)
+        self.assertEqual([u[0] for u in result["untested"]], ["as is"])
+
+    def test_without_a_compiling_own_edit_the_bare_singles_are_tried(self):
+        _s, fake, result = sweep({"s32 c1();": 9}, fail=["as is", "s32 f();", "s32 f(void);"])
+        self.assertIn("s32 c1();", fake.calls)
+        self.assertEqual(result["best_rows"], 9)
+        self.assertEqual(result["anchor"], [])
 
     def test_nothing_that_compiles_is_a_failure(self):
         s = vs.Sweep(FakeScore({}, fail=["as is", "s32 c1();"]), [], {"c1": [C1S]}, None, 10, 1, log=lambda m: None)
@@ -675,7 +695,7 @@ class Cli(unittest.TestCase):
             try:
                 with mock.patch.object(vs, "make_target", side_effect=ValueError("main:f has no C body (INCLUDE_ASM only)")), \
                         contextlib.redirect_stdout(io.StringIO()) as out:
-                    self.assertEqual(vs.main(["main:f"]), 0)
+                    self.assertEqual(vs.main(["main:f"]), 1)             # a target that could not be swept fails the run
             finally:
                 os.chdir(old)
         self.assertIn("error", out.getvalue())

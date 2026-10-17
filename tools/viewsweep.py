@@ -17,8 +17,9 @@ Targets
   - `--guarded`: every guarded draft of the tree (`--unit U` narrows it to one unit).
   - `--targets FILE`: lines `UNIT:func [BODY.c]` (blank lines and `#` comments are skipped).
   - `--body BODY.c --scope UNIT:func`, `--drafts DIR`: an archived draft body (`DIR/<UNIT>/<func>/body.c`, the
-    layout of drafts/T-NNNN/) for a function that is still `INCLUDE_ASM`. The body is put into the file's text
-    in a scratch copy as a `NON_MATCHING` draft; archived functions that are already C or guarded are skipped.
+    layout of drafts/T-NNNN/) for a function that is still `INCLUDE_ASM`. The body goes into a scratch copy of the
+    file as a `NON_MATCHING` draft, with the `declarations.h` that sits next to it (extern lines) above it;
+    archived functions that are C or guarded already are skipped.
   - `--src FILE`: a scratch copy of the C file to sweep instead of the tree's (one target only).
 
 The unit is preprocessed once per compile with funcdiff_verify.preprocess_draft (`NON_MATCHING` defined when
@@ -31,14 +32,17 @@ The lattice of one target (a variant is a set of edits on different functions):
   own     the target's definition: as is, `s32 f()` (K&R, no return), `s32 f(void)`; a definition with
           parameters keeps them and only changes its return type to `s32`.
   callee  every function that the body calls (the `jal` targets of the original asm, when there is one): as is,
-          `s32 c();`, `s32 c(<its declared parameters>);` and, when the body ignores the result (or the callee is
-          void already), `void c();`. A callee that the file defines gets its definition's return type
-          rewritten too (its parameters stay).
+          `s32 c();`, `s32 c(<its declared parameters>);` and `void c();` (the last only when no function of the
+          file uses the result, or the callee is void already: the edit applies to the whole file). A callee that the
+          file defines gets its definition's return type rewritten too (its parameters stay).
 Search order, inside --budget compiles (the baseline counts): (1) the baseline, (2) every single edit, likely
 ones first (the asm says which: a copy, zero or constant left in `$v0` at an exit points to `s32` for the
 function; a call whose result the original reads points to a non-void callee), (3) the best own edit x every
 callee edit, (4) all pairs among the five best single improvers, (5) the best variant extended by the other
-improvers one at a time. It stops at the first variant with 0 rows.
+improvers one at a time. It stops at the first variant with 0 rows. When the unedited unit does not compile
+(a header that says `void` for an `s32` definition, a call ahead of an implicit-int definition, an archived
+draft), the own edits go first and the best one that compiles is part of every later variant; a compiler error
+that names no function of the lattice (an undefined global in a draft) ends the target as `failed`.
 
 A compile that fails (a concurrent build.ninja rewrite, a compiler crash, an edit the file cannot take) is
 retried once, serially, after the parallel batch; if it fails again the variant is reported UNTESTED with the
@@ -50,7 +54,8 @@ function is C) and the recipe: the definition change, the header prototype to ch
 `*_OVERRIDE_<symbol>` lines (protoverride.commit_hint), and every caller (grep over src/ and include/) whose
 unit must stay sha1-OK after `ninja`. The table at the end is ranked by best rows. `--json OUT` writes one
 `UNIT_func.json` per target into the directory OUT (or all targets into OUT when it ends in `.json`);
-`--resume` skips targets whose file is there.
+`--resume` skips targets whose file is there. The exit status is 1 when a target could not be swept (`error`: unknown
+function, no C body), else 0; a sweep that finds nothing is not a failure.
 
 Limits: a body is read as written (calls through a function pointer variable are not callees); only return
 types and parameter lists change, never an argument or a statement; a view that matches here is a result of
@@ -182,13 +187,16 @@ def _statement_call(masked, start, end):
     return False
 
 
-def ignored_results(body, callees):
-    """The callees whose every call in `body` is a statement of its own (the result is ignored)."""
-    masked = mask(body)
+def ignored_in_unit(pre, callees):
+    """The callees whose every call, in every function body of the unit, is a statement of its own (the result is
+    ignored). A `void` view is a compile error in the file otherwise, because the edit applies to every function
+    that calls it; declarations are not uses."""
+    bodies = [mask(pre[pre.index("{", start):end]) for start, end, body in protoverride._spans(pre) if body]
     ignored = set()
     for name in callees:
-        uses = [m for m in re.finditer(r"\b%s\s*\(" % re.escape(name), masked)]
-        if uses and all(_statement_call(masked, m.start(), match_paren(masked, m.end() - 1)) for m in uses):
+        pat = re.compile(r"\b%s\s*\(" % re.escape(name))
+        uses = [(b, m) for b in bodies for m in pat.finditer(b)]
+        if uses and all(_statement_call(b, m.start(), match_paren(b, m.end() - 1)) for b, m in uses):
             ignored.add(name)
     return ignored
 
@@ -328,6 +336,7 @@ class Sweep:
         self.budget, self.jobs, self.log = budget, max(1, jobs), log
         self.singles = order_singles(own, per, hints)
         self.outcomes = {}                 # variant key -> Outcome
+        self.base = ()                     # edits in every variant after the baseline (see anchor_on_own_edit)
         self.compiles = 0                  # compile calls, retries included
         self.stop = threading.Event()      # a variant reached 0 rows
         self.cut = False                   # the budget ended a batch early
@@ -423,30 +432,46 @@ class Sweep:
             self.log("viewsweep: the unedited unit fails with a compiler error that no view change touches: %s"
                      % self.outcomes[()].error)
             return self.result("failed")
-        if base is None:            # the unit does not compile as it is: a type that the edits restate may be why
-            self.evaluate([(e,) for e in self.own], "own edits first")
-        self.evaluate([(e,) for e in self.singles], "singles")
+        if base is None:
+            self.anchor_on_own_edit()
+        self.evaluate([self.base + (e,) for e in self.singles if e.symbol not in self.base_symbols()], "singles")
         for phase in (self.cross_with_best_own, self.pairs, self.extend_best):
             if self.stop.is_set():
                 break
             phase()
         return self.result()
 
+    def base_symbols(self):
+        return {e.symbol for e in self.base}
+
+    def anchor_on_own_edit(self):
+        """The unit does not compile as it is: a type that an own edit restates (a header that says `void` for an
+        `s32` definition, a call before an implicit-int definition) may be why. The own edit that compiles with the
+        fewest rows becomes the base of every later variant, since the others would fail the same way."""
+        self.evaluate([(e,) for e in self.own], "own edits first")
+        scored = [(self.tested((e,)), i, e) for i, e in enumerate(self.own) if self.tested((e,)) is not None]
+        if scored:
+            self.base = (min(scored)[2],)
+            self.log("viewsweep: the unedited unit does not compile; later variants build on %s" % self.base[0].decl)
+
     def improvers(self):
-        """Single edits that beat the baseline (any scored edit when the baseline does not compile), best first."""
-        base = self.tested(())
+        """Single edits that beat the base (any scored edit when the baseline does not compile), best first."""
+        base = self.tested(self.base)
         base = BIG if base is None else base
-        scored = [(self.tested((e,)), i, e) for i, e in enumerate(self.singles)]
+        scored = [(self.tested(variant_key(self.base + (e,))), i, e) for i, e in enumerate(self.singles)
+                  if e.symbol not in self.base_symbols()]
         return [e for _r, _i, e in sorted(t for t in scored if t[0] is not None and t[0] < base)]
 
     def cross_with_best_own(self):
+        if self.base:                        # the own edit is in every variant already
+            return
         own = [e for e in self.improvers() if e.kind == "own"]
         if own:
             self.evaluate([(own[0], e) for e in self.singles if e.kind == "callee"], "best own x callees")
 
     def pairs(self):
         top = self.improvers()[:TOP_IMPROVERS]
-        self.evaluate([(a, b) for a, b in itertools.combinations(top, 2) if a.symbol != b.symbol], "pairs")
+        self.evaluate([self.base + (a, b) for a, b in itertools.combinations(top, 2) if a.symbol != b.symbol], "pairs")
 
     def extend_best(self):
         """Add the other improvers to the best variant one at a time while that keeps improving."""
@@ -479,6 +504,7 @@ class Sweep:
             "status": status,
             "baseline": base,
             "baseline_error": baseline.error if baseline is not None and base is None else None,
+            "anchor": [e.decl for e in self.base],
             "best_rows": best[0] if best else None,
             "best": [e.decl for e in best[1]] if best else [],
             "compiled": self.compiles,
@@ -643,10 +669,6 @@ def isolated_source(target):
     return None
 
 
-def last_line(err):
-    return error_summary(err)
-
-
 def prove(target, scorer, edits):
     """(equal, explanation) of the literal-byte proof of a 0-row variant. First on the sweep's own object; when
     that fails and the file has a guard of the function, again on a unit where only this function is C (the other
@@ -656,7 +678,7 @@ def prove(target, scorer, edits):
     try:
         equal, reason = scorer.proof.exact_match(obj, target.c, target.name, directory, True, True)
     except (OSError, ValueError, SystemExit) as err:
-        equal, reason = False, "literal-byte proof unavailable: " + last_line(err)
+        equal, reason = False, "literal-byte proof unavailable: " + error_summary(err)
     if equal:
         return True, reason
     only = isolated_source(target)
@@ -668,7 +690,7 @@ def prove(target, scorer, edits):
         iso, iso_dir = scorer.compile(key, non_matching=False, source=scratch)
         equal, reason2 = scorer.proof.exact_match(iso, target.c, target.name, iso_dir, True, True)
     except (OSError, ValueError, SystemExit) as err:
-        return False, "%s; only this function as C: %s" % (reason, last_line(err))
+        return False, "%s; only this function as C: %s" % (reason, error_summary(err))
     return equal, "only this function as C: " + reason2 if equal else "%s; only this function as C: %s" % (reason, reason2)
 
 
@@ -771,7 +793,7 @@ def sweep_target(target, jobs, budget, log=print):
     callees = body_calls(body, target.name)
     if asm_order:
         callees = [c for c in callees if c in asm_order]
-    own, per = build_plan(pre, target.name, callees, ignored_results(body, callees))
+    own, per = build_plan(pre, target.name, callees, ignored_in_unit(pre, callees))
     sweep = Sweep(scorer, own, per, hints, budget, jobs, log)
     result.update(sweep.run())
     result["seconds"] = round(time.time() - started, 1)
@@ -875,7 +897,7 @@ def main(argv):
             target = make_target(spec, None if args.guarded else args.unit, body, args.src)
             result = sweep_target(target, args.j, args.budget, log=lambda m: print("    " + m, flush=True))
         except (ValueError, OSError, SystemExit) as err:
-            reason = last_line(err) if isinstance(err, SystemExit) else (str(err).splitlines() or ["?"])[0]
+            reason = error_summary(err) if isinstance(err, SystemExit) else (str(err).splitlines() or ["?"])[0]
             if body is not None and ("is C or guarded" in reason or "no plain INCLUDE_ASM" in reason):
                 print(mark + "%s: skipped (%s)" % (spec, reason), flush=True)
                 continue
@@ -892,7 +914,7 @@ def main(argv):
     print("\n" + format_table(results))
     counts = collections.Counter(r["status"] for r in results)
     print("\nviewsweep: %s" % (", ".join("%d %s" % (v, k) for k, v in sorted(counts.items())) or "nothing swept"))
-    return 0
+    return 1 if counts.get("error") else 0
 
 
 if __name__ == "__main__":
