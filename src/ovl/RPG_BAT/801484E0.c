@@ -71,22 +71,20 @@ void func_80148654(void) {
     }
 }
 
-/* NON_MATCHING: T-17113, 28 differing lines; case 0 loads D_8015EBAC after the EC2C load (the original hoists it above the first store), the shift loop makes uopt store D_8015EDB4 back before it. */
-/* FAKE: draft only; the D_8015EBAC and D_8015EC70 tables are reached through their first symbol (aggregates not typed yet). Type them when the function is revisited. T-17113 */
-#ifdef NON_MATCHING
+/* FAKE: the D_8015EBAC and D_8015EC70 tables are reached through their first symbol (aggregates not typed yet); m views the D_8015EC50 words as RpgMotion20, as func_80148B08 does. T-17113, T-22013 */
 void func_80148714(void) {
     s32 i;
     s32 start;
-    s32 *p;
-    s32 *q;
     s32 *r;
     s32 x;
     s32 y;
+    RpgMotion20 *m = (RpgMotion20 *)&D_8015EC50;
 
     switch (D_8015EDB0.unk_00) {
     case 0:
-        D_8015EC50 = D_8015EBFC.unk_2C - 0xB0;
-        D_8015EC54 = D_8015EBFC.unk_30 - 0x58;
+        /* FAKE: T-22013, D_8015EC28/2C/50/54 are words 31, 32, 41, 42 of the table at D_8015EBAC; as1 keeps the loads behind the first store only when all four are one symbol (aggregate not typed yet) */
+        (&D_8015EBAC)[41] = (&D_8015EBAC)[31] - 0xB0;
+        (&D_8015EBAC)[42] = (&D_8015EBAC)[32] - 0x58;
         if (D_8015EBAC == 1) {
             D_801215FD = 4;
             D_80121685 = 4;
@@ -105,13 +103,13 @@ void func_80148714(void) {
             /* FAKE: redundant else; the original has the branch over an empty else (T-17113) */
             start = 0;
         }
+        i = start;
         if (start < 6) {
             r = &(&D_8015EBAC)[start * 2];
-            i = start;
             do {
-                D_8015EC58.unk_10 = r[50] * D_8015EC50 / 1000;
-                D_8015EC58.unk_14 = r[50] * D_8015EC54 / 1000;
-                func_8013E97C(i + 0x32, D_8015EC58.unk_10, D_8015EC58.unk_14);
+                m->rect.unk_10 = r[50] * m->dx / 1000;
+                m->rect.unk_14 = r[50] * m->dy / 1000;
+                func_8013E97C(i + 0x32, m->rect.unk_10, m->rect.unk_14);
                 func_8013E7C0(i + 0x32, 6, 1, 1);
                 i++;
                 r += 2;
@@ -125,11 +123,9 @@ void func_80148714(void) {
             }
             D_8015EC74 = D_8015EDB0.unk_04;
         }
-        p = &D_8015ED34;
-        q = (s32 *)&D_8015ED38;
-        do {
-            *q-- = *p--;
-        } while ((u32)&D_8015EC70 < (u32)p);
+        for (i = 0; i < 0x31; i++) {
+            (&D_8015ED38)[-i] = (&D_8015ED34)[-i];
+        }
         if (D_8015ECC4 == D_8015EC74) {
             for (i = 1; i < 6; i++) {
                 func_8013E7C0(i + 0x32, 6, 1, 0);
@@ -163,9 +159,6 @@ void func_80148714(void) {
         return;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801484E0", func_80148714);
-#endif
 
 void func_80148B08(void) {
     RpgMotion20 *motion = (RpgMotion20 *)&D_8015EC50;

@@ -17719,3 +17719,27 @@ Clean rebuild 27/27, check_headers, migrate_globals --check and sync_protos --ch
 ## [2026-10-17] ticket | T-22012 Done
 
 Code review against CODING_STANDARDS.md found nothing to fix; 2 of 4 matched (`BUNKASAI:func_8013B25C`, `BUNKASAI:func_80150B7C`), `func_801509A4` (19 rows) and `func_80151364` (2 rows) stay guarded. [[tickets/T-22012-w4-p12]], [[kanban]].
+
+## [2026-10-17] ticket | T-22013 Wave 4 package w4-p13 In Progress
+
+Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E0.c` and `src/ovl/RPG_BAT/8015A1F0.c`, three guarded functions (`func_8015A8B4`, `func_8015A744`, `func_80148714`). See [[tickets/T-22013-w4-p13]].
+
+## [2026-10-17] build | T-22013 func_80148714 matched
+
+`func_80148714` (RPG_BAT `src/ovl/RPG_BAT/801484E0.c`, 1,012 bytes) matches in plain C. Three causes: case 0 reaches `D_8015EC28/2C/50/54` as words of the `D_8015EBAC` table (as1 keeps a load behind a store of the same symbol), the shift loop is an index loop over `D_8015ED34`/`D_8015ED38` (the pointer form made uopt write `D_8015EDB4` back first), and `i = start;` sits before the `if`. See [[matching-notes]], section T-22013, and the new row in [[register-cheatsheet]].
+
+## [2026-10-17] ticket | T-22013 Wave 4 package w4-p13 In Review
+
+[[tickets/T-22013-w4-p13]]: 1 of 3 matched. `func_8015A8B4` (14 rows) and `func_8015A744` (6 rows) stay guarded: dead copy of a promoted global (and, for `func_8015A8B4`, `i + 0x28` in the first block), many new shapes tried, autotweak and permuter found nothing. Code review pending.
+
+## [2026-10-17] build | T-22013 func_8015A8B4 matched
+
+`func_8015A8B4` (RPG_BAT `src/ovl/RPG_BAT/8015A1F0.c`, 236 bytes) matches in plain C with one FAKE. A permuter candidate for `func_8015A744` reassigned `x` as the offset of the first store; written in the pointer-walk form, the same trick leaves the copy in `$a0` and moves `i + 0x28` into the first block. `func_8015A744` drops to 4 rows (one missing `or a1,v0,zero`). See [[matching-notes]], section T-22013, and the new [[register-cheatsheet]] row.
+
+## [2026-10-17] build | T-22013 func_8015A744 matched
+
+`func_8015A744` (RPG_BAT `src/ovl/RPG_BAT/8015A1F0.c`, 368 bytes) matches in plain C with one FAKE (closer pass, 4 rows to 0). The records are indexed as `((DisplayActor44 *)D_8011ECD0)[i + 136]` so uopt sees the stores land in another symbol and keeps the displacement globals in registers, and a mix of scalar and `RpgMotion20` views of the words reproduces the dead `or a1,v0,zero`. See [[matching-notes]], section T-22013.
+
+## [2026-10-17] ticket | T-22013 Done
+
+[[tickets/T-22013-w4-p13]]: code review against `CODING_STANDARDS.md`, two comment-only findings fixed (FAKE comments of `func_80148714` and `func_8015A8B4`), stale notes refreshed. 3 of 3 matched (`func_80148714` 1,012 bytes, `func_8015A8B4` 236 bytes, `func_8015A744` 368 bytes).
