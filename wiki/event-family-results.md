@@ -5,6 +5,10 @@ updated: 2026-10-16
 
 # GYOZI and SHOUGATU event families
 
+## Display/dispatch follow-up (T-20005)
+
+Issue #41 claims `func_8014206C` / `func_8013C774` before work. Both now match 524 actual default linked bytes (160 + 364), with full GYOZI SHA1 passing. The display helper uses a signed local selector for compare operand order; the dispatcher uses a shared s32 return type to preserve its original schedule and byte extent. Existing DisplayActor44/GyoziWork/GzCallbacks90 types and inline literals suffice. No new fakematches or compiler changes. These supersede the T-17600 hand-draft near misses; see [[tickets/T-20005-gyozi-display-dispatch]] for verification and local review.
+
 SHOUGATU types-first pass (T-17500): [[shougatu-family-results]].
 
 Scope: [[tickets/T-13200-event-family-transfer]], isolated codex/events-13200 from aa2b3158. The original checkout stayed read-only; ignored inputs came from integration, and all analysis/compilation ran in the existing Docker image. No generated assembly edits or metrics changes.

@@ -6,6 +6,10 @@ sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 
 # Matching notes
 
+## GYOZI display/dispatch types (T-20005)
+
+`func_8014206C` (160 bytes) and `func_8013C774` (364 bytes) pass actual default linked comparisons and the full GYOZI checksum. A meaningful signed-word local for the display selector fixes three commuted `beq` operand pairs; direct casts and u8/u32 locals keep the six-row miss. The dispatcher requires a plain shared `s32` declaration/definition: the void control allows mode-address/load instructions to move into branch scheduling, while s32 restores the original slots and function span. This is consistent with return-register liveness; no allocator trace is claimed. The existing GyoziWork field view, GzCallbacks90 table and C string literals are used; the unit checksum verifies literal placement and other callers. No new FAKE, override, volatile access or compiler rule. Evidence and final checks: [[tickets/T-20005-gyozi-display-dispatch]].
+
 ## RPG_BAT timer callbacks (T-20003)
 
 `func_80138F6C` matches 1,268 default linked bytes: direct timer updates/decrement replace stale draft snapshots; a same-width selector pointer read and two frame words are marked FAKE with their reasons. The missing text-buffer declaration is added to the overlay header. No compiler-pass change. Two other independently matched callbacks (`func_80157158`, `func_80156D78`) were dropped when upstream T-17102 landed; its implementation and caller views are retained. Evidence, full RPG_BAT/27-binary checks and local review: [[tickets/T-20003-rpg-timer-callees]].

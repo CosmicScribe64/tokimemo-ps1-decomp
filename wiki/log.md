@@ -16675,3 +16675,23 @@ Opus closer on [[tickets/T-17004-w3-main-p04]]: `func_8006D6E0` matched in plain
 ## [2026-10-16] ticket | T-17004 Done
 
 [[tickets/T-17004-w3-main-p04]] In Review to Done after the code review: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`), 5 of 5 functions matched (2,812 bytes: `func_8006EB64`, `func_8006EEC4`, `func_80072998`, `func_800726F0`, `func_8006D6E0`). One finding, fixed: the `NON_MATCHING` comment of the still guarded `func_80072D70` now names T-17004. Clean build sha1 OK; headers and globals checks OK.
+
+## [2026-10-16] ticket | T-20005 GYOZI display/dispatch claim
+
+Claimed func_8014206C (160 bytes, 801418B0.c) and func_8013C774 (364 bytes, 8013C3B0.c) in issue #41 before implementation. Created [[tickets/T-20005-gyozi-display-dispatch]] In Progress, synchronized board/index, branch from upstream main 2c272843. Excludes existing PR #37/#40 work and TT. Inspecting archived T-17600 near misses and original assembly; all tools remain Docker-only.
+
+## [2026-10-16] build | T-20005 display helper linked match
+
+Actual default funcdiff --resolve proves GYOZI func_8014206C matches 160 linked bytes. A signed local selector fixes the three reversed compare operands; the unsigned/direct variants stay six rows away. No FAKE or header change for this match. Dispatcher probes remain scratch-only while investigating load scheduling and literal placement. [[tickets/T-20005-gyozi-display-dispatch]] stays In Progress for the second claimed helper and final checks.
+
+## [2026-10-16] query | T-20005 dispatcher return liveness
+
+The dispatcher's s32 declaration/definition removes the 12-row scheduling difference and gives a zero-instruction-difference candidate. The void control still hoists byte-address/load instructions into branch scheduling; volatile diagnostics add instructions and are discarded. Private linked verification will check the owned S/T literals and actual function span before any match claim. Display helper remains verified at 160 linked bytes. [[tickets/T-20005-gyozi-display-dispatch]] stays In Progress.
+
+## [2026-10-16] build | T-20005 both GYOZI helpers matched
+
+Actual default funcdiff proves func_8014206C (160 bytes) and func_8013C774 (364 bytes), 524 new bytes. The dispatcher uses a plain shared s32 return type and existing GyoziWork field access; full GYOZI hash passes with unchanged literal/data placement and existing callers. No new FAKE or compiler changes. Whole-tree build/checksums and prototype guard are now running. [[tickets/T-20005-gyozi-display-dispatch]] stays In Progress until final checks/review.
+
+## [2026-10-16] build | T-20005 final checks and In Review
+
+Actual default linked proofs match both helpers (160 + 364 = 524 bytes). Full 489-step Docker build, GYOZI/all 27 binary SHA1 checks, header/global gates and prototype branch guard pass (0 new / 15 known). Local standards review found no issues; no new fakematches or toolchain changes. Maintainer confirmed issue #41 ownership and handles conflicts with other functions in the same files. Latest main still has both claimed INCLUDE_ASM functions. [[tickets/T-20005-gyozi-display-dispatch]] moves to In Review with board/index synchronized.
