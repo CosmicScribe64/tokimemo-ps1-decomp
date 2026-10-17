@@ -305,10 +305,6 @@ extern u8 D_801492A8[4]; /* func_80135480 */
 #endif /* OVL_TAIIKU_W8_3_TYPES_H */
 #ifndef TAIIKU_W8_CONTROLLER_TYPES_H
 #define TAIIKU_W8_CONTROLLER_TYPES_H
-typedef union TaiikuPosition {
-    /* 0x00 */ s32 w;
-    /* 0x00 */ s16 h[2];
-} TaiikuPosition; /* size 0x04; word at 0x8014A3FC, signed high half at +2. T-9570 */
 /* Game C runner records (801452D0.c): D_8014A3E4 is the player, D_8014A400[3] the three other
  * runners, two objects: func_801482BC indexes D_8014A400 by runner - 1 and the loops of
  * func_801470A0/func_80147120 by i; written as one 4-element array they compile differently.
@@ -322,7 +318,7 @@ typedef struct TaiikuController {
     /* 0x0C */ u32 unk_0C;
     /* 0x10 */ s32 unk_10;
     /* 0x14 */ s32 unk_14;
-    /* 0x18 */ TaiikuPosition position;
+    /* 0x18 */ Fix32 position;
 } TaiikuController; /* size 0x1C */
 extern TaiikuController D_8014A3E4;
 extern TaiikuController D_8014A400[3];
@@ -442,7 +438,7 @@ extern TaiikuSlot1C D_8014A454[4];
 #ifndef OVL_TAIIKU_T10010_SCROLL_POSITION
 #define OVL_TAIIKU_T10010_SCROLL_POSITION
 void func_8014430C(void);
-extern TaiikuPosition D_8014A1CC; /* Scroll position; signed high half at +2. T-10010. */
+extern Fix32 D_8014A1CC; /* Scroll position; signed high half at +2. T-10010. */
 void func_8013D254(void);
 extern s32 D_80149948;
 
@@ -713,6 +709,9 @@ void func_8013F35C(void);
 /* T-11640: TAIIKU's view of the D_8011ECD0 display records (DisplayActor44 layout). The bytes at
  * 0x01 and 0x06 are signed here: func_801400D8 stores them with constants that the original keeps
  * apart from the unsigned switch constants of its later loops, which a u8 field merges. */
+/* DisplayActor44 (game.h) with +0x01 and +0x06 signed: func_80138DF8, func_80139610 and func_801400D8 store
+ * constants to them, and the s8 type changes uopt's constant registers there (T-20900: the shared u8 view
+ * does not match those three functions). */
 typedef struct TaiikuActor44 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ s8 unk_01;
@@ -722,22 +721,33 @@ typedef struct TaiikuActor44 {
     /* 0x05 */ u8 unk_05;
     /* 0x06 */ s8 unk_06;
     /* 0x07 */ u8 unk_07;
-    /* 0x08 */ u8 pad_08[4];
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
     /* 0x0C */ u8 *unk_0C;
     /* 0x10 */ u8 *unk_10;
     /* 0x14 */ s16 unk_14;
-    /* 0x16 */ u8 pad_16[2];
+    /* 0x16 */ s16 unk_16;
     /* 0x18 */ s16 unk_18;
     /* 0x1A */ s16 unk_1A;
     /* 0x1C */ s16 unk_1C;
-    /* 0x1E */ u8 pad_1E[8];
+    /* 0x1E */ s16 unk_1E;
+    /* 0x20 */ s16 unk_20;
+    /* 0x22 */ s16 unk_22;
+    /* 0x24 */ s16 unk_24;
     /* 0x26 */ s16 unk_26;
-    /* 0x28 */ u8 pad_28[2];
+    /* 0x28 */ s16 unk_28;
     /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ u8 pad_2C[8];
+    /* 0x2C */ s16 unk_2C;
+    /* 0x2E */ s16 unk_2E;
+    /* 0x30 */ s16 unk_30;
+    /* 0x32 */ s16 unk_32;
     /* 0x34 */ u8 *unk_34;
     /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 pad_3C[7];
+    /* 0x3C */ s16 unk_3C;
+    /* 0x3E */ s16 unk_3E;
+    /* 0x40 */ u8 unk_40;
+    /* 0x41 */ u8 unk_41;
+    /* 0x42 */ u8 unk_42;
     /* 0x43 */ u8 unk_43;
 } TaiikuActor44; /* size 0x44 */
 /* T-11640: per-runner tables of func_8013FC5C (runners 1..3; D_801499B4 holds their 16.16 positions). */

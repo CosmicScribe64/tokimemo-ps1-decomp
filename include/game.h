@@ -81,7 +81,7 @@ typedef struct DisplayActor44 {
 
 /* 16.16 fixed-point word of a display record: word arithmetic through w, the signed integer part (the
  * coordinate the halfword view reads at +2) through h[1]. Was Fix32, Fix32, Fix32 and
- * TaiikuPosition (T-20900). */
+ * Fix32 (T-20900). */
 typedef union Fix32 {
     /* 0x00 */ s32 w;
     /* 0x00 */ s16 h[2];
