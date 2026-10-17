@@ -424,7 +424,67 @@ void func_80077694(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077900);
+/* The original passes club to main_state_set as a second argument (the definition takes one; main_api.h keeps
+ * the `()` declaration): club lives in a1 from its second read on. */
+void func_80077900(void) {
+    GameState *gs = &D_800E6280;
+    u8 b;
+    s32 girl;
+    u32 club;
+
+    if (gs->unk_1104.w == 0x20) {
+        switch (((DisplayActor44 *)D_8011ECD0)[96].unk_16 & 1) {
+        case 0:
+            func_80044750(0x501);
+            break;
+        case 1:
+            func_80044750(0x502);
+            break;
+        }
+        b = gs->unk_69C[gs->unk_71C].unk_02;
+        parameter_up_down(gs->unk_69C[gs->unk_71C].unk_01, 1, b);
+        parameter_show_init();
+        return;
+    }
+    if (gs->unk_1104.u <= 0x40) {
+        return;
+    }
+    func_80048F64(0x60);
+    func_80048F64(0x61);
+    if ((gs->unk_041 == 6) && (gs->unk_69C[gs->unk_71C].unk_01 == 4)
+        && ((club = gs->unk_0F4.h >> 12) != 11) && (gs->unk_66C[club].unk_00 == 6)) {
+        girl = func_80053564(club);
+        gs->unk_75D = girl;
+        if ((girl != -1) && (gs->unk_042 < 0x2DA)) {
+            club = gs->unk_0F4.h >> 12;
+            if (club == 10) {
+                if (girl == 0) {
+                    if (gs->unk_1BC[girl].unk_0C.f.b2 && gs->unk_1BC[girl].unk_0C.f.b1
+                        && !((ScheduleClubFlags *)&gs->unk_66C[club])->b29
+                        && !gs->unk_1BC[girl].unk_0C.f.b18) {
+                        gs->unk_1BC[girl].unk_0C.f.b18 = 1;
+                        main_state_set(0x60, club);
+                        return;
+                    }
+                }
+                if (gs->unk_1BC[girl].unk_0C.f.b2 && gs->unk_1BC[girl].unk_0C.f.b1
+                    && !((ScheduleClubFlags *)&gs->unk_66C[club])->b29
+                    && !gs->unk_1BC[girl].unk_0C.f.b18) {
+                    gs->unk_1BC[girl].unk_0C.f.b18 = 1;
+                    main_state_set(0x60, club);
+                    return;
+                }
+            } else if (gs->unk_1BC[girl].unk_0C.f.b1 && gs->unk_1BC[girl].unk_0C.f.b2
+                       && !((ScheduleClubFlags *)&gs->unk_66C[club])->b29
+                       && !gs->unk_1BC[girl].unk_0C.f.b18) {
+                gs->unk_1BC[girl].unk_0C.f.b18 = 1;
+                main_state_set(0x60, club);
+                return;
+            }
+        }
+    }
+    func_80072B5C(0);
+}
 
 void func_80077BE0(void) {
     switch (D_800E6280.unk_110A) {
