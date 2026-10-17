@@ -46,11 +46,17 @@ permuter farm. Never edit a C file listed by the conveyor's busy-files script.
 RPG_BAT `func_80149C5C` (1,296, implicit-int definition and `RPG_BAT_OVERRIDE_func_8013F0F4`), RPG_BAT
 `func_8013E54C` (624, implicit-int definition), TAIIKU `func_80145370` (720, `MAIN_API_OVERRIDE_func_80085E30`).
 Header change: `include/ovl/RPG_BAT.h` wraps `func_8013F0F4` in `#ifndef RPG_BAT_OVERRIDE_func_8013F0F4`.
+Later the same day: RPG_BAT `func_8013B5B0` (864, `MAIN_API_OVERRIDE_func_800452C4`, wrapped in `main_api.h`; a
+`promo` row, found by a second sweep over the other guarded drafts in free files) and main `func_8006D6E0` (268,
+`s32` definition; `include/main_api.h` declares it `s32`; its file was released by the conveyor during the session).
+Seven functions, 4,532 bytes.
 Details and negative results: [[matching-notes]], "T-20600". Ready for code review against `CODING_STANDARDS.md`.
 
 For the conveyor (files it owns, not edited here):
-- EN_NICHI `func_80132EE8` (`80132000.c`): called before its definition with no prototype and has the same
-  one-block loop preheader as RPG_BAT `func_8013E54C` (T-17107): write it `s32` with no return first.
+- EN_NICHI `func_80132EE8` (`80132000.c`, T-18200 `hand.c`): read-only probe, the structure (including the
+  preheader the T-17107 note compared with `func_8013E54C`) already matches; 44 register rows, 43 as `s32`. The gap
+  is one range: `v & 0x7F` becomes a CSE range in `$v1` and pushes `v` to `$a0`, every later range one register up;
+  the original keeps `v` in `$v1` and the mask in a ugen temporary. Try forms that do not repeat `v & 0x7F`.
 - Any unmatched function with no prototype whose draft is `void` (callers see an implicit `int`): try `s32` with no
   return first. A read-only probe (`regdiff --src` on scratch copies) on such guarded drafts in owned files changed
   nothing for ENDING `func_80134B18`, EVENT `func_8010B614`, GEKO `func_801355E8`, GYOZI `func_80137188`,

@@ -6739,7 +6739,10 @@ Compiler-gap rows: none (both matched). Five new rows in [[register-cheatsheet]]
 worktree `cg-regorder` from `w2-good`. Part of getting ahead of the compiler-limited tail of
 [[speedup-research-2026-10-16]]. Target list: the functions still `INCLUDE_ASM` or guarded that have a `regorder`
 row in [[data/t0018-cases]], without TT (claimed by a contributor) and without the files the wave 3 conveyor owns:
-39 functions, 17 with a guarded draft and 22 with an archived draft only. Five matched, 3,400 bytes, no FAKE:
+39 functions, 17 with a guarded draft and 22 with an archived draft only. Five of them matched, 3,400 bytes, no
+FAKE; a second sweep over the other guarded drafts in files the conveyor had released by then matched RPG_BAT
+`func_8013B5B0` (864 bytes, a `promo` row) and main `func_8006D6E0` (268 bytes, a `regorder` row), seven functions
+and 4,532 bytes in all:
 
 | function | bytes | what fixed it |
 |---|---|---|
@@ -6748,13 +6751,18 @@ row in [[data/t0018-cases]], without TT (claimed by a contributor) and without t
 | RPG_BAT `func_80149C5C` | 1,296 | `s32` definition with no return (its caller comes first in the file, so the original is an implicit `int`) and an `s32 func_8013F0F4();` view through `RPG_BAT_OVERRIDE_func_8013F0F4` |
 | RPG_BAT `func_8013E54C` | 624 | `s32` definition with no return (callers in six files call it undeclared); with `$v0` live at the exit ugen hands as1 the hoisted loop limit before the strength-reduced start, the order the T-17107 closer pass could not get from any `void` form |
 | TAIIKU `func_80145370` | 720 | `MAIN_API_OVERRIDE_func_80085E30` and `s32 func_80085E30();`, the T-16552 fix of `func_80138AA8`: the call's `$v0` result keeps the loop pointer off `$v0`, so the hoisted 8 takes it |
+| RPG_BAT `func_8013B5B0` | 864 | `MAIN_API_OVERRIDE_func_800452C4` and `s32 func_800452C4();` (20 register rows to 2: the promoted state byte `unk_1109` moves from `$v0` to `$v1`), then the counter test as a pre-increment, `(u32)++D_800E6280.unk_1100 > 0x400U` (the original stores the incremented value and compares with 0x401) |
+| main `func_8006D6E0` | 268 | `s32` definition with no return and `s32 func_8006D6E0();` in `main_api.h` (the definition's type; the MASTER caller builds the same); the `void` form folds the second loop's start copy (`move v1,v0`) into the promoted `unk_71C` (T-11670, 5 lines) |
 
 How the recipes did:
 - **Implicit `int` of the function itself** (new here): the strongest lever. Drafts of functions that are called
   before their definition, or only from files that call them undeclared, were written `void` in earlier passes and
-  tested with a prototype. Check this first; two of the five matches needed it, and the callee view of
-  `func_80149C5C` only worked on top of it.
-- **Integer view of a `void` callee** (T-16210, T-20001): a sweep over all callees of the 17 guarded drafts
+  tested with a prototype. Check this first; three of the seven matches needed it (`func_8013E54C`,
+  `func_80149C5C`, `func_8006D6E0`), and the callee view of `func_80149C5C` only worked on top of it.
+- **Integer view of a `void` callee** (T-16210, T-20001): the second sweep (`s32 f();` for every `void` callee of the
+  28 other guarded drafts, plus `s32` definitions) found `func_8013B5B0` and moved DATE `func_8013B488` from 35 to 22
+  register rows (`s32 func_80083440();`). It skipped two far main drafts (`func_80067870`, `func_800696DC`) and was
+  stopped before `func_8006EB64`, `func_8006EEC4`, `func_80072998` and `func_80072D70` had their callee views run. A sweep over all callees of the 17 guarded drafts
   (`s32 f();` for `void` callees, `void f();` for ignored results; 98 `funcdiff --proto` runs) found nothing at
   first. The `func_80145370` win was in a job that reported an error in the sweep (probably a concurrent `build.ninja`
   rewrite) and was only seen on a rerun: treat a failed probe as untested. Callees defined in the same file cannot be probed this

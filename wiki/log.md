@@ -16616,3 +16616,17 @@ an Update paragraph and three rows in [[data/t0018-cases]].
 [[tickets/T-20600-regorder-recipe-sweep]] In Progress to In Review: 5 of 39 targets matched; recipes for the
 conveyor's files listed in the ticket. Clean rebuild 27/27 SHA1 OK, `check_headers`, `migrate_globals --check`,
 `sync_protos --check-branch` OK. Card moved in [[kanban]]. Code review against `CODING_STANDARDS.md` pending.
+
+## [2026-10-16] build | T-20600 sixth match
+
+`src/ovl/RPG_BAT/8013B5B0.c` `func_8013B5B0` (864 B) matched in plain C: `MAIN_API_OVERRIDE_func_800452C4` and
+`s32 func_800452C4();` (the wrapper added in `include/main_api.h`), and the counter test as `(u32)++unk_1100 > 0x400U`.
+Found by a second callee-view sweep over the 28 other guarded drafts in free files. [[tickets/T-20600-regorder-recipe-sweep]]
+now 6 functions, 4,264 bytes; [[matching-notes]], [[register-cheatsheet]] and [[data/t0018-cases]] updated.
+
+## [2026-10-16] build | T-20600 seventh match
+
+`src/main/8006CB30.c` `func_8006D6E0` (268 B, `regorder` row T-11670) matched as an `s32` definition with no return;
+`include/main_api.h` declares it `s32` (the definition's type). [[tickets/T-20600-regorder-recipe-sweep]] now 7
+functions, 4,532 bytes. Second clean rebuild for the header change.
+
