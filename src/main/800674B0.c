@@ -1,44 +1,14 @@
 #define MAIN_API_OVERRIDE_func_80049FF0 /* Line draw calls narrow four coordinates at the call site. T-11060. */
 #define MAIN_API_OVERRIDE_D_8011F414    /* Stored as s16 in func_80067870. T-11100. */
-#define MAIN_API_OVERRIDE_D_8011ECD0    /* Indexed as DisplayRecord44[] in func_8006A2CC. T-11100. */
+#define MAIN_API_OVERRIDE_D_8011ECD0    /* Indexed as DisplayActor44[] in func_8006A2CC. T-11100. */
 #define MAIN_API_OVERRIDE_strncat       /* func_800696DC calls strncat with 2 args for club name. T-11100. */
-#define TOKIMEMO_DISPLAY_RECORD44_H     /* Exposes s16 unk_08, unk_1A, unk_1C for func_80068EC0. T-11100. */
 #include "common.h"
 #include "game.h"
 
 extern s16 D_8011F414;
 s32 func_80049FF0(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, s32 arg6);
 u8 *strncat();
-
-typedef struct DisplayRecord44 {
-    /* 0x00 */ u8 unk_00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 unk_04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 unk_06;
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ s16 unk_0A;
-    /* 0x0C */ u8 *unk_0C;
-    /* 0x10 */ u8 *unk_10;
-    /* 0x14 */ s16 unk_14;
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ s16 unk_1C;
-    /* 0x1E */ u8 unk_1E[8];
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ u8 unk_28[2];
-    /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ u8 unk_2C[8];
-    /* 0x34 */ u8 *unk_34;
-    /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 unk_3C[8];
-} DisplayRecord44; /* size 0x44 */
-
-extern DisplayRecord44 D_8011ECD0[];
+extern DisplayActor44 D_8011ECD0[];
 
 /* Flag word of the 4-byte entries at GameState +0x54C (GsWord unk_54C[8]): nibble in bits 25..28, flag in bit 29. */
 typedef struct {
@@ -337,24 +307,24 @@ void func_80068EC0(void) {
     func_80068BE4();
     dtd_on_tpage(0, 0, 1, 2, 0);
     cal_base_show();
-    t = ((DisplayRecord44 *)D_8011ECD0)[0x61].unk_08++;
+    t = ((DisplayActor44 *)D_8011ECD0)[0x61].unk_08++;
     for (i = 0x61; i < 0xA0; i++) {
         switch ((t >> 6) & 3) {
         case 0:
-            ((DisplayRecord44 *)D_8011ECD0)[i].unk_1A = (t & 0x3F) << 6;
-            ((DisplayRecord44 *)D_8011ECD0)[i].unk_1C = (t & 0x3F) << 6;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_1A = (t & 0x3F) << 6;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_1C = (t & 0x3F) << 6;
             break;
         case 1:
-            ((DisplayRecord44 *)D_8011ECD0)[i].unk_1A = 0x1000;
-            ((DisplayRecord44 *)D_8011ECD0)[i].unk_1C = 0x1000;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_1A = 0x1000;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_1C = 0x1000;
             break;
         case 2:
-            ((DisplayRecord44 *)D_8011ECD0)[i].unk_1A = (0x3F - (t & 0x3F)) << 6;
-            ((DisplayRecord44 *)D_8011ECD0)[i].unk_1C = (0x3F - (t & 0x3F)) << 6;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_1A = (0x3F - (t & 0x3F)) << 6;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_1C = (0x3F - (t & 0x3F)) << 6;
             break;
         case 3:
-            ((DisplayRecord44 *)D_8011ECD0)[i].unk_1A = 0;
-            ((DisplayRecord44 *)D_8011ECD0)[i].unk_1C = 0;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_1A = 0;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_1C = 0;
             break;
         }
     }

@@ -37,7 +37,7 @@ typedef struct FileReq {
  * scan of the original asm finds lbu/sb only at the byte fields (no lb anywhere), lh/sh at the halfwords
  * and lw/sw at +0x0C, +0x10, +0x34 and +0x38 (the other word accesses are whole-record copies).
  * +0x24 .. +0x33 are also read as 16.16 fixed-point words: DisplayFixActor44 is that view of the same record.
- * Replaces the per-unit views DisplayRecord44, TelRec44, DisplayActor44, RpgFlagRecord44, DisplayActor44,
+ * Replaces the per-unit views DisplayActor44, TelRec44, DisplayActor44, RpgFlagRecord44, DisplayActor44,
  * DisplayActor44, EventMotion44, DisplayActor44, GyoziInitSprite44, DisplayActor44, DisplayActor44, NameRecord44,
  * DisplayActor44, NameAssetActor44, DisplayActor44, TaiRecord44, TextureRecord44, OptActor44, DateScene44 (T-20900). */
 typedef struct DisplayActor44 {
@@ -287,36 +287,6 @@ typedef struct ScheduleGirlFlags {
     /* 0x00 */ u32 unk_20 : 4;
     /* 0x00 */ u32 unk_24 : 8;
 } ScheduleGirlFlags; /* size 0x04 */
-#endif
-
-#ifndef TOKIMEMO_DISPLAY_RECORD44_H
-#define TOKIMEMO_DISPLAY_RECORD44_H
-/* D_8011ECD0 display records. Main func_8006A2CC initializes slots 96..128.
- * This view also exposes byte +4/+6 and halfword +0x14 used by main. T-10880. */
-typedef struct DisplayRecord44 {
-    /* 0x00 */ u8 unk_00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 unk_04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 unk_06;
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ u8 unk_08[4];
-    /* 0x0C */ u8 *unk_0C;
-    /* 0x10 */ u8 *unk_10;
-    /* 0x14 */ s16 unk_14;
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 unk_1A[0xC];
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ u8 unk_28[2];
-    /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ u8 unk_2C[8];
-    /* 0x34 */ u8 *unk_34;
-    /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 unk_3C[8];
-} DisplayRecord44; /* size 0x44 */
 #endif
 
 #ifndef GAME_T10880_CALL_PAIRS

@@ -3,13 +3,13 @@
 #include "game.h"
 
 /* Display record n of the D_8011ECD0 pool. */
-#define REC(n) (((DisplayRecord44 *)D_8011ECD0)[n])
+#define REC(n) (((DisplayActor44 *)D_8011ECD0)[n])
 
 /* Frame and position of display record n, one source line (as1 schedules the three stores by line). */
 #define SET_REC(n, frame, px, py) (REC(n).unk_18 = (frame), REC(n).unk_26 = (px), REC(n).unk_2A = (py))
 
 void func_8013CCD0(void) {
-    DisplayRecord44 *rec;
+    DisplayActor44 *rec;
     s32 i;
     s32 idx;
     s32 x;
