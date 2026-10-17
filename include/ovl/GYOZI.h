@@ -86,7 +86,7 @@ extern s32 D_80147134;
 extern s32 D_80147168;
 extern u8 D_80147650;
 extern s32 D_8012E6B0;
-extern s8 D_801317EB;
+extern u8 D_801317EB; /* T-20006: original readers use lbu. */
 void func_801372B0();
 void func_80137524();
 void func_8013829C();
@@ -502,7 +502,7 @@ typedef struct GyoziRec44 {
     /* 0x03 */ u8 unk_03;
     /* 0x04 */ s8 unk_04;
     /* 0x05 */ u8 pad05[2];
-    /* 0x07 */ s8 unk_07;
+    /* 0x07 */ u8 unk_07; /* T-20006: copied with lbu in func_80145384. */
     /* 0x08 */ s16 unk_08;
     /* 0x0A */ u8 pad0A[2];
     /* 0x0C */ s32 unk_0C; /* gives the record word alignment */
@@ -998,6 +998,13 @@ extern GzCallbacks90 D_801476F4; /* func_8013B0C4 */
 extern GzCallbacks90 D_80147C6C; /* func_8013C774 */
 extern GzCallbacks68 D_80148880; /* func_80141944 */
 extern GzCallbacksBC D_8014901C; /* func_80145384 */
+/* T-20006: scene callback callees and the word flag read by func_80145384. */
+s32 func_80141944(void);
+s32 func_80145384(void);
+s32 func_801428EC(void);
+void func_80142C14(void);
+void func_80145520(void);
+extern s32 D_8012E694;
 /* T-17600: 0x24-byte records indexed with stride 0x24 (func_80144018, func_80144B70): the field widths of
  * main's Rec24 table D_801217D0, 0xB270 above it as the display records D_80129F40 are above D_8011ECD0. */
 extern Rec24 D_8012CA40[];

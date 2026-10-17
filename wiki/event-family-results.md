@@ -5,6 +5,10 @@ updated: 2026-10-16
 
 # GYOZI and SHOUGATU event families
 
+## Scene callbacks (T-20006)
+
+Issue #43 claims `func_80141944` in `801418B0.c` and `func_80145384` in `80143AD0.c` before implementation. Both pass actual default linked comparisons: 336 + 372 = 708 new bytes. Existing callback tables and display records replace the invalid scalar calls in the archived drafts. Meaningful index locals, direct s16 counter increments, shared s32 return types and corrected unsigned byte fields suffice; no new fakematches or compiler changes. These supersede the T-17600 noncompiling redraft fallbacks. Evidence, whole-build checks and review are in [[tickets/T-20006-gyozi-scene-callbacks]].
+
 ## GYOZI dialogue follow-up (T-20004)
 
 Issue #39 claims `func_80135118` / `func_80135280` in `80134FD0.c` before work. Both now pass actual default linked comparisons: 360 + 416 = 776 new bytes. Recover `D_800C3370` as a byte array instead of the archived word-scalar context, use direct timer updates and byte postincrement tests, and reread the selector after calls. The setup callee uses the same shared s32 return type as PR #37. Two marked FAKE sites retain the original unchanged-byte stores before the sound calls. Verification, limitations and local review: [[tickets/T-20004-gyozi-dialogue-followup]].
