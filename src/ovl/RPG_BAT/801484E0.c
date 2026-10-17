@@ -82,11 +82,13 @@ void func_80148714(void) {
     s32 *r;
     s32 x;
     s32 y;
+    RpgMotion30 *mo = (RpgMotion30 *)&D_8015EC28;
+    RpgMotion20 *m = (RpgMotion20 *)&D_8015EC50;
 
     switch (D_8015EDB0.unk_00) {
     case 0:
-        D_8015EC50 = D_8015EBFC.unk_2C - 0xB0;
-        D_8015EC54 = D_8015EBFC.unk_30 - 0x58;
+        mo->dx = mo->x - 0xB0;
+        mo->dy = mo->y - 0x58;
         if (D_8015EBAC == 1) {
             D_801215FD = 4;
             D_80121685 = 4;
@@ -105,13 +107,13 @@ void func_80148714(void) {
             /* FAKE: redundant else; the original has the branch over an empty else (T-17113) */
             start = 0;
         }
+        i = start;
         if (start < 6) {
             r = &(&D_8015EBAC)[start * 2];
-            i = start;
             do {
-                D_8015EC58.unk_10 = r[50] * D_8015EC50 / 1000;
-                D_8015EC58.unk_14 = r[50] * D_8015EC54 / 1000;
-                func_8013E97C(i + 0x32, D_8015EC58.unk_10, D_8015EC58.unk_14);
+                m->rect.unk_10 = r[50] * m->dx / 1000;
+                m->rect.unk_14 = r[50] * m->dy / 1000;
+                func_8013E97C(i + 0x32, m->rect.unk_10, m->rect.unk_14);
                 func_8013E7C0(i + 0x32, 6, 1, 1);
                 i++;
                 r += 2;
@@ -125,11 +127,9 @@ void func_80148714(void) {
             }
             D_8015EC74 = D_8015EDB0.unk_04;
         }
-        p = &D_8015ED34;
-        q = (s32 *)&D_8015ED38;
-        do {
-            *q-- = *p--;
-        } while ((u32)&D_8015EC70 < (u32)p);
+        for (i = 0; i < 0x31; i++) {
+            (&D_8015ED38)[-i] = (&D_8015ED34)[-i];
+        }
         if (D_8015ECC4 == D_8015EC74) {
             for (i = 1; i < 6; i++) {
                 func_8013E7C0(i + 0x32, 6, 1, 0);
