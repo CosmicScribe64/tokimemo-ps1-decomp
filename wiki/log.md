@@ -17754,3 +17754,7 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E
 ## [2026-10-17] ticket | T-23001 Done
 
 [[tickets/T-23001-w5-big-p01]]: code review against `CODING_STANDARDS.md` passed, no findings. 0 of 2 functions matched (`func_80136724` and `func_80134FE4` stay `INCLUDE_ASM`); the branch adds hand drafts under `drafts/T-23001/` and wiki notes only, no source change. Ticket Done, card moved to Done.
+
+## [2026-10-17] ticket | T-23003 Wave 5 big package w5-big-p03 opened
+
+[[tickets/T-23003-w5-big-p03]] (In Progress) under [[tickets/T-23000-wave-5-big-conveyor]]: `src/main/8006CB30.c`, `func_8006D7EC` (4,692 B), `func_8007132C` (4,292 B), `func_8006D138` (920 B). Branch `w5-big-p03` from `w2-good`.
