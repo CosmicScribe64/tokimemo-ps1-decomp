@@ -38,12 +38,13 @@ TYPE_COUNTS = {"Tc14": 16, "TacoParticle14": 16}
 # main-exe u8[] declarations that m2c should see as arrays of records: (type, record count). The display pool
 # D_8011ECD0 is DisplayActor44[160] everywhere; EVENT and GYOZI have their own pools (T-17400, T-17600) and
 # MASTER reads the pool and the sprites at D_80120650 as MasterSprite44 (T-18600).
-RECORD_VIEWS = {"*": {"D_8011ECD0": ("DisplayActor44", 160), "D_80123120": ("NameRecordF00", 2)},
+RECORD_VIEWS = {"*": {"D_8011ECD0": ("DisplayActor44", 160)},
+                "NAME_ENT": {"D_80123120": ("NameRecordF00", 2)},
                 "EVENT": {"D_800E9620": ("DisplayActor44", 160), "D_800EC190": ("Rec24", 0x43)},
                 "GYOZI": {"D_80129F40": ("DisplayActor44", 160)},
                 "MASTER": {"D_8011ECD0": ("MasterSprite44", 160), "D_80120650": ("MasterSprite44", 64)}}
 # scalars that are whole objects (the headers declare a word, the unit reads the struct)
-OBJ_VIEWS = {"D_800E7D10": ("NameMetricWork", 0xED8), "D_801230D0": ("EtcWork40", 0x40)}
+OBJ_VIEWS = {"NAME_ENT": {"D_800E7D10": ("NameMetricWork", 0xED8)}, "ETC": {"D_801230D0": ("EtcWork40", 0x40)}}
 # extents that start inside a main-exe object (T-17600: GyoziWork's girl records, 11 x 0x38 at +0x1A8)
 UNIT_RANGES = {"GYOZI": [(0x800F53A0 + 0x1A8, 0x800F53A0 + 0x1A8 + 11 * 0x38, "D_800F53A0")]}
 UNIT_NO_AGG = {"GYOZI": {"D_800F53A0"}}      # its scalars keep their main_api.h names
@@ -164,7 +165,7 @@ class Env:
         self.flags = set()                       # "pass1": no stack-array typing (T-17300 typed1)
         views = dict(RECORD_VIEWS["*"], **RECORD_VIEWS.get(unit, {}))
         self.record_views = {s: v for s, v in views.items() if v[0] in self.types}
-        self.obj_views = {s: v for s, v in OBJ_VIEWS.items() if v[0] in self.types}
+        self.obj_views = {s: v for s, v in OBJ_VIEWS.get(unit, {}).items() if v[0] in self.types}
         self.globals = self._typed_globals()
         self.records = self._records()
         self.ranges = self._ranges()

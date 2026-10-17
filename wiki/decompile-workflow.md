@@ -1983,12 +1983,12 @@ Baseline `7f081d79` (w2-good): 4 plans, 944 bytes; applied in a scratch clone (n
 ```
 tools/docker.sh python3 tools/redraft.py --ticket T-NNNN UNIT:func [UNIT:func ...]   # named functions (a bare name: every unit with it)
 tools/docker.sh python3 tools/redraft.py --ticket T-NNNN --unit GEKO --unit DATE      # every unmatched function of the units
-tools/docker.sh python3 tools/redraft.py --ticket T-NNNN --all-unmatched --jobs 2     # the tree, TT left out
+tools/docker.sh python3 tools/redraft.py --ticket T-NNNN --all-unmatched --jobs 2 --base $(git rev-parse HEAD)   # the tree, TT left out
 tools/docker.sh python3 tools/redraft.py --list --all-unmatched                       # targets only
 tools/docker.sh python3 tools/redraft.py --unit GEKO --rewrite BODY.c                 # print the rewrites of one body
 ```
 
-Other options: `--variants a,b,c|all`, `--jobs N` (compile jobs, default 2), `--timeout S` (per variant, 4x for the finish step), `--no-fixes`, `--force`, `--include-tt`, `--skip-unit U`, `--limit N`, `--base REV` (git head for the provenance: a worktree's `.git` file points outside the Docker mount), `--work DIR`, `--out DIR`.
+Other options: `--variants a,b,c|all`, `--jobs N` (compile jobs, default 2), `--timeout S` (per variant, default 300; 4x for the finish step), `--no-fixes`, `--force`, `--include-tt`, `--skip-unit U`, `--limit N`, `--base REV` (git head for the provenance: a worktree's `.git` file points outside the Docker mount), `--work DIR`, `--out DIR`.
 
 **Per function.** One subprocess per (function, variant), each the census path of `tools/exhaustive_drafts.py` `process()`. It runs m2c with the current headers, the `bulk_m2c` cleanup and the cheap declaration-fix loop, compiles the whole translation unit and scores it with `order_search`'s resolved diff (the T-14500 measure; 0 is a candidate, not a match). The best score wins (ties go to the variant earlier in the list); then `draft_fixes.best_rewrite` (all rewrites, each alone, greedy build-up) and the GameState-local form (`gs-local`, T-18500) are tried on it. The tool caches each compiled object under the hash of the unit text and of all headers (`<work>/objcache`). Two variants that end in the same draft (a function that touches no folded label) then share one IDO run, and a compile error is cached with its message.
 
@@ -2008,8 +2008,8 @@ Other options: `--variants a,b,c|all`, `--jobs N` (compile jobs, default 2), `--
 
 | Stage | Rewrites |
 |---|---|
-| fold (asm) | a label inside a typed global, `GameState D_800E6280`, a record view or a sized array becomes `base+offset`; innermost range first; record views `D_8011ECD0` (DisplayActor44[160]), `D_80123120`, and per unit EVENT/GYOZI/MASTER pools |
-| PRE (m2c text) | `views` (scalar objects read as structs: `D_800E7D10`, `D_801230D0`), `display-records` (byte arithmetic on a record view becomes `&view[i]`), `stack-table` (word copies of a one-array table to a stack local become `spXX = D_YYY;` with `spXX.f[i]` reads), `stack-elements`, `fptab` (the T-3330 `idx` form) |
+| fold (asm) | a label inside a typed global, `GameState D_800E6280`, a record view or a sized array becomes `base+offset`; innermost range first; the display pool `D_8011ECD0` (DisplayActor44[160]) and, per unit, NAME_ENT's album records `D_80123120`, the EVENT and GYOZI pools and MASTER's sprites |
+| PRE (m2c text) | `views` (scalar objects read as structs: NAME_ENT `D_800E7D10`, ETC `D_801230D0`), `display-records` (byte arithmetic on a record view becomes `&view[i]`), `stack-table` (word copies of a one-array table to a stack local become `spXX = D_YYY;` with `spXX.f[i]` reads), `stack-elements`, `fptab` (the T-3330 `idx` form) |
 | POST (cleaned body) | `implicit-int`, `rect-view`, `header-arrays`, `array-symbols`, `array-views`, `struct-bytes`, `gamestate-records`, `gamestate-words`, `raw-display`, `pointer-index`, `record-walk`, `return-type`, `menu-arrays`, `work-prim` (GetWorkBase primitives), `record-temp`, `actor-offset`, `record-offset`, `struct-walk`, `pointer-step`, `matrix-copy`, `tcpos-args` (TcPos by value), `rect-local`; then `field-symbols` (`tools/migrate_globals.py`), then `club-bits`, `record-copy`, `reroll` (MASTER) |
 
 **Output.** `drafts/<ticket>/<UNIT>/<func>/{body.c, context.c, declarations.h, result.json}` and `drafts/<ticket>/catalog.jsonl`. `result.json`: `scope`, `score`, `census_score` (the T-14500 / T-16510 best), `variant` (the winner, `+draft-fixes`, `+gs-local`), `variant_scores` (every variant, `null` where it did not compile), `rewrites`, `draft_fixes`, `best_archived_score` and `best_archived_path` (the best any archive holds, scored when it was made), `vs_census`, `vs_archived`, `status` (`scored`, `candidate-zero`, `failed`) and `provenance` (tool, ticket, git head, harness and header hashes, the archived source). Work files (variant runs with `m2c.c` and diagnostics, the object cache) stay in `build/redraft/<ticket>`, which is gitignored.

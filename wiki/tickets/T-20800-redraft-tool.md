@@ -43,7 +43,7 @@ jobs.
 re-roll). All 21 drivers `drafts/T-16550` .. `drafts/T-18800` and their READMEs were read; the 31 functions that exist in
 more than one version were compared, and the later variants were merged in (the fold after `fix_shared_hi` of T-17700 as
 `typed-late`, `indexed_his` of T-17000, `hi_exact` of T-17300, per-unit record views for EVENT, GYOZI and MASTER, the
-display-base walk, the scaled-index temporary of T-18300). Tests: `tools/test_redraft.py`, 90 tests on synthetic headers,
+display-base walk, the scaled-index temporary of T-18300). Tests: `tools/test_redraft.py`, 95 tests on synthetic headers,
 asm and C; the whole tool suite (`unittest discover -s tools -p 'test_*.py'`) passes, 1,279 tests, 3 skipped.
 All 1,020 archived best bodies run through the rewrites without an error.
 

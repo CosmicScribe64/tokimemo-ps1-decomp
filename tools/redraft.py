@@ -640,7 +640,7 @@ def main(argv=None):
     p.add_argument("--work", help="work directory (default build/redraft/<ticket>)")
     p.add_argument("--variants", default=",".join(DEFAULT_VARIANTS), help="comma list or 'all'; default %(default)s")
     p.add_argument("--jobs", type=int, default=2, help="parallel compile jobs (default 2)")
-    p.add_argument("--timeout", type=int, default=180, help="seconds per variant (finish: 4x)")
+    p.add_argument("--timeout", type=int, default=300, help="seconds per variant (finish: 4x)")
     p.add_argument("--no-fixes", action="store_true", help="skip the draft_fixes search and gs-local")
     p.add_argument("--force", action="store_true", help="finish functions that already have a result")
     p.add_argument("--include-tt", action="store_true")

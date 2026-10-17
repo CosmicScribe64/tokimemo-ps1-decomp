@@ -141,6 +141,19 @@ class TestUnitViews(unittest.TestCase):
             self.assertIn("%lo(D_80120650)", out)                     # the innermost base itself stays
             self.assertNotIn("D_8011ECD0", out)
 
+    def test_name_ent_and_etc_views_belong_to_their_units(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = make_tree(tmp)
+            (root / "game_extra.h").write_text("")
+            with open(root / "include/game.h", "a") as f:
+                f.write("typedef struct NameRecordF00 {\n    u8 unk_00;\n    u8 pad[0xEFF];\n} NameRecordF00; /* size 0xF00 */\n"
+                        "typedef struct NameMetricWork {\n    s32 unk_00;\n} NameMetricWork;\n")
+            (root / "include/ovl/NAME_ENT.h").write_text("")
+            self.assertIn("D_80123120", rw.Env("NAME_ENT", str(root)).record_views)
+            self.assertIn("D_800E7D10", rw.Env("NAME_ENT", str(root)).obj_views)
+            self.assertNotIn("D_80123120", rw.Env("FOO", str(root)).record_views)
+            self.assertEqual(rw.Env("FOO", str(root)).obj_views, {})
+
     def test_event_has_its_own_pool_and_the_default_is_kept(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = make_tree(tmp)
@@ -428,7 +441,6 @@ class TestPost(EnvCase):
 
 class TestExtras(EnvCase):
     def test_matrix_copy(self):
-        words = "".join("    sp20.t[%d] = D_80129C40.t[%d];\n" % (0, 0) for _ in range(0))
         body = "void f(void) {\n    s32 sp20;\n" + "".join(
             "    *(s32 *)((unsigned char *)(&sp20) + (%d)) = *(s32 *)((unsigned char *)D_80125C60 + (%d));\n" % (
                 4 * i, 4 * i) for i in range(8)) + "}\n"
@@ -436,7 +448,6 @@ class TestExtras(EnvCase):
         self.assertIn("    MATRIX sp20;", out)
         self.assertIn("    sp20 = *(MATRIX *)D_80125C60;", out)
         self.assertEqual(out.count("sp20 ="), 1)
-        self.assertEqual(words, "")
 
     def test_matrix_copy_needs_all_eight_words(self):
         body = "\n".join("*(s32 *)((unsigned char *)(&sp20) + (%d)) = *(s32 *)((unsigned char *)D_80125C60 + (%d));" % (
