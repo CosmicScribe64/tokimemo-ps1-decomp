@@ -82,6 +82,23 @@ INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80043010);
 
 INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_800430C0);
 
-INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80043448);
+void func_80043448(void) {
+    if (D_800B3CFC != 0) {
+        if (++D_800B3D00 == 0) {
+            D_800B3CFC = 0;
+            D_800B3CF8 = 0;
+        }
+    } else {
+        if (D_800E6280.unk_F80 == D_800B3CA8[D_800B3CF8]) {
+            if (++D_800B3CF8 >= 0x12U) {
+                D_800B3CFC = 1;
+            }
+            D_800B3D00 = 0x10;
+        }
+        if (--D_800B3D00 == 0) {
+            D_800B3CF8 = 0;
+        }
+    }
+}
 
 void func_80043504(void) {}
