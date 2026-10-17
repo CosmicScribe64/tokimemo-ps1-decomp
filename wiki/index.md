@@ -35,6 +35,8 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
+- [[tickets/T-20010-name-ent-resource-loader|T-20010]] NAME_ENT resource loader follow-up, 1,652 bytes; valid table recovered, still ASM (Ready).
+- [[tickets/T-20009-name-ent-loader|T-20009]] NAME_ENT CD-level display helper, 484-byte verified match, claim #52 (In Review).
 - [[tickets/T-11870-tt-batch-13|T-11870]] TT batch 13: the last three guarded near misses (Done; all 3 matched, TT 302/303, 99.7% of bytes).
 - [[tickets/T-11860-tt-batch-12|T-11860]] TT batch 12: the TT remainder, one long Opus run per file group (Done; 25 of 28 matched, TT 299/303, 97.2% of bytes).
 - [[tickets/T-21520-apply-tooling-matches|T-21520]] Apply the tooling-round matches (T-20810 viewsweep, T-20820 keep proofs, T-20830 autotweak recipes) to `src/` on the current tree: 8 matches (5,444 bytes) and two `keep` proof lines in `config/migrate_globals.txt` (Done, review passed).

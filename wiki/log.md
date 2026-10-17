@@ -17471,3 +17471,19 @@ All three remaining guarded TT near misses matched (2,740 bytes): `func_80142110
 ## [2026-10-17] ticket | T-11870 Done (PR #48 merged)
 
 diman8's PR #48: the last three TT near misses matched (2,740 bytes), TT 302/303; only func_8014D260 (gcc PsyQ code) is left. All three had been logged as allocator quirks; the causes were statement order and control-flow shape. [[tickets/T-11870-tt-batch-13]] Done.
+
+## [2026-10-17] ticket | Claim NAME_ENT loader and display helper
+
+[[tickets/T-20009-name-ent-loader]] starts on main d73328b8, branch codex/name-ent-loader. GitHub issue #52 claims only func_80142E24 (1,652 bytes) and func_80149B08 (484 bytes), leaving neighbors, TT and DATE2 unchanged. PR #51 has no feedback yet; its separate large-scene archive remains in review. Inspect the loader table extent/stride and shared views before tuning registers.
+
+## [2026-10-17] build | T-20009 identify table extent and allocator tie
+
+[[tickets/T-20009-name-ent-loader]]: verified eight-word/0x10-row loader table and rejected the historical one-word draft as invalid. Helper trace shows an equal-priority global/hoisted-constant allocation tie; its remaining structural changes are order-only. Existing view sweeps completed with no untested variants and no gain. Bounded source controls and permuter searches remain scratch; no production C or match claim yet.
+
+## [2026-10-17] build | T-20009 actor view closes the display-helper match
+
+[[tickets/T-20009-name-ent-loader]]: a whole-function DisplayActor44 view initialized before the status calls reaches zero full-unit differences in func_80149B08. Actor96 X is kept in A3; shared flags/pointers use V0/V1/A0/A2. Direct/inside-branch views miss 20 edits. Removing frame padding leaves only two stack-adjustment differences; removing dead initialization changes eight instructions; void exit changes three. Retained controls are explicitly FAKE. Actual default linked proof MATCH 484 bytes, default ninja 9 steps, headers/globals OK, independent hashes 27/27, prototype 0 new / 15 known branchOK.
+
+## [2026-10-17] ticket | T-20009 ready for review; loader follow-up separated
+
+[[tickets/T-20009-name-ent-loader]] moved to In Review for the verified 484-byte helper and synchronized with [[kanban]]. [[tickets/T-20010-name-ent-resource-loader]] is Ready for the unmatched 1,652-byte loader; its table extent/stride, priority trace and negative controls are preserved. No loader C, compiler change, raw asset, binary, generated ASM, probe script or comparison listing is submitted. Self-review against CODING_STANDARDS.md completed; maintainer review pending.

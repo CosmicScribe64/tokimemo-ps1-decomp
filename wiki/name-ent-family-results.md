@@ -126,3 +126,7 @@ functions are not in a package: `func_80138C1C`, `func_80138F60`, `func_801398EC
 | w3-name-ent-p02 | T-17902 | `80132000.c` | `func_80132320`, `func_80134B94`, `func_80134248`, `func_80134110` (3,608 B) |
 | w3-name-ent-p03 | T-17903 | `80139740.c` | `func_80140B20`, `func_8013BE18`, `func_8013DF88`, `func_8013AF78`, `func_8013D2AC` (2,252 B) |
 | w3-name-ent-p04 | T-17904 | `80144AD0.c` | `prologue_line_start`, `func_801460D8`, `func_80145FB0`, `func_80149B08`, `prologue_line_run` (2,340 B) |
+
+## CD-level display helper matched (T-20009)
+
+[[tickets/T-20009-name-ent-loader]] matches func_80149B08 (484 bytes) in 80144AD0.c. Use one DisplayActor44 pointer for all actor accesses and initialize it before the status calls; a pointer introduced only in the final branch or direct fixed fields keep the historical delayed X load. The before-call view fixes the priority tie between the loaded coordinate and hoisted constants, reproducing the original A3 load and V0/V1/A0/A2 constants. The existing frame/dead-initialization controls and s32 exit liveness remain explicitly FAKE. Default linked proof, all 27 hashes and header/global/prototype checks pass. The loader follow-up is [[tickets/T-20010-name-ent-resource-loader]].

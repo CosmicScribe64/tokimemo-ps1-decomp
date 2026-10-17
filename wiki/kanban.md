@@ -40,12 +40,14 @@ kanban-plugin: board
 - [ ] [[tickets/T-0601-obin-med-confidence-review|T-0601 Review medium and low confidence O.BIN mappings]]
 
 ## Ready
+- [ ] [[tickets/T-20010-name-ent-resource-loader|T-20010 Match NAME_ENT resource loader]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 ## In Review
+- [ ] [[tickets/T-20009-name-ent-loader|T-20009 Match NAME_ENT CD-level display helper]]
 
 ## Done
 - [ ] [[tickets/T-11870-tt-batch-13|T-11870 TT batch 13]]
