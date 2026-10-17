@@ -677,7 +677,11 @@ void func_8014A198(void) {
  * 0x1000 t6, not the original's t2; the original behaves as if t2..t5 were uopt colours of four hoisted constants
  * (needs each constant to be worth a register and v0..t1 busy). Tried: autotweak 300 s, an empty if at every line of
  * case 7, store orders, u16 stores (all 64 s16/u16 combinations), constant locals (s16/s32/u16/u32, chained or not),
- * self-chains, duplicate stores, empty compares, zero-store chains. */
+ * self-chains, duplicate stores, empty compares, zero-store chains.
+ * T-11860 (still 28 lines): the four stores written first in the case give exactly t2..t5 (and t6..t8 for the
+ * values before them) but as1 keeps them first; a second use of each constant makes uopt colour them (t0/t1/a0/a2);
+ * a one-iteration loop, one-line groups and a 900 s permuter run did not help. FIFO bookkeeping fits t2..t5 being
+ * uopt colours in a block that ends before the 0x1000 store (4096 then gets t2, the next block t4/t5). */
 void func_8014A2B4(void) {
     u8 *s;
     u8 *e;
