@@ -6744,3 +6744,12 @@ Compiler-gap rows: none (both matched). Five new rows in [[register-cheatsheet]]
 - **`appointment_launch` (288 B, score 95) and `func_80076630` (372 B, score 84):** not started (time box), left `INCLUDE_ASM`.
 - Shared idea worth a later look: both the selector copy of `func_80076C7C`/`func_80077CA8` and the `move a1` placement of `func_800754C0` are as1 delay-slot choices that depend on which instruction the original ucode had before the branch; a toolchain-side model (`tools/frame_pass.py` style) would fix both without source changes.
 - Compiler-gap rows: four, in [[data/t0018-cases]].
+
+### Closer pass (2026-10-17, Opus)
+
+About 50 minutes on the three smallest drafts; two matched.
+
+- **`func_80076C7C`: matched.** The function is implicit int in the original: declared `s32` with no return value (header `main_api.h` changed from `void`), `$v0` is live at the exit and uopt keeps the switch selector copy `or v0,v1,zero` in the first `beqz` delay slot. This is the cheat-sheet row for the switch-temporary copy. The FAKE `pad` local stays.
+- **`func_8007866C`: matched.** The skipped `$t5` is the bit-field store of the cheat sheet: `((CharFlags *)&gs->unk_66C[i].unk_03)->b0 = 1;` instead of `|= 1` (FAKE, borrowed view; the record's real bit-field is unknown). The `& 0xFF0F | 0xB0` byte update and the `lhu; srl 12` read look like a `u16` bit-field `club : 4` at bits 12..15 of `unk_0F4`, and a `ScheduleEntryDate` view for that store also showed no differing lines in `funcdiff` (not checked with a build). The plain form stays.
+- **`func_800754C0`: still 9 rows.** Tried `u8`/`u32` `m`, `(u8)m` in the call, nested tests, `m` assigned inside the condition, the tests and the call on one source line, and autotweak (136 edits, `--time 120`): all 9 rows. The call reading `D_800E6280.unk_03F` again puts the month in `$a1` (then `lui a0` does fill the `beq` slot, 10 rows); `switch (m)` adds 8 bytes of frame (41 rows). So the slot gets the first movable instruction of the call block, and the open question is why `move a1,v0` comes first there.
+- Not tried here (outside the closer list): the same `s32`-without-return change on `func_80077CA8`. It returns the selector in its default arm, so the change does not carry over as is.

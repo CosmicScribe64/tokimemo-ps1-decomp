@@ -16594,3 +16594,7 @@ Clean rebuild of the w3-rpg-bat-p14 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.
 ## [2026-10-16] ticket | T-17006 In Review
 
 [[tickets/T-17006-w3-main-p06]] In Progress to In Review: 0 of 6 matched (about 94 minutes). Guarded drafts: `func_800754C0` (9 rows), `func_80076C7C` (3), `func_80077CA8` (28), `func_8007866C` (14); `appointment_launch` and `func_80076630` not started. Four rows in [[data/t0018-cases]], notes in [[matching-notes]] (T-17006). Clean rebuild 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Waiting for the code review.
+
+## [2026-10-17] ticket | T-17006 closer pass
+
+[[tickets/T-17006-w3-main-p06]] closer pass (Opus, about 55 minutes) on three guarded drafts: `func_80076C7C` matched (`s32` without a return value, `include/main_api.h` declaration changed), `func_8007866C` matched (bit-field store through a FAKE `CharFlags` view), `func_800754C0` still 9 rows (variants listed in [[matching-notes]], T-17006 "Closer pass"). Three rows appended to [[data/t0018-cases]]. Checks: clean build `rm -rf build && configure.py && ninja -j2` 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` 0 new disagreements, 15 known. Ticket stays In Review.

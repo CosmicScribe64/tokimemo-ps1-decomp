@@ -65,7 +65,10 @@ void func_80075468(void) {
 }
 
 /* NON_MATCHING: T-17006, 9 differing lines; the local m keeps the month in v0 as the original does, but the
- * beq delay slot gets move a1,v0 instead of lui a0 and the jal slot stays empty. */
+ * beq delay slot gets move a1,v0 instead of lui a0 and the jal slot stays empty. Same 9 lines with m as u8/u32,
+ * (u8)m in the call, the tests nested, m assigned in the condition, or the test and call on one source line;
+ * the call reading D_800E6280.unk_03F again puts the month in a1 (lui a0 then fills the slot, 10 lines); a switch
+ * on m adds 8 bytes of frame. */
 #ifdef NON_MATCHING
 s32 func_800754C0(void) {
     s32 m;
