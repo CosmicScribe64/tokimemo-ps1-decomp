@@ -17662,3 +17662,7 @@ Second conveyor next to [[tickets/T-22000-wave-4-conveyor]], biggest functions f
 ## [2026-10-17] build | T-23002 checks
 
 [[tickets/T-23002-w5-big-p02]]: clean build 27/27 (668 steps), `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` all pass. Package left In Review for the lead.
+
+## [2026-10-17] ticket | T-23002 Done
+
+[[tickets/T-23002-w5-big-p02]]: code review against `CODING_STANDARDS.md` done, one finding fixed (`FAKE (T-23002)` comment on the `s32` return type of `func_8013B640` in `src/ovl/ENDING/801396E0.c`, unit sha1 still OK). 0 of 1 functions matched; `func_8013A2E8` stays under `#ifdef NON_MATCHING` at 12 differing lines. Ticket Done, card moved to Done.
