@@ -1,0 +1,42 @@
+# before: d9794660 (tools/redraft.py, default variants)
+main:appointment_launch      typed-late             score 89      census 95    archived 95    archived=95 gs-local=90 plain=96 typed=93 typed-late=89
+main:func_800754C0           guarded                score 9       census 49    archived 49    archived=37 gs-local=14 guarded=9 plain=41 typed=41 typed-late=50
+main:func_800755B4           typed                  score 205     census 207   archived 205   archived=205 gs-local=205 plain=207 typed=205 typed-late=207
+main:func_80075C84           archived               score 269     census 270   archived 270   archived=269 gs-local=269 plain=None typed=None typed-late=None
+main:func_80076000           typed                  score 231     census 354   archived 231   archived=231 gs-local=1000000 plain=354 typed=231 typed-late=268
+main:func_800764AC           archived               score 54      census 54    archived 54    archived=54 gs-local=1000000 guarded=54 plain=129 typed=146 typed-late=146
+main:func_80076630           typed                  score 84      census 84    archived 84    archived=84 gs-local=87 plain=84 typed=84 typed-late=84
+main:func_800767A4           archived               score 317     census 317   archived 317   archived=317 gs-local=317 plain=318 typed=318 typed-late=318
+main:func_80076FDC           plain                  score 371     census 371   archived 351   archived=None plain=371 typed=None typed-late=None
+main:func_8007739C           plain                  score 191     census 196   archived 165   archived=270 gs-local=211 plain=191 typed=270 typed-late=266
+main:func_80077694           typed-late             score 159     census 163   archived 163   archived=163 gs-local=179 plain=163 typed=163 typed-late=159
+main:func_80077900           typed                  score 163     census 211   archived 163   archived=163 gs-local=1000000 plain=None typed=163 typed-late=163
+main:func_80077CA8           typed-late             score 26      census 34    archived 34    archived=34 gs-local=34 guarded=28 plain=34 typed=34 typed-late=26
+main:holiday_tel_exit        typed-late             score 85      census 100   archived 100   archived=100 gs-local=95 plain=100 typed=100 typed-late=85
+main:telephone_class_init    typed                  score 144     census 150   archived 135   archived=144 gs-local=151 plain=150 typed=144 typed-late=144
+
+# after, header types only (f8717e22, no hand drafts as archives)
+main:appointment_launch      typed-late             score 89      census 95    archived 95    archived=95 gs-local=90 plain=96 typed=93 typed-late=89
+main:func_800754C0           guarded                score 9       census 49    archived 49    archived=37 gs-local=14 guarded=9 plain=41 typed=41 typed-late=50
+main:func_800755B4           archived               score 205     census 207   archived 205   archived=205 gs-local=205 plain=None typed=None typed-late=None
+main:func_80075C84           -                      score None    census 270   archived 270   archived=None plain=None typed=None typed-late=None
+main:func_80076000           typed                  score 231     census 354   archived 231   archived=231 gs-local=1000000 plain=354 typed=231 typed-late=268
+main:func_800764AC           archived               score 54      census 54    archived 54    archived=54 gs-local=1000000 guarded=54 plain=129 typed=146 typed-late=146
+main:func_80076630           typed                  score 84      census 84    archived 84    archived=84 gs-local=87 plain=84 typed=84 typed-late=84
+main:func_800767A4           archived               score 317     census 317   archived 317   archived=317 gs-local=317 plain=318 typed=318 typed-late=318
+main:func_80076FDC           plain                  score 361     census 371   archived 351   archived=None plain=361 typed=None typed-late=None
+main:func_8007739C           plain                  score 191     census 196   archived 165   archived=270 gs-local=211 plain=191 typed=270 typed-late=266
+main:func_80077900           typed                  score 163     census 211   archived 163   archived=163 gs-local=1000000 plain=None typed=163 typed-late=163
+main:func_80077CA8           typed-late             score 26      census 34    archived 34    archived=34 gs-local=34 guarded=28 plain=34 typed=34 typed-late=26
+main:holiday_tel_exit        archived               score 103     census 100   archived 100   archived=103 gs-local=107 plain=130 typed=None typed-late=None
+
+# after, hand drafts as archives (--force)
+main:appointment_launch      archived               score 7       census 95    archived 3     archived=7 plain=96 typed=93 typed-late=89
+main:func_800755B4           archived               score 10      census 207   archived 5     archived=10 gs-local=76 plain=None typed=None typed-late=None
+main:func_80075C84           archived+gs-local      score 53      census 270   archived 99    archived=203 gs-local=53 plain=None typed=None typed-late=None
+main:func_80076000           archived               score 218     census 354   archived 109   archived=218 gs-local=244 plain=354 typed=231 typed-late=268
+main:func_80076630           archived               score 18      census 84    archived 9     archived=18 plain=84 typed=84 typed-late=84
+main:func_8007739C           plain                  score 191     census 196   archived 131   archived=None gs-local=211 plain=191 typed=270 typed-late=266
+main:func_80077900           archived               score 33      census 211   archived 16    archived=33 gs-local=1000000 plain=None typed=163 typed-late=163
+main:holiday_tel_exit        archived+gs-local      score 0       census 100   archived 29    archived=58 gs-local=0 plain=130 typed=None typed-late=None
+main:func_8007739C           archived               score 110     census 196   archived 55    archived=110 gs-local=110 plain=191 typed=270 typed-late=266

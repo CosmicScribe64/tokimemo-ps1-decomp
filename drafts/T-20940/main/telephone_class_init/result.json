@@ -1,0 +1,13 @@
+{
+ "before_git": "d9794660",
+ "before_score": 144,
+ "before_variant": "typed",
+ "census_score": 150,
+ "draft_score": null,
+ "func": "telephone_class_init",
+ "matched_bytes": 788,
+ "scope": "main:telephone_class_init",
+ "score": 0,
+ "status": "matched",
+ "unit": "main"
+}
