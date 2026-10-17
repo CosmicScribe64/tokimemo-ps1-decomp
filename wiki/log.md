@@ -17544,3 +17544,7 @@ Four BUNKA_SD functions from the T-18100 drafts. [[tickets/T-22003-w4-p03]], par
 ## [2026-10-17] ticket | T-22003 In Review
 
 Matched BUNKA_SD `func_80133D54`, `func_801373D0`, `func_8013842C` (3 x 592 bytes); `func_80137890` guarded at 6 rows. See [[matching-notes]] and [[tickets/T-22003-w4-p03]]; board in [[kanban]]. Sources: `src/ovl/BUNKA_SD/80133540.c`, `801369D0.c`, `80137B40.c`, `80137890.c`.
+
+## [2026-10-17] ticket | T-22003 Done
+
+Review against `CODING_STANDARDS.md` passed after one wiki fix (stale guard text in [[matching-notes]], row added to [[register-cheatsheet]]). 4 of 4 matched, 2,464 bytes: BUNKA_SD `func_80133D54`, `func_801373D0`, `func_8013842C` (592 bytes each) and `func_80137890` (688 bytes, closer). Ticket [[tickets/T-22003-w4-p03]], board in [[kanban]]. Sources: `src/ovl/BUNKA_SD/80133540.c`, `801369D0.c`, `80137B40.c`, `80137890.c`.

@@ -36,7 +36,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-22000-wave-4-conveyor|T-22000]] Wave 4 conveyor until weekly usage nears 95 percent (In Progress).
-- [[tickets/T-22003-w4-p03|T-22003]] Wave 4 package w4-p03: BUNKA_SD func_80137890 and three 592-byte functions (In Review; 3 matched, func_80137890 guarded at 6 rows).
+- [[tickets/T-22003-w4-p03|T-22003]] Wave 4 package w4-p03: BUNKA_SD func_80137890 and three 592-byte functions (Done; 4 of 4 matched, 2,464 bytes).
 - [[tickets/T-11880-date2-remainder|T-11880]] DATE2: the remaining nine functions, claim #49 (Done; 8 of 9 matched, DATE2 101/102, 91.9% of bytes).
 - [[tickets/T-20008-large-name-introduction|T-20008]] NAME_ENT introduction reconstruction archive (4,308-byte scope), claim #50; compiling, still nonmatching (In Progress; draft checkpoint merged, PR #51).
 - [[tickets/T-20010-name-ent-resource-loader|T-20010]] NAME_ENT resource loader follow-up, 1,652 bytes; valid table recovered, still ASM (Ready).
