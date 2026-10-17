@@ -9,3 +9,9 @@
 # has a separate view. A keep line is accepted only for an object whose original asm has such a
 # hoisted pair on that symbol (migrate_globals.py --check runs the audit on it).
 aggregate D_800E6280 GameState include/main_api.h
+
+# Keep lines backed by a byte-match necessity proof (T-20820, wiki/keep-lines.md; applied in T-21520). Each proves, for one
+# function of a file, that the frame counter 0x800E7384 must be a separate symbol for its final `+= 1`: the function is plain C
+# and links to the original's bytes with the symbol, and differs in <rows> instruction rows with the symbol folded into
+# GameState. Uses of the symbol outside the proven functions are errors (write D_800E6280.unk_1104.w).
+keep src/ovl/TACO/801447D0.c D_800E7384 proof=func_8014616C:165:bb8762f0 second uopt variable for the late read (byte-match necessity proof, T-20820)
