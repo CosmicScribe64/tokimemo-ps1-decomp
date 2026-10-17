@@ -17622,3 +17622,7 @@ Package w4-p12: `BUNKASAI:func_8013B25C` matched (`src/ovl/BUNKASAI/8013B190.c`,
 ## [2026-10-17] ticket | T-22012 In Review
 
 2 of 4 matched, 2 guarded under 30 rows. Final checks run before the move; ticket [[tickets/T-22012-w4-p12]].
+
+## [2026-10-17] build | T-22012 final checks
+
+Clean rebuild 27/27, check_headers, migrate_globals --check and sync_protos --check-branch all OK on branch w4-p12. [[tickets/T-22012-w4-p12]] stays In Review.
