@@ -176,7 +176,7 @@ void func_80132198(void)
   }
 }
 
-/* NON_MATCHING: T-22008, 14 differing lines: the masked byte (D_800B593C + 4) & 0xFF is a ugen temporary ($t2) where the original keeps it in a uopt range ($a1); local, u8/u32/register local, chain, compare source and sum-local forms tried */
+/* NON_MATCHING: T-22008, 14 differing lines: the masked byte (D_800B593C + 4) & 0xFF is a ugen temporary ($t2) where the original keeps it in a uopt range ($a1); about 40 local width, cast, chain, repeated-expression, compare-source and array-view forms, autotweak (950 edits) and viewsweep tried; D_800B593C += 4 with the stores and the compare read from the global gives the range, but one register low ($a0) and kept through the join (4 more instructions) */
 #ifdef NON_MATCHING
 void func_80132320(void) {
     s32 i;
