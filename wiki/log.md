@@ -17658,3 +17658,7 @@ Second conveyor next to [[tickets/T-22000-wave-4-conveyor]], biggest functions f
 ## [2026-10-17] ticket | T-23001 In Review
 
 [[tickets/T-23001-w5-big-p01]]: 0 of 2 matched in `src/ovl/TEL/80132000.c`; `func_80136724` (7,044 B, about 1,050 diff rows from the GameState-typed redraft, 25 structural hunks, frame layout worked out) and `func_80134FE4` (800 B, structurally identical, 140 register rows) are back to `INCLUDE_ASM`. Hand drafts and the aligned-diff script in `drafts/T-23001/`. Notes in [[matching-notes]] section T-23001.
+
+## [2026-10-17] ticket | T-23001 Done
+
+[[tickets/T-23001-w5-big-p01]]: code review against `CODING_STANDARDS.md` passed, no findings. 0 of 2 functions matched (`func_80136724` and `func_80134FE4` stay `INCLUDE_ASM`); the branch adds hand drafts under `drafts/T-23001/` and wiki notes only, no source change. Ticket Done, card moved to Done.
