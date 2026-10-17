@@ -538,4 +538,88 @@ void func_801393B4(void) {
     if (D_8013B5C8 == 4620) func_8004E9F4(1);
 }
 
+#ifdef NON_MATCHING
+/* T-11880: 84 diff rows left (funcdiff --resolve --version c). Frame, registers and code shape match; the two spill homes sit at sp+0x40/0x44 where the original has sp+0x44/0x48 (IDO reserves one more temp slot above them here), which also changes how the first case-1 spill is stored. */
+void func_801395C8(arg0)
+    s16 arg0;
+{
+    u8 buf[81][31];
+    s16 i;
+    u8 (*p)[31];
+
+    if (arg0) {} /* FAKE: lowers arg0's priority so it stays in its home as in the original (no s4). T-11880 */
+    switch (D_8013B5C4) {
+    case 2:
+        for (i = 0; i < 30; i++) {
+            func_800AE0F0(buf[i], ((u8 **)D_8013B5D4)[i]);
+        }
+        break;
+    case 0:
+        for (i = 0; i < 51; i++) {
+            func_800AE0F0(buf[i], ((u8 **)D_8013B5D8)[i]);
+        }
+        break;
+    case 3:
+        for (i = 0; i < 39; i++) {
+            func_800AE0F0(buf[i], ((u8 **)D_8013B5DC)[i]);
+        }
+        break;
+    default:
+        for (i = 0; i < 81; i++) {
+            func_800AE0F0(buf[i], ((u8 **)D_8013B5E0)[i]);
+        }
+        break;
+    }
+    if (arg0 % 6 == 0) {
+        p = &buf[arg0];
+        func_8004E788(-0x74, 0x36, 2, (s32)p[0], 0);
+        func_8004E788((s16)(func_800AE0E0(p[0]) * 7 - 0x74), 0x36, 0, (s32)p[1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[0]) * 7 + func_800AE0E0(p[1]) * 7 - 0x74), 0x36, 0, (s32)p[2], 0);
+        func_8004E788(-0x54, 0x4A, 0, (s32)p[3], 0);
+        func_8004E788((s16)(func_800AE0E0(p[3]) * 7 - 0x54), 0x4A, 0, (s32)p[4], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[3]) * 7 + func_800AE0E0(p[4]) * 7 - 0x54), 0x4A, 0, (s32)p[5], 0));
+    } else if (arg0 % 6 == 1) {
+        p = &buf[arg0];
+        func_8004E788(-0x74, 0x36, 2, (s32)p[-1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 - 0x74), 0x36, 2, (s32)p[0], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 + func_800AE0E0(p[0]) * 7 - 0x74), 0x36, 0, (s32)p[1], 0);
+        func_8004E788(-0x54, 0x4A, 0, (s32)p[2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[2]) * 7 - 0x54), 0x4A, 0, (s32)p[3], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[2]) * 7 + func_800AE0E0(p[3]) * 7 - 0x54), 0x4A, 0, (s32)p[4], 0));
+    } else if (arg0 % 6 == 2) {
+        p = &buf[arg0];
+        func_8004E788(-0x74, 0x36, 2, (s32)p[-2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 - 0x74), 0x36, 2, (s32)p[-1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 + func_800AE0E0(p[-1]) * 7 - 0x74), 0x36, 2, (s32)p[0], 0);
+        func_8004E788(-0x54, 0x4A, 0, (s32)p[1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[1]) * 7 - 0x54), 0x4A, 0, (s32)p[2], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[1]) * 7 + func_800AE0E0(p[2]) * 7 - 0x54), 0x4A, 0, (s32)p[3], 0));
+    } else if (arg0 % 6 == 3) {
+        p = &buf[arg0];
+        func_8004E788(-0x74, 0x36, 0, (s32)p[3], 0);
+        func_8004E788((s16)(func_800AE0E0(p[3]) * 7 - 0x74), 0x36, 0, (s32)p[4], 0);
+        func_8004E788((s16)(func_800AE0E0(p[3]) * 7 + func_800AE0E0(p[4]) * 7 - 0x74), 0x36, 0, (s32)p[5], 0);
+        func_8004E788(-0x54, 0x4A, 2, (s32)p[0], 0);
+        func_8004E788((s16)(func_800AE0E0(p[0]) * 7 - 0x54), 0x4A, 0, (s32)p[1], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[0]) * 7 + func_800AE0E0(p[1]) * 7 - 0x54), 0x4A, 0, (s32)p[2], 0));
+    } else if (arg0 % 6 == 4) {
+        p = &buf[arg0];
+        func_8004E788(-0x74, 0x36, 0, (s32)p[2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[2]) * 7 - 0x74), 0x36, 0, (s32)p[3], 0);
+        func_8004E788((s16)(func_800AE0E0(p[2]) * 7 + func_800AE0E0(p[3]) * 7 - 0x74), 0x36, 0, (s32)p[4], 0);
+        func_8004E788(-0x54, 0x4A, 2, (s32)p[-1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 - 0x54), 0x4A, 2, (s32)p[0], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 + func_800AE0E0(p[0]) * 7 - 0x54), 0x4A, 0, (s32)p[1], 0));
+    } else {
+        p = &buf[arg0];
+        func_8004E788(-0x74, 0x36, 0, (s32)p[1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[1]) * 7 - 0x74), 0x36, 0, (s32)p[2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[1]) * 7 + func_800AE0E0(p[2]) * 7 - 0x74), 0x36, 0, (s32)p[3], 0);
+        func_8004E788(-0x54, 0x4A, 2, (s32)p[-2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 - 0x54), 0x4A, 2, (s32)p[-1], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 + func_800AE0E0(p[-1]) * 7 - 0x54), 0x4A, 2, (s32)p[0], 0));
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_801395C8);
+#endif
