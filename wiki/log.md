@@ -16668,3 +16668,7 @@ Clean rebuild of the w3-main-p05 worktree: 27/27 sha1 OK (`build/SLPM_86.053.bin
 ## [2026-10-16] build | T-17009 clean rebuild
 
 Clean rebuild of the w3-main-p09 worktree (`rm -rf build && configure.py && ninja`): 27/27 sha1 OK with `func_80043448` and `func_800430C0` as C, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17009-w3-main-p09]].
+
+## [2026-10-17] ticket | T-17009 Done
+
+[[tickets/T-17009-w3-main-p09]] In Review to Done: code review against `CODING_STANDARDS.md` found two small issues, fixed (`D_800B3CA8` declared before `D_800B3CA4` in `include/main_api.h`, address order restored; comment added on the fall-through end of `func_800430C0`). Rebuild OK (27/27 sha1, headers OK, globals OK, `sync_protos --check-branch` OK). 2 of 4 functions matched (`func_80043448`, `func_800430C0`; 1,092 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
