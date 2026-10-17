@@ -16683,3 +16683,7 @@ Created [[tickets/T-17012-w3-main-p12]]: wave 3 package w3-main-p12, six functio
 ## [2026-10-17] ticket | T-17012 In Review
 
 [[tickets/T-17012-w3-main-p12]] In Progress to In Review: wave 3 package w3-main-p12 (main `src/main/80079B10.c`), 2 of 6 functions matched (492 bytes: `func_80079B34`, `func_8007A50C`), `func_8007B144` (21 rows) and `func_8007B64C` (51 rows) kept as `NON_MATCHING` drafts, `func_80079C70` and `func_8007BCFC` not started (75-minute mark). `func_80079B34` was a wrong callee return type (`u16 func_8007B64C()`), `func_8007A50C` an `s16` view of `D_80125D44` found by autotweak. New idioms in [[register-cheatsheet]] (three rows), details in [[matching-notes]] (section T-17012), two rows and an update line in [[data/t0018-cases]]. Card moved to In Review on [[kanban]].
+
+## [2026-10-17] ticket | T-17012 Done
+
+[[tickets/T-17012-w3-main-p12]] In Review to Done after the code review: wave 3 package w3-main-p12 (main `src/main/80079B10.c`), 2 of 6 functions matched (492 bytes: `func_80079B34`, `func_8007A50C`). No findings; one non-blocking note on the first-symbol queue access in the guarded `func_8007B64C` draft. Clean build sha1 OK; headers, globals and `sync_protos --check-branch` OK. Card moved to Done on [[kanban]].
