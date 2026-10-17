@@ -1,7 +1,7 @@
 ---
 id: T-20820
 title: "migrate_globals: keep lines backed by a byte-match necessity proof (counter-tail family)"
-status: In Review
+status: Done
 assignee: tr-keep-proof agent
 created: 2026-10-17
 updated: 2026-10-17
@@ -42,3 +42,12 @@ After approval a wave-4 package applies the line to the four TACO functions.
 - **Deviations from the spec text.** (1) The text variants are compiled with `order_search.compile_variant`, the text form of `funcdiff_verify.compile_unit` (that one reads `c.src` from disk, and `trailing_pad`/`source_extent` resolve by the real path). (2) `rows_without` is the larger of the removed and added lines of `funcdiff.diff_lines` (165 for `func_8014616C`; the notes' 242 are funcdiff lines of another draft). (3) Folding the symbol keeps the file's other absorbed names as written, so only the tested symbol changes. (4) A proof line is accepted when the proof holds or the hoisted pair holds (literal OR).
 - **Limits.** The census is static and the proofs hold for the text `--from-draft`/`--src` builds, not for a committed file (none exists yet). `rows` tries one field, all fields and the last statement; other splits are untried. No `src/`, `include/`, `config/` or `CODING_STANDARDS.md` change.
 - Tests: `tools/test_keepproof.py` 47, `tools/test_migrate_globals.py` 24, `tools/test_sync_protos.py` 76; full suite result in the log.
+
+2026-10-17 (reviewer): code review of `w2-good...tr-keep-proof` against `CODING_STANDARDS.md` (section 13 checklist). Result: approved, one small finding fixed.
+
+- **Scope.** Only `tools/`, `wiki/` and the new `drafts/T-20820/` changed; no `src/`, `include/`, `config/`, `CODING_STANDARDS.md` or game data; no keep line added; `drafts/T-20820/` holds names, addresses, sizes and counts only (no assembly, no C). Python 3, docstrings, exit codes, ASCII, no host installs, no trailing whitespace; the commits carry the ticket id and the `Co-Authored-By` trailer.
+- **Tests.** Full tool suite through `tools/docker.sh python3 -m unittest discover -s tools -p 'test_*.py'`: 1,251 tests OK (3 skipped), the same as the builder's run; `test_keepproof` 47, `test_migrate_globals` 24, `test_sync_protos` 76.
+- **Real input.** `keepproof.py census --top 5` reproduces the report (6,958 functions, 6,348 matched, 371 with the shape, 299 matched all plain C); `keepproof.py check TACO:func_80149538 --symbol D_800E7384 --from-draft` prints PROVEN (692 B linked equal, 33 rows without, sha `d7dd7f6c`) and the ready-made keep line.
+- **Docs.** [[keep-lines]], [[decompile-workflow]], [[game-state]], [[data-types]] agree with the code and the numbers above; the rule stays a proposal (the lead decides the rule and the marking).
+- **Finding, fixed.** `test_verify_proofs_runs_the_recompiling_check` printed four lines of `migrate_globals.main` output into the test run; its stdout is now redirected (a suite that pipes through `tail -3` for the result line would otherwise see chatter after `OK`).
+- **Open for the lead (not a finding).** Approve or change the rule and the marking in [[keep-lines]]; then a wave-4 package applies the proof lines to TACO `func_8014616C` and `func_80149538`.

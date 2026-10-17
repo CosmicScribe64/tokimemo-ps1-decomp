@@ -3,6 +3,8 @@
 
 Run: tools/docker.sh python3 tools/test_migrate_globals.py
 """
+import contextlib
+import io
 import os
 import sys
 import tempfile
@@ -330,7 +332,7 @@ class MigrateTest(unittest.TestCase):
         self.proof_tree()
         fake = types.ModuleType("keepproof")
         fake.verify_config = mock.Mock(return_value=[])
-        with mock.patch.dict(sys.modules, {"keepproof": fake}):
+        with mock.patch.dict(sys.modules, {"keepproof": fake}), contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(mg.main(["--root", self.root, "--verify-proofs"]), 0)
             fake.verify_config.assert_called_once()
             fake.verify_config.return_value = ["config/migrate_globals.txt: proof not reproduced"]

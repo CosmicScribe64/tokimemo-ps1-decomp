@@ -17046,3 +17046,7 @@ New `tools/keepproof.py` (`check`, `census`, `rows`) and the `proof=<func>:<rows
 ## [2026-10-17] ticket | T-20820 In Review
 
 [[tickets/T-20820-keep-proof]] In Progress to In Review (card moved in [[kanban]]). Full tool suite `python3 -m unittest discover -s tools -p 'test_*.py'`: 1,251 tests OK (3 skipped); `ninja` (globals check, headers), `migrate_globals.py --verify-proofs` (no proof lines yet) and `sync_protos.py --check-branch` OK on the unchanged `src/`. The gate stands: the lead decides on [[keep-lines]] (rule and marking); no `src/` or `config/migrate_globals.txt` keep line before that. After approval a wave-4 package applies it to TACO `func_8014616C` and `func_80149538` (proven), with `func_80146754` (158 to 2 rows with the tail symbol) and `func_801484E4` (1 row left) needing more work.
+
+## [2026-10-17] ticket | T-20820 Done
+
+[[tickets/T-20820-keep-proof]] In Review to Done: code review against `CODING_STANDARDS.md` approved, one small finding fixed (the new `--verify-proofs` test wrote `migrate_globals` output to stdout; now redirected). Full tool suite 1,251 tests OK (3 skipped); census and `check TACO:func_80149538 --from-draft` reproduced (PROVEN, 33 rows, `d7dd7f6c`). Only `tools/`, `wiki/` and `drafts/T-20820/` changed; no keep line added. Card moved in [[kanban]]. The rule in [[keep-lines]] still awaits the lead. Merge via the tool-branch merge script.
