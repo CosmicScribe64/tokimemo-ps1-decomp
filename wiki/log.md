@@ -17689,3 +17689,6 @@ Three of five SHUGAKU functions matched: `func_80135480` (`s32` no return, `SHUG
 
 ## [2026-10-17] ticket | T-22014 Done
 3 of 5 SHUGAKU functions matched (`func_80135480`, `func_80133E10`, `func_801360B0`; 1,408 bytes); `func_801357AC` and `func_80135EA4` stay guarded at 10 rows. Code review against CODING_STANDARDS.md: no findings. Ticket [[tickets/T-22014-w4-p14]].
+
+## [2026-10-17] ticket | T-22018 Wave 4 package w4-p18 In Progress
+Started: BUNKAKEN `src/ovl/BUNKAKEN/80144F70.c`, `src/ovl/BUNKAKEN/80143DD0.c` and `src/ovl/BUNKAKEN/801428D0.c`, three functions from the work list. Ticket [[tickets/T-22018-w4-p18]], parent [[tickets/T-22000-wave-4-conveyor]].
