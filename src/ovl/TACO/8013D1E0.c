@@ -152,7 +152,9 @@ s32 func_8013D528(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
  * then match). Closer pass, still 10 lines: that load carries the colour of the uopt range shl(arg3, 6), which gets
  * $v1 (the call result holds $v0); the original needs $t4 while the four v/u1 ranges keep $a1..$t0, and no tie order
  * gives that, because u1's range is numbered after the shift. Layout notes: matching-notes, "T-19018".
- * T-22005: regdiff (traced uopt) agrees: the shl range (priority 3) takes colour 2 ($v1) and the original has an interfering range in $v1 with no instruction in this block. No change from autotweak (1,308 tries in two runs), 150 permutations of the eight UV stores, one statement per store, two lines, dummy tests, `u8`/`s32` for `t`, `arg3 * 64`, or early-return shapes of the two ifs (those give 22 lines). */
+ * T-22005: regdiff (traced uopt) agrees: the shl range (priority 3) takes colour 2 ($v1) and the original has an interfering range in $v1 with no instruction in this block. No change from autotweak (1,308 tries in two runs), 150 permutations of the eight UV stores, one statement per store, two lines, dummy tests, `u8`/`s32` for `t`, `arg3 * 64`, or early-return shapes of the two ifs (those give 22 lines).
+ * T-22005 closer: viewsweep finds no gain (10 views); writing `(arg3 & 4) << 4` without the `t` local gives 66 lines, 132
+ * without its frame word. */
 s32 func_8013D838(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
     POLY_FT4 *poly;
     s32 dist;
