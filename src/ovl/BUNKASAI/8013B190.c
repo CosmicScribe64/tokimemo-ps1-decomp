@@ -104,8 +104,8 @@ void func_8013B25C(void) {
         break;
     case 10:
         D_80122EAC = 3;
-        D_80122EB0 = (s32) D_800E6280.unk_1109;
-        D_80122EB4 = D_800E6280.unk_110A + 1;
+        D_80122EB0 = (s32) game->unk_1109;
+        D_80122EB4 = game->unk_110A + 1;
         main_state_set(0x80);
         break;
     case 11:

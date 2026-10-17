@@ -17614,3 +17614,11 @@ Code review of `w2-good...w4-p02` against CODING_STANDARDS.md: owned file only (
 ## [2026-10-17] ticket | T-22012 In Progress
 
 Package w4-p12 started in worktree w4-p12 (branch from w2-good): BUNKASAI `src/ovl/BUNKASAI/801511E0.c`, `src/ovl/BUNKASAI/8013B190.c`, `src/ovl/BUNKASAI/80150930.c`, four functions. [[tickets/T-22012-w4-p12]], [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] build | T-22012 matches and guards
+
+Package w4-p12: `BUNKASAI:func_8013B25C` matched (`src/ovl/BUNKASAI/8013B190.c`, read-after-store of `D_800CA148` in case 14, no `s16` temporary) and `BUNKASAI:func_80150B7C` matched (`src/ovl/BUNKASAI/80150930.c`, `GameState *` for the record reads only, FAKE-marked). `func_801509A4` guarded at 19 rows (hoisted constant 1 coloured last), `func_80151364` at 2 rows (case 5 `lui` order). Findings in [[matching-notes]] (section T-22012).
+
+## [2026-10-17] ticket | T-22012 In Review
+
+2 of 4 matched, 2 guarded under 30 rows. Final checks run before the move; ticket [[tickets/T-22012-w4-p12]].

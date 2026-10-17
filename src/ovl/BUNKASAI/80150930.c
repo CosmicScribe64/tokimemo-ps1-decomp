@@ -15,7 +15,7 @@ void func_80150930(void) {
     tbl.f[idx]();
 }
 
-/* NON_MATCHING: T-22012, 19 rows; frame, loop shape and increment match. The loop-invariant constant 1 gets $a1 where the original has $v0 (original order: 1, i, row pointer, count; built: i, row pointer, count, 1), which shifts the loop registers and later ugen temps. Named constant local, loop forms, index types, viewsweep and autotweak did not move it. */
+/* NON_MATCHING: T-22012, 19 rows; frame, loop shape and increment match. The loop-invariant constant 1 gets $a1 where the original has $v0 (original order: 1, i, row pointer, count; built: i, row pointer, count, 1), which shifts the loop registers and later ugen temps. Named constant local, loop forms, index types, a `GameState *` for the record walk, viewsweep, autotweak and a 240 s permuter run did not move it. */
 #ifdef NON_MATCHING
 void func_801509A4(void) {
     s32 temp_v1;
@@ -83,6 +83,8 @@ void func_80150B7C(void) {
     u16 temp_v1_2;
     u32 temp_t2;
     u8 temp_v1;
+    /* FAKE: T-22012, the record reads go through game while the selector and the 0xF4 halfword are read from
+     * D_800E6280 directly; the split is what gives the hoisted constant 1 the register $v0 (all-game: 50 rows). */
     GameState *game = &D_800E6280;
 
     temp_v1 = D_800E6280.unk_110A;
