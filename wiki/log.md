@@ -17700,3 +17700,7 @@ Three of five SHUGAKU functions matched: `func_80135480` (`s32` no return, `SHUG
 ## [2026-10-17] ticket | T-22015 Done
 
 [[tickets/T-22015-w4-p15]]: code review against `CODING_STANDARDS.md` passed; one finding (unexplained byte view of `D_800E7D50` in the `func_80132444` guard) fixed with a comment, build 27/27 OK. 0 of 2 functions matched (`func_80132444` guarded at 22 rows, `func_801326B4` stays `INCLUDE_ASM`). Ticket Done, card moved to Done.
+
+## [2026-10-17] ticket | T-22019 Wave 4 package w4-p19 opened
+
+[[tickets/T-22019-w4-p19]] (In Progress) under [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/ETC/8013BEF0.c`, five functions (`func_8013C700`, `func_8013E89C`, `func_8013D32C`, `func_8013CCE4`, `func_8013E6AC`). Branch `w4-p19` from `w2-good`.
