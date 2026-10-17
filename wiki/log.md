@@ -16821,3 +16821,31 @@ Card moved to In Review in [[kanban]]. Code review against `CODING_STANDARDS.md`
 ## [2026-10-17] ticket | T-20005 Done (PR #42 merged)
 
 KakarottoCake's PR #42 (claim #41): GYOZI func_8013C774 and func_8014206C matched, 524 bytes, merged in one clean build with PR checks. [[tickets/T-20005-gyozi-display-dispatch]] Done.
+
+## [2026-10-16] ticket | T-20006 GYOZI scene callbacks
+
+Read maintainer merge notes on PRs #37/#40/#42; all accepted with 27/27 checks. Started [[tickets/T-20006-gyozi-scene-callbacks]] from main d27b6916 after opening claim issue #43 for func_80141944 and func_80145384. Existing aggregate types and original assembly guide the next bounded probes; other functions and TT are excluded.
+
+## [2026-10-16] query | T-20006 callback draft repair
+
+Archived drafts fail because their copied tables are scalar arrays invoked as functions and they assign results from void callees. Initial full-unit probes also exposed missing forward declarations for func_80142C14/func_80145520 and the word flag D_8012E694 (lw evidence). Added those once in GYOZI.h and retried existing GzCallbacks/GyoziRec44 source forms with the original unsigned byte read. No function C installed yet.
+
+## [2026-10-16] query | T-20006 source-form results
+
+Existing aggregate/table forms give zero resolved instruction differences for func_80141944 and one signedness instruction pair for func_80145384 (typed.log). A meaningful index before the table, direct narrow counter update and s32 fall-through return are the useful forms; extra counter locals and void returns fail. Testing explicit unsigned reads before default linked proof.
+
+## [2026-10-16] decision | T-20006 unsigned fields and candidate installation
+
+The original lbu accesses establish u8 for D_801317EB and GyoziRec44.unk_07. Correcting those shared types removes all source-byte pointer casts from the two new callbacks, and both full-unit diagnostics stay at zero (plain.log). Installed only the claimed functions using meaningful table indices, direct field updates and shared s32 fall-through declarations; default linked proof is running.
+
+## [2026-10-16] build | T-20006 first actual linked proofs
+
+Default funcdiff proves both installed callbacks against the immutable original: func_80141944 MATCH (336 bytes), func_80145384 MATCH (372 bytes), totaling 708 bytes. Recorded the source/type findings in [[matching-notes]], [[event-family-results]] and [[data-types]]. Final whole-build/header validation and fresh linked proofs run after an explicit shared callee declaration and comment cleanup.
+
+## [2026-10-16] build | T-20006 full build and binary checks
+
+The complete default build passes after resuming its remaining 319 jobs with eight workers (full-build.log; earlier completed work is retained in full-build-initial.log). Explicit immutable SHA1 validation passes for all 27 binaries, including GYOZI and its existing callers (checksums.log). Prototype guard and final linked proofs remain pending. A single upstream fetch reached 41b3fdf9; both claimed functions remain INCLUDE_ASM there. No main merge is performed.
+
+## [2026-10-16] ticket | T-20006 ready for review
+
+Final checks pass: full default build, all 27 immutable binary hashes, headers/globals and prototype guard (0 new / 15 known, branch check OK). Fresh actual linked proofs verify both functions at 336 and 372 bytes. Local standards review found no unresolved issue; no new fakematches. Moved [[tickets/T-20006-gyozi-scene-callbacks]] and its board card to In Review. Maintainer acceptance remains pending.

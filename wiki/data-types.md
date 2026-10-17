@@ -6,6 +6,8 @@ sources: ["tools/type_recovery.py", "tools/test_type_recovery.py", "include/main
 
 # Data types recovered from access patterns (T-5000)
 
+T-20006 follow-up: GYOZI's D_801317EB and GyoziRec44.unk_07 are u8. The original scene callbacks read both with lbu; declaring the record field s8 leaves an lb where the original has lbu, even with a value cast afterward. The shared unsigned types allow ordinary field assignments in the two newly matched callbacks. Their actual linked proofs and whole-overlay/shared-header checks are recorded in [[tickets/T-20006-gyozi-scene-callbacks]].
+
 splat names every address the original code touches, so one struct or array of the original source shows up as many `D_` globals. Declaring those globals separately is not only untidy: IDO treats separate symbols as non-aliasing and moves a later load above an earlier store, while the original compiler kept the order because the accesses went through one symbol. The wave-3 agents worked around this with "reach the later field through the first symbol" (`(&D_X)[n]`, marked `FAKE`). This page describes the tool that finds the real aggregates, the conversions made with it, and their limits. Ticket: [[tickets/T-5000-type-recovery-arrays-structs]].
 
 ## The rule behind it

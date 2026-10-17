@@ -6,6 +6,10 @@ sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 
 # Matching notes
 
+## GYOZI scene callback types (T-20006)
+
+`func_80141944` (336 bytes) and `func_80145384` (372 bytes) pass actual default linked comparisons. Both use the existing GzCallbacks68/BC and GyoziRec44 types, a meaningful index declared before the copied table, direct narrow counter updates and fresh selector reads. Plain shared s32 fall-through returns reproduce the original schedule; void controls and extra counter locals do not. Original lbu accesses establish u8 for D_801317EB and GyoziRec44.unk_07, so the new C uses ordinary field assignments rather than unsigned memory-view casts. No new FAKE or compiler rule. Full-build and shared-header validation are recorded in [[tickets/T-20006-gyozi-scene-callbacks]].
+
 ## GYOZI dialogue byte counters (T-20004)
 
 `func_80135118` and `func_80135280` match 776 actual default linked bytes. The archived m2c context made `D_800C3370` a word scalar; the original `lbu` and unscaled offset require a byte array, now declared once in `main_api.h` beside the byte step counter `D_800F647D`. Direct s16 timer updates, `D_800F647D++ < 0x40U`, structured control flow and fresh selector reads remove stale draft temporaries. Both need the shared `s32 func_801343A4(void)` type corrected in PR #37. One explicitly marked FAKE per helper (`D_800F647D |= 0`) retains the original unchanged-byte store before the sound call and its temporary order; direct self-assignment disappears, and the original spelling is unknown. No compiler pass, volatile access or local prototype override. Evidence and final checks: [[tickets/T-20004-gyozi-dialogue-followup]].
