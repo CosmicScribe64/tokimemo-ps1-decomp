@@ -16664,3 +16664,7 @@ Clean rebuild of the w3-main-p05 worktree: 27/27 sha1 OK (`build/SLPM_86.053.bin
 ## [2026-10-16] build | T-17010 match main:func_8006190C
 
 [[tickets/T-17010-w3-main-p10]]: `func_8006190C` (304 bytes) matched in plain C in `src/main/80061710.c`, default build sha1 OK. The TMD address is an `s32` (`m = 0x801F0004; m += 4;`) with a `u32` view of the count word; pointers fold or share the `lui`. Details in [[matching-notes]] (T-17010); the guarded 14-row version and its T-0018 row are replaced by an update line in [[data/t0018-cases]]. Matched count for the package: 1 of 4.
+
+## [2026-10-17] ticket | T-17010 Done
+
+[[tickets/T-17010-w3-main-p10]] In Review to Done: code review against `CODING_STANDARDS.md` found three issues, all fixed (an unneeded `MAIN_API_OVERRIDE_func_8009B430` in `src/main/80061710.c`, removed with sha1 still OK; a terse FAKE comment on the `pad[4]` in the guarded `func_80062210`; a stray empty Comments heading in the ticket). Rebuild OK (sha1 OK, headers OK, globals OK, `sync_protos --check-branch` OK). 1 of 4 functions matched (`func_8006190C`, 304 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
