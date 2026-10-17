@@ -16946,3 +16946,9 @@ Created [[tickets/T-17012-w3-main-p12]]: wave 3 package w3-main-p12, six functio
 Merging `cg-regorder` into `w2-good` conflicted in `src/main/8006CB30.c`: T-17004 had matched `func_8006D6E0` with the
 same `s32` definition; kept its comment. [[tickets/T-20600-regorder-recipe-sweep]] therefore adds six new matches on
 main. `include/ovl/RPG_BAT.h`: the override wrapper for `func_8013F0F4` now covers that declaration only.
+
+## [2026-10-17] ticket | T-20700 In Progress
+
+[[tickets/T-20700-ido41-as1-test]] created and started: does IDO 4.1's as1 (and ugen) after IDO 5.3's cfe/uopt
+reproduce the original better? Worktree `tokimemo-wt/bs-ido41-as1`, base `w2-good`. IDO 4.1 fetched from the
+decomp.me release URL in [[ido-52-evaluation]] into the gitignored `tools/local-compilers/`; sha256 matches the table.
