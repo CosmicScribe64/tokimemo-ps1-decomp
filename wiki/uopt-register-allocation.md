@@ -523,3 +523,19 @@ as C by reading the field through a local `GameState *g`. The rule is not needed
 T-10400 sample). Only 23 (9.2%) have ugen temporaries on both sides, the case where ugen's own order decides; in the
 rest one side holds the value in a uopt colour, which the existing trace covers. Below the 25% bar: no 3-day ugen
 trace.
+
+## True-gap census and the tie-break question (T-20710)
+
+[[tickets/T-20710-true-gap-census]] classified the 55 guarded non-TT drafts whose remaining difference is registers
+or order (at most six unpaired instructions) by regdiff's first divergence ([[data/true-gaps]]). uopt decides 28 of
+them: 15 a different range set (the original colours a value the draft leaves to ugen, or the reverse), 7 a range
+of other priority coloured first, 4 a higher-priority constrained range taking the lower colour, and 2 ties
+(EVENT `func_80114B0C`, bits 70/71 at 2.5; TACO `func_80134A18`, bits 12/32 at 2). Only the ties are tie-breaks, and
+both are first-use order of hoisted constants or globals, the case DATE `func_80136F2C` solved in C (section
+"Rules the tool's cases made visible"). A tie rule could gain at most these 2 and the T-9800 tie candidates change
+661 to 1,724 matched functions, so no new uopt candidate was built; the eight T-9800 results stand. The other 26
+need different priorities or ranges, i.e. a different uopt input (source), not a different allocator rule.
+
+The uniform difference this census did find is in ugen, not uopt: the block-copy state of T-19001. IDO 4.1's ugen
+does not switch a struct copy to state F at a block start, IDO 5.2's and 5.3's do, and the original behaves like 4.1
+in the census cases ([[ido-52-evaluation]], section "T-20710").

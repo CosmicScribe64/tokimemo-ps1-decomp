@@ -17105,3 +17105,34 @@ fix with `tools/test_ido_eval.py` (5 tests OK), no compiler archive tracked (`to
 ## [2026-10-17] ticket | T-17017 Done
 
 [[tickets/T-17017-w3-main-p17]] In Review to Done after the code review: wave 3 package w3-main-p17 (main `src/main/80058D20.c`), 0 of 3 functions matched (0 bytes); `func_800590CC` (16 rows) and `func_800591D8` (32 rows) stay guarded, `func_8005938C` stays `INCLUDE_ASM` with drafts archived. Two non-blocking findings fixed (FAKE comment wording, acceptance criterion wording). Clean build sha1 OK; headers OK. Card moved to Done on [[kanban]].
+## [2026-10-17] ticket | T-20710 created, In Progress
+
+[[tickets/T-20710-true-gap-census]]: census of the unmatched non-TT functions whose remaining difference is registers or
+order only, and a search for one uniform uopt allocator rule (traced uopt of [[uopt-register-allocation]], offline method
+of T-20610, IDO 5.2/4.1 components of [[ido-52-evaluation]]). Worktree `bs-gap-census` from `w2-good`. Card in
+[[kanban]] In Progress.
+
+## [2026-10-17] query | T-20710 true-gap census and rule search
+
+[[tickets/T-20710-true-gap-census]]: new data page [[data/true-gaps]] (55 guarded non-TT drafts whose difference is
+registers or order, 32,308 bytes): first divergence in uopt 28 (only 2 ties), as1 order 12, ugen 11 (5 block-copy
+state, 6 temporary numbering). No uopt tie-break rule can gain more than the 2 ties ([[uopt-register-allocation]]).
+IDO 4.1 and 5.2 re-downloaded from the recorded URLs (sha256 equal, gitignored `tools/local-compilers/`, Docker only):
+4.1's ugen has the original's block-copy state (no state F at a block start; 5.2 and 5.3 enter F there), which
+matches TACO `func_8013B2A0` and gives 5 more census functions the original's copy registers, but 4.1's ugen as a whole
+changes 1,307 of 6,337 matched C functions; 4.1's as1 equals 5.3's on 6,336 of 6,337 matched functions and gains nothing. Candidate rule documented in [[ido-52-evaluation]]
+(section "T-20710"), not adopted (no ugen source to implement it in). Reproducers:
+`tools/ido_eval_cases/ugen_copy_state/`. Note in [[toolchain]].
+
+## [2026-10-17] ticket | T-20710 In Review
+
+[[tickets/T-20710-true-gap-census]] In Progress to In Review; card moved in [[kanban]]. No build step added.
+
+## [2026-10-17] ticket | T-20710 Done
+
+[[tickets/T-20710-true-gap-census]] In Review to Done; card moved in [[kanban]]. Code review against `CODING_STANDARDS.md`:
+pass. No source, header, config or build-tool change; `tools/local-compilers/` untracked and gitignored; provenance
+table unchanged. One small finding fixed: the 5.2 column of the block-copy table was blank for two cases, filled after
+re-running the six reproducers under IDO 5.3 and 5.2 in Docker (5.2's code equals 5.3's on all six). Verdict: no rule
+adopted. No uopt tie rule is possible (2 ties); IDO 4.1's block-copy state is the one uniform difference but cannot be
+built without ugen source. See [[ido-52-evaluation]], [[data/true-gaps]], [[uopt-register-allocation]].

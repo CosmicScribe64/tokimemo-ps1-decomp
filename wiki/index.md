@@ -33,6 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
+- [[tickets/T-20710-true-gap-census|T-20710]] True compiler-gap census ([[data/true-gaps]], 55 drafts: uopt 28, as1 12, ugen 11) and uniform rule search: no uopt tie rule (2 ties); IDO 4.1's ugen has the original's block-copy state (6 census cases, TACO `func_8013B2A0` matches with it) but changes 1,307 matched functions; candidate rule not adopted (Done, review passed).
 - [[tickets/T-20600-regorder-recipe-sweep|T-20600]] Register-order family: recipe sweep over the `regorder` rows of [[data/t0018-cases]]; 7 functions matched, 4,532 bytes (Done; `func_8006D6E0` was matched the same way by T-17004, so 6 are new on main).
 - [[tickets/T-20006-gyozi-scene-callbacks|T-20006]] Two GYOZI scene callbacks matched, 708 bytes; corrected unsigned fields, no new FAKE, full build/27 hashes/prototype checks pass (Done, PR #44 merged).
 - [[tickets/T-17017-w3-main-p17|T-17017]] Wave 3 package w3-main-p17: main `80058D20.c`, 0 of 3 matched: `func_800590CC` guarded at 16 rows and `func_800591D8` at 32 (aliased width/height variables), `func_8005938C` frame and stack layout solved but still `INCLUDE_ASM` (Done)
@@ -387,6 +388,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[decompile-workflow]] - queue.py work list -> m2c -> edit -> build -> funcdiff -> commit
 - [[data/shared-at-groups]] - data table: address groups the original stores through one `lui $at`, per original object (T-5020; struct/array candidates)
 - [[data/t0018-cases]] - data table: functions skipped for the T-0018 register-promotion gap (calibrates `tools/queue.py`)
+- [[data/true-gaps]] - data table: the 55 guarded non-TT drafts whose difference is registers or order, by first-divergence layer (uopt, ugen, as1) with IDO 4.1 pass results (T-20710)
 - [[data/t11620-func_801441BC-draft.patch]] - T-11620: unmatched TT draft of func_801441BC (break-block and constant-range gaps)
 - [[data/t11620-func_80143A44-draft.patch]] - T-11620: unmatched TT draft of func_80143A44 (106 lines, pad & 2 part)
 - [[data/t3330-fptab-proof.patch]] - T-3330: C for 18 table-copy and spill functions with the index-declared-first idiom, to apply after T-1321
