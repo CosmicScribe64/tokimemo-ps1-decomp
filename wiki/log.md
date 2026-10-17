@@ -16883,3 +16883,7 @@ Created [[tickets/T-17012-w3-main-p12]]: wave 3 package w3-main-p12, six functio
 ## [2026-10-17] ticket | T-17012 Done
 
 [[tickets/T-17012-w3-main-p12]] In Review to Done after the code review: wave 3 package w3-main-p12 (main `src/main/80079B10.c`), 2 of 6 functions matched (492 bytes: `func_80079B34`, `func_8007A50C`). No findings; one non-blocking note on the first-symbol queue access in the guarded `func_8007B64C` draft. Clean build sha1 OK; headers, globals and `sync_protos --check-branch` OK. Card moved to Done on [[kanban]].
+
+## [2026-10-17] ticket | T-17017 started
+
+[[tickets/T-17017-w3-main-p17]] created and In Progress: wave 3 package w3-main-p17 (main `src/main/80058D20.c`: `func_800590CC`, `func_800591D8`, `func_8005938C`), worktree `tokimemo-wt/w3-main-p17` on branch `w3-main-p17`, base `w2-good`.
