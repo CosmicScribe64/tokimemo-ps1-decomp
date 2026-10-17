@@ -24,6 +24,9 @@ extern u8 D_8013BFC0[];
 extern s16 D_8013C358;
 extern s16 D_8013C35C; /* read with lh/sh only (T-8080, T-9020) */
 s32 func_80132B04(s32 arg0, s32 arg1, s32 arg2);
+/* T-20930: (text, kind, arg2, voices, page, step, colour). No prototype: the callee reads kind, page, step and
+ * colour as u8/u16 from their argument slots, and func_80132B04 passes them unconverted (K&R). */
+s32 func_80132420();
 extern u8 D_8013CA38;
 
 
@@ -159,7 +162,7 @@ typedef struct EdFnTbl25 { void (*f[25])(); } EdFnTbl25; /* size 0x64 */
 typedef struct EdFnTbl43 { void (*f[43])(); } EdFnTbl43; /* size 0xAC */
 extern EdFnTbl16 D_8013C370; /* func_80133030 */
 extern EdFnTbl43 D_8013C3E4; /* func_80133540 */
-extern EdFnTbl9 D_8013C490; /* 80133540.c */
+extern EdFnTbl9 D_8013C490; /* func_80133AD0 */
 extern EdFnTbl13 D_8013C5BC; /* func_80133F1C */
 extern EdFnTbl9 D_8013CA3C; /* func_80135DD0 */
 extern EdFnTbl6 D_8013CAA4; /* func_80137340 */
