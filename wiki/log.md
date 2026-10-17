@@ -17471,3 +17471,6 @@ All three remaining guarded TT near misses matched (2,740 bytes): `func_80142110
 ## [2026-10-17] ticket | T-11870 Done (PR #48 merged)
 
 diman8's PR #48: the last three TT near misses matched (2,740 bytes), TT 302/303; only func_8014D260 (gcc PsyQ code) is left. All three had been logged as allocator quirks; the causes were statement order and control-flow shape. [[tickets/T-11870-tt-batch-13]] Done.
+
+## [2026-10-17] ticket | T-11880 DATE2 remainder started
+TT is finished apart from `func_8014D260` (gcc); closed claim #2 and opened claim #49 for DATE2. Created [[tickets/T-11880-date2-remainder]] (In Progress): nine functions in three groups, one Opus agent each, two at a time.
