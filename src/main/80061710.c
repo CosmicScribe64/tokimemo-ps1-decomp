@@ -57,36 +57,34 @@ void func_800618B0(void) {
     } while (p != D_80122CA0);
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-17010, 14 differing lines; prologue only: the original builds 0x801F0004 for $a0 on its own and the TMD pointer in $s3 after func_8009B3C0, ours shares one lui in $s3 (T-0018 hoist row) */
+/* HYPOTHESIS: the TMD walk of initModelingData_init (func_8009B3C0 = GsMapModelingData, func_8009B430 = GsLinkObject4)
+ * on the model loaded at 0x801F0000: map the data, check the object count word (13), then link the 16 and 13 objects.
+ * The address is an integer (`m`), not a pointer: a pointer is folded into `lui; lw 8(t6)` by uopt, and the `u32`
+ * view keeps the count compare's `li at,13` apart from the divisor. T-17010 */
 s32 func_8006190C(void) {
-    u32 *m;
+    s32 m;
     s32 r;
     s32 i;
 
-    m = (u32 *)0x801F0000;
-    m++;
-    func_8009B3C0((s32)m);
-    m++;
-    if (*m != 0xD) {
+    m = 0x801F0004;
+    func_8009B3C0(m);
+    m += 4;
+    if (*(u32 *)m != 0xD) {
         return 0;
     }
-    m++;
+    m += 4;
     for (i = 0; i < 16; i++) {
-        func_8009B430((s32)m, (u8 *)&D_80122640[i * 4], 0);
+        func_8009B430(m, (u8 *)&D_80122640[i * 4], 0);
         D_80122640[i * 4 + 1] = (u32)&D_801227A0[i];
         D_80122640[i * 4] = 0;
     }
     r = rand();
     for (i = 0; i < 13; i++) {
-        func_8009B430((s32)m, (u8 *)&D_80122640[i * 4], (r + i) % 13);
+        func_8009B430(m, (u8 *)&D_80122640[i * 4], (r + i) % 13);
         D_80122640[i * 4 + 1] = (u32)&D_801227A0[i];
         D_80122640[i * 4] = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80061710", func_8006190C);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80061710", func_80061A3C);
 
