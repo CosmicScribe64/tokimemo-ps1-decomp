@@ -992,5 +992,21 @@ class TestCommandLine(unittest.TestCase):
                 rd.main([])
 
 
+class TestTypeAliases(unittest.TestCase):
+    """T-20900: archived bodies that name a retired per-unit view read the shared type."""
+
+    def test_fixed_view_and_field_names(self):
+        out = rw.type_aliases("MasterSprite44 *p;\np->unk_26 = 1;\np->unk_28.w += 2;\n")
+        self.assertEqual(out, "DisplayFixActor44 *p;\np->unk_24.h[1] = 1;\np->unk_28.w += 2;\n")
+        out = rw.type_aliases("((NameMotionActor44 *)D_8011ECD0)[96].x.half.high = 3;")
+        self.assertEqual(out, "((DisplayFixActor44 *)D_8011ECD0)[96].unk_24.h[1] = 3;")
+
+    def test_local_typedef_and_header_types_are_kept(self):
+        text = "typedef struct { s32 w[17]; } Ev44;\nEv44 a;\n"
+        self.assertEqual(rw.type_aliases(text), text)
+        self.assertEqual(rw.type_aliases("TelRec44 *r;", {"TelRec44": None}), "TelRec44 *r;")
+        self.assertEqual(rw.type_aliases("TelRec44 *r;"), "DisplayFixActor44 *r;")
+
+
 if __name__ == "__main__":
     unittest.main()

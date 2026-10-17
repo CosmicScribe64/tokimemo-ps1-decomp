@@ -246,6 +246,8 @@ def archived_source(env, folder, name):
     # the census declared some table globals itself; the header now has their real type
     decls = "\n".join(l for l in decls.splitlines() if not (set(re.findall(r"\bD_[0-9A-F]{8}\b", l)) & declared))
     body = (folder / name).read_text()
+    # T-20900: the per-unit views that game.h folded into one type
+    decls, body = rw.type_aliases(decls, env.types), rw.type_aliases(body, env.types)
     local = [l for l in decls.splitlines() if l.startswith("typedef")]
     names = [m.group(1) for l in local for m in [re.search(r"\}\s*(\w+)\s*;", l)] if m]
     local += [l for l in decls.splitlines() if any(re.match(r"extern %s\b" % n, l) for n in names)]

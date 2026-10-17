@@ -51,6 +51,42 @@ UNIT_RANGES = {"GYOZI": [(0x800F53A0 + 0x1A8, 0x800F53A0 + 0x1A8 + 11 * 0x38, "D
 UNIT_NO_AGG = {"GYOZI": {"D_800F53A0"}}      # its scalars keep their main_api.h names
 # main-exe functions that every caller calls without arguments (T-17900); m2c would read stale registers
 CONTEXT_PROTOS = {"NAME_ENT": ("void func_80054E6C(void);",)}
+# T-20900: per-unit views folded into one shared type. An archived body (drafts/*) that names a retired type
+# reads the shared one; the field renames apply where the old view had other names (as every rewrite, a
+# candidate: the compiler and the score decide).
+_FIX_HALVES = ((r"\.word\b", ".w"), (r"\.half\.high\b", ".h[1]"), (r"\.half\.low\b", ".h[0]"))
+TYPE_ALIASES = {
+    "DisplayRecord44": ("DisplayActor44", ()), "ShoSprite44": ("DisplayActor44", ()),
+    "ShoCounter44": ("DisplayActor44", ()), "NameActorHead44": ("DisplayActor44", ()),
+    "EventFlagRecord44": ("DisplayActor44", ()), "RpgObjectRecord44": ("DisplayActor44", ()),
+    "RpgHealth44": ("DisplayActor44", ()), "RpgFlagRecord44": ("DisplayActor44", ()),
+    "TaiValue44": ("DisplayActor44", ()), "GyoziRec44": ("DisplayActor44", ()),
+    "GyoziInitSprite44": ("DisplayActor44", ()), "NameRecord44": ("DisplayActor44", ()),
+    "OptActor44": ("DisplayActor44", ()), "OptSpr44": ("DisplayActor44", ()),
+    "OptDraw44": ("DisplayActor44", ((r"\bunk_00\.b\[3\]", "unk_03"),)),
+    "DateScene44": ("DisplayActor44", ((r"\.bytes\[7\]", ".unk_07"), (r"\.flags\b", ".unk_38"))),
+    "NameAssetActor44": ("DisplayActor44", ((r"(->|\.)image\b", r"\1unk_34"),)),
+    "TaiRecord44": ("DisplayActor44", ((r"(->|\.)y\b", r"\1unk_26"), (r"(->|\.)active\b", r"\1unk_02"),
+                                       (r"(->|\.)flags\b", r"\1unk_03"))),
+    "EtcRec44": ("DisplayActor44", ()), "Ev44": ("DisplayActor44", ()), "DateWords44": ("DisplayActor44", ()),
+    "MasterSprite44": ("DisplayFixActor44", ((r"(->|\.)unk_26\b", r"\1unk_24.h[1]"),)),
+    "KangeiSprite44": ("DisplayFixActor44", ((r"(->|\.)unk_26\b", r"\1unk_24.h[1]"),)),
+    "DateMotion44": ("DisplayFixActor44", ()), "EventMotion44": ("DisplayFixActor44", ()),
+    "DateParticleView44": ("DisplayFixActor44", ()), "EventParticleView44": ("DisplayFixActor44", ()),
+    "DateMover44": ("DisplayFixActor44", ()), "TelRec44": ("DisplayFixActor44", ()),
+    "TaiikuScene44": ("DisplayFixActor44", ((r"(->|\.)position\b", r"\1unk_24"),)),
+    "NameMotionActor44": ("DisplayFixActor44", ((r"(->|\.)x\b", r"\1unk_24"), (r"(->|\.)y\b", r"\1unk_28"),
+                                                (r"(->|\.)phase\b", r"\1unk_07"), (r"(->|\.)flags\b", r"\1unk_03"))
+                          + _FIX_HALVES),
+    "MasterFixed32": ("Fix32", ()), "KangeiFixed32": ("Fix32", ()), "DateFix32": ("Fix32", ()),
+    "TaiikuPosition": ("Fix32", ()), "NameMotionWord": ("Fix32", _FIX_HALVES),
+    "BunkaReturnFlags": ("Flags7D4F", ()),
+    "BunkasaiModeFlags": ("Flags7D4F", ((r"->mode\b", "->unk_2_4"), (r"->pad\b", "->unk_5_7"))),
+    "BunkakenModeFlags": ("Flags7D4F", ((r"->mode\b", "->unk_2_4"), (r"->pad\b", "->unk_5_7"))),
+    "BunkSelectWords": ("BunkaDispatch8", ()), "BunkModePair": ("BunkaDispatch8", ()),
+    "EtcMat": ("MATRIX", ()), "EtcMat2": ("MATRIX", ()), "TaiikuMat": ("MATRIX", ()),
+    "EtcVec": ("VECTOR", ()), "EtcVec2": ("VECTOR", ()), "TaiikuVec": ("VECTOR", ()),
+}
 
 DECL_RE = re.compile(r"^\s*extern\s+(?:volatile\s+)?(\w+)\s*(\*?)\s*(D_[0-9A-F]{8})\s*(\[(\w*)\])?\s*;"
                      r"(?:\s*/\*\s*(\d+) records)?", re.M)
@@ -69,7 +105,23 @@ SCALAR_SIZES = {"s16": 2, "u16": 2, "s32": 4, "u32": 4}
 CAST = r"\*\((?:[^()]|\([^()]*\))*\)"
 
 
+def type_aliases(text, types=None):
+    """T-20900: rename the retired per-unit types of TYPE_ALIASES in an archived body or its declarations to
+    the shared type (and the old field names to the shared ones). A type the text defines itself (a local
+    typedef) or that the headers still have (`types`) is left alone."""
+    for old, (new, fields) in TYPE_ALIASES.items():
+        if not re.search(r"\b%s\b" % old, text) or (types and old in types):
+            continue
+        if re.search(r"\}\s*%s\s*;" % old, text):
+            continue
+        text = re.sub(r"\b%s\b" % old, new, text)
+        for pat, rep in fields:
+            text = re.sub(pat, rep, text)
+    return text
+
+
 # ------------------------------------------------------------------------------------------ layout
+
 
 def leaf_at(t, rel, want_size):
     """(C path ".a.b[2]", leaf type) of the scalar of `want_size` bytes that starts at `rel` inside `t`."""
