@@ -16695,3 +16695,5 @@ Actual default funcdiff proves func_8014206C (160 bytes) and func_8013C774 (364 
 ## [2026-10-16] build | T-20005 final checks and In Review
 
 Actual default linked proofs match both helpers (160 + 364 = 524 bytes). Full 489-step Docker build, GYOZI/all 27 binary SHA1 checks, header/global gates and prototype branch guard pass (0 new / 15 known). Local standards review found no issues; no new fakematches or toolchain changes. Maintainer confirmed issue #41 ownership and handles conflicts with other functions in the same files. Latest main still has both claimed INCLUDE_ASM functions. [[tickets/T-20005-gyozi-display-dispatch]] moves to In Review with board/index synchronized.
+
+2026-10-16 — T-20005: submitted PR #42 (https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/42), two GYOZI helpers / 524 verified bytes. Ticket remains In Review pending maintainer acceptance; claim #41 is linked for closure on merge.

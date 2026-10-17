@@ -17,7 +17,7 @@ Match GYOZI func_8014206C (160 bytes, src/ovl/GYOZI/801418B0.c) and func_8013C77
 - [x] Only actual default linked matches replace INCLUDE_ASM (160 + 364 = 524 bytes).
 - [x] Affected overlay/full-binary SHA1 and header/global/prototype checks pass.
 - [x] Local standards review and documentation complete.
-- [ ] Focused PR for verified work.
+- [x] Focused PR for verified work: https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/42.
 
 ## Notes
 
