@@ -17540,3 +17540,7 @@ Matching resumes at the user's request until weekly usage nears 95 percent. Fres
 ## [2026-10-17] ticket | T-22003 Wave 4 package w4-p03 opened
 
 Four BUNKA_SD functions from the T-18100 drafts. [[tickets/T-22003-w4-p03]], part of [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] ticket | T-22003 In Review
+
+Matched BUNKA_SD `func_80133D54`, `func_801373D0`, `func_8013842C` (3 x 592 bytes); `func_80137890` guarded at 6 rows. See [[matching-notes]] and [[tickets/T-22003-w4-p03]]; board in [[kanban]]. Sources: `src/ovl/BUNKA_SD/80133540.c`, `801369D0.c`, `80137B40.c`, `80137890.c`.
