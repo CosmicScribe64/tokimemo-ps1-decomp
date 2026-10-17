@@ -150,7 +150,7 @@ void func_80137C58(void) {
         if (two == v) {
             D_80139C44[i] += 1;
             if (D_80139C44[i] >= 0x3D) {
-                D_8011ECD0[i * 0x44 + 0x1A0B] = 0;
+                ((DisplayActor44 *)D_8011ECD0)[i + 98].unk_03 = 0;
                 *p = 0;
             }
         }

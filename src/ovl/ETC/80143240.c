@@ -124,7 +124,7 @@ void func_8014387C(s32 arg0, s32 arg1, s32 arg2) {
     *(s16 *)(p + 0x19B2) = -1;
     p[0x1987] = 0x80;
     if (arg1 == 0xA3) {
-        D_8011ECD0[j * 0x44 + 0x43] = 0xE;
+        ((DisplayActor44 *)D_8011ECD0)[j].unk_43 = 0xE;
     }
     p = D_8011ECD0 + j * 0x44;
     if (*(s16 *)(p + 0x18) >= 0xF1) {

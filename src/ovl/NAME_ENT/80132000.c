@@ -900,9 +900,9 @@ void func_80133FC4(void) {
 
     for (i = 0; i < 5; i++) {
         if (i == D_8014CCC8) {
-            D_8011ECD0[i * 0x44 + 0x1E4B] |= 0x80;
+            ((DisplayActor44 *)D_8011ECD0)[i + 114].unk_03 |= 0x80;
         } else {
-            D_8011ECD0[i * 0x44 + 0x1E4B] &= 0x7F;
+            ((DisplayActor44 *)D_8011ECD0)[i + 114].unk_03 &= 0x7F;
         }
     }
     if (D_8014CCCC >= 0) {

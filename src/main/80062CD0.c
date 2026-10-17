@@ -353,10 +353,10 @@ void parameter_disp_switch(s32 arg0) {
 
     if (arg0 == 1) {
         /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-        for (i = 0; i < 28; i++) D_8011ECD0[0x883 + i * 0x44] |= 0x80;
+        for (i = 0; i < 28; i++) ((DisplayActor44 *)D_8011ECD0)[i + 32].unk_03 |= 0x80;
     } else {
         /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-        for (i = 0; i < 28; i++) D_8011ECD0[0x883 + i * 0x44] &= 0x7F;
+        for (i = 0; i < 28; i++) ((DisplayActor44 *)D_8011ECD0)[i + 32].unk_03 &= 0x7F;
     }
 }
 
@@ -591,10 +591,10 @@ void hizuke_disp_switch(s32 arg0) {
 
     if (arg0 == 1) {
         /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-        for (i = 0; i < 8; i++) D_8011ECD0[0x443 + i * 0x44] |= 0x80;
+        for (i = 0; i < 8; i++) ((DisplayActor44 *)D_8011ECD0)[i + 16].unk_03 |= 0x80;
     } else {
         /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-        for (i = 0; i < 8; i++) D_8011ECD0[0x443 + i * 0x44] &= 0x7F;
+        for (i = 0; i < 8; i++) ((DisplayActor44 *)D_8011ECD0)[i + 16].unk_03 &= 0x7F;
     }
 }
 

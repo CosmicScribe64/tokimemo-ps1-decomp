@@ -35,8 +35,8 @@ s32 func_8013E54C(s32 arg0) {
             *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEB4;
             *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EECC;
             *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE9C;
-            D_8011ECD0[0x1981 + i * 0x44] = 5;
-            D_8011ECD0[0x19C3 + i * 0x44] = 0x1D;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 5;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x1D;
         }
         break;
     case 4:
@@ -44,8 +44,8 @@ s32 func_8013E54C(s32 arg0) {
             *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEA8;
             *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EEC0;
             *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE90;
-            D_8011ECD0[0x1981 + i * 0x44] = 5;
-            D_8011ECD0[0x19C3 + i * 0x44] = 0x12;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 5;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x12;
         }
         break;
     case 5:
@@ -53,8 +53,8 @@ s32 func_8013E54C(s32 arg0) {
             *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEB8;
             *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EED0;
             *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EEA0;
-            D_8011ECD0[0x1981 + i * 0x44] = 5;
-            D_8011ECD0[0x19C3 + i * 0x44] = 0x1C;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 5;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x1C;
         }
         break;
     case 0xFF:
@@ -62,9 +62,9 @@ s32 func_8013E54C(s32 arg0) {
             *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEA4;
             *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EEBC;
             *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE8C;
-            D_8011ECD0[0x19C3 + i * 0x44] = 0;
-            D_8011ECD0[0x1981 + i * 0x44] = 3;
-            D_8011ECD0[0x1983 + i * 0x44] = 0;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 3;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_03 = 0;
         }
         break;
     }
@@ -169,7 +169,7 @@ void func_8013EA30(s32 arg0) {
     s32 i;
 
     for (i = 0; i < 96; i++) {
-        D_8011ECD0[0x1107 + i * 0x44] = arg0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_07 = arg0;
     }
 }
 

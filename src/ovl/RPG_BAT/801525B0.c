@@ -70,7 +70,7 @@ void func_801528DC(void) {
     }
     i = 0;
     do {
-        D_8011ECD0[i * 0x44 + 0x1107] = *p;
+        ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_07 = *p;
         D_800E6280.unk_03A = *p;
         if (D_8015EB98 == 0x20000 && *p >= 0x61) {
             D_80120E93 = 0x60;
@@ -331,7 +331,7 @@ void func_80153A60(void) {
     i = 0;
     p = &D_8015EC74;
     do {
-        D_8011ECD0[i * 0x44 + 0x1107] = *p;
+        ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_07 = *p;
         *(s8 *)&D_800E6280.unk_3A = *p;
         if (D_8015EB98 == 0x20000 && (dead = *p) >= 0x61) {
             D_80120E93 = 0x60;

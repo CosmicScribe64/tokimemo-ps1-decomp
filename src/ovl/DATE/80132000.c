@@ -4357,7 +4357,7 @@ void func_80140788(void) {
     s16 i;
 
     for (i = 0; i < 20; i++) {
-        D_8011ECD0[i * 0x44 + 0x1A0B] &= 0x7F;
+        ((DisplayActor44 *)D_8011ECD0)[i + 98].unk_03 &= 0x7F;
     }
 }
 

@@ -251,11 +251,11 @@ void func_80048DD0(s32 count) {
     printf("%d CLASS_CLEAR \n", count);
     if (count != 0) {
         for (i = 0; i < count && i < 160; i++) {
-            D_8011ECD0[i * 0x44 + 3] = 0;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_03 = 0;
         }
     } else {
         for (i = 0; i < 160; i++) {
-            D_8011ECD0[i * 0x44 + 3] = 0;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_03 = 0;
         }
     }
 }

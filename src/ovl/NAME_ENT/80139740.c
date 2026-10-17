@@ -2302,10 +2302,10 @@ void func_8014231C(void) {
     s32 i;
 
     for (i = 0; i < 13; i++) {
-        D_8011ECD0[i * 0x44 + 8707] &= 0x7F;
+        ((DisplayActor44 *)D_8011ECD0)[i + 128].unk_03 &= 0x7F;
     }
     for (i = 0; i < 11; i++) {
-        D_8011ECD0[i * 0x44 + 9591] &= 0x7F;
+        ((DisplayActor44 *)D_8011ECD0)[i + 141].unk_03 &= 0x7F;
     }
     func_8013AF78(0);
     D_800E6280.unk_1100 += 1;

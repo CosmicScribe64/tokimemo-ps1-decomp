@@ -1997,7 +1997,7 @@ void func_80140338(void) {
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        *(s16 *)&D_8011ECD0[0x1AA8 + i * 0x44] -= 4 - i;
+        ((DisplayActor44 *)D_8011ECD0)[i + 100].unk_18 -= 4 - i;
     }
 }
 
@@ -2007,7 +2007,7 @@ void func_8014038C(void) {
 
     t = D_80149F8C;
     for (i = 0; i < 4; i++) {
-        *(s16 *)&D_8011ECD0[0x1998 + i * 0x44] += t.v[i];
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_18 += t.v[i];
     }
 }
 

@@ -182,14 +182,14 @@ s32 func_80133AD8(void) {
 
     if (D_800E6280.unk_110D == 0) {
         /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-        for (i = 0; i < 3; i++) D_8011ECD0[0x1C6F + i * 0x44] &= ~0x80;
+        for (i = 0; i < 3; i++) ((DisplayActor44 *)D_8011ECD0)[i + 107].unk_03 &= ~0x80;
         D_80120912[0] = D_80120912[0] / 9 * 8;
         if (D_80120912[0] < 9) {
             D_800E6280.unk_110D = 1;
         }
     } else if (D_800E6280.unk_110D == 2) {
         /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-        for (i = 0; i < 3; i++) D_8011ECD0[0x1C6F + i * 0x44] &= ~0x80;
+        for (i = 0; i < 3; i++) ((DisplayActor44 *)D_8011ECD0)[i + 107].unk_03 &= ~0x80;
         D_80120912[0] = D_80120912[0] * 9 / 8;
         D_80120912[1] = D_80120912[1] * 9 / 8;
         if (D_80120912[0] >= 0x4000) {
@@ -601,14 +601,14 @@ s32 func_80136434(void) {
 
     if (D_800E6280.unk_110D == 0) {
         /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-        for (i = 0; i < 5; i++) D_8011ECD0[0x1C6F + i * 0x44] &= ~0x80;
+        for (i = 0; i < 5; i++) ((DisplayActor44 *)D_8011ECD0)[i + 107].unk_03 &= ~0x80;
         D_80120912[0] = D_80120912[0] / 9 * 8;
         if (D_80120912[0] < 9) {
             D_800E6280.unk_110D = 1;
         }
     } else if (D_800E6280.unk_110D == 2) {
         /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-        for (i = 0; i < 5; i++) D_8011ECD0[0x1C6F + i * 0x44] &= ~0x80;
+        for (i = 0; i < 5; i++) ((DisplayActor44 *)D_8011ECD0)[i + 107].unk_03 &= ~0x80;
         D_80120912[0] = D_80120912[0] * 9 / 8;
         D_80120912[1] = D_80120912[1] * 9 / 8;
         if (D_80120912[0] >= 0x4000) {
@@ -685,14 +685,14 @@ void func_80136A50(void) {
 
     if (D_800E6280.unk_110D == 0) {
         /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-        for (i = 0; i < 3; i++) D_8011ECD0[0x1C6F + i * 0x44] &= ~0x80;
+        for (i = 0; i < 3; i++) ((DisplayActor44 *)D_8011ECD0)[i + 107].unk_03 &= ~0x80;
         D_80120912[0] = D_80120912[0] / 9 * 8;
         if (D_80120912[0] < 9) {
             D_800E6280.unk_110D = 1;
         }
     } else if (D_800E6280.unk_110D == 2) {
         /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-        for (i = 0; i < 3; i++) D_8011ECD0[0x1C6F + i * 0x44] &= ~0x80;
+        for (i = 0; i < 3; i++) ((DisplayActor44 *)D_8011ECD0)[i + 107].unk_03 &= ~0x80;
         D_80120912[0] = D_80120912[0] * 9 / 8;
         D_80120912[1] = D_80120912[1] * 9 / 8;
         if (D_80120912[0] >= 0x4000) {
@@ -823,7 +823,7 @@ void func_80137864(void) {
 
     D_8012170F &= (m = 0xFF7F); /* FAKE: keeps the mask in $a0 for the loop's `and`, as the original; real source unknown. T-9340 */
     for (i = 0; i < 2; i++) {
-        D_80120650[0x3FF + i * 0x44] &= ~0x80;
+        ((DisplayActor44 *)D_80120650)[i + 15].unk_03 &= ~0x80;
     }
     func_80042940(0);
     D_8012170F = 0;
@@ -842,7 +842,7 @@ void func_80137C1C(void) {
 
     for (i = 0; i < 14; i++) {
         if (D_800E7D10.flags[i] != 0 || g->unk_53C[i] != 0) {
-            D_80120650[0x3FF + i * 0x44] = 0x80;
+            ((DisplayActor44 *)D_80120650)[i + 15].unk_03 = 0x80;
         }
     }
     /* one table: as1 keeps the loads after the stores only when both go through D_8011ECD0 (T-9020, T-16930) */
@@ -942,7 +942,7 @@ void func_801383C4(void) {
 
     for (i = 0; i < 14; i++) {
         if (D_800E7D10.flags[i] != 0 || g->unk_53C[i] != 0) {
-            D_80120650[0x3FF + i * 0x44] = 0x80;
+            ((DisplayActor44 *)D_80120650)[i + 15].unk_03 = 0x80;
         }
     }
     /* one table: as1 keeps the loads after the stores only when both go through D_8011ECD0 (T-9020, T-16930) */

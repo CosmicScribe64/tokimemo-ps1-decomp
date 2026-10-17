@@ -3040,7 +3040,7 @@ void func_8011C11C(void) {
     s16 i;
 
     for (i = 0; i < 20; i++) {
-        D_800E9620[i * 0x44 + 0x1A0B] &= 0x7F;
+        ((DisplayActor44 *)D_800E9620)[i + 98].unk_03 &= 0x7F;
     }
 }
 
