@@ -13,7 +13,7 @@ four-array setup; the `x * 0x44` linear-function test replacement; the `D_801209
 
 ## Types-first pass (T-17800)
 
-T-20900 update: `OptActor44`, `OptDraw44`, `OptSpr44` are `DisplayActor44`; `OptionScheduleBits` is `ScheduleEntryFlags`, `OptionPlayerBits` is `ScheduleFlags` ([[data-types]], "Shared-type unification").
+T-20900 update: `OptActor44`, `OptDraw44`, `OptSpr44` are `DisplayActor44`; `OptionScheduleBits` is `ScheduleEntryFlags`, `OptionPlayerBits` is `ScheduleFlags`; `D_800E7D10` needs no override (it is `Work800E7D10` in main_api.h) ([[data-types]], "Shared-type unification").
 
 Wave-3 types-first pass ([[tickets/T-17800-types-first-option]], [[speedup-research-2026-10-16]]), branch
 `w3-option-types` from `w2-good`. Start: 36 unmatched functions (22,648 bytes) in three files, 2 of them guarded.

@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # TACO boss actor transform family
@@ -38,6 +38,8 @@ Best evidence: a480-storeorders.diff and 97ec-nocache.diff. Broader failures rem
 The saved reprobe script reproduces the one-row and three-row results without compile errors. The restored default TACO build then exits 0 with SHA1 OK, 1419e93cbad6c0df790577701181be04e0747969; header/global checks pass. Evidence: build/t13801/final-default.log and final-verified.log. No whole-game rebuild/checksum claim is made. Independent standards review found no issues. Spec review confirms the primary matching goal is unmet; both tickets remain In Review for integration disposition. Source/header diff against 97ec697f is empty.
 
 ## Types-first pass (T-16560)
+
+T-20900 update: `TcSetAll` and `TcSetBits` are `Work800E7D10` and `WorkSetBits` (main_api.h), `D_800E7D10` needs no override; `TcSave` stays the loader's union view ([[data-types]], "Shared-type unification").
 
 Pilot of the types-first idea in [[speedup-research-2026-10-16]]: recover TACO's shared types first, then
 redraft every unmatched function ([[tickets/T-16560-taco-types-first]], branch `pt-taco`). The drafts and the

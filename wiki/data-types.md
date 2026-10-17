@@ -261,16 +261,19 @@ more register with the fields; it keeps the byte view, marked `FAKE`. Two FAKE c
 | GameState +0xF4 word | DATE `DateFlag17`, `DateFlags0F4`, OPTION `OptionPlayerBits` | `ScheduleFlags` (game.h: `unk_08:4`, `unk_12:4`, `b16` .. `b20`, `unk_21:3`) |
 | GameState +0xF8 date | NAME_ENT `NameDate` (its `day`/`month` were swapped against main's names) | `GsDateBits` (main_api.h) |
 
-Not merged (fewer than three views of the same fields): `D_800E7D10`, a 0xEE0-byte work area (cleared by
-`bzero(&D_800E7D10, 0xEE0)` in main), read as main's `FlagsWork24` (prefix), NAME_ENT's `NameMetricWork` (album
-fields to +0xED8), TACO's `TcSave`/`TcSetAll` (+0x40 .. +0x57, a word that overlaps the name bytes at +0x42) and ETC's
-`EtcConfig8` (8-byte records indexed from the base): only the first two share fields; one struct in `main_api.h`
-with TACO's union at +0x40 is the next step. `D_801217D0`: `Rec24` and main's local `SprEnt` (+0x0A `u16` against
-`s16`).
+`D_800E7D10` is a 0xEE0-byte work area (main clears it with `bzero(&D_800E7D10, 0xEE0)`; +0 is the word main steps by
+0x377 and NAME_ENT passes to `srand`). Its views: main's `FlagsWork24` (prefix), the album view `NameMetricWork` of main
+and NAME_ENT (to +0xED8), TACO's `TcSetAll` (+0x40 .. +0x57: the settings bit pair, three names, three words) and
+`TcSave` (a word/halfword/byte union over +0x40), and ETC's `EtcConfig8` (8-byte records indexed from the base, +0x58
+on). `Work800E7D10` in `main_api.h` takes the first three (the bit pair is `WorkSetBits`), and `D_800E7D10` is declared
+with it: the overrides in OPTION and TACO `80142820.c` and the casts in main and NAME_ENT are gone, main's word uses
+are `.unk_000`. TACO's loader keeps `TcSave` (its word view overlaps the name bytes) and ETC `EtcConfig8`, as casts of
+the base. Not merged: `D_801217D0`, `Rec24` and main's local `SprEnt` (two views; +0x0A `u16` against `s16`).
 
 A bit-field view compiles from the accessed field's position, width and container type only: the views that differ
 in their padding fields merged without a byte change; a different container (`u16` against `u32`) is a real
-difference and stays. 64 type names are gone (702 typedefs to 633 in `include/` and `src/`, TT excluded).
+difference and stays. 68 type names are gone (702 typedefs to 631 in `include/` and `src/`, TT excluded, with four
+new ones: `Fix32`, `DisplayFixActor44`, `Work800E7D10`, `WorkSetBits`).
 
 ### Draft scores
 
@@ -290,6 +293,16 @@ matched source, comments and the `record-copy` fix below, with the 13 drafts tha
   `pad_1C[temp_lo]`, a byte array, by luck closer; its best, `plain` 72, is unchanged) and the one above. A first run
   showed the `record-copy` rewrite writing `DisplayFixActor44` in every unit (mixed-type assignments that did not
   compile in EVENT, GEKO, KANGEI); it now uses the unit's record view, and those drafts score as before.
+- Declaring `D_800E7D10` as `Work800E7D10` (6575fad7, measured separately) is the one change that moves scores. Of the 34
+  unmatched functions that read the work area, 33 score on both sides and 13 change: 3 better (`main:func_8005CC40` 92
+  to 15, `NAME_ENT:func_80139F30` 1,171 to 992, `ETC:func_80144F74` 115 to 46), 10 worse (sum 8,201 to 8,297). Scoring
+  the archived bodies on the new headers too, 8 of the 13 beat their best archive and 3 fall behind it
+  (`ETC:func_8013E6AC` 216 against 130, `ETC:func_8013F054` 249 against 238, `main:func_8005CA94` 65 against 61). Here
+  the type changes the folds: m2c and the `typed` fold see the labels inside the work area (`D_800E7D14`, `D_800E7D36`,
+  ETC's records) as fields of one symbol, which changes what the compiler may reorder, the label-fold effect of
+  T-16550, in both directions. The three improved drafts are in `drafts/T-20900/`; `main:func_8005CC40` was tried by
+  hand and stays at 15 rows (in case 1 the original keeps the switch value in `$v1` and loads `unk_F88` into `$v0`; the
+  draft swaps them).
 - The draft text changed in 51 of the 111 `typed`/`typed-late` bodies of the 37 (none of the `plain` ones): byte-offset
   casts `*(s16 *)((unsigned char *)D_8011ECD0 + (7236))` became fields `((DisplayActor44 *)D_8011ECD0)[106].unk_1C`
   (1,057 to 945 casts, 583 to 756 record-field references).

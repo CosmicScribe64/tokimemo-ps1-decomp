@@ -46,7 +46,7 @@ Repository code-review skill, aa2b3158...aa1c51ec: GPT-6.1 Sol medium standards 
 
 ## Types-first pass (T-17300)
 
-T-20900 update: `EtcRec44` is `DisplayActor44`; `EtcMat`, `EtcMat2`, `EtcVec`, `EtcVec2` are `MATRIX` and `VECTOR`; `EtcSlot` is `ScheduleClubFlags` (`grade` is `unk_25`, `flag` is `b30`) ([[data-types]], "Shared-type unification").
+T-20900 update: `EtcRec44` is `DisplayActor44`; `EtcMat`, `EtcMat2`, `EtcVec`, `EtcVec2` are `MATRIX` and `VECTOR`; `EtcSlot` is `ScheduleClubFlags` (`grade` is `unk_25`, `flag` is `b30`); `FlagsWork24` is `Work800E7D10` (the `EtcConfig8` records stay a cast view) ([[data-types]], "Shared-type unification").
 
 Wave-3 types-first pass ([[tickets/T-17300-types-first-etc]], [[speedup-research-2026-10-16]]), branch
 `w3-etc-types` from `w2-good`. Start: 43 unmatched functions (34,724 bytes), 2 of them guarded. About 80 minutes

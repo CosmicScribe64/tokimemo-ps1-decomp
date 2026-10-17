@@ -117,6 +117,9 @@ One view per word family, all in `include/game.h` or `include/main_api.h` (the p
 
 RENSYU's `RensyuClubCount` reads the same club words with a `u16` container and stays a separate view.
 
+The object right after `GameState`, the 0xEE0-byte work area `D_800E7D10` (album slots and names, TACO's settings at
++0x40), is one struct too: `Work800E7D10` in `main_api.h` ([[data-types]]).
+
 ## Tool and workflow
 
 - `tools/migrate_globals.py --apply` rewrites `D_X` inside an aggregate to the subobject at `X - base` whose type equals the old declaration (own `extern`, the overlay header's override, else `main_api.h`), removes the absorbed declarations and their `MAIN_API_OVERRIDE_` guards, and leaves a use it cannot map for a hand rewrite (it keeps that symbol's declarations). Re-runnable; a migrated tree is a no-op. Without a declaration it rewrites only an offset where exactly one scalar starts (or one array, for an indexed use).

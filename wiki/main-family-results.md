@@ -59,7 +59,7 @@ Final isolated-branch census: 5887/6958 game functions, 1414152/2279368 game byt
 
 ## Types-first pass (T-17000)
 
-T-20900 update: `DisplayRecord44` (game.h and the local copy in `800674B0.c`) and `TextureRecord44` are `DisplayActor44`; `TelEntryFlags`, `EntryFlags54C`, `EntryFlags29` are `ScheduleEntryFlags` ([[data-types]], "Shared-type unification").
+T-20900 update: `DisplayRecord44` (game.h and the local copy in `800674B0.c`) and `TextureRecord44` are `DisplayActor44`; `TelEntryFlags`, `EntryFlags54C`, `EntryFlags29` are `ScheduleEntryFlags`; `FlagsWork24` and `NameMetricWork` are `Work800E7D10`, the declared type of `D_800E7D10` (main_api.h) ([[data-types]], "Shared-type unification").
 
 Types-first pass of [[speedup-research-2026-10-16]] on the main executable ([[tickets/T-17000-types-first-main]],
 branch `w3-main-types` from `w2-good`): recover the shared types, redraft all 163 unmatched `src/main`
