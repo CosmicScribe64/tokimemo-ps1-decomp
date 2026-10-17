@@ -290,4 +290,67 @@ void func_80135EA4(void) {
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_80135EA4);
 #endif
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_801360B0);
+/* Record 99 of the D_8011ECD0 display table: unk_24..unk_30 are two 16.16 position pairs (the s32 views below).
+ * FAKE: D_8013C2E8 is read and written through an address-taken view, so uopt does not promote the counter into a
+ * register; the original loads and stores it at every use. cnt keeps one load for the colour and the square. T-22014 */
+s32 func_801360B0(void) {
+    s16 cnt;
+    u32 var_v1;
+
+    if ((D_80120732 == 5) && !(((DisplayActor44 *)D_8011ECD0)[99].unk_03 & 0x80)) {
+        *(s16 *)&D_8013C2E8 += 1;
+        if (*(s16 *)&D_8013C2E8 >= 0x29) {
+            func_80044750(0x500);
+            *(s16 *)&D_8013C2E8 = 0;
+            D_80120732 = 6;
+            D_80120734 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[99].unk_08 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[99].unk_03 |= 0x80;
+            D_8012071E = 1;
+            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[99].unk_2C = 0x64000;
+            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[99].unk_30 = 0x12000;
+        }
+    }
+    if ((((DisplayActor44 *)D_8011ECD0)[99].unk_03 & 0x80) && (D_80120732 == 6)) {
+        *(s32 *)&((DisplayActor44 *)D_8011ECD0)[99].unk_2C -= 0x1800;
+        *(s32 *)&((DisplayActor44 *)D_8011ECD0)[99].unk_24 +=
+            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[99].unk_2C;
+        *(s32 *)&((DisplayActor44 *)D_8011ECD0)[99].unk_30 -= 0x600;
+        *(s32 *)&((DisplayActor44 *)D_8011ECD0)[99].unk_28 +=
+            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[99].unk_30;
+        if (((DisplayActor44 *)D_8011ECD0)[99].unk_26 < -0xA0) {
+            ((DisplayActor44 *)D_8011ECD0)[99].unk_03 &= 0xFF7F;
+        }
+    }
+    if (((DisplayActor44 *)D_8011ECD0)[99].unk_26 < -0xA0) {
+        D_800B5BD4 = 9;
+        if (*(s16 *)&D_8013C2E8 == 0x64) {
+            func_80135B68();
+        }
+        if (*(s16 *)&D_8013C2E8 == 0xA) {
+            func_80044750(0x502);
+        }
+        if ((D_801206F0 == 1) && (D_801206E0 == 0x21)) {
+            func_80135BB8();
+        }
+        *(s16 *)&D_8013C2E8 += 1;
+        if (*(s16 *)&D_8013C2E8 >= 0xA6) {
+            *(s16 *)&D_8013C2E8 = 0xA5;
+        }
+        cnt = *(s16 *)&D_8013C2E8;
+        var_v1 = cnt + 0x80;
+        if (var_v1 >= 0x100U) {
+            var_v1 = 0xFF;
+        }
+        if (var_v1 == 0xFF) {
+            if (D_800B593C == 0) {
+                var_v1 = 0;
+            } else {
+                var_v1 = (D_800B593C * 2) - 1;
+            }
+        }
+        func_80046AC8(0x25, 0, 0x1FF, (s32) (s16) ((u32) (cnt * cnt) >> 1), -0xA0, -0x78,
+                      (var_v1 << 0x10) | (var_v1 << 8) | var_v1 | 0x10000000, 0xA);
+        dtd_on_tpage(0, 0, 0xA, 0, 0);
+    }
+}
