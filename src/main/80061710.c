@@ -1,6 +1,3 @@
-/* main_api.h override (T-3340, tools/sync_protos.py): the view this file was matched with. */
-#define MAIN_API_OVERRIDE_func_8009B430 /* implicit declaration: called with 3 arguments, the original leaves $a3 unset (main_api.h: 4) */
-
 #include "common.h"
 #include "game.h"
 
@@ -168,7 +165,7 @@ void func_8006218C(void) {
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-17010, 24 differing lines; the eight s16 stores to x, y, w, h come out in source order, the original stores h, w, x, y per row while its li order is y, x, w, h; loop: sh unk_18 after ori and addiu s2 before addiu s0 */
 void func_80062210(void) {
-    s16 pad[4]; /* FAKE: frame 0x80, T-17010 */
+    s16 pad[4]; /* FAKE: unused pad grows the frame to the original 0x80; real source unknown. T-17010 */
     s16 x[2];
     s16 y[2];
     s16 w[2];
