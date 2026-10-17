@@ -51,6 +51,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-20009-name-ent-loader|T-20009 Match NAME_ENT CD-level display helper]]
 
 ## Done
+- [ ] [[tickets/T-11880-date2-remainder|T-11880 DATE2 remainder]]
 - [ ] [[tickets/T-11870-tt-batch-13|T-11870 TT batch 13]]
 - [ ] [[tickets/T-11860-tt-batch-12|T-11860 TT batch 12]]
 - [ ] [[tickets/T-21520-apply-tooling-matches|T-21520 Apply the tooling-round matches]]

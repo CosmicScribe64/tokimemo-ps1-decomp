@@ -1,10 +1,72 @@
+#define MAIN_API_OVERRIDE_D_800B3CFC /* T-11880: func_801388C0 matched with the word as a u8[4] (main_api.h: u8 scalar); the scalar view keeps a second register range */
+#define MAIN_API_OVERRIDE_func_8004F870 /* T-11880: func_801385CC keeps the call result live in v0 (implicit int view; main_api.h: void) */
 #include "common.h"
 #include "ovl/DATE2.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B540);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B544);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B548);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B54C);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B550);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B554);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B558);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B55C);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B560);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B564);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B568);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B56C);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B570);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B574);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B578);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B57C);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B580);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B584);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B588);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B58C);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B590);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B594);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B598);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B59C);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5A0);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5A4);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5A8);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5AC);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5B0);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5B4);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5B8);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5BC);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5C0);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5C4);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5C8);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5CC);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5D0);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5D4);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5D8);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5DC);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5E0);
+s16 D_8013B5E4[4] = { 0, 0, 0, 0 };
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5EC);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5F0);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5F4);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5F8);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B5FC);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B600);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B634);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B688);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B6A8);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B6B0);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B6B8);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B6F4);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B75C);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B7AC);
 
 typedef struct {
     void (*f[13])();
 } FnTbl13; /* size 0x34 */
 extern FnTbl13 D_8013B600;
+extern u8 D_800B3CFC[4];
+s32 func_8004F870();
 
 void func_80137D50(void) {
     D_8013B540 = 0x801B00A4;
@@ -216,9 +278,90 @@ void func_8013856C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_801385CC);
+s32 func_801385CC(void) {
+    GameState *g = &D_800E6280;
+    s16 i;
+    s16 *p;
+    Date2Labels4x21 lab;
+    s16 x[4];
+    s16 y[4];
+    s16 h[4];
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_801388C0);
+    lab = D_8013B634;
+    /* FAKE: one x/y pair per line keeps the original li/sh order (as1 schedules by line). T-11880 */
+    x[0] = -0x80; y[0] = 0x34;
+    x[1] = 0; y[1] = 0x34;
+    x[2] = -0x80; y[2] = 0x4C;
+    x[3] = -0x20; y[3] = 0x4C;
+    if (D_8013B5CC) {} /* FAKE: empty test adds a block; without it uopt promotes the h chain (frame 0xB8) and keeps D_8013B5CC out of v0 in the first label test. T-11880 */
+    D_8013B5E4[1] = (func_800AE0E0(lab.v[1]) / 2) * 0x10;
+    h[0] = h[1] = h[2] = h[3] = 0x10; /* FAKE: chain store, one li for all four and h[3] stored last. T-11880 */
+    D_8013B5E4[0] = 0;
+    D_8013B5E4[2] = 0;
+    D_8013B5E4[3] = 0;
+    func_8004E9F4(1);
+    if ((D_800E7D10.unk_024[0] & 1) || (D_8013B5CC != 0)) {
+        if (D_8013B5CC >= 2U) {
+            func_800AE0F0(lab.v[0], "恋は…（歌付き）");
+        }
+        D_8013B5E4[0] = (func_800AE0E0(lab.v[0]) / 2) * 0x10;
+        func_8004E884(func_8004E788(x[0], y[0], 0, (s32)lab.v[0], 0));
+    }
+    func_8004E884(func_8004E788(x[1], y[1], 0, (s32)lab.v[1], 0));
+    if ((D_800E7D10.unk_024[0] & 4) || (D_8013B5CC != 0)) {
+        D_8013B5E4[2] = (func_800AE0E0(lab.v[2]) / 2) * 0x10;
+        func_8004E884(func_8004E788(x[2], y[2], 0, (s32)lab.v[2], 0));
+    }
+    if ((D_800E7D10.unk_024[0] & 8) || (D_8013B5CC != 0)) {
+        if (D_8013B5CC >= 2U) {
+            func_800AE0F0(lab.v[3], "女々しい…（歌付き）");
+        }
+        D_8013B5E4[3] = (func_800AE0E0(lab.v[3]) / 2) * 0x10;
+        func_8004E884(func_8004E788(x[3], y[3], 0, (s32)lab.v[3], 0));
+    }
+    p = D_8013B5E4;
+    func_8004F870(0, 4, x, y, p, h);
+    D_80122D30 = 1;
+    for (i = 0; i < 4; i++) {
+        if (p[i] != 0) {
+            g->unk_1093 = i;
+            break;
+        }
+    }
+    g->unk_110D++;
+}
+
+s32 func_801388C0(void) {
+    s16 i;
+
+    func_8004F984(0, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(0);
+    func_80050B54(0);
+    if (D_800B3CFC[0] != 0 && D_800B3CFC[0] != D_8013B5D0) {
+        func_80044750(0x601);
+        if (++D_8013B5CC >= 3) {
+            D_8013B5CC = 1;
+        }
+        D_800E6280.unk_110D = 0;
+        D_800B3CFC[0] = 0;
+        D_800B3CF8 = 0;
+    }
+    D_8013B5D0 = D_800B3CFC[0];
+    if (D_800E6280.unk_F88 & 0x600060) {
+        for (i = 0; i < 4; i++) {
+            if (((GsRecF90 (*)[2])D_800E6280.unk_F90)[i][0].unk_06 != 0 && D_8013B5E4[i] != 0) {
+                D_80122CDC = i;
+                D_8013B5C4 = i;
+                D_80122D30 = 0;
+                D_8011ECD3 &= ~0x80;
+                func_8004E9F4(1);
+                D_800E6280.unk_1104.w++;
+                D_800E6280.unk_110D = 0;
+                return 0;
+            }
+        }
+    }
+}
 
 s32 func_80138A3C(void) {
     switch (D_800E6280.unk_110D) {
@@ -395,4 +538,88 @@ void func_801393B4(void) {
     if (D_8013B5C8 == 4620) func_8004E9F4(1);
 }
 
+#ifdef NON_MATCHING
+/* T-11880: 84 diff rows left (funcdiff --resolve --version c). Frame, registers and code shape match; the two spill homes sit at sp+0x40/0x44 where the original has sp+0x44/0x48 (IDO reserves one more temp slot above them here), which also changes how the first case-1 spill is stored. */
+void func_801395C8(arg0)
+    s16 arg0;
+{
+    u8 buf[81][31];
+    s16 i;
+    u8 (*p)[31];
+
+    if (arg0) {} /* FAKE: lowers arg0's priority so it stays in its home as in the original (no s4). T-11880 */
+    switch (D_8013B5C4) {
+    case 2:
+        for (i = 0; i < 30; i++) {
+            func_800AE0F0(buf[i], ((u8 **)D_8013B5D4)[i]);
+        }
+        break;
+    case 0:
+        for (i = 0; i < 51; i++) {
+            func_800AE0F0(buf[i], ((u8 **)D_8013B5D8)[i]);
+        }
+        break;
+    case 3:
+        for (i = 0; i < 39; i++) {
+            func_800AE0F0(buf[i], ((u8 **)D_8013B5DC)[i]);
+        }
+        break;
+    default:
+        for (i = 0; i < 81; i++) {
+            func_800AE0F0(buf[i], ((u8 **)D_8013B5E0)[i]);
+        }
+        break;
+    }
+    if (arg0 % 6 == 0) {
+        p = &buf[arg0];
+        func_8004E788(-0x74, 0x36, 2, (s32)p[0], 0);
+        func_8004E788((s16)(func_800AE0E0(p[0]) * 7 - 0x74), 0x36, 0, (s32)p[1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[0]) * 7 + func_800AE0E0(p[1]) * 7 - 0x74), 0x36, 0, (s32)p[2], 0);
+        func_8004E788(-0x54, 0x4A, 0, (s32)p[3], 0);
+        func_8004E788((s16)(func_800AE0E0(p[3]) * 7 - 0x54), 0x4A, 0, (s32)p[4], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[3]) * 7 + func_800AE0E0(p[4]) * 7 - 0x54), 0x4A, 0, (s32)p[5], 0));
+    } else if (arg0 % 6 == 1) {
+        p = &buf[arg0];
+        func_8004E788(-0x74, 0x36, 2, (s32)p[-1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 - 0x74), 0x36, 2, (s32)p[0], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 + func_800AE0E0(p[0]) * 7 - 0x74), 0x36, 0, (s32)p[1], 0);
+        func_8004E788(-0x54, 0x4A, 0, (s32)p[2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[2]) * 7 - 0x54), 0x4A, 0, (s32)p[3], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[2]) * 7 + func_800AE0E0(p[3]) * 7 - 0x54), 0x4A, 0, (s32)p[4], 0));
+    } else if (arg0 % 6 == 2) {
+        p = &buf[arg0];
+        func_8004E788(-0x74, 0x36, 2, (s32)p[-2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 - 0x74), 0x36, 2, (s32)p[-1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 + func_800AE0E0(p[-1]) * 7 - 0x74), 0x36, 2, (s32)p[0], 0);
+        func_8004E788(-0x54, 0x4A, 0, (s32)p[1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[1]) * 7 - 0x54), 0x4A, 0, (s32)p[2], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[1]) * 7 + func_800AE0E0(p[2]) * 7 - 0x54), 0x4A, 0, (s32)p[3], 0));
+    } else if (arg0 % 6 == 3) {
+        p = &buf[arg0];
+        func_8004E788(-0x74, 0x36, 0, (s32)p[3], 0);
+        func_8004E788((s16)(func_800AE0E0(p[3]) * 7 - 0x74), 0x36, 0, (s32)p[4], 0);
+        func_8004E788((s16)(func_800AE0E0(p[3]) * 7 + func_800AE0E0(p[4]) * 7 - 0x74), 0x36, 0, (s32)p[5], 0);
+        func_8004E788(-0x54, 0x4A, 2, (s32)p[0], 0);
+        func_8004E788((s16)(func_800AE0E0(p[0]) * 7 - 0x54), 0x4A, 0, (s32)p[1], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[0]) * 7 + func_800AE0E0(p[1]) * 7 - 0x54), 0x4A, 0, (s32)p[2], 0));
+    } else if (arg0 % 6 == 4) {
+        p = &buf[arg0];
+        func_8004E788(-0x74, 0x36, 0, (s32)p[2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[2]) * 7 - 0x74), 0x36, 0, (s32)p[3], 0);
+        func_8004E788((s16)(func_800AE0E0(p[2]) * 7 + func_800AE0E0(p[3]) * 7 - 0x74), 0x36, 0, (s32)p[4], 0);
+        func_8004E788(-0x54, 0x4A, 2, (s32)p[-1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 - 0x54), 0x4A, 2, (s32)p[0], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 + func_800AE0E0(p[0]) * 7 - 0x54), 0x4A, 0, (s32)p[1], 0));
+    } else {
+        p = &buf[arg0];
+        func_8004E788(-0x74, 0x36, 0, (s32)p[1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[1]) * 7 - 0x74), 0x36, 0, (s32)p[2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[1]) * 7 + func_800AE0E0(p[2]) * 7 - 0x74), 0x36, 0, (s32)p[3], 0);
+        func_8004E788(-0x54, 0x4A, 2, (s32)p[-2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 - 0x54), 0x4A, 2, (s32)p[-1], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 + func_800AE0E0(p[-1]) * 7 - 0x54), 0x4A, 2, (s32)p[0], 0));
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_801395C8);
+#endif

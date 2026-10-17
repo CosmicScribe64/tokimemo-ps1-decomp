@@ -35,6 +35,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
+- [[tickets/T-11880-date2-remainder|T-11880]] DATE2: the remaining nine functions, claim #49 (Done; 8 of 9 matched, DATE2 101/102, 91.9% of bytes).
 - [[tickets/T-20008-large-name-introduction|T-20008]] NAME_ENT introduction reconstruction archive (4,308-byte scope), claim #50; compiling, still nonmatching (In Progress; draft checkpoint merged, PR #51).
 - [[tickets/T-20010-name-ent-resource-loader|T-20010]] NAME_ENT resource loader follow-up, 1,652 bytes; valid table recovered, still ASM (Ready).
 - [[tickets/T-20009-name-ent-loader|T-20009]] NAME_ENT CD-level display helper, 484-byte verified match, claim #52 (In Review).

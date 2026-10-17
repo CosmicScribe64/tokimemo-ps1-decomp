@@ -17472,6 +17472,9 @@ All three remaining guarded TT near misses matched (2,740 bytes): `func_80142110
 
 diman8's PR #48: the last three TT near misses matched (2,740 bytes), TT 302/303; only func_8014D260 (gcc PsyQ code) is left. All three had been logged as allocator quirks; the causes were statement order and control-flow shape. [[tickets/T-11870-tt-batch-13]] Done.
 
+## [2026-10-17] ticket | T-11880 DATE2 remainder started
+TT is finished apart from `func_8014D260` (gcc); closed claim #2 and opened claim #49 for DATE2. Created [[tickets/T-11880-date2-remainder]] (In Progress): nine functions in three groups, one Opus agent each, two at a time.
+
 ## [2026-10-17] ticket | Claim the next large NAME_ENT handler
 
 PR #46 is merged; the maintainer independently confirms the renderer MATCH and 27/27 hashes. [[tickets/T-20008-large-name-introduction]] claims NAME_ENT func_80143580 (4,308 bytes) in issue #50 before implementation, from current upstream d73328b8. Leave the DATE2 claim #49 and TT untouched. Initial assembly inspection finds eight tile addresses in a 0x90-byte frame; the archived m2c draft has broken pointer/record strides and misinterpreted relocation low halves.
@@ -17522,3 +17525,6 @@ KakarottoCake's PR #51: corrected NAME_ENT func_80143580 reconstruction archived
 ## [2026-10-17] ticket | T-20009 ready for review; loader follow-up separated
 
 [[tickets/T-20009-name-ent-loader]] moved to In Review for the verified 484-byte helper and synchronized with [[kanban]]. [[tickets/T-20010-name-ent-resource-loader]] is Ready for the unmatched 1,652-byte loader; its table extent/stride, priority trace and negative controls are preserved. No loader C, compiler change, raw asset, binary, generated ASM, probe script or comparison listing is submitted. Self-review against CODING_STANDARDS.md completed; maintainer review pending.
+
+## [2026-10-17] ticket | T-11880 DATE2 remainder Done
+Three groups, one Opus agent each: 8 of 9 matched (11,172 bytes), `func_801395C8` guarded (84 rows). Merged current `main`; clean rebuild 27/27 OK, checks clean; DATE2 101/102 (91.9%). Inline review against CODING_STANDARDS.md: no open findings. Moved [[tickets/T-11880-date2-remainder]] to Done. Notes in [[matching-notes]] ("DATE2 remainder"), 9 rows in [[data/t0018-cases]].
