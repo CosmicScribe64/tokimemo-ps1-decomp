@@ -16994,3 +16994,6 @@ KakarottoCake's PR #44 (claim #43): GYOZI func_80141944 and func_80145384 matche
 
 ## [2026-10-17] ticket | T-17011 Done
 [[tickets/T-17011-w3-main-p11]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/main/80062CD0.c` changed in code, `D_800B5A98` added to `include/main_api.h`, no `drafts/` or config change. Findings fixed (comments and one blank line, bytes unchanged): the `(u8)` view of `unk_F6E`, the `pad_1C` halfword view and the byte-pointer record address of `func_8006612C` now carry comments; stray blank line removed. The one `FAKE` (`func_80063668`) is tracked in the ticket. Clean build, main exe sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 3 of 5 matched (`func_80063668`, `parameter_show`, `func_8006612C`, 1,680 bytes). Merge via the wave 3 merge script.
+
+## [2026-10-17] ticket | T-17019 In Progress
+[[tickets/T-17019-w3-main-p19]] created and started: wave 3 package w3-main-p19, five functions of `src/main/80043510.c` (`func_80044C98`, `func_80044E8C`, `csr_load_vram`, `func_8004443C`, `func_80043510`), worktree `tokimemo-wt/w3-main-p19`, base `w2-good`. Follows [[tickets/T-17000-types-first-main]].
