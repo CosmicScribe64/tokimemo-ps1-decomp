@@ -94,7 +94,8 @@ From the orchestrator's `inventory2.py`/`mklists3.py`; lists in its scratchpad.
 | w3-en-nichi-p02 | T-18202 | `80136B10.c` | 3 (`func_80138CCC`, `func_80136DEC`, `func_8013735C`) | 4,808 |
 
 Left for later waves: `func_80132450`, `func_801339D4`, `func_80134800`, `func_80135ACC`, `func_80135FBC`,
-`func_801362A4` in `80132000.c`.
+`func_801362A4` in `80132000.c`. Since T-20920 the first four are matched (see "Targeted type pass (T-20920)" below);
+`func_80135FBC` and `func_801362A4` are still open.
 
 ## Targeted type pass (T-20920)
 

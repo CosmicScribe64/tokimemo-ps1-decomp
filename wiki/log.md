@@ -17324,3 +17324,7 @@ functions after [[en-nichi-family-results]] T-18200), redraft with `tools/redraf
 
 [[tickets/T-20920-types-en-nichi]] In Progress to In Review: types, matches, redraft and docs committed; the code
 review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]], line in [[index]] updated.
+
+## [2026-10-17] ticket | T-20920 Done
+
+[[tickets/T-20920-types-en-nichi]] reviewed against `CODING_STANDARDS.md`: no blocking finding, two small fixes (a blank line after the opening brace of `func_801339D4`; a stale "left for later waves" line in [[en-nichi-family-results]]). No edits in `src/ovl/TT/*` or `dialogue_render`, one FAKE (`func_80135ACC`, ticket named), types documented in [[data-types]], no game data. Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. In Review to Done (kanban card moved, [[index]] line updated).

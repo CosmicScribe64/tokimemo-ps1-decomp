@@ -1,7 +1,7 @@
 ---
 id: T-20920
 title: "Targeted type pass: EN_NICHI"
-status: In Review
+status: Done
 assignee: claude-opus (ty-en-nichi)
 created: 2026-10-17
 updated: 2026-10-17
@@ -50,4 +50,35 @@ types: [[data-types]], section "EN_NICHI targeted pass (T-20920)".
 [2026-10-17] Done in one session (07:03 to 09:10 UTC). Every match was checked with the EN_NICHI sha1 in
 ninja (all 27 OK) and committed on its own; the clean build `rm -rf build && python3 configure.py && ninja` gives
 27/27; `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. No edit in `src/ovl/TT/*`
-or `src/main/8007C030.c`. Code review against `CODING_STANDARDS.md` still open (In Review).
+or `src/main/8007C030.c`. The code review against `CODING_STANDARDS.md` was still open at that point; it is below.
+
+### 2026-10-17 claude-sonnet (review): code review against `CODING_STANDARDS.md`, Done
+
+Reviewed `git diff w2-good...ty-en-nichi` (13 commits, 56 files; 11 are `src`, `include`, `config` and `wiki` files, the rest
+`drafts/T-20920/`) against the checklist. Two small findings, both fixed; nothing left open.
+- Scope: no edit in `src/ovl/TT/*` and none in `src/main/8007C030.c` (`dialogue_render`); no game data, binaries or
+  `disc/` content (the `drafts/T-20920/` files are the usual draft bodies and header contexts, as in the other
+  `drafts/T-*` folders). The one edit outside the stated ownership, the `D_800E7D10` link name in
+  `config/symbol_addrs_types.txt`, is a single `T-20920` line in the existing format and is needed to link.
+- Matches: the eight new matches are plain C with no `#ifdef NON_MATCHING`; the two guards that existed
+  (`func_801330D0`, `func_80136A2C`) are gone with their `INCLUDE_ASM` fallbacks, and no guard was added. Clean
+  `rm -rf build && python3 configure.py && ninja` in Docker: 27/27 sha1 OK. The splat "Unable to determine a segment"
+  lines are the known main-exe symbol messages (none names a symbol of this branch).
+- C89: the scan of added `src` and `include` lines found no `//` comment (the `//` in `symbol_addrs_types.txt` is the
+  splat symbol-file syntax), no `inline`, `bool` or non-ASCII text; locals are declared at block top (the `Fix32 x, y`,
+  `EnHalf64 tbl` and `u8 list[15]` locals included).
+- Types: `EnObj` and `EnFixPos` carry offsets and sizes; `Fix32`/`DisplayFixActor44` are the T-20900 game types, no SDK
+  struct redefined; the new `func_80136700`/`func_80136904` prototypes and the `s32 arg0` prototypes match their
+  definitions (the `BUNKA_SD` `func_80136904(void)` is another overlay and another header closure). `EnResetSlot8` and
+  the `s16 [10][4]` view have no remaining user. `check_headers` OK, `migrate_globals --check` OK,
+  `sync_protos --check-branch` OK (0 new, 15 known).
+- Matched code changed only to use the new types (`.unk_16` to `.unk_14.h[1]`, `.unk_1A` to `.unk_18.h[1]`, the grid and
+  centre halves to `.unk_00.h[1]`/`.unk_04.h[1]`); the sha1 of every unit is unchanged.
+- FAKE: one new marker, the empty statement in `func_80135ACC` (reason and `T-20920` in the comment). The FAKEs of the
+  two former guards are gone. The `s32 func_80132450(void)` without a return is the implicit-int view of its
+  prototype-less caller, explained in its comment, not a fakematch.
+- Findings fixed: (1) a blank line right after the opening brace of `func_801339D4` removed (clean rebuild still
+  27/27); (2) the "Left for later waves" line of [[en-nichi-family-results]] still listed four functions this ticket
+  matched, now annotated.
+- Wiki: types in [[data-types]] (table row and section "EN_NICHI targeted pass (T-20920)"), results in
+  [[en-nichi-family-results]]; status, kanban card (In Review to Done), index line and log agree.
