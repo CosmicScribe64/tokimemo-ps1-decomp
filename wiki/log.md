@@ -17260,3 +17260,42 @@ New `tools/keepproof.py` (`check`, `census`, `rows`) and the `proof=<func>:<rows
 
 ## [2026-10-17] ticket | T-20900 In Review
 [[tickets/T-20900-shared-type-unification]] moved In Progress to In Review (kanban card moved). Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Awaits code review against `CODING_STANDARDS.md`.
+## [2026-10-17] ticket | T-16990 Done
+
+Wave 3 conveyor paused at the user's request after 19 types passes and 77 packages: 239 matches / about 167 KB, 75.8%. 81 packages return to the next inventory. Type round (T-20900..T-20940) and tooling round (T-20800..) running; the conveyor restarts after them. [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-17] ticket | T-20810 In Progress
+
+[[tickets/T-20810-viewsweep]] created and started: `tools/viewsweep.py`, the type pass as a tool (own return type x every callee view, scored on the full translation unit in memory), branch `tr-viewsweep` from `w2-good`. Card in [[kanban]] under In Progress. Background: 19 of 102 wave 3 blocker notes were one lever, found by hand; see [[decompile-workflow]] ("Trying another prototype") and [[tickets/T-16530-proto-override]].
+
+## [2026-10-17] build | T-20810 viewsweep validation and first use
+
+[[tickets/T-20810-viewsweep]]: `tools/viewsweep.py` rediscovered the five hand-found type-lever cases from scratch copies with the lever removed (RPG_BAT `func_80149C5C` 6 compiles, TACO `func_8014B8B4` 4, TAIIKU `func_80145370` 5, RPG_BAT `func_8013B5B0` 41, RPG_BAT `func_8013E54C` 2). First use with the committed tool at `-j 2`: 101 guarded drafts, 996 compiles, 14 minutes, 1 match (NAME_ENT `func_80134B94`, 804 B, `s32 func_800AE090();`), 7 improved, 93 no gain; 29 archived draft bodies, 157 compiles, 3 improved, 10 not compiling in the tree. Results, table and the verified patch in `drafts/T-20810/`; details in [[matching-notes]] and [[decompile-workflow]].
+
+## [2026-10-17] ticket | T-20810 In Review
+
+[[tickets/T-20810-viewsweep]] In Progress to In Review (card moved in [[kanban]]): `tools/viewsweep.py`, `tools/test_viewsweep.py`, `allow_defined` in `tools/protoverride.py`, `edit=`/`source=` in `tools/funcdiff_verify.py`, docs in [[decompile-workflow]] (section "Step 1 for a near miss"), [[register-cheatsheet]] (first row, loop step 0) and [[matching-notes]]. Full tool suite 1,281 tests OK. The one match is a patch (`drafts/T-20810/patches/NAME_ENT_func_80134B94.patch`), not applied in `src/` because the ticket rules forbid editing `src/` and `include/`.
+
+## [2026-10-17] ticket | T-20810 Done
+
+[[tickets/T-20810-viewsweep]] In Review to Done: code review against `CODING_STANDARDS.md`, no blocking findings; one small fix (the acceptance criterion about committing the match now says it is kept as a verified patch). Full tool suite 1,281 tests OK (3 skipped); a run of `tools/viewsweep.py` on NAME_ENT `func_80134B94` found the match in 3 compiles with the literal-byte proof. Card moved in [[kanban]]. The patch `drafts/T-20810/patches/NAME_ENT_func_80134B94.patch` (804 B) still has to be applied in `src/` by a matcher. Merge via the wave 2 merge script.
+
+## [2026-10-17] ticket | T-20830 In Progress
+
+[[tickets/T-20830-autotweak-recipes]] created and In Progress: autotweak edit kinds for the four wave-3 recipes (GameState pointer, statement runs, chain stores, multi-use local). Card in [[kanban]]; method in [[decompile-workflow]]. Tool worktree `tr-autotweak-recipes`, only `tools/`, `wiki/` and `drafts/T-20830/` change.
+
+## [2026-10-17] build | T-20830 recipe edit kinds in autotweak
+
+`tools/recipes.py` adds `gstate`, `group`, `chain` and `inline_multi` to `tools/autotweak.py` (registered at the end of the file like `typefix`); `--only-kinds` and per-kind `--list` counts; `HINT_EDITS` gets group (tie, ugen), chain (ugen), gstate (priority, structure, argument), inline_multi (priority); `regdiff.py` prints `ORDER-ONLY` and autotweak maps it to group, order, join, split. Tests `tools/test_recipes.py` (59) and the full tool suite in Docker: 1,250 tests OK (3 skipped). The four transforms ran over all 6,370 function bodies of `src/` with no error. Method and numbers in [[decompile-workflow]] ("Recipe edits for autotweak (T-20830)"), rows in [[register-cheatsheet]], notes in [[matching-notes]] ("T-20830"). Ticket [[tickets/T-20830-autotweak-recipes]].
+
+## [2026-10-17] build | T-20830 first use of the recipe edit kinds
+
+`autotweak.py --all --only-kinds gstate,group,chain,inline_multi --time 30 --score-jobs 2` in scratch copies of the worktree, over the 101 guarded drafts and 16 wave-3 archive drafts (`drafts/T-17106` to `T-19030`, guarded in the copy), about 95 minutes on a loaded machine. Six new matches, 2,660 bytes, plain C: main `func_80072D70` (1,064 B, `gstate all last`), DATE `func_8013AF1C` (600 B, `gstate all`), NAME_ENT `func_8013BE18` (348 B, `gstate all`), GYOZI `func_8013E638` (236 B, `group head` with the empty counter test), TT `func_8013D2E0` (224 B, `inline_multi ... use1`), ETC `func_80143F24` (188 B, `chain join` plus `gstate all`). The archived draft of DATE `func_80155004` was matched again (chain plus loop-head join). 20 guarded and 6 archive drafts got a lower score; 73 and 9 did not change; 2 guarded drafts could not be set up. The six matches applied together in a scratch copy: 27/27 sha1 OK, `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch` pass. `src/` was not changed here; texts and the full hit table are in `drafts/T-20830/` (README, `body.c`, `best.c`).
+
+## [2026-10-17] ticket | T-20830 In Review
+
+[[tickets/T-20830-autotweak-recipes]] In Progress to In Review: tool, tests, docs and the first use are done and committed; the code review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]]. The six matches in `drafts/T-20830/` wait for the lead to apply them to `src/`.
+
+## [2026-10-17] ticket | T-20830 Done
+
+[[tickets/T-20830-autotweak-recipes]] In Review to Done: code review against `CODING_STANDARDS.md` found no blocking issue and one small fix (`import unittest.mock` moved to the top of `tools/test_recipes.py`). Full tool suite in Docker: 1,250 tests OK (3 skipped). A real dry run on TT `func_8013D2E0` printed `MATCH ... 105 -> 0 [inline_multi v L7 use1]`. Only `tools/`, `wiki/` and `drafts/T-20830/` changed, no game data. The six matches (2,660 bytes) wait in `drafts/T-20830/` for the lead to apply to `src/` (GYOZI `func_8013E638` keeps its `FAKE` comment). Card moved in [[kanban]]. Merge via the tool merge script.

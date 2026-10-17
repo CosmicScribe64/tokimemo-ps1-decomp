@@ -1,0 +1,132 @@
+target                       status           base   best tries  unt  edits
+---------------------------------------------------------------------------
+NAME_ENT:func_80134B94       match              10      0     3    0  s32 func_800AE090();
+TACO:func_801497EC           no-gain             2      2     6    0  -
+TT:func_8013A0DC             no-gain             2      2    18    0  -
+BUNKASAI:func_80151364       no-gain             4      4    21    0  -
+GEKO:func_80136C20           no-gain             4      4     6    0  -
+GYOZI:func_8013E638          no-gain             4      4     6    0  -
+main:file_checksum_ok        no-gain             4      4     1    0  -
+main:func_80054C74           no-gain             4      4    22    0  -
+main:func_80079070           no-gain             4      4     7    0  -
+EN_NICHI:func_80136A2C       no-gain             6      6     3    0  -
+SHOUGATU:func_801347E0       no-gain             6      6     6    0  -
+TACO:func_8014616C           no-gain             6      6    20    0  -
+GEKO:func_80140040           no-gain             7      7     5    0  -
+EVENT:func_80118868          improved           16      8     5    0  s32 func_80118868();
+EVENT:func_80114B0C          no-gain             8      8     4    0  -
+main:func_800754C0           no-gain             9      9     4    0  -
+NAME_ENT:func_8013BE18       no-gain            10     10    14    0  -
+TACO:func_8013D838           no-gain            10     10    10    0  -
+TACO:func_80149538           no-gain            10     10    14    0  -
+TACO:func_801511C0           no-gain            10     10     3    0  -
+OPTION:func_80139F8C         no-gain            11     11     5    0  -
+TACO:func_8014F5F0           no-gain            11     11    17    0  -
+NAME_ENT:func_80140B20       improved           15     12     5    0  s32 func_80140B20();
+BUNKAKEN:func_801428D0       no-gain            12     12     8    0  -
+RPG_BAT:func_8015A744        no-gain            12     12    13    0  -
+TACO:func_801484E4           no-gain            12     12    11    0  -
+TACO:func_8014A480           no-gain            12     12     8    0  -
+TAIIKU:func_8013BCEC         no-gain            12     12    13    0  -
+EVENT:func_8011EDFC          no-gain            13     13    17    0  -
+BUNKA_SD:func_8013987C       no-gain            14     14     5    0  -
+ETC:func_80146400            no-gain            14     14     6    0  -
+NAME_ENT:func_80132320       no-gain            14     14    18    0  -
+TT:func_80146000             no-gain            14     14     5    0  -
+GEKO:func_80134228           no-gain            16     16    13    0  -
+GEKO:func_80135AC8           no-gain            16     16    13    0  -
+TACO:func_8015B1B8           no-gain            16     16     2    0  -
+main:dialogue_speak_part     no-gain            16     16    29    0  -
+NAME_ENT:func_8013BB24       improved           28     17    69    0  s32 func_8013BB24();
+TT:func_80136830             no-gain            17     17     4    0  -
+main:func_800460FC           no-gain            17     17     4    0  -
+main:menu_bar_color          no-gain            17     17     2    0  -
+GYOZI:func_80136488          no-gain            19     19     8    0  -
+main:menu_check_1            improved           27     20     2    0  s32 menu_check_1();
+main:func_8007B144           improved           21     20    20    0  s32 func_8007B144();
+TACO:func_801472D4           no-gain            20     20     1    0  -
+TAIIKU:func_8014607C         no-gain            20     20     6    0  -
+NAME_ENT:func_8013DF88       no-gain            22     22    30    0  -
+TAIIKU:func_80135480         no-gain            22     22     6    0  -
+TT:func_801392A0             no-gain            22     22     8    0  -
+main:func_800590CC           no-gain            22     22    16    0  -
+main:func_80072D70           no-gain            22     22    10    0  -
+ETC:func_80143F24            no-gain            23     23     6    0  -
+ENDING:func_80134B18         no-gain            24     24     6    0  -
+TT:func_801455C8             no-gain            24     24    20    0  -
+main:func_80062210           no-gain            24     24    19    0  -
+main:x_taku_menu_set         no-gain            24     24     3    0  -
+BUNKA_SD:func_80134418       no-gain            26     26     5    0  -
+TAIIKU:func_80137544         no-gain            26     26     6    0  -
+main:csr_load_vram           no-gain            26     26     5    0  -
+SHUGAKU:func_801352B0        improved           37     27     6    0  s32 func_801343B0();
+VALEN:func_80134030          no-gain            27     27     6    0  -
+DATE:func_801518B8           no-gain            28     28    10    0  -
+RPG_BAT:func_80148714        no-gain            28     28    20    0  -
+RPG_BAT:func_8015A8B4        no-gain            28     28     6    0  -
+TT:func_8014A2B4             no-gain            28     28    39    0  -
+main:func_80077CA8           no-gain            28     28     3    0  -
+TACO:func_8013506C           no-gain            29     29     5    0  -
+main:load_tpage_buf_lock     no-gain            29     29     3    0  -
+GEKO:func_80137580           no-gain            30     30     5    0  -
+EVENT:func_8010B614          no-gain            33     33     6    0  -
+TAIIKU:func_8014357C         no-gain            34     34     6    0  -
+TACO:func_80134A18           no-gain            36     36     6    0  -
+TT:func_8013A3E0             no-gain            37     37     5    0  -
+NAME_ENT:func_801460D8       no-gain            40     40    18    0  -
+SHOUGATU:func_80136948       no-gain            40     40     5    0  -
+SHUGAKU:func_801357AC        no-gain            40     40     9    0  -
+TACO:func_8013B2A0           no-gain            40     40    12    0  -
+TT:func_8013D2E0             no-gain            40     40     3    0  -
+RENSYU:func_80133628         no-gain            42     42    14    0  -
+GYOZI:func_80137188          no-gain            46     46     5    0  -
+DATE:func_8013B488           improved           75     49     7    0  s32 func_80083440();
+main:func_8004B358           improved          err     49    12    1  s32 func_8004B358(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+main:func_8007B64C           no-gain            51     51     3    0  -
+DATE:func_8014718C           no-gain            52     52    33    0  -
+main:func_800764AC           no-gain            54     54     1    0  -
+TACO:func_801416E8           no-gain            55     55    11    0  -
+TT:func_80142570             no-gain            56     56     4    0  -
+SHUGAKU:func_80133038        no-gain            58     58     5    0  -
+TT:func_80136AD8             no-gain            58     58     4    0  -
+TT:func_80147A18             no-gain            58     58     3    0  -
+EN_NICHI:func_801330D0       no-gain            60     60     3    0  -
+OPTION:func_80139E3C         no-gain            60     60     7    0  -
+TACO:func_80138B2C           no-gain            60     60     8    0  -
+TT:func_801374C0             no-gain            60     60     3    0  -
+VALEN:func_80132D0C          no-gain            64     64     9    0  -
+TAIIKU:func_80140A90         no-gain            66     66    46    0  -
+DATE:func_8014A8FC           no-gain            68     68    10    0  -
+TT:func_8013BE9C             no-gain            70     70     8    0  -
+TACO:func_8013B460           no-gain            82     82     3    0  -
+DATE:func_8013D5FC           no-gain            93     93    10    0  -
+TEL:func_8013D03C            no-gain            97     97     7    0  -
+NAME_ENT:func_8013B994       no-gain           104    104    11    0  -
+main:func_8006C988           no-gain           131    131     1    0  -
+DATE:func_8013AF1C           no-gain           134    134     3    0  -
+GYOZI:func_80142A8C          no-gain           152    152     6    0  -
+RPG_BAT:func_801447E0        no-gain           154    154     5    0  -
+TEL:func_80134FE4            no-gain           154    154     6    0  -
+main:col2sepia               no-gain           171    171     3    0  -
+TT:func_8013E498             no-gain           198    198     3    0  -
+main:srn_set                 no-gain           210    210     2    0  -
+RPG_BAT:func_80154760        improved          292    213    16    0  s32 func_8013E97C();
+main:parameter_up_down       no-gain           218    218     2    0  -
+GEKO:func_801355E8           no-gain           224    224     5    0  -
+main:func_8005938C           no-gain           226    226    11    0  -
+main:func_80067870           no-gain           244    244     6    0  -
+RPG_BAT:func_80144C84        no-gain           252    252     5    0  -
+RPG_BAT:func_80134E78        no-gain           257    257     9    0  -
+main:func_80042CB0           no-gain           396    396     3    0  -
+NAME_ENT:func_80134248       no-gain           455    455     3    0  -
+OMIMAI:func_8013388C         improved          err    594    20    9  s32 func_801340E4();
+DATE:func_801449D4           failed            err      -     2    1  -
+DATE:func_80144E20           failed            err      -     2    1  -
+RENSYU:func_8013325C         failed            err      -     2    1  -
+RENSYU:func_80133990         failed            err      -     2    1  -
+RPG_BAT:func_80154DD8        failed            err      -     2    1  -
+TACO:func_801424A8           failed            err      -     4    2  -
+TACO:func_80144094           failed            err      -     2    1  -
+TAIIKU:func_80147B14         failed            err      -     2    1  -
+VALEN:func_80133088          failed            err      -     2    1  -
+main:func_80043010           failed            err      -     2    1  -

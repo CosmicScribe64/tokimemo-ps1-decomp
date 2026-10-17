@@ -1,10 +1,10 @@
 ---
 id: T-16990
 title: Wave 3 conveyor (types-first passes feeding a matcher pool)
-status: In Progress
+status: Done
 assignee: claude-orchestrator
 created: 2026-10-16
-updated: 2026-10-16
+updated: 2026-10-17
 links: [[speedup-research-2026-10-16]], [[tickets/T-16200-matching-wave-2]], [[taiiku-family-results]], [[taco-family-results]]
 ---
 
@@ -26,8 +26,21 @@ Clear as many of the remaining 831 non-TT functions (725 KB) as the weekly usage
 
 ## Acceptance criteria
 
-- [ ] Every started package reviewed, merged or dropped, ticket Done
-- [ ] Integration tree clean 27/27, headers, globals, prototypes
-- [ ] Results and blockers recorded here
+- [x] Every started package reviewed, merged or dropped, ticket Done
+- [x] Integration tree clean 27/27, headers, globals, prototypes
+- [x] Results and blockers recorded here
 
 ## Comments
+
+### 2026-10-17: results, paused for a type round and a tooling round
+
+User decision: pause the conveyor, run a cross-unit type round and a tooling round, then restart. New packages were
+refused at setup (pause flag in the orchestrator's setup script); the seven running packages finished and merged.
+
+- 19 types-first passes: 69 matches / 39,460 bytes; 126 packages produced.
+- 77 packages worked (Sonnet matcher, Opus closer on near misses of 20 rows or fewer): 170 matches / 127,844 bytes,
+  27 of them from the closer; every worked package reviewed and merged.
+- 81 packages not started (pause); they return to the next inventory.
+- Total 239 matches / about 167 KB; project 6,076 -> 6,358/6,958 functions, 67.2% -> 75.8% of bytes (contributor PRs
+  included in the totals).
+- Blockers: 102 notes, clustered by the tooling round (T-20800..); compiler-limited cases in [[build-step-gaps]].

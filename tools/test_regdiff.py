@@ -502,6 +502,18 @@ class ReportTest(unittest.TestCase):
         self.assertIn("STRUCTURE differs in 1 place(s)", text)
         self.assertIn("+ original", text)
 
+    def test_the_same_instructions_in_another_order_are_order_only(self):
+        draft = [addiu("v0", "zero", 1), lw("v1", 0, "a0"), jr_ra(), nop()]
+        want = [lw("v1", 0, "a0"), addiu("v0", "zero", 1), jr_ra(), nop()]
+        rc, text = self.run_report(draft, want)
+        self.assertEqual(rc, 1)
+        self.assertIn("STRUCTURE differs", text)
+        self.assertIn("ORDER-ONLY: the draft has the same instructions as the original in another order", text)
+        # an extra instruction is a structure difference, not an order difference
+        rc, text = self.run_report([addiu("v0", "zero", 1), jr_ra(), nop()],
+                                   [addiu("v0", "zero", 1), lw("v1", 0, "a0"), jr_ra(), nop()])
+        self.assertNotIn("ORDER-ONLY", text)
+
     def test_only_an_operand_order_difference(self):
         draft = [beq("v1", "v0", 3), nop(), nop(), jr_ra(), nop()]
         want = [beq("v0", "v1", 3), nop(), nop(), jr_ra(), nop()]
