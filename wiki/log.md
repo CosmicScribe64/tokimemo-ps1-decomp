@@ -17034,3 +17034,7 @@ Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-17015 Done
 
 [[tickets/T-17015-w3-main-p15]] In Review to Done: code review against `CODING_STANDARDS.md` found one small issue, fixed (matching-notes comment added above `srn_vram_set`; comment only) and one non-blocking follow-up (the `SrnRec28` view of `D_80121750` is a cast because `srn_init` and BUNKA_SD use the byte view). Rebuild OK (sha1, headers OK, globals OK, `sync_protos --check-branch` OK). 1 of 4 functions matched (`srn_vram_set`; 664 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-17] ticket | T-20830 In Progress
+
+[[tickets/T-20830-autotweak-recipes]] created and In Progress: autotweak edit kinds for the four wave-3 recipes (GameState pointer, statement runs, chain stores, multi-use local). Card in [[kanban]]; method in [[decompile-workflow]]. Tool worktree `tr-autotweak-recipes`, only `tools/`, `wiki/` and `drafts/T-20830/` change.
