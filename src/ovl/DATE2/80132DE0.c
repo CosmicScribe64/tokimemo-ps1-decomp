@@ -103,7 +103,40 @@ void func_80133088(void) {
     func_8009C884(&rect, (void *)0x80180000);
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_801330D4);
+void func_801330D4(void) {
+    GameState *g;
+    s16 sums[10];
+    s16 i;
+    s16 j;
+    s32 best;
+
+    best = 100; /* set before the loops: the original holds 100 in a2 from the entry */
+    D_8013A4C0 = 0;
+    D_800E6280.unk_F5F = 1;
+    g = &D_800E6280;
+    for (i = 1; i < 10; i++) {
+        sums[i] = 0;
+        for (j = 1; j < 0x25; j++) {
+            sums[i] += g->unk_1BC[i].unk_14[j]; /* j = 0x24 reads the byte after unk_14 (the original does) */
+        }
+        sums[i] -= g->unk_1BC[i].unk_14[0x1A];
+    }
+
+    for (i = 1; i < 10; i++) {
+        if (sums[i] < best && g->unk_1BC[i].unk_0C.f.b1) {
+            g->unk_F5F = i; /* through g: the store may alias sums, so sums[i] is reloaded below */
+            best = sums[i];
+        }
+    }
+    func_800847B8(D_800E6280.unk_75D = D_800E6280.unk_F5F);
+    D_800E6280.unk_F5F = 0;
+    func_80085B3C(0xC, 0);
+    D_800E6280.unk_F5F = D_800E6280.unk_75D;
+    func_80085B3C(0xC, 0);
+    func_80133258();
+    func_801338F8();
+    func_8004284C();
+}
 
 void func_80133258(void) {
     switch (D_800E6280.unk_F5F) {
