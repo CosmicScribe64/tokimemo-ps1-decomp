@@ -17637,3 +17637,6 @@ Two of four TACO functions matched: `func_801484E4` (392 bytes; kept `D_800E7384
 
 ## [2026-10-17] ticket | T-22014 Wave 4 package w4-p14 In Progress
 Started: SHUGAKU `src/ovl/SHUGAKU/80133D60.c` and `src/ovl/SHUGAKU/80135430.c`, five functions from the work list. Ticket [[tickets/T-22014-w4-p14]], parent [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] ticket | T-22014 Wave 4 package w4-p14 In Review
+Three of five SHUGAKU functions matched: `func_80135480` (`s32` no return, `SHUGAKU.h` updated), `func_80133E10` (store-forwarded compare), `func_801360B0` (address-taken counter view, mixed record and scalar views; 720 bytes from a 205-row draft). `func_801357AC` and `func_80135EA4` stay guarded at 10 rows (block-copy end register one entry off; eight test files in the session found no C spelling that reaches the other state). Notes in [[matching-notes]] (T-22014), four new rows in [[register-cheatsheet]]. Sources: `src/ovl/SHUGAKU/80133D60.c`, `src/ovl/SHUGAKU/80135430.c`. Ticket [[tickets/T-22014-w4-p14]].

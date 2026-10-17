@@ -249,8 +249,8 @@ void func_80135DB8(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-22014, 10 rows; ugen takes t3 for the end pointer of the block copy where the original takes t2 (one more
- * temporary skipped; the known copy-state gap, same as func_801357AC), every later t register follows. */
+/* NON_MATCHING: T-22014, 10 rows; ugen takes t3 for the end pointer of the block copy where the original takes t2 (one
+ * more temporary skipped; the known copy-state gap, same as func_801357AC), every later t register follows. */
 void func_80135EA4(void) {
     s16 i;
 
