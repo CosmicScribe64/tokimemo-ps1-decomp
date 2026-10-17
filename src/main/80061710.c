@@ -1,3 +1,6 @@
+/* main_api.h override (T-3340, tools/sync_protos.py): the view this file was matched with. */
+#define MAIN_API_OVERRIDE_func_8009B430 /* implicit declaration: called with 3 arguments, the original leaves $a3 unset (main_api.h: 4) */
+
 #include "common.h"
 #include "game.h"
 
@@ -54,7 +57,36 @@ void func_800618B0(void) {
     } while (p != D_80122CA0);
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-17010, 14 differing lines; prologue only: the original builds 0x801F0004 for $a0 on its own and the TMD pointer in $s3 after func_8009B3C0, ours shares one lui in $s3 (T-0018 hoist row) */
+s32 func_8006190C(void) {
+    u32 *m;
+    s32 r;
+    s32 i;
+
+    m = (u32 *)0x801F0000;
+    m++;
+    func_8009B3C0((s32)m);
+    m++;
+    if (*m != 0xD) {
+        return 0;
+    }
+    m++;
+    for (i = 0; i < 16; i++) {
+        func_8009B430((s32)m, (u8 *)&D_80122640[i * 4], 0);
+        D_80122640[i * 4 + 1] = (u32)&D_801227A0[i];
+        D_80122640[i * 4] = 0;
+    }
+    r = rand();
+    for (i = 0; i < 13; i++) {
+        func_8009B430((s32)m, (u8 *)&D_80122640[i * 4], (r + i) % 13);
+        D_80122640[i * 4 + 1] = (u32)&D_801227A0[i];
+        D_80122640[i * 4] = 0;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80061710", func_8006190C);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80061710", func_80061A3C);
 
