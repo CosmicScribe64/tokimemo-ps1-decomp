@@ -16613,3 +16613,7 @@ rename table.
 ## [2026-10-16] ticket | T-17007 In Progress
 
 [[tickets/T-17007-w3-main-p07]] created and started: wave 3 package w3-main-p07 of [[tickets/T-17000-types-first-main]], branch `w3-main-p07` from `w2-good`, owned file `src/main/80053650.c`, 5 functions.
+
+## [2026-10-17] ticket | T-17007 In Review
+
+[[tickets/T-17007-w3-main-p07]] In Progress to In Review (23:00 to 00:30 UTC, load 33 on the machine): 0 of 5 matched. `func_80055A38` guarded draft 8 to 4 differing lines (increment order of the bank pointers), `func_80054C74` guarded draft 8 differing lines (from 47 rows) with the new `SaveBank`/`D_80123320[2]` save-image types and header externs in `include/main_api.h`, `func_80054140` restored to `INCLUDE_ASM` (about 60 rows), `func_80054884` and `func_80054E6C` not started. Notes in [[matching-notes]], rows in [[data/t0018-cases]], type map row in [[main-family-results]]. Checks: clean build 27/27, check_headers OK, migrate_globals --check OK, sync_protos --check-branch OK (0 new, 15 known).
