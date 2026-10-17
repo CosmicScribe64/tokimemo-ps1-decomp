@@ -1,15 +1,13 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11860, 4 lines: in the else arm the original loads a[0] into a ugen temporary (t3), the draft into c (a2) */
 void func_80142110(void) {
     u8 *s;
     u8 *g;
     u16 *a;
     u16 *b;
     s32 x;
-    u16 c;
+    s32 c;
     u16 t;
 
     g = D_80158A60;
@@ -33,7 +31,7 @@ void func_80142110(void) {
         *(u16 *)(g + 0x50) += 1;
         *(u16 *)(g + 0x50) &= 0xFFF;
     } else {
-        c = a[0] & 0xFF00;
+        c = (a[0] & 0xFFFF) & 0xFF00; /* FAKE: the redundant mask (with an s32 c) loads a[0] into a ugen temporary, not into c. T-11870 */
         b[0] = c;
         t = a[0] << 8;
         b[0] |= (t >> (g[0x44] + 8)) & 1;
@@ -67,6 +65,3 @@ void func_80142110(void) {
     a[0] = ((u16 *)&x)[1];
     a[2] = a[0] & ~a[1];
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142110", func_80142110);
-#endif
