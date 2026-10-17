@@ -420,25 +420,26 @@ void func_8013BB24(void) {
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013BB24);
 #endif
 
-/* NON_MATCHING: T-11570, 10 lines, frame slot only: the rect sits at sp+0x38 here, sp+0x34 in the original with the same 0x40 frame. IDO places locals from the frame top and keeps 8 spare bytes below them, so any extra local (s32/s16/u8 pad, 12-byte struct, s16[6], block scope) grows the frame by 8 (T-11120). The `li v1,0x80` order was the two case-2 stores swapped. */
-#ifdef NON_MATCHING
 void func_8013BE18(void) {
+    /* FAKE: the fields are read through a GameState pointer declared before the rect. Written as direct D_800E6280 reads the
+     * rect sat at sp+0x38, the original has it at sp+0x34 with the same frame (T-11570); found by autotweak gstate, T-20830. T-21520 */
+    GameState *g = &D_800E6280;
     RECT rect;
 
-    D_800E6280.unk_03A += 4;
-    if (D_800E6280.unk_03A >= 0x80) {
-        D_800E6280.unk_03A = 0x80;
+    g->unk_03A += 4;
+    if (g->unk_03A >= 0x80) {
+        g->unk_03A = 0x80;
     }
-    switch (D_800E6280.unk_110D) {
+    switch (g->unk_110D) {
     case 0:
         func_8004500C(0, 0);
         cd_read_sectors(5, 0x801E0000, 0x9DBA);
-        D_800E6280.unk_110D++;
+        g->unk_110D++;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
             cd_read_sectors(0x89, 0x80180000, 0x9CB5);
-            D_800E6280.unk_110D++;
+            g->unk_110D++;
         }
         break;
     case 2:
@@ -449,8 +450,8 @@ void func_8013BE18(void) {
             rect.w = 0x20;
             func_8009C884(&rect, (void *)0x801E0200);
             func_80043914(0x801E0000, 0x18, 1, 2, 0);
-            D_800E6280.unk_03A = 0x80;
-            D_800E6280.unk_110D = 3;
+            g->unk_03A = 0x80;
+            g->unk_110D = 3;
         }
         break;
     case 3:
@@ -458,9 +459,6 @@ void func_8013BE18(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013BE18);
-#endif
 
 void func_8013BF74(void) {
     s32 i;
