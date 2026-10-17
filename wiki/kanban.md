@@ -145,6 +145,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-20006-gyozi-scene-callbacks|T-20006 Two GYOZI scene callbacks matched (708 bytes)]]
 - [ ] [[tickets/T-20600-regorder-recipe-sweep|T-20600 Register-order family: recipe sweep]]
 - [ ] [[tickets/T-17015-w3-main-p15|T-17015 Wave 3 package w3-main-p15]]
+- [ ] [[tickets/T-17014-w3-main-p14|T-17014 Wave 3 package w3-main-p14]]
 - [ ] [[tickets/T-20005-gyozi-display-dispatch|T-20005 Two GYOZI display/dispatch helpers matched (524 bytes)]]
 - [ ] [[tickets/T-20004-gyozi-dialogue-followup|T-20004 Two GYOZI dialogue helpers matched (776 bytes)]]
 

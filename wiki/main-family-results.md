@@ -155,3 +155,6 @@ the first-argument constant and the narrowing on an earlier source line than the
 ### Wave 3 package w3-main-p13 (T-17013)
 
 `func_8004AE54` matched ([[matching-notes]], section T-17013); `func_8004B358`, `col2sepia` and `make_color_bar` not. Type notes: `D_800B3D84` is the table of sixteen (u, v) glyph pairs, so `D_800B3D96/97` and `D_800B3D98/99` are its elements 0x12/0x13 and 0x14/0x15 and no separate globals are declared; the sprites are `SPRT_8` (number printer) and `SPRT` (string printer) from `psx_types.h`.
+### Wave 3 package w3-main-p14 (T-17014)
+
+`src/main/800563F0.c`, the PsyQ movie player ([[tickets/T-17014-w3-main-p14]]). `func_8005715C` (subtitle picker, 564 B) is matched with one FAKE scalar that reserves the original's fourth stack slot. `strNext` (496 B) is matched in the closer pass with one FAKE (`w * 1` keeps the operand order of the width compare), `strCallback` and `func_80056BA8` stay `INCLUDE_ASM` with their drafts in `drafts/T-17014/`. Type changes: `StrDecEnv30` is now the sample's DECENV and lives in `main_api.h`; `StrCtx` (the state at `0x80180000` behind `D_80125C58`) and `StHEADER` are new; `SyncObj` and `MovieVlcState` are gone ([[matching-notes]], section T-17014).
