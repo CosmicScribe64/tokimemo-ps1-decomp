@@ -17245,3 +17245,18 @@ New `tools/keepproof.py` (`check`, `census`, `rows`) and the `proof=<func>:<rows
 
 ## [2026-10-17] ticket | T-20900 Cross-unit shared-type unification started
 [[tickets/T-20900-shared-type-unification]] In Progress (kanban card added): unify the parallel per-overlay views of the 0x44-byte display-record table `D_8011ECD0` (and its pools) into one type in `include/game.h`, then other tables with three or more duplicate types; rescore the affected drafts. Worktree tokimemo-wt/ty-shared, branch ty-shared (from w2-good).
+
+## [2026-10-17] build | T-20900 one record type for the 0x44 display-record pools
+[[tickets/T-20900-shared-type-unification]]: `DisplayActor44` (`include/game.h`) is the union of every unit's accesses to main `D_8011ECD0`, EVENT `D_800E9620` and GYOZI `D_80129F40` (asm scan with the `tools/type_recovery.py` register pass), `DisplayFixActor44` its view with 16.16 words at +0x24/+0x28 (`Fix32`). 35 per-unit record views and 6 fixed-point unions retired; 764 byte-offset uses in matched code are record fields (EVENT `func_80108DD4` keeps its byte view as a marked FAKE). Byte-identical at every step. Details in [[data-types]] ("Shared-type unification"), one line per family page.
+
+## [2026-10-17] decision | T-20900 views that stay
+[[tickets/T-20900-shared-type-unification]]: TAIIKU `TaiikuActor44` stays a documented view (s8 at +0x01/+0x06; three functions mismatch with the shared u8). RENSYU's `u16` club-word view, TACO's `TcSave` union and ETC's `EtcConfig8` casts stay; `D_801217D0` (`Rec24`, `SprEnt`) has only two views.
+
+## [2026-10-17] build | T-20900 other duplicated tables
+[[tickets/T-20900-shared-type-unification]]: one view each for `D_800E7D4F` (`Flags7D4F`), `D_80122EB8` (`BunkaDispatch8`, game.h), the matrix copies (`MATRIX`, `VECTOR`), GameState +0x54C/+0x66C/+0xF4/+0xF8 (`ScheduleEntryFlags`, `ScheduleClubFlags`, `ScheduleFlags`, `GsDateBits`, [[game-state]]) and the work area `D_800E7D10` (`Work800E7D10` in `include/main_api.h`, declared type; OPTION and TACO overrides gone). 68 type names gone (702 to 631 typedefs). `tools/redraft_rewrites.py` `TYPE_ALIASES`, MASTER's record view, club-bits and record-copy follow; [[decompile-workflow]] ("Redraft tool").
+
+## [2026-10-17] query | T-20900 draft scores before and after
+[[tickets/T-20900-shared-type-unification]]: `tools/redraft.py` (plain, typed, typed-late) on snapshots before (dcfb746d) and after. Header types: 166 unmatched pool users, 153 equal on both sides, 1 new compiling draft (`main:func_80077900` 163, census 211, via the club-bits rewrite that now runs everywhere); the drafts read field names instead of casts but compile the same. `Work800E7D10` as a declared type moves 13 of 34 users (3 better: `main:func_8005CC40` 92 to 15, `NAME_ENT:func_80139F30`, `ETC:func_80144F74`; 10 worse), the label-fold effect. Improved drafts in `drafts/T-20900/`; `main:func_8005CC40` tried by hand, 15 rows (register of the switch value), not matched. Recorded in [[data-types]].
+
+## [2026-10-17] ticket | T-20900 In Review
+[[tickets/T-20900-shared-type-unification]] moved In Progress to In Review (kanban card moved). Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Awaits code review against `CODING_STANDARDS.md`.
