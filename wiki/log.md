@@ -17022,3 +17022,11 @@ KakarottoCake's PR #44 (claim #43): GYOZI func_80141944 and func_80145384 matche
 ## [2026-10-17] ticket | T-17021 In Progress
 
 [[tickets/T-17021-w3-main-p21]] created and started: wave 3 package w3-main-p21 of [[tickets/T-17000-types-first-main]], branch `w3-main-p21` from `w2-good`, owned file `src/main/80041000.c`, 1 function (`func_800419FC`, 560 B).
+
+## [2026-10-17] build | T-17021 matched main:func_800419FC
+
+[[tickets/T-17021-w3-main-p21]]: `func_800419FC` (560 B, `src/main/80041000.c`) matched as plain C in 16 minutes: GameState fields instead of 51 `D_800E63xx` scalars, bit-field views `GsByteNibbles`, `GsF6Bits` (new, local) and `GsDateBits` (new field `unk_09` in `include/main_api.h`), and an unrolled byte loop written as a one-line `for (i = 0; i < 9; i++) D_800E6280.unk_120[0x15 + i] = 0;` (a braced multi-line `for` puts the first store in the delay slot). Notes in [[matching-notes]] (section T-17021), new row in [[register-cheatsheet]].
+
+## [2026-10-17] ticket | T-17021 In Review
+
+[[tickets/T-17021-w3-main-p21]] In Progress to In Review: 1 of 1 function matched in `src/main/80041000.c` (`func_800419FC`, 560 bytes), no FAKE statements, no `NON_MATCHING` blocks, no T-0018 rows. Waiting for the clean rebuild and the code review.
