@@ -7494,3 +7494,15 @@ Harness: a 40-line script that imports `order_search.make_text_scorer`, takes a 
 `func_80151364` stays at 2 rows (guard note updated): in case 5 the two address `lui`s before the year compare come out in the other order. New this round and tried: plain/compound add, year statement or in-condition, operand order, one-line forms, a `tmp` local, pointer reassignment, all six declaration orders of `year`/`game`/`temp_v0`, viewsweep, autotweak 120 s (278 variants).
 
 Lesson for both guarded and matched cases: in a function with a function-wide hoisted constant 1, the original colours that constant first. Splitting which accesses go through a `GameState *` local changed that order in `func_80150B7C`; try the same split (record reads only, selector direct) on the next one before reaching for the permuter.
+
+## T-22020 SHOUGATU package w4-p20 (80138B40.c, 80137FF0.c, 801390C0.c)
+
+1 of 3 matched (`func_80138FC0`, 252 bytes); `func_80138240` and `func_80139334` were not started (the package ran out of time on a loaded machine: builds took two to ten minutes each), so both stay `INCLUDE_ASM`.
+
+`func_80138FC0` (set bit 2 of the current girl's Rec38 flag byte, derive two flags from `GameState.unk_0F4` and record 3, add 2 or 4 to `D_80144E08`, clear the bit again): the m2c draft was 77 diff lines. Three changes closed it.
+
+- The two flags are written in both branches (`if (c) f = 1; else f = 0;`). The draft's `f = 0; ... if (c) f = 1;` compiles to a plain skip; the original has the `bne; nop; b; li` shape and puts the flags in `$v1` and `$v0` with the constant 4 in `$a0`. This took 77 to 54 lines.
+- The flag bit is set and cleared through `Rec38Flags.f.b2` (`= 1` and `= 0`), not `.b[0] |= 4` and `&= 0xFFFB`. The `u32` bit-field compiles to the same `lbu; ori 4; sb` and `andi 0xFFFB`, but ugen takes one more temporary before the load, which is the `$t8` the original skips. This took 54 to 0. Plain `|= 4`, an explicit `x = x | 4`, a pointer local and a `& 0xFF` mask all stay one temporary off (the mask gave 4 lines, with the skipped temporary on the wrong side of the load).
+- The `(u16)` and `(u8)` casts of the draft are redundant on `h` and `b[2]`; dropping them changes nothing.
+
+Lesson: when the original does `lbu; ori; sb` on a Rec38 flag byte and the temporaries after the load are one lower than the original's, try the `CharFlags` bit-field (`unk_0C.f.bN`) before the `Bits64B8` cast or a mask. `autotweak` found its 41-line improvement through a `& 0xFFFF` mask on the other flag, which was a dead end here.
