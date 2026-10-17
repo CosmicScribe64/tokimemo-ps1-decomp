@@ -17743,3 +17743,7 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E
 ## [2026-10-17] ticket | T-22013 Done
 
 [[tickets/T-22013-w4-p13]]: code review against `CODING_STANDARDS.md`, two comment-only findings fixed (FAKE comments of `func_80148714` and `func_8015A8B4`), stale notes refreshed. 3 of 3 matched (`func_80148714` 1,012 bytes, `func_8015A8B4` 236 bytes, `func_8015A744` 368 bytes).
+
+## [2026-10-17] ticket | T-22021 In Progress
+
+[[tickets/T-22021-w4-p21]]: wave 4 package w4-p21 (BUNKA_SD `src/ovl/BUNKA_SD/801388D0.c`, `src/ovl/BUNKA_SD/80134540.c`; four functions) started on branch `w4-p21` from `w2-good`.
