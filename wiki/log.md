@@ -17610,3 +17610,19 @@ Opus closer for [[tickets/T-22002-w4-p02]]: `main:func_80079070` matched (1,204 
 ## [2026-10-17] ticket | T-22002 Done
 
 Code review of `w2-good...w4-p02` against CODING_STANDARDS.md: owned file only (`src/main/800789E0.c`), FAKE marks ticketed, no inline asm or game data. Stale "guarded" claims fixed in `wiki/index.md`, [[matching-notes]], [[data/t0018-cases]] and [[data/true-gaps]]. 1 of 1 matched (`main:func_80079070`, 1,204 B). [[tickets/T-22002-w4-p02]] moved to Done.
+
+## [2026-10-17] ticket | T-22009 Wave 4 package w4-p09 In Progress
+
+Package of [[tickets/T-22000-wave-4-conveyor]]: EVENT `src/ovl/EVENT/8011C650.c`, two functions (`func_8011EDFC`, `func_8011D5C4`). See [[tickets/T-22009-w4-p09]].
+
+## [2026-10-17] build | T-22009 func_8011EDFC matched
+
+`func_8011EDFC` (EVENT `src/ovl/EVENT/8011C650.c`) matches in plain C. Cause of the old 13-row residual: the four halfword arrays `D_801258E4/EC/F4/FC` were externs, so IDO emitted one `lui $at` per store. `tools/data_island.py EVENT/8011C650` made the `.data` island (`config/overlays/EVENT.yaml`) and the arrays are now defined in the C file; the overlay's last word `D_80125FFC` (0x10124FE6) had to be defined too for the unit sha1. See [[matching-notes]], section T-22009.
+
+## [2026-10-17] ticket | T-22009 Wave 4 package w4-p09 In Review
+
+[[tickets/T-22009-w4-p09]]: 1 of 2 matched. `func_8011D5C4` stays `INCLUDE_ASM` (hand draft at 409 diff rows, archived in `drafts/T-22009/EVENT/func_8011D5C4/body.c`; loop index and hoisted constants swap `$a0`/`$v1`, frame 48 against 64). Code review pending.
+
+## [2026-10-17] ticket | T-22009 Done
+
+[[tickets/T-22009-w4-p09]]: code review against `CODING_STANDARDS.md`, no findings. 1 of 2 matched (`func_8011EDFC` matched through the `EVENT/8011C650` data island; `func_8011D5C4` stays `INCLUDE_ASM`).
