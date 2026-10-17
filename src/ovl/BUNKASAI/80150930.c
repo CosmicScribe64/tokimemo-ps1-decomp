@@ -79,7 +79,102 @@ void func_801509A4(void) {
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80150930", func_801509A4);
 #endif
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80150930", func_80150B7C);
+void func_80150B7C(void) {
+    u16 temp_v1_2;
+    u32 temp_t2;
+    u8 temp_v1;
+    GameState *game = &D_800E6280;
+
+    temp_v1 = D_800E6280.unk_110A;
+    switch (temp_v1) {
+    case 0:
+        D_800CA148 = ((((u16) D_800E6280.unk_0F4.h >> 0xC) * 3) + D_800E6280.unk_03E) - 0x4D;
+        func_8004284C();
+        return;
+    case 1:
+        normal_date_speak();
+        return;
+    case 2:
+        temp_v1_2 = D_800E6280.unk_0F4.h;
+        D_80122EB8 = (s32) ((u16) D_800E6280.unk_0F4.h >> 0xC);
+        temp_t2 = temp_v1_2 >> 0xC;
+        switch (temp_t2) {
+        case 0:
+            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 0) {
+                func_80042908(1);
+                return;
+            }
+            if ((((u8) game->unk_1BC[1].unk_0C.b[2] >> 4) == 0) && (game->unk_1BC[1].unk_0C.f.b1 == 1)) {
+                func_80042908(0x2A);
+                return;
+            }
+            func_80042908(0xE);
+            return;
+        case 1:
+            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 1) {
+                func_80042908(1);
+                return;
+            }
+            if ((((u8) game->unk_1BC[1].unk_0C.b[2] >> 4) == 1) && (game->unk_1BC[1].unk_0C.f.b1 == 1)) {
+                func_80042908(0x2A);
+                return;
+            }
+            func_80042908(0xE);
+            return;
+        case 2:
+            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 2) {
+                func_80042908(1);
+                return;
+            }
+            if ((((u8) game->unk_1BC[2].unk_0C.b[2] >> 4) == 2) && (game->unk_1BC[2].unk_0C.f.b1 == 1)) {
+                func_80042908(0x3B);
+                return;
+            }
+            func_80042908(0xE);
+            return;
+        case 3:
+            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 3) {
+                func_80042908(1);
+                return;
+            }
+            if ((((u8) game->unk_1BC[2].unk_0C.b[2] >> 4) == 3) && (game->unk_1BC[2].unk_0C.f.b1 == 1)) {
+                func_80042908(0x3B);
+                return;
+            }
+            func_80042908(0xE);
+            return;
+        case 4:
+            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 4) {
+                func_80042908(1);
+                return;
+            }
+            if ((((u8) game->unk_1BC[3].unk_0C.b[2] >> 4) == 4) && (game->unk_1BC[3].unk_0C.f.b1 == 1)) {
+                func_80042908(0x50);
+                return;
+            }
+            func_80042908(0xE);
+            return;
+        case 5:
+            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 5) {
+                func_80042908(1);
+                return;
+            }
+            if ((((u8) game->unk_1BC[3].unk_0C.b[2] >> 4) == 5) && (game->unk_1BC[3].unk_0C.f.b1 == 1)) {
+                func_80042908(0x50);
+                return;
+            }
+            func_80042908(0xE);
+            return;
+        default:
+            func_80046500();
+            return;
+        }
+        break;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_80150F20(void) {
     switch (D_800E6280.unk_110A) {
