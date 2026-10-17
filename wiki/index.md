@@ -22,7 +22,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 - [[date-family-results]] - DATE step tables (`FnTblNN`) and stack tables, the types-first redraft and its numbers, sibling ports, near misses, packages (T-17200)
 - [[bunka-sd-family-results]] - BUNKA_SD type map (scene event lists, text tables, picture sets), display-record loop and compare-operand idioms, the types-first redraft, near misses, packages (T-18100)
-- [[option-family-results]] - OPTION type map (menu rows, word tables, `OptActor44`), the types-first redraft and its numbers, near misses, packages (T-17800)
+- [[option-family-results]] - OPTION type map (menu rows, word tables, `OptActor44`), the types-first redraft and its numbers, near misses, packages (T-17800); second pass with the BG map types and the menu-page template (T-20910)
 - [[master-family-results]] - MASTER type map (stack and step tables, second mini-event counters), the types-first redraft with re-rolled record loops, idioms, packages (T-18600)
 - [[ending-family-results]] - ENDING type map (stack tables, location records left as scalars), the types-first redraft and its numbers, the `check_k_scroll` port, scene-script hand drafts, packages (T-18300)
 - [[kangei-family-results]] - KANGEI type map (picture-set tables, MASTER streak effect, club name tables), the types-first redraft and its numbers, near misses, packages (T-18400)
@@ -35,7 +35,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
-- [[tickets/T-20910-types-option|T-20910]] Targeted type pass: OPTION: second type pass on the 32 unmatched OPTION functions, redrafts in `drafts/T-20910/` (In Progress).
+- [[tickets/T-20910-types-option|T-20910]] Targeted type pass: OPTION: BG cell map, cells and index types (GsMAP/GsCELL layouts) in `OPTION.h`, the menu-page template, redraft of the 32 unmatched functions (sum 5,184 to 3,504 diff rows, 12 better, none worse), 1 match / 948 bytes (In Review).
 - [[tickets/T-20900-shared-type-unification|T-20900]] Cross-unit shared-type unification: `DisplayActor44`/`DisplayFixActor44`/`Fix32` for the 0x44 display-record pools (35 per-unit views retired, 764 byte-offset uses now fields), one view each for `D_800E7D4F`, `D_80122EB8`, the GameState words, `MATRIX`/`VECTOR`, `Work800E7D10`; 68 type names gone, build byte-identical; draft scores unchanged except where folds change (Done).
 - [[tickets/T-20710-true-gap-census|T-20710]] True compiler-gap census ([[data/true-gaps]], 55 drafts: uopt 28, as1 12, ugen 11) and uniform rule search: no uopt tie rule (2 ties); IDO 4.1's ugen has the original's block-copy state (6 census cases, TACO `func_8013B2A0` matches with it) but changes 1,307 matched functions; candidate rule not adopted (Done, review passed).
 - [[tickets/T-20820-keep-proof|T-20820]] migrate_globals: keep lines backed by a byte-match necessity proof (counter-tail family): `tools/keepproof.py`, proposed rule [[keep-lines]] (Done; the rule awaits the lead)

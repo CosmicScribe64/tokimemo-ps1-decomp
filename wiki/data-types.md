@@ -54,6 +54,7 @@ Limits: the pass is linear (no control flow), so a register state survives a lab
 | NAME_ENT tables: flag counters `u8 D_8014D060[16]` and `u8 D_8014D158[16]`, digit sprite (u, v) `u8 D_8014D0F4[10][2]`, name-entry buffers `D_8014CC74[8]`/`D_8014CC7C[8]` sized; main-exe records read through views in the redraft (`NameMetricWork` at `D_800E7D10`, `NameRecordF00[]` at `D_80123120`, `DisplayActor44[]` at `D_8011ECD0`) | `D_8014D060`, `D_8014D158`, `D_8014D0F4`, `D_8014CC74`, `D_8014CC7C` | `include/ovl/NAME_ENT.h` (T-17900) | none (new declarations) | 0 |
 | EN_NICHI objects `EnObj D_8013984C[10]` (0x30), sprite frames `s16 D_80139A34[16][6]`, ring buffer `s16 D_80139228[10][4]`/`s32 D_80139278[10]`, stack tables `EnHalf22` x3, `EnBytes22`, `EnHalf64`, `EnHalf13`, asset pointer `s32 *D_80139204`; status and sprite bytes sized | `D_8013984C`, `D_80139A34`, `D_80139A2C`, `D_80139228`, `D_80139278`, `D_80139C68`/`C94`/`CC0`/`CEC`, `D_80139DA0`, `D_80139E20`, `D_80139200`..`D_80139218` | `include/ovl/EN_NICHI.h` (T-18200) | `u8 D_8013984C[]`, `Rec30 D_80139868[]` | 1 (`func_80132834`, peeled loop) |
 | MASTER stack tables `MasterWords13` (`s32 v[13]`) x9 and `MasterHalfwords13 D_8013C6A4`; step tables `FnTbl4/7/30`, `PtrTbl3` moved into the header; second mini-event counters `u8 D_8013C788[5]`, `D_8013C780`, `s16 D_8013C794`; the local `MasterSlot` copies unified as `MasterClubBits` | `D_8013C2F4`..`D_8013C460`, `D_8013C7B4`, `D_8013C6A4`, `D_8013C2E4`, `D_8013C5C8`, `D_8013C700`, `D_8013C798`, `D_8013C788` | `include/ovl/MASTER.h` (T-18600) | `Tbl13`, two `MasterSlot` typedefs, `D_8013C78C` | 0 |
+| OPTION BG cell map `SpriteMap10 D_80122120[2]` (GsMAP layout), cells `SpriteCell8 D_80122140[2][64]` (GsCELL), cell index `SpriteIndex80 D_80122540[2]`; prototype `void func_80134210(void)` | `D_80122120`, `D_80122140`, `D_80122540` | `include/ovl/OPTION.h` (T-20910) | none (new declarations of main bss read only by OPTION) | 0 |
 
 33 `FAKE` comments of the "first symbol" family are gone (117 to 84 in `src/`). The `Work80125D10` conversion is the strongest single test: 96 uses in already-matched functions moved to one symbol and none changed bytes.
 
@@ -313,3 +314,22 @@ rewrite changes what the compiler sees as one object (the label fold of the `typ
 The unification pays off for people reading and editing drafts, for rewrites that were gated on one unit's private
 type (`club-bits`, `record-copy`) and for later rewrites that need one field name per offset (`tools/redraft_rewrites.py` reads one record view per unit; `TYPE_ALIASES` maps the retired names in
 archived bodies).
+
+## OPTION second type pass (T-20910)
+
+The tables behind main's two BG slots: `SpriteSlot24` (game.h, GsBG layout) at `D_801220D0 + n * 0x24` points
+at the cell map `D_80122120[n]` (`SpriteMap10`, GsMAP layout), whose cells are `D_80122140[n]` (64 x
+`SpriteCell8`, GsCELL layout) and whose index is `D_80122540[n]` (`SpriteIndex80`, 64 halfwords); main
+`func_8004A1A0` (asm) sets up slot n through all four, OPTION `func_801328C0` fills slot 0. The types and the
+three externs live in `include/ovl/OPTION.h` because OPTION is the only C reader (CODING_STANDARDS 8a: a main-bss
+symbol may stay in an overlay header only through a type of that header; `check_headers` rejects a `game.h` type
+there, and a plain `u16 [2][64]`, which is why the index is a one-array struct). When main matches
+`func_8004A1A0`, the types move to `game.h` and the externs to `main_api.h`, and `D_801220D0` (now `u32` plus
+fifteen scalar field labels in `main_api.h`) can become `SpriteSlot24 D_801220D0[2]`.
+
+Score effect, the T-20900 lesson again: the header types moved two variant scores (`func_801326BC` 134 to 130
+with a draft-side `SpriteSlot24` view of `D_801220D0`; `func_801328C0` `plain` 101 to 99, `typed` 101 to 126),
+while hand drafts in the shape of the matched siblings took the OPTION sum from 5,184 to 3,504 diff rows and
+matched `func_80135E48`. A measured non-change: `D_8013D3B8` stays `volatile u16` (dropping it helps one draft
+and hurts two). Details: [[option-family-results]] ("Second type pass (T-20910)").
+

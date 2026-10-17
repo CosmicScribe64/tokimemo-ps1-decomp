@@ -17307,3 +17307,15 @@ Wave 3 conveyor paused at the user's request after 19 types passes and 77 packag
 ## [2026-10-17] ticket | T-20910 In Progress
 
 [[tickets/T-20910-types-option]] created and In Progress: a second, targeted type pass for OPTION (32 unmatched functions after T-17800, [[option-family-results]]). Worktree `ty-option` from `w2-good`; scope `src/ovl/OPTION/*.c`, `include/ovl/OPTION.h`, additions to `include/game.h`. Card in [[kanban]], line in [[index]].
+
+## [2026-10-17] build | T-20910 OPTION BG map types and the menu-page redraft
+
+[[tickets/T-20910-types-option]]: `include/ovl/OPTION.h` gets `SpriteCell8`, `SpriteMap10`, `SpriteIndex80` (PsyQ GsCELL / GsMAP layouts) with `D_80122120[2]`, `D_80122140[2][64]`, `D_80122540[2]`, the tables behind main's BG slots at `D_801220D0` (main `func_8004A1A0` sets up slot n through them), and `void func_80134210(void);`; build byte-identical. `drafts/T-20910/redraft.py` (tools/redraft.py plus a `SpriteSlot24` view of `D_801220D0` and a `hand` variant) redrafted the 32 unmatched functions; paired with tools/redraft.py on the tree before the pass: sum 5,184 to 3,504 diff rows, median 156 to 97, 12 better, 20 same, 0 worse. The header types alone moved two variant scores; the gains are hand drafts in the menu-page template of the matched siblings and `gs-local`. Measured and left: `D_8013D3B8` stays `volatile u16`. Pages and numbers: [[option-family-results]] ("Second type pass (T-20910)"), [[data-types]].
+
+## [2026-10-17] build | T-20910 match OPTION:func_80135E48
+
+`func_80135E48` (948 bytes) matched from its redraft: the menu-page template with five rows, the `GameState *g` local, and `s32 i; s32 pad;` before the row arrays for the frame (FAKE, as the T-4070 pad). `funcdiff --resolve` MATCH, OPTION sha1 OK. Near misses recorded in [[option-family-results]]: `func_80136C30` 4 rows (one hoisted `lui`/`li` pair), `func_801328C0` 12, `func_80139F8C` 5 (guarded).
+
+## [2026-10-17] ticket | T-20910 In Review
+
+[[tickets/T-20910-types-option]] In Progress to In Review: clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` pass; the code review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]], line in [[index]] updated.

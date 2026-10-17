@@ -1,7 +1,7 @@
 ---
 id: T-20910
 title: "Targeted type pass: OPTION"
-status: In Progress
+status: In Review
 assignee: claude-opus (ty-option)
 created: 2026-10-17
 updated: 2026-10-17
@@ -20,15 +20,31 @@ changes. Scope: `src/ovl/OPTION/*.c`, `include/ovl/OPTION.h`, additions to `incl
 
 ## Acceptance criteria
 
-- [ ] New OPTION types declared with offsets and sizes; matched code converted where it stays byte-identical.
-- [ ] Every matched function byte-identical (clean build 27/27); `check_headers`, `migrate_globals --check`,
+- [x] New OPTION types declared with offsets and sizes; matched code converted where it stays byte-identical.
+- [x] Every matched function byte-identical (clean build 27/27); `check_headers`, `migrate_globals --check`,
       `sync_protos --check-branch` pass.
-- [ ] Unmatched OPTION functions redrafted into `drafts/T-20910/`; paired score changes recorded.
-- [ ] [[data-types]] and [[option-family-results]] document the types.
+- [x] Unmatched OPTION functions redrafted into `drafts/T-20910/`; paired score changes recorded.
+- [x] [[data-types]] and [[option-family-results]] document the types.
 - [ ] Code review against `CODING_STANDARDS.md` (before Done).
 
 ## Notes
 
 - Not touched: `src/ovl/TT/*` (issue #2), main `dialogue_render` in `src/main/8007C030.c` (issue #45).
+- Types (`include/ovl/OPTION.h`): `SpriteCell8`, `SpriteMap10`, `SpriteIndex80` (PsyQ GsCELL / GsMAP layouts) with
+  `D_80122120[2]`, `D_80122140[2][64]`, `D_80122540[2]`, the tables of main's two BG slots at `D_801220D0`;
+  `void func_80134210(void);`. `include/game.h` and `main_api.h` unchanged. Draft-side `SpriteSlot24` view of
+  `D_801220D0` in `drafts/T-20910/redraft.py`.
+- Measured and left: `D_8013D3B8` stays `volatile u16` (without it `func_80139A30` 225 to 219, but the guarded
+  `func_80139E3C` 60 to 63 and its `typed` draft 225 to 370).
+- Redraft (`drafts/T-20910/`): paired with `tools/redraft.py` on the tree before the pass, sum 5,184 to 3,504
+  diff rows, median 156 to 97, 12 better, 20 same, 0 worse. Header types alone moved two variant scores; the
+  gains are hand drafts in the menu-page template of the matched siblings plus `gs-local`.
+- Matched: `func_80135E48` (948 bytes, commit e8a452e2).
+- Details: [[option-family-results]] ("Second type pass (T-20910)"), [[data-types]].
 
 ## Comments
+
+- 2026-10-17 (claude-opus, ty-option): types, redraft and one match committed on `ty-option`; clean build
+  27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` pass. In Review: the code
+  review against `CODING_STANDARDS.md` is open. About two hours of agent time.
+
