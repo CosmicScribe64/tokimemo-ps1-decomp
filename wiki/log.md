@@ -17607,3 +17607,7 @@ EVENT `func_8010F340` (376 bytes) matched; `func_800FD00C` (3 rows), `func_800FC
 
 ## [2026-10-17] build | T-22011 closer: func_800FD00C matched
 Opus closer for [[tickets/T-22011-w4-p11]]: EVENT `func_800FD00C` matches (340 bytes). It reads the scalar globals through the `DisplayActor44` table at `D_800EAFA0` and the `Rec24` table at `D_800EC190`, and assigns them in one chain with `unk_07` innermost. The `pad1` FAKE is gone. Notes in [[matching-notes]], section T-22011. Clean rebuild 27/27; check_headers, migrate_globals and sync_protos OK.
+
+## [2026-10-17] ticket | T-22011 Done
+
+Review against `CODING_STANDARDS.md` passed after two small fixes in `src/ovl/EVENT/8010BB90.c` (`DisplayActor44` `unk_38` fields instead of raw `D_800E9620` offsets; FAKE note on the `D_800EECB4` view). 2 of 5 matched: EVENT `func_8010F340` (376 bytes) and `func_800FD00C` (340 bytes). Ticket [[tickets/T-22011-w4-p11]], board in [[kanban]], notes in [[matching-notes]].
