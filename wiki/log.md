@@ -17090,3 +17090,18 @@ value (5.3: 0, 4.1: 1), now set by `tools/ido_eval.py` (tests `tools/test_ido_ev
 Verdict: rejected, no adoption proposal, production toolchain unchanged (4.1's as1 changes 1 of 6336 matched functions, a
 regression; 4.1's ugen changes 1355 and matches only TACO `func_8013B2A0`). Committed: `tools/ido_eval.py` `.option pic`
 fix with `tools/test_ido_eval.py` (5 tests OK), no compiler archive tracked (`tools/local-compilers/` stays gitignored).
+## [2026-10-17] ticket | T-17017 started
+
+[[tickets/T-17017-w3-main-p17]] created and In Progress: wave 3 package w3-main-p17 (main `src/main/80058D20.c`: `func_800590CC`, `func_800591D8`, `func_8005938C`), worktree `tokimemo-wt/w3-main-p17` on branch `w3-main-p17`, base `w2-good`.
+
+## [2026-10-17] ticket | T-17017 In Review
+
+[[tickets/T-17017-w3-main-p17]] In Progress to In Review: wave 3 package w3-main-p17 (main `src/main/80058D20.c`), 0 of 3 functions matched. `func_800590CC` guarded at 16 rows (was 22) and `func_800591D8` guarded at 32 (was 54+, `INCLUDE_ASM`): aliased width/height variables keep the constants in `a0`/`a1`, extra K&R parameters keep the 0x30 frame. `func_8005938C` stays `INCLUDE_ASM`; frame and stack offsets now match (`p = &rot`, scalars before `rot`, `pad[1]` after), the loop-invariant address registers do not; draft in `drafts/T-17017/main/func_8005938C/`. Notes in [[matching-notes]] (section T-17017), rows in [[data/t0018-cases]], entry in [[main-family-results]]. Clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved to In Review.
+
+## [2026-10-17] ticket | T-17017 closer pass
+
+[[tickets/T-17017-w3-main-p17]] closer pass (Opus, 02:45 to 03:55 UTC), only the guarded near misses of `src/main/80058D20.c`; nothing matched, ticket stays In Review. `func_8005938C`: an index loop (`i += 2` over 0x44-byte slots) and the `OtRec20` element address for `&D_800E8C70[D_8011ECA0]` give every `s` register, frame 0x108 and all stack offsets; 304 rows to 124, all ugen temporaries (T-11610 MATRIX-copy gap), so it stays `INCLUDE_ASM` with the draft in `drafts/T-17017/main/func_8005938C-closer/`. `func_800590CC` stays at 16 rows (five more forms, all worse; NON_MATCHING comment updated), `func_800591D8` unchanged at 32. Notes in [[matching-notes]] (section T-17017), row in [[data/t0018-cases]]. Clean build (`rm -rf build`, configure, ninja) 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK.
+
+## [2026-10-17] ticket | T-17017 Done
+
+[[tickets/T-17017-w3-main-p17]] In Review to Done after the code review: wave 3 package w3-main-p17 (main `src/main/80058D20.c`), 0 of 3 functions matched (0 bytes); `func_800590CC` (16 rows) and `func_800591D8` (32 rows) stay guarded, `func_8005938C` stays `INCLUDE_ASM` with drafts archived. Two non-blocking findings fixed (FAKE comment wording, acceptance criterion wording). Clean build sha1 OK; headers OK. Card moved to Done on [[kanban]].

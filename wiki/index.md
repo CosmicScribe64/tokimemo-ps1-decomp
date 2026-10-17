@@ -35,6 +35,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 - [[tickets/T-20600-regorder-recipe-sweep|T-20600]] Register-order family: recipe sweep over the `regorder` rows of [[data/t0018-cases]]; 7 functions matched, 4,532 bytes (Done; `func_8006D6E0` was matched the same way by T-17004, so 6 are new on main).
 - [[tickets/T-20006-gyozi-scene-callbacks|T-20006]] Two GYOZI scene callbacks matched, 708 bytes; corrected unsigned fields, no new FAKE, full build/27 hashes/prototype checks pass (Done, PR #44 merged).
+- [[tickets/T-17017-w3-main-p17|T-17017]] Wave 3 package w3-main-p17: main `80058D20.c`, 0 of 3 matched: `func_800590CC` guarded at 16 rows and `func_800591D8` at 32 (aliased width/height variables), `func_8005938C` frame and stack layout solved but still `INCLUDE_ASM` (Done)
 - [[tickets/T-20620-as1-scheduling|T-20620]] Scheduling family: as1 ordering (sched/hoist rows of [[data/t0018-cases]]): TACO `func_8014B8B4` matched (972 B), 3 owned-file recipes verified in scratch, order-only near misses with no C form or as1 option (Done)
 - [[tickets/T-20700-ido41-as1-test|T-20700]] IDO 4.1 back end after the production front end: 4.1 as1 changes 1 of 6336 matched functions and no sched/hoist draft, 4.1 ugen changes 1355 (matches TACO `func_8013B2A0`); rejected, no build change (Done)
 - [[tickets/T-20004-gyozi-dialogue-followup|T-20004]] Two GYOZI dialogue helpers matched, 776 bytes; issue #39 claim, 27/27 checksums and prototype guard pass (Done, PR #40 merged).
