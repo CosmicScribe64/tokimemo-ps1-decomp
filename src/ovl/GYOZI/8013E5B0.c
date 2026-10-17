@@ -15,18 +15,14 @@ void func_8013E5B0(void) {
     tbl.f[idx](0x80);
 }
 
-/* NON_MATCHING: T-10850, 4 differing listing lines; see the ticket scratch evidence. */
-#ifdef NON_MATCHING
 /* FAKE: empty counter test steers allocation; the opaque call keeps only
- * the base argument to avoid a redundant stride reload. T-10850. */
+ * the base argument to avoid a redundant stride reload. T-10850.
+ * FAKE: the loop init, the empty test and the `do` share one source line (as1 schedules by line;
+ * autotweak group, T-20830). T-21520 */
 void func_8013E638(void)
 {
     s16 i;
-    i = 0;
-    if (i && i)
-    {
-    }
-    do
+    i = 0; if (i && i) { } do
     {
         if ((D_800F53A0.girl[i].unk_10[1] & 1) && (D_800F53A0.unk_F2F != i))
         {
@@ -41,9 +37,6 @@ void func_8013E638(void)
     func_80050D60(0, 0);
     func_80081D30(1);
 }
-#else
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013E5B0", func_8013E638);
-#endif
 
 void func_8013E724(void) {
     s16 i;
