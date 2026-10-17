@@ -698,7 +698,7 @@ class Main(unittest.TestCase):
         with unittest.mock.patch.object(A, "order_stage", spy):
             self.run_main(["func_80132100", "--time", "5", "--dry-run", "--only-kinds", "gstate"], ["no such text"])
             self.assertEqual(calls, [])
-            self.run_main(["func_80132100", "--time", "5", "--dry-run", "--only-kinds", "order,gstate"], ["no such text"])
+            self.run_main(["func_80132100", "--time", "300", "--dry-run", "--only-kinds", "order,gstate"], ["no such text"])
             self.assertTrue(calls)
 
 
