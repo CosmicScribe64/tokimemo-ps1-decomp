@@ -54,7 +54,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-20940-types-main-80075320|T-20940 Targeted type pass: src/main/80075320.c]]
 - [ ] [[tickets/T-20005-gyozi-display-dispatch|T-20005 Two GYOZI display/dispatch helpers matched (524 bytes)]]
 
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
@@ -141,6 +140,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-20940-types-main-80075320|T-20940 Targeted type pass: src/main/80075320.c]]
 - [ ] [[tickets/T-20900-shared-type-unification|T-20900 Cross-unit shared-type unification]]
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 - [ ] [[tickets/T-17021-w3-main-p21|T-17021 Wave 3 package w3-main-p21]]

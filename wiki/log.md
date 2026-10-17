@@ -17315,3 +17315,6 @@ Created [[tickets/T-20940-types-main-80075320]] (branch `ty-main-80075320` from 
 ## [2026-10-17] ticket | T-20940 In Review
 
 [[tickets/T-20940-types-main-80075320]] In Progress to In Review: types documented, matches committed, clean build and checks run; the code review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]], index line updated.
+
+## [2026-10-17] ticket | T-20940 Done
+[[tickets/T-20940-types-main-80075320]] reviewed against `CODING_STANDARDS.md`: three small findings fixed in `src/main/80075320.c` (a shift-and-cast flag test replaced by the `CharFlags.b3` bit-field, which builds the same object; a missing `FAKE` mark on the u8 view of `unk_F6E` in `func_80077694`; a comment for the repeated club 10 condition in `func_80077900`). No edit in `src/ovl/TT/*` or `dialogue_render`, types documented in [[data-types]], no game data. Clean rebuild 27/27 sha1 OK; `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. In Review to Done (kanban card moved).
