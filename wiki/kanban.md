@@ -147,6 +147,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-20620-as1-scheduling|T-20620 Scheduling family: as1 ordering]]
 - [ ] [[tickets/T-20001-gyozi-helper|T-20001 Match the GYOZI dialogue helper from its SHOUGATU sibling]]
 - [ ] [[tickets/T-17008-w3-main-p08|T-17008 Wave 3 package w3-main-p08]]
+- [ ] [[tickets/T-20610-promo-entry-rule|T-20610 Promotion family: cvt_pass entry rule]]
 - [ ] [[tickets/T-17119-w3-rpg-bat-p19|T-17119 Wave 3 package w3-rpg-bat-p19]]
 - [ ] [[tickets/T-17003-w3-main-p03|T-17003 Wave 3 package w3-main-p03]]
 - [ ] [[tickets/T-17001-w3-main-p01|T-17001 Wave 3 package w3-main-p01]]

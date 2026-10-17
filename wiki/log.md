@@ -16789,3 +16789,31 @@ Actual default linked proofs match both helpers (160 + 364 = 524 bytes). Full 48
 
 ## [2026-10-17] ticket | T-17008 Done
 [[tickets/T-17008-w3-main-p08]] reviewed against `CODING_STANDARDS.md`: 2 findings fixed (two prototypes out of address order in `include/main_api.h`, a missing source comment on the do-while tail of `func_80059BE8`), no others. In Review to Done (kanban card moved). Matched 3 of 3 (`func_80059EF0`, `func_8004F6B0`, `func_80059BE8`, 1,364 B); one FAKE local, no guarded drafts. Build 27/27, headers, globals and proto checks OK.
+## [2026-10-16] ticket | T-20610 Promotion family: cvt_pass entry rule (In Progress)
+
+[[tickets/T-20610-promo-entry-rule]] created In Progress (compiler-gap family agent, worktree `cg-promo`): the `promo`
+rows of [[data/t0018-cases]] for unmatched functions, a uniform refinement of the `tools/cvt_pass.py` entry rule
+(T-5010) measured against every matched function, or a negative result.
+
+## [2026-10-16] decision | T-20610 cvt_pass entry rule: no refinement adopted
+
+[[tickets/T-20610-promo-entry-rule]]: scratch variants of `tools/cvt_pass.py` measured against every matched function
+(cfe ucode of all 430 IDO files dumped once, offline screen of the uopt input, recompile of the changed files only).
+Late global (first touched after the entry) rules: stored 14 matched functions changed, compared with a non-zero
+constant 18, stored and compared with a constant 0 changed but 1 gain (main `func_800726F0`) and no guarded draft
+gained (105 compiled), latest-definition constant-first at least 4. None adopted; `tools/` unchanged. Census of the
+original and the tables: [[matching-notes]] "T-20610". Source recipe: main `func_800726F0` matches in plain C under the
+production pass with truth tests and `s32 sndisp();` (new row in [[register-cheatsheet]]); `src/main/8006CB30.c` is
+owned by the wave 3 conveyor, so it is handed over. Row for `func_80072998` (4 rows with a FAKE entry read) and an
+Update paragraph in [[data/t0018-cases]]; note in [[toolchain]].
+
+## [2026-10-16] ticket | T-20610 In Review
+
+[[tickets/T-20610-promo-entry-rule]] In Progress to In Review: negative result for the pass (nothing under `tools/`
+changed), one plain-C recipe handed to the conveyor (main `func_800726F0`). Clean rebuild (`rm -rf build && configure.py
+&& ninja -j2`) 27/27 SHA1 OK, headers OK, globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known).
+Card moved to In Review in [[kanban]]. Code review against `CODING_STANDARDS.md` pending.
+
+## [2026-10-17] ticket | T-20610 Done
+
+[[tickets/T-20610-promo-entry-rule]] In Review to Done after the code review against `CODING_STANDARDS.md`: wiki-only diff (no C, header or `tools/` change), no findings, 0 functions matched in `src/` (negative result for the `cvt_pass` entry rule; the plain-C recipe for main `func_800726F0` is handed to the wave 3 conveyor). Card moved to Done in [[kanban]], index line updated.
