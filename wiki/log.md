@@ -16887,3 +16887,7 @@ Created [[tickets/T-17012-w3-main-p12]]: wave 3 package w3-main-p12, six functio
 ## [2026-10-17] ticket | T-17017 started
 
 [[tickets/T-17017-w3-main-p17]] created and In Progress: wave 3 package w3-main-p17 (main `src/main/80058D20.c`: `func_800590CC`, `func_800591D8`, `func_8005938C`), worktree `tokimemo-wt/w3-main-p17` on branch `w3-main-p17`, base `w2-good`.
+
+## [2026-10-17] ticket | T-17017 In Review
+
+[[tickets/T-17017-w3-main-p17]] In Progress to In Review: wave 3 package w3-main-p17 (main `src/main/80058D20.c`), 0 of 3 functions matched. `func_800590CC` guarded at 16 rows (was 22) and `func_800591D8` guarded at 32 (was 54+, `INCLUDE_ASM`): aliased width/height variables keep the constants in `a0`/`a1`, extra K&R parameters keep the 0x30 frame. `func_8005938C` stays `INCLUDE_ASM`; frame and stack offsets now match (`p = &rot`, scalars before `rot`, `pad[1]` after), the loop-invariant address registers do not; draft in `drafts/T-17017/main/func_8005938C/`. Notes in [[matching-notes]] (section T-17017), rows in [[data/t0018-cases]], entry in [[main-family-results]]. Clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved to In Review.

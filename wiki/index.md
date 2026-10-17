@@ -33,7 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-17017-w3-main-p17|T-17017]] Wave 3 package w3-main-p17: main `80058D20.c`, `func_800590CC`, `func_800591D8`, `func_8005938C` (In Progress)
+- [[tickets/T-17017-w3-main-p17|T-17017]] Wave 3 package w3-main-p17: main `80058D20.c`, 0 of 3 matched: `func_800590CC` guarded at 16 rows and `func_800591D8` at 32 (aliased width/height variables), `func_8005938C` frame and stack layout solved but still `INCLUDE_ASM` (In Review)
 - [[tickets/T-20620-as1-scheduling|T-20620]] Scheduling family: as1 ordering (sched/hoist rows of [[data/t0018-cases]]): TACO `func_8014B8B4` matched (972 B), 3 owned-file recipes verified in scratch, order-only near misses with no C form or as1 option (Done)
 - [[tickets/T-20004-gyozi-dialogue-followup|T-20004]] Two GYOZI dialogue helpers matched, 776 bytes; issue #39 claim, 27/27 checksums and prototype guard pass (Done, PR #40 merged).
 - [[tickets/T-20005-gyozi-display-dispatch|T-20005]] Two GYOZI display/dispatch helpers matched, 524 bytes; no new FAKE, full build/27 hashes/prototype checks pass (Done, PR #42 merged).

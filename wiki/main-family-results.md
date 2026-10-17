@@ -151,3 +151,7 @@ the first-argument constant and the narrowing on an earlier source line than the
 ### Wave 3 package w3-main-p08 (T-17008)
 
 `func_80059EF0`, `func_8004F6B0` and `func_80059BE8` matched ([[matching-notes]], section T-17008). Type changes: `s32 D_800C6200[8]`, `s32 D_800C62C0[32]` are index loops now (the `func_80059EF0` entry of the type map above); `s16 D_80125BF0`/`D_80125BF2` declared (the cursor, promoted by uopt); `func_80098490` takes `u16` parameters; `D_800C9730` and `D_800C5FCC` have file-local array views in `80059B40.c` (`s32 D_800C9730[11]`, `s32 D_800C5FCC[2]`, `MAIN_API_OVERRIDE_*`), while `main_api.h` keeps `u8[]` and `s32` for their other users.
+
+### Wave 3 package w3-main-p17 (T-17017)
+
+`80058D20.c`: no match of the three remaining T-0018 functions ([[matching-notes]], section T-17017). Type work: the model record walked by `func_8005938C` is a local 0x88-byte `ModelRec88` (active/flag bytes, object at +4, handle at +8, `MATRIX coord` at +0x18, `SVECTOR` rot/scale/pos/vel at +0x64..+0x7C) in `drafts/T-17017/main/func_8005938C/`; the word at `D_800E731C` is read as `*(s32 *)&D_800E6280.unk_1095[7]` (+0x109C, like the +0x1098 word other units read through the same array). `func_800590CC` (16 rows) and `func_800591D8` (32 rows) stay guarded with aliased width and height variables.
