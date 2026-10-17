@@ -17054,3 +17054,7 @@ Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] build | T-20800 final checks
 
 [[tickets/T-20800-redraft-tool]]: unit-specific views (NAME_ENT album records and metric work, ETC work area) now belong to their units, the default timeout is 300 s. The ten validation functions were run again from an empty work directory on the final code: the same scores, three better than the best archived draft. A second run over the smallest unmatched function of each of the 25 units (`typed`, `typed-late`, `plain`, `guarded`, no draft_fixes) scored 25 of 25 with no worker failure; 87 of 88 variant runs compiled (TAIIKU `func_8013B78C` `typed-late`: m2c wrote `.unk_06.unk0` for a halfword). The full tool suite passes: 1,285 tests, 3 skipped (`tools/test_redraft.py` 96). Ticket stays In Review.
+
+## [2026-10-17] ticket | T-20800 Done
+
+[[tickets/T-20800-redraft-tool]] In Review to Done: code review against `CODING_STANDARDS.md` found one small issue, fixed (the acceptance criterion said `--jobs N (max 2)`, the tool defaults to 2 and takes any N). Full tool suite passes (1,285 tests, 3 skipped); `tools/redraft.py` re-run on `GEKO:func_80134228` reproduced the committed result (score 8). Changes limited to `tools/`, `wiki/` and `drafts/T-20800/`. Card moved in [[kanban]]. Merge via the merge script.
