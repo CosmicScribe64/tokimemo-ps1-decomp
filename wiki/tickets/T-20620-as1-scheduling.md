@@ -1,10 +1,10 @@
 ---
 id: T-20620
 title: "Scheduling family: as1 ordering"
-status: In Review
+status: Done
 assignee: cg-sched agent
 created: 2026-10-16
-updated: 2026-10-16
+updated: 2026-10-17
 links: ["[[speedup-research-2026-10-16]]", "[[data/t0018-cases]]", "[[matching-notes]]", "[[register-cheatsheet]]", "[[toolchain]]"]
 ---
 
@@ -46,4 +46,5 @@ Worktree `tokimemo-wt/cg-sched`, branch `cg-sched` (from `w2-good`). Time box ab
 - No uniform as1 rule: `-O1`, `-O3`, `-p1`, `-g1..3` and flattened `.loc` lines tested through an as1 shim; none fixes
   the near misses without breaking them or the rest. No build pass changed. IDO 4.1's as1 is the untested lead (needs
   the private compilers back).
-- Review pending.
+- 2026-10-17: `rm -rf build && configure.py && ninja` gave 27 of 27 SHA1 checks OK (agent run); re-checked in the review worktree: `ninja` up to date, `check_headers` headers OK, `sync_protos --check-branch` branch check OK (0 new disagreements, 15 known), `migrate_globals --check` globals OK; grand total 6301/6958 (74.5%). No build pass or tool changed, so the tool test suite was not needed; matched functions changed: 0.
+- 2026-10-17: Code review against `CODING_STANDARDS.md` (Opus, merge reviewer), diff `w2-good...cg-sched`. Scope: C changes are `src/ovl/TACO/80149F90.c` (`func_8014B8B4`) and `include/ovl/TACO.h` (prototype `void` to `s32`); the rest is wiki. `busy_files.sh` lists neither file, so no conveyor-owned file was edited; the three owned-file recipes (EVENT `func_8010B614`, GYOZI `func_8013E638`, main `func_80055A38`) stay in [[matching-notes]] for their owners. The one match is plain C (C89, declarations at the block top, `/* */` comments); its `s32`-without-`return` form carries an explaining comment and this ticket, as the sibling `func_8014E5F8` (T-19003), so no `FAKE` is needed and the header now carries the definition's type (no override). No `NON_MATCHING` block added, no build pass changed (section 7a not touched), no game data, asm or binaries in the diff, commits small with ticket id and trailer. Wiki: ticket/kanban/index/log agree, the negative results are recorded with their evidence. Findings: none open. Ticket Done.
