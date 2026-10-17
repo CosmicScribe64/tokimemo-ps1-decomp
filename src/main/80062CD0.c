@@ -254,7 +254,71 @@ void func_80063520(u32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80063668);
+/* FAKE: the u8 view of the s8 field unk_03C gives the original lbu (as in func_80067C28), and the three locals declared
+ * before `saved` put three unused slots above its spill slot (frame size 0x38, as TACO func_801438F0). T-17011 */
+void func_80063668(void) {
+    s32 max;
+    s32 level;
+    s32 n;
+    s32 saved;
+    s32 i;
+    u8 k;
+    s32 face;
+
+    ((DisplayActor44 *)D_8011ECD0)[31].unk_07 = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[31].unk_38 &= 0x7FFFFFFF;
+    D_801217D0[0].unk_00 &= 0x7FFFFFFF;
+    D_801217D0[1].unk_00 &= 0x7FFFFFFF;
+    saved = ((DisplayActor44 *)D_8011ECD0)[30].unk_18;
+    if (*(u8 *)&D_800E6280.unk_03C != 0) {
+        if (func_800460EC() & 4) {
+            level = getCDlevel() + 1;
+        } else {
+            level = 0;
+        }
+        D_80125C80[D_800E6280.unk_10F8 & 3] = level;
+        /* max is never read; the loop is in the original code. */
+        max = 0;
+        for (i = 0; i < 4; i++) {
+            if (max < D_80125C80[i]) {
+                max = D_80125C80[i];
+            }
+        }
+        n = 0;
+        k = D_800E6280.unk_F5F;
+        for (i = 0; i < 3; i++) {
+            if (D_800B5A68[k][i] < level) {
+                n = i + 1;
+            }
+        }
+        if (n >= 4) {
+            n = 3;
+        }
+        if (D_801217D0[0].unk_0F == 0 || !(D_800E6280.unk_10F8 & 1)) {
+            if (level == 0) {
+                D_801217D0[0].unk_0F = 0;
+            } else if (n == 0) {
+                D_801217D0[0].unk_0F = 0;
+            } else if (n == 1) {
+                D_801217D0[0].unk_0F = 0x10;
+            } else if (n == 2) {
+                D_801217D0[0].unk_0F = 0x20;
+            } else if (n >= 3) {
+                D_801217D0[0].unk_0F = 0x30;
+            }
+        }
+        if (D_800E6280.unk_F80 & 0x80) {
+            D_800B5A98 = 0;
+        }
+        if (D_800B5A98 < level) {
+            D_800B5A98 = level;
+        }
+    } else {
+        face = ((DisplayActor44 *)D_8011ECD0)[31].unk_18;
+        D_801217D0[0].unk_0F = face * 0x10;
+    }
+    D_801217D0[1].unk_0F = saved << 5;
+}
 
 void bustup_speech(void) {
     /* GameState.unk_03C is s8; this function reads it as u8 (lbu) */
@@ -468,7 +532,73 @@ void parameter_show_init(void) {
 }
 
 
+/* NON_MATCHING: T-17011, work in progress */
+#ifdef NON_MATCHING
+void parameter_show(void) {
+    s32 sp3C;
+    DisplayActor44 *var_v0;
+    DisplayActor44 *var_v0_2;
+    s16 temp_v1;
+    s16 temp_v1_2;
+    s32 temp_lo;
+    s32 temp_lo_2;
+    s32 temp_lo_3;
+    s32 var_t0;
+
+    if (*(u8 *)&D_800E6280.unk_F6E != 0) {
+        var_t0 = 4;
+    } else {
+        var_t0 = 8;
+    }
+    if (((DisplayActor44 *)D_8011ECD0)[32].unk_03 & 0x80) {
+        sp3C = var_t0;
+        func_80049A40(-0x84, -0x61, 0x108, 0x2A, 0xC, 0x30E00, 0);
+        dtd_on(0xC);
+        var_v0 = &((DisplayActor44 *)D_8011ECD0)[32];
+        do {
+            temp_v1 = var_v0->unk_2E;
+            if (1 == temp_v1) {
+                temp_lo = 0x1000 / var_t0;
+                var_v0->unk_1A -= temp_lo;
+                var_v0->unk_08 += temp_lo;
+                if (temp_lo >= var_v0->unk_1A) {
+                    var_v0->unk_2E = 2;
+                }
+            } else if (2 == temp_v1) {
+                temp_lo_2 = 0x1000 / var_t0;
+                var_v0->unk_1A += temp_lo_2;
+                var_v0->unk_08 -= temp_lo_2;
+                if (var_v0->unk_1A >= 0x1000) {
+                    var_v0->unk_1A = 0x1000;
+                    var_v0->unk_2E = 0;
+                    var_v0->unk_08 = 0;
+                }
+            }
+            var_v0 += 1;
+        } while ((u32) var_v0 < (u32) (&((DisplayActor44 *)D_8011ECD0)[56]));
+        var_v0_2 = &((DisplayActor44 *)D_8011ECD0)[56];
+        do {
+            temp_v1_2 = var_v0_2->unk_2E;
+            if (1 == temp_v1_2) {
+                temp_lo_3 = 0x1000 / var_t0;
+                var_v0_2->unk_1C = (var_v0_2->unk_1C - temp_lo_3);
+                if (temp_lo_3 >= var_v0_2->unk_1C) {
+                    var_v0_2->unk_2E = 2;
+                }
+            } else if (2 == temp_v1_2) {
+                var_v0_2->unk_1C = (s16) (var_v0_2->unk_1C + (0x1000 / var_t0));
+                if (var_v0_2->unk_1C >= 0x1000) {
+                    var_v0_2->unk_1C = 0x1000;
+                    var_v0_2->unk_2E = 0;
+                }
+            }
+            var_v0_2 += 1;
+        } while (var_v0_2 != (&((DisplayActor44 *)D_8011ECD0)[59]));
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", parameter_show);
+#endif
 
 void hizuke_disp_switch(s32 arg0) {
     s32 i;
@@ -599,7 +729,47 @@ void func_80066104(void) {
     D_80125CA0 = 0xB8;
 }
 
+/* NON_MATCHING: T-17011, work in progress */
+#ifdef NON_MATCHING
+void func_8006612C(u8 *arg0) {
+    DisplayActor44 *tab;
+    u8 *p;
+    s32 i;
+    s32 n;
+    s32 y;
+
+    tab = (DisplayActor44 *)D_8011ECD0;
+    D_80125CA0 = -0x40;
+    for (i = 0; i < D_800B5B24 + 2; i++) {
+        func_80048F64(i + 3);
+    }
+    set_kanji_string(-0xCE, -0x98, 0U, arg0, 0);
+    D_800B5B24 = strlen(arg0) / 2;
+    for (i = 0; i < D_800B5B24 + 2; i++) {
+        func_80048F64(i + 3);
+        tab[i + 3].unk_01 = 2;
+        tab[i + 3].unk_02 = 0x40;
+        tab[i + 3].unk_38 = 0x40000000;
+        tab[i + 3].unk_03 = 0xA4;
+        tab[i + 3].unk_0C = sprite_frame_table;
+        tab[i + 3].unk_10 = D_800C9A14;
+        tab[i + 3].unk_34 = D_800C9730;
+        tab[i + 3].unk_26 = (D_800B5B24 - i) * 0xE + D_80125CA0 - 0x87;
+        tab[i + 3].unk_2A = D_80125CA0 - 0x51;
+        tab[i + 3].unk_14 = D_800C9A54;
+        tab[i + 3].unk_04 = 8;
+        tab[i + 3].unk_05 = 1;
+        tab[i + 3].unk_18 = 0x72;
+    }
+    p = D_8011ECD0 + D_800B5B24 * 0x44;
+    ((DisplayActor44 *)(p + 0x110))->unk_18 = 0x71;
+    ((DisplayActor44 *)(p + 0x110))->unk_26 += 2;
+    tab[3].unk_18 = 0x73;
+    tab[3].unk_26 -= 2;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006612C);
+#endif
 
 void func_80066334(void) {
     s32 x;
