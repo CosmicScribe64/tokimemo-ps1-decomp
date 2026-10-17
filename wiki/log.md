@@ -16798,3 +16798,6 @@ Actual default linked proofs match both helpers (160 + 364 = 524 bytes). Full 48
 
 ## [2026-10-17] ticket | T-17013 In Review
 [[tickets/T-17013-w3-main-p13]] moved In Progress to In Review (kanban card moved): 1 of 4 matched (`func_8004AE54`); `func_8004B358` 49 rows (restored to `INCLUDE_ASM`, draft in `drafts/T-17013/main/func_8004B358`), `col2sepia` 171 rows, `make_color_bar` not retried; rows in [[data/t0018-cases]], notes in [[matching-notes]] and [[register-cheatsheet]]. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-17] ticket | T-17013 Done
+[[tickets/T-17013-w3-main-p13]] reviewed against `CODING_STANDARDS.md`: 1 finding fixed (a source comment on the two always-true `v >= 0` tests of `func_8004AE54`, which the original asm has as `bltz`/`bgez`), no others. In Review to Done (kanban card moved). Matched 1 of 4 (`func_8004AE54`, 840 B), no FAKE, no guarded drafts; `func_8004B358`, `col2sepia` and `make_color_bar` stay `INCLUDE_ASM` with rows in [[data/t0018-cases]]. Unit sha1, headers and globals OK after the comment edit; the clean 27/27 build runs in the merge.
