@@ -17046,3 +17046,7 @@ Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-20810 In Review
 
 [[tickets/T-20810-viewsweep]] In Progress to In Review (card moved in [[kanban]]): `tools/viewsweep.py`, `tools/test_viewsweep.py`, `allow_defined` in `tools/protoverride.py`, `edit=`/`source=` in `tools/funcdiff_verify.py`, docs in [[decompile-workflow]] (section "Step 1 for a near miss"), [[register-cheatsheet]] (first row, loop step 0) and [[matching-notes]]. Full tool suite 1,281 tests OK. The one match is a patch (`drafts/T-20810/patches/NAME_ENT_func_80134B94.patch`), not applied in `src/` because the ticket rules forbid editing `src/` and `include/`.
+
+## [2026-10-17] ticket | T-20810 Done
+
+[[tickets/T-20810-viewsweep]] In Review to Done: code review against `CODING_STANDARDS.md`, no blocking findings; one small fix (the acceptance criterion about committing the match now says it is kept as a verified patch). Full tool suite 1,281 tests OK (3 skipped); a run of `tools/viewsweep.py` on NAME_ENT `func_80134B94` found the match in 3 compiles with the literal-byte proof. Card moved in [[kanban]]. The patch `drafts/T-20810/patches/NAME_ENT_func_80134B94.patch` (804 B) still has to be applied in `src/` by a matcher. Merge via the wave 2 merge script.

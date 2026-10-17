@@ -55,9 +55,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-20810-viewsweep|T-20810 viewsweep: exhaustive return-type and callee-view sweep]]
-
-
 - [ ] [[tickets/T-20005-gyozi-display-dispatch|T-20005 Two GYOZI display/dispatch helpers matched (524 bytes)]]
 
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
@@ -144,6 +141,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-20810-viewsweep|T-20810 viewsweep: exhaustive return-type and callee-view sweep]]
 - [ ] [[tickets/T-20006-gyozi-scene-callbacks|T-20006 Two GYOZI scene callbacks matched (708 bytes)]]
 - [ ] [[tickets/T-20600-regorder-recipe-sweep|T-20600 Register-order family: recipe sweep]]
 - [ ] [[tickets/T-17015-w3-main-p15|T-17015 Wave 3 package w3-main-p15]]

@@ -1,7 +1,7 @@
 ---
 id: T-20810
 title: "viewsweep: exhaustive return-type and callee-view sweep"
-status: In Review
+status: Done
 assignee: tr-viewsweep agent
 created: 2026-10-17
 updated: 2026-10-17
@@ -25,10 +25,12 @@ recipe when a variant reaches 0 rows. It is step 1 of the type pass and of every
 - [x] Unit tests with synthetic units (no game data): definition and K&R definition rewrite, callee defined in the same
       file, refusal of data, lattice generation and order, budget cut-off, UNTESTED retry with a fake compiler.
 - [x] Full tool suite passes (`python3 -m unittest discover -s tools -p 'test_*.py'`).
-- [x] First use over the guarded drafts and the wave 3 restore drafts; any MATCH committed as plain C with the checks
-      (clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch`); table logged.
+- [x] First use over the guarded drafts and the wave 3 restore drafts; table logged. The one MATCH is kept as a verified
+      patch (`drafts/T-20810/patches/`), not committed to `src/`: the rule "nothing under `src/` or `include/`" won over
+      "commit any MATCH as plain C" (checks run with the patch applied: `ninja` sha1 OK, `check_headers`,
+      `migrate_globals --check`, `sync_protos --check-branch`; no clean rebuild). Applying it is a follow-up (see Comments).
 - [x] [[decompile-workflow]] section, first row 'Do first: run viewsweep' in [[register-cheatsheet]], [[matching-notes]] entry.
-- [ ] Code review against `CODING_STANDARDS.md` before Done (pending: ticket is In Review).
+- [x] Code review against `CODING_STANDARDS.md` before Done (2026-10-17, see Comments).
 
 ## Notes
 
@@ -67,3 +69,22 @@ Worktree `tokimemo-wt/tr-viewsweep`, branch `tr-viewsweep` from `w2-good`. At mo
 2026-10-17 (agent): In Review. Open for the reviewer: the patch is not applied in `src/` (rules); the
 `UNTESTED` handling reports deterministic compile errors too (a `void` view that a use elsewhere in the file rejects is
 filtered now, a draft that fails for another reason ends the target as `failed`).
+
+2026-10-17 (review, claude-opus): Done. Checked `w2-good...tr-viewsweep` against `CODING_STANDARDS.md`.
+- Scope: only `tools/`, `wiki/` and new `drafts/T-20810/` changed; nothing under `src/`, `include/`, `config/`, `asm/`
+  or `disc/`; no game data or binaries (`drafts/` holds names, row counts, edit strings and one source patch).
+- Standards: Python 3, module docstrings, paths as arguments, non-zero exit when a target cannot be swept (section 11);
+  all new `tools/` files ASCII; no trailing whitespace; all 6 commits start with `T-20810:`. The patch adds no new FAKE
+  and keeps a one-line reason in the `MAIN_API_OVERRIDE_` define (8a).
+- Tests: full tool suite through `tools/docker.sh`, 1,281 tests OK (3 skipped); `tools/test_viewsweep.py` (76) and the 16
+  `AllowDefined` tests in `tools/test_protoverride.py` use synthetic units and a fake compiler.
+- Use: `viewsweep.py NAME_ENT:func_80134B94 -j 1` found the match in 3 compiles (10 rows to 0, `s32 func_800AE090();`), ran the
+  literal-byte proof (MATCH, 804 bytes) and printed the recipe and the units to re-check; the patch applies cleanly.
+- Docs: numbers in `wiki/decompile-workflow.md`, `wiki/matching-notes.md` and `drafts/T-20810/` agree with
+  `viewsweep-results.jsonl` (101 guarded: 996 compiles, 1 match, 7 improved, 93 no gain; 29 restores: 157 compiles, 16 no gain,
+  3 improved, 10 failed). The "5 of the 7 T-20600 matches (3,772 B)" figure adds up (1,296 + 624 + 720 + 864 + 268).
+- Findings: one small, fixed: the acceptance criterion said any MATCH is committed as plain C while the branch keeps it as a
+  patch; the criterion now says what was done. No blocking findings.
+- Follow-up for the next matcher (not done here, `src/` is outside this ticket): apply
+  `drafts/T-20810/patches/NAME_ENT_func_80134B94.patch`, run the clean build and the three checks, commit as
+  `T-NNNN: match func_80134B94` (804 B). Until then the conveyor should skip that guarded draft.

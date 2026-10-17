@@ -33,7 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-20810-viewsweep|T-20810]] viewsweep: exhaustive return-type and callee-view sweep (`tools/viewsweep.py`, the type pass as a tool; own type x every callee view on the full unit, ranked, recipe at 0 rows; first use: 1 match in 101 guarded drafts, NAME_ENT `func_80134B94` as a patch in `drafts/T-20810/`, 10 leads) (In Review).
+- [[tickets/T-20810-viewsweep|T-20810]] viewsweep: exhaustive return-type and callee-view sweep (`tools/viewsweep.py`, the type pass as a tool; own type x every callee view on the full unit, ranked, recipe at 0 rows; first use: 1 match in 101 guarded drafts, NAME_ENT `func_80134B94` as a patch in `drafts/T-20810/`, 10 leads) (Done).
 - [[tickets/T-20600-regorder-recipe-sweep|T-20600]] Register-order family: recipe sweep over the `regorder` rows of [[data/t0018-cases]]; 7 functions matched, 4,532 bytes (Done; `func_8006D6E0` was matched the same way by T-17004, so 6 are new on main).
 - [[tickets/T-20006-gyozi-scene-callbacks|T-20006]] Two GYOZI scene callbacks matched, 708 bytes; corrected unsigned fields, no new FAKE, full build/27 hashes/prototype checks pass (Done, PR #44 merged).
 - [[tickets/T-20620-as1-scheduling|T-20620]] Scheduling family: as1 ordering (sched/hoist rows of [[data/t0018-cases]]): TACO `func_8014B8B4` matched (972 B), 3 owned-file recipes verified in scratch, order-only near misses with no C form or as1 option (Done)
