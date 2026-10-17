@@ -146,11 +146,12 @@ void func_8015A744(void) {
                 x = *(s16 *)(p + 0x2446);
             }
         }
+        i++;
         y = x;
         r = ((0x70 - x) << 12) / 240;
-        i++;
         p += 0x44;
-        *(s16 *)(p + 0x23F6) = r;
+        x = 0x23F6;
+        *(s16 *)(p + x) = r;
         *(s16 *)(p + 0x23F8) = r;
         m->rect.unk_10 = y;
     } while (i != 8);
@@ -159,26 +160,29 @@ void func_8015A744(void) {
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8015A1F0", func_8015A744);
 #endif
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-22013, 14 rows; the original sets i + 0x28 in $a0 before the first compare (addiu a0 in the lh delay slot) and stores D_8015EC68 from a $a0 copy of the halfword. No effect: id or t locals for i + 0x28 (also reused for the copy), a[i + 0x28] with a loop-invariant base pointer (multu or the same order), u8/s16 chain temps, the (&D_8015EBAC)[47] table word, autotweak (318 edits), permuter (240 s) */
+/* FAKE: T-22013, x is reused as the offset of the first store. Reassigning x makes uopt keep the original's copy of the halfword (stored to D_8015EC68 from $a0) and compute i + 0x28 in the first block; real source unknown. */
 void func_8015A8B4(void) {
+    u8 *p;
     s32 i;
-    s32 v;
     s32 x;
-    u8 t;
+    s32 r;
+    s32 y;
 
-    for (i = 0; i < 8; i++) {
-        x = ((DisplayActor44 *)D_8011ECD0)[i + 136].unk_26;
-        if ((x < -0xB4) || (((DisplayActor44 *)D_8011ECD0)[i + 136].unk_2A >= 0x8D)) {
+    p = D_8011ECD0;
+    i = 0;
+    do {
+        x = *(s16 *)(p + 0x2446);
+        if (x < -0xB4 || *(s16 *)(p + 0x244A) >= 0x8D) {
             func_8013E810(i + 0x28, 7, 1, 0);
-            x = ((DisplayActor44 *)D_8011ECD0)[i + 136].unk_26;
+            x = *(s16 *)(p + 0x2446);
         }
-        v = ((0x70 - x) << 0xC) / 240;
-        ((DisplayActor44 *)D_8011ECD0)[i + 136].unk_1A = v;
-        ((DisplayActor44 *)D_8011ECD0)[i + 136].unk_1C = v;
-        D_8015EC68 = x; t = D_8015EC68;
-    }
+        i++;
+        y = x;
+        r = ((0x70 - x) << 12) / 240;
+        p += 0x44;
+        x = 0x23F6;
+        *(s16 *)(p + x) = r;
+        *(s16 *)(p + 0x23F8) = r;
+        D_8015EC68 = y;
+    } while (i != 8);
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8015A1F0", func_8015A8B4);
-#endif
