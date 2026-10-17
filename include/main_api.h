@@ -942,7 +942,7 @@ extern u8 D_800E7D4B;
 extern s32 D_800E7D4C;
 /* T-17000: bit-field view of the flag byte D_800E7D4F. `lui rA; lbu rB,%lo(D_800E7D4F)(rA); ori; sb` with
  * rB != rA is a bit-field store (T-7010); func_8007959C sets b0 so. BUNKASAI and BUNKAKEN read the same
- * view (their Flags7D4F, Flags7D4F and Flags7D4F, folded in by T-20900). */
+ * view (their BunkaReturnFlags, BunkasaiModeFlags and BunkakenModeFlags, folded in by T-20900). */
 typedef struct Flags7D4F {
     u8 b0 : 1;
     u8 b1 : 1;

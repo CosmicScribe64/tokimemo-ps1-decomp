@@ -32,14 +32,12 @@ typedef struct FileReq {
 #ifndef GAME_DISPLAY_ACTOR44_T10890
 #define GAME_DISPLAY_ACTOR44_T10890
 /* One record of the 0x44-byte display-record pools (T-20900): main D_8011ECD0 (160 records, D_80120650 is
- * record 96), EVENT D_800E9620 and GYOZI D_80129F40 (the same 160-record pool at the addresses those two
- * overlays were linked against). Field widths are the union of every unit's accesses: tools/type_recovery.py's
- * scan of the original asm finds lbu/sb only at the byte fields (no lb anywhere), lh/sh at the halfwords
- * and lw/sw at +0x0C, +0x10, +0x34 and +0x38 (the other word accesses are whole-record copies).
- * +0x24 .. +0x33 are also read as 16.16 fixed-point words: DisplayFixActor44 is that view of the same record.
- * Replaces the per-unit views DisplayActor44, DisplayFixActor44, DisplayActor44, DisplayActor44, DisplayActor44,
- * DisplayActor44, EventMotion44, DisplayActor44, DisplayActor44, DisplayActor44, DisplayActor44, DisplayActor44,
- * DisplayActor44, DisplayActor44, DisplayActor44, TaiRecord44, TextureRecord44, OptActor44, DateScene44 (T-20900). */
+ * record 96), EVENT D_800E9620 and GYOZI D_80129F40 (the same pool at the addresses those two overlays were
+ * linked against). Field widths are the union of every unit's accesses: the original asm has lbu/sb only at
+ * the byte fields (no lb through the pool symbols), lh/sh at the halfwords and lw/sw at +0x0C, +0x10, +0x34
+ * and +0x38 (the other word accesses are whole-record copies). +0x24 .. +0x33 are also read as 16.16
+ * fixed-point words: DisplayFixActor44 is that view of the same record. The per-unit views this replaces are
+ * listed in wiki/data-types.md ("Shared-type unification"); TAIIKU's TaiikuActor44 stays (signed bytes). */
 typedef struct DisplayActor44 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
@@ -79,9 +77,9 @@ typedef struct DisplayActor44 {
     /* 0x43 */ u8 unk_43;
 } DisplayActor44; /* size 0x44 */
 
-/* 16.16 fixed-point word of a display record: word arithmetic through w, the signed integer part (the
- * coordinate the halfword view reads at +2) through h[1]. Was Fix32, Fix32, Fix32 and
- * Fix32 (T-20900). */
+/* 16.16 fixed-point word: word arithmetic through w, the signed integer part (the coordinate the halfword
+ * view of a display record reads at +2) through h[1]. One type for the former MASTER, KANGEI, DATE, TAIIKU and
+ * NAME_ENT copies (T-20900). */
 typedef union Fix32 {
     /* 0x00 */ s32 w;
     /* 0x00 */ s16 h[2];
@@ -90,8 +88,7 @@ typedef union Fix32 {
 /* DisplayActor44 with +0x24 and +0x28 as 16.16 fixed-point words and +0x2C, +0x30 as words (their
  * steps): the view of the units that move a record in fixed point (MASTER, KANGEI, DATE, EVENT, NAME_ENT,
  * TAIIKU, TEL). C89 has no anonymous unions, so the halfword users (most of the tree) keep DisplayActor44.
- * Replaces DisplayFixActor44, DisplayFixActor44, DateMotion44, DisplayFixActor44, DisplayFixActor44, DisplayFixActor44,
- * DisplayFixActor44 and DisplayFixActor44 (T-20900). */
+ * T-20900. */
 typedef struct DisplayFixActor44 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
@@ -161,9 +158,9 @@ typedef struct DisplayColorPair4 {
 
 #ifndef BUNKA_DISPATCH8_T10630_H
 #define BUNKA_DISPATCH8_T10630_H
-/* The two adjacent words at D_80122EB8 (route and character selection of the culture-festival overlays),
- * read and written together, so one object: BUNKASAI's and BUNKAKEN's BunkaDispatch8 (T-10630) and
- * BUNKASAI's BunkaDispatch8 (T-9510) and BunkaDispatch8 (T-9740), folded into one type by T-20900. */
+/* The two adjacent words at D_80122EB8, read and written together (one object): BUNKASAI's and BUNKAKEN's
+ * BunkaDispatch8 (T-10630) and BUNKASAI's BunkSelectWords (T-9510) and BunkModePair (T-9740), one type since
+ * T-20900. */
 typedef struct BunkaDispatch8 {
     /* 0x00 */ s32 unk_00;
     /* 0x04 */ s32 unk_04;
@@ -208,8 +205,8 @@ typedef struct GsByteNibbles {
 /* T-10880: word view at GameState +0xF4 in func_8006D7EC.
  * Bit 18 is tested with lw/sll 13/srl 31 and stored through byte +0xF6.
  * Bits 21..23 are a three-bit counter read and decremented through +0xF6.
- * T-20900: also DATE's ScheduleFlags and ScheduleFlags and OPTION's ScheduleFlags (unk_08, unk_12: its f8, f12;
- * bits 16..20 tested one by one). */
+ * T-20900: also DATE's DateFlag17 and DateFlags0F4 and OPTION's OptionPlayerBits (unk_08, unk_12: its f8,
+ * f12; bits 16..20 tested one by one). */
 typedef struct ScheduleFlags {
     /* 0x00 */ u32 unk_00 : 8;
     /* 0x00 */ u32 unk_08 : 4;
@@ -225,8 +222,8 @@ typedef struct ScheduleFlags {
 
 /* T-10880: word view of GameState.unk_66C[11]. The counter occupies
  * bits 25..26; increment reads the word and writes byte +3 bits 1..2.
- * T-20900: also TEL's ScheduleClubFlags (b24), KANGEI's ScheduleClubFlags and ETC's ScheduleClubFlags (grade: unk_25, flag: b30) and
- * MASTER's ScheduleClubFlags (count: unk_25, b30). RENSYU's RensyuClubCount is a u16 view and stays. */
+ * T-20900: also TEL's TelClubFlags (b24), KANGEI's KgSlot and ETC's EtcSlot (grade: unk_25, flag: b30) and
+ * MASTER's MasterClubBits (count: unk_25, b30). RENSYU's RensyuClubCount is a u16 view and stays. */
 typedef struct ScheduleClubFlags {
     /* 0x00 */ u32 unk_00 : 24;
     /* 0x00 */ u32 b24 : 1;
@@ -246,8 +243,8 @@ typedef struct ScheduleEntryDate {
     /* 0x02 */ u16 unk_15 : 11;
 } ScheduleEntryDate; /* size 0x04 */
 
-/* T-20900: also main's ScheduleEntryFlags, ScheduleEntryFlags, ScheduleEntryFlags (idx: unk_00, nib: unk_25, b29: active),
- * TEL's ScheduleEntryFlags and OPTION's ScheduleEntryFlags (f0: unk_00, f25: unk_25). */
+/* T-20900: also main's TelEntryFlags, EntryFlags54C and EntryFlags29 (idx: unk_00, nib: unk_25, b29: active),
+ * TEL's TelEntryFlags and OPTION's OptionScheduleBits (f0: unk_00, f25: unk_25). */
 typedef struct ScheduleEntryFlags {
     /* 0x00 */ u32 unk_00 : 5;
     /* 0x00 */ u32 unk_05 : 19;

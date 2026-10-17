@@ -708,10 +708,9 @@ void func_8013F35C(void);
 #define OVL_TAIIKU_RUNNERS_T11640
 /* T-11640: TAIIKU's view of the D_8011ECD0 display records (DisplayActor44 layout). The bytes at
  * 0x01 and 0x06 are signed here: func_801400D8 stores them with constants that the original keeps
- * apart from the unsigned switch constants of its later loops, which a u8 field merges. */
-/* DisplayActor44 (game.h) with +0x01 and +0x06 signed: func_80138DF8, func_80139610 and func_801400D8 store
- * constants to them, and the s8 type changes uopt's constant registers there (T-20900: the shared u8 view
- * does not match those three functions). */
+ * apart from the unsigned switch constants of its later loops, which a u8 field merges. T-20900: with the
+ * shared u8 record func_80138DF8, func_80139610 and func_801400D8 do not match, so this view stays; its other
+ * fields are the shared layout. */
 typedef struct TaiikuActor44 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ s8 unk_01;
