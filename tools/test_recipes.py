@@ -237,6 +237,22 @@ class Group(unittest.TestCase):
         # the tail of a do-while is not a head
         self.assertEqual(of(fn("s32 i;", "do {", "    i++;", "} while (i < 4);"), "group", " head"), [])
 
+    def test_the_empty_test_of_the_counter_goes_to_the_loop_head_too(self):
+        t = fn("s16 i;", "i = 0;", "if (i && i) {} /* FAKE: empty test splits the live range of i. T-11170 */",
+               "do {", "    D_8015F000 += 1;", "    i += 1;", "} while (i < 4);")
+        v = one(t, "group", " head L4 (2)")
+        self.assertIn("    i = 0; if (i && i) {} /* FAKE: empty test splits the live range of i. T-11170 */ do {", body(v))
+        self.assertIn("    if (i && i) {} /* FAKE: empty test splits the live range of i. T-11170 */ do {",
+                      body(one(t, "group", " head L4 (1)")))
+        # braces on their own lines (GYOZI func_8013E638 draft)
+        t = fn("s16 i;", "i = 0;", "if (i && i)", "{", "}", "do", "{", "    D_8015F000 += 1;", "    i += 1;", "}",
+               "while (i < 4);")
+        v = one(t, "group", " head L6 (2)")
+        self.assertEqual(body(v)[1:3], ["    i = 0; if (i && i) { } do", "    {"])
+        # a test with a body is not an empty test
+        t = fn("s16 i;", "i = 0;", "if (i) {", "    D_8015F000 = 1;", "}", "do {", "    i += 1;", "} while (i < 4);")
+        self.assertEqual(of(t, "group", " head"), [])
+
     def test_reverse_splits(self):
         joined = fn("s32 a;", "s32 b;", "s32 c;", "s32 d;", "a = 1; b = 2; c = 3; d = 4;")
         got = {v.label: v for v in of(joined, "group", " split")}

@@ -744,23 +744,48 @@ def group_joins(f, acc):
     return out, chunked
 
 
+def _empty_test(f, i, indent):
+    """The lines of an empty `if (...) { }` statement that ends on line i (one line, `if (...) {` and
+    `}`, or the three lines of braces on their own lines), or None. The recipe of T-20620 keeps the
+    counter clear and this test on the loop-head line."""
+    ml = lambda k: f.mlines[k].strip()
+    if i < f.stmt_line or f.indent(i) != indent:
+        return None
+    if re.match(r"if\s*\(.*\)\s*\{\s*\}$", ml(i)):
+        return [i]
+    if ml(i) == "}" and i - 1 >= f.stmt_line and f.indent(i - 1) == indent and re.match(r"if\s*\(.*\)\s*\{$", ml(i - 1)):
+        return [i - 1, i]
+    if ml(i) == "}" and i - 2 >= f.stmt_line and ml(i - 1) == "{" and f.indent(i - 1) == indent and \
+            f.indent(i - 2) == indent and re.match(r"if\s*\(.*\)$", ml(i - 2)):
+        return [i - 2, i - 1, i]
+    return None
+
+
 def group_heads(f, acc):
-    """The initial assignments right before a loop, put on the loop-head line."""
+    """The initial assignments right before a loop (and an empty test of the counter between them and
+    the loop), put on the loop-head line."""
     a = at()
     out = []
     for h in range(f.stmt_line, f.end_line):
         if _head_split(f, h) != []:
             continue
-        run = []
-        i = h - 1
-        while i >= f.stmt_line and len(run) < HEAD_MAX and a.simple_statement(f, i) and \
-                f.indent(i) == f.indent(h) and all(a.independent(acc[j], acc[i]) for j in run):
-            run.insert(0, i)
-            i -= 1
-        for k in [len(run)] + list(range(1, len(run))):
+        units, simple, i = [], [], h - 1          # units: lists of lines, the earliest first
+        while i >= f.stmt_line and len(units) < HEAD_MAX:
+            test = _empty_test(f, i, f.indent(h)) if not units else None   # only right before the loop
+            if test is not None:
+                units.insert(0, test)
+                i = test[0] - 1
+                continue
+            if a.simple_statement(f, i) and f.indent(i) == f.indent(h) and all(a.independent(acc[j], acc[i]) for j in simple):
+                units.insert(0, [i])
+                simple.append(i)
+                i -= 1
+                continue
+            break
+        for k in [len(units)] + list(range(1, len(units))):
             if k < 1:
                 continue
-            idx = run[len(run) - k:]
+            idx = [j for u in units[len(units) - k:] for j in u]
             if not _comment_free(f, idx + [h]):
                 continue
             text = f.indent(idx[0]) + " ".join([f.lines[j].strip() for j in idx] + [f.lines[h].strip()])
