@@ -907,8 +907,8 @@ void func_8014F36C(void) {
         func_8007E99C();
         break;
     case 17:
-        ((BunkasaiModeFlags *)&D_800E7D4F)->b1 = 1;
-        ((BunkasaiModeFlags *)&D_800E7D4F)->mode = 2;
+        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
+        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 2;
         D_800E6280.unk_720 = D_800E6280.unk_1108;
         D_800E6280.unk_721 = D_800E6280.unk_1109;
         D_800E6280.unk_722 = D_800E6280.unk_110A + 1;
@@ -989,8 +989,8 @@ void func_8014F36C(void) {
         }
         break;
     case 28:
-        ((BunkasaiModeFlags *)&D_800E7D4F)->b1 = 1;
-        ((BunkasaiModeFlags *)&D_800E7D4F)->mode = 0;
+        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
+        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 0;
         D_800E6280.unk_720 = D_800E6280.unk_1108;
         D_800E6280.unk_721 = D_800E6280.unk_1109;
         D_800E6280.unk_722 = D_800E6280.unk_110A + 1;
@@ -1109,7 +1109,7 @@ void func_8014F36C(void) {
         func_80085A60();
         break;
     case 44:
-        ((BunkasaiModeFlags *)&D_800E7D4F)->b0 = 1;
+        ((Flags7D4F *)&D_800E7D4F)->b0 = 1;
         func_80142BC8();
         break;
     default:

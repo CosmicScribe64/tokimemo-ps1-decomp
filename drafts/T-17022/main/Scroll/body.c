@@ -1,0 +1,51 @@
+void Scroll(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    POLY_FT4 *p;
+    s32 i;
+    s32 x;
+    s32 u;
+    s32 off;
+    s32 base;
+    u32 mod;
+    u8 sum;
+    u8 lo;
+
+    off = arg1 * 4;
+    base = arg0 * 2;
+    x = 0;
+    i = 0;
+    u = 0;
+    sum = (s16) arg2 + (s16) arg3;
+    mod = (s16) arg4;
+    do {
+        p = (POLY_FT4 *) GetWorkBase(0x28, D_8011ECA0);
+        func_8009F040(p);
+        SetSemiTrans(p, 0);
+        SetShadeTex(p, 0);
+        p->r0 = D_800E6280.unk_03A;
+        p->g0 = D_800E6280.unk_03A;
+        p->b0 = D_800E6280.unk_03A;
+        lo = (base + ((i % 2) << 6)) & 0x7F;
+        p->u1 = lo + 0x40;
+        p->u3 = lo + 0x40;
+        p->u0 = lo;
+        p->u2 = lo;
+        p->v3 = sum;
+        p->v2 = sum;
+        p->v1 = (s16) arg2;
+        p->v0 = (s16) arg2;
+        p->x0 = D_800E6280.unk_014[D_8011ECA0] + x - 0xA0;
+        p->y0 = D_800E6280.unk_018[D_8011ECA0] + (s16) arg2 - 0x78;
+        p->x1 = D_800E6280.unk_014[D_8011ECA0] + x - 0x60;
+        p->y1 = D_800E6280.unk_018[D_8011ECA0] + (s16) arg2 - 0x78;
+        p->x2 = D_800E6280.unk_014[D_8011ECA0] + x - 0xA0;
+        p->y2 = D_800E6280.unk_018[D_8011ECA0] + (s16) arg2 + (s16) arg3 - 0x78;
+        p->x3 = D_800E6280.unk_014[D_8011ECA0] + x - 0x60;
+        p->y3 = D_800E6280.unk_018[D_8011ECA0] + (s16) arg2 + (s16) arg3 - 0x78;
+        p->tpage = func_8009ECB0(1, 0, ((u32) (((u32) (u + arg0) >> 6) << 6) % mod) + 0x140, 0);
+        p->clut = func_8009ED74(0, 0x1F0);
+        AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + off], p);
+        i++;
+        u += 0x20;
+        x += 0x40;
+    } while (i != 5);
+}

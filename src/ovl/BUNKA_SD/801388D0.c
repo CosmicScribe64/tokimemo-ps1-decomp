@@ -259,7 +259,7 @@ void func_8013987C(void) {
     D_800E6280.unk_110B = v;
     if (v == 0) {
         for (i = 0; i < 0x40; i++) {
-            D_80120650[i * 0x44 + 7] = v;
+            ((DisplayActor44 *)D_80120650)[i].unk_07 = v;
         }
         *(u8 *)&D_800E6280.unk_110B = v;
         func_8004284C();

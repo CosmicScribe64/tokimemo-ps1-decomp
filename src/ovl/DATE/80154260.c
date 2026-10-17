@@ -289,7 +289,35 @@ void func_80154FCC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80154260", func_80155004);
+void func_80155004(void) {
+    s32 idx; /* declared before tbl with i: two words above tbl (T-3330) */
+    s16 i;
+    FnTbl53 tbl;
+
+    tbl = D_8015F82C;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+    if (D_800E6280.unk_110A == 0xE) {
+        if (D_800E6280.unk_F88 & 0xFF9FFF9F) {
+            D_8015F5D0 = 1 - (u8) D_8015F5D0;
+        }
+        if ((u32) D_800E6280.unk_10F8 % 3U == 0) {
+            if ((u8) D_8015F5D0 != 0) {
+                D_800B593C = 0x80;
+            } else if (D_800B593C == 0x80) {
+                D_800B593C = 0x60;
+            } else {
+                D_800B593C = 0x80;
+            }
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = D_800B593C;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_07 = D_800B593C;
+            /* One chain assignment for the three bytes: separate stores give other registers (T-20600). */
+            for (i = 0x3A; i < 0x40; i++) {
+                D_801217D0[i].unk_14 = D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_800B593C;
+            }
+        }
+    }
+}
 
 void func_80155174(void) {
     if (D_800E6280.unk_1104.w++ == 0) {

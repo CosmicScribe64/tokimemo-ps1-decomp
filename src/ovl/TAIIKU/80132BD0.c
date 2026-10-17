@@ -1,9 +1,83 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_80132BD0);
+#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_80132E20);
+void func_80132BD0(void) {
+    s32 i;
+    s32 j; /* FAKE: five unused word locals reproduce the original frame (arrays at 0x68, frame 0x128); real locals unknown. T-19031 */
+    s32 k;
+    s32 l;
+    s32 m;
+    s32 n;
+    TaiBytes23 spF8;
+    TaiShorts23 spC8;
+    TaiShorts23 sp98;
+    TaiShorts23 sp68;
+
+    spF8 = D_80148F10;
+    spC8 = D_80148F28;
+    sp98 = D_80148F58;
+    sp68 = D_80148F88;
+    for (i = 0; i < 0x17; i++) {
+        func_80048F64(i + 1);
+        DISP(i + 1).unk_38 = 0x01000000;
+        DISP(i + 1).unk_04 = 0;
+        DISP(i + 1).unk_05 = 0x80;
+        DISP(i + 1).unk_01 = spF8.v[i];
+        DISP(i + 1).unk_06 = 2;
+        DISP(i + 1).unk_08 = 0;
+        DISP(i + 1).unk_0C = (u8 *)D_80149FCC;
+        DISP(i + 1).unk_10 = (u8 *)D_8014A004;
+        DISP(i + 1).unk_34 = (u8 *)D_8014A070;
+        DISP(i + 1).unk_14 = D_8014A03C;
+        DISP(i + 1).unk_1A = 0x1000;
+        DISP(i + 1).unk_1C = 0x1000;
+        DISP(i + 1).unk_07 = 0x80;
+        DISP(i + 1).unk_26 = spC8.v[i] - 0xA0;
+        DISP(i + 1).unk_2A = sp98.v[i] - 0x78;
+        DISP(i + 1).unk_18 = 0;
+        DISP(i + 1).unk_16 = sp68.v[i];
+    }
+}
+
+void func_80132E20(arg0, arg1)
+s16 arg0;
+s32 arg1;
+{
+    s32 i;
+    s32 j;
+    s32 t;
+    s32 k; /* FAKE: k and l are unused word locals; the original frame has two more scalar slots (one above, one below the arrays), real locals unknown. T-19031 */
+    s16 spA8[4];
+    TaiShorts23 sp78;
+    s32 l;
+
+    sp78 = D_80148FB8;
+    for (i = 0; i < 0x17; i++) {
+        for (j = 0; j < arg1; j++) {
+            spA8[j] = sp78.v[i] + j * 0x500 - arg0 - 0xA0;
+        }
+        for (j = 0; j < arg1; j++) {
+            t = func_800AE0C0(spA8[j]);
+            if (t < func_800AE0C0(spA8[0])) {
+                spA8[0] = spA8[j];
+            }
+        }
+        DISP(i + 1).unk_26 = spA8[0];
+    }
+    for (i = 0; i < 0x17; i++) {
+        if ((DISP(i + 1).unk_26 < 0xB1) && (DISP(i + 1).unk_26 >= -0x127)) {
+            DISP(i + 1).unk_02 = 1;
+            DISP(i + 1).unk_03 = 0xA4;
+        } else {
+            DISP(i + 1).unk_02 = 0;
+            DISP(i + 1).unk_03 = 0;
+            DISP(i + 1).unk_18 = 0;
+            DISP(i + 1).unk_08 = 0;
+        }
+    }
+}
 
 void func_801330D4(void) {
     func_801330FC();
@@ -51,7 +125,40 @@ void func_801331D0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_80133258);
+void func_80133258(void) {
+    s32 i;
+    TaiBytes10 sp88;
+    TaiikuHalf10 sp74;
+    TaiikuHalf10 sp60;
+    TaiikuHalf10 sp4C;
+
+    sp88 = D_80148FE8;
+    sp74 = D_80148FF4;
+    sp60 = D_80149008;
+    sp4C = D_8014901C;
+    for (i = 0; i < 0x17; i++) {
+        func_80048F64(i + 1);
+    }
+    for (i = 0; i < 10; i++) {
+        /* FAKE: the (u8) narrowing takes one ugen temporary and emits no code; the original's temporaries (t6 first in the loop) need it, real source unknown. T-19031 */
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_38 = ((u8)(i & 1) << 0x1E) | 0x01000000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_05 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_06 = 2;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_0C = (u8 *)D_80149FCC;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_10 = (u8 *)D_8014A004;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_34 = (u8 *)D_8014A070;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_14 = D_8014A03C;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_1A = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_07 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_02 = 1;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_03 = 0xA4;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_01 = sp88.v[i];
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_26 = sp74.h[i];
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_2A = sp60.h[i];
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_16 = sp4C.h[i];
+    }
+}
 
 void func_80133438(void) {
     func_80132E20(0, 1);

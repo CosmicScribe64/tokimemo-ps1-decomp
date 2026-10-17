@@ -509,6 +509,7 @@ void func_80151460(void);
 void func_80151510(void);
 void func_801515C0(void);
 void func_80151670(void);
+void func_80152684(); /* old-style definition with s16 parameters, called before it (T-17204) */
 void func_80152FC0(void);
 void func_80153070(void);
 void func_80153120(void);
@@ -563,7 +564,7 @@ extern u8 D_8015B69C;
 void func_8013BFF8(void);
 void func_8013C0A4(void);
 void func_8014A810(void);
-void func_8014A8FC(void);
+s32 func_8014A8FC(void);
 void func_8014AD70(void);
 extern u8 D_8015B658;
 s32 func_8013AE5C();
@@ -1128,7 +1129,8 @@ void func_8014EBB8(void);
 void func_8015761C(void);
 void func_801592A0(void);
 void func_80155D80(void);
-void func_80155E40(void);
+s32 func_80155E40(void);
+void func_801560E0(void);
 void func_801563A8(void);
 void func_80156494(void);
 void func_80155530(void);
@@ -1202,11 +1204,6 @@ void func_8014B1C4(void);
 extern s16 D_8015E318;
 s32 func_8014E010(void);
 
-typedef struct DateScene44 {
-    /* 0x00 */ u8 bytes[0x38];
-    /* 0x38 */ s32 flags;
-    /* 0x3C */ u8 pad_3C[8];
-} DateScene44; /* size 0x44; record 31 byte 7 and signed flag view. T-9570 */
 extern s8 D_8015BF44;
 
 #endif /* OVL_DATE_H */
@@ -1256,7 +1253,7 @@ void func_8014A360(void);
 /* Forward declarations for the original object, T-10040. */
 void func_801461B0(void);
 u16 func_801462B0(void);
-void func_8014718C(void);
+s32 func_8014718C(void);
 s32 func_80147958(void);
 s32 func_80148924(s16 a0);
 s32 func_801489D0(void);
@@ -1293,25 +1290,6 @@ typedef struct DateRideChoices36 {
 
 #ifndef OVL_DATE_MOTION_T10730
 #define OVL_DATE_MOTION_T10730
-/* Record view recovered from func_8013FD6C, D_8011ECD0.
- * Records 96..99 use signed high halves of the two fixed-point words.
- * Byte names remain provisional; existing raw-array declarations are views. */
-typedef struct DateMotion44 {
-    /* 0x00 */ u8 pad00[2];
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 pad04[3];
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad0A[0xC];
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad1A[0xA];
-    /* 0x24 */ GsWord unk_24;
-    /* 0x28 */ GsWord unk_28;
-    /* 0x2C */ s32 unk_2C;
-    /* 0x30 */ u8 pad30[0x14];
-} DateMotion44; /* size 0x44 */
 typedef struct DateMuseumChoices15 {
     /* 0x00 */ DateChoice3 choice[5];
 } DateMuseumChoices15; /* size 0x0F */
@@ -1328,16 +1306,6 @@ extern u8 D_8015B698;
 typedef struct DateCounts22 {
     /* 0x00 */ s16 value[11];
 } DateCounts22; /* size 0x16 */
-#endif
-
-#ifndef OVL_DATE_FLAG17_T10730
-#define OVL_DATE_FLAG17_T10730
-/* Word view at GameState +0xF4; the seasonal event tests bit 17. */
-typedef struct DateFlag17 {
-    /* bits 0..16 */ u32 pad : 17;
-    /* bit 17 */ u32 b17 : 1;
-    /* bits 18..31 */ u32 rest : 14;
-} DateFlag17; /* size 0x04 */
 #endif
 
 #ifndef DATE_SELECTION_VIEW_T10730
@@ -1387,36 +1355,6 @@ typedef struct DateMovieHeader8 {
 
 #ifndef OVL_DATE_PARTICLE_T10870_H
 #define OVL_DATE_PARTICLE_T10870_H
-/* T-10870: func_80140374 initializes 20 records starting at sprite 98.
- * The coordinate words are also read and written as signed high halves. */
-typedef struct DateParticleView44 {
-    /* 0x00 */ u8 pad00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 unk_04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 unk_06;
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ u8 pad08[4];
-    /* 0x0C */ s32 unk_0C;
-    /* 0x10 */ s32 unk_10;
-    /* 0x14 */ s16 unk_14;
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ s16 unk_1C;
-    /* 0x1E */ u8 pad1E[6];
-    /* 0x24 */ GsWord unk_24;
-    /* 0x28 */ GsWord unk_28;
-    /* 0x2C */ s32 unk_2C;
-    /* 0x30 */ s32 unk_30;
-    /* 0x34 */ s32 unk_34;
-    /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 pad3C[7];
-    /* 0x43 */ u8 unk_43;
-} DateParticleView44; /* size 0x44 */
-
 /* Fixed-point horizontal positions, with signed high-halfword updates. */
 extern GsWord D_8015BD40[20];
 /* func_8013F638 initializes ten falling-particle velocities. */
@@ -1565,13 +1503,6 @@ extern u8 *D_8015B56C;
 extern s16 D_800CA158;
 #ifndef OVL_DATE_T11030_H
 #define OVL_DATE_T11030_H
-/* T-11030: the word at GameState +0xF4 (unk_0F4/unk_0F6) tested by bit 19 and 20 (func_8013C7D0). */
-typedef struct DateFlags0F4 {
-    /* 0x00 */ u32 pad : 19;
-    /* 0x00 */ u32 b19 : 1;
-    /* 0x00 */ u32 b20 : 1;
-    /* 0x00 */ u32 rest : 11;
-} DateFlags0F4; /* size 0x04 */
 void func_80138220(void);
 void func_801384D4(void);
 
@@ -1789,6 +1720,11 @@ extern DateWords21 D_8015B8DC;
 extern DateWords21 D_8015B930;
 extern Tbl21 D_8015B984; /* func_8013EB8C reads [D_800CA2F8] with lhu */
 
+typedef struct DateWords2 {
+    /* 0x00 */ s32 v[2];
+} DateWords2; /* size 0x08; func_80152060 copies it to the stack */
+extern DateWords2 D_8015EF0C;
+
 typedef struct DateShorts8 {
     /* 0x00 */ s16 v[8];
 } DateShorts8; /* size 0x10; screen x or y lists of func_801556D8 and func_801560E0 */
@@ -1801,6 +1737,12 @@ typedef struct DatePairs8 {
     /* 0x00 */ s16 v[8][2];
 } DatePairs8; /* size 0x20; func_801560E0 reads v[i][1] */
 extern DatePairs8 D_8015FB3C;
+
+/* func_801560E0 and func_801556D8: eight moving objects (display records 98..105). D_8015F9A0 holds their
+ * state (0 idle, 1 armed, 2 moving), D_8015F9A8 the idle counters (T-17205). */
+extern u8 D_8015F9A0[8];
+extern u8 D_8015F9A8[8];
+
 #endif
 
 #ifndef OVL_DATE_PROTOS_T17200

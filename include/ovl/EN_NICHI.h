@@ -12,12 +12,10 @@ typedef struct EnObj {
     /* 0x08 */ s32 unk_08;
     /* 0x0C */ s32 unk_0C;
     /* 0x10 */ s32 unk_10;
-    /* 0x14 */ u8 unk_14[2];
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ u8 unk_18[2];
-    /* 0x1A */ s16 unk_1A;
+    /* 0x14 */ Fix32 unk_14; /* 16.16 x: words in func_801339D4, the integer half .h[1] elsewhere (T-20920) */
+    /* 0x18 */ Fix32 unk_18; /* 16.16 y */
     /* 0x1C */ s32 unk_1C;
-    /* 0x20 */ u8 unk_20[4];
+    /* 0x20 */ s32 unk_20; /* 16.16 step of the motion of func_801339D4 (T-20920) */
     /* 0x24 */ s32 unk_24;
     /* 0x28 */ s32 unk_28;
     /* 0x2C */ s32 unk_2C;
@@ -55,6 +53,8 @@ void func_80135600(void);
 void func_801359D0(void);
 void func_80135F54(void);
 void func_801369F4(s32 arg0);
+void func_80136700(void);
+void func_80136904(s32 arg0, s32 arg1);
 s32 func_80132B40(void);
 void func_80132D44(void);
 void func_80132E3C(void);
@@ -82,10 +82,10 @@ void func_80132DC4();
 
 extern s32 D_80139AFC;
 extern s32 D_80139278[10];
-void func_80135ACC();
+void func_80135ACC(s32 arg0);
 void func_80134C1C();
-void func_801339D4();
-void func_80134800();
+void func_801339D4(s32 arg0);
+void func_80134800(s32 arg0);
 extern s32 D_8013921C;
 
 void func_801321EC(void);
@@ -103,7 +103,7 @@ void func_80134D74();
 void func_80134F2C();
 void func_80135044();
 void func_8013515C();
-s32 func_80135274();
+s32 func_80135274(s32 arg0);
 
 extern u16 D_80139C58;
 extern u8 D_80139C34[8];
@@ -131,13 +131,13 @@ extern EnFn33 D_80139D1C;
 
 #ifndef W9_EN_RESET_TABLE
 #define W9_EN_RESET_TABLE
-typedef struct EnResetSlot8 {
-    /* 0x00 */ s16 unk_00;
-    /* 0x02 */ s16 unk_02;
-    /* 0x04 */ s16 unk_04;
-    /* 0x06 */ s16 unk_06;
-} EnResetSlot8; /* size 0x08, 15 rows of 12 records, T-9710. */
-extern EnResetSlot8 D_801392AC[15][12];
+/* A 16.16 point (x, y): func_80135ACC reads and writes the words, the other users the integer
+ * halves .h[1] (T-20920; T-9710 had four halfwords). */
+typedef struct EnFixPos {
+    /* 0x00 */ Fix32 unk_00;
+    /* 0x04 */ Fix32 unk_04;
+} EnFixPos; /* size 0x08 */
+extern EnFixPos D_801392AC[15][12]; /* the point grid: 15 rows of 12 (func_801354E0, func_80135600, func_80135ACC, func_80135FBC) */
 #endif
 
 #ifndef OVL_EN_NICHI_DISTANCE_T10020
@@ -164,7 +164,7 @@ void func_80132278(void);
 void func_8013275C(void);
 void func_80132A0C(void);
 extern u8 D_80139A2C[8]; /* follows the D_8013984C records, read as their end (T-10810); object kind -> sprite flag (T-18200) */
-extern s16 D_80139228[10][4]; /* 8-byte pop-up records (T-10810), ten up to D_80139278 */
+extern EnFixPos D_80139228[10]; /* pop-up centres (T-10810), ten up to D_80139278 */
 #endif
 
 #ifndef OVL_EN_NICHI_T10850_TYPES

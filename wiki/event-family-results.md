@@ -1,9 +1,20 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # GYOZI and SHOUGATU event families
+
+## Scene callbacks (T-20006)
+
+Issue #43 claims `func_80141944` in `801418B0.c` and `func_80145384` in `80143AD0.c` before implementation. Both pass actual default linked comparisons: 336 + 372 = 708 new bytes. Existing callback tables and display records replace the invalid scalar calls in the archived drafts. Meaningful index locals, direct s16 counter increments, shared s32 return types and corrected unsigned byte fields suffice; no new fakematches or compiler changes. These supersede the T-17600 noncompiling redraft fallbacks. Evidence, whole-build checks and review are in [[tickets/T-20006-gyozi-scene-callbacks]].
+
+## GYOZI dialogue follow-up (T-20004)
+
+Issue #39 claims `func_80135118` / `func_80135280` in `80134FD0.c` before work. Both now pass actual default linked comparisons: 360 + 416 = 776 new bytes. Recover `D_800C3370` as a byte array instead of the archived word-scalar context, use direct timer updates and byte postincrement tests, and reread the selector after calls. The setup callee uses the same shared s32 return type as PR #37. Two marked FAKE sites retain the original unchanged-byte stores before the sound calls. Verification, limitations and local review: [[tickets/T-20004-gyozi-dialogue-followup]].
+## Display/dispatch follow-up (T-20005)
+
+Issue #41 claims `func_8014206C` / `func_8013C774` before work. Both now match 524 actual default linked bytes (160 + 364), with full GYOZI SHA1 passing. The display helper uses a signed local selector for compare operand order; the dispatcher uses a shared s32 return type to preserve its original schedule and byte extent. Existing DisplayActor44/GyoziWork/GzCallbacks90 types and inline literals suffice. No new fakematches or compiler changes. These supersede the T-17600 hand-draft near misses; see [[tickets/T-20005-gyozi-display-dispatch]] for verification and local review.
 
 SHOUGATU types-first pass (T-17500): [[shougatu-family-results]].
 
@@ -43,6 +54,8 @@ Probe ledger: 47 full-TU scoring attempts across6 distinct targets; 44 nonzero/e
 Final handoff: codex/events-13200. Source gains are21df4fe7 and63d90035; final declaration/guard review repairs and this evidence are committed separately. Both review axes clear the source changes. Closure review confirms the negative particle result and excluded ASM controls; its stale pending-validation wording is corrected here. All744 baseline C bodies are unchanged.
 
 ## Types-first pass (T-17400)
+
+T-20900 update: `EventParticleView44` and `EventMotion44` are `DisplayFixActor44`; `EventFlagRecord44`, `Ev44` and the local `Words17` copies are `DisplayActor44` ([[data-types]], "Shared-type unification").
 
 This section is about the EVENT overlay (`src/ovl/EVENT`), not the GYOZI/SHOUGATU event scenes above. Wave-3
 types-first pass ([[tickets/T-17400-types-first-event]], [[speedup-research-2026-10-16]]), branch `w3-event-types`

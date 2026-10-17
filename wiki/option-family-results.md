@@ -1,7 +1,7 @@
 ---
 type: research
-updated: 2026-10-16
-sources: ["include/ovl/OPTION.h", "drafts/T-17800/README.md", "drafts/T-17800/redraft.py", "tools/type_recovery.py", "tools/siblings.py"]
+updated: 2026-10-17
+sources: ["include/ovl/OPTION.h", "drafts/T-17800/README.md", "drafts/T-17800/redraft.py", "drafts/T-20910/README.md", "drafts/T-20910/redraft.py", "tools/type_recovery.py", "tools/siblings.py", "tools/redraft.py"]
 ---
 
 # OPTION family results
@@ -12,6 +12,8 @@ records are the `D_8011ECD0` display records 96 to 113 (`D_80120650` is record 9
 four-array setup; the `x * 0x44` linear-function test replacement; the `D_80120912` pair).
 
 ## Types-first pass (T-17800)
+
+T-20900 update: `OptActor44`, `OptDraw44`, `OptSpr44` are `DisplayActor44`; `OptionScheduleBits` is `ScheduleEntryFlags`, `OptionPlayerBits` is `ScheduleFlags`; `D_800E7D10` needs no override (it is `Work800E7D10` in main_api.h) ([[data-types]], "Shared-type unification").
 
 Wave-3 types-first pass ([[tickets/T-17800-types-first-option]], [[speedup-research-2026-10-16]]), branch
 `w3-option-types` from `w2-good`. Start: 36 unmatched functions (22,648 bytes) in three files, 2 of them guarded.
@@ -109,3 +111,129 @@ read loses its offset (`func_80139E3C` prints `(u8) D_800E6280`), and a `lui` sh
 Three packages for wave 3, T-17801..T-17803 (`w3-option-p01`..`p03`), 12 functions, 6,636 bytes, built with the
 wave-3 inventory scripts. The p01 and p02 lists point `func_80139198`, `func_8013394C` and `func_80132000` at their
 census drafts; the hand drafts above are closer.
+
+## Second type pass (T-20910)
+
+Targeted second pass ([[tickets/T-20910-types-option]], [[data-types]]), branch `ty-option` from `w2-good`.
+Start: 32 unmatched functions (2 guarded). About two hours of agent time.
+
+### Survey
+
+- OPTION's own data is typed: after T-17800 the overlay's `.data`/`.bss` labels are strings, the word and
+  row tables of the type map above, and byte/halfword scalars (`D_8013D3A0` .. `D_8013D3F4`) with no
+  stride, walk or ordered-pair evidence (`tools/type_recovery.py --unit OPTION` proposes only jump tables).
+- What the unmatched functions read beyond that are main-exe objects: the display pool (already
+  `DisplayActor44`), GameState, main's BG slot 0 at `D_801220D0` (`SpriteSlot24`, GsBG layout, declared as
+  scalars in `main_api.h`) with its cell map, cells and cell index (`D_80122120`, `D_80122140`,
+  `D_80122540`, undeclared), the pair table `D_80125C10` (`u8[]` in `main_api.h`; the matched
+  `func_80134210` reads it as `*(s16 *)&D_80125C10[i * 4]`), and the work area `D_800E7D10`.
+- Ten of the 32 are menu pages built on one template (below); their drafts were far off because m2c
+  prints the rows loop as pointer walks with byte offsets, not because a type was missing.
+
+### Types (all byte-identical, 27/27)
+
+| Type / declaration | Where | Evidence |
+| --- | --- | --- |
+| `SpriteCell8` (0x8: `u`, `v`, `cba`, `flag`, `tpage`), `SpriteMap10` (0x10: `cellw`, `cellh`, `ncellw`, `ncellh`, `base`, `index`), `SpriteIndex80` (`u16 v[64]`) | `include/ovl/OPTION.h` | main `func_8004A1A0` (asm) sets up BG slot n: `SpriteSlot24` at `D_801220D0 + n * 0x24` with +0x14 = `&D_80122120[n]` (stride 0x10), cells `D_80122140 + n * 0x200`, index `D_80122540 + n * 0x80`; bss sizes 0x20, 0x400, 0x100 (two slots of 64 cells). Field widths from the `sb`/`sh` of `func_801328C0` and `func_8004A1A0`; the layouts are PsyQ libgs `GsMAP`/`GsCELL` (the field names are the SDK's). |
+| `extern SpriteMap10 D_80122120[2]`, `SpriteCell8 D_80122140[2][64]`, `SpriteIndex80 D_80122540[2]` | `include/ovl/OPTION.h` | main-bss symbols that only OPTION's C reads, through types of the overlay header (CODING_STANDARDS 8a; `check_headers` rejects them in an overlay header with a `game.h` type or as a plain `u16[2][64]`, hence the one-array struct). |
+| `void func_80134210(void);` | `include/ovl/OPTION.h` | called by `func_80133F50` before its definition; drafts of the caller did not compile. |
+| object view `SpriteSlot24` of `D_801220D0` | `drafts/T-20910/redraft.py` only | the drafts read slot 0 as main `80041000.c` does, `((SpriteSlot24 *)&D_801220D0)->unk_10`; matched OPTION code keeps the `main_api.h` scalars. |
+
+Not changed:
+- `D_8013D3B8` stays `volatile u16`. Measured without `volatile`: the `plain` draft of `func_80139A30` 302 to
+  219 rows (best 225 to 219), but the `typed` draft 225 to 370 and the guarded `func_80139E3C` 60 to 63; a
+  `volatile` view inside the guarded body instead (pointer local 61, casts 82) does not keep its score. The
+  original `func_80139A30` does not behave as if the halfword were volatile, so the qualifier is a draft aid
+  of T-11340, not the type; left for the ticket that matches `func_80139E3C`.
+- `D_80125C10`, `D_801220D0`: main-exe declarations (`main_api.h`), not in this ticket's scope. A pair-table
+  type for `D_80125C10` (`s16 [16][2]`) and `SpriteSlot24 D_801220D0[2]` are the natural next step; the
+  users are main, NAME_ENT, OPTION and ETC.
+
+### The menu-page template
+
+`func_80133718`, `func_80133CB8`, `func_801344E4`, `func_8013554C`, `func_80135E48`, `func_80136688`,
+`func_80136C30`, `func_801373C8`, `func_801378DC`, `func_80138080` share one shape with the matched page
+functions (`func_80133AD8`, `func_80134C00`, `func_80136434`, `func_80137040`):
+
+```c
+if (D_800E6280.unk_110D == 0) {
+    ((DisplayActor44 *)D_8011ECD0)[106].unk_18 = PAGE;   /* also unk_26 = -0xA0, unk_2A = -0x78, unk_03 = 0 */
+    D_80120912[1] = 0x7FFF;
+    D_800E6280.unk_110D = 1;
+    D_80120912[0] = 0x7FFF;
+} else {
+    D_80120912[0] = D_80120912[0] / 17 * 16;             /* record 106 zooms in */
+    D_80120912[1] = D_80120912[1] / 17 * 16;
+    if (D_80120912[0] <= 0x1000) {
+        D_80120912[1] = 0x1000;
+        D_80120912[0] = 0x1000;
+        for (i = 0, j = FIRST; i < N; i++, j += 2) {    /* rows and records 107.. */
+            a[i] = X; b[i] = i * DY + Y0; c[i] = W; d[i] = 0x10;
+            ((DisplayActor44 *)D_80120650)[i + 11].unk_18 = j;
+            ((DisplayActor44 *)D_80120650)[i + 11].unk_03 |= 0x80;
+            ((DisplayActor44 *)D_80120650)[i + 11].unk_2A = b[i];
+            ((DisplayActor44 *)D_80120650)[i + 11].unk_26 = a[i];
+        }
+        func_8004F870(1, N, a, b, c, d);
+        switch (setting) { ... the current choice's record unk_18++ and unk_1094 ... }
+        func_8004284C();
+    }
+}
+```
+
+The `func_801373C8`/`func_801378DC`/`func_80138080` group zooms record 159 (`D_80121726`, `D_80121728`)
+under `if (unk_110D != 0)` and dispatches on `unk_110D` afterwards (0: set up record 159, 1: hide records
+107..110 and shrink record 106, else: close).
+
+- With five rows IDO peels and unrolls the loop as the original; the stored value is `i * 2 + FIRST`. With
+  three rows the original keeps the value in its own counter (`j`, as in `func_80134804`).
+- Residuals: the stack offsets of the four arrays (the original keeps 8 to 16 bytes above them; `s32 i;`
+  then an unused word before the arrays reproduced `func_80135E48`'s frame, marked `FAKE` like the
+  T-4070 pad), and in the three-row loops the register order of the `j` counter (the original allocates it
+  after the `w`/`h` row pointers; no counter spelling tried here moves it).
+- `func_801344E4` increments records 14..17 of the base pool (`D_8011F0A0`, ...) inside its later loops; the
+  original reloads them in every iteration, which IDO does only when the loop's records go through
+  `D_8011ECD0` too (through `D_80120650` it keeps them in registers).
+
+### Redraft
+
+`drafts/T-20910/redraft.py`, variants `typed`, `typed-late`, `plain`, `archived`, `guarded` and `hand`, then
+`draft_fixes` and `gs-local` on the best. Paired with the baseline: `tools/redraft.py` with its default
+variants on the tree before T-20910 (`26d45f25`), each run in its own copy.
+
+| | baseline | T-20910 |
+| --- | --- | --- |
+| sum of diff rows (32 functions) | 5,184 | 3,504 (-32%; 3,484 with the match at 0) |
+| median | 156 | 97 |
+| better / same / worse than baseline | | 12 / 20 / 0 |
+| score 0 | none | none (`func_80135E48` at 20 matched by hand) |
+
+The header types alone changed two variant scores: `func_801326BC` `typed` 134 to 130 (the slot view) and
+`func_801328C0` `plain` 101 to 99, `typed` 101 to 126 (the fold of the BG labels). The gains are the hand
+drafts in the template shape and `gs-local` on them: `func_80135E48` 364 to 20, `func_80133CB8` 252 to 48,
+`func_8013554C` 229 to 31, `func_80136688` 160 to 46, `func_80133718` 139 to 50, `func_80136C30` 208 to 4,
+`func_80133F50` 315 to 93, `func_801344E4` 281 to 127, `func_801328C0` 101 to 12, `func_801373C8` 248 to 193,
+`func_801378DC` 206 to 203, `func_801326BC` 134 to 130.
+
+### Matched
+
+- `func_80135E48` (948 bytes): the template with five rows and the `GameState *g` local of the gs-local
+  form; `s32 i; s32 pad;` before the arrays gives the original frame (0x88).
+
+### Near misses
+
+- `func_801328C0` (460, 12 funcdiff rows): the BG slot through the new types. Left: the original creates the
+  cell pointer before the index pointer (`addu s0` then `addu s2`, increments `s1, s0, s2`); every index
+  spelling tried (`[j + i * 4]`, `[i * 4 + j]`, row pointers, declaration order, a cell pointer local)
+  either keeps the order or breaks the `&D_80122540[j]` exit test.
+- `func_80139F8C` (132, guarded, 5 rows with `gs-local`): only the `move a0,t1` that puts the byte into the
+  argument register before `ori`/`andi`; ten local and cast spellings give 6 to 39 rows.
+- `func_80136C30` (780, 4 rows): the template with four rows, `s32 i; s32 pad[3];` before the arrays (frame),
+  and `D_80120912[0] = 0x7FFF;` before `unk_110D = 1;` (found by `tools/autotweak.py`, 8 to 4 rows). Left: the
+  original hoists `lui %hi(D_8012093F)` (record 107's `unk_03`) above `li 0x34` (its `unk_18`); four
+  spellings of the stored value and two statement orders keep it, and a second autotweak run (1,456
+  candidates) found nothing.
+- `func_8013554C` (1,112, 31 rows): `GameState *g` with `s32 i; u8 t;` declared before the arrays.
+- `func_80133718`, `func_80133CB8`, `func_80136688` (46 to 50): the stack offsets and the register order of
+  the `j` counter; the layout probe (scalars or arrays first, no pad to `pad[3]`) gives 46 to 60.
+

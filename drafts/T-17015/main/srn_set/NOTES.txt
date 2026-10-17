@@ -1,0 +1,7 @@
+main:srn_set (T-17015), hand draft, 64 differing rows against the original (funcdiff --resolve).
+Uses SrnRec28 (include/game.h). Frame (192) and the spilled home slots (th, rows, row, wid, hgt, cols,
+ybase) agree; what is left is registers: the original gives fp to the cols loop copy and spills wid and
+hgt, the draft gives fp to wid and v1 to cols; oy/cw/ch sit one register later because yoff (priority
+1.5) is coloured before oy (1). mod_set_gpu is called with 7 words (stack args wid, hgt, D_8012175C).
+Same two idioms as srn_vram_set: the masked table word is written twice, (*src & 0xFFFF), and the
+declaration order sets the stack homes.

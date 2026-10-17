@@ -1,10 +1,10 @@
 ---
 id: T-11240
 title: Type-mismatch fixes for bulk_m2c and autotweak
-status: In Review
+status: Done
 assignee: g41
 created: 2026-10-14
-updated: 2026-10-14
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[register-cheatsheet]]", "[[tickets/T-11210-bulk-m2c-draft-failure-classes]]", "[[tickets/T-11220-regdiff-guided-autotweak]]"]
 ---
 
@@ -24,3 +24,5 @@ New module `tools/typefix.py`: (A) post-m2c rewrites for the compile failures le
 Only minimal hooks in `tools/bulk_m2c.py` and `tools/autotweak.py` (parallel work on bulk_m2c for T-11230).
 
 ## Comments
+
+2026-10-17 cleanup: merged (1b2e557ed). tools/test_typefix.py covers each rewrite and each autotweak edit kind. The bulk_m2c rerun of the failed drafts gave 4 matches (84234c01f), committed separately, and main builds 27/27. Code review against CODING_STANDARDS.md found nothing. T-20830 later added more edit kinds next to typefix. Closed.

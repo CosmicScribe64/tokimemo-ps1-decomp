@@ -177,13 +177,13 @@ void func_8013AF10(void) {
         var_s0 += 0xC;
         var_s1++;
     } while (var_s0 != 0x60);
-    func_8004AE28(((OptionPlayerBits *)&g->unk_0F4)->f8, 0x20, -0x60);
-    func_8004AE28(((OptionPlayerBits *)&g->unk_0F4)->f12, 0x20, -0x54);
-    func_8004AE28(((OptionPlayerBits *)&g->unk_0F4)->b16, 0x20, -0x48);
-    func_8004AE28(((OptionPlayerBits *)&g->unk_0F4)->b17, 0x20, -0x3C);
-    func_8004AE28(((OptionPlayerBits *)&g->unk_0F4)->b18, 0x20, -0x30);
-    func_8004AE28(((OptionPlayerBits *)&g->unk_0F4)->b19, 0x20, -0x24);
-    func_8004AE28(((OptionPlayerBits *)&g->unk_0F4)->b20, 0x20, -0x18);
+    func_8004AE28(((ScheduleFlags *)&g->unk_0F4)->unk_08, 0x20, -0x60);
+    func_8004AE28(((ScheduleFlags *)&g->unk_0F4)->unk_12, 0x20, -0x54);
+    func_8004AE28(((ScheduleFlags *)&g->unk_0F4)->b16, 0x20, -0x48);
+    func_8004AE28(((ScheduleFlags *)&g->unk_0F4)->b17, 0x20, -0x3C);
+    func_8004AE28(((ScheduleFlags *)&g->unk_0F4)->b18, 0x20, -0x30);
+    func_8004AE28(((ScheduleFlags *)&g->unk_0F4)->b19, 0x20, -0x24);
+    func_8004AE28(((ScheduleFlags *)&g->unk_0F4)->b20, 0x20, -0x18);
     func_8004AE28((s32) g->unk_0FC.unk_02, 0x20, -0xC);
     func_8004AE28((s32) g->unk_100.unk_02, 0x20, 0);
     func_8004AE28((s32) g->unk_104.unk_02, 0x20, 0xC);
@@ -196,25 +196,25 @@ void func_8013AF10(void) {
     if (g->unk_F80 & 0x90) {
         switch (g->unk_1093) {
         case 0:
-            ((OptionPlayerBits *)&g->unk_0F4)->f8 = func_8013A550(((OptionPlayerBits *)&g->unk_0F4)->f8, 3, 0);
+            ((ScheduleFlags *)&g->unk_0F4)->unk_08 = func_8013A550(((ScheduleFlags *)&g->unk_0F4)->unk_08, 3, 0);
             break;
         case 1:
-            ((OptionPlayerBits *)&g->unk_0F4)->f12 = func_8013A550(((OptionPlayerBits *)&g->unk_0F4)->f12, 11, 0);
+            ((ScheduleFlags *)&g->unk_0F4)->unk_12 = func_8013A550(((ScheduleFlags *)&g->unk_0F4)->unk_12, 11, 0);
             break;
         case 2:
-            ((OptionPlayerBits *)&g->unk_0F4)->b16 = func_8013A550(((OptionPlayerBits *)&g->unk_0F4)->b16, 1, 0);
+            ((ScheduleFlags *)&g->unk_0F4)->b16 = func_8013A550(((ScheduleFlags *)&g->unk_0F4)->b16, 1, 0);
             break;
         case 3:
-            ((OptionPlayerBits *)&g->unk_0F4)->b17 = func_8013A550(((OptionPlayerBits *)&g->unk_0F4)->b17, 1, 0);
+            ((ScheduleFlags *)&g->unk_0F4)->b17 = func_8013A550(((ScheduleFlags *)&g->unk_0F4)->b17, 1, 0);
             break;
         case 4:
-            ((OptionPlayerBits *)&g->unk_0F4)->b18 = func_8013A550(((OptionPlayerBits *)&g->unk_0F4)->b18, 1, 0);
+            ((ScheduleFlags *)&g->unk_0F4)->b18 = func_8013A550(((ScheduleFlags *)&g->unk_0F4)->b18, 1, 0);
             break;
         case 5:
-            ((OptionPlayerBits *)&g->unk_0F4)->b19 = func_8013A550(((OptionPlayerBits *)&g->unk_0F4)->b19, 1, 0);
+            ((ScheduleFlags *)&g->unk_0F4)->b19 = func_8013A550(((ScheduleFlags *)&g->unk_0F4)->b19, 1, 0);
             break;
         case 6:
-            ((OptionPlayerBits *)&g->unk_0F4)->b20 = func_8013A550(((OptionPlayerBits *)&g->unk_0F4)->b20, 1, 0);
+            ((ScheduleFlags *)&g->unk_0F4)->b20 = func_8013A550(((ScheduleFlags *)&g->unk_0F4)->b20, 1, 0);
             break;
         case 7:
             g->unk_0FC.unk_02 = func_8013A550((s32) g->unk_0FC.unk_02, 0x3E7, 0);
@@ -486,9 +486,9 @@ void func_8013BFF8(void) {
     } while (var_s0 != 0x60);
     func_8004AE28((s32) g->unk_69C[0].unk_01, 0x20, -0x60);
     func_8004AE28((s32) g->unk_69C[0].unk_02, 0x20, -0x54);
-    func_8004AE28(((OptionScheduleBits *)&g->unk_54C[0])->b24, 0x20, -0x30);
-    func_8004AE28(((OptionScheduleBits *)&g->unk_54C[0])->f25, 0x20, -0x24);
-    func_8004AE28(((OptionScheduleBits *)&g->unk_54C[0])->f0, 0x20, -0x18);
+    func_8004AE28(((ScheduleEntryFlags *)&g->unk_54C[0])->b24, 0x20, -0x30);
+    func_8004AE28(((ScheduleEntryFlags *)&g->unk_54C[0])->unk_25, 0x20, -0x24);
+    func_8004AE28(((ScheduleEntryFlags *)&g->unk_54C[0])->unk_00, 0x20, -0x18);
     func_8004AE28((s32) g->unk_724, 0x20, 0);
     func_8004AE28((s32) g->unk_725, 0x20, 0xC);
     func_8004AE28((s32) g->unk_726, 0x20, 0x18);
@@ -506,13 +506,13 @@ void func_8013BFF8(void) {
             g->unk_69C[0].unk_02 = func_8013A550((s32) g->unk_69C[0].unk_02, 0x24, 0);
             break;
         case 4:
-            ((OptionScheduleBits *)&g->unk_54C[0])->b24 = func_8013A550(((OptionScheduleBits *)&g->unk_54C[0])->b24, 1, 0);
+            ((ScheduleEntryFlags *)&g->unk_54C[0])->b24 = func_8013A550(((ScheduleEntryFlags *)&g->unk_54C[0])->b24, 1, 0);
             break;
         case 5:
-            ((OptionScheduleBits *)&g->unk_54C[0])->f25 = func_8013A550(((OptionScheduleBits *)&g->unk_54C[0])->f25, 0xA, 0);
+            ((ScheduleEntryFlags *)&g->unk_54C[0])->unk_25 = func_8013A550(((ScheduleEntryFlags *)&g->unk_54C[0])->unk_25, 0xA, 0);
             break;
         case 6:
-            ((OptionScheduleBits *)&g->unk_54C[0])->f0 = func_8013A550(((OptionScheduleBits *)&g->unk_54C[0])->f0, 0x15, 0);
+            ((ScheduleEntryFlags *)&g->unk_54C[0])->unk_00 = func_8013A550(((ScheduleEntryFlags *)&g->unk_54C[0])->unk_00, 0x15, 0);
             break;
         case 8:
             g->unk_724 = func_8013A550((s32) g->unk_724, 0x15, 0);

@@ -1,10 +1,10 @@
 ---
 id: T-14000
 title: Match ENDING and EN_NICHI coherent families
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ['[[matching-notes]]', '[[decompile-workflow]]']
 ---
 
@@ -33,3 +33,5 @@ Owned scope: src/ovl/ENDING, src/ovl/EN_NICHI and their overlay headers. Isolate
 Review correction: func_801333B0 return/liveness form is explicitly marked FAKE because the original return type is unconfirmed. Its s32 declaration exists to preserve the clamp accumulator and split epilogue. No additional byte claim.
 
 2026-10-15 checkpoint 3: EN_NICHI func_80135600 adds 976 literal linked bytes; default full-TU funcdiff MATCH, EN_NICHI SHA1 OK, headers OK. Existing 64-word EnWords64 gains an 8x8 matrix union view. Natural 12-column / 15-row loops recover original unrolling. Keeping the /7 invariant in one scalar and the /5 invariant directly in the matrix expression recovers register ordering and avoids one unnecessary home slot. No FAKE in this function. Cumulative verified gain 2032 bytes / three functions. The AI 34800 natural EnObj reconstruction is exact except its pointer spill at sp+0x28 versus target sp+0x2C; two random locals and a marked test home fix the spill but grow the frame by eight. None is accepted. Spawn 34258 remains 26 listing rows after four bounded line-placement forms. Diagnostics remain scratchpad/t14000.
+
+2026-10-17: The three matches (ENDING func_80136EE4, EN_NICHI func_801333B0 and func_80135600, 2,032 bytes) are on main and still plain C. Review against CODING_STANDARDS.md found nothing blocking: the one accommodation carries a FAKE comment with ticket, and only stray double blank lines remain. The wider ENDING and EN_NICHI work went on under T-18200 and T-18300 and is now live in T-20920 and T-20930, so this ticket is closed as Done. The ending-14000 worktree is idle and holds only an unmatched func_80134270 draft.

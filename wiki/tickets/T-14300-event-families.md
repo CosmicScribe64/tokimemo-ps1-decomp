@@ -1,10 +1,10 @@
 ---
 id: T-14300
 title: Recover remaining EVENT source families
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[bunka-family-results]]", "[[etc-family-results]]", "[[broad-coverage-results]]"]
 ---
 
@@ -41,3 +41,5 @@ Particle 8011C164 existing EventParticleView44 probe remains a broad mismatch (1
 2026-10-15 fourth checkpoint: func_8010A91C adds 400 literal linked bytes (final cumulative eight / 4,084). Replacing the do-while with an ordinary for loop closes the two pointer/zero-initialization ordering rows; the earlier bounded negative is superseded. Existing Rec34 indexed accesses plus EventRecordFlags.bit1 reproduce the target's word shift/sign test. The bit view lives in EVENT.h, has documented size/offset, and adds no shared main declarations. No FAKE in this function.
 
 Final combined evidence: build/event14300/eight-proof.diff proves all eight default full-TU literal linked spans; loop-build.log verifies EVENT SHA1. headers4.log and globals4.log pass. protos4.log: zero new disagreements, 12 known, branch check OK. Exact text body audit against 45d52546 preserves all pre-existing C in both touched source files (existing-c-audit.txt). Only EVENT C/header production paths changed. Two new FAKE assignments are explicitly marked and recorded above. No generated assembly, tooling flags, metrics changes, new raw inputs in Git, push or PR. Ticket moves In Review for independent standards/spec review; broader byte-coverage goal remains with integration.
+
+2026-10-17: Review closed. The eight EVENT matches (4,084 literal linked bytes) are on the integration tree; the two FAKE statements are marked with reason and ticket, and the rest is plain C. The shop handler func_80114C5C and the particle func_8011C164 remain on INCLUDE_ASM with the scratch evidence recorded here, and the large dispatcher is covered by T-15200. Moved to Done.

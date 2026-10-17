@@ -49,28 +49,17 @@ void func_80143334(void) {
     func_80042940(0xFF);
 }
 
-typedef struct {
-    s32 vx;
-    s32 vy;
-    s32 vz;
-    s32 pad;
-} EtcVec2; /* VECTOR layout */
 
-typedef struct {
-    s16 m[3][3];
-    s16 pad;
-    s32 t[3];
-} EtcMat2; /* MATRIX layout, size 0x20 */
 
 void func_801433E4(void) {
     s32 pad1[2]; /* FAKE: two unused 8-byte locals (above m1 and below scale) give the original frame 0x88, as in func_8013FA7C; real source unknown. T-9110 */
-    EtcMat2 m1;
-    EtcMat2 m2;
-    EtcVec2 scale;
+    MATRIX m1;
+    MATRIX m2;
+    VECTOR scale;
     s32 pad2[2];
 
-    m1 = *(EtcMat2 *)D_80125C60;
-    m2 = *(EtcMat2 *)D_80125C60;
+    m1 = *(MATRIX *)D_80125C60;
+    m2 = *(MATRIX *)D_80125C60;
     func_800A09D0(&D_8015013C, &m1);
     scale.vx = 0x1000;
     scale.vy = 0x1000;
@@ -80,7 +69,7 @@ void func_801433E4(void) {
     m1.t[0] = D_80150130;
     m1.t[1] = D_80150134;
     m1.t[2] = D_80150138;
-    *(EtcMat2 *)D_801227A4 = m1;
+    *(MATRIX *)D_801227A4 = m1;
     D_801227A0->unk0 = 0;
 }
 
@@ -135,7 +124,7 @@ void func_8014387C(s32 arg0, s32 arg1, s32 arg2) {
     *(s16 *)(p + 0x19B2) = -1;
     p[0x1987] = 0x80;
     if (arg1 == 0xA3) {
-        D_8011ECD0[j * 0x44 + 0x43] = 0xE;
+        ((DisplayActor44 *)D_8011ECD0)[j].unk_43 = 0xE;
     }
     p = D_8011ECD0 + j * 0x44;
     if (*(s16 *)(p + 0x18) >= 0xF1) {
@@ -149,34 +138,30 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80143968);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80143A88);
 
-/* NON_MATCHING: T-10330, 23 lines: c and the Rec24 pointer sit in v1/v0 (original a1/v1, the original reads D_800E62BA as its own scalar). */
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10720, register assignment only: the promoted D_800E6280.unk_03A lands in v1 (plus a copy in a1) and the pointer in v0, the original has the value in a1 and the pointer in v1 with lui v0 for D_80150138 hoisted; the loop is written over D_80121818 so the end folds to a single lui/addiu, about 25 lines */
 void func_80143F24(void) {
+    /* FAKE: GameState pointer plus one chain assignment of the three bytes of a record: the pointer makes uopt keep the
+     * counter in a1 and the record base in v1, the chain stores the bytes in the original's order (autotweak gstate and
+     * chain, T-20830). T-21520 */
+    GameState *g = &D_800E6280;
     s32 i;
 
     func_80142AE8();
-    if (D_800E6280.unk_03A != 0) {
+    if (g->unk_03A != 0) {
         for (i = 0; i < 3; i++) {
-            ((u8 *)&D_80121818)[i * 0x24 + 0x16] = D_800E6280.unk_03A;
-            ((u8 *)&D_80121818)[i * 0x24 + 0x15] = D_800E6280.unk_03A;
-            ((u8 *)&D_80121818)[i * 0x24 + 0x14] = D_800E6280.unk_03A;
+            ((u8 *)&D_80121818)[i * 0x24 + 0x14] = ((u8 *)&D_80121818)[i * 0x24 + 0x15] = ((u8 *)&D_80121818)[i * 0x24 + 0x16] = g->unk_03A;
         }
-        D_800E6280.unk_03A -= 1;
+        g->unk_03A -= 1;
     }
     D_80150138 -= 0xC8;
     if (D_80150138 < -0x7530) {
         func_80059048();
-        if (D_800E6280.unk_F5F >= 0xD) {
+        if (g->unk_F5F >= 0xD) {
             main_state_set(0x12);
         } else {
             main_state_set(0xC3);
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80143F24);
-#endif
 
 void func_80143FE0(void) {
     D_800E6280.unk_1104.w += 1;
@@ -356,7 +341,7 @@ s32 func_80144A38(void) {
 void func_80144AC0(void) {
     s32 i;
     s32 d;
-    FlagsWork24 *work;
+    Work800E7D10 *work;
     s16 x[16];
     s16 y[16];
     s16 w[16];
@@ -375,9 +360,9 @@ void func_80144AC0(void) {
     menu_set(1, 14, x, y, w, h);
     D_800E6280.unk_1094 = 0;
     k_sub_reset_point_set();
-    work = (FlagsWork24 *)&D_800E7D10;
+    work = &D_800E7D10;
     for (i = 1; i != 15; i++) {
-        if (work->unk_04[i] == 1) {
+        if (work->slot_status[i] == 1) {
             break;
         }
     }

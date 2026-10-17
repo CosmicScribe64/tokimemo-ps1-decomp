@@ -609,7 +609,61 @@ s32 func_8005BE8C(void) {
     k_disp_inc();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005C14C);
+s32 func_8005C14C(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 0xF, "未初期化のメモリーカードです。", 0);
+        k_disp_start(1);
+        D_800E6280.unk_110D++;
+    default:
+        break;
+    case 1:
+        if (D_800E6280.unk_F88 & 0x860) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 2:
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 0xF, "初期化していいですか？", 0);
+        set_kanji_string(-0x80, 0x42, 0, D_800B3C70, 0);
+        set_kanji_string(-0x2C, 0x42, 1, func_8006CA9C(), 0);
+        set_kanji_string(-0x80, 0x52, 0, D_800B3C88, 0);
+        set_kanji_string(-0x2C, 0x52, 2, func_8006CAE0(), 0);
+        k_sub_disp_start(5);
+        D_800E6280.unk_110D++;
+        break;
+    case 3:
+        if (D_800E6280.unk_F88 & 0x20) {
+            if (func_80054108() == 1) {
+                func_80042940(0);
+            } else {
+                func_8005C4CC(1);
+                func_80042908(0);
+                func_80042940(2);
+            }
+        } else if (D_800E6280.unk_F88 & 0x40) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 4:
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 0xF, "別のメモリーカードを", 0);
+        set_kanji_string(-0x80, 0x42, 1, "差し込み口１", 0);
+        set_kanji_string(-0x80, 0x42, 0xF, "　　　　　　にセットして、", 0);
+        set_kanji_string(-0x80, 0x52, 0xF, "○ボタンを押してください。", 0);
+        k_sub_disp_start(4);
+        D_800E6280.unk_110D++;
+        break;
+    case 5:
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_8005C4CC(1);
+            func_80042908(0);
+            func_80042940(2);
+        }
+        break;
+    }
+}
 
 void func_8005C414(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);
@@ -654,7 +708,7 @@ void func_8005C4CC(s32 arg0) {
 void func_8005C5BC(void) {
     s32 i;
     s32 d;
-    FlagsWork24 *work;
+    Work800E7D10 *work;
     s16 x[16];
     s16 y[16];
     s16 w[16];
@@ -673,9 +727,9 @@ void func_8005C5BC(void) {
     menu_set(1, 14, x, y, w, h);
     D_800E6280.unk_1094 = 0;
     k_sub_reset_point_set();
-    work = (FlagsWork24 *)&D_800E7D10;
+    work = &D_800E7D10;
     for (i = 1; i != 15; i++) {
-        if (work->unk_04[i] == 1) {
+        if (work->slot_status[i] == 1) {
             break;
         }
     }
@@ -757,7 +811,7 @@ INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005CC40);
 void func_8005CF6C(void) {
     s32 i;
     s32 d;
-    FlagsWork24 *work;
+    Work800E7D10 *work;
     s16 x[16];
     s16 y[16];
     s16 w[16];
@@ -776,9 +830,9 @@ void func_8005CF6C(void) {
     menu_set(1, 14, x, y, w, h);
     D_800E6280.unk_1094 = 0;
     k_sub_reset_point_set();
-    work = (FlagsWork24 *)&D_800E7D10;
+    work = &D_800E7D10;
     for (i = 1; i != 15; i++) {
-        if (work->unk_04[i] == 1) {
+        if (work->slot_status[i] == 1) {
             break;
         }
     }
@@ -1937,7 +1991,44 @@ void func_80060150(void) {
     func_80042940(2);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060178);
+void func_80060178(void) {
+    s32 i;
+    s32 d;
+    s32 pad; /* FAKE: unused local reserves the third home word above the arrays (frame 0xE8); real source unknown. T-17005 */
+    s16 x[14];
+    s16 y[14];
+    s16 w[14];
+    s16 h[14];
+
+    func_8004E58C();
+    func_8006612C("マスコット");
+    func_8005DEA0(6);
+    d = 3;
+    for (i = 0; i < 14; i++) {
+        x[i] = (i % d) * 0x2B - 8;
+        y[i] = (i / d) * 0x10 - 0x40;
+        w[i] = 0x28;
+        h[i] = 0x10;
+        if (i == 13) {
+            w[i] = 0x46;
+            set_kanji_string(x[i], y[i], 5, "表示しない", 0);
+        } else if (D_800E7D10.flags[i] != 0 || D_800E6280.unk_53C[i] != 0) {
+            set_kanji_string(x[i], y[i], 3, girl_short_name_table[i], 0);
+        } else {
+            w[i] = 0;
+        }
+    }
+    k_sub_reset_point_set();
+    set_kanji_string(-0x80, 0x32, 0, "マスコットを選びます", 0);
+    menu_set(1, 14, x, y, w, h);
+    if (D_800B5C08 == 0 || D_800B5C08 >= 14) {
+        D_800E6280.unk_1094 = 0;
+    } else {
+        D_800E6280.unk_1094 = D_800B5C08;
+    }
+    k_sub_disp_start(0);
+    func_8004284C();
+}
 
 s32 func_800603C0(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);
@@ -1946,7 +2037,7 @@ s32 func_800603C0(void) {
     k_disp_inc();
     if (D_800E6280.unk_1094 != -1) {
         func_800676AC(0);
-        if (((FlagsWork24 *)&D_800E7D10)->flags[D_800E6280.unk_1094] != 0 || D_800E6280.unk_53C[D_800E6280.unk_1094] != 0) {
+        if (D_800E7D10.flags[D_800E6280.unk_1094] != 0 || D_800E6280.unk_53C[D_800E6280.unk_1094] != 0) {
             func_800676AC(D_800E6280.unk_1094 + 1);
         }
     }
@@ -1955,7 +2046,7 @@ s32 func_800603C0(void) {
     } else if ((D_800E6280.unk_F88 & 0x20) && (D_800E6280.unk_1094 != -1)) {
         if (D_800E6280.unk_1094 == 0xD) {
             func_80042940(0);
-        } else if ((((FlagsWork24 *)&D_800E7D10)->flags[D_800E6280.unk_1094] != 0) || (D_800E6280.unk_53C[D_800E6280.unk_1094] != 0)) {
+        } else if ((D_800E7D10.flags[D_800E6280.unk_1094] != 0) || (D_800E6280.unk_53C[D_800E6280.unk_1094] != 0)) {
             func_800676AC(0);
             func_800676AC(D_800E6280.unk_1094 + 1);
             func_8004284C();
@@ -2374,17 +2465,14 @@ void pre_syogatu0(void) {
     }
 }
 
-/* NON_MATCHING: T-12030, 15 diff rows; one cached buffer address replaces separate target calculations. */
-#ifdef NON_MATCHING
 s32 pre_syogatu1(void) {
     s32 var_s0;
     s32 var_s1;
-    /* FAKE: two words recover the observed frame without moving the buffers. T-12030. */
+    /* FAKE: two words recover the observed frame without moving the buffers. T-17005 */
     s32 stack_home[2];
     u8 sp16C[0xC];
     u8 sp6C[0x100];
     u8 sp5C[0x10];
-    u8 *var_s2;
 
     switch (D_800E6280.unk_110D) {
     case 0:
@@ -2392,10 +2480,8 @@ s32 pre_syogatu1(void) {
         k_sub_reset();
         strcpy(sp6C, "やった！ ");
         var_s1 = 0;
-        var_s0 = 0;
-        var_s2 = sp16C;
-        do {
-            if (((u8) *var_s2 >= 0x4DU) && (D_800E6280.unk_1BC[var_s0].unk_0C.f.b1)) {
+        for (var_s0 = 0; var_s0 < 0xB; var_s0++) {
+            if ((sp16C[var_s0] >= 0x4DU) && (D_800E6280.unk_1BC[var_s0].unk_0C.f.b1)) {
                 if (var_s1 != 0) {
                     strcat(sp6C, "と、 ");
                 }
@@ -2403,9 +2489,7 @@ s32 pre_syogatu1(void) {
                 strcat(sp6C, sp5C);
                 var_s1 += 1;
             }
-            var_s0 += 1;
-            var_s2 += 1;
-        } while (var_s0 != 0xB);
+        }
         strcat(sp6C, "から、 年賀状をもらったラッキー。）");
         gnsx(D_800E6280.unk_0D4);
         sndisp(sp6C, 0, 0x1F);
@@ -2419,9 +2503,6 @@ s32 pre_syogatu1(void) {
         return;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_syogatu1);
-#endif
 
 s32 func_80061634(void) {
     switch (D_800E6280.unk_110A) {

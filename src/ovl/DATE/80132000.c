@@ -1,8 +1,10 @@
 #define MAIN_API_OVERRIDE_D_80121808 /* byte store here (main_api.h: s32, EVENT) */
+#define MAIN_API_OVERRIDE_func_80085A60 /* int view: the original keeps $v0 busy after the call, func_8013E6A4 (T-17202; main_api.h: void) */
 #include "common.h"
 #include "ovl/DATE.h"
 
 extern u8 D_80121808;
+extern s32 func_80085A60();
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B520);
@@ -287,8 +289,6 @@ void func_801324A8(void) {
     D_8015B650 = 0x801B0170;
 }
 
-/* NON_MATCHING: T-11580, 1 differing instruction; the original adds the two products in the other operand order */
-#ifdef NON_MATCHING
 void func_801324DC(void) {
     u8 t;
     u8 six;
@@ -302,7 +302,9 @@ void func_801324DC(void) {
     }
     D_800CA14C = 0;
     t = func_80051A68(D_800E6280.unk_F5F) & 0x7F;
-    D_8015BF04 = date_arrival * six + ((t >= 2) + (t >= 3)) * ((date_arrival == 0) + 1) - (date_arrival == 2) * 3;
+    /* FAKE: T-17202, `date_arrival * 0` mentions the promoted global before `t`, so its load
+     * (lui a0) is scheduled before the andi of the call result; the sum keeps the original order */
+    D_8015BF04 = date_arrival * 0 + ((t >= 2) + (t >= 3)) * ((date_arrival == 0) + 1) + date_arrival * six - (date_arrival == 2) * 3;
     D_8015BF08 = 0;
     *(s16 *)&D_800CA15C = 0;
     D_8015BF18 = 0;
@@ -329,9 +331,6 @@ void func_801324DC(void) {
     D_8015B67C = 0;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801324DC);
-#endif
 
 void date_event_trigger(s16 arg0, s16 arg1, u8 arg2) {
     D_80122CD0 = arg0;
@@ -531,7 +530,7 @@ s32 date_event_choose(void) {
             date_event_trigger(5, 1, 0x3A);
             return 0;
         }
-        if (((place = D_800CA2F8) == 8) && (((g->unk_03E == 0x5F) && (g->unk_03F == 0xC) && (g->unk_040 == 0xA)) || ((g->unk_03E == 0x60) && (g->unk_03F == 0xC) && (g->unk_040 == 8)) || ((g->unk_03E == 0x61) && (g->unk_03F == 0xC) && (g->unk_040 == 7))) && (rank < 3U) && (((DateFlag17 *)&g->unk_0F4)->b17 != 0) && (g->unk_1109 == 1) && (g->unk_110A == 0)) {
+        if (((place = D_800CA2F8) == 8) && (((g->unk_03E == 0x5F) && (g->unk_03F == 0xC) && (g->unk_040 == 0xA)) || ((g->unk_03E == 0x60) && (g->unk_03F == 0xC) && (g->unk_040 == 8)) || ((g->unk_03E == 0x61) && (g->unk_03F == 0xC) && (g->unk_040 == 7))) && (rank < 3U) && (((ScheduleFlags *)&g->unk_0F4)->b17 != 0) && (g->unk_1109 == 1) && (g->unk_110A == 0)) {
             date_event_trigger(6, 1, 0x3B);
             return 0;
         }
@@ -1718,9 +1717,8 @@ void func_80137D1C(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11580, 4 differing instructions; D_80122CDC at the entry takes $v1, the original $v0 */
-#ifdef NON_MATCHING
 s32 func_80137DF4(void) {
+    /* No return statement: $v0 is live at the exit, so uopt keeps D_80122CDC in $v0 (T-17202). */
     s32 text;
 
     if (D_80122CDC == 0) {
@@ -1764,15 +1762,11 @@ s32 func_80137DF4(void) {
     func_80085B3C(0, D_80122D08);
     func_80136F2C();
     if ((D_800E6280.unk_F5F == 8) && ((u8)D_8015B68C == 3) && (D_800E6280.unk_1BC[8].unk_14[0x18] != 0)) {
-        (&D_80122CDC)[0] = 1;
-        return (&D_80122CDC)[0];
+        D_80122CDC = 1;
+    } else {
+        D_80122CDC = 0;
     }
-    D_80122CDC = 0;
-    return 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137DF4);
-#endif
 
 void func_80137FAC(void) {
     func_800AE0F0(D_800CA1DC, "ナイトパレード");
@@ -2293,14 +2287,15 @@ void func_801395B4(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11580, 9 differing instructions; the post-call unk_110A update takes $v1 (the original keeps it in $v0 with an ugen andi), and the entry F5F lui is scheduled one slot later */
-#ifdef NON_MATCHING
 s32 func_80139664(void) {
     /* FAKE: unused byte local puts prev at 0x28(sp) as in the original. T-11580 */
     u8 pad;
     s32 prev;
 
     if (D_80122CDC == 1) {
+        /* FAKE: evaluates the F5F byte into $v0 before D_800CA148 = 9 (EVENT twin func_80116940, T-11110). T-17202 */
+        if (D_800E6280.unk_F5F + 0) {
+        }
         D_800CA148 = 9;
         if (D_800E6280.unk_F5F == 7) {
             D_800CA148 = 0xA;
@@ -2332,55 +2327,53 @@ s32 func_80139664(void) {
         func_80085A60();
         if (prev != D_800E6280.unk_110A) {
             D_800CA148 = 8;
-            D_800E6280.unk_110A += 0x11;
+            /* FAKE: T-17202, the element view keeps the new byte in a register (andi t8; move v0,t8)
+             * for $v0, which is live at the exit of this s32 function with no return value */
+            (&D_800E6280.unk_110A)[0] += 0x11;
         }
-        return D_800E6280.unk_110A;
+        /* no value on purpose: `return unk_110A` splits the byte into two ranges (T-17202) */
+        return;
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80139664);
-#endif
 
-/* NON_MATCHING: T-11580, 7 differing instructions; the tail load of unk_110A takes $v1 with its lui hoisted, the original reloads it into $v0 */
-#ifdef NON_MATCHING
 s32 func_80139834(void) {
     /* FAKE: 4 spare bytes reproduce prev's stack home at 0x2A(sp). T-11140 */
     s32 pad;
     s16 prev;
-    u8 g;
 
     if (D_80122CDC == 1) {
-        g = D_800E6280.unk_F5F;
-        if (g == 7) {
+        if (D_800E6280.unk_F5F == 7) {
             prev = D_800E6280.unk_110A;
             func_80085A60();
-            g = D_800E6280.unk_110A;
-            if (prev != g) {
+            if (prev != D_800E6280.unk_110A) {
                 D_800CA148 = 0xA;
-                D_800E6280.unk_110A = g + 0xC;
+                D_800E6280.unk_110A += 0xC;
             }
             return 0;
         }
         D_800CA148 = 9;
-        if (g == 9) {
+        if (D_800E6280.unk_F5F == 9) {
             D_800CA148 = 8;
-        } else if ((g == 4) || (g == 8) || (g == 5)) {
+        } else if ((D_800E6280.unk_F5F == 4) || (D_800E6280.unk_F5F == 8) || (D_800E6280.unk_F5F == 5)) {
             D_800CA148 = 7;
+        }
+        /* FAKE: dead test gives the unk_110A byte a second use in this block so uopt allocates $v0
+           (EVENT twin func_80116AA8, T-11110). T-17202 */
+        if ((s32)D_800E6280.unk_110A) {
         }
         D_800E6280.unk_110A += 0xC;
     } else {
-        g = D_800E6280.unk_F5F;
-        if (g == 7) {
+        /* FAKE: dead test gives the F5F byte a second use so uopt allocates $v0 for it. T-17202 */
+        if ((s32)D_800E6280.unk_F5F) {
+        }
+        if (D_800E6280.unk_F5F == 7) {
             D_800CA148 += 1;
         }
         D_8015B67C = 1;
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80139834);
-#endif
 
 void func_80139944(void) {
     /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing g->unk_F5F * 0x24 across stores. T-11140 */
@@ -2781,41 +2774,43 @@ s32 func_8013AE5C(void) {
     return func_80082764(D_80122CDC, 1, 0);
 }
 
-/* NON_MATCHING: T-11020, register-only, 67 insns: 3E/40 swapped v1/a0 (cvt range outranks) */
-#ifdef NON_MATCHING
 s32 func_8013AF1C(void) {
-    if (D_800E6280.unk_110D++ == 0) {
-        if ((D_800E6280.unk_03F == 3) && (D_800E6280.unk_040 == 0x15) && (D_800E6280.unk_03E != 0x60)) {
+    /* FAKE: the fields are read through a local pointer; an indirect load is not a plain variable for uopt, which gives the
+     * 0x3E/0x40 selector tests the original's registers (autotweak gstate, T-20830). T-21520 */
+    GameState *g = &D_800E6280;
+
+    if (g->unk_110D++ == 0) {
+        if ((g->unk_03F == 3) && (g->unk_040 == 0x15) && (g->unk_03E != 0x60)) {
             D_8015BF0C = 0;
-        } else if ((D_800E6280.unk_03F == 3) && (D_800E6280.unk_040 == 0x14) && (D_800E6280.unk_03E == 0x60)) {
+        } else if ((g->unk_03F == 3) && (g->unk_040 == 0x14) && (g->unk_03E == 0x60)) {
             D_8015BF0C = 0;
-        } else if ((D_800E6280.unk_03E == 0x5F) && (D_800E6280.unk_03F == 7) && (D_800E6280.unk_040 == 0x17)) {
+        } else if ((g->unk_03E == 0x5F) && (g->unk_03F == 7) && (g->unk_040 == 0x17)) {
             D_8015BF0C = 1;
-        } else if ((D_800E6280.unk_03E == 0x60) && (D_800E6280.unk_03F == 7) && (D_800E6280.unk_040 == 0x1C)) {
+        } else if ((g->unk_03E == 0x60) && (g->unk_03F == 7) && (g->unk_040 == 0x1C)) {
             D_8015BF0C = 1;
-        } else if ((D_800E6280.unk_03E == 0x61) && (D_800E6280.unk_03F == 7) && (D_800E6280.unk_040 == 0x1B)) {
+        } else if ((g->unk_03E == 0x61) && (g->unk_03F == 7) && (g->unk_040 == 0x1B)) {
             D_8015BF0C = 1;
-        } else if ((D_800E6280.unk_03F == 9) && (D_800E6280.unk_040 == 0x17) && (D_800E6280.unk_03E != 0x60)) {
-            if (D_800E6280.unk_10F8 & 1) {
+        } else if ((g->unk_03F == 9) && (g->unk_040 == 0x17) && (g->unk_03E != 0x60)) {
+            if (g->unk_10F8 & 1) {
                 D_8015BF0C = 2;
             } else {
                 D_8015BF0C = 3;
             }
-        } else if ((D_800E6280.unk_03F == 9) && (D_800E6280.unk_040 == 0x16) && (D_800E6280.unk_03E == 0x60)) {
-            if (D_800E6280.unk_10F8 & 1) {
+        } else if ((g->unk_03F == 9) && (g->unk_040 == 0x16) && (g->unk_03E == 0x60)) {
+            if (g->unk_10F8 & 1) {
                 D_8015BF0C = 2;
             } else {
                 D_8015BF0C = 3;
             }
-        } else if ((D_800E6280.unk_03F == 0xC) && (D_800E6280.unk_040 == 0x17)) {
+        } else if ((g->unk_03F == 0xC) && (g->unk_040 == 0x17)) {
             D_8015BF0C = 4;
         } else {
             func_8004284C();
             return 0;
         }
     }
-    if (D_800E6280.unk_110D >= 0xBU) {
-        D_800E6280.unk_110D = 0xA;
+    if (g->unk_110D >= 0xBU) {
+        g->unk_110D = 0xA;
     }
     D_800CA134 = (u8 *) &D_8015BF0C;
     D_800CA138 = (u8 *) &D_8015BF10;
@@ -2824,9 +2819,6 @@ s32 func_8013AF1C(void) {
     D_800CA144 = D_8015BEF8;
     return func_80082764(D_80122CDC, 1, 0);
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013AF1C);
-#endif
 
 void func_8013B174(void) {
     s16 sp2E;
@@ -3116,9 +3108,9 @@ void func_8013BE98(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11140, 8 diff lines (chain assignment store scheduling and $t4 vs $v0 for second = 3 chain) */
-#ifdef NON_MATCHING
 void func_8013BEB8(void) {
+    s32 x;
+
     if (D_800E6280.unk_F5F != 6) {
         func_8004284C();
         D_800E6280.unk_110A += 8;
@@ -3129,14 +3121,14 @@ void func_8013BEB8(void) {
         func_80042940(0x2D);
         return;
     }
-    D_800CA234[0] = D_800CA22C[2] = D_800CA22C[0] = D_800CA22C[3] = 2;
+    x = D_800CA22C[0] = D_800CA22C[3] = 2;
     D_800CA21C[0] = D_800CA21C[1] = D_800CA21C[2] = 3;
-    D_800CA224[0] = D_800CA224[1] = D_800CA224[2] = 3;
+    D_800CA22C[2] = x;
+    D_800CA234[0] = x;
+    /* FAKE: the u16 view of the row gives its constant 3 the original's $v0 (autotweak, T-17202). */
+    ((u16 *)D_800CA224)[0] = ((u16 *)D_800CA224)[1] = ((u16 *)D_800CA224)[2] = 3;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013BEB8);
-#endif
 
 void func_8013BF94(void) {
     if (D_800CA2F8 == 0x12) {
@@ -3262,9 +3254,9 @@ s32 func_8013C7D0(void) {
         if (g->unk_66C[i].unk_00 != 0) {
             any = 1;
         }
-        if (((((ScheduleClubFlags *)&g->unk_66C[i])->unk_25 == 3) || ((DateFlags0F4 *)&g->unk_0F4)->b19) && !((DateFlags0F4 *)&g->unk_0F4)->b20 && (g->unk_03E == 0x61) && (g->unk_03F == 9)) {
+        if (((((ScheduleClubFlags *)&g->unk_66C[i])->unk_25 == 3) || ((ScheduleFlags *)&g->unk_0F4)->b19) && !((ScheduleFlags *)&g->unk_0F4)->b20 && (g->unk_03E == 0x61) && (g->unk_03F == 9)) {
             g->unk_56C[0x55] = 2;
-            ((DateFlags0F4 *)&g->unk_0F4)->b20 = 1;
+            ((ScheduleFlags *)&g->unk_0F4)->b20 = 1;
             g->unk_71E &= 8;
             D_80122CE0 = 5;
             g->unk_720 = g->unk_1108;
@@ -3278,10 +3270,10 @@ s32 func_8013C7D0(void) {
             return 0;
         }
     }
-    if ((any == 0) && (g->unk_03E == 0x61) && (g->unk_03F == 9) && !((DateFlags0F4 *)&g->unk_0F4)->b20) {
+    if ((any == 0) && (g->unk_03E == 0x61) && (g->unk_03F == 9) && !((ScheduleFlags *)&g->unk_0F4)->b20) {
         ((ScheduleClubFlags *)&g->unk_66C[11])->unk_25 = 3;
         g->unk_56C[0x55] = 2;
-        ((DateFlags0F4 *)&g->unk_0F4)->b20 = 1;
+        ((ScheduleFlags *)&g->unk_0F4)->b20 = 1;
         g->unk_71E &= 8;
         D_80122CE0 = 5;
         g->unk_720 = g->unk_1108;
@@ -3294,11 +3286,11 @@ s32 func_8013C7D0(void) {
         func_80042940(0x40);
         return 0;
     }
-    if ((g->unk_728[0] == D_800CA2F8) && (g->unk_728[0] == g->unk_728[1]) && !((DateFlags0F4 *)&g->unk_0F4)->b20 && (g->unk_03E >= 0x60) && ((*(s8 *)&D_800CA2F8) != 0)) {
+    if ((g->unk_728[0] == D_800CA2F8) && (g->unk_728[0] == g->unk_728[1]) && !((ScheduleFlags *)&g->unk_0F4)->b20 && (g->unk_03E >= 0x60) && ((*(s8 *)&D_800CA2F8) != 0)) {
         D_80122CE0 = 4;
         g->unk_56C[0x55] = 1;
         g->unk_71E &= 8;
-        ((DateFlags0F4 *)&g->unk_0F4)->b19 = 1;
+        ((ScheduleFlags *)&g->unk_0F4)->b19 = 1;
         g->unk_720 = g->unk_1108;
         g->unk_721 = g->unk_1109;
         g->unk_722 = 0x3E;
@@ -3954,25 +3946,19 @@ void func_8013E614(void) {
     }
 }
 
-/* NON_MATCHING: T-10510, T-11580, 12 funcdiff lines left: post-increment compare, a0/v1 vs v1/v0 */
-#ifdef NON_MATCHING
 void func_8013E6A4(void) {
-    s32 d;
+    /* FAKE: unused word local above x puts x at 0x2B(sp) as in the original. T-17202 */
+    s32 pad;
     u8 x;
 
     x = func_80051B48(D_800E6280.unk_F5F);
     func_80085A60();
-    d = D_800E6280.unk_1104.w;
-    D_800E6280.unk_1104.w = d + 1;
-    if (d == 1) {
+    if (D_800E6280.unk_1104.w++ == 1) {
         if (D_800CA14C == 2) {
             func_80083440(x);
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013E6A4);
-#endif
 
 void func_8013E710(void) {
     if (D_80122CDC == 0) {
@@ -4215,7 +4201,7 @@ void func_8013F544(void) {
 
 void func_8013F638(void) {
     s16 i;
-    DateParticleView44 *p;
+    DisplayFixActor44 *p;
 
     if (D_800B5939 == 1) {
         for (i = 11; i < 16; i++) {
@@ -4237,7 +4223,7 @@ void func_8013F638(void) {
     D_8015BD38 = 1;
     func_80132288();
     func_80043914(D_800CA130, 15, 1, 2, 0);
-    ((DateParticleView44 *)D_8011ECD0)[31].unk_43 = 15;
+    ((DisplayFixActor44 *)D_8011ECD0)[31].unk_43 = 15;
     ((Rec24 *)D_801217D0)[0].unk_12 = 0x1EF;
     ((Rec24 *)D_801217D0)[1].unk_12 = 0x1EF;
     for (i = 16; i < 32; i++) {
@@ -4248,7 +4234,7 @@ void func_8013F638(void) {
     func_800AE120(D_800E6280.unk_10F8);
     for (i = 0; i < 10; i++) {
         func_80048F64(i + 96);
-        p = (DateParticleView44 *)D_8011ECD0 + i;
+        p = (DisplayFixActor44 *)D_8011ECD0 + i;
         p[96].unk_01 = 13;
         p[96].unk_02 = 1;
         p[96].unk_38 = 0x1000000;
@@ -4269,7 +4255,7 @@ void func_8013F638(void) {
         p[96].unk_2C = (rand() % 0x8000) - 0x4000;
         D_8015BCB4[i].w = ((u32)-(rand() % 9) << 16) - 0x280000;
     }
-    ((DateParticleView44 *)D_8011ECD0)[96].unk_03 |= 0x80;
+    ((DisplayFixActor44 *)D_8011ECD0)[96].unk_03 |= 0x80;
     func_80084E90(D_8015B5DC, D_8015B5E0, D_8015B5E4, D_8015B5E8, D_8015B5EC, D_8015B5F0);
     for (i = 58; i < 64; i++) {
         ((Rec24 *)D_801217D0)[i].unk_00 &= 0x7FFFFFFF;
@@ -4331,36 +4317,36 @@ s32 func_80140374(void) {
     }
     for (i = 0; i < 0x14; i++) {
         func_80048F64(i + 0x62);
-        ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_38 = 0x01000000;
-        ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_01 = 0xD;
-        ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_02 = 1;
-        ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_03 = 4;
+        ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_38 = 0x01000000;
+        ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_01 = 0xD;
+        ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_02 = 1;
+        ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_03 = 4;
         if (two == D_800CA2FC) {
-            ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_0C = (s32) D_8015B614;
-            ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_10 = (s32) D_8015B61C;
-            ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_34 = (s32) D_8015B60C;
+            ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_0C = (u8 *)D_8015B614;
+            ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_10 = (u8 *)D_8015B61C;
+            ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_34 = (u8 *)D_8015B60C;
         } else {
-            ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_0C = (s32) D_8015B618;
-            ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_10 = (s32) D_8015B620;
-            ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_34 = (s32) D_8015B610;
+            ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_0C = (u8 *)D_8015B618;
+            ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_10 = (u8 *)D_8015B620;
+            ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_34 = (u8 *)D_8015B610;
         }
-        ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_16 = (s16) (func_800AE0D0() % 8);
-        ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_43 = 0x12;
+        ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_16 = (s16) (func_800AE0D0() % 8);
+        ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_43 = 0x12;
         choice = func_800AE0D0() % 2;
         scale = 0x1000 / ((s32) ((((s16) choice) * 2) + 2));
         size_variant = (s16) choice;
-        ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_1A = (s16) scale;
-        ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_1C = (s16) scale;
-        ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_07 = 0x80;
+        ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_1A = (s16) scale;
+        ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_1C = (s16) scale;
+        ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_07 = 0x80;
         position = &D_8015BD40[i];
-        ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_24.h[1] = (s16) ((func_800AE0D0() % 300) - 0x96);
-        position->w = (s32) ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_24.w;
+        ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_24.h[1] = (s16) ((func_800AE0D0() % 300) - 0x96);
+        position->w = (s32) ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_24.w;
         random_span = func_800AE0D0();
         divisor = size_variant + 1;
         drift = ((s32) (((((func_800AE0D0() % 2) * 2) - 1) * (random_span % 8)) + 8)) / divisor;
         position->h[1] = (s16) (((s16) position->h[1]) + drift);
-        ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_28.h[1] = (s16) ((func_800AE0D0() % 160) - 0x78);
-        ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_30 = (s32) (((two != D_800CA2FC) << 15) + 0x8000) / divisor;
+        ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_28.h[1] = (s16) ((func_800AE0D0() % 160) - 0x78);
+        ((DisplayFixActor44 *) D_8011ECD0)[i + 98].unk_30 = (s32) (((two != D_800CA2FC) << 15) + 0x8000) / divisor;
     }
 
     func_8004284C();
@@ -4370,7 +4356,7 @@ void func_80140788(void) {
     s16 i;
 
     for (i = 0; i < 20; i++) {
-        D_8011ECD0[i * 0x44 + 0x1A0B] &= 0x7F;
+        ((DisplayActor44 *)D_8011ECD0)[i + 98].unk_03 &= 0x7F;
     }
 }
 

@@ -1,10 +1,10 @@
 ---
 id: T-13701
 title: Recover NAME_ENT record-rendering types
-status: In Review
+status: Done
 assignee: codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[name-ent-family-results]]", "[[data-types]]"]
 ---
 
@@ -23,6 +23,8 @@ Recover func_80139F30 record and actor accesses using existing NameMetricWork, N
 The work flags start at D_800E7D10+0x14; stored record flags at D_80123120+0x688 with record stride0xF00. Actor stride0x44; display status bytes +0x2201/+0x2203 correspond to actors128..135 fields1/3. Fixed actors136..140 correspond to flag order12,8,9,10,11. Existing matching func_80139CB4 and func_801324AC corroborate record and actor layouts.
 
 ## Comments
+
+2026-10-17: Research ticket finished. The typed full-TU draft of NAME_ENT func_80139F30 scored 769 rows (actor endpoint 746), so no bytes were accepted; strides and fields are recorded in name-ent-family-results. Only wiki files were merged, so there is no code to review. T-17900 later redrafted all unmatched NAME_ENT functions with these types; func_80139F30 stays INCLUDE_ASM and unpackaged. Moved to Done.
 
 ## Result
 

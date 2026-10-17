@@ -270,22 +270,19 @@ void func_801572BC(void) {
     func_8004284C();
 }
 
-/* FAKE: byte-workspace and element-zero views preserve load/store ordering;
- * the copied record layout is incomplete. T-9550 */
+/* FAKE: element-zero views of the GameState bytes preserve load/store ordering (the record copy is one
+ * DisplayActor44 since T-20900). T-9550 */
 void func_801572E4(void) {
-    typedef struct {
-        /* 0x00 */ u32 words[17];
-    } DateWords44; /* size 0x44 */
     s16 i;
 
-    *(DateWords44 *)&D_8011ECD0[0x1A08] = *(DateWords44 *)&D_8011ECD0[0x1980];
+    ((DisplayActor44 *)D_8011ECD0)[98] = ((DisplayActor44 *)D_8011ECD0)[96];
     D_801206EE = 4;
     D_801206DA = 9;
     for (i = 0; i < 6; i++) {
         D_801217D0[i + 4].unk_00 |= 0x80000000;
     }
-    D_8011ECD0[0x1983] &= 0xFF7F;
-    D_8011ECD0[0x19C7] &= 0xFF7F;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_03 &= 0xFF7F;
+    ((DisplayActor44 *)D_8011ECD0)[97].unk_03 &= 0xFF7F;
     D_80122CF8 = 0;
     (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_037)[0] = (&D_800E6280.unk_038)[0] = 0x7F;
     func_8004284C();
@@ -310,8 +307,8 @@ void func_8015745C(void) {
     D_800E6280.unk_038 = 0; for (i = 0; i < 6; i++) {
         D_801217D0[i + 4].unk_00 &= 0x7FFFFFFF;
     }
-    D_80120650[3] |= 0x80;
-    D_80120650[0x47] |= 0x80;
+    ((DisplayActor44 *)D_80120650)->unk_03 |= 0x80;
+    ((DisplayActor44 *)D_80120650)[1].unk_03 |= 0x80;
     D_80122CF8 = 1;
     func_8004284C();
 }
@@ -350,7 +347,27 @@ void func_8015761C(void) {
     tbl.f[idx](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_80157698);
+void func_80157698(void) {
+    u8 x;
+    u32 t;
+    /* FAKE: constant-1 local keeps the original bne operand order (constant register first); T-17206 */
+    s32 one;
+
+    one = 1;
+    func_8014C5C8();
+    x = func_80051A68(6);
+    t = x & 0x7F;
+    if ((t >= 2U) && (D_800CA154 == 8) && (one == D_800E6280.unk_1104.w)) {
+        func_80083440(2);
+    } else if ((t >= 2U) && (D_800CA154 == 0xA) && (one == D_800E6280.unk_1104.w)) {
+        func_80083440(3);
+    } else if ((t >= 2U) && (D_800CA154 == 6) && (one == D_800E6280.unk_1104.w)) {
+        func_80083440(1);
+    } else if ((t >= 2U) && (D_800CA154 == 0xC) && (one == D_800E6280.unk_1104.w)) {
+        func_80083440(1);
+    }
+    D_800E6280.unk_1104.w += 1;
+}
 
 void func_801577C4(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8A4B);

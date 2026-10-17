@@ -1,4 +1,3 @@
-#define MAIN_API_OVERRIDE_D_800E7D10 /* settings block as a struct, T-19009 */
 #define MAIN_API_OVERRIDE_func_800AE090 /* matched as int: the call's $v0 result range (main_api.h: void), T-19009 */
 #include "common.h"
 #include "ovl/TACO.h"
@@ -34,31 +33,10 @@ void func_80142820(void) {
     }
 }
 
-/* Settings block at D_800E7D10 (the loader func_801345D4 in 80133870.c has its own view of it, T-16562): byte 0 holds
- * the "saved" flag, the mode and the selector, byte 1 two more selectors. Declared as one struct at D_800E7D10 so
- * that every access relocates against the same symbol: as1 then hoists the flag byte load over the word stores,
- * as the original does (separate symbols D_800E7D50/D_800E7D5C keep it after them). T-19009 */
-typedef struct TcSetBits {
-    u8 flag : 1;
-    u8 pad0 : 1;
-    u8 mode : 1;
-    u8 sel : 2;
-    u8 pad1 : 3;
-    u8 lo : 4;
-    u8 hi : 4;
-} TcSetBits;
-typedef struct TcSetAll {
-    /* 0x00 */ u8 pad00[0x40];
-    /* 0x40 */ TcSetBits bits;
-    /* 0x42 */ u8 name0[3];
-    /* 0x45 */ u8 name1[3];
-    /* 0x48 */ u8 name2[3];
-    /* 0x4B */ u8 pad4B;
-    /* 0x4C */ s32 w0;
-    /* 0x50 */ s32 w1;
-    /* 0x54 */ s32 w2;
-} TcSetAll; /* size 0x58 */
-extern TcSetAll D_800E7D10;
+/* Settings block at D_800E7D10 +0x40 (Work800E7D10 in main_api.h since T-20900; the loader func_801345D4 in
+ * 80133870.c has its own view of it, T-16562): byte 0 holds the "saved" flag, the mode and the selector, byte 1 two
+ * more selectors. Every access relocates against the one symbol D_800E7D10: as1 then hoists the flag byte load over
+ * the word stores, as the original does (separate symbols D_800E7D50/D_800E7D5C keep it after them). T-19009 */
 
 void func_801428DC(void) {
     D_800E7D10.bits.flag = 1;

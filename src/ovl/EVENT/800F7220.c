@@ -226,22 +226,10 @@ void func_800F7AA8(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    s32 w[17];
-} Words17; /* size 0x44 */
-
-typedef struct {
-    s32 w[17];
-} Words17; /* size 0x44 */
-
-typedef struct {
-    s32 w[17];
-} Words17; /* size 0x44 */
-
 void func_800F7C94(void) {
-    /* FAKE: one unused word above tmp gives the original's local offset (0x30); the real type of the buffer is unknown. T-9310 */
+    /* FAKE: one unused word above tmp gives the original's local offset (0x30); tmp is one display record (T-20900). T-9310 */
     s32 pad;
-    Words17 tmp;
+    DisplayActor44 tmp;
 
     D_80120678 = D_80120530;
     D_8012067C = D_80120548;
@@ -258,9 +246,9 @@ void func_800F7C94(void) {
     func_80012D64(D_801206F8, 0x13, 1, 2, 0);
     func_8004C46C(D_801206FC, D_80120700, D_80120704, D_80120708, D_8012070C, D_80120710);
     func_8004C6B0(D_801206EC, D_801206F0, D_801206E8, D_801206F4);
-    tmp = *(Words17 *)D_800EAFA0;
-    *(Words17 *)&D_800EAFA0[0xCC] = tmp;
-    *(Words17 *)&D_800EAFA0[0x88] = tmp;
+    tmp = ((DisplayActor44 *)D_800EAFA0)[0];
+    ((DisplayActor44 *)D_800EAFA0)[3] = tmp;
+    ((DisplayActor44 *)D_800EAFA0)[2] = tmp;
     D_800EB06E = 0x40;
     D_800EB02A = 0x40;
     D_800EB040 = 8;
@@ -315,7 +303,7 @@ void func_800F8188(void) {
     func_80012D64(D_8012077C, 0x11, 1, 2, 0);
     func_8004C46C(D_80120780, D_80120784, D_80120788, D_8012078C, D_80120790, D_80120794);
     func_8004C6B0(D_80120770, D_80120774, D_8012076C, D_80120778);
-    D_800EAFA0[4] = D_800EAFA0[0x48] = 8;
+    ((DisplayActor44 *)D_800EAFA0)->unk_04 = ((DisplayActor44 *)D_800EAFA0)[1].unk_04 = 8;
     D_800B0A04[8].unk_02 += 1;
     D_800B0A04[8].unk_06 += 1;
     D_800B0A04[8].unk_0A -= 0x14;
@@ -455,20 +443,20 @@ void func_800F8784(void) {
 
 void func_800F87BC(void) {
     func_8004C90C();
-    D_800EAFA0[0x8B] |= 0x80;
-    D_800EAFA0[0xCF] |= 0x80;
-    D_800EAFA0[0x8F] = D_800EAFA0[7];
-    D_800EAFA0[0xD3] = D_800EAFA0[7];
+    ((DisplayActor44 *)D_800EAFA0)[2].unk_03 |= 0x80;
+    ((DisplayActor44 *)D_800EAFA0)[3].unk_03 |= 0x80;
+    ((DisplayActor44 *)D_800EAFA0)[2].unk_07 = ((DisplayActor44 *)D_800EAFA0)->unk_07;
+    ((DisplayActor44 *)D_800EAFA0)[3].unk_07 = ((DisplayActor44 *)D_800EAFA0)->unk_07;
 }
 
 void func_800F8818(void) {
     func_8004C984();
-    if (D_800EAFA0[7] == 0) {
-        D_800EAFA0[0x8B] &= 0xFF7F;
-        D_800EAFA0[0xCF] &= 0xFF7F;
+    if (((DisplayActor44 *)D_800EAFA0)->unk_07 == 0) {
+        ((DisplayActor44 *)D_800EAFA0)[2].unk_03 &= 0xFF7F;
+        ((DisplayActor44 *)D_800EAFA0)[3].unk_03 &= 0xFF7F;
     }
-    D_800EAFA0[0x8F] = D_800EAFA0[7];
-    D_800EAFA0[0xD3] = D_800EAFA0[7];
+    ((DisplayActor44 *)D_800EAFA0)[2].unk_07 = ((DisplayActor44 *)D_800EAFA0)->unk_07;
+    ((DisplayActor44 *)D_800EAFA0)[3].unk_07 = ((DisplayActor44 *)D_800EAFA0)->unk_07;
 }
 
 s32 func_800F8878(void) {

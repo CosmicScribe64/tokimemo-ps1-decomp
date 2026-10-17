@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_80053418 /* this object calls it as void (no v0 result in the call block, func_800754C0); main_api.h has s32 */
 #include "common.h"
 #include "game.h"
+
+void func_80053418();
 
 void func_80075320(void) {
     /* FAKE: byte view of the u8 field avoids the redundant selector copy (move v0,v1), as in TEL
@@ -61,7 +64,40 @@ void func_80075468(void) {
     func_80065B0C(0);
 }
 
+/* NON_MATCHING: T-17006, 9 differing lines; the local m keeps the month in v0 as the original does, but the
+ * beq delay slot gets move a1,v0 instead of lui a0 and the jal slot stays empty. Same 9 lines with m as u8/u32,
+ * (u8)m in the call, the tests nested, m assigned in the condition, or the test and call on one source line;
+ * the call reading D_800E6280.unk_03F again puts the month in a1 (lui a0 then fills the slot, 10 lines); a switch
+ * on m adds 8 bytes of frame. */
+#ifdef NON_MATCHING
+s32 func_800754C0(void) {
+    s32 m;
+    u8 rank[16];
+    s16 points[16];
+
+    func_80053418(rank, points);
+    if (((D_800E6280.unk_0F8 & 0xF) != (D_800E6280.unk_1BC[0].unk_10.w & 0xF)) ||
+        (((u32)(D_800E6280.unk_0F8 << 0x17) >> 0x1B) != ((u32)(D_800E6280.unk_1BC[0].unk_10.w << 0x17) >> 0x1B))) {
+        return 0;
+    }
+    m = D_800E6280.unk_03F;
+    if ((m != 3) && ((m != 4) || ((u8)D_800E6280.unk_040 >= 4U))) {
+        return 0;
+    }
+    if (appointment_find_today(D_800E6280.unk_03E, m, D_800E6280.unk_040) > 0) {
+        return 0;
+    }
+    if (birth_day_check(0xF) != 1) {
+        return 0;
+    }
+    if (get_g_zyotai_s(0) & 0x80) {
+        return 1;
+    }
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800754C0);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800755B4);
 
@@ -137,13 +173,6 @@ s32 func_80075FA0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076000);
 
-typedef struct {
-    u32 idx : 5;
-    u32 pad : 20;
-    u32 nib : 4;
-    u32 b29 : 1;
-    u32 rest : 2;
-} EntryFlags29;
 
 /* NON_MATCHING: T-10910, structure matches (97 of 97 instructions) with the bit-field entry view, the 5 explicit clears and an if (1) around cnt[idx]++ (found by decomp-permuter, FAKE); only register choice differs: the original colours n, m, arg0, idx in that order (..), 24 lines */
 #ifdef NON_MATCHING
@@ -168,11 +197,11 @@ s32 func_800764AC(u32 *arg0) {
             cnt[i] = 0;
         }
         for (i = 0; i < 8; i++) {
-            if (!((EntryFlags29 *)&D_800E6280.unk_54C[i])->b29) {
+            if (!((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active) {
                 break;
             }
             if (1) {
-                cnt[((EntryFlags29 *)&D_800E6280.unk_54C[i])->idx]++;
+                cnt[((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_00]++;
             }
         }
         cnt[16] = 0;
@@ -192,14 +221,14 @@ s32 func_800764AC(u32 *arg0) {
             return 1;
         }
         for (i = 0; i < 8; i++) {
-            if (!((EntryFlags29 *)&D_800E6280.unk_54C[i])->b29) {
+            if (!((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active) {
                 break;
             }
-            if (cnt[((EntryFlags29 *)&D_800E6280.unk_54C[i])->idx] != 0) {
-                idx = ((EntryFlags29 *)&D_800E6280.unk_54C[i])->idx;
+            if (cnt[((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_00] != 0) {
+                idx = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_00;
                 arg0[m] = idx;
                 m++;
-                cnt[((EntryFlags29 *)&D_800E6280.unk_54C[i])->idx] = 0;
+                cnt[((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_00] = 0;
                 if (m >= 3) {
                     break;
                 }
@@ -253,7 +282,38 @@ s32 func_80076B48(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076C7C);
+/* Implicit int in the original (no return value): the switch selector then stays live in $v0 (or v0,v1,zero in the
+ * delay slot of the first beqz). T-17006 */
+s32 func_80076C7C(void) {
+    s32 pad; /* FAKE: T-17006, unused local that reproduces the original stack layout (a 4-byte slot above sp4C; the
+              * buffers are otherwise 4 bytes too high); its real use is unknown. */
+    u8 sp4C[0x100];
+    u8 sp2C[0x20];
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        k_reset(1);
+        k_sub_reset_point_set();
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        strcpy(sp4C, "それじゃ、 ");
+        strcat(sp4C, D_800B342C[D_800E6280.unk_724]);
+        strcat(sp4C, "で、 ");
+        get_g_name(sp2C, (u32)(D_800E6280.unk_54C[0].w * 8) >> 0x1C);
+        strcat(sp4C, sp2C);
+        strcat(sp4C, "を待つか。）");
+        sndisp(sp4C, 0, 0x1F);
+        k_sub_disp_start(4);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        xa_wait();
+        return;
+    case 2:
+        func_8004284C();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", appointment_launch);
 
@@ -308,9 +368,127 @@ s32 func_80077330(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_8007739C);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077694);
+void func_80077694(void) {
+    /* FAKE: T-20940, unused local declared first, as the sibling func_8007437C declares its record pointer; IDO gives
+     * every local a slot, so temp spills at sp+0x30 as in the original (sp+0x34 without it). */
+    GsRec69C *rec;
+    s32 temp;
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077900);
+    func_80048F64(0x60);
+    temp = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02;
+    if (((D_800E6280.unk_0F4.b[1] & 0xF) == 3) && !(D_800E6280.unk_0F6.h & 1)) {
+        addr_init_else_sd(2);
+        temp = 0;
+    } else if (D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 == 4) {
+        addr_init_club_sd(D_801230D0);
+        if (func_8006F524(4) != 0xF) {
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_01 = 1;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_02 = 5;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_38 = 0x01000000;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_03 = 0x84;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_0C = (u8 *)D_80125CA8;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_10 = (u8 *)D_80125CAC;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_34 = (u8 *)D_80125CB0;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_05 = 2;
+            /* FAKE: u8 view of the s8 flag unk_F6E (both reads in this function; the original loads it with lbu).
+             * Same view as in func_8007437C (800737A0.c, T-17016). Matches; real source unknown. T-20940 */
+            if (*(u8 *)&D_800E6280.unk_F6E != 0) {
+                ((DisplayActor44 *)D_8011ECD0)[97].unk_06 = 0x82;
+            }
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_43 = 0x10;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_16 = (s16)(temp + 2);
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_26 = -0x18;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_2A = -0x40;
+        }
+    } else {
+        if ((D_801230D0 == 6) || (D_801230D0 == 7)) {
+            D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02 = 0;
+            temp = 0;
+        }
+        addr_init_holiday_sd(D_801230D0);
+    }
+    load_palette(D_80125CA4, 0x10, 1, 1, 0);
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 1;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 5;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_38 = 0x01000000;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0x84;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_0C = (u8 *)D_80125CA8;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_10 = (u8 *)D_80125CAC;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_34 = (u8 *)D_80125CB0;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 2;
+    if (*(u8 *)&D_800E6280.unk_F6E != 0) {
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_06 = 0x82;
+    }
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_43 = 0x10;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = temp;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0x50;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = -0x40;
+    func_8004284C();
+}
+
+/* The original passes club to main_state_set as a second argument (the definition takes one; main_api.h keeps
+ * the `()` declaration): club lives in a1 from its second read on. */
+void func_80077900(void) {
+    GameState *gs = &D_800E6280;
+    u8 b;
+    s32 girl;
+    u32 club;
+
+    if (gs->unk_1104.w == 0x20) {
+        switch (((DisplayActor44 *)D_8011ECD0)[96].unk_16 & 1) {
+        case 0:
+            func_80044750(0x501);
+            break;
+        case 1:
+            func_80044750(0x502);
+            break;
+        }
+        b = gs->unk_69C[gs->unk_71C].unk_02;
+        parameter_up_down(gs->unk_69C[gs->unk_71C].unk_01, 1, b);
+        parameter_show_init();
+        return;
+    }
+    if (gs->unk_1104.u <= 0x40) {
+        return;
+    }
+    func_80048F64(0x60);
+    func_80048F64(0x61);
+    if ((gs->unk_041 == 6) && (gs->unk_69C[gs->unk_71C].unk_01 == 4)
+        && ((club = gs->unk_0F4.h >> 12) != 11) && (gs->unk_66C[club].unk_00 == 6)) {
+        girl = func_80053564(club);
+        gs->unk_75D = girl;
+        if ((girl != -1) && (gs->unk_042 < 0x2DA)) {
+            club = gs->unk_0F4.h >> 12;
+            /* Club 10 tests the condition twice: under girl == 0, then again for every girl (the first copy falls
+             * through into the second). Both copies are in the original. */
+            if (club == 10) {
+                if (girl == 0) {
+                    if (gs->unk_1BC[girl].unk_0C.f.b2 && gs->unk_1BC[girl].unk_0C.f.b1
+                        && !((ScheduleClubFlags *)&gs->unk_66C[club])->b29
+                        && !gs->unk_1BC[girl].unk_0C.f.b18) {
+                        gs->unk_1BC[girl].unk_0C.f.b18 = 1;
+                        main_state_set(0x60, club);
+                        return;
+                    }
+                }
+                if (gs->unk_1BC[girl].unk_0C.f.b2 && gs->unk_1BC[girl].unk_0C.f.b1
+                    && !((ScheduleClubFlags *)&gs->unk_66C[club])->b29
+                    && !gs->unk_1BC[girl].unk_0C.f.b18) {
+                    gs->unk_1BC[girl].unk_0C.f.b18 = 1;
+                    main_state_set(0x60, club);
+                    return;
+                }
+            } else if (gs->unk_1BC[girl].unk_0C.f.b1 && gs->unk_1BC[girl].unk_0C.f.b2
+                       && !((ScheduleClubFlags *)&gs->unk_66C[club])->b29
+                       && !gs->unk_1BC[girl].unk_0C.f.b18) {
+                gs->unk_1BC[girl].unk_0C.f.b18 = 1;
+                main_state_set(0x60, club);
+                return;
+            }
+        }
+    }
+    func_80072B5C(0);
+}
 
 void func_80077BE0(void) {
     switch (D_800E6280.unk_110A) {
@@ -337,7 +515,71 @@ void func_80077C50(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-17006, 28 differing lines; the original copies the selector into v0 (or v0,v1,zero) in the delay
+ * slot of the first beq, before the dispatch, so the case blocks keep their own lui v0 and the dispatch slots hold
+ * the next li at. Every form tried (selector local, return local, s32/u32 return, comma and assignment in the
+ * switch) leaves the copy at the default return (move v0,v1 or andi v0,v1,0xff) and hoists lui v0 into the beq
+ * slots. */
+#ifdef NON_MATCHING
+u8 func_80077CA8(void) {
+    s32 x;
+
+    x = D_800E6280.unk_03E;
+    switch (x) {
+    default:
+        return x;
+    case 0x5F:
+        if (D_800E6280.unk_03F < 5U) {
+            return 0;
+        }
+        if (D_800E6280.unk_03F < 8U) {
+            return 1;
+        }
+        if (D_800E6280.unk_03F < 0xBU) {
+            return 2;
+        }
+        return 3;
+    case 0x60:
+        if (D_800E6280.unk_03F < 2U) {
+            return 3;
+        }
+        if (D_800E6280.unk_03F < 5U) {
+            return 4;
+        }
+        if (D_800E6280.unk_03F < 8U) {
+            return 5;
+        }
+        if (D_800E6280.unk_03F < 0xBU) {
+            return 6;
+        }
+        return 7;
+    case 0x61:
+        if (D_800E6280.unk_03F == 8) {
+            return 0xD;
+        }
+        if (D_800E6280.unk_03F < 2U) {
+            return 7;
+        }
+        if (D_800E6280.unk_03F < 5U) {
+            return 8;
+        }
+        if (D_800E6280.unk_03F < 8U) {
+            return 9;
+        }
+        if (D_800E6280.unk_03F < 0xBU) {
+            return 0xA;
+        }
+        return 0xB;
+    case 0x62:
+        if (D_800E6280.unk_03F < 2U) {
+            return 0xB;
+        }
+        return 0xC;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077CA8);
+#endif
 
 void func_80077E30(void) {
     magazine_base_show();
@@ -432,9 +674,97 @@ void holiday_tel_call(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_tel_exit);
+/* Implicit int: holiday_tel calls it before this definition. */
+s32 holiday_tel_exit(void) {
+    GameState *g = &D_800E6280;
+    s32 k;
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", telephone_class_init);
+    if (g->unk_110D != 11) {
+        if ((g->unk_1104.w & 7) == 7) {
+            if (g->unk_110D == 0) {
+                func_80044750(0x504);
+            } else if (g->unk_110D >= 4) {
+                k = g->unk_110D - 4;
+                if (g->unk_F5F == 13) {
+                    func_80044750((u16)(D_800B3778[10][k] + 0x505));
+                } else {
+                    func_80044750((u16)(D_800B3778[g->unk_F5F][k] + 0x505));
+                }
+            }
+            g->unk_110D++;
+        }
+    } else if (g->unk_F5F == 13) {
+        g->unk_1093 = 0;
+        k_sub_reset();
+        restore_bgm();
+        main_state_set(0x45);
+        func_80042908(0);
+    } else if (g->unk_F5F == 11) {
+        k_sub_reset();
+        g->unk_1093 = 12;
+        D_801230D0 = 11;
+        restore_bgm();
+        main_state_set(0x45);
+        func_80042908(1);
+    } else {
+        k_sub_reset();
+        g->unk_1093 = g->unk_F5F + 1;
+        D_801230D0 = g->unk_F5F;
+        restore_bgm();
+        main_state_set(0x45);
+        func_80042908(1);
+    }
+}
+
+void telephone_class_init(void) {
+    s32 i;
+    /* FAKE: T-20940, a second local above the four row arrays puts them at sp+0xBC/0xA0/0x84/0x68 as in the
+     * original (IDO gives every local a slot); its real use is unknown, here it holds the first row's text. */
+    u8 *str;
+    s16 x[14];
+    s16 y[14];
+    s16 w[14];
+    s16 h[14];
+
+    set_kanji_string(-0x80, -0x54, 3, "電話番号", 0);
+    for (i = 0; i < 14; i++) {
+        x[i] = (i / 5) * 0x58 - 0x88;
+        y[i] = (i % 5) * 0x10 - 0x38;
+        w[i] = 0x48;
+        h[i] = 0xE;
+        if (i == 0) {
+            str = D_800B3538[13];
+            set_kanji_string(x[i], y[i], 3, str, 0);
+        } else if (i == 13) {
+            y[i] += 0x10;
+            set_kanji_string(x[i], y[i], 3, "取り消し", 0);
+        } else if (i == 12) {
+            set_kanji_string(x[i], y[i], 3, D_800B3538[12], 0);
+        } else if (D_800E6280.unk_1BC[i - 1].unk_0C.f.b3) {
+            set_kanji_string(x[i], y[i], 3, D_800B3538[i - 1], 0);
+        } else {
+            w[i] = 0;
+        }
+    }
+    menu_set(0, 14, x, y, w, h);
+    D_800E6280.unk_1093 = 0;
+    func_80048F64(0x60);
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 0x40;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_38 = 0x40000000;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0x84;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_0C = sprite_frame_table;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_10 = D_800C9A14;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_34 = D_800C9730;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_14 = D_800C9A54;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_04 = 8;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 1;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_06 = 2;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0x3F;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0x10;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = -0x13;
+}
 
 void holiday_club_init(void) {
     func_80065F34(0);
@@ -446,7 +776,38 @@ void holiday_club_init(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_8007866C);
+void func_8007866C(void) {
+    u8 buf[72];
+    GameState *gs;
+
+    menu_check(1, (s32) ((DisplayActor44 *)D_8011ECD0)->unk_26, (s32) ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    menu_bar_show(1);
+    func_8004FC10(1);
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_80042908(0);
+        return;
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (D_800E6280.unk_1094) {
+        case 0:
+            func_8004284C();
+            return;
+        case 1:
+            func_80042940((D_800E6280.unk_110A + 2) & 0xFF);
+            func_8004E58C();
+            strcpy(buf, club_name_table[(u16) D_800E6280.unk_0F4.h >> 0xC]);
+            strcat(buf, "部を退部した。");
+            sndi(buf, 0, 0xFF);
+            gs = &D_800E6280;
+            /* FAKE: T-17006, a bit-field store through the borrowed CharFlags view (one ugen temporary more than
+             * `|= 1`, so the original's t6..t0 numbering); the record's real bit-field layout is unknown. */
+            ((CharFlags *)&gs->unk_66C[D_800E6280.unk_0F4.h >> 12].unk_03)->b0 = 1;
+            gs->unk_0F4.b[1] = (gs->unk_0F4.b[1] & 0xFF0F) | 0xB0;
+            k_disp_start(1);
+            break;
+        }
+    }
+}
 
 void holiday_club_exit(void) {
     func_80048E78();

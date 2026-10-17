@@ -154,7 +154,68 @@ void func_80132378(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132450);
+/* Loads the textures and sets up display records 96..159, 144..147 and 152..155. Implicit int (the
+ * caller has no prototype). The second loop indexes records 96..115 absolutely; the same loop on
+ * D_80120650 (record 96) puts its walk in other registers. T-20920 */
+s32 func_80132450(void) {
+    s32 i;
+
+    load_tpage_buf_lock(5, D_80139204[0], 1);
+    load_tpage_buf_lock(0x25, D_80139204[1], 1);
+    load_tpage_buf_lock(6, D_80139204[2], 1);
+    load_tpage_buf_lock(7, 0x801BA000, 1);
+    load_tpage_buf_lock(8, 0x801BA000, 1);
+    load_tpage_buf_lock(9, 0x801BA000, 1);
+    load_tpage_buf_lock(0x27, 0x801BA000, 1);
+    load_tpage_buf_lock(0x28, 0x801BA000, 1);
+    load_tpage_buf_lock(0x29, 0x801BA000, 1);
+    for (i = 0; i < 64; i++) {
+        func_80048F64(i + 96);
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 7;
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_38 = 0x01000000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_07 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_02 = 0x40;
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_03 = 4;
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_06 = 1;
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_26 = -0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_2A = -0x78;
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_05 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x11;
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_04 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_0C = (u8 *)D_80139208;
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_10 = (u8 *)D_8013920C;
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_34 = (u8 *)D_80139204;
+    }
+    ((DisplayActor44 *)D_8011ECD0)[154].unk_03 = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[154].unk_18 = 0x22;
+    ((DisplayActor44 *)D_8011ECD0)[153].unk_03 = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[153].unk_18 = 0x20;
+    ((DisplayActor44 *)D_8011ECD0)[152].unk_01 = 3;
+    ((DisplayActor44 *)D_8011ECD0)[152].unk_03 = 0x84;
+    ((DisplayActor44 *)D_8011ECD0)[152].unk_18 = 0x1F;
+    ((DisplayActor44 *)D_8011ECD0)[152].unk_26 = ((DisplayActor44 *)D_8011ECD0)[0].unk_26;
+    ((DisplayActor44 *)D_8011ECD0)[152].unk_2A = ((DisplayActor44 *)D_8011ECD0)[0].unk_2A;
+    for (i = 96; i < 116; i++) {
+        ((DisplayActor44 *)D_8011ECD0)[i].unk_01 = 3;
+        ((DisplayActor44 *)D_8011ECD0)[i].unk_18 = 0x2E;
+    }
+    ((DisplayActor44 *)D_8011ECD0)[155].unk_01 = 2;
+    ((DisplayActor44 *)D_8011ECD0)[155].unk_18 = 0x2D;
+    ((DisplayActor44 *)D_8011ECD0)[155].unk_38 = 0x51000000;
+    ((DisplayActor44 *)D_8011ECD0)[155].unk_43 = 0x1E;
+    ((DisplayActor44 *)D_8011ECD0)[144].unk_01 = 2;
+    ((DisplayActor44 *)D_8011ECD0)[144].unk_26 = 0x10;
+    ((DisplayActor44 *)D_8011ECD0)[144].unk_2A = -8;
+    ((DisplayActor44 *)D_8011ECD0)[145].unk_01 = 2;
+    ((DisplayActor44 *)D_8011ECD0)[145].unk_26 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[145].unk_2A = -8;
+    ((DisplayActor44 *)D_8011ECD0)[146].unk_01 = 2;
+    ((DisplayActor44 *)D_8011ECD0)[146].unk_26 = 0x10;
+    ((DisplayActor44 *)D_8011ECD0)[146].unk_2A = 0x18;
+    ((DisplayActor44 *)D_8011ECD0)[147].unk_01 = 2;
+    ((DisplayActor44 *)D_8011ECD0)[147].unk_26 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[147].unk_2A = 0x18;
+}
 
 void func_8013275C(void) {
     s32 index;
@@ -290,7 +351,7 @@ s32 func_80132B40(void) {
     if (D_8013921C == 0x7C) {
         D_8013921C = 0x80;
         for (i = 0; i < 64; i++) {
-            D_8011ECD0[0x1987 + i * 0x44] = 0x80;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_07 = 0x80;
         }
         D_800E6280.unk_036 = 0x40;
         D_800E6280.unk_037 = 0x40;
@@ -300,7 +361,7 @@ s32 func_80132B40(void) {
     if (D_8013921C < 0x80) {
         D_8013921C += 4;
         for (i = 0; i < 64; i++) {
-            D_8011ECD0[0x1987 + i * 0x44] += 4;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_07 += 4;
         }
         D_800E6280.unk_036 += 2;
         D_800E6280.unk_037 += 2;
@@ -314,7 +375,7 @@ void func_80132C4C(void) {
     if (D_8013921C == 4) {
         D_8013921C = 0;
         for (i = 0; i < 64; i++) {
-            D_8011ECD0[0x1987 + i * 0x44] = 0;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_07 = 0;
         }
         D_800E6280.unk_036 = 0;
         D_800E6280.unk_037 = 0;
@@ -324,7 +385,7 @@ void func_80132C4C(void) {
     if (D_8013921C > 0) {
         D_8013921C -= 4;
         for (i = 0; i < 64; i++) {
-            D_8011ECD0[0x1987 + i * 0x44] -= 4;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_07 -= 4;
         }
         D_800E6280.unk_036 -= 2;
         D_800E6280.unk_037 -= 2;
@@ -382,14 +443,16 @@ void func_80132E3C(void) {
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132EE8);
 
-/* NON_MATCHING: T-10610, switch and prologue match (the two cursor words are D_8011ECF4[0..1], so their loads stay in the original order); the final clamp of the two s16 positions is forwarded through registers here, the original reloads after each store and keeps the base in $v1 (188 against 184 instructions) */
-#ifdef NON_MATCHING
+/* Moves display record 0 by the pad bits of D_800E6280.unk_F80 in 16.16 steps (diagonals
+ * by v * 0xB505, v / sqrt 2), clamps its integer position and copies it to record 152. The words go
+ * through the record view, so their loads stay after the stores as in the original; the clamp goes
+ * through a pointer to the pool, whose reloads after each store and $v1 base match. Replaces the
+ * T-10610 NON_MATCHING draft. T-20920 */
 void func_801330D0(void) {
     s32 sel;
     s32 v;
     s32 d;
-    volatile s16 *px;
-    volatile s16 *py;
+    DisplayActor44 *p;
 
     sel = D_800E6280.unk_F80;
     if (sel & 0x40) {
@@ -400,59 +463,55 @@ void func_801330D0(void) {
     if (D_800E6280.unk_F74 == 1) {
         switch (sel & ~0x60) {
         case 0x1000:
-            (&D_8011ECF4)[1] -= v << 16;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_28.w -= v << 16;
             break;
         case 0x2000:
-            D_8011ECF4 += v << 16;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_24.w += v << 16;
             break;
         case 0x4000:
-            (&D_8011ECF4)[1] += v << 16;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_28.w += v << 16;
             break;
         case 0x8000:
-            D_8011ECF4 -= v << 16;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_24.w -= v << 16;
             break;
         case 0x3000:
             d = v * 0xB505;
-            D_8011ECF4 += d;
-            (&D_8011ECF4)[1] -= d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_24.w += d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_28.w -= d;
             break;
         case 0x6000:
             d = v * 0xB505;
-            D_8011ECF4 += d;
-            (&D_8011ECF4)[1] += d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_24.w += d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_28.w += d;
             break;
         case 0xC000:
             d = v * 0xB505;
-            D_8011ECF4 -= d;
-            (&D_8011ECF4)[1] += d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_24.w -= d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_28.w += d;
             break;
         case 0x9000:
             d = v * 0xB505;
-            D_8011ECF4 -= d;
-            (&D_8011ECF4)[1] -= d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_24.w -= d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_28.w -= d;
             break;
         }
     }
-    px = (volatile s16 *)(D_8011ECD0 + 0x26);
-    py = (volatile s16 *)(D_8011ECD0 + 0x2A);
-    if (*px < -0x8F) {
-        *px = -0x90;
+    p = (DisplayActor44 *)D_8011ECD0;
+    if (p->unk_26 < -0x8F) {
+        p->unk_26 = -0x90;
     }
-    if (*px >= 0x90) {
-        *px = 0x90;
+    if (p->unk_26 >= 0x90) {
+        p->unk_26 = 0x90;
     }
-    if (*py < -0x67) {
-        *py = -0x68;
+    if (p->unk_2A < -0x67) {
+        p->unk_2A = -0x68;
     }
-    if (*py >= 0x68) {
-        *py = 0x68;
+    if (p->unk_2A >= 0x68) {
+        p->unk_2A = 0x68;
     }
-    D_80121556 = *px;
-    D_8012155A = *py;
+    p[152].unk_26 = p->unk_26;
+    p[152].unk_2A = p->unk_2A;
 }
-#else
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801330D0);
-#endif
 
 /* FAKE: s32 without return keeps the clamp accumulator in v0 and the original
  * split epilogue. Original return type is unconfirmed. T-14000. */
@@ -499,7 +558,7 @@ void func_801337E0(void) {
     radius *= radius;
     /* FAKE: this shared line preserves the loop-setup load schedule. T-10020. */
     object = D_8013984C; status = D_80139B08; do {
-        distance = func_80132A74((s32) object->unk_16, (s32) object->unk_1A, (s32) D_8011ECF6, (s32) D_8011ECFA);
+        distance = func_80132A74((s32) object->unk_14.h[1], (s32) object->unk_18.h[1], (s32) D_8011ECF6, (s32) D_8011ECFA);
         if (object->unk_00 != 0) {
             if (distance < radius) {
                 *status = 2;
@@ -543,7 +602,85 @@ void func_80133924(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801339D4);
+/* Moves object arg0: kind 4 drifts at a fixed step, the others steer by unk_2C and move at the
+ * speed of class unk_28; unk_14/unk_18 are 16.16 positions, unk_1C the angle (4096 = 360 degrees).
+ * Index form: a pointer local changes the spill slot and the frame. T-20920 */
+void func_801339D4(s32 arg0) {
+    D_8013984C[arg0].unk_24--;
+    if (D_8013984C[arg0].unk_00 == 4) {
+        D_8013984C[arg0].unk_14.w += (func_800A0140(D_8013984C[arg0].unk_1C) * 0x8000) >> 12;
+        D_8013984C[arg0].unk_18.w += (func_800A0070(D_8013984C[arg0].unk_1C) * 0x8000) >> 12;
+    } else {
+        switch (D_8013984C[arg0].unk_28) {
+        case 0:
+            D_8013984C[arg0].unk_20 = 0xC000;
+            break;
+        case 1:
+            D_8013984C[arg0].unk_20 = 0xF000;
+            break;
+        case 2:
+            D_8013984C[arg0].unk_20 = 0x12000;
+            break;
+        case 3:
+            D_8013984C[arg0].unk_20 = 0x15000;
+            break;
+        case 4:
+            D_8013984C[arg0].unk_20 = 0x18000;
+            break;
+        case 5:
+            D_8013984C[arg0].unk_20 = 0x1B000;
+            break;
+        case 6:
+            D_8013984C[arg0].unk_20 = 0x1E000;
+            break;
+        case 7:
+            D_8013984C[arg0].unk_20 = 0x21000;
+            break;
+        case 8:
+            D_8013984C[arg0].unk_20 = 0x24000;
+            break;
+        }
+        if (D_8013984C[arg0].unk_2C == 1) {
+            if (D_8013984C[arg0].unk_24 % 40 < 10) {
+                D_8013984C[arg0].unk_1C += 30;
+            } else if (D_8013984C[arg0].unk_24 % 40 >= 20 && D_8013984C[arg0].unk_24 % 40 < 30) {
+                D_8013984C[arg0].unk_1C -= 30;
+            }
+        }
+        if (D_8013984C[arg0].unk_2C & 0x10) {
+            D_8013984C[arg0].unk_1C += 20;
+        }
+        if (D_8013984C[arg0].unk_2C & 0x20) {
+            D_8013984C[arg0].unk_1C -= 20;
+        }
+        switch (D_8013984C[arg0].unk_2C) {
+        case 0x40:
+            D_8013984C[arg0].unk_20 = 0xC000;
+            D_8013984C[arg0].unk_1C += 0x100;
+            break;
+        case 0x41:
+            D_8013984C[arg0].unk_20 = 0xC000;
+            D_8013984C[arg0].unk_1C += 0x200;
+            break;
+        case 0x80:
+            D_8013984C[arg0].unk_20 = 0xC000;
+            D_8013984C[arg0].unk_1C -= 0x100;
+            break;
+        case 0x81:
+            D_8013984C[arg0].unk_20 = 0xC000;
+            D_8013984C[arg0].unk_1C -= 0x200;
+            break;
+        }
+        if (D_8013984C[arg0].unk_1C >= 0x1000) {
+            D_8013984C[arg0].unk_1C -= 0x1000;
+        }
+        if (D_8013984C[arg0].unk_1C < 0) {
+            D_8013984C[arg0].unk_1C += 0x1000;
+        }
+        D_8013984C[arg0].unk_14.w += (D_8013984C[arg0].unk_20 * func_800A0140(D_8013984C[arg0].unk_1C)) >> 12;
+        D_8013984C[arg0].unk_18.w += (D_8013984C[arg0].unk_20 * func_800A0070(D_8013984C[arg0].unk_1C)) >> 12;
+    }
+}
 
 void func_80133CA8(void) {
     s32 i;
@@ -582,8 +719,8 @@ void func_80133CA8(void) {
             }
             ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_18 = v & 0x7F;
             ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_43 = D_80139A2C[D_8013984C[i].unk_00 & 0x7F];
-            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_26 = D_8013984C[i].unk_16;
-            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_2A = D_8013984C[i].unk_1A;
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_26 = D_8013984C[i].unk_14.h[1];
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_2A = D_8013984C[i].unk_18.h[1];
             break;
         case 4:
             if (D_8013984C[i].unk_0C >= 4) {
@@ -597,8 +734,8 @@ void func_80133CA8(void) {
             }
             ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_18 = v & 0x7F;
             ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_43 = D_80139A2C[D_8013984C[i].unk_00 & 0x7F];
-            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_26 = D_8013984C[i].unk_16;
-            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_2A = D_8013984C[i].unk_1A;
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_26 = D_8013984C[i].unk_14.h[1];
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_2A = D_8013984C[i].unk_18.h[1];
             break;
         }
     }
@@ -622,8 +759,8 @@ s32 arg1;
         e = &D_8013984C[arg0];
         if (e->unk_00 == 4) {
             if (!(e->unk_0C & 1)) {
-                x = e->unk_16;
-                y = e->unk_1A;
+                x = e->unk_14.h[1];
+                y = e->unk_18.h[1];
                 rec[0x1983] |= 0x80;
                 rec[0x19C7] |= 0x80;
                 *(s16 *) (rec + 0x19A6) = x - 0x10;
@@ -632,8 +769,8 @@ s32 arg1;
                 *(s16 *) (rec + 0x19EE) = y + 7;
             }
         } else if (!(e->unk_0C & 1)) {
-            x = e->unk_16;
-            y = e->unk_1A;
+            x = e->unk_14.h[1];
+            y = e->unk_18.h[1];
             rec[0x1983] |= 0x80;
             rec[0x19C7] |= 0x80;
             *(s16 *) (rec + 0x19A6) = x - 0x10;
@@ -681,7 +818,7 @@ void func_801340CC(void) {
     s32 y;
 
     /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-    for (i = 0; i < 10; i++) if (D_8013984C[i].unk_16 < -0xC0 || D_8013984C[i].unk_16 >= 0xC1 || D_8013984C[i].unk_1A < -0x98 || D_8013984C[i].unk_1A >= 0x99) D_8013984C[i].unk_00 = 0;
+    for (i = 0; i < 10; i++) if (D_8013984C[i].unk_14.h[1] < -0xC0 || D_8013984C[i].unk_14.h[1] >= 0xC1 || D_8013984C[i].unk_18.h[1] < -0x98 || D_8013984C[i].unk_18.h[1] >= 0x99) D_8013984C[i].unk_00 = 0;
 }
 
 void func_80134258(s32 arg0) {
@@ -742,34 +879,34 @@ void func_801344F0(s32 arg0, s32 arg1) {
         case 0:
             temp_hi = func_800AE0D0() % 320 - 0xA0;
             var_s0 = &D_8013984C[arg0];
-            var_s0->unk_16 = temp_hi;
-            var_s0->unk_1A = -0x96;
+            var_s0->unk_14.h[1] = temp_hi;
+            var_s0->unk_18.h[1] = -0x96;
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0x200);
             break;
         case 1:
             var_s0 = &D_8013984C[arg0];
-            var_s0->unk_16 = 0xBE;
-            var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
+            var_s0->unk_14.h[1] = 0xBE;
+            var_s0->unk_18.h[1] = (s16) ((func_800AE0D0() % 240) - 0x78);
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0x600);
             break;
         case 2:
             temp_hi_2 = func_800AE0D0() % 320 - 0xA0;
             var_s0 = &D_8013984C[arg0];
-            var_s0->unk_16 = temp_hi_2;
-            var_s0->unk_1A = 0x96;
+            var_s0->unk_14.h[1] = temp_hi_2;
+            var_s0->unk_18.h[1] = 0x96;
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0xA00);
             break;
         case 3:
             var_s0 = &D_8013984C[arg0];
-            var_s0->unk_16 = -0xBE;
-            var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
+            var_s0->unk_14.h[1] = -0xBE;
+            var_s0->unk_18.h[1] = (s16) ((func_800AE0D0() % 240) - 0x78);
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0xE00);
             break;
         }
     } else {
         var_s0 = &D_8013984C[arg0];
-        var_s0->unk_16 = (s16) ((func_800AE0D0() % 320) - 0xA0);
-        var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
+        var_s0->unk_14.h[1] = (s16) ((func_800AE0D0() % 320) - 0xA0);
+        var_s0->unk_18.h[1] = (s16) ((func_800AE0D0() % 240) - 0x78);
         var_s0->unk_1C = (s32) (func_800AE0D0() % 4096);
     }
     var_s0->unk_24 = 1;
@@ -802,7 +939,90 @@ void func_80134784(s32 *arg0, s32 *arg1) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134800);
+/* When the countdown unk_24 of object arg0 has run out, picks its next unk_28 (the speed class of
+ * func_801339D4) and unk_2C (the steering mode) at random. Index form as in T-18200. T-20920 */
+void func_80134800(s32 arg0) {
+    s32 r;
+
+    if (D_8013984C[arg0].unk_24 <= 0) {
+        r = func_800AE0D0();
+        switch (D_8013984C[arg0].unk_08) {
+        case 0:
+            if (r % 100 < 80) {
+                D_8013984C[arg0].unk_28 = 0;
+            } else {
+                D_8013984C[arg0].unk_28 = 1;
+            }
+            break;
+        case 1:
+            if (r % 100 < 10) {
+                D_8013984C[arg0].unk_28 = 0;
+            } else if (r % 100 < 90) {
+                D_8013984C[arg0].unk_28 = 1;
+            } else {
+                D_8013984C[arg0].unk_28 = 2;
+            }
+            break;
+        case 2:
+            if (r % 100 < 20) {
+                D_8013984C[arg0].unk_28 = 1;
+            } else {
+                D_8013984C[arg0].unk_28 = 2;
+            }
+            break;
+        }
+        r = func_800AE0D0();
+        if (D_8013984C[arg0].unk_2C == 0 || D_8013984C[arg0].unk_2C == 1) {
+            if (r % 100 < 25) {
+                D_8013984C[arg0].unk_2C = 0;
+            } else if (r % 100 < 40) {
+                D_8013984C[arg0].unk_2C = 1;
+            } else if (r % 100 < 70) {
+                D_8013984C[arg0].unk_2C = 0x10;
+            } else {
+                D_8013984C[arg0].unk_2C = 0x20;
+            }
+        } else if (D_8013984C[arg0].unk_2C & 0x50) {
+            if (r % 100 < 40) {
+                D_8013984C[arg0].unk_2C = 0;
+            } else if (r % 100 < 80) {
+                D_8013984C[arg0].unk_2C = 1;
+            } else {
+                D_8013984C[arg0].unk_2C = 0x20;
+            }
+        } else if (D_8013984C[arg0].unk_2C & 0xA0) {
+            if (r % 100 < 40) {
+                D_8013984C[arg0].unk_2C = 0;
+            } else if (r % 100 < 80) {
+                D_8013984C[arg0].unk_2C = 1;
+            } else {
+                D_8013984C[arg0].unk_2C = 0x10;
+            }
+        }
+        if ((D_8013984C[arg0].unk_2C & 0x10) || (D_8013984C[arg0].unk_2C & 0x20)) {
+            r = func_800AE0D0() % 100;
+            if (r < 33) {
+                D_8013984C[arg0].unk_2C |= 1;
+            } else if (r < 66) {
+                D_8013984C[arg0].unk_2C |= 2;
+            } else {
+                D_8013984C[arg0].unk_2C |= 4;
+            }
+        }
+        if (D_8013984C[arg0].unk_2C == 0 || D_8013984C[arg0].unk_2C == 1) {
+            D_8013984C[arg0].unk_24 = func_800AE0D0() % 25 + 40;
+            if (D_8013984C[arg0].unk_28 >= 4) {
+                D_8013984C[arg0].unk_24 /= 4;
+            }
+        } else if (D_8013984C[arg0].unk_2C & 1) {
+            D_8013984C[arg0].unk_24 = 25;
+        } else if (D_8013984C[arg0].unk_2C & 2) {
+            D_8013984C[arg0].unk_24 = 50;
+        } else if (D_8013984C[arg0].unk_2C & 4) {
+            D_8013984C[arg0].unk_24 = 100;
+        }
+    }
+}
 
 /* FAKE: the record pointer stays an expression; as a local it is spilled to another stack slot than the original's (T-3330, T-9330) */
 #define EN_OBJ(i) (&D_8013984C[i])
@@ -820,7 +1040,7 @@ s32 arg0;
             EN_OBJ(arg0)->unk_2C = 1;
         }
     }
-    d = func_80132A74(EN_OBJ(arg0)->unk_16, EN_OBJ(arg0)->unk_1A, D_8011ECF6, D_8011ECFA);
+    d = func_80132A74(EN_OBJ(arg0)->unk_14.h[1], EN_OBJ(arg0)->unk_18.h[1], D_8011ECF6, D_8011ECFA);
     switch (func_80135274(arg0)) {
     case 0:
         func_80134D74(arg0, d);
@@ -998,7 +1218,100 @@ void func_8013515C(s32 arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135274);
+/* The quadrant (0..3) of display record 0 as seen from object arg0, turned by the object's
+ * direction func_80134008(arg0) (0..7). dir is unset for other values, so IDO keeps it in memory
+ * (sp+0x2C); dx, dy, dir declared in this order give the original's slots. T-20920 */
+s32 func_80135274(s32 arg0) {
+    s32 dx;
+    s32 dy;
+    s32 dir;
+
+    dx = D_8011ECF6 - D_8013984C[arg0].unk_14.h[1];
+    dy = D_8011ECFA - D_8013984C[arg0].unk_18.h[1];
+    switch (func_80134008(arg0)) {
+    case 0:
+        if (dy < dx) {
+            dir = 0;
+        } else {
+            dir = 1;
+        }
+        if (dy <= -dx) {
+            dir += 2;
+        }
+        break;
+    case 1:
+        if (D_8013984C[arg0].unk_14.h[1] < D_8011ECF6) {
+            dir = 0;
+        } else {
+            dir = 1;
+        }
+        if (D_8011ECFA <= D_8013984C[arg0].unk_18.h[1]) {
+            dir += 2;
+        }
+        break;
+    case 2:
+        if (-dx < dy) {
+            dir = 0;
+        } else {
+            dir = 1;
+        }
+        if (dy <= dx) {
+            dir += 2;
+        }
+        break;
+    case 3:
+        if (D_8013984C[arg0].unk_18.h[1] < D_8011ECFA) {
+            dir = 0;
+        } else {
+            dir = 1;
+        }
+        if (D_8013984C[arg0].unk_14.h[1] <= D_8011ECF6) {
+            dir += 2;
+        }
+        break;
+    case 4:
+        if (dx < dy) {
+            dir = 0;
+        } else {
+            dir = 1;
+        }
+        if (-dx <= dy) {
+            dir += 2;
+        }
+        break;
+    case 5:
+        if (D_8011ECF6 < D_8013984C[arg0].unk_14.h[1]) {
+            dir = 0;
+        } else {
+            dir = 1;
+        }
+        if (D_8013984C[arg0].unk_18.h[1] <= D_8011ECFA) {
+            dir += 2;
+        }
+        break;
+    case 6:
+        if (dy < -dx) {
+            dir = 0;
+        } else {
+            dir = 1;
+        }
+        if (dx <= dy) {
+            dir += 2;
+        }
+        break;
+    case 7:
+        if (D_8011ECFA < D_8013984C[arg0].unk_18.h[1]) {
+            dir = 0;
+        } else {
+            dir = 1;
+        }
+        if (D_8011ECF6 <= D_8013984C[arg0].unk_14.h[1]) {
+            dir += 2;
+        }
+        break;
+    }
+    return dir;
+}
 
 void func_801354E0(void) {
     s32 i;
@@ -1006,8 +1319,8 @@ void func_801354E0(void) {
 
     for (i = 0; i < 12; i++) {
         for (j = 0; j < 15; j++) {
-            D_801392AC[j][i].unk_02 = 0;
-            D_801392AC[j][i].unk_06 = 0;
+            D_801392AC[j][i].unk_00.h[1] = 0;
+            D_801392AC[j][i].unk_04.h[1] = 0;
         }
     }
     D_801392A4 = 0;
@@ -1037,8 +1350,8 @@ void func_80135600(void) {
     b = (D_80139220 / 7) % 8;
     for (x = 0; x < 12; x++) {
         for (y = 0; y < 15; y++) {
-            D_801392AC[y][x].unk_02 = table.value[(x + y * 3) % 8][(D_80139220 / 5) % 8];
-            D_801392AC[y][x].unk_06 = table.value[(x * 3 + y) % 8][b];
+            D_801392AC[y][x].unk_00.h[1] = table.value[(x + y * 3) % 8][(D_80139220 / 5) % 8];
+            D_801392AC[y][x].unk_04.h[1] = table.value[(x * 3 + y) % 8][b];
         }
     }
 }
@@ -1065,13 +1378,73 @@ s32 func_80135A48(s32 arg0, s32 arg1) {
         if (D_801392A0 >= 10) {
             D_801392A0 = 0;
         }
-        D_80139228[D_801392A0][1] = arg0 + 0xA0;
-        D_80139228[D_801392A0][3] = arg1 + 0x78;
+        D_80139228[D_801392A0].unk_00.h[1] = arg0 + 0xA0;
+        D_80139228[D_801392A0].unk_04.h[1] = arg1 + 0x78;
         D_80139278[D_801392A0] = 1;
     }
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135ACC);
+/* Pushes the grid points of ring arg0 (radius 5 * age) outwards or inwards in four bands. x and y are
+ * 16.16 locals of which only the integer half is set; r0..r7 are the band bounds, and with x and y in
+ * memory each declared local takes a stack slot (T-3330), which gives the original frame. T-20920 */
+void func_80135ACC(s32 arg0) {
+    s32 i;
+    s32 j;
+    s32 d;
+    s32 r0;
+    s32 r1;
+    s32 r2;
+    s32 r3;
+    s32 r4;
+    s32 r5;
+    s32 r6;
+    s32 r7;
+    Fix32 x;
+    Fix32 y;
+    s32 px;
+    s32 py;
+
+    for (j = 0, py = -25; j < 12; j++, py += 25) {
+        for (i = 0, px = -25; i < 15; i++, px += 25) {
+            x.h[1] = px;
+            y.h[1] = py;
+            d = func_80132A74(D_80139228[arg0].unk_00.h[1], D_80139228[arg0].unk_04.h[1], x.h[1], y.h[1]);
+            r0 = D_80139278[arg0] * 5;
+            r1 = r0 + 5;
+            if (r0 * r0 <= d) {
+                if (d <= r1 * r1) {
+                    D_801392AC[i][j].unk_00.w += (x.w - D_80139228[arg0].unk_00.w) * 2 / r0;
+                    D_801392AC[i][j].unk_04.w += (y.w - D_80139228[arg0].unk_04.w) * 2 / r0;
+                } else {
+                    r2 = r0 + 10;
+                    r3 = r0 + 15;
+                    if (r2 * r2 < d) {
+                        if (d <= r3 * r3) {
+                            D_801392AC[i][j].unk_00.w -= (x.w - D_80139228[arg0].unk_00.w) * 3 / r2;
+                            D_801392AC[i][j].unk_04.w -= (y.w - D_80139228[arg0].unk_04.w) * 3 / r2;
+                        } else {
+                            r4 = r0 + 20;
+                            r5 = r0 + 25;
+                            if (r4 * r4 < d) {
+                                if (d <= r5 * r5) {
+                                    D_801392AC[i][j].unk_00.w += (x.w - D_80139228[arg0].unk_00.w) * 3 / r4;
+                                    D_801392AC[i][j].unk_04.w += (y.w - D_80139228[arg0].unk_04.w) * 3 / r4;
+                                } else {
+                                    r6 = r0 + 30;
+                                    r7 = r0 + 35;
+                                    if (r6 * r6 < d && d <= r7 * r7) {
+                                        D_801392AC[i][j].unk_00.w -= (x.w - D_80139228[arg0].unk_00.w) * 2 / r6;
+                                        D_801392AC[i][j].unk_04.w -= (y.w - D_80139228[arg0].unk_04.w) * 2 / r6;
+                                    }
+                                }
+                            }; /* FAKE: empty statement (found with the permuter) gives the original's register order, j in s2 before the grid base and the constant 3; T-20920 */
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 void func_80135F54(void) {
     s32 i;
@@ -1147,53 +1520,26 @@ void func_801369F4(s32 arg0) {
     }
 }
 
-/* NON_MATCHING: T-10850, 6 differing listing lines; regdiff evidence in the ticket scratch. */
-#ifdef NON_MATCHING
-/* FAKE: empty test separates the loop constant live ranges. T-10850 */
-void func_80136A2C(void)
-{
-  s32 i;
-  if (D_800B3CFC != 0)
-  {
-    D_800B3CF8 = 0;
-    D_800B3CFC = 0;
-    D_80139B18 += 1;
-  }
-  if (D_80139B18 > 0)
-  {
-    for (i = 0; i < 5; i++)
-    {
-      if ((D_8013984C[i * 2].unk_00 > 0) && (D_8013984C[i * 2].unk_00 < 4))
-      {
-        if (D_80139B18 < 3)
-        {
-          D_8013984C[i * 2].unk_00 = D_8013984C[i * 2].unk_04 + 1;
-        }
-        else
-        {
-          D_8013984C[i * 2].unk_00 = 4;
-          D_8013984C[i * 2].unk_04 = 0;
-        }
-      }
-      if ((D_8013984C[(i * 2) + 1].unk_00 > 0) && (D_8013984C[(i * 2) + 1].unk_00 < 4))
-      {
-        if (D_80139B18 < 3)
-        {
-          if (!i)
-          {
-          }
-          D_8013984C[(i * 2) + 1].unk_00 = D_8013984C[(i * 2) + 1].unk_04 + 1;
-        }
-        else
-        {
-          D_8013984C[(i * 2) + 1].unk_00 = 4;
-          D_8013984C[(i * 2) + 1].unk_04 = 0;
-        }
-      }
-    }
+/* A plain index loop: IDO unrolls it by two into the original's pointer walk (T-10850 had written the
+ * unrolled form by hand, with a FAKE). T-20920 */
+void func_80136A2C(void) {
+    s32 i;
 
-  }
+    if (D_800B3CFC != 0) {
+        D_800B3CF8 = 0;
+        D_800B3CFC = 0;
+        D_80139B18++;
+    }
+    if (D_80139B18 > 0) {
+        for (i = 0; i < 10; i++) {
+            if (D_8013984C[i].unk_00 > 0 && D_8013984C[i].unk_00 < 4) {
+                if (D_80139B18 < 3) {
+                    D_8013984C[i].unk_00 = D_8013984C[i].unk_04 + 1;
+                } else {
+                    D_8013984C[i].unk_00 = 4;
+                    D_8013984C[i].unk_04 = 0;
+                }
+            }
+        }
+    }
 }
-#else
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80136A2C);
-#endif

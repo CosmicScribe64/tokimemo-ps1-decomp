@@ -354,7 +354,70 @@ void func_8014B790(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, u32 arg4) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014B8B4);
+/* s32 with no return (implicit int in the original), as func_8014E5F8: v0 is live at the exit, so as1 keeps
+ * li v0,0x40 out of the beqz delay slot and takes li v1,0x800 there, as in the original. T-20620 */
+s32 func_8014B8B4(s32 arg0, s32 arg1, s32 arg2) {
+    s32 i;
+    s32 n;
+
+    if (arg2 < 4) {
+        for (i = 0, n = arg0; i != 3; i++, n++, arg1++) {
+            func_80147674(n, (s16 *)D_8016001C[arg1], 1, 0, 0);
+        }
+    } else if (arg2 >= 4 && arg2 < 8) {
+        for (i = 0, n = arg0; i != 3; i++, n++, arg1++) {
+            func_80147674(n, (s16 *)D_8016001C[arg1], 2, 0, 0);
+        }
+    } else if (arg2 >= 0xC && arg2 < 0x16) {
+        for (i = 0, n = arg0; i != 3; i++, n++, arg1++) {
+            func_80147674(n, (s16 *)D_8016001C[arg1], 3, 0, 0);
+        }
+    } else if (arg2 >= 0x18 && arg2 < 0x1C) {
+        for (i = 0, n = arg0; i != 3; i++, n++, arg1++) {
+            func_80147674(n, (s16 *)D_8016001C[arg1], 1, 0, 0);
+        }
+    } else if (arg2 >= 0x20 && arg2 < 0x2A) {
+        for (i = 0, n = arg0; i != 3; i++, n++, arg1++) {
+            func_80147674(n, (s16 *)D_8016001C[arg1], 4, 0, 0);
+        }
+    } else if (arg2 >= 0x2E && arg2 < 0x32) {
+        for (i = 0, n = arg0; i != 3; i++, n++, arg1++) {
+            func_80147674(n, (s16 *)D_8016001C[arg1], 2, 0, 0);
+        }
+    }
+    if (arg2 >= 0x14 && arg2 < 0x1E) {
+        D_8015EDB4[18].unk0[1] = 0x40;
+        D_8015EDB4[18].unk78 = 0x800;
+        D_8015EDB4[19].unk0[1] = 0x40;
+        D_8015EDB4[19].unk78 = 0x800;
+        D_8015EDB4[19].unk84[0] = 0x14;
+        D_8015EDB4[20].unk0[1] = 0x40;
+        D_8015EDB4[20].unk78 = 0x800;
+        D_8015EDB4[20].unk84[0] = 0x14;
+        D_8015EDB4[21].unk0[1] = 0x40;
+        D_8015EDB4[21].unk78 = 0x800;
+        D_8015EDB4[21].unk84[0] = 0x14;
+        D_8015EDB4[23].unk0[1] = 0x40;
+        D_8015EDB4[23].unk78 = 0x800;
+        D_8015EDB4[23].unk84[0] = 0x14;
+        D_8015EDB4[24].unk0[1] = 0x40;
+        D_8015EDB4[24].unk78 = 0x800;
+        D_8015EDB4[24].unk84[0] = 0x14;
+        D_8015EDB4[25].unk0[1] = 0x40;
+        D_8015EDB4[25].unk78 = 0x800;
+        D_8015EDB4[25].unk84[0] = 0x14;
+        return;
+    }
+    if (arg2 == 0x1E) {
+        D_8015EDB4[18].unk0[1] = 0x80;
+        D_8015EDB4[19].unk0[1] = 0x80;
+        D_8015EDB4[20].unk0[1] = 0x80;
+        D_8015EDB4[21].unk0[1] = 0x80;
+        D_8015EDB4[23].unk0[1] = 0x80;
+        D_8015EDB4[24].unk0[1] = 0x80;
+        D_8015EDB4[25].unk0[1] = 0x80;
+    }
+}
 
 void func_8014BC80(s32 arg0, s32 arg1) {
     s32 i;

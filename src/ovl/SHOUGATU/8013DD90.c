@@ -21,11 +21,11 @@ s32 func_8013DDD0(void) {
     table = D_80145FE8;
     index = D_800E6280.unk_110A;
     table.f[index](0x80);
-    ((ShoCounter44 *)D_80120650)->unk_07 = D_800B593C;
-    if (((ShoCounter44 *)D_80120650)->unk_18 == 0 && ((ShoCounter44 *)D_80120650)->unk_08 == 0) {
-        ((ShoCounter44 *)D_80120650)->unk_16++;
-        if (((ShoCounter44 *)D_80120650)->unk_16 >= 3) {
-            ((ShoCounter44 *)D_80120650)->unk_16 = 0;
+    ((DisplayActor44 *)D_80120650)->unk_07 = D_800B593C;
+    if (((DisplayActor44 *)D_80120650)->unk_18 == 0 && ((DisplayActor44 *)D_80120650)->unk_08 == 0) {
+        ((DisplayActor44 *)D_80120650)->unk_16++;
+        if (((DisplayActor44 *)D_80120650)->unk_16 >= 3) {
+            ((DisplayActor44 *)D_80120650)->unk_16 = 0;
         }
     }
 }

@@ -1,10 +1,10 @@
 ---
 id: T-15500
 title: Match BUNKASAI character flag continuation
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[tickets/T-15300-fresh-structural-near-matches]]"]
 ---
 
@@ -20,3 +20,7 @@ D_800E6679 is GameState +0x3F9: record ten at 0x1BC +10*0x38, flags byte +0x0D. 
 
 ## Results
 The existing record-ten CharFlags bit13 representation eliminates all six differing rows. Default linked proof matches 820 bytes; affected BUNKASAI checksum, header/global guards and branch prototype check pass. No header changes, artificial code or edits to prior matching functions. Evidence: build/scratch/goal-bunkasai-feb4.log and build/scratch/t15500/.
+
+## Comments
+
+2026-10-17: Closed after review against CODING_STANDARDS.md with no findings. func_8013FEB4 is plain C on main (820 bytes, commit 176699adc) and BUNKASAI still builds sha1 OK in T-20900's clean 27/27 build. The review covered C89, types, FAKE and NON_MATCHING, headers and wiki bookkeeping; the m2c-style local names are the only nit.

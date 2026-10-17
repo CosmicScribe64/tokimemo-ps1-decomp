@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 sources: ["include/ovl/SHOUGATU.h", "drafts/T-17500/README.md", "drafts/T-17500/redraft.py", "tools/type_recovery.py", "tools/siblings.py"]
 ---
 
@@ -10,6 +10,8 @@ SHOUGATU (the New Year event overlay) shares its scene code with GYOZI; the earl
 transfer work is in [[event-family-results]].
 
 ## Types-first pass (T-17500)
+
+T-20900 update: `ShoSprite44` and `ShoCounter44` are `DisplayActor44` ([[data-types]], "Shared-type unification").
 
 Wave-3 types-first pass ([[tickets/T-17500-types-first-shougatu]], [[speedup-research-2026-10-16]]), branch
 `w3-shougatu-types` from `w2-good`. Start: 38 unmatched functions (21,124 bytes), 2 of them guarded. About 55

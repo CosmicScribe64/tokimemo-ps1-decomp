@@ -714,7 +714,7 @@ void func_80133D54(void) {
     /* FAKE: buffer extent preserves the original frame and sp+0x5C address. T-10040. */
     u8 sp5C[44];
     u8 sp3C[32];
-    TelRec44 *var_s0;
+    DisplayFixActor44 *var_s0;
     s32 var_s1;
 
     switch (D_800E6280.unk_110D) {
@@ -882,7 +882,7 @@ void func_80133D54(void) {
         func_80042940(4);
         break;
     }
-    var_s0 = &((TelRec44 *)D_8011ECD0)[0x61];
+    var_s0 = &((DisplayFixActor44 *)D_8011ECD0)[0x61];
     var_s1 = 0x61;
     do {
         if (var_s0->unk_18 == 0x60) {

@@ -1,10 +1,10 @@
 ---
 id: T-12070
 title: Codex cx7 TACO actor matching
-status: In Review
+status: Done
 assignee: Codex cx1
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[matching-notes]]"]
 ---
 
@@ -44,6 +44,10 @@ Production default resolved funcdiff reports literal MATCH (1,340 bytes, versus 
 Production resolved funcdiff literal MATCH and TACO SHA1 pass (build/scratch/C2CC-production.log). Actual size 972 versus worklist estimate 1,040. Direct actor rereads and byte-offset views reduced 307 rows to 9; direct u8 switch read plus explicit case 0 restores the 17-entry jump-table range. The last pair of reversed loads matches when the case-13 call and following load share a source line. These source-shape requirements are FAKE-labeled. Table declarations and the C2CC prototype live in the overlay header; redundant array-address casts removed and reverified. Total: three matches, 4,252 bytes.
 
 User steering through orchestrator now authorizes longer (~45 minute) focused passes on the largest remaining functions, including beyond-list functions in the owned object. Inventory confirms no extra larger targets: ACCC 1,260 bytes; BD30 576 bytes; all others <=360 bytes. Prioritize those two over tiny compiler-gap chases.
+
+2026-10-17: Code review against CODING_STANDARDS.md done. Three matches (func_8015B59C 1,940 B, func_8015C718 1,340 B, func_8015C2CC 972 B) are on main as C89 with FAKE comments naming T-12070 and a reason; no new NON_MATCHING, no inline asm, no tool changes. ACCC and BD30 follow-ups were matched later by T-19026 and T-16563. The byte-offset TcActor views are moved to a follow-up. Moved to Done.
+
+Followup opened: [[tickets/T-21017-taco-tcactor-field-access-retry|T-21017]].
 
 ## Handoff
 

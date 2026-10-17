@@ -425,8 +425,8 @@ void func_80138D40(void) {
     parameter_show_init();
     parameter_show_init();
     D_800B593C = 0x80;
-    D_80120650[3] &= 0x7F;
-    D_80120650[0x47] &= 0x7F;
+    ((DisplayActor44 *)D_80120650)->unk_03 &= 0x7F;
+    ((DisplayActor44 *)D_80120650)[1].unk_03 &= 0x7F;
     k_reset(1);
     D_800E6280.unk_F5F = 0;
     D_80139ADC = 0;

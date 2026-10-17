@@ -53,19 +53,12 @@ s32 func_80149394(void) {
     func_8004284C();
 }
 
-typedef struct {
-    u32 pad0 : 25;
-    u32 grade : 2;
-    u32 pad1 : 3;
-    u32 flag : 1;
-    u32 pad2 : 1;
-} EtcSlot;
 
 s32 func_80149468(void) {
     s32 i;
 
     for (i = 0; i < 11; i++) {
-        if (((EtcSlot *)&D_800E6280.unk_66C[i])->grade >= 3 && ((EtcSlot *)&D_800E6280.unk_66C[i])->flag) {
+        if (((ScheduleClubFlags *)&D_800E6280.unk_66C[i])->unk_25 >= 3 && ((ScheduleClubFlags *)&D_800E6280.unk_66C[i])->b30) {
             return i;
         }
     }
@@ -316,19 +309,19 @@ s32 func_80149DD8(void) {
 
 void func_80149E68(void) {
     func_80048F64(0x60);
-    D_80120650[1] = 1;
-    D_80120650[2] = 4;
-    *(s32 *)&D_80120650[0x38] = 0x01000000;
-    D_80120650[3] = 0x84;
+    ((DisplayActor44 *)D_80120650)->unk_01 = 1;
+    ((DisplayActor44 *)D_80120650)->unk_02 = 4;
+    ((DisplayActor44 *)D_80120650)->unk_38 = 0x01000000;
+    ((DisplayActor44 *)D_80120650)->unk_03 = 0x84;
     *(u8 **)&D_80120650[0xC] = D_80125CA8;
     *(u8 **)&D_80120650[0x10] = D_80125CAC;
     *(u8 **)&D_80120650[0x34] = D_80125CB0;
-    D_80120650[5] = 2;
-    D_80120650[6] = 1;
-    D_80120650[0x43] = 0x10;
-    *(s16 *)&D_80120650[0x16] = 0;
-    *(s16 *)&D_80120650[0x26] = -0x50;
-    *(s16 *)&D_80120650[0x2A] = -0x40;
+    ((DisplayActor44 *)D_80120650)->unk_05 = 2;
+    ((DisplayActor44 *)D_80120650)->unk_06 = 1;
+    ((DisplayActor44 *)D_80120650)->unk_43 = 0x10;
+    ((DisplayActor44 *)D_80120650)->unk_16 = 0;
+    ((DisplayActor44 *)D_80120650)->unk_26 = -0x50;
+    ((DisplayActor44 *)D_80120650)->unk_2A = -0x40;
     load_palette(D_80125CA4, 0x10, 1, 1, 0);
 }
 

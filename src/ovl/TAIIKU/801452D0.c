@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_80085E30 /* called as an implicit int function (definition: void): the call's $v0 result keeps the loop pointer off $v0 in func_80145370, T-20600 */
 #include "common.h"
 #include "ovl/TAIIKU.h"
+
+s32 func_80085E30();
 
 /* Display record n of the runner sprites (D_8011ECD0 is an array of 0x44-byte records). */
 #define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
@@ -80,8 +83,6 @@ void func_801452D0(void) {
     tbl.f[idx]();
 }
 
-/* NON_MATCHING: T-16553, 22 differing lines; in the two loops that store 8 the original keeps the constant 8 in v0 and the loop pointer in v1, the build has them the other way round (registers only). T-19007: regdiff colours the pointer start constant (priority 41) before the hoisted 8 (15.5) and gives it v0; autotweak, explicit pointer loops, i = 5..16, do-while forms and a named constant do not flip it */
-#ifdef NON_MATCHING
 void func_80145370(void) {
     s32 i;
     s32 j;
@@ -145,9 +146,6 @@ void func_80145370(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80145370);
-#endif
 
 void func_80145640(void) {
     s32 slot;
@@ -508,7 +506,7 @@ void func_80146338(void) {
         DISP(96 + i).unk_04 = 0;
         DISP(96 + i).unk_05 = 0x80;
         DISP(96 + i).unk_1A = 0x1000;
-        *(s16 *)DISP(96 + i).pad_1C = 0x1000;
+        DISP(96 + i).unk_1C = 0x1000;
         DISP(96 + i).unk_06 = 2;
         DISP(96 + i).unk_2A = a.v[i];
         DISP(96 + i).unk_18 = b.v[i];
@@ -1160,7 +1158,7 @@ s32 func_80148370(void) {
         DISP(96 + i).unk_04 = 0;
         DISP(96 + i).unk_05 = 0x80;
         DISP(96 + i).unk_1A = 0x1000;
-        *(s16 *)DISP(96 + i).pad_1C = 0x1000;
+        DISP(96 + i).unk_1C = 0x1000;
         DISP(96 + i).unk_06 = 2;
     }
     for (i = 0; i < 4; i++) {
@@ -1196,12 +1194,12 @@ s32 func_801485C4(void) {
         index++;
         p++;
     } while (index < 4);
-    if (chosen * 48 - 64 < ((TaiikuScene44 *)D_8011ECD0)[104].position.h[1]) {
-        ((TaiikuScene44 *)D_8011ECD0)[104].position.w += 0xFFFE8000;
+    if (chosen * 48 - 64 < ((DisplayFixActor44 *)D_8011ECD0)[104].unk_24.h[1]) {
+        ((DisplayFixActor44 *)D_8011ECD0)[104].unk_24.w += 0xFFFE8000;
         return 0;
     }
-    ((TaiikuScene44 *)D_8011ECD0)[104].unk_02 = 64;
-    ((TaiikuScene44 *)D_8011ECD0)[104].unk_18 = 61;
+    ((DisplayFixActor44 *)D_8011ECD0)[104].unk_02 = 64;
+    ((DisplayFixActor44 *)D_8011ECD0)[104].unk_18 = 61;
     func_80085ED0();
     return 1;
 }
@@ -1211,8 +1209,8 @@ s32 func_80148678(void) {
     s32 n;
 
     if (func_80085EEC() >= 0x2E) {
-        *(s16 *)&D_8011ECD0[0x1BB8] = 0x3C;
-        *(s16 *)&D_8011ECD0[0x1BCA] = -8;
+        ((DisplayActor44 *)D_8011ECD0)[104].unk_18 = 0x3C;
+        ((DisplayActor44 *)D_8011ECD0)[104].unk_2A = -8;
         for (i = 0; i < 4; i++) {
             if (D_8014A3D8[i] == 1) {
                 n = i;
@@ -1220,7 +1218,7 @@ s32 func_80148678(void) {
         }
         for (i = 0; i < 4; i++) {
             if (n < i) {
-                *(s16 *)&D_8011ECD0[0x19A6 + i * 0x44] += 0x30;
+                ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_26 += 0x30;
                 *(s16 *)&D_8011ECD0[0x19A6 + 0x110 + i * 0x44] += 0x30;
             }
         }
@@ -1233,7 +1231,7 @@ void func_801487B4(void) {
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        *(s16 *)&D_8011ECD0[0x1AA8 + i * 0x44] -= 4 - i;
+        ((DisplayActor44 *)D_8011ECD0)[i + 100].unk_18 -= 4 - i;
     }
     func_80085ED0();
 }
@@ -1249,9 +1247,9 @@ void func_80148820(void) {
     }
     if (func_80085EEC() >= 0x33) {
         for (i = 0; i < 4; i++) {
-            *(s16 *)&D_8011ECD0[0x1998 + i * 0x44] += i + 1;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_18 += i + 1;
         }
-        *(s16 *)&D_8011ECD0[0x1BB8] = *(s16 *)&D_8011ECD0[0x1BB8] + n + 2;
+        ((DisplayActor44 *)D_8011ECD0)[104].unk_18 = ((DisplayActor44 *)D_8011ECD0)[104].unk_18 + n + 2;
         func_8004284C();
     }
 }

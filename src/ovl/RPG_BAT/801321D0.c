@@ -115,7 +115,21 @@ void func_80132348(void) {
 }
 
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801321D0", func_801328C4);
+void func_801328C4(s32 arg0, s32 arg1) {
+    s32 i;
+    RpgDirTable dirs;
+
+    dirs = D_8015E4F0;
+    for (i = 0; i < 8; i++) {
+        func_8013E97C(i + 0x28, (dirs.v[i * 2] * D_8015EDB0.unk_04) / 1000 + arg0, arg1 + (dirs.v[i * 2 + 1] * D_8015EDB0.unk_04) / 1000 - (func_800A0070((D_8015EDB0.unk_04 << 11) / 1000) >> 7));
+    }
+    D_8015EDB0.unk_04 += 0x19;
+    if (D_8015EDB0.unk_04 > 1000) {
+        for (i = 0; i < 8; i++) {
+            func_8013E810(i + 0x28, 9, 1, 0);
+        }
+    }
+}
 
 void func_80132A94(s32 arg0, s32 arg1) {
     s32 i;
@@ -123,7 +137,7 @@ void func_80132A94(s32 arg0, s32 arg1) {
     for (i = 0; i < 8; i++) {
         func_8013E97C(i + 0x28, arg0, arg1);
         func_8013E810(i + 0x28, 9, 1, 1);
-        D_8011ECD0[0x2421 + i * 0x44] = 4;
+        ((DisplayActor44 *)D_8011ECD0)[i + 136].unk_01 = 4;
     }
 }
 

@@ -91,7 +91,39 @@ void func_801555C4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_801556D8);
+void func_801556D8(void) {
+    DisplayActor44 *m = (DisplayActor44 *)D_8011ECD0;
+    s16 i;
+    DateShorts8 sp68;
+    DateShorts8 sp58;
+
+    sp68 = D_8015F9B0;
+    sp58 = D_8015F9C0;
+    D_8015E208 = D_8015DF04;
+    D_8015E20C = D_8015E040;
+    D_8015E210 = D_8015E17C;
+    D_800E6280.unk_1BC[5].unk_02 += 2;
+    D_800E6280.unk_1BC[5].unk_06 += 1;
+    D_800E6280.unk_1BC[5].unk_0A -= 0x14;
+    check_para_limit();
+    func_80155360();
+    load_palette(D_8015F93C, 0x11, 1, 2, 0);
+    func_80084E90(D_8015F940, D_8015F944, D_8015F948, D_8015F94C, D_8015F950, D_8015F954);
+    func_800850D4(D_8015F930, D_8015F934, D_8015F92C, D_8015F938);
+    m[96].unk_04 = m[97].unk_04 = 8;
+    for (i = 0; i < 8; i++) {
+        D_8015F9A0[i] = 0;
+    }
+    for (i = 0; i < 8; i++) {
+        m[98 + i] = m[96];
+        m[98 + i].unk_16 = 5;
+        m[98 + i].unk_26 = sp68.v[i] - 0xA0;
+        m[98 + i].unk_2A = sp58.v[i] - 0x78;
+        D_8015F9A8[i] = func_800AE0D0() % 120;
+    }
+    m[98].unk_16 = 4;
+    func_8004284C();
+}
 
 void func_801559C0(void) {
     D_8015E208 = D_8015DF08;
@@ -189,7 +221,34 @@ void func_80155E08(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_80155E40);
+/* int result, no return statement (K&R): $v0 stays live at the exit, so as1 keeps the second loop's counter clear below the byte test. T-17205 */
+s32 func_80155E40(void) {
+    GameState *g = &D_800E6280;
+    s16 i;
+    FnTbl45 tbl;
+
+    tbl = D_8015FA68;
+    if (((g->unk_03E == 0x5F && g->unk_03F == 7 && g->unk_040 == 0x17) ||
+         (g->unk_03E == 0x60 && g->unk_03F == 7 && g->unk_040 == 0x1C) ||
+         (g->unk_03E == 0x61 && g->unk_03F == 7 && g->unk_040 == 0x1B)) &&
+        D_800B593C == 0x80 && D_80122D04 == 0 && g->unk_110A >= 0x21) {
+        func_8006B900();
+    }
+    tbl.f[g->unk_110A](0x80);
+    if (func_800853FC == tbl.f[g->unk_110A]) {
+        for (i = 0; i < 8; i++) {
+            ((DisplayActor44 *)D_8011ECD0)[98 + i].unk_07 = ((DisplayActor44 *)D_8011ECD0)[96].unk_07;
+        }
+        if (((DisplayActor44 *)D_8011ECD0)[96].unk_07 < 9) {
+            for (i = 0; i < 8; i++) {
+                ((DisplayActor44 *)D_8011ECD0)[98 + i].unk_03 &= 0x7F;
+            }
+        }
+    }
+    if (g->unk_110A >= 0x11 && g->unk_110A < 0x14) {
+        func_801560E0();
+    }
+}
 
 void func_80156024(void) {
     func_8014C5C8();
@@ -210,7 +269,53 @@ void func_801560B8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_801560E0);
+void func_801560E0(void) {
+    DisplayFixActor44 *m = (DisplayFixActor44 *)D_8011ECD0;
+    u8 *st;
+    DateShorts8 sp98;
+    DateShorts8 sp88;
+    DatePairs8 sp68;
+    s16 i;
+
+    sp98 = D_8015FB1C;
+    sp88 = D_8015FB2C;
+    sp68 = D_8015FB3C;
+    for (i = 0; i < 8; i++) {
+        st = i + D_8015F9A0;
+        m[98 + i].unk_07 = m[96].unk_07;
+        if (*st == 0) {
+            D_8015F9A8[i]++;
+        }
+        if (*st == 0 && D_8015F9A8[i] >= 0x79 && (u32)(0xB4 - D_8015F9A8[i]) < (u32)(func_800AE0D0() % 60)) {
+            m[98 + i].unk_03 |= 0x80;
+            m[98 + i].unk_02 = 5;
+            *st = 1;
+        }
+        if (i == 0) {
+            if (*st == 1 && m[98 + i].unk_18 == 7 && m[98 + i].unk_08 == 0) {
+                m[98 + i].unk_30 = 0;
+                *st = 2;
+            }
+        } else if (*st == 1 && m[98 + i].unk_18 == 3 && m[98 + i].unk_08 == 7) {
+            m[98 + i].unk_30 = 0;
+            *st = 2;
+        }
+        if (*st == 2) {
+            m[98 + i].unk_30 += 0x4000;
+            m[98 + i].unk_28.w += m[98 + i].unk_30;
+            if (sp68.v[i][1] - 0x78 < m[98 + i].unk_28.h[1]) {
+                m[98 + i].unk_02 = 0;
+                m[98 + i].unk_03 &= 0x7F;
+                m[98 + i].unk_28.h[1] = sp88.v[i] - 0x78;
+                m[98 + i].unk_28.h[0] = 0;
+                m[98 + i].unk_18 = 0;
+                m[98 + i].unk_08 = 0;
+                *st = 0;
+                D_8015F9A8[i] = 0;
+            }
+        }
+    }
+}
 
 void func_801563A8(void) {
     s32 pad; /* FAKE: unused slot above tbl, the original frame has it (T-3330 idiom, real source unknown). T-8010 */

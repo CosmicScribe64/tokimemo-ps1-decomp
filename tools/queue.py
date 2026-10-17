@@ -68,8 +68,9 @@ for container: unexpected EOF"). Nothing else was wrong: output is a few KB and 
 80 MB. Now the loaded functions and the groups are cached in build/queue-cache.json, keyed on the
 size and mtime of every asm, source and config file and of queue.py, dupes.py and neardupes.py, so a
 repeat run takes about a second and any edit or regenerated asm invalidates it (--no-cache ignores it).
-Without --by bytes / --plan, --files also limits what is read to those files. Progress lines go to
-stderr, so a long first run is not silent.
+Without --by bytes / --plan / --calibrate, --files also limits function loading to those files.
+These scoped queries bypass the whole-tree cache: validating its signature would still stat every
+asm, source and config file, even for a one-file query (T-20000). Progress lines go to stderr.
 
 Byte-weighted ranking (--by bytes): score = expected bytes / effort.
   expected bytes = size * P(match) * (1 + credit), credit = 0.9 per byte-identical twin and 0.6 per near
@@ -466,8 +467,9 @@ class Cache:
 
 
 def load_cached(root=".", legacy=False, cache=None, files=None):
-    """load() through the cache. A request limited to `files` is served from a full cache but does
-    not write one."""
+    """Load through the cache without writing partial results. main() disables the cache for
+    scoped --files queries, which read only the selected files. An explicit full-cache caller
+    can also filter cached results by `files`."""
     cache = cache or Cache(root, False)
     key = "legacy" if legacy else "rules"
     hit = cache.get(key)
@@ -478,7 +480,8 @@ def load_cached(root=".", legacy=False, cache=None, files=None):
             rem = [f for f in rem if file_wanted(f.file, files)]
             mat = [f for f in mat if file_wanted(f.file, files)]
         return rem, mat
-    note("reading the asm of the project%s" % (" (cached afterwards)" if cache.enabled and not files else ""))
+    scope = "selected files" if files else "the project"
+    note("reading the asm of %s%s" % (scope, " (cached afterwards)" if cache.enabled and not files else ""))
     rem, mat = load(root, legacy=legacy, files=files)
     if not files:
         cache.put(key, {"remaining": [func_to_json(f) for f in rem], "matched": [func_to_json(f) for f in mat]})
@@ -842,11 +845,12 @@ def main(argv=None):
     ap.add_argument("--no-cache", action="store_true", help="ignore and do not write build/queue-cache.json")
     a = ap.parse_args(argv)
     root = Path(a.root)
-    cache = Cache(root, not a.no_cache)
-    wanted = a.files.split(",") if a.files else []
+    wanted = [f for f in a.files.split(",") if f] if a.files else []
     # only --by bytes / --plan need the whole project (duplicate groups, balancing); otherwise a
     # --files list limits what is read
     narrow = wanted if not (a.calibrate or a.plan or a.by == "bytes") else []
+    # A scoped load never writes the full cache. Do not pay for its whole-tree signature either.
+    cache = Cache(root, not a.no_cache and not narrow)
     remaining, matched = load_cached(root, legacy=a.calibrate and a.legacy, cache=cache, files=narrow)
     if not remaining and not narrow:
         print("error: no INCLUDE_ASM functions found (run ninja first to generate asm/)", file=sys.stderr)

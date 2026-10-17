@@ -2,7 +2,7 @@
 #define OVL_TEL_H
 
 #include "common.h"
-#include "main_api.h"
+#include "game.h"
 
 extern u8 D_801405E4;
 extern u8 *D_80140AD8[];
@@ -92,17 +92,6 @@ void func_801345C4(void);
 void func_801352F0(void);
 void func_80136724(void);
 
-typedef struct TelRec44 {
-    /* 0x00 */ u8 pad00[3];
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 pad04[0x14];
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ s16 unk_1C;
-    /* 0x1E */ u8 pad1E[0x12];
-    /* 0x30 */ s32 unk_30;
-    /* 0x34 */ u8 pad34[0x10];
-} TelRec44; /* size 0x44; view of D_8011ECD0 records, T-10040. */
 
 /* Dialogue text pointers and XA tables, T-10040. */
 extern u8 *D_801410BC[];
@@ -295,17 +284,6 @@ extern u32 D_80145468[];
 extern u32 D_801454A0[];
 #endif
 
-#ifndef OVL_TEL_ENTRY_FLAGS_H
-#define OVL_TEL_ENTRY_FLAGS_H
-/* Flag word at +0x54C of the 4-byte entries at GameState +0x54C (GsWord unk_54C[8]): nibble in bits 25..28, flag in bit 29. */
-typedef struct {
-    /* 0x00, bits 0..24 */ u32 pad : 25;
-    /* 0x00, bits 25..28 */ u32 nib : 4;
-    /* 0x00, bit 29 */ u32 b29 : 1;
-    /* 0x00, bits 30..31 */ u32 rest : 2;
-} TelEntryFlags; /* size 4 */
-#endif
-
 #ifndef OVL_TEL_T10860_ADC_H
 #define OVL_TEL_T10860_ADC_H
 s32 func_8013ADC0(void);
@@ -380,16 +358,6 @@ s32 func_8013A4FC(void);
 #define OVL_TEL_T10860_DISPATCH_DECLS
 void func_80139AA4(void);
 void func_80139FEC(void);
-#endif
-
-#ifndef OVL_TEL_T10860_CLUB_FLAGS
-#define OVL_TEL_T10860_CLUB_FLAGS
-/* T-10860: word view of a GameState +0x66C record. */
-typedef struct TelClubFlags {
-    /* 0x00, bits 0..23 */ u32 pad : 24;
-    /* 0x00, bit 24 */ u32 b24 : 1;
-    /* 0x00, bits 25..31 */ u32 rest : 7;
-} TelClubFlags; /* size 0x04 */
 #endif
 
 #ifndef OVL_TEL_RECORD_FLAGS_H

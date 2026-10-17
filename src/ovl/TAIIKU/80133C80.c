@@ -73,14 +73,6 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801498BC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801498E8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_80149914);
 
-typedef struct TaiRecord44 {
-    /* 0x00 */ u8 pad[2];
-    /* 0x02 */ u8 active;
-    /* 0x03 */ u8 flags;
-    /* 0x04 */ u8 pad04[0x22];
-    /* 0x26 */ s16 y;
-    /* 0x28 */ u8 pad28[0x1C];
-} TaiRecord44; /* size 0x44; T-10030 */
 
 
 typedef struct {
@@ -509,7 +501,7 @@ void func_80135830(void) {
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_04 = 0;
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_05 = 0x80;
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_1A = 0x1000;
-        *(s16 *)((DisplayActor44 *)D_8011ECD0)[96 + i].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_1C = 0x1000;
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_06 = 2;
     }
     for (i = 0; i < 4; i++) {
@@ -585,7 +577,7 @@ void func_80135AD0(void) {
         ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_34 = (u8 *)D_801492C8;
         ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_14 = (s16)D_8014A024;
         ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_1A = 0x1000;
-        *(s16 *)((DisplayActor44 *)D_8011ECD0)[i + 46].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_1C = 0x1000;
         ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_07 = 128;
         ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_2A = -48 - row * 16;
         ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_16 = func_80135D24();
@@ -890,7 +882,7 @@ void func_8013732C(void) {
     for (i = 0; i < 3; i++) {
         p = ((u8 *)&D_80149208) + i * 0x24;
         if (p[0x25] != 0) {
-            *(s16 *)&D_8011ECD0[i * 0x44 + 0x19DC] = i + 0x88;
+            ((DisplayActor44 *)D_8011ECD0)[i + 97].unk_18 = i + 0x88;
         } else {
             t = *(u16 *)(p + 0x30);
             if (t >= 6 && !(*(s32 *)(p + 0x3C) < 0xD000) || t >= 8 && !(*(s32 *)(p + 0x3C) < 0x6801) || t >= 0xB) {
@@ -902,7 +894,7 @@ void func_8013732C(void) {
                     p[0x27] = k + 1;
                     *(u16 *)(p + 0x30) = 0;
                 }
-                *(s16 *)&D_8011ECD0[i * 0x44 + 0x19DC] = *(s16 *)&D_801492AC[p[0x27] * 2] + i * 6 + 6;
+                ((DisplayActor44 *)D_8011ECD0)[i + 97].unk_18 = *(s16 *)&D_801492AC[p[0x27] * 2] + i * 6 + 6;
             }
         }
     }
@@ -912,7 +904,7 @@ void func_8013732C(void) {
 s32 func_80137440(void) {
     s32 timer;
     s16 y;
-    TaiRecord44 *record;
+    DisplayActor44 *record;
 
     /* FAKE: the indirect halfword reads retain the timer in a0; direct scalar
      * reads introduce an extra v0-to-a0 copy. T-10030. */
@@ -930,10 +922,10 @@ s32 func_80137440(void) {
         }
         /* FAKE: joining initialization and loop opening preserves the two
          * address-setup instructions' order. T-10030. */
-        record = (TaiRecord44 *)D_8011ECD0; do {
-            if (record[97].y >= record[101].y) {
-                record[101].active = 0;
-                record[101].flags = 0;
+        record = (DisplayActor44 *)D_8011ECD0; do {
+            if (record[97].unk_26 >= record[101].unk_26) {
+                record[101].unk_02 = 0;
+                record[101].unk_03 = 0;
             }
             record++;
         } while ((u32) record < (u32) (D_8011ECD0 + 0xCC));
@@ -1082,7 +1074,7 @@ void func_80138224(void) {
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_16 = 0;
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_18 = func_80138680(i, 1);
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_1A = 0x1000;
-        *(s16 *)((DisplayActor44 *)D_8011ECD0)[96 + i].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_1C = 0x1000;
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_07 = 0x80;
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 = func_801388E4(i);
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_2A = 0x28 - i * 0x18;
@@ -1103,7 +1095,7 @@ void func_80138224(void) {
         ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_16 = 0;
         ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_18 = func_80138680(i, 0);
         ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_1A = 0x1000;
-        *(s16 *)((DisplayActor44 *)D_8011ECD0)[107 + i].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_1C = 0x1000;
         ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_07 = 0x80;
         ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_26 = func_801388E4(i);
         ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_2A = 0x28 - i * 0x18;
@@ -1125,7 +1117,7 @@ void func_80138224(void) {
         ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_16 = sp90.h[i];
         ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_18 = 0;
         ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_1A = 0x1000;
-        *(s16 *)((DisplayActor44 *)D_8011ECD0)[111 + i].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_1C = 0x1000;
         ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_43 = 0;
         ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_07 = 0x80;
         ((DisplayActor44 *)D_8011ECD0)[111 + i].unk_26 = sp7C.h[i];
@@ -1147,7 +1139,7 @@ void func_80138224(void) {
     ((DisplayActor44 *)D_8011ECD0)[112].unk_16 = 0;
     ((DisplayActor44 *)D_8011ECD0)[112].unk_18 = 0xA0;
     ((DisplayActor44 *)D_8011ECD0)[112].unk_1A = 0x2000;
-    *(s16 *)((DisplayActor44 *)D_8011ECD0)[112].pad_1C = 0x2000;
+    ((DisplayActor44 *)D_8011ECD0)[112].unk_1C = 0x2000;
     ((DisplayActor44 *)D_8011ECD0)[112].unk_43 = 0;
     ((DisplayActor44 *)D_8011ECD0)[112].unk_07 = 0x80;
     ((DisplayActor44 *)D_8011ECD0)[112].unk_26 = -0x80;
@@ -1184,7 +1176,7 @@ s32 func_80138680(s32 arg0, s32 arg1) {
         } else {
             /* FAKE: indexes the four runners (player, cpu[3]) of D_80149208 from the player record; the
              * object is player + cpu[3], not one array (see TaiRunnersA). T-16550 */
-            slot += large.value[((TaiValue44 *)D_8011ECD0)[(&D_80149208.player)[arg0].unk_02 + 46].unk_16 >> 3];
+            slot += large.value[((DisplayActor44 *)D_8011ECD0)[(&D_80149208.player)[arg0].unk_02 + 46].unk_16 >> 3];
         }
     }
     return slot;

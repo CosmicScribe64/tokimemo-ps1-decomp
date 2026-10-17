@@ -1,15 +1,25 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # RPG_BAT family results
+
+## Timer callback follow-up (T-20003)
+
+`func_80138F6C` matches 1,268 actual default linked bytes through direct timer updates and a signed-word selector view. Two frame words and the selector view are explicitly FAKE (two sites). Full RPG_BAT and 27/27 binary SHA1 checks pass; see [[tickets/T-20003-rpg-timer-callees]] for evidence and local review. Three independently matched functions are excluded from this contribution after upstream landed them: `func_80146C30` (T-17104), `func_80157158` and `func_80156D78` (T-17102). Their upstream implementations are retained.
 
 Scope: the RPG_BAT overlay (`src/ovl/RPG_BAT/`, `include/ovl/RPG_BAT.h`), a battle scene (its strings are battle messages: damage taken, running away, enemy names). At the start of [[tickets/T-17100-types-first-rpg_bat]] it had 74 unmatched functions (77,064 bytes, census sizes) in 33 C files, five of them guarded (`func_80145CC0`, `func_8014AB84`, `func_8014AC74`, `func_8014E994`, `func_8015A744`). Matched siblings are scarce: `tools/siblings.py --unit RPG_BAT` finds no function at a ratio of 0.80 or more, two at 0.70-0.80, and two unmatched twin clusters (`func_801387F0`/`func_80138B9C`, `func_8014EF8C`/`func_8014F278`, 0.939).
 
 Older RPG_BAT notes are spread over [[matching-notes]], [[data-types]] (`RpgRec18`, the display-record byte view) and [[data/t0018-cases]] (89 rows).
 
+## Package w3-rpg-bat-p14 (T-17114)
+
+All four functions of `801368B0.c` and `8013F4F0.c` matched in plain C ([[tickets/T-17114-w3-rpg-bat-p14]], 4,320 bytes): `func_80136A9C`, `func_80140E70`, `func_8013F82C`, `func_80140204`. What carried over to the rest of the unit: the display-record globals `D_80120786`..`D_8012089A` are fields of `D_8011ECD0` records 100..104 (`unk_26`/`unk_2A`); a 0x44-stride loop over five records is peeled and unrolled by IDO (`for (i = 0; i < 5; i++)`); the grey level `c * 0x101 * 0x101` is two `c + (c << 8)` steps; an inner `switch (D_8015EBAC)` selector in `$v1` is `switch (*(s32 *)&D_8015EBAC)` (try it on `func_80154760`, `func_80154DD8`); `RPG_BAT_OVERRIDE_func_8013E7C0` also fixes `$v0`/`$v1` of a `0x10`-scaled value after the call. Details: [[matching-notes]], section T-17114.
+
 ## Types-first pass (T-17100)
+
+T-20900 update: `RpgObjectRecord44`, `RpgHealth44`, `RpgFlagRecord44` are `DisplayActor44`; `RpgObjectBlock` and `RpgHealthBlock` are gone (`group[n]` is record 96 + n of the pool) ([[data-types]], "Shared-type unification").
 
 Wave-3 types-first pass ([[tickets/T-16990-wave-3-conveyor]], method from [[speedup-research-2026-10-16]] and the pilots [[taiiku-family-results]] and [[taco-family-results]]). About 75 minutes of agent time for the types, the redraft and the matches below.
 
@@ -79,3 +89,51 @@ As in the pilots, the headers alone change nothing; the display-record view and 
 ### Packages
 
 19 packages `w3-rpg-bat-p01`..`p19` (T-17101..T-17119), 62 functions, 64,940 bytes, built by the wave-3 inventory scripts from this branch; each list names the T-17100 draft as the starting point.
+
+## Package w3-rpg-bat-p01 (T-17101)
+
+[[tickets/T-17101-w3-rpg-bat-p01]]: `src/ovl/RPG_BAT/80145CC0.c` and `80151FC0.c`, all four functions matched in plain C (4,564 bytes): `func_80152080` (812 B; FAKE homes `home0`/`home1` above the `sp34` spill), `func_80145CC0` (2,372 B; `func_8013E7C0` and `func_8013E97C` as implicit int), `func_80152384` (556 B; strcpy `func_800AE0F0` returning its destination in that file), `func_80146578` (824 B; `func_8013F15C` implicit int, FAKE one-word `zero[1]`). Details and the new register idioms: [[matching-notes]] (section T-17101), [[register-cheatsheet]] (six rows).
+
+Types: `RpgObjectRecord44.unk_40` (record 155 +0x40, the byte of `D_8012163C`), `RPG_BAT_OVERRIDE_func_8013F15C` wrapper in `RPG_BAT.h`, `MAIN_API_OVERRIDE_func_800AE0F0` wrapper in `main_api.h`. Other unmatched RPG_BAT step functions that keep `D_8015EDE0` in `$v1` (`func_80138F6C`, `func_80146C30`, `func_80157158`) should be tested with the same `--proto 's32 f();'` views.
+### Package results (T-17104)
+
+`w3-rpg-bat-p04`: `func_80146C30` (2,992 bytes) matched in plain C with one FAKE ([[matching-notes]], "T-17104"): implicit `s32` views of `func_8013E7C0` and `func_8013E97C` colour the `D_8015EDE0` counter web `$v1`, and a rolled 3-trip loop over `D_8015ECEC`. The same two overrides make the guarded `func_80145CC0` (T-12300) match under `funcdiff --proto`; its file still needs the edit.
+### Wave 3 results
+
+- `w3-rpg-bat-p03` ([[tickets/T-17103-w3-rpg-bat-p03]]): 4 of 4 matched, `80137280.c` (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`, 3,048 bytes). Details and the FAKE tricks in [[matching-notes]] ("T-17103"). Findings for the rest of the unit: the asset-pointer scalars `D_8015EE8C`..`D_8015EED0` are one array of 0x18-byte records (defined as scalars in `8014E780.c`, stores through their address keep the original order); two unused `s32` above a spill slot add the 8 frame bytes that `func_80152080` lacks (try `s32 pad1; s32 pad2;` before its spill local); the enemy-message scenes `func_80138170`, `func_801387F0`, `func_80138B9C` share the `u32` view of `D_8015EBAC` and the implicit-int `func_8013E7C0`.
+- `w3-rpg-bat-p02` ([[tickets/T-17102-w3-rpg-bat-p02]]): 3 of 3 matched, `func_80151C10`, `func_80156D78`, `func_80157158` (3,056 bytes). The `$v1`-selector miss of all three was fixed by an int-returning view of one callee (`func_8013E7C0` in `80151C10.c`, `func_8013F15C` in `80156CC0.c`, file-wide `RPG_BAT_OVERRIDE_` guards); details in [[matching-notes]], "T-17102".
+
+## Package w3-rpg-bat-p08 (T-17108)
+
+[[tickets/T-17108-w3-rpg-bat-p08]]: `src/ovl/RPG_BAT/8014E780.c` and `8014A660.c`, all six functions matched in plain C (1,844 bytes): `func_8014E994`, `func_8014EBEC`, `func_8014EF8C`, `func_8014F278` (one shared loop counter for the clear loops, the `i + 96` record loop, `(&D_8015EDC4)[3]` / `(&D_8015EDF0)[3]` first-symbol stores) and `func_8014AB84`, `func_8014AC74` (element-index and typed-record accesses instead of byte-offset casts). No header change. The "loop shape, not the type, is the open problem" note above is solved: the loops need one counter. Method and idioms: [[matching-notes]] (section T-17108), [[register-cheatsheet]] (five rows).
+
+### Package results (T-17109)
+
+`w3-rpg-bat-p09`: `func_8013D834`, `func_8013DC60` (`8013D780.c`) and `func_80147930` (`801477E0.c`) all matched in plain C, 4,268 bytes ([[matching-notes]], "T-17109"). The two CD-load state machines read the state byte as `D_800E6280.unk_110D` after every call and write the `+ 2` / `+ 3` arms as 2 / 3 single increments (ugen takes a temporary per step); `func_8013DC60` is `s32` without a return. `func_80147930` needed its return values (the draft had none), `D_8015EBFC.unk_10`/`unk_14` for the two promoted counters, an empty `case 14:` and a scalar view of `D_8015EBCC` (`RPG_BAT_OVERRIDE_D_8015EBCC`). Four new rows in [[register-cheatsheet]].
+- `w3-rpg-bat-p11` ([[tickets/T-17111-w3-rpg-bat-p11]]): 2 of 2 matched, `func_80144010` (1,196 B) and `func_801505B8` (1,376 B). `func_80144010` needs the club index as the global `D_8015EBA0` (a local is coloured before the hoisted loop constants) and `D_8015EB9C` handled without a local; `func_801505B8` needs a file-local `s32` view of the `D_8015EDAC` selector (`RPG_BAT_OVERRIDE_D_8015EDAC`) and the display-record fields as `DisplayActor44` elements. Details in [[matching-notes]] ("T-17111") and [[register-cheatsheet]].
+- `w3-rpg-bat-p17` ([[tickets/T-17117-w3-rpg-bat-p17]]): 1 of 1 matched, `func_8013CC90` (928 B, draft 157 rows, one FAKE: the scalar-view scrutinee). The fix was in the draft: update `RpgStat.unk_34` (`D_8015EC30`) in place so uopt promotes it, `switch (sel = D_8015ED98 & 0x1FF)`, a `u32` file view of `D_8015ED98` (`RPG_BAT_OVERRIDE_D_8015ED98`) and a scalar-view scrutinee ([[matching-notes]], "T-17117").
+
+## Package w3-rpg-bat-p10 (T-17110)
+
+[[tickets/T-17110-w3-rpg-bat-p10]]: `src/ovl/RPG_BAT/8014ADD0.c`, 3 of 4 matched in plain C (`func_8014C360`, `func_8014B79C`, `func_8014D11C`, 1,788 bytes); `func_8014BFE4` stays `INCLUDE_ASM` (hand draft, 128 rows, `drafts/T-17110/RPG_BAT/func_8014BFE4/hand.c`). Details in [[matching-notes]] ("T-17110"), four rows in [[register-cheatsheet]].
+
+Types and header: `D_8015E740` is `u8 **` (a table of string pointers), `func_8014B79C` is `void`, prototypes for `func_8013E864` and `func_8014EB58`, externs for the four triple heads `D_8015EE5C/68/74/80`. The state triple `D_8015EE44` is read as scalars (`D_8015EE48` state, `D_8015EE4C` counter) in the state machine, which lets uopt promote the state into `$a0`; keep that in the other functions of the family that touch it. The `D_8015EE5C`..`D_8015EE88` triples are four 0xC-byte records (`func_8014C360` and `func_8014BFE4` clear one by `switch (slot)`); they stay scalars because the original writes them with separate `lui` per store.
+### Package w3-rpg-bat-p07 (T-17107)
+
+`func_8013BBF8` and `func_8013EA60` matched (types `RpgPadSeq` at `D_8015EBEC`, four words; `RpgGauge` over `D_8015EBC0..D_8015EBD4`, six words, reached through `RPG_GAUGE` until the other users migrate); `func_8013B5B0` (25 rows, promoted state byte in `$v0` instead of `$v1`) and `func_8013E54C` (16 rows, loop preheader order) stay guarded. Notes: [[matching-notes]], section "T-17107".
+- `w3-rpg-bat-p15` ([[tickets/T-17115-w3-rpg-bat-p15]]): 2 of 4 matched, `func_801328C4` (464 B: declare the loop counter before the stack table, the table drops 4 bytes) and `func_8014A3DC` (672 B: an `s32` return type for the implicit-int definition stops as1 from hoisting a second `lui` above the case branch). `func_80132B34` (constant folding, a phi form keeps the adds unfolded but IDO shares the tail) and `func_80149C5C` (252 register rows: the original keeps `D_8015EDB4` in `$a1` and the chain value in `$v1`) stay `INCLUDE_ASM`. Details in [[matching-notes]] ("T-17115").
+
+### Package w3-rpg-bat-p18 (T-17118)
+
+`func_80133108` (4,192 B, the 30-case Salmon Boomerang cutscene script) matched from the 863-row T-14500 draft: angle computed once before the sine loops, one shared `tmp` local, the case 9 record loop indexed `[i + 64]`, `RPG_BAT_OVERRIDE_func_8013F15C` only. Details in [[matching-notes]] (section T-17118).
+## Package w3-rpg-bat-p12 (T-17112)
+
+[[tickets/T-17112-w3-rpg-bat-p12]]: `src/ovl/RPG_BAT/801525B0.c`, four of four matched in plain C (3,404 bytes): `func_80154220` (quad primitive with `xy`/`uv` word tables and a unary-minus offset), `func_80153F3C` (two `s32[8]` tables, the x pair of each point on one line; `D_80120E93` is `u8`) and `func_801529B4` (compare switch with a stacked shared arm, jump table inside `if (D_8015EB9C != 0xE)`). `func_80153784` matched in the closer pass (case 1 load schedule: every access to `D_8015EC40`/`D_8015ED28`..`D_8015ED38` through the `D_8015EC38` symbol, so as1 keeps the loads and stores in source order; FAKE until the aggregate is known). Types: `D_80120E93` `u8` in `main_api.h`, four prototypes in `RPG_BAT.h`. Details and idioms: [[matching-notes]] (section T-17112), [[register-cheatsheet]] (eight rows).
+
+### Package w3-rpg-bat-p19 (T-17119)
+
+[[tickets/T-17119-w3-rpg-bat-p19]]: `src/ovl/RPG_BAT/80148F70.c` and `80141060.c`, 2 of 2 matched in plain C (`func_80148F70` 1,644 B, `func_80141060` 2,564 B linked; 4,208 B). `func_80148F70` is the m2c draft rewritten as plain per-arm assignments (uopt promotes `D_8015EBB0` to `$a3` by itself); `func_80141060` uses typed `DisplayActor44` records for the call loops and byte-array index loops for the unrolled 40..63 groups. Both frames need one named local that uopt folds (`flag`, `sel`), no pad. Types: `D_800E6280.unk_66C[D_8015EBA0].unk_00` (a `GsRec66C` halfword) for the clamped value. Details in [[matching-notes]] ("T-17119").
+
+## Package w3-rpg-bat-p16 (T-17116)
+
+[[tickets/T-17116-w3-rpg-bat-p16]]: `src/ovl/RPG_BAT/80155CC0.c`, `80134D30.c`. 2 of 3 matched in plain C: `func_80156064` (828 B; `RpgObjectRecord44[147]` fields, two index loops over records `i + 96` and the words `(&D_8015EBAC)[i + 50]`, compound assignment on the word, `RPG_BAT_OVERRIDE_func_8013F0F4`). `func_80135358` (1,700 B) matched by the closer pass (the last range in `$v0` moved to `$v1` with `RPG_BAT_OVERRIDE_func_8013E97C`, the implicit int view; `h + -h` for the unfolded `subu s1,s1`, three declared locals for frame and spill); `func_80134E78` (1,248 B) stays `INCLUDE_ASM` (constant stored and passed gap, unfolded `v0 + 0x10`; draft in `drafts/T-17116/`). Type facts: `D_8015EC9C`, `D_8015ECC4`, `D_8015ECEC` start three 10-word rows (stride 0x28) of the 8-entry formation words (from x, to x, y) that sit at `D_8015EBAC + 4 * (60, 70, 80)`; `D_8015EC68/EC6C/ED08` stay scalars (struct or record views share `lui at`). Details: [[matching-notes]] "T-17116".

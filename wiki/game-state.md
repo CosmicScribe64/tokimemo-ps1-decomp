@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-10
+updated: 2026-10-17
 sources: ["include/main_api.h", "tools/migrate_globals.py", "config/migrate_globals.txt", "tools/type_recovery.py", "tools/aggregate_audit.py", "asm/**/*.s"]
 ---
 
@@ -99,7 +99,26 @@ A "symbol-direct" access (`lui %hi(D_X); lbu %lo(D_X)`) is therefore no evidence
 
 **Rule for the future** (`tools/migrate_globals.py`): a `keep` line (a separate-symbol view for one file) is accepted only when the original object of that file has a hoisted read-modify-write pair on that address (`tools/aggregate_audit.py --pairs`); `--check` runs the audit on that object and rejects the line otherwise. A function that misses by registers, operand order or scheduling does not get a view.
 
+**Proposal (T-20820; two proof lines applied in T-21520, rule text not yet in CODING_STANDARDS).** A second kind of evidence for a `keep` line: a byte-match necessity proof, `keep <file> <symbol> proof=<func>:<rows_without>:<asm_sha1_8> <reason>`. It covers the counter-tail family (TACO `func_8014616C`, `func_80149538`, ...) where the original reads the frame counter again as another uopt variable and no hoisted pair exists. The asm shape alone is not evidence (299 of 299 matched functions with it match in plain C); the compile-based proof is. Rule text, measurements and the open decision: [[keep-lines]].
+
 **Update (T-9020).** The four list-1 functions of wave 5 said to need "separate scalars" were checked again: main `func_80042960` matches with the T-8080 selector view (`switch (*(u8 *)&D_800E6280.unk_1108)` in an `s32` function); VALEN `func_80133670`, BUNKASAI `func_80146030` and TACO `func_8013546C` miss on one register or one load position, which the scalar declaration does not change either. The Rec38 flag word `unk_1BC[i].unk_0C` is now the union `Rec38Flags` with the bit-field struct `CharFlags` (`.f.b1`, `.f.f9`, ...) in place of per-file views ([[matching-notes]], "Wave-5 codegen shapes (T-9020)").
+
+## Bit-field views of the packed words (T-20900)
+
+One view per word family, all in `include/game.h` or `include/main_api.h` (the per-unit copies were merged, see
+[[data-types]] "Shared-type unification"):
+
+| member | view | bits |
+|---|---|---|
+| `unk_0F4` | `ScheduleFlags` | `unk_08:4`, `unk_12:4`, `b16` .. `b20`, `unk_21:3` (counter), `unk_24:8` |
+| `unk_0F8` | `GsDateBits` | `month:4`, `day:5`, `unk_09:2` |
+| `unk_54C[8]` | `ScheduleEntryFlags` | `unk_00:5`, `b24`, `unk_25:4`, `active` (bit 29), `unk_30:2`; date halves: `ScheduleEntryDate` |
+| `unk_66C[]` | `ScheduleClubFlags` | `b24`, `unk_25:2` (the count of MASTER and the grade of KANGEI/ETC), `unk_27:3`, `b30`, `unk_31` |
+
+RENSYU's `RensyuClubCount` reads the same club words with a `u16` container and stays a separate view.
+
+The object right after `GameState`, the 0xEE0-byte work area `D_800E7D10` (album slots and names, TACO's settings at
++0x40), is one struct too: `Work800E7D10` in `main_api.h` ([[data-types]]).
 
 ## Tool and workflow
 

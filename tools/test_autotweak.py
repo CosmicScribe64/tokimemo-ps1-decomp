@@ -495,9 +495,21 @@ class RegdiffHints(unittest.TestCase):
         self.assertTrue(err.error)
         self.assertEqual(err.summary(), "error")
 
+    def test_order_only_report_maps_to_order_and_line_edits(self):
+        body = ["regdiff f [TT]  draft: f.c", "  4 draft / 4 original instructions",
+                "  STRUCTURE differs in 2 place(s); first at draft insn 0 / original insn 0:",
+                "    - draft    addiu v0,zero,1", "    + original lw v1,0(a0)",
+                "  ORDER-ONLY: the draft has the same instructions as the original in another order (2 place(s) move)"]
+        h = A.parse_regdiff("\n".join(body))
+        self.assertEqual(h.classes, ["order-only"])
+        self.assertEqual(h.kinds[:4], ["group", "order", "join", "split"])
+        plain = A.parse_regdiff("\n".join(body[:-1]))
+        self.assertEqual(plain.classes, ["structure"])
+
     def test_table_names_real_edit_kinds(self):
         known = {"byteview", "swap", "join", "split", "compound", "expand", "emptytest", "pad", "declswap",
-                 "shift", "inline", "temp", "width", "order"} | set(A.typefix.KINDS)  # T-11240
+                 "shift", "inline", "temp", "width", "order"} | set(A.typefix.KINDS) | set(A.recipes.KINDS)  # T-11240, T-20830
+        self.assertEqual(set(A.KINDS), known)
         produced = {A.edit_kind(v.label) for v in A.variants(FUNC)}
         self.assertTrue(produced <= known, produced - known)
         for cls, kinds in A.HINT_EDITS.items():
@@ -658,7 +670,7 @@ class Main(Repo):
 
     def test_list(self):
         rc, out = self.run_main(["--list", "--all"], [])
-        self.assertRegex(out, r"^AA:func_80132100  src/ovl/AA/80132000.c  \d+ edits\n$")
+        self.assertRegex(out, r"^AA:func_80132100  src/ovl/AA/80132000.c  \d+ edits  .*\bswap \d+.*\n$")
 
     def test_regdiff_hint_in_output_and_flag(self):
         made = []

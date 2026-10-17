@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # EN_NICHI family results
@@ -94,4 +94,59 @@ From the orchestrator's `inventory2.py`/`mklists3.py`; lists in its scratchpad.
 | w3-en-nichi-p02 | T-18202 | `80136B10.c` | 3 (`func_80138CCC`, `func_80136DEC`, `func_8013735C`) | 4,808 |
 
 Left for later waves: `func_80132450`, `func_801339D4`, `func_80134800`, `func_80135ACC`, `func_80135FBC`,
-`func_801362A4` in `80132000.c`.
+`func_801362A4` in `80132000.c`. Since T-20920 the first four are matched (see "Targeted type pass (T-20920)" below);
+`func_80135FBC` and `func_801362A4` are still open.
+
+## Targeted type pass (T-20920)
+
+[[tickets/T-20920-types-en-nichi]], branch `ty-en-nichi` from `w2-good`. Start: 14 unmatched functions (12,964 bytes),
+two of them guarded (`func_801330D0`, `func_80136A2C`). End: 6 unmatched (6,636 bytes), 8 matched (6,328 bytes), all
+by hand on the new types, every step EN_NICHI sha1 OK and the clean build 27/27.
+
+### Type map
+
+| Type / global | Replaces | Evidence |
+| --- | --- | --- |
+| `EnObj.unk_14`, `EnObj.unk_18` as `Fix32` (16.16 x, y), `EnObj.unk_20` as `s32` | `u8 unk_14[2]; s16 unk_16;`, `u8 unk_18[2]; s16 unk_1A;`, `u8 unk_20[4]` | `func_801339D4` reads and writes +0x14, +0x18 and +0x20 as words (`lw`/`sw`), every other user reads the halves at +0x16/+0x1A (`lh`/`sh`): `.unk_16` is now `.unk_14.h[1]`, `.unk_1A` is `.unk_18.h[1]` (26 matched uses). |
+| `EnFixPos` (`Fix32 unk_00; Fix32 unk_04;`, 8 bytes): `D_801392AC[15][12]` (the point grid) and `D_80139228[10]` (the pop-up centres) | `EnResetSlot8` (four `s16`, T-9710) and `s16 D_80139228[10][4]` | `func_80135ACC` adds 16.16 words to the grid points (`lw`/`sw` at +0/+4) and subtracts the centre words; `func_80135FBC`, `func_801354E0`, `func_80135600` and `func_80135A48` use the integer halves (+2, +6). |
+| local `Fix32 x, y` in `func_80135ACC` | m2c's `*(s16 *)((u8 *)&sp68 + 2)` | only the integer half is set, then the whole word is read (`sh 0x2(s6)` .. `lw 0x68(sp)`). |
+| local `s32 p[4][2]` and `POLY_FT4 *` in `func_80135FBC` | eight spilled scalars, byte-offset casts | the corner positions sit in memory at sp+0x54.. in x, y order (an array, not spills); the primitive is a 0x28-byte `POLY_FT4` (`GetWorkBase(0x28)`, uv bytes at +0x0C/+0x14/+0x1C/+0x24, tpage +0x16, clut +0x0E). |
+| `EnHalf64` copy in `func_80138CCC` with entries 32..47 rewritten | m2c's separate `s32 spB8[]` | the fill loop walks sp+0xB8..0xD8, which is `tbl.value[32..47]` of the copy at sp+0x78. |
+| `DisplayFixActor44` for display record 0 in `func_801330D0` and records 105..116 in `func_80138CCC` | `(&D_8011ECF4)[1]` (FAKE), `volatile` pointers (FAKE) | the two words of record 0 are one object (the second load stays after the first store); rows 109.. and 113.. add 16.16 steps to +0x24. |
+| `D_800E7D10.flags[11]`, `.flags[12]` | `D_800E7D2F`, `D_800E7D30` (undeclared) | `Work800E7D10` (T-20900); the base is now a link name in `config/symbol_addrs_types.txt`. |
+
+`include/ovl/EN_NICHI.h` also gained prototypes for `func_80136700`, `func_80136904` and the new definitions
+(`func_801339D4`, `func_80134800`, `func_80135274`, `func_80135ACC` take `s32 arg0`).
+
+### Matched (all by hand)
+
+| Function | Bytes | Baseline score | What made it match |
+| --- | ---: | ---: | --- |
+| `func_80135ACC` | 1,160 | 268 | the `Fix32` locals; direct `D_80139228[arg0]` (a pointer local keeps the centre's y load below the grid store); band bounds `r0`..`r7` as declared locals, which with `x`, `y` in memory gives the 0x98 frame (T-3330 slot rule); one FAKE empty statement `};` from the permuter for the register order |
+| `func_80134800` | 1,052 | 324 | plain logic in index form; a pointer local moves the spill slot by 4 |
+| `func_801339D4` | 724 | 181 | `EnObj` words; index form with no locals (a pointer or a remainder local grows the frame by 8) |
+| `func_80132450` | 780 | 144 | record fields in `DisplayActor44` index form, implicit int; the second loop by absolute record index 96..115 |
+| `func_801330D0` | 736 | 60 (guarded) | record 0 words through `DisplayFixActor44`; the clamp through a pointer to the pool (reloads after each store, base in `$v1`) and the copy as `p[152]`; replaces the T-10610 guard |
+| `func_80135274` | 620 | 170 | the result is unset on the default path, so IDO keeps it in memory; declaration order `dx, dy, dir` gives the slots |
+| `func_80136A2C` | 228 | 6 (guarded) | a plain `for` loop, which IDO unrolls by two; replaces the T-10850 guard and its FAKE |
+| `func_80138CCC` | 1,028 | 368 | the table entries 32..47, the u8 girl list and count, the neighbour read before the new frame is stored, one `rand` variable per row (frame) |
+
+### Redraft and paired scores
+
+`tools/redraft.py --unit EN_NICHI` (default variants), once on a snapshot of `f3933305` (before the types) and once on
+`c2dabc21` (after them), each from its own copy under `build/ty/`. Drafts in `drafts/T-20920/EN_NICHI/<func>/`
+(`result.json`: `scope`, `score`, `census_score`, `base_score`; the matched ones have `status: matched` and the body
+as `hand.c`; `catalog.jsonl` has one line per function).
+
+| | value |
+| --- | --- |
+| the 6 still unmatched | same best score before and after: `func_80132EE8` 242, `func_8013358C` 77, `func_80135FBC` 288, `func_801362A4` 65, `func_80136DEC` 480, `func_8013735C` 584 (sum 1,736) |
+| the 8 matched | baseline 1,521 rows in all (144 + 60 + 181 + 324 + 170 + 268 + 6 + 368), now 0 |
+| draft text | no m2c draft of the 6 uses the new fields; the casts are unchanged (`func_80135FBC` 8, `func_8013735C` 23) |
+| hand drafts (instruction rows that differ, relocation-blind, not the census measure) | `func_80132EE8` 6 (two `lui` swapped), `func_801362A4` 11 (u8 load register, frame +8), `func_80135FBC` 14 (5 with a FAKE `u1 = arg0`), `func_8013358C` 46 (T-18200 hand) |
+
+This repeats the lesson of T-16550/T-16560/T-20900: the header types alone do not move the m2c scores. What they
+did here was make hand drafts short enough to finish: with the 16.16 fields and the right local aggregates
+(a `Fix32` local, a point array, the table entries), the drafts of six functions were within a few rows on the first
+compile, and the rest was frame and register order (declaration order of locals, index form against pointer
+locals, implicit int).

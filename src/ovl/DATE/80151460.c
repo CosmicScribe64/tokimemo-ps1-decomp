@@ -1,6 +1,7 @@
 #define MAIN_API_OVERRIDE_D_80122CD0 /* switched as u32: selector in $v1 (main_api.h: s32) */
 #include "common.h"
 #include "ovl/DATE.h"
+#include "psx_types.h"
 
 extern u32 D_80122CD0;
 
@@ -100,7 +101,34 @@ void func_801517C8(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-17204, 14 differing lines; the copy's end pointer takes $t6 where the original has $t7 (one ugen
+ * temporary more is consumed before it), which shifts the later constant temporaries by one. Closer pass: in our
+ * ugen the copy skips two temporaries only when a direct memory store (global or stack local) is the last store or
+ * branch before it; here the loop's back-edge branch is last, and calls, stack arguments, register locals and copy
+ * spellings do not change that. A dead store to a local array after the loop does, but adds a `sw` and 8 bytes of
+ * frame. */
+#ifdef NON_MATCHING
+void func_801518B8(void) {
+    s16 i;
+
+    for (i = 0; i < 6; i++) {
+        load_tpage_buf_lock(i + 5, ((s32 *)D_8015ED70)[i], 1);
+    }
+    func_80151460();
+    load_palette(D_8015ED80, 0x11, 1, 2, 0);
+    func_80084E90(D_8015ED84, D_8015ED88, D_8015ED8C, D_8015ED90, D_8015ED94, D_8015ED98);
+    func_800850D4(D_8015ED74, D_8015ED78, D_8015ED70, D_8015ED7C);
+    ((DisplayActor44 *)D_8011ECD0)[97] = ((DisplayActor44 *)D_8011ECD0)[96];
+    ((DisplayActor44 *)D_8011ECD0)[97].unk_16 = 3;
+    D_80122D10 = 2;
+    D_80122D0C = 1;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 3;
+    ((DisplayActor44 *)D_8011ECD0)[97].unk_18 = 3;
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_801518B8);
+#endif
 
 void func_80151A20(void) {
     D_8015E208 = D_8015DEB8;
@@ -227,9 +255,119 @@ void func_80152024(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152060);
+/* The last call's result stays in $v0 as the return value: s32 with no final return (T-17204). */
+s32 func_80152060(void) {
+    s16 i;
+    s32 found;
+    s16 *rec;
+    DateWords2 tbl;
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152268);
+    tbl = D_8015EF0C;
+    if (D_800E6280.unk_1104.u == 0) {
+        D_80120696 = 1;
+        func_80046290(tbl.v[0], tbl.v[1], 0xF);
+        func_80044750(0xBF);
+        func_80044750(0x300);
+        D_800E6280.unk_1104.u += 1;
+    } else {
+        if (func_80046094() == 9 && D_800E6280.unk_1104.u >= 0x3D) {
+            D_80120696 = 0;
+            func_8004284C();
+            func_80044750(0x202);
+            return 0;
+        }
+        if ((D_800E6280.unk_F88 & 0x400040) && D_800E6280.unk_1104.u >= 0x3D) {
+            D_80120696 = 0;
+            func_8004284C();
+            D_80120668 = 3;
+            func_80044750(0xB4);
+            func_80044750(0x202);
+            return 0;
+        }
+        found = 0;
+        i = 0;
+        do {
+            rec = &((s16 *)D_8015EE20)[i * 3];
+            if (D_800E6280.unk_1104.u >= rec[0]) {
+                if (rec[1] >= D_800E6280.unk_1104.u) {
+                    found = 1;
+                    D_80120668 = rec[2];
+                }
+            }
+            i++;
+        } while (i < 0xA7);
+        if (found == 0) {
+            D_80120668 = 3;
+        }
+    }
+    if (D_800E6280.unk_1104.u >= 0x67C) {
+        D_80120696 = 0;
+    }
+    if (D_800E6280.unk_1104.u < 0x18E3) {
+        D_80120696 = 1;
+    }
+    if (func_800460EC() & 4) {
+        D_800E6280.unk_1104.u += 1;
+    }
+}
+
+/* Result is the last call's $v0 (s32, no return). T-17204 */
+s32 func_80152268(void) {
+    s16 i;
+    s32 v;
+    s32 j;
+    u32 n;
+
+    if (D_800E6280.unk_10F8 % 51 == 0) {
+        for (i = 0; i < 12; ) {
+            D_8015EE24[i] = func_800AE0D0() % 4;
+            ++i;
+        }
+    }
+    n = 1000;
+    /* FAKE: the dead copies `j = v` after each call keep `v` live across the call, so uopt promotes it to $s0 (with its
+     * narrowing and the copy `move s0,tN`) and puts the divisor constants in $s1, as the original has; without them the
+     * variable is folded away and `n` takes $s0. The original's real use of `v` after the calls is unknown. T-17204 */
+    v = (s16)((D_800E6280.unk_10F8 * 16) % n);
+    func_80152684((s16)v, 0, 9);
+    j = v;
+    v = (s16)((D_800E6280.unk_10F8 * 16) % n);
+    func_80152684((s16)(v - 0xA), 1, 9);
+    j = v;
+    v = (s16)((D_800E6280.unk_10F8 * 16) % n);
+    func_80152684((s16)(v - 0x14), 2, 9);
+    j = v;
+    v = (s16)((D_800E6280.unk_10F8 * 16 + 0x1F4) % n);
+    func_80152684((s16)v, 6, 9);
+    j = v;
+    v = (s16)((D_800E6280.unk_10F8 * 16 + 0x1F4) % n);
+    func_80152684((s16)(v - 0xA), 7, 9);
+    j = v;
+    v = (s16)((D_800E6280.unk_10F8 * 16 + 0x1F4) % n);
+    func_80152684((s16)(v - 0x14), 8, 9);
+    j = v;
+    dtd_on_tpage(0, 0, 9, 3, 0);
+    n = 0x320;
+    v = (s16)(n - (D_800E6280.unk_10F8 * 16) % n);
+    func_80152684((s16)v, 3, 0xD);
+    j = v;
+    v = (s16)(n - (D_800E6280.unk_10F8 * 16) % n);
+    func_80152684((s16)(v + 0xA), 4, 0xD);
+    j = v;
+    v = (s16)(n - (D_800E6280.unk_10F8 * 16) % n);
+    func_80152684((s16)(v + 0x14), 5, 0xD);
+    j = v;
+    v = (s16)(n - (D_800E6280.unk_10F8 * 16 + 0x190) % n);
+    func_80152684((s16)v, 9, 0xD);
+    j = v;
+    v = (s16)(n - (D_800E6280.unk_10F8 * 16 + 0x190) % n);
+    func_80152684((s16)(v + 0xA), 0xA, 0xD);
+    j = v;
+    v = (s16)(n - (D_800E6280.unk_10F8 * 16 + 0x190) % n);
+    func_80152684((s16)(v + 0x14), 0xB, 0xD);
+    j = v;
+    dtd_on_tpage(0, 0, 0xD, 3, 0);
+}
 
 typedef struct {
     s32 a;
@@ -390,4 +528,24 @@ void func_80152DF8(void) {
     func_800833A0();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152E34);
+/* Implicit int with no return value: the callers above come before this definition (T-20600). */
+s32 func_80152E34(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1, s32 z, s32 trans) {
+    GameState *g;
+    POLY_G3 *poly;
+
+    g = &D_800E6280;
+    poly = func_800490F0(0x1C, D_8011ECA0);
+    func_8009F004(poly);
+    SetSemiTrans(poly, trans);
+    /* setRGBn-style comma lines with masks: separate statements give other registers (T-20600). */
+    poly->r0 = (c0 >> 16) & 0xFF, poly->g0 = (c0 >> 8) & 0xFF, poly->b0 = c0 & 0xFF;
+    poly->r1 = (c1 >> 16) & 0xFF, poly->g1 = (c1 >> 8) & 0xFF, poly->b1 = c1 & 0xFF;
+    poly->r2 = (c1 >> 16) & 0xFF, poly->g2 = (c1 >> 8) & 0xFF, poly->b2 = c1 & 0xFF;
+    poly->x0 = g->unk_014[D_8011ECA0] + x0;
+    poly->y0 = g->unk_018[D_8011ECA0] + y0;
+    poly->x1 = g->unk_014[D_8011ECA0] + x1;
+    poly->y1 = g->unk_018[D_8011ECA0] + y1;
+    poly->x2 = g->unk_014[D_8011ECA0] + x2;
+    poly->y2 = g->unk_018[D_8011ECA0] + y2;
+    func_8009EED0(&D_800E8CA0[(D_8011ECA0 << 10) + z * 4], poly);
+}

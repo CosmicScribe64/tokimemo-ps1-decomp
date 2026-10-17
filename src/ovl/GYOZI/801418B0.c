@@ -17,7 +17,29 @@ void func_80141900(void) {
     D_80148814 = 0x801DB000;
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_80141944);
+/* Return type preserves the original fall-through schedule. T-20006. */
+s32 func_80141944(void) {
+    s32 idx; /* Index precedes the copied table (T-3330, T-20006). */
+    GzCallbacks68 table;
+
+    table = D_80148880;
+    idx = D_800F647A;
+    table.callbacks[idx](0x80);
+    if (D_800F647A < 8) {
+        D_8012B8C0[0].unk_07 = D_801317EB;
+        if (D_8012B8C0[0].unk_18 == 0 && D_8012B8C0[0].unk_08 == 0) {
+            if (++D_8012B8C0[0].unk_16 >= 3) {
+                D_8012B8C0[0].unk_16 = 0;
+            }
+        }
+    }
+    if (D_800F647A >= 0xA && D_80148820 != 0) {
+        func_801428EC();
+    }
+    if (D_800F647A >= 0xA && D_80148824 != 0) {
+        func_80142C14();
+    }
+}
 
 void func_80141A94(void) {
     func_8004C6A0(0, 0x40);
@@ -93,7 +115,22 @@ void func_80141ACC(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_8014206C);
+void func_8014206C(void) {
+    /* Signed local preserves the original compare operand order. T-20005. */
+    s32 selector = D_801486E4;
+    if (selector && selector != 7) {
+        ((DisplayActor44 *)D_80129F40)[98].unk_03 |= 0x80;
+    }
+    if (selector && selector != 7) {
+        ((DisplayActor44 *)D_80129F40)[99].unk_03 |= 0x80;
+    }
+    if (selector && selector != 7) {
+        ((DisplayActor44 *)D_80129F40)[100].unk_03 |= 0x80;
+    }
+    ((DisplayActor44 *)D_80129F40)[101].unk_03 |= 0x80;
+    D_80148824 = 1;
+    func_8004DE1C();
+}
 
 void func_8014210C(void) {
     s16 a[4];
@@ -124,7 +161,7 @@ void func_8014261C(void) {
     s16 i;
 
     for (i = 0; i < 6; i++) {
-        D_80129F40[i * 0x44 + 0x1983] = 0;
+        ((DisplayActor44 *)D_80129F40)[i + 96].unk_03 = 0;
     }
     D_80148820 = 0;
     D_80148824 = 0;
@@ -207,9 +244,9 @@ void func_80142C14(void) {
     s16 i;
 
     for (i = 0; i < 3; i++) {
-        if (((GyoziInitSprite44 *)D_80129F40)[i + 0x62].unk_18 == 0xE
-            && ((GyoziInitSprite44 *)D_80129F40)[i + 0x62].unk_08 == 9) {
-            ((GyoziInitSprite44 *)D_80129F40)[i + 0x62].unk_16 = func_800BCE40() % 3;
+        if (((DisplayActor44 *)D_80129F40)[i + 0x62].unk_18 == 0xE
+            && ((DisplayActor44 *)D_80129F40)[i + 0x62].unk_08 == 9) {
+            ((DisplayActor44 *)D_80129F40)[i + 0x62].unk_16 = func_800BCE40() % 3;
         }
     }
 }

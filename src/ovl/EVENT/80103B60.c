@@ -363,14 +363,14 @@ void func_80104C3C(void) {
     /* Port of the DATE clone func_801572E4 (T-17400). */
     s16 i;
 
-    *(Ev44 *)&D_800EAFA0[0x88] = *(Ev44 *)D_800EAFA0;
+    ((DisplayActor44 *)D_800EAFA0)[2] = ((DisplayActor44 *)D_800EAFA0)[0];
     D_800EB03E = 4;
     D_800EB02A = 9;
     for (i = 0; i < 6; i++) {
         ((Rec24 *)D_800EC190)[i + 4].unk_00 |= 0x80000000;
     }
-    D_800EAFA0[3] &= 0xFF7F;
-    D_800EAFA0[0x47] &= 0xFF7F;
+    ((DisplayActor44 *)D_800EAFA0)->unk_03 &= 0xFF7F;
+    ((DisplayActor44 *)D_800EAFA0)[1].unk_03 &= 0xFF7F;
     D_800EECD4 = 0;
     D_800B0860[6] = D_800B0860[7] = D_800B0860[8] = 0x7F;
     func_80011DFC();
@@ -394,8 +394,8 @@ void func_80104DB4(void) {
     D_800B0860[8] = 0; for (i = 0; i < 6; i++) {
         ((Rec24 *)D_800EC190)[i + 4].unk_00 &= 0x7FFFFFFF;
     }
-    D_800EAFA0[3] |= 0x80;
-    D_800EAFA0[0x47] |= 0x80;
+    ((DisplayActor44 *)D_800EAFA0)->unk_03 |= 0x80;
+    ((DisplayActor44 *)D_800EAFA0)[1].unk_03 |= 0x80;
     D_800EECD4 = 1;
     func_80011DFC();
 }

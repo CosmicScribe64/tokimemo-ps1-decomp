@@ -1,6 +1,8 @@
 ---
 type: research
-updated: 2026-10-09
+updated: 2026-10-17
+ticket: T-3110, T-20700
+sources: ["tools/ido_eval.py", "tools/test_ido_eval.py", "tools/ido_eval_cases/", "wiki/data/t0018-cases.md", "wiki/original-compiler.md", "disc/files/CDROM/EXEDIR/O.BIN"]
 ticket: T-3110
 sources: ["tools/ido_eval.py", "tools/ido_eval_cases/", "wiki/data/t0018-cases.md", "wiki/original-compiler.md", "disc/files/CDROM/EXEDIR/O.BIN"]
 ---
@@ -14,6 +16,7 @@ Question: does IDO 5.2 (C 3.18, the release the O.BIN version stamps point at, [
 - **IDO 5.2 generates the same code as IDO 5.3.** With the frame pass, all 2564 matched C functions are byte-identical. Without it, only the 504 frameless ones are. All 46 blocked cases give the same result as 5.3. 5.2 does not make +16 frames, does not fix the T-0018/T-1321 cases or the constant reuse, and does not fix the function-pointer-table frame. Its one difference is the version stamp: it writes 3.18, the value in O.BIN.
 - **IDO 4.1's code generator (ugen) makes the original's +16 frames natively.** With 5.2's front end and uopt, 4.1's ugen gives exactly the frame pass's frame size and `$sp` offsets in all 2564 matched functions. But it changes the code of 80 of them (register reuse, unaligned-store expansion, sign-extension temporaries), and 5.3 already matched those against the original. The full 4.1 suite is further off: its front end puts string literals and `const` data in `.data`, while O.BIN keeps string literals in `.rdata`.
 - **No compiler or pass mix reproduces what T-1321's `cvt_pass.py` does.** That pass removes the unsigned-load widening and turns off copy propagation for switch temporaries. Its 26 pass-only ETC/TACO functions fail under 5.3, 5.2, 4.1 and every mix tried.
+- **T-20700: 4.1's as1 and ugen after the production front end (cvt pass, K&R).** 4.1's as1 changes 1 of 6336 matched functions (an `mflo` hazard fill where the original behaves like 5.3) and none of the 19 guarded sched/hoist drafts; 4.1's ugen changes 1355 and matches one draft (TACO `func_8013B2A0`). Both rejected; details in the T-20700 section below.
 - Recommendation: **(b) keep IDO 5.3 + the frame pass + the T-1321 ucode pass.** The evidence for it is below. Switching to 5.2 gains no function and adds an emulator plus a licensing step. The 4.1 result supports the frame pass: real IDO 4.1 code produces the pass's frame layout in every matched function, which is the strongest evidence so far that the pass models a real compiler behaviour (CODING_STANDARDS 7a).
 
 ## Provenance (private use only, never committed)
@@ -122,6 +125,177 @@ The pass undoes both. Test: `src/ovl/ETC.c` and `TACO.c` from commit `16bbea4` o
 
 The functions each configuration misses are a superset of the 26 that 5.3 misses. Neither 5.2's cfe nor 4.1's accom drops the widening, and neither version's uopt stops the switch-temporary propagation. So the T-1321 behaviours are not those of IDO 5.2 or 4.1 either.
 
+## IDO 4.1's as1 and ugen after the production front end (T-20700)
+
+Question ([[tickets/T-20700-ido41-as1-test]]): did the original use an IDO 4.1-like back end? T-3110 showed that 4.1's
+ugen makes the original's +16 frames, that 5.2 equals 5.3, and left 4.1's as1 untested on the T-20620 order-only near
+misses. Here the front half is the production pipeline of today (5.3 cfe in K&R mode, `tools/cvt_pass.py`, 5.3 uopt with
+`-nokpicopt`), which `ido_eval.py` does not model (no cvt pass). IDO 4.1 was fetched again from the URL in the table
+above (sha256 equal), into the gitignored `tools/local-compilers/`, and run only in the private image.
+
+**Verdict: reject both.** 4.1's as1 is 5.3's as1 except for one hazard rule, where the original sides with 5.3. 4.1's
+ugen changes a fifth of the matched functions in the direction away from the original. No mix is uniform and
+regression-free, so there is no adoption proposal and the build is unchanged.
+
+### Method (scratch, not committed)
+
+- Capture: every one of the 442 IDO C files compiled once with `tools/cc.py`'s pipeline (native image), with shims
+  that save ugen's input (uopt output and symbol table), ugen's binasm (before the frame pass) and 5.3 as1's output.
+  6336 C-defined functions (the matched set; guarded drafts are `INCLUDE_ASM` in this compile). Check: the captured
+  5.3 as1 output equals the ninja objects in all 6336 bodies (14 differ only by the trailing padding words that
+  `tools/trailing_pad.py` adds later).
+- Replay: only the swapped passes run again, under qemu-irix-4.0 in the `tokimemo-decomp-ido52` image (amd64; started
+  with `docker run` because its label predates the current `tools/Dockerfile`, so `tools/docker.sh` would rebuild
+  it). ECOFF to ELF conversion as in `ido_eval.py`, in the native image. Each variant is compared per function with
+  the captured 5.3 output (`funcdiff.functions`: `objdump -dr` lines, addresses stripped). About 6 minutes for the as1
+  variant and under 20 for the two ugen variants, at 2 jobs.
+- Near misses: the 18 files with a guarded `sched`/`schedule`/`hoist` draft of [[data/t0018-cases]] (19 drafts,
+  including all 8 order-only near misses of T-20620) compiled in full (asm-processor, padding) with `-DNON_MATCHING`
+  and the variant shims, then `funcdiff.py --resolve --built` against the original.
+
+**Interface detail found on the way.** ugen writes an `.option pic` binasm record: 5.3's ugen 0, 4.1's ugen 1.
+5.3's as1 obeys a 1 and makes PIC calls (`lw t9,0(gp); jalr t9`). 4.1's as1 reading the 0 of 5.3's ugen schedules much
+less (no branch-target or fall-through delay-slot fills): 439 of the first 1001 matched functions changed before the run
+was stopped. With the value 4.1's own ugen writes (1) the results are those of experiment 1. `ido_eval.py` now sets the record to the as1
+version's own value (`PIC_OPTION`, tests in `tools/test_ido_eval.py`); its `5.3/5.3/5.3/4.1 frame` mix then gives 109
+of 109 functions of `src/main/8005A0B0.c` equal to `5.3 frame` (40 differed before).
+
+### Experiment 1: production pipeline with only as1 replaced by 4.1's
+
+| measure | result |
+|---|---|
+| matched functions identical | **6335 of 6336** |
+| changed | 1: main `func_80046684` (plain C, no FAKE). 4.1's as1 leaves two `nop`s between `mflo` and the next `multu`; 5.3's as1 and the original move the next term's `sllv`/`and` there. A genuine regression |
+| 19 guarded sched/hoist drafts | identical `funcdiff` output to production for all 19 (no near miss fixed or changed) |
+| FAKE one-line tricks (46 sites in `src/`) | all compile identically under 4.1's as1; 4 sites split back to one statement per line in scratch copies (main `func_8004111C`, TT `func_80142D40`, NAME_ENT `func_80145848`, DATE `func_80137D1C`) differ from the original by the same 4, 4, 8, 4 rows under both as1 versions (unsplit control: MATCH). So 4.1's as1 also schedules by source line and needs the same tricks |
+
+### Experiment 2: 4.1 ugen + 4.1 as1 after 5.3 cfe/cvt_pass/uopt, frame pass off
+
+| configuration | identical of 6336 |
+|---|---|
+| 4.1 ugen, 4.1 as1 | 4980 (1356 differ) |
+| 4.1 ugen, 5.3 as1 (`.option pic 0`) | 4981 (1355 differ) |
+
+Kinds of the 1355 (4.1 ugen, 5.3 as1): 405 with `swl`/`swr` or `lwl`/`lwr` the original does not have (4.1's ugen
+expands word stores it cannot prove aligned; the full 4.1 suite, with its own front end, emits the same 16 pairs in
+`src/main/80041000.c`, so this is 4.1 behaviour, not a ucode-format artefact), 124 with the K&R narrow parameter
+converted in place (`andi a0,a0,0xffff` where the original has the `-cckr` copy `andi t6,a0,0xffff; move a0,t6`),
+399 with the same opcodes in other registers (in-place reuse such as `andi v0,v0,0xff` for the original's fresh
+`andi t7,v0,0xff`, temporary numbering), 21 order-only, the rest one or two instructions longer or shorter.
+
+Frames: in 1354 of the 1355 the frame size and `$sp` offsets equal the frame pass's, so 4.1's ugen and
+`tools/frame_pass.py` agree on 6335 of 6336 matched functions (T-3110: 2564 of 2564). The exception, DATE
+`date_event_choose`, is a spill 4.1's ugen does not need (frame 0x30 against 0x38), not a layout rule.
+
+FAKE tricks: 713 of the 6287 functions whose body the scan finds carry a `FAKE` comment (11.3%); of the 1318 changed
+ones, 351 (26.6%). Their kinds follow the overall mix (111 unaligned, 93 register-only, 45 one instruction shorter, 38
+same length, ...), so they change for the same generic reasons; tricked functions are over-represented because the
+tricks sit where register choice is delicate. No changed function was found whose trick 4.1 makes unnecessary.
+
+Near misses (19 guarded drafts, rows differing from the original, production then 4.1 ugen + as1):
+
+| draft | production | 4.1 ugen + as1 |
+|---|---|---|
+| TACO `func_8013B2A0` | 40 | **MATCH** (248 bytes, linked bytes equal) |
+| main `func_800754C0`, GEKO `func_80136C20`, ETC `func_80146400`, TACO `func_801511C0` | 9, 4, 14, 10 | same output |
+| main `func_800590CC`, `func_80062210`, `func_80077CA8` | 22, 24, 28 | same count, other rows |
+| main `csr_load_vram`, `dialogue_speak_part`, `file_checksum_ok`, `load_tpage_buf_lock` | 26, 16, 4, 29 | 49, 2036, 25, 42 |
+| VALEN `func_80134030`, TACO `func_8013506C`, EN_NICHI `func_80136A2C`, NAME_ENT `func_8013BB24` | 27, 29, 6, 28 | 263, 68, 40, 32 |
+| GYOZI `func_8013E638`, GEKO `func_80140040`, BUNKASAI `func_80151364` | 4, 7, 4 | 40, 36, 48 |
+
+TACO `func_8013B2A0` is the T-20620 struct-copy case ("ugen skips one temporary before word 2 of the struct copy, the
+original two"): 4.1's ugen numbers that copy like the original. It is not a general rule: of the 44 matched functions
+with `lwl`/`lwr` copies, 4.1's ugen keeps 24 identical and renumbers the copy registers in 8.
+
+### Experiment 3: mixes
+
+Nothing the data suggests is both uniform and regression-free. as1: 4.1's is neutral except the `mflo` hazard rule,
+where the original behaves like 5.3, and it fixes no near miss. ugen: the only 4.1 traits the original shares are the
+frame layout (already modelled by the frame pass, now on 6335 of 6336 functions) and one struct-copy numbering. Taking
+them from 4.1's ugen costs 1355 functions.
+
+### What it adds to the picture of the original compiler
+
+The original's back end is neither 4.1's nor 5.3's: its as1 is the 5.x as1 (hazard fill included), and its ugen has
+4.1's frame layout and at least one 4.1 temporary choice, but 5.x's fresh temporaries, alignment knowledge and K&R
+parameter copies. That fits an intermediate 3.18 ugen ([[original-compiler]]), which no available release reproduces.
+## T-20710: IDO 4.1's ugen and as1 on the true gaps
+
+[[tickets/T-20710-true-gap-census]] ran the census of [[data/true-gaps]] (55 guarded drafts whose difference is
+registers or order) through IDO 4.1's passes, one pass at a time, on the build's current pipeline (K&R, cvt pass,
+asm-processor, padding). Both archives were downloaded again on 2026-10-17 from the URLs in the provenance table,
+each into its own new directory under the gitignored `tools/local-compilers/`, and extracted inside Docker; both
+sha256 values equal the table. Nothing from them is committed.
+
+Harness (scratch, not committed): `cc.ido_frame_env` with the uopt, ugen or as1 entry pointed at the 4.1 binary under
+its qemu-irix; the cvt pass stays around uopt, the frame pass stays before as1 except with 4.1's ugen (which makes the
++16 frames itself). It ran in the existing amd64 image `tokimemo-decomp-ido52` with `docker run` (`tools/docker.sh`
+would rebuild that image from the current Dockerfile, which lacks the two lines above). Control: the 5.3 path of the
+harness gives the build's code for all 47 units. Two things had to be handled:
+- 4.1's ugen writes `.option pic1` into the binasm; 5.3's as1 then emits PIC calls (`lw t9,%call16(f)`, `jalr t9`).
+  5.3's ugen writes `pic0` under `-non_shared`, so the harness gives each as1 the value its own ugen writes: 0 for
+  5.3's as1, 1 for 4.1's (with 0, 4.1's as1 leaves delay slots empty, see the as1 paragraph below).
+- `ecoff_tool.py` runs in-process and rewrites `sys.argv`, so conversions in two threads corrupt each other; they
+  are serialised.
+
+### The block-copy state (T-19001) is a 4.1/5.x difference
+
+A struct copy of 0x44 bytes is a 12-byte loop whose end register comes from ugen's rotation (`$t6`..`$t9`,
+`$t0`..`$t5`): source + 3 in state B, source + 2 in state F (T-19001). Six one-function reproducers in
+`tools/ido_eval_cases/ugen_copy_state/`, compiled with the build flags:
+
+| copy placed | IDO 5.3 | IDO 5.2 | IDO 4.1 |
+|---|---|---|---|
+| at the entry | B | B | B |
+| after a loop | F | F | B |
+| after `if (n) f();` | F | F | B |
+| after stores through a pointer (`p[4] = 8;`) | F | F | F |
+| after a loop and a global store | B | B | B |
+| after a call | B | B | B |
+
+So 5.2 and 5.3 put the copy into F at a block start (loop exit, conditional block, join), 4.1 only after an indirect
+store. In the original, the census copies after a block start are in B, as with 4.1: main `func_80054C74`, DATE
+`func_801518B8`, TAIIKU `func_80140A90` (end-pointer loops, end register as in the original with 4.1's ugen) and TACO
+`func_8013B2A0` (matches with 4.1's ugen), `func_801472D4`, `func_8015B1B8` (every register as in the original; only
+4.1's `lwl`/`lwr` expansion is left). In the whole original (non-TT) there are 27 end-pointer copies: the 15 in
+matched functions are all B, the 5 F ones are unmatched functions whose copy follows stores to fields beside the copy
+source (an indirect store would explain them in all three compilers).
+
+### 4.1's ugen and as1 on the matched set
+
+Offline, as in T-20610: the build pipeline (cvt pass included) saved ugen's input (uopt's output and symbol table) for
+all 431 IDO files once; then 5.3's ugen plus the frame pass and 4.1's ugen ran on the same input, both assembled by
+5.3's as1, and every C-defined function was compared (instructions and relocations). For as1 the binasm of 5.3's
+ugen plus the frame pass went to both as1s.
+
+| pass from 4.1 | C functions compared | changed | main kinds of change |
+|---|---:|---:|---|
+| ugen | 6,337 | 1,307 | 387 `lwl`/`lwr`/`swl`/`swr` for word accesses, 342 narrowing in place (`andi a0,a0,0xff`, `sll s0,s0,16`), 387 other registers, 61 inserted or removed instructions, 17 `div` for `divu`, 16 stack offsets |
+| as1 (given `pic1`) | 6,337 | 1 | main `func_80046684`: two independent `sllv`/`and` pairs in the other order. With 5.3's `pic0` record instead: 1,866 changed, 1,054 of them with delay slots left empty |
+
+The 15 matched end-pointer copies: 13 functions identical under 4.1's ugen, 2 (DATE `func_801572E4`, EVENT
+`func_80104C3C`) changed only by in-place narrowing before the copy; no copy register changes. Procedures with an F
+copy under 5.3 (two `.set noat` records in a row in the binasm) are 35 matched non-TT functions (32 in TACO; procedures mapped to names by their
+order in the object); 17 of them are identical under 4.1's ugen, so 4.1 is in F there as well, and the other 18
+change for the reasons in the table, so they neither confirm nor refute the rule below.
+
+### Candidate rule, not adopted
+
+"ugen does not enter the block-copy state F at a block start; only an indirect store does" (4.1's behaviour). For:
+IDO 4.1 is a real compiler with this behaviour, the original agrees with it in 6 census functions and in all 15
+matched end-pointer copies, and the original is otherwise 5.x code with 4.1's frame layout (section "What this says
+about the original compiler"), the same kind of mix. Missing before it can be a build step: (1) an implementation in
+the build's 5.3 ugen; there is no reconstructed ugen source and the copy state sits inside ugen's register
+rotation, so a binasm pass would have to renumber every later ugen temporary; (2) the regression of that change
+alone on the 35 matched functions with F copies (the 4.1 comparison mixes in 4.1's other differences); (3) the C of
+the 5 F copies, to confirm they follow indirect stores. 4.1's ugen itself is no option: it changes 1,307 matched
+functions.
+
+4.1's as1 gives nothing on the census: with the `.option pic1` record its own ugen writes, 18 of the 21 drafts it
+was run on have exactly 5.3's lines and 3 have more. A first run that handed it 5.3's `pic0` record matched VALEN
+`func_80134030`, but in that mode 4.1's as1 leaves delay slots empty in 1,054 matched functions: the option
+mismatch, not 4.1's scheduler. A harness that feeds 4.1's as1 must give it `pic1`.
+
 ## What this says about the original compiler
 
 - Release 3.18 (stamp) with code that 5.3 (3.19) reproduces exactly wherever no known gap applies. That fits an IDO 5.2-generation suite, and 5.2 behaves identically to 5.3 on everything measured.
@@ -181,3 +355,9 @@ IMG=tokimemo-decomp-ido52 tools/docker.sh python3 tools/ido_eval.py cases tools/
 IMG=tokimemo-decomp-ido52 tools/docker.sh python3 tools/ido_eval.py stamp 5.2
 ```
 A full `regress` run takes about 15 minutes on Apple Silicon (amd64 emulation plus qemu-irix).
+
+T-20700 notes: the `tokimemo-decomp-ido52` image carries an older `tools/Dockerfile` label, so `IMG=... tools/docker.sh`
+now rebuilds it; start it with `docker run --platform linux/amd64` and the mounts of `tools/docker.sh` instead.
+`regress` globs `src/ovl/*.c`, which no longer exist since the per-object split (`src/ovl/<NAME>/<addr>.c`), and runs
+the 5.3 front end without `tools/cvt_pass.py`, so it no longer measures the production pipeline; T-20700 used a capture
+and replay harness instead (section above), whose steps are described there.

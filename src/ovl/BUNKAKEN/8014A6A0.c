@@ -1076,8 +1076,8 @@ void func_8014C374(void) {
         }
         break;
     case 13:
-        ((BunkakenModeFlags *)&D_800E7D4F)->b1 = 1;
-        ((BunkakenModeFlags *)&D_800E7D4F)->mode = 0;
+        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
+        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 0;
         g->unk_720 = g->unk_1108;
         g->unk_721 = g->unk_1109;
         g->unk_722 = g->unk_110A + 1;

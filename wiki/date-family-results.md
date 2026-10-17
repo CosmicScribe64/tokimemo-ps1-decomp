@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 sources: ["include/ovl/DATE.h", "drafts/T-17200/README.md", "drafts/T-17200/redraft.py", "tools/type_recovery.py", "tools/siblings.py"]
 ---
 
@@ -11,6 +11,8 @@ The DATE overlay (date scenes: one handler per scene step, each scene a `.c` fil
 retries). DATE2 is a different overlay ([[scenes-family-results]]).
 
 ## Types-first pass (T-17200)
+
+T-20900 update: `DateParticleView44`, `DateMover44` and `DateMotion44` are `DisplayFixActor44`; `DateScene44`, `DisplayRecord44` and the local `DateWords44` are `DisplayActor44`; `DateFix32` is `Fix32`; `DateFlag17` and `DateFlags0F4` are `ScheduleFlags` ([[data-types]], "Shared-type unification").
 
 Wave-3 types-first pass ([[tickets/T-17200-types-first-date]], [[speedup-research-2026-10-16]]), branch
 `w3-date-types` from `w2-good`. Start: 49 unmatched functions (40,656 bytes), 15 of them guarded. About one
@@ -114,6 +116,7 @@ Matched during the pass (1,760 bytes):
 - `func_80139834`: the EVENT twin's form (no `u8` local, dead `if ((s32)unk_110A) {}` before `+= 0xC`) fixes
   the first branch but the else branch's `unk_F5F` load then takes `t5` for `v0` (18 rows, worse than the
   guard's 7); left guarded.
+- `func_801449D4` and `func_80144E20` (T-17207, `80141EE0.c`): neither matched. The first reaches the original's structure (71 rows) with the global as the table index and a `u8 sel` copy of `D_800CA2F8`, but the shape reserves one slot more under the table than the original; the second has the exact frame and table offsets (one `void (**base)()` under the 21 tables, one unused scalar above) and about 180 register rows from the colour order of `base`. Details: [[matching-notes]], "DATE `80141EE0.c`: the two step-table dispatchers (T-17207)".
 - m2c on folded asm printed `D_800E6280.unk0` for a `%lo(D_800E6280+0x10F8)` paired with a bare `%hi`
   (`func_80155004`); the field is `unk_10F8`. Check fold output for `.unk0` on `GameState`.
 
@@ -130,5 +133,24 @@ Eight file-disjoint packages from the orchestrator's `mklists3.py` (lists in its
 | w3-date-p04 | T-17204 | `80151460.c` | 4 | 2,328 |
 | w3-date-p05 | T-17205 | `80149310.c`, `801552B0.c` | 5 | 3,180 |
 | w3-date-p06 | T-17206 | `8014B1F0.c`, `80156600.c` | 2 | 1,136 |
-| w3-date-p07 | T-17207 | `80141EE0.c` | 2 | 4,464 |
+| w3-date-p07 | T-17207 | `80141EE0.c` | 2 | 4,464 (none matched) |
 | w3-date-p08 | T-17208 | `8014A1B0.c`, `8015A640.c`, `8015A7E0.c`, `8015A980.c` | 5 | 2,636 |
+
+### Wave 3 result: w3-date-p01 (T-17201)
+
+`func_80147958` (4,044 bytes) matched in plain C; the old guard was four fade rows, fixed by comparing the `u8` local `value` instead of its masked copy (two FAKE entries stay from T-12100: the `s32` type with bare returns, the unused header view). `func_8014718C` (1,996 bytes) was rewritten by hand in the shape of `func_80147958` (the same movie player with 19 steps) and stays guarded at 26 differing lines, down from 672 rows; its declaration in `DATE.h` is now `s32`. Details and the two left-over register gaps: [[matching-notes]], "T-17201".
+Result of w3-date-p03 ([[tickets/T-17203-w3-date-p03]]): 3 of 4 matched (`func_8014EF1C`, `func_80154118`, `func_8014DCCC`, 1,064 bytes); `func_80155004` is back to `INCLUDE_ASM` with a draft in `drafts/T-17203/` (46 lines, register names only). Notes in [[matching-notes]], section T-17203.
+### Package w3-date-p02 (T-17202)
+
+`80132000.c`, six guarded drafts, all 6 matched (1,972 bytes). The matcher pass matched `func_80139834`, `func_8013E6A4` and `func_80137DF4` (820 bytes). The Opus closer pass matched `func_801324DC`, `func_8013BEB8` and `func_80139664` (1,152 bytes). New idioms: the callee view `s32 func_80085A60();` (file override), `s32` without `return` for a flag read at the entry, the dead selector test in the else arm, the first mention of a promoted global in a long expression (`g * 0 +`, FAKE), the first chain's value kept in an `s32` local for stores placed after the next chain, and `return;` plus an element view for a byte that `$v0` carries at the exit. Details in [[matching-notes]] (T-17202) and [[data/t0018-cases]].
+
+### w3-date-p04 (T-17204)
+
+`80151460.c`, 4 functions (2,328 bytes): `func_80152060` matched (520 bytes: `DateWords2` stack table, a real element pointer local that moves the table 4 bytes, `s32` with no `return` so the last call's result stays in `$v0`); `func_80152268` matched (1,052 bytes: FAKE unread copies `j = v` keep the result variable live across the twelve `func_80152684` calls, `for` loop with a trailing `++i`); `func_801518B8` guarded at 14 rows (copy end pointer `t6` against `t7`, the old ugen-temporary gap); `func_80152E34` (POLY_G3 builder, colours of six uopt ranges) left as `INCLUDE_ASM` with a draft in `drafts/T-17204/DATE/`. Details: [[matching-notes]], section T-17204.
+
+### Wave 3 result: w3-date-p08 (T-17208)
+
+`func_8014AF88` (248 bytes) matched in plain C: the argument of `func_8009B3C0` and the loop calls is the pointer variable `dop` (`0x801F8000` plus steps), as in TACO `func_801471D0`. `func_8014A8FC` (1,140 bytes, a frame timeline with the light fade, the step loops and the ordering-table clear) was rewritten by hand and stays guarded at 34 differing lines, all of them register choices in the two light blocks (T-0018 row, same gap as TACO `func_80134A18`); two FAKE entries (byte view of `D_8012276C`, `s32` return with no `return`, and `func_8014A8FC` is `s32` in `DATE.h`). The three 416-byte rotation helpers stay `INCLUDE_ASM` (hand-written libgte, probe: 86 of 104 rows differ). Details: [[matching-notes]], "T-17208".
+### Package w3-date-p05 (T-17205)
+
+Result: 5 of 5 matched in plain C (`func_801496C4` 1,020 B, `func_801556D8` 744 B, `func_801560E0` 712 B, `func_80155E40` 484 B, and in the closer pass `func_80149F48` 176 B with `(s16)(D_8015D084 * 3) + D_8015D090`; 3,136 bytes). New in `DATE.h`: `DateFix32`, `DateMover44` (display records 98..105 as the eight-object scene uses them), `D_8015F9A0[8]` (state) and `D_8015F9A8[8]` (idle counters), `void func_801560E0(void);`, and `s32 func_80155E40(void);`. What fixed each function, and the register-cheatsheet rows it added, are in [[matching-notes]], "T-17205". The eight objects: `func_801556D8` sets them up, `func_801560E0` updates them and is called from the step-table handler `func_80155E40` when `unk_110A` is 0x11..0x13.

@@ -129,7 +129,8 @@ typedef struct Rec34 {
 typedef struct GsDateBits {
     /* 0x00 */ u32 month : 4;
     u32 day : 5;
-    u32 rest : 23;
+    u32 unk_09 : 2; /* T-17021: set to 1 at init (func_800419FC); OptionDateBits.f9 */
+    u32 rest : 21;
 } GsDateBits; /* size 0x04 */
 
 typedef union GsWord {
@@ -148,13 +149,56 @@ typedef union GsHalf {
 
 #ifndef T9540_FLAGS_WORK24
 #define T9540_FLAGS_WORK24
-/* Word at 0x800E7D10, slot bytes at +4, and fourteen flags at +0x14; T-9540/T-12030. */
-typedef struct FlagsWork24 {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ u8 unk_04[0x10];
-    /* 0x14 */ u8 flags[14];
-    /* 0x22 */ u8 pad22[2];
-} FlagsWork24; /* size 0x24 */
+/* T-10880: one entry of the album metrics (main album display, NAME_ENT card routines). */
+typedef struct NameMetric4 {
+    /* 0x00 */ u8 unk_00[2];
+    /* 0x02 */ s16 unk_02;
+} NameMetric4; /* size 0x04 */
+
+/* T-19009: the settings bits at D_800E7D10 +0x40 (TACO): the saved flag, the mode and a selector in byte 0, two
+ * more selectors in byte 1. */
+typedef struct WorkSetBits {
+    u8 flag : 1;
+    u8 unk_1 : 1;
+    u8 mode : 1;
+    u8 sel : 2;
+    u8 unk_5 : 3;
+    u8 lo : 4;
+    u8 hi : 4;
+} WorkSetBits; /* size 0x02 */
+
+/* The 0xEE0-byte work area at 0x800E7D10 (main clears it with bzero(&D_800E7D10, 0xEE0); +0 is the word main
+ * steps by 0x377 and NAME_ENT seeds srand with). One struct for main's FlagsWork24 (T-9540, T-12030), the album
+ * view NameMetricWork of main and NAME_ENT (T-10880) and TACO's settings TcSetAll (T-19009), T-20900. TACO's
+ * loader still reads +0x40 through its own word/byte union (TcSave), ETC the 8-byte records from +0x58 through
+ * EtcConfig8. */
+typedef struct Work800E7D10 {
+    /* 0x000 */ s32 unk_000;
+    /* 0x004 */ u8 slot_status[16];
+    /* 0x014 */ u8 flags[16];
+    /* 0x024 */ u8 unk_024[2];
+    /* 0x026 */ u8 selected_slot;
+    /* 0x027 */ u8 unk_027[0x19];
+    /* 0x040 */ WorkSetBits bits;
+    /* 0x042 */ u8 name0[3];
+    /* 0x045 */ u8 name1[3];
+    /* 0x048 */ u8 name2[3];
+    /* 0x04B */ u8 unk_04B;
+    /* 0x04C */ s32 w0;
+    /* 0x050 */ s32 w1;
+    /* 0x054 */ s32 w2;
+    /* 0x058 */ u8 unk_058[0x800];
+    /* 0x858 */ u8 year[16];
+    /* 0x868 */ u8 month[16];
+    /* 0x878 */ u8 day[16];
+    /* 0x888 */ u8 family_name[16][8];
+    /* 0x908 */ u8 given_name[16][8];
+    /* 0x988 */ u8 nickname[16][16];
+    /* 0xA88 */ NameMetric4 metrics[9][16];
+    /* 0xCC8 */ u8 unk_CC8[0x200];
+    /* 0xEC8 */ u8 club[16];
+    /* 0xED8 */ u8 unk_ED8[8];
+} Work800E7D10; /* size 0xEE0 */
 #endif
 
 /* Flag word at +0x0C of a Rec38 record (GameState +0x1C8 + 0x38 * i). The original tests single bits
@@ -174,7 +218,11 @@ typedef struct CharFlags {
     /* 0x00 */ u32 b12 : 1;
     /* 0x00 */ u32 b13 : 1;
     /* 0x00 */ u32 b14 : 1;
-    /* 0x00 */ u32 f15 : 5;
+    /* 0x00 */ u32 b15 : 1;
+    /* 0x00 */ u32 b16 : 1;
+    /* 0x00 */ u32 b17 : 1;
+    /* 0x00 */ u32 b18 : 1;            /* T-20940: func_80077900 tests it (sll 13) and sets it (byte +2, ori 4) */
+    /* 0x00 */ u32 b19 : 1;
     u32 f20 : 4;
     u32 rest : 8;
 } CharFlags; /* size 0x04 */
@@ -423,9 +471,9 @@ typedef struct GameState {
     /* 0x75E */ GsRec75E unk_75E[256];
     /* 0xF5E */ u8 unk_F5E;
     /* 0xF5F */ u8 unk_F5F;            /* index of the current girl's Rec38 record */
-    /* 0xF60 */ s8 unk_F60;
-    /* 0xF61 */ s8 unk_F61;
-    /* 0xF62 */ s8 unk_F62;
+    /* 0xF60 */ u8 unk_F60;
+    /* 0xF61 */ u8 unk_F61;
+    /* 0xF62 */ u8 unk_F62;
     /* 0xF63 */ s8 unk_F63;
     /* 0xF64 */ u8 unk_F64[4];
     /* 0xF68 */ GsWord unk_F68;
@@ -594,7 +642,10 @@ extern s32 D_800B1CF0;
 extern u8 D_800B3220;
 extern u8 *D_800B3288[];
 extern u8 **D_800B32CC;
-extern s32 D_800B3538[];
+/* T-20940: name table, 16 string pointers up to D_800B3578 (12 girls, then four more). telephone_class_init
+ * reads entry i - 1 for menu row i (splat's D_800B3534 is that -4 relocation) and entries 12 and 13 as
+ * D_800B3568, D_800B356C; TEL and OPTION index it by girl. */
+extern u8 *D_800B3538[16];
 extern u8 *girl_short_name_table[];
 extern u8 *D_800B3624;
 extern u8 *D_800B3630;
@@ -616,6 +667,10 @@ extern s32 **D_800B3748;
 #endif
 extern void *D_800B374C; /* image data passed to LoadSquare (func_800673B8) */
 extern u8 D_800B3750[][3];
+/* T-20940: the 13 telephone numbers, seven digits each (0x5B bytes, D_800B37D4 follows after one pad
+ * byte): holiday_tel_exit plays digit k of number D_800E6280.unk_F5F (row 10 as D_800B37BE), and
+ * func_80075C84 compares each row with the last seven keys in D_800B6990. */
+extern u8 D_800B3778[13][7];
 extern s32 D_800B37D4[];
 extern u8 *club_name_table[];
 extern s32 D_800B394C[];
@@ -625,7 +680,10 @@ extern u8 D_800B3C6C;
 extern u8 D_800B3C70[];
 extern u8 D_800B3C88[];
 extern s8 D_800B3CA0;
+extern u8 D_800B3CA4;
+extern u32 D_800B3CA8[20];
 extern u8 D_800B3CFC;
+extern u8 D_800B3D00;
 extern u8 D_800B3D24;
 extern u8 D_800B3D40;
 extern u8 D_800B3D44;
@@ -654,6 +712,21 @@ typedef struct KWork {
     /* 0xB */ u8 pad_0B;
 } KWork; /* size 0xC */
 extern KWork text_list_count;
+/* Shift-JIS range table of load_string at font_range_table: first code of each range and the glyph number
+ * of its first character (T-17020); 46 entries up to D_800B40E4. */
+typedef struct FontRange {
+    /* 0x0 */ u16 first;
+    /* 0x2 */ u16 glyph;
+} FontRange; /* size 0x4 */
+extern FontRange font_range_table[46];
+/* Font and cursor images that func_8004E58C uploads with LoadSquare (T-17020). */
+extern u8 D_800B3F6C[0x40];
+extern u8 D_800B3FAC[0x20];
+extern u8 D_800B3FCC[0x20];
+extern u8 D_800B3FEC[0x20];
+extern u8 D_800B400C[0x20];
+s32 load_string(); /* set_kanji_string passes three arguments, the definition takes one */
+void vload_font();
 /* Four signed menu row positions, read by x_taku_menu_set. */
 extern s16 D_800B40F0[4];
 extern u8 D_800B4100[13];
@@ -669,6 +742,8 @@ extern u8 D_800B4355[10];
 extern u8 D_800B4361[10];
 extern s8 D_800B436C[15];
 extern s8 D_800B437C[15];
+extern u8 D_800B4390[];
+extern u8 *D_800B58B0;
 extern s32 D_800B58E4;
 extern s32 D_800B58F8;
 extern s32 D_800B58FC;
@@ -690,6 +765,7 @@ extern s16 D_800B59F0;
 extern s16 D_800B59F4;
 extern u8 D_800B5A60;
 extern u8 D_800B5A64;
+extern s32 D_800B5A98; /* T-17011: counter of func_80063668 (CD level high-water mark) */
 /* T-17000: two tables of (x, y) halfword pairs that func_8006509C copies pair by pair into the pair
  * table at D_80125C10 (`lh`/`sh` at +0 and +2, step 4); the copy of the second table from D_800B5AF0
  * (pair 3) runs to D_800B5B20, its end. 16 + 15 pairs fill 0x800B5AA4..0x800B5B20. */
@@ -736,6 +812,7 @@ extern s32 D_800B6754;
 extern s32 D_800B6758;
 extern s32 D_800B6760[];
 extern s32 D_800B6780[];
+extern s32 D_800B67AC[];
 extern s32 D_800B6810[];
 /* T-17000: parameter tables of func_80076FDC, func_80073CB0 and parameter_up_down. func_80076FDC
  * reads byte [row][col] of two 12-row, two-byte tables in an 11-case switch (`lbu %lo(D_800B6892)` after
@@ -745,6 +822,23 @@ extern u8 D_800B6890[12][2];
 extern u8 D_800B68A8[12][2];
 extern s8 D_800B68E0[8][9];
 extern s8 D_800B6928[][9];
+/* T-20940: static data of 80075320.c. D_800B6990 is a ring of the last seven keys pressed on the holiday
+ * menu (0, 1, 2 from the pad bits 0x20, 0x40, 0x10; cleared to 0xFF by func_800755B4 in a loop IDO unrolled)
+ * and its write position at +8 (splat's D_800B6998): func_80075C84 stores `keys[pos] = key; pos++`, wraps pos
+ * at 7 and reads the ring from pos + 7 modulo 7. One object: the original reloads pos after the store into
+ * keys[pos], which IDO does only when both go through one symbol. D_800B69BC is a 0x14-byte string in .data
+ * (strcat argument of func_800767A4). D_800B69D0 and D_800B69D8 map GameState.unk_69C[].unk_01 (0..7) to a
+ * background in func_80076FDC, one table per func_80066A84() result. */
+typedef struct KeyRing {
+    /* 0x0 */ u8 keys[7];
+    /* 0x7 */ u8 pad_07;
+    /* 0x8 */ u8 pos;
+    /* 0x9 */ u8 pad_09[3];
+} KeyRing; /* size 0xC */
+extern KeyRing D_800B6990;
+extern u8 D_800B69BC[0x14];
+extern u8 D_800B69D0[8];
+extern u8 D_800B69D8[8];
 extern s32 D_800B69E0[];
 /* T-17000: message table of func_80077E30, indexed by func_80077CA8() and passed to sndisp. */
 extern u8 *D_800B6CF8[];
@@ -754,18 +848,25 @@ extern u8 ovl_load_sectors;
 extern s32 ovl_load_buf;
 extern s32 ovl_load_lba;
 extern u8 font_glyphs[];
+/* T-20004: byte loads indexed by girl * 7 + (step >> 3). */
+extern u8 D_800C3370[];
 extern s8 D_800C51C4;
+#ifndef MAIN_API_OVERRIDE_D_800C5FCC
 extern s32 D_800C5FCC;
+#endif
 extern s32 D_800C5FD0;
 extern u8 D_800C5FD4[];
 extern u8 D_800C6010[];
 extern s16 D_800C6014;
+extern s32 D_800C6020;
 /* T-17000: word tables walked by func_80059EF0 (and func_8006509C) up to the next symbol: eight words
  * ending at D_800C6220, 32 words ending at D_800C6340. */
 extern s32 D_800C6200[8];
 extern s32 D_800C62C0[32];
 extern u8 D_800C6220[];
+#ifndef MAIN_API_OVERRIDE_D_800C9730
 extern u8 D_800C9730[];
+#endif
 extern s32 D_800C9734;
 extern s32 D_800C9738;
 extern s32 D_800C973C;
@@ -794,7 +895,7 @@ extern s32 D_800CA144;
 extern s16 D_800CA148;  /* also address-taken by the date code */
 extern s16 D_800CA14C;
 extern s16 D_800CA150;
-extern s16 D_800CA154;
+extern u16 D_800CA154;
 #ifndef MAIN_API_OVERRIDE_D_800CA158
 extern u8 D_800CA158;
 #endif
@@ -821,6 +922,7 @@ extern s16 D_800CA236;
 extern u8 D_800CA23C[];
 extern u8 D_800CA250[];
 extern u8 D_800CA25C[];
+extern u8 D_800CA280[];
 extern u8 D_800CA2A4[4]; /* [1], [2] are the former D_800CA2A5/6 */
 extern u8 D_800CA2A5;
 extern u8 D_800CA2A6;
@@ -882,8 +984,9 @@ extern u16 D_800E36EA;
 extern s32 D_800E36F0;
 extern s32 D_800E36F4;
 extern GameState D_800E6280;
+extern s32 D_800E7384; /* frame counter, GameState.unk_1104.w: kept as a separate symbol by keep lines with a proof (config/migrate_globals.txt, T-20820) */
 #ifndef MAIN_API_OVERRIDE_D_800E7D10
-extern s32 D_800E7D10;
+extern Work800E7D10 D_800E7D10;
 #endif
 extern u8 D_800E7D11[];
 extern u8 D_800E7D13[];
@@ -893,6 +996,7 @@ extern s8 D_800E7D16;
 extern u8 D_800E7D1F;
 extern u8 D_800E7D2C;
 extern u8 D_800E7D34;
+extern u8 D_800E7D35;
 extern u8 D_800E7D36;
 extern u8 D_800E7D37;
 extern u16 D_800E7D3C;
@@ -910,8 +1014,8 @@ extern u8 D_800E7D4A;
 extern u8 D_800E7D4B;
 extern s32 D_800E7D4C;
 /* T-17000: bit-field view of the flag byte D_800E7D4F. `lui rA; lbu rB,%lo(D_800E7D4F)(rA); ori; sb` with
- * rB != rA is a bit-field store (T-7010); func_8007959C sets b0 so. BUNKASAI's BunkaReturnFlags
- * (T-10630) is the same view. */
+ * rB != rA is a bit-field store (T-7010); func_8007959C sets b0 so. BUNKASAI and BUNKAKEN read the same
+ * view (their BunkaReturnFlags, BunkasaiModeFlags and BunkakenModeFlags, folded in by T-20900). */
 typedef struct Flags7D4F {
     u8 b0 : 1;
     u8 b1 : 1;
@@ -1057,6 +1161,7 @@ extern s32 D_800F6468;
 extern s32 D_800F6474;
 extern u8 D_800F6479;
 extern u8 D_800F647A;
+extern u8 D_800F647D;
 extern s32 D_800F65C0;
 extern s32 D_800F6600;
 extern s32 D_800F6680;
@@ -1332,6 +1437,10 @@ extern s32 D_8012076C;
 extern s32 D_80120770;
 extern s16 D_80120776;
 extern s16 D_80120778;
+extern s16 D_8012077A;
+#ifndef MAIN_API_OVERRIDE_D_8012077C
+extern s32 D_8012077C;
+#endif
 extern s16 D_80120786;
 extern s16 D_8012078A;
 extern s32 D_80120794;
@@ -1427,7 +1536,7 @@ extern u8 D_80120E0A;
 extern s16 D_80120E1C;
 extern u8 D_80120E4E;
 extern s16 D_80120E60;
-extern s8 D_80120E93;
+extern u8 D_80120E93;
 extern s16 D_80120EE6;
 extern s16 D_80120EF6;
 extern s16 D_80120EFA;
@@ -1438,6 +1547,7 @@ extern u8 D_801210F2;
 extern s16 D_8012114C;
 extern u8 D_8012117A;
 extern u8 D_801211BE;
+extern s16 D_801211E6;
 extern u8 D_80121202;
 extern s16 D_8012121A;
 #ifndef MAIN_API_OVERRIDE_D_8012121C
@@ -1485,15 +1595,19 @@ extern s8 D_801214F3;
 extern s32 D_80121524;
 extern s8 D_8012152F;
 extern u8 D_80121531;
+extern u8 D_80121532;
 extern u8 D_80121533;
 extern s16 D_80121548;
 extern s16 D_80121556;
 extern s16 D_8012155A;
+extern s8 D_80121575;
 extern s16 D_8012158C;
 extern u8 D_801215BA;
 extern s8 D_801215FD;
+extern s8 D_801215FE;
 extern u8 D_801215FF;
 extern s8 D_80121603;
+extern s16 D_80121614;
 extern s32 D_80121634;
 extern s8 D_8012163F;
 extern s8 D_80121647;
@@ -1635,6 +1749,7 @@ extern s32 D_80122D40;
 extern s32 D_80122D44;
 extern s32 D_80122D4C;
 extern u8 D_80122DD0[];
+extern s32 D_80122E90;
 extern s32 D_80122E94;
 extern u32 D_80122E9C;
 extern s32 D_80122EA0;
@@ -1655,7 +1770,20 @@ extern s32 D_801230E0[];
 extern s32 D_801230E4;
 extern s32 D_801230F4;
 extern u32 D_80123110;
+/* One bank of the memory-card save image: D_80123320[2] follows the 0x200-byte header at D_80123120; header
+ * and banks together are one 0x2000-byte card block. T-17007 */
+typedef struct SaveBank {
+    /* 0x000 */ s32 checksum;      /* byte sum of data (func_80055A38) */
+    /* 0x004 */ u8 data[0xEFC];
+} SaveBank; /* size 0xF00 */
 extern u8 D_80123120[];
+extern u8 D_80123122;
+extern u8 D_80123123;
+extern u8 D_80123124[];
+extern u8 D_80123164[];
+extern u8 D_80123180[];
+extern u8 D_801231A0[];
+extern SaveBank D_80123320[2];
 extern s32 D_80125120;
 extern s32 D_80125124;
 extern u8 D_80125128;
@@ -1682,6 +1810,8 @@ extern u8 D_801255DC;
 extern s16 D_801255E0;
 extern s16 D_801255E2;
 extern u32 D_801255F0[];
+extern s16 D_80125BF0;
+extern s16 D_80125BF2;
 extern s32 D_80125BF4;
 extern s32 D_80125BF8;
 extern s32 D_80125BFC;
@@ -1694,7 +1824,46 @@ extern s16 D_80125C50;
 extern s16 D_80125C52;
 extern u8 D_80125C54;
 extern u8 D_80125C55;
-extern u8 *D_80125C58;
+/* libcd StHEADER, the sector header StGetNext returns (PsyQ movie sample layout). T-17014 */
+typedef struct StHEADER {
+    /* 0x00 */ u16 id;
+    /* 0x02 */ u16 type;
+    /* 0x04 */ u16 secCount;
+    /* 0x06 */ u16 nSectors;
+    /* 0x08 */ u32 frameCount;
+    /* 0x0C */ u32 frameSize;
+    /* 0x10 */ u16 width;
+    /* 0x12 */ u16 height;
+    /* 0x14 */ u32 headm;
+    /* 0x18 */ u32 headv;
+} StHEADER; /* size 0x1C */
+
+/* PsyQ movie sample DECENV (strSetDefDecEnv, strCallback, strNext, strSync), T-9930, T-17014. */
+typedef struct StrDecEnv30 {
+    /* 0x00 */ u8 *vlcbuf[2];
+    /* 0x08 */ s32 vlcid;
+    /* 0x0C */ u8 *imgbuf;
+    /* 0x10 */ RECT rect[2];
+    /* 0x20 */ s32 rectid;
+    /* 0x24 */ RECT slice;
+    /* 0x2C */ s32 isdone;
+} StrDecEnv30; /* size 0x30 */
+
+/* Movie (STR) player state at 0x80180000 behind D_80125C58 (strInit, strNext, strCallback,
+ * func_80056BA8); the ring buffer behind +0x44 is reached by byte offset. T-17014 */
+typedef struct StrCtx {
+    /* 0x00 */ u8 pos[4];
+    /* 0x04 */ StrDecEnv30 dec;
+    /* 0x34 */ s32 endflag;
+    /* 0x38 */ s32 unk_38;
+    /* 0x3C */ s32 width;
+    /* 0x40 */ s32 height;
+} StrCtx; /* accessed prefix, size 0x44+ */
+extern StrCtx *D_80125C58;
+extern s32 D_80125C5C;
+extern s32 D_800B58F0; /* frame number of the last movie frame (strNext) */
+extern u32 D_800B58F4; /* end frame of the movie, set by func_80056BA8 (strNext) */
+extern u8 D_800B5904[22]; /* movie subtitle frame table (func_8005715C) */
 extern u8 D_80125C60[];
 extern s16 D_80125C80[]; /* four s16 slots, written at index (tick & 3) (ENDING func_80137730) */
 extern u8 D_80125C90[];
@@ -1704,6 +1873,7 @@ extern s32 D_80125CA8;
 extern s32 D_80125CAC;
 extern s32 D_80125CB0;
 extern u16 D_80125CC0;
+extern u16 D_80125CC2;
 extern Work80125D10 D_80125D10;
 extern s32 D_80125D14;
 extern s32 D_80125D18;
@@ -1711,6 +1881,10 @@ extern s32 D_80125D1C;
 extern s32 D_80125D20;
 extern s32 D_80125D24;
 extern s32 D_80125D28;
+extern s16 D_80125D2C;
+extern u16 D_80125D44;
+extern u16 D_80125D46;
+extern u16 D_80125D48;
 extern s16 D_80125D4A;
 extern s8 D_80125D5C;
 extern u8 D_80125D5D;
@@ -1828,6 +2002,7 @@ void func_8003C2C0();
 void func_800410AC(void);
 void func_8004111C(void);
 void func_80041168(s32 arg0);
+void func_800412E0(s32 arg0);
 void func_80041584(void);
 void func_800415B4(s32 arg0, s32 arg1);
 void func_8004164C(s32 arg0, s32 arg1);
@@ -1842,20 +2017,23 @@ void func_800422C8(void);
 void func_80042418(void);
 void func_80042458(void);
 void func_80042488(void);
+void func_800424FC(void);
 s32 func_80042808(void);
 s32 func_8004284C(void);
 void main_state_set();
 s32 func_80042908(s32 arg0);
 s32 func_80042940(s32 arg0);
 s32 func_80042960(void);
+void func_80042A00(void);
 s32 func_80042AC8();
 void func_80042BD4(void);
 void func_80042C30(void);
 void func_80042C74(void);
 void func_80042CB0();
 s32 func_80043010(void);
-void func_800430C0();
+s32 func_800430C0(void);
 void func_800433D0(s32 arg0);
+void func_80043448(void);
 s32 func_80046590(s16 arg0, u8 arg1);
 s32 search_load_tpage_buf_lock(s32 arg0, u8 arg1);
 u8 *get_k_work(s32 arg0);
@@ -1881,7 +2059,9 @@ s32 func_80044E8C(void);
 s32 func_8004500C();
 s32 func_800450F4(s32 arg0, s32 arg1);
 s32 func_800451D0();
+#ifndef MAIN_API_OVERRIDE_func_800452C4
 void func_800452C4(void);
+#endif
 void func_80045414(s32 arg0, s32 arg1, u8 *arg2);
 void func_80045B14(void);
 s32 func_80045FF4(void);
@@ -1966,8 +2146,9 @@ void func_8004CA18();
 void func_8004CA48();
 void func_8004CDDC();
 void func_8004CF30();
-void srn_vram_set(s32, s32, s32, s32);
-void func_8004D320();
+s32 srn_vram_set(s32, s32, s32, s32);
+void move_255_line(s32 arg0, s32 arg1, s32 arg2);
+void mod_trans_vram(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_8004DDD8();
 void func_8004DE1C(void);
 void func_8004DEAC();
@@ -2076,8 +2257,11 @@ void func_80056284(void);
 void set_movie_offset(s16 arg0, s16 arg1);
 void strKickCD(s32 arg0);
 void func_80056BA8();
+void func_8005715C(s32 arg0); /* defined after its caller func_80056BA8 */
 void func_80057390();
+#ifndef MAIN_API_OVERRIDE_set_dec_bri
 void set_dec_bri(u8 arg0);
+#endif
 s32 get_last_gamen_mode(void);
 void dec_bg_reset(void);
 void func_800573AC();
@@ -2111,6 +2295,7 @@ void func_80059B40(void);
 void func_80059BC0(void);
 void func_80059BE8(void);
 s32 func_80059E00(void);
+void func_80059EF0(void);
 s32 func_8005A1A0(void);
 void func_8005A2A8(void);
 void func_8005A37C(void);
@@ -2267,7 +2452,7 @@ void restore_bgm(void);
 s32 func_8006CDD4(void);
 void func_8006D038(void);
 void func_8006D138(void);
-void func_8006D6E0();
+s32 func_8006D6E0();
 void func_8006D7EC(void);
 s32 func_8006EB64(u8 *arg0, u8 *arg1);
 s32 func_8006EEC4(u8 *arg0, u8 *arg1);
@@ -2306,6 +2491,7 @@ u8 func_80074F24(void);
 u8 func_8007505C(void);
 void func_800755B4(void);
 void func_80075A64(void);
+void func_80075AF8(void); /* T-20940: called by func_800755B4 before its definition */
 void func_80075BFC();
 void func_80075C24(void);
 s32 func_80075C84();
@@ -2314,7 +2500,7 @@ s32 func_80076000();
 void func_80076450();
 void func_80076630(void);
 s32 func_80076B48(void);
-void func_80076C7C(void);
+s32 func_80076C7C(void);
 void appointment_launch(void);
 void func_8007739C(void);
 void func_80077694(void);
@@ -2344,25 +2530,32 @@ void ovl_load_poll(void);
 void ovl_load_verify(void);
 void func_80079070();
 s32 func_80079524(void);
+void func_80079800(void);
 void func_80079B10(u16 arg0);
 void func_80079C70(void);
 void func_80079D28(s16 arg0);
 s32 func_80079E00(s32 arg0);
+void func_80079E4C(void);
 void func_80079E9C(void);
 void func_80079F00(void);
+void func_8007A008(void);
+void func_8007A080();
 void func_8007A4DC();
 void func_8007A50C(void);
 void func_8007A5BC();
+void func_8007A6AC();
 void func_8007A868(void);
 void func_8007A924(s32 arg0);
 void func_8007A98C();
 void func_8007AB24(u16 arg0);
 void func_8007ABE0();
 void func_8007AD6C();
+void func_8007ADD8();
 void func_8007AEC0(void);
 void func_8007AF0C(void);
 void func_8007B144();
 void func_8007B2B4();
+void func_8007B358(u16 arg0);
 #ifndef MAIN_API_OVERRIDE_func_8007B3DC
 void func_8007B3DC(u16 arg0);
 #endif
@@ -2376,6 +2569,7 @@ void func_8007B568(s32 arg0, s32 arg1);
 void func_8007B5CC();
 s32 func_8007B5EC(u16 a);
 void func_8007B640(void);
+u16 func_8007B64C();
 void func_8007B6E0();
 void func_8007B734();
 void func_8007B7E0();
@@ -2425,7 +2619,8 @@ void func_8007EDF8();
 void wait_sub_sub(s16 arg0);
 void func_80081128(void);
 #ifndef MAIN_API_OVERRIDE_dialogue_render
-void dialogue_render(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5, void *arg6, s32 arg7);
+/* K&R arguments are narrowed by the callee; its renderer result is returned. T-20007. */
+s32 dialogue_render();
 #endif
 void func_80081D30();
 s32 func_80082764();
@@ -2484,7 +2679,9 @@ void func_80085678();
 void func_8008585C();
 void don_wait(void);
 void normal_date_speak_1line();
+#ifndef MAIN_API_OVERRIDE_func_80085A60
 void func_80085A60();
+#endif
 void normal_date_speak(void);
 s32 func_80085B3C();
 void func_80085CD4(u8 a);
@@ -2498,6 +2695,7 @@ void func_80085F0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void Rot_2D(s32 arg0, s32 *arg1, s32 *arg2, s32 *arg3, s32 *arg4);
 void Default_Disp(void);
 void func_80086424();
+s32 func_8008647C(void);
 s32 func_8008667C(s32 a);
 void func_800867CC(void);
 void DecDCTReset(s32 mode);
@@ -2571,11 +2769,12 @@ void func_800949B0();
 void func_80097D90(s32 a, s32 b, s32 c, s32 d, s32 e);
 s32 func_80098370(void);
 void func_80098380(void);
-void func_80098490(s32 a, s32 b, s32 c, s32 d);
+void func_80098490(u16 a, u16 b, u16 c, u16 d);
 void func_80098530(void);
 void func_800985A0(void);
 void func_80099540(s32 *p);
 void func_80099E30(s32 a, void *p);
+void func_8009AC20(void);
 void func_8009AD30(s32 arg0);
 void func_8009AD50(s32 arg0);
 void func_8009AD60(s32 arg0);
@@ -2639,6 +2838,9 @@ void func_800AE080(u8 *arg0, s32 arg1);
 #ifndef MAIN_API_OVERRIDE_func_800AE090
 void func_800AE090(void *dst, void *src, s32 n);
 #endif
+#ifndef MAIN_API_OVERRIDE_strncpy
+void strncpy(void *dst, void *src, s32 n); /* Same SDK address and legacy view as func_800AE090. */
+#endif
 void func_800AE0A0(void *arg0, s32 arg1, s32 arg2);
 void memcpy();
 void func_800AE0B0(void *arg0, ...); /* printf-like (SDK libc) */
@@ -2650,10 +2852,13 @@ s32 rand();
 s32 func_800BCE40();
 s32 func_800AE0E0(void *arg0);
 s32 strlen(u8 *s);
+#ifndef MAIN_API_OVERRIDE_func_800AE0F0
 void func_800AE0F0(void *dst, void *src);  /* strcpy (SDK libc) */
+#endif
 void strcpy(u8 *dst, u8 *src);
 void strcat(u8 *dst, u8 *src);
 void func_800AE120(s32 arg0);
+s32 sprintf();
 s32 strcmp(u8 *a, u8 *b);
 s32 SetSp();
 void InitHeap();
@@ -2839,6 +3044,7 @@ void func_8005F6E4(void);
 void func_8005FDA0(void);
 void func_8005FF68(void);
 void func_80060104(void);
+void func_80060178(void);
 void func_80060504(void);
 void func_80060150(void);
 

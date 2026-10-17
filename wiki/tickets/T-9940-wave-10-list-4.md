@@ -1,10 +1,10 @@
 ---
 id: T-9940
 title: "Wave 10: list 4"
-status: In Progress
+status: Done
 assignee: w10-4
 created: 2026-10-11
-updated: 2026-10-11
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[matching-notes]]"]
 ---
 
@@ -93,3 +93,7 @@ Started 2026-10-11 20:19 UTC. Scratch artifacts live in the shared scratchpad's
   0xE7-byte table wrapper and a real local for the table row index. The two
   signed-halfword counters precede the row and table. Source/header retained;
   the missing main-exe halfword is being added through sync_protos.
+
+2026-10-17: Closing as superseded. The Codex run hit its usage limit with 8 functions merged (MouseState, OPTION func_8013A550, TT func_8014BB30, func_8014CC04 and func_80133AD0, TACO func_80141290, BUNKASAI func_8015B828, EVENT func_80118DAC; about 2,100 bytes), all still C on main. Its near misses OPTION func_80137E38, DATE func_80150C78, TACO func_8013A580 and TT func_8014B7A8 have matched since, and the rest is in the T-14500 census. Review: one finding, the unmarked goto loops in EVENT func_80118DAC, moved to a followup; the func_80044750 override carries its reason.
+
+Followup opened: [[tickets/T-21000-event-goto-loops-and-seq-views|T-21000]].

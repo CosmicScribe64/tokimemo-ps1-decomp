@@ -58,7 +58,7 @@ extern u8 D_801499D8;
 extern u8 D_8014A064;
 extern u8 D_8014A11C;
 
-extern u8 D_80148EC0[];
+extern u8 D_80148EC0[4];
 extern s32 D_80148EF0;
 extern s32 D_80148EF4;
 extern s32 D_80148EF8;
@@ -138,7 +138,9 @@ void func_801482BC(s32);
 void func_80147A6C(s32);
 void func_80147B14(s32);
 s32 func_80141CDC();
-void func_80132E20(s32, s32);
+void func_80132E20(); /* K&R definition in 80132BD0.c (s16 first parameter) */
+void func_80132970(void);
+void func_80133BF0(void);
 s32 func_80140A90();
 extern u8 D_8014A110;
 void func_80143D24(void);
@@ -215,6 +217,11 @@ extern s32 D_8014A208[8]; /* tpage buffer ids, func_8014280C */
 extern s32 D_8014A228[11]; /* tpage buffer ids, func_8014280C */
 extern s16 D_8014A1E8[]; /* s16 table paired with D_8014A1D4 (func_80143DD0) */
 void func_801452D0(void);
+void func_80141964(void);
+s32 func_801419F8(void);
+void func_80141AE8(void);
+void func_80141B28(void);
+void func_80141B70(void);
 
 typedef struct {
     s32 v[11];
@@ -288,11 +295,6 @@ typedef struct TaiWords4 {
 typedef struct TaiWords11 {
     /* 0x00 */ s32 value[11];
 } TaiWords11; /* size 0x2C */
-typedef struct TaiValue44 {
-    /* 0x00 */ u8 pad_00[0x16];
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ u8 pad_18[0x2C];
-} TaiValue44; /* size 0x44 */
 extern TaiWords4 D_801498AC;
 extern TaiWords11 D_801498BC;
 extern s16 D_80149320[];
@@ -303,10 +305,6 @@ extern u8 D_801492A8[4]; /* func_80135480 */
 #endif /* OVL_TAIIKU_W8_3_TYPES_H */
 #ifndef TAIIKU_W8_CONTROLLER_TYPES_H
 #define TAIIKU_W8_CONTROLLER_TYPES_H
-typedef union TaiikuPosition {
-    /* 0x00 */ s32 w;
-    /* 0x00 */ s16 h[2];
-} TaiikuPosition; /* size 0x04; word at 0x8014A3FC, signed high half at +2. T-9570 */
 /* Game C runner records (801452D0.c): D_8014A3E4 is the player, D_8014A400[3] the three other
  * runners, two objects: func_801482BC indexes D_8014A400 by runner - 1 and the loops of
  * func_801470A0/func_80147120 by i; written as one 4-element array they compile differently.
@@ -320,20 +318,10 @@ typedef struct TaiikuController {
     /* 0x0C */ u32 unk_0C;
     /* 0x10 */ s32 unk_10;
     /* 0x14 */ s32 unk_14;
-    /* 0x18 */ TaiikuPosition position;
+    /* 0x18 */ Fix32 position;
 } TaiikuController; /* size 0x1C */
 extern TaiikuController D_8014A3E4;
 extern TaiikuController D_8014A400[3];
-typedef struct TaiikuScene44 {
-    /* 0x00 */ u8 unk_00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 pad_03[0x15];
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad_1A[0x0A];
-    /* 0x24 */ TaiikuPosition position;
-    /* 0x28 */ u8 pad_28[0x1C];
-} TaiikuScene44; /* size 0x44; camera record 104 and related records. T-9570 */
 
 #endif
 
@@ -450,7 +438,7 @@ extern TaiikuSlot1C D_8014A454[4];
 #ifndef OVL_TAIIKU_T10010_SCROLL_POSITION
 #define OVL_TAIIKU_T10010_SCROLL_POSITION
 void func_8014430C(void);
-extern TaiikuPosition D_8014A1CC; /* Scroll position; signed high half at +2. T-10010. */
+extern Fix32 D_8014A1CC; /* Scroll position; signed high half at +2. T-10010. */
 void func_8013D254(void);
 extern s32 D_80149948;
 
@@ -720,7 +708,9 @@ void func_8013F35C(void);
 #define OVL_TAIIKU_RUNNERS_T11640
 /* T-11640: TAIIKU's view of the D_8011ECD0 display records (DisplayActor44 layout). The bytes at
  * 0x01 and 0x06 are signed here: func_801400D8 stores them with constants that the original keeps
- * apart from the unsigned switch constants of its later loops, which a u8 field merges. */
+ * apart from the unsigned switch constants of its later loops, which a u8 field merges. T-20900: with the
+ * shared u8 record func_80138DF8, func_80139610 and func_801400D8 do not match, so this view stays; its other
+ * fields are the shared layout. */
 typedef struct TaiikuActor44 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ s8 unk_01;
@@ -730,22 +720,33 @@ typedef struct TaiikuActor44 {
     /* 0x05 */ u8 unk_05;
     /* 0x06 */ s8 unk_06;
     /* 0x07 */ u8 unk_07;
-    /* 0x08 */ u8 pad_08[4];
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
     /* 0x0C */ u8 *unk_0C;
     /* 0x10 */ u8 *unk_10;
     /* 0x14 */ s16 unk_14;
-    /* 0x16 */ u8 pad_16[2];
+    /* 0x16 */ s16 unk_16;
     /* 0x18 */ s16 unk_18;
     /* 0x1A */ s16 unk_1A;
     /* 0x1C */ s16 unk_1C;
-    /* 0x1E */ u8 pad_1E[8];
+    /* 0x1E */ s16 unk_1E;
+    /* 0x20 */ s16 unk_20;
+    /* 0x22 */ s16 unk_22;
+    /* 0x24 */ s16 unk_24;
     /* 0x26 */ s16 unk_26;
-    /* 0x28 */ u8 pad_28[2];
+    /* 0x28 */ s16 unk_28;
     /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ u8 pad_2C[8];
+    /* 0x2C */ s16 unk_2C;
+    /* 0x2E */ s16 unk_2E;
+    /* 0x30 */ s16 unk_30;
+    /* 0x32 */ s16 unk_32;
     /* 0x34 */ u8 *unk_34;
     /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 pad_3C[7];
+    /* 0x3C */ s16 unk_3C;
+    /* 0x3E */ s16 unk_3E;
+    /* 0x40 */ u8 unk_40;
+    /* 0x41 */ u8 unk_41;
+    /* 0x42 */ u8 unk_42;
     /* 0x43 */ u8 unk_43;
 } TaiikuActor44; /* size 0x44 */
 /* T-11640: per-runner tables of func_8013FC5C (runners 1..3; D_801499B4 holds their 16.16 positions). */
@@ -777,18 +778,7 @@ typedef struct {
     s16 pad;
 } TaiikuSVec; /* SVECTOR layout */
 
-typedef struct {
-    s32 vx;
-    s32 vy;
-    s32 vz;
-    s32 pad;
-} TaiikuVec; /* VECTOR layout */
 
-typedef struct {
-    s16 m[3][3];
-    s16 pad;
-    s32 t[3];
-} TaiikuMat; /* MATRIX layout, size 0x20 */
 
 /* Track grid tables filled by func_80139AB0 (80 entries each). */
 extern s16 D_801499E4[];
@@ -841,6 +831,9 @@ extern TaiikuB16 D_80149F40;
 typedef struct TaiBytes10 {
     /* 0x00 */ u8 v[10];
 } TaiBytes10; /* size 0xA */
+typedef struct TaiBytes23 {
+    /* 0x00 */ u8 v[23];
+} TaiBytes23; /* size 0x17 */
 typedef struct TaiShorts12x {
     /* 0x00 */ s16 v[12];
 } TaiShorts12x; /* size 0x18 */
@@ -853,6 +846,12 @@ typedef struct TaiShorts23 {
 typedef struct TaiWords6 {
     /* 0x00 */ s32 v[6];
 } TaiWords6; /* size 0x18 */
+typedef struct TaiRec16 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+} TaiRec16; /* size 0x10 */
 typedef struct TaiWords7 {
     /* 0x00 */ s32 v[7];
 } TaiWords7; /* size 0x1C */
@@ -871,6 +870,9 @@ typedef struct TaiWords12 {
 extern s32 D_8014A56C; /* func_80145370 */
 extern TaiWords12 D_8014A570; /* func_80145370 */
 extern TaiWords9 D_8014A5A0; /* func_80145370 */
+extern TaiWords11 D_80148EC4; /* func_80132000 */
+extern TaiBytes23 D_80148F10; /* func_80132BD0 */
+extern TaiShorts23 D_80148FB8; /* func_80132E20 */
 extern TaiShorts23 D_80148F28; /* func_80132BD0 */
 extern TaiShorts23 D_80148F58; /* func_80132BD0 */
 extern TaiShorts23 D_80148F88; /* func_80132BD0 */
@@ -891,7 +893,7 @@ extern TaiBytes10 D_80149864; /* func_80138224 */
 extern TaiikuHalf10 D_80149870; /* func_80138224 */
 extern TaiikuHalf10 D_80149884; /* func_80138224 */
 extern TaiikuHalf10 D_80149898; /* func_80138224 */
-extern TaiWords6 D_8014A088; /* func_80141280 */
+extern TaiWords6 D_8014A088; /* initialiser of the auto array tbl in func_80141280 (its .data, after D_8014A070), end bound in func_80145640 */
 extern TaiikuHalf10 D_8014A27C; /* func_80142400 */
 extern TaiikuHalf10 D_8014A290; /* func_80142400 */
 extern TaiWords8 D_8014A2A4; /* func_80142400 */

@@ -1,0 +1,13 @@
+extern Work800E7D10 D_800E7D18;
+extern u8 D_800E7D24;
+extern u8 D_800E7D25;
+extern u8 D_800E7D26;
+extern u8 D_800E7D27;
+extern u8 D_800E7D28;
+extern u8 D_800E7D29;
+extern u8 D_800E7D2A;
+extern u8 D_800E7D2B;
+extern u8 D_800E7D2D;
+extern u8 D_800E7D2E;
+extern u8 D_800E7D2F;
+extern u8 D_800E7D30;

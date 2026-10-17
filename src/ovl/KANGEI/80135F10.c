@@ -382,47 +382,47 @@ void func_801370A0(void) {
     s16 temp_v0_2;
     s16 var_s2;
     s32 temp_hi;
-    KangeiSprite44 *temp_s0;
+    DisplayFixActor44 *temp_s0;
 
-    if ((((KangeiSprite44 *)D_80120650)->unk_16 == 0) && (((KangeiSprite44 *)D_80120650)->unk_18 == 7) && (((KangeiSprite44 *)D_80120650)->unk_08 == 2)) {
-        ((KangeiSprite44 *)D_80120650)->unk_16 = 1;
-        ((KangeiSprite44 *)D_80120650)->unk_18 = 0;
-        ((KangeiSprite44 *)D_80120650)->unk_08 = 0;
-        ((KangeiSprite44 *)D_80120650)->unk_02 = 1;
+    if ((((DisplayFixActor44 *)D_80120650)->unk_16 == 0) && (((DisplayFixActor44 *)D_80120650)->unk_18 == 7) && (((DisplayFixActor44 *)D_80120650)->unk_08 == 2)) {
+        ((DisplayFixActor44 *)D_80120650)->unk_16 = 1;
+        ((DisplayFixActor44 *)D_80120650)->unk_18 = 0;
+        ((DisplayFixActor44 *)D_80120650)->unk_08 = 0;
+        ((DisplayFixActor44 *)D_80120650)->unk_02 = 1;
     }
     var_s2 = 0x61;
-    if ((((KangeiSprite44 *)D_80120650)->unk_16 == 2) && (((KangeiSprite44 *)D_80120650)->unk_18 == 1) && (((KangeiSprite44 *)D_80120650)->unk_08 == 4)) {
-        ((KangeiSprite44 *)D_80120650)->unk_16 = 3;
-        ((KangeiSprite44 *)D_80120650)->unk_18 = 0;
-        ((KangeiSprite44 *)D_80120650)->unk_08 = 0;
-        ((KangeiSprite44 *)D_80120650)->unk_02 = 1;
+    if ((((DisplayFixActor44 *)D_80120650)->unk_16 == 2) && (((DisplayFixActor44 *)D_80120650)->unk_18 == 1) && (((DisplayFixActor44 *)D_80120650)->unk_08 == 4)) {
+        ((DisplayFixActor44 *)D_80120650)->unk_16 = 3;
+        ((DisplayFixActor44 *)D_80120650)->unk_18 = 0;
+        ((DisplayFixActor44 *)D_80120650)->unk_08 = 0;
+        ((DisplayFixActor44 *)D_80120650)->unk_02 = 1;
     }
     do {
-        temp_s0 = &((KangeiSprite44 *)D_8011ECD0)[var_s2];
+        temp_s0 = &((DisplayFixActor44 *)D_8011ECD0)[var_s2];
         temp_v0 = temp_s0->unk_18;
         if ((temp_v0 < 2) || (temp_v0 >= 8)) {
-            temp_s0->unk_28.w = temp_s0->unk_28.w - ((((KangeiSprite44 *)D_80120650)->unk_16 == 3) * 0x50000) - 0x50000;
+            temp_s0->unk_28.w = temp_s0->unk_28.w - ((((DisplayFixActor44 *)D_80120650)->unk_16 == 3) * 0x50000) - 0x50000;
         } else if ((temp_v0 == 4) || (temp_v0 == 7)) {
-            temp_s0->unk_28.w = temp_s0->unk_28.w - ((((KangeiSprite44 *)D_80120650)->unk_16 == 3) * 0x30000) - 0x30000;
+            temp_s0->unk_28.w = temp_s0->unk_28.w - ((((DisplayFixActor44 *)D_80120650)->unk_16 == 3) * 0x30000) - 0x30000;
         } else {
-            temp_s0->unk_28.w = temp_s0->unk_28.w - ((((KangeiSprite44 *)D_80120650)->unk_16 == 3) * 0x20000) - 0x20000;
+            temp_s0->unk_28.w = temp_s0->unk_28.w - ((((DisplayFixActor44 *)D_80120650)->unk_16 == 3) * 0x20000) - 0x20000;
         }
         if (temp_s0->unk_28.h[1] < -0x9F) {
             temp_hi = func_800AE0D0() % 320;
-            temp_s0->unk_26 = (s16) (temp_hi - 0xA0);
+            temp_s0->unk_24.h[1] = (s16) (temp_hi - 0xA0);
             temp_s0->unk_28.h[1] = 0x3C;
             temp_s0->unk_18 = (s16) (func_800AE0D0() % 10);
         }
         var_s2 += 1;
     } while (var_s2 < 0x74);
     var_s2 = 0;
-    if ((u8) ((KangeiSprite44 *)D_80120650)->unk_07 >= 0x78U) {
+    if ((u8) ((DisplayFixActor44 *)D_80120650)->unk_07 >= 0x78U) {
         do {
             temp_s0_2 = &D_80139F10[var_s2];
             temp_s1 = &D_80139F38[var_s2];
             temp_a0 = temp_s0_2->x;
             temp_v0_2 = *temp_s1;
-            temp_s0_2->y -= temp_v0_2 * 4 * ((((KangeiSprite44 *)D_80120650)->unk_16 == 3) + 1);
+            temp_s0_2->y -= temp_v0_2 * 4 * ((((DisplayFixActor44 *)D_80120650)->unk_16 == 3) + 1);
             temp_a1 = temp_s0_2->y;
             func_80049FF0((s32) temp_a0, (s32) temp_a1, (s16) temp_a0, (s32) (s16) ((temp_v0_2 * 0x14) + temp_a1), 0xFFFFFF, 0xFFFFFF, 0xB);
             if (temp_s0_2->y < -0xAA) {
@@ -445,19 +445,19 @@ void func_80137440(void) {
 
 void func_80137484(void) {
     s16 i;
-    KangeiSprite44 *sprite;
+    DisplayFixActor44 *sprite;
 
-    ((KangeiSprite44 *)D_8011ECD0)[96].unk_03 |= 0x80;
-    ((KangeiSprite44 *)D_8011ECD0)[96].unk_07 += 8;
+    ((DisplayFixActor44 *)D_8011ECD0)[96].unk_03 |= 0x80;
+    ((DisplayFixActor44 *)D_8011ECD0)[96].unk_07 += 8;
     for (i = 0x61; i < 0x74; i++) {
-        sprite = &((KangeiSprite44 *)D_8011ECD0)[i];
+        sprite = &((DisplayFixActor44 *)D_8011ECD0)[i];
         sprite->unk_03 |= 0x80;
         sprite->unk_07 += 8;
     }
-    ((KangeiSprite44 *)D_8011ECD0)[96].unk_02 = 5;
-    if (((KangeiSprite44 *)D_8011ECD0)[96].unk_07 >= 0x80U) {
-        ((KangeiSprite44 *)D_8011ECD0)[96].unk_07 = 0x80;
-        ((KangeiSprite44 *)D_8011ECD0)[97].unk_07 = 0x80;
+    ((DisplayFixActor44 *)D_8011ECD0)[96].unk_02 = 5;
+    if (((DisplayFixActor44 *)D_8011ECD0)[96].unk_07 >= 0x80U) {
+        ((DisplayFixActor44 *)D_8011ECD0)[96].unk_07 = 0x80;
+        ((DisplayFixActor44 *)D_8011ECD0)[97].unk_07 = 0x80;
         func_8004284C();
     }
 }
@@ -466,19 +466,19 @@ void func_80137484(void) {
 s32 func_80137544(void) {
     s16 i;
     s32 mask;
-    KangeiSprite44 *sprite;
-    ((KangeiSprite44 *)D_8011ECD0)[96].unk_07 -= 8;
+    DisplayFixActor44 *sprite;
+    ((DisplayFixActor44 *)D_8011ECD0)[96].unk_07 -= 8;
     for (i = 0x61; i < 0x74; i++) {
-        sprite = &((KangeiSprite44 *)D_8011ECD0)[i];
+        sprite = &((DisplayFixActor44 *)D_8011ECD0)[i];
         sprite->unk_07 -= 8;
     }
     /* The signed mask is shared by the scalar and loop flag clears. */
     mask = ~0x80;
-    if (((KangeiSprite44 *)D_8011ECD0)[96].unk_07 < 9U) {
-        ((KangeiSprite44 *)D_8011ECD0)[96].unk_07 = 0;
-        ((KangeiSprite44 *)D_8011ECD0)[96].unk_03 &= mask;
+    if (((DisplayFixActor44 *)D_8011ECD0)[96].unk_07 < 9U) {
+        ((DisplayFixActor44 *)D_8011ECD0)[96].unk_07 = 0;
+        ((DisplayFixActor44 *)D_8011ECD0)[96].unk_03 &= mask;
         for (i = 0x61; i < 0x74; i++) {
-            sprite = &((KangeiSprite44 *)D_8011ECD0)[i];
+            sprite = &((DisplayFixActor44 *)D_8011ECD0)[i];
             sprite->unk_07 = 0;
             sprite->unk_03 &= mask;
         }
@@ -489,14 +489,9 @@ s32 func_80137544(void) {
     }
 }
 
-typedef struct {
-    u32 pad0 : 25;
-    u32 grade : 2;
-    u32 pad1 : 5;
-} KgSlot;
 
 s32 func_80137638(void) {
-    if (((KgSlot *) &D_800E6280.unk_66C[(u32) D_800E6280.unk_0F4.h >> 12])->grade < 3) {
+    if (((ScheduleClubFlags *) &D_800E6280.unk_66C[(u32) D_800E6280.unk_0F4.h >> 12])->unk_25 < 3) {
         func_80042808();
         return 0;
     }

@@ -51,13 +51,6 @@ void func_80142864(void);
 
 #ifndef OVL_BUNKAKEN_T9960
 #define OVL_BUNKAKEN_T9960
-/* Byte at D_800E7D4F: continuation flags and three-bit mode (T-9960). */
-typedef struct BunkakenModeFlags {
-    /* 0x00 */ u8 b0 : 1;
-    /* 0x00 */ u8 b1 : 1;
-    /* 0x00 */ u8 mode : 3;
-    /* 0x00 */ u8 pad : 3;
-} BunkakenModeFlags; /* size 0x01 */
 
 void func_80140EF4(void);
 
@@ -80,14 +73,6 @@ extern u8 D_801564DC;
 s32 func_80152F4C(void);
 #endif
 
-#ifndef BUNKA_DISPATCH8_T10630_H
-#define BUNKA_DISPATCH8_T10630_H
-/* T-10630: adjacent route/character words at D_80122EB8, used by both overlays. */
-typedef struct BunkaDispatch8 {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
-} BunkaDispatch8; /* size 0x08 */
-#endif
 
 #ifndef OVL_BUNKAKEN_T10860_H
 #define OVL_BUNKAKEN_T10860_H

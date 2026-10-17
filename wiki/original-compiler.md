@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-11
+updated: 2026-10-17
 ticket: T-3100
 sources: ["disc/files/CDROM/EXEDIR/O.BIN", "disc/files/SLPM_86.053", "disc/files/CDROM/EXEDIR/*.EXN", "disc/track1.bin", "tools/obin_syms.py", "wiki/raw/original-compiler-sources.md"]
 ---
@@ -186,3 +186,12 @@ So the original combines a 3.18 (5.x-generation) code generator with the older f
 
 ## Update: K&R promotion (T-7000)
 The original front end used K&R ("unsigned preserving") promotion: a value loaded with `lbu`/`lhu` is compared, shifted and divided unsigned (`sltiu` 1459 against `slti` 3, `srl` 556 against `sra` 0, `divu` 101 against `div` 4), which IDO gives only in K&R mode (`cc -cckr`). IDO 5.x defaults to `-xansi`; whether the original's suite defaulted to K&R or the build used `-cckr` is unknown (UNVERIFIED either way). The original still widened narrow global loads with a conversion record, which IDO's K&R front end leaves out. The build now uses `-cckr` and `tools/cvt_pass.py` restores the widening ([[toolchain]], [[matching-notes]] "K&R promotion rules (T-7000)").
+
+## Update: IDO 4.1 back end after the production front end (T-20700)
+
+- 4.1's as1 (3.12) equals 5.3's as1 on 6335 of 6336 matched functions; the one difference is an `mflo` hazard that 4.1
+  pads with `nop`s and the original fills like 5.3. So the original's as1 is a 5.x as1.
+- 4.1's ugen changes 1355 matched functions away from the original but agrees with the frame pass on 6335 of 6336 frames
+  and reproduces one struct-copy temporary numbering (TACO `func_8013B2A0`). The original's ugen therefore mixes 4.1
+  traits (frames, that copy) with 5.x ones (fresh temporaries, alignment, K&R parameter copies): an intermediate 3.18
+  ugen, as hypothesised above, still UNVERIFIED. Numbers: [[ido-52-evaluation]], T-20700 section.

@@ -127,10 +127,10 @@ s32 func_80142544(void) {
     func_8013E7C0(0x2C, 0x13, 1, 1);
     if (D_8015EDB0.unk_04 < 200) {
         value = (D_8015EDB0.unk_04 << 12) / 30;
-        ((RpgObjectBlock *)D_8011ECD0)->group[43].unk_1A = value;
-        ((RpgObjectBlock *)D_8011ECD0)->group[43].unk_1C = value;
-        ((RpgObjectBlock *)D_8011ECD0)->group[44].unk_1A = value;
-        ((RpgObjectBlock *)D_8011ECD0)->group[44].unk_1C = value;
+        ((DisplayActor44 *)D_8011ECD0)[139].unk_1A = value;
+        ((DisplayActor44 *)D_8011ECD0)[139].unk_1C = value;
+        ((DisplayActor44 *)D_8011ECD0)[140].unk_1A = value;
+        ((DisplayActor44 *)D_8011ECD0)[140].unk_1C = value;
     }
     if (D_8015EDB0.unk_04 >= 10) {
         func_8013E97C(0x2B, 0, ((10 - D_8015EDB0.unk_04) * D_8015EDB0.unk_04) / 100);
@@ -140,10 +140,10 @@ s32 func_80142544(void) {
     if (D_8015EDB0.unk_04 >= 129) {
         func_8013E7C0(0x2B, 0xFF, 1, 0);
         func_8013E7C0(0x2C, 0xFF, 1, 0);
-        ((RpgObjectBlock *)D_8011ECD0)->group[43].unk_1A = 0x1000;
-        ((RpgObjectBlock *)D_8011ECD0)->group[43].unk_1C = 0x1000;
-        ((RpgObjectBlock *)D_8011ECD0)->group[44].unk_1A = 0x1000;
-        ((RpgObjectBlock *)D_8011ECD0)->group[44].unk_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[139].unk_1A = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[139].unk_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[140].unk_1A = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[140].unk_1C = 0x1000;
         func_8014EBA8();
     }
 }
@@ -195,7 +195,7 @@ s32 func_801427E4(void) {
         func_8014EBD0();
         break;
     case 3:
-        if (*(s16 *)&D_8011ECD0[0x24C0] == 7) {
+        if (((DisplayActor44 *)D_8011ECD0)[138].unk_18 == 7) {
             func_8014EBD0();
         }
         break;

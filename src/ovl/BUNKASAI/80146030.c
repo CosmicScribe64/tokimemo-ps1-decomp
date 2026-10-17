@@ -6,9 +6,9 @@ void func_80083440();
 
 void func_80146030(void) {
     s32 selector;
-    BunkSelectWords *work;
+    BunkaDispatch8 *work;
 
-    work = (BunkSelectWords *)&D_80122EB8;
+    work = (BunkaDispatch8 *)&D_80122EB8;
     selector = work->unk_00;
     work->unk_04 = 3;
     D_800E6280.unk_1BC[3].unk_0C.f.b2 = 1;

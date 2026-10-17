@@ -1,10 +1,10 @@
 ---
 id: T-14501
 title: Verify and integrate remaining-function drafts
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[matching-notes]]", "[[tickets/T-14500-exhaustive-drafts]]"]
 ---
 
@@ -55,3 +55,5 @@ Local evidence: build/t14500/rows.json, build/t14500/proof.txt, /private/tmp/t14
 2026-10-15: ETC func_8013C330 is the first recovered mechanical post-pass zero: 976 coverage / 976 literal bytes, from drafts/T-14500/repairs/automatic/mechanical/ETC/func_8013C330. Twelve helper/global declarations plus the target declaration are centralized in ETC.h; the existing K&R implicit s32 view is retained. Default literal proof, ETC SHA1 and header/global/prototype checks pass after normalization. The first-pass failure remains immutable. Aggregate proof-lane census gains are now 30 functions / 19,220 inventory coverage bytes, distinct from the separate near-match tickets.
 
 2026-10-15: Final source-only handoff also preserves the proof-lane's local Python scaffolding at drafts/T-14501/proof-lane-tools/, with original paths and SHA256 manifest. This includes final batch promotion/default-proof helpers, per-target normalizations, and bookkeeping scripts. They are historical artifacts outside normal build/tool paths; no binary or assembly inputs are archived. All production source changes are committed; TACO's unfinished source is archived separately under T-15300 and its production fallback restored.
+
+2026-10-17: Code review against CODING_STANDARDS.md done: the 30 promoted functions (19,220 inventory coverage bytes in 9 units) are C89 with no FAKE, NON_MATCHING or inline asm, and each commit only replaces INCLUDE_ASM lines. Header additions are small and in the right headers. The archived proof-lane scripts in drafts/ are historical and need no change. Moved to Done.

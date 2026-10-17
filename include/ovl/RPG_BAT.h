@@ -14,8 +14,12 @@ extern s32 D_8015EC28;
 extern s32 D_8015EC2C;
 extern s32 D_8015EC6C;
 extern s32 D_8015E744;
+#ifndef RPG_BAT_OVERRIDE_D_8015ED98
 extern s32 D_8015ED98;
+#endif
 extern s32 D_8015EBDC;
+extern s32 D_8015EBD8;
+extern s32 D_8015EBE0;
 extern s32 D_8015EDC4;
 extern s32 D_8015EDF0;
 extern s32 D_8015EE1C;
@@ -31,6 +35,7 @@ void func_8014F258(void);
 void func_8014F500(void);
 void func_8014F524(void);
 
+void func_80140E70(void);
 void func_80141C70(void);
 void func_80141E38(void);
 s32 func_80137280(void);
@@ -39,7 +44,7 @@ void func_8014EF8C(void);
 extern s32 D_8015ED64[][4];
 extern s32 D_8015ED94;
 
-extern s32 D_8015E740;
+extern u8 **D_8015E740;
 extern s32 D_8015E748;
 void func_8013415C(void);
 void func_80134570(void);
@@ -94,12 +99,23 @@ void func_8013E97C(s32 a, s32 b, s32 c);
 void func_8014F080(s32 arg0);
 void func_8014EF3C(void);
 
+#ifndef RPG_BAT_OVERRIDE_func_8013F0F4
 void func_8013F0F4(s32 a, s32 b, s32 c);
+#endif
+void func_801328C4(s32 a, s32 b);
+s32 func_8014A3DC(void);
+/* Same override rule as the pair above (the definition in 8013E4D0.c is void; T-17101). */
+#ifndef RPG_BAT_OVERRIDE_func_8013F15C
 void func_8013F15C(s32 a, s32 b, s32 c);
+#endif
 s32 func_8013E90C(s32 i);
 s32 func_80156870(void);
 
+void func_80153A60(void);
+void func_80153B08(void);
+void func_80153D20(void);
 void func_80153F3C(s32, s32, s32, s32, s32, s32);
+void func_80154220(s32 *xy, s32 *uv, s32 arg2, s32 arg3, s32 arg4); /* four (x, y) and four (u, v) words */
 extern s32 D_8015EC38;
 extern s32 D_8015EC3C;
 extern s32 D_8015EC40;
@@ -116,9 +132,15 @@ void func_80155868(s32, s32, s32, s32, s32, s32, s32, s32, s32);
 s32 func_8013EA00(s32 arg0, s32 arg1);
 
 extern s16 D_8015E5A0[][12];
+extern s32 D_8015EE5C;
 extern s32 D_8015EE60;
+extern s32 D_8015EE68;
+extern s32 D_8015EE74;
+extern s32 D_8015EE80;
 extern s32 D_8015EE64;
 void func_8013E8B8(s32 a0, s32 a1, s32 a2);
+void func_8013E864(s32 arg0, s32 arg1, s32 arg2);
+void func_8014EB58(s32 arg0);
 extern s32 D_8015EE6C;
 extern s32 D_8015EE70;
 extern s32 D_8015EE78;
@@ -147,18 +169,29 @@ extern s32 D_8015EE40;
 s32 func_8013C1CC(void);
 void func_8013C2A0(void);
 void func_8013C32C(void);
+void func_8013BEA8(void);
+s32 func_8013B910(void);
+#ifndef RPG_BAT_OVERRIDE_func_8013C890
 void func_8013C890(void);
+#endif
 void func_8013CC90(void);
 void func_801439E0();
 void func_8014B294(void);
-s32 func_8014B79C(void);
+void func_8014B79C(void);
 void func_8014C4FC(void);
 void func_8014C804(void);
+void func_801495DC(void);
 void func_8014CB0C(void);
 void func_8014CE14(void);
-extern s32 D_8015EBF0;
-extern s32 D_8015EBF4;
-extern s32 D_8015EBF8;
+/* Pad-sequence matcher state of func_8013BBF8, one aggregate. The original keeps the store of unk_00 in front
+ * of the load of unk_04; four separate scalars let the build sink that store into the branch delay slot (T-17107). */
+typedef struct RpgPadSeq {
+    /* 0x00 */ s32 unk_00; /* pad word read this frame (D_8015EBEC) */
+    /* 0x04 */ s32 unk_04; /* pad word of the previous change (D_8015EBF0) */
+    /* 0x08 */ s32 unk_08; /* position in the D_8015E578 sequence (D_8015EBF4) */
+    /* 0x0C */ s32 unk_0C; /* position in the D_8015E550 sequence (D_8015EBF8) */
+} RpgPadSeq; /* size 0x10 */
+extern RpgPadSeq D_8015EBEC;
 void func_8013BBF8();
 /* Battle counters; one struct because as1 then keeps the access order of the original (T-4030, func_801452C0). */
 typedef struct RpgStat {
@@ -203,6 +236,7 @@ void func_8014B738();
 void func_8014ED80();
 void func_8014EE98();
 void func_80150F84();
+void func_80151F38(void);
 extern u8 D_8015E814;
 extern s32 D_8015EC18;
 void func_8013F1C4();
@@ -222,12 +256,16 @@ void func_8013F220();
 extern u8 D_8015E74C[];
 extern s32 D_8015EC78;
 extern s32 D_8015EDB8;
+/* A file that reads the first word as a scalar (func_80147930, T-17109) defines RPG_BAT_OVERRIDE_D_8015EBCC and declares `extern s32 D_8015EBCC;` itself. */
+#ifndef RPG_BAT_OVERRIDE_D_8015EBCC
 extern s32 D_8015EBCC[3];
+#endif
 extern s32 D_8015EEE4;
 extern u8 D_8015E774[];
 extern u8 D_8015E79C[];
 extern u8 D_8015E850[];
 extern u8 D_8015E878[];
+extern u8 D_8015E8A0[];
 extern u8 D_8015EA08[];
 extern u8 D_8015EA30[];
 extern u8 D_8015EA58[];
@@ -244,6 +282,7 @@ void func_8015A11C(void);
 extern s32 D_8015EBD0;
 extern s32 D_8015EBD4;
 extern u32 D_8015EBA0;
+extern s32 D_8015EBA8;
 void func_801321D0(void);
 void func_80134D30(void);
 void func_801368B0(void);
@@ -263,8 +302,15 @@ void func_80135AE0();
 void func_80136374();
 void func_80136E2C();
 void func_8013D030();
+void func_8013D0D4(void);
 void func_801420EC();
 s32 func_801446F8();
+s32 func_801447B8(void);
+void func_80150AA4(void);
+void func_80151108(void);
+void func_80151380(s32 arg0);
+s32 func_801513C8(void);
+s32 func_801515F0(void);
 s32 func_80147930();
 void func_801481C8();
 void func_8014DF60();
@@ -285,6 +331,8 @@ extern s32 D_8015EDF8;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 extern s32 D_8015EDB4;
+extern s32 D_8015ECC4;
+void func_80148714(void);
 extern s32 D_8015EE4C;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
@@ -305,7 +353,19 @@ extern u8 D_8015E8F0[];
 extern s32 D_8015EBC0;
 extern s32 D_8015EBC4;
 extern s32 D_8015EBC8;
+#ifndef RPG_BAT_OVERRIDE_D_8015EDAC
+/* The six words D_8015EBC0..D_8015EBD4 are one aggregate; func_8013EA60 only matches when it reads them through
+ * one struct (the original loads the counter above the flag-byte store, scalars give the other order; T-17107). */
+typedef struct RpgGauge {
+    /* 0x00 */ s32 cur[3];  /* D_8015EBC0, D_8015EBC4, D_8015EBC8 */
+    /* 0x0C */ s32 flag[3]; /* D_8015EBCC, D_8015EBD0, D_8015EBD4 */
+} RpgGauge; /* size 0x18 */
+/* FAKE: interim view. The scalar names above stay for the files that still use them (801504E0.c, 8014DF60.c,
+ * 80154430.c, func_8013C1CC), so RPG_GAUGE reaches the aggregate through the first symbol until those are
+ * migrated to a real `RpgGauge D_8015EBC0`. T-17107 */
+#define RPG_GAUGE ((RpgGauge *)&D_8015EBC0)
 extern u32 D_8015EDAC;
+#endif
 void func_80136A9C(void);
 void func_80136BD8(void);
 void func_80136CCC(void);
@@ -315,31 +375,6 @@ void func_8014F3C8();
 void func_80136070();
 void func_801361AC();
 extern u32 D_8015ED38;
-
-#ifndef OVL_RPG_OBJECT_BLOCK_T9520
-#define OVL_RPG_OBJECT_BLOCK_T9520
-typedef struct RpgObjectRecord44 {
-    /* 0x00 */ u8 pad0;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 pad3[3];
-    /* 0x06 */ u8 unk_06;
-    /* 0x07 */ u8 pad7[0x13];
-    /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ s16 unk_1C;
-    /* 0x1E */ u8 pad1E[8];
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ u8 pad28[2];
-    /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ u8 pad2C[0xC];
-    /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 pad3C[8];
-} RpgObjectRecord44; /* size 0x44; confirmed main object-table view, T-9520 */
-typedef struct RpgObjectBlock {
-    /* 0x0000 */ RpgObjectRecord44 prefix[96];
-    /* 0x1980 */ RpgObjectRecord44 group[64];
-} RpgObjectBlock; /* size 0x2A80 */
-#endif
 
 void func_8014E1A4();
 void func_8014E28C();
@@ -351,12 +386,6 @@ typedef struct RpgClearWords50 {
     /* 0x00 */ s32 values[50];
 } RpgClearWords50; /* size 0xC8 */
 
-/* Three flag bytes at a 0x44-byte stride are accessed through the shared record table. */
-typedef struct RpgFlagRecord44 { /* size 0x44 */
-    /* 0x00 */ u8 unk_00[3];
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 unk_04[0x40];
-} RpgFlagRecord44;
 
 void func_80148654(void);
 void func_80148B08(void);
@@ -368,17 +397,6 @@ void func_80142CB8(void);
 
 #ifndef OVL_RPG_HEALTH_RECORDS_T9780
 #define OVL_RPG_HEALTH_RECORDS_T9780
-/* Additional flag/health view of the 0x44-byte main object records. */
-typedef struct RpgHealth44 {
-    /* 0x00 */ u8 pad0[3];
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 pad4[0x22];
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ u8 pad28[0x1C];
-} RpgHealth44; /* size 0x44 */
-typedef struct RpgHealthBlock {
-    /* 0x0000 */ RpgHealth44 record[160];
-} RpgHealthBlock; /* size 0x2A80; same extent as RpgObjectBlock */
 extern s32 D_8015EDBC;
 extern s32 D_8015EE14;
 extern s32 D_8015ED14;
@@ -413,7 +431,9 @@ void func_80150120(void);
 #ifndef OVL_RPG_ASSET_WORDS_T9720
 #define OVL_RPG_ASSET_WORDS_T9720
 /* Word values copied into 0x44-byte draw records by func_8013E54C. */
+#ifndef RPG_BAT_OVERRIDE_D_8015EE8C
 extern s32 D_8015EE8C;
+#endif
 extern s32 D_8015EE90;
 extern s32 D_8015EE9C;
 extern s32 D_8015EEA0;
@@ -554,6 +574,9 @@ extern s32 D_8015EE18;
 /* T-12300: word counters cleared by func_8014A660 (sw accesses). */
 extern s32 D_8015EC7C;
 extern s32 D_8015EC80;
+extern s32 D_8015ECB8;
+extern s32 D_8015ECE0;
+extern s32 D_8015ED08;
 extern s32 D_8015ECEC;
 extern s32 D_8015ECF0;
 extern s32 D_8015ECF4;
@@ -593,6 +616,7 @@ extern RpgStrTbl4 D_8015EFC0;   /* func_80152384 */
 extern RpgWordTbl4 D_8015EFD0;  /* func_80152384 */
 extern RpgStrTbl4 D_8015EFE0;   /* func_80159B40 */
 extern RpgStrTbl4 D_8015EFF0;   /* func_80159B40 */
+extern RpgWordTbl4 D_8015F000;  /* func_80159B40 (the first 16 bytes of a zero block) */
 /* T-17100: called by func_801498C0 before their definitions. */
 void func_80149AA8(void);
 void func_8014A16C(void);

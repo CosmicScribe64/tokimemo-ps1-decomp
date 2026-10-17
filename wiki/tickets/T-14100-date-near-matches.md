@@ -1,10 +1,10 @@
 ---
 id: T-14100
 title: Resolve DATE near matches with data-flow hypotheses
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[tickets/T-12100-codex-cx10]]", "[[matching-notes]]"]
 ---
 
@@ -39,3 +39,7 @@ Isolated branch codex/date-14100 from 589bacb8. Build dependency commits 462d25d
 Final package: 636 newly verified bytes in three functions; existing four T-12100 matches are unchanged. Awaiting independent standards review. The original near-match guards remain unchanged.
 
 Final cleanup verification: all three default-build full-TU literal-byte proofs pass again (160 + 180 + 296 bytes), DATE SHA1 OK, headers OK, branch prototype check OK (zero new disagreements, 15 known baseline). Logs: build/t14100/final-literal.log, final-date.log, final-headers.log, final-protos.log. No source/header changes remain beyond the three verified dispatchers. Independent review remains required for Done.
+
+## Comments
+
+2026-10-17: The three dispatchers (func_8015A288, func_80154004, func_80152980, 636 bytes) are on main as plain unguarded C. Review against CODING_STANDARDS.md is clean: C89, no FAKE or NON_MATCHING added, table typedefs sized and documented. The near-match guards it probed were closed later (func_80147958 in T-17201, func_80158338 in T-17200), and func_80144E20 and func_801449D4 stay unmatched under T-17207 and the draft catalog. Closed as Done.

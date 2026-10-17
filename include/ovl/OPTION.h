@@ -54,6 +54,7 @@ s32 func_8013C3B0(void);
 void func_8013C52C(void);
 s32 func_8013C72C(void);
 void func_8013447C(void);
+void func_80134210(void);
 void func_80135DE0(void);
 void func_80136BC8(void);
 s32 func_80133718(void);
@@ -90,24 +91,6 @@ void func_8013A4FC(void);
 void func_80138DF8(void);
 void func_80138C20(void);
 void func_80138FC0(void);
-
-#ifndef T9540_OPT_DRAW44
-#define T9540_OPT_DRAW44
-typedef union OptDrawWord {
-    /* 0x00 */ s32 w;
-    /* 0x00 */ u8 b[4];
-} OptDrawWord; /* size 0x04 */
-typedef struct OptDraw44 {
-    /* 0x00 */ OptDrawWord unk_00;
-    /* 0x04 */ u8 pad04[0x14];
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad1A[0x0C];
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ u8 pad28[2];
-    /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ u8 pad2C[0x18];
-} OptDraw44; /* size 0x44 */
-#endif
 
 #ifndef OVL_OPTION_DISPATCH_T10020
 #define OVL_OPTION_DISPATCH_T10020
@@ -152,14 +135,38 @@ extern s32 D_8013D308;
 /* Four pointers walked up to the next label, D_8013D360 (func_8013554C, T-17800). */
 extern u8 *D_8013D350[4];
 
+/* Main-exe bss read only here (CODING_STANDARDS 8a: the types live in this header while no other unit
+ * declares the symbols): the cell maps, cells and cell indexes of the two BG slots, SpriteSlot24 (game.h,
+ * GsBG layout) at D_801220D0 + n * 0x24, whose +0x14 points at map n. Main func_8004A1A0 (asm) sets up
+ * slot n through these three tables; func_801328C0 fills slot 0 itself (T-20910). */
+typedef struct SpriteCell8 {
+    /* 0x00 */ u8 u;
+    /* 0x01 */ u8 v;
+    /* 0x02 */ u16 cba;
+    /* 0x04 */ u16 flag;
+    /* 0x06 */ u16 tpage;
+} SpriteCell8; /* size 0x08, PsyQ libgs GsCELL layout */
+
+typedef struct SpriteMap10 {
+    /* 0x00 */ u8 cellw;
+    /* 0x01 */ u8 cellh;
+    /* 0x02 */ u16 ncellw;
+    /* 0x04 */ u16 ncellh;
+    /* 0x06 */ u8 pad_06[2];
+    /* 0x08 */ SpriteCell8 *base;
+    /* 0x0C */ u16 *index;
+} SpriteMap10; /* size 0x10, PsyQ libgs GsMAP layout */
+
+/* The cell index of one slot (map->index), one u16 per map position. */
+typedef struct SpriteIndex80 {
+    /* 0x00 */ u16 v[64];
+} SpriteIndex80; /* size 0x80 */
+
+extern SpriteMap10 D_80122120[2];
+extern SpriteCell8 D_80122140[2][64];
+extern SpriteIndex80 D_80122540[2];
+
 /* Views of shared records, moved here from the .c files (T-17800). */
-/* View of the 0x44-byte sprite records of the D_8011ECD0 table that the option menus number
- * (D_80120650 is record 96; the menus write the s16 at +0x18 of records 107-113). T-9020 */
-typedef struct OptSpr44 {
-    /* 0x00 */ s32 unk_00[6];
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad1A[0x2A];
-} OptSpr44; /* size 0x44 */
 
 /* Four s16 rows filled by func_801325A0 for menu_set. */
 typedef struct Arrs4x8 {
@@ -189,27 +196,7 @@ typedef struct OptionCharBits {
     /* 0x00 */ u32 f24 : 8;
 } OptionCharBits; /* size 0x04 */
 
-/* Packed player word at GameState +0xF4; byte/halfword bitfield accesses, T-14400. */
-typedef struct OptionPlayerBits {
-    /* 0x00 */ u32 unk_00 : 8;
-    /* 0x00 */ u32 f8 : 4;
-    /* 0x00 */ u32 f12 : 4;
-    /* 0x00 */ u32 b16 : 1;
-    /* 0x00 */ u32 b17 : 1;
-    /* 0x00 */ u32 b18 : 1;
-    /* 0x00 */ u32 b19 : 1;
-    /* 0x00 */ u32 b20 : 1;
-    /* 0x00 */ u32 unk_21 : 11;
-} OptionPlayerBits; /* size 0x04 */
 
-/* Packed schedule word at GameState +0x54C, T-14400. */
-typedef struct OptionScheduleBits {
-    /* 0x00 */ u32 f0 : 5;
-    /* 0x00 */ u32 unk_05 : 19;
-    /* 0x00 */ u32 b24 : 1;
-    /* 0x00 */ u32 f25 : 4;
-    /* 0x00 */ u32 unk_29 : 3;
-} OptionScheduleBits; /* size 0x04 */
 
 /* Packed date word at GameState +0xF8 and Rec38 +0x10: GsDateBits (main_api.h) plus the two bits at 9-10,
  * read as `& 0xF`, `<< 0x17 >> 0x1B`, `<< 0x15 >> 0x1E` (func_8013A7EC, T-17800). */
@@ -220,41 +207,5 @@ typedef struct OptionDateBits {
     /* 0x00 */ u32 unk_11 : 21;
 } OptionDateBits; /* size 0x04 */
 
-/* The 0x44-byte display records of D_8011ECD0 as the option menus use them: DisplayActor44 (game.h) with
- * s16 fields where it has padding (+0x1C is the pair partner of +0x1A, D_80120914; +0x2C..+0x32 are set
- * from func_800AE0D0 in func_80139198). Record 96 is D_80120650 (T-17800). */
-typedef struct OptActor44 {
-    /* 0x00 */ u8 unk_00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 unk_04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 unk_06;
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ s16 unk_0A;
-    /* 0x0C */ u8 *unk_0C;
-    /* 0x10 */ u8 *unk_10;
-    /* 0x14 */ s16 unk_14;
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ s16 unk_1C;
-    /* 0x1E */ s16 unk_1E;
-    /* 0x20 */ s16 unk_20;
-    /* 0x22 */ s16 unk_22;
-    /* 0x24 */ s16 unk_24;
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ s16 unk_28;
-    /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ s16 unk_2C;
-    /* 0x2E */ s16 unk_2E;
-    /* 0x30 */ s16 unk_30;
-    /* 0x32 */ s16 unk_32;
-    /* 0x34 */ s32 *unk_34;
-    /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 pad3C[8];
-} OptActor44; /* size 0x44 */
 
 #endif /* OVL_OPTION_H */

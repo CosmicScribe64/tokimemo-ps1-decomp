@@ -501,7 +501,7 @@ void func_80139E34(void) {
         p[96].unk_14 = D_8014A050;
         p[96].unk_05 = 0x80;
         p[96].unk_1A = 0x1000;
-        *(s16 *)p[96].pad_1C = 0x1000;
+        p[96].unk_1C = 0x1000;
         p[96].unk_06 = 2;
         p[96].unk_02 = 1;
         if (i == 11) {
@@ -1223,14 +1223,14 @@ void func_8013C0E4(void) {
         D_801499A0.unk_04 = ((s16 *)&tmp)[1];
         D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
     }
-    if (D_80120676 < ((TaiikuScene44 *)D_8011ECD0)[97].position.h[1] &&
+    if (D_80120676 < ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.h[1] &&
         func_800AE0C0(D_8012067A - D_801206BE) < 12 &&
-        ((TaiikuScene44 *)D_8011ECD0)[97].position.h[1] - 0x20 < D_80120676) {
-        ((TaiikuScene44 *)D_8011ECD0)[97].position.w += 0x11800;
-    } else if (((TaiikuScene44 *)D_8011ECD0)[97].position.h[1] < D_80120676 &&
+        ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.h[1] - 0x20 < D_80120676) {
+        ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.w += 0x11800;
+    } else if (((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.h[1] < D_80120676 &&
                func_800AE0C0(D_8012067A - D_801206BE) < 12 &&
-               D_80120676 < ((TaiikuScene44 *)D_8011ECD0)[97].position.h[1] + 0x20) {
-        ((TaiikuScene44 *)D_8011ECD0)[97].position.w -= 0x11800;
+               D_80120676 < ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.h[1] + 0x20) {
+        ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.w -= 0x11800;
     }
     if (((u16 *)&D_801499A0)[1] > 128) {
         ((u16 *)&D_801499A0)[1] = 0x20;
@@ -1900,17 +1900,17 @@ s8 func_8013FE44(void) {
 }
 
 void func_8013FEF0(void) {
-    TaiikuMat m1;
-    TaiikuMat m2;
+    MATRIX m1;
+    MATRIX m2;
     TaiikuSVec rot;
-    TaiikuVec scale;
+    VECTOR scale;
 
-    m1 = *(TaiikuMat *)D_80125C60;
+    m1 = *(MATRIX *)D_80125C60;
     rot.vx = 0;
     rot.vz = 0;
     rot.vy = D_8014995A;
     func_800A09D0(&rot, &m1);
-    m2 = *(TaiikuMat *)D_80125C60;
+    m2 = *(MATRIX *)D_80125C60;
     rot.vy = 0;
     rot.vz = 0;
     rot.vx = D_80149958;
@@ -1924,7 +1924,7 @@ void func_8013FEF0(void) {
     m1.t[0] = D_80149968.unk_1C[0];
     m1.t[1] = D_80149968.unk_1C[1];
     m1.t[2] = 0x1B58;
-    *(TaiikuMat *)D_801227A4 = m1;
+    *(MATRIX *)D_801227A4 = m1;
     D_801227A0->unk0 = 0;
     D_80149954 -= 0x80;
     if ((D_80149968.unk_1C[1] >> 3) >= -0x3F) {
@@ -1997,7 +1997,7 @@ void func_80140338(void) {
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        *(s16 *)&D_8011ECD0[0x1AA8 + i * 0x44] -= 4 - i;
+        ((DisplayActor44 *)D_8011ECD0)[i + 100].unk_18 -= 4 - i;
     }
 }
 
@@ -2007,7 +2007,7 @@ void func_8014038C(void) {
 
     t = D_80149F8C;
     for (i = 0; i < 4; i++) {
-        *(s16 *)&D_8011ECD0[0x1998 + i * 0x44] += t.v[i];
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_18 += t.v[i];
     }
 }
 

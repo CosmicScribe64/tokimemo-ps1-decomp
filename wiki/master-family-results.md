@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # MASTER family results
@@ -12,6 +12,8 @@ small setters for the scene's three asset pointers. Earlier work:
 [[master-types-pilot]] (T-13000/T-13001: three typed-table matches), [[tickets/T-0700-overlay-batch-a]].
 
 ## Types-first pass (T-18600)
+
+T-20900 update: `MasterSprite44` is `DisplayFixActor44` (`unk_26` is `unk_24.h[1]`; the redraft record view follows), `MasterFixed32` is `Fix32`, `MasterClubBits` is `ScheduleClubFlags` (`count` is `unk_25`) ([[data-types]], "Shared-type unification").
 
 [[tickets/T-18600-types-first-master]] recovered MASTER's shared types before function matching, redrafted the
 11 functions still unmatched at `w2-good` (17,412 bytes, none guarded) and cut the rest into three packages

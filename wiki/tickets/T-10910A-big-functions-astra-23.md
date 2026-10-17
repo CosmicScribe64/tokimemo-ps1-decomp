@@ -1,10 +1,10 @@
 ---
 id: T-10910A
 title: Big functions (astra) 23
-status: In Progress
+status: Done
 assignee: Codex a23
 created: 2026-10-13
-updated: 2026-10-13
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[register-cheatsheet]]"]
 ---
 
@@ -36,3 +36,5 @@ Added DateMovieScene50 to DATE.h; IDO verified size 0x50 and row offsets 0x24/0x
   as a word; a byte local introduced an incorrect extra stack-byte spill.
 - DATE `func_80147958`: bounded permuter search started from the 1014/1010
   instruction draft while refining the fade and callback live ranges.
+
+2026-10-17 cleanup: nothing was matched; the run ended at the Codex usage limit with a documented DateMovieScene50 layout and workflow notes (merged as e1157f598). Its targets were taken over by T-12100 (DATE 47958 and 462B0 attempts), then T-17201 matched func_80147958. func_801462B0 (950 instructions, no match) and func_8007132C (4.3 KB, census draft only) stay INCLUDE_ASM and are listed in T-16520's sibling clusters and T-14500's draft inventory. Closed as superseded.

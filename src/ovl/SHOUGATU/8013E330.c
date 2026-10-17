@@ -9,11 +9,11 @@ s32 func_8013E330(void) {
     table = D_8014605C;
     idx = D_800E6280.unk_110A;
     table.f[idx](0x80);
-    ((ShoSprite44 *)D_8011ECD0)[96].unk_07 = D_800B593C;
-    if (((ShoSprite44 *)D_8011ECD0)[96].unk_18 == 0 && ((ShoSprite44 *)D_8011ECD0)[96].unk_08 == 0) {
-        ((ShoSprite44 *)D_8011ECD0)[96].unk_16 += 1;
-        if (((ShoSprite44 *)D_8011ECD0)[96].unk_16 >= 3) {
-            ((ShoSprite44 *)D_8011ECD0)[96].unk_16 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = D_800B593C;
+    if (((DisplayActor44 *)D_8011ECD0)[96].unk_18 == 0 && ((DisplayActor44 *)D_8011ECD0)[96].unk_08 == 0) {
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_16 += 1;
+        if (((DisplayActor44 *)D_8011ECD0)[96].unk_16 >= 3) {
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 0;
         }
     }
 }

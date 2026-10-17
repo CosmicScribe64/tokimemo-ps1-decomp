@@ -1,10 +1,10 @@
 ---
 id: T-9960
 title: "Wave 10: list 6"
-status: In Progress
+status: Done
 assignee: w10-6
 created: 2026-10-11
-updated: 2026-10-11
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[matching-notes]]"]
 ---
 
@@ -81,3 +81,7 @@ Eight matches total 20,440 text bytes. The full incremental checkpoint passed al
 - MASTER graphics functions: tested explicit leading sprite updates, pointer lifetime reuse and the actual adjacent-table end address. Pointer reuse alone worsens allocation; the adjacent end reduces func_801344E0 to 420 lines. The record-copy tail and later temporary sequence remain the main differences.
 
 BUNKAKEN func_80143DD0 now reaches eight differing lines. The signed-halfword nibble cast, explicit bit equality, and direct selected-character accesses fix all preceding regions. A five-minute permuter is testing the masked-switch residue. The nine-match checkpoint passes all 27 unit hashes. The MASTER/80139000 data-island dry run confirms a viable data range, but applying it requires forbidden YAML edits; retain assembly and hand off that integration step. Started a supplemental survey of 83 non-assigned functions within the existing seventeen owned files, as allowed after the deep pass.
+
+2026-10-17: Closing as superseded. The Codex run hit its usage limit with 9 of 21 functions merged (BUNKAKEN, BUNKASAI and MASTER, 22,692 bytes), all still C on main; RPG_BAT func_80146C30 has matched since and the other open ones are in the T-14500 census. Review: no standards findings in the merged code (no FAKE or NON_MATCHING needed, new types document their sizes, the func_800847B8 override carries its reason). The 8-line BUNKAKEN func_80143DD0 and 21-line RPG_BAT func_80139510 near misses were never committed, so a followup recovers them.
+
+Followup opened: [[tickets/T-21001-recover-wave-10-list-6-near-misses|T-21001]].

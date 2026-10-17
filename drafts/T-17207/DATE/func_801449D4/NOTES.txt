@@ -1,0 +1,6 @@
+T-17207 best draft of DATE func_801449D4 (1,100 B; 274 instructions, structure equal to the original, 71 differing rows).
+Replaces the T-14500 repair draft (312 rows). Needs in src/ovl/DATE/80141EE0.c: the body below under #ifdef NON_MATCHING and
+prototypes for the 21 callees (void f(void)) in include/ovl/DATE.h. The pad words are FAKE (frame only).
+Left: (1) this shape reserves two unused slots under the table (table at sp+0x30, original sp+0x2C, frame equal at 3 pads + sel);
+the idx-local form has the original frame but not the code; (2) idx gets $a0 and &tbl $v1 (original $v1 and $a0): the 03E..040
+compare range (priority 1.333) outranks the promoted unk_110A (0.533). See wiki/matching-notes.md, T-17207.

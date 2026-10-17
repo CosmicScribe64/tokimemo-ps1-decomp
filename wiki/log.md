@@ -16090,3 +16090,1367 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 
 ## [2026-10-16] ticket | T-11860 TT batch 12 started
 Created [[tickets/T-11860-tt-batch-12]] (In Progress), stacked on T-11850 (PR #35). Eleven file groups covering every remaining TT function except `func_8014D260`; one Opus agent each, two at a time.
+
+## [2026-10-16] ticket | T-19025 In Progress
+[[tickets/T-19025-w3-d-p25]] created and started: Wave 3 package for TACO `src/ovl/TACO/80132220.c` (`func_8013356C`, `func_80132FE8`, `func_8013240C`, `func_801328B0`), worktree `tokimemo-wt/w3-d-p25`, branch `w3-d-p25`.
+
+## [2026-10-16] ticket | T-19025 In Review
+[[tickets/T-19025-w3-d-p25]] In Progress to In Review: TACO `src/ovl/TACO/80132220.c`, 2 of 4 functions matched (`func_8013356C` 48 bytes, `func_801328B0` 1,848 bytes, FAKE unused locals for four frame words and the pointer local `q` in a pad slot). `func_80132FE8` and `func_8013240C` stay guarded drafts at 10 differing lines each (register of two `D_8015EDE4` constant ranges; result variable `r` in `$a0`). Notes in [[matching-notes]] (T-19025), two rows in [[register-cheatsheet]], rows in [[data/t0018-cases]], section in [[taco-family-results]]. Tool finding: `funcdiff` can report a size difference from guarded neighbours in the same unit; make the function plain and let the unit sha1 decide.
+
+## [2026-10-16] build | T-19025 closer pass
+[[tickets/T-19025-w3-d-p25]] closer pass (Opus, 16:38-17:11 UTC) on branch `w3-d-p25`: both guarded drafts of `src/ovl/TACO/80132220.c` matched, so the whole file is C (4 of 4). `func_8013240C` (1,188 bytes): K&R `s32` with no `return` and no result variable. `func_80132FE8` (908 bytes): `D_800E6280.unk_F88` read into a local `btn` that stays live in `$v0` across the `D_8015EDE4` tests, plus one FAKE empty test from `autotweak`. Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Notes in [[matching-notes]] (section T-19025), two rows in [[register-cheatsheet]], two rows in [[data/t0018-cases]], [[taco-family-results]], [[index]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19025 Done
+[[tickets/T-19025-w3-d-p25]] In Review to Done: code review against `CODING_STANDARDS.md` found one missing `FAKE` comment (`btn` in `func_80132FE8`) and one undocumented unset `flags` path, both fixed with comments only (unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 4 of 4 functions matched (`func_8013356C`, `func_801328B0`, `func_8013240C`, `func_80132FE8`; 3,992 bytes), `src/ovl/TACO/80132220.c` is all C. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19030 started
+
+[[tickets/T-19030-w3-d-p30]] created and In Progress: Wave 3 direct package w3-d-p30 (TACO `func_8013B2A0`, `func_8015D0D0`, `func_8015D270`, `func_8013B460`), worktree `w3-d-p30` from `w2-good`. Card in [[kanban]], line in [[index]].
+
+## [2026-10-16] ticket | T-19030 In Progress -> In Review
+
+[[tickets/T-19030-w3-d-p30]] In Review: wave 3 direct package w3-d-p30, 0 of 4 matched. TACO `func_8013B2A0` stays a guarded draft (20 differing instructions, registers only; the element chain `(&D_800E6280.unk_036)[0] = [1] = [2] = 0x10` and one pad word close the old store and frame blockers), `func_8013B460` typed redraft at 41 rows is back to `INCLUDE_ASM` (draft in `drafts/T-19030/TACO/func_8013B460/body.c`), `func_8015D0D0` and `func_8015D270` are hand-written libgte and stay `INCLUDE_ASM`. Rebuild 27/27, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK. Notes in [[matching-notes]] ("T-19030"), rows in [[data/t0018-cases]] and [[register-cheatsheet]]; card moved in [[kanban]], line in [[index]]. Header change: `include/ovl/TACO.h` declares `func_8013B404`.
+
+## [2026-10-16] build | T-19030 closer pass
+
+[[tickets/T-19030-w3-d-p30]]: Opus closer on TACO `func_8013B2A0`, no match. The 20-instruction gap is ugen's block-copy state: B in the original, F in the draft, because the copy follows the `bnez`. A probe global store gives B and all of the original's registers, and no C form without an added store was found. Updated the NON_MATCHING comment in `src/ovl/TACO/8013B170.c`, [[matching-notes]], [[data/t0018-cases]] and [[register-cheatsheet]]. Clean rebuild 27/27 and all checks OK. The ticket stays In Review.
+
+## [2026-10-16] ticket | T-19030 Done
+
+[[tickets/T-19030-w3-d-p30]] In Review to Done: code review against `CODING_STANDARDS.md` found 1 minor item (the two unused locals of the archived `func_8013B460` draft had no `FAKE` comment), fixed in the draft only (bytes unchanged); headers OK, globals OK, sync_protos OK. 0 of 4 functions matched (`func_8013B2A0` stays a guarded draft at 20 instructions, `func_8013B460`, `func_8015D0D0`, `func_8015D270` stay `INCLUDE_ASM`). Card moved in [[kanban]], line in [[index]].
+## [2026-10-16] ticket | T-19031 In Progress
+
+[[tickets/T-19031-w3-d-p31]] created and In Progress: wave 3 package w3-d-p31, TAIIKU `src/ovl/TAIIKU/80132000.c` and `src/ovl/TAIIKU/80132BD0.c`, 4 functions (`func_80133258`, `func_80132BD0`, `func_80132E20`, `func_80132000`), worktree tokimemo-wt/w3-d-p31.
+
+## [2026-10-16] build | T-19031 matches
+
+[[tickets/T-19031-w3-d-p31]]: TAIIKU `src/ovl/TAIIKU/80132BD0.c` and `src/ovl/TAIIKU/80132000.c`, 4 of 4 functions matched in plain C (4,412 bytes): `func_80133258` (480 B, FAKE `(u8)` narrowing), `func_80132BD0` (592 B, five FAKE unused word locals), `func_80132E20` (692 B, K&R `s16` parameter, two FAKE unused word locals) and `func_80132000` (2,648 B, `D_80148EC0` defined in the unit through the data island of `80132000.c`, one FAKE empty test). New in `include/`: `TaiBytes23`, `D_80148F10`, `D_80148EC4`, `D_80148FB8`, `func_80132970`/`func_80133BF0` prototypes, `func_80132E20` unprototyped, `D_80122E90` in `main_api.h`; `config/overlays/TAIIKU.yaml` data island. Notes in [[matching-notes]] (T-19031), [[register-cheatsheet]], [[taiiku-family-results]]. Clean build 27/27, `tools/check_headers.py` OK, `tools/migrate_globals.py --check` OK, `tools/sync_protos.py --check-branch` OK.
+
+## [2026-10-16] ticket | T-19031 In Review
+
+[[tickets/T-19031-w3-d-p31]] In Progress to In Review: wave 3 package w3-d-p31 (TAIIKU `80132000.c`, `80132BD0.c`), 4 of 4 functions matched (4,412 bytes), about 70 minutes of agent time. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-16] ticket | T-19031 Done
+
+[[tickets/T-19031-w3-d-p31]] In Review to Done after the code review: wave 3 package w3-d-p31 (TAIIKU `src/ovl/TAIIKU/80132000.c`, `src/ovl/TAIIKU/80132BD0.c`, `include/ovl/TAIIKU.h`, `include/main_api.h`, `config/overlays/TAIIKU.yaml`), 4 of 4 functions matched (4,412 bytes: `func_80133258`, `func_80132BD0`, `func_80132E20`, `func_80132000`, four ticketed FAKEs). One finding fixed: `D_80122E90` moved into address order in `include/main_api.h`. Full build 27/27 sha1 OK, headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-19032 In Progress
+
+Created [[tickets/T-19032-w3-d-p32]] (Wave 3 package w3-d-p32, branch w3-d-p32 from w2-good): TAIIKU `src/ovl/TAIIKU/80141280.c`, `func_80141280` (1840 B). Starting from the T-14500 draft (score 446).
+
+## [2026-10-16] build | T-19032 matched func_80141280
+
+TAIIKU `func_80141280` (1,764 B, `src/ovl/TAIIKU/80141280.c`) matches in plain C, TAIIKU.bin sha1 OK, after about 59 minutes from the T-14500 draft (score 446). Data island for `.data` 0x8014A070-0x8014A0A0 (`config/overlays/TAIIKU.yaml`), `D_8014A070` defined in C, the table `D_8014A088` is the auto array initialiser `tbl`. Two FAKE comments (`(u8)` mask test, `*(u32 *)&D_80122CDC` selector). Notes in [[matching-notes]] (T-19032), five rows in [[register-cheatsheet]], section in [[taiiku-family-results]], and a correction in [[decompile-workflow]]: the rolled loop with a hoisted end pointer has a C form.
+
+## [2026-10-16] ticket | T-19032 In Review
+
+[[tickets/T-19032-w3-d-p32]] In Progress to In Review: 1 of 1 functions matched (`func_80141280`). Clean rebuild 667 steps, 27/27 sha1 OK; `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` OK (0 new, 15 known). Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] ticket | T-19032 Done
+
+[[tickets/T-19032-w3-d-p32]] In Review to Done: code review against `CODING_STANDARDS.md` found two small documentation issues (the zero loop's record view and store order were unexplained in the source; a delay-slot remark in [[register-cheatsheet]] named the wrong field), both fixed. 1 of 1 functions matched: TAIIKU `func_80141280` (1,764 B, two FAKE comments). TAIIKU unit sha1 OK after a rebuild. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17201 started
+[[tickets/T-17201-w3-date-p01]] created In Progress: Wave 3 package w3-date-p01, DATE `src/ovl/DATE/801461B0.c`, two functions (`func_80147958`, `func_8014718C`). Branch w3-date-p01 from w2-good. Links [[tickets/T-17200-types-first-date]].
+
+## [2026-10-16] build | T-17201 DATE func_80147958 matched
+DATE `func_80147958` (4,044 bytes) matched in plain C, unit sha1 OK (`src/ovl/DATE/801461B0.c`, commit "T-17201: match DATE:func_80147958"). The guarded draft had four fade rows; comparing the `u8` local `value` (not the masked `color`) in the fade-in and fade-out steps gives the original registers and keeps the ugen temporary numbering. Found by a 42-variant grid. See [[matching-notes]] ("T-17201").
+
+## [2026-10-16] build | T-17201 DATE func_8014718C guarded at 26 lines
+DATE `func_8014718C` (1,996 bytes) rewritten by hand from the `func_80147958` shape (672 rows before, 26 differing lines now), kept under `#ifdef NON_MATCHING` in `src/ovl/DATE/801461B0.c`. Left: fade-step sum in v0 (original a1) and the tail timer web. Row in [[data/t0018-cases]]; `include/ovl/DATE.h` declares it `s32`.
+
+## [2026-10-16] ticket | T-17201 In Review
+[[tickets/T-17201-w3-date-p01]] In Progress to In Review: 1 of 2 functions matched (`func_80147958`), `func_8014718C` guarded at 26 lines. Notes in [[matching-notes]], rows in [[register-cheatsheet]] and [[data/t0018-cases]], family page [[date-family-results]] updated.
+
+## [2026-10-16] build | T-17201 clean rebuild and checks
+Clean rebuild of the w3-date-p01 worktree: 27/27 sha1 OK, headers OK, globals OK, `sync_protos --check-branch` OK. Recorded in [[tickets/T-17201-w3-date-p01]].
+
+## [2026-10-16] ticket | T-17201 Done
+
+[[tickets/T-17201-w3-date-p01]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a missing `FAKE` prefix on a one-line scheduling trick in the guarded `func_8014718C`, a broken table row in [[data/t0018-cases]]); rebuild of DATE OK (headers OK, globals OK, sha1 OK). 1 of 2 functions matched (`func_80147958`, 4,044 bytes); `func_8014718C` stays a guarded draft (26 lines). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17206 In Progress
+
+[[tickets/T-17206-w3-date-p06]] created and In Progress: wave 3 package w3-date-p06 (DATE `src/ovl/DATE/8014B1F0.c`, `src/ovl/DATE/80156600.c`), 2 functions (`func_80157698`, `func_8014C20C`), worktree `tokimemo-wt/w3-date-p06`, branch `w3-date-p06`. Links [[tickets/T-17200-types-first-date]].
+
+## [2026-10-16] ticket | T-17206 In Review
+
+[[tickets/T-17206-w3-date-p06]] In Progress to In Review: wave 3 package w3-date-p06 (DATE `src/ovl/DATE/8014B1F0.c`, `src/ovl/DATE/80156600.c`, `include/main_api.h`), 2 of 2 functions matched (1,136 bytes: `func_80157698`, `func_8014C20C`), about 50 minutes of agent time. `D_800CA154` is `u16` in `main_api.h` (no override); three FAKE locals (`one`, `seven`, `cur`). Findings (callee arity, constant webs, the two-variable `& 0x7F` shape) in [[matching-notes]] (section T-17206) and four rows in [[register-cheatsheet]]. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-16] ticket | T-17206 Done
+
+[[tickets/T-17206-w3-date-p06]] In Review to Done after the code review: wave 3 package w3-date-p06 (DATE `src/ovl/DATE/8014B1F0.c`, `src/ovl/DATE/80156600.c`, `include/main_api.h`), 2 of 2 functions matched (1,136 bytes: `func_80157698`, `func_8014C20C`, three ticketed FAKE locals). One finding fixed: the redundant `(u16)` casts on `D_800CA154` in `func_80157698` removed (the unit still matches). Headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-11850 Done (PR #35 merged)
+[[tickets/T-11850-tt-batch-11]] reviewed on integration branch `pr35-int` against `CODING_STANDARDS.md`: one finding fixed (missing `FAKE` mark on the two-store chain `q[0] = q[1] = 0;` in `func_80149704`, comment only), none open. 12 of 15 functions matched (4,520 bytes; 3 guarded: `func_80147A18`, `func_8013A0DC`, `func_8014A2B4`), clean rebuild 27/27 sha1 OK, headers OK, globals OK, `sync_protos --check-branch` OK. TT 274/303 functions, 92080/111376 bytes (82.7%); grand total 6233/6958 functions, 1639244/2279368 bytes, 71.9%. The earlier "started" entry's "PR #34, still open" is outdated: [[tickets/T-11840-tt-batch-10]] is merged. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17203 In Progress
+[[tickets/T-17203-w3-date-p03]] created and In Progress: Wave 3 package w3-date-p03, four DATE functions in `src/ovl/DATE/80154260.c`, `src/ovl/DATE/80152FC0.c` and `src/ovl/DATE/8014CC40.c`, worktree `w3-date-p03`.
+
+## [2026-10-16] build | T-17203 results
+[[tickets/T-17203-w3-date-p03]]: 3 of 4 matched (1,064 bytes). DATE `func_8014EF1C` (468 bytes) in plain C: `s32 unused` before the `POLY_G4 *p`, colour shifts inline with `& 0xFF`, the three stores of a vertex on one source line in the order `r, g, b` (FAKE). `func_80154118` (328 bytes): the last 8 diff lines were `tools/cvt_pass.py` (a retained-`CVT` CSE temporary of `D_800CA2F8` costs a frame slot; with the `uopt` shim removed the draft matches), fixed by reading the byte through `DateSelectionView` (FAKE). `func_8014DCCC` (268 bytes): no function-pointer local, the table entry read three times. `func_80155004` stays `INCLUDE_ASM` (46 lines, register names only, draft in `drafts/T-17203/DATE/func_80155004/body.c`). Notes in [[matching-notes]] (section T-17203), three rows in [[register-cheatsheet]], three rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-17203 In Review
+[[tickets/T-17203-w3-date-p03]] In Progress to In Review (3 of 4 matched).
+
+## [2026-10-16] ticket | T-17203 Done
+[[tickets/T-17203-w3-date-p03]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 3 of 4 functions matched (`func_8014EF1C`, `func_80154118`, `func_8014DCCC`, 1,064 bytes), `func_80155004` still `INCLUDE_ASM` with its draft in `drafts/T-17203/`. Rebuild: DATE unit sha1 OK, headers OK, globals OK. Card moved to Done.
+## [2026-10-16] ticket | T-17207 In Progress
+
+[[tickets/T-17207-w3-date-p07]] created and In Progress: DATE `src/ovl/DATE/80141EE0.c`, `func_801449D4` (draft 312) and `func_80144E20` (draft 628), branch `w3-date-p07`.
+
+## [2026-10-16] build | T-17207 DATE 80141EE0: two dispatchers, no match
+
+[[tickets/T-17207-w3-date-p07]]: `func_801449D4` (draft 312 to 71 rows, structure equal) and `func_80144E20` (draft did not compile, now exact frame and 21 table offsets, about 180 register rows) did not match; both stay `INCLUDE_ASM`. Findings, drafts (`drafts/T-17207/DATE/`) and two T-0018 rows in [[matching-notes]] and `wiki/data/t0018-cases.md`.
+
+## [2026-10-16] ticket | T-17207 In Review
+
+[[tickets/T-17207-w3-date-p07]] In Progress to In Review: 0 of 2 functions matched (`func_801449D4`, `func_80144E20`). Documentation and drafts only, no C changed. Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] ticket | T-17207 Done
+
+[[tickets/T-17207-w3-date-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues in the drafts (missing inline `FAKE` comments on the frame and `sel` locals, `g` called unused), both fixed. 0 of 2 functions matched (`func_801449D4`, `func_80144E20`); no C changed. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17202 started
+[[tickets/T-17202-w3-date-p02]] (17:14 UTC): wave 3 package w3-date-p02, DATE `src/ovl/DATE/80132000.c`, six guarded drafts from the T-17200 list. Branch `w3-date-p02` from `w2-good`.
+
+## [2026-10-16] build | T-17202 DATE 80132000.c, 3 of 6 matched
+[[tickets/T-17202-w3-date-p02]] (17:14-18:36 UTC, Opus): matched `func_80139834` (EVENT twin form with dead selector tests, commit `fd316964`), `func_8013E6A4` (`D.w++ == 1` with `func_80085A60` as an `s32` file override, commit `a7301dea`) and `func_80137DF4` (`s32` function without `return`, commit `261ec214`), 820 bytes in plain C. Guarded: `func_80139664` 7 lines, `func_8013BEB8` 4, `func_801324DC` 1. Notes in [[matching-notes]] (T-17202), rows in [[data/t0018-cases]] and [[register-cheatsheet]], summary on [[date-family-results]]. Checks: clean build 27/27 sha1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known). Ticket In Review.
+
+
+## [2026-10-16] build | T-17202 closer pass, DATE 80132000.c 6 of 6
+[[tickets/T-17202-w3-date-p02]] (18:37-19:08 UTC, Opus closer): matched the three guarded drafts, so the package is 6 of 6 (1,972 bytes). `func_801324DC` (commit `a5497073`): FAKE `date_arrival * 0 +` in front of `P + a*six - T`. ugen emits the promoted global's load and the deferred mask of `t` in first-mention order. `func_8013BEB8` (commit `6887ca7f`): `s32 x` takes the first chain's value, and `D_800CA22C[2] = x; D_800CA234[0] = x;` follow the `21C` chain. `func_80139664` (commit `2263cba4`): `return;` instead of `return unk_110A` plus the FAKE element view `(&D_800E6280.unk_110A)[0] += 0x11;`. Candidates were scored with a scratch harness on the `permute.py setup` base, about 2 s each, with `cc -S` for ugen order. Clean rebuild 27/27 sha1 OK (`ninja -t clean`, then `ninja -j2`), check_headers, `migrate_globals.py --check` and `sync_protos.py --check-branch` (0 new, 15 known) pass. Notes in [[matching-notes]], rows in [[data/t0018-cases]] and [[register-cheatsheet]]. The ticket stays In Review.
+
+## [2026-10-16] ticket | T-17202 Done
+[[tickets/T-17202-w3-date-p02]] reviewed against `CODING_STANDARDS.md` and moved to Done: 6 of 6 DATE functions matched in plain C (1,972 bytes, `src/ovl/DATE/80132000.c`), all FAKEs marked and ticketed. One finding fixed: the value-less `return;` of `func_80139664` had no explaining comment (comment only). DATE.bin SHA1 OK, check_headers, migrate_globals --check and sync_protos --check-branch pass.
+## [2026-10-16] ticket | T-17204 In Progress
+[[tickets/T-17204-w3-date-p04]] created and started: Wave 3 package for DATE `src/ovl/DATE/80151460.c` (`func_801518B8`, `func_80152E34`, `func_80152060`, `func_80152268`), worktree `tokimemo-wt/w3-date-p04`, branch `w3-date-p04` from `w2-good`.
+
+## [2026-10-16] build | T-17204 matches
+[[tickets/T-17204-w3-date-p04]] on branch `w3-date-p04` (matcher, 17:25-18:55 UTC): DATE `src/ovl/DATE/80151460.c`, 2 of 4 functions matched. `func_80152060` (520 bytes, new `DateWords2` in `include/ovl/DATE.h`) and `func_80152268` (1,052 bytes, FAKE unread copies `j = v`, `void func_80152684();` in `DATE.h`); `func_801518B8` stays guarded (14 rows), `func_80152E34` open (draft `drafts/T-17204/DATE/func_80152E34`). Notes in [[matching-notes]] (section T-17204), [[register-cheatsheet]], [[data/t0018-cases]], [[date-family-results]].
+
+## [2026-10-16] ticket | T-17204 In Review
+[[tickets/T-17204-w3-date-p04]] In Progress to In Review: 2 of 4 matched; clean build, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` to be run before merge.
+
+## [2026-10-16] ticket | T-17204 closer pass
+[[tickets/T-17204-w3-date-p04]] closer pass (Opus, 18:55-19:11 UTC) on branch `w3-date-p04`, scope `func_801518B8` in `src/ovl/DATE/80151460.c`: still guarded at 14 rows. A `cc -S` harness placed the copy in ugen's T-19001 "F" state after the loop's back-edge branch; calls with stack arguments, struct argument forms, register locals and `Blk44` views keep it, and only a direct memory store after the loop (always new code) gives the original's "B" state. Notes in [[matching-notes]] (T-17204), [[register-cheatsheet]] (block-copy row), [[data/t0018-cases]]. Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17204 Done
+[[tickets/T-17204-w3-date-p04]] In Review to Done: code review against `CODING_STANDARDS.md` found one out-of-order declaration (`func_80152684` in `include/ovl/DATE.h`, moved) and one stale `wiki/data/t0018-cases.md` row (reworded), both fixed without a code change (unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 2 of 4 functions matched (`func_80152060`, `func_80152268`; 1,572 bytes), `func_801518B8` guarded at 14 rows, `func_80152E34` still `INCLUDE_ASM`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17208 In Progress
+
+[[tickets/T-17208-w3-date-p08]] created and started: wave 3 package for DATE `src/ovl/DATE/8014A1B0.c`, `8015A640.c`, `8015A7E0.c`, `8015A980.c` (5 functions), from [[tickets/T-17200-types-first-date]].
+
+## [2026-10-16] ticket | T-17208 In Progress to In Review
+
+[[tickets/T-17208-w3-date-p08]] In Progress to In Review: 1 of 5 functions matched (`func_8014AF88`), `func_8014A8FC` guarded at 34 lines (light fade register gap, same as TACO `func_80134A18`), the three libgte rotation helpers stay `INCLUDE_ASM` (probe: 86 of 104 rows). Notes in [[matching-notes]], rows in [[register-cheatsheet]] and [[data/t0018-cases]], family page [[date-family-results]] updated.
+
+## [2026-10-16] build | T-17208 clean rebuild and checks
+Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17208-w3-date-p08]].
+
+## [2026-10-16] ticket | T-17208 Done
+
+[[tickets/T-17208-w3-date-p08]] In Review to Done: code review against `CODING_STANDARDS.md` found one item, fixed (a comment for the `dop` pointer-variable idiom in `func_8014AF88`); rebuild of DATE OK (headers OK, globals OK, sha1 OK). 1 of 5 functions matched (`func_8014AF88`, 248 bytes); `func_8014A8FC` stays a guarded draft (34 lines), the three libgte rotation helpers stay `INCLUDE_ASM`. Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17205 In Progress
+
+[[tickets/T-17205-w3-date-p05]] started: wave 3 package w3-date-p05 (DATE `src/ovl/DATE/80149310.c`, `src/ovl/DATE/801552B0.c`; `func_80149F48`, `func_80155E40`, `func_801560E0`, `func_801556D8`, `func_801496C4`), worktree `w3-date-p05` from `w2-good`.
+
+## [2026-10-16] ticket | T-17205 In Review
+
+[[tickets/T-17205-w3-date-p05]] In Progress to In Review: 4 of 5 functions matched (DATE `func_801496C4`, `func_801556D8`, `func_801560E0`, `func_80155E40`, 2,960 bytes), `func_80149F48` stays guarded at 11 lines. New types `DateMover44`, `DateFix32` and the arrays `D_8015F9A0`/`D_8015F9A8` in `include/ovl/DATE.h`; sources `src/ovl/DATE/80149310.c`, `src/ovl/DATE/801552B0.c`. Notes in [[matching-notes]] ("T-17205"), [[date-family-results]], [[register-cheatsheet]] and [[data/t0018-cases]]. Clean-build and header checks are recorded in the ticket.
+
+## [2026-10-16] build | T-17205 final checks
+
+[[tickets/T-17205-w3-date-p05]]: clean rebuild 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` pass on branch `w3-date-p05`; 4 of 5 functions matched, `src/ovl/DATE/80149310.c` keeps `func_80149F48` guarded at 11 lines.
+
+## [2026-10-16] build | T-17205 closer pass: func_80149F48 matched
+
+[[tickets/T-17205-w3-date-p05]]: DATE `func_80149F48` matched in plain C in `src/ovl/DATE/80149310.c` (`(s16)(D_8015D084 * 3) + D_8015D090`, placed before the second group of copies), so the package is 5 of 5. Clean rebuild 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check`, `tools/sync_protos.py --check-branch` pass. Notes in [[matching-notes]], [[register-cheatsheet]], [[data/t0018-cases]], [[date-family-results]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17205 Done
+
+[[tickets/T-17205-w3-date-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found 2 minor items (the `(u8)` cast in `func_801496C4` and the `(s16)` cast in `func_80149F48` had no explanatory comment), fixed with comments only in `src/ovl/DATE/80149310.c`, bytes unchanged. Headers OK, globals OK, sync_protos OK, DATE sha1 OK. 5 of 5 functions matched (3,136 bytes). Card moved in [[kanban]], line in [[index]].
+## [2026-10-16] ticket | T-17101 In Progress
+
+[[tickets/T-17101-w3-rpg-bat-p01]] created and In Progress: wave 3 package w3-rpg-bat-p01 (RPG_BAT `src/ovl/RPG_BAT/80145CC0.c`, `src/ovl/RPG_BAT/80151FC0.c`; `func_80152080`, `func_80145CC0`, `func_80152384`, `func_80146578`). Branch `w3-rpg-bat-p01` from `w2-good`. Links [[tickets/T-17100-types-first-rpg_bat]].
+
+## [2026-10-16] ticket | T-17101 In Review
+
+[[tickets/T-17101-w3-rpg-bat-p01]] In Progress to In Review: wave 3 package w3-rpg-bat-p01 (RPG_BAT `src/ovl/RPG_BAT/80145CC0.c`, `src/ovl/RPG_BAT/80151FC0.c`, `include/ovl/RPG_BAT.h`, `include/main_api.h`), 4 of 4 functions matched (4,564 bytes): `func_80152080`, `func_80145CC0`, `func_80152384`, `func_80146578`. Findings in [[matching-notes]] (section T-17101), six rows in [[register-cheatsheet]], update paragraph in [[data/t0018-cases]], section in [[rpg-bat-family-results]]. Review pending.
+
+## [2026-10-16] ticket | T-17101 Done
+
+[[tickets/T-17101-w3-rpg-bat-p01]] In Review to Done after the code review: wave 3 package w3-rpg-bat-p01 (RPG_BAT `src/ovl/RPG_BAT/80145CC0.c`, `src/ovl/RPG_BAT/80151FC0.c`, `include/ovl/RPG_BAT.h`, `include/main_api.h`), 4 of 4 functions matched (4,564 bytes: `func_80152080`, `func_80145CC0`, `func_80152384`, `func_80146578`; three ticketed FAKEs). One finding fixed: the `RPG_BAT.h` comment for the override wrappers now covers `func_8013F15C`. 27 of 27 units sha1 OK; headers, globals and proto checks OK.
+## [2026-10-16] ticket | T-17104 started
+[[tickets/T-17104-w3-rpg-bat-p04]] created In Progress (branch `w3-rpg-bat-p04`, base `w2-good`): wave 3 package for `src/ovl/RPG_BAT/801468B0.c`, one function `func_80146C30` (draft score 329). Board: [[kanban]].
+
+## [2026-10-16] ticket | T-17104 In Review
+[[tickets/T-17104-w3-rpg-bat-p04]] In Progress to In Review: 1 of 1 function matched, `func_80146C30` (2,992 bytes of code) in `src/ovl/RPG_BAT/801468B0.c`, plain C with one FAKE (`(&D_8015ECEC)[i]` in a rolled 3-trip loop). Cause: the `D_8015EDE0` register web; `RPG_BAT_OVERRIDE_func_8013E7C0` and `RPG_BAT_OVERRIDE_func_8013E97C` (implicit `s32` calls) move it to `$v1`. Side result: the same two protos make the guarded `func_80145CC0` (T-12300) MATCH under `funcdiff --proto`; `src/ovl/RPG_BAT/80145CC0.c` was not in this package and is not edited. Notes in [[matching-notes]], [[register-cheatsheet]], [[data/t0018-cases]], [[rpg-bat-family-results]]. Board: [[kanban]].
+
+## [2026-10-16] ticket | T-17104 Done
+[[tickets/T-17104-w3-rpg-bat-p04]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing (only `src/ovl/RPG_BAT/801468B0.c` changed, one marked FAKE, overrides explained; unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 1 of 1 matched (`func_80146C30`, 2,992 bytes). Follow-up noted in the ticket: the guarded `func_80145CC0` (T-12300) matches under the same two overrides. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17103 In Progress
+
+[[tickets/T-17103-w3-rpg-bat-p03]] created and In Progress: wave 3 package w3-rpg-bat-p03, four RPG_BAT functions in `src/ovl/RPG_BAT/80137280.c` (links [[tickets/T-17100-types-first-rpg_bat]]).
+
+## [2026-10-16] ticket | T-17103 In Review
+
+[[tickets/T-17103-w3-rpg-bat-p03]] In Progress to In Review: 4 of 4 functions matched in `src/ovl/RPG_BAT/80137280.c` (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`), unit sha1 OK. New: `RPG_BAT_OVERRIDE_D_8015EE8C` (header wrapper) and `RPG_BAT_OVERRIDE_func_8013E7C0` in the file; notes in [[matching-notes]], rows in [[register-cheatsheet]], section in [[rpg-bat-family-results]]. Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] ticket | T-17103 Done
+
+[[tickets/T-17103-w3-rpg-bat-p03]] In Review to Done: code review against `CODING_STANDARDS.md` found two documentation issues, both fixed (three [[register-cheatsheet]] rows sat outside the table, moved in; three stray triple blank lines in `src/ovl/RPG_BAT/80137280.c`). 4 of 4 functions matched (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`), unit sha1 OK. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17102 In Progress
+[[tickets/T-17102-w3-rpg-bat-p02]] created and started: RPG_BAT `func_80151C10`, `func_80156D78`, `func_80157158` (files `src/ovl/RPG_BAT/80151C10.c`, `src/ovl/RPG_BAT/80156CC0.c`), worktree `tokimemo-wt/w3-rpg-bat-p02` from `w2-good`.
+
+## [2026-10-16] build | T-17102 matches
+[[tickets/T-17102-w3-rpg-bat-p02]]: `func_80151C10` (`src/ovl/RPG_BAT/80151C10.c`), `func_80156D78` and `func_80157158` (`src/ovl/RPG_BAT/80156CC0.c`) matched in plain C, RPG_BAT sha1 OK. The `$v1`-selector miss of all three was an int-returning callee view (`RPG_BAT_OVERRIDE_func_8013E7C0`, `RPG_BAT_OVERRIDE_func_8013F15C`); notes in [[matching-notes]], rows in [[register-cheatsheet]] and [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-17102 In Review
+[[tickets/T-17102-w3-rpg-bat-p02]] In Progress to In Review (3 of 3 matched).
+
+## [2026-10-16] ticket | T-17102 Done
+[[tickets/T-17102-w3-rpg-bat-p02]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 3 of 3 functions matched (`func_80151C10`, `func_80156D78`, `func_80157158`, 3,056 bytes). Rebuild: RPG_BAT unit sha1 OK, headers OK, globals OK. Card moved to Done.
+
+## [2026-10-16] ticket | T-17108 In Progress
+
+[[tickets/T-17108-w3-rpg-bat-p08]] created and In Progress: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`; `func_8014E994`, `func_8014AB84`, `func_8014AC74`, `func_8014F278`, `func_8014EF8C`, `func_8014EBEC`). Branch `w3-rpg-bat-p08` from `w2-good`, worktree `tokimemo-wt/w3-rpg-bat-p08`.
+
+## [2026-10-16] ticket | T-17108 In Review
+
+[[tickets/T-17108-w3-rpg-bat-p08]] In Progress to In Review: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`), 6 of 6 functions matched (1,844 bytes): `func_8014E994`, `func_8014EBEC`, `func_8014EF8C`, `func_8014F278`, `func_8014AC74`, `func_8014AB84`. One shared counter for the word-clear loops, the `i + 96` record loop, first-symbol element views for the shared-`$at` stores, typed `DisplayActor44` records and element indexes instead of byte-offset casts; seven old T-0018 rows solved. Notes in [[matching-notes]] (section T-17108), five rows in [[register-cheatsheet]], update in [[data/t0018-cases]], section in [[rpg-bat-family-results]]. Awaiting code review.
+
+## [2026-10-16] ticket | T-17108 Done
+
+[[tickets/T-17108-w3-rpg-bat-p08]] In Review to Done after the code review: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`), 6 of 6 functions matched (1,844 bytes: `func_8014E994`, `func_8014EBEC`, `func_8014EF8C`, `func_8014F278`, `func_8014AC74`, `func_8014AB84`; six ticketed FAKE comments). No findings. Headers, globals and proto checks OK, build up to date.
+
+## [2026-10-16] ticket | T-17109 started
+[[tickets/T-17109-w3-rpg-bat-p09]] created In Progress (branch `w3-rpg-bat-p09`, base `w2-good`): wave 3 package for `src/ovl/RPG_BAT/8013D780.c` and `src/ovl/RPG_BAT/801477E0.c`, three functions `func_8013D834`, `func_80147930`, `func_8013DC60` (draft scores 158, 396, 319).
+
+## [2026-10-16] ticket | T-17109 In Review
+[[tickets/T-17109-w3-rpg-bat-p09]] In Progress to In Review: 3 of 3 functions matched (4,268 bytes of code, about 35 minutes), all plain C with no FAKE: `func_8013D834` and `func_8013DC60` in `src/ovl/RPG_BAT/8013D780.c` (state byte as `D_800E6280.unk_110D`, the `+ 3` / `+ 2` arms as 3 / 2 single increments because ugen takes a temporary per step, `func_8013DC60` `s32` without a return), `func_80147930` in `src/ovl/RPG_BAT/801477E0.c` (return codes restored, `D_8015EBFC.unk_10`/`unk_14`, `case 14: break;`, `RPG_BAT_OVERRIDE_D_8015EBCC` scalar view, decrement and return on one line). Notes in [[matching-notes]] (section T-17109), four rows in [[register-cheatsheet]], package results in [[rpg-bat-family-results]]. Waiting for the clean-build checks and code review.
+
+## [2026-10-16] ticket | T-17109 Done
+[[tickets/T-17109-w3-rpg-bat-p09]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing that blocks (only `src/ovl/RPG_BAT/8013D780.c` and `src/ovl/RPG_BAT/801477E0.c` changed; `s32` without a return, the single-increment arms and the one-line decrement judged plain C with comments; `RPG_BAT_OVERRIDE_D_8015EBCC` follows 8a). Review edits: a doubled and a trailing blank line removed; the "about 35 minutes" of the In Review entry is 39 minutes (19:46:13 to 20:24:57 UTC), fixed in the ticket and [[matching-notes]]. Unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 3 of 3 matched (`func_8013D834`, `func_80147930`, `func_8013DC60`, 4,268 bytes). Merge via the wave 3 merge script.
+
+
+## [2026-10-16] ticket | T-20003 RPG timer follow-up In Progress
+
+Created [[tickets/T-20003-rpg-timer-callees]] from upstream main 68650e14. The T-17101 section of [[matching-notes]] explicitly suggests func_80138F6C, func_80146C30 and func_80157158 for the newly confirmed integer-return callee-view test. T-17101 is Done and no follow-up package tickets for these files are present in fetched upstream. Inspecting existing typed drafts and original assembly before compiling candidates.
+
+## [2026-10-16] build | T-20003 RPG callback func_80157158 matched
+
+Actual default funcdiff --resolve proves 1,256 linked bytes for RPG_BAT func_80157158; RPG_BAT.bin SHA1 passes. Use integer-return caller views of func_8013D030 and func_8013F15C, reread the state selector after calls, update timer globals directly and split the flag mask/or into two in-place operations. Two unused frame words are explicitly FAKE and ticketed. Other target callbacks stay scratch-only. See [[tickets/T-20003-rpg-timer-callees]].
+
+## [2026-10-16] build | T-20003 RPG callback func_80138F6C matched
+
+Actual default funcdiff --resolve proves 1,268 linked bytes for RPG_BAT func_80138F6C. Reused canonical timer updates, removed the unused m2c tail local, kept two explicitly FAKE frame words and used a documented FAKE signed-word selector view for the remaining v0/v1 difference. Added the missing text-buffer declaration in the overlay header. Upstream fa1dffb4 independently matched the third target (func_80146C30, T-17104); its scratch probes are discarded from production. See [[tickets/T-20003-rpg-timer-callees]].
+
+## [2026-10-16] build | T-20003 third RPG callback matched; In Review
+
+RPG_BAT func_80156D78 matches 992 actual default linked bytes, bringing T-20003 to three callbacks / 3,516 bytes. The draw width needs the original word-argument caller view; one unused frame word is explicitly FAKE. Default linked funcdiff also rechecks its sibling func_80157158. Full build and header/global guards pass, as do all 27 binary SHA1 checks and sync_protos --check-branch (0 new, 15 known disagreements). Local self-review against CODING_STANDARDS.md recorded; upstream review pending. Updated matching notes, family results and the T-0018 superseding update without changing historical rows. [[tickets/T-20003-rpg-timer-callees]] moves to In Review, with the board/index synchronized.
+
+## [2026-10-16] ticket | T-20003 PR #38 opened
+
+Opened https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/38 for the three RPG_BAT callbacks (3,516 bytes). Integrated upstream main 81095a46 and retained all T-17103 source/wiki work. All three actual default linked comparisons still match despite the upstream caller-view change in their shared source; full RPG_BAT/globals and 27/27 binary SHA1 checks pass again. [[tickets/T-20003-rpg-timer-callees]] stays In Review for the maintainer.
+
+## [2026-10-16] build | T-20003 final prototype guard passed
+
+After integrating upstream main 81095a46, sync_protos --check-branch reports 0 new disagreements, 15 known and branch check OK. The integrated three-function linked proof, RPG_BAT checksum and 27/27 binary checks remain successful. PR #38 is mergeable; no GitHub CI check results are exposed. [[tickets/T-20003-rpg-timer-callees]] stays In Review.
+
+## [2026-10-16] decision | T-20003 narrow PR #38 after upstream overlap
+
+Upstream main a8591fb8 merged T-17102's independent matches for func_80156D78 and func_80157158 during final checks. Retained its complete 80156CC0.c verbatim and removed our now-unused func_8013D030 header guard. PR #38 now contributes only func_80138F6C (1,268 bytes) plus its missing text-buffer declaration; all earlier investigation/check results remain as history. Updated the PR scope, ticket, board, index and matching notes. No duplicate upstream matches are counted. [[tickets/T-20003-rpg-timer-callees]] stays In Review.
+
+## [2026-10-16] build | T-20003 final single-callback verification passed
+
+On upstream main a8591fb8, actual default funcdiff proves all 1,268 linked bytes of func_80138F6C match. The 39-step incremental build passes RPG_BAT/GYOZI SHA1 and globals, explicit binary checks pass 27/27, and sync_protos --check-branch passes (0 new / 15 known). Final production scope is one C callback plus its missing D_8015E8A0 declaration; upstream 80156CC0.c remains verbatim. Two FAKE sites are marked and locally reviewed. [[tickets/T-20003-rpg-timer-callees]] and PR #38 remain In Review for the maintainer.
+
+## [2026-10-16] ticket | T-20003 Done (PR #38 merged)
+
+Contributor KakarottoCake's PR #38 narrowed to RPG_BAT `func_80138F6C` (1,268 bytes) after T-17102 matched the other
+two callbacks on main. Review: no findings; one doubled blank line removed. Clean rebuild 27/27, headers, globals and
+prototypes OK, funcdiff MATCH. [[tickets/T-20003-rpg-timer-callees]] Done.
+## [2026-10-16] setup | T-20003 follow unrelated upstream RPG work
+
+Integrated main 0925704e (T-17108). Only the append-only log conflicted; preserved both histories. Upstream changed other RPG_BAT source files and wiki, leaving this PR's func_80138F6C, its source-file caller views and the buffer declaration unchanged. The final narrowed proof/build/prototype evidence on a8591fb8 remains recorded above. [[tickets/T-20003-rpg-timer-callees]] stays In Review.
+
+
+## [2026-10-16] setup | T-20003 final upstream refresh
+
+Integrated main dee64939 (T-17109), preserving both shared wiki histories. This upstream batch changes other RPG_BAT functions and adds unrelated declarations/guards; the contribution's function bodies and caller views are unchanged. Recorded validation bases and results remain explicit in the ticket. Ticket stays In Review.
+## [2026-10-16] ticket | T-17106 created and started
+
+[[tickets/T-17106-w3-rpg-bat-p06]] created and started: wave 3 package for RPG_BAT `src/ovl/RPG_BAT/80154430.c` (`func_80154DD8`, `func_80155868`, `func_80154760`), from [[tickets/T-17100-types-first-rpg_bat]].
+
+## [2026-10-16] ticket | T-17106 In Progress to In Review
+
+[[tickets/T-17106-w3-rpg-bat-p06]] In Progress to In Review: 1 of 3 functions matched (`func_80155868`, 520 bytes, plain C with three FAKE marks: unused frame local, `0x2FU`, four `(unused - unused)` references that move uopt's 20-reference block boundary). `func_80154760` (197 rows) and `func_80154DD8` (216 rows) restored to `INCLUDE_ASM`, drafts in `drafts/T-17106/`. Notes in [[matching-notes]], rows in [[data/t0018-cases]], two rows in [[register-cheatsheet]].
+
+## [2026-10-16] build | T-17106 clean rebuild and checks
+
+Clean rebuild of the w3-rpg-bat-p06 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.bin: OK` with `func_80155868` as C), `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17106-w3-rpg-bat-p06]].
+
+## [2026-10-16] ticket | T-17106 Done
+
+[[tickets/T-17106-w3-rpg-bat-p06]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of RPG_BAT OK (headers OK, globals OK, sha1 OK, `sync_protos --check-branch` OK). 1 of 3 functions matched (`func_80155868`, 520 bytes); `func_80154760` and `func_80154DD8` stay `INCLUDE_ASM` with drafts in `drafts/T-17106/`. Card moved in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17111 In Progress
+[[tickets/T-17111-w3-rpg-bat-p11]] created and started: RPG_BAT `func_80144010` and `func_801505B8` (`src/ovl/RPG_BAT/80144010.c`, `src/ovl/RPG_BAT/801504E0.c`), worktree `w3-rpg-bat-p11`.
+
+## [2026-10-16] build | T-17111 matches
+[[tickets/T-17111-w3-rpg-bat-p11]]: `func_80144010` (club index kept in the global `D_8015EBA0`, no local for `D_8015EB9C`) and `func_801505B8` (`RPG_BAT_OVERRIDE_D_8015EDAC` s32 selector, display-record fields as `DisplayActor44`) matched in plain C in `src/ovl/RPG_BAT/80144010.c` and `src/ovl/RPG_BAT/801504E0.c`; header additions in `include/ovl/RPG_BAT.h`. Notes in [[matching-notes]] (T-17111), four rows in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-17111 In Review
+[[tickets/T-17111-w3-rpg-bat-p11]] In Progress to In Review (2 of 2 matched). Card moved.
+
+## [2026-10-16] ticket | T-17111 Done
+[[tickets/T-17111-w3-rpg-bat-p11]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 2 of 2 functions matched (`func_80144010`, `func_801505B8`, 2,572 bytes). Rebuild: RPG_BAT unit sha1 OK, headers OK, globals OK, protos OK. Card moved to Done.
+## [2026-10-16] build | T-20000 PR submitted and upstream integrated
+
+Opened PR #36 with the scoped queue fix and the requested communication-platform question. The final pre-integration ninja had no work; sync_protos --check-branch reported 0 new / 15 known disagreements. Integrated upstream main 639693d2 (DATE and TT contributions); resolved only the append-only [[log]] conflict by preserving both sides. Ticket remains In Review. See [[tickets/T-20000-first-contribution]].
+
+## [2026-10-16] build | T-20000 shared-wiki conflict resolved
+
+Integrated upstream main 9e74085b into PR #36, preserving both sides of the [[index]], [[kanban]] and append-only [[log]] conflicts. All 52 queue tests pass again in Docker. PR #37 independently contains the verified GYOZI helper; its final post-integration checks pass 27/27 binary SHA1 values and the prototype guard (0 new / 15 known). See [[tickets/T-20000-first-contribution]].
+
+## [2026-10-16] build | T-20000 PR #36 refreshed
+
+Integrated upstream main 81095a46 into PR #36. Preserved both sides of the shared index and append-only log conflicts; source merged without conflicts. All 52 synthetic queue tests pass again in Docker (build/T-20000/refreshed-tests.log, gitignored). [[tickets/T-20000-first-contribution]] remains In Review.
+
+## [2026-10-16] setup | T-20000 follow upstream RPG merge
+
+Integrated main a8591fb8 into PR #36, preserving both append-only log histories. This upstream change affects RPG_BAT and wiki only; tools/queue.py and its tests are unchanged, so the recorded 52-test result still applies. [[tickets/T-20000-first-contribution]] remains In Review.
+
+## [2026-10-16] setup | T-20000 follow unrelated RPG batch
+
+Integrated main 0925704e into PR #36, preserving both log histories. The upstream delta changes other RPG_BAT files and wiki only; queue implementation/tests are unchanged. The recorded 52 passing synthetic tests remain applicable. [[tickets/T-20000-first-contribution]] stays In Review.
+
+
+## [2026-10-16] setup | T-20000 final upstream refresh
+
+Integrated main dee64939 (T-17109), preserving both shared wiki histories. This upstream batch changes other RPG_BAT functions and adds unrelated declarations/guards; the contribution's function bodies and caller views are unchanged. Recorded validation bases and results remain explicit in the ticket. Ticket stays In Review.
+
+## [2026-10-16] build | T-20000 address PR #36 review
+
+Dropped empty --files entries before scope/cache selection and final filtering, corrected the load_cached docstring and scoped progress message. Two new synthetic regressions fail before the fix; all 54 queue tests pass afterward in Docker. Local standards review found no issues. Maintainer requested GitHub issues for work claims, Discussions for questions, and no repeated main merges because they handle wiki conflicts. [[tickets/T-20000-first-contribution]] stays In Review for acceptance.
+
+## [2026-10-16] setup | T-20000 first external contribution
+
+Created [[tickets/T-20000-first-contribution]] In Progress on branch codex/first-contribution from upstream main a4c75a63. Read the project instructions, [[index]], [[kanban]], [[decompile-workflow]] and [[matching-notes]]. TT is claimed in upstream issue #2 and excluded from this contribution. Building the pinned Docker image through the existing WSL Docker daemon; the user-supplied CHD is copied into gitignored game/. No host dependencies installed.
+
+
+## [2026-10-16] build | T-20000 baseline verified
+
+The user-supplied PlayStation the Best CHD passed release identification; disc extraction produced 1,355 files (17 audio streams skipped). The unmodified upstream checkout completed 667 Docker build steps: all 27 binaries SHA1 OK, symbols OK, headers OK, globals OK. Initial bounded full-translation-unit probes for SHOUGATU func_801347E0 and DATE2 func_80136794 did not match; production sources are unchanged. The ranked queue and duplicate reports are being checked before selecting the final contribution. See [[tickets/T-20000-first-contribution]].
+
+## [2026-10-16] ticket | T-20000 scoped queue fix In Review
+
+[[tickets/T-20000-first-contribution]] now focuses on avoiding whole-tree cache validation for scoped queue queries. Two new synthetic regressions reproduce the original bug; all 52 queue tests pass with the fix in Docker. Global ranking/planning/calibration retain cache validation. A frozen pre-fix versus fixed real query (--files 800451D0 --next 10) gave identical stdout, 53.402 s before / 5.312 s after on this Windows/WSL mount. Production game sources are unchanged; the established baseline has all 27 SHA1 checks OK. Local standards review found no issues; status moved In Progress to In Review, with upstream review pending. [[decompile-workflow]] documents the cache tradeoff. TT remains excluded.
+
+## [2026-10-16] ticket | T-20000 Done (PR #36 merged)
+
+Maintainer review of PR #36 (KakarottoCake): both review points addressed (empty --files entries dropped; load_cached docstring and progress note describe the scoped path), 54 queue tests. Verified on the integration base: clean rebuild 27/27, headers, globals and prototypes OK, 1,189 tool tests OK. The three mid-file T-20000 entries were moved here unchanged. [[tickets/T-20000-first-contribution]] Done.
+## [2026-10-16] ticket | T-17110 In Progress
+
+[[tickets/T-17110-w3-rpg-bat-p10]] created and In Progress: wave 3 package w3-rpg-bat-p10, four RPG_BAT functions in `src/ovl/RPG_BAT/8014ADD0.c` (links [[tickets/T-17100-types-first-rpg_bat]]).
+
+## [2026-10-16] ticket | T-17110 In Review
+
+[[tickets/T-17110-w3-rpg-bat-p10]] In Progress to In Review: 3 of 4 functions matched in `src/ovl/RPG_BAT/8014ADD0.c` (`func_8014C360`, `func_8014B79C`, `func_8014D11C`; 1,800 bytes), unit sha1 OK; `func_8014BFE4` back to `INCLUDE_ASM` with the hand draft in `drafts/T-17110/RPG_BAT/func_8014BFE4/hand.c` (128 rows). Notes in [[matching-notes]] ("T-17110"), four rows in [[register-cheatsheet]], section in [[rpg-bat-family-results]], update line in [[data/t0018-cases]]. Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] ticket | T-17110 Done
+
+[[tickets/T-17110-w3-rpg-bat-p10]] In Review to Done: code review against `CODING_STANDARDS.md` found two issues, both fixed: wrong byte counts in the ticket Goal and notes (the matched total is 1,788 bytes, not the 1,800 of the In Review entry; `func_8014D11C` is 600 B, `func_8014B79C` 776 B) and missing comments for the matching tricks in `src/ovl/RPG_BAT/8014ADD0.c`. 3 of 4 functions matched (`func_8014C360`, `func_8014B79C`, `func_8014D11C`), unit sha1 OK; `func_8014BFE4` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17105 In Progress
+
+[[tickets/T-17105-w3-rpg-bat-p05]] created and started: wave 3 package w3-rpg-bat-p05 (RPG_BAT `src/ovl/RPG_BAT/80157AE0.c`, `src/ovl/RPG_BAT/8015A1F0.c`; work list `func_8015A8B4`, `func_8015A744`, `func_80159B40`, `func_80158C4C`, `func_80159214`). Card in [[kanban]].
+
+## [2026-10-16] build | T-17105 clean rebuild
+
+Clean rebuild of the w3-rpg-bat-p05 worktree (`rm -rf build && configure.py && ninja`): 27/27 sha1 OK, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17105-w3-rpg-bat-p05]].
+
+## [2026-10-16] ticket | T-17105 In Review
+
+[[tickets/T-17105-w3-rpg-bat-p05]] In Progress to In Review: 1 of 5 functions matched (`func_80159B40`, 528 bytes, frame order of the stack tables); `func_80158C4C` (4 lines), `func_8015A744` (12), `func_80159214` (16) and `func_8015A8B4` (28) stay under `NON_MATCHING` with T-17105 comments. Notes in [[matching-notes]], rows in [[data/t0018-cases]], three rows in [[register-cheatsheet]]. Card moved in [[kanban]], index line in [[index]]. Code review against `CODING_STANDARDS.md` still to do.
+
+## [2026-10-16] build | T-17105 closer pass
+
+[[tickets/T-17105-w3-rpg-bat-p05]], Opus closer, worktree `w3-rpg-bat-p05`, 20:43-21:20 UTC. Matched `func_80158C4C` (1,056 bytes) and `func_80159214` (1,036 bytes) in `src/ovl/RPG_BAT/80157AE0.c`, one commit each. The shared 4-row gap was as1 load scheduling; a FAKE store through the load's base symbol, `(&D_8015EDC4)[5] = 0;`, closes it. `func_8015A744` stays guarded at 12 rows, and its comment now lists the forms tried. Notes in [[matching-notes]], rows in [[data/t0018-cases]], one row in [[register-cheatsheet]]. Clean rebuild 27/27 sha1 OK, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK (0 new, 15 known). The ticket stays In Review.
+
+## [2026-10-16] ticket | T-17105 Done
+
+[[tickets/T-17105-w3-rpg-bat-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a stray blank line at the end of `src/ovl/RPG_BAT/80157AE0.c`; stale counts in [[index]] and [[matching-notes]]); rebuild of RPG_BAT OK (sha1 OK, headers OK, globals OK, protos OK). 3 of 5 functions matched (`func_80159B40` 528 bytes, `func_80158C4C` 1,056 bytes, `func_80159214` 1,036 bytes); `func_8015A744` (12 rows) and `func_8015A8B4` (28 rows) stay guarded. Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17107 In Progress
+
+[[tickets/T-17107-w3-rpg-bat-p07]] created and started: wave-3 package w3-rpg-bat-p07 (RPG_BAT `func_8013B5B0`, `func_8013EA60`, `func_8013BBF8`, `func_8013E54C`), worktree `w3-rpg-bat-p07` from `w2-good`. Links [[tickets/T-17100-types-first-rpg_bat]].
+
+## [2026-10-16] build | T-17107 RPG_BAT package w3-rpg-bat-p07: 2 of 4 matched
+
+[[tickets/T-17107-w3-rpg-bat-p07]]: `func_8013BBF8` (688 B) and `func_8013EA60` (1,100 B) matched in plain C in `src/ovl/RPG_BAT/8013B5B0.c` and `src/ovl/RPG_BAT/8013E4D0.c`; `func_8013B5B0` (25 lines, promoted state byte `$v0` vs `$v1`) and `func_8013E54C` (16 lines, loop preheader order) guarded. New types `RpgPadSeq` (`D_8015EBEC`, four words) and `RpgGauge` (view over `D_8015EBC0..D_8015EBD4`) in `include/ovl/RPG_BAT.h`. Notes in [[matching-notes]], [[register-cheatsheet]], [[rpg-bat-family-results]], rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-17107 In Review
+
+[[tickets/T-17107-w3-rpg-bat-p07]] In Progress to In Review (kanban card moved); matched count 2 of 4. Review against `CODING_STANDARDS.md` pending.
+
+## [2026-10-16] ticket | T-17107 closer pass on func_8013E54C
+
+[[tickets/T-17107-w3-rpg-bat-p07]] stays In Review. RPG_BAT `func_8013E54C` is still guarded at 16 lines (`src/ovl/RPG_BAT/8013E4D0.c`, comment updated). ugen emits the strength-reduction init `la start` before the hoisted `la limit`; swapping only those two binasm records reproduces the original's case 3, so the gap is uopt's preheader order. About 60 source shapes and a 120-second autotweak kept the order. No matched two-`la` loop in the tree (190) has the limit first. Notes in [[matching-notes]], [[data/t0018-cases]] and [[register-cheatsheet]]; scripts in `drafts/T-17107/binasm-order/`.
+
+## [2026-10-16] ticket | T-17107 Done
+
+[[tickets/T-17107-w3-rpg-bat-p07]] reviewed against `CODING_STANDARDS.md`: one finding (the `FAKE` note of `RPG_GAUGE` in `include/ovl/RPG_BAT.h` now starts its own comment), fixed. In Review to Done (kanban card moved). Matched 2 of 4 (`func_8013BBF8`, `func_8013EA60`); `func_8013B5B0` and `func_8013E54C` stay guarded.
+## [2026-10-16] ticket | T-17117 In Progress
+[[tickets/T-17117-w3-rpg-bat-p17]] created and started: RPG_BAT `func_8013CC90` (`src/ovl/RPG_BAT/8013CC90.c`), worktree `w3-rpg-bat-p17`.
+
+## [2026-10-16] build | T-17117 matches
+[[tickets/T-17117-w3-rpg-bat-p17]], worktree `w3-rpg-bat-p17`, 21:19-21:35 UTC. Matched `func_8013CC90` (928 bytes, 1 of 1) in `src/ovl/RPG_BAT/8013CC90.c`, plain C, no FAKE, one commit. From the 157-row typed draft: wrong field in one arm, local replaced by in-place updates of `D_8015EBFC.unk_34`, `switch (sel = ...)`, `u32` file view of `D_8015ED98` (`RPG_BAT_OVERRIDE_D_8015ED98`), scalar-view scrutinee found by `autotweak`. Notes in [[matching-notes]], four rows in [[register-cheatsheet]], update in [[data/t0018-cases]], [[rpg-bat-family-results]].
+
+## [2026-10-16] ticket | T-17117 In Review
+[[tickets/T-17117-w3-rpg-bat-p17]] In Progress to In Review: 1 of 1 matched. Clean rebuild (`rm -rf build && configure.py && ninja`) 27/27 SHA1 OK (26 overlays and the main executable), `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Code review against `CODING_STANDARDS.md` pending.
+
+## [2026-10-16] ticket | T-17117 Done
+
+[[tickets/T-17117-w3-rpg-bat-p17]] In Review to Done: code review against `CODING_STANDARDS.md` found one item, fixed (the `*(u32 *)&D_8015ED98` switch scrutinee is a fakematch and now carries a `FAKE` comment; wiki pages say "one FAKE"). Rebuild OK (globals, headers, `RPG_BAT.bin` sha1 OK). 1 of 1 function matched (`func_8013CC90`, 928 bytes). Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17115 In Progress
+Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG_BAT/801498C0.c`, `src/ovl/RPG_BAT/801321D0.c`, four functions) and moved it to In Progress. Card on [[kanban]], line in [[index]]. Worktree `tokimemo-wt/w3-rpg-bat-p15`, started 21:00 UTC.
+
+## [2026-10-16] build | T-17115 matches
+[[tickets/T-17115-w3-rpg-bat-p15]]: `func_801328C4` matched (declare `s32 i` before the `RpgDirTable` local; prototype in `RPG_BAT.h`) and `func_8014A3DC` matched (`s32` return type, as1 no longer hoists the second `lui`). `func_80132B34` and `func_80149C5C` restored to `INCLUDE_ASM` after the time box; rows in [[data/t0018-cases]], findings in [[matching-notes]] (section T-17115), two new rows in [[register-cheatsheet]], draft `drafts/T-17115/RPG_BAT/func_80149C5C/body.c`.
+
+## [2026-10-16] ticket | T-17115 In Review
+[[tickets/T-17115-w3-rpg-bat-p15]] In Progress to In Review (2 of 4 matched, 1,136 bytes). Card moved to In Review.
+
+## [2026-10-16] ticket | T-17115 Done
+[[tickets/T-17115-w3-rpg-bat-p15]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 2 of 4 functions matched (`func_801328C4`, `func_8014A3DC`, 1,136 bytes); `func_80132B34` and `func_80149C5C` stay `INCLUDE_ASM`. Rebuild: RPG_BAT unit sha1 OK, 27/27 binaries OK, headers OK, globals OK, protos OK. Card moved to Done.
+## [2026-10-16] ticket | T-17113 In Progress
+[[tickets/T-17113-w3-rpg-bat-p13]] created and started: Wave 3 package w3-rpg-bat-p13 of [[tickets/T-17100-types-first-rpg_bat]], four RPG_BAT functions in `src/ovl/RPG_BAT/801447E0.c`, `src/ovl/RPG_BAT/8013C890.c`, `src/ovl/RPG_BAT/801484E0.c` (`func_801447E0`, `func_80148714`, `func_8013C890`, `func_80144C84`). Worktree `tokimemo-wt/w3-rpg-bat-p13`, base `w2-good`.
+
+## [2026-10-16] ticket | T-17113 In Review
+[[tickets/T-17113-w3-rpg-bat-p13]] In Progress to In Review: 1 of 4 functions matched (`func_8013C890`, 1,024 bytes of code, plain C in `src/ovl/RPG_BAT/8013C890.c`), `func_80148714` kept as a `NON_MATCHING` draft with 28 differing lines in `src/ovl/RPG_BAT/801484E0.c`, `func_801447E0` (154 rows) and `func_80144C84` (252 rows) left `INCLUDE_ASM` with drafts in `drafts/T-17113/`. Notes in [[matching-notes]] (section T-17113), three rows in [[data/t0018-cases]], new `RPG_BAT_OVERRIDE_func_8013C890` in `include/ovl/RPG_BAT.h`. Started 20:31 UTC, about 75 minutes.
+
+## [2026-10-16] ticket | T-17113 Done
+[[tickets/T-17113-w3-rpg-bat-p13]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/ovl/RPG_BAT/8013C890.c`, `src/ovl/RPG_BAT/801484E0.c` and `include/ovl/RPG_BAT.h` changed in code, `drafts/T-17113/` is new. One finding fixed: the guarded `func_80148714` draft reached the `D_8015EBAC` and `D_8015EC70` tables through their first symbol without a mark, now a `FAKE` comment with the ticket (comment only). `s32` without a return (`RPG_BAT_OVERRIDE_func_8013C890`) judged plain C with a comment, as in T-17109. Unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 1 of 4 matched (`func_8013C890`, 1,024 bytes). Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17118 In Progress
+[[tickets/T-17118-w3-rpg-bat-p18]] created and started: RPG_BAT `func_80133108` (`src/ovl/RPG_BAT/80132FE0.c`), worktree `w3-rpg-bat-p18`.
+
+## [2026-10-16] build | T-17118 match
+[[tickets/T-17118-w3-rpg-bat-p18]]: `func_80133108` (`src/ovl/RPG_BAT/80132FE0.c`, 4,192 B) matched in plain C from the 863-row T-14500 draft: `ang` computed once before the loops and `ang + i * 0x200` at the calls, one shared `tmp` local (priority tie with the counter, case 19's call result in `$s2`), case 9 records as `[i + 64]`, only `RPG_BAT_OVERRIDE_func_8013F15C` kept. Notes in [[matching-notes]], two rows in [[register-cheatsheet]], [[rpg-bat-family-results]].
+
+## [2026-10-16] ticket | T-17118 In Review
+[[tickets/T-17118-w3-rpg-bat-p18]] In Progress to In Review (1 of 1 matched). Card moved.
+
+## [2026-10-16] ticket | T-17118 Done
+[[tickets/T-17118-w3-rpg-bat-p18]] reviewed against `CODING_STANDARDS.md`: no findings. In Review to Done (kanban card moved). Matched 1 of 1 (`func_80133108`, 4,192 B), no guard left.
+## [2026-10-16] ticket | T-17112 In Progress
+
+[[tickets/T-17112-w3-rpg-bat-p12]] created and In Progress: wave 3 package w3-rpg-bat-p12 (RPG_BAT `src/ovl/RPG_BAT/801525B0.c`; `func_80154220`, `func_80153784`, `func_80153F3C`, `func_801529B4`). Branch `w3-rpg-bat-p12` from `w2-good`, worktree `tokimemo-wt/w3-rpg-bat-p12`.
+
+## [2026-10-16] ticket | T-17112 In Review
+
+[[tickets/T-17112-w3-rpg-bat-p12]] In Progress to In Review: wave 3 package w3-rpg-bat-p12 (RPG_BAT `src/ovl/RPG_BAT/801525B0.c`), 3 of 4 functions matched (2,672 bytes): `func_80154220`, `func_80153F3C`, `func_801529B4`; `func_80153784` stays a guarded draft at 19 differing lines (case 1 load schedule). Unary-minus offset (`-D * 0xF0 + 0xF0`), same-line pairs for the RECT and table stores, a compare switch with stacked labels and a guarded jump table, a 2 + 48 word clear; `D_80120E93` is `u8` in `include/main_api.h`. Notes in [[matching-notes]] (section T-17112), eight rows in [[register-cheatsheet]], one row in [[data/t0018-cases]], section in [[rpg-bat-family-results]]. Awaiting code review.
+
+## [2026-10-16] build | T-17112 closer pass
+
+[[tickets/T-17112-w3-rpg-bat-p12]] closer pass (Opus): RPG_BAT `func_80153784` matched in plain C (732 bytes, commit `86f57b06`; package now 4 of 4, 3,404 bytes). The case 1 schedule was as1 alias order: every access to `D_8015EC40` and `D_8015ED28`..`D_8015ED38` goes through the `D_8015EC38` symbol (FAKE first-symbol views, aggregate not recovered), so the loads stay above the `D_8015EC38` store and the `D_8015ED30` `lui` fills the `D_8015EC40` load delay; the case 0 `D_8015ED28` store needs the same view. Notes in [[matching-notes]] (section T-17112), a row in [[register-cheatsheet]], an update line in [[data/t0018-cases]], [[rpg-bat-family-results]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17112 Done
+
+[[tickets/T-17112-w3-rpg-bat-p12]] In Review to Done after the code review: wave 3 package w3-rpg-bat-p12 (RPG_BAT `src/ovl/RPG_BAT/801525B0.c`), 4 of 4 functions matched (3,404 bytes: `func_80154220`, `func_80153F3C`, `func_801529B4`, `func_80153784`). One finding, fixed: `func_80154220` used byte-offset casts on a `u8 *` where `POLY_FT4` from `include/psx_types.h` fits; rewritten with the same bytes (RPG_BAT sha1 OK). Headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-17114 In Progress
+
+[[tickets/T-17114-w3-rpg-bat-p14]] created and In Progress: wave 3 package for RPG_BAT `src/ovl/RPG_BAT/8013F4F0.c` and `src/ovl/RPG_BAT/801368B0.c` (4 functions: `func_80136A9C`, `func_80140E70`, `func_8013F82C`, `func_80140204`). Types-first parent: [[tickets/T-17100-types-first-rpg_bat]].
+
+## [2026-10-16] ticket | T-17114 In Progress to In Review
+
+[[tickets/T-17114-w3-rpg-bat-p14]] In Progress to In Review: 4 of 4 functions matched in plain C (`func_80136A9C` with one FAKE address-taken selector view, `func_80140E70`, `func_8013F82C`, `func_80140204`; 4,320 bytes, about 70 minutes). Notes in [[matching-notes]] (section T-17114), four rows in [[register-cheatsheet]], an update line in [[data/t0018-cases]], a package section in [[rpg-bat-family-results]]. New externs in `include/main_api.h` (`D_801211E6`, `D_80121532`, `D_80121575`, `D_801215FE`, `D_80121614`, `D_8012077A`, `D_8012077C` moved from `include/ovl/EVENT.h`), prototype in `include/ovl/RPG_BAT.h`. Code review pending.
+
+## [2026-10-16] build | T-17114 clean rebuild and checks
+
+Clean rebuild of the w3-rpg-bat-p14 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.bin: OK` with the four functions as C), `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17114-w3-rpg-bat-p14]].
+
+## [2026-10-16] ticket | T-17114 Done
+
+[[tickets/T-17114-w3-rpg-bat-p14]] In Review to Done: code review against `CODING_STANDARDS.md` found one issue, fixed (FAKE marks on the first-symbol accesses to the slot table `D_8015EBAC` in `func_8013F82C` and `func_80140204`, comment-only). Rebuild OK (headers OK, globals OK, sha1 OK, `sync_protos --check-branch` OK). 4 of 4 functions matched (`func_80136A9C`, `func_80140E70`, `func_8013F82C`, `func_80140204`; 4,320 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17119 In Progress
+[[tickets/T-17119-w3-rpg-bat-p19]] created and In Progress: Wave 3 package for RPG_BAT `func_80148F70` (1,756 B) and `func_80141060` (2,668 B), worktree `w3-rpg-bat-p19`, base `w2-good`. Part of [[tickets/T-17100-types-first-rpg_bat]].
+
+## [2026-10-16] build | T-17119 matches
+`src/ovl/RPG_BAT/80148F70.c` and `src/ovl/RPG_BAT/80141060.c`: `func_80148F70` (1,644 B) and `func_80141060` (2,564 B) matched in plain C, no FAKE and no guard left. Both first matched with a `u8 pad[4]` frame word, then with a named local that uopt folds (`flag`, `sel`). Header: `void func_801495DC(void);` in `include/ovl/RPG_BAT.h`. Notes in [[matching-notes]] (section T-17119), five rows in [[register-cheatsheet]], [[rpg-bat-family-results]].
+
+## [2026-10-16] ticket | T-17119 In Review
+[[tickets/T-17119-w3-rpg-bat-p19]] In Progress to In Review: 2 of 2 matched. Clean rebuild (`rm -rf build && configure.py && ninja`) 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Code review against `CODING_STANDARDS.md` pending.
+
+## [2026-10-16] ticket | T-17119 Done
+
+[[tickets/T-17119-w3-rpg-bat-p19]] In Review to Done: code review against `CODING_STANDARDS.md` found one item, fixed (a comment explaining the byte-index record loops in `src/ovl/RPG_BAT/80141060.c`, comment only). Rebuild OK (globals, headers, `RPG_BAT.bin` sha1 OK, `sync_protos --check-branch` OK). 2 of 2 functions matched (`func_80148F70` 1,644 B, `func_80141060` 2,564 B). Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-20500 Emulator-assisted naming pass (Backlog)
+
+User idea: start phase 2 renames and constants now, with agents using a PS1 emulator and debugger to find names.
+Held off while the wave 3 conveyor uses the CPU. Plan notes in [[tickets/T-20500-emulator-assisted-naming]]: open
+BIOS only (no proprietary BIOS), Docker, GameState names and enums first, rename in a quiet window or via the merge-time
+rename table.
+
+## [2026-10-16] ticket | T-20600 In Progress
+
+[[tickets/T-20600-regorder-recipe-sweep]] created and In Progress: sweep the source recipes that solved single
+register-order gaps (int-return callee view, `GameState *g`, u16/s16 constants, one-line zero-store pairs, dead
+selector read, natural extra local, same-unit data) across the `regorder` rows of [[data/t0018-cases]]. Worktree
+`cg-regorder`, base `w2-good`. Links [[speedup-research-2026-10-16]].
+
+## [2026-10-16] build | T-20600 matches
+
+Recipe sweep over the `regorder` family ([[tickets/T-20600-regorder-recipe-sweep]], worktree `cg-regorder`): five
+functions matched in plain C, 3,400 bytes, no FAKE. `src/ovl/DATE/80154260.c` `func_80155004` (chain assignment),
+`src/ovl/DATE/80151460.c` `func_80152E34` (`setRGBn` comma lines, `GameState *g`), `src/ovl/RPG_BAT/801498C0.c`
+`func_80149C5C` and `src/ovl/RPG_BAT/8013E4D0.c` `func_8013E54C` (implicit-int definitions; the first also with
+`RPG_BAT_OVERRIDE_func_8013F0F4`, wrapped in `include/ovl/RPG_BAT.h`), `src/ovl/TAIIKU/801452D0.c` `func_80145370`
+(`MAIN_API_OVERRIDE_func_80085E30`). Notes in [[matching-notes]] (T-20600), four rows in [[register-cheatsheet]],
+an Update paragraph and three rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-20600 In Review
+
+[[tickets/T-20600-regorder-recipe-sweep]] In Progress to In Review: 5 of 39 targets matched; recipes for the
+conveyor's files listed in the ticket. Clean rebuild 27/27 SHA1 OK, `check_headers`, `migrate_globals --check`,
+`sync_protos --check-branch` OK. Card moved in [[kanban]]. Code review against `CODING_STANDARDS.md` pending.
+
+## [2026-10-16] build | T-20600 sixth match
+
+`src/ovl/RPG_BAT/8013B5B0.c` `func_8013B5B0` (864 B) matched in plain C: `MAIN_API_OVERRIDE_func_800452C4` and
+`s32 func_800452C4();` (the wrapper added in `include/main_api.h`), and the counter test as `(u32)++unk_1100 > 0x400U`.
+Found by a second callee-view sweep over the 28 other guarded drafts in free files. [[tickets/T-20600-regorder-recipe-sweep]]
+now 6 functions, 4,264 bytes; [[matching-notes]], [[register-cheatsheet]] and [[data/t0018-cases]] updated.
+
+## [2026-10-16] build | T-20600 seventh match
+
+`src/main/8006CB30.c` `func_8006D6E0` (268 B, `regorder` row T-11670) matched as an `s32` definition with no return;
+`include/main_api.h` declares it `s32` (the definition's type). [[tickets/T-20600-regorder-recipe-sweep]] now 7
+functions, 4,532 bytes. Second clean rebuild for the header change.
+
+## [2026-10-17] ticket | T-20600 Done
+
+[[tickets/T-20600-regorder-recipe-sweep]] In Review to Done after code review against `CODING_STANDARDS.md`: 7 functions
+matched in plain C, 4,532 bytes, no new FAKE. One comment added in `src/ovl/DATE/80151460.c` (`func_80152E34`, implicit
+`int`). Header checks, `migrate_globals --check` and `sync_protos --check-branch` OK; no busy file edited. Card moved
+in [[kanban]].
+## [2026-10-16] ticket | T-17116 In Progress
+
+[[tickets/T-17116-w3-rpg-bat-p16]] created and In Progress: wave 3 package w3-rpg-bat-p16, three RPG_BAT functions in `src/ovl/RPG_BAT/80155CC0.c` and `src/ovl/RPG_BAT/80134D30.c` (links [[tickets/T-17100-types-first-rpg_bat]]).
+
+## [2026-10-16] ticket | T-17116 In Review
+
+[[tickets/T-17116-w3-rpg-bat-p16]] In Progress to In Review: 1 of 3 functions matched in `src/ovl/RPG_BAT/80155CC0.c` (`func_80156064`, 828 bytes), unit sha1 OK; `func_80135358` is a guarded draft at 10 differing lines in `src/ovl/RPG_BAT/80134D30.c`, `func_80134E78` back to `INCLUDE_ASM` with the best draft in `drafts/T-17116/RPG_BAT/func_80134E78/`. Notes in [[matching-notes]] (section T-17116), [[register-cheatsheet]] (six rows), [[data/t0018-cases]] (two rows), [[rpg-bat-family-results]].
+
+## [2026-10-16] ticket | T-17116 closer pass, func_80135358 matched
+
+[[tickets/T-17116-w3-rpg-bat-p16]] (22:32-22:45 UTC, Opus closer): `func_80135358` matched in `src/ovl/RPG_BAT/80134D30.c` with the file-local implicit int view `RPG_BAT_OVERRIDE_func_8013E97C` (`funcdiff --proto 's32 func_8013E97C();'` gave MATCH; the 10 lines were one range in `$v0` where the original has `$v1`). Package now 2 of 3 (2,528 bytes); `func_80134E78` stays `INCLUDE_ASM`. Updated [[matching-notes]] (T-17116 closer bullet), [[data/t0018-cases]], [[register-cheatsheet]] (row of the implicit int call result), [[rpg-bat-family-results]], [[index]]. Clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17116 Done
+
+[[tickets/T-17116-w3-rpg-bat-p16]] In Review to Done: code review against `CODING_STANDARDS.md` found two issues, both fixed: wrong byte counts in the ticket, [[matching-notes]], [[rpg-bat-family-results]] and `drafts/T-17116/RPG_BAT/func_80134E78/NOTES.txt` (the list sizes 856 B and 1,268 B include jump table words; the code is 828 B and 1,248 B) and missing comments for the `s32` return without `return` in `src/ovl/RPG_BAT/80155CC0.c` and `src/ovl/RPG_BAT/80134D30.c`. 2 of 3 functions matched (`func_80156064` 828 B, `func_80135358` 1,700 B; 2,528 B), unit sha1 OK; `func_80134E78` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17003 In Progress
+[[tickets/T-17003-w3-main-p03]] created and In Progress: wave 3 package w3-main-p03, `src/main/800789E0.c`, `func_80079070` and `func_80079800`. Worktree `tokimemo-wt/w3-main-p03`, branch `w3-main-p03` from `w2-good`.
+
+## [2026-10-16] ticket | T-17003 In Review
+[[tickets/T-17003-w3-main-p03]] In Progress to In Review (1 of 2 matched). `func_80079800` (784 B) matched in plain C with one FAKE local (TACO `func_80142AF0` idiom) and a `main_api.h` prototype; `func_80079070` guarded at 14 differing lines, T-0018 row (`sched`) in [[data/t0018-cases]], notes in [[matching-notes]] (section T-17003). Card moved. Commits in `src/main/800789E0.c`, `include/main_api.h`.
+
+## [2026-10-16] build | T-17003 closer pass
+[[tickets/T-17003-w3-main-p03]]: `func_80079070` from 14 to 4 differing lines, still guarded. A `GameState *gs` pointer store with the argument loaded into a local first, and `ovl_load_state = 0` before the saves, give the original's tail schedule; left is the call-argument colour (`lui v0; lbu a0,(v0)` against `lui a0; lbu a0`). [[data/t0018-cases]] row now `regorder`, notes in [[matching-notes]]. Clean build 27/27, header, globals and prototype checks OK. `src/main/800789E0.c`.
+
+## [2026-10-16] ticket | T-17003 Done
+[[tickets/T-17003-w3-main-p03]] reviewed against `CODING_STANDARDS.md`: 2 findings fixed (FAKE mark on the u8 views of the s8 fields in the guarded `func_80079070` draft, an unfinished sentence in the [[data/t0018-cases]] row), no others. In Review to Done (kanban card moved). Matched 1 of 2 (`func_80079800`, 784 B); `func_80079070` stays guarded at 4 lines, `regorder`.
+
+## [2026-10-16] ticket | T-17001 In Progress
+Created [[tickets/T-17001-w3-main-p01]] (Wave 3 package, main `src/main/8007C030.c`, two functions: `_sprite_set_box_shade_tarao`, `dialogue_speak_part`) and moved it to In Progress. Card on [[kanban]], line in [[index]]. Worktree `tokimemo-wt/w3-main-p01`, started 21:52 UTC.
+
+## [2026-10-16] build | T-17001 matches
+[[tickets/T-17001-w3-main-p01]]: `_sprite_set_box_shade_tarao` (484 B) matched in plain C with one FAKE local (`u32 v4 = (arg5 >> 16) & 0xFF;`, read once by the `r2` store); unit sha1 OK, committed as "T-17001: match main:_sprite_set_box_shade_tarao". `dialogue_speak_part` stays `NON_MATCHING` at 16 lines (guard comment now T-17001). New: as1 scheduler trace recipe (`-R -xbbdbg 8`) and its pick rule in [[matching-notes]], a [[register-cheatsheet]] row, two rows in [[data/t0018-cases]], section in [[main-family-results]]. Matched count 1 of 2 (484 bytes).
+
+## [2026-10-16] ticket | T-17001 In Review
+[[tickets/T-17001-w3-main-p01]] In Progress to In Review (1 of 2 matched). Card moved to In Review on [[kanban]]. Elapsed about 75 minutes.
+
+## [2026-10-16] query | T-17001 closer pass
+[[tickets/T-17001-w3-main-p01]]: Opus closer pass on `dialogue_speak_part`, still 16 lines. A toy shows the `li a0,-40` needs a source line strictly below the string stores. IDO 7.1 behaves like 5.3, and 8 more source forms all propagate the constant. `NON_MATCHING` comment in `src/main/8007C030.c` updated; notes in [[matching-notes]] (T-17001, "Closer pass"). Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17001 Done
+[[tickets/T-17001-w3-main-p01]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 1 of 2 functions matched (`_sprite_set_box_shade_tarao`, 484 bytes); `dialogue_speak_part` stays `NON_MATCHING` at 16 lines. Rebuild: headers OK, globals OK, protos OK, main exe sha1 OK. Card moved to Done.
+
+## [2026-10-16] ticket | T-17005 In Progress
+
+Opened [[tickets/T-17005-w3-main-p05]]: wave 3 package for `src/main/8005A0B0.c` (`pre_syogatu1`, `func_8005CA94`, `func_80060178`, `func_8005C14C`, `func_8005CC40`), parent [[tickets/T-17000-types-first-main]]. Worktree `tokimemo-wt/w3-main-p05`, branch `w3-main-p05`.
+
+## [2026-10-16] ticket | T-17005 In Review
+
+[[tickets/T-17005-w3-main-p05]] In Progress to In Review: 3 of 5 functions matched in plain C (`pre_syogatu1` by an index loop, `func_80060178` by statement order x, y, w, h and a FAKE `pad` local, `func_8005C14C` copied from the NAME_ENT sibling), 1,708 bytes. `func_8005CA94` (51 rows at best) and `func_8005CC40` (54 rows) restored to `INCLUDE_ASM` with rows in [[data/t0018-cases]]. Notes in [[matching-notes]] (section T-17005). Code changes in `src/main/8005A0B0.c` and `include/main_api.h` (`func_80060178` declaration).
+
+## [2026-10-16] build | T-17005 clean rebuild
+
+Clean rebuild of the w3-main-p05 worktree: 27/27 sha1 OK (`build/SLPM_86.053.bin: OK` with `pre_syogatu1`, `func_80060178` and `func_8005C14C` as C), `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17005-w3-main-p05]].
+
+## [2026-10-16] ticket | T-17005 Done
+
+[[tickets/T-17005-w3-main-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found one issue, fixed (the two new rows in [[data/t0018-cases]] lacked the closing table pipe). Rebuild OK (sha1 OK, 27/27, headers OK, globals OK, `sync_protos --check-branch` OK). 3 of 5 functions matched (`pre_syogatu1`, `func_80060178`, `func_8005C14C`; 1,708 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17002 In Progress
+[[tickets/T-17002-w3-main-p02]] created and started: wave 3 package w3-main-p02, four functions of `src/main/800674B0.c` (`func_8006BC28`, `func_800676AC`, `func_80067870`, `func_800696DC`), worktree `tokimemo-wt/w3-main-p02`, base `w2-good`. Follows [[tickets/T-17000-types-first-main]].
+
+## [2026-10-16] ticket | T-17002 In Review
+[[tickets/T-17002-w3-main-p02]] In Progress to In Review: 3 of 4 functions matched (`func_8006BC28`, `func_800676AC`, `func_800696DC`, 3,184 bytes, plain C in `src/main/800674B0.c`); `func_80067870` back to `INCLUDE_ASM` at 244 rows (draft `drafts/T-17002/main/func_80067870/body.c`). All three matches use marked FAKE empty tests that give a promoted global or parameter a second use (`if ((s32)D_800B6708) {}` before the dispatch, `if (arg0) {}` between store and call, `KEEP_UNK_1117();` before each call-free stretch of the else arm), `func_800696DC` also two unused frame locals and no `s32` pointer casts. Clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Notes in [[matching-notes]] (T-17002), update line and one row in [[data/t0018-cases]], six rows in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-17002 Done
+[[tickets/T-17002-w3-main-p02]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/main/800674B0.c` changed in code, `drafts/T-17002/` is new, no header or config change. Findings fixed (comments and two casts, bytes unchanged): the `(s32)` cast on the two two-argument `strncat` calls of `func_800696DC` removed and the calls commented, the `selected_slot` view marked `FAKE`. Unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 3 of 4 matched (`func_8006BC28`, `func_800676AC`, `func_800696DC`, 3,184 bytes). Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17004 In Progress
+
+[[tickets/T-17004-w3-main-p04]] created and started: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`, five guarded drafts: `func_8006D6E0`, `func_8006EEC4`, `func_8006EB64`, `func_80072998`, `func_800726F0`), worktree `tokimemo-wt/w3-main-p04`, base `w2-good`. Parent [[tickets/T-17000-types-first-main]].
+
+## [2026-10-16] ticket | T-17004 In Review
+
+[[tickets/T-17004-w3-main-p04]] In Progress to In Review: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`), 4 of 5 functions matched in plain C (2,544 bytes: `func_8006EB64`, `func_8006EEC4`, `func_80072998`, `func_800726F0`), `func_8006D6E0` stays guarded at 5 lines. The first three matched by reading the struct fields through a local `GameState *g = &D_800E6280;` (the two 8-line ones lost their FAKE locals and compare); `func_800726F0` needs a marked FAKE local copy found by autotweak. Notes in [[matching-notes]] (section T-17004), a row in [[register-cheatsheet]], two rows and an update in [[data/t0018-cases]], [[main-family-results]] updated. Commits `bcf3c783`, `90864652`, `469023e8`, `46795e4a`.
+
+## [2026-10-16] ticket | T-17004 closer pass
+
+Opus closer on [[tickets/T-17004-w3-main-p04]]: `func_8006D6E0` matched in plain C (268 bytes, commit `1694e986`; package 5 of 5, 2,812 bytes). The missing `move v1,v0` is folded by as1's global optimisation, not uopt (uopt's output ucode and `cc -S` keep it); as1 keeps it when `$v0` is live at the exit, so the definition is `s32` with no `return` and `include/main_api.h` declares `s32 func_8006D6E0();`. Notes in [[matching-notes]] (T-17004 closer pass), a row in [[register-cheatsheet]], an update line in [[data/t0018-cases]], [[main-family-results]] and [[index]] updated. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17004 Done
+
+[[tickets/T-17004-w3-main-p04]] In Review to Done after the code review: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`), 5 of 5 functions matched (2,812 bytes: `func_8006EB64`, `func_8006EEC4`, `func_80072998`, `func_800726F0`, `func_8006D6E0`). One finding, fixed: the `NON_MATCHING` comment of the still guarded `func_80072D70` now names T-17004. Clean build sha1 OK; headers and globals checks OK.
+## [2026-10-16] ticket | T-20620 Scheduling family: as1 ordering (In Progress)
+
+New ticket [[tickets/T-20620-as1-scheduling]], card in In Progress of [[kanban]]. Compiler-gap family agent for the `sched`/`schedule`/`hoist` rows of [[data/t0018-cases]] (instruction order from as1 or ugen), following [[speedup-research-2026-10-16]]. Worktree `tokimemo-wt/cg-sched`, branch `cg-sched` from `w2-good`.
+
+## [2026-10-16] ticket | T-20620 Scheduling family: as1 ordering (In Review)
+
+[[tickets/T-20620-as1-scheduling]] In Progress to In Review. TACO `func_8014B8B4` matched (972 bytes, implicit `int` as in its sibling, `src/ovl/TACO/80149F90.c`, `include/ovl/TACO.h`). Three functions in conveyor-owned files match in scratch copies (EVENT `func_8010B614`, GYOZI `func_8013E638`, main `func_80055A38`); their C is in [[matching-notes]] "T-20620" for the owning packages. A `funcdiff` sweep of all 110 guarded drafts listed the order-only near misses; seven have the original issuing a later line's instruction first, one (VALEN `func_80134030`) the opposite, and no C form, as1 option or `.loc` flattening fixed them, so no build pass changed. Two rows in [[register-cheatsheet]], one Update paragraph and nine rows in [[data/t0018-cases]]. Card moved in [[kanban]]. Review pending.
+
+## [2026-10-17] ticket | T-20620 Done
+
+[[tickets/T-20620-as1-scheduling]] In Review to Done after the code review against `CODING_STANDARDS.md`: 1 function matched (TACO `func_8014B8B4`, 972 bytes, plain C, implicit `int` as in T-19003), no findings open. The three owned-file recipes (EVENT `func_8010B614`, GYOZI `func_8013E638`, main `func_80055A38`) are recorded in [[matching-notes]] for their packages; the order-only near misses and the as1 option tests are written up as negative results. No build pass changed (matched functions changed: 0). Card moved to Done in [[kanban]], [[index]] updated. Build 27 of 27, grand total 6301/6958.
+## [2026-10-16] ticket | T-20001 GYOZI helper In Progress
+
+Created [[tickets/T-20001-gyozi-helper]] on codex/match-gyozi-helper from upstream main 639693d2. Whole-tree dupes report identifies GYOZI func_8013506C (172 bytes, guarded T-10850 draft) and matched SHOUGATU func_8013315C as a fillable pair including string data. Inspecting the two sources and the original function assembly before adapting the source. PR #36 independently contains the scoped queue fix and communication-platform question.
+
+## [2026-10-16] query | T-20001 GYOZI caller declaration identified
+
+The direct sibling adaptation still differed in six counter-allocation rows. Bounded counter pointer/union/aggregate views did not remove them. An in-memory s32 prototype for the setup callee func_801343A4 made funcdiff --resolve prove all 172 linked function bytes equal the target; changing the sound callee return type alone did not help. Added the explicit overlay-local caller-view override required by CODING_STANDARDS.md section 8a, preserving the existing void definition and other callers. Actual source and full-unit verification are now running. See [[tickets/T-20001-gyozi-helper]].
+
+## [2026-10-16] ticket | T-20001 matched and In Review
+
+GYOZI func_8013506C now passes actual default funcdiff --resolve: 172 linked bytes equal the target, with GYOZI unit SHA1 OK. The full build completed 490 steps after upstream header changes; explicit checks passed all 27 binary SHA1 values. Local standards review found no issues. Moved [[tickets/T-20001-gyozi-helper]] In Progress to In Review; [[matching-notes]] records the return-view evidence and [[data/t0018-cases]] supersedes the historical rows without deleting them. Final prototype guard and PR submission are pending.
+
+## [2026-10-16] build | T-20001 final verification and PR #37
+
+After integrating upstream main 9e74085b, actual default funcdiff again proves the 172 GYOZI func_8013506C linked bytes; the 8-step incremental build passes GYOZI and DATE SHA1. Explicit binary verification passes 27/27; sync_protos --check-branch passes with 0 new / 15 known disagreements. Opened PR #37. [[tickets/T-20001-gyozi-helper]] remains In Review for upstream review; no generated files or game data committed.
+
+## [2026-10-16] build | T-20001 PR #37 refreshed and reverified
+
+Integrated upstream main 81095a46, preserving all sides of the shared index, append-only log and matching-note conflicts. Actual default linked funcdiff still matches GYOZI func_8013506C (172 bytes); the full 490-step rebuild and explicit binary SHA1 verifier pass 27/27. Production GYOZI code/header are unchanged from the submitted match. [[tickets/T-20001-gyozi-helper]] remains In Review; GitHub reports the updated PR mergeable.
+
+## [2026-10-16] setup | T-20001 follow upstream RPG merge
+
+Integrated main a8591fb8 into PR #37, retaining both append-only log and matching-note histories. The upstream delta affects RPG_BAT and wiki only; GYOZI code/header and the reviewed caller view are unchanged, so its recorded 172-byte linked proof remains applicable. [[tickets/T-20001-gyozi-helper]] remains In Review.
+
+## [2026-10-16] setup | T-20001 follow unrelated RPG batch
+
+Integrated main 0925704e into PR #37, retaining both log and matching-note histories. Upstream changes other RPG_BAT files and wiki only; GYOZI source/header and caller views are unchanged. The recorded actual linked proof and full checksum verification remain applicable to this contribution. [[tickets/T-20001-gyozi-helper]] stays In Review.
+
+
+## [2026-10-16] setup | T-20001 final upstream refresh
+
+Integrated main dee64939 (T-17109), preserving both shared wiki histories. This upstream batch changes other RPG_BAT functions and adds unrelated declarations/guards; the contribution's function bodies and caller views are unchanged. Recorded validation bases and results remain explicit in the ticket. Ticket stays In Review.
+
+## [2026-10-16] build | T-20001 address PR #37 review
+
+Changed func_801343A4's shared header and definition to s32, removing the unnecessary caller override/guard/local prototype. Corrected the ticket and matching-note explanation: the plain return-type change is sufficient and preserves all callers. Moved the T-0018 Update after Rules, leaving historical rows unchanged. Actual default linked proofs match callback172/setup124 bytes; GYOZI SHA1, full 67-step build/globals, 27/27 binary checks and prototype branch guard (0 new / 15 known) pass. Local standards review complete; [[tickets/T-20001-gyozi-helper]] stays In Review for acceptance. No repeated main integration, as requested by the maintainer.
+
+## [2026-10-17] ticket | T-20001 Done (PR #37 merged)
+
+KakarottoCake's PR #37 updated per review: plain `s32 func_801343A4(void)` in `include/ovl/GYOZI.h` and its
+definition, no override. Verified on the integration base: clean 27/27, headers, globals, prototypes OK, GYOZI
+`func_8013506C` MATCH (172 bytes). [[tickets/T-20001-gyozi-helper]] Done.
+
+## [2026-10-16] ticket | T-20004 GYOZI dialogue follow-up claimed
+
+Opened issue #39 before starting to claim only func_80135118 (360 bytes) and func_80135280 (416 bytes) in src/ovl/GYOZI/80134FD0.c. This excludes the PR #37 helper and TT. Created [[tickets/T-20004-gyozi-dialogue-followup]] In Progress, synchronized board/index, branch based on upstream main 9af6ac58. Maintainer preference is GitHub issues for claims and Discussions for coordination; no repeated main merges.
+
+## [2026-10-16] query | T-20004 byte-table type and timer updates
+
+Inspected both claimed helpers and archived T-17600 drafts against assembly. The lookup table is loaded with lbu and an unscaled byte index; the archived scalar word context has the wrong stride. Scratch-only byte-array typing, canonical timer updates and setup s32 callee view reduce func_80135118 to 29 rows and func_80135280 to 49 rows (fresh selector reads for the latter). Testing natural byte postincrements next; no production C/header changed. [[tickets/T-20004-gyozi-dialogue-followup]] remains In Progress.
+
+## [2026-10-16] query | T-20004 shared byte-store gap isolated
+
+Both helpers reach the same 15-line difference with structured control flow and the natural byte postincrement test. The original includes an unchanged-byte store before the sound call. Direct self-assignment disappears; address/normalization forms preserve it but shift subsequent temporary registers by one. Testing bounded equivalent forms in gitignored scratch. No production source/header changes or verified-byte claim. [[tickets/T-20004-gyozi-dialogue-followup]] remains In Progress.
+
+## [2026-10-16] build | T-20004 two GYOZI default linked matches
+
+Actual default funcdiff --resolve proves func_80135118 (360 bytes) and func_80135280 (416 bytes), 776 new bytes. Byte-table/counter declarations live once in main_api.h; shared setup return type follows PR #37 with no override. Each helper carries one FAKE for the unchanged-byte store before the sound call. No volatile or compiler-pass changes. Full build/prototype checks are running. Updated matching/family notes; [[tickets/T-20004-gyozi-dialogue-followup]] remains In Progress until final checks/review.
+
+## [2026-10-16] build | T-20004 final checks and In Review
+
+Both actual default linked matches total 776 bytes. Full 490-step Docker build completes; GYOZI SHA1, all 27 explicit binary SHA1 checks, header/global gates and prototype branch guard pass (0 new / 15 known). Local CODING_STANDARDS review complete: two marked FAKE unchanged-byte stores, shared declarations only, no generated game data or toolchain changes. [[tickets/T-20004-gyozi-dialogue-followup]] moves to In Review with index/board synchronized; maintainer acceptance pending.
+
+## [2026-10-16] ticket | T-20004 PR #40 opened
+
+Opened https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/40 for the two claimed GYOZI helpers (776 verified bytes). Claim issue #39 links to the scoped work; the PR documents the shared setup-type dependency on #37 and both marked no-op store fakematches. Actual linked proofs, full 490-step build, 27/27 checksums and prototype guard pass. [[tickets/T-20004-gyozi-dialogue-followup]] stays In Review for the maintainer. No repeated main merges, per maintainer guidance.
+
+## [2026-10-17] ticket | T-20004 Done (PR #40 merged)
+
+KakarottoCake's PR #40 (claim #39): GYOZI func_80135118 and func_80135280 matched, 776 bytes. Merged in one clean build with PR checks (27/27, headers, globals, prototypes, funcdiff MATCH). [[tickets/T-20004-gyozi-dialogue-followup]] Done.
+
+## [2026-10-16] ticket | T-20005 GYOZI display/dispatch claim
+
+Claimed func_8014206C (160 bytes, 801418B0.c) and func_8013C774 (364 bytes, 8013C3B0.c) in issue #41 before implementation. Created [[tickets/T-20005-gyozi-display-dispatch]] In Progress, synchronized board/index, branch from upstream main 2c272843. Excludes existing PR #37/#40 work and TT. Inspecting archived T-17600 near misses and original assembly; all tools remain Docker-only.
+
+## [2026-10-16] build | T-20005 display helper linked match
+
+Actual default funcdiff --resolve proves GYOZI func_8014206C matches 160 linked bytes. A signed local selector fixes the three reversed compare operands; the unsigned/direct variants stay six rows away. No FAKE or header change for this match. Dispatcher probes remain scratch-only while investigating load scheduling and literal placement. [[tickets/T-20005-gyozi-display-dispatch]] stays In Progress for the second claimed helper and final checks.
+
+## [2026-10-16] query | T-20005 dispatcher return liveness
+
+The dispatcher's s32 declaration/definition removes the 12-row scheduling difference and gives a zero-instruction-difference candidate. The void control still hoists byte-address/load instructions into branch scheduling; volatile diagnostics add instructions and are discarded. Private linked verification will check the owned S/T literals and actual function span before any match claim. Display helper remains verified at 160 linked bytes. [[tickets/T-20005-gyozi-display-dispatch]] stays In Progress.
+
+## [2026-10-16] build | T-20005 both GYOZI helpers matched
+
+Actual default funcdiff proves func_8014206C (160 bytes) and func_8013C774 (364 bytes), 524 new bytes. The dispatcher uses a plain shared s32 return type and existing GyoziWork field access; full GYOZI hash passes with unchanged literal/data placement and existing callers. No new FAKE or compiler changes. Whole-tree build/checksums and prototype guard are now running. [[tickets/T-20005-gyozi-display-dispatch]] stays In Progress until final checks/review.
+
+## [2026-10-16] build | T-20005 final checks and In Review
+
+Actual default linked proofs match both helpers (160 + 364 = 524 bytes). Full 489-step Docker build, GYOZI/all 27 binary SHA1 checks, header/global gates and prototype branch guard pass (0 new / 15 known). Local standards review found no issues; no new fakematches or toolchain changes. Maintainer confirmed issue #41 ownership and handles conflicts with other functions in the same files. Latest main still has both claimed INCLUDE_ASM functions. [[tickets/T-20005-gyozi-display-dispatch]] moves to In Review with board/index synchronized.
+
+2026-10-16 — T-20005: submitted PR #42 (https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/42), two GYOZI helpers / 524 verified bytes. Ticket remains In Review pending maintainer acceptance; claim #41 is linked for closure on merge.
+## [2026-10-16] ticket | T-17008 Wave 3 package w3-main-p08 started
+[[tickets/T-17008-w3-main-p08]] In Progress: three main functions (`func_80059EF0`, `func_8004F6B0`, `func_80059BE8`) in `src/main/80059B40.c` and `src/main/8004F6B0.c`, worktree tokimemo-wt/w3-main-p08, branch w3-main-p08. Part of [[tickets/T-17000-types-first-main]].
+
+## [2026-10-16] build | T-17008 three main functions matched
+[[tickets/T-17008-w3-main-p08]]: `func_80059EF0`, `func_8004F6B0` and `func_80059BE8` matched in plain C (1,364 B; one FAKE local in `func_80059BE8`), about 70 minutes, each committed on its own. Index loops with compound assignments (`func_80059EF0`); the cursor globals are the variables and `func_80098490` takes `u16` (`func_8004F6B0`); index loops over file-local array views plus a do-while for the peeled and unrolled tail (`func_80059BE8`). Notes in [[matching-notes]] (section T-17008), three rows in [[register-cheatsheet]], family page [[main-family-results]]. Headers: `include/main_api.h`.
+
+## [2026-10-16] ticket | T-17008 In Review
+[[tickets/T-17008-w3-main-p08]] Wave 3 package w3-main-p08 moved In Progress to In Review (kanban card moved): 3 of 3 matched, no guarded drafts, no T-0018 rows. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-17] ticket | T-17008 Done
+[[tickets/T-17008-w3-main-p08]] reviewed against `CODING_STANDARDS.md`: 2 findings fixed (two prototypes out of address order in `include/main_api.h`, a missing source comment on the do-while tail of `func_80059BE8`), no others. In Review to Done (kanban card moved). Matched 3 of 3 (`func_80059EF0`, `func_8004F6B0`, `func_80059BE8`, 1,364 B); one FAKE local, no guarded drafts. Build 27/27, headers, globals and proto checks OK.
+## [2026-10-16] ticket | T-20610 Promotion family: cvt_pass entry rule (In Progress)
+
+[[tickets/T-20610-promo-entry-rule]] created In Progress (compiler-gap family agent, worktree `cg-promo`): the `promo`
+rows of [[data/t0018-cases]] for unmatched functions, a uniform refinement of the `tools/cvt_pass.py` entry rule
+(T-5010) measured against every matched function, or a negative result.
+
+## [2026-10-16] decision | T-20610 cvt_pass entry rule: no refinement adopted
+
+[[tickets/T-20610-promo-entry-rule]]: scratch variants of `tools/cvt_pass.py` measured against every matched function
+(cfe ucode of all 430 IDO files dumped once, offline screen of the uopt input, recompile of the changed files only).
+Late global (first touched after the entry) rules: stored 14 matched functions changed, compared with a non-zero
+constant 18, stored and compared with a constant 0 changed but 1 gain (main `func_800726F0`) and no guarded draft
+gained (105 compiled), latest-definition constant-first at least 4. None adopted; `tools/` unchanged. Census of the
+original and the tables: [[matching-notes]] "T-20610". Source recipe: main `func_800726F0` matches in plain C under the
+production pass with truth tests and `s32 sndisp();` (new row in [[register-cheatsheet]]); `src/main/8006CB30.c` is
+owned by the wave 3 conveyor, so it is handed over. Row for `func_80072998` (4 rows with a FAKE entry read) and an
+Update paragraph in [[data/t0018-cases]]; note in [[toolchain]].
+
+## [2026-10-16] ticket | T-20610 In Review
+
+[[tickets/T-20610-promo-entry-rule]] In Progress to In Review: negative result for the pass (nothing under `tools/`
+changed), one plain-C recipe handed to the conveyor (main `func_800726F0`). Clean rebuild (`rm -rf build && configure.py
+&& ninja -j2`) 27/27 SHA1 OK, headers OK, globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known).
+Card moved to In Review in [[kanban]]. Code review against `CODING_STANDARDS.md` pending.
+
+## [2026-10-17] ticket | T-20610 Done
+
+[[tickets/T-20610-promo-entry-rule]] In Review to Done after the code review against `CODING_STANDARDS.md`: wiki-only diff (no C, header or `tools/` change), no findings, 0 functions matched in `src/` (negative result for the `cvt_pass` entry rule; the plain-C recipe for main `func_800726F0` is handed to the wave 3 conveyor). Card moved to Done in [[kanban]], index line updated.
+
+## [2026-10-17] ticket | T-20005 Done (PR #42 merged)
+
+KakarottoCake's PR #42 (claim #41): GYOZI func_8013C774 and func_8014206C matched, 524 bytes, merged in one clean build with PR checks. [[tickets/T-20005-gyozi-display-dispatch]] Done.
+## [2026-10-16] ticket | T-17006 In Progress
+
+[[tickets/T-17006-w3-main-p06]] created and In Progress: wave 3 package w3-main-p06, six functions in `src/main/80075320.c` (`func_800754C0`, `func_80076C7C`, `func_8007866C`, `func_80077CA8`, `appointment_launch`, `func_80076630`). Worktree `tokimemo-wt/w3-main-p06` from `w2-good`.
+
+## [2026-10-16] ticket | T-17006 In Review
+
+[[tickets/T-17006-w3-main-p06]] In Progress to In Review: 0 of 6 matched (about 94 minutes). Guarded drafts: `func_800754C0` (9 rows), `func_80076C7C` (3), `func_80077CA8` (28), `func_8007866C` (14); `appointment_launch` and `func_80076630` not started. Four rows in [[data/t0018-cases]], notes in [[matching-notes]] (T-17006). Clean rebuild 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Waiting for the code review.
+
+## [2026-10-17] ticket | T-17006 closer pass
+
+[[tickets/T-17006-w3-main-p06]] closer pass (Opus, about 55 minutes) on three guarded drafts: `func_80076C7C` matched (`s32` without a return value, `include/main_api.h` declaration changed), `func_8007866C` matched (bit-field store through a FAKE `CharFlags` view), `func_800754C0` still 9 rows (variants listed in [[matching-notes]], T-17006 "Closer pass"). Three rows appended to [[data/t0018-cases]]. Checks: clean build `rm -rf build && configure.py && ninja -j2` 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` 0 new disagreements, 15 known. Ticket stays In Review.
+
+## [2026-10-17] ticket | T-17006 Done
+
+[[tickets/T-17006-w3-main-p06]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a `NON_MATCHING` comment wrapped, a stale acceptance line). Rebuild OK (27/27 SHA1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 2 of 6 functions matched (`func_80076C7C` 292 B, `func_8007866C` 324 B), 2 guarded (`func_800754C0`, `func_80077CA8`), 2 left `INCLUDE_ASM`. Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17009 In Progress
+
+[[tickets/T-17009-w3-main-p09]] created and started: Wave 3 package for main `src/main/80042A00.c` (`func_80043448`, `func_80043010`, `func_800430C0`, `func_80042CB0`), worktree tokimemo-wt/w3-main-p09, branch w3-main-p09 from w2-good.
+
+## [2026-10-16] build | T-17009 matches
+
+[[tickets/T-17009-w3-main-p09]]: `func_80043448` (188 B) and `func_800430C0` (904 B) matched in plain C in `src/main/80042A00.c`. `include/main_api.h` gained `D_800B3CA4`, `D_800B3CA8[20]`, `D_800B3D00` and prototypes; `func_800430C0` is `s32` now. Details in [[matching-notes]] (section T-17009).
+
+## [2026-10-16] ticket | T-17009 In Review
+
+[[tickets/T-17009-w3-main-p09]] In Progress to In Review: 2 of 4 functions matched (1,092 bytes). `func_80043010` (32 rows) and `func_80042CB0` (about 200 rows) restored to `INCLUDE_ASM` with drafts in `drafts/T-17009/`; two rows in [[data/t0018-cases]], three rows in [[register-cheatsheet]].
+
+## [2026-10-16] build | T-17009 clean rebuild
+
+Clean rebuild of the w3-main-p09 worktree (`rm -rf build && configure.py && ninja`): 27/27 sha1 OK with `func_80043448` and `func_800430C0` as C, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17009-w3-main-p09]].
+
+## [2026-10-17] ticket | T-17009 Done
+
+[[tickets/T-17009-w3-main-p09]] In Review to Done: code review against `CODING_STANDARDS.md` found two small issues, fixed (`D_800B3CA8` declared before `D_800B3CA4` in `include/main_api.h`, address order restored; comment added on the fall-through end of `func_800430C0`). Rebuild OK (27/27 sha1, headers OK, globals OK, `sync_protos --check-branch` OK). 2 of 4 functions matched (`func_80043448`, `func_800430C0`; 1,092 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17007 In Progress
+
+[[tickets/T-17007-w3-main-p07]] created and started: wave 3 package w3-main-p07 of [[tickets/T-17000-types-first-main]], branch `w3-main-p07` from `w2-good`, owned file `src/main/80053650.c`, 5 functions.
+
+## [2026-10-17] ticket | T-17007 In Review
+
+[[tickets/T-17007-w3-main-p07]] In Progress to In Review (23:00 to 00:30 UTC, load 33 on the machine): 0 of 5 matched. `func_80055A38` guarded draft 8 to 4 differing lines (increment order of the bank pointers), `func_80054C74` guarded draft 8 differing lines (from 47 rows) with the new `SaveBank`/`D_80123320[2]` save-image types and header externs in `include/main_api.h`, `func_80054140` restored to `INCLUDE_ASM` (about 60 rows), `func_80054884` and `func_80054E6C` not started. Notes in [[matching-notes]], rows in [[data/t0018-cases]], type map row in [[main-family-results]]. Checks: clean build 27/27, check_headers OK, migrate_globals --check OK, sync_protos --check-branch OK (0 new, 15 known).
+
+## [2026-10-17] build | T-17007 closer pass: func_80055A38 matched
+
+[[tickets/T-17007-w3-main-p07]] closer pass (Opus, 00:34 to 01:05 UTC), only the two guarded near misses in `src/main/80053650.c`. `func_80055A38` (196 B) matched: the FAKE dead initial assignments on one source line give as1's original preheader order (commit `1afb3dc5`). `func_80054C74` guarded draft 8 to 2 differing lines: a `u32` loop counter replaces the FAKE named 0x2000 constants; left is the block copy's end pointer (`$t4` against `$t5`), the T-19001 ugen-state gap (commit `c31bde0a`). Notes in [[matching-notes]], two rows in [[register-cheatsheet]], update line and row in [[data/t0018-cases]], index line updated. Checks: clean build (`rm -rf build`, configure, ninja) 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK. Ticket stays In Review.
+
+## [2026-10-17] ticket | T-17007 Done
+
+[[tickets/T-17007-w3-main-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found three issues, all fixed: the one-pass write loop in the guarded `func_80054C74` draft lacked a `FAKE` comment, `func_80055A38` reached the bank through the old symbol `D_80123324` (now `D_80123320[0].data`, still matches; the checksum field form breaks the registers and is explained in the comment), and a stale "0 of 5" line in [[matching-notes]]. 1 of 5 functions matched (`func_80055A38`, 196 B), unit sha1 OK, `func_80054C74` stays guarded at 2 lines. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17012 In Progress
+
+Created [[tickets/T-17012-w3-main-p12]]: wave 3 package w3-main-p12, six functions of `src/main/80079B10.c` from drafts under `drafts/T-16000`, `drafts/T-14500/main`, `drafts/T-17000/main`. Worktree `tokimemo-wt/w3-main-p12`, branch `w3-main-p12`. Card in In Progress on [[kanban]].
+
+## [2026-10-17] ticket | T-17012 In Review
+
+[[tickets/T-17012-w3-main-p12]] In Progress to In Review: wave 3 package w3-main-p12 (main `src/main/80079B10.c`), 2 of 6 functions matched (492 bytes: `func_80079B34`, `func_8007A50C`), `func_8007B144` (21 rows) and `func_8007B64C` (51 rows) kept as `NON_MATCHING` drafts, `func_80079C70` and `func_8007BCFC` not started (75-minute mark). `func_80079B34` was a wrong callee return type (`u16 func_8007B64C()`), `func_8007A50C` an `s16` view of `D_80125D44` found by autotweak. New idioms in [[register-cheatsheet]] (three rows), details in [[matching-notes]] (section T-17012), two rows and an update line in [[data/t0018-cases]]. Card moved to In Review on [[kanban]].
+
+## [2026-10-17] ticket | T-17012 Done
+
+[[tickets/T-17012-w3-main-p12]] In Review to Done after the code review: wave 3 package w3-main-p12 (main `src/main/80079B10.c`), 2 of 6 functions matched (492 bytes: `func_80079B34`, `func_8007A50C`). No findings; one non-blocking note on the first-symbol queue access in the guarded `func_8007B64C` draft. Clean build sha1 OK; headers, globals and `sync_protos --check-branch` OK. Card moved to Done on [[kanban]].
+
+## [2026-10-16] ticket | T-17010 In Progress
+
+[[tickets/T-17010-w3-main-p10]] created and started: wave 3 package for `src/main/80061710.c` (four functions, see the ticket), worktree `tokimemo-wt/w3-main-p10`, base `w2-good`.
+
+## [2026-10-16] ticket | T-17010 In Review
+
+[[tickets/T-17010-w3-main-p10]] In Progress to In Review: 0 of 4 functions matched. `func_8006190C` guarded at 14 rows (index loops, `(r + i) % 13`, `u32` pointer chain), `func_80062210` guarded at 24 rows (`DisplayRecord44` view, element-store chain, FAKE `pad[4]`), `func_80062948` restored to `INCLUDE_ASM` (89 rows at best), `func_80061A3C` not started. Notes in [[matching-notes]] (T-17010), three rows in [[data/t0018-cases]]. Worktree `tokimemo-wt/w3-main-p10`.
+
+## [2026-10-16] build | T-17010 match main:func_8006190C
+
+[[tickets/T-17010-w3-main-p10]]: `func_8006190C` (304 bytes) matched in plain C in `src/main/80061710.c`, default build sha1 OK. The TMD address is an `s32` (`m = 0x801F0004; m += 4;`) with a `u32` view of the count word; pointers fold or share the `lui`. Details in [[matching-notes]] (T-17010); the guarded 14-row version and its T-0018 row are replaced by an update line in [[data/t0018-cases]]. Matched count for the package: 1 of 4.
+
+## [2026-10-17] ticket | T-17010 Done
+
+[[tickets/T-17010-w3-main-p10]] In Review to Done: code review against `CODING_STANDARDS.md` found three issues, all fixed (an unneeded `MAIN_API_OVERRIDE_func_8009B430` in `src/main/80061710.c`, removed with sha1 still OK; a terse FAKE comment on the `pad[4]` in the guarded `func_80062210`; a stray empty Comments heading in the ticket). Rebuild OK (sha1 OK, headers OK, globals OK, `sync_protos --check-branch` OK). 1 of 4 functions matched (`func_8006190C`, 304 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-17] decision | T-20600 merge with w2-good
+
+Merging `cg-regorder` into `w2-good` conflicted in `src/main/8006CB30.c`: T-17004 had matched `func_8006D6E0` with the
+same `s32` definition; kept its comment. [[tickets/T-20600-regorder-recipe-sweep]] therefore adds six new matches on
+main. `include/ovl/RPG_BAT.h`: the override wrapper for `func_8013F0F4` now covers that declaration only.
+
+## [2026-10-16] ticket | T-20006 GYOZI scene callbacks
+
+Read maintainer merge notes on PRs #37/#40/#42; all accepted with 27/27 checks. Started [[tickets/T-20006-gyozi-scene-callbacks]] from main d27b6916 after opening claim issue #43 for func_80141944 and func_80145384. Existing aggregate types and original assembly guide the next bounded probes; other functions and TT are excluded.
+
+## [2026-10-16] query | T-20006 callback draft repair
+
+Archived drafts fail because their copied tables are scalar arrays invoked as functions and they assign results from void callees. Initial full-unit probes also exposed missing forward declarations for func_80142C14/func_80145520 and the word flag D_8012E694 (lw evidence). Added those once in GYOZI.h and retried existing GzCallbacks/GyoziRec44 source forms with the original unsigned byte read. No function C installed yet.
+
+## [2026-10-16] query | T-20006 source-form results
+
+Existing aggregate/table forms give zero resolved instruction differences for func_80141944 and one signedness instruction pair for func_80145384 (typed.log). A meaningful index before the table, direct narrow counter update and s32 fall-through return are the useful forms; extra counter locals and void returns fail. Testing explicit unsigned reads before default linked proof.
+
+## [2026-10-16] decision | T-20006 unsigned fields and candidate installation
+
+The original lbu accesses establish u8 for D_801317EB and GyoziRec44.unk_07. Correcting those shared types removes all source-byte pointer casts from the two new callbacks, and both full-unit diagnostics stay at zero (plain.log). Installed only the claimed functions using meaningful table indices, direct field updates and shared s32 fall-through declarations; default linked proof is running.
+
+## [2026-10-16] build | T-20006 first actual linked proofs
+
+Default funcdiff proves both installed callbacks against the immutable original: func_80141944 MATCH (336 bytes), func_80145384 MATCH (372 bytes), totaling 708 bytes. Recorded the source/type findings in [[matching-notes]], [[event-family-results]] and [[data-types]]. Final whole-build/header validation and fresh linked proofs run after an explicit shared callee declaration and comment cleanup.
+
+## [2026-10-16] build | T-20006 full build and binary checks
+
+The complete default build passes after resuming its remaining 319 jobs with eight workers (full-build.log; earlier completed work is retained in full-build-initial.log). Explicit immutable SHA1 validation passes for all 27 binaries, including GYOZI and its existing callers (checksums.log). Prototype guard and final linked proofs remain pending. A single upstream fetch reached 41b3fdf9; both claimed functions remain INCLUDE_ASM there. No main merge is performed.
+
+## [2026-10-16] ticket | T-20006 ready for review
+
+Final checks pass: full default build, all 27 immutable binary hashes, headers/globals and prototype guard (0 new / 15 known, branch check OK). Fresh actual linked proofs verify both functions at 336 and 372 bytes. Local standards review found no unresolved issue; no new fakematches. Moved [[tickets/T-20006-gyozi-scene-callbacks]] and its board card to In Review. Maintainer acceptance remains pending.
+
+## [2026-10-16] ticket | T-20006 PR submitted
+
+Submitted https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/44 for the two claimed GYOZI scene callbacks (708 verified bytes). [[tickets/T-20006-gyozi-scene-callbacks]] remains In Review; PR links claim #43 for closure on merge.
+
+## [2026-10-17] ticket | T-20006 Done (PR #44 merged)
+
+KakarottoCake's PR #44 (claim #43): GYOZI func_80141944 and func_80145384 matched, 708 bytes, merged in one clean build with PR checks. [[tickets/T-20006-gyozi-scene-callbacks]] Done.
+
+## [2026-10-16] ticket | T-17011 In Progress
+[[tickets/T-17011-w3-main-p11]] created and started: wave 3 package w3-main-p11, five functions of `src/main/80062CD0.c` (`func_8006612C`, `func_80063668`, `parameter_show`, `func_80065964`, `func_80065F34`), worktree `tokimemo-wt/w3-main-p11`, base `w2-good`. Follows [[tickets/T-17000-types-first-main]].
+
+## [2026-10-17] ticket | T-17011 In Review
+[[tickets/T-17011-w3-main-p11]] In Progress to In Review: 1 of 5 functions matched (`func_80063668`, 552 bytes, plain C in `src/main/80062CD0.c`, committed). `func_8006612C` (20 rows) and `parameter_show` (10 rows) stay under `NON_MATCHING`; `func_80065964` and `func_80065F34` not reached. Header change: `D_800B5A98` in `include/main_api.h`; `DisplayActor44.pad_1C` stays (TAIIKU reads it as `*(s16 *)x.pad_1C`). Findings in [[matching-notes]] (section T-17011): spill-slot rule by declaration order, plain global instead of a local copy for a promoted s16, source-order temp numbering.
+
+## [2026-10-17] build | T-17011 closer pass: parameter_show and func_8006612C matched
+[[tickets/T-17011-w3-main-p11]] closer pass (Opus) on the two guarded drafts of `src/main/80062CD0.c`: both matched in plain C with no FAKE, so the package is 3 of 5. `parameter_show` (608 B): index loops `for (i = 32; i < 56; i++)` / `for (i = 56; i < 59; i++)` instead of the m2c pointer walks. `func_8006612C` (520 B): index `D_8011ECD0` directly instead of through a local `tab`, which kept the promoted `D_800B5B24` dirty and wrote it back at the loop latch; then the second-loop store order with `unk_14` first among the last six. Notes in [[matching-notes]] (section T-17011), two new rows in [[register-cheatsheet]]. Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Ticket stays In Review; `func_80065964` and `func_80065F34` still `INCLUDE_ASM`.
+
+## [2026-10-17] ticket | T-17011 Done
+[[tickets/T-17011-w3-main-p11]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/main/80062CD0.c` changed in code, `D_800B5A98` added to `include/main_api.h`, no `drafts/` or config change. Findings fixed (comments and one blank line, bytes unchanged): the `(u8)` view of `unk_F6E`, the `pad_1C` halfword view and the byte-pointer record address of `func_8006612C` now carry comments; stray blank line removed. The one `FAKE` (`func_80063668`) is tracked in the ticket. Clean build, main exe sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 3 of 5 matched (`func_80063668`, `parameter_show`, `func_8006612C`, 1,680 bytes). Merge via the wave 3 merge script.
+
+## [2026-10-17] ticket | T-17013 Wave 3 package w3-main-p13 started
+[[tickets/T-17013-w3-main-p13]] In Progress: four main functions (`func_8004B358`, `func_8004AE54`, `col2sepia`, `make_color_bar`) in `src/main/8004AD60.c`, worktree tokimemo-wt/w3-main-p13, branch w3-main-p13. Part of [[tickets/T-17000-types-first-main]].
+
+## [2026-10-17] build | T-17013 func_8004AE54 matched
+[[tickets/T-17013-w3-main-p13]]: `func_8004AE54` (840 B) matched in plain C, committed on its own. Declared locals `tpx`, `tpy` (in that order) fix the spill of the `func_8009ED74` arguments (superseding the T-9320 row in [[data/t0018-cases]]), `v = v / 10; n++;` fixes the induction-variable update. `src/main/8004AD60.c`; main sha1 OK.
+
+## [2026-10-17] ticket | T-17013 In Review
+[[tickets/T-17013-w3-main-p13]] moved In Progress to In Review (kanban card moved): 1 of 4 matched (`func_8004AE54`); `func_8004B358` 49 rows (restored to `INCLUDE_ASM`, draft in `drafts/T-17013/main/func_8004B358`), `col2sepia` 171 rows, `make_color_bar` not retried; rows in [[data/t0018-cases]], notes in [[matching-notes]] and [[register-cheatsheet]]. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-17] ticket | T-17013 Done
+[[tickets/T-17013-w3-main-p13]] reviewed against `CODING_STANDARDS.md`: 1 finding fixed (a source comment on the two always-true `v >= 0` tests of `func_8004AE54`, which the original asm has as `bltz`/`bgez`), no others. In Review to Done (kanban card moved). Matched 1 of 4 (`func_8004AE54`, 840 B), no FAKE, no guarded drafts; `func_8004B358`, `col2sepia` and `make_color_bar` stay `INCLUDE_ASM` with rows in [[data/t0018-cases]]. Unit sha1, headers and globals OK after the comment edit; the clean 27/27 build runs in the merge.
+## [2026-10-17] ticket | T-17016 In Progress
+
+[[tickets/T-17016-w3-main-p16]] created and started: wave 3 package w3-main-p16 of [[tickets/T-17000-types-first-main]], branch `w3-main-p16` from `w2-good`, owned file `src/main/800737A0.c`, 4 functions (`func_800741B8`, `func_8007505C`, `func_8007437C`, `parameter_up_down`).
+
+## [2026-10-17] ticket | T-17016 In Review
+
+[[tickets/T-17016-w3-main-p16]] In Progress to In Review: 3 of 4 functions matched in `src/main/800737A0.c` (`func_800741B8` 452 B, `func_8007505C` 708 B, `func_8007437C` 732 B; 1,892 bytes), `parameter_up_down` (1,228 B) restored to `INCLUDE_ASM` with a T-0018 `regorder` row (best form 221 funcdiff lines, `drafts/T-17016/main/parameter_up_down/`). Idioms in [[matching-notes]] (section T-17016) and four rows in [[register-cheatsheet]]: delete m2c's result variable and `return`s, a record-pointer local for the spill slot, a pointer local for a table inside `GameState`, a FAKE byte view for a reloaded flag. Header: `D_800B67AC` table in `include/main_api.h`. Checks: clean build `rm -rf build && configure.py && ninja` 27/27 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known). Waiting for the code review.
+
+## [2026-10-17] ticket | T-17016 Done
+
+[[tickets/T-17016-w3-main-p16]] In Review to Done: code review against `CODING_STANDARDS.md` found one issue, fixed: the display-record pointer stores in `func_8007437C` and `func_8007505C` used an `s32` view of `u8 *` fields; plain `(u8 *)` casts give the same bytes (unit sha1 OK). 3 of 4 functions matched (`func_800741B8`, `func_8007505C`, `func_8007437C`; 1,892 bytes), `parameter_up_down` stays `INCLUDE_ASM` with a T-0018 `regorder` row. Merge via the wave 3 merge script.
+
+
+## [2026-10-17] ticket | T-17015 In Progress
+
+[[tickets/T-17015-w3-main-p15]] created and started (wave 3 package, branch `w3-main-p15` from `w2-good`): `src/main/8004C3F0.c`, four functions from the draft list (`srn_vram_set`, `srn_set`, `mod_trans_vram`, `mod_set`). Card in [[kanban]] under In Progress.
+
+## [2026-10-17] ticket | T-17015 In Review
+
+[[tickets/T-17015-w3-main-p15]] In Progress to In Review: 1 of 4 functions matched (`srn_vram_set`, 664 bytes, plain C, no FAKE; `SrnRec28` added to `include/game.h`, `mod_trans_vram` and `move_255_line` prototypes and an `s32 srn_vram_set` in `include/main_api.h`). `srn_set` stays `INCLUDE_ASM` (hand draft 64 rows, `drafts/T-17015/main/srn_set/`, row in [[data/t0018-cases]]); `mod_trans_vram` and `mod_set` not tried. Notes in [[matching-notes]] (section T-17015), two rows in [[register-cheatsheet]]. Card moved to In Review in [[kanban]]. Awaiting code review.
+
+## [2026-10-17] build | T-17015 clean rebuild
+
+Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninja`): 27/27 sha1 OK with `srn_vram_set` as C, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17015-w3-main-p15]].
+
+## [2026-10-17] ticket | T-17015 Done
+
+[[tickets/T-17015-w3-main-p15]] In Review to Done: code review against `CODING_STANDARDS.md` found one small issue, fixed (matching-notes comment added above `srn_vram_set`; comment only) and one non-blocking follow-up (the `SrnRec28` view of `D_80121750` is a cast because `srn_init` and BUNKA_SD use the byte view). Rebuild OK (sha1, headers OK, globals OK, `sync_protos --check-branch` OK). 1 of 4 functions matched (`srn_vram_set`; 664 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-17] ticket | T-17014 In Progress
+
+[[tickets/T-17014-w3-main-p14]] created and In Progress: wave 3 package w3-main-p14, four functions in `src/main/800563F0.c` (`strCallback`, `strNext`, `func_8005715C`, `func_80056BA8`). Worktree `tokimemo-wt/w3-main-p14` from `w2-good`.
+
+## [2026-10-17] ticket | T-17014 In Review
+
+[[tickets/T-17014-w3-main-p14]] In Progress to In Review: 1 of 4 matched (`func_8005715C`, 564 bytes, FAKE scalar for the fourth stack slot), about 65 minutes. `strNext` guarded at 1 row (operand order of the width compare), `strCallback` (75 rows) and `func_80056BA8` (about 250 rows) stay `INCLUDE_ASM`; drafts in `drafts/T-17014/strCallback/body.c` and `drafts/T-17014/func_80056BA8/`. Types: `StrDecEnv30` (PsyQ DECENV, moved to `include/main_api.h`), `StrCtx`, `StHEADER`; `SyncObj` and `MovieVlcState` removed from `include/game.h`, `strSync` and `strNextVlc` take `StrDecEnv30 *` (still match). Three rows in [[data/t0018-cases]], notes in [[matching-notes]] (section T-17014), result in [[main-family-results]].
+
+## [2026-10-17] ticket | T-17014 closer pass: strNext matched
+
+[[tickets/T-17014-w3-main-p14]] closer pass (Opus, about 35 minutes) on the guarded `strNext`. Matched (496 bytes) and committed as `T-17014: match main:strNext`, with one FAKE: `w * 1 != sector->width`. The local `w` holds `$v0` with no instruction, so the stream width takes `$a0`, and the no-op `* 1` keeps `w` from going first as a plain variable. New row in [[register-cheatsheet]], update line in [[data/t0018-cases]], notes in [[matching-notes]] (T-17014) and [[main-family-results]]. `src/main/800563F0.c` has no guard left; `strCallback` and `func_80056BA8` are still `INCLUDE_ASM`. The ticket stays In Review.
+
+## [2026-10-17] ticket | T-17014 Done
+
+[[tickets/T-17014-w3-main-p14]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (missing `/* size 0x1C */` on `StHEADER` in `include/main_api.h`, stale acceptance lines in the ticket). Rebuild OK (27/27 SHA1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 2 of 4 functions matched (`func_8005715C` 564 B, `strNext` 496 B, 1,060 bytes, two marked FAKEs), `strCallback` and `func_80056BA8` left as `INCLUDE_ASM` with drafts in `drafts/T-17014/`. Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-17] ticket | T-17021 In Progress
+
+[[tickets/T-17021-w3-main-p21]] created and started: wave 3 package w3-main-p21 of [[tickets/T-17000-types-first-main]], branch `w3-main-p21` from `w2-good`, owned file `src/main/80041000.c`, 1 function (`func_800419FC`, 560 B).
+
+## [2026-10-17] build | T-17021 matched main:func_800419FC
+
+[[tickets/T-17021-w3-main-p21]]: `func_800419FC` (560 B, `src/main/80041000.c`) matched as plain C in 16 minutes: GameState fields instead of 51 `D_800E63xx` scalars, bit-field views `GsByteNibbles`, `GsF6Bits` (new, local) and `GsDateBits` (new field `unk_09` in `include/main_api.h`), and an unrolled byte loop written as a one-line `for (i = 0; i < 9; i++) D_800E6280.unk_120[0x15 + i] = 0;` (a braced multi-line `for` puts the first store in the delay slot). Notes in [[matching-notes]] (section T-17021), new row in [[register-cheatsheet]].
+
+## [2026-10-17] ticket | T-17021 In Review
+
+[[tickets/T-17021-w3-main-p21]] In Progress to In Review: 1 of 1 function matched in `src/main/80041000.c` (`func_800419FC`, 560 bytes), no FAKE statements, no `NON_MATCHING` blocks, no T-0018 rows. Waiting for the clean rebuild and the code review.
+
+## [2026-10-17] build | T-17021 clean rebuild
+
+[[tickets/T-17021-w3-main-p21]]: `rm -rf build && configure.py && ninja` 27/27 sha1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known). Acceptance box ticked; the ticket stays In Review until the code review.
+
+## [2026-10-17] ticket | T-17021 Done
+
+[[tickets/T-17021-w3-main-p21]] In Review to Done: code review against `CODING_STANDARDS.md` found one issue, fixed: the one-line `for` and the `0x15 + i` index in `func_800419FC` had no explanation, a comment was added (comment only, unit sha1 OK). 1 of 1 function matched (`func_800419FC`, 560 bytes), plain C, no FAKE, no `NON_MATCHING`. Merge via the wave 3 merge script.
+## [2026-10-17] ticket | T-20700 In Progress
+
+[[tickets/T-20700-ido41-as1-test]] created and started: does IDO 4.1's as1 (and ugen) after IDO 5.3's cfe/uopt
+reproduce the original better? Worktree `tokimemo-wt/bs-ido41-as1`, base `w2-good`. IDO 4.1 fetched from the
+decomp.me release URL in [[ido-52-evaluation]] into the gitignored `tools/local-compilers/`; sha256 matches the table.
+
+## [2026-10-17] ticket | T-20700 In Review
+
+[[tickets/T-20700-ido41-as1-test]] In Progress to In Review. IDO 4.1's as1 after the production pipeline (5.3 cfe in
+K&R mode, `tools/cvt_pass.py`, 5.3 uopt and ugen, frame pass) leaves 6335 of 6336 matched functions and all 19 guarded
+sched/hoist drafts unchanged; the one change (main `func_80046684`, an `mflo` hazard fill) is a regression. 4.1's ugen
+(+ as1, no frame pass) changes 1355 matched functions, keeps the frame pass's frames in 6335, and matches TACO
+`func_8013B2A0`. Both rejected; no adoption proposal. Found: ugen's `.option pic` record must carry the as1 version's own
+value (5.3: 0, 4.1: 1), now set by `tools/ido_eval.py` (tests `tools/test_ido_eval.py`). Pages: [[ido-52-evaluation]]
+(T-20700 section), [[toolchain]], [[original-compiler]], [[data/t0018-cases]], [[matching-notes]] (T-20620 pointer).
+
+## [2026-10-17] ticket | T-20700 Done
+
+[[tickets/T-20700-ido41-as1-test]] reviewed against `CODING_STANDARDS.md` with no findings and moved In Review to Done.
+Verdict: rejected, no adoption proposal, production toolchain unchanged (4.1's as1 changes 1 of 6336 matched functions, a
+regression; 4.1's ugen changes 1355 and matches only TACO `func_8013B2A0`). Committed: `tools/ido_eval.py` `.option pic`
+fix with `tools/test_ido_eval.py` (5 tests OK), no compiler archive tracked (`tools/local-compilers/` stays gitignored).
+## [2026-10-17] ticket | T-17017 started
+
+[[tickets/T-17017-w3-main-p17]] created and In Progress: wave 3 package w3-main-p17 (main `src/main/80058D20.c`: `func_800590CC`, `func_800591D8`, `func_8005938C`), worktree `tokimemo-wt/w3-main-p17` on branch `w3-main-p17`, base `w2-good`.
+
+## [2026-10-17] ticket | T-17017 In Review
+
+[[tickets/T-17017-w3-main-p17]] In Progress to In Review: wave 3 package w3-main-p17 (main `src/main/80058D20.c`), 0 of 3 functions matched. `func_800590CC` guarded at 16 rows (was 22) and `func_800591D8` guarded at 32 (was 54+, `INCLUDE_ASM`): aliased width/height variables keep the constants in `a0`/`a1`, extra K&R parameters keep the 0x30 frame. `func_8005938C` stays `INCLUDE_ASM`; frame and stack offsets now match (`p = &rot`, scalars before `rot`, `pad[1]` after), the loop-invariant address registers do not; draft in `drafts/T-17017/main/func_8005938C/`. Notes in [[matching-notes]] (section T-17017), rows in [[data/t0018-cases]], entry in [[main-family-results]]. Clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Card moved to In Review.
+
+## [2026-10-17] ticket | T-17017 closer pass
+
+[[tickets/T-17017-w3-main-p17]] closer pass (Opus, 02:45 to 03:55 UTC), only the guarded near misses of `src/main/80058D20.c`; nothing matched, ticket stays In Review. `func_8005938C`: an index loop (`i += 2` over 0x44-byte slots) and the `OtRec20` element address for `&D_800E8C70[D_8011ECA0]` give every `s` register, frame 0x108 and all stack offsets; 304 rows to 124, all ugen temporaries (T-11610 MATRIX-copy gap), so it stays `INCLUDE_ASM` with the draft in `drafts/T-17017/main/func_8005938C-closer/`. `func_800590CC` stays at 16 rows (five more forms, all worse; NON_MATCHING comment updated), `func_800591D8` unchanged at 32. Notes in [[matching-notes]] (section T-17017), row in [[data/t0018-cases]]. Clean build (`rm -rf build`, configure, ninja) 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK.
+
+## [2026-10-17] ticket | T-17017 Done
+
+[[tickets/T-17017-w3-main-p17]] In Review to Done after the code review: wave 3 package w3-main-p17 (main `src/main/80058D20.c`), 0 of 3 functions matched (0 bytes); `func_800590CC` (16 rows) and `func_800591D8` (32 rows) stay guarded, `func_8005938C` stays `INCLUDE_ASM` with drafts archived. Two non-blocking findings fixed (FAKE comment wording, acceptance criterion wording). Clean build sha1 OK; headers OK. Card moved to Done on [[kanban]].
+## [2026-10-17] ticket | T-20710 created, In Progress
+
+[[tickets/T-20710-true-gap-census]]: census of the unmatched non-TT functions whose remaining difference is registers or
+order only, and a search for one uniform uopt allocator rule (traced uopt of [[uopt-register-allocation]], offline method
+of T-20610, IDO 5.2/4.1 components of [[ido-52-evaluation]]). Worktree `bs-gap-census` from `w2-good`. Card in
+[[kanban]] In Progress.
+
+## [2026-10-17] query | T-20710 true-gap census and rule search
+
+[[tickets/T-20710-true-gap-census]]: new data page [[data/true-gaps]] (55 guarded non-TT drafts whose difference is
+registers or order, 32,308 bytes): first divergence in uopt 28 (only 2 ties), as1 order 12, ugen 11 (5 block-copy
+state, 6 temporary numbering). No uopt tie-break rule can gain more than the 2 ties ([[uopt-register-allocation]]).
+IDO 4.1 and 5.2 re-downloaded from the recorded URLs (sha256 equal, gitignored `tools/local-compilers/`, Docker only):
+4.1's ugen has the original's block-copy state (no state F at a block start; 5.2 and 5.3 enter F there), which
+matches TACO `func_8013B2A0` and gives 5 more census functions the original's copy registers, but 4.1's ugen as a whole
+changes 1,307 of 6,337 matched C functions; 4.1's as1 equals 5.3's on 6,336 of 6,337 matched functions and gains nothing. Candidate rule documented in [[ido-52-evaluation]]
+(section "T-20710"), not adopted (no ugen source to implement it in). Reproducers:
+`tools/ido_eval_cases/ugen_copy_state/`. Note in [[toolchain]].
+
+## [2026-10-17] ticket | T-20710 In Review
+
+[[tickets/T-20710-true-gap-census]] In Progress to In Review; card moved in [[kanban]]. No build step added.
+
+## [2026-10-17] ticket | T-20710 Done
+
+[[tickets/T-20710-true-gap-census]] In Review to Done; card moved in [[kanban]]. Code review against `CODING_STANDARDS.md`:
+pass. No source, header, config or build-tool change; `tools/local-compilers/` untracked and gitignored; provenance
+table unchanged. One small finding fixed: the 5.2 column of the block-copy table was blank for two cases, filled after
+re-running the six reproducers under IDO 5.3 and 5.2 in Docker (5.2's code equals 5.3's on all six). Verdict: no rule
+adopted. No uopt tie rule is possible (2 ties); IDO 4.1's block-copy state is the one uniform difference but cannot be
+built without ugen source. See [[ido-52-evaluation]], [[data/true-gaps]], [[uopt-register-allocation]].
+
+## [2026-10-17] ticket | T-17018 In Progress
+
+[[tickets/T-17018-w3-main-p18]] created and In Progress: Wave 3 package for `src/main/8004F870.c` (`menu_bar_color`, `menu_set`, `sndisp`, `menu_girl_taku_set`, `xa_wait`, `menu_check_1`), worktree `tokimemo-wt/w3-main-p18`, branch `w3-main-p18` from `w2-good`.
+
+## [2026-10-17] build | T-17018 main:8004F870 six functions
+
+[[tickets/T-17018-w3-main-p18]]: none of `menu_bar_color`, `menu_set`, `sndisp`, `menu_girl_taku_set`, `xa_wait`, `menu_check_1` matched. `xa_wait` is a new guarded draft (18 lines, from 132) in `src/main/8004F870.c` after `GameState.unk_F60..F62` became `u8` in `include/main_api.h` and `else if (ph != 0)`; FAKE `pad[2]` for the frame. `menu_set` (118 lines), `sndisp` (69 with the data island, reverted), `menu_girl_taku_set` (86) restored to `INCLUDE_ASM`. Notes in [[matching-notes]] (T-17018), rows in [[data/t0018-cases]].
+
+## [2026-10-17] ticket | T-17018 In Review
+
+[[tickets/T-17018-w3-main-p18]] In Progress to In Review: 0 of 6 functions matched, 1 new guard, 2 old guards kept. Build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK.
+
+## [2026-10-17] ticket | T-17018 closer pass
+
+[[tickets/T-17018-w3-main-p18]] closer pass (Opus, 02:59 to about 03:55 UTC), only the guarded near misses in `src/main/8004F870.c`. `xa_wait` (580 B) matched (commit `206bdff4`): `u8 get_now_k(void);` declared in the file (the other callers keep the implicit `int` view) and the byte `unk_F61` read into `t` with `t + 3` in both compares. `menu_bar_color` unchanged (17 lines): `D_800E3680` looks like this object's piece of a second data area, which needs a second data range per object (tooling). Notes in [[matching-notes]] (section T-17018), two rows in [[data/t0018-cases]], one row in [[register-cheatsheet]]. Clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` (0 new, 15 known) OK. Ticket stays In Review.
+
+## [2026-10-17] ticket | T-17018 Done
+
+[[tickets/T-17018-w3-main-p18]] In Review to Done: code review against `CODING_STANDARDS.md` found two issues, both fixed in `src/main/8004F870.c` (the `FAKE` comment of the duplicate pointer in the guarded `menu_check_1` was restored; the redundant `else if (ph != 0)` in `xa_wait` was marked `FAKE`), comment-only, rebuild OK (sha1 OK, headers OK, globals OK). 1 of 6 functions matched (`xa_wait`, 580 bytes). Card moved in [[kanban]], [[index]] line updated. Merge via the wave 3 merge script.
+
+## [2026-10-17] query | Build-step gap report
+
+Combined T-20700 (IDO 4.1 back end: as1 equals 5.3 on 6,335/6,336; ugen changes 1,355, rejected) and T-20710 (true-gap census: 55 near drafts, first divergence uopt 28, as1 12, ugen 11) into [[build-step-gaps]]. The one uniform compiler difference found is the ugen block-copy state; a narrow ugen patch is the next build-step candidate.
+## [2026-10-17] ticket | T-17019 In Progress
+[[tickets/T-17019-w3-main-p19]] created and started: wave 3 package w3-main-p19, five functions of `src/main/80043510.c` (`func_80044C98`, `func_80044E8C`, `csr_load_vram`, `func_8004443C`, `func_80043510`), worktree `tokimemo-wt/w3-main-p19`, base `w2-good`. Follows [[tickets/T-17000-types-first-main]].
+
+## [2026-10-17] build | T-17019 func_80044C98 and func_80044E8C matched
+[[tickets/T-17019-w3-main-p19]]: main `func_80044C98` (188 B) and `func_80044E8C` (264 B) of `src/main/80043510.c` match in plain C, no FAKE. Both T-0018 `regorder` rows ("result kept in $v1, original keeps $v0") fall to one change: the counter `D_800B3D4C` is incremented as the value of the compare, `if ((++D_800B3D4C > 0xC0U) || ...)`, with `D_800B3D4C++;` in the zero arm. `csr_load_vram` stays guarded, 26 to 24 lines (u16 locals for the three computed `LoadSquare` arguments). `func_8004443C` and `func_80043510` not matched (139 and 172 lines at best, `INCLUDE_ASM`). Notes in [[matching-notes]] (section T-17019), two rows in [[register-cheatsheet]], rows in [[data/t0018-cases]].
+
+## [2026-10-17] ticket | T-17019 In Review
+[[tickets/T-17019-w3-main-p19]] In Progress to In Review: 2 of 5 functions matched (`func_80044C98`, `func_80044E8C`, 452 bytes), one guarded (`csr_load_vram`, 24 lines), two untouched `INCLUDE_ASM`. Clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` run at the end of the package.
+
+## [2026-10-17] ticket | T-17019 Done
+[[tickets/T-17019-w3-main-p19]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/main/80043510.c` changed in code, no header, config or `drafts/` change. One finding fixed (comments only, bytes unchanged): the pre-increment as the value of the compare in `func_80044C98` and `func_80044E8C` now has an in-code comment. The `NON_MATCHING` draft `csr_load_vram` carries its tickets and the 24 lines left. Unit build and main exe sha1 OK, `check_headers` OK. 2 of 5 matched (`func_80044C98`, `func_80044E8C`, 452 bytes). Merge via the wave 3 merge script.
+
+## [2026-10-17] ticket | T-17022 started
+
+[[tickets/T-17022-w3-main-p22]] created In Progress: wave 3 package w3-main-p22, four main functions of `src/main/80085E30.c` (`Fade_Out_Main`, `Fade_In_Main`, `func_8008647C`, `Scroll`). Worktree `tokimemo-wt/w3-main-p22` from `w2-good`.
+
+## [2026-10-17] build | T-17022 package w3-main-p22: 2 of 4 matched
+
+`Fade_Out_Main` and `Fade_In_Main` matched in `src/main/80085E30.c` (196 B, plain C, a `u8 temp` read after the timer test; the first found by `autotweak.py`). `func_8008647C` kept as a `NON_MATCHING` draft at 24 differing lines (`s32 func_8008647C(void);` added to `include/main_api.h`), `Scroll` left `INCLUDE_ASM` after one typed try (229 lines). Notes in [[matching-notes]] (section T-17022), three rows in [[register-cheatsheet]], one T-0018 row in [[data/t0018-cases]], drafts in `drafts/T-17022/`. Clean rebuild 27/27 sha1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK.
+
+## [2026-10-17] ticket | T-17022 In Review
+
+[[tickets/T-17022-w3-main-p22]] In Progress to In Review; kanban card moved, matched count 2. Code review against `CODING_STANDARDS.md` is the remaining step before Done.
+
+## [2026-10-17] ticket | T-17022 Done
+
+[[tickets/T-17022-w3-main-p22]] In Review to Done: code review against `CODING_STANDARDS.md` found two small issues, fixed (a trick comment above `Fade_Out_Main` and `Fade_In_Main` for the `u8 temp` local; comment only; and the index status). Rebuild OK (globals, headers, sha1). 2 of 4 functions matched (`Fade_Out_Main`, `Fade_In_Main`; 196 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-17] ticket | T-20820 migrate_globals keep proof (In Progress)
+
+New ticket [[tickets/T-20820-keep-proof]], card in In Progress of [[kanban]]. Tool round for the counter-tail family (TACO `func_8014616C`, `func_80146754`, `func_801484E4`, `func_80149538` and six more unmatched functions of [[data/t0018-cases]]): a `keep` line backed by a byte-match necessity proof instead of a hoisted pair, `tools/keepproof.py`, a rule proposal in [[keep-lines]] for the lead. Worktree `tokimemo-wt/tr-keep-proof` (from `w2-good`); no `src/` keep line before approval.
+
+## [2026-10-17] build | T-20820 keepproof tools and real-tree measurements
+
+New `tools/keepproof.py` (`check`, `census`, `rows`) and the `proof=<func>:<rows_without>:<asm_sha1_8>` keep-line syntax in `tools/migrate_globals.py` (`--check` verifies plain C and the asm sha1, `--verify-proofs` recompiles, one line per function, uses outside the proven function are listed); `tools/sync_protos.py` no longer warns about a declared symbol with a keep line. Tests `tools/test_keepproof.py` (47), `tools/test_migrate_globals.py` (24), `tools/test_sync_protos.py` (76). Real tree (w2-good, nothing in `src/` edited): census over 6,958 functions finds the counter-tail shape in 371 (299 matched, all plain C, false-positive rate 100%; 0 of 6,348 matched functions use a keep, volatile access or absolute aggregate address); `check --from-draft` proves TACO `func_8014616C` (1,512 B, 165 rows without, `bb8762f0`) and `func_80149538` (692 B, 33 rows, `d7dd7f6c`), `func_801484E4` is necessary but not sufficient (1 row); `rows`: `func_80146754` 158 rows as m2c draft, 2 with the tail symbol; the six other candidates compile to identical words with separate symbols. Rule proposal: [[keep-lines]]; reports in `drafts/T-20820/`; method in [[decompile-workflow]] ("Keep lines with a proof"). No `keep` line added to `config/migrate_globals.txt`.
+
+## [2026-10-17] ticket | T-20820 In Review
+
+[[tickets/T-20820-keep-proof]] In Progress to In Review (card moved in [[kanban]]). Full tool suite `python3 -m unittest discover -s tools -p 'test_*.py'`: 1,251 tests OK (3 skipped); `ninja` (globals check, headers), `migrate_globals.py --verify-proofs` (no proof lines yet) and `sync_protos.py --check-branch` OK on the unchanged `src/`. The gate stands: the lead decides on [[keep-lines]] (rule and marking); no `src/` or `config/migrate_globals.txt` keep line before that. After approval a wave-4 package applies it to TACO `func_8014616C` and `func_80149538` (proven), with `func_80146754` (158 to 2 rows with the tail symbol) and `func_801484E4` (1 row left) needing more work.
+
+## [2026-10-17] ticket | T-20820 Done
+
+[[tickets/T-20820-keep-proof]] In Review to Done: code review against `CODING_STANDARDS.md` approved, two small findings fixed (the new `--verify-proofs` test wrote `migrate_globals` output to stdout, now redirected; the merge check `tail -3 | grep '^OK'` saw buffered chatter after `OK`, fixed with `tools/test_stdout_order.py`, line-buffered stdout while the suite runs). Full tool suite 1,251 tests OK (3 skipped); census and `check TACO:func_80149538 --from-draft` reproduced (PROVEN, 33 rows, `d7dd7f6c`). Only `tools/`, `wiki/` and `drafts/T-20820/` changed; no keep line added. Card moved in [[kanban]]. The rule in [[keep-lines]] still awaits the lead. Merge via the tool-branch merge script.
+
+## [2026-10-17] ticket | T-20800 In Progress
+
+[[tickets/T-20800-redraft-tool]] created and started (worktree `tr-redraft-tool`, base `w2-good`): consolidate the 21 per-unit redraft drivers (`drafts/T-16550/redraft.py` .. `drafts/T-18800/redraft.py`) into `tools/redraft.py`. Card in [[kanban]] under In Progress, line in [[index]].
+
+## [2026-10-17] build | T-20800 validation run
+
+[[tickets/T-20800-redraft-tool]]: `tools/redraft.py` on ten functions (GEKO x4, DATE2 x3, main x3), default variants `typed`, `typed-late`, `plain`, `archived`, `guarded`, 51 tasks, 2 jobs, results in `drafts/T-20800/`. Nine better than the census, one equal; two better than the best archived draft (GEKO `func_80144198` 69 to 62, main `func_80054140` 106 to 48, both through `gs-local`), seven equal, one worse (DATE2 `func_80136860`, 164 against 188). None at 0. Scratch runs: the opt-in variants (`typed-keep`, `typed-named`, `typed-pass1`, `archived-raw`) on two functions, and RENSYU with three functions (`func_80132390` 364 to 337). The full tool suite passes (1,279 tests, 3 skipped). Method and numbers in [[decompile-workflow]] ("Redraft tool").
+
+## [2026-10-17] ticket | T-20800 In Review
+
+[[tickets/T-20800-redraft-tool]] In Progress to In Review: `tools/redraft.py`, `tools/redraft_rewrites.py`, `tools/redraft_extras.py`, `tools/test_redraft.py` (90 tests), the "Redraft tool" section of [[decompile-workflow]], `drafts/T-20800/` (10 functions). Card moved in [[kanban]]. Awaiting code review.
+
+## [2026-10-17] build | T-20800 validation re-finish
+
+[[tickets/T-20800-redraft-tool]]: a guarded function's result folder came out with an empty `context.c` (`draft_fixes.fresh_context` cannot place a body in a file that still holds the function's `NON_MATCHING` block). The tool now builds the unit text itself (`unit_text`), and `--force` removes the finished result so the finish step runs again. The ten validation functions were finished again from the cached variant runs: GEKO `func_80134228` went from 16 to 8 (`archived+gs-local`), so three functions beat the best archived draft (GEKO `func_80144198` 69 to 62, GEKO `func_80134228` 16 to 8, main `func_80054140` 106 to 48), six equal it and one stays above it (DATE2 `func_80136860`, 164 against 188). The numbers above in the earlier validation entry (two better, seven equal) are superseded. Tests 95.
+
+## [2026-10-17] build | T-20800 final checks
+
+[[tickets/T-20800-redraft-tool]]: unit-specific views (NAME_ENT album records and metric work, ETC work area) now belong to their units, the default timeout is 300 s. The ten validation functions were run again from an empty work directory on the final code: the same scores, three better than the best archived draft. A second run over the smallest unmatched function of each of the 25 units (`typed`, `typed-late`, `plain`, `guarded`, no draft_fixes) scored 25 of 25 with no worker failure; 87 of 88 variant runs compiled (TAIIKU `func_8013B78C` `typed-late`: m2c wrote `.unk_06.unk0` for a halfword). The full tool suite passes: 1,285 tests, 3 skipped (`tools/test_redraft.py` 96). Ticket stays In Review.
+
+## [2026-10-17] ticket | T-20800 Done
+
+[[tickets/T-20800-redraft-tool]] In Review to Done: code review against `CODING_STANDARDS.md` found one small issue, fixed (the acceptance criterion said `--jobs N (max 2)`, the tool defaults to 2 and takes any N). Full tool suite passes (1,285 tests, 3 skipped); `tools/redraft.py` re-run on `GEKO:func_80134228` reproduced the committed result (score 8). Changes limited to `tools/`, `wiki/` and `drafts/T-20800/`. Card moved in [[kanban]]. Merge via the merge script.
+
+## [2026-10-17] ticket | T-17020 Wave 3 package w3-main-p20 started
+[[tickets/T-17020-w3-main-p20]] In Progress: four main functions (`load_string`, `func_8004E58C`, `glyph_expand_1bpp`, `disp_string`) in `src/main/8004E500.c`, worktree tokimemo-wt/w3-main-p20, branch w3-main-p20. Part of [[tickets/T-17000-types-first-main]].
+
+## [2026-10-17] build | T-17020 load_string matched
+[[tickets/T-17020-w3-main-p20]]: `load_string` (252 B) matched in plain C, committed on its own. `FontRange` array type and the `load_string`/`vload_font` declarations in `include/main_api.h`; index loop, `vload_font` second argument, `q = str++`/`p = str++` byte fetch and locals declared before `start` (frame slots) replace the T-9320 and T-9740 `regorder` rows ([[data/t0018-cases]] update line, [[matching-notes]] section T-17020).
+
+## [2026-10-17] ticket | T-17020 In Review
+[[tickets/T-17020-w3-main-p20]] moved In Progress to In Review (kanban card moved): 1 of 4 matched (`load_string`); `func_8004E58C` guarded at 18 rows (`text_glyph_advance` load order, new row in [[data/t0018-cases]]); `glyph_expand_1bpp` and `disp_string` not started (past the 75 minute start limit on a loaded machine). Draft image externs `D_800B3F6C`, `D_800B3FAC`..`D_800B400C` added to `include/main_api.h`.
+
+## [2026-10-17] build | T-17020 closer pass: func_8004E58C matched
+[[tickets/T-17020-w3-main-p20]] closer pass (Opus) on the one guarded draft of `src/main/8004E500.c`: `func_8004E58C` (452 B) matched with a FAKE pointer view for the two compares (`((KWork *)&text_list_count)->unk_6A`), commit "T-17020: match main:func_8004E58C". Package now 2 of 4; `glyph_expand_1bpp` and `disp_string` still `INCLUDE_ASM`. Clean rebuild 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Notes in [[matching-notes]] (section T-17020), update line in [[data/t0018-cases]], new row in [[register-cheatsheet]]. Ticket stays In Review.
+
+## [2026-10-17] ticket | T-17020 Done
+[[tickets/T-17020-w3-main-p20]] reviewed against `CODING_STANDARDS.md`: 1 finding fixed (the [[index]] line still described the pre-closer state, 1 of 4 matched), no source findings. In Review to Done (kanban card moved). Matched 2 of 4 (`load_string`, 252 B, plain C; `func_8004E58C`, 452 B, one marked FAKE pointer view); `glyph_expand_1bpp` and `disp_string` stay `INCLUDE_ASM`. Unit sha1, headers, globals and `sync_protos --check-branch` OK after the edit; the clean 27/27 build runs in the merge.
+
+## [2026-10-17] ticket | T-20900 Cross-unit shared-type unification started
+[[tickets/T-20900-shared-type-unification]] In Progress (kanban card added): unify the parallel per-overlay views of the 0x44-byte display-record table `D_8011ECD0` (and its pools) into one type in `include/game.h`, then other tables with three or more duplicate types; rescore the affected drafts. Worktree tokimemo-wt/ty-shared, branch ty-shared (from w2-good).
+
+## [2026-10-17] build | T-20900 one record type for the 0x44 display-record pools
+[[tickets/T-20900-shared-type-unification]]: `DisplayActor44` (`include/game.h`) is the union of every unit's accesses to main `D_8011ECD0`, EVENT `D_800E9620` and GYOZI `D_80129F40` (asm scan with the `tools/type_recovery.py` register pass), `DisplayFixActor44` its view with 16.16 words at +0x24/+0x28 (`Fix32`). 35 per-unit record views and 6 fixed-point unions retired; 764 byte-offset uses in matched code are record fields (EVENT `func_80108DD4` keeps its byte view as a marked FAKE). Byte-identical at every step. Details in [[data-types]] ("Shared-type unification"), one line per family page.
+
+## [2026-10-17] decision | T-20900 views that stay
+[[tickets/T-20900-shared-type-unification]]: TAIIKU `TaiikuActor44` stays a documented view (s8 at +0x01/+0x06; three functions mismatch with the shared u8). RENSYU's `u16` club-word view, TACO's `TcSave` union and ETC's `EtcConfig8` casts stay; `D_801217D0` (`Rec24`, `SprEnt`) has only two views.
+
+## [2026-10-17] build | T-20900 other duplicated tables
+[[tickets/T-20900-shared-type-unification]]: one view each for `D_800E7D4F` (`Flags7D4F`), `D_80122EB8` (`BunkaDispatch8`, game.h), the matrix copies (`MATRIX`, `VECTOR`), GameState +0x54C/+0x66C/+0xF4/+0xF8 (`ScheduleEntryFlags`, `ScheduleClubFlags`, `ScheduleFlags`, `GsDateBits`, [[game-state]]) and the work area `D_800E7D10` (`Work800E7D10` in `include/main_api.h`, declared type; OPTION and TACO overrides gone). 68 type names gone (702 to 631 typedefs). `tools/redraft_rewrites.py` `TYPE_ALIASES`, MASTER's record view, club-bits and record-copy follow; [[decompile-workflow]] ("Redraft tool").
+
+## [2026-10-17] query | T-20900 draft scores before and after
+[[tickets/T-20900-shared-type-unification]]: `tools/redraft.py` (plain, typed, typed-late) on snapshots before (dcfb746d) and after. Header types: 166 unmatched pool users, 153 equal on both sides, 1 new compiling draft (`main:func_80077900` 163, census 211, via the club-bits rewrite that now runs everywhere); the drafts read field names instead of casts but compile the same. `Work800E7D10` as a declared type moves 13 of 34 users (3 better: `main:func_8005CC40` 92 to 15, `NAME_ENT:func_80139F30`, `ETC:func_80144F74`; 10 worse), the label-fold effect. Improved drafts in `drafts/T-20900/`; `main:func_8005CC40` tried by hand, 15 rows (register of the switch value), not matched. Recorded in [[data-types]].
+
+## [2026-10-17] ticket | T-20900 In Review
+[[tickets/T-20900-shared-type-unification]] moved In Progress to In Review (kanban card moved). Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Awaits code review against `CODING_STANDARDS.md`.
+
+## [2026-10-17] ticket | T-16990 Done
+
+Wave 3 conveyor paused at the user's request after 19 types passes and 77 packages: 239 matches / about 167 KB, 75.8%. 81 packages return to the next inventory. Type round (T-20900..T-20940) and tooling round (T-20800..) running; the conveyor restarts after them. [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-17] ticket | T-20810 In Progress
+
+[[tickets/T-20810-viewsweep]] created and started: `tools/viewsweep.py`, the type pass as a tool (own return type x every callee view, scored on the full translation unit in memory), branch `tr-viewsweep` from `w2-good`. Card in [[kanban]] under In Progress. Background: 19 of 102 wave 3 blocker notes were one lever, found by hand; see [[decompile-workflow]] ("Trying another prototype") and [[tickets/T-16530-proto-override]].
+
+## [2026-10-17] build | T-20810 viewsweep validation and first use
+
+[[tickets/T-20810-viewsweep]]: `tools/viewsweep.py` rediscovered the five hand-found type-lever cases from scratch copies with the lever removed (RPG_BAT `func_80149C5C` 6 compiles, TACO `func_8014B8B4` 4, TAIIKU `func_80145370` 5, RPG_BAT `func_8013B5B0` 41, RPG_BAT `func_8013E54C` 2). First use with the committed tool at `-j 2`: 101 guarded drafts, 996 compiles, 14 minutes, 1 match (NAME_ENT `func_80134B94`, 804 B, `s32 func_800AE090();`), 7 improved, 93 no gain; 29 archived draft bodies, 157 compiles, 3 improved, 10 not compiling in the tree. Results, table and the verified patch in `drafts/T-20810/`; details in [[matching-notes]] and [[decompile-workflow]].
+
+## [2026-10-17] ticket | T-20810 In Review
+
+[[tickets/T-20810-viewsweep]] In Progress to In Review (card moved in [[kanban]]): `tools/viewsweep.py`, `tools/test_viewsweep.py`, `allow_defined` in `tools/protoverride.py`, `edit=`/`source=` in `tools/funcdiff_verify.py`, docs in [[decompile-workflow]] (section "Step 1 for a near miss"), [[register-cheatsheet]] (first row, loop step 0) and [[matching-notes]]. Full tool suite 1,281 tests OK. The one match is a patch (`drafts/T-20810/patches/NAME_ENT_func_80134B94.patch`), not applied in `src/` because the ticket rules forbid editing `src/` and `include/`.
+
+## [2026-10-17] ticket | T-20810 Done
+
+[[tickets/T-20810-viewsweep]] In Review to Done: code review against `CODING_STANDARDS.md`, no blocking findings; one small fix (the acceptance criterion about committing the match now says it is kept as a verified patch). Full tool suite 1,281 tests OK (3 skipped); a run of `tools/viewsweep.py` on NAME_ENT `func_80134B94` found the match in 3 compiles with the literal-byte proof. Card moved in [[kanban]]. The patch `drafts/T-20810/patches/NAME_ENT_func_80134B94.patch` (804 B) still has to be applied in `src/` by a matcher. Merge via the wave 2 merge script.
+
+## [2026-10-17] ticket | T-20830 In Progress
+
+[[tickets/T-20830-autotweak-recipes]] created and In Progress: autotweak edit kinds for the four wave-3 recipes (GameState pointer, statement runs, chain stores, multi-use local). Card in [[kanban]]; method in [[decompile-workflow]]. Tool worktree `tr-autotweak-recipes`, only `tools/`, `wiki/` and `drafts/T-20830/` change.
+
+## [2026-10-17] build | T-20830 recipe edit kinds in autotweak
+
+`tools/recipes.py` adds `gstate`, `group`, `chain` and `inline_multi` to `tools/autotweak.py` (registered at the end of the file like `typefix`); `--only-kinds` and per-kind `--list` counts; `HINT_EDITS` gets group (tie, ugen), chain (ugen), gstate (priority, structure, argument), inline_multi (priority); `regdiff.py` prints `ORDER-ONLY` and autotweak maps it to group, order, join, split. Tests `tools/test_recipes.py` (59) and the full tool suite in Docker: 1,250 tests OK (3 skipped). The four transforms ran over all 6,370 function bodies of `src/` with no error. Method and numbers in [[decompile-workflow]] ("Recipe edits for autotweak (T-20830)"), rows in [[register-cheatsheet]], notes in [[matching-notes]] ("T-20830"). Ticket [[tickets/T-20830-autotweak-recipes]].
+
+## [2026-10-17] build | T-20830 first use of the recipe edit kinds
+
+`autotweak.py --all --only-kinds gstate,group,chain,inline_multi --time 30 --score-jobs 2` in scratch copies of the worktree, over the 101 guarded drafts and 16 wave-3 archive drafts (`drafts/T-17106` to `T-19030`, guarded in the copy), about 95 minutes on a loaded machine. Six new matches, 2,660 bytes, plain C: main `func_80072D70` (1,064 B, `gstate all last`), DATE `func_8013AF1C` (600 B, `gstate all`), NAME_ENT `func_8013BE18` (348 B, `gstate all`), GYOZI `func_8013E638` (236 B, `group head` with the empty counter test), TT `func_8013D2E0` (224 B, `inline_multi ... use1`), ETC `func_80143F24` (188 B, `chain join` plus `gstate all`). The archived draft of DATE `func_80155004` was matched again (chain plus loop-head join). 20 guarded and 6 archive drafts got a lower score; 73 and 9 did not change; 2 guarded drafts could not be set up. The six matches applied together in a scratch copy: 27/27 sha1 OK, `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch` pass. `src/` was not changed here; texts and the full hit table are in `drafts/T-20830/` (README, `body.c`, `best.c`).
+
+## [2026-10-17] ticket | T-20830 In Review
+
+[[tickets/T-20830-autotweak-recipes]] In Progress to In Review: tool, tests, docs and the first use are done and committed; the code review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]]. The six matches in `drafts/T-20830/` wait for the lead to apply them to `src/`.
+
+## [2026-10-17] ticket | T-20830 Done
+
+[[tickets/T-20830-autotweak-recipes]] In Review to Done: code review against `CODING_STANDARDS.md` found no blocking issue and one small fix (`import unittest.mock` moved to the top of `tools/test_recipes.py`). Full tool suite in Docker: 1,250 tests OK (3 skipped). A real dry run on TT `func_8013D2E0` printed `MATCH ... 105 -> 0 [inline_multi v L7 use1]`. Only `tools/`, `wiki/` and `drafts/T-20830/` changed, no game data. The six matches (2,660 bytes) wait in `drafts/T-20830/` for the lead to apply to `src/` (GYOZI `func_8013E638` keeps its `FAKE` comment). Card moved in [[kanban]]. Merge via the tool merge script.
+
+## [2026-10-17] ticket | T-20900 Done
+[[tickets/T-20900-shared-type-unification]] reviewed against `CODING_STANDARDS.md`: no findings (no edits in `src/ovl/TT/*` or `dialogue_render`, FAKE comments name tickets, types documented in [[data-types]], no game data). `w2-good` merged into the branch first (only `wiki/log.md` conflicted, both sides kept); clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` and all tool tests OK. In Review to Done (kanban card moved).
+
+## [2026-10-17] ticket | T-20910 In Progress
+
+[[tickets/T-20910-types-option]] created and In Progress: a second, targeted type pass for OPTION (32 unmatched functions after T-17800, [[option-family-results]]). Worktree `ty-option` from `w2-good`; scope `src/ovl/OPTION/*.c`, `include/ovl/OPTION.h`, additions to `include/game.h`. Card in [[kanban]], line in [[index]].
+
+## [2026-10-17] build | T-20910 OPTION BG map types and the menu-page redraft
+
+[[tickets/T-20910-types-option]]: `include/ovl/OPTION.h` gets `SpriteCell8`, `SpriteMap10`, `SpriteIndex80` (PsyQ GsCELL / GsMAP layouts) with `D_80122120[2]`, `D_80122140[2][64]`, `D_80122540[2]`, the tables behind main's BG slots at `D_801220D0` (main `func_8004A1A0` sets up slot n through them), and `void func_80134210(void);`; build byte-identical. `drafts/T-20910/redraft.py` (tools/redraft.py plus a `SpriteSlot24` view of `D_801220D0` and a `hand` variant) redrafted the 32 unmatched functions; paired with tools/redraft.py on the tree before the pass: sum 5,184 to 3,504 diff rows, median 156 to 97, 12 better, 20 same, 0 worse. The header types alone moved two variant scores; the gains are hand drafts in the menu-page template of the matched siblings and `gs-local`. Measured and left: `D_8013D3B8` stays `volatile u16`. Pages and numbers: [[option-family-results]] ("Second type pass (T-20910)"), [[data-types]].
+
+## [2026-10-17] build | T-20910 match OPTION:func_80135E48
+
+`func_80135E48` (948 bytes) matched from its redraft: the menu-page template with five rows, the `GameState *g` local, and `s32 i; s32 pad;` before the row arrays for the frame (FAKE, as the T-4070 pad). `funcdiff --resolve` MATCH, OPTION sha1 OK. Near misses recorded in [[option-family-results]]: `func_80136C30` 4 rows (one hoisted `lui`/`li` pair), `func_801328C0` 12, `func_80139F8C` 5 (guarded).
+
+## [2026-10-17] ticket | T-20910 In Review
+
+[[tickets/T-20910-types-option]] In Progress to In Review: clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` pass; the code review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]], line in [[index]] updated.
+## [2026-10-17] ticket | T-21500 and T-21510 opened (retro)
+
+From the session retro: [[tickets/T-21500-incremental-configure]] (configure re-splits asm whenever git touches a source directory, so every merge and worktree setup rebuilds everything) and [[tickets/T-21510-wiki-lint]] (mechanical ticket/kanban/index/log rules have no check). Both Backlog.
+
+## [2026-10-17] lint | Ticket cleanup
+
+Cleanup of tickets left open by the Codex usage-limit runs and the tool/draft rounds, plus kanban drift. 71 tickets moved to Done after a check of what reached main and a review against `CODING_STANDARDS.md`: 54 Done and 17 superseded (mostly by the T-14500 census and the wave 2/3 packages); 0 moved to Backlog; 0 kept open by this pass. Each ticket got a dated comment with the evidence and the review result.
+
+19 followup tickets opened in Backlog from review findings: [[tickets/T-21000-event-goto-loops-and-seq-views]], [[tickets/T-21001-recover-wave-10-list-6-near-misses]], [[tickets/T-21002-game-state-unk120-second-record-set]], [[tickets/T-21003-big-function-leftovers-cleanup]], [[tickets/T-21004-m2c-leftovers-and-unmarked-tricks]], [[tickets/T-21005-near-miss-views-and-dead-blocks-cleanup]], [[tickets/T-21006-fastscore-order-search-hardening]], [[tickets/T-21007-bulk-m2c-banner-clutter-and-header-recovery]], [[tickets/T-21008-taco-8014a480-three-row-form]], [[tickets/T-21009-draft-archive-hygiene-comparison-rows]], [[tickets/T-21010-drafts-archive-scrub-instruction-rows]], [[tickets/T-21011-drafts-listings-and-t16100-tools]], [[tickets/T-21012-rensyu-801320e0-club-count-view]], [[tickets/T-21013-rpg-bat-motion-work-area-views]], [[tickets/T-21014-main-80042134-gamestate-pointer]], [[tickets/T-21015-object-config-multiple-data-ranges]], [[tickets/T-21016-restart-matching-conveyor-80-percent]], [[tickets/T-21017-taco-tcactor-field-access-retry]], [[tickets/T-21018-event-80118010-near-miss]]. The three drafts-archive ones (T-21009, T-21010, T-21011) overlap and should be decided together.
+
+Board fixes in [[kanban]]: 69 missing cards added (2 of them for tickets closed in this pass, T-15400 and T-15500), 1 duplicate card removed (T-20005 was in In Review and Done; the file says Done), 19 cards added for the new tickets, 69 cards moved to Done, blank lines between cards removed. The In Progress card that looked like T-10910 is T-10910A (closed here as superseded); T-10910 itself only lacked a card. The tickets of the running type round (T-20910 to T-20940) live in their own worktrees, not on this branch, so they were not touched; no other In Progress or In Review ticket is left here. [[index]]: 56 ticket lines updated, 6 stale duplicate lines (older In Progress copies of T-14000, T-14100, T-14300, T-15300, T-12090, T-12100) removed, 34 lines added.
+
+Counts per status after the pass: Backlog 33, Ready 1, In Progress 0, In Review 0, Done 449. Every ticket file has exactly one card in the column equal to its status.
+
+## [2026-10-17] ticket | T-20930 In Progress
+
+[[tickets/T-20930-types-ending]] created and In Progress (card in [[kanban]], line in [[index]]): a second, targeted type pass for ENDING after [[tickets/T-18300-types-first-ending]]. Worktree `ty-ending` from `w2-good`; scope `src/ovl/ENDING/*.c` and `include/ovl/ENDING.h`, additions only in `include/game.h`.
+
+## [2026-10-17] build | T-20930 ENDING types and three matches
+
+[[tickets/T-20930-types-ending]]: ENDING's data tables as aggregates (message scripts `D_8013C280[3][17]`, `D_8013CAC0[3][15]`, `EdScriptSet`, `EdScene30`/`EdScene44`, `EdPortraitTbl`, `D_8013C5A0[7]`; 427 scalar declarations gone, 449 matched uses rewritten by `drafts/T-20930/fold_ending.py`), the callback and stack tables moved into `include/ovl/ENDING.h`, `D_8013C364` as `u8`, `func_80132B04` returning `s32`, `func_80132420` without prototype, ENDING's `set_kanji_string` override removed. Matched `func_80139B48` (476 B), `func_80132B04` (660 B) and `func_80132420` (1,764 B, FAKE frame layout); 27/27 sha1 after each commit. `tools/redraft.py` before and after the types: no score change from the headers alone; hand drafts lowered `func_801330E4` 129 to 114, `func_80134C2C` 46 to 40, `func_8013759C` 99 to 66. Drafts in `drafts/T-20930/`, numbers in [[ending-family-results]] and [[data-types]].
+
+## [2026-10-17] ticket | T-20930 In Review
+
+[[tickets/T-20930-types-ending]] In Progress to In Review (card moved in [[kanban]], line in [[index]] updated). Clean rebuild (`rm -rf build && python3 configure.py && ninja`) 27/27 sha1 OK; `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` pass. Three ENDING matches (2,900 bytes), the type map and the paired score table are in [[ending-family-results]] ("Targeted type pass") and [[data-types]]. The code review against `CODING_STANDARDS.md` is open.
+
+## [2026-10-17] ticket | T-20930 Done
+[[tickets/T-20930-types-ending]] reviewed against `CODING_STANDARDS.md`: no findings (no edits in `src/ovl/TT/*` or `dialogue_render`, header declarations consistent, matched code changed only to use the new types, the three new matches are plain C, both FAKE comments name T-20930 and a reason, types documented in [[data-types]] and [[ending-family-results]], no game data). `w2-good` merged into the branch first (only `wiki/index.md`, `wiki/kanban.md`, `wiki/log.md` conflicted; index and log keep both sides, kanban is `w2-good`'s board plus this card). `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. In Review to Done (kanban card moved).
+
+## [2026-10-17] ticket | T-20910 Done
+[[tickets/T-20910-types-option]] reviewed against `CODING_STANDARDS.md`: no blocking findings (no edits in `src/ovl/TT/*` or `dialogue_render`, `game.h` and `main_api.h` untouched, the new BG map types and externs declared once in `include/ovl/OPTION.h`, matched code changed only by the new match `func_80135E48`, which is plain C with one FAKE that names T-20910 and a reason, types documented in [[data-types]] and [[option-family-results]], no game data in `drafts/T-20910/`). Two small fixes: the FAKE `pad` is now listed in the ticket notes, and a stray blank line at the end of [[data-types]] is gone. `w2-good` merged into the branch first (`wiki/index.md`, `wiki/kanban.md`, `wiki/log.md` conflicted; index and log keep both sides, kanban is `w2-good`'s board plus this card). Clean rebuild (`rm -rf asm build && configure.py && ninja`) 27/27 sha1 OK; `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` (0 new, 15 known) OK. In Review to Done (kanban card moved, [[index]] line updated).
+## [2026-10-17] ticket | T-20920 In Progress
+
+[[tickets/T-20920-types-en-nichi]] created and In Progress: a second, targeted type pass for EN_NICHI (14 unmatched
+functions after [[en-nichi-family-results]] T-18200), redraft with `tools/redraft.py` into `drafts/T-20920/`. Branch
+`ty-en-nichi` from `w2-good`. Card in [[kanban]], line in [[index]].
+
+## [2026-10-17] build | T-20920 EN_NICHI types and eight hand matches
+
+[[tickets/T-20920-types-en-nichi]]: `EnObj.unk_14`/`unk_18` are `Fix32` (16.16, words in `func_801339D4`), `unk_20` an
+`s32`; `EnFixPos` (two `Fix32`) replaces `EnResetSlot8` for the grid `D_801392AC[15][12]` and the `s16[10][4]` view of
+`D_80139228`. Matched by hand on the new types: `func_80135ACC`, `func_80134800`, `func_801339D4`, `func_80135274`,
+`func_80136A2C` (was guarded), `func_801330D0` (was guarded), `func_80132450`, `func_80138CCC` (6,328 bytes). Link name
+`D_800E7D10` added to `config/symbol_addrs_types.txt`. Paired `tools/redraft.py` run (snapshots `f3933305` and
+`c2dabc21`): the 6 functions still unmatched keep their scores; drafts in `drafts/T-20920/`. Details in
+[[en-nichi-family-results]] and [[data-types]].
+
+## [2026-10-17] ticket | T-20920 In Review
+
+[[tickets/T-20920-types-en-nichi]] In Progress to In Review: types, matches, redraft and docs committed; the code
+review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]], line in [[index]] updated.
+
+## [2026-10-17] ticket | T-20920 Done
+
+[[tickets/T-20920-types-en-nichi]] reviewed against `CODING_STANDARDS.md`: no blocking finding, two small fixes (a blank line after the opening brace of `func_801339D4`; a stale "left for later waves" line in [[en-nichi-family-results]]). No edits in `src/ovl/TT/*` or `dialogue_render`, one FAKE (`func_80135ACC`, ticket named), types documented in [[data-types]], no game data. Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. In Review to Done (kanban card moved, [[index]] line updated).
+## [2026-10-17] ticket | T-20940 In Progress
+
+Created [[tickets/T-20940-types-main-80075320]] (branch `ty-main-80075320` from `w2-good`): second, targeted type pass for `src/main/80075320.c` after [[main-family-results]] "Types-first pass (T-17000)". Card added to In Progress in [[kanban]], index line added.
+
+## [2026-10-17] build | T-20940 types and matches in 80075320.c
+
+[[tickets/T-20940-types-main-80075320]]: `KeyRing D_800B6990` (the key ring and its position are one object: the original reloads the position after the store into the ring), `u8 D_800B3778[13][7]`, `u8 *D_800B3538[16]` (plus `D_800B3538` in `config/symbol_addrs_main.txt`), the unit's static tables, `CharFlags.b15 .. b19`, `ScheduleClubFlags.b29`, the `func_80075AF8` prototype. Matched `func_80077694`, `telephone_class_init`, `holiday_tel_exit`, `func_80077900` (2,568 bytes, 27/27 sha1). Paired `tools/redraft.py` scores: 2,397 to 1,183 rows over the 15 functions; the header types alone changed three scores (one better, one worse, one no longer compiling), the gains came from drafts written with the typed objects and the `gs-local` pass. Pages: [[data-types]], [[main-family-results]]; drafts in `drafts/T-20940/`.
+
+## [2026-10-17] ticket | T-20940 In Review
+
+[[tickets/T-20940-types-main-80075320]] In Progress to In Review: types documented, matches committed, clean build and checks run; the code review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]], index line updated.
+
+## [2026-10-17] ticket | T-20940 Done
+[[tickets/T-20940-types-main-80075320]] reviewed against `CODING_STANDARDS.md`: three small findings fixed in `src/main/80075320.c` (a shift-and-cast flag test replaced by the `CharFlags.b3` bit-field, which builds the same object; a missing `FAKE` mark on the u8 view of `unk_F6E` in `func_80077694`; a comment for the repeated club 10 condition in `func_80077900`). No edit in `src/ovl/TT/*` or `dialogue_render`, types documented in [[data-types]], no game data. Clean rebuild 27/27 sha1 OK; `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. In Review to Done (kanban card moved).
+## [2026-10-16] ticket | T-20007 large dialogue renderer
+
+Ranked current unmatched functions by archived size, excluding TT and landed source. Claimed main dialogue_render (5,588 bytes) in issue #45 before implementation; started [[tickets/T-20007-large-dialogue-renderer]] on main 5df5fdc6. The larger dialogue_speak_part is excluded because its documented last-mile scheduling obstacle has already had extensive probes. Existing renderer drafts need real buffers/loops and three-byte copies recovered from the original.
+
+## [2026-10-16] query | T-20007 large renderer structure
+
+Original assembly confirms a 760-byte frame, five three-byte punctuation initializers, the 512-byte input copy and repeated 64-byte line/name-token expansion loops. Mechanical archived-draft repairs still differ by 1,751 rows (initial.log); partial counter merging is worse. A structured source reconstruction is being measured, with no production C installed.
+
+## [2026-10-16] query | T-20007 raw and narrowed Y lifetimes
+
+The structured renderer reaches the original frame extent and reduces diagnostics from 1,751 to 1,196 rows. Inspection of the final-line assembly exposes a real draft error: sp+0x68 stores the raw coordinate sum, sp+0x64 its narrowed drawing coordinate. Corrected this distinction in scratch and are testing parser block placement/common return. Production remains INCLUDE_ASM.
+
+## [2026-10-16] query | T-20007 original instruction count recovered
+
+A single control-token condition plus the shared narrow-index advance restores the renderer to 1,397 instructions, equal to the original. Best full-unit diagnostic is 1,090 rows, still not matching. Separating both original expansion loop increments and the short draw-Y lifetime is the next measured refinement. No production source change.
+
+## [2026-10-16] query | T-20007 narrow index update breakthrough
+
+Eliminating the explicit line cursor restores the 760-byte frame. Splitting the short output-index update into two meaningful assignments recovers the original ugen temporary sequence and reduces full-unit diagnostics from 982 to 358 rows. Testing inferred scalar positions, compare operand order and the canonical return view of the strncpy alias. No byte-match claim or production C installation yet.
+
+## [2026-10-17] build | Continue the large dialogue renderer
+
+[[tickets/T-20007-large-dialogue-renderer]] resumes with exclusive maintainer-confirmed ownership in issue #45. Source sequencing reduces the scratch full-unit diagnostic from 358 to 330 rows, and grouping related narrow-index updates on one line reaches 242. Frame and instruction count agree, but stack homes and repeated operands remain different; keep the ASM fallback while measuring declaration order. All compiler work remains in Docker.
+
+## [2026-10-17] query | T-20007 direct byte scan and inferred coordinate saves
+
+[[tickets/T-20007-large-dialogue-renderer]] now has a 106-row scratch diagnostic, compared with 330 at this continuation's start. Direct array reads remove the first compare-copy mismatch, and a shared drawing-coordinate expression recovers the original Y save homes without a dedicated local. A measured signed-pointer expression fixes repeated commutative operands but needs FAKE annotation if retained. Buffer extent and result-lifetime controls remain nonmatching; no production source or match claim.
+
+## [2026-10-17] build | T-20007 renderer reaches zero diagnostic differences
+
+[[tickets/T-20007-large-dialogue-renderer]] recovers the original compiler-generated source-pointer save by separating the line-start and substitution-copy indices. Per-line for initializers restore the final address-hoist schedule. Full-source scratch comparison now agrees for all 1,397 instructions, without buffer padding or signed pointer casts. This is a candidate only; next are source/declaration cleanup, actual linked-byte proof and all 27 binary/header/global/prototype checks.
+
+## [2026-10-17] build | Large renderer passes all 27 binary hashes
+
+[[tickets/T-20007-large-dialogue-renderer]] installs the recovered 5,588-byte dialogue_render body in the default build. ninja -j8 completes 526 steps, header/global checks pass, and independent SHA1 comparisons pass for main plus all 26 overlays. Shared s32 K&R dialogue_render works without the old file override. The linked SDK symbol is strncpy; its measured integer view is explicit and the shared alias matches the existing void address view. [[matching-notes]] records the index/common-expression recovery and the two marked matching constraints. Prototype guard and final function proof are still running.
+
+## [2026-10-17] ticket | T-20007 ready for upstream review
+
+[[tickets/T-20007-large-dialogue-renderer]] moves to In Review after source/header self-review, a default linked MATCH for all 5,588 bytes, 27/27 immutable binary hashes, headers/globals OK and the prototype guard (0 new / 15 known). [[kanban]] and [[index]] agree. Only the claimed function and its required declarations/wiki notes are included. The latest fetched main (2de889b8) still has its ASM fallback; no main merge was made.
+
+## [2026-10-17] ticket | Submit large renderer PR 46
+
+[[tickets/T-20007-large-dialogue-renderer]] is submitted as https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/46 and attached to the chat. GitHub reports integration conflicts with newer main; retain the verified branch and leave moving-main integration to the maintainer per coordination. No immediate review comments or hosted checks. Status remains In Review.
+
+## [2026-10-17] ticket | T-20007 Done (PR #46 merged)
+
+KakarottoCake's PR #46 (claim #45): main dialogue_render matched, 5,588 bytes, merged in one clean build with PR checks (27/27, headers, globals, prototypes, funcdiff MATCH). [[tickets/T-20007-large-dialogue-renderer]] Done.
+
+## [2026-10-17] ticket | T-21520 opened, In Progress
+
+[[tickets/T-21520-apply-tooling-matches]]: apply the eight tooling-round matches ([[tickets/T-20830-autotweak-recipes]], [[tickets/T-20810-viewsweep]]) and the two keep proofs ([[tickets/T-20820-keep-proof]]) to `src/` on the tree after the shared-type round. Worktree tr-apply from w2-good.
+
+## [2026-10-17] build | T-21520 eight tooling-round matches applied
+
+Re-derived each tooling-round result on the current tree and committed one match per function: main `func_80072D70`, DATE `func_8013AF1C`, ETC `func_80143F24`, GYOZI `func_8013E638`, NAME_ENT `func_8013BE18` (autotweak recipes, [[tickets/T-20830-autotweak-recipes]]), NAME_ENT `func_80134B94` (viewsweep patch, [[tickets/T-20810-viewsweep]]), TACO `func_8014616C` and `func_80149538` (necessity proofs, [[tickets/T-20820-keep-proof]]). Two `keep` lines for `D_800E7384` in `config/migrate_globals.txt`, `extern s32 D_800E7384;` back in `include/main_api.h`. `src/ovl/TT/*` and the main dialogue renderer untouched. See [[keep-lines]], [[matching-notes]], [[tickets/T-21520-apply-tooling-matches]].
+
+## [2026-10-17] ticket | T-21520 In Review
+
+[[tickets/T-21520-apply-tooling-matches]] moved to In Review: 8 of 8 functions applied (5,444 bytes), 0 failed. Clean `rm -rf build && python3 configure.py && ninja` gives 27/27 sha1 OK; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` pass; `funcdiff.py --resolve` says MATCH for all eight. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-17] ticket | T-21520 Done
+
+Code review against `CODING_STANDARDS.md`, no findings: 8 matched functions (5,444 bytes), all plain C and `funcdiff.py --resolve` MATCH, every trick carries a `FAKE` comment with ticket and reason, the two `keep` lines cite their necessity proofs (`migrate_globals.py --verify-proofs`: both PROVEN), `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` pass, nothing under `src/ovl/TT/` or `dialogue_render` changed, no game data. [[tickets/T-21520-apply-tooling-matches]] Done; the `keep` rule text for `CODING_STANDARDS.md` stays open in [[keep-lines]].

@@ -1,0 +1,13 @@
+{
+ "before_git": "d9794660",
+ "before_score": 159,
+ "before_variant": "typed-late",
+ "census_score": 163,
+ "draft_score": null,
+ "func": "func_80077694",
+ "matched_bytes": 620,
+ "scope": "main:func_80077694",
+ "score": 0,
+ "status": "matched",
+ "unit": "main"
+}

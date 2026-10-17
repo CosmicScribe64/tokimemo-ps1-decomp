@@ -3,28 +3,72 @@
 
 void func_8013E4D0(void) {
     s32 i;
-    RpgObjectBlock *p;
+    DisplayActor44 *p;
 
-    p = (RpgObjectBlock *) D_8011ECD0;
+    p = (DisplayActor44 *)D_8011ECD0;
     for (i = 40; i < 64; i++) {
-        p->group[i].unk_01 = 5;
-        p->group[i].unk_38 = 0x41000000;
-        p->group[i].unk_02 = 0x1;
-        p->group[i].unk_06 = 0x1;
-        p->group[i].unk_1A = 0x1000;
-        p->group[i].unk_1C = 0x1000;
+        p[96 + i].unk_01 = 5;
+        p[96 + i].unk_38 = 0x41000000;
+        p[96 + i].unk_02 = 0x1;
+        p[96 + i].unk_06 = 0x1;
+        p[96 + i].unk_1A = 0x1000;
+        p[96 + i].unk_1C = 0x1000;
     }
     for (i = 29; i < 31; i++) {
-        p->group[i].unk_01 = 5;
-        p->group[i].unk_38 = 0x41000000;
-        p->group[i].unk_02 = 0x1;
-        p->group[i].unk_06 = 0x1;
-        p->group[i].unk_1A = 0x1000;
-        p->group[i].unk_1C = 0x1000;
+        p[96 + i].unk_01 = 5;
+        p[96 + i].unk_38 = 0x41000000;
+        p[96 + i].unk_02 = 0x1;
+        p[96 + i].unk_06 = 0x1;
+        p[96 + i].unk_1A = 0x1000;
+        p[96 + i].unk_1C = 0x1000;
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013E54C);
+/* Implicit int with no return value (the callers have no prototype): with $v0 live at the exit, uopt
+ * emits the hoisted loop limit before the strength-reduced start in each case, as the original (T-20600). */
+s32 func_8013E54C(s32 arg0) {
+    s32 i;
+
+    switch (arg0) {
+    case 3:
+        for (i = 4; i < 16; i++) {
+            *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEB4;
+            *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EECC;
+            *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE9C;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 5;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x1D;
+        }
+        break;
+    case 4:
+        for (i = 4; i < 16; i++) {
+            *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEA8;
+            *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EEC0;
+            *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE90;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 5;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x12;
+        }
+        break;
+    case 5:
+        for (i = 4; i < 16; i++) {
+            *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEB8;
+            *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EED0;
+            *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EEA0;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 5;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x1C;
+        }
+        break;
+    case 0xFF:
+        for (i = 4; i < 16; i++) {
+            *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEA4;
+            *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EEBC;
+            *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE8C;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 3;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_03 = 0;
+        }
+        break;
+    }
+}
 
 void func_8013E7C0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     u8 *temp_v0;
@@ -125,11 +169,133 @@ void func_8013EA30(s32 arg0) {
     s32 i;
 
     for (i = 0; i < 96; i++) {
-        D_8011ECD0[0x1107 + i * 0x44] = arg0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_07 = arg0;
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013EA60);
+void func_8013EA60(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    switch (arg1) {
+    case 0:
+        ((DisplayActor44 *)D_8011ECD0)[155].unk_03 &= 0xFFFE;
+        RPG_GAUGE->flag[0] = 0;
+        RPG_GAUGE->cur[0] -= arg2;
+        if (RPG_GAUGE->cur[0] < 0) {
+            RPG_GAUGE->cur[0] = 0;
+        }
+        if (arg2 == 0) {
+            func_8014C360(0, 0x6C, 0x77);
+            return;
+        }
+        func_8014BFE4(arg0, 0x74, 0x77, arg2, arg3);
+        return;
+    case 1:
+        ((DisplayActor44 *)D_8011ECD0)[156].unk_03 &= 0xFFFE;
+        RPG_GAUGE->flag[1] = 0;
+        RPG_GAUGE->cur[1] -= arg2;
+        if (RPG_GAUGE->cur[1] < 0) {
+            RPG_GAUGE->cur[1] = 0;
+        }
+        if (arg2 == 0) {
+            func_8014C360(0, 0x33, 0x67);
+            return;
+        }
+        func_8014BFE4(arg0, 0x3B, 0x67, arg2, arg3);
+        return;
+    case 2:
+        ((DisplayActor44 *)D_8011ECD0)[157].unk_03 &= 0xFFFE;
+        RPG_GAUGE->flag[2] = 0;
+        RPG_GAUGE->cur[2] -= arg2;
+        if (RPG_GAUGE->cur[2] < 0) {
+            RPG_GAUGE->cur[2] = 0;
+        }
+        if (arg2 == 0) {
+            func_8014C360(0, 0x30, 0x97);
+            return;
+        }
+        func_8014BFE4(arg0, 0x34, 0x97, arg2, arg3);
+        return;
+    case 3:
+        D_8015EDC0 -= arg2;
+        if (D_8015EDC0 < 0) {
+            D_8015EDC0 = 0;
+        }
+        if (arg2 == 0) {
+            func_8014C360(0, 0x38, 0x98);
+            return;
+        }
+        func_8014BFE4(arg0, 0x40, 0x98, arg2, arg3);
+        return;
+    case 4:
+        D_8015EDC0 -= arg2;
+        if (D_8015EDC0 < 0) {
+            D_8015EDC0 = 0;
+        }
+        if (arg2 == 0) {
+            func_8014C360(0, 0x38, 0x98);
+            return;
+        }
+        func_8014BFE4(arg0, 0x40, 0x98, arg2, arg3);
+        return;
+    case 5:
+        D_8015EDC0 -= arg2;
+        if (D_8015EDC0 < 0) {
+            D_8015EDC0 = 0;
+        }
+        if (arg2 == 0) {
+            func_8014C360(0, 0x38, 0x95);
+            return;
+        }
+        func_8014BFE4(arg0, 0x40, 0x95, arg2, arg3);
+        return;
+    case 16:
+        if (arg2 == 0) {
+            func_8014C360(0, 0x40, 0x97);
+            return;
+        }
+        func_8014BFE4(arg0, 0x48, 0x97, arg2, arg3);
+        return;
+    case 17:
+        if (arg2 == 0) {
+            func_8014C360(0, 0x40, 0x85);
+            return;
+        }
+        func_8014BFE4(arg0, 0x48, 0x85, arg2, arg3);
+        return;
+    case 18:
+        if (arg2 == 0) {
+            func_8014C360(0, 0x48, 0x8D);
+            return;
+        }
+        func_8014BFE4(arg0, 0x50, 0x8D, arg2, arg3);
+        return;
+    case 32:
+        D_8015ED94 -= arg2;
+        if (D_8015ED94 < 0) {
+            D_8015ED94 = 0;
+        }
+        func_8014BFE4(arg0, 0xF4, 0x96, arg2, arg3);
+        return;
+    case 33:
+        if (arg3 == 1) {
+            D_8015ED94 -= arg2;
+            if (D_8015ED94 < 0) {
+                D_8015ED94 = 0;
+            }
+        } else {
+            D_8015ED94 += arg2;
+            if (D_8015EDA0 < D_8015ED94) {
+                D_8015ED94 = D_8015EDA0;
+            }
+        }
+        func_8014BFE4(arg0, 0x10C, 0x66, arg2, arg3);
+        return;
+    case 35:
+        func_8014BFE4(arg0, 0x114, 0x96, arg2, arg3);
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 void func_8013EEAC(u32 arg0) {
     switch (arg0) {
@@ -315,17 +481,17 @@ s32 func_8013F350(s32 arg0, s32 arg1) {
 
 void func_8013F3F0(s32 arg0, s32 arg1) {
     s32 i;
-    RpgObjectBlock *p;
+    DisplayActor44 *p;
 
-    p = (RpgObjectBlock *) D_8011ECD0;
+    p = (DisplayActor44 *)D_8011ECD0;
     for (i = 40; i < 64; i++) {
-        p->group[i].unk_26 += arg0;
-        p->group[i].unk_2A += arg1;
+        p[96 + i].unk_26 += arg0;
+        p[96 + i].unk_2A += arg1;
     }
-    ((RpgObjectBlock *) D_8011ECD0)->group[29].unk_26 += arg0;
-    ((RpgObjectBlock *) D_8011ECD0)->group[30].unk_26 += arg0;
-    ((RpgObjectBlock *) D_8011ECD0)->group[31].unk_26 += arg0;
-    ((RpgObjectBlock *) D_8011ECD0)->group[29].unk_2A += arg1;
-    ((RpgObjectBlock *) D_8011ECD0)->group[30].unk_2A += arg1;
-    ((RpgObjectBlock *) D_8011ECD0)->group[31].unk_2A += arg1;
+    ((DisplayActor44 *)D_8011ECD0)[125].unk_26 += arg0;
+    ((DisplayActor44 *)D_8011ECD0)[126].unk_26 += arg0;
+    ((DisplayActor44 *)D_8011ECD0)[127].unk_26 += arg0;
+    ((DisplayActor44 *)D_8011ECD0)[125].unk_2A += arg1;
+    ((DisplayActor44 *)D_8011ECD0)[126].unk_2A += arg1;
+    ((DisplayActor44 *)D_8011ECD0)[127].unk_2A += arg1;
 }

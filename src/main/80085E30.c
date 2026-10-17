@@ -46,13 +46,41 @@ void Fade_Out_Init(void) {
     Vblnk_Timer_Init();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80085E30", Fade_Out_Main);
+/* temp: the byte is read into a local after the timer test; with a direct compare IDO loads it into $v0 and puts the li v0,1 in the branch delay slot (T-17022, matching-notes) */
+s32 Fade_Out_Main(void) {
+    u8 temp;
+    if (Vblnk_Timer() != 0) {
+        temp = D_800E6280.unk_03A;
+        if (temp < 3U) {
+            D_800E6280.unk_03A = 0;
+            return 1;
+        }
+        D_800E6280.unk_03A -= 4;
+        Vblnk_Timer_Init();
+        return 0;
+    }
+    return 0;
+}
 
 void Fade_In_Init(void) {
     Vblnk_Timer_Init();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80085E30", Fade_In_Main);
+/* temp: same byte local as Fade_Out_Main (T-17022, matching-notes) */
+s32 Fade_In_Main(void) {
+    u8 temp;
+    if (Vblnk_Timer() != 0) {
+        temp = D_800E6280.unk_03A;
+        if (temp >= 0x7EU) {
+            D_800E6280.unk_03A = 0x80;
+            return 1;
+        }
+        D_800E6280.unk_03A += 4;
+        Vblnk_Timer_Init();
+        return 0;
+    }
+    return 0;
+}
 
 void Yubi(s32 idx) {
     u8 *p;
@@ -73,7 +101,50 @@ void Default_Disp(void) {
     func_80047560();
 }
 
+/* NON_MATCHING: T-17022, 24 differing lines; the original keeps the two record sums in $a0/$a1 and the list entry in $a2 (uopt ranges), the draft has ugen temporaries ($t) and the entry in $a0; naming them as locals gives those registers but 8 bytes too much frame */
+#ifdef NON_MATCHING
+s32 func_8008647C(void) {
+    s32 cur;
+    s32 list[16];
+    u32 n;
+    s32 i;
+    s32 best;
+    s32 bscore;
+    s32 score;
+    u32 t;
+
+    n = 0;
+    for (i = 0; i < 11; i++) {
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b1 == 1) {
+            list[n] = i;
+            n = (n + 1) & 0xFF;
+        }
+    }
+    t = get_h_yuukou(0) & 0xFF;
+    bscore = get_h_tokimeki(0) + t;
+    best = 0;
+    for (i = 1; i < n; i++) {
+        t = get_h_tokimeki(list[i]) & 0xFF;
+        score = get_h_yuukou(list[i]) + t;
+        if (bscore < score && (t = func_8008667C(best) & 0xFF, t >= func_8008667C(list[i]))) {
+            best = list[i];
+            bscore = score;
+        } else if (bscore == score) {
+            t = func_8008667C(best) & 0xFF;
+            if (t >= func_8008667C(list[i])) {
+                cur = list[i];
+                if (D_800E6280.unk_1BC[best].unk_06 + D_800E6280.unk_1BC[best].unk_02 < D_800E6280.unk_1BC[cur].unk_06 + D_800E6280.unk_1BC[cur].unk_02) {
+                    bscore = score;
+                    best = cur;
+                }
+            }
+        }
+    }
+    return best;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80085E30", func_8008647C);
+#endif
 
 /* FAKE: same-line swap and pointer read retain the original halfword load order. T-9550 */
 s32 func_80086640(void)

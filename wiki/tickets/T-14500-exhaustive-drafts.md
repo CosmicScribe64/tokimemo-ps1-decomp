@@ -1,10 +1,10 @@
 ---
 id: T-14500
 title: Draft and score every remaining game function
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[exhaustive-drafts]]"]
 ---
 
@@ -21,6 +21,8 @@ Inventory every configured game INCLUDE_ASM, retain guarded drafts, generate mis
 ## Comments
 
 2026-10-15: Isolated branch from 48362009; immutable generated inputs hard-linked from integration to avoid duplicated disc images.
+
+2026-10-17: Closed. Acceptance is met: all 1,066 scopes have an explicit outcome, contexts, diagnostics and hashes are kept, and the zero candidates went through literal proof in T-14501 (30 functions, 19,220 bytes). All 1,066 scopes now have a compiling draft and nothing is running. The open goal of usable C for every function is carried by T-16100 and the types-first waves (T-16550, T-16560, T-17xxx, T-18xxx) and the redraft tool T-20800. Review of tools/ found tests for all but refresh_draft_ledgers.py; the instruction rows in the archive go to the scrub followup opened from T-14600.
 
 ## Publishing checkpoint
 

@@ -1,10 +1,10 @@
 ---
 id: T-9920
 title: "Wave 10: list 2"
-status: In Progress
+status: Done
 assignee: w10-2
 created: 2026-10-11
-updated: 2026-10-11
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[matching-notes]]", "[[register-allocation-wave7]]"]
 ---
 
@@ -52,3 +52,5 @@ TAIIKU. No compiler or build-pass change is proposed.
 native bit-field access with separate read/write views; precise FAKE documents
 the incomplete SDK aggregate. Real resolved diff and linked EVENT SHA1 pass.
 Historical pass resumes after a safe pause, without repeating completed rows.
+
+2026-10-17: Closing as superseded. The Codex run hit its usage limit with one function merged (EVENT func_8010A6E4, +172 bytes, still C on main); the rest of list 2 is covered by the T-14500 census and the later waves. Review: the FAKE comment gives reason and T-9920, but the function defines two local bit-field structs with a 0x3EC pad and reaches the field through D_800B0860 + 0x3EC instead of the typed root recorded under T-9770. That finding is part of the followup opened from T-9940.

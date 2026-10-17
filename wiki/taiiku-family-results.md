@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # TAIIKU family results
@@ -10,6 +10,8 @@ Scope: the TAIIKU overlay (`src/ovl/TAIIKU/`, `include/ovl/TAIIKU.h`). At the st
 Three objects hold the same update code with different record layouts. This page calls them game A (`80133C80.c`), game B (`80142240.c`) and game C (`801452D0.c`). Each has four 16.16-position records, a player and three others, so the records are called runners here. That name is a working hypothesis from the code shape (speed added to a position, timers, a "next free slot gets i + 2" table), not from game text.
 
 ## Types-first pass (T-16550)
+
+T-20900 update: `TaiValue44` and `TaiRecord44` are `DisplayActor44`, `TaiikuScene44` is `DisplayFixActor44`, `TaiikuPosition` is `Fix32`, `TaiikuMat`/`TaiikuVec` are `MATRIX`/`VECTOR`; `TaiikuActor44` stays a view (signed +0x01/+0x06, three functions need it) ([[data-types]], "Shared-type unification").
 
 The pilot recovered the overlay's shared types before any function matching, redrafted all 64 functions with them and cut the rest into four packages. It took about one hour of agent time for the types and the redraft.
 
@@ -138,3 +140,10 @@ Closer pass: `func_8013B608` matched by splitting the result assignment (`v = x 
 ## Package w3-d-p10 (T-19010, `80142240.c`)
 
 [[tickets/T-19010-w3-d-p10]], wave 3: `func_80144464` (572 B), `func_80143814` (692 B), `func_80142FB8` (992 B) and `func_80144E54` (496 B) matched, `func_8014357C` guarded at 34 lines. Game B now has no `INCLUDE_ASM` left among the 80142240.c functions except `func_80142400`. The T-16554 gap of `func_80142FB8` (spills of the pointer and constants) was an index loop with `<`; `D_8014A110` is `u8`. Details in [[matching-notes]], section T-19010.
+
+### Package w3-d-p31 (T-19031, `80132000.c`, `80132BD0.c`)
+
+[[tickets/T-19031-w3-d-p31]], wave 3: all four listed functions matched in plain C (4,412 bytes, about 65 minutes): `func_80133258` (display-record initialiser, one FAKE `(u8)` narrowing), `func_80132BD0` (23-record initialiser from four stack tables, FAKE unused word locals for the frame), `func_80132E20` (K&R `s16` parameter, IDO unrolls the loops, FAKE unused locals) and `func_80132000` (folk dance state machine, `D_80148EC0` defined in the unit for the shared `lui at`, one FAKE empty test). `80132000.c` and `80132BD0.c` have no `INCLUDE_ASM` left. Method and numbers in [[matching-notes]], section T-19031.
+## Package w3-d-p32 (T-19032, `80141280.c`)
+
+[[tickets/T-19032-w3-d-p32]], wave 3: `func_80141280` (1,764 bytes, the intro state machine of the sports festival) matched, the last open function of the file. The table `D_8014A088` is the initialiser of an auto array; the object's `.data` (0x8014A070-0x8014A0A0) is now a data island with `s32 D_8014A070[6]` defined in C, and `D_8014A088` stays declared for `func_80145640`'s loop bound. Three tricks, two of them FAKE (a `(u8)` narrowing of a mask test, a `u32` address view of the selector), one declaration view (`set_dec_bri` as implicit int), plus a rolled 16-record zero loop that needs a counter assigned again. Details in [[matching-notes]] ("T-19032"), rows in [[register-cheatsheet]].

@@ -1,0 +1,14 @@
+{"base_score": 144, "census_score": 155, "commit": "20fc0bb52", "hand_rows": null, "scope": "EN_NICHI:func_80132450", "score": 0, "size": 780, "status": "matched"}
+{"base_score": 242, "census_score": 249, "commit": null, "hand_rows": 6, "scope": "EN_NICHI:func_80132EE8", "score": 242, "size": 488, "status": "scored"}
+{"base_score": 60, "census_score": 60, "commit": "4758be214", "hand_rows": null, "scope": "EN_NICHI:func_801330D0", "score": 0, "size": 736, "status": "matched"}
+{"base_score": 77, "census_score": 77, "commit": null, "hand_rows": 46, "scope": "EN_NICHI:func_8013358C", "score": 77, "size": 596, "status": "scored"}
+{"base_score": 181, "census_score": 181, "commit": "ca9d69fd4", "hand_rows": null, "scope": "EN_NICHI:func_801339D4", "score": 0, "size": 724, "status": "matched"}
+{"base_score": 324, "census_score": 324, "commit": "92d3af06b", "hand_rows": null, "scope": "EN_NICHI:func_80134800", "score": 0, "size": 1052, "status": "matched"}
+{"base_score": 170, "census_score": 174, "commit": "c8bec270f", "hand_rows": null, "scope": "EN_NICHI:func_80135274", "score": 0, "size": 620, "status": "matched"}
+{"base_score": 268, "census_score": 268, "commit": "bdaefa131", "hand_rows": null, "scope": "EN_NICHI:func_80135ACC", "score": 0, "size": 1160, "status": "matched"}
+{"base_score": 288, "census_score": 288, "commit": null, "hand_rows": 14, "scope": "EN_NICHI:func_80135FBC", "score": 288, "size": 744, "status": "scored"}
+{"base_score": 65, "census_score": 177, "commit": null, "hand_rows": 11, "scope": "EN_NICHI:func_801362A4", "score": 65, "size": 1116, "status": "scored"}
+{"base_score": 6, "census_score": 6, "commit": "ec70d8da2", "hand_rows": null, "scope": "EN_NICHI:func_80136A2C", "score": 0, "size": 228, "status": "matched"}
+{"base_score": 480, "census_score": 592, "commit": null, "hand_rows": null, "scope": "EN_NICHI:func_80136DEC", "score": 480, "size": 1392, "status": "scored"}
+{"base_score": 584, "census_score": 584, "commit": null, "hand_rows": null, "scope": "EN_NICHI:func_8013735C", "score": 584, "size": 2300, "status": "scored"}
+{"base_score": 368, "census_score": 376, "commit": "c2dabc218", "hand_rows": null, "scope": "EN_NICHI:func_80138CCC", "score": 0, "size": 1028, "status": "matched"}

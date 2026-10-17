@@ -1,0 +1,21 @@
+{
+ "base_head": "f3933305",
+ "base_score": 6,
+ "base_variant_scores": {
+  "archived": 6,
+  "guarded": 6,
+  "plain": 162,
+  "typed": 162,
+  "typed-late": 162
+ },
+ "census_score": 6,
+ "commit": "ec70d8da2",
+ "func": "func_80136A2C",
+ "note": "matched by hand on the T-20920 types; hand.c is the body in src/",
+ "scope": "EN_NICHI:func_80136A2C",
+ "score": 0,
+ "size": 228,
+ "status": "matched",
+ "ticket": "T-20920",
+ "unit": "EN_NICHI"
+}

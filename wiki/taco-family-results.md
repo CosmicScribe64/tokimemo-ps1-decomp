@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # TACO boss actor transform family
@@ -38,6 +38,8 @@ Best evidence: a480-storeorders.diff and 97ec-nocache.diff. Broader failures rem
 The saved reprobe script reproduces the one-row and three-row results without compile errors. The restored default TACO build then exits 0 with SHA1 OK, 1419e93cbad6c0df790577701181be04e0747969; header/global checks pass. Evidence: build/t13801/final-default.log and final-verified.log. No whole-game rebuild/checksum claim is made. Independent standards review found no issues. Spec review confirms the primary matching goal is unmet; both tickets remain In Review for integration disposition. Source/header diff against 97ec697f is empty.
 
 ## Types-first pass (T-16560)
+
+T-20900 update: `TcSetAll` and `TcSetBits` are `Work800E7D10` and `WorkSetBits` (main_api.h), `D_800E7D10` needs no override; `TcSave` stays the loader's union view ([[data-types]], "Shared-type unification").
 
 Pilot of the types-first idea in [[speedup-research-2026-10-16]]: recover TACO's shared types first, then
 redraft every unmatched function ([[tickets/T-16560-taco-types-first]], branch `pt-taco`). The drafts and the
@@ -195,3 +197,7 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p28 (T-19028)
 
 [[tickets/T-19028-w3-d-p28]] (`8013DB80.c`, `8015CF30.c`, the particle quads): `func_8013E778` (812 bytes) matched in plain C from the sibling `func_8013D528`; `func_8013E424` and `func_8013DB80` matched in the closer pass (index the record array, no pointer local, so the stack loads are `.noalias` and hoisted); `func_8013DEE4` (draft in `drafts/T-19028/TACO/`) and the libgte `RotMatrixZ` `func_8015CF30` stay `INCLUDE_ASM`. Details and idioms in [[matching-notes]] (T-19028).
+
+## Matching stage, package w3-d-p25 (T-19025)
+
+[[tickets/T-19025-w3-d-p25]] (`80132220.c`, the two actor input/AI functions and their callers' helpers): `func_8013356C` (the four-way unrolled `unk13` clear of `D_8015EB30`) and `func_801328B0` (the second actor's AI, 1,848 bytes, FAKE pads for four frame words) matched; the closer pass matched `func_80132FE8` (input collector: a local `btn` for `unk_F88` that stays live across the `D_8015EDE4` tests, one FAKE empty test) and `func_8013240C` (stick mover: K&R `s32` with no `return` and no result variable), so the whole file is C. `func_80132FE8` takes no arguments (callers pass none). `D_800E7200`, `D_800E7208` and `D_800E7378` are `D_800E6280.unk_F80`, `unk_F88` and `unk_10F8`. Details, the ugen-order fix by a pointer local, the closer pass and the `funcdiff` guarded-neighbour gotcha: [[matching-notes]], "T-19025".

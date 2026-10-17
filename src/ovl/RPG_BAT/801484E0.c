@@ -71,7 +71,101 @@ void func_80148654(void) {
     }
 }
 
+/* NON_MATCHING: T-17113, 28 differing lines; case 0 loads D_8015EBAC after the EC2C load (the original hoists it above the first store), the shift loop makes uopt store D_8015EDB4 back before it. */
+/* FAKE: draft only; the D_8015EBAC and D_8015EC70 tables are reached through their first symbol (aggregates not typed yet). Type them when the function is revisited. T-17113 */
+#ifdef NON_MATCHING
+void func_80148714(void) {
+    s32 i;
+    s32 start;
+    s32 *p;
+    s32 *q;
+    s32 *r;
+    s32 x;
+    s32 y;
+
+    switch (D_8015EDB0.unk_00) {
+    case 0:
+        D_8015EC50 = D_8015EBFC.unk_2C - 0xB0;
+        D_8015EC54 = D_8015EBFC.unk_30 - 0x58;
+        if (D_8015EBAC == 1) {
+            D_801215FD = 4;
+            D_80121685 = 4;
+        }
+        if (D_8015EBAC == 0) {
+            D_80121685 = 4;
+        }
+        func_8013F0F4(0x507, 1, 0);
+        func_8014EBD0();
+        return;
+    case 1:
+        start = 0;
+        if (D_8015EDB0.unk_04 >= 0x3E8) {
+            start = 1;
+        } else {
+            /* FAKE: redundant else; the original has the branch over an empty else (T-17113) */
+            start = 0;
+        }
+        if (start < 6) {
+            r = &(&D_8015EBAC)[start * 2];
+            i = start;
+            do {
+                D_8015EC58.unk_10 = r[50] * D_8015EC50 / 1000;
+                D_8015EC58.unk_14 = r[50] * D_8015EC54 / 1000;
+                func_8013E97C(i + 0x32, D_8015EC58.unk_10, D_8015EC58.unk_14);
+                func_8013E7C0(i + 0x32, 6, 1, 1);
+                i++;
+                r += 2;
+            } while (i != 6);
+        }
+        if (D_8015EDB0.unk_04 < 0x3E8) {
+            if (D_8015EBAC == 0) {
+                D_8015EDB0.unk_04 += 0x3C;
+            } else {
+                D_8015EDB0.unk_04 += 0x28;
+            }
+            D_8015EC74 = D_8015EDB0.unk_04;
+        }
+        p = &D_8015ED34;
+        q = (s32 *)&D_8015ED38;
+        do {
+            *q-- = *p--;
+        } while ((u32)&D_8015EC70 < (u32)p);
+        if (D_8015ECC4 == D_8015EC74) {
+            for (i = 1; i < 6; i++) {
+                func_8013E7C0(i + 0x32, 6, 1, 0);
+            }
+        }
+        if (D_8015EDB0.unk_04 >= 0x3E8 && D_8015EDB0.unk_04 < 0x7D0) {
+            func_8013E97C(0x32, D_8015EBFC.unk_2C, D_8015EBFC.unk_30);
+            func_8013E810(0x32, 7, 5, 1);
+            D_8015EDB0.unk_04 = 0x7D1;
+        } else if (!(D_8012139A & 1)) {
+            D_8015EDB0.unk_04 = 0x3E8;
+            D_8015EDB0.unk_08 += 1;
+        }
+        if (D_8015EDB0.unk_04 >= 0x3E8) {
+            func_8013F0F4(0x508, 0xA, 1);
+            for (i = 0; i < 4; i++) {
+                if (func_8013E9A8(0x14) == 0) {
+                    x = func_8013E9A8(0x20);
+                    y = func_8013E9A8(0x20);
+                    func_8013E97C(i + 0x28, x + D_8015EBFC.unk_2C - 0x10, y + D_8015EBFC.unk_30 - 0x10);
+                    func_8013E810(i + 0x28, 8, 1, 1);
+                }
+            }
+        }
+        if (D_8015EDB0.unk_08 >= 8) {
+            for (i = 0; i < 4; i++) {
+                func_8013E810(i + 0x28, 0xFF, 1, 0);
+            }
+            func_8014EBA8();
+        }
+        return;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801484E0", func_80148714);
+#endif
 
 void func_80148B08(void) {
     RpgMotion20 *motion = (RpgMotion20 *)&D_8015EC50;

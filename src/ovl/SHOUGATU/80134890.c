@@ -115,11 +115,11 @@ void func_80135014(void) {
 }
 
 void func_8013507C(void) {
-    D_80120650[3] |= 0x80;
-    D_80120650[0x46] = 1;
-    D_80120650[0x47] |= 0x80;
-    D_80120650[0x8A] = 1;
-    D_80120650[0x8B] |= 0x80;
+    ((DisplayActor44 *)D_80120650)->unk_03 |= 0x80;
+    ((DisplayActor44 *)D_80120650)[1].unk_02 = 1;
+    ((DisplayActor44 *)D_80120650)[1].unk_03 |= 0x80;
+    ((DisplayActor44 *)D_80120650)[2].unk_02 = 1;
+    ((DisplayActor44 *)D_80120650)[2].unk_03 |= 0x80;
     D_80143DDC = 1;
     func_8004284C();
 }

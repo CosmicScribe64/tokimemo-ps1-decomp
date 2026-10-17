@@ -146,7 +146,6 @@ extern s32 D_8012075C;
 extern s32 D_80120764;
 extern s32 D_80120768;
 extern s32 D_80120774;
-extern s32 D_8012077C;
 extern s32 D_80120780;
 extern s32 D_80120784;
 extern s32 D_80120788;
@@ -1376,15 +1375,8 @@ void func_80105BC4(void);
 
 #ifndef OVL_EVENT_RECORDS_T9740
 #define OVL_EVENT_RECORDS_T9740
-/* View of the 0x44-byte D_800E9620 records 30/31 (T-9740).
+/* D_800E9620 records 30/31 are read as DisplayActor44 (game.h, T-9740, T-20900).
  * D_800EC190 uses the shared Rec24 game-record layout. */
-typedef struct EventFlagRecord44 {
-    /* 0x00 */ u8 pad0[3];
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 pad4[3];
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ u8 pad8[0x3C];
-} EventFlagRecord44; /* size 0x44 */
 s32 func_8010B8A4(void);
 #endif
 
@@ -1476,25 +1468,6 @@ typedef struct EventRideChoices36 {
 
 #ifndef OVL_EVENT_MOTION_T10730
 #define OVL_EVENT_MOTION_T10730
-/* Record view recovered from func_8011B848, D_800E9620.
- * Records 96..99 use signed high halves of the two fixed-point words.
- * Byte names remain provisional; existing raw-array declarations are views. */
-typedef struct EventMotion44 {
-    /* 0x00 */ u8 pad00[2];
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 pad04[3];
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad0A[0xC];
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad1A[0xA];
-    /* 0x24 */ GsWord unk_24;
-    /* 0x28 */ GsWord unk_28;
-    /* 0x2C */ s32 unk_2C;
-    /* 0x30 */ u8 pad30[0x14];
-} EventMotion44; /* size 0x44 */
 typedef struct EventMuseumChoices15 {
     /* 0x00 */ EventChoice3 choice[5];
 } EventMuseumChoices15; /* size 0x0F */
@@ -1561,36 +1534,6 @@ typedef struct EventMovieState {
 
 #ifndef OVL_EVENT_PARTICLE_T10870_H
 #define OVL_EVENT_PARTICLE_T10870_H
-/* func_8011B190 initializes records 96..105 at D_800E9620. The same
- * allocation's record 31 uses byte 0x43. Coordinate high halves are signed. */
-typedef struct EventParticleView44 {
-    /* 0x00 */ u8 pad00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 unk_04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 unk_06;
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ u8 pad08[4];
-    /* 0x0C */ s32 unk_0C;
-    /* 0x10 */ s32 unk_10;
-    /* 0x14 */ s16 unk_14;
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ s16 unk_1C;
-    /* 0x1E */ u8 pad1E[6];
-    /* 0x24 */ GsWord unk_24;
-    /* 0x28 */ GsWord unk_28;
-    /* 0x2C */ s32 unk_2C;
-    /* 0x30 */ s32 unk_30;
-    /* 0x34 */ s32 unk_34;
-    /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 pad3C[7];
-    /* 0x43 */ u8 unk_43;
-} EventParticleView44; /* size 0x44 */
-
 /* Partial state view at D_800B0860. The word table's observed accesses
  * extend through element 57; its full allocation size is not yet known. */
 typedef struct EventEffectTables {
@@ -1847,9 +1790,6 @@ extern FnTbl31 D_8012514C; /* unmatched user */
 #ifndef OVL_EVENT_RECORD_COPIES_T17400
 #define OVL_EVENT_RECORD_COPIES_T17400
 /* T-17400: shared views that were local to the .c files. */
-typedef struct {
-    s32 w[0x11];
-} Ev44; /* size 0x44: one D_800E9620 record copied whole (D_800EAFA0 is record 96) */
 typedef struct {
     s32 a;
     s32 b;

@@ -211,37 +211,6 @@ void func_80137B84(s32 arg0, s32 arg1, s32 arg2);
 void func_80137CA0();
 
 
-#ifndef OVL_NAME_ENT_T9510_RECORD44
-#define OVL_NAME_ENT_T9510_RECORD44
-/* T-9510: 0x44-byte records in D_8011ECD0, initialized starting at record 96.
- * Offsets and widths follow func_801454CC and its neighbouring initializers. */
-typedef struct NameRecord44 {
-    /* 0x00 */ u8 pad00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 pad04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 pad06;
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad0A[2];
-    /* 0x0C */ s32 unk_0C;
-    /* 0x10 */ s32 unk_10;
-    /* 0x14 */ u8 pad14[2];
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad1A[0xC];
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ u8 pad28[2];
-    /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ u8 pad2C[8];
-    /* 0x34 */ s32 unk_34;
-    /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 pad3C[8];
-} NameRecord44; /* size 0x44 */
-#endif
-
 
 #ifndef OVL_NAME_ENT_T9770_SELECTION_GLOBALS
 #define OVL_NAME_ENT_T9770_SELECTION_GLOBALS
@@ -283,43 +252,10 @@ void func_80145EA4(void);
 void func_801478E0(void);
 #endif
 
-#ifndef OVL_NAME_ENT_MOTION_TYPES_H
-#define OVL_NAME_ENT_MOTION_TYPES_H
-/* Shared T-10030 actor view, exported for T-10860 and later drafts. */
-typedef union NameMotionWord {
-    /* 0x00 */ s32 word;
-    struct {
-        /* 0x00 */ s16 low;
-        /* 0x02 */ s16 high;
-    } half;
-} NameMotionWord; /* size 0x04; signed fixed-point coordinate view */
-
-typedef struct NameMotionActor44 {
-    /* 0x00 */ u8 pad[3];
-    /* 0x03 */ u8 flags;
-    /* 0x04 */ u8 pad04[3];
-    /* 0x07 */ u8 phase;
-    /* 0x08 */ u8 pad08[0x1C];
-    /* 0x24 */ NameMotionWord x;
-    /* 0x28 */ NameMotionWord y;
-    /* 0x2C */ u8 pad2C[0x18];
-} NameMotionActor44; /* size 0x44; T-10030 */
-#endif
-
 #ifndef OVL_NAME_ENT_T10860_ACTOR_HELPER_H
 #define OVL_NAME_ENT_T10860_ACTOR_HELPER_H
 /* Side-effect-only actor setup; no returned value (801473AC assembly). */
 void func_801473AC(void);
-#endif
-
-#ifndef OVL_NAME_ENT_ASSET_ACTOR44_H
-#define OVL_NAME_ENT_ASSET_ACTOR44_H
-/* Record 96 image header: word 0 is passed to load_tpage_buf_lock (T-10860). */
-typedef struct NameAssetActor44 {
-    /* 0x00 */ u8 pad00[0x34];
-    /* 0x34 */ s32 *image;
-    /* 0x38 */ u8 pad38[0x0C];
-} NameAssetActor44; /* size 0x44 */
 #endif
 
 #ifndef OVL_NAME_ENT_T10860_FADE_HELPER_H
@@ -349,12 +285,6 @@ void func_80146CB8(void);
 /* T-10860: last getCDlevel sample and four signed samples, indexed by frame & 3. */
 extern s32 D_8014D1B0;
 extern s32 D_8014D1B4[4];
-/* Halfword +0x08 is read by func_80146624; the other actor views omit it. */
-typedef struct NameActorHead44 {
-    /* 0x00 */ u8 pad_00[8];
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad_0A[0x3A];
-} NameActorHead44; /* size 0x44 */
 #endif
 
 #ifndef OVL_NAME_ENT_T10860_DIALOGUE_TEXT
@@ -464,7 +394,7 @@ s32 func_801429BC(void);
 #ifndef OVL_NAME_ENT_T17900_TABLES
 #define OVL_NAME_ENT_T17900_TABLES
 /* T-17900: sixteen flag counters, cleared and counted four at a time (end address D_8014D070) and
- * copied into NameMetricWork.flags by func_80140F90 and func_80141820. */
+ * copied into Work800E7D10.flags (D_800E7D10) by func_80140F90 and func_80141820. */
 extern u8 D_8014D060[16];
 /* T-17900: second sixteen-byte flag table of func_80140F90 (walked four at a time up to D_8014D168). */
 extern u8 D_8014D158[16];

@@ -1,0 +1,68 @@
+{
+ "base_head": "f3933305",
+ "base_score": 480,
+ "base_variant_scores": {
+  "archived": 502,
+  "gs-local": 480,
+  "plain": null,
+  "typed": 480,
+  "typed-late": 502
+ },
+ "best_archived_path": "drafts/T-18200/EN_NICHI/func_80136DEC",
+ "best_archived_score": 502,
+ "census_path": "drafts/T-16100/batch-1/EN_NICHI/func_80136DEC",
+ "census_score": 592,
+ "context_hash": "701783fa4f18504f8e5aed25a450d3d3787d1504c353601ce15078213c45b7fd",
+ "created": "2026-10-17",
+ "draft_fixes": [],
+ "draft_hash": "fb7e85cd5e33de3b515bf9efc2378dbc43e4304468e6e3f8c0381e062968e52c",
+ "func": "func_80136DEC",
+ "guarded": false,
+ "provenance": {
+  "archived": {
+   "file": "body.c",
+   "path": "drafts/T-18200/EN_NICHI/func_80136DEC",
+   "score": 502,
+   "ticket": "T-18200"
+  },
+  "draft_fixes_tried": {
+   "": 480
+  },
+  "git": "c2dabc21",
+  "harness_hash": "0225e1c12eaacc2851b9274ba91bbd2e639e8a2acd4f8a83395ddf4422ff8614",
+  "headers": {
+   "include/game.h": "f1b1b294280189be3c4bd2ad59f87cdda702d49a3c7d5f1091ea846db44ef5e2",
+   "include/libgte.h": "914456b688f1c510ee2406ff0f493d9adec3dc07394a39b04152883d8cba958d",
+   "include/main_api.h": "870cb1eff8f93867f5190c5ac9362f40d07408f995cb38035b4deb2b1f943411",
+   "include/ovl/EN_NICHI.h": "8ee5a8e7bfa2f05a8851d909818d445543e591b3cd79dde0df3d58e32f64d120",
+   "include/psx_types.h": "c69b27b63733802c88d8f4bf403813fd072dd6da6aa0a59e741e85a82662d660"
+  },
+  "ticket": "T-20920",
+  "tool": "tools/redraft.py (T-20800)"
+ },
+ "rewrites": [
+  "array-views",
+  "display-records",
+  "pointer-step",
+  "record-temp",
+  "record-walk",
+  "stack-table"
+ ],
+ "scope": "EN_NICHI:func_80136DEC",
+ "score": 480,
+ "size": 1392,
+ "src": "src/ovl/EN_NICHI/80136B10.c",
+ "status": "scored",
+ "ticket": "T-20920",
+ "unit": "EN_NICHI",
+ "variant": "typed",
+ "variant_scores": {
+  "archived": 502,
+  "gs-local": 480,
+  "plain": null,
+  "typed": 480,
+  "typed-late": 502
+ },
+ "vs_archived": "better",
+ "vs_census": "better"
+}

@@ -15,7 +15,99 @@ void func_8014B738(s32 arg0, s32 arg1, s32 arg2) {
     D_8015EE44.unk_04 = 1;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014ADD0", func_8014B79C);
+/* D_8015EE48 and D_8015EE4C are the scalar views of D_8015EE44.unk_04 and .unk_08: uopt only
+ * promotes them into registers as scalars (as in the other RPG_BAT files); T-17110. */
+void func_8014B79C(void) {
+    s32 pad; /* FAKE: unused local, reserves the top spill word so idx sits at 0x30(sp); T-17110 */
+    s32 idx;
+
+    if (D_8015EE48 != 0) {
+        switch (D_8015EE44.unk_00) {
+        case 0:
+            func_8013E7C0(0x24, 0x32, 5, 1);
+            func_8014EB58(0);
+            break;
+        case 1:
+            if (func_8013E90C(0x24) != 0) {
+                func_8014EB58(0);
+            }
+            break;
+        case 2:
+            func_8013E7C0(0x24, 3, 1, 1);
+            func_8014EB58(0);
+            break;
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+            idx = D_8015EE44.unk_00 - 3;
+            if (idx >= D_8015E748) {
+                D_8015EE44.unk_00 = 0xFFFE;
+            } else {
+                D_8015EE4C += 1;
+                if (D_8015EE4C == 1) {
+                    k_disp_start(set_kanji_string(-0x7E, -0x66, 0, D_8015E740[idx], 0));
+                }
+                if (D_8015EE48 == 4 && func_800460EC() == 2) {
+                    D_8015EE4C = D_8015E744 + 1;
+                    D_8015EE48 = 1;
+                }
+                if (D_8015E744 < D_8015EE4C) {
+                    switch (D_8015EE48) {
+                    case 1:
+                        k_sub_reset();
+                        func_8014EB58(0);
+                        break;
+                    case 3:
+                        /* empty on purpose: gives the compare tree of the original; T-17110 */
+                        break;
+                    case 4:
+                        D_8015EE48 = 1;
+                        break;
+                    case 0x80:
+                    case 0x81:
+                    case 0x82:
+                    case 0x83:
+                    case 0x84:
+                    case 0x85:
+                    case 0x86:
+                    case 0x87:
+                    case 0x88:
+                    case 0x89:
+                    case 0x8A:
+                        if (idx != (D_8015EE48 & 0x7F)) {
+                            k_sub_reset();
+                            func_8014EB58(0);
+                        }
+                        break;
+                    }
+                }
+            }
+            break;
+        case 0xFFFE:
+            func_8013E7C0(0x24, 0x32, 0x21, 1);
+            ((DisplayActor44 *) D_8011ECD0)[132].unk_18 = 6;
+            func_8014EB58(0);
+            break;
+        case 0xFFFF:
+        default:
+            if (func_8013E90C(0x24) != 0) {
+                func_8013E7C0(0x24, 0xFF, 0, 0);
+                D_8015EE4C = 0;
+                D_8015EE44.unk_00 = 0;
+                D_8015EE48 = 0;
+            }
+            break;
+        }
+    }
+}
 
 void func_8014BAA4(s32 arg0) {
     switch (arg0) {
@@ -59,7 +151,57 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014ADD0", func_8014BB80);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014ADD0", func_8014BFE4);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014ADD0", func_8014C360);
+void func_8014C360(s32 arg0, s32 arg1, s32 arg2) {
+    s32 t;
+    s32 u;
+    s32 i;
+    DisplayActor44 *rec;
+
+    arg1 -= 0x9E;
+    arg2 -= 0x78;
+    switch (arg0) {
+    case 0:
+        D_8015EE5C = 0;
+        D_8015EE60 = 1;
+        D_8015EE64 = 0;
+        break;
+    case 1:
+        D_8015EE68 = 0;
+        D_8015EE6C = 1;
+        D_8015EE70 = 0;
+        break;
+    case 2:
+        D_8015EE74 = 0;
+        D_8015EE78 = 1;
+        D_8015EE7C = 0;
+        break;
+    case 3:
+        D_8015EE80 = 0;
+        D_8015EE84 = 1;
+        D_8015EE88 = 0;
+        break;
+    }
+    rec = (DisplayActor44 *) D_8011ECD0;
+    t = arg0 * 12;
+    u = t + 0x40; /* named local: t and u get the two spill slots of the original; T-17110 */
+    rec[64 + t].unk_26 = arg1;
+    rec[64 + t].unk_2A = arg2;
+    rec[68 + t].unk_26 = arg1;
+    rec[68 + t].unk_2A = arg2;
+    rec[72 + t].unk_26 = arg1;
+    rec[72 + t].unk_2A = arg2;
+    func_8013E864(u, 0x34, 0);
+    func_8013E864(u + 4, 0x35, 0);
+    func_8013E864(u + 8, 0x35, 0);
+    for (i = 1; i < 4; i++) {
+        rec[64 + t + i].unk_26 = 0xA0;
+        rec[64 + t + i].unk_2A = 0x78;
+        rec[68 + t + i].unk_26 = 0xA0;
+        rec[68 + t + i].unk_2A = 0x78;
+        rec[72 + t + i].unk_26 = 0xA0;
+        rec[72 + t + i].unk_2A = 0x78;
+    }
+}
 
 void func_8014C4FC(void) {
     s32 half;
@@ -289,4 +431,55 @@ void func_8014CE14(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014ADD0", func_8014D11C);
+void func_8014D11C(u8 *dst, u8 *name, u8 *label, s32 num, u8 *suffix) {
+    u32 quot;
+    s32 place;
+    s32 base;
+
+    func_800AE0F0(dst, name);
+    func_800AE100(dst, label);
+    if (num == 0) {
+        func_800AE100(dst, "０");
+    }
+    /* radix in one variable: with literal 10 the unsigned % and the signed / keep two copies in
+     * two $s registers; T-17110 */
+    base = 10;
+    for (place = 0x3E8; place > 0; place = place / base) {
+        quot = num / place;
+        if (quot != 0) {
+            switch (quot % base) {
+            case 0:
+                func_800AE100(dst, "０");
+                break;
+            case 1:
+                func_800AE100(dst, "１");
+                break;
+            case 2:
+                func_800AE100(dst, "２");
+                break;
+            case 3:
+                func_800AE100(dst, "３");
+                break;
+            case 4:
+                func_800AE100(dst, "４");
+                break;
+            case 5:
+                func_800AE100(dst, "５");
+                break;
+            case 6:
+                func_800AE100(dst, "６");
+                break;
+            case 7:
+                func_800AE100(dst, "７");
+                break;
+            case 8:
+                func_800AE100(dst, "８");
+                break;
+            case 9:
+                func_800AE100(dst, "９");
+                break;
+            }
+        }
+    }
+    func_800AE100(dst, suffix);
+}

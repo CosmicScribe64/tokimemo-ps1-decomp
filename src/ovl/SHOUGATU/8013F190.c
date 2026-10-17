@@ -159,7 +159,7 @@ void func_8013FFD0(void) {
     s16 i;
 
     for (i = 0; i < 6; i++) {
-        D_8011ECD0[i * 0x44 + 0x1983] = 0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_03 = 0;
     }
     D_80146160 = 0;
     D_80146164 = 0;

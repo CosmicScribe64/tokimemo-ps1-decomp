@@ -282,12 +282,14 @@ void func_80108D00(void) {
     }
     D_80123988 = 0;
     for (i = 0; i < 0xA; i++) {
-        D_800E9620[i * 0x44 + 0x1A4F] |= 0x80;
+        ((DisplayActor44 *)D_800E9620)[i + 99].unk_03 |= 0x80;
     }
     D_8012398C = 1;
     func_80011DFC();
 }
 
+/* FAKE: byte-offset view of the D_800E9620 display records (DisplayActor44, records 99..108); with the
+ * record fields the loop allocates one more register. T-20900 */
 void func_80108DD4(void) {
     s16 i;
     s32 any;

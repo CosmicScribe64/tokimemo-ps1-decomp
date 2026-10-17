@@ -27,7 +27,7 @@ extern s16 D_80147220;
 extern u8 D_80147240;
 extern s16 D_8014723C;
 extern u8 D_80145F60;
-void func_801343A4(void);
+s32 func_801343A4(void);
 extern u8 D_80145EC8;
 extern u8 D_80148110;
 void func_8013E148(void);
@@ -86,7 +86,7 @@ extern s32 D_80147134;
 extern s32 D_80147168;
 extern u8 D_80147650;
 extern s32 D_8012E6B0;
-extern s8 D_801317EB;
+extern u8 D_801317EB; /* T-20006: original readers use lbu. */
 void func_801372B0();
 void func_80137524();
 void func_8013829C();
@@ -496,22 +496,7 @@ void func_80144018();
 
 /* Three consecutive records at D_8012B8C0 (T-4070): accessing the flag bytes through one base symbol
  * keeps IDO from hoisting loads above earlier stores, as in the original. */
-typedef struct GyoziRec44 {
-    /* 0x00 */ u8 pad00[2];
-    /* 0x02 */ s8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ s8 unk_04;
-    /* 0x05 */ u8 pad05[2];
-    /* 0x07 */ s8 unk_07;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad0A[2];
-    /* 0x0C */ s32 unk_0C; /* gives the record word alignment */
-    /* 0x10 */ u8 pad10[6];
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad1A[0x2A];
-} GyoziRec44; /* size 0x44 */
-extern GyoziRec44 D_8012B8C0[3];
+extern DisplayActor44 D_8012B8C0[3];
 
 extern s32 D_80148BC0;
 extern s32 D_80148BC4;
@@ -580,7 +565,7 @@ void func_8013C560();
 void func_8013C5E8();
 void func_8013C670();
 void func_8013C6EC();
-void func_8013C774();
+s32 func_8013C774(void);
 
 void func_801388E0(void);
 void func_80138BF0(void);
@@ -938,33 +923,6 @@ extern GyoziTextCC3 D_80146428;
 /* T-10850: signed halfword sprite fields loaded by func_80136488. */
 extern s16 D_80146168;
 extern s16 D_8014616C;
-/* T-10850: 0x44-byte sprite records initialized by func_80136488. */
-typedef struct GyoziInitSprite44 {
-    /* 0x00 */ u8 pad_00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 unk_04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 unk_06;
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad_0A[2];
-    /* 0x0C */ s32 *unk_0C;
-    /* 0x10 */ s32 *unk_10;
-    /* 0x14 */ s16 unk_14;
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad_1A[0xC];
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ u8 pad_28[2];
-    /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ u8 pad_2C[8];
-    /* 0x34 */ s32 *unk_34;
-    /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 pad_3C[7];
-    /* 0x43 */ u8 unk_43;
-} GyoziInitSprite44; /* size 0x44 */
 void func_80134EDC(void);
 void func_80134520(void);
 void func_80135CA0(void);
@@ -998,6 +956,13 @@ extern GzCallbacks90 D_801476F4; /* func_8013B0C4 */
 extern GzCallbacks90 D_80147C6C; /* func_8013C774 */
 extern GzCallbacks68 D_80148880; /* func_80141944 */
 extern GzCallbacksBC D_8014901C; /* func_80145384 */
+/* T-20006: scene callback callees and the word flag read by func_80145384. */
+s32 func_80141944(void);
+s32 func_80145384(void);
+s32 func_801428EC(void);
+void func_80142C14(void);
+void func_80145520(void);
+extern s32 D_8012E694;
 /* T-17600: 0x24-byte records indexed with stride 0x24 (func_80144018, func_80144B70): the field widths of
  * main's Rec24 table D_801217D0, 0xB270 above it as the display records D_80129F40 are above D_8011ECD0. */
 extern Rec24 D_8012CA40[];

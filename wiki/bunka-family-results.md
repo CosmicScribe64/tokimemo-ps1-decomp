@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # BUNKAKEN and BUNKASAI family reconstruction
@@ -48,6 +48,8 @@ Forty-one functions add **40,252 literal linked bytes**: BUNKAKEN 35 / 33,716 an
 Final validation: 5,848/6,958 game functions, 1,385,776/2,279,368 game bytes (60.8%); BUNKAKEN 82.9%, BUNKASAI 88.9% byte coverage. Both final overlay SHA1 hashes were independently recalculated and match references. Headers/globals pass, prototypes have 0 new / 15 known disagreements. Both review axes pass all source changes. This bounded family pass is complete; the game-wide 80% target is not yet reached. All failures remain local in the documented ignored experiment directories.
 
 ## Types-first pass (T-18500)
+
+T-20900 update: `BunkakenModeFlags` is `Flags7D4F` (main_api.h; `mode` is `unk_2_4`) and `BunkaDispatch8` moved to game.h ([[data-types]], "Shared-type unification").
 
 [[tickets/T-18500-types-first-bunkaken]], branch `w3-bunkaken-types` from `w2-good`. Method of
 [[speedup-research-2026-10-16]]; driver and drafts in `drafts/T-18500/` (README there).
