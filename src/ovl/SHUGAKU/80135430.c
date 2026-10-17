@@ -91,7 +91,10 @@ void func_80135630(void) {
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-22014, 10 rows; ugen takes t8 for the end pointer of the block copy where the original takes t7 (one
- * temporary fewer skipped; the known copy-state gap), every later t register follows. */
+ * temporary fewer skipped; the known copy-state gap), every later t register follows. The last global byte store puts
+ * ugen in the two-skip state; a label, goto, empty block, moved 0xFFFFFF constant, store loop, bit-field, common or
+ * static symbol keeps it, and only a store through a register base (volatile, absolute address) gives the original's
+ * one skip, with other code. Viewsweep and autotweak (365 tries) found nothing. */
 void func_801357AC(void) {
     s16 i;
 
@@ -250,7 +253,8 @@ void func_80135DB8(void) {
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-22014, 10 rows; ugen takes t3 for the end pointer of the block copy where the original takes t2 (one
- * more temporary skipped; the known copy-state gap, same as func_801357AC), every later t register follows. */
+ * more temporary skipped; the known copy-state gap, same as func_801357AC, whose note lists the forms tried), every
+ * later t register follows. Viewsweep and autotweak (673 tries) found nothing. */
 void func_80135EA4(void) {
     s16 i;
 
