@@ -25,7 +25,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
@@ -141,6 +140,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 - [ ] [[tickets/T-17021-w3-main-p21|T-17021 Wave 3 package w3-main-p21]]
 - [ ] [[tickets/T-17019-w3-main-p19|T-17019 Wave 3 package w3-main-p19]]
 - [ ] [[tickets/T-17022-w3-main-p22|T-17022 Wave 3 package w3-main-p22]]

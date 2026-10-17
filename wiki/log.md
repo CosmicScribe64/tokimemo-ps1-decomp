@@ -17242,3 +17242,7 @@ New `tools/keepproof.py` (`check`, `census`, `rows`) and the `proof=<func>:<rows
 
 ## [2026-10-17] ticket | T-17020 Done
 [[tickets/T-17020-w3-main-p20]] reviewed against `CODING_STANDARDS.md`: 1 finding fixed (the [[index]] line still described the pre-closer state, 1 of 4 matched), no source findings. In Review to Done (kanban card moved). Matched 2 of 4 (`load_string`, 252 B, plain C; `func_8004E58C`, 452 B, one marked FAKE pointer view); `glyph_expand_1bpp` and `disp_string` stay `INCLUDE_ASM`. Unit sha1, headers, globals and `sync_protos --check-branch` OK after the edit; the clean 27/27 build runs in the merge.
+
+## [2026-10-17] ticket | T-16990 Done
+
+Wave 3 conveyor paused at the user's request after 19 types passes and 77 packages: 239 matches / about 167 KB, 75.8%. 81 packages return to the next inventory. Type round (T-20900..T-20940) and tooling round (T-20800..) running; the conveyor restarts after them. [[tickets/T-16990-wave-3-conveyor]].

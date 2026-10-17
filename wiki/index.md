@@ -124,7 +124,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-19004-w3-d-p04|T-19004]] Wave 3 package w3-d-p04: TAIIKU `80133C80.c`, 2 of 5 functions matched (`func_80137228` 260 B, `func_80135830` 672 B with a FAKE dead `i = 0;`), 2 guarded, 1 left as `INCLUDE_ASM` (Done).
 - [[tickets/T-17600-types-first-gyozi|T-17600]] Types-first: GYOZI: callback tables, dumpling arrays, `Rec24 D_8012CA40`, `GyoziWork.unk_10B8` in `GYOZI.h`, 37 redrafts (7 better than the census), 3 matches / 908 bytes, packages T-17601..T-17608 (Done).
 - [[tickets/T-17300-types-first-etc|T-17300]] Types-first: ETC: `EtcExamRank`, per-girl tables, `SVECTOR`, `EtcWork40` view typed in `ETC.h`, 40 redrafts (11 better than the census), 3 sibling-port matches / 1,572 bytes, packages T-17301..T-17308 (Done).
-- [[tickets/T-16990-wave-3-conveyor|T-16990]] Wave 3 conveyor: types-first passes on 19 units feeding a 7-worker matcher pool (In Progress).
+- [[tickets/T-16990-wave-3-conveyor|T-16990]] Wave 3 conveyor: 239 matches / 167 KB, paused for a type and tooling round (Done).
 - [[tickets/T-19003-w3-d-p03|T-19003]] Wave 3 package w3-d-p03: TACO `80149F90.c`, 5 drafts from the T-14500 and T-16560 runs, 1 matched (`func_8014E5F8`, 1,108 B), 3 guarded (10-12 lines), `func_8014F820` back to `INCLUDE_ASM` (Done).
 - [[tickets/T-16564-taco-types-first-p4|T-16564]] Types-first pilot package pt-taco-p4: TACO `80154960.c`, `80137A60.c`, `80138890.c`, 6 of 8 functions matched (5,852 B), 2 guarded register near misses (Done).
 - [[tickets/T-16554-pt-taiiku-p4|T-16554]] Types-first pilot package pt-taiiku-p4: TAIIKU `80132000.c`, `80140810.c`, `80142240.c`, 4 of 7 functions matched (3,208 B), 2 guarded, 1 left (Done).
