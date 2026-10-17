@@ -779,18 +779,7 @@ typedef struct {
     s16 pad;
 } TaiikuSVec; /* SVECTOR layout */
 
-typedef struct {
-    s32 vx;
-    s32 vy;
-    s32 vz;
-    s32 pad;
-} TaiikuVec; /* VECTOR layout */
 
-typedef struct {
-    s16 m[3][3];
-    s16 pad;
-    s32 t[3];
-} TaiikuMat; /* MATRIX layout, size 0x20 */
 
 /* Track grid tables filled by func_80139AB0 (80 entries each). */
 extern s16 D_801499E4[];

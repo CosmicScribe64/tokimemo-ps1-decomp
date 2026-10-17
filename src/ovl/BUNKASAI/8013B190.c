@@ -2,9 +2,9 @@
 #include "ovl/BUNKASAI.h"
 
 void func_8013B190(void) {
-    BunkModePair *state;
+    BunkaDispatch8 *state;
 
-    state = (BunkModePair *)&D_80122EB8;
+    state = (BunkaDispatch8 *)&D_80122EB8;
     state->unk_04 = 2;
     D_800E6280.unk_1BC[2].unk_0C.f.b2 = 1;
     switch (state->unk_00) {
@@ -287,8 +287,8 @@ void func_8013BB94(void) {
         }
         break;
     case 11:
-        ((BunkaReturnFlags *)&D_800E7D4F)->b1 = 1;
-        ((BunkaReturnFlags *)&D_800E7D4F)->unk_2_4 = 0;
+        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
+        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 0;
         D_800E6280.unk_720 = D_800E6280.unk_1108;
         D_800E6280.unk_721 = D_800E6280.unk_1109;
         D_800E6280.unk_722 = D_800E6280.unk_110A + 1;
@@ -381,7 +381,7 @@ void func_8013BB94(void) {
         normal_date_speak();
         break;
     case 24:
-        ((BunkaReturnFlags *)&D_800E7D4F)->b0 = 1;
+        ((Flags7D4F *)&D_800E7D4F)->b0 = 1;
         func_80142BC8();
         break;
     default:

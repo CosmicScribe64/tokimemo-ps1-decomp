@@ -871,8 +871,8 @@ void func_80137788(void) {
         }
         break;
     case 15:
-        ((BunkaReturnFlags *)&D_800E7D4F)->b1 = 1;
-        ((BunkaReturnFlags *)&D_800E7D4F)->unk_2_4 = 0;
+        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
+        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 0;
         D_800E6280.unk_720 = D_800E6280.unk_1108;
         D_800E6280.unk_721 = D_800E6280.unk_1109;
         D_800E6280.unk_722 = D_800E6280.unk_110A + 1;
@@ -1004,7 +1004,7 @@ void func_80137788(void) {
         normal_date_speak();
         break;
     case 33:
-        ((BunkaReturnFlags *)&D_800E7D4F)->b0 = 1;
+        ((Flags7D4F *)&D_800E7D4F)->b0 = 1;
         func_80142BC8();
         break;
     default:

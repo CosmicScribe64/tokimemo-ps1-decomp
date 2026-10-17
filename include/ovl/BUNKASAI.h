@@ -120,12 +120,6 @@ extern s32 D_801606D0;
 extern s32 D_801606D4;
 extern s32 D_801606D8;
 
-/* T-9510: adjacent words D_80122EB8/+4, read and written together in
- * func_80146030. This view preserves the observed load-before-store order. */
-typedef struct BunkSelectWords {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
-} BunkSelectWords; /* size 0x08 */
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 void func_80136230(void);
@@ -140,11 +134,6 @@ void func_8013C3C4(void);
 
 #ifndef OVL_BUNKASAI_MODE_T9740
 #define OVL_BUNKASAI_MODE_T9740
-/* Two-word state at D_80122EB8, used by func_8013B190 (T-9740). */
-typedef struct BunkModePair {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
-} BunkModePair; /* size 0x08 */
 void func_8013B190(void);
 #endif
 
@@ -159,13 +148,6 @@ extern BunkasaiTable40 D_80160B50;
 
 #ifndef OVL_BUNKASAI_T9960
 #define OVL_BUNKASAI_T9960
-/* Byte at D_800E7D4F: continuation flags and three-bit mode (T-9960). */
-typedef struct BunkasaiModeFlags {
-    /* 0x00 */ u8 b0 : 1;
-    /* 0x00 */ u8 b1 : 1;
-    /* 0x00 */ u8 mode : 3;
-    /* 0x00 */ u8 pad : 3;
-} BunkasaiModeFlags; /* size 0x01 */
 
 void func_8013B120(void);
 void func_801508C4(void);
@@ -223,28 +205,10 @@ void func_8013FCBC(void);
 void func_8013FC58(void);
 void func_8013FD20(void);
 
-#ifndef OVL_BUNKASAI_T10630_FLAGS_H
-#define OVL_BUNKASAI_T10630_FLAGS_H
-/* T-10630: byte D_800E7D4F, preserving bits 0 and 5..7. */
-typedef struct BunkaReturnFlags {
-    u8 b0 : 1;
-    u8 b1 : 1;
-    u8 unk_2_4 : 3;
-    u8 unk_5_7 : 3;
-} BunkaReturnFlags; /* size 0x01 */
-#endif
 
 /* T-10630: scene helper has no return value; callers use its side effects. */
 void func_801431D4(void);
 
-#ifndef BUNKA_DISPATCH8_T10630_H
-#define BUNKA_DISPATCH8_T10630_H
-/* T-10630: adjacent route/character words at D_80122EB8, used by both overlays. */
-typedef struct BunkaDispatch8 {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
-} BunkaDispatch8; /* size 0x08 */
-#endif
 
 #ifndef OVL_BUNKASAI_T10830_H
 #define OVL_BUNKASAI_T10830_H

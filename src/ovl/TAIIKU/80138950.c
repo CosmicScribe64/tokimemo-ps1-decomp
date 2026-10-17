@@ -1900,17 +1900,17 @@ s8 func_8013FE44(void) {
 }
 
 void func_8013FEF0(void) {
-    TaiikuMat m1;
-    TaiikuMat m2;
+    MATRIX m1;
+    MATRIX m2;
     TaiikuSVec rot;
-    TaiikuVec scale;
+    VECTOR scale;
 
-    m1 = *(TaiikuMat *)D_80125C60;
+    m1 = *(MATRIX *)D_80125C60;
     rot.vx = 0;
     rot.vz = 0;
     rot.vy = D_8014995A;
     func_800A09D0(&rot, &m1);
-    m2 = *(TaiikuMat *)D_80125C60;
+    m2 = *(MATRIX *)D_80125C60;
     rot.vy = 0;
     rot.vz = 0;
     rot.vx = D_80149958;
@@ -1924,7 +1924,7 @@ void func_8013FEF0(void) {
     m1.t[0] = D_80149968.unk_1C[0];
     m1.t[1] = D_80149968.unk_1C[1];
     m1.t[2] = 0x1B58;
-    *(TaiikuMat *)D_801227A4 = m1;
+    *(MATRIX *)D_801227A4 = m1;
     D_801227A0->unk0 = 0;
     D_80149954 -= 0x80;
     if ((D_80149968.unk_1C[1] >> 3) >= -0x3F) {

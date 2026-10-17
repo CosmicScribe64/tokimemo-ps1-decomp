@@ -2,7 +2,7 @@
 #include "ovl/BUNKASAI.h"
 
 void func_801354B0(void) {
-    BunkSelectWords *work = (BunkSelectWords *)&D_80122EB8;
+    BunkaDispatch8 *work = (BunkaDispatch8 *)&D_80122EB8;
     s32 selector = work->unk_00;
     work->unk_04 = 1;
     D_800E6280.unk_1BC[1].unk_0C.f.b2 = 1;

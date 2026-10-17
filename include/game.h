@@ -159,6 +159,17 @@ typedef struct DisplayColorPair4 {
 } DisplayColorPair4; /* size 0x04 */
 #endif
 
+#ifndef BUNKA_DISPATCH8_T10630_H
+#define BUNKA_DISPATCH8_T10630_H
+/* The two adjacent words at D_80122EB8 (route and character selection of the culture-festival overlays),
+ * read and written together, so one object: BUNKASAI's and BUNKAKEN's BunkaDispatch8 (T-10630) and
+ * BUNKASAI's BunkaDispatch8 (T-9510) and BunkaDispatch8 (T-9740), folded into one type by T-20900. */
+typedef struct BunkaDispatch8 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+} BunkaDispatch8; /* size 0x08 */
+#endif
+
 #ifndef GAME_SPRITE_SLOT24_T9740
 #define GAME_SPRITE_SLOT24_T9740
 /* T-9740: 0x24-byte records at D_801220D0, cleared by func_8004164C. */

@@ -49,28 +49,17 @@ void func_80143334(void) {
     func_80042940(0xFF);
 }
 
-typedef struct {
-    s32 vx;
-    s32 vy;
-    s32 vz;
-    s32 pad;
-} EtcVec2; /* VECTOR layout */
 
-typedef struct {
-    s16 m[3][3];
-    s16 pad;
-    s32 t[3];
-} EtcMat2; /* MATRIX layout, size 0x20 */
 
 void func_801433E4(void) {
     s32 pad1[2]; /* FAKE: two unused 8-byte locals (above m1 and below scale) give the original frame 0x88, as in func_8013FA7C; real source unknown. T-9110 */
-    EtcMat2 m1;
-    EtcMat2 m2;
-    EtcVec2 scale;
+    MATRIX m1;
+    MATRIX m2;
+    VECTOR scale;
     s32 pad2[2];
 
-    m1 = *(EtcMat2 *)D_80125C60;
-    m2 = *(EtcMat2 *)D_80125C60;
+    m1 = *(MATRIX *)D_80125C60;
+    m2 = *(MATRIX *)D_80125C60;
     func_800A09D0(&D_8015013C, &m1);
     scale.vx = 0x1000;
     scale.vy = 0x1000;
@@ -80,7 +69,7 @@ void func_801433E4(void) {
     m1.t[0] = D_80150130;
     m1.t[1] = D_80150134;
     m1.t[2] = D_80150138;
-    *(EtcMat2 *)D_801227A4 = m1;
+    *(MATRIX *)D_801227A4 = m1;
     D_801227A0->unk0 = 0;
 }
 
