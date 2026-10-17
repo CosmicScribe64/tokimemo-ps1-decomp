@@ -1,7 +1,7 @@
 ---
 id: T-20005
 title: Match GYOZI display and dispatch helpers
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-16
 updated: 2026-10-16
@@ -42,3 +42,5 @@ Final verification on branch base 2c272843, all Docker: default-proof.log report
 Local self-review against CODING_STANDARDS.md: plain C89 and fixed-width locals; existing SDK/DisplayActor44/GyoziWork/GzCallbacks90 types; original symbols and source order; one shared declaration for the dispatcher and no local override; no new FAKE, dummy local, volatile, assembly, compiler flags/pass or literal bypass. Only intended C/header/wiki files are staged. Meaningful selector/table-index locals account for their observed uses. Maintainer review remains pending; keep In Review.
 
 Maintainer confirmed both functions are assigned to T-20005 and removed from automated runs in issue #41. Other functions in the same files may still be worked on upstream; the maintainer will resolve those merge conflicts. Latest pre-submission fetch still leaves both functions INCLUDE_ASM on main; no duplicate work is submitted.
+
+2026-10-17, maintainer review (PR #42): no findings. Verified in the integration tree: clean 27/27, headers, globals, prototypes OK, funcdiff MATCH for func_8013C774 (364) and func_8014206C (160). Status Done.

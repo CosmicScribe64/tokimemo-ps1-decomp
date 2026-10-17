@@ -16817,3 +16817,7 @@ Card moved to In Review in [[kanban]]. Code review against `CODING_STANDARDS.md`
 ## [2026-10-17] ticket | T-20610 Done
 
 [[tickets/T-20610-promo-entry-rule]] In Review to Done after the code review against `CODING_STANDARDS.md`: wiki-only diff (no C, header or `tools/` change), no findings, 0 functions matched in `src/` (negative result for the `cvt_pass` entry rule; the plain-C recipe for main `func_800726F0` is handed to the wave 3 conveyor). Card moved to Done in [[kanban]], index line updated.
+
+## [2026-10-17] ticket | T-20005 Done (PR #42 merged)
+
+KakarottoCake's PR #42 (claim #41): GYOZI func_8013C774 and func_8014206C matched, 524 bytes, merged in one clean build with PR checks. [[tickets/T-20005-gyozi-display-dispatch]] Done.
