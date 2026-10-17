@@ -200,7 +200,21 @@ void func_8007A4DC(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A50C);
+void func_8007A50C(void) {
+    if (D_80125D10.unk_00 & 0x4400) {
+        D_80125D44 += D_80125D48;
+        /* FAKE: the flag test reads D_80125D44 through an s16 view (a plain u16 test changes the uopt range order: sum in $v1, temporaries one register off); real source unknown. T-17012 */
+        if (((*(s16 *)&D_80125D44) & 0xFF00) != 0) {
+            D_80125D44 &= 0xFF;
+            D_80125D2C -= D_80125D46;
+            if (D_80125D2C <= 0) {
+                func_8007A5BC();
+                return;
+            }
+            func_8008BFB0(0, D_80125D2C, D_80125D2C);
+        }
+    }
+}
 
 void func_8007A5BC(void) {
     func_8007A98C(0x74);
