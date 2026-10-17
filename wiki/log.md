@@ -17650,3 +17650,18 @@ Two of four TACO functions matched: `func_801484E4` (392 bytes; kept `D_800E7384
 ## [2026-10-17] ticket | T-23000 Wave 5 biggest-first conveyor opened
 
 Second conveyor next to [[tickets/T-22000-wave-4-conveyor]], biggest functions first: 27 packages, 89 functions / 134,984 bytes (seeds of 1,500 bytes or more, functions wave 4 just attempted left out). The 26 unstarted wave 4 packages from w4-p65 on that share its files are absorbed and refused to wave 4. Two workers, Sonnet matcher, Opus closer for near misses of 30 rows or fewer. [[tickets/T-23000-wave-5-big-conveyor]].
+
+## [2026-10-17] ticket | T-22011 In Progress
+
+Started wave 4 package w4-p11 of [[tickets/T-22000-wave-4-conveyor]]: EVENT `func_800FD00C`, `func_8010F340`, `func_800FC040`, `func_8010F74C`, `func_8010F55C` in `src/ovl/EVENT/800FBBF0.c` and `8010BB90.c`. Ticket [[tickets/T-22011-w4-p11]], board in [[kanban]].
+
+## [2026-10-17] ticket | T-22011 In Review
+
+EVENT `func_8010F340` (376 bytes) matched; `func_800FD00C` (3 rows), `func_800FC040` (24 rows) and `func_8010F74C` (29 rows) stay guarded; `func_8010F55C` restored to `INCLUDE_ASM`. Clean build 27/27, check_headers, migrate_globals --check and sync_protos --check-branch pass. Details in [[matching-notes]], ticket [[tickets/T-22011-w4-p11]], board in [[kanban]]. Sources: `src/ovl/EVENT/8010BB90.c`, `src/ovl/EVENT/800FBBF0.c`, `include/main_api.h`, `drafts/T-22011/EVENT/func_8010F55C/body.c`.
+
+## [2026-10-17] build | T-22011 closer: func_800FD00C matched
+Opus closer for [[tickets/T-22011-w4-p11]]: EVENT `func_800FD00C` matches (340 bytes). It reads the scalar globals through the `DisplayActor44` table at `D_800EAFA0` and the `Rec24` table at `D_800EC190`, and assigns them in one chain with `unk_07` innermost. The `pad1` FAKE is gone. Notes in [[matching-notes]], section T-22011. Clean rebuild 27/27; check_headers, migrate_globals and sync_protos OK.
+
+## [2026-10-17] ticket | T-22011 Done
+
+Review against `CODING_STANDARDS.md` passed after two small fixes in `src/ovl/EVENT/8010BB90.c` (`DisplayActor44` `unk_38` fields instead of raw `D_800E9620` offsets; FAKE note on the `D_800EECB4` view). 2 of 5 matched: EVENT `func_8010F340` (376 bytes) and `func_800FD00C` (340 bytes). Ticket [[tickets/T-22011-w4-p11]], board in [[kanban]], notes in [[matching-notes]].

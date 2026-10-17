@@ -612,6 +612,7 @@ extern s16 D_800B096E;
 extern Rec34 D_800B0A04[]; /* 12 records */
 extern u8 D_800B0A14;
 extern u8 D_800B0AFF;
+extern u8 D_800B086A;
 extern s16 D_800B0B0E[];
 extern u8 D_800B0B64[];
 extern u8 D_800B0B6C[];
@@ -630,7 +631,9 @@ extern u8 D_800B0F30;
 extern u8 D_800B0F35[];
 extern u8 D_800B1746;
 extern s32 D_800B1764;
+extern s8 D_800B1888;
 extern u8 D_800B188D[];
+extern s32 D_800B18D0;
 extern u32 D_800B1AE4;
 extern s32 D_800B1AF0;
 extern u8 D_800B1AF5;
@@ -1977,6 +1980,7 @@ extern u8 D_800EC1A6;
 extern u8 D_800EC1C9;
 extern u8 D_800EC1CA;
 extern s32 D_80080710;
+extern s8 D_80080714;
 extern s16 D_800F1990[14];
 #ifndef MAIN_API_OVERRIDE_D_80120694
 extern u8 D_80120694[];
