@@ -54,7 +54,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
-- [ ] [[tickets/T-17015-w3-main-p15|T-17015 Wave 3 package w3-main-p15]]
 
 
 
@@ -142,6 +141,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-17015-w3-main-p15|T-17015 Wave 3 package w3-main-p15]]
 - [ ] [[tickets/T-20005-gyozi-display-dispatch|T-20005 Two GYOZI display/dispatch helpers matched (524 bytes)]]
 - [ ] [[tickets/T-20004-gyozi-dialogue-followup|T-20004 Two GYOZI dialogue helpers matched (776 bytes)]]
 

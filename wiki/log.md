@@ -16868,3 +16868,7 @@ Clean rebuild of the w3-main-p09 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] build | T-17015 clean rebuild
 
 Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninja`): 27/27 sha1 OK with `srn_vram_set` as C, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17015-w3-main-p15]].
+
+## [2026-10-17] ticket | T-17015 Done
+
+[[tickets/T-17015-w3-main-p15]] In Review to Done: code review against `CODING_STANDARDS.md` found one small issue, fixed (matching-notes comment added above `srn_vram_set`; comment only) and one non-blocking follow-up (the `SrnRec28` view of `D_80121750` is a cast because `srn_init` and BUNKA_SD use the byte view). Rebuild OK (sha1, headers OK, globals OK, `sync_protos --check-branch` OK). 1 of 4 functions matched (`srn_vram_set`; 664 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
