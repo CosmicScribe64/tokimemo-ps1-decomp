@@ -1,8 +1,5 @@
 #define MAIN_API_OVERRIDE_func_8008BFB0 /* original narrows both volume arguments; T-12902 */
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this file was matched with. */
-#define MAIN_API_OVERRIDE_func_8007B3DC /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
-#define MAIN_API_OVERRIDE_func_8007B460 /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
-#define MAIN_API_OVERRIDE_func_8007B4E4 /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
 
 #include "common.h"
 #include "game.h"
@@ -13,7 +10,42 @@ void func_80079B10(u16 arg0) {
     func_8007B5EC(arg0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80079B34);
+void func_80079B34(void) {
+    u16 r;
+
+    r = func_8007B64C();
+    if (r != 0) {
+        do {
+            switch (r & 0xF00) {
+            case 0x0:
+                func_8007A080(r);
+                break;
+            case 0x200:
+                func_8007ADD8(r);
+                break;
+            case 0x300:
+                func_8007A6AC(r);
+                break;
+            case 0x500:
+                func_8007B358(r);
+                break;
+            case 0x600:
+                func_8007B3DC(r);
+                break;
+            case 0x700:
+                func_8007B460(r);
+                break;
+            case 0x800:
+                func_8007B4E4(r);
+                break;
+            }
+            r = func_8007B64C();
+        } while (r != 0);
+    }
+    func_80079E4C();
+    func_8007A008();
+    func_8007B640();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80079C70);
 
@@ -200,7 +232,21 @@ void func_8007A4DC(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A50C);
+void func_8007A50C(void) {
+    if (D_80125D10.unk_00 & 0x4400) {
+        D_80125D44 += D_80125D48;
+        /* FAKE: the flag test reads D_80125D44 through an s16 view (a plain u16 test changes the uopt range order: sum in $v1, temporaries one register off); real source unknown. T-17012 */
+        if (((*(s16 *)&D_80125D44) & 0xFF00) != 0) {
+            D_80125D44 &= 0xFF;
+            D_80125D2C -= D_80125D46;
+            if (D_80125D2C <= 0) {
+                func_8007A5BC();
+                return;
+            }
+            func_8008BFB0(0, D_80125D2C, D_80125D2C);
+        }
+    }
+}
 
 void func_8007A5BC(void) {
     func_8007A98C(0x74);
@@ -358,7 +404,40 @@ void func_8007AEC0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007AF0C);
 
+/* NON_MATCHING: T-17012, 21 diff rows (about 10 differing lines); with the K&R u8 parameter the temporaries match but the selector sits in t6 where the original has `andi v0,a0,0xFF` plus an unused t6 temp; an s32 parameter with a u8 local gets v0 but starts the temporaries at t6. */
+#ifdef NON_MATCHING
+void func_8007B144(arg0)
+u8 arg0;
+{
+    switch (arg0) {
+    case 0x71:
+        if ((D_80125D10.unk_00 & 0x100) || (D_80125D10.unk_00 & 0x1000)) {
+            func_8008C720(D_80125D38, 0, 0);
+            func_80090580(D_80125D38);
+            func_800907E0(D_80125D38);
+        }
+        D_80125D3A = D_80125D3C;
+        D_80125D3C = -1;
+        D_80125D10.unk_00 = D_80125D10.unk_00 & ~0x100 & ~0x1000;
+        D_80125D14 &= ~1;
+        break;
+    case 0xE1:
+        if (D_80125D10.unk_00 & 0x100) {
+            func_80090AB0(D_80125D38);
+            D_80125D10.unk_00 = (D_80125D10.unk_00 & ~0x100) | 0x1000;
+        }
+        break;
+    case 0xF1:
+        if (D_80125D10.unk_00 & 0x1000) {
+            SsSeqReplay(D_80125D38);
+            D_80125D10.unk_00 = (D_80125D10.unk_00 & ~0x1000) | 0x100;
+        }
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B144);
+#endif
 
 /* FAKE: the constant branch retains the selector in v0. Keeping it on the
  * flag-store line also preserves the ORI scheduling. T-10020. */
@@ -465,7 +544,37 @@ void func_8007B640(void) {
     D_80125CC0 = 0;
 }
 
+/* NON_MATCHING: T-17012, 51 diff rows (about 26 differing lines); the structure is right (return value read before the shift loop, u16 loop counter), but IDO hoists `move v0,zero` for `return 0` and colours the count $v1 and the loop counter $v0 where the original has the count in $v0, the counter in $a0 and the saved element in $v1 (T-0018, promo). */
+#ifdef NON_MATCHING
+u16 func_8007B64C(void) {
+    u16 n;
+    u16 i;
+    u16 ret;
+
+    n = D_80125CC0;
+    if (n > 0x20) {
+        n = 0x20;
+    }
+    if (n == 0) {
+        D_80125CC0 = n;
+        return 0;
+    }
+    ret = D_80125CC2;
+    i = 1;
+    if (n >= 2) {
+        D_80125CC0 = n;
+        do {
+            (&D_80125CC0)[i] = (&D_80125CC0)[i + 1];
+            i++;
+        } while (i < D_80125CC0);
+        n = D_80125CC0;
+    }
+    D_80125CC0 = n - 1;
+    return ret;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B64C);
+#endif
 
 void func_8007B6E0(void) {
     func_8007A98C(0x74);

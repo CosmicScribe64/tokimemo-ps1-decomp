@@ -55,6 +55,8 @@ kanban-plugin: board
 
 ## In Review
 
+
+
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
@@ -140,8 +142,25 @@ kanban-plugin: board
 
 ## Done
 - [ ] [[tickets/T-20600-regorder-recipe-sweep|T-20600 Register-order family: recipe sweep]]
+- [ ] [[tickets/T-20005-gyozi-display-dispatch|T-20005 Two GYOZI display/dispatch helpers matched (524 bytes)]]
+- [ ] [[tickets/T-20004-gyozi-dialogue-followup|T-20004 Two GYOZI dialogue helpers matched (776 bytes)]]
+
+- [ ] [[tickets/T-20620-as1-scheduling|T-20620 Scheduling family: as1 ordering]]
+- [ ] [[tickets/T-20001-gyozi-helper|T-20001 Match the GYOZI dialogue helper from its SHOUGATU sibling]]
+- [ ] [[tickets/T-17008-w3-main-p08|T-17008 Wave 3 package w3-main-p08]]
+- [ ] [[tickets/T-20610-promo-entry-rule|T-20610 Promotion family: cvt_pass entry rule]]
+- [ ] [[tickets/T-17006-w3-main-p06|T-17006 Wave 3 package w3-main-p06]]
+- [ ] [[tickets/T-17009-w3-main-p09|T-17009 Wave 3 package w3-main-p09]]
+- [ ] [[tickets/T-17007-w3-main-p07|T-17007 Wave 3 package w3-main-p07]]
+- [ ] [[tickets/T-17012-w3-main-p12|T-17012 Wave 3 package w3-main-p12]]
 - [ ] [[tickets/T-17119-w3-rpg-bat-p19|T-17119 Wave 3 package w3-rpg-bat-p19]]
+- [ ] [[tickets/T-17003-w3-main-p03|T-17003 Wave 3 package w3-main-p03]]
+- [ ] [[tickets/T-17001-w3-main-p01|T-17001 Wave 3 package w3-main-p01]]
+- [ ] [[tickets/T-17005-w3-main-p05|T-17005 Wave 3 package w3-main-p05]]
+- [ ] [[tickets/T-17002-w3-main-p02|T-17002 Wave 3 package w3-main-p02]]
+- [ ] [[tickets/T-17004-w3-main-p04|T-17004 Wave 3 package w3-main-p04]]
 - [ ] [[tickets/T-17117-w3-rpg-bat-p17|T-17117 Wave 3 package w3-rpg-bat-p17]]
+- [ ] [[tickets/T-17116-w3-rpg-bat-p16|T-17116 Wave 3 package w3-rpg-bat-p16]]
 - [ ] [[tickets/T-20000-first-contribution|T-20000 Avoid whole-tree cache scans for scoped queues]]
 - [ ] [[tickets/T-17115-w3-rpg-bat-p15|T-17115 Wave 3 package w3-rpg-bat-p15]]
 - [ ] [[tickets/T-17114-w3-rpg-bat-p14|T-17114 Wave 3 package w3-rpg-bat-p14]]

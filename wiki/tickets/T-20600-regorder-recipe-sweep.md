@@ -90,3 +90,8 @@ findings. Checked:
 - One small fix: `func_80152E34` returns `s32` without a `return`; a comment now says why (its callers precede the
   definition). Comment only, `DATE.bin` SHA1 still OK.
 Status Done.
+
+2026-10-17 merge: w2-good had meanwhile merged T-17004, which matched `func_8006D6E0` with the same `s32` definition
+(same `main_api.h` type). The merge keeps the T-17004 comment; six of the seven matches are new on main (4,264 bytes).
+`include/ovl/RPG_BAT.h` now wraps only `func_8013F0F4` in the override `#ifndef` (T-17116 had put `func_801328C4` and
+`func_8014A3DC` inside it, so the two merged wrappers left a stray `#endif`).

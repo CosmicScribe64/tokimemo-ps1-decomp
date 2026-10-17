@@ -93,10 +93,8 @@ void func_8006764C(s32 arg0) {
     }
 }
 
-/* NON_MATCHING: T-11690, 11 differing lines; IDO keeps arg0 in $a1 (move a1,a0 at entry) and hoists li a0,27
- * into the bnez delay slot, the original stores arg0 to D_800B5C08 straight from $a0. Index local, if/else and
- * goto spellings give the same (T-9730 tried void/s32 and a 300-second permuter). */
-#ifdef NON_MATCHING
+/* FAKE: the empty `if (arg0) {}` after the store gives the parameter a second use, so uopt leaves it in $a0 (without it
+ * IDO copies it to $a1 at entry and hoists `li a0,27` into the bnez delay slot). The test emits no code. T-17002 */
 void func_800676AC(s32 arg0) {
     if (arg0 == 0 || arg0 >= 0xE) {
         D_80125C50 = 0x78;
@@ -108,6 +106,8 @@ void func_800676AC(s32 arg0) {
         return;
     }
     D_800B5C08 = arg0;
+    if (arg0) {
+    }
     func_80048F64(0x1B);
     D_8011ECD0[0x1B].unk_01 = 1;
     D_8011ECD0[0x1B].unk_02 = 0x40;
@@ -135,103 +135,8 @@ void func_800676AC(s32 arg0) {
     D_8011ECD0[0x1C].unk_16 = 0;
     D_8011ECD0[0x1C].unk_18 = 0xD;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_800676AC);
-#endif
 
-/* NON_MATCHING: T-11100, 142 words differ in registers (14 structural): the original loads D_800B5C08 into $a3 and
- * passes it with `move a0,a3`, and keeps D_80125C54 in $a2 and the D_80125C5x values in other temporaries (T-0018 style
- * global promotion); the draft gets $a0/$t* for them. */
-#ifdef NON_MATCHING
-void func_80067870(void) {
-    s32 x1;
-    s16 dx;
-    s16 dy;
-    s32 y1;
-
-    if (D_800B5C08 == 0 || D_800B5C08 >= 0xE) {
-        func_800676AC(0);
-        return;
-    }
-    func_800676AC(D_800B5C08);
-    if (D_800B5C08 < 0xE) {
-        if ((u32)D_800E6280.unk_F88 >> 16) {
-            D_80125C55 = (u32)(D_80125C54 + 1) / 2;
-        }
-        if (((s32)D_800E6280.unk_10F8 & 0x3F) == 0x3F && D_80125C55 != 0) {
-            D_80125C55 -= 1;
-        }
-        dx = (u32)(rsin(((s32)D_800E6280.unk_10F8 & 0x7F) << 5) * D_80125C55) >> 12;
-        D_8011F41C = ((dx * -2) / 3) << 12;
-        dy = 0xF - SquareRoot0(D_80125C54 * D_80125C54 - dx * dx);
-        x1 = D_80125C50 + dx;
-        D_8011F422 = x1;
-        y1 = D_80125C52 + D_80125C54;
-        D_8011F426 = y1 - dy;
-        D_8011F414 = D_800B5C08 - 1;
-        D_8011F466 = D_80125C50;
-        D_8011F46A = D_80125C52;
-        if (D_800E6280.unk_F80 & 2) {
-            D_8011F458 = 0xE;
-            switch (D_800E6280.unk_F80 & 0x5000) {
-            case 0x1000:
-                if (D_80125C54 >= 3U) {
-                    D_80125C54 -= 2;
-                    D_80125C55 = (u32)(D_80125C54 + 1) / 2;
-                    y1 = D_80125C52 + D_80125C54;
-                }
-                break;
-            case 0x4000:
-                if (D_80125C54 < 0xC4U) {
-                    D_80125C54 += 2;
-                    D_80125C55 = (u32)(D_80125C54 + 1) / 2;
-                    y1 = D_80125C52 + D_80125C54;
-                }
-                break;
-            }
-        } else if (D_800E6280.unk_F80 & 8) {
-            D_8011F458 = 0xE;
-            switch (D_800E6280.unk_F80 & 0x5000) {
-            case 0x1000:
-                D_80125C52 -= 4;
-                y1 = D_80125C52 + D_80125C54;
-                break;
-            case 0x4000:
-                D_80125C52 += 4;
-                y1 = D_80125C52 + D_80125C54;
-                break;
-            }
-            switch (D_800E6280.unk_F80 & 0xA000) {
-            case 0x8000:
-                D_80125C50 -= 4;
-                x1 -= 4;
-                break;
-            case 0x2000:
-                D_80125C50 += 4;
-                x1 += 4;
-                break;
-            }
-        } else {
-            D_8011F458 = 0xD;
-        }
-        func_80049FF0(D_80125C50, D_80125C52, x1, y1 - dy, 0xF8B0C8, 0xF8B0C8, 1);
-        if (D_80125C50 >= 0x201) {
-            D_80125C50 = -0x200;
-        }
-        if (D_80125C50 < -0x200) {
-            D_80125C50 = 0x200;
-        }
-        if (D_80125C52 >= 0x201) {
-            D_80125C52 = -0x200;
-        }
-        if (D_80125C52 < -0x200) {
-            D_80125C52 = 0x200;
-        }
-    }
-}
-#else
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067870);
-#endif
 
 /* FAKE: the second `max` loop is dead (max is never read) and the u8 view of the s8 field unk_03C gives the original lbu;
  * both are needed for the bytes, real source unknown. T-11690 */
@@ -580,20 +485,21 @@ void data_save_load_class_init(void) {
     D_8012067A = -0x13;
 }
 
-/* NON_MATCHING: T-11100, 44 structural differences (603 against 602 instructions, frame 240 against 248): the original
- * keeps the clear counter in $s0 and the loop index in another register, and addresses the NameMetricWork/
- * NameRecordF00 slots through a different set of hoisted constants (lui a3 chain). Registers and frame do not follow
- * from the draft's locals yet. */
-#ifdef NON_MATCHING
+/* FAKE: KEEP_UNK_1117 is an empty test that gives the byte a second use in each call-free stretch of the else branch, so uopt
+ * promotes it to $a3 and reloads it after every call as the original does (register cheat sheet, "narrow selector the
+ * original reloads after every call"); the test emits no code. T-17002 */
+#define KEEP_UNK_1117() if ((s32)D_800E6280.unk_1117) { }
 void func_800696DC(s32 arg0, s32 arg1) {
     s32 i;
     s32 var_s0;
     s32 spEC;
+    s32 j; /* FAKE: unused; keeps the original frame slot between spEC and spC8 (every declared local reserves a slot), real local unknown. T-17002 */
     u8 spC8[32];
     u8 spA8[32];
     u8 sp88[32];
     u8 sp68[32];
     u8 sp48[32];
+    s32 sp44; /* FAKE: unused; keeps the original frame slot below sp48, real local unknown. T-17002 */
 
     if (arg1 != 0) {
         spEC = -0x8C;
@@ -601,7 +507,6 @@ void func_800696DC(s32 arg0, s32 arg1) {
         spEC = -8;
     }
     k_sub_reset();
-    var_s0 = 0;
     if ((u8) D_800E8BEE != 0) {
         var_s0 = 0;
         for (i = 0; i < 13; i++) {
@@ -610,9 +515,11 @@ void func_800696DC(s32 arg0, s32 arg1) {
             }
         }
         strcpy(spC8, D_800B3288[D_800E7D36]);
-        strncat((s32) spC8, (s32) "番アルバム", 2);
+        strncat(spC8, "番アルバム", 2);
         set_kanji_string((s16) (spEC + 0xC), -0x50, 0xFU, spC8, 0);
-        if (D_800E7D36 == 0) {
+        /* FAKE: the byte D_800E7D36 read through the NameMetricWork view; uopt does not CSE it with the D_800E7D36 loads
+         * in the else arm, the original reloads it there. Real source unknown. T-17002 */
+        if (((NameMetricWork *)&D_800E7D10)->selected_slot == 0) {
             set_kanji_string((s16) spEC, -0x40, 0xFU, "システム", 0);
         } else {
             if (((NameMetricWork *)&D_800E7D10)->slot_status[D_800E7D36] == 0) {
@@ -621,38 +528,41 @@ void func_800696DC(s32 arg0, s32 arg1) {
                 set_kanji_string((s16) spEC, -0x40, 0xFU, "データ異常", 0);
             } else {
                 strcpy(spC8, D_800B3288[(u8) ((NameMetricWork *)&D_800E7D10)->year[D_800E7D36] / 10U]);
-                strncat((s32) spC8, (s32) D_800B3288[(u8) ((NameMetricWork *)&D_800E7D10)->year[D_800E7D36] % 10U], 2);
-                strncat((s32) spC8, (s32) "年", 2);
-                strncat((s32) spC8, (s32) D_800B3288[((NameMetricWork *)&D_800E7D10)->month[D_800E7D36]], 4);
-                strncat((s32) spC8, (s32) "月", 2);
+                strncat(spC8, D_800B3288[(u8) ((NameMetricWork *)&D_800E7D10)->year[D_800E7D36] % 10U], 2);
+                strncat(spC8, "年", 2);
+                strncat(spC8, D_800B3288[((NameMetricWork *)&D_800E7D10)->month[D_800E7D36]], 4);
+                strncat(spC8, "月", 2);
                 if (((NameMetricWork *)&D_800E7D10)->day[D_800E7D36] >= 0xAU) {
-                    strncat((s32) spC8, (s32) D_800B3288[((NameMetricWork *)&D_800E7D10)->day[D_800E7D36] / 10U], 2);
+                    strncat(spC8, D_800B3288[((NameMetricWork *)&D_800E7D10)->day[D_800E7D36] / 10U], 2);
                 }
-                strncat((s32) spC8, (s32) D_800B3288[((NameMetricWork *)&D_800E7D10)->day[D_800E7D36] % 10U], 2);
-                strncat((s32) spC8, (s32) "日", 2);
+                strncat(spC8, D_800B3288[((NameMetricWork *)&D_800E7D10)->day[D_800E7D36] % 10U], 2);
+                strncat(spC8, "日", 2);
                 set_kanji_string((s16) spEC, -0x40, 0xFU, spC8, 0);
                 strcpy(spA8, "名前…");
-                strncat((s32) spA8, (s32) ((NameMetricWork *)&D_800E7D10)->family_name[D_800E7D36], 6);
-                strncat((s32) spA8, (s32) ((NameMetricWork *)&D_800E7D10)->given_name[D_800E7D36], 6);
+                strncat(spA8, ((NameMetricWork *)&D_800E7D10)->family_name[D_800E7D36], 6);
+                strncat(spA8, ((NameMetricWork *)&D_800E7D10)->given_name[D_800E7D36], 6);
                 strcpy(sp88, "あだ名…");
-                strncat((s32) sp88, (s32) ((NameMetricWork *)&D_800E7D10)->nickname[D_800E7D36], 0xD);
+                strncat(sp88, ((NameMetricWork *)&D_800E7D10)->nickname[D_800E7D36], 0xD);
                 set_kanji_string((s16) spEC, -0x30, 0xFU, spA8, 0);
                 set_kanji_string((s16) spEC, -0x20, 0xFU, sp88, 0);
                 strcpy(sp68, "所属部‥");
-                strncat((s32) sp68, club_name_table[((NameMetricWork *)&D_800E7D10)->club[D_800E7D36]]);
+                /* two arguments as in the original: no count is loaded into $a2 before this call */
+                strncat(sp68, club_name_table[((NameMetricWork *)&D_800E7D10)->club[D_800E7D36]]);
                 set_kanji_string((s16) spEC, -0x10, 0xFU, sp68, 0);
                 strcpy(sp48, "クリア人数‥");
                 if (var_s0 >= 0x64) {
                     var_s0 = 0x63;
                 }
                 if (var_s0 >= 0xA) {
-                    strncat((s32) sp48, (s32) D_800B3288[var_s0 / 10], 2);
+                    strncat(sp48, D_800B3288[var_s0 / 10], 2);
                 }
-                strncat((s32) sp48, (s32) D_800B3288[var_s0 % 10], 2);
+                strncat(sp48, D_800B3288[var_s0 % 10], 2);
                 set_kanji_string((s16) spEC, 0, 0xFU, sp48, 0);
             }
         }
     } else {
+        var_s0 = 0;
+        KEEP_UNK_1117();
         for (i = 0; i < 13; i++) {
             if (((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].flags[i] != 0) {
                 var_s0 += 1;
@@ -664,45 +574,51 @@ void func_800696DC(s32 arg0, s32 arg1) {
             set_kanji_string((s16) spEC, -0x40, 0xFU, "データ異常", 0);
         } else {
             strcpy(spC8, D_800B3288[D_800E6280.unk_1118]);
-            strncat((s32) spC8, (s32) "番アルバム", 2);
+            strncat(spC8, "番アルバム", 2);
             set_kanji_string((s16) (spEC + 0xC), -0x50, 0xFU, spC8, 0);
+            KEEP_UNK_1117();
             strcpy(spC8, D_800B3288[(u8) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].year / 10U]);
-            strncat((s32) spC8, (s32) D_800B3288[(u8) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].year % 10U], 2);
-            strncat((s32) spC8, (s32) "年", 2);
-            strncat((s32) spC8, (s32) D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].month], 4);
-            strncat((s32) spC8, (s32) "月", 2);
+            KEEP_UNK_1117();
+            strncat(spC8, D_800B3288[(u8) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].year % 10U], 2);
+            strncat(spC8, "年", 2);
+            KEEP_UNK_1117();
+            strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].month], 4);
+            strncat(spC8, "月", 2);
+            KEEP_UNK_1117();
             if (((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].day >= 0xAU) {
-                strncat((s32) spC8, (s32) D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].day / 10U], 2);
+                strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].day / 10U], 2);
             }
-            strncat((s32) spC8, (s32) D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].day % 10U], 2);
-            strncat((s32) spC8, (s32) "日", 2);
+            strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].day % 10U], 2);
+            strncat(spC8, "日", 2);
             set_kanji_string((s16) spEC, -0x40, 0xFU, spC8, 0);
             strcpy(spA8, "名前…");
-            strncat((s32) spA8, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].family_name, 6);
-            strncat((s32) spA8, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].given_name, 6);
+            KEEP_UNK_1117();
+            strncat(spA8, ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].family_name, 6);
+            KEEP_UNK_1117();
+            strncat(spA8, ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].given_name, 6);
             strcpy(sp88, "あだ名…");
-            strncat((s32) sp88, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].nickname, 0xD);
+            KEEP_UNK_1117();
+            strncat(sp88, ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].nickname, 0xD);
             set_kanji_string((s16) spEC, -0x30, 0xFU, spA8, 0);
             set_kanji_string((s16) spEC, -0x20, 0xFU, sp88, 0);
             strcpy(sp68, "所属部‥");
-            strncat((s32) sp68, club_name_table[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].club >> 12]);
+            KEEP_UNK_1117();
+            /* two arguments as in the original: no count is loaded into $a2 before this call */
+            strncat(sp68, club_name_table[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].club >> 12]);
             set_kanji_string((s16) spEC, -0x10, 0xFU, sp68, 0);
             strcpy(sp48, "クリア人数‥");
             if (var_s0 >= 0x64) {
                 var_s0 = 0x63;
             }
             if (var_s0 >= 0xA) {
-                strncat((s32) sp48, (s32) D_800B3288[var_s0 / 10], 2);
+                strncat(sp48, D_800B3288[var_s0 / 10], 2);
             }
-            strncat((s32) sp48, (s32) D_800B3288[var_s0 % 10], 2);
+            strncat(sp48, D_800B3288[var_s0 % 10], 2);
             set_kanji_string((s16) spEC, 0, 0xFU, sp48, 0);
         }
     }
     k_sub_disp_start(6);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_800696DC);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A044);
 
@@ -1079,9 +995,8 @@ void func_8006B900(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BA40);
 
-/* NON_MATCHING: T-11690, 17 differing lines; the original loads D_800B6708 once into $v0 in the dispatch block
- * (arg0 reloaded into $v1), IDO loads it at the top of each arm; a local copy (s32, s16, u16, s8) is sunk the same way. */
-#ifdef NON_MATCHING
+/* FAKE: the empty `if ((s32)D_800B6708) {}` gives the byte a use in the dispatch block, so uopt promotes it and loads it
+ * once into $v0 before the arg0 tests; without it each arm loads it. The test emits no code. T-17002 */
 void func_8006BC28(s32 arg0) {
     s16 sp2E;
     s16 sp2C;
@@ -1100,6 +1015,8 @@ void func_8006BC28(s32 arg0) {
     D_8011ECD0[0].unk_04 = 8;
     D_8011ECD0[0].unk_05 = 1;
     D_8011ECD0[0].unk_16 = 0;
+    if ((s32)D_800B6708) {
+    }
     switch (arg0) {
     case 0:
     default:
@@ -1116,9 +1033,6 @@ void func_8006BC28(s32 arg0) {
     D_8011ECD0[0].unk_26 = sp2E;
     D_8011ECD0[0].unk_2A = sp2C;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BC28);
-#endif
 
 void func_8006BD6C(s32 arg0) {
     if (arg0 == 1) {

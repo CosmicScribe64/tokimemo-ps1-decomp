@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # MAIN source family recovery
@@ -81,6 +81,7 @@ those declarations stay; they are listed below for a cross-unit ticket. What cha
 | `s16 D_800B5AA4[16][2]`, `s16 D_800B5AE4[15][2]` | (x, y) halfword pairs copied pair by pair into the pair table at `D_80125C10`; the copy from pair 3 runs to `D_800B5B20` | `func_8006509C` |
 | `Flags7D4F` bit-field view of `D_800E7D4F` | `lui rA; lbu rB; ori; sb` with rB != rA is a bit-field store (T-7010); BUNKASAI's `BunkaReturnFlags` is the same view | `func_8007959C` (matched) |
 | `u8 *D_800B6CF8[]` | message table indexed by `func_80077CA8()`, passed to `sndisp` | `func_80077E30` (matched) |
+| `SaveBank D_80123320[2]` (`s32 checksum; u8 data[0xEFC]`), header externs `D_80123122`..`D_801231A0` | memory-card block of 0x2000 bytes at `D_80123120`: 0x200-byte header, two 0xF00-byte banks; a 12-bytes-per-iteration copy loop of 0xF00 bytes is `D_80123320[1] = D_80123320[0]`; one `lui at` per header store means separate symbols (T-17007) | `func_80054C74` (guarded), `func_80055A38` |
 | seven `void` prototypes (`func_80075468` ..) and `s32 holiday_club(void)` | defined later in `80075320.c`, called earlier by `func_80075320` | `func_80075320` (matched) |
 | draft-time only: `GameState D_800E6280`, `Rec34`, `Rec24`, `Ring18`, `Work80125D10`, `MATRIX D_80129C40`, every sized array of `main_api.h`, `D_8011ECD0` as `DisplayActor44[160]` | the T-16550 fold: a label inside one of them becomes base + offset in the asm handed to m2c | all redrafts |
 
@@ -136,3 +137,17 @@ Largest gains: `parameter_show` 362 to 61, `parameter_up_down` 408 to 177, `func
 The fold helps main less than TAIIKU: most census drafts already compiled the GameState labels as separate
 scalars, which compile like members except for the load-after-store order, and the large shared objects
 above could not be typed.
+
+## Wave 3 package w3-main-p01 (T-17001)
+
+`src/main/8007C030.c`, two long-standing guarded drafts ([[tickets/T-17001-w3-main-p01]]). `_sprite_set_box_shade_tarao` (484 B) is
+matched: natural one-trio-per-line colour stores plus one local that holds the red byte of `arg5` and is read once (FAKE; it
+numbers an invisible uopt range first, which shifts the register choices and the stack-argument load order, see
+[[register-cheatsheet]]). `dialogue_speak_part` stays guarded at 16 lines; the as1 scheduler trace shows that the original needs
+the first-argument constant and the narrowing on an earlier source line than the string stores ([[matching-notes]], T-17001).
+### Wave 3 package w3-main-p04 (T-17004)
+
+[[tickets/T-17004-w3-main-p04]] took five guarded drafts of `src/main/8006CB30.c` and matched four in plain C: `func_8006EB64`, `func_8006EEC4`, `func_80072998` and `func_800726F0` (2,544 bytes). The first three needed only a local `GameState *g = &D_800E6280;` for the reads (no FAKE left in the first two); `func_800726F0` also needs a marked `FAKE` local copy of the first `unk_03D` read, found by autotweak. The Opus closer matched `func_8006D6E0` (268 bytes; 5 of 5, 2,812 bytes): `s32` with no `return`, because as1 keeps the `move v1,v0` copy only when `$v0` is live at the exit. Details in [[matching-notes]], section T-17004.
+### Wave 3 package w3-main-p08 (T-17008)
+
+`func_80059EF0`, `func_8004F6B0` and `func_80059BE8` matched ([[matching-notes]], section T-17008). Type changes: `s32 D_800C6200[8]`, `s32 D_800C62C0[32]` are index loops now (the `func_80059EF0` entry of the type map above); `s16 D_80125BF0`/`D_80125BF2` declared (the cursor, promoted by uopt); `func_80098490` takes `u16` parameters; `D_800C9730` and `D_800C5FCC` have file-local array views in `80059B40.c` (`s32 D_800C9730[11]`, `s32 D_800C5FCC[2]`, `MAIN_API_OVERRIDE_*`), while `main_api.h` keeps `u8[]` and `s32` for their other users.

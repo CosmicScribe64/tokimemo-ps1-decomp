@@ -16636,3 +16636,298 @@ functions, 4,532 bytes. Second clean rebuild for the header change.
 matched in plain C, 4,532 bytes, no new FAKE. One comment added in `src/ovl/DATE/80151460.c` (`func_80152E34`, implicit
 `int`). Header checks, `migrate_globals --check` and `sync_protos --check-branch` OK; no busy file edited. Card moved
 in [[kanban]].
+## [2026-10-16] ticket | T-17116 In Progress
+
+[[tickets/T-17116-w3-rpg-bat-p16]] created and In Progress: wave 3 package w3-rpg-bat-p16, three RPG_BAT functions in `src/ovl/RPG_BAT/80155CC0.c` and `src/ovl/RPG_BAT/80134D30.c` (links [[tickets/T-17100-types-first-rpg_bat]]).
+
+## [2026-10-16] ticket | T-17116 In Review
+
+[[tickets/T-17116-w3-rpg-bat-p16]] In Progress to In Review: 1 of 3 functions matched in `src/ovl/RPG_BAT/80155CC0.c` (`func_80156064`, 828 bytes), unit sha1 OK; `func_80135358` is a guarded draft at 10 differing lines in `src/ovl/RPG_BAT/80134D30.c`, `func_80134E78` back to `INCLUDE_ASM` with the best draft in `drafts/T-17116/RPG_BAT/func_80134E78/`. Notes in [[matching-notes]] (section T-17116), [[register-cheatsheet]] (six rows), [[data/t0018-cases]] (two rows), [[rpg-bat-family-results]].
+
+## [2026-10-16] ticket | T-17116 closer pass, func_80135358 matched
+
+[[tickets/T-17116-w3-rpg-bat-p16]] (22:32-22:45 UTC, Opus closer): `func_80135358` matched in `src/ovl/RPG_BAT/80134D30.c` with the file-local implicit int view `RPG_BAT_OVERRIDE_func_8013E97C` (`funcdiff --proto 's32 func_8013E97C();'` gave MATCH; the 10 lines were one range in `$v0` where the original has `$v1`). Package now 2 of 3 (2,528 bytes); `func_80134E78` stays `INCLUDE_ASM`. Updated [[matching-notes]] (T-17116 closer bullet), [[data/t0018-cases]], [[register-cheatsheet]] (row of the implicit int call result), [[rpg-bat-family-results]], [[index]]. Clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17116 Done
+
+[[tickets/T-17116-w3-rpg-bat-p16]] In Review to Done: code review against `CODING_STANDARDS.md` found two issues, both fixed: wrong byte counts in the ticket, [[matching-notes]], [[rpg-bat-family-results]] and `drafts/T-17116/RPG_BAT/func_80134E78/NOTES.txt` (the list sizes 856 B and 1,268 B include jump table words; the code is 828 B and 1,248 B) and missing comments for the `s32` return without `return` in `src/ovl/RPG_BAT/80155CC0.c` and `src/ovl/RPG_BAT/80134D30.c`. 2 of 3 functions matched (`func_80156064` 828 B, `func_80135358` 1,700 B; 2,528 B), unit sha1 OK; `func_80134E78` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17003 In Progress
+[[tickets/T-17003-w3-main-p03]] created and In Progress: wave 3 package w3-main-p03, `src/main/800789E0.c`, `func_80079070` and `func_80079800`. Worktree `tokimemo-wt/w3-main-p03`, branch `w3-main-p03` from `w2-good`.
+
+## [2026-10-16] ticket | T-17003 In Review
+[[tickets/T-17003-w3-main-p03]] In Progress to In Review (1 of 2 matched). `func_80079800` (784 B) matched in plain C with one FAKE local (TACO `func_80142AF0` idiom) and a `main_api.h` prototype; `func_80079070` guarded at 14 differing lines, T-0018 row (`sched`) in [[data/t0018-cases]], notes in [[matching-notes]] (section T-17003). Card moved. Commits in `src/main/800789E0.c`, `include/main_api.h`.
+
+## [2026-10-16] build | T-17003 closer pass
+[[tickets/T-17003-w3-main-p03]]: `func_80079070` from 14 to 4 differing lines, still guarded. A `GameState *gs` pointer store with the argument loaded into a local first, and `ovl_load_state = 0` before the saves, give the original's tail schedule; left is the call-argument colour (`lui v0; lbu a0,(v0)` against `lui a0; lbu a0`). [[data/t0018-cases]] row now `regorder`, notes in [[matching-notes]]. Clean build 27/27, header, globals and prototype checks OK. `src/main/800789E0.c`.
+
+## [2026-10-16] ticket | T-17003 Done
+[[tickets/T-17003-w3-main-p03]] reviewed against `CODING_STANDARDS.md`: 2 findings fixed (FAKE mark on the u8 views of the s8 fields in the guarded `func_80079070` draft, an unfinished sentence in the [[data/t0018-cases]] row), no others. In Review to Done (kanban card moved). Matched 1 of 2 (`func_80079800`, 784 B); `func_80079070` stays guarded at 4 lines, `regorder`.
+
+## [2026-10-16] ticket | T-17001 In Progress
+Created [[tickets/T-17001-w3-main-p01]] (Wave 3 package, main `src/main/8007C030.c`, two functions: `_sprite_set_box_shade_tarao`, `dialogue_speak_part`) and moved it to In Progress. Card on [[kanban]], line in [[index]]. Worktree `tokimemo-wt/w3-main-p01`, started 21:52 UTC.
+
+## [2026-10-16] build | T-17001 matches
+[[tickets/T-17001-w3-main-p01]]: `_sprite_set_box_shade_tarao` (484 B) matched in plain C with one FAKE local (`u32 v4 = (arg5 >> 16) & 0xFF;`, read once by the `r2` store); unit sha1 OK, committed as "T-17001: match main:_sprite_set_box_shade_tarao". `dialogue_speak_part` stays `NON_MATCHING` at 16 lines (guard comment now T-17001). New: as1 scheduler trace recipe (`-R -xbbdbg 8`) and its pick rule in [[matching-notes]], a [[register-cheatsheet]] row, two rows in [[data/t0018-cases]], section in [[main-family-results]]. Matched count 1 of 2 (484 bytes).
+
+## [2026-10-16] ticket | T-17001 In Review
+[[tickets/T-17001-w3-main-p01]] In Progress to In Review (1 of 2 matched). Card moved to In Review on [[kanban]]. Elapsed about 75 minutes.
+
+## [2026-10-16] query | T-17001 closer pass
+[[tickets/T-17001-w3-main-p01]]: Opus closer pass on `dialogue_speak_part`, still 16 lines. A toy shows the `li a0,-40` needs a source line strictly below the string stores. IDO 7.1 behaves like 5.3, and 8 more source forms all propagate the constant. `NON_MATCHING` comment in `src/main/8007C030.c` updated; notes in [[matching-notes]] (T-17001, "Closer pass"). Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17001 Done
+[[tickets/T-17001-w3-main-p01]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 1 of 2 functions matched (`_sprite_set_box_shade_tarao`, 484 bytes); `dialogue_speak_part` stays `NON_MATCHING` at 16 lines. Rebuild: headers OK, globals OK, protos OK, main exe sha1 OK. Card moved to Done.
+
+## [2026-10-16] ticket | T-17005 In Progress
+
+Opened [[tickets/T-17005-w3-main-p05]]: wave 3 package for `src/main/8005A0B0.c` (`pre_syogatu1`, `func_8005CA94`, `func_80060178`, `func_8005C14C`, `func_8005CC40`), parent [[tickets/T-17000-types-first-main]]. Worktree `tokimemo-wt/w3-main-p05`, branch `w3-main-p05`.
+
+## [2026-10-16] ticket | T-17005 In Review
+
+[[tickets/T-17005-w3-main-p05]] In Progress to In Review: 3 of 5 functions matched in plain C (`pre_syogatu1` by an index loop, `func_80060178` by statement order x, y, w, h and a FAKE `pad` local, `func_8005C14C` copied from the NAME_ENT sibling), 1,708 bytes. `func_8005CA94` (51 rows at best) and `func_8005CC40` (54 rows) restored to `INCLUDE_ASM` with rows in [[data/t0018-cases]]. Notes in [[matching-notes]] (section T-17005). Code changes in `src/main/8005A0B0.c` and `include/main_api.h` (`func_80060178` declaration).
+
+## [2026-10-16] build | T-17005 clean rebuild
+
+Clean rebuild of the w3-main-p05 worktree: 27/27 sha1 OK (`build/SLPM_86.053.bin: OK` with `pre_syogatu1`, `func_80060178` and `func_8005C14C` as C), `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17005-w3-main-p05]].
+
+## [2026-10-16] ticket | T-17005 Done
+
+[[tickets/T-17005-w3-main-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found one issue, fixed (the two new rows in [[data/t0018-cases]] lacked the closing table pipe). Rebuild OK (sha1 OK, 27/27, headers OK, globals OK, `sync_protos --check-branch` OK). 3 of 5 functions matched (`pre_syogatu1`, `func_80060178`, `func_8005C14C`; 1,708 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17002 In Progress
+[[tickets/T-17002-w3-main-p02]] created and started: wave 3 package w3-main-p02, four functions of `src/main/800674B0.c` (`func_8006BC28`, `func_800676AC`, `func_80067870`, `func_800696DC`), worktree `tokimemo-wt/w3-main-p02`, base `w2-good`. Follows [[tickets/T-17000-types-first-main]].
+
+## [2026-10-16] ticket | T-17002 In Review
+[[tickets/T-17002-w3-main-p02]] In Progress to In Review: 3 of 4 functions matched (`func_8006BC28`, `func_800676AC`, `func_800696DC`, 3,184 bytes, plain C in `src/main/800674B0.c`); `func_80067870` back to `INCLUDE_ASM` at 244 rows (draft `drafts/T-17002/main/func_80067870/body.c`). All three matches use marked FAKE empty tests that give a promoted global or parameter a second use (`if ((s32)D_800B6708) {}` before the dispatch, `if (arg0) {}` between store and call, `KEEP_UNK_1117();` before each call-free stretch of the else arm), `func_800696DC` also two unused frame locals and no `s32` pointer casts. Clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Notes in [[matching-notes]] (T-17002), update line and one row in [[data/t0018-cases]], six rows in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-17002 Done
+[[tickets/T-17002-w3-main-p02]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/main/800674B0.c` changed in code, `drafts/T-17002/` is new, no header or config change. Findings fixed (comments and two casts, bytes unchanged): the `(s32)` cast on the two two-argument `strncat` calls of `func_800696DC` removed and the calls commented, the `selected_slot` view marked `FAKE`. Unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 3 of 4 matched (`func_8006BC28`, `func_800676AC`, `func_800696DC`, 3,184 bytes). Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17004 In Progress
+
+[[tickets/T-17004-w3-main-p04]] created and started: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`, five guarded drafts: `func_8006D6E0`, `func_8006EEC4`, `func_8006EB64`, `func_80072998`, `func_800726F0`), worktree `tokimemo-wt/w3-main-p04`, base `w2-good`. Parent [[tickets/T-17000-types-first-main]].
+
+## [2026-10-16] ticket | T-17004 In Review
+
+[[tickets/T-17004-w3-main-p04]] In Progress to In Review: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`), 4 of 5 functions matched in plain C (2,544 bytes: `func_8006EB64`, `func_8006EEC4`, `func_80072998`, `func_800726F0`), `func_8006D6E0` stays guarded at 5 lines. The first three matched by reading the struct fields through a local `GameState *g = &D_800E6280;` (the two 8-line ones lost their FAKE locals and compare); `func_800726F0` needs a marked FAKE local copy found by autotweak. Notes in [[matching-notes]] (section T-17004), a row in [[register-cheatsheet]], two rows and an update in [[data/t0018-cases]], [[main-family-results]] updated. Commits `bcf3c783`, `90864652`, `469023e8`, `46795e4a`.
+
+## [2026-10-16] ticket | T-17004 closer pass
+
+Opus closer on [[tickets/T-17004-w3-main-p04]]: `func_8006D6E0` matched in plain C (268 bytes, commit `1694e986`; package 5 of 5, 2,812 bytes). The missing `move v1,v0` is folded by as1's global optimisation, not uopt (uopt's output ucode and `cc -S` keep it); as1 keeps it when `$v0` is live at the exit, so the definition is `s32` with no `return` and `include/main_api.h` declares `s32 func_8006D6E0();`. Notes in [[matching-notes]] (T-17004 closer pass), a row in [[register-cheatsheet]], an update line in [[data/t0018-cases]], [[main-family-results]] and [[index]] updated. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-17004 Done
+
+[[tickets/T-17004-w3-main-p04]] In Review to Done after the code review: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`), 5 of 5 functions matched (2,812 bytes: `func_8006EB64`, `func_8006EEC4`, `func_80072998`, `func_800726F0`, `func_8006D6E0`). One finding, fixed: the `NON_MATCHING` comment of the still guarded `func_80072D70` now names T-17004. Clean build sha1 OK; headers and globals checks OK.
+## [2026-10-16] ticket | T-20620 Scheduling family: as1 ordering (In Progress)
+
+New ticket [[tickets/T-20620-as1-scheduling]], card in In Progress of [[kanban]]. Compiler-gap family agent for the `sched`/`schedule`/`hoist` rows of [[data/t0018-cases]] (instruction order from as1 or ugen), following [[speedup-research-2026-10-16]]. Worktree `tokimemo-wt/cg-sched`, branch `cg-sched` from `w2-good`.
+
+## [2026-10-16] ticket | T-20620 Scheduling family: as1 ordering (In Review)
+
+[[tickets/T-20620-as1-scheduling]] In Progress to In Review. TACO `func_8014B8B4` matched (972 bytes, implicit `int` as in its sibling, `src/ovl/TACO/80149F90.c`, `include/ovl/TACO.h`). Three functions in conveyor-owned files match in scratch copies (EVENT `func_8010B614`, GYOZI `func_8013E638`, main `func_80055A38`); their C is in [[matching-notes]] "T-20620" for the owning packages. A `funcdiff` sweep of all 110 guarded drafts listed the order-only near misses; seven have the original issuing a later line's instruction first, one (VALEN `func_80134030`) the opposite, and no C form, as1 option or `.loc` flattening fixed them, so no build pass changed. Two rows in [[register-cheatsheet]], one Update paragraph and nine rows in [[data/t0018-cases]]. Card moved in [[kanban]]. Review pending.
+
+## [2026-10-17] ticket | T-20620 Done
+
+[[tickets/T-20620-as1-scheduling]] In Review to Done after the code review against `CODING_STANDARDS.md`: 1 function matched (TACO `func_8014B8B4`, 972 bytes, plain C, implicit `int` as in T-19003), no findings open. The three owned-file recipes (EVENT `func_8010B614`, GYOZI `func_8013E638`, main `func_80055A38`) are recorded in [[matching-notes]] for their packages; the order-only near misses and the as1 option tests are written up as negative results. No build pass changed (matched functions changed: 0). Card moved to Done in [[kanban]], [[index]] updated. Build 27 of 27, grand total 6301/6958.
+## [2026-10-16] ticket | T-20001 GYOZI helper In Progress
+
+Created [[tickets/T-20001-gyozi-helper]] on codex/match-gyozi-helper from upstream main 639693d2. Whole-tree dupes report identifies GYOZI func_8013506C (172 bytes, guarded T-10850 draft) and matched SHOUGATU func_8013315C as a fillable pair including string data. Inspecting the two sources and the original function assembly before adapting the source. PR #36 independently contains the scoped queue fix and communication-platform question.
+
+## [2026-10-16] query | T-20001 GYOZI caller declaration identified
+
+The direct sibling adaptation still differed in six counter-allocation rows. Bounded counter pointer/union/aggregate views did not remove them. An in-memory s32 prototype for the setup callee func_801343A4 made funcdiff --resolve prove all 172 linked function bytes equal the target; changing the sound callee return type alone did not help. Added the explicit overlay-local caller-view override required by CODING_STANDARDS.md section 8a, preserving the existing void definition and other callers. Actual source and full-unit verification are now running. See [[tickets/T-20001-gyozi-helper]].
+
+## [2026-10-16] ticket | T-20001 matched and In Review
+
+GYOZI func_8013506C now passes actual default funcdiff --resolve: 172 linked bytes equal the target, with GYOZI unit SHA1 OK. The full build completed 490 steps after upstream header changes; explicit checks passed all 27 binary SHA1 values. Local standards review found no issues. Moved [[tickets/T-20001-gyozi-helper]] In Progress to In Review; [[matching-notes]] records the return-view evidence and [[data/t0018-cases]] supersedes the historical rows without deleting them. Final prototype guard and PR submission are pending.
+
+## [2026-10-16] build | T-20001 final verification and PR #37
+
+After integrating upstream main 9e74085b, actual default funcdiff again proves the 172 GYOZI func_8013506C linked bytes; the 8-step incremental build passes GYOZI and DATE SHA1. Explicit binary verification passes 27/27; sync_protos --check-branch passes with 0 new / 15 known disagreements. Opened PR #37. [[tickets/T-20001-gyozi-helper]] remains In Review for upstream review; no generated files or game data committed.
+
+## [2026-10-16] build | T-20001 PR #37 refreshed and reverified
+
+Integrated upstream main 81095a46, preserving all sides of the shared index, append-only log and matching-note conflicts. Actual default linked funcdiff still matches GYOZI func_8013506C (172 bytes); the full 490-step rebuild and explicit binary SHA1 verifier pass 27/27. Production GYOZI code/header are unchanged from the submitted match. [[tickets/T-20001-gyozi-helper]] remains In Review; GitHub reports the updated PR mergeable.
+
+## [2026-10-16] setup | T-20001 follow upstream RPG merge
+
+Integrated main a8591fb8 into PR #37, retaining both append-only log and matching-note histories. The upstream delta affects RPG_BAT and wiki only; GYOZI code/header and the reviewed caller view are unchanged, so its recorded 172-byte linked proof remains applicable. [[tickets/T-20001-gyozi-helper]] remains In Review.
+
+## [2026-10-16] setup | T-20001 follow unrelated RPG batch
+
+Integrated main 0925704e into PR #37, retaining both log and matching-note histories. Upstream changes other RPG_BAT files and wiki only; GYOZI source/header and caller views are unchanged. The recorded actual linked proof and full checksum verification remain applicable to this contribution. [[tickets/T-20001-gyozi-helper]] stays In Review.
+
+
+## [2026-10-16] setup | T-20001 final upstream refresh
+
+Integrated main dee64939 (T-17109), preserving both shared wiki histories. This upstream batch changes other RPG_BAT functions and adds unrelated declarations/guards; the contribution's function bodies and caller views are unchanged. Recorded validation bases and results remain explicit in the ticket. Ticket stays In Review.
+
+## [2026-10-16] build | T-20001 address PR #37 review
+
+Changed func_801343A4's shared header and definition to s32, removing the unnecessary caller override/guard/local prototype. Corrected the ticket and matching-note explanation: the plain return-type change is sufficient and preserves all callers. Moved the T-0018 Update after Rules, leaving historical rows unchanged. Actual default linked proofs match callback172/setup124 bytes; GYOZI SHA1, full 67-step build/globals, 27/27 binary checks and prototype branch guard (0 new / 15 known) pass. Local standards review complete; [[tickets/T-20001-gyozi-helper]] stays In Review for acceptance. No repeated main integration, as requested by the maintainer.
+
+## [2026-10-17] ticket | T-20001 Done (PR #37 merged)
+
+KakarottoCake's PR #37 updated per review: plain `s32 func_801343A4(void)` in `include/ovl/GYOZI.h` and its
+definition, no override. Verified on the integration base: clean 27/27, headers, globals, prototypes OK, GYOZI
+`func_8013506C` MATCH (172 bytes). [[tickets/T-20001-gyozi-helper]] Done.
+
+## [2026-10-16] ticket | T-20004 GYOZI dialogue follow-up claimed
+
+Opened issue #39 before starting to claim only func_80135118 (360 bytes) and func_80135280 (416 bytes) in src/ovl/GYOZI/80134FD0.c. This excludes the PR #37 helper and TT. Created [[tickets/T-20004-gyozi-dialogue-followup]] In Progress, synchronized board/index, branch based on upstream main 9af6ac58. Maintainer preference is GitHub issues for claims and Discussions for coordination; no repeated main merges.
+
+## [2026-10-16] query | T-20004 byte-table type and timer updates
+
+Inspected both claimed helpers and archived T-17600 drafts against assembly. The lookup table is loaded with lbu and an unscaled byte index; the archived scalar word context has the wrong stride. Scratch-only byte-array typing, canonical timer updates and setup s32 callee view reduce func_80135118 to 29 rows and func_80135280 to 49 rows (fresh selector reads for the latter). Testing natural byte postincrements next; no production C/header changed. [[tickets/T-20004-gyozi-dialogue-followup]] remains In Progress.
+
+## [2026-10-16] query | T-20004 shared byte-store gap isolated
+
+Both helpers reach the same 15-line difference with structured control flow and the natural byte postincrement test. The original includes an unchanged-byte store before the sound call. Direct self-assignment disappears; address/normalization forms preserve it but shift subsequent temporary registers by one. Testing bounded equivalent forms in gitignored scratch. No production source/header changes or verified-byte claim. [[tickets/T-20004-gyozi-dialogue-followup]] remains In Progress.
+
+## [2026-10-16] build | T-20004 two GYOZI default linked matches
+
+Actual default funcdiff --resolve proves func_80135118 (360 bytes) and func_80135280 (416 bytes), 776 new bytes. Byte-table/counter declarations live once in main_api.h; shared setup return type follows PR #37 with no override. Each helper carries one FAKE for the unchanged-byte store before the sound call. No volatile or compiler-pass changes. Full build/prototype checks are running. Updated matching/family notes; [[tickets/T-20004-gyozi-dialogue-followup]] remains In Progress until final checks/review.
+
+## [2026-10-16] build | T-20004 final checks and In Review
+
+Both actual default linked matches total 776 bytes. Full 490-step Docker build completes; GYOZI SHA1, all 27 explicit binary SHA1 checks, header/global gates and prototype branch guard pass (0 new / 15 known). Local CODING_STANDARDS review complete: two marked FAKE unchanged-byte stores, shared declarations only, no generated game data or toolchain changes. [[tickets/T-20004-gyozi-dialogue-followup]] moves to In Review with index/board synchronized; maintainer acceptance pending.
+
+## [2026-10-16] ticket | T-20004 PR #40 opened
+
+Opened https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/40 for the two claimed GYOZI helpers (776 verified bytes). Claim issue #39 links to the scoped work; the PR documents the shared setup-type dependency on #37 and both marked no-op store fakematches. Actual linked proofs, full 490-step build, 27/27 checksums and prototype guard pass. [[tickets/T-20004-gyozi-dialogue-followup]] stays In Review for the maintainer. No repeated main merges, per maintainer guidance.
+
+## [2026-10-17] ticket | T-20004 Done (PR #40 merged)
+
+KakarottoCake's PR #40 (claim #39): GYOZI func_80135118 and func_80135280 matched, 776 bytes. Merged in one clean build with PR checks (27/27, headers, globals, prototypes, funcdiff MATCH). [[tickets/T-20004-gyozi-dialogue-followup]] Done.
+
+## [2026-10-16] ticket | T-20005 GYOZI display/dispatch claim
+
+Claimed func_8014206C (160 bytes, 801418B0.c) and func_8013C774 (364 bytes, 8013C3B0.c) in issue #41 before implementation. Created [[tickets/T-20005-gyozi-display-dispatch]] In Progress, synchronized board/index, branch from upstream main 2c272843. Excludes existing PR #37/#40 work and TT. Inspecting archived T-17600 near misses and original assembly; all tools remain Docker-only.
+
+## [2026-10-16] build | T-20005 display helper linked match
+
+Actual default funcdiff --resolve proves GYOZI func_8014206C matches 160 linked bytes. A signed local selector fixes the three reversed compare operands; the unsigned/direct variants stay six rows away. No FAKE or header change for this match. Dispatcher probes remain scratch-only while investigating load scheduling and literal placement. [[tickets/T-20005-gyozi-display-dispatch]] stays In Progress for the second claimed helper and final checks.
+
+## [2026-10-16] query | T-20005 dispatcher return liveness
+
+The dispatcher's s32 declaration/definition removes the 12-row scheduling difference and gives a zero-instruction-difference candidate. The void control still hoists byte-address/load instructions into branch scheduling; volatile diagnostics add instructions and are discarded. Private linked verification will check the owned S/T literals and actual function span before any match claim. Display helper remains verified at 160 linked bytes. [[tickets/T-20005-gyozi-display-dispatch]] stays In Progress.
+
+## [2026-10-16] build | T-20005 both GYOZI helpers matched
+
+Actual default funcdiff proves func_8014206C (160 bytes) and func_8013C774 (364 bytes), 524 new bytes. The dispatcher uses a plain shared s32 return type and existing GyoziWork field access; full GYOZI hash passes with unchanged literal/data placement and existing callers. No new FAKE or compiler changes. Whole-tree build/checksums and prototype guard are now running. [[tickets/T-20005-gyozi-display-dispatch]] stays In Progress until final checks/review.
+
+## [2026-10-16] build | T-20005 final checks and In Review
+
+Actual default linked proofs match both helpers (160 + 364 = 524 bytes). Full 489-step Docker build, GYOZI/all 27 binary SHA1 checks, header/global gates and prototype branch guard pass (0 new / 15 known). Local standards review found no issues; no new fakematches or toolchain changes. Maintainer confirmed issue #41 ownership and handles conflicts with other functions in the same files. Latest main still has both claimed INCLUDE_ASM functions. [[tickets/T-20005-gyozi-display-dispatch]] moves to In Review with board/index synchronized.
+
+2026-10-16 — T-20005: submitted PR #42 (https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/42), two GYOZI helpers / 524 verified bytes. Ticket remains In Review pending maintainer acceptance; claim #41 is linked for closure on merge.
+## [2026-10-16] ticket | T-17008 Wave 3 package w3-main-p08 started
+[[tickets/T-17008-w3-main-p08]] In Progress: three main functions (`func_80059EF0`, `func_8004F6B0`, `func_80059BE8`) in `src/main/80059B40.c` and `src/main/8004F6B0.c`, worktree tokimemo-wt/w3-main-p08, branch w3-main-p08. Part of [[tickets/T-17000-types-first-main]].
+
+## [2026-10-16] build | T-17008 three main functions matched
+[[tickets/T-17008-w3-main-p08]]: `func_80059EF0`, `func_8004F6B0` and `func_80059BE8` matched in plain C (1,364 B; one FAKE local in `func_80059BE8`), about 70 minutes, each committed on its own. Index loops with compound assignments (`func_80059EF0`); the cursor globals are the variables and `func_80098490` takes `u16` (`func_8004F6B0`); index loops over file-local array views plus a do-while for the peeled and unrolled tail (`func_80059BE8`). Notes in [[matching-notes]] (section T-17008), three rows in [[register-cheatsheet]], family page [[main-family-results]]. Headers: `include/main_api.h`.
+
+## [2026-10-16] ticket | T-17008 In Review
+[[tickets/T-17008-w3-main-p08]] Wave 3 package w3-main-p08 moved In Progress to In Review (kanban card moved): 3 of 3 matched, no guarded drafts, no T-0018 rows. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-17] ticket | T-17008 Done
+[[tickets/T-17008-w3-main-p08]] reviewed against `CODING_STANDARDS.md`: 2 findings fixed (two prototypes out of address order in `include/main_api.h`, a missing source comment on the do-while tail of `func_80059BE8`), no others. In Review to Done (kanban card moved). Matched 3 of 3 (`func_80059EF0`, `func_8004F6B0`, `func_80059BE8`, 1,364 B); one FAKE local, no guarded drafts. Build 27/27, headers, globals and proto checks OK.
+## [2026-10-16] ticket | T-20610 Promotion family: cvt_pass entry rule (In Progress)
+
+[[tickets/T-20610-promo-entry-rule]] created In Progress (compiler-gap family agent, worktree `cg-promo`): the `promo`
+rows of [[data/t0018-cases]] for unmatched functions, a uniform refinement of the `tools/cvt_pass.py` entry rule
+(T-5010) measured against every matched function, or a negative result.
+
+## [2026-10-16] decision | T-20610 cvt_pass entry rule: no refinement adopted
+
+[[tickets/T-20610-promo-entry-rule]]: scratch variants of `tools/cvt_pass.py` measured against every matched function
+(cfe ucode of all 430 IDO files dumped once, offline screen of the uopt input, recompile of the changed files only).
+Late global (first touched after the entry) rules: stored 14 matched functions changed, compared with a non-zero
+constant 18, stored and compared with a constant 0 changed but 1 gain (main `func_800726F0`) and no guarded draft
+gained (105 compiled), latest-definition constant-first at least 4. None adopted; `tools/` unchanged. Census of the
+original and the tables: [[matching-notes]] "T-20610". Source recipe: main `func_800726F0` matches in plain C under the
+production pass with truth tests and `s32 sndisp();` (new row in [[register-cheatsheet]]); `src/main/8006CB30.c` is
+owned by the wave 3 conveyor, so it is handed over. Row for `func_80072998` (4 rows with a FAKE entry read) and an
+Update paragraph in [[data/t0018-cases]]; note in [[toolchain]].
+
+## [2026-10-16] ticket | T-20610 In Review
+
+[[tickets/T-20610-promo-entry-rule]] In Progress to In Review: negative result for the pass (nothing under `tools/`
+changed), one plain-C recipe handed to the conveyor (main `func_800726F0`). Clean rebuild (`rm -rf build && configure.py
+&& ninja -j2`) 27/27 SHA1 OK, headers OK, globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known).
+Card moved to In Review in [[kanban]]. Code review against `CODING_STANDARDS.md` pending.
+
+## [2026-10-17] ticket | T-20610 Done
+
+[[tickets/T-20610-promo-entry-rule]] In Review to Done after the code review against `CODING_STANDARDS.md`: wiki-only diff (no C, header or `tools/` change), no findings, 0 functions matched in `src/` (negative result for the `cvt_pass` entry rule; the plain-C recipe for main `func_800726F0` is handed to the wave 3 conveyor). Card moved to Done in [[kanban]], index line updated.
+
+## [2026-10-17] ticket | T-20005 Done (PR #42 merged)
+
+KakarottoCake's PR #42 (claim #41): GYOZI func_8013C774 and func_8014206C matched, 524 bytes, merged in one clean build with PR checks. [[tickets/T-20005-gyozi-display-dispatch]] Done.
+## [2026-10-16] ticket | T-17006 In Progress
+
+[[tickets/T-17006-w3-main-p06]] created and In Progress: wave 3 package w3-main-p06, six functions in `src/main/80075320.c` (`func_800754C0`, `func_80076C7C`, `func_8007866C`, `func_80077CA8`, `appointment_launch`, `func_80076630`). Worktree `tokimemo-wt/w3-main-p06` from `w2-good`.
+
+## [2026-10-16] ticket | T-17006 In Review
+
+[[tickets/T-17006-w3-main-p06]] In Progress to In Review: 0 of 6 matched (about 94 minutes). Guarded drafts: `func_800754C0` (9 rows), `func_80076C7C` (3), `func_80077CA8` (28), `func_8007866C` (14); `appointment_launch` and `func_80076630` not started. Four rows in [[data/t0018-cases]], notes in [[matching-notes]] (T-17006). Clean rebuild 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Waiting for the code review.
+
+## [2026-10-17] ticket | T-17006 closer pass
+
+[[tickets/T-17006-w3-main-p06]] closer pass (Opus, about 55 minutes) on three guarded drafts: `func_80076C7C` matched (`s32` without a return value, `include/main_api.h` declaration changed), `func_8007866C` matched (bit-field store through a FAKE `CharFlags` view), `func_800754C0` still 9 rows (variants listed in [[matching-notes]], T-17006 "Closer pass"). Three rows appended to [[data/t0018-cases]]. Checks: clean build `rm -rf build && configure.py && ninja -j2` 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` 0 new disagreements, 15 known. Ticket stays In Review.
+
+## [2026-10-17] ticket | T-17006 Done
+
+[[tickets/T-17006-w3-main-p06]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a `NON_MATCHING` comment wrapped, a stale acceptance line). Rebuild OK (27/27 SHA1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 2 of 6 functions matched (`func_80076C7C` 292 B, `func_8007866C` 324 B), 2 guarded (`func_800754C0`, `func_80077CA8`), 2 left `INCLUDE_ASM`. Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17009 In Progress
+
+[[tickets/T-17009-w3-main-p09]] created and started: Wave 3 package for main `src/main/80042A00.c` (`func_80043448`, `func_80043010`, `func_800430C0`, `func_80042CB0`), worktree tokimemo-wt/w3-main-p09, branch w3-main-p09 from w2-good.
+
+## [2026-10-16] build | T-17009 matches
+
+[[tickets/T-17009-w3-main-p09]]: `func_80043448` (188 B) and `func_800430C0` (904 B) matched in plain C in `src/main/80042A00.c`. `include/main_api.h` gained `D_800B3CA4`, `D_800B3CA8[20]`, `D_800B3D00` and prototypes; `func_800430C0` is `s32` now. Details in [[matching-notes]] (section T-17009).
+
+## [2026-10-16] ticket | T-17009 In Review
+
+[[tickets/T-17009-w3-main-p09]] In Progress to In Review: 2 of 4 functions matched (1,092 bytes). `func_80043010` (32 rows) and `func_80042CB0` (about 200 rows) restored to `INCLUDE_ASM` with drafts in `drafts/T-17009/`; two rows in [[data/t0018-cases]], three rows in [[register-cheatsheet]].
+
+## [2026-10-16] build | T-17009 clean rebuild
+
+Clean rebuild of the w3-main-p09 worktree (`rm -rf build && configure.py && ninja`): 27/27 sha1 OK with `func_80043448` and `func_800430C0` as C, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17009-w3-main-p09]].
+
+## [2026-10-17] ticket | T-17009 Done
+
+[[tickets/T-17009-w3-main-p09]] In Review to Done: code review against `CODING_STANDARDS.md` found two small issues, fixed (`D_800B3CA8` declared before `D_800B3CA4` in `include/main_api.h`, address order restored; comment added on the fall-through end of `func_800430C0`). Rebuild OK (27/27 sha1, headers OK, globals OK, `sync_protos --check-branch` OK). 2 of 4 functions matched (`func_80043448`, `func_800430C0`; 1,092 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17007 In Progress
+
+[[tickets/T-17007-w3-main-p07]] created and started: wave 3 package w3-main-p07 of [[tickets/T-17000-types-first-main]], branch `w3-main-p07` from `w2-good`, owned file `src/main/80053650.c`, 5 functions.
+
+## [2026-10-17] ticket | T-17007 In Review
+
+[[tickets/T-17007-w3-main-p07]] In Progress to In Review (23:00 to 00:30 UTC, load 33 on the machine): 0 of 5 matched. `func_80055A38` guarded draft 8 to 4 differing lines (increment order of the bank pointers), `func_80054C74` guarded draft 8 differing lines (from 47 rows) with the new `SaveBank`/`D_80123320[2]` save-image types and header externs in `include/main_api.h`, `func_80054140` restored to `INCLUDE_ASM` (about 60 rows), `func_80054884` and `func_80054E6C` not started. Notes in [[matching-notes]], rows in [[data/t0018-cases]], type map row in [[main-family-results]]. Checks: clean build 27/27, check_headers OK, migrate_globals --check OK, sync_protos --check-branch OK (0 new, 15 known).
+
+## [2026-10-17] build | T-17007 closer pass: func_80055A38 matched
+
+[[tickets/T-17007-w3-main-p07]] closer pass (Opus, 00:34 to 01:05 UTC), only the two guarded near misses in `src/main/80053650.c`. `func_80055A38` (196 B) matched: the FAKE dead initial assignments on one source line give as1's original preheader order (commit `1afb3dc5`). `func_80054C74` guarded draft 8 to 2 differing lines: a `u32` loop counter replaces the FAKE named 0x2000 constants; left is the block copy's end pointer (`$t4` against `$t5`), the T-19001 ugen-state gap (commit `c31bde0a`). Notes in [[matching-notes]], two rows in [[register-cheatsheet]], update line and row in [[data/t0018-cases]], index line updated. Checks: clean build (`rm -rf build`, configure, ninja) 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK. Ticket stays In Review.
+
+## [2026-10-17] ticket | T-17007 Done
+
+[[tickets/T-17007-w3-main-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found three issues, all fixed: the one-pass write loop in the guarded `func_80054C74` draft lacked a `FAKE` comment, `func_80055A38` reached the bank through the old symbol `D_80123324` (now `D_80123320[0].data`, still matches; the checksum field form breaks the registers and is explained in the comment), and a stale "0 of 5" line in [[matching-notes]]. 1 of 5 functions matched (`func_80055A38`, 196 B), unit sha1 OK, `func_80054C74` stays guarded at 2 lines. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17012 In Progress
+
+Created [[tickets/T-17012-w3-main-p12]]: wave 3 package w3-main-p12, six functions of `src/main/80079B10.c` from drafts under `drafts/T-16000`, `drafts/T-14500/main`, `drafts/T-17000/main`. Worktree `tokimemo-wt/w3-main-p12`, branch `w3-main-p12`. Card in In Progress on [[kanban]].
+
+## [2026-10-17] ticket | T-17012 In Review
+
+[[tickets/T-17012-w3-main-p12]] In Progress to In Review: wave 3 package w3-main-p12 (main `src/main/80079B10.c`), 2 of 6 functions matched (492 bytes: `func_80079B34`, `func_8007A50C`), `func_8007B144` (21 rows) and `func_8007B64C` (51 rows) kept as `NON_MATCHING` drafts, `func_80079C70` and `func_8007BCFC` not started (75-minute mark). `func_80079B34` was a wrong callee return type (`u16 func_8007B64C()`), `func_8007A50C` an `s16` view of `D_80125D44` found by autotweak. New idioms in [[register-cheatsheet]] (three rows), details in [[matching-notes]] (section T-17012), two rows and an update line in [[data/t0018-cases]]. Card moved to In Review on [[kanban]].
+
+## [2026-10-17] ticket | T-17012 Done
+
+[[tickets/T-17012-w3-main-p12]] In Review to Done after the code review: wave 3 package w3-main-p12 (main `src/main/80079B10.c`), 2 of 6 functions matched (492 bytes: `func_80079B34`, `func_8007A50C`). No findings; one non-blocking note on the first-symbol queue access in the guarded `func_8007B64C` draft. Clean build sha1 OK; headers, globals and `sync_protos --check-branch` OK. Card moved to Done on [[kanban]].
+
+## [2026-10-17] decision | T-20600 merge with w2-good
+
+Merging `cg-regorder` into `w2-good` conflicted in `src/main/8006CB30.c`: T-17004 had matched `func_8006D6E0` with the
+same `s32` definition; kept its comment. [[tickets/T-20600-regorder-recipe-sweep]] therefore adds six new matches on
+main. `include/ovl/RPG_BAT.h`: the override wrapper for `func_8013F0F4` now covers that declaration only.

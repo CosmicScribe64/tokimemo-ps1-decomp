@@ -618,6 +618,9 @@ extern s32 D_8015EE18;
 /* T-12300: word counters cleared by func_8014A660 (sw accesses). */
 extern s32 D_8015EC7C;
 extern s32 D_8015EC80;
+extern s32 D_8015ECB8;
+extern s32 D_8015ECE0;
+extern s32 D_8015ED08;
 extern s32 D_8015ECEC;
 extern s32 D_8015ECF0;
 extern s32 D_8015ECF4;
