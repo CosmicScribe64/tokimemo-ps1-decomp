@@ -17586,3 +17586,7 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: EVENT `src/ovl/EVENT/8011C650.c`
 ## [2026-10-17] ticket | T-22009 Wave 4 package w4-p09 In Review
 
 [[tickets/T-22009-w4-p09]]: 1 of 2 matched. `func_8011D5C4` stays `INCLUDE_ASM` (hand draft at 409 diff rows, archived in `drafts/T-22009/EVENT/func_8011D5C4/body.c`; loop index and hoisted constants swap `$a0`/`$v1`, frame 48 against 64). Code review pending.
+
+## [2026-10-17] ticket | T-22009 Done
+
+[[tickets/T-22009-w4-p09]]: code review against `CODING_STANDARDS.md`, no findings. 1 of 2 matched (`func_8011EDFC` matched through the `EVENT/8011C650` data island; `func_8011D5C4` stays `INCLUDE_ASM`).
