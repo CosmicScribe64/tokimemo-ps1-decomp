@@ -16875,3 +16875,7 @@ Clean rebuild of the w3-main-p09 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-17016 In Progress
 
 [[tickets/T-17016-w3-main-p16]] created and started: wave 3 package w3-main-p16 of [[tickets/T-17000-types-first-main]], branch `w3-main-p16` from `w2-good`, owned file `src/main/800737A0.c`, 4 functions (`func_800741B8`, `func_8007505C`, `func_8007437C`, `parameter_up_down`).
+
+## [2026-10-17] ticket | T-17016 In Review
+
+[[tickets/T-17016-w3-main-p16]] In Progress to In Review: 3 of 4 functions matched in `src/main/800737A0.c` (`func_800741B8` 452 B, `func_8007505C` 708 B, `func_8007437C` 732 B; 1,892 bytes), `parameter_up_down` (1,228 B) restored to `INCLUDE_ASM` with a T-0018 `regorder` row (best form 221 funcdiff lines, `drafts/T-17016/main/parameter_up_down/`). Idioms in [[matching-notes]] (section T-17016) and four rows in [[register-cheatsheet]]: delete m2c's result variable and `return`s, a record-pointer local for the spill slot, a pointer local for a table inside `GameState`, a FAKE byte view for a reloaded flag. Header: `D_800B67AC` table in `include/main_api.h`. Checks: clean build `rm -rf build && configure.py && ninja` 27/27 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known). Waiting for the code review.
