@@ -17540,3 +17540,7 @@ Matching resumes at the user's request until weekly usage nears 95 percent. Fres
 ## [2026-10-17] ticket | T-22002 Wave 4 package w4-p02 In Progress
 
 Package w4-p02 started in worktree w4-p02 (branch from w2-good): `src/main/800789E0.c`, one function `func_80079070`. [[tickets/T-22002-w4-p02]], [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] ticket | T-22002 In Review (func_80079070 stays guarded, 4 rows)
+
+No match: viewsweep, autotweak (345 variants) and about 100 hand placements did not move the 2-instruction diff. Guard note rewritten in `src/main/800789E0.c`; findings in [[matching-notes]]. [[tickets/T-22002-w4-p02]] moved to In Review.

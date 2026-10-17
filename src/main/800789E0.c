@@ -304,9 +304,11 @@ void ovl_load_verify(void) {
     }
 }
 
-/* NON_MATCHING: T-17003, 4 differing lines (2 instructions); frame, switch, saves and schedule equal.
- * The original loads the call argument straight into $a0 (`lui a0; lbu a0`); IDO keeps `arg` in $v0
- * and folds the copy (`lui v0; lbu a0,(v0)`), the T-0018 regorder class of GYOZI func_801361D4. */
+/* NON_MATCHING: T-22002, 4 rows (2 instructions: `lui a0; lbu a0,(a0)` of the func_80042908 argument); frame, switch,
+ * saves and schedule equal. The original loads the call argument straight into $a0 (`lui a0; lbu a0`); IDO keeps
+ * the `gs` base of `arg` in $v0 (`lui v0; lbu a0,(v0)`), the T-0018 regorder class of GYOZI func_801361D4.
+ * Tried in T-22002: viewsweep, autotweak 345 variants, and about 100 placements of the 1108 store and the arg
+ * read (gs, symbol, local, direct); every form that drops the gs base moves `sb zero` above the four loads (20-26 rows). */
 #ifdef NON_MATCHING
 void func_80079070(void) {
     GameState *gs; /* FAKE: T-17003, a store through gs keeps the arg load above it and the selector in $v1 */
