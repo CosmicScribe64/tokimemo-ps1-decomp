@@ -93,7 +93,22 @@ void func_80141ACC(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_8014206C);
+void func_8014206C(void) {
+    /* Signed local preserves the original compare operand order. T-20005. */
+    s32 selector = D_801486E4;
+    if (selector && selector != 7) {
+        ((DisplayActor44 *)D_80129F40)[98].unk_03 |= 0x80;
+    }
+    if (selector && selector != 7) {
+        ((DisplayActor44 *)D_80129F40)[99].unk_03 |= 0x80;
+    }
+    if (selector && selector != 7) {
+        ((DisplayActor44 *)D_80129F40)[100].unk_03 |= 0x80;
+    }
+    ((DisplayActor44 *)D_80129F40)[101].unk_03 |= 0x80;
+    D_80148824 = 1;
+    func_8004DE1C();
+}
 
 void func_8014210C(void) {
     s16 a[4];
