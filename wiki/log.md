@@ -17685,3 +17685,11 @@ Review against `CODING_STANDARDS.md` found nothing to fix: one owned C file, FAK
 ## [2026-10-17] ticket | T-22017 In Progress
 
 Package w4-p17: DATE `src/ovl/DATE/80132000.c`, `func_8013D5FC`, `func_8013B488`, `func_8013EFA0`, `func_8013F214`, `func_8013C410`. [[tickets/T-22017-w4-p17]] In Progress.
+
+## [2026-10-17] build | T-22017 no matches
+
+`src/ovl/DATE/80132000.c`: 0 of 5. The guarded drafts of `func_8013D5FC` (93 rows) and `func_8013B488` (75 rows) are back to INCLUDE_ASM; best forms in `drafts/T-22017/DATE/` (`func_8013B488` 52 rows with byte views of `unk_75C` in every use, `func_8013D5FC` 67, `func_8013F214` 51). `func_8013EFA0` and `func_8013C410` not reached. One cheatsheet row, section in [[matching-notes]].
+
+## [2026-10-17] ticket | T-22017 In Progress to In Review
+
+0 of 5 matched, no guard left in the file. [[tickets/T-22017-w4-p17]] In Review.
