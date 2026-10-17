@@ -17559,3 +17559,7 @@ The board had 96 cards in In Review while no ticket was In Review: union-resolve
 ## [2026-10-17] ticket | T-22007 In Review
 
 [[tickets/T-22007-w4-p07]]: 2 of 2 matched. `func_8014472C` (pointer view of `D_8012070C` via `MAIN_API_OVERRIDE_D_8012070C`, FAKE empty compare for the dead average) and `func_80142A80` (FAKE unused `s32 pad`; the 21 song-line strings via `INCLUDE_RODATA`, text not copied). `tools/rodata_pieces.py` now writes pieces for owned early symbols (test added in `tools/test_rodata_tools.py`). Clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` pass. Notes in [[matching-notes]] and [[build-system]]. Review still to do.
+
+## [2026-10-17] ticket | T-22007 Done
+
+[[tickets/T-22007-w4-p07]]: code review against `CODING_STANDARDS.md` passed; one finding fixed (section 6 now names the section 10 exception for `INCLUDE_RODATA` of song text). 2 of 2 functions matched (`func_80142A80`, `func_8014472C`). Ticket Done, card moved to Done.
