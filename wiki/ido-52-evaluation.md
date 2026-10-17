@@ -153,8 +153,8 @@ A struct copy of 0x44 bytes is a 12-byte loop whose end register comes from ugen
 | after a loop | F | F | B |
 | after `if (n) f();` | F | F | B |
 | after stores through a pointer (`p[4] = 8;`) | F | F | F |
-| after a loop and a global store | B | - | B |
-| after a call | B | - | B |
+| after a loop and a global store | B | B | B |
+| after a call | B | B | B |
 
 So 5.2 and 5.3 put the copy into F at a block start (loop exit, conditional block, join), 4.1 only after an indirect
 store. In the original, the census copies after a block start are in B, as with 4.1: main `func_80054C74`, DATE

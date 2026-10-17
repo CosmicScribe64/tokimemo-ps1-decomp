@@ -1,7 +1,7 @@
 ---
 id: T-20710
 title: "True compiler-gap census and uniform allocator rule search"
-status: In Review
+status: Done
 assignee: bs-gap-census agent
 created: 2026-10-17
 updated: 2026-10-17
@@ -79,3 +79,30 @@ ascmp.py (offline 4.1-vs-5.3 comparison per C function), copyscan.py (block copi
 census_rows.json.
 
 ## Comments
+
+**Review 2026-10-17 (CODING_STANDARDS.md section 13 checklist, `git diff w2-good...bs-gap-census`): pass, one small
+finding fixed.**
+
+- Diff is 6 reproducer `.c` files under `tools/ido_eval_cases/ugen_copy_state/` and wiki pages only. No `src/`,
+  `include/`, `config/` or build-tool change, so no production toolchain switch: the adoption rule (7a) is not
+  triggered and no matched function can change. None of the files in the busy-file list is edited.
+- No compiler archive, binary, game data or asm staged: `git ls-files tools/local-compilers` is empty and
+  `.gitignore` has `/tools/local-compilers/`; no bulk instruction dumps (only first-divergence instruction pairs) and no non-ASCII in the added lines.
+- Provenance: URL, sha256 and size of both compilers stay in the table of [[ido-52-evaluation]]; the ticket and the
+  section "T-20710" record that the re-downloaded archives equal it.
+- Reproducers are C89 with `/* */` comments, each with its measured result in the header (they are evaluation
+  inputs like the other files in `tools/ido_eval_cases/`; no tool code is added, so no unit test applies).
+- Re-ran the six reproducers in Docker (image `tokimemo-decomp-ido52`, `tools/ido_eval.py obj VER frame`) with IDO
+  5.3 and 5.2: the end registers equal the headers (entry/call/store B, loop/if F, indirect store F) and 5.2's
+  object code equals 5.3's on all six. IDO 4.1's end registers in the recorded runs equal the headers.
+- Census page: layer counts add up to 55 (uopt 28, as1 12, ugen 11, other 4) and the 1/4/14/36 summary to 55.
+- Finding (fixed): the table in [[ido-52-evaluation]] and the headers of `copy_after_call.c` and
+  `copy_after_store.c` left the 5.2 result blank ("-") while the text says 5.2 matched 5.3 on all six; filled with B
+  from the re-run above.
+- Wiki: ticket status equals the kanban column; log entries appended, index lists the new ticket and data page.
+
+**Verdict:** the write-up is accepted as a rejection of a rule: no uopt tie rule is possible (2 ties), and the
+block-copy-state candidate cannot become a build step yet (no ugen source, 1,307 matched functions changed by 4.1's
+ugen as a whole). Nothing in the build changes. Open follow-ups: the two recipes for busy files (EVENT
+`func_8010B614`, GYOZI `func_8013E638`), a recipe pass for GEKO `func_80134228` and `func_80135AC8`, and the three
+missing pieces of evidence in [[ido-52-evaluation]], "Candidate rule, not adopted".

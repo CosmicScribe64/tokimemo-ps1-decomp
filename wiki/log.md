@@ -16969,3 +16969,12 @@ changes 1,307 of 6,337 matched C functions; 4.1's as1 equals 5.3's on 6,336 of 6
 ## [2026-10-17] ticket | T-20710 In Review
 
 [[tickets/T-20710-true-gap-census]] In Progress to In Review; card moved in [[kanban]]. No build step added.
+
+## [2026-10-17] ticket | T-20710 Done
+
+[[tickets/T-20710-true-gap-census]] In Review to Done; card moved in [[kanban]]. Code review against `CODING_STANDARDS.md`:
+pass. No source, header, config or build-tool change; `tools/local-compilers/` untracked and gitignored; provenance
+table unchanged. One small finding fixed: the 5.2 column of the block-copy table was blank for two cases, filled after
+re-running the six reproducers under IDO 5.3 and 5.2 in Docker (5.2's code equals 5.3's on all six). Verdict: no rule
+adopted. No uopt tie rule is possible (2 ties); IDO 4.1's block-copy state is the one uniform difference but cannot be
+built without ugen source. See [[ido-52-evaluation]], [[data/true-gaps]], [[uopt-register-allocation]].
