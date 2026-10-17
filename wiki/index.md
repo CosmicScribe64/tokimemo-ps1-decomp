@@ -41,6 +41,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-22007-w4-p07|T-22007]] Wave 4 package w4-p07: `NAME_ENT` `80142A80.c`, `func_80142A80` and `func_8014472C` both matched; `rodata_pieces.py` writes pieces for owned symbols (Done; 2 of 2 matched).
 - [[tickets/T-22009-w4-p09|T-22009]] Wave 4 package w4-p09: EVENT `8011C650.c`, `func_8011EDFC` matched through a data island (13 rows to 0), `func_8011D5C4` back to INCLUDE_ASM, hand draft at 409 rows (Done; 1 of 2 matched).
 - [[tickets/T-22004-w4-p04|T-22004]] Wave 4 package w4-p04: TAIIKU `80140810.c` and `80142240.c`, three functions: `func_80142400` guarded 349 to 26 rows, `func_8014357C` guarded 34 rows, `func_80140A90` restored to INCLUDE_ASM (Done; 0 of 3 matched).
+- [[tickets/T-22010-w4-p10|T-22010]] Wave 4 package w4-p10: GEKO `80134D10.c`, `func_80137580`, `func_80135AC8`, `func_801355E8` matched, `func_80136C20` guarded at 4 rows, `func_801367EC` back to INCLUDE_ASM (Done; 3 of 5 matched).
 - [[tickets/T-22006-w4-p06|T-22006]] Wave 4 package w4-p06: DATE `8014A1B0.c`, `func_8014A8FC` guarded at 20 rows from 34, not matched (Done; 0 of 1 matched).
 - [[tickets/T-22003-w4-p03|T-22003]] Wave 4 package w4-p03: BUNKA_SD func_80137890 and three 592-byte functions (Done; 4 of 4 matched, 2,464 bytes).
 - [[tickets/T-22002-w4-p02|T-22002]] Wave 4 package w4-p02: main `func_80079070` matched (1,204 B; unconverted `s32` call-argument local is precoloured `$a0`), 1 of 1 (Done).

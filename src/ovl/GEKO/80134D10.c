@@ -524,12 +524,11 @@ void func_801355B8(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-17700, the SHOUGATU func_8013BDE0 switch form; control flow and opcodes match, but the temporaries rotate from $t6 where the original starts at $t0 (constant 1 in $t0, %hi of unk_71E in $v0), so 224 funcdiff rows differ in register numbers throughout */
-#ifdef NON_MATCHING
 void func_801355E8(void) {
+    D_800E6280.unk_71E |= 0x40;
+    D_800E6280.unk_71E |= 0x04;
     D_80145060 = 1;
     D_80145064 = 0;
-    D_800E6280.unk_71E |= 0x44;
     switch (D_800E6280.unk_F5F) {
     case 0:
         D_80145048 = D_80144FB0;
@@ -589,9 +588,6 @@ void func_801355E8(void) {
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_801355E8);
-#endif
 
 void func_80135894(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
@@ -610,8 +606,6 @@ s32 func_80135A6C(void) {
     }
 }
 
-/* NON_MATCHING: T-17700, the census draft's merged store of unk_110D as a u8 local; 8 instructions differ: the original loads each unk_110D into $v0 with its %hi in $v0, IDO here uses $v1 */
-#ifdef NON_MATCHING
 s32 func_80135AC8(void) {
     u8 state;
 
@@ -620,7 +614,8 @@ s32 func_80135AC8(void) {
         main_state_set(0x52);
         return 0;
     }
-    state = D_800E6280.unk_110D;
+    /* FAKE: read through a u8 view so the base and the result share $v0 (T-22010). */
+    state = *(u8 *)&D_800E6280.unk_110D;
     if (state == 0) {
         func_800674B0();
         state = D_800E6280.unk_110D + 1;
@@ -633,6 +628,8 @@ s32 func_80135AC8(void) {
             D_800E6280.unk_110D = 0;
         }
         if (func_80044E8C() == 1) {
+            /* FAKE: the dead test gives the byte a second use, so uopt allocates $v0 for the load (T-22010). */
+            if ((s32)D_800E6280.unk_110D) {}
             D_800E6280.unk_110D += 1;
         } else {
             return 0;
@@ -641,9 +638,6 @@ s32 func_80135AC8(void) {
     D_80122D4C = 0;
     return func_80072B5C(1);
 }
-#else
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80135AC8);
-#endif
 
 void func_80135BC4(void) {
     D_800B3D60 = 0;
@@ -753,7 +747,7 @@ void func_80136BA8(void) {
     func_80082764(0xFF, 1, 0);
 }
 
-/* NON_MATCHING: T-17700, the KANGEI func_8013454C form; one instruction pair differs: the original fills the delay slot of the D_80145088 branch with the lui of unk_F5F, IDO here puts it in the load delay of D_80145090 */
+/* NON_MATCHING: T-22010, 4 rows; the original fills the delay slot of the D_80145088 branch with the lui of unk_F5F (the selector of the switch, loaded later), IDO here puts it in the load delay of D_80145090; moving the girl read, a pointer or a wider local and dead tests changed nothing; closer round: volatile views of either flag or the selector, goto and nested if/else forms, `!` tests, dead `(s32)` tests at four places and permute (300 s) do not move it (the girl local only holds the frame slot) */
 #ifdef NON_MATCHING
 void func_80136C20(void) {
     u8 girl;
@@ -909,26 +903,18 @@ void func_80137560(void) {
     func_80042940(0x31);
 }
 
-/* NON_MATCHING: T-10910, the file's own data (twelve variables) is defined so the schedule and shared lui at match; the first copy takes $v0 with the double assignment of D_80145060; the three constant-pointer loads take t9/t0/t1 where the original has t5/t6/t7, 15 lines */
-#ifdef NON_MATCHING
 void func_80137580(void) {
-    u8 new_var;
-
     D_80145068 = D_80145060;
     D_80145054 = D_80145048;
     D_80145058 = D_8014504C;
     D_8014505C = D_80145050;
+    D_80145060 = D_800E6280.unk_F5F * 3;
+    D_80145060 += D_8014506C;
     D_80145048 = D_80144F3C;
     D_8014504C = D_80144F70;
     D_80145050 = D_80144FA4;
-    new_var = D_800E6280.unk_F5F;
-    D_80145060 = new_var;
-    D_80145060 = (D_80145060 * 3) + D_8014506C;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80137580);
-#endif
 
 void func_80137630(void) {
     D_80145060 = D_80145068;

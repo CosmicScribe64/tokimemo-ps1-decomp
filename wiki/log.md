@@ -17665,3 +17665,19 @@ Opus closer for [[tickets/T-22011-w4-p11]]: EVENT `func_800FD00C` matches (340 b
 ## [2026-10-17] ticket | T-22011 Done
 
 Review against `CODING_STANDARDS.md` passed after two small fixes in `src/ovl/EVENT/8010BB90.c` (`DisplayActor44` `unk_38` fields instead of raw `D_800E9620` offsets; FAKE note on the `D_800EECB4` view). 2 of 5 matched: EVENT `func_8010F340` (376 bytes) and `func_800FD00C` (340 bytes). Ticket [[tickets/T-22011-w4-p11]], board in [[kanban]], notes in [[matching-notes]].
+
+## [2026-10-17] ticket | T-22010 Wave 4 package w4-p10 opened
+
+Package w4-p10 of [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/GEKO/80134D10.c`, five functions (`func_801367EC` 872 bytes first). [[tickets/T-22010-w4-p10]] In Progress.
+
+## [2026-10-17] build | T-22010 matches
+
+`src/ovl/GEKO/80134D10.c`: `func_80137580`, `func_80135AC8` and `func_801355E8` matched (statement order and split sums for the ugen rotation, a u8 view and a dead test for `$v0`, two flag statements for the address CSE). `func_80136C20` stays guarded at 4 rows, `func_801367EC` restored to INCLUDE_ASM at 44 rows. See [[matching-notes]] and [[register-cheatsheet]].
+
+## [2026-10-17] ticket | T-22010 In Progress to In Review
+
+3 of 5 matched; notes in [[matching-notes]] (T-22010), three cheatsheet rows. [[tickets/T-22010-w4-p10]] In Review.
+
+## [2026-10-17] ticket | T-22010 Done
+
+Review against `CODING_STANDARDS.md` found nothing to fix: one owned C file, FAKE and NON_MATCHING comments ticketed, no inline asm or game data. 3 of 5 matched (`func_80137580`, `func_80135AC8`, `func_801355E8`). [[tickets/T-22010-w4-p10]] Done.
