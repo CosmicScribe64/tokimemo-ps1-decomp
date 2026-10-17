@@ -15,7 +15,69 @@ void func_80150930(void) {
     tbl.f[idx]();
 }
 
+/* NON_MATCHING: T-22012, 19 rows; frame, loop shape and increment match. The loop-invariant constant 1 gets $a1 where the original has $v0 (original order: 1, i, row pointer, count; built: i, row pointer, count, 1), which shifts the loop registers and later ugen temps. Named constant local, loop forms, index types, viewsweep and autotweak did not move it. */
+#ifdef NON_MATCHING
+void func_801509A4(void) {
+    s32 temp_v1;
+    u8 var_a1;
+    s32 var_v1;
+    s32 sp30[11];
+
+    *(BunkasaiGirlList *)sp30 = D_80160AA4;
+    func_800AE120(D_800E6280.unk_10F4);
+    var_a1 = 0;
+    var_v1 = 0;
+    do {
+        if (D_800E6280.unk_1BC[var_v1].unk_0C.f.b1 == 1) {
+            sp30[var_a1] = var_v1;
+            var_a1++;
+        }
+        var_v1 += 1;
+    } while (var_v1 != 0xB);
+    temp_v1 = sp30[func_800AE0D0() % var_a1];
+    D_80122EBC = temp_v1;
+    switch (temp_v1) {
+    case 0:
+        func_80042908(0xF);
+        return;
+    case 1:
+        func_80042908(0x1C);
+        return;
+    case 2:
+        func_80042908(0x2E);
+        return;
+    case 3:
+        func_80042908(0x41);
+        return;
+    case 4:
+        func_80042908(0x55);
+        return;
+    case 5:
+        func_80042908(0x61);
+        return;
+    case 6:
+        func_80042908(0x6D);
+        return;
+    case 7:
+        func_80042908(0x79);
+        return;
+    case 8:
+        func_80042908(0x85);
+        return;
+    case 9:
+        func_80042908(0x91);
+        return;
+    case 10:
+        func_80042908(0x9A);
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80150930", func_801509A4);
+#endif
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80150930", func_80150B7C);
 
