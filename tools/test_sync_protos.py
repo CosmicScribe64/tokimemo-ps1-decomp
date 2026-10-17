@@ -267,6 +267,17 @@ class SkippedAndAddGlobalTest(Repo):
         self.assertEqual(len(text), 2)      # D_800E7384 and D_800E7388, not the base itself
         self.assertTrue(any("D_800E7388 lies inside GS D_800E7380" in t for t in text))
 
+    def test_kept_symbol_inside_an_aggregate_is_not_a_warning(self):
+        self.write("main_api.h", API.replace("extern u8 D_800E7388;", "typedef struct GS {\n    s32 a[8];\n} GS; /* size 0x20 */\n"
+                                              "extern GS D_800E7380;\nextern u8 D_800E7388;"))
+        (self.root / "config" / "migrate_globals.txt").write_text(
+            "aggregate D_800E7380 GS include/main_api.h\n"
+            "keep src/main/AAAA.c D_800E7388 proof=f:3:0123abcd second uopt variable (T-20820)\n")
+        m = sp.Model(str(self.inc), str(self.root / "src"))
+        text = [t for n, t in sp.aggregate_warnings(m)]
+        self.assertEqual(len(text), 1)      # D_800E7384 only; the kept D_800E7388 is declared on purpose
+        self.assertIn("D_800E7384", text[0])
+
     def test_add_global_declares_in_address_order_and_survives_write(self):
         self.src("main/AAAA.c", "#define MAIN_API_OVERRIDE_func_80083440 /* word */\n")   # the API fixture's guard
         inc, src = str(self.inc), str(self.root / "src")

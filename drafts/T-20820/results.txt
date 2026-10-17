@@ -1,0 +1,147 @@
+== census (tools/keepproof.py census --top 100)
+census of the counter-tail shape (keepproof.py docstring), 6958 functions, 6348 matched
+  functions with the shape:    371  (matched 299, unmatched 72)
+  matched, C found and plain:  299 of 299 needed no keep, volatile or absolute address: false-positive rate 100.0%
+  matched that needed a trick: 0     (other tags among the matched: {'fake': 47, 'local': 22})
+  whole tree: 6348 matched functions with plain C found, 0 use a keep, a volatile access or an absolute address of an aggregate field
+  held across a call (the func_8014616C form): 11 matched (plain 11, false-positive rate 100.0%), 11 unmatched
+
+unmatched functions with the shape (candidates; held first, then by size):
+  DATE      func_801462B0      3804 B  D_800E738A  uses 1  held
+  DATE2     func_801350A4      3328 B  D_800E738A  uses 1  held
+  RPG_BAT   func_80152F30      1716 B  D_800E7384  uses 1  held
+  TACO      func_80146754      1540 B  D_800E7384  uses 94  held
+  TACO      func_8014616C      1512 B  D_800E7384  uses 106  held
+  ETC       func_80141BE8       552 B  D_800E71DF  uses 12  held
+  DATE      func_8013F214       492 B  D_800E738A  uses 1  held
+  ETC       func_8013C700       492 B  D_800E7384  uses 2  held
+  TACO      func_801484E4       392 B  D_800E7384  uses 9  held
+  SHUGAKU   func_801392B4       272 B  D_800E738A  uses 1  held
+  SHUGAKU   func_801398E8       268 B  D_800E738A  uses 1  held
+  TEL       func_80136724      6580 B  D_800E738D  uses 22
+  main      func_8007132C      3992 B  D_800E699C  uses 6
+  DATE2     func_80133AF0      3584 B  D_800E7384  uses 6
+  MASTER    func_801326B4      3264 B  D_800E738D  uses 1
+  SHOUGATU  func_801350F8      2308 B  D_800E7384  uses 6
+  EN_NICHI  func_8013735C      2300 B  D_800E738D  uses 6
+  GEKO      func_80135DC0      2260 B  D_800E699E  uses 2
+  NAME_ENT  func_80140F90      2192 B  D_800E738D  uses 6
+  ETC       func_8013FFAC      2116 B  D_800E738D  uses 6
+  DATE      func_8014718C      1996 B  D_800E7384  uses 6
+  DATE2     func_801348F0      1972 B  D_800E7384  uses 6
+  NAME_ENT  func_80141820      1924 B  D_800E738D  uses 6
+  NAME_ENT  func_80142E24      1652 B  D_800E738D  uses 6
+  BUNKASAI  func_80142BE8      1516 B  D_800E643E  uses 3
+  main      func_8005215C      1260 B  D_800E71E2  uses 3
+  main      func_80061A3C      1216 B  D_800E738D  uses 4
+  ETC       func_8014790C      1128 B  D_800E738D  uses 4
+  EN_NICHI  func_801362A4      1116 B  D_800E738D  uses 5
+  TACO      func_80133E98      1076 B  D_800E738D  uses 6
+  OPTION    func_80139A30      1036 B  D_800E7208  uses 2
+  MASTER    func_8013B448       956 B  D_800E71DE  uses 3
+  BUNKASAI  func_801433C0       932 B  D_800E71DE  uses 3
+  NAME_ENT  func_8013CB44       900 B  D_800E738D  uses 6
+  NAME_ENT  func_8013DF88       900 B  D_800E738D  uses 6
+  ETC       func_80145C00       884 B  D_800E738D  uses 3
+  OPTION    func_80138080       836 B  D_800E738D  uses 1
+  OPTION    func_801378DC       832 B  D_800E738D  uses 1
+  ETC       func_8013CF2C       824 B  D_800E738C  uses 6
+  ETC       func_8013BFFC       820 B  D_800E738D  uses 6
+  main      func_8005CC40       812 B  D_800E738D  uses 6
+  NAME_ENT  prologue_line_run   780 B  D_800E71E2  uses 3
+  TEL       func_80134FE4       780 B  D_800E738D  uses 6
+  NAME_ENT  func_8013BB24       756 B  D_800E738D  uses 2
+  SHOUGATU  func_8013737C       744 B  D_800E738D  uses 1
+  OPTION    func_801373C8       736 B  D_800E738D  uses 1
+  TACO      func_80149538       692 B  D_800E7384  uses 4
+  main      func_8006A044       648 B  D_800E71E5  uses 2
+  ETC       func_80144F74       608 B  D_800E738D  uses 4
+  ETC       func_8013CCE4       584 B  D_800E738D  uses 6
+  main      xa_wait             580 B  D_800E71E2  uses 3
+  DATE2     func_80136860       560 B  D_800E738D  uses 1
+  OPTION    func_8013493C       560 B  D_800E738D  uses 1
+  TACO      func_8014F5F0       560 B  D_800E7384  uses 1
+  NAME_ENT  func_8013D2AC       544 B  D_800E738D  uses 3
+  SHOUGATU  func_801333F0       544 B  D_800E7384  uses 2
+  SHOUGATU  func_80133208       488 B  D_800E7384  uses 2
+  OPTION    func_801342A8       468 B  D_800E738D  uses 1
+  NAME_ENT  func_801460D8       432 B  D_800E738D  uses 6
+  SHOUGATU  func_8013BA7C       432 B  D_800E738D  uses 1
+  main      holiday_tel_exit    424 B  D_800E738D  uses 3
+  MASTER    func_8013B804       420 B  D_800E71DE  uses 3
+  GEKO      func_8013A3C4       416 B  D_800E7384  uses 2
+  NAME_ENT  func_80132320       396 B  D_800E738D  uses 1
+  GEKO      func_80138E10       364 B  D_800E738D  uses 1
+  SHUGAKU   func_80138E40       364 B  D_800E738D  uses 1
+  NAME_ENT  func_8013BE18       348 B  D_800E738D  uses 4
+  SHUGAKU   func_8013ABAC       344 B  D_800E738D  uses 1
+  GEKO      func_80141870       268 B  D_800E7384  uses 2
+  GEKO      func_80135AC8       252 B  D_800E738D  uses 1
+  GEKO      func_80134228       244 B  D_800E738D  uses 1
+  KANGEI    func_80135004       220 B  D_800E7384  uses 1
+
+matched functions that needed a trick:
+
+== proofs (check --from-draft)
+$ tools/docker.sh python3 tools/keepproof.py check TACO:func_8014616C --symbol D_800E7384 --from-draft
+func_8014616C: D_800E7384 in src/ovl/TACO/801447D0.c
+  plain C:      yes
+  sufficiency:  yes (symbol separate: linked function bytes equal target (1512 bytes); rows 0)
+  necessity:    yes (symbol folded into the aggregate: 165 differing rows)
+  asm sha1:     bb8762f0
+  verdict:      PROVEN
+  note:         the draft written as plain C was proven, not the committed src/ovl/TACO/801447D0.c; commit it before adding the line
+
+keep src/ovl/TACO/801447D0.c D_800E7384 proof=func_8014616C:165:bb8762f0 second uopt variable for the late read (byte-match necessity proof, T-20820)
+
+$ tools/docker.sh python3 tools/keepproof.py check TACO:func_80149538 --symbol D_800E7384 --from-draft
+func_80149538: D_800E7384 in src/ovl/TACO/80148FE0.c
+  plain C:      yes
+  sufficiency:  yes (symbol separate: linked function bytes equal target (692 bytes); rows 0)
+  necessity:    yes (symbol folded into the aggregate: 33 differing rows)
+  asm sha1:     d7dd7f6c
+  verdict:      PROVEN
+  note:         the draft written as plain C was proven, not the committed src/ovl/TACO/80148FE0.c; commit it before adding the line
+
+keep src/ovl/TACO/80148FE0.c D_800E7384 proof=func_80149538:33:d7dd7f6c second uopt variable for the late read (byte-match necessity proof, T-20820)
+
+$ tools/docker.sh python3 tools/keepproof.py check TACO:func_801484E4 --symbol D_800E7384 --from-draft
+func_801484E4: D_800E7384 in src/ovl/TACO/801480B0.c
+  plain C:      yes
+  sufficiency:  NO (symbol separate: linked function bytes differ from target (392 bytes); rows 1)
+  necessity:    yes (symbol folded into the aggregate: 32 differing rows)
+  asm sha1:     cda52ed3
+  rows with the separate symbol (- original, + built):
+    -@row 15 afa8002c  ; sw t0,44(sp)
+    +@row 15 afa2002c  ; sw v0,44(sp)
+  verdict:      NOT PROVEN
+  note:         the draft written as plain C was proven, not the committed src/ovl/TACO/801480B0.c; commit it before adding the line
+
+== rows (tools/keepproof.py rows --controls --max-fields 4)
+unit      function        separate symbol           uses   base    all   tail  draft
+TACO      func_8014616C   D_800E7384 s32               3      3    165      0  committed guarded draft
+TACO      func_80146754   D_800E7384 s32              29    158    158      2  archived draft drafts/T-16560/TACO/func_80146754
+TACO      func_80146754   D_800E78BC s32               3    158    158    158  archived draft drafts/T-16560/TACO/func_80146754
+TACO      func_80146754   all 2 fields                32    158    158      -  archived draft drafts/T-16560/TACO/func_80146754
+TACO      func_801484E4   D_800E7384 s32               2      6     32      1  committed guarded draft
+TACO      func_80149538   D_800E7384 s32              11      5     33      0  committed guarded draft
+OMIMAI    func_8013388C   D_800E71E8 s32               9    298    298    298  archived draft drafts/T-19012/OMIMAI/func_8013388C
+OMIMAI    func_8013388C   D_800E6374 u16               7    298    298    310  archived draft drafts/T-19012/OMIMAI/func_8013388C
+OMIMAI    func_8013388C   D_800E62BE u8                3    298    298    298  archived draft drafts/T-19012/OMIMAI/func_8013388C
+OMIMAI    func_8013388C   D_800E71DF u8                2    298    298    298  archived draft drafts/T-19012/OMIMAI/func_8013388C
+OMIMAI    func_8013388C   all 4 fields                21    298    298      -  archived draft drafts/T-19012/OMIMAI/func_8013388C
+main      func_800590CC   D_800E6294 s16               2     13     13     13  committed guarded draft
+main      func_800590CC   D_800E6296 s16               2     13     13     13  committed guarded draft
+main      func_800590CC   D_800E6282 u16               2     13     13     13  committed guarded draft
+main      func_800590CC   D_800E6284 u16               2     13     13     13  committed guarded draft
+main      func_800590CC   all 4 fields                 8     13     13      -  committed guarded draft
+main      func_800591D8   D_800E6294 s16               2     39     39     39  archived draft drafts/T-17000/main/func_800591D8
+main      func_800591D8   D_800E6296 s16               2     39     39     39  archived draft drafts/T-17000/main/func_800591D8
+main      func_800591D8   D_800E6282 u16               2     39     39     39  archived draft drafts/T-17000/main/func_800591D8
+main      func_800591D8   D_800E6284 u16               2     39     39     39  archived draft drafts/T-17000/main/func_800591D8
+main      func_800591D8   all 4 fields                 8     39     39      -  archived draft drafts/T-17000/main/func_800591D8
+TACO      func_8013506C   D_800E7378 u32               1     16     16     16  committed guarded draft
+SHOUGATU  func_801347E0   D_800E71DF u8                2      3      3      3  committed guarded draft
+SHOUGATU  func_801347E0   D_800E69DD u8                1      3      3      3  committed guarded draft
+SHOUGATU  func_801347E0   all 2 fields                 3      3      3      -  committed guarded draft
+main      csr_load_vram   (no scalar field used)       0     13      -      -  committed guarded draft

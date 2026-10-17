@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # Wiki Index
@@ -16,6 +16,7 @@ Read this first. Update on every ingest or new page.
 - [[kanban]] - ticket board (columns must match ticket frontmatter status)
 - [[data-types]] - structs and arrays recovered from the original's access patterns, `tools/type_recovery.py` (T-5000)
 - [[game-state]] - `GameState D_800E6280`, the main game-state struct (0x800E6280..0x800E7D10): field map, evidence, confidence, `tools/migrate_globals.py` (T-5100); one view for every unit, access audit (T-7010)
+- [[keep-lines]] - proposed rule (awaiting the lead): a `keep` line backed by a byte-match necessity proof for the frame-counter tail of TACO and similar, `tools/keepproof.py` (T-20820); census false-positive rate of the asm shape
 - Repo-root `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`, `LICENSE` (CC0) - public face of the project (T-0901)
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
@@ -35,6 +36,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-20710-true-gap-census|T-20710]] True compiler-gap census ([[data/true-gaps]], 55 drafts: uopt 28, as1 12, ugen 11) and uniform rule search: no uopt tie rule (2 ties); IDO 4.1's ugen has the original's block-copy state (6 census cases, TACO `func_8013B2A0` matches with it) but changes 1,307 matched functions; candidate rule not adopted (Done, review passed).
+- [[tickets/T-20820-keep-proof|T-20820]] migrate_globals: keep lines backed by a byte-match necessity proof (counter-tail family): `tools/keepproof.py`, proposed rule [[keep-lines]] (Done; the rule awaits the lead)
 - [[tickets/T-20600-regorder-recipe-sweep|T-20600]] Register-order family: recipe sweep over the `regorder` rows of [[data/t0018-cases]]; 7 functions matched, 4,532 bytes (Done; `func_8006D6E0` was matched the same way by T-17004, so 6 are new on main).
 - [[tickets/T-20006-gyozi-scene-callbacks|T-20006]] Two GYOZI scene callbacks matched, 708 bytes; corrected unsigned fields, no new FAKE, full build/27 hashes/prototype checks pass (Done, PR #44 merged).
 - [[tickets/T-17017-w3-main-p17|T-17017]] Wave 3 package w3-main-p17: main `80058D20.c`, 0 of 3 matched: `func_800590CC` guarded at 16 rows and `func_800591D8` at 32 (aliased width/height variables), `func_8005938C` frame and stack layout solved but still `INCLUDE_ASM` (Done)
@@ -412,6 +414,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - T-3300 tooling fixes: `tools/m2c.py --unit`, `funcdiff.py --resolve/--no-build`, K&R in `srcscan.py`, archives in `identify_version.py`; tests `tools/test_srcscan.py`, `tools/test_funcdiff.py`; details in [[matching-notes]] ("Tooling fixes T-3300")
 - `tools/identify_version.py` (T-3200): identify which release a disc image or folder is, from `config/versions.txt`; tests `tools/test_identify_version.py`
 - `tools/migrate_globals.py` (T-5100): rewrites the old `D_` names of aggregate fields (`GameState`) into field accesses, removes their declarations; `--check` in ninja (`build/globals.ok`); config `config/migrate_globals.txt`; tests `tools/test_migrate_globals.py`; [[game-state]]
+- `tools/keepproof.py` (T-20820): `check UNIT:func --symbol D_X` (necessity and sufficiency of a separate symbol, prints the `keep ... proof=` line; `--src`, `--from-draft`), `census` (the counter-tail shape in all original asm, false-positive rate on matched code), `rows` (drafts with each field as a separate symbol); `migrate_globals.py` accepts `proof=<func>:<rows>:<asm_sha1_8>` keep lines and `--verify-proofs` recompiles them; tests `tools/test_keepproof.py`, `tools/test_migrate_globals.py`; [[keep-lines]], [[decompile-workflow]]
 - `tools/aggregate_audit.py` (T-7010): how the original reaches the fields of each aggregate (direct, indexed, base-relative), read-modify-write pairs kept or hoisted, bit-field sites; used by `migrate_globals.py --check` for `keep` lines; tests `tools/test_aggregate_audit.py`; [[game-state]]
 - `tools/sync_protos.py` (T-3340): lists, generates and checks `include/main_api.h`, the one declaration of every main-exe symbol; overrides, `--prune`, `--snapshot/--compare`; tests `tools/test_sync_protos.py`; rules in CODING_STANDARDS 8a and [[decompile-workflow]]
 - T-5030 tooling fixes: `tools/funcloc.py` (find the C file by definition; used by `funcdiff.py`, `permute.py`), `funcdiff.py --unit` and string/rename resolution, `permute.py all`/K&R, `sync_protos.py` speed-up and `--check-branch`, `queue.py` cache; tests `tools/test_funcloc.py` and the tests of each tool; details in [[matching-notes]] ("Tooling fixes T-5030"), [[decompile-workflow]] ("Before finishing")

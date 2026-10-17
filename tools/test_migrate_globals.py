@@ -3,9 +3,14 @@
 
 Run: tools/docker.sh python3 tools/test_migrate_globals.py
 """
+import contextlib
+import io
 import os
+import sys
 import tempfile
+import types
 import unittest
+from unittest import mock
 
 import migrate_globals as mg
 
@@ -204,6 +209,193 @@ class MigrateTest(unittest.TestCase):
         msgs = mg.check(self.root, *mg.load_config(self.root))
         self.assertEqual(len(msgs), 1)
         self.assertIn("src/main/b.c:2: D_80100000 is the State struct", msgs[0])
+
+
+    # ---- keep lines backed by a byte-match necessity proof (T-20820) ----
+
+    FUNC_ROWS = ["3C0E8010", "8DCE0004", "25CF0001", "3C018010", "AC2F0004", "03E00008", "00000000"]
+    PLAIN = '#include "main_api.h"\nvoid f(void) { D_80100002 = 1; }\n'
+
+    def put_func_asm(self, words=None, folder="matchings", name="f"):
+        """Original asm of `name` (plain C, matched) in object 80010000, one row per word."""
+        words = words or self.FUNC_ROWS
+        d = os.path.join(self.root, "asm", folder, "main", "80010000")
+        os.makedirs(d, exist_ok=True)
+        rows = ["    /* %X %08X %s */  nop" % (4 * i, 0x80010000 + 4 * i, w) for i, w in enumerate(words)]
+        self.put("asm/%s/main/80010000/%s.s" % (folder, name),
+                 "\n".join(["glabel " + name] + rows + ["endlabel " + name]) + "\n")
+
+    def proof_tree(self, src=None, sha=None, rows=5, asm=True):
+        """A tree whose keep line cites a proof for f; returns the sha of f's asm (or None)."""
+        if asm:
+            self.put_func_asm()
+        real = mg.asm_sha1(self.get("asm/matchings/main/80010000/f.s")) if asm else "0123abcd"
+        self.put("config/migrate_globals.txt", CONFIG + "keep src/main/80010000.c D_80100002 proof=f:%d:%s "
+                 "second uopt variable\n" % (rows, sha or real))
+        self.put("src/main/80010000.c", src or self.PLAIN)
+        self.assertEqual(self.apply(), 0)           # folds the other absorbed names, keeps D_80100002
+        return real
+
+    def check_lines(self):
+        return mg.check(self.root, *mg.load_config(self.root))
+
+    def test_parse_old_and_new_keep_syntax(self):
+        self.put("config/migrate_globals.txt", CONFIG +
+                 "keep src/main/a.c D_80100002 plain reason words\n"
+                 "keep src/main/b.c D_80100004 proof=f:242:0123abcd second uopt variable\n")
+        _aggs, keep = mg.load_config(self.root)
+        self.assertEqual(keep["src/main/a.c"], {"D_80100002"})
+        self.assertEqual(keep["src/main/a.c"].proofs, {})
+        self.assertEqual(keep["src/main/b.c"], {"D_80100004"})
+        proof = keep["src/main/b.c"].proofs["D_80100004"][0]
+        self.assertEqual((proof.func, proof.rows, proof.sha), ("f", 242, "0123abcd"))
+        self.assertEqual(keep["src/main/a.c"].plain, {"D_80100002"})
+        self.assertEqual(keep["src/main/b.c"].plain, set())
+        self.assertEqual(str(proof), "proof=f:242:0123abcd")
+
+    def test_malformed_proof_is_a_config_error(self):
+        for bad in ("proof=f:0:0123abcd reason",          # necessity needs at least one differing row
+                    "proof=f:3:0123ABCD reason",          # upper case digits
+                    "proof=f:3:0123abc reason",           # seven digits
+                    "proof=f:3:0123abcd",                 # no reason
+                    "proof=f:x:0123abcd reason",
+                    "proof=:3:0123abcd reason"):
+            self.put("config/migrate_globals.txt", CONFIG + "keep src/main/a.c D_80100002 " + bad + "\n")
+            with self.assertRaises(SystemExit, msg=bad):
+                mg.load_config(self.root)
+
+    def test_asm_sha1_hashes_the_words_only(self):
+        a = ("glabel f\n    /* 0 80010000 3C0E8010 */  lui $t6, %hi(D_80100002)\n"
+             "    /* 4 80010004 03E00008 */  jr $ra\nendlabel f\n")
+        renamed = a.replace("D_80100002", "counter").replace("80010000", "80020000")
+        self.assertEqual(mg.asm_sha1(a), mg.asm_sha1(renamed))
+        self.assertEqual(len(mg.asm_sha1(a)), 8)
+        self.assertNotEqual(mg.asm_sha1(a), mg.asm_sha1(a.replace("3C0E8010", "3C0E8011")))
+        rodata = a + "glabel jtbl\n    /* 8 80010008 00000000 */  .word 0\n"
+        self.assertEqual(mg.asm_sha1(a), mg.asm_sha1(rodata))
+
+    def test_proof_accepts_plain_c_with_matching_sha(self):
+        sha = self.proof_tree()
+        self.assertEqual(self.check_lines(), [])
+        aggs, _keep = mg.load_config(self.root)
+        self.assertEqual(mg.keep_evidence(self.root, aggs, "src/main/80010000.c", "D_80100002",
+                                          mg.Proof("f", 5, sha)), (True, "f"))
+
+    def test_stale_sha_is_rejected(self):
+        self.proof_tree(sha="0123abcd")
+        msgs = self.check_lines()
+        self.assertEqual(len(msgs), 1)
+        self.assertIn("proof=f:5:0123abcd is stale", msgs[0])
+        self.assertIn(mg.asm_sha1(self.get("asm/matchings/main/80010000/f.s")), msgs[0])
+
+    def test_changed_original_makes_the_line_stale(self):
+        self.proof_tree()
+        self.assertEqual(self.check_lines(), [])
+        self.put_func_asm(words=self.FUNC_ROWS[:-1] + ["00000001"])
+        self.assertIn("is stale", self.check_lines()[0])
+
+    def test_include_asm_or_guarded_function_is_rejected(self):
+        for src in ('#include "main_api.h"\nINCLUDE_ASM("asm/nonmatchings/main/80010000", f);\n',
+                    '#include "main_api.h"\n#ifdef NON_MATCHING\nvoid f(void) { D_80100002 = 1; }\n#else\n'
+                    'INCLUDE_ASM("asm/nonmatchings/main/80010000", f);\n#endif\n',
+                    '#include "main_api.h"\nvoid g(void) { D_80100002 = 1; }\n'):
+            self.proof_tree(src=src)
+            msgs = self.check_lines()
+            self.assertIn("is not plain C", msgs[0], src)
+            self.assertTrue(all("not plain C" in m or "used outside f" in m for m in msgs), msgs)
+
+    def test_proof_without_original_asm_is_rejected(self):
+        self.proof_tree(asm=False)
+        msgs = self.check_lines()
+        self.assertEqual(len(msgs), 1)
+        self.assertIn("no original asm of f", msgs[0])
+
+    def test_hoisted_pair_evidence_is_unchanged_by_the_proof_path(self):
+        self.put_asm(hoisted=True)
+        self.put("config/migrate_globals.txt", CONFIG + "keep src/main/80010000.c D_80100002 plain reason\n")
+        self.put("src/main/80010000.c", self.PLAIN)
+        self.assertEqual(self.apply(), 0)
+        self.assertEqual(self.check_lines(), [])
+        # a proof line is backed by the hoisted pair of its object as well: either evidence suffices
+        self.put("config/migrate_globals.txt", CONFIG +
+                 "keep src/main/80010000.c D_80100002 proof=f:5:0123abcd reason\n")
+        self.assertEqual(self.check_lines(), [])
+        # and a plain keep line without any evidence keeps failing as before
+        self.put_asm(hoisted=False)
+        self.put("config/migrate_globals.txt", CONFIG + "keep src/main/80010000.c D_80100002 plain reason\n")
+        msgs = self.check_lines()
+        self.assertEqual(len(msgs), 1)
+        self.assertIn("no evidence for a separate symbol", msgs[0])
+        self.assertIn("keepproof.py", msgs[0])
+
+    def test_verify_proofs_runs_the_recompiling_check(self):
+        self.proof_tree()
+        fake = types.ModuleType("keepproof")
+        fake.verify_config = mock.Mock(return_value=[])
+        with mock.patch.dict(sys.modules, {"keepproof": fake}), contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(mg.main(["--root", self.root, "--verify-proofs"]), 0)
+            fake.verify_config.assert_called_once()
+            fake.verify_config.return_value = ["config/migrate_globals.txt: proof not reproduced"]
+            self.assertEqual(mg.main(["--root", self.root, "--verify-proofs"]), 1)
+            fake.verify_config.reset_mock()
+            self.assertEqual(mg.main(["--root", self.root, "--check"]), 0)       # --check never compiles
+            fake.verify_config.assert_not_called()
+
+    TWO = ('#include "main_api.h"\nvoid f(void) { D_80100002 = 1; }\nvoid g(void) { D_80100002 = 2; }\n'
+           'void h(void) { D_80100000.unk_02 = 3; }\n')
+
+    def put_two_func_asm(self):
+        self.put_func_asm()
+        self.put_func_asm(words=self.FUNC_ROWS[:-1] + ["00000002"], name="g")
+        d = "asm/matchings/main/80010000/"
+        return (mg.asm_sha1(self.get(d + "f.s")), mg.asm_sha1(self.get(d + "g.s")))
+
+    def test_one_proof_line_per_function_of_the_same_symbol(self):
+        sf, sg = self.put_two_func_asm()
+        self.put("config/migrate_globals.txt", CONFIG +
+                 "keep src/main/80010000.c D_80100002 proof=f:5:%s first\n"
+                 "keep src/main/80010000.c D_80100002 proof=g:9:%s second\n" % (sf, sg))
+        self.put("src/main/80010000.c", self.TWO)
+        self.assertEqual(self.apply(), 0)
+        _aggs, keep = mg.load_config(self.root)
+        self.assertEqual([p.func for p in keep["src/main/80010000.c"].proofs["D_80100002"]], ["f", "g"])
+        self.assertEqual(self.check_lines(), [])
+        # g's original changes: its line goes stale, f's stays good
+        self.put_func_asm(words=self.FUNC_ROWS[:-1] + ["00000003"], name="g")
+        msgs = self.check_lines()
+        self.assertEqual(len(msgs), 1)
+        self.assertIn("proof=g:9:", msgs[0])
+
+    def test_kept_symbol_used_outside_its_proven_function_is_flagged(self):
+        sf, _sg = self.put_two_func_asm()
+        self.put("config/migrate_globals.txt", CONFIG +
+                 "keep src/main/80010000.c D_80100002 proof=f:5:%s first\n" % sf)
+        self.put("src/main/80010000.c", self.TWO)
+        self.assertEqual(self.apply(), 0)                     # --apply leaves the kept symbol everywhere
+        msgs = self.check_lines()
+        self.assertEqual(len(msgs), 1)
+        self.assertIn("src/main/80010000.c:3: keep D_80100002 used outside f", msgs[0])
+        # a plain (hoisted pair) line for the same symbol covers the whole file
+        self.put_asm(hoisted=True)
+        self.put("config/migrate_globals.txt", CONFIG +
+                 "keep src/main/80010000.c D_80100002 proof=f:5:%s first\n"
+                 "keep src/main/80010000.c D_80100002 plain reason\n" % sf)
+        self.assertEqual(self.check_lines(), [])
+
+    def test_function_span(self):
+        text = 'void f(void) {\n    s("}"); /* } */\n    if (1) { g(); }\n}\nvoid h(void) {\n}\n'
+        s, e = mg.function_span(text, "f")
+        self.assertEqual(text[s:e].count("{"), 2)
+        self.assertEqual(text[e:].lstrip(), "void h(void) {\n}\n")
+        self.assertIsNone(mg.function_span(text, "zz"))
+
+    def test_plain_c(self):
+        self.assertTrue(mg.plain_c("void f(void) {\n}\n", "f"))
+        self.assertTrue(mg.plain_c("s32 f(a)\ns32 a;\n{\n return a;\n}\n", "f"))
+        self.assertFalse(mg.plain_c("INCLUDE_ASM(\"asm/x\", f);\n", "f"))
+        self.assertFalse(mg.plain_c("#ifdef NON_MATCHING\nvoid f(void) {\n}\n#else\n"
+                                    "INCLUDE_ASM(\"a\", f);\n#endif\n", "f"))
+        self.assertFalse(mg.plain_c("void g(void) {\n f();\n}\n", "f"))
 
 
 if __name__ == "__main__":
