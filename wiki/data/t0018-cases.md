@@ -1,10 +1,12 @@
 ---
 type: data
-updated: 2026-10-16
+updated: 2026-10-17
 sources: ["wiki/matching-notes.md", "tools/queue.py"]
 ---
 
 # T-0018 cases (register promotion of globals and related register-order gaps)
+
+Update (T-17007 closer): main `func_80055A38` (the `regorder` rows below, T-9140 to T-17007) matches with its FAKE dead initial assignments written on one source line (`n = 0; b = 0; p = D_80123324; r = D_80123120; q = D_80123324;`): as1 then emits the hoisted starts `q`, `r`, `b` as the original does. Main `func_80054C74` is down to 2 rows (new row at the end).
 
 Update (T-20003): RPG_BAT `func_80138F6C` matches 1,268 actual default linked bytes with direct timer updates/decrement and two marked FAKE sites (frame padding and selector word read). Full RPG_BAT and all 27 binary SHA1 checks pass. Historical rows below remain unchanged; [[tickets/T-20003-rpg-timer-callees]] supersedes its unmatched status. Independent matches for `func_80157158` and `func_80156D78` were dropped from this contribution after upstream T-17102 landed.
 
@@ -2298,3 +2300,4 @@ Update (T-17117): RPG_BAT `func_8013CC90` (row `hoist`, T-9740: `D_800E7200` loa
 | RPG_BAT/801525B0 | `func_80153784` | sched | T-17112: 19 rows, guarded (8 are branch offsets). Everything matches except case 1: the original loads `D_8015ED28`/`D_8015ED38` before the `D_8015EC38` store, `D_8015EC40` after it and `D_8015ED30` right before the compare (extra `nop`). `(&D_8015EC38)[2]` keeps the `D_8015EC40` load behind the store but moves the `D_8015ED28`/`D_8015ED38` loads behind it too; the same view for `D_8015ED30` gives the `nop` and 32 rows. 36 statement orders, line groupings, m2c temps and 179 autotweak variants did not help. |
 | main/80053650 | `func_80054C74` | regorder | T-17007: 8 rows, guarded. Two 0x2000 constants (write size and `bne` loop bound) need two named values; with the write size raised in priority by an empty test (FAKE) the registers agree, but the two `li` are emitted bound-first (`s3`, `s2`) where the original has `s2`, `s3`, and the struct-copy end pointer is `$t4` instead of `$t5` (the original skips two ugen temporaries). |
 | main/80053650 | `func_80055A38` | regorder | T-17007: 4 rows (was 8). `r += 0xF00; q += 0xF00;` fixes the swapped `a1`/`a2` increments; left: the hoisted starts are emitted `b`, `r`, `q` instead of `q`, `r`, `b`, so `move v1,zero` and `addiu a2` are swapped. 120 orders of the initial assignments and 128 autotweak edits stay at 4 or more. |
+| main/80053650 | `func_80054C74` | regorder | T-17007 closer: 2 rows, guarded (supersedes the 8-row T-17007 row). A `u32` loop counter (`for (; i < 0x2000; i += 0x2000)`) gives the `bne` bound its own 0x2000 register next to the write size, so the FAKE named constants are gone. Left: the block copy `D_80123320[1] = D_80123320[0]` after the `if/else` of two calls has its end pointer in `$t4` (one ugen skip, two `.set noat` in `cc -S`) where the original has `$t5` (two skips): the T-19001 state gap; the switch form and an empty test after the `if/else` keep the one-skip state. |

@@ -33,7 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-17007-w3-main-p07|T-17007]] Wave 3 package w3-main-p07: main `80053650.c`, 0 of 5 matched; `func_80055A38` (4 lines) and `func_80054C74` (8 lines) guarded, `SaveBank` save-image types (In Review).
+- [[tickets/T-17007-w3-main-p07|T-17007]] Wave 3 package w3-main-p07: main `80053650.c`, 1 of 5 matched (`func_80055A38`, closer pass); `func_80054C74` guarded (2 lines), `SaveBank` save-image types (In Review).
 - [[tickets/T-20500-emulator-assisted-naming|T-20500]] Emulator-assisted naming and constants pass, phase 2 head start (Backlog; waits for free CPU).
 - [[tickets/T-17119-w3-rpg-bat-p19|T-17119]] Wave 3 package w3-rpg-bat-p19: RPG_BAT `80148F70.c`, `80141060.c`, 2 of 2 matched (`func_80148F70`, `func_80141060`, 4,208 B; m2c draft rewritten as plain per-arm stores, byte-array group loops, frame word from a named local; Done)
 - [[tickets/T-17117-w3-rpg-bat-p17|T-17117]] Wave 3 package w3-rpg-bat-p17: RPG_BAT `8013CC90.c`, `func_8013CC90` matched, 1 of 1 (928 B; promoted global updated in place, `u32` file view of `D_8015ED98`, one FAKE; Done)
