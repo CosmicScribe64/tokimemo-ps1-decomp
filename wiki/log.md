@@ -16860,3 +16860,11 @@ Clean rebuild of the w3-main-p09 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-17015 In Progress
 
 [[tickets/T-17015-w3-main-p15]] created and started (wave 3 package, branch `w3-main-p15` from `w2-good`): `src/main/8004C3F0.c`, four functions from the draft list (`srn_vram_set`, `srn_set`, `mod_trans_vram`, `mod_set`). Card in [[kanban]] under In Progress.
+
+## [2026-10-17] ticket | T-17015 In Review
+
+[[tickets/T-17015-w3-main-p15]] In Progress to In Review: 1 of 4 functions matched (`srn_vram_set`, 664 bytes, plain C, no FAKE; `SrnRec28` added to `include/game.h`, `mod_trans_vram` and `move_255_line` prototypes and an `s32 srn_vram_set` in `include/main_api.h`). `srn_set` stays `INCLUDE_ASM` (hand draft 64 rows, `drafts/T-17015/main/srn_set/`, row in [[data/t0018-cases]]); `mod_trans_vram` and `mod_set` not tried. Notes in [[matching-notes]] (section T-17015), two rows in [[register-cheatsheet]]. Card moved to In Review in [[kanban]]. Awaiting code review.
+
+## [2026-10-17] build | T-17015 clean rebuild
+
+Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninja`): 27/27 sha1 OK with `srn_vram_set` as C, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17015-w3-main-p15]].
