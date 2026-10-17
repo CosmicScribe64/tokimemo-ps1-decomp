@@ -17731,3 +17731,7 @@ Wave 4 package w4-p20 started: three SHOUGATU functions in `src/ovl/SHOUGATU/801
 ## [2026-10-17] ticket | T-22020 In Review
 
 1 of 3 matched; `func_80138240` and `func_80139334` not started (time), both still `INCLUDE_ASM`. Final checks run before the move. [[tickets/T-22020-w4-p20]], [[kanban]].
+
+## [2026-10-17] build | T-22020 final checks
+
+Clean rebuild 27/27 units OK, check_headers, migrate_globals --check and sync_protos --check-branch all OK on branch w4-p20. [[tickets/T-22020-w4-p20]] stays In Review.
