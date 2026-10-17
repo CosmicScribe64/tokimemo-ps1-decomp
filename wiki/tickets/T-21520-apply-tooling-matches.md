@@ -1,7 +1,7 @@
 ---
 id: T-21520
 title: Apply the tooling-round matches
-status: In Review   # Backlog | Ready | In Progress | In Review | Done  (must match column in wiki/kanban.md)
+status: Done   # Backlog | Ready | In Progress | In Review | Done  (must match column in wiki/kanban.md)
 assignee: tr-apply
 created: 2026-10-17
 updated: 2026-10-17
@@ -25,7 +25,7 @@ Targets:
 - [x] Tricks (gstate pointer, chain stores, grouped lines, implicit-int view, kept symbol) carry a `FAKE` comment with ticket and reason (CODING_STANDARDS sections 7 and 9).
 - [x] No edit to `src/ovl/TT/*` or the main `dialogue_render`.
 - [x] Clean `rm -rf build && python3 configure.py && ninja` gives 27/27 sha1 OK; `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` pass.
-- [ ] Code review against `CODING_STANDARDS.md`, findings resolved, then Done.
+- [x] Code review against `CODING_STANDARDS.md`, findings resolved, then Done (no findings).
 
 ## Notes
 
@@ -54,3 +54,5 @@ Findings while applying:
 - `migrate_globals.py --verify-proofs` was not run on the whole config; `keepproof.py check UNIT:func --symbol D_800E7384` on the committed files says PROVEN for both.
 
 ## Comments
+
+- 2026-10-17: Code review against `CODING_STANDARDS.md`, In Review to Done. No findings. Checked: all eight functions are plain C (no `asm`, `volatile`, `register`, `//` or `#pragma` in the added lines) and `funcdiff.py --resolve` says MATCH with the byte counts of the table (1,064 / 600 / 188 / 236 / 348 / 804 / 1,512 / 692 = 5,444); every guarded `NON_MATCHING` block and its `INCLUDE_ASM` fallback is gone with its stale comment; every trick has a `FAKE` comment with reason and ticket (gstate pointer in four functions, the chain store in `func_80143F24`, the grouped line in `func_8013E638`, the `func_800AE090` implicit-int override define and the `s32` result of `func_80134B94`, the `D_800E7384` tail in both TACO functions); the added declarations sit at block top (C89); `include/main_api.h` gains one declaration (`extern s32 D_800E7384;`) with the reason in a comment, and `tools/check_headers.py` says headers OK; the two `keep` lines in `config/migrate_globals.txt` carry `proof=func:rows:sha1` and the proof comment, and `migrate_globals.py --check` (globals OK), `migrate_globals.py --verify-proofs` (both PROVEN: sufficiency yes, necessity yes, 165 and 33 rows) and `keepproof.py check ... --symbol D_800E7384` agree; `sync_protos.py --check-branch` OK (0 new disagreements). No edit under `src/ovl/TT/` and none to the main `dialogue_render`; no game data, drafts or binaries in the diff (only `src/`, `include/`, `config/`, `wiki/`); eleven commits each start with the ticket id and carry the trailer. Open point, not a finding of this ticket: the `keep`-rule sentence for `CODING_STANDARDS.md` is the lead's decision ([[keep-lines]]); until then the two lines stand on the existing section 8 allowance (a use that matches only through the old symbol is listed with its reason in `config/migrate_globals.txt`).

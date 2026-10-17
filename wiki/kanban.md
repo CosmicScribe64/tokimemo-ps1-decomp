@@ -45,9 +45,9 @@ kanban-plugin: board
 ## In Progress
 
 ## In Review
-- [ ] [[tickets/T-21520-apply-tooling-matches|T-21520 Apply the tooling-round matches]]
 
 ## Done
+- [ ] [[tickets/T-21520-apply-tooling-matches|T-21520 Apply the tooling-round matches]]
 - [ ] [[tickets/T-20007-large-dialogue-renderer|T-20007 Recover the large dialogue renderer (5,588 bytes)]]
 - [ ] [[tickets/T-20910-types-option|T-20910 Targeted type pass: OPTION]]
 - [ ] [[tickets/T-20930-types-ending|T-20930 Targeted type pass: ENDING]]

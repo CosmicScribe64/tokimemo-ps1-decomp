@@ -35,7 +35,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
-- [[tickets/T-21520-apply-tooling-matches|T-21520]] Apply the tooling-round matches (T-20810 viewsweep, T-20820 keep proofs, T-20830 autotweak recipes) to `src/` on the current tree: 8 matches (5,444 bytes) and two `keep` proof lines in `config/migrate_globals.txt` (In Review).
+- [[tickets/T-21520-apply-tooling-matches|T-21520]] Apply the tooling-round matches (T-20810 viewsweep, T-20820 keep proofs, T-20830 autotweak recipes) to `src/` on the current tree: 8 matches (5,444 bytes) and two `keep` proof lines in `config/migrate_globals.txt` (Done, review passed).
 - [[tickets/T-20910-types-option|T-20910]] Targeted type pass: OPTION: BG cell map, cells and index types (GsMAP/GsCELL layouts) in `OPTION.h`, the menu-page template, redraft of the 32 unmatched functions (sum 5,184 to 3,504 diff rows, 12 better, none worse), 1 match / 948 bytes (Done, review passed).
 - [[tickets/T-20930-types-ending|T-20930]] Targeted type pass: ENDING, second pass after T-18300: message-script, scene-image and portrait tables as aggregates (427 scalars folded), callback tables in the header, dialogue context views; 3 matches (`func_80132420`, `func_80132B04`, `func_80139B48`, 2,900 bytes), headers alone moved no draft score, hand drafts in `drafts/T-20930/` (Done, review passed).
 - [[tickets/T-21000-event-goto-loops-and-seq-views|T-21000]] EVENT: mark or remove the goto loops in func_80118DAC and type the func_8010A6E4 views (Backlog; followup of T-9940).

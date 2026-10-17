@@ -17447,3 +17447,7 @@ Re-derived each tooling-round result on the current tree and committed one match
 ## [2026-10-17] ticket | T-21520 In Review
 
 [[tickets/T-21520-apply-tooling-matches]] moved to In Review: 8 of 8 functions applied (5,444 bytes), 0 failed. Clean `rm -rf build && python3 configure.py && ninja` gives 27/27 sha1 OK; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` pass; `funcdiff.py --resolve` says MATCH for all eight. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-17] ticket | T-21520 Done
+
+Code review against `CODING_STANDARDS.md`, no findings: 8 matched functions (5,444 bytes), all plain C and `funcdiff.py --resolve` MATCH, every trick carries a `FAKE` comment with ticket and reason, the two `keep` lines cite their necessity proofs (`migrate_globals.py --verify-proofs`: both PROVEN), `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` pass, nothing under `src/ovl/TT/` or `dialogue_render` changed, no game data. [[tickets/T-21520-apply-tooling-matches]] Done; the `keep` rule text for `CODING_STANDARDS.md` stays open in [[keep-lines]].
