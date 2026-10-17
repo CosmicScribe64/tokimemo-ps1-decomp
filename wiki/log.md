@@ -17646,3 +17646,7 @@ Two of four TACO functions matched: `func_801484E4` (392 bytes; kept `D_800E7384
 ## [2026-10-17] ticket | T-22008 Done
 
 [[tickets/T-22008-w4-p08]]: code review against `CODING_STANDARDS.md` passed, no findings. 0 of 4 functions matched (`func_80132320` 14 lines and `func_80134110` 26 lines stay guarded, `func_80134248` 455 lines, `func_80138C1C` stays `INCLUDE_ASM`). Ticket Done, card moved to Done.
+
+## [2026-10-17] ticket | T-22015 Wave 4 package w4-p15 opened
+
+[[tickets/T-22015-w4-p15]] (In Progress) under [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/MASTER/80132140.c`, `func_80132444` and `func_801326B4`. Branch `w4-p15` from `w2-good`.
