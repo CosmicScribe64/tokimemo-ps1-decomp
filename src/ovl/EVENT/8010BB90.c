@@ -942,6 +942,7 @@ void func_8010F340(void) {
     func_8003535C();
     func_8003580C();
     D_801243B0 = D_800B0F2C;
+    /* FAKE: u32 view of the s32 D_800EECB4; the plain store changes the register of the later D_800B0F30 compare; T-22011 */
     *(u32 *)&D_800EECB4 = D_800B0F30;
     D_80094730 = 0;
     D_801252E4 = 1;
@@ -955,8 +956,8 @@ void func_8010F340(void) {
     /* FAKE: signed byte view of the argument keeps the one lbu in $a0 (no move to the call register); T-22011 */
     func_8004BC20(*(s8 *)&D_800B0F30);
     ((DisplayActor44 *)D_800E9620)[31].unk_07 = 0;
-    *(s32 *)(D_800E9620 + 0x874) |= 0x81000000;
-    *(s32 *)(D_800E9620 + 0x830) |= 0x81000000;
+    ((DisplayActor44 *)D_800E9620)[31].unk_38 |= 0x81000000;
+    ((DisplayActor44 *)D_800E9620)[30].unk_38 |= 0x81000000;
     ((Rec24 *)D_800EC190)[0].unk_00 |= 0x81000000;
     ((Rec24 *)D_800EC190)[1].unk_00 |= 0x81000000;
     func_8004C360();
