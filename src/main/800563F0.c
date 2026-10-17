@@ -204,11 +204,12 @@ void func_800570B8(s32 arg0, u8 arg1) {
     func_80049A40(-0x90, 0x69, 0x100, 0x10, 1, 0, 1);
 }
 
-#ifdef NON_MATCHING
 void func_8005715C(s32 arg0) {
-    u8 *p;
-    s32 i;
+    /* FAKE: unused scalar reserving the original's fourth stack slot (declared first = highest). T-17014 */
+    s32 pad;
     s32 d;
+    s32 i;
+    u8 *p;
 
     p = D_800B5904;
     for (i = 0; i < 22; i++) {
@@ -241,6 +242,3 @@ void func_8005715C(s32 arg0) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800563F0", func_8005715C);
-#endif
