@@ -17034,3 +17034,7 @@ Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-17015 Done
 
 [[tickets/T-17015-w3-main-p15]] In Review to Done: code review against `CODING_STANDARDS.md` found one small issue, fixed (matching-notes comment added above `srn_vram_set`; comment only) and one non-blocking follow-up (the `SrnRec28` view of `D_80121750` is a cast because `srn_init` and BUNKA_SD use the byte view). Rebuild OK (sha1, headers OK, globals OK, `sync_protos --check-branch` OK). 1 of 4 functions matched (`srn_vram_set`; 664 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-17] ticket | T-17022 started
+
+[[tickets/T-17022-w3-main-p22]] created In Progress: wave 3 package w3-main-p22, four main functions of `src/main/80085E30.c` (`Fade_Out_Main`, `Fade_In_Main`, `func_8008647C`, `Scroll`). Worktree `tokimemo-wt/w3-main-p22` from `w2-good`.
