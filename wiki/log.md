@@ -17604,3 +17604,6 @@ Started wave 4 package w4-p11 of [[tickets/T-22000-wave-4-conveyor]]: EVENT `fun
 ## [2026-10-17] ticket | T-22011 In Review
 
 EVENT `func_8010F340` (376 bytes) matched; `func_800FD00C` (3 rows), `func_800FC040` (24 rows) and `func_8010F74C` (29 rows) stay guarded; `func_8010F55C` restored to `INCLUDE_ASM`. Clean build 27/27, check_headers, migrate_globals --check and sync_protos --check-branch pass. Details in [[matching-notes]], ticket [[tickets/T-22011-w4-p11]], board in [[kanban]]. Sources: `src/ovl/EVENT/8010BB90.c`, `src/ovl/EVENT/800FBBF0.c`, `include/main_api.h`, `drafts/T-22011/EVENT/func_8010F55C/body.c`.
+
+## [2026-10-17] build | T-22011 closer: func_800FD00C matched
+Opus closer for [[tickets/T-22011-w4-p11]]: EVENT `func_800FD00C` matches (340 bytes). It reads the scalar globals through the `DisplayActor44` table at `D_800EAFA0` and the `Rec24` table at `D_800EC190`, and assigns them in one chain with `unk_07` innermost. The `pad1` FAKE is gone. Notes in [[matching-notes]], section T-22011. Clean rebuild 27/27; check_headers, migrate_globals and sync_protos OK.
