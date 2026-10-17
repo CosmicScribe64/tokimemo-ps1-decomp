@@ -1,10 +1,10 @@
 ---
 id: T-12090
 title: Match cx9 BUNKA_SD functions
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: []
 ---
 
@@ -54,6 +54,8 @@ Restored the fifth switch entry, replaced the shared m2c goto with separate if/e
 ### func_801388D0: MATCH, 268 bytes
 
 A bounded direct transfer from neighboring matched state machines: s32 no-return keeps the byte-assignment result live, plain +=1 uses the canonical byte conversion, and removing the spurious func_80048390 argument matches the original nop delay slot. Exact linked and overlay SHA1 pass with headers/globals OK. No FAKE. Six matches total4172 text bytes plus124 table bytes.
+
+2026-10-17: Code review against CODING_STANDARDS.md at w2-int 28d5f509: no findings. The six matches (func_80132428, func_80132FF0, func_80132940, func_80138D48, func_80133204, func_801388D0) are plain C apart from the marked FAKE name buffer in func_80132FF0, and the two guards (func_80134418, func_8013987C) name T-12090 and a row count. The unmatched rest of BUNKA_SD (func_80139290, func_801344A8 and the two guards) sits in the unstarted conveyor packages w3-bunka-sd-p02 and p03 (see bunka-sd-family-results). Moved to Done.
 
 ## T-12090: cx9 BUNKA_SD byte-first pass
 

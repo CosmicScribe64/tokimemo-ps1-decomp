@@ -1,10 +1,10 @@
 ---
 id: T-13300
 title: Recover RPG_BAT source families
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[broad-coverage-results]]"]
 ---
 
@@ -44,3 +44,5 @@ Final accepted gain: **0 functions / 0 verified bytes**. No production edits or 
 ### Diagnostic handoff
 
 This ticket is In Review for the diagnostic-only work delivered here. No match, overlay SHA1, or coverage gain is claimed. Existing source/header files were never modified. Future function recovery should use a follow-up ticket.
+
+2026-10-17: Superseded by T-17100 (RPG_BAT types-first) and its packages T-17101 to T-17119, plus T-16210, T-16930 and T-12300. All six functions this ticket probed (func_8013AF1C, 801568A4, 80152080, 801495DC, 8014AB84, 8014AC74) are now plain C on main. The ticket itself delivered only diagnostics and no accepted bytes.

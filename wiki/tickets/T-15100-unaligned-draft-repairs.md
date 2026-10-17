@@ -1,10 +1,10 @@
 ---
 id: T-15100
 title: Recover nine unaligned aggregate-copy draft failures
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[tickets/T-14500-exhaustive-drafts]]", "[[tickets/T-14600-date-draft-repairs]]"]
 ---
 
@@ -24,6 +24,10 @@ Recover usable compiling C for nine reserved unaligned-copy failures, preserving
 Reservation: drafts/T-14500/unaligned-repair-candidates.json. Nine scopes in BUNKAKEN, BUNKASAI, ENDING, GEKO, GYOZI, KANGEI and SHOUGATU. Reuse T-14600's genuine byte aggregate reconstruction. Source ASM is immutable input; all compilers/dependencies run in existing Docker image, serially. No production source changes for merely compiling nonmatches.
 
 ## Comments
+
+2026-10-17: The archive (nine compiling drafts, 17,408 target bytes, zero coverage gain) is on main, and the types-first passes (T-17500 to T-18700) redrafted the same nine scopes with similar scores; all nine functions are still INCLUDE_ASM. Review found no src or header change but two hygiene issues, opened as a follow-up: about 5,550 rows of target instruction words in the comparison.txt files, and an untested one-shot tool that reads a /ref mount. Closed as Done.
+
+Followup opened: [[tickets/T-21009-draft-archive-hygiene-comparison-rows|T-21009]].
 
 ## Results
 

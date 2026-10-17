@@ -1,10 +1,10 @@
 ---
 id: T-15300
 title: Resolve fresh structural near matches
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[matching-notes]]", "[[tickets/T-14501-remaining-draft-proof]]"]
 ---
 
@@ -33,3 +33,5 @@ Avoid main, EVENT, RPG_BAT, and separately reserved repair functions. Historical
 2026-10-15: TACO func_80133738 remains local and guarded. Correcting its saved selector and using existing TcPair8 lookup entries plus TcActor[8].unk78 fixes m2c's genuine table-stride error (the seed scaled by 32 instead of 8). Remaining differences are the selector home slot (+0x2C instead of +0x28) and four lookup temporaries; paused for incoming exact/encoding candidates. Evidence: /private/tmp/t15300-taco-{state,structure}-diff.log.
 
 2026-10-15: Final handoff at the user's request: no further experiments. The unfinished TACO func_80133738 probe is archived at drafts/T-15300/TACO/func_80133738/ with body, exact guarded translation-unit context, quoted header snapshots and SHA256 manifest, three diagnostic logs, transformation scripts, and findings. It remains nonmatching (eight instruction positions); no untested local-declaration reorder is claimed. Production src/ovl/TACO/801335A0.c is restored byte-for-byte to its committed INCLUDE_ASM fallback. No assembly files, original binaries, or build artifacts were added. Verified T-15300 production gains are BUNKASAI 852 plus BUNKAKEN 440 = 1,292 inventory coverage bytes; TACO adds zero. Status In Review for root's final handoff check.
+
+2026-10-17: Review closed with no findings. BUNKASAI func_801438E4 (852 bytes) and BUNKAKEN func_80145844 (440 bytes) are on the integration tree as plain C, 1,292 bytes in total. The archived TACO func_80133738 probe was finished afterwards in T-16561 (matched, commit dc76bc447). Moved to Done.

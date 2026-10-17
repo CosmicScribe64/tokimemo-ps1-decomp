@@ -1,10 +1,10 @@
 ---
 id: T-12500
 title: Match largest dialogue routine
-status: In Review
+status: Done
 assignee: Codex cx1
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[tickets/T-10870-big-functions-5-astra]]", "[[tickets/T-10900-big-functions-astra-22]]", "[[tickets/T-11590-w1-main-8007c030]]", "[[matching-notes]]"]
 ---
 
@@ -35,6 +35,7 @@ Baseline remains 16 rows at positions 329–332 and 410–413. In the first DAG,
 
 Further full-TU probes covered explicit signed shifts, temporary scopes, narrow/unsigned views, constant identities, reversed textual goto blocks, and live-range copies. None improved 16 rows. Wider coordinates disturb the frame and global allocation; scoped copies reach 24–32 rows but select addiu a1 instead of the original s1. Keeping inline narrow assignment adds a move; removing its result restores the old scheduling. These observations do not establish impossibility. A bounded 20-minute combined-mutation search retains measured near-miss variants and tests combinations; a separate 128-layout sweep splits increment and call tokens at source-line boundaries. All outputs are ignored scratch, and the production C remains unchanged.
 
+2026-10-17: Superseded. The pass found no new bytes and left dialogue_speak_part at the same 16-row guard. T-17001 (Done) then tried 144 more source forms and recorded the cause (as1 breaks ties by source line, so the original li a0,-40 must carry an earlier line) in the guard comment. T-20620 (as1 scheduling family) and T-20700 (IDO 4.1 back end test, Done) took over the open compiler question; the function stays guarded. Moved to Done.
 
 ## Handoff
 

@@ -1,10 +1,10 @@
 ---
 id: T-11150
 title: Twin detection for jump-table functions
-status: In Review
+status: Done
 assignee: Claude
 created: 2026-10-14
-updated: 2026-10-14
+updated: 2026-10-17
 links: [[[build-system]], [[tickets/T-1300-reuse-c-across-identical-functions]], [[tickets/T-3320-tooling-near-duplicate-function-reuse]], tools/dupes.py, tools/neardupes.py]
 ---
 
@@ -30,3 +30,5 @@ A jtbl plan is `island` when every table of the target is in its own function fi
 ## Comments
 
 - 2026-10-14: Implemented without game data (cloud worktree, no build). `test_dupes.py` 54 OK, `test_neardupes.py` 26 OK, `check_headers.py include src` OK, `test_check_headers.py` 16 OK. To verify locally: `tools/docker.sh python3 tools/dupes.py -v`, `tools/docker.sh python3 tools/neardupes.py --report`, then `--apply --check` for both and a full `tools/docker.sh ninja`.
+
+2026-10-17: Cleanup pass. Merged on main: the jump-table fingerprinting in tools/dupes.py and tools/neardupes.py with tests (fe2db3347), 10 jump-table twins filled with --apply --check (67552e51a) and the parameter-name fix (8e5824b45). The last open item, the run on the real build, is met by that fill and by the T-16500 whole-tree sweep, which uses the same plans and holds back 'outside' tables. Review against CODING_STANDARDS.md: Python 3, docstrings, synthetic tests, no game data; only nits (8e5824b45 lacks a leading ticket id). Closing as Done.

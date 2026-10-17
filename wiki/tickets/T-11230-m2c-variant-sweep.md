@@ -1,10 +1,10 @@
 ---
 id: T-11230
 title: m2c variant sweep in bulk_m2c
-status: In Review
+status: Done
 assignee: agent
 created: 2026-10-14
-updated: 2026-10-14
+updated: 2026-10-17
 links: [[[decompile-workflow]], [[tickets/T-11190-bulk-m2c-pipeline]], [[tickets/T-11210-bulk-m2c-draft-failure-classes]], tools/bulk_m2c.py, tools/m2c.py, tools/test_bulk_m2c.py]
 ---
 
@@ -32,3 +32,5 @@ All option names were checked with `m2c --help` in the toolchain image, and each
 ## Comments
 
 - 2026-10-14 agent: implemented on branch t11230-m2c-variants; In Review until the real-build trial and the code review.
+
+2026-10-17 cleanup: merged (df9e32d5d). Tests cover the variant list, best pick, retry selection, state replacement and summary, and code review found nothing. The real-build trial was run: 17f9572ef added 5 matches from a partial retry, and T-11270 then ran the full near+fail retry to 738 of 1167 entries. The unfinished 429 entries are covered by T-14500, which made a bounded attempt on every remaining function. Closed.

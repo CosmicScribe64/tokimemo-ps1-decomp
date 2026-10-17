@@ -1,10 +1,10 @@
 ---
 id: T-13400
 title: Recover TACO flag handler control flow
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[broad-coverage-results]]"]
 ---
 
@@ -26,3 +26,7 @@ Four bounded local-coalescing tests: merging the two decompiler mask temporaries
 Twelve bounded local-slot/type forms improve52to44rows by declaring the unified mask first. The improved candidate has the correct instruction count, but a56-byteframe instead of64 and maskspill52 instead of48, plus divide-input register and scheduling differences. Word-width and pointer-order changes do not solve it. No new ASM guard or artificial padding added. Evidence build/t13400/slots.log and best.diff.
 
 Bounded diagnostic handoff: zero production changes, zero matched bytes; candidate44rows and reproducible scripts retained. No further repetition without a new local-lifetime hypothesis.
+
+## Comments
+
+2026-10-17: Superseded by T-19025, which matched func_80132FE8 (908 bytes) in its closer pass, commit 584bc45b7. The route that worked differs from this ticket's 44-row candidate: the D_800E6280.unk_F88 value is read into a local btn that the D_8015EDE4 tests use, plus three marked FAKE pad words and one marked FAKE empty test. This ticket produced no code and no matched bytes, and its goal is met by T-19025.

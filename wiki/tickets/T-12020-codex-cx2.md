@@ -1,10 +1,10 @@
 ---
 id: T-12020
 title: Match cx2 TAIIKU functions
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: []
 ---
 
@@ -49,3 +49,5 @@ Other scratch results: func_80136BB4 reaches 32 +/- rows after table/local decla
 ### Final deep-pass results
 
 All 15 listed functions attempted; 3 matches (1,300 bytes), 3 retained guarded near misses, 9 plain INCLUDE_ASM. See [[matching-notes#T-12020: cx2 TAIIKU deep pass]] for per-function counts and blockers. Final animation draft reaches four rows; the earlier 32-row estimate is superseded. No new FAKE; inherited decrement frame padding remains identified. Final verification: refreshed build stamps, clean configure plus ninja -j2 completed 27/27 SHA1, headers OK and globals OK. All three matches were rechecked against final linked bytes. sync_protos --check-branch reports 0 new disagreements, 15 known, branch check OK. git diff --check passes; no new inline assembly, raw data or FAKE constructs. Logs: build/scratch/final-all-checks.log, final-protos.log, final-matches.log and final-guards.log.
+
+2026-10-17: Review closed. The three matches (func_80135DF8, func_80136EC0, func_80135AD0; 1,300 bytes) are on the integration tree as plain C. The unmarked byte-offset and pad-field views seen at merge were later replaced by typed fields in T-16550 and T-20900, so no finding is open. The nine functions still on INCLUDE_ASM in this unit are tracked in taiiku-family-results and the later TAIIKU tickets. Moved to Done.

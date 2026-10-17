@@ -1,10 +1,10 @@
 ---
 id: T-13800
 title: Recover remaining TACO actor families
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[tickets/T-13801-taco-actor-family]]", "[[tickets/T-12070-codex-cx7]]"]
 ---
 
@@ -21,6 +21,8 @@ Prior T-12070 and T-13400 read. Do not repeat ACCC/BD30 broad searches or 32FE8 
 
 ## Comments
 Setup: isolated codex/taco-13800 created from origin/main; copied ignored reference inputs from integration.
+
+2026-10-17: This was a research handoff: zero bytes matched and no source change reached main. The same functions were taken up by the wave-3 TACO packages: func_801487A4 matched in T-19013, func_801497EC is a one-row NON_MATCHING draft from T-19019 (the same commuted add found here), func_8014A480 is a guarded draft from T-19003. Marked superseded; taco-family-results stays as the evidence page.
 
 ## Diagnostic handoff
 

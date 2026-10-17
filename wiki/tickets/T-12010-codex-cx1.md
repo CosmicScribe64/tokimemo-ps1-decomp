@@ -1,10 +1,10 @@
 ---
 id: T-12010
 title: Codex cx1 main helper matching
-status: In Review
+status: Done
 assignee: Codex cx1
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[matching-notes]]"]
 ---
 
@@ -69,3 +69,7 @@ Logs and discarded drafts are under build/scratch/. The reused traced uopt was s
 Four exact promotions have individual linked funcdiff evidence and immediate commits. Final guards are recompiled from the current full translation units in build/scratch/final-guards.log. Final configure/build and prototype results are recorded below after completion. Status In Review; independent standards review still required.
 
 Final verification: Docker `python3 configure.py && ninja -j2` completed successfully with 27/27 binary SHA1 checks, headers OK and globals OK (build/scratch/final-build.log). `sync_protos.py --check-branch` passed: zero new disagreements, fifteen known baseline disagreements (build/scratch/final-protos.log). Current-source guarded counts verified as 4, 8, 29 and 17 (build/scratch/final-guards.log). `git diff --check` clean; source diff contains no added inline assembly. Final source has one newly labeled FAKE in the guarded 460FC draft; four promoted functions have none.
+
+2026-10-17: Code review against CODING_STANDARDS.md at 28d5f509 found two issues; the four matches and four guards are otherwise fine. (1) func_80042134 reads GameState through a pointer only in the loop-tail condition, which is the redundant-pointer-view pattern other files mark FAKE, and the ticket said 'No FAKE'. (2) config/objects/main.txt got a hand-written data line for 80059710 although the file is generated, and the next object_boundaries.py --data --write drops it. Moved to Done with a Backlog followup for (1); (2) goes into the data-range tooling ticket opened from T-12050.
+
+Followup opened: [[tickets/T-21014-main-80042134-gamestate-pointer|T-21014]].

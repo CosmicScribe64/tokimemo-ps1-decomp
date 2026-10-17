@@ -1,10 +1,10 @@
 ---
 id: T-15800
 title: Compile remaining assigned overlay drafts
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[tickets/T-14501-remaining-draft-proof]]", "[[tickets/T-14500-exhaustive-drafts]]"]
 ---
 
@@ -28,3 +28,5 @@ Produce complete compiling C alternatives for all 23 assigned nonreserved failed
 Repairs: measured copied callback structs replace integer arrays called as functions; existing return views resolve K&R declaration conflicts; real four-by-eight coordinate and seven-halfword threshold arrays replace incomplete locals; byte pointers replace illegal void-pointer arithmetic; known Word4 copy views replace scalar/struct assignment mismatches. Caller result-register views are explicit and documented where retained helper declarations use void. Root's generation lane reconstructed the two NAME_ENT phantom-argument failures after inspecting func_80054E6C: it initializes all incoming registers before use and takes no arguments. Those two compile with scores 847 and 501; the original M2C_ERROR attempts remain immutable.
 
 Archive: drafts/T-15800/catalog.jsonl and per-scope body.c/declarations.h/context.c/preprocessed.c/diagnostics.txt/result.json/provenance.json, plus earlier attempts, repair scripts, preparation and audit drivers. Frozen common headers remain referenced at drafts/T-14500/baseline/include. No objects, game binaries or assembly files are included. Final evidence: /private/tmp/t15800-final-replay.log and the archived catalog. Status In Review for root's archive/completeness review.
+
+2026-10-17: Closed after review with no findings. All 23 assigned scopes compile as archived full-TU alternatives with hashes and diagnostics, production C is unchanged, and nine of them are now plain C on main through later matching waves; the rest were redrafted by the types-first passes. The archive carries no instruction rows or assembly, so nothing needs scrubbing.

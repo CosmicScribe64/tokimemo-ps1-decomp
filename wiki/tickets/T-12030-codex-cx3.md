@@ -1,10 +1,10 @@
 ---
 id: T-12030
 title: Match cx3 main menu functions
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[register-cheatsheet]]"]
 ---
 
@@ -61,6 +61,8 @@ Baseline Docker configure and ninja passed all 27 SHA1 targets (13 before restar
 
 - Final New Year check: a marked two-word local recovers the original frame without moving the three buffers, reducing the retained draft from 19 to 15 diff output rows. Array/element/void address spellings all leave the cached-pointer difference unchanged. The natural array argument is retained. Logs: build/scratch/pre-pad.log and pre-{array_address,element_address,void_view}.log.
 - Recovered the active slot bytes in FlagsWork24 at +4: renamed its former pad04 member to unk_04 and retained its existing layout. Both menu twins use the typed field.
+
+2026-10-17: Code review against CODING_STANDARDS.md at 28d5f509: no findings. The twelve matches (5,200 bytes) in src/main/8005A0B0.c are plain C with FAKEs that name T-12030, and the 15-row pre_syogatu1 guard was later matched by T-17005, so no NON_MATCHING remains from this ticket. func_8005A410 and func_8005CA94 stay INCLUDE_ASM; CA94 is a T-17005 near miss (51 rows, T-0018 row) and A410 is in the unmatched inventory. Moved to Done.
 
 ## Final verification
 
