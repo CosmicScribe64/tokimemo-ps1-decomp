@@ -16903,3 +16903,11 @@ Created [[tickets/T-17012-w3-main-p12]]: wave 3 package w3-main-p12, six functio
 ## [2026-10-17] ticket | T-17018 In Progress
 
 [[tickets/T-17018-w3-main-p18]] created and In Progress: Wave 3 package for `src/main/8004F870.c` (`menu_bar_color`, `menu_set`, `sndisp`, `menu_girl_taku_set`, `xa_wait`, `menu_check_1`), worktree `tokimemo-wt/w3-main-p18`, branch `w3-main-p18` from `w2-good`.
+
+## [2026-10-17] build | T-17018 main:8004F870 six functions
+
+[[tickets/T-17018-w3-main-p18]]: none of `menu_bar_color`, `menu_set`, `sndisp`, `menu_girl_taku_set`, `xa_wait`, `menu_check_1` matched. `xa_wait` is a new guarded draft (18 lines, from 132) in `src/main/8004F870.c` after `GameState.unk_F60..F62` became `u8` in `include/main_api.h` and `else if (ph != 0)`; FAKE `pad[2]` for the frame. `menu_set` (118 lines), `sndisp` (69 with the data island, reverted), `menu_girl_taku_set` (86) restored to `INCLUDE_ASM`. Notes in [[matching-notes]] (T-17018), rows in [[data/t0018-cases]].
+
+## [2026-10-17] ticket | T-17018 In Review
+
+[[tickets/T-17018-w3-main-p18]] In Progress to In Review: 0 of 6 functions matched, 1 new guard, 2 old guards kept. Build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK.
