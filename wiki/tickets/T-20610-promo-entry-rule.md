@@ -1,7 +1,7 @@
 ---
 id: T-20610
 title: "Promotion family: cvt_pass entry rule"
-status: In Progress
+status: In Review
 assignee: claude-opus (cg-promo)
 created: 2026-10-16
 updated: 2026-10-16
@@ -19,16 +19,32 @@ original's choice, or write up the negative result with numbers.
 
 ## Acceptance criteria
 
-- [ ] Promo rows of still-unmatched functions collected and classified (first load relative to calls; register vs
+- [x] Promo rows of still-unmatched functions collected and classified (first load relative to calls; register vs
       reload per use).
-- [ ] One uniform candidate rule prototyped in a scratch copy of the pass; measured on the targets and on every
+- [x] One uniform candidate rule prototyped in a scratch copy of the pass; measured on the targets and on every
       matched function (0 changed matched functions required).
-- [ ] Adopted only if it gains at least 3 functions with 0 changed: then tests in `tools/test_cvt_pass.py`, docs in
+- [x] Adopted only if it gains at least 3 functions with 0 changed: then tests in `tools/test_cvt_pass.py`, docs in
       [[toolchain]], gained functions matched in plain C (non-busy files). Otherwise a negative result with numbers.
-- [ ] T-20610 section in [[matching-notes]]; [[register-cheatsheet]] row for any new recipe.
-- [ ] Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` (and the tool
+      (Negative: nothing adopted, `tools/` unchanged.)
+- [x] T-20610 section in [[matching-notes]]; [[register-cheatsheet]] row for any new recipe.
+- [x] Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` (and the tool
       tests if `tools/` changed).
 
 ## Notes
+
+Result: negative for the pass, one plain-C recipe. Details and tables: [[matching-notes]], "T-20610".
+
+- Targets: 36 functions with `promo` rows are still `INCLUDE_ASM` (35 without TT), 120 non-TT R/V-flagged functions
+  (146,828 bytes); 29 of them have guarded drafts. Most rows are not entry-rule cases (views, frames, `$a1`/`$v0`
+  choices of entry-loaded globals).
+- Rules (late global = first touched after the entry), procedures whose uopt input changes / matched functions
+  changed: no entry condition 567 / not compiled; stored 80 / 14; compared with a non-zero constant 410 / 18; stored
+  and compared with a constant 69 / 0 (gains only `func_800726F0`, no guarded draft; 2 drafts worse);
+  latest-definition `_constant_first` at least 4 changed. None adopted.
+- Census of the original (constant stores to an unsigned global, store register = load register): entry 45 promoted
+  against 13; later 51 against 73, by compare kind 30 against 9 (non-zero constants) and 14 against 61 (zero tests).
+- main `func_800726F0` matches in plain C under the production pass: zero tests as truth tests plus `s32 sndisp();`.
+  `src/main/8006CB30.c` is owned by the wave 3 conveyor, so the recipe is handed over, not applied.
+- main `func_80072998`: FAKE dead entry read gives 4 rows (constant-first order of two compares).
 
 ## Comments

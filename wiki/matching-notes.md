@@ -6732,3 +6732,60 @@ Result: 2 of 4 matched (`func_8013BBF8` 688 B, `func_8013EA60` 1,100 B linked), 
 - Header: nothing changed for this function.
 
 Compiler-gap rows: none (both matched). Five new rows in [[register-cheatsheet]]; the frame-word model of the T-19019 note (line "Frame words of a function with spills") is confirmed for two more functions.
+
+## T-20610: promotion family and the cvt_pass entry rule (negative)
+
+[[tickets/T-20610-promo-entry-rule]], compiler-gap family agent, worktree `cg-promo`. Question: does one uniform refinement
+of the `tools/cvt_pass.py` entry rule (T-5010: a `u8`/`u16` global loses its widening `CVT` only when the procedure
+touches it before its first call, branch or label) predict when the original promotes a global that is first read
+later? Result: no rule met the bar (at least 3 gained functions, 0 changed matched functions). One target matches in
+plain C under the production pass with a source idiom.
+
+Method (scratch only, nothing committed under `tools/`): cfe's ucode of all 430 IDO C files was dumped once; a scratch
+copy of the pass with selectable entry rules was compared with the production pass offline (a procedure whose uopt
+input is byte-identical compiles to the same bytes), and only the files whose uopt input changed were recompiled with
+the variant and compared per function with the build objects (resolved instructions, the `uopt_eval` comparison).
+BUNKASAI `func_80153FA4` and `func_80158E3C` differ in that comparison with the production pass as well (artifacts, as
+in T-16900) and are not counted. Targets: the 105 non-TT guarded drafts, compiled once per rule, plus hand-written drafts.
+
+Matched set: 1,492 (procedure, global) pairs have a widened unsigned global that is compared; 783 are touched at the
+entry, 709 later (395 first after a branch and never stored, 217 first after a call and never stored, 66 and 31 of
+each also stored).
+
+| rule (late global = first touched after the entry) | procedures whose uopt input changes | matched functions changed | targets gained |
+|---|---|---|---|
+| no entry condition | 567 in 182 files | not compiled | main `func_800726F0` (with `s32 sndisp();`) |
+| late global stored in the procedure | 80 in 49 files | 14: switch temporaries (TACO `func_80145DC4`, ETC `func_80145FF0`, DATE `func_80139834`), `==` of two variables (main `func_8005D448`, EVENT `func_80119B78`, NAME_ENT `func_80132B78`), promotions the original does not make (main `func_80053F04`, `func_80073AD8`, DATE `func_80147958`, `func_80149268`, ...) | |
+| late global compared with a non-zero constant | 410 in 141 files | 18 (DATE 5, EVENT 7, NAME_ENT 3, SHUGAKU 2, main 1) | |
+| late global stored and compared with a constant (`stored_k`) | 69 in 46 files | 0 | `func_800726F0` in its `!= 0` form; no guarded draft (2 get worse: main `func_80067870` 304 to 327 lines, ETC `func_80143F24` 23 to 28) |
+| `_constant_first` by the latest register definition | post-uopt, all 183 files with a rewritten global | at least 4 (DATE `date_event_choose`, `func_8013B208`, `func_8013D23C`, `func_8013D2C8`; run stopped) | main `func_80072998` (with a FAKE entry read) |
+
+`stored_k` is neutral on the matched set: it fires in 69 procedures and changes no byte, so the matched set neither
+confirms nor refutes it. With one gain (whose plain-C alternative below needs no pass change) it is not adopted.
+
+Census of the original asm (6,958 functions, TT excluded): for an unsigned global loaded with `lbu`/`lhu` and stored with
+a constant (`li R,k; sb R,G`), R the register of the global's own load means promoted, a ugen temporary (`t6`..`t9`)
+means not promoted. At the entry, with a compare: 45 promoted, 13 not. Later: 51 promoted, 73 not; with constant
+compares only (`li at,k; beq`) 30 against 9, with zero tests only (`beqz`/`bnez`) 14 against 61. 21 of the 30 are
+matched already, through views (`*(u8 *)&D`, `(u16 *)` element views) or other idioms that bypass the pass. So the
+original promotes a late global mostly when it is compared with non-zero constants, but that rule alone changes 18
+matched functions: the condition is not a property of the ucode the pass can see.
+
+What matched and what to do instead:
+- **Zero tests as truth tests** (main `func_800726F0`, 436 bytes, file busy, recipe for the conveyor): the original
+  loads `unk_03D` after four calls into `$v1`, tests it twice with `beqz` and stores 0/1/2/3 from `$v1`. Written
+  `if (D_800E6280.unk_03D && D_800E6280.unk_040 == 2)` / `else if (D_800E6280.unk_03D)` (no `h` local), the K&R
+  widening adds no `CVT` to a truth test, uopt sees two plain uses and promotes the byte; with `s32 sndisp();` (implicit
+  int, `$v0` taken in the range) it is `$v1`: MATCH under the production pass (`funcdiff --built`, linked bytes equal
+  the target). Without the `sndisp` view: 40 rows (`$v0`). Row in [[register-cheatsheet]].
+- **Dead entry read** (main `func_80072998`, file busy): `m = D_800E6280.unk_03F;` (FAKE) before the switch puts the
+  month in the entry set; the month is then promoted into `$a1` across `func_80068938` as in the original. Left: 4
+  rows, `bne a1,v0` against the original's constant-first `bne v0,a1`. `_constant_first` skips the compare because
+  `$a1` also has other definitions; classifying by the latest definition closes it but changes matched DATE functions
+  (table). `s32 sndisp();` changes nothing here.
+- RENSYU `func_8013325C` (T-19020 draft, 209 lines): a dead entry read changes nothing; the case 0 stores of
+  `D_801342C4` are store-only arms, not this gap.
+
+Scratch tools (not committed): the ucode dump, the offline screen and the variant regression are a few dozen lines on
+top of `tools/cvt_pass.py`, `tools/uopt_eval.py` and `tools/funcdiff_verify.py`; repeat them from this description
+if a new rule is proposed.

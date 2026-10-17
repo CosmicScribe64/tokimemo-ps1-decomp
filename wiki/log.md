@@ -16599,3 +16599,22 @@ rename table.
 [[tickets/T-20610-promo-entry-rule]] created In Progress (compiler-gap family agent, worktree `cg-promo`): the `promo`
 rows of [[data/t0018-cases]] for unmatched functions, a uniform refinement of the `tools/cvt_pass.py` entry rule
 (T-5010) measured against every matched function, or a negative result.
+
+## [2026-10-16] decision | T-20610 cvt_pass entry rule: no refinement adopted
+
+[[tickets/T-20610-promo-entry-rule]]: scratch variants of `tools/cvt_pass.py` measured against every matched function
+(cfe ucode of all 430 IDO files dumped once, offline screen of the uopt input, recompile of the changed files only).
+Late global (first touched after the entry) rules: stored 14 matched functions changed, compared with a non-zero
+constant 18, stored and compared with a constant 0 changed but 1 gain (main `func_800726F0`) and no guarded draft
+gained (105 compiled), latest-definition constant-first at least 4. None adopted; `tools/` unchanged. Census of the
+original and the tables: [[matching-notes]] "T-20610". Source recipe: main `func_800726F0` matches in plain C under the
+production pass with truth tests and `s32 sndisp();` (new row in [[register-cheatsheet]]); `src/main/8006CB30.c` is
+owned by the wave 3 conveyor, so it is handed over. Row for `func_80072998` (4 rows with a FAKE entry read) and an
+Update paragraph in [[data/t0018-cases]]; note in [[toolchain]].
+
+## [2026-10-16] ticket | T-20610 In Review
+
+[[tickets/T-20610-promo-entry-rule]] In Progress to In Review: negative result for the pass (nothing under `tools/`
+changed), one plain-C recipe handed to the conveyor (main `func_800726F0`). Clean rebuild (`rm -rf build && configure.py
+&& ninja -j2`) 27/27 SHA1 OK, headers OK, globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known).
+Card moved to In Review in [[kanban]]. Code review against `CODING_STANDARDS.md` pending.
