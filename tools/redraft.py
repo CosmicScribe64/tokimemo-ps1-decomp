@@ -127,8 +127,8 @@ class Archive:
     """The drafts earlier passes archived: scope -> the best (lowest score, newest ticket) body, and the census
     score of T-14500 / T-16510 that every pass compared with."""
 
-    def __init__(self, root="."):
-        self.root = Path(root)
+    def __init__(self, root=".", exclude=()):
+        self.root, self.exclude = Path(root), set(exclude)    # exclude: tickets whose folders are not archives
         self.census, self.best = {}, {}
         self._load()
 
@@ -157,7 +157,7 @@ class Archive:
                     self.offer(r["scope"], r["score"], "T-16510", self.root / "drafts/T-16510" / r["unit"] / r["func"])
         for res in sorted((self.root / "drafts").glob("T-*/*/*/result.json")):
             ticket, unit, func = res.parts[-4], res.parts[-3], res.parts[-2]
-            if not ARCHIVE_TICKETS.match(ticket) or unit.startswith(("_", ".")):
+            if not ARCHIVE_TICKETS.match(ticket) or ticket in self.exclude or unit.startswith(("_", ".")):
                 continue
             try:
                 r = json.loads(res.read_text())
@@ -300,6 +300,13 @@ def read_inventory(work):
     return {r["scope"]: r for r in json.loads((Path(work) / "inventory.json").read_text())}
 
 
+def prune_context(folder, spec):
+    """Drop the full unit text of a variant run: finish() rebuilds it from body.c and declarations.h. A guarded
+    body lives in src/ and cannot be inserted again, so its unit text stays."""
+    if spec.get("source") != "guarded":
+        (Path(folder) / "context.c").unlink(missing_ok=True)
+
+
 def run_worker(scope, variant, work, archived):
     """One (function, variant): the census path of exhaustive_drafts.process() with the variant installed;
     result.json lands in <work>/runs/<variant>/<UNIT>/<func>/."""
@@ -331,7 +338,7 @@ def run_worker(scope, variant, work, archived):
     got["redraft_variant"] = variant
     folder = ex.BASE / row["unit"] / row["func"]
     ex.save(folder / "result.json", json.dumps(got, sort_keys=True) + "\n")
-    (folder / "context.c").unlink(missing_ok=True)      # finish() rebuilds it from body.c and declarations.h
+    prune_context(folder, spec)
 
 
 # ------------------------------------------------------------------------------------------ finishing
@@ -355,28 +362,71 @@ def harness_hash():
     return digest("".join((here / n).read_text() for n in ("redraft.py", "redraft_rewrites.py", "redraft_extras.py")))
 
 
-def result_record(row, ticket, variant_scores, chosen, rewrites, census, best, fixes=None, extra=None):
-    """The result.json of a finished function."""
-    score = variant_scores.get(chosen) if chosen else None
+def result_record(row, ticket, variant_scores, chosen, rewrites, census, best, fixes=None, extra=None,
+                  score=None, name=None):
+    """The result.json of a finished function. `chosen` is the variant whose draft it is; `score` and `name`
+    default to its score and its name and differ after draft_fixes or gs-local."""
+    if score is None and chosen:
+        score = variant_scores.get(chosen)
     record = dict(scope=row["scope"], unit=row["unit"], func=row["func"], src=row["src"], size=row["size"],
-                  guarded=row["guarded"], ticket=ticket, score=score, variant=chosen,
+                  guarded=row["guarded"], ticket=ticket, score=score, variant=name or chosen,
                   census_score=census.get("score"), census_path=census.get("path"),
                   best_archived_score=best["score"] if best else None, best_archived_path=best["path"] if best else None,
                   variant_scores=variant_scores, rewrites=rewrites, draft_fixes=fixes or [],
                   created=time.strftime("%Y-%m-%d", time.gmtime()))
     record["status"] = "failed" if score is None else "candidate-zero" if score == 0 else "scored"
-    cs = record["census_score"]
-    record["vs_census"] = None if score is None or cs is None else "better" if score < cs else "same" if score == cs else "worse"
-    bs = record["best_archived_score"]
-    record["vs_archived"] = None if score is None or bs is None else "better" if score < bs else "same" if score == bs else "worse"
+
+    def versus(other):
+        return None if score is None or other is None else "better" if score < other else "same" if score == other else "worse"
+    record["vs_census"] = versus(record["census_score"])
+    record["vs_archived"] = versus(record["best_archived_score"])
     record["provenance"] = dict(tool="tools/redraft.py (T-20800)", ticket=ticket, git=git_head(),
                                 harness_hash=harness_hash(), headers=header_hashes(row["unit"]),
                                 archived=best, **(extra or {}))
     return record
 
 
+def unit_text(row, body, folder, guard_body=False):
+    """The whole source file of `row` with `body` as the definition, as exhaustive_drafts.process() scored it:
+    in place of the function's INCLUDE_ASM line or, for a guarded function, of its NON_MATCHING block.
+    `guard_body`: `body` is the block's own definition (the guarded variant); otherwise the block is first
+    reduced to its asm line. None when the file has no place for the body."""
+    import autotweak
+    import bulk_m2c as bulk
+    func = row["func"]
+    src = Path(row["src"]).read_text(errors="replace")
+    guard = next((g for g in autotweak.guards(src) if g.func == func), None)
+    if guard is not None:
+        if guard_body:
+            return autotweak.rewrite_guard(src, func, body)
+        include = re.search(bulk.INCLUDE_ASM_TMPL % re.escape(func), src[guard.else_end:guard.end], re.M)
+        if include is None:
+            return None
+        src = autotweak.rewrite_guard(src, func, include.group(0))
+        if src is None:
+            return None
+    decls = Path(folder) / "declarations.h"
+    lines = [l for l in decls.read_text(errors="replace").splitlines() if l.strip()] if decls.exists() else []
+    placed = bulk.insert_draft(src, func, body, lines)
+    return autotweak.rewrite_guard(placed, func, body) if placed else None
+
+
+def write_draft(dest, body, context, declarations, record):
+    """The result folder of one function; result.json goes last, so it is the mark of a finished function."""
+    dest.mkdir(parents=True, exist_ok=True)
+    (dest / "body.c").write_text(body)
+    (dest / "context.c").write_text(context)
+    if declarations is not None and Path(declarations).exists():
+        shutil.copy(declarations, dest / "declarations.h")
+    record["draft_hash"], record["context_hash"] = digest(body), digest(context)
+    tmp = dest / "result.json.tmp"
+    tmp.write_text(json.dumps(record, sort_keys=True) + "\n")
+    os.replace(tmp, dest / "result.json")
+
+
 def finish(scope, work, out, ticket, variants, fixes=True):
-    """Pick the best variant of one function, try draft_fixes and gs-local on it, write the result folder."""
+    """Pick the best variant of one function and write the result folder; then try draft_fixes and gs-local on
+    it and rewrite the folder if one is better (the first write stands if the search is cut short)."""
     import draft_fixes
     import m2c
     install_compile_cache(Path(work) / "objcache")
@@ -389,63 +439,64 @@ def finish(scope, work, out, ticket, variants, fixes=True):
             if runs[v][0].get("score") is not None:
                 scores[v] = runs[v][0]["score"]
     dest = Path(out) / row["unit"] / row["func"]
-    dest.mkdir(parents=True, exist_ok=True)
     census, best = row.get("census") or {}, row.get("archived")
     variant_scores = {v: runs[v][0].get("score") for v in runs}
     if not scores:
         reason = " | ".join("%s: %s" % (v, (r[0].get("reason") or r[0].get("status") or "")[:120]) for v, r in runs.items())
-        for v in ("typed", "plain", "archived"):
-            if v in runs and (runs[v][1] / "body.c").exists():
-                shutil.copy(runs[v][1] / "body.c", dest / "body.c")
-                break
         record = result_record(row, ticket, variant_scores, None, [], census, best, extra={"reason": reason[:400]})
+        for v in ("typed", "typed-late", "plain", "archived"):
+            if v in runs and (runs[v][1] / "body.c").exists():
+                write_draft(dest, (runs[v][1] / "body.c").read_text(), "", runs[v][1] / "declarations.h", record)
+                (dest / "context.c").unlink()
+                return record
+        dest.mkdir(parents=True, exist_ok=True)
         (dest / "result.json").write_text(json.dumps(record, sort_keys=True) + "\n")
         return record
     chosen = choose_variant(scores, list(variants))
     got, folder = runs[chosen]
     body = (folder / "body.c").read_text()
-    context = draft_fixes.fresh_context(dict(row), body, folder)
+    context = unit_text(row, body, folder, VARIANTS[chosen].get("source") == "guarded")
     if context is None:
         context = (folder / "context.c").read_text() if (folder / "context.c").exists() else ""
-    score, tried, chosen_fixes, name = scores[chosen], {}, [], chosen
-    if score > 0 and fixes and context:
-        scorer = draft_fixes.make_scorer(dict(row))
-        files = {}
-        try:
-            files[(row["unit"], row["func"])] = m2c.locate(".", scope)[0]
-        except (LookupError, OSError):
-            pass
-        scratch = Path(work) / "fixes" / row["unit"] / row["func"]
-        base, new_score, picked, new_body, new_context, tried = draft_fixes.best_rewrite(
-            row, body, draft_fixes.asm_for(scope, files), context, scorer, scratch)
-        if new_score < score:
-            body, context, score, chosen_fixes = new_body, new_context, new_score, ["%s#%d" % c for c in picked]
-            name = chosen + "+draft-fixes"
-        if score > 0 and "D_800E6280" in body:
-            gbody = rw.gs_local(body)
-            if gbody != body and body in context:
-                work_dir = scratch / "gs"
-                work_dir.mkdir(parents=True, exist_ok=True)
-                gscore = scorer(context.replace(body, gbody, 1), work_dir)
-                variant_scores["gs-local"] = gscore
-                if gscore < score:
-                    context, body, score = context.replace(body, gbody, 1), gbody, gscore
-                    name += "+gs-local"
-        shutil.rmtree(Path(work) / "fixes" / row["unit"], ignore_errors=True)
-    (dest / "body.c").write_text(body)
-    (dest / "context.c").write_text(context)
-    if (folder / "declarations.h").exists():
-        shutil.copy(folder / "declarations.h", dest / "declarations.h")
-    variant_scores[chosen] = scores[chosen]
-    record = result_record(row, ticket, variant_scores, chosen, got.get("rewrites", []), census, best, chosen_fixes,
-                           extra={"draft_fixes_tried": tried})
-    record["score"], record["variant"] = score, name
-    record["status"] = "candidate-zero" if score == 0 else "scored"
-    cs, bs = record["census_score"], record["best_archived_score"]
-    record["vs_census"] = None if cs is None else "better" if score < cs else "same" if score == cs else "worse"
-    record["vs_archived"] = None if bs is None else "better" if score < bs else "same" if score == bs else "worse"
-    record["draft_hash"], record["context_hash"] = digest(body), digest(context)
-    (dest / "result.json").write_text(json.dumps(record, sort_keys=True) + "\n")
+    rewrites = got.get("rewrites", [])
+    record = result_record(row, ticket, variant_scores, chosen, rewrites, census, best)
+    write_draft(dest, body, context, folder / "declarations.h", record)
+    score = scores[chosen]
+    if score == 0 or not fixes or not context:
+        return record
+    scorer = draft_fixes.make_scorer(dict(row))
+    files = {}
+    try:
+        files[(row["unit"], row["func"])] = m2c.locate(".", scope)[0]
+    except (LookupError, OSError):
+        pass
+    scratch = Path(work) / "fixes" / row["unit"] / row["func"]
+    _base, new_score, picked, new_body, new_context, tried = draft_fixes.best_rewrite(
+        row, body, draft_fixes.asm_for(scope, files), context, scorer, scratch)
+    name, chosen_fixes = chosen, []
+    if new_score < score:
+        body, context, score, chosen_fixes = new_body, new_context, new_score, ["%s#%d" % c for c in picked]
+        name = chosen + "+draft-fixes"
+    if score > 0 and "D_800E6280" in body:
+        gbody = rw.gs_local(body)
+        if gbody != body and body in context:
+            work_dir = scratch / "gs"
+            work_dir.mkdir(parents=True, exist_ok=True)
+            gcontext = context.replace(body, gbody, 1)
+            gscore = scorer(gcontext, work_dir)
+            variant_scores["gs-local"] = gscore
+            if gscore < score:
+                body, context, score = gbody, gcontext, gscore
+                name += "+gs-local"
+    shutil.rmtree(scratch, ignore_errors=True)
+    if name != chosen:
+        record = result_record(row, ticket, variant_scores, chosen, rewrites, census, best, chosen_fixes,
+                               extra={"draft_fixes_tried": tried}, score=score, name=name)
+        write_draft(dest, body, context, folder / "declarations.h", record)
+    else:
+        record["variant_scores"] = variant_scores
+        record["provenance"]["draft_fixes_tried"] = tried
+        (dest / "result.json").write_text(json.dumps(record, sort_keys=True) + "\n")
     return record
 
 
@@ -454,9 +505,10 @@ def finish(scope, work, out, ticket, variants, fixes=True):
 class Task:
     """A subprocess with a result file; `after` names tasks that must have finished first."""
 
-    def __init__(self, name, cmd, result, timeout, after=(), on_fail=None):
+    def __init__(self, name, cmd, result, timeout, after=(), on_fail=None, log=None):
         self.name, self.cmd, self.result, self.timeout = name, cmd, Path(result), timeout
         self.after, self.on_fail = set(after), on_fail
+        self.log = Path(log) if log else self.result.parent / (name.replace("/", "_").replace(":", "_") + ".log")
 
 
 def run_pool(tasks, jobs, log=print, poll=0.2):
@@ -465,14 +517,27 @@ def run_pool(tasks, jobs, log=print, poll=0.2):
     pending = [t for t in tasks if not t.result.exists()]
     done = {t.name for t in tasks if t.result.exists()}
     running = []
+    try:
+        _pool_loop(pending, done, running, jobs, log, poll)
+    except BaseException:           # an interrupt must not leave compiles running in the background
+        for t, proc, _t0, logf in running:
+            try:
+                os.killpg(proc.pid, signal.SIGKILL)
+            except OSError:
+                pass
+            logf.close()
+        raise
+
+
+def _pool_loop(pending, done, running, jobs, log, poll):
     while pending or running:
         for t in list(pending):
             if len(running) >= jobs:
                 break
             if t.after <= done:
                 pending.remove(t)
-                t.result.parent.mkdir(parents=True, exist_ok=True)
-                logf = open(t.result.parent / (t.name.replace("/", "_") + ".log"), "w")
+                t.log.parent.mkdir(parents=True, exist_ok=True)
+                logf = open(t.log, "w")
                 proc = subprocess.Popen(t.cmd, stdout=logf, stderr=subprocess.STDOUT, start_new_session=True)
                 running.append((t, proc, time.monotonic(), logf))
         if not running and pending and not any(t.after <= done for t in pending):
@@ -514,6 +579,10 @@ def applicable(row, variant):
     return True
 
 
+def log_path(work, scope, step):
+    return Path(work) / "logs" / ("%s_%s.log" % (scope.replace(":", "_"), step))
+
+
 def build_tasks(rows, variants, work, out, ticket, timeout, fixes, force):
     script = str(Path(__file__).resolve())
     tasks = []
@@ -531,11 +600,12 @@ def build_tasks(rows, variants, work, out, ticket, timeout, fixes, force):
             if VARIANTS[v].get("source") == "archived":
                 cmd += ["--archived", "%s|%s" % (arch["path"], arch["file"])]
             result = Path(work) / "runs" / v / row["unit"] / row["func"] / "result.json"
-            tasks.append(Task("%s/%s" % (scope, v), cmd, result, timeout, on_fail=write_failure(row, v, work)))
+            tasks.append(Task("%s/%s" % (scope, v), cmd, result, timeout, on_fail=write_failure(row, v, work),
+                              log=log_path(work, scope, v)))
             names.append("%s/%s" % (scope, v))
         cmd = [sys.executable, script, "--finish", scope, "--work", str(work), "--out", str(out), "--ticket", ticket,
                "--variants", ",".join(variants)] + ([] if fixes else ["--no-fixes"])
-        tasks.append(Task("%s/finish" % scope, cmd, final, timeout * 4, after=names))
+        tasks.append(Task("%s/finish" % scope, cmd, final, timeout * 4, after=names, log=log_path(work, scope, "finish")))
     return tasks
 
 
@@ -624,7 +694,7 @@ def main(argv=None):
     workp.mkdir(parents=True, exist_ok=True)
     inventory = workp / "inventory.json"
     known = {r["scope"]: r for r in json.loads(inventory.read_text())} if inventory.exists() else {}
-    archive = Archive()
+    archive = Archive(exclude=(a.ticket,))
     for r in rows:   # the workers read the archive's view from here, not by scanning drafts/ again
         r["census"], r["archived"] = archive.census_of(r["scope"]), archive.best_of(r["scope"])
         if r["archived"]:

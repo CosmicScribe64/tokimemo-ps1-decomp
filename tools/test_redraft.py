@@ -667,6 +667,60 @@ class TestInstall(EnvCase):
             self.assertEqual(m2c.run_m2c(".", "A:f"), "ARCH drafts/x body.c")
 
 
+class TestUnitText(unittest.TestCase):
+    SRC = ('#include "common.h"\n\nINCLUDE_ASM("asm/nonmatchings/FOO/a", func_80140010);\n\n'
+           '/* NON_MATCHING: T-1 note */\n#ifdef NON_MATCHING\nvoid func_80140020(void) {\n    old();\n}\n#else\n'
+           'INCLUDE_ASM("asm/nonmatchings/FOO/a", func_80140020);\n#endif\n')
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self.tmp.name)
+        (self.root / "a.c").write_text(self.SRC)
+        (self.root / "decl").mkdir()
+        (self.root / "decl" / "declarations.h").write_text("extern s32 D_80140100;\n")
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def row(self, func):
+        return {"func": func, "src": str(self.root / "a.c")}
+
+    def test_plain_include_asm_gets_the_body_and_the_declarations(self):
+        text = rd.unit_text(self.row("func_80140010"), "void func_80140010(void) {\n    new();\n}\n", self.root / "decl")
+        self.assertIn("extern s32 D_80140100;", text)
+        self.assertIn("void func_80140010(void) {\n    new();\n}", text)
+        self.assertNotIn('INCLUDE_ASM("asm/nonmatchings/FOO/a", func_80140010)', text)
+        self.assertIn("old();", text)                     # the other function's guard is untouched
+
+    def test_guarded_function_regenerated_replaces_the_block(self):
+        text = rd.unit_text(self.row("func_80140020"), "void func_80140020(void) {\n    new();\n}\n", self.root / "decl")
+        self.assertIn("new();", text)
+        self.assertNotIn("old();", text)
+        self.assertNotIn("#ifdef NON_MATCHING", text)
+
+    def test_guarded_body_replaces_the_block_as_it_is(self):
+        text = rd.unit_text(self.row("func_80140020"), "void func_80140020(void) {\n    old();\n}\n", self.root / "decl",
+                            guard_body=True)
+        self.assertIn("old();", text)
+        self.assertNotIn("extern s32 D_80140100;", text)  # no declaration block for the function's own guard body
+
+    def test_unknown_function_has_no_place(self):
+        self.assertIsNone(rd.unit_text(self.row("func_80149999"), "x", self.root / "decl"))
+
+
+class TestPruneContext(unittest.TestCase):
+    def test_guarded_bodies_keep_their_unit_text(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            for name in ("a", "b"):
+                (Path(tmp) / name).mkdir()
+                (Path(tmp) / name / "context.c").write_text("TU")
+            rd.prune_context(Path(tmp) / "a", rd.VARIANTS["typed"])
+            rd.prune_context(Path(tmp) / "b", rd.VARIANTS["guarded"])
+            self.assertFalse((Path(tmp) / "a" / "context.c").exists())
+            self.assertTrue((Path(tmp) / "b" / "context.c").exists())
+            rd.prune_context(Path(tmp) / "a", rd.VARIANTS["plain"])        # already gone: no error
+
+
 class TestCompileCache(unittest.TestCase):
     def test_same_text_is_compiled_once_and_errors_are_cached(self):
         import order_search
@@ -731,7 +785,7 @@ class TestFinish(unittest.TestCase):
 
     def add_run(self, variant, score, body):
         d = self.work / "runs" / variant / "GEKO" / "func_1"
-        d.mkdir(parents=True)
+        d.mkdir(parents=True, exist_ok=True)
         (d / "body.c").write_text(body)
         (d / "declarations.h").write_text("extern s32 D_1;\n")
         (d / "result.json").write_text(json.dumps({"score": score, "status": "scored" if score is not None else "failed",
@@ -741,7 +795,7 @@ class TestFinish(unittest.TestCase):
     def run_finish(self, fixes, **patches):
         import draft_fixes
         scorer = mock.Mock(return_value=7)
-        with mock.patch.object(draft_fixes, "fresh_context", lambda row, body, folder: "TU{" + body + "}"), \
+        with mock.patch.object(rd, "unit_text", lambda row, body, folder, guard_body=False: "TU{" + body + "}"), \
                 mock.patch.object(draft_fixes, "make_scorer", lambda row: scorer), \
                 mock.patch.object(draft_fixes, "asm_for", lambda scope, files: None), \
                 mock.patch.object(draft_fixes, "best_rewrite", patches.get("best_rewrite", mock.Mock(
@@ -769,6 +823,31 @@ class TestFinish(unittest.TestCase):
         self.assertEqual((r["score"], r["variant"], r["draft_fixes"]), (4, "typed+draft-fixes", ["sjis-escape#0"]))
         self.assertEqual((self.out / "GEKO/func_1/body.c").read_text(), "fixed body\n")
         self.assertEqual(draft_fixes.best_rewrite, draft_fixes.best_rewrite)
+
+    def test_first_write_stands_when_the_search_is_cut_short(self):
+        cut = mock.Mock(side_effect=KeyboardInterrupt)
+        with self.assertRaises(KeyboardInterrupt):
+            self.run_finish(True, best_rewrite=cut)
+        d = self.out / "GEKO/func_1"
+        r = json.loads((d / "result.json").read_text())
+        self.assertEqual((r["score"], r["variant"], r["status"]), (12, "typed", "scored"))
+        self.assertEqual((d / "body.c").read_text(), "typed body\n")
+
+    def test_gs_local_candidate_is_scored_and_kept_when_better(self):
+        self.add_run("typed", 12, "void f(void) {\n    x = D_800E6280.unk_004;\n}\n")
+        body = "void f(void) {\n    x = D_800E6280.unk_004;\n}\n"
+        better = mock.Mock(return_value=(12, 12, [], body, "TU{" + body + "}", {}))
+        import draft_fixes
+        scorer = mock.Mock(return_value=5)
+        with mock.patch.object(rd, "unit_text", lambda row, b, folder, guard_body=False: "TU{" + b + "}"), \
+                mock.patch.object(draft_fixes, "make_scorer", lambda row: scorer), \
+                mock.patch.object(draft_fixes, "asm_for", lambda scope, files: None), \
+                mock.patch.object(draft_fixes, "best_rewrite", better), \
+                mock.patch("m2c.locate", side_effect=LookupError("no asm")):
+            r = rd.finish("GEKO:func_1", self.work, self.out, "T-20810", ("typed", "plain", "archived"), True)
+        self.assertEqual((r["score"], r["variant"]), (5, "typed+gs-local"))
+        self.assertIn("GameState *g = &D_800E6280;", (self.out / "GEKO/func_1/body.c").read_text())
+        self.assertEqual(r["variant_scores"]["gs-local"], 5)
 
     def test_no_variant_scored_writes_a_failure(self):
         for v in ("typed", "plain"):
@@ -822,6 +901,21 @@ class TestPool(unittest.TestCase):
         t = self.task("bad", "import sys; sys.exit(3)", on_fail=reasons.append)
         rd.run_pool([t], 1, log=lambda m: None, poll=0.01)
         self.assertEqual(reasons, ["exit 3"])
+
+    def test_interrupt_kills_the_running_tasks(self):
+        slow = self.task("slow", "import time; time.sleep(60)")
+        started = []
+        real = rd.subprocess.Popen
+
+        def popen(*a, **k):
+            started.append(real(*a, **k))
+            return started[-1]
+        with mock.patch.object(rd.subprocess, "Popen", popen), \
+                mock.patch.object(rd.time, "sleep", side_effect=KeyboardInterrupt):
+            with self.assertRaises(KeyboardInterrupt):
+                rd.run_pool([slow], 1, log=lambda m: None)
+        started[0].wait(timeout=10)
+        self.assertIsNotNone(started[0].returncode)
 
     def test_jobs_bound_the_parallelism(self):
         logdir = self.root / "live"

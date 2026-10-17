@@ -17038,3 +17038,11 @@ Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-20800 In Progress
 
 [[tickets/T-20800-redraft-tool]] created and started (worktree `tr-redraft-tool`, base `w2-good`): consolidate the 21 per-unit redraft drivers (`drafts/T-16550/redraft.py` .. `drafts/T-18800/redraft.py`) into `tools/redraft.py`. Card in [[kanban]] under In Progress, line in [[index]].
+
+## [2026-10-17] build | T-20800 validation run
+
+[[tickets/T-20800-redraft-tool]]: `tools/redraft.py` on ten functions (GEKO x4, DATE2 x3, main x3), default variants `typed`, `typed-late`, `plain`, `archived`, `guarded`, 51 tasks, 2 jobs, results in `drafts/T-20800/`. Nine better than the census, one equal; two better than the best archived draft (GEKO `func_80144198` 69 to 62, main `func_80054140` 106 to 48, both through `gs-local`), seven equal, one worse (DATE2 `func_80136860`, 164 against 188). None at 0. Scratch runs: the opt-in variants (`typed-keep`, `typed-named`, `typed-pass1`, `archived-raw`) on two functions, and RENSYU with three functions (`func_80132390` 364 to 337). The full tool suite passes (1,279 tests, 3 skipped). Method and numbers in [[decompile-workflow]] ("Redraft tool").
+
+## [2026-10-17] ticket | T-20800 In Review
+
+[[tickets/T-20800-redraft-tool]] In Progress to In Review: `tools/redraft.py`, `tools/redraft_rewrites.py`, `tools/redraft_extras.py`, `tools/test_redraft.py` (90 tests), the "Redraft tool" section of [[decompile-workflow]], `drafts/T-20800/` (10 functions). Card moved in [[kanban]]. Awaiting code review.
