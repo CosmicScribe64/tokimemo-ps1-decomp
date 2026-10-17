@@ -612,7 +612,55 @@ void holiday_tel_call(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_tel_exit);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", telephone_class_init);
+void telephone_class_init(void) {
+    s32 i;
+    /* FAKE: T-20940, a second local above the four row arrays puts them at sp+0xBC/0xA0/0x84/0x68 as in the
+     * original (IDO gives every local a slot); its real use is unknown, here it holds the first row's text. */
+    u8 *str;
+    s16 x[14];
+    s16 y[14];
+    s16 w[14];
+    s16 h[14];
+
+    set_kanji_string(-0x80, -0x54, 3, "電話番号", 0);
+    for (i = 0; i < 14; i++) {
+        x[i] = (i / 5) * 0x58 - 0x88;
+        y[i] = (i % 5) * 0x10 - 0x38;
+        w[i] = 0x48;
+        h[i] = 0xE;
+        if (i == 0) {
+            str = D_800B3538[13];
+            set_kanji_string(x[i], y[i], 3, str, 0);
+        } else if (i == 13) {
+            y[i] += 0x10;
+            set_kanji_string(x[i], y[i], 3, "取り消し", 0);
+        } else if (i == 12) {
+            set_kanji_string(x[i], y[i], 3, D_800B3538[12], 0);
+        } else if ((u32)(D_800E6280.unk_1BC[i - 1].unk_0C.w << 28) >> 31) {
+            set_kanji_string(x[i], y[i], 3, D_800B3538[i - 1], 0);
+        } else {
+            w[i] = 0;
+        }
+    }
+    menu_set(0, 14, x, y, w, h);
+    D_800E6280.unk_1093 = 0;
+    func_80048F64(0x60);
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 0x40;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_38 = 0x40000000;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0x84;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_0C = sprite_frame_table;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_10 = D_800C9A14;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_34 = D_800C9730;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_14 = D_800C9A54;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_04 = 8;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 1;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_06 = 2;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0x3F;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0x10;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = -0x13;
+}
 
 void holiday_club_init(void) {
     func_80065F34(0);
