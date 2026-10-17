@@ -648,6 +648,7 @@ s32 func_8013B5E4(void) {
     func_8004284C();
 }
 
+/* FAKE (T-23002): s32 with no return, so the callers (func_8013A2E8) see a live $v0 after the call; the real return type is unknown. */
 s32 func_8013B640(void) {
     s32 temp_v0;
     s32 var_s0;
