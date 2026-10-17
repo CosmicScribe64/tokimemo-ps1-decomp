@@ -437,36 +437,28 @@ void func_800FCFE4(void) {
     func_80011DFC();
 }
 
-/* NON_MATCHING: T-22011, 3 rows; the D_800F19AB base `lui` takes $v0 and comes before the second D_800EC2F8 `lui` ($v1 and after in the original) */
-#ifdef NON_MATCHING
 void func_800FD00C(void) {
     s32 idx;
     FnTbl39 tbl;
-    s32 pad1; /* FAKE: unused, declared after tbl so the table sits at sp+48 and the frame is 208 as in the original; T-22011 */
 
     tbl = D_801214A0;
     func_80078950("%d\n", D_800B1AF6);
     idx = D_800B1AF6;
     tbl.f[idx](0x80);
     if (D_800EECE0 != 0) {
-        D_800EB02B |= 0x80;
+        ((DisplayActor44 *)D_800EAFA0)[2].unk_03 |= 0x80;
         if (D_800B1AE4 % 40 < 0x14) {
-            D_800EC2F8 &= 0x7FFFFFFF;
+            ((Rec24 *)D_800EC190)[10].unk_00 &= 0x7FFFFFFF;
         } else {
-            D_800EC2F8 |= 0x80000000;
+            ((Rec24 *)D_800EC190)[10].unk_00 |= 0x80000000;
         }
-        D_800EC30E = D_800F19AB;
-        D_800EC30D = D_800F19AB;
-        D_800EC30C = D_800F19AB;
-        D_800EB02F = D_800F19AB;
+        ((Rec24 *)D_800EC190)[10].unk_14 = ((Rec24 *)D_800EC190)[10].unk_15 =
+            ((Rec24 *)D_800EC190)[10].unk_16 = ((DisplayActor44 *)D_800EAFA0)[2].unk_07 = D_800F19AB;
         return;
     }
-    D_800EB02B &= 0xFF7F;
-    D_800EC2F8 |= 0x80000000;
+    ((DisplayActor44 *)D_800EAFA0)[2].unk_03 &= 0xFF7F;
+    ((Rec24 *)D_800EC190)[10].unk_00 |= 0x80000000;
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FD00C);
-#endif
 
 void func_800FD160(void) {
     func_800433D0(0x502);
