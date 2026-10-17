@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_80053418 /* this object calls it as void (no v0 result in the call block, func_800754C0); main_api.h has s32 */
 #include "common.h"
 #include "game.h"
+
+void func_80053418();
 
 void func_80075320(void) {
     /* FAKE: byte view of the u8 field avoids the redundant selector copy (move v0,v1), as in TEL
@@ -61,7 +64,40 @@ void func_80075468(void) {
     func_80065B0C(0);
 }
 
+/* NON_MATCHING: T-17006, 9 differing lines; the local m keeps the month in v0 as the original does, but the
+ * beq delay slot gets move a1,v0 instead of lui a0 and the jal slot stays empty. Same 9 lines with m as u8/u32,
+ * (u8)m in the call, the tests nested, m assigned in the condition, or the test and call on one source line;
+ * the call reading D_800E6280.unk_03F again puts the month in a1 (lui a0 then fills the slot, 10 lines); a switch
+ * on m adds 8 bytes of frame. */
+#ifdef NON_MATCHING
+s32 func_800754C0(void) {
+    s32 m;
+    u8 rank[16];
+    s16 points[16];
+
+    func_80053418(rank, points);
+    if (((D_800E6280.unk_0F8 & 0xF) != (D_800E6280.unk_1BC[0].unk_10.w & 0xF)) ||
+        (((u32)(D_800E6280.unk_0F8 << 0x17) >> 0x1B) != ((u32)(D_800E6280.unk_1BC[0].unk_10.w << 0x17) >> 0x1B))) {
+        return 0;
+    }
+    m = D_800E6280.unk_03F;
+    if ((m != 3) && ((m != 4) || ((u8)D_800E6280.unk_040 >= 4U))) {
+        return 0;
+    }
+    if (appointment_find_today(D_800E6280.unk_03E, m, D_800E6280.unk_040) > 0) {
+        return 0;
+    }
+    if (birth_day_check(0xF) != 1) {
+        return 0;
+    }
+    if (get_g_zyotai_s(0) & 0x80) {
+        return 1;
+    }
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800754C0);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800755B4);
 
@@ -253,7 +289,38 @@ s32 func_80076B48(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076C7C);
+/* Implicit int in the original (no return value): the switch selector then stays live in $v0 (or v0,v1,zero in the
+ * delay slot of the first beqz). T-17006 */
+s32 func_80076C7C(void) {
+    s32 pad; /* FAKE: T-17006, unused local that reproduces the original stack layout (a 4-byte slot above sp4C; the
+              * buffers are otherwise 4 bytes too high); its real use is unknown. */
+    u8 sp4C[0x100];
+    u8 sp2C[0x20];
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        k_reset(1);
+        k_sub_reset_point_set();
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        strcpy(sp4C, "それじゃ、 ");
+        strcat(sp4C, D_800B342C[D_800E6280.unk_724]);
+        strcat(sp4C, "で、 ");
+        get_g_name(sp2C, (u32)(D_800E6280.unk_54C[0].w * 8) >> 0x1C);
+        strcat(sp4C, sp2C);
+        strcat(sp4C, "を待つか。）");
+        sndisp(sp4C, 0, 0x1F);
+        k_sub_disp_start(4);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        xa_wait();
+        return;
+    case 2:
+        func_8004284C();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", appointment_launch);
 
@@ -337,7 +404,71 @@ void func_80077C50(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-17006, 28 differing lines; the original copies the selector into v0 (or v0,v1,zero) in the delay
+ * slot of the first beq, before the dispatch, so the case blocks keep their own lui v0 and the dispatch slots hold
+ * the next li at. Every form tried (selector local, return local, s32/u32 return, comma and assignment in the
+ * switch) leaves the copy at the default return (move v0,v1 or andi v0,v1,0xff) and hoists lui v0 into the beq
+ * slots. */
+#ifdef NON_MATCHING
+u8 func_80077CA8(void) {
+    s32 x;
+
+    x = D_800E6280.unk_03E;
+    switch (x) {
+    default:
+        return x;
+    case 0x5F:
+        if (D_800E6280.unk_03F < 5U) {
+            return 0;
+        }
+        if (D_800E6280.unk_03F < 8U) {
+            return 1;
+        }
+        if (D_800E6280.unk_03F < 0xBU) {
+            return 2;
+        }
+        return 3;
+    case 0x60:
+        if (D_800E6280.unk_03F < 2U) {
+            return 3;
+        }
+        if (D_800E6280.unk_03F < 5U) {
+            return 4;
+        }
+        if (D_800E6280.unk_03F < 8U) {
+            return 5;
+        }
+        if (D_800E6280.unk_03F < 0xBU) {
+            return 6;
+        }
+        return 7;
+    case 0x61:
+        if (D_800E6280.unk_03F == 8) {
+            return 0xD;
+        }
+        if (D_800E6280.unk_03F < 2U) {
+            return 7;
+        }
+        if (D_800E6280.unk_03F < 5U) {
+            return 8;
+        }
+        if (D_800E6280.unk_03F < 8U) {
+            return 9;
+        }
+        if (D_800E6280.unk_03F < 0xBU) {
+            return 0xA;
+        }
+        return 0xB;
+    case 0x62:
+        if (D_800E6280.unk_03F < 2U) {
+            return 0xB;
+        }
+        return 0xC;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077CA8);
+#endif
 
 void func_80077E30(void) {
     magazine_base_show();
@@ -446,7 +577,38 @@ void holiday_club_init(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_8007866C);
+void func_8007866C(void) {
+    u8 buf[72];
+    GameState *gs;
+
+    menu_check(1, (s32) ((DisplayActor44 *)D_8011ECD0)->unk_26, (s32) ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    menu_bar_show(1);
+    func_8004FC10(1);
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_80042908(0);
+        return;
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (D_800E6280.unk_1094) {
+        case 0:
+            func_8004284C();
+            return;
+        case 1:
+            func_80042940((D_800E6280.unk_110A + 2) & 0xFF);
+            func_8004E58C();
+            strcpy(buf, club_name_table[(u16) D_800E6280.unk_0F4.h >> 0xC]);
+            strcat(buf, "部を退部した。");
+            sndi(buf, 0, 0xFF);
+            gs = &D_800E6280;
+            /* FAKE: T-17006, a bit-field store through the borrowed CharFlags view (one ugen temporary more than
+             * `|= 1`, so the original's t6..t0 numbering); the record's real bit-field layout is unknown. */
+            ((CharFlags *)&gs->unk_66C[D_800E6280.unk_0F4.h >> 12].unk_03)->b0 = 1;
+            gs->unk_0F4.b[1] = (gs->unk_0F4.b[1] & 0xFF0F) | 0xB0;
+            k_disp_start(1);
+            break;
+        }
+    }
+}
 
 void holiday_club_exit(void) {
     func_80048E78();

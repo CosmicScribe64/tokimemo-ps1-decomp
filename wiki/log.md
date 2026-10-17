@@ -16821,3 +16821,18 @@ Card moved to In Review in [[kanban]]. Code review against `CODING_STANDARDS.md`
 ## [2026-10-17] ticket | T-20005 Done (PR #42 merged)
 
 KakarottoCake's PR #42 (claim #41): GYOZI func_8013C774 and func_8014206C matched, 524 bytes, merged in one clean build with PR checks. [[tickets/T-20005-gyozi-display-dispatch]] Done.
+## [2026-10-16] ticket | T-17006 In Progress
+
+[[tickets/T-17006-w3-main-p06]] created and In Progress: wave 3 package w3-main-p06, six functions in `src/main/80075320.c` (`func_800754C0`, `func_80076C7C`, `func_8007866C`, `func_80077CA8`, `appointment_launch`, `func_80076630`). Worktree `tokimemo-wt/w3-main-p06` from `w2-good`.
+
+## [2026-10-16] ticket | T-17006 In Review
+
+[[tickets/T-17006-w3-main-p06]] In Progress to In Review: 0 of 6 matched (about 94 minutes). Guarded drafts: `func_800754C0` (9 rows), `func_80076C7C` (3), `func_80077CA8` (28), `func_8007866C` (14); `appointment_launch` and `func_80076630` not started. Four rows in [[data/t0018-cases]], notes in [[matching-notes]] (T-17006). Clean rebuild 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Waiting for the code review.
+
+## [2026-10-17] ticket | T-17006 closer pass
+
+[[tickets/T-17006-w3-main-p06]] closer pass (Opus, about 55 minutes) on three guarded drafts: `func_80076C7C` matched (`s32` without a return value, `include/main_api.h` declaration changed), `func_8007866C` matched (bit-field store through a FAKE `CharFlags` view), `func_800754C0` still 9 rows (variants listed in [[matching-notes]], T-17006 "Closer pass"). Three rows appended to [[data/t0018-cases]]. Checks: clean build `rm -rf build && configure.py && ninja -j2` 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` 0 new disagreements, 15 known. Ticket stays In Review.
+
+## [2026-10-17] ticket | T-17006 Done
+
+[[tickets/T-17006-w3-main-p06]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a `NON_MATCHING` comment wrapped, a stale acceptance line). Rebuild OK (27/27 SHA1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 2 of 6 functions matched (`func_80076C7C` 292 B, `func_8007866C` 324 B), 2 guarded (`func_800754C0`, `func_80077CA8`), 2 left `INCLUDE_ASM`. Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.
