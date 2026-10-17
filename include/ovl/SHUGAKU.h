@@ -488,7 +488,7 @@ void func_80132274(void);
 void func_801336A4(void);
 void func_80133E10(void);
 void func_80134930(void);
-void func_80135480(void);
+s32 func_80135480(void);
 void func_80138B20(void);
 void func_80139C80(void);
 void func_80139D40(void);
