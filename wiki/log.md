@@ -17815,3 +17815,18 @@ Package w4-p17: DATE `src/ovl/DATE/80132000.c`, `func_8013D5FC`, `func_8013B488`
 ## [2026-10-17] ticket | T-22017 Done
 
 Review against `CODING_STANDARDS.md`: no findings; only `src/ovl/DATE/80132000.c` changed (guards removed, `INCLUDE_ASM` kept), drafts are plain source. 0 of 5 matched. [[tickets/T-22017-w4-p17]] Done.
+## [2026-10-17] ticket | T-23002 Wave 5 big package w5-big-p02 opened
+
+[[tickets/T-23002-w5-big-p02]] (In Progress) under [[tickets/T-23000-wave-5-big-conveyor]]: `src/ovl/ENDING/801396E0.c`, `func_8013A2E8` (4,772 B). Branch `w5-big-p02` from `w2-good`.
+
+## [2026-10-17] ticket | T-23002 In Review
+
+[[tickets/T-23002-w5-big-p02]]: `func_8013A2E8` in `src/ovl/ENDING/801396E0.c` guarded at 12 differing lines (census draft 1,667 rows), 0 of 1 matched. GameState and string-literal views, one `i`/`idx`, else-if row table, `msg` evaluated before the `D_800CA2C0` update, `func_8013B640` as `s32`; `include/ovl/ENDING.h` declares `D_8013CAF0`. Notes in [[matching-notes]]. Clean build and checks still to run.
+
+## [2026-10-17] build | T-23002 checks
+
+[[tickets/T-23002-w5-big-p02]]: clean build 27/27 (668 steps), `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` all pass. Package left In Review for the lead.
+
+## [2026-10-17] ticket | T-23002 Done
+
+[[tickets/T-23002-w5-big-p02]]: code review against `CODING_STANDARDS.md` done, one finding fixed (`FAKE (T-23002)` comment on the `s32` return type of `func_8013B640` in `src/ovl/ENDING/801396E0.c`, unit sha1 still OK). 0 of 1 functions matched; `func_8013A2E8` stays under `#ifdef NON_MATCHING` at 12 differing lines. Ticket Done, card moved to Done.
