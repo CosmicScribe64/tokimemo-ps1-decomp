@@ -105,9 +105,25 @@ class GState(unittest.TestCase):
         self.assertFalse(v.fake)
         self.assertNotIn("FAKE", v.text)
 
+    def test_four_compares_of_a_nested_bit_field_like_func_8006EB64(self):
+        t = fn("s32 flag;", "",
+               "flag = D_800E6280.unk_1BC[8].unk_0C.f.f9;",
+               "if (D_800E6280.unk_1BC[8].unk_0C.f.f9 == 0) {", "    D_8015F000 = 1;", "}",
+               "if (D_800E6280.unk_1BC[8].unk_0C.f.f9 == 1) {", "    D_8015F000 = 2;", "}",
+               "if (D_800E6280.unk_1BC[8].unk_0C.f.f9 == 2) {", "    D_8015F000 = 3;", "}",
+               "if (D_800E6280.unk_1BC[8].unk_0C.f.f9 == 3) {", "    D_8015F000 = 4;", "}")
+        v = one(t, "gstate", " all")
+        self.assertEqual(v.text.count("g->unk_1BC[8].unk_0C.f.f9"), 5)
+        self.assertNotIn("D_800E6280", v.text.replace("&D_800E6280;", ""))
+        self.assertEqual(body(v)[:3], ["    GameState *g = &D_800E6280;", "    s32 flag;", ""])
+
     def test_declared_last_among_the_locals(self):
         v = one(STATE_FUNC, "gstate", " all last")
         self.assertEqual(body(v)[:3], ["    s32 idx;", "    s32 v;", "    GameState *g = &D_800E6280;"])
+
+    def test_declared_between_the_locals(self):
+        v = one(STATE_FUNC, "gstate", " all at1")
+        self.assertEqual(body(v)[:3], ["    s32 idx;", "    GameState *g = &D_800E6280;", "    s32 v;"])
 
     def test_first_statements_and_one_arm(self):
         labels = [v.label for v in of(STATE_FUNC, "gstate")]
