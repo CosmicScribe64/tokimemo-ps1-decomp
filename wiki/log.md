@@ -17551,3 +17551,7 @@ The board had 96 cards in In Review while no ticket was In Review: union-resolve
 ## [2026-10-17] ticket | T-22001 Done
 
 [[tickets/T-22001-w4-p01]]: code review against `CODING_STANDARDS.md` passed (comment-only C change in `src/main/8007C030.c`, one wording fix). 0 of 1 functions matched; `dialogue_speak_part` stays guarded at 16 rows. Ticket Done, card moved to Done.
+
+## [2026-10-17] ticket | T-22007 Wave 4 package w4-p07 opened
+
+[[tickets/T-22007-w4-p07]] (In Progress) under [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/NAME_ENT/80142A80.c`, `func_80142A80` (932 B) and `func_8014472C` (476 B). Branch `w4-p07` from `w2-good`.
