@@ -7510,3 +7510,9 @@ exact kind TT needs, and maspsx's real-ASPSX fixture for `div $2,$4,$6` has the 
 version. A pass that moves the `mflo` would be a rule fitted to this one function, which CODING_STANDARDS 7a rules out.
 The function stays `INCLUDE_ASM`; next step is running the real ASPSX binaries on test cases (ticket
 [[tickets/T-11890-tt-ratan2-aspsx]]).
+
+Update (same day): the real ASPSX (versions 2.56 to 2.86 under wine, measurement only) does none of the three habits:
+it puts every divide move after the checks (with a nop before a reader of rd), adds no hazard nop before labels or
+branches, and expands every symbol+register load through `$at`, exactly as maspsx does. The original's layout is
+therefore not ASPSX output of gcc's macros but most likely compiler output that was already expanded; none of our
+old-gcc builds produces it. No pass; [[gcc-objects]], "The real ASPSX on synthetic input (T-11890)".

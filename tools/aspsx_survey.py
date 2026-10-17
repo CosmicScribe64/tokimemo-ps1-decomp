@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Measure three ASPSX output habits over the SDK asm of the main exe (T-11890).
+"""Measure three code habits of the ASPSX-assembled SDK asm of the main exe (T-11890).
 
 Usage (inside Docker, after configure.py has split the main exe):
     python3 tools/aspsx_survey.py [asm/lib*.s ...]
@@ -20,7 +20,8 @@ prints counts, no game bytes:
 3. symbol + register loads/stores: `lui R,%hi(sym); addu R,R,X; op D,%lo(sym)(R)`, keyed by
    load/store and by R ($at or the destination D), with D == X separated.
 
-Results and their reading: wiki/gcc-objects.md, "ASPSX habits in the SDK asm (T-11890)".
+Results and their reading: wiki/gcc-objects.md, "ASPSX habits in the SDK asm (T-11890)"; the real ASPSX
+shows none of the three on gcc's macro output (same page, "The real ASPSX on synthetic input").
 """
 import collections
 import glob

@@ -17745,3 +17745,19 @@ The divide-move habit has no uniform rule backed by the evidence, so no pass and
 (draft in [[gcc-objects]]): with the three habits applied by hand to a scratch copy it gives all 97 instructions.
 Next step proposed: run the real ASPSX binaries on test cases. Notes in [[tickets/T-11890-tt-ratan2-aspsx]],
 [[matching-notes]], [[toolchain]]; the ticket stays In Progress.
+
+## [2026-10-18] query | T-11890 real ASPSX on synthetic input
+
+User-approved download of the maspsx author's `aspsx-binaries.tar.gz` into the scratchpad; ASPSX 2.56, 2.67, 2.77,
+2.79, 2.81 and 2.86 run under wine in a throwaway container (nothing committed). 36 synthetic divide cases, hazard and
+symbol-load cases, and the gcc 2.7.2-psx output of the ratan2 draft: all six versions agree with each other and with
+maspsx (move after the checks, nop before a reader, no nop before labels or branches, symbol loads through `$at`;
+ratan2 96 instructions against the original's 97). None of the three SDK habits is ASPSX behaviour. Results in
+[[gcc-objects]] ("The real ASPSX on synthetic input (T-11890)"), [[tickets/T-11890-tt-ratan2-aspsx]], [[matching-notes]],
+[[toolchain]].
+
+## [2026-10-18] decision | T-11890 no ASPSX pass (confirmed by the real ASPSX)
+
+An emulation pass would model behaviour the real assembler does not have, so none is built; `TT/8014D260` stays
+INCLUDE_ASM and the ticket stays In Progress. The open lead is a compiler that emits the expanded divide and split
+symbol loads itself.
