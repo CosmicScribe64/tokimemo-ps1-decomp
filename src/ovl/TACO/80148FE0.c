@@ -159,10 +159,10 @@ void func_80149538(void) {
     D_800E7384 += 1;
 }
 
-/* NON_MATCHING: T-19019, 2 differing lines (1 row, row 182): the reload of the selector in the `if` body is `addu t2,v1,t3` (index first), the original has `addu t2,t3,v1` (base first). Frame, spill slot (0x4C) and every other instruction match.
- * Without a selector local, uopt merges the two reads of `unk84[1]` itself (PRE): the first test's load stays in $a0 on the paths that skip the body, and uopt inserts a reload at the end of the body. The PRE temporary takes the frame word below the `arg1 * 2` spill that the original has (a declared `u8 st` takes a word above it: spill 0x48, the earlier 4-line draft). `(idx + D_8015EDB4)` and `(D_8015EDB4 + idx)` compile alike (uopt orders the sum itself, index first); the inserted reload copies that order. A `D_8015EDB4[idx]` read is a different expression, so mixing the forms ends the merge (89 to 132 lines). With `st` and one loop counter every offset is right relative to the frame top, but the frame is 8 bytes short. Tried without effect on the frame: `st` in a nested block, `obj` as an expression (operands of the address compares must then be swapped), `<` loop tests, `do`/`while` loops, the first store through `idx`, a ternary for the merged value (its temporary sits above the spill, 21 lines). autotweak (437 tries) reaches 4 lines.
- * T-22005: all 31 mixes of `(idx + D)` and `D[idx]` over the five accesses (best 4 lines), E spelled 15 other ways (casts, `idx[D]`, `(D + 0 + idx)`, `arg1 + 16`), early-return and nested shapes: no change. A declared `u8 st` (`st = A; if (st < 0x15U ...) { ...; st = D_8015EDB4[idx].unk84[1]; } if (st == 0)`) gives the base-first reload (row 182 matches) but takes the declared word above the `arg1 * 2` spill (spill 0x48 against 0x4C, 2 rows); about 1,100 placements of `st`, FAKE pad words and `obj` as an expression did not move the spill back. */
-#ifdef NON_MATCHING
+/* FAKE: the slot addresses are written as integer sums, not D_8015EDB4[idx]. uopt merges the two reads of `unk84[1]`
+ * (PRE) and copies the first lexical form of `(s32)D_8015EDB4 + idx * size` into the reload at the end of the `if`
+ * body; the `unk78` store enters that form base first, the tests and body index first, as in the original. Array
+ * and pointer forms reorder the adds or end the merge. Real source unknown. T-22005 */
 s32 func_801497EC(s32 arg0, s32 arg1, s16 *arg2, u8 *arg3, u8 *arg4) {
     MATRIX mtx;
     TcPos in;
@@ -189,13 +189,14 @@ s32 func_801497EC(s32 arg0, s32 arg1, s16 *arg2, u8 *arg3, u8 *arg4) {
     func_800A0ECC(&mtx, &in, &out);
     D_8015EDB4[idx].unk74 = D_80127480[0].unk18 + out.x + offX;
     D_8015EDB4[idx].unk76 = D_80127480[0].unk1C + out.y + offY;
-    D_8015EDB4[idx].unk78 = D_80127480[0].unk20 + out.z;
-    if ((idx + D_8015EDB4)->unk84[1] < 0x15U && (idx + D_8015EDB4)->unk82 < (idx + D_8015EDB4)->unk7A) {
-        (idx + D_8015EDB4)->unk84[1] = arg4[arg1 * 2];
-        (idx + D_8015EDB4)->unk82 += 1;
+    ((TcActor *)((s32)D_8015EDB4 + idx * sizeof(TcActor)))->unk78 = D_80127480[0].unk20 + out.z;
+    if (((TcActor *)(idx * sizeof(TcActor) + (s32)D_8015EDB4))->unk84[1] < 0x15U
+        && ((TcActor *)(idx * sizeof(TcActor) + (s32)D_8015EDB4))->unk82 < ((TcActor *)(idx * sizeof(TcActor) + (s32)D_8015EDB4))->unk7A) {
+        ((TcActor *)(idx * sizeof(TcActor) + (s32)D_8015EDB4))->unk84[1] = arg4[arg1 * 2];
+        ((TcActor *)(idx * sizeof(TcActor) + (s32)D_8015EDB4))->unk82 += 1;
         D_8015EDB4[17].unk84[2] = 1;
     }
-    if ((idx + D_8015EDB4)->unk84[1] == 0) {
+    if (((TcActor *)(idx * sizeof(TcActor) + (s32)D_8015EDB4))->unk84[1] == 0) {
         func_8015435C(arg0, 9);
         if (obj == &D_801274D0) {
             for (i = 4; i != 0x16; i += 3) {
@@ -214,9 +215,6 @@ s32 func_801497EC(s32 arg0, s32 arg1, s16 *arg2, u8 *arg3, u8 *arg4) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80148FE0", func_801497EC);
-#endif
 
 void func_80149B7C(void) {
     s32 i;
