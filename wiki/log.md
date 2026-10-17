@@ -17700,3 +17700,22 @@ Three of five SHUGAKU functions matched: `func_80135480` (`s32` no return, `SHUG
 ## [2026-10-17] ticket | T-22015 Done
 
 [[tickets/T-22015-w4-p15]]: code review against `CODING_STANDARDS.md` passed; one finding (unexplained byte view of `D_800E7D50` in the `func_80132444` guard) fixed with a comment, build 27/27 OK. 0 of 2 functions matched (`func_80132444` guarded at 22 rows, `func_801326B4` stays `INCLUDE_ASM`). Ticket Done, card moved to Done.
+## [2026-10-17] ticket | T-22012 In Progress
+
+Package w4-p12 started in worktree w4-p12 (branch from w2-good): BUNKASAI `src/ovl/BUNKASAI/801511E0.c`, `src/ovl/BUNKASAI/8013B190.c`, `src/ovl/BUNKASAI/80150930.c`, four functions. [[tickets/T-22012-w4-p12]], [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] build | T-22012 matches and guards
+
+Package w4-p12: `BUNKASAI:func_8013B25C` matched (`src/ovl/BUNKASAI/8013B190.c`, read-after-store of `D_800CA148` in case 14, no `s16` temporary) and `BUNKASAI:func_80150B7C` matched (`src/ovl/BUNKASAI/80150930.c`, `GameState *` for the record reads only, FAKE-marked). `func_801509A4` guarded at 19 rows (hoisted constant 1 coloured last), `func_80151364` at 2 rows (case 5 `lui` order). Findings in [[matching-notes]] (section T-22012).
+
+## [2026-10-17] ticket | T-22012 In Review
+
+2 of 4 matched, 2 guarded under 30 rows. Final checks run before the move; ticket [[tickets/T-22012-w4-p12]].
+
+## [2026-10-17] build | T-22012 final checks
+
+Clean rebuild 27/27, check_headers, migrate_globals --check and sync_protos --check-branch all OK on branch w4-p12. [[tickets/T-22012-w4-p12]] stays In Review.
+
+## [2026-10-17] ticket | T-22012 Done
+
+Code review against CODING_STANDARDS.md found nothing to fix; 2 of 4 matched (`BUNKASAI:func_8013B25C`, `BUNKASAI:func_80150B7C`), `func_801509A4` (19 rows) and `func_80151364` (2 rows) stay guarded. [[tickets/T-22012-w4-p12]], [[kanban]].

@@ -53,7 +53,7 @@ void func_801511E0(void) {
     }
 }
 
-/* NON_MATCHING: T-10040, one address-load scheduling difference. */
+/* NON_MATCHING: T-10040, T-22012, 2 rows: in case 5 the two address `lui`s before the year compare come out in the other order (built: D_800CA148 then D_800E62BE; original: D_800E62BE then D_800CA148); everything else matches. uopt puts the D_800CA148 range load at the top of the join block, so ugen emits it before the year load, and the as1 trace shows both `lui`s tied (aftercycles 4), which as1 breaks by original index; the original needs the year load first on the same source line. Not reachable from C so far: compound/plain add, year statement or in-condition, operand order, one-line forms (all on one line swaps the loads instead), a tmp or s16 copy of D_800CA148, cast and volatile reads, a second year read, direct D_800E6280 reads, a pointer reassignment, viewsweep, autotweak and a 240 s permuter run. */
 #ifdef NON_MATCHING
 void func_80151364(void) {
     u8 year;

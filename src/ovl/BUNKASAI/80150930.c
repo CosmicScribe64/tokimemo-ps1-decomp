@@ -15,9 +15,168 @@ void func_80150930(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80150930", func_801509A4);
+/* NON_MATCHING: T-22012, 19 rows; frame, loop shape and increment match. The loop-invariant constant 1 gets $a1 where the original has $v0 (original order: 1, i, row pointer, count; built: i, row pointer, count, 1), which shifts the loop registers and later ugen temps. Named constant local, loop forms, index types, a `GameState *` for the record walk, viewsweep, autotweak and a 240 s permuter run did not move it. */
+#ifdef NON_MATCHING
+void func_801509A4(void) {
+    s32 temp_v1;
+    u8 var_a1;
+    s32 var_v1;
+    s32 sp30[11];
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80150930", func_80150B7C);
+    *(BunkasaiGirlList *)sp30 = D_80160AA4;
+    func_800AE120(D_800E6280.unk_10F4);
+    var_a1 = 0;
+    var_v1 = 0;
+    do {
+        if (D_800E6280.unk_1BC[var_v1].unk_0C.f.b1 == 1) {
+            sp30[var_a1] = var_v1;
+            var_a1++;
+        }
+        var_v1 += 1;
+    } while (var_v1 != 0xB);
+    temp_v1 = sp30[func_800AE0D0() % var_a1];
+    D_80122EBC = temp_v1;
+    switch (temp_v1) {
+    case 0:
+        func_80042908(0xF);
+        return;
+    case 1:
+        func_80042908(0x1C);
+        return;
+    case 2:
+        func_80042908(0x2E);
+        return;
+    case 3:
+        func_80042908(0x41);
+        return;
+    case 4:
+        func_80042908(0x55);
+        return;
+    case 5:
+        func_80042908(0x61);
+        return;
+    case 6:
+        func_80042908(0x6D);
+        return;
+    case 7:
+        func_80042908(0x79);
+        return;
+    case 8:
+        func_80042908(0x85);
+        return;
+    case 9:
+        func_80042908(0x91);
+        return;
+    case 10:
+        func_80042908(0x9A);
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
+#else
+INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80150930", func_801509A4);
+#endif
+
+void func_80150B7C(void) {
+    u16 temp_v1_2;
+    u32 temp_t2;
+    u8 temp_v1;
+    /* FAKE: T-22012, the record reads go through game while the selector and the 0xF4 halfword are read from
+     * D_800E6280 directly; the split is what gives the hoisted constant 1 the register $v0 (all-game: 50 rows). */
+    GameState *game = &D_800E6280;
+
+    temp_v1 = D_800E6280.unk_110A;
+    switch (temp_v1) {
+    case 0:
+        D_800CA148 = ((((u16) D_800E6280.unk_0F4.h >> 0xC) * 3) + D_800E6280.unk_03E) - 0x4D;
+        func_8004284C();
+        return;
+    case 1:
+        normal_date_speak();
+        return;
+    case 2:
+        temp_v1_2 = D_800E6280.unk_0F4.h;
+        D_80122EB8 = (s32) ((u16) D_800E6280.unk_0F4.h >> 0xC);
+        temp_t2 = temp_v1_2 >> 0xC;
+        switch (temp_t2) {
+        case 0:
+            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 0) {
+                func_80042908(1);
+                return;
+            }
+            if ((((u8) game->unk_1BC[1].unk_0C.b[2] >> 4) == 0) && (game->unk_1BC[1].unk_0C.f.b1 == 1)) {
+                func_80042908(0x2A);
+                return;
+            }
+            func_80042908(0xE);
+            return;
+        case 1:
+            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 1) {
+                func_80042908(1);
+                return;
+            }
+            if ((((u8) game->unk_1BC[1].unk_0C.b[2] >> 4) == 1) && (game->unk_1BC[1].unk_0C.f.b1 == 1)) {
+                func_80042908(0x2A);
+                return;
+            }
+            func_80042908(0xE);
+            return;
+        case 2:
+            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 2) {
+                func_80042908(1);
+                return;
+            }
+            if ((((u8) game->unk_1BC[2].unk_0C.b[2] >> 4) == 2) && (game->unk_1BC[2].unk_0C.f.b1 == 1)) {
+                func_80042908(0x3B);
+                return;
+            }
+            func_80042908(0xE);
+            return;
+        case 3:
+            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 3) {
+                func_80042908(1);
+                return;
+            }
+            if ((((u8) game->unk_1BC[2].unk_0C.b[2] >> 4) == 3) && (game->unk_1BC[2].unk_0C.f.b1 == 1)) {
+                func_80042908(0x3B);
+                return;
+            }
+            func_80042908(0xE);
+            return;
+        case 4:
+            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 4) {
+                func_80042908(1);
+                return;
+            }
+            if ((((u8) game->unk_1BC[3].unk_0C.b[2] >> 4) == 4) && (game->unk_1BC[3].unk_0C.f.b1 == 1)) {
+                func_80042908(0x50);
+                return;
+            }
+            func_80042908(0xE);
+            return;
+        case 5:
+            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 5) {
+                func_80042908(1);
+                return;
+            }
+            if ((((u8) game->unk_1BC[3].unk_0C.b[2] >> 4) == 5) && (game->unk_1BC[3].unk_0C.f.b1 == 1)) {
+                func_80042908(0x50);
+                return;
+            }
+            func_80042908(0xE);
+            return;
+        default:
+            func_80046500();
+            return;
+        }
+        break;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_80150F20(void) {
     switch (D_800E6280.unk_110A) {

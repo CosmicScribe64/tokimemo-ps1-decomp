@@ -45,6 +45,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-22010-w4-p10|T-22010]] Wave 4 package w4-p10: GEKO `80134D10.c`, `func_80137580`, `func_80135AC8`, `func_801355E8` matched, `func_80136C20` guarded at 4 rows, `func_801367EC` back to INCLUDE_ASM (Done; 3 of 5 matched).
 - [[tickets/T-22006-w4-p06|T-22006]] Wave 4 package w4-p06: DATE `8014A1B0.c`, `func_8014A8FC` guarded at 20 rows from 34, not matched (Done; 0 of 1 matched).
 - [[tickets/T-22003-w4-p03|T-22003]] Wave 4 package w4-p03: BUNKA_SD func_80137890 and three 592-byte functions (Done; 4 of 4 matched, 2,464 bytes).
+- [[tickets/T-22012-w4-p12|T-22012]] Wave 4 package w4-p12: BUNKASAI `801511E0.c`, `8013B190.c`, `80150930.c`, four functions: `func_8013B25C` (1,068 B) and `func_80150B7C` (932 B) matched, `func_801509A4` guarded at 19 rows, `func_80151364` at 2 rows (Done; 2 of 4 matched).
 - [[tickets/T-22002-w4-p02|T-22002]] Wave 4 package w4-p02: main `func_80079070` matched (1,204 B; unconverted `s32` call-argument local is precoloured `$a0`), 1 of 1 (Done).
 - [[tickets/T-22005-w4-p05|T-22005]] Wave 4 package w4-p05: TACO func_801484E4, func_801416E8 and func_801497EC matched (2,376 bytes), func_8013D838 (10 lines) guarded (Done).
 - [[tickets/T-22008-w4-p08|T-22008]] Wave 4 package w4-p08: `NAME_ENT` `80132000.c`, 0 of 4 matched; `func_80132320` (14 lines) and `func_80134110` (26 lines) stay guarded, `func_80134248` at 455 lines, `func_80138C1C` not closer (Done; 0 of 4 matched).
