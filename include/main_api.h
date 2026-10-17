@@ -2620,6 +2620,7 @@ void func_800A09D0();
 void func_800A0C64();
 void func_800A0F4C();
 void func_800A1070(MATRIX *m); /* returns nothing: an implicit int view adds a $v0 range (T-19009) */
+s32 SquareRoot0(s32 a);
 void func_800AB984();
 void func_800ABA38();
 void func_800ABAB8();

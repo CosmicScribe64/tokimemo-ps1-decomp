@@ -78,7 +78,60 @@ void func_80146DC8(u8 *arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80146BE0", func_80146E10);
+void func_80146E10(u8 *a, s32 idx) {
+    u8 *p;
+    u8 *q;
+    s32 t;
+    s32 i;
+
+    p = D_80158A88 + idx * 0x58;
+    *(s32 *)(a + 0x20) += *(s32 *)(a + 0x28);
+    *(s32 *)(a + 0x24) += *(s32 *)(a + 0x2C);
+    *(s16 *)(a + 0x14) = *(s16 *)(a + 0x22);
+    *(s16 *)(a + 0x16) = *(s16 *)(a + 0x26);
+    /* abs(dx) as the usual ABS() expansion; a local for the difference gives other registers. T-11860 */
+    t = (*(s16 *)(a + 0x14) - *(s16 *)(p + 0x14) < 0) ? -(*(s16 *)(a + 0x14) - *(s16 *)(p + 0x14))
+                                                      : *(s16 *)(a + 0x14) - *(s16 *)(p + 0x14);
+    if (t < 2) {
+        *(s32 *)(a + 0x28) = 0;
+    } else {
+        *(s32 *)(a + 0x28) = (*(s16 *)(p + 0x14) - *(s16 *)(a + 0x14)) << 12;
+        t = (*(s16 *)(a + 0x14) < *(s16 *)(p + 0x14)) ? 0x20000 : -0x20000;
+        *(s32 *)(a + 0x28) += t;
+    }
+    if (*(s16 *)(a + 0x16) < *(s16 *)(p + 0x16) || *(s16 *)(a + 0x16) < 0) {
+        a[0] = 0;
+        p[0] = 0;
+        if (*(u16 *)(p + 0x44) != 0xFFFF) {
+            q = D_80158A9C + *(u16 *)(p + 0x44) * 0x78;
+            if (*(u16 *)(q + 4) == 0x40) {
+                *(u16 *)(q + 4) = 0x70;
+                /* FAKE: TT zero-store chains; separate stores change registers. T-11860 */
+                *(u16 *)(q + 6) = *(u16 *)(q + 8) = *(u16 *)(q + 0xA) = 0;
+                q[0xD] = q[0xE] = q[0xF] = 0;
+            }
+        } else {
+            q = D_80158A9C;
+            for (i = 0; i < 0x20; i++, q += 0x78) {
+                if (*(u16 *)(q + 4) == 0x40) {
+                    t = (*(s16 *)(p + 0x14) - *(s16 *)(q + 0x14) < 0) ? -(*(s16 *)(p + 0x14) - *(s16 *)(q + 0x14))
+                                                                      : *(s16 *)(p + 0x14) - *(s16 *)(q + 0x14);
+                    if (t < 8) {
+                        t = (*(s16 *)(p + 0x16) - *(s16 *)(q + 0x16) < 0) ? -(*(s16 *)(p + 0x16) - *(s16 *)(q + 0x16))
+                                                                          : *(s16 *)(p + 0x16) - *(s16 *)(q + 0x16);
+                        if (t < 8) {
+                            *(u16 *)(q + 4) = 0x70;
+                            /* FAKE: TT zero-store chains; separate stores change registers. T-11860 */
+                            *(u16 *)(q + 6) = *(u16 *)(q + 8) = *(u16 *)(q + 0xA) = 0;
+                            q[0xD] = q[0xE] = q[0xF] = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 void func_80147074(void) {
     u32 limit;
