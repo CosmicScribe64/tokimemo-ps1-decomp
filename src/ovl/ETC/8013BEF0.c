@@ -238,7 +238,38 @@ void func_8013D2C0(void) {
     func_8009C674(0);
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013D32C);
+s32 func_8013D32C(void) {
+    s32 i;
+    POLY_FT4 *poly[2];
+
+    for (i = 0; i < 2; i++) {
+        poly[i] = GetWorkBase(0x28, D_8011ECA0);
+        func_8009F040(poly[i]);
+        SetSemiTrans(poly[i], 0);
+        SetShadeTex(poly[i], 0);
+        poly[i]->tpage = func_8009ECB0(2, 0, 0x280 + i * 0x80, 0);
+        poly[i]->x0 = i * 0xA0;
+        poly[i]->y0 = D_800E6280.unk_018[D_8011ECA0] - 0x78;
+        poly[i]->x1 = (i + 1) * 0xA0;
+        poly[i]->y1 = D_800E6280.unk_018[D_8011ECA0] - 0x78;
+        poly[i]->x2 = i * 0xA0;
+        poly[i]->y2 = D_800E6280.unk_018[D_8011ECA0] + 0x78;
+        poly[i]->x3 = (i + 1) * 0xA0;
+        poly[i]->y3 = D_800E6280.unk_018[D_8011ECA0] + 0x78;
+        poly[i]->u0 = i * 0x20;
+        poly[i]->v0 = 0;
+        poly[i]->u1 = (i + 5) * 0x20;
+        poly[i]->v1 = 0;
+        poly[i]->u2 = i * 0x20;
+        poly[i]->v2 = 0xF0;
+        poly[i]->u3 = (i + 5) * 0x20;
+        poly[i]->v3 = 0xF0;
+        poly[i]->r0 = 0x80;
+        poly[i]->g0 = 0x80;
+        poly[i]->b0 = 0x80;
+        AddPrim(D_8011ECA0 * 0x400 + 0x38 + D_800E8CA0, poly[i]);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013D570);
 
