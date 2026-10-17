@@ -742,6 +742,7 @@ extern s32 D_800B6754;
 extern s32 D_800B6758;
 extern s32 D_800B6760[];
 extern s32 D_800B6780[];
+extern s32 D_800B67AC[];
 extern s32 D_800B6810[];
 /* T-17000: parameter tables of func_80076FDC, func_80073CB0 and parameter_up_down. func_80076FDC
  * reads byte [row][col] of two 12-row, two-byte tables in an 11-case switch (`lbu %lo(D_800B6892)` after
