@@ -17626,3 +17626,7 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: EVENT `src/ovl/EVENT/8011C650.c`
 ## [2026-10-17] ticket | T-22009 Done
 
 [[tickets/T-22009-w4-p09]]: code review against `CODING_STANDARDS.md`, no findings. 1 of 2 matched (`func_8011EDFC` matched through the `EVENT/8011C650` data island; `func_8011D5C4` stays `INCLUDE_ASM`).
+
+## [2026-10-17] ticket | T-22013 Wave 4 package w4-p13 In Progress
+
+Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E0.c` and `src/ovl/RPG_BAT/8015A1F0.c`, three guarded functions (`func_8015A8B4`, `func_8015A744`, `func_80148714`). See [[tickets/T-22013-w4-p13]].
