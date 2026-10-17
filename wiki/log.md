@@ -16871,3 +16871,15 @@ Clean rebuild of the w3-main-p09 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-17007 Done
 
 [[tickets/T-17007-w3-main-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found three issues, all fixed: the one-pass write loop in the guarded `func_80054C74` draft lacked a `FAKE` comment, `func_80055A38` reached the bank through the old symbol `D_80123324` (now `D_80123320[0].data`, still matches; the checksum field form breaks the registers and is explained in the comment), and a stale "0 of 5" line in [[matching-notes]]. 1 of 5 functions matched (`func_80055A38`, 196 B), unit sha1 OK, `func_80054C74` stays guarded at 2 lines. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17012 In Progress
+
+Created [[tickets/T-17012-w3-main-p12]]: wave 3 package w3-main-p12, six functions of `src/main/80079B10.c` from drafts under `drafts/T-16000`, `drafts/T-14500/main`, `drafts/T-17000/main`. Worktree `tokimemo-wt/w3-main-p12`, branch `w3-main-p12`. Card in In Progress on [[kanban]].
+
+## [2026-10-17] ticket | T-17012 In Review
+
+[[tickets/T-17012-w3-main-p12]] In Progress to In Review: wave 3 package w3-main-p12 (main `src/main/80079B10.c`), 2 of 6 functions matched (492 bytes: `func_80079B34`, `func_8007A50C`), `func_8007B144` (21 rows) and `func_8007B64C` (51 rows) kept as `NON_MATCHING` drafts, `func_80079C70` and `func_8007BCFC` not started (75-minute mark). `func_80079B34` was a wrong callee return type (`u16 func_8007B64C()`), `func_8007A50C` an `s16` view of `D_80125D44` found by autotweak. New idioms in [[register-cheatsheet]] (three rows), details in [[matching-notes]] (section T-17012), two rows and an update line in [[data/t0018-cases]]. Card moved to In Review on [[kanban]].
+
+## [2026-10-17] ticket | T-17012 Done
+
+[[tickets/T-17012-w3-main-p12]] In Review to Done after the code review: wave 3 package w3-main-p12 (main `src/main/80079B10.c`), 2 of 6 functions matched (492 bytes: `func_80079B34`, `func_8007A50C`). No findings; one non-blocking note on the first-symbol queue access in the guarded `func_8007B64C` draft. Clean build sha1 OK; headers, globals and `sync_protos --check-branch` OK. Card moved to Done on [[kanban]].
