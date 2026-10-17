@@ -17454,3 +17454,6 @@ Re-derived each tooling-round result on the current tree and committed one match
 ## [2026-10-17] ticket | T-21520 Done
 
 Code review against `CODING_STANDARDS.md`, no findings: 8 matched functions (5,444 bytes), all plain C and `funcdiff.py --resolve` MATCH, every trick carries a `FAKE` comment with ticket and reason, the two `keep` lines cite their necessity proofs (`migrate_globals.py --verify-proofs`: both PROVEN), `check_headers.py`, `migrate_globals.py --check` and `sync_protos.py --check-branch` pass, nothing under `src/ovl/TT/` or `dialogue_render` changed, no game data. [[tickets/T-21520-apply-tooling-matches]] Done; the `keep` rule text for `CODING_STANDARDS.md` stays open in [[keep-lines]].
+
+## [2026-10-17] ticket | T-11860 TT batch 12 Done
+Eleven file groups, one Opus agent each, two at a time: 25 of 28 matched (16,208 bytes), including the three batch-10/11 near misses and seven never-drafted functions; guarded `func_801427A8`, `func_80142110`, `func_8014A2B4`. FAKE comments added to the remaining chain stores (maintainer review of #35). Merged current `main`; clean rebuild 27/27 OK, checks clean; TT 299/303 (97.2%). Inline review against CODING_STANDARDS.md: no open findings. Moved [[tickets/T-11860-tt-batch-12]] to Done. Notes in [[matching-notes]] ("TT overlay, batch 12"), 28 rows in [[data/t0018-cases]].

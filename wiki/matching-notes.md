@@ -6202,6 +6202,41 @@ the earlier agents' findings as tips, which carried the zero-chain idiom through
   constant register for a call argument (`func_8013A0DC`, contradicts the T-11810 note); four ugen-looking constants in
   t2..t5 that behave like uopt registers (`func_8014A2B4`).
 
+## TT overlay, batch 12: the TT remainder, one long Opus run per file group (T-11860)
+
+Eleven file groups covering every remaining TT function except `func_8014D260` (gcc), one Opus agent each, two at a
+time; each agent got the earlier agents' findings as tips. 25 of 28 matched (16,208 bytes), including all three
+batch-10/11 near misses (`func_801455C8`, `func_8013A0DC`, `func_80147A18`) and seven functions that had never been
+drafted. Guarded: `func_801427A8` (12 lines), `func_80142110` (4 lines), `func_8014A2B4` (28 lines). TT is at 299/303.
+Ticket [[tickets/T-11860-tt-batch-12]].
+
+- **The zero-store chain pair** (see batch 11) matched or helped nine more functions; besides moving shared constants,
+  its reloads raise a pointer's uopt priority (`func_801374C0`) and explain "unexplained" occupants of v0/v1/a0
+  (`func_801455C8`). Every chain store carries a FAKE comment (maintainer review of #35).
+- **Wrong assumptions in old drafts** were the biggest single cause of long-standing near misses: a handler call that
+  takes no arguments (`func_8013A0DC`, check sibling calls through the same pointer), extra call arguments
+  (`func_80140D84`), a byte-indexed view of what is a struct (`func_80147A18`: cfe orders operands by complexity, so
+  `arg1[6]` and `arg1->field` give different ugen temps), a single pointer that is really a table, and globals that are
+  file-`static` (`func_80136830`: a data island plus `static` definitions let uopt reuse stored values).
+- **Constant registers:** a constant used once gets `li at`; a second use keeps it in a register (`case 0xFF:` on the
+  default arm, `func_80136AD8`; empty `if (j == 12) {}`, `func_80137654`). Tied hoisted constants follow the order
+  uopt numbers them: `if (...) continue;` tests, `for (...; i != 12; ...)` heads and `if (x == 0) return;` change it
+  (`func_8013F040`, `func_8013A3E0`, `func_801455C8`).
+- **Loop shape:** IDO unrolls plain counted loops itself; a test it cannot analyse (`i << 0 < 4`, FAKE) keeps a loop
+  rolled (`func_80138808`); a plain loop over four records that IDO unrolls fully explained four constants in a1..t0
+  (`func_801498C8`).
+- **Expressions:** inline abs ternaries `(x < 0 ? -(x) : x)` instead of difference locals (`func_80146E10`, 151 to 8
+  lines); accessing a config word through a pointer to its base global instead of an absolute symbol, with a u32
+  bit-field type (`func_8013E498`); conversion casts that as1 removes cost a ugen temp (`func_801487D0`).
+- **Locals:** reusing one pointer local for a second record (an invisible local still holds a uopt register,
+  `func_80146000`); one chain store that leaves a value with a single use splits its range to a stack slot
+  (`func_80146924`); locals removed by copy-propagation still get frame slots.
+- **Tools that found the levers:** the uopt output ucode dump (`uo.sh`/`udump.py` in the agents' scratch), per-range
+  use/frequency counts, and sibling functions; long permuter runs mostly confirmed dead ends.
+- Open: three tied hoisted constants coloured in bit order (`func_801427A8`, as `func_801475C8`); an else-arm load in
+  c instead of a ugen temp (`func_80142110`); four constants in t2..t5 that behave like uopt registers
+  (`func_8014A2B4`, case 7 equals the `func_801498C8` loop body).
+
 ## T-19020: RENSYU package w3-d-p20 (80132040.c)
 
 [[tickets/T-19020-w3-d-p20]], wave 3 direct package of [[tickets/T-16990-wave-3-conveyor]], worktree `w3-d-p20`. Four functions, one matched (FAKE): `func_80133CB8` (420 B). `func_80133628` (900 B) stays a guarded draft (21 lines); `func_80133990` (844 B) and `func_8013325C` (972 B) are back to `INCLUDE_ASM` (drafts in `drafts/T-19020/RENSYU/`). `tools/siblings.py --package` found no matched relative above 0.70 for any of them.
