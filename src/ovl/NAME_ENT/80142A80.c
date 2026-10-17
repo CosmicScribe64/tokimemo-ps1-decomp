@@ -4,10 +4,7 @@
 
 extern s32 *D_8012070C;
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-22007, 0 rows in the code (funcdiff --resolve: only the 21 string-address pairs differ). The song-line strings are
- * not copied: they stay extern rodata labels, so the unit rodata still needs INCLUDE_RODATA pieces for them (rodata_pieces.py
- * writes only unowned symbols). */
+/* The 21 song-line strings are placed from their rodata pieces (rodata_pieces.py), not copied into the source. T-22007 */
 extern u8 D_8014C4F0[];
 extern u8 D_8014C4FC[];
 extern u8 D_8014C510[];
@@ -29,6 +26,28 @@ extern u8 D_8014C6B0[];
 extern u8 D_8014C6D0[];
 extern u8 D_8014C6E0[];
 extern u8 D_8014C6F4[];
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C4F0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C4FC);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C510);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C534);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C554);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C578);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C5A4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C5B8);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C5D8);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C5F0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C60C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C62C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C63C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C65C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C668);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C684);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C6A0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C6B0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C6D0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C6E0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80142A80.rodata", D_8014C6F4);
+
 void func_80142A80(void) {
     s32 pad; /* FAKE: unused; its stack home gives the original 72-byte frame. T-22007 */
     u8 sp43;
@@ -89,9 +108,6 @@ void func_80142A80(void) {
     D_800B3CFC = 0;
     D_800B3D00 = 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80142A80", func_80142A80);
-#endif
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80142A80", func_80142E24);
 

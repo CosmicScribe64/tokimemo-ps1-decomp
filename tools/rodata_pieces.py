@@ -160,6 +160,14 @@ def process(src, folder, piece_dir):
     for sym, body in free:
         with open(os.path.join(piece_dir, sym + ".s"), "w", encoding="utf-8") as f:
             f.write(SECTION + "\n" + body)
+    # T-22007: a function converted to C may name a symbol that only its own INCLUDE_ASM file
+    # held (string rodata that must not be copied into the source, e.g. song text). Every early
+    # symbol of the island also gets a piece, so `INCLUDE_RODATA("<dir>", SYM)` can place it.
+    for items in owned.values():
+        for late, sym, body in items:
+            if not late:
+                with open(os.path.join(piece_dir, sym + ".s"), "w", encoding="utf-8") as f:
+                    f.write(SECTION + "\n" + body)
     return sum(len(v) for v in owned.values()), [s for s, _ in free]
 
 

@@ -96,6 +96,9 @@ class Distribute(unittest.TestCase):
         self.assertNotIn(".late_rodata", a)
         self.assertIn(".section .late_rodata\n", b)
         self.assertTrue(os.path.exists(os.path.join(pieces, "jtbl_8010001C.s")))
+        # T-22007: an early symbol held by a function file also has a piece; a table does not
+        self.assertTrue(os.path.exists(os.path.join(pieces, "D_80100000.s")))
+        self.assertFalse(os.path.exists(os.path.join(pieces, "jtbl_80100008.s")))
 
     def test_second_run_gives_the_same_files(self):
         self.func("func_A", 0x80200000, "D_80100000")
