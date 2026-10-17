@@ -16879,3 +16879,8 @@ Clean rebuild of the w3-main-p09 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-17016 In Review
 
 [[tickets/T-17016-w3-main-p16]] In Progress to In Review: 3 of 4 functions matched in `src/main/800737A0.c` (`func_800741B8` 452 B, `func_8007505C` 708 B, `func_8007437C` 732 B; 1,892 bytes), `parameter_up_down` (1,228 B) restored to `INCLUDE_ASM` with a T-0018 `regorder` row (best form 221 funcdiff lines, `drafts/T-17016/main/parameter_up_down/`). Idioms in [[matching-notes]] (section T-17016) and four rows in [[register-cheatsheet]]: delete m2c's result variable and `return`s, a record-pointer local for the spill slot, a pointer local for a table inside `GameState`, a FAKE byte view for a reloaded flag. Header: `D_800B67AC` table in `include/main_api.h`. Checks: clean build `rm -rf build && configure.py && ninja` 27/27 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known). Waiting for the code review.
+
+## [2026-10-17] ticket | T-17016 Done
+
+[[tickets/T-17016-w3-main-p16]] In Review to Done: code review against `CODING_STANDARDS.md` found one issue, fixed: the display-record pointer stores in `func_8007437C` and `func_8007505C` used an `s32` view of `u8 *` fields; plain `(u8 *)` casts give the same bytes (unit sha1 OK). 3 of 4 functions matched (`func_800741B8`, `func_8007505C`, `func_8007437C`; 1,892 bytes), `parameter_up_down` stays `INCLUDE_ASM` with a T-0018 `regorder` row. Merge via the wave 3 merge script.
+
