@@ -638,7 +638,10 @@ extern s32 D_800B1CF0;
 extern u8 D_800B3220;
 extern u8 *D_800B3288[];
 extern u8 **D_800B32CC;
-extern s32 D_800B3538[];
+/* T-20940: name table, 16 string pointers up to D_800B3578 (12 girls, then four more). telephone_class_init
+ * reads entry i - 1 for menu row i (splat's D_800B3534 is that -4 relocation) and entries 12 and 13 as
+ * D_800B3568, D_800B356C; TEL and OPTION index it by girl. */
+extern u8 *D_800B3538[16];
 extern u8 *girl_short_name_table[];
 extern u8 *D_800B3624;
 extern u8 *D_800B3630;
@@ -660,6 +663,10 @@ extern s32 **D_800B3748;
 #endif
 extern void *D_800B374C; /* image data passed to LoadSquare (func_800673B8) */
 extern u8 D_800B3750[][3];
+/* T-20940: the 13 telephone numbers, seven digits each (0x5B bytes, D_800B37D4 follows after one pad
+ * byte): holiday_tel_exit plays digit k of number D_800E6280.unk_F5F (row 10 as D_800B37BE), and
+ * func_80075C84 compares each row with the last seven keys in D_800B6990. */
+extern u8 D_800B3778[13][7];
 extern s32 D_800B37D4[];
 extern u8 *club_name_table[];
 extern s32 D_800B394C[];
@@ -811,6 +818,17 @@ extern u8 D_800B6890[12][2];
 extern u8 D_800B68A8[12][2];
 extern s8 D_800B68E0[8][9];
 extern s8 D_800B6928[][9];
+/* T-20940: static data of 80075320.c. D_800B6990 is a ring of the last seven keys pressed on the holiday
+ * menu (cleared to 0xFF by func_800755B4 in a loop IDO unrolled; the eighth byte is padding) and D_800B6998
+ * its write index (func_80075C84: `D_800B6990[D_800B6998++] = key`, wrapped at 7, then read from index + 7
+ * modulo 7). D_800B69BC is a 0x14-byte string in .data (strcat argument of func_800767A4). D_800B69D0 and
+ * D_800B69D8 map GameState.unk_69C[].unk_01 (0..7) to a background in func_80076FDC, one table per
+ * func_80066A84() result. */
+extern u8 D_800B6990[8];
+extern u8 D_800B6998;
+extern u8 D_800B69BC[0x14];
+extern u8 D_800B69D0[8];
+extern u8 D_800B69D8[8];
 extern s32 D_800B69E0[];
 /* T-17000: message table of func_80077E30, indexed by func_80077CA8() and passed to sndisp. */
 extern u8 *D_800B6CF8[];
