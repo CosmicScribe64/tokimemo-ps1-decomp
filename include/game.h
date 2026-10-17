@@ -320,8 +320,8 @@ typedef struct SrnRec28 {
     /* 0x13 */ u8 unk_13;
     /* 0x14 */ u8 unk_14;
     /* 0x15 */ u8 unk_15;
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
+    /* 0x16 */ u16 unk_16;
+    /* 0x18 */ u16 unk_18;
     /* 0x1A */ u8 unk_1A[2];
     /* 0x1C */ s32 unk_1C;
     /* 0x20 */ u32 unk_20;
