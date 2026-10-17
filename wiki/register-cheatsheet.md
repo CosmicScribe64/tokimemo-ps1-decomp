@@ -1,6 +1,6 @@
 ---
 type: guide
-updated: 2026-10-16
+updated: 2026-10-17
 sources: ["wiki/matching-notes.md", "wiki/uopt-register-allocation.md", "wiki/register-allocation-wave7.md", "wiki/decompile-workflow.md", "tools/regdiff.py"]
 ---
 
@@ -28,6 +28,8 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 | regdiff says / asm shows | Try, in this order |
 |---|---|
 | **tie**: two equal-priority values swapped (constants, addresses) | The compiler numbers them by first use. Reorder the statements so the original's value is used first. In `a[i] = b[i]` the left address comes first; dropping a temporary (`v = b[i]; a[i] = v;` -> `a[i] = b[i];`) swaps the two bases. Ranges are numbered in ucode first-mention order, so writing `r2` before `b0` changed the colouring in `_sprite_set_box_shade_tarao` (T-16220). |
+| a loop's end pointer and a constant used in two loops swap registers (regdiff: priority, not a tie), or a second loop's end is `addiu tN,base,k` from a hoisted base where the original rebuilds it with `lui/addiu` | Write the m2c pointer walks as index loops over the array, `for (i = 32; i < 56; i++) tab[i].f ...`: IDO strength-reduces the index and builds the end constants itself. main `parameter_show` (T-17011). |
+| a promoted global is written back at a loop latch (`sh vN,%lo(G)` before the `bnez`) where the original stores it once before the loop; the loop calls a function and reads G after the call | Drop the local copy of an array base (`tab = (T *)D_X;`) and index the global itself, `((T *)D_X)[i + 3].f = ...`: with the local, uopt keeps G's range dirty and saves it before every call. main `func_8006612C` (T-17011). |
 | **priority order**: the wrong value wins a register | Give the loser one more use, or the winner one fewer. Repeat an expression instead of keeping a temporary, or the reverse. Move a use into or out of a loop, since loop uses count 10x. |
 | **extra or missing range**: the original keeps a value in a register that the draft recomputes, or the reverse | Add or remove a local for that value. A raw load in one register and a derived value in another means: declare the raw value as a local and repeat the derived expression. |
 | **invisible masked value**: the original's `a1`/`a2` are one register later than the draft's, `p` moves up, the two stack arguments are loaded in the other order, and no instruction shows why. Colour-mask stores `p->r = (c >> 16) & 0xFF;` where ugen drops the `and` before `sb` still leave a uopt range that takes a colour | Make that value a local read in only one of its uses: `v = (c >> 16) & 0xFF; ... p->r2 = v; ... p->r3 = (c >> 16) & 0xFF;`. uopt folds the single read back (no extra instruction) but numbers the range at the local's first mention, so it is coloured first and the other ranges (and `p`) shift by one register; raw loads follow the numbering. Local read in both uses, or any other value of the group, did not work (main `_sprite_set_box_shade_tarao`, T-17001). |
