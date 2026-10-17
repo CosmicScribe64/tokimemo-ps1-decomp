@@ -17471,3 +17471,35 @@ All three remaining guarded TT near misses matched (2,740 bytes): `func_80142110
 ## [2026-10-17] ticket | T-11870 Done (PR #48 merged)
 
 diman8's PR #48: the last three TT near misses matched (2,740 bytes), TT 302/303; only func_8014D260 (gcc PsyQ code) is left. All three had been logged as allocator quirks; the causes were statement order and control-flow shape. [[tickets/T-11870-tt-batch-13]] Done.
+
+## [2026-10-17] ticket | Claim the next large NAME_ENT handler
+
+PR #46 is merged; the maintainer independently confirms the renderer MATCH and 27/27 hashes. [[tickets/T-20008-large-name-introduction]] claims NAME_ENT func_80143580 (4,308 bytes) in issue #50 before implementation, from current upstream d73328b8. Leave the DATE2 claim #49 and TT untouched. Initial assembly inspection finds eight tile addresses in a 0x90-byte frame; the archived m2c draft has broken pointer/record strides and misinterpreted relocation low halves.
+
+## [2026-10-17] build | T-20008 semantic loop reconstruction compiles
+
+[[tickets/T-20008-large-name-introduction]] now has a compiling structured full-unit scratch draft (1,079 diagnostic rows). Recovered Rec24 field widths, eight tile addresses, sprite/mode setup and the 128-word palette blend; malformed m2c scaling and missing increments are repaired. Current differences include unwanted loop unrolling, a 16-byte frame excess and register choices. Keep the ASM fallback while testing source induction types.
+
+## [2026-10-17] query | T-20008 old-value tests and fall-through reload
+
+[[tickets/T-20008-large-name-introduction]] recovers post-decrement thresholds from the original assembly, plus a selector reload between the step-4 helper and fall-through step 5. The archived draft omitted that reload and held an obsolete selector across a call. Shared meaningful loop indices recover the 0x90-byte frame and tile table home. All changes are still scratch candidates; no production C or new match claim.
+
+## [2026-10-17] decision | Trace the T-20008 register allocation
+
+[[tickets/T-20008-large-name-introduction]] keeps its corrected semantic candidate despite a lower score for the older malformed control. Shared-counter nested for loops recover the rolled tile loops. Build the existing documented uopt trace diagnostic at the pinned revision inside ignored Docker scratch, and regenerate m2c with current types to check the archive; do not change compiler flags or production source.
+
+## [2026-10-17] query | T-20008 word counters and consistent diagnostics
+
+[[tickets/T-20008-large-name-introduction]] separates raw row counts from aligned instruction edits; equal-length and unequal-length candidates previously used different scoring paths. The original sprite-loop coordinates are word counters, with narrowing only at record stores. Resource-address signedness also separates loop-bound constants from call arguments. These source/type controls improve structural fidelity without toolchain changes; the handler is still ASM in production.
+
+## [2026-10-17] build | T-20008 recover stack layout and reduce duplicate ranges
+
+[[tickets/T-20008-large-name-introduction]]: s32 coordinate induction restores the original 0x90 frame, ra save and tile-array offsets without extra saved registers. Indexed tile fills remove an artificial array-base cache, shared selector/counter and field depth expression recover further register-web facts; best consistent aligned edit distance is 378, still nonmatching. Explicit scoped flag views avoid broad header changes. Production remains ASM; upstream issue #50 still confirms exclusive function ownership.
+
+## [2026-10-17] build | T-20008 reconstruction archive verified
+
+[[tickets/T-20008-large-name-introduction]]: cleaned archived C uses Rec24, SpriteSlot24 and GameState; canonical full-unit compile is 835 diff rows / 448 aligned edits, diagnostic helper return view 799 / 430. Existing viewsweep completed 39 compiles, zero untested variants. Default ninja completed 605 steps, header/global guards passed, 27/27 independent binary SHA1 checks passed, prototype guard has 0 new / 15 known disagreements. Default linked func_80143580 MATCH is the unchanged ASM fallback; zero new verified C bytes. No production or compiler changes.
+
+## [2026-10-17] ticket | T-20008 archive ready for review
+
+[[tickets/T-20008-large-name-introduction]] moved to In Review with [[kanban]] synchronized. Scope is the recovered source checkpoint in drafts/T-20008, reproducible measurements and assembly-backed semantic corrections; matching remains unfinished. Self-review against CODING_STANDARDS.md completed, retained source controls explicitly marked FAKE, no game assets, generated instruction listings, binaries or probe scripts included. Maintainer review is pending.

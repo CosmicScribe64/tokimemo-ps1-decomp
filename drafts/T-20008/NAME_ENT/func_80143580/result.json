@@ -1,0 +1,37 @@
+{
+  "ticket": "T-20008",
+  "scope": "NAME_ENT:func_80143580",
+  "source": "src/ovl/NAME_ENT/80142A80.c",
+  "base": "d73328b8e901198701082e3c5a2a99d36e45186f",
+  "created": "2026-10-17",
+  "status": "nonmatching-archive",
+  "original_bytes": 4308,
+  "original_instruction_rows": 1077,
+  "body_sha256": "b40c77b33afa816fe8889a0042099b4b3f39223ab15e80cc6edba6562e21b3b0",
+  "declarations_sha256": "314a8588dd48c60a147653ae70656c511904423167d5b112e03b744163f7d017",
+  "canonical_headers": {
+    "instruction_rows": 1078,
+    "resolved_diff_rows": 835,
+    "aligned_instruction_edits": 448
+  },
+  "diagnostic_return_view": {
+    "declaration": "s32 func_8004A1A0();",
+    "instruction_rows": 1078,
+    "resolved_diff_rows": 799,
+    "aligned_instruction_edits": 430,
+    "production_adopted": false
+  },
+  "viewsweep": {
+    "compiled": 39,
+    "untested": 0,
+    "budget": 150
+  },
+  "default_build": {
+    "binary_sha1_checks_passed": 27,
+    "binary_sha1_checks_total": 27,
+    "prototype_new_disagreements": 0,
+    "prototype_known_disagreements": 15,
+    "fallback": "INCLUDE_ASM",
+    "new_verified_c_bytes": 0
+  }
+}

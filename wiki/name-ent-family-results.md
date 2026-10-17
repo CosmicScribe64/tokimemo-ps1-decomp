@@ -126,3 +126,7 @@ functions are not in a package: `func_80138C1C`, `func_80138F60`, `func_801398EC
 | w3-name-ent-p02 | T-17902 | `80132000.c` | `func_80132320`, `func_80134B94`, `func_80134248`, `func_80134110` (3,608 B) |
 | w3-name-ent-p03 | T-17903 | `80139740.c` | `func_80140B20`, `func_8013BE18`, `func_8013DF88`, `func_8013AF78`, `func_8013D2AC` (2,252 B) |
 | w3-name-ent-p04 | T-17904 | `80144AD0.c` | `prologue_line_start`, `func_801460D8`, `func_80145FB0`, `func_80149B08`, `prologue_line_run` (2,340 B) |
+
+## Introduction-scene reconstruction checkpoint (T-20008)
+
+[[tickets/T-20008-large-name-introduction]] and drafts/T-20008 retain a compiling reconstruction of func_80143580 (4,308 bytes), with corrected tile fills, Rec24/SpriteSlot24 access widths and strides, post-decrement thresholds, helper-side selector reload and palette-copy bounds. This is a nonmatching archive; production remains ASM and no new verified C bytes are claimed. The archive README contains the full-unit reproduction command, measured view controls and remaining source differences.
