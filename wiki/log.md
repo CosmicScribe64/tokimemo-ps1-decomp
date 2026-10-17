@@ -17626,3 +17626,7 @@ Package w4-p12: `BUNKASAI:func_8013B25C` matched (`src/ovl/BUNKASAI/8013B190.c`,
 ## [2026-10-17] build | T-22012 final checks
 
 Clean rebuild 27/27, check_headers, migrate_globals --check and sync_protos --check-branch all OK on branch w4-p12. [[tickets/T-22012-w4-p12]] stays In Review.
+
+## [2026-10-17] ticket | T-22012 Done
+
+Code review against CODING_STANDARDS.md found nothing to fix; 2 of 4 matched (`BUNKASAI:func_8013B25C`, `BUNKASAI:func_80150B7C`), `func_801509A4` (19 rows) and `func_80151364` (2 rows) stay guarded. [[tickets/T-22012-w4-p12]], [[kanban]].
