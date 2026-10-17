@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_80085E30 /* called as an implicit int function (definition: void): the call's $v0 result keeps the loop pointer off $v0 in func_80145370, T-20600 */
 #include "common.h"
 #include "ovl/TAIIKU.h"
+
+s32 func_80085E30();
 
 /* Display record n of the runner sprites (D_8011ECD0 is an array of 0x44-byte records). */
 #define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
@@ -80,8 +83,6 @@ void func_801452D0(void) {
     tbl.f[idx]();
 }
 
-/* NON_MATCHING: T-16553, 22 differing lines; in the two loops that store 8 the original keeps the constant 8 in v0 and the loop pointer in v1, the build has them the other way round (registers only). T-19007: regdiff colours the pointer start constant (priority 41) before the hoisted 8 (15.5) and gives it v0; autotweak, explicit pointer loops, i = 5..16, do-while forms and a named constant do not flip it */
-#ifdef NON_MATCHING
 void func_80145370(void) {
     s32 i;
     s32 j;
@@ -145,9 +146,6 @@ void func_80145370(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80145370);
-#endif
 
 void func_80145640(void) {
     s32 slot;
