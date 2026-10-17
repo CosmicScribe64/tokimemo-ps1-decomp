@@ -1,7 +1,7 @@
 ---
 id: T-20900
 title: "Cross-unit shared-type unification"
-status: In Review
+status: Done
 assignee: claude-opus (ty-shared)
 created: 2026-10-17
 updated: 2026-10-17
@@ -27,7 +27,7 @@ unified tables (`tools/redraft.py`).
       `sync_protos --check-branch` pass.
 - [x] Draft score changes measured and recorded.
 - [x] [[data-types]] and the family pages document the types.
-- [ ] Code review against `CODING_STANDARDS.md` (before Done).
+- [x] Code review against `CODING_STANDARDS.md` (before Done).
 
 ## Notes
 
@@ -79,3 +79,14 @@ after = snapshot of the unified headers, each run from its own tree under build/
 
 Final checks: clean `rm -rf build && python3 configure.py && ninja` 27/27, `check_headers` OK, `migrate_globals --check`
 OK, `sync_protos --check-branch` OK (0 new, 15 known). No draft reached 0, so nothing new to match.
+
+### 2026-10-17 claude-opus (review): code review against `CODING_STANDARDS.md`, Done
+
+Reviewed `git diff w2-good...ty-shared` (26 commits, 167 files) against the checklist; no findings.
+- Scope: no edit in `src/ovl/TT/*` or `src/main/8007C030.c` (`dialogue_render` untouched); no game data, binaries or `disc/` content (the `drafts/T-20900/` files are the usual draft bodies and header contexts, same as the other `drafts/T-*` folders).
+- Matched code changed only to use the new types (field access instead of byte-offset casts, record copies, bit-field views); no new match claimed. The scan of added `src`/`include` lines found no `//` comment, `inline`, `bool` or non-ASCII text; local declarations (`Work800E7D10 *work;`) sit at block top.
+- Types: struct offsets and sizes documented in `include/game.h` and `include/main_api.h`; each header carries a comment naming the views it replaced; `check_headers` passes (main-exe symbols declared once, overrides for `D_800E7D10` gone).
+- FAKE comments: the four touched (`src/main/800674B0.c`, `src/ovl/DATE/80156600.c`, `src/ovl/EVENT/800F7220.c`, `src/ovl/EVENT/80107FC0.c`) each state the reason and a ticket id.
+- Wiki: section "Shared-type unification" in [[data-types]], word views in [[game-state]], T-20900 lines on the family pages; kanban card was In Review and moves to Done; index and log updated.
+- Tools: `tools/redraft*.py` changes are Python 3 with tests (`tools/test_redraft.py`).
+- Verification after merging `w2-good` (T-20810, T-20830, T-16990) into the branch (log conflict resolved by keeping both sides): clean `rm -rf asm build && configure.py && ninja` 27/27 sha1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known), all tool tests (1508, 3 skipped) OK.
