@@ -267,7 +267,69 @@ void func_8013731C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801369D0", func_801373D0);
+s32 func_801373D0(void) {
+    BsdEvent *list;
+    BsdEvent *ev;
+    s32 i;
+    s32 slot;
+    s32 img;
+
+    if (D_800E6280.unk_1100 == 0) {
+        D_8013CED8 = 0;
+        if (D_8013CED4 != 0) {
+            switch (D_8013CED4) {
+            case 1:
+                D_800E6280.unk_1104.w = 0;
+                break;
+            case 2:
+                D_8013CECC++;
+                D_8013CED0 = 0;
+                D_8013CED4 = 0;
+                D_8013CEC8 = 1;
+                func_8004E9F4(1);
+                func_8004284C();
+                return 0;
+            }
+        }
+    }
+    list = D_8013CE8C[D_8013CECC];
+    if (D_8013CED4 == 0) {
+        D_8013CED4 = 1;
+    }
+    if (D_8013CED4 == 1) {
+        for (i = D_8013CEC8; i < 0xFFFF; i++) {
+            /* FAKE: T-22003, the word view with i * 2 takes the ugen temporary that the
+             * original's index expression takes; &list[i] gives $t1 for $t2 in the loop */
+            ev = (BsdEvent *)((s32 *)list + i * 2);
+            if (D_8013CED0 == ev->unk_00) {
+                if (ev->unk_04 == 0x0FFFFFFF) {
+                    D_8013CED4 = 2;
+                    i = 0xFFFF;
+                } else {
+                    slot = (ev->unk_04 & 0xFF0000) >> 16;
+                    img = ev->unk_04 & 0xFF;
+                    if (img == 0xFE) {
+                        func_801377D4(slot, 0x50, 0);
+                    } else {
+                        func_801377D4(slot, img, 1);
+                    }
+                    if (ev->unk_04 & 0xF0000000) {
+                        func_80137824(D_8013C814[D_8013CECC]);
+                        D_800E6280.unk_1100 = 1;
+                        D_8013CED8 = 1;
+                    }
+                }
+            } else {
+                D_8013CEC8 = i;
+                i = 0xFFFF;
+            }
+        }
+    }
+    D_8013CED0++;
+    if (D_8013CED8 == 1) {
+        func_80137620();
+    }
+}
 
 INCLUDE_RODATA("asm/ovl/BUNKA_SD/data/BUNKA_SD/801369D0.rodata", D_8013AAD0);
 

@@ -17585,3 +17585,14 @@ Package w4-p06 of [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/DATE/8014A1B0.c`
 ## [2026-10-17] ticket | T-22006 Done
 
 Code review of [[tickets/T-22006-w4-p06]] against `CODING_STANDARDS.md`: 0 of 1 matched (`func_8014A8FC` guarded at 20 rows, from 34). One finding fixed (ticket `links:` frontmatter quoting), no code change; build 27/27 from the matcher run. Package of [[tickets/T-22000-wave-4-conveyor]].
+## [2026-10-17] ticket | T-22003 Wave 4 package w4-p03 opened
+
+Four BUNKA_SD functions from the T-18100 drafts. [[tickets/T-22003-w4-p03]], part of [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] ticket | T-22003 In Review
+
+Matched BUNKA_SD `func_80133D54`, `func_801373D0`, `func_8013842C` (3 x 592 bytes); `func_80137890` guarded at 6 rows. See [[matching-notes]] and [[tickets/T-22003-w4-p03]]; board in [[kanban]]. Sources: `src/ovl/BUNKA_SD/80133540.c`, `801369D0.c`, `80137B40.c`, `80137890.c`.
+
+## [2026-10-17] ticket | T-22003 Done
+
+Review against `CODING_STANDARDS.md` passed after one wiki fix (stale guard text in [[matching-notes]], row added to [[register-cheatsheet]]). 4 of 4 matched, 2,464 bytes: BUNKA_SD `func_80133D54`, `func_801373D0`, `func_8013842C` (592 bytes each) and `func_80137890` (688 bytes, closer). Ticket [[tickets/T-22003-w4-p03]], board in [[kanban]]. Sources: `src/ovl/BUNKA_SD/80133540.c`, `801369D0.c`, `80137B40.c`, `80137890.c`.
