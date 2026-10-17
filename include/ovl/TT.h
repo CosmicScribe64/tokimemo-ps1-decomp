@@ -805,3 +805,20 @@ extern TtCollision6 D_80155C6A;
 /* Scene reset in 80148DB0.c, called by func_801494D8 before its definition. T-11860 */
 void func_80149B20(void);
 #endif
+
+#ifndef OVL_TT_T11860_801478D0
+#define OVL_TT_T11860_801478D0
+/* Sprite animation state at object + 0x38 (and + 0x98), drawn by func_80147A18. T-11860 */
+typedef struct TtSprAnim {
+    /* 0x00 */ TtSprSet **sets;
+    /* 0x04 */ u8 flip; /* XORed into each part's flags; bit 0 flips y, bit 1 flips x */
+    /* 0x05 */ u8 set;
+    /* 0x06 */ u8 frame;
+    /* 0x07 */ u8 unk_07[3];
+    /* 0x0A */ u8 clutOverride;
+    /* 0x0B */ u8 clut;
+    /* 0x0C */ s16 x;
+    /* 0x0E */ s16 y;
+    /* 0x10 */ u8 unk_10;
+} TtSprAnim; /* accessed prefix size 0x11 */
+#endif
