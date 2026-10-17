@@ -17536,3 +17536,6 @@ KakarottoCake's PR #53: NAME_ENT func_80149B08 (484 bytes). diman8's PR #54: DAT
 ## [2026-10-17] ticket | T-22000 Wave 4 conveyor opened
 
 Matching resumes at the user's request until weekly usage nears 95 percent. Fresh inventory: 426 functions in 122 packages (TT, DATE2 and claimed functions excluded). [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] ticket | T-22005 Wave 4 package w4-p05 opened
+Package of four TACO functions from [[tickets/T-22000-wave-4-conveyor]], In Progress. Owned: src/ovl/TACO/80140DF0.c, src/ovl/TACO/80148FE0.c, src/ovl/TACO/8013D1E0.c, src/ovl/TACO/801480B0.c. See [[tickets/T-22005-w4-p05]].
