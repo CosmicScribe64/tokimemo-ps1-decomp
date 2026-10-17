@@ -235,7 +235,7 @@ void func_8013A004(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-23002, 16 differing lines (8 rows): as1 fills the load-delay slot of the first flag test with the `lui a1` of the first string (the original) and the delay slot of the 0x40 test with `lui t8`; here `lui a1` stays in the arm and `li a0,-72` fills the slot */
+/* NON_MATCHING: T-23002, 12 differing lines (6 rows): the original fills the load-delay slot after `lbu a0` of the first flag test with the `lui a1` of the first string (arm 1 then reads `lui a0; addiu a0; jal; addiu a1`), here the slot stays a nop and the arm keeps `lui a1` (viewsweep, autotweak, 240 s of permuter, local and pointer forms of the first call: no gain) */
 #ifdef NON_MATCHING
 s32 func_8013B640(void); /* the callers read its (unset) $v0: it blocks $v0 in the next block (selector in $a0) */
 
@@ -342,7 +342,8 @@ void func_8013A2E8(void) {
                 D_80122CD0 = dialogue_render(-0x48, D_800CA2C0, 0, (s32)name, 0, "", "", 0);
                 func_8013B640();
             } else {
-                D_80122CD0 = dialogue_render(-0x48, D_800CA2C0, 0, (*D_8013CAF0)[27], 0, "", "", 0);
+                msg = (*D_8013CAF0)[27];
+                D_80122CD0 = dialogue_render(-0x48, D_800CA2C0, 0, msg, 0, "", "", 0);
                 func_8013B640();
             }
             if (best < 0x78) {
