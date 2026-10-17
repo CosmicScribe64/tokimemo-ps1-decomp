@@ -17596,3 +17596,17 @@ Matched BUNKA_SD `func_80133D54`, `func_801373D0`, `func_8013842C` (3 x 592 byte
 ## [2026-10-17] ticket | T-22003 Done
 
 Review against `CODING_STANDARDS.md` passed after one wiki fix (stale guard text in [[matching-notes]], row added to [[register-cheatsheet]]). 4 of 4 matched, 2,464 bytes: BUNKA_SD `func_80133D54`, `func_801373D0`, `func_8013842C` (592 bytes each) and `func_80137890` (688 bytes, closer). Ticket [[tickets/T-22003-w4-p03]], board in [[kanban]]. Sources: `src/ovl/BUNKA_SD/80133540.c`, `801369D0.c`, `80137B40.c`, `80137890.c`.
+## [2026-10-17] ticket | T-22002 Wave 4 package w4-p02 In Progress
+
+Package w4-p02 started in worktree w4-p02 (branch from w2-good): `src/main/800789E0.c`, one function `func_80079070`. [[tickets/T-22002-w4-p02]], [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] ticket | T-22002 In Review (func_80079070 stays guarded, 4 rows)
+
+No match: viewsweep, autotweak (345 variants) and about 100 hand placements did not move the 2-instruction diff. Guard note rewritten in `src/main/800789E0.c`; findings in [[matching-notes]]. [[tickets/T-22002-w4-p02]] moved to In Review.
+
+## [2026-10-17] ticket | T-22002 closer: func_80079070 matched
+Opus closer for [[tickets/T-22002-w4-p02]]: `main:func_80079070` matched (1,204 bytes) with an `s32` call-argument local (precoloured `$a0`) and a FAKE unused `u8` frame pad; guard removed in `src/main/800789E0.c`. Notes in [[matching-notes]]. Clean rebuild 27/27, check_headers, migrate_globals --check, sync_protos --check-branch OK.
+
+## [2026-10-17] ticket | T-22002 Done
+
+Code review of `w2-good...w4-p02` against CODING_STANDARDS.md: owned file only (`src/main/800789E0.c`), FAKE marks ticketed, no inline asm or game data. Stale "guarded" claims fixed in `wiki/index.md`, [[matching-notes]], [[data/t0018-cases]] and [[data/true-gaps]]. 1 of 1 matched (`main:func_80079070`, 1,204 B). [[tickets/T-22002-w4-p02]] moved to Done.

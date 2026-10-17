@@ -304,17 +304,15 @@ void ovl_load_verify(void) {
     }
 }
 
-/* NON_MATCHING: T-17003, 4 differing lines (2 instructions); frame, switch, saves and schedule equal.
- * The original loads the call argument straight into $a0 (`lui a0; lbu a0`); IDO keeps `arg` in $v0
- * and folds the copy (`lui v0; lbu a0,(v0)`), the T-0018 regorder class of GYOZI func_801361D4. */
-#ifdef NON_MATCHING
 void func_80079070(void) {
-    GameState *gs; /* FAKE: T-17003, a store through gs keeps the arg load above it and the selector in $v1 */
-    u8 arg;
+    GameState *gs; /* FAKE: T-22002, the switch and the arg read go through gs: it keeps the selector in $v1,
+                    * the arg load above the unk_1108 store, and takes frame word 0x34 */
+    u8 pad; /* FAKE: T-22002, never used; holds frame byte 0x33 so the four saved bytes sit at 0x2F-0x32 */
     u8 sp32;
     u8 sp31;
     u8 sp30;
     u8 sp2F;
+    s32 arg; /* s32 and passed as is, so its range is precoloured $a0 (a u8 converted at the call took $v0) */
 
     gs = &D_800E6280;
     switch (gs->unk_110E) {
@@ -471,16 +469,13 @@ void func_80079070(void) {
     sp2F = *(u8 *)&D_800E6280.unk_110C;
     sp30 = *(u8 *)&D_800E6280.unk_110B;
     arg = gs->unk_1109;
-    gs->unk_1108 = gs->unk_110E;
-    func_80042908((s32) arg);
+    D_800E6280.unk_1108 = D_800E6280.unk_110E;
+    func_80042908(arg);
     func_80042940((s32) sp32);
     D_800E6280.unk_110D = sp31;
     D_800E6280.unk_110C = sp2F;
     D_800E6280.unk_110B = sp30;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800789E0", func_80079070);
-#endif
 
 s32 func_80079524(void) {
     if (D_800E6280.unk_1108 == 0xD0 || D_800E6280.unk_1108 == 0xD1) {

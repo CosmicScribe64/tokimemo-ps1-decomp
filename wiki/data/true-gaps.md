@@ -12,6 +12,8 @@ Census of the unmatched non-TT functions whose remaining difference is registers
 ugen temporary, as1 order), the decision behind it, and what IDO 4.1's ugen and as1 do with the same input
 ([[ido-52-evaluation]], section "T-20710"). Rules of the allocator: [[uopt-register-allocation]].
 
+Update (T-22002): main `func_80079070` was matched after this census (an unconverted `s32` call-argument local is precoloured `$a0`); its row below is the pre-match snapshot. See [[matching-notes]], section T-22002.
+
 ## Method
 
 - Input: the 87 guarded `NON_MATCHING` drafts outside TT at `w2-good` 5df5fdc6 (merge of T-20600). Each was

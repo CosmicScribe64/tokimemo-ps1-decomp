@@ -41,6 +41,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-22004-w4-p04|T-22004]] Wave 4 package w4-p04: TAIIKU `80140810.c` and `80142240.c`, three functions: `func_80142400` guarded 349 to 26 rows, `func_8014357C` guarded 34 rows, `func_80140A90` restored to INCLUDE_ASM (Done; 0 of 3 matched).
 - [[tickets/T-22006-w4-p06|T-22006]] Wave 4 package w4-p06: DATE `8014A1B0.c`, `func_8014A8FC` guarded at 20 rows from 34, not matched (Done; 0 of 1 matched).
 - [[tickets/T-22003-w4-p03|T-22003]] Wave 4 package w4-p03: BUNKA_SD func_80137890 and three 592-byte functions (Done; 4 of 4 matched, 2,464 bytes).
+- [[tickets/T-22002-w4-p02|T-22002]] Wave 4 package w4-p02: main `func_80079070` matched (1,204 B; unconverted `s32` call-argument local is precoloured `$a0`), 1 of 1 (Done).
 - [[tickets/T-11880-date2-remainder|T-11880]] DATE2: the remaining nine functions, claim #49 (Done; 8 of 9 matched, DATE2 101/102, 91.9% of bytes).
 - [[tickets/T-20008-large-name-introduction|T-20008]] NAME_ENT introduction reconstruction archive (4,308-byte scope), claim #50; compiling, still nonmatching (In Progress; draft checkpoint merged, PR #51).
 - [[tickets/T-20010-name-ent-resource-loader|T-20010]] NAME_ENT resource loader follow-up, 1,652 bytes; valid table recovered, still ASM (Ready).
