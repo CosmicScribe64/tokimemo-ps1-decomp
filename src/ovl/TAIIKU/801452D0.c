@@ -506,7 +506,7 @@ void func_80146338(void) {
         DISP(96 + i).unk_04 = 0;
         DISP(96 + i).unk_05 = 0x80;
         DISP(96 + i).unk_1A = 0x1000;
-        *(s16 *)DISP(96 + i).pad_1C = 0x1000;
+        DISP(96 + i).unk_1C = 0x1000;
         DISP(96 + i).unk_06 = 2;
         DISP(96 + i).unk_2A = a.v[i];
         DISP(96 + i).unk_18 = b.v[i];
@@ -1158,7 +1158,7 @@ s32 func_80148370(void) {
         DISP(96 + i).unk_04 = 0;
         DISP(96 + i).unk_05 = 0x80;
         DISP(96 + i).unk_1A = 0x1000;
-        *(s16 *)DISP(96 + i).pad_1C = 0x1000;
+        DISP(96 + i).unk_1C = 0x1000;
         DISP(96 + i).unk_06 = 2;
     }
     for (i = 0; i < 4; i++) {

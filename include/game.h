@@ -31,6 +31,15 @@ typedef struct FileReq {
 
 #ifndef GAME_DISPLAY_ACTOR44_T10890
 #define GAME_DISPLAY_ACTOR44_T10890
+/* One record of the 0x44-byte display-record pools (T-20900): main D_8011ECD0 (160 records, D_80120650 is
+ * record 96), EVENT D_800E9620 and GYOZI D_80129F40 (the same 160-record pool at the addresses those two
+ * overlays were linked against). Field widths are the union of every unit's accesses: tools/type_recovery.py's
+ * scan of the original asm finds lbu/sb only at the byte fields (no lb anywhere), lh/sh at the halfwords
+ * and lw/sw at +0x0C, +0x10, +0x34 and +0x38 (the other word accesses are whole-record copies).
+ * +0x24 .. +0x33 are also read as 16.16 fixed-point words: DisplayFixActor44 is that view of the same record.
+ * Replaces the per-unit views DisplayRecord44, TelRec44, RpgObjectRecord44, RpgFlagRecord44, RpgHealth44,
+ * EventFlagRecord44, EventMotion44, GyoziRec44, GyoziInitSprite44, ShoSprite44, ShoCounter44, NameRecord44,
+ * NameActorHead44, NameAssetActor44, TaiValue44, TaiRecord44, TextureRecord44, OptActor44, DateScene44 (T-20900). */
 typedef struct DisplayActor44 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
@@ -41,30 +50,82 @@ typedef struct DisplayActor44 {
     /* 0x06 */ u8 unk_06;
     /* 0x07 */ u8 unk_07;
     /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad_0A[2];
+    /* 0x0A */ s16 unk_0A;
     /* 0x0C */ u8 *unk_0C;
     /* 0x10 */ u8 *unk_10;
     /* 0x14 */ s16 unk_14;
     /* 0x16 */ s16 unk_16;
     /* 0x18 */ s16 unk_18;
     /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ u8 pad_1C[2];
+    /* 0x1C */ s16 unk_1C;
     /* 0x1E */ s16 unk_1E;
-    /* 0x20 */ u8 pad_20[2];
+    /* 0x20 */ s16 unk_20;
     /* 0x22 */ s16 unk_22;
-    /* 0x24 */ u8 pad_24[2];
+    /* 0x24 */ s16 unk_24;
     /* 0x26 */ s16 unk_26;
-    /* 0x28 */ u8 pad_28[2];
+    /* 0x28 */ s16 unk_28;
     /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ u8 pad_2C[2];
+    /* 0x2C */ s16 unk_2C;
     /* 0x2E */ s16 unk_2E;
-    /* 0x30 */ u8 pad_30[3];
-    /* 0x33 */ u8 unk_33;
+    /* 0x30 */ s16 unk_30;
+    /* 0x32 */ s16 unk_32;
     /* 0x34 */ u8 *unk_34;
     /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 pad_3C[7];
+    /* 0x3C */ s16 unk_3C;
+    /* 0x3E */ s16 unk_3E;
+    /* 0x40 */ u8 unk_40;
+    /* 0x41 */ u8 unk_41;
+    /* 0x42 */ u8 unk_42;
     /* 0x43 */ u8 unk_43;
 } DisplayActor44; /* size 0x44 */
+
+/* 16.16 fixed-point word of a display record: word arithmetic through w, the signed integer part (the
+ * coordinate the halfword view reads at +2) through h[1]. Was MasterFixed32, KangeiFixed32, DateFix32 and
+ * TaiikuPosition (T-20900). */
+typedef union DisplayFix32 {
+    /* 0x00 */ s32 w;
+    /* 0x00 */ s16 h[2];
+} DisplayFix32; /* size 0x04 */
+
+/* DisplayActor44 with +0x24 and +0x28 as 16.16 fixed-point words and +0x2C, +0x30 as words (their
+ * steps): the view of the units that move a record in fixed point (MASTER, KANGEI, DATE, EVENT, NAME_ENT,
+ * TAIIKU, TEL). C89 has no anonymous unions, so the halfword users (most of the tree) keep DisplayActor44.
+ * Replaces MasterSprite44, KangeiSprite44, DateMotion44, DateParticleView44, DateMover44, EventParticleView44,
+ * NameMotionActor44 and TaiikuScene44 (T-20900). */
+typedef struct DisplayFixActor44 {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ u8 *unk_0C;
+    /* 0x10 */ u8 *unk_10;
+    /* 0x14 */ s16 unk_14;
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ s16 unk_1E;
+    /* 0x20 */ s16 unk_20;
+    /* 0x22 */ s16 unk_22;
+    /* 0x24 */ DisplayFix32 unk_24;
+    /* 0x28 */ DisplayFix32 unk_28;
+    /* 0x2C */ s32 unk_2C;
+    /* 0x30 */ s32 unk_30;
+    /* 0x34 */ u8 *unk_34;
+    /* 0x38 */ s32 unk_38;
+    /* 0x3C */ s16 unk_3C;
+    /* 0x3E */ s16 unk_3E;
+    /* 0x40 */ u8 unk_40;
+    /* 0x41 */ u8 unk_41;
+    /* 0x42 */ u8 unk_42;
+    /* 0x43 */ u8 unk_43;
+} DisplayFixActor44; /* size 0x44 */
 
 /* T-10890: image metadata consumed by func_80062DBC; eight observed parts. */
 typedef struct DisplayImagePart0E {

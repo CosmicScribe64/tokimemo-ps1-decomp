@@ -32,7 +32,7 @@ void func_80132BD0(void) {
         DISP(i + 1).unk_34 = (u8 *)D_8014A070;
         DISP(i + 1).unk_14 = D_8014A03C;
         DISP(i + 1).unk_1A = 0x1000;
-        *(s16 *)DISP(i + 1).pad_1C = 0x1000;
+        DISP(i + 1).unk_1C = 0x1000;
         DISP(i + 1).unk_07 = 0x80;
         DISP(i + 1).unk_26 = spC8.v[i] - 0xA0;
         DISP(i + 1).unk_2A = sp98.v[i] - 0x78;
@@ -149,7 +149,7 @@ void func_80133258(void) {
         ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_34 = (u8 *)D_8014A070;
         ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_14 = D_8014A03C;
         ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_1A = 0x1000;
-        *(s16 *)((DisplayActor44 *)D_8011ECD0)[i + 1].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_1C = 0x1000;
         ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_07 = 0x80;
         ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_02 = 1;
         ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_03 = 0xA4;

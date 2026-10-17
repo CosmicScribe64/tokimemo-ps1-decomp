@@ -567,18 +567,18 @@ void parameter_show(void) {
                 }
             }
         }
-        /* Records 56..58 keep an s16 at 0x1C (pad_1C in game.h; the TAIIKU overlay reads it the same way). T-17011 */
+        /* Records 56..58 keep an s16 at 0x1C (unk_1C; the TAIIKU overlay reads it the same way). T-17011 */
         for (i = 56; i < 59; i++) {
             if (tab[i].unk_2E == 1) {
                 d = 0x1000 / step;
-                *(s16 *)tab[i].pad_1C -= d;
-                if (d >= *(s16 *)tab[i].pad_1C) {
+                tab[i].unk_1C -= d;
+                if (d >= tab[i].unk_1C) {
                     tab[i].unk_2E = 2;
                 }
             } else if (tab[i].unk_2E == 2) {
-                *(s16 *)tab[i].pad_1C += 0x1000 / step;
-                if (*(s16 *)tab[i].pad_1C >= 0x1000) {
-                    *(s16 *)tab[i].pad_1C = 0x1000;
+                tab[i].unk_1C += 0x1000 / step;
+                if (tab[i].unk_1C >= 0x1000) {
+                    tab[i].unk_1C = 0x1000;
                     tab[i].unk_2E = 0;
                 }
             }

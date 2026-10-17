@@ -140,7 +140,7 @@ void func_8014280C(void) {
         if (((DisplayActor44 *)D_8011ECD0)[96].unk_2A >= 0x61) {
             /* FAKE: s32 view of the 16.16 y position at 0x28 (its high half is unk_2A); the actor
              * type has no field for the word yet. T-16554 */
-            *(s32 *)((DisplayActor44 *)D_8011ECD0)[96].pad_28 -= 0x18000;
+            ((DisplayFixActor44 *)D_8011ECD0)[96].unk_28.w -= 0x18000;
         } else {
             if (*(u8 *)&D_8014A110 == 0) {
                 ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 1;
@@ -553,7 +553,7 @@ void func_80143814(void) {
         DISP(96 + i).unk_04 = 0;
         DISP(96 + i).unk_05 = 0x80;
         DISP(96 + i).unk_1A = 0x1000;
-        *(s16 *)DISP(96 + i).pad_1C = 0x1000;
+        DISP(96 + i).unk_1C = 0x1000;
         DISP(96 + i).unk_06 = 2;
         DISP(96 + i).unk_2A = a.value[i];
         DISP(96 + i).unk_18 = b.value[i];
@@ -1105,7 +1105,7 @@ void func_80144E54(void) {
         DISP(96 + i).unk_34 = (u8 *)D_8014A228;
         DISP(96 + i).unk_14 = D_8014A038;
         DISP(96 + i).unk_1A = 0x1000;
-        *(s16 *)DISP(96 + i).pad_1C = 0x1000;
+        DISP(96 + i).unk_1C = 0x1000;
         DISP(96 + i).unk_06 = 2;
     }
     for (i = 0; i < 4; i++) {
