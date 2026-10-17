@@ -107,10 +107,6 @@ void func_801493D4(void) {
     D_800E6280.unk_1104.u++;
 }
 
-/* NON_MATCHING: T-19019, 10 differing lines (5 rows); only the final `+= 1` address form is left: the original reads and writes the counter as `lui t8; lw t8,%lo(D_800E7384)(t8)` / `lui at; sw t9,%lo(D_800E7384)(at)`, the volatile view builds `lui v0; addiu v0,%lo(D_800E6280)` with the offset 0x1104 in the lw and sw.
- * Plain `+= 1` is 61 lines: IDO keeps the chain's shared load in $v0, reloads it at the end of every arm that calls (`lui v0; lw v0; b end; lw ra`) where the original has `b L; nop` to one shared tail. The volatile access removes that. The absolute address `*(s32 *)0x800E7384` gives the right form, but as1 then fills the branch delay slots with the tail's `lui` (32 lines). The loop is the plain loop over the records (IDO peels records 1-3, as the original).
- * Closer pass: the tail matches byte for byte when its access goes through a second base symbol (tested with `((s32 *)&D_800E7D10)[-0x263] += 1`, not kept: CODING_STANDARDS section 8 forbids reaching a GameState field through another symbol). So the original's tail is a different uopt variable from the chain's read: uopt identifies a global access by symbol and offset (`.u`, casts and bit-fields stay one variable). The chain read through the absolute address `*(s32 *)0x800E7384` with a plain tail gives the tail's exact form, but the chain load becomes `lui t6; lw v0,0x7384(t6)` (original `lui v0; lw v0`) and every later ugen temporary moves one step (110 lines). A volatile read with an absolute store keeps the `addiu` address form. */
-#ifdef NON_MATCHING
 void func_80149538(void) {
     s32 i;
     u8 shade;
@@ -157,12 +153,11 @@ void func_80149538(void) {
         func_8009AD70(2, &D_80122780);
         func_80042908(0x1F);
     }
-    /* FAKE: the volatile access keeps the tail out of the counter's register range (the original has plain ugen code here); real source unknown. T-19019 */
-    *(volatile s32 *)&D_800E6280.unk_1104.w += 1;
+    /* FAKE: the frame counter is read through its own symbol for the final `+= 1`. The original reads it twice, as two uopt
+     * variables (the compare chain, then the increment); through GameState both reads join one web and the function is 33
+     * rows off. Keep line with proof=func_80149538:33:d7dd7f6c in config/migrate_globals.txt, wiki/keep-lines.md. T-20820, T-21520 */
+    D_800E7384 += 1;
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80148FE0", func_80149538);
-#endif
 
 /* NON_MATCHING: T-19019, 2 differing lines (1 row, row 182): the reload of the selector in the `if` body is `addu t2,v1,t3` (index first), the original has `addu t2,t3,v1` (base first). Frame, spill slot (0x4C) and every other instruction match.
  * Without a selector local, uopt merges the two reads of `unk84[1]` itself (PRE): the first test's load stays in $a0 on the paths that skip the body, and uopt inserts a reload at the end of the body. The PRE temporary takes the frame word below the `arg1 * 2` spill that the original has (a declared `u8 st` takes a word above it: spill 0x48, the earlier 4-line draft). `(idx + D_8015EDB4)` and `(D_8015EDB4 + idx)` compile alike (uopt orders the sum itself, index first); the inserted reload copies that order. A `D_8015EDB4[idx]` read is a different expression, so mixing the forms ends the merge (89 to 132 lines). With `st` and one loop counter every offset is right relative to the frame top, but the frame is 8 bytes short. Tried without effect on the frame: `st` in a nested block, `obj` as an expression (operands of the address compares must then be swapped), `<` loop tests, `do`/`while` loops, the first store through `idx`, a ternary for the merged value (its temporary sits above the spill, 21 lines). autotweak (437 tries) reaches 4 lines. */
