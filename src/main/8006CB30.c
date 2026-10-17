@@ -179,9 +179,9 @@ void func_8006D52C(s32 *arg0, s32 arg1, s32 arg2) {
     }
 }
 
-/* NON_MATCHING: T-11670, 5 differing lines; the original keeps the second loop's start index as a copy (move v1,v0), IDO folds it into the promoted unk_71C. */
-#ifdef NON_MATCHING
-void func_8006D6E0(void) {
+/* Implicit int with no return value: as a void function IDO folds the second loop's start copy
+ * (move v1,v0) into the promoted unk_71C (T-11670, T-20600). */
+s32 func_8006D6E0(void) {
     GameState *gs;
     s32 n;
     s32 i;
@@ -215,9 +215,6 @@ void func_8006D6E0(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D6E0);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D7EC);
 
