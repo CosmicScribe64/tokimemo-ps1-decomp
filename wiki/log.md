@@ -17034,3 +17034,7 @@ Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-17015 Done
 
 [[tickets/T-17015-w3-main-p15]] In Review to Done: code review against `CODING_STANDARDS.md` found one small issue, fixed (matching-notes comment added above `srn_vram_set`; comment only) and one non-blocking follow-up (the `SrnRec28` view of `D_80121750` is a cast because `srn_init` and BUNKA_SD use the byte view). Rebuild OK (sha1, headers OK, globals OK, `sync_protos --check-branch` OK). 1 of 4 functions matched (`srn_vram_set`; 664 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-17] ticket | T-20800 In Progress
+
+[[tickets/T-20800-redraft-tool]] created and started (worktree `tr-redraft-tool`, base `w2-good`): consolidate the 21 per-unit redraft drivers (`drafts/T-16550/redraft.py` .. `drafts/T-18800/redraft.py`) into `tools/redraft.py`. Card in [[kanban]] under In Progress, line in [[index]].
