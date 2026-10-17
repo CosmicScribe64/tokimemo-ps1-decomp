@@ -12,7 +12,7 @@
 extern u8 D_800B5938;
 void func_80138048(void);
 
-extern s16 D_8013B5D0;
+extern u16 D_8013B5D0;
 extern s16 D_8013A428;
 extern u8 D_8013A4C0;
 extern s16 D_8013A42C;
@@ -186,8 +186,8 @@ extern s32 D_8013B5B4;
 extern s32 D_8013B5B8;
 extern s32 D_8013B5BC;
 extern s32 D_8013B5C0;
-void func_801385CC();
-void func_801388C0();
+s32 func_801385CC();
+s32 func_801388C0();
 void func_80138BEC(void);
 s32 func_80138A3C(void);
 void func_80136660(void);

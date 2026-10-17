@@ -682,7 +682,9 @@ extern u8 D_800B3C88[];
 extern s8 D_800B3CA0;
 extern u8 D_800B3CA4;
 extern u32 D_800B3CA8[20];
+#ifndef MAIN_API_OVERRIDE_D_800B3CFC
 extern u8 D_800B3CFC;
+#endif
 extern u8 D_800B3D00;
 extern u8 D_800B3D24;
 extern u8 D_800B3D40;
@@ -2185,7 +2187,9 @@ void func_8004EDE0();
 void func_8004EDF4();
 void func_8004EE18();
 void func_8004F860();
+#ifndef MAIN_API_OVERRIDE_func_8004F870
 void func_8004F870();
+#endif
 s8 menu_check();
 s8 menu_check_1();
 s8 menu_check_2();
