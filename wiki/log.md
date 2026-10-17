@@ -17443,3 +17443,7 @@ KakarottoCake's PR #46 (claim #45): main dialogue_render matched, 5,588 bytes, m
 ## [2026-10-17] build | T-21520 eight tooling-round matches applied
 
 Re-derived each tooling-round result on the current tree and committed one match per function: main `func_80072D70`, DATE `func_8013AF1C`, ETC `func_80143F24`, GYOZI `func_8013E638`, NAME_ENT `func_8013BE18` (autotweak recipes, [[tickets/T-20830-autotweak-recipes]]), NAME_ENT `func_80134B94` (viewsweep patch, [[tickets/T-20810-viewsweep]]), TACO `func_8014616C` and `func_80149538` (necessity proofs, [[tickets/T-20820-keep-proof]]). Two `keep` lines for `D_800E7384` in `config/migrate_globals.txt`, `extern s32 D_800E7384;` back in `include/main_api.h`. `src/ovl/TT/*` and the main dialogue renderer untouched. See [[keep-lines]], [[matching-notes]], [[tickets/T-21520-apply-tooling-matches]].
+
+## [2026-10-17] ticket | T-21520 In Review
+
+[[tickets/T-21520-apply-tooling-matches]] moved to In Review: 8 of 8 functions applied (5,444 bytes), 0 failed. Clean `rm -rf build && python3 configure.py && ninja` gives 27/27 sha1 OK; `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` pass; `funcdiff.py --resolve` says MATCH for all eight. Awaiting code review against `CODING_STANDARDS.md`.
