@@ -1398,7 +1398,9 @@ extern s16 D_801206F2;
 extern s16 D_801206F4;
 extern s16 D_801206FE;
 extern s16 D_80120702;
+#ifndef MAIN_API_OVERRIDE_D_8012070C
 extern s32 D_8012070C;
+#endif
 extern s32 D_80120710;
 extern s8 D_8012071B;
 extern s8 D_8012071D;
