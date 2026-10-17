@@ -17003,3 +17003,6 @@ KakarottoCake's PR #44 (claim #43): GYOZI func_80141944 and func_80145384 matche
 
 ## [2026-10-17] ticket | T-17019 In Review
 [[tickets/T-17019-w3-main-p19]] In Progress to In Review: 2 of 5 functions matched (`func_80044C98`, `func_80044E8C`, 452 bytes), one guarded (`csr_load_vram`, 24 lines), two untouched `INCLUDE_ASM`. Clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` run at the end of the package.
+
+## [2026-10-17] ticket | T-17019 Done
+[[tickets/T-17019-w3-main-p19]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/main/80043510.c` changed in code, no header, config or `drafts/` change. One finding fixed (comments only, bytes unchanged): the pre-increment as the value of the compare in `func_80044C98` and `func_80044E8C` now has an in-code comment. The `NON_MATCHING` draft `csr_load_vram` carries its tickets and the 24 lines left. Unit build and main exe sha1 OK, `check_headers` OK. 2 of 5 matched (`func_80044C98`, `func_80044E8C`, 452 bytes). Merge via the wave 3 merge script.
