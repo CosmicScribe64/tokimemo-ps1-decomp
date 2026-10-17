@@ -71,7 +71,7 @@ void func_80148654(void) {
     }
 }
 
-/* FAKE: the D_8015EBAC table is reached through its first symbol (aggregate not typed yet). T-17113, T-22013 */
+/* FAKE: the D_8015EBAC and D_8015EC70 tables are reached through their first symbol (aggregates not typed yet); m views the D_8015EC50 words as RpgMotion20, as func_80148B08 does. T-17113, T-22013 */
 void func_80148714(void) {
     s32 i;
     s32 start;

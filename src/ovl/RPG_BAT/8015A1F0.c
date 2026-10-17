@@ -143,7 +143,7 @@ void func_8015A744(void) {
     }
 }
 
-/* FAKE: T-22013, x is reused as the offset of the first store. Reassigning x makes uopt keep the original's copy of the halfword (stored to D_8015EC68 from $a0) and compute i + 0x28 in the first block; real source unknown. */
+/* FAKE: T-22013, x is reused as the offset of the first store. Reassigning x makes uopt keep the original's copy of the halfword (stored to D_8015EC68 from $a0) and compute i + 0x28 in the first block; real source unknown. p walks D_8011ECD0 as raw bytes: p + 0x2446/0x244A are DisplayActor44 unk_26/unk_2A of record i + 136, and after p += 0x44 the stores at p + 0x23F6/0x23F8 are unk_1A/unk_1C of the same record. */
 void func_8015A8B4(void) {
     u8 *p;
     s32 i;

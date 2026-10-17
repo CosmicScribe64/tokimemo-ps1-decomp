@@ -17642,3 +17642,11 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E
 ## [2026-10-17] build | T-22013 func_8015A8B4 matched
 
 `func_8015A8B4` (RPG_BAT `src/ovl/RPG_BAT/8015A1F0.c`, 236 bytes) matches in plain C with one FAKE. A permuter candidate for `func_8015A744` reassigned `x` as the offset of the first store; written in the pointer-walk form, the same trick leaves the copy in `$a0` and moves `i + 0x28` into the first block. `func_8015A744` drops to 4 rows (one missing `or a1,v0,zero`). See [[matching-notes]], section T-22013, and the new [[register-cheatsheet]] row.
+
+## [2026-10-17] build | T-22013 func_8015A744 matched
+
+`func_8015A744` (RPG_BAT `src/ovl/RPG_BAT/8015A1F0.c`, 368 bytes) matches in plain C with one FAKE (closer pass, 4 rows to 0). The records are indexed as `((DisplayActor44 *)D_8011ECD0)[i + 136]` so uopt sees the stores land in another symbol and keeps the displacement globals in registers, and a mix of scalar and `RpgMotion20` views of the words reproduces the dead `or a1,v0,zero`. See [[matching-notes]], section T-22013.
+
+## [2026-10-17] ticket | T-22013 Done
+
+[[tickets/T-22013-w4-p13]]: code review against `CODING_STANDARDS.md`, two comment-only findings fixed (FAKE comments of `func_80148714` and `func_8015A8B4`), stale notes refreshed. 3 of 3 matched (`func_80148714` 1,012 bytes, `func_8015A8B4` 236 bytes, `func_8015A744` 368 bytes).
