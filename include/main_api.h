@@ -2605,6 +2605,7 @@ void func_80085F0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void Rot_2D(s32 arg0, s32 *arg1, s32 *arg2, s32 *arg3, s32 *arg4);
 void Default_Disp(void);
 void func_80086424();
+s32 func_8008647C(void);
 s32 func_8008667C(s32 a);
 void func_800867CC(void);
 void DecDCTReset(s32 mode);

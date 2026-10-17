@@ -17171,3 +17171,19 @@ Combined T-20700 (IDO 4.1 back end: as1 equals 5.3 on 6,335/6,336; ugen changes 
 
 ## [2026-10-17] ticket | T-17019 Done
 [[tickets/T-17019-w3-main-p19]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/main/80043510.c` changed in code, no header, config or `drafts/` change. One finding fixed (comments only, bytes unchanged): the pre-increment as the value of the compare in `func_80044C98` and `func_80044E8C` now has an in-code comment. The `NON_MATCHING` draft `csr_load_vram` carries its tickets and the 24 lines left. Unit build and main exe sha1 OK, `check_headers` OK. 2 of 5 matched (`func_80044C98`, `func_80044E8C`, 452 bytes). Merge via the wave 3 merge script.
+
+## [2026-10-17] ticket | T-17022 started
+
+[[tickets/T-17022-w3-main-p22]] created In Progress: wave 3 package w3-main-p22, four main functions of `src/main/80085E30.c` (`Fade_Out_Main`, `Fade_In_Main`, `func_8008647C`, `Scroll`). Worktree `tokimemo-wt/w3-main-p22` from `w2-good`.
+
+## [2026-10-17] build | T-17022 package w3-main-p22: 2 of 4 matched
+
+`Fade_Out_Main` and `Fade_In_Main` matched in `src/main/80085E30.c` (196 B, plain C, a `u8 temp` read after the timer test; the first found by `autotweak.py`). `func_8008647C` kept as a `NON_MATCHING` draft at 24 differing lines (`s32 func_8008647C(void);` added to `include/main_api.h`), `Scroll` left `INCLUDE_ASM` after one typed try (229 lines). Notes in [[matching-notes]] (section T-17022), three rows in [[register-cheatsheet]], one T-0018 row in [[data/t0018-cases]], drafts in `drafts/T-17022/`. Clean rebuild 27/27 sha1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK.
+
+## [2026-10-17] ticket | T-17022 In Review
+
+[[tickets/T-17022-w3-main-p22]] In Progress to In Review; kanban card moved, matched count 2. Code review against `CODING_STANDARDS.md` is the remaining step before Done.
+
+## [2026-10-17] ticket | T-17022 Done
+
+[[tickets/T-17022-w3-main-p22]] In Review to Done: code review against `CODING_STANDARDS.md` found two small issues, fixed (a trick comment above `Fade_Out_Main` and `Fade_In_Main` for the `u8 temp` local; comment only; and the index status). Rebuild OK (globals, headers, sha1). 2 of 4 functions matched (`Fade_Out_Main`, `Fade_In_Main`; 196 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.

@@ -111,7 +111,7 @@ Left for a cross-unit ticket (each needs overlay C edits):
 - `func_8007866C`: a 72-byte name buffer and the `& 0xFF` argument mask give 14 rows
   (`main/func_8007866C/hand.c`); the rest is a temporary-register offset in the club flag update.
 - Not closed in the time box: `Fade_In_Main` and `Fade_Out_Main` (the original sets the return value 1
-  in `$v0` before the compare and keeps the byte in `$v1`; six return/flag spellings gave 20 to 40 rows).
+  in `$v0` before the compare and keeps the byte in `$v1`; six return/flag spellings gave 20 to 40 rows). Both matched later in T-17022 (a `u8 temp` read after the timer test; [[matching-notes]], section T-17022).
 
 ### Redraft
 
