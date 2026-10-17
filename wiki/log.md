@@ -16778,3 +16778,14 @@ Actual default funcdiff proves func_8014206C (160 bytes) and func_8013C774 (364 
 Actual default linked proofs match both helpers (160 + 364 = 524 bytes). Full 489-step Docker build, GYOZI/all 27 binary SHA1 checks, header/global gates and prototype branch guard pass (0 new / 15 known). Local standards review found no issues; no new fakematches or toolchain changes. Maintainer confirmed issue #41 ownership and handles conflicts with other functions in the same files. Latest main still has both claimed INCLUDE_ASM functions. [[tickets/T-20005-gyozi-display-dispatch]] moves to In Review with board/index synchronized.
 
 2026-10-16 — T-20005: submitted PR #42 (https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/42), two GYOZI helpers / 524 verified bytes. Ticket remains In Review pending maintainer acceptance; claim #41 is linked for closure on merge.
+## [2026-10-16] ticket | T-17008 Wave 3 package w3-main-p08 started
+[[tickets/T-17008-w3-main-p08]] In Progress: three main functions (`func_80059EF0`, `func_8004F6B0`, `func_80059BE8`) in `src/main/80059B40.c` and `src/main/8004F6B0.c`, worktree tokimemo-wt/w3-main-p08, branch w3-main-p08. Part of [[tickets/T-17000-types-first-main]].
+
+## [2026-10-16] build | T-17008 three main functions matched
+[[tickets/T-17008-w3-main-p08]]: `func_80059EF0`, `func_8004F6B0` and `func_80059BE8` matched in plain C (1,364 B; one FAKE local in `func_80059BE8`), about 70 minutes, each committed on its own. Index loops with compound assignments (`func_80059EF0`); the cursor globals are the variables and `func_80098490` takes `u16` (`func_8004F6B0`); index loops over file-local array views plus a do-while for the peeled and unrolled tail (`func_80059BE8`). Notes in [[matching-notes]] (section T-17008), three rows in [[register-cheatsheet]], family page [[main-family-results]]. Headers: `include/main_api.h`.
+
+## [2026-10-16] ticket | T-17008 In Review
+[[tickets/T-17008-w3-main-p08]] Wave 3 package w3-main-p08 moved In Progress to In Review (kanban card moved): 3 of 3 matched, no guarded drafts, no T-0018 rows. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-17] ticket | T-17008 Done
+[[tickets/T-17008-w3-main-p08]] reviewed against `CODING_STANDARDS.md`: 2 findings fixed (two prototypes out of address order in `include/main_api.h`, a missing source comment on the do-while tail of `func_80059BE8`), no others. In Review to Done (kanban card moved). Matched 3 of 3 (`func_80059EF0`, `func_8004F6B0`, `func_80059BE8`, 1,364 B); one FAKE local, no guarded drafts. Build 27/27, headers, globals and proto checks OK.

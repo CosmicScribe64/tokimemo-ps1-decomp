@@ -147,3 +147,6 @@ the first-argument constant and the narrowing on an earlier source line than the
 ### Wave 3 package w3-main-p04 (T-17004)
 
 [[tickets/T-17004-w3-main-p04]] took five guarded drafts of `src/main/8006CB30.c` and matched four in plain C: `func_8006EB64`, `func_8006EEC4`, `func_80072998` and `func_800726F0` (2,544 bytes). The first three needed only a local `GameState *g = &D_800E6280;` for the reads (no FAKE left in the first two); `func_800726F0` also needs a marked `FAKE` local copy of the first `unk_03D` read, found by autotweak. The Opus closer matched `func_8006D6E0` (268 bytes; 5 of 5, 2,812 bytes): `s32` with no `return`, because as1 keeps the `move v1,v0` copy only when `$v0` is live at the exit. Details in [[matching-notes]], section T-17004.
+### Wave 3 package w3-main-p08 (T-17008)
+
+`func_80059EF0`, `func_8004F6B0` and `func_80059BE8` matched ([[matching-notes]], section T-17008). Type changes: `s32 D_800C6200[8]`, `s32 D_800C62C0[32]` are index loops now (the `func_80059EF0` entry of the type map above); `s16 D_80125BF0`/`D_80125BF2` declared (the cursor, promoted by uopt); `func_80098490` takes `u16` parameters; `D_800C9730` and `D_800C5FCC` have file-local array views in `80059B40.c` (`s32 D_800C9730[11]`, `s32 D_800C5FCC[2]`, `MAIN_API_OVERRIDE_*`), while `main_api.h` keeps `u8[]` and `s32` for their other users.

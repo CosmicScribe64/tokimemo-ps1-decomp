@@ -757,17 +757,22 @@ extern u8 font_glyphs[];
 /* T-20004: byte loads indexed by girl * 7 + (step >> 3). */
 extern u8 D_800C3370[];
 extern s8 D_800C51C4;
+#ifndef MAIN_API_OVERRIDE_D_800C5FCC
 extern s32 D_800C5FCC;
+#endif
 extern s32 D_800C5FD0;
 extern u8 D_800C5FD4[];
 extern u8 D_800C6010[];
 extern s16 D_800C6014;
+extern s32 D_800C6020;
 /* T-17000: word tables walked by func_80059EF0 (and func_8006509C) up to the next symbol: eight words
  * ending at D_800C6220, 32 words ending at D_800C6340. */
 extern s32 D_800C6200[8];
 extern s32 D_800C62C0[32];
 extern u8 D_800C6220[];
+#ifndef MAIN_API_OVERRIDE_D_800C9730
 extern u8 D_800C9730[];
+#endif
 extern s32 D_800C9734;
 extern s32 D_800C9738;
 extern s32 D_800C973C;
@@ -1695,6 +1700,8 @@ extern u8 D_801255DC;
 extern s16 D_801255E0;
 extern s16 D_801255E2;
 extern u32 D_801255F0[];
+extern s16 D_80125BF0;
+extern s16 D_80125BF2;
 extern s32 D_80125BF4;
 extern s32 D_80125BF8;
 extern s32 D_80125BFC;
@@ -1861,6 +1868,7 @@ void main_state_set();
 s32 func_80042908(s32 arg0);
 s32 func_80042940(s32 arg0);
 s32 func_80042960(void);
+void func_80042A00(void);
 s32 func_80042AC8();
 void func_80042BD4(void);
 void func_80042C30(void);
@@ -2126,6 +2134,7 @@ void func_80059B40(void);
 void func_80059BC0(void);
 void func_80059BE8(void);
 s32 func_80059E00(void);
+void func_80059EF0(void);
 s32 func_8005A1A0(void);
 void func_8005A2A8(void);
 void func_8005A37C(void);
@@ -2589,11 +2598,12 @@ void func_800949B0();
 void func_80097D90(s32 a, s32 b, s32 c, s32 d, s32 e);
 s32 func_80098370(void);
 void func_80098380(void);
-void func_80098490(s32 a, s32 b, s32 c, s32 d);
+void func_80098490(u16 a, u16 b, u16 c, u16 d);
 void func_80098530(void);
 void func_800985A0(void);
 void func_80099540(s32 *p);
 void func_80099E30(s32 a, void *p);
+void func_8009AC20(void);
 void func_8009AD30(s32 arg0);
 void func_8009AD50(s32 arg0);
 void func_8009AD60(s32 arg0);
