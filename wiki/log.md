@@ -17574,3 +17574,14 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: no byte match. `func_80142400` (
 ## [2026-10-17] ticket | T-22004 Done
 
 Code review of [[tickets/T-22004-w4-p04]] against `CODING_STANDARDS.md`: 0 of 3 matched (`func_80142400` guarded 26 rows, `func_8014357C` guarded 34 rows, `func_80140A90` back to INCLUDE_ASM). One finding fixed (comment on the first-symbol views and the peeled `D_8014A1E8` stores in `src/ovl/TAIIKU/80142240.c`), build 27/27. Package of [[tickets/T-22000-wave-4-conveyor]].
+## [2026-10-17] ticket | T-22006 Wave 4 package w4-p06 opened
+
+Package w4-p06 of [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/DATE/8014A1B0.c`, `func_8014A8FC` (1,140 bytes, guarded at 34 lines). [[tickets/T-22006-w4-p06]] In Progress.
+
+## [2026-10-17] ticket | T-22006 In Progress to In Review
+
+`func_8014A8FC` (DATE `src/ovl/DATE/8014A1B0.c`) not matched; guard cut from 34 to 20 rows by writing the third light group as two equal masked sums (uopt range in `$v0`, ugen slot kept). Left: the schedule of the byte loads. See [[matching-notes]] and [[register-cheatsheet]]. [[tickets/T-22006-w4-p06]] In Review.
+
+## [2026-10-17] ticket | T-22006 Done
+
+Code review of [[tickets/T-22006-w4-p06]] against `CODING_STANDARDS.md`: 0 of 1 matched (`func_8014A8FC` guarded at 20 rows, from 34). One finding fixed (ticket `links:` frontmatter quoting), no code change; build 27/27 from the matcher run. Package of [[tickets/T-22000-wave-4-conveyor]].

@@ -208,7 +208,7 @@ void func_8014A810(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-17208, 34 differing lines (17 per light block); only registers differ in the two fade blocks: the original keeps the loaded bytes in $v1/$a2/$a3 and the third sum in $v0, IDO gives $v0/$v1/$a2 and $t9 (fade up) or $t5 (fade down); same gap as TACO func_80134A18 (T-0018). */
+/* NON_MATCHING: T-22006, 20 rows (10 per fade block); registers and the order of the sums now match, only the schedule of the byte loads differs: the original loads 6E, 8E and 7E in a row before the first sum, IDO loads each byte just before its group. */
 /* FAKE: s32 without a return keeps the s16 counter in $v0 at the exit (sll/sra before the sh), the real return type is unknown. T-17208 */
 s32 func_8014A8FC(void) {
     s32 frame;
@@ -223,7 +223,9 @@ s32 func_8014A8FC(void) {
         if (D_8012276C < 0xC0U) {
             D_8012276C = D_8012276D = (D_8012276E += 6);
             D_8012277C = D_8012277D = (D_8012277E += 1);
-            D_8012278C = D_8012278D = (D_8012278E += 1);
+            /* FAKE: the two equal masked sums make the third group a uopt range ($v0, the bytes get $v1/$a2/$a3) and keep its ugen slot, as in the original. T-22006 */
+            D_8012278D = (D_8012278E + 1) & 0xFF;
+            D_8012278C = D_8012278E = (D_8012278E + 1) & 0xFF;
             func_8009AD70(0, &D_80122760);
             func_8009AD70(1, &D_80122770);
             func_8009AD70(2, &D_80122780);
@@ -263,7 +265,9 @@ s32 func_8014A8FC(void) {
         if (D_8012276C != 0) {
             D_8012276C = D_8012276D = (D_8012276E -= 6);
             D_8012277C = D_8012277D = (D_8012277E -= 1);
-            D_8012278C = D_8012278D = (D_8012278E -= 1);
+            /* FAKE: the two equal masked sums make the third group a uopt range ($v0, the bytes get $v1/$a2/$a3) and keep its ugen slot, as in the original. T-22006 */
+            D_8012278D = (D_8012278E - 1) & 0xFF;
+            D_8012278C = D_8012278E = (D_8012278E - 1) & 0xFF;
             func_8009AD70(0, &D_80122760);
             func_8009AD70(1, &D_80122770);
             func_8009AD70(2, &D_80122780);
