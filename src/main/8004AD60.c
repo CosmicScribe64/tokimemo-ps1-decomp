@@ -50,6 +50,8 @@ void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3) {
     n = 0;
     if (D_800B3D80 >= 4 && D_800B3220 != 0) {
         v = abs(a0);
+        /* Both v >= 0 tests (here and at the loop end) are always true, but the original has the
+         * bltz/bgez branches, so they stay. T-17013 */
         if (v >= 0) {
             tpx = (a3 & 8) * 4 + 0x100;
             tpy = (a3 & 7) + 0x1F8;
