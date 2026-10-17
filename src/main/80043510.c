@@ -121,12 +121,15 @@ u16 arg6;
     return 0;
 }
 
-/* NON_MATCHING: T-10850, 26 differing listing lines; see the ticket scratch evidence. */
+/* NON_MATCHING: T-10850, T-17019, 24 differing listing lines (12 instructions, registers only: ugen temporary numbering of the three computed arguments). The u16 locals x, y, w give the original order of the three andi 0xFFFF (a0, a1, a2); see wiki/matching-notes.md T-17019. */
 #ifdef NON_MATCHING
 void csr_load_vram(s32 arg0) {
     GameState *base;
     s32 var_s1;
     s32 temp_v0;
+    u16 x;
+    u16 y;
+    u16 w;
 
     base = &D_800E6280;
     var_s1 = 0;
@@ -136,7 +139,10 @@ void csr_load_vram(s32 arg0) {
             if (temp_v0 == 0) {
                 LoadSquare(base->unk_142C[var_s1].unk_08, base->unk_142C[var_s1].unk_0A, base->unk_142C[var_s1].unk_0C, base->unk_142C[var_s1].unk_0E, (void *) base->unk_142C[var_s1].unk_00);
             } else {
-                LoadSquare((((temp_v0 & 0xF) << 6) + base->unk_142C[var_s1].unk_08), (((temp_v0 & 0x10) * 0x10) + base->unk_142C[var_s1].unk_0A), ((u16) base->unk_142C[var_s1].unk_0C >> base->unk_142C[var_s1].unk_05), base->unk_142C[var_s1].unk_0E, (void *) base->unk_142C[var_s1].unk_00);
+                x = (((temp_v0 & 0xF) << 6) + base->unk_142C[var_s1].unk_08);
+                y = (((temp_v0 & 0x10) * 0x10) + base->unk_142C[var_s1].unk_0A);
+                w = ((u16) base->unk_142C[var_s1].unk_0C >> base->unk_142C[var_s1].unk_05);
+                LoadSquare(x, y, w, base->unk_142C[var_s1].unk_0E, (void *) base->unk_142C[var_s1].unk_00);
             }
             var_s1 += 1;
         } while (var_s1 < (u8) base->unk_1429);
