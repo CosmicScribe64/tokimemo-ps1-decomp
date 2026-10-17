@@ -28,9 +28,6 @@ void func_8004E500(s32 arg0) {
     func_8009C674(0);
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-17020, 18 differing lines; the original loads text_glyph_advance (lbu) before the four
- * zero stores and keeps it in v0 for the li; the build stores first, then loads, and li goes to t6 */
 void func_8004E58C(void) {
     s32 i;
     RECT r;
@@ -59,13 +56,14 @@ void func_8004E58C(void) {
     text_list_count.count = 0;
     text_list_count.pos = 0;
     text_list_count.mark = 0;
-    if (text_list_count.unk_6A != 0xE && text_list_count.unk_6A != 0x10) {
+    /* FAKE: T-17020. The two compares read the byte through a KWork pointer view. With a direct
+     * read the build loads it after the four zero stores and puts the li in t6 (tools/cvt_pass.py
+     * keeps the widening CVT because the first read comes after a call). The pointer view gives the
+     * original's order: lbu before the stores, li in v0. */
+    if (((KWork *)&text_list_count)->unk_6A != 0xE && ((KWork *)&text_list_count)->unk_6A != 0x10) {
         text_list_count.unk_6A = 0xE;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", func_8004E58C);
-#endif
 
 void text_set_advance(u8 arg0) {
     if (arg0 == 0x10) {
