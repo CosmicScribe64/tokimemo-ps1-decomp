@@ -16663,3 +16663,6 @@ Clean rebuild of the w3-main-p05 worktree: 27/27 sha1 OK (`build/SLPM_86.053.bin
 
 ## [2026-10-16] ticket | T-17011 In Progress
 [[tickets/T-17011-w3-main-p11]] created and started: wave 3 package w3-main-p11, five functions of `src/main/80062CD0.c` (`func_8006612C`, `func_80063668`, `parameter_show`, `func_80065964`, `func_80065F34`), worktree `tokimemo-wt/w3-main-p11`, base `w2-good`. Follows [[tickets/T-17000-types-first-main]].
+
+## [2026-10-17] ticket | T-17011 In Review
+[[tickets/T-17011-w3-main-p11]] In Progress to In Review: 1 of 5 functions matched (`func_80063668`, 552 bytes, plain C in `src/main/80062CD0.c`, committed). `func_8006612C` (20 rows) and `parameter_show` (10 rows) stay under `NON_MATCHING`; `func_80065964` and `func_80065F34` not reached. Header change: `D_800B5A98` in `include/main_api.h`; `DisplayActor44.pad_1C` stays (TAIIKU reads it as `*(s16 *)x.pad_1C`). Findings in [[matching-notes]] (section T-17011): spill-slot rule by declaration order, plain global instead of a local copy for a promoted s16, source-order temp numbering.

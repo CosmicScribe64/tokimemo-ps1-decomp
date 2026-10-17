@@ -64,7 +64,7 @@ typedef struct DisplayActor44 {
     /* 0x16 */ s16 unk_16;
     /* 0x18 */ s16 unk_18;
     /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ s16 unk_1C;
+    /* 0x1C */ u8 pad_1C[2];
     /* 0x1E */ s16 unk_1E;
     /* 0x20 */ u8 pad_20[2];
     /* 0x22 */ s16 unk_22;

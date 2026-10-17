@@ -532,18 +532,15 @@ void parameter_show_init(void) {
 }
 
 
-/* NON_MATCHING: T-17011, work in progress */
+/* NON_MATCHING: T-17011, 10 differing lines; the loop-invariant end pointer and the 0x1000 constant swap a2/a3 */
 #ifdef NON_MATCHING
 void parameter_show(void) {
-    s32 sp3C;
     DisplayActor44 *var_v0;
     DisplayActor44 *var_v0_2;
-    s16 temp_v1;
-    s16 temp_v1_2;
+    s32 var_t0;
     s32 temp_lo;
     s32 temp_lo_2;
     s32 temp_lo_3;
-    s32 var_t0;
 
     if (*(u8 *)&D_800E6280.unk_F6E != 0) {
         var_t0 = 4;
@@ -551,23 +548,21 @@ void parameter_show(void) {
         var_t0 = 8;
     }
     if (((DisplayActor44 *)D_8011ECD0)[32].unk_03 & 0x80) {
-        sp3C = var_t0;
         func_80049A40(-0x84, -0x61, 0x108, 0x2A, 0xC, 0x30E00, 0);
         dtd_on(0xC);
         var_v0 = &((DisplayActor44 *)D_8011ECD0)[32];
         do {
-            temp_v1 = var_v0->unk_2E;
-            if (1 == temp_v1) {
+            if (var_v0->unk_2E == 1) {
                 temp_lo = 0x1000 / var_t0;
-                var_v0->unk_1A -= temp_lo;
                 var_v0->unk_08 += temp_lo;
+                var_v0->unk_1A -= temp_lo;
                 if (temp_lo >= var_v0->unk_1A) {
                     var_v0->unk_2E = 2;
                 }
-            } else if (2 == temp_v1) {
+            } else if (var_v0->unk_2E == 2) {
                 temp_lo_2 = 0x1000 / var_t0;
-                var_v0->unk_1A += temp_lo_2;
                 var_v0->unk_08 -= temp_lo_2;
+                var_v0->unk_1A += temp_lo_2;
                 if (var_v0->unk_1A >= 0x1000) {
                     var_v0->unk_1A = 0x1000;
                     var_v0->unk_2E = 0;
@@ -578,17 +573,16 @@ void parameter_show(void) {
         } while ((u32) var_v0 < (u32) (&((DisplayActor44 *)D_8011ECD0)[56]));
         var_v0_2 = &((DisplayActor44 *)D_8011ECD0)[56];
         do {
-            temp_v1_2 = var_v0_2->unk_2E;
-            if (1 == temp_v1_2) {
+            if (var_v0_2->unk_2E == 1) {
                 temp_lo_3 = 0x1000 / var_t0;
-                var_v0_2->unk_1C = (var_v0_2->unk_1C - temp_lo_3);
-                if (temp_lo_3 >= var_v0_2->unk_1C) {
+                *(s16 *)var_v0_2->pad_1C -= temp_lo_3;
+                if (temp_lo_3 >= *(s16 *)var_v0_2->pad_1C) {
                     var_v0_2->unk_2E = 2;
                 }
-            } else if (2 == temp_v1_2) {
-                var_v0_2->unk_1C = (s16) (var_v0_2->unk_1C + (0x1000 / var_t0));
-                if (var_v0_2->unk_1C >= 0x1000) {
-                    var_v0_2->unk_1C = 0x1000;
+            } else if (var_v0_2->unk_2E == 2) {
+                *(s16 *)var_v0_2->pad_1C += 0x1000 / var_t0;
+                if (*(s16 *)var_v0_2->pad_1C >= 0x1000) {
+                    *(s16 *)var_v0_2->pad_1C = 0x1000;
                     var_v0_2->unk_2E = 0;
                 }
             }
@@ -729,14 +723,13 @@ void func_80066104(void) {
     D_80125CA0 = 0xB8;
 }
 
-/* NON_MATCHING: T-17011, work in progress */
+/* NON_MATCHING: T-17011, 20 differing lines; the second loop schedules the ucode's last stores and the D_800B5B24
+ * write-back differently (v0/v1 reloads after the call, store inside the loop instead of before it) */
 #ifdef NON_MATCHING
 void func_8006612C(u8 *arg0) {
     DisplayActor44 *tab;
     u8 *p;
     s32 i;
-    s32 n;
-    s32 y;
 
     tab = (DisplayActor44 *)D_8011ECD0;
     D_80125CA0 = -0x40;
