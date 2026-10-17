@@ -47,6 +47,7 @@ kanban-plugin: board
 ## In Review
 
 ## Done
+- [ ] [[tickets/T-20007-large-dialogue-renderer|T-20007 Recover the large dialogue renderer (5,588 bytes)]]
 - [ ] [[tickets/T-20910-types-option|T-20910 Targeted type pass: OPTION]]
 - [ ] [[tickets/T-20930-types-ending|T-20930 Targeted type pass: ENDING]]
 - [ ] [[tickets/T-9910-wave-10-list-1|T-9910 Wave 10: list 1]]
@@ -69,7 +70,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
-- [ ] [[tickets/T-20007-large-dialogue-renderer|T-20007 Recover the large dialogue renderer (5,588 bytes)]]
 
 
 

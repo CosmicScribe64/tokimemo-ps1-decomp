@@ -1,7 +1,7 @@
 ---
 id: T-20007
 title: Recover the large dialogue renderer
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-16
 updated: 2026-10-17
@@ -83,3 +83,5 @@ Final pre-submission fetch is origin/main 2de889b8; dialogue_render is still INC
 ## Submission
 
 PR #46: https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/46 (open, attached to the Codex chat). GitHub reports integration conflicts against newer main; per existing maintainer coordination, do not repeatedly merge moving main into this branch. The claimed renderer is still ASM upstream and the verified branch is unchanged. No immediate review comments or hosted checks were present at submission. Ticket remains In Review for maintainer integration/review.
+
+2026-10-17, maintainer review (PR #46): no findings. The two FAKE comments (grouped narrow-index updates, implicit-int strncpy view) name T-20007 and the reason; the gotos form the token-scanner loop. Verified in the integration tree: clean 27/27, headers, globals, prototypes OK, funcdiff MATCH (5,588 bytes). Status Done.

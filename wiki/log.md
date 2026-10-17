@@ -17431,3 +17431,7 @@ Eliminating the explicit line cursor restores the 760-byte frame. Splitting the 
 ## [2026-10-17] ticket | Submit large renderer PR 46
 
 [[tickets/T-20007-large-dialogue-renderer]] is submitted as https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/46 and attached to the chat. GitHub reports integration conflicts with newer main; retain the verified branch and leave moving-main integration to the maintainer per coordination. No immediate review comments or hosted checks. Status remains In Review.
+
+## [2026-10-17] ticket | T-20007 Done (PR #46 merged)
+
+KakarottoCake's PR #46 (claim #45): main dialogue_render matched, 5,588 bytes, merged in one clean build with PR checks (27/27, headers, globals, prototypes, funcdiff MATCH). [[tickets/T-20007-large-dialogue-renderer]] Done.
