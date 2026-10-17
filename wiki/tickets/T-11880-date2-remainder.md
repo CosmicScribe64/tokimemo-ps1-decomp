@@ -41,3 +41,7 @@ Header changes: hand-written `MAIN_API_OVERRIDE_` guards in `main_api.h` (`D_800
 `func_80083B24`), `s32` return types for three DATE2 prototypes, one block of DATE movie types in `DATE2.h` under
 DATE.h's guard name (no file includes both). Config: data island `DATE2/80137D50`. Clean rebuild 27/27 OK,
 headers/globals OK, `sync_protos.py --check-branch` and `migrate_globals.py --check` clean. No open findings.
+
+## Comments
+
+2026-10-17, maintainer review (PR #54): no findings; 15 FAKE lines name T-11880 with reasons, the main_api.h overrides follow section 8a, func_801395C8 stays guarded with its ticket. Verified: clean 27/27, headers, globals, prototypes OK, funcdiff MATCH for all 8 functions (11,172 bytes). Status Done.

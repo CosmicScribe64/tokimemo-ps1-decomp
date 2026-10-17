@@ -1,7 +1,7 @@
 ---
 id: T-20009
 title: Match NAME_ENT CD-level display helper
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
 updated: 2026-10-17
@@ -35,3 +35,7 @@ Measured retained FAKE controls: two unused words keep the original 0x40 frame (
 Docker default ninja build passes (nine steps), including headers OK/globals OK. Independent SHA1 checks pass for all 27 binaries. sync_protos.py --check-branch: 0 new / 15 known disagreements, branch OK. Actual default linked funcdiff: MATCH, 484 bytes; this function is plain C with no ASM fallback. Logs are ignored under build/T-20009. Source-format diff check passes.
 
 Self-review against CODING_STANDARDS.md: fixed-width C89 declarations and comments; existing actor fields and canonical shared API; one overlay declaration, no duplicate main externs; required frame/allocation/exit controls explicitly FAKE; production source location and symbol preserved; no generated ASM, raw assets, binaries, compiler artifacts, probe scripts or comparison instruction listings submitted. Ticket/kanban In Review; maintainer review remains pending. Loader work and the large T-20008 scene are not claimed as matches.
+
+## Comments
+
+2026-10-17, maintainer review (PR #53): no findings; the three FAKE controls name T-20009 and the reason. Verified in the integration tree: clean 27/27, headers, globals, prototypes OK, funcdiff MATCH for func_80149B08 (484 bytes). Status Done.
