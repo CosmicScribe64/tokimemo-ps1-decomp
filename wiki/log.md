@@ -17571,3 +17571,7 @@ The board had 96 cards in In Review while no ticket was In Review: union-resolve
 ## [2026-10-17] ticket | T-22008 In Review
 
 [[tickets/T-22008-w4-p08]]: 0 of 4 matched in `src/ovl/NAME_ENT/80132000.c`. `func_80132320` guard refreshed (14 lines), `func_80134110` guarded (26 lines), `func_80134248` guard comment refreshed (455 lines), `func_80138C1C` still `INCLUDE_ASM` (a clean draft is about 300 lines; a file-wide scalar view of `D_800B3644` kept the unit sha1 but was dropped). Notes in [[matching-notes]]. Clean build and checks run, review still to do.
+
+## [2026-10-17] ticket | T-22008 Done
+
+[[tickets/T-22008-w4-p08]]: code review against `CODING_STANDARDS.md` passed, no findings. 0 of 4 functions matched (`func_80132320` 14 lines and `func_80134110` 26 lines stay guarded, `func_80134248` 455 lines, `func_80138C1C` stays `INCLUDE_ASM`). Ticket Done, card moved to Done.
