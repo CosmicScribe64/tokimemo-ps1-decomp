@@ -755,7 +755,9 @@ extern s32 ovl_load_buf;
 extern s32 ovl_load_lba;
 extern u8 font_glyphs[];
 extern s8 D_800C51C4;
+#ifndef MAIN_API_OVERRIDE_D_800C5FCC
 extern s32 D_800C5FCC;
+#endif
 extern s32 D_800C5FD0;
 extern u8 D_800C5FD4[];
 extern u8 D_800C6010[];
@@ -766,7 +768,9 @@ extern s32 D_800C6020;
 extern s32 D_800C6200[8];
 extern s32 D_800C62C0[32];
 extern u8 D_800C6220[];
+#ifndef MAIN_API_OVERRIDE_D_800C9730
 extern u8 D_800C9730[];
+#endif
 extern s32 D_800C9734;
 extern s32 D_800C9738;
 extern s32 D_800C973C;
