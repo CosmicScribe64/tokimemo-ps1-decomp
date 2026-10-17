@@ -34,7 +34,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-20500-emulator-assisted-naming|T-20500]] Emulator-assisted naming and constants pass, phase 2 head start (Backlog; waits for free CPU).
-- [[tickets/T-17012-w3-main-p12|T-17012]] Wave 3 package w3-main-p12: main `80079B10.c`, six small functions (`func_8007A50C`, `func_80079B34`, `func_8007B144`, `func_8007B64C`, `func_80079C70`, `func_8007BCFC`), all known T-0018 rows; in progress.
+- [[tickets/T-17012-w3-main-p12|T-17012]] Wave 3 package w3-main-p12: main `80079B10.c`, 2 of 6 matched (492 B: `func_80079B34` needed `u16 func_8007B64C()`, a wrong return type; `func_8007A50C` an `s16` view found by autotweak), `func_8007B144` (21 rows) and `func_8007B64C` (51 rows) guarded, two not started.
 - [[tickets/T-17119-w3-rpg-bat-p19|T-17119]] Wave 3 package w3-rpg-bat-p19: RPG_BAT `80148F70.c`, `80141060.c`, 2 of 2 matched (`func_80148F70`, `func_80141060`, 4,208 B; m2c draft rewritten as plain per-arm stores, byte-array group loops, frame word from a named local; Done)
 - [[tickets/T-17117-w3-rpg-bat-p17|T-17117]] Wave 3 package w3-rpg-bat-p17: RPG_BAT `8013CC90.c`, `func_8013CC90` matched, 1 of 1 (928 B; promoted global updated in place, `u32` file view of `D_8015ED98`, one FAKE; Done)
 - [[tickets/T-17001-w3-main-p01|T-17001]] Wave 3 package w3-main-p01: main `8007C030.c`, 1 of 2 matched (`_sprite_set_box_shade_tarao`, 484 B: a read-once FAKE local numbers an invisible colour range first); `dialogue_speak_part` stays guarded (16 lines); as1 scheduler trace recipe and pick rule in [[matching-notes]] (Done).
