@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-11
+updated: 2026-10-17
 sources: ["tools/Dockerfile", "tools/m2c.py", "tools/permute.py", "tools/test_cc.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py"]
 sources: ["wiki/original-compiler.md", "tools/Dockerfile", "tools/test_cc.py", "tools/trailing_pad.py", "tools/test_trailing_pad.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py"]
 sources: ["tools/docker.sh", "tools/Dockerfile", "tools/m2c.py", "tools/permute.py", "tools/test_cc.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py"]
@@ -74,6 +74,7 @@ Identification, evidence and citations: [[original-compiler]]. The best fit is a
 
 ## IDO 5.2 and 4.1 (T-3110)
 Tested privately with decomp.me's archives under qemu-irix ([[ido-52-evaluation]]; never committed, not part of the build). IDO 5.2 writes the O.BIN stamp 3.18 but otherwise generates the same code as 5.3: with the frame pass, all 2564 matched C functions are identical; without it, it makes 5.3's frames. IDO 4.1's ugen makes the original's +16 frames natively: with 5.2's front end and uopt, its frame size and `$sp` offsets equal the frame pass's in all 2564 functions. That is real-compiler evidence for the pass. Its older register allocation, though, breaks 80 of them. Neither version reproduces the T-1321 unsigned-load and switch-temporary behaviours. Decision: keep 5.3 + frame pass (+ the T-1321 pass). The evaluation harness is `tools/ido_eval.py`.
+T-20700 repeated the 4.1 back-end test after today's front end (K&R cfe, `tools/cvt_pass.py`, uopt): 4.1's as1 changes 1 of 6336 matched functions (it pads an `mflo`/`multu` hazard with `nop`s where 5.3's as1 and the original fill it) and no sched/hoist draft, and it needs the same one-line FAKE tricks; 4.1's ugen changes 1355 (unaligned-store expansion, in-place register reuse, no K&R parameter copy) and matches one draft (TACO `func_8013B2A0`). Its frames equal the frame pass's in 6335 of 6336. No build step adopted ([[ido-52-evaluation]], T-20700 section).
 
 ## Unsigned-load conversion pass (T-1321, T-5010, in the build)
 `tools/cvt_pass.py` runs around IDO's `uopt` for every IDO compile (shim under `USR_LIB`, like the `as1` shim of the frame pass; `tools/cc.py` `SHIMS`; `cc.ido_frame_env(ver, tmp, {"uopt": None})` turns it off for an experiment). T-1321 kept it out of the build because it changed 26 matched functions; T-5010 added two rules (entry and compare, below) and found the source property behind the rest (unit-private data), and since then it changes no matched function. It models two measured differences in how the original compiler optimised global variables ([[matching-notes]], section "Unsigned-load conversion pass (T-1321)"):

@@ -17068,3 +17068,25 @@ Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-17021 Done
 
 [[tickets/T-17021-w3-main-p21]] In Review to Done: code review against `CODING_STANDARDS.md` found one issue, fixed: the one-line `for` and the `0x15 + i` index in `func_800419FC` had no explanation, a comment was added (comment only, unit sha1 OK). 1 of 1 function matched (`func_800419FC`, 560 bytes), plain C, no FAKE, no `NON_MATCHING`. Merge via the wave 3 merge script.
+## [2026-10-17] ticket | T-20700 In Progress
+
+[[tickets/T-20700-ido41-as1-test]] created and started: does IDO 4.1's as1 (and ugen) after IDO 5.3's cfe/uopt
+reproduce the original better? Worktree `tokimemo-wt/bs-ido41-as1`, base `w2-good`. IDO 4.1 fetched from the
+decomp.me release URL in [[ido-52-evaluation]] into the gitignored `tools/local-compilers/`; sha256 matches the table.
+
+## [2026-10-17] ticket | T-20700 In Review
+
+[[tickets/T-20700-ido41-as1-test]] In Progress to In Review. IDO 4.1's as1 after the production pipeline (5.3 cfe in
+K&R mode, `tools/cvt_pass.py`, 5.3 uopt and ugen, frame pass) leaves 6335 of 6336 matched functions and all 19 guarded
+sched/hoist drafts unchanged; the one change (main `func_80046684`, an `mflo` hazard fill) is a regression. 4.1's ugen
+(+ as1, no frame pass) changes 1355 matched functions, keeps the frame pass's frames in 6335, and matches TACO
+`func_8013B2A0`. Both rejected; no adoption proposal. Found: ugen's `.option pic` record must carry the as1 version's own
+value (5.3: 0, 4.1: 1), now set by `tools/ido_eval.py` (tests `tools/test_ido_eval.py`). Pages: [[ido-52-evaluation]]
+(T-20700 section), [[toolchain]], [[original-compiler]], [[data/t0018-cases]], [[matching-notes]] (T-20620 pointer).
+
+## [2026-10-17] ticket | T-20700 Done
+
+[[tickets/T-20700-ido41-as1-test]] reviewed against `CODING_STANDARDS.md` with no findings and moved In Review to Done.
+Verdict: rejected, no adoption proposal, production toolchain unchanged (4.1's as1 changes 1 of 6336 matched functions, a
+regression; 4.1's ugen changes 1355 and matches only TACO `func_8013B2A0`). Committed: `tools/ido_eval.py` `.option pic`
+fix with `tools/test_ido_eval.py` (5 tests OK), no compiler archive tracked (`tools/local-compilers/` stays gitignored).

@@ -143,6 +143,7 @@ kanban-plugin: board
 ## Done
 - [ ] [[tickets/T-17021-w3-main-p21|T-17021 Wave 3 package w3-main-p21]]
 - [ ] [[tickets/T-20006-gyozi-scene-callbacks|T-20006 Two GYOZI scene callbacks matched (708 bytes)]]
+- [ ] [[tickets/T-20700-ido41-as1-test|T-20700 IDO 4.1 back end (as1/ugen) as a build-step candidate]]
 - [ ] [[tickets/T-20600-regorder-recipe-sweep|T-20600 Register-order family: recipe sweep]]
 - [ ] [[tickets/T-17015-w3-main-p15|T-17015 Wave 3 package w3-main-p15]]
 - [ ] [[tickets/T-17014-w3-main-p14|T-17014 Wave 3 package w3-main-p14]]
