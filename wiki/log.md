@@ -16656,3 +16656,11 @@ Clean rebuild of the w3-main-p05 worktree: 27/27 sha1 OK (`build/SLPM_86.053.bin
 ## [2026-10-16] ticket | T-17009 In Progress
 
 [[tickets/T-17009-w3-main-p09]] created and started: Wave 3 package for main `src/main/80042A00.c` (`func_80043448`, `func_80043010`, `func_800430C0`, `func_80042CB0`), worktree tokimemo-wt/w3-main-p09, branch w3-main-p09 from w2-good.
+
+## [2026-10-16] build | T-17009 matches
+
+[[tickets/T-17009-w3-main-p09]]: `func_80043448` (188 B) and `func_800430C0` (904 B) matched in plain C in `src/main/80042A00.c`. `include/main_api.h` gained `D_800B3CA4`, `D_800B3CA8[20]`, `D_800B3D00` and prototypes; `func_800430C0` is `s32` now. Details in [[matching-notes]] (section T-17009).
+
+## [2026-10-16] ticket | T-17009 In Review
+
+[[tickets/T-17009-w3-main-p09]] In Progress to In Review: 2 of 4 functions matched (1,092 bytes). `func_80043010` (32 rows) and `func_80042CB0` (about 200 rows) restored to `INCLUDE_ASM` with drafts in `drafts/T-17009/`; two rows in [[data/t0018-cases]], three rows in [[register-cheatsheet]].

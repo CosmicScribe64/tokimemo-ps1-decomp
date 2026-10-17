@@ -1,0 +1,3 @@
+T-17009 best draft of main:func_80043010 (32 differing rows, register-only; scalars D_800E8BF2/D_800E8BF3/D_800E8C32/D_800E8C33 are u8 globals, not in main_api.h; the array form D_800E8BF0[2] etc. gives 37 rows).
+Structure matches (no explicit return on the 0xFF path, so v0 keeps the type byte).
+Left: the original keeps the four pad bytes of the mouse sum in uopt colours v1/a0/a1/a2 (the globals are promoted), the draft leaves them in ugen temporaries (prio 0, one use each).
