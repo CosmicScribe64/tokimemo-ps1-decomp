@@ -157,7 +157,56 @@ void func_80137878(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80137A78);
+/* t = s; s += 0xEFC; before the test keeps s in a2 (spilled only around calls) and puts the addiu in the branch delay slot; the comma-for header orders i = 0 before the D_80158AA4 load. T-11860 */
+void func_80137A78(void) {
+    u8 *c;
+    u8 *s;
+    u8 *p;
+    s32 i;
+    u8 *t;
+
+    c = D_80158A8C;
+    s = D_80158AAC;
+    if (c[0] != 0) {
+        for (i = 0; i < 24; i++) {
+            c[i * 0x14 + 0x42] = 0;
+        }
+        if (c[0x342] == 0) {
+            if (func_801427A8() != 0) {
+                func_80133AD0(0x508);
+                for (i = 0, p = D_80158AA4 + 0xFA0; i < 7; i++) {
+                    p -= 0x64;
+                    *(s16 *)(p + 0xA6) = 0x3CDF;
+                }
+                p = D_80158AA4 + 0x12C0;
+                for (i = 0; i < 7; i++, p -= 0x64) {
+                    *(s16 *)(p + 0x42) = 0x3CDF;
+                }
+            } else {
+                for (i = 0, p = D_80158AA4 + 0xFA0; i < 7; i++) {
+                    p -= 0x64;
+                    *(s16 *)(p + 0xA6) = 0x3CD9;
+                }
+                p = D_80158AA4 + 0x12C0;
+                for (i = 0; i < 7; i++, p -= 0x64) {
+                    *(s16 *)(p + 0x42) = 0x3CD9;
+                }
+            }
+        }
+        t = s;
+        s += 0xEFC;
+        if (c[0x343] == 0) {
+            func_801374C0(t);
+            func_801374C0(s);
+        }
+        if (*(u16 *)(c + 0x30E) == 1) {
+            func_80137654();
+            func_80137878();
+        } else if (*(u16 *)(c + 0x30E) == 2) {
+            func_80137878();
+        }
+    }
+}
 
 /* The u16 store of 8 lets the constant share t5 with the s[0x1A] store; the 0x11C ring row is spelled like the packet loops' s + i * 4 loads so both share one induction variable (a3), and the 2D-array rows keep i * 4 as the loop test; the packet loops' grouped stores share a source line because as1 schedules the stores of one line together. T-11840 */
 void func_80137C20(void) {
