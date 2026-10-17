@@ -1,3 +1,4 @@
+#define MAIN_API_OVERRIDE_func_80085E30 /* called as an implicit int function (definition: void): the call's $v0 result keeps the loop pointers off $v0 in func_80142400, T-22004 */
 #include "common.h"
 #include "ovl/TAIIKU.h"
 #define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
@@ -17,8 +18,8 @@ TaiRunnerB D_8014A13C[4] = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A1CC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A1D0);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A1D4);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A1E8);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A1EC);
+/* Defined in the unit (not island pieces) so that the first two stores share one lui at; T-16551, func_80133CFC, T-22004, func_80142400. */
+s16 D_8014A1E8[10] = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A1FC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A208);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A228);
@@ -96,7 +97,95 @@ void func_801423A4(void) {
     }
 }
 
+/* NON_MATCHING: T-22004, 26 rows; only the saved registers of case 3 are left: the original keeps the tpage
+ * pointer in $s0, its end in $s1, then the palette counter in $s1 and the bound 16 in $s0; the draft has all four
+ * swapped (regdiff: the pointer range, priority 20.5, is coloured before the end range, priority 5, and takes $s1).
+ * The pointer needs the counter `j` shared with the palette loop to keep the `sltu` form; a separate counter, a
+ * pointer local (a stack word, frame 200), `<=`/`!=`/unsigned bounds, u32/s16 `j` and autotweak (513 edits) did not
+ * move it. Needs MAIN_API_OVERRIDE_func_80085E30 (int call: 74 to 52 rows) and the unit-defined D_8014A1E8 (one
+ * shared `lui at`). */
+#ifdef NON_MATCHING
+void func_80142400(void) {
+    s32 i;
+    s32 j;
+    TaiikuHalf10 sp_a;
+    TaiikuHalf10 sp_b;
+    TaiWords8 sp_c;
+    TaiWords11 sp_d;
+
+    sp_a = D_8014A27C;
+    sp_b = D_8014A290;
+    sp_c = D_8014A2A4;
+    sp_d = D_8014A2C4;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        if (D_8014A110 == 1) {
+            func_80044750(0xBF);
+        }
+        func_80044890(0, 0xBF98, 0xBF79, 0xC20F, 0xC1EF, 0xD6B7);
+        func_80085E30(1, 1);
+        for (i = 0; i < 11; i++) {
+            D_800E6280.unk_1228[i + 5] = 8;
+        }
+        for (i = 0; i < 3; i++) {
+            D_800E6280.unk_1228[i + 0x25] = 8;
+        }
+        for (i = 0; i < 8; i++) {
+            D_8014A208[i] = sp_c.v[i];
+        }
+        for (i = 0; i < 11; i++) {
+            D_8014A228[i] = sp_d.value[i];
+        }
+        for (i = 0; i < 10; i++) {
+            *(s16 *)&D_8014A1D4[i * 2] = sp_a.h[i];
+        }
+        D_8014A1E8[0] = sp_b.h[0];
+        D_8014A1E8[1] = sp_b.h[1];
+        for (i = 2; i < 10; i++) {
+            D_8014A1E8[i] = sp_b.h[i];
+        }
+        func_80048EB8(0);
+        func_8006BD6C(0);
+        func_8004284C();
+        break;
+    case 1:
+        if (func_80044E8C() == 1) {
+            cd_read_sectors(0x1E, 0x80180000, 0xBAD0);
+            func_8004284C();
+        }
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            cd_read_sectors(0x4F, 0x8018F000, 0xB861);
+            Fade_Out_Init();
+            func_8004284C();
+        }
+        break;
+    case 3:
+        if ((Fade_Out_Main() != 0) && (cd_read_sync_status() & 1)) {
+            func_80140810();
+            func_80145190();
+            for (j = 0; j < 3; j++) {
+                search_load_tpage_buf_lock(((s32 *)&D_8014A1FC)[j], 1);
+            }
+            for (j = 0; j < 0x10; j++) {
+                load_palette(D_8014A378, (j + 0x10) & 0xFF, 1, 1, j);
+            }
+            func_8014357C();
+            func_80143398();
+            func_80143470();
+            cd_read_sectors(0xA1, 0x8018F000, 0xB7C0);
+            func_80042808();
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80142400);
+#endif
 
 /* FAKE: `pad` reserves the top local word: the original keeps the two loop spills of the
  * tpage loops at 0x38 and 0x30 (sp). The u8 views of the flag D_8014A110 keep its lbu loads and
@@ -431,7 +520,9 @@ void func_80143470(void) {
  * flags in a ugen temporary, promotes the rating field into $a1 with a move and emits each constant
  * next to its store. Same family as TAIIKU func_8013D2B4 (wiki/data/t0018-cases.md). T-19010 also tried, no
  * gain: a raw byte local, separate rating and speed locals, direct access instead of `gs`, the doubled
- * flags expression instead of `temp_v1`. */
+ * flags expression instead of `temp_v1`. T-22004 (34 rows, unchanged): `temp_v1` as u8/u16/u32/s8, the flags and rating
+ * reads in the natural order, `temp_v1 & 3`, a doubled flags expression and viewsweep (6 callee views) gave no
+ * gain; autotweak skips it (its isolated compile has 8 instructions more than the target). */
 #ifdef NON_MATCHING
 void func_8014357C(void) {
     GameState *gs;

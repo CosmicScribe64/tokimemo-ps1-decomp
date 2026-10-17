@@ -45,11 +45,11 @@ kanban-plugin: board
 
 ## In Progress
 - [ ] [[tickets/T-22000-wave-4-conveyor|T-22000 Wave 4 conveyor]]
-- [ ] [[tickets/T-22004-w4-p04|T-22004 Wave 4 package w4-p04]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 ## In Review
+- [ ] [[tickets/T-22004-w4-p04|T-22004 Wave 4 package w4-p04]]
 
 ## Done
 - [ ] [[tickets/T-11880-date2-remainder|T-11880 DATE2 remainder]]

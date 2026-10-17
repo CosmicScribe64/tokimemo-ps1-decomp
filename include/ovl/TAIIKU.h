@@ -146,6 +146,10 @@ extern u8 D_8014A110;
 void func_80143D24(void);
 void func_80143DD0(void);
 void func_80143F50(void);
+void func_8014357C(void);
+void func_80143398(void);
+void func_80143470(void);
+void func_80145190(void);
 typedef struct TaiikuRec {
     /* 0x0 */ s32 unk0;
     /* 0x4 */ s32 unk4;
@@ -897,6 +901,7 @@ extern TaiWords6 D_8014A088; /* initialiser of the auto array tbl in func_801412
 extern TaiikuHalf10 D_8014A27C; /* func_80142400 */
 extern TaiikuHalf10 D_8014A290; /* func_80142400 */
 extern TaiWords8 D_8014A2A4; /* func_80142400 */
+extern TaiWords11 D_8014A2C4; /* func_80142400 */
 extern TaiShorts12 D_8014A2F0; /* func_80143814 */
 extern TaiShorts12 D_8014A304; /* func_80143814 */
 extern TkS16x4 D_8014A318; /* func_80144464 */
