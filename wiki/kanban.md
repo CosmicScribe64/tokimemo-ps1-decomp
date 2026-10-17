@@ -25,6 +25,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-20920-types-en-nichi|T-20920 Targeted type pass: EN_NICHI]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
