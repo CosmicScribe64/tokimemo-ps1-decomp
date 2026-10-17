@@ -17681,3 +17681,7 @@ Package w4-p10 of [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/GEKO/80134D10.c`
 ## [2026-10-17] ticket | T-22010 Done
 
 Review against `CODING_STANDARDS.md` found nothing to fix: one owned C file, FAKE and NON_MATCHING comments ticketed, no inline asm or game data. 3 of 5 matched (`func_80137580`, `func_80135AC8`, `func_801355E8`). [[tickets/T-22010-w4-p10]] Done.
+
+## [2026-10-17] ticket | T-22017 In Progress
+
+Package w4-p17: DATE `src/ovl/DATE/80132000.c`, `func_8013D5FC`, `func_8013B488`, `func_8013EFA0`, `func_8013F214`, `func_8013C410`. [[tickets/T-22017-w4-p17]] In Progress.
