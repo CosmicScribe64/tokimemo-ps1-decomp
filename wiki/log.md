@@ -16600,3 +16600,19 @@ rename table.
 register-order gaps (int-return callee view, `GameState *g`, u16/s16 constants, one-line zero-store pairs, dead
 selector read, natural extra local, same-unit data) across the `regorder` rows of [[data/t0018-cases]]. Worktree
 `cg-regorder`, base `w2-good`. Links [[speedup-research-2026-10-16]].
+
+## [2026-10-16] build | T-20600 matches
+
+Recipe sweep over the `regorder` family ([[tickets/T-20600-regorder-recipe-sweep]], worktree `cg-regorder`): five
+functions matched in plain C, 3,400 bytes, no FAKE. `src/ovl/DATE/80154260.c` `func_80155004` (chain assignment),
+`src/ovl/DATE/80151460.c` `func_80152E34` (`setRGBn` comma lines, `GameState *g`), `src/ovl/RPG_BAT/801498C0.c`
+`func_80149C5C` and `src/ovl/RPG_BAT/8013E4D0.c` `func_8013E54C` (implicit-int definitions; the first also with
+`RPG_BAT_OVERRIDE_func_8013F0F4`, wrapped in `include/ovl/RPG_BAT.h`), `src/ovl/TAIIKU/801452D0.c` `func_80145370`
+(`MAIN_API_OVERRIDE_func_80085E30`). Notes in [[matching-notes]] (T-20600), four rows in [[register-cheatsheet]],
+an Update paragraph and three rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-20600 In Review
+
+[[tickets/T-20600-regorder-recipe-sweep]] In Progress to In Review: 5 of 39 targets matched; recipes for the
+conveyor's files listed in the ticket. Clean rebuild 27/27 SHA1 OK, `check_headers`, `migrate_globals --check`,
+`sync_protos --check-branch` OK. Card moved in [[kanban]]. Code review against `CODING_STANDARDS.md` pending.

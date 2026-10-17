@@ -1,7 +1,7 @@
 ---
 id: T-20600
 title: "Register-order family: recipe sweep"
-status: In Progress
+status: In Review
 assignee: claude-opus (cg-regorder)
 created: 2026-10-16
 updated: 2026-10-16
@@ -26,13 +26,13 @@ Recipes to sweep, in order of fit (each from a matched function):
 
 ## Acceptance criteria
 
-- [ ] Target list: functions still `INCLUDE_ASM` or guarded with `regorder` rows, minus files owned by the wave 3
-  conveyor, ranked by size and draft closeness.
-- [ ] Each target tried for about 15 minutes with the recipes; every match committed in plain C (FAKE marked).
-- [ ] Rows / Update paragraphs in [[data/t0018-cases]]; a T-20600 section in [[matching-notes]]; a
-  [[register-cheatsheet]] row for any new recipe.
-- [ ] Recipes for functions in busy files reported for the conveyor.
-- [ ] Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch`.
+- [x] Target list: functions still `INCLUDE_ASM` or guarded with `regorder` rows, minus files owned by the wave 3
+  conveyor, ranked by size and draft closeness (39 functions without TT; 17 guarded, 22 archived drafts).
+- [x] Each target tried with the recipes; every match committed in plain C (no FAKE needed).
+- [x] Update paragraph and three rows in [[data/t0018-cases]]; a T-20600 section in [[matching-notes]]; four
+  [[register-cheatsheet]] rows.
+- [x] Recipes for functions in busy files reported for the conveyor (Comments below).
+- [x] Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch`.
 
 ## Notes
 
@@ -40,3 +40,29 @@ Worktree `tokimemo-wt/cg-regorder`, branch `cg-regorder`, base `w2-good`. At mos
 permuter farm. Never edit a C file listed by the conveyor's busy-files script.
 
 ## Comments
+
+2026-10-16 (claude-opus, cg-regorder): five functions matched in plain C, 3,400 bytes: DATE `func_80155004`
+(368, chain assignment of the colour bytes), DATE `func_80152E34` (392, `setRGBn` comma lines and `GameState *g`),
+RPG_BAT `func_80149C5C` (1,296, implicit-int definition and `RPG_BAT_OVERRIDE_func_8013F0F4`), RPG_BAT
+`func_8013E54C` (624, implicit-int definition), TAIIKU `func_80145370` (720, `MAIN_API_OVERRIDE_func_80085E30`).
+Header change: `include/ovl/RPG_BAT.h` wraps `func_8013F0F4` in `#ifndef RPG_BAT_OVERRIDE_func_8013F0F4`.
+Details and negative results: [[matching-notes]], "T-20600". Ready for code review against `CODING_STANDARDS.md`.
+
+For the conveyor (files it owns, not edited here):
+- EN_NICHI `func_80132EE8` (`80132000.c`): called before its definition with no prototype and has the same
+  one-block loop preheader as RPG_BAT `func_8013E54C` (T-17107): write it `s32` with no return first.
+- Any unmatched function with no prototype whose draft is `void` (callers see an implicit `int`): try `s32` with no
+  return first. A read-only probe (`regdiff --src` on scratch copies) on such guarded drafts in owned files changed
+  nothing for ENDING `func_80134B18`, EVENT `func_8010B614`, GEKO `func_801355E8`, GYOZI `func_80137188`,
+  `func_8013E638` and main `csr_load_vram`, made ETC `func_80143F24` worse (10 to 13 register rows) and did not
+  compile for EVENT `func_80118868`, so it is not enough on its own there.
+- `$v0` never free after calls of `void` callees: `s32 f();` views per file (`regdiff --proto`), as for
+  `func_80149C5C` and `func_80145370`. Candidates by symptom: GEKO `func_80140040`, GYOZI `func_80142A8C`,
+  main `func_8006C988`, OPTION `func_80139E3C`, SHUGAKU `func_801357AC`.
+- One loaded value stored to several fields, the original skipping a low register: one chain assignment
+  (`func_80155004`). Candidates: EVENT `func_801022C0`, `func_80118868`.
+- Colour words split into bytes: `setRGBn` comma lines with masks (`func_80152E34`); EVENT `func_800F9730`,
+  GYOZI `func_80142A8C`, SHOUGATU `func_80136948`. Probed read-only on main `_sprite_set_box_shade_tarao`: worse
+  (24 register rows), so its T-16220 shape stays.
+- `GameState *g` (T-19016) still untried on DATE2 `func_80136794`.
+
