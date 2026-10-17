@@ -376,3 +376,42 @@ hand matches: local declaration order and the T-3330 slot rule for frames, index
 a pointer to the display pool when the original reloads after its stores, implicit `int` for functions called
 without a prototype. `D_800E7D10` is a link name in `config/symbol_addrs_types.txt` now, so overlay C can read the
 work area through its fields.
+## Targeted type pass: main `80075320.c` (T-20940)
+
+Second pass on one unit (the holiday menu, telephone and appointment code), after T-17000. Ticket:
+[[tickets/T-20940-types-main-80075320]]; drafts and scores: `drafts/T-20940/` and [[main-family-results]]
+("Targeted type pass (T-20940)"). Every step built byte-identical (27/27).
+
+| type / global | evidence | users |
+| --- | --- | --- |
+| `KeyRing D_800B6990` (`u8 keys[7]`, pad, `u8 pos` at +8; size 0xC; splat's `D_800B6998` is `.pos`) | `func_80075C84` stores `keys[pos] = key` and reloads `pos` for `pos++`; IDO keeps that load after the store only when both go through one symbol (the T-5000 rule). With two symbols the draft kept `pos` in a register. | `func_80075C84`, `func_800755B4` |
+| `u8 D_800B3778[13][7]` | the telephone numbers: rows of seven digits (`* 7` row index), `D_800B37BE` is row 10, `D_800B37D4` follows after one pad byte | `holiday_tel_exit` (matched), `func_80075C84` |
+| `u8 *D_800B3538[16]` (was `s32 D_800B3538[]`) | the name table (string pointers up to `D_800B3578`); `telephone_class_init` reads entry `i - 1` (splat's `D_800B3534` is that -4 relocation) and entries 12 and 13 (`D_800B3568`, `D_800B356C`). TEL and OPTION compile unchanged with it. `D_800B3538` added to `config/symbol_addrs_main.txt` so main links the base. | `telephone_class_init` (matched), TEL, OPTION |
+| `u8 D_800B69BC[0x14]`, `u8 D_800B69D0[8]`, `u8 D_800B69D8[8]` | a string in `.data` (strcat argument) and two background maps indexed by `GameState.unk_69C[].unk_01` | `func_800767A4`, `func_80076FDC` |
+| `CharFlags.b15` .. `b19` (was `f15 : 5`, no users) | `func_80077900` tests bit 18 (`sll 13; bltz`) and sets it (`lbu` of byte +2, `ori 4`, `sb`) | `func_80077900` (matched) |
+| `ScheduleClubFlags.b29` (was part of `unk_27 : 3`, no users) | `lw` of the club word, `sll 2; bltz` | `func_80077900` (matched) |
+| `void func_80075AF8(void)` prototype | `func_800755B4` calls it before its definition | |
+
+Found on the way (no new type needed): GameState +0x724 .. +0x727 are a `u8[4]` choice table (indexed stores in
+`appointment_launch`, the T-9910 FAKE in `func_80076B48`); the fields are separate members used by DATE, OPTION and
+`80041000.c`, so the drafts use the existing `((GsWord *)&D_800E6280.unk_724)->b[n]` view. The first 0xC bytes of
+`Rec38` are three 16.16 words (`func_80075C84` adds `rand() & 0x7FFF` to the word at +0, `check_para_limit` clears
+words); `unk_00 .. unk_0A` stay `s16` (their users are in many files). `D_801230D0` (0x40-byte work area) and the
+`D_80125CA0` sprite-address block keep their scalar declarations: this unit reads only `D_801230D0` +0 and the
+words at `D_80125CA4 .. CB0`.
+
+Scores (`tools/redraft.py`, default variants, before = d9794660, after = the final headers; 15 unmatched functions,
+sum of the best scores 2,397 rows before):
+
+- Header types alone (same tool, no new bodies): 1 better (`func_80076FDC` 371 to 361, the typed background maps),
+  1 worse (`holiday_tel_exit` 85 to 103: m2c's view of the new 2-D table does not compile in the typed variants,
+  `plain` 100 to 130), 1 lost (`func_80075C84`: no variant compiles, the archived 269 used the old scalars), the
+  rest equal; `func_800755B4` keeps 205 only through its archived body (fresh m2c output stops compiling on the
+  `KeyRing` member). The T-16550 result again: a header type does not improve m2c's output, and where m2c reads
+  the new aggregate through byte offsets it can make it worse.
+- Rewrites that fold the labels into the typed objects (hand drafts, scored by the tool's `archived` variant and
+  its `gs-local` pass): 4 matches (`func_80077694`, `telephone_class_init`, `holiday_tel_exit`, `func_80077900`,
+  2,568 bytes) and lower scores for 6 more; with the header-only gain of `func_80076FDC`, the sum of the 15 best
+  scores goes from 2,397 to 1,183 rows (table in [[main-family-results]]).
+- `gs-local` (`GameState *g = &D_800E6280;`) decided two of the matches: IDO allocates other registers when the
+  game state is reached through a pointer local, though the code reads the same addresses.

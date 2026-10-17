@@ -124,6 +124,7 @@ kanban-plugin: board
 
 ## Done
 - [ ] [[tickets/T-20920-types-en-nichi|T-20920 Targeted type pass: EN_NICHI]]
+- [ ] [[tickets/T-20940-types-main-80075320|T-20940 Targeted type pass: src/main/80075320.c]]
 - [ ] [[tickets/T-20900-shared-type-unification|T-20900 Cross-unit shared-type unification]]
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 - [ ] [[tickets/T-17021-w3-main-p21|T-17021 Wave 3 package w3-main-p21]]

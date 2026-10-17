@@ -1,0 +1,15 @@
+{"after": 7, "before": 89, "census_score": 95, "scope": "main:appointment_launch", "status": "scored", "variant": "archived"}
+{"after": 9, "before": 9, "census_score": 49, "scope": "main:func_800754C0", "status": "scored", "variant": "guarded"}
+{"after": 10, "before": 205, "census_score": 207, "scope": "main:func_800755B4", "status": "scored", "variant": "archived"}
+{"after": 53, "before": 269, "census_score": 270, "scope": "main:func_80075C84", "status": "scored", "variant": "archived+gs-local"}
+{"after": 218, "before": 231, "census_score": 354, "scope": "main:func_80076000", "status": "scored", "variant": "archived"}
+{"after": 54, "before": 54, "census_score": 54, "scope": "main:func_800764AC", "status": "scored", "variant": "archived"}
+{"after": 18, "before": 84, "census_score": 84, "scope": "main:func_80076630", "status": "scored", "variant": "archived"}
+{"after": 317, "before": 317, "census_score": 317, "scope": "main:func_800767A4", "status": "scored", "variant": "archived"}
+{"after": 361, "before": 371, "census_score": 371, "scope": "main:func_80076FDC", "status": "scored", "variant": "plain"}
+{"after": 110, "before": 191, "census_score": 196, "scope": "main:func_8007739C", "status": "scored", "variant": "archived"}
+{"after": 0, "before": 159, "census_score": 163, "scope": "main:func_80077694", "status": "matched", "variant": null}
+{"after": 0, "before": 163, "census_score": 211, "scope": "main:func_80077900", "status": "matched", "variant": "archived"}
+{"after": 26, "before": 26, "census_score": 34, "scope": "main:func_80077CA8", "status": "scored", "variant": "typed-late"}
+{"after": 0, "before": 85, "census_score": 100, "scope": "main:holiday_tel_exit", "status": "matched", "variant": "archived+gs-local"}
+{"after": 0, "before": 144, "census_score": 150, "scope": "main:telephone_class_init", "status": "matched", "variant": null}

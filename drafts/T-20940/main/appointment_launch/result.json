@@ -1,0 +1,54 @@
+{
+ "before_git": "d9794660",
+ "before_score": 89,
+ "before_variant": "typed-late",
+ "best_archived_path": "drafts/T-20940/main/appointment_launch",
+ "best_archived_score": 3,
+ "census_path": "drafts/T-16100/batch-1/main/appointment_launch",
+ "census_score": 95,
+ "context_hash": "08ac09d94a5df2a270dcafc5b762e9e47b9ce467a808d975d5d57f954ddcee7e",
+ "created": "2026-10-17",
+ "draft_fixes": [],
+ "draft_hash": "e9e8f9805a887ed11150982d45a5392445758773185e7a988849a61bf905b85d",
+ "func": "appointment_launch",
+ "guarded": false,
+ "hand": "hand.c",
+ "provenance": {
+  "archived": {
+   "file": "hand.c",
+   "path": "drafts/T-20940/main/appointment_launch",
+   "score": 3,
+   "ticket": "T-20940"
+  },
+  "draft_fixes_tried": {
+   "": 7
+  },
+  "git": "f8717e22",
+  "harness_hash": "0225e1c12eaacc2851b9274ba91bbd2e639e8a2acd4f8a83395ddf4422ff8614",
+  "headers": {
+   "include/game.h": "0bedb7c27961ecb0a529527185018cec4f3cb972ae89aff6f30398dbd86d3ce4",
+   "include/libgte.h": "914456b688f1c510ee2406ff0f493d9adec3dc07394a39b04152883d8cba958d",
+   "include/main_api.h": "2bed940ee7aae575c331b300a5fa32b1e0f6be75673824dfca323a02caccdb66",
+   "include/psx_types.h": "c69b27b63733802c88d8f4bf403813fd072dd6da6aa0a59e741e85a82662d660"
+  },
+  "ticket": "T-20940",
+  "tool": "tools/redraft.py (T-20800)"
+ },
+ "rewrites": [],
+ "scope": "main:appointment_launch",
+ "score": 7,
+ "size": 288,
+ "src": "src/main/80075320.c",
+ "status": "scored",
+ "ticket": "T-20940",
+ "unit": "main",
+ "variant": "archived",
+ "variant_scores": {
+  "archived": 7,
+  "plain": 96,
+  "typed": 93,
+  "typed-late": 89
+ },
+ "vs_archived": "worse",
+ "vs_census": "better"
+}

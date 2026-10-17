@@ -5,3 +5,6 @@ func_80066A2C = 0x80066A2C; // type:func size:0x58
 func_80066A84 = 0x80066A84; // type:func size:0x48
 // T-9140 u8 view of D_800E7D11 plus 2, the 4-byte record table that func_80056284 clears.
 D_800E7D13 = 0x800E7D13;
+// T-20940: the name table (u8 *[16], main_api.h). telephone_class_init (C) indexes it as D_800B3538[i - 1];
+// the original's relocation was splat's D_800B3534 = D_800B3538 - 4.
+D_800B3538 = 0x800B3538;

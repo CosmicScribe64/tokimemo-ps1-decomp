@@ -17374,3 +17374,17 @@ review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]], line in 
 ## [2026-10-17] ticket | T-20920 Done
 
 [[tickets/T-20920-types-en-nichi]] reviewed against `CODING_STANDARDS.md`: no blocking finding, two small fixes (a blank line after the opening brace of `func_801339D4`; a stale "left for later waves" line in [[en-nichi-family-results]]). No edits in `src/ovl/TT/*` or `dialogue_render`, one FAKE (`func_80135ACC`, ticket named), types documented in [[data-types]], no game data. Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. In Review to Done (kanban card moved, [[index]] line updated).
+## [2026-10-17] ticket | T-20940 In Progress
+
+Created [[tickets/T-20940-types-main-80075320]] (branch `ty-main-80075320` from `w2-good`): second, targeted type pass for `src/main/80075320.c` after [[main-family-results]] "Types-first pass (T-17000)". Card added to In Progress in [[kanban]], index line added.
+
+## [2026-10-17] build | T-20940 types and matches in 80075320.c
+
+[[tickets/T-20940-types-main-80075320]]: `KeyRing D_800B6990` (the key ring and its position are one object: the original reloads the position after the store into the ring), `u8 D_800B3778[13][7]`, `u8 *D_800B3538[16]` (plus `D_800B3538` in `config/symbol_addrs_main.txt`), the unit's static tables, `CharFlags.b15 .. b19`, `ScheduleClubFlags.b29`, the `func_80075AF8` prototype. Matched `func_80077694`, `telephone_class_init`, `holiday_tel_exit`, `func_80077900` (2,568 bytes, 27/27 sha1). Paired `tools/redraft.py` scores: 2,397 to 1,183 rows over the 15 functions; the header types alone changed three scores (one better, one worse, one no longer compiling), the gains came from drafts written with the typed objects and the `gs-local` pass. Pages: [[data-types]], [[main-family-results]]; drafts in `drafts/T-20940/`.
+
+## [2026-10-17] ticket | T-20940 In Review
+
+[[tickets/T-20940-types-main-80075320]] In Progress to In Review: types documented, matches committed, clean build and checks run; the code review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]], index line updated.
+
+## [2026-10-17] ticket | T-20940 Done
+[[tickets/T-20940-types-main-80075320]] reviewed against `CODING_STANDARDS.md`: three small findings fixed in `src/main/80075320.c` (a shift-and-cast flag test replaced by the `CharFlags.b3` bit-field, which builds the same object; a missing `FAKE` mark on the u8 view of `unk_F6E` in `func_80077694`; a comment for the repeated club 10 condition in `func_80077900`). No edit in `src/ovl/TT/*` or `dialogue_render`, types documented in [[data-types]], no game data. Clean rebuild 27/27 sha1 OK; `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. In Review to Done (kanban card moved).

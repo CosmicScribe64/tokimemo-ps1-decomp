@@ -140,6 +140,45 @@ The fold helps main less than TAIIKU: most census drafts already compiled the Ga
 scalars, which compile like members except for the load-after-store order, and the large shared objects
 above could not be typed.
 
+## Targeted type pass (T-20940)
+
+Second, targeted pass on `src/main/80075320.c` (holiday menu, telephone, appointments; 28.7% matched before)
+in [[tickets/T-20940-types-main-80075320]]. Types in [[data-types]] ("Targeted type pass: main `80075320.c`"):
+the key ring `KeyRing D_800B6990` (one object: `pos` is reloaded after the store into `keys[pos]`), the telephone
+numbers `u8 D_800B3778[13][7]`, the name table `u8 *D_800B3538[16]`, the unit's static tables, single-bit fields
+`CharFlags.b15 .. b19` and `ScheduleClubFlags.b29`, and the missing `func_80075AF8` prototype. Matched sibling:
+`func_8007437C` in `800737A0.c` (the weekday twin of `func_80077694`, same display-record setup).
+
+| function | before | after | how |
+| --- | ---: | ---: | --- |
+| `func_80077694` | 159 | matched | written from the sibling; FAKE unused record pointer for the spill slot |
+| `telephone_class_init` | 144 | matched | name table entries `[i - 1]`, `[12]`, `[13]`; four `s16[14]` row arrays filled x, y, w, h; FAKE second local for the frame |
+| `holiday_tel_exit` | 85 | matched | `D_800B3778[F5F][k]` (row 10 for girl 13); `gs-local` |
+| `func_80077900` | 163 | matched | bit-field tests `b1`, `b2`, `b18`, club `b29`; `gs-local`; club passed to `main_state_set` as a second argument |
+| `appointment_launch` | 89 | 7 | `u32 tmp[3]`, the `GsWord` byte view of GameState +0x724 |
+| `func_800755B4` | 205 | 10 | `KeyRing` clear loop on one line (FAKE), 0x104-byte message buffer, the typed fold's `unk0` fixed; the last rows are the shared `lui $at` of the unrolled stores (as1, [[build-step-gaps]]) |
+| `func_80075C84` | 269 | 53 | `KeyRing`, `D_800B3778[i][j]`, the 16.16 word at Rec38 +0, `b3` read as a shift; frame 8 bytes large with `gs-local` |
+| `func_80076630` | 84 | 18 | schedule-entry bit-fields `unk_00`, `unk_25`, `b24` |
+| `func_8007739C` | 191 | 110 | `gs-local`; F68 nibble store; left: temporary numbering (t3 skipped by the original) |
+| `func_80076000` | 231 | 218 | the typed fold's `unk0` fixed (it read +0 for `unk_1093`); frame 16 bytes small |
+| `func_80076FDC` | 371 | 361 | header types only (`D_800B69D0`, `D_800B69D8`) |
+| `func_800754C0`, `func_800764AC`, `func_800767A4`, `func_80077CA8` | 9, 54, 317, 26 | same | not worked on |
+
+Sum of the best scores 2,397 to 1,183 rows; 2,568 bytes matched. The header types alone moved one score up and
+one down and made `func_80075C84` stop compiling in every variant (m2c reads the new 2-D table and the struct
+through byte offsets); the gains came from drafts that use the typed objects, as in T-16550 / T-16560. Idioms:
+
+- `gs-local` (`GameState *gs = &D_800E6280;` with `gs->` everywhere) changes IDO's register choices without
+  changing the addresses: two of the four matches needed it, two of the hand drafts got worse with it.
+- The typed fold of `tools/redraft.py` still prints `D_800E6280.unk0` for a `%lo` whose `%hi` sits in a branch
+  delay slot (`func_800755B4`, `func_80076000`, `func_80076FDC`); the `typed-late` variant avoids it, but the
+  chosen `typed` drafts kept the wrong field.
+- A local that only exists for the frame (`func_80077694`, `telephone_class_init`) is marked `FAKE`: IDO gives
+  every local a slot once one local is in memory (T-3330).
+
+Left for a cross-unit ticket: GameState +0x724 as `u8 unk_724[4]` (users in DATE, OPTION, `80041000.c`), the
+three 16.16 words at the head of `Rec38`, and the `D_801230D0` and `D_80125CA0` blocks.
+
 ## Wave 3 package w3-main-p01 (T-17001)
 
 `src/main/8007C030.c`, two long-standing guarded drafts ([[tickets/T-17001-w3-main-p01]]). `_sprite_set_box_shade_tarao` (484 B) is
