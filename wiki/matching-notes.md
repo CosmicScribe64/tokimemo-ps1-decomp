@@ -6804,3 +6804,99 @@ Ticket [[tickets/T-17004-w3-main-p04]]. Five guarded drafts from the T-17000 typ
 - as1's global optimisation removes it. as0+as1 on that `.s` with `-noglobal` keep the move (and leave the delay slot empty); without it as1 gives the build's `slti at,v0,32; beqz; sll t4,v0,2`. An unused label after the branch changes nothing.
 - The exit liveness decides. With `.livereg 0x2000FF0E` at the `j $31` (`$v0` live at the exit, an `int` function) instead of `0x0000FF0E` (`void`), as1 gives exactly the original: `slti at,v0,32; beqz at; move v1,v0` (delay slot) `; sll t4,v1,2`. So the source is an `int` function with no `return`, as in the 8007C030 row of [[register-cheatsheet]]; written `s32 func_8006D6E0(void)` and the header type follows the definition (`s32 func_8006D6E0();` in `main_api.h`; both MASTER callers, one matched, still build OK). No FAKE.
 - Method worth reusing when a draft lacks a `move` the original keeps: compare uopt's output ucode and `cc -S` first. If the move is in the `.s`, the C form must change what as1 sees (return type, `.livereg`), not the allocation.
+## T-20620: scheduling family (as1 and ugen instruction order)
+
+Ticket [[tickets/T-20620-as1-scheduling]]. Compiler-gap pass over the `sched`/`schedule`/`hoist`/`scheduling`/`const-order`
+rows of [[data/t0018-cases]] while the wave 3 conveyor owned most files. 1 function matched in a free file, 3 recipes
+verified for conveyor-owned files without editing them, the rest narrowed to as1 order differences with no C or option
+lever found.
+
+**Data.** The rows name 102 functions; 77 are matched by now, 23 are not (16 of them in conveyor-owned files at the time).
+A `funcdiff --resolve` sweep of all 110 guarded drafts (49 in free files, 61 in owned files) found these order-only near
+misses (the same instructions, two or more in another order): BUNKASAI `func_80151364`, GEKO `func_80136C20`, GYOZI
+`func_8013E638`, main `file_checksum_ok` (4 lines each), main `func_80055A38` (8), TACO `func_801511C0` (10), NAME_ENT
+`func_8013BB24` (14), main `dialogue_speak_part` (16, 8,672 bytes), VALEN `func_80134030` (27, two instructions), ETC
+`func_80146400` (12, with a slot fill).
+
+**`li aN` before `lui at` (the 37 sites of T-9020).** A scan of the splat asm for `li aN,k; lui at,%hi(G); jal; s? aN,%lo(G)(at)`
+finds 32 of the 37 sites matched now (the T-9770 form `*(u8 *)&G = k; f(G);`, FAKE) and the reverse order (`lui at` first)
+nowhere in the original. The 5 left are in 4 owned files: EVENT `func_8010B614`, OPTION `func_80133F50`, main
+`func_80076FDC`, BUNKASAI `func_80158764`. `func_8010B614` matches in scratch with the T-9770 form plus one more step: a
+later plain read of `G` makes uopt promote it (the index load goes to `$v1`), so the later read also goes through the
+byte view:
+
+```c
+void func_8010B614(void) {
+    u8 *p;
+
+    *(u8 *)&D_800B1746 = 4;
+    func_8004BC20(D_800B1746);
+    p = (u8 *)D_800B0860 + *(u8 *)&D_800B1746 * 0x34;
+    p[0x1B0] &= 0xFFFD;
+    func_80011DFC();
+}
+```
+
+The other three drafts are 320 to 350 rows away; the form applies to their store/call site.
+
+**Matched: TACO `func_8014B8B4`** (972 bytes, `src/ovl/TACO/80149F90.c`). The T-9320 draft was right except `li v1,0x800` /
+`li v0,0x40`; the T-19003 recipe of its sibling `func_8014E5F8` (implicit `int`: `s32` with no `return`, so `$v0` is live
+at the exit and as1 keeps `li v0,0x40` out of the `beqz` slot) matched it. Header prototype changed to `s32`.
+
+**Preheader order (verified in scratch for owned files).** Both fixed by putting the loop's init statements and the
+loop head on one source line (as1 schedules by line; rows 58 and 193 of [[register-cheatsheet]]):
+- GYOZI `func_8013E638` (236 bytes): the draft's `i = 0;` / `if (i && i) {}` / `do` becomes `i = 0; if (i && i) { } do`.
+  Moving `i = 0` alone onto the `do` line fixes the order but the empty test then reads an uninitialised `i` (frame +8);
+  repeating `i = 0` on both lines changes the colours.
+- main `func_80055A38` (196 bytes): `n = 0; b = 0; p = D_80123324; r = D_80123120; q = D_80123324; for (; b < 2; b++) {`
+  on one line, and `r += 0xF00;` before `q += 0xF00;` at the loop end.
+
+**Scratch verification of an owned file.** Copy the C file into an ignored directory, put the variant in place of the
+`INCLUDE_ASM` line or the guard, compile the copy with `python3 tools/cc.py COPY.c COPY.o ido 5.3`, and compare with
+`python3 tools/funcdiff.py --resolve --built COPY.o --unit src/<the owned file> UNIT:func`. A MATCH there is the linked
+byte check of the real unit layout, and nothing under `src/` changes. The three recipes above were checked this way.
+
+**No C form found** (same instructions, as1 picks another order). Seven of the eight have one shape: the original issues
+an instruction of a later source line (often a call argument: `lui a0` of a string, `li a0,k`, the loop compare) before
+an independent instruction of an earlier line, where IDO 5.3's as1 keeps line order.
+- BUNKASAI `func_80151364`: `lui v0` of the `year` byte (line 53) before `lui v1` of the PRE reload of `D_800CA148` (the
+  join label, line 51). Line placement of the switch's closing brace, `if` on the same line, all on one line: no change.
+- main `file_checksum_ok`: the loop's `sltu at` (the `while` line) before `andi t0,v0,0xFFFF`. Six statement orders and
+  line groupings, a precomputed condition `c = v1 < n;` and a `break` form keep IDO's order; natural `for`/`arg1[i + 1]`
+  loops lose the second pointer.
+- NAME_ENT `func_8013BB24`: `lui a0` of each `printf` string before the `lui at` of the store before it (T-11570). A
+  string local (`str = "..."; D = x; f(str, x);`) changes nothing; assignment in the argument goes through `$v0`.
+- main `dialogue_speak_part`: `li a0,-40` before `sra a1` (the `temp_s1 += 0x10` line). An `s32 y = temp_s1 + 0x10`
+  narrowed at the call (`(s16) y`, frame kept by dropping the FAKE pad) puts the add into `a1` instead of `s1`; inline
+  `(s16)(temp_s1 + 0x10)` the same. T-12500's 128 layouts stand.
+- TACO `func_801511C0`: the home store `sw a1,0x3C(sp)` sits in the prologue group in the original. A draft with the
+  dead first assignments `i = 0; n = arg0;` before the pointer setup and again after the empty test (FAKE) gets the
+  colours right with the pointer computed first (10 lines, as before); the store stays last because ugen places the
+  spill at the block end under the `do` line (`cc -S`). An empty `do {} while (0)`, a one-line preheader and everything on
+  the header line do not move it.
+- GEKO `func_80136C20`: the `lui t6` of the `girl` byte goes into the earlier `beqz t3` delay slot in the original, into
+  the load-delay slot of `lw t0` in IDO. Moving the `girl` assignment or grouping lines: no change.
+- ETC `func_80146400`: `lui a0` of the string hoisted early in the original, `lui t7` of `D_801506F8` in IDO.
+- VALEN `func_80134030` (the one in the other direction): IDO's as1 moves two `lui` of the default case into the
+  `lbu` load-delay slot and the `beqz` slot, the original does not. IDO hoists in every ablation tried (no call, no
+  read-modify-write, no join code); labels, `goto` to a join, default first, a `u8` selector local and casts do not stop
+  it. In the original, the 4 matched jump-table switches whose default `lui`s are hoisted all have the selector in `$t6`;
+  none of the 14 unmatched range checks with a `nop` in the selector's load-delay slot has (`$t0`, `$t3`..`$t5`, `$t7`,
+  `$t9`, `$v0`). Not explained.
+
+**Uniform as1 rule: none.** Tested through an as1 shim (frame pass, then as1 with edited arguments or binasm) on the
+near misses: `-O1` stops the VALEN hoist but also as1's copy propagation that the same function needs (14 lines);
+`-O3`, `-p1`, `-g3` change nothing; `-g1`/`-g2` change everything; giving every `.loc` record of a procedure its first
+line makes BUNKASAI and `file_checksum_ok` worse. IDO 5.2's as1 behaves like 5.3's (T-3110). IDO 4.1's as1 differed on 2
+matched functions in T-3110 and was never run on these near misses; the private compilers are no longer on disk, so that
+test needs them back (user decision).
+
+**Other near misses looked at (register or uopt gaps, not scheduling).** TT `func_8013A0DC` (2 lines): the original
+passes the call argument `0x40` in the `$a0` that already holds the constant for the switch compares, IDO reloads it.
+TT `func_8014A2B4` (28 lines): the original's four case-7 constants are uopt colours `$t2..$t5`, IDO's ugen temporaries.
+TACO `func_8013B2A0` (40 lines): ugen skips one temporary before word 2 of the struct copy, the original two; every
+spelling of the copy (`TcPos *` source or destination local, byte-offset cast, element form) gives the same `cc -S`.
+TACO `func_801497EC` (2 lines): the last record test needs `addu t2,t3,v1` (base first); `(D_8015EDB4 + idx)` gives the
+same IDO order and the base-first spellings `D_8015EDB4[idx]`, `(D_8015EDB4 + idx)[0]`, `idx[D_8015EDB4]` are CSEd with the
+earlier record stores (frame 8 bytes short). RPG_BAT `func_8015A8B4`: re-reading the field for the `D_8015EC58` store
+or naming `id = i + 0x28` moves the copies around (17 lines best).

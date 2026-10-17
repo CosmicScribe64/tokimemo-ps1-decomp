@@ -16675,3 +16675,14 @@ Opus closer on [[tickets/T-17004-w3-main-p04]]: `func_8006D6E0` matched in plain
 ## [2026-10-16] ticket | T-17004 Done
 
 [[tickets/T-17004-w3-main-p04]] In Review to Done after the code review: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`), 5 of 5 functions matched (2,812 bytes: `func_8006EB64`, `func_8006EEC4`, `func_80072998`, `func_800726F0`, `func_8006D6E0`). One finding, fixed: the `NON_MATCHING` comment of the still guarded `func_80072D70` now names T-17004. Clean build sha1 OK; headers and globals checks OK.
+## [2026-10-16] ticket | T-20620 Scheduling family: as1 ordering (In Progress)
+
+New ticket [[tickets/T-20620-as1-scheduling]], card in In Progress of [[kanban]]. Compiler-gap family agent for the `sched`/`schedule`/`hoist` rows of [[data/t0018-cases]] (instruction order from as1 or ugen), following [[speedup-research-2026-10-16]]. Worktree `tokimemo-wt/cg-sched`, branch `cg-sched` from `w2-good`.
+
+## [2026-10-16] ticket | T-20620 Scheduling family: as1 ordering (In Review)
+
+[[tickets/T-20620-as1-scheduling]] In Progress to In Review. TACO `func_8014B8B4` matched (972 bytes, implicit `int` as in its sibling, `src/ovl/TACO/80149F90.c`, `include/ovl/TACO.h`). Three functions in conveyor-owned files match in scratch copies (EVENT `func_8010B614`, GYOZI `func_8013E638`, main `func_80055A38`); their C is in [[matching-notes]] "T-20620" for the owning packages. A `funcdiff` sweep of all 110 guarded drafts listed the order-only near misses; seven have the original issuing a later line's instruction first, one (VALEN `func_80134030`) the opposite, and no C form, as1 option or `.loc` flattening fixed them, so no build pass changed. Two rows in [[register-cheatsheet]], one Update paragraph and nine rows in [[data/t0018-cases]]. Card moved in [[kanban]]. Review pending.
+
+## [2026-10-17] ticket | T-20620 Done
+
+[[tickets/T-20620-as1-scheduling]] In Review to Done after the code review against `CODING_STANDARDS.md`: 1 function matched (TACO `func_8014B8B4`, 972 bytes, plain C, implicit `int` as in T-19003), no findings open. The three owned-file recipes (EVENT `func_8010B614`, GYOZI `func_8013E638`, main `func_80055A38`) are recorded in [[matching-notes]] for their packages; the order-only near misses and the as1 option tests are written up as negative results. No build pass changed (matched functions changed: 0). Card moved to Done in [[kanban]], [[index]] updated. Build 27 of 27, grand total 6301/6958.
