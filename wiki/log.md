@@ -17815,3 +17815,7 @@ Package w4-p17: DATE `src/ovl/DATE/80132000.c`, `func_8013D5FC`, `func_8013B488`
 ## [2026-10-17] ticket | T-22017 Done
 
 Review against `CODING_STANDARDS.md`: no findings; only `src/ovl/DATE/80132000.c` changed (guards removed, `INCLUDE_ASM` kept), drafts are plain source. 0 of 5 matched. [[tickets/T-22017-w4-p17]] Done.
+
+## [2026-10-17] ticket | T-22022 In Progress
+
+Wave 4 package w4-p22 (GYOZI, four functions in `src/ovl/GYOZI/`), branch `w4-p22`. [[tickets/T-22022-w4-p22]] In Progress.
