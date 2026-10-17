@@ -254,7 +254,71 @@ void func_80063520(u32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80063668);
+/* FAKE: the u8 view of the s8 field unk_03C gives the original lbu (as in func_80067C28), and the three locals declared
+ * before `saved` put three unused slots above its spill slot (frame size 0x38, as TACO func_801438F0). T-17011 */
+void func_80063668(void) {
+    s32 max;
+    s32 level;
+    s32 n;
+    s32 saved;
+    s32 i;
+    u8 k;
+    s32 face;
+
+    ((DisplayActor44 *)D_8011ECD0)[31].unk_07 = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[31].unk_38 &= 0x7FFFFFFF;
+    D_801217D0[0].unk_00 &= 0x7FFFFFFF;
+    D_801217D0[1].unk_00 &= 0x7FFFFFFF;
+    saved = ((DisplayActor44 *)D_8011ECD0)[30].unk_18;
+    if (*(u8 *)&D_800E6280.unk_03C != 0) {
+        if (func_800460EC() & 4) {
+            level = getCDlevel() + 1;
+        } else {
+            level = 0;
+        }
+        D_80125C80[D_800E6280.unk_10F8 & 3] = level;
+        /* max is never read; the loop is in the original code. */
+        max = 0;
+        for (i = 0; i < 4; i++) {
+            if (max < D_80125C80[i]) {
+                max = D_80125C80[i];
+            }
+        }
+        n = 0;
+        k = D_800E6280.unk_F5F;
+        for (i = 0; i < 3; i++) {
+            if (D_800B5A68[k][i] < level) {
+                n = i + 1;
+            }
+        }
+        if (n >= 4) {
+            n = 3;
+        }
+        if (D_801217D0[0].unk_0F == 0 || !(D_800E6280.unk_10F8 & 1)) {
+            if (level == 0) {
+                D_801217D0[0].unk_0F = 0;
+            } else if (n == 0) {
+                D_801217D0[0].unk_0F = 0;
+            } else if (n == 1) {
+                D_801217D0[0].unk_0F = 0x10;
+            } else if (n == 2) {
+                D_801217D0[0].unk_0F = 0x20;
+            } else if (n >= 3) {
+                D_801217D0[0].unk_0F = 0x30;
+            }
+        }
+        if (D_800E6280.unk_F80 & 0x80) {
+            D_800B5A98 = 0;
+        }
+        if (D_800B5A98 < level) {
+            D_800B5A98 = level;
+        }
+    } else {
+        face = ((DisplayActor44 *)D_8011ECD0)[31].unk_18;
+        D_801217D0[0].unk_0F = face * 0x10;
+    }
+    D_801217D0[1].unk_0F = saved << 5;
+}
 
 void bustup_speech(void) {
     /* GameState.unk_03C is s8; this function reads it as u8 (lbu) */
@@ -468,7 +532,59 @@ void parameter_show_init(void) {
 }
 
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", parameter_show);
+void parameter_show(void) {
+    s32 i;
+    s32 d;
+    s32 step;
+    DisplayActor44 *tab;
+
+    /* GameState.unk_F6E is s8; this function reads it as u8 (lbu) */
+    if ((u8)D_800E6280.unk_F6E != 0) {
+        step = 4;
+    } else {
+        step = 8;
+    }
+    tab = (DisplayActor44 *)D_8011ECD0;
+    if (tab[32].unk_03 & 0x80) {
+        func_80049A40(-0x84, -0x61, 0x108, 0x2A, 0xC, 0x30E00, 0);
+        dtd_on(0xC);
+        for (i = 32; i < 56; i++) {
+            if (tab[i].unk_2E == 1) {
+                d = 0x1000 / step;
+                tab[i].unk_08 += d;
+                tab[i].unk_1A -= d;
+                if (d >= tab[i].unk_1A) {
+                    tab[i].unk_2E = 2;
+                }
+            } else if (tab[i].unk_2E == 2) {
+                d = 0x1000 / step;
+                tab[i].unk_08 -= d;
+                tab[i].unk_1A += d;
+                if (tab[i].unk_1A >= 0x1000) {
+                    tab[i].unk_1A = 0x1000;
+                    tab[i].unk_2E = 0;
+                    tab[i].unk_08 = 0;
+                }
+            }
+        }
+        /* Records 56..58 keep an s16 at 0x1C (pad_1C in game.h; the TAIIKU overlay reads it the same way). T-17011 */
+        for (i = 56; i < 59; i++) {
+            if (tab[i].unk_2E == 1) {
+                d = 0x1000 / step;
+                *(s16 *)tab[i].pad_1C -= d;
+                if (d >= *(s16 *)tab[i].pad_1C) {
+                    tab[i].unk_2E = 2;
+                }
+            } else if (tab[i].unk_2E == 2) {
+                *(s16 *)tab[i].pad_1C += 0x1000 / step;
+                if (*(s16 *)tab[i].pad_1C >= 0x1000) {
+                    *(s16 *)tab[i].pad_1C = 0x1000;
+                    tab[i].unk_2E = 0;
+                }
+            }
+        }
+    }
+}
 
 void hizuke_disp_switch(s32 arg0) {
     s32 i;
@@ -599,7 +715,39 @@ void func_80066104(void) {
     D_80125CA0 = 0xB8;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006612C);
+void func_8006612C(u8 *arg0) {
+    u8 *p;
+    s32 i;
+
+    D_80125CA0 = -0x40;
+    for (i = 0; i < D_800B5B24 + 2; i++) {
+        func_80048F64(i + 3);
+    }
+    set_kanji_string(-0xCE, -0x98, 0U, arg0, 0);
+    D_800B5B24 = strlen(arg0) / 2;
+    for (i = 0; i < D_800B5B24 + 2; i++) {
+        func_80048F64(i + 3);
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_01 = 2;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_02 = 0x40;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_38 = 0x40000000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_03 = 0xA4;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_0C = sprite_frame_table;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_10 = D_800C9A14;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_34 = D_800C9730;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_14 = D_800C9A54;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_04 = 8;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_05 = 1;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_18 = 0x72;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_26 = (D_800B5B24 - i) * 0xE + D_80125CA0 - 0x87;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_2A = D_80125CA0 - 0x51;
+    }
+    /* Byte pointer on purpose: &tab[n + 4] compiles to multu, this form to sll/addu as in the original. T-17011 */
+    p = D_8011ECD0 + D_800B5B24 * 0x44;
+    ((DisplayActor44 *)(p + 0x110))->unk_18 = 0x71;
+    ((DisplayActor44 *)(p + 0x110))->unk_26 += 2;
+    ((DisplayActor44 *)D_8011ECD0)[3].unk_18 = 0x73;
+    ((DisplayActor44 *)D_8011ECD0)[3].unk_26 -= 2;
+}
 
 void func_80066334(void) {
     s32 x;

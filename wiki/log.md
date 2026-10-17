@@ -16982,3 +16982,15 @@ Submitted https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/44 for the 
 ## [2026-10-17] ticket | T-20006 Done (PR #44 merged)
 
 KakarottoCake's PR #44 (claim #43): GYOZI func_80141944 and func_80145384 matched, 708 bytes, merged in one clean build with PR checks. [[tickets/T-20006-gyozi-scene-callbacks]] Done.
+
+## [2026-10-16] ticket | T-17011 In Progress
+[[tickets/T-17011-w3-main-p11]] created and started: wave 3 package w3-main-p11, five functions of `src/main/80062CD0.c` (`func_8006612C`, `func_80063668`, `parameter_show`, `func_80065964`, `func_80065F34`), worktree `tokimemo-wt/w3-main-p11`, base `w2-good`. Follows [[tickets/T-17000-types-first-main]].
+
+## [2026-10-17] ticket | T-17011 In Review
+[[tickets/T-17011-w3-main-p11]] In Progress to In Review: 1 of 5 functions matched (`func_80063668`, 552 bytes, plain C in `src/main/80062CD0.c`, committed). `func_8006612C` (20 rows) and `parameter_show` (10 rows) stay under `NON_MATCHING`; `func_80065964` and `func_80065F34` not reached. Header change: `D_800B5A98` in `include/main_api.h`; `DisplayActor44.pad_1C` stays (TAIIKU reads it as `*(s16 *)x.pad_1C`). Findings in [[matching-notes]] (section T-17011): spill-slot rule by declaration order, plain global instead of a local copy for a promoted s16, source-order temp numbering.
+
+## [2026-10-17] build | T-17011 closer pass: parameter_show and func_8006612C matched
+[[tickets/T-17011-w3-main-p11]] closer pass (Opus) on the two guarded drafts of `src/main/80062CD0.c`: both matched in plain C with no FAKE, so the package is 3 of 5. `parameter_show` (608 B): index loops `for (i = 32; i < 56; i++)` / `for (i = 56; i < 59; i++)` instead of the m2c pointer walks. `func_8006612C` (520 B): index `D_8011ECD0` directly instead of through a local `tab`, which kept the promoted `D_800B5B24` dirty and wrote it back at the loop latch; then the second-loop store order with `unk_14` first among the last six. Notes in [[matching-notes]] (section T-17011), two new rows in [[register-cheatsheet]]. Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. Ticket stays In Review; `func_80065964` and `func_80065F34` still `INCLUDE_ASM`.
+
+## [2026-10-17] ticket | T-17011 Done
+[[tickets/T-17011-w3-main-p11]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/main/80062CD0.c` changed in code, `D_800B5A98` added to `include/main_api.h`, no `drafts/` or config change. Findings fixed (comments and one blank line, bytes unchanged): the `(u8)` view of `unk_F6E`, the `pad_1C` halfword view and the byte-pointer record address of `func_8006612C` now carry comments; stray blank line removed. The one `FAKE` (`func_80063668`) is tracked in the ticket. Clean build, main exe sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 3 of 5 matched (`func_80063668`, `parameter_show`, `func_8006612C`, 1,680 bytes). Merge via the wave 3 merge script.
