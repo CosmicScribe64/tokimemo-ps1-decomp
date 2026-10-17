@@ -150,6 +150,7 @@ void func_80132444(void) {
             D_800E6280.unk_720 = D_800E6280.unk_1108;
             D_800E6280.unk_721 = D_800E6280.unk_1109 + 1;
             D_800E6280.unk_722 = 0;
+            /* byte view: the original does lbu/ori/sb on D_800E7D50 (main_api.h: s32), T-22015 */
             *(u8 *)&D_800E7D50 |= 3;
             main_state_set(0x90);
         } else {

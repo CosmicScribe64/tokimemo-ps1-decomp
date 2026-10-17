@@ -17654,3 +17654,7 @@ Two of four TACO functions matched: `func_801484E4` (392 bytes; kept `D_800E7384
 ## [2026-10-17] ticket | T-22015 In Review
 
 [[tickets/T-22015-w4-p15]]: 0 of 2 matched in `src/ovl/MASTER/80132140.c`. `func_80132444` guarded at 22 rows (case 4 register allocation: uopt ranges in the original, ugen temporaries in the draft), `func_801326B4` stays `INCLUDE_ASM` after cleanup (frame 0x1E8 matches, 586 rows; cleaned draft in `drafts/T-22015/MASTER/func_801326B4/body.c`). Notes: [[matching-notes]] section T-22015.
+
+## [2026-10-17] ticket | T-22015 Done
+
+[[tickets/T-22015-w4-p15]]: code review against `CODING_STANDARDS.md` passed; one finding (unexplained byte view of `D_800E7D50` in the `func_80132444` guard) fixed with a comment, build 27/27 OK. 0 of 2 functions matched (`func_80132444` guarded at 22 rows, `func_801326B4` stays `INCLUDE_ASM`). Ticket Done, card moved to Done.
