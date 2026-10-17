@@ -16915,3 +16915,7 @@ Created [[tickets/T-17012-w3-main-p12]]: wave 3 package w3-main-p12, six functio
 ## [2026-10-17] ticket | T-17018 closer pass
 
 [[tickets/T-17018-w3-main-p18]] closer pass (Opus, 02:59 to about 03:55 UTC), only the guarded near misses in `src/main/8004F870.c`. `xa_wait` (580 B) matched (commit `206bdff4`): `u8 get_now_k(void);` declared in the file (the other callers keep the implicit `int` view) and the byte `unk_F61` read into `t` with `t + 3` in both compares. `menu_bar_color` unchanged (17 lines): `D_800E3680` looks like this object's piece of a second data area, which needs a second data range per object (tooling). Notes in [[matching-notes]] (section T-17018), two rows in [[data/t0018-cases]], one row in [[register-cheatsheet]]. Clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` (0 new, 15 known) OK. Ticket stays In Review.
+
+## [2026-10-17] ticket | T-17018 Done
+
+[[tickets/T-17018-w3-main-p18]] In Review to Done: code review against `CODING_STANDARDS.md` found two issues, both fixed in `src/main/8004F870.c` (the `FAKE` comment of the duplicate pointer in the guarded `menu_check_1` was restored; the redundant `else if (ph != 0)` in `xa_wait` was marked `FAKE`), comment-only, rebuild OK (sha1 OK, headers OK, globals OK). 1 of 6 functions matched (`xa_wait`, 580 bytes). Card moved in [[kanban]], [[index]] line updated. Merge via the wave 3 merge script.

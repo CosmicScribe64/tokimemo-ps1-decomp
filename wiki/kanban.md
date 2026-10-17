@@ -55,7 +55,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-17018-w3-main-p18|T-17018 Wave 3 package w3-main-p18]]
 
 
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
@@ -142,6 +141,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-17018-w3-main-p18|T-17018 Wave 3 package w3-main-p18]]
 - [ ] [[tickets/T-20005-gyozi-display-dispatch|T-20005 Two GYOZI display/dispatch helpers matched (524 bytes)]]
 - [ ] [[tickets/T-20004-gyozi-dialogue-followup|T-20004 Two GYOZI dialogue helpers matched (776 bytes)]]
 
