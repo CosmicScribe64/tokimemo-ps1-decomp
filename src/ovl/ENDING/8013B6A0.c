@@ -3,28 +3,23 @@
 #include "game.h"
 
 void func_8013B6A0(void) {
-    D_8013CBB0 = 0x801C22CC;
-    D_8013CBB4 = 0x801C22D4;
-    D_8013CBB8 = 0x801C22F0;
-    D_8013CBBC = *(s16 *)0x801C2300;
-    D_8013CBC0 = 0x801A0000;
-    D_8013CBC4 = 0x801C2000;
-    D_8013CBC8 = 0x801AA000;
-    D_8013CBCC = 0x801AE000;
-    D_8013CBD0 = 0x801B2000;
-    D_8013CBD4 = 0x801B6000;
-    D_8013CBD8 = 0x801BA000;
-    D_8013CBDC = 0x801BE000;
+    D_8013CBB0.unk_00 = 0x801C22CC;
+    D_8013CBB0.unk_04 = 0x801C22D4;
+    D_8013CBB0.unk_08 = 0x801C22F0;
+    D_8013CBB0.unk_0C = *(s16 *)0x801C2300;
+    D_8013CBB0.unk_10[0] = 0x801A0000;
+    D_8013CBB0.unk_10[1] = 0x801C2000;
+    D_8013CBB0.unk_10[2] = 0x801AA000;
+    D_8013CBB0.unk_10[3] = 0x801AE000;
+    D_8013CBB0.unk_10[4] = 0x801B2000;
+    D_8013CBB0.unk_10[5] = 0x801B6000;
+    D_8013CBB0.unk_10[6] = 0x801BA000;
+    D_8013CBB0.unk_10[7] = 0x801BE000;
 }
-
-typedef struct {
-    void (*f[25])();
-} FnTbl25; /* size 0x64 */
-extern FnTbl25 D_8013CBE4;
 
 void func_8013B760(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl25 tbl;
+    EdFnTbl25 tbl;
 
     tbl = D_8013CBE4;
     if (D_800E6280.unk_1109 == 7 && D_800E6280.unk_110A < 0x10) {
@@ -78,9 +73,9 @@ s32 func_8013B91C(void) {
     D_800CA14C = 0;
     func_800847B8(D_800E6280.unk_56C[82]);
     func_80132000();
-    D_800CA160 = D_8013C280;
-    D_800CA164 = D_8013C2C4;
-    D_800CA168 = D_8013C308;
+    D_800CA160 = D_8013C280[0][0];
+    D_800CA164 = D_8013C280[1][0];
+    D_800CA168 = D_8013C280[2][0];
     if (D_800E6280.unk_56C[82] != 0) {
         D_800CA148 = 2;
         D_800E6280.unk_110A += 0xA;
@@ -107,10 +102,10 @@ void func_8013B9F0(void) {
     D_800B593C = 0;
     D_800B5940 = 0;
     func_8013B6A0();
-    func_80043914(D_8013CBC4, 0x11, 1, 2, 0);
-    func_80043914(D_8013CBC0, 0x12, 1, 2, 0);
-    func_80084E90(D_8013CBC8, D_8013CBCC, D_8013CBD0, D_8013CBD4, D_8013CBD8, D_8013CBDC);
-    func_800850D4(D_8013CBB4, D_8013CBB8, D_8013CBB0, D_8013CBBC);
+    func_80043914(D_8013CBB0.unk_10[1], 0x11, 1, 2, 0);
+    func_80043914(D_8013CBB0.unk_10[0], 0x12, 1, 2, 0);
+    func_80084E90(D_8013CBB0.unk_10[2], D_8013CBB0.unk_10[3], D_8013CBB0.unk_10[4], D_8013CBB0.unk_10[5], D_8013CBB0.unk_10[6], D_8013CBB0.unk_10[7]);
+    func_800850D4(D_8013CBB0.unk_04, D_8013CBB0.unk_08, D_8013CBB0.unk_00, D_8013CBB0.unk_0C);
     D_801217D0[61].unk_0A = D_801217D0[62].unk_0A = D_801217D0[63].unk_0A = 0x70;
     func_80048F64(0x61);
     D_80120666 = 0;
@@ -121,14 +116,9 @@ void func_8013B9F0(void) {
     func_8004284C();
 }
 
-typedef struct {
-    s32 w[4];
-} Tw4; /* size 0x10 */
-extern Tw4 D_8013CD90;
-
 void func_8013BB9C(void) {
     s32 r;
-    Tw4 v;
+    EdWords4 v;
 
     v = D_8013CD90;
     func_80044750(0xBF);
@@ -144,13 +134,8 @@ void func_8013BB9C(void) {
     func_8004284C();
 }
 
-typedef struct {
-    s16 h[13];
-} Th13; /* size 0x1A */
-extern Th13 D_8013CDA0;
-
 void func_8013BC58(void) {
-    Th13 tbl;
+    EdShorts13 tbl;
     s16 i;
     s16 sel;
 

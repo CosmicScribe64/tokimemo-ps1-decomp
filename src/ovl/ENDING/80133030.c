@@ -2,14 +2,9 @@
 #include "ovl/ENDING.h"
 #include "game.h"
 
-typedef struct {
-    void (*f[16])();
-} FnTbl16; /* size 0x40 */
-extern FnTbl16 D_8013C370;
-
 void func_80133030(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl16 tbl;
+    EdFnTbl16 tbl;
 
     tbl = D_8013C370;
     func_80083808();

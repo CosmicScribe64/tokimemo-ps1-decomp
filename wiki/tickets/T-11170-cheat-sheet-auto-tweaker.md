@@ -1,10 +1,10 @@
 ---
 id: T-11170
 title: Cheat-sheet auto-tweaker for near-miss drafts
-status: In Review
+status: Done
 assignee: Claude
 created: 2026-10-14
-updated: 2026-10-14
+updated: 2026-10-17
 links: [[[register-cheatsheet]], [[decompile-workflow]], [[tickets/T-1330-tooling-m2c-context-and-permuter]], [[tickets/T-9810-permuter-farm-for-near-misses]], tools/autotweak.py, tools/test_autotweak.py, tools/permute.py]
 ---
 
@@ -31,3 +31,5 @@ About 157 drafts sit under `#ifdef NON_MATCHING`, most of them register-allocati
 ## Comments
 
 - 2026-10-14: implemented; `python3 tools/test_autotweak.py`, `python3 tools/check_headers.py include src` and `python3 tools/test_check_headers.py` pass. In Review pending the real-build run and code review.
+
+2026-10-17: Work is on main (8f3da9cf5, merge 6ccc26117). All acceptance criteria are met, including the real-build run (later matches by autotweak, and the T-20830 run over 117 drafts). Code review against CODING_STANDARDS found nothing blocking. The FAKE sites it produced, all with reason and T-11170, are NAME_ENT/80144AD0.c (4 empty tests), SHUGAKU/80132000.c and main/80056300.c (pad local) and main/8005A0B0.c (selector byte view).

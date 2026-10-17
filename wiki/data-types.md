@@ -198,6 +198,32 @@ Picture-set tables as arrays, one row per component of the current set (`D_80139
 summer tables at `D_80139A08`. type_recovery's 0xC-stride arrays at `D_801399A8` and `D_80139F44` are artefacts
 of these neighbouring tables. Details: [[kangei-family-results]].
 
+## ENDING targeted type pass (T-20930)
+
+A second pass over ENDING ([[tickets/T-20930-types-ending]], details and numbers in [[ending-family-results]],
+"Targeted type pass"). New types in `include/ovl/ENDING.h`, all byte-identical (27/27):
+
+- message scripts `s32 D_8013C280[3][17]` and `s32 D_8013CAC0[3][15]` (row = table, column = scene; the three
+  rows of one scene are copied together), the running scene's set `EdScriptSet D_8013C34C`;
+- scene image records `EdScene30` (`D_8013C5F0`, `D_8013CBB0`) and `EdScene44 D_8013C620[15]`: three TIM
+  addresses, a halfword, then texture pages;
+- the portrait columns `EdPortraitTbl D_8013C4C0` (three `s32[14]` and an `EdHalf4[14]` read with `lh` at a
+  4-byte stride) and `s32 D_8013C5A0[7]`;
+- the callback tables `EdFnTblN` and the stack tables `EdWords4`, `EdShorts13`, moved out of five C files;
+- `D_8013C364` is `u8` (only `lbu`/`sb` in the original), `func_80132B04` returns `s32`, `func_80132420` has no
+  prototype (K&R callee), and ENDING's `set_kanji_string` override is gone (main's `u8 col` view is the right one).
+
+The 427 scalar labels were folded with a one-off script scoped to the overlay (`drafts/T-20930/fold_ending.py`),
+not with `tools/migrate_globals.py`, which rewrites every source file and would touch the same `D_8013xxxx`
+names in other overlays.
+
+Draft scores: the header change alone moved none of the 11 redrafted functions (one 487 to 468 change is a
+`draft_fixes` search-order effect). Hand drafts that use the types matched `func_80132420`, `func_80132B04` and
+`func_80139B48` (2,900 bytes) and lowered three others (`func_8013759C` 99 to 66 with the `D_8011ECD0` record
+view instead of main's scalars). Same lesson as T-16550 and T-20900: types pay off when a draft is rewritten
+around them; the views of callees and of the context (prototype or K&R, return type, typed pointer casts of
+main's `u8 *` slots) mattered more than the data aggregates.
+
 ## Shared-type unification (T-20900)
 
 The types-first passes (T-16550 .. T-18800) could only add declarations, so one table had a view per unit.

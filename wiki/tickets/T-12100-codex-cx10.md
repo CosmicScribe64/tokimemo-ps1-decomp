@@ -1,10 +1,10 @@
 ---
 id: T-12100
 title: Match DATE movie and effect functions
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[register-cheatsheet]]", "[[build-system]]"]
 ---
 
@@ -46,6 +46,8 @@ The existing 489D0 draft has a documented data-ownership/shared-LUI blocker. Unl
 - Deep 47958 follow-up: all 1,010 instructions now align; best candidate differs in four register-only rows (two fade addiu/andi pairs). Removed redundant inner returns in cases23/40 to recover the original branch layout. Reordered genuine locals and added movie/header pointer declarations to recover the96-byte frame; header declaration is currently unused and must be labelled FAKE if retained. Reversing the case42 comparison restores branch operand order. Keeping the case40 call, state restoration and comparison on one source line restores the original AS1 load schedule; ordinary separated lines differ by2–3 rows. Existing DateMovieHeader8 direct field casts preserve the old header loads. Evidence: build/scratch/g2-callandafter.log, g2-typedheader.log, 47958-seven-reg.log. No bytes claimed/promoted yet.
 
 - Matched `DATE:func_8014D298`: 740 literal linked bytes, production DATE SHA1 and header/global checks pass. Reused DateParticleView44 for the68-byte local and all three record copies; the genuine record-pointer declaration before the scene local recovers its0x30 stack address. A diagnostic unused padding declaration also matched, but was discarded in favor of the useful pointer. Recovered GameState field accesses replace old scalar aliases. No FAKE shaping. Evidence: build/scratch/d298-{typed,natural,build,final}.log. Package total5,628 bytes / four matches.
+
+2026-10-17: Code review against CODING_STANDARDS.md done. The four matches (func_801489D0 2,068 B, func_8014E3E8 2,000 B, func_8014A4DC 820 B, func_8014D298 740 B) are on main as C89; the FAKE comments name T-12100 with reasons, and its near-miss guards were resolved by later work (T-17201 matched func_80147958; AF88, A8FC and EF1C are ticketed under T-17208 and T-17203). func_801462B0 stays assembly and is distant. No findings. Moved to Done.
 
 ## Final matching pass
 

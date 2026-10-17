@@ -1,10 +1,10 @@
 ---
 id: T-10890
 title: Big functions (astra) 21
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-13
-updated: 2026-10-13
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[register-cheatsheet]]"]
 ---
 
@@ -118,3 +118,7 @@ tool/config changes, or edits to other agents' C files.
   s0. Precede the constant field stores with the resource-pointer assignment.
   Removed the unused pointer without a frame change. Re-indexing and the
   one-line flag loop are explicitly FAKE-marked scheduling dependencies.
+
+2026-10-17: Done. Six matches are merged and still C on main (parameter_show_init, func_80062DBC, func_80066334, func_80066C08, NAME_ENT func_801324AC and func_80136808; 13,056 bytes), with the DisplayActor44 family and the other new types in game.h and TAIIKU.h and the idioms in decompile-workflow. TAIIKU func_801346FC and func_8013A6FC, its guarded near misses, have matched since; NAME_ENT func_80134248 stays guarded under T-10890 (about 455 lines). Review: FAKE comments carry reason and ticket and every guard now has ticket and line count; one finding, 18 raw s16 casts into GameState unk_120 in src/main/80062CD0.c, goes to a followup.
+
+Followup opened: [[tickets/T-21002-game-state-unk120-second-record-set|T-21002]].

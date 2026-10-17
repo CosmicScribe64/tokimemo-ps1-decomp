@@ -1,10 +1,10 @@
 ---
 id: T-15200
 title: Reconstruct large EVENT dispatcher and reusable types
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[tickets/T-11600-w1-ovl-event-8010fe10]]", "[[tickets/T-14300-event-families]]"]
 ---
 
@@ -38,3 +38,7 @@ Traced uopt confirms the handler's residual: stride 0x34 chooses v1 instead of a
 2026-10-15 usage-limited handoff: parent requested immediate committed draft checkpoint, no further exploration. Supersedes guarded-source retention above: func_80118010 C is saved separately under drafts/T-15200 only; production src/ovl/EVENT/8010FE10.c restored exactly. All 29 measured alternative bodies/declarations, useful compiler contexts, replay scripts and allocator reports saved. EVENT header fields retained as reusable type evidence. EVENT SHA1 passed after rebuilding every EVENT consumer. Default code coverage gain: zero. Parent integrates and pushes.
 
 2026-10-15 final verification: restored production C passes host `git diff --quiet c5859bf5 -- src` (Docker cannot resolve this worktree's external .git metadata). Docker `ninja -j1 build/ovl/EVENT.ok build/headers.ok build/globals.ok` succeeds; explicit `funcdiff --version default --resolve EVENT:func_801103A0 EVENT:func_80118010` proves 6,848 and 680 literal linked bytes of the unchanged ASM fallbacks, not new C matches. Prototype branch check: zero new disagreements, 15 known, OK. Preferred saved contexts independently rescore to 1,930 and 26 rows. Machine-readable hashes/check results in drafts/T-15200/verification.json; literal-proof transcript default-proof.txt. Review remains pending; no Done claim.
+
+2026-10-17: Code review against CODING_STANDARDS.md done; the only src change is the EventStateView split in include/ovl/EVENT.h, with correct offsets and sizes, and the drafts hold C only. No bytes were gained by design; T-17400 later redrafted both functions with the same types and scores. The func_80118010 near miss (26 rows) is moved to a follow-up. Moved to Done.
+
+Followup opened: [[tickets/T-21018-event-80118010-near-miss|T-21018]].

@@ -1,10 +1,10 @@
 ---
 id: T-11200
 title: Statement-order search in the automatic solvers
-status: In Review
+status: Done
 assignee: agent
 created: 2026-10-14
-updated: 2026-10-14
+updated: 2026-10-17
 links: [[[decompile-workflow]], [[register-cheatsheet]], [[tickets/T-11170-cheat-sheet-auto-tweaker]], [[tickets/T-11190-bulk-m2c-pipeline]], [[tickets/T-11530-order-search-tool]], tools/autotweak.py, tools/bulk_m2c.py, tools/order_search.py]
 ---
 
@@ -46,3 +46,5 @@ Let autotweak (T-11170) and bulk_m2c (T-11190) try statement and operand orders 
 - 2026-10-14: implemented on branch `t11200-order-in-solvers`; `test_autotweak.py` (45), `test_bulk_m2c.py` (22),
   `test_order_search.py`, `check_headers.py include src`, `test_check_headers.py` pass. Needs the real-build
   check (commands in the PR) and the code review before Done.
+
+2026-10-17: Work is on main (51266abc3, 45bf8c369). All acceptance criteria are met: autotweak has the order edit and order stage, bulk_m2c has --no-order, the climb no longer reports an unverified 0 as a match, and the real-build check matched two near misses. Code review against CODING_STANDARDS found nothing, and no ORDER markers leaked into src/ or include/.

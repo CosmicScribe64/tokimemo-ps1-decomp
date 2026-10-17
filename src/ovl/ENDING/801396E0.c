@@ -1,63 +1,59 @@
 #include "common.h"
 #include "ovl/ENDING.h"
 #include "game.h"
+#include "psx_types.h"
 
 void func_801396E0(void) {
-    D_8013CAC0 = 0x80180308;
-    D_8013CAC4 = 0x80180728;
-    D_8013CAC8 = 0x80180BCC;
-    D_8013CACC = 0x80180ED4;
-    D_8013CAD0 = 0x801812E4;
-    D_8013CAD4 = 0x80181648;
-    D_8013CAD8 = 0x80181A84;
-    D_8013CADC = 0x80181ED0;
-    D_8013CAE0 = 0x80182258;
-    D_8013CAE4 = 0x80182684;
-    D_8013CAE8 = 0x80182AB4;
-    D_8013CAEC = 0x80182C74;
-    D_8013CAF0 = (s32 **) 0x801835E4;
-    D_8013CAF4 = 0x80183CC4;
-    D_8013CAF8 = 0x80184008;
-    D_8013CAFC = 0x80180314;
-    D_8013CB00 = 0x80180734;
-    D_8013CB04 = 0x80180BD8;
-    D_8013CB08 = 0x80180EE0;
-    D_8013CB0C = 0x801812F0;
-    D_8013CB10 = 0x80181654;
-    D_8013CB14 = 0x80181A90;
-    D_8013CB18 = 0x80181EDC;
-    D_8013CB1C = 0x80182264;
-    D_8013CB20 = 0x80182690;
-    D_8013CB24 = 0x80182AC0;
-    D_8013CB28 = 0x80182C80;
-    D_8013CB2C = 0x8018360C;
-    D_8013CB30 = 0x80183CD4;
-    D_8013CB34 = 0x80184014;
-    D_8013CB38 = 0x801803DC;
-    D_8013CB3C = 0x801807FC;
-    D_8013CB40 = 0x80180CA0;
-    D_8013CB44 = 0x80180FA8;
-    D_8013CB48 = 0x801813B8;
-    D_8013CB4C = 0x8018171C;
-    D_8013CB50 = 0x80181B58;
-    D_8013CB54 = 0x80181FA4;
-    D_8013CB58 = 0x8018232C;
-    D_8013CB5C = 0x80182758;
-    D_8013CB60 = 0x80182B88;
-    D_8013CB64 = 0x80182D48;
-    D_8013CB68 = 0x801839E4;
-    D_8013CB6C = 0x80183DB8;
-    D_8013CB70 = 0x801840DC;
+    D_8013CAC0[0][0] = 0x80180308;
+    D_8013CAC0[0][1] = 0x80180728;
+    D_8013CAC0[0][2] = 0x80180BCC;
+    D_8013CAC0[0][3] = 0x80180ED4;
+    D_8013CAC0[0][4] = 0x801812E4;
+    D_8013CAC0[0][5] = 0x80181648;
+    D_8013CAC0[0][6] = 0x80181A84;
+    D_8013CAC0[0][7] = 0x80181ED0;
+    D_8013CAC0[0][8] = 0x80182258;
+    D_8013CAC0[0][9] = 0x80182684;
+    D_8013CAC0[0][10] = 0x80182AB4;
+    D_8013CAC0[0][11] = 0x80182C74;
+    D_8013CAC0[0][12] = 0x801835E4;
+    D_8013CAC0[0][13] = 0x80183CC4;
+    D_8013CAC0[0][14] = 0x80184008;
+    D_8013CAC0[1][0] = 0x80180314;
+    D_8013CAC0[1][1] = 0x80180734;
+    D_8013CAC0[1][2] = 0x80180BD8;
+    D_8013CAC0[1][3] = 0x80180EE0;
+    D_8013CAC0[1][4] = 0x801812F0;
+    D_8013CAC0[1][5] = 0x80181654;
+    D_8013CAC0[1][6] = 0x80181A90;
+    D_8013CAC0[1][7] = 0x80181EDC;
+    D_8013CAC0[1][8] = 0x80182264;
+    D_8013CAC0[1][9] = 0x80182690;
+    D_8013CAC0[1][10] = 0x80182AC0;
+    D_8013CAC0[1][11] = 0x80182C80;
+    D_8013CAC0[1][12] = 0x8018360C;
+    D_8013CAC0[1][13] = 0x80183CD4;
+    D_8013CAC0[1][14] = 0x80184014;
+    D_8013CAC0[2][0] = 0x801803DC;
+    D_8013CAC0[2][1] = 0x801807FC;
+    D_8013CAC0[2][2] = 0x80180CA0;
+    D_8013CAC0[2][3] = 0x80180FA8;
+    D_8013CAC0[2][4] = 0x801813B8;
+    D_8013CAC0[2][5] = 0x8018171C;
+    D_8013CAC0[2][6] = 0x80181B58;
+    D_8013CAC0[2][7] = 0x80181FA4;
+    D_8013CAC0[2][8] = 0x8018232C;
+    D_8013CAC0[2][9] = 0x80182758;
+    D_8013CAC0[2][10] = 0x80182B88;
+    D_8013CAC0[2][11] = 0x80182D48;
+    D_8013CAC0[2][12] = 0x801839E4;
+    D_8013CAC0[2][13] = 0x80183DB8;
+    D_8013CAC0[2][14] = 0x801840DC;
 }
-
-typedef struct {
-    void (*f[14])();
-} FnTbl14; /* size 0x38 */
-extern FnTbl14 D_8013CB74;
 
 void func_801399B4(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl14 tbl;
+    EdFnTbl14 tbl;
 
     tbl = D_8013CB74;
     idx = D_800E6280.unk_110A;
@@ -84,7 +80,31 @@ void func_80139AA0(s32 arg0) {
     dtd_on(0xB);
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_80139B48);
+/* FAKE: the explicit "& 0xFF" masks and one source line per colour trio, as in the matched main sibling
+ * _sprite_set_box_shade_tarao (T-17001; one colour instead of two): the masks leave the shifts in ugen
+ * temporaries (t6, t7) and as1 schedules the stores by source line. The real source is unknown. T-20930 */
+void func_80139B48(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s32 arg6) {
+    GameState *gs;
+    POLY_G4 *p;
+
+    p = (POLY_G4 *)GetWorkBase(0x24, D_8011ECA0);
+    func_8009F054(p);
+    SetSemiTrans(p, arg6);
+    gs = &D_800E6280;
+    p->r0 = (arg4 >> 16) & 0xFF; p->g0 = (arg4 >> 8) & 0xFF; p->b0 = arg4 & 0xFF;
+    p->r1 = (arg4 >> 16) & 0xFF; p->g1 = (arg4 >> 8) & 0xFF; p->b1 = arg4 & 0xFF;
+    p->r2 = (arg4 >> 16) & 0xFF; p->g2 = (arg4 >> 8) & 0xFF; p->b2 = arg4 & 0xFF;
+    p->r3 = (arg4 >> 16) & 0xFF; p->g3 = (arg4 >> 8) & 0xFF; p->b3 = arg4 & 0xFF;
+    p->x0 = gs->unk_014[D_8011ECA0] + arg0;
+    p->y0 = gs->unk_018[D_8011ECA0] + arg1;
+    p->x1 = gs->unk_014[D_8011ECA0] + arg0 + arg2;
+    p->y1 = gs->unk_018[D_8011ECA0] + arg1;
+    p->x2 = gs->unk_014[D_8011ECA0] + arg0;
+    p->y2 = gs->unk_018[D_8011ECA0] + arg1 + arg3;
+    p->x3 = gs->unk_014[D_8011ECA0] + arg0 + arg2;
+    p->y3 = gs->unk_018[D_8011ECA0] + arg1 + arg3;
+    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg5 * 4, (s32)p);
+}
 
 void func_80139D24(void) {
     cd_read_sectors(9, 0x80180000, 0xAE18);

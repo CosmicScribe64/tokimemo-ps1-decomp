@@ -1,10 +1,10 @@
 ---
 id: T-15600
 title: Resolve fresh RENSYU and RPG_BAT near matches
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[tickets/T-14900-rpg-near-matches]]", "[[game-state]]"]
 ---
 
@@ -24,6 +24,10 @@ Investigate RENSYU func_801320E0 (688 code bytes) and RPG_BAT func_80155A70 (588
 Wiki has no retained target-specific experiment for the first two; ancient RENSYU note about unlinked rodata is obsolete under the current build system. RENSYU case 5 accesses byte +0x66E at stride four, represented canonically by GameState.unk_66C[].unk_02. Initial inferred s32 declaration and pointer scaling are suspect. RPG and SHOUGATU will be assessed from exact baseline differences before structural probes. No overlap with root BUNKASAI or proof-lane BUNKAKEN/main targets.
 
 ## Comments
+
+2026-10-17: Review closed. Both matches (RENSYU func_801320E0 and SHOUGATU func_80137144, 1,256 linked bytes) are on the integration tree as plain C, and the RPG_BAT func_80155A70 gap was closed by T-16210 (s32 return with no value). One small cleanup remains: use the RensyuClubCount view in func_801320E0 case 5; filed as a followup. Moved to Done.
+
+Followup opened: [[tickets/T-21012-rensyu-801320e0-club-count-view|T-21012]].
 
 ## Results
 

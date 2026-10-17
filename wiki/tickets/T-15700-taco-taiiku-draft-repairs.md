@@ -1,10 +1,10 @@
 ---
 id: T-15700
 title: Compile all 28 failed TACO and TAIIKU draft scopes
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[tickets/T-14500-exhaustive-drafts]]", "[[tickets/T-13600-taiiku-families]]", "[[tickets/T-13800-taco-families]]"]
 ---
 
@@ -25,6 +25,8 @@ Repair all 17 TACO and 11 TAIIKU failed scopes, retaining complete real C, sourc
 Reservation extracted from latest best-catalog: TACO17/TAIIKU11. Frozen source census 48362009; current unrelated accepted changes do not touch owned TUs. Read previous family tickets and every prior alternative's available diagnostics. Known historical taco-13800/taiiku-13600/cx2/cx9 sources contain no implemented C definition for these exact targets. Start from immutable initial body/declarations and capture complete diagnostics, since earlier helper-tail truncation obscures actual errors.
 
 ## Comments
+
+2026-10-17: Closed after review. All 28 TACO and TAIIKU scopes compile as archived full-TU alternatives, no production file changed, and 16 of the 28 targets are now plain C on main (the drafts fed T-19029 and others); the rest were redrafted by T-16550 and T-16560. The one finding is that the 28 comparison.txt files carry 9,828 rows of original instruction words (CODING_STANDARDS section 10), handled in the drafts-archive scrub followup opened from T-14600.
 
 ## Results
 

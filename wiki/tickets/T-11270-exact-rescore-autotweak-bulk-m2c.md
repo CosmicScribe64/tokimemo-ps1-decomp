@@ -1,10 +1,10 @@
 ---
 id: T-11270
 title: Exact rescoring in autotweak and bulk_m2c
-status: In Review   # Backlog | Ready | In Progress | In Review | Done  (must match column in wiki/kanban.md)
+status: Done
 assignee: tooling agent
 created: 2026-10-14
-updated: 2026-10-14
+updated: 2026-10-17
 links: ["[[tickets/T-11250-faster-candidate-scoring]]", "[[tickets/T-11260-fast-scoring-order-search-permute]]", "[[decompile-workflow]]"]
 ---
 
@@ -36,3 +36,7 @@ autotweak and bulk_m2c rank candidates with the stripped single-function compile
 Each rescored text is one full-unit compile (about 1 s, T-11260). Near a match many single edits can score at most 40 stripped, so a step may rescore tens of texts; `--exact-threshold` lowers that. To be measured on the real build (PR body has the commands).
 
 ## Comments
+
+2026-10-17 cleanup: merged (8ce84504c). Exact rescoring ran in production: ce433c2c6 matched 8 guarded drafts and f9fd4ea18 matched 23 functions in the near+fail retry (738 of 1167 entries; the rest is covered by T-14500). The before/after cost measurement was never recorded and is dropped. Review found the tool code clean and three small things in the matched C (a no-op goto in SHUGAKU func_80139FD4, unsigned char casts); they go to the cleanup followup. Main builds 27/27. Closed.
+
+Followup opened: [[tickets/T-21004-m2c-leftovers-and-unmarked-tricks|T-21004]].

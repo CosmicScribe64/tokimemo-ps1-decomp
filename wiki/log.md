@@ -17319,3 +17319,31 @@ Wave 3 conveyor paused at the user's request after 19 types passes and 77 packag
 ## [2026-10-17] ticket | T-20910 In Review
 
 [[tickets/T-20910-types-option]] In Progress to In Review: clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` pass; the code review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]], line in [[index]] updated.
+## [2026-10-17] ticket | T-21500 and T-21510 opened (retro)
+
+From the session retro: [[tickets/T-21500-incremental-configure]] (configure re-splits asm whenever git touches a source directory, so every merge and worktree setup rebuilds everything) and [[tickets/T-21510-wiki-lint]] (mechanical ticket/kanban/index/log rules have no check). Both Backlog.
+
+## [2026-10-17] lint | Ticket cleanup
+
+Cleanup of tickets left open by the Codex usage-limit runs and the tool/draft rounds, plus kanban drift. 71 tickets moved to Done after a check of what reached main and a review against `CODING_STANDARDS.md`: 54 Done and 17 superseded (mostly by the T-14500 census and the wave 2/3 packages); 0 moved to Backlog; 0 kept open by this pass. Each ticket got a dated comment with the evidence and the review result.
+
+19 followup tickets opened in Backlog from review findings: [[tickets/T-21000-event-goto-loops-and-seq-views]], [[tickets/T-21001-recover-wave-10-list-6-near-misses]], [[tickets/T-21002-game-state-unk120-second-record-set]], [[tickets/T-21003-big-function-leftovers-cleanup]], [[tickets/T-21004-m2c-leftovers-and-unmarked-tricks]], [[tickets/T-21005-near-miss-views-and-dead-blocks-cleanup]], [[tickets/T-21006-fastscore-order-search-hardening]], [[tickets/T-21007-bulk-m2c-banner-clutter-and-header-recovery]], [[tickets/T-21008-taco-8014a480-three-row-form]], [[tickets/T-21009-draft-archive-hygiene-comparison-rows]], [[tickets/T-21010-drafts-archive-scrub-instruction-rows]], [[tickets/T-21011-drafts-listings-and-t16100-tools]], [[tickets/T-21012-rensyu-801320e0-club-count-view]], [[tickets/T-21013-rpg-bat-motion-work-area-views]], [[tickets/T-21014-main-80042134-gamestate-pointer]], [[tickets/T-21015-object-config-multiple-data-ranges]], [[tickets/T-21016-restart-matching-conveyor-80-percent]], [[tickets/T-21017-taco-tcactor-field-access-retry]], [[tickets/T-21018-event-80118010-near-miss]]. The three drafts-archive ones (T-21009, T-21010, T-21011) overlap and should be decided together.
+
+Board fixes in [[kanban]]: 69 missing cards added (2 of them for tickets closed in this pass, T-15400 and T-15500), 1 duplicate card removed (T-20005 was in In Review and Done; the file says Done), 19 cards added for the new tickets, 69 cards moved to Done, blank lines between cards removed. The In Progress card that looked like T-10910 is T-10910A (closed here as superseded); T-10910 itself only lacked a card. The tickets of the running type round (T-20910 to T-20940) live in their own worktrees, not on this branch, so they were not touched; no other In Progress or In Review ticket is left here. [[index]]: 56 ticket lines updated, 6 stale duplicate lines (older In Progress copies of T-14000, T-14100, T-14300, T-15300, T-12090, T-12100) removed, 34 lines added.
+
+Counts per status after the pass: Backlog 33, Ready 1, In Progress 0, In Review 0, Done 449. Every ticket file has exactly one card in the column equal to its status.
+
+## [2026-10-17] ticket | T-20930 In Progress
+
+[[tickets/T-20930-types-ending]] created and In Progress (card in [[kanban]], line in [[index]]): a second, targeted type pass for ENDING after [[tickets/T-18300-types-first-ending]]. Worktree `ty-ending` from `w2-good`; scope `src/ovl/ENDING/*.c` and `include/ovl/ENDING.h`, additions only in `include/game.h`.
+
+## [2026-10-17] build | T-20930 ENDING types and three matches
+
+[[tickets/T-20930-types-ending]]: ENDING's data tables as aggregates (message scripts `D_8013C280[3][17]`, `D_8013CAC0[3][15]`, `EdScriptSet`, `EdScene30`/`EdScene44`, `EdPortraitTbl`, `D_8013C5A0[7]`; 427 scalar declarations gone, 449 matched uses rewritten by `drafts/T-20930/fold_ending.py`), the callback and stack tables moved into `include/ovl/ENDING.h`, `D_8013C364` as `u8`, `func_80132B04` returning `s32`, `func_80132420` without prototype, ENDING's `set_kanji_string` override removed. Matched `func_80139B48` (476 B), `func_80132B04` (660 B) and `func_80132420` (1,764 B, FAKE frame layout); 27/27 sha1 after each commit. `tools/redraft.py` before and after the types: no score change from the headers alone; hand drafts lowered `func_801330E4` 129 to 114, `func_80134C2C` 46 to 40, `func_8013759C` 99 to 66. Drafts in `drafts/T-20930/`, numbers in [[ending-family-results]] and [[data-types]].
+
+## [2026-10-17] ticket | T-20930 In Review
+
+[[tickets/T-20930-types-ending]] In Progress to In Review (card moved in [[kanban]], line in [[index]] updated). Clean rebuild (`rm -rf build && python3 configure.py && ninja`) 27/27 sha1 OK; `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` pass. Three ENDING matches (2,900 bytes), the type map and the paired score table are in [[ending-family-results]] ("Targeted type pass") and [[data-types]]. The code review against `CODING_STANDARDS.md` is open.
+
+## [2026-10-17] ticket | T-20930 Done
+[[tickets/T-20930-types-ending]] reviewed against `CODING_STANDARDS.md`: no findings (no edits in `src/ovl/TT/*` or `dialogue_render`, header declarations consistent, matched code changed only to use the new types, the three new matches are plain C, both FAKE comments name T-20930 and a reason, types documented in [[data-types]] and [[ending-family-results]], no game data). `w2-good` merged into the branch first (only `wiki/index.md`, `wiki/kanban.md`, `wiki/log.md` conflicted; index and log keep both sides, kanban is `w2-good`'s board plus this card). `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. In Review to Done (kanban card moved).

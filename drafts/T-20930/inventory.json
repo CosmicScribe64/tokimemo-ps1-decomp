@@ -1,0 +1,211 @@
+[
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80132000.c",
+  "func": "func_80132420",
+  "size": 1764,
+  "guarded": false,
+  "source_hash": "bf697f3dc37aa77f4589e1f419e58d76026567546d95b15315c06f32864e58d9",
+  "scope": "ENDING:func_80132420",
+  "census": {
+   "score": 364,
+   "path": "drafts/T-14500/ENDING/func_80132420"
+  },
+  "archived": {
+   "score": 336,
+   "path": "drafts/T-18300/ENDING/func_80132420",
+   "file": "body.c",
+   "ticket": "T-18300"
+  }
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80133030.c",
+  "func": "func_801330E4",
+  "size": 796,
+  "guarded": false,
+  "source_hash": "344dd4e90af8869e3ab702e3daa647363ebed5ebbd3d6644732a4b2d9c072b92",
+  "scope": "ENDING:func_801330E4",
+  "census": {
+   "score": 129,
+   "path": "drafts/T-14500/ENDING/func_801330E4"
+  },
+  "archived": {
+   "score": 129,
+   "path": "drafts/T-18300/ENDING/func_801330E4",
+   "file": "body.c",
+   "ticket": "T-18300"
+  }
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80133C10.c",
+  "func": "func_80134270",
+  "size": 1848,
+  "guarded": false,
+  "source_hash": "c34fc260cc0f5d1b59e7240393f605be09fc0d5bb0b4f22de8f064db2e2178cf",
+  "scope": "ENDING:func_80134270",
+  "census": {
+   "score": 468,
+   "path": "drafts/T-16510/ENDING/func_80134270"
+  },
+  "archived": {
+   "score": 468,
+   "path": "drafts/T-18300/ENDING/func_80134270",
+   "file": "body.c",
+   "ticket": "T-18300"
+  }
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80133C10.c",
+  "func": "func_80134B18",
+  "size": 208,
+  "guarded": true,
+  "source_hash": "c34fc260cc0f5d1b59e7240393f605be09fc0d5bb0b4f22de8f064db2e2178cf",
+  "scope": "ENDING:func_80134B18",
+  "census": {
+   "score": 24,
+   "path": "drafts/T-14500/ENDING/func_80134B18"
+  },
+  "archived": {
+   "score": 24,
+   "path": "drafts/T-14500/ENDING/func_80134B18",
+   "file": "body.c",
+   "ticket": "T-14500"
+  }
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80133C10.c",
+  "func": "func_80134C2C",
+  "size": 240,
+  "guarded": false,
+  "source_hash": "c34fc260cc0f5d1b59e7240393f605be09fc0d5bb0b4f22de8f064db2e2178cf",
+  "scope": "ENDING:func_80134C2C",
+  "census": {
+   "score": 56,
+   "path": "drafts/T-14500/ENDING/func_80134C2C"
+  },
+  "archived": {
+   "score": 52,
+   "path": "drafts/T-18300/ENDING/func_80134C2C",
+   "file": "body.c",
+   "ticket": "T-18300"
+  }
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80134D20.c",
+  "func": "func_80135F4C",
+  "size": 3220,
+  "guarded": false,
+  "source_hash": "4cf3d49b1b0cf9913a567ca1c40069dcb03d3fbd0683d44a4be3ae1462166bd7",
+  "scope": "ENDING:func_80135F4C",
+  "census": {
+   "score": 815,
+   "path": "drafts/T-14500/ENDING/func_80135F4C"
+  },
+  "archived": {
+   "score": 813,
+   "path": "drafts/T-18300/ENDING/func_80135F4C",
+   "file": "body.c",
+   "ticket": "T-18300"
+  }
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80137340.c",
+  "func": "func_8013759C",
+  "size": 352,
+  "guarded": false,
+  "source_hash": "58cad3ae32356afbab8c2ee12f414bae0244738a498039e306d81ce391c04b5f",
+  "scope": "ENDING:func_8013759C",
+  "census": {
+   "score": 99,
+   "path": "drafts/T-14500/ENDING/func_8013759C"
+  },
+  "archived": {
+   "score": 94,
+   "path": "drafts/T-18300/ENDING/func_8013759C",
+   "file": "body.c",
+   "ticket": "T-18300"
+  }
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80137340.c",
+  "func": "func_80137BB4",
+  "size": 652,
+  "guarded": false,
+  "source_hash": "58cad3ae32356afbab8c2ee12f414bae0244738a498039e306d81ce391c04b5f",
+  "scope": "ENDING:func_80137BB4",
+  "census": {
+   "score": 100,
+   "path": "drafts/T-14500/ENDING/func_80137BB4"
+  },
+  "archived": {
+   "score": 58,
+   "path": "drafts/T-18300/ENDING/func_80137BB4",
+   "file": "body.c",
+   "ticket": "T-18300"
+  }
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80137340.c",
+  "func": "func_80137E40",
+  "size": 292,
+  "guarded": false,
+  "source_hash": "58cad3ae32356afbab8c2ee12f414bae0244738a498039e306d81ce391c04b5f",
+  "scope": "ENDING:func_80137E40",
+  "census": {
+   "score": 67,
+   "path": "drafts/T-14500/ENDING/func_80137E40"
+  },
+  "archived": {
+   "score": 64,
+   "path": "drafts/T-18300/ENDING/func_80137E40",
+   "file": "body.c",
+   "ticket": "T-18300"
+  }
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/80137340.c",
+  "func": "func_801387B0",
+  "size": 748,
+  "guarded": false,
+  "source_hash": "58cad3ae32356afbab8c2ee12f414bae0244738a498039e306d81ce391c04b5f",
+  "scope": "ENDING:func_801387B0",
+  "census": {
+   "score": 209,
+   "path": "drafts/T-14500/ENDING/func_801387B0"
+  },
+  "archived": {
+   "score": 156,
+   "path": "drafts/T-18300/ENDING/func_801387B0",
+   "file": "body.c",
+   "ticket": "T-18300"
+  }
+ },
+ {
+  "unit": "ENDING",
+  "src": "src/ovl/ENDING/801396E0.c",
+  "func": "func_8013A2E8",
+  "size": 4648,
+  "guarded": false,
+  "source_hash": "66088f9fc60ac091357e76565fe885a793f6daf9945649e562d876d43d1135a9",
+  "scope": "ENDING:func_8013A2E8",
+  "census": {
+   "score": 1667,
+   "path": "drafts/T-14500/repairs-unaligned/ENDING/func_8013A2E8"
+  },
+  "archived": {
+   "score": 1667,
+   "path": "drafts/T-18300/ENDING/func_8013A2E8",
+   "file": "body.c",
+   "ticket": "T-18300"
+  }
+ }
+]

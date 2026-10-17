@@ -1,0 +1,1 @@
+{"census_path": "drafts/T-14500/ENDING/func_80132B04", "census_score": 82, "func": "func_80132B04", "matched_commit": "f92bd1a5", "matched_in": "src/ovl/ENDING/80132000.c", "redraft_score": null, "scope": "ENDING:func_80132B04", "score": 0, "size": 660, "status": "matched", "vs_census": "better"}

@@ -2,14 +2,9 @@
 #include "ovl/ENDING.h"
 #include "game.h"
 
-typedef struct {
-    void (*f[43])();
-} FnTbl43; /* size 0xAC */
-extern FnTbl43 D_8013C3E4;
-
 void func_80133540(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
-    FnTbl43 tbl;
+    EdFnTbl43 tbl;
 
     tbl = D_8013C3E4;
     func_80083808();
@@ -114,9 +109,9 @@ s32 func_801338F8(void) {
     D_800CA14C = 0;
     func_800AE0F0(D_800CA188, "外井");
     func_80132000();
-    D_800CA160 = D_8013C2BC;
-    D_800CA164 = D_8013C300;
-    D_800CA168 = D_8013C344;
+    D_800CA160 = D_8013C280[0][15];
+    D_800CA164 = D_8013C280[1][15];
+    D_800CA168 = D_8013C280[2][15];
     func_8004284C();
 }
 
@@ -151,14 +146,9 @@ void func_80133A6C(void) {
     D_800E7D34 |= 4;
 }
 
-typedef struct {
-    void (*f[9])();
-} FnTbl9; /* size 0x24 */
-extern FnTbl9 D_8013C490;
-
 void func_80133AD0(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
-    FnTbl9 tbl;
+    EdFnTbl9 tbl;
 
     tbl = D_8013C490;
     func_80083808();
@@ -176,9 +166,9 @@ void func_80133B80(void) {
     D_800CA148 = 0;
     D_800CA14C = 0;
     func_80132000();
-    D_800CA160 = D_8013C2B4;
-    D_800CA164 = D_8013C2F8;
-    D_800CA168 = D_8013C33C;
+    D_800CA160 = D_8013C280[0][13];
+    D_800CA164 = D_8013C280[1][13];
+    D_800CA168 = D_8013C280[2][13];
     func_8004284C();
 }
 

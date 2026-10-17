@@ -1,10 +1,10 @@
 ---
 id: T-13801
 title: Reconstruct TACO actor initialization and update family
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[tickets/T-13800-taco-families]]"]
 ---
 
@@ -26,6 +26,10 @@ Fresh m2c reads for 3D528/3D838 reveal unresolved SDK projection locals and matr
 
 ### Actor aggregate/lifetime results
 4A480 improves to three differing instruction rows in full-TU context: separate x/y/index locals retained, matrix aggregate copy and TcPos vectors, no cached selector/index locals; mixed pointer addition order is required. Remaining one commuted actor-add and a two-row constant/store-address scheduling swap. Natural direct end reread changes the register web and shrinks the frame, so it cannot be substituted blindly. Named comparison symbols are temporarily declared only in scratch tests; any accepted source must add canonical main declarations with complete checks. Bounded evidence: build/t13801/a480-{unify,both,storeorders,endbytes}.diff. No production function promoted.
+
+2026-10-17: Research handoff, no source reached main. Main's guarded func_8014A480 draft (T-19003) sits at 12 differing lines with spill slots 4 bytes off, while this ticket's form without cached index/selector locals had the right frame and three rows; it survives only in taco-family-results and the T-11920 backup (taco-13800.tar.gz, build/t13801). Opened a follow-up to carry that form into the draft; func_801487A4 and func_801497EC are covered by T-19013 and T-19019. Marked superseded.
+
+Followup opened: [[tickets/T-21008-taco-8014a480-three-row-form|T-21008]].
 
 ## Diagnostic handoff
 
