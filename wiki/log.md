@@ -17719,3 +17719,24 @@ Clean rebuild 27/27, check_headers, migrate_globals --check and sync_protos --ch
 ## [2026-10-17] ticket | T-22012 Done
 
 Code review against CODING_STANDARDS.md found nothing to fix; 2 of 4 matched (`BUNKASAI:func_8013B25C`, `BUNKASAI:func_80150B7C`), `func_801509A4` (19 rows) and `func_80151364` (2 rows) stay guarded. [[tickets/T-22012-w4-p12]], [[kanban]].
+
+## [2026-10-17] ticket | Resume claimed NAME_ENT resource loader
+
+[[tickets/T-20010-name-ent-resource-loader]] moves to In Progress on current main 567b5663, branch codex/name-ent-resource-loader, under the maintainer-confirmed claim #52. PR #53 is merged and independently verified (484-byte helper MATCH, all 27 hashes and declaration guards). Preserve the neighboring T-22007 matches; investigate the loader's induction and stack layout in full-unit scratch builds before promoting any C.
+
+
+## [2026-10-17] build | T-20010 nested induction recovers the original allocator shape
+
+[[tickets/T-20010-name-ent-resource-loader]]: two nested loops with multiplication by 0x10000/0x4000 reduce the valid eight-word loader to 12 aligned instruction differences without extra draw2d3d arguments. Shift-based equivalents miss the strength-reduction form. The remaining differences are stack offsets and six opening-loop store/update positions; no production C is promoted. Regenerated ignored NAME_ENT rodata pieces with the current upstream tool after checkout.
+
+## [2026-10-17] build | T-20010 exact table source reaches zero differences
+
+[[tickets/T-20010-name-ent-resource-loader]] recovers four increasing column assignments using row * 0x10000. Declaring the meaningful row index before the exact eight-word table reproduces the original 0x80 frame and sp+0x5C table; full-unit comparison is zero edits. No padding, oversized capacity, unread arguments or new FAKE controls. Promoted the claimed function only, preserving the current upstream neighboring matches and shared declarations. Final default linked proof and all binary/declaration checks are running.
+
+## [2026-10-17] build | T-20010 default C match and all checks pass
+
+[[tickets/T-20010-name-ent-resource-loader]]: Docker default build completes 531 steps, including header/global guards. Independent SHA1 verification passes for all 27 binaries; sync_protos --check-branch passes (0 new disagreement(s), 15 known (config/proto_known.txt); branch check OK). Actual default linked funcdiff MATCH: 1,652 bytes, plain C. The recovered four-column source needs no new FAKE controls or declaration/build-tool changes.
+
+## [2026-10-17] ticket | T-20010 submitted for review
+
+[[tickets/T-20010-name-ent-resource-loader]] and [[kanban]] move to In Review. Self-review against CODING_STANDARDS.md completed: bounded table, fixed-width C89, real shared field views, no new fakematches, no neighboring function changes, source-only submission. Claim #52 is complete together with merged T-20009/PR #53; maintainer review pending.

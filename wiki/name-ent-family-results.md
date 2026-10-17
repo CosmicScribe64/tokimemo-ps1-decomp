@@ -133,3 +133,7 @@ functions are not in a package: `func_80138C1C`, `func_80138F60`, `func_801398EC
 ## CD-level display helper matched (T-20009)
 
 [[tickets/T-20009-name-ent-loader]] matches func_80149B08 (484 bytes) in 80144AD0.c. Use one DisplayActor44 pointer for all actor accesses and initialize it before the status calls; a pointer introduced only in the final branch or direct fixed fields keep the historical delayed X load. The before-call view fixes the priority tie between the loaded coordinate and hoisted constants, reproducing the original A3 load and V0/V1/A0/A2 constants. The existing frame/dead-initialization controls and s32 exit liveness remain explicitly FAKE. Default linked proof, all 27 hashes and header/global/prototype checks pass. The loader follow-up is [[tickets/T-20010-name-ent-resource-loader]].
+
+## Resource loader matched (T-20010)
+
+[[tickets/T-20010-name-ent-resource-loader]] matches func_80142E24 (1,652 bytes), completing the loader claim #52 after T-20009's 484-byte helper. Recover the two-row/four-column table with explicit column assignments using row * 0x10000; the source induction, rather than manually maintained streams, gives the original AT step and A3 bound. Declare the row index before the exact eight-word table for the original frame/offsets. No new FAKE constraints or declaration changes; default linked C MATCH, all 27 hashes and header/global/prototype guards pass. The separately claimed 4,308-byte T-20008 scene remains ASM and is not a new match here.
