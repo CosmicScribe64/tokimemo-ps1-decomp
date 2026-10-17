@@ -1,6 +1,6 @@
+#define MAIN_API_OVERRIDE_strncpy /* Implicit integer strncpy call view preserves v1 length calculation; shared void view differs by 12 rows. T-20007. */
 #define MAIN_API_OVERRIDE_func_80049FF0 /* Transition calls narrow four coordinates at the call site. T-10870. */
 #define MAIN_API_OVERRIDE_SsVabTransCompleted /* SD_GetCDLevel reads the transfer status; canonical legacy view is void. T-10870. */
-#define MAIN_API_OVERRIDE_dialogue_render /* integer result read by k_disp_start; callee narrows K&R arguments, T-10730 */
 #define MAIN_API_OVERRIDE_func_80084C98 /* promoted s32 index view avoids call-site narrowing; existing callee performs the s16 conversion, T-9540 */
 #define MAIN_API_OVERRIDE_D_80122CD0 /* word-indexed clearing view, canonical scalar retained elsewhere, T-9540 */
 #define MAIN_API_OVERRIDE_select_girl_init /* K&R byte parameter is narrowed in the callee. T-10900. */
@@ -9,7 +9,8 @@
 #include "psx_types.h"
 s32 func_80049FF0(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, s32 arg6);
 s32 SsVabTransCompleted();
-s32 dialogue_render();
+/* FAKE: preserve the original implicit integer view of the SDK strncpy alias. T-20007. */
+s32 strncpy();
 void select_girl_init();
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
@@ -1579,7 +1580,378 @@ void func_80081128(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", dialogue_render);
+s32 dialogue_render(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    s16 arg0;
+    s16 arg1;
+    u8 arg2;
+    u8 *arg3;
+    s32 arg4;
+    u8 *arg5;
+    u8 *arg6;
+    u8 arg7;
+{
+    s16 i;
+    s16 length;
+    s16 scan;
+    s16 copy;
+    s32 final_y;
+    u8 token;
+    s16 in_index;
+    s16 row;
+    u8 line[64];
+    u8 name[24];
+    u8 text[512];
+    s16 out_index;
+    u8 open[3];
+    u8 punct0[3] = "…";
+    u8 punct1[3] = "‥";
+    u8 punct2[3] = "「";
+    u8 punct3[3] = "。";
+    u8 punct4[3] = "、";
+
+    if (*arg3 == 0) {
+        return 0;
+    }
+    strcpy(open, "（");
+    strcpy(text, arg3);
+    D_80122D1C = 1;
+    i = strlen(text);
+    for (scan = 0; scan < i; scan += 2) {
+        if (text[scan] == 'm' || text[scan] == 'M' || text[scan] == 'A' || text[scan] == 'W' || text[scan] == 'O' || text[scan] == 'F' || text[scan] == 'Y' || text[scan] == 'S' || text[scan] == 'P' || text[scan] == 'p' || text[scan] == 'G' || text[scan] == ' ' || text[scan] == 'q') {
+            scan--;
+        } else if ((text[scan] != punct0[0] || text[scan + 1] != punct0[1]) && (text[scan] != punct1[0] || text[scan + 1] != punct1[1]) && (text[scan] != punct2[0] || text[scan + 1] != punct2[1]) && (text[scan] != punct3[0] || text[scan + 1] != punct3[1]) && (text[scan] != punct4[0] || text[scan + 1] != punct4[1]) ) {
+            D_80122D1C = 0;
+        }
+    }
+    i = 0;
+    row = 0;
+    scan = 0;
+parse_next:
+    token = text[scan];
+    if (token == 'm' || token == 'M' || token == 'A' || token == 'W' || token == 'O' || token == 'F' || token == 'Y' || token == 'S' || token == 'P' || token == 'p' || token == 'G') {
+        scan--;
+    advance_text:
+        scan += 2;
+        goto parse_next;
+    }
+    if (token == ' ' || token == 'q') {
+        text[scan] = 0;
+        if (arg7 != 0) {
+            set_kanji_string(arg0 - 0xE, arg1 + row, arg2, arg6, arg4);
+        }
+
+        strncpy(line, (text + i), 0x40);
+        length = scan - i;
+        /* FAKE: grouped narrow index updates below preserve as1 scheduling. T-20007. */
+        for (out_index = 0, in_index = 0; out_index < length; out_index += 2, in_index += 2) {
+            if (line[out_index] == 'P') {
+                copy = 0;
+                if (strlen(D_800CA17C) > 0) {
+                    do {
+                        line[out_index + copy] = D_800CA17C[copy];
+                        copy++;
+                    } while (copy < strlen(D_800CA17C));
+                }
+                strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+                length += strlen(D_800CA17C) - 1;
+                out_index += strlen(D_800CA17C); out_index -= 2; in_index--;
+            }
+            else if (line[out_index] == 'S') {
+                copy = 0;
+                if (strlen(D_800CA23C) > 0) {
+                    do {
+                        line[out_index + copy] = D_800CA23C[copy];
+                        copy++;
+                    } while (copy < strlen(D_800CA23C));
+                }
+                strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+                length += strlen(D_800CA23C) - 1;
+                out_index += strlen(D_800CA23C); out_index -= 2; in_index--;
+            }
+            else if (line[out_index] == 'G') {
+                copy = 0;
+                if (strlen(girl_name_buf) > 0) {
+                    do {
+                        line[out_index + copy] = girl_name_buf[copy];
+                        copy++;
+                    } while (copy < strlen(girl_name_buf));
+                }
+                strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+                length += strlen(girl_name_buf) - 1;
+                out_index += strlen(girl_name_buf); out_index -= 2; in_index--;
+            }
+            else if (line[out_index] == 'p') {
+                copy = 0;
+                if (strlen(D_800CA16C) > 0) {
+                    do {
+                        line[out_index + copy] = D_800CA16C[copy];
+                        copy++;
+                    } while (copy < strlen(D_800CA16C));
+                }
+                strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+                length += strlen(D_800CA16C) - 1;
+                out_index += strlen(D_800CA16C); out_index -= 2; in_index--;
+            }
+            else if (line[out_index] == 'Y') {
+                strcpy(name, "好雄");
+                copy = 0;
+                if (strlen(name) > 0) {
+                    do {
+                        line[out_index + copy] = name[copy];
+                        copy++;
+                    } while (copy < strlen(name));
+                }
+                strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+                length += strlen(name) - 1;
+                out_index += strlen(name); out_index -= 2; in_index--;
+            }
+            else if (line[out_index] == 'F') {
+                sprintf(name, "%s%s", D_800CA16C, D_800CA174);
+                copy = 0;
+                if (strlen(name) > 0) {
+                    do {
+                        line[out_index + copy] = name[copy];
+                        copy++;
+                    } while (copy < strlen(name));
+                }
+                strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+                length += strlen(name) - 1;
+                out_index += strlen(name); out_index -= 2; in_index--;
+            }
+            else if (line[out_index] == 'm') {
+                strcpy(name, D_800CA174);
+                copy = 0;
+                if (strlen(name) > 0) {
+                    do {
+                        line[out_index + copy] = name[copy];
+                        copy++;
+                    } while (copy < strlen(name));
+                }
+                strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+                length += strlen(name) - 1;
+                out_index += strlen(name); out_index -= 2; in_index--;
+            }
+            else if (line[out_index] == 'O') {
+                copy = 0;
+                if (strlen(D_800CA248) > 0) {
+                    do {
+                        line[out_index + copy] = D_800CA248[copy];
+                        copy++;
+                    } while (copy < strlen(D_800CA248));
+                }
+                strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+                length += strlen(D_800CA248) - 1;
+                out_index += strlen(D_800CA248); out_index -= 2; in_index--;
+            }
+            else if (line[out_index] == 'W') {
+                copy = 0;
+                if (strlen(D_800CA250) > 0) {
+                    do {
+                        line[out_index + copy] = D_800CA250[copy];
+                        copy++;
+                    } while (copy < strlen(D_800CA250));
+                }
+                strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+                length += strlen(D_800CA250) - 1;
+                out_index += strlen(D_800CA250); out_index -= 2; in_index--;
+            }
+            else if (line[out_index] == 'A') {
+                copy = 0;
+                if (strlen(D_800CA25C) > 0) {
+                    do {
+                        line[out_index + copy] = D_800CA25C[copy];
+                        copy++;
+                    } while (copy < strlen(D_800CA25C));
+                }
+                strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+                length += strlen(D_800CA25C) - 1;
+                out_index += strlen(D_800CA25C); out_index -= 2; in_index--;
+            }
+            else if (line[out_index] == 'M') {
+                copy = 0;
+                if (strlen(D_800CA280) > 0) {
+                    do {
+                        line[out_index + copy] = D_800CA280[copy];
+                        copy++;
+                    } while (copy < strlen(D_800CA280));
+                }
+                strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+                length += strlen(D_800CA280) - 1;
+                out_index += strlen(D_800CA280); out_index -= 2; in_index--;
+            }
+        }
+        if (arg7 != 0) {
+            strcat(line, arg5);
+        }
+        if (line[0] == open[0] && line[1] == open[1]) {
+            set_kanji_string(arg0 - 0xE, (s16)(arg1 + row), arg2, line, arg4);
+        } else {
+            set_kanji_string(arg0, (s16)(arg1 + row), arg2, line, arg4);
+        }
+        row += 0x10;
+        i = scan + 1;
+        scan--;
+        goto advance_text;
+    }
+    if (token != 0) {
+        goto advance_text;
+    }
+    if (arg7 != 0) {
+        set_kanji_string(arg0 - 0xE, arg1 + row, arg2, arg6, arg4);
+    }
+
+    final_y = arg1 + row;
+    strncpy(line, (text + i), 0x40);
+    length = scan - i;
+    /* FAKE: grouped narrow index updates below preserve as1 scheduling. T-20007. */
+    for (out_index = 0, in_index = 0; out_index < length; out_index += 2, in_index += 2) {
+        if (line[out_index] == 'P') {
+            copy = 0;
+            if (strlen(D_800CA17C) > 0) {
+                do {
+                    line[out_index + copy] = D_800CA17C[copy];
+                    copy++;
+                } while (copy < strlen(D_800CA17C));
+            }
+            strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+            length += strlen(D_800CA17C) - 1;
+            out_index += strlen(D_800CA17C); out_index -= 2; in_index--;
+        }
+        else if (line[out_index] == 'S') {
+            copy = 0;
+            if (strlen(D_800CA23C) > 0) {
+                do {
+                    line[out_index + copy] = D_800CA23C[copy];
+                    copy++;
+                } while (copy < strlen(D_800CA23C));
+            }
+            strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+            length += strlen(D_800CA23C) - 1;
+            out_index += strlen(D_800CA23C); out_index -= 2; in_index--;
+        }
+        else if (line[out_index] == 'G') {
+            copy = 0;
+            if (strlen(girl_name_buf) > 0) {
+                do {
+                    line[out_index + copy] = girl_name_buf[copy];
+                    copy++;
+                } while (copy < strlen(girl_name_buf));
+            }
+            strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+            length += strlen(girl_name_buf) - 1;
+            out_index += strlen(girl_name_buf); out_index -= 2; in_index--;
+        }
+        else if (line[out_index] == 'p') {
+            copy = 0;
+            if (strlen(D_800CA16C) > 0) {
+                do {
+                    line[out_index + copy] = D_800CA16C[copy];
+                    copy++;
+                } while (copy < strlen(D_800CA16C));
+            }
+            strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+            length += strlen(D_800CA16C) - 1;
+            out_index += strlen(D_800CA16C); out_index -= 2; in_index--;
+        }
+        else if (line[out_index] == 'Y') {
+            strcpy(name, "好雄");
+            copy = 0;
+            if (strlen(name) > 0) {
+                do {
+                    line[out_index + copy] = name[copy];
+                    copy++;
+                } while (copy < strlen(name));
+            }
+            strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+            length += strlen(name) - 1;
+            out_index += strlen(name); out_index -= 2; in_index--;
+        }
+        else if (line[out_index] == 'F') {
+            sprintf(name, "%s%s", D_800CA16C, D_800CA174);
+            copy = 0;
+            if (strlen(name) > 0) {
+                do {
+                    line[out_index + copy] = name[copy];
+                    copy++;
+                } while (copy < strlen(name));
+            }
+            strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+            length += strlen(name) - 1;
+            out_index += strlen(name); out_index -= 2; in_index--;
+        }
+        else if (line[out_index] == 'm') {
+            strcpy(name, D_800CA174);
+            copy = 0;
+            if (strlen(name) > 0) {
+                do {
+                    line[out_index + copy] = name[copy];
+                    copy++;
+                } while (copy < strlen(name));
+            }
+            strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+            length += strlen(name) - 1;
+            out_index += strlen(name); out_index -= 2; in_index--;
+        }
+        else if (line[out_index] == 'O') {
+            copy = 0;
+            if (strlen(D_800CA248) > 0) {
+                do {
+                    line[out_index + copy] = D_800CA248[copy];
+                    copy++;
+                } while (copy < strlen(D_800CA248));
+            }
+            strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+            length += strlen(D_800CA248) - 1;
+            out_index += strlen(D_800CA248); out_index -= 2; in_index--;
+        }
+        else if (line[out_index] == 'W') {
+            copy = 0;
+            if (strlen(D_800CA250) > 0) {
+                do {
+                    line[out_index + copy] = D_800CA250[copy];
+                    copy++;
+                } while (copy < strlen(D_800CA250));
+            }
+            strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+            length += strlen(D_800CA250) - 1;
+            out_index += strlen(D_800CA250); out_index -= 2; in_index--;
+        }
+        else if (line[out_index] == 'A') {
+            copy = 0;
+            if (strlen(D_800CA25C) > 0) {
+                do {
+                    line[out_index + copy] = D_800CA25C[copy];
+                    copy++;
+                } while (copy < strlen(D_800CA25C));
+            }
+            strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+            length += strlen(D_800CA25C) - 1;
+            out_index += strlen(D_800CA25C); out_index -= 2; in_index--;
+        }
+        else if (line[out_index] == 'M') {
+            copy = 0;
+            if (strlen(D_800CA280) > 0) {
+                do {
+                    line[out_index + copy] = D_800CA280[copy];
+                    copy++;
+                } while (copy < strlen(D_800CA280));
+            }
+            strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
+            length += strlen(D_800CA280) - 1;
+            out_index += strlen(D_800CA280); out_index -= 2; in_index--;
+        }
+    }
+    if (*arg5 != 0) {
+        strcat(line, arg5);
+    }
+    D_800CA2C0 = final_y + 0x10;
+    if (line[0] == open[0] && line[1] == open[1]) {
+        final_y = set_kanji_string(arg0 - 0xE, (s16)(arg1 + row), arg2, line, arg4);
+    } else {
+        final_y = set_kanji_string(arg0, (s16)(arg1 + row), arg2, line, arg4);
+    }
+    return final_y;
+}
 
 s32 func_80082764(arg0, arg1, arg2)
 u8 arg0;

@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-16
+updated: 2026-10-17
 sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 ---
 
@@ -7112,3 +7112,11 @@ Ticket [[tickets/T-17012-w3-main-p12]], wave 3 package of [[tickets/T-17000-type
 - **`func_80061A3C` (1,216 bytes): not started.** The package ran out of time after the three functions above; restored `INCLUDE_ASM`, draft score 264 unchanged.
 - **`siblings.py --package` takes `unit/name` entries.** `main/func_80062210,main/func_80062948,main/func_80061A3C` runs (no sibling at 0.70 or more); bare names or a file with extra columns say "no unmatched function". The useful sibling came from `grep D_80125C60` (ETC `func_8013FA7C`, `DATE func_8014A1B0`).
 - Idioms for [[register-cheatsheet]]: none added; see the notes above (index loop for a hoist row, integer address instead of pointer, unsigned compare to split constants, explicit IV pointers for allocation).
+
+## T-20007: large main dialogue renderer
+
+[[tickets/T-20007-large-dialogue-renderer]] reconstructs dialogue_render (5,588 bytes, 1,397 instructions) in src/main/8007C030.c. The normal build passes all 27 immutable binary SHA1 checks, including main. The renderer scans two-byte glyphs and one-byte control tokens, expands eleven name controls into a 64-byte line buffer, draws prefixes/suffixes and adjusts an opening full-width parenthesis. Keep the two expansion bodies in their original order.
+
+The critical source recovery was to separate the line-start index from the substitution-copy index. An explicit line-source pointer and cursor cost unwanted CFE stack homes; ordinary line[index + copy] and repeated (text + i) expressions let uopt generate the original saved source pointer at sp+0x60. A shared drawing-coordinate expression generates the narrowed save at sp+0x64 while the raw final Y sum is kept at sp+0x68. The three-byte automatic punctuation initializers reproduce the five lwl/swl pairs without copy wrappers. Initializing the expansion indices in each for head lets the hoisted global address low halves precede the two zero moves, closing the final five-instruction schedule difference.
+
+Two measured matching constraints are marked FAKE: keeping each three-statement narrow-index update on one physical source line (ungrouping differs by 98 diagnostic rows), and preserving the original implicit integer strncpy call view (the shared void view changes the length result from v1 to v0, 12 rows). The shared s32 K&R dialogue_render declaration works for every default caller and removes the old local override. No padding, oversized buffer, forced register or toolchain change is needed. These are source/dataflow findings, not evidence of a compiler limitation.
