@@ -551,7 +551,56 @@ void func_80054C4C(void) {
     bzero(D_80123120, 0x2000);
 }
 
+/* NON_MATCHING: T-17007, 2 differing lines; only the struct copy's end pointer differs (t4, the original t5): ugen's
+   block copy is in the one-skip state after the if/else of calls, the original in the two-skip state (T-19001 rule,
+   a compiler-version gap, no C form found) */
+#ifdef NON_MATCHING
+s32 func_80054C74(s32 arg0) {
+    u8 name[0x1C];
+    u32 i;
+    u8 *p;
+
+    func_80054C4C();
+    func_80056070(name, arg0);
+    close(D_800B58E4);
+    if ((D_800B58E4 = open(name, 2)) == -1) {
+        return -1;
+    }
+    strncpy(D_80123120, "SC", 2);
+    D_80123122 = 0x13;
+    D_80123123 = 1;
+    bzero(D_80123124, 0x40);
+    strcpy(D_80123124, "ときめきメモリアル");
+    if (arg0 != 0) {
+        strcat(D_80123124, D_800B32CC[arg0 - 1]);
+    } else {
+        strcat(D_80123124, "・システム");
+    }
+    bzero(D_80123164, 0x1C);
+    memcpy(D_80123180, D_800B4390, 0x20);
+    memcpy(D_801231A0, D_800B58B0, 0x180);
+    if (arg0 != 0) {
+        func_8005557C(0);
+    } else {
+        func_80054FC0(0);
+    }
+    D_80123320[1] = D_80123320[0];
+    i = 0;
+    p = D_80123120;
+    /* FAKE: a one-pass loop; the u32 counter makes the bound a second 0x2000 register next to the write
+       size, as in the original. The real loop shape is unknown. T-17007 */
+    for (; i < 0x2000; i += 0x2000) {
+        if (write(D_800B58E4, p, 0x2000) != 0x2000) {
+            close(D_800B58E4);
+            return -1;
+        }
+        p += 0x2000;
+    }
+    return 1;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054C74);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054E6C);
 
@@ -561,9 +610,10 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_800552DC);
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005557C);
 
-/* NON_MATCHING: T-10850, 8 differing listing lines; regdiff evidence in the ticket scratch. */
-#ifdef NON_MATCHING
-/* FAKE: dead initial assignments preserve induction-register numbering. T-10850 */
+/* FAKE: T-10850, T-17007: the dead initial assignments set the induction-register numbering, and
+   writing all five on one line makes as1 emit the hoisted starts in the original order (q, r, b).
+   The bank checksum is read as *(s32 *)(r + 0x200), not D_80123320[b].checksum: the field form
+   changes the register allocation (r is the header-side induction pointer). */
 s32 func_80055A38(s32 arg0) {
     s32 b;
     s32 n;
@@ -573,11 +623,7 @@ s32 func_80055A38(s32 arg0) {
     u8 *q;
     u8 *r;
 
-    n = 0;
-    b = 0;
-    p = D_80123324;
-    r = D_80123120;
-    q = D_80123324;
+    n = 0; b = 0; p = D_80123320[0].data; r = D_80123120; q = D_80123320[0].data;
     for (; b < 2; b++) {
         n = 0;
         p = q;
@@ -592,14 +638,11 @@ s32 func_80055A38(s32 arg0) {
             D_800E6280.unk_1117 = b;
             return 1;
         }
-        q += 0xF00;
         r += 0xF00;
+        q += 0xF00;
     }
     return -1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80055A38);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80055AFC);
 

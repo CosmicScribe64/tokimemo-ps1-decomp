@@ -81,6 +81,7 @@ those declarations stay; they are listed below for a cross-unit ticket. What cha
 | `s16 D_800B5AA4[16][2]`, `s16 D_800B5AE4[15][2]` | (x, y) halfword pairs copied pair by pair into the pair table at `D_80125C10`; the copy from pair 3 runs to `D_800B5B20` | `func_8006509C` |
 | `Flags7D4F` bit-field view of `D_800E7D4F` | `lui rA; lbu rB; ori; sb` with rB != rA is a bit-field store (T-7010); BUNKASAI's `BunkaReturnFlags` is the same view | `func_8007959C` (matched) |
 | `u8 *D_800B6CF8[]` | message table indexed by `func_80077CA8()`, passed to `sndisp` | `func_80077E30` (matched) |
+| `SaveBank D_80123320[2]` (`s32 checksum; u8 data[0xEFC]`), header externs `D_80123122`..`D_801231A0` | memory-card block of 0x2000 bytes at `D_80123120`: 0x200-byte header, two 0xF00-byte banks; a 12-bytes-per-iteration copy loop of 0xF00 bytes is `D_80123320[1] = D_80123320[0]`; one `lui at` per header store means separate symbols (T-17007) | `func_80054C74` (guarded), `func_80055A38` |
 | seven `void` prototypes (`func_80075468` ..) and `s32 holiday_club(void)` | defined later in `80075320.c`, called earlier by `func_80075320` | `func_80075320` (matched) |
 | draft-time only: `GameState D_800E6280`, `Rec34`, `Rec24`, `Ring18`, `Work80125D10`, `MATRIX D_80129C40`, every sized array of `main_api.h`, `D_8011ECD0` as `DisplayActor44[160]` | the T-16550 fold: a label inside one of them becomes base + offset in the asm handed to m2c | all redrafts |
 

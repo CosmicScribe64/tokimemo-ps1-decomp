@@ -1,10 +1,12 @@
 ---
 type: data
-updated: 2026-10-16
+updated: 2026-10-17
 sources: ["wiki/matching-notes.md", "tools/queue.py"]
 ---
 
 # T-0018 cases (register promotion of globals and related register-order gaps)
+
+Update (T-17007 closer): main `func_80055A38` (the `regorder` rows below, T-9140 to T-17007) matches with its FAKE dead initial assignments written on one source line (`n = 0; b = 0; p = D_80123324; r = D_80123120; q = D_80123324;`): as1 then emits the hoisted starts `q`, `r`, `b` as the original does. Main `func_80054C74` is down to 2 rows (new row at the end).
 
 Update (T-20003): RPG_BAT `func_80138F6C` matches 1,268 actual default linked bytes with direct timer updates/decrement and two marked FAKE sites (frame padding and selector word read). Full RPG_BAT and all 27 binary SHA1 checks pass. Historical rows below remain unchanged; [[tickets/T-20003-rpg-timer-callees]] supersedes its unmatched status. Independent matches for `func_80157158` and `func_80156D78` were dropped from this contribution after upstream T-17102 landed.
 
@@ -2335,3 +2337,6 @@ Update (T-17117): RPG_BAT `func_8013CC90` (row `hoist`, T-9740: `D_800E7200` loa
 | 80075320 | `func_800754C0` | sched | T-17006 closer: still 9 rows. No change from `u8`/`u32` m, `(u8)m`, nested tests, assignment in the condition, one-line layout, or autotweak (136 edits); the call reading the field again gives 10 rows (month in `$a1`), a `switch (m)` 41 rows (frame +8). |
 | main/80042A00 | `func_80043010` | regorder | T-17009: not matched (restored to `INCLUDE_ASM`; best draft kept in `drafts/T-17009/main/func_80043010/body.c`, 32 rows, registers only). Structure matches when the 0xFF path has no `return` (v0 keeps the loaded type byte) and the digital-pad arm returns `a`. The original keeps the five `lui 0x800F0000` address constants of the four mouse bytes and the digital byte in uopt colours (`v1`, `a1`, `a0`, `a2`, `v0`, colours in the order BF3, BF2, C33, C32), so the loads sit in `a0..a2`/`v1`; here regdiff lists those globals as prio-0 ranges (one use) and ugen puts them in `t6..t9`. Scalar globals `D_800E8BF2` and friends give 32 rows, the array view 37, locals for the bytes and a volatile view no change. |
 | main/80042A00 | `func_80042CB0` | regorder | T-17009: not matched (restored to `INCLUDE_ASM`; hand draft in `drafts/T-17009/main/func_80042CB0/body.c`, about 200 rows by register cascade). Flow, clamps, key-repeat state (`unk_F70..F73`), port-2 merge and store order follow the asm; signed `div` by 3 needs `(s32)(s8 * u8) / 3`. Same gap as `func_80043010`: the original keeps the single-use loads at the top (`D_800E8BF4/5`, `D_800E71EF`, `D_800E71FA/FC`) in uopt colours `v0/a1/v1/a3/t0`, the draft leaves them in ugen temporaries; scalar externs for them changed nothing. |
+| main/80053650 | `func_80054C74` | regorder | T-17007: 8 rows, guarded. Two 0x2000 constants (write size and `bne` loop bound) need two named values; with the write size raised in priority by an empty test (FAKE) the registers agree, but the two `li` are emitted bound-first (`s3`, `s2`) where the original has `s2`, `s3`, and the struct-copy end pointer is `$t4` instead of `$t5` (the original skips two ugen temporaries). |
+| main/80053650 | `func_80055A38` | regorder | T-17007: 4 rows (was 8). `r += 0xF00; q += 0xF00;` fixes the swapped `a1`/`a2` increments; left: the hoisted starts are emitted `b`, `r`, `q` instead of `q`, `r`, `b`, so `move v1,zero` and `addiu a2` are swapped. 120 orders of the initial assignments and 128 autotweak edits stay at 4 or more. |
+| main/80053650 | `func_80054C74` | regorder | T-17007 closer: 2 rows, guarded (supersedes the 8-row T-17007 row). A `u32` loop counter (`for (; i < 0x2000; i += 0x2000)`) gives the `bne` bound its own 0x2000 register next to the write size, so the FAKE named constants are gone. Left: the block copy `D_80123320[1] = D_80123320[0]` after the `if/else` of two calls has its end pointer in `$t4` (one ugen skip, two `.set noat` in `cc -S`) where the original has `$t5` (two skips): the T-19001 state gap; the switch form and an empty test after the `if/else` keep the one-skip state. |

@@ -16856,3 +16856,18 @@ Clean rebuild of the w3-main-p09 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-17009 Done
 
 [[tickets/T-17009-w3-main-p09]] In Review to Done: code review against `CODING_STANDARDS.md` found two small issues, fixed (`D_800B3CA8` declared before `D_800B3CA4` in `include/main_api.h`, address order restored; comment added on the fall-through end of `func_800430C0`). Rebuild OK (27/27 sha1, headers OK, globals OK, `sync_protos --check-branch` OK). 2 of 4 functions matched (`func_80043448`, `func_800430C0`; 1,092 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17007 In Progress
+
+[[tickets/T-17007-w3-main-p07]] created and started: wave 3 package w3-main-p07 of [[tickets/T-17000-types-first-main]], branch `w3-main-p07` from `w2-good`, owned file `src/main/80053650.c`, 5 functions.
+
+## [2026-10-17] ticket | T-17007 In Review
+
+[[tickets/T-17007-w3-main-p07]] In Progress to In Review (23:00 to 00:30 UTC, load 33 on the machine): 0 of 5 matched. `func_80055A38` guarded draft 8 to 4 differing lines (increment order of the bank pointers), `func_80054C74` guarded draft 8 differing lines (from 47 rows) with the new `SaveBank`/`D_80123320[2]` save-image types and header externs in `include/main_api.h`, `func_80054140` restored to `INCLUDE_ASM` (about 60 rows), `func_80054884` and `func_80054E6C` not started. Notes in [[matching-notes]], rows in [[data/t0018-cases]], type map row in [[main-family-results]]. Checks: clean build 27/27, check_headers OK, migrate_globals --check OK, sync_protos --check-branch OK (0 new, 15 known).
+
+## [2026-10-17] build | T-17007 closer pass: func_80055A38 matched
+
+[[tickets/T-17007-w3-main-p07]] closer pass (Opus, 00:34 to 01:05 UTC), only the two guarded near misses in `src/main/80053650.c`. `func_80055A38` (196 B) matched: the FAKE dead initial assignments on one source line give as1's original preheader order (commit `1afb3dc5`). `func_80054C74` guarded draft 8 to 2 differing lines: a `u32` loop counter replaces the FAKE named 0x2000 constants; left is the block copy's end pointer (`$t4` against `$t5`), the T-19001 ugen-state gap (commit `c31bde0a`). Notes in [[matching-notes]], two rows in [[register-cheatsheet]], update line and row in [[data/t0018-cases]], index line updated. Checks: clean build (`rm -rf build`, configure, ninja) 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK. Ticket stays In Review.
+
+## [2026-10-17] ticket | T-17007 Done
+
+[[tickets/T-17007-w3-main-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found three issues, all fixed: the one-pass write loop in the guarded `func_80054C74` draft lacked a `FAKE` comment, `func_80055A38` reached the bank through the old symbol `D_80123324` (now `D_80123320[0].data`, still matches; the checksum field form breaks the registers and is explained in the comment), and a stale "0 of 5" line in [[matching-notes]]. 1 of 5 functions matched (`func_80055A38`, 196 B), unit sha1 OK, `func_80054C74` stays guarded at 2 lines. Merge via the wave 3 merge script.
