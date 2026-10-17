@@ -173,13 +173,6 @@ s32 func_80075FA0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076000);
 
-typedef struct {
-    u32 idx : 5;
-    u32 pad : 20;
-    u32 nib : 4;
-    u32 b29 : 1;
-    u32 rest : 2;
-} EntryFlags29;
 
 /* NON_MATCHING: T-10910, structure matches (97 of 97 instructions) with the bit-field entry view, the 5 explicit clears and an if (1) around cnt[idx]++ (found by decomp-permuter, FAKE); only register choice differs: the original colours n, m, arg0, idx in that order (..), 24 lines */
 #ifdef NON_MATCHING
@@ -204,11 +197,11 @@ s32 func_800764AC(u32 *arg0) {
             cnt[i] = 0;
         }
         for (i = 0; i < 8; i++) {
-            if (!((EntryFlags29 *)&D_800E6280.unk_54C[i])->b29) {
+            if (!((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active) {
                 break;
             }
             if (1) {
-                cnt[((EntryFlags29 *)&D_800E6280.unk_54C[i])->idx]++;
+                cnt[((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_00]++;
             }
         }
         cnt[16] = 0;
@@ -228,14 +221,14 @@ s32 func_800764AC(u32 *arg0) {
             return 1;
         }
         for (i = 0; i < 8; i++) {
-            if (!((EntryFlags29 *)&D_800E6280.unk_54C[i])->b29) {
+            if (!((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active) {
                 break;
             }
-            if (cnt[((EntryFlags29 *)&D_800E6280.unk_54C[i])->idx] != 0) {
-                idx = ((EntryFlags29 *)&D_800E6280.unk_54C[i])->idx;
+            if (cnt[((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_00] != 0) {
+                idx = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_00;
                 arg0[m] = idx;
                 m++;
-                cnt[((EntryFlags29 *)&D_800E6280.unk_54C[i])->idx] = 0;
+                cnt[((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_00] = 0;
                 if (m >= 3) {
                     break;
                 }

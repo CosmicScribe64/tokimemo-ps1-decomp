@@ -53,19 +53,12 @@ s32 func_80149394(void) {
     func_8004284C();
 }
 
-typedef struct {
-    u32 pad0 : 25;
-    u32 grade : 2;
-    u32 pad1 : 3;
-    u32 flag : 1;
-    u32 pad2 : 1;
-} EtcSlot;
 
 s32 func_80149468(void) {
     s32 i;
 
     for (i = 0; i < 11; i++) {
-        if (((EtcSlot *)&D_800E6280.unk_66C[i])->grade >= 3 && ((EtcSlot *)&D_800E6280.unk_66C[i])->flag) {
+        if (((ScheduleClubFlags *)&D_800E6280.unk_66C[i])->unk_25 >= 3 && ((ScheduleClubFlags *)&D_800E6280.unk_66C[i])->b30) {
             return i;
         }
     }

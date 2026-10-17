@@ -143,14 +143,6 @@ void func_80138F10(void);
 
 #ifndef OVL_MASTER_T10630_CLUB_BITS_H
 #define OVL_MASTER_T10630_CLUB_BITS_H
-/* Word of GameState.unk_66C[]: read as a word, bit 30 set as a flag (T-10630, T-18600). */
-typedef struct MasterClubBits {
-    u32 unk_00_24 : 25;
-    u32 count : 2;
-    u32 unk_27_29 : 3;
-    u32 b30 : 1;
-    u32 unk_31 : 1;
-} MasterClubBits; /* size 0x04 */
 #endif
 
 /* T-10630: eleven resource IDs copied by the neighboring selector. */

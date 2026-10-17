@@ -530,7 +530,7 @@ s32 date_event_choose(void) {
             date_event_trigger(5, 1, 0x3A);
             return 0;
         }
-        if (((place = D_800CA2F8) == 8) && (((g->unk_03E == 0x5F) && (g->unk_03F == 0xC) && (g->unk_040 == 0xA)) || ((g->unk_03E == 0x60) && (g->unk_03F == 0xC) && (g->unk_040 == 8)) || ((g->unk_03E == 0x61) && (g->unk_03F == 0xC) && (g->unk_040 == 7))) && (rank < 3U) && (((DateFlag17 *)&g->unk_0F4)->b17 != 0) && (g->unk_1109 == 1) && (g->unk_110A == 0)) {
+        if (((place = D_800CA2F8) == 8) && (((g->unk_03E == 0x5F) && (g->unk_03F == 0xC) && (g->unk_040 == 0xA)) || ((g->unk_03E == 0x60) && (g->unk_03F == 0xC) && (g->unk_040 == 8)) || ((g->unk_03E == 0x61) && (g->unk_03F == 0xC) && (g->unk_040 == 7))) && (rank < 3U) && (((ScheduleFlags *)&g->unk_0F4)->b17 != 0) && (g->unk_1109 == 1) && (g->unk_110A == 0)) {
             date_event_trigger(6, 1, 0x3B);
             return 0;
         }
@@ -3255,9 +3255,9 @@ s32 func_8013C7D0(void) {
         if (g->unk_66C[i].unk_00 != 0) {
             any = 1;
         }
-        if (((((ScheduleClubFlags *)&g->unk_66C[i])->unk_25 == 3) || ((DateFlags0F4 *)&g->unk_0F4)->b19) && !((DateFlags0F4 *)&g->unk_0F4)->b20 && (g->unk_03E == 0x61) && (g->unk_03F == 9)) {
+        if (((((ScheduleClubFlags *)&g->unk_66C[i])->unk_25 == 3) || ((ScheduleFlags *)&g->unk_0F4)->b19) && !((ScheduleFlags *)&g->unk_0F4)->b20 && (g->unk_03E == 0x61) && (g->unk_03F == 9)) {
             g->unk_56C[0x55] = 2;
-            ((DateFlags0F4 *)&g->unk_0F4)->b20 = 1;
+            ((ScheduleFlags *)&g->unk_0F4)->b20 = 1;
             g->unk_71E &= 8;
             D_80122CE0 = 5;
             g->unk_720 = g->unk_1108;
@@ -3271,10 +3271,10 @@ s32 func_8013C7D0(void) {
             return 0;
         }
     }
-    if ((any == 0) && (g->unk_03E == 0x61) && (g->unk_03F == 9) && !((DateFlags0F4 *)&g->unk_0F4)->b20) {
+    if ((any == 0) && (g->unk_03E == 0x61) && (g->unk_03F == 9) && !((ScheduleFlags *)&g->unk_0F4)->b20) {
         ((ScheduleClubFlags *)&g->unk_66C[11])->unk_25 = 3;
         g->unk_56C[0x55] = 2;
-        ((DateFlags0F4 *)&g->unk_0F4)->b20 = 1;
+        ((ScheduleFlags *)&g->unk_0F4)->b20 = 1;
         g->unk_71E &= 8;
         D_80122CE0 = 5;
         g->unk_720 = g->unk_1108;
@@ -3287,11 +3287,11 @@ s32 func_8013C7D0(void) {
         func_80042940(0x40);
         return 0;
     }
-    if ((g->unk_728[0] == D_800CA2F8) && (g->unk_728[0] == g->unk_728[1]) && !((DateFlags0F4 *)&g->unk_0F4)->b20 && (g->unk_03E >= 0x60) && ((*(s8 *)&D_800CA2F8) != 0)) {
+    if ((g->unk_728[0] == D_800CA2F8) && (g->unk_728[0] == g->unk_728[1]) && !((ScheduleFlags *)&g->unk_0F4)->b20 && (g->unk_03E >= 0x60) && ((*(s8 *)&D_800CA2F8) != 0)) {
         D_80122CE0 = 4;
         g->unk_56C[0x55] = 1;
         g->unk_71E &= 8;
-        ((DateFlags0F4 *)&g->unk_0F4)->b19 = 1;
+        ((ScheduleFlags *)&g->unk_0F4)->b19 = 1;
         g->unk_720 = g->unk_1108;
         g->unk_721 = g->unk_1109;
         g->unk_722 = 0x3E;

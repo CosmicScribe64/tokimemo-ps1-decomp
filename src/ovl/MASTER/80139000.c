@@ -542,7 +542,7 @@ s32 func_8013B20C(void) {
             D_800E6280.unk_71E |= 0x10;
             func_8008585C();
             if (D_8013C784 >= 3U) {
-                ((MasterClubBits *)&D_800E6280.unk_66C[(u32)D_800E6280.unk_0F4.h >> 0xC])->b30 = 1;
+                ((ScheduleClubFlags *)&D_800E6280.unk_66C[(u32)D_800E6280.unk_0F4.h >> 0xC])->b30 = 1;
             }
             func_80057390(0);
             func_80072B5C(1);

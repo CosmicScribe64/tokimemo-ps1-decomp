@@ -487,8 +487,8 @@ class TestExtras(EnvCase):
         self.assertEqual(rx.record_copies(self.env, "*(M2cBlock44 *)(a) = *(M2cBlock44 *)(b);\n"),
                          "*(M2cBlock44 *)(a) = *(M2cBlock44 *)(b);\n")
         env = rw.Env("FOO", str(self.root))
-        env.types["MasterClubBits"] = env.types["Rec24"]
-        self.assertIn("((MasterClubBits *)&D_800E6280.unk_66C[6])->count", rx.club_bits(env, text))
+        env.types["ScheduleClubFlags"] = env.types["Rec24"]
+        self.assertIn("((ScheduleClubFlags *)&D_800E6280.unk_66C[6])->unk_25", rx.club_bits(env, text))
 
     def test_reroll_leaves_other_loops_alone(self):
         body = "void f(void) {\n    do {\n        x += 1;\n    } while (x < 4);\n}\n"
@@ -1006,6 +1006,10 @@ class TestTypeAliases(unittest.TestCase):
         self.assertEqual(rw.type_aliases(text), text)
         self.assertEqual(rw.type_aliases("TelRec44 *r;", {"TelRec44": None}), "TelRec44 *r;")
         self.assertEqual(rw.type_aliases("TelRec44 *r;"), "DisplayFixActor44 *r;")
+
+    def test_gamestate_views(self):
+        out = rw.type_aliases("((NameDate *)&D_800E6280.unk_0F8)->day = ((NameDate *)&x)->month;")
+        self.assertEqual(out, "((GsDateBits *)&D_800E6280.unk_0F8)->month = ((GsDateBits *)&x)->day;")
 
 
 if __name__ == "__main__":

@@ -57,9 +57,9 @@ void func_80139920(void) {
     s32 i;
     u32 sel;
 
-    sel = ((TelEntryFlags *)&D_800E6280.unk_54C[0].w)->nib;
+    sel = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0].w)->unk_25;
     for (i = 0; i != 8; i++) {
-        if (((TelEntryFlags *)&D_800E6280.unk_54C[i])->b29 && sel == ((TelEntryFlags *)&D_800E6280.unk_54C[i])->nib) {
+        if (((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active && sel == ((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_25) {
             D_800E6280.unk_54C[i].b[3] &= 0xFFDF;
             func_800AE0B0("canceled %d \n", i);
         }
@@ -252,7 +252,7 @@ void func_80139FEC(void) {
     s32 unused;
     u32 girl;
 
-    girl = ((TelEntryFlags *)&D_800E6280.unk_54C[0].w)->nib;
+    girl = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0].w)->unk_25;
     status = get_g_zyotai_s(girl);
     switch (D_800E6280.unk_110D) {
     case 0x0:
@@ -890,7 +890,7 @@ s32 func_8013B54C(void) {
         sndisp(D_801450CC, 0, 0xF);
         k_sub_disp_start(0);
         D_800E6280.unk_110D += 1;
-        if ((((TelEntryFlags *)&D_800E6280.unk_54C[0])->nib) == 0xA) {
+        if ((((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->unk_25) == 0xA) {
             D_800E6280.unk_110D = 0x1E;
         }
         break;
@@ -931,7 +931,7 @@ s32 func_8013B54C(void) {
         break;
     case 0xD:
         k_sub_reset();
-        girl = ((TelEntryFlags *)&D_800E6280.unk_54C[0])->nib;
+        girl = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->unk_25;
         gnsx(D_800B3628);
         sndisp(D_801452C8[girl], 0, 0xD);
         func_80052060((s32) D_801452F0, (s32) D_80145340, (s32) girl, 0xD);
@@ -1031,7 +1031,7 @@ s32 func_8013B54C(void) {
         k_sub_reset();
         gnsx(D_800E6280.unk_0D4);
         func_800AE0F0(text, "そうかっ！ ");
-        get_g_name(name, ((TelEntryFlags *)&D_800E6280.unk_54C[0])->nib);
+        get_g_name(name, ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->unk_25);
         strcat(text, name);
         strcat(text, "は、 怒って来なかったのか。）");
         sndisp(text, 0, 0x1F);
@@ -1403,7 +1403,7 @@ s32 func_8013C9D4(void) {
         k_sub_reset();
         gnsx("部長");
         temp_t8 = (u16) D_800E6280.unk_0F4.h >> 0xC;
-        ((TelClubFlags *)&D_800E6280.unk_66C[temp_t8])->b24 = 1;
+        ((ScheduleClubFlags *)&D_800E6280.unk_66C[temp_t8])->b24 = 1;
         D_800E6280.unk_0F4.b[1] = (D_800E6280.unk_0F4.b[1] & 0xFF0F) | 0xB0;
         sndisp("君は、今日クラブを 休んでしまったようなので、 退部してもらう。", 0, 0xD);
         func_80052060(0x0D000020, 0x0400002F, -1, 0xE);

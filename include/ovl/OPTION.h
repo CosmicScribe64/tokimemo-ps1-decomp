@@ -164,27 +164,7 @@ typedef struct OptionCharBits {
     /* 0x00 */ u32 f24 : 8;
 } OptionCharBits; /* size 0x04 */
 
-/* Packed player word at GameState +0xF4; byte/halfword bitfield accesses, T-14400. */
-typedef struct OptionPlayerBits {
-    /* 0x00 */ u32 unk_00 : 8;
-    /* 0x00 */ u32 f8 : 4;
-    /* 0x00 */ u32 f12 : 4;
-    /* 0x00 */ u32 b16 : 1;
-    /* 0x00 */ u32 b17 : 1;
-    /* 0x00 */ u32 b18 : 1;
-    /* 0x00 */ u32 b19 : 1;
-    /* 0x00 */ u32 b20 : 1;
-    /* 0x00 */ u32 unk_21 : 11;
-} OptionPlayerBits; /* size 0x04 */
 
-/* Packed schedule word at GameState +0x54C, T-14400. */
-typedef struct OptionScheduleBits {
-    /* 0x00 */ u32 f0 : 5;
-    /* 0x00 */ u32 unk_05 : 19;
-    /* 0x00 */ u32 b24 : 1;
-    /* 0x00 */ u32 f25 : 4;
-    /* 0x00 */ u32 unk_29 : 3;
-} OptionScheduleBits; /* size 0x04 */
 
 /* Packed date word at GameState +0xF8 and Rec38 +0x10: GsDateBits (main_api.h) plus the two bits at 9-10,
  * read as `& 0xF`, `<< 0x17 >> 0x1B`, `<< 0x15 >> 0x1E` (func_8013A7EC, T-17800). */

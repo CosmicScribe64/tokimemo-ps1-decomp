@@ -193,7 +193,7 @@ void func_80133AA0(void) {
         break;
     case 11:
         D_8013C570 = 0;
-        ((MasterClubBits *)&g->unk_66C[6])->count += 1;
+        ((ScheduleClubFlags *)&g->unk_66C[6])->unk_25 += 1;
         func_80042808();
         break;
     default:
@@ -794,7 +794,7 @@ void func_80136E24(void) {
 
     switch (D_800E6280.unk_110A) {
     case 0:
-        if (((MasterClubBits *)&D_800E6280.unk_66C[6])->count < 3U) {
+        if (((ScheduleClubFlags *)&D_800E6280.unk_66C[6])->unk_25 < 3U) {
             func_80042940(2);
         } else {
             cd_read_sectors(0xBU, 0x801E8000, 0xA9C5);
@@ -818,7 +818,7 @@ void func_80136E24(void) {
             for (i = 1; i < 13; i++) {
                 D_800E6280.unk_1BC[i].unk_02 += 5;
             }
-            ((MasterClubBits *)&D_800E6280.unk_66C[6])->b30 = 1;
+            ((ScheduleClubFlags *)&D_800E6280.unk_66C[6])->b30 = 1;
         }
         if (D_8013C584 == 0xFF) {
             func_80042808();

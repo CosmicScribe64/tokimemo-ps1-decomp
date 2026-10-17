@@ -347,11 +347,11 @@ CLUB_RE = re.compile(r"\(u32\) \(\(u32\) \(\(s32\) (D_800E6280\.unk_66C\[[^\[\]]
 
 def club_bits(env, body):
     """T-18600: field-symbols writes GameState word +0x684 as the GsRec66C record `D_800E6280.unk_66C[6]`, which
-    C cannot shift; bits 25..26 are MasterClubBits.count (as the matched func_801344E0 neighbours read them),
-    any other word read is `*(s32 *)&...`."""
-    if "MasterClubBits" not in env.types:
+    C cannot shift; bits 25..26 are ScheduleClubFlags.unk_25 (MASTER's MasterClubBits.count until T-20900, as the
+    matched func_801344E0 neighbours read them), any other word read is `*(s32 *)&...`."""
+    if "ScheduleClubFlags" not in env.types:
         return body
-    body = CLUB_RE.sub(lambda m: "((MasterClubBits *)&%s)->count" % m.group(1), body)
+    body = CLUB_RE.sub(lambda m: "((ScheduleClubFlags *)&%s)->unk_25" % m.group(1), body)
     return re.sub(r"\((?:s32|u32)\) (D_800E6280\.unk_66C\[[^\[\]]+\])(?![.\[])", lambda m: "*(s32 *)&" + m.group(1), body)
 
 

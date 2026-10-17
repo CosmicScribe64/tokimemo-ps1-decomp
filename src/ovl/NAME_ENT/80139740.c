@@ -1272,23 +1272,17 @@ void func_8013E6A8(void) {
 }
 
 /* Packed date word: day in bits 0-3, month in bits 4-8, week in bits 9-10. */
-typedef struct NameDate {
-    u32 day : 4;
-    u32 month : 5;
-    u32 week : 2;
-    u32 rest : 21;
-} NameDate;
 
 void func_8013E71C(void) {
     func_800AE0A0(D_8014D070, &D_800E6280.unk_0D4, 8);
     func_800AE0A0(D_8014D078, &D_800E6280.unk_0DC, 8);
     func_800AE0A0(D_8014D080, &D_800E6280.unk_0E4, 0xC);
-    D_8014D08C = ((NameDate *)&D_800E6280.unk_0F8)->day - 1;
-    D_8014D090 = ((NameDate *)&D_800E6280.unk_0F8)->month - 1;
-    D_8014D094 = (((NameDate *)&D_800E6280.unk_0F8)->week + 3) & 3;
-    D_8014D098 = ((NameDate *)&D_800E6280.unk_1BC[0].unk_10.w)->day - 1;
-    D_8014D09C = ((NameDate *)&D_800E6280.unk_1BC[0].unk_10.w)->month - 1;
-    D_8014D0A0 = (((NameDate *)&D_800E6280.unk_1BC[0].unk_10.w)->week + 3) & 3;
+    D_8014D08C = ((GsDateBits *)&D_800E6280.unk_0F8)->month - 1;
+    D_8014D090 = ((GsDateBits *)&D_800E6280.unk_0F8)->day - 1;
+    D_8014D094 = (((GsDateBits *)&D_800E6280.unk_0F8)->unk_09 + 3) & 3;
+    D_8014D098 = ((GsDateBits *)&D_800E6280.unk_1BC[0].unk_10.w)->month - 1;
+    D_8014D09C = ((GsDateBits *)&D_800E6280.unk_1BC[0].unk_10.w)->day - 1;
+    D_8014D0A0 = (((GsDateBits *)&D_800E6280.unk_1BC[0].unk_10.w)->unk_09 + 3) & 3;
     D_8014D0A4 = 1;
 }
 

@@ -287,12 +287,6 @@ extern u32 D_801454A0[];
 #ifndef OVL_TEL_ENTRY_FLAGS_H
 #define OVL_TEL_ENTRY_FLAGS_H
 /* Flag word at +0x54C of the 4-byte entries at GameState +0x54C (GsWord unk_54C[8]): nibble in bits 25..28, flag in bit 29. */
-typedef struct {
-    /* 0x00, bits 0..24 */ u32 pad : 25;
-    /* 0x00, bits 25..28 */ u32 nib : 4;
-    /* 0x00, bit 29 */ u32 b29 : 1;
-    /* 0x00, bits 30..31 */ u32 rest : 2;
-} TelEntryFlags; /* size 4 */
 #endif
 
 #ifndef OVL_TEL_T10860_ADC_H
@@ -373,12 +367,6 @@ void func_80139FEC(void);
 
 #ifndef OVL_TEL_T10860_CLUB_FLAGS
 #define OVL_TEL_T10860_CLUB_FLAGS
-/* T-10860: word view of a GameState +0x66C record. */
-typedef struct TelClubFlags {
-    /* 0x00, bits 0..23 */ u32 pad : 24;
-    /* 0x00, bit 24 */ u32 b24 : 1;
-    /* 0x00, bits 25..31 */ u32 rest : 7;
-} TelClubFlags; /* size 0x04 */
 #endif
 
 #ifndef OVL_TEL_RECORD_FLAGS_H

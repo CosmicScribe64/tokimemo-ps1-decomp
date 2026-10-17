@@ -1310,12 +1310,6 @@ typedef struct DateCounts22 {
 
 #ifndef OVL_DATE_FLAG17_T10730
 #define OVL_DATE_FLAG17_T10730
-/* Word view at GameState +0xF4; the seasonal event tests bit 17. */
-typedef struct DateFlag17 {
-    /* bits 0..16 */ u32 pad : 17;
-    /* bit 17 */ u32 b17 : 1;
-    /* bits 18..31 */ u32 rest : 14;
-} DateFlag17; /* size 0x04 */
 #endif
 
 #ifndef DATE_SELECTION_VIEW_T10730
@@ -1516,13 +1510,6 @@ extern u8 *D_8015B56C;
 extern s16 D_800CA158;
 #ifndef OVL_DATE_T11030_H
 #define OVL_DATE_T11030_H
-/* T-11030: the word at GameState +0xF4 (unk_0F4/unk_0F6) tested by bit 19 and 20 (func_8013C7D0). */
-typedef struct DateFlags0F4 {
-    /* 0x00 */ u32 pad : 19;
-    /* 0x00 */ u32 b19 : 1;
-    /* 0x00 */ u32 b20 : 1;
-    /* 0x00 */ u32 rest : 11;
-} DateFlags0F4; /* size 0x04 */
 void func_80138220(void);
 void func_801384D4(void);
 

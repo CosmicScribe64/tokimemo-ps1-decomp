@@ -102,7 +102,7 @@ void func_80133374(void) {
     if (D_8013C2E0 != 0xFF) {
         D_800E6280.unk_1BC[D_8013C2E0].unk_06 += 2;
     }
-    ((MasterClubBits *)&D_800E6280.unk_66C[(u32)D_800E6280.unk_0F4.h >> 0xC])->b30 = 1;
+    ((ScheduleClubFlags *)&D_800E6280.unk_66C[(u32)D_800E6280.unk_0F4.h >> 0xC])->b30 = 1;
     func_8008585C();
     func_800573AC();
     func_80057390(0);

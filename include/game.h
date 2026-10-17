@@ -207,21 +207,33 @@ typedef struct GsByteNibbles {
 #define TOKIMEMO_SCHEDULE_FLAGS_H
 /* T-10880: word view at GameState +0xF4 in func_8006D7EC.
  * Bit 18 is tested with lw/sll 13/srl 31 and stored through byte +0xF6.
- * Bits 21..23 are a three-bit counter read and decremented through +0xF6. */
+ * Bits 21..23 are a three-bit counter read and decremented through +0xF6.
+ * T-20900: also DATE's ScheduleFlags and ScheduleFlags and OPTION's ScheduleFlags (unk_08, unk_12: its f8, f12;
+ * bits 16..20 tested one by one). */
 typedef struct ScheduleFlags {
-    /* 0x00 */ u32 unk_00 : 18;
+    /* 0x00 */ u32 unk_00 : 8;
+    /* 0x00 */ u32 unk_08 : 4;
+    /* 0x00 */ u32 unk_12 : 4;
+    /* 0x00 */ u32 b16 : 1;
+    /* 0x00 */ u32 b17 : 1;
     /* 0x00 */ u32 b18 : 1;
-    /* 0x00 */ u32 unk_19 : 2;
+    /* 0x00 */ u32 b19 : 1;
+    /* 0x00 */ u32 b20 : 1;
     /* 0x00 */ u32 unk_21 : 3;
     /* 0x00 */ u32 unk_24 : 8;
 } ScheduleFlags; /* size 0x04 */
 
 /* T-10880: word view of GameState.unk_66C[11]. The counter occupies
- * bits 25..26; increment reads the word and writes byte +3 bits 1..2. */
+ * bits 25..26; increment reads the word and writes byte +3 bits 1..2.
+ * T-20900: also TEL's ScheduleClubFlags (b24), KANGEI's ScheduleClubFlags and ETC's ScheduleClubFlags (grade: unk_25, flag: b30) and
+ * MASTER's ScheduleClubFlags (count: unk_25, b30). RENSYU's RensyuClubCount is a u16 view and stays. */
 typedef struct ScheduleClubFlags {
-    /* 0x00 */ u32 unk_00 : 25;
+    /* 0x00 */ u32 unk_00 : 24;
+    /* 0x00 */ u32 b24 : 1;
     /* 0x00 */ u32 unk_25 : 2;
-    /* 0x00 */ u32 unk_27 : 5;
+    /* 0x00 */ u32 unk_27 : 3;
+    /* 0x00 */ u32 b30 : 1;
+    /* 0x00 */ u32 unk_31 : 1;
 } ScheduleClubFlags; /* size 0x04 */
 
 /* T-10880: date and activity views of the eight GameState.unk_54C entries.
@@ -234,8 +246,12 @@ typedef struct ScheduleEntryDate {
     /* 0x02 */ u16 unk_15 : 11;
 } ScheduleEntryDate; /* size 0x04 */
 
+/* T-20900: also main's ScheduleEntryFlags, ScheduleEntryFlags, ScheduleEntryFlags (idx: unk_00, nib: unk_25, b29: active),
+ * TEL's ScheduleEntryFlags and OPTION's ScheduleEntryFlags (f0: unk_00, f25: unk_25). */
 typedef struct ScheduleEntryFlags {
-    /* 0x00 */ u32 unk_00 : 25;
+    /* 0x00 */ u32 unk_00 : 5;
+    /* 0x00 */ u32 unk_05 : 19;
+    /* 0x00 */ u32 b24 : 1;
     /* 0x00 */ u32 unk_25 : 4;
     /* 0x00 */ u32 active : 1;
     /* 0x00 */ u32 unk_30 : 2;

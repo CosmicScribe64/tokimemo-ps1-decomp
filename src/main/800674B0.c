@@ -10,13 +10,6 @@ s32 func_80049FF0(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, s32 arg6);
 u8 *strncat();
 extern DisplayActor44 D_8011ECD0[];
 
-/* Flag word of the 4-byte entries at GameState +0x54C (GsWord unk_54C[8]): nibble in bits 25..28, flag in bit 29. */
-typedef struct {
-    u32 pad : 25;
-    u32 nib : 4;
-    u32 b29 : 1;
-    u32 rest : 2;
-} TelEntryFlags; /* size 4 */
 
 void func_800674B0(void) {
     u8 v;
@@ -859,12 +852,6 @@ s32 appointment_find_today(s32 arg0, s32 arg1, s32 arg2) {
     return r;
 }
 
-typedef struct EntryFlags54C {
-    u32 pad : 25;
-    u32 nib : 4;
-    u32 b29 : 1;
-    u32 rest : 2;
-} EntryFlags54C;
 
 s32 func_8006B014(s32 arg0) {
     s32 i;
@@ -872,7 +859,7 @@ s32 func_8006B014(s32 arg0) {
 
     n = 0;
     for (i = 0; i < 8; i++) {
-        if (((EntryFlags54C *)&D_800E6280.unk_54C[i])->b29 && arg0 == ((EntryFlags54C *)&D_800E6280.unk_54C[i])->nib) {
+        if (((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active && arg0 == ((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_25) {
             n++;
         }
     }
@@ -885,12 +872,12 @@ void func_8006B5BC(GsWord arg0) {
     s32 i;
 
     i = 0;
-    if (((TelEntryFlags *)&D_800E6280.unk_54C[i])->b29) {
+    if (((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active) {
         if (i) { /* FAKE: the empty test keeps i from folding to 0, the original has `sll t9,zero,2; addu v0,t9,base`; real source unknown. T-9340 */
         }
         do {
             i++;
-        } while (((TelEntryFlags *)&D_800E6280.unk_54C[i])->b29 && i != 8);
+        } while (((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active && i != 8);
     }
     D_800E6280.unk_54C[i] = arg0;
     func_8006B0C8();

@@ -86,6 +86,20 @@ TYPE_ALIASES = {
     "BunkSelectWords": ("BunkaDispatch8", ()), "BunkModePair": ("BunkaDispatch8", ()),
     "EtcMat": ("MATRIX", ()), "EtcMat2": ("MATRIX", ()), "TaiikuMat": ("MATRIX", ()),
     "EtcVec": ("VECTOR", ()), "EtcVec2": ("VECTOR", ()), "TaiikuVec": ("VECTOR", ()),
+    # GameState words: +0x54C entries, +0x66C club words, +0xF4, +0xF8
+    "TelEntryFlags": ("ScheduleEntryFlags", ((r"->nib\b", "->unk_25"), (r"->b29\b", "->active"))),
+    "EntryFlags54C": ("ScheduleEntryFlags", ((r"->nib\b", "->unk_25"), (r"->b29\b", "->active"))),
+    "EntryFlags29": ("ScheduleEntryFlags", ((r"->idx\b", "->unk_00"), (r"->nib\b", "->unk_25"),
+                                            (r"->b29\b", "->active"))),
+    "OptionScheduleBits": ("ScheduleEntryFlags", ((r"->f0\b", "->unk_00"), (r"->f25\b", "->unk_25"))),
+    "KgSlot": ("ScheduleClubFlags", ((r"->grade\b", "->unk_25"),)),
+    "EtcSlot": ("ScheduleClubFlags", ((r"->grade\b", "->unk_25"), (r"->flag\b", "->b30"))),
+    "MasterClubBits": ("ScheduleClubFlags", ((r"->count\b", "->unk_25"),)),
+    "TelClubFlags": ("ScheduleClubFlags", ()),
+    "DateFlag17": ("ScheduleFlags", ()), "DateFlags0F4": ("ScheduleFlags", ()),
+    "OptionPlayerBits": ("ScheduleFlags", ((r"->f8\b", "->unk_08"), (r"->f12\b", "->unk_12"))),
+    "NameDate": ("GsDateBits", ((r"->day\b", "->@MONTH@"), (r"->month\b", "->day"), (r"->@MONTH@", "->month"),
+                                (r"->week\b", "->unk_09"))),
 }
 
 DECL_RE = re.compile(r"^\s*extern\s+(?:volatile\s+)?(\w+)\s*(\*?)\s*(D_[0-9A-F]{8})\s*(\[(\w*)\])?\s*;"
