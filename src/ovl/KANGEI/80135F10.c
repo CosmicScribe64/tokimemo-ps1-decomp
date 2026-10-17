@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_800AE120 /* T-22016: int-returning view for func_801362F0 */
 #include "common.h"
 #include "ovl/KANGEI.h"
+
+s32 func_800AE120();
 
 typedef struct {
     void (*f[24])();
@@ -99,7 +102,43 @@ void func_801362BC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_801362F0);
+void func_801362F0(void) {
+    u8 temp_v1;
+
+    func_800AE120(D_800E6280.unk_10F8);
+    temp_v1 = D_80139DF4[(u8) D_80139DF0];
+    if (temp_v1 == 1) {
+        func_8004284C();
+        func_8004284C();
+    } else if (temp_v1 == 2) {
+        func_8004284C();
+        func_8004284C();
+    } else {
+        D_800E6280.unk_F5F = 0xB;
+        D_80139DF8 = (u8) (func_800AE0D0() % 4);
+        if ((((u16) D_800E6280.unk_0F4.h >> 0xC) == 0xA) && (func_800AE0D0() % 2)) {
+            D_80139DF8 = 4;
+        }
+        switch (*(u8 *)&D_80139DF8) /* FAKE: T-22016, byte view of the selector keeps it in a ugen temporary */ {
+        case 0:
+            cd_read_sectors(0x35U, 0x801B4400, 0x8FF3);
+            break;
+        case 1:
+            cd_read_sectors(0x35U, 0x801B4400, 0x9028);
+            break;
+        case 2:
+            cd_read_sectors(0x35U, 0x801B4400, 0x905D);
+            break;
+        case 3:
+            cd_read_sectors(0x35U, 0x801B4400, 0x9092);
+            break;
+        default:
+            cd_read_sectors(0x35U, 0x801B4400, 0x90C7);
+            break;
+        }
+    }
+    func_8004284C();
+}
 
 void func_80136494(void) {
     load_palette(D_80139DB0, 0x11, 1, 2, 0);

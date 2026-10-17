@@ -2869,7 +2869,9 @@ void func_800AE0F0(void *dst, void *src);  /* strcpy (SDK libc) */
 #endif
 void strcpy(u8 *dst, u8 *src);
 void strcat(u8 *dst, u8 *src);
+#ifndef MAIN_API_OVERRIDE_func_800AE120
 void func_800AE120(s32 arg0);
+#endif
 s32 sprintf();
 s32 strcmp(u8 *a, u8 *b);
 s32 SetSp();
