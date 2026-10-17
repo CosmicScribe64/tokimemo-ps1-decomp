@@ -353,16 +353,13 @@ void func_80044890(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f) {
     D_800B3D2C = 1;
 }
 
-/* NON_MATCHING: T-17019, 7 differing lines; the D_800B3D4C load is in $v0 (original $v1, one range with its increment) and the copy of the increment after the branch is missing (T-0018) */
-#ifdef NON_MATCHING
 s32 func_80044C98(void) {
     if ((u32) (((func_800460DC() - D_800B3D20) + 0x100) & 0xFF) >= 5U) {
         if (D_800B3D4C == 0) {
             func_80044D54();
-            D_800B3D4C += 1;
+            D_800B3D4C++;
         } else {
-            D_800B3D4C += 1;
-            if ((D_800B3D4C > 0xC0U) || (func_80044F94((s32) D_800B3D24) != 0)) {
+            if ((++D_800B3D4C > 0xC0U) || (func_80044F94((s32) D_800B3D24) != 0)) {
                 D_800B3D54[D_800B3D24] = 0;
                 return 1;
             }
@@ -370,9 +367,6 @@ s32 func_80044C98(void) {
     }
     return -1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80043510", func_80044C98);
-#endif
 
 s32 func_80044D54(void) {
     if (D_800B3D24 == 0) {
