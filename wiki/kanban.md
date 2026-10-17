@@ -46,9 +46,8 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-20910-types-option|T-20910 Targeted type pass: OPTION]]
-
 ## Done
+- [ ] [[tickets/T-20910-types-option|T-20910 Targeted type pass: OPTION]]
 - [ ] [[tickets/T-20930-types-ending|T-20930 Targeted type pass: ENDING]]
 - [ ] [[tickets/T-9910-wave-10-list-1|T-9910 Wave 10: list 1]]
 - [ ] [[tickets/T-9920-wave-10-list-2|T-9920 Wave 10: list 2]]

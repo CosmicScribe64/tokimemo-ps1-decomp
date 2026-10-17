@@ -358,4 +358,3 @@ with a draft-side `SpriteSlot24` view of `D_801220D0`; `func_801328C0` `plain` 1
 while hand drafts in the shape of the matched siblings took the OPTION sum from 5,184 to 3,504 diff rows and
 matched `func_80135E48`. A measured non-change: `D_8013D3B8` stays `volatile u16` (dropping it helps one draft
 and hurts two). Details: [[option-family-results]] ("Second type pass (T-20910)").
-
