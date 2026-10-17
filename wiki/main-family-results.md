@@ -136,3 +136,7 @@ Largest gains: `parameter_show` 362 to 61, `parameter_up_down` 408 to 177, `func
 The fold helps main less than TAIIKU: most census drafts already compiled the GameState labels as separate
 scalars, which compile like members except for the load-after-store order, and the large shared objects
 above could not be typed.
+
+### Wave 3 package w3-main-p08 (T-17008)
+
+`func_80059EF0`, `func_8004F6B0` and `func_80059BE8` matched ([[matching-notes]], section T-17008). Type changes: `s32 D_800C6200[8]`, `s32 D_800C62C0[32]` are index loops now (the `func_80059EF0` entry of the type map above); `s16 D_80125BF0`/`D_80125BF2` declared (the cursor, promoted by uopt); `func_80098490` takes `u16` parameters; `D_800C9730` and `D_800C5FCC` have file-local array views in `80059B40.c` (`s32 D_800C9730[11]`, `s32 D_800C5FCC[2]`, `MAIN_API_OVERRIDE_*`), while `main_api.h` keeps `u8[]` and `s32` for their other users.
