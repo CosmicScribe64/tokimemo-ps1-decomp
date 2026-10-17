@@ -45,7 +45,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-22002-w4-p02|T-22002]] Wave 4 package w4-p02: main `func_80079070` matched (1,204 B; unconverted `s32` call-argument local is precoloured `$a0`), 1 of 1 (Done).
 - [[tickets/T-22005-w4-p05|T-22005]] Wave 4 package w4-p05: TACO func_801484E4, func_801416E8 and func_801497EC matched (2,376 bytes), func_8013D838 (10 lines) guarded (Done).
 - [[tickets/T-22008-w4-p08|T-22008]] Wave 4 package w4-p08: `NAME_ENT` `80132000.c`, 0 of 4 matched; `func_80132320` (14 lines) and `func_80134110` (26 lines) stay guarded, `func_80134248` at 455 lines, `func_80138C1C` not closer (Done; 0 of 4 matched).
-- [[tickets/T-22015-w4-p15|T-22015]] Wave 4 package w4-p15: MASTER `func_80132444` and `func_801326B4` in `80132140.c` (In Progress).
+- [[tickets/T-22015-w4-p15|T-22015]] Wave 4 package w4-p15: MASTER `80132140.c`, 0 of 2 matched; `func_80132444` guarded at 22 rows, `func_801326B4` stays `INCLUDE_ASM` (586 rows after cleanup, frame matches) (In Review).
 - [[tickets/T-11880-date2-remainder|T-11880]] DATE2: the remaining nine functions, claim #49 (Done; 8 of 9 matched, DATE2 101/102, 91.9% of bytes).
 - [[tickets/T-20008-large-name-introduction|T-20008]] NAME_ENT introduction reconstruction archive (4,308-byte scope), claim #50; compiling, still nonmatching (In Progress; draft checkpoint merged, PR #51).
 - [[tickets/T-20010-name-ent-resource-loader|T-20010]] NAME_ENT resource loader follow-up, 1,652 bytes; valid table recovered, still ASM (Ready).

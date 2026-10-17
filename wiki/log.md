@@ -17650,3 +17650,7 @@ Two of four TACO functions matched: `func_801484E4` (392 bytes; kept `D_800E7384
 ## [2026-10-17] ticket | T-22015 Wave 4 package w4-p15 opened
 
 [[tickets/T-22015-w4-p15]] (In Progress) under [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/MASTER/80132140.c`, `func_80132444` and `func_801326B4`. Branch `w4-p15` from `w2-good`.
+
+## [2026-10-17] ticket | T-22015 In Review
+
+[[tickets/T-22015-w4-p15]]: 0 of 2 matched in `src/ovl/MASTER/80132140.c`. `func_80132444` guarded at 22 rows (case 4 register allocation: uopt ranges in the original, ugen temporaries in the draft), `func_801326B4` stays `INCLUDE_ASM` after cleanup (frame 0x1E8 matches, 586 rows; cleaned draft in `drafts/T-22015/MASTER/func_801326B4/body.c`). Notes: [[matching-notes]] section T-22015.
