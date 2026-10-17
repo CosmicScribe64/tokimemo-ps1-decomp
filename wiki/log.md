@@ -17692,3 +17692,6 @@ Three of five SHUGAKU functions matched: `func_80135480` (`s32` no return, `SHUG
 
 ## [2026-10-17] ticket | T-22018 Wave 4 package w4-p18 In Progress
 Started: BUNKAKEN `src/ovl/BUNKAKEN/80144F70.c`, `src/ovl/BUNKAKEN/80143DD0.c` and `src/ovl/BUNKAKEN/801428D0.c`, three functions from the work list. Ticket [[tickets/T-22018-w4-p18]], parent [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] ticket | T-22018 Wave 4 package w4-p18 In Review
+One of three BUNKAKEN functions matched: `func_801428D0` (`BunkaDispatch8` view). `func_80144F70` guarded at 4 rows (from 335): two-local frame, operand order, `GameState *g`. `func_80143DD0` not started. Notes in [[matching-notes]], ticket [[tickets/T-22018-w4-p18]].
