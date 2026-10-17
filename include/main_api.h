@@ -669,6 +669,8 @@ extern u8 D_800B4355[10];
 extern u8 D_800B4361[10];
 extern s8 D_800B436C[15];
 extern s8 D_800B437C[15];
+extern u8 D_800B4390[];
+extern u8 *D_800B58B0;
 extern s32 D_800B58E4;
 extern s32 D_800B58F8;
 extern s32 D_800B58FC;
@@ -1665,7 +1667,20 @@ extern s32 D_801230E0[];
 extern s32 D_801230E4;
 extern s32 D_801230F4;
 extern u32 D_80123110;
+/* One bank of the memory-card save image: D_80123320[2] follows the 0x200-byte header at D_80123120; header
+ * and banks together are one 0x2000-byte card block. T-17007 */
+typedef struct SaveBank {
+    /* 0x000 */ s32 checksum;      /* byte sum of data (func_80055A38) */
+    /* 0x004 */ u8 data[0xEFC];
+} SaveBank; /* size 0xF00 */
 extern u8 D_80123120[];
+extern u8 D_80123122;
+extern u8 D_80123123;
+extern u8 D_80123124[];
+extern u8 D_80123164[];
+extern u8 D_80123180[];
+extern u8 D_801231A0[];
+extern SaveBank D_80123320[2];
 extern s32 D_80125120;
 extern s32 D_80125124;
 extern u8 D_80125128;

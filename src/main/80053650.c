@@ -551,7 +551,57 @@ void func_80054C4C(void) {
     bzero(D_80123120, 0x2000);
 }
 
+/* NON_MATCHING: T-17007, 18 differing lines; the D_80123120 address and the two 0x2000 constants take s3/s2 where the original has s2 (address and write size) and s3 (loop bound); the struct-copy end pointer is t4, not t5 */
+#ifdef NON_MATCHING
+s32 func_80054C74(s32 arg0) {
+    u8 name[0x1C];
+    s32 i;
+    s32 n;
+    u8 *p;
+
+    func_80054C4C();
+    func_80056070(name, arg0);
+    close(D_800B58E4);
+    if ((D_800B58E4 = open(name, 2)) == -1) {
+        return -1;
+    }
+    strncpy(D_80123120, "SC", 2);
+    D_80123122 = 0x13;
+    D_80123123 = 1;
+    bzero(D_80123124, 0x40);
+    strcpy(D_80123124, "ときめきメモリアル");
+    if (arg0 != 0) {
+        strcat(D_80123124, D_800B32CC[arg0 - 1]);
+    } else {
+        strcat(D_80123124, "・システム");
+    }
+    bzero(D_80123164, 0x1C);
+    memcpy(D_80123180, D_800B4390, 0x20);
+    memcpy(D_801231A0, D_800B58B0, 0x180);
+    if (arg0 != 0) {
+        func_8005557C(0);
+    } else {
+        func_80054FC0(0);
+    }
+    D_80123320[1] = D_80123320[0];
+    i = 0;
+    p = D_80123120;
+    /* FAKE: two named 0x2000 constants keep separate registers (write size and loop bound), and arg0 is reused as one of them because a fourth scalar grows the frame by 8 bytes. T-17007 */
+    n = 0x2000;
+    arg0 = 0x2000;
+    do {
+        if (write(D_800B58E4, p, arg0) != arg0) {
+            close(D_800B58E4);
+            return -1;
+        }
+        i += 0x2000;
+        p += 0x2000;
+    } while (i != n);
+    return 1;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054C74);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054E6C);
 
