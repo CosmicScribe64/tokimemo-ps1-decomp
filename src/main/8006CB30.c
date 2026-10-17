@@ -1435,8 +1435,6 @@ void func_80072CA0(void) {
     }
 }
 
-/* NON_MATCHING: T-11670 (rechecked in T-17004), 22 differing lines; the original loads D_800E639A straight into lim's s1 and the selector byte into v1, IDO keeps the 0x800E0000 base in v0 and the selector in a0 (constant 11 holds v1). */
-#ifdef NON_MATCHING
 s32 func_80072D70(void) {
     s32 state;
     s32 lim;
@@ -1444,25 +1442,28 @@ s32 func_80072D70(void) {
     s32 k;
     s32 flag;
     s32 start;
+    /* FAKE: every GameState field is read through a local pointer. An indirect load is not a plain variable for uopt, so
+     * the compares keep the original's constant-first order and register colours; found by autotweak (gstate), T-20830. T-21520 */
+    GameState *g = &D_800E6280;
 
     flag = 0;
-    lim = D_800E6280.unk_118.unk_02;
+    lim = g->unk_118.unk_02;
     lim = lim / 8 + 0xCC;
     if (lim >= 0xFF) {
         lim = 0xFE;
     }
-    switch (D_800E6280.unk_0F4.b[1] & 0xF) {
+    switch (g->unk_0F4.b[1] & 0xF) {
     case 0:
         state = 0;
-        if ((D_800E6280.unk_0F6.b[0] >> 5) == 0) {
-            if ((D_800E6280.unk_0FC.unk_02 < 0x14) && (lim < (rand() & 0xFF))) {
+        if ((g->unk_0F6.b[0] >> 5) == 0) {
+            if ((g->unk_0FC.unk_02 < 0x14) && (lim < (rand() & 0xFF))) {
                 state = 1;
                 flag = 1;
-            } else if (D_800E6280.unk_0FC.unk_02 == 0) {
+            } else if (g->unk_0FC.unk_02 == 0) {
                 state = 1;
                 flag = 1;
             }
-            if ((D_800E6280.unk_11C.unk_02 >= 0x51) && ((u32) lim < (u32) (D_800E7D10.unk_000 & 0xFF))) {
+            if ((g->unk_11C.unk_02 >= 0x51) && ((u32) lim < (u32) (D_800E7D10.unk_000 & 0xFF))) {
                 state += 2;
                 flag = 1;
             }
@@ -1479,11 +1480,11 @@ s32 func_80072D70(void) {
         break;
     case 1:
         state = 1;
-        if ((D_800E6280.unk_11C.unk_02 >= 0x51) && ((u32) lim < (u32) (D_800E7D10.unk_000 & 0xFF))) {
+        if ((g->unk_11C.unk_02 >= 0x51) && ((u32) lim < (u32) (D_800E7D10.unk_000 & 0xFF))) {
             state = 3;
             flag = 1;
         }
-        if (D_800E6280.unk_0FC.unk_02 >= 0x1F) {
+        if (g->unk_0FC.unk_02 >= 0x1F) {
             state = 0;
             flag = 1;
         }
@@ -1496,14 +1497,14 @@ s32 func_80072D70(void) {
         break;
     case 2:
         state = 2;
-        if ((D_800E6280.unk_0FC.unk_02 < 0x14) && (lim < (rand() & 0xFF))) {
+        if ((g->unk_0FC.unk_02 < 0x14) && (lim < (rand() & 0xFF))) {
             state = 3;
             flag = 1;
-        } else if (D_800E6280.unk_0FC.unk_02 == 0) {
+        } else if (g->unk_0FC.unk_02 == 0) {
             state = 3;
             flag = 1;
         }
-        if (D_800E6280.unk_11C.unk_02 < 0x46) {
+        if (g->unk_11C.unk_02 < 0x46) {
             state = 0;
             flag = 1;
         }
@@ -1516,7 +1517,7 @@ s32 func_80072D70(void) {
         break;
     case 3:
         state = 3;
-        if ((D_800E6280.unk_11C.unk_02 < 0x46) && (D_800E6280.unk_0FC.unk_02 >= 0x1F)) {
+        if ((g->unk_11C.unk_02 < 0x46) && (g->unk_0FC.unk_02 >= 0x1F)) {
             state = 0;
             flag = 1;
         }
@@ -1524,13 +1525,13 @@ s32 func_80072D70(void) {
             func_80042940(7);
             break;
         }
-        if (((u8 *) D_800E6280.unk_044)[D_800E6280.unk_040] == 0) {
+        if (((u8 *) g->unk_044)[g->unk_040] == 0) {
             start = rand() % 11;
             for (i = 0; i != 11; i++) {
                 k = (start + i) % 11;
-                if (D_800E6280.unk_1BC[k].unk_0C.f.b1 && (get_h_tokimeki(k) >= 0x33U) && (get_g_zyotai_s(start) != 4)) {
+                if (g->unk_1BC[k].unk_0C.f.b1 && (get_h_tokimeki(k) >= 0x33U) && (get_g_zyotai_s(start) != 4)) {
                     if ((rand() & 0xFF) < 0x3F) {
-                        D_800E6280.unk_75D = k;
+                        g->unk_75D = k;
                         main_state_set(0x62);
                         return 1;
                     }
@@ -1539,16 +1540,13 @@ s32 func_80072D70(void) {
         }
         break;
     default:
-        D_800E6280.unk_0F4.b[1] &= 0xFFF0;
+        g->unk_0F4.b[1] &= 0xFFF0;
         break;
     }
     if (flag == 0) {
         func_80042908(0xFF);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072D70);
-#endif
 
 s32 func_80073198(void) {
     switch (*(u8 *)&D_800E6280.unk_110D) {
