@@ -16895,3 +16895,7 @@ Created [[tickets/T-17012-w3-main-p12]]: wave 3 package w3-main-p12, six functio
 ## [2026-10-17] ticket | T-17017 closer pass
 
 [[tickets/T-17017-w3-main-p17]] closer pass (Opus, 02:45 to 03:55 UTC), only the guarded near misses of `src/main/80058D20.c`; nothing matched, ticket stays In Review. `func_8005938C`: an index loop (`i += 2` over 0x44-byte slots) and the `OtRec20` element address for `&D_800E8C70[D_8011ECA0]` give every `s` register, frame 0x108 and all stack offsets; 304 rows to 124, all ugen temporaries (T-11610 MATRIX-copy gap), so it stays `INCLUDE_ASM` with the draft in `drafts/T-17017/main/func_8005938C-closer/`. `func_800590CC` stays at 16 rows (five more forms, all worse; NON_MATCHING comment updated), `func_800591D8` unchanged at 32. Notes in [[matching-notes]] (section T-17017), row in [[data/t0018-cases]]. Clean build (`rm -rf build`, configure, ninja) 27/27 SHA1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK.
+
+## [2026-10-17] ticket | T-17017 Done
+
+[[tickets/T-17017-w3-main-p17]] In Review to Done after the code review: wave 3 package w3-main-p17 (main `src/main/80058D20.c`), 0 of 3 functions matched (0 bytes); `func_800590CC` (16 rows) and `func_800591D8` (32 rows) stay guarded, `func_8005938C` stays `INCLUDE_ASM` with drafts archived. Two non-blocking findings fixed (FAKE comment wording, acceptance criterion wording). Clean build sha1 OK; headers OK. Card moved to Done on [[kanban]].

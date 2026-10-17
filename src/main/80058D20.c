@@ -131,11 +131,11 @@ void func_8005907C(void) {
  * locals alias w/h but grow the frame to 0x38 (31); `*&w` and plain parameters propagate (40, 42);
  * only w aliased gives 34. */
 #ifdef NON_MATCHING
-/* FAKE: `w` and `h` are extra K&R-style parameters whose addresses are read (pw, ph).
- * Aliased variables keep IDO from propagating the constants, so 0x140/0xF0 are loaded
- * into a0/a1 before the branch and stored and passed from those registers as in the
- * original; the parameters' home slots in the caller's area keep the frame at 0x30
- * (locals cost 8 bytes, 22 lines). T-17017 */
+/* FAKE: `w` and `h` are extra parameters (the main_api.h prototype is `()`) whose
+ * addresses are read (pw, ph). Aliased variables keep IDO from propagating the
+ * constants, so 0x140/0xF0 are loaded into a0/a1 before the branch and stored and
+ * passed from those registers as in the original; the parameters' home slots in the
+ * caller's area keep the frame at 0x30 (locals cost 8 bytes, 22 lines). T-17017 */
 void func_800590CC(s32 arg0, s32 w, s32 h) {
     s32 *pw;
     s32 *ph;
