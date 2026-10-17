@@ -17388,3 +17388,46 @@ Created [[tickets/T-20940-types-main-80075320]] (branch `ty-main-80075320` from 
 
 ## [2026-10-17] ticket | T-20940 Done
 [[tickets/T-20940-types-main-80075320]] reviewed against `CODING_STANDARDS.md`: three small findings fixed in `src/main/80075320.c` (a shift-and-cast flag test replaced by the `CharFlags.b3` bit-field, which builds the same object; a missing `FAKE` mark on the u8 view of `unk_F6E` in `func_80077694`; a comment for the repeated club 10 condition in `func_80077900`). No edit in `src/ovl/TT/*` or `dialogue_render`, types documented in [[data-types]], no game data. Clean rebuild 27/27 sha1 OK; `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. In Review to Done (kanban card moved).
+## [2026-10-16] ticket | T-20007 large dialogue renderer
+
+Ranked current unmatched functions by archived size, excluding TT and landed source. Claimed main dialogue_render (5,588 bytes) in issue #45 before implementation; started [[tickets/T-20007-large-dialogue-renderer]] on main 5df5fdc6. The larger dialogue_speak_part is excluded because its documented last-mile scheduling obstacle has already had extensive probes. Existing renderer drafts need real buffers/loops and three-byte copies recovered from the original.
+
+## [2026-10-16] query | T-20007 large renderer structure
+
+Original assembly confirms a 760-byte frame, five three-byte punctuation initializers, the 512-byte input copy and repeated 64-byte line/name-token expansion loops. Mechanical archived-draft repairs still differ by 1,751 rows (initial.log); partial counter merging is worse. A structured source reconstruction is being measured, with no production C installed.
+
+## [2026-10-16] query | T-20007 raw and narrowed Y lifetimes
+
+The structured renderer reaches the original frame extent and reduces diagnostics from 1,751 to 1,196 rows. Inspection of the final-line assembly exposes a real draft error: sp+0x68 stores the raw coordinate sum, sp+0x64 its narrowed drawing coordinate. Corrected this distinction in scratch and are testing parser block placement/common return. Production remains INCLUDE_ASM.
+
+## [2026-10-16] query | T-20007 original instruction count recovered
+
+A single control-token condition plus the shared narrow-index advance restores the renderer to 1,397 instructions, equal to the original. Best full-unit diagnostic is 1,090 rows, still not matching. Separating both original expansion loop increments and the short draw-Y lifetime is the next measured refinement. No production source change.
+
+## [2026-10-16] query | T-20007 narrow index update breakthrough
+
+Eliminating the explicit line cursor restores the 760-byte frame. Splitting the short output-index update into two meaningful assignments recovers the original ugen temporary sequence and reduces full-unit diagnostics from 982 to 358 rows. Testing inferred scalar positions, compare operand order and the canonical return view of the strncpy alias. No byte-match claim or production C installation yet.
+
+## [2026-10-17] build | Continue the large dialogue renderer
+
+[[tickets/T-20007-large-dialogue-renderer]] resumes with exclusive maintainer-confirmed ownership in issue #45. Source sequencing reduces the scratch full-unit diagnostic from 358 to 330 rows, and grouping related narrow-index updates on one line reaches 242. Frame and instruction count agree, but stack homes and repeated operands remain different; keep the ASM fallback while measuring declaration order. All compiler work remains in Docker.
+
+## [2026-10-17] query | T-20007 direct byte scan and inferred coordinate saves
+
+[[tickets/T-20007-large-dialogue-renderer]] now has a 106-row scratch diagnostic, compared with 330 at this continuation's start. Direct array reads remove the first compare-copy mismatch, and a shared drawing-coordinate expression recovers the original Y save homes without a dedicated local. A measured signed-pointer expression fixes repeated commutative operands but needs FAKE annotation if retained. Buffer extent and result-lifetime controls remain nonmatching; no production source or match claim.
+
+## [2026-10-17] build | T-20007 renderer reaches zero diagnostic differences
+
+[[tickets/T-20007-large-dialogue-renderer]] recovers the original compiler-generated source-pointer save by separating the line-start and substitution-copy indices. Per-line for initializers restore the final address-hoist schedule. Full-source scratch comparison now agrees for all 1,397 instructions, without buffer padding or signed pointer casts. This is a candidate only; next are source/declaration cleanup, actual linked-byte proof and all 27 binary/header/global/prototype checks.
+
+## [2026-10-17] build | Large renderer passes all 27 binary hashes
+
+[[tickets/T-20007-large-dialogue-renderer]] installs the recovered 5,588-byte dialogue_render body in the default build. ninja -j8 completes 526 steps, header/global checks pass, and independent SHA1 comparisons pass for main plus all 26 overlays. Shared s32 K&R dialogue_render works without the old file override. The linked SDK symbol is strncpy; its measured integer view is explicit and the shared alias matches the existing void address view. [[matching-notes]] records the index/common-expression recovery and the two marked matching constraints. Prototype guard and final function proof are still running.
+
+## [2026-10-17] ticket | T-20007 ready for upstream review
+
+[[tickets/T-20007-large-dialogue-renderer]] moves to In Review after source/header self-review, a default linked MATCH for all 5,588 bytes, 27/27 immutable binary hashes, headers/globals OK and the prototype guard (0 new / 15 known). [[kanban]] and [[index]] agree. Only the claimed function and its required declarations/wiki notes are included. The latest fetched main (2de889b8) still has its ASM fallback; no main merge was made.
+
+## [2026-10-17] ticket | Submit large renderer PR 46
+
+[[tickets/T-20007-large-dialogue-renderer]] is submitted as https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/46 and attached to the chat. GitHub reports integration conflicts with newer main; retain the verified branch and leave moving-main integration to the maintainer per coordination. No immediate review comments or hosted checks. Status remains In Review.

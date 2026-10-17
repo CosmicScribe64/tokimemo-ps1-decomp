@@ -922,6 +922,7 @@ extern s16 D_800CA236;
 extern u8 D_800CA23C[];
 extern u8 D_800CA250[];
 extern u8 D_800CA25C[];
+extern u8 D_800CA280[];
 extern u8 D_800CA2A4[4]; /* [1], [2] are the former D_800CA2A5/6 */
 extern u8 D_800CA2A5;
 extern u8 D_800CA2A6;
@@ -2617,7 +2618,8 @@ void func_8007EDF8();
 void wait_sub_sub(s16 arg0);
 void func_80081128(void);
 #ifndef MAIN_API_OVERRIDE_dialogue_render
-void dialogue_render(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5, void *arg6, s32 arg7);
+/* K&R arguments are narrowed by the callee; its renderer result is returned. T-20007. */
+s32 dialogue_render();
 #endif
 void func_80081D30();
 s32 func_80082764();
@@ -2834,6 +2836,9 @@ void func_800AE080(u8 *arg0, s32 arg1);
 #ifndef MAIN_API_OVERRIDE_func_800AE090
 void func_800AE090(void *dst, void *src, s32 n);
 #endif
+#ifndef MAIN_API_OVERRIDE_strncpy
+void strncpy(void *dst, void *src, s32 n); /* Same SDK address and legacy view as func_800AE090. */
+#endif
 void func_800AE0A0(void *arg0, s32 arg1, s32 arg2);
 void memcpy();
 void func_800AE0B0(void *arg0, ...); /* printf-like (SDK libc) */
@@ -2851,6 +2856,7 @@ void func_800AE0F0(void *dst, void *src);  /* strcpy (SDK libc) */
 void strcpy(u8 *dst, u8 *src);
 void strcat(u8 *dst, u8 *src);
 void func_800AE120(s32 arg0);
+s32 sprintf();
 s32 strcmp(u8 *a, u8 *b);
 s32 SetSp();
 void InitHeap();

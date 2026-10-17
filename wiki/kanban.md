@@ -62,6 +62,88 @@ kanban-plugin: board
 - [ ] [[tickets/T-11070-small-functions-gemini-30|T-11070 Small functions (Gemini) 30]]
 - [ ] [[tickets/T-11110-small-functions-gemini-34|T-11110 Small functions (Gemini) 34]]
 - [ ] [[tickets/T-11120-small-functions-sonnet-36|T-11120 Small functions (Sonnet via Antigravity) 36]]
+- [ ] [[tickets/T-9930-wave-10-list-3|T-9930 Wave 10: list 3]]
+- [ ] [[tickets/T-9910-wave-10-list-1|T-9910 Wave 10: list 1]]
+- [ ] [[tickets/T-9920-wave-10-list-2|T-9920 Wave 10: list 2]]
+- [ ] [[tickets/T-9940-wave-10-list-4|T-9940 Wave 10: list 4]]
+- [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
+
+## In Review
+- [ ] [[tickets/T-20007-large-dialogue-renderer|T-20007 Recover the large dialogue renderer (5,588 bytes)]]
+
+
+
+- [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
+
+- [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
+
+- [ ] [[tickets/T-15200-event-large|T-15200 Reconstruct large EVENT dispatcher and reusable types]]
+
+- [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
+
+- [ ] [[tickets/T-12500-largest-dialogue|T-12500 Match largest dialogue routine]]
+
+- [ ] [[tickets/T-13701-name-ent-record-types|T-13701 Recover NAME_ENT record-rendering types]]
+
+- [ ] [[tickets/T-14501-remaining-draft-proof|T-14501 Verify and integrate remaining-function drafts]]
+
+- [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]
+
+- [ ] [[tickets/T-12300-large-unclaimed-byte-matches|T-12300 Match substantial unclaimed functions]]
+
+- [ ] [[tickets/T-14800-etc-801447b0|T-14800 Resolve ETC func_801447B0]]
+
+- [ ] [[tickets/T-12050-codex-cx5|T-12050 Codex cx5 main menu matching pass]]
+
+- [ ] [[tickets/T-15900-remaining-draft-compile-repairs|T-15900 Compile remaining mixed-overlay drafts]]
+
+- [ ] [[tickets/T-12010-codex-cx1|T-12010 Codex cx1 main helper matching]]
+
+- [ ] [[tickets/T-12030-codex-cx3|T-12030 Codex cx3 main menu functions]]
+
+- [ ] [[tickets/T-12090-codex-cx9|T-12090 Codex cx9 BUNKA_SD matching pass]]
+
+- [ ] [[tickets/T-15300-fresh-structural-near-matches|T-15300 Resolve fresh structural near matches]]
+
+- [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
+
+- [ ] [[tickets/T-14900-rpg-near-matches|T-14900 Revisit three RPG_BAT near matches]]
+
+- [ ] [[tickets/T-13400-taco-control-flow|T-13400 Recover TACO flag handler control flow]]
+
+- [ ] [[tickets/T-15600-fresh-near-matches|T-15600 Fresh RENSYU and RPG near matches]]
+
+- [ ] [[tickets/T-12020-codex-cx2|T-12020 Codex cx2 TAIIKU matching pass]]
+
+- [ ] [[tickets/T-16100-flagged-draft-pass|T-16100 Review 165 flagged compiling drafts]]
+
+- [ ] [[tickets/T-12040-codex-cx4|T-12040 Codex cx4 RPG battle matching]]
+
+- [ ] [[tickets/T-13300-rpg-families|T-13300 Recover RPG_BAT source families]]
+
+- [ ] [[tickets/T-13700-name-ent-families|T-13700 Reconstruct NAME_ENT families]]
+
+- [ ] [[tickets/T-15800-compile-remaining-overlay-drafts|T-15800 Compile remaining assigned overlay drafts]]
+
+- [ ] [[tickets/T-16000-main-draft-compilation|T-16000 Repair thirteen main executable drafts]]
+
+- [ ] [[tickets/T-15700-taco-taiiku-draft-repairs|T-15700 Compile 28 TACO/TAIIKU failed drafts]]
+
+- [ ] [[tickets/T-14600-date-draft-repairs|T-14600 Repair nine DATE census draft failures]]
+
+- [ ] [[tickets/T-15100-unaligned-draft-repairs|T-15100 Recover nine unaligned-copy drafts]]
+
+- [ ] [[tickets/T-13801-taco-actor-family|T-13801 Reconstruct TACO actor initialization and update family]]
+
+- [ ] [[tickets/T-14100-date-near-matches|T-14100 Resolve DATE near matches]]
+
+- [ ] [[tickets/T-15000-kangei-near-match|T-15000 Resolve KANGEI scene setup near match]]
+
+- [ ] [[tickets/T-13800-taco-families|T-13800 Recover remaining TACO actor families]]
+
+- [ ] [[tickets/T-11300-close-near-misses-sonnet-46|T-11300 Close near misses (Sonnet) 46]]
+- [ ] [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c|T-11270 Exact rescoring in autotweak and bulk_m2c]]
+- [ ] [[tickets/T-11260-fast-scoring-order-search-permute|T-11260 Fast scoring for order_search, permute and the permuter farm]]
 - [ ] [[tickets/T-11230-m2c-variant-sweep|T-11230 m2c variant sweep in bulk_m2c]]
 - [ ] [[tickets/T-11240-typefix-bulk-m2c-autotweak|T-11240 Type-mismatch fixes for bulk_m2c and autotweak]]
 - [ ] [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c|T-11270 Exact rescoring in autotweak and bulk_m2c]]
