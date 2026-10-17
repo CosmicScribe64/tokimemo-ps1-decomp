@@ -1,0 +1,8 @@
+T-17009 hand draft of main:func_80042CB0 (about 198 differing rows, not kept under NON_MATCHING).
+Semantics recovered from the asm: D_800E7200..720C = GameState unk_F80..F8C (pad word, previous, new presses, released),
+unk_F76 = current pad byte (~D_800E8BF3), unk_F78 = previous pad byte, unk_F77 = fresh presses (F76 & ~F78),
+unk_F70..F73 = key-repeat state (enable, counter, repeated key, delay), unk_F75 = swap direction, F7A/F7C = cursor x/y.
+Signed division by 3 needs (s32)(s8 * u8) / 3 (K&R makes the product unsigned and gives divu).
+Structure (clamps, repeat logic, port-2 pad merge, store order) follows the asm; the registers do not: the original keeps the single-use
+loads at the top (D_800E8BF4/5, D_800E71EF, D_800E71FA/FC) in uopt colours v0/a1/v1/a3/t0, the draft leaves them in ugen temporaries.
+Same family as func_80043010 (T-17009).

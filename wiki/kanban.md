@@ -149,6 +149,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-17008-w3-main-p08|T-17008 Wave 3 package w3-main-p08]]
 - [ ] [[tickets/T-20610-promo-entry-rule|T-20610 Promotion family: cvt_pass entry rule]]
 - [ ] [[tickets/T-17006-w3-main-p06|T-17006 Wave 3 package w3-main-p06]]
+- [ ] [[tickets/T-17009-w3-main-p09|T-17009 Wave 3 package w3-main-p09]]
 - [ ] [[tickets/T-17119-w3-rpg-bat-p19|T-17119 Wave 3 package w3-rpg-bat-p19]]
 - [ ] [[tickets/T-17003-w3-main-p03|T-17003 Wave 3 package w3-main-p03]]
 - [ ] [[tickets/T-17001-w3-main-p01|T-17001 Wave 3 package w3-main-p01]]

@@ -16836,3 +16836,23 @@ KakarottoCake's PR #42 (claim #41): GYOZI func_8013C774 and func_8014206C matche
 ## [2026-10-17] ticket | T-17006 Done
 
 [[tickets/T-17006-w3-main-p06]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a `NON_MATCHING` comment wrapped, a stale acceptance line). Rebuild OK (27/27 SHA1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 2 of 6 functions matched (`func_80076C7C` 292 B, `func_8007866C` 324 B), 2 guarded (`func_800754C0`, `func_80077CA8`), 2 left `INCLUDE_ASM`. Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17009 In Progress
+
+[[tickets/T-17009-w3-main-p09]] created and started: Wave 3 package for main `src/main/80042A00.c` (`func_80043448`, `func_80043010`, `func_800430C0`, `func_80042CB0`), worktree tokimemo-wt/w3-main-p09, branch w3-main-p09 from w2-good.
+
+## [2026-10-16] build | T-17009 matches
+
+[[tickets/T-17009-w3-main-p09]]: `func_80043448` (188 B) and `func_800430C0` (904 B) matched in plain C in `src/main/80042A00.c`. `include/main_api.h` gained `D_800B3CA4`, `D_800B3CA8[20]`, `D_800B3D00` and prototypes; `func_800430C0` is `s32` now. Details in [[matching-notes]] (section T-17009).
+
+## [2026-10-16] ticket | T-17009 In Review
+
+[[tickets/T-17009-w3-main-p09]] In Progress to In Review: 2 of 4 functions matched (1,092 bytes). `func_80043010` (32 rows) and `func_80042CB0` (about 200 rows) restored to `INCLUDE_ASM` with drafts in `drafts/T-17009/`; two rows in [[data/t0018-cases]], three rows in [[register-cheatsheet]].
+
+## [2026-10-16] build | T-17009 clean rebuild
+
+Clean rebuild of the w3-main-p09 worktree (`rm -rf build && configure.py && ninja`): 27/27 sha1 OK with `func_80043448` and `func_800430C0` as C, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17009-w3-main-p09]].
+
+## [2026-10-17] ticket | T-17009 Done
+
+[[tickets/T-17009-w3-main-p09]] In Review to Done: code review against `CODING_STANDARDS.md` found two small issues, fixed (`D_800B3CA8` declared before `D_800B3CA4` in `include/main_api.h`, address order restored; comment added on the fall-through end of `func_800430C0`). Rebuild OK (27/27 sha1, headers OK, globals OK, `sync_protos --check-branch` OK). 2 of 4 functions matched (`func_80043448`, `func_800430C0`; 1,092 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
