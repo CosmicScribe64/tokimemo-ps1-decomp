@@ -23,7 +23,7 @@ extern u8 D_8013BFC0[];
 
 extern s16 D_8013C358;
 extern s16 D_8013C35C; /* read with lh/sh only (T-8080, T-9020) */
-void func_80132B04(s32 arg0, s32 arg1, s32 arg2);
+s32 func_80132B04(s32 arg0, s32 arg1, s32 arg2);
 extern u8 D_8013CA38;
 
 
