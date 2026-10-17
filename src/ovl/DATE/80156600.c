@@ -273,12 +273,9 @@ void func_801572BC(void) {
 /* FAKE: byte-workspace and element-zero views preserve load/store ordering;
  * the copied record layout is incomplete. T-9550 */
 void func_801572E4(void) {
-    typedef struct {
-        /* 0x00 */ u32 words[17];
-    } DateWords44; /* size 0x44 */
     s16 i;
 
-    *(DateWords44 *)&D_8011ECD0[0x1A08] = *(DateWords44 *)&D_8011ECD0[0x1980];
+    *(DisplayActor44 *)&D_8011ECD0[0x1A08] = *(DisplayActor44 *)&D_8011ECD0[0x1980];
     D_801206EE = 4;
     D_801206DA = 9;
     for (i = 0; i < 6; i++) {

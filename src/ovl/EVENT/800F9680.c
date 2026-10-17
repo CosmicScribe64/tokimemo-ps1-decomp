@@ -439,7 +439,7 @@ void func_800FAE6C(void) {
     func_8004C6B0(D_80120CC8, D_80120CCC, D_80120CC4, D_80120CD0);
     D_800EAFA0[0x48] = 8;
     D_800EAFA0[4] = 8;
-    *(Ev44 *)&D_800EAFA0[0x88] = *(Ev44 *)D_800EAFA0;
+    *(DisplayActor44 *)&D_800EAFA0[0x88] = *(DisplayActor44 *)D_800EAFA0;
     *(s16 *)&D_800EAFA0[0x9E] = 4;
     func_80011DFC();
 }

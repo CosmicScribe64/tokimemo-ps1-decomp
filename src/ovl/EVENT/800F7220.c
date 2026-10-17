@@ -226,22 +226,10 @@ void func_800F7AA8(void) {
     func_80011DFC();
 }
 
-typedef struct {
-    s32 w[17];
-} Words17; /* size 0x44 */
-
-typedef struct {
-    s32 w[17];
-} Words17; /* size 0x44 */
-
-typedef struct {
-    s32 w[17];
-} Words17; /* size 0x44 */
-
 void func_800F7C94(void) {
-    /* FAKE: one unused word above tmp gives the original's local offset (0x30); the real type of the buffer is unknown. T-9310 */
+    /* FAKE: one unused word above tmp gives the original's local offset (0x30); tmp is one display record (T-20900). T-9310 */
     s32 pad;
-    Words17 tmp;
+    DisplayActor44 tmp;
 
     D_80120678 = D_80120530;
     D_8012067C = D_80120548;
@@ -258,9 +246,9 @@ void func_800F7C94(void) {
     func_80012D64(D_801206F8, 0x13, 1, 2, 0);
     func_8004C46C(D_801206FC, D_80120700, D_80120704, D_80120708, D_8012070C, D_80120710);
     func_8004C6B0(D_801206EC, D_801206F0, D_801206E8, D_801206F4);
-    tmp = *(Words17 *)D_800EAFA0;
-    *(Words17 *)&D_800EAFA0[0xCC] = tmp;
-    *(Words17 *)&D_800EAFA0[0x88] = tmp;
+    tmp = *(DisplayActor44 *)D_800EAFA0;
+    *(DisplayActor44 *)&D_800EAFA0[0xCC] = tmp;
+    *(DisplayActor44 *)&D_800EAFA0[0x88] = tmp;
     D_800EB06E = 0x40;
     D_800EB02A = 0x40;
     D_800EB040 = 8;

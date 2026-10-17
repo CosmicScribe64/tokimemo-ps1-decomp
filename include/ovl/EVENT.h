@@ -1794,9 +1794,6 @@ extern FnTbl31 D_8012514C; /* unmatched user */
 #define OVL_EVENT_RECORD_COPIES_T17400
 /* T-17400: shared views that were local to the .c files. */
 typedef struct {
-    s32 w[0x11];
-} Ev44; /* size 0x44: one D_800E9620 record copied whole (D_800EAFA0 is record 96) */
-typedef struct {
     s32 a;
     s32 b;
 } EvEnt; /* size 0x08 */

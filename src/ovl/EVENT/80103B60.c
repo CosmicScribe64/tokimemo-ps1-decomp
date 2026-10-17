@@ -363,7 +363,7 @@ void func_80104C3C(void) {
     /* Port of the DATE clone func_801572E4 (T-17400). */
     s16 i;
 
-    *(Ev44 *)&D_800EAFA0[0x88] = *(Ev44 *)D_800EAFA0;
+    *(DisplayActor44 *)&D_800EAFA0[0x88] = *(DisplayActor44 *)D_800EAFA0;
     D_800EB03E = 4;
     D_800EB02A = 9;
     for (i = 0; i < 6; i++) {
