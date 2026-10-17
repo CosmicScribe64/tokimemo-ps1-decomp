@@ -17467,3 +17467,7 @@ diman8's PR #47: TT batch 12, 25 of 28 matched (16,208 bytes), TT 299/303. Merge
 
 ## [2026-10-17] ticket | T-11870 TT batch 13 Done
 All three remaining guarded TT near misses matched (2,740 bytes): `func_80142110`, `func_801427A8`, `func_8014A2B4`. Merged current `main`; clean rebuild 27/27 OK, checks clean; TT 302/303 (99.7%), only `func_8014D260` (gcc) left. Inline review against CODING_STANDARDS.md: no open findings. Moved [[tickets/T-11870-tt-batch-13]] to Done. Notes in [[matching-notes]] ("TT overlay, batch 13"), 3 rows in [[data/t0018-cases]].
+
+## [2026-10-17] ticket | T-11870 Done (PR #48 merged)
+
+diman8's PR #48: the last three TT near misses matched (2,740 bytes), TT 302/303; only func_8014D260 (gcc PsyQ code) is left. All three had been logged as allocator quirks; the causes were statement order and control-flow shape. [[tickets/T-11870-tt-batch-13]] Done.

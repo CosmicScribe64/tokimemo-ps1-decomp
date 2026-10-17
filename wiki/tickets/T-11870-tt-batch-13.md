@@ -33,3 +33,7 @@ Inline review against `CODING_STANDARDS.md`: one new fake trick (the redundant m
 `FAKE ... T-11870` comment; `func_801427A8`'s draft-era FAKEs are gone; no header changes; the `NON_MATCHING` blocks
 of all three are removed. Clean rebuild 27/27 OK, headers/globals OK, `sync_protos.py --check-branch` and
 `migrate_globals.py --check` clean. No open findings.
+
+## Comments
+
+2026-10-17, maintainer review (PR #48): no findings. The one new FAKE (redundant mask in func_80142110) names T-11870 and the reason. Verified in the integration tree: clean 27/27, headers, globals, prototypes OK, funcdiff MATCH for all three functions (2,740 bytes). Status Done.
