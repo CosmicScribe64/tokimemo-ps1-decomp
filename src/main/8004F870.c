@@ -46,6 +46,7 @@ s8 menu_check(arg0, arg1, arg2)
 
 /* NON_MATCHING: T-17018 (inherited T-12050), 27 differing lines; cnt/sel take $v0/$v1 and the loop count base $a3 where the original has base $v0, cnt $v1, sel $a3, and the s8 return is sign-extended (an s8 sel moves the extension into the loop, worse) */
 #ifdef NON_MATCHING
+/* FAKE: duplicate GameState pointer steers record/base allocation. T-17018 (inherited T-12050) */
 s8 menu_check_1(arg0, arg1, arg2)
     s32 arg0;
     s16 arg1;
@@ -460,6 +461,7 @@ void xa_wait(void) {
             *(s16 *)(b + 2) -= 2;
             D_800E6280.unk_F62 += 1;
         } else if (ph != 0) {
+            /* FAKE: redundant test; the second use makes ph a uopt variable in $v0 as in the original (a plain else gives a $t9 temporary). T-17018 */
             a = get_k_work(D_800E6280.unk_F61 + 1);
             b = get_k_work(D_800E6280.unk_F61 + 2);
             *(s16 *)(a + 2) -= 2;
