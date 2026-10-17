@@ -16962,3 +16962,10 @@ sched/hoist drafts unchanged; the one change (main `func_80046684`, an `mflo` ha
 `func_8013B2A0`. Both rejected; no adoption proposal. Found: ugen's `.option pic` record must carry the as1 version's own
 value (5.3: 0, 4.1: 1), now set by `tools/ido_eval.py` (tests `tools/test_ido_eval.py`). Pages: [[ido-52-evaluation]]
 (T-20700 section), [[toolchain]], [[original-compiler]], [[data/t0018-cases]], [[matching-notes]] (T-20620 pointer).
+
+## [2026-10-17] ticket | T-20700 Done
+
+[[tickets/T-20700-ido41-as1-test]] reviewed against `CODING_STANDARDS.md` with no findings and moved In Review to Done.
+Verdict: rejected, no adoption proposal, production toolchain unchanged (4.1's as1 changes 1 of 6336 matched functions, a
+regression; 4.1's ugen changes 1355 and matches only TACO `func_8013B2A0`). Committed: `tools/ido_eval.py` `.option pic`
+fix with `tools/test_ido_eval.py` (5 tests OK), no compiler archive tracked (`tools/local-compilers/` stays gitignored).

@@ -1,7 +1,7 @@
 ---
 id: T-20700
 title: "IDO 4.1 back end (as1/ugen) as a build-step candidate"
-status: In Review
+status: Done
 assignee: bs-ido41-as1 agent
 created: 2026-10-17
 updated: 2026-10-17
@@ -70,3 +70,11 @@ production front end (T-20700)"). Verdict: reject both experiments, no adoption 
   headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` branch check OK (0 new, 15 known);
   `tools/test_ido_eval.py` (new, 5 tests) and `tools/test_frame_pass.py` OK. No C file, header or build step changed;
   matched functions changed by this branch: 0.
+
+2026-10-17 (review, Claude Opus 5.5): `git diff w2-good...bs-ido41-as1` checked against `CODING_STANDARDS.md` section 13. No findings.
+- No compiler archive, binary, game data or asm committed: `git ls-files tools/local-compilers` is empty and `/tools/local-compilers/` is in `.gitignore`. The diff holds two Python files and wiki pages only.
+- No production toolchain switch: `configure.py`, `tools/cc.py`, `tools/Dockerfile` and the shims are untouched; the verdict is reject, so no adoption rule (section 7a) applies. Matched functions changed by the branch: 0 (the committed `tools/ido_eval.py` is an evaluation harness outside the build).
+- Provenance (URL, sha256, size, origin repo) for IDO 4.1 is in the table of [[ido-52-evaluation]]; the T-20700 section and this ticket state that the fetched archive's sha256 matched.
+- Tools: `tools/ido_eval.py` (`PIC_OPTION`, `set_pic_option`, docstring updated) has `tools/test_ido_eval.py` with synthetic records only; re-run in Docker: 5 tests OK, `tools/test_frame_pass.py` 24 tests OK, `py_compile` OK. Python 3, no host installs.
+- No `.c` or header edited, so the busy-file list is not touched; no non-ASCII text, no `//` comments, `git diff --check` clean.
+- Wiki: status `Done` matches the `## Done` kanban column; index line and log entries present.
