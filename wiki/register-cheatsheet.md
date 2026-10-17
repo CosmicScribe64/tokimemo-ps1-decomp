@@ -1,7 +1,7 @@
 ---
 type: guide
 updated: 2026-10-17
-sources: ["wiki/matching-notes.md", "wiki/uopt-register-allocation.md", "wiki/register-allocation-wave7.md", "wiki/decompile-workflow.md", "tools/regdiff.py"]
+sources: ["wiki/matching-notes.md", "wiki/uopt-register-allocation.md", "wiki/register-allocation-wave7.md", "wiki/decompile-workflow.md", "tools/regdiff.py", "tools/viewsweep.py"]
 ---
 
 # Register cheat sheet
@@ -10,6 +10,7 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 
 ## The loop
 
+0. Run `tools/viewsweep.py` on the function (first row of the table): the return type of the function and the view of each callee decide many register and delay-slot misses.
 1. Fix every non-register difference first (`funcdiff --resolve`). The register analysis only covers instructions that already agree.
 2. Run `TOKIMEMO_SCRATCH=<scratch> tools/docker.sh python3 tools/regdiff.py [UNIT:]func`. Read only the `FIRST DIVERGENCE` block.
 3. Make one change from the table below, then rebuild and run `regdiff` again. Repeat until it says `MATCH`, or you have tried every row that fits.
@@ -27,6 +28,7 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 
 | regdiff says / asm shows | Try, in this order |
 |---|---|
+| **Do first: run viewsweep.** Any miss near a call or at an exit: registers off after a call, an `or v0,...` copy or `li v0` the draft lacks, a delay slot holding the wrong instruction, a promoted counter in `$v1` where the draft has `$v0` | `tools/docker.sh python3 tools/viewsweep.py [UNIT:]func` ([[decompile-workflow]], "viewsweep"). It tries the function's own type (`s32` with no `return`, implicit int) and every callee view (`s32 c();`, `s32 c(<args>);`, `void c();`) on the whole unit, singles, own x callees and pairs, and prints the recipe (definition, header, `*_OVERRIDE_` guard, callers to re-check) at 0 rows. This one lever closed 19 of the 102 wave 3 blocker notes and 5 of the 7 T-20600 matches, each found by hand before. Read its table before you try any row below; a row that it improves (but not to 0) is the new baseline for the rows below. |
 | **commuted branch operands**: registers match but three equality branches reverse their operands | Try a meaningful signed-word local holding the unsigned selector. GYOZI `func_8014206C` reaches exact bytes with `s32 selector = D_801486E4`; direct casts and u8/u32 locals keep the six-row miss. No dummy local or override ([[tickets/T-20005-gyozi-display-dispatch]]). |
 | `bne` operands reversed, registers right, and the draft needs a local `w` that regdiff shows in `$v0` with no instruction (it only keeps a CSE expression such as `D->width` out of `$v0`), but `w` as a plain variable goes first | Put a no-op wrapper on the left: `w * 1 != sector->width` (also `\| 0`, `^ 0`, `<< 0`, `& -1`; `+ 0`, `- 0`, unary `+` and casts keep the plain-variable order). Mark it FAKE. Without a local, two expressions came out in reversed C order. Moving the local into a later block or writing `a - w != 0` costs ugen temporaries. Main `strNext` (T-17014 closer). |
 | **unexpected branch-slot filling**: mode-address/load instructions replace original nops | Check the function's return type before changing scheduler rules or string placement. A shared s32 declaration/definition makes GYOZI `func_8013C774` preserve its original slots/span; the void control differs. Full-unit SHA1 verifies literals and other callers. Return-register liveness is the working explanation, not an allocator-trace claim ([[tickets/T-20005-gyozi-display-dispatch]]). |

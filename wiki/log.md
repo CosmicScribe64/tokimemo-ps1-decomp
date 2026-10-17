@@ -17246,3 +17246,19 @@ New `tools/keepproof.py` (`check`, `census`, `rows`) and the `proof=<func>:<rows
 ## [2026-10-17] ticket | T-16990 Done
 
 Wave 3 conveyor paused at the user's request after 19 types passes and 77 packages: 239 matches / about 167 KB, 75.8%. 81 packages return to the next inventory. Type round (T-20900..T-20940) and tooling round (T-20800..) running; the conveyor restarts after them. [[tickets/T-16990-wave-3-conveyor]].
+
+## [2026-10-17] ticket | T-20810 In Progress
+
+[[tickets/T-20810-viewsweep]] created and started: `tools/viewsweep.py`, the type pass as a tool (own return type x every callee view, scored on the full translation unit in memory), branch `tr-viewsweep` from `w2-good`. Card in [[kanban]] under In Progress. Background: 19 of 102 wave 3 blocker notes were one lever, found by hand; see [[decompile-workflow]] ("Trying another prototype") and [[tickets/T-16530-proto-override]].
+
+## [2026-10-17] build | T-20810 viewsweep validation and first use
+
+[[tickets/T-20810-viewsweep]]: `tools/viewsweep.py` rediscovered the five hand-found type-lever cases from scratch copies with the lever removed (RPG_BAT `func_80149C5C` 6 compiles, TACO `func_8014B8B4` 4, TAIIKU `func_80145370` 5, RPG_BAT `func_8013B5B0` 41, RPG_BAT `func_8013E54C` 2). First use with the committed tool at `-j 2`: 101 guarded drafts, 996 compiles, 14 minutes, 1 match (NAME_ENT `func_80134B94`, 804 B, `s32 func_800AE090();`), 7 improved, 93 no gain; 29 archived draft bodies, 157 compiles, 3 improved, 10 not compiling in the tree. Results, table and the verified patch in `drafts/T-20810/`; details in [[matching-notes]] and [[decompile-workflow]].
+
+## [2026-10-17] ticket | T-20810 In Review
+
+[[tickets/T-20810-viewsweep]] In Progress to In Review (card moved in [[kanban]]): `tools/viewsweep.py`, `tools/test_viewsweep.py`, `allow_defined` in `tools/protoverride.py`, `edit=`/`source=` in `tools/funcdiff_verify.py`, docs in [[decompile-workflow]] (section "Step 1 for a near miss"), [[register-cheatsheet]] (first row, loop step 0) and [[matching-notes]]. Full tool suite 1,281 tests OK. The one match is a patch (`drafts/T-20810/patches/NAME_ENT_func_80134B94.patch`), not applied in `src/` because the ticket rules forbid editing `src/` and `include/`.
+
+## [2026-10-17] ticket | T-20810 Done
+
+[[tickets/T-20810-viewsweep]] In Review to Done: code review against `CODING_STANDARDS.md`, no blocking findings; one small fix (the acceptance criterion about committing the match now says it is kept as a verified patch). Full tool suite 1,281 tests OK (3 skipped); a run of `tools/viewsweep.py` on NAME_ENT `func_80134B94` found the match in 3 compiles with the literal-byte proof. Card moved in [[kanban]]. The patch `drafts/T-20810/patches/NAME_ENT_func_80134B94.patch` (804 B) still has to be applied in `src/` by a matcher. Merge via the wave 2 merge script.

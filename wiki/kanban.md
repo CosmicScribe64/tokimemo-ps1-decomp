@@ -146,6 +146,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-17022-w3-main-p22|T-17022 Wave 3 package w3-main-p22]]
 - [ ] [[tickets/T-20820-keep-proof|T-20820 migrate_globals: keep lines backed by a byte-match necessity proof]]
 - [ ] [[tickets/T-20800-redraft-tool|T-20800 Consolidate the per-unit redraft drivers into tools/redraft.py]]
+- [ ] [[tickets/T-20810-viewsweep|T-20810 viewsweep: exhaustive return-type and callee-view sweep]]
 - [ ] [[tickets/T-20006-gyozi-scene-callbacks|T-20006 Two GYOZI scene callbacks matched (708 bytes)]]
 - [ ] [[tickets/T-20700-ido41-as1-test|T-20700 IDO 4.1 back end (as1/ugen) as a build-step candidate]]
 - [ ] [[tickets/T-20710-true-gap-census|T-20710 True compiler-gap census and uniform allocator rule search]]

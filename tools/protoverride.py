@@ -11,7 +11,11 @@ to the preprocessed translation unit, in memory, so that nothing under src/ or i
   - every top-level declaration of the function in the preprocessed unit (the header's and the file's own) is
     removed, and the given declaration is written where the first mention of the function was (the removed
     declaration's place, or in front of the first function that calls it);
-  - a function that the unit defines is refused (its definition fixes the type; use a scratch copy and --src);
+  - a function that the unit defines is refused (its definition fixes the type; use a scratch copy and --src),
+    unless `apply(..., allow_defined=True)` is given (tools/viewsweep.py, T-20810): then the definition's return
+    type is rewritten to the declaration's (a definition without parameters also takes the declaration's `()` or
+    `(void)`; one with parameters keeps them) and the other declarations are replaced as usual, so the function's
+    own type and the type of a callee that the same file defines can be tried in memory too;
   - a name that does not occur in the unit is refused (a typo would otherwise pass silently);
   - only function declarations (`ret name(args);`, `name();` for implicit int) are accepted, not data.
 
@@ -214,8 +218,98 @@ def _find_declarations(text, spans, name):
     return decls, defined
 
 
-def apply(text, protos):
-    """(new text, notes) with each prototype in place of the unit's declarations of that function."""
+Definition = namedtuple("Definition", "start end brace ret name params parens rest")
+
+
+def _definitions(text, spans, name):
+    """[Definition] of the function definitions of `name`: `start`..`brace` is the head (return type, name,
+    parameters and, for K&R, the parameter declarations), `start`..`end` the whole definition, `params` the text
+    between the parentheses (`parens` with them, as written), `rest` what follows them in the head."""
+    out = []
+    for start, end, body in spans:
+        if not body:
+            continue
+        stmt = text[start:end]
+        brace = start + stmt.find("{")
+        head = text[start:brace]
+        d = _declarator(head)
+        if d is None or d[0] != name:
+            continue
+        _name, at, after = d
+        parens = head[at + len(name):after].strip()
+        out.append(Definition(start, end, brace, head[:at].strip(), name, parens[1:-1].strip(), parens, head[after:]))
+    return out
+
+
+def definitions(text, name):
+    """[Definition] of `name` in a preprocessed unit (usually one, empty when the unit only declares it)."""
+    return _definitions(text, _spans(text), name)
+
+
+def split_declaration(decl):
+    """(return type, parameter text between the parentheses) of a declaration like 'void f(s32 a);'."""
+    text = " ".join(decl.split())
+    name, start, after = _declarator(text)
+    return text[:start].strip(), text[start + len(name):after].strip()[1:-1].strip()
+
+
+def _empty(params):
+    return params.strip() in ("", "void")
+
+
+def _redefine(defn, proto):
+    """The head of the definition `defn` with the declaration's return type. Parameters: a definition without any
+    takes the declaration's `()` or `(void)`; one with parameters keeps them (the body uses them)."""
+    ret, params = split_declaration(proto.decl)
+    ret = " ".join(re.sub(r"\b(?:extern|static)\b", " ", ret).split())
+    if _empty(defn.params) and not defn.rest.strip():
+        if not _empty(params):
+            raise ProtoError("%s is defined without parameters; %r would need named parameters in the definition"
+                             % (defn.name, proto.decl))
+        parens = "(%s)" % params
+    else:
+        parens = defn.parens
+    core = defn.rest.rstrip()
+    storage = "static " if re.search(r"\bstatic\b", defn.ret) else ""
+    return "%s%s %s%s%s%s" % (storage, ret, defn.name, parens, core, defn.rest[len(core):])
+
+
+def _data_statement(text, spans, name):
+    """The first top-level statement that declares `name` as data (`extern s32 name;`, `u8 a, name[4] = {..};`), or None."""
+    pat = re.compile(r"(?:[A-Za-z_]\w*\s+|\*\s*|,\s*)%s\b\s*(?:\[[^\]]*\]\s*)*(?:;|,|$)" % re.escape(name))
+    for start, end, body in spans:
+        stmt = text[start:end]
+        if body or re.match(r"\s*typedef\b", stmt):
+            continue
+        d = _declarator(stmt)
+        if d is not None and d[0] == name:
+            continue
+        head = stmt.split("=", 1)[0].rstrip() + (";" if "=" in stmt else "")
+        if pat.search(head):
+            return " ".join(stmt.split())
+    return None
+
+
+def current_view(text, name):
+    """(return type, parameter text, defined) of `name` as the unit's code sees it: its first declaration, else its
+    definition's head; (None, None, False) for a function the unit never declares (implicit int). A K&R definition
+    without a declaration has parameter text None (no prototype to copy)."""
+    spans = _spans(text)
+    decls, _defined = _find_declarations(text, spans, name)
+    defs = _definitions(text, spans, name)
+    if decls:
+        ret, params = split_declaration(text[decls[0][0]:decls[0][1]].rstrip().rstrip(";"))
+        return ret or "int", params, bool(defs)
+    if defs:
+        d = defs[0]
+        return d.ret or "int", None if d.rest.strip() else d.params, True
+    return None, None, False
+
+
+def apply(text, protos, allow_defined=False):
+    """(new text, notes) with each prototype in place of the unit's declarations of that function.
+    allow_defined: a function that the unit defines is accepted; its definition gets the declaration's return type
+    (see the module docstring)."""
     notes = []
     for proto in protos:
         name = proto.name
@@ -224,10 +318,17 @@ def apply(text, protos):
             raise ProtoError("%s does not occur in the preprocessed translation unit; check the name (a prototype "
                              "override changes how this file declares and calls a function)" % name)
         spans = _spans(text)
+        data = _data_statement(text, spans, name)
+        if data:
+            raise ProtoError("%s is data in this unit (%s), not a function; a prototype cannot replace it"
+                             % (name, data[:80]))
         decls, defined = _find_declarations(text, spans, name)
-        if defined:
+        if defined and not allow_defined:
             raise ProtoError("%s is defined in this file; --proto replaces the declaration of a function the file "
                              "only calls. Change the definition in a scratch copy and compare that (tools/regdiff.py --src COPY)." % name)
+        defs = _definitions(text, spans, name) if defined else []
+        if len(defs) > 1:
+            raise ProtoError("%s is defined %d times in the unit" % (name, len(defs)))
         at = next((s for s, e, _b in spans if s <= first.start() < e), None)
         if at is None:
             at = text.rfind("\n", 0, first.start()) + 1
@@ -235,15 +336,21 @@ def apply(text, protos):
         edits = [(s, e, "") for s, e in decls]
         if any(s == at for s, _e in decls):
             edits = [(s, e, proto.decl if s == at else "") for s, e, _ in edits]
-        else:
+        elif not defs or at != defs[0].start:        # the definition itself is the first mention: it is the declaration
             edits.append((at, at, proto.decl + "\n"))
+        if defs:
+            edits.append((defs[0].start, defs[0].brace, _redefine(defs[0], proto)))
+            old.append("definition " + " ".join(text[defs[0].start:defs[0].brace].split()))
         for s, e, repl in sorted(edits, reverse=True):
             text = text[:s] + repl + text[e:]
         line = text.count("\n", 0, at) + 1
-        notes.append("proto override %s: %s%s" % (
-            name, proto.decl,
-            "  (replaces %s)" % " ".join(o if len(o) <= 90 else o[:87] + "..." for o in old) if old else
-            "  (no declaration in the unit; implicit before; placed before the first use, line %d)" % line))
+        if old:
+            detail = "  (replaces %s)" % " ".join(o if len(o) <= 90 else o[:87] + "..." for o in old)
+        elif defs and at == defs[0].start:
+            detail = "  (the definition is the first use; its head is the declaration)"
+        else:
+            detail = "  (no declaration in the unit; implicit before; placed before the first use, line %d)" % line
+        notes.append("proto override %s: %s%s" % (name, proto.decl, detail))
     return text, notes
 
 

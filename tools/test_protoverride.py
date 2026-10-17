@@ -164,6 +164,135 @@ class Apply(unittest.TestCase):
         self.assertEqual(out, UNIT)
 
 
+DEFINED = """typedef int s32;
+typedef unsigned char u8;
+void target(void);
+void func_8013E97C(s32 a, s32 b, s32 c);
+extern s32 D_800E0000;
+extern u8 table[4];
+static void helper(s32 x);
+
+void old_style(a, b)
+s32 a;
+s32 b;
+{
+    func_8013E97C(a, b, 0);
+}
+
+void target(void) {
+    char *s = "{;";
+    helper(1);
+    old_style(1, 2);
+}
+
+static void helper(s32 x) {
+    D_800E0000 = x;
+}
+"""
+
+
+class AllowDefined(unittest.TestCase):
+    """The definition's return type follows the declaration (tools/viewsweep.py, T-20810)."""
+
+    def apply(self, decl, text=DEFINED):
+        return pv.apply(text, pv.parse([decl]), allow_defined=True)
+
+    def test_the_own_definition_and_its_declaration_change_together(self):
+        out, notes = self.apply("s32 target();")
+        self.assertIn("s32 target();\nvoid func_8013E97C", out)
+        self.assertNotIn("void target(void)", out)
+        self.assertIn("s32 target() {", out)
+        self.assertIn("replaces void target(void); definition void target(void)", notes[0])
+
+    def test_the_spelling_of_an_empty_list_follows_the_declaration(self):
+        out, _ = self.apply("s32 target(void);")
+        self.assertIn("s32 target(void) {", out)
+        out, _ = self.apply("s32 target(void);", DEFINED.replace("void target(void) {", "void target() {"))
+        self.assertIn("s32 target(void) {", out)
+
+    def test_only_the_head_of_the_definition_changes(self):
+        out, _ = self.apply("s32 target();")
+        old = DEFINED.replace("void target(void);\n", "")
+        self.assertEqual(out.replace("s32 target();\n", "").replace("s32 target() {", "void target(void) {"), old)
+
+    def test_a_definition_with_parameters_keeps_them(self):
+        text = DEFINED.replace("void func_8013E97C(s32 a, s32 b, s32 c);", "void func_8013E97C(s32 a);")
+        text += "void with_args(s32 a, u8 b) {\n    D_800E0000 = a + b;\n}\n"
+        out, _ = self.apply("s32 with_args(s32 a, u8 b);", text)
+        self.assertIn("s32 with_args(s32 a, u8 b) {", out)
+        out, notes = self.apply("s32 with_args();", text)           # a K&R view of the callers; the definition keeps its list
+        self.assertIn("s32 with_args(s32 a, u8 b) {", out)
+        self.assertIn("replaces definition void with_args(s32 a, u8 b)", notes[0])
+
+    def test_a_definition_without_parameters_cannot_take_some(self):
+        with self.assertRaisesRegex(pv.ProtoError, "defined without parameters"):
+            self.apply("s32 target(s32 a);")
+
+    def test_a_k_and_r_definition_keeps_its_parameter_declarations(self):
+        out, _ = self.apply("s32 old_style();")
+        self.assertIn("s32 old_style(a, b)\ns32 a;\ns32 b;\n{\n    func_8013E97C(a, b, 0);", out)
+        self.assertEqual(out.count("old_style("), 2)             # the definition and the call; no earlier use, no declaration
+
+    def test_a_static_definition_stays_static(self):
+        out, notes = self.apply("s32 helper(s32 x);")
+        self.assertIn("static s32 helper(s32 x) {", out)
+        self.assertIn("s32 helper(s32 x);\n", out)
+        self.assertNotIn("static void helper(s32 x);", out)
+
+    def test_a_callee_defined_after_the_call_is_declared_before_it(self):
+        text = "typedef int s32;\nvoid g(void) { c(1); }\nvoid c(s32 a) { }\n"
+        out, notes = self.apply("s32 c(s32 a);", text)
+        self.assertEqual(out, "typedef int s32;\ns32 c(s32 a);\nvoid g(void) { c(1); }\ns32 c(s32 a) { }\n")
+        self.assertIn("replaces definition void c(s32 a)", notes[0])
+
+    def test_a_definition_that_is_the_first_mention_needs_no_declaration(self):
+        text = "typedef int s32;\nvoid c(void) { }\nvoid g(void) { c(); }\n"
+        out, _ = self.apply("s32 c();", text)
+        self.assertEqual(out, "typedef int s32;\ns32 c() { }\nvoid g(void) { c(); }\n")
+
+    def test_a_function_that_is_not_defined_works_as_before(self):
+        out, _ = self.apply("s32 func_8013E97C();")
+        self.assertIn("s32 func_8013E97C();\nextern s32 D_800E0000;", out)
+
+    def test_the_default_still_refuses_a_definition(self):
+        for name in ("target", "old_style", "helper"):
+            with self.assertRaisesRegex(pv.ProtoError, "is defined in this file"):
+                pv.apply(DEFINED, pv.parse(["void %s();" % name]))
+
+    def test_data_is_refused_in_both_modes(self):
+        for allow in (False, True):
+            for name in ("D_800E0000", "table"):
+                with self.assertRaisesRegex(pv.ProtoError, "is data in this unit", msg=name):
+                    pv.apply(DEFINED, pv.parse(["s32 %s();" % name]), allow_defined=allow)
+        text = "s32 a, b = 3;\nvoid g(void) { }\n"
+        with self.assertRaisesRegex(pv.ProtoError, "is data"):
+            pv.apply(text, pv.parse(["s32 b();"]), allow_defined=True)
+
+    def test_a_function_named_in_a_data_initializer_is_not_data(self):
+        text = "void f(void) { }\nvoid (*tbl[1])(void) = { f };\n"
+        out, _ = pv.apply(text, pv.parse(["s32 f();"]), allow_defined=True)
+        self.assertEqual(out, "s32 f() { }\nvoid (*tbl[1])(void) = { f };\n")
+
+    def test_a_function_defined_twice_is_refused(self):
+        text = "void f(void) { }\nvoid f(void) { }\n"
+        with self.assertRaisesRegex(pv.ProtoError, "defined 2 times"):
+            pv.apply(text, pv.parse(["s32 f();"]), allow_defined=True)
+
+    def test_the_view_of_a_function_as_the_unit_sees_it(self):
+        self.assertEqual(pv.current_view(DEFINED, "target"), ("void", "void", True))
+        self.assertEqual(pv.current_view(DEFINED, "func_8013E97C"), ("void", "s32 a, s32 b, s32 c", False))
+        self.assertEqual(pv.current_view(DEFINED, "old_style"), ("void", None, True))
+        self.assertEqual(pv.current_view(DEFINED, "missing"), (None, None, False))
+        self.assertEqual(pv.current_view("f(void) { }\n", "f"), ("int", "void", True))
+
+    def test_definitions_and_split_declaration(self):
+        d, = pv.definitions(DEFINED, "old_style")
+        self.assertEqual((d.ret, d.params, d.rest.split()), ("void", "a, b", ["s32", "a;", "s32", "b;"]))
+        self.assertEqual(DEFINED[d.brace], "{")
+        self.assertEqual(pv.definitions(DEFINED, "func_8013E97C"), [])
+        self.assertEqual(pv.split_declaration("extern  u8 *f( s32  a ,s32 b );"), ("extern u8 *", "s32 a ,s32 b"))
+
+
 class KeepIt(unittest.TestCase):
     def test_guards_are_found_in_the_headers(self):
         with tempfile.TemporaryDirectory() as tmp:
