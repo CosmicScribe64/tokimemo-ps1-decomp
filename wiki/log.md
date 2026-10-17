@@ -17596,3 +17596,7 @@ Matched BUNKA_SD `func_80133D54`, `func_801373D0`, `func_8013842C` (3 x 592 byte
 ## [2026-10-17] ticket | T-22003 Done
 
 Review against `CODING_STANDARDS.md` passed after one wiki fix (stale guard text in [[matching-notes]], row added to [[register-cheatsheet]]). 4 of 4 matched, 2,464 bytes: BUNKA_SD `func_80133D54`, `func_801373D0`, `func_8013842C` (592 bytes each) and `func_80137890` (688 bytes, closer). Ticket [[tickets/T-22003-w4-p03]], board in [[kanban]]. Sources: `src/ovl/BUNKA_SD/80133540.c`, `801369D0.c`, `80137B40.c`, `80137890.c`.
+
+## [2026-10-17] ticket | T-22011 In Progress
+
+Started wave 4 package w4-p11 of [[tickets/T-22000-wave-4-conveyor]]: EVENT `func_800FD00C`, `func_8010F340`, `func_800FC040`, `func_8010F74C`, `func_8010F55C` in `src/ovl/EVENT/800FBBF0.c` and `8010BB90.c`. Ticket [[tickets/T-22011-w4-p11]], board in [[kanban]].
