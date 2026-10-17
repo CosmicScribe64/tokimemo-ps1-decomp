@@ -10,6 +10,7 @@ import os
 import sys
 import tempfile
 import unittest
+import unittest.mock
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import autotweak as A  # noqa: E402
@@ -733,8 +734,6 @@ class Main(unittest.TestCase):
             self.run_main(["func_80132100", "--time", "300", "--dry-run", "--only-kinds", "order,gstate"], ["no such text"])
             self.assertTrue(calls)
 
-
-import unittest.mock  # noqa: E402
 
 if __name__ == "__main__":
     unittest.main()

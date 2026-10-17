@@ -17050,3 +17050,7 @@ Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-20830 In Review
 
 [[tickets/T-20830-autotweak-recipes]] In Progress to In Review: tool, tests, docs and the first use are done and committed; the code review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]]. The six matches in `drafts/T-20830/` wait for the lead to apply them to `src/`.
+
+## [2026-10-17] ticket | T-20830 Done
+
+[[tickets/T-20830-autotweak-recipes]] In Review to Done: code review against `CODING_STANDARDS.md` found no blocking issue and one small fix (`import unittest.mock` moved to the top of `tools/test_recipes.py`). Full tool suite in Docker: 1,250 tests OK (3 skipped). A real dry run on TT `func_8013D2E0` printed `MATCH ... 105 -> 0 [inline_multi v L7 use1]`. Only `tools/`, `wiki/` and `drafts/T-20830/` changed, no game data. The six matches (2,660 bytes) wait in `drafts/T-20830/` for the lead to apply to `src/` (GYOZI `func_8013E638` keeps its `FAKE` comment). Card moved in [[kanban]]. Merge via the tool merge script.

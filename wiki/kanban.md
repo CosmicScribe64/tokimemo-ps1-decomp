@@ -55,8 +55,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-20830-autotweak-recipes|T-20830 autotweak edit kinds for the wave-3 recipes]]
-
 
 - [ ] [[tickets/T-20005-gyozi-display-dispatch|T-20005 Two GYOZI display/dispatch helpers matched (524 bytes)]]
 
@@ -144,6 +142,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-20830-autotweak-recipes|T-20830 autotweak edit kinds for the wave-3 recipes]]
 - [ ] [[tickets/T-20006-gyozi-scene-callbacks|T-20006 Two GYOZI scene callbacks matched (708 bytes)]]
 - [ ] [[tickets/T-20600-regorder-recipe-sweep|T-20600 Register-order family: recipe sweep]]
 - [ ] [[tickets/T-17015-w3-main-p15|T-17015 Wave 3 package w3-main-p15]]
