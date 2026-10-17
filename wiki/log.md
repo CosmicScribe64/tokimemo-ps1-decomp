@@ -17015,3 +17015,7 @@ KakarottoCake's PR #44 (claim #43): GYOZI func_80141944 and func_80145384 matche
 
 ## [2026-10-17] ticket | T-17020 In Review
 [[tickets/T-17020-w3-main-p20]] moved In Progress to In Review (kanban card moved): 1 of 4 matched (`load_string`); `func_8004E58C` guarded at 18 rows (`text_glyph_advance` load order, new row in [[data/t0018-cases]]); `glyph_expand_1bpp` and `disp_string` not started (past the 75 minute start limit on a loaded machine). Draft image externs `D_800B3F6C`, `D_800B3FAC`..`D_800B400C` added to `include/main_api.h`.
+
+## [2026-10-17] build | T-17020 closer pass: func_8004E58C matched
+[[tickets/T-17020-w3-main-p20]] closer pass (Opus) on the one guarded draft of `src/main/8004E500.c`: `func_8004E58C` (452 B) matched with a FAKE pointer view for the two compares (`((KWork *)&text_list_count)->unk_6A`), commit "T-17020: match main:func_8004E58C". Package now 2 of 4; `glyph_expand_1bpp` and `disp_string` still `INCLUDE_ASM`. Clean rebuild 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Notes in [[matching-notes]] (section T-17020), update line in [[data/t0018-cases]], new row in [[register-cheatsheet]]. Ticket stays In Review.
+

@@ -12,6 +12,8 @@ Update (T-20003): RPG_BAT `func_80138F6C` matches 1,268 actual default linked by
 
 Update (T-17020): main `load_string` (rows T-9320 and T-9740 below, `regorder`) is matched in plain C: it was not an allocation gap. The ranges are an array of 46 `FontRange` pairs walked by an index loop, `vload_font` takes the offset as a second argument, the bytes are fetched through explicit `q = str++` / `p = str++` copies, and the locals `i, p, q, c, hi, lo` are declared before `start` so IDO gives them frame slots ([[matching-notes]], "T-17020"). The rows stay unchanged.
 
+Update (T-17020 closer): main `func_8004E58C` (row T-17020 below, `regorder`) is matched with a FAKE pointer view: the two compares read `((KWork *)&text_list_count)->unk_6A`, the store stays direct. A direct read keeps the widening CVT in `tools/cvt_pass.py` (the first read comes after a call), so the compares share a `cvt` CSE temporary, the byte is not promoted, and the load lands after the stores with `li t6`. A `u8` local read before the stores gives the code but a frame 8 bytes too big (the local plus the compare temporary). Same rule as DATE `func_80154118` (T-17203).
+
 Update (T-17013): main `func_8004AE54` (row T-9320 below) is matched in plain C: both loop invariants of the `func_8009ED74` call are declared locals (`tpx`, `tpy`, in that order), so the allocator spills `tpy` at `sp+0x5C` and keeps `tpx` in `$fp` as the original does ([[matching-notes]], "T-17013"). Rows below stay unchanged.
 
 Update (T-17005): main `pre_syogatu1` (rows T-12030 below) is matched in plain C: an index loop `sp16C[i]` replaces the pointer walk that let IDO cache the argument address ([[matching-notes]], "T-17005"). Rows below stay unchanged.
