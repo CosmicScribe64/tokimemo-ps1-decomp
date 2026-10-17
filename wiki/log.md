@@ -17544,3 +17544,7 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: TAIIKU `src/ovl/TAIIKU/80140810.
 ## [2026-10-17] ticket | T-22004 Wave 4 package w4-p04 In Review
 
 Package of [[tickets/T-22000-wave-4-conveyor]]: no byte match. `func_80142400` (TAIIKU) guarded at 26 rows (from 349), `func_8014357C` guarded at 34 rows (unchanged), `func_80140A90` restored to INCLUDE_ASM (66 rows, body archived in `drafts/T-22004/TAIIKU/func_80140A90/body.c`). New: `MAIN_API_OVERRIDE_func_80085E30` in `src/ovl/TAIIKU/80142240.c`, `s16 D_8014A1E8[10]` defined in the unit, four prototypes and `D_8014A2C4` in `include/ovl/TAIIKU.h`. Clean build 27/27, check_headers, migrate_globals --check, sync_protos --check-branch pass. See [[matching-notes]] (T-22004) and [[tickets/T-22004-w4-p04]]. Code review pending.
+
+## [2026-10-17] ticket | T-22004 Done
+
+Code review of [[tickets/T-22004-w4-p04]] against `CODING_STANDARDS.md`: 0 of 3 matched (`func_80142400` guarded 26 rows, `func_8014357C` guarded 34 rows, `func_80140A90` back to INCLUDE_ASM). One finding fixed (comment on the first-symbol views and the peeled `D_8014A1E8` stores in `src/ovl/TAIIKU/80142240.c`), build 27/27. Package of [[tickets/T-22000-wave-4-conveyor]].

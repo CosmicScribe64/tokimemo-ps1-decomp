@@ -103,7 +103,9 @@ void func_801423A4(void) {
  * The pointer needs the counter `j` shared with the palette loop to keep the `sltu` form; a separate counter, a
  * pointer local (a stack word, frame 200), `<=`/`!=`/unsigned bounds, u32/s16 `j` and autotweak (513 edits) did not
  * move it. Needs MAIN_API_OVERRIDE_func_80085E30 (int call: 74 to 52 rows) and the unit-defined D_8014A1E8 (one
- * shared `lui at`). */
+ * shared `lui at`). Forms to keep: D_8014A1D4 and D_8014A1FC are reached through their first symbol as in the matched
+ * users of this file (rodata islands, aggregates not recovered); D_8014A1E8 is peeled by two stores because IDO unrolls the
+ * plain 0..10 loop by four (207 rows). */
 #ifdef NON_MATCHING
 void func_80142400(void) {
     s32 i;
