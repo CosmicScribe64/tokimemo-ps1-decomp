@@ -390,6 +390,8 @@ void func_80077694(void) {
             ((DisplayActor44 *)D_8011ECD0)[97].unk_10 = (u8 *)D_80125CAC;
             ((DisplayActor44 *)D_8011ECD0)[97].unk_34 = (u8 *)D_80125CB0;
             ((DisplayActor44 *)D_8011ECD0)[97].unk_05 = 2;
+            /* FAKE: u8 view of the s8 flag unk_F6E (both reads in this function; the original loads it with lbu).
+             * Same view as in func_8007437C (800737A0.c, T-17016). Matches; real source unknown. T-20940 */
             if (*(u8 *)&D_800E6280.unk_F6E != 0) {
                 ((DisplayActor44 *)D_8011ECD0)[97].unk_06 = 0x82;
             }
@@ -457,6 +459,8 @@ void func_80077900(void) {
         gs->unk_75D = girl;
         if ((girl != -1) && (gs->unk_042 < 0x2DA)) {
             club = gs->unk_0F4.h >> 12;
+            /* Club 10 tests the condition twice: under girl == 0, then again for every girl (the first copy falls
+             * through into the second). Both copies are in the original. */
             if (club == 10) {
                 if (girl == 0) {
                     if (gs->unk_1BC[girl].unk_0C.f.b2 && gs->unk_1BC[girl].unk_0C.f.b1
@@ -736,7 +740,7 @@ void telephone_class_init(void) {
             set_kanji_string(x[i], y[i], 3, "取り消し", 0);
         } else if (i == 12) {
             set_kanji_string(x[i], y[i], 3, D_800B3538[12], 0);
-        } else if ((u32)(D_800E6280.unk_1BC[i - 1].unk_0C.w << 28) >> 31) {
+        } else if (D_800E6280.unk_1BC[i - 1].unk_0C.f.b3) {
             set_kanji_string(x[i], y[i], 3, D_800B3538[i - 1], 0);
         } else {
             w[i] = 0;
