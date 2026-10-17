@@ -9,6 +9,7 @@
 #include "psx_types.h"
 #include "main_api.h"
 s32 func_80142028(void);
+s32 func_80134110(void);
 void func_801460D8(void);
 void func_801462B4(void);
 void func_80146624(void);
