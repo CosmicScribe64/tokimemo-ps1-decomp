@@ -587,6 +587,8 @@ s32 func_80054C74(s32 arg0) {
     D_80123320[1] = D_80123320[0];
     i = 0;
     p = D_80123120;
+    /* FAKE: a one-pass loop; the u32 counter makes the bound a second 0x2000 register next to the write
+       size, as in the original. The real loop shape is unknown. T-17007 */
     for (; i < 0x2000; i += 0x2000) {
         if (write(D_800B58E4, p, 0x2000) != 0x2000) {
             close(D_800B58E4);
@@ -609,7 +611,9 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_800552DC);
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005557C);
 
 /* FAKE: T-10850, T-17007: the dead initial assignments set the induction-register numbering, and
-   writing all five on one line makes as1 emit the hoisted starts in the original order (q, r, b). */
+   writing all five on one line makes as1 emit the hoisted starts in the original order (q, r, b).
+   The bank checksum is read as *(s32 *)(r + 0x200), not D_80123320[b].checksum: the field form
+   changes the register allocation (r is the header-side induction pointer). */
 s32 func_80055A38(s32 arg0) {
     s32 b;
     s32 n;
@@ -619,7 +623,7 @@ s32 func_80055A38(s32 arg0) {
     u8 *q;
     u8 *r;
 
-    n = 0; b = 0; p = D_80123324; r = D_80123120; q = D_80123324;
+    n = 0; b = 0; p = D_80123320[0].data; r = D_80123120; q = D_80123320[0].data;
     for (; b < 2; b++) {
         n = 0;
         p = q;
