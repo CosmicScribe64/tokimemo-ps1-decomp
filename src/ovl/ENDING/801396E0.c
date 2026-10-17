@@ -235,7 +235,7 @@ void func_8013A004(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-23002, 12 differing lines (6 rows): the original fills the load-delay slot after `lbu a0` of the first flag test with the `lui a1` of the first string (arm 1 then reads `lui a0; addiu a0; jal; addiu a1`), here the slot stays a nop and the arm keeps `lui a1` (viewsweep, autotweak, 240 s of permuter, local and pointer forms of the first call: no gain) */
+/* NON_MATCHING: T-23002, 12 differing lines (6 rows): the original fills the load-delay slot after `lbu a0` of the first flag test with the `lui a1` of the first string (arm 1 then reads `lui a0; addiu a0; jal; addiu a1`), here the slot stays a nop and the arm keeps `lui a1` (viewsweep, autotweak, 240 s of permuter, local and pointer forms of the first call: no gain). Binasm probes: ugen's chain is the plain order, and as1 builds the original's slot and moves `andi t8` from this same chain once about 240 instructions or the last 14 calls after the join are deleted, so the cause is a whole-function as1 limit, not the chain's C */
 #ifdef NON_MATCHING
 s32 func_8013B640(void); /* the callers read its (unset) $v0: it blocks $v0 in the next block (selector in $a0) */
 
