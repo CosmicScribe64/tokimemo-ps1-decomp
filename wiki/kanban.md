@@ -52,10 +52,10 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-22010-w4-p10|T-22010 Wave 4 package w4-p10]]
 
 ## Done
 
+- [ ] [[tickets/T-22010-w4-p10|T-22010 Wave 4 package w4-p10]]
 - [ ] [[tickets/T-22007-w4-p07|T-22007 Wave 4 package w4-p07]]
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 - [ ] [[tickets/T-22001-w4-p01|T-22001 Wave 4 package w4-p01]]

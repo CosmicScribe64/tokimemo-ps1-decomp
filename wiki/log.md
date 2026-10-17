@@ -17597,3 +17597,7 @@ Package w4-p10 of [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/GEKO/80134D10.c`
 ## [2026-10-17] ticket | T-22010 In Progress to In Review
 
 3 of 5 matched; notes in [[matching-notes]] (T-22010), three cheatsheet rows. [[tickets/T-22010-w4-p10]] In Review.
+
+## [2026-10-17] ticket | T-22010 Done
+
+Review against `CODING_STANDARDS.md` found nothing to fix: one owned C file, FAKE and NON_MATCHING comments ticketed, no inline asm or game data. 3 of 5 matched (`func_80137580`, `func_80135AC8`, `func_801355E8`). [[tickets/T-22010-w4-p10]] Done.
