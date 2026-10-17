@@ -1,7 +1,7 @@
 ---
 id: T-20008
 title: Recover the large NAME_ENT introduction handler
-status: In Review
+status: In Progress
 assignee: Codex
 created: 2026-10-17
 updated: 2026-10-17
@@ -48,3 +48,7 @@ The cleaned archive uses the real SpriteSlot24 work-area fields, Rec24 sprite fi
 Docker validation: ninja completed 605 steps including header/global guards; 27/27 independent binary SHA1 checks passed; sync_protos.py --check-branch reports 0 new / 15 known disagreements. Actual default funcdiff reports MATCH for 4,308 bytes through the unchanged ASM fallback, not through the archived C. No production source/header/compiler/build changes are submitted.
 
 Self-review against CODING_STANDARDS.md: C89 and fixed-width types; existing aggregates and canonical symbols; scratch declarations only for missing functions; every retained allocator/redundant-loop source control is marked FAKE with T-20008; no generated asm, comparison instruction listings, game assets, binaries, compiler artifacts or one-off probe scripts included. README and result.json distinguish canonical C, diagnostic view and default ASM results. Ticket/kanban synchronized to In Review; maintainer review remains pending.
+
+## Comments
+
+2026-10-17, maintainer review (PR #51): draft checkpoint merged; no findings (archive files hold C and notes only, no instruction listings; FAKE controls name T-20008). Matching continues under claim #50, so the ticket goes back to In Progress until a match or a stop.

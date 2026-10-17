@@ -17503,3 +17503,7 @@ PR #46 is merged; the maintainer independently confirms the renderer MATCH and 2
 ## [2026-10-17] ticket | T-20008 archive ready for review
 
 [[tickets/T-20008-large-name-introduction]] moved to In Review with [[kanban]] synchronized. Scope is the recovered source checkpoint in drafts/T-20008, reproducible measurements and assembly-backed semantic corrections; matching remains unfinished. Self-review against CODING_STANDARDS.md completed, retained source controls explicitly marked FAKE, no game assets, generated instruction listings, binaries or probe scripts included. Maintainer review is pending.
+
+## [2026-10-17] ticket | T-20008 draft checkpoint merged (PR #51)
+
+KakarottoCake's PR #51: corrected NAME_ENT func_80143580 reconstruction archived in drafts/T-20008 (835 rows, no production change). Ticket back to In Progress while the claim (#50) continues.
