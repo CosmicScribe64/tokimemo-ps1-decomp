@@ -80,7 +80,106 @@ INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80042CB0);
 
 INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80043010);
 
-INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_800430C0);
+s32 func_800430C0(void) {
+    s32 raw;
+
+    D_800E6280.unk_F84 = D_800E6280.unk_F80;
+    raw = func_80043010();
+    if ((raw & 0xFFFF0000) == 0xFFFF0000) {
+        D_800E6280.unk_F80 = raw & 0xFFFF;
+        if (D_800E6280.unk_F80 == 0xFFFF) {
+            D_800E6280.unk_F80 = 0;
+        }
+    } else {
+        D_800E6280.unk_F80 = raw;
+        if ((raw & 0xFFFF) == 0xFFFF) {
+            if ((raw & 0xFFFF0000) == 0xFFFF0000) {
+                D_800E6280.unk_F80 = 0;
+            } else {
+                D_800E6280.unk_F80 = raw & 0xFFFF0000;
+            }
+        }
+    }
+    D_800E6280.unk_F88 = ~D_800E6280.unk_F84 & D_800E6280.unk_F80;
+    /* FAKE: the (u32) cast keeps ugen's operand order (prev, ~pad) of the original; real source unknown. T-17009 */
+    D_800E6280.unk_F8C = D_800E6280.unk_F84 & (u32)~D_800E6280.unk_F80;
+    if (D_800B3CA0 != 0 && (D_800E6280.unk_10F8 & 1)) {
+        D_800E6280.unk_F88 |= 0x20;
+    }
+    if (D_800E6280.unk_1111 == 1) {
+        if (D_800E6280.unk_F88 & 0x08000800) {
+            if (D_800E6280.unk_1110 == 0) {
+                D_800E6280.unk_1110 = 1;
+                D_800E6280.unk_1112 = 0;
+            } else {
+                D_800E6280.unk_1112 = 1;
+                D_800E6280.unk_1110 = 0;
+            }
+        }
+    }
+    if (D_800E6280.unk_1108 != 0xD0 && D_800E6280.unk_1108 != 0x20 && D_800E6280.unk_1108 != 0x90 && D_800E6280.unk_F74 == 1) {
+        if ((D_800E6280.unk_F80 & 0x90C) == 0x90C) {
+            if (D_800B3CA4++ >= 0x81) {
+                D_800B3CA4 = 0;
+                func_800789E0();
+                func_800591D8(0);
+                func_800412E0(0);
+                main_state_set(0);
+                func_80041584();
+                func_80048DD0(0);
+                back_clear_switch(1);
+                dec_bg_reset();
+                func_8004482C();
+                tpage_buf_clear();
+                func_80044750(0x7F);
+                func_800424FC();
+                func_8007BDE8();
+                func_8007B844();
+                func_80042488();
+                func_800452C4();
+                func_80041878();
+                func_80042058();
+                func_80041F48();
+                if (D_800E6280.unk_035 != 0) {
+                    func_80053D10();
+                }
+                func_8006BC28(0);
+                return -1;
+            }
+        } else if ((D_800E6280.unk_F80 & 0x090C0000) == 0x090C0000) {
+            if (D_800B3CA4++ >= 0x81) {
+                D_800B3CA4 = 0;
+                func_800789E0();
+                func_800591D8(0);
+                func_800412E0(0);
+                main_state_set(0x11);
+                func_80041584();
+                func_80048DD0(0);
+                back_clear_switch(1);
+                dec_bg_reset();
+                func_8004482C();
+                tpage_buf_clear();
+                func_80044750(0x7F);
+                func_800424FC();
+                func_8007BDE8();
+                func_8007B844();
+                func_80042488();
+                func_800452C4();
+                func_80041878();
+                func_80042058();
+                func_80041F48();
+                if (D_800E6280.unk_035 != 0) {
+                    func_80053D10();
+                }
+                func_8006BC28(0);
+                return -1;
+            }
+        } else {
+            D_800B3CA4 = 0;
+        }
+    }
+    func_80043448();
+}
 
 void func_80043448(void) {
     if (D_800B3CFC != 0) {
