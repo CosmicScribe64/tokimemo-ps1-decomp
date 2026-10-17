@@ -17307,3 +17307,7 @@ Wave 3 conveyor paused at the user's request after 19 types passes and 77 packag
 ## [2026-10-17] ticket | T-20930 In Progress
 
 [[tickets/T-20930-types-ending]] created and In Progress (card in [[kanban]], line in [[index]]): a second, targeted type pass for ENDING after [[tickets/T-18300-types-first-ending]]. Worktree `ty-ending` from `w2-good`; scope `src/ovl/ENDING/*.c` and `include/ovl/ENDING.h`, additions only in `include/game.h`.
+
+## [2026-10-17] build | T-20930 ENDING types and three matches
+
+[[tickets/T-20930-types-ending]]: ENDING's data tables as aggregates (message scripts `D_8013C280[3][17]`, `D_8013CAC0[3][15]`, `EdScriptSet`, `EdScene30`/`EdScene44`, `EdPortraitTbl`, `D_8013C5A0[7]`; 427 scalar declarations gone, 449 matched uses rewritten by `drafts/T-20930/fold_ending.py`), the callback and stack tables moved into `include/ovl/ENDING.h`, `D_8013C364` as `u8`, `func_80132B04` returning `s32`, `func_80132420` without prototype, ENDING's `set_kanji_string` override removed. Matched `func_80139B48` (476 B), `func_80132B04` (660 B) and `func_80132420` (1,764 B, FAKE frame layout); 27/27 sha1 after each commit. `tools/redraft.py` before and after the types: no score change from the headers alone; hand drafts lowered `func_801330E4` 129 to 114, `func_80134C2C` 46 to 40, `func_8013759C` 99 to 66. Drafts in `drafts/T-20930/`, numbers in [[ending-family-results]] and [[data-types]].
