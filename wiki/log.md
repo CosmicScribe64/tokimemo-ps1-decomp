@@ -17708,3 +17708,7 @@ Three of five SHUGAKU functions matched: `func_80135480` (`s32` no return, `SHUG
 ## [2026-10-17] ticket | T-22019 In Review
 
 [[tickets/T-22019-w4-p19]]: 4 of 5 matched in `src/ovl/ETC/8013BEF0.c` (`func_8013C700`, `func_8013E89C`, `func_8013D32C`, `func_8013E6AC`; 2,232 bytes). `func_8013CCE4` stays `INCLUDE_ASM` at 43 rows (cleaned draft in `drafts/T-22019/ETC/func_8013CCE4/body.c`). Notes in [[matching-notes]].
+
+## [2026-10-17] ticket | T-22019 Done
+
+[[tickets/T-22019-w4-p19]]: code review against `CODING_STANDARDS.md` passed; one finding (the byte pointer into `D_800E7D10` in `func_8013E6AC` was only half explained) fixed with a comment, `ETC.bin` SHA1 OK. 4 of 5 functions matched (`func_8013C700`, `func_8013E89C`, `func_8013D32C`, `func_8013E6AC`; 2,232 bytes), `func_8013CCE4` stays `INCLUDE_ASM`. Ticket Done, card moved to Done.

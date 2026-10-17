@@ -430,7 +430,10 @@ void func_8013E524(s32 a, s32 b) {
     safe_env(3);
 }
 
-/* Both record tables are read through pointer locals: the original reloads the +5 byte for the switch (T-22019). */
+/* Both record tables are read through pointer locals: the original reloads the +5 byte for the switch, direct
+ * D_800E6280.unk_75E[...] accesses CSE it with the earlier load. The second table is the EtcConfig8 record array
+ * at D_800E7D10 + 0x58 (main_api.h): a byte pointer plus `[11]` after the scaled index keeps the +0x58 as the
+ * displacement, while a typed base folds it into the address (T-22019). */
 void func_8013E6AC(void) {
     GameState *g = &D_800E6280;
     u8 *w = (u8 *)&D_800E7D10;
