@@ -86,9 +86,6 @@ s32 strNextVlc(StrDecEnv30 *arg0) {
     return 0;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-17014, 2 differing lines; the width compare is `bne a0,t0` where the original has
- * `bne t0,a0` (the local w is a plain variable and goes first; without it the width takes $v0). */
 s32 strNext(StrDecEnv30 *env) {
     u32 *addr;
     StHEADER *sector;
@@ -111,7 +108,9 @@ s32 strNext(StrDecEnv30 *env) {
     }
     D_800B58F0 = sector->frameCount;
     w = D_80125C58->width;
-    if (sector->width != w || D_80125C58->height != sector->height) {
+    /* FAKE: `w * 1` keeps the sector width first in the bne (a plain w would go first); the local
+     * holds $v0 so the width takes $a0. T-17014 */
+    if (w * 1 != sector->width || D_80125C58->height != sector->height) {
         rect.x = 0;
         rect.y = 0;
         rect.w = 0x280;
@@ -129,9 +128,6 @@ s32 strNext(StrDecEnv30 *env) {
     env->slice.h = D_80125C58->height;
     return (s32)addr;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800563F0", strNext);
-#endif
 
 /* Implicit-int return type with no return statement: it changes how as1 fills the loop's
  * back-branch delay slot (T-9140, found by the permuter in T-1330). */
