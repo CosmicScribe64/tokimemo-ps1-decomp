@@ -359,6 +359,8 @@ s32 func_80044C98(void) {
             func_80044D54();
             D_800B3D4C++;
         } else {
+            /* The counter is incremented as the value of the compare: this keeps load and
+             * increment in one register range ($v1), as in the original (T-17019). */
             if ((++D_800B3D4C > 0xC0U) || (func_80044F94((s32) D_800B3D24) != 0)) {
                 D_800B3D54[D_800B3D24] = 0;
                 return 1;
@@ -411,6 +413,8 @@ s32 func_80044E8C(void) {
             func_80044D54();
             D_800B3D4C++;
         } else {
+            /* The counter is incremented as the value of the compare: this keeps load and
+             * increment in one register range ($v1), as in the original (T-17019). */
             if ((++D_800B3D4C > 0xC0U) || (func_80044F94((s32) D_800B3D24) != 0)) {
                 if (D_800B3D24 == 0) {
                     func_80044750(0x22);
