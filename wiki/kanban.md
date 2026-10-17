@@ -25,7 +25,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-20940-types-main-80075320|T-20940 Targeted type pass: src/main/80075320.c]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
@@ -55,6 +54,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-20940-types-main-80075320|T-20940 Targeted type pass: src/main/80075320.c]]
 - [ ] [[tickets/T-20005-gyozi-display-dispatch|T-20005 Two GYOZI display/dispatch helpers matched (524 bytes)]]
 
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
