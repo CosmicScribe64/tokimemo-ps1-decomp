@@ -532,67 +532,58 @@ void parameter_show_init(void) {
 }
 
 
-/* NON_MATCHING: T-17011, 10 differing lines; the loop-invariant end pointer and the 0x1000 constant swap a2/a3 */
-#ifdef NON_MATCHING
 void parameter_show(void) {
-    DisplayActor44 *var_v0;
-    DisplayActor44 *var_v0_2;
-    s32 var_t0;
-    s32 temp_lo;
-    s32 temp_lo_2;
-    s32 temp_lo_3;
+    s32 i;
+    s32 d;
+    s32 step;
+    DisplayActor44 *tab;
 
-    if (*(u8 *)&D_800E6280.unk_F6E != 0) {
-        var_t0 = 4;
+    if ((u8)D_800E6280.unk_F6E != 0) {
+        step = 4;
     } else {
-        var_t0 = 8;
+        step = 8;
     }
-    if (((DisplayActor44 *)D_8011ECD0)[32].unk_03 & 0x80) {
+    tab = (DisplayActor44 *)D_8011ECD0;
+    if (tab[32].unk_03 & 0x80) {
         func_80049A40(-0x84, -0x61, 0x108, 0x2A, 0xC, 0x30E00, 0);
         dtd_on(0xC);
-        var_v0 = &((DisplayActor44 *)D_8011ECD0)[32];
-        do {
-            if (var_v0->unk_2E == 1) {
-                temp_lo = 0x1000 / var_t0;
-                var_v0->unk_08 += temp_lo;
-                var_v0->unk_1A -= temp_lo;
-                if (temp_lo >= var_v0->unk_1A) {
-                    var_v0->unk_2E = 2;
+        for (i = 32; i < 56; i++) {
+            if (tab[i].unk_2E == 1) {
+                d = 0x1000 / step;
+                tab[i].unk_08 += d;
+                tab[i].unk_1A -= d;
+                if (d >= tab[i].unk_1A) {
+                    tab[i].unk_2E = 2;
                 }
-            } else if (var_v0->unk_2E == 2) {
-                temp_lo_2 = 0x1000 / var_t0;
-                var_v0->unk_08 -= temp_lo_2;
-                var_v0->unk_1A += temp_lo_2;
-                if (var_v0->unk_1A >= 0x1000) {
-                    var_v0->unk_1A = 0x1000;
-                    var_v0->unk_2E = 0;
-                    var_v0->unk_08 = 0;
-                }
-            }
-            var_v0 += 1;
-        } while ((u32) var_v0 < (u32) (&((DisplayActor44 *)D_8011ECD0)[56]));
-        var_v0_2 = &((DisplayActor44 *)D_8011ECD0)[56];
-        do {
-            if (var_v0_2->unk_2E == 1) {
-                temp_lo_3 = 0x1000 / var_t0;
-                *(s16 *)var_v0_2->pad_1C -= temp_lo_3;
-                if (temp_lo_3 >= *(s16 *)var_v0_2->pad_1C) {
-                    var_v0_2->unk_2E = 2;
-                }
-            } else if (var_v0_2->unk_2E == 2) {
-                *(s16 *)var_v0_2->pad_1C += 0x1000 / var_t0;
-                if (*(s16 *)var_v0_2->pad_1C >= 0x1000) {
-                    *(s16 *)var_v0_2->pad_1C = 0x1000;
-                    var_v0_2->unk_2E = 0;
+            } else if (tab[i].unk_2E == 2) {
+                d = 0x1000 / step;
+                tab[i].unk_08 -= d;
+                tab[i].unk_1A += d;
+                if (tab[i].unk_1A >= 0x1000) {
+                    tab[i].unk_1A = 0x1000;
+                    tab[i].unk_2E = 0;
+                    tab[i].unk_08 = 0;
                 }
             }
-            var_v0_2 += 1;
-        } while (var_v0_2 != (&((DisplayActor44 *)D_8011ECD0)[59]));
+        }
+        for (i = 56; i < 59; i++) {
+            if (tab[i].unk_2E == 1) {
+                d = 0x1000 / step;
+                *(s16 *)tab[i].pad_1C -= d;
+                if (d >= *(s16 *)tab[i].pad_1C) {
+                    tab[i].unk_2E = 2;
+                }
+            } else if (tab[i].unk_2E == 2) {
+                *(s16 *)tab[i].pad_1C += 0x1000 / step;
+                if (*(s16 *)tab[i].pad_1C >= 0x1000) {
+                    *(s16 *)tab[i].pad_1C = 0x1000;
+                    tab[i].unk_2E = 0;
+                }
+            }
+        }
+
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", parameter_show);
-#endif
 
 void hizuke_disp_switch(s32 arg0) {
     s32 i;
