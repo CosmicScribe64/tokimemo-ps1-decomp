@@ -232,12 +232,10 @@ void func_801383CC(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
 s32 func_8013842C(void) {
     BsdEvent *list;
     BsdEvent *ev;
     s32 i;
-    s32 cmd;
     s32 slot;
     s32 img;
 
@@ -265,15 +263,16 @@ s32 func_8013842C(void) {
     }
     if (D_8013D9A0 == 1) {
         for (i = D_8013D994; i < 0xFFFF; i++) {
-            ev = &list[i];
+            /* FAKE: T-22003, the word view with i * 2 takes the ugen temporary that the
+             * original's index expression takes; &list[i] gives $t1 for $t2 in the loop */
+            ev = (BsdEvent *)((s32 *)list + i * 2);
             if (D_8013D99C == ev->unk_00) {
-                cmd = ev->unk_04;
-                if (cmd == 0x0FFFFFFF) {
+                if (ev->unk_04 == 0x0FFFFFFF) {
                     D_8013D9A0 = 2;
                     i = 0xFFFF;
                 } else {
-                    slot = (cmd & 0xFF0000) >> 16;
-                    img = cmd & 0xFF;
+                    slot = (ev->unk_04 & 0xFF0000) >> 16;
+                    img = ev->unk_04 & 0xFF;
                     if (img == 0xFE) {
                         func_80138810(slot, 0x50, 0);
                     } else {
@@ -296,9 +295,6 @@ s32 func_8013842C(void) {
         func_8013867C();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80137B40", func_8013842C);
-#endif
 
 INCLUDE_RODATA("asm/ovl/BUNKA_SD/data/BUNKA_SD/80137B40.rodata", D_8013AE70);
 

@@ -267,12 +267,10 @@ void func_8013731C(void) {
     }
 }
 
-#ifdef NON_MATCHING
 s32 func_801373D0(void) {
     BsdEvent *list;
     BsdEvent *ev;
     s32 i;
-    s32 cmd;
     s32 slot;
     s32 img;
 
@@ -290,7 +288,7 @@ s32 func_801373D0(void) {
                 D_8013CEC8 = 1;
                 func_8004E9F4(1);
                 func_8004284C();
-                return 1;
+                return 0;
             }
         }
     }
@@ -300,15 +298,16 @@ s32 func_801373D0(void) {
     }
     if (D_8013CED4 == 1) {
         for (i = D_8013CEC8; i < 0xFFFF; i++) {
-            ev = &list[i];
+            /* FAKE: T-22003, the word view with i * 2 takes the ugen temporary that the
+             * original's index expression takes; &list[i] gives $t1 for $t2 in the loop */
+            ev = (BsdEvent *)((s32 *)list + i * 2);
             if (D_8013CED0 == ev->unk_00) {
-                cmd = ev->unk_04;
-                if (cmd == 0x0FFFFFFF) {
+                if (ev->unk_04 == 0x0FFFFFFF) {
                     D_8013CED4 = 2;
                     i = 0xFFFF;
                 } else {
-                    slot = (cmd & 0xFF0000) >> 16;
-                    img = cmd & 0xFF;
+                    slot = (ev->unk_04 & 0xFF0000) >> 16;
+                    img = ev->unk_04 & 0xFF;
                     if (img == 0xFE) {
                         func_801377D4(slot, 0x50, 0);
                     } else {
@@ -331,9 +330,6 @@ s32 func_801373D0(void) {
         func_80137620();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801369D0", func_801373D0);
-#endif
 
 INCLUDE_RODATA("asm/ovl/BUNKA_SD/data/BUNKA_SD/801369D0.rodata", D_8013AAD0);
 
