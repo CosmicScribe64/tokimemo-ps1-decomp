@@ -573,9 +573,6 @@ void holiday_club_init(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-17006, 14 differing lines; the club flag update (lbu/ori/sb at +0x66F, then the +0xF5 byte) takes t5..t9 where the
- * original skips t5 (ugen temporary numbering, regdiff "ugen"); the frame (72-byte buf plus one 4-byte local) matches. */
-#ifdef NON_MATCHING
 void func_8007866C(void) {
     u8 buf[72];
     GameState *gs;
@@ -599,16 +596,15 @@ void func_8007866C(void) {
             strcat(buf, "部を退部した。");
             sndi(buf, 0, 0xFF);
             gs = &D_800E6280;
-            gs->unk_66C[D_800E6280.unk_0F4.h >> 12].unk_03 |= 1;
+            /* FAKE: T-17006, a bit-field store through the borrowed CharFlags view (one ugen temporary more than
+             * `|= 1`, so the original's t6..t0 numbering); the record's real bit-field layout is unknown. */
+            ((CharFlags *)&gs->unk_66C[D_800E6280.unk_0F4.h >> 12].unk_03)->b0 = 1;
             gs->unk_0F4.b[1] = (gs->unk_0F4.b[1] & 0xFF0F) | 0xB0;
             k_disp_start(1);
             break;
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_8007866C);
-#endif
 
 void holiday_club_exit(void) {
     func_80048E78();
