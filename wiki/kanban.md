@@ -53,10 +53,9 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-22020-w4-p20|T-22020 Wave 4 package w4-p20]]
-
 ## Done
 
+- [ ] [[tickets/T-22020-w4-p20|T-22020 Wave 4 package w4-p20]]
 - [ ] [[tickets/T-22014-w4-p14|T-22014 Wave 4 package w4-p14]]
 - [ ] [[tickets/T-22015-w4-p15|T-22015 Wave 4 package w4-p15]]
 - [ ] [[tickets/T-22009-w4-p09|T-22009 Wave 4 package w4-p09]]
