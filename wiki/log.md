@@ -16656,3 +16656,7 @@ Clean rebuild of the w3-main-p05 worktree: 27/27 sha1 OK (`build/SLPM_86.053.bin
 ## [2026-10-16] ticket | T-17010 In Progress
 
 [[tickets/T-17010-w3-main-p10]] created and started: wave 3 package for `src/main/80061710.c` (four functions, see the ticket), worktree `tokimemo-wt/w3-main-p10`, base `w2-good`.
+
+## [2026-10-16] ticket | T-17010 In Review
+
+[[tickets/T-17010-w3-main-p10]] In Progress to In Review: 0 of 4 functions matched. `func_8006190C` guarded at 14 rows (index loops, `(r + i) % 13`, `u32` pointer chain), `func_80062210` guarded at 24 rows (`DisplayRecord44` view, element-store chain, FAKE `pad[4]`), `func_80062948` restored to `INCLUDE_ASM` (89 rows at best), `func_80061A3C` not started. Notes in [[matching-notes]] (T-17010), three rows in [[data/t0018-cases]]. Worktree `tokimemo-wt/w3-main-p10`.
