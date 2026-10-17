@@ -47,7 +47,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-22005-w4-p05|T-22005]] Wave 4 package w4-p05: TACO func_801484E4, func_801416E8 and func_801497EC matched (2,376 bytes), func_8013D838 (10 lines) guarded (Done).
 - [[tickets/T-22008-w4-p08|T-22008]] Wave 4 package w4-p08: `NAME_ENT` `80132000.c`, 0 of 4 matched; `func_80132320` (14 lines) and `func_80134110` (26 lines) stay guarded, `func_80134248` at 455 lines, `func_80138C1C` not closer (Done; 0 of 4 matched).
 - [[tickets/T-22011-w4-p11|T-22011]] Wave 4 package w4-p11: EVENT `800FBBF0.c` and `8010BB90.c`, five functions: `func_8010F340` and `func_800FD00C` matched, `func_800FC040` and `func_8010F74C` guarded (24, 29 rows), `func_8010F55C` back to ASM (Done; 2 of 5 matched).
-- [[tickets/T-22016-w4-p16|T-22016]] Wave 4 package w4-p16: KANGEI `80135F10.c` and `80134120.c`, four functions (In Progress).
+- [[tickets/T-22016-w4-p16|T-22016]] Wave 4 package w4-p16: KANGEI `80135F10.c` and `80134120.c`, four functions: `func_801362F0` matched, `func_8013769C` and `func_80135004` guarded (2, 16 rows), `func_80134724` back to ASM (In Review; 1 of 4 matched).
 - [[tickets/T-11880-date2-remainder|T-11880]] DATE2: the remaining nine functions, claim #49 (Done; 8 of 9 matched, DATE2 101/102, 91.9% of bytes).
 - [[tickets/T-20008-large-name-introduction|T-20008]] NAME_ENT introduction reconstruction archive (4,308-byte scope), claim #50; compiling, still nonmatching (In Progress; draft checkpoint merged, PR #51).
 - [[tickets/T-20010-name-ent-resource-loader|T-20010]] NAME_ENT resource loader follow-up, 1,652 bytes; valid table recovered, still ASM (Ready).

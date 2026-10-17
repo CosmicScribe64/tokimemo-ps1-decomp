@@ -17668,3 +17668,9 @@ Review against `CODING_STANDARDS.md` passed after two small fixes in `src/ovl/EV
 
 ## [2026-10-17] ticket | T-22016 started
 Package w4-p16 for [[tickets/T-22016-w4-p16]]: KANGEI `func_80135004`, `func_801362F0`, `func_80134724` and `func_8013769C` in `src/ovl/KANGEI/80135F10.c` and `src/ovl/KANGEI/80134120.c`. Status In Progress.
+
+## [2026-10-17] build | T-22016 results
+[[tickets/T-22016-w4-p16]]: KANGEI `func_801362F0` (420 bytes) matched with `s32 func_800AE120();` as a file-level override (`include/main_api.h` prototype wrapped in `#ifndef`) and a byte view of the switch selector. `func_8013769C` guarded at 2 rows (name tables 8 bytes high), `func_80135004` guarded at 16 rows, `func_80134724` restored to `INCLUDE_ASM`. Best forms in `drafts/T-22016/KANGEI/`; details in [[matching-notes]].
+
+## [2026-10-17] ticket | T-22016 In Review
+[[tickets/T-22016-w4-p16]] moved from In Progress to In Review after the clean build and header checks.
