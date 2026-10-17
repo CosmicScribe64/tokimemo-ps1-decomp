@@ -17457,3 +17457,7 @@ Code review against `CODING_STANDARDS.md`, no findings: 8 matched functions (5,4
 
 ## [2026-10-17] ticket | T-11860 TT batch 12 Done
 Eleven file groups, one Opus agent each, two at a time: 25 of 28 matched (16,208 bytes), including the three batch-10/11 near misses and seven never-drafted functions; guarded `func_801427A8`, `func_80142110`, `func_8014A2B4`. FAKE comments added to the remaining chain stores (maintainer review of #35). Merged current `main`; clean rebuild 27/27 OK, checks clean; TT 299/303 (97.2%). Inline review against CODING_STANDARDS.md: no open findings. Moved [[tickets/T-11860-tt-batch-12]] to Done. Notes in [[matching-notes]] ("TT overlay, batch 12"), 28 rows in [[data/t0018-cases]].
+
+## [2026-10-17] ticket | T-11860 Done (PR #47 merged)
+
+diman8's PR #47: TT batch 12, 25 of 28 matched (16,208 bytes), TT 299/303. Merged in one clean build with PR checks (27/27, headers, globals, prototypes, funcdiff MATCH for all 25). [[tickets/T-11860-tt-batch-12]] Done.

@@ -60,3 +60,7 @@ are guarded blocks at the end of `include/ovl/TT.h` (balanced `#if`/`#endif`), t
 and one `SquareRoot0` prototype in `main_api.h` (an SDK symbol already used by `src/main/800674B0.c`). Guard comments
 current. Clean rebuild 27/27 OK, headers/globals OK, `sync_protos.py --check-branch` and `migrate_globals.py --check`
 clean. No open findings.
+
+## Comments
+
+2026-10-17, maintainer review (PR #47): no findings. Every chain store and other trick carries FAKE with T-11860; the TT.yaml data island and the SquareRoot0 prototype are the only changes outside TT. Verified in the integration tree: clean 27/27, headers, globals, prototypes OK, funcdiff MATCH for all 25 functions. Status Done.
