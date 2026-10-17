@@ -239,26 +239,26 @@ void func_801454CC(void) {
 }
 
 void func_801455E4(s32 arg0) {
-    NameMotionActor44 *p;
+    DisplayFixActor44 *p;
 
     /* FAKE: sharing the initialization and loop source line places the actor
      * base setup after the two endpoint loads. T-10030. */
-    p = (NameMotionActor44 *)D_8011ECD0; do {
-        p[96].phase++;
-        p[96].x.word += func_800A0070(p[96].phase << 5) * 8;
+    p = (DisplayFixActor44 *)D_8011ECD0; do {
+        p[96].unk_07++;
+        p[96].unk_24.w += func_800A0070(p[96].unk_07 << 5) * 8;
         if (arg0 == 0) {
-            p[96].x.half.high--;
+            p[96].unk_24.h[1]--;
         }
-        p[96].y.half.high++;
-        if (p[96].y.half.high >= 41) {
-            if (arg0 == 1 && p >= (NameMotionActor44 *)D_8011EDE0) {
-                p[96].flags = 0;
+        p[96].unk_28.h[1]++;
+        if (p[96].unk_28.h[1] >= 41) {
+            if (arg0 == 1 && p >= (DisplayFixActor44 *)D_8011EDE0) {
+                p[96].unk_03 = 0;
             }
-            p[96].x.half.high = (func_800AE0D0() % 320) - 160;
-            p[96].y.half.high = -120 - (func_800AE0D0() % 48);
+            p[96].unk_24.h[1] = (func_800AE0D0() % 320) - 160;
+            p[96].unk_28.h[1] = -120 - (func_800AE0D0() % 48);
         }
         p++;
-    } while (p != (NameMotionActor44 *)D_8011EEF0);
+    } while (p != (DisplayFixActor44 *)D_8011EEF0);
 }
 
 void func_80145760(void) {
@@ -1562,8 +1562,8 @@ s32 func_801486F8(void) {
 }
 
 void func_801488DC(void) {
-    NameMotionActor44 *actors;
-    actors = (NameMotionActor44 *)D_8011ECD0;
+    DisplayFixActor44 *actors;
+    actors = (DisplayFixActor44 *)D_8011ECD0;
     switch (D_800E6280.unk_110D) {
     case 0:
         D_8014D180 = 0xF;
@@ -1624,7 +1624,7 @@ void func_801488DC(void) {
                 D_80120684 = (u8 *)0x801800D4;
                 D_80120666 = 0;
                 D_80120655 = 0x80;
-                actors[96].x.half.high = -0xA0;
+                actors[96].unk_24.h[1] = -0xA0;
                 D_8012067A = -0x78;
                 func_80044750(5);
                 func_80044750(0xC1);
@@ -1635,8 +1635,8 @@ void func_801488DC(void) {
         break;
     }
     if ((u8) D_800E6280.unk_110D >= 2U) {
-        actors[96].x.word = (s32) (actors[96].x.word - 0x8000);
-        actors[98].x.half.high = actors[97].x.half.high = actors[96].x.half.high;
+        actors[96].unk_24.w = (s32) (actors[96].unk_24.w - 0x8000);
+        actors[98].unk_24.h[1] = actors[97].unk_24.h[1] = actors[96].unk_24.h[1];
     }
     func_800578F4(1);
 }

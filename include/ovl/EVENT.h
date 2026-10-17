@@ -1536,33 +1536,6 @@ typedef struct EventMovieState {
 #define OVL_EVENT_PARTICLE_T10870_H
 /* func_8011B190 initializes records 96..105 at D_800E9620. The same
  * allocation's record 31 uses byte 0x43. Coordinate high halves are signed. */
-typedef struct EventParticleView44 {
-    /* 0x00 */ u8 pad00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 unk_04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 unk_06;
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ u8 pad08[4];
-    /* 0x0C */ s32 unk_0C;
-    /* 0x10 */ s32 unk_10;
-    /* 0x14 */ s16 unk_14;
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ s16 unk_1C;
-    /* 0x1E */ u8 pad1E[6];
-    /* 0x24 */ GsWord unk_24;
-    /* 0x28 */ GsWord unk_28;
-    /* 0x2C */ s32 unk_2C;
-    /* 0x30 */ s32 unk_30;
-    /* 0x34 */ s32 unk_34;
-    /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 pad3C[7];
-    /* 0x43 */ u8 unk_43;
-} EventParticleView44; /* size 0x44 */
 
 /* Partial state view at D_800B0860. The word table's observed accesses
  * extend through element 57; its full allocation size is not yet known. */

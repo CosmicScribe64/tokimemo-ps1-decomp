@@ -1223,14 +1223,14 @@ void func_8013C0E4(void) {
         D_801499A0.unk_04 = ((s16 *)&tmp)[1];
         D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
     }
-    if (D_80120676 < ((TaiikuScene44 *)D_8011ECD0)[97].position.h[1] &&
+    if (D_80120676 < ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.h[1] &&
         func_800AE0C0(D_8012067A - D_801206BE) < 12 &&
-        ((TaiikuScene44 *)D_8011ECD0)[97].position.h[1] - 0x20 < D_80120676) {
-        ((TaiikuScene44 *)D_8011ECD0)[97].position.w += 0x11800;
-    } else if (((TaiikuScene44 *)D_8011ECD0)[97].position.h[1] < D_80120676 &&
+        ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.h[1] - 0x20 < D_80120676) {
+        ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.w += 0x11800;
+    } else if (((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.h[1] < D_80120676 &&
                func_800AE0C0(D_8012067A - D_801206BE) < 12 &&
-               D_80120676 < ((TaiikuScene44 *)D_8011ECD0)[97].position.h[1] + 0x20) {
-        ((TaiikuScene44 *)D_8011ECD0)[97].position.w -= 0x11800;
+               D_80120676 < ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.h[1] + 0x20) {
+        ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.w -= 0x11800;
     }
     if (((u16 *)&D_801499A0)[1] > 128) {
         ((u16 *)&D_801499A0)[1] = 0x20;

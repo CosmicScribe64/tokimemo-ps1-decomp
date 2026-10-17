@@ -197,29 +197,7 @@ void func_80138D40(void);
 
 #ifndef OVL_KANGEI_SPRITE_T9740
 #define OVL_KANGEI_SPRITE_T9740
-/* 16.16 position: word arithmetic, signed high halfword coordinate (MASTER's MasterFixed32, T-18400). */
-typedef union KangeiFixed32 {
-    /* 0x00 */ s32 w;
-    /* 0x00 */ s16 h[2];
-} KangeiFixed32; /* size 0x04 */
 
-/* T-9740: 0x44-byte D_8011ECD0 records used by func_80137484; T-18400: fields of the
- * MASTER clone func_801370A0 (MasterSprite44 layout). */
-typedef struct KangeiSprite44 {
-    /* 0x00 */ u8 pad_00[2];
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 pad_04[3];
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad_0A[0xC];
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad_1A[0xC];
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ KangeiFixed32 unk_28;
-    /* 0x2C */ u8 pad_2C[0x18];
-} KangeiSprite44; /* size 0x44 */
 
 /* T-18400: the ten falling streaks of func_801370A0 (MASTER's D_8013C58C/D_8013C5B4). */
 typedef struct KangeiPoint2 {

@@ -2,7 +2,7 @@
 #define OVL_TEL_H
 
 #include "common.h"
-#include "main_api.h"
+#include "game.h"
 
 extern u8 D_801405E4;
 extern u8 *D_80140AD8[];
@@ -92,17 +92,6 @@ void func_801345C4(void);
 void func_801352F0(void);
 void func_80136724(void);
 
-typedef struct TelRec44 {
-    /* 0x00 */ u8 pad00[3];
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 pad04[0x14];
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ s16 unk_1C;
-    /* 0x1E */ u8 pad1E[0x12];
-    /* 0x30 */ s32 unk_30;
-    /* 0x34 */ u8 pad34[0x10];
-} TelRec44; /* size 0x44; view of D_8011ECD0 records, T-10040. */
 
 /* Dialogue text pointers and XA tables, T-10040. */
 extern u8 *D_801410BC[];

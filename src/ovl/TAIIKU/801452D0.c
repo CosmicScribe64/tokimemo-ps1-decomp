@@ -1194,12 +1194,12 @@ s32 func_801485C4(void) {
         index++;
         p++;
     } while (index < 4);
-    if (chosen * 48 - 64 < ((TaiikuScene44 *)D_8011ECD0)[104].position.h[1]) {
-        ((TaiikuScene44 *)D_8011ECD0)[104].position.w += 0xFFFE8000;
+    if (chosen * 48 - 64 < ((DisplayFixActor44 *)D_8011ECD0)[104].unk_24.h[1]) {
+        ((DisplayFixActor44 *)D_8011ECD0)[104].unk_24.w += 0xFFFE8000;
         return 0;
     }
-    ((TaiikuScene44 *)D_8011ECD0)[104].unk_02 = 64;
-    ((TaiikuScene44 *)D_8011ECD0)[104].unk_18 = 61;
+    ((DisplayFixActor44 *)D_8011ECD0)[104].unk_02 = 64;
+    ((DisplayFixActor44 *)D_8011ECD0)[104].unk_18 = 61;
     func_80085ED0();
     return 1;
 }

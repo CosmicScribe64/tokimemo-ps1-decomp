@@ -270,7 +270,7 @@ void func_801560B8(void) {
 }
 
 void func_801560E0(void) {
-    DateMover44 *m = (DateMover44 *)D_8011ECD0;
+    DisplayFixActor44 *m = (DisplayFixActor44 *)D_8011ECD0;
     u8 *st;
     DateShorts8 sp98;
     DateShorts8 sp88;

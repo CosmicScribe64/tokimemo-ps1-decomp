@@ -326,16 +326,6 @@ typedef struct TaiikuController {
 } TaiikuController; /* size 0x1C */
 extern TaiikuController D_8014A3E4;
 extern TaiikuController D_8014A400[3];
-typedef struct TaiikuScene44 {
-    /* 0x00 */ u8 unk_00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 pad_03[0x15];
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad_1A[0x0A];
-    /* 0x24 */ TaiikuPosition position;
-    /* 0x28 */ u8 pad_28[0x1C];
-} TaiikuScene44; /* size 0x44; camera record 104 and related records. T-9570 */
 
 #endif
 

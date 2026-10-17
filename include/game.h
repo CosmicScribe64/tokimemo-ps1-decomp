@@ -37,7 +37,7 @@ typedef struct FileReq {
  * scan of the original asm finds lbu/sb only at the byte fields (no lb anywhere), lh/sh at the halfwords
  * and lw/sw at +0x0C, +0x10, +0x34 and +0x38 (the other word accesses are whole-record copies).
  * +0x24 .. +0x33 are also read as 16.16 fixed-point words: DisplayFixActor44 is that view of the same record.
- * Replaces the per-unit views DisplayActor44, TelRec44, DisplayActor44, RpgFlagRecord44, DisplayActor44,
+ * Replaces the per-unit views DisplayActor44, DisplayFixActor44, DisplayActor44, RpgFlagRecord44, DisplayActor44,
  * DisplayActor44, EventMotion44, DisplayActor44, DisplayActor44, DisplayActor44, DisplayActor44, DisplayActor44,
  * DisplayActor44, DisplayActor44, DisplayActor44, TaiRecord44, TextureRecord44, OptActor44, DateScene44 (T-20900). */
 typedef struct DisplayActor44 {
@@ -80,18 +80,18 @@ typedef struct DisplayActor44 {
 } DisplayActor44; /* size 0x44 */
 
 /* 16.16 fixed-point word of a display record: word arithmetic through w, the signed integer part (the
- * coordinate the halfword view reads at +2) through h[1]. Was MasterFixed32, KangeiFixed32, DateFix32 and
+ * coordinate the halfword view reads at +2) through h[1]. Was Fix32, Fix32, Fix32 and
  * TaiikuPosition (T-20900). */
-typedef union DisplayFix32 {
+typedef union Fix32 {
     /* 0x00 */ s32 w;
     /* 0x00 */ s16 h[2];
-} DisplayFix32; /* size 0x04 */
+} Fix32; /* size 0x04 */
 
 /* DisplayActor44 with +0x24 and +0x28 as 16.16 fixed-point words and +0x2C, +0x30 as words (their
  * steps): the view of the units that move a record in fixed point (MASTER, KANGEI, DATE, EVENT, NAME_ENT,
  * TAIIKU, TEL). C89 has no anonymous unions, so the halfword users (most of the tree) keep DisplayActor44.
- * Replaces MasterSprite44, KangeiSprite44, DateMotion44, DateParticleView44, DateMover44, EventParticleView44,
- * NameMotionActor44 and TaiikuScene44 (T-20900). */
+ * Replaces DisplayFixActor44, DisplayFixActor44, DateMotion44, DisplayFixActor44, DisplayFixActor44, DisplayFixActor44,
+ * DisplayFixActor44 and DisplayFixActor44 (T-20900). */
 typedef struct DisplayFixActor44 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
@@ -113,8 +113,8 @@ typedef struct DisplayFixActor44 {
     /* 0x1E */ s16 unk_1E;
     /* 0x20 */ s16 unk_20;
     /* 0x22 */ s16 unk_22;
-    /* 0x24 */ DisplayFix32 unk_24;
-    /* 0x28 */ DisplayFix32 unk_28;
+    /* 0x24 */ Fix32 unk_24;
+    /* 0x28 */ Fix32 unk_28;
     /* 0x2C */ s32 unk_2C;
     /* 0x30 */ s32 unk_30;
     /* 0x34 */ u8 *unk_34;

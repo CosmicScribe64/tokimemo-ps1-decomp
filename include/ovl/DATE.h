@@ -1367,33 +1367,6 @@ typedef struct DateMovieHeader8 {
 #define OVL_DATE_PARTICLE_T10870_H
 /* T-10870: func_80140374 initializes 20 records starting at sprite 98.
  * The coordinate words are also read and written as signed high halves. */
-typedef struct DateParticleView44 {
-    /* 0x00 */ u8 pad00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 unk_04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 unk_06;
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ u8 pad08[4];
-    /* 0x0C */ s32 unk_0C;
-    /* 0x10 */ s32 unk_10;
-    /* 0x14 */ s16 unk_14;
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ s16 unk_1C;
-    /* 0x1E */ u8 pad1E[6];
-    /* 0x24 */ GsWord unk_24;
-    /* 0x28 */ GsWord unk_28;
-    /* 0x2C */ s32 unk_2C;
-    /* 0x30 */ s32 unk_30;
-    /* 0x34 */ s32 unk_34;
-    /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 pad3C[7];
-    /* 0x43 */ u8 unk_43;
-} DateParticleView44; /* size 0x44 */
 
 /* Fixed-point horizontal positions, with signed high-halfword updates. */
 extern GsWord D_8015BD40[20];
@@ -1790,27 +1763,6 @@ extern DatePairs8 D_8015FB3C;
 extern u8 D_8015F9A0[8];
 extern u8 D_8015F9A8[8];
 
-/* Display record 98..105 as func_801560E0 uses it: a fixed-point word at 0x28 whose signed high half is
- * the y position, and a velocity word at 0x30. */
-typedef union DateFix32 {
-    /* 0x00 */ s32 w;
-    /* 0x00 */ s16 h[2];
-} DateFix32; /* size 0x04 */
-typedef struct DateMover44 {
-    /* 0x00 */ u8 pad00[2];
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 pad04[3];
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad0A[0xE];
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad1A[0xE];
-    /* 0x28 */ DateFix32 unk_28;
-    /* 0x2C */ u8 pad2C[4];
-    /* 0x30 */ s32 unk_30;
-    /* 0x34 */ u8 pad34[0x10];
-} DateMover44; /* size 0x44 */
 #endif
 
 #ifndef OVL_DATE_PROTOS_T17200

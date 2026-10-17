@@ -260,25 +260,7 @@ void func_801478E0(void);
 
 #ifndef OVL_NAME_ENT_MOTION_TYPES_H
 #define OVL_NAME_ENT_MOTION_TYPES_H
-/* Shared T-10030 actor view, exported for T-10860 and later drafts. */
-typedef union NameMotionWord {
-    /* 0x00 */ s32 word;
-    struct {
-        /* 0x00 */ s16 low;
-        /* 0x02 */ s16 high;
-    } half;
-} NameMotionWord; /* size 0x04; signed fixed-point coordinate view */
 
-typedef struct NameMotionActor44 {
-    /* 0x00 */ u8 pad[3];
-    /* 0x03 */ u8 flags;
-    /* 0x04 */ u8 pad04[3];
-    /* 0x07 */ u8 phase;
-    /* 0x08 */ u8 pad08[0x1C];
-    /* 0x24 */ NameMotionWord x;
-    /* 0x28 */ NameMotionWord y;
-    /* 0x2C */ u8 pad2C[0x18];
-} NameMotionActor44; /* size 0x44; T-10030 */
 #endif
 
 #ifndef OVL_NAME_ENT_T10860_ACTOR_HELPER_H
