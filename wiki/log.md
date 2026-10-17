@@ -17778,3 +17778,24 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E
 ## [2026-10-17] ticket | T-20010 Done
 
 [[tickets/T-20010-name-ent-resource-loader]]: PR #55 (KakarottoCake) merged, NAME_ENT `func_80142E24` (1,652 bytes) matches in plain C. Clean build 27/27, linked funcdiff MATCH. Closes claim #52.
+
+
+## [2026-10-17] ticket | T-20012 fix inconsistent candidate ranking
+
+[[tickets/T-20012-stable-search-scoring]] starts In Progress under issue #58. Separate stable ranking from funcdiff's positional diagnostic rows; production game C remains unchanged. The shared helper uses the already pinned Levenshtein dependency, insert/delete cost 1 and substitution 2. viewsweep and order_search consume it; versioned JSON resume recomputes legacy metrics.
+
+## [2026-10-17] build | T-20012 synthetic and real scoring checks
+
+[[tickets/T-20012-stable-search-scoring]]: 230 Docker tests pass across funcdiff, viewsweep, order_search and autotweak. Regressions cover equal-length shifts, extra-instruction ranking inversions, unchanged positional swap evidence, normalized-key equality, zero proof plumbing and legacy/mismatched cache metrics. Existing scene archive/word-fade/pointer objects score 811/791/781 consistently (printed rows 835/815/803); none matches. Default build/hash/guard verification and an already matched C helper CLI proof are running.
+
+## [2026-10-17] build | T-20012 validation complete
+
+[[tickets/T-20012-stable-search-scoring]]: 230 Docker tests pass; real full-unit order_search archive cost811; viewsweep CLI existing helper matches-as-is at zero, one compile; independent linked proof preserves its existing 484-byte MATCH. Default ninja five steps passes, headers/globals OK, hashes27/27 and prototype0new/15known branchOK. No production source/header/configuration changes or newly verified C bytes.
+
+## [2026-10-17] ticket | T-20012 ready for maintainer review
+
+[[tickets/T-20012-stable-search-scoring]] and [[kanban]] move to In Review after self-review against CODING_STANDARDS.md. Submitted scope is the stable shared ranking metric, two scorer integrations, JSON metric/resume migration, tests and documentation. Positional diagnostics and exact proof remain unchanged. Independent nonmatching source research is preserved locally under claims #50/#57.
+
+## [2026-10-17] build | T-20012 documentation integration verified
+
+[[tickets/T-20012-stable-search-scoring]] rebased once onto main 9c36fa39 to retain the new upstream RPG_BAT notes alongside this ticket's wiki entries. Tool files are identical to the 230-test-validated commit. The combined default build passes seven steps and all 27 independent SHA1 checks; no game code is changed by this contribution.

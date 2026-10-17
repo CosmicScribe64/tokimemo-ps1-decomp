@@ -641,6 +641,17 @@ def keys(rows):
     return [r[0] if isinstance(r, tuple) else r for r in rows]
 
 
+def diff_score(want, got):
+    """Aligned differing-instruction cost for search, independent of function lengths.
+
+    Insertions/deletions cost one row, substitutions two. Printable diff_lines deliberately
+    uses positional evidence for equal lengths; its row count is not a stable search score.
+    Zero means identical normalized keys, not a linked-byte match proof. T-20012.
+    """
+    from Levenshtein import distance
+    return distance(keys(want), keys(got), weights=(1, 1, 2))
+
+
 def diff_lines(want, got):
     """Printable diff rows (`-` expected, `+` built) of two lists of strings or (key, display)."""
     def disp(r):

@@ -35,6 +35,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
+- [[tickets/T-20012-stable-search-scoring|T-20012]] Stable candidate ranking in viewsweep/order_search, 230 tests pass, issue #58 (In Review).
 - [[tickets/T-22000-wave-4-conveyor|T-22000]] Wave 4 conveyor until weekly usage nears 95 percent (In Progress).
 - [[tickets/T-23000-wave-5-big-conveyor|T-23000]] Wave 5 biggest-first conveyor alongside wave 4 (In Progress).
 - [[tickets/T-23001-w5-big-p01|T-23001]] Wave 5 big package w5-big-p01: TEL `80132000.c`, `func_80136724` (7,044 B) and `func_80134FE4` (800 B) both back to `INCLUDE_ASM`; frame rule for many locals, `func_80134FE4` structurally equal with 140 register rows (Done; 0 of 2 matched).

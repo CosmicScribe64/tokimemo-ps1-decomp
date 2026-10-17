@@ -25,8 +25,10 @@ Targets
 The unit is preprocessed once per compile with funcdiff_verify.preprocess_draft (`NON_MATCHING` defined when
 the function is guarded or has a `--body`), the variant is applied to the preprocessed text in memory
 (protoverride.apply with allow_defined), and the result is compiled like the build (tools/cc.py, trailing pad,
-object layout) and scored as order_search.make_text_scorer does: the number of funcdiff rows of the function,
-relocations resolved. Nothing under src/ or include/ is touched.
+object layout) and scored as order_search.make_text_scorer does: aligned instruction insert/delete cost,
+relocations resolved. Insertions/deletions cost one, substitutions two, for both equal and unequal lengths
+(T-20012). The JSON `rows` fields retain their names; these are search costs, not printable diff row counts.
+Nothing under src/ or include/ is touched.
 
 The lattice of one target (a variant is a set of edits on different functions):
   own     the target's definition: as is, `s32 f()` (K&R, no return), `s32 f(void)`; a definition with
@@ -54,7 +56,7 @@ function is C) and the recipe: the definition change, the header prototype to ch
 `*_OVERRIDE_<symbol>` lines (protoverride.commit_hint), and every caller (grep over src/ and include/) whose
 unit must stay sha1-OK after `ninja`. The table at the end is ranked by best rows. `--json OUT` writes one
 `UNIT_func.json` per target into the directory OUT (or all targets into OUT when it ends in `.json`);
-`--resume` skips targets whose file is there. The exit status is 1 when a target could not be swept (`error`: unknown
+`--resume` skips targets whose file uses the current score metric; legacy scores are recomputed. The exit status is 1 when a target could not be swept (`error`: unknown
 function, no C body), else 0; a sweep that finds nothing is not a failure.
 
 Limits: a body is read as written (calls through a function pointer variable are not callees); only return
@@ -81,6 +83,7 @@ import protoverride  # noqa: E402
 TICKET = "T-20810"
 BIG = 10 ** 6
 DEFAULT_BUDGET = 150
+SCORE_METRIC = "aligned-insert-delete-v1"
 TOP_IMPROVERS = 5
 UNTESTED_SHOWN = 6
 WORK_ROOT = Path("build/viewsweep")
@@ -620,7 +623,7 @@ def make_target(spec, unit=None, body=None, src=None, work=WORK_ROOT):
 # compiling and scoring one target (needs the Docker toolchain)
 
 class Scorer:
-    """score(edits) -> rows of the target in the full unit compiled with the edits, against the original. The
+    """score(edits) -> aligned row cost of the full-unit target against the original. The
     object of a variant with 0 rows is kept in self.objects for the proof; the others are deleted."""
 
     def __init__(self, target, work_root=WORK_ROOT):
@@ -656,8 +659,7 @@ class Scorer:
         got = self.funcdiff.resolved_functions(obj, [self.target.name])[self.target.name]
         if got is None:
             raise ValueError("%s is missing from the compiled object" % self.target.name)
-        rows = 0 if self.funcdiff.keys(got) == self.funcdiff.keys(self.want) \
-            else len(self.funcdiff.diff_lines(self.want, got))
+        rows = self.funcdiff.diff_score(self.want, got)
         if rows:
             shutil.rmtree(directory, ignore_errors=True)
         else:
@@ -786,7 +788,7 @@ def sweep_target(target, jobs, budget, log=print):
     scorer = Scorer(target)
     pre = proof.preprocess_draft(target.source, target.non_matching)
     defs = protoverride.definitions(pre, target.name)
-    result = dict(scope=target.scope, note=target.note, body=target.body_path)
+    result = dict(scope=target.scope, note=target.note, body=target.body_path, score_metric=SCORE_METRIC)
     if not defs:
         result.update(status="no-definition", baseline=None, best_rows=None, best=[], compiled=0, untested=[],
                       variants=[], seconds=0)
@@ -871,7 +873,7 @@ def main(argv):
     ap.add_argument("-j", type=int, default=2, help="parallel compiles (default 2: the machine is shared)")
     ap.add_argument("--budget", type=int, default=DEFAULT_BUDGET, help="compiles per target (default %d)" % DEFAULT_BUDGET)
     ap.add_argument("--json", metavar="OUT", help="a directory (one UNIT_func.json per target) or a .json file")
-    ap.add_argument("--resume", action="store_true", help="skip targets whose JSON file already exists")
+    ap.add_argument("--resume", action="store_true", help="skip targets whose JSON uses the current score metric")
     args = ap.parse_args(argv)
     if not os.path.isdir("config"):
         sys.exit("viewsweep.py: run it from the repository root")
@@ -897,9 +899,12 @@ def main(argv):
         mark = "[%d/%d] " % (n, len(work))
         path = output_path(args.json, spec) if args.json else None
         if args.resume and path is not None and path.exists():
-            results.append(json.loads(path.read_text()))
-            print(mark + "%s: resumed from %s" % (spec, path), flush=True)
-            continue
+            cached = json.loads(path.read_text())
+            if cached.get("score_metric") == SCORE_METRIC:
+                results.append(cached)
+                print(mark + "%s: resumed from %s" % (spec, path), flush=True)
+                continue
+            print(mark + "%s: score metric changed; rescoring %s" % (spec, path), flush=True)
         try:
             target = make_target(spec, None if args.guarded else args.unit, body, args.src)
             result = sweep_target(target, args.j, args.budget, log=lambda m: print("    " + m, flush=True))
@@ -910,6 +915,7 @@ def main(argv):
                 continue
             result = dict(scope=spec, status="error", error=reason, baseline=None, best_rows=None, best=[],
                           compiled=0, untested=[], variants=[], seconds=0)
+        result["score_metric"] = SCORE_METRIC
         results.append(result)
         report(result, lambda line: print(mark + line if not line.startswith("    ") else line, flush=True))
         if path is not None:
