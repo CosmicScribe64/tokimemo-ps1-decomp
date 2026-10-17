@@ -17510,3 +17510,6 @@ PR #46 is merged; the maintainer independently confirms the renderer MATCH and 2
 ## [2026-10-17] ticket | T-20008 draft checkpoint merged (PR #51)
 
 KakarottoCake's PR #51: corrected NAME_ENT func_80143580 reconstruction archived in drafts/T-20008 (835 rows, no production change). Ticket back to In Progress while the claim (#50) continues.
+
+## [2026-10-17] ticket | T-11880 DATE2 remainder Done
+Three groups, one Opus agent each: 8 of 9 matched (11,172 bytes), `func_801395C8` guarded (84 rows). Merged current `main`; clean rebuild 27/27 OK, checks clean; DATE2 101/102 (91.9%). Inline review against CODING_STANDARDS.md: no open findings. Moved [[tickets/T-11880-date2-remainder]] to Done. Notes in [[matching-notes]] ("DATE2 remainder"), 9 rows in [[data/t0018-cases]].

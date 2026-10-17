@@ -35,7 +35,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
-- [[tickets/T-11880-date2-remainder|T-11880]] DATE2: the remaining nine functions, claim #49 (In Progress).
+- [[tickets/T-11880-date2-remainder|T-11880]] DATE2: the remaining nine functions, claim #49 (Done; 8 of 9 matched, DATE2 101/102, 91.9% of bytes).
 - [[tickets/T-20008-large-name-introduction|T-20008]] NAME_ENT introduction reconstruction archive (4,308-byte scope), claim #50; compiling, still nonmatching (In Progress; draft checkpoint merged, PR #51).
 - [[tickets/T-11870-tt-batch-13|T-11870]] TT batch 13: the last three guarded near misses (Done; all 3 matched, TT 302/303, 99.7% of bytes).
 - [[tickets/T-11860-tt-batch-12|T-11860]] TT batch 12: the TT remainder, one long Opus run per file group (Done; 25 of 28 matched, TT 299/303, 97.2% of bytes).

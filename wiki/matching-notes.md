@@ -6253,6 +6253,24 @@ One Opus agent per function, two at a time: all three matched (2,740 bytes), and
   second mask (FAKE) with an `s32` destination routes it through a ugen temp (`func_80142110`); a `u16` destination
   costs an extra temp instead.
 
+## DATE2 remainder (T-11880)
+
+Outside claim #49: the nine remaining DATE2 functions, three groups, one Opus agent each, two at a time. 8 of 9 matched
+(11,172 bytes; four had never been drafted); `func_801395C8` stays guarded at 84 rows. DATE2 is at 101/102.
+Ticket [[tickets/T-11880-date2-remainder]].
+
+- **DATE twins:** three DATE2 functions were written from their DATE twins (`func_8014718C`, `func_80147958`) with the
+  cases remapped from the DATE2 jump table; differences were wrong call arguments in the twin's draft and frame slots.
+  One DATE2 fix (a second variable plus a one-line store group moving the fade sum from v0 to a1) is untried on the twin.
+- **GameState access path:** `GameState *g = &D_800E6280;` vs direct `D_800E6280.field` decides which fields uopt keeps
+  in registers; mixing both on purpose fixed two functions; a store through `g` makes IDO assume it aliases locals.
+- **Views of globals:** element 0 of a file-local `u8[4]` view (one range), `D_800E7D10.unk_024[0]` instead of a
+  scalar alias (reloaded each time), `D_800E7384` as `D_800E6280.unk_1104.w` (required by migrate_globals); implicit-int
+  callee views keep v0 busy; a data island with a defined `s16[4]` table gives the shared `lui at`.
+- **Boolean sums:** `((x & 1) > 0)` gives sltiu/xori; `!!x` and `!= 0` give sltu.
+- Colour copies `r = g = b = v` are written as chains without a FAKE comment, as in the matched DATE twins.
+- Open: `func_801395C8`'s two spilled string pointers sit one 4-byte slot lower than the original's.
+
 ## T-19020: RENSYU package w3-d-p20 (80132040.c)
 
 [[tickets/T-19020-w3-d-p20]], wave 3 direct package of [[tickets/T-16990-wave-3-conveyor]], worktree `w3-d-p20`. Four functions, one matched (FAKE): `func_80133CB8` (420 B). `func_80133628` (900 B) stays a guarded draft (21 lines); `func_80133990` (844 B) and `func_8013325C` (972 B) are back to `INCLUDE_ASM` (drafts in `drafts/T-19020/RENSYU/`). `tools/siblings.py --package` found no matched relative above 0.70 for any of them.
