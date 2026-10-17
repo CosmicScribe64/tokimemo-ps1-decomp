@@ -138,8 +138,7 @@ void func_8014280C(void) {
     case 3:
         Scroll(0, 0xF, 0, 0xF0, 0x280);
         if (((DisplayActor44 *)D_8011ECD0)[96].unk_2A >= 0x61) {
-            /* FAKE: s32 view of the 16.16 y position at 0x28 (its high half is unk_2A); the actor
-             * type has no field for the word yet. T-16554 */
+            /* the 16.16 y position at 0x28 (its high half is unk_2A), through the fixed-point view. T-16554, T-20900 */
             ((DisplayFixActor44 *)D_8011ECD0)[96].unk_28.w -= 0x18000;
         } else {
             if (*(u8 *)&D_8014A110 == 0) {
@@ -1002,9 +1001,9 @@ void func_801449A0(void) {
             D_8014A130[i] -= tbl.v[i];
             y = *(s16 *)&((u8 *)D_8014A13C)[i * 0x24 + 0x3A] - d;
         }
-        if (*(s16 *)&D_8011ECD0[0x1AFA] + i * 8 + 8 < y - 0x60 && ((u8 *)D_8014A13C)[i * 0x24 + 0x25] == 0) {
-            *(s16 *)&D_8011ECD0[0x1B30] = 0x32;
-            *(s16 *)&D_8011ECD0[0x1B3E] = *(s16 *)&D_8011ECD0[0x1AFA] + 0x20;
+        if (((DisplayActor44 *)D_8011ECD0)[101].unk_26 + i * 8 + 8 < y - 0x60 && ((u8 *)D_8014A13C)[i * 0x24 + 0x25] == 0) {
+            ((DisplayActor44 *)D_8011ECD0)[102].unk_18 = 0x32;
+            ((DisplayActor44 *)D_8011ECD0)[102].unk_26 = ((DisplayActor44 *)D_8011ECD0)[101].unk_26 + 0x20;
             n = 0;
             while (D_8014A120[n] != 0) {
                 n++;

@@ -149,11 +149,11 @@ void func_80134F18(void) {
     D_80120698 = 8;
     D_80120654 = 8;
     D_801206AC = 3;
-    /* FAKE: D_80120650 and D_801206D8 (+0x88) are one object in the original: the loads stay behind the stores. T-9310 */
-    *(DisplayActor44 *)&D_80120650[0x88] = *(DisplayActor44 *)D_80120650;
-    D_80120650[0x8A] = 0x40;
-    *(s16 *)&D_80120650[0xA0] = 0x28;
-    D_80120650[0x89] -= 1;
+    /* D_80120650 and D_801206D8 are records 96 and 98 of one table: the loads stay behind the stores. T-9310, T-20900 */
+    ((DisplayActor44 *)D_80120650)[2] = ((DisplayActor44 *)D_80120650)[0];
+    ((DisplayActor44 *)D_80120650)[2].unk_02 = 0x40;
+    ((DisplayActor44 *)D_80120650)[2].unk_18 = 0x28;
+    ((DisplayActor44 *)D_80120650)[2].unk_01 -= 1;
     D_800CA2E4 = 3;
     D_800CA2E8 = 0;
     D_800E6280.unk_1228[5] = -1;

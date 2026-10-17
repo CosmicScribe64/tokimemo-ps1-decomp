@@ -327,12 +327,12 @@ void func_8015109C(void) {
 }
 
 void func_801510E8(void) {
-    D_8011ECD0[0x1A0F] = 0x80;
-    D_8011ECD0[0x1A0B] |= 0x80;
-    *(s16 *)&D_8011ECD0[0x1A10] = 0;
-    *(s16 *)&D_8011ECD0[0x1A1E] = 4;
-    *(s16 *)&D_8011ECD0[0x1A20] = 0;
-    D_8011ECD0[0x1A0A] = 1;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_07 = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_03 |= 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_08 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_16 = 4;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_18 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_02 = 1;
     func_8004284C();
 }
 

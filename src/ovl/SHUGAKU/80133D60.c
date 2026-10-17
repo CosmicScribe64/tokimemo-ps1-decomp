@@ -102,10 +102,10 @@ void func_8013425C(void) {
     func_80043914(D_8013BFE0, 0x11, 1, 2, 0);
     func_80084E90(D_8013BFE4, D_8013BFE8, D_8013BFEC, D_8013BFF0, D_8013BFF4, D_8013BFF8);
     func_800850D4(D_8013BFD4, D_8013BFD8, D_8013BFD0, D_8013BFDC);
-    D_80120650[0x48] = 8;
-    D_80120650[4] = 8;
+    ((DisplayActor44 *)D_80120650)[1].unk_04 = 8;
+    ((DisplayActor44 *)D_80120650)->unk_04 = 8;
     *(DisplayActor44 *) &D_80120650[0x88] = *(DisplayActor44 *) D_80120650;
-    *(s16 *) &D_80120650[0x9E] = 4;
+    ((DisplayActor44 *)D_80120650)[2].unk_16 = 4;
     func_8004284C();
 }
 

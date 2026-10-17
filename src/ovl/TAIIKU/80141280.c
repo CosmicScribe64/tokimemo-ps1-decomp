@@ -257,7 +257,7 @@ s32 func_801419F8(void) {
             } else {
                 return 0;
             }
-            D_8011ECD0[3] &= 0xFF7F;
+            ((DisplayActor44 *)D_8011ECD0)->unk_03 &= 0xFF7F;
             func_8004E9F4(1);
             func_8004284C();
         }

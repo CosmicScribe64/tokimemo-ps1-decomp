@@ -195,7 +195,7 @@ s32 func_801427E4(void) {
         func_8014EBD0();
         break;
     case 3:
-        if (*(s16 *)&D_8011ECD0[0x24C0] == 7) {
+        if (((DisplayActor44 *)D_8011ECD0)[138].unk_18 == 7) {
             func_8014EBD0();
         }
         break;

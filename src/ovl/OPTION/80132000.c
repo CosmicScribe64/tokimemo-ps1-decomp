@@ -256,8 +256,8 @@ void func_80134804(void) {
     s32 sel;
 
     /* one table: as1 keeps the loads after the store only when both go through D_8011ECD0 (T-9020) */
-    D_8011ECD0[0x1C2B] = 0x80;
-    func_8004F984(1, *(s16 *)&D_8011ECD0[0x26], *(s16 *)&D_8011ECD0[0x2A]);
+    ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0x80;
+    func_8004F984(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
     func_8004FC10(1);
     func_801320C0();
     sel = D_800E6280.unk_1094;
@@ -457,11 +457,11 @@ void func_80135034(void) {
     }
     func_8004F870(1, 2, a, b, c, d);
     /* record 20 of the 0x44-byte table at D_80120650: one base symbol keeps the load behind the stores (T-4070) */
-    *(s16 *)&D_80120650[0x568] = 0x79;
-    *(s16 *)&D_80120650[0x576] = 0x40;
-    *(s16 *)&D_80120650[0x57A] = 0x30;
-    D_80120650[0x553] |= 0x80;
-    D_80120650[0x593] = 0x1F;
+    ((DisplayActor44 *)D_80120650)[20].unk_18 = 0x79;
+    ((DisplayActor44 *)D_80120650)[20].unk_26 = 0x40;
+    ((DisplayActor44 *)D_80120650)[20].unk_2A = 0x30;
+    ((DisplayActor44 *)D_80120650)[20].unk_03 |= 0x80;
+    ((DisplayActor44 *)D_80120650)[20].unk_43 = 0x1F;
     D_8013D180 = 0;
     func_8004284C();
     func_801320C0();
@@ -643,8 +643,8 @@ void func_801368FC(void) {
     s32 sel;
 
     /* one table: as1 keeps the loads after the store only when both go through D_8011ECD0 (T-9020) */
-    D_8011ECD0[0x1C2B] = 0x80;
-    func_8004F984(1, *(s16 *)&D_8011ECD0[0x26], *(s16 *)&D_8011ECD0[0x2A]);
+    ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0x80;
+    func_8004F984(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
     func_8004FC10(1);
     func_801320C0();
     sel = D_800E6280.unk_1094;
@@ -741,8 +741,8 @@ void func_80137040(void) {
     s32 sel;
 
     /* one table: as1 keeps the loads after the store only when both go through D_8011ECD0 (T-9020) */
-    D_8011ECD0[0x1C2B] = 0x80;
-    func_8004F984(1, *(s16 *)&D_8011ECD0[0x26], *(s16 *)&D_8011ECD0[0x2A]);
+    ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0x80;
+    func_8004F984(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
     func_8004FC10(1);
     func_801320C0();
     sel = D_800E6280.unk_1094;
@@ -846,10 +846,10 @@ void func_80137C1C(void) {
         }
     }
     /* one table: as1 keeps the loads after the stores only when both go through D_8011ECD0 (T-9020, T-16930) */
-    D_8011ECD0[0x2A3F] = 0x80;
-    *(s16 *)&D_8011ECD0[0x2A56] = 0x1000;
-    *(s16 *)&D_8011ECD0[0x2A58] = 0x1000;
-    func_8004F984(1, *(s16 *)&D_8011ECD0[0x26], *(s16 *)&D_8011ECD0[0x2A]);
+    ((DisplayActor44 *)D_8011ECD0)[159].unk_03 = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[159].unk_1A = 0x1000;
+    ((DisplayActor44 *)D_8011ECD0)[159].unk_1C = 0x1000;
+    func_8004F984(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
     func_8004FC10(1);
     for (i = 0, j = 0; i < 14; i++, j += 2) {
         if (i == g->unk_1094) {
@@ -946,10 +946,10 @@ void func_801383C4(void) {
         }
     }
     /* one table: as1 keeps the loads after the stores only when both go through D_8011ECD0 (T-9020, T-16930) */
-    D_8011ECD0[0x2A3F] = 0x80;
-    *(s16 *)&D_8011ECD0[0x2A56] = 0x1000;
-    *(s16 *)&D_8011ECD0[0x2A58] = 0x1000;
-    func_8004F984(1, *(s16 *)&D_8011ECD0[0x26], *(s16 *)&D_8011ECD0[0x2A]);
+    ((DisplayActor44 *)D_8011ECD0)[159].unk_03 = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[159].unk_1A = 0x1000;
+    ((DisplayActor44 *)D_8011ECD0)[159].unk_1C = 0x1000;
+    func_8004F984(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
     func_8004FC10(1);
     func_801320C0();
     for (i = 0, j = 0; i < 14; i++, j += 2) {

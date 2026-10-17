@@ -119,31 +119,31 @@ s32 func_80135A80(void) {
 
 /* One symbol for the whole 0x44-byte-entry table: as1 then keeps the later lbu below the earlier stores (T-2040, T-4020). */
 void func_80135AF4(void) {
-    D_80120650[3] |= 0x80;
-    *(s16 *) &D_80120650[0x16] = 8;
-    D_80120650[0x47] |= 0x80;
-    *(s16 *) &D_80120650[0x5A] = 7;
-    D_80120650[0x8A] = 0x40;
-    *(s16 *) &D_80120650[0xA0] = 0x14;
+    ((DisplayActor44 *)D_80120650)->unk_03 |= 0x80;
+    ((DisplayActor44 *)D_80120650)->unk_16 = 8;
+    ((DisplayActor44 *)D_80120650)[1].unk_03 |= 0x80;
+    ((DisplayActor44 *)D_80120650)[1].unk_16 = 7;
+    ((DisplayActor44 *)D_80120650)[2].unk_02 = 0x40;
+    ((DisplayActor44 *)D_80120650)[2].unk_18 = 0x14;
     func_8004284C();
 }
 
 u32 func_80135B68(void) {
-    D_80120650[3] &= ~0x80;
-    D_80120650[0x47] &= ~0x80;
-    D_80120650[0x8A] = 5;
-    *(s16 *)&D_80120650[0x9E] = 4;
-    *(s16 *)&D_80120650[0xA0] = 0;
+    ((DisplayActor44 *)D_80120650)->unk_03 &= ~0x80;
+    ((DisplayActor44 *)D_80120650)[1].unk_03 &= ~0x80;
+    ((DisplayActor44 *)D_80120650)[2].unk_02 = 5;
+    ((DisplayActor44 *)D_80120650)[2].unk_16 = 4;
+    ((DisplayActor44 *)D_80120650)[2].unk_18 = 0;
     return ~0x80;
 }
 
 void func_80135BB8(void) {
-    D_80120650[3] |= 0x80;
-    *(s16 *) &D_80120650[0x16] = 3;
-    D_80120650[0x47] |= 0x80;
-    *(s16 *) &D_80120650[0x5A] = 1;
-    D_80120650[0x8A] = 0x40;
-    *(s16 *) &D_80120650[0xA0] = 0x16;
+    ((DisplayActor44 *)D_80120650)->unk_03 |= 0x80;
+    ((DisplayActor44 *)D_80120650)->unk_16 = 3;
+    ((DisplayActor44 *)D_80120650)[1].unk_03 |= 0x80;
+    ((DisplayActor44 *)D_80120650)[1].unk_16 = 1;
+    ((DisplayActor44 *)D_80120650)[2].unk_02 = 0x40;
+    ((DisplayActor44 *)D_80120650)[2].unk_18 = 0x16;
 }
 
 void func_80135C14(void) {
@@ -176,12 +176,12 @@ void func_80135CC8(void) {
 void func_80135CF8(void) {
     D_8013C2E4 = 1;
     *(DisplayActor44 *) &D_80120650[0xCC] = *(DisplayActor44 *) D_80120650;
-    D_80120650[0xCD] = 0xB;
-    D_80120650[0xCF] |= 0x80;
-    *(s16 *) &D_80120650[0xE2] = 5;
-    D_80120650[0xCE] = 9;
-    *(s16 *) &D_80120650[0xF2] = -0x60;
-    *(s16 *) &D_80120650[0xF6] = -0x48;
+    ((DisplayActor44 *)D_80120650)[3].unk_01 = 0xB;
+    ((DisplayActor44 *)D_80120650)[3].unk_03 |= 0x80;
+    ((DisplayActor44 *)D_80120650)[3].unk_16 = 5;
+    ((DisplayActor44 *)D_80120650)[3].unk_02 = 9;
+    ((DisplayActor44 *)D_80120650)[3].unk_26 = -0x60;
+    ((DisplayActor44 *)D_80120650)[3].unk_2A = -0x48;
     func_8004284C();
 }
 

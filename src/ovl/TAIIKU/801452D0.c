@@ -1209,8 +1209,8 @@ s32 func_80148678(void) {
     s32 n;
 
     if (func_80085EEC() >= 0x2E) {
-        *(s16 *)&D_8011ECD0[0x1BB8] = 0x3C;
-        *(s16 *)&D_8011ECD0[0x1BCA] = -8;
+        ((DisplayActor44 *)D_8011ECD0)[104].unk_18 = 0x3C;
+        ((DisplayActor44 *)D_8011ECD0)[104].unk_2A = -8;
         for (i = 0; i < 4; i++) {
             if (D_8014A3D8[i] == 1) {
                 n = i;
@@ -1249,7 +1249,7 @@ void func_80148820(void) {
         for (i = 0; i < 4; i++) {
             *(s16 *)&D_8011ECD0[0x1998 + i * 0x44] += i + 1;
         }
-        *(s16 *)&D_8011ECD0[0x1BB8] = *(s16 *)&D_8011ECD0[0x1BB8] + n + 2;
+        ((DisplayActor44 *)D_8011ECD0)[104].unk_18 = ((DisplayActor44 *)D_8011ECD0)[104].unk_18 + n + 2;
         func_8004284C();
     }
 }

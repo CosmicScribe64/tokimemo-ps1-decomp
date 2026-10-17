@@ -14,8 +14,8 @@ void func_80062CD0(s32 arg0) {
 
 void func_80062D0C(s32 arg0) {
     if (arg0 == 0) {
-        D_8011ECD0[0x83F] &= 0x7F;
-        D_8011ECD0[0x7FB] &= 0x7F;
+        ((DisplayActor44 *)D_8011ECD0)[31].unk_03 &= 0x7F;
+        ((DisplayActor44 *)D_8011ECD0)[30].unk_03 &= 0x7F;
         D_801217D0[0].unk_00 |= 0x80000000;
         D_801217D0[1].unk_00 |= 0x80000000;
         D_801217D0[2].unk_00 |= 0x80000000;
