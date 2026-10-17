@@ -53,7 +53,7 @@ void func_801511E0(void) {
     }
 }
 
-/* NON_MATCHING: T-10040, one address-load scheduling difference. */
+/* NON_MATCHING: T-10040, T-22012, 2 rows: in case 5 the two address `lui`s before the year compare come out in the other order (built: D_800CA148 then D_800E62BE; original: D_800E62BE then D_800CA148); everything else matches. Compound/plain add, year statement or in-condition, operand order, one-line forms, a tmp local, a pointer reassignment, viewsweep and autotweak did not move it. */
 #ifdef NON_MATCHING
 void func_80151364(void) {
     u8 year;
