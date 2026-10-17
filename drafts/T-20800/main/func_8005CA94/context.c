@@ -844,10 +844,10 @@ void func_8005CA94(void) {
         } else {
             temp_v0_2 = temp_v1 & 0xFF;
             if ((u8) D_800E8BEE != 0) {
-                ((NameMetricWork *)&D_800E7D10)->selected_slot = temp_v0_2;
+                D_800E7D36 = temp_v0_2;
                 D_800E6280.unk_1118 = temp_v0_2;
                 func_800696DC(0, 0);
-                D_800E6280.unk_1094 = ((NameMetricWork *)&D_800E7D10)->selected_slot - 1;
+                D_800E6280.unk_1094 = D_800E7D36 - 1;
             } else {
                 D_800E6280.unk0 = temp_v0_2;
                 func_80042940(0xC0);

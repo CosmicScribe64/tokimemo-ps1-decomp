@@ -323,9 +323,9 @@ s32 func_80054140(void) {
             temp_a0 = temp_v0 & 0xFF;
             g->unk_1118 = temp_a0;
             if (func_80054AF4((s32) temp_a0) == 1) {
-                ((NameMetricWork *)&D_800E7D10)->slot_status[g->unk_1118] = 1;
+                D_800E7D14[g->unk_1118] = 1;
             } else {
-                ((NameMetricWork *)&D_800E7D10)->slot_status[g->unk0] = 0;
+                D_800E7D14[g->unk0] = 0;
             }
             g->unk_111C += 1;
         } else {

@@ -32,4 +32,8 @@ Reading the table:
 - The fold order changes the result for four of the ten. `typed-late` is better than `typed` in three (by 4 rows on `GEKO:func_80134228`, 4 on `DATE2:func_80136860`, 1 on `GEKO:func_80133024`) and much worse on `main:func_8005CA94` (126 against 61). That is why both run by default; `typed` wins six ties by being first in the list.
 - `draft_fixes` found nothing to rewrite in these ten.
 
+The run was repeated from an empty work directory on the final code and gave the same scores for all ten.
+
+A second run covered the smallest unmatched function of each of the 25 units (TT left out) with `typed`, `typed-late`, `plain` and `guarded`, no draft_fixes: all 25 functions scored and no worker failed. Of the 88 variant runs, 87 scored; `typed-late` did not compile on `TAIIKU:func_8013B78C` (m2c wrote `D_801499A0.unk_06.unk0` for a halfword). The hand-written `NON_MATCHING` body in `src/` scored at least as well as any m2c draft for all 13 guarded functions in that set and strictly better for 10, which is why `guarded` is a default variant. Those results are not kept.
+
 The run folders (`m2c.c`, diagnostics, the compiled-object cache) stay under `build/redraft/T-20800`, which is not committed.
