@@ -1462,53 +1462,26 @@ void func_801369F4(s32 arg0) {
     }
 }
 
-/* NON_MATCHING: T-10850, 6 differing listing lines; regdiff evidence in the ticket scratch. */
-#ifdef NON_MATCHING
-/* FAKE: empty test separates the loop constant live ranges. T-10850 */
-void func_80136A2C(void)
-{
-  s32 i;
-  if (D_800B3CFC != 0)
-  {
-    D_800B3CF8 = 0;
-    D_800B3CFC = 0;
-    D_80139B18 += 1;
-  }
-  if (D_80139B18 > 0)
-  {
-    for (i = 0; i < 5; i++)
-    {
-      if ((D_8013984C[i * 2].unk_00 > 0) && (D_8013984C[i * 2].unk_00 < 4))
-      {
-        if (D_80139B18 < 3)
-        {
-          D_8013984C[i * 2].unk_00 = D_8013984C[i * 2].unk_04 + 1;
-        }
-        else
-        {
-          D_8013984C[i * 2].unk_00 = 4;
-          D_8013984C[i * 2].unk_04 = 0;
-        }
-      }
-      if ((D_8013984C[(i * 2) + 1].unk_00 > 0) && (D_8013984C[(i * 2) + 1].unk_00 < 4))
-      {
-        if (D_80139B18 < 3)
-        {
-          if (!i)
-          {
-          }
-          D_8013984C[(i * 2) + 1].unk_00 = D_8013984C[(i * 2) + 1].unk_04 + 1;
-        }
-        else
-        {
-          D_8013984C[(i * 2) + 1].unk_00 = 4;
-          D_8013984C[(i * 2) + 1].unk_04 = 0;
-        }
-      }
-    }
+/* A plain index loop: IDO unrolls it by two into the original's pointer walk (T-10850 had written the
+ * unrolled form by hand, with a FAKE). T-20920 */
+void func_80136A2C(void) {
+    s32 i;
 
-  }
+    if (D_800B3CFC != 0) {
+        D_800B3CF8 = 0;
+        D_800B3CFC = 0;
+        D_80139B18++;
+    }
+    if (D_80139B18 > 0) {
+        for (i = 0; i < 10; i++) {
+            if (D_8013984C[i].unk_00 > 0 && D_8013984C[i].unk_00 < 4) {
+                if (D_80139B18 < 3) {
+                    D_8013984C[i].unk_00 = D_8013984C[i].unk_04 + 1;
+                } else {
+                    D_8013984C[i].unk_00 = 4;
+                    D_8013984C[i].unk_04 = 0;
+                }
+            }
+        }
+    }
 }
-#else
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80136A2C);
-#endif
