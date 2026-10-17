@@ -11,6 +11,9 @@ INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/8011C650.data", D_801258D4);
 INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/8011C650.data", D_801258D8);
 INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/8011C650.data", D_801258DC);
 INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/8011C650.data", D_801258E0);
+/* T-22009: the four halfword arrays are defined here so IDO shares one lui $at between the stores of
+ * func_8011EDFC. D_801258FC ends at 0x80125902; D_80125904 is the zero fill that follows it up to the last
+ * word of the overlay file, D_80125FFC (0x10124FE6; no EVENT code references it). */
 s16 D_801258E4[3] = { 0, 0, 0 };
 s16 D_801258EC[3] = { 0, 0, 0 };
 s16 D_801258F4[3] = { 0, 0, 0 };

@@ -17578,3 +17578,11 @@ Code review of [[tickets/T-22004-w4-p04]] against `CODING_STANDARDS.md`: 0 of 3 
 ## [2026-10-17] ticket | T-22009 Wave 4 package w4-p09 In Progress
 
 Package of [[tickets/T-22000-wave-4-conveyor]]: EVENT `src/ovl/EVENT/8011C650.c`, two functions (`func_8011EDFC`, `func_8011D5C4`). See [[tickets/T-22009-w4-p09]].
+
+## [2026-10-17] build | T-22009 func_8011EDFC matched
+
+`func_8011EDFC` (EVENT `src/ovl/EVENT/8011C650.c`) matches in plain C. Cause of the old 13-row residual: the four halfword arrays `D_801258E4/EC/F4/FC` were externs, so IDO emitted one `lui $at` per store. `tools/data_island.py EVENT/8011C650` made the `.data` island (`config/overlays/EVENT.yaml`) and the arrays are now defined in the C file; the overlay's last word `D_80125FFC` (0x10124FE6) had to be defined too for the unit sha1. See [[matching-notes]], section T-22009.
+
+## [2026-10-17] ticket | T-22009 Wave 4 package w4-p09 In Review
+
+[[tickets/T-22009-w4-p09]]: 1 of 2 matched. `func_8011D5C4` stays `INCLUDE_ASM` (hand draft at 409 diff rows, archived in `drafts/T-22009/EVENT/func_8011D5C4/body.c`; loop index and hoisted constants swap `$a0`/`$v1`, frame 48 against 64). Code review pending.
