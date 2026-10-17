@@ -347,7 +347,7 @@ void func_80044890(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f) {
     D_800B3D2C = 1;
 }
 
-/* NON_MATCHING: T-17019, 3 differing lines; register of the D_800B3D4C load */
+/* NON_MATCHING: T-17019, 7 differing lines; the D_800B3D4C load is in $v0 (original $v1, one range with its increment) and the copy of the increment after the branch is missing (T-0018) */
 #ifdef NON_MATCHING
 s32 func_80044C98(void) {
     if ((u32) (((func_800460DC() - D_800B3D20) + 0x100) & 0xFF) >= 5U) {
