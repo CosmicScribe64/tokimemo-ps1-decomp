@@ -46,7 +46,6 @@ kanban-plugin: board
 
 ## In Progress
 
-
 - [ ] [[tickets/T-22000-wave-4-conveyor|T-22000 Wave 4 conveyor]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 - [ ] [[tickets/T-23000-wave-5-big-conveyor|T-23000 Wave 5 biggest-first conveyor alongside wave 4]]
@@ -54,7 +53,6 @@ kanban-plugin: board
 ## In Review
 
 - [ ] [[tickets/T-20010-name-ent-resource-loader|T-20010 Match NAME_ENT resource loader]]
-
 
 ## Done
 
