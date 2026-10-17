@@ -61,46 +61,9 @@ void strSetDefDecEnv(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
     env->slice.x = arg1;
 }
 
-#ifdef NON_MATCHING
-void strCallback(void) {
-    RECT rect;
-    s32 odd;
-
-    odd = D_800B5900 & 1;
-    if (odd != 0 && D_80125C5C != 0) {
-        func_80088210();
-        odd = D_800B5900 & 1;
-        D_80125C5C = 0;
-    }
-    rect = D_80125C58->dec.slice;
-    if (odd != 0) {
-        rect.x += (D_800B58F8 * 3 + 2) / 3;
-        rect.y += (D_800B58FC * 3 + 2) / 3;
-    } else {
-        rect.x += D_800B58F8;
-        rect.y += D_800B58FC;
-    }
-    func_8009C884(&rect, D_80125C58->dec.imgbuf);
-    func_8009C674(0);
-    D_80125C58->dec.slice.x += D_80125C58->dec.slice.w;
-    if (D_80125C58->dec.slice.x < D_80125C58->dec.rect[D_80125C58->dec.rectid].x + D_80125C58->dec.rect[D_80125C58->dec.rectid].w) {
-        func_80086944(D_80125C58->dec.imgbuf, D_80125C58->dec.slice.w * D_80125C58->dec.slice.h / 2);
-        return;
-    }
-    D_80125C58->dec.isdone = 1;
-    if (D_80125C58->dec.rectid != 0) {
-        D_80125C58->dec.rectid = 0;
-    } else {
-        D_80125C58->dec.rectid = 1;
-    }
-    D_80125C58->dec.slice.x = D_80125C58->dec.rect[D_80125C58->dec.rectid].x;
-    D_80125C58->dec.slice.y = D_80125C58->dec.rect[D_80125C58->dec.rectid].y;
-}
-#else
 INCLUDE_ASM("asm/nonmatchings/main/800563F0", strCallback);
-#endif
 
-s32 strNextVlc(u8 *arg0) {
+s32 strNextVlc(StrDecEnv30 *arg0) {
     s32 vlc;
     s32 timeout;
 
@@ -113,18 +76,19 @@ s32 strNextVlc(u8 *arg0) {
         func_80088CB0(vlc);
         vlc = strNext(arg0);
     }
-    if (((MovieVlcState *)arg0)->index != 0) {
-        ((MovieVlcState *)arg0)->index = 0;
+    if (arg0->vlcid != 0) {
+        arg0->vlcid = 0;
     } else {
-        ((MovieVlcState *)arg0)->index = 1;
+        arg0->vlcid = 1;
     }
-    func_80086870(vlc, ((MovieVlcState *)arg0)->buffers[((MovieVlcState *)arg0)->index]);
+    func_80086870(vlc, arg0->vlcbuf[arg0->vlcid]);
     func_80088CB0(vlc);
     return 0;
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-17014, 2 differing lines; bne operand order of the width compare (t0,a0 expected). */
+/* NON_MATCHING: T-17014, 2 differing lines; the width compare is `bne a0,t0` where the original has
+ * `bne t0,a0` (the local w is a plain variable and goes first; without it the width takes $v0). */
 s32 strNext(StrDecEnv30 *env) {
     u32 *addr;
     StHEADER *sector;
@@ -171,22 +135,22 @@ INCLUDE_ASM("asm/nonmatchings/main/800563F0", strNext);
 
 /* Implicit-int return type with no return statement: it changes how as1 fills the loop's
  * back-branch delay slot (T-9140, found by the permuter in T-1330). */
-u32 strSync(SyncObj *arg0, s32 arg1) {
+u32 strSync(StrDecEnv30 *arg0, s32 arg1) {
     volatile s32 timeout = 0x800000;
 
-    while (arg0->flag == 0) {
+    while (arg0->isdone == 0) {
         if (--timeout == 0) {
-            arg0->flag = 1;
-            if (arg0->idx != 0) {
-                arg0->idx = 0;
+            arg0->isdone = 1;
+            if (arg0->rectid != 0) {
+                arg0->rectid = 0;
             } else {
-                arg0->idx = 1;
+                arg0->rectid = 1;
             }
-            arg0->unk_24 = arg0->tbl[arg0->idx].unk_00;
-            arg0->unk_26 = arg0->tbl[arg0->idx].unk_02;
+            arg0->slice.x = arg0->rect[arg0->rectid].x;
+            arg0->slice.y = arg0->rect[arg0->rectid].y;
         }
     }
-    arg0->flag = 0;
+    arg0->isdone = 0;
 }
 
 void strKickCD(s32 arg0) {

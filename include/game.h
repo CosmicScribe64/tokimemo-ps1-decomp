@@ -20,28 +20,12 @@ typedef struct Entry8 {
     /* 0x07 */ s8 unk_07;
 } Entry8; /* size 0x08 */
 
-/* Sync-wait object of strSync (field meanings unknown). */
-typedef struct SyncObj {
-    /* 0x00 */ u8 unk_00[0x10];
-    /* 0x10 */ Entry8 tbl[2];
-    /* 0x20 */ s32 idx;
-    /* 0x24 */ s16 unk_24;
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ u8 unk_28[4];
-    /* 0x2C */ s32 flag;
-} SyncObj; /* size 0x30 */
-
 /* Stack request of the memory-card file functions (func_80054694, func_80054704): name buffer plus a retry
  * counter; layout read from the frame (counter at +0x20 in func_80054704). */
 typedef struct FileReq {
     /* 0x00 */ u8 name[32];
     /* 0x20 */ s32 retry;
 } FileReq; /* size 0x24 */
-
-typedef struct MovieVlcState {
-    /* 0x00 */ s32 buffers[2];
-    /* 0x08 */ s32 index;
-} MovieVlcState; /* accessed prefix, size 0x0C. T-9570 */
 
 #endif /* GAME_H */
 

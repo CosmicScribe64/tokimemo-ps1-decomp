@@ -16840,3 +16840,7 @@ KakarottoCake's PR #42 (claim #41): GYOZI func_8013C774 and func_8014206C matche
 ## [2026-10-17] ticket | T-17014 In Progress
 
 [[tickets/T-17014-w3-main-p14]] created and In Progress: wave 3 package w3-main-p14, four functions in `src/main/800563F0.c` (`strCallback`, `strNext`, `func_8005715C`, `func_80056BA8`). Worktree `tokimemo-wt/w3-main-p14` from `w2-good`.
+
+## [2026-10-17] ticket | T-17014 In Review
+
+[[tickets/T-17014-w3-main-p14]] In Progress to In Review: 1 of 4 matched (`func_8005715C`, 564 bytes, FAKE scalar for the fourth stack slot), about 65 minutes. `strNext` guarded at 1 row (operand order of the width compare), `strCallback` (75 rows) and `func_80056BA8` (about 250 rows) stay `INCLUDE_ASM`; drafts in `drafts/T-17014/strCallback/body.c` and `drafts/T-17014/func_80056BA8/`. Types: `StrDecEnv30` (PsyQ DECENV, moved to `include/main_api.h`), `StrCtx`, `StHEADER`; `SyncObj` and `MovieVlcState` removed from `include/game.h`, `strSync` and `strNextVlc` take `StrDecEnv30 *` (still match). Three rows in [[data/t0018-cases]], notes in [[matching-notes]] (section T-17014), result in [[main-family-results]].

@@ -150,3 +150,7 @@ the first-argument constant and the narrowing on an earlier source line than the
 ### Wave 3 package w3-main-p08 (T-17008)
 
 `func_80059EF0`, `func_8004F6B0` and `func_80059BE8` matched ([[matching-notes]], section T-17008). Type changes: `s32 D_800C6200[8]`, `s32 D_800C62C0[32]` are index loops now (the `func_80059EF0` entry of the type map above); `s16 D_80125BF0`/`D_80125BF2` declared (the cursor, promoted by uopt); `func_80098490` takes `u16` parameters; `D_800C9730` and `D_800C5FCC` have file-local array views in `80059B40.c` (`s32 D_800C9730[11]`, `s32 D_800C5FCC[2]`, `MAIN_API_OVERRIDE_*`), while `main_api.h` keeps `u8[]` and `s32` for their other users.
+
+### Wave 3 package w3-main-p14 (T-17014)
+
+`src/main/800563F0.c`, the PsyQ movie player ([[tickets/T-17014-w3-main-p14]]). `func_8005715C` (subtitle picker, 564 B) is matched with one FAKE scalar that reserves the original's fourth stack slot. `strNext` is guarded at one row (the operand order of the width compare), `strCallback` and `func_80056BA8` stay `INCLUDE_ASM` with their drafts in `drafts/T-17014/`. Type changes: `StrDecEnv30` is now the sample's DECENV and lives in `main_api.h`; `StrCtx` (the state at `0x80180000` behind `D_80125C58`) and `StHEADER` are new; `SyncObj` and `MovieVlcState` are gone ([[matching-notes]], section T-17014).

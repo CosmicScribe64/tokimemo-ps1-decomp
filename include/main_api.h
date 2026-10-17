@@ -1740,8 +1740,8 @@ typedef struct StrDecEnv30 {
     /* 0x2C */ s32 isdone;
 } StrDecEnv30; /* size 0x30 */
 
-/* Movie (STR) player state at 0x80180000 behind D_80125C58 (strInit, strNext, func_80056BA8); the
- * ring buffer behind +0x44 is reached by byte offset. T-17014 */
+/* Movie (STR) player state at 0x80180000 behind D_80125C58 (strInit, strNext, strCallback,
+ * func_80056BA8); the ring buffer behind +0x44 is reached by byte offset. T-17014 */
 typedef struct StrCtx {
     /* 0x00 */ u8 pos[4];
     /* 0x04 */ StrDecEnv30 dec;
@@ -1753,7 +1753,7 @@ typedef struct StrCtx {
 extern StrCtx *D_80125C58;
 extern s32 D_80125C5C;
 extern s32 D_800B58F0; /* frame number of the last movie frame (strNext) */
-extern u32 D_800B58F4; /* end frame (func_80056BA8) */
+extern u32 D_800B58F4; /* end frame of the movie, set by func_80056BA8 (strNext) */
 extern u8 D_800B5904[22]; /* movie subtitle frame table (func_8005715C) */
 extern u8 D_80125C60[];
 extern s16 D_80125C80[]; /* four s16 slots, written at index (tick & 3) (ENDING func_80137730) */
