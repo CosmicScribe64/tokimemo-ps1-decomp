@@ -28,7 +28,42 @@ void func_8004E500(s32 arg0) {
     func_8009C674(0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", func_8004E58C);
+void func_8004E58C(void) {
+    s32 i;
+    RECT r;
+
+    LoadSquare(0x100, 0x1F8, 2, 8, D_800B3FAC);
+    LoadSquare(0x120, 0x1F8, 2, 8, D_800B3FCC);
+    LoadSquare(0x110, 0x1F8, 2, 8, D_800B3FEC);
+    LoadSquare(0x130, 0x1F8, 2, 8, D_800B400C);
+    LoadSquare(0x320, 0x1FF, 0x20, 1, D_800B3F6C);
+    LoadSquare(0x360, 0x1FF, 0x20, 1, D_800B3F6C);
+    func_8004E500(2);
+    r.x = 0x102;
+    r.y = 0x1F8;
+    r.w = 2;
+    r.h = 8;
+    func_8009C7F8(&r, 0x80, 0x80, 0x80);
+    for (i = 0; i < 0x34; i++) {
+        ((Entry8 *)text_list)[i].unk_00 = 0;
+        ((Entry8 *)text_list)[i].unk_02 = 0;
+        ((Entry8 *)text_list)[i].unk_04 = 0;
+        ((Entry8 *)text_list)[i].unk_05 = 0;
+        ((Entry8 *)text_list)[i].unk_06 = 0;
+        ((Entry8 *)text_list)[i].unk_07 = 0;
+    }
+    text_list_count.total = 0;
+    text_list_count.count = 0;
+    text_list_count.pos = 0;
+    text_list_count.mark = 0;
+    /* FAKE: T-17020. The two compares read the byte through a KWork pointer view. With a direct
+     * read the build loads it after the four zero stores and puts the li in t6 (tools/cvt_pass.py
+     * keeps the widening CVT because the first read comes after a call). The pointer view gives the
+     * original's order: lbu before the stores, li in v0. */
+    if (((KWork *)&text_list_count)->unk_6A != 0xE && ((KWork *)&text_list_count)->unk_6A != 0x10) {
+        text_list_count.unk_6A = 0xE;
+    }
+}
 
 void text_set_advance(u8 arg0) {
     if (arg0 == 0x10) {
@@ -192,7 +227,42 @@ u8 get_now_k(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004E500", disp_string);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", load_string);
+/* Declaration order: IDO gives every local a stack slot once one local (start) lives in memory, and the
+ * locals declared before it sit above it; these six reproduce the original frame (T-17020, T-3330). The
+ * original passes the offset into the range as a second argument to vload_font (a1). */
+s32 load_string(str)
+u8 *str;
+{
+    s32 i;
+    u8 *p;
+    u8 *q;
+    u16 c;
+    s32 hi;
+    u8 lo;
+    s32 start;
+
+    start = text_list_count.total;
+    while (1) {
+        q = str++;
+        hi = *q;
+        p = str++;
+        if (hi == 0 || (lo = *p) == 0) {
+            return text_list_count.total - start;
+        }
+        c = lo + (hi << 8);
+        if (c < font_range_table[0].first) {
+            printf("<kanji.c>error(No-sjis)");
+            return text_list_count.total - start;
+        }
+        for (i = 1; i < 46; i++) {
+            if (c < font_range_table[i].first) {
+                vload_font((c - font_range_table[i - 1].first) + font_range_table[i - 1].glyph,
+                           c - font_range_table[i - 1].first);
+                break;
+            }
+        }
+    }
+}
 
 void vload_font(arg0)
 s32 arg0;

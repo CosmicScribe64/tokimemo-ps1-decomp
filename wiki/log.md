@@ -17227,3 +17227,18 @@ New `tools/keepproof.py` (`check`, `census`, `rows`) and the `proof=<func>:<rows
 ## [2026-10-17] ticket | T-20800 Done
 
 [[tickets/T-20800-redraft-tool]] In Review to Done: code review against `CODING_STANDARDS.md` found one small issue, fixed (the acceptance criterion said `--jobs N (max 2)`, the tool defaults to 2 and takes any N). Full tool suite passes (1,285 tests, 3 skipped); `tools/redraft.py` re-run on `GEKO:func_80134228` reproduced the committed result (score 8). Changes limited to `tools/`, `wiki/` and `drafts/T-20800/`. Card moved in [[kanban]]. Merge via the merge script.
+
+## [2026-10-17] ticket | T-17020 Wave 3 package w3-main-p20 started
+[[tickets/T-17020-w3-main-p20]] In Progress: four main functions (`load_string`, `func_8004E58C`, `glyph_expand_1bpp`, `disp_string`) in `src/main/8004E500.c`, worktree tokimemo-wt/w3-main-p20, branch w3-main-p20. Part of [[tickets/T-17000-types-first-main]].
+
+## [2026-10-17] build | T-17020 load_string matched
+[[tickets/T-17020-w3-main-p20]]: `load_string` (252 B) matched in plain C, committed on its own. `FontRange` array type and the `load_string`/`vload_font` declarations in `include/main_api.h`; index loop, `vload_font` second argument, `q = str++`/`p = str++` byte fetch and locals declared before `start` (frame slots) replace the T-9320 and T-9740 `regorder` rows ([[data/t0018-cases]] update line, [[matching-notes]] section T-17020).
+
+## [2026-10-17] ticket | T-17020 In Review
+[[tickets/T-17020-w3-main-p20]] moved In Progress to In Review (kanban card moved): 1 of 4 matched (`load_string`); `func_8004E58C` guarded at 18 rows (`text_glyph_advance` load order, new row in [[data/t0018-cases]]); `glyph_expand_1bpp` and `disp_string` not started (past the 75 minute start limit on a loaded machine). Draft image externs `D_800B3F6C`, `D_800B3FAC`..`D_800B400C` added to `include/main_api.h`.
+
+## [2026-10-17] build | T-17020 closer pass: func_8004E58C matched
+[[tickets/T-17020-w3-main-p20]] closer pass (Opus) on the one guarded draft of `src/main/8004E500.c`: `func_8004E58C` (452 B) matched with a FAKE pointer view for the two compares (`((KWork *)&text_list_count)->unk_6A`), commit "T-17020: match main:func_8004E58C". Package now 2 of 4; `glyph_expand_1bpp` and `disp_string` still `INCLUDE_ASM`. Clean rebuild 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. Notes in [[matching-notes]] (section T-17020), update line in [[data/t0018-cases]], new row in [[register-cheatsheet]]. Ticket stays In Review.
+
+## [2026-10-17] ticket | T-17020 Done
+[[tickets/T-17020-w3-main-p20]] reviewed against `CODING_STANDARDS.md`: 1 finding fixed (the [[index]] line still described the pre-closer state, 1 of 4 matched), no source findings. In Review to Done (kanban card moved). Matched 2 of 4 (`load_string`, 252 B, plain C; `func_8004E58C`, 452 B, one marked FAKE pointer view); `glyph_expand_1bpp` and `disp_string` stay `INCLUDE_ASM`. Unit sha1, headers, globals and `sync_protos --check-branch` OK after the edit; the clean 27/27 build runs in the merge.
