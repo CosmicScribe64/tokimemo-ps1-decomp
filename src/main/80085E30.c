@@ -65,23 +65,20 @@ void Fade_In_Init(void) {
     Vblnk_Timer_Init();
 }
 
-#ifdef NON_MATCHING
 s32 Fade_In_Main(void) {
+    u8 temp;
     if (Vblnk_Timer() != 0) {
-        if ((u8) D_800E6280.unk_03A >= 0x7EU) {
+        temp = D_800E6280.unk_03A;
+        if (temp >= 0x7EU) {
             D_800E6280.unk_03A = 0x80;
             return 1;
         }
         D_800E6280.unk_03A += 4;
         Vblnk_Timer_Init();
-        goto block_4;
+        return 0;
     }
-block_4:
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80085E30", Fade_In_Main);
-#endif
 
 void Yubi(s32 idx) {
     u8 *p;
