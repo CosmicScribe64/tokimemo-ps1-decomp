@@ -126,7 +126,10 @@ void func_8005907C(void) {
 
 /* NON_MATCHING: T-17017, 16 differing lines. Left: the entry spills of a1/a2 and the
  * stores of w/h to their home slots before each call, which the original does not have
- * (T-0018 constant-in-register family). */
+ * (T-0018 constant-in-register family). Closer pass: element-target assignments in the call
+ * arguments share a0/a1 but put lui before li and drop the else-arm hoist (36 lines); `(&w)[0]`
+ * locals alias w/h but grow the frame to 0x38 (31); `*&w` and plain parameters propagate (40, 42);
+ * only w aliased gives 34. */
 #ifdef NON_MATCHING
 /* FAKE: `w` and `h` are extra K&R-style parameters whose addresses are read (pw, ph).
  * Aliased variables keep IDO from propagating the constants, so 0x140/0xF0 are loaded
