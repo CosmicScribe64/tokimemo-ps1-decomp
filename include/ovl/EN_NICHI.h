@@ -80,7 +80,7 @@ void func_80132DC4();
 
 extern s32 D_80139AFC;
 extern s32 D_80139278[10];
-void func_80135ACC();
+void func_80135ACC(s32 arg0);
 void func_80134C1C();
 void func_801339D4();
 void func_80134800();
