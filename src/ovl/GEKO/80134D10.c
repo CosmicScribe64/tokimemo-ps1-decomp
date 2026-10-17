@@ -524,12 +524,11 @@ void func_801355B8(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-17700, the SHOUGATU func_8013BDE0 switch form; control flow and opcodes match, but the temporaries rotate from $t6 where the original starts at $t0 (constant 1 in $t0, %hi of unk_71E in $v0), so 224 funcdiff rows differ in register numbers throughout */
-#ifdef NON_MATCHING
 void func_801355E8(void) {
+    D_800E6280.unk_71E |= 0x40;
+    D_800E6280.unk_71E |= 0x04;
     D_80145060 = 1;
     D_80145064 = 0;
-    D_800E6280.unk_71E |= 0x44;
     switch (D_800E6280.unk_F5F) {
     case 0:
         D_80145048 = D_80144FB0;
@@ -589,9 +588,6 @@ void func_801355E8(void) {
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_801355E8);
-#endif
 
 void func_80135894(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
