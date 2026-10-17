@@ -547,7 +547,29 @@ s32 func_801366E8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80136794);
+/* The selected girl and the D_800E6280 flag bytes are read through a state
+ * pointer: uopt then keeps unk_F5F and unk_71E in registers (a1, v0), which
+ * gives the `lui a1; lbu a0,lo(a1)` argument loads. T-11880 */
+s32 func_80136794(void) {
+    GameState *g;
+    s32 v;
+
+    g = &D_800E6280;
+    v = func_80051A68(D_800E6280.unk_F5F); /* FAKE: direct symbol here but g-> below; the mix decides which loads uopt keeps in registers T-11880 */
+    if ((g->unk_0F8 & 0xF) == g->unk_03F && ((u32)(g->unk_0F8 << 0x17) >> 0x1B) == g->unk_040) {
+        if (((u8)v & 0x7F) < 2U) {
+            g->unk_71E &= ~8;
+            g->unk_71E |= 4;
+            g->unk_722 = g->unk_110A + 1;
+            g->unk_F5F = g->unk_75D;
+            func_800847B8(g->unk_F5F);
+            func_80042908(4);
+            return 0;
+        }
+        g->unk_71E |= 8;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80136860);
 
