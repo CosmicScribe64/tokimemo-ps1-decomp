@@ -17303,3 +17303,7 @@ Wave 3 conveyor paused at the user's request after 19 types passes and 77 packag
 
 ## [2026-10-17] ticket | T-20900 Done
 [[tickets/T-20900-shared-type-unification]] reviewed against `CODING_STANDARDS.md`: no findings (no edits in `src/ovl/TT/*` or `dialogue_render`, FAKE comments name tickets, types documented in [[data-types]], no game data). `w2-good` merged into the branch first (only `wiki/log.md` conflicted, both sides kept); clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` and all tool tests OK. In Review to Done (kanban card moved).
+
+## [2026-10-17] ticket | T-20930 In Progress
+
+[[tickets/T-20930-types-ending]] created and In Progress (card in [[kanban]], line in [[index]]): a second, targeted type pass for ENDING after [[tickets/T-18300-types-first-ending]]. Worktree `ty-ending` from `w2-good`; scope `src/ovl/ENDING/*.c` and `include/ovl/ENDING.h`, additions only in `include/game.h`.
