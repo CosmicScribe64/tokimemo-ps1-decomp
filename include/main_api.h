@@ -1727,7 +1727,7 @@ typedef struct StHEADER {
     /* 0x12 */ u16 height;
     /* 0x14 */ u32 headm;
     /* 0x18 */ u32 headv;
-} StHEADER;
+} StHEADER; /* size 0x1C */
 
 /* PsyQ movie sample DECENV (strSetDefDecEnv, strCallback, strNext, strSync), T-9930, T-17014. */
 typedef struct StrDecEnv30 {

@@ -16848,3 +16848,7 @@ KakarottoCake's PR #42 (claim #41): GYOZI func_8013C774 and func_8014206C matche
 ## [2026-10-17] ticket | T-17014 closer pass: strNext matched
 
 [[tickets/T-17014-w3-main-p14]] closer pass (Opus, about 35 minutes) on the guarded `strNext`. Matched (496 bytes) and committed as `T-17014: match main:strNext`, with one FAKE: `w * 1 != sector->width`. The local `w` holds `$v0` with no instruction, so the stream width takes `$a0`, and the no-op `* 1` keeps `w` from going first as a plain variable. New row in [[register-cheatsheet]], update line in [[data/t0018-cases]], notes in [[matching-notes]] (T-17014) and [[main-family-results]]. `src/main/800563F0.c` has no guard left; `strCallback` and `func_80056BA8` are still `INCLUDE_ASM`. The ticket stays In Review.
+
+## [2026-10-17] ticket | T-17014 Done
+
+[[tickets/T-17014-w3-main-p14]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (missing `/* size 0x1C */` on `StHEADER` in `include/main_api.h`, stale acceptance lines in the ticket). Rebuild OK (27/27 SHA1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 2 of 4 functions matched (`func_8005715C` 564 B, `strNext` 496 B, 1,060 bytes, two marked FAKEs), `strCallback` and `func_80056BA8` left as `INCLUDE_ASM` with drafts in `drafts/T-17014/`. Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.
