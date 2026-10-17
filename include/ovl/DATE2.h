@@ -46,8 +46,8 @@ void func_801370E4(void);
 void func_801365DC(s32 arg0);
 
 s32 func_801348F0(); /* returns 0 on most paths (or v0,zero,zero) T-11880 */
-void func_80133AF0();
-void func_801350A4();
+s32 func_80133AF0(); /* returns 0, or the timer from the dot animation T-11880 */
+s32 func_801350A4(); /* returns 0 on the header-error path only T-11880 */
 s32 func_80135E50();
 extern s32 D_8013A380;
 extern s32 D_8013A388;
