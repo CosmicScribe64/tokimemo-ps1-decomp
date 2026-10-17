@@ -189,7 +189,70 @@ u8 func_800741B8(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800737A0", func_8007437C);
+u8 func_8007437C(void) {
+    GsRec69C *rec;
+    s32 temp;
+    u8 *tbl;
+
+    func_80048F64(0x60);
+    func_80048F64(0x61);
+    rec = &D_800E6280.unk_69C[D_800E6280.unk_71C];
+    temp = rec->unk_02;
+    if (((D_800E6280.unk_0F4.b[1] & 0xF) == 3) && !(D_800E6280.unk_0F6.h & 1) && ((D_800E6280.unk_F68.w & 0xF) == 7)) {
+        addr_init_else_sd(2);
+        temp = 0;
+    } else if (rec->unk_01 == 4) {
+        addr_init_club_sd(D_801230D0);
+    } else {
+        addr_init_weekly_sd(D_801230D0);
+        if ((D_801230D0 == 0xF) || (D_801230D0 == 0x10)) {
+            temp = 0;
+            D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02 = 0;
+        }
+    }
+    load_palette(D_80125CA4, 0x10, 1, 1, 0);
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 1;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 5;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_38 = 0x01000000;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0x84;
+    *(s32 *)&((DisplayActor44 *)D_8011ECD0)[96].unk_0C = (s32)D_80125CA8;
+    *(s32 *)&((DisplayActor44 *)D_8011ECD0)[96].unk_10 = (s32)D_80125CAC;
+    *(s32 *)&((DisplayActor44 *)D_8011ECD0)[96].unk_34 = (s32)D_80125CB0;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 2;
+    /* FAKE: u8 view of the s8 flag unk_F6E (both reads below). The original reloads the flag for the second
+     * record; with the field read as s8 the first load is kept in a register and every temporary shifts.
+     * Matches; real source unknown. T-17016 */
+    if (*(u8 *)&D_800E6280.unk_F6E != 0) {
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_06 = 0x82;
+    }
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_43 = 0x10;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = temp;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0x50;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = -0x40;
+    /* A pointer to the day table keeps its base apart from the record base (the original addresses it with
+     * its own lui); D_800E6280.unk_044[0].unk_00[i] reuses the record base register. T-17016 */
+    tbl = D_800E6280.unk_044[0].unk_00;
+    if (D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 != 7) {
+        if ((tbl[D_800E6280.unk_040] != 1) && (tbl[D_800E6280.unk_040] != 2) && (tbl[D_800E6280.unk_040] != 3) && (D_800E6280.unk_69C[D_800E6280.unk_71C].unk_03 != 0xF)) {
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_01 = 1;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_02 = 5;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_38 = 0x01000000;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_03 = 0x84;
+            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[97].unk_0C = (s32)D_80125CA8;
+            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[97].unk_10 = (s32)D_80125CAC;
+            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[97].unk_34 = (s32)D_80125CB0;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_05 = 2;
+            if (*(u8 *)&D_800E6280.unk_F6E != 0) {
+                ((DisplayActor44 *)D_8011ECD0)[97].unk_06 = 0x82;
+            }
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_43 = 0x10;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_16 = (s16)(temp + 2);
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_26 = -0x18;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_2A = -0x40;
+        }
+    }
+    func_80042808();
+}
 
 s32 week_day_main0(void) {
     s16 *state;
