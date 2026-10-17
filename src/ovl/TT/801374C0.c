@@ -678,8 +678,7 @@ void func_8013923C(void) {
     work->step = 0x100U;
 }
 
-/* T-11520 near miss: 11 differing instructions, registers only. Writing the case-0 short arrays as *(s16 *)(c + 0x2A8 + i * 2) makes c + i * 2 one range with the 0x40 loops (priority 75.5), so it takes v1 and the slot pointer a0 as in the original. Left: the shared c[0x364] tail value (PRE'd load in the default case, the end of case 0, the 0xDC/0xFD tests and the 0xFD block) is a0 in the original and v0 here (nothing allocated before it holds v0 or v1 in its blocks), and the 0xFD loop preheader orders li v1,0x18 before move v0,a2 (the original fills the bne delay slot with the move). Tried: i = 0 before the 0xDC test, do/while and i < 0x18 forms of the 0xFD loop, (*p)++ tail. */
-#ifdef NON_MATCHING
+/* Writing the case-0 short arrays as *(s16 *)(c + 0x2A8 + i * 2) makes c + i * 2 one range with the 0x40 loops (T-11520); TT's zero-store chain pair in the 0xFD block puts the shared c[0x364] tail value in a0. T-11860 */
 void func_801392A0(void) {
     u8 *c;
     u8 *e;
@@ -772,21 +771,15 @@ void func_801392A0(void) {
             for (i = 0; i != 0x18; i++) {
                 c[0x310 + i] = 0;
             }
-            *(s16 *)(c + 10) = 0;
-            *(s16 *)(c + 8) = 0;
-            *(s16 *)(c + 6) = 0;
-            c[15] = 0;
-            c[14] = 0;
-            c[13] = 0;
+            /* FAKE: TT's zero-store chain pair; the reloads move the shared c[0x364] value from v0 to a0. T-11860 */
+            *(u16 *)(c + 6) = *(u16 *)(c + 8) = *(u16 *)(c + 0xA) = 0;
+            c[0xD] = c[0xE] = c[0xF] = 0;
             *(s16 *)(c + 4) = 0xA0;
         }
         break;
     }
     *(u16 *)(c + 0x364) += 1;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_801392A0);
-#endif
 
 void func_801396C4(void) {
     func_80138300();
