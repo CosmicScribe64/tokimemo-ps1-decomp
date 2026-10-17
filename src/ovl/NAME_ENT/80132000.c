@@ -912,8 +912,6 @@ void func_80133FC4(void) {
     D_80120C96 = -0xB4;
 }
 
-/* NON_MATCHING: T-22008, 26 rows; the return value y sits in $a0/$a1 with a final move to $v0, the original keeps it in $v0 */
-#ifdef NON_MATCHING
 /* NON_MATCHING: T-22008, 26 rows; the returned y sits in $a0/$a1 with a final move to $v0, the original keeps it in $v0 and x in $v1 (s16/s32, no-return, chain, global-promoted and void forms tried) */
 #ifdef NON_MATCHING
 s32 func_80134110(void) {
@@ -934,9 +932,6 @@ s32 func_80134110(void) {
     D_8014CCBC = -1;
     return y;
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134110);
-#endif
 #else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134110);
 #endif
