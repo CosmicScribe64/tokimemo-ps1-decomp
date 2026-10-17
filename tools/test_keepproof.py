@@ -3,6 +3,8 @@
 
 Run: tools/docker.sh python3 tools/test_keepproof.py
 """
+import contextlib
+import io
 import os
 import tempfile
 import unittest
@@ -163,7 +165,8 @@ class ProveTest(Tree):
         self.put("src/main/80010000.c", SRC)
         res = self.prove(SRC)
         self.put("config/migrate_globals.txt", CONFIG + res.keep_line(kp.DEFAULT_REASON) + "\n")
-        self.assertEqual(mg.main(["--root", self.root, "--apply"]), 0)      # folds D_80100008, keeps D_80100004
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(mg.main(["--root", self.root, "--apply"]), 0)  # folds D_80100008, keeps D_80100004
         aggs, keep = mg.load_config(self.root)
         self.assertEqual(keep["src/main/80010000.c"].proofs["D_80100004"][0].rows, 7)
         msgs = [m for m in mg.check(self.root, aggs, keep) if "D_80100004" in m]
@@ -275,7 +278,8 @@ class VerifyConfigTest(Tree):
 
     def verify(self):
         aggs, keep = mg.load_config(self.root)
-        return kp.verify_config(self.root, aggs, keep, self.tc)
+        with contextlib.redirect_stdout(io.StringIO()):
+            return kp.verify_config(self.root, aggs, keep, self.tc)
 
     def test_a_valid_line_reproduces(self):
         self.setup_keep()
@@ -412,7 +416,9 @@ class SummaryTest(unittest.TestCase):
     def test_false_positive_rate_counts_matched_functions_that_needed_no_trick(self):
         funcs = [self.info("a", True, set(), True), self.info("b", True, {"fake"}), self.info("c", True, {"volatile"}),
                  self.info("d", True, {"absolute", "fake"}, True), self.info("e", False, None, True)]
-        funcs.append(kp.FuncInfo("TACO", "n", True, "src/ovl/TACO/a.c", 10))        # no hit: not counted
+        n = kp.FuncInfo("TACO", "n", True, "src/ovl/TACO/a.c", 10)                    # no hit: not in the shape counts
+        n.tags = {"volatile"}
+        funcs.append(n)
         s = kp.summarize(funcs)
         self.assertEqual((s["hit_functions"], s["hit_matched"], s["hit_unmatched"]), (5, 4, 1))
         self.assertEqual((s["matched_classified"], s["matched_plain"], s["matched_trick"]), (4, 2, 2))
@@ -420,6 +426,8 @@ class SummaryTest(unittest.TestCase):
         self.assertEqual((s["held_matched"], s["held_matched_plain"], s["held_unmatched"]), (2, 1, 1))
         self.assertEqual(s["trick_counts"], {"volatile": 1, "absolute": 1})
         self.assertEqual(s["other_tags"], {"fake": 2})
+        self.assertEqual((s["tree_matched_classified"], s["tree_matched_trick"]), (5, 3))          # + the one without a hit
+        self.assertIn("whole tree: 5 matched functions", kp.census_text(funcs))
         text = kp.census_text(funcs)
         self.assertIn("false-positive rate 50.0%", text)
         self.assertIn("e", text)

@@ -768,17 +768,17 @@ def proof_evidence(root, rel, proof):
     recompiling checks (necessity, sufficiency) are tools/keepproof.py's, run by --verify-proofs."""
     path = os.path.join(root, rel)
     if not os.path.exists(path):
-        return False, "proof %s: no source file %s" % (proof, rel)
+        return False, "%s: no source file %s" % (proof, rel)
     if not plain_c(read(path), proof.func):
-        return False, ("proof %s: %s is not plain C in %s (undefined, INCLUDE_ASM or a NON_MATCHING guard): "
+        return False, ("%s: %s is not plain C in %s (undefined, INCLUDE_ASM or a NON_MATCHING guard): "
                        "a proof needs the matched function" % (proof, proof.func, rel))
     files = [f for f in object_asm_files(root, rel) if os.path.basename(f) == proof.func + ".s"]
     if not files:
-        return False, ("proof %s: no original asm of %s for %s (run configure.py; per-object C files only)"
+        return False, ("%s: no original asm of %s for %s (run configure.py; per-object C files only)"
                        % (proof, proof.func, rel))
     got = asm_sha1(read(files[0]))
     if got != proof.sha:
-        return False, ("proof %s is stale: the asm sha1 of %s is %s (the original asm or the function changed; "
+        return False, ("%s is stale: the asm sha1 of %s is %s (the original asm or the function changed; "
                        "run tools/keepproof.py check and write the new line)" % (proof, proof.func, got))
     return True, proof.func
 

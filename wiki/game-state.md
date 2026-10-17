@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-10
+updated: 2026-10-17
 sources: ["include/main_api.h", "tools/migrate_globals.py", "config/migrate_globals.txt", "tools/type_recovery.py", "tools/aggregate_audit.py", "asm/**/*.s"]
 ---
 
@@ -98,6 +98,8 @@ A "symbol-direct" access (`lui %hi(D_X); lbu %lo(D_X)`) is therefore no evidence
 - register allocation and constant sharing of the T-0018 / T-3001 families (OPTION `func_80132AB8`, `func_801387E4`, `func_8013C780`, TACO `func_80136C60`, ENDING `func_80134B18`, DATE `func_8014E38C`, `func_801378BC`, `func_801386C8`, `func_80137B78`, `func_801395B4`, KANGEI `func_80132354`, OMIMAI `func_801337EC`, main `get_weekly_bg_sector`, `load_palette`): the scalar view gives the same words, so no view fixes them.
 
 **Rule for the future** (`tools/migrate_globals.py`): a `keep` line (a separate-symbol view for one file) is accepted only when the original object of that file has a hoisted read-modify-write pair on that address (`tools/aggregate_audit.py --pairs`); `--check` runs the audit on that object and rejects the line otherwise. A function that misses by registers, operand order or scheduling does not get a view.
+
+**Proposal (T-20820, not applied).** A second kind of evidence for a `keep` line: a byte-match necessity proof, `keep <file> <symbol> proof=<func>:<rows_without>:<asm_sha1_8> <reason>`. It covers the counter-tail family (TACO `func_8014616C`, `func_80149538`, ...) where the original reads the frame counter again as another uopt variable and no hoisted pair exists. The asm shape alone is not evidence (299 of 299 matched functions with it match in plain C); the compile-based proof is. Rule text, measurements and the open decision: [[keep-lines]].
 
 **Update (T-9020).** The four list-1 functions of wave 5 said to need "separate scalars" were checked again: main `func_80042960` matches with the T-8080 selector view (`switch (*(u8 *)&D_800E6280.unk_1108)` in an `s32` function); VALEN `func_80133670`, BUNKASAI `func_80146030` and TACO `func_8013546C` miss on one register or one load position, which the scalar declaration does not change either. The Rec38 flag word `unk_1BC[i].unk_0C` is now the union `Rec38Flags` with the bit-field struct `CharFlags` (`.f.b1`, `.f.f9`, ...) in place of per-file views ([[matching-notes]], "Wave-5 codegen shapes (T-9020)").
 

@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-16
+updated: 2026-10-17
 sources: ["tools/type_recovery.py", "tools/test_type_recovery.py", "include/main_api.h", "config/symbol_addrs_types.txt", "wiki/matching-notes.md", "tools/migrate_globals.py", "tools/aggregate_audit.py"]
 ---
 
@@ -88,6 +88,8 @@ Once an aggregate is declared, its fields must not be used through their splat n
 - IDO 5.3 compiles a constant-offset member of an extern struct like a scalar extern at that address: same instruction words after relocation, same registers, and uopt keeps members apart (a member value survives a store to another member). Only alias rules differ: as1 does not move a load above a store through the same symbol (it does for two symbols), and uopt reloads a member after a store through an indexed element or a pointer into the struct. A diff in registers or operand order is never fixed by switching between the two views; check with both before blaming the declaration.
 - Evidence for a separate symbol in the original is therefore a load hoisted above a store between two fields of an aggregate (`tools/aggregate_audit.py --pairs`). For `GameState` there is none (407 pairs kept, 0 hoisted), and `tools/migrate_globals.py --check` accepts a `keep` line only with such a pair in that file's original object.
 - `lui rA; lbu rB,%lo(D)(rA); ori/andi; sb` with rB different from rA is a bit-field store, not a separate symbol: IDO computes a bit-field member's address apart from the load. Write a bit-field view of the word (a local `typedef struct { u32 pad0 : 14; u32 f : 1; u32 pad1 : 17; }` cast on the member, LSB first, as the neighbouring files do); `tools/aggregate_audit.py --bitfields` lists the sites in the aggregates (56 in `GameState`), and the same shape appears on `Rec34` (`unk_0C.b14`) and EVENT/GYOZI flag bytes.
+
+- Proposed second evidence (T-20820, [[keep-lines]]): a `keep` line with a byte-match necessity proof for functions where the original reads one field as two uopt variables (the frame counter in TACO). `tools/keepproof.py check` compiles the unit with the symbol folded and with it separate; the asm shape alone has a false-positive rate of 100% on matched code, the proof has none by construction.
 
 ## T-9020 additions
 - `Rec38Flags` / `CharFlags` (`include/main_api.h`): the flag word at +0x0C of a `Rec38` record as a union of `w`, `u`, `h[2]`, `b[4]` and the bit-field struct `f` (bits 0-8, `f9` = bits 9-11, bits 12-14). Evidence: `sll; bltz/bgez` tests of bits 1, 2, 3, 6, 14 and `sll 20; srl 29` reads of bits 9-11 in the original; it replaced thirteen file-local views without changing a byte.

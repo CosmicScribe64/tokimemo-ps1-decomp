@@ -27,7 +27,8 @@ Usage (Docker, repo root, after configure.py and a build):
   python3 tools/keepproof.py check UNIT:func --symbol D_800E7384 [--src FILE | --from-draft] [--declare s32]
                                              [--write-scratch FILE] [--reason TEXT] [--no-build]
       prove the symbol necessary for func and print the ready-made keep line. --src names a scratch copy
-      of the unit's C file (the committed file is the default); the function must be plain C there.
+      of the unit's C file (the committed file is the default; it must lie under the repository, the Docker
+      mount, `build/` is fine); the function must be plain C there.
       --declare TYPE adds `extern TYPE SYMBOL;` after the includes when no header declares the symbol
       (the declaration the package adds to include/main_api.h together with the keep line).
       --from-draft proves the committed guarded draft written as plain C with the separate symbol in the
@@ -36,9 +37,10 @@ Usage (Docker, repo root, after configure.py and a build):
   python3 tools/keepproof.py census [--json OUT] [--top N]
       the counter-tail shape in the original asm of every function (see SHAPE below), and for the
       matched ones whether their C needed a keep, a volatile access or an absolute address.
-  python3 tools/keepproof.py rows [--only NAME ...] [--max-fields N]
-      the control functions and the candidates as unmatched drafts: rows with each aggregate field
-      read as a separate symbol and without.
+  python3 tools/keepproof.py rows [--only NAME ...] [--controls] [--max-fields N]
+      the six candidate functions (--controls adds the four TACO counter-tail functions) as unmatched
+      drafts: the rows of the draft as written, with each aggregate field it uses as a separate symbol
+      in every use (all) or in the statement of its last use (tail), and with all of them at once.
 
 SHAPE (census). In one function's asm, for an address X inside an aggregate reached by `lui; l?
 %lo(X)`: a first load L1 of X; later a load L2 of X (no store to X in between: the value is unchanged)
@@ -292,11 +294,11 @@ def verify_config(root, aggs, keep, tc=None):
             res = prove(tc, root, aggs, c, proof.func, sym, mg.read(os.path.join(root, rel)))
             print(res.report())
             if not res.ok:
-                lines.append("%s: %s: keep %s: proof %s not reproduced: %s" % (
+                lines.append("%s: %s: keep %s: %s not reproduced: %s" % (
                     CONFIG, rel, sym, proof, "; ".join(res.problems) or
                     ("not necessary" if res.sufficient else "the bytes do not match: " + res.why)))
             elif res.sha != proof.sha:
-                lines.append("%s: %s: keep %s: proof %s is stale: the asm sha1 is %s" % (
+                lines.append("%s: %s: keep %s: %s is stale: the asm sha1 is %s" % (
                     CONFIG, rel, sym, proof, res.sha))
             elif res.rows_without != proof.rows:
                 print("note: %s rows_without is %d now (the line says %d); the proof still holds"
@@ -409,7 +411,7 @@ def shape_hits(lines, unit, syms, ranges):
             d = args[0]
             sv = [val(r) for r in REG_RE.findall(" ".join(args[1:]))]
             ids = frozenset().union(*[v[0] for v in sv]) if sv else frozenset()
-            copy = op in COPIES and len(args) == 3 and args[2] == "$zero" or op == "move"
+            copy = (op in COPIES and len(args) == 3 and args[2] == "$zero") or op == "move"
             vals[d] = (ids, any(v[1] for v in sv) or (bool(ids) and not copy))
             his.pop(d, None)
         if delay_end == "call":
@@ -500,7 +502,6 @@ class FuncInfo:
 
 def tree_functions(root, aggs, ranges):
     """FuncInfo of every original function with its shape hits (aggregate_audit's tree walk)."""
-    import aggregate_audit as aa
     import type_recovery as tr
     syms = tr.load_labels(tr.data_files(root))
     owner = {}
@@ -524,13 +525,14 @@ def tree_functions(root, aggs, ranges):
 
 
 def census(root, aggs):
-    """Dict with the census numbers (see main) and the per-function rows."""
+    """FuncInfo of every original function: its shape hits and, for a matched function with a hit whose C
+    is plain, the tags of classify_c."""
     import aggregate_audit as aa
     _a, ranges = aa.load_ranges(root)
     funcs = tree_functions(root, aggs, ranges)
     cache = {}
     for f in funcs:
-        if not f.hits or not f.matched or not f.src:
+        if not f.matched or not f.src:
             continue
         if f.src not in cache:
             cache[f.src] = mg.read(os.path.join(root, f.src))
@@ -549,9 +551,12 @@ def summarize(funcs):
     held = [f for f in matched if any(h.held for h in f.hits)]
     held_classified = [f for f in held if f.tags is not None]
     held_plain = [f for f in held_classified if not f.tags & set(tricks)]
+    tree = [f for f in funcs if f.matched and f.tags is not None]
     return {
         "functions": len(funcs),
         "matched_functions": sum(1 for f in funcs if f.matched),
+        "tree_matched_classified": len(tree),
+        "tree_matched_trick": sum(1 for f in tree if f.tags & set(tricks)),
         "hit_functions": len(hit),
         "hit_matched": len(matched),
         "hit_unmatched": len(unmatched),
@@ -579,6 +584,8 @@ def census_text(funcs, top=40):
            "false-positive rate %s" % (s["matched_plain"], s["matched_classified"], pct(s["false_positive_rate"])),
            "  matched that needed a trick: %d  %s   (other tags among the matched: %s)" % (
                s["matched_trick"], s["trick_counts"] or "", s["other_tags"] or "none"),
+           "  whole tree: %d matched functions with plain C found, %d use a keep, a volatile access or an "
+           "absolute address of an aggregate field" % (s["tree_matched_classified"], s["tree_matched_trick"]),
            "  held across a call (the func_8014616C form): %d matched (plain %d, false-positive rate %s), "
            "%d unmatched" % (s["held_matched"], s["held_matched_plain"], pct(s["held_false_positive_rate"]),
                              s["held_unmatched"])]
@@ -594,7 +601,7 @@ def census_text(funcs, top=40):
         out.append("  ... %d more (--json OUT lists all)" % (len(cand) - top))
     out.append("")
     out.append("matched functions that needed a trick:")
-    for f in sorted((f for f in funcs if f.hits and f.matched and f.tags and f.tags & {"keep", "volatile", "absolute"}),
+    for f in sorted((f for f in funcs if f.matched and f.tags and f.tags & {"keep", "volatile", "absolute"}),
                     key=lambda f: (f.unit, f.name)):
         out.append("  %-9s %-18s %s" % (f.unit, f.name, ",".join(sorted(f.tags))))
     return "\n".join(out)
@@ -604,7 +611,8 @@ def census_json(funcs):
     return {"summary": summarize(funcs),
             "functions": [{"unit": f.unit, "name": f.name, "matched": f.matched, "src": f.src, "bytes": 4 * f.words,
                            "tags": sorted(f.tags) if f.tags is not None else None,
-                           "hits": [h.as_dict() for h in f.hits]} for f in funcs if f.hits]}
+                           "hits": [h.as_dict() for h in f.hits]}
+                          for f in funcs if f.hits or (f.tags and f.tags & {"keep", "volatile", "absolute"})]}
 
 
 # ------------------------------------------------------------------------------------- rows
