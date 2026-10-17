@@ -16986,3 +16986,7 @@ Eliminating the explicit line cursor restores the 760-byte frame. Splitting the 
 ## [2026-10-17] ticket | T-20007 ready for upstream review
 
 [[tickets/T-20007-large-dialogue-renderer]] moves to In Review after source/header self-review, a default linked MATCH for all 5,588 bytes, 27/27 immutable binary hashes, headers/globals OK and the prototype guard (0 new / 15 known). [[kanban]] and [[index]] agree. Only the claimed function and its required declarations/wiki notes are included. The latest fetched main (2de889b8) still has its ASM fallback; no main merge was made.
+
+## [2026-10-17] ticket | Submit large renderer PR 46
+
+[[tickets/T-20007-large-dialogue-renderer]] is submitted as https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/46 and attached to the chat. GitHub reports integration conflicts with newer main; retain the verified branch and leave moving-main integration to the maintainer per coordination. No immediate review comments or hosted checks. Status remains In Review.

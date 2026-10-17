@@ -79,3 +79,7 @@ Docker evidence in ignored build/T-20007:
 - git diff --check passes; only source/header/wiki files are included.
 
 Final pre-submission fetch is origin/main 2de889b8; dialogue_render is still INCLUDE_ASM there. Branch remains based on 5df5fdc6 with no main merge, per maintainer coordination. Upstream review is pending; do not mark Done until it is accepted.
+
+## Submission
+
+PR #46: https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/46 (open, attached to the Codex chat). GitHub reports integration conflicts against newer main; per existing maintainer coordination, do not repeatedly merge moving main into this branch. The claimed renderer is still ASM upstream and the verified branch is unchanged. No immediate review comments or hosted checks were present at submission. Ticket remains In Review for maintainer integration/review.
