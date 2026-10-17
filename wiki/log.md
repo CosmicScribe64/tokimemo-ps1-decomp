@@ -16752,3 +16752,7 @@ Both actual default linked matches total 776 bytes. Full 490-step Docker build c
 ## [2026-10-16] ticket | T-20004 PR #40 opened
 
 Opened https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/40 for the two claimed GYOZI helpers (776 verified bytes). Claim issue #39 links to the scoped work; the PR documents the shared setup-type dependency on #37 and both marked no-op store fakematches. Actual linked proofs, full 490-step build, 27/27 checksums and prototype guard pass. [[tickets/T-20004-gyozi-dialogue-followup]] stays In Review for the maintainer. No repeated main merges, per maintainer guidance.
+
+## [2026-10-17] ticket | T-20004 Done (PR #40 merged)
+
+KakarottoCake's PR #40 (claim #39): GYOZI func_80135118 and func_80135280 matched, 776 bytes. Merged in one clean build with PR checks (27/27, headers, globals, prototypes, funcdiff MATCH). [[tickets/T-20004-gyozi-dialogue-followup]] Done.

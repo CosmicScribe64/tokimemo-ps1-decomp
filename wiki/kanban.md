@@ -56,7 +56,6 @@ kanban-plugin: board
 ## In Review
 
 
-- [ ] [[tickets/T-20004-gyozi-dialogue-followup|T-20004 Two GYOZI dialogue helpers matched (776 bytes)]]
 
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
@@ -142,6 +141,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-20004-gyozi-dialogue-followup|T-20004 Two GYOZI dialogue helpers matched (776 bytes)]]
 
 - [ ] [[tickets/T-20620-as1-scheduling|T-20620 Scheduling family: as1 ordering]]
 - [ ] [[tickets/T-20001-gyozi-helper|T-20001 Match the GYOZI dialogue helper from its SHOUGATU sibling]]

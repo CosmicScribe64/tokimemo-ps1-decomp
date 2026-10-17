@@ -1,7 +1,7 @@
 ---
 id: T-20004
 title: Match the remaining GYOZI 80134FD0 dialogue helpers
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-16
 updated: 2026-10-16
@@ -38,3 +38,5 @@ The production header adds D_800C3370 as an unsized u8 array (lbu at a linear by
 Final Docker verification: default-proof.log gives actual default linked MATCH for both helpers (360 / 416 bytes). full-build.log completes all 490 ninja steps, including GYOZI SHA1 and header/global gates; checksums.log reports 27/27 binary SHA1 checks passed. protos.log reports 0 new disagreements, 15 known and branch check OK. No production game data, extracted assets or generated outputs are included.
 
 Local self-review against CODING_STANDARDS.md: C89 block-top declarations/comments and fixed-width types; symbols retained; existing source placement and SDK headers; one shared declaration per new main symbol; setup header/definition types agree with PR #37; both FAKE sites give their reason and T-20004. No guessed aggregate, inline assembly, volatile access, compiler rule, per-file flags or unrelated refactor. Every accepted match has actual linked proof and the full-unit checksum. Ticket/board/index synchronized; upstream review remains pending, so keep In Review.
+
+2026-10-17, maintainer review (PR #40): no findings; the FAKE no-op store names T-20004 and the reason. Verified in the integration tree: clean 27/27, headers, globals, prototypes OK, funcdiff MATCH for func_80135118 (360) and func_80135280 (416). Status Done.
