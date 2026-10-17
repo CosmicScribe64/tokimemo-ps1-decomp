@@ -47,7 +47,7 @@ types: [[data-types]], section "EN_NICHI targeted pass (T-20920)".
 
 ## Comments
 
-[2026-10-17] Done in one session (07:03 to 09:20 UTC). Every match was checked with the EN_NICHI sha1 in
+[2026-10-17] Done in one session (07:03 to 09:10 UTC). Every match was checked with the EN_NICHI sha1 in
 ninja (all 27 OK) and committed on its own; the clean build `rm -rf build && python3 configure.py && ninja` gives
 27/27; `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass. No edit in `src/ovl/TT/*`
 or `src/main/8007C030.c`. Code review against `CODING_STANDARDS.md` still open (In Review).
