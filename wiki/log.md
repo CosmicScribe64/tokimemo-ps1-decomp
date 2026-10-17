@@ -17536,3 +17536,7 @@ KakarottoCake's PR #53: NAME_ENT func_80149B08 (484 bytes). diman8's PR #54: DAT
 ## [2026-10-17] ticket | T-22000 Wave 4 conveyor opened
 
 Matching resumes at the user's request until weekly usage nears 95 percent. Fresh inventory: 426 functions in 122 packages (TT, DATE2 and claimed functions excluded). [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] lint | Kanban rebuilt from ticket status
+
+The board had 96 cards in In Review while no ticket was In Review: union-resolved kanban conflicts in integration merges had brought back stale cards from older branches. Rebuilt wiki/kanban.md from ticket frontmatter (496 tickets, one card each); the integration merge script now re-syncs the board after every merge. CI lint stays T-21510.

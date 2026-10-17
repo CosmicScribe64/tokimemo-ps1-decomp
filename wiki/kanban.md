@@ -5,6 +5,7 @@ kanban-plugin: board
 ---
 
 ## Backlog
+
 - [ ] [[tickets/T-21000-event-goto-loops-and-seq-views|T-21000 EVENT: mark or remove the goto loops in func_80118DAC and type the func_8010A6E4 views]]
 - [ ] [[tickets/T-21001-recover-wave-10-list-6-near-misses|T-21001 Recover the wave-10 list 6 near misses: BUNKAKEN func_80143DD0 and RPG_BAT func_80139510]]
 - [ ] [[tickets/T-21002-game-state-unk120-second-record-set|T-21002 Declare the second set of nine GsRec0FC records in GameState instead of raw unk_120 casts]]
@@ -40,17 +41,21 @@ kanban-plugin: board
 - [ ] [[tickets/T-0601-obin-med-confidence-review|T-0601 Review medium and low confidence O.BIN mappings]]
 
 ## Ready
+
 - [ ] [[tickets/T-20010-name-ent-resource-loader|T-20010 Match NAME_ENT resource loader]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
 - [ ] [[tickets/T-22000-wave-4-conveyor|T-22000 Wave 4 conveyor]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
-- [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 ## In Review
 
+
 ## Done
+
+- [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 - [ ] [[tickets/T-11880-date2-remainder|T-11880 DATE2 remainder]]
 - [ ] [[tickets/T-20009-name-ent-loader|T-20009 Match NAME_ENT CD-level display helper]]
 - [ ] [[tickets/T-11870-tt-batch-13|T-11870 TT batch 13]]
@@ -72,90 +77,45 @@ kanban-plugin: board
 - [ ] [[tickets/T-11070-small-functions-gemini-30|T-11070 Small functions (Gemini) 30]]
 - [ ] [[tickets/T-11110-small-functions-gemini-34|T-11110 Small functions (Gemini) 34]]
 - [ ] [[tickets/T-11120-small-functions-sonnet-36|T-11120 Small functions (Sonnet via Antigravity) 36]]
-- [ ] [[tickets/T-9930-wave-10-list-3|T-9930 Wave 10: list 3]]
-- [ ] [[tickets/T-9910-wave-10-list-1|T-9910 Wave 10: list 1]]
-- [ ] [[tickets/T-9920-wave-10-list-2|T-9920 Wave 10: list 2]]
-- [ ] [[tickets/T-9940-wave-10-list-4|T-9940 Wave 10: list 4]]
-- [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
-
-## In Review
-
-
-
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
-
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
-
 - [ ] [[tickets/T-15200-event-large|T-15200 Reconstruct large EVENT dispatcher and reusable types]]
-
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
-
 - [ ] [[tickets/T-12500-largest-dialogue|T-12500 Match largest dialogue routine]]
-
 - [ ] [[tickets/T-13701-name-ent-record-types|T-13701 Recover NAME_ENT record-rendering types]]
-
 - [ ] [[tickets/T-14501-remaining-draft-proof|T-14501 Verify and integrate remaining-function drafts]]
-
 - [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]
-
 - [ ] [[tickets/T-12300-large-unclaimed-byte-matches|T-12300 Match substantial unclaimed functions]]
-
 - [ ] [[tickets/T-14800-etc-801447b0|T-14800 Resolve ETC func_801447B0]]
-
 - [ ] [[tickets/T-12050-codex-cx5|T-12050 Codex cx5 main menu matching pass]]
-
 - [ ] [[tickets/T-15900-remaining-draft-compile-repairs|T-15900 Compile remaining mixed-overlay drafts]]
-
 - [ ] [[tickets/T-12010-codex-cx1|T-12010 Codex cx1 main helper matching]]
-
 - [ ] [[tickets/T-12030-codex-cx3|T-12030 Codex cx3 main menu functions]]
-
 - [ ] [[tickets/T-12090-codex-cx9|T-12090 Codex cx9 BUNKA_SD matching pass]]
-
 - [ ] [[tickets/T-15300-fresh-structural-near-matches|T-15300 Resolve fresh structural near matches]]
-
 - [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
-
 - [ ] [[tickets/T-14900-rpg-near-matches|T-14900 Revisit three RPG_BAT near matches]]
-
 - [ ] [[tickets/T-13400-taco-control-flow|T-13400 Recover TACO flag handler control flow]]
-
 - [ ] [[tickets/T-15600-fresh-near-matches|T-15600 Fresh RENSYU and RPG near matches]]
-
 - [ ] [[tickets/T-12020-codex-cx2|T-12020 Codex cx2 TAIIKU matching pass]]
-
 - [ ] [[tickets/T-16100-flagged-draft-pass|T-16100 Review 165 flagged compiling drafts]]
-
 - [ ] [[tickets/T-12040-codex-cx4|T-12040 Codex cx4 RPG battle matching]]
-
 - [ ] [[tickets/T-13300-rpg-families|T-13300 Recover RPG_BAT source families]]
-
 - [ ] [[tickets/T-13700-name-ent-families|T-13700 Reconstruct NAME_ENT families]]
-
 - [ ] [[tickets/T-15800-compile-remaining-overlay-drafts|T-15800 Compile remaining assigned overlay drafts]]
-
 - [ ] [[tickets/T-16000-main-draft-compilation|T-16000 Repair thirteen main executable drafts]]
-
 - [ ] [[tickets/T-15700-taco-taiiku-draft-repairs|T-15700 Compile 28 TACO/TAIIKU failed drafts]]
-
 - [ ] [[tickets/T-14600-date-draft-repairs|T-14600 Repair nine DATE census draft failures]]
-
 - [ ] [[tickets/T-15100-unaligned-draft-repairs|T-15100 Recover nine unaligned-copy drafts]]
-
 - [ ] [[tickets/T-13801-taco-actor-family|T-13801 Reconstruct TACO actor initialization and update family]]
-
 - [ ] [[tickets/T-14100-date-near-matches|T-14100 Resolve DATE near matches]]
-
 - [ ] [[tickets/T-15000-kangei-near-match|T-15000 Resolve KANGEI scene setup near match]]
-
 - [ ] [[tickets/T-13800-taco-families|T-13800 Recover remaining TACO actor families]]
-
 - [ ] [[tickets/T-11300-close-near-misses-sonnet-46|T-11300 Close near misses (Sonnet) 46]]
 - [ ] [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c|T-11270 Exact rescoring in autotweak and bulk_m2c]]
 - [ ] [[tickets/T-11260-fast-scoring-order-search-permute|T-11260 Fast scoring for order_search, permute and the permuter farm]]
 - [ ] [[tickets/T-11230-m2c-variant-sweep|T-11230 m2c variant sweep in bulk_m2c]]
 - [ ] [[tickets/T-11240-typefix-bulk-m2c-autotweak|T-11240 Type-mismatch fixes for bulk_m2c and autotweak]]
-- [ ] [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c|T-11270 Exact rescoring in autotweak and bulk_m2c]]
 - [ ] [[tickets/T-11310-close-near-misses-sonnet-47|T-11310 Close near misses (Sonnet) 47]]
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 - [ ] [[tickets/T-11320-close-near-misses-sonnet-48|T-11320 Close near misses (Sonnet) 48]]
@@ -163,61 +123,21 @@ kanban-plugin: board
 - [ ] [[tickets/T-11150-twin-detection-for-jump-table-functions|T-11150 Twin detection for jump-table functions]]
 - [ ] [[tickets/T-11160-twin-detection-for-data-in-function-functions|T-11160 Twin detection for data-in-function functions]]
 - [ ] [[tickets/T-11220-regdiff-guided-autotweak|T-11220 regdiff-guided edit ordering in autotweak]]
-- [ ] [[tickets/T-11300-close-near-misses-sonnet-46|T-11300 Close near misses (Sonnet) 46]]
 - [ ] [[tickets/T-11130-big-functions-gemini-37|T-11130 Big functions (Gemini) 37]]
 - [ ] [[tickets/T-11210-bulk-m2c-draft-failure-classes|T-11210 bulk_m2c, fix the main draft failure classes]]
 - [ ] [[tickets/T-11250-faster-candidate-scoring|T-11250 Faster candidate scoring for the solvers]]
-- [ ] [[tickets/T-11260-fast-scoring-order-search-permute|T-11260 Fast scoring for order_search, permute and the permuter farm]]
 - [ ] [[tickets/T-11190-bulk-m2c-pipeline|T-11190 Bulk m2c and auto-solve pipeline for small functions]]
 - [ ] [[tickets/T-11200-order-search-in-solvers|T-11200 Statement-order search in the automatic solvers]]
 - [ ] [[tickets/T-11170-cheat-sheet-auto-tweaker|T-11170 Cheat-sheet auto-tweaker for near-miss drafts]]
 - [ ] [[tickets/T-15400-bunkasai-label-draft|T-15400 Recover BUNKASAI menu label draft]]
-- [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
-- [ ] [[tickets/T-13800-taco-families|T-13800 Recover remaining TACO actor families]]
-- [ ] [[tickets/T-13801-taco-actor-family|T-13801 Reconstruct TACO actor initialization and update family]]
 - [ ] [[tickets/T-14000-ending-en-nichi-families|T-14000 Match ENDING and EN_NICHI coherent families]]
-- [ ] [[tickets/T-15000-kangei-near-match|T-15000 Resolve KANGEI scene setup near match]]
-- [ ] [[tickets/T-14100-date-near-matches|T-14100 Resolve DATE near matches]]
 - [ ] [[tickets/T-13600-taiiku-families|T-13600 Recover TAIIKU source families]]
-- [ ] [[tickets/T-15100-unaligned-draft-repairs|T-15100 Recover nine unaligned-copy drafts]]
-- [ ] [[tickets/T-14600-date-draft-repairs|T-14600 Repair nine DATE census draft failures]]
-- [ ] [[tickets/T-15700-taco-taiiku-draft-repairs|T-15700 Compile 28 TACO/TAIIKU failed drafts]]
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
 - [ ] [[tickets/T-15500-bunkasai-character-flags|T-15500 Match BUNKASAI character flag continuation]]
-- [ ] [[tickets/T-16000-main-draft-compilation|T-16000 Repair thirteen main executable drafts]]
-- [ ] [[tickets/T-15800-compile-remaining-overlay-drafts|T-15800 Compile remaining assigned overlay drafts]]
-- [ ] [[tickets/T-13700-name-ent-families|T-13700 Reconstruct NAME_ENT families]]
-- [ ] [[tickets/T-13300-rpg-families|T-13300 Recover RPG_BAT source families]]
-- [ ] [[tickets/T-12040-codex-cx4|T-12040 Codex cx4 RPG battle matching]]
-- [ ] [[tickets/T-16100-flagged-draft-pass|T-16100 Review 165 flagged compiling drafts]]
-- [ ] [[tickets/T-12020-codex-cx2|T-12020 Codex cx2 TAIIKU matching pass]]
-- [ ] [[tickets/T-15600-fresh-near-matches|T-15600 Fresh RENSYU and RPG near matches]]
-- [ ] [[tickets/T-13400-taco-control-flow|T-13400 Recover TACO flag handler control flow]]
-- [ ] [[tickets/T-14900-rpg-near-matches|T-14900 Revisit three RPG_BAT near matches]]
-- [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
-- [ ] [[tickets/T-15300-fresh-structural-near-matches|T-15300 Resolve fresh structural near matches]]
-- [ ] [[tickets/T-12090-codex-cx9|T-12090 Codex cx9 BUNKA_SD matching pass]]
-- [ ] [[tickets/T-12030-codex-cx3|T-12030 Codex cx3 main menu functions]]
-- [ ] [[tickets/T-12010-codex-cx1|T-12010 Codex cx1 main helper matching]]
-- [ ] [[tickets/T-15900-remaining-draft-compile-repairs|T-15900 Compile remaining mixed-overlay drafts]]
-- [ ] [[tickets/T-12050-codex-cx5|T-12050 Codex cx5 main menu matching pass]]
-- [ ] [[tickets/T-14800-etc-801447b0|T-14800 Resolve ETC func_801447B0]]
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
-- [ ] [[tickets/T-12300-large-unclaimed-byte-matches|T-12300 Match substantial unclaimed functions]]
-- [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]
-- [ ] [[tickets/T-14501-remaining-draft-proof|T-14501 Verify and integrate remaining-function drafts]]
-- [ ] [[tickets/T-13701-name-ent-record-types|T-13701 Recover NAME_ENT record-rendering types]]
-- [ ] [[tickets/T-12500-largest-dialogue|T-12500 Match largest dialogue routine]]
-- [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
-- [ ] [[tickets/T-15200-event-large|T-15200 Reconstruct large EVENT dispatcher and reusable types]]
-- [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
-- [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
-
-## Done
 - [ ] [[tickets/T-20920-types-en-nichi|T-20920 Targeted type pass: EN_NICHI]]
 - [ ] [[tickets/T-20940-types-main-80075320|T-20940 Targeted type pass: src/main/80075320.c]]
 - [ ] [[tickets/T-20900-shared-type-unification|T-20900 Cross-unit shared-type unification]]
-- [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 - [ ] [[tickets/T-17021-w3-main-p21|T-17021 Wave 3 package w3-main-p21]]
 - [ ] [[tickets/T-17019-w3-main-p19|T-17019 Wave 3 package w3-main-p19]]
 - [ ] [[tickets/T-17022-w3-main-p22|T-17022 Wave 3 package w3-main-p22]]
@@ -594,6 +514,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-2000-wave2-event|T-2000 Wave 2: EVENT]]
 - [ ] [[tickets/T-1340-tooling-jump-table-functions|T-1340 Tooling: jump-table functions]]
 - [ ] [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500 Split game rodata, data and bss per source file]]
+
 
 %% kanban:settings
 ```
