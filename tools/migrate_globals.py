@@ -12,6 +12,8 @@ Configuration, config/migrate_globals.txt:
                                               is a field of <base>; <type> is parsed from <header>
   keep <src file> <symbol> <reason ...>       a separate-symbol view for one original object: the file
                                               keeps <symbol> (declared in the header with its old type)
+  keep <src file> <symbol> proof=<func>:<rows_without>:<asm_sha1_8> <reason ...>
+                                              the same, backed by a byte-match necessity proof (T-20820)
 
 A `keep` line needs evidence from the original code (T-7010): in the original object of that file
 (`src/main/<addr>.c` -> `asm/*matchings/main/<addr>/`, `src/ovl/<NAME>/<addr>.c` -> its overlay
@@ -21,6 +23,14 @@ store). IDO compiles a constant-offset member exactly like a separate symbol exc
 load-over-store scheduling, so this is the only thing a separate view changes; a function that
 misses by registers or operand order does not get one. `--check` runs the audit on that object's
 asm (configure.py must have run) and rejects a keep line without such a pair.
+
+The other accepted evidence is a necessity proof (T-20820, wiki/keep-lines.md): `proof=<func>:<rows>:<sha>`
+says that the plain C function <func> of that file matches byte for byte with the separate symbol, and
+that the same C with the symbol folded into the aggregate does not (<rows> > 0 differing instruction rows).
+`--check` accepts the line without compiling when <func> is plain C in the file (defined, not an INCLUDE_ASM
+and not a NON_MATCHING guard) and <sha> is the first 8 hex digits of the sha1 over the instruction words of
+the function's original asm (asm_sha1); a stale sha or a function that is not plain C is rejected.
+`--verify-proofs` recompiles (tools/keepproof.py): the necessity and the sufficiency of every proof line.
 
 The layout comes from the header itself: `typedef struct|union Name { ... } Name;` blocks with
 fields of the fixed-width types, pointers, arrays, bit-fields (packed into u32 units) and other
@@ -45,10 +55,12 @@ Modes (run from the repo root, inside Docker like every tool):
                                  MAIN_API_OVERRIDE_ guards from include/ and src/ (kept symbols stay);
                                  safe to re-run: a migrated tree is left unchanged
   migrate_globals.py --dry-run   what --apply would change, per file
+  migrate_globals.py --verify-proofs  --check, then recompile every proof= keep line (slow, Docker toolchain)
   migrate_globals.py --layout    the computed layout of each aggregate (offset, size, field)
   migrate_globals.py --at ADDR   the field paths at an address (0x800E62BE or D_800E62BE)
 """
 import argparse
+import hashlib
 import os
 import re
 import sys
@@ -63,6 +75,55 @@ DECL_RE = re.compile(r"^[ \t]*extern[ \t]+(?:volatile[ \t]+)?([A-Za-z_]\w*)[ \t]
                      r"(D_[0-9A-F]{8})[ \t]*((?:\[[^\]]*\])*)[ \t]*;[ \t]*(?:/\*.*?\*/)?[ \t]*\n?", re.M)
 OVR_DEF_RE = r"^[ \t]*#[ \t]*define[ \t]+MAIN_API_OVERRIDE_%s\b[^\n]*\n?"
 OVR_GUARD_RE = r"^[ \t]*#[ \t]*ifndef[ \t]+MAIN_API_OVERRIDE_%s[ \t]*\n((?:(?!#[ \t]*endif).*\n)*?)[ \t]*#[ \t]*endif[^\n]*\n?"
+
+
+PROOF_RE = re.compile(r"^proof=(\w+):(\d+):([0-9a-f]{8})$")
+ASM_ROW_RE = re.compile(r"^[ \t]*/\*[ \t]*[0-9A-Fa-f]+[ \t]+[0-9A-Fa-f]{8}[ \t]+([0-9A-Fa-f]{8})[ \t]*\*/", re.M)
+
+
+class Proof:
+    """`proof=<func>:<rows_without>:<asm_sha1_8>` of a keep line (T-20820): the plain C function <func>
+    matches with the separate symbol and differs in <rows_without> rows without it."""
+
+    def __init__(self, func, rows, sha):
+        self.func, self.rows, self.sha = func, rows, sha
+
+    def __str__(self):
+        return "proof=%s:%d:%s" % (self.func, self.rows, self.sha)
+
+
+class KeepSet(set):
+    """The symbols one file keeps; `proofs` maps a symbol to its Proof when the keep line has one."""
+
+    def __init__(self, items=()):
+        super().__init__(items)
+        self.proofs = {}
+
+
+def parse_proof(field):
+    """Proof of a `proof=...` field, or None when it does not parse or has rows_without == 0
+    (necessity needs at least one differing row)."""
+    m = PROOF_RE.match(field)
+    if not m or int(m.group(2)) < 1:
+        return None
+    return Proof(m.group(1), int(m.group(2)), m.group(3))
+
+
+def asm_sha1(text):
+    """First 8 hex digits of the sha1 over the instruction words of one original function: the 32-bit
+    word of every `/* offset vram WORD */` row of its splat asm up to `endlabel`, upper case, one per
+    line. Addresses, symbol names and comments are not part of it, so renaming a symbol keeps a proof."""
+    body = text.split("\nendlabel", 1)[0]
+    words = [w.upper() for w in ASM_ROW_RE.findall(body)]
+    return hashlib.sha1("".join(w + "\n" for w in words).encode("ascii")).hexdigest()[:8]
+
+
+def plain_c(text, name):
+    """True when `name` has a C body in `text` and no INCLUDE_ASM line (a guarded draft has both)."""
+    import srcscan
+    defined = set(srcscan.DEF_RE.findall(text)) | set(srcscan.KR_DEF_RE.findall(text))
+    asm = {n for _folder, n in srcscan.INCLUDE_ASM_RE.findall(text)}
+    return name in defined and name not in asm
 
 
 class LayoutError(Exception):
@@ -257,7 +318,14 @@ def load_config(root, path=None):
         if parts[0] == "aggregate" and len(parts) == 4:
             aggs.append(Aggregate(parts[1], parts[2], parts[3], root))
         elif parts[0] == "keep" and len(parts) >= 4:
-            keep.setdefault(os.path.normpath(parts[1]), set()).add(parts[2])
+            kept = keep.setdefault(os.path.normpath(parts[1]), KeepSet())
+            if parts[3].startswith("proof="):
+                proof = parse_proof(parts[3])
+                if proof is None or len(parts) < 5:
+                    raise SystemExit("%s:%d: cannot parse '%s' (keep <file> <symbol> "
+                                     "proof=<func>:<rows_without > 0>:<asm_sha1_8> <reason>)" % (p, n, line))
+                kept.proofs[parts[2]] = proof
+            kept.add(parts[2])
         else:
             raise SystemExit("%s:%d: cannot parse '%s'" % (p, n, line))
     return aggs, keep
@@ -614,10 +682,11 @@ def check(root, aggs, keep):
                 lines.append("include/%s: declares %s, a field of %s: delete the declaration "
                              "(python3 tools/migrate_globals.py --apply)" % (h, sym, agg_for(aggs, sym).base))
     for p, syms in sorted(keep.items()):
+        proofs = getattr(syms, "proofs", {})
         for sym in sorted(syms):
             if sym not in views.main:
                 lines.append("%s: %s: kept symbol %s is not declared in include/main_api.h" % (CONFIG, p, sym))
-            ok, why = keep_evidence(root, aggs, p, sym)
+            ok, why = keep_evidence(root, aggs, p, sym, proofs.get(sym))
             if not ok:
                 lines.append("%s: %s: keep %s: %s" % (CONFIG, p, sym, why))
     return lines
@@ -643,19 +712,47 @@ def object_asm_files(root, rel):
     return sorted(out)
 
 
-def keep_evidence(root, aggs, rel, sym):
-    """(True, function) when the original object of `rel` has a hoisted read-modify-write pair inside
-    an aggregate that involves sym's address (tools/aggregate_audit.py); else (False, reason)."""
+def proof_evidence(root, rel, proof):
+    """(True, function) when the proof of a keep line holds without compiling: `proof.func` is plain C in
+    the file `rel` and `proof.sha` is the asm_sha1 of its original asm; else (False, reason). The
+    recompiling checks (necessity, sufficiency) are tools/keepproof.py's, run by --verify-proofs."""
+    path = os.path.join(root, rel)
+    if not os.path.exists(path):
+        return False, "proof %s: no source file %s" % (proof, rel)
+    if not plain_c(read(path), proof.func):
+        return False, ("proof %s: %s is not plain C in %s (undefined, INCLUDE_ASM or a NON_MATCHING guard): "
+                       "a proof needs the matched function" % (proof, proof.func, rel))
+    files = [f for f in object_asm_files(root, rel) if os.path.basename(f) == proof.func + ".s"]
+    if not files:
+        return False, ("proof %s: no original asm of %s for %s (run configure.py; per-object C files only)"
+                       % (proof, proof.func, rel))
+    got = asm_sha1(read(files[0]))
+    if got != proof.sha:
+        return False, ("proof %s is stale: the asm sha1 of %s is %s (the original asm or the function changed; "
+                       "run tools/keepproof.py check and write the new line)" % (proof, proof.func, got))
+    return True, proof.func
+
+
+def keep_evidence(root, aggs, rel, sym, proof=None):
+    """(True, function) when the keep line of `sym` in `rel` is backed: by a proof (proof_evidence) or by a
+    hoisted read-modify-write pair inside an aggregate that involves sym's address in the original object
+    of `rel` (tools/aggregate_audit.py); else (False, reason)."""
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import aggregate_audit as aa
     import type_recovery as tr
     m = SYM_RE.match(sym)
     if not m or not agg_for(aggs, sym):
         return False, "not a field of an aggregate"
+    problem = None
+    if proof is not None:
+        ok, why = proof_evidence(root, rel, proof)
+        if ok:
+            return True, why
+        problem = why
     addr = int(m.group(1), 16)
     files = object_asm_files(root, rel)
     if not files:
-        return False, "no asm of the original object for %s (run configure.py; per-object C files only)" % rel
+        return False, problem or ("no asm of the original object for %s (run configure.py; per-object C files only)" % rel)
     unit = rel.replace(os.sep, "/").split("/")[2].split(".")[0] if rel.startswith("src/ovl") else "main"
     syms = tr.load_labels({k: v for k, v in tr.data_files(root).items() if k in ("main", unit)})
     ranges = aa.Ranges((g.base, g.addr, g.end) for g in aggs)
@@ -664,9 +761,12 @@ def keep_evidence(root, aggs, rel, sym):
         for where, how, x, y in aa.analyze_function(name, lines, unit, syms, ranges).pairs:
             if where == "in" and how == "hoisted" and addr in (x, y):
                 return True, name
+    if problem:
+        return False, problem
     return False, ("no evidence for a separate symbol: the original object has no load of %s hoisted "
                    "over a store to another field (tools/aggregate_audit.py --pairs); write the field "
-                   "access and fix the function another way (wiki/game-state.md)" % sym)
+                   "access and fix the function another way (wiki/game-state.md), or prove the symbol "
+                   "necessary (tools/keepproof.py check, wiki/keep-lines.md)" % sym)
 
 
 def main(argv=None):
@@ -677,6 +777,8 @@ def main(argv=None):
     g.add_argument("--check", action="store_true")
     g.add_argument("--apply", action="store_true")
     g.add_argument("--dry-run", action="store_true")
+    g.add_argument("--verify-proofs", action="store_true",
+                   help="--check, then recompile every proof= keep line (necessity and sufficiency, Docker)")
     g.add_argument("--layout", action="store_true")
     g.add_argument("--at")
     a = ap.parse_args(argv)
@@ -698,8 +800,11 @@ def main(argv=None):
                 for path, t in subobjects(agg.type, addr - agg.addr):
                     print("%s%s  %s" % (agg.base, path, t.spell()))
         return 0
-    if a.check:
+    if a.check or a.verify_proofs:
         lines = check(a.root, aggs, keep)
+        if a.verify_proofs:
+            import keepproof
+            lines += keepproof.verify_config(a.root, aggs, keep)
         for line in lines:
             print(line)
         if lines:
