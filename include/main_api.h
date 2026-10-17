@@ -664,6 +664,12 @@ typedef struct FontRange {
     /* 0x2 */ u16 glyph;
 } FontRange; /* size 0x4 */
 extern FontRange font_range_table[46];
+/* Font and cursor images that func_8004E58C uploads with LoadSquare (T-17020). */
+extern u8 D_800B3F6C[0x40];
+extern u8 D_800B3FAC[0x20];
+extern u8 D_800B3FCC[0x20];
+extern u8 D_800B3FEC[0x20];
+extern u8 D_800B400C[0x20];
 s32 load_string(); /* set_kanji_string passes three arguments, the definition takes one */
 void vload_font();
 /* Four signed menu row positions, read by x_taku_menu_set. */

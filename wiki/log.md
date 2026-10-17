@@ -17009,3 +17009,9 @@ KakarottoCake's PR #44 (claim #43): GYOZI func_80141944 and func_80145384 matche
 
 ## [2026-10-17] ticket | T-17020 Wave 3 package w3-main-p20 started
 [[tickets/T-17020-w3-main-p20]] In Progress: four main functions (`load_string`, `func_8004E58C`, `glyph_expand_1bpp`, `disp_string`) in `src/main/8004E500.c`, worktree tokimemo-wt/w3-main-p20, branch w3-main-p20. Part of [[tickets/T-17000-types-first-main]].
+
+## [2026-10-17] build | T-17020 load_string matched
+[[tickets/T-17020-w3-main-p20]]: `load_string` (252 B) matched in plain C, committed on its own. `FontRange` array type and the `load_string`/`vload_font` declarations in `include/main_api.h`; index loop, `vload_font` second argument, `q = str++`/`p = str++` byte fetch and locals declared before `start` (frame slots) replace the T-9320 and T-9740 `regorder` rows ([[data/t0018-cases]] update line, [[matching-notes]] section T-17020).
+
+## [2026-10-17] ticket | T-17020 In Review
+[[tickets/T-17020-w3-main-p20]] moved In Progress to In Review (kanban card moved): 1 of 4 matched (`load_string`); `func_8004E58C` guarded at 18 rows (`text_glyph_advance` load order, new row in [[data/t0018-cases]]); `glyph_expand_1bpp` and `disp_string` not started (past the 75 minute start limit on a loaded machine). Draft image externs `D_800B3F6C`, `D_800B3FAC`..`D_800B400C` added to `include/main_api.h`.

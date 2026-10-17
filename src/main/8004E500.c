@@ -28,7 +28,44 @@ void func_8004E500(s32 arg0) {
     func_8009C674(0);
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-17020, 18 differing lines; the original loads text_glyph_advance (lbu) before the four
+ * zero stores and keeps it in v0 for the li; the build stores first, then loads, and li goes to t6 */
+void func_8004E58C(void) {
+    s32 i;
+    RECT r;
+
+    LoadSquare(0x100, 0x1F8, 2, 8, D_800B3FAC);
+    LoadSquare(0x120, 0x1F8, 2, 8, D_800B3FCC);
+    LoadSquare(0x110, 0x1F8, 2, 8, D_800B3FEC);
+    LoadSquare(0x130, 0x1F8, 2, 8, D_800B400C);
+    LoadSquare(0x320, 0x1FF, 0x20, 1, D_800B3F6C);
+    LoadSquare(0x360, 0x1FF, 0x20, 1, D_800B3F6C);
+    func_8004E500(2);
+    r.x = 0x102;
+    r.y = 0x1F8;
+    r.w = 2;
+    r.h = 8;
+    func_8009C7F8(&r, 0x80, 0x80, 0x80);
+    for (i = 0; i < 0x34; i++) {
+        ((Entry8 *)text_list)[i].unk_00 = 0;
+        ((Entry8 *)text_list)[i].unk_02 = 0;
+        ((Entry8 *)text_list)[i].unk_04 = 0;
+        ((Entry8 *)text_list)[i].unk_05 = 0;
+        ((Entry8 *)text_list)[i].unk_06 = 0;
+        ((Entry8 *)text_list)[i].unk_07 = 0;
+    }
+    text_list_count.total = 0;
+    text_list_count.count = 0;
+    text_list_count.pos = 0;
+    text_list_count.mark = 0;
+    if (text_list_count.unk_6A != 0xE && text_list_count.unk_6A != 0x10) {
+        text_list_count.unk_6A = 0xE;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8004E500", func_8004E58C);
+#endif
 
 void text_set_advance(u8 arg0) {
     if (arg0 == 0x10) {
