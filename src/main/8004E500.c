@@ -192,7 +192,42 @@ u8 get_now_k(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004E500", disp_string);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", load_string);
+/* Declaration order: IDO gives every local a stack slot once one local (start) lives in memory, and the
+ * locals declared before it sit above it; these six reproduce the original frame (T-17020, T-3330). The
+ * original passes the offset into the range as a second argument to vload_font (a1). */
+s32 load_string(str)
+u8 *str;
+{
+    s32 i;
+    u8 *p;
+    u8 *q;
+    u16 c;
+    s32 hi;
+    u8 lo;
+    s32 start;
+
+    start = text_list_count.total;
+    while (1) {
+        q = str++;
+        hi = *q;
+        p = str++;
+        if (hi == 0 || (lo = *p) == 0) {
+            return text_list_count.total - start;
+        }
+        c = lo + (hi << 8);
+        if (c < font_range_table[0].first) {
+            printf("<kanji.c>error(No-sjis)");
+            return text_list_count.total - start;
+        }
+        for (i = 1; i < 46; i++) {
+            if (c < font_range_table[i].first) {
+                vload_font((c - font_range_table[i - 1].first) + font_range_table[i - 1].glyph,
+                           c - font_range_table[i - 1].first);
+                break;
+            }
+        }
+    }
+}
 
 void vload_font(arg0)
 s32 arg0;
