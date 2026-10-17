@@ -17563,3 +17563,7 @@ The board had 96 cards in In Review while no ticket was In Review: union-resolve
 ## [2026-10-17] ticket | T-22007 Done
 
 [[tickets/T-22007-w4-p07]]: code review against `CODING_STANDARDS.md` passed; one finding fixed (section 6 now names the section 10 exception for `INCLUDE_RODATA` of song text). 2 of 2 functions matched (`func_80142A80`, `func_8014472C`). Ticket Done, card moved to Done.
+
+## [2026-10-17] ticket | T-22008 Wave 4 package w4-p08 opened
+
+[[tickets/T-22008-w4-p08]] (In Progress) under [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/NAME_ENT/80132000.c`, `func_80132320`, `func_80134248`, `func_80134110`, `func_80138C1C`. Branch `w4-p08` from `w2-good`.

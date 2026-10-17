@@ -47,6 +47,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-22008-w4-p08|T-22008 Wave 4 package w4-p08]]
 - [ ] [[tickets/T-22000-wave-4-conveyor|T-22000 Wave 4 conveyor]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
