@@ -240,11 +240,14 @@ other registers (measured: the TAIIKU sha1 fails with the shared type). `NameKan
 kana table). The pointer fields keep the `u8 *` type of the shared record; a store of a constant or an `s32 *`
 casts, an indexed word table reads `((s32 *)p->unk_34)[i]`.
 
-The 740 byte-offset uses of the pools in matched code (`*(s16 *)&D_80120650[0x26]`, `D_80120650[0x4B]`,
-`*(DisplayActor44 *)&D_8011ECD0[0x1A08]`) are field accesses now (`((DisplayActor44 *)D_80120650)->unk_26`,
-`((DisplayActor44 *)D_80120650)[1].unk_07`, `((DisplayActor44 *)D_8011ECD0)[98]`), each with its old base symbol; all
-matched unchanged, and two FAKE comments went away (TAIIKU `func_80142240`, SHUGAKU's record copy). main
-`800674B0.c` (records already) and `8007C030.c` (issue #45) were not touched.
+The byte-offset uses of the pools in matched code are field accesses now, each with its old base symbol: 669
+constant ones (`*(s16 *)&D_80120650[0x26]` is `((DisplayActor44 *)D_80120650)->unk_26`, `D_80120650[0x4B]` is
+`((DisplayActor44 *)D_80120650)[1].unk_07`), 12 record copies (`((DisplayActor44 *)D_8011ECD0)[98] = ...[96]`) and 83
+indexed ones (`D_8011ECD0[0x19C3 + i * 0x44]` is `((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43`; IDO distributes the
+record index, so the code is the same). All matched unchanged except EVENT `func_80108DD4`, whose loop takes one
+more register with the fields; it keeps the byte view, marked `FAKE`. Two FAKE comments went away (TAIIKU
+`func_80142240`, SHUGAKU's record copy). Not converted: `*(s32 *)&` views of the pointer fields, addresses
+(`&D_8011ECD0[n]`), main `800674B0.c` (it declares the table as records) and `8007C030.c` (issue #45).
 
 ### Other tables with three or more views
 
@@ -257,6 +260,13 @@ matched unchanged, and two FAKE comments went away (TAIIKU `func_80142240`, SHUG
 | GameState +0x66C club words | TEL `TelClubFlags`, KANGEI `KgSlot`, ETC `EtcSlot`, MASTER `MasterClubBits` | `ScheduleClubFlags` (game.h: `b24`, `unk_25:2`, `unk_27:3`, `b30`); RENSYU's `u16` `RensyuClubCount` stays |
 | GameState +0xF4 word | DATE `DateFlag17`, `DateFlags0F4`, OPTION `OptionPlayerBits` | `ScheduleFlags` (game.h: `unk_08:4`, `unk_12:4`, `b16` .. `b20`, `unk_21:3`) |
 | GameState +0xF8 date | NAME_ENT `NameDate` (its `day`/`month` were swapped against main's names) | `GsDateBits` (main_api.h) |
+
+Not merged (fewer than three views of the same fields): `D_800E7D10`, a 0xEE0-byte work area (cleared by
+`bzero(&D_800E7D10, 0xEE0)` in main), read as main's `FlagsWork24` (prefix), NAME_ENT's `NameMetricWork` (album
+fields to +0xED8), TACO's `TcSave`/`TcSetAll` (+0x40 .. +0x57, a word that overlaps the name bytes at +0x42) and ETC's
+`EtcConfig8` (8-byte records indexed from the base): only the first two share fields; one struct in `main_api.h`
+with TACO's union at +0x40 is the next step. `D_801217D0`: `Rec24` and main's local `SprEnt` (+0x0A `u16` against
+`s16`).
 
 A bit-field view compiles from the accessed field's position, width and container type only: the views that differ
 in their padding fields merged without a byte change; a different container (`u16` against `u32`) is a real
