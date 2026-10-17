@@ -17567,3 +17567,7 @@ The board had 96 cards in In Review while no ticket was In Review: union-resolve
 ## [2026-10-17] ticket | T-22008 Wave 4 package w4-p08 opened
 
 [[tickets/T-22008-w4-p08]] (In Progress) under [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/NAME_ENT/80132000.c`, `func_80132320`, `func_80134248`, `func_80134110`, `func_80138C1C`. Branch `w4-p08` from `w2-good`.
+
+## [2026-10-17] ticket | T-22008 In Review
+
+[[tickets/T-22008-w4-p08]]: 0 of 4 matched in `src/ovl/NAME_ENT/80132000.c`. `func_80132320` guard refreshed (14 lines), `func_80134110` guarded (26 lines), `func_80134248` guard comment refreshed (455 lines), `func_80138C1C` still `INCLUDE_ASM` (a clean draft is about 300 lines; a file-wide scalar view of `D_800B3644` kept the unit sha1 but was dropped). Notes in [[matching-notes]]. Clean build and checks run, review still to do.

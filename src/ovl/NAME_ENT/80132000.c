@@ -949,7 +949,7 @@ void func_801341A8(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10890, about 455 differing lines (T-11650 probe made it worse), character-page selection */
+/* NON_MATCHING: T-22008, about 455 differing lines, character-page selection; the first switch already differs (the original loads D_8014CC70 into $v0 and copies it to $a1; viewsweep no gain, autotweak 455 to 393 with an empty test, not kept) */
 void func_80134248(s32 arg0) {
     s32 selected;
     u32 index;

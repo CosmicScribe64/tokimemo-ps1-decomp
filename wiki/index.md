@@ -38,7 +38,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-22000-wave-4-conveyor|T-22000]] Wave 4 conveyor until weekly usage nears 95 percent (In Progress).
 - [[tickets/T-22001-w4-p01|T-22001]] Wave 4 package w4-p01: main `8007C030.c`, `dialogue_speak_part` stays guarded at 16 rows, 18 more forms tried (Done; 0 of 1 matched).
 - [[tickets/T-22007-w4-p07|T-22007]] Wave 4 package w4-p07: `NAME_ENT` `80142A80.c`, `func_80142A80` and `func_8014472C` both matched; `rodata_pieces.py` writes pieces for owned symbols (Done; 2 of 2 matched).
-- [[tickets/T-22008-w4-p08|T-22008]] Wave 4 package w4-p08: `NAME_ENT` `80132000.c`, four functions (In Progress).
+- [[tickets/T-22008-w4-p08|T-22008]] Wave 4 package w4-p08: `NAME_ENT` `80132000.c`, 0 of 4 matched; `func_80132320` (14 lines) and `func_80134110` (26 lines) stay guarded, `func_80134248` at 455 lines, `func_80138C1C` not closer (In Review).
 - [[tickets/T-11880-date2-remainder|T-11880]] DATE2: the remaining nine functions, claim #49 (Done; 8 of 9 matched, DATE2 101/102, 91.9% of bytes).
 - [[tickets/T-20008-large-name-introduction|T-20008]] NAME_ENT introduction reconstruction archive (4,308-byte scope), claim #50; compiling, still nonmatching (In Progress; draft checkpoint merged, PR #51).
 - [[tickets/T-20010-name-ent-resource-loader|T-20010]] NAME_ENT resource loader follow-up, 1,652 bytes; valid table recovered, still ASM (Ready).
