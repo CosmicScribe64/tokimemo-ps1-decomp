@@ -17018,3 +17018,7 @@ KakarottoCake's PR #44 (claim #43): GYOZI func_80141944 and func_80145384 matche
 
 [[tickets/T-17016-w3-main-p16]] In Review to Done: code review against `CODING_STANDARDS.md` found one issue, fixed: the display-record pointer stores in `func_8007437C` and `func_8007505C` used an `s32` view of `u8 *` fields; plain `(u8 *)` casts give the same bytes (unit sha1 OK). 3 of 4 functions matched (`func_800741B8`, `func_8007505C`, `func_8007437C`; 1,892 bytes), `parameter_up_down` stays `INCLUDE_ASM` with a T-0018 `regorder` row. Merge via the wave 3 merge script.
 
+
+## [2026-10-17] ticket | T-17021 In Progress
+
+[[tickets/T-17021-w3-main-p21]] created and started: wave 3 package w3-main-p21 of [[tickets/T-17000-types-first-main]], branch `w3-main-p21` from `w2-good`, owned file `src/main/80041000.c`, 1 function (`func_800419FC`, 560 B).
