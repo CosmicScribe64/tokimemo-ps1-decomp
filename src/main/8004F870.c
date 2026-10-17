@@ -41,9 +41,8 @@ s8 menu_check(arg0, arg1, arg2)
     return menu_check_1(arg0, arg1, arg2);
 }
 
-/* NON_MATCHING: T-12050, 27 differing listing rows; selector/base allocation and signed return extension. */
+/* NON_MATCHING: T-17018 (inherited T-12050), 27 differing lines; cnt/sel take $v0/$v1 and the loop count base $a3 where the original has base $v0, cnt $v1, sel $a3, and the s8 return is sign-extended (an s8 sel moves the extension into the loop, worse) */
 #ifdef NON_MATCHING
-/* FAKE: duplicate GameState pointer steers record/base allocation. T-12050 (inherited T-10850) */
 s8 menu_check_1(arg0, arg1, arg2)
     s32 arg0;
     s16 arg1;
@@ -150,7 +149,7 @@ s32 func_80050324(s32 menu, s32 reverse) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_near_menu);
 
-/* NON_MATCHING: T-12050, 17 differing listing rows; shared lui requires unowned D_800E3680 data range */
+/* NON_MATCHING: T-17018 (inherited T-12050), 17 differing lines; the original shares one lui $at between D_800E3680 and D_800E3684, which needs a definition in this object, and its data range (config/objects/main.txt) does not cover 0x800E3680 */
 #ifdef NON_MATCHING
 void menu_bar_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     if (arg0 >= 0x10) {
@@ -427,7 +426,75 @@ s32 get_g_zyotai_h(s32 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_girl_taku_set);
 
+/* NON_MATCHING: T-17018, 18 differing lines; the value E1 + 3 of the k_disp_inc path takes $v1 (its load $v1) where the original has $a0 (load in $a1) */
+#ifdef NON_MATCHING
+void xa_wait(void) {
+    /* FAKE: two unused home words above the spills; the original frame is 8 bytes larger. T-17018 */
+    s32 pad[2];
+    s32 r;
+    u8 *a;
+    u8 *b;
+    s32 now;
+    s32 ph;
+    u32 t;
+
+    r = 0;
+    now = get_now_k();
+    if (D_800E6280.unk_F62 & 0x80) {
+        ph = D_800E6280.unk_F62 & 0x7F;
+        if (D_800E6280.unk_F61 + 2 >= (u32)now) {
+            r = k_disp_inc();
+            now = get_now_k();
+            t = D_800E6280.unk_F61 + 3;
+            if (t == now) {
+                if (D_800E6280.unk_F60 >= t) {
+                    k_disp_switch(now, 0);
+                }
+            }
+        } else if (ph == 0) {
+            k_disp_switch(D_800E6280.unk_F61, 0);
+            a = get_k_work(D_800E6280.unk_F61 + 1);
+            b = get_k_work(D_800E6280.unk_F61 + 2);
+            *(s16 *)(a + 2) -= 2;
+            *(s16 *)(b + 2) -= 2;
+            D_800E6280.unk_F62 += 1;
+        } else if (ph != 0) {
+            a = get_k_work(D_800E6280.unk_F61 + 1);
+            b = get_k_work(D_800E6280.unk_F61 + 2);
+            *(s16 *)(a + 2) -= 2;
+            *(s16 *)(b + 2) -= 2;
+            if (*(s16 *)(a + 2) < 0x33) {
+                *(s16 *)(a + 2) = 0x32;
+                *(s16 *)(b + 2) = 0x42;
+                D_800E6280.unk_F62 -= 1;
+                D_800E6280.unk_F61 += 1;
+                k_disp_switch(D_800E6280.unk_F61 + 2, 1);
+            }
+        }
+    } else {
+        r = k_disp_inc();
+        get_now_k();
+    }
+    if (r == 1) {
+        if (D_8011ED5B & 0x80) {
+            func_8006C934();
+        } else {
+            func_8006C848(1);
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x60) {
+        if (r == 1) {
+            func_8006C848(0);
+            D_800E6280.unk_110D += 1;
+            D_800E6280.unk_F62 = 0;
+            return;
+        }
+        k_disp_goto_line_end();
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", xa_wait);
+#endif
 
 void func_80052000(void) {
     k_disp_inc();

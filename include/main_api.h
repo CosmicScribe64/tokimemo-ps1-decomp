@@ -423,9 +423,9 @@ typedef struct GameState {
     /* 0x75E */ GsRec75E unk_75E[256];
     /* 0xF5E */ u8 unk_F5E;
     /* 0xF5F */ u8 unk_F5F;            /* index of the current girl's Rec38 record */
-    /* 0xF60 */ s8 unk_F60;
-    /* 0xF61 */ s8 unk_F61;
-    /* 0xF62 */ s8 unk_F62;
+    /* 0xF60 */ u8 unk_F60;
+    /* 0xF61 */ u8 unk_F61;
+    /* 0xF62 */ u8 unk_F62;
     /* 0xF63 */ s8 unk_F63;
     /* 0xF64 */ u8 unk_F64[4];
     /* 0xF68 */ GsWord unk_F68;
