@@ -551,7 +551,7 @@ void func_80054C4C(void) {
     bzero(D_80123120, 0x2000);
 }
 
-/* NON_MATCHING: T-17007, 18 differing lines; the D_80123120 address and the two 0x2000 constants take s3/s2 where the original has s2 (address and write size) and s3 (loop bound); the struct-copy end pointer is t4, not t5 */
+/* NON_MATCHING: T-17007, 8 differing lines; the two `li` of the 0x2000 constants are emitted in the other order (s3 first, the original has s2 first), and the struct-copy end pointer is t4, not t5 */
 #ifdef NON_MATCHING
 s32 func_80054C74(s32 arg0) {
     u8 name[0x1C];
@@ -586,10 +586,12 @@ s32 func_80054C74(s32 arg0) {
     D_80123320[1] = D_80123320[0];
     i = 0;
     p = D_80123120;
-    /* FAKE: two named 0x2000 constants keep separate registers (write size and loop bound), and arg0 is reused as one of them because a fourth scalar grows the frame by 8 bytes. T-17007 */
-    n = 0x2000;
+    /* FAKE: two named 0x2000 constants keep separate registers (write size and loop bound); arg0 is reused as the write size because a fourth scalar grows the frame by 8 bytes, and the empty test raises its allocation priority above the loop bound's (regdiff hint). T-17007 */
     arg0 = 0x2000;
+    n = 0x2000;
     do {
+        if (arg0) {
+        }
         if (write(D_800B58E4, p, arg0) != arg0) {
             close(D_800B58E4);
             return -1;
