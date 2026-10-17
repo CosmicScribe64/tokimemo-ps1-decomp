@@ -1,9 +1,9 @@
-#define MAIN_API_OVERRIDE_func_800AE090 /* func_80133510 calls it without the length: no prototype (main_api.h: three parameters) */
+#define MAIN_API_OVERRIDE_func_800AE090 /* FAKE: implicit int view, no prototype: func_80133510 calls it without the length, and the unused $v0 result keeps the address in func_80134B94 off $v0 (main_api.h: void, three parameters; T-20810, T-21520) */
 #include "common.h"
 #include "ovl/NAME_ENT.h"
 #include "game.h"
 
-void func_800AE090();
+s32 func_800AE090();
 
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
@@ -1063,8 +1063,8 @@ void func_80134B18(void) {
     k_sub_disp_start(3);
 }
 
-/* NON_MATCHING: T-11650, 10 differing lines: the address of the third name's first unfilled byte is in v0, the original keeps it in v1 */
-#ifdef NON_MATCHING
+/* FAKE: s32 result with no return statement: as a void function the build loses the original's `move v0,zero`; no caller
+ * reads the result. T-20810, T-21520 */
 s32 func_80134B94(s32 arg0) {
     s32 i;
     s32 n;
@@ -1121,9 +1121,6 @@ s32 func_80134B94(s32 arg0) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134B94);
-#endif
 
 void func_80134EB8(void) {
     if ((D_8014CCC0 >= 0) && (D_8014CCC4 >= 0)) {
