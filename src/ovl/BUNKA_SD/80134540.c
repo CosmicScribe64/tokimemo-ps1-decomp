@@ -98,7 +98,33 @@ void func_80134800(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80134540", func_80134850);
+/* FAKE: T-22021. The bytes D_800E6280.unk_110B and unk_110C are read and written only as u8 views, so uopt promotes each to one register (see func_8013987C in 801388D0.c); `*= 0` keeps the `move v1,zero` that a plain `= 0` folds into `sb zero`; the original source is unknown. */
+s32 func_80134850(void) {
+    s32 i;
+    u32 q;
+
+    if (D_80122EAC == 3) {
+        D_80120762 = 0x40;
+        q = *(u8 *)&D_800E6280.unk_110C / 14;
+        if (q >= 2) {
+            *(u8 *)&D_800E6280.unk_110C = 0;
+            q = 0;
+        }
+        D_80120778 = q + 0xA2;
+        *(u8 *)&D_800E6280.unk_110C += 1;
+    }
+    for (i = 0; i < 5; i++) {
+        D_8011ECD0[0x1987 + i * 0x44] = *(u8 *)&D_800E6280.unk_110B;
+    }
+    *(u8 *)&D_800E6280.unk_110B -= 2;
+    if (*(u8 *)&D_800E6280.unk_110B == 0) {
+        *(u8 *)&D_800E6280.unk_110B *= 0;
+        for (i = 0; i < 0x40; i++) {
+            ((DisplayActor44 *)D_80120650)[i].unk_07 = *(u8 *)&D_800E6280.unk_110B;
+        }
+        func_8004284C();
+    }
+}
 
 void func_80134938(void) {
     s32 i;
