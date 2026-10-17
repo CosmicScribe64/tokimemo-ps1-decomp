@@ -274,20 +274,29 @@ difference and stays. 64 type names are gone (702 typedefs to 633 in `include/` 
 
 ### Draft scores
 
-`tools/redraft.py` (variants `plain`, `typed`, `typed-late`, no `draft_fixes`) on the 37 unmatched functions whose
-asm reads a pool field that the old `DisplayActor44` left as padding, once on a snapshot of `w2-good` (dcfb746d) and
-once on the unified headers (56ef7417), each from its own tree under `build/ty/`:
+`tools/redraft.py` (variants `plain`, `typed`, `typed-late`, no `draft_fixes`) on the 166 unmatched functions whose asm
+reads one of the pools (37 of them a field that the old `DisplayActor44` left as padding), once on a snapshot of
+`w2-good` (dcfb746d) and once on the unified tree (the 37 on 2b4d091a; the other 129 on 7ad19d0c, which differs only in
+matched source, comments and the `record-copy` fix below, with the 13 drafts that hold a record block copy rerun on
+2b4d091a), each run from its own copy under `build/ty/`:
 
-- 31 functions scored on both sides, 6 compile on neither (`DATE:func_8013FD6C`, `EVENT:func_8011B848`,
-  `GYOZI:func_801368B8`, `SHOUGATU:func_801350F8`, `TAIIKU:func_80147B14`, `main:func_800476C0`).
-- No score changed, in any variant: 31 the same, sum 7,428 diff rows on both sides.
-- The draft text changed in 51 of the 111 typed and typed-late bodies (none of the plain ones): byte-offset casts
-  `*(s16 *)((unsigned char *)D_8011ECD0 + (7236))` became fields `((DisplayActor44 *)D_8011ECD0)[106].unk_1C` (1,057
-  to 945 casts, 583 to 756 record-field references).
+- 153 functions scored on both sides, with the same best score each (34,580 diff rows in all); 12 compile on neither
+  (among them `DATE:func_8013FD6C`, `EVENT:func_8011B848`, `GYOZI:func_801368B8`, `SHOUGATU:func_801350F8`,
+  `TAIIKU:func_80147B14`, `main:func_800476C0`).
+- One function changed: `main:func_80077900` had no compiling fresh draft and now has one at 163 rows (census and best
+  archive 211), kept in `drafts/T-20900/main/`. The cause is a tool effect of the unification: the T-18600 `club-bits`
+  rewrite ran only where MASTER's `MasterClubBits` existed and now runs wherever `ScheduleClubFlags` does.
+- Variant level, two changes: ETC `func_80143968` `typed`/`typed-late` 79 to 109 (the old draft stored through
+  `pad_1C[temp_lo]`, a byte array, by luck closer; its best, `plain` 72, is unchanged) and the one above. A first run
+  showed the `record-copy` rewrite writing `DisplayFixActor44` in every unit (mixed-type assignments that did not
+  compile in EVENT, GEKO, KANGEI); it now uses the unit's record view, and those drafts score as before.
+- The draft text changed in 51 of the 111 `typed`/`typed-late` bodies of the 37 (none of the `plain` ones): byte-offset
+  casts `*(s16 *)((unsigned char *)D_8011ECD0 + (7236))` became fields `((DisplayActor44 *)D_8011ECD0)[106].unk_1C`
+  (1,057 to 945 casts, 583 to 756 record-field references).
 
 This repeats the T-16550 / T-16560 result with a cleaner test: IDO compiles a constant-offset member like a cast at
 the same address (T-7010), so a better header makes drafts readable but does not move the score. Scores move when a
 rewrite changes what the compiler sees as one object (the label fold of the `typed` variant) or the statement shape.
-The unification pays off for people reading and editing drafts and for later rewrites that need one field name per
-offset (`tools/redraft_rewrites.py` reads one record view per unit; `TYPE_ALIASES` maps the retired names in
+The unification pays off for people reading and editing drafts, for rewrites that were gated on one unit's private
+type (`club-bits`, `record-copy`) and for later rewrites that need one field name per offset (`tools/redraft_rewrites.py` reads one record view per unit; `TYPE_ALIASES` maps the retired names in
 archived bodies).
