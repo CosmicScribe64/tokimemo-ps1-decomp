@@ -6900,3 +6900,11 @@ TACO `func_801497EC` (2 lines): the last record test needs `addu t2,t3,v1` (base
 same IDO order and the base-first spellings `D_8015EDB4[idx]`, `(D_8015EDB4 + idx)[0]`, `idx[D_8015EDB4]` are CSEd with the
 earlier record stores (frame 8 bytes short). RPG_BAT `func_8015A8B4`: re-reading the field for the `D_8015EC58` store
 or naming `id = i + 0x28` moves the copies around (17 lines best).
+
+
+
+## GYOZI setup-callee return view (T-20001)
+
+GYOZI func_8013506C (172 bytes) matches after porting the nested post-increment and pointer-table accesses from SHOUGATU func_8013315C and correcting its setup callee func_801343A4 to s32. With the void prototype, the counter/boolean use v1/v0; with s32 func_801343A4(void), they use the original a0/v1. The plain shared-header/definition change is sufficient and preserves the callee and seven other callers. This is consistent with the setup return value remaining live in v0 in a fall-through s32 callback; no allocator trace was used to prove that explanation.
+
+The shared s32 declaration lives in include/ovl/GYOZI.h and its definition in src/ovl/GYOZI/80134000.c has the same return type. No overlay override, header guard or local prototype is needed (CODING_STANDARDS.md section 8a); these were removed after maintainer review. No FAKE, shared main prototype change or new aggregate is needed. Actual default funcdiff --resolve proves 172 linked bytes, the GYOZI SHA1 passes and all 27 built binaries pass explicit SHA1 checks. Historical [[data/t0018-cases]] rows remain; [[tickets/T-20001-gyozi-helper]] records verification.
