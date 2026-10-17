@@ -17665,3 +17665,6 @@ Opus closer for [[tickets/T-22011-w4-p11]]: EVENT `func_800FD00C` matches (340 b
 ## [2026-10-17] ticket | T-22011 Done
 
 Review against `CODING_STANDARDS.md` passed after two small fixes in `src/ovl/EVENT/8010BB90.c` (`DisplayActor44` `unk_38` fields instead of raw `D_800E9620` offsets; FAKE note on the `D_800EECB4` view). 2 of 5 matched: EVENT `func_8010F340` (376 bytes) and `func_800FD00C` (340 bytes). Ticket [[tickets/T-22011-w4-p11]], board in [[kanban]], notes in [[matching-notes]].
+
+## [2026-10-17] ticket | T-22016 started
+Package w4-p16 for [[tickets/T-22016-w4-p16]]: KANGEI `func_80135004`, `func_801362F0`, `func_80134724` and `func_8013769C` in `src/ovl/KANGEI/80135F10.c` and `src/ovl/KANGEI/80134120.c`. Status In Progress.
