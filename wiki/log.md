@@ -16952,3 +16952,13 @@ main. `include/ovl/RPG_BAT.h`: the override wrapper for `func_8013F0F4` now cove
 [[tickets/T-20700-ido41-as1-test]] created and started: does IDO 4.1's as1 (and ugen) after IDO 5.3's cfe/uopt
 reproduce the original better? Worktree `tokimemo-wt/bs-ido41-as1`, base `w2-good`. IDO 4.1 fetched from the
 decomp.me release URL in [[ido-52-evaluation]] into the gitignored `tools/local-compilers/`; sha256 matches the table.
+
+## [2026-10-17] ticket | T-20700 In Review
+
+[[tickets/T-20700-ido41-as1-test]] In Progress to In Review. IDO 4.1's as1 after the production pipeline (5.3 cfe in
+K&R mode, `tools/cvt_pass.py`, 5.3 uopt and ugen, frame pass) leaves 6335 of 6336 matched functions and all 19 guarded
+sched/hoist drafts unchanged; the one change (main `func_80046684`, an `mflo` hazard fill) is a regression. 4.1's ugen
+(+ as1, no frame pass) changes 1355 matched functions, keeps the frame pass's frames in 6335, and matches TACO
+`func_8013B2A0`. Both rejected; no adoption proposal. Found: ugen's `.option pic` record must carry the as1 version's own
+value (5.3: 0, 4.1: 1), now set by `tools/ido_eval.py` (tests `tools/test_ido_eval.py`). Pages: [[ido-52-evaluation]]
+(T-20700 section), [[toolchain]], [[original-compiler]], [[data/t0018-cases]], [[matching-notes]] (T-20620 pointer).

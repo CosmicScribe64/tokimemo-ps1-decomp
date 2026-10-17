@@ -12,6 +12,12 @@ them. The image needs libglib2.0-0 (5.2's qemu-irix) and a glibc >= 2.38 in
 Each compile runs the IDO driver up to ugen (`-Hc -K`), optionally applies
 tools/frame_pass.py to ugen's binasm output, and then runs that version's own as1.
 IDO 4.1 writes ECOFF; the archive's ecoff_tool.py converts it to ELF.
+Before as1 the binasm's `.option pic` record is set to the value the as1 version's own
+ugen writes (PIC_OPTION, T-20700): IDO 5.3's as1 obeys a 1 from 4.1's ugen and makes PIC
+calls (`lw t9,0(gp); jalr t9`), and IDO 4.1's as1 schedules far less when it reads the 0
+of 5.3's ugen (439 of the first 1001 matched functions changed, against 1 of 6336 with 1).
+The 5.3 front end runs without tools/cvt_pass.py here; T-20700 measured the production
+pipeline with a capture-and-replay harness instead (wiki/ido-52-evaluation.md).
 
 Usage (inside Docker, repo root):
   python3 tools/ido_eval.py cc VER FRAME <cc flags...> -o OUT SRC
@@ -63,6 +69,20 @@ HERE = os.path.abspath(__file__)
 AS1_ARGS = {"5.3": ["-G", "0", "-p0", "-EL", "-g0", "-O2", "-elf"],
             "5.2": ["-G", "0", "-p0", "-EL", "-g0", "-O2", "-elf"],
             "4.1": ["-G", "0", "-p0", "-EL", "-g0", "-O2"]}
+
+
+# `.option pic` value that each version's own ugen writes for this build's flags (T-20700).
+# IDO 5.2's ugen was not measured; its as1 gets the record unchanged.
+PIC_OPTION = {"5.3": 0, "4.1": 1}
+
+
+def set_pic_option(data, value):
+    """Return binasm `data` with every `.option pic` record set to `value`."""
+    recs = frame_pass.parse(data)
+    for rec, _ in recs:
+        if rec.instr == frame_pass.I_IOPTION and (rec.w[1] >> 14) & 3 == 2:
+            rec.w[3] = value
+    return frame_pass.serialize(recs)
 
 
 def qemu(ver, tmp):
@@ -215,9 +235,13 @@ def compile_c(ver, frame, flags, out, src):
             run(pass_cmd(ug, "ugen", tmp) + opt + ["u.O", "-o", "u.G", "-t", "u.T",
                                                     "-temp", "u.tmp"], cwd=tmp, env=env)
         g = os.path.join(tmp, "u.G")
-        if frame:
+        if frame or a1 in PIC_OPTION:
             with open(g, "rb") as f:
-                data = frame_pass.transform(f.read())
+                data = f.read()
+            if frame:
+                data = frame_pass.transform(data)
+            if a1 in PIC_OPTION:
+                data = set_pic_option(data, PIC_OPTION[a1])
             with open(g, "wb") as f:
                 f.write(data)
         obj = os.path.join(tmp, "u.o")

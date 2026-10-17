@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-16
+updated: 2026-10-17
 sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 ---
 
@@ -6962,7 +6962,8 @@ near misses: `-O1` stops the VALEN hoist but also as1's copy propagation that th
 `-O3`, `-p1`, `-g3` change nothing; `-g1`/`-g2` change everything; giving every `.loc` record of a procedure its first
 line makes BUNKASAI and `file_checksum_ok` worse. IDO 5.2's as1 behaves like 5.3's (T-3110). IDO 4.1's as1 differed on 2
 matched functions in T-3110 and was never run on these near misses; the private compilers are no longer on disk, so that
-test needs them back (user decision).
+test needs them back (user decision). Update (T-20700): tested; 4.1's as1 gives the same output on all 19 guarded sched/hoist drafts and on 6335 of
+6336 matched functions, so it is not the lever ([[ido-52-evaluation]], T-20700 section).
 
 **Other near misses looked at (register or uopt gaps, not scheduling).** TT `func_8013A0DC` (2 lines): the original
 passes the call argument `0x40` in the `$a0` that already holds the constant for the switch compares, IDO reloads it.

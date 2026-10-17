@@ -6,6 +6,8 @@ sources: ["wiki/matching-notes.md", "tools/queue.py"]
 
 # T-0018 cases (register promotion of globals and related register-order gaps)
 
+Update (T-20700): IDO 4.1's as1 after the production front end and ugen leaves all 19 guarded `sched`/`schedule`/`hoist` drafts unchanged (same `funcdiff` output), so the order-only near misses of T-20620 are not a 4.1-as1 property. 4.1's ugen + as1 matches TACO `func_8013B2A0` (the struct-copy temporary row, 248 bytes) but breaks 1355 matched functions, so that row stays a compiler gap with no build step ([[ido-52-evaluation]], T-20700 section). Rows below stay unchanged.
+
 Update (T-17007 closer): main `func_80055A38` (the `regorder` rows below, T-9140 to T-17007) matches with its FAKE dead initial assignments written on one source line (`n = 0; b = 0; p = D_80123324; r = D_80123120; q = D_80123324;`): as1 then emits the hoisted starts `q`, `r`, `b` as the original does. Main `func_80054C74` is down to 2 rows (new row at the end).
 
 Update (T-20003): RPG_BAT `func_80138F6C` matches 1,268 actual default linked bytes with direct timer updates/decrement and two marked FAKE sites (frame padding and selector word read). Full RPG_BAT and all 27 binary SHA1 checks pass. Historical rows below remain unchanged; [[tickets/T-20003-rpg-timer-callees]] supersedes its unmatched status. Independent matches for `func_80157158` and `func_80156D78` were dropped from this contribution after upstream T-17102 landed.
