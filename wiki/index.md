@@ -33,7 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-20830-autotweak-recipes|T-20830]] autotweak edit kinds for the wave-3 recipes: `gstate`, `group`, `chain`, `inline_multi` in `tools/recipes.py`, `--only-kinds` (In Progress).
+- [[tickets/T-20830-autotweak-recipes|T-20830]] autotweak edit kinds for the wave-3 recipes: `gstate`, `group`, `chain`, `inline_multi` in `tools/recipes.py`, `--only-kinds`; first use: 6 matches, 2,660 bytes (In Review).
 - [[tickets/T-20600-regorder-recipe-sweep|T-20600]] Register-order family: recipe sweep over the `regorder` rows of [[data/t0018-cases]]; 7 functions matched, 4,532 bytes (Done; `func_8006D6E0` was matched the same way by T-17004, so 6 are new on main).
 - [[tickets/T-20006-gyozi-scene-callbacks|T-20006]] Two GYOZI scene callbacks matched, 708 bytes; corrected unsigned fields, no new FAKE, full build/27 hashes/prototype checks pass (Done, PR #44 merged).
 - [[tickets/T-20620-as1-scheduling|T-20620]] Scheduling family: as1 ordering (sched/hoist rows of [[data/t0018-cases]]): TACO `func_8014B8B4` matched (972 B), 3 owned-file recipes verified in scratch, order-only near misses with no C form or as1 option (Done)
@@ -394,6 +394,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - Raw sources (plain paths): `raw/disc-findings.md`, `wiki/raw/compiler-mismatch-research-sources.md`, `wiki/raw/ai-disclosure-research.md`, `wiki/raw/original-compiler-sources.md` (T-3100)
 
 ## Tooling
+- `tools/recipes.py` (T-20830): autotweak edit kinds for the wave-3 recipes, `gstate` (`GameState *g = &D_800E6280;` and `g->F`), `group` (3 to 8 independent statements on one source line, loop-head initial assignments, and back), `chain` (`a = b = c = v;` and back), `inline_multi` (a multi-use local copy of a global or field and its reverse); `autotweak.py --only-kinds`, `--list` per-kind counts, regdiff `ORDER-ONLY`; tests `tools/test_recipes.py`; [[decompile-workflow]], [[register-cheatsheet]].
 - `tools/draft_fixes.py` (T-16510): detectors and mechanical rewrites for recurring m2c defects (shared-store `goto`, Shift-JIS escapes, old-value post-increment compares; report-only `s32` and callers-read-`$v0` candidates), `survey` and `rescore` over a draft archive, `tools/m2c.py --fix-defects`; tests `tools/test_draft_fixes.py`; [[decompile-workflow]] ("Recurring m2c defects"), [[matching-notes]].
 - `tools/order_search.py` (T-11530): exhaustive or hill-climb search over marked statement orders (`/* ORDER */`) and operand orders (`ORDER_SWAP`), scored with funcdiff's resolved comparison; tests `tools/test_order_search.py`; [[decompile-workflow]] ("Statement and operand order search").
 - `tools/orphan_rodata.py` and `tools/object_layout.py` (T-10200): reference-based orphan ownership and configured text tail alignment; [[build-system]], [[decompile-workflow]].

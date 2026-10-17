@@ -17038,3 +17038,15 @@ Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-20830 In Progress
 
 [[tickets/T-20830-autotweak-recipes]] created and In Progress: autotweak edit kinds for the four wave-3 recipes (GameState pointer, statement runs, chain stores, multi-use local). Card in [[kanban]]; method in [[decompile-workflow]]. Tool worktree `tr-autotweak-recipes`, only `tools/`, `wiki/` and `drafts/T-20830/` change.
+
+## [2026-10-17] build | T-20830 recipe edit kinds in autotweak
+
+`tools/recipes.py` adds `gstate`, `group`, `chain` and `inline_multi` to `tools/autotweak.py` (registered at the end of the file like `typefix`); `--only-kinds` and per-kind `--list` counts; `HINT_EDITS` gets group (tie, ugen), chain (ugen), gstate (priority, structure, argument), inline_multi (priority); `regdiff.py` prints `ORDER-ONLY` and autotweak maps it to group, order, join, split. Tests `tools/test_recipes.py` (59) and the full tool suite in Docker: 1,250 tests OK (3 skipped). The four transforms ran over all 6,370 function bodies of `src/` with no error. Method and numbers in [[decompile-workflow]] ("Recipe edits for autotweak (T-20830)"), rows in [[register-cheatsheet]], notes in [[matching-notes]] ("T-20830"). Ticket [[tickets/T-20830-autotweak-recipes]].
+
+## [2026-10-17] build | T-20830 first use of the recipe edit kinds
+
+`autotweak.py --all --only-kinds gstate,group,chain,inline_multi --time 30 --score-jobs 2` in scratch copies of the worktree, over the 101 guarded drafts and 16 wave-3 archive drafts (`drafts/T-17106` to `T-19030`, guarded in the copy), about 95 minutes on a loaded machine. Six new matches, 2,660 bytes, plain C: main `func_80072D70` (1,064 B, `gstate all last`), DATE `func_8013AF1C` (600 B, `gstate all`), NAME_ENT `func_8013BE18` (348 B, `gstate all`), GYOZI `func_8013E638` (236 B, `group head` with the empty counter test), TT `func_8013D2E0` (224 B, `inline_multi ... use1`), ETC `func_80143F24` (188 B, `chain join` plus `gstate all`). The archived draft of DATE `func_80155004` was matched again (chain plus loop-head join). 20 guarded and 6 archive drafts got a lower score; 73 and 9 did not change; 2 guarded drafts could not be set up. The six matches applied together in a scratch copy: 27/27 sha1 OK, `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch` pass. `src/` was not changed here; texts and the full hit table are in `drafts/T-20830/` (README, `body.c`, `best.c`).
+
+## [2026-10-17] ticket | T-20830 In Review
+
+[[tickets/T-20830-autotweak-recipes]] In Progress to In Review: tool, tests, docs and the first use are done and committed; the code review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]]. The six matches in `drafts/T-20830/` wait for the lead to apply them to `src/`.
