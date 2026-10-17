@@ -17160,3 +17160,14 @@ built without ugen source. See [[ido-52-evaluation]], [[data/true-gaps]], [[uopt
 ## [2026-10-17] query | Build-step gap report
 
 Combined T-20700 (IDO 4.1 back end: as1 equals 5.3 on 6,335/6,336; ugen changes 1,355, rejected) and T-20710 (true-gap census: 55 near drafts, first divergence uopt 28, as1 12, ugen 11) into [[build-step-gaps]]. The one uniform compiler difference found is the ugen block-copy state; a narrow ugen patch is the next build-step candidate.
+## [2026-10-17] ticket | T-17019 In Progress
+[[tickets/T-17019-w3-main-p19]] created and started: wave 3 package w3-main-p19, five functions of `src/main/80043510.c` (`func_80044C98`, `func_80044E8C`, `csr_load_vram`, `func_8004443C`, `func_80043510`), worktree `tokimemo-wt/w3-main-p19`, base `w2-good`. Follows [[tickets/T-17000-types-first-main]].
+
+## [2026-10-17] build | T-17019 func_80044C98 and func_80044E8C matched
+[[tickets/T-17019-w3-main-p19]]: main `func_80044C98` (188 B) and `func_80044E8C` (264 B) of `src/main/80043510.c` match in plain C, no FAKE. Both T-0018 `regorder` rows ("result kept in $v1, original keeps $v0") fall to one change: the counter `D_800B3D4C` is incremented as the value of the compare, `if ((++D_800B3D4C > 0xC0U) || ...)`, with `D_800B3D4C++;` in the zero arm. `csr_load_vram` stays guarded, 26 to 24 lines (u16 locals for the three computed `LoadSquare` arguments). `func_8004443C` and `func_80043510` not matched (139 and 172 lines at best, `INCLUDE_ASM`). Notes in [[matching-notes]] (section T-17019), two rows in [[register-cheatsheet]], rows in [[data/t0018-cases]].
+
+## [2026-10-17] ticket | T-17019 In Review
+[[tickets/T-17019-w3-main-p19]] In Progress to In Review: 2 of 5 functions matched (`func_80044C98`, `func_80044E8C`, 452 bytes), one guarded (`csr_load_vram`, 24 lines), two untouched `INCLUDE_ASM`. Clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` run at the end of the package.
+
+## [2026-10-17] ticket | T-17019 Done
+[[tickets/T-17019-w3-main-p19]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/main/80043510.c` changed in code, no header, config or `drafts/` change. One finding fixed (comments only, bytes unchanged): the pre-increment as the value of the compare in `func_80044C98` and `func_80044E8C` now has an in-code comment. The `NON_MATCHING` draft `csr_load_vram` carries its tickets and the 24 lines left. Unit build and main exe sha1 OK, `check_headers` OK. 2 of 5 matched (`func_80044C98`, `func_80044E8C`, 452 bytes). Merge via the wave 3 merge script.

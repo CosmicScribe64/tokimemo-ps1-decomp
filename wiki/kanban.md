@@ -142,6 +142,7 @@ kanban-plugin: board
 
 ## Done
 - [ ] [[tickets/T-17021-w3-main-p21|T-17021 Wave 3 package w3-main-p21]]
+- [ ] [[tickets/T-17019-w3-main-p19|T-17019 Wave 3 package w3-main-p19]]
 - [ ] [[tickets/T-20006-gyozi-scene-callbacks|T-20006 Two GYOZI scene callbacks matched (708 bytes)]]
 - [ ] [[tickets/T-20700-ido41-as1-test|T-20700 IDO 4.1 back end (as1/ugen) as a build-step candidate]]
 - [ ] [[tickets/T-20710-true-gap-census|T-20710 True compiler-gap census and uniform allocator rule search]]
