@@ -55,7 +55,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-22015-w4-p15|T-22015]] Wave 4 package w4-p15: MASTER `80132140.c`, 0 of 2 matched; `func_80132444` guarded at 22 rows, `func_801326B4` stays `INCLUDE_ASM` (586 rows after cleanup, frame matches) (Done; 0 of 2 matched).
 - [[tickets/T-11880-date2-remainder|T-11880]] DATE2: the remaining nine functions, claim #49 (Done; 8 of 9 matched, DATE2 101/102, 91.9% of bytes).
 - [[tickets/T-20008-large-name-introduction|T-20008]] NAME_ENT introduction reconstruction archive (4,308-byte scope), claim #50; compiling, still nonmatching (In Progress; draft checkpoint merged, PR #51).
-- [[tickets/T-20010-name-ent-resource-loader|T-20010]] NAME_ENT resource loader follow-up, 1,652 bytes; valid table recovered, still ASM (Ready).
+- [[tickets/T-20010-name-ent-resource-loader|T-20010]] NAME_ENT resource loader, 1,652-byte verified plain-C match, claim #52 (In Review).
 - [[tickets/T-20009-name-ent-loader|T-20009]] NAME_ENT CD-level display helper, 484-byte verified match, claim #52 (Done, PR #53 merged).
 - [[tickets/T-11870-tt-batch-13|T-11870]] TT batch 13: the last three guarded near misses (Done; all 3 matched, TT 302/303, 99.7% of bytes).
 - [[tickets/T-11860-tt-batch-12|T-11860]] TT batch 12: the TT remainder, one long Opus run per file group (Done; 25 of 28 matched, TT 299/303, 97.2% of bytes).

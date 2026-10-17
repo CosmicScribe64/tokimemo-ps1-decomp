@@ -42,16 +42,18 @@ kanban-plugin: board
 
 ## Ready
 
-- [ ] [[tickets/T-20010-name-ent-resource-loader|T-20010 Match NAME_ENT resource loader]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
 
 - [ ] [[tickets/T-22000-wave-4-conveyor|T-22000 Wave 4 conveyor]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 - [ ] [[tickets/T-23000-wave-5-big-conveyor|T-23000 Wave 5 biggest-first conveyor alongside wave 4]]
 
 ## In Review
+
+- [ ] [[tickets/T-20010-name-ent-resource-loader|T-20010 Match NAME_ENT resource loader]]
 
 
 ## Done
