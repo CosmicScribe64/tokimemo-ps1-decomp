@@ -17585,3 +17585,7 @@ Package w4-p06 of [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/DATE/8014A1B0.c`
 ## [2026-10-17] ticket | T-22006 Done
 
 Code review of [[tickets/T-22006-w4-p06]] against `CODING_STANDARDS.md`: 0 of 1 matched (`func_8014A8FC` guarded at 20 rows, from 34). One finding fixed (ticket `links:` frontmatter quoting), no code change; build 27/27 from the matcher run. Package of [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] ticket | T-22010 Wave 4 package w4-p10 opened
+
+Package w4-p10 of [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/GEKO/80134D10.c`, five functions (`func_801367EC` 872 bytes first). [[tickets/T-22010-w4-p10]] In Progress.
