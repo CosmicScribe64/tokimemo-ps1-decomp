@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 sources: ["include/ovl/DATE.h", "drafts/T-17200/README.md", "drafts/T-17200/redraft.py", "tools/type_recovery.py", "tools/siblings.py"]
 ---
 
@@ -11,6 +11,8 @@ The DATE overlay (date scenes: one handler per scene step, each scene a `.c` fil
 retries). DATE2 is a different overlay ([[scenes-family-results]]).
 
 ## Types-first pass (T-17200)
+
+T-20900 update: `DateParticleView44`, `DateMover44` and `DateMotion44` are `DisplayFixActor44`; `DateScene44`, `DisplayRecord44` and the local `DateWords44` are `DisplayActor44`; `DateFix32` is `Fix32`; `DateFlag17` and `DateFlags0F4` are `ScheduleFlags` ([[data-types]], "Shared-type unification").
 
 Wave-3 types-first pass ([[tickets/T-17200-types-first-date]], [[speedup-research-2026-10-16]]), branch
 `w3-date-types` from `w2-good`. Start: 49 unmatched functions (40,656 bytes), 15 of them guarded. About one

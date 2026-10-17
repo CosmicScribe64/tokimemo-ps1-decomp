@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # ETC bounded source-family transfer
@@ -45,6 +45,8 @@ Repository code-review skill, aa2b3158...aa1c51ec: GPT-6.1 Sol medium standards 
 [[tickets/T-14800-etc-801447b0]] accepts func_801447B0 (648 literal linked bytes). The census direct-field draft had only a final case-4 status-byte register difference (t9 versus v0, six diagnostic rows). Using the existing GameState through one consistent local pointer across state/status/counter fields yields zero full-TU diagnostic rows, then passes explicit default linked-byte proof and the ETC SHA1. This is a focused transfer from the confirmed pointer family above; no broader sweep was needed. Original census source remains archived unchanged.
 
 ## Types-first pass (T-17300)
+
+T-20900 update: `EtcRec44` is `DisplayActor44`; `EtcMat`, `EtcMat2`, `EtcVec`, `EtcVec2` are `MATRIX` and `VECTOR`; `EtcSlot` is `ScheduleClubFlags` (`grade` is `unk_25`, `flag` is `b30`) ([[data-types]], "Shared-type unification").
 
 Wave-3 types-first pass ([[tickets/T-17300-types-first-etc]], [[speedup-research-2026-10-16]]), branch
 `w3-etc-types` from `w2-good`. Start: 43 unmatched functions (34,724 bytes), 2 of them guarded. About 80 minutes

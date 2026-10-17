@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 sources: ["include/ovl/OPTION.h", "drafts/T-17800/README.md", "drafts/T-17800/redraft.py", "tools/type_recovery.py", "tools/siblings.py"]
 ---
 
@@ -12,6 +12,8 @@ records are the `D_8011ECD0` display records 96 to 113 (`D_80120650` is record 9
 four-array setup; the `x * 0x44` linear-function test replacement; the `D_80120912` pair).
 
 ## Types-first pass (T-17800)
+
+T-20900 update: `OptActor44`, `OptDraw44`, `OptSpr44` are `DisplayActor44`; `OptionScheduleBits` is `ScheduleEntryFlags`, `OptionPlayerBits` is `ScheduleFlags` ([[data-types]], "Shared-type unification").
 
 Wave-3 types-first pass ([[tickets/T-17800-types-first-option]], [[speedup-research-2026-10-16]]), branch
 `w3-option-types` from `w2-good`. Start: 36 unmatched functions (22,648 bytes) in three files, 2 of them guarded.

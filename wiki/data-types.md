@@ -1,7 +1,7 @@
 ---
 type: concept
 updated: 2026-10-17
-sources: ["tools/type_recovery.py", "tools/test_type_recovery.py", "include/main_api.h", "config/symbol_addrs_types.txt", "wiki/matching-notes.md", "tools/migrate_globals.py", "tools/aggregate_audit.py"]
+sources: ["include/game.h", "tools/type_recovery.py", "tools/test_type_recovery.py", "include/main_api.h", "config/symbol_addrs_types.txt", "wiki/matching-notes.md", "tools/migrate_globals.py", "tools/aggregate_audit.py"]
 ---
 
 # Data types recovered from access patterns (T-5000)
@@ -70,7 +70,7 @@ Linking: a base that no original instruction names has no label. Overlays get su
 
 ## Open work
 
-- The 0x44-byte table at `D_8011ECD0` (160 records; `D_80120650` is record 96) is still a `u8[]` view: its users read the same offsets as `u8` and `s8` and some words as `s32` or pointers, so one struct does not fit all of them yet.
+- The 0x44-byte table at `D_8011ECD0` (160 records; `D_80120650` is record 96) has one record type since T-20900 (`DisplayActor44`, fixed-point view `DisplayFixActor44`, section "Shared-type unification"), but the declaration is still `u8 D_8011ECD0[]` and its 381 splat labels (5,286 uses) are separate globals. Next step: `extern DisplayActor44 D_8011ECD0[160]` as a `config/migrate_globals.txt` aggregate, with the fixed-point labels and main `src/main/800674B0.c` (which declares the table as records) handled first.
 - The main bss block is `GameState D_800E6280` (0x800E6280..0x800E7D10, T-5100): [[game-state]] has the layout, the evidence and what is still unknown. Its old `D_` names are rejected by ninja; `tools/migrate_globals.py --apply` rewrites them, also in new code. Every unit reaches it through the base symbol (T-7010, [[game-state]] "Views").
 - `Rec38` +0x0C and +0x10 are `GsWord` unions (word and byte views of bit-field words); a bit-field struct that fits every user is still open.
 - Main `D_80121818`, `D_8012183C`, `D_80121860`, `D_80121864`, `D_80121884` stay declared because EVENT has its own data at those addresses.
@@ -196,3 +196,88 @@ Picture-set tables as arrays, one row per component of the current set (`D_80139
 (`u8 name[11][20]`, `[11][21]`, stack copies); `KangeiImage10 D_80139D10[2]`; the `KangeiWords11`/`KangeiWords2`
 summer tables at `D_80139A08`. type_recovery's 0xC-stride arrays at `D_801399A8` and `D_80139F44` are artefacts
 of these neighbouring tables. Details: [[kangei-family-results]].
+
+## Shared-type unification (T-20900)
+
+The types-first passes (T-16550 .. T-18800) could only add declarations, so one table had a view per unit.
+T-20900 compared the views with the original accesses and folded them into one type per table; every step was
+built byte-identical (27/27). Ticket: [[tickets/T-20900-shared-type-unification]].
+
+### The display-record pools (0x44 bytes)
+
+Main `D_8011ECD0` (160 records, `D_80120650` is record 96), EVENT `D_800E9620` (`D_800EAFA0` is record 96) and GYOZI
+`D_80129F40` (`D_8012B8C0` is record 96) hold the same record (EVENT and GYOZI were linked against another main-exe
+layout; the main and GYOZI pools both end 0x80 bytes before a `Rec24` table, `D_801217D0` and `D_8012CA40`). A scan of every function's asm with
+`tools/type_recovery.py`'s register pass (accesses at pool base + n * 0x44 + k, also through a register that holds a
+pool address) gives the widths:
+
+| offset | original accesses | type |
+|---|---|---|
+| +0x00 .. +0x07, +0x40 .. +0x43 | `lbu`/`sb` only; no `lb` through the pool symbols in any unit | `u8 unk_00` .. `unk_07`, `unk_40` .. `unk_43` |
+| +0x08, +0x0A, +0x14 .. +0x22, +0x3C, +0x3E | `lh`/`sh` (one `lhu` at +0x18: RPG_BAT `func_8014F88C` switches on it unsigned, through a `*(u16 *)&` view in its body) | `s16` |
+| +0x0C, +0x10, +0x34 | `sw` of addresses, `lw` | `u8 *` |
+| +0x38 | `sw`, `lw` | `s32` |
+| +0x24, +0x28, +0x2C, +0x30 | `lw`/`sw` (16.16 arithmetic) next to `lh`/`sh` at +0x26, +0x2A, +0x2E, +0x32 | two views, below |
+
+Other word accesses at every fourth offset are whole-record copies. C89 has no anonymous unions, so the record has two
+views in `include/game.h`, identical except at +0x24 .. +0x33:
+
+- `DisplayActor44`: every field, halfwords at +0x24 .. +0x32 (the coordinates most of the tree reads).
+- `DisplayFixActor44`: `Fix32 unk_24`, `Fix32 unk_28` (16.16 words; the coordinate is `.h[1]`), `s32 unk_2C`,
+  `s32 unk_30`. Used by MASTER, KANGEI, DATE, EVENT, NAME_ENT, TEL and one TAIIKU line.
+- `Fix32` (`s32 w; s16 h[2]`): the 16.16 word, also used outside the pools (TAIIKU's controller records, `D_8014A1CC`).
+
+| retired view (unit) | now |
+|---|---|
+| `DisplayRecord44` (game.h, and a local copy in main `800674B0.c`), `ShoSprite44`, `ShoCounter44` (SHOUGATU), `NameActorHead44`, `NameRecord44`, `NameAssetActor44` (`image`) (NAME_ENT), `EventFlagRecord44` (EVENT), `RpgObjectRecord44`, `RpgHealth44`, `RpgFlagRecord44`, `RpgObjectBlock`, `RpgHealthBlock` (RPG_BAT; `group[n]` is record 96 + n), `TaiValue44`, `TaiRecord44` (`active`, `flags`, `y`) (TAIIKU), `GyoziRec44`, `GyoziInitSprite44` (GYOZI), `OptActor44`, `OptDraw44` (`unk_00.b[3]` is `unk_03`), `OptSpr44` (OPTION), `DateScene44` (DATE), `TextureRecord44` (`pages`) (main) | `DisplayActor44` |
+| record copies `Ev44` (EVENT, GEKO), `Words17` (EVENT, three copies), `DateWords44` (DATE), `EtcRec44` (ETC) | `DisplayActor44` assignment (same copy code) |
+| `MasterSprite44`, `KangeiSprite44` (`unk_26` is `unk_24.h[1]`), `DateParticleView44`, `DateMover44`, `DateMotion44` (DATE), `EventParticleView44`, `EventMotion44` (EVENT), `NameMotionActor44` (`x`, `y`, `phase`, `flags`), `TaiikuScene44` (`position`), `TelRec44` | `DisplayFixActor44` |
+| `MasterFixed32`, `KangeiFixed32`, `DateFix32`, `TaiikuPosition`, `NameMotionWord` (`.word`, `.half.high`) | `Fix32` |
+
+Kept as a documented view: TAIIKU `TaiikuActor44`, the shared layout with +0x01 and +0x06 signed. `func_80138DF8`,
+`func_80139610` and `func_801400D8` store constants to those bytes, and with `u8` fields uopt puts the constants in
+other registers (measured: the TAIIKU sha1 fails with the shared type). `NameKanaPages44` is not a pool view (NAME_ENT's
+kana table). The pointer fields keep the `u8 *` type of the shared record; a store of a constant or an `s32 *`
+casts, an indexed word table reads `((s32 *)p->unk_34)[i]`.
+
+The 740 byte-offset uses of the pools in matched code (`*(s16 *)&D_80120650[0x26]`, `D_80120650[0x4B]`,
+`*(DisplayActor44 *)&D_8011ECD0[0x1A08]`) are field accesses now (`((DisplayActor44 *)D_80120650)->unk_26`,
+`((DisplayActor44 *)D_80120650)[1].unk_07`, `((DisplayActor44 *)D_8011ECD0)[98]`), each with its old base symbol; all
+matched unchanged, and two FAKE comments went away (TAIIKU `func_80142240`, SHUGAKU's record copy). main
+`800674B0.c` (records already) and `8007C030.c` (issue #45) were not touched.
+
+### Other tables with three or more views
+
+| object | retired views | now |
+|---|---|---|
+| `D_800E7D4F` flag byte | `BunkaReturnFlags`, `BunkasaiModeFlags` (BUNKASAI), `BunkakenModeFlags` (BUNKAKEN; `mode` is `unk_2_4`) | `Flags7D4F` (main_api.h) |
+| `D_80122EB8` word pair | `BunkaDispatch8` (two copies), `BunkSelectWords`, `BunkModePair` | `BunkaDispatch8` (game.h) |
+| `D_80125C60` / `D_801227A4` matrix copies | `EtcMat`, `EtcMat2`, `TaiikuMat`; `EtcVec`, `EtcVec2`, `TaiikuVec` | `MATRIX`, `VECTOR` (libgte.h) |
+| GameState +0x54C entries | main `TelEntryFlags`, `EntryFlags54C`, `EntryFlags29`, TEL `TelEntryFlags`, OPTION `OptionScheduleBits` | `ScheduleEntryFlags` (game.h: `unk_00:5`, `b24`, `unk_25:4`, `active` = bit 29) |
+| GameState +0x66C club words | TEL `TelClubFlags`, KANGEI `KgSlot`, ETC `EtcSlot`, MASTER `MasterClubBits` | `ScheduleClubFlags` (game.h: `b24`, `unk_25:2`, `unk_27:3`, `b30`); RENSYU's `u16` `RensyuClubCount` stays |
+| GameState +0xF4 word | DATE `DateFlag17`, `DateFlags0F4`, OPTION `OptionPlayerBits` | `ScheduleFlags` (game.h: `unk_08:4`, `unk_12:4`, `b16` .. `b20`, `unk_21:3`) |
+| GameState +0xF8 date | NAME_ENT `NameDate` (its `day`/`month` were swapped against main's names) | `GsDateBits` (main_api.h) |
+
+A bit-field view compiles from the accessed field's position, width and container type only: the views that differ
+in their padding fields merged without a byte change; a different container (`u16` against `u32`) is a real
+difference and stays. 64 type names are gone (702 typedefs to 633 in `include/` and `src/`, TT excluded).
+
+### Draft scores
+
+`tools/redraft.py` (variants `plain`, `typed`, `typed-late`, no `draft_fixes`) on the 37 unmatched functions whose
+asm reads a pool field that the old `DisplayActor44` left as padding, once on a snapshot of `w2-good` (dcfb746d) and
+once on the unified headers (56ef7417), each from its own tree under `build/ty/`:
+
+- 31 functions scored on both sides, 6 compile on neither (`DATE:func_8013FD6C`, `EVENT:func_8011B848`,
+  `GYOZI:func_801368B8`, `SHOUGATU:func_801350F8`, `TAIIKU:func_80147B14`, `main:func_800476C0`).
+- No score changed, in any variant: 31 the same, sum 7,428 diff rows on both sides.
+- The draft text changed in 51 of the 111 typed and typed-late bodies (none of the plain ones): byte-offset casts
+  `*(s16 *)((unsigned char *)D_8011ECD0 + (7236))` became fields `((DisplayActor44 *)D_8011ECD0)[106].unk_1C` (1,057
+  to 945 casts, 583 to 756 record-field references).
+
+This repeats the T-16550 / T-16560 result with a cleaner test: IDO compiles a constant-offset member like a cast at
+the same address (T-7010), so a better header makes drafts readable but does not move the score. Scores move when a
+rewrite changes what the compiler sees as one object (the label fold of the `typed` variant) or the statement shape.
+The unification pays off for people reading and editing drafts and for later rewrites that need one field name per
+offset (`tools/redraft_rewrites.py` reads one record view per unit; `TYPE_ALIASES` maps the retired names in
+archived bodies).

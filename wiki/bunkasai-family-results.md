@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # BUNKASAI family results
@@ -9,6 +9,8 @@ BUNKASAI is the school-festival overlay; its early family work with BUNKAKEN (T-
 [[bunka-family-results]]. This page holds the types-first pass of wave 3.
 
 ## Types-first pass (T-18700)
+
+T-20900 update: `BunkaReturnFlags` and `BunkasaiModeFlags` are `Flags7D4F` (main_api.h; `mode` is `unk_2_4`); `BunkSelectWords` and `BunkModePair` are `BunkaDispatch8` (game.h) ([[data-types]], "Shared-type unification").
 
 [[tickets/T-18700-types-first-bunkasai]], branch `w3-bunkasai-types` from `w2-good`. Method of
 [[speedup-research-2026-10-16]]; driver and drafts in `drafts/T-18700/` (README there). At the start 11

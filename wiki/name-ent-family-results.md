@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # NAME_ENT bounded family reconstruction
@@ -48,6 +48,8 @@ A complete coherent typed C draft (no unknown types, unset-register placeholders
 Evidence: build/name13700/typed39F30-body.c, typed39F30.c, typed39F30.diff, actor-end39F30.c and address-end39F30.c. Reproduction: build/name13700/name13704.py. The scratch forward declaration void func_80139F30(void) is required before its earlier caller in the same TU; without it, IDO sees an incompatible implicit-int declaration. Production INCLUDE_ASM remains unchanged. The distant draft is kept in ignored scratch instead of adding a hundreds-of-rows NON_MATCHING body to production.
 
 ## Types-first pass (T-17900)
+
+T-20900 update: `NameRecord44`, `NameActorHead44`, `NameAssetActor44` are `DisplayActor44`; `NameMotionActor44` is `DisplayFixActor44` (`x`, `y`, `phase`, `flags` are `unk_24`, `unk_28`, `unk_07`, `unk_03`); `NameMotionWord` is `Fix32`; `NameDate` is `GsDateBits` (its `day`/`month` names were swapped) ([[data-types]], "Shared-type unification").
 
 Wave-3 types-first pass ([[tickets/T-17900-types-first-name_ent]], branch `w3-name-ent-types`, method of
 [[speedup-research-2026-10-16]]): recover NAME_ENT's shared types, redraft every unmatched function with them, then

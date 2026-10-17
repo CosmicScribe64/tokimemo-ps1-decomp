@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # TAIIKU family results
@@ -10,6 +10,8 @@ Scope: the TAIIKU overlay (`src/ovl/TAIIKU/`, `include/ovl/TAIIKU.h`). At the st
 Three objects hold the same update code with different record layouts. This page calls them game A (`80133C80.c`), game B (`80142240.c`) and game C (`801452D0.c`). Each has four 16.16-position records, a player and three others, so the records are called runners here. That name is a working hypothesis from the code shape (speed added to a position, timers, a "next free slot gets i + 2" table), not from game text.
 
 ## Types-first pass (T-16550)
+
+T-20900 update: `TaiValue44` and `TaiRecord44` are `DisplayActor44`, `TaiikuScene44` is `DisplayFixActor44`, `TaiikuPosition` is `Fix32`, `TaiikuMat`/`TaiikuVec` are `MATRIX`/`VECTOR`; `TaiikuActor44` stays a view (signed +0x01/+0x06, three functions need it) ([[data-types]], "Shared-type unification").
 
 The pilot recovered the overlay's shared types before any function matching, redrafted all 64 functions with them and cut the rest into four packages. It took about one hour of agent time for the types and the redraft.
 

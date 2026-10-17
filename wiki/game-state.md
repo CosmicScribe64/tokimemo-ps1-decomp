@@ -103,6 +103,20 @@ A "symbol-direct" access (`lui %hi(D_X); lbu %lo(D_X)`) is therefore no evidence
 
 **Update (T-9020).** The four list-1 functions of wave 5 said to need "separate scalars" were checked again: main `func_80042960` matches with the T-8080 selector view (`switch (*(u8 *)&D_800E6280.unk_1108)` in an `s32` function); VALEN `func_80133670`, BUNKASAI `func_80146030` and TACO `func_8013546C` miss on one register or one load position, which the scalar declaration does not change either. The Rec38 flag word `unk_1BC[i].unk_0C` is now the union `Rec38Flags` with the bit-field struct `CharFlags` (`.f.b1`, `.f.f9`, ...) in place of per-file views ([[matching-notes]], "Wave-5 codegen shapes (T-9020)").
 
+## Bit-field views of the packed words (T-20900)
+
+One view per word family, all in `include/game.h` or `include/main_api.h` (the per-unit copies were merged, see
+[[data-types]] "Shared-type unification"):
+
+| member | view | bits |
+|---|---|---|
+| `unk_0F4` | `ScheduleFlags` | `unk_08:4`, `unk_12:4`, `b16` .. `b20`, `unk_21:3` (counter), `unk_24:8` |
+| `unk_0F8` | `GsDateBits` | `month:4`, `day:5`, `unk_09:2` |
+| `unk_54C[8]` | `ScheduleEntryFlags` | `unk_00:5`, `b24`, `unk_25:4`, `active` (bit 29), `unk_30:2`; date halves: `ScheduleEntryDate` |
+| `unk_66C[]` | `ScheduleClubFlags` | `b24`, `unk_25:2` (the count of MASTER and the grade of KANGEI/ETC), `unk_27:3`, `b30`, `unk_31` |
+
+RENSYU's `RensyuClubCount` reads the same club words with a `u16` container and stays a separate view.
+
 ## Tool and workflow
 
 - `tools/migrate_globals.py --apply` rewrites `D_X` inside an aggregate to the subobject at `X - base` whose type equals the old declaration (own `extern`, the overlay header's override, else `main_api.h`), removes the absorbed declarations and their `MAIN_API_OVERRIDE_` guards, and leaves a use it cannot map for a hand rewrite (it keeps that symbol's declarations). Re-runnable; a migrated tree is a no-op. Without a declaration it rewrites only an offset where exactly one scalar starts (or one array, for an indexed use).

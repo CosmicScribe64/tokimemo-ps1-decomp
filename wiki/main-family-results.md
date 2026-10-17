@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # MAIN source family recovery
@@ -58,6 +58,8 @@ Both code-review skill axes (GPT-6.1 Sol medium) pass after removing redundant s
 Final isolated-branch census: 5887/6958 game functions, 1414152/2279368 game bytes (62.0%). Accepted gain is 6624 literal bytes: 2536 without new FAKE and 4088 with the two labeled frame-home locals. This bounded checkpoint is complete; the broader 80% goal and remaining MAIN work are ongoing. Integrate the entire T-14200 commit chain, including the final review corrections, before relying on the source-plausibility result.
 
 ## Types-first pass (T-17000)
+
+T-20900 update: `DisplayRecord44` (game.h and the local copy in `800674B0.c`) and `TextureRecord44` are `DisplayActor44`; `TelEntryFlags`, `EntryFlags54C`, `EntryFlags29` are `ScheduleEntryFlags` ([[data-types]], "Shared-type unification").
 
 Types-first pass of [[speedup-research-2026-10-16]] on the main executable ([[tickets/T-17000-types-first-main]],
 branch `w3-main-types` from `w2-good`): recover the shared types, redraft all 163 unmatched `src/main`

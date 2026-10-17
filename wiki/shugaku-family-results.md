@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # SHUGAKU family results
@@ -11,6 +11,8 @@ has a callback table that a dispatcher copies to the stack, and pointer tables f
 It shares templates with GEKO, GYOZI and EVENT (siblings in `tools/siblings.py`).
 
 ## Types-first pass (T-18000)
+
+T-20900 update: the copy of record 96 to 98 is a `DisplayActor44` assignment and its FAKE comment is gone; the byte views of `D_80120650` are record fields ([[data-types]], "Shared-type unification").
 
 [[tickets/T-18000-types-first-shugaku]] recovered SHUGAKU's shared types before function matching, redrafted
 the 25 unmatched functions (9,908 bytes, 3 guarded) and cut the rest into four packages (branch

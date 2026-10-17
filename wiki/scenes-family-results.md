@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # GEKO and DATE2 source-family work
@@ -49,6 +49,8 @@ Total **four functions / 2108 literal linked bytes**. List/instruction sizes can
 Independent standards and spec reviews of 0e670a13...1e2eb462 found no actionable findings. Standards review checked CODING_STANDARDS.md, source and proof logs; spec review checked ownership, verification and preservation. Original checkout remained read only. Branch codex/scenes-13900 is ready for parent integration; no PR or push performed.
 
 ## Types-first pass (T-17700)
+
+T-20900 update: GEKO's local `Ev44` record copy is a `DisplayActor44` assignment ([[data-types]], "Shared-type unification").
 
 [[tickets/T-17700-types-first-geko]] recovered GEKO's shared types before function matching, redrafted the 35
 unmatched GEKO functions with them and cut the rest into eight packages (branch `w3-geko-types`, from `w2-good`).

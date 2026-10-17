@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # GYOZI and SHOUGATU event families
@@ -54,6 +54,8 @@ Probe ledger: 47 full-TU scoring attempts across6 distinct targets; 44 nonzero/e
 Final handoff: codex/events-13200. Source gains are21df4fe7 and63d90035; final declaration/guard review repairs and this evidence are committed separately. Both review axes clear the source changes. Closure review confirms the negative particle result and excluded ASM controls; its stale pending-validation wording is corrected here. All744 baseline C bodies are unchanged.
 
 ## Types-first pass (T-17400)
+
+T-20900 update: `EventParticleView44` and `EventMotion44` are `DisplayFixActor44`; `EventFlagRecord44`, `Ev44` and the local `Words17` copies are `DisplayActor44` ([[data-types]], "Shared-type unification").
 
 This section is about the EVENT overlay (`src/ovl/EVENT`), not the GYOZI/SHOUGATU event scenes above. Wave-3
 types-first pass ([[tickets/T-17400-types-first-event]], [[speedup-research-2026-10-16]]), branch `w3-event-types`

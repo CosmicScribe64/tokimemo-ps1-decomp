@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # KANGEI family results
@@ -14,6 +14,8 @@ copies one set into `D_80139AD0`, `D_80139AD4` and `D_80139AD8`. Its data shares
 `KangeiWords11`/`KangeiWords2` tables) and MASTER (the falling streak effect).
 
 ## Types-first pass (T-18400)
+
+T-20900 update: `KangeiSprite44` is `DisplayFixActor44` (`unk_26` is `unk_24.h[1]`), `KangeiFixed32` is `Fix32`, `KgSlot` is `ScheduleClubFlags` (`grade` is `unk_25`) ([[data-types]], "Shared-type unification").
 
 [[tickets/T-18400-types-first-kangei]], branch `w3-kangei-types` from `w2-good`. At the start 13 functions
 were unmatched (9,184 bytes, census sizes), none of them guarded. Four matched during the pass (2,596 bytes):
