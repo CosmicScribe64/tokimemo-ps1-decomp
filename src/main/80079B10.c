@@ -404,7 +404,40 @@ void func_8007AEC0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007AF0C);
 
+/* NON_MATCHING: T-17012, 21 diff rows (about 10 differing lines); with the K&R u8 parameter the temporaries match but the selector sits in t6 where the original has `andi v0,a0,0xFF` plus an unused t6 temp; an s32 parameter with a u8 local gets v0 but starts the temporaries at t6. */
+#ifdef NON_MATCHING
+void func_8007B144(arg0)
+u8 arg0;
+{
+    switch (arg0) {
+    case 0x71:
+        if ((D_80125D10.unk_00 & 0x100) || (D_80125D10.unk_00 & 0x1000)) {
+            func_8008C720(D_80125D38, 0, 0);
+            func_80090580(D_80125D38);
+            func_800907E0(D_80125D38);
+        }
+        D_80125D3A = D_80125D3C;
+        D_80125D3C = -1;
+        D_80125D10.unk_00 = D_80125D10.unk_00 & ~0x100 & ~0x1000;
+        D_80125D14 &= ~1;
+        break;
+    case 0xE1:
+        if (D_80125D10.unk_00 & 0x100) {
+            func_80090AB0(D_80125D38);
+            D_80125D10.unk_00 = (D_80125D10.unk_00 & ~0x100) | 0x1000;
+        }
+        break;
+    case 0xF1:
+        if (D_80125D10.unk_00 & 0x1000) {
+            SsSeqReplay(D_80125D38);
+            D_80125D10.unk_00 = (D_80125D10.unk_00 & ~0x1000) | 0x100;
+        }
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B144);
+#endif
 
 /* FAKE: the constant branch retains the selector in v0. Keeping it on the
  * flag-store line also preserves the ORI scheduling. T-10020. */
