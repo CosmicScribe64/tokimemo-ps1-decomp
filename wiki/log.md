@@ -17610,3 +17610,7 @@ Opus closer for [[tickets/T-22002-w4-p02]]: `main:func_80079070` matched (1,204 
 ## [2026-10-17] ticket | T-22002 Done
 
 Code review of `w2-good...w4-p02` against CODING_STANDARDS.md: owned file only (`src/main/800789E0.c`), FAKE marks ticketed, no inline asm or game data. Stale "guarded" claims fixed in `wiki/index.md`, [[matching-notes]], [[data/t0018-cases]] and [[data/true-gaps]]. 1 of 1 matched (`main:func_80079070`, 1,204 B). [[tickets/T-22002-w4-p02]] moved to Done.
+
+## [2026-10-17] ticket | T-22012 In Progress
+
+Package w4-p12 started in worktree w4-p12 (branch from w2-good): BUNKASAI `src/ovl/BUNKASAI/801511E0.c`, `src/ovl/BUNKASAI/8013B190.c`, `src/ovl/BUNKASAI/80150930.c`, four functions. [[tickets/T-22012-w4-p12]], [[tickets/T-22000-wave-4-conveyor]].
