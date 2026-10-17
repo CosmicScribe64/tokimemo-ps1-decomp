@@ -16953,3 +16953,19 @@ main. `include/ovl/RPG_BAT.h`: the override wrapper for `func_8013F0F4` now cove
 order only, and a search for one uniform uopt allocator rule (traced uopt of [[uopt-register-allocation]], offline method
 of T-20610, IDO 5.2/4.1 components of [[ido-52-evaluation]]). Worktree `bs-gap-census` from `w2-good`. Card in
 [[kanban]] In Progress.
+
+## [2026-10-17] query | T-20710 true-gap census and rule search
+
+[[tickets/T-20710-true-gap-census]]: new data page [[data/true-gaps]] (55 guarded non-TT drafts whose difference is
+registers or order, 32,308 bytes): first divergence in uopt 28 (only 2 ties), as1 order 12, ugen 11 (5 block-copy
+state, 6 temporary numbering). No uopt tie-break rule can gain more than the 2 ties ([[uopt-register-allocation]]).
+IDO 4.1 and 5.2 re-downloaded from the recorded URLs (sha256 equal, gitignored `tools/local-compilers/`, Docker only):
+4.1's ugen has the original's block-copy state (no state F at a block start; 5.2 and 5.3 enter F there), which
+matches TACO `func_8013B2A0` and gives 5 more census functions the original's copy registers, but 4.1's ugen as a whole
+changes 1,307 of 6,337 matched C functions; 4.1's as1 equals 5.3's on 6,336 of 6,337 matched functions and gains nothing. Candidate rule documented in [[ido-52-evaluation]]
+(section "T-20710"), not adopted (no ugen source to implement it in). Reproducers:
+`tools/ido_eval_cases/ugen_copy_state/`. Note in [[toolchain]].
+
+## [2026-10-17] ticket | T-20710 In Review
+
+[[tickets/T-20710-true-gap-census]] In Progress to In Review; card moved in [[kanban]]. No build step added.
