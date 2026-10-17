@@ -17006,3 +17006,6 @@ KakarottoCake's PR #44 (claim #43): GYOZI func_80141944 and func_80145384 matche
 
 ## [2026-10-17] ticket | T-17013 Done
 [[tickets/T-17013-w3-main-p13]] reviewed against `CODING_STANDARDS.md`: 1 finding fixed (a source comment on the two always-true `v >= 0` tests of `func_8004AE54`, which the original asm has as `bltz`/`bgez`), no others. In Review to Done (kanban card moved). Matched 1 of 4 (`func_8004AE54`, 840 B), no FAKE, no guarded drafts; `func_8004B358`, `col2sepia` and `make_color_bar` stay `INCLUDE_ASM` with rows in [[data/t0018-cases]]. Unit sha1, headers and globals OK after the comment edit; the clean 27/27 build runs in the merge.
+
+## [2026-10-17] ticket | T-17020 Wave 3 package w3-main-p20 started
+[[tickets/T-17020-w3-main-p20]] In Progress: four main functions (`load_string`, `func_8004E58C`, `glyph_expand_1bpp`, `disp_string`) in `src/main/8004E500.c`, worktree tokimemo-wt/w3-main-p20, branch w3-main-p20. Part of [[tickets/T-17000-types-first-main]].
