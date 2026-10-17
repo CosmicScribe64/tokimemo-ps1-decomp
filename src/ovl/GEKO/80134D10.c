@@ -610,8 +610,6 @@ s32 func_80135A6C(void) {
     }
 }
 
-/* NON_MATCHING: T-17700, the census draft's merged store of unk_110D as a u8 local; 8 instructions differ: the original loads each unk_110D into $v0 with its %hi in $v0, IDO here uses $v1 */
-#ifdef NON_MATCHING
 s32 func_80135AC8(void) {
     u8 state;
 
@@ -620,7 +618,8 @@ s32 func_80135AC8(void) {
         main_state_set(0x52);
         return 0;
     }
-    state = D_800E6280.unk_110D;
+    /* FAKE: read through a u8 view so the base and the result share $v0 (T-22010). */
+    state = *(u8 *)&D_800E6280.unk_110D;
     if (state == 0) {
         func_800674B0();
         state = D_800E6280.unk_110D + 1;
@@ -633,6 +632,8 @@ s32 func_80135AC8(void) {
             D_800E6280.unk_110D = 0;
         }
         if (func_80044E8C() == 1) {
+            /* FAKE: the dead test gives the byte a second use, so uopt allocates $v0 for the load (T-22010). */
+            if ((s32)D_800E6280.unk_110D) {}
             D_800E6280.unk_110D += 1;
         } else {
             return 0;
@@ -641,9 +642,6 @@ s32 func_80135AC8(void) {
     D_80122D4C = 0;
     return func_80072B5C(1);
 }
-#else
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80135AC8);
-#endif
 
 void func_80135BC4(void) {
     D_800B3D60 = 0;
