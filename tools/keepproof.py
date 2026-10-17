@@ -24,12 +24,14 @@ tool turns "the separate symbol is needed" into a check anyone can repeat:
 verify_config() here and recompiles.
 
 Usage (Docker, repo root, after configure.py and a build):
-  python3 tools/keepproof.py check UNIT:func --symbol D_800E7384 [--src FILE] [--declare s32]
-                                             [--reason TEXT] [--no-build]
+  python3 tools/keepproof.py check UNIT:func --symbol D_800E7384 [--src FILE | --from-draft] [--declare s32]
+                                             [--write-scratch FILE] [--reason TEXT] [--no-build]
       prove the symbol necessary for func and print the ready-made keep line. --src names a scratch copy
       of the unit's C file (the committed file is the default); the function must be plain C there.
       --declare TYPE adds `extern TYPE SYMBOL;` after the includes when no header declares the symbol
       (the declaration the package adds to include/main_api.h together with the keep line).
+      --from-draft proves the committed guarded draft written as plain C with the separate symbol in the
+      statement of its last use of the field (--write-scratch FILE keeps that text for the package).
       Exit 0 when the proof holds, 1 otherwise.
   python3 tools/keepproof.py census [--json OUT] [--top N]
       the counter-tail shape in the original asm of every function (see SHAPE below), and for the
@@ -98,10 +100,38 @@ def declare_symbol(text, views, symbol, ctype):
     return "%sextern %s %s;\n%s" % (text[:at], ctype, symbol, text[at:])
 
 
+def unguard(text, func):
+    """`text` with the NON_MATCHING arm of the guarded draft of `func` as plain C (the INCLUDE_ASM arm
+    dropped), or None when `func` has no such guard."""
+    m = re.search(r'#ifdef NON_MATCHING\n(.*?)#else\nINCLUDE_ASM\("[^"]*",\s*%s\);\n#endif\n' % re.escape(func),
+                  text, re.S)
+    return text[:m.start()] + m.group(1) + text[m.end():] if m else None
+
+
+def from_draft(text, aggs, func, symbol):
+    """(plain text, type): the committed guarded draft of `func` written as plain C whose last statement
+    on the aggregate field of `symbol` uses the separate symbol (`D_800E7384 += 1;`; a volatile cast or an
+    absolute address of the draft's tail goes). A starting point for the package that commits the line;
+    FAKE comments of the draft stay for the author to rewrite."""
+    plain = unguard(text, func)
+    if plain is None:
+        raise FoldError("%s has no NON_MATCHING guard with an INCLUDE_ASM arm in the source" % func)
+    span = function_span(plain, func)
+    uses = field_uses(plain[span[0]:span[1]], aggs[0])
+    key = next((k for k in uses if k[0] == symbol), None)
+    if key is None:
+        raise FoldError("%s does not use the field at %s" % (func, symbol))
+    body = separate_variants(plain[span[0]:span[1]], symbol, uses[key])["tail"]
+    return plain[:span[0]] + body + plain[span[1]:], key[1]
+
+
 # ------------------------------------------------------------------------------------- toolchain
 
 class Toolchain:
-    """The compile and score steps (Docker): the pipeline of funcdiff for a text variant of a unit."""
+    """The compile and score steps (Docker): the pipeline of funcdiff for a text variant of a unit.
+    `diff` holds the funcdiff rows (- original, + built) of the last rows() call."""
+
+    diff = ()
 
     def locate(self, func, scope):
         import funcdiff
@@ -129,7 +159,8 @@ class Toolchain:
         got = funcdiff.resolved_functions(obj, [func])[func]
         if want is None or got is None:
             raise ValueError("%s is missing from the %s object" % (func, "original" if want is None else "built"))
-        return diff_rows(funcdiff.keys(want), funcdiff.keys(got), funcdiff.diff_lines(want, got))
+        self.diff = funcdiff.diff_lines(want, got)
+        return diff_rows(funcdiff.keys(want), funcdiff.keys(got), self.diff)
 
     def exact(self, c, obj, func, work, build=True):
         """(equal, explanation): the literal-byte proof of funcdiff, the object linked in the unit."""
@@ -158,6 +189,7 @@ class Result:
         self.rows_with = None
         self.rows_without = None
         self.sha = None
+        self.diff_with = []
         self.problems = []
 
     @property
@@ -186,6 +218,9 @@ class Result:
                 yes[self.necessary], self.rows_without))
         if self.sha:
             out.append("  asm sha1:     %s" % self.sha)
+        if self.sufficient is False and self.diff_with:
+            out.append("  rows with the separate symbol (- original, + built):")
+            out += ["    " + x for x in self.diff_with[:12]]
         for p in self.problems:
             out.append("  problem:      %s" % p)
         out.append("  verdict:      %s" % ("PROVEN" if self.ok else "NOT PROVEN"))
@@ -218,19 +253,24 @@ def prove(tc, root, aggs, c, func, symbol, text, declare=None, work=None, build=
     own = tempfile.TemporaryDirectory(prefix="keepproof-") if work is None else None
     base = Path(work) if work else Path(own.name)
     try:
-        for name, body in (("with", with_text), ("without", without_text)):
+        # necessity first: a folded source that already matches ends the check without the second compile
+        for name, body in (("without", without_text), ("with", with_text)):
             d = base / name
             d.mkdir(parents=True, exist_ok=True)
             try:
                 obj = tc.compile(c, body, d)
                 rows = tc.rows(c, obj, func)
-                if name == "with":
-                    res.rows_with = rows
-                    res.sufficient, res.why = tc.exact(c, obj, func, d, build)
-                else:
+                if name == "without":
                     res.rows_without = rows
+                    if rows == 0:
+                        break
+                else:
+                    res.rows_with = rows
+                    res.diff_with = list(getattr(tc, "diff", ()))
+                    res.sufficient, res.why = tc.exact(c, obj, func, d, build)
             except (ValueError, OSError, SystemExit) as e:
-                res.problems.append("%s compile or score failed: %s" % (name, str(e).strip().splitlines()[-1] if str(e).strip() else e))
+                msg = str(e).strip()
+                res.problems.append("%s compile or score failed: %s" % (name, msg.splitlines()[-1] if msg else e))
                 return res
     finally:
         if own:
@@ -243,7 +283,7 @@ def verify_config(root, aggs, keep, tc=None):
     tc = tc or Toolchain()
     lines = []
     for rel, syms in sorted(keep.items()):
-        for sym, proof in sorted(getattr(syms, "proofs", {}).items()):
+        for sym, proof in [(s, pr) for s, prs in sorted(getattr(syms, "proofs", {}).items()) for pr in prs]:
             try:
                 c = tc.locate(proof.func, rel)
             except Exception as e:                  # LocateError, AmbiguousError
@@ -404,24 +444,7 @@ def shape_hits(lines, unit, syms, ranges):
 
 # ------------------------------------------------------------------------------------- census: C side
 
-def function_span(text, func):
-    """(start, end) of the definition of `func` in `text` (line start to the closing brace), or None."""
-    m = re.search(r"^[A-Za-z_][\w \t*]*[ \t*]%s\(" % re.escape(func), text, re.M)
-    if not m:
-        return None
-    i = text.find("{", m.end())
-    if i < 0:
-        return None
-    depth, j = 0, i
-    code = re.compile(r'/\*.*?\*/|//[^\n]*|"(?:\\.|[^"\\\n])*"|\'(?:\\.|[^\'\\\n])*\'|[{}]', re.S)
-    for t in code.finditer(text, i):
-        if t.group(0) == "{":
-            depth += 1
-        elif t.group(0) == "}":
-            depth -= 1
-            if depth == 0:
-                return m.start(), t.end()
-    return None
+function_span = mg.function_span
 
 
 def leading_comment(text, start):
@@ -441,7 +464,8 @@ def classify_c(text, func, aggs):
     keep      a separate field symbol (D_XXXXXXXX inside an aggregate) is used,
     volatile  a line with `volatile` that names an aggregate or an address inside one,
     absolute  a numeric address literal inside an aggregate (`*(s32 *)0x800E7384`),
-    fake      a FAKE comment on the function (any reason; informational)."""
+    fake      a FAKE comment on the function (any reason; informational),
+    local     a `GameState *g = ...` pointer local (ordinary C; informational)."""
     span = function_span(text, func)
     if span is None:
         return None
@@ -460,6 +484,8 @@ def classify_c(text, func, aggs):
             tags.add("volatile")
     if "FAKE" in body or "FAKE" in leading_comment(text, span[0]):
         tags.add("fake")
+    if any(re.search(r"\b%s\s*\*\s*\w+\s*=" % re.escape(g.tname), body) for g in aggs):
+        tags.add("local")          # a pointer local to the aggregate: ordinary C, informational
     return tags
 
 
@@ -538,6 +564,7 @@ def summarize(funcs):
         "held_false_positive_rate": (len(held_plain) / len(held_classified)) if held_classified else None,
         "held_unmatched": sum(1 for f in unmatched if any(h.held for h in f.hits)),
         "trick_counts": dict(Counter(t for f in classified for t in f.tags if t in tricks)),
+        "other_tags": dict(Counter(t for f in classified for t in f.tags if t not in tricks)),
     }
 
 
@@ -550,7 +577,8 @@ def census_text(funcs, top=40):
                s["hit_functions"], s["hit_matched"], s["hit_unmatched"]),
            "  matched, C found and plain:  %d of %d needed no keep, volatile or absolute address: "
            "false-positive rate %s" % (s["matched_plain"], s["matched_classified"], pct(s["false_positive_rate"])),
-           "  matched that needed a trick: %d  %s" % (s["matched_trick"], s["trick_counts"] or ""),
+           "  matched that needed a trick: %d  %s   (other tags among the matched: %s)" % (
+               s["matched_trick"], s["trick_counts"] or "", s["other_tags"] or "none"),
            "  held across a call (the func_8014616C form): %d matched (plain %d, false-positive rate %s), "
            "%d unmatched" % (s["held_matched"], s["held_matched_plain"], pct(s["held_false_positive_rate"]),
                              s["held_unmatched"])]
@@ -581,10 +609,12 @@ def census_json(funcs):
 
 # ------------------------------------------------------------------------------------- rows
 
-CONTROLS = [("TACO", "func_8014616C"), ("TACO", "func_80146754"), ("TACO", "func_801484E4"),
-            ("TACO", "func_80149538")]
-CANDIDATES = [("OMIMAI", "func_8013388C"), ("main", "func_800590CC"), ("main", "func_800591D8"),
-              ("TACO", "func_8013506C"), ("SHOUGATU", "func_801347E0"), ("main", "csr_load_vram")]
+# (unit, function, extra declaration lines the draft needs in today's tree)
+CONTROLS = [("TACO", "func_8014616C", ()), ("TACO", "func_80146754", ("#define D_8015F830 D_8015F82C[1]",)),
+            ("TACO", "func_801484E4", ()), ("TACO", "func_80149538", ())]
+CANDIDATES = [("OMIMAI", "func_8013388C", ("void func_801340E4(void);",)), ("main", "func_800590CC", ()),
+              ("main", "func_800591D8", ()), ("TACO", "func_8013506C", ()), ("SHOUGATU", "func_801347E0", ()),
+              ("main", "csr_load_vram", ())]
 
 PATH_RE = re.compile(r"(?:\.\w+|\[\s*(?:0x[0-9A-Fa-f]+|\d+)\s*\])+")
 
@@ -607,98 +637,159 @@ def path_target(agg, path):
     return off, t
 
 
+CAST_RE = re.compile(r"\*\s*\(\s*(?:volatile\s+)?(\w+)\s*\*\s*\)\s*&?\s*$")
+ABS_RE = re.compile(r"\*\s*\(\s*(?:volatile\s+)?(\w+)\s*\*\s*\)\s*0x([0-9A-Fa-f]{8})\b")
+
+
 def field_uses(text, agg):
-    """{(symbol, type spelling): [span]} of the constant scalar field paths of `agg` used in `text`."""
+    """{(symbol, type spelling): [(start, end)]} of the uses of scalar fields of `agg` in `text`: the
+    constant field paths (`D_800E6280.unk_1104.w`, also inside a `*(volatile s32 *)&...` cast of the
+    field's own type) and the absolute reads/writes of a field's address (`*(s32 *)0x800E7384`)."""
     out = defaultdict(list)
     for m in re.finditer(r"\b%s(%s)" % (re.escape(agg.base), PATH_RE.pattern), text):
         target = path_target(agg, m.group(1))
-        if target and target[1].kind == "scalar":
-            out[("D_%08X" % (agg.addr + target[0]), target[1].spell())].append((m.start(), m.end()))
+        if not target or target[1].kind != "scalar":
+            continue
+        start = m.start()
+        wrap = CAST_RE.search(text[:start])
+        if wrap and wrap.group(1) == target[1].spell() and text[:start].rstrip().endswith("&"):
+            start = wrap.start()
+        out[("D_%08X" % (agg.addr + target[0]), target[1].spell())].append((start, m.end()))
+    for m in ABS_RE.finditer(text):
+        addr = int(m.group(2), 16)
+        if agg.addr < addr < agg.end:
+            scalar = [t for _p, t in mg.subobjects(agg.type, addr - agg.addr)
+                      if t.kind == "scalar" and t.spell() == m.group(1)]
+            if scalar:
+                out[("D_%08X" % addr, m.group(1))].append((m.start(), m.end()))
+    for spans in out.values():
+        spans.sort()
     return out
 
 
-def separate_variants(body, agg, sym, ctype, spans):
-    """{mode: body}: every use of the field (mode all) or only its last use (mode last) written as the
-    separate symbol `sym`."""
-    def put(chosen):
-        out, last = [], 0
-        for s, e in chosen:
-            out.append(body[last:s] + sym)
-            last = e
-        return "".join(out) + body[last:]
-    return {"all": put(spans), "last": put(spans[-1:])}
+def replace_spans(body, items):
+    """`body` with the (start, end, text) items replaced; items are sorted and do not overlap."""
+    out, last = [], 0
+    for s, e, text in sorted(items):
+        out.append(body[last:s] + text)
+        last = e
+    return "".join(out) + body[last:]
+
+
+def separate_variants(body, sym, spans):
+    """{mode: body}: every use of the field written as `sym` (all), or the uses in the statement of the
+    last use only (tail: `D += 1;` at the end of a function, FAKE casts and absolute addresses included)."""
+    last_s, last_e = spans[-1]
+    lo = max(body.rfind(c, 0, last_s) for c in ";{}") + 1
+    hi = body.find(";", last_e) + 1 or len(body)
+    return {"all": replace_spans(body, [(s, e, sym) for s, e in spans]),
+            "tail": replace_spans(body, [(s, e, sym) for s, e in spans if lo <= s and e <= hi])}
+
+
+def with_lines(text, lines):
+    """`text` plus declaration `lines` after its last #include."""
+    if not lines:
+        return text
+    incl = list(re.finditer(r"^[ \t]*#[ \t]*include[^\n]*\n", text, re.M))
+    at = incl[-1].end() if incl else 0
+    return text[:at] + "".join(x + "\n" for x in lines) + text[at:]
 
 
 def archived_draft(root, unit, func):
-    """Newest archived context.c of the draft for `func` in drafts/ (highest ticket number), or None."""
+    """Folder of the newest archived draft of `func` in drafts/ (highest ticket number) that has a
+    body.c, or None."""
     best = None
-    base = Path(root) / "drafts"
-    for p in base.glob("*/%s/%s/context.c" % (unit, func)):
+    for p in (Path(root) / "drafts").glob("*/%s/%s/body.c" % (unit, func)):
         key = (p.parent.parent.parent.name, str(p))
         if best is None or key > best[0]:
-            best = (key, p)
+            best = (key, p.parent)
     return best[1] if best else None
 
 
-def draft_source(root, c, func):
-    """(text, origin): the guarded NON_MATCHING draft of `func` in its committed file, else the newest
-    archived draft context of the function; (None, reason) when there is none."""
+def draft_source(root, c, func, extra=()):
+    """(text, origin): the guarded NON_MATCHING draft of `func` in its committed file; else the newest
+    archived draft (body.c, declarations.h of drafts/*/<unit>/<func>) spliced into the committed file in
+    place of the function's INCLUDE_ASM line (bulk_m2c.insert_draft); (None, reason) when there is none.
+    `extra` declaration lines (what today's headers need) are added after the includes."""
     text = mg.read(str(c.src))
     import srcscan
     defined = set(srcscan.DEF_RE.findall(text)) | set(srcscan.KR_DEF_RE.findall(text))
     if func in defined and not mg.plain_c(text, func):
-        return text, "committed guarded draft"
-    p = archived_draft(root, c.unit, func)
-    if p is not None:
-        return mg.read(str(p)), "archived draft %s" % p
-    return None, "no draft"
+        return with_lines(text, extra), "committed guarded draft"
+    folder = archived_draft(root, c.unit, func)
+    if folder is None:
+        return None, "no draft"
+    import bulk_m2c
+    decls = []
+    if (folder / "declarations.h").exists():
+        decls = [x for x in (folder / "declarations.h").read_text().splitlines() if x.strip()]
+    spliced = bulk_m2c.insert_draft(text, func, (folder / "body.c").read_text(), decls)
+    if spliced is None:
+        return None, "cannot splice %s (no plain INCLUDE_ASM line)" % folder
+    return with_lines(spliced, extra), "archived draft %s" % folder
 
 
-def run_rows(root, aggs, targets, max_fields, tc=None, out=print):
+def compiler_error(e):
+    """The line of a toolchain failure that says what is wrong (an `error` line, else the last line)."""
+    lines = [x.strip() for x in str(e).strip().splitlines() if x.strip()]
+    hit = [x for x in lines if re.search(r"\berror\b|Error:|undefined|not declared", x, re.I)]
+    return (hit or lines or [str(e)])[0][:160]
+
+
+def run_rows(root, aggs, targets, max_fields, tc=None, out=lambda s: print(s, flush=True)):
+    """Rows of each target draft as it is (base) and with the aggregate fields it uses written as
+    separate symbols: one field at a time, every use (all) or only the statement of the last use
+    (tail), and all of the picked fields at once. The base symbol of the aggregate is not a field. Returns dicts."""
     tc = tc or Toolchain()
     agg = aggs[0]
     views = mg.Views(root)
-    out("%-9s %-15s %-26s %-6s %5s %7s %7s %7s  %s" % (
-        "unit", "function", "field", "uses", "", "base", "all", "last", "draft"))
+    fmt = "%-9s %-15s %-24s %5s %6s %6s %6s  %s"
+    out(fmt % ("unit", "function", "separate symbol", "uses", "base", "all", "tail", "draft"))
     results = []
-    for unit, func in targets:
+    for unit, func, extra in targets:
         try:
             c = tc.locate(func, unit)
         except Exception as e:
             out("%-9s %-15s %s" % (unit, func, e))
             continue
-        text, origin = draft_source(root, c, func)
-        if text is None:
-            out("%-9s %-15s no draft (%s)" % (unit, func, origin))
-            continue
-        span = function_span(text, func)
+        text, origin = draft_source(root, c, func, extra)
+        span = function_span(text, func) if text is not None else None
         if span is None:
-            out("%-9s %-15s draft has no definition (%s)" % (unit, func, origin))
+            out("%-9s %-15s %s" % (unit, func, "no draft to score (%s)" % origin if text is None else
+                                   "the draft has no definition (%s)" % origin))
             continue
         body = text[span[0]:span[1]]
-        uses = field_uses(body, agg)
-        picks = sorted(uses.items(), key=lambda kv: -len(kv[1]))[:max_fields]
-        with tempfile.TemporaryDirectory(prefix="keeprows-") as tmp:
+        picks = [kv for kv in sorted(field_uses(body, agg).items(), key=lambda kv: -len(kv[1]))
+                 if kv[0][0] != agg.base][:max_fields]
+
+        def score(variant, ctypes, name, tmp):
+            for sym, ctype in ctypes:
+                variant = declare_symbol(variant, views, sym, ctype)
             try:
-                base = tc.rows(c, tc.compile(c, text, Path(tmp) / "base", True), func)
+                return tc.rows(c, tc.compile(c, variant, Path(tmp) / name, True), func)
             except (ValueError, OSError, SystemExit) as e:
-                out("%-9s %-15s baseline failed: %s" % (unit, func, str(e).strip().splitlines()[-1]))
+                return "err: " + compiler_error(e)
+
+        with tempfile.TemporaryDirectory(prefix="keeprows-") as tmp:
+            base = score(text, [], "base", tmp)
+            if not isinstance(base, int):
+                out(fmt % (unit, func, "", "", base, "", "", origin))
                 continue
             if not picks:
-                out("%-9s %-15s %-26s %-6s %5s %7d %7s %7s  %s" % (unit, func, "(no scalar field)", 0, "", base, "-", "-", origin))
+                out(fmt % (unit, func, "(no scalar field used)", 0, base, "-", "-", origin))
             for (sym, ctype), spans in picks:
                 row = {"unit": unit, "func": func, "symbol": sym, "uses": len(spans), "base": base}
-                for mode, nb in separate_variants(body, agg, sym, ctype, spans).items():
-                    variant = text[:span[0]] + nb + text[span[1]:]
-                    variant = declare_symbol(variant, views, sym, ctype)
-                    try:
-                        row[mode] = tc.rows(c, tc.compile(c, variant, Path(tmp) / (sym + mode), True), func)
-                    except (ValueError, OSError, SystemExit) as e:
-                        row[mode] = None
+                for mode, nb in separate_variants(body, sym, spans).items():
+                    row[mode] = score(text[:span[0]] + nb + text[span[1]:], [(sym, ctype)], sym + mode, tmp)
                 results.append(row)
-                out("%-9s %-15s %-26s %-6d %5s %7s %7s %7s  %s" % (
-                    unit, func, sym + " " + ctype, len(spans), "", base,
-                    "err" if row["all"] is None else row["all"], "err" if row["last"] is None else row["last"], origin))
+                out(fmt % (unit, func, "%s %s" % (sym, ctype), len(spans), base, row["all"], row["tail"], origin))
+            if len(picks) > 1:
+                items = [(s, e, sym) for (sym, _t), spans in picks for s, e in spans]
+                every = score(text[:span[0]] + replace_spans(body, items) + text[span[1]:], [k for k, _v in picks],
+                              "every", tmp)
+                results.append({"unit": unit, "func": func, "symbol": "every", "uses": len(items), "base": base,
+                                "all": every, "tail": None})
+                out(fmt % (unit, func, "all %d fields" % len(picks), len(items), base, every, "-", origin))
     return results
 
 
@@ -712,6 +803,10 @@ def main(argv=None):
     ck.add_argument("target", help="UNIT:func (a unit name, or a C file path before the colon)")
     ck.add_argument("--symbol", required=True)
     ck.add_argument("--src", help="scratch copy of the unit's C file (default: the committed file)")
+    ck.add_argument("--from-draft", action="store_true",
+                    help="prove the committed guarded draft written as plain C with the separate symbol "
+                         "in its last statement on the field (implies --declare with the field's type)")
+    ck.add_argument("--write-scratch", metavar="FILE", help="write the text that --from-draft proves")
     ck.add_argument("--declare", metavar="TYPE", help="declare the symbol with this type when no header does")
     ck.add_argument("--reason", default=DEFAULT_REASON)
     ck.add_argument("--no-build", action="store_true", help="do not run ninja for the unit's link inputs")
@@ -719,7 +814,8 @@ def main(argv=None):
     ce.add_argument("--json")
     ce.add_argument("--top", type=int, default=40)
     rw = sub.add_parser("rows", help="controls and candidates as drafts: rows with and without a separate symbol")
-    rw.add_argument("--only", nargs="*", help="function names to run (default: controls and candidates)")
+    rw.add_argument("--only", nargs="*", help="function names to run (default: the six candidates)")
+    rw.add_argument("--controls", action="store_true", help="add the four counter-tail functions of TACO")
     rw.add_argument("--max-fields", type=int, default=4)
     a = ap.parse_args(argv)
     if a.root != ".":
@@ -740,11 +836,22 @@ def main(argv=None):
             print("keepproof: %s" % e)
             return 1
         text = mg.read(a.src or str(c.src))
-        res = prove(tc, ".", aggs, c, func, a.symbol, text, a.declare, build=not a.no_build)
+        declare = a.declare
+        if a.from_draft:
+            try:
+                text, ctype = from_draft(text, aggs, func, a.symbol)
+            except FoldError as e:
+                print("keepproof: %s" % e)
+                return 1
+            declare = declare or ctype
+            if a.write_scratch:
+                with open(a.write_scratch, "w") as f:
+                    f.write(text)
+        res = prove(tc, ".", aggs, c, func, a.symbol, text, declare, build=not a.no_build)
         print(res.report())
-        if a.src:
-            print("  note:         --src %s was proven, not the committed %s; commit it before adding the line"
-                  % (a.src, res.src_rel))
+        if a.src or a.from_draft:
+            print("  note:         %s was proven, not the committed %s; commit it before adding the line"
+                  % ("the draft written as plain C" if a.from_draft else "--src " + a.src, res.src_rel))
         if res.ok:
             print("\n" + res.keep_line(a.reason))
         return 0 if res.ok else 1
@@ -755,7 +862,7 @@ def main(argv=None):
             with open(a.json, "w") as f:
                 json.dump(census_json(funcs), f, indent=1)
         return 0
-    targets = [t for t in CONTROLS + CANDIDATES if not a.only or t[1] in a.only]
+    targets = [t for t in (CONTROLS if a.controls or a.only else []) + CANDIDATES if not a.only or t[1] in a.only]
     run_rows(".", aggs, targets, a.max_fields)
     return 0
 

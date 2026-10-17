@@ -245,8 +245,10 @@ class MigrateTest(unittest.TestCase):
         self.assertEqual(keep["src/main/a.c"], {"D_80100002"})
         self.assertEqual(keep["src/main/a.c"].proofs, {})
         self.assertEqual(keep["src/main/b.c"], {"D_80100004"})
-        proof = keep["src/main/b.c"].proofs["D_80100004"]
+        proof = keep["src/main/b.c"].proofs["D_80100004"][0]
         self.assertEqual((proof.func, proof.rows, proof.sha), ("f", 242, "0123abcd"))
+        self.assertEqual(keep["src/main/a.c"].plain, {"D_80100002"})
+        self.assertEqual(keep["src/main/b.c"].plain, set())
         self.assertEqual(str(proof), "proof=f:242:0123abcd")
 
     def test_malformed_proof_is_a_config_error(self):
@@ -297,8 +299,8 @@ class MigrateTest(unittest.TestCase):
                     '#include "main_api.h"\nvoid g(void) { D_80100002 = 1; }\n'):
             self.proof_tree(src=src)
             msgs = self.check_lines()
-            self.assertEqual(len(msgs), 1, src)
-            self.assertIn("is not plain C", msgs[0])
+            self.assertIn("is not plain C", msgs[0], src)
+            self.assertTrue(all("not plain C" in m or "used outside f" in m for m in msgs), msgs)
 
     def test_proof_without_original_asm_is_rejected(self):
         self.proof_tree(asm=False)
@@ -336,6 +338,54 @@ class MigrateTest(unittest.TestCase):
             fake.verify_config.reset_mock()
             self.assertEqual(mg.main(["--root", self.root, "--check"]), 0)       # --check never compiles
             fake.verify_config.assert_not_called()
+
+    TWO = ('#include "main_api.h"\nvoid f(void) { D_80100002 = 1; }\nvoid g(void) { D_80100002 = 2; }\n'
+           'void h(void) { D_80100000.unk_02 = 3; }\n')
+
+    def put_two_func_asm(self):
+        self.put_func_asm()
+        self.put_func_asm(words=self.FUNC_ROWS[:-1] + ["00000002"], name="g")
+        d = "asm/matchings/main/80010000/"
+        return (mg.asm_sha1(self.get(d + "f.s")), mg.asm_sha1(self.get(d + "g.s")))
+
+    def test_one_proof_line_per_function_of_the_same_symbol(self):
+        sf, sg = self.put_two_func_asm()
+        self.put("config/migrate_globals.txt", CONFIG +
+                 "keep src/main/80010000.c D_80100002 proof=f:5:%s first\n"
+                 "keep src/main/80010000.c D_80100002 proof=g:9:%s second\n" % (sf, sg))
+        self.put("src/main/80010000.c", self.TWO)
+        self.assertEqual(self.apply(), 0)
+        _aggs, keep = mg.load_config(self.root)
+        self.assertEqual([p.func for p in keep["src/main/80010000.c"].proofs["D_80100002"]], ["f", "g"])
+        self.assertEqual(self.check_lines(), [])
+        # g's original changes: its line goes stale, f's stays good
+        self.put_func_asm(words=self.FUNC_ROWS[:-1] + ["00000003"], name="g")
+        msgs = self.check_lines()
+        self.assertEqual(len(msgs), 1)
+        self.assertIn("proof=g:9:", msgs[0])
+
+    def test_kept_symbol_used_outside_its_proven_function_is_flagged(self):
+        sf, _sg = self.put_two_func_asm()
+        self.put("config/migrate_globals.txt", CONFIG +
+                 "keep src/main/80010000.c D_80100002 proof=f:5:%s first\n" % sf)
+        self.put("src/main/80010000.c", self.TWO)
+        self.assertEqual(self.apply(), 0)                     # --apply leaves the kept symbol everywhere
+        msgs = self.check_lines()
+        self.assertEqual(len(msgs), 1)
+        self.assertIn("src/main/80010000.c:3: keep D_80100002 used outside f", msgs[0])
+        # a plain (hoisted pair) line for the same symbol covers the whole file
+        self.put_asm(hoisted=True)
+        self.put("config/migrate_globals.txt", CONFIG +
+                 "keep src/main/80010000.c D_80100002 proof=f:5:%s first\n"
+                 "keep src/main/80010000.c D_80100002 plain reason\n" % sf)
+        self.assertEqual(self.check_lines(), [])
+
+    def test_function_span(self):
+        text = 'void f(void) {\n    s("}"); /* } */\n    if (1) { g(); }\n}\nvoid h(void) {\n}\n'
+        s, e = mg.function_span(text, "f")
+        self.assertEqual(text[s:e].count("{"), 2)
+        self.assertEqual(text[e:].lstrip(), "void h(void) {\n}\n")
+        self.assertIsNone(mg.function_span(text, "zz"))
 
     def test_plain_c(self):
         self.assertTrue(mg.plain_c("void f(void) {\n}\n", "f"))

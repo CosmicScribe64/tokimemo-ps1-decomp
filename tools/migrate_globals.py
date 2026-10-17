@@ -31,6 +31,8 @@ that the same C with the symbol folded into the aggregate does not (<rows> > 0 d
 and not a NON_MATCHING guard) and <sha> is the first 8 hex digits of the sha1 over the instruction words of
 the function's original asm (asm_sha1); a stale sha or a function that is not plain C is rejected.
 `--verify-proofs` recompiles (tools/keepproof.py): the necessity and the sufficiency of every proof line.
+A file may carry one proof line per function for the same symbol. A symbol kept by proof lines alone may
+be used only inside the functions they name; `--check` lists every other use (write the field access).
 
 The layout comes from the header itself: `typedef struct|union Name { ... } Name;` blocks with
 fields of the fixed-width types, pointers, arrays, bit-fields (packed into u32 units) and other
@@ -93,11 +95,13 @@ class Proof:
 
 
 class KeepSet(set):
-    """The symbols one file keeps; `proofs` maps a symbol to its Proof when the keep line has one."""
+    """The symbols one file keeps. `proofs` maps a symbol to the Proofs of its keep lines (one per proven
+    function); `plain` holds the symbols that have a line without a proof."""
 
     def __init__(self, items=()):
         super().__init__(items)
         self.proofs = {}
+        self.plain = set()
 
 
 def parse_proof(field):
@@ -124,6 +128,26 @@ def plain_c(text, name):
     defined = set(srcscan.DEF_RE.findall(text)) | set(srcscan.KR_DEF_RE.findall(text))
     asm = {n for _folder, n in srcscan.INCLUDE_ASM_RE.findall(text)}
     return name in defined and name not in asm
+
+
+def function_span(text, func):
+    """(start, end) of the C definition of `func` in `text` (line start to the closing brace), or None."""
+    m = re.search(r"^[A-Za-z_][\w \t*]*[ \t*]%s\(" % re.escape(func), text, re.M)
+    if not m:
+        return None
+    i = text.find("{", m.end())
+    if i < 0:
+        return None
+    depth = 0
+    code = re.compile(r'/\*.*?\*/|//[^\n]*|"(?:\\.|[^"\\\n])*"|\'(?:\\.|[^\'\\\n])*\'|[{}]', re.S)
+    for tok in code.finditer(text, i):
+        if tok.group(0) == "{":
+            depth += 1
+        elif tok.group(0) == "}":
+            depth -= 1
+            if depth == 0:
+                return m.start(), tok.end()
+    return None
 
 
 class LayoutError(Exception):
@@ -324,7 +348,9 @@ def load_config(root, path=None):
                 if proof is None or len(parts) < 5:
                     raise SystemExit("%s:%d: cannot parse '%s' (keep <file> <symbol> "
                                      "proof=<func>:<rows_without > 0>:<asm_sha1_8> <reason>)" % (p, n, line))
-                kept.proofs[parts[2]] = proof
+                kept.proofs.setdefault(parts[2], []).append(proof)
+            else:
+                kept.plain.add(parts[2])
             kept.add(parts[2])
         else:
             raise SystemExit("%s:%d: cannot parse '%s'" % (p, n, line))
@@ -686,10 +712,34 @@ def check(root, aggs, keep):
         for sym in sorted(syms):
             if sym not in views.main:
                 lines.append("%s: %s: kept symbol %s is not declared in include/main_api.h" % (CONFIG, p, sym))
-            ok, why = keep_evidence(root, aggs, p, sym, proofs.get(sym))
-            if not ok:
-                lines.append("%s: %s: keep %s: %s" % (CONFIG, p, sym, why))
+            for proof in proofs.get(sym) or [None]:
+                ok, why = keep_evidence(root, aggs, p, sym, proof)
+                if not ok:
+                    lines.append("%s: %s: keep %s: %s" % (CONFIG, p, sym, why))
+            if proofs.get(sym) and sym not in getattr(syms, "plain", ()):
+                lines += stray_uses(root, p, sym, proofs[sym])
     return lines
+
+
+def stray_uses(root, rel, sym, proofs):
+    """Lines for the uses of a symbol kept by proofs alone that lie outside the proven functions: a
+    proof covers the function it names, every other access is a field of the aggregate."""
+    path = os.path.join(root, rel)
+    if not os.path.exists(path):
+        return []
+    text = read(path)
+    spans = [function_span(text, pr.func) for pr in proofs]
+    decls = [(m.start(), m.end()) for m in DECL_RE.finditer(text)]
+    out = []
+    for s, _e, tok in code_tokens(text):
+        if tok != sym or any(a <= s < b for a, b in decls):
+            continue
+        if not any(sp and sp[0] <= s < sp[1] for sp in spans):
+            out.append("%s: %s:%d: keep %s used outside %s: a proof covers its function only, write the field "
+                       "access elsewhere (wiki/keep-lines.md)" % (
+                           CONFIG, rel, text.count("\n", 0, s) + 1, sym,
+                           ", ".join(sorted({pr.func for pr in proofs}))))
+    return out
 
 
 def object_asm_files(root, rel):

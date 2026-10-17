@@ -482,11 +482,12 @@ def aggregate_warnings(model):
         return []
     import migrate_globals as mg
     try:
-        aggs, _keep = mg.load_config(model.root, cfg)
+        aggs, keep = mg.load_config(model.root, cfg)
     except SystemExit:
         return []
+    kept = set().union(*keep.values()) if keep else set()     # a keep line declares its symbol on purpose
     out = []
-    for name in sorted(set(candidates(model)) | set(model.api)):
+    for name in sorted((set(candidates(model)) | set(model.api)) - kept):
         a = model.addr(name)
         for g in aggs:
             if a is not None and g.holds(a):

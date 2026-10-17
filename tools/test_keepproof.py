@@ -151,9 +151,9 @@ class ProveTest(Tree):
         self.assertTrue(res.ok, res.report())
         self.assertEqual((res.rows_with, res.rows_without), (0, 7))
         self.assertEqual(res.sha, mg.asm_sha1(mg.read(os.path.join(self.root, "asm/matchings/main/80010000/f.s"))))
-        self.assertEqual(len(self.tc.compiles), 2)                           # symbol separate, symbol folded
-        self.assertIn("D_80100004 += 1", self.tc.compiles[0])
-        self.assertIn("D_80100000.unk_04.w += 1", self.tc.compiles[1])
+        self.assertEqual(len(self.tc.compiles), 2)                           # symbol folded, symbol separate
+        self.assertIn("D_80100000.unk_04.w += 1", self.tc.compiles[0])
+        self.assertIn("D_80100004 += 1", self.tc.compiles[1])
         self.assertIn("PROVEN", res.report())
         line = res.keep_line("why")
         self.assertEqual(line, "keep src/main/80010000.c D_80100004 proof=f:7:%s why" % res.sha)
@@ -165,7 +165,7 @@ class ProveTest(Tree):
         self.put("config/migrate_globals.txt", CONFIG + res.keep_line(kp.DEFAULT_REASON) + "\n")
         self.assertEqual(mg.main(["--root", self.root, "--apply"]), 0)      # folds D_80100008, keeps D_80100004
         aggs, keep = mg.load_config(self.root)
-        self.assertEqual(keep["src/main/80010000.c"].proofs["D_80100004"].rows, 7)
+        self.assertEqual(keep["src/main/80010000.c"].proofs["D_80100004"][0].rows, 7)
         msgs = [m for m in mg.check(self.root, aggs, keep) if "D_80100004" in m]
         self.assertEqual(msgs, [])
 
@@ -192,19 +192,23 @@ class ProveTest(Tree):
         self.tc.rows_without = 0
         self.tc.rows = lambda c, obj, func: 0
         res = self.prove(SRC)
-        self.assertTrue(res.sufficient)
         self.assertFalse(res.necessary)
+        self.assertIsNone(res.sufficient)                    # not run: the first compile ended the check
+        self.assertEqual(len(self.tc.compiles), 1)
         self.assertFalse(res.ok)
         self.assertIsNone(res.keep_line())
         self.assertIn("NOT PROVEN", res.report())
+        self.assertIn("necessity:    NO", res.report())
 
     def test_not_sufficient_when_the_bytes_differ(self):
         self.header("extern s32 D_80100004;\n")
         self.tc.exact = lambda c, obj, func, work, build=True: (False, "linked function bytes differ from target")
+        self.tc.diff = ["-@row 15 sw $t0, 0x10($sp)", "+@row 15 sw $v0, 0x10($sp)"]
         res = self.prove(SRC)
         self.assertFalse(res.sufficient)
         self.assertTrue(res.necessary)
         self.assertFalse(res.ok)
+        self.assertIn("    +@row 15 sw $v0, 0x10($sp)", res.report())
 
     def test_toolchain_failure_is_a_problem_not_a_proof(self):
         self.header("extern s32 D_80100004;\n")
@@ -222,6 +226,40 @@ class ProveTest(Tree):
         res = self.prove(SRC)
         self.assertFalse(res.ok)
         self.assertIn("no original asm", res.problems[0])
+
+
+class FromDraftTest(Tree):
+    GUARDED = ("#include \"main_api.h\"\n#ifdef NON_MATCHING\nvoid f(s32 x) {\n"
+               "    if (D_80100000.unk_04.w == x) {\n        g();\n    }\n"
+               "    /* FAKE: volatile tail, T-1 */\n    *(volatile s32 *)&D_80100000.unk_04.w += 1;\n}\n#else\n"
+               "INCLUDE_ASM(\"asm/nonmatchings/main/80010000\", f);\n#endif\n")
+
+    def test_unguard(self):
+        plain = kp.unguard(self.GUARDED, "f")
+        self.assertNotIn("INCLUDE_ASM", plain)
+        self.assertNotIn("NON_MATCHING", plain)
+        self.assertTrue(mg.plain_c(plain, "f"))
+        self.assertIsNone(kp.unguard("void f(void) {\n}\n", "f"))
+        self.assertIsNone(kp.unguard(self.GUARDED, "g"))
+
+    def test_from_draft_writes_the_tail_with_the_separate_symbol(self):
+        text, ctype = kp.from_draft(self.GUARDED, self.aggs(), "f", "D_80100004")
+        self.assertEqual(ctype, "s32")
+        self.assertIn("D_80100000.unk_04.w == x", text)           # the chain still reads the field
+        self.assertIn("    D_80100004 += 1;", text)
+        self.assertNotIn("*(volatile", text)                      # the comment stays for the author to rewrite
+
+    def test_from_draft_errors(self):
+        with self.assertRaises(kp.FoldError):
+            kp.from_draft("void f(void) {\n}\n", self.aggs(), "f", "D_80100004")
+        with self.assertRaises(kp.FoldError):
+            kp.from_draft(self.GUARDED, self.aggs(), "f", "D_80100008")
+
+    def test_the_draft_proves_with_the_fake_toolchain(self):
+        text, ctype = kp.from_draft(self.GUARDED, self.aggs(), "f", "D_80100004")
+        res = self.prove(text, declare=ctype)
+        self.assertTrue(res.ok, res.report())
+        self.assertIn("D_80100000.unk_04.w += 1", self.tc.compiles[0])
 
 
 class VerifyConfigTest(Tree):
@@ -349,6 +387,9 @@ class ClassifyTest(unittest.TestCase):
     def test_volatile_elsewhere_is_not_the_trick(self):
         self.assertEqual(self.tags("    *(volatile u32 *)0x1F801070 = 0;"), set())
 
+    def test_pointer_local_is_informational(self):
+        self.assertEqual(self.tags("    State *g = &D_80100000;\n    g->unk_04.w += 1;"), {"local"})
+
     def test_fake_comment_is_informational(self):
         self.assertEqual(self.tags("    D_80100000.unk_04.w += 1;", "/* FAKE: pad, T-1 */\n"), {"fake"})
 
@@ -378,6 +419,7 @@ class SummaryTest(unittest.TestCase):
         self.assertAlmostEqual(s["false_positive_rate"], 0.5)
         self.assertEqual((s["held_matched"], s["held_matched_plain"], s["held_unmatched"]), (2, 1, 1))
         self.assertEqual(s["trick_counts"], {"volatile": 1, "absolute": 1})
+        self.assertEqual(s["other_tags"], {"fake": 2})
         text = kp.census_text(funcs)
         self.assertIn("false-positive rate 50.0%", text)
         self.assertIn("e", text)
@@ -407,13 +449,42 @@ class RowsTest(Tree):
         self.assertEqual(sorted(uses), [("D_80100004", "s32"), ("D_80100008", "s16")])
         self.assertEqual(len(uses[("D_80100004", "s32")]), 2)
 
-    def test_separate_variants_all_and_last(self):
+    def test_separate_variants_all_and_tail(self):
         agg = self.aggs()[0]
         body = "{ D_80100000.unk_04.w += 1; x = D_80100000.unk_04.w; D_80100000.unk_04.w += 1; }"
         spans = kp.field_uses(body, agg)[("D_80100004", "s32")]
-        v = kp.separate_variants(body, agg, "D_80100004", "s32", spans)
+        v = kp.separate_variants(body, "D_80100004", spans)
         self.assertEqual(v["all"], "{ D_80100004 += 1; x = D_80100004; D_80100004 += 1; }")
-        self.assertEqual(v["last"], "{ D_80100000.unk_04.w += 1; x = D_80100000.unk_04.w; D_80100004 += 1; }")
+        self.assertEqual(v["tail"], "{ D_80100000.unk_04.w += 1; x = D_80100000.unk_04.w; D_80100004 += 1; }")
+
+    def test_tail_takes_fake_casts_and_absolute_reads_of_the_last_statement(self):
+        agg = self.aggs()[0]
+        for last, want in (("*(volatile s32 *)&D_80100000.unk_04.w += 1;", "D_80100004 += 1;"),
+                           ("D_80100000.unk_04.w = *(s32 *)0x80100004 + 1;", "D_80100004 = D_80100004 + 1;"),
+                           ("*(s32 *)&D_80100000.unk_04.w = 2;", "D_80100004 = 2;")):
+            body = "{ x = D_80100000.unk_04.w; %s }" % last
+            uses = kp.field_uses(body, agg)
+            self.assertEqual(list(uses), [("D_80100004", "s32")], last)
+            self.assertEqual(kp.separate_variants(body, "D_80100004", uses[("D_80100004", "s32")])["tail"],
+                             "{ x = D_80100000.unk_04.w; %s }" % want, last)
+
+    def test_a_cast_of_another_type_is_not_swallowed(self):
+        agg = self.aggs()[0]
+        body = "{ *(u8 *)&D_80100000.unk_04.w = 1; }"
+        (sym, spans), = kp.field_uses(body, agg).items()
+        self.assertEqual(body[spans[0][0]:spans[0][1]], "D_80100000.unk_04.w")
+
+    def test_with_lines_and_replace_spans(self):
+        self.assertEqual(kp.with_lines('#include "a.h"\n#include "b.h"\nint x;\n', ["int y;"]),
+                         '#include "a.h"\n#include "b.h"\nint y;\nint x;\n')
+        self.assertEqual(kp.with_lines("int x;\n", ["int y;"]), "int y;\nint x;\n")
+        self.assertEqual(kp.with_lines("int x;\n", []), "int x;\n")
+        self.assertEqual(kp.replace_spans("abcdef", [(4, 5, "X"), (1, 3, "YY")]), "aYYdXf")
+
+    def test_compiler_error_picks_the_error_line(self):
+        e = ValueError("ido failed:\nfoo\ncfe: Error: x.c, line 3: undeclared name\npython3 build.py --x")
+        self.assertEqual(kp.compiler_error(e), "cfe: Error: x.c, line 3: undeclared name")
+        self.assertEqual(kp.compiler_error(ValueError("boom")), "boom")
 
     def test_run_rows_with_a_fake_toolchain(self):
         self.header("")
@@ -429,11 +500,11 @@ class RowsTest(Tree):
             tc.rows = lambda c, obj, func: (0 if "D_80100004 += 1" in Path(obj).read_text() and
                                             "D_80100000.unk_04.w == x" in Path(obj).read_text() else 9)
             out = []
-            res = kp.run_rows(".", self.aggs(), [("main", "f")], 4, tc, out.append)
+            res = kp.run_rows(".", self.aggs(), [("main", "f", ())], 4, tc, out.append)
         finally:
             os.chdir(old)
         self.assertEqual(len(res), 1, "\n".join(out))
-        self.assertEqual((res[0]["base"], res[0]["all"], res[0]["last"]), (9, 9, 0))
+        self.assertEqual((res[0]["base"], res[0]["all"], res[0]["tail"]), (9, 9, 0))
         self.assertTrue(any("committed guarded draft" in line for line in out))
 
 
