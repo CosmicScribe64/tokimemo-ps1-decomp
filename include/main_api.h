@@ -2187,7 +2187,9 @@ void func_8004EDE0();
 void func_8004EDF4();
 void func_8004EE18();
 void func_8004F860();
+#ifndef MAIN_API_OVERRIDE_func_8004F870
 void func_8004F870();
+#endif
 s8 menu_check();
 s8 menu_check_1();
 s8 menu_check_2();
