@@ -37,12 +37,13 @@ COUNTS_UNIT = {"TACO": {"D_80127480": 64, "D_80127080": 64, "D_80128880": 64}, "
 TYPE_COUNTS = {"Tc14": 16, "TacoParticle14": 16}
 # main-exe u8[] declarations that m2c should see as arrays of records: (type, record count). The display pool
 # D_8011ECD0 is DisplayActor44[160] everywhere; EVENT and GYOZI have their own pools (T-17400, T-17600) and
-# MASTER reads the pool and the sprites at D_80120650 as MasterSprite44 (T-18600).
+# MASTER reads the pool and the sprites at D_80120650 in the fixed-point view DisplayFixActor44 (T-18600; the
+# MasterSprite44 of that pass, folded into game.h by T-20900).
 RECORD_VIEWS = {"*": {"D_8011ECD0": ("DisplayActor44", 160)},
                 "NAME_ENT": {"D_80123120": ("NameRecordF00", 2)},
                 "EVENT": {"D_800E9620": ("DisplayActor44", 160), "D_800EC190": ("Rec24", 0x43)},
                 "GYOZI": {"D_80129F40": ("DisplayActor44", 160)},
-                "MASTER": {"D_8011ECD0": ("MasterSprite44", 160), "D_80120650": ("MasterSprite44", 64)}}
+                "MASTER": {"D_8011ECD0": ("DisplayFixActor44", 160), "D_80120650": ("DisplayFixActor44", 64)}}
 # scalars that are whole objects (the headers declare a word, the unit reads the struct)
 OBJ_VIEWS = {"NAME_ENT": {"D_800E7D10": ("NameMetricWork", 0xED8)}, "ETC": {"D_801230D0": ("EtcWork40", 0x40)}}
 # extents that start inside a main-exe object (T-17600: GyoziWork's girl records, 11 x 0x38 at +0x1A8)

@@ -129,10 +129,10 @@ class TestUnitViews(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = make_tree(tmp)
             (root / "include/ovl/MASTER.h").write_text(
-                "typedef struct MasterSprite44 {\n    u8 unk_00;\n    u8 pad[0x43];\n} MasterSprite44; /* size 0x44 */\n")
+                "typedef struct DisplayFixActor44 {\n    u8 unk_00;\n    u8 pad[0x43];\n} DisplayFixActor44; /* size 0x44 */\n")
             env = rw.Env("MASTER", str(root))
-            self.assertEqual(env.record_views["D_8011ECD0"], ("MasterSprite44", 160))
-            self.assertEqual(env.record_views["D_80120650"], ("MasterSprite44", 64))
+            self.assertEqual(env.record_views["D_8011ECD0"], ("DisplayFixActor44", 160))
+            self.assertEqual(env.record_views["D_80120650"], ("DisplayFixActor44", 64))
             # D_80120650 sits inside D_8011ECD0: the innermost range comes first
             bases = [r[2] for r in env.ranges]
             self.assertLess(bases.index("D_80120650"), bases.index("D_8011ECD0"))

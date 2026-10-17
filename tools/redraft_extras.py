@@ -357,11 +357,11 @@ def club_bits(env, body):
 
 # record arrays a do-while walks: the C base expression, the record type, its size, and the absolute byte offset of
 # record 0 (the GameState records are measured from D_800E6280, the sprites from D_80120650)
-ROLL_BASES = {"sprite": ("((MasterSprite44 *)D_80120650)", "MasterSprite44", 0x44, 0),
+ROLL_BASES = {"sprite": ("((DisplayFixActor44 *)D_80120650)", "DisplayFixActor44", 0x44, 0),
               "girls": ("D_800E6280.unk_1BC", "Rec38", 0x38, 0x1BC)}
 ROLL_START = (
-    (r"&\(\(MasterSprite44 \*\)D_80120650\)\[(\d+)\]", "sprite", lambda m: int(m.group(1)) * 0x44),
-    (r"\(?&\(\(MasterSprite44 \*\)D_80120650\)\[(\d+)\]\)?", "sprite", lambda m: int(m.group(1)) * 0x44),
+    (r"&\(\(DisplayFixActor44 \*\)D_80120650\)\[(\d+)\]", "sprite", lambda m: int(m.group(1)) * 0x44),
+    (r"\(?&\(\(DisplayFixActor44 \*\)D_80120650\)\[(\d+)\]\)?", "sprite", lambda m: int(m.group(1)) * 0x44),
     (r"&D_800E6280\.unk_([0-9A-F]{3})", "girls", lambda m: int(m.group(1), 16)),
     (r"&D_800E6280\.unk_1BC\[(\d+)\]\.unk_([0-9A-F]{2})", "girls",
      lambda m: 0x1BC + int(m.group(1)) * 0x38 + int(m.group(2), 16)),
@@ -569,14 +569,14 @@ SPRITE_COPY_RE = re.compile(r"\*\(M2cBlock44 \*\)\((.+?)\) = \*\(M2cBlock44 \*\)
 
 
 def record_copies(env, body):
-    """T-18600: m2c's 0x44-byte block copy between sprite records is one MasterSprite44 assignment."""
-    if "MasterSprite44" not in env.types:
+    """T-18600: m2c's 0x44-byte block copy between sprite records is one DisplayFixActor44 assignment."""
+    if "DisplayFixActor44" not in env.types:
         return body
 
     def side(e):
         e = e.strip()
         m = re.fullmatch(r"&(.+)", e)
-        return m.group(1) if m else "*(MasterSprite44 *)%s" % e if re.fullmatch(r"\w+", e) else None
+        return m.group(1) if m else "*(DisplayFixActor44 *)%s" % e if re.fullmatch(r"\w+", e) else None
 
     def repl(m):
         a, b = side(m.group(1)), side(m.group(2))
