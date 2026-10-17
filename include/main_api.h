@@ -2489,6 +2489,7 @@ u8 func_80074F24(void);
 u8 func_8007505C(void);
 void func_800755B4(void);
 void func_80075A64(void);
+void func_80075AF8(void); /* T-20940: called by func_800755B4 before its definition */
 void func_80075BFC();
 void func_80075C24(void);
 s32 func_80075C84();
