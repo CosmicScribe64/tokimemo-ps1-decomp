@@ -5,10 +5,9 @@ void func_800755B4(void) {
     u8 buf[0x104];
     u8 name[0x20];
 
-    D_800B6990.pos = 0;
-    for (i = 0; i < 7; i++) {
-        D_800B6990.keys[i] = 0xFF;
-    }
+    /* FAKE: T-20940, the clear on one source line (as1 schedules a line as a unit) gives the original's order
+     * of the unrolled stores; the three remainder stores still take three lui $at (the original shares one). */
+    D_800B6990.pos = 0; for (i = 0; i < 7; i++) { D_800B6990.keys[i] = 0xFF; }
     hizuke_init();
     if (func_800754C0() != 0) {
         D_80122CD4 = 0;
