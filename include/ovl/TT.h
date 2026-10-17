@@ -799,3 +799,9 @@ typedef struct TtCfgBits {
 /* Second hit box of the D_80155C64 table, labelled on its own; passed to func_80145508 by func_80137654. T-11860 */
 extern TtCollision6 D_80155C6A;
 #endif
+
+#ifndef OVL_TT_T11860_G10
+#define OVL_TT_T11860_G10
+/* s16 pairs passed to func_80142AF0 for the 0x14-byte records 2, 3 and 8..22 set up by func_80138808; its first value is copied to byte 6 of records 2 and 3. T-11860 */
+extern s16 D_80152C8C[];
+#endif
