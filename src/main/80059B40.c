@@ -62,6 +62,7 @@ void func_80059BE8(void) {
     for (i = 0x1B; i < 0x20; i++) {
         D_800E6280.unk_1228[i] += 0xFFF80000;
     }
+    /* do-while with a pre-increment test: IDO peels the first of these five trips and unrolls the rest as the original does; a `for` here also unrolls the loop above. T-17008 */
     i = 0x3B;
     do {
         D_800E6280.unk_1228[i] += 0xFFF80000;
