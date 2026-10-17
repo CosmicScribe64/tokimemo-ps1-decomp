@@ -37,6 +37,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 - [[tickets/T-22000-wave-4-conveyor|T-22000]] Wave 4 conveyor until weekly usage nears 95 percent (In Progress).
 - [[tickets/T-23000-wave-5-big-conveyor|T-23000]] Wave 5 biggest-first conveyor alongside wave 4 (In Progress).
+- [[tickets/T-23002-w5-big-p02|T-23002]] Wave 5 big package w5-big-p02: ENDING `801396E0.c`, `func_8013A2E8` (4,772 B) (In Progress).
 - [[tickets/T-22001-w4-p01|T-22001]] Wave 4 package w4-p01: main `8007C030.c`, `dialogue_speak_part` stays guarded at 16 rows, 18 more forms tried (Done; 0 of 1 matched).
 - [[tickets/T-22007-w4-p07|T-22007]] Wave 4 package w4-p07: `NAME_ENT` `80142A80.c`, `func_80142A80` and `func_8014472C` both matched; `rodata_pieces.py` writes pieces for owned symbols (Done; 2 of 2 matched).
 - [[tickets/T-22009-w4-p09|T-22009]] Wave 4 package w4-p09: EVENT `8011C650.c`, `func_8011EDFC` matched through a data island (13 rows to 0), `func_8011D5C4` back to INCLUDE_ASM, hand draft at 409 rows (Done; 1 of 2 matched).
