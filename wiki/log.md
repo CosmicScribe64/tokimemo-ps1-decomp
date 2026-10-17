@@ -17540,3 +17540,14 @@ Matching resumes at the user's request until weekly usage nears 95 percent. Fres
 ## [2026-10-17] lint | Kanban rebuilt from ticket status
 
 The board had 96 cards in In Review while no ticket was In Review: union-resolved kanban conflicts in integration merges had brought back stale cards from older branches. Rebuilt wiki/kanban.md from ticket frontmatter (496 tickets, one card each); the integration merge script now re-syncs the board after every merge. CI lint stays T-21510.
+## [2026-10-17] ticket | T-22001 Wave 4 package w4-p01 opened
+
+[[tickets/T-22001-w4-p01]] (In Progress) under [[tickets/T-22000-wave-4-conveyor]]: main `src/main/8007C030.c`, `dialogue_speak_part` (8,980 B, guarded at 16 lines). Branch `w4-p01` from `w2-good`.
+
+## [2026-10-17] ticket | T-22001 In Review
+
+[[tickets/T-22001-w4-p01]]: `dialogue_speak_part` stays guarded at 16 rows. 18 more source forms at the two incremented-Y calls (casts, increment spellings, dummy statement, `s32` local, increment in the call, for-loop reordering, `#line`) gave no gain; `#line` is dropped by `gcc -E -P`. Guard comment in `src/main/8007C030.c` now names T-22001. Notes in [[matching-notes]]. Ticket In Review.
+
+## [2026-10-17] ticket | T-22001 Done
+
+[[tickets/T-22001-w4-p01]]: code review against `CODING_STANDARDS.md` passed (comment-only C change in `src/main/8007C030.c`, one wording fix). 0 of 1 functions matched; `dialogue_speak_part` stays guarded at 16 rows. Ticket Done, card moved to Done.
