@@ -317,14 +317,9 @@ void func_80135CC0(void) {
     D_8013C620[14].unk_10[12] = 0x801C6000;
 }
 
-typedef struct {
-    void (*f[9])();
-} FnTbl9; /* size 0x24 */
-extern FnTbl9 D_8013CA3C;
-
 void func_80135DD0(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
-    FnTbl9 tbl;
+    EdFnTbl9 tbl;
 
     tbl = D_8013CA3C;
     tbl.f[D_800E6280.unk_110A](0x80);

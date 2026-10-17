@@ -4,7 +4,7 @@
 
 s32 func_80137340(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl6 tbl;
+    EdFnTbl6 tbl;
 
     tbl = D_8013CAA4;
     idx = D_800E6280.unk_110A;

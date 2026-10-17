@@ -2,14 +2,9 @@
 #include "ovl/ENDING.h"
 #include "game.h"
 
-typedef struct {
-    void (*f[43])();
-} FnTbl43; /* size 0xAC */
-extern FnTbl43 D_8013C3E4;
-
 void func_80133540(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
-    FnTbl43 tbl;
+    EdFnTbl43 tbl;
 
     tbl = D_8013C3E4;
     func_80083808();
@@ -151,14 +146,9 @@ void func_80133A6C(void) {
     D_800E7D34 |= 4;
 }
 
-typedef struct {
-    void (*f[9])();
-} FnTbl9; /* size 0x24 */
-extern FnTbl9 D_8013C490;
-
 void func_80133AD0(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
-    FnTbl9 tbl;
+    EdFnTbl9 tbl;
 
     tbl = D_8013C490;
     func_80083808();

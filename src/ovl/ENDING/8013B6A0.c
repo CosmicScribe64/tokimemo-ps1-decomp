@@ -17,14 +17,9 @@ void func_8013B6A0(void) {
     D_8013CBB0.unk_10[7] = 0x801BE000;
 }
 
-typedef struct {
-    void (*f[25])();
-} FnTbl25; /* size 0x64 */
-extern FnTbl25 D_8013CBE4;
-
 void func_8013B760(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl25 tbl;
+    EdFnTbl25 tbl;
 
     tbl = D_8013CBE4;
     if (D_800E6280.unk_1109 == 7 && D_800E6280.unk_110A < 0x10) {
@@ -121,14 +116,9 @@ void func_8013B9F0(void) {
     func_8004284C();
 }
 
-typedef struct {
-    s32 w[4];
-} Tw4; /* size 0x10 */
-extern Tw4 D_8013CD90;
-
 void func_8013BB9C(void) {
     s32 r;
-    Tw4 v;
+    EdWords4 v;
 
     v = D_8013CD90;
     func_80044750(0xBF);
@@ -144,13 +134,8 @@ void func_8013BB9C(void) {
     func_8004284C();
 }
 
-typedef struct {
-    s16 h[13];
-} Th13; /* size 0x1A */
-extern Th13 D_8013CDA0;
-
 void func_8013BC58(void) {
-    Th13 tbl;
+    EdShorts13 tbl;
     s16 i;
     s16 sel;
 

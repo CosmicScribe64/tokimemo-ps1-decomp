@@ -68,10 +68,6 @@ s32 func_80137574(void);
 
 extern s16 D_8013CBE0;
 void func_8013BDD8(s16 arg0);
-typedef struct {
-    void (*f[6])();
-} FnTbl6; /* size 0x18 */
-extern FnTbl6 D_8013CAA4;
 void func_80132D98();
 void func_80132F18();
 s32 func_80137730();
@@ -151,6 +147,34 @@ typedef struct EdPortraitTbl {
 } EdPortraitTbl; /* size 0xE0 */
 extern EdPortraitTbl D_8013C4C0;
 extern s32 D_8013C5A0[7]; /* texture page addresses of func_80134270 (func_80133C10) */
+
+/* Callback tables (T-20930, collected from the matched files): a step function copies the table to the
+ * stack whole and calls entry D_800E6280.unk_110A (or unk_1109) with 0x80 (T-3330). */
+typedef struct EdFnTbl6 { void (*f[6])(); } EdFnTbl6; /* size 0x18 */
+typedef struct EdFnTbl9 { void (*f[9])(); } EdFnTbl9; /* size 0x24 */
+typedef struct EdFnTbl13 { void (*f[13])(); } EdFnTbl13; /* size 0x34 */
+typedef struct EdFnTbl14 { void (*f[14])(); } EdFnTbl14; /* size 0x38 */
+typedef struct EdFnTbl16 { void (*f[16])(); } EdFnTbl16; /* size 0x40 */
+typedef struct EdFnTbl25 { void (*f[25])(); } EdFnTbl25; /* size 0x64 */
+typedef struct EdFnTbl43 { void (*f[43])(); } EdFnTbl43; /* size 0xAC */
+extern EdFnTbl16 D_8013C370; /* func_80133030 */
+extern EdFnTbl43 D_8013C3E4; /* func_80133540 */
+extern EdFnTbl9 D_8013C490; /* 80133540.c */
+extern EdFnTbl13 D_8013C5BC; /* func_80133F1C */
+extern EdFnTbl9 D_8013CA3C; /* func_80135DD0 */
+extern EdFnTbl6 D_8013CAA4; /* func_80137340 */
+extern EdFnTbl14 D_8013CB74; /* func_801399B4 */
+extern EdFnTbl25 D_8013CBE4; /* func_8013B760 */
+
+/* Small tables copied to the stack whole (8013B6A0.c). */
+typedef struct EdWords4 {
+    s32 w[4];
+} EdWords4; /* size 0x10 */
+typedef struct EdShorts13 {
+    s16 h[13];
+} EdShorts13; /* size 0x1A */
+extern EdWords4 D_8013CD90; /* func_8013BB9C: two pairs of func_80046290 arguments */
+extern EdShorts13 D_8013CDA0; /* func_8013BC58: thresholds compared with D_8013CBE0 */
 #endif /* OVL_ENDING_H */
 
 #ifndef OVL_ENDING_TIMER_T9780

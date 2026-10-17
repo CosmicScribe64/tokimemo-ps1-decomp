@@ -54,14 +54,9 @@ void func_80133C10(void) {
     D_8013C5A0[6] = 0x80198000;
 }
 
-typedef struct {
-    void (*f[13])();
-} FnTbl13; /* size 0x34 */
-extern FnTbl13 D_8013C5BC;
-
 void func_80133F1C(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl13 tbl;
+    EdFnTbl13 tbl;
 
     tbl = D_8013C5BC;
     idx = D_800E6280.unk_110A;
