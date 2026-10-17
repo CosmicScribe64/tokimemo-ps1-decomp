@@ -298,7 +298,62 @@ void func_800418B0(void) {
     D_800E6280.unk_044[1].unk_00[5] = 2;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800419FC);
+/* Three flag bits at GameState +0xF6, cleared at init (lbu/andi/sb per bit). */
+typedef struct GsF6Bits {
+    /* 0x00, bit 0 */ u8 b0 : 1;
+    /* 0x00, bit 1 */ u8 b1 : 1;
+    /* 0x00, bit 2 */ u8 b2 : 1;
+    /* 0x00, bits 3-7 */ u8 unk_03 : 5;
+} GsF6Bits; /* size 0x01 */
+
+void func_800419FC(void) {
+    s32 i;
+
+    bzero(D_800E6280.unk_0C4, 0x7C);
+    D_800E6280.unk_0F4.b[0] = 0;
+    ((GsByteNibbles *)&D_800E6280.unk_0F4.b[1])->low = 0;
+    ((GsByteNibbles *)&D_800E6280.unk_0F4.b[1])->high = 0xB;
+    ((GsF6Bits *)&D_800E6280.unk_0F6)->b0 = 0;
+    ((GsF6Bits *)&D_800E6280.unk_0F6)->b1 = 0;
+    ((GsF6Bits *)&D_800E6280.unk_0F6)->b2 = 0;
+    ((GsDateBits *)&D_800E6280.unk_0F8)->unk_09 = 1;
+    ((GsDateBits *)&D_800E6280.unk_0F8)->month = 1;
+    ((GsDateBits *)&D_800E6280.unk_0F8)->day = 1;
+    /* Body on the line of the for, array start folded into the index: a braced body puts the
+       wrong store in the delay slot, and for (i = 0x15; ...) starts the pointer at +0x16. T-17021 */
+    for (i = 0; i < 9; i++) D_800E6280.unk_120[0x15 + i] = 0;
+    D_800E6280.unk_0FC.unk_02 = 0x64;
+    D_800E6280.unk_100.unk_02 = 0x28;
+    D_800E6280.unk_104.unk_02 = 0x28;
+    D_800E6280.unk_108.unk_02 = 0x28;
+    D_800E6280.unk_10C.unk_02 = 0x28;
+    D_800E6280.unk_110.unk_02 = 0x20;
+    D_800E6280.unk_114.unk_02 = 0x3C;
+    D_800E6280.unk_118.unk_02 = 5;
+    D_800E6280.unk_11C.unk_02 = 0;
+    D_800E6280.unk_120[0] = 1;
+    D_800E6280.unk_120[1] = 0;
+    D_800E6280.unk_120[2] = 1;
+    D_800E6280.unk_120[3] = 0;
+    D_800E6280.unk_120[4] = 1;
+    D_800E6280.unk_120[5] = 0;
+    D_800E6280.unk_120[6] = 0;
+    D_800E6280.unk_120[7] = 0;
+    D_800E6280.unk_120[8] = 1;
+    D_800E6280.unk_120[9] = 1;
+    D_800E6280.unk_120[10] = 0;
+    D_800E6280.unk_120[11] = 0;
+    D_800E6280.unk_120[12] = 1;
+    D_800E6280.unk_120[13] = 0;
+    D_800E6280.unk_120[14] = 0;
+    D_800E6280.unk_120[15] = 1;
+    D_800E6280.unk_120[16] = 0;
+    D_800E6280.unk_120[17] = 0;
+    D_800E6280.unk_120[18] = 0;
+    D_800E6280.unk_120[19] = 0;
+    D_800E6280.unk_120[20] = 0;
+    memcpy(&D_800E6280.unk_120[0x20], D_800E6280.unk_0C4, 0x7C);
+}
 
 void func_80041C2C(void) {
     GameState *g = &D_800E6280;

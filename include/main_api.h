@@ -129,7 +129,8 @@ typedef struct Rec34 {
 typedef struct GsDateBits {
     /* 0x00 */ u32 month : 4;
     u32 day : 5;
-    u32 rest : 23;
+    u32 unk_09 : 2; /* T-17021: set to 1 at init (func_800419FC); OptionDateBits.f9 */
+    u32 rest : 21;
 } GsDateBits; /* size 0x04 */
 
 typedef union GsWord {
