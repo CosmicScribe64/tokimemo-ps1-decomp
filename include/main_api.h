@@ -2641,7 +2641,9 @@ void func_80083440(u8 arg0);
 s32 func_80083474(void);
 s32 func_80083808();
 void func_80083A10();
+#ifndef MAIN_API_OVERRIDE_func_80083B24
 void func_80083B24();
+#endif
 void read_bustup();
 void func_800846C0();
 void k_disp_inc2();

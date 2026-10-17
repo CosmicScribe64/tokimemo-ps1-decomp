@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_80083B24 /* implicit int view: the call's $v0 result moves the reloaded unk_110A to $v1 in func_801350A4 (definition: void, T-11880) */
 #include "common.h"
 #include "ovl/DATE2.h"
+
+s32 func_80083B24();
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80132DE0.data", D_8013A4C0);
@@ -560,7 +563,377 @@ s32 func_801348F0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_801350A4);
+/* s32: only the header-error path returns 0 (or v0,zero,zero), as in the DATE twin func_80147958. T-11880 */
+s32 func_801350A4(void) {
+    GameState *g;
+    s16 i;
+    s32 sp54;
+    u32 sp50;
+    RECT rect;
+    DateMovieWork *movie;
+    DateMovieHeader8 *header; /* FAKE: unused, reserves the observed frame slot (as in the DATE twin func_80147958) T-11880 */
+    u8 value;
+    u32 color;
+
+    g = &D_800E6280;
+    movie = (DateMovieWork *)D_800B5920;
+    D_800B3D60 = 0;
+    switch (g->unk_1104.u) {
+    case 0:
+        func_80044750(0xCF);
+        D_80122D2C = 1;
+        movie->unk_06 = 0;
+        movie->unk_02 = 0;
+        movie->unk_04 = 0;
+        movie->unk_00 = 0;
+        movie->unk_19 = 0;
+        movie->unk_18 = 0;
+        movie->unk_28 = -1;
+        movie->unk_0A = 0;
+        movie->unk_1A = 0;
+        func_8006492C(0);
+        D_8013A5CC = 0;
+        for (i = 0; i < 2; i++) {
+            D_801217D0[i + 4].unk_08 = (i << 6) + 0x80;
+            D_801217D0[i + 4].unk_00 = 0x82000000;
+            D_801217D0[i + 4].unk_0A = 0xA0;
+            D_801217D0[i + 4].unk_0E = 0;
+            D_801217D0[i + 4].unk_0F = 0;
+            D_801217D0[i + 4].unk_10 = 0;
+            D_801217D0[i + 4].unk_0C = (i * 2) + 0x15;
+            D_801217D0[i + 4].unk_12 = 0x1E0;
+            D_801217D0[i + 4].unk_14 = 0;
+            D_801217D0[i + 4].unk_15 = 0;
+            D_801217D0[i + 4].unk_16 = 0;
+            D_801217D0[i + 4].unk_18 = 0;
+            D_801217D0[i + 4].unk_1A = 0;
+            D_801217D0[i + 4].unk_1C = 0x1000;
+            D_801217D0[i + 4].unk_1E = 0x1000;
+            D_801217D0[i + 4].unk_20 = 0;
+            D_801217D0[i + 4].unk_04 = (i << 7) - 0xA0;
+            D_801217D0[i + 4].unk_06 = -0x78;
+            D_800E6280.unk_10A5[i + 4] = 0xB;
+        }
+        for (i = 0; i < 2; i++) {
+            D_801217D0[i + 6].unk_08 = (i << 6) + 0x80;
+            D_801217D0[i + 6].unk_00 = 0x82000000;
+            D_801217D0[i + 6].unk_0A = 0;
+            D_801217D0[i + 6].unk_0E = 0;
+            D_801217D0[i + 6].unk_0F = 0xA0;
+            D_801217D0[i + 6].unk_10 = 0;
+            D_801217D0[i + 6].unk_0C = (i * 2) + 0xA;
+            D_801217D0[i + 6].unk_12 = 0x1E0;
+            D_801217D0[i + 6].unk_14 = 0;
+            D_801217D0[i + 6].unk_15 = 0;
+            D_801217D0[i + 6].unk_16 = 0;
+            D_801217D0[i + 6].unk_18 = 0;
+            D_801217D0[i + 6].unk_1A = 0;
+            D_801217D0[i + 6].unk_1C = 0x1000;
+            D_801217D0[i + 6].unk_1E = 0x1000;
+            D_801217D0[i + 6].unk_20 = 0;
+            D_801217D0[i + 6].unk_04 = (i << 7) - 0xA0;
+            D_801217D0[i + 6].unk_06 = -0x78;
+            D_800E6280.unk_10A5[i + 6] = 0xB;
+        }
+        func_8005742C(0x43B1, 1);
+        g->unk_1104.u += 1;
+        return;
+    case 1:
+    case 4:
+    case 7:
+    case 10:
+    case 13:
+    case 16:
+    case 31:
+    case 34:
+    case 37:
+        if (cd_read_sync_status() & 1) {
+            g->unk_1104.u += 1;
+            return;
+        }
+        return;
+    case 2:
+        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        rect.x = 0x140;
+        rect.y = 0x100;
+        rect.w = 0x140;
+        rect.h = 0xA0;
+        func_8009C8E0(&rect, (void *)0x80183000);
+        g->unk_1104.u += 1;
+        return;
+    case 3:
+        func_8005742C(0x43AA, 1);
+        g->unk_1104.u += 1;
+        return;
+    case 5:
+        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        rect.x = 0x140;
+        rect.y = 0x100;
+        rect.w = 0x140;
+        rect.h = 0xA0;
+        func_8009C8E0(&rect, (void *)0x8019C000);
+        g->unk_1104.u += 1;
+        return;
+    case 6:
+        func_8005742C(0x43A3, 1);
+        g->unk_1104.u += 1;
+        return;
+    case 8:
+        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        rect.x = 0x140;
+        rect.y = 0x100;
+        rect.w = 0x140;
+        rect.h = 0xA0;
+        func_8009C8E0(&rect, (void *)0x801B5000);
+        g->unk_1104.u += 1;
+        return;
+    case 9:
+        func_8005742C(0x439C, 1);
+        g->unk_1104.u += 1;
+        return;
+    case 11:
+        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        rect.x = 0x140;
+        rect.y = 0x100;
+        rect.w = 0x140;
+        rect.h = 0xA0;
+        func_8009C8E0(&rect, (void *)0x801CE000);
+        g->unk_1104.u += 1;
+        return;
+    case 12:
+        func_8005742C(0x4395, 1);
+        g->unk_1104.u += 1;
+        return;
+    case 14:
+        func_800536AC(0x280, 0, 0x140, 0xA0);
+        g->unk_1104.u += 1;
+        return;
+    case 15:
+        func_8005742C(0x438D, 1);
+        g->unk_1104.u += 1;
+        return;
+    case 17:
+        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        g->unk_1104.u += 1;
+        return;
+    case 18:
+        for (i = 0; i < 4; i++) {
+            D_801217D0[i + 4].unk_00 = (s32) (D_801217D0[i + 4].unk_00 & 0x7FFFFFFF);
+        }
+        g->unk_1104.u++;
+        return;
+    case 19:
+        for (i = 4; i < 8; i++) {
+            func_80084C98(i, 0x80);
+        }
+        for (i = 0; i < 2; i++) {
+            D_801217D0[i + 4].unk_00 = 0x02000000;
+            D_801217D0[i + 4].unk_0A = 0xA0;
+            D_801217D0[i + 4].unk_0F = 0;
+            D_801217D0[i + 4].unk_06 = -0x78;
+        }
+        for (i = 0; i < 2; i++) {
+            D_801217D0[i + 6].unk_00 = 0x02000000;
+            D_801217D0[i + 6].unk_0A = 0;
+            D_801217D0[i + 6].unk_0F = 0xA0;
+            D_801217D0[i + 6].unk_06 = -0x78;
+        }
+        D_8013A5CC = 0;
+        func_80044750(0x500);
+        g->unk_1104.u += 1;
+        return;
+    case 20:
+    case 22:
+    case 24:
+        func_80135DA4(8);
+        if (++D_8013A5CC == 0x14) {
+            g->unk_1104.u += 1;
+            return;
+        }
+        break;
+    case 21:
+        rect.x = 0x280;
+        rect.y = 0;
+        rect.w = 0x140;
+        rect.h = 0xA0;
+        func_8009C93C(&rect, 0x140, 0x100);
+        func_8004435C(0x280U, 0U, 0x140U, 0xA0U, 0x801CE000);
+        for (i = 0; i < 2; i++) {
+            D_801217D0[i + 4].unk_0A = 0xA0;
+            D_801217D0[i + 4].unk_0F = 0;
+            D_801217D0[i + 4].unk_06 = -0x78;
+        }
+        for (i = 0; i < 2; i++) {
+            D_801217D0[i + 6].unk_0A = 0;
+            D_801217D0[i + 6].unk_0F = 0xA0;
+            D_801217D0[i + 6].unk_06 = -0x78;
+        }
+        D_8013A5CC = 0;
+        g->unk_1104.u += 1;
+        return;
+    case 23:
+        rect.x = 0x280;
+        rect.y = 0;
+        rect.w = 0x140;
+        rect.h = 0xA0;
+        func_8009C93C(&rect, 0x140, 0x100);
+        func_8004435C(0x280U, 0U, 0x140U, 0xA0U, 0x801B5000);
+        for (i = 0; i < 2; i++) {
+            D_801217D0[i + 4].unk_0A = 0xA0;
+            D_801217D0[i + 4].unk_0F = 0;
+            D_801217D0[i + 4].unk_06 = -0x78;
+        }
+        for (i = 0; i < 2; i++) {
+            D_801217D0[i + 6].unk_0A = 0;
+            D_801217D0[i + 6].unk_0F = 0xA0;
+            D_801217D0[i + 6].unk_06 = -0x78;
+        }
+        D_8013A5CC = 0;
+        g->unk_1104.u += 1;
+        return;
+    case 25:
+        rect.x = 0x280;
+        rect.y = 0;
+        rect.w = 0x140;
+        rect.h = 0xA0;
+        func_8009C93C(&rect, 0x140, 0x100);
+        func_8004435C(0x280U, 0U, 0x140U, 0xA0U, 0x8019C000);
+        for (i = 0; i < 2; i++) {
+            D_801217D0[i + 4].unk_0A = 0xA0;
+            D_801217D0[i + 4].unk_0F = 0;
+            D_801217D0[i + 4].unk_06 = -0x78;
+        }
+        for (i = 0; i < 2; i++) {
+            D_801217D0[i + 6].unk_0A = 0;
+            D_801217D0[i + 6].unk_0F = 0xA0;
+            D_801217D0[i + 6].unk_06 = -0x78;
+        }
+        D_8013A5CC = 0;
+        g->unk_1104.u += 1;
+        return;
+    case 26:
+        func_80135DA4(8);
+        if ((u16) D_8013A5CC >= 8U) {
+            value = D_801217D0[4].unk_14;
+            value -= 4;
+            color = (value & 0xFF);
+            D_801217D0[7].unk_16 = color;
+            D_801217D0[7].unk_15 = color;
+            D_801217D0[7].unk_14 = color;
+            D_801217D0[6].unk_16 = color;
+            D_801217D0[6].unk_15 = color;
+            D_801217D0[6].unk_14 = color;
+            D_801217D0[5].unk_16 = color;
+            D_801217D0[5].unk_15 = color;
+            D_801217D0[5].unk_14 = color;
+            D_801217D0[4].unk_16 = color;
+            D_801217D0[4].unk_15 = color;
+            D_801217D0[4].unk_14 = color;
+        }
+        if (++D_8013A5CC == 0x14) {
+            g->unk_1104.u += 1;
+            return;
+        }
+        break;
+    case 27:
+        rect.x = 0x280;
+        rect.y = 0;
+        rect.w = 0x140;
+        rect.h = 0xA0;
+        func_8009C93C(&rect, 0x140, 0x100);
+        func_8004435C(0x280U, 0U, 0x140U, 0xA0U, 0x80183000);
+        for (i = 0; i < 2; i++) {
+            D_801217D0[i + 4].unk_0A = 0xA0;
+            D_801217D0[i + 4].unk_0F = 0;
+            D_801217D0[i + 4].unk_06 = -0x78;
+        }
+        for (i = 0; i < 2; i++) {
+            D_801217D0[i + 6].unk_0A = 0;
+            D_801217D0[i + 6].unk_0F = 0xA0;
+            D_801217D0[i + 6].unk_06 = -0x78;
+        }
+        D_8013A5CC = 0;
+        g->unk_1104.u += 1;
+        return;
+    case 28:
+        func_80135DA4(8);
+        value = D_801217D0[4].unk_14;
+        value -= 4;
+        color = (value & 0xFF);
+        D_801217D0[7].unk_16 = color;
+        D_801217D0[7].unk_15 = color;
+        D_801217D0[7].unk_14 = color;
+        D_801217D0[6].unk_16 = color;
+        D_801217D0[6].unk_15 = color;
+        D_801217D0[6].unk_14 = color;
+        D_801217D0[5].unk_16 = color;
+        D_801217D0[5].unk_15 = color;
+        D_801217D0[5].unk_14 = color;
+        D_801217D0[4].unk_16 = color;
+        D_801217D0[4].unk_15 = color;
+        D_801217D0[4].unk_14 = color;
+        if (value < 4U) {
+            g->unk_1104.u += 1;
+            return;
+        }
+        break;
+    case 29:
+        for (i = 0; i < 4; i++) {
+            D_801217D0[i + 4].unk_00 = (s32) (D_801217D0[i + 4].unk_00 | 0x80000000);
+        }
+        g->unk_1104.u++;
+        return;
+    case 30:
+        sp50 = g->unk_1104.u;
+
+        sp54 = D_800E6280.unk_110A;
+        func_80083B24();
+        g->unk_1104.u = sp50; if (sp54 != D_800E6280.unk_110A) { /* FAKE: one source line keeps the as1 load order T-11880 */
+            D_800E6280.unk_110A -= 1;
+            g->unk_1104.u++;
+        }
+        break;
+    case 32:
+        sp50 = g->unk_1104.u;
+
+        func_80083474();
+        D_800E6280.unk_110A -= 1;
+        g->unk_1104.u = sp50;
+        g->unk_1104.u++;
+        return;
+    case 33:
+        func_800462C8(0xAU, 0x80162000, 0x433E);
+        g->unk_1104.u += 1;
+        return;
+    case 35:
+        if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
+            func_800AE0B0("DEC_BS header Error \n");
+            movie->unk_04 = 0;
+            movie->unk_06 = 0;
+            g->unk_1104.u -= 2;
+            return 0;
+        }
+        func_8005751C(1);
+        dec_bg_show_switch(1);
+        g->unk_1104.u += 1;
+        return;
+    case 36:
+        sp50 = g->unk_1104.u;
+
+        func_80132BB0();
+        D_800E6280.unk_110A -= 1;
+        g->unk_1104.u = sp50;
+        g->unk_1104.u++;
+        return;
+    default:
+        func_8004284C();
+        D_80122D2C = 0;
+        func_80044750(0x200);
+        func_8006492C(1);
+        break;
+    }
+    return;
+}
 
 s32 func_80135DA4(s16 arg0) {
     D_801217D0[4].unk_06 += arg0;
