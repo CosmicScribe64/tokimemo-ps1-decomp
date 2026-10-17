@@ -1,10 +1,10 @@
 ---
 id: T-20610
 title: "Promotion family: cvt_pass entry rule"
-status: In Review
+status: Done
 assignee: claude-opus (cg-promo)
 created: 2026-10-16
-updated: 2026-10-16
+updated: 2026-10-17
 links: [[[speedup-research-2026-10-16]], [[data/t0018-cases]], [[toolchain]], [[matching-notes]], tools/cvt_pass.py, tools/test_cvt_pass.py]
 ---
 
@@ -48,3 +48,13 @@ Result: negative for the pass, one plain-C recipe. Details and tables: [[matchin
 - main `func_80072998`: FAKE dead entry read gives 4 rows (constant-first order of two compares).
 
 ## Comments
+
+### 2026-10-16 start and finish (claude-opus, branch `cg-promo`)
+
+Started 22:37 UTC, ended about 00:57 UTC. Two commits (ticket In Progress, results). Negative result for the pass (no `cvt_pass` entry rule adopted, `tools/` unchanged), one plain-C recipe for main `func_800726F0` handed to the wave 3 conveyor because `src/main/8006CB30.c` is busy. Clean rebuild 27/27 SHA1 OK, headers OK, globals OK, `sync_protos --check-branch` OK (0 new, 15 known). Moved to In Review.
+
+### 2026-10-17 code review (claude-opus, against `CODING_STANDARDS.md`, diff `w2-good...cg-promo`)
+
+Scope: eight wiki files only (this ticket, `kanban.md`, `index.md`, `log.md`, `matching-notes.md`, `register-cheatsheet.md`, `toolchain.md`, `data/t0018-cases.md`). No C file, header, `tools/` file, config or draft changed, so the busy-file rule holds (nothing under `src/` touched; `8006CB30.c` was left alone and the recipe is documented for the conveyor), there is no `NON_MATCHING` or `FAKE` code to check, and no build pass changed (section 7a does not apply: the candidate rules were scratch variants, measured, and none adopted; the regression numbers, 0 matched functions changed by the committed state, are recorded in the ticket and in [[matching-notes]] "T-20610"). Matched count: 0. The `func_800726F0` result is a verification on a scratch copy (`funcdiff --built`, linked bytes equal the target), stated as such, not a claimed match in `src/`. No game data, asm listings or binaries added (the wiki quotes only short instruction fragments, as other pages do). Ticket status, kanban column and index line agree (set to Done with this review). The wiki rows are consistent with each other (cheatsheet row, `toolchain.md` note, `t0018-cases` update and table row all state the same numbers).
+
+No findings. Rebuild and checks run by the merge step (clean `configure.py` + `ninja`, 27/27). Done.

@@ -33,7 +33,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-20610-promo-entry-rule|T-20610]] Promotion family (`promo` rows of [[data/t0018-cases]]): no `cvt_pass` entry-rule refinement adopted (the narrowest changes 0 matched functions but gains 1; others change 4-18); main `func_800726F0` matches in plain C with truth tests and `s32 sndisp();` (busy file, handed to the conveyor) (In Review).
+- [[tickets/T-20610-promo-entry-rule|T-20610]] Promotion family (`promo` rows of [[data/t0018-cases]]): no `cvt_pass` entry-rule refinement adopted (the narrowest changes 0 matched functions but gains 1; others change 4-18); main `func_800726F0` matches in plain C with truth tests and `s32 sndisp();` (busy file, handed to the conveyor) (Done).
 - [[tickets/T-20500-emulator-assisted-naming|T-20500]] Emulator-assisted naming and constants pass, phase 2 head start (Backlog; waits for free CPU).
 - [[tickets/T-17119-w3-rpg-bat-p19|T-17119]] Wave 3 package w3-rpg-bat-p19: RPG_BAT `80148F70.c`, `80141060.c`, 2 of 2 matched (`func_80148F70`, `func_80141060`, 4,208 B; m2c draft rewritten as plain per-arm stores, byte-array group loops, frame word from a named local; Done)
 - [[tickets/T-17117-w3-rpg-bat-p17|T-17117]] Wave 3 package w3-rpg-bat-p17: RPG_BAT `8013CC90.c`, `func_8013CC90` matched, 1 of 1 (928 B; promoted global updated in place, `u32` file view of `D_8015ED98`, one FAKE; Done)

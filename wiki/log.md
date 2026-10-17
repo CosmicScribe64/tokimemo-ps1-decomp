@@ -16618,3 +16618,7 @@ Update paragraph in [[data/t0018-cases]]; note in [[toolchain]].
 changed), one plain-C recipe handed to the conveyor (main `func_800726F0`). Clean rebuild (`rm -rf build && configure.py
 && ninja -j2`) 27/27 SHA1 OK, headers OK, globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known).
 Card moved to In Review in [[kanban]]. Code review against `CODING_STANDARDS.md` pending.
+
+## [2026-10-17] ticket | T-20610 Done
+
+[[tickets/T-20610-promo-entry-rule]] In Review to Done after the code review against `CODING_STANDARDS.md`: wiki-only diff (no C, header or `tools/` change), no findings, 0 functions matched in `src/` (negative result for the `cvt_pass` entry rule; the plain-C recipe for main `func_800726F0` is handed to the wave 3 conveyor). Card moved to Done in [[kanban]], index line updated.
