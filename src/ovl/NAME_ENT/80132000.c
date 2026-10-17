@@ -176,7 +176,7 @@ void func_80132198(void)
   }
 }
 
-/* NON_MATCHING: T-11650, 14 differing lines: the masked byte (D_800B593C + 4) & 0xFF is a ugen temporary ($t2) where the original keeps it in $a1 */
+/* NON_MATCHING: T-22008, 14 differing lines: the masked byte (D_800B593C + 4) & 0xFF is a ugen temporary ($t2) where the original keeps it in a uopt range ($a1); about 40 local width, cast, chain, repeated-expression, compare-source and array-view forms, autotweak (950 edits) and viewsweep tried; D_800B593C += 4 with the stores and the compare read from the global gives the range, but one register low ($a0) and kept through the join (4 more instructions) */
 #ifdef NON_MATCHING
 void func_80132320(void) {
     s32 i;
@@ -912,7 +912,29 @@ void func_80133FC4(void) {
     D_80120C96 = -0xB4;
 }
 
+/* NON_MATCHING: T-22008, 26 rows; the returned y sits in $a0/$a1 with a final move to $v0, the original keeps it in $v0 and x in $v1 (s16/s32, no-return, chain, global-promoted and void forms tried) */
+#ifdef NON_MATCHING
+s32 func_80134110(void) {
+    s32 y;
+    s32 x;
+
+    x = D_8011ECF6;
+    y = x;
+    if (x >= -0x77 && x < 0x98) {
+        y = D_8011ECFA;
+        if (y >= 0x39 && y < 0x68) {
+            D_8014CCB8 = (x + 0x78) / 16;
+            D_8014CCBC = (y - 0x38) / 16;
+            return y;
+        }
+    }
+    D_8014CCB8 = -1;
+    D_8014CCBC = -1;
+    return y;
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134110);
+#endif
 
 void func_801341A8(void) {
     s32 prev;
@@ -927,7 +949,7 @@ void func_801341A8(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10890, about 455 differing lines (T-11650 probe made it worse), character-page selection */
+/* NON_MATCHING: T-22008, about 455 differing lines, character-page selection; the first switch already differs (the original loads D_8014CC70 into $v0 and copies it to $a1; viewsweep no gain, autotweak 455 to 393 with an empty test, not kept) */
 void func_80134248(s32 arg0) {
     s32 selected;
     u32 index;

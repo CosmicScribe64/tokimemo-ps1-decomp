@@ -17634,3 +17634,15 @@ Two of four TACO functions matched: `func_801484E4` (392 bytes; kept `D_800E7384
 
 ## [2026-10-17] ticket | T-22005 Done
 3 of 4 TACO functions matched (`func_801484E4`, `func_801416E8`, `func_801497EC`; 2,376 bytes); `func_8013D838` stays guarded at 10 lines. Code review against CODING_STANDARDS.md: three small findings fixed (comment on the `s32` no-return type in `src/ovl/TACO/801480B0.c`, wrapped a long comment in `src/ovl/TACO/8013D1E0.c`, stale guarded claims for `func_801497EC` in the ticket, [[matching-notes]] and [[index]]). Clean build 27/27, check_headers, migrate_globals, sync_protos clean. Ticket [[tickets/T-22005-w4-p05]].
+
+## [2026-10-17] ticket | T-22008 Wave 4 package w4-p08 opened
+
+[[tickets/T-22008-w4-p08]] (In Progress) under [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/NAME_ENT/80132000.c`, `func_80132320`, `func_80134248`, `func_80134110`, `func_80138C1C`. Branch `w4-p08` from `w2-good`.
+
+## [2026-10-17] ticket | T-22008 In Review
+
+[[tickets/T-22008-w4-p08]]: 0 of 4 matched in `src/ovl/NAME_ENT/80132000.c`. `func_80132320` guard refreshed (14 lines), `func_80134110` guarded (26 lines), `func_80134248` guard comment refreshed (455 lines), `func_80138C1C` still `INCLUDE_ASM` (a clean draft is about 300 lines; a file-wide scalar view of `D_800B3644` kept the unit sha1 but was dropped). Notes in [[matching-notes]]. Clean build and checks run, review still to do.
+
+## [2026-10-17] ticket | T-22008 Done
+
+[[tickets/T-22008-w4-p08]]: code review against `CODING_STANDARDS.md` passed, no findings. 0 of 4 functions matched (`func_80132320` 14 lines and `func_80134110` 26 lines stay guarded, `func_80134248` 455 lines, `func_80138C1C` stays `INCLUDE_ASM`). Ticket Done, card moved to Done.
