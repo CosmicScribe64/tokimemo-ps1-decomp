@@ -16711,3 +16711,9 @@ Integrated main dee64939 (T-17109), preserving both shared wiki histories. This 
 ## [2026-10-16] build | T-20001 address PR #37 review
 
 Changed func_801343A4's shared header and definition to s32, removing the unnecessary caller override/guard/local prototype. Corrected the ticket and matching-note explanation: the plain return-type change is sufficient and preserves all callers. Moved the T-0018 Update after Rules, leaving historical rows unchanged. Actual default linked proofs match callback172/setup124 bytes; GYOZI SHA1, full 67-step build/globals, 27/27 binary checks and prototype branch guard (0 new / 15 known) pass. Local standards review complete; [[tickets/T-20001-gyozi-helper]] stays In Review for acceptance. No repeated main integration, as requested by the maintainer.
+
+## [2026-10-17] ticket | T-20001 Done (PR #37 merged)
+
+KakarottoCake's PR #37 updated per review: plain `s32 func_801343A4(void)` in `include/ovl/GYOZI.h` and its
+definition, no override. Verified on the integration base: clean 27/27, headers, globals, prototypes OK, GYOZI
+`func_8013506C` MATCH (172 bytes). [[tickets/T-20001-gyozi-helper]] Done.

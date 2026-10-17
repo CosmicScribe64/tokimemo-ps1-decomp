@@ -1,7 +1,7 @@
 ---
 id: T-20001
 title: Match the GYOZI dialogue helper from its SHOUGATU sibling
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-16
 updated: 2026-10-16
@@ -39,3 +39,5 @@ Initial-submission history (before the shared-return-type review fix): integrate
 Refreshed PR #37 against upstream main 81095a46. Shared index/log/matching-note conflicts preserve both sides; no production source conflicts. Actual default linked proof still matches all 172 bytes, the full 490-step ninja rebuild passes every binary SHA1 and build guard, and the explicit verifier reports 27/27 again (build/T-20001/refreshed-*.log, gitignored). No changes to the reviewed GYOZI implementation or caller view.
 
 Maintainer review follow-up verification (2026-10-16): replaced the local override with plain shared s32 func_801343A4(void) in both header and definition. Actual default linked funcdiff proves callback func_8013506C MATCH (172 bytes) and setup callee func_801343A4 MATCH (124 bytes). The full GYOZI SHA1 preserves all seven other callers; ninja passes its 67 steps and globals, and explicit binary verification passes 27/27. Prototype branch guard: 0 new disagreements, 15 known, branch check OK. Evidence: gitignored build/T-20001/review-{proof,build,checksums,protos}.log. Final local standards review confirms one shared declaration, no override/local duplicate, C89 and intended source/header/wiki files only. Ticket remains In Review for maintainer acceptance. Per maintainer request, no further main merge; they will resolve wiki conflicts upstream.
+
+2026-10-16, maintainer review (PR #37): review point addressed (plain s32 func_801343A4 in header and definition, override removed, wiki corrected). Verified on the integration base: 27/27, headers, globals, prototypes OK, funcdiff MATCH (172 bytes). Status Done.
