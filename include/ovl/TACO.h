@@ -481,7 +481,7 @@ void func_80158DBC(s16 arg0, s16 arg1, s16 arg2);
 extern s8 D_8015EDE8;
 void func_80148184(void);
 void func_80148308(void);
-void func_801484E4(void);
+s32 func_801484E4();
 void func_8014866C(void);
 void func_801487A4(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4);
 void func_8014AB50();
