@@ -215,9 +215,9 @@ u8 func_8007437C(void) {
     ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 5;
     ((DisplayActor44 *)D_8011ECD0)[96].unk_38 = 0x01000000;
     ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0x84;
-    *(s32 *)&((DisplayActor44 *)D_8011ECD0)[96].unk_0C = (s32)D_80125CA8;
-    *(s32 *)&((DisplayActor44 *)D_8011ECD0)[96].unk_10 = (s32)D_80125CAC;
-    *(s32 *)&((DisplayActor44 *)D_8011ECD0)[96].unk_34 = (s32)D_80125CB0;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_0C = (u8 *)D_80125CA8;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_10 = (u8 *)D_80125CAC;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_34 = (u8 *)D_80125CB0;
     ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 2;
     /* FAKE: u8 view of the s8 flag unk_F6E (both reads below). The original reloads the flag for the second
      * record; with the field read as s8 the first load is kept in a register and every temporary shifts.
@@ -238,9 +238,9 @@ u8 func_8007437C(void) {
             ((DisplayActor44 *)D_8011ECD0)[97].unk_02 = 5;
             ((DisplayActor44 *)D_8011ECD0)[97].unk_38 = 0x01000000;
             ((DisplayActor44 *)D_8011ECD0)[97].unk_03 = 0x84;
-            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[97].unk_0C = (s32)D_80125CA8;
-            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[97].unk_10 = (s32)D_80125CAC;
-            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[97].unk_34 = (s32)D_80125CB0;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_0C = (u8 *)D_80125CA8;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_10 = (u8 *)D_80125CAC;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_34 = (u8 *)D_80125CB0;
             ((DisplayActor44 *)D_8011ECD0)[97].unk_05 = 2;
             if (*(u8 *)&D_800E6280.unk_F6E != 0) {
                 ((DisplayActor44 *)D_8011ECD0)[97].unk_06 = 0x82;
@@ -401,9 +401,9 @@ u8 func_8007505C(void) {
             ((DisplayActor44 *)D_8011ECD0)[97].unk_02 = 5;
             ((DisplayActor44 *)D_8011ECD0)[97].unk_38 = 0x01000000;
             ((DisplayActor44 *)D_8011ECD0)[97].unk_03 = 0x84;
-            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[97].unk_0C = (s32)D_80125CA8;
-            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[97].unk_10 = (s32)D_80125CAC;
-            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[97].unk_34 = (s32)D_80125CB0;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_0C = (u8 *)D_80125CA8;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_10 = (u8 *)D_80125CAC;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_34 = (u8 *)D_80125CB0;
             ((DisplayActor44 *)D_8011ECD0)[97].unk_05 = 2;
             if ((u8)D_800E6280.unk_F6E != 0) {
                 ((DisplayActor44 *)D_8011ECD0)[97].unk_06 = 0x82;
@@ -425,9 +425,9 @@ u8 func_8007505C(void) {
     ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 5;
     ((DisplayActor44 *)D_8011ECD0)[96].unk_38 = 0x01000000;
     ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0x84;
-    *(s32 *)&((DisplayActor44 *)D_8011ECD0)[96].unk_0C = (s32)D_80125CA8;
-    *(s32 *)&((DisplayActor44 *)D_8011ECD0)[96].unk_10 = (s32)D_80125CAC;
-    *(s32 *)&((DisplayActor44 *)D_8011ECD0)[96].unk_34 = (s32)D_80125CB0;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_0C = (u8 *)D_80125CA8;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_10 = (u8 *)D_80125CAC;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_34 = (u8 *)D_80125CB0;
     ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 2;
     if ((u8)D_800E6280.unk_F6E != 0) {
         ((DisplayActor44 *)D_8011ECD0)[96].unk_06 = 0x82;
