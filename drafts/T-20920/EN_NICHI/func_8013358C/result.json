@@ -1,0 +1,66 @@
+{
+ "base_head": "f3933305",
+ "base_score": 77,
+ "base_variant_scores": {
+  "archived": 77,
+  "gs-local": 77,
+  "plain": 77,
+  "typed": null,
+  "typed-late": 77
+ },
+ "best_archived_path": "drafts/T-18200/EN_NICHI/func_8013358C",
+ "best_archived_score": 77,
+ "census_path": "drafts/T-14500/EN_NICHI/func_8013358C",
+ "census_score": 77,
+ "context_hash": "998475a1148e2dabccb7fbec20530bd945706a9a5ee40553e0cd5236ec37e29d",
+ "created": "2026-10-17",
+ "draft_fixes": [],
+ "draft_hash": "ba60b8936b2abb6626144e6edb802072fce9b2b75fc153789d8bed5119bdc10d",
+ "func": "func_8013358C",
+ "guarded": false,
+ "hand_note": "T-18200 hand.c unchanged: loop-invariant registers (t0/t1/t2) and the dead move v0,zero on the early return (register promotion of D_80139AFC).",
+ "hand_rows": 46,
+ "provenance": {
+  "archived": {
+   "file": "body.c",
+   "path": "drafts/T-18200/EN_NICHI/func_8013358C",
+   "score": 77,
+   "ticket": "T-18200"
+  },
+  "draft_fixes_tried": {
+   "": 77
+  },
+  "git": "c2dabc21",
+  "harness_hash": "0225e1c12eaacc2851b9274ba91bbd2e639e8a2acd4f8a83395ddf4422ff8614",
+  "headers": {
+   "include/game.h": "f1b1b294280189be3c4bd2ad59f87cdda702d49a3c7d5f1091ea846db44ef5e2",
+   "include/libgte.h": "914456b688f1c510ee2406ff0f493d9adec3dc07394a39b04152883d8cba958d",
+   "include/main_api.h": "870cb1eff8f93867f5190c5ac9362f40d07408f995cb38035b4deb2b1f943411",
+   "include/ovl/EN_NICHI.h": "8ee5a8e7bfa2f05a8851d909818d445543e591b3cd79dde0df3d58e32f64d120",
+   "include/psx_types.h": "c69b27b63733802c88d8f4bf403813fd072dd6da6aa0a59e741e85a82662d660"
+  },
+  "ticket": "T-20920",
+  "tool": "tools/redraft.py (T-20800)"
+ },
+ "rewrites": [
+  "display-records",
+  "record-temp"
+ ],
+ "scope": "EN_NICHI:func_8013358C",
+ "score": 77,
+ "size": 596,
+ "src": "src/ovl/EN_NICHI/80132000.c",
+ "status": "scored",
+ "ticket": "T-20920",
+ "unit": "EN_NICHI",
+ "variant": "typed-late",
+ "variant_scores": {
+  "archived": 77,
+  "gs-local": 77,
+  "plain": 77,
+  "typed": null,
+  "typed-late": 77
+ },
+ "vs_archived": "same",
+ "vs_census": "same"
+}

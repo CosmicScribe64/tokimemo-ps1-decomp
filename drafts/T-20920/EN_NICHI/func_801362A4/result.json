@@ -1,0 +1,65 @@
+{
+ "base_head": "f3933305",
+ "base_score": 65,
+ "base_variant_scores": {
+  "archived": 165,
+  "gs-local": 65,
+  "plain": 177,
+  "typed": 165,
+  "typed-late": 165
+ },
+ "best_archived_path": "drafts/T-18200/EN_NICHI/func_801362A4",
+ "best_archived_score": 165,
+ "census_path": "drafts/T-14500/repairs/automatic/mechanical/EN_NICHI/func_801362A4",
+ "census_score": 177,
+ "context_hash": "0dc9a9dd94cccb05c984cc2f5566dedf879285920f431fc3fdca54df1fa19fc6",
+ "created": "2026-10-17",
+ "draft_fixes": [],
+ "draft_hash": "b937b5df82041137728c87bbf0458eb248cc779cc5a0d7d189fe4dc43d268aed",
+ "func": "func_801362A4",
+ "guarded": false,
+ "hand_note": "direct GameState fields, s32 locals for the two minima, implicit int; the u8 load goes to v0 and is copied (original loads straight into a2), and the frame is 8 bytes smaller than the original (one unused slot below the spills).",
+ "hand_rows": 11,
+ "provenance": {
+  "archived": {
+   "file": "body.c",
+   "path": "drafts/T-18200/EN_NICHI/func_801362A4",
+   "score": 165,
+   "ticket": "T-18200"
+  },
+  "draft_fixes_tried": {
+   "": 165
+  },
+  "git": "c2dabc21",
+  "harness_hash": "0225e1c12eaacc2851b9274ba91bbd2e639e8a2acd4f8a83395ddf4422ff8614",
+  "headers": {
+   "include/game.h": "f1b1b294280189be3c4bd2ad59f87cdda702d49a3c7d5f1091ea846db44ef5e2",
+   "include/libgte.h": "914456b688f1c510ee2406ff0f493d9adec3dc07394a39b04152883d8cba958d",
+   "include/main_api.h": "870cb1eff8f93867f5190c5ac9362f40d07408f995cb38035b4deb2b1f943411",
+   "include/ovl/EN_NICHI.h": "8ee5a8e7bfa2f05a8851d909818d445543e591b3cd79dde0df3d58e32f64d120",
+   "include/psx_types.h": "c69b27b63733802c88d8f4bf403813fd072dd6da6aa0a59e741e85a82662d660"
+  },
+  "ticket": "T-20920",
+  "tool": "tools/redraft.py (T-20800)"
+ },
+ "rewrites": [
+  "implicit-int"
+ ],
+ "scope": "EN_NICHI:func_801362A4",
+ "score": 65,
+ "size": 1116,
+ "src": "src/ovl/EN_NICHI/80132000.c",
+ "status": "scored",
+ "ticket": "T-20920",
+ "unit": "EN_NICHI",
+ "variant": "typed+gs-local",
+ "variant_scores": {
+  "archived": 165,
+  "gs-local": 65,
+  "plain": 177,
+  "typed": 165,
+  "typed-late": 165
+ },
+ "vs_archived": "better",
+ "vs_census": "better"
+}

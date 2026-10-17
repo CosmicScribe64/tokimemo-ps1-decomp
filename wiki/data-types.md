@@ -53,6 +53,7 @@ Limits: the pass is linear (no control flow), so a register state survives a lab
 | GYOZI overlay data: step-callback tables `GzCallbacks68/90/BC`, dumpling arrays `s32[50]` x3 and `s16[50]`, `s16[8]` x2, `Rec24 D_8012CA40[]`, `GyoziGirl.unk_14`, `GyoziWork.unk_10B8`, `u8 D_80148828[4]`; `GYOZI.h` includes `game.h` | `D_801476F4`, `D_80147C6C`, `D_80148880`, `D_8014901C`, `D_80148BF0`/`CB8`/`D80`/`E48`, `D_8014875C`/`76C`, `D_8012CA40`, `D_800F53A0` | `include/ovl/GYOZI.h` (T-17600); `D_800F62F0` added to `main_api.h` | `D_800F6458` written as `D_800F53A0.unk_10B8` in `func_8013DC2C` only; the other users keep the scalar | 0 |
 | NAME_ENT tables: flag counters `u8 D_8014D060[16]` and `u8 D_8014D158[16]`, digit sprite (u, v) `u8 D_8014D0F4[10][2]`, name-entry buffers `D_8014CC74[8]`/`D_8014CC7C[8]` sized; main-exe records read through views in the redraft (`NameMetricWork` at `D_800E7D10`, `NameRecordF00[]` at `D_80123120`, `DisplayActor44[]` at `D_8011ECD0`) | `D_8014D060`, `D_8014D158`, `D_8014D0F4`, `D_8014CC74`, `D_8014CC7C` | `include/ovl/NAME_ENT.h` (T-17900) | none (new declarations) | 0 |
 | EN_NICHI objects `EnObj D_8013984C[10]` (0x30), sprite frames `s16 D_80139A34[16][6]`, ring buffer `s16 D_80139228[10][4]`/`s32 D_80139278[10]`, stack tables `EnHalf22` x3, `EnBytes22`, `EnHalf64`, `EnHalf13`, asset pointer `s32 *D_80139204`; status and sprite bytes sized | `D_8013984C`, `D_80139A34`, `D_80139A2C`, `D_80139228`, `D_80139278`, `D_80139C68`/`C94`/`CC0`/`CEC`, `D_80139DA0`, `D_80139E20`, `D_80139200`..`D_80139218` | `include/ovl/EN_NICHI.h` (T-18200) | `u8 D_8013984C[]`, `Rec30 D_80139868[]` | 1 (`func_80132834`, peeled loop) |
+| EN_NICHI 16.16 fields: `EnObj.unk_14`/`unk_18` as `Fix32`, `unk_20` `s32`; points `EnFixPos` (two `Fix32`) for the grid `D_801392AC[15][12]` and the pop-up centres `D_80139228[10]` | `D_8013984C`, `D_801392AC`, `D_80139228` | `include/ovl/EN_NICHI.h` (T-20920) | `EnObj.unk_16`/`unk_1A` (`s16`), `EnResetSlot8`, `s16 D_80139228[10][4]` | 0 (one added, `func_80135ACC`; the guarded FAKE drafts of `func_801330D0` and `func_80136A2C` are gone) |
 | MASTER stack tables `MasterWords13` (`s32 v[13]`) x9 and `MasterHalfwords13 D_8013C6A4`; step tables `FnTbl4/7/30`, `PtrTbl3` moved into the header; second mini-event counters `u8 D_8013C788[5]`, `D_8013C780`, `s16 D_8013C794`; the local `MasterSlot` copies unified as `MasterClubBits` | `D_8013C2F4`..`D_8013C460`, `D_8013C7B4`, `D_8013C6A4`, `D_8013C2E4`, `D_8013C5C8`, `D_8013C700`, `D_8013C798`, `D_8013C788` | `include/ovl/MASTER.h` (T-18600) | `Tbl13`, two `MasterSlot` typedefs, `D_8013C78C` | 0 |
 
 33 `FAKE` comments of the "first symbol" family are gone (117 to 84 in `src/`). The `Work80125D10` conversion is the strongest single test: 96 uses in already-matched functions moved to one symbol and none changed bytes.
@@ -313,3 +314,21 @@ rewrite changes what the compiler sees as one object (the label fold of the `typ
 The unification pays off for people reading and editing drafts, for rewrites that were gated on one unit's private
 type (`club-bits`, `record-copy`) and for later rewrites that need one field name per offset (`tools/redraft_rewrites.py` reads one record view per unit; `TYPE_ALIASES` maps the retired names in
 archived bodies).
+
+## EN_NICHI targeted pass (T-20920)
+
+A second pass over the 14 functions EN_NICHI still had after T-18200 ([[en-nichi-family-results]], section "Targeted
+type pass (T-20920)"; ticket [[tickets/T-20920-types-en-nichi]]). The access widths of `func_801339D4` and
+`func_80135ACC` showed that the object positions and the grid points are 16.16 words read by halves elsewhere, so
+both are `Fix32` now (`EnObj.unk_14`, `unk_18`; `EnFixPos`). Two of the types are locals rather than globals: a `Fix32`
+local whose integer half is set and whose word is read (`func_80135ACC`) and a point array in memory
+(`func_80135FBC`); `func_80138CCC` writes entries 32..47 of its `EnHalf64` copy, which m2c had shown as a second array.
+
+Paired redraft (`tools/redraft.py`, before and after the types, each on its own snapshot): the six functions that
+are still unmatched keep the same best scores (sum 1,736), and their m2c text does not pick up the new fields. The
+eight functions matched by hand on the types (6,328 bytes) scored 1,521 rows in the baseline. Same result as the
+T-20900 measurement: header types change what a person can write, not what m2c prints. Idioms that decided the
+hand matches: local declaration order and the T-3330 slot rule for frames, index form instead of a pointer local,
+a pointer to the display pool when the original reloads after its stores, implicit `int` for functions called
+without a prototype. `D_800E7D10` is a link name in `config/symbol_addrs_types.txt` now, so overlay C can read the
+work area through its fields.

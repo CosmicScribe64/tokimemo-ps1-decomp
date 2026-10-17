@@ -17309,3 +17309,18 @@ Wave 3 conveyor paused at the user's request after 19 types passes and 77 packag
 [[tickets/T-20920-types-en-nichi]] created and In Progress: a second, targeted type pass for EN_NICHI (14 unmatched
 functions after [[en-nichi-family-results]] T-18200), redraft with `tools/redraft.py` into `drafts/T-20920/`. Branch
 `ty-en-nichi` from `w2-good`. Card in [[kanban]], line in [[index]].
+
+## [2026-10-17] build | T-20920 EN_NICHI types and eight hand matches
+
+[[tickets/T-20920-types-en-nichi]]: `EnObj.unk_14`/`unk_18` are `Fix32` (16.16, words in `func_801339D4`), `unk_20` an
+`s32`; `EnFixPos` (two `Fix32`) replaces `EnResetSlot8` for the grid `D_801392AC[15][12]` and the `s16[10][4]` view of
+`D_80139228`. Matched by hand on the new types: `func_80135ACC`, `func_80134800`, `func_801339D4`, `func_80135274`,
+`func_80136A2C` (was guarded), `func_801330D0` (was guarded), `func_80132450`, `func_80138CCC` (6,328 bytes). Link name
+`D_800E7D10` added to `config/symbol_addrs_types.txt`. Paired `tools/redraft.py` run (snapshots `f3933305` and
+`c2dabc21`): the 6 functions still unmatched keep their scores; drafts in `drafts/T-20920/`. Details in
+[[en-nichi-family-results]] and [[data-types]].
+
+## [2026-10-17] ticket | T-20920 In Review
+
+[[tickets/T-20920-types-en-nichi]] In Progress to In Review: types, matches, redraft and docs committed; the code
+review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]], line in [[index]] updated.
