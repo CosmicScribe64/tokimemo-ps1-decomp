@@ -376,14 +376,6 @@ void func_80136070();
 void func_801361AC();
 extern u32 D_8015ED38;
 
-#ifndef OVL_RPG_OBJECT_BLOCK_T9520
-#define OVL_RPG_OBJECT_BLOCK_T9520
-typedef struct RpgObjectBlock {
-    /* 0x0000 */ DisplayActor44 prefix[96];
-    /* 0x1980 */ DisplayActor44 group[64];
-} RpgObjectBlock; /* size 0x2A80 */
-#endif
-
 void func_8014E1A4();
 void func_8014E28C();
 
@@ -405,9 +397,6 @@ void func_80142CB8(void);
 
 #ifndef OVL_RPG_HEALTH_RECORDS_T9780
 #define OVL_RPG_HEALTH_RECORDS_T9780
-typedef struct RpgHealthBlock {
-    /* 0x0000 */ DisplayActor44 record[160];
-} RpgHealthBlock; /* size 0x2A80; same extent as RpgObjectBlock */
 extern s32 D_8015EDBC;
 extern s32 D_8015EE14;
 extern s32 D_8015ED14;

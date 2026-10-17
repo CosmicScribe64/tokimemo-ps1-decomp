@@ -85,6 +85,7 @@ TYPE_ALIASES = {
     "BunkakenModeFlags": ("Flags7D4F", ((r"->mode\b", "->unk_2_4"), (r"->pad\b", "->unk_5_7"))),
     "BunkSelectWords": ("BunkaDispatch8", ()), "BunkModePair": ("BunkaDispatch8", ()),
     "EtcMat": ("MATRIX", ()), "EtcMat2": ("MATRIX", ()), "TaiikuMat": ("MATRIX", ()),
+    "RpgHealthBlock": ("DisplayActor44", ((r"->record\[", "["),)),
     "EtcVec": ("VECTOR", ()), "EtcVec2": ("VECTOR", ()), "TaiikuVec": ("VECTOR", ()),
     # GameState words: +0x54C entries, +0x66C club words, +0xF4, +0xF8
     "TelEntryFlags": ("ScheduleEntryFlags", ((r"->nib\b", "->unk_25"), (r"->b29\b", "->active"))),

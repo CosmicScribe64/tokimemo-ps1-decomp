@@ -3,24 +3,24 @@
 
 void func_8013E4D0(void) {
     s32 i;
-    RpgObjectBlock *p;
+    DisplayActor44 *p;
 
-    p = (RpgObjectBlock *) D_8011ECD0;
+    p = (DisplayActor44 *)D_8011ECD0;
     for (i = 40; i < 64; i++) {
-        p->group[i].unk_01 = 5;
-        p->group[i].unk_38 = 0x41000000;
-        p->group[i].unk_02 = 0x1;
-        p->group[i].unk_06 = 0x1;
-        p->group[i].unk_1A = 0x1000;
-        p->group[i].unk_1C = 0x1000;
+        p[96 + i].unk_01 = 5;
+        p[96 + i].unk_38 = 0x41000000;
+        p[96 + i].unk_02 = 0x1;
+        p[96 + i].unk_06 = 0x1;
+        p[96 + i].unk_1A = 0x1000;
+        p[96 + i].unk_1C = 0x1000;
     }
     for (i = 29; i < 31; i++) {
-        p->group[i].unk_01 = 5;
-        p->group[i].unk_38 = 0x41000000;
-        p->group[i].unk_02 = 0x1;
-        p->group[i].unk_06 = 0x1;
-        p->group[i].unk_1A = 0x1000;
-        p->group[i].unk_1C = 0x1000;
+        p[96 + i].unk_01 = 5;
+        p[96 + i].unk_38 = 0x41000000;
+        p[96 + i].unk_02 = 0x1;
+        p[96 + i].unk_06 = 0x1;
+        p[96 + i].unk_1A = 0x1000;
+        p[96 + i].unk_1C = 0x1000;
     }
 }
 
@@ -481,17 +481,17 @@ s32 func_8013F350(s32 arg0, s32 arg1) {
 
 void func_8013F3F0(s32 arg0, s32 arg1) {
     s32 i;
-    RpgObjectBlock *p;
+    DisplayActor44 *p;
 
-    p = (RpgObjectBlock *) D_8011ECD0;
+    p = (DisplayActor44 *)D_8011ECD0;
     for (i = 40; i < 64; i++) {
-        p->group[i].unk_26 += arg0;
-        p->group[i].unk_2A += arg1;
+        p[96 + i].unk_26 += arg0;
+        p[96 + i].unk_2A += arg1;
     }
-    ((RpgObjectBlock *) D_8011ECD0)->group[29].unk_26 += arg0;
-    ((RpgObjectBlock *) D_8011ECD0)->group[30].unk_26 += arg0;
-    ((RpgObjectBlock *) D_8011ECD0)->group[31].unk_26 += arg0;
-    ((RpgObjectBlock *) D_8011ECD0)->group[29].unk_2A += arg1;
-    ((RpgObjectBlock *) D_8011ECD0)->group[30].unk_2A += arg1;
-    ((RpgObjectBlock *) D_8011ECD0)->group[31].unk_2A += arg1;
+    ((DisplayActor44 *)D_8011ECD0)[125].unk_26 += arg0;
+    ((DisplayActor44 *)D_8011ECD0)[126].unk_26 += arg0;
+    ((DisplayActor44 *)D_8011ECD0)[127].unk_26 += arg0;
+    ((DisplayActor44 *)D_8011ECD0)[125].unk_2A += arg1;
+    ((DisplayActor44 *)D_8011ECD0)[126].unk_2A += arg1;
+    ((DisplayActor44 *)D_8011ECD0)[127].unk_2A += arg1;
 }

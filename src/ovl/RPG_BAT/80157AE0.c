@@ -636,9 +636,9 @@ void func_80159214(void) {
     case 2:
         if (D_8015EDE0 == 0x6E) {
             func_8013E97C(0x3A, 0, 0);
-            ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_1A = 0x100;
-            ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_1C = 0x100;
-            ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_01 = 4;
+            ((DisplayActor44 *)D_8011ECD0)[154].unk_1A = 0x100;
+            ((DisplayActor44 *)D_8011ECD0)[154].unk_1C = 0x100;
+            ((DisplayActor44 *)D_8011ECD0)[154].unk_01 = 4;
             func_8013E7C0(0x3A, 0xB, 1, 1);
             func_8013F15C(0x50B, 1, 0);
             func_8014EF3C();
@@ -647,8 +647,8 @@ void func_80159214(void) {
         break;
     case 3:
         temp = ((D_8015EDE0 << 0xD) / 256) + 0x100;
-        ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_1A = temp;
-        ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_1C = temp;
+        ((DisplayActor44 *)D_8011ECD0)[154].unk_1A = temp;
+        ((DisplayActor44 *)D_8011ECD0)[154].unk_1C = temp;
         D_8015EDE0 += 3;
         if (D_8015EDE0 < 0x100) {
             half = D_8015EDE0 / 2;
@@ -662,9 +662,9 @@ void func_80159214(void) {
         func_80049A40(-0xA0, -0x78, 0x140, 0xA8, 2, color, 0x81);
         dtd_on_tpage(0, 0, 2, 1, 0);
         if (D_8015EDE0 >= 0x1F5) {
-            ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_1A = 0x1000;
-            ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_1C = 0x1000;
-            ((RpgObjectBlock *)D_8011ECD0)->group[58].unk_01 = 5;
+            ((DisplayActor44 *)D_8011ECD0)[154].unk_1A = 0x1000;
+            ((DisplayActor44 *)D_8011ECD0)[154].unk_1C = 0x1000;
+            ((DisplayActor44 *)D_8011ECD0)[154].unk_01 = 5;
             func_8013E7C0(0x3A, 0xFF, 1, 0);
             func_8013E7C0(0x3B, 8, 1, 1);
             if (D_8015ED98 == 0x02000000) {
@@ -791,8 +791,8 @@ void func_801596E8(void) {
         func_80158240();
         break;
     case 7:
-        ((RpgHealthBlock *)D_8011ECD0)->record[155].unk_03 |= 1;
-        ((RpgHealthBlock *)D_8011ECD0)->record[155].unk_26 -= 0x10;
+        ((DisplayActor44 *)D_8011ECD0)[155].unk_03 |= 1;
+        ((DisplayActor44 *)D_8011ECD0)[155].unk_26 -= 0x10;
         temp_v0 = D_8015EE38 + 1;
         D_8015EE38 = temp_v0;
         if (temp_v0 >= 0x21) {
