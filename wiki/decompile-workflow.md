@@ -1,12 +1,12 @@
 ---
 type: concept
-updated: 2026-10-16
+updated: 2026-10-17
 sources: ["tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py", "tools/funcloc.py", "tools/sync_protos.py", "tools/migrate_globals.py", "tools/data_island.py", "tools/data_pieces.py"]
 sources: ["tools/draft_fixes.py", "tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py", "tools/funcloc.py", "tools/sync_protos.py", "tools/migrate_globals.py", "tools/data_island.py", "tools/data_pieces.py"]
 sources: ["tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py"]
 sources: ["tools/type_recovery.py", "tools/queue.py", "tools/dupes.py", "tools/twin_sweep.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py", "tools/regdiff.py"]
 sources: ["tools/type_recovery.py", "tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py", "tools/regdiff.py", "tools/siblings.py"]
-sources: ["tools/type_recovery.py", "tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py", "tools/regdiff.py", "tools/protoverride.py", "tools/funcdiff_verify.py"]
+sources: ["tools/type_recovery.py", "tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py", "tools/regdiff.py", "tools/redraft.py", "tools/redraft_rewrites.py", "tools/redraft_extras.py", "tools/protoverride.py", "tools/funcdiff_verify.py"]
 ---
 
 # How to decompile a function
@@ -1974,7 +1974,7 @@ Baseline `7f081d79` (w2-good): 4 plans, 944 bytes; applied in a scratch clone (n
 
 ## Types-first redraft (T-16550)
 
-`drafts/T-16550/redraft.py` redrafts a unit's unmatched functions after its types change and scores them like the census (`exhaustive_drafts.process()`). Written for TAIIKU; the unit and header are constants at the top. The main finding: new struct types in the header change little by themselves, because m2c prints the splat label of a field (`D_80149214`) and never sees the struct. The `fold` variant rewrites the asm given to m2c so such a label becomes `base + offset` (TAIIKU aggregates, `GameState D_800E6280`, the `D_8011ECD0` display records seen as `DisplayActor44[]`); the `%hi` keeps the bare base, because m2c reads every `%lo` paired with a `%hi(sym+k)` as `sym+k`. It also writes m2c's word-by-word stack copies of a typed table as one struct assignment. On TAIIKU the redraft improved 27 of 64 starting points, 25 of them through the fold; results and limits in [[taiiku-family-results]].
+`drafts/T-16550/redraft.py` redrafts a unit's unmatched functions after its types change and scores them like the census (`exhaustive_drafts.process()`). Written for TAIIKU; the unit and header are constants at the top. The main finding: new struct types in the header change little by themselves, because m2c prints the splat label of a field (`D_80149214`) and never sees the struct. The `fold` variant rewrites the asm given to m2c so such a label becomes `base + offset` (TAIIKU aggregates, `GameState D_800E6280`, the `D_8011ECD0` display records seen as `DisplayActor44[]`); the `%hi` keeps the bare base, because m2c reads every `%lo` paired with a `%hi(sym+k)` as `sym+k`. It also writes m2c's word-by-word stack copies of a typed table as one struct assignment. On TAIIKU the redraft improved 27 of 64 starting points, 25 of them through the fold; results and limits in [[taiiku-family-results]]. The 21 per-unit copies of this driver are replaced by `tools/redraft.py` (next section).
 
 
 ## Keep lines with a proof (T-20820)
@@ -1986,3 +1986,50 @@ For a function whose original reads an aggregate field a second time as another 
 - **Apply (only after the lead approves the rule).** Commit the plain C, re-add `extern s32 D_800E7384;` to `include/main_api.h`, put the printed line in `config/migrate_globals.txt`, run `migrate_globals.py --check` (plain C and sha1) and the build. `--verify-proofs` recompiles every proof line.
 - **Candidates.** `tools/keepproof.py census [--json OUT]` lists the functions whose original asm has the counter-tail shape (matched and unmatched, with sizes). The shape alone is not evidence: 299 of 299 matched functions with it match in plain C.
 - Tests: `tools/test_keepproof.py` (fake toolchain, synthetic asm), `tools/test_migrate_globals.py` (syntax, stale sha1, INCLUDE_ASM and guarded functions, one line per function, uses outside the proven function).
+## Redraft tool (T-20800)
+
+`tools/redraft.py` replaces the 21 per-unit drivers `drafts/T-16550/redraft.py` .. `drafts/T-18800/redraft.py` (17,000 lines, each a copy of the last with a few rewrites added; they stay in the archives as the record). A draft from an older archive often no longer compiles against today's headers, so every remaining function needs a new one, and this is the one tool that makes it. It reads the headers of the unit instead of constants, so it runs on any unit, also those no pass covered (RENSYU, TEL, VALEN, OMIMAI, OLH).
+
+```
+tools/docker.sh python3 tools/redraft.py --ticket T-NNNN UNIT:func [UNIT:func ...]   # named functions (a bare name: every unit with it)
+tools/docker.sh python3 tools/redraft.py --ticket T-NNNN --unit GEKO --unit DATE      # every unmatched function of the units
+tools/docker.sh python3 tools/redraft.py --ticket T-NNNN --all-unmatched --jobs 2 --base $(git rev-parse HEAD)   # the tree, TT left out
+tools/docker.sh python3 tools/redraft.py --list --all-unmatched                       # targets only
+tools/docker.sh python3 tools/redraft.py --unit GEKO --rewrite BODY.c                 # print the rewrites of one body
+```
+
+Other options: `--variants a,b,c|all`, `--jobs N` (compile jobs, default 2), `--timeout S` (per variant, default 300; 4x for the finish step), `--no-fixes`, `--force`, `--include-tt`, `--skip-unit U`, `--limit N`, `--base REV` (git head for the provenance: a worktree's `.git` file points outside the Docker mount), `--work DIR`, `--out DIR`.
+
+**Per function.** One subprocess per (function, variant), each the census path of `tools/exhaustive_drafts.py` `process()`. It runs m2c with the current headers, the `bulk_m2c` cleanup and the cheap declaration-fix loop, compiles the whole translation unit and scores it with `order_search`'s resolved diff (the T-14500 measure; 0 is a candidate, not a match). The best score wins (ties go to the variant earlier in the list); then `draft_fixes.best_rewrite` (all rewrites, each alone, greedy build-up) and the GameState-local form (`gs-local`, T-18500) are tried on it. The tool caches each compiled object under the hash of the unit text and of all headers (`<work>/objcache`). Two variants that end in the same draft (a function that touches no folded label) then share one IDO run, and a compile error is cached with its message.
+
+| Variant | What it does | Default |
+|---|---|---|
+| `plain` | m2c with the current headers, nothing else (what the census did) | yes |
+| `typed` | fold the asm (every `%hi` takes the bare base, an indexed `%hi` keeps its offset), type the record views in the m2c context, then the PRE and POST rewrites. The fold of 10 of the 21 drivers (TAIIKU, TACO, RPG_BAT, DATE, EVENT, SHOUGATU, OPTION, BUNKA_SD, BUNKAKEN, DATE2) | yes |
+| `typed-late` | the fold runs after `m2c.fix_shared_hi` and every `%hi` keeps its offset (T-17700: a bare base made m2c print `D_800E6280.unk0`). GEKO, NAME_ENT, SHUGAKU, EN_NICHI, ENDING, KANGEI, MASTER, BUNKASAI | yes |
+| `archived` | the best archived body (lowest score in `drafts/`, `hand.c` where its `hand_score` is lower) through the same rewrites and cleanup | yes (when one exists) |
+| `guarded` | the `NON_MATCHING` body in `src/`, scored as it is | yes (guarded functions) |
+| `typed-keep` | `typed`, plus a `%hi` whose `%lo` uses all name its own symbol keeps its offset (T-17300: ETC, GYOZI) | opt-in |
+| `typed-named` | `typed`, but only labels at a named field fold (T-17100) | opt-in |
+| `typed-pass1` | `typed` without stack-array typing in `work-prim` (T-17300 `typed1`) | opt-in |
+| `archived-raw` | the archived body untouched: today's score of the old draft | opt-in |
+
+**Rewrites** (`tools/redraft_rewrites.py`; unit-specific ones in `tools/redraft_extras.py`). Each is a candidate; the compiler decides. `result.json` lists the ones that changed the body. `Env(unit)` parses the header closure (`libgte.h`, `psx_types.h`, `main_api.h`, `game.h`, the overlay header) once.
+
+| Stage | Rewrites |
+|---|---|
+| fold (asm) | a label inside a typed global, `GameState D_800E6280`, a record view or a sized array becomes `base+offset`; innermost range first; the display pool `D_8011ECD0` (DisplayActor44[160]) and, per unit, NAME_ENT's album records `D_80123120`, the EVENT and GYOZI pools and MASTER's sprites |
+| PRE (m2c text) | `views` (scalar objects read as structs: NAME_ENT `D_800E7D10`, ETC `D_801230D0`), `display-records` (byte arithmetic on a record view becomes `&view[i]`), `stack-table` (word copies of a one-array table to a stack local become `spXX = D_YYY;` with `spXX.f[i]` reads), `stack-elements`, `fptab` (the T-3330 `idx` form) |
+| POST (cleaned body) | `implicit-int`, `rect-view`, `header-arrays`, `array-symbols`, `array-views`, `struct-bytes`, `gamestate-records`, `gamestate-words`, `raw-display`, `pointer-index`, `record-walk`, `return-type`, `menu-arrays`, `work-prim` (GetWorkBase primitives), `record-temp`, `actor-offset`, `record-offset`, `struct-walk`, `pointer-step`, `matrix-copy`, `tcpos-args` (TcPos by value), `rect-local`; then `field-symbols` (`tools/migrate_globals.py`), then `club-bits`, `record-copy`, `reroll` (MASTER) |
+
+**Output.** `drafts/<ticket>/<UNIT>/<func>/{body.c, context.c, declarations.h, result.json}` and `drafts/<ticket>/catalog.jsonl`. `result.json`: `scope`, `score`, `census_score` (the T-14500 / T-16510 best), `variant` (the winner, `+draft-fixes`, `+gs-local`), `variant_scores` (every variant, `null` where it did not compile), `rewrites`, `draft_fixes`, `best_archived_score` and `best_archived_path` (the best any archive holds, scored when it was made), `vs_census`, `vs_archived`, `status` (`scored`, `candidate-zero`, `failed`) and `provenance` (tool, ticket, git head, harness and header hashes, the archived source). Work files (variant runs with `m2c.c` and diagnostics, the object cache) stay in `build/redraft/<ticket>`, which is gitignored.
+
+**Resuming.** A variant with a `result.json` in the work directory is not run again (a timeout or crash is recorded as a failed result; delete it to retry), a function with a `result.json` in `drafts/<ticket>/` is not finished again (`--force`). Interrupt and restart freely; the pool stops its subprocess groups on a timeout.
+
+**Skipped units.** TT is left out unless `--include-tt` (a contributor's overlay); an explicit `TT:func` target is reported and not run. `--skip-unit` adds more.
+
+**Adding a rewrite.** A function `fn(env, body)` in `redraft_rewrites.py` (or `redraft_extras.py` when it is one overlay's shape), a line in `pre_steps` or `post_steps`, a test in `tools/test_redraft.py` on a synthetic body. Take the shape from a hand edit that matched; a rewrite that never changes a body costs nothing.
+
+**Limits.** The rewrites are line-oriented regexes over m2c's layout and the bulk cleanup's spelling; a body they do not recognise passes through unchanged. A better score than the archive's is a better starting point, not a match (`funcdiff.py --resolve` and the unit sha1 decide). Archived scores were made against older headers, so `vs_archived` compares a score of today with one of then; `archived-raw` gives today's score of the old body. Tests: `tools/test_redraft.py`.
+
+**Validation (T-20800).** Ten functions in GEKO, DATE2 and main, default variants, scores against the best archived draft (table in `drafts/T-20800/README.md`): nine are better than the census and one equal; three beat the best archive (`GEKO:func_80144198` 69 to 62, `GEKO:func_80134228` 16 to 8 and `main:func_80054140` 106 to 48, all through `gs-local`), six equal it and one stays above it (`DATE2:func_80136860`, 164 against 188). None reached 0. The archived bodies of these ten still compile and score what they did, so the new drafts mostly reproduce them; the tool's value here is one command that rebuilds all of them against today's headers and tries the variants the passes tried one unit at a time. The fold order matters per function (`typed-late` better by 1 to 4 rows on three, `typed` better by 65 on one), which is why both run by default. A unit no pass covered works too: RENSYU `func_80132390` 364 (census) to 337. A second run over the smallest function of each of the 25 units (`typed`, `typed-late`, `plain`, `guarded`) scored 25 of 25 with no worker failure; the `NON_MATCHING` body in `src/` scored at least as well as any m2c draft for all 13 guarded functions in it and strictly better for 10, which is why `guarded` is a default variant.

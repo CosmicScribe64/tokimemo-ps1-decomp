@@ -37,6 +37,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 - [[tickets/T-20710-true-gap-census|T-20710]] True compiler-gap census ([[data/true-gaps]], 55 drafts: uopt 28, as1 12, ugen 11) and uniform rule search: no uopt tie rule (2 ties); IDO 4.1's ugen has the original's block-copy state (6 census cases, TACO `func_8013B2A0` matches with it) but changes 1,307 matched functions; candidate rule not adopted (Done, review passed).
 - [[tickets/T-20820-keep-proof|T-20820]] migrate_globals: keep lines backed by a byte-match necessity proof (counter-tail family): `tools/keepproof.py`, proposed rule [[keep-lines]] (Done; the rule awaits the lead)
+- [[tickets/T-20800-redraft-tool|T-20800]] Consolidate the 21 per-unit types-first redraft drivers into `tools/redraft.py`; 10-function validation in `drafts/T-20800/` (Done).
 - [[tickets/T-20600-regorder-recipe-sweep|T-20600]] Register-order family: recipe sweep over the `regorder` rows of [[data/t0018-cases]]; 7 functions matched, 4,532 bytes (Done; `func_8006D6E0` was matched the same way by T-17004, so 6 are new on main).
 - [[tickets/T-20006-gyozi-scene-callbacks|T-20006]] Two GYOZI scene callbacks matched, 708 bytes; corrected unsigned fields, no new FAKE, full build/27 hashes/prototype checks pass (Done, PR #44 merged).
 - [[tickets/T-17017-w3-main-p17|T-17017]] Wave 3 package w3-main-p17: main `80058D20.c`, 0 of 3 matched: `func_800590CC` guarded at 16 rows and `func_800591D8` at 32 (aliased width/height variables), `func_8005938C` frame and stack layout solved but still `INCLUDE_ASM` (Done)
@@ -406,6 +407,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 ## Tooling
 - `tools/draft_fixes.py` (T-16510): detectors and mechanical rewrites for recurring m2c defects (shared-store `goto`, Shift-JIS escapes, old-value post-increment compares; report-only `s32` and callers-read-`$v0` candidates), `survey` and `rescore` over a draft archive, `tools/m2c.py --fix-defects`; tests `tools/test_draft_fixes.py`; [[decompile-workflow]] ("Recurring m2c defects"), [[matching-notes]].
+- `tools/redraft.py`, `tools/redraft_rewrites.py`, `tools/redraft_extras.py` (T-20800): one tool for the per-unit types-first redraft drivers; variants `plain`, `typed`, `typed-late`, `archived`, `guarded`, the union of the proven type rewrites, whole-unit scores like the census, `drafts/<ticket>/<UNIT>/<func>/`; tests `tools/test_redraft.py`; [[decompile-workflow]] ("Redraft tool").
 - `tools/order_search.py` (T-11530): exhaustive or hill-climb search over marked statement orders (`/* ORDER */`) and operand orders (`ORDER_SWAP`), scored with funcdiff's resolved comparison; tests `tools/test_order_search.py`; [[decompile-workflow]] ("Statement and operand order search").
 - `tools/orphan_rodata.py` and `tools/object_layout.py` (T-10200): reference-based orphan ownership and configured text tail alignment; [[build-system]], [[decompile-workflow]].
 - `tools/header_merge.py` (T-10100): rebuild both-changed headers of a two-parent merge as ours plus whole other-side additions; `--check` previews; tests `tools/test_header_merge.py`; [[matching-notes]].

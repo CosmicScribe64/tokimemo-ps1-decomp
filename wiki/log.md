@@ -17203,3 +17203,27 @@ New `tools/keepproof.py` (`check`, `census`, `rows`) and the `proof=<func>:<rows
 ## [2026-10-17] ticket | T-20820 Done
 
 [[tickets/T-20820-keep-proof]] In Review to Done: code review against `CODING_STANDARDS.md` approved, two small findings fixed (the new `--verify-proofs` test wrote `migrate_globals` output to stdout, now redirected; the merge check `tail -3 | grep '^OK'` saw buffered chatter after `OK`, fixed with `tools/test_stdout_order.py`, line-buffered stdout while the suite runs). Full tool suite 1,251 tests OK (3 skipped); census and `check TACO:func_80149538 --from-draft` reproduced (PROVEN, 33 rows, `d7dd7f6c`). Only `tools/`, `wiki/` and `drafts/T-20820/` changed; no keep line added. Card moved in [[kanban]]. The rule in [[keep-lines]] still awaits the lead. Merge via the tool-branch merge script.
+
+## [2026-10-17] ticket | T-20800 In Progress
+
+[[tickets/T-20800-redraft-tool]] created and started (worktree `tr-redraft-tool`, base `w2-good`): consolidate the 21 per-unit redraft drivers (`drafts/T-16550/redraft.py` .. `drafts/T-18800/redraft.py`) into `tools/redraft.py`. Card in [[kanban]] under In Progress, line in [[index]].
+
+## [2026-10-17] build | T-20800 validation run
+
+[[tickets/T-20800-redraft-tool]]: `tools/redraft.py` on ten functions (GEKO x4, DATE2 x3, main x3), default variants `typed`, `typed-late`, `plain`, `archived`, `guarded`, 51 tasks, 2 jobs, results in `drafts/T-20800/`. Nine better than the census, one equal; two better than the best archived draft (GEKO `func_80144198` 69 to 62, main `func_80054140` 106 to 48, both through `gs-local`), seven equal, one worse (DATE2 `func_80136860`, 164 against 188). None at 0. Scratch runs: the opt-in variants (`typed-keep`, `typed-named`, `typed-pass1`, `archived-raw`) on two functions, and RENSYU with three functions (`func_80132390` 364 to 337). The full tool suite passes (1,279 tests, 3 skipped). Method and numbers in [[decompile-workflow]] ("Redraft tool").
+
+## [2026-10-17] ticket | T-20800 In Review
+
+[[tickets/T-20800-redraft-tool]] In Progress to In Review: `tools/redraft.py`, `tools/redraft_rewrites.py`, `tools/redraft_extras.py`, `tools/test_redraft.py` (90 tests), the "Redraft tool" section of [[decompile-workflow]], `drafts/T-20800/` (10 functions). Card moved in [[kanban]]. Awaiting code review.
+
+## [2026-10-17] build | T-20800 validation re-finish
+
+[[tickets/T-20800-redraft-tool]]: a guarded function's result folder came out with an empty `context.c` (`draft_fixes.fresh_context` cannot place a body in a file that still holds the function's `NON_MATCHING` block). The tool now builds the unit text itself (`unit_text`), and `--force` removes the finished result so the finish step runs again. The ten validation functions were finished again from the cached variant runs: GEKO `func_80134228` went from 16 to 8 (`archived+gs-local`), so three functions beat the best archived draft (GEKO `func_80144198` 69 to 62, GEKO `func_80134228` 16 to 8, main `func_80054140` 106 to 48), six equal it and one stays above it (DATE2 `func_80136860`, 164 against 188). The numbers above in the earlier validation entry (two better, seven equal) are superseded. Tests 95.
+
+## [2026-10-17] build | T-20800 final checks
+
+[[tickets/T-20800-redraft-tool]]: unit-specific views (NAME_ENT album records and metric work, ETC work area) now belong to their units, the default timeout is 300 s. The ten validation functions were run again from an empty work directory on the final code: the same scores, three better than the best archived draft. A second run over the smallest unmatched function of each of the 25 units (`typed`, `typed-late`, `plain`, `guarded`, no draft_fixes) scored 25 of 25 with no worker failure; 87 of 88 variant runs compiled (TAIIKU `func_8013B78C` `typed-late`: m2c wrote `.unk_06.unk0` for a halfword). The full tool suite passes: 1,285 tests, 3 skipped (`tools/test_redraft.py` 96). Ticket stays In Review.
+
+## [2026-10-17] ticket | T-20800 Done
+
+[[tickets/T-20800-redraft-tool]] In Review to Done: code review against `CODING_STANDARDS.md` found one small issue, fixed (the acceptance criterion said `--jobs N (max 2)`, the tool defaults to 2 and takes any N). Full tool suite passes (1,285 tests, 3 skipped); `tools/redraft.py` re-run on `GEKO:func_80134228` reproduced the committed result (score 8). Changes limited to `tools/`, `wiki/` and `drafts/T-20800/`. Card moved in [[kanban]]. Merge via the merge script.
