@@ -17630,3 +17630,11 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: EVENT `src/ovl/EVENT/8011C650.c`
 ## [2026-10-17] ticket | T-22013 Wave 4 package w4-p13 In Progress
 
 Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E0.c` and `src/ovl/RPG_BAT/8015A1F0.c`, three guarded functions (`func_8015A8B4`, `func_8015A744`, `func_80148714`). See [[tickets/T-22013-w4-p13]].
+
+## [2026-10-17] build | T-22013 func_80148714 matched
+
+`func_80148714` (RPG_BAT `src/ovl/RPG_BAT/801484E0.c`, 1,012 bytes) matches in plain C. Three causes: case 0 reaches `D_8015EC28/2C/50/54` as words of the `D_8015EBAC` table (as1 keeps a load behind a store of the same symbol), the shift loop is an index loop over `D_8015ED34`/`D_8015ED38` (the pointer form made uopt write `D_8015EDB4` back first), and `i = start;` sits before the `if`. See [[matching-notes]], section T-22013, and the new row in [[register-cheatsheet]].
+
+## [2026-10-17] ticket | T-22013 Wave 4 package w4-p13 In Review
+
+[[tickets/T-22013-w4-p13]]: 1 of 3 matched. `func_8015A8B4` (14 rows) and `func_8015A744` (6 rows) stay guarded: dead copy of a promoted global (and, for `func_8015A8B4`, `i + 0x28` in the first block), many new shapes tried, autotweak and permuter found nothing. Code review pending.

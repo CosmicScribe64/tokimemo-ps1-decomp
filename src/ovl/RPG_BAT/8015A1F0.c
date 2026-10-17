@@ -111,7 +111,7 @@ void func_8015A6D4(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-17105, 12 differing lines; the original keeps two dead copies ($a1 = v, $a0 = x) of the values stored to D_8015EC54 and D_8015EC68 and stores x from $a0. Closer pass: no effect from chain assignments, reused or retyped locals, dead local copies, a second store or a read-back of the global (scalar or RpgMotion20 view) */
+/* NON_MATCHING: T-22013, 6 rows; the original keeps two dead copies ($a1 = v, $a0 = x) of the values stored to D_8015EC54 and D_8015EC68 and stores x from $a0 (a promoted global the build leaves unpromoted). No effect: chain assignments, reused or retyped locals, dead local copies, a second store, a read-back of the global, the RpgMotion20 view or the (&D_8015EBAC)[41/42/47] table words, autotweak, permuter */
 void func_8015A744(void) {
     u8 *p;
     RpgMotion20 *m;
@@ -160,11 +160,12 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8015A1F0", func_8015A744);
 #endif
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-17105, 28 differing lines; the original computes i + 0x28 before the first compare (addiu a0 in the lh delay slot) and stores D_8015EC68 from a $a0 copy of the halfword */
+/* NON_MATCHING: T-22013, 14 rows; the original sets i + 0x28 in $a0 before the first compare (addiu a0 in the lh delay slot) and stores D_8015EC68 from a $a0 copy of the halfword. No effect: id or t locals for i + 0x28 (also reused for the copy), a[i + 0x28] with a loop-invariant base pointer (multu or the same order), u8/s16 chain temps, the (&D_8015EBAC)[47] table word, autotweak (318 edits), permuter (240 s) */
 void func_8015A8B4(void) {
     s32 i;
     s32 v;
     s32 x;
+    u8 t;
 
     for (i = 0; i < 8; i++) {
         x = ((DisplayActor44 *)D_8011ECD0)[i + 136].unk_26;
@@ -175,7 +176,7 @@ void func_8015A8B4(void) {
         v = ((0x70 - x) << 0xC) / 240;
         ((DisplayActor44 *)D_8011ECD0)[i + 136].unk_1A = v;
         ((DisplayActor44 *)D_8011ECD0)[i + 136].unk_1C = v;
-        D_8015EC58.unk_10 = x;
+        D_8015EC68 = x; t = D_8015EC68;
     }
 }
 #else
