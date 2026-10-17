@@ -499,7 +499,7 @@ void func_801337E0(void) {
     radius *= radius;
     /* FAKE: this shared line preserves the loop-setup load schedule. T-10020. */
     object = D_8013984C; status = D_80139B08; do {
-        distance = func_80132A74((s32) object->unk_16, (s32) object->unk_1A, (s32) D_8011ECF6, (s32) D_8011ECFA);
+        distance = func_80132A74((s32) object->unk_14.h[1], (s32) object->unk_18.h[1], (s32) D_8011ECF6, (s32) D_8011ECFA);
         if (object->unk_00 != 0) {
             if (distance < radius) {
                 *status = 2;
@@ -582,8 +582,8 @@ void func_80133CA8(void) {
             }
             ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_18 = v & 0x7F;
             ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_43 = D_80139A2C[D_8013984C[i].unk_00 & 0x7F];
-            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_26 = D_8013984C[i].unk_16;
-            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_2A = D_8013984C[i].unk_1A;
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_26 = D_8013984C[i].unk_14.h[1];
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_2A = D_8013984C[i].unk_18.h[1];
             break;
         case 4:
             if (D_8013984C[i].unk_0C >= 4) {
@@ -597,8 +597,8 @@ void func_80133CA8(void) {
             }
             ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_18 = v & 0x7F;
             ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_43 = D_80139A2C[D_8013984C[i].unk_00 & 0x7F];
-            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_26 = D_8013984C[i].unk_16;
-            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_2A = D_8013984C[i].unk_1A;
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_26 = D_8013984C[i].unk_14.h[1];
+            ((DisplayActor44 *)D_8011ECD0)[128 + i].unk_2A = D_8013984C[i].unk_18.h[1];
             break;
         }
     }
@@ -622,8 +622,8 @@ s32 arg1;
         e = &D_8013984C[arg0];
         if (e->unk_00 == 4) {
             if (!(e->unk_0C & 1)) {
-                x = e->unk_16;
-                y = e->unk_1A;
+                x = e->unk_14.h[1];
+                y = e->unk_18.h[1];
                 rec[0x1983] |= 0x80;
                 rec[0x19C7] |= 0x80;
                 *(s16 *) (rec + 0x19A6) = x - 0x10;
@@ -632,8 +632,8 @@ s32 arg1;
                 *(s16 *) (rec + 0x19EE) = y + 7;
             }
         } else if (!(e->unk_0C & 1)) {
-            x = e->unk_16;
-            y = e->unk_1A;
+            x = e->unk_14.h[1];
+            y = e->unk_18.h[1];
             rec[0x1983] |= 0x80;
             rec[0x19C7] |= 0x80;
             *(s16 *) (rec + 0x19A6) = x - 0x10;
@@ -681,7 +681,7 @@ void func_801340CC(void) {
     s32 y;
 
     /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-    for (i = 0; i < 10; i++) if (D_8013984C[i].unk_16 < -0xC0 || D_8013984C[i].unk_16 >= 0xC1 || D_8013984C[i].unk_1A < -0x98 || D_8013984C[i].unk_1A >= 0x99) D_8013984C[i].unk_00 = 0;
+    for (i = 0; i < 10; i++) if (D_8013984C[i].unk_14.h[1] < -0xC0 || D_8013984C[i].unk_14.h[1] >= 0xC1 || D_8013984C[i].unk_18.h[1] < -0x98 || D_8013984C[i].unk_18.h[1] >= 0x99) D_8013984C[i].unk_00 = 0;
 }
 
 void func_80134258(s32 arg0) {
@@ -742,34 +742,34 @@ void func_801344F0(s32 arg0, s32 arg1) {
         case 0:
             temp_hi = func_800AE0D0() % 320 - 0xA0;
             var_s0 = &D_8013984C[arg0];
-            var_s0->unk_16 = temp_hi;
-            var_s0->unk_1A = -0x96;
+            var_s0->unk_14.h[1] = temp_hi;
+            var_s0->unk_18.h[1] = -0x96;
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0x200);
             break;
         case 1:
             var_s0 = &D_8013984C[arg0];
-            var_s0->unk_16 = 0xBE;
-            var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
+            var_s0->unk_14.h[1] = 0xBE;
+            var_s0->unk_18.h[1] = (s16) ((func_800AE0D0() % 240) - 0x78);
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0x600);
             break;
         case 2:
             temp_hi_2 = func_800AE0D0() % 320 - 0xA0;
             var_s0 = &D_8013984C[arg0];
-            var_s0->unk_16 = temp_hi_2;
-            var_s0->unk_1A = 0x96;
+            var_s0->unk_14.h[1] = temp_hi_2;
+            var_s0->unk_18.h[1] = 0x96;
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0xA00);
             break;
         case 3:
             var_s0 = &D_8013984C[arg0];
-            var_s0->unk_16 = -0xBE;
-            var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
+            var_s0->unk_14.h[1] = -0xBE;
+            var_s0->unk_18.h[1] = (s16) ((func_800AE0D0() % 240) - 0x78);
             var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0xE00);
             break;
         }
     } else {
         var_s0 = &D_8013984C[arg0];
-        var_s0->unk_16 = (s16) ((func_800AE0D0() % 320) - 0xA0);
-        var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
+        var_s0->unk_14.h[1] = (s16) ((func_800AE0D0() % 320) - 0xA0);
+        var_s0->unk_18.h[1] = (s16) ((func_800AE0D0() % 240) - 0x78);
         var_s0->unk_1C = (s32) (func_800AE0D0() % 4096);
     }
     var_s0->unk_24 = 1;
@@ -820,7 +820,7 @@ s32 arg0;
             EN_OBJ(arg0)->unk_2C = 1;
         }
     }
-    d = func_80132A74(EN_OBJ(arg0)->unk_16, EN_OBJ(arg0)->unk_1A, D_8011ECF6, D_8011ECFA);
+    d = func_80132A74(EN_OBJ(arg0)->unk_14.h[1], EN_OBJ(arg0)->unk_18.h[1], D_8011ECF6, D_8011ECFA);
     switch (func_80135274(arg0)) {
     case 0:
         func_80134D74(arg0, d);
@@ -1006,8 +1006,8 @@ void func_801354E0(void) {
 
     for (i = 0; i < 12; i++) {
         for (j = 0; j < 15; j++) {
-            D_801392AC[j][i].unk_02 = 0;
-            D_801392AC[j][i].unk_06 = 0;
+            D_801392AC[j][i].unk_00.h[1] = 0;
+            D_801392AC[j][i].unk_04.h[1] = 0;
         }
     }
     D_801392A4 = 0;
@@ -1037,8 +1037,8 @@ void func_80135600(void) {
     b = (D_80139220 / 7) % 8;
     for (x = 0; x < 12; x++) {
         for (y = 0; y < 15; y++) {
-            D_801392AC[y][x].unk_02 = table.value[(x + y * 3) % 8][(D_80139220 / 5) % 8];
-            D_801392AC[y][x].unk_06 = table.value[(x * 3 + y) % 8][b];
+            D_801392AC[y][x].unk_00.h[1] = table.value[(x + y * 3) % 8][(D_80139220 / 5) % 8];
+            D_801392AC[y][x].unk_04.h[1] = table.value[(x * 3 + y) % 8][b];
         }
     }
 }
@@ -1065,8 +1065,8 @@ s32 func_80135A48(s32 arg0, s32 arg1) {
         if (D_801392A0 >= 10) {
             D_801392A0 = 0;
         }
-        D_80139228[D_801392A0][1] = arg0 + 0xA0;
-        D_80139228[D_801392A0][3] = arg1 + 0x78;
+        D_80139228[D_801392A0].unk_00.h[1] = arg0 + 0xA0;
+        D_80139228[D_801392A0].unk_04.h[1] = arg1 + 0x78;
         D_80139278[D_801392A0] = 1;
     }
 }
