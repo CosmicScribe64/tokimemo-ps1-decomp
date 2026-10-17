@@ -17303,3 +17303,7 @@ Wave 3 conveyor paused at the user's request after 19 types passes and 77 packag
 
 ## [2026-10-17] ticket | T-20900 Done
 [[tickets/T-20900-shared-type-unification]] reviewed against `CODING_STANDARDS.md`: no findings (no edits in `src/ovl/TT/*` or `dialogue_render`, FAKE comments name tickets, types documented in [[data-types]], no game data). `w2-good` merged into the branch first (only `wiki/log.md` conflicted, both sides kept); clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` and all tool tests OK. In Review to Done (kanban card moved).
+
+## [2026-10-17] ticket | T-21500 and T-21510 opened (retro)
+
+From the session retro: [[tickets/T-21500-incremental-configure]] (configure re-splits asm whenever git touches a source directory, so every merge and worktree setup rebuilds everything) and [[tickets/T-21510-wiki-lint]] (mechanical ticket/kanban/index/log rules have no check). Both Backlog.
