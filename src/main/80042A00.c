@@ -178,6 +178,7 @@ s32 func_800430C0(void) {
             D_800B3CA4 = 0;
         }
     }
+    /* no return value on this path, as in the original (v0 is whatever func_80043448 leaves) */
     func_80043448();
 }
 
