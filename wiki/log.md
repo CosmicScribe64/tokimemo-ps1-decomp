@@ -17540,3 +17540,7 @@ Matching resumes at the user's request until weekly usage nears 95 percent. Fres
 ## [2026-10-17] ticket | T-22006 Wave 4 package w4-p06 opened
 
 Package w4-p06 of [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/DATE/8014A1B0.c`, `func_8014A8FC` (1,140 bytes, guarded at 34 lines). [[tickets/T-22006-w4-p06]] In Progress.
+
+## [2026-10-17] ticket | T-22006 In Progress to In Review
+
+`func_8014A8FC` (DATE `src/ovl/DATE/8014A1B0.c`) not matched; guard cut from 34 to 20 rows by writing the third light group as two equal masked sums (uopt range in `$v0`, ugen slot kept). Left: the schedule of the byte loads. See [[matching-notes]] and [[register-cheatsheet]]. [[tickets/T-22006-w4-p06]] In Review.
