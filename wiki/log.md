@@ -16899,3 +16899,7 @@ Created [[tickets/T-17012-w3-main-p12]]: wave 3 package w3-main-p12, six functio
 ## [2026-10-17] ticket | T-17010 Done
 
 [[tickets/T-17010-w3-main-p10]] In Review to Done: code review against `CODING_STANDARDS.md` found three issues, all fixed (an unneeded `MAIN_API_OVERRIDE_func_8009B430` in `src/main/80061710.c`, removed with sha1 still OK; a terse FAKE comment on the `pad[4]` in the guarded `func_80062210`; a stray empty Comments heading in the ticket). Rebuild OK (sha1 OK, headers OK, globals OK, `sync_protos --check-branch` OK). 1 of 4 functions matched (`func_8006190C`, 304 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-17] ticket | T-17018 In Progress
+
+[[tickets/T-17018-w3-main-p18]] created and In Progress: Wave 3 package for `src/main/8004F870.c` (`menu_bar_color`, `menu_set`, `sndisp`, `menu_girl_taku_set`, `xa_wait`, `menu_check_1`), worktree `tokimemo-wt/w3-main-p18`, branch `w3-main-p18` from `w2-good`.
