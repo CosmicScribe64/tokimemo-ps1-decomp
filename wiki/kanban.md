@@ -55,6 +55,9 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-20001-gyozi-helper|T-20001 Match the GYOZI dialogue helper from its SHOUGATU sibling]]
+
+
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]

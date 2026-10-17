@@ -6804,3 +6804,11 @@ Ticket [[tickets/T-17004-w3-main-p04]]. Five guarded drafts from the T-17000 typ
 - as1's global optimisation removes it. as0+as1 on that `.s` with `-noglobal` keep the move (and leave the delay slot empty); without it as1 gives the build's `slti at,v0,32; beqz; sll t4,v0,2`. An unused label after the branch changes nothing.
 - The exit liveness decides. With `.livereg 0x2000FF0E` at the `j $31` (`$v0` live at the exit, an `int` function) instead of `0x0000FF0E` (`void`), as1 gives exactly the original: `slti at,v0,32; beqz at; move v1,v0` (delay slot) `; sll t4,v1,2`. So the source is an `int` function with no `return`, as in the 8007C030 row of [[register-cheatsheet]]; written `s32 func_8006D6E0(void)` and the header type follows the definition (`s32 func_8006D6E0();` in `main_api.h`; both MASTER callers, one matched, still build OK). No FAKE.
 - Method worth reusing when a draft lacks a `move` the original keeps: compare uopt's output ucode and `cc -S` first. If the move is in the `.s`, the C form must change what as1 sees (return type, `.livereg`), not the allocation.
+
+
+
+## GYOZI setup-callee return view (T-20001)
+
+GYOZI func_8013506C (172 bytes) matches after porting the nested post-increment and pointer-table accesses from SHOUGATU func_8013315C and correcting its setup callee func_801343A4 to s32. With the void prototype, the counter/boolean use v1/v0; with s32 func_801343A4(void), they use the original a0/v1. The plain shared-header/definition change is sufficient and preserves the callee and seven other callers. This is consistent with the setup return value remaining live in v0 in a fall-through s32 callback; no allocator trace was used to prove that explanation.
+
+The shared s32 declaration lives in include/ovl/GYOZI.h and its definition in src/ovl/GYOZI/80134000.c has the same return type. No overlay override, header guard or local prototype is needed (CODING_STANDARDS.md section 8a); these were removed after maintainer review. No FAKE, shared main prototype change or new aggregate is needed. Actual default funcdiff --resolve proves 172 linked bytes, the GYOZI SHA1 passes and all 27 built binaries pass explicit SHA1 checks. Historical [[data/t0018-cases]] rows remain; [[tickets/T-20001-gyozi-helper]] records verification.

@@ -83,7 +83,8 @@ void func_801342A4(void) {
     func_8008E8B4();
 }
 
-void func_801343A4(void) {
+/* Integer return type matches the setup callers. T-20001. */
+s32 func_801343A4(void) {
     D_800D9234 = (u8 *) &D_80145EB4;
     D_800D9238 = (u8 *) &D_80145EB8;
     D_800D923C = D_80145EA8;

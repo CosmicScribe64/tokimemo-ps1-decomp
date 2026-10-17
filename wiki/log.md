@@ -16675,3 +16675,39 @@ Opus closer on [[tickets/T-17004-w3-main-p04]]: `func_8006D6E0` matched in plain
 ## [2026-10-16] ticket | T-17004 Done
 
 [[tickets/T-17004-w3-main-p04]] In Review to Done after the code review: wave 3 package w3-main-p04 (main `src/main/8006CB30.c`), 5 of 5 functions matched (2,812 bytes: `func_8006EB64`, `func_8006EEC4`, `func_80072998`, `func_800726F0`, `func_8006D6E0`). One finding, fixed: the `NON_MATCHING` comment of the still guarded `func_80072D70` now names T-17004. Clean build sha1 OK; headers and globals checks OK.
+## [2026-10-16] ticket | T-20001 GYOZI helper In Progress
+
+Created [[tickets/T-20001-gyozi-helper]] on codex/match-gyozi-helper from upstream main 639693d2. Whole-tree dupes report identifies GYOZI func_8013506C (172 bytes, guarded T-10850 draft) and matched SHOUGATU func_8013315C as a fillable pair including string data. Inspecting the two sources and the original function assembly before adapting the source. PR #36 independently contains the scoped queue fix and communication-platform question.
+
+## [2026-10-16] query | T-20001 GYOZI caller declaration identified
+
+The direct sibling adaptation still differed in six counter-allocation rows. Bounded counter pointer/union/aggregate views did not remove them. An in-memory s32 prototype for the setup callee func_801343A4 made funcdiff --resolve prove all 172 linked function bytes equal the target; changing the sound callee return type alone did not help. Added the explicit overlay-local caller-view override required by CODING_STANDARDS.md section 8a, preserving the existing void definition and other callers. Actual source and full-unit verification are now running. See [[tickets/T-20001-gyozi-helper]].
+
+## [2026-10-16] ticket | T-20001 matched and In Review
+
+GYOZI func_8013506C now passes actual default funcdiff --resolve: 172 linked bytes equal the target, with GYOZI unit SHA1 OK. The full build completed 490 steps after upstream header changes; explicit checks passed all 27 binary SHA1 values. Local standards review found no issues. Moved [[tickets/T-20001-gyozi-helper]] In Progress to In Review; [[matching-notes]] records the return-view evidence and [[data/t0018-cases]] supersedes the historical rows without deleting them. Final prototype guard and PR submission are pending.
+
+## [2026-10-16] build | T-20001 final verification and PR #37
+
+After integrating upstream main 9e74085b, actual default funcdiff again proves the 172 GYOZI func_8013506C linked bytes; the 8-step incremental build passes GYOZI and DATE SHA1. Explicit binary verification passes 27/27; sync_protos --check-branch passes with 0 new / 15 known disagreements. Opened PR #37. [[tickets/T-20001-gyozi-helper]] remains In Review for upstream review; no generated files or game data committed.
+
+## [2026-10-16] build | T-20001 PR #37 refreshed and reverified
+
+Integrated upstream main 81095a46, preserving all sides of the shared index, append-only log and matching-note conflicts. Actual default linked funcdiff still matches GYOZI func_8013506C (172 bytes); the full 490-step rebuild and explicit binary SHA1 verifier pass 27/27. Production GYOZI code/header are unchanged from the submitted match. [[tickets/T-20001-gyozi-helper]] remains In Review; GitHub reports the updated PR mergeable.
+
+## [2026-10-16] setup | T-20001 follow upstream RPG merge
+
+Integrated main a8591fb8 into PR #37, retaining both append-only log and matching-note histories. The upstream delta affects RPG_BAT and wiki only; GYOZI code/header and the reviewed caller view are unchanged, so its recorded 172-byte linked proof remains applicable. [[tickets/T-20001-gyozi-helper]] remains In Review.
+
+## [2026-10-16] setup | T-20001 follow unrelated RPG batch
+
+Integrated main 0925704e into PR #37, retaining both log and matching-note histories. Upstream changes other RPG_BAT files and wiki only; GYOZI source/header and caller views are unchanged. The recorded actual linked proof and full checksum verification remain applicable to this contribution. [[tickets/T-20001-gyozi-helper]] stays In Review.
+
+
+## [2026-10-16] setup | T-20001 final upstream refresh
+
+Integrated main dee64939 (T-17109), preserving both shared wiki histories. This upstream batch changes other RPG_BAT functions and adds unrelated declarations/guards; the contribution's function bodies and caller views are unchanged. Recorded validation bases and results remain explicit in the ticket. Ticket stays In Review.
+
+## [2026-10-16] build | T-20001 address PR #37 review
+
+Changed func_801343A4's shared header and definition to s32, removing the unnecessary caller override/guard/local prototype. Corrected the ticket and matching-note explanation: the plain return-type change is sufficient and preserves all callers. Moved the T-0018 Update after Rules, leaving historical rows unchanged. Actual default linked proofs match callback172/setup124 bytes; GYOZI SHA1, full 67-step build/globals, 27/27 binary checks and prototype branch guard (0 new / 15 known) pass. Local standards review complete; [[tickets/T-20001-gyozi-helper]] stays In Review for acceptance. No repeated main integration, as requested by the maintainer.
