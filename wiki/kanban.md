@@ -44,12 +44,12 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-22001-w4-p01|T-22001 Wave 4 package w4-p01]]
 - [ ] [[tickets/T-22000-wave-4-conveyor|T-22000 Wave 4 conveyor]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 ## In Review
+- [ ] [[tickets/T-22001-w4-p01|T-22001 Wave 4 package w4-p01]]
 
 ## Done
 - [ ] [[tickets/T-11880-date2-remainder|T-11880 DATE2 remainder]]
