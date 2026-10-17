@@ -6237,6 +6237,22 @@ Ticket [[tickets/T-11860-tt-batch-12]].
   c instead of a ugen temp (`func_80142110`); four constants in t2..t5 that behave like uopt registers
   (`func_8014A2B4`, case 7 equals the `func_801498C8` loop body).
 
+## TT overlay, batch 13: the last three near misses (T-11870)
+
+One Opus agent per function, two at a time: all three matched (2,740 bytes), and TT is at 302/303. Only
+`func_8014D260` (gcc-built PsyQ code, needs maspsx; see [[gcc-objects]]) is left. Ticket [[tickets/T-11870-tt-batch-13]].
+
+- **"Unexplained" register colourings were statement order in all three.** `func_8014A2B4`'s four constants in t2..t5,
+  which earlier notes read as uopt colours, were plain ugen FIFO order once case 7 was written as the `func_801498C8`
+  record init followed by its position block. `func_801427A8`'s three tied hoisted constants followed the control-flow
+  shape: `if (slot == 0) continue;` plus one `||` continue numbered the loop bound first. Before trusting a "tie" or
+  "uopt colour" explanation, try reordering whole statement blocks to match the asm's store order and a sibling.
+- **Fixing the root cause removes FAKEs:** with the right loop test, `func_801427A8` lost its permuter-found dead load
+  and its chain pairs.
+- **Where a load lands:** a single mask lets ugen load straight into the destination variable's register; a redundant
+  second mask (FAKE) with an `s32` destination routes it through a ugen temp (`func_80142110`); a `u16` destination
+  costs an extra temp instead.
+
 ## T-19020: RENSYU package w3-d-p20 (80132040.c)
 
 [[tickets/T-19020-w3-d-p20]], wave 3 direct package of [[tickets/T-16990-wave-3-conveyor]], worktree `w3-d-p20`. Four functions, one matched (FAKE): `func_80133CB8` (420 B). `func_80133628` (900 B) stays a guarded draft (21 lines); `func_80133990` (844 B) and `func_8013325C` (972 B) are back to `INCLUDE_ASM` (drafts in `drafts/T-19020/RENSYU/`). `tools/siblings.py --package` found no matched relative above 0.70 for any of them.

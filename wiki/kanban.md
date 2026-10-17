@@ -43,12 +43,12 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-11870-tt-batch-13|T-11870 TT batch 13]]
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 ## In Review
 
 ## Done
+- [ ] [[tickets/T-11870-tt-batch-13|T-11870 TT batch 13]]
 - [ ] [[tickets/T-11860-tt-batch-12|T-11860 TT batch 12]]
 - [ ] [[tickets/T-21520-apply-tooling-matches|T-21520 Apply the tooling-round matches]]
 - [ ] [[tickets/T-20007-large-dialogue-renderer|T-20007 Recover the large dialogue renderer (5,588 bytes)]]
