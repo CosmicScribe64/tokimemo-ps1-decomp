@@ -17640,3 +17640,6 @@ Started: SHUGAKU `src/ovl/SHUGAKU/80133D60.c` and `src/ovl/SHUGAKU/80135430.c`, 
 
 ## [2026-10-17] ticket | T-22014 Wave 4 package w4-p14 In Review
 Three of five SHUGAKU functions matched: `func_80135480` (`s32` no return, `SHUGAKU.h` updated), `func_80133E10` (store-forwarded compare), `func_801360B0` (address-taken counter view, mixed record and scalar views; 720 bytes from a 205-row draft). `func_801357AC` and `func_80135EA4` stay guarded at 10 rows (block-copy end register one entry off; eight test files in the session found no C spelling that reaches the other state). Notes in [[matching-notes]] (T-22014), four new rows in [[register-cheatsheet]]. Sources: `src/ovl/SHUGAKU/80133D60.c`, `src/ovl/SHUGAKU/80135430.c`. Ticket [[tickets/T-22014-w4-p14]].
+
+## [2026-10-17] ticket | T-22014 Done
+3 of 5 SHUGAKU functions matched (`func_80135480`, `func_80133E10`, `func_801360B0`; 1,408 bytes); `func_801357AC` and `func_80135EA4` stay guarded at 10 rows. Code review against CODING_STANDARDS.md: no findings. Ticket [[tickets/T-22014-w4-p14]].
