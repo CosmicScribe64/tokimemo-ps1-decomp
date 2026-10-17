@@ -201,23 +201,19 @@ def has_value_return(body):
 # the lattice
 
 def own_edits(pre, name):
-    """The edits of the target's own type: [Edit]. Empty when the unit does not define `name`."""
+    """The edits of the target's own type: [Edit]. Empty when the unit does not define `name`. The definition's
+    own return type and parameter list are the reference (a header that says otherwise is replaced with it)."""
     defs = protoverride.definitions(pre, name)
     if not defs:
         return []
     d = defs[0]
-    ret, params, _defined = protoverride.current_view(pre, name)
-    cur_ret = norm_ret(ret if ret is not None else d.ret)
-    out = []
+    cur_ret = norm_ret(d.ret)
     if protoverride._empty(d.params) and not d.rest.strip():
-        current = _spelled(params if params is not None else d.params)
-        for spelling in ("()", "(void)"):
-            if (cur_ret, spelling) != ("s32", current):
-                out.append(Edit(name, "s32 %s%s;" % (name, spelling), "own"))
-    elif cur_ret != "s32":
-        keep = params if params is not None else ("" if d.rest.strip() else d.params)
-        out.append(Edit(name, "s32 %s%s;" % (name, _spelled(keep)), "own"))
-    return out
+        return [Edit(name, "s32 %s%s;" % (name, spelling), "own") for spelling in ("()", "(void)")
+                if (cur_ret, spelling) != ("s32", _spelled(d.params))]
+    if cur_ret != "s32":
+        return [Edit(name, "s32 %s%s;" % (name, "()" if d.rest.strip() else _spelled(d.params)), "own")]
+    return []
 
 
 def callee_edits(pre, name, ignored=False):
@@ -708,8 +704,12 @@ def recipe(target, edits, pre, root=".", unit_of=None):
                 src, restore, " ".join(pre[d.start:d.brace].split()), " ".join(protoverride._redefine(d, proto).split()),
                 "; the body has no `return <value>`, so `$v0` stays live at the exit (implicit int)"
                 if e.kind == "own" and not has_value_return(pre[d.brace:d.end]) else ""))
-            lines += ["header prototype %s:%d: `%s` becomes `%s`, the type of the definition" % (
-                path, n, text.rstrip(";"), e.decl.rstrip(";")) for path, n, text in found]
+            for path, n, text in found:
+                if " ".join(text.split()) == " ".join(e.decl.split()):
+                    lines.append("header prototype %s:%d already says `%s`" % (path, n, e.decl.rstrip(";")))
+                else:
+                    lines.append("header prototype %s:%d: `%s` becomes `%s`, the type of the definition" % (
+                        path, n, text.rstrip(";"), e.decl.rstrip(";")))
             if not found:
                 lines.append("header prototype: %s is not declared in include/" % e.symbol)
         else:

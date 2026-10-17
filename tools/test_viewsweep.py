@@ -105,6 +105,14 @@ class Lattice(unittest.TestCase):
         text = "typedef int s32;\nf() { }\n"
         self.assertEqual(self.decls(vs.own_edits(text, "f")), ["s32 f(void);"])
 
+    def test_the_definition_not_the_header_is_the_reference(self):
+        text = "typedef int s32;\ns32 f(s32 a);\nvoid f(s32 a) { }\n"          # a header that disagrees with the definition
+        self.assertEqual(self.decls(vs.own_edits(text, "f")), ["s32 f(s32 a);"])
+        text = "typedef int s32;\nvoid f(void);\ns32 f(void) { }\n"
+        self.assertEqual(self.decls(vs.own_edits(text, "f")), ["s32 f();"])
+        text = "typedef int s32;\nvoid f(a)\ns32 a;\n{\n}\n"
+        self.assertEqual(self.decls(vs.own_edits(text, "f")), ["s32 f();"])
+
     def test_nothing_to_try_for_a_function_the_unit_does_not_define(self):
         self.assertEqual(vs.own_edits(UNIT, "func_8013E7C0"), [])
 
@@ -562,6 +570,15 @@ class Recipe(unittest.TestCase):
         self.assertIn("#define X_OVERRIDE_func_8013E111", text)
         self.assertIn("uses of target (2, units X, main)", text)
         self.assertIn("every unit above (X, main) must stay sha1 OK", text)
+
+    def test_a_header_that_has_the_type_already_needs_no_change(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.tree(tmp)
+            Path(tmp, "include/ovl/X.h").write_text("s32 target();\n")
+            c = SimpleNamespace(unit="X", src=Path("src/ovl/X/8013.c"))
+            target = vs.Target("X:target", "target", "X", c, c.src, "", True, None, "guarded draft")
+            lines = vs.recipe(target, [E("target", "s32 target();", "own")], UNIT, tmp, unit_of=lambda p: "X")
+        self.assertIn("include/ovl/X.h:1 already says `s32 target()`", "\n".join(lines))
 
     def test_a_restore_says_where_the_body_goes(self):
         with tempfile.TemporaryDirectory() as tmp:
