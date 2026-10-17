@@ -17654,3 +17654,11 @@ Second conveyor next to [[tickets/T-22000-wave-4-conveyor]], biggest functions f
 ## [2026-10-17] ticket | T-23002 Wave 5 big package w5-big-p02 opened
 
 [[tickets/T-23002-w5-big-p02]] (In Progress) under [[tickets/T-23000-wave-5-big-conveyor]]: `src/ovl/ENDING/801396E0.c`, `func_8013A2E8` (4,772 B). Branch `w5-big-p02` from `w2-good`.
+
+## [2026-10-17] ticket | T-23002 In Review
+
+[[tickets/T-23002-w5-big-p02]]: `func_8013A2E8` in `src/ovl/ENDING/801396E0.c` guarded at 12 differing lines (census draft 1,667 rows), 0 of 1 matched. GameState and string-literal views, one `i`/`idx`, else-if row table, `msg` evaluated before the `D_800CA2C0` update, `func_8013B640` as `s32`; `include/ovl/ENDING.h` declares `D_8013CAF0`. Notes in [[matching-notes]]. Clean build and checks still to run.
+
+## [2026-10-17] build | T-23002 checks
+
+[[tickets/T-23002-w5-big-p02]]: clean build 27/27 (668 steps), `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` all pass. Package left In Review for the lead.
