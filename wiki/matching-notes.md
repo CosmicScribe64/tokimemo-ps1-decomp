@@ -9,6 +9,9 @@ sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 ## GYOZI dialogue byte counters (T-20004)
 
 `func_80135118` and `func_80135280` match 776 actual default linked bytes. The archived m2c context made `D_800C3370` a word scalar; the original `lbu` and unscaled offset require a byte array, now declared once in `main_api.h` beside the byte step counter `D_800F647D`. Direct s16 timer updates, `D_800F647D++ < 0x40U`, structured control flow and fresh selector reads remove stale draft temporaries. Both need the shared `s32 func_801343A4(void)` type corrected in PR #37. One explicitly marked FAKE per helper (`D_800F647D |= 0`) retains the original unchanged-byte store before the sound call and its temporary order; direct self-assignment disappears, and the original spelling is unknown. No compiler pass, volatile access or local prototype override. Evidence and final checks: [[tickets/T-20004-gyozi-dialogue-followup]].
+## GYOZI display/dispatch types (T-20005)
+
+`func_8014206C` (160 bytes) and `func_8013C774` (364 bytes) pass actual default linked comparisons and the full GYOZI checksum. A meaningful signed-word local for the display selector fixes three commuted `beq` operand pairs; direct casts and u8/u32 locals keep the six-row miss. The dispatcher requires a plain shared `s32` declaration/definition: the void control allows mode-address/load instructions to move into branch scheduling, while s32 restores the original slots and function span. This is consistent with return-register liveness; no allocator trace is claimed. The existing GyoziWork field view, GzCallbacks90 table and C string literals are used; the unit checksum verifies literal placement and other callers. No new FAKE, override, volatile access or compiler rule. Evidence and final checks: [[tickets/T-20005-gyozi-display-dispatch]].
 
 ## RPG_BAT timer callbacks (T-20003)
 

@@ -8,6 +8,9 @@ updated: 2026-10-16
 ## GYOZI dialogue follow-up (T-20004)
 
 Issue #39 claims `func_80135118` / `func_80135280` in `80134FD0.c` before work. Both now pass actual default linked comparisons: 360 + 416 = 776 new bytes. Recover `D_800C3370` as a byte array instead of the archived word-scalar context, use direct timer updates and byte postincrement tests, and reread the selector after calls. The setup callee uses the same shared s32 return type as PR #37. Two marked FAKE sites retain the original unchanged-byte stores before the sound calls. Verification, limitations and local review: [[tickets/T-20004-gyozi-dialogue-followup]].
+## Display/dispatch follow-up (T-20005)
+
+Issue #41 claims `func_8014206C` / `func_8013C774` before work. Both now match 524 actual default linked bytes (160 + 364), with full GYOZI SHA1 passing. The display helper uses a signed local selector for compare operand order; the dispatcher uses a shared s32 return type to preserve its original schedule and byte extent. Existing DisplayActor44/GyoziWork/GzCallbacks90 types and inline literals suffice. No new fakematches or compiler changes. These supersede the T-17600 hand-draft near misses; see [[tickets/T-20005-gyozi-display-dispatch]] for verification and local review.
 
 SHOUGATU types-first pass (T-17500): [[shougatu-family-results]].
 

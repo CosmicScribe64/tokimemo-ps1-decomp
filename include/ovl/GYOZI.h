@@ -580,7 +580,7 @@ void func_8013C560();
 void func_8013C5E8();
 void func_8013C670();
 void func_8013C6EC();
-void func_8013C774();
+s32 func_8013C774(void);
 
 void func_801388E0(void);
 void func_80138BF0(void);
