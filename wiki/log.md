@@ -17034,3 +17034,7 @@ KakarottoCake's PR #44 (claim #43): GYOZI func_80141944 and func_80145384 matche
 ## [2026-10-17] build | T-17021 clean rebuild
 
 [[tickets/T-17021-w3-main-p21]]: `rm -rf build && configure.py && ninja` 27/27 sha1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known). Acceptance box ticked; the ticket stays In Review until the code review.
+
+## [2026-10-17] ticket | T-17021 Done
+
+[[tickets/T-17021-w3-main-p21]] In Review to Done: code review against `CODING_STANDARDS.md` found one issue, fixed: the one-line `for` and the `0x15 + i` index in `func_800419FC` had no explanation, a comment was added (comment only, unit sha1 OK). 1 of 1 function matched (`func_800419FC`, 560 bytes), plain C, no FAKE, no `NON_MATCHING`. Merge via the wave 3 merge script.
