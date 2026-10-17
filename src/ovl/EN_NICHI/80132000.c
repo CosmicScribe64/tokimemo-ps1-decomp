@@ -606,7 +606,6 @@ void func_80133924(void) {
  * speed of class unk_28; unk_14/unk_18 are 16.16 positions, unk_1C the angle (4096 = 360 degrees).
  * Index form: a pointer local changes the spill slot and the frame. T-20920 */
 void func_801339D4(s32 arg0) {
-
     D_8013984C[arg0].unk_24--;
     if (D_8013984C[arg0].unk_00 == 4) {
         D_8013984C[arg0].unk_14.w += (func_800A0140(D_8013984C[arg0].unk_1C) * 0x8000) >> 12;
