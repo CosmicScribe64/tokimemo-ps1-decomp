@@ -793,3 +793,9 @@ typedef struct TtCfgBits {
     u32 b30 : 2;
 } TtCfgBits; /* size 0x04 */
 #endif
+
+#ifndef OVL_TT_T11860_801374C0
+#define OVL_TT_T11860_801374C0
+/* Second hit box of the D_80155C64 table, labelled on its own; passed to func_80145508 by func_80137654. T-11860 */
+extern TtCollision6 D_80155C6A;
+#endif

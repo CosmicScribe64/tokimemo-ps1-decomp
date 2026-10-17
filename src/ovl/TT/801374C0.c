@@ -10,8 +10,7 @@ typedef struct TtPhase3AE {
     /* 0x3AC */ u16 step;
 } TtPhase3AE; /* size 0x3AE */
 
-/* T-11000 near miss: frame, spill slots, hoisted constants and stores match; only the saved-register numbering of a, &pt and D_80155C64 is rotated (original s2, s3, s4; here s4, s2, s3), 32 line pairs. */
-#ifdef NON_MATCHING
+/* The zero-store chain pair on a (stores 0xA, 8, 6 and 0xF, 0xE, 0xD) gives a the reloads that rank it above &pt and D_80155C64; the one-line loop head and step fix the order of the i/q home stores. T-11860 */
 void func_801374C0(u8 *arg0) {
     u8 *a;
     u8 *p;
@@ -25,42 +24,86 @@ void func_801374C0(u8 *arg0) {
     u8 *q;
 
     a = D_80158A74;
-    i = 0;
-    q = arg0;
-    do {
+    i = 0; q = arg0; do { /* FAKE: one line, so as1 puts the i/q home stores after the hoisted constants. T-11860 */
         pt[0] = *(s16 *)(q + 0x1E);
         pt[1] = *(s16 *)(q + 0x9E);
         if (a[0x52] == 0 && a[0] != 0 && func_80145508(a + 0x14, D_80155B30, (u8 *)pt, D_80155C64) != 0) {
             func_80144094();
             *(u16 *)(a + 4) = 0x60;
-            *(s16 *)(a + 10) = 0;
-            *(s16 *)(a + 8) = 0;
-            *(s16 *)(a + 6) = 0;
-            a[15] = 0;
-            a[14] = 0;
-            a[13] = 0;
+            /* FAKE: TT's zero-store chain pair; the reloads raise a's priority above &pt and D_80155C64 (s2, s3, s4). T-11860 */
+            *(u16 *)(a + 6) = *(u16 *)(a + 8) = *(u16 *)(a + 0xA) = 0;
+            a[0xD] = a[0xE] = a[0xF] = 0;
         }
         p = D_80158A80;
         for (j = 0, n = 12; j != n; j++, p += 0x54) {
             if (p[0] != 0 && *(u16 *)(p + 4) == 0x40 && func_80145508(p + 0x14, &D_80155B36, (u8 *)pt, D_80155C64) != 0) {
                 *(u16 *)(p + 4) = 0x80;
-                *(s16 *)(p + 10) = 0;
-                *(s16 *)(p + 8) = 0;
-                *(s16 *)(p + 6) = 0;
-                p[15] = 0;
-                p[14] = 0;
-                p[13] = 0;
+                /* FAKE: TT's zero-store chain pair; same idiom as the record above. T-11860 */
+                *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 0xA) = 0;
+                p[0xD] = p[0xE] = p[0xF] = 0;
             }
         }
-        i += 4;
-        q += 4;
+        i += 4; q += 4; /* FAKE: one line, so as1 stores q before i. T-11860 */
     } while (i != 0x20);
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_801374C0);
-#endif
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80137654);
+/* Sibling of func_80137878 for the four player slots; the c + 0x24C + i * 2 spelling with c's field first gives the original's load and temp order. T-11860 */
+void func_80137654(void) {
+    /* FAKE: unused homes (top, frame_pad) place c at sp+0x90, pt at sp+0x6C and i at sp+0x64 in the 152-byte frame. T-11860 */
+    s32 top;
+    u8 *c;
+    u8 *b;
+    s32 frame_pad[7];
+    s16 pt[2];
+    u8 *p;
+    s32 i;
+    s32 j;
+
+    c = D_80158A8C;
+    b = D_80158A64;
+    for (i = 0; i < 4; i++) {
+        if (c[i + 0x353] != 0) {
+            (c + i * 0x14)[0x6A] = 0;
+            pt[0] = *(s16 *)(c + 0x14) + *(s16 *)(c + 0x24C + i * 2);
+            pt[1] = *(s16 *)(c + 0x16) + *(s16 *)(c + 0x27C + i * 2);
+            p = D_80158A80;
+            for (j = 0; j != 12; j++, p += 0x54) {
+                if (j == 12) {} /* FAKE: a second use of 12 keeps the constant in s6 (hoisted to entry) instead of &pt. T-11860 */
+                if (p[0] != 0 && *(u16 *)(p + 4) == 0x40 && func_80145508(p + 0x14, &D_80155B36, (u8 *)pt, &D_80155C6A) != 0) {
+                    b[0x25] = b[0x25] + 1;
+                    if (b[0x24] != 0) {
+                        if (!(b[0x25] & 3)) {
+                            func_80133D14(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x20, 0xA0);
+                        }
+                    }
+                    func_80133AD0(0x507);
+                    if (c[i + 0x353] != 0) {
+                        if (j >= 6) {
+                            *(s16 *)(c + i * 2 + 0x2D8) -= 1;
+                        } else if (*(u16 *)(p + 2) == 9) {
+                            *(s16 *)(c + i * 2 + 0x2D8) -= 4;
+                        } else {
+                            *(s16 *)(c + i * 2 + 0x2D8) -= 2;
+                        }
+                        if (*(s16 *)(c + i * 2 + 0x2D8) < 0) {
+                            func_80133AD0(0x505);
+                            c[i + 0x353] = 0;
+                            (c + i * 0x14)[0x69] = 0;
+                        }
+                    }
+                    (c + i * 0x14)[0x6A] = 1;
+                    *(u16 *)(p + 4) = 0x80;
+                    p[13] = 0;
+                    p[14] = 0;
+                    p[15] = 0;
+                    *(s16 *)(p + 6) = 0;
+                    *(s16 *)(p + 8) = 0;
+                    *(s16 *)(p + 10) = 0;
+                }
+            }
+        }
+    }
+}
 
 void func_80137878(void) {
     u8 *c;
@@ -114,7 +157,56 @@ void func_80137878(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80137A78);
+/* t = s; s += 0xEFC; before the test keeps s in a2 (spilled only around calls) and puts the addiu in the branch delay slot; the comma-for header orders i = 0 before the D_80158AA4 load. T-11860 */
+void func_80137A78(void) {
+    u8 *c;
+    u8 *s;
+    u8 *p;
+    s32 i;
+    u8 *t;
+
+    c = D_80158A8C;
+    s = D_80158AAC;
+    if (c[0] != 0) {
+        for (i = 0; i < 24; i++) {
+            c[i * 0x14 + 0x42] = 0;
+        }
+        if (c[0x342] == 0) {
+            if (func_801427A8() != 0) {
+                func_80133AD0(0x508);
+                for (i = 0, p = D_80158AA4 + 0xFA0; i < 7; i++) {
+                    p -= 0x64;
+                    *(s16 *)(p + 0xA6) = 0x3CDF;
+                }
+                p = D_80158AA4 + 0x12C0;
+                for (i = 0; i < 7; i++, p -= 0x64) {
+                    *(s16 *)(p + 0x42) = 0x3CDF;
+                }
+            } else {
+                for (i = 0, p = D_80158AA4 + 0xFA0; i < 7; i++) {
+                    p -= 0x64;
+                    *(s16 *)(p + 0xA6) = 0x3CD9;
+                }
+                p = D_80158AA4 + 0x12C0;
+                for (i = 0; i < 7; i++, p -= 0x64) {
+                    *(s16 *)(p + 0x42) = 0x3CD9;
+                }
+            }
+        }
+        t = s;
+        s += 0xEFC;
+        if (c[0x343] == 0) {
+            func_801374C0(t);
+            func_801374C0(s);
+        }
+        if (*(u16 *)(c + 0x30E) == 1) {
+            func_80137654();
+            func_80137878();
+        } else if (*(u16 *)(c + 0x30E) == 2) {
+            func_80137878();
+        }
+    }
+}
 
 /* The u16 store of 8 lets the constant share t5 with the s[0x1A] store; the 0x11C ring row is spelled like the packet loops' s + i * 4 loads so both share one induction variable (a3), and the 2D-array rows keep i * 4 as the loop test; the packet loops' grouped stores share a source line because as1 schedules the stores of one line together. T-11840 */
 void func_80137C20(void) {
