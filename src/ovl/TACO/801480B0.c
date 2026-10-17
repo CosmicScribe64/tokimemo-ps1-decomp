@@ -89,6 +89,8 @@ void func_801483B0(void) {
     D_800E6280.unk_1104.w += 1;
 }
 
+/* s32 with no return (v0 live at the exit): with void the first spill of the counter is `sw v0` instead of the original's
+ * `sw t0`. T-22005 */
 s32 func_801484E4() {
     s32 pad[2]; /* FAKE: reserves the 8 bytes of frame the original has below the spill slot; real local unknown. T-22005 */
     s32 t;
