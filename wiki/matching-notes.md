@@ -7370,9 +7370,9 @@ Three measured FAKE controls remain: two unused frame words (without them only t
 
 ## T-22002 main func_80079070 (wave 4, package w4-p02)
 
-[[tickets/T-22002-w4-p02]] worked the one function of the package, `main:func_80079070` (1,720 bytes, 47-case overlay-address switch). It stays guarded at 4 rows (2 instructions); no match.
+[[tickets/T-22002-w4-p02]] worked the one function of the package, `main:func_80079070` (1,204 linked bytes, 47-case overlay-address switch). Final state: **matched** (closer pass, last paragraph). The first pass below left it guarded at 4 rows (2 instructions); that text is kept as the record of what did not work.
 
-What is left: the original loads the argument of `func_80042908` as `lui a0; lbu a0,(a0)` (an as1 symbolic load whose base shares the destination register). The draft reads it through the FAKE `gs` pointer, so uopt keeps the base in `$v0` (`lui v0; lbu a0,0x1109(v0)`); regdiff says an interfering range holds `$v0` in the original, with no instruction to show it.
+First pass, what was left: the original loads the argument of `func_80042908` as `lui a0; lbu a0,(a0)` (an as1 symbolic load whose base shares the destination register). The draft reads it through the FAKE `gs` pointer, so uopt keeps the base in `$v0` (`lui v0; lbu a0,0x1109(v0)`); regdiff says an interfering range holds `$v0` in the original, with no instruction to show it.
 
 Tried: viewsweep (8 compiles, no gain); autotweak 120 s (345 variants, 4 rows stays); about 100 statement placements of the `unk_1108 = unk_110E` store and the `unk_1109` argument read, each as `gs->`, `D_800E6280.`, a `u8 arg` local or a direct call argument. Every variant that drops the gs base for the argument also moves `sb zero,ovl_load_state` above the four stack-save loads (20 to 26 rows); the best was the baseline. Next to try: a second pointer local that takes `$v0` for the argument range, or a different selector copy, not a statement order.
 

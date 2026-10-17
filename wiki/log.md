@@ -17547,3 +17547,7 @@ No match: viewsweep, autotweak (345 variants) and about 100 hand placements did 
 
 ## [2026-10-17] ticket | T-22002 closer: func_80079070 matched
 Opus closer for [[tickets/T-22002-w4-p02]]: `main:func_80079070` matched (1,204 bytes) with an `s32` call-argument local (precoloured `$a0`) and a FAKE unused `u8` frame pad; guard removed in `src/main/800789E0.c`. Notes in [[matching-notes]]. Clean rebuild 27/27, check_headers, migrate_globals --check, sync_protos --check-branch OK.
+
+## [2026-10-17] ticket | T-22002 Done
+
+Code review of `w2-good...w4-p02` against CODING_STANDARDS.md: owned file only (`src/main/800789E0.c`), FAKE marks ticketed, no inline asm or game data. Stale "guarded" claims fixed in `wiki/index.md`, [[matching-notes]], [[data/t0018-cases]] and [[data/true-gaps]]. 1 of 1 matched (`main:func_80079070`, 1,204 B). [[tickets/T-22002-w4-p02]] moved to Done.
