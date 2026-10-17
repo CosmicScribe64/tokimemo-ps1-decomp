@@ -52,9 +52,9 @@ void func_80152080(void) {
         D_8015EE48 = 3;
         D_8015EDE0 += 1;
         if ((D_8015EDE0 % 3) == 0) {
-            ((RpgObjectRecord44 *)D_8011ECD0)[155].unk_40 = 0xFF;
+            ((DisplayActor44 *)D_8011ECD0)[155].unk_40 = 0xFF;
         } else {
-            ((RpgObjectRecord44 *)D_8011ECD0)[155].unk_40 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[155].unk_40 = 0;
         }
         if (D_8015EDE0 >= 0x10) {
             func_8014EF3C();

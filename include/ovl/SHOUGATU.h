@@ -710,16 +710,6 @@ typedef struct ShoCalendarFn28 {
 } ShoCalendarFn28; /* size 0x70 */
 extern ShoCalendarFn28 D_8014605C;
 
-/* Record 96 of D_8011ECD0; byte and halfword widths verified in the wrapper. */
-typedef struct ShoSprite44 {
-    /* 0x00 */ u8 pad_00[7];
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad_0A[0xC];
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad_1A[0x2A];
-} ShoSprite44; /* size 0x44 */
 s32 func_8013E330(void);
 #endif
 
@@ -750,16 +740,6 @@ typedef struct ShoCallbacks23 {
 } ShoCallbacks23; /* size 0x5C */
 extern ShoCallbacks23 D_80145FE8;
 
-/* T-10850: sprite fields used together by func_8013DDD0. */
-typedef struct ShoCounter44 {
-    /* 0x00 */ u8 pad_00[7];
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad_0A[0xC];
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad_1A[0x2A];
-} ShoCounter44; /* size 0x44 */
 void func_80138240(void);
 void func_80137FF0(void);
 void func_801385AC(void);

@@ -664,7 +664,7 @@ void func_80146624(void) {
         }
         break;
     case 1:
-        if ((D_801206AC == 3) && (((NameActorHead44 *)D_8011ECD0)[97].unk_08 == 0)) {
+        if ((D_801206AC == 3) && (((DisplayActor44 *)D_8011ECD0)[97].unk_08 == 0)) {
             func_80044750(0x605);
         }
         if (!(D_80120696 & 1) && (cd_read_sync_status() & 1)) {

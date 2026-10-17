@@ -295,11 +295,6 @@ typedef struct TaiWords4 {
 typedef struct TaiWords11 {
     /* 0x00 */ s32 value[11];
 } TaiWords11; /* size 0x2C */
-typedef struct TaiValue44 {
-    /* 0x00 */ u8 pad_00[0x16];
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ u8 pad_18[0x2C];
-} TaiValue44; /* size 0x44 */
 extern TaiWords4 D_801498AC;
 extern TaiWords11 D_801498BC;
 extern s16 D_80149320[];

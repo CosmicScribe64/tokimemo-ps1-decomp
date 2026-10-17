@@ -1295,25 +1295,6 @@ typedef struct DateRideChoices36 {
 
 #ifndef OVL_DATE_MOTION_T10730
 #define OVL_DATE_MOTION_T10730
-/* Record view recovered from func_8013FD6C, D_8011ECD0.
- * Records 96..99 use signed high halves of the two fixed-point words.
- * Byte names remain provisional; existing raw-array declarations are views. */
-typedef struct DateMotion44 {
-    /* 0x00 */ u8 pad00[2];
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 pad04[3];
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad0A[0xC];
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad1A[0xA];
-    /* 0x24 */ GsWord unk_24;
-    /* 0x28 */ GsWord unk_28;
-    /* 0x2C */ s32 unk_2C;
-    /* 0x30 */ u8 pad30[0x14];
-} DateMotion44; /* size 0x44 */
 typedef struct DateMuseumChoices15 {
     /* 0x00 */ DateChoice3 choice[5];
 } DateMuseumChoices15; /* size 0x0F */

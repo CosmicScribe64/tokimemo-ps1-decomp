@@ -1184,7 +1184,7 @@ s32 func_80138680(s32 arg0, s32 arg1) {
         } else {
             /* FAKE: indexes the four runners (player, cpu[3]) of D_80149208 from the player record; the
              * object is player + cpu[3], not one array (see TaiRunnersA). T-16550 */
-            slot += large.value[((TaiValue44 *)D_8011ECD0)[(&D_80149208.player)[arg0].unk_02 + 46].unk_16 >> 3];
+            slot += large.value[((DisplayActor44 *)D_8011ECD0)[(&D_80149208.player)[arg0].unk_02 + 46].unk_16 >> 3];
         }
     }
     return slot;

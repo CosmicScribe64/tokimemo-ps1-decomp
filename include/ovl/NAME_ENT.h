@@ -349,12 +349,6 @@ void func_80146CB8(void);
 /* T-10860: last getCDlevel sample and four signed samples, indexed by frame & 3. */
 extern s32 D_8014D1B0;
 extern s32 D_8014D1B4[4];
-/* Halfword +0x08 is read by func_80146624; the other actor views omit it. */
-typedef struct NameActorHead44 {
-    /* 0x00 */ u8 pad_00[8];
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad_0A[0x3A];
-} NameActorHead44; /* size 0x44 */
 #endif
 
 #ifndef OVL_NAME_ENT_T10860_DIALOGUE_TEXT
