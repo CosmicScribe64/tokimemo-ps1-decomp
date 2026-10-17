@@ -1,10 +1,10 @@
 ---
 id: T-20600
 title: "Register-order family: recipe sweep"
-status: In Review
+status: Done
 assignee: claude-opus (cg-regorder)
 created: 2026-10-16
-updated: 2026-10-16
+updated: 2026-10-17
 links: ["[[speedup-research-2026-10-16]]", "[[data/t0018-cases]]", "[[register-cheatsheet]]", "[[matching-notes]]"]
 ---
 
@@ -72,3 +72,21 @@ For the conveyor (files it owns, not edited here):
   (24 register rows), so its T-16220 shape stays.
 - `GameState *g` (T-19016) still untried on DATE2 `func_80136794`.
 
+2026-10-17 (claude-opus, code review against `CODING_STANDARDS.md`, diff `w2-good...cg-regorder`): no blocking
+findings. Checked:
+- Busy files: none of the 7 edited C files is in the conveyor's busy list (`src/main/8006CB30.c` was released
+  during the session); headers `main_api.h` and `RPG_BAT.h` are edited only for the `#ifndef` wrappers and the
+  `func_8006D6E0` type.
+- Seven reported matches are plain C: no `asm`, `volatile`, `register` or pad added; no new `FAKE` (the existing
+  `FAKE` comments in the same files belong to other functions and carry ticket and reason). The `idx` and `g` locals
+  are ordinary names in place of the old FAKE pads.
+- C89 (declarations first, `/* */` only, ASCII), fixed-width types; the overrides follow section 8a
+  (`MAIN_API_OVERRIDE_func_800452C4`, `MAIN_API_OVERRIDE_func_80085E30` and `RPG_BAT_OVERRIDE_func_8013F0F4`, each
+  with its reason before the includes and its own type after them).
+- No build-pass change (no `tools/` edit), so no `wiki/toolchain.md` entry or pass test is needed. No game data,
+  asm or binaries in the diff (src, include and wiki only).
+- Rebuild in the worktree: `ninja` up to date, SHA1 OK; `check_headers` OK, `migrate_globals --check` OK,
+  `sync_protos --check-branch` OK (0 new disagreements). The merge script rebuilds clean.
+- One small fix: `func_80152E34` returns `s32` without a `return`; a comment now says why (its callers precede the
+  definition). Comment only, `DATE.bin` SHA1 still OK.
+Status Done.

@@ -16630,3 +16630,9 @@ now 6 functions, 4,264 bytes; [[matching-notes]], [[register-cheatsheet]] and [[
 `include/main_api.h` declares it `s32` (the definition's type). [[tickets/T-20600-regorder-recipe-sweep]] now 7
 functions, 4,532 bytes. Second clean rebuild for the header change.
 
+## [2026-10-17] ticket | T-20600 Done
+
+[[tickets/T-20600-regorder-recipe-sweep]] In Review to Done after code review against `CODING_STANDARDS.md`: 7 functions
+matched in plain C, 4,532 bytes, no new FAKE. One comment added in `src/ovl/DATE/80151460.c` (`func_80152E34`, implicit
+`int`). Header checks, `migrate_globals --check` and `sync_protos --check-branch` OK; no busy file edited. Card moved
+in [[kanban]].
