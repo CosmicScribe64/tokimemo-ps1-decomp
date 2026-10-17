@@ -101,7 +101,7 @@ void func_80134D74();
 void func_80134F2C();
 void func_80135044();
 void func_8013515C();
-s32 func_80135274();
+s32 func_80135274(s32 arg0);
 
 extern u16 D_80139C58;
 extern u8 D_80139C34[8];
