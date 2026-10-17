@@ -43,8 +43,6 @@ void func_8013E454(void) {
     func_8013E320();
 }
 
-/* NON_MATCHING: T-11540 (order_search: operand order 4 * x of the p[84] shift gave 101 -> 99 diff rows; store order of p[82..65] gives no gain), T-10710, 130 of 130 instructions with locals p/r/q for D_80158A60/D_80158A64/&D_800E7D10; differences are the ugen temp numbering (original skips t8 after the sll) and the constant 1 in t0 (uopt colour) instead of a ugen temp */
-#ifdef NON_MATCHING
 void func_8013E498(void) {
     u8 *p;
     u8 *r;
@@ -54,13 +52,13 @@ void func_8013E498(void) {
     r = D_80158A64;
     q = (u8 *)&D_800E7D10;
     p[85] = 0;
-    if (D_800E7D4C & 0x02000000) {
+    if (((TtCfgBits *)(q + 0x3C))->b25) {
         p[83] = 0;
     } else {
         p[83] = 1;
     }
-    p[82] = (u32)(*(s32 *)(q + 0x3C) * 8) >> 0x1D;
-    p[84] = (u32)(4 * *(s32 *)(q + 0x3C)) >> 0x1F;
+    p[82] = ((TtCfgBits *)(q + 0x3C))->b26;
+    p[84] = ((TtCfgBits *)(q + 0x3C))->b29;
     p[53] = 0xFF;
     p[59] = 0xFF;
     p[65] = 0xFF;
@@ -93,12 +91,12 @@ void func_8013E498(void) {
         p[63] = D_800E7D49;
         p[64] = D_800E7D4A;
         p[68] = D_800E7D4B;
-        p[69] = *(s32 *)(q + 0x3C);
-        p[67] = q[0x3D] & 1;
+        p[69] = ((TtCfgBits *)(q + 0x3C))->b0;
+        p[67] = ((TtCfgBits *)(q + 0x3C))->b8;
         if (p[83] == 0 && p[82] != 0) {
             p[73] = 0;
         } else {
-            p[73] = (q[0x3D] >> 1) & 1;
+            p[73] = (u8)(q[0x3D] >> 1) & 1; /* FAKE: the u8 conversion costs the ugen temporary the original skips (t8). T-11860 */
         }
     }
     if (p[83] == 0 && p[82] != 0) {
@@ -108,9 +106,6 @@ void func_8013E498(void) {
     }
     *(u8 **)(p + 76) = D_80150A50;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013E290", func_8013E498);
-#endif
 
 void func_8013E6A0(void) {
     u8 *state;

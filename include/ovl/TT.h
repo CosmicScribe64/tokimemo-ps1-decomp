@@ -777,3 +777,19 @@ typedef struct TtSprSet {
 /* Hit box passed to func_80145508 by func_8013F040 (12 bytes of data; first record used). T-11860 */
 extern TtCollision6 D_80155D44;
 #endif
+
+#ifndef OVL_TT_T11860_G4
+#define OVL_TT_T11860_G4
+/* Settings word at D_800E7D10 + 0x3C (D_800E7D4C), read by func_8013E498 through a pointer to D_800E7D10.
+ * b0 and b8/b9 are written back by func_8013E850 from the TT state bytes 0x45, 0x43 and 0x49. T-11860 */
+typedef struct TtCfgBits {
+    u32 b0 : 8;
+    u32 b8 : 1;
+    u32 b9 : 1;
+    u32 b10 : 15;
+    u32 b25 : 1;
+    u32 b26 : 3;
+    u32 b29 : 1;
+    u32 b30 : 2;
+} TtCfgBits; /* size 0x04 */
+#endif
