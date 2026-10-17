@@ -17034,3 +17034,7 @@ Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-17015 Done
 
 [[tickets/T-17015-w3-main-p15]] In Review to Done: code review against `CODING_STANDARDS.md` found one small issue, fixed (matching-notes comment added above `srn_vram_set`; comment only) and one non-blocking follow-up (the `SrnRec28` view of `D_80121750` is a cast because `srn_init` and BUNKA_SD use the byte view). Rebuild OK (sha1, headers OK, globals OK, `sync_protos --check-branch` OK). 1 of 4 functions matched (`srn_vram_set`; 664 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-17] ticket | T-20820 migrate_globals keep proof (In Progress)
+
+New ticket [[tickets/T-20820-keep-proof]], card in In Progress of [[kanban]]. Tool round for the counter-tail family (TACO `func_8014616C`, `func_80146754`, `func_801484E4`, `func_80149538` and six more unmatched functions of [[data/t0018-cases]]): a `keep` line backed by a byte-match necessity proof instead of a hoisted pair, `tools/keepproof.py`, a rule proposal in [[keep-lines]] for the lead. Worktree `tokimemo-wt/tr-keep-proof` (from `w2-good`); no `src/` keep line before approval.
