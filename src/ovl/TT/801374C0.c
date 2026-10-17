@@ -47,7 +47,63 @@ void func_801374C0(u8 *arg0) {
     } while (i != 0x20);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80137654);
+/* Sibling of func_80137878 for the four player slots; the c + 0x24C + i * 2 spelling with c's field first gives the original's load and temp order. T-11860 */
+void func_80137654(void) {
+    /* FAKE: unused homes (top, frame_pad) place c at sp+0x90, pt at sp+0x6C and i at sp+0x64 in the 152-byte frame. T-11860 */
+    s32 top;
+    u8 *c;
+    u8 *b;
+    s32 frame_pad[7];
+    s16 pt[2];
+    u8 *p;
+    s32 i;
+    s32 j;
+
+    c = D_80158A8C;
+    b = D_80158A64;
+    for (i = 0; i < 4; i++) {
+        if (c[i + 0x353] != 0) {
+            (c + i * 0x14)[0x6A] = 0;
+            pt[0] = *(s16 *)(c + 0x14) + *(s16 *)(c + 0x24C + i * 2);
+            pt[1] = *(s16 *)(c + 0x16) + *(s16 *)(c + 0x27C + i * 2);
+            p = D_80158A80;
+            for (j = 0; j != 12; j++, p += 0x54) {
+                if (j == 12) {} /* FAKE: a second use of 12 keeps the constant in s6 (hoisted to entry) instead of &pt. T-11860 */
+                if (p[0] != 0 && *(u16 *)(p + 4) == 0x40 && func_80145508(p + 0x14, &D_80155B36, (u8 *)pt, &D_80155C6A) != 0) {
+                    b[0x25] = b[0x25] + 1;
+                    if (b[0x24] != 0) {
+                        if (!(b[0x25] & 3)) {
+                            func_80133D14(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x20, 0xA0);
+                        }
+                    }
+                    func_80133AD0(0x507);
+                    if (c[i + 0x353] != 0) {
+                        if (j >= 6) {
+                            *(s16 *)(c + i * 2 + 0x2D8) -= 1;
+                        } else if (*(u16 *)(p + 2) == 9) {
+                            *(s16 *)(c + i * 2 + 0x2D8) -= 4;
+                        } else {
+                            *(s16 *)(c + i * 2 + 0x2D8) -= 2;
+                        }
+                        if (*(s16 *)(c + i * 2 + 0x2D8) < 0) {
+                            func_80133AD0(0x505);
+                            c[i + 0x353] = 0;
+                            (c + i * 0x14)[0x69] = 0;
+                        }
+                    }
+                    (c + i * 0x14)[0x6A] = 1;
+                    *(u16 *)(p + 4) = 0x80;
+                    p[13] = 0;
+                    p[14] = 0;
+                    p[15] = 0;
+                    *(s16 *)(p + 6) = 0;
+                    *(s16 *)(p + 8) = 0;
+                    *(s16 *)(p + 10) = 0;
+                }
+            }
+        }
+    }
+}
 
 void func_80137878(void) {
     u8 *c;
