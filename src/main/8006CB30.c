@@ -872,7 +872,7 @@ s32 geko_judge(s8 *arg0) {
     u8 sp5C[0x20];
 
     *arg0 = 0;
-    n = (u32)D_800E7D10 % 11;
+    n = (u32)D_800E7D10.unk_000 % 11;
     func_80053418(sp7C, sp5C);
     for (i = 0, idx = n; i != 11; i++, idx++) {
         n = idx % 11;
@@ -915,7 +915,7 @@ s32 date_sasoi_judge(s8 *arg0) {
     if ((D_800E6280.unk_03E == 0x62) && ((u32)i >= 2)) {
         return 0;
     }
-    n = (u32)D_800E7D10 % 11;
+    n = (u32)D_800E7D10.unk_000 % 11;
     func_80053418(sp7C, sp5C);
     for (i = 0, idx = n; i != 11; i++, idx++) {
         n = idx % 11;
@@ -1462,7 +1462,7 @@ s32 func_80072D70(void) {
                 state = 1;
                 flag = 1;
             }
-            if ((D_800E6280.unk_11C.unk_02 >= 0x51) && ((u32) lim < (u32) (D_800E7D10 & 0xFF))) {
+            if ((D_800E6280.unk_11C.unk_02 >= 0x51) && ((u32) lim < (u32) (D_800E7D10.unk_000 & 0xFF))) {
                 state += 2;
                 flag = 1;
             }
@@ -1479,7 +1479,7 @@ s32 func_80072D70(void) {
         break;
     case 1:
         state = 1;
-        if ((D_800E6280.unk_11C.unk_02 >= 0x51) && ((u32) lim < (u32) (D_800E7D10 & 0xFF))) {
+        if ((D_800E6280.unk_11C.unk_02 >= 0x51) && ((u32) lim < (u32) (D_800E7D10.unk_000 & 0xFF))) {
             state = 3;
             flag = 1;
         }

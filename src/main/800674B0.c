@@ -473,44 +473,44 @@ void func_800696DC(s32 arg0, s32 arg1) {
     if ((u8) D_800E8BEE != 0) {
         var_s0 = 0;
         for (i = 0; i < 13; i++) {
-            if (((NameMetricWork *)&D_800E7D10)->flags[i] != 0) {
+            if (D_800E7D10.flags[i] != 0) {
                 var_s0 += 1;
             }
         }
         strcpy(spC8, D_800B3288[D_800E7D36]);
         strncat(spC8, "番アルバム", 2);
         set_kanji_string((s16) (spEC + 0xC), -0x50, 0xFU, spC8, 0);
-        /* FAKE: the byte D_800E7D36 read through the NameMetricWork view; uopt does not CSE it with the D_800E7D36 loads
+        /* FAKE: the byte D_800E7D36 read through the Work800E7D10 view; uopt does not CSE it with the D_800E7D36 loads
          * in the else arm, the original reloads it there. Real source unknown. T-17002 */
-        if (((NameMetricWork *)&D_800E7D10)->selected_slot == 0) {
+        if (D_800E7D10.selected_slot == 0) {
             set_kanji_string((s16) spEC, -0x40, 0xFU, "システム", 0);
         } else {
-            if (((NameMetricWork *)&D_800E7D10)->slot_status[D_800E7D36] == 0) {
+            if (D_800E7D10.slot_status[D_800E7D36] == 0) {
                 set_kanji_string((s16) spEC, -0x40, 0xFU, "未使用", 0);
-            } else if (((NameMetricWork *)&D_800E7D10)->slot_status[D_800E7D36] == 0xFF) {
+            } else if (D_800E7D10.slot_status[D_800E7D36] == 0xFF) {
                 set_kanji_string((s16) spEC, -0x40, 0xFU, "データ異常", 0);
             } else {
-                strcpy(spC8, D_800B3288[(u8) ((NameMetricWork *)&D_800E7D10)->year[D_800E7D36] / 10U]);
-                strncat(spC8, D_800B3288[(u8) ((NameMetricWork *)&D_800E7D10)->year[D_800E7D36] % 10U], 2);
+                strcpy(spC8, D_800B3288[(u8) D_800E7D10.year[D_800E7D36] / 10U]);
+                strncat(spC8, D_800B3288[(u8) D_800E7D10.year[D_800E7D36] % 10U], 2);
                 strncat(spC8, "年", 2);
-                strncat(spC8, D_800B3288[((NameMetricWork *)&D_800E7D10)->month[D_800E7D36]], 4);
+                strncat(spC8, D_800B3288[D_800E7D10.month[D_800E7D36]], 4);
                 strncat(spC8, "月", 2);
-                if (((NameMetricWork *)&D_800E7D10)->day[D_800E7D36] >= 0xAU) {
-                    strncat(spC8, D_800B3288[((NameMetricWork *)&D_800E7D10)->day[D_800E7D36] / 10U], 2);
+                if (D_800E7D10.day[D_800E7D36] >= 0xAU) {
+                    strncat(spC8, D_800B3288[D_800E7D10.day[D_800E7D36] / 10U], 2);
                 }
-                strncat(spC8, D_800B3288[((NameMetricWork *)&D_800E7D10)->day[D_800E7D36] % 10U], 2);
+                strncat(spC8, D_800B3288[D_800E7D10.day[D_800E7D36] % 10U], 2);
                 strncat(spC8, "日", 2);
                 set_kanji_string((s16) spEC, -0x40, 0xFU, spC8, 0);
                 strcpy(spA8, "名前…");
-                strncat(spA8, ((NameMetricWork *)&D_800E7D10)->family_name[D_800E7D36], 6);
-                strncat(spA8, ((NameMetricWork *)&D_800E7D10)->given_name[D_800E7D36], 6);
+                strncat(spA8, D_800E7D10.family_name[D_800E7D36], 6);
+                strncat(spA8, D_800E7D10.given_name[D_800E7D36], 6);
                 strcpy(sp88, "あだ名…");
-                strncat(sp88, ((NameMetricWork *)&D_800E7D10)->nickname[D_800E7D36], 0xD);
+                strncat(sp88, D_800E7D10.nickname[D_800E7D36], 0xD);
                 set_kanji_string((s16) spEC, -0x30, 0xFU, spA8, 0);
                 set_kanji_string((s16) spEC, -0x20, 0xFU, sp88, 0);
                 strcpy(sp68, "所属部‥");
                 /* two arguments as in the original: no count is loaded into $a2 before this call */
-                strncat(sp68, club_name_table[((NameMetricWork *)&D_800E7D10)->club[D_800E7D36]]);
+                strncat(sp68, club_name_table[D_800E7D10.club[D_800E7D36]]);
                 set_kanji_string((s16) spEC, -0x10, 0xFU, sp68, 0);
                 strcpy(sp48, "クリア人数‥");
                 if (var_s0 >= 0x64) {
@@ -531,9 +531,9 @@ void func_800696DC(s32 arg0, s32 arg1) {
                 var_s0 += 1;
             }
         }
-        if (((NameMetricWork *)&D_800E7D10)->slot_status[D_800E6280.unk_1118] == 0) {
+        if (D_800E7D10.slot_status[D_800E6280.unk_1118] == 0) {
             set_kanji_string((s16) spEC, -0x40, 0xFU, "未使用", 0);
-        } else if (((NameMetricWork *)&D_800E7D10)->slot_status[D_800E6280.unk_1118] == 0xFF) {
+        } else if (D_800E7D10.slot_status[D_800E6280.unk_1118] == 0xFF) {
             set_kanji_string((s16) spEC, -0x40, 0xFU, "データ異常", 0);
         } else {
             strcpy(spC8, D_800B3288[D_800E6280.unk_1118]);

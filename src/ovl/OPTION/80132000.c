@@ -1,8 +1,6 @@
-#define MAIN_API_OVERRIDE_D_800E7D10 /* recovered aggregate flag view, canonical word view retained elsewhere, T-9540 */
 #include "common.h"
 #include "ovl/OPTION.h"
 /* FAKE: scoped minimum aggregate view of the word and adjacent flags, based on observed +0x14 indexing. T-9540 */
-extern FlagsWork24 D_800E7D10;
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132000);
 

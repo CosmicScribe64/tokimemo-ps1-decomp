@@ -257,30 +257,7 @@ typedef struct ScheduleEntryFlags {
 
 #ifndef TOKIMEMO_ALBUM_LAYOUT_H
 #define TOKIMEMO_ALBUM_LAYOUT_H
-/* T-10880: main album display and NAME_ENT card/metric routines share these views. */
-typedef struct NameMetric4 {
-    /* 0x00 */ u8 unk_00[2];
-    /* 0x02 */ s16 unk_02;
-} NameMetric4; /* size 0x04 */
-
-typedef struct NameMetricWork {
-    /* 0x000 */ s32 unk_000;
-    /* 0x004 */ u8 slot_status[16];
-    /* 0x014 */ u8 flags[16];
-    /* 0x024 */ u8 unk_024[2];
-    /* 0x026 */ u8 selected_slot;
-    /* 0x027 */ u8 unk_027[0x831];
-    /* 0x858 */ u8 year[16];
-    /* 0x868 */ u8 month[16];
-    /* 0x878 */ u8 day[16];
-    /* 0x888 */ u8 family_name[16][8];
-    /* 0x908 */ u8 given_name[16][8];
-    /* 0x988 */ u8 nickname[16][16];
-    /* 0xA88 */ NameMetric4 metrics[9][16];
-    /* 0xCC8 */ u8 unk_CC8[0x200];
-    /* 0xEC8 */ u8 club[16];
-} NameMetricWork; /* minimum observed extent 0xED8 */
-
+/* T-10880: NAME_ENT's album record; the album work area itself is Work800E7D10 (main_api.h, T-20900). */
 typedef struct NameRecordF00 {
     /* 0x000 */ u8 unk_000[0x205];
     /* 0x205 */ u8 year;

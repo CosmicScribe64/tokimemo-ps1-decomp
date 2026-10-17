@@ -69,12 +69,12 @@ void func_800422C8(void) {
 
 void func_800423D4(void) {
     D_800E6280.unk_10F4 += 1;
-    D_800E7D10 += 0x377;
+    D_800E7D10.unk_000 += 0x377;
 }
 
 s32 func_80042400(void) {
-    D_800E7D10 += 0x377;
-    return D_800E7D10;
+    D_800E7D10.unk_000 += 0x377;
+    return D_800E7D10.unk_000;
 }
 
 void func_80042418(void) {

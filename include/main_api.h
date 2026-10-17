@@ -149,13 +149,56 @@ typedef union GsHalf {
 
 #ifndef T9540_FLAGS_WORK24
 #define T9540_FLAGS_WORK24
-/* Word at 0x800E7D10, slot bytes at +4, and fourteen flags at +0x14; T-9540/T-12030. */
-typedef struct FlagsWork24 {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ u8 unk_04[0x10];
-    /* 0x14 */ u8 flags[14];
-    /* 0x22 */ u8 pad22[2];
-} FlagsWork24; /* size 0x24 */
+/* T-10880: one entry of the album metrics (main album display, NAME_ENT card routines). */
+typedef struct NameMetric4 {
+    /* 0x00 */ u8 unk_00[2];
+    /* 0x02 */ s16 unk_02;
+} NameMetric4; /* size 0x04 */
+
+/* T-19009: the settings bits at D_800E7D10 +0x40 (TACO): the saved flag, the mode and a selector in byte 0, two
+ * more selectors in byte 1. */
+typedef struct WorkSetBits {
+    u8 flag : 1;
+    u8 unk_1 : 1;
+    u8 mode : 1;
+    u8 sel : 2;
+    u8 unk_5 : 3;
+    u8 lo : 4;
+    u8 hi : 4;
+} WorkSetBits; /* size 0x02 */
+
+/* The 0xEE0-byte work area at 0x800E7D10 (main clears it with bzero(&D_800E7D10, 0xEE0); +0 is the word main
+ * steps by 0x377 and NAME_ENT seeds srand with). One struct for main's FlagsWork24 (T-9540, T-12030), the album
+ * view NameMetricWork of main and NAME_ENT (T-10880) and TACO's settings TcSetAll (T-19009), T-20900. TACO's
+ * loader still reads +0x40 through its own word/byte union (TcSave), ETC the 8-byte records from +0x58 through
+ * EtcConfig8. */
+typedef struct Work800E7D10 {
+    /* 0x000 */ s32 unk_000;
+    /* 0x004 */ u8 slot_status[16];
+    /* 0x014 */ u8 flags[16];
+    /* 0x024 */ u8 unk_024[2];
+    /* 0x026 */ u8 selected_slot;
+    /* 0x027 */ u8 unk_027[0x19];
+    /* 0x040 */ WorkSetBits bits;
+    /* 0x042 */ u8 name0[3];
+    /* 0x045 */ u8 name1[3];
+    /* 0x048 */ u8 name2[3];
+    /* 0x04B */ u8 unk_04B;
+    /* 0x04C */ s32 w0;
+    /* 0x050 */ s32 w1;
+    /* 0x054 */ s32 w2;
+    /* 0x058 */ u8 unk_058[0x800];
+    /* 0x858 */ u8 year[16];
+    /* 0x868 */ u8 month[16];
+    /* 0x878 */ u8 day[16];
+    /* 0x888 */ u8 family_name[16][8];
+    /* 0x908 */ u8 given_name[16][8];
+    /* 0x988 */ u8 nickname[16][16];
+    /* 0xA88 */ NameMetric4 metrics[9][16];
+    /* 0xCC8 */ u8 unk_CC8[0x200];
+    /* 0xEC8 */ u8 club[16];
+    /* 0xED8 */ u8 unk_ED8[8];
+} Work800E7D10; /* size 0xEE0 */
 #endif
 
 /* Flag word at +0x0C of a Rec38 record (GameState +0x1C8 + 0x38 * i). The original tests single bits
@@ -913,7 +956,7 @@ extern s32 D_800E36F0;
 extern s32 D_800E36F4;
 extern GameState D_800E6280;
 #ifndef MAIN_API_OVERRIDE_D_800E7D10
-extern s32 D_800E7D10;
+extern Work800E7D10 D_800E7D10;
 #endif
 extern u8 D_800E7D11[];
 extern u8 D_800E7D13[];

@@ -410,7 +410,7 @@ s32 func_801429BC(void);
 #ifndef OVL_NAME_ENT_T17900_TABLES
 #define OVL_NAME_ENT_T17900_TABLES
 /* T-17900: sixteen flag counters, cleared and counted four at a time (end address D_8014D070) and
- * copied into NameMetricWork.flags by func_80140F90 and func_80141820. */
+ * copied into Work800E7D10.flags (D_800E7D10) by func_80140F90 and func_80141820. */
 extern u8 D_8014D060[16];
 /* T-17900: second sixteen-byte flag table of func_80140F90 (walked four at a time up to D_8014D168). */
 extern u8 D_8014D158[16];

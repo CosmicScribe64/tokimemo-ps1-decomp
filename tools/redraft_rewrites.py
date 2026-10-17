@@ -45,7 +45,8 @@ RECORD_VIEWS = {"*": {"D_8011ECD0": ("DisplayActor44", 160)},
                 "GYOZI": {"D_80129F40": ("DisplayActor44", 160)},
                 "MASTER": {"D_8011ECD0": ("DisplayFixActor44", 160), "D_80120650": ("DisplayFixActor44", 64)}}
 # scalars that are whole objects (the headers declare a word, the unit reads the struct)
-OBJ_VIEWS = {"NAME_ENT": {"D_800E7D10": ("NameMetricWork", 0xED8)}, "ETC": {"D_801230D0": ("EtcWork40", 0x40)}}
+# (NAME_ENT read D_800E7D10 as NameMetricWork until T-20900; main_api.h declares it as Work800E7D10 now)
+OBJ_VIEWS = {"ETC": {"D_801230D0": ("EtcWork40", 0x40)}}
 # extents that start inside a main-exe object (T-17600: GyoziWork's girl records, 11 x 0x38 at +0x1A8)
 UNIT_RANGES = {"GYOZI": [(0x800F53A0 + 0x1A8, 0x800F53A0 + 0x1A8 + 11 * 0x38, "D_800F53A0")]}
 UNIT_NO_AGG = {"GYOZI": {"D_800F53A0"}}      # its scalars keep their main_api.h names
@@ -86,6 +87,9 @@ TYPE_ALIASES = {
     "BunkSelectWords": ("BunkaDispatch8", ()), "BunkModePair": ("BunkaDispatch8", ()),
     "EtcMat": ("MATRIX", ()), "EtcMat2": ("MATRIX", ()), "TaiikuMat": ("MATRIX", ()),
     "RpgHealthBlock": ("DisplayActor44", ((r"->record\[", "["),)),
+    "NameMetricWork": ("Work800E7D10", ()), "TcSetAll": ("Work800E7D10", ((r"\.pad4B\b", ".unk_04B"),)),
+    "FlagsWork24": ("Work800E7D10", ((r"->unk_04\b", "->slot_status"), (r"->unk_00\b", "->unk_000"))),
+    "TcSetBits": ("WorkSetBits", ((r"\.pad0\b", ".unk_1"), (r"\.pad1\b", ".unk_5"))),
     "EtcVec": ("VECTOR", ()), "EtcVec2": ("VECTOR", ()), "TaiikuVec": ("VECTOR", ()),
     # GameState words: +0x54C entries, +0x66C club words, +0xF4, +0xF8
     "TelEntryFlags": ("ScheduleEntryFlags", ((r"->nib\b", "->unk_25"), (r"->b29\b", "->active"))),
@@ -520,8 +524,8 @@ def display_records(env, body):
 
 
 def obj_views(env, body):
-    """T-17900: m2c sees `D_800E7D10` as a NameMetricWork object; the unit declares an s32 (main_api.h), so
-    the draft reads it as the matched code does, ((NameMetricWork *)&D_800E7D10)->field."""
+    """T-17900: m2c sees a scalar of main_api.h as the object a unit reads (ETC's `D_801230D0` as EtcWork40); the
+    draft reads it as the matched code does, ((EtcWork40 *)&D_801230D0)->field."""
     for sym, (tname, _size) in env.obj_views.items():
         view = "((%s *)&%s)" % (tname, sym)
         body = re.sub(r"(?<![\w.>&])%s\.(\w)" % sym, lambda m: view + "->" + m.group(1), body)

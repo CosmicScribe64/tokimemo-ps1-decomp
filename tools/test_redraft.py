@@ -147,10 +147,12 @@ class TestUnitViews(unittest.TestCase):
             (root / "game_extra.h").write_text("")
             with open(root / "include/game.h", "a") as f:
                 f.write("typedef struct NameRecordF00 {\n    u8 unk_00;\n    u8 pad[0xEFF];\n} NameRecordF00; /* size 0xF00 */\n"
-                        "typedef struct NameMetricWork {\n    s32 unk_00;\n} NameMetricWork;\n")
+                        "typedef struct EtcWork40 {\n    s32 unk_00;\n} EtcWork40;\n")
             (root / "include/ovl/NAME_ENT.h").write_text("")
+            (root / "include/ovl/ETC.h").write_text("")
             self.assertIn("D_80123120", rw.Env("NAME_ENT", str(root)).record_views)
-            self.assertIn("D_800E7D10", rw.Env("NAME_ENT", str(root)).obj_views)
+            self.assertIn("D_801230D0", rw.Env("ETC", str(root)).obj_views)
+            self.assertEqual(rw.Env("NAME_ENT", str(root)).obj_views, {})
             self.assertNotIn("D_80123120", rw.Env("FOO", str(root)).record_views)
             self.assertEqual(rw.Env("FOO", str(root)).obj_views, {})
 

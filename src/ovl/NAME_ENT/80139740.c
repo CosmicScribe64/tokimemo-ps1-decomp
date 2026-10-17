@@ -92,10 +92,10 @@ void func_80139CB4(void) {
         func_800AE090(sp30, D_800B3288[D_800E7D36], 5);
         func_800AE100(sp30, "番");
         func_8004E788(-0x20, -0x5C, 0xF, (s32) sp30, 0);
-        func_8004E788(0x20, -0x4B, 0xF, (s32) ((NameMetricWork *)&D_800E7D10)->family_name[D_800E7D36], 0);
-        func_8004E788(0x4E, -0x4B, 0xF, (s32) ((NameMetricWork *)&D_800E7D10)->given_name[D_800E7D36], 0);
-        func_8004E788(0x20, -0x3B, 0xF, (s32) ((NameMetricWork *)&D_800E7D10)->nickname[D_800E7D36], 0);
-        func_8004E788(0x20, -0x2B, 0xF, (s32) club_name_table[((NameMetricWork *)&D_800E7D10)->club[D_800E7D36]], 0);
+        func_8004E788(0x20, -0x4B, 0xF, (s32) D_800E7D10.family_name[D_800E7D36], 0);
+        func_8004E788(0x4E, -0x4B, 0xF, (s32) D_800E7D10.given_name[D_800E7D36], 0);
+        func_8004E788(0x20, -0x3B, 0xF, (s32) D_800E7D10.nickname[D_800E7D36], 0);
+        func_8004E788(0x20, -0x2B, 0xF, (s32) club_name_table[D_800E7D10.club[D_800E7D36]], 0);
         return;
     }
     func_800AE090(sp30, D_800B3288[D_800E6280.unk_1118], 5);
@@ -113,15 +113,15 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013A9C8);
 
 void func_8013ACA4(void) {
     if (D_800E8BEE != 0) {
-        func_80139740(((NameMetricWork *)&D_800E7D10)->metrics[0][D_800E7D36].unk_02, 16, 30);
-        func_80139740(((NameMetricWork *)&D_800E7D10)->metrics[1][D_800E7D36].unk_02, 16, 46);
-        func_80139740(((NameMetricWork *)&D_800E7D10)->metrics[2][D_800E7D36].unk_02, 16, 62);
-        func_80139740(((NameMetricWork *)&D_800E7D10)->metrics[3][D_800E7D36].unk_02, 16, 78);
-        func_80139740(((NameMetricWork *)&D_800E7D10)->metrics[4][D_800E7D36].unk_02, 128, 14);
-        func_80139740(((NameMetricWork *)&D_800E7D10)->metrics[5][D_800E7D36].unk_02, 128, 30);
-        func_80139740(((NameMetricWork *)&D_800E7D10)->metrics[6][D_800E7D36].unk_02, 128, 46);
-        func_80139740(((NameMetricWork *)&D_800E7D10)->metrics[7][D_800E7D36].unk_02, 128, 62);
-        func_80139740(((NameMetricWork *)&D_800E7D10)->metrics[8][D_800E7D36].unk_02, 128, 78);
+        func_80139740(D_800E7D10.metrics[0][D_800E7D36].unk_02, 16, 30);
+        func_80139740(D_800E7D10.metrics[1][D_800E7D36].unk_02, 16, 46);
+        func_80139740(D_800E7D10.metrics[2][D_800E7D36].unk_02, 16, 62);
+        func_80139740(D_800E7D10.metrics[3][D_800E7D36].unk_02, 16, 78);
+        func_80139740(D_800E7D10.metrics[4][D_800E7D36].unk_02, 128, 14);
+        func_80139740(D_800E7D10.metrics[5][D_800E7D36].unk_02, 128, 30);
+        func_80139740(D_800E7D10.metrics[6][D_800E7D36].unk_02, 128, 46);
+        func_80139740(D_800E7D10.metrics[7][D_800E7D36].unk_02, 128, 62);
+        func_80139740(D_800E7D10.metrics[8][D_800E7D36].unk_02, 128, 78);
         return;
     }
     func_80139740(((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].metrics[0].unk_02, 16, 30);
@@ -385,7 +385,7 @@ void func_8013BB24(void) {
         D_800E6280.unk_1124 = 0;
         D_8014D0A8 = 1;
         D_8014D0A4 = 0;
-        srand(D_800E7D10);
+        srand(D_800E7D10.unk_000);
         k_speed_set(1);
         back_clear_switch(1);
         func_8006764C(0);
@@ -1125,10 +1125,10 @@ void func_8013DF88(void) {
         break;
     case 3:
         func_80053D10();
-        ((NameMetricWork *)&D_800E7D10)->selected_slot = D_800E6280.unk_1118;
+        D_800E7D10.selected_slot = D_800E6280.unk_1118;
         i = 0;
         while (i < 15) {
-            ((NameMetricWork *)&D_800E7D10)->slot_status[i] = 0;
+            D_800E7D10.slot_status[i] = 0;
             ++i;
         }
         D_800E7D14[D_800E6280.unk_1118] = 1;
@@ -1153,8 +1153,8 @@ void func_8013DF88(void) {
         func_80041878();
         func_80042058();
         func_80042058();
-        D_800E6280.unk_1118 = ((NameMetricWork *)&D_800E7D10)->selected_slot;
-        func_800AE0B0("s->file_no %x \n", ((NameMetricWork *)&D_800E7D10)->selected_slot);
+        D_800E6280.unk_1118 = D_800E7D10.selected_slot;
+        func_800AE0B0("s->file_no %x \n", D_800E7D10.selected_slot);
         D_800E6280.unk_110D += 1;
         break;
     case 6:
@@ -2365,10 +2365,10 @@ s32 func_801425C0(void) {
     s32 var_s0;
 
     for (var_s0 = 0; var_s0 < 14; var_s0++) {
-        if (((NameMetricWork *)&D_800E7D10)->slot_status[var_s0 + 1] == 0) {
+        if (D_800E7D10.slot_status[var_s0 + 1] == 0) {
             func_80049A40(((var_s0 / 7) * 0x1F) - 0x90, ((var_s0 % 7) * 0x10) - 0x12, 0x1E, 0xF, 2, 0x808080, 0x81);
         }
-        if (((NameMetricWork *)&D_800E7D10)->slot_status[var_s0 + 1] == 0xFF) {
+        if (D_800E7D10.slot_status[var_s0 + 1] == 0xFF) {
             func_80049A40(((var_s0 / 7) * 0x1F) - 0x90, ((var_s0 % 7) * 0x10) - 0x12, 0x1E, 0xF, 2, 0x8080, 0x81);
         }
     }

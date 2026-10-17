@@ -345,7 +345,7 @@ s32 func_80144A38(void) {
 void func_80144AC0(void) {
     s32 i;
     s32 d;
-    FlagsWork24 *work;
+    Work800E7D10 *work;
     s16 x[16];
     s16 y[16];
     s16 w[16];
@@ -364,9 +364,9 @@ void func_80144AC0(void) {
     menu_set(1, 14, x, y, w, h);
     D_800E6280.unk_1094 = 0;
     k_sub_reset_point_set();
-    work = (FlagsWork24 *)&D_800E7D10;
+    work = &D_800E7D10;
     for (i = 1; i != 15; i++) {
-        if (work->unk_04[i] == 1) {
+        if (work->slot_status[i] == 1) {
             break;
         }
     }
