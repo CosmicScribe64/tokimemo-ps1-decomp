@@ -1,5 +1,22 @@
 #include "common.h"
 #include "ovl/EVENT.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/8011C650.data", D_801258C0);
+INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/8011C650.data", D_801258C4);
+INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/8011C650.data", D_801258C8);
+INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/8011C650.data", D_801258CC);
+INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/8011C650.data", D_801258D0);
+INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/8011C650.data", D_801258D4);
+INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/8011C650.data", D_801258D8);
+INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/8011C650.data", D_801258DC);
+INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/8011C650.data", D_801258E0);
+s16 D_801258E4[3] = { 0, 0, 0 };
+s16 D_801258EC[3] = { 0, 0, 0 };
+s16 D_801258F4[3] = { 0, 0, 0 };
+s16 D_801258FC[3] = { 0, 0, 0 };
+u8 D_80125904[0x6F8] = { 0 };
+u32 D_80125FFC = 0x10124FE6;
 
 void func_8011C650(void) {
     D_801258C0 = 0x801C6000;
@@ -49,16 +66,12 @@ s32 func_8011ED50(s16 arg0) {
     ((Rec24 *)D_800EC190)[7].unk_0F -= arg0;
 }
 
-/* NON_MATCHING: T-10040, 13-line initialization/data-ownership residual. */
-#ifdef NON_MATCHING
-
 void func_8011EDFC(void) {
     s16 *temp_v0;
     s16 *var_a0;
     s16 temp_v0_2;
     s16 var_a1;
     s16 var_s3;
-    s32 remainder;
     s32 temp_s1;
     s32 temp_s1_3;
     u8 temp_s0;
@@ -120,7 +133,7 @@ void func_8011EDFC(void) {
             }
 
             if ((D_801258F4[var_s3] == 0) && (D_801258FC[var_s3] == 0)) {
-                if ((remainder = func_800789A0() % 2)) {
+                if (func_800789A0() % 2) {
                     D_801258F4[var_s3] = ((func_800789A0() % 2) * 2) - 1;
                 } else {
                     D_801258FC[var_s3] = ((func_800789A0() % 2) * 2) - 1;
@@ -179,6 +192,3 @@ void func_8011EDFC(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8011C650", func_8011EDFC);
-#endif

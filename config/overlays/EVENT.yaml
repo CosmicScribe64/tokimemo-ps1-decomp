@@ -93,4 +93,5 @@ segments:
       - [0x29C30, .rodata, EVENT/8010FE10]
       - [0x2A0E0, .rodata, EVENT/8011C650]
       - [0x2A2D0, data, EVENT_data]
+      - [0x2F8C0, .data, EVENT/8011C650]
   - [0x30000]
