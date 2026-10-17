@@ -12,7 +12,7 @@ Proposed rule for the lead. Nothing in `src/`, `include/` or `CODING_STANDARDS.m
 
 [[game-state]] says every unit reaches the frame counter and the other `GameState` fields through `D_800E6280`, because the original has no separate symbol for them (T-7010: 407 read-modify-write pairs kept in order, 0 hoisted). A `keep` line gives one C file its old separate symbol back and `migrate_globals.py --check` accepts it only when the original object has an as1 "hoisted pair" on that address.
 
-Six notes from three work packages (T-19002, T-19013, T-19019) hit a case the hoisted pair cannot show. In TACO `func_8014616C`, `func_80146754`, `func_801484E4` and `func_80149538` the original reads the frame counter 0x800E7384 for a chain of compares and reads it again, as a second uopt variable, for the final `+= 1`. With `GameState` fields IDO joins both into one register web; with a separate `D_800E7384` for the tail the functions match. Three closers asked the lead whether a `keep` line may cite a live-range argument. This page replaces that question with a check.
+Six notes from three work packages (T-19002, T-19013, T-19019) hit a case the hoisted pair cannot show. In TACO `func_8014616C`, `func_80146754`, `func_801484E4` and `func_80149538` the original reads the frame counter 0x800E7384 for a chain of compares and reads it again, as a second uopt variable, for the final `+= 1`. With `GameState` fields IDO joins both into one register web (`func_8014616C` is 165 rows off); with a separate `D_800E7384` for the tail alone `func_8014616C` and `func_80149538` match byte for byte, and the other two get close. Three closers asked the lead whether a `keep` line may cite a live-range argument. This page replaces that question with a check.
 
 ## Proposed rule
 
