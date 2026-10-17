@@ -150,3 +150,7 @@ the first-argument constant and the narrowing on an earlier source line than the
 ### Wave 3 package w3-main-p08 (T-17008)
 
 `func_80059EF0`, `func_8004F6B0` and `func_80059BE8` matched ([[matching-notes]], section T-17008). Type changes: `s32 D_800C6200[8]`, `s32 D_800C62C0[32]` are index loops now (the `func_80059EF0` entry of the type map above); `s16 D_80125BF0`/`D_80125BF2` declared (the cursor, promoted by uopt); `func_80098490` takes `u16` parameters; `D_800C9730` and `D_800C5FCC` have file-local array views in `80059B40.c` (`s32 D_800C9730[11]`, `s32 D_800C5FCC[2]`, `MAIN_API_OVERRIDE_*`), while `main_api.h` keeps `u8[]` and `s32` for their other users.
+
+### Wave 3 package w3-main-p13 (T-17013)
+
+`func_8004AE54` matched ([[matching-notes]], section T-17013); `func_8004B358`, `col2sepia` and `make_color_bar` not. Type notes: `D_800B3D84` is the table of sixteen (u, v) glyph pairs, so `D_800B3D96/97` and `D_800B3D98/99` are its elements 0x12/0x13 and 0x14/0x15 and no separate globals are declared; the sprites are `SPRT_8` (number printer) and `SPRT` (string printer) from `psx_types.h`.

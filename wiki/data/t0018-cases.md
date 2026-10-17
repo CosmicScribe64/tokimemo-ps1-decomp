@@ -1,12 +1,14 @@
 ---
 type: data
-updated: 2026-10-16
+updated: 2026-10-17
 sources: ["wiki/matching-notes.md", "tools/queue.py"]
 ---
 
 # T-0018 cases (register promotion of globals and related register-order gaps)
 
 Update (T-20003): RPG_BAT `func_80138F6C` matches 1,268 actual default linked bytes with direct timer updates/decrement and two marked FAKE sites (frame padding and selector word read). Full RPG_BAT and all 27 binary SHA1 checks pass. Historical rows below remain unchanged; [[tickets/T-20003-rpg-timer-callees]] supersedes its unmatched status. Independent matches for `func_80157158` and `func_80156D78` were dropped from this contribution after upstream T-17102 landed.
+
+Update (T-17013): main `func_8004AE54` (row T-9320 below) is matched in plain C: both loop invariants of the `func_8009ED74` call are declared locals (`tpx`, `tpy`, in that order), so the allocator spills `tpy` at `sp+0x5C` and keeps `tpx` in `$fp` as the original does ([[matching-notes]], "T-17013"). Rows below stay unchanged.
 
 Update (T-17005): main `pre_syogatu1` (rows T-12030 below) is matched in plain C: an index loop `sp16C[i]` replaces the pointer walk that let IDO cache the argument address ([[matching-notes]], "T-17005"). Rows below stay unchanged.
 
@@ -2324,3 +2326,6 @@ Update (T-17117): RPG_BAT `func_8013CC90` (row `hoist`, T-9740: `D_800E7200` loa
 | 8007C030 | `dialogue_speak_part` | sched | T-20620: 16 lines. An `s32` local narrowed at the call (`y = temp_s1 + 0x10; f(-0x28, (s16) y, ...)`, frame kept by dropping the FAKE pad) and inline `(s16)(temp_s1 + 0x10)` put the sum into `a1` instead of updating `s1` (32 lines). |
 | ETC/80146400 | `func_80146400` | sched | T-20620: 12 lines in the guarded draft. The original hoists the string's `lui a0` early and leaves the `bne` slot empty; IDO hoists `lui t7` of `D_801506F8` and fills the slot with `sll t6`. Not tried further. |
 | TACO/80148FE0 | `func_801497EC` | regorder | T-20620: 2 lines. The last record test needs `addu t2,t3,v1` (base first); `(D_8015EDB4 + idx)` gives IDO's order and `D_8015EDB4[idx]`, `(D_8015EDB4 + idx)[0]`, `idx[D_8015EDB4]` are CSEd with the earlier `D_8015EDB4[idx]` stores (frame 8 bytes short). |
+| 8004AD60 | `func_8004B358` | regorder | T-17013: string printer, twin of `func_8004AE54`; 49 differing rows after the same fixes (invariants `tpx`/`tpy` as locals, two FAKE pad words for the frame, `x` copied inside the guard, `SPRT` view). Left: the three loop variables sit one register off (original x=`s1`, char=`s2`, flag=`s3`; IDO char=`s1`, flag=`s3`, x=`s2`), and the entry load is a uopt colour (`lbu v0`, shared with the char) where the original has a ugen temporary (`lbu t8; andi v0,t8,0xff; move s2,v0`, bottom `lbu v0,1(s4); move s2,v0` in the `bnez` slot). About 40 variants of the char/index/flag split (`c &= 0x1F`, separate `idx`, flag from `*s`, a second `ch` variable, test on the parameter pointer, declaration and statement order) all fold the copy or leave the 49 rows. Draft in `drafts/T-17013/main/func_8004B358` (T-17013) |
+| 8004AD60 | `col2sepia` | regorder | T-17013: a fresh single-pointer draft (reads through `Pix2In *`, writes through a `(Pix2Out *)` cast of the same pointer, no second walking pointer) gives 171 rows against the earlier 144; the two-pointer form is 197. Same cascade as the T-9730 row (first byte-store temporary `t7` against `t6`); not pursued past the 10 minute bound. Draft in `drafts/T-17013/main/col2sepia` (T-17013) |
+| 8004AD60 | `make_color_bar` | regorder | T-17013: not retried, the T-10620 row (about 340 rows, bit-field temporaries against induction values) still describes it; no new idea for the allocation order in the 10 minute bound (T-17013) |

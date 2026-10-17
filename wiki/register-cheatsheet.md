@@ -1,6 +1,6 @@
 ---
 type: guide
-updated: 2026-10-16
+updated: 2026-10-17
 sources: ["wiki/matching-notes.md", "wiki/uopt-register-allocation.md", "wiki/register-allocation-wave7.md", "wiki/decompile-workflow.md", "tools/regdiff.py"]
 ---
 
@@ -332,6 +332,9 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 | the first test of a branch reads a byte (`if (D_800E7D36 == 0)`), the else arm indexes with the same byte; the original reloads it (`lbu t4` then `lbu t5`), the draft reuses the register | Read the first one through the aggregate that contains the byte (`((NameMetricWork *)&D_800E7D10)->selected_slot == 0`); uopt cannot prove two base symbols alias and keeps both loads. `func_800696DC` (T-17002). |
 | the original stores a call's constant argument from the argument register and loads it first (`li a0,k; lui at,%hi(G); jal f; sb a0,%lo(G)(at)`), the draft puts `lui at` first or loads `k` twice; with that fixed, a later read of `G` lands in `$v1` (`lui v1; lbu v1,G`) where the original reloads it into a ugen temporary | Store through the byte view and pass the plain member: `*(u8 *)&G = k; f(G);` (T-9770, FAKE). Read `G` again later through the same view (`*(u8 *)&G * 0x34`): a plain later read makes uopt promote `G`. EVENT `func_8010B614` (T-20620, verified in scratch), GEKO `func_8013CC20`. 32 of the 37 `li`-first sites of T-9020 match with the first half. |
 | a loop-invariant base (`lui a0; addiu a0,%lo(D)`) is hoisted above the loop, and its `addiu` comes after the counter clear (`move v1,zero`) in the draft, before it in the original | Put the counter clear (and an empty FAKE test that reads it) on the loop's head line: `i = 0; if (i && i) { } do`, or `n = 0; b = 0; p = D; r = E; q = D; for (; b < 2; b++) {`. Splitting `i = 0` from the test reads an uninitialised `i` (frame +8). At a loop end, the pointer steps come out in source order (`r += k;` before `q += k;`). GYOZI `func_8013E638`, main `func_80055A38` (T-20620, verified in scratch). |
+| two loop-invariant arguments of one call (`f((a3 & 8) * 4 + 0x100, (a3 & 7) + 0x1F8)`), all nine saved registers taken: the draft spills the first (`sw` at the wrong slot, the other in `$fp`), the original spills the second at `sp+0x5C` and keeps the first in `$fp` | Declare both as locals, the one that stays in `$fp` first (`s32 tpx; s32 tpy;`) and assign them just before the loop (and again before a later use in another block); as bare expressions IDO spills whichever uopt hoisted first. Main `func_8004AE54` (T-17013; the T-9320 row in [[data/t0018-cases]] is superseded). |
+| a number printer `do { ... } while (v >= 0)` with an `n++` and a strength-reduced `- n * 5` (`addiu s2,s2,5`): the draft puts the `addiu` before the divide checks, the original after them | Write `v = v / 10; n++;` (the update of the induction variable follows the statement that holds the division; `n++; v = v / 10;` places it first). Main `func_8004AE54` (T-17013). |
+| an extra unused local per frame word of the original (the frame is 8 to 16 bytes short, the spilled local is already at the right offset) | The locals above the spill are the first declared ones: two `s32 pad0, pad1;` at the top of the list reproduce a frame of twelve words (`func_8004B358`, T-17013, draft kept in `drafts/T-17013`; FAKE if used). |
 
 ## Do not
 
