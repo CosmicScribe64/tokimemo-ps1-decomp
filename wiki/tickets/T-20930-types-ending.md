@@ -1,7 +1,7 @@
 ---
 id: T-20930
 title: "Targeted type pass: ENDING"
-status: In Review
+status: Done
 assignee: agent (ty-ending)
 created: 2026-10-17
 updated: 2026-10-17
@@ -73,3 +73,4 @@ Not done: `tools/redraft.py`'s archived variant cannot compile old bodies that u
   rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. The code review
   against `CODING_STANDARDS.md` is open (two FAKE notes to check: `func_80139B48`, the sibling's masks;
   `func_80132420`, the frame layout).
+- 2026-10-17: Code review against `CODING_STANDARDS.md`, In Review to Done. No findings. Checked: no edits under `src/ovl/TT/` and none to main `dialogue_render` (it is only called; `src/main/8007C030.c` and `include/main_api.h` untouched); every header change keeps one declaration per symbol (`check_headers` OK; the ENDING `set_kanji_string` override is gone and the main_api.h view is used); matched code changed only to the new aggregates and typed views (the one other change is dropping `(u8)` on `D_8013C364`, now `u8`); the three new matches are plain C (K&R definition of `func_80132420`, `POLY_G4` port, nested ifs); both new FAKE comments (`func_80132420` frame layout, `func_80139B48` colour masks) name T-20930 and the reason; types documented in [[data-types]] and [[ending-family-results]]; C89 only (no `//`, declarations at block top), comments ASCII; no game data or binaries (drafts hold source and scores, register names only inside NON_MATCHING comments, same layout as `drafts/T-18300/`); commits start with the ticket id and carry the trailer. `w2-good` merged into the branch first: only `wiki/index.md`, `wiki/kanban.md` and `wiki/log.md` conflicted (index and log keep both sides; the kanban board is `w2-good`'s, with this card re-added under Done). `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK; the full clean rebuild (27/27 sha1) runs in the merge step.

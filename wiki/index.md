@@ -35,7 +35,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
-- [[tickets/T-20930-types-ending|T-20930]] Targeted type pass: ENDING, second pass after T-18300: message-script, scene-image and portrait tables as aggregates (427 scalars folded), callback tables in the header, dialogue context views; 3 matches (`func_80132420`, `func_80132B04`, `func_80139B48`, 2,900 bytes), headers alone moved no draft score, hand drafts in `drafts/T-20930/` (In Review).
+- [[tickets/T-20930-types-ending|T-20930]] Targeted type pass: ENDING, second pass after T-18300: message-script, scene-image and portrait tables as aggregates (427 scalars folded), callback tables in the header, dialogue context views; 3 matches (`func_80132420`, `func_80132B04`, `func_80139B48`, 2,900 bytes), headers alone moved no draft score, hand drafts in `drafts/T-20930/` (Done, review passed).
 - [[tickets/T-21000-event-goto-loops-and-seq-views|T-21000]] EVENT: mark or remove the goto loops in func_80118DAC and type the func_8010A6E4 views (Backlog; followup of T-9940).
 - [[tickets/T-21001-recover-wave-10-list-6-near-misses|T-21001]] Recover the wave-10 list 6 near misses: BUNKAKEN func_80143DD0 and RPG_BAT func_80139510 (Backlog; followup of T-9960).
 - [[tickets/T-21002-game-state-unk120-second-record-set|T-21002]] Declare the second set of nine GsRec0FC records in GameState instead of raw unk_120 casts (Backlog; followup of T-10890).

@@ -17329,3 +17329,6 @@ Counts per status after the pass: Backlog 33, Ready 1, In Progress 0, In Review 
 ## [2026-10-17] ticket | T-20930 In Review
 
 [[tickets/T-20930-types-ending]] In Progress to In Review (card moved in [[kanban]], line in [[index]] updated). Clean rebuild (`rm -rf build && python3 configure.py && ninja`) 27/27 sha1 OK; `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` pass. Three ENDING matches (2,900 bytes), the type map and the paired score table are in [[ending-family-results]] ("Targeted type pass") and [[data-types]]. The code review against `CODING_STANDARDS.md` is open.
+
+## [2026-10-17] ticket | T-20930 Done
+[[tickets/T-20930-types-ending]] reviewed against `CODING_STANDARDS.md`: no findings (no edits in `src/ovl/TT/*` or `dialogue_render`, header declarations consistent, matched code changed only to use the new types, the three new matches are plain C, both FAKE comments name T-20930 and a reason, types documented in [[data-types]] and [[ending-family-results]], no game data). `w2-good` merged into the branch first (only `wiki/index.md`, `wiki/kanban.md`, `wiki/log.md` conflicted; index and log keep both sides, kanban is `w2-good`'s board plus this card). `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK. In Review to Done (kanban card moved).
