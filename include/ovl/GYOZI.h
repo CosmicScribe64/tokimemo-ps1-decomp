@@ -923,7 +923,6 @@ extern GyoziTextCC3 D_80146428;
 /* T-10850: signed halfword sprite fields loaded by func_80136488. */
 extern s16 D_80146168;
 extern s16 D_8014616C;
-/* T-10850: 0x44-byte sprite records initialized by func_80136488. */
 void func_80134EDC(void);
 void func_80134520(void);
 void func_80135CA0(void);

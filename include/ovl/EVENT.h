@@ -1534,9 +1534,6 @@ typedef struct EventMovieState {
 
 #ifndef OVL_EVENT_PARTICLE_T10870_H
 #define OVL_EVENT_PARTICLE_T10870_H
-/* func_8011B190 initializes records 96..105 at D_800E9620. The same
- * allocation's record 31 uses byte 0x43. Coordinate high halves are signed. */
-
 /* Partial state view at D_800B0860. The word table's observed accesses
  * extend through element 57; its full allocation size is not yet known. */
 typedef struct EventEffectTables {

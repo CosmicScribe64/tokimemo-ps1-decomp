@@ -141,10 +141,6 @@ void func_80138088(void);
 void func_80138374(void);
 void func_80138F10(void);
 
-#ifndef OVL_MASTER_T10630_CLUB_BITS_H
-#define OVL_MASTER_T10630_CLUB_BITS_H
-#endif
-
 /* T-10630: eleven resource IDs copied by the neighboring selector. */
 extern MasterWords11 D_8013C678;
 

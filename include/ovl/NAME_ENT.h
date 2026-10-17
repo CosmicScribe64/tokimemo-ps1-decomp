@@ -211,12 +211,6 @@ void func_80137B84(s32 arg0, s32 arg1, s32 arg2);
 void func_80137CA0();
 
 
-#ifndef OVL_NAME_ENT_T9510_RECORD44
-#define OVL_NAME_ENT_T9510_RECORD44
-/* T-9510: 0x44-byte records in D_8011ECD0, initialized starting at record 96.
- * Offsets and widths follow func_801454CC and its neighbouring initializers. */
-#endif
-
 
 #ifndef OVL_NAME_ENT_T9770_SELECTION_GLOBALS
 #define OVL_NAME_ENT_T9770_SELECTION_GLOBALS
@@ -258,20 +252,10 @@ void func_80145EA4(void);
 void func_801478E0(void);
 #endif
 
-#ifndef OVL_NAME_ENT_MOTION_TYPES_H
-#define OVL_NAME_ENT_MOTION_TYPES_H
-
-#endif
-
 #ifndef OVL_NAME_ENT_T10860_ACTOR_HELPER_H
 #define OVL_NAME_ENT_T10860_ACTOR_HELPER_H
 /* Side-effect-only actor setup; no returned value (801473AC assembly). */
 void func_801473AC(void);
-#endif
-
-#ifndef OVL_NAME_ENT_ASSET_ACTOR44_H
-#define OVL_NAME_ENT_ASSET_ACTOR44_H
-/* Record 96 image header: word 0 is passed to load_tpage_buf_lock (T-10860). */
 #endif
 
 #ifndef OVL_NAME_ENT_T10860_FADE_HELPER_H

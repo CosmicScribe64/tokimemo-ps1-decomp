@@ -1308,10 +1308,6 @@ typedef struct DateCounts22 {
 } DateCounts22; /* size 0x16 */
 #endif
 
-#ifndef OVL_DATE_FLAG17_T10730
-#define OVL_DATE_FLAG17_T10730
-#endif
-
 #ifndef DATE_SELECTION_VIEW_T10730
 #define DATE_SELECTION_VIEW_T10730
 /* T-10730: byte selector slots at D_800CA2F8 and D_800CA2FC. This view
@@ -1359,9 +1355,6 @@ typedef struct DateMovieHeader8 {
 
 #ifndef OVL_DATE_PARTICLE_T10870_H
 #define OVL_DATE_PARTICLE_T10870_H
-/* T-10870: func_80140374 initializes 20 records starting at sprite 98.
- * The coordinate words are also read and written as signed high halves. */
-
 /* Fixed-point horizontal positions, with signed high-halfword updates. */
 extern GsWord D_8015BD40[20];
 /* func_8013F638 initializes ten falling-particle velocities. */

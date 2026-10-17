@@ -284,11 +284,6 @@ extern u32 D_80145468[];
 extern u32 D_801454A0[];
 #endif
 
-#ifndef OVL_TEL_ENTRY_FLAGS_H
-#define OVL_TEL_ENTRY_FLAGS_H
-/* Flag word at +0x54C of the 4-byte entries at GameState +0x54C (GsWord unk_54C[8]): nibble in bits 25..28, flag in bit 29. */
-#endif
-
 #ifndef OVL_TEL_T10860_ADC_H
 #define OVL_TEL_T10860_ADC_H
 s32 func_8013ADC0(void);
@@ -363,10 +358,6 @@ s32 func_8013A4FC(void);
 #define OVL_TEL_T10860_DISPATCH_DECLS
 void func_80139AA4(void);
 void func_80139FEC(void);
-#endif
-
-#ifndef OVL_TEL_T10860_CLUB_FLAGS
-#define OVL_TEL_T10860_CLUB_FLAGS
 #endif
 
 #ifndef OVL_TEL_RECORD_FLAGS_H
