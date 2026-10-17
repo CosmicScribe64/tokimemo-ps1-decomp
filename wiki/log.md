@@ -17030,3 +17030,7 @@ KakarottoCake's PR #44 (claim #43): GYOZI func_80141944 and func_80145384 matche
 ## [2026-10-17] ticket | T-17021 In Review
 
 [[tickets/T-17021-w3-main-p21]] In Progress to In Review: 1 of 1 function matched in `src/main/80041000.c` (`func_800419FC`, 560 bytes), no FAKE statements, no `NON_MATCHING` blocks, no T-0018 rows. Waiting for the clean rebuild and the code review.
+
+## [2026-10-17] build | T-17021 clean rebuild
+
+[[tickets/T-17021-w3-main-p21]]: `rm -rf build && configure.py && ninja` 27/27 sha1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new, 15 known). Acceptance box ticked; the ticket stays In Review until the code review.
