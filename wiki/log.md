@@ -17242,3 +17242,6 @@ New `tools/keepproof.py` (`check`, `census`, `rows`) and the `proof=<func>:<rows
 
 ## [2026-10-17] ticket | T-17020 Done
 [[tickets/T-17020-w3-main-p20]] reviewed against `CODING_STANDARDS.md`: 1 finding fixed (the [[index]] line still described the pre-closer state, 1 of 4 matched), no source findings. In Review to Done (kanban card moved). Matched 2 of 4 (`load_string`, 252 B, plain C; `func_8004E58C`, 452 B, one marked FAKE pointer view); `glyph_expand_1bpp` and `disp_string` stay `INCLUDE_ASM`. Unit sha1, headers, globals and `sync_protos --check-branch` OK after the edit; the clean 27/27 build runs in the merge.
+
+## [2026-10-17] ticket | T-20900 Cross-unit shared-type unification started
+[[tickets/T-20900-shared-type-unification]] In Progress (kanban card added): unify the parallel per-overlay views of the 0x44-byte display-record table `D_8011ECD0` (and its pools) into one type in `include/game.h`, then other tables with three or more duplicate types; rescore the affected drafts. Worktree tokimemo-wt/ty-shared, branch ty-shared (from w2-good).
