@@ -25,8 +25,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-20810-viewsweep|T-20810 viewsweep: exhaustive return-type and callee-view sweep]]
-
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
@@ -56,6 +54,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
+
+- [ ] [[tickets/T-20810-viewsweep|T-20810 viewsweep: exhaustive return-type and callee-view sweep]]
 
 
 - [ ] [[tickets/T-20005-gyozi-display-dispatch|T-20005 Two GYOZI display/dispatch helpers matched (524 bytes)]]

@@ -218,9 +218,10 @@ endlabel f
 class FakeScore:
     """A compiler stand-in: rows by variant label; `fail` labels raise (every time, or `flaky`: once)."""
 
-    def __init__(self, rows, default=50, fail=(), flaky=(), proto_error=(), delay=0.0, message="cc.py failed:\nbuild.ninja: No such file or directory"):
+    def __init__(self, rows, default=50, fail=(), flaky=(), proto_error=(), delay=0.0, message="cc.py failed:\nbuild.ninja: No such file or directory",
+                 messages=None):
         self.rows, self.default, self.fail, self.flaky, self.proto_error = rows, default, set(fail), set(flaky), set(proto_error)
-        self.delay, self.message = delay, message
+        self.delay, self.message, self.messages = delay, message, messages or {}
         self.calls, self.lock = [], threading.Lock()
         self.running = self.peak = 0
         self.running_at_call = {}
@@ -238,7 +239,7 @@ class FakeScore:
             if label in self.proto_error:
                 raise pv.ProtoError("cannot apply")
             if label in self.fail or (label in self.flaky and first):
-                raise ValueError(self.message)
+                raise ValueError(self.messages.get(label, self.message))
             return self.rows.get(label, self.default)
         finally:
             with self.lock:
@@ -395,6 +396,15 @@ class Untested(unittest.TestCase):
         self.assertEqual(result["status"], "failed")
         self.assertEqual(s.compiles, 2)                                # the baseline and its serial retry; no variant
         self.assertIn("D_800E8C32", result["baseline_error"])
+
+    def test_an_error_that_appears_once_the_own_type_is_restated_ends_the_sweep(self):
+        # the baseline is a redeclaration of f; with f restated the draft's undefined global shows: nothing to repair
+        messages = {"as is": "cfe: Error: unit, line 7: redeclaration of 'f'",
+                    "s32 f();": "cfe: Error: unit, line 9: 'D_1' undefined", "s32 f(void);": "cfe: Error: unit, line 9: 'D_1' undefined"}
+        s = vs.Sweep(FakeScore({}, fail=list(messages), messages=messages), [OWN1, OWN2], dict(PER), None, 50, 1, log=lambda m: None)
+        result = s.run()
+        self.assertEqual(result["status"], "failed")
+        self.assertEqual(s.compiles, 2 + 2 + 2)           # the baseline and the two own edits, each retried; no callee edit
 
     def test_a_baseline_error_about_a_lattice_symbol_is_what_the_variants_fix(self):
         message = "cfe: Error: unit, line 7: redeclaration of 'c1'; previous declaration at line 3"

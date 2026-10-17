@@ -426,20 +426,27 @@ class Sweep:
         base = self.tested(())
         if base == 0:
             return self.result("matches-as-is")
-        detail = self.outcomes[()].detail
-        if base is None and re.search(r"\bError:", detail) and \
-                not any(re.search(r"\b%s\b" % re.escape(sym), detail) for sym in self.symbols()):
+        if base is None and self.unrelated(self.outcomes[()]):
             self.log("viewsweep: the unedited unit fails with a compiler error that no view change touches: %s"
                      % self.outcomes[()].error)
             return self.result("failed")
         if base is None:
             self.anchor_on_own_edit()
+            if not self.base and any(self.unrelated(self.outcomes[(e,)]) for e in self.own if (e,) in self.outcomes):
+                self.log("viewsweep: with the own type restated the unit still fails on an error that no view change touches")
+                return self.result("failed")
         self.evaluate([self.base + (e,) for e in self.singles if e.symbol not in self.base_symbols()], "singles")
         for phase in (self.cross_with_best_own, self.pairs, self.extend_best):
             if self.stop.is_set():
                 break
             phase()
         return self.result()
+
+    def unrelated(self, outcome):
+        """True for a failed compile whose compiler error names no function of the lattice (an undefined global in
+        a draft): no view change can repair it. An infrastructure failure has no compiler `Error:` and is not."""
+        return outcome.rows is None and re.search(r"\bError:", outcome.detail) is not None and \
+            not any(re.search(r"\b%s\b" % re.escape(sym), outcome.detail) for sym in self.symbols())
 
     def base_symbols(self):
         return {e.symbol for e in self.base}
