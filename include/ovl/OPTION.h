@@ -91,24 +91,6 @@ void func_80138DF8(void);
 void func_80138C20(void);
 void func_80138FC0(void);
 
-#ifndef T9540_OPT_DRAW44
-#define T9540_OPT_DRAW44
-typedef union OptDrawWord {
-    /* 0x00 */ s32 w;
-    /* 0x00 */ u8 b[4];
-} OptDrawWord; /* size 0x04 */
-typedef struct OptDraw44 {
-    /* 0x00 */ OptDrawWord unk_00;
-    /* 0x04 */ u8 pad04[0x14];
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad1A[0x0C];
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ u8 pad28[2];
-    /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ u8 pad2C[0x18];
-} OptDraw44; /* size 0x44 */
-#endif
-
 #ifndef OVL_OPTION_DISPATCH_T10020
 #define OVL_OPTION_DISPATCH_T10020
 void func_8013990C(void);
@@ -153,13 +135,6 @@ extern s32 D_8013D308;
 extern u8 *D_8013D350[4];
 
 /* Views of shared records, moved here from the .c files (T-17800). */
-/* View of the 0x44-byte sprite records of the D_8011ECD0 table that the option menus number
- * (D_80120650 is record 96; the menus write the s16 at +0x18 of records 107-113). T-9020 */
-typedef struct OptSpr44 {
-    /* 0x00 */ s32 unk_00[6];
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad1A[0x2A];
-} OptSpr44; /* size 0x44 */
 
 /* Four s16 rows filled by func_801325A0 for menu_set. */
 typedef struct Arrs4x8 {

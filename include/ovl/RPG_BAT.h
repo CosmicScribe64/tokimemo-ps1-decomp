@@ -394,12 +394,6 @@ typedef struct RpgClearWords50 {
     /* 0x00 */ s32 values[50];
 } RpgClearWords50; /* size 0xC8 */
 
-/* Three flag bytes at a 0x44-byte stride are accessed through the shared record table. */
-typedef struct RpgFlagRecord44 { /* size 0x44 */
-    /* 0x00 */ u8 unk_00[3];
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 unk_04[0x40];
-} RpgFlagRecord44;
 
 void func_80148654(void);
 void func_80148B08(void);

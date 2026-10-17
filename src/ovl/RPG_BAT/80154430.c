@@ -81,12 +81,12 @@ void func_8015461C(void) {
     case 2:
         func_8013EA30(128);
         for (i = 0; i < 6; i++) {
-            ((RpgFlagRecord44 *)D_8011ECD0)[i + 136].unk_03 ^= 128;
+            ((DisplayActor44 *)D_8011ECD0)[i + 136].unk_03 ^= 128;
         }
         if ((D_8015EDC4 & 0x100000) && D_8015EBB0 == 1000) {
             D_8015EBC0 = 0;
         } else {
-            ((RpgFlagRecord44 *)D_8011ECD0)[D_8015EC70 + 96].unk_03 ^= 128;
+            ((DisplayActor44 *)D_8011ECD0)[D_8015EC70 + 96].unk_03 ^= 128;
             func_8013D3E4();
         }
         func_8014EBA8();

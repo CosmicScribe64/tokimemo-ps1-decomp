@@ -37,7 +37,7 @@ typedef struct FileReq {
  * scan of the original asm finds lbu/sb only at the byte fields (no lb anywhere), lh/sh at the halfwords
  * and lw/sw at +0x0C, +0x10, +0x34 and +0x38 (the other word accesses are whole-record copies).
  * +0x24 .. +0x33 are also read as 16.16 fixed-point words: DisplayFixActor44 is that view of the same record.
- * Replaces the per-unit views DisplayActor44, DisplayFixActor44, DisplayActor44, RpgFlagRecord44, DisplayActor44,
+ * Replaces the per-unit views DisplayActor44, DisplayFixActor44, DisplayActor44, DisplayActor44, DisplayActor44,
  * DisplayActor44, EventMotion44, DisplayActor44, DisplayActor44, DisplayActor44, DisplayActor44, DisplayActor44,
  * DisplayActor44, DisplayActor44, DisplayActor44, TaiRecord44, TextureRecord44, OptActor44, DateScene44 (T-20900). */
 typedef struct DisplayActor44 {
