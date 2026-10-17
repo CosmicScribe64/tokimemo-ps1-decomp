@@ -149,6 +149,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-17015-w3-main-p15|T-17015 Wave 3 package w3-main-p15]]
 - [ ] [[tickets/T-17014-w3-main-p14|T-17014 Wave 3 package w3-main-p14]]
 - [ ] [[tickets/T-17017-w3-main-p17|T-17017 Wave 3 package w3-main-p17]]
+- [ ] [[tickets/T-17018-w3-main-p18|T-17018 Wave 3 package w3-main-p18]]
 - [ ] [[tickets/T-20005-gyozi-display-dispatch|T-20005 Two GYOZI display/dispatch helpers matched (524 bytes)]]
 - [ ] [[tickets/T-20004-gyozi-dialogue-followup|T-20004 Two GYOZI dialogue helpers matched (776 bytes)]]
 

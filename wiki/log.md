@@ -17136,3 +17136,23 @@ table unchanged. One small finding fixed: the 5.2 column of the block-copy table
 re-running the six reproducers under IDO 5.3 and 5.2 in Docker (5.2's code equals 5.3's on all six). Verdict: no rule
 adopted. No uopt tie rule is possible (2 ties); IDO 4.1's block-copy state is the one uniform difference but cannot be
 built without ugen source. See [[ido-52-evaluation]], [[data/true-gaps]], [[uopt-register-allocation]].
+
+## [2026-10-17] ticket | T-17018 In Progress
+
+[[tickets/T-17018-w3-main-p18]] created and In Progress: Wave 3 package for `src/main/8004F870.c` (`menu_bar_color`, `menu_set`, `sndisp`, `menu_girl_taku_set`, `xa_wait`, `menu_check_1`), worktree `tokimemo-wt/w3-main-p18`, branch `w3-main-p18` from `w2-good`.
+
+## [2026-10-17] build | T-17018 main:8004F870 six functions
+
+[[tickets/T-17018-w3-main-p18]]: none of `menu_bar_color`, `menu_set`, `sndisp`, `menu_girl_taku_set`, `xa_wait`, `menu_check_1` matched. `xa_wait` is a new guarded draft (18 lines, from 132) in `src/main/8004F870.c` after `GameState.unk_F60..F62` became `u8` in `include/main_api.h` and `else if (ph != 0)`; FAKE `pad[2]` for the frame. `menu_set` (118 lines), `sndisp` (69 with the data island, reverted), `menu_girl_taku_set` (86) restored to `INCLUDE_ASM`. Notes in [[matching-notes]] (T-17018), rows in [[data/t0018-cases]].
+
+## [2026-10-17] ticket | T-17018 In Review
+
+[[tickets/T-17018-w3-main-p18]] In Progress to In Review: 0 of 6 functions matched, 1 new guard, 2 old guards kept. Build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` OK.
+
+## [2026-10-17] ticket | T-17018 closer pass
+
+[[tickets/T-17018-w3-main-p18]] closer pass (Opus, 02:59 to about 03:55 UTC), only the guarded near misses in `src/main/8004F870.c`. `xa_wait` (580 B) matched (commit `206bdff4`): `u8 get_now_k(void);` declared in the file (the other callers keep the implicit `int` view) and the byte `unk_F61` read into `t` with `t + 3` in both compares. `menu_bar_color` unchanged (17 lines): `D_800E3680` looks like this object's piece of a second data area, which needs a second data range per object (tooling). Notes in [[matching-notes]] (section T-17018), two rows in [[data/t0018-cases]], one row in [[register-cheatsheet]]. Clean build 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` (0 new, 15 known) OK. Ticket stays In Review.
+
+## [2026-10-17] ticket | T-17018 Done
+
+[[tickets/T-17018-w3-main-p18]] In Review to Done: code review against `CODING_STANDARDS.md` found two issues, both fixed in `src/main/8004F870.c` (the `FAKE` comment of the duplicate pointer in the guarded `menu_check_1` was restored; the redundant `else if (ph != 0)` in `xa_wait` was marked `FAKE`), comment-only, rebuild OK (sha1 OK, headers OK, globals OK). 1 of 6 functions matched (`xa_wait`, 580 bytes). Card moved in [[kanban]], [[index]] line updated. Merge via the wave 3 merge script.
