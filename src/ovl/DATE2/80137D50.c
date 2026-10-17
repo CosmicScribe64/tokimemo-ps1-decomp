@@ -1,3 +1,4 @@
+#define MAIN_API_OVERRIDE_D_800B3CFC /* T-11880: func_801388C0 matched with the word as a u8[4] (main_api.h: u8 scalar); the scalar view keeps a second register range */
 #include "common.h"
 #include "ovl/DATE2.h"
 
@@ -5,6 +6,7 @@ typedef struct {
     void (*f[13])();
 } FnTbl13; /* size 0x34 */
 extern FnTbl13 D_8013B600;
+extern u8 D_800B3CFC[4];
 
 void func_80137D50(void) {
     D_8013B540 = 0x801B00A4;
@@ -218,7 +220,37 @@ void func_8013856C(void) {
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_801385CC);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_801388C0);
+s32 func_801388C0(void) {
+    s16 i;
+
+    func_8004F984(0, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(0);
+    func_80050B54(0);
+    if (D_800B3CFC[0] != 0 && D_800B3CFC[0] != D_8013B5D0) {
+        func_80044750(0x601);
+        if (++D_8013B5CC >= 3) {
+            D_8013B5CC = 1;
+        }
+        D_800E6280.unk_110D = 0;
+        D_800B3CFC[0] = 0;
+        D_800B3CF8 = 0;
+    }
+    D_8013B5D0 = D_800B3CFC[0];
+    if (D_800E6280.unk_F88 & 0x600060) {
+        for (i = 0; i < 4; i++) {
+            if (((GsRecF90 (*)[2])D_800E6280.unk_F90)[i][0].unk_06 != 0 && D_8013B5E4[i] != 0) {
+                D_80122CDC = i;
+                D_8013B5C4 = i;
+                D_80122D30 = 0;
+                D_8011ECD3 &= ~0x80;
+                func_8004E9F4(1);
+                D_800E6280.unk_1104.w++;
+                D_800E6280.unk_110D = 0;
+                return 0;
+            }
+        }
+    }
+}
 
 s32 func_80138A3C(void) {
     switch (D_800E6280.unk_110D) {

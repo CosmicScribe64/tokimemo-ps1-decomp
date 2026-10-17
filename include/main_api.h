@@ -682,7 +682,9 @@ extern u8 D_800B3C88[];
 extern s8 D_800B3CA0;
 extern u8 D_800B3CA4;
 extern u32 D_800B3CA8[20];
+#ifndef MAIN_API_OVERRIDE_D_800B3CFC
 extern u8 D_800B3CFC;
+#endif
 extern u8 D_800B3D00;
 extern u8 D_800B3D24;
 extern u8 D_800B3D40;
