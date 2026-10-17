@@ -17600,3 +17600,7 @@ Review against `CODING_STANDARDS.md` passed after one wiki fix (stale guard text
 ## [2026-10-17] ticket | T-22011 In Progress
 
 Started wave 4 package w4-p11 of [[tickets/T-22000-wave-4-conveyor]]: EVENT `func_800FD00C`, `func_8010F340`, `func_800FC040`, `func_8010F74C`, `func_8010F55C` in `src/ovl/EVENT/800FBBF0.c` and `8010BB90.c`. Ticket [[tickets/T-22011-w4-p11]], board in [[kanban]].
+
+## [2026-10-17] ticket | T-22011 In Review
+
+EVENT `func_8010F340` (376 bytes) matched; `func_800FD00C` (3 rows), `func_800FC040` (24 rows) and `func_8010F74C` (29 rows) stay guarded; `func_8010F55C` restored to `INCLUDE_ASM`. Clean build 27/27, check_headers, migrate_globals --check and sync_protos --check-branch pass. Details in [[matching-notes]], ticket [[tickets/T-22011-w4-p11]], board in [[kanban]]. Sources: `src/ovl/EVENT/8010BB90.c`, `src/ovl/EVENT/800FBBF0.c`, `include/main_api.h`, `drafts/T-22011/EVENT/func_8010F55C/body.c`.

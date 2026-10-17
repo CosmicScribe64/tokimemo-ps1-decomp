@@ -101,7 +101,37 @@ void func_800FBFE0(void) {
     func_80015FE0();
 }
 
+/* NON_MATCHING: T-22011, 24 rows; the table sits at sp+52 not sp+40 (frame 224 against 216) and the third D_801212B4 read takes $t2 not $v0 */
+#ifdef NON_MATCHING
+void func_800FC040(void) {
+    s32 idx;
+    FnTbl42 tbl;
+
+    tbl = D_801212B8;
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+    if (D_800EECE0 != 0) {
+        D_800EB06F |= 0x80;
+        D_800EB073 = D_800F19AB;
+        if ((u8) D_801212B4 == 0) {
+            D_800EB06E = 3;
+        }
+        if ((D_800EB084 == 6) && ((u8) D_801212B4 == 0)) {
+            D_800EB06E = 0;
+        }
+        if ((func_80015A64() & 4 ? func_800458E0() : 0) != 0) {
+            if ((u8) D_801212B4 == 0) {
+                D_800EB06E = 3;
+                D_801212B4 = 1;
+            }
+        }
+        return;
+    }
+    D_800EB06F &= 0xFF7F;
+}
+#else
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FC040);
+#endif
 
 void func_800FC184(void) {
     func_80015D28(0x45, 0x801B0000, 0x7D8F);
@@ -407,13 +437,12 @@ void func_800FCFE4(void) {
     func_80011DFC();
 }
 
-/* NON_MATCHING: T-22011, 6 rows; register of the D_800F19AB base */
+/* NON_MATCHING: T-22011, 3 rows; the D_800F19AB base `lui` takes $v0 and comes before the second D_800EC2F8 `lui` ($v1 and after in the original) */
 #ifdef NON_MATCHING
 void func_800FD00C(void) {
     s32 idx;
     FnTbl39 tbl;
-    s32 pad1;
-    u8 temp;
+    s32 pad1; /* FAKE: unused, declared after tbl so the table sits at sp+48 and the frame is 208 as in the original; T-22011 */
 
     tbl = D_801214A0;
     func_80078950("%d\n", D_800B1AF6);
@@ -426,11 +455,10 @@ void func_800FD00C(void) {
         } else {
             D_800EC2F8 |= 0x80000000;
         }
-        temp = D_800F19AB;
-        D_800EC30E = temp;
-        D_800EC30D = temp;
-        D_800EC30C = temp;
-        D_800EB02F = temp;
+        D_800EC30E = D_800F19AB;
+        D_800EC30D = D_800F19AB;
+        D_800EC30C = D_800F19AB;
+        D_800EB02F = D_800F19AB;
         return;
     }
     D_800EB02B &= 0xFF7F;

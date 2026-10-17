@@ -987,4 +987,133 @@ void func_8010F4B8(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010BB90", func_8010F55C);
 
+/* NON_MATCHING: T-22011, 29 rows; case 0 of the table switch folds into the pre-switch assignment (the original has an explicit `or v0,v1,zero`), and the last D_800B1AF6 read lands in $t9 not $v1 */
+#ifdef NON_MATCHING
+s32 func_8010F74C(void) {
+    s32 pad; /* FAKE: unused, declared first so the 21 tables sit 4 bytes lower as in the original; T-22011 */
+    FnTbl18 spD04;
+    FnTbl35 spC78;
+    FnTbl48 spBB8;
+    FnTbl32 spB38;
+    FnTbl35 spAAC;
+    FnTbl34 spA24;
+    FnTbl36 sp994;
+    FnTbl37 sp900;
+    FnTbl36 sp870;
+    FnTbl39 sp7D4;
+    FnTbl32 sp754;
+    FnTbl32 sp6D4;
+    FnTbl103 sp538;
+    FnTbl29 sp4C4;
+    FnTbl45 sp410;
+    FnTbl41 sp36C;
+    FnTbl37 sp2D8;
+    FnTbl47 sp21C;
+    FnTbl61 sp128;
+    FnTbl31 spAC;
+    FnTbl31 sp30;
+    void (**tbl)();
+
+    spD04 = D_801244AC;
+    spC78 = D_801244F4;
+    spBB8 = D_80124580;
+    spB38 = D_80124640;
+    spAAC = D_801246C0;
+    spA24 = D_8012474C;
+    sp994 = D_801247D4;
+    sp900 = D_80124864;
+    sp870 = D_801248F8;
+    sp7D4 = D_80124988;
+    sp754 = D_80124A24;
+    sp6D4 = D_80124AA4;
+    sp538 = D_80124B24;
+    sp4C4 = D_80124CC0;
+    sp410 = D_80124D34;
+    sp36C = D_80124DE8;
+    sp2D8 = D_80124E8C;
+    sp21C = D_80124F20;
+    sp128 = D_80124FDC;
+    spAC = *(FnTbl31 *)&D_801250D0;
+    sp30 = D_8012514C;
+    tbl = spD04.f;
+    switch (D_801243B0) {
+    case 0:
+        tbl = spD04.f;
+        break;
+    case 1:
+        tbl = spC78.f;
+        break;
+    case 2:
+        tbl = spBB8.f;
+        break;
+    case 3:
+        tbl = spB38.f;
+        break;
+    case 4:
+        tbl = spAAC.f;
+        break;
+    case 5:
+        tbl = spA24.f;
+        break;
+    case 6:
+        tbl = sp994.f;
+        break;
+    case 7:
+        tbl = sp900.f;
+        break;
+    case 8:
+        tbl = sp870.f;
+        break;
+    case 9:
+        tbl = sp7D4.f;
+        break;
+    case 10:
+        tbl = sp754.f;
+        break;
+    case 11:
+        tbl = sp6D4.f;
+        break;
+    case 12:
+        tbl = sp538.f;
+        break;
+    case 13:
+        tbl = sp4C4.f;
+        break;
+    case 14:
+        tbl = sp410.f;
+        break;
+    case 15:
+        tbl = sp36C.f;
+        break;
+    case 16:
+        tbl = sp2D8.f;
+        break;
+    case 17:
+        tbl = sp21C.f;
+        break;
+    case 18:
+        tbl = sp128.f;
+        break;
+    case 19:
+        tbl = spAC.f;
+        break;
+    case 20:
+        tbl = sp30.f;
+        break;
+    }
+    tbl[D_800B1AF6](0x80);
+    if (D_800EECF0 != 0) {
+        func_8011B848();
+    }
+    if ((tbl == spC78.f) && ((u8) D_800B1AF6 >= 0xCU) && ((u8) D_800B1AF6 < 0x15U)) {
+        func_8011C164();
+    }
+    if (tbl == spC78.f) {
+        if (D_800B1AF6 == 0x15) {
+            func_8011C11C();
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010BB90", func_8010F74C);
+#endif
