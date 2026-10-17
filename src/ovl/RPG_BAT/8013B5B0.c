@@ -1,8 +1,9 @@
+#define MAIN_API_OVERRIDE_func_800452C4 /* implicit int view: the call's $v0 result moves the promoted state byte unk_1109 to $v1 in func_8013B5B0 (T-20600) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-17107, 25 differing lines; the state byte D_800E6280.unk_1109 is promoted to $v0, the original colours it $v1 (T-0018 promoted-global family; s32 return, u8 view, int callees, post-increment, temp form tried) */
+s32 func_800452C4();
+
 void func_8013B5B0(void) {
     if (D_800E6280.unk_1109 >= 6 && D_800E6280.unk_1109 < 0xA) {
         func_8013BEA8();
@@ -80,7 +81,7 @@ void func_8013B5B0(void) {
         func_80042808();
         break;
     case 14:
-        if ((u32)D_800E6280.unk_1100++ >= 0x400U) {
+        if ((u32)++D_800E6280.unk_1100 > 0x400U) {
             func_8004482C();
             func_800452C4();
             D_800E6280.unk_1109 = 0xD;
@@ -99,9 +100,6 @@ void func_8013B5B0(void) {
     }
     func_8006BD6C(0);
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013B5B0", func_8013B5B0);
-#endif
 
 s32 func_8013B910(void) {
     func_8013C32C();
