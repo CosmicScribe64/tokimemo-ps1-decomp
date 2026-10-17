@@ -319,11 +319,7 @@ void func_800419FC(void) {
     ((GsDateBits *)&D_800E6280.unk_0F8)->unk_09 = 1;
     ((GsDateBits *)&D_800E6280.unk_0F8)->month = 1;
     ((GsDateBits *)&D_800E6280.unk_0F8)->day = 1;
-    i = 0;
-    while (i < 9) {
-        D_800E6280.unk_120[0x15 + i] = 0;
-        i++;
-    }
+    for (i = 0; i < 9; i++) D_800E6280.unk_120[0x15 + i] = 0;
     D_800E6280.unk_0FC.unk_02 = 0x64;
     D_800E6280.unk_100.unk_02 = 0x28;
     D_800E6280.unk_104.unk_02 = 0x28;
