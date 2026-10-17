@@ -17574,3 +17574,7 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: no byte match. `func_80142400` (
 ## [2026-10-17] ticket | T-22004 Done
 
 Code review of [[tickets/T-22004-w4-p04]] against `CODING_STANDARDS.md`: 0 of 3 matched (`func_80142400` guarded 26 rows, `func_8014357C` guarded 34 rows, `func_80140A90` back to INCLUDE_ASM). One finding fixed (comment on the first-symbol views and the peeled `D_8014A1E8` stores in `src/ovl/TAIIKU/80142240.c`), build 27/27. Package of [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] ticket | T-22009 Wave 4 package w4-p09 In Progress
+
+Package of [[tickets/T-22000-wave-4-conveyor]]: EVENT `src/ovl/EVENT/8011C650.c`, two functions (`func_8011EDFC`, `func_8011D5C4`). See [[tickets/T-22009-w4-p09]].
