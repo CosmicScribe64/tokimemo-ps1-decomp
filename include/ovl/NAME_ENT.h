@@ -215,31 +215,6 @@ void func_80137CA0();
 #define OVL_NAME_ENT_T9510_RECORD44
 /* T-9510: 0x44-byte records in D_8011ECD0, initialized starting at record 96.
  * Offsets and widths follow func_801454CC and its neighbouring initializers. */
-typedef struct NameRecord44 {
-    /* 0x00 */ u8 pad00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 pad04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 pad06;
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad0A[2];
-    /* 0x0C */ s32 unk_0C;
-    /* 0x10 */ s32 unk_10;
-    /* 0x14 */ u8 pad14[2];
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad1A[0xC];
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ u8 pad28[2];
-    /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ u8 pad2C[8];
-    /* 0x34 */ s32 unk_34;
-    /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 pad3C[8];
-} NameRecord44; /* size 0x44 */
 #endif
 
 
@@ -315,11 +290,6 @@ void func_801473AC(void);
 #ifndef OVL_NAME_ENT_ASSET_ACTOR44_H
 #define OVL_NAME_ENT_ASSET_ACTOR44_H
 /* Record 96 image header: word 0 is passed to load_tpage_buf_lock (T-10860). */
-typedef struct NameAssetActor44 {
-    /* 0x00 */ u8 pad00[0x34];
-    /* 0x34 */ s32 *image;
-    /* 0x38 */ u8 pad38[0x0C];
-} NameAssetActor44; /* size 0x44 */
 #endif
 
 #ifndef OVL_NAME_ENT_T10860_FADE_HELPER_H

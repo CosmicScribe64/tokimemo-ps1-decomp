@@ -89,10 +89,10 @@ void func_80144F98(void) {
 }
 
 void func_80144FDC(void) {
-    NameAssetActor44 *actors;
+    DisplayActor44 *actors;
     s32 i;
 
-    actors = (NameAssetActor44 *)D_8011ECD0;
+    actors = (DisplayActor44 *)D_8011ECD0;
     D_800E6280.unk_1104.u += 1;
     if (D_800E6280.unk_110D == 0) {
         D_8011ECD3 = 0;
@@ -151,14 +151,14 @@ void func_80144FDC(void) {
         D_80120653 = 0x24;
         D_8012065C = (u8 *)0x801800AC;
         D_80120660 = (u8 *)0x801800C0;
-        actors[96].image = (s32 *)0x801800A8;
+        actors[96].unk_34 = (u8 *)0x801800A8;
         D_80120656 = 2;
         D_80120693 = 0;
         D_80120655 = 0x80;
         D_80120676 = -0xA0;
         D_8012067A = -0x78;
         D_80120657 = 0x80;
-        load_tpage_buf_lock(0x1A, *(s32 *)actors[96].image, 1);
+        load_tpage_buf_lock(0x1A, *(s32 *)actors[96].unk_34, 1);
         for (i = 0; i < 16; i++) {
             load_palette((u8 *)0x80184490, (i + 16) & 255, 1, 2, i);
         }
@@ -215,18 +215,18 @@ void func_80145454(void) {
 
 void func_801454CC(void) {
     s32 var_s1;
-    NameRecord44 *var_s0;
+    DisplayActor44 *var_s0;
     s32 last;
 
-    for (var_s0 = (NameRecord44 *)D_8011ECD0, var_s1 = 0; var_s1 != 8; var_s1++) {
+    for (var_s0 = (DisplayActor44 *)D_8011ECD0, var_s1 = 0; var_s1 != 8; var_s1++) {
         func_80048F64(var_s1 + 0x60);
         var_s0[96].unk_01 = 0xA;
         var_s0[96].unk_02 = 1;
         var_s0[96].unk_38 = 0x41000000;
         var_s0[96].unk_03 = 0xA4;
-        var_s0[96].unk_0C = 0x80184228;
-        var_s0[96].unk_10 = 0x80184258;
-        var_s0[96].unk_34 = 0x80184224;
+        var_s0[96].unk_0C = (u8 *)0x80184228;
+        var_s0[96].unk_10 = (u8 *)0x80184258;
+        var_s0[96].unk_34 = (u8 *)0x80184224;
         var_s0[96].unk_16 = 0;
         var_s0[96].unk_18 = (s16) (func_800AE0D0() & 7);
         var_s0[96].unk_05 = 0x80;
@@ -1436,11 +1436,11 @@ void func_8014826C(void) {
         break;
     case 4:
         D_80120762 = 5;
-        ((NameRecord44 *)D_8011ECD0)[99].unk_02 = 5;
+        ((DisplayActor44 *)D_8011ECD0)[99].unk_02 = 5;
         D_800E6280.unk_110D += 1;
         break;
     case 5:
-        if ((((NameRecord44 *)D_8011ECD0)[99].unk_02 == 0) && (((NameRecord44 *)D_8011ECD0)[99].unk_02 == 0)) {
+        if ((((DisplayActor44 *)D_8011ECD0)[99].unk_02 == 0) && (((DisplayActor44 *)D_8011ECD0)[99].unk_02 == 0)) {
             D_800E6280.unk_110D++;
             D_8014D184 = 0;
         }
@@ -1650,7 +1650,7 @@ void func_80148BF4(void) {
 /* rec is record 96 of the D_8011ECD0 table (D_80120658 and D_80120668 are its +0x08 and +0x18): read through the
  * record, uopt compares constant-first as the original does. T-16930 */
 void func_80148C20(void) {
-    NameRecord44 *rec = &((NameRecord44 *)D_8011ECD0)[96];
+    DisplayActor44 *rec = &((DisplayActor44 *)D_8011ECD0)[96];
 
     switch (D_800E6280.unk_110D) {
     case 0:

@@ -73,14 +73,6 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801498BC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801498E8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_80149914);
 
-typedef struct TaiRecord44 {
-    /* 0x00 */ u8 pad[2];
-    /* 0x02 */ u8 active;
-    /* 0x03 */ u8 flags;
-    /* 0x04 */ u8 pad04[0x22];
-    /* 0x26 */ s16 y;
-    /* 0x28 */ u8 pad28[0x1C];
-} TaiRecord44; /* size 0x44; T-10030 */
 
 
 typedef struct {
@@ -912,7 +904,7 @@ void func_8013732C(void) {
 s32 func_80137440(void) {
     s32 timer;
     s16 y;
-    TaiRecord44 *record;
+    DisplayActor44 *record;
 
     /* FAKE: the indirect halfword reads retain the timer in a0; direct scalar
      * reads introduce an extra v0-to-a0 copy. T-10030. */
@@ -930,10 +922,10 @@ s32 func_80137440(void) {
         }
         /* FAKE: joining initialization and loop opening preserves the two
          * address-setup instructions' order. T-10030. */
-        record = (TaiRecord44 *)D_8011ECD0; do {
-            if (record[97].y >= record[101].y) {
-                record[101].active = 0;
-                record[101].flags = 0;
+        record = (DisplayActor44 *)D_8011ECD0; do {
+            if (record[97].unk_26 >= record[101].unk_26) {
+                record[101].unk_02 = 0;
+                record[101].unk_03 = 0;
             }
             record++;
         } while ((u32) record < (u32) (D_8011ECD0 + 0xCC));

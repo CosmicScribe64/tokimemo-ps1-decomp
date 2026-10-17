@@ -1204,11 +1204,6 @@ void func_8014B1C4(void);
 extern s16 D_8015E318;
 s32 func_8014E010(void);
 
-typedef struct DateScene44 {
-    /* 0x00 */ u8 bytes[0x38];
-    /* 0x38 */ s32 flags;
-    /* 0x3C */ u8 pad_3C[8];
-} DateScene44; /* size 0x44; record 31 byte 7 and signed flag view. T-9570 */
 extern s8 D_8015BF44;
 
 #endif /* OVL_DATE_H */

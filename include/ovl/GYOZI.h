@@ -924,32 +924,6 @@ extern GyoziTextCC3 D_80146428;
 extern s16 D_80146168;
 extern s16 D_8014616C;
 /* T-10850: 0x44-byte sprite records initialized by func_80136488. */
-typedef struct GyoziInitSprite44 {
-    /* 0x00 */ u8 pad_00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 unk_04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 unk_06;
-    /* 0x07 */ u8 unk_07;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u8 pad_0A[2];
-    /* 0x0C */ s32 *unk_0C;
-    /* 0x10 */ s32 *unk_10;
-    /* 0x14 */ s16 unk_14;
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ u8 pad_1A[0xC];
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ u8 pad_28[2];
-    /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ u8 pad_2C[8];
-    /* 0x34 */ s32 *unk_34;
-    /* 0x38 */ s32 unk_38;
-    /* 0x3C */ u8 pad_3C[7];
-    /* 0x43 */ u8 unk_43;
-} GyoziInitSprite44; /* size 0x44 */
 void func_80134EDC(void);
 void func_80134520(void);
 void func_80135CA0(void);

@@ -1,11 +1,6 @@
 #include "common.h"
 #include "game.h"
 
-typedef struct TextureRecord44 {
-    /* 0x00 */ u8 pad[0x34];
-    /* 0x34 */ s32 *pages;
-    /* 0x38 */ u8 pad38[0x0C];
-} TextureRecord44; /* size 0x44; texture-page table view, T-10030 */
 
 void func_80047550(void) {
     D_801255DC = 4;
@@ -137,7 +132,7 @@ s32 search_tpage_multi(s32 arg0, u8 arg1) {
 s32 search_tpage(s16 arg0, s32 arg1, u8 arg2) {
     s32 j;
     s32 i;
-    TextureRecord44 *record;
+    DisplayActor44 *record;
     s16 index;
 
     if (arg0 == 0x7FFF) {
@@ -150,28 +145,28 @@ s32 search_tpage(s16 arg0, s32 arg1, u8 arg2) {
         }
         return 0;
     }
-    record = &((TextureRecord44 *)D_8011ECD0)[arg1];
+    record = &((DisplayActor44 *)D_8011ECD0)[arg1];
     index = (s16)(arg0 >> 6);
     for (i = 0xF; i >= 5; i--) {
         for (j = 3; j >= 0; j--) {
             if (D_800E6280.unk_1128[i + j * 16] == 0x7FFE &&
-                D_800E6280.unk_1228[i + j * 16] == record->pages[index]) {
+                D_800E6280.unk_1228[i + j * 16] == ((s32 *)record->unk_34)[index]) {
                 return (j * 16 + i) & 0xFFFF;
             }
         }
     }
     for (i = 0; i < 0x40; i++) {
-        if (D_800E6280.unk_1128[i] == record->pages[index]) {
+        if (D_800E6280.unk_1128[i] == ((s32 *)record->unk_34)[index]) {
             return i & 0xFFFF;
         }
     }
     for (i = 0; i < 0x40; i++) {
         if (D_800E6280.unk_1128[i] == 0x7FFF) {
-            D_800E6280.unk_1128[i] = record->pages[index];
+            D_800E6280.unk_1128[i] = ((s32 *)record->unk_34)[index];
             if (i < 0x20) {
-                load_csr_tp(record->pages[index], i & 0xFF, arg2, 0, 0, 0x80, 0x80);
+                load_csr_tp(((s32 *)record->unk_34)[index], i & 0xFF, arg2, 0, 0, 0x80, 0x80);
             } else {
-                load_csr_tp(record->pages[index], i & 0xFF, arg2, 0, 0x80, 0x80, 0x80);
+                load_csr_tp(((s32 *)record->unk_34)[index], i & 0xFF, arg2, 0, 0x80, 0x80, 0x80);
             }
             return i & 0xFFFF;
         }
@@ -184,7 +179,7 @@ s32 search_tpage(s16 arg0, s32 arg1, u8 arg2) {
 s32 search_tpage8(s16 arg0, s32 arg1, u8 arg2) {
     s32 j;
     s32 i;
-    TextureRecord44 *record;
+    DisplayActor44 *record;
     s16 index;
 
     if (arg0 == 0x7FFF) {
@@ -197,28 +192,28 @@ s32 search_tpage8(s16 arg0, s32 arg1, u8 arg2) {
         }
         return 0;
     }
-    record = &((TextureRecord44 *)D_8011ECD0)[arg1];
+    record = &((DisplayActor44 *)D_8011ECD0)[arg1];
     index = (s16)(arg0 >> 8);
     for (i = 0xF; i >= 5; i--) {
         for (j = 3; j >= 0; j--) {
             if (D_800E6280.unk_1128[i + j * 16] == 0x7FFE &&
-                D_800E6280.unk_1228[i + j * 16] == record->pages[index]) {
+                D_800E6280.unk_1228[i + j * 16] == ((s32 *)record->unk_34)[index]) {
                 return (j * 16 + i) & 0xFFFF;
             }
         }
     }
     for (i = 0; i < 0x40; i++) {
-        if (D_800E6280.unk_1128[i] == record->pages[index]) {
+        if (D_800E6280.unk_1128[i] == ((s32 *)record->unk_34)[index]) {
             return i & 0xFFFF;
         }
     }
     for (i = 0; i < 0x40; i++) {
         if (D_800E6280.unk_1128[i] == 0x7FFF) {
-            D_800E6280.unk_1128[i] = record->pages[index];
+            D_800E6280.unk_1128[i] = ((s32 *)record->unk_34)[index];
             if (i < 0x20) {
-                load_csr_tp(record->pages[index], i & 0xFF, arg2, 0, 0, 0x80, 0x80);
+                load_csr_tp(((s32 *)record->unk_34)[index], i & 0xFF, arg2, 0, 0, 0x80, 0x80);
             } else {
-                load_csr_tp(record->pages[index], i & 0xFF, arg2, 0, 0x80, 0x80, 0x80);
+                load_csr_tp(((s32 *)record->unk_34)[index], i & 0xFF, arg2, 0, 0x80, 0x80, 0x80);
             }
             return i & 0xFFFF;
         }
