@@ -49,9 +49,9 @@ kanban-plugin: board
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 ## In Review
-- [ ] [[tickets/T-22006-w4-p06|T-22006 Wave 4 package w4-p06]]
 
 ## Done
+- [ ] [[tickets/T-22006-w4-p06|T-22006 Wave 4 package w4-p06]]
 - [ ] [[tickets/T-11880-date2-remainder|T-11880 DATE2 remainder]]
 - [ ] [[tickets/T-20009-name-ent-loader|T-20009 Match NAME_ENT CD-level display helper]]
 - [ ] [[tickets/T-11870-tt-batch-13|T-11870 TT batch 13]]
