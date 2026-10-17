@@ -17626,3 +17626,11 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: EVENT `src/ovl/EVENT/8011C650.c`
 ## [2026-10-17] ticket | T-22009 Done
 
 [[tickets/T-22009-w4-p09]]: code review against `CODING_STANDARDS.md`, no findings. 1 of 2 matched (`func_8011EDFC` matched through the `EVENT/8011C650` data island; `func_8011D5C4` stays `INCLUDE_ASM`).
+## [2026-10-17] ticket | T-22005 Wave 4 package w4-p05 opened
+Package of four TACO functions from [[tickets/T-22000-wave-4-conveyor]], In Progress. Owned: src/ovl/TACO/80140DF0.c, src/ovl/TACO/80148FE0.c, src/ovl/TACO/8013D1E0.c, src/ovl/TACO/801480B0.c. See [[tickets/T-22005-w4-p05]].
+
+## [2026-10-17] ticket | T-22005 Wave 4 package w4-p05 In Review
+Two of four TACO functions matched: `func_801484E4` (392 bytes; kept `D_800E7384` for the final increment, `s32` no-return type, proof line in `config/migrate_globals.txt`) and `func_801416E8` (1,072 bytes; early-return shape of the second condition, see [[register-cheatsheet]]). `func_8013D838` (10 lines) and `func_801497EC` (2 lines) stay guarded with updated notes in `src/ovl/TACO/8013D1E0.c` and `src/ovl/TACO/80148FE0.c`. Clean build 27/27, check_headers, migrate_globals, sync_protos clean. Notes: [[matching-notes]] (T-22005), [[keep-lines]]. Ticket [[tickets/T-22005-w4-p05]].
+
+## [2026-10-17] ticket | T-22005 Done
+3 of 4 TACO functions matched (`func_801484E4`, `func_801416E8`, `func_801497EC`; 2,376 bytes); `func_8013D838` stays guarded at 10 lines. Code review against CODING_STANDARDS.md: three small findings fixed (comment on the `s32` no-return type in `src/ovl/TACO/801480B0.c`, wrapped a long comment in `src/ovl/TACO/8013D1E0.c`, stale guarded claims for `func_801497EC` in the ticket, [[matching-notes]] and [[index]]). Clean build 27/27, check_headers, migrate_globals, sync_protos clean. Ticket [[tickets/T-22005-w4-p05]].

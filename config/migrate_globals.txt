@@ -16,3 +16,4 @@ aggregate D_800E6280 GameState include/main_api.h
 # GameState. Uses of the symbol outside the proven functions are errors (write D_800E6280.unk_1104.w).
 keep src/ovl/TACO/801447D0.c D_800E7384 proof=func_8014616C:165:bb8762f0 second uopt variable for the late read (byte-match necessity proof, T-20820)
 keep src/ovl/TACO/80148FE0.c D_800E7384 proof=func_80149538:33:d7dd7f6c second uopt variable for the late read (byte-match necessity proof, T-20820)
+keep src/ovl/TACO/801480B0.c D_800E7384 proof=func_801484E4:32:cda52ed3 second uopt variable for the late read (byte-match necessity proof, T-20820, T-22005)
