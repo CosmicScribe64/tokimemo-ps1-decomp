@@ -16946,3 +16946,10 @@ Created [[tickets/T-17012-w3-main-p12]]: wave 3 package w3-main-p12, six functio
 Merging `cg-regorder` into `w2-good` conflicted in `src/main/8006CB30.c`: T-17004 had matched `func_8006D6E0` with the
 same `s32` definition; kept its comment. [[tickets/T-20600-regorder-recipe-sweep]] therefore adds six new matches on
 main. `include/ovl/RPG_BAT.h`: the override wrapper for `func_8013F0F4` now covers that declaration only.
+
+## [2026-10-17] ticket | T-20710 created, In Progress
+
+[[tickets/T-20710-true-gap-census]]: census of the unmatched non-TT functions whose remaining difference is registers or
+order only, and a search for one uniform uopt allocator rule (traced uopt of [[uopt-register-allocation]], offline method
+of T-20610, IDO 5.2/4.1 components of [[ido-52-evaluation]]). Worktree `bs-gap-census` from `w2-good`. Card in
+[[kanban]] In Progress.
