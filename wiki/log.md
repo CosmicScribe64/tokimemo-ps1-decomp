@@ -17719,3 +17719,7 @@ Clean rebuild 27/27, check_headers, migrate_globals --check and sync_protos --ch
 ## [2026-10-17] ticket | T-22012 Done
 
 Code review against CODING_STANDARDS.md found nothing to fix; 2 of 4 matched (`BUNKASAI:func_8013B25C`, `BUNKASAI:func_80150B7C`), `func_801509A4` (19 rows) and `func_80151364` (2 rows) stay guarded. [[tickets/T-22012-w4-p12]], [[kanban]].
+
+## [2026-10-17] ticket | T-22020 In Progress
+
+Wave 4 package w4-p20 started: three SHOUGATU functions in `src/ovl/SHOUGATU/801390C0.c`, `80137FF0.c`, `80138B40.c`. [[tickets/T-22020-w4-p20]], [[kanban]].
