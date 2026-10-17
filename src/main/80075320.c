@@ -404,10 +404,11 @@ void func_80077C50(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-17006, 28 differing lines; the original copies the selector into v0 (or v0,v1,zero) in the delay slot of the first
- * beq, before the dispatch, so the case blocks keep their own lui v0 and the dispatch slots hold the next li at. Every form
- * tried (selector local, return local, s32/u32 return, comma and assignment in the switch) leaves the copy at the default return
- * (move v0,v1 or andi v0,v1,0xff) and hoists lui v0 into the beq slots. */
+/* NON_MATCHING: T-17006, 28 differing lines; the original copies the selector into v0 (or v0,v1,zero) in the delay
+ * slot of the first beq, before the dispatch, so the case blocks keep their own lui v0 and the dispatch slots hold
+ * the next li at. Every form tried (selector local, return local, s32/u32 return, comma and assignment in the
+ * switch) leaves the copy at the default return (move v0,v1 or andi v0,v1,0xff) and hoists lui v0 into the beq
+ * slots. */
 #ifdef NON_MATCHING
 u8 func_80077CA8(void) {
     s32 x;
