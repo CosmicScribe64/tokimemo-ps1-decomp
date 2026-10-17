@@ -900,6 +900,7 @@ extern s8 D_800E7D16;
 extern u8 D_800E7D1F;
 extern u8 D_800E7D2C;
 extern u8 D_800E7D34;
+extern u8 D_800E7D35;
 extern u8 D_800E7D36;
 extern u8 D_800E7D37;
 extern u16 D_800E7D3C;
@@ -1714,7 +1715,46 @@ extern s16 D_80125C50;
 extern s16 D_80125C52;
 extern u8 D_80125C54;
 extern u8 D_80125C55;
-extern u8 *D_80125C58;
+/* libcd StHEADER, the sector header StGetNext returns (PsyQ movie sample layout). T-17014 */
+typedef struct StHEADER {
+    /* 0x00 */ u16 id;
+    /* 0x02 */ u16 type;
+    /* 0x04 */ u16 secCount;
+    /* 0x06 */ u16 nSectors;
+    /* 0x08 */ u32 frameCount;
+    /* 0x0C */ u32 frameSize;
+    /* 0x10 */ u16 width;
+    /* 0x12 */ u16 height;
+    /* 0x14 */ u32 headm;
+    /* 0x18 */ u32 headv;
+} StHEADER;
+
+/* PsyQ movie sample DECENV (strSetDefDecEnv, strCallback, strNext, strSync), T-9930, T-17014. */
+typedef struct StrDecEnv30 {
+    /* 0x00 */ u8 *vlcbuf[2];
+    /* 0x08 */ s32 vlcid;
+    /* 0x0C */ u8 *imgbuf;
+    /* 0x10 */ RECT rect[2];
+    /* 0x20 */ s32 rectid;
+    /* 0x24 */ RECT slice;
+    /* 0x2C */ s32 isdone;
+} StrDecEnv30; /* size 0x30 */
+
+/* Movie (STR) player state at 0x80180000 behind D_80125C58 (strInit, strNext, func_80056BA8); the
+ * ring buffer behind +0x44 is reached by byte offset. T-17014 */
+typedef struct StrCtx {
+    /* 0x00 */ u8 pos[4];
+    /* 0x04 */ StrDecEnv30 dec;
+    /* 0x34 */ s32 endflag;
+    /* 0x38 */ s32 unk_38;
+    /* 0x3C */ s32 width;
+    /* 0x40 */ s32 height;
+} StrCtx; /* accessed prefix, size 0x44+ */
+extern StrCtx *D_80125C58;
+extern s32 D_80125C5C;
+extern u32 D_800B58F0; /* frame number of the last movie frame (strNext) */
+extern u32 D_800B58F4; /* end frame (func_80056BA8) */
+extern u8 D_800B5904[22]; /* movie subtitle frame table (func_8005715C) */
 extern u8 D_80125C60[];
 extern s16 D_80125C80[]; /* four s16 slots, written at index (tick & 3) (ENDING func_80137730) */
 extern u8 D_80125C90[];

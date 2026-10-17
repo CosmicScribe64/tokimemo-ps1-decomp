@@ -8,9 +8,9 @@ void set_movie_offset(s16 arg0, s16 arg1) {
 
 void strInit(s32 arg0, s32 arg1) {
     DecDCTReset(0);
-    *(s32 *)(D_80125C58 + 0x34) = 0;
+    D_80125C58->endflag = 0;
     func_800869C8(arg1);
-    func_80088150(D_80125C58 + 0x44, 0x20);
+    func_80088150((u8 *)D_80125C58 + 0x44, 0x20);
     func_80088180(D_800B5900 & 1, 1, -1, 0, 0);
     strKickCD(arg0);
 }
@@ -22,46 +22,83 @@ void strSetDefDecEnv(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
     StrDecEnv30 *env;
 
     env = arg0;
-    env->buffer0 = (u8 *) (D_80125C58 + 0x12D44);
-    env->buffer1 = (u8 *) (D_80125C58 + 0x48D44);
-    env->unk_08 = 0;
-    env->buffer2 = (u8 *) (D_80125C58 + 0x10044);
-    env->index = 0;
-    env->flag = 0;
+    env->vlcbuf[0] = (u8 *) D_80125C58 + 0x12D44;
+    env->vlcbuf[1] = (u8 *) D_80125C58 + 0x48D44;
+    env->vlcid = 0;
+    env->imgbuf = (u8 *) D_80125C58 + 0x10044;
+    env->rectid = 0;
+    env->isdone = 0;
     width = 0x140;
     height = 0xF0;
     if (D_800B5900 & 1) {
         width = 0x1E0;
         height = 0xF0;
         /* FAKE: one source line gives as1 the original halfword-store order. T-9930. */
-        env->rect0.w = width; env->rect0.h = height;
-        env->rect0.x = arg1;
-        env->rect0.y = arg2;
-        env->rect1.x = arg3;
-        env->rect1.y = arg4;
-        env->rect1.h = height;
-        env->rect1.w = width;
-        env->rect2.w = 0x18;
-        env->rect2.h = height;
-        env->rect2.y = arg2;
-        env->rect2.x = arg1;
+        env->rect[0].w = width; env->rect[0].h = height;
+        env->rect[0].x = arg1;
+        env->rect[0].y = arg2;
+        env->rect[1].x = arg3;
+        env->rect[1].y = arg4;
+        env->rect[1].h = height;
+        env->rect[1].w = width;
+        env->slice.w = 0x18;
+        env->slice.h = height;
+        env->slice.y = arg2;
+        env->slice.x = arg1;
         return;
     }
-    env->rect0.x = arg1;
-    env->rect0.y = arg2;
-    env->rect0.w = width;
-    env->rect0.h = height;
-    env->rect1.x = arg3;
-    env->rect1.y = arg4;
-    env->rect1.h = height;
-    env->rect1.w = width;
-    env->rect2.w = 0x10;
-    env->rect2.h = height;
-    env->rect2.y = arg2;
-    env->rect2.x = arg1;
+    env->rect[0].x = arg1;
+    env->rect[0].y = arg2;
+    env->rect[0].w = width;
+    env->rect[0].h = height;
+    env->rect[1].x = arg3;
+    env->rect[1].y = arg4;
+    env->rect[1].h = height;
+    env->rect[1].w = width;
+    env->slice.w = 0x10;
+    env->slice.h = height;
+    env->slice.y = arg2;
+    env->slice.x = arg1;
 }
 
+#ifdef NON_MATCHING
+void strCallback(void) {
+    RECT rect;
+    s32 odd;
+
+    odd = D_800B5900 & 1;
+    if (odd != 0 && D_80125C5C != 0) {
+        func_80088210();
+        odd = D_800B5900 & 1;
+        D_80125C5C = 0;
+    }
+    rect = D_80125C58->dec.slice;
+    if (odd != 0) {
+        rect.x += (D_800B58F8 * 3 + 2) / 3;
+        rect.y += (D_800B58FC * 3 + 2) / 3;
+    } else {
+        rect.x += D_800B58F8;
+        rect.y += D_800B58FC;
+    }
+    func_8009C884(&rect, D_80125C58->dec.imgbuf);
+    func_8009C674(0);
+    D_80125C58->dec.slice.x += D_80125C58->dec.slice.w;
+    if (D_80125C58->dec.slice.x < D_80125C58->dec.rect[D_80125C58->dec.rectid].x + D_80125C58->dec.rect[D_80125C58->dec.rectid].w) {
+        func_80086944(D_80125C58->dec.imgbuf, D_80125C58->dec.slice.w * D_80125C58->dec.slice.h / 2);
+        return;
+    }
+    D_80125C58->dec.isdone = 1;
+    if (D_80125C58->dec.rectid != 0) {
+        D_80125C58->dec.rectid = 0;
+    } else {
+        D_80125C58->dec.rectid = 1;
+    }
+    D_80125C58->dec.slice.x = D_80125C58->dec.rect[D_80125C58->dec.rectid].x;
+    D_80125C58->dec.slice.y = D_80125C58->dec.rect[D_80125C58->dec.rectid].y;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/800563F0", strCallback);
+#endif
 
 s32 strNextVlc(u8 *arg0) {
     s32 vlc;
@@ -86,7 +123,48 @@ s32 strNextVlc(u8 *arg0) {
     return 0;
 }
 
+#ifdef NON_MATCHING
+s32 strNext(StrDecEnv30 *env) {
+    u32 *addr;
+    StHEADER *sector;
+    s32 cnt;
+    RECT rect;
+
+    cnt = 0x800000;
+    while (func_80088D70(&addr, &sector) != 0) {
+        if (--cnt == 0) {
+            return 0;
+        }
+    }
+    if (sector->frameCount >= D_800B58F4) {
+        D_80125C58->endflag = 1;
+    }
+    if (sector->headm != addr[0] || sector->headv != addr[1]) {
+        func_80088CB0(addr);
+        return 0;
+    }
+    D_800B58F0 = sector->frameCount;
+    if (D_80125C58->width != sector->width || D_80125C58->height != sector->height) {
+        rect.x = 0;
+        rect.y = 0;
+        rect.w = 0x280;
+        rect.h = 0x1E0;
+        func_8009C7F8(&rect, 0, 0, 0);
+        D_80125C58->width = sector->width;
+        D_80125C58->height = sector->height;
+    }
+    if (D_800B5900 & 1) {
+        env->rect[0].w = env->rect[1].w = D_80125C58->width * 3 / 2;
+    } else {
+        env->rect[0].w = env->rect[1].w = D_80125C58->width;
+    }
+    env->rect[0].h = env->rect[1].h = D_80125C58->height;
+    env->slice.h = D_80125C58->height;
+    return (s32)addr;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/800563F0", strNext);
+#endif
 
 /* Implicit-int return type with no return statement: it changes how as1 fills the loop's
  * back-branch delay slot (T-9140, found by the permuter in T-1330). */
@@ -126,4 +204,43 @@ void func_800570B8(s32 arg0, u8 arg1) {
     func_80049A40(-0x90, 0x69, 0x100, 0x10, 1, 0, 1);
 }
 
+#ifdef NON_MATCHING
+void func_8005715C(s32 arg0) {
+    u8 *p;
+    s32 i;
+    s32 d;
+
+    p = D_800B5904;
+    for (i = 0; i < 22; i++) {
+        if (arg0 < (s32)(*p * 0x50 / 0xF)) {
+            break;
+        }
+        p++;
+    }
+    if (i != 0) {
+        k_disp_switch(i - 1, 0);
+        k_disp_start(i + 1);
+    }
+    if (p >= &D_800B5904[4] && p < &D_800B5904[9]) {
+        func_8006C760(0);
+    } else {
+        func_8006C760(1);
+    }
+    if (p >= &D_800B5904[21]) {
+        func_8006C760(0);
+        func_800570B8(0, 1);
+        func_8004E58C();
+        return;
+    }
+    if (D_800B58F8 != 0) {
+        d = *p * 0x50 / 0xF - arg0;
+        if (d == 4 || d == 5) {
+            func_800570B8((D_800B5900 + D_800E7D35) * 0xDF7FCF + 0xFF208031, 1);
+        } else {
+            func_800570B8((D_800B5900 + D_800E7D35) * 0xDF7FCF + 0xFF208031, 0x81);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/800563F0", func_8005715C);
+#endif
