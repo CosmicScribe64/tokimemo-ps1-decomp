@@ -38,6 +38,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-22000-wave-4-conveyor|T-22000]] Wave 4 conveyor until weekly usage nears 95 percent (In Progress).
 - [[tickets/T-22001-w4-p01|T-22001]] Wave 4 package w4-p01: main `8007C030.c`, `dialogue_speak_part` stays guarded at 16 rows, 18 more forms tried (Done; 0 of 1 matched).
 - [[tickets/T-22007-w4-p07|T-22007]] Wave 4 package w4-p07: `NAME_ENT` `80142A80.c`, `func_80142A80` and `func_8014472C` both matched; `rodata_pieces.py` writes pieces for owned symbols (Done; 2 of 2 matched).
+- [[tickets/T-22004-w4-p04|T-22004]] Wave 4 package w4-p04: TAIIKU `80140810.c` and `80142240.c`, three functions: `func_80142400` guarded 349 to 26 rows, `func_8014357C` guarded 34 rows, `func_80140A90` restored to INCLUDE_ASM (Done; 0 of 3 matched).
 - [[tickets/T-11880-date2-remainder|T-11880]] DATE2: the remaining nine functions, claim #49 (Done; 8 of 9 matched, DATE2 101/102, 91.9% of bytes).
 - [[tickets/T-20008-large-name-introduction|T-20008]] NAME_ENT introduction reconstruction archive (4,308-byte scope), claim #50; compiling, still nonmatching (In Progress; draft checkpoint merged, PR #51).
 - [[tickets/T-20010-name-ent-resource-loader|T-20010]] NAME_ENT resource loader follow-up, 1,652 bytes; valid table recovered, still ASM (Ready).
