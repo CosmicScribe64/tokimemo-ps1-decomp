@@ -71,24 +71,20 @@ void func_80148654(void) {
     }
 }
 
-/* NON_MATCHING: T-17113, 28 differing lines; case 0 loads D_8015EBAC after the EC2C load (the original hoists it above the first store), the shift loop makes uopt store D_8015EDB4 back before it. */
-/* FAKE: draft only; the D_8015EBAC and D_8015EC70 tables are reached through their first symbol (aggregates not typed yet). Type them when the function is revisited. T-17113 */
-#ifdef NON_MATCHING
+/* FAKE: the D_8015EBAC table is reached through its first symbol (aggregate not typed yet). T-17113, T-22013 */
 void func_80148714(void) {
     s32 i;
     s32 start;
-    s32 *p;
-    s32 *q;
     s32 *r;
     s32 x;
     s32 y;
-    RpgMotion30 *mo = (RpgMotion30 *)&D_8015EC28;
     RpgMotion20 *m = (RpgMotion20 *)&D_8015EC50;
 
     switch (D_8015EDB0.unk_00) {
     case 0:
-        mo->dx = mo->x - 0xB0;
-        mo->dy = mo->y - 0x58;
+        /* FAKE: T-22013, D_8015EC28/2C/50/54 are words 31, 32, 41, 42 of the table at D_8015EBAC; as1 keeps the loads behind the first store only when all four are one symbol (aggregate not typed yet) */
+        (&D_8015EBAC)[41] = (&D_8015EBAC)[31] - 0xB0;
+        (&D_8015EBAC)[42] = (&D_8015EBAC)[32] - 0x58;
         if (D_8015EBAC == 1) {
             D_801215FD = 4;
             D_80121685 = 4;
@@ -163,9 +159,6 @@ void func_80148714(void) {
         return;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801484E0", func_80148714);
-#endif
 
 void func_80148B08(void) {
     RpgMotion20 *motion = (RpgMotion20 *)&D_8015EC50;
