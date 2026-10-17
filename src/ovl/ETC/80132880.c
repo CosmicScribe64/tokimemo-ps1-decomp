@@ -1256,10 +1256,6 @@ void func_80137920(void) {
     *(s16 *)&D_80120650[0x6E] = -0x65;
 }
 
-/* One 0x44-byte sprite record of the D_80120650 table, copied as a whole. */
-typedef struct EtcRec44 {
-    s32 w[0x11];
-} EtcRec44;
 
 void func_80137A14(void) {
     func_80133F2C();
@@ -1269,7 +1265,7 @@ void func_80137A14(void) {
     D_80120650[4] = 8;
     D_80120650[0x45] = 0xB;
     D_80120650[1] = 0xB;
-    *(EtcRec44 *)&D_80120650[0x88] = *(EtcRec44 *)D_80120650;
+    *(DisplayActor44 *)&D_80120650[0x88] = *(DisplayActor44 *)D_80120650;
     D_80120650[0x8A] = 0x40;
     *(s16 *)&D_80120650[0xA0] = 0x14;
     D_80120650[0x8B] |= 0x80;
@@ -1301,7 +1297,7 @@ void func_80137C7C(void) {
     load_palette(D_8014EDEC, 0x11, 1, 2, 0);
     func_80136948(D_8014EDF0, D_8014EDF4, D_8014EDF8, D_8014EDFC, D_8014EE00, D_8014EE04);
     func_800850D4(D_8014EDE0, D_8014EDE4, D_8014EDDC, D_8014EDE8);
-    *(EtcRec44 *)&D_80120650[0x44] = *(EtcRec44 *)D_80120650;
+    *(DisplayActor44 *)&D_80120650[0x44] = *(DisplayActor44 *)D_80120650;
     *(s16 *)&D_80120650[0x5A] = 3;
     D_80120650[3] |= 0x80;
     D_80120650[7] = 0x80;
@@ -1365,7 +1361,7 @@ void func_801380AC(void) {
     D_80120650[0x4B] = 0x80;
     *(s16 *)&D_80120650[0x6E] = -0x65;
     D_80120650[0x48] |= 8;
-    *(EtcRec44 *)&D_80120650[0x88] = *(EtcRec44 *)D_80120650;
+    *(DisplayActor44 *)&D_80120650[0x88] = *(DisplayActor44 *)D_80120650;
     D_80120650[0x8B] |= 0x80;
     D_80120650[0x8F] = 0x80;
     *(s16 *)&D_80120650[0xB2] = -0x65;
@@ -1461,7 +1457,7 @@ void func_8013872C(void) {
     D_80120650[0x4B] = 0x80;
     *(s16 *)&D_80120650[0x6E] = -0x65;
     D_80120650[0x48] |= 8;
-    *(EtcRec44 *)&D_80120650[0x88] = *(EtcRec44 *)D_80120650;
+    *(DisplayActor44 *)&D_80120650[0x88] = *(DisplayActor44 *)D_80120650;
     D_80120650[0x8A] = 0x40;
     *(s16 *)&D_80120650[0xA0] = 0x28;
     D_80120650[0x89] -= 1;
