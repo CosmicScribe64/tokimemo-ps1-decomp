@@ -26,6 +26,7 @@ s32 func_80132B04(s32 arg0, s32 arg1, s32 arg2);
  * colour as u8/u16 from their argument slots, and func_80132B04 passes them unconverted (K&R). */
 s32 func_80132420();
 extern u8 D_8013CA38;
+extern s32 **D_8013CAF0; /* T-23002: pointer to the message pointer table (func_8013A2E8) */
 
 
 
