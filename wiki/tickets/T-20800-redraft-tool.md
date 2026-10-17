@@ -48,8 +48,8 @@ asm and C; the whole tool suite (`unittest discover -s tools -p 'test_*.py'`) pa
 All 1,020 archived best bodies run through the rewrites without an error.
 
 Validation, ten functions in GEKO, DATE2 and main, default variants, `drafts/T-20800/`: nine better than the census and
-one equal; against the best archived draft two better (`GEKO:func_80144198` 69 to 62, `main:func_80054140` 106 to 48,
-both `gs-local`), seven equal, one worse (`DATE2:func_80136860`, 164 against 188). None at 0. The archived bodies still
+one equal; against the best archived draft three better (`GEKO:func_80144198` 69 to 62, `GEKO:func_80134228` 16 to 8,
+`main:func_80054140` 106 to 48, all `gs-local`), six equal, one worse (`DATE2:func_80136860`, 164 against 188). None at 0. The archived bodies still
 compile and score what they did. Opt-in variants and an un-driven unit (RENSYU 3 functions, VALEN not reached by
 `--limit`) were run once in scratch: RENSYU `func_80132390` 364 to 337.
 Details: [[decompile-workflow]] ("Redraft tool"). Ready for code review against `CODING_STANDARDS.md`.

@@ -949,6 +949,7 @@ class TestPool(unittest.TestCase):
         self.assertEqual([t.name for t in tasks], ["GEKO:func_1/typed", "GEKO:func_1/finish"])
         tasks = rd.build_tasks(rows, ("typed",), self.root / "w", out, "T-1", 10, True, True)       # --force
         self.assertEqual(len(tasks), 4)
+        self.assertFalse((done / "result.json").exists())            # removed, so the finish task runs again
 
 
 class TestCommandLine(unittest.TestCase):

@@ -17046,3 +17046,7 @@ Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-20800 In Review
 
 [[tickets/T-20800-redraft-tool]] In Progress to In Review: `tools/redraft.py`, `tools/redraft_rewrites.py`, `tools/redraft_extras.py`, `tools/test_redraft.py` (90 tests), the "Redraft tool" section of [[decompile-workflow]], `drafts/T-20800/` (10 functions). Card moved in [[kanban]]. Awaiting code review.
+
+## [2026-10-17] build | T-20800 validation re-finish
+
+[[tickets/T-20800-redraft-tool]]: a guarded function's result folder came out with an empty `context.c` (`draft_fixes.fresh_context` cannot place a body in a file that still holds the function's `NON_MATCHING` block). The tool now builds the unit text itself (`unit_text`), and `--force` removes the finished result so the finish step runs again. The ten validation functions were finished again from the cached variant runs: GEKO `func_80134228` went from 16 to 8 (`archived+gs-local`), so three functions beat the best archived draft (GEKO `func_80144198` 69 to 62, GEKO `func_80134228` 16 to 8, main `func_80054140` 106 to 48), six equal it and one stays above it (DATE2 `func_80136860`, 164 against 188). The numbers above in the earlier validation entry (two better, seven equal) are superseded. Tests 95.

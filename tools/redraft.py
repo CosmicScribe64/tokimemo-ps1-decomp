@@ -589,8 +589,10 @@ def build_tasks(rows, variants, work, out, ticket, timeout, fixes, force):
     for row in rows:
         scope = row["scope"]
         final = Path(out) / row["unit"] / row["func"] / "result.json"
-        if final.exists() and not force:
-            continue
+        if final.exists():
+            if not force:
+                continue
+            final.unlink()            # the finish task counts as done when its result exists
         names = []
         for v in variants:
             if not applicable(row, v):

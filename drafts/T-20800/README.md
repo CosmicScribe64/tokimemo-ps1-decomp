@@ -18,7 +18,7 @@ Default variants, `--jobs 2`. The columns are the score of each variant; "fail" 
 | `DATE2:func_801388C0` | 380 | 81 | 57 (T-18800) | 88 | 57 | 57 | 57 | - | **57** | typed |
 | `GEKO:func_80133024` | 280 | 94 | 46 (T-17700) | 94 | 47 | 46 | 46 | - | **46** | typed-late |
 | `GEKO:func_80133598` | 452 | 112 | 111 (T-17700) | 112 | 111 | 111 | 111 | - | **111** | typed |
-| `GEKO:func_80134228` | 244 | 25 | 16 (T-17700) | 25 | 39 | 35 | 16 | 16 | **16** | archived |
+| `GEKO:func_80134228` | 244 | 25 | 16 (T-17700) | 25 | 39 | 35 | 16 | 16 | **8** | archived + gs-local |
 | `GEKO:func_80144198` | 216 | 97 | 69 (T-17700) | 99 | 69 | 69 | 69 | - | **62** | typed + gs-local |
 | `main:func_80044E8C` | 264 | 41 | 41 (T-17000) | 41 | 41 | 41 | 41 | - | **41** | typed |
 | `main:func_80054140` | 324 | 120 | 106 (T-17000) | 120 | 106 | 106 | 106 | - | **48** | typed + gs-local |
@@ -27,7 +27,7 @@ Default variants, `--jobs 2`. The columns are the score of each variant; "fail" 
 Reading the table:
 
 - Against the census every function is the same or better (9 of 10 better, `main:func_80044E8C` the same).
-- Against the best archived draft, two are better (`GEKO:func_80144198` 69 to 62, `main:func_80054140` 106 to 48; both through the `GameState *g` form that the tool tries on the winner), seven are the same and one is an archived body the new drafts do not reach (`DATE2:func_80136860`, 164 against 188 at best).
+- Against the best archived draft, three are better (`GEKO:func_80144198` 69 to 62, `GEKO:func_80134228` 16 to 8, `main:func_80054140` 106 to 48; all through the `GameState *g` form that the tool tries on the winner), six are the same and one is an archived body the new drafts do not reach (`DATE2:func_80136860`, 164 against 188 at best).
 - The archived bodies still compile against today's headers and score what they scored when they were made, so the fresh typed drafts mostly reproduce them. The rewrites are the same ones.
 - The fold order changes the result for four of the ten. `typed-late` is better than `typed` in three (by 4 rows on `GEKO:func_80134228`, 4 on `DATE2:func_80136860`, 1 on `GEKO:func_80133024`) and much worse on `main:func_8005CA94` (126 against 61). That is why both run by default; `typed` wins six ties by being first in the list.
 - `draft_fixes` found nothing to rewrite in these ten.
