@@ -501,7 +501,84 @@ void func_80138300(void) {
     *(u16 *)(c + 0x364) = v + 1;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80138808);
+/* Sibling of func_80138B90: the s16 0x3D4 store lets 8 share t0 with the loop stores; the 2D-array view of the s rows keeps 0x18 in the strength-reduced pointer of the unrolled loop. T-11860 */
+void func_80138808(void) {
+    u8 *c;
+    u8 *s;
+    u8 *e;
+    s32 i;
+    s32 j;
+
+    c = D_80158A8C;
+    s = D_80158AAC;
+    e = D_80158AA4;
+    switch (*(u16 *)(c + 6)) {
+    case 0:
+        c[0x343] = 1;
+        for (i = 2; i << 0 < 4; i++) { /* FAKE: an opaque test keeps IDO's unroller off this loop (slti on i, as in the original). T-11860 */
+            ((TtAnim14 *)(c + 0x38))[i].unk_08 = 0x80;
+            ((TtAnim14 *)(c + 0x38))[i].unk_04 = 0;
+            ((TtAnim14 *)(c + 0x38))[i].unk_05 = 2;
+            ((TtAnim14 *)(c + 0x38))[i].unk_06 = D_80152C8C[0];
+        }
+        for (j = 0; j * 4 < 0x1C; j++) { /* FAKE: same; the original unrolls the second record loop but not this one. T-11860 */
+            ((TtSlot14 *)(c + 0xD8))[j].unk_00 = D_80151A50;
+            ((TtSlot14 *)(c + 0xD8))[j].unk_04 = 0;
+            ((TtSlot14 *)(c + 0xD8))[j].unk_05 = 2;
+            ((TtSlot14 *)(c + 0xD8))[j].unk_0A = 0;
+            ((TtSlot14 *)(c + 0xD8))[j].unk_10 = 0;
+            c[0x318 + j] = 0;
+            ((s16 *)(c + 0x2B8))[j] = 8;
+            ((s16 *)(c + 0x258))[j] = ((s16 (*)[2])(s + 0x1C))[6 - j][1] - *(s16 *)(c + 0x14);
+            ((s16 *)(c + 0x288))[j] = ((s16 (*)[2])(s + 0x9C))[6 - j][1] - *(s16 *)(c + 0x16) - 8;
+            ((TtSlot14 *)(c + 0xD8))[j].unk_08 = 0x80;
+        }
+        s += 0xEFC;
+        for (i = 0; i != 7; i++) {
+            ((TtSlot14 *)(c + 0x178))[i].unk_00 = D_80151A50;
+            ((TtSlot14 *)(c + 0x178))[i].unk_04 = 0;
+            ((TtSlot14 *)(c + 0x178))[i].unk_05 = 2;
+            ((TtSlot14 *)(c + 0x178))[i].unk_0A = 0;
+            ((TtSlot14 *)(c + 0x178))[i].unk_10 = 0;
+            c[0x320 + i] = 0;
+            ((s16 *)(c + 0x2C8))[i] = 8; /* FAKE: the array spelling drops a phantom range so s keeps t5. T-11860 */
+            ((s16 *)(c + 0x268))[i] = ((s16 (*)[2])(s + 0x1C))[6 - i][1] - *(s16 *)(c + 0x14);
+            ((s16 *)(c + 0x298))[i] = ((s16 (*)[2])(s + 0x9C))[6 - i][1] - *(s16 *)(c + 0x16) - 8;
+            ((TtSlot14 *)(c + 0x178))[i].unk_08 = 0x80;
+        }
+        *(u16 *)(c + 0x36C) = 0;
+        *(s16 *)(c + 0x3D4) = 8;
+        *(s16 *)(c + 6) = 0x40;
+        break;
+    case 0x40:
+        func_80142AF0(D_80152C8C, 2);
+        func_80142AF0(D_80152C8C, 3);
+        if ((*(u16 *)(c + 0x36C) & 7) == 7) {
+            if (*(u16 *)(c + 0x3D4) < 0xF) {
+                func_80133AD0(0x50A);
+                ((TtAnim14 *)(c + 0x38))[*(u16 *)(c + 0x3D4)].unk_08 = 0x80;
+                c[0x310 + *(u16 *)(c + 0x3D4)] = 1;
+                ((TtAnim14 *)(c + 0xD8))[*(u16 *)(c + 0x3D4)].unk_08 = 0x80;
+                c[0x318 + *(u16 *)(c + 0x3D4)] = 1;
+                (e + 0xD48)[*(u16 *)(c + 0x3D4) * 0x64] = 0;
+                (e + 0xA28)[*(u16 *)(c + 0x3D4) * 0x64] = 0;
+            }
+            if (*(u16 *)(c + 0x3D4) >= 0x13) {
+                *(s16 *)(c + 4) = 0x51;
+                *(s16 *)(c + 6) = 0;
+            }
+            *(u16 *)(c + 0x3D4) += 1;
+        }
+        for (i = 8; i < 15; i++) {
+            func_80142AF0(D_80152C8C, i);
+        }
+        for (i = 16; i != 23; i++) {
+            func_80142AF0(D_80152C8C, i);
+        }
+        break;
+    }
+    *(u16 *)(c + 0x36C) += 1;
+}
 
 void func_80138B90(void) {
     u8 *p;
@@ -678,8 +755,7 @@ void func_8013923C(void) {
     work->step = 0x100U;
 }
 
-/* T-11520 near miss: 11 differing instructions, registers only. Writing the case-0 short arrays as *(s16 *)(c + 0x2A8 + i * 2) makes c + i * 2 one range with the 0x40 loops (priority 75.5), so it takes v1 and the slot pointer a0 as in the original. Left: the shared c[0x364] tail value (PRE'd load in the default case, the end of case 0, the 0xDC/0xFD tests and the 0xFD block) is a0 in the original and v0 here (nothing allocated before it holds v0 or v1 in its blocks), and the 0xFD loop preheader orders li v1,0x18 before move v0,a2 (the original fills the bne delay slot with the move). Tried: i = 0 before the 0xDC test, do/while and i < 0x18 forms of the 0xFD loop, (*p)++ tail. */
-#ifdef NON_MATCHING
+/* Writing the case-0 short arrays as *(s16 *)(c + 0x2A8 + i * 2) makes c + i * 2 one range with the 0x40 loops (T-11520); TT's zero-store chain pair in the 0xFD block puts the shared c[0x364] tail value in a0. T-11860 */
 void func_801392A0(void) {
     u8 *c;
     u8 *e;
@@ -772,21 +848,15 @@ void func_801392A0(void) {
             for (i = 0; i != 0x18; i++) {
                 c[0x310 + i] = 0;
             }
-            *(s16 *)(c + 10) = 0;
-            *(s16 *)(c + 8) = 0;
-            *(s16 *)(c + 6) = 0;
-            c[15] = 0;
-            c[14] = 0;
-            c[13] = 0;
+            /* FAKE: TT's zero-store chain pair; the reloads move the shared c[0x364] value from v0 to a0. T-11860 */
+            *(u16 *)(c + 6) = *(u16 *)(c + 8) = *(u16 *)(c + 0xA) = 0;
+            c[0xD] = c[0xE] = c[0xF] = 0;
             *(s16 *)(c + 4) = 0xA0;
         }
         break;
     }
     *(u16 *)(c + 0x364) += 1;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_801392A0);
-#endif
 
 void func_801396C4(void) {
     func_80138300();
