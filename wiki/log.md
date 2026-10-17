@@ -17650,3 +17650,7 @@ Two of four TACO functions matched: `func_801484E4` (392 bytes; kept `D_800E7384
 ## [2026-10-17] ticket | T-23000 Wave 5 biggest-first conveyor opened
 
 Second conveyor next to [[tickets/T-22000-wave-4-conveyor]], biggest functions first: 27 packages, 89 functions / 134,984 bytes (seeds of 1,500 bytes or more, functions wave 4 just attempted left out). The 26 unstarted wave 4 packages from w4-p65 on that share its files are absorbed and refused to wave 4. Two workers, Sonnet matcher, Opus closer for near misses of 30 rows or fewer. [[tickets/T-23000-wave-5-big-conveyor]].
+
+## [2026-10-17] ticket | T-23001 Wave 5 big package w5-big-p01 opened
+
+[[tickets/T-23001-w5-big-p01]] (In Progress) under [[tickets/T-23000-wave-5-big-conveyor]]: `src/ovl/TEL/80132000.c`, `func_80136724` (7,044 B) and `func_80134FE4` (800 B). Branch `w5-big-p01` from `w2-good`.
