@@ -20,7 +20,12 @@ the original (funcdiff's resolved words, register fields masked for the alignmen
   - commutative instructions whose source registers are exchanged are reported as operand order, not
     as an allocation difference; constants that sit in other registers are listed by value;
   - other instructions: the first structural difference is printed and the register analysis runs on
-    the aligned parts only. Fix the structure first (funcdiff.py shows the full diff).
+    the aligned parts only. Fix the structure first (funcdiff.py shows the full diff). When the
+    differing blocks hold the same instructions (as a multiset of shapes) in another order, an
+    `ORDER-ONLY` line says so: nothing is missing or extra, the C statements, the stores of a
+    source line or the scheduling are what move (T-20830; tools/autotweak.py maps it to the group,
+    order, join and split edits; the object has no line numbers, so the moved instructions are
+    named by their position, not by a source line).
 
 --proto 'void func_80012345(s32 a0);' (repeatable) replaces the declaration of a function the file calls, for
 this compile only (tools/protoverride.py, T-16530): test void against implicit int (`s32 f();`) against typed
@@ -314,6 +319,16 @@ def is_swap(a, b):
     ra, rb = (a.word >> RS) & 31, (a.word >> RT) & 31
     return (ra != rb and (ra, rb) == ((b.word >> RT) & 31, (b.word >> RS) & 31)
             and (a.word >> RD) & 31 == (b.word >> RD) & 31)
+
+
+def order_only(dkeys, tkeys, structural):
+    """True when the structural differences only move instructions (T-20830): the instructions of the
+    differing blocks of the draft are, as a multiset of shapes, those of the original's blocks."""
+    if not structural:
+        return False
+    d = sorted(key_shape(k) for _op, (i1, i2), _j in structural for k in dkeys[i1:i2])
+    t = sorted(key_shape(k) for _op, _i, (j1, j2) in structural for k in tkeys[j1:j2])
+    return bool(d) and d == t
 
 
 def register_map(pairs):
@@ -1366,6 +1381,10 @@ def report(args, name, c, src, comp, got, want, times, out):
             out("    + original %s" % text_of(want[k]))
         out("  Fix the instruction differences first (tools/funcdiff.py --resolve shows them all); regdiff "
             "explains the registers of the instructions that agree.")
+        if order_only(dkeys, tkeys, structural):
+            out("  ORDER-ONLY: the draft has the same instructions as the original in another order (%d place(s) "
+                "move); nothing is missing or extra, so this is statement order, store order on a line or "
+                "scheduling, not a different expression (autotweak: group, order, join, split)." % len(structural))
     for p in left[:3]:
         out("  constant differs at draft insn %d: `%s` against `%s`" % (
             p.draft_index, text_of(got[p.draft_index]), text_of(want[p.target_index])))
