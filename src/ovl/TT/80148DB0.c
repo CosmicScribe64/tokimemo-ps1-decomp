@@ -670,18 +670,6 @@ void func_8014A198(void) {
     *(u16 *)(p + 0x5A) += 0x40;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11840/T-11850, 28 lines (registers only, case 7): the original loads the constants 0x180, 0x1A, 0x3D04
- * and 2 into t2..t5 before every other value of the block (0x100000 then gets t6), this draft at their stores. ugen
- * hands out temporaries first-in first-out by free order (scratch test), so four ugen temps loaded first would make
- * 0x1000 t6, not the original's t2; the original behaves as if t2..t5 were uopt colours of four hoisted constants
- * (needs each constant to be worth a register and v0..t1 busy). Tried: autotweak 300 s, an empty if at every line of
- * case 7, store orders, u16 stores (all 64 s16/u16 combinations), constant locals (s16/s32/u16/u32, chained or not),
- * self-chains, duplicate stores, empty compares, zero-store chains.
- * T-11860 (still 28 lines): the four stores written first in the case give exactly t2..t5 (and t6..t8 for the
- * values before them) but as1 keeps them first; a second use of each constant makes uopt colour them (t0/t1/a0/a2);
- * a one-iteration loop, one-line groups and a 900 s permuter run did not help. FIFO bookkeeping fits t2..t5 being
- * uopt colours in a block that ends before the 0x1000 store (4096 then gets t2, the next block t4/t5). */
 void func_8014A2B4(void) {
     u8 *s;
     u8 *e;
@@ -800,10 +788,8 @@ void func_8014A2B4(void) {
         func_8014A000();
         break;
     case 7:
+        /* Record init (as in func_801498C8), then the position: the original ugen order. T-11870 */
         *e = 0;
-        *(s32 *)(p + 0x20) = 0x100000;
-        *(s32 *)(p + 0x24) = 0x6C0000;
-        *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
         *(s16 *)(p + 0x52) = 0;
         *(s16 *)(p + 0x5A) = 0x180;
         p[0] = 1;
@@ -822,9 +808,12 @@ void func_8014A2B4(void) {
         *(s16 *)(p + 0x42) = 0x3D04;
         p[0x4C] = 0;
         *(s16 *)(p + 0x10) = 2;
+        *(s32 *)(p + 0x20) = 0x100000;
+        *(s32 *)(p + 0x24) = 0x6C0000;
+        *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
+        *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
         *(s32 *)(p + 0x28) = 0;
         *(s32 *)(p + 0x2C) = 0;
-        *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
         *(s16 *)(y + 4) = *(s16 *)(p + 0x14);
         *(s16 *)(y + 6) = *(s16 *)(p + 0x16);
         *(s16 *)(y + 2) = 0x1000;
@@ -864,9 +853,6 @@ void func_8014A2B4(void) {
         s[9] = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_8014A2B4);
-#endif
 
 void func_8014A7E0(void) {
     s32 i;
