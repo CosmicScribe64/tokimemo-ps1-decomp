@@ -17156,3 +17156,7 @@ built without ugen source. See [[ido-52-evaluation]], [[data/true-gaps]], [[uopt
 ## [2026-10-17] ticket | T-17018 Done
 
 [[tickets/T-17018-w3-main-p18]] In Review to Done: code review against `CODING_STANDARDS.md` found two issues, both fixed in `src/main/8004F870.c` (the `FAKE` comment of the duplicate pointer in the guarded `menu_check_1` was restored; the redundant `else if (ph != 0)` in `xa_wait` was marked `FAKE`), comment-only, rebuild OK (sha1 OK, headers OK, globals OK). 1 of 6 functions matched (`xa_wait`, 580 bytes). Card moved in [[kanban]], [[index]] line updated. Merge via the wave 3 merge script.
+
+## [2026-10-17] query | Build-step gap report
+
+Combined T-20700 (IDO 4.1 back end: as1 equals 5.3 on 6,335/6,336; ugen changes 1,355, rejected) and T-20710 (true-gap census: 55 near drafts, first divergence uopt 28, as1 12, ugen 11) into [[build-step-gaps]]. The one uniform compiler difference found is the ugen block-copy state; a narrow ugen patch is the next build-step candidate.

@@ -31,6 +31,7 @@ Read this first. Update on every ingest or new page.
 - [[taiiku-family-results]] - TAIIKU type map (runner records of three games, stack tables), idioms, the types-first redraft and its numbers, packages (T-16550)
 - [[bunkasai-family-results]] - BUNKASAI type map (name, text and per-girl tables), the implicit-int v0/v1 fix of the BUNKAKEN port, the types-first redraft and its numbers, packages (T-18700)
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
+- [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
 - [[tickets/T-20710-true-gap-census|T-20710]] True compiler-gap census ([[data/true-gaps]], 55 drafts: uopt 28, as1 12, ugen 11) and uniform rule search: no uopt tie rule (2 ties); IDO 4.1's ugen has the original's block-copy state (6 census cases, TACO `func_8013B2A0` matches with it) but changes 1,307 matched functions; candidate rule not adopted (Done, review passed).
