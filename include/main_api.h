@@ -218,7 +218,11 @@ typedef struct CharFlags {
     /* 0x00 */ u32 b12 : 1;
     /* 0x00 */ u32 b13 : 1;
     /* 0x00 */ u32 b14 : 1;
-    /* 0x00 */ u32 f15 : 5;
+    /* 0x00 */ u32 b15 : 1;
+    /* 0x00 */ u32 b16 : 1;
+    /* 0x00 */ u32 b17 : 1;
+    /* 0x00 */ u32 b18 : 1;            /* T-20940: func_80077900 tests it (sll 13) and sets it (byte +2, ori 4) */
+    /* 0x00 */ u32 b19 : 1;
     u32 f20 : 4;
     u32 rest : 8;
 } CharFlags; /* size 0x04 */

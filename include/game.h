@@ -228,7 +228,8 @@ typedef struct ScheduleClubFlags {
     /* 0x00 */ u32 unk_00 : 24;
     /* 0x00 */ u32 b24 : 1;
     /* 0x00 */ u32 unk_25 : 2;
-    /* 0x00 */ u32 unk_27 : 3;
+    /* 0x00 */ u32 unk_27 : 2;
+    /* 0x00 */ u32 b29 : 1;            /* T-20940: func_80077900 tests it (sll 2; bltz) */
     /* 0x00 */ u32 b30 : 1;
     /* 0x00 */ u32 unk_31 : 1;
 } ScheduleClubFlags; /* size 0x04 */
