@@ -25,6 +25,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-20940-types-main-80075320|T-20940 Targeted type pass: src/main/80075320.c]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 

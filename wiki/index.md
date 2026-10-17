@@ -35,6 +35,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
+- [[tickets/T-20940-types-main-80075320|T-20940]] Targeted type pass for `src/main/80075320.c`: shared structures of the unmatched functions, matched code converted, redraft in `drafts/T-20940/` (In Progress).
 - [[tickets/T-20900-shared-type-unification|T-20900]] Cross-unit shared-type unification: `DisplayActor44`/`DisplayFixActor44`/`Fix32` for the 0x44 display-record pools (35 per-unit views retired, 764 byte-offset uses now fields), one view each for `D_800E7D4F`, `D_80122EB8`, the GameState words, `MATRIX`/`VECTOR`, `Work800E7D10`; 68 type names gone, build byte-identical; draft scores unchanged except where folds change (Done).
 - [[tickets/T-20710-true-gap-census|T-20710]] True compiler-gap census ([[data/true-gaps]], 55 drafts: uopt 28, as1 12, ugen 11) and uniform rule search: no uopt tie rule (2 ties); IDO 4.1's ugen has the original's block-copy state (6 census cases, TACO `func_8013B2A0` matches with it) but changes 1,307 matched functions; candidate rule not adopted (Done, review passed).
 - [[tickets/T-20820-keep-proof|T-20820]] migrate_globals: keep lines backed by a byte-match necessity proof (counter-tail family): `tools/keepproof.py`, proposed rule [[keep-lines]] (Done; the rule awaits the lead)
