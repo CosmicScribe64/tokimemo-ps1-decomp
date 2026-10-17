@@ -1,7 +1,7 @@
 ---
 id: T-20006
 title: Match two GYOZI scene callbacks
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-16
 updated: 2026-10-16
@@ -38,3 +38,5 @@ Local self-review against CODING_STANDARDS.md: new C is C89 with fixed-width loc
 Build scheduling note: the initial whole-tree ninja -j2 run was intentionally interrupted after its EVENT binary checksum passed, solely to resume the remaining jobs with ninja -j8. Compiler flags and all source inputs are unchanged; initial output is retained in full-build-initial.log. The resumed full default build and explicit 27-binary checks determine acceptance.
 
 Final verification on branch base d27b6916, all Docker: full default build PASS (full-build-initial.log and resumed full-build.log); explicit checksums.log reports 27/27 binary SHA1 checks passed, including GYOZI and all existing functions affected by the shared header; protos.log reports 0 new / 15 known disagreements and branch check OK. final-proof.log reports fresh actual default linked MATCH for func_80141944 (336 bytes) and func_80145384 (372 bytes). Source and header are unchanged after these checks. Local standards review has no unresolved findings. Moved to In Review; maintainer acceptance is pending. Latest fetched main 41b3fdf9 still has both functions as INCLUDE_ASM, so no duplicate matches are submitted.
+
+2026-10-17, maintainer review (PR #44): no findings. Verified in the integration tree: clean 27/27 (the s8 to u8 declaration changes keep every matched function), headers, globals, prototypes OK, funcdiff MATCH for func_80141944 (336) and func_80145384 (372). Status Done.

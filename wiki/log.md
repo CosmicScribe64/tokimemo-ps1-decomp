@@ -16978,3 +16978,7 @@ Final checks pass: full default build, all 27 immutable binary hashes, headers/g
 ## [2026-10-16] ticket | T-20006 PR submitted
 
 Submitted https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/44 for the two claimed GYOZI scene callbacks (708 verified bytes). [[tickets/T-20006-gyozi-scene-callbacks]] remains In Review; PR links claim #43 for closure on merge.
+
+## [2026-10-17] ticket | T-20006 Done (PR #44 merged)
+
+KakarottoCake's PR #44 (claim #43): GYOZI func_80141944 and func_80145384 matched, 708 bytes, merged in one clean build with PR checks. [[tickets/T-20006-gyozi-scene-callbacks]] Done.
