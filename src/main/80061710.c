@@ -54,7 +54,34 @@ void func_800618B0(void) {
     } while (p != D_80122CA0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80061710", func_8006190C);
+/* HYPOTHESIS: the TMD walk of initModelingData_init (func_8009B3C0 = GsMapModelingData, func_8009B430 = GsLinkObject4)
+ * on the model loaded at 0x801F0000: map the data, check the object count word (13), then link the 16 and 13 objects.
+ * The address is an integer (`m`), not a pointer: a pointer is folded into `lui; lw 8(t6)` by uopt, and the `u32`
+ * view keeps the count compare's `li at,13` apart from the divisor. T-17010 */
+s32 func_8006190C(void) {
+    s32 m;
+    s32 r;
+    s32 i;
+
+    m = 0x801F0004;
+    func_8009B3C0(m);
+    m += 4;
+    if (*(u32 *)m != 0xD) {
+        return 0;
+    }
+    m += 4;
+    for (i = 0; i < 16; i++) {
+        func_8009B430(m, (u8 *)&D_80122640[i * 4], 0);
+        D_80122640[i * 4 + 1] = (u32)&D_801227A0[i];
+        D_80122640[i * 4] = 0;
+    }
+    r = rand();
+    for (i = 0; i < 13; i++) {
+        func_8009B430(m, (u8 *)&D_80122640[i * 4], (r + i) % 13);
+        D_80122640[i * 4 + 1] = (u32)&D_801227A0[i];
+        D_80122640[i * 4] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80061710", func_80061A3C);
 
@@ -135,7 +162,58 @@ void func_8006218C(void) {
     func_80062948();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-17010, 24 differing lines; the eight s16 stores to x, y, w, h come out in source order, the original stores h, w, x, y per row while its li order is y, x, w, h; loop: sh unk_18 after ori and addiu s2 before addiu s0 */
+void func_80062210(void) {
+    s16 pad[4]; /* FAKE: unused pad grows the frame to the original 0x80; real source unknown. T-17010 */
+    s16 x[2];
+    s16 y[2];
+    s16 w[2];
+    s16 h[2];
+    s32 i;
+    s32 j;
+
+    y[0] = 0x42;
+    x[0] = -0x30;
+    w[0] = 0xA0;
+    h[0] = 0x14;
+    y[1] = 0x52;
+    x[1] = -0x30;
+    w[1] = 0xA0;
+    h[1] = 0x14;
+    menu_set(0, 2, x, y, w, h);
+    D_801230D0 = 0;
+    (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_037)[0] = (&D_800E6280.unk_038)[0] = 0xFF;
+    func_80041584();
+    (&D_800E6280.unk_03A)[0] = 0x80;
+    func_8006BC28(0);
+    func_8006BD6C(1);
+    func_800623E4();
+    for (i = 0, j = 0; i < 3; i++) {
+        func_80048F64(i + 0x60);
+        ((DisplayRecord44 *)D_8011ECD0)[i + 0x60].unk_18 = j;
+        j += 2;
+        ((DisplayRecord44 *)D_8011ECD0)[i + 0x60].unk_01 = 0xD;
+        ((DisplayRecord44 *)D_8011ECD0)[i + 0x60].unk_02 = 0x40;
+        ((DisplayRecord44 *)D_8011ECD0)[i + 0x60].unk_38 = 0x01000000;
+        ((DisplayRecord44 *)D_8011ECD0)[i + 0x60].unk_03 = 0xA4;
+        ((DisplayRecord44 *)D_8011ECD0)[i + 0x60].unk_0C = (u8 *)0x801EAB3C;
+        ((DisplayRecord44 *)D_8011ECD0)[i + 0x60].unk_10 = (u8 *)0x801EAB6C;
+        ((DisplayRecord44 *)D_8011ECD0)[i + 0x60].unk_34 = (u8 *)0x801EAB20;
+        ((DisplayRecord44 *)D_8011ECD0)[i + 0x60].unk_04 = 8;
+        ((DisplayRecord44 *)D_8011ECD0)[i + 0x60].unk_05 = 0x80;
+        ((DisplayRecord44 *)D_8011ECD0)[i + 0x60].unk_26 = -0xA0;
+        ((DisplayRecord44 *)D_8011ECD0)[i + 0x60].unk_2A = -0x78;
+    }
+    D_801206BE = -0x6E;
+    D_80120702 = -0x78;
+    D_801206BA = -0xAA;
+    D_801206FE = -0xAA;
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80061710", func_80062210);
+#endif
 
 void func_800623E4(void) {
     if (D_800E6280.unk_F74 != 0) {

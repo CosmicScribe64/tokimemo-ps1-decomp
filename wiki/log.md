@@ -16883,3 +16883,19 @@ Created [[tickets/T-17012-w3-main-p12]]: wave 3 package w3-main-p12, six functio
 ## [2026-10-17] ticket | T-17012 Done
 
 [[tickets/T-17012-w3-main-p12]] In Review to Done after the code review: wave 3 package w3-main-p12 (main `src/main/80079B10.c`), 2 of 6 functions matched (492 bytes: `func_80079B34`, `func_8007A50C`). No findings; one non-blocking note on the first-symbol queue access in the guarded `func_8007B64C` draft. Clean build sha1 OK; headers, globals and `sync_protos --check-branch` OK. Card moved to Done on [[kanban]].
+
+## [2026-10-16] ticket | T-17010 In Progress
+
+[[tickets/T-17010-w3-main-p10]] created and started: wave 3 package for `src/main/80061710.c` (four functions, see the ticket), worktree `tokimemo-wt/w3-main-p10`, base `w2-good`.
+
+## [2026-10-16] ticket | T-17010 In Review
+
+[[tickets/T-17010-w3-main-p10]] In Progress to In Review: 0 of 4 functions matched. `func_8006190C` guarded at 14 rows (index loops, `(r + i) % 13`, `u32` pointer chain), `func_80062210` guarded at 24 rows (`DisplayRecord44` view, element-store chain, FAKE `pad[4]`), `func_80062948` restored to `INCLUDE_ASM` (89 rows at best), `func_80061A3C` not started. Notes in [[matching-notes]] (T-17010), three rows in [[data/t0018-cases]]. Worktree `tokimemo-wt/w3-main-p10`.
+
+## [2026-10-16] build | T-17010 match main:func_8006190C
+
+[[tickets/T-17010-w3-main-p10]]: `func_8006190C` (304 bytes) matched in plain C in `src/main/80061710.c`, default build sha1 OK. The TMD address is an `s32` (`m = 0x801F0004; m += 4;`) with a `u32` view of the count word; pointers fold or share the `lui`. Details in [[matching-notes]] (T-17010); the guarded 14-row version and its T-0018 row are replaced by an update line in [[data/t0018-cases]]. Matched count for the package: 1 of 4.
+
+## [2026-10-17] ticket | T-17010 Done
+
+[[tickets/T-17010-w3-main-p10]] In Review to Done: code review against `CODING_STANDARDS.md` found three issues, all fixed (an unneeded `MAIN_API_OVERRIDE_func_8009B430` in `src/main/80061710.c`, removed with sha1 still OK; a terse FAKE comment on the `pad[4]` in the guarded `func_80062210`; a stray empty Comments heading in the ticket). Rebuild OK (sha1 OK, headers OK, globals OK, `sync_protos --check-branch` OK). 1 of 4 functions matched (`func_8006190C`, 304 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
