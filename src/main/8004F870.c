@@ -1,6 +1,9 @@
 #include "common.h"
 #include "game.h"
 
+/* get_now_k (8004E500.c) returns u8; xa_wait needs that view, the other callers keep the implicit int one. T-17018 */
+u8 get_now_k(void);
+
 /* Accessed menu-selection view at GameState +0x1090. */
 typedef struct MenuSelection5 {
     /* 0x00 */ u8 count[2];
@@ -426,8 +429,6 @@ s32 get_g_zyotai_h(s32 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_girl_taku_set);
 
-/* NON_MATCHING: T-17018, 18 differing lines; the value E1 + 3 of the k_disp_inc path takes $v1 (its load $v1) where the original has $a0 (load in $a1) */
-#ifdef NON_MATCHING
 void xa_wait(void) {
     /* FAKE: two unused home words above the spills; the original frame is 8 bytes larger. T-17018 */
     s32 pad[2];
@@ -445,9 +446,9 @@ void xa_wait(void) {
         if (D_800E6280.unk_F61 + 2 >= (u32)now) {
             r = k_disp_inc();
             now = get_now_k();
-            t = D_800E6280.unk_F61 + 3;
-            if (t == now) {
-                if (D_800E6280.unk_F60 >= t) {
+            t = D_800E6280.unk_F61;
+            if (now == t + 3) {
+                if (D_800E6280.unk_F60 >= t + 3) {
                     k_disp_switch(now, 0);
                 }
             }
@@ -492,9 +493,6 @@ void xa_wait(void) {
         k_disp_goto_line_end();
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", xa_wait);
-#endif
 
 void func_80052000(void) {
     k_disp_inc();
