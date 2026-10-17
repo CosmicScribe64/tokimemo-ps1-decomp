@@ -430,7 +430,74 @@ void func_8013E524(s32 a, s32 b) {
     safe_env(3);
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013E6AC);
+/* Both record tables are read through pointer locals: the original reloads the +5 byte for the switch (T-22019). */
+void func_8013E6AC(void) {
+    GameState *g = &D_800E6280;
+    u8 *w = (u8 *)&D_800E7D10;
+
+    if (g->unk_1124 == 0) {
+        D_8015004C = g->unk_75E[D_80150064].unk_00;
+        D_80150044 = g->unk_75E[D_80150064].unk_01;
+        D_80150040 = g->unk_75E[D_80150064].unk_02;
+        D_80150048 = g->unk_75E[D_80150064].unk_03 % 6U;
+        D_80150054 = g->unk_75E[D_80150064].unk_04;
+        D_80150058 = g->unk_75E[D_80150064].unk_05;
+        D_8015005C = g->unk_75E[D_80150064].unk_06;
+        D_80150060 = g->unk_75E[D_80150064].unk_07;
+        switch (g->unk_75E[D_80150064].unk_05) {
+        case 3:
+        case 4:
+        case 5:
+            D_80150050 = 0;
+            return;
+        case 6:
+        case 7:
+        case 8:
+            D_80150050 = 1;
+            return;
+        case 9:
+        case 10:
+        case 11:
+            D_80150050 = 2;
+            return;
+        case 1:
+        case 2:
+        case 12:
+            D_80150050 = 3;
+            return;
+        }
+    } else {
+        D_8015004C = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_00;
+        D_80150044 = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_01;
+        D_80150040 = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_02;
+        D_80150048 = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_03 % 6U;
+        D_80150054 = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_04;
+        D_80150058 = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_05;
+        D_8015005C = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_06;
+        D_80150060 = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_07;
+        switch (((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_05) {
+        case 3:
+        case 4:
+        case 5:
+            D_80150050 = 0;
+            return;
+        case 6:
+        case 7:
+        case 8:
+            D_80150050 = 1;
+            return;
+        case 9:
+        case 10:
+        case 11:
+            D_80150050 = 2;
+            return;
+        case 1:
+        case 2:
+        case 12:
+            D_80150050 = 3;
+        }
+    }
+}
 
 s32 func_8013E89C(s32 arg0) {
     switch (D_80150070) {
