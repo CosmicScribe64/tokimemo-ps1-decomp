@@ -551,12 +551,13 @@ void func_80054C4C(void) {
     bzero(D_80123120, 0x2000);
 }
 
-/* NON_MATCHING: T-17007, 8 differing lines; the two `li` of the 0x2000 constants are emitted in the other order (s3 first, the original has s2 first), and the struct-copy end pointer is t4, not t5 */
+/* NON_MATCHING: T-17007, 2 differing lines; only the struct copy's end pointer differs (t4, the original t5): ugen's
+   block copy is in the one-skip state after the if/else of calls, the original in the two-skip state (T-19001 rule,
+   a compiler-version gap, no C form found) */
 #ifdef NON_MATCHING
 s32 func_80054C74(s32 arg0) {
     u8 name[0x1C];
-    s32 i;
-    s32 n;
+    u32 i;
     u8 *p;
 
     func_80054C4C();
@@ -586,19 +587,13 @@ s32 func_80054C74(s32 arg0) {
     D_80123320[1] = D_80123320[0];
     i = 0;
     p = D_80123120;
-    /* FAKE: two named 0x2000 constants keep separate registers (write size and loop bound); arg0 is reused as the write size because a fourth scalar grows the frame by 8 bytes, and the empty test raises its allocation priority above the loop bound's (regdiff hint). T-17007 */
-    arg0 = 0x2000;
-    n = 0x2000;
-    do {
-        if (arg0) {
-        }
-        if (write(D_800B58E4, p, arg0) != arg0) {
+    for (; i < 0x2000; i += 0x2000) {
+        if (write(D_800B58E4, p, 0x2000) != 0x2000) {
             close(D_800B58E4);
             return -1;
         }
-        i += 0x2000;
         p += 0x2000;
-    } while (i != n);
+    }
     return 1;
 }
 #else
