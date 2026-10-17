@@ -613,9 +613,8 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_800552DC);
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005557C);
 
-/* NON_MATCHING: T-17007, 4 differing lines; the hoisted starts come out b, r, q where the original has q, r, b (`move v1,zero` and `addiu a2` swapped); T-10850 */
-#ifdef NON_MATCHING
-/* FAKE: dead initial assignments preserve induction-register numbering. T-10850 */
+/* FAKE: T-10850, T-17007: the dead initial assignments set the induction-register numbering, and
+   writing all five on one line makes as1 emit the hoisted starts in the original order (q, r, b). */
 s32 func_80055A38(s32 arg0) {
     s32 b;
     s32 n;
@@ -625,11 +624,7 @@ s32 func_80055A38(s32 arg0) {
     u8 *q;
     u8 *r;
 
-    n = 0;
-    b = 0;
-    p = D_80123324;
-    r = D_80123120;
-    q = D_80123324;
+    n = 0; b = 0; p = D_80123324; r = D_80123120; q = D_80123324;
     for (; b < 2; b++) {
         n = 0;
         p = q;
@@ -649,9 +644,6 @@ s32 func_80055A38(s32 arg0) {
     }
     return -1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80055A38);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80055AFC);
 
