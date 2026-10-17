@@ -17634,3 +17634,6 @@ Two of four TACO functions matched: `func_801484E4` (392 bytes; kept `D_800E7384
 
 ## [2026-10-17] ticket | T-22005 Done
 3 of 4 TACO functions matched (`func_801484E4`, `func_801416E8`, `func_801497EC`; 2,376 bytes); `func_8013D838` stays guarded at 10 lines. Code review against CODING_STANDARDS.md: three small findings fixed (comment on the `s32` no-return type in `src/ovl/TACO/801480B0.c`, wrapped a long comment in `src/ovl/TACO/8013D1E0.c`, stale guarded claims for `func_801497EC` in the ticket, [[matching-notes]] and [[index]]). Clean build 27/27, check_headers, migrate_globals, sync_protos clean. Ticket [[tickets/T-22005-w4-p05]].
+
+## [2026-10-17] ticket | T-22014 Wave 4 package w4-p14 In Progress
+Started: SHUGAKU `src/ovl/SHUGAKU/80133D60.c` and `src/ovl/SHUGAKU/80135430.c`, five functions from the work list. Ticket [[tickets/T-22014-w4-p14]], parent [[tickets/T-22000-wave-4-conveyor]].
