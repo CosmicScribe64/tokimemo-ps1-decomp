@@ -2326,7 +2326,7 @@ s32 func_80076000();
 void func_80076450();
 void func_80076630(void);
 s32 func_80076B48(void);
-void func_80076C7C(void);
+s32 func_80076C7C(void);
 void appointment_launch(void);
 void func_8007739C(void);
 void func_80077694(void);

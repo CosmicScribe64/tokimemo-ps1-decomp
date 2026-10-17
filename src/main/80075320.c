@@ -286,12 +286,11 @@ s32 func_80076B48(void) {
     }
 }
 
-/* NON_MATCHING: T-17006, 3 differing lines; the original copies the switch selector (or v0,v1,zero in the delay slot of the first
- * beqz), the build does not. FAKE: pad is an unused local that reproduces the original stack layout (a 4-byte slot above
- * sp4C; the buffers are otherwise 4 bytes too high); its real use is unknown. */
-#ifdef NON_MATCHING
-void func_80076C7C(void) {
-    s32 pad;
+/* Implicit int in the original (no return value): the switch selector then stays live in $v0 (or v0,v1,zero in the
+ * delay slot of the first beqz). T-17006 */
+s32 func_80076C7C(void) {
+    s32 pad; /* FAKE: T-17006, unused local that reproduces the original stack layout (a 4-byte slot above sp4C; the
+              * buffers are otherwise 4 bytes too high); its real use is unknown. */
     u8 sp4C[0x100];
     u8 sp2C[0x20];
 
@@ -319,9 +318,6 @@ void func_80076C7C(void) {
         return;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076C7C);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", appointment_launch);
 
