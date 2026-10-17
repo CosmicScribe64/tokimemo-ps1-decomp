@@ -3,7 +3,68 @@
 
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", srn_tpage_show);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", srn_vram_set);
+s32 srn_vram_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    u32 *src;
+    s32 left;
+    s32 w0;
+    s32 h0;
+    s32 tw;
+    s32 th;
+    s32 ox;
+    s32 oy;
+    s32 cw;
+    s32 ch;
+    s32 cols;
+    s32 rows;
+    s32 row;
+    s32 col;
+    SrnRec28 *rec;
+
+    func_8009C674(0);
+    rec = (SrnRec28 *)(D_80121750 + arg0 * 0x28);
+    w0 = rec->unk_0E;
+    h0 = rec->unk_0F;
+    tw = rec->unk_10;
+    th = rec->unk_11;
+    ox = rec->unk_12;
+    oy = rec->unk_13;
+    cw = rec->unk_14;
+    ch = rec->unk_15;
+    src = rec->unk_08;
+    if (h0 == 0 || w0 == 0) {
+        printf("ERROR");
+        return -1;
+    }
+    left = rec->unk_1C;
+    row = 0;
+    cols = cw * tw / w0;
+    rows = ch * th / h0;
+    if (rows > 0) {
+        do {
+            col = 0;
+            if (cols > 0) {
+                do {
+                    if ((col - 1) * tw + ox * w0 < arg2 && (row - 1) * th + oy * h0 < arg3) {
+                        if ((*src & 0xFFFF) != 0) {
+                            mod_trans_vram(0, *src & 0xFFFF, arg1, tw * col, th * row);
+                        }
+                    }
+                    left--;
+                    src++;
+                    if (left == 0) {
+                        row = rows;
+                        col = cols;
+                    }
+                    col++;
+                } while (col < cols);
+            }
+            row++;
+        } while (row < rows);
+    }
+    if ((u8)D_800B3DB0 != 0) {
+        move_255_line(arg1, arg1 + 0xB, 0xF);
+    }
+}
 
 void move_255_line(s32 arg0, s32 arg1, s32 arg2) {
     s32 i;
