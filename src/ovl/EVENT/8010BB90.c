@@ -925,7 +925,43 @@ void func_8010EE2C(void) {
     D_80124340 = 0x8019D870;
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010BB90", func_8010F340);
+void func_8010F340(void) {
+    func_80012D2C(1, 0);
+    func_8001886C(1);
+    func_80010678();
+    func_80018944(0);
+    func_80012D40(1);
+    func_8004CDDC();
+    D_800B086A = 0x80;
+    D_800F19AB = 0;
+    D_80080714 = 0;
+    D_800B1888 = 0;
+    D_800B18D0 = 1;
+    func_8001FD50();
+    func_800201FC(1);
+    func_8003535C();
+    func_8003580C();
+    D_801243B0 = D_800B0F2C;
+    *(u32 *)&D_800EECB4 = D_800B0F30;
+    D_80094730 = 0;
+    D_801252E4 = 1;
+    if (!(D_800B1AE4 & 3) && (D_800B0F30 != 2)) {
+        D_801252E4 = 0;
+    }
+    D_801243B4 = 0;
+    D_80124384 = 0;
+    D_80124388 = 0;
+    D_800B1746 = D_800B0F30;
+    /* FAKE: signed byte view of the argument keeps the one lbu in $a0 (no move to the call register); T-22011 */
+    func_8004BC20(*(s8 *)&D_800B0F30);
+    ((DisplayActor44 *)D_800E9620)[31].unk_07 = 0;
+    *(s32 *)(D_800E9620 + 0x874) |= 0x81000000;
+    *(s32 *)(D_800E9620 + 0x830) |= 0x81000000;
+    ((Rec24 *)D_800EC190)[0].unk_00 |= 0x81000000;
+    ((Rec24 *)D_800EC190)[1].unk_00 |= 0x81000000;
+    func_8004C360();
+    func_80011DFC();
+}
 
 void func_8010F4B8(void) {
     func_8004ACA8();

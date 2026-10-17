@@ -407,7 +407,38 @@ void func_800FCFE4(void) {
     func_80011DFC();
 }
 
+/* NON_MATCHING: T-22011, 6 rows; register of the D_800F19AB base */
+#ifdef NON_MATCHING
+void func_800FD00C(void) {
+    s32 idx;
+    FnTbl39 tbl;
+    s32 pad1;
+    u8 temp;
+
+    tbl = D_801214A0;
+    func_80078950("%d\n", D_800B1AF6);
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+    if (D_800EECE0 != 0) {
+        D_800EB02B |= 0x80;
+        if (D_800B1AE4 % 40 < 0x14) {
+            D_800EC2F8 &= 0x7FFFFFFF;
+        } else {
+            D_800EC2F8 |= 0x80000000;
+        }
+        temp = D_800F19AB;
+        D_800EC30E = temp;
+        D_800EC30D = temp;
+        D_800EC30C = temp;
+        D_800EB02F = temp;
+        return;
+    }
+    D_800EB02B &= 0xFF7F;
+    D_800EC2F8 |= 0x80000000;
+}
+#else
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FD00C);
+#endif
 
 void func_800FD160(void) {
     func_800433D0(0x502);
