@@ -16597,3 +16597,7 @@ rename table.
 ## [2026-10-16] ticket | T-20620 Scheduling family: as1 ordering (In Progress)
 
 New ticket [[tickets/T-20620-as1-scheduling]], card in In Progress of [[kanban]]. Compiler-gap family agent for the `sched`/`schedule`/`hoist` rows of [[data/t0018-cases]] (instruction order from as1 or ugen), following [[speedup-research-2026-10-16]]. Worktree `tokimemo-wt/cg-sched`, branch `cg-sched` from `w2-good`.
+
+## [2026-10-16] ticket | T-20620 Scheduling family: as1 ordering (In Review)
+
+[[tickets/T-20620-as1-scheduling]] In Progress to In Review. TACO `func_8014B8B4` matched (972 bytes, implicit `int` as in its sibling, `src/ovl/TACO/80149F90.c`, `include/ovl/TACO.h`). Three functions in conveyor-owned files match in scratch copies (EVENT `func_8010B614`, GYOZI `func_8013E638`, main `func_80055A38`); their C is in [[matching-notes]] "T-20620" for the owning packages. A `funcdiff` sweep of all 110 guarded drafts listed the order-only near misses; seven have the original issuing a later line's instruction first, one (VALEN `func_80134030`) the opposite, and no C form, as1 option or `.loc` flattening fixed them, so no build pass changed. Two rows in [[register-cheatsheet]], one Update paragraph and nine rows in [[data/t0018-cases]]. Card moved in [[kanban]]. Review pending.
