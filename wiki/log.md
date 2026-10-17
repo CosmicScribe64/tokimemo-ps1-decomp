@@ -16630,3 +16630,6 @@ rename table.
 
 ## [2026-10-16] ticket | T-17008 In Review
 [[tickets/T-17008-w3-main-p08]] Wave 3 package w3-main-p08 moved In Progress to In Review (kanban card moved): 3 of 3 matched, no guarded drafts, no T-0018 rows. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-17] ticket | T-17008 Done
+[[tickets/T-17008-w3-main-p08]] reviewed against `CODING_STANDARDS.md`: 2 findings fixed (two prototypes out of address order in `include/main_api.h`, a missing source comment on the do-while tail of `func_80059BE8`), no others. In Review to Done (kanban card moved). Matched 3 of 3 (`func_80059EF0`, `func_8004F6B0`, `func_80059BE8`, 1,364 B); one FAKE local, no guarded drafts. Build 27/27, headers, globals and proto checks OK.
