@@ -1,7 +1,7 @@
 ---
 id: T-20930
 title: "Targeted type pass: ENDING"
-status: In Progress
+status: In Review
 assignee: agent (ty-ending)
 created: 2026-10-17
 updated: 2026-10-17
@@ -21,11 +21,11 @@ Not `src/ovl/TT/*` (issue #2) and not main `dialogue_render` in `src/main/8007C0
 
 ## Acceptance criteria
 
-- [ ] New ENDING types declared with offset and size comments, matched code uses them, 27/27 sha1 OK.
-- [ ] The unmatched ENDING functions redrafted, drafts and `result.json` (scope, score, census_score) in `drafts/T-20930/`.
-- [ ] Paired score changes (census or T-18300 draft vs new draft) reported here and in [[ending-family-results]].
-- [ ] Types documented in [[data-types]] and [[ending-family-results]].
-- [ ] Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` pass.
+- [x] New ENDING types declared with offset and size comments, matched code uses them, 27/27 sha1 OK.
+- [x] The unmatched ENDING functions redrafted, drafts and `result.json` (scope, score, census_score) in `drafts/T-20930/`.
+- [x] Paired score changes (census or T-18300 draft vs new draft) reported here and in [[ending-family-results]].
+- [x] Types documented in [[data-types]] and [[ending-family-results]].
+- [x] Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` pass.
 
 ## Notes
 
@@ -68,3 +68,8 @@ Not done: `tools/redraft.py`'s archived variant cannot compile old bodies that u
 (`D_8013C4FC` and so on); a symbol-alias map like `TYPE_ALIASES` would fix that (tools/, out of scope here).
 
 ## Comments
+
+- 2026-10-17: In Progress to In Review. Three matches (2,900 bytes), types and drafts committed on `ty-ending`; clean
+  rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. The code review
+  against `CODING_STANDARDS.md` is open (two FAKE notes to check: `func_80139B48`, the sibling's masks;
+  `func_80132420`, the frame layout).
