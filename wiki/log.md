@@ -17723,3 +17723,25 @@ Code review against CODING_STANDARDS.md found nothing to fix; 2 of 4 matched (`B
 ## [2026-10-18] ticket | T-11890 created (In Progress)
 
 Claim #56: TT `func_8014D260`, the last TT function, through the gcc/maspsx path. Created [[tickets/T-11890-tt-ratan2-aspsx]]. First step is measuring the three ASPSX behaviours of [[gcc-objects]] over the SDK asm of the main exe before writing any rule.
+
+## [2026-10-18] build | T-11890 baseline
+
+Clean rebuild of branch `gcc-d260` (asm/ and build/ removed, configure.py, ninja): 27/27 SHA1 OK. A rebuild over the old
+asm/ tree failed on stale NAME_ENT rodata paths; the clean split fixed it.
+
+## [2026-10-18] query | T-11890 ASPSX habits over the SDK asm
+
+New `tools/aspsx_survey.py` (counts only, no game bytes) over every `asm/lib*.s`. `mflo`/`mfhi` hazard nops: 290 of 290
+sites follow one rule (pad before mult/div, a label or a gcc `.set noreorder` branch). `l* rd,sym(rs)`: 103 of 103 loads
+with rd != rs go through rd; rd == rs and stores use `$at`. Divide move position: 63 of 67 sites fit "right after the
+divide unless the checks read rd", 4 libspu `rem` sites do not, there is no SDK site with a signed quotient and rd
+distinct, and maspsx's real-ASPSX fixture `div.yaml` contradicts it; ASPSX scheduled other instructions into 44 of the
+67 expansions. Written to [[gcc-objects]] ("ASPSX habits in the SDK asm (T-11890)").
+
+## [2026-10-18] decision | T-11890 no ASPSX pass for now
+
+The divide-move habit has no uniform rule backed by the evidence, so no pass and no change to `tools/cc.py`,
+`config/toolchains.txt` or `src/ovl/TT/8014D260.c` (CODING_STANDARDS 7a, claim #56 condition). The ratan2 C is settled
+(draft in [[gcc-objects]]): with the three habits applied by hand to a scratch copy it gives all 97 instructions.
+Next step proposed: run the real ASPSX binaries on test cases. Notes in [[tickets/T-11890-tt-ratan2-aspsx]],
+[[matching-notes]], [[toolchain]]; the ticket stays In Progress.

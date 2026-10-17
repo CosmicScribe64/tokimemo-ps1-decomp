@@ -14,12 +14,22 @@ Match TT `func_8014D260` (object `TT/8014D260`, PsyQ gcc `ratan2`), the last TT 
 
 ## Acceptance criteria
 
-- [ ] Each modelled behaviour measured over the ASPSX-built SDK asm of the main exe; rule and exceptions written down (CODING_STANDARDS 7a)
+- [x] Each modelled behaviour measured over the ASPSX-built SDK asm of the main exe; rule and exceptions written down (CODING_STANDARDS 7a)
 - [ ] Pass is uniform, fails loudly, has synthetic unit tests, and is documented in a module docstring, [[toolchain]] and [[matching-notes]]
 - [ ] `TT/8014D260` listed in `config/toolchains.txt`; `func_8014D260` matches
 - [ ] Every other function unchanged: clean rebuild 27/27, `TAIIKU/801488F0` still matches
 - [ ] Code review against CODING_STANDARDS.md
 
 ## Notes
+
+2026-10-18, evidence pass (stopped before any rule was built, per the claim's condition):
+- Baseline: clean rebuild (asm/ and build/ removed) of `gcc-d260` is 27/27 SHA1 OK.
+- New `tools/aspsx_survey.py` measures the three habits over every `asm/lib*.s`; counts and reading in [[gcc-objects]], "ASPSX habits in the SDK asm (T-11890)".
+- Habit 2 (`mflo`/`mfhi` nops): uniform, 290 of 290 sites (pad before mult/div, a label, or a gcc `.set noreorder` branch; an ASPSX-filled branch + its nop close the window). Also: no nop between a late move and a reader of rd (16 of 16), where maspsx adds one.
+- Habit 3 (`l* rd,sym(rs)` through rd): uniform, 103 of 103 loads with rd != rs; rd == rs (53) and stores (99) use `$at`.
+- Habit 1 (move right after `div $zero` when the checks do not read rd): not uniform. 63 of 67 sites fit, but the 4 others (libspu `func_80098D00`, `rem` with rd distinct, late) contradict it, the SDK has no signed-quotient site with rd distinct (the case TT needs), and maspsx's real-ASPSX fixture `aspsx/fixtures/div.yaml` (`div $2,$4,$6`) puts the `mflo` after the checks in every ASPSX version 1.07 to 2.86. In 44 of 67 sites ASPSX has scheduled other instructions into the expansion, so the position looks like an ASPSX scheduler effect. No pass written.
+- The C is settled (draft in [[gcc-objects]]): gcc 2.7.2-psx (2.6.3-psx gives the same `cc1` output) + maspsx (aspsx >= 2.50) + the three habits applied by hand in a scratch copy = all 97 instructions identical to the original except relocation fields. Needs `extern s16 D_80159B20[];` in `include/ovl/TT.h`.
+- `src/ovl/TT/8014D260.c`, `include/ovl/TT.h` and `config/toolchains.txt` are unchanged.
+- Way forward: run the real ASPSX (maspsx `aspsx/README.md`: binaries in a maspsx release archive, dosemu2/wine) on the gcc output of this function and on small cases (`div $4,$2,$5` followed by a dependent / independent instruction / a label / a noreorder branch) to see when the move goes early. That needs a download and new image tools, so it waits for a maintainer decision.
 
 ## Comments

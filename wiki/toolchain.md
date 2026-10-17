@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-17
+updated: 2026-10-18
 sources: ["tools/Dockerfile", "tools/m2c.py", "tools/permute.py", "tools/test_cc.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py"]
 sources: ["wiki/original-compiler.md", "tools/Dockerfile", "tools/test_cc.py", "tools/trailing_pad.py", "tools/test_trailing_pad.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py"]
 sources: ["tools/docker.sh", "tools/Dockerfile", "tools/m2c.py", "tools/permute.py", "tools/test_cc.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py"]
@@ -37,7 +37,7 @@ The release binaries of decompals/old-gcc are x86_64 only. The arm64 Dockerfile 
 Evidence of equivalence: gcc 2.7.2 output (`-O2 -G0 -mcpu=3000`) of 110 sources (every fourth file of `src/`, `INCLUDE_ASM` lines removed) is byte-identical to the amd64 release binary's under emulation (110 of 110; before the prototypes 1 crashed). The same check for 2.8.1: 110 of 110. The hash casts of pointers (`cse.c`, `varasm.c`, `tree.c`: hash-table order only) are left alone. Build time: about 2 minutes per version.
 
 ## Per-object toolchain (T-9200)
-`config/toolchains.txt` assigns a toolchain to single objects (main exe `main/<addr>` or overlay `<UNIT>/<addr>`; the splat `c` subsegment name). `configure.py` checks every name and form and hands the words to `tools/cc.py`. Used for the PsyQ-gcc-built code that lives in overlays; how those objects are found and which functions they hold: [[gcc-objects]]. `tools/cc.py` runs maspsx with `--expand-div`.
+`config/toolchains.txt` assigns a toolchain to single objects (main exe `main/<addr>` or overlay `<UNIT>/<addr>`; the splat `c` subsegment name). `configure.py` checks every name and form and hands the words to `tools/cc.py`. Used for the PsyQ-gcc-built code that lives in overlays; how those objects are found and which functions they hold: [[gcc-objects]]. `tools/cc.py` runs maspsx with `--expand-div`. Three ASPSX habits that maspsx does not model were measured over the SDK asm (`tools/aspsx_survey.py`, T-11890): the `mflo`/`mfhi` hazard nops before labels and gcc `.set noreorder` branches and `l* rd,sym(rs)` through rd are uniform; the position of the move in an expanded divide is not, so there is no ASPSX emulation pass on the gcc path yet ([[gcc-objects]], "ASPSX habits in the SDK asm").
 - objdiff-cli: the v3.8.2 `linux-aarch64` release. binutils, gcc-mips-linux-gnu, ninja, make and Python packages are the Ubuntu 22.04 and PyPI arm64 builds of the same versions (binutils 2.38).
 - Timings and the test results are in [[tickets/T-3310-native-docker-image]].
 

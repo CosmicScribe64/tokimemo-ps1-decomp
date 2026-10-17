@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-17
+updated: 2026-10-18
 sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 ---
@@ -7494,3 +7494,19 @@ Harness: a 40-line script that imports `order_search.make_text_scorer`, takes a 
 `func_80151364` stays at 2 rows (guard note updated): in case 5 the two address `lui`s before the year compare come out in the other order. New this round and tried: plain/compound add, year statement or in-condition, operand order, one-line forms, a `tmp` local, pointer reassignment, all six declaration orders of `year`/`game`/`temp_v0`, viewsweep, autotweak 120 s (278 variants).
 
 Lesson for both guarded and matched cases: in a function with a function-wide hoisted constant 1, the original colours that constant first. Splitting which accesses go through a `GameState *` local changed that order in `func_80150B7C`; try the same split (record reads only, selector direct) on the next one before reaching for the permuter.
+
+## TT func_8014D260 and the ASPSX pass (T-11890)
+
+TT `func_8014D260` is PsyQ `ratan2` built with gcc ([[gcc-objects]]). The C is settled: the quotient needs its own
+variable (`q`) so the table value lands in `$v1` as in the original; gcc 2.7.2-psx then gives the original's registers
+and block layout. What is left is assembler output that maspsx does not model: (1) where ASPSX puts the `mflo` of an
+expanded `div` (right after `div $zero` for the two divides whose rd is neither rs nor rt, after the checks for the
+other two), (2) the `mflo` hazard nops before a label or a gcc `.set noreorder` branch, (3) `lh rd,sym(rs)` through rd
+instead of `$at`. Applied by hand to a scratch copy of the maspsx output, the three give all 97 instructions.
+
+No build pass was added. Measured over the SDK asm of the main exe (`tools/aspsx_survey.py`), habits 2 and 3 are
+uniform (290 of 290 and 103 of 103 sites) but habit 1 is not: 4 of 67 sites contradict it, the SDK has no site of the
+exact kind TT needs, and maspsx's real-ASPSX fixture for `div $2,$4,$6` has the `mflo` after the checks in every
+version. A pass that moves the `mflo` would be a rule fitted to this one function, which CODING_STANDARDS 7a rules out.
+The function stays `INCLUDE_ASM`; next step is running the real ASPSX binaries on test cases (ticket
+[[tickets/T-11890-tt-ratan2-aspsx]]).
