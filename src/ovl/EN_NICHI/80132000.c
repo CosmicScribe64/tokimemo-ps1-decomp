@@ -382,14 +382,16 @@ void func_80132E3C(void) {
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132EE8);
 
-/* NON_MATCHING: T-10610, switch and prologue match (the two cursor words are D_8011ECF4[0..1], so their loads stay in the original order); the final clamp of the two s16 positions is forwarded through registers here, the original reloads after each store and keeps the base in $v1 (188 against 184 instructions) */
-#ifdef NON_MATCHING
+/* Moves display record 0 by the pad bits of D_800E6280.unk_F80 in 16.16 steps (diagonals
+ * by v * 0xB505, v / sqrt 2), clamps its integer position and copies it to record 152. The words go
+ * through the record view, so their loads stay after the stores as in the original; the clamp goes
+ * through a pointer to the pool, whose reloads after each store and $v1 base match. Replaces the
+ * T-10610 NON_MATCHING draft. T-20920 */
 void func_801330D0(void) {
     s32 sel;
     s32 v;
     s32 d;
-    volatile s16 *px;
-    volatile s16 *py;
+    DisplayActor44 *p;
 
     sel = D_800E6280.unk_F80;
     if (sel & 0x40) {
@@ -400,59 +402,55 @@ void func_801330D0(void) {
     if (D_800E6280.unk_F74 == 1) {
         switch (sel & ~0x60) {
         case 0x1000:
-            (&D_8011ECF4)[1] -= v << 16;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_28.w -= v << 16;
             break;
         case 0x2000:
-            D_8011ECF4 += v << 16;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_24.w += v << 16;
             break;
         case 0x4000:
-            (&D_8011ECF4)[1] += v << 16;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_28.w += v << 16;
             break;
         case 0x8000:
-            D_8011ECF4 -= v << 16;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_24.w -= v << 16;
             break;
         case 0x3000:
             d = v * 0xB505;
-            D_8011ECF4 += d;
-            (&D_8011ECF4)[1] -= d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_24.w += d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_28.w -= d;
             break;
         case 0x6000:
             d = v * 0xB505;
-            D_8011ECF4 += d;
-            (&D_8011ECF4)[1] += d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_24.w += d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_28.w += d;
             break;
         case 0xC000:
             d = v * 0xB505;
-            D_8011ECF4 -= d;
-            (&D_8011ECF4)[1] += d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_24.w -= d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_28.w += d;
             break;
         case 0x9000:
             d = v * 0xB505;
-            D_8011ECF4 -= d;
-            (&D_8011ECF4)[1] -= d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_24.w -= d;
+            ((DisplayFixActor44 *)D_8011ECD0)->unk_28.w -= d;
             break;
         }
     }
-    px = (volatile s16 *)(D_8011ECD0 + 0x26);
-    py = (volatile s16 *)(D_8011ECD0 + 0x2A);
-    if (*px < -0x8F) {
-        *px = -0x90;
+    p = (DisplayActor44 *)D_8011ECD0;
+    if (p->unk_26 < -0x8F) {
+        p->unk_26 = -0x90;
     }
-    if (*px >= 0x90) {
-        *px = 0x90;
+    if (p->unk_26 >= 0x90) {
+        p->unk_26 = 0x90;
     }
-    if (*py < -0x67) {
-        *py = -0x68;
+    if (p->unk_2A < -0x67) {
+        p->unk_2A = -0x68;
     }
-    if (*py >= 0x68) {
-        *py = 0x68;
+    if (p->unk_2A >= 0x68) {
+        p->unk_2A = 0x68;
     }
-    D_80121556 = *px;
-    D_8012155A = *py;
+    p[152].unk_26 = p->unk_26;
+    p[152].unk_2A = p->unk_2A;
 }
-#else
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801330D0);
-#endif
 
 /* FAKE: s32 without return keeps the clamp accumulator in v0 and the original
  * split epilogue. Original return type is unconfirmed. T-14000. */
