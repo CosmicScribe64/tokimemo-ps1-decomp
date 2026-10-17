@@ -16849,3 +16849,7 @@ The complete default build passes after resuming its remaining 319 jobs with eig
 ## [2026-10-16] ticket | T-20006 ready for review
 
 Final checks pass: full default build, all 27 immutable binary hashes, headers/globals and prototype guard (0 new / 15 known, branch check OK). Fresh actual linked proofs verify both functions at 336 and 372 bytes. Local standards review found no unresolved issue; no new fakematches. Moved [[tickets/T-20006-gyozi-scene-callbacks]] and its board card to In Review. Maintainer acceptance remains pending.
+
+## [2026-10-16] ticket | T-20006 PR submitted
+
+Submitted https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/44 for the two claimed GYOZI scene callbacks (708 verified bytes). [[tickets/T-20006-gyozi-scene-callbacks]] remains In Review; PR links claim #43 for closure on merge.

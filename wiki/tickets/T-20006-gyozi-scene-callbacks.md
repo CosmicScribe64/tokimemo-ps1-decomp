@@ -17,7 +17,7 @@ Match func_80141944 (336 bytes, src/ovl/GYOZI/801418B0.c) and func_80145384 (372
 - [x] Actual default linked proofs for both installed functions (708 bytes).
 - [x] Full build, 27 binary SHA1 checks and header/global/prototype guards.
 - [x] Local standards review and documentation complete.
-- [ ] Focused PR for verified work.
+- [x] Focused PR for verified work: https://github.com/CosmicScribe64/tokimemo-ps1-decomp/pull/44.
 
 ## Notes
 
