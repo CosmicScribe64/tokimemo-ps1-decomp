@@ -16856,3 +16856,7 @@ Clean rebuild of the w3-main-p09 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-17009 Done
 
 [[tickets/T-17009-w3-main-p09]] In Review to Done: code review against `CODING_STANDARDS.md` found two small issues, fixed (`D_800B3CA8` declared before `D_800B3CA4` in `include/main_api.h`, address order restored; comment added on the fall-through end of `func_800430C0`). Rebuild OK (27/27 sha1, headers OK, globals OK, `sync_protos --check-branch` OK). 2 of 4 functions matched (`func_80043448`, `func_800430C0`; 1,092 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-17] ticket | T-17015 In Progress
+
+[[tickets/T-17015-w3-main-p15]] created and started (wave 3 package, branch `w3-main-p15` from `w2-good`): `src/main/8004C3F0.c`, four functions from the draft list (`srn_vram_set`, `srn_set`, `mod_trans_vram`, `mod_set`). Card in [[kanban]] under In Progress.
