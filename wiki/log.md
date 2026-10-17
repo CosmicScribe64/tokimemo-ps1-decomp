@@ -17638,3 +17638,7 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E
 ## [2026-10-17] ticket | T-22013 Wave 4 package w4-p13 In Review
 
 [[tickets/T-22013-w4-p13]]: 1 of 3 matched. `func_8015A8B4` (14 rows) and `func_8015A744` (6 rows) stay guarded: dead copy of a promoted global (and, for `func_8015A8B4`, `i + 0x28` in the first block), many new shapes tried, autotweak and permuter found nothing. Code review pending.
+
+## [2026-10-17] build | T-22013 func_8015A8B4 matched
+
+`func_8015A8B4` (RPG_BAT `src/ovl/RPG_BAT/8015A1F0.c`, 236 bytes) matches in plain C with one FAKE. A permuter candidate for `func_8015A744` reassigned `x` as the offset of the first store; written in the pointer-walk form, the same trick leaves the copy in `$a0` and moves `i + 0x28` into the first block. `func_8015A744` drops to 4 rows (one missing `or a1,v0,zero`). See [[matching-notes]], section T-22013, and the new [[register-cheatsheet]] row.

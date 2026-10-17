@@ -111,7 +111,8 @@ void func_8015A6D4(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-22013, 6 rows; the original keeps two dead copies ($a1 = v, $a0 = x) of the values stored to D_8015EC54 and D_8015EC68 and stores x from $a0 (a promoted global the build leaves unpromoted). No effect: chain assignments, reused or retyped locals, dead local copies, a second store, a read-back of the global, the RpgMotion20 view or the (&D_8015EBAC)[41/42/47] table words, autotweak, permuter */
+/* NON_MATCHING: T-22013, 4 rows (one missing instruction, `or a1,v0,zero` before `sw v0,D_8015EC54`; the three branch offsets follow from it). No effect on the dead copy of v: a second variable or constant offset for v, chain assignments, a second store, the (&D_8015EBAC)[41/42/47] table words, autotweak, permuter */
+/* FAKE: T-22013, x is reused as the offset of the first store; it makes uopt keep the copy of x that the original stores to D_8015EC68 from $a0 (as in func_8015A8B4), real source unknown. */
 void func_8015A744(void) {
     u8 *p;
     RpgMotion20 *m;
