@@ -20,211 +20,31 @@ void func_80134D20(void);
 void func_8013B6A0(void);
 extern u8 D_8013BFB8[];
 extern u8 D_8013BFC0[];
-extern s32 D_8013C2B4;
-extern s32 D_8013C2F8;
-extern s32 D_8013C33C;
 
-extern s32 D_8013C34C;
-extern s32 D_8013C350;
-extern s32 D_8013C354;
 extern s16 D_8013C358;
 extern s16 D_8013C35C; /* read with lh/sh only (T-8080, T-9020) */
 void func_80132B04(s32 arg0, s32 arg1, s32 arg2);
 extern u8 D_8013CA38;
 
-extern s32 D_8013C620;
-extern s32 D_8013C624;
-extern s32 D_8013C628;
-extern s16 D_8013C62C;
-extern s32 D_8013C630;
-extern s32 D_8013C634;
-extern s32 D_8013C638;
-extern s32 D_8013C63C;
-extern s32 D_8013C640;
-extern s32 D_8013C644;
-extern s32 D_8013C648;
-extern s32 D_8013C64C;
-extern s32 D_8013C650;
-extern s32 D_8013C654;
-extern s32 D_8013C658;
-extern s32 D_8013C65C;
-extern s32 D_8013C660;
 
-extern s32 D_8013C6A8;
-extern s32 D_8013C6AC;
-extern s32 D_8013C6B0;
-extern s16 D_8013C6B4;
-extern s32 D_8013C6B8;
-extern s32 D_8013C6BC;
-extern s32 D_8013C6C0;
-extern s32 D_8013C6C4;
-extern s32 D_8013C6C8;
-extern s32 D_8013C6CC;
-extern s32 D_8013C6D0;
-extern s32 D_8013C6D4;
-extern s32 D_8013C6D8;
-extern s32 D_8013C6DC;
-extern s32 D_8013C6E0;
-extern s32 D_8013C6E4;
-extern s32 D_8013C6E8;
 
-extern s32 D_8013C6EC;
-extern s32 D_8013C6F0;
-extern s32 D_8013C6F4;
-extern s16 D_8013C6F8;
-extern s32 D_8013C6FC;
-extern s32 D_8013C700;
-extern s32 D_8013C704;
-extern s32 D_8013C708;
-extern s32 D_8013C70C;
-extern s32 D_8013C710;
-extern s32 D_8013C714;
-extern s32 D_8013C718;
-extern s32 D_8013C71C;
-extern s32 D_8013C720;
-extern s32 D_8013C724;
-extern s32 D_8013C728;
-extern s32 D_8013C72C;
 
-extern s32 D_8013C730;
-extern s32 D_8013C734;
-extern s32 D_8013C738;
-extern s16 D_8013C73C;
-extern s32 D_8013C740;
-extern s32 D_8013C744;
-extern s32 D_8013C748;
-extern s32 D_8013C74C;
-extern s32 D_8013C750;
-extern s32 D_8013C754;
-extern s32 D_8013C758;
-extern s32 D_8013C75C;
-extern s32 D_8013C760;
-extern s32 D_8013C764;
-extern s32 D_8013C768;
-extern s32 D_8013C76C;
-extern s32 D_8013C770;
 
-extern s32 D_8013C7B8;
-extern s32 D_8013C7BC;
-extern s32 D_8013C7C0;
-extern s16 D_8013C7C4;
-extern s32 D_8013C7C8;
-extern s32 D_8013C7CC;
-extern s32 D_8013C7D0;
-extern s32 D_8013C7D4;
-extern s32 D_8013C7D8;
-extern s32 D_8013C7DC;
-extern s32 D_8013C7E0;
-extern s32 D_8013C7E4;
-extern s32 D_8013C7E8;
-extern s32 D_8013C7EC;
-extern s32 D_8013C7F0;
-extern s32 D_8013C7F4;
-extern s32 D_8013C7F8;
 
-extern s32 D_8013C7FC;
-extern s32 D_8013C800;
-extern s32 D_8013C804;
-extern s16 D_8013C808;
-extern s32 D_8013C80C;
-extern s32 D_8013C810;
-extern s32 D_8013C814;
-extern s32 D_8013C818;
-extern s32 D_8013C81C;
-extern s32 D_8013C820;
-extern s32 D_8013C824;
-extern s32 D_8013C828;
-extern s32 D_8013C82C;
-extern s32 D_8013C830;
-extern s32 D_8013C834;
-extern s32 D_8013C838;
-extern s32 D_8013C83C;
 
 void func_801396A4(s16 arg0, u8 arg1);
 
 void func_801341D8();
 
-extern s32 D_8013C5F0;
-extern s32 D_8013C5F4;
-extern s32 D_8013C5F8;
-extern s16 D_8013C5FC;
-extern s32 D_8013C600;
-extern s32 D_8013C604;
-extern s32 D_8013C608;
-extern s32 D_8013C60C;
-extern s32 D_8013C610;
-extern s32 D_8013C614;
-extern s32 D_8013C618;
-extern s32 D_8013C61C;
 
 void func_80139B48();
 
 void func_80139AA0();
 
-extern s32 D_8013CBB0;
-extern s32 D_8013CBB4;
-extern s32 D_8013CBB8;
-extern s16 D_8013CBBC;
-extern s32 D_8013CBC0;
-extern s32 D_8013CBC4;
-extern s32 D_8013CBC8;
-extern s32 D_8013CBCC;
-extern s32 D_8013CBD0;
-extern s32 D_8013CBD4;
-extern s32 D_8013CBD8;
-extern s32 D_8013CBDC;
 void func_80136C5C(s16 arg0);
 void func_80136CD0(s16 arg0);
 extern s16 D_8013CA1C[];
 
-extern s32 D_8013CAC0;
-extern s32 D_8013CAC4;
-extern s32 D_8013CAC8;
-extern s32 D_8013CACC;
-extern s32 D_8013CAD0;
-extern s32 D_8013CAD4;
-extern s32 D_8013CAD8;
-extern s32 D_8013CADC;
-extern s32 D_8013CAE0;
-extern s32 D_8013CAE4;
-extern s32 D_8013CAE8;
-extern s32 D_8013CAEC;
-extern s32 **D_8013CAF0; /* T-18300: points at a block whose first word is a message pointer table (func_8013A2E8 reads (*D_8013CAF0)[k]) */
-extern s32 D_8013CAF4;
-extern s32 D_8013CAF8;
-extern s32 D_8013CAFC;
-extern s32 D_8013CB00;
-extern s32 D_8013CB04;
-extern s32 D_8013CB08;
-extern s32 D_8013CB0C;
-extern s32 D_8013CB10;
-extern s32 D_8013CB14;
-extern s32 D_8013CB18;
-extern s32 D_8013CB1C;
-extern s32 D_8013CB20;
-extern s32 D_8013CB24;
-extern s32 D_8013CB28;
-extern s32 D_8013CB2C;
-extern s32 D_8013CB30;
-extern s32 D_8013CB34;
-extern s32 D_8013CB38;
-extern s32 D_8013CB3C;
-extern s32 D_8013CB40;
-extern s32 D_8013CB44;
-extern s32 D_8013CB48;
-extern s32 D_8013CB4C;
-extern s32 D_8013CB50;
-extern s32 D_8013CB54;
-extern s32 D_8013CB58;
-extern s32 D_8013CB5C;
-extern s32 D_8013CB60;
-extern s32 D_8013CB64;
-extern s32 D_8013CB68;
-extern s32 D_8013CB6C;
-extern s32 D_8013CB70;
-extern s32 D_8013C280;
-extern s32 D_8013C2C4;
-extern s32 D_8013C308;
 extern u8 D_8013CC48[];
 
 void func_80134140();
@@ -241,212 +61,7 @@ void func_80138DC8();
 void func_80138FC8();
 void func_801391E4();
 void func_80139498();
-extern s32 D_8013C9D8;
-extern s32 D_8013C9DC;
-extern s32 D_8013C9E0;
-extern s16 D_8013C9E4;
-extern s32 D_8013C9E8;
-extern s32 D_8013C9EC;
-extern s32 D_8013C9F0;
-extern s32 D_8013C9F4;
-extern s32 D_8013C9F8;
-extern s32 D_8013C9FC;
-extern s32 D_8013CA00;
-extern s32 D_8013CA04;
-extern s32 D_8013CA08;
-extern s32 D_8013CA0C;
-extern s32 D_8013CA10;
-extern s32 D_8013CA14;
-extern s32 D_8013CA18;
-extern s32 D_8013C4C0;
-extern s32 D_8013C4C4;
-extern s32 D_8013C4C8;
-extern s32 D_8013C4CC;
-extern s32 D_8013C4D0;
-extern s32 D_8013C4D4;
-extern s32 D_8013C4D8;
-extern s32 D_8013C4DC;
-extern s32 D_8013C4E0;
-extern s32 D_8013C4E4;
-extern s32 D_8013C4E8;
-extern s32 D_8013C4EC;
-extern s32 D_8013C4F0;
-extern s32 D_8013C4F4;
-extern s32 D_8013C4F8;
-extern s32 D_8013C4FC;
-extern s32 D_8013C500;
-extern s32 D_8013C504;
-extern s32 D_8013C508;
-extern s32 D_8013C50C;
-extern s32 D_8013C510;
-extern s32 D_8013C514;
-extern s32 D_8013C518;
-extern s32 D_8013C51C;
-extern s32 D_8013C520;
-extern s32 D_8013C524;
-extern s32 D_8013C528;
-extern s32 D_8013C52C;
-extern s32 D_8013C530;
-extern s32 D_8013C534;
-extern s32 D_8013C538;
-extern s32 D_8013C53C;
-extern s32 D_8013C540;
-extern s32 D_8013C544;
-extern s32 D_8013C548;
-extern s32 D_8013C54C;
-extern s32 D_8013C550;
-extern s32 D_8013C554;
-extern s32 D_8013C558;
-extern s32 D_8013C55C;
-extern s32 D_8013C560;
-extern s32 D_8013C564;
-extern s32 D_8013C5A0;
-extern s32 D_8013C5A4;
-extern s32 D_8013C5A8;
-extern s32 D_8013C5AC;
-extern s32 D_8013C5B0;
-extern s32 D_8013C5B4;
-extern s32 D_8013C5B8;
-extern s32 D_8013C664;
-extern s32 D_8013C668;
-extern s32 D_8013C66C;
-extern s16 D_8013C670;
-extern s32 D_8013C674;
-extern s32 D_8013C678;
-extern s32 D_8013C67C;
-extern s32 D_8013C680;
-extern s32 D_8013C684;
-extern s32 D_8013C688;
-extern s32 D_8013C68C;
-extern s32 D_8013C690;
-extern s32 D_8013C694;
-extern s32 D_8013C698;
-extern s32 D_8013C69C;
-extern s32 D_8013C6A0;
-extern s32 D_8013C6A4;
-extern s32 D_8013C774;
-extern s32 D_8013C778;
-extern s32 D_8013C77C;
-extern s16 D_8013C780;
-extern s32 D_8013C784;
-extern s32 D_8013C788;
-extern s32 D_8013C78C;
-extern s32 D_8013C790;
-extern s32 D_8013C794;
-extern s32 D_8013C798;
-extern s32 D_8013C79C;
-extern s32 D_8013C7A0;
-extern s32 D_8013C7A4;
-extern s32 D_8013C7A8;
-extern s32 D_8013C7AC;
-extern s32 D_8013C7B0;
-extern s32 D_8013C7B4;
-extern s32 D_8013C840;
-extern s32 D_8013C844;
-extern s32 D_8013C848;
-extern s16 D_8013C84C;
-extern s32 D_8013C850;
-extern s32 D_8013C854;
-extern s32 D_8013C858;
-extern s32 D_8013C85C;
-extern s32 D_8013C860;
-extern s32 D_8013C864;
-extern s32 D_8013C868;
-extern s32 D_8013C86C;
-extern s32 D_8013C870;
-extern s32 D_8013C874;
-extern s32 D_8013C878;
-extern s32 D_8013C87C;
-extern s32 D_8013C880;
-extern s32 D_8013C884;
-extern s32 D_8013C888;
-extern s32 D_8013C88C;
-extern s16 D_8013C890;
-extern s32 D_8013C894;
-extern s32 D_8013C898;
-extern s32 D_8013C89C;
-extern s32 D_8013C8A0;
-extern s32 D_8013C8A4;
-extern s32 D_8013C8A8;
-extern s32 D_8013C8AC;
-extern s32 D_8013C8B0;
-extern s32 D_8013C8B4;
-extern s32 D_8013C8B8;
-extern s32 D_8013C8BC;
-extern s32 D_8013C8C0;
-extern s32 D_8013C8C4;
-extern s32 D_8013C8C8;
-extern s32 D_8013C8CC;
-extern s32 D_8013C8D0;
-extern s16 D_8013C8D4;
-extern s32 D_8013C8D8;
-extern s32 D_8013C8DC;
-extern s32 D_8013C8E0;
-extern s32 D_8013C8E4;
-extern s32 D_8013C8E8;
-extern s32 D_8013C8EC;
-extern s32 D_8013C8F0;
-extern s32 D_8013C8F4;
-extern s32 D_8013C8F8;
-extern s32 D_8013C8FC;
-extern s32 D_8013C900;
-extern s32 D_8013C904;
-extern s32 D_8013C908;
-extern s32 D_8013C90C;
-extern s32 D_8013C910;
-extern s32 D_8013C914;
-extern s16 D_8013C918;
-extern s32 D_8013C91C;
-extern s32 D_8013C920;
-extern s32 D_8013C924;
-extern s32 D_8013C928;
-extern s32 D_8013C92C;
-extern s32 D_8013C930;
-extern s32 D_8013C934;
-extern s32 D_8013C938;
-extern s32 D_8013C93C;
-extern s32 D_8013C940;
-extern s32 D_8013C944;
-extern s32 D_8013C948;
-extern s32 D_8013C94C;
-extern s32 D_8013C950;
-extern s32 D_8013C954;
-extern s32 D_8013C958;
-extern s16 D_8013C95C;
-extern s32 D_8013C960;
-extern s32 D_8013C964;
-extern s32 D_8013C968;
-extern s32 D_8013C96C;
-extern s32 D_8013C970;
-extern s32 D_8013C974;
-extern s32 D_8013C978;
-extern s32 D_8013C97C;
-extern s32 D_8013C980;
-extern s32 D_8013C984;
-extern s32 D_8013C988;
-extern s32 D_8013C98C;
-extern s32 D_8013C990;
-extern s32 D_8013C994;
-extern s32 D_8013C998;
-extern s32 D_8013C99C;
-extern s16 D_8013C9A0;
-extern s32 D_8013C9A4;
-extern s32 D_8013C9A8;
-extern s32 D_8013C9AC;
-extern s32 D_8013C9B0;
-extern s32 D_8013C9B4;
-extern s32 D_8013C9B8;
-extern s32 D_8013C9BC;
-extern s32 D_8013C9C0;
-extern s32 D_8013C9C4;
-extern s32 D_8013C9C8;
-extern s32 D_8013C9CC;
-extern s32 D_8013C9D0;
-extern s32 D_8013C9D4;
 
-extern s32 D_8013C2BC;
-extern s32 D_8013C300;
-extern s32 D_8013C344;
 
 void func_80136D60(void);
 s32 func_80137574(void);
@@ -466,48 +81,6 @@ extern u8 D_8013CAA0;
 
 
 /* T-9580: symbols recovered from list-8 assembly. */
-extern s32 D_8013C284;
-extern s32 D_8013C288;
-extern s32 D_8013C28C;
-extern s32 D_8013C290;
-extern s32 D_8013C294;
-extern s32 D_8013C298;
-extern s32 D_8013C29C;
-extern s32 D_8013C2A0;
-extern s32 D_8013C2A4;
-extern s32 D_8013C2A8;
-extern s32 D_8013C2AC;
-extern s32 D_8013C2B0;
-extern s32 D_8013C2B8;
-extern s32 D_8013C2C0;
-extern s32 D_8013C2C8;
-extern s32 D_8013C2CC;
-extern s32 D_8013C2D0;
-extern s32 D_8013C2D4;
-extern s32 D_8013C2D8;
-extern s32 D_8013C2DC;
-extern s32 D_8013C2E0;
-extern s32 D_8013C2E4;
-extern s32 D_8013C2E8;
-extern s32 D_8013C2EC;
-extern s32 D_8013C2F0;
-extern s32 D_8013C2F4;
-extern s32 D_8013C2FC;
-extern s32 D_8013C304;
-extern s32 D_8013C30C;
-extern s32 D_8013C310;
-extern s32 D_8013C314;
-extern s32 D_8013C318;
-extern s32 D_8013C31C;
-extern s32 D_8013C320;
-extern s32 D_8013C324;
-extern s32 D_8013C328;
-extern s32 D_8013C32C;
-extern s32 D_8013C330;
-extern s32 D_8013C334;
-extern s32 D_8013C338;
-extern s32 D_8013C340;
-extern s32 D_8013C348;
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 void func_80132400(void);
 
@@ -522,6 +95,62 @@ typedef struct EdShorts18 {
 extern EdShorts18 D_8013C3B0; /* func_801330E4: chance per level 0..0x11, compared with rand() % 256 */
 extern EdShorts14 D_8013CA60; /* func_80135F4C: x positions of the 14 sprites */
 extern EdShorts14 D_8013CA7C; /* func_80135F4C: y positions of the 14 sprites */
+
+/* T-20930: ENDING's data tables, recovered from the matched initialisers (one store per element, in
+ * address order) and the readers. All are .data with the same initial values the initialisers write. */
+
+/* Message scripts: one row per message table, one entry per scene; a scene's three entries are copied
+ * together into D_800CA160/164/168 (main) or into D_8013C34C. Entries are message block addresses
+ * (D_8013CAC0[0][12] is read as a block whose first word is a message pointer table, func_8013A2E8). */
+extern s32 D_8013C280[3][17]; /* size 0xCC */
+extern s32 D_8013CAC0[3][15]; /* size 0xB4 */
+
+/* The message tables of the running scene, copied as a whole to D_800CA13C/140/144 (func_80132D98). */
+typedef struct EdScriptSet {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+} EdScriptSet; /* size 0x0C */
+extern EdScriptSet D_8013C34C;
+
+/* Scene image records: three TIM addresses and a halfword read from the TIM data (the order of
+ * func_80137160's and func_800850D4's arguments: +0x04, +0x08, +0x00, +0x0C go to the display record's
+ * unk_0C, unk_10, unk_34 and unk_14), then the addresses of the scene's texture pages. */
+typedef struct EdScene30 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s16 unk_0C;
+    /* 0x0E */ u8 pad_0E[2];
+    /* 0x10 */ s32 unk_10[8];
+} EdScene30; /* size 0x30 */
+typedef struct EdScene44 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s16 unk_0C;
+    /* 0x0E */ u8 pad_0E[2];
+    /* 0x10 */ s32 unk_10[13];
+} EdScene44; /* size 0x44 */
+extern EdScene30 D_8013C5F0; /* func_80134D20 */
+extern EdScene44 D_8013C620[15]; /* func_80134DE0 .. func_80135CC0, one initialiser per record */
+extern EdScene30 D_8013CBB0; /* func_8013B6A0 */
+
+/* The same four values per portrait as columns of 14 (func_80133C10, func_80134270 case k reads entry
+ * k + 1): unk_00 goes to the display record's unk_34, unk_38 to unk_0C, unk_70 to unk_10, unk_A8 to
+ * unk_14. unk_A8 is never written (zero data) and is read with lh at a 4-byte stride. */
+typedef struct EdHalf4 {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ u8 pad_02[2];
+} EdHalf4; /* size 0x04 */
+typedef struct EdPortraitTbl {
+    /* 0x00 */ s32 unk_00[14];
+    /* 0x38 */ s32 unk_38[14];
+    /* 0x70 */ s32 unk_70[14];
+    /* 0xA8 */ EdHalf4 unk_A8[14];
+} EdPortraitTbl; /* size 0xE0 */
+extern EdPortraitTbl D_8013C4C0;
+extern s32 D_8013C5A0[7]; /* texture page addresses of func_80134270 (func_80133C10) */
 #endif /* OVL_ENDING_H */
 
 #ifndef OVL_ENDING_TIMER_T9780
