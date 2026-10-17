@@ -37,7 +37,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 - [[tickets/T-22000-wave-4-conveyor|T-22000]] Wave 4 conveyor until weekly usage nears 95 percent (In Progress).
 - [[tickets/T-23000-wave-5-big-conveyor|T-23000]] Wave 5 biggest-first conveyor alongside wave 4 (In Progress).
-- [[tickets/T-22021-w4-p21|T-22021]] Wave 4 package w4-p21: BUNKA_SD `801388D0.c` and `80134540.c`, `func_8013987C`, `func_80134850`, `func_80134D94`, `func_80139290` (In Progress).
+- [[tickets/T-22021-w4-p21|T-22021]] Wave 4 package w4-p21: BUNKA_SD `801388D0.c` and `80134540.c`, `func_8013987C` and `func_80134850` matched (promoted counter byte, `*= 0` clear, FAKE); `func_80134D94` and `func_80139290` stay `INCLUDE_ASM` (In Review; 2 of 4 matched).
 - [[tickets/T-22001-w4-p01|T-22001]] Wave 4 package w4-p01: main `8007C030.c`, `dialogue_speak_part` stays guarded at 16 rows, 18 more forms tried (Done; 0 of 1 matched).
 - [[tickets/T-22007-w4-p07|T-22007]] Wave 4 package w4-p07: `NAME_ENT` `80142A80.c`, `func_80142A80` and `func_8014472C` both matched; `rodata_pieces.py` writes pieces for owned symbols (Done; 2 of 2 matched).
 - [[tickets/T-22014-w4-p14|T-22014]] Wave 4 package w4-p14: SHUGAKU `80133D60.c` and `80135430.c`, `func_80135480`, `func_80133E10`, `func_801360B0` matched; `func_801357AC` and `func_80135EA4` stay guarded at 10 rows (block-copy end register) (Done; 3 of 5 matched).

@@ -17747,3 +17747,11 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E
 ## [2026-10-17] ticket | T-22021 In Progress
 
 [[tickets/T-22021-w4-p21]]: wave 4 package w4-p21 (BUNKA_SD `src/ovl/BUNKA_SD/801388D0.c`, `src/ovl/BUNKA_SD/80134540.c`; four functions) started on branch `w4-p21` from `w2-good`.
+
+## [2026-10-17] build | T-22021 func_8013987C and func_80134850 matched
+
+`func_8013987C` (`src/ovl/BUNKA_SD/801388D0.c`, 148 bytes, was a 14-row guard) and `func_80134850` (`src/ovl/BUNKA_SD/80134540.c`, 232 bytes, was `INCLUDE_ASM`) match in plain C, one FAKE each. The counter byte `unk_110B` is read and written only as a u8 view of the global, which uopt promotes to `$v1`; both loops are index loops sharing `i`; the clear is `*= 0` (every plain zero folds to `sb zero`). Recipe row added to [[register-cheatsheet]], notes in [[matching-notes]] (section T-22021). `func_80134D94` (137 rows) and `func_80139290` (142 rows) stay `INCLUDE_ASM`, blockers recorded.
+
+## [2026-10-17] ticket | T-22021 In Review
+
+[[tickets/T-22021-w4-p21]] moved to In Review: 2 of 4 matched, no guards left, clean build and the header checks run before the final commit.
