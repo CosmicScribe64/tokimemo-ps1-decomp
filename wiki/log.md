@@ -16836,3 +16836,7 @@ KakarottoCake's PR #42 (claim #41): GYOZI func_8013C774 and func_8014206C matche
 ## [2026-10-17] ticket | T-17006 Done
 
 [[tickets/T-17006-w3-main-p06]] In Review to Done: code review against `CODING_STANDARDS.md` found two items, fixed (a `NON_MATCHING` comment wrapped, a stale acceptance line). Rebuild OK (27/27 SHA1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK). 2 of 6 functions matched (`func_80076C7C` 292 B, `func_8007866C` 324 B), 2 guarded (`func_800754C0`, `func_80077CA8`), 2 left `INCLUDE_ASM`. Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-17] ticket | T-17014 In Progress
+
+[[tickets/T-17014-w3-main-p14]] created and In Progress: wave 3 package w3-main-p14, four functions in `src/main/800563F0.c` (`strCallback`, `strNext`, `func_8005715C`, `func_80056BA8`). Worktree `tokimemo-wt/w3-main-p14` from `w2-good`.
