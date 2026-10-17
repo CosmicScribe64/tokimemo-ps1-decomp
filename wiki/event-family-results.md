@@ -5,6 +5,10 @@ updated: 2026-10-16
 
 # GYOZI and SHOUGATU event families
 
+## GYOZI dialogue follow-up (T-20004)
+
+Issue #39 claims `func_80135118` / `func_80135280` in `80134FD0.c` before work. Both now pass actual default linked comparisons: 360 + 416 = 776 new bytes. Recover `D_800C3370` as a byte array instead of the archived word-scalar context, use direct timer updates and byte postincrement tests, and reread the selector after calls. The setup callee uses the same shared s32 return type as PR #37. Two marked FAKE sites retain the original unchanged-byte stores before the sound calls. Verification, limitations and local review: [[tickets/T-20004-gyozi-dialogue-followup]].
+
 SHOUGATU types-first pass (T-17500): [[shougatu-family-results]].
 
 Scope: [[tickets/T-13200-event-family-transfer]], isolated codex/events-13200 from aa2b3158. The original checkout stayed read-only; ignored inputs came from integration, and all analysis/compilation ran in the existing Docker image. No generated assembly edits or metrics changes.

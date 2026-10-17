@@ -33,9 +33,81 @@ s32 func_8013506C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80134FD0", func_80135118);
+s32 func_80135118(void) {
+    s32 sound_id;
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80134FD0", func_80135280);
+    if ((func_8005B32C() != 0) && (D_80145EB8 < 5)) {
+        if (D_80145EB8 == 0) {
+            if (D_80145F64 < 0x5A) {
+                D_80145F64 += 1;
+                if (D_80145F64 == 1) {
+                    func_80086AB0(0x60A);
+                }
+                if (D_80145F64 == 0x1E) {
+                    func_80086AB0(0x604);
+                }
+                return 0;
+            }
+            if (!(D_800F647D & 7)) {
+                sound_id = (((D_800C3370[(D_800F62CF * 7) + (D_800F647D >> 3)] + 0x505) & 0xFF) | 0x600) & 0xFFFF;
+                /* FAKE: retain the original unchanged-byte store before the call.
+                 * Direct self-assignment is removed; original spelling unknown. T-20004. */
+                D_800F647D |= 0;
+                func_80086AB0(sound_id);
+            }
+        }
+        if (D_800F647D++ < 0x40U) {
+            return 0;
+        }
+        D_800F647D = 0;
+        func_8005B06C(1);
+    }
+    func_801343A4();
+    if (D_80145EB8 < 5) {
+        if (D_800F6474++ == 1) {
+            func_80086AB0(0x608);
+        }
+    }
+}
+
+s32 func_80135280(void) {
+    s32 sound_id;
+
+    if ((func_8005B32C() != 0) && (D_80145EB8 < 3)) {
+        if (D_80145EB8 == 0) {
+            if (D_80145F64 < 0x5A) {
+                D_80145F64 += 1;
+                if (D_80145F64 == 1) {
+                    func_80086AB0(0x60A);
+                }
+                if (D_80145F64 == 0x1E) {
+                    func_80086AB0(0x604);
+                }
+                return 0;
+            }
+            if (!(D_800F647D & 7)) {
+                sound_id = (((D_800C3370[(D_800F62CF * 7) + (D_800F647D >> 3)] + 0x505) & 0xFF) | 0x600) & 0xFFFF;
+                /* FAKE: retain the original unchanged-byte store before the call.
+                 * Direct self-assignment is removed; original spelling unknown. T-20004. */
+                D_800F647D |= 0;
+                func_80086AB0(sound_id);
+            }
+        }
+        if (D_800F647D++ < 0x40U) {
+            return 0;
+        }
+        D_800F647D = 0;
+        func_8005B06C(1);
+    }
+    func_801343A4();
+    if ((D_80145EB8 < 3) && (D_800F6474 == 1)) {
+        func_80086AB0(0x608);
+    }
+    if ((D_80145EB8 == 3) && (D_800F6474 == 1)) {
+        func_80086AB0(0x60B);
+    }
+    D_800F6474 += 1;
+}
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/80134FD0.rodata", D_801458E8);
 

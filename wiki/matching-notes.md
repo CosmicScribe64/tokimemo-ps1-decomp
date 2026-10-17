@@ -6,6 +6,10 @@ sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 
 # Matching notes
 
+## GYOZI dialogue byte counters (T-20004)
+
+`func_80135118` and `func_80135280` match 776 actual default linked bytes. The archived m2c context made `D_800C3370` a word scalar; the original `lbu` and unscaled offset require a byte array, now declared once in `main_api.h` beside the byte step counter `D_800F647D`. Direct s16 timer updates, `D_800F647D++ < 0x40U`, structured control flow and fresh selector reads remove stale draft temporaries. Both need the shared `s32 func_801343A4(void)` type corrected in PR #37. One explicitly marked FAKE per helper (`D_800F647D |= 0`) retains the original unchanged-byte store before the sound call and its temporary order; direct self-assignment disappears, and the original spelling is unknown. No compiler pass, volatile access or local prototype override. Evidence and final checks: [[tickets/T-20004-gyozi-dialogue-followup]].
+
 ## RPG_BAT timer callbacks (T-20003)
 
 `func_80138F6C` matches 1,268 default linked bytes: direct timer updates/decrement replace stale draft snapshots; a same-width selector pointer read and two frame words are marked FAKE with their reasons. The missing text-buffer declaration is added to the overlay header. No compiler-pass change. Two other independently matched callbacks (`func_80157158`, `func_80156D78`) were dropped when upstream T-17102 landed; its implementation and caller views are retained. Evidence, full RPG_BAT/27-binary checks and local review: [[tickets/T-20003-rpg-timer-callees]].

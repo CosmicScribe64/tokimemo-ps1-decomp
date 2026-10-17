@@ -34,6 +34,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-20620-as1-scheduling|T-20620]] Scheduling family: as1 ordering (sched/hoist rows of [[data/t0018-cases]]): TACO `func_8014B8B4` matched (972 B), 3 owned-file recipes verified in scratch, order-only near misses with no C form or as1 option (Done)
+- [[tickets/T-20004-gyozi-dialogue-followup|T-20004]] Two GYOZI dialogue helpers matched, 776 bytes; issue #39 claim, 27/27 checksums and prototype guard pass (In Review).
 - [[tickets/T-20500-emulator-assisted-naming|T-20500]] Emulator-assisted naming and constants pass, phase 2 head start (Backlog; waits for free CPU).
 - [[tickets/T-17119-w3-rpg-bat-p19|T-17119]] Wave 3 package w3-rpg-bat-p19: RPG_BAT `80148F70.c`, `80141060.c`, 2 of 2 matched (`func_80148F70`, `func_80141060`, 4,208 B; m2c draft rewritten as plain per-arm stores, byte-array group loops, frame word from a named local; Done)
 - [[tickets/T-17117-w3-rpg-bat-p17|T-17117]] Wave 3 package w3-rpg-bat-p17: RPG_BAT `8013CC90.c`, `func_8013CC90` matched, 1 of 1 (928 B; promoted global updated in place, `u32` file view of `D_8015ED98`, one FAKE; Done)
