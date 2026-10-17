@@ -24,10 +24,9 @@ void func_8013E4D0(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-17107, 16 differing lines; all four unrolled loop bodies match (byte-array index form, i = 4..15 like func_8013E7C0's D_8011ECD0[k + i * 0x44]); left: the loop preheader, where the original puts the limit's lui (t0) in the dispatch delay slot and emits addiu v0 then addiu t0, and the build the reverse.
- * Closer pass: ugen hands as1 `la start` (the strength-reduction init) before `la limit` (the hoisted loop-test constant, then the other hoisted constants and loads). Swapping only those two binasm records reproduces the original's case 3, so the gap is uopt's record order, not as1, line records or symbols. About 60 source shapes keep that order (base pointer locals, counter types and scopes, labels, goto loops, if-chain, return, manual 4x body, dead reassignments, address tests). None of the 190 matched two-address loops in the tree has the limit first. The original's addiu order shows in 7 other unmatched functions; EN_NICHI func_80132EE8 has the same one-block preheader (limit lui in a delay slot). */
-void func_8013E54C(s32 arg0) {
+/* Implicit int with no return value (the callers have no prototype): with $v0 live at the exit, uopt
+ * emits the hoisted loop limit before the strength-reduced start in each case, as the original (T-20600). */
+s32 func_8013E54C(s32 arg0) {
     s32 i;
 
     switch (arg0) {
@@ -70,9 +69,6 @@ void func_8013E54C(s32 arg0) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013E54C);
-#endif
 
 void func_8013E7C0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     u8 *temp_v0;

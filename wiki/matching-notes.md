@@ -6740,6 +6740,72 @@ Result: 2 of 4 matched (`func_8013BBF8` 688 B, `func_8013EA60` 1,100 B linked), 
 
 Compiler-gap rows: none (both matched). Five new rows in [[register-cheatsheet]]; the frame-word model of the T-19019 note (line "Frame words of a function with spills") is confirmed for two more functions.
 
+## T-20600: register-order family, recipe sweep
+
+[[tickets/T-20600-regorder-recipe-sweep]], one Opus agent, about three hours on a loaded machine (two compile jobs),
+worktree `cg-regorder` from `w2-good`. Part of getting ahead of the compiler-limited tail of
+[[speedup-research-2026-10-16]]. Target list: the functions still `INCLUDE_ASM` or guarded that have a `regorder`
+row in [[data/t0018-cases]], without TT (claimed by a contributor) and without the files the wave 3 conveyor owns:
+39 functions, 17 with a guarded draft and 22 with an archived draft only. Five of them matched, 3,400 bytes, no
+FAKE; a second sweep over the other guarded drafts in files the conveyor had released by then matched RPG_BAT
+`func_8013B5B0` (864 bytes, a `promo` row) and main `func_8006D6E0` (268 bytes, a `regorder` row), seven functions
+and 4,532 bytes in all:
+
+| function | bytes | what fixed it |
+|---|---|---|
+| DATE `func_80155004` | 368 | the three colour-byte stores as one chain assignment (`D_801217D0[i].unk_14 = .unk_15 = .unk_16 = D_800B593C;`), the walk as a `for` loop, and the `idx` local of the sibling step-table handlers instead of the FAKE `pad[2]` |
+| DATE `func_80152E34` | 392 | the colour stores as `setRGBn`-style comma lines with `& 0xFF` masks (663 to 290 points), then the `GameState` fields through `GameState *g` declared where the FAKE pad was (290 to a match) |
+| RPG_BAT `func_80149C5C` | 1,296 | `s32` definition with no return (its caller comes first in the file, so the original is an implicit `int`) and an `s32 func_8013F0F4();` view through `RPG_BAT_OVERRIDE_func_8013F0F4` |
+| RPG_BAT `func_8013E54C` | 624 | `s32` definition with no return (callers in six files call it undeclared); with `$v0` live at the exit ugen hands as1 the hoisted loop limit before the strength-reduced start, the order the T-17107 closer pass could not get from any `void` form |
+| TAIIKU `func_80145370` | 720 | `MAIN_API_OVERRIDE_func_80085E30` and `s32 func_80085E30();`, the T-16552 fix of `func_80138AA8`: the call's `$v0` result keeps the loop pointer off `$v0`, so the hoisted 8 takes it |
+| RPG_BAT `func_8013B5B0` | 864 | `MAIN_API_OVERRIDE_func_800452C4` and `s32 func_800452C4();` (20 register rows to 2: the promoted state byte `unk_1109` moves from `$v0` to `$v1`), then the counter test as a pre-increment, `(u32)++D_800E6280.unk_1100 > 0x400U` (the original stores the incremented value and compares with 0x401) |
+| main `func_8006D6E0` | 268 | `s32` definition with no return and `s32 func_8006D6E0();` in `main_api.h` (the definition's type; the MASTER caller builds the same); the `void` form folds the second loop's start copy (`move v1,v0`) into the promoted `unk_71C` (T-11670, 5 lines) |
+
+How the recipes did:
+- **Implicit `int` of the function itself** (new here): the strongest lever. Drafts of functions that are called
+  before their definition, or only from files that call them undeclared, were written `void` in earlier passes and
+  tested with a prototype. Check this first; three of the seven matches needed it (`func_8013E54C`,
+  `func_80149C5C`, `func_8006D6E0`), and the callee view of `func_80149C5C` only worked on top of it.
+- **Integer view of a `void` callee** (T-16210, T-20001): the second sweep (`s32 f();` for every `void` callee of the
+  28 other guarded drafts, plus `s32` definitions) found `func_8013B5B0` and moved DATE `func_8013B488` from 35 to 22
+  register rows (`s32 func_80083440();`). It skipped two far main drafts (`func_80067870`, `func_800696DC`) and was
+  stopped before `func_8006EB64`, `func_8006EEC4`, `func_80072998` and `func_80072D70` had their callee views run. A sweep over all callees of the 17 guarded drafts
+  (`s32 f();` for `void` callees, `void f();` for ignored results; 98 `funcdiff --proto` runs) found nothing at
+  first. The `func_80145370` win was in a job that reported an error in the sweep (probably a concurrent `build.ninja`
+  rewrite) and was only seen on a rerun: treat a failed probe as untested. Callees defined in the same file cannot be probed this
+  way (`regdiff` refuses them).
+- **Chain assignment for one value stored to several fields** (new; the T-11850 zero-store chains are the same
+  effect): when the original never uses one low register in that block and every range is one register higher, the
+  chain's hidden value range seems to be the missing occupant.
+- **`setRGBn` comma lines with masks** (new): for colour words split into bytes. Without the masks, or as separate
+  statements, the colour ranges keep the low registers.
+- **`GameState *g`** (T-16920, T-16930): finished `func_80152E34`; no effect on RENSYU `func_80133628`, TACO
+  `func_801424A8`, `func_8013D838`, DATE `func_80155004`, TAIIKU `func_80135480`.
+- **Natural extra local for the frame** (T-16930): `func_80155004` (`s32 idx; s16 i;` above the table, as in
+  `func_80154F44`) and `func_80152E34` (`g`) both dropped a FAKE pad.
+- u16/s16 constant typing (T-11840), one-line store pairs (T-11850), a dead selector read (T-11690) and same-unit
+  data (T-16551) fit none of the 39 symptoms well enough to change a draft; the one-line forms were tried on
+  `func_8014F5F0`, `func_80134A18` and `func_80152E34` without effect.
+
+Near misses and what moved (rows added to [[data/t0018-cases]]):
+- TACO `func_80134A18`: writing the third light as `D_8012278D = D_8012278E + 1; D_8012278C = D_8012278E = D_8012278E + 1;`
+  gives the original's colours (bytes `$v1`/`$a2`/`$a3`, sum `$v0` as an expression range), but the 7E/8E loads
+  stay after the stores of the light before them and every later ugen temporary is one lower (48 funcdiff lines
+  against 36, so not kept). The original seems to compute the sum into a ugen temporary first and copy it.
+- TACO `func_801511C0`: `p = D_8016024C + arg1;` instead of `&D_8016024C[arg1]` puts the `sw a1,0x3C(sp)` home store
+  at the entry like the original; left are the count/pointer `$s0`/`$s2` swap and one ugen temporary.
+- RPG_BAT `func_8015A744`: merging `x` into `r` (one variable for the position and the random step) and `y` into `n`
+  brings back the original's `move a0,v1` copy before the `D_8015EC68` store (scorer 291 to 201); left are the dead
+  `move a1,v0` at the `D_8015EC54` store, the `i++` position and one `mflo` register.
+- No change from any recipe: TAIIKU `func_80135480`/`func_8014357C` (flags nibble and rating prologue: types,
+  chains, `else` arms, a ternary, `t &= 0xF`), TACO `func_8014F5F0` (`unk_036..038` chains and increments), TACO
+  `func_80138B2C` (zero-store chains), RENSYU `func_80133628`, DATE `func_8014718C` (fade-step sum forms), RPG_BAT
+  `func_801447E0` (multiply operand orders), `func_8015A8B4` (object-id indexing `i + 0x28` / `[id + 96]`).
+
+Tooling notes: `autotweak.BuildScorer` (the scorer behind `vs.py`-style variant files in the scratchpad) scores a
+changed base symbol as a large difference even when the resolved bytes agree, so check symbol-view variants with
+`regdiff --src`. The archived drafts of the 22 `INCLUDE_ASM` functions mostly no longer compile against the current
+headers (migrated globals such as `D_8014929A`, `D_800E7318`; m2c artefacts such as `D_7FFF`).
 ## T-17116: RPG_BAT package w3-rpg-bat-p16 (80155CC0.c, 80134D30.c)
 
 [[tickets/T-17116-w3-rpg-bat-p16]], wave 3 package of [[tickets/T-17100-types-first-rpg_bat]] ([[rpg-bat-family-results]]), worktree `w3-rpg-bat-p16`. 2 of 3 matched in plain C: `func_80156064` (828 B, T-17100 draft score 228, one FAKE site) in about 22 minutes, and `func_80135358` (1,700 B, draft score 521) by the closer pass (see below); `func_80134E78` (1,248 B, score 254) is back to `INCLUDE_ASM` (draft `drafts/T-17116/RPG_BAT/func_80134E78`). `tools/siblings.py` found no matched relative above 0.70 for any of them. Note for the tool: `--package` takes `UNIT/func` lines (the work-list text with sizes is read as one entry) and the list must be inside the repo (the container sees only `/work` and `/scratch`).

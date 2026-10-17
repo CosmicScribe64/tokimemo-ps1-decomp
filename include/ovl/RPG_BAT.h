@@ -101,9 +101,9 @@ void func_8014EF3C(void);
 
 #ifndef RPG_BAT_OVERRIDE_func_8013F0F4
 void func_8013F0F4(s32 a, s32 b, s32 c);
+#endif
 void func_801328C4(s32 a, s32 b);
 s32 func_8014A3DC(void);
-#endif
 /* Same override rule as the pair above (the definition in 8013E4D0.c is void; T-17101). */
 #ifndef RPG_BAT_OVERRIDE_func_8013F15C
 void func_8013F15C(s32 a, s32 b, s32 c);
