@@ -17536,3 +17536,7 @@ KakarottoCake's PR #53: NAME_ENT func_80149B08 (484 bytes). diman8's PR #54: DAT
 ## [2026-10-17] ticket | T-22000 Wave 4 conveyor opened
 
 Matching resumes at the user's request until weekly usage nears 95 percent. Fresh inventory: 426 functions in 122 packages (TT, DATE2 and claimed functions excluded). [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] ticket | T-22006 Wave 4 package w4-p06 opened
+
+Package w4-p06 of [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/DATE/8014A1B0.c`, `func_8014A8FC` (1,140 bytes, guarded at 34 lines). [[tickets/T-22006-w4-p06]] In Progress.
