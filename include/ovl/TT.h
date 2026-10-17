@@ -771,3 +771,9 @@ typedef struct TtSprSet {
     /* 0x10 */ u16 clut;
 } TtSprSet; /* accessed prefix size 0x12 */
 #endif
+
+#ifndef OVL_TT_T11860_8013F040
+#define OVL_TT_T11860_8013F040
+/* Hit box passed to func_80145508 by func_8013F040 (12 bytes of data; first record used). T-11860 */
+extern TtCollision6 D_80155D44;
+#endif

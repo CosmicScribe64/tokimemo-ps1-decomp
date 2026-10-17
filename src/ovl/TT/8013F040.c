@@ -14,7 +14,92 @@ typedef struct TtAnimScene366 {
     /* 0x364 */ u16 timer;
 } TtAnimScene366; /* accessed prefix size 0x366; T-10030 */
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013F040);
+void func_8013F040(void) {
+    u8 *c;
+    u8 *a;
+    s32 pad[9]; /* FAKE: unused, places pt, box and the spilled q at the original's frame offsets. T-11860 */
+    s16 pt[2];
+    TtCollision6 box;
+    s32 i;
+    s32 j;
+    u8 *p;
+    u8 *q;
+
+    c = D_80158A8C;
+    a = D_80158A74;
+    if (c[0] == 0) {
+        return;
+    }
+    for (i = 0; i < 0x18; i++) {
+        c[i * 0x14 + 0x42] = 0;
+    }
+    if (c[0x342] == 0 && func_801427A8() != 0) {
+        func_80133AD0(0x503);
+    }
+    for (i = 0x10; i < 0x13; i++) {
+        if (c[i + 0x310] != 0) {
+            c[i * 0x14 + 0x42] = 0;
+        }
+    }
+    if (c[0x343] == 0) {
+        for (i = 0x10, q = c + 0x10; i != 0x13; i++, q++) {
+            if (q[0x310] != 0) {
+                pt[0] = *(s16 *)(c + 0x14) + ((s16 *)(c + 0x248))[i];
+                pt[1] = *(s16 *)(c + 0x16) + ((s16 *)(c + 0x278))[i];
+                if (a[0x52] == 0 && a[0] != 0 && func_80145508(a + 0x14, D_80155B30, pt, &D_80155D44) != 0) {
+                    func_80144094();
+                    *(s16 *)(a + 4) = 0x60;
+                    *(s16 *)(a + 10) = 0;
+                    *(s16 *)(a + 8) = 0;
+                    *(s16 *)(a + 6) = 0;
+                    a[15] = 0;
+                    a[14] = 0;
+                    a[13] = 0;
+                }
+                for (j = 0, p = D_80158A80; j != 12; j++, p += 0x54) {
+                    /* Separate tests number the hoisted constants 12, 0x40, &D_80155B36, 0x80 as in the original. */
+                    if (p[0] == 0) {
+                        continue;
+                    }
+                    if (*(u16 *)(p + 4) != 0x40) {
+                        continue;
+                    }
+                    if (func_80145508(p + 0x14, &D_80155B36, pt, &D_80155D44) == 0) {
+                        continue;
+                    }
+                    *(u16 *)(p + 4) = 0x80;
+                    *(s16 *)(p + 10) = 0;
+                    *(s16 *)(p + 8) = 0;
+                    *(s16 *)(p + 6) = 0;
+                    p[15] = 0;
+                    p[14] = 0;
+                    p[13] = 0;
+                }
+            }
+        }
+    }
+    if (c[0x344] == 0) {
+        c[0x20E] = 0;
+        if (a[0] != 0) {
+            pt[0] = *(s16 *)(c + 0x14) + *(s16 *)(c + 0x276);
+            pt[1] = *(s16 *)(c + 0x16) + *(s16 *)(c + 0x2A6);
+            box.x = 0;
+            box.y = 0;
+            box.w = *(s16 *)(c + 0x210) * 0x30 / 4096;
+            box.h = *(s16 *)(c + 0x212) * 0x30 / 4096;
+            if (a[0x52] == 0 && a[0] != 0 && func_80145508(a + 0x14, D_80155B30, pt, &box) != 0) {
+                func_80144094();
+                *(s16 *)(a + 4) = 0x60;
+                *(s16 *)(a + 10) = 0;
+                *(s16 *)(a + 8) = 0;
+                *(s16 *)(a + 6) = 0;
+                a[15] = 0;
+                a[14] = 0;
+                a[13] = 0;
+            }
+        }
+    }
+}
 
 void func_8013F3B4(void) {
     u8 *p;
