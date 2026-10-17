@@ -1714,6 +1714,7 @@ extern s32 D_80125CA8;
 extern s32 D_80125CAC;
 extern s32 D_80125CB0;
 extern u16 D_80125CC0;
+extern u16 D_80125CC2;
 extern Work80125D10 D_80125D10;
 extern s32 D_80125D14;
 extern s32 D_80125D18;

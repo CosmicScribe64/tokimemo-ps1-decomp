@@ -544,7 +544,37 @@ void func_8007B640(void) {
     D_80125CC0 = 0;
 }
 
+/* NON_MATCHING: T-17012, 51 diff rows (about 26 differing lines); the structure is right (return value read before the shift loop, u16 loop counter), but IDO hoists `move v0,zero` for `return 0` and colours the count $v1 and the loop counter $v0 where the original has the count in $v0, the counter in $a0 and the saved element in $v1 (T-0018, promo). */
+#ifdef NON_MATCHING
+u16 func_8007B64C(void) {
+    u16 n;
+    u16 i;
+    u16 ret;
+
+    n = D_80125CC0;
+    if (n > 0x20) {
+        n = 0x20;
+    }
+    if (n == 0) {
+        D_80125CC0 = n;
+        return 0;
+    }
+    ret = D_80125CC2;
+    i = 1;
+    if (n >= 2) {
+        D_80125CC0 = n;
+        do {
+            (&D_80125CC0)[i] = (&D_80125CC0)[i + 1];
+            i++;
+        } while (i < D_80125CC0);
+        n = D_80125CC0;
+    }
+    D_80125CC0 = n - 1;
+    return ret;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B64C);
+#endif
 
 void func_8007B6E0(void) {
     func_8007A98C(0x74);
