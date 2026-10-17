@@ -17,7 +17,29 @@ void func_80141900(void) {
     D_80148814 = 0x801DB000;
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_80141944);
+/* Return type preserves the original fall-through schedule. T-20006. */
+s32 func_80141944(void) {
+    s32 idx; /* Index precedes the copied table (T-3330, T-20006). */
+    GzCallbacks68 table;
+
+    table = D_80148880;
+    idx = D_800F647A;
+    table.callbacks[idx](0x80);
+    if (D_800F647A < 8) {
+        D_8012B8C0[0].unk_07 = D_801317EB;
+        if (D_8012B8C0[0].unk_18 == 0 && D_8012B8C0[0].unk_08 == 0) {
+            if (++D_8012B8C0[0].unk_16 >= 3) {
+                D_8012B8C0[0].unk_16 = 0;
+            }
+        }
+    }
+    if (D_800F647A >= 0xA && D_80148820 != 0) {
+        func_801428EC();
+    }
+    if (D_800F647A >= 0xA && D_80148824 != 0) {
+        func_80142C14();
+    }
+}
 
 void func_80141A94(void) {
     func_8004C6A0(0, 0x40);
