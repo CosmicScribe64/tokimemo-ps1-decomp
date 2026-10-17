@@ -17704,3 +17704,7 @@ Three of five SHUGAKU functions matched: `func_80135480` (`s32` no return, `SHUG
 ## [2026-10-17] ticket | T-22019 Wave 4 package w4-p19 opened
 
 [[tickets/T-22019-w4-p19]] (In Progress) under [[tickets/T-22000-wave-4-conveyor]]: `src/ovl/ETC/8013BEF0.c`, five functions (`func_8013C700`, `func_8013E89C`, `func_8013D32C`, `func_8013CCE4`, `func_8013E6AC`). Branch `w4-p19` from `w2-good`.
+
+## [2026-10-17] ticket | T-22019 In Review
+
+[[tickets/T-22019-w4-p19]]: 4 of 5 matched in `src/ovl/ETC/8013BEF0.c` (`func_8013C700`, `func_8013E89C`, `func_8013D32C`, `func_8013E6AC`; 2,232 bytes). `func_8013CCE4` stays `INCLUDE_ASM` at 43 rows (cleaned draft in `drafts/T-22019/ETC/func_8013CCE4/body.c`). Notes in [[matching-notes]].
