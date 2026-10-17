@@ -56,6 +56,7 @@ kanban-plugin: board
 ## In Review
 
 
+- [ ] [[tickets/T-20005-gyozi-display-dispatch|T-20005 Two GYOZI display/dispatch helpers matched (524 bytes)]]
 
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
@@ -148,6 +149,7 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-20620-as1-scheduling|T-20620 Scheduling family: as1 ordering]]
 - [ ] [[tickets/T-20001-gyozi-helper|T-20001 Match the GYOZI dialogue helper from its SHOUGATU sibling]]
+- [ ] [[tickets/T-17013-w3-main-p13|T-17013 Wave 3 package w3-main-p13]]
 - [ ] [[tickets/T-17008-w3-main-p08|T-17008 Wave 3 package w3-main-p08]]
 - [ ] [[tickets/T-20610-promo-entry-rule|T-20610 Promotion family: cvt_pass entry rule]]
 - [ ] [[tickets/T-17006-w3-main-p06|T-17006 Wave 3 package w3-main-p06]]

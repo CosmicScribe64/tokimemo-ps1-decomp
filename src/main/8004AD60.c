@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "psx_types.h"
 
 void func_8004AD60(s32 arg0) {
     if ((arg0 & 0xFF) == 0) {
@@ -37,7 +38,63 @@ void func_8004AE28(s32 a0, s32 a1, s32 a2) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004AE54);
+/* tpx and tpy are declared locals so that the allocator spills the later one (tpy, sp+0x5C) and keeps tpx in
+ * $fp, as the original does; as bare expressions it spills the other. T-17013 */
+void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3) {
+    SPRT_8 *p;
+    s32 n;
+    s32 v;
+    s32 tpx;
+    s32 tpy;
+
+    n = 0;
+    if (D_800B3D80 >= 4 && D_800B3220 != 0) {
+        v = abs(a0);
+        /* Both v >= 0 tests (here and at the loop end) are always true, but the original has the
+         * bltz/bgez branches, so they stay. T-17013 */
+        if (v >= 0) {
+            tpx = (a3 & 8) * 4 + 0x100;
+            tpy = (a3 & 7) + 0x1F8;
+            do {
+                p = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
+                func_8009F07C(p);
+                SetSemiTrans(p, 0);
+                p->r0 = 0x80;
+                p->g0 = 0x80;
+                p->b0 = 0x80;
+                p->x0 = D_800E6280.unk_014[D_8011ECA0] + a1 - n * 5;
+                p->y0 = D_800E6280.unk_018[D_8011ECA0] + a2;
+                p->u0 = D_800B3D84[(v % 10) * 2];
+                p->v0 = D_800B3D84[(v % 10) * 2 + 1];
+                p->clut = func_8009ED74(tpx, tpy);
+                AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + 4, p);
+                if (v < 10) {
+                    n++;
+                    break;
+                }
+                v = v / 10;
+                n++;
+            } while (v >= 0);
+        }
+        if (a0 < 0) {
+            tpx = (a3 & 8) * 4 + 0x100;
+            tpy = (a3 & 7) + 0x1F8;
+            p = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
+            func_8009F07C(p);
+            SetSemiTrans(p, 0);
+            p->r0 = 0x80;
+            p->g0 = 0x80;
+            p->b0 = 0x80;
+            p->x0 = D_800E6280.unk_014[D_8011ECA0] + a1 - n * 5;
+            p->y0 = D_800E6280.unk_018[D_8011ECA0] + a2;
+            p->u0 = D_800B3D84[0x12] + 8;
+            p->v0 = D_800B3D84[0x13];
+            p->clut = func_8009ED74(tpx, tpy);
+            AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + 4, p);
+        }
+        dtd_on_tpage(0x2C0, 0x100, 1, 0, 0);
+    }
+}
 
 void func_8004B19C(s32 arg0, s32 arg1, s32 arg2) {
     u8 *p;

@@ -16994,3 +16994,15 @@ KakarottoCake's PR #44 (claim #43): GYOZI func_80141944 and func_80145384 matche
 
 ## [2026-10-17] ticket | T-17011 Done
 [[tickets/T-17011-w3-main-p11]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/main/80062CD0.c` changed in code, `D_800B5A98` added to `include/main_api.h`, no `drafts/` or config change. Findings fixed (comments and one blank line, bytes unchanged): the `(u8)` view of `unk_F6E`, the `pad_1C` halfword view and the byte-pointer record address of `func_8006612C` now carry comments; stray blank line removed. The one `FAKE` (`func_80063668`) is tracked in the ticket. Clean build, main exe sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 3 of 5 matched (`func_80063668`, `parameter_show`, `func_8006612C`, 1,680 bytes). Merge via the wave 3 merge script.
+
+## [2026-10-17] ticket | T-17013 Wave 3 package w3-main-p13 started
+[[tickets/T-17013-w3-main-p13]] In Progress: four main functions (`func_8004B358`, `func_8004AE54`, `col2sepia`, `make_color_bar`) in `src/main/8004AD60.c`, worktree tokimemo-wt/w3-main-p13, branch w3-main-p13. Part of [[tickets/T-17000-types-first-main]].
+
+## [2026-10-17] build | T-17013 func_8004AE54 matched
+[[tickets/T-17013-w3-main-p13]]: `func_8004AE54` (840 B) matched in plain C, committed on its own. Declared locals `tpx`, `tpy` (in that order) fix the spill of the `func_8009ED74` arguments (superseding the T-9320 row in [[data/t0018-cases]]), `v = v / 10; n++;` fixes the induction-variable update. `src/main/8004AD60.c`; main sha1 OK.
+
+## [2026-10-17] ticket | T-17013 In Review
+[[tickets/T-17013-w3-main-p13]] moved In Progress to In Review (kanban card moved): 1 of 4 matched (`func_8004AE54`); `func_8004B358` 49 rows (restored to `INCLUDE_ASM`, draft in `drafts/T-17013/main/func_8004B358`), `col2sepia` 171 rows, `make_color_bar` not retried; rows in [[data/t0018-cases]], notes in [[matching-notes]] and [[register-cheatsheet]]. Awaiting code review against `CODING_STANDARDS.md`.
+
+## [2026-10-17] ticket | T-17013 Done
+[[tickets/T-17013-w3-main-p13]] reviewed against `CODING_STANDARDS.md`: 1 finding fixed (a source comment on the two always-true `v >= 0` tests of `func_8004AE54`, which the original asm has as `bltz`/`bgez`), no others. In Review to Done (kanban card moved). Matched 1 of 4 (`func_8004AE54`, 840 B), no FAKE, no guarded drafts; `func_8004B358`, `col2sepia` and `make_color_bar` stay `INCLUDE_ASM` with rows in [[data/t0018-cases]]. Unit sha1, headers and globals OK after the comment edit; the clean 27/27 build runs in the merge.
