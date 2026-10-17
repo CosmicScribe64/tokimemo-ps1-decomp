@@ -252,9 +252,6 @@ void func_801413B8(Tc14 *arg0, s32 arg1) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-19017, 28 differing lines; the original reloads D_8011ECA0 (lui/lw $a1) for the func_800490F0 call, this
- * draft reuses the earlier load ($t3), which shifts the registers of the rest. The UV ladder, loops and frame are exact. */
 void func_801416E8(Tc14 *arg0, s32 arg1) {
     s32 pad[2]; /* FAKE: pad and k2 are unused; they reproduce the original frame (208 bytes). T-19017 */
     MATRIX m;
@@ -293,43 +290,41 @@ void func_801416E8(Tc14 *arg0, s32 arg1) {
         }
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
-        if (((s16 *)pt)[3] >= D_800E6280.unk_018[D_8011ECA0] - 0x200
-            && D_800E6280.unk_018[D_8011ECA0] + 0x200 >= ((s16 *)pt)[7]) {
-            side = rec->unk12;
-            poly = func_800490F0(0x28, D_8011ECA0);
-            func_8009F040(poly);
-            SetSemiTrans(poly, 1);
-            poly->r0 = 0x80;
-            poly->g0 = 0x80;
-            poly->b0 = 0x80;
-            poly->tpage = func_8009ECB0(0, 1, 0x380, 0x100);
-            poly->clut = func_8009ED74((side % 14) << 4, 0x1EB);
-            /* FAKE: the four branches are hand expansions of setUVWH(poly, 0x80 + 0x20 * k, 0x20, 0x1E, 0x1E) on one line each
-             * (as1 schedules the eight stores of one line together). T-19017 */
-            if (dist < 0x20) {
-                poly->u0 = 0x80, poly->v0 = 0x20, poly->u1 = 0x80 + 0x1E, poly->v1 = 0x20, poly->u2 = 0x80, poly->v2 = 0x20 + 0x1E, poly->u3 = 0x80 + 0x1E, poly->v3 = 0x20 + 0x1E;
-            } else if (dist < 0x60) {
-                poly->u0 = 0xA0, poly->v0 = 0x20, poly->u1 = 0xA0 + 0x1E, poly->v1 = 0x20, poly->u2 = 0xA0, poly->v2 = 0x20 + 0x1E, poly->u3 = 0xA0 + 0x1E, poly->v3 = 0x20 + 0x1E;
-            } else if (dist < 0xA0) {
-                poly->u0 = 0xC0, poly->v0 = 0x20, poly->u1 = 0xC0 + 0x1E, poly->v1 = 0x20, poly->u2 = 0xC0, poly->v2 = 0x20 + 0x1E, poly->u3 = 0xC0 + 0x1E, poly->v3 = 0x20 + 0x1E;
-            } else {
-                poly->u0 = 0xE0, poly->v0 = 0x20, poly->u1 = 0xE0 + 0x1E, poly->v1 = 0x20, poly->u2 = 0xE0, poly->v2 = 0x20 + 0x1E, poly->u3 = 0xE0 + 0x1E, poly->v3 = 0x20 + 0x1E;
-            }
-            poly->x0 = ((s16 *)pt)[0];
-            poly->y0 = ((s16 *)pt)[1];
-            poly->x1 = ((s16 *)pt)[2];
-            poly->y1 = ((s16 *)pt)[3];
-            poly->x2 = ((s16 *)pt)[4];
-            poly->y2 = ((s16 *)pt)[5];
-            poly->x3 = ((s16 *)pt)[6];
-            poly->y3 = ((s16 *)pt)[7];
-            func_8009EED0((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+        /* The early return (not a nested if) gives the original's separate load of D_8011ECA0 for the func_800490F0 call. T-22005 */
+        if (((s16 *)pt)[3] < D_800E6280.unk_018[D_8011ECA0] - 0x200 || D_800E6280.unk_018[D_8011ECA0] + 0x200 < ((s16 *)pt)[7]) {
+            return;
         }
+        side = rec->unk12;
+        poly = func_800490F0(0x28, D_8011ECA0);
+        func_8009F040(poly);
+        SetSemiTrans(poly, 1);
+        poly->r0 = 0x80;
+        poly->g0 = 0x80;
+        poly->b0 = 0x80;
+        poly->tpage = func_8009ECB0(0, 1, 0x380, 0x100);
+        poly->clut = func_8009ED74((side % 14) << 4, 0x1EB);
+        /* FAKE: the four branches are hand expansions of setUVWH(poly, 0x80 + 0x20 * k, 0x20, 0x1E, 0x1E) on one line each
+         * (as1 schedules the eight stores of one line together). T-19017 */
+        if (dist < 0x20) {
+            poly->u0 = 0x80, poly->v0 = 0x20, poly->u1 = 0x80 + 0x1E, poly->v1 = 0x20, poly->u2 = 0x80, poly->v2 = 0x20 + 0x1E, poly->u3 = 0x80 + 0x1E, poly->v3 = 0x20 + 0x1E;
+        } else if (dist < 0x60) {
+            poly->u0 = 0xA0, poly->v0 = 0x20, poly->u1 = 0xA0 + 0x1E, poly->v1 = 0x20, poly->u2 = 0xA0, poly->v2 = 0x20 + 0x1E, poly->u3 = 0xA0 + 0x1E, poly->v3 = 0x20 + 0x1E;
+        } else if (dist < 0xA0) {
+            poly->u0 = 0xC0, poly->v0 = 0x20, poly->u1 = 0xC0 + 0x1E, poly->v1 = 0x20, poly->u2 = 0xC0, poly->v2 = 0x20 + 0x1E, poly->u3 = 0xC0 + 0x1E, poly->v3 = 0x20 + 0x1E;
+        } else {
+            poly->u0 = 0xE0, poly->v0 = 0x20, poly->u1 = 0xE0 + 0x1E, poly->v1 = 0x20, poly->u2 = 0xE0, poly->v2 = 0x20 + 0x1E, poly->u3 = 0xE0 + 0x1E, poly->v3 = 0x20 + 0x1E;
+        }
+        poly->x0 = ((s16 *)pt)[0];
+        poly->y0 = ((s16 *)pt)[1];
+        poly->x1 = ((s16 *)pt)[2];
+        poly->y1 = ((s16 *)pt)[3];
+        poly->x2 = ((s16 *)pt)[4];
+        poly->y2 = ((s16 *)pt)[5];
+        poly->x3 = ((s16 *)pt)[6];
+        poly->y3 = ((s16 *)pt)[7];
+        func_8009EED0((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_801416E8);
-#endif
 
 /* FAKE: pad, k1, k7, k8, k2, t, k3 and k4 are unused locals; they reproduce the original frame (224 bytes: eight above m,
  * three words below pt, the homes of depth, flag and fade). Real source unknown. T-19017 */
