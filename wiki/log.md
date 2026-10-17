@@ -17435,3 +17435,7 @@ Eliminating the explicit line cursor restores the 760-byte frame. Splitting the 
 ## [2026-10-17] ticket | T-20007 Done (PR #46 merged)
 
 KakarottoCake's PR #46 (claim #45): main dialogue_render matched, 5,588 bytes, merged in one clean build with PR checks (27/27, headers, globals, prototypes, funcdiff MATCH). [[tickets/T-20007-large-dialogue-renderer]] Done.
+
+## [2026-10-17] ticket | T-21520 opened, In Progress
+
+[[tickets/T-21520-apply-tooling-matches]]: apply the eight tooling-round matches ([[tickets/T-20830-autotweak-recipes]], [[tickets/T-20810-viewsweep]]) and the two keep proofs ([[tickets/T-20820-keep-proof]]) to `src/` on the tree after the shared-type round. Worktree tr-apply from w2-good.
