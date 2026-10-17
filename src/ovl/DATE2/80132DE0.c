@@ -386,7 +386,179 @@ void func_80133A6C(void) {
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80133AF0);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_801348F0);
+/* s32: the step exits return 0 (or v0,zero,zero), the fade steps fall off the end (as in the DATE twin func_8014718C). T-11880 */
+s32 func_801348F0(void) {
+    GameState *g;
+    RECT rect; /* FAKE: unused, reserves the 8 bytes above sp30 in the original 0x40 frame (as in the DATE twin func_8014718C) T-11880 */
+    u32 sp30;
+    u32 timer;
+    s16 i;
+    u8 x;
+    u32 y; /* FAKE: second copy of the fade step; it holds $v1 so the stored value lands in $a1 T-11880 */
+    DateMovieWork *movie;
+
+    g = &D_800E6280;
+    movie = (DateMovieWork *)D_800B5920;
+    D_800B3D60 = 0;
+    switch (g->unk_1104.u) {
+    case 0:
+        D_80122D2C = 1;
+        func_80044750(0x201);
+        movie->unk_06 = 0;
+        movie->unk_02 = 0;
+        movie->unk_04 = 0;
+        movie->unk_00 = 0;
+        movie->unk_19 = 0;
+        movie->unk_18 = 0;
+        movie->unk_28 = -1;
+        movie->unk_0A = 0;
+        movie->unk_1A = 0;
+        func_8006492C(0);
+        D_8013A5CC = 0; for (i = 0; i < 2; i++) { /* FAKE: one source line keeps the as1 store order T-11880 */
+            D_801217D0[i + 10].unk_08 = (i << 6) + 0x80;
+            D_801217D0[i + 10].unk_00 = 0x82000000;
+            D_801217D0[i + 10].unk_0A = 0xA0;
+            D_801217D0[i + 10].unk_0E = 0;
+            D_801217D0[i + 10].unk_0F = 0;
+            D_801217D0[i + 10].unk_10 = 0;
+            D_801217D0[i + 10].unk_0C = (i * 2) + 0x15;
+            D_801217D0[i + 10].unk_12 = 0x1E0;
+            D_801217D0[i + 10].unk_14 = 0;
+            D_801217D0[i + 10].unk_15 = 0;
+            D_801217D0[i + 10].unk_16 = 0;
+            D_801217D0[i + 10].unk_18 = 0;
+            D_801217D0[i + 10].unk_1A = 0;
+            D_801217D0[i + 10].unk_1C = 0x1000;
+            D_801217D0[i + 10].unk_1E = 0x1000;
+            D_801217D0[i + 10].unk_20 = 0;
+            D_801217D0[i + 10].unk_04 = (i << 7) - 0xA0;
+            D_801217D0[i + 10].unk_06 = -0x96;
+            D_800E6280.unk_10A5[i + 10] = 0xC;
+        }
+        func_801365DC(0x43C2);
+        g->unk_1104.u += 1;
+        return 0;
+    case 1:
+        if (cd_read_sync_status() & 1) {
+            if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
+                func_800AE0B0("DEC_BS header Error \n");
+                movie->unk_04 = 0;
+                movie->unk_06 = 0;
+                g->unk_1104.u -= 1;
+                return 0;
+            }
+            func_800536AC(0x140, 0x100, 0x140, 0xA0);
+            g->unk_1104.u += 1;
+        }
+        return 0;
+    case 2:
+        cd_read_sectors(0x31, 0x801AE000, 0xBCD1);
+        func_801339F8();
+        g->unk_1104.u += 1;
+        return 0;
+    case 3:
+    case 11:
+    case 14:
+    case 16:
+    case 18:
+        if (cd_read_sync_status() & 1) {
+            g->unk_1104.u += 1;
+        }
+        return 0;
+    case 4:
+        func_80043914(D_8013A5B0, 0x11, 1, 0, 0);
+        func_80084E90(D_8013A5B4, D_8013A5B8, D_8013A5BC, D_8013A5C0, D_8013A5C4, D_8013A5C8);
+        g->unk_1104.u += 1;
+        return 0;
+    case 5:
+        for (i = 10; i < 12; i++) {
+            D_801217D0[i].unk_00 &= 0x7FFFFFFF;
+        }
+        for (i = 58; i < 64; i++) {
+            D_801217D0[i].unk_00 &= 0x7FFFFFFF;
+        }
+        g->unk_1104.u += 1;
+        return 0;
+    case 6:
+        x = (D_801217D0[58].unk_14 += 4); y = D_801217D0[58].unk_15 = x; D_801217D0[58].unk_16 = y; /* FAKE: see y; one line keeps the store order T-11880 */
+        for (i = 10; i < 12; i++) {
+            D_801217D0[i].unk_14 = D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_801217D0[58].unk_14;
+        }
+        for (i = 59; i < 64; i++) {
+            D_801217D0[i].unk_14 = D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_801217D0[58].unk_14;
+        }
+        if (D_801217D0[58].unk_14 == 0x40) {
+            g->unk_1104.u += 1;
+        }
+        return 0;
+    case 7:
+        x = (D_801217D0[58].unk_14 += 4); y = D_801217D0[58].unk_15 = x; D_801217D0[58].unk_16 = y; /* FAKE: see y; one line keeps the store order T-11880 */
+        for (i = 10; i < 12; i++) {
+            D_801217D0[i].unk_14 = D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_801217D0[58].unk_14;
+        }
+        for (i = 59; i < 64; i++) {
+            D_801217D0[i].unk_14 = D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_801217D0[58].unk_14;
+        }
+        if (D_801217D0[58].unk_14 == 0x80) {
+            g->unk_1104.u += 1;
+        }
+        break;
+    case 8:
+        break;
+    case 9:
+        x = (D_801217D0[58].unk_14 -= 4); y = D_801217D0[58].unk_15 = x; D_801217D0[58].unk_16 = y; /* FAKE: see y; one line keeps the store order T-11880 */
+        for (i = 10; i < 12; i++) {
+            D_801217D0[i].unk_14 = D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_801217D0[58].unk_14;
+        }
+        for (i = 59; i < 64; i++) {
+            D_801217D0[i].unk_14 = D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_801217D0[58].unk_14;
+        }
+        if (D_801217D0[58].unk_14 == 0) {
+            for (i = 10; i < 12; i++) {
+                D_801217D0[i].unk_00 |= 0x80000000;
+            }
+            for (i = 58; i < 64; i++) {
+                D_801217D0[i].unk_00 |= 0x80000000;
+            }
+            g->unk_1104.u += 1;
+        }
+        break;
+    case 10:
+        func_800462C8(0xA, 0x80162000, 0x4350);
+        g->unk_1104.u += 1;
+        return 0;
+    case 12:
+        if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
+            func_800AE0B0("DEC_BS header Error \n");
+            movie->unk_04 = 0;
+            movie->unk_06 = 0;
+            g->unk_1104.u -= 2;
+            return 0;
+        }
+        func_8005751C(1);
+        dec_bg_show_switch(1);
+        g->unk_1104.u += 1;
+        return 0;
+    case 13:
+        sp30 = g->unk_1104.u;
+        func_80132BB0();
+        D_800E6280.unk_110A -= 1;
+        g->unk_1104.u = sp30;
+        g->unk_1104.u++;
+        return 0;
+    default:
+        func_8004284C();
+        D_80122D2C = 0;
+        func_80044750(0x200);
+        func_8006492C(1);
+        return 0;
+    }
+    timer = (D_8013A5CC + 1) & 0xFFFF;
+    D_8013A5CC = timer;
+    if (timer == 0x96) {
+        g->unk_1104.u += 1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_801350A4);
 
