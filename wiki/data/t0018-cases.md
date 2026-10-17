@@ -6,6 +6,8 @@ sources: ["wiki/matching-notes.md", "tools/queue.py"]
 
 # T-0018 cases (register promotion of globals and related register-order gaps)
 
+Update (T-17014 closer): main `strNext` (row T-17014 below, `regorder`) is matched with one FAKE: `w * 1 != sector->width` keeps the local `w` (which holds `$v0` with no instruction, so the stream width takes `$a0`) from going first as a plain variable ([[matching-notes]], "T-17014"). Rows below stay unchanged.
+
 Update (T-20003): RPG_BAT `func_80138F6C` matches 1,268 actual default linked bytes with direct timer updates/decrement and two marked FAKE sites (frame padding and selector word read). Full RPG_BAT and all 27 binary SHA1 checks pass. Historical rows below remain unchanged; [[tickets/T-20003-rpg-timer-callees]] supersedes its unmatched status. Independent matches for `func_80157158` and `func_80156D78` were dropped from this contribution after upstream T-17102 landed.
 
 Update (T-17005): main `pre_syogatu1` (rows T-12030 below) is matched in plain C: an index loop `sp16C[i]` replaces the pointer walk that let IDO cache the argument address ([[matching-notes]], "T-17005"). Rows below stay unchanged.
