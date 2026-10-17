@@ -17018,3 +17018,19 @@ KakarottoCake's PR #44 (claim #43): GYOZI func_80141944 and func_80145384 matche
 
 [[tickets/T-17016-w3-main-p16]] In Review to Done: code review against `CODING_STANDARDS.md` found one issue, fixed: the display-record pointer stores in `func_8007437C` and `func_8007505C` used an `s32` view of `u8 *` fields; plain `(u8 *)` casts give the same bytes (unit sha1 OK). 3 of 4 functions matched (`func_800741B8`, `func_8007505C`, `func_8007437C`; 1,892 bytes), `parameter_up_down` stays `INCLUDE_ASM` with a T-0018 `regorder` row. Merge via the wave 3 merge script.
 
+
+## [2026-10-17] ticket | T-17015 In Progress
+
+[[tickets/T-17015-w3-main-p15]] created and started (wave 3 package, branch `w3-main-p15` from `w2-good`): `src/main/8004C3F0.c`, four functions from the draft list (`srn_vram_set`, `srn_set`, `mod_trans_vram`, `mod_set`). Card in [[kanban]] under In Progress.
+
+## [2026-10-17] ticket | T-17015 In Review
+
+[[tickets/T-17015-w3-main-p15]] In Progress to In Review: 1 of 4 functions matched (`srn_vram_set`, 664 bytes, plain C, no FAKE; `SrnRec28` added to `include/game.h`, `mod_trans_vram` and `move_255_line` prototypes and an `s32 srn_vram_set` in `include/main_api.h`). `srn_set` stays `INCLUDE_ASM` (hand draft 64 rows, `drafts/T-17015/main/srn_set/`, row in [[data/t0018-cases]]); `mod_trans_vram` and `mod_set` not tried. Notes in [[matching-notes]] (section T-17015), two rows in [[register-cheatsheet]]. Card moved to In Review in [[kanban]]. Awaiting code review.
+
+## [2026-10-17] build | T-17015 clean rebuild
+
+Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninja`): 27/27 sha1 OK with `srn_vram_set` as C, `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17015-w3-main-p15]].
+
+## [2026-10-17] ticket | T-17015 Done
+
+[[tickets/T-17015-w3-main-p15]] In Review to Done: code review against `CODING_STANDARDS.md` found one small issue, fixed (matching-notes comment added above `srn_vram_set`; comment only) and one non-blocking follow-up (the `SrnRec28` view of `D_80121750` is a cast because `srn_init` and BUNKA_SD use the byte view). Rebuild OK (sha1, headers OK, globals OK, `sync_protos --check-branch` OK). 1 of 4 functions matched (`srn_vram_set`; 664 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.

@@ -299,3 +299,32 @@ typedef struct CallPair8 {
     /* 0x04 */ s32 unk_04;
 } CallPair8; /* size 0x08; table view: CallPair8[][2] */
 #endif
+
+#ifndef GAME_T17015_SRN_REC
+#define GAME_T17015_SRN_REC
+/* D_80121750: 0x28-byte records of the srn_* screen routines. srn_init fills one,
+ * srn_vram_set and srn_set read it. T-17015. */
+typedef struct SrnRec28 {
+    /* 0x00 */ u8 unk_00[2];
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ u8 unk_04[2];
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ u32 *unk_08;
+    /* 0x0C */ u8 unk_0C;
+    /* 0x0D */ u8 unk_0D;
+    /* 0x0E */ u8 unk_0E;
+    /* 0x0F */ u8 unk_0F;
+    /* 0x10 */ u8 unk_10;
+    /* 0x11 */ u8 unk_11;
+    /* 0x12 */ u8 unk_12;
+    /* 0x13 */ u8 unk_13;
+    /* 0x14 */ u8 unk_14;
+    /* 0x15 */ u8 unk_15;
+    /* 0x16 */ u16 unk_16;
+    /* 0x18 */ u16 unk_18;
+    /* 0x1A */ u8 unk_1A[2];
+    /* 0x1C */ s32 unk_1C;
+    /* 0x20 */ u32 unk_20;
+    /* 0x24 */ u8 *unk_24;
+} SrnRec28; /* size 0x28 */
+#endif
