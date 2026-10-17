@@ -1715,13 +1715,6 @@ extern s16 D_80125C50;
 extern s16 D_80125C52;
 extern u8 D_80125C54;
 extern u8 D_80125C55;
-/* libcd CdlFILE, the result of CdSearchFile (PsyQ layout). T-17014 */
-typedef struct CdlFILE {
-    /* 0x00 */ u8 pos[4];
-    /* 0x04 */ u32 size;
-    /* 0x08 */ char name[16];
-} CdlFILE; /* size 0x18 */
-
 /* libcd StHEADER, the sector header StGetNext returns (PsyQ movie sample layout). T-17014 */
 typedef struct StHEADER {
     /* 0x00 */ u16 id;
@@ -2143,7 +2136,8 @@ void func_80056070(u8 *buf, s32 arg1);
 void func_80056284(void);
 void set_movie_offset(s16 arg0, s16 arg1);
 void strKickCD(s32 arg0);
-s32 func_80056BA8();
+void func_80056BA8();
+void func_8005715C(s32 arg0); /* defined after its caller func_80056BA8 */
 void func_80057390();
 #ifndef MAIN_API_OVERRIDE_set_dec_bri
 void set_dec_bri(u8 arg0);
