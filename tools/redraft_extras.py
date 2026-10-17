@@ -569,14 +569,18 @@ SPRITE_COPY_RE = re.compile(r"\*\(M2cBlock44 \*\)\((.+?)\) = \*\(M2cBlock44 \*\)
 
 
 def record_copies(env, body):
-    """T-18600: m2c's 0x44-byte block copy between sprite records is one DisplayFixActor44 assignment."""
-    if "DisplayFixActor44" not in env.types:
+    """T-18600: m2c's 0x44-byte block copy between display records is one record assignment. The record type is
+    the unit's view of its pool (T-20900: since the views are shared, every unit has one; MASTER's is
+    DisplayFixActor44, the others DisplayActor44), so both sides have the same type."""
+    tname = next((env.record_views[s][0] for s in ("D_80120650", "D_8011ECD0", "D_800E9620", "D_80129F40")
+                  if s in env.record_views), None)
+    if tname is None or tname not in env.types:
         return body
 
     def side(e):
         e = e.strip()
         m = re.fullmatch(r"&(.+)", e)
-        return m.group(1) if m else "*(DisplayFixActor44 *)%s" % e if re.fullmatch(r"\w+", e) else None
+        return m.group(1) if m else "*(%s *)%s" % (tname, e) if re.fullmatch(r"\w+", e) else None
 
     def repl(m):
         a, b = side(m.group(1)), side(m.group(2))

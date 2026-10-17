@@ -484,8 +484,15 @@ class TestExtras(EnvCase):
     def test_club_bits_and_record_copies_need_their_types(self):
         text = "x = (u32) ((u32) ((s32) D_800E6280.unk_66C[6] << 5) >> 0x1E);\n"
         self.assertEqual(rx.club_bits(self.env, text), text)
-        self.assertEqual(rx.record_copies(self.env, "*(M2cBlock44 *)(a) = *(M2cBlock44 *)(b);\n"),
+        bare = rw.Env("FOO", str(self.root))
+        bare.record_views = {}
+        self.assertEqual(rx.record_copies(bare, "*(M2cBlock44 *)(a) = *(M2cBlock44 *)(b);\n"),
                          "*(M2cBlock44 *)(a) = *(M2cBlock44 *)(b);\n")
+        env2 = rw.Env("FOO", str(self.root))
+        env2.types["DisplayActor44"] = env2.types["Rec24"]
+        env2.record_views = {"D_8011ECD0": ("DisplayActor44", 160)}
+        self.assertEqual(rx.record_copies(env2, "*(M2cBlock44 *)(p) = *(M2cBlock44 *)(&((DisplayActor44 *)D_8011ECD0)[96]);\n"),
+                         "*(DisplayActor44 *)p = ((DisplayActor44 *)D_8011ECD0)[96];\n")
         env = rw.Env("FOO", str(self.root))
         env.types["ScheduleClubFlags"] = env.types["Rec24"]
         self.assertIn("((ScheduleClubFlags *)&D_800E6280.unk_66C[6])->unk_25", rx.club_bits(env, text))
