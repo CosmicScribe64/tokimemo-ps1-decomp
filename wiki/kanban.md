@@ -120,6 +120,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
 - [ ] [[tickets/T-15200-event-large|T-15200 Reconstruct large EVENT dispatcher and reusable types]]
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
+- [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
+
+## Done
+- [ ] [[tickets/T-20920-types-en-nichi|T-20920 Targeted type pass: EN_NICHI]]
 - [ ] [[tickets/T-20900-shared-type-unification|T-20900 Cross-unit shared-type unification]]
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 - [ ] [[tickets/T-17021-w3-main-p21|T-17021 Wave 3 package w3-main-p21]]

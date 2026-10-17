@@ -17350,3 +17350,27 @@ Counts per status after the pass: Backlog 33, Ready 1, In Progress 0, In Review 
 
 ## [2026-10-17] ticket | T-20910 Done
 [[tickets/T-20910-types-option]] reviewed against `CODING_STANDARDS.md`: no blocking findings (no edits in `src/ovl/TT/*` or `dialogue_render`, `game.h` and `main_api.h` untouched, the new BG map types and externs declared once in `include/ovl/OPTION.h`, matched code changed only by the new match `func_80135E48`, which is plain C with one FAKE that names T-20910 and a reason, types documented in [[data-types]] and [[option-family-results]], no game data in `drafts/T-20910/`). Two small fixes: the FAKE `pad` is now listed in the ticket notes, and a stray blank line at the end of [[data-types]] is gone. `w2-good` merged into the branch first (`wiki/index.md`, `wiki/kanban.md`, `wiki/log.md` conflicted; index and log keep both sides, kanban is `w2-good`'s board plus this card). Clean rebuild (`rm -rf asm build && configure.py && ninja`) 27/27 sha1 OK; `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` (0 new, 15 known) OK. In Review to Done (kanban card moved, [[index]] line updated).
+## [2026-10-17] ticket | T-20920 In Progress
+
+[[tickets/T-20920-types-en-nichi]] created and In Progress: a second, targeted type pass for EN_NICHI (14 unmatched
+functions after [[en-nichi-family-results]] T-18200), redraft with `tools/redraft.py` into `drafts/T-20920/`. Branch
+`ty-en-nichi` from `w2-good`. Card in [[kanban]], line in [[index]].
+
+## [2026-10-17] build | T-20920 EN_NICHI types and eight hand matches
+
+[[tickets/T-20920-types-en-nichi]]: `EnObj.unk_14`/`unk_18` are `Fix32` (16.16, words in `func_801339D4`), `unk_20` an
+`s32`; `EnFixPos` (two `Fix32`) replaces `EnResetSlot8` for the grid `D_801392AC[15][12]` and the `s16[10][4]` view of
+`D_80139228`. Matched by hand on the new types: `func_80135ACC`, `func_80134800`, `func_801339D4`, `func_80135274`,
+`func_80136A2C` (was guarded), `func_801330D0` (was guarded), `func_80132450`, `func_80138CCC` (6,328 bytes). Link name
+`D_800E7D10` added to `config/symbol_addrs_types.txt`. Paired `tools/redraft.py` run (snapshots `f3933305` and
+`c2dabc21`): the 6 functions still unmatched keep their scores; drafts in `drafts/T-20920/`. Details in
+[[en-nichi-family-results]] and [[data-types]].
+
+## [2026-10-17] ticket | T-20920 In Review
+
+[[tickets/T-20920-types-en-nichi]] In Progress to In Review: types, matches, redraft and docs committed; the code
+review against `CODING_STANDARDS.md` is open. Card moved in [[kanban]], line in [[index]] updated.
+
+## [2026-10-17] ticket | T-20920 Done
+
+[[tickets/T-20920-types-en-nichi]] reviewed against `CODING_STANDARDS.md`: no blocking finding, two small fixes (a blank line after the opening brace of `func_801339D4`; a stale "left for later waves" line in [[en-nichi-family-results]]). No edits in `src/ovl/TT/*` or `dialogue_render`, one FAKE (`func_80135ACC`, ticket named), types documented in [[data-types]], no game data. Clean rebuild 27/27, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. In Review to Done (kanban card moved, [[index]] line updated).
