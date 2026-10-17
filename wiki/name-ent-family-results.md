@@ -130,3 +130,6 @@ functions are not in a package: `func_80138C1C`, `func_80138F60`, `func_801398EC
 ## Introduction-scene reconstruction checkpoint (T-20008)
 
 [[tickets/T-20008-large-name-introduction]] and drafts/T-20008 retain a compiling reconstruction of func_80143580 (4,308 bytes), with corrected tile fills, Rec24/SpriteSlot24 access widths and strides, post-decrement thresholds, helper-side selector reload and palette-copy bounds. This is a nonmatching archive; production remains ASM and no new verified C bytes are claimed. The archive README contains the full-unit reproduction command, measured view controls and remaining source differences.
+## CD-level display helper matched (T-20009)
+
+[[tickets/T-20009-name-ent-loader]] matches func_80149B08 (484 bytes) in 80144AD0.c. Use one DisplayActor44 pointer for all actor accesses and initialize it before the status calls; a pointer introduced only in the final branch or direct fixed fields keep the historical delayed X load. The before-call view fixes the priority tie between the loaded coordinate and hoisted constants, reproducing the original A3 load and V0/V1/A0/A2 constants. The existing frame/dead-initialization controls and s32 exit liveness remain explicitly FAKE. Default linked proof, all 27 hashes and header/global/prototype checks pass. The loader follow-up is [[tickets/T-20010-name-ent-resource-loader]].

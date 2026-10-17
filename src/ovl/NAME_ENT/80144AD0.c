@@ -2030,7 +2030,60 @@ void func_80149ADC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80149B08);
+/* FAKE: implicit-int exit liveness is needed; void changes three
+ * instructions. Callers ignore the value. T-20009. */
+s32 func_80149B08(void) {
+    DisplayActor44 *actors;
+    /* FAKE: two unused words keep the original 0x40-byte frame; removing
+     * them changes only the two stack adjustments to 0x38. T-20009. */
+    s32 padding[2];
+    s32 level;
+    s32 frame;
+    s32 average;
+
+    actors = (DisplayActor44 *)D_8011ECD0;
+    /* FAKE: dead joined initialization preserves the original CD-level
+     * and average register order, as in func_801486F8. T-20009. */
+    average = frame = 0;
+    if (func_800460EC() & 4) {
+        level = getCDlevel();
+    } else {
+        level = 0;
+    }
+    D_8014D1B4[D_800E6280.unk_10F8 & 3] = level;
+    average = (D_8014D1B4[0] + D_8014D1B4[1] + D_8014D1B4[2] + D_8014D1B4[3]) / 4;
+    frame = average / 10;
+    D_8014D1B0 = level;
+    if (frame >= 4) {
+        frame = 3;
+    }
+    func_80048F64(0x61);
+    if (func_800460EC() & 4) {
+        actors[97].unk_01 = 9;
+        actors[97].unk_02 = 0x40;
+        actors[97].unk_38 = 0x41000000;
+        actors[97].unk_03 = 0xA4;
+        actors[97].unk_0C = (u8 *)0x80180258;
+        actors[97].unk_10 = (u8 *)0x80180298;
+        actors[97].unk_34 = (u8 *)0x8018024C;
+        actors[97].unk_18 = frame + 6;
+        actors[97].unk_05 = 0x80;
+        actors[97].unk_26 = actors[96].unk_26;
+        actors[97].unk_2A = -0x78;
+        actors[98].unk_01 = 9;
+        actors[98].unk_02 = 0x40;
+        actors[98].unk_38 = 0x41000000;
+        actors[98].unk_03 = 0xA4;
+        actors[98].unk_0C = (u8 *)0x80180258;
+        actors[98].unk_10 = (u8 *)0x80180298;
+        actors[98].unk_34 = (u8 *)0x8018024C;
+        actors[98].unk_18 = frame + 10;
+        actors[98].unk_05 = 0x80;
+        actors[98].unk_26 = actors[96].unk_26;
+        actors[98].unk_2A = -0x78;
+        actors[100].unk_02 = 0;
+    }
+}
 
 void func_80149CEC(void) {
     D_8012071D = 9;

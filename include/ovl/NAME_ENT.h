@@ -130,6 +130,7 @@ extern s32 D_8014D184;
 
 void prologue_line_start(void);
 void prologue_line_run(void);
+s32 func_80149B08(void);
 extern s8 D_8014D180;
 void func_80142E24();
 void func_80143580();
