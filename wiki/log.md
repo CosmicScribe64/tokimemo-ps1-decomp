@@ -17046,3 +17046,7 @@ Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-17022 In Review
 
 [[tickets/T-17022-w3-main-p22]] In Progress to In Review; kanban card moved, matched count 2. Code review against `CODING_STANDARDS.md` is the remaining step before Done.
+
+## [2026-10-17] ticket | T-17022 Done
+
+[[tickets/T-17022-w3-main-p22]] In Review to Done: code review against `CODING_STANDARDS.md` found two small issues, fixed (a trick comment above `Fade_Out_Main` and `Fade_In_Main` for the `u8 temp` local; comment only; and the index status). Rebuild OK (globals, headers, sha1). 2 of 4 functions matched (`Fade_Out_Main`, `Fade_In_Main`; 196 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.

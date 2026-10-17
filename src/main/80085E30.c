@@ -46,6 +46,7 @@ void Fade_Out_Init(void) {
     Vblnk_Timer_Init();
 }
 
+/* temp: the byte is read into a local after the timer test; with a direct compare IDO loads it into $v0 and puts the li v0,1 in the branch delay slot (T-17022, matching-notes) */
 s32 Fade_Out_Main(void) {
     u8 temp;
     if (Vblnk_Timer() != 0) {
@@ -65,6 +66,7 @@ void Fade_In_Init(void) {
     Vblnk_Timer_Init();
 }
 
+/* temp: same byte local as Fade_Out_Main (T-17022, matching-notes) */
 s32 Fade_In_Main(void) {
     u8 temp;
     if (Vblnk_Timer() != 0) {
