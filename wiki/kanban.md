@@ -25,6 +25,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-20910-types-option|T-20910 Targeted type pass: OPTION]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
