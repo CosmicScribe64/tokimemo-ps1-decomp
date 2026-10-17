@@ -17646,3 +17646,7 @@ Two of four TACO functions matched: `func_801484E4` (392 bytes; kept `D_800E7384
 ## [2026-10-17] ticket | T-22008 Done
 
 [[tickets/T-22008-w4-p08]]: code review against `CODING_STANDARDS.md` passed, no findings. 0 of 4 functions matched (`func_80132320` 14 lines and `func_80134110` 26 lines stay guarded, `func_80134248` 455 lines, `func_80138C1C` stays `INCLUDE_ASM`). Ticket Done, card moved to Done.
+
+## [2026-10-17] ticket | T-23000 Wave 5 biggest-first conveyor opened
+
+Second conveyor next to [[tickets/T-22000-wave-4-conveyor]], biggest functions first: 27 packages, 89 functions / 134,984 bytes (seeds of 1,500 bytes or more, functions wave 4 just attempted left out). The 26 unstarted wave 4 packages from w4-p65 on that share its files are absorbed and refused to wave 4. Two workers, Sonnet matcher, Opus closer for near misses of 30 rows or fewer. [[tickets/T-23000-wave-5-big-conveyor]].
