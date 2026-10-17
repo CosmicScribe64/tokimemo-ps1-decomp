@@ -107,11 +107,17 @@ class Lattice(unittest.TestCase):
 
     def test_the_definition_not_the_header_is_the_reference(self):
         text = "typedef int s32;\ns32 f(s32 a);\nvoid f(s32 a) { }\n"          # a header that disagrees with the definition
-        self.assertEqual(self.decls(vs.own_edits(text, "f")), ["s32 f(s32 a);"])
+        self.assertEqual(self.decls(vs.own_edits(text, "f")), ["void f(s32 a);", "s32 f(s32 a);"])
         text = "typedef int s32;\nvoid f(void);\ns32 f(void) { }\n"
-        self.assertEqual(self.decls(vs.own_edits(text, "f")), ["s32 f();"])
+        self.assertEqual(self.decls(vs.own_edits(text, "f")), ["s32 f(void);", "s32 f();"])
         text = "typedef int s32;\nvoid f(a)\ns32 a;\n{\n}\n"
         self.assertEqual(self.decls(vs.own_edits(text, "f")), ["s32 f();"])
+
+    def test_a_header_that_says_void_for_an_s32_definition_is_restated_first(self):
+        text = "typedef int s32;\nvoid f(s32 a);\ns32 f(s32 a) { }\n"
+        self.assertEqual(self.decls(vs.own_edits(text, "f")), ["s32 f(s32 a);"])
+        text = "typedef int s32;\ns32 f(void);\nvoid f(void) { }\n"
+        self.assertEqual(self.decls(vs.own_edits(text, "f")), ["void f(void);", "s32 f();", "s32 f(void);"])
 
     def test_nothing_to_try_for_a_function_the_unit_does_not_define(self):
         self.assertEqual(vs.own_edits(UNIT, "func_8013E7C0"), [])
@@ -203,9 +209,9 @@ endlabel f
 class FakeScore:
     """A compiler stand-in: rows by variant label; `fail` labels raise (every time, or `flaky`: once)."""
 
-    def __init__(self, rows, default=50, fail=(), flaky=(), proto_error=(), delay=0.0):
+    def __init__(self, rows, default=50, fail=(), flaky=(), proto_error=(), delay=0.0, message="cc.py failed:\nbuild.ninja: No such file or directory"):
         self.rows, self.default, self.fail, self.flaky, self.proto_error = rows, default, set(fail), set(flaky), set(proto_error)
-        self.delay = delay
+        self.delay, self.message = delay, message
         self.calls, self.lock = [], threading.Lock()
         self.running = self.peak = 0
         self.running_at_call = {}
@@ -223,7 +229,7 @@ class FakeScore:
             if label in self.proto_error:
                 raise pv.ProtoError("cannot apply")
             if label in self.fail or (label in self.flaky and first):
-                raise ValueError("cc.py failed:\nbuild.ninja: No such file or directory")
+                raise ValueError(self.message)
             return self.rows.get(label, self.default)
         finally:
             with self.lock:
@@ -372,6 +378,24 @@ class Untested(unittest.TestCase):
         self.assertEqual(result["status"], "improved")
         self.assertEqual(result["best_rows"], 30)
 
+    def test_a_baseline_error_that_no_view_touches_ends_the_sweep(self):
+        s = vs.Sweep(FakeScore({}, fail=["as is"], message="cfe: Error: unit, line 7: 'D_800E8C32' undefined"),
+                     [OWN1], dict(PER), None, 50, 1, log=lambda m: None)
+        result = s.run()
+        self.assertEqual(result["status"], "failed")
+        self.assertEqual(s.compiles, 2)                                # the baseline and its serial retry; no variant
+        self.assertIn("D_800E8C32", result["baseline_error"])
+
+    def test_a_baseline_error_about_a_lattice_symbol_is_what_the_variants_fix(self):
+        message = "cfe: Error: unit, line 7: redeclaration of 'c1'; previous declaration at line 3"
+        _s, fake, result = sweep({"s32 c1();": 9}, fail=["as is"], message=message)
+        self.assertGreater(len(fake.calls), 3)
+        self.assertEqual((result["status"], result["best_rows"]), ("improved", 9))
+
+    def test_when_the_unit_does_not_compile_the_own_edits_come_before_the_other_singles(self):
+        _s, fake, _r = sweep({"s32 f();": 40}, fail=["as is"])
+        self.assertEqual(fake.calls[:5], ["as is", "as is", "s32 f();", "s32 f(void);", "s32 c1();"])
+
     def test_nothing_that_compiles_is_a_failure(self):
         s = vs.Sweep(FakeScore({}, fail=["as is", "s32 c1();"]), [], {"c1": [C1S]}, None, 10, 1, log=lambda m: None)
         result = s.run()
@@ -414,6 +438,24 @@ class Targets(unittest.TestCase):
         self.assertEqual(out, 'void a(void) {}\n#ifdef NON_MATCHING\nvoid f(void) {\n}\n#else\n'
                               'INCLUDE_ASM("asm/nonmatchings/X", f);\n#endif\nINCLUDE_ASM("asm/nonmatchings/X", g);\n')
         self.assertIsNone(vs.insert_body(text, "missing", "x"))
+
+    def test_the_drafts_own_declarations_go_above_the_guard(self):
+        text = 'INCLUDE_ASM("asm/nonmatchings/X", f);\n'
+        out = vs.insert_body(text, "f", "void f(void) {\n}\n", ["extern s32 D_1;\n", "", "extern u8 D_2;"])
+        self.assertEqual(out, 'extern s32 D_1;\nextern u8 D_2;\n#ifdef NON_MATCHING\nvoid f(void) {\n}\n#else\n'
+                              'INCLUDE_ASM("asm/nonmatchings/X", f);\n#endif\n')
+
+    def test_make_target_reads_declarations_h_next_to_the_body(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            src = Path(tmp, "a.c")
+            src.write_text('INCLUDE_ASM("asm/nonmatchings/a", f);\n')
+            folder = Path(tmp, "d")
+            folder.mkdir()
+            Path(folder, "body.c").write_text("void f(void) {\n}\n")
+            Path(folder, "declarations.h").write_text("extern s32 D_8015ECB4;\n")
+            with mock.patch("funcloc.locate", return_value=SimpleNamespace(unit="main", src=src)):
+                t = vs.make_target("main:f", body=str(folder / "body.c"), work=Path(tmp, "w"))
+            self.assertTrue(Path(t.source).read_text().startswith("extern s32 D_8015ECB4;\n#ifdef NON_MATCHING"))
 
     def test_make_target_refuses_a_body_for_a_function_that_is_c_already(self):
         c = SimpleNamespace(unit="main", src=Path("src/main/a.c"))

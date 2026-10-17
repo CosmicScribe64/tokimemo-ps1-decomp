@@ -91,7 +91,7 @@ class Edit(collections.namedtuple("Edit", "symbol decl kind")):
     __slots__ = ()
 
 
-Outcome = collections.namedtuple("Outcome", "rows error")        # rows None = UNTESTED (error says why)
+Outcome = collections.namedtuple("Outcome", "rows error detail", defaults=("",))   # rows None = UNTESTED (error says why)
 Hints = collections.namedtuple("Hints", "own reads")             # own: bool; reads: {callee: bool}
 
 
@@ -202,18 +202,25 @@ def has_value_return(body):
 
 def own_edits(pre, name):
     """The edits of the target's own type: [Edit]. Empty when the unit does not define `name`. The definition's
-    own return type and parameter list are the reference (a header that says otherwise is replaced with it)."""
+    own return type and parameter list are the reference. A header that disagrees with the definition (a redeclaration
+    error before any edit) is first answered by an edit that restates the definition, then come the `s32` views."""
     defs = protoverride.definitions(pre, name)
     if not defs:
         return []
     d = defs[0]
     cur_ret = norm_ret(d.ret)
-    if protoverride._empty(d.params) and not d.rest.strip():
-        return [Edit(name, "s32 %s%s;" % (name, spelling), "own") for spelling in ("()", "(void)")
-                if (cur_ret, spelling) != ("s32", _spelled(d.params))]
-    if cur_ret != "s32":
-        return [Edit(name, "s32 %s%s;" % (name, "()" if d.rest.strip() else _spelled(d.params)), "own")]
-    return []
+    no_params = protoverride._empty(d.params) and not d.rest.strip()
+    parens = "()" if d.rest.strip() else _spelled(d.params)
+    out = []
+    declared = protoverride.current_view(pre, name)[0]
+    if declared is not None and norm_ret(declared) != cur_ret:
+        out.append(Edit(name, "%s %s%s;" % (cur_ret, name, parens), "own"))
+    if no_params:
+        out += [Edit(name, "s32 %s%s;" % (name, spelling), "own") for spelling in ("()", "(void)")
+                if (cur_ret, spelling) != ("s32", parens)]
+    elif cur_ret != "s32":
+        out.append(Edit(name, "s32 %s%s;" % (name, parens), "own"))
+    return out
 
 
 def callee_edits(pre, name, ignored=False):
@@ -334,9 +341,9 @@ class Sweep:
         try:
             return Outcome(self.score(key), None)
         except protoverride.ProtoError as err:     # the edit does not apply: deterministic, no retry
-            return Outcome(None, "ProtoError: " + (str(err).splitlines() or [""])[0][:160])
+            return Outcome(None, "ProtoError: " + (str(err).splitlines() or [""])[0][:160], str(err))
         except Exception as err:                   # noqa: BLE001 - any compile failure is retried once
-            return Outcome(None, "%s: %s" % (type(err).__name__, error_summary(err)))
+            return Outcome(None, "%s: %s" % (type(err).__name__, error_summary(err)), str(err)[-3000:])
 
     def _parallel(self, keys):
         """{key: Outcome} for the keys that were started (all of them unless a variant reached 0 rows)."""
@@ -402,11 +409,22 @@ class Sweep:
 
     # -- the phases
 
+    def symbols(self):
+        return {e.symbol for e in self.own} | set(self.per)
+
     def run(self):
         self.evaluate([()], "baseline")
         base = self.tested(())
         if base == 0:
             return self.result("matches-as-is")
+        detail = self.outcomes[()].detail
+        if base is None and re.search(r"\bError:", detail) and \
+                not any(re.search(r"\b%s\b" % re.escape(sym), detail) for sym in self.symbols()):
+            self.log("viewsweep: the unedited unit fails with a compiler error that no view change touches: %s"
+                     % self.outcomes[()].error)
+            return self.result("failed")
+        if base is None:            # the unit does not compile as it is: a type that the edits restate may be why
+            self.evaluate([(e,) for e in self.own], "own edits first")
         self.evaluate([(e,) for e in self.singles], "singles")
         for phase in (self.cross_with_best_own, self.pairs, self.extend_best):
             if self.stop.is_set():
@@ -480,14 +498,16 @@ class Sweep:
 Target = collections.namedtuple("Target", "scope name unit c source text non_matching body_path note")
 
 
-def insert_body(text, name, body):
+def insert_body(text, name, body, decls=()):
     """`text` with the plain `INCLUDE_ASM(..., name);` line replaced by an `#ifdef NON_MATCHING` block holding
-    `body`; None when there is no such line (the function is C already)."""
+    `body`, the lines `decls` (the draft's own declarations) above it; None when there is no such line (the
+    function is C already)."""
     m = re.search(r'^[ \t]*INCLUDE_ASM\(\s*"[^"]*"\s*,\s*%s\s*\);[^\n]*\n?' % re.escape(name), text, re.M)
     if m is None:
         return None
     line = m.group(0).rstrip("\n") + "\n"
-    block = "#ifdef NON_MATCHING\n%s\n#else\n%s#endif\n" % (body.strip("\n"), line)
+    head = "".join(d.rstrip("\n") + "\n" for d in decls if d.strip())
+    block = "%s#ifdef NON_MATCHING\n%s\n#else\n%s#endif\n" % (head, body.strip("\n"), line)
     return text[:m.start()] + block + text[m.end():]
 
 
@@ -547,7 +567,9 @@ def make_target(spec, unit=None, body=None, src=None, work=WORK_ROOT):
     if body:
         if defined or any(g.func == name for g in autotweak.guards(text)):
             raise ValueError("%s is C or guarded in %s already; sweep it without a body" % (scope_name, path))
-        placed = insert_body(text, name, Path(body).read_text())
+        extra = Path(body).with_name("declarations.h")          # the draft's own extern lines, when it has them
+        placed = insert_body(text, name, Path(body).read_text(),
+                             extra.read_text().splitlines() if extra.exists() else ())
         if placed is None:
             raise ValueError("%s has no plain INCLUDE_ASM line in %s" % (scope_name, path))
         folder = Path(work) / ("%s_%s" % (c.unit, name))
