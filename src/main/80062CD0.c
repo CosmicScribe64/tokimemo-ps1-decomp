@@ -714,15 +714,10 @@ void func_80066104(void) {
     D_80125CA0 = 0xB8;
 }
 
-/* NON_MATCHING: T-17011, 20 differing lines; the second loop schedules the ucode's last stores and the D_800B5B24
- * write-back differently (v0/v1 reloads after the call, store inside the loop instead of before it) */
-#ifdef NON_MATCHING
 void func_8006612C(u8 *arg0) {
-    DisplayActor44 *tab;
     u8 *p;
     s32 i;
 
-    tab = (DisplayActor44 *)D_8011ECD0;
     D_80125CA0 = -0x40;
     for (i = 0; i < D_800B5B24 + 2; i++) {
         func_80048F64(i + 3);
@@ -731,29 +726,26 @@ void func_8006612C(u8 *arg0) {
     D_800B5B24 = strlen(arg0) / 2;
     for (i = 0; i < D_800B5B24 + 2; i++) {
         func_80048F64(i + 3);
-        tab[i + 3].unk_01 = 2;
-        tab[i + 3].unk_02 = 0x40;
-        tab[i + 3].unk_38 = 0x40000000;
-        tab[i + 3].unk_03 = 0xA4;
-        tab[i + 3].unk_0C = sprite_frame_table;
-        tab[i + 3].unk_10 = D_800C9A14;
-        tab[i + 3].unk_34 = D_800C9730;
-        tab[i + 3].unk_26 = (D_800B5B24 - i) * 0xE + D_80125CA0 - 0x87;
-        tab[i + 3].unk_2A = D_80125CA0 - 0x51;
-        tab[i + 3].unk_14 = D_800C9A54;
-        tab[i + 3].unk_04 = 8;
-        tab[i + 3].unk_05 = 1;
-        tab[i + 3].unk_18 = 0x72;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_01 = 2;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_02 = 0x40;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_38 = 0x40000000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_03 = 0xA4;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_0C = sprite_frame_table;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_10 = D_800C9A14;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_34 = D_800C9730;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_14 = D_800C9A54;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_04 = 8;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_05 = 1;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_18 = 0x72;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_26 = (D_800B5B24 - i) * 0xE + D_80125CA0 - 0x87;
+        ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_2A = D_80125CA0 - 0x51;
     }
     p = D_8011ECD0 + D_800B5B24 * 0x44;
     ((DisplayActor44 *)(p + 0x110))->unk_18 = 0x71;
     ((DisplayActor44 *)(p + 0x110))->unk_26 += 2;
-    tab[3].unk_18 = 0x73;
-    tab[3].unk_26 -= 2;
+    ((DisplayActor44 *)D_8011ECD0)[3].unk_18 = 0x73;
+    ((DisplayActor44 *)D_8011ECD0)[3].unk_26 -= 2;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006612C);
-#endif
 
 void func_80066334(void) {
     s32 x;
