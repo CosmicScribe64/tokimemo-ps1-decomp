@@ -17693,3 +17693,7 @@ Package w4-p17: DATE `src/ovl/DATE/80132000.c`, `func_8013D5FC`, `func_8013B488`
 ## [2026-10-17] ticket | T-22017 In Progress to In Review
 
 0 of 5 matched, no guard left in the file. [[tickets/T-22017-w4-p17]] In Review.
+
+## [2026-10-17] ticket | T-22017 Done
+
+Review against `CODING_STANDARDS.md`: no findings; only `src/ovl/DATE/80132000.c` changed (guards removed, `INCLUDE_ASM` kept), drafts are plain source. 0 of 5 matched. [[tickets/T-22017-w4-p17]] Done.
