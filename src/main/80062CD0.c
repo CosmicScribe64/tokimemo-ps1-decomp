@@ -538,6 +538,7 @@ void parameter_show(void) {
     s32 step;
     DisplayActor44 *tab;
 
+    /* GameState.unk_F6E is s8; this function reads it as u8 (lbu) */
     if ((u8)D_800E6280.unk_F6E != 0) {
         step = 4;
     } else {
@@ -566,6 +567,7 @@ void parameter_show(void) {
                 }
             }
         }
+        /* Records 56..58 keep an s16 at 0x1C (pad_1C in game.h; the TAIIKU overlay reads it the same way). T-17011 */
         for (i = 56; i < 59; i++) {
             if (tab[i].unk_2E == 1) {
                 d = 0x1000 / step;
@@ -581,7 +583,6 @@ void parameter_show(void) {
                 }
             }
         }
-
     }
 }
 
@@ -740,6 +741,7 @@ void func_8006612C(u8 *arg0) {
         ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_26 = (D_800B5B24 - i) * 0xE + D_80125CA0 - 0x87;
         ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_2A = D_80125CA0 - 0x51;
     }
+    /* Byte pointer on purpose: &tab[n + 4] compiles to multu, this form to sll/addu as in the original. T-17011 */
     p = D_8011ECD0 + D_800B5B24 * 0x44;
     ((DisplayActor44 *)(p + 0x110))->unk_18 = 0x71;
     ((DisplayActor44 *)(p + 0x110))->unk_26 += 2;
