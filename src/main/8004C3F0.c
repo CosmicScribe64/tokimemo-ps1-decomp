@@ -3,6 +3,10 @@
 
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", srn_tpage_show);
 
+/* Matching notes (T-17015): the count and order of the 15 declared locals set the frame size and the
+ * spilled home slots, so do not add or drop one. The masked table word is written twice ((*src & 0xFFFF)
+ * in the test and in the call) because any local for it changes the registers; uopt merges the two.
+ * Only the error path returns a value, the normal path falls off the end (as in the original). */
 s32 srn_vram_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     u32 *src;
     s32 left;
