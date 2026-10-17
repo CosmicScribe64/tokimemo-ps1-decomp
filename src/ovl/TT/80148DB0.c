@@ -208,7 +208,68 @@ void func_80149400(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801494D8);
+void func_801494D8(void) {
+    u8 *scene;
+    u8 *state;
+    u16 pad1; /* FAKE: pad1..pad3 reproduce the original frame (c at sp+0x44). T-11860 */
+    u16 pad2;
+    s32 pad3;
+    u8 *c;
+    u8 *input;
+    u8 *q;
+    u8 *p;
+    u32 max;
+
+    scene = D_80158A60;
+    input = scene + 0x10;
+    state = D_80158A64;
+    c = D_80158A6C;
+    q = D_80158AA4;
+    p = D_80158AA8;
+    max = 3;
+    if (scene[0x53] == 0) {
+        max = 2;
+    }
+    p[c[0xA] * 0x14 + 2] = 0;
+    if (*(u16 *)(input + 4) & 0x1000) {
+        func_80133AD0(0x613);
+        *(s16 *)(state + 0x26) = 0;
+        if (--c[0xA] == 0xFF) {
+            c[0xA] = max;
+        }
+    } else if (*(u16 *)(input + 4) & 0x4000) {
+        func_80133AD0(0x613);
+        *(s16 *)(state + 0x26) = 0;
+        if (++c[0xA] > max) {
+            c[0xA] = 0;
+        }
+    }
+    p[c[0xA] * 0x14 + 2] = 2;
+    q[0] = 1;
+    q[1] = 0;
+    *(s16 *)(q + 0x44) = 0;
+    *(s16 *)(q + 0x14) = -0x2C;
+    *(s16 *)(q + 0x16) = c[0xA] * 8 + 0xA0;
+    *(u16 *)(q + 0x10) = 1;
+    q[0x3B] = 0x63;
+    *(s16 *)(q + 0x3C) = 0x58; *(s16 *)(q + 0x3E) = 8; /* FAKE: one line keeps the original li order (as1 schedules by line). T-11860 */
+    q[0x38] = 0x80;
+    q[0x39] = 0x40;
+    q[0x3A] = 0x40;
+    if ((*(u16 *)(input + 4) & 0x800) || (*(u16 *)(input + 4) & 0x20)) {
+        func_80044750(0xB1);
+        func_80133AD0(0x612);
+        state[0x22] = 0;
+        *(u16 *)(state + 2) += 1;
+        *(s16 *)(state + 4) = 0;
+        *(s16 *)(c + 0x10) = 0;
+        *(s16 *)(c + 0x12) = 0;
+        func_80149B20();
+    }
+    if (scene[0x53] == 1 && state[0x24] == 0) {
+        func_80149400();
+    }
+}
 
 void func_80149704(void) {
     u8 *scene;
