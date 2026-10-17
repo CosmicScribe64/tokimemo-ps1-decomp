@@ -1,10 +1,10 @@
 ---
 id: T-9910
 title: "Wave 10: list 1"
-status: In Progress
+status: Done
 assignee: wave-10 batch agent 1
 created: 2026-10-11
-updated: 2026-10-11
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[matching-notes]]"]
 ---
 
@@ -96,3 +96,5 @@ Evidence: scratchpad/w10-1/. Started 2026-10-11 20:19 UTC.
 - Deep pass verified ETC func_80142AE8 (152 bytes): real funcdiff MATCH and full ninja success.
 
 - Deep bounded search EVENT func_8010B614: resolved scratch score 17 after 336 seconds; evidence scratchpad/w10-1/deep-queue/.
+
+2026-10-17: Closing as superseded. The Codex run hit its usage limit after 6 matches were merged (main func_80074DE0, func_80057710, func_80076B48, join_club_select; NAME_ENT func_80132198; ETC func_80142AE8; 1,912 bytes), all still C on main and covered by the T-20900 27/27 rebuild. The rest of list 1 is covered by the T-14500 census (drafts/T-14500) and the later waves; ENDING func_80139F3C has matched since, KANGEI func_80135004 is still open. Review against CODING_STANDARDS found nothing: both FAKE comments give reason and T-9910, no NON_MATCHING, no inline asm.

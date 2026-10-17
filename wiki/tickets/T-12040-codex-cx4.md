@@ -1,10 +1,10 @@
 ---
 id: T-12040
 title: Codex cx4 RPG battle matching
-status: In Review
+status: Done
 assignee: Codex cx1
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[matching-notes]]"]
 ---
 
@@ -77,3 +77,5 @@ All logs/drafts are under ignored build/scratch/. Compiler experiments used Dock
 Ticket and card moved to In Review; independent CODING_STANDARDS review remains required. Seven functions have individual linked-byte proofs and immediate commits. Final configure/build, current guarded score and prototype checks recorded below after completion.
 
 Final verification passed: configure/ninja -j2, then explicit invalidation of verification stamps and a full rebuild reran all 27 binary SHA1 checks, headers and globals successfully (build/scratch/final-build.log, final-all-checks.log). Branch prototype check passes with zero new and fifteen known disagreements (final-protos.log). Current full-TU func_8015A744 draft remains17 listing lines (final-guard.diff). `git diff --check` clean; branch source diff contains no added inline assembly. All seven promoted functions have no new FAKE annotations or artificial source tricks.
+
+2026-10-17: Ticket review closed. The seven matches (6,068 linked bytes) are on the integration tree as plain C with no FAKE and no new guard; the standards review found only trivial whitespace. The four leftovers moved on: func_801328C4 was matched in T-17115, func_8015A744 and func_8015A8B4 are guarded near misses under T-17105, and func_80132B34 stays INCLUDE_ASM as a known T-0018 gap (T-17115). Moved to Done.

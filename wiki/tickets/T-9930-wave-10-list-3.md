@@ -1,10 +1,10 @@
 ---
 id: T-9930
 title: "Wave 10: list 3"
-status: In Progress
+status: Done
 assignee: Codex w10-3
 created: 2026-10-11
-updated: 2026-10-11
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[matching-notes]]"]
 ---
 
@@ -61,3 +61,5 @@ Private scratch: scratchpad/w10-3/. No tool, compiler, YAML, or out-of-scope sou
 - ETC `func_8013DEA0` has an exact scratch candidate after replacing raw packet addresses with SDK SPRT fields and documenting the paired width/height source-line dependencies; full-file verification is running.
 
 - ETC SPRT candidate passes full-file funcdiff. A build already in flight encountered transient ETC parse errors while the new source/full-file check was being staged; the completed full-file check on the settled source is clean. Serializing source mutations and build checks from this point, and running a fresh default ninja before counting ETC or claiming the latest full regression.
+
+2026-10-17: Done. Ten functions are merged and still C on main (load_palette, load_csr_ab, load_csr_tp, func_80052060, strSetDefDecEnv, func_80136124, func_80142DF4, func_801322F0, func_80142D90, ETC func_8013DEA0); the T-20900 rebuild passes 27/27 with headers and globals. Review against CODING_STANDARDS found nothing: the 4 FAKE comments give reason and T-9930, no NON_MATCHING, no inline asm, StrDecEnv30 documents its offsets. The unmatched rest of list 3 stays with the T-14500 census and the later waves.

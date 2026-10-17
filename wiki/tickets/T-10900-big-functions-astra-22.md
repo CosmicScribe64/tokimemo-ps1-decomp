@@ -1,10 +1,10 @@
 ---
 id: T-10900
 title: Big functions (astra) 22
-status: In Progress
+status: Done
 assignee: Codex a22
 created: 2026-10-13
-updated: 2026-10-13
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[register-cheatsheet]]"]
 ---
 
@@ -63,3 +63,5 @@ Scratch: external scratchpad/a22. Work list: astra22-list.txt (46 functions,
 - DATE `func_80136340`: MATCH, 868 linked bytes. Structured January–February
   branch replaces m2c's over-shared goto. Added 36-byte concert table rows
   to DATE.h. Total confirmed gain: 5 functions / 8,016 bytes.
+
+2026-10-17 cleanup: Codex stopped at its usage limit; the work merged as 66d5a55c4. Seven functions are plain C on main: select_girl_init, func_8007C8D8, func_8007D8AC, func_80133EA0, func_80135E7C, func_80136340, func_80113CA0 (the last two were committed after the last comment above). Main builds 27/27 (T-20900 clean rebuild). Code review against CODING_STANDARDS.md found nothing blocking; the unsigned char casts are tracked in the cleanup followup. The largest leftover, the dialogue function, has its own ticket T-12500.

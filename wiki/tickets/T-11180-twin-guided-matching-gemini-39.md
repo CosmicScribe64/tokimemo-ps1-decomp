@@ -1,10 +1,10 @@
 ---
 id: T-11180
 title: Twin-guided matching (Gemini) 39
-status: In Progress
+status: Done
 assignee: gemini
 created: 2026-10-14
-updated: 2026-10-14
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[matching-notes]]"]
 ---
 
@@ -23,3 +23,5 @@ Match functions from twin-guided batch list 39 (`g39-list.txt`): 24 twin rows wi
 ## Notes
 
 ## Comments
+
+2026-10-17: Cleanup pass. 25 of the 50 listed functions were matched and merged on 2026-10-14 (BUNKAKEN 12, BUNKASAI 9, NAME_ENT 2, TACO 1, EVENT 1) and are still plain C on main. The other targets got no T-11180 commit; the family waves and the dupes/neardupes fills took them (T-11150 filled 10 jump-table twins), and the T-16500 whole-tree sweep of 2026-10-16 found only 4 twin plans left, so the BUNKA_SD group func_801336AC, func_80136B3C, func_80137CAC is plain C now. Review against CODING_STANDARDS.md: copies of matched donors, no FAKE, NON_MATCHING or asm lines, no finding. Closing as Done.

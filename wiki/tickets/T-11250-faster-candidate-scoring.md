@@ -1,10 +1,10 @@
 ---
 id: T-11250
 title: Faster candidate scoring for the solvers
-status: In Review   # Backlog | Ready | In Progress | In Review | Done  (must match column in wiki/kanban.md)
+status: Done
 assignee: tooling agent g42
 created: 2026-10-14
-updated: 2026-10-14
+updated: 2026-10-17
 links: ["[[tickets/T-11170-cheat-sheet-auto-tweaker]]", "[[tickets/T-11190-bulk-m2c-pipeline]]", "[[tickets/T-11530-order-search-tool]]"]
 ---
 
@@ -49,3 +49,7 @@ So 1.3 s per candidate became 0.22 s serial (4.5/s). The remaining time is the I
 - End to end, `autotweak.py --time 60 --dry-run`: main:func_80067870 40 tried (0.6/s) with `--exact`, 974 tried (15/s) now; TT:func_8013C0A8 43 tried with `--exact`, 340 tried in 22 s (15/s) now, same best score 623. About 25x on a 10-core host.
 
 ## Comments
+
+2026-10-17: Work is on main (cc825cedb, 2659b4838). All acceptance criteria are met. The scores match the legacy path (68 of 68 candidates) and the speedup was seen end to end, with --exact kept as the legacy path. Code review against CODING_STANDARDS found only low-severity latent issues in tools/fastscore.py (a pool that is closed while shared, a stale docstring, unlocked counters). These go into the followup together with the T-11260 nits.
+
+Followup opened: [[tickets/T-21006-fastscore-order-search-hardening|T-21006]].

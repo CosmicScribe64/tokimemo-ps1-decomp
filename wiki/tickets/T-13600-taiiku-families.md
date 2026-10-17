@@ -1,10 +1,10 @@
 ---
 id: T-13600
 title: Recover TAIIKU source families
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[bunka-family-results]]", "[[tickets/T-12020-codex-cx2]]"]
 ---
 
@@ -96,3 +96,5 @@ UntouchedBCEC (524 bytes) has an m2c LO16-collapse bug: its final two stores bot
 Untouched43DD0 (384 bytes) has the same animation/state update pattern as matched44B40. Its tables are signed halfwords (target lh instructions); using existing byte storage as a halfword view corrects m2c's byte load, and direct per-branch state updates reduce109 to36 lines. Remaining differences include byte truncation/store placement and m2c's redundant tail stores. Duplicating the branch stores gives58, so no artificial self-store workaround is retained. All attempts remain scratch-only; cumulative gain stays1,496 verified bytes.
 
 A final isolation of43DD0's matching44B40 donor form keeps only the per-branch zero resets and removes the rejected extra tail-store duplication. This improves36 to20 full-TU lines; the remaining differences concern the redundant tail store/load allocation. No register sweep follows. The twelve candidates without baseline wiki mentions have now been inspected or bounded-tested (including the three verified wins); this is a limited fresh-candidate inventory, not exhaustion of the84-function baseline. Further prioritization can use the separate exhaustive draft/scoring catalog.
+
+2026-10-17: The three matches (TAIIKU func_80133494, func_80133644 and func_80139330, 1,496 bytes) are on main as plain C with no FAKE or guard, and review against CODING_STANDARDS.md is clean apart from missing spaces before numbers in the wiki notes. The follow-up candidates it ranked (46A60, 47928, 47318, 45640, 43DD0, 44E54, 44464) were matched later by T-16553, T-16554 and T-19010, and the rest of TAIIKU lives in the draft catalog and wave queues. func_80139330 had also been matched by T-11640, so only one definition survives. Closed as Done.

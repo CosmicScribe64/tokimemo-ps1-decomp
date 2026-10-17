@@ -1,10 +1,10 @@
 ---
 id: T-12300
 title: Match substantial unclaimed functions
-status: In Review
+status: Done
 assignee: Codex large-byte-matches
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[decompile-workflow]]", "[[register-cheatsheet]]"]
 ---
 
@@ -37,6 +37,8 @@ Verified BUNKAKEN gain: **3,604 literal linked bytes / 3 functions** (8013C0AC 1
 RPG_BAT func_80145CC0: **0 gained bytes**, guarded reconstruction of a 2,232-byte target retained because the entire control-flow/scheduling structure is recovered. 557/557 compared instructions; 58 register-only positions (116 +/- diff rows), D_8015EDE0 in v0 instead of v1. Removing m2c temporary/self-store noise and writing `(-D_8015EDE0) << 3` restores missing instructions. Traced uopt shows timer priority 0.6667 and no competing v1 range. Tested void/s32 fallthrough, bare return, local timer pointer, empty tests, postfix updates and boolean compare locals; none resolves the range. No speculative dummy statements retained, no FAKE added. Default RPG_BAT SHA1, headers/globals and whitespace checks pass. Evidence build/large-bytes/rpg-large/{handoff.txt,final.diff,regdiff.txt,checks.txt}.
 
 Verified RPG_BAT func_8014A660: **1,316 literal linked bytes**, bringing total to **4,920 bytes / 4 functions**. Explicit nested final cases recover forward-branch structure; canonical `*(s32 *)&D_8015EDB0.unk_04` accesses then fix 31 register substitutions. Redundant same-type pointer views are transparently marked FAKE T-12300; plain members/direct scalar/local copies/s32-return versions did not match. Production literal proof and RPG_BAT SHA1 pass. Missing word counters declared from sw accesses; existing helper definitions provide prototypes. The same pointer/unsigned/array/record variants fail to transfer to func_80145CC0 (still 58 register-only positions); the clean guarded draft is retained without those casts.
+
+2026-10-17: Reviewed at 28d5f509. The ticket's own two-axis review already fixed its one standards finding, and re-checking the merged code finds nothing more: the single FAKE in 8014A660.c names T-12300 with a reason, BUNKAKEN 8013BFE0.c is plain C, and the guarded func_80145CC0 was matched later by T-17101 (guard gone). Only trivial: redundant ticket-named #ifndef guards inside BUNKAKEN.h and RPG_BAT.h. func_8014BB80, func_8014ADD0 and func_8014B294 stay in the unmatched inventory. Moved to Done.
 
 ## Bounded pass outcomes
 

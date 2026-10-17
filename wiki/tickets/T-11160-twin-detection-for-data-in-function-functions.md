@@ -1,10 +1,10 @@
 ---
 id: T-11160
 title: Twin detection for data-in-function functions
-status: In Review
+status: Done
 assignee: Claude
 created: 2026-10-14
-updated: 2026-10-14
+updated: 2026-10-17
 links: [[[build-system]], [[tickets/T-11150-twin-detection-for-jump-table-functions]], [[tickets/T-9010-per-object-data-shared-lui-at]], [[tickets/T-10200-orphan-jump-tables]], tools/dupes.py, tools/neardupes.py]
 ---
 
@@ -33,3 +33,5 @@ links: [[[build-system]], [[tickets/T-11150-twin-detection-for-jump-table-functi
 ## Comments
 
 - 2026-10-14: Implemented without game data (cloud worktree, no build). `test_dupes.py` 66 OK, `test_neardupes.py` 28 OK, `check_headers.py include src` OK, `test_check_headers.py` OK. To verify locally: `tools/docker.sh python3 tools/neardupes.py --report` (the "data-in-function groups" line and what remains of "data in function"), `tools/docker.sh python3 tools/dupes.py -v`, then `tools/docker.sh python3 tools/dupes.py --lenient --apply --check`, `tools/docker.sh python3 tools/neardupes.py --apply --check` and a full `tools/docker.sh ninja`.
+
+2026-10-17: Cleanup pass. Merged on main as 200bc9d3a: own-rodata fingerprinting and the 'needs data check' plans in tools/dupes.py and tools/neardupes.py, with tests (+175 and +21 lines) and the build-system section. The real-build run was never logged for this ticket, but the T-16500 whole-tree sweep (2026-10-16) plans a copy into a data-island function (GYOZI func_8013506C) and the unit sha1 check rejects it, which is the intended behaviour; no other data-island plan was found. Review against CODING_STANDARDS.md: no finding. Closing as Done.

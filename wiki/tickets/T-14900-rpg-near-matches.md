@@ -1,10 +1,10 @@
 ---
 id: T-14900
 title: Revisit three RPG_BAT near matches with structural evidence
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[tickets/T-13300-rpg-families]]", "[[broad-coverage-results]]"]
 ---
 
@@ -26,6 +26,10 @@ Read T-13300 and T-9780. AF1C negative-call register issue has already rejected 
 Proof lane edits only RPG_BAT/8013F4F0.c (80140A58 and 80140CC8), separate from all three owned TUs; root integrates its main_api.h addition. This lane has no shared header changes initially. Docker only, one compiler.
 
 ## Comments
+
+2026-10-17: Review closed. func_80148B08 (1,128 linked bytes) is on the integration tree as plain C, and the two bounded failures were matched afterwards in T-16210 (func_8013AF1C, func_801454F0). One low-priority standards point remains: the RpgMotion20/RpgMotion30 cast views over D_8015EC28..EC6F are neither a declared aggregate nor marked; filed as a followup (it also covers the T-12040 sites). Moved to Done.
+
+Followup opened: [[tickets/T-21013-rpg-bat-motion-work-area-views|T-21013]].
 
 ## Results
 

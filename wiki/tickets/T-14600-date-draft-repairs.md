@@ -1,10 +1,10 @@
 ---
 id: T-14600
 title: Repair nine DATE census draft failures
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: ["[[tickets/T-14500-exhaustive-drafts]]", "[[matching-notes]]"]
 ---
 
@@ -23,6 +23,10 @@ Recover compiling C for nine reserved DATE census failures without editing produ
 Frozen source base 48362009. Original archives are in the census worktree at drafts/T-14500/DATE. T-14100 historical callback-table drafts are reusable evidence, not matches. Docker only; no production C changes; hardlinked immutable disc/assembly inputs are not regenerated.
 
 ## Comments
+
+2026-10-17: Closed after review against CODING_STANDARDS.md. The nine repairs are archived and compile; four of the nine targets are now plain C on main (func_801511B4 T-16230, func_80152268 T-17204, func_80152E34 and func_80155004 T-20600) and the other five were redrafted by T-17200. Review found no src/ or include/ issues, but comparison.txt holds 2,361 rows of original instruction words (section 10) and tools/date_draft_repairs.py has no test and always exits 0. Both are tracked in the followup ticket that scrubs the drafts archive.
+
+Followup opened: [[tickets/T-21010-drafts-archive-scrub-instruction-rows|T-21010]].
 
 ## Results
 

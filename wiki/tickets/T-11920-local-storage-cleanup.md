@@ -1,10 +1,10 @@
 ---
 id: T-11920
 title: Clean redundant local worktrees while preserving game data
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: []
 ---
 
@@ -21,3 +21,7 @@ Cleanup manifests and backups live in /Users/lila/Documents/Codex/2026-10-15/hel
 
 ## Results
 Removed 35 clean registered worktrees and 4 abandoned folders with missing Git metadata. Retained all six dirty tokimemo-wt checkouts, the main project, and other agent worktrees. Preserved registered checkout commits under refs/cleanup-backup/2026-10-15/. Verified every archived regular file against SHA-256 before removal and rechecked 1,360 retained game files afterward. Backups occupy about 1.54 GiB. No code was changed; local maintenance documentation is ready for review.
+
+## Comments
+
+2026-10-17: Checked the result: the 1.5 GB backup folder and the 35 refs/cleanup-backup/2026-10-15/ refs still exist, and the three acceptance criteria are met as the Results section describes. No code changed, so no standards review applies. Closed as Done.

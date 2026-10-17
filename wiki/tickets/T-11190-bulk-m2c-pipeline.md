@@ -1,10 +1,10 @@
 ---
 id: T-11190
 title: Bulk m2c and auto-solve pipeline for small functions
-status: In Review
+status: Done
 assignee: Claude
 created: 2026-10-14
-updated: 2026-10-14
+updated: 2026-10-17
 links: [[[decompile-workflow]], [[register-cheatsheet]], [[tickets/T-11170-cheat-sheet-auto-tweaker]], [[tickets/T-1330-tooling-m2c-context-and-permuter]], tools/bulk_m2c.py, tools/test_bulk_m2c.py, tools/autotweak.py, tools/m2c.py, tools/permute.py]
 ---
 
@@ -33,3 +33,7 @@ About 790 `INCLUDE_ASM` functions under 600 bytes remain. Run m2c, a mechanical 
 ## Comments
 
 - 2026-10-14: implemented without the game binaries (cloud worktree): only the synthetic tests ran (`python3 tools/test_bulk_m2c.py`, 21 OK; `tools/test_autotweak.py` OK; `check_headers.py include src` headers OK; `test_check_headers.py` OK). In Review until the orchestrator's real run and the code review.
+
+2026-10-17: Work is on main (72a3faba9 through ccade9834, merge 6ccc26117). All acceptance criteria are met, including the real run: 58 + 3 functions matched, then +33 under T-11210, and the tool has been reused by later tickets. Code review against CODING_STANDARDS found no blocking issue in tools/bulk_m2c.py or the matched functions. Two housekeeping findings (71 stale banner comments in include/, and header recovery after a crash) go into the followup.
+
+Followup opened: [[tickets/T-21007-bulk-m2c-banner-clutter-and-header-recovery|T-21007]].

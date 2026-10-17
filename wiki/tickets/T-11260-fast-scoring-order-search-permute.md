@@ -1,10 +1,10 @@
 ---
 id: T-11260
 title: Fast scoring for order_search, permute and the permuter farm
-status: In Review   # Backlog | Ready | In Progress | In Review | Done  (must match column in wiki/kanban.md)
+status: Done
 assignee: tooling agent g43
 created: 2026-10-14
-updated: 2026-10-14
+updated: 2026-10-17
 links: ["[[tickets/T-11250-faster-candidate-scoring]]", "[[tickets/T-11530-order-search-tool]]"]
 ---
 
@@ -39,3 +39,5 @@ Candidates/s (8 threads, warm cache): func_80067870 4.0 exact, 13.2 stripped; Lo
 - Also left alone: `autotweak.py`, `bulk_m2c.py` (T-11250 done), `typefix.py` (T-11240, other agent), `funcdiff.py`, `funcdiff_verify.py`, `cvt_pass.py`, `frame_pass.py`, `ido_eval.py`, `uopt_eval.py`, `gcc_fingerprint.py` (single compiles or fingerprint runs, no candidate loop).
 
 ## Comments
+
+2026-10-17: Work is on main (9bb94b5b7, merge 4cefb013b). All acceptance criteria are met: the equality measurement showed the stripped compile scores differently, so --fast is opt-in with exact rescoring. Code review against CODING_STANDARDS found only the low-severity nits, which go into the followup written under T-11250. T-11270 later built the exact rescoring for autotweak and bulk_m2c on this work (it extends it, it does not replace it).

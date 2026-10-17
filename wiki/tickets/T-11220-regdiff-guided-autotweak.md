@@ -1,10 +1,10 @@
 ---
 id: T-11220
 title: regdiff-guided edit ordering in autotweak
-status: In Review
+status: Done
 assignee: agent
 created: 2026-10-14
-updated: 2026-10-14
+updated: 2026-10-17
 links: [[[decompile-workflow]], [[register-cheatsheet]], [[uopt-register-allocation]], [[tickets/T-11170-cheat-sheet-auto-tweaker]], [[tickets/T-11200-order-search-in-solvers]], tools/autotweak.py, tools/bulk_m2c.py, tools/regdiff.py]
 ---
 
@@ -41,3 +41,5 @@ score first, instead of the plain round robin over the transforms.
 - Built without the game binaries or the traced uopt (no compile); synthetic tests only.
 
 ## Comments
+
+2026-10-17: Cleanup pass. Merged on main as de2b19294: regdiff-guided edit ordering in tools/autotweak.py (HINT_EDITS, --no-regdiff), the bulk_m2c pass-through and mocked-regdiff tests. It has been used for real since: the T-11550 Opus pass credits the hints for func_801330D8 and func_80140920, and T-20830 extended HINT_EDITS; a controlled run against --no-regdiff was not recorded and is not needed. Review against CODING_STANDARDS.md: Python 3, docstrings, tests, no game data; the broad except is limited to the guidance path; no finding. Closing as Done.

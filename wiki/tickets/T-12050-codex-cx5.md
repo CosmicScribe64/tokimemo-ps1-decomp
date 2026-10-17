@@ -1,10 +1,10 @@
 ---
 id: T-12050
 title: Match cx5 main menu and text functions
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-17
 links: []
 ---
 
@@ -33,6 +33,10 @@ Reproduced the prior T-10010 seed from its retained scratch declaration-order-pr
 ### Initial deep-pass triage
 
 All fourteen listed functions have now been compared or reconstructed and compiled. x_taku_menu_set reaches 24 differing rows, exclusively array homes eight bytes above target; argument style, scalar homes and aggregate variants do not close it. Larger repaired drafts: menu_girl_taku_set 58 rows, sndisp 77, xa_wait 93 initially (safe signed-byte variant under refinement), sndi 332, func_8005215C 335, func_80052F68 327, get_h_tokimeki 817, get_near_menu 1424 and func_8004FC10 752. Corrected saved-draft pointer strides, real buffers and canonical GameState fields. Narrowing F61+2 to u8 gives an attractive smaller score but changes semantics and is rejected. User steering makes verified bytes primary: current focus is the 1260-byte state machine and its 580-byte shared-prefix sibling, plus the 1200-byte score builder. No broad scratch drafts are retained in production.
+
+2026-10-17: Code review against CODING_STANDARDS.md at 28d5f509: no blocking findings. menu_bar_show (208 bytes) is plain C, D_800B40F0 is declared once, and the guards for menu_check_1, menu_bar_color and x_taku_menu_set name a ticket and a row count (T-17018 later reworded two and matched xa_wait in the same file). The open item is menu_bar_color (17 rows): it needs a second data range per object, which is tooling rather than C, and a Backlog ticket now holds that together with the hand-edited range from T-12010. Moved to Done.
+
+Followup opened: [[tickets/T-21015-object-config-multiple-data-ranges|T-21015]].
 
 ## T-12050: cx5 menu/text deep pass
 
