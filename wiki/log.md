@@ -17038,3 +17038,11 @@ Clean rebuild of the w3-main-p15 worktree (`rm -rf build && configure.py && ninj
 ## [2026-10-17] ticket | T-17022 started
 
 [[tickets/T-17022-w3-main-p22]] created In Progress: wave 3 package w3-main-p22, four main functions of `src/main/80085E30.c` (`Fade_Out_Main`, `Fade_In_Main`, `func_8008647C`, `Scroll`). Worktree `tokimemo-wt/w3-main-p22` from `w2-good`.
+
+## [2026-10-17] build | T-17022 package w3-main-p22: 2 of 4 matched
+
+`Fade_Out_Main` and `Fade_In_Main` matched in `src/main/80085E30.c` (196 B, plain C, a `u8 temp` read after the timer test; the first found by `autotweak.py`). `func_8008647C` kept as a `NON_MATCHING` draft at 24 differing lines (`s32 func_8008647C(void);` added to `include/main_api.h`), `Scroll` left `INCLUDE_ASM` after one typed try (229 lines). Notes in [[matching-notes]] (section T-17022), three rows in [[register-cheatsheet]], one T-0018 row in [[data/t0018-cases]], drafts in `drafts/T-17022/`. Clean rebuild 27/27 sha1 OK, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK.
+
+## [2026-10-17] ticket | T-17022 In Review
+
+[[tickets/T-17022-w3-main-p22]] In Progress to In Review; kanban card moved, matched count 2. Code review against `CODING_STANDARDS.md` is the remaining step before Done.
