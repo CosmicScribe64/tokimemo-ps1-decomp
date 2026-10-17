@@ -17774,3 +17774,7 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E
 ## [2026-10-17] ticket | T-20010 submitted for review
 
 [[tickets/T-20010-name-ent-resource-loader]] and [[kanban]] move to In Review. Self-review against CODING_STANDARDS.md completed: bounded table, fixed-width C89, real shared field views, no new fakematches, no neighboring function changes, source-only submission. Claim #52 is complete together with merged T-20009/PR #53; maintainer review pending.
+
+## [2026-10-17] ticket | T-20010 Done
+
+[[tickets/T-20010-name-ent-resource-loader]]: PR #55 (KakarottoCake) merged, NAME_ENT `func_80142E24` (1,652 bytes) matches in plain C. Clean build 27/27, linked funcdiff MATCH. Closes claim #52.

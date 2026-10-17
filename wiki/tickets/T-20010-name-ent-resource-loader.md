@@ -1,7 +1,7 @@
 ---
 id: T-20010
 title: Match NAME_ENT resource loader
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
 updated: 2026-10-17
@@ -41,3 +41,5 @@ Full-unit resolved instruction comparison reaches zero edits. The production bod
 ## Review
 
 Self-review against CODING_STANDARDS.md: fixed-width C89 declarations and comments; exact eight-word bounds; existing GameState/SpriteSlot24 layouts and canonical API declarations; no new FAKE constraints, dead locals, forced registers, compiler changes or nonmatching guards. Only the claimed body changes in production; neighboring T-22007 matches are preserved. No generated assembly, game assets, binaries, probe scripts or instruction listings are submitted. Ticket and kanban move to In Review; maintainer review remains pending.
+
+- 2026-10-17 review (orchestrator, CODING_STANDARDS.md): plain C, no fakematch, inline asm, padding or extra arguments; only src/ovl/NAME_ENT/80142A80.c changed. Merged as PR #55 in one clean build: 27/27 SHA1, headers, globals, prototypes, linked funcdiff MATCH (1,652 bytes). Done.

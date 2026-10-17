@@ -52,10 +52,10 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-20010-name-ent-resource-loader|T-20010 Match NAME_ENT resource loader]]
 
 ## Done
 
+- [ ] [[tickets/T-20010-name-ent-resource-loader|T-20010 Match NAME_ENT resource loader]]
 - [ ] [[tickets/T-22014-w4-p14|T-22014 Wave 4 package w4-p14]]
 - [ ] [[tickets/T-22015-w4-p15|T-22015 Wave 4 package w4-p15]]
 - [ ] [[tickets/T-22013-w4-p13|T-22013 Wave 4 package w4-p13]]
