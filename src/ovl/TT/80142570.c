@@ -116,6 +116,7 @@ u8 func_801427A8(void) {
                         *(s16 *)(c + 0x30C) -= 2;
                     }
                     *(u16 *)(r + 4) = 0x80;
+                    /* FAKE: TT zero-store chain pair (as in func_80142570); dead reloads keep uopt ranges. T-11860 */
                     *(u16 *)(r + 6) = *(u16 *)(r + 8) = *(u16 *)(r + 0xA) = 0;
                     r[0xD] = r[0xE] = r[0xF] = 0;
                 }
@@ -123,6 +124,7 @@ u8 func_801427A8(void) {
             for (j = 4; j < 8; j++) {
                 if (*(u8 **)(c + 0x218 + j * 4) != 0 && func_80145508(r + 0x14, &D_80155B36, c + 0x14, *(u8 **)(c + 0x218 + j * 4)) != 0) {
                     *(u16 *)(r + 4) = 0x80;
+                    /* FAKE: TT zero-store chain pair (as in func_80142570); dead reloads keep uopt ranges. T-11860 */
                     *(u16 *)(r + 6) = *(u16 *)(r + 8) = *(u16 *)(r + 0xA) = 0;
                     r[0xD] = r[0xE] = r[0xF] = 0;
                 }
@@ -133,6 +135,7 @@ u8 func_801427A8(void) {
         if (*(u8 **)(c + 0x218 + i * 4) != 0 && a[0x52] == 0 && a[0] != 0 && func_80145508(a + 0x14, D_80155B30, c + 0x14, *(u8 **)(c + 0x218 + i * 4)) != 0) {
             func_80144094();
             *(u16 *)(a + 4) = 0x60;
+            /* FAKE: TT zero-store chain pair (as in func_80142570); dead reloads keep uopt ranges. T-11860 */
             *(u16 *)(a + 6) = *(u16 *)(a + 8) = *(u16 *)(a + 0xA) = 0;
             a[0xD] = a[0xE] = a[0xF] = 0;
         }

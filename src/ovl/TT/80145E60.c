@@ -367,6 +367,7 @@ void func_80146924(void) {
                 col = 4;
                 break;
             }
+            /* FAKE: one chain store leaves col with a single use, so its range splits to a stack slot as in the original. T-11860 */
             r[2] = r[0x16] = r[0x2A] = col;
             *(u16 *)(s + 2) = 0x70;
         }
