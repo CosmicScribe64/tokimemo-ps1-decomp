@@ -53,6 +53,8 @@ void func_80135600(void);
 void func_801359D0(void);
 void func_80135F54(void);
 void func_801369F4(s32 arg0);
+void func_80136700(void);
+void func_80136904(s32 arg0, s32 arg1);
 s32 func_80132B40(void);
 void func_80132D44(void);
 void func_80132E3C(void);
