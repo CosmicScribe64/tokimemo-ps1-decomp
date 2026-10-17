@@ -17544,3 +17544,6 @@ Package w4-p02 started in worktree w4-p02 (branch from w2-good): `src/main/80078
 ## [2026-10-17] ticket | T-22002 In Review (func_80079070 stays guarded, 4 rows)
 
 No match: viewsweep, autotweak (345 variants) and about 100 hand placements did not move the 2-instruction diff. Guard note rewritten in `src/main/800789E0.c`; findings in [[matching-notes]]. [[tickets/T-22002-w4-p02]] moved to In Review.
+
+## [2026-10-17] ticket | T-22002 closer: func_80079070 matched
+Opus closer for [[tickets/T-22002-w4-p02]]: `main:func_80079070` matched (1,204 bytes) with an `s32` call-argument local (precoloured `$a0`) and a FAKE unused `u8` frame pad; guard removed in `src/main/800789E0.c`. Notes in [[matching-notes]]. Clean rebuild 27/27, check_headers, migrate_globals --check, sync_protos --check-branch OK.
