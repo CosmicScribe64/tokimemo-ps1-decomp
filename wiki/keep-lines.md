@@ -6,7 +6,7 @@ sources: ["tools/keepproof.py", "tools/migrate_globals.py", "tools/aggregate_aud
 
 # Keep lines backed by a byte-match necessity proof (T-20820)
 
-Proposed rule for the lead. Nothing in `src/`, `include/` or `CODING_STANDARDS.md` changes until it is approved; the tools below are built and tested, and no `keep` line exists in `config/migrate_globals.txt`.
+Proposed rule for the lead. `CODING_STANDARDS.md` stays as it is until the rule is approved. The tools below are built and tested. Since T-21520 `config/migrate_globals.txt` has two proof lines, TACO `func_8014616C` and `func_80149538` (below, "Applied"); they were added on the orchestrator's request with the recommended marking (a `FAKE` comment at the use) and can be removed with their two functions if the lead rejects the rule.
 
 ## The question
 
@@ -82,10 +82,14 @@ The numbers in the proof lines are those of the scratch run; a package that comm
 
 The six other functions of [[data/t0018-cases]] whose notes say that the original reads a separate symbol (OMIMAI `func_8013388C`, main `func_800590CC`, `func_800591D8`, `csr_load_vram`, TACO `func_8013506C`, SHOUGATU `func_801347E0`) do not have the counter-tail shape (the census does not list them), and the table above shows that separate symbols do not change their drafts. They are not candidates for a proof line; their remaining rows are register allocation and scheduling that the symbol does not move. If one of them reaches a draft where the symbol makes a difference, `check` gives the same answer for it.
 
-## Next steps (not started)
+## Applied (T-21520)
 
-1. Lead decision on the rule and on the marking.
-2. Wave-4 package for the TACO counter tail (about 1 hour): re-add `extern s32 D_800E7384;` to `include/main_api.h`, write `func_8014616C` and `func_80149538` as plain C with the tail `D_800E7384 += 1;` (`tools/keepproof.py check UNIT:func --symbol D_800E7384 --from-draft --write-scratch FILE` writes the plain C text it proves from the committed guarded draft), run `keepproof.py check` for each, add the proof lines, run `migrate_globals.py --check`, build. `func_80146754` and `func_801484E4` need work beyond the symbol.
+On the tree after the shared-type round both proofs held again with the same numbers (`keepproof.py check ... --from-draft`: 165 and 33 rows without the symbol, sha1 `bb8762f0` and `d7dd7f6c`). [[tickets/T-21520-apply-tooling-matches]] wrote the two functions as plain C with the last statement `D_800E7384 += 1;` (the first form to try matched, so the proven `D_800E7384 = D_800E7384 + 1;` text was not needed), re-added `extern s32 D_800E7384;` to `include/main_api.h`, and added the two lines to `config/migrate_globals.txt`. Both functions MATCH (1,512 and 692 bytes) and `keepproof.py check UNIT:func --symbol D_800E7384` on the committed files says PROVEN. Each use carries a `FAKE` comment that names the proof line and the tickets. The `FAKE` marking and the declaration are the two decisions below as recommended; the rule text in `CODING_STANDARDS.md` is still to do.
+
+## Next steps
+
+1. Lead decision on the rule (CODING_STANDARDS sentence, [[game-state]] paragraph) and on the marking; the two lines above are in place.
+2. Done in T-21520 for `func_8014616C` and `func_80149538`. The original plan was a wave-4 package for the TACO counter tail (about 1 hour): re-add `extern s32 D_800E7384;` to `include/main_api.h`, write `func_8014616C` and `func_80149538` as plain C with the tail `D_800E7384 += 1;` (`tools/keepproof.py check UNIT:func --symbol D_800E7384 --from-draft --write-scratch FILE` writes the plain C text it proves from the committed guarded draft), run `keepproof.py check` for each, add the proof lines, run `migrate_globals.py --check`, build. `func_80146754` and `func_801484E4` need work beyond the symbol.
 3. TACO `func_80146754` (1,540 B) goes from 158 to 2 rows with the tail symbol alone: worth a polishing package once the rule is approved.
 4. The census lists 72 unmatched functions with the shape (83,108 B; `drafts/T-20820/census.json`); the 19 on 0x800E7384 (27,948 B) are the first to try. The shape alone proves nothing, so each one needs a draft and a `check`.
 

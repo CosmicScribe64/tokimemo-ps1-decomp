@@ -16,7 +16,7 @@ Read this first. Update on every ingest or new page.
 - [[kanban]] - ticket board (columns must match ticket frontmatter status)
 - [[data-types]] - structs and arrays recovered from the original's access patterns, `tools/type_recovery.py` (T-5000)
 - [[game-state]] - `GameState D_800E6280`, the main game-state struct (0x800E6280..0x800E7D10): field map, evidence, confidence, `tools/migrate_globals.py` (T-5100); one view for every unit, access audit (T-7010)
-- [[keep-lines]] - proposed rule (awaiting the lead): a `keep` line backed by a byte-match necessity proof for the frame-counter tail of TACO and similar, `tools/keepproof.py` (T-20820); census false-positive rate of the asm shape
+- [[keep-lines]] - proposed rule (awaiting the lead; two proof lines in `config/migrate_globals.txt` since T-21520): a `keep` line backed by a byte-match necessity proof for the frame-counter tail of TACO and similar, `tools/keepproof.py` (T-20820); census false-positive rate of the asm shape
 - Repo-root `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`, `LICENSE` (CC0) - public face of the project (T-0901)
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
