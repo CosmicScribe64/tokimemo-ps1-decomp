@@ -1,0 +1,16 @@
+diff --git a/include/ovl/TEL.h b/include/ovl/TEL.h
+index 36e343ecc..bcf5f97f9 100644
+--- a/include/ovl/TEL.h
++++ b/include/ovl/TEL.h
+@@ -372,3 +372,11 @@ typedef struct TelRecordFlags {
+     /* 0x00, bits 17..31 */ u32 high : 15;
+ } TelRecordFlags; /* size 0x04 */
+ #endif
++
++#ifndef OVL_TEL_T23001_H
++#define OVL_TEL_T23001_H
++/* Dialogue tables of func_80134FE4 (T-23001): one string pointer and two word tables per girl. */
++extern u8 *D_801406E0[];
++extern u32 D_80140710[];
++extern u32 D_80140770[];
++#endif
