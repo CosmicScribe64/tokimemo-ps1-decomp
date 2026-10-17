@@ -16789,3 +16789,6 @@ Actual default linked proofs match both helpers (160 + 364 = 524 bytes). Full 48
 
 ## [2026-10-17] ticket | T-17008 Done
 [[tickets/T-17008-w3-main-p08]] reviewed against `CODING_STANDARDS.md`: 2 findings fixed (two prototypes out of address order in `include/main_api.h`, a missing source comment on the do-while tail of `func_80059BE8`), no others. In Review to Done (kanban card moved). Matched 3 of 3 (`func_80059EF0`, `func_8004F6B0`, `func_80059BE8`, 1,364 B); one FAKE local, no guarded drafts. Build 27/27, headers, globals and proto checks OK.
+
+## [2026-10-17] ticket | T-17013 Wave 3 package w3-main-p13 started
+[[tickets/T-17013-w3-main-p13]] In Progress: four main functions (`func_8004B358`, `func_8004AE54`, `col2sepia`, `make_color_bar`) in `src/main/8004AD60.c`, worktree tokimemo-wt/w3-main-p13, branch w3-main-p13. Part of [[tickets/T-17000-types-first-main]].
