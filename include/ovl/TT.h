@@ -799,3 +799,9 @@ typedef struct TtCfgBits {
 /* Second hit box of the D_80155C64 table, labelled on its own; passed to func_80145508 by func_80137654. T-11860 */
 extern TtCollision6 D_80155C6A;
 #endif
+
+#ifndef OVL_TT_T11860_G9
+#define OVL_TT_T11860_G9
+/* Scene reset in 80148DB0.c, called by func_801494D8 before its definition. T-11860 */
+void func_80149B20(void);
+#endif

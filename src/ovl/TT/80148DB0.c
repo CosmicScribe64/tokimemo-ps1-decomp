@@ -208,7 +208,68 @@ void func_80149400(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801494D8);
+void func_801494D8(void) {
+    u8 *scene;
+    u8 *state;
+    u16 pad1; /* FAKE: pad1..pad3 reproduce the original frame (c at sp+0x44). T-11860 */
+    u16 pad2;
+    s32 pad3;
+    u8 *c;
+    u8 *input;
+    u8 *q;
+    u8 *p;
+    u32 max;
+
+    scene = D_80158A60;
+    input = scene + 0x10;
+    state = D_80158A64;
+    c = D_80158A6C;
+    q = D_80158AA4;
+    p = D_80158AA8;
+    max = 3;
+    if (scene[0x53] == 0) {
+        max = 2;
+    }
+    p[c[0xA] * 0x14 + 2] = 0;
+    if (*(u16 *)(input + 4) & 0x1000) {
+        func_80133AD0(0x613);
+        *(s16 *)(state + 0x26) = 0;
+        if (--c[0xA] == 0xFF) {
+            c[0xA] = max;
+        }
+    } else if (*(u16 *)(input + 4) & 0x4000) {
+        func_80133AD0(0x613);
+        *(s16 *)(state + 0x26) = 0;
+        if (++c[0xA] > max) {
+            c[0xA] = 0;
+        }
+    }
+    p[c[0xA] * 0x14 + 2] = 2;
+    q[0] = 1;
+    q[1] = 0;
+    *(s16 *)(q + 0x44) = 0;
+    *(s16 *)(q + 0x14) = -0x2C;
+    *(s16 *)(q + 0x16) = c[0xA] * 8 + 0xA0;
+    *(u16 *)(q + 0x10) = 1;
+    q[0x3B] = 0x63;
+    *(s16 *)(q + 0x3C) = 0x58; *(s16 *)(q + 0x3E) = 8; /* FAKE: one line keeps the original li order (as1 schedules by line). T-11860 */
+    q[0x38] = 0x80;
+    q[0x39] = 0x40;
+    q[0x3A] = 0x40;
+    if ((*(u16 *)(input + 4) & 0x800) || (*(u16 *)(input + 4) & 0x20)) {
+        func_80044750(0xB1);
+        func_80133AD0(0x612);
+        state[0x22] = 0;
+        *(u16 *)(state + 2) += 1;
+        *(s16 *)(state + 4) = 0;
+        *(s16 *)(c + 0x10) = 0;
+        *(s16 *)(c + 0x12) = 0;
+        func_80149B20();
+    }
+    if (scene[0x53] == 1 && state[0x24] == 0) {
+        func_80149400();
+    }
+}
 
 void func_80149704(void) {
     u8 *scene;
@@ -278,7 +339,87 @@ void func_80149704(void) {
     *(s16 *)(q + 0x10) = 0;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801498C8);
+void func_801498C8(void) {
+    u8 *q;
+    u8 *c;
+    u8 *o;
+    s32 i;
+
+    c = D_80158A6C;
+    q = D_80158AB0 + 0x10;
+    *(s16 *)(q + 4) = -0x100;
+    *(s16 *)(q + 6) = 0x44;
+    *(s16 *)q = 0x1000;
+    *(s16 *)(q + 2) = 0x1000;
+    *(s16 *)(q + 0x14) = 0x100;
+    *(s16 *)(q + 0x16) = 0x44;
+    *(s16 *)(q + 0x10) = 0x1000;
+    *(s16 *)(q + 0x12) = 0x1000;
+    o = D_80158AA4 + 0xFA0;
+    for (i = 0; i < 4; i++, o += 0x64) {
+        o[0] = 1;
+        o[1] = 0;
+        *(s16 *)(o + 0x44) = 0;
+        o[0x3B] = 0x80;
+        o[0x4D] = 0;
+        o[0x4E] = 1;
+        o[0x4F] = 1;
+        o[0x50] = 0;
+        *(s16 *)(o + 0x40) = 0x19;
+        *(s16 *)(o + 0x42) = 0x3C07;
+        o[0x4C] = 0;
+        *(s16 *)(o + 0x10) = 0;
+    }
+    o = D_80158AA4 + 0xFA0;
+    o[0x46] = 0;
+    o[0x47] = 0x80;
+    *(s16 *)(o + 0x3C) = 0x50;
+    *(s16 *)(o + 0x3E) = 0x20;
+    *(s32 *)(o + 0x20) = (*(s16 *)(q + 0x14) - 0x6C) << 16;
+    *(s32 *)(o + 0x24) = 0x500000;
+    *(s16 *)(o + 0x14) = *(s16 *)(o + 0x22);
+    *(s16 *)(o + 0x16) = *(s16 *)(o + 0x26);
+    *(s32 *)(o + 0x28) = 0;
+    *(s32 *)(o + 0x2C) = 0;
+    *(u8 **)(o + 0x48) = q + 0x10;
+    o += 0x64;
+    o[0x47] = 0xA0;
+    o[0x46] = 0;
+    *(s16 *)(o + 0x3C) = 0x80;
+    *(s16 *)(o + 0x3E) = 0x20;
+    *(s32 *)(o + 0x20) = (*(s16 *)(q + 0x14) - 0x18) << 16;
+    *(s32 *)(o + 0x24) = 0x500000;
+    *(s16 *)(o + 0x14) = *(s16 *)(o + 0x22);
+    *(s16 *)(o + 0x16) = *(s16 *)(o + 0x26);
+    *(s32 *)(o + 0x28) = 0;
+    *(s32 *)(o + 0x2C) = 0;
+    *(u8 **)(o + 0x48) = q + 0x10;
+    o += 0x64;
+    o[0x47] = 0;
+    o[0x46] = 0;
+    *(s16 *)(o + 0x3C) = 0x80;
+    *(s16 *)(o + 0x3E) = 0x40;
+    *(s32 *)(o + 0x20) = (*(s16 *)(q + 4) - 0x60) << 16;
+    *(s32 *)(o + 0x24) = 0x180000;
+    *(s16 *)(o + 0x14) = *(s16 *)(o + 0x22);
+    *(s16 *)(o + 0x16) = *(s16 *)(o + 0x26);
+    *(s32 *)(o + 0x28) = 0;
+    *(s32 *)(o + 0x2C) = 0;
+    *(u8 **)(o + 0x48) = q;
+    o += 0x64;
+    o[0x47] = 0x40;
+    o[0x46] = 0;
+    *(s16 *)(o + 0x3C) = 0x40;
+    *(s16 *)(o + 0x3E) = 0x40;
+    *(s32 *)(o + 0x20) = (*(s16 *)(q + 4) + 0x20) << 16;
+    *(s32 *)(o + 0x24) = 0x180000;
+    *(s16 *)(o + 0x14) = *(s16 *)(o + 0x22);
+    *(s16 *)(o + 0x16) = *(s16 *)(o + 0x26);
+    *(s32 *)(o + 0x28) = 0;
+    *(s32 *)(o + 0x2C) = 0;
+    *(u8 **)(o + 0x48) = q;
+    *(s16 *)(c + 0x12) = 0;
+}
 
 void func_80149B20(void) {
     u8 *q;
@@ -536,7 +677,11 @@ void func_8014A198(void) {
  * 0x1000 t6, not the original's t2; the original behaves as if t2..t5 were uopt colours of four hoisted constants
  * (needs each constant to be worth a register and v0..t1 busy). Tried: autotweak 300 s, an empty if at every line of
  * case 7, store orders, u16 stores (all 64 s16/u16 combinations), constant locals (s16/s32/u16/u32, chained or not),
- * self-chains, duplicate stores, empty compares, zero-store chains. */
+ * self-chains, duplicate stores, empty compares, zero-store chains.
+ * T-11860 (still 28 lines): the four stores written first in the case give exactly t2..t5 (and t6..t8 for the
+ * values before them) but as1 keeps them first; a second use of each constant makes uopt colour them (t0/t1/a0/a2);
+ * a one-iteration loop, one-line groups and a 900 s permuter run did not help. FIFO bookkeeping fits t2..t5 being
+ * uopt colours in a block that ends before the 0x1000 store (4096 then gets t2, the next block t4/t5). */
 void func_8014A2B4(void) {
     u8 *s;
     u8 *e;
