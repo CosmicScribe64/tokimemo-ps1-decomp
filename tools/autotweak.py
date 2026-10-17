@@ -4,7 +4,8 @@
 Usage (in Docker, repo root as cwd):
     python3 tools/autotweak.py [UNIT:]func_X [--time 300]          # one draft
     python3 tools/autotweak.py --all [--exclude TT] [--time 120]     # every guarded draft
-    python3 tools/autotweak.py --list [--all | UNIT:func_X]          # drafts and edit counts, no compile
+    python3 tools/autotweak.py --list [--all | UNIT:func_X]          # drafts and edit counts per kind, no compile
+    python3 tools/autotweak.py --all --only-kinds gstate,group,chain,inline_multi --time 30   # some kinds only
 
 A draft is a function under `#ifdef NON_MATCHING ... #else INCLUDE_ASM(...) #endif` in src/.
 Instead of the permuter's random rewrites, the tool applies the deterministic text edits of
@@ -22,6 +23,19 @@ wiki/register-cheatsheet.md to the one function body:
                right side, switch selector, left side of an if comparison)
     width      s16/u16/s32/u32 and u8/s8 of a local or parameter
     order      swap two adjacent independent simple statements (T-11200)
+
+The kinds of tools/typefix.py (cast, castdrop, castflip, mask, view, access, usuffix, decl; T-11240)
+and of tools/recipes.py (T-20830) join them when this file ends:
+
+    gstate        GameState *g = &D_800E6280; and g->F for D_800E6280.F (all uses, the first N
+                  statements, one switch arm)
+    group         3..8 independent statements on one source line (`;` or `,`), chunks of a long run, the
+                  initial assignments on the loop-head line; and back
+    chain         a = v; b = v; c = v;  <->  a = b = c = v;  (target orders tried)
+    inline_multi  a multi-use local copy of a global or field <-> the direct reads
+
+--only-kinds a,b limits the search (and --list) to those kinds, named as in the output lines and in
+HINT_EDITS (the order stage is skipped unless `order` is named).
 
 Scoring is the permuter's (tools/permute.py setup + upstream Compiler/Scorer): only the one
 function is compiled, through tools/cc.py, against the original bytes of its splat .s. The
@@ -1003,8 +1017,9 @@ TRANSFORMS = (t_byteview, t_temp, t_swap, t_width, t_compound, t_lines, t_shift,
               t_pad, t_declswap, t_order)
 
 
-def variants(text, cap=None):
-    """Single-edit variants of a function text: round robin over the transforms, deduplicated."""
+def variants(text, cap=None, kinds=None):
+    """Single-edit variants of a function text: round robin over the transforms, deduplicated.
+    `kinds` (a set of edit kinds, `--only-kinds`) keeps only the variants of those kinds."""
     try:
         f = Func(text)
     except ValueError:
@@ -1015,6 +1030,8 @@ def variants(text, cap=None):
             lists.append(tr(f))
         except (ValueError, IndexError, KeyError, StopIteration):
             lists.append([])
+    if kinds:
+        lists = [[v for v in l if edit_kind(v.label) in kinds] for l in lists]
     out, seen = [], {text}
     k = 0
     while any(k < len(l) for l in lists):
@@ -1050,6 +1067,9 @@ HINT_EDITS = {
     "ugen": ("swap", "join", "split", "width", "order", "shift", "compound", "expand", "byteview"),
     # commutative operands exchanged, registers right
     "operand": ("swap", "order"),
+    # regdiff's ORDER-ONLY: the same instructions in another order (T-20830): statement order, store
+    # order on a source line, the initial assignments on a loop head
+    "order-only": ("group", "order", "join", "split"),
     # other instructions: fix the shape first (step 1 of the cheat sheet's loop)
     "structure": ("temp", "inline", "compound", "expand", "shift", "byteview", "emptytest", "width"),
     # frame size or stack offsets differ: unused locals and declaration order
@@ -1117,7 +1137,9 @@ def parse_regdiff(text, first_line=1):
     if errors:
         return Hint(error=errors[0][len("regdiff: "):][:120])
     classes = []
-    if any(l.startswith("STRUCTURE differs") for l in head):
+    if any(l.startswith("ORDER-ONLY") for l in head):
+        classes.append("order-only")
+    elif any(l.startswith("STRUCTURE differs") for l in head):
         shape = [l.split(None, 2)[-1] for l in head if l.startswith(("- draft", "+ original"))]
         classes.append("frame" if any(SP_RE.search(l) for l in shape) else "structure")
     elif any(l.startswith("constant differs") for l in head):
@@ -1145,6 +1167,12 @@ def parse_regdiff(text, first_line=1):
                 if k >= 0 and k not in nums:
                     nums.append(k)
     return Hint(classes, names, nums)
+
+
+# Edit kinds: the first word of a variant label (edit_kind). typefix.py and recipes.py add theirs
+# when they register at the end of this file; --only-kinds takes names from this list.
+KINDS = ("byteview", "swap", "join", "split", "compound", "expand", "emptytest", "pad", "declswap",
+         "shift", "inline", "temp", "width", "order")
 
 
 def edit_kind(label):
@@ -1341,7 +1369,7 @@ def pick_rescore(cands, top=EXACT_TOP, threshold=EXACT_THRESHOLD):
 
 def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_seeds=8, pair_cap=200,
           clock=time.monotonic, order=True, order_opts=None, advise=None, prefetch=None,
-          rescore=None, exact_top=EXACT_TOP, exact_threshold=EXACT_THRESHOLD):
+          rescore=None, exact_top=EXACT_TOP, exact_threshold=EXACT_THRESHOLD, kinds=None):
     """Greedy hill climb over `variants`. score(text) -> int or None (does not compile);
     verify(text) -> bool is asked for every score of 0, and only a verified 0 is a match. When no
     single edit or pair improves, `order` runs order_stage (T-11200) once per best text, with
@@ -1354,7 +1382,9 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
     every candidate scoring at most `exact_threshold` are rescored. An exact 0 goes to verify, and
     the stage's step is the rescored candidate with the lowest exact score when that beats the
     exact score of the current best text, so the climb follows the full-unit score. A verified
-    stripped 0 is a match as before."""
+    stripped 0 is a match as before.
+
+    kinds (T-20830, `--only-kinds`): the edit kinds to try; None tries all of them."""
     deadline = clock() + budget
     base = score(text)
     if base is None:
@@ -1426,7 +1456,8 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
         found, found_text, scored, step = None, None, [], None
         if advise is not None:
             hint, hint_text = advise(best_text), best_text
-        ranked = rank_variants([v for v in variants(best_text) if v.text not in seen], hint, best_text)[:cap]
+        ranked = rank_variants([v for v in variants(best_text, kinds=kinds) if v.text not in seen], hint,
+                               best_text)[:cap]
         if prefetch is not None:
             prefetch([v.text for v in ranked])
         for v in ranked:
@@ -1452,7 +1483,7 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
                 planned, left = set(seen), pair_cap
                 for s1, v1 in scored[:pair_seeds]:
                     lst = []
-                    for v2 in rank_variants(variants(v1.text), hint, v1.text):
+                    for v2 in rank_variants(variants(v1.text, kinds=kinds), hint, v1.text):
                         if left <= 0:
                             break
                         if v2.text not in planned:
@@ -1462,7 +1493,8 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
                     pairs[v1.text] = lst
                 prefetch([v2.text for lst in pairs.values() for v2 in lst])
             for s1, v1 in scored[:pair_seeds]:
-                for v2 in (pairs[v1.text] if prefetch is not None else rank_variants(variants(v1.text), hint, v1.text)):
+                for v2 in (pairs[v1.text] if prefetch is not None
+                           else rank_variants(variants(v1.text, kinds=kinds), hint, v1.text)):
                     if budget_left <= 0 or clock() >= deadline:
                         break
                     if v2.text in seen:
@@ -1780,6 +1812,15 @@ def exact_note(res):
     return "  exact %s -> %s (%d rescored)" % (show(res.exact_base), show(res.exact_best), res.rescored)
 
 
+def kind_counts(vs):
+    """`  group 24, order 3`: how many of the variants are of each kind (the --list tail)."""
+    counts = {}
+    for v in vs:
+        counts[edit_kind(v.label)] = counts.get(edit_kind(v.label), 0) + 1
+    names = sorted(counts, key=lambda k: (KINDS.index(k) if k in KINDS else len(KINDS), k))
+    return "  " + ", ".join("%s %d" % (k, counts[k]) for k in names) if names else ""
+
+
 def run_one(root, draft, args, make_scorer=BuildScorer, out=print):
     try:
         scorer = make_scorer(root, draft)
@@ -1788,6 +1829,7 @@ def run_one(root, draft, args, make_scorer=BuildScorer, out=print):
         return None
     verify = (lambda text: True) if args.no_verify else scorer.verify
     advise = None if args.no_regdiff else make_advisor(root, draft)
+    kinds = getattr(args, "only_kinds", None)
     exact = getattr(args, "exact", False)
     jobs = 1 if exact else getattr(args, "score_jobs", None) or fastscore.default_jobs()
     if hasattr(scorer, "configure"):
@@ -1800,11 +1842,12 @@ def run_one(root, draft, args, make_scorer=BuildScorer, out=print):
             out("NOTE %s  no exact rescoring: %s" % (draft.scope, (str(exc).strip().splitlines() or [type(exc).__name__])[-1][:120]))
     try:
         res = climb(draft.text, scorer.score, verify, budget=args.time, cap=args.cap, pair_cap=args.pair_cap,
-                    order=not args.no_order, order_opts={"max_exhaustive": args.max_exhaustive,
+                    order=not args.no_order and (not kinds or "order" in kinds),
+                    order_opts={"max_exhaustive": args.max_exhaustive,
                                                          "max_swaps": args.order_swaps, "jobs": jobs},
                     advise=advise, prefetch=getattr(scorer, "prefetch", None) if jobs > 1 else None,
                     rescore=rescore, exact_top=getattr(args, "exact_top", EXACT_TOP),
-                    exact_threshold=getattr(args, "exact_threshold", EXACT_THRESHOLD))
+                    exact_threshold=getattr(args, "exact_threshold", EXACT_THRESHOLD), kinds=kinds)
     finally:
         if hasattr(scorer, "close"):
             scorer.close()
@@ -1851,6 +1894,9 @@ def parse_args(argv):
     p.add_argument("--dry-run", action="store_true", help="do not write src/ on a match")
     p.add_argument("--no-verify", action="store_true", help="accept a score of 0 without the ninja check")
     p.add_argument("--no-order", action="store_true", help="skip the statement-order stage (T-11200)")
+    p.add_argument("--only-kinds", default="", metavar="KIND,KIND",
+                   help="try only these edit kinds, e.g. gstate,group,chain,inline_multi (T-20830); "
+                        "--list prints the kinds and their counts")
     p.add_argument("--no-regdiff", action="store_true",
                    help="do not order the edits by regdiff's first divergence (T-11220)")
     p.add_argument("--max-exhaustive", type=int, default=2000,
@@ -1872,6 +1918,11 @@ def parse_args(argv):
     args = p.parse_args(argv)
     if not args.all and not args.func:
         p.error("give [UNIT:]func_X or --all")
+    kinds = [k for k in args.only_kinds.split(",") if k]
+    unknown = [k for k in kinds if k not in KINDS]
+    if unknown:
+        p.error("unknown edit kind %s; the kinds are %s" % (", ".join(unknown), ", ".join(KINDS)))
+    args.only_kinds = set(kinds) or None
     return args
 
 
@@ -1891,7 +1942,8 @@ def main(argv=None, make_scorer=BuildScorer, out=print):
         return 1
     if args.list:
         for d in drafts:
-            out("%s  %s  %d edits" % (d.scope, d.src, len(variants(d.text))))
+            vs = variants(d.text, kinds=args.only_kinds)
+            out("%s  %s  %d edits%s" % (d.scope, d.src, len(vs), kind_counts(vs)))
         return 0
     matched = 0
     for d in drafts:
@@ -1904,6 +1956,9 @@ def main(argv=None, make_scorer=BuildScorer, out=print):
 
 import typefix  # noqa: E402  (T-11240: type-mismatch edits join TRANSFORMS and HINT_EDITS)
 typefix.register(sys.modules[__name__])
+import recipes  # noqa: E402  (T-20830: gstate, group, chain, inline_multi)
+recipes.register(sys.modules[__name__])
+KINDS += tuple(k for k in typefix.KINDS + recipes.KINDS if k not in KINDS)
 
 
 if __name__ == "__main__":
