@@ -13,14 +13,23 @@ fallback = 'INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80141ABC);
 if original.count(fallback) != 1:
     raise SystemExit('assigned fallback changed')
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--variant', choices=['continue', 'indexed', 'cursor', 'store-control'], default='continue')
+parser.add_argument('--variant', choices=['continue', 'indexed', 'cursor', 'store-control', 'register-out'], default='continue')
 args = parser.parse_args()
 body = {'continue': 'body.c', 'indexed': 'indexed-body.c', 'cursor': 'cursor-body.c',
-    'store-control': 'store-control.c'}[args.variant]
+    'store-control': 'store-control.c', 'register-out': 'body.c'}[args.variant]
 root = Path('build/etc24067/archive') / args.variant
 root.mkdir(parents=True, exist_ok=True)
 source, obj = root / 'source.c', root / 'source.o'
-source.write_text(original.replace(fallback, (Path('drafts/T-24067') / body).read_text()))
+body_text = (Path('drafts/T-24067') / body).read_text()
+if args.variant == 'register-out':
+    old = '        ((GsRec75E *)D_800E7D10.unk_058)[count] = D_800E6280.unk_75E[i];'
+    assert body_text.count(old) == 1
+    body_text = body_text.replace(old, '''        {
+            register GsRec75E *out;
+            out = &((GsRec75E *)D_800E7D10.unk_058)[count];
+            *out = D_800E6280.unk_75E[i];
+        }''')
+source.write_text(original.replace(fallback, body_text))
 subprocess.run([sys.executable, 'tools/cc.py', str(source), str(obj), 'ido', '5.3'], check=True)
 result = subprocess.run([sys.executable, 'tools/funcdiff.py', '--built', str(obj),
     '--no-build', '--resolve', '--version', 'default', '--unit', 'ETC', name],

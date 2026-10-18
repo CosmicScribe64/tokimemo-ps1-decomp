@@ -99,3 +99,25 @@ The existing /private/tmp/t24047-uopt mount was read-only at /scratch. SHA256 ha
 In f_eval_mov (0x42A078; reference line50898), L42aa44 allocates/frees one scratch, then L42ab84 selects AT plus the second scratch for this unaligned tiny-copy path. Word stores go directly through emit_rob; they do not revisit the scalar store/address classifier. Thus the first aggregate word store cannot stand in for the rejected extra direct stack store. The alternative paths L42a9e0/L42ab18 use additional scratch allocations for large offsets; the actual record offsets and eight-byte length do not satisfy those conditions. Forcing those paths is not established as a faithful source change.
 
 get_free_reg (0x43E124; line82429) uses its dtype bitset0x5010000 to select paired registers for wide integer nodes. The narrowing helper at0x4365B0 selects the low word on MIPS1. This suggested unsigned 64-bit destination arithmetic narrowed to u32 as a single private control, conditional on an existing project C89 type. That condition fails: common.h defines only s8/u8/s16/u16/s32/u32, and include has no 64-bit integer typedef. Parent agreed to reject the non-C89 extension before compilation. No control was run and no allocation result is claimed. The four-word best, production source, interfaces and toolchain remain unchanged.
+
+Parent subsequently authorized a separate logging-only ugen diagnostic. trace_ugen.py pins the reference hash, inserts native stderr observations at seven existing labels, builds with existing pinned dependencies and audits a same-input stock/private compile. No emulated memory or allocation decisions are written by the logger. Run serially in Docker with the same read-only /scratch mount:
+
+```
+python3 drafts/T-24067/trace_ugen.py
+python3 drafts/T-24067/trace_ugen.py --compile-audit > build/etc24067/ugen-state/compile.log 2>&1
+```
+
+Full stock/private object SHA256 agrees at `28fc0f816f0d4471f7536aa32ae4c94f7446caf909b358c8dfb3f2048df72d7f`. The .text7216/.rel.text5632/.rodata1488/.rel.rodata336 sections also agree. Input source SHA is `58532fb81e6ee7674270a1969e82477d1f293439166196b4b0bce21954f92a05`, generated logging source `41b03665323ce9463bf0f6efd737156a963c9fd730f54d08c06df88460adc2c0`, private binary `ad02bb34a8075e30972a38b448430883df49bda3a2c4f0d53b2439de0fc395c1`. audit.json retains these hashes. Explicit default-version funcdiff on stock.o confirms exactly the same four copy words, not a production C match.
+
+| Observation | Integer free head/tail | Integer used head/tail |
+| --- | --- | --- |
+| Before destination evaluation | 10/9 | 72/72 |
+| After destination, before source | 12/10 | 11/11 |
+| After source, before dummy | 12/10 | 11/11 |
+| After dummy allocation/free | 13/12 | 11/11 |
+| Before second-copy selection | 13/11 | 72/72 |
+| After second scratch allocation | 14/11 | 13/13 |
+
+Register72 is the list sentinel; register13 is t5. The destination child changes state; source evaluation does not. The table reads free/used lists at0x10019DA4/DA8. The third observed list at0x10019DAC is the **FP free list**, constant36/50 here; it is not a pending integer list. Initialization/get_free_fp_reg confirm that identity, and the final logger labels it correctly.
+
+One derived C89 control introduces a block-local `register GsRec75E *out`, assigns the actual indexed destination immediately before `*out = source`, and keeps count movement unchanged. This differs from the earlier ordinary pre-loop album-base local and the earlier destination/count reordering. It is rejected as exactly neutral: whole object equals the stock four-word baseline, with no frame or instruction change. `replay.py --variant register-out` preserves the exact control. No new source winner, compiler exception or external blocker is claimed.
