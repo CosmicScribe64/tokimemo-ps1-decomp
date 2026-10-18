@@ -11,6 +11,7 @@ From the repository root, after normal Docker configuration:
 ```sh
 tools/docker.sh python3 drafts/T-24011/probe.py
 tools/docker.sh python3 drafts/T-24011/probe.py --standalone
+tools/docker.sh python3 drafts/T-24011/test_diagnostic.py
 ```
 
 The harness writes scratch C, objects and resolved diagnostic comparisons
@@ -19,6 +20,12 @@ caps its header-check build at one job. The temporary declarations are the
 missing DATE callback prototypes and `extern u8 D_8015BF48`; promotion would
 require evidence-backed declarations in the overlay header and verification
 of every affected function.
+
+Both harnesses validate funcdiff's exit status and named verdict before
+printing a score. Exit 1 is accepted only for a resolved DIFF with actual
+instruction rows; exit 0 requires MATCH. Other statuses, missing verdicts,
+and exception diagnostics fail without printing a score. The failure-contract
+checks include objdump failure and traceback output without an ERROR label.
 
 ## Results and remaining blockers
 

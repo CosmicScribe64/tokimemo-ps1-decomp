@@ -9,6 +9,7 @@ import re
 import subprocess
 import sys
 import tempfile
+from diagnostic import report
 
 sys.path.insert(0, str(Path('tools').resolve()))
 from cc import IDO_CFLAGS, ido_frame_env
@@ -27,8 +28,8 @@ def main():
     with tempfile.TemporaryDirectory(dir=root) as temporary:
         flags = [('-I' + str(Path('include').resolve())) if flag == '-Iinclude'
                  else flag for flag in IDO_CFLAGS if flag != '-c'] + ['-S']
-        subprocess.run(['/opt/ido/5.3/cc'] + flags + ['-o',
-                       str(root / 'small-constant-local.s'), str(source)],
+        # IDO -S writes the source basename in cwd; -o an existing .s fails.
+        subprocess.run(['/opt/ido/5.3/cc'] + flags + [str(source)],
                        env=ido_frame_env('5.3', temporary), cwd=root, check=True)
     obj = root / 'small-constant-local.o'
     subprocess.run([sys.executable, 'tools/cc.py', str(source), str(obj),
@@ -36,11 +37,12 @@ def main():
     result = subprocess.run([sys.executable, 'tools/funcdiff.py', '--built',
                              str(obj), '--no-build', '--resolve', '--unit',
                              'DATE', name], capture_output=True, text=True)
-    text = result.stdout + result.stderr
-    (root / 'small-constant-local.diff').write_text(text)
-    print('diagnostic resolved +/- rows = ' + str(sum(
-        line.lstrip().startswith(('-', '+')) for line in text.splitlines())))
-    return 1 if 'ERROR' in text or 'missing in ' in text else 0
+    try:
+        report(result, name, root / 'small-constant-local.diff')
+    except ValueError as error:
+        print(error, file=sys.stderr)
+        return 1
+    return 0
 
 
 if __name__ == '__main__':

@@ -18181,3 +18181,7 @@ Preserved source-only dispatcher near misses and Docker reproducers under drafts
 ## [2026-10-17] ticket | T-24011 awaits archive review
 
 Moved [[tickets/T-24011-date-dispatch-family]] and its [[kanban]] card to In Review. Both dispatchers retain production INCLUDE_ASM; libgte helper retains its established hand-assembly blocker. Coordinator owns the required two-axis review.
+
+## [2026-10-17] build | T-24011 resolve diagnostic failure reporting review finding
+
+Standards review found P2: drafts/T-24011/probe.py and stage.py ignored funcdiff return status and could report zero rows after tool failure. Added shared validated reporting and failure-contract checks; Docker tests pass (5 tests, 12 cases), real full-unit diagnostics remain 48/72, and stage passes twice consecutively at 11. The stage rerun also exposed an existing-listing IDO -S -o collision; removed the unnecessary output flag. [[tickets/T-24011-date-dispatch-family]] remains In Review; no source-body or production changes.

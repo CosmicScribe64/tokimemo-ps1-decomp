@@ -9,6 +9,7 @@ import argparse
 import re
 import subprocess
 import sys
+from diagnostic import report
 
 
 def main():
@@ -50,13 +51,11 @@ def main():
             result = subprocess.run([sys.executable, 'tools/funcdiff.py',
                                      '--built', str(obj), '--no-build', '--resolve',
                                      '--unit', 'DATE', name], capture_output=True, text=True)
-            text = result.stdout + result.stderr
-            (output / (name + ('-standalone' if args.standalone else '-fulltu')
-                       + '.diff')).write_text(text)
-            rows = sum(line.lstrip().startswith(('-', '+')) for line in text.splitlines())
-            print(name + ': diagnostic resolved +/- rows = ' + str(rows), flush=True)
-            if 'ERROR' in text or 'missing in ' in text:
-                print(text)
+            try:
+                report(result, name, output / (name + (
+                    '-standalone' if args.standalone else '-fulltu') + '.diff'))
+            except ValueError as error:
+                print(error, file=sys.stderr)
                 return 1
     return 0
 
