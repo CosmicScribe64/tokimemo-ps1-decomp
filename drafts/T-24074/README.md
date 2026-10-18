@@ -60,3 +60,12 @@ measured layout, validates explicit-object --resolve --version default
 --no-build output and checks production unchanged. No default ASM fallback
 proof counts as C progress. Outputs stay ignored under build/etc24074/replay;
 only source/prose is retained, with no original assembly or compiler dump.
+
+One parent-approved post-review control uses a real s32 pointer cursor and
+selected value only in the interior table arm: selected=*order++, conditional
+selected=*order++, then helper(selected). Original biased-load assembly supports
+this distinct source hypothesis; prior negative-index forms did not test it.
+The valid current full-TU diagnostic measures241 rows/frame0x40, versus
+best166/frame0x38. Order index changes fromv1 toa1 and quotient spill fromsp34
+tosp3C. Rejected; no cursor sweep follows. Replay with --variant postinc-cursor.
+The166-row body and all required post-call frame reloads remain unchanged.

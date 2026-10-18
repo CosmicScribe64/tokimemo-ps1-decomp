@@ -285,3 +285,16 @@ T-24073 parent independent all27/hash/interface/actual-C/literal352 checks pass,
 T-24074 fresh faithful44224 baseline209/frame58 versus38, after real helper arguments/order/Rec24 and required frame reloads across calls. Old stale-frame cache was a semantic error. No production/helper/header/config edit; source-led lifetime cleanup begins.
 
 T-24074 faithful baseline209 improves through ordinary disjoint-value/directlookup/inlinephase cleanup to166/exactframe38. Current source corrects actual helper arguments, real arrays and post-call frame reloads. Pointer226 and quotient type/order controls do not close it. Remaining copied-frame/quotient allocation, table bias/redundant stores and later fade scheduling; source-only drafts/T-24074 retained, production/helper/interfaces unchanged. In Progress, no C proof.
+
+Parent-approved bounded post-review cursor control uses actual order pointer and
+post-increment loads only in the interior table arm. Valid default-resolved
+full-TU diagnostic241/frame40 is worse than166/frame38; orderindexv1 becomesa1,
+quotient spillsp34 becomessp3C. Rejected and retained as source-only replay.
+No other source choices, production or interfaces changed; ownership remains
+active In Progress pending a concrete next lead, without further pointer sweep.
+
+T-24074 final bounded handoff is unresolved In Review: best166/frame38,
+post-increment cursor241/frame40 rejected. Required post-call frame reload
+corrections and all source controls/replay retained. Production remains ASM;
+no supported next faithful form or compiler-impossibility claim. Further
+probes stopped under parent direction.
