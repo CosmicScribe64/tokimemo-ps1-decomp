@@ -59,7 +59,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
 - [ ] [[tickets/T-24040-option-menu-siblings|T-24040 OPTION menu sibling completion]]
-- [ ] [[tickets/T-24038-etc-master-siblings|T-24038 Recover ETC renderer and MASTER sibling handlers]]
 - [ ] [[tickets/T-24031-gyozi-shougatu-pairs|T-24031 Recover GYOZI and SHOUGATU particle pairs]]
 - [ ] [[tickets/T-24035-small-bunka-geko-siblings|T-24035 Match small BUNKA_SD and GEKO siblings]]
 - [ ] [[tickets/T-24036-geko-shugaku-siblings|T-24036 GEKO and SHUGAKU sibling completion]]
@@ -81,7 +80,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24011-date-dispatch-family|T-24011 Match DATE dispatch family]]
 - [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]
 - [ ] [[tickets/T-24022-tel-frame|T-24022 Recover TEL large handler allocation]]
-- [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Investigate dialogue argument scheduling]]
 - [ ] [[tickets/T-24012-etc-render-family|T-24012 Match ETC rendering family]]
 - [ ] [[tickets/T-24007-complete-geko|T-24007 Complete GEKO scene package]]
 - [ ] [[tickets/T-24003-complete-bunkaken|T-24003 Complete BUNKAKEN selector and date-loader remainder]]
@@ -91,6 +89,8 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24038-etc-master-siblings|T-24038 Recover ETC renderer and MASTER sibling handlers]]
+- [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Investigate dialogue argument scheduling]]
 - [ ] [[tickets/T-24030-bunkasai-sibling-package|T-24030 Recover BUNKASAI sibling package]]
 - [ ] [[tickets/T-24034-event-render-siblings|T-24034 Port EVENT rendering siblings]]
 - [ ] [[tickets/T-24016-bunkasai-state-machines|T-24016 Recover BUNKASAI festival state machines]]

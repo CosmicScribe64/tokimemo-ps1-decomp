@@ -1,7 +1,7 @@
 ---
 id: T-24021
 title: Match dialogue argument scheduling
-status: In Review
+status: Done
 assignee: Astra hard-function lane
 created: 2026-10-17
 updated: 2026-10-18
@@ -45,3 +45,7 @@ Promoted `dialogue_speak_part` to default C. Capture each of the two preceding `
 Independent Docker replay from b312d1e24 gives baseline cost 4 / 16 printed rows, early dependent assignment cost 4 / 4 rows, then masked constant cost 0 / 0 rows. Every variant has 2,168 instructions. The final candidate links to exactly 8,672 text bytes. Default `funcdiff.py main:dialogue_speak_part --resolve` also reports MATCH. `ninja -j1 build/SLPM_86.053.ok` passes SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26. Header/global checks pass; prototype branch guard reports 0 new disagreements and 15 known. No compiler, header or flag changes.
 
 Replay and explanation are in drafts/T-24021/replay_closure.py and drafts/T-24021/README.md. Source checklist inspection found no C89, FAKE-comment or scope issue. Parent retains formal review and integration; ticket remains In Review until that gate is complete. Earlier near-match conclusions above and in T-17001/T-22001 are superseded by this proof.
+
+## Independent root combined verification
+
+Production changes reviewed against CODING_STANDARDS.md: existing SDK/aggregate types and necessary declaration views retained, new LINE_G2 layout documented, matching-specific forms explicitly marked FAKE, no per-function compiler exception. All new targets lack assembly fallbacks and pass normal linked byte proofs. Combined integration passes all27 original binary hashes and header/global/prototype guards. No unresolved findings for the verified matches. Published on main after all checks; unresolved siblings remain excluded.

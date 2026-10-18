@@ -26,3 +26,7 @@ Read earlier T-9530/T-10030 renderer negatives (58+ edit baselines), T-12010 CD 
 func_80049FF0 is an unguarded348 B normal default linked literal match; full MAIN checksum passes. Recovered SDK LINE_G2 packet is exactly0x14 bytes, with offsets established by target allocation/stores. Root approved adding the missing canonical SDK type; no bundled libgpu.h reference was available under Docker /opt or repository raw/tools, so no SDK header text was copied. Existing psx_types.h reconstruction convention supplies tag/coordinate field widths. Meaningful GameState pointer and documented explicit colour masks/comma lines reproduce scheduling. K&R narrow parameter definition preserves existing unprototyped caller ABI and passes header gate; main_api.h unchanged.
 
 The large CD dispatcher remains in progress; no claim yet. Renderer self-review: C89, shared SDK type, explicit FAKE provenance, no asm/toolchain exceptions. Independent root review pending.
+
+## Independent root combined verification
+
+Production changes reviewed against CODING_STANDARDS.md: existing SDK/aggregate types and necessary declaration views retained, new LINE_G2 layout documented, matching-specific forms explicitly marked FAKE, no per-function compiler exception. All new targets lack assembly fallbacks and pass normal linked byte proofs. Combined integration passes all27 original binary hashes and header/global/prototype guards. No unresolved findings for the verified matches. Published on main after all checks; unresolved siblings remain excluded.

@@ -36,3 +36,7 @@ GEKO func_80140040 remains guarded, zero additional coverage. Latest-main mixed 
 At GEKO tail, the original branches over the opaque call then unconditionally reloads the counter before loading ra. Current code duplicates the tail and hoists the ra load on the no-call path. Meaningful tail locals, branch-local increments and alias reads do not match. Whole signed counter alias forces unconditional reload but leaves8 register rows; a scratch-only signed declaration still gives7, so no header override was added. This distinguishes alias effects from the declared sign and is a bounded negative, not compiler-impossibility evidence. No volatile, compiler change or inline assembly used.
 
 Clean parent-authorized merge db89e0ce incorporated latest main before work; four wiki-only conflicts preserved both histories, with no C conflict. Read index, scenes/shugaku family results, T-17700/T-18000 and prior tail evidence before probes. Source-only unresolved form and old typed control retained here; every loose input/script/source/diagnostic remains intact in ignored build/T-24036-probes/.
+
+## Independent root review
+
+Reviewed production source/header changes against CODING_STANDARDS.md; no unresolved findings. Actual unguarded C target passed default linked proof and all27 binary hashes plus headers/globals/prototype guards. Preserved guarded siblings and explicit existing FAKE documentation. Ticket remains In Review because the assigned sibling is unresolved. Published on main.

@@ -18743,3 +18743,11 @@ Parent identified a collision with published SHOUGATU T-24026. Renamed the local
 ## [2026-10-18] build | Dialogue matches default C and full executable checksum
 
 [[tickets/T-24021-dialogue-scheduling]] moves In Progress to In Review. Two early zero-masked constant definitions close both scheduling sites; all 2,168 instructions / 8,672 linked text bytes match. Independent three-stage replay reproduces 16, 4, then 0 printed rows. Main SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 and header/global/prototype guards pass. Updated [[matching-notes]], [[register-cheatsheet]], [[main-family-results]], [[data/t0018-cases]] and [[tickets/T-24020-astra-hard-functions]]. Parent notified with proof; formal review and main integration remain its responsibility. User extends full-match requirement to remaining reserved hard functions and authorizes orchestrator notifications after every match.
+
+## [2026-10-18] build | SHUGAKU and EVENT matches published
+
+Independent root review and all27 hashes, guards, no-fallback C gates and literal proofs pass for T24036SHUGAKU244 and T24037EVENT628. [[completion-run-2026-10-17]] records6499functions/1847520bytes from Docker progress. T24031 source-only four-body archive preserved with no coverage claim. Current workers reassigned T24039/T24040/T24041; chats continue large dialogue and T24038ETC/MASTER.
+
+## [2026-10-18] build | Dialogue and five companion matches independently verified
+
+[[tickets/T-24021-dialogue-scheduling]] Done after root review and literal8672-byte C proof. T24038 Done for ETC796/MASTER956; T24040OPTION468/560 and T24041MAIN348 also independently verified. One combined build covered all27 hashes, six no-fallback C/literal proofs and guards before publication. [[completion-run-2026-10-17]] records measured6499/1847520. Worker ownership updated to T24043/T24044/T24045/T24046; Astra continues large EVENT. No coverage counted for archived/guarded drafts.

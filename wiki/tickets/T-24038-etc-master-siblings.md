@@ -1,7 +1,7 @@
 ---
 id: T-24038
 title: Recover ETC renderer and MASTER sibling handlers
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
 updated: 2026-10-18
@@ -30,3 +30,7 @@ Proof: `build/etc-master24038/final-proof.log` (`--no-build --resolve --version 
 Source-only provenance and bounded rejected controls: `drafts/T-24038/README.md`. No generated assembly, executable, or copyrighted asset is archived.
 
 T-24031 source-only archive is frozen at 5ef7c0dd5237fc006d1f94ac3957d5605e75fc13 with zero new C bytes; T-24030 BUNKASAI two matches remain preserved in ancestry. No other files claimed, no main API edits without prior notification, no new checkout/reset or host install.
+
+## Independent root combined verification
+
+Production changes reviewed against CODING_STANDARDS.md: existing SDK/aggregate types and necessary declaration views retained, new LINE_G2 layout documented, matching-specific forms explicitly marked FAKE, no per-function compiler exception. All new targets lack assembly fallbacks and pass normal linked byte proofs. Combined integration passes all27 original binary hashes and header/global/prototype guards. No unresolved findings for the verified matches. Published on main after all checks; unresolved siblings remain excluded.

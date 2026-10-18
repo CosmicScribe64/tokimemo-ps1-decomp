@@ -5,7 +5,7 @@ updated: 2026-10-17
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Current published code checkpoint `03acf729b` has **6,491/6,958 functions and 1,834,848/2,279,368 bytes (80.5%)**, measured in Docker. Since baseline `283b86fca`: 25 functions / 21,380 bytes added. The active goal remains 100%, with 444,520 game-code bytes remaining. SDK assembly is separately reported and excluded.
+User resumed work toward 100% verified game-code matching. Current published code checkpoint `f55a2d7e9` has **6,499/6,958 functions and 1,847,520/2,279,368 bytes (81.1%)**, measured in Docker. Since baseline `283b86fca`: 33 functions / 34,052 bytes added. The active goal remains 100%, with 431,848 game-code bytes remaining. SDK assembly is separately reported and excluded.
 
 ## Verified gains
 
@@ -36,16 +36,24 @@ User resumed work toward 100% verified game-code matching. Current published cod
 | T24034 | EVENT func_800FEF74 |940|
 | T24034 | EVENT func_800FFA4C |404|
 | T24034 | EVENT func_800F9730 |464|
+| T24036 | SHUGAKU func_80134C98 |244|
+| T24037 | EVENT func_80103774 |628|
+| T24021 | MAIN dialogue_speak_part |8672|
+| T24041 | MAIN func_80049FF0 |348|
+| T24040 | OPTION func_801342A8 |468|
+| T24040 | OPTION func_8013493C |560|
+| T24038 | ETC func_8013FC64 |796|
+| T24038 | MASTER func_8013B448 |956|
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
 
 ## Active ownership
 
-- T24037 Sol medium root worker, codex/complete-main: EVENT801024B0 funcs80102E54/80103774. Four main_api canonical scalar guards plus EVENT array views reserved if verified ports require them; main types retained.
-- T24035 Sol medium root worker, codex/complete-bunkaken: BUNKA_SD80134260 funcs80134418/801344A8 and GEKO80134040 func80134228. T24028 near-miss package is preserved; shared seven-instruction timer blocker is available for a later compiler-focused pass.
-- T24036 Sol medium root worker, codex/complete-option: GEKO8013F360 func80140040 and SHUGAKU80134880 func80134C98. SHUGAKU244-byte worker win e8662459b queued for root verification; excluded from published coverage. T24033 VALEN guarded improvement is now on main.
-- Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687 active on MAIN8007C030 dialogue_speak_part; owns TEL80132000, EVENT8010FE10, MAIN8006CB30 ONLYfunc8007132C and GEKO80142760 ONLYfunc80142C9C as reserved follow-ups. Do not touch parked MAIN8006D7EC. One compiler.
-- Sol medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8 finishes T24031 source-only archive, then T24038 ETC8013F980 func8013FC64 and MASTER80139000 func8013B448. Reuses built tree, one compiler.
+- T24046 Sol medium root worker, codex/complete-main: MAIN8004C3F0 srn_tpage_show, roughly3.2KB. T24041 renderer verified; CD source-only checkpoint5ca2b84b4 queued for archival integration.
+- T24045 Sol medium root worker, codex/complete-bunkaken: TEL8013CCD0 func8013D03C, roughly2.1KB, using existing49-row draft and matched local recipe. T24035 final guard is integrated; T24039 source-only checkpoint68126eccd queued.
+- T24044 Sol medium root worker, codex/complete-option: TAIIKU80138950 func8013B3B0 and TACO80141DE0 func801424A8. T24040 two OPTION wins and final guarded selector are integrated.
+- Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687: dialogue_speak_part completed and independently integrated. Continues EVENT8010FE10 func801103A0; reserved MAIN8006CB30 ONLYfunc8007132C, GEKO80142760 ONLYfunc80142C9C, TEL80132000. T24042 is the renamed TEL helper follow-up; T24026 remains the earlier SHOUGATU ticket. One compiler.
+- Sol medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: T24043 MASTER80139000 func80139CC8, roughly2.7KB. T24038 both matches are independently integrated. One compiler.
 
 ## Completed bounded passes
 
@@ -111,3 +119,13 @@ T24029 seasonal drafts and T24028 DATE/EVENT near-miss checkpoints are on main. 
 T24035 first pair and allthree T24034 targets passed independent root review, all27 default binary hashes, header/global/prototype guards and explicit target-INCLUDE_ASM rejection plus linked C proofs. EVENT940-byte recovery removes duplicate argument-site narrowing from the legacy K&R calls while preserving the sibling’s marked dead-copy liveness. SDK primitives and existing EventStateView are used. T24034 Done; T24035 final guarded-draft checkpoint8e742c12d is queued. T24033 VALEN32D0C guarded draft was also published at e5bddd3cf with no added verified bytes. Local integration helper now checks staged whitespace before expensive builds as well as afterward.
 
 Coverage uses canonical splat sizes, not the sum of linked proof extents: T24035 BUNKA_SD344A8 is148 canonical bytes versus152 linked proof bytes; T24034 EVENT800FFA4C is392 canonical versus404 linked. This batch adds2188 canonical bytes,2204 linked proof bytes. The Docker progress total above is authoritative.
+
+## Latest source and archive review
+
+T24036 SHUGAKU244-byte match and T24037 EVENT628-byte match passed independent review, explicit no-fallback C gates, normal linked proofs, all27 binary hashes and header/global/prototype guards before main publication. T24037 keeps the canonical main scalar declarations and uses documented EVENT load-time byte/halfword arrays of eight entries; all header closures compile. Neither match adds a new FAKE. Their unresolved GEKO/EVENT sibling drafts remain guarded, not counted. T24031 four-body source-only archive is preserved on main with its reproduction script and accurate negative results.
+
+## Largest-function closure and combined verification
+
+MAIN dialogue_speak_part now compiles as actual matching C:2168 instructions/8672 literal text bytes, original0x290-byte frame. Replacing an unused padding word with an argument local and explicitly marked `(render_x & 0) - 40` expressions gives the early constant lifetime required at two calls. Baseline replay remained4 aligned edits/16 printed rows; the accepted form is0/0. Root verified target fallback absence and normal linked bytes independently. T24021 Done; remaining hard targets stay open.
+
+The line renderer, two OPTION menus, ETC number renderer and MASTER event-record handler were reviewed and staged locally, then verified together with dialogue using one build, all27 original hashes, all six explicit C proofs and all header/global/prototype guards. Main and w2-good advanced only after success. This reduces repeated shared-header builds without weakening verification. T24038 Done; T24040/T24041 remain In Review for their unresolved siblings.
