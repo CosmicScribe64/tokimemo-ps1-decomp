@@ -32,3 +32,7 @@ EVENT func_8010B614: default actual C literal MATCH100 bytes, EVENT SHA1 `ff7184
 BUNKA_SD func_801355AC: matched sibling T-22021's byte promotion and `*= 0` zero-retention recipe gives zero scratch rows and default actual C literal MATCH132 bytes. BUNKA_SD SHA1 `173ac942ad4efbbbb176f8522fc7d273540169b0`. Byte-view/zero-retention shaping marked FAKE. Keeps the compiling s32/implicit-int definition shape of the archived draft; no header change. One index loop clears64 real DisplayActor44 fade members.
 
 Both production targets have no INCLUDE_ASM fallback. Affected builds pass with one compiler; headers/globals/prototype guards pass0 new/15 known. No compiler/config/header change. SHUGAKU remains under brief investigation. Independent review pending.
+
+## Root independent review
+
+First two targets independently reviewed against CODING_STANDARDS.md and published d40a1ece7. Byte/opaque-stride and zero-retention forms explicitly FAKE with current canonical-view control evidence; no header/config/compiler changes. Both actual-C gates pass, literal default MATCH100/132, all27 hashes and interface guards pass. Ticket remains active for SHUGAKU.

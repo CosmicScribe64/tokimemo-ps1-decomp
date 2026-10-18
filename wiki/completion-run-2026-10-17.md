@@ -5,7 +5,7 @@ updated: 2026-10-17
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Current published code checkpoint `f828daec1` has **6,500/6,958 functions and 1,849,648/2,279,368 bytes (81.1%)**, measured in Docker. Since baseline `283b86fca`: 34 functions / 36,180 bytes added. The active goal remains 100%, with 429,720 game-code bytes remaining. SDK assembly is separately reported and excluded.
+User resumed work toward 100% verified game-code matching. Current published code checkpoint `d40a1ece7` has **6,503/6,958 functions and 1,850,368/2,279,368 bytes (81.2%)**, measured in Docker. Since baseline `283b86fca`: 37 functions / 36,900 bytes added. The active goal remains 100%, with 429,000 game-code bytes remaining. SDK assembly is separately reported and excluded.
 
 ## Verified gains
 
@@ -45,6 +45,9 @@ User resumed work toward 100% verified game-code matching. Current published cod
 | T24038 | ETC func_8013FC64 |796|
 | T24038 | MASTER func_8013B448 |956|
 | T24045 | TEL func_8013D03C |2128|
+| T24052 | SHOUGATU func_80133208 |488|
+| T24053 | EVENT func_8010B614 |100|
+| T24053 | BUNKA_SD func_801355AC |132|
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
 
@@ -150,3 +153,5 @@ Latest ownership override: ETC T24049 source-only archive published b57b6e50b (c
 Filtered the prior sibling census against current production INCLUDE_ASM references and sorted targets up to300 instruction bytes. Existing contributor and live-TU exclusions still apply. T24053 Sol medium worker owns EVENT8010B360 func8010B614(100), BUNKA_SD80135160 func801355AC(132), SHUGAKU80139D00 func8013A1D4(160). First lead: T20620 already reported a scratch EVENT match withheld for conveyor ownership; matching-notes retains byte-store/later-read recipe. Must reproduce against current types and prove actual default C before counting.
 
 After preserving T24050, its Sol medium worker continues T24054: main80042A00 func80043010(176), OPTION80132000 func80132000(176), KANGEI80137B90 func8013852C(180). Short size alone is not evidence of easy matching: historical failed experiments must be checked first. Large EVENT, ENDING and DATE chats stay active. T24052 SHOUGATU sibling pair stays active. T24048 MASTER source-only archive published444be6846; no new matching bytes.
+
+Latest count-pass publication: T24052 first sibling f90483388 and T24053 two short wins d40a1ece7 are independently verified on main. Both tickets remain active for unfinished targets. T24050 source-only archive9bf7361e4 adds no bytes; worker proceeds with T24054. DATE T24051 and EVENT Astra now have operand-order-only near misses; exchanged comparison-source evidence, no additional match claimed.

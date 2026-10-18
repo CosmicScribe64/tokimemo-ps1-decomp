@@ -22,3 +22,7 @@ Start 8be265d2a. Only assigned TU, no header/config changes without notice. T-17
 ## First verified checkpoint
 
 func_80133208 is actual unguarded normal C, no target fallback. Ported matched GYOZI source with SHOUGATU skip block, threshold0x28, table/field views and five-step selector. One inherited FAKE unchanged-byte |=0 store is reticketed T-24052. Fresh Docker ninja -j1 compiled/linked SHOUGATU and passed unit checksum/headers; literal tools/funcdiff.py func_80133208 --unit SHOUGATU --resolve --no-build --version default reports MATCH488 bytes. No header/config changes. Second target remains in progress; no push/merge.
+
+## Root independent review
+
+First488-byte sibling independently reviewed against CODING_STANDARDS.md and published f90483388. Plain C89, inherited unchanged-byte store explicitly FAKE, no header/config changes; actual-C gate and literal default MATCH488, all27 hashes and interface guards pass. Ticket remains In Progress for second sibling.
