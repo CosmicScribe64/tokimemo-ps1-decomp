@@ -18754,3 +18754,7 @@ Created [[tickets/T-24072-etc-model-init]] before edits on only func_8014354C in
 ## [2026-10-18] ticket | T-24072 unresolved In Review
 
 [[tickets/T-24072-etc-model-init]] moves with card/index to In Review, not Done. New5-row integer-recipe source and neutral controls preserved, production ASM unchanged. Stop4354C probes/instrumentation; no verified bytes or compiler-impossibility claim. Next lead screening is read-only, with new ownership/ticket before edits.
+
+## [2026-10-18] ticket | Correct ETC record initializer from actual Rec24 layout
+
+Created [[tickets/T-24073-etc-record-init]] before edits for only func_8014407C in ETC/80143240.c. Parent confirms single-worker reservation and final prior archive fe932f320. Stale array-object arithmetic conflicts with real Rec24 start/stride; matched MAIN80084E90 supplies read-only typed initialization evidence. Reuse55ff6f88e and same sole Sol medium Docker compiler; preserve all other functions and signed remainder/store semantics.

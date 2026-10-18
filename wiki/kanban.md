@@ -48,6 +48,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24073-etc-record-init|T-24073 Recover ETC typed record initializer]]
+
 
 
 
