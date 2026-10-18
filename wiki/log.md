@@ -19165,3 +19165,12 @@ leaves unknown8C above it; UV50/54 versus current90/94 anchors differ. Existing
 604 frontend has72 declared bytes plus hidden4-byte selector, optimizedDEF76;
 no628 snapshot exists. Unaccessed original homes remain unknown. No new compile,
 capture, padding or declaration permutation. Same function remains active.
+
+## [2026-10-18] build | T24078 existing-counter home predicts stack shifts exactly
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve one
+constrained declaration move, existing counter beforepoly. Predicted and observed
+poly94/98, UV8C/90, page60, frameA0; neutral628cost/592words. Confirms anchor
+mechanism without recovering unknown original8C or fixing16B excess. Explicit
+FAKE source/replay preserved; no other declaration, geometry or production edit.
+Same function active, no new capture or sweep.

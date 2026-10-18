@@ -199,3 +199,14 @@ No628 frontend capture exists. First-declared-highest IDO rule explains current
 layout, but original unused homes are unidentified; no arbitrary permutation
 or padding proposed. Disjoint X0/right-coordinate roles are a possible real
 same-type reuse lead, not measured or a complete original-layout explanation.
+
+
+One constrained counter-first control on628 moves only existing var_s4 before
+poly[2], with explicit FAKE unknown-original-order annotation. Prediction before
+compile: unchanged76B homes/frameA0; poly94/98, UV1608C/UV2490, page60, counter
+unused home9C above poly. All observed offsets match the prediction exactly;
+628cost/856rows/592words/frameA0 unchanged. Arithmetic/register allocation is
+unchanged. This confirms the declaration anchor mechanism, not identity of
+original8C or a16B frame fix. No UV move, removed local, padding or sweep.
+Original poly84/88 is still16bytes below the new array, so the unknown local
+count/lifetime gap remains separate from this one-word anchor.

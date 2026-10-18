@@ -30,6 +30,7 @@ Historical T17300 plain792/typed957 are different contexts, not fresh results.
 | origin-x1.c |624|792|594|0xA0|
 | origin-void.c |628|856|592|0xA0|
 | origin-uv-pair.c |634|862|594|0xA0|
+| counter-first.c |628|856|592|0xA0|
 
 Original588 words/frame0x90. Rank with tools/funcdiff.py diff_score on resolved
 instruction keys (insertion/deletion1, substitution2). Printed rows use different
@@ -193,3 +194,14 @@ predict this outcome. No new stage capture or geometry claim. Same target active
 
 See stack-map.md for original/current slot classifications and the limits of
 the existing604 frontend observations. No new capture or layout control.
+
+
+One constrained counter-first control on628 moves only existing var_s4 before
+poly[2], with explicit FAKE unknown-original-order annotation. Prediction before
+compile: unchanged76B homes/frameA0; poly94/98, UV1608C/UV2490, page60, counter
+unused home9C above poly. All observed offsets match the prediction exactly;
+628cost/856rows/592words/frameA0 unchanged. Arithmetic/register allocation is
+unchanged. This confirms the declaration anchor mechanism, not identity of
+original8C or a16B frame fix. No UV move, removed local, padding or sweep.
+Original poly84/88 is still16bytes below the new array, so the unknown local
+count/lifetime gap remains separate from this one-word anchor.
