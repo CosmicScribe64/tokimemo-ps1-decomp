@@ -48,6 +48,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24069-etc-menu-state|T-24069 Match ETC menu state machine]]
+
 
 
 

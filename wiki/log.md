@@ -18656,3 +18656,7 @@ One parent-authorized private writer diagnostic for [[tickets/T-24068-etc-album-
 ## [2026-10-18] ticket | T-24068 unresolved packet enters review
 
 Parent closes [[tickets/T-24068-etc-album-interaction]] as In Review, not Done. Card/index agree; [[etc-family-results]] records frozen source-only packet bed9333e1,48 diagnostic rows and unchanged production assembly. Exact later mask-creation/live-range provenance remains unresolved; no impossibility claim or verified-byte gain. No further tracing/probes under this pass. Next work is read-only selection of one unclaimed ETC source lead, requiring assignment/ticket setup before new target edits or compilation.
+
+## [2026-10-18] ticket | Select ETC menu state machine from matched sibling evidence
+
+Created [[tickets/T-24069-etc-menu-state]] before edits for only func_8013BFFC in ETC/8013BEF0.c, reusing clean af25ebdc7 with the same sole Sol medium worker. Current primary015c3496f target remains ASM; matched same-file func_8013C330 supplies concrete structure. Prior T-17300 attempts failed compilation and contain incorrect field folds, motivating semantic reconstruction before matching. Read-only ownership check found no current claim; preserve all other bodies and contributor scopes. [[tickets/T-24068-etc-album-interaction]] and T-24067 remain unresolved archives, not matches.
