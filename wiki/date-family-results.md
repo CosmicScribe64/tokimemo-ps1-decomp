@@ -173,3 +173,7 @@ T-24011 review correction: the archived harnesses now validate funcdiff return s
 ## T-24018 source-based movie sibling follow-up
 
 Matched DATE2 func_80133AF0 gives a much closer structural starting point for DATE func_801462B0 than the census. Adding DATE's callback branches and 300-frame timer, with an early break in case 14, restores the exact 0x68 frame and 951 instructions; first 442 instructions exact, 434 printable diff rows remain. Callback-save arrays, direct stage/record views and s32 return diagnostics do not solve later allocation. No production change or new C bytes. Source-only draft and reproduction in drafts/T-24018/, [[tickets/T-24018-large-sibling-state-machines]] In Review.
+
+## T-24032 SDK rotation clone control
+
+[[tickets/T-24032-date-taco-rotation-clones]] performs one fresh SDK MATRIX control on DATE A640, retaining all six DATE/TACO rotation helpers as ASM (zero new coverage). Source/control/provenance archived in drafts/T-24032/. Existing SDK-style classification remains; no per-function toolchain exception or impossibility claim.

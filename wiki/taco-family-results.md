@@ -201,3 +201,6 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p25 (T-19025)
 
 [[tickets/T-19025-w3-d-p25]] (`80132220.c`, the two actor input/AI functions and their callers' helpers): `func_8013356C` (the four-way unrolled `unk13` clear of `D_8015EB30`) and `func_801328B0` (the second actor's AI, 1,848 bytes, FAKE pads for four frame words) matched; the closer pass matched `func_80132FE8` (input collector: a local `btn` for `unk_F88` that stays live across the `D_8015EDE4` tests, one FAKE empty test) and `func_8013240C` (stick mover: K&R `s32` with no `return` and no result variable), so the whole file is C. `func_80132FE8` takes no arguments (callers pass none). `D_800E7200`, `D_800E7208` and `D_800E7378` are `D_800E6280.unk_F80`, `unk_F88` and `unk_10F8`. Details, the ugen-order fix by a pointer local, the closer pass and the `funcdiff` guarded-neighbour gotcha: [[matching-notes]], "T-19025".
+
+
+T-24032 cross-unit control: DATE/TACO rotation clone provenance retained after one fresh SDK MATRIX control; zero matches or production changes. See [[tickets/T-24032-date-taco-rotation-clones]] and drafts/T-24032/. CF30 old draft offset0 word access is a semantic defect; use matrix halfwords in any future reconstruction.

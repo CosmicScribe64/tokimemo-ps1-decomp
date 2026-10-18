@@ -59,6 +59,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24018-large-sibling-state-machines|T-24018 Recover large DATE and EVENT sibling state machines]]
 - [ ] [[tickets/T-24014-taco-pre-closer|T-24014 Close TACO PRE operand order]]
 - [ ] [[tickets/T-24009-ending-scheduler-closer|T-24009 Close ENDING scheduler residue]]
+- [ ] [[tickets/T-24032-date-taco-rotation-clones|T-24032 DATE and TACO rotation clone provenance]]
 - [ ] [[tickets/T-24027-rpg-bat-state-machines|T-24027 RPG_BAT state-machine completion]]
 - [ ] [[tickets/T-24019-gyozi-sibling-ports|T-24019 GYOZI sibling completion ports]]
 - [ ] [[tickets/T-24015-complete-main-menu|T-24015 Complete MAIN menu family package]]

@@ -18567,3 +18567,12 @@ Docker ninja -j1 DATE.ok/EVENT.ok has no work; independent Docker SHA1 compariso
 
 ## [2026-10-18] ticket | Large movie sibling follow-up ready for review
 Moved [[tickets/T-24018-large-sibling-state-machines]] and its board card to In Review. Root review remains; no push or merge by worker.
+
+## [2026-10-17] ticket | T-24032 DATE/TACO rotation clone provenance
+
+Created [[tickets/T-24032-date-taco-rotation-clones]] after reading prior SDK/libgte evidence in [[date-family-results]] and [[taco-family-results]]. Parent narrows work to one fresh typed control and provenance notes; no per-function toolchain exceptions or reclassification.
+
+
+## [2026-10-17] decision | T-24032 rotation provenance retained
+
+[[tickets/T-24032-date-taco-rotation-clones]] moves to In Review after one fresh SDK MATRIX control. All six helpers remain ASM; no production changes or new coverage. Source/provenance archived; [[date-family-results]] and [[taco-family-results]] updated. Every loose probe retained in ignored build/T-24032-probes/.
