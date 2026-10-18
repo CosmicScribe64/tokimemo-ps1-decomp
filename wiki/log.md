@@ -17893,3 +17893,19 @@ Review against `CODING_STANDARDS.md` found nothing to fix; 1 of 3 matched (`func
 ## [2026-10-17] build | T-20011 documentation integration verified
 
 [[tickets/T-20011-name-ent-coordinate-selection]] rebased onto main 5860bc1c, retaining both new wiki sections. Validated NAME_ENT source/header and tool/configuration blobs are unchanged. The concurrent DATE edit only moves guarded drafts to archives: Docker preprocessing proves identical default tokens, so the existing linked proof, hashes and guards remain applicable.
+
+## [2026-10-17] ticket | T-22021 In Progress
+
+[[tickets/T-22021-w4-p21]]: wave 4 package w4-p21 (BUNKA_SD `src/ovl/BUNKA_SD/801388D0.c`, `src/ovl/BUNKA_SD/80134540.c`; four functions) started on branch `w4-p21` from `w2-good`.
+
+## [2026-10-17] build | T-22021 func_8013987C and func_80134850 matched
+
+`func_8013987C` (`src/ovl/BUNKA_SD/801388D0.c`, 148 bytes, was a 14-row guard) and `func_80134850` (`src/ovl/BUNKA_SD/80134540.c`, 232 bytes, was `INCLUDE_ASM`) match in plain C, one FAKE each. The counter byte `unk_110B` is read and written only as a u8 view of the global, which uopt promotes to `$v1`; both loops are index loops sharing `i`; the clear is `*= 0` (every plain zero folds to `sb zero`). Recipe row added to [[register-cheatsheet]], notes in [[matching-notes]] (section T-22021). `func_80134D94` (137 rows) and `func_80139290` (142 rows) stay `INCLUDE_ASM`, blockers recorded.
+
+## [2026-10-17] ticket | T-22021 In Review
+
+[[tickets/T-22021-w4-p21]] moved to In Review: 2 of 4 matched, no guards left, clean build and the header checks run before the final commit.
+
+## [2026-10-18] ticket | T-22021 Done
+
+[[tickets/T-22021-w4-p21]]: code review against `CODING_STANDARDS.md`, two small findings fixed (record-array form of the five-record loop in `func_80134850`, `s32`-without-return explained in its FAKE comment; objects unchanged). 2 of 4 matched (`func_8013987C` 148 bytes, `func_80134850` 232 bytes).
