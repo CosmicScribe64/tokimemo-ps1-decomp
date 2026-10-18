@@ -18228,3 +18228,11 @@ Created [[tickets/T-24019-gyozi-sibling-ports]] In Progress for four exclusive f
 ## [2026-10-17] decision | T-24019 bounded selector negatives retained
 
 [[tickets/T-24019-gyozi-sibling-ports]] moves to In Review: one of four matched (392 bytes). E82424 and39E4C27 reproduce prior negatives; 3907C meaningful result/local and natural control flow leave12 aligned edits. Updated [[event-family-results]] with blockers; source-only drafts and scorer archived. All loose experiments preserved in ignored build/T-24019-probes/. No additional production changes. Independent review pending.
+
+## [2026-10-17] ticket | T-24027 RPG_BAT state-machine completion
+
+Created [[tickets/T-24027-rpg-bat-state-machines]] In Progress for three exclusive functions in80154430.c. Read [[rpg-bat-family-results]], T-17100 and T-17106 before reconstruction; retain prior negatives and use current aggregates/sibling recipes.
+
+## [2026-10-17] build | T-24027 RPG_BAT state-machine match
+
+[[tickets/T-24027-rpg-bat-state-machines]] verifies func_80154760 as1656 default linked bytes. Direct selected-index global and natural remaining-flag loop resolve the old shape blocker. Two existing recipe FAKE sites marked; required implicit-int callee view retained. RPG_BAT SHA1 passes; literal default no-build proof matches. Updated [[rpg-bat-family-results]].

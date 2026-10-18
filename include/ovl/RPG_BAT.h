@@ -130,6 +130,7 @@ extern s32 D_8015ED30;
 extern s32 D_8015ED34;
 extern s32 D_8015EC48;
 extern s32 D_8015EC4C;
+s32 func_80154760(void);
 void func_80155868(s32, s32, s32, s32, s32, s32, s32, s32, s32);
 
 /* defined in C in one object, called from another (T-0500) */
