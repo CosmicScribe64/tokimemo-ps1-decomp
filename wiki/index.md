@@ -49,6 +49,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-24040-option-menu-siblings|T-24040]] two of three matched (1028 bytes), selector guarded at5 rows; In Review.
 - [[tickets/T-24036-geko-shugaku-siblings|T-24036]] one of two matched (244 bytes); GEKO guard refreshed to7 rows, In Review.
 - [[tickets/T-24033-valen-selector-ports|T-24033]] VALEN sibling retry:32D0C guarded at7 rows,34030 remains27; zero matches, In Review.
+- [[tickets/T-24072-etc-model-init|T-24072]] ETC model initializer, In Progress; new5-row source checkpoint, production assembly.
 - [[tickets/T-24071-etc-menu-selection|T-24071]] ETC menu selection handler, unresolved/In Review;57-row source and audited stock-AS1 packet, production assembly.
 - [[tickets/T-24070-etc-save-card-state|T-24070]] ETC save-card state machine, unresolved/In Review;39-row source packet, production assembly.
 - [[tickets/T-24069-etc-menu-state|T-24069]] ETC menu state machine Done;820 default linked C bytes independently reviewed/published fd700bf3f.
