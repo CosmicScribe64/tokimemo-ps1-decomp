@@ -454,5 +454,117 @@
     "cost": 114,
     "printed": 114,
     "matching_claim": false
+  },
+  {
+    "label": "default_roundtrip",
+    "expected": 805,
+    "got": 807,
+    "cost": 64,
+    "printed": 64,
+    "matching_claim": false
+  },
+  {
+    "label": "default_volatile",
+    "expected": 805,
+    "got": 803,
+    "cost": 52,
+    "printed": 52,
+    "matching_claim": false
+  },
+  {
+    "label": "palette_local",
+    "expected": 805,
+    "got": 804,
+    "cost": 55,
+    "printed": 55,
+    "matching_claim": false
+  },
+  {
+    "label": "origin_s32",
+    "expected": 805,
+    "got": 804,
+    "cost": 55,
+    "printed": 55,
+    "matching_claim": false
+  },
+  {
+    "label": "palette_first",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "palette_after_uv",
+    "expected": 805,
+    "got": 803,
+    "cost": 636,
+    "printed": 882,
+    "matching_claim": false
+  },
+  {
+    "label": "outer_bound_then_switch",
+    "expected": 805,
+    "got": 834,
+    "cost": 109,
+    "printed": 109,
+    "matching_claim": false
+  },
+  {
+    "label": "outer_default_then_switch",
+    "expected": 805,
+    "got": 834,
+    "cost": 369,
+    "printed": 393,
+    "matching_claim": false
+  },
+  {
+    "label": "palette_cast_u16",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "palette_cast_u32",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "palette_unsigned_view",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "default_distinct_symbols",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "palette_register",
+    "expected": 805,
+    "got": 804,
+    "cost": 55,
+    "printed": 55,
+    "matching_claim": false
+  },
+  {
+    "label": "origin_register",
+    "expected": 805,
+    "got": 804,
+    "cost": 55,
+    "printed": 55,
+    "matching_claim": false
   }
 ]

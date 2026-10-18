@@ -18795,3 +18795,37 @@ Created [[tickets/T-24047-ending-sprite-scene]] at main4496b0dc7 in isolated cod
 ## [2026-10-18] build | ENDING checkpoint validation and review complete
 
 [[tickets/T-24047-ending-sprite-scene]] independent standards review has no actionable findings; parent scope review confirms the owned function is the only production change. Matching acceptance remains unmet and status stays In Review. Docker full-TU replay reproduces804/805 instructions/cost43, ENDING default rebuild passes SHA1, and headers/globals/branch prototypes pass with zero new disagreements. All27 built binaries pass manifest SHA1 checks after rebuilding inherited stale GEKO/GYOZI cache outputs without source edits. No coverage gain claimed.
+
+## [2026-10-18] ticket | Continue focused ENDING initializer closure
+
+[[tickets/T-24047-ending-sprite-scene]] returns to In Progress for focused
+default-arm dependency and grid-constant lifetime probes. Reviewed checkpoint
+b0111332c is preserved. Scope remains one function, one compiler, no new workers.
+
+## [2026-10-18] query | ENDING dependency and constant probes remain negative
+
+[[tickets/T-24047-ending-sprite-scene]] records six bounded source probes.
+Default address roundtrips/volatile views and explicit constant locals worsen
+output. Early palette-store reordering is neutral; late reordering worsens it.
+The reviewed804/805-instruction checkpoint remains preferred, zero new bytes.
+
+## [2026-10-18] query | Explicit ENDING range control rejected
+
+[[tickets/T-24047-ending-sprite-scene]] outer if/switch variants retain duplicate
+range checks and selector lifetime changes,834 instructions each. Neither
+improves the checkpoint; production remains unchanged.
+
+## [2026-10-18] query | ENDING declaration metadata hypothesis ruled out
+
+[[tickets/T-24047-ending-sprite-scene]] constant casts and unsigned lvalue view
+are neutral. Scratch-only distinct default-cell symbols also retain804/cost43;
+the matrix declaration is not the source of speculative address motion. No
+header or production source changes are justified by these results.
+
+## [2026-10-18] ticket | ENDING focused continuation checkpoint
+
+[[tickets/T-24047-ending-sprite-scene]] returns to In Review after fourteen
+negative probes. Register constants also expand the frame. The ledger and
+[[ending-family-results]] retain results; production source/replay body remain
+unchanged from b0111332c. Scope and standards review has no new findings; no
+production revalidation is needed for this evidence-only update. Zero new bytes.
