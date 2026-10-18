@@ -85,11 +85,13 @@ Setup logs are `/private/tmp/t24047-uopt/setup.log`, `generate.log`,
 `build-uopt.log` and `build-trace.log`. Generated compiler C and binaries must
 remain external; do not commit them.
 
-## Current target evidence
+## Recovered allocation tie
 
-Ranges528 (499) and529 (128) each have priority5 and cheapest colour cost0.
+In the43-cost baseline, ranges528 (499) and529 (128) each have priority5 and cheapest colour cost0.
 They are constrained; ascending bit order gives499 colour6/a3 before128
 colour7/t0. The original uses the opposite pair. This is a measured first-use
 tie, rather than a priority imbalance. See [[ending-family-results]] for the
 separate default-arm AS1 cross-block motion; no compiler decision changes are
-enabled in the normal build.
+enabled in the normal build. The current35-cost source fixes that tie by moving
+UV before palette, spelling the later quotient directly, and placing the zero
+store after UV. All loops/case bodies match; only default-arm motion remains.

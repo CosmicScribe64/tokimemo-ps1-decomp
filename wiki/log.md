@@ -19266,3 +19266,33 @@ Parent preserved source checkpoint eadad3134 on main ebf0aa7b1. Optional private
 
 ## [2026-10-18] build | T-24067 source-line boundary gain
 Retained exact initializer/do source-line grouping in drafts/T-24067/body.c with FAKE scheduling explanation. Diagnostic improves cost18/28 rows to16/20, frame0x48/75 words unchanged. Safe replay validates exact tagged body. Independent endpoint symbol does not improve it, so canonical GameState endpoint remains. [[tickets/T-24067-etc-album-copy]] remains In Progress; no actual C match claimed.
+## [2026-10-18] query | ENDING loop scheduling fully recovered
+
+[[tickets/T-24047-ending-sprite-scene]] moving the zero store after UV closes
+the remaining initialization-loop gap:804/cost35. All scene bodies also agree.
+Explicitcase12 diagnostic leaves only the wrong bound word (cost2) and extra
+table entry, so it remains rejected. Only real default-arm AS1 motion remains.
+
+## [2026-10-18] query | ENDING address-motion metadata probes remain negative
+
+[[tickets/T-24047-ending-sprite-scene]] direct volatile views, selector cast,
+register qualifiers and ordinary default C label are neutral35. Volatile pointer
+store's lower score23 is offset cancellation with extra instructions, rejected.
+Unchanged assembler-input capture isolates the extra-case label/table/bound
+records. Guarded production reconstruction and archived body advance to35;
+default ASM fallback remains pending normal validation.
+
+## [2026-10-18] build | ENDING35 guarded source validated
+
+[[tickets/T-24047-ending-sprite-scene]] preferred replay804/cost35, reusable
+stock/diagnostic code-data-relocation fidelity, and fresh ENDING SHA1 all pass.
+Parent scope/standards review has no findings; guard and FAKE notes remain.
+[[ending-family-results]] and [[index]] reflect the sole AS1 blocker. Zero new
+verified C bytes; ticket remains In Progress.
+
+## [2026-10-18] query | ENDING script pointer metadata ruled out for current residue
+
+[[tickets/T-24047-ending-sprite-scene]] private pointer-table/EdScriptSet views
+are neutral35. The100-entry ledger retains all rejected diagnostics explicitly;
+no shared header change is supported. Guarded35 source is validated and ready
+for a source checkpoint while AS1 closure continues.

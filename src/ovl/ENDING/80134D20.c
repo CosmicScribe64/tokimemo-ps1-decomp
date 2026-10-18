@@ -348,7 +348,7 @@ void func_80135ECC(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-24047, constant register tie and default-arm address
+/* NON_MATCHING: T-24047, default-arm address
  * speculation; 804/805 instructions, original 160-byte frame. */
 #ifdef NON_MATCHING
 void func_80135F4C(void) {
@@ -455,6 +455,7 @@ void func_80135F4C(void) {
         D_801217D0[i + 4].unk_0A = (u32)size;
         D_801217D0[i + 4].unk_0E = 0;
         row = i / 6;
+        D_801217D0[i + 4].unk_0F = 0x80 - (row << 7);
         D_801217D0[i + 4].unk_10 = 0;
         D_801217D0[i + 4].unk_12 = 0x1F3;
         D_801217D0[i + 4].unk_14 = (u32)size;
@@ -465,8 +466,7 @@ void func_80135F4C(void) {
         D_801217D0[i + 4].unk_1C = 0x1000;
         D_801217D0[i + 4].unk_1E = 0x1000;
         D_801217D0[i + 4].unk_20 = 0;
-        D_801217D0[i + 4].unk_0F = 0x80 - (row << 7);
-        D_801217D0[i + 4].unk_0C = (i % 6) + (row * 0x10) + 5;
+        D_801217D0[i + 4].unk_0C = (i % 6) + ((i / 6) * 0x10) + 5;
         D_801217D0[i + 4].unk_04 = ((i % 3) << 7) - 0xA0;
         D_801217D0[i + 4].unk_06 = ((i / 3) << 7) - 0x188;
         D_800E6280.unk_10A5[i + 4] = 0xB;
