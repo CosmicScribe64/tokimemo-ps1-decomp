@@ -151,3 +151,13 @@ statements give 32 differing rows / 16 aligned edits; paired comma expressions m
 Three existing callbacks needed forward declarations in RPG_BAT.h. Docker `ninja -j1
 build/ovl/RPG_BAT.ok` passes; default no-build resolved funcdiff reports exact linked
 target bytes (2,424 bytes). See [[tickets/T-24013-complete-rpg-bat]].
+
+The two other T-24013 functions stay assembly. `func_80138324` improves 176 to 142
+literal rows (138 aligned edits) with a direct counter update, experimental unsigned
+selector views and genuine spill declaration order; actor-index t0 versus source v1
+remains the blocker. `func_80152F30` stays 321 in its clean folded baseline; frame and
+implicit-callee-view experiments reach 307 / 295 aligned edits, while direct timer
+updates worsen it. No experimental views or homes were added to production for these
+functions. Source-only drafts and exact attempts are in drafts/T-24013/README.md;
+all loose diagnostics are preserved in ignored build/T-24013-probes. Final
+header/global/prototype checks pass (0 new, 15 known prototype disagreements).

@@ -18202,3 +18202,7 @@ Independent review of [[tickets/T-24007-complete-geko]] found swallowed candidat
 ## [2026-10-17] build | Recover RPG_BAT rectangle state machine
 
 [[tickets/T-24013-complete-rpg-bat]] recovered func_80139510 (2,424 literal linked bytes) in src/ovl/RPG_BAT/80137280.c. Paired RECT comma-expression stores and direct counters recover the old T-9960 lead; FAKE two-word padding preserves the original frame. Existing callee view solves the prior power-counter gap. Default linked proof and RPG_BAT checksum pass; details in [[rpg-bat-family-results]].
+
+## [2026-10-17] ticket | RPG_BAT battle package enters review
+
+[[tickets/T-24013-complete-rpg-bat]] ends with one verified function / 2,424 literal linked bytes, two unresolved source-only archives, and passing header/global/prototype checks (0 new, 15 known). Ticket/board moved to In Review for independent integration verification. Updated [[tickets/T-21001-recover-wave-10-list-6-near-misses]] with the recovered RPG_BAT half; its BUNKAKEN half stays open. Every loose experimental file is preserved under ignored build/T-24013-probes. See [[rpg-bat-family-results]].
