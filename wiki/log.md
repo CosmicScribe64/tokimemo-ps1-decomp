@@ -17921,3 +17921,7 @@ One of three BUNKAKEN functions matched: `func_801428D0` (`BunkaDispatch8` view)
 
 ## [2026-10-18] ticket | T-22018 Done
 2 of 3 BUNKAKEN functions matched (`func_801428D0`, `func_80144F70`; 1,792 bytes); `func_80143DD0` not started, still `INCLUDE_ASM`. Code review against CODING_STANDARDS.md: no findings, one stale intro line in [[matching-notes]] fixed. Ticket [[tickets/T-22018-w4-p18]].
+
+## [2026-10-17] ticket | T-20011 Done
+
+[[tickets/T-20011-name-ent-coordinate-selection]]: PR #60 (KakarottoCake) merged, NAME_ENT `func_80134110` (152 bytes) matches. Clean build 27/27, linked funcdiff MATCH. `func_80132320` and `func_80134248` stay claimed (#57) under T-20013.

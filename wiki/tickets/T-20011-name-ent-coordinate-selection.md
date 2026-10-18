@@ -1,7 +1,7 @@
 ---
 id: T-20011
 title: Match NAME_ENT pointer-coordinate hit test
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
 updated: 2026-10-17
@@ -36,3 +36,5 @@ Explicit return values forced extra return-copy ranges. An s32 function with a n
 ## Review
 
 Self-review against CODING_STANDARDS.md: C89 and fixed-width types; existing shared actor fields; one overlay prototype and no duplicate main declarations; no new buffers, dead initializers, forced registers or compiler changes. The sole FAKE is the integer no-value exit constraint, explained with the ticket and measured void control. All three callers use the function as a statement and discard its result. No neighboring function changes, generated ASM, game assets, binaries, permutation scripts or instruction listings submitted. Ticket/kanban In Review; maintainer review pending. Claim #57 remains open for T-20013.
+
+- 2026-10-17 review (orchestrator, CODING_STANDARDS.md): plain C with one FAKE comment (implicit integer exit liveness; ticket and reason given), existing DisplayActor44 view, one overlay prototype, no inline asm. Merged as PR #60 in one clean build: 27/27 SHA1, headers, globals, prototypes, linked funcdiff MATCH (152 bytes). Done; the other two functions of claim #57 continue in T-20013.
