@@ -370,3 +370,6 @@ constant160/page-spill question; counts are not a match or scheduling proof.
 
 allocation.md records the current618 priority/interference observation and
 mandatory whole-object fidelity. It supplies no supported new source edit.
+
+constant-use-map.md follows the six saved160 geometry reads to original LI
+sites; it finds no allocated-register UV sharing or supported source edit.

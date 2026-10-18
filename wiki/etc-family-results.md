@@ -777,3 +777,13 @@ ineligibility. Other consumers of21/22 unlogged; no source edit or impossibility
 claim follows. allocation.md/patch/recipe/fidelity preserve bounded evidence;
 generated compiler/raw logs ignored. No production/options/source change, same
 function active. Signed/unsigned160 or H width guesses remain untested.
+
+
+Requested existing-data use map confirms current618 allocateds6 serves exactly
+six geometry SUBUs: four H=160-A and two lower-right160-Q11. No UV/page use;
+UV initializer separatelyLI t8,160, rightX uses immediateADDIU160. Case2 LIorder
+was checked byconsumers (DB3Ct5 islower-right, DB48t4 isH), not assumedorder.
+constant-use-map.md preserves fulloriginalVAs/currentrelativeoffsets. Parent
+read-only followup again supplied no faithful edit. Ordinary geometry pooling,
+no UVcross-purpose cause supported; finaluses are not completeIRprioritycounts.
+No new build/instrument/source/signednesssplit. Same function active, unchanged.
