@@ -17674,3 +17674,6 @@ Package w4-p16 for [[tickets/T-22016-w4-p16]]: KANGEI `func_80135004`, `func_801
 
 ## [2026-10-17] ticket | T-22016 In Review
 [[tickets/T-22016-w4-p16]] moved from In Progress to In Review after the clean build and header checks.
+
+## [2026-10-17] build | T-22016 closer: KANGEI func_8013769C matched
+[[tickets/T-22016-w4-p16]]: Opus closer matched KANGEI `func_8013769C` (2 rows, stack offsets of the two name tables). `s16 var_s0` declared before the tables plus a FAKE `s32 pad;` gave the original offsets 0x13C/0x54. Row added to [[register-cheatsheet]].

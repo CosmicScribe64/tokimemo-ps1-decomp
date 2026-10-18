@@ -538,12 +538,11 @@ s32 func_80137638(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-22016, 2 rows; only the stack offsets of the two name tables differ (sp13C at 0x144, the original 0x13C; frame size matches, s32/s16/u8 pad locals above the tables do not move it by 8). */
-#ifdef NON_MATCHING
 void func_8013769C(void) {
+    s16 var_s0;
+    s32 pad; /* FAKE: unused slot above the name tables, the original puts them 8 bytes lower (sp+0x13C, sp+0x54); real source unknown. T-22016 */
     KangeiNames20 sp13C;
     KangeiNames21 sp54;
-    s16 var_s0;
 
     sp13C = D_80139FAC;
     sp54 = D_8013A088;
@@ -595,6 +594,3 @@ void func_8013769C(void) {
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_8013769C);
-#endif
