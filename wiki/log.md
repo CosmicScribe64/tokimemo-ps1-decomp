@@ -17960,3 +17960,7 @@ Clean build 27/27, `check_headers` OK, `migrate_globals --check` OK, `sync_proto
 ## [2026-10-18] ticket | T-22022 Done
 
 Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` and wiki changed, the four functions stay `INCLUDE_ASM`, drafts are plain source. 0 of 4 matched. [[tickets/T-22022-w4-p22]] Done.
+
+## [2026-10-17] ticket | T-22028 In Progress
+
+Package w4-p28 started: ENDING `src/ovl/ENDING/80133030.c` and `src/ovl/ENDING/80137340.c`, five functions. [[tickets/T-22028-w4-p28]] In Progress, card in `wiki/kanban.md`.
