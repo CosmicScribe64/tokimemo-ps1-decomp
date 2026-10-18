@@ -18838,3 +18838,12 @@ arguments into the faithful rejection-loop source. Explicit-object default
 resolved comparison reports904 equal bytes. Return-view uncertainty is marked
 FAKE; sole caller ignores result, existing interface retained. Production still
 ASM pending actual linked proof/hash/interfaces/neighbor audit.
+
+## [2026-10-18] build | T-24075 actual default random-selection match
+
+[[tickets/T-24075-etc-random-selection]] production5d083af5 passes default linked
+904B, ETC SHA1 and headers/globals/prototype guards (0new/15known). Fresh object
+audit verifies34 other function bodies plus exact neighbor source text. Only
+target fallback replaced; no guard/header/config change. [[etc-family-results]]
+and drafts/T-24075 record source/proofs. Ticket/card/index move to In Review
+awaiting parent independent all27 and integration; not Done yet.

@@ -18,7 +18,7 @@ fallback = 'INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013C8EC);
 if before.count(fallback) != 1:
     raise SystemExit('assigned fallback changed')
 body = (Path('drafts/T-24075') / variants[args.variant]).read_text()
-assert body.startswith('/* NON_MATCHING:')
+assert body.startswith(('/* NON_MATCHING:', '/* T-24075:'))
 body = body.split('\n', 1)[1]
 root = Path('build/etc24075/replay') / args.variant
 root.mkdir(parents=True, exist_ok=True)

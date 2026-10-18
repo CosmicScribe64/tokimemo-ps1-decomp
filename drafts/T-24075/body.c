@@ -1,4 +1,4 @@
-/* NON_MATCHING: T-24075 private zero; actual default production proof pending. */
+/* T-24075: verified default C source, production pin5d083af5. */
 /* FAKE: retain the s32 fallthrough matching view; original return type is unproven,
  * and the sole caller ignores the result. T-24075. */
 s32 func_8013C8EC(void) {

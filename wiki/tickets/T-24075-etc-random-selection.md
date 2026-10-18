@@ -1,7 +1,7 @@
 ---
 id: T-24075
 title: Recover ETC random selection with current pointer layout
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -40,3 +40,15 @@ Porting that source idiom closes all six tail words: private default-resolved
 full-TU zero/904B, pending actual production proof. Sole caller8013BF34 ignores
 result, original epilogue does not establish return; retain existing implicit
 s32 matching view with conservative FAKE note, no header/config change.
+
+## Actual default verification
+
+Frozen production5d083af5 replaces only the target fallback with faithful global
+rejection loops and matched same-table direct pair arguments. Actual default
+linked904B MATCH, ETC SHA1 OK, headers/globals OK, prototype branch0new/15known.
+Fresh before-object audit confirms34 other resolved-word function bodies and
+all other source text unchanged; target guard/fallback absent. No header/config
+change. See drafts/T-24075/README.md and build/etc24075 proof logs.
+
+Parent preliminary standards/spec review has no findings. Ticket/card move to
+In Review, awaiting independent parent all27/integration, not Done yet.

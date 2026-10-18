@@ -319,3 +319,11 @@ Porting that source idiom closes all six tail words: private default-resolved
 full-TU zero/904B, pending actual production proof. Sole caller8013BF34 ignores
 result, original epilogue does not establish return; retain existing implicit
 s32 matching view with conservative FAKE note, no header/config change.
+
+T-24075 production5d083af5 passes actual default linked904B and ETC checksum.
+Global rejection loops reproduce repeated stores and immediate comparison
+constants; matched same-table8013F320 direct pair arguments close the six tail
+words. Real GameState/word-pair types, no shared interface/config changes;
+unproven s32 fallthrough view conservatively FAKE-tagged, sole caller ignores
+result. All34 other function words and neighbor text unchanged. Headers/globals
+OK, protos0new/15known; In Review pending parent all27/integration.

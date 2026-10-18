@@ -37,7 +37,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
-- [[tickets/T-24075-etc-random-selection|T-24075]] ETC random selection, In Progress; private zero904-byte source, production proof pending.
+- [[tickets/T-24075-etc-random-selection|T-24075]] ETC random selection, In Review; actual default904-byte C match, independent integration pending.
 - [[tickets/T-24074-etc-record-scene|T-24074]] ETC record scene, unresolved In Review;166-row source-only checkpoint, production assembly.
 - [[tickets/T-24073-etc-record-init|T-24073]] ETC typed record initializer Done;352 actual default C bytes independently reviewed/published c4847ad5d.
 - [[tickets/T-24072-etc-model-init|T-24072]] ETC model initializer, unresolved/In Review; new5-row source and neutral controls, production assembly.
