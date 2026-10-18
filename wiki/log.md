@@ -18122,3 +18122,23 @@ Wave 4 package w4-p30 started on branch `w4-p30` from `w2-good`: RENSYU `src/ovl
 ## [2026-10-17] ticket | T-22029 Done
 
 [[tickets/T-22029-w4-p29]]: 2 of 4 matched: ETC func_80146400 and func_80148BC8. Merged after the conveyors stopped at the usage limit.
+
+## [2026-10-17] ticket | T-23006 Wave 5 big package w5-big-p06 opened
+
+[[tickets/T-23006-w5-big-p06]] (In Progress) under [[tickets/T-23000-wave-5-big-conveyor]]: `src/main/80047550.c`, `func_800476C0` (3.1 KB), `func_80047560` (352 B) and `load_tpage_buf_lock` (168 B, guarded at 29 rows). Branch `w5-big-p06` from `w2-good`.
+
+## [2026-10-17] ticket | T-23006 In Review
+
+[[tickets/T-23006-w5-big-p06]]: 0 of 3 matched in `src/main/80047550.c`. `func_800476C0` (3,132 B) and `func_80047560` (352 B) stay `INCLUDE_ASM`; `load_tpage_buf_lock` keeps its guard at 20 differing lines (29 before) with a `FAKE` comment. `func_800476C0` is typed (`DisplayFixActor44`, `DisplayImage78`, `Rec24`), the frame is word-exact, the first 100 rows differ in register numbers and load placement only; the register order of the nine saved registers is open. Levers and numbers in [[matching-notes]] section T-23006; drafts and scorer in `drafts/T-23006/`.
+
+## [2026-10-17] build | T-23006 checks
+
+[[tickets/T-23006-w5-big-p06]]: clean build 27/27 (668 steps; `SHA1 CHECK` of every binary OK), `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass; a later comment-only edit of `src/main/80047550.c` rebuilt with `SLPM_86.053.bin: OK`. Package left In Review for the lead.
+
+## [2026-10-17] ticket | T-23006 closer: load_tpage_buf_lock matches
+
+[[tickets/T-23006-w5-big-p06]]: the Opus closer matched `main:load_tpage_buf_lock` in `src/main/80047550.c` (`funcdiff --resolve` MATCH, 168 bytes). The store goes through an integer address with the index first, so uopt reloads the parameters after it (FAKE comment); notes in [[matching-notes]]. Package now 1 of 3, still In Review.
+
+## [2026-10-17] ticket | T-23006 Done
+
+[[tickets/T-23006-w5-big-p06]]: 1 of 3 matched: main load_tpage_buf_lock (168 bytes, one ticketed FAKE store form); func_800476C0 and func_80047560 stay INCLUDE_ASM. Merged after the conveyors stopped at the usage limit.
