@@ -657,3 +657,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI two-function sibling package, one compiler, current main reference ports.
 
 - [[tickets/T-24031-gyozi-shougatu-pairs|T-24031]] Paired GYOZI/SHOUGATU handlers (In Review; no matches, four corrected source-only drafts).
+
+- [[tickets/T-24038-etc-master-siblings|T-24038]] ETC signed-number renderer and MASTER handler ports from strong matched siblings.
