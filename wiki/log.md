@@ -19577,3 +19577,7 @@ updated native evidence preserve the bit6 path-barrier result. Both stock
 section/target fidelity checks pass. [[ending-allocator-trace]] has exact commands
 and replaces the unproven label-flag hypothesis. Standards review finds no new
 issue; production guarded35, zero coverage gain, In Progress.
+
+## [2026-10-18] decision | T-24067 prune unsupported final-predicate control
+
+Read-only f_jump path inspection requires constant RHS for the scalar immediate emitter, while both actual compared bytes are variable. Reversing operands only changes a physical register number0..31 and cannot cross the stale-value-plus8 threshold0x7FF9. No new predicate probe justified; bool/XOR/subtraction would add instructions or normalize back. [[tickets/T-24067-etc-album-copy]] and [[etc-family-results]] preserve the unresolved four-word source checkpoint with unchanged production/In Progress. drafts/T-24067/README.md records exact path predicates and avoids exhaustive-source or older-compiler claims.
