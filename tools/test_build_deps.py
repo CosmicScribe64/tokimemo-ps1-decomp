@@ -36,7 +36,7 @@ class NinjaDependencies(unittest.TestCase):
         self.previous = Path.cwd()
         os.chdir(self.root)
         self.addCleanup(os.chdir, self.previous)
-        for name in ("cc.py", "trailing_pad.py", "srcscan.py", "frame_pass.py", "cvt_pass.py", "check_headers.py", "sync_protos.py"):
+        for name in ("cc.py", "trailing_pad.py", "srcscan.py", "frame_pass.py", "cvt_pass.py", "sdk_aspsx_pass.py", "check_headers.py", "sync_protos.py"):
             self.write("tools/" + name, (ROOT / "tools" / name).read_text())
         # Layout validation is independent of dependencies and requires a game layout.
         self.write("tools/object_layout.py", "")

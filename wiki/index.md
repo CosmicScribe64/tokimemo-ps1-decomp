@@ -739,8 +739,13 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24079-date-80132000-event-siblings|T-24079]] DATE `80132000.c` siblings from matched EVENT `8010FE10.c` (Done; 4 matches, 2,316 B verified default C).
 - [[tickets/T-24080-gyozi-shougatu-twins|T-24080]] GYOZI and SHOUGATU 1.000 twin pair cluster (`func_80136488`/`func_80134CB4`, `func_801378D0`/`func_80136204`, Done; 4 matches, 1,840 B verified default C).
 - [[tickets/T-24081-event-geko-twins-a|T-24081]] EVENT and GEKO 1.000 twin cluster A (`func_800FAA04`/`func_8013A820`, `func_800FA25C`/`func_80139E1C`, Done; 4 matches, 2,632 B verified default C).
-- [[tickets/T-24082-guarded-near-misses-rensyu-option-bunkasd|T-24082]] Guarded 4-8 row near misses in RENSYU, OPTION, and BUNKA_SD (In Progress).
+- [[tickets/T-24082-guarded-near-misses-rensyu-option-bunkasd|T-24082]] Guarded 4-8 row near misses in RENSYU, OPTION, and BUNKA_SD (Done; 2 of 3 matched: `BUNKA_SD:func_80134418` 144 B, `OPTION:func_8013394C` 396 B — 540 B verified default C).
 - [[tickets/T-24083-date-80132000-siblings-b|T-24083]] DATE 80132000.c sibling batch B (`func_80147BB0`, `func_8013A94C`, `func_8014EF60`, `func_80151110`, In Progress).
-- [[tickets/T-24084-shougatu-gyozi-siblings-b|T-24084]] SHOUGATU and GYOZI sibling batch B (`func_801359FC`, `func_80132148`/`func_80134100`, `func_801345BC`/`func_80135EB0`, `func_80137480`, In Progress).
-- [[tickets/T-24085-event-geko-twins-b|T-24085]] EVENT and GEKO twin cluster B (`func_80105DF8`/`func_8013E950`, `func_80109404`/`func_801406CC`, In Progress).
-- [[tickets/T-24086-issue-63-tt-ratan2-reevaluation|T-24086]] Re-evaluate Issue 63 (`TT:func_8014D260` `ratan2`) toolchain, provenance, and matching route (In Progress).
+- [[tickets/T-24084-shougatu-gyozi-siblings-b|T-24084]] SHOUGATU and GYOZI sibling batch B (`func_801359FC` 276 B, `func_8013C118` 504 B, `func_8013E824` 748 B, Done; 3 matches, 1,528 B verified default C).
+- [[tickets/T-24085-event-geko-twins-b|T-24085]] EVENT and GEKO twin cluster B (`func_80105DF8`/`func_8013E950` matched 1,712 B; `func_80109404`/`func_801406CC` diagnosed as `ugen` block-copy state gap, Done).
+- [[tickets/T-24086-issue-63-tt-ratan2-reevaluation|T-24086]] Issue 63 (`TT:func_8014D260` `ratan2`) Sony workstation assembler pass (`tools/sdk_aspsx_pass.py`), 400 B C match (`303/303` C functions in `TT`), and repo-wide SDK toolchain survey (Done).
+- [[tickets/T-24087-guarded-near-misses-and-option-twins|T-24087]] Guarded near misses and twin pairs in OPTION, VALEN, TAIIKU, and main (In Progress).
+- [[tickets/T-24088-gyozi-shougatu-valen-siblings-c|T-24088]] GYOZI, SHOUGATU, and VALEN sibling batch C (`func_8013907C`, `func_80139E4C`/`func_80134030`, `func_80138240`, `func_8013DF14`, In Progress).
+- [[tickets/T-24089-date-event-movie-sibling-pairs|T-24089]] DATE and EVENT movie sibling pairs (`func_8014718C`/`func_8011D5C4`, `func_801462B0`/`func_8011C750`, In Progress).
+- [[tickets/T-24090-geko-event-twins-and-near-misses-c|T-24090]] GEKO and EVENT twin pair and guarded near misses C (`func_80137120`/`func_801372D4`, `func_80102E54`, `func_80133AA0`, `func_8013F894`, In Progress).
+

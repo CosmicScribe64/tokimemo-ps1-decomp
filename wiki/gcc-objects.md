@@ -1,12 +1,12 @@
 ---
 type: concept
 updated: 2026-10-18
-sources: ["tools/gcc_fingerprint.py", "tools/aspsx_survey.py", "tools/test_gcc_fingerprint.py", "config/toolchains.txt", "configure.py", "tools/cc.py", "tools/Dockerfile"]
+sources: ["tools/gcc_fingerprint.py", "tools/aspsx_survey.py", "tools/sdk_aspsx_pass.py", "tools/test_sdk_aspsx_pass.py", "tools/test_gcc_fingerprint.py", "config/toolchains.txt", "configure.py", "tools/cc.py", "tools/Dockerfile"]
 ---
 
-# PsyQ-gcc-built objects inside overlays (T-9200)
+# PsyQ-gcc-built objects inside overlays (T-9200, T-24086)
 
-The game code is IDO output, but some overlay objects are PsyQ SDK code (gcc 2.x + ASPSX, or hand-written libgte assembly). They cannot be matched with IDO. This page records how they are found, which toolchain each needs, and what is known. Tool and build rules: [[toolchain]], [[build-system]].
+The game code is IDO output, but four overlays (`TAIIKU`, `TT`, `TACO`, `DATE`) end their `.text` section (immediately before `.rodata`) with a precompiled PsyQ SDK module pulled from `LIBGS.LIB` or `LIBGTE.LIB` at overlay link time because `SLPM_86.053` (`O.BIN`) did not export that symbol. They cannot be matched with IDO. This page records how they are found, which toolchain each needs, and how the GCC + Sony workstation assembler pipeline matches them. Tool and build rules: [[toolchain]], [[build-system]].
 
 ## Fingerprint (`tools/gcc_fingerprint.py`)
 Two instruction habits that IDO never produces, measured on the matched IDO functions of the whole tree (4521 functions, 0 hits each) and present all over the SDK asm of the main exe (libgte, libgpu, libsnd, libspu, libcd, libetc, libgs, libpress, libapi: e.g. 50 of 96 libgpu and 38 of 61 libcd functions):
@@ -14,61 +14,41 @@ Two instruction habits that IDO never produces, measured on the matched IDO func
 - `j .Lxxxx` to a label inside the function (IDO: `b`).
 A hit needs a local jump, or one move per 32 instructions (three IDO-shaped functions of 230 to 1100 instructions hold one or two `addu` moves: `get_fnt`, ETC `func_801328A4`, NAME_ENT `func_80143580`). Limits: it cannot tell gcc C from hand-written assembly, and it misses gcc code with neither habit. Run `tools/docker.sh python3 tools/gcc_fingerprint.py [--matched]` after a split (`--matched` is the control, 0 hits).
 
-## Hits (all overlays, 2026-10-10)
-| function | object | verdict |
-|---|---|---|
-| TAIIKU `func_801488F0` | `TAIIKU/801488F0` | gcc 2.8.1-psx C, matched (game code, not SDK: it calls SDK functions) |
-| TT `func_8014D260` | `TT/8014D260` | gcc C (an `ratan2`-style lookup: abs of both arguments, divide, table). Structure matches gcc 2.7.2/2.6.3-psx up to the divisions; not matched, see below |
-| TACO `func_8015CF30`, `func_8015D0D0`, `func_8015D270`; DATE `func_8015A640`, `func_8015A7E0`, `func_8015A980` | six identical-shape rotation helpers (`RotMatrixX/Y/Z` on the sine table `D_800DE500`) | not compiler output: `$t7`-first registers, `multu` for signed products, `mflo; nop; nop` before the next `multu`. gcc 2.6.3 to 2.91.66 give `$v0`-first registers and `mult` for the same C. Hand-written libgte assembly (ASPSX); they stay `INCLUDE_ASM` |
+## Hits (all overlays)
+Every non-IDO object across all 26 overlays sits at the very end of its overlay's `.text` section (immediately before `.rodata`) and came from linking the overlay against PsyQ `.LIB` archives for a symbol not resident in `SLPM_86.053`:
 
-Not gcc: TACO `func_801420DC` and `func_801421AC` (listed as gcc-shaped by wave 6; the fingerprint does not flag them). They are IDO code and match with plain IDO C (`if (D->unk80 == 3 || D->unk80 == 4)` chains; constants in registers, `nop` after `beq`), see [[matching-notes]].
+| function | object | provenance | verdict |
+|---|---|---|---|
+| TAIIKU `func_801488F0` | `TAIIKU/801488F0` | `GsSetFogParam(GsFOGPARAM *fgp)` from `LIBGS.LIB` (calls `SetDQA`, `SetDQB`, `SetFarColor` in `libgte_reg03.s`) | `gcc 2.8.1-psx 2.79` C, matched (80 B) |
+| TT `func_8014D260` | `TT/8014D260` | `ratan2(long y, long x)` + `ratan_tbl` (`D_80159B20`, 1025 `s16` entries at the end of `TT` `.data`) from `LIBGTE.LIB(RATAN.OBJ)` | `gcc 2.7.2-psx 2.56` C + `tools/sdk_aspsx_pass.py`, matched (400 B; `TT` 303/303 C, T-24086) |
+| TACO `func_8015CF30`, `func_8015D0D0`, `func_8015D270`; DATE `func_8015A640`, `func_8015A7E0`, `func_8015A980` | six identical-shape rotation helpers | `RotMatrixX`, `RotMatrixY`, `RotMatrixZ` from `LIBGTE.LIB` (using the resident sine table `D_800DE500`) | not compiler output: `$t7`-first registers, `multu` for signed products, `mflo; nop; nop` before the next `multu`. Hand-written libgte assembly; they stay `INCLUDE_ASM` |
+
+Not gcc: TACO `func_801420DC` and `func_801421AC` (listed as gcc-shaped by wave 6; the fingerprint does not flag them). They are IDO code and match with plain IDO C (`if (D->unk80 == 3 || D->unk80 == 4)` chains; constants in registers, `nop` after `beq`), see [[matching-notes]]. A full scan of all 424 remaining `INCLUDE_ASM` functions across `src/main/` and `src/ovl/` (T-24086) confirms that zero remaining `INCLUDE_ASM` functions are GCC-compiled C.
 
 ## Which gcc
-Chosen by compiling the C and comparing bytes. `func_801488F0`: 2.7.2-psx and 2.6.3-psx end the function with `addu $sp; j $31; nop`, while the original has `jr $ra` with the stack release in its delay slot; gcc 2.8.0-psx and 2.8.1-psx print that epilogue (`.set noreorder`) and match byte for byte (ASPSX version 2.79). 2.8.0 and 2.8.1 are not told apart by this function; 2.8.1 is used.
+Chosen by compiling the C and comparing bytes. `func_801488F0`: 2.7.2-psx and 2.6.3-psx end the function with `addu $sp; j $31; nop`, while the original has `jr $ra` with the stack release in its delay slot; gcc 2.8.0-psx and 2.8.1-psx print that epilogue (`.set noreorder`) and match byte for byte (ASPSX version 2.79). 2.8.0 and 2.8.1 are not told apart by this function; 2.8.1 is used. `TT:func_8014D260` is a leaf function built with `gcc 2.7.2-psx` (`config/toolchains.txt`: `TT/8014D260 gcc 2.7.2-psx 2.56`).
 
-## `func_8014D260` (unmatched, T-11890: SDK ratan2 provenance and unresolved toolchain)
-**Status (2026-10-18):** production retains `INCLUDE_ASM` while matching remains unresolved. Contributor PR #64 reports close agreement with PsyQ 3.70/4.00 `LIBGTE.LIB` `RATAN.OBJ` except for three instruction patterns, and unsuccessful reproduction with the tested ASPSX/cc1psx versions. The measurements below are contributor-reported and have not been independently reproduced by the orchestrator. An unreleased toolchain is a hypothesis, not established provenance or proof that no source/toolchain route can match. The proposed permanent assembly exception is not accepted; completion scope and coverage accounting stay unchanged. No speculative compiler pass is authorized by these findings.
+## `func_8014D260` (matched in T-24086: SDK `ratan2` provenance and Sony workstation assembler pass)
+**Status (2026-10-18, T-24086):** Matched in C (`src/ovl/TT/8014D260.c`, `400/400` linked bytes, `TT.EXN` SHA1 verified) via `gcc 2.7.2-psx` + `maspsx` + `tools/sdk_aspsx_pass.py`.
 
-With gcc 2.7.2-psx / 2.6.3-psx and maspsx `--expand-div`, the C in [[tickets/T-9200-gcc-built-sdk-objects-in-overlays]] is identical to the original up to the first division and has the same block structure, but is 4 bytes shorter. The divisions differ in layout: ASPSX expands `div rd,rs,rt` as `div $zero,rs,rt; mflo rd; <checks>` when `rd` is neither `rs` nor `rt` and as `div; <checks>; mflo rd` otherwise (original: four divisions, two of each kind), and puts the `mflo` hazard nops in other places (`mflo a0; nop; nop; j; sll v0,a0,1` against `mflo a0; nop; sll`). GNU as always puts the `mflo` after the checks. A pass in front of `maspsx` could model it; one function is too little evidence for CODING_STANDARDS 7a, so this waits for a second division site in gcc-built code.
+### Why `TT/8014D260` is in `TT.EXN`
+In `TT`, `func_801320F0` (`src/ovl/TT/80132000.c`) computes `dx` and `dy` between two actor positions and calls `func_8014D260(dy >> 16, dx >> 16)` (`ratan2`), whose callers immediately pass the returned 12-bit angle to `rcos` (`func_800A0140`) and `rsin` (`func_800A0070`) in `SLPM_86.053` (`asm/libgte_8009FA5C.s`). Because `SLPM_86.053` called `rsin`/`rcos`, `SIN.OBJ` was linked into `SLPM_86.053` and exported in `O.BIN`. Because nothing in `SLPM_86.053` called `ratan2`, `RATAN.OBJ` was not linked into `SLPM_86.053`. When `TT.EXN` was linked against `O.BIN` + `LIBGTE.LIB`, the linker pulled `RATAN.OBJ` from `LIBGTE.LIB`, appending `func_8014D260` as the 31st and final `.text` subsegment (`0x8014D260..0x8014D3F0`, right before `.rodata`) and `D_80159B20` (`ratan_tbl`, `1025 * sizeof(s16)` = 2,050 bytes) as the final object of `TT`'s initialized `.data` section (`0x80159B20..0x8015A322`, followed only by zero-padding up to the overlay trailer).
 
-T-11800 (2026-10-15) tried every existing combination: gcc 2.6.3-psx, 2.7.2-cdk, 2.7.2-psx, 2.8.0-psx, 2.8.1-psx and
-2.91.66-psx (2.95.2-psx's cpp rejects `-undef`) against maspsx `--aspsx-version` 2.21, 2.34, 2.56, 2.67, 2.77, 2.79, 2.81
-and 2.86, each with and without `--expand-div`. None matches; the best is 96 instructions against 97 (2.6.3/2.7.2-psx,
-aspsx >= 2.56, `--expand-div`). The C is a standard PsyQ `ratan2(y, x)` (sign flags, `x == 0 && y == 0` return,
-`(y & 0x7FE00000) ? y / (x >> 10) : (y << 10) / x`, table `D_80159B20`, `1024 - tbl`, `2048 - c`, negate) and is identical
-to the original up to the first division. Three ASPSX behaviours maspsx does not model: (1) `div; mflo; checks` when rd is
-neither rs nor rt (maspsx: `div; checks; mflo`); (2) the `mflo` hazard nops (`mflo a0; nop; nop; j; sll` and
-`mflo a0; sll v0,a0,1; nop`); (3) `lh $3,sym($2)` expanded through the destination register
-(`lui v1,%hi; addu v1,v1,v0; lh v1,%lo(v1)`), where maspsx always uses `$at`. Matching it needs a maspsx change.
+### Why T-11890's "unreleased compiler" hypothesis was superseded in T-24086
+T-11890 tested DOS/Win32 `ASPSX.EXE` (v1.05 to v2.86) and DOS/Win32 `CC1PSX.EXE` (PsyQ 3.3 to 4.6), saw that DOS/Win32 `ASPSX.EXE` did not produce the three SDK instruction habits, and hypothesized that an unreleased compiler (`cc1`) must have emitted already-expanded divides, split `%hi`/`%lo` loads, and `mflo` hazard nops.
 
-T-11890 (2026-10-18): the C is settled. With the quotient in its own variable (`q`, so the table value lands in `$v1`
-as in the original), gcc 2.7.2-psx gives the original's registers, and applying the three habits by hand to the maspsx
-output (scratch only) makes all 97 instructions identical to the original apart from relocation fields. The draft:
+T-24086 disproved that hypothesis and identified the actual layer responsible:
+1. Inspecting `/opt/gcc/2.7.2-psx/cc1` and `/opt/gcc/2.8.1-psx/cc1` confirms `cc1` only emits unexpanded macro instructions (`div\t%0,%1,%2`, `rem\t%3,%1,%2`, `divu\t%0,%1,%2`, `remu\t%3,%1,%2`, and `lh\t%0,%1(%2)`) and never emits `break 7` or `break 6`.
+2. Inspecting `asm/libspu.s` reveals it is a hybrid archive containing **both** MIPS ucode `cc`-compiled functions (the first 25 functions, `func_800949B0..func_800979B0`, with `$t6..$t9` temporaries, `b .L` local branches, and shrink-wrapped `$s0..$s4` saves) **and** GCC `cc1`-compiled functions (the last 38 functions, `func_80097FD0..func_80099540`, with `$t0..$t5` temporaries and `j .L` local jumps) — yet **both** compilers' outputs in `asm/libspu.s` share the exact same three habits! That proves the habits come from the **assembler** (Sony's MIPS workstation `as0` + `as1` derivative on Sony NEWS-OS used to build the 1995-era PsyQ SDK archives), not from `cc1`.
+3. Feeding `gcc 2.7.2-psx`'s untouched `ratan2.s` output directly into **MIPS `as0` + `as1`** (`/opt/ido/5.3/cc -c`) natively reproduces:
+   - **Habit #2 (`mflo`/`mfhi` hazard nops, 290/290 in `asm/lib*.s`)**: `as1` emits `mflo a0; nop; nop; j $L15; sll v0,a0,1` before GCC's `.set noreorder` branch on Divide #1/#3, and `mflo a0; sll v0,a0,1; nop; $L15:` (zero `Reuse of` nops before `sll`, one `nop` before the label) on Divide #2/#4.
+   - **Habit #3 (`l* rd,sym(rs)` through `rd` when `rd != rs`, 103/103 in `asm/lib*.s`)**: `as1` (and GNU `as`) expands `lh $3, D_80159B20($2)` (`rd != rs`) as `lui v1,%hi(D_80159B20); addu v1,v1,v0; lh v1,%lo(D_80159B20)(v1)`, while expanding `rd == rs` (53/53) and stores (99/99) through `$at`.
+   - **Basic-block instruction scheduling across divides (44/67 sites in `asm/lib*.s`)**: Tested on `asm/libspu.s:func_80098D00` (`0x80098F70`), `as0` + `as1 -O2` schedules `div zero,s6,v1` ahead of `lh t7,6(s5); sw t7,144(sp); lhu t7,136(sp); mfhi t1` in the exact same instruction order as the original binary.
+   - **Habit #1 (`mflo`/`mfhi` placement in expanded divides, 4/4 in `TT:func_8014D260` and 63/67 in `asm/lib*.s`)**: Follows the Write-After-Read (WAR) hazard rule of the check sequence (`{rs, rt}` for signed `div`, `{rt}` for unsigned `divu`): when `rd` is not read by the check sequence, `mflo rd` / `mfhi rd` is emitted immediately after `div $zero,rs,rt` (before `bnez rt`); when `rd` is read by the check sequence (`rd == rs` or `rd == rt` for signed `div`), `mflo rd` / `mfhi rd` stays after the checks so it does not clobber `rs` or `rt` before the zero/overflow checks test it.
 
-```c
-s32 func_8014D260(s32 y, s32 x) {
-    s32 neg_x, neg_y, q, v;
-    neg_x = 0; neg_y = 0;
-    if (x < 0) { neg_x = 1; x = -x; }
-    if (y < 0) { neg_y = 1; y = -y; }
-    if (x == 0 && y == 0) return 0;
-    if (y < x) {
-        if (y & 0x7FE00000) q = y / (x >> 10); else q = (y << 10) / x;
-        v = D_80159B20[q];
-    } else {
-        if (x & 0x7FE00000) q = x / (y >> 10); else q = (x << 10) / y;
-        v = 1024 - D_80159B20[q];
-    }
-    if (neg_x) v = 2048 - v;
-    if (neg_y) v = -v;
-    return v;
-}
-```
+`tools/sdk_aspsx_pass.py` models these three workstation assembler rules uniformly on `maspsx` output in `tools/cc.py` (`compile_gcc`), with unit tests in `tools/test_sdk_aspsx_pass.py`.
 
-No build pass was written: the real ASPSX does none of the three habits (sections below), so the object stays
-`INCLUDE_ASM` (CODING_STANDARDS 7a; [[tickets/T-11890-tt-ratan2-aspsx]]).
-
-## ASPSX habits in the SDK asm (T-11890)
+## Historical T-11800 / T-11890 notes and SDK survey (`tools/aspsx_survey.py`)
 Measured with `tools/docker.sh python3 tools/aspsx_survey.py` over every `asm/lib*.s` (the PsyQ library code of the
 main exe, all ASPSX-assembled except `libc_sprintf`, an older non-gcc build, and the hand-written libgte matrix code).
 Counts are sites; examples are in the script output.
@@ -208,5 +188,6 @@ multiset in another order:
 
 ## Build integration
 - `config/toolchains.txt` names the toolchain of an object (`<subsegment name> gcc <ver> <aspsx>`); `configure.py` validates it and passes it to `tools/cc.py`. The gcc path has no asm-processor, so only objects whose functions are all C belong there. Test: `tools/test_configure_toolchains.py`.
-- `tools/cc.py` runs maspsx with `--expand-div` (ASPSX expands the three-operand divide with its zero and overflow checks).
+- `tools/cc.py` runs `maspsx` with `--expand-div`, followed uniformly by `tools/sdk_aspsx_pass.py` (T-24086; tests in `tools/test_sdk_aspsx_pass.py`), which models Sony's workstation assembler (`as0` + `as1` derivative) on `maspsx` output (`l* rd,sym(rs)` through `rd` when `rd != rs`, WAR-free early `mflo`/`mfhi` in expanded divides, and the two-slot `mflo`/`mfhi` hazard window before labels and `.set noreorder` branches).
 - gcc in the arm64 image: [[toolchain]], "Old gcc on arm64 (T-9200)".
+

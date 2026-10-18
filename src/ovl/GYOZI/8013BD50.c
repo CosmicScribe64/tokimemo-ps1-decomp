@@ -99,7 +99,42 @@ void func_8013C0D0(void) {
     D_8012E6B0 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013BD50", func_8013C118);
+void func_8013C118(void) {
+    func_8004EDE0(1, 0);
+    func_80054864(1);
+    func_8004C670();
+    func_8005493C(0);
+    func_8004EDF4(1);
+    func_80053EFC();
+    func_8005ABC0();
+    D_800F6412 = 0;
+    D_800F6458 = 1;
+    func_8009068C();
+    D_800F53DA = 0x80;
+    D_801317EB = 0;
+    D_800C51C4 = 0;
+    func_80089200();
+    func_800744A0();
+    func_80074950();
+    func_8008FC10();
+    /* FAKE: indirect byte-store and reload via address-of shares $a0 across both stores and the call (T-9020 idiom, as in func_8013AC38 and func_8013DC00). T-24084 */
+    *(u8 *)&D_800F5ACD = *(u8 *)&D_800F62CF = 7;
+    func_8008F618(*(u8 *)&D_800F62CF);
+    func_8013A140();
+    D_8014749C = D_8014743C;
+    D_801474A0 = D_80147460;
+    D_801474A4 = D_80147484;
+    func_8013BEA0();
+    if (D_800F53DF >= 6U && D_800F53DF < 0xAU) {
+        func_8004EE18((s32)D_801479C0, 0x11, 1, 2, 0);
+        func_8008FD1C((s32)D_801479C8, (s32)D_801479CC, (s32)D_801479D0, (s32)D_801479D4, (s32)D_801479D8, (s32)D_801479DC);
+    } else {
+        func_8004EE18((s32)D_801479C4, 0x11, 1, 2, 0);
+        func_8008FD1C((s32)D_801479E0, (s32)D_801479E4, (s32)D_801479E8, (s32)D_801479EC, (s32)D_801479F0, (s32)D_801479F4);
+    }
+    func_8008FF60((s32)D_801479B4, (s32)D_801479B8, (s32)D_801479B0, D_801479BC);
+    func_8004DE1C();
+}
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/8013BD50.rodata", D_80145BA0);
 

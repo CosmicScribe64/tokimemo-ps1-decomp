@@ -14,7 +14,12 @@ ido: SGI IDO (decompals/ido-static-recomp) run through asm-processor, which
      T-5010): the original keeps unsigned byte and halfword globals in a register.
      IDO runs in K&R mode (-cckr, T-7000): unsigned char/short promote to
      unsigned int, as in the original.
-gcc: the PsyQ way, cpp | cc1 | maspsx | as.
+gcc: the PsyQ way, cpp | cc1 | maspsx | sdk_aspsx_pass | as. Every GCC compile
+     runs the Sony workstation assembler emulation pass (tools/sdk_aspsx_pass.py,
+     T-24086) on maspsx output: `l* rd,sym(rs)` through `rd` when `rd != rs`,
+     early `mflo`/`mfhi` in expanded divides when `rd` is not read by the check
+     sequence, and the two-slot `mflo`/`mfhi` hazard window before labels and
+     `.set noreorder` branches.
 
 Every object's .text is zero-padded to a multiple of 16 bytes (T-0012): the original link
 aligned the .text of each object to 16, and the build's linker script uses SUBALIGN(2), so the
@@ -45,6 +50,7 @@ import subprocess
 import sys
 import tempfile
 
+import sdk_aspsx_pass
 import trailing_pad
 
 AS = ["mips-linux-gnu-as", "-EL", "-march=r3000", "-mabi=32", "-G0",
@@ -132,6 +138,7 @@ def compile_gcc(src, out, gcc_ver, aspsx_ver):
     deps = cpp_dependencies(data)
     data = run_stage([gcc + "/cc1"] + GCC_CFLAGS, data)
     data = run_stage(["python3", MASPSX, "--aspsx-version=" + aspsx_ver] + MASPSX_FLAGS, data)
+    data = sdk_aspsx_pass.rewrite(data.decode()).encode()
     run_stage(AS + ["-o", out], data)
     return deps
 

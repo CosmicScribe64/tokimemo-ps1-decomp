@@ -44,9 +44,7 @@ s32 func_80134314(void) {
     }
 }
 
-/* NON_MATCHING: T-24035, four printable diff rows: two extra narrowing instructions (andi/move) after the cap constant, plus its changed branch offset. */
-#ifdef NON_MATCHING
-/* FAKE: u8 views keep one promoted counter range as in func_8013987C; original source unknown. T-24035. */
+/* FAKE: u8 views keep one promoted counter range as in func_8013987C; original source unknown. T-24035 */
 void func_80134418(void) {
     s32 i;
 
@@ -55,18 +53,14 @@ void func_80134418(void) {
     }
     *(u8 *)&D_800E6280.unk_110B += 2;
     if (*(u8 *)&D_800E6280.unk_110B > 0x80) {
-        /* FAKE: clear/add preserves the promoted cap range instead of splitting the constant; two redundant narrowing instructions remain. T-24035. */
-        *(u8 *)&D_800E6280.unk_110B *= 0;
-        *(u8 *)&D_800E6280.unk_110B += 0x80;
+        /* FAKE: single-expression * 0 + 0x80 folds the cap constant and its narrowing in one uopt pass while keeping unk_110B in the single promoted $v1 range. T-24082 */
+        *(u8 *)&D_800E6280.unk_110B = *(u8 *)&D_800E6280.unk_110B * 0 + 0x80;
         for (i = 0; i < 0x40; i++) {
             ((DisplayActor44 *)D_80120650)[i].unk_07 = *(u8 *)&D_800E6280.unk_110B;
         }
         func_8004284C();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80134260", func_80134418);
-#endif
 
 /* FAKE: T-24035. The u8 views keep the counter in one promoted range; *= 0 preserves its zero register for the clear loop instead of folding the stores to sb zero, as in matched sibling func_8013987C. Original source unknown. */
 void func_801344A8(void) {

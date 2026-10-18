@@ -244,7 +244,65 @@ void func_8013E828(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E950);
+void func_8013E950(void) {
+    s16 i;
+
+    for (i = 4; i < 0xE; i++) {
+        D_801217D0[i].unk_06 += 0xA;
+        if (((func_800AE0D0() & 3) == 0 &&
+             ((D_801217D0[i].unk_06 >= -0x52 && D_801217D0[i].unk_06 < -0x39 && D_801217D0[i].unk_04 < -0x57) ||
+              (D_801217D0[i].unk_06 >= -0x39 && D_801217D0[i].unk_06 < -0x1A && D_801217D0[i].unk_04 < -0x77) ||
+              (D_801217D0[i].unk_06 >= -0xB && D_801217D0[i].unk_06 < 3 && D_801217D0[i].unk_04 >= -0x8D && D_801217D0[i].unk_04 < -0x6F) ||
+              (D_801217D0[i].unk_06 >= 5 && D_801217D0[i].unk_04 >= -0x7F && D_801217D0[i].unk_04 < -0x5C)) &&
+             D_801463E0[i - 4] == 0 && D_80146400[i - 4] == 0) ||
+            D_801463E0[i - 4] != 0 || D_80146400[i - 4] != 0) {
+            D_801217D0[i].unk_06 -= 0xA;
+            if (D_801463E0[i - 4] == 0) {
+                if (D_80146400[i - 4] == 0) {
+                    if (D_801217D0[i].unk_06 < -0x44) {
+                        D_801217D0[i].unk_0F += 8;
+                    }
+                    D_801217D0[i].unk_04 -= 0xC;
+                    D_801217D0[i].unk_06 += 0x10;
+                    /* FAKE: signed byte/halfword views on Rec24 unk_0E/unk_0A share constant registers $s3 (8) and $s5 (0x18) with unk_08, matching func_80139E1C. T-24085 */
+                    *(s8 *)&D_801217D0[i].unk_0E = 8;
+                    D_801217D0[i].unk_08 = 0x18;
+                    *(s16 *)&D_801217D0[i].unk_0A = 8;
+                    D_80146400[i - 4] += 1;
+                } else {
+                    D_80146400[i - 4] = 0;
+                    D_801463E0[i - 4] += 1;
+                }
+            } else if (D_801463E0[i - 4] == 4) {
+                D_801217D0[i].unk_0E = 0;
+                D_801217D0[i].unk_0F = 0;
+                D_801217D0[i].unk_08 = 8;
+                *(s16 *)&D_801217D0[i].unk_0A = 0x18;
+                /* FAKE: same-line stores place mfhi after the zero stores as in the original. T-24085 */
+                D_801217D0[i].unk_04 = func_800AE0D0() % 84 - 0x9F; D_801217D0[i].unk_06 = -0x78; D_80146400[i - 4] = 0; D_801463E0[i - 4] = 0;
+            } else if (D_801463E0[i - 4] == 5) {
+                if (D_80146400[i - 4] == 0) {
+                    D_801217D0[i].unk_0E -= 0x18;
+                    D_80146400[i - 4] += 1;
+                } else {
+                    D_80146400[i - 4] = 0;
+                    D_801463E0[i - 4] += 1;
+                }
+            } else {
+                if (D_80146400[i - 4] == 0) {
+                    D_801217D0[i].unk_0E += 0x18;
+                    D_80146400[i - 4] += 1;
+                } else {
+                    D_80146400[i - 4] = 0;
+                    D_801463E0[i - 4] += 1;
+                }
+            }
+        } else if (D_801217D0[i].unk_06 >= 0x19 && D_801463E0[i - 4] == 0 && D_80146400[i - 4] == 0) {
+            /* FAKE: same-line store places mfhi after unk_06 = -0x78 as in the original. T-24085 */
+            D_801217D0[i].unk_04 = func_800AE0D0() % 84 - 0x9F; D_801217D0[i].unk_06 = -0x78;
+        }
+    }
+}
 
 void func_8013ECA8(void) {
     D_800E6280.unk_F5F = 9;

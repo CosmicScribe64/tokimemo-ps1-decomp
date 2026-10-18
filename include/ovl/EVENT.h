@@ -1240,6 +1240,7 @@ typedef struct EventRec24 {
     /* 0x0E */ s8 unk_0E;
     /* 0x0F */ u8 pad_0F[0x15];
 } EventRec24; /* size 0x24 */
+void func_80105DF8(void);
 
 extern u8 D_80125328;
 void func_800FD4FC();

@@ -206,10 +206,13 @@ void func_80132F10(void) {
 INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_8013325C);
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-22030, 4 rows (2 pairs); frame, registers, control flow and cases 1 to 6 match. In case 0 the
- * original has `lui v0,%hi(D_801342C0)` before the bnez on D_80120652 (with a nop in the branch slot); the draft
- * puts the lui into the branch slot (nop before the bnez). Tried: s32 return type, early break, nested else-if,
- * !test, permuter (150 s), a local copy of the count (frame grows by 8) */
+/* NON_MATCHING: T-22030, T-24082, 4 rows (2 pairs); frame, registers, control flow and cases 1 to 6 match. In case 0
+ * the original has `lui v0,%hi(D_801342C0)` before the bnez on D_80120652 (with a nop in the branch slot); the draft
+ * puts the lui into the branch slot (nop before the bnez). Root cause (T-24082): uopt promotes &tbl to $a0 (RLDA) in
+ * BB0 and emits UNAL(1,$4,$gp) before `tbl = D_80134390` and UNAL(0,$4,$gp) at the end of BB0 after XJP/CLAB/UJP; ugen
+ * emits `.alias $4,$gp` (I_IALIAS) between the jump-table `.text` switch and the case-0 label, which makes IDO 5.3 as1
+ * schedule `lui v0` into the bnez slot instead of the lbu load-delay slot (moving or dropping that single I_IALIAS
+ * record in binasm gives score=0). */
 void func_80133628(void) {
     s32 girl;
     s16 diff;

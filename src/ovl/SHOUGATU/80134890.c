@@ -175,7 +175,27 @@ void func_8013507C(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134890", func_801350F8);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134890", func_801359FC);
+void func_801359FC(void) {
+    s32 pad; /* FAKE: preserves labels at stack +0x28 (T-3330). T-24084 */
+    ShoStr7x5 labels;
+
+    labels = D_80143E80;
+    D_80143DD8 = D_800E6280.unk_10F8 & 7;
+    if (D_80143DD8 != 0) {
+        D_80143DD8--;
+    }
+    if (D_800E6280.unk_F5F == 3 && D_80143DD8 == 3) {
+        D_80143DD8 = 4;
+    }
+    func_800AE0F0(D_800CA248, labels.s[D_80143DD8]);
+    if (D_80143DD8 == 0) {
+        D_800E6280.unk_11C.unk_02 -= 5;
+    }
+    if (D_80143DD8 == 4) {
+        D_800E6280.unk_11C.unk_02 += 5;
+    }
+    check_para_limit();
+}
 
 void func_80135B10(void) {
     func_80048F64(0x60);

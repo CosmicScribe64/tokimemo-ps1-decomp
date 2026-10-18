@@ -828,3 +828,10 @@ typedef struct TtSprAnim {
     /* 0x10 */ u8 unk_10;
 } TtSprAnim; /* accessed prefix size 0x11 */
 #endif
+
+#ifndef OVL_TT_T24086_8014D260
+#define OVL_TT_T24086_8014D260
+/* PsyQ LIBGTE ratan_tbl (1025 s16 entries) indexed by func_8014D260 (ratan2). T-24086 */
+extern s16 D_80159B20[];
+#endif
+
