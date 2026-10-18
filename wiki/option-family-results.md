@@ -248,3 +248,12 @@ the expression controls evaluation order and the real source is unknown. Default
 `funcdiff.py --unit OPTION --resolve --version default func_80139198` reports linked
 function bytes equal target (860 bytes); `ninja -j2 build/ovl/OPTION.ok` passes its checksum.
 See [[tickets/T-24002-complete-option]].
+
+The bounded follow-up retains the GameState-local `func_80139F8C` guard at 5 differing
+rows (11 before). Width, assignment-stage and shared-compare forms did not recover the
+original `move a0,t1` before OR/mask. `func_80139E3C` stays guarded at 60 rows after
+input-local, width/narrowing, return-type and index-form probes. The larger routines
+remain assembly: current typed `func_801394F4` improves 215 to 115 differing rows by
+merging split temporary ranges (a natural clamp form has 56 aligned edits but 134 literal
+diff rows), while corrected input fields in `func_80139A30` leave 223 rows. Source drafts
+and concrete blockers are in drafts/T-24002/README.md; no shared header types changed.

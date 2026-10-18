@@ -414,15 +414,17 @@ void func_80139F04(void) {
     func_80044750((D_8013E730 | 0x500) & 0xFFFF);
 }
 
-/* NON_MATCHING: T-10850, 11 differing listing lines; see the ticket scratch evidence. */
+/* NON_MATCHING: T-24002, 5 differing rows: original copies the byte to a0
+ * before OR/mask; IDO combines the value range. */
 #ifdef NON_MATCHING
 /* FAKE: width-staged locals preserve raw-byte and call-argument ranges. T-10850 */
 void func_80139F8C(void)
 {
+    GameState *g = &D_800E6280;
     s32 t;
     u32 value;
     u16 code;
-    t = D_800E6280.unk_F88 & 0x60;
+    t = g->unk_F88 & 0x60;
     if (t != 0x20)
     {
         if (t == 0x40)
