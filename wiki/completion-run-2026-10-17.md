@@ -200,3 +200,7 @@ ENDING worker rebuilt the documented pinned tracer in Docker in about3minutes/62
 ## Contributor check 2026-10-18 08:40 UTC
 
 No open PRs. Open claims #50, #56 and #57 have unchanged update timestamps; NAME_ENT and TT reservations remain excluded. No contributor messages sent. Next check around09:10 UTC. ENDING and ETC workers remain active; their latest source-only archives are published at833561fb7 andebf0aa7b1 respectively. Verified coverage remains81.7%.
+
+## Contributor integration 2026-10-18 09:10 UTC
+
+PR #62 integrated at64ef469bf: NAME_ENT func_80132320 and func_80134248 independently verified as default C396/2256 bytes. All27 hashes and interface guards pass. T-20013 reviewed and Done. Authoritative Docker progress now6512/6958 functions,1864344/2279368 bytes (81.8%);415024 bytes remain. Gain2652 bytes. PR #61 contains TT compiler measurements and a read-only survey, no match claim; fetched for follow-up integration. Open claim timestamps #50/#57 unchanged; #56 updated with that evidence. Next contributor check around09:40 UTC. No contributor messages sent.

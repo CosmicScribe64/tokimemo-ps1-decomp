@@ -19321,3 +19321,7 @@ PR #60 is merged; maintainer independently verified all 27 hashes and the 152-by
 ## [2026-10-18] decision | Preserve final PR append history
 
 PR #62 integrates upstream708a0f02b after concurrent T-24067 archive/wiki updates. Both log histories are retained. Git confirms src/include/tools/config are identical to verified249ca2384, including the tested NAME_ENT blob; prior linked/hash/interface evidence still applies. No build repetition is needed for the archive/docs-only integration.
+
+## [2026-10-18] build | Integrate and independently verify PR62 NAME_ENT matches
+
+Published64ef469bf after actual default C proofs396/2256 bytes and all27 hashes/interface guards. Root standards review resolved T-20013 to Done and synchronized board. Docker progress6512/6958 functions,1864344/2279368 bytes (81.8%). [[completion-run-2026-10-17]] records contributor check and pending PR61 evidence; [[tickets/T-20013-name-ent-fade-page-followup]] records review. No new worker launched.

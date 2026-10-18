@@ -1,7 +1,7 @@
 ---
 id: T-20013
 title: Match NAME_ENT fade and character-page selection
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
 updated: 2026-10-18
@@ -39,3 +39,5 @@ Metrics here count unweighted aligned instruction edits, not printed diff rows o
 ## Review
 
 Self-review against CODING_STANDARDS.md: both bodies are ordinary C89 with fixed-width locals and the existing GameState and NameKanaPages44 layouts. Existing canonical declarations are unchanged. The index local is reused for actual raw-byte work rather than adding stack storage. Every retained identity, indirect read and eliminated empty test is explicitly FAKE, ticketed and covered by removal controls. Store order, signed divisions, unsigned count comparisons and helper-side reloads are preserved. The default build verifies the C bodies without ASM fallback. No neighboring body, compiler option, generated ASM, data asset, binary or scratch probe is submitted. Ticket/kanban In Review; maintainer review pending.
+
+Maintainer review 2026-10-18: inspected both complete function bodies and all changes against CODING_STANDARDS.md. C89 and existing types retained; identity/read/test constraints are explicitly FAKE and backed by individual controls. No shared ABI or toolchain change. Independent integration at64ef469bf rejected ASM fallback, verified literal default C396/2256 bytes, all27 binary hashes and header/global/prototype guards (0 new/15 known). No unresolved findings; Done.
