@@ -48,6 +48,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24076-etc-album-search|T-24076 Recover ETC album search]]
+
 
 
 

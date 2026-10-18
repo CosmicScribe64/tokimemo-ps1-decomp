@@ -18874,3 +18874,7 @@ pinned matched body rather than requiring the removed ASM fallback. Fresh
 Docker replay on matched checkout reports zero; production unchanged assertion
 passes. [[etc-family-results]] and drafts/T-24075 record the correction; verified
 904-byte production/source/review and Done status are unchanged.
+
+## [2026-10-18] ticket | Claim ETC album search using actual helper contract
+
+Created [[tickets/T-24076-etc-album-search]] before edits for only func_8013F054 in ETC/8013BEF0.c. Prior249/238 scores acknowledged; new current matched helper exposes phantom arguments/incoming parameter and stale GameState scaling. Establish faithful full-TU baseline from original/current types, preserving backward-search index0 semantics. Same sole Sol medium worker, no extra agents/instrumentation; coordinate any F320 header declaration before shared edit. Preserve T-24075 and all other functions.
