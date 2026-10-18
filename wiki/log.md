@@ -18426,3 +18426,8 @@ Root review found that bulk_m2c.insert_draft had left a NON_MATCHING guard in th
 ## [2026-10-17] build | Verify BUNKASAI C and refresh sibling priorities
 
 Rejected an initial guarded fallback claim before integration, then independently verified corrected unguarded BUNKASAI func_80135C4C (1508 bytes) with all27 hashes/guards. Added a local source gate with positive/negative checks. Docker progress now 6476/6958 functions and 1825104/2279368 bytes (80.1%). Refreshed sibling census:45 targets >=0.80, including3 exact opcode/register clones. Priorities and evidence recorded in [[completion-run-2026-10-17]].
+## [2026-10-18] build | Both BUNKASAI state machines verified as default C
+[[tickets/T-24016-bunkasai-state-machines]] matched func_80158764 (1,652 bytes) through ascending nested switch arms and repeated direct byte-field reads. Both unguarded C bodies compile together: BUNKASAI checksum OK and literal default linked funcdiff MATCH for 1,508 plus 1,652 bytes. No FAKE or header change. Preserved source-only near/matching variants in drafts/T-24016/ and moved all private exploration intact to ignored build/T-24016-private/exploration; [[bunkasai-family-results]] updated.
+
+## [2026-10-18] ticket | BUNKASAI state machines ready for review
+Moved [[tickets/T-24016-bunkasai-state-machines]] to In Review and moved its kanban card. Root review/integration remains; no push or merge by worker.
