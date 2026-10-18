@@ -18722,3 +18722,7 @@ Created [[tickets/T-24071-etc-menu-selection]] before edits for only func_80144D
 ## [2026-10-18] query | Parent GitHub ownership check11:44UTC
 
 Parent reports completed read-only GitHub check at11:44UTC: no open PRs; only open contributor claims50/57 with unchanged timestamps. No messages sent. Next check planned12:14UTC. Coordination record only; T-24071 matching scope unchanged.
+
+## [2026-10-18] build | T-24071 stock as1 mask deletion isolated
+
+[[tickets/T-24071-etc-menu-selection]]/[[etc-family-results]] record newly approved stock ugen/as1 capture. Same57 input passes whole-object/four-section fidelity; ugen output equals as1 input with target per-arm AND masks still present, while final object deletes them. This resolves the prior stage uncertainty and corrects any ugen-specific attribution. Source-only backend_capture.py retained, stage files ignored. No new source probe/binary/options or production change; In Progress.

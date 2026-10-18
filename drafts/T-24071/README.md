@@ -108,3 +108,29 @@ supported untried source condition emerged beyond the prior24 narrowing forms.
 No new source control, binary, instrumentation or compiler execution followed
 this read-only inspection. The source remains57 rows, with no impossibility
 claim.
+
+
+A subsequent parent-approved stock ugen/as1 capture resolves that stage limit:
+**the masks survive ugen and disappear during stock as1 processing**.
+backend_capture.py uses the existing wrapper pattern, unchanged binaries and
+options, and the same pinned57 input. Whole-object/four-section identity passes;
+ugen.output and as1.input are byte-identical. ENT165, the assigned procedure,
+still contains AND v0,v1,255, SB v0, then AND a0,v0,255 in the first arm.
+The later arm also has an AND into v0 followed by a second mask/copy before
+byte stores. Final object lacks those earlier masks. No claim of a ugen mask
+deletion remains; the read-only unsigned-CVTL construction explains why the
+redundant mask reaches as1.
+
+Run after replay, serially in the same existing Docker image:
+
+```
+python3 drafts/T-24071/backend_capture.py
+```
+
+The helper checks the pinned full-TU source, whole-object/four-section identity,
+identical stage boundary and target-only mask presence. Stage bytes/symbol tables
+stay ignored under build/etc24071/backend57. Source controls would need to avoid
+the redundant argument narrowing while retaining each arm's full-word mask;
+prior word-local controls hoisted masks, so this is a concrete gap rather than
+an untried cast proposal. No source probe, compiler patch or new binary follows
+this observation.
