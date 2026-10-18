@@ -48,3 +48,19 @@ Reproduction: `tools/docker.sh python3 drafts/T-24001/counter_forms.py [variant 
 ## Review notes
 
 Self-check against CODING_STANDARDS.md: source unchanged; the new diagnostic has a module docstring, takes variant names as arguments, runs the compiler only inside Docker, reads generated asm at run time, and commits no game data or build output. Ticket remains In Review for the integrating reviewer. Suggested next step: a focused compiler/control-flow investigation of row 94, rather than another direct expression sweep.
+
+### Astra follow-up (2026-10-18)
+
+Reopened for a bounded compiler-informed source investigation of the single counter fold. First hypothesis: a type-conversion or optimizer basic-block boundary may preserve the increment without any emitted extra instructions. Previous direct-expression and one-entry control-flow variants are excluded.
+
+#### Astra result
+
+No production changes and no new matching bytes. Tested 19 new source variants with one compiler at a time in Docker (18 compiled; the float-union representation failed in as1). Reproducer: `tools/docker.sh python3 drafts/T-24001/astra_forms.py [variant ...]`. The harness reads generated asm at runtime and writes only scratch diagnostics; no original instruction listing is committed.
+
+- Signed 32-bit bit-field counter and empty dynamic/counter conditionals preserve the baseline one-row fold. Unsigned bit-field changes later allocation as well. Float-punned initialization generates floating-point transfers and stack accesses; volatile initialization forces a store/reload, losing the original zero-in-register initialization.
+- A genuine loop backedge is a distinct result from the earlier while/for-with-break tests: `do { idx++; } while (idx < 1)`, equivalent while and goto forms, and the signed-negative condition retain exactly the required `addiu v1,v1,1`. However, the loop branch and its delay-slot nop remain. An earlier `j < 10` loop also changes from a compare plus branch to a direct inequality branch. This is not a match. `!= 1` and a loop around the full month-boundary body are worse.
+- Four single-iteration for-loop placements (inner init, shared init, outer condition with break, and inequality bound) do not eliminate the extra loop control. Two equivalent timer-switch forms at the function entry preserve the unwanted counter fold and add a reload, with 609 aligned register differences. They used the unchanged standard pipeline; no per-function option or compiler patch was used.
+- Fresh full-TU `funcdiff.py func_8006D7EC --unit main --resolve --version c` still reports only row 94: expected `24630001`, built `24030001`. Fresh default `--resolve --version default --no-build` still MATCHes 4,692 bytes through the existing asm fallback. Executable SHA1 remains `e823bd844a8f8fa4d05483b59c66bc54b8393b26`.
+- Archived harness smoke-check: `signed-bitfield do-lt` reproduces both the baseline fold and the surviving-backedge result. Production C, headers, configuration, and shared compiler tools remain byte-for-byte unchanged from the pinned commit, so the previous header/global/prototype checks remain applicable.
+
+The precise remaining barrier is retaining the register increment while eliminating the artificial predecessor/backedge that prevents constant propagation. These tests do not establish that every source formulation is impossible. The supplied historical compiler-source directories were empty, so no new compiler-source finding is claimed. Ticket returns to In Review; integrating review is still required. Self-check: diagnostics have a docstring, take variant arguments, return nonzero on compile failure, run only in Docker, and contain no embedded game bytes or original assembly.

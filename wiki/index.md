@@ -628,4 +628,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-17202-w3-date-p02|T-17202]] Wave 3 package w3-date-p02: DATE `80132000.c`, 6 of 6 matched (1,972 B: `func_80139834`, `func_8013E6A4` with an `s32` view of `func_80085A60`, `func_80137DF4` as an `s32` function without `return`; closer pass: `func_801324DC`, `func_8013BEB8`, `func_80139664`) (Done).
 - [[tickets/T-17102-w3-rpg-bat-p02|T-17102]] Wave 3 package w3-rpg-bat-p02: RPG_BAT `80151C10.c`, `80156CC0.c`, 3 of 3 functions matched (3,056 B: `func_80151C10`, `func_80156D78`, `func_80157158`); the `$v1`-selector miss fixed by an int-returning callee view (Done).
 
-- [[tickets/T-24001-main-schedule-final-row|T-24001]] Close main schedule final instruction (In Review; bounded negative pass, one row preserved).
+- [[tickets/T-24001-main-schedule-final-row|T-24001]] Close main schedule final instruction (In Review; Astra backedge follow-up remains one row, no new C match).

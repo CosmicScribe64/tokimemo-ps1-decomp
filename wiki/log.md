@@ -18158,3 +18158,11 @@ Created [[tickets/T-24001-main-schedule-final-row]] after reading [[tickets/T-23
 ## [2026-10-18] build | T-24001 final counter fold remains
 
 [[tickets/T-24001-main-schedule-final-row]] moved In Progress to In Review. Baseline plus 20 source-only forms leave one linked C instruction different; production src/main/8006CB30.c is unchanged. Archived Docker diagnostic drafts/T-24001/counter_forms.py, appended [[matching-notes]]. Default linked function MATCH (4,692 bytes), main SHA1 matches, ninja -j2 complete, headers/globals/prototypes pass. No new verified C bytes.
+
+## [2026-10-18] ticket | Reopen main schedule final row for Astra
+
+[[tickets/T-24001-main-schedule-final-row]] moved In Review to In Progress for a bounded compiler-informed source pass; the existing one-row guard is retained pending evidence.
+
+## [2026-10-18] build | Astra final-row follow-up retains main guard
+
+[[tickets/T-24001-main-schedule-final-row]] returns In Progress to In Review after 19 new source variants (18 compile, one as1 error), archived in drafts/T-24001/astra_forms.py. Genuine loop backedges retain the desired increment but add loop control; single-trip loops, representation changes and timer switches do not close the row. [[matching-notes]] records the mechanism. Fresh full-TU C diff remains row 94 only; default fallback MATCHes 4,692 bytes and main SHA1 is unchanged. Production source and compiler tools are untouched; no new matching bytes.
