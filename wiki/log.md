@@ -19921,3 +19921,19 @@ address-bound cursor,143 natural short-circuit tail,139 selected-code word and
 103 selected-event word controls in drafts/T-24076. Field loads stay bytes;
 frame28 matches. Source-led narrowing/copy and constant-sharing evidence drives
 each control, no sweep/instrumentation. Production/header unchanged; In Progress.
+
+## [2026-10-18] build | T-24076 state-pointer control and source-view caveat
+
+[[tickets/T-24076-etc-album-search]] records107 consistent-pointer control versus
+best103, despite restored final selector reloads. Inline FAKE marks the whole-
+GameState+756 and integer-cursor source view as unproven original syntax while
+preserving index0 bounds semantics. Annotated source replay follows; production
+and headers unchanged, no pointer sweep or type/layout redesign.
+
+## [2026-10-18] build | T-24076 final selector reload view reaches90 rows
+
+[[tickets/T-24076-etc-album-search]] annotated103 replays103. Narrow FAKE scalar-
+field address views restore the two final selector reloads and reach90; signed
+raw-code comparison view worsens294, rejected without width alternatives. Best
+frame28/177words versus179 original, production/header/config unchanged. All
+source controls and bounds/type caveats retained in drafts/T-24076.

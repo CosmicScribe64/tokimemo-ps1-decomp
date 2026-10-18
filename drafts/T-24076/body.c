@@ -1,5 +1,9 @@
-/* NON_MATCHING: T-24076 source-only diagnostic, 103 resolved rows. */
+/* NON_MATCHING: T-24076 scalar tail reload view, 90 resolved rows. */
 void func_8013F054(void) {
+    /* FAKE: the whole-GameState byte view at +0x756 covers index0 before the
+     * known unk_75E subarray. The integer address cursor preserves the unsigned
+     * boundary without forming a before-object pointer; original C type and
+     * spelling are unproven. T-24076. */
     s32 index;
     u32 cursor;
     u8 code;
@@ -39,7 +43,9 @@ void func_8013F054(void) {
         var_a3 = record->unk_02;
         var_t0 = record->unk_01;
     }
-    if ((D_800E6280.unk_F5F == 0xC) && (var_t1 == 0xC)) {
+    /* FAKE: scalar field-address views retain independent final selector reloads.
+     * T-24076; the ordinary direct-field form CSEs the second read. */
+    if ((*(u8 *) &D_800E6280.unk_F5F == 0xC) && (var_t1 == 0xC)) {
         if (var_a3 == 4) {
             func_8013F320(1);
         } else if (var_a3 == 6) {
@@ -55,7 +61,7 @@ void func_8013F054(void) {
                 func_8013F320(6);
             }
         }
-    } else if ((D_800E6280.unk_F5F == 0xB) && (var_t1 == 0xB)) {
+    } else if ((*(u8 *) &D_800E6280.unk_F5F == 0xB) && (var_t1 == 0xB)) {
         if ((var_a3 == 2) && (var_t0 == 0x4A)) {
             func_8013F320(0);
         } else if (((var_a3 == 2) && (var_t0 == 0x4C)) || ((var_a3 == 0xB) && (var_t0 != 0x1E))) {

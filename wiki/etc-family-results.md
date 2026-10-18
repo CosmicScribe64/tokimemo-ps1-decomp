@@ -363,3 +363,16 @@ Byte record fields remain unchanged, frame28 exact. All source-only controls and
 replay retained in drafts/T-24076; production/header/config unchanged, In Progress.
 Remaining index-load sinking, register/web/global reload and branch differences
 are unresolved; no match or impossibility claim.
+
+Consistent GameState pointer from matched same-TU E6AC restores final F5F
+reloads but worsens103 to107; retained negative, no pointer sweep. Inline FAKE
+now explains whole-GameState+756/index0 crossing known subarray and integer
+address bound, with original C view unproven. Annotated best replay required
+before pin; no production/header/type-layout redesign.
+
+Annotated103 freshly replays103 with inline FAKE whole-GameState+756/integer
+cursor rationale. Narrow scalar field-address views on only the two final F5F
+conditions restore original independent reloads and improve to90, explicitly
+FAKE-tagged. Signed raw-code comparison views worsen294 and are rejected; no
+additional type alternatives/sweep. Best90 retains frame28 and177words versus
+179 original; production/header/config unchanged, active source-only checkpoint.

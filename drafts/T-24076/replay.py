@@ -6,11 +6,12 @@ import sys
 sys.path.insert(0, 'drafts/T-24011')
 from diagnostic import report
 
-variants = {'word-event': 'body.c', 'baseline': 'baseline.c',
+variants = {'tail-reloads': 'body.c', 'word-event': 'word-event.c', 'baseline': 'baseline.c',
     'address-cursor': 'address-cursor.c', 'short-tail': 'short-tail.c',
-    'word-code': 'word-code.c'}
+    'word-code': 'word-code.c', 'state-pointer': 'state-pointer.c',
+    'signed-code-tests': 'signed-code-tests.c'}
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--variant', choices=variants, default='word-event')
+parser.add_argument('--variant', choices=variants, default='tail-reloads')
 args = parser.parse_args()
 p = Path('src/ovl/ETC/8013BEF0.c')
 before = p.read_text()
