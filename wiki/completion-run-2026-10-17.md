@@ -59,7 +59,7 @@ Each was independently checked against default linked function bytes, all27 bina
 
 ## Active ownership
 
-User clarified on2026-10-18: keep the100% goal active, limit matching to1–2Sol6.1medium workers, each persistent on one function; avoid batch churn and conserve usage. No routine Astra or additional agents. Root handles independent integration and quiet30-minute PR/issue monitoring.
+User clarified on2026-10-18: keep the100% goal active, limit matching to1–2Sol6.1medium workers, each persistent on one function; avoid batch churn and conserve usage. No routine Astra. User subsequently authorized two additional Antigravity Gemini4Argon Medium workers using separate account usage (see below). Root handles independent integration and quiet30-minute PR/issue monitoring.
 
 - Sol6.1 chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: one existing worker on DATE80141EE0 func80144E20 only. ETC T24064 deferred. Coordinator does no duplicate probe work.
 - Sol6.1 chat01a1410a-cead-7cf3-9bfa-aa44f25f055b: ENDING80134D20 func80135F4C only, no extra agents.
@@ -176,3 +176,12 @@ Contributor check07:47UTC: no open PRs; claims#50/#56/#57 unchanged. NAME_ENT an
 ## 2026-10-18 focused-worker checkpoints
 
 DATE negative-transfer checkpoint33ce56acce published96301444d. ENDING checkpointb0111332c reviewed and integrated with guarded C, explicit FAKE width/alias views, original ASM fallback, all27 hashes and interface guards passing; one trailing blank line removed from archived body. No new matching functions or bytes. Both Sol workers remain on their assigned functions. DATE subsequently reports scratch4-row result with exact frame/tables and only two reversed selector comparisons; not a literal production match and not counted.
+
+## 2026-10-18 Antigravity CLI workers
+
+User authorized two Antigravity workers using Gemini4Argon Medium; explicitly requested CLI. Installed CLI is `~/.local/bin/agy` (not `antigravity`); `agy models` confirms `gemini-4-argon-medium`. Existing two Sol workers remain DATE/ENDING. No additional subagents authorized inside these workers.
+
+- T24065 OPTION func8013394C, src/ovl/OPTION/80132000.c. Reused clean complete-option checkout, fast-forwarded to main b493b6d48. Conversation a95cd5c6-72fb-4270-804c-6e4404606bdd; exec session70265; logs /tmp/t24065-argon.jsonl and .stderr.
+- T24066 BUNKA_SD func80134418, src/ovl/BUNKA_SD/80134260.c. Reused clean complete-bunkaken checkout, fast-forwarded to main b493b6d48. Conversation abd1a788-0787-4e42-a019-383201090726; exec session78281; logs /tmp/t24066-argon.jsonl and .stderr.
+
+Launch flags `--model gemini-4-argon-medium --effort medium --output-format stream-json --print`. Auto mode is unavailable for this account; CLI retained default request-review permissions. No bypass flag used. Monitor logs for approval blockers and live process handles before restarting. Both own only one function, one Docker compiler, preserve evidence and local commits; root alone verifies/publishes. New tickets created by workers before edits.

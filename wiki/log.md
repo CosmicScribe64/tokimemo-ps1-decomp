@@ -19062,3 +19062,7 @@ Created [[tickets/T-24047-ending-sprite-scene]] at main4496b0dc7 in isolated cod
 ## [2026-10-18] ingest | Preserve focused DATE and ENDING checkpoints
 
 Published DATE33ce56acce source-only checkpoint as96301444d. Reviewed ENDINGb0111332c guarded reconstruction against CODING_STANDARDS; explicit FAKE casts, canonical fields, C89 and default ASM retained. Removed one trailing blank line; integration all27 hashes and interface guards pass. [[completion-run-2026-10-17]] records two continuing workers and uncounted DATE scratch four-row lead. No coverage change.
+
+## [2026-10-18] decision | Add two user-authorized Antigravity CLI workers
+
+Confirmed agy CLI model gemini-4-argon-medium and launched T24065 OPTION3394C and T24066 BUNKA_SD34418 in two clean reused checkouts. [[completion-run-2026-10-17]] records conversation/process handles and logs. Existing two Sol workers retain DATE/ENDING; no overlap or subagents. CLI auto mode unavailable, default review permissions retained. No new match claimed.
