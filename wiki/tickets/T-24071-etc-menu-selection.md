@@ -1,7 +1,7 @@
 ---
 id: T-24071
 title: Match ETC menu selection handler
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -33,3 +33,8 @@ Approved unchanged trace57 passes pinned same-input whole-object/four-section eq
 Bounded read-only existing ugen reference explains unsigned CVTL8 argument AND construction, but does not isolate removal of the earlier per-arm mask. The measured boundary is final post-cvt uopt output versus final object (ugen/as1 interval), not a proven exact ugen deletion rule. MAIN8005D448 lacks the empty-slot callback arm; no supported untried source condition beyond prior24 narrowing forms. No further compile/probe/binary. Source57 remains; exact lowering condition unresolved, no impossibility claim.
 
 New parent-approved stock ugen/as1 capture resolves the stage gap: whole-object/four-section fidelity passes, ugen output equals as1 input, and assigned ENT165 still contains ANDv0,v1,255;SBv0;ANDa0,v0,255. Final object removes the earlier mask. Deletion is therefore in stock as1 processing, not ugen. Source-only backend_capture.py retains exact replay/audit; outputs ignored. No supported new source condition beyond avoiding redundant narrowing while preventing known word-mask hoisting; no new probe or binary.
+
+Bounded existing-AS1 inspection identifies candidate func41917c ANDI needed-bit-width gate and mask-chain combination; runtime table/branch not observed, so no exact executed-rule claim. A full-word use could prevent deletion but old word/argument controls cover that route and can hoist masks; no supported untried ordinary source expression found. Exact source gap: retain per-arm masked word without redundant narrowing or common-mask hoisting. No diagnostic expansion/probe. backend_capture.py docstring corrected to stock5.3 and unused import removed, with no compiler rerun.
+
+## Final handoff
+Unresolved/In Review, not Done. Best source57 remains private; production stays INCLUDE_ASM. Whole-object-fidelity trace and stock ugen/as1 capture establish that per-arm masks survive ugen and disappear in stock as1 processing. Candidate AS1 width-rule attribution remains a hypothesis because runtime gate/table values were not observed. No supported untried expression; no further tracing, casts or compiler diagnostics in this pass. No impossibility claim. All sources, controls and safe reproducers are retained under drafts/T-24071.

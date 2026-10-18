@@ -48,7 +48,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24071-etc-menu-selection|T-24071 Match ETC menu selection handler]]
 
 
 
@@ -68,6 +67,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24071-etc-menu-selection|T-24071 Match ETC menu selection handler]]
 
 - [ ] [[tickets/T-24070-etc-save-card-state|T-24070 ETC save-card state unresolved39-row checkpoint]]
 

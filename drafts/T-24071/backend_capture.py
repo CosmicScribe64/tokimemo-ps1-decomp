@@ -1,8 +1,7 @@
-"""Same-input IDO5.2 backend diagnostic; Docker only, no production changes."""
+"""Capture stock IDO5.3 backend stages; Docker only, production unchanged."""
 from pathlib import Path
 import hashlib
 import json
-import shutil
 import subprocess
 import sys
 
