@@ -18023,3 +18023,7 @@ Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` 
 ## [2026-10-17] ticket | T-23006 closer: load_tpage_buf_lock matches
 
 [[tickets/T-23006-w5-big-p06]]: the Opus closer matched `main:load_tpage_buf_lock` in `src/main/80047550.c` (`funcdiff --resolve` MATCH, 168 bytes). The store goes through an integer address with the index first, so uopt reloads the parameters after it (FAKE comment); notes in [[matching-notes]]. Package now 1 of 3, still In Review.
+
+## [2026-10-17] ticket | T-23006 Done
+
+[[tickets/T-23006-w5-big-p06]]: 1 of 3 matched: main load_tpage_buf_lock (168 bytes, one ticketed FAKE store form); func_800476C0 and func_80047560 stay INCLUDE_ASM. Merged after the conveyors stopped at the usage limit.
