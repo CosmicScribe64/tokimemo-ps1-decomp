@@ -416,3 +416,17 @@ read-only review found no supported untried form: shared-word recipe already
 present; scratch rotation/equal count do not isolate missing op/lifetime; no
 observed dependency delays early flag constant. No additional probe, no match/
 Done/impossibility claim. Production ASM; active packet published9a522dac3.
+
+Original full VRAM8013D5BC sets cursor tosp84, 8013DE64 steps4bytes and
+8013DE4C/DE68 enforce two iterations, proving slots84/88 in frame90. Fresh
+baseline repairs singleton to real POLY_FT4*poly[2], typed pointer step1, all16
+GameState.unk_018 frame-index reads and exact two-argument AddPrim byte-ordering
+table address. Old plain792/typed957 remain history. No production/header change.
+
+Fresh valid current baseline800/frameC0; joining12 disjoint same-type aliases
+preserves expressions/store order and reduces frame to98 with800 rows. Direct
+SDK UV assignments remove inherited signed-byte casts, restore word loads and
+reach790/frame98. Source-only controls/replay are drafts/T-24078; production,
+headers/config and helpers remain unchanged. Original frame90; recovery active,
+no match or linked C proof claimed. Initial field-substitution syntax error was
+repaired before scoring and is not a baseline result.

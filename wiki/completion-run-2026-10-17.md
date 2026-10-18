@@ -70,12 +70,14 @@ Each was independently checked against default linked function bytes, all27 bina
 
 User clarified on2026-10-18: keep the100% goal active, limit matching to1–2Sol6.1medium workers, each persistent on one function; avoid batch churn and conserve usage. No routine Astra. User subsequently authorized two additional Antigravity Gemini4Argon Medium workers using separate account usage (see below). Root handles independent integration and quiet30-minute PR/issue monitoring.
 
-- Sol6.1 chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: sole existing medium worker active on T24073 ETC func8014407C in80143240.c. Fresh typed record baseline replaces the old compile-error draft. Coordinator does no duplicate probe work.
 - Sol6.1 chat01a1410a-cead-7cf3-9bfa-aa44f25f055b: idle after unresolved T24047 ENDING35F4C archive.
-- Astra idle after bounded read-only T24072 advice; its one pointer control was object-identical and rejected. T24067/68/70/71/72 are unresolved In Review, production assembly. TEL/MAIN7132C/GEKO42C9C reservations are inactive until explicit reassignment.
 - All three root subagents stopped after saving T24061/T24063 archives and T24062 mixer match. Do not restart automatically.
 
 Contributor exclusions NAME_ENT/TT and DATE2 continue. Existing30-minute read-only contributor heartbeat stays ACTIVE; unchanged checks remain quiet. No contributor messages authorized. Old integration automation remains paused.
+- Sole Sol 6.1 medium compiler: T24078 ETC func_8013D570 only, src/ovl/ETC/8013BEF0.c; active recovery in /private/tmp/tokimemo-complete-etc. One existing Docker compiler, ninja -j1. Earlier T24072/T24073 activity is superseded.
+- Astra idle after T24077 bounded read-only review; no build or editing assignment.
+- Antigravity pending user shell approval; no restart authorized.
+- TT/DATE2 and NAME_ENT contributor reservations remain excluded. No new worker or target is implied by this ownership refresh.
 
 ## Completed bounded passes
 

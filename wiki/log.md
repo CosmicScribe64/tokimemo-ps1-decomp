@@ -19999,3 +19999,20 @@ probes stopped, no Done/match/impossibility claim. See [[etc-family-results]].
 ## [2026-10-18] ticket | Recover ETC renderer from actual two-slot polygon layout
 
 Created [[tickets/T-24078-etc-two-poly-renderer]] before edits on only func_8013D570 in ETC/8013BEF0.c. Both old drafts retain a scalar despite original two four-byte slots at sp84/88; matched same-TU D32C supplies a real SDK polygon-array idiom. Establish faithful current-type baseline, retaining original target fields/calls/order and acknowledging old792/957 scores. Same sole Sol medium worker/Docker compiler, no agents/instrumentation; all neighbors and unresolved T-24077 preserved.
+
+## [2026-10-18] build | T-24078 faithful two-polygon SDK baseline
+
+[[tickets/T-24078-etc-two-poly-renderer]] uses proven two-slot POLY_FT4 pointer
+array (8013D5BC/DE64/DE4C/DE68), correct four-byte pointer stride,16 actual
+draw-center reads and two-argument AddPrim. Prior792/957 diagnostics remain
+history. New private full-TU baseline follows, no production/header mutation.
+
+## [2026-10-18] build | T24078 corrected SDK baseline and temporary cleanup
+
+[[tickets/T-24078-etc-two-poly-renderer]] and [[etc-family-results]] record
+fresh800/frameC0, shared same-type temporaries800/frame98, and direct SDK UV
+assignments790/frame98. Source-only replay packet drafts/T-24078 preserves
+controls and original two-slot/frame-index evidence; production unchanged.
+Recovery remains In Progress. [[completion-run-2026-10-17]] active ownership
+refreshed: sole Sol T24078, Astra idle after T24077 read-only review, Antigravity
+pending user shell approval with no restart. No extra matching scope.
