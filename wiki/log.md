@@ -18573,3 +18573,7 @@ Parent approved private logging only. Separate diagnostic binary records first e
 ## [2026-10-18] build | T-24067 early-continue allocation gain
 
 Early rejection/continue corrects saved end/save allocation and improves cost16/16 to8/8 rows. Exact tagged full-TU explicit-object default replay confirms only four second-copy t5/t6 instructions remain, with75 words/frame0x48. Retained improved body.c and previous indexed-body.c/cursor-body.c in drafts/T-24067; capture helpers explicitly retain the indexed baseline for prior trace provenance. [[tickets/T-24067-etc-album-copy]] stays In Progress; no production/header/config change or verified C claim.
+
+## [2026-10-18] decision | T-24067 reject added-store state diagnostic
+
+Retained separate FAKE store-control.c: direct stack store before aggregate copy makes all four scratch-register words agree in current5.3, but adds SW, grows frame0x48→0x58 and changes branch offsets. Tagged full-TU default explicit-object replay reports15 rows, so it is rejected for promotion. Aggregate volatile qualifiers stay8/8. Required printf/tail/copy store sequencing supplies no immediate faithful direct-store substitute; [[tickets/T-24067-etc-album-copy]] records reasons. No compiler-version necessity inferred; continue read-only backend classification analysis within this function only.

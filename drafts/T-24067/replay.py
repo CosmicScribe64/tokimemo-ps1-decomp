@@ -13,9 +13,10 @@ fallback = 'INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80141ABC);
 if original.count(fallback) != 1:
     raise SystemExit('assigned fallback changed')
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--variant', choices=['continue', 'indexed', 'cursor'], default='continue')
+parser.add_argument('--variant', choices=['continue', 'indexed', 'cursor', 'store-control'], default='continue')
 args = parser.parse_args()
-body = {'continue': 'body.c', 'indexed': 'indexed-body.c', 'cursor': 'cursor-body.c'}[args.variant]
+body = {'continue': 'body.c', 'indexed': 'indexed-body.c', 'cursor': 'cursor-body.c',
+    'store-control': 'store-control.c'}[args.variant]
 root = Path('build/etc24067/archive') / args.variant
 root.mkdir(parents=True, exist_ok=True)
 source, obj = root / 'source.c', root / 'source.o'
