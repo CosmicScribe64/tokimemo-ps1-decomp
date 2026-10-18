@@ -18485,3 +18485,7 @@ Created [[tickets/T-24051-date-large-dispatcher]] before source work; reused bui
 ## [2026-10-18] decision | T-24051 diagnostic contexts clarified
 
 [[tickets/T-24051-date-large-dispatcher]] and the archive README distinguish the early private helper's old-baseline 71/71 from the validated direct-cc 72-row replay; terminal padding explains that difference. The improved assigning-default body remains 28 rows in both contexts. Source checkpoint 8f4958fd2 is unchanged.
+
+## [2026-10-18] ticket | Claim two small ENDING fade handlers
+
+Created [[tickets/T-24057-ending-small-pair]] before source work and started codex/complete-ending-small-pair from frozen DATE tip 71833d4e2. Read [[ending-family-results]] and prior T-18300/T-20930 aliasing and promotion findings. Scope is only func_80134B18/func_80134C2C in ENDING/80133C10.c, one serial Docker compiler; ENDING/80134D20.c belongs to another chat. Parent owns review/integration. DATE remains reserved with no further compilation while Astra investigates a shared branch-order mechanism.

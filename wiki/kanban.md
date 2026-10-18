@@ -47,6 +47,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24057-ending-small-pair|T-24057 Match two small ENDING fade handlers]]
+
 
 
 
