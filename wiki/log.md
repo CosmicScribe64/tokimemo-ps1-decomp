@@ -18298,3 +18298,9 @@ Read current main coordination, ETC family/type evidence and prior ranking draft
 
 ## [2026-10-18] decision | T-24049 corrected ETC ranking source; no promotion
 Current-view reconstruction of func_801480D0 compiles at885 rows,709 versus702 target words, frame216 versus208. Corrected signed byte-spread division, existing aggregate seed/score access, debug string and the earlier repair's incorrect fifteen-record bonus bound (target updates11). Selector/noise spills and separate phase/tie-counter hypotheses worsen; reproducible source and ledger in drafts/T-24049. Production/header unchanged, default ETC checksum control passes through ASM; zero new C bytes. Updated [[etc-family-results]] and [[tickets/T-24049-etc-exam-ranking]], now In Review for root archive review. TEL pin unchanged. No push/merge.
+
+## [2026-10-18] ticket | Start T-24052 SHOUGATU dialogue siblings
+Read T-17500 target/type drafts and T-20004's verified GYOZI implementations. Reserved only src/ovl/SHOUGATU/801330C0.c:func_80133208/func_801333F0 at 8be265d2a. Both target functions add an input-skip block to the matched sibling control flow; threshold0x28 differs. [[tickets/T-24052-shougatu-dialogue-siblings]] is In Progress; no shared edits or push/merge.
+
+## [2026-10-18] build | T-24052 first SHOUGATU sibling,488 actual C bytes
+func_80133208 is installed as unguarded normal C without its target INCLUDE_ASM. Ported matched GYOZI source plus SHOUGATU input skip and0x28 byte bound; inherited unchanged-byte store is marked FAKE/T-24052. Fresh Docker ninja -j1 compiles/links SHOUGATU with checksum/headers OK; literal default linked funcdiff MATCH488 bytes. [[shougatu-family-results]] and [[tickets/T-24052-shougatu-dialogue-siblings]] updated; second sibling remains In Progress. No header/config changes, no push/merge.

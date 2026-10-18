@@ -47,6 +47,9 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24052-shougatu-dialogue-siblings|T-24052 Match SHOUGATU dialogue siblings]]
+
+
 
 
 

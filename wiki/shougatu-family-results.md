@@ -96,3 +96,7 @@ after resetting the counter although the function's callees are `void`.
 
 Seven packages for wave 3, T-17501..T-17507 (`w3-shougatu-p01`..`p07`), 33 functions, 18,404 bytes, built with the
 wave-3 inventory scripts; `func_8014288C` (1,300 bytes, 506 rows) is not in a package.
+
+## T-24052 sibling closure (2026-10-18, first checkpoint)
+
+func_80133208 now matches488 literal linked bytes as unguarded default C, ported from GYOZI func_80135280 with the skip/reset block, five-step selector and0x28 byte postincrement bound. Current D_800B3778[girl][column] is the sound byte table. The sibling's unchanged-byte |=0 store is retained and explicitly FAKE/T-24052; no header/config changes. Fresh Docker ninja -j1 passed SHOUGATU checksum/headers and literal default linked proof. func_801333F0 remains in progress (selector no-op store), so [[tickets/T-24052-shougatu-dialogue-siblings]] stays In Progress at this checkpoint.
