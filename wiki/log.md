@@ -18481,3 +18481,7 @@ Created [[tickets/T-24051-date-large-dispatcher]] before source work; reused bui
 ## [2026-10-18] ticket | T-24051 DATE callback hypotheses archived
 
 [[tickets/T-24051-date-large-dispatcher]] moves with its board card to In Review. [[date-family-results]] records zero new C bytes and a 72-to-28-row source improvement: an assigning default with no preinitializer restores both redundant switch branches, displacements and padding. Fourteen symmetric compare-operand words remain. `drafts/T-24051/` provides the improved body, safe target-only replay, negative callback/representation/type controls, and audit of all 21 table mappings/extents. Production src/include/config and every other TU body remain unchanged; no header/config scope was requested.
+
+## [2026-10-18] decision | T-24051 diagnostic contexts clarified
+
+[[tickets/T-24051-date-large-dispatcher]] and the archive README distinguish the early private helper's old-baseline 71/71 from the validated direct-cc 72-row replay; terminal padding explains that difference. The improved assigning-default body remains 28 rows in both contexts. Source checkpoint 8f4958fd2 is unchanged.

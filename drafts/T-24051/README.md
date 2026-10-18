@@ -35,6 +35,8 @@ The following were measured against the original T-24011 source before the assig
 | Legacy `u32 *base`, cast each slot only for compare/call | 72 |
 | Selector-derived case-0/case-20 array index | 720 |
 
+These table values come from the validated direct-cc full-TU replay. The earlier private search helper reported 71/71 for unchanged old forms and 643/719 for the selector-index form because it supplied terminal padding and used a different diagnostic cost. They are not interchangeable with the table's row totals. After the assigning-default improvement, both contexts report 28 rows.
+
 The callback experiment changes the pointed-to return type only; the dispatcher remains void. It has no code-generation benefit and is not promoted. The word-table view tests a legacy representation and also gives no benefit. These experimental ABI/representation views remain generator controls, not proposed source declarations.
 
 The aggregate/subobject address forms fold to the same pointer. For `&spDEC.f`, cfe warns that the ampersand before an array is ignored. Using the selector as an index in the selected arms introduces arithmetic and shifts many live ranges; it is rejected. No overall dispatcher return-view sweep was repeated.
