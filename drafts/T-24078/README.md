@@ -413,3 +413,6 @@ negative outcomes; no form moved the current earlyH definition.
 
 The second height-lifetimes.md set distinguishes exact-count/saved-pool616
 from a635 narrow-boundary negative; neither is a byte match.
+
+The explicit parent-authorized u16-boundary followup is archived in
+height-lifetimes.md:615/595words/frame90, four masks survive. Not a match.

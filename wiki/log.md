@@ -20348,3 +20348,21 @@ All frame90/poly84/88/UV50/54 retained. Semantic-domain proofs and predictions
 in drafts/T-24078/height-lifetimes.md, source/replays preserved. No further
 width/mask/suffix grid, instrumentation or production edit. Same target active,
 no match/impossibility claim; original word count alone is insufficient.
+
+## [2026-10-18] build | T24078 unsigned height boundary retains extra masks
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve one
+parent-authorized u16 boundary on the four negated height definitions. Actual
+A0..80 proves identity; prediction and source FAKE notes retained. Measured
+615 aligned cost,595words/frame90: four ANDI and four extra MOVE survive,
+although local LI/SUB height and original saved roles remain. Reject extra
+operations; keep618/606/604 and616 separately. Production remains ASM and the
+same function remains active. Replay accepts height-negated-u16.
+
+## [2026-10-18] query | Contributor coordination at 15:27 UTC
+
+Parent completed read-only GitHub coordination at approximately15:27UTC:
+no open PRs; claims #57 and #50 retain their15:00UTC update timestamps
+(2026-10-17T22:16:21Z and2026-10-17T15:45:07Z respectively). No external
+messages sent; next check approximately15:57UTC. Completed query only;
+[[completion-run-2026-10-17]] ownership and matching scope unchanged.
