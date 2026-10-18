@@ -18513,3 +18513,7 @@ Parent reports T-24060 belongs to an independently frozen SHUGAKU package. Renam
 ## [2026-10-18] decision | User narrows sole-worker focus to DATE
 
 Latest user steering continues [[tickets/T-24051-date-large-dispatcher]] In Progress after this checkpoint, with reduced usage and evidence-driven source hypotheses for func_80144E20 only. [[tickets/T-24064-etc-count-trio]] moves to Ready with its board card and index; ETC has only read-only prior notes and no new compiler probes. This supersedes the immediately preceding plan to resume ETC. No new agents, duplicate conversion-pass trace or compiler/header patch is authorized.
+
+## [2026-10-18] build | T-24051 reaches four-row source checkpoint
+
+[[tickets/T-24051-date-large-dispatcher]] and [[date-family-results]] record exact EVENT assignment-capture transfer: constants assigned inside comparisons fix twelve of fourteen branch pairs. Declaring the real byte after base preserves all21table offsets, base home and frame0xE38; four rows remain at source selector comparisons411/495. `drafts/T-24051/func_80144E20-4rows.c` is tagged FAKE and preserved beside the older28-row body. No production/header/pass changes or new verified bytes. Sole-worker DATE work continues In Progress.

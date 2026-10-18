@@ -47,6 +47,7 @@ word = re.sub(r"base = (sp\w+)\.f;", r"base = (u32 *) \1.f;", word)
 variants["word-base"] = word.replace("base[g->unk_110A]", "((void (*)()) base[g->unk_110A])")
 improved = Path("drafts/T-24051/func_80144E20.c").read_text()
 variants["assigned-default"] = improved
+variants["capture-below"] = Path("drafts/T-24051/func_80144E20-4rows.c").read_text()
 variants["selector-neighbor"] = improved.replace("D_800CA2F8", "((u8 *)&D_800CA2F4)[4]")
 variants["flag-neighbor"] = improved.replace("D_8015BF48", "((u8 *)&D_8015BF44)[4]")
 variants["fade-neighbor"] = improved.replace("D_800B593C", "((u8 *)D_800B5920)[0x1C]")
