@@ -19067,3 +19067,12 @@ identity first. P order is already pre-ugen; H nearY2 persists through ugen and
 moves early only post-ugen. Folded X1base+160 identified separately from original
 X0+136. drafts/T-24078/phase.md/capture.py/manifest preserve replay/provenance;
 raw stages ignored. No production or compiler/option change.
+
+## [2026-10-18] build | T24078 X1 use-site narrowing restores web but worsens cost
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve the
+single approved phase-backed cast:638cost/594words/frameA0 vsretained604/592/A0.
+Original X0+136 web returns with two extra copies; no semantic repair or new
+phase observation claimed. drafts/T-24078/x1-narrow.c/replay preserve result.
+Remaining P-order origin precedes current capture; no further diagnostic or
+source probe begun, target active and production unchanged.
