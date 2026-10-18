@@ -47,34 +47,45 @@ kanban-plugin: board
 
 ## In Progress
 
-
-
-
-
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
-
-
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
 
 - [ ] [[tickets/T-24033-valen-selector-ports|T-24033 VALEN selector sibling completion]]
 
+- [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
+- [ ] [[tickets/T-24029-seasonal-scene-siblings|T-24029 Recover GYOZI and SHOUGATU scene sibling pair]]
+- [ ] [[tickets/T-24026-shougatu-sibling-ports|T-24026 Port three SHOUGATU high-similarity siblings]]
+- [ ] [[tickets/T-24008-taiiku-runners|T-24008 Recover TAIIKU runner family]]
+- [ ] [[tickets/T-24028-date-event-short-movie-siblings|T-24028 Recover DATE and EVENT short movie siblings]]
+- [ ] [[tickets/T-24018-large-sibling-state-machines|T-24018 Recover large DATE and EVENT sibling state machines]]
+- [ ] [[tickets/T-24014-taco-pre-closer|T-24014 Close TACO PRE operand order]]
+- [ ] [[tickets/T-24009-ending-scheduler-closer|T-24009 Close ENDING scheduler residue]]
 - [ ] [[tickets/T-24032-date-taco-rotation-clones|T-24032 DATE and TACO rotation clone provenance]]
-
 - [ ] [[tickets/T-24027-rpg-bat-state-machines|T-24027 RPG_BAT state-machine completion]]
-
 - [ ] [[tickets/T-24019-gyozi-sibling-ports|T-24019 GYOZI sibling completion ports]]
-
 - [ ] [[tickets/T-24015-complete-main-menu|T-24015 Complete MAIN menu family package]]
 - [ ] [[tickets/T-24013-complete-rpg-bat|T-24013 Complete RPG_BAT battle family package]]
+- [ ] [[tickets/T-24010-date-etc-coordination|T-24010 Coordinate DATE and ETC matching]]
+- [ ] [[tickets/T-24011-date-dispatch-family|T-24011 Match DATE dispatch family]]
+- [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
+- [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]
+- [ ] [[tickets/T-24022-tel-frame|T-24022 Recover TEL large handler allocation]]
+- [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Investigate dialogue argument scheduling]]
+- [ ] [[tickets/T-24012-etc-render-family|T-24012 Match ETC rendering family]]
 - [ ] [[tickets/T-24007-complete-geko|T-24007 Complete GEKO scene package]]
-- [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
+- [ ] [[tickets/T-24003-complete-bunkaken|T-24003 Complete BUNKAKEN selector and date-loader remainder]]
 - [ ] [[tickets/T-24002-complete-option|T-24002 Complete OPTION matching package]]
-
+- [ ] [[tickets/T-24006-main-render-family|T-24006 Recover MAIN render family]]
+- [ ] [[tickets/T-24001-main-schedule-final-row|T-24001 Close main schedule final instruction]]
 
 ## Done
 
+- [ ] [[tickets/T-24030-bunkasai-sibling-package|T-24030 Recover BUNKASAI sibling package]]
+- [ ] [[tickets/T-24016-bunkasai-state-machines|T-24016 Recover BUNKASAI festival state machines]]
+- [ ] [[tickets/T-24017-clone-ports|T-24017 Port three exact opcode clones]]
+- [ ] [[tickets/T-24005-bunkaken-date-state-machine|T-24005 Match BUNKAKEN date state machine]]
 - [ ] [[tickets/T-22000-wave-4-conveyor|T-22000 Wave 4 conveyor]]
 - [ ] [[tickets/T-23000-wave-5-big-conveyor|T-23000 Wave 5 biggest-first conveyor alongside wave 4]]
 - [ ] [[tickets/T-23006-w5-big-p06|T-23006 Wave 5 big package w5-big-p06]]

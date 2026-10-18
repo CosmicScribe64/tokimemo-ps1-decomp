@@ -8,6 +8,9 @@ updated: 2026-10-18
 Read this first. Update on every ingest or new page.
 
 ## Core
+- [[completion-run-2026-10-17]] - ACTIVE 100% goal: current coverage, verified gains, file ownership and contributor coordination.
+
+- [[geko-family-results]] - exact renderer clone ports and verification (T-24017).
 - [[flagged-draft-pass]] - Sol6.1 medium pass:165 reviewed,93 repaired,116 remaining flagged; no new verified bytes.
 - [[stopping-point-2026-10-15]] - final handoff: 1,066/1,066 compiling draft scopes, 63.7% verified bytes, reconstruction limitations and restart instructions; user-requested stop.
 - [[overview]] - project goal, stack, pointers to fact pages
@@ -36,6 +39,22 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-24033-valen-selector-ports|T-24033]] VALEN sibling retry:32D0C guarded at7 rows,34030 remains27; zero matches, In Review.
+- [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI sibling package (In Review; 2 matches, 2,020 bytes).
+- [[tickets/T-24028-date-event-short-movie-siblings|T-24028]] Short DATE/EVENT movie siblings (In Review; DATE 11-instruction guard, EVENT 7-instruction source lead).
+- [[tickets/T-24018-large-sibling-state-machines|T-24018]] Large DATE/EVENT sibling state machines (In Review; source-only leads, 0 new C bytes).
+- [[tickets/T-24016-bunkasai-state-machines|T-24016]] BUNKASAI state machines (Done; 2 matches, 3,160 bytes).
+- [[tickets/T-24014-taco-pre-closer|T-24014]] TACO func_8014A480 PRE closer (In Review; no match, expression-order tradeoff archived).
+- [[tickets/T-24009-ending-scheduler-closer|T-24009]] ENDING func_8013A2E8 scheduler closer (In Review; no match, new pointer-lifetime evidence archived).
+- [[tickets/T-24005-bunkaken-date-state-machine|T-24005]] BUNKAKEN func_80143DD0 (Done; unguarded default C matched, 3,232 bytes).
+
+- [[tickets/T-24020-astra-hard-functions|T-24020]] Astra hard-function checkpoint; zero C bytes, all three investigations In Review.
+- [[tickets/T-24021-dialogue-scheduling|T-24021]] Dialogue scheduling, six new call-path forms with no gain.
+- [[tickets/T-24022-tel-frame|T-24022]] TEL month-range and structural probes, no promotion.
+- [[tickets/T-24023-event-handler|T-24023]] EVENT source-only reconstruction: aligned cost 1618 to 214, 1712/1712 instructions; not matched.
+- [[tickets/T-24003-complete-bunkaken|T-24003]] BUNKAKEN selector and date-loader remainder (In Review; 2 of 3 matched, 836 bytes).
+- [[tickets/T-24004-complete-shougatu|T-24004]] SHOUGATU scene completion: dispatcher func_801430A0 matched (352 bytes), remaining bounded probes in progress.
+- [[tickets/T-24007-complete-geko|T-24007]] GEKO scene completion: func_80133598 matched (452 bytes), bounded remainder probes ongoing.
+- [[tickets/T-24013-complete-rpg-bat|T-24013]] RPG_BAT battle completion: func_80139510 matched (2,424 linked bytes), bounded remainder probes ongoing.
 - [[tickets/T-24032-date-taco-rotation-clones|T-24032]] Six SDK rotation clones retained as ASM; one fresh typed control, provenance notes, zero matches, In Review.
 - [[tickets/T-24027-rpg-bat-state-machines|T-24027]] RPG_BAT state-machine completion:one of three matched (1656 bytes); two current-type source forms archived, In Review.
 - [[tickets/T-24019-gyozi-sibling-ports|T-24019]] GYOZI sibling ports: one of four matched (392 bytes); three selector source forms archived, In Review.
@@ -48,6 +67,10 @@ Read this first. Update on every ingest or new page.
 
 - [[tickets/T-24002-complete-option|T-24002]] OPTION completion follow-up: func_80139198 matched (860 bytes), one guarded draft improved; package in review.
 
+- [[tickets/T-24008-taiiku-runners|T-24008]] TAIIKU runner family (In Progress).
+- [[tickets/T-24017-clone-ports|T-24017]] Three unguarded C clone ports,1128 verified bytes (In Review).
+- [[tickets/T-24008-taiiku-runners|T-24008]] TAIIKU runners: 692-byte match and nine-instruction updater draft (In Review).
+- [[tickets/T-24006-main-render-family|T-24006]] MAIN renderer family, five typed source hypotheses, zero new verified bytes (In Review).
 - [[tickets/T-20012-stable-search-scoring|T-20012]] Stable candidate ranking in viewsweep/order_search, 230 tests pass, issue #58 (Done).
 - [[tickets/T-20013-name-ent-fade-page-followup|T-20013]] NAME_ENT fade/page follow-up, 2,652 bytes still guarded, claim #57 (Ready).
 - [[tickets/T-20012-stable-search-scoring|T-20012]] Stable candidate ranking in viewsweep/order_search, 230 tests pass, issue #58 (In Review).
@@ -640,3 +663,11 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-17203-w3-date-p03|T-17203]] Wave 3 package w3-date-p03: DATE `80154260.c`, `80152FC0.c`, `8014CC40.c`, 3 of 4 matched (`func_8014EF1C` POLY_G4 builder, `func_80154118` where `tools/cvt_pass.py` cost a frame slot, `func_8014DCCC` without a function-pointer local), `func_80155004` draft in `drafts/T-17203/` (register names only) (Done)
 - [[tickets/T-17202-w3-date-p02|T-17202]] Wave 3 package w3-date-p02: DATE `80132000.c`, 6 of 6 matched (1,972 B: `func_80139834`, `func_8013E6A4` with an `s32` view of `func_80085A60`, `func_80137DF4` as an `s32` function without `return`; closer pass: `func_801324DC`, `func_8013BEB8`, `func_80139664`) (Done).
 - [[tickets/T-17102-w3-rpg-bat-p02|T-17102]] Wave 3 package w3-rpg-bat-p02: RPG_BAT `80151C10.c`, `80156CC0.c`, 3 of 3 functions matched (3,056 B: `func_80151C10`, `func_80156D78`, `func_80157158`); the `$v1`-selector miss fixed by an int-returning callee view (Done).
+
+- [[tickets/T-24010-date-etc-coordination|T-24010]] Isolated DATE and ETC coordinator; workers [[tickets/T-24011-date-dispatch-family|T-24011]] and [[tickets/T-24012-etc-render-family|T-24012]].
+- [[tickets/T-24001-main-schedule-final-row|T-24001]] Close main schedule final instruction (In Review; Astra backedge follow-up remains one row, no new C match).
+
+- [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI two-function sibling package, one compiler, current main reference ports.
+- [[tickets/T-24026-shougatu-sibling-ports]] — SHOUGATU sibling ports: 708 B verified C; dispatcher stack-layout near miss.
+
+- [[tickets/T-24029-seasonal-scene-siblings]] — source-only GYOZI/SHOUGATU typed scene checkpoints; no verified bytes.

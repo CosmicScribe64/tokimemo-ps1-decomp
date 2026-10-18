@@ -60,7 +60,25 @@ void func_801381B8(void) {
     tbl.f[idx]();
 }
 
+/* NON_MATCHING: T-24026, four stack layout words differ. */
+#ifdef NON_MATCHING
+void func_80138240(void) {
+    s32 idx;
+    FnTbl37 table;
+
+    table = D_80144FB4;
+    if (D_80144F10 == 0 && D_800E6280.unk_110A >= 0x13 && D_800E6280.unk_110A < 0x1C) {
+        func_8004A414(0x60, -0x10, 0x30, 8, 8, 0xD);
+    }
+    if (D_80144F10 == 1 && D_800E6280.unk_110A >= 0x13 && D_800E6280.unk_110A < 0x1C) {
+        func_8004A414(-0x3C, -0x20, 0x20, 8, 8, 0xD);
+    }
+    idx = D_800E6280.unk_110A;
+    table.f[idx]();
+}
+#else
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_80138240);
+#endif
 
 void func_80138354(void) {
     func_80137AB4();

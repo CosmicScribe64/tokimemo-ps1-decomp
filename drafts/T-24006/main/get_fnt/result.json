@@ -1,0 +1,10 @@
+{
+  "function": "get_fnt",
+  "variant": "get-natural",
+  "aligned_cost": 251,
+  "built_instructions": 266,
+  "target_instructions": 259,
+  "status": "unmatched",
+  "base": "f70450137580e684e20f8ecd28e7a93062385ac7",
+  "source_sha256": "019407186f66517f6d88e81fc71f61b58a0dd8415b77ff9a4827ebb99cb8b82a"
+}

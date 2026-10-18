@@ -52,7 +52,7 @@ void func_80146224(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801461B0", func_801462B0);
 
-/* NON_MATCHING: T-17201, 26 differing lines; the fade colour sum of cases 6, 7 and 9 is in v0 (original a1), and the tail timer keeps a v1 copy of the narrowed value (original: sum in t0, narrowing temp t8). */
+/* NON_MATCHING: T-24028, 11 differing instructions (22 printable rows); fades now exact. The tail timer keeps a v1 copy of the narrowed value (original: sum in t0, narrowing temp t8), and its final store precedes the state write-back. */
 #ifdef NON_MATCHING
 s32 func_8014718C(void) {
     /* FAKE: unused RECT reserves the observed frame words. T-17201. */
@@ -61,6 +61,9 @@ s32 func_8014718C(void) {
     u32 sp30;
     u32 timer;
     s16 var_v1;
+    u8 x;
+    /* FAKE: second fade copy holds v1 so the stored sum uses a1. T-24028. */
+    u32 y;
     DateMovieWork *movie;
 
     g = &D_800E6280;
@@ -137,7 +140,7 @@ s32 func_8014718C(void) {
         g->unk_1104.u += 1;
         return 0;
     case 6:
-        D_801217D0[4].unk_15 = D_801217D0[4].unk_16 = D_801217D0[4].unk_14 += 1;
+        x = (D_801217D0[4].unk_14 += 1); y = D_801217D0[4].unk_15 = x; D_801217D0[4].unk_16 = y; /* FAKE: one source line preserves store order. T-24028. */
         for (var_v1 = 1; var_v1 < 8; var_v1++) {
             D_801217D0[var_v1 + 4].unk_14 = D_801217D0[var_v1 + 4].unk_15 = D_801217D0[var_v1 + 4].unk_16 = D_801217D0[4].unk_14;
         }
@@ -146,7 +149,7 @@ s32 func_8014718C(void) {
         }
         return 0;
     case 7:
-        D_801217D0[4].unk_15 = D_801217D0[4].unk_16 = D_801217D0[4].unk_14 += 1;
+        x = (D_801217D0[4].unk_14 += 1); y = D_801217D0[4].unk_15 = x; D_801217D0[4].unk_16 = y; /* FAKE: one source line preserves store order. T-24028. */
         for (var_v1 = 1; var_v1 < 8; var_v1++) {
             D_801217D0[var_v1 + 4].unk_14 = D_801217D0[var_v1 + 4].unk_15 = D_801217D0[var_v1 + 4].unk_16 = D_801217D0[4].unk_14;
         }
@@ -157,7 +160,7 @@ s32 func_8014718C(void) {
     case 8:
         break;
     case 9:
-        D_801217D0[4].unk_15 = D_801217D0[4].unk_16 = D_801217D0[4].unk_14 -= 2;
+        x = (D_801217D0[4].unk_14 -= 2); y = D_801217D0[4].unk_15 = x; D_801217D0[4].unk_16 = y; /* FAKE: one source line preserves store order. T-24028. */
         for (var_v1 = 1; var_v1 < 8; var_v1++) {
             D_801217D0[var_v1 + 4].unk_14 = D_801217D0[var_v1 + 4].unk_15 = D_801217D0[var_v1 + 4].unk_16 = D_801217D0[4].unk_14;
         }

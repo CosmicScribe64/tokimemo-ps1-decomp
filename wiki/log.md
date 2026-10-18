@@ -18151,6 +18151,28 @@ Both conveyors stopped at the user's request when the weekly usage limit was rea
 
 User resumed after contributor/Claude waves. Read latest index, wave4/5 completion, source-recovery research and build gaps; fetched main283b86fca, no open PRs, active claims#50/#56/#57 respected. Baseline79.6%,465,900 unmatched game bytes. Opened [[tickets/T-24000-complete-matching]] with Sol6.1 medium workers and Astra escalation for concrete blockers. Contributor PR/issue heartbeat runs every30minutes. Existing integration heartbeat remains paused.
 
+## [2026-10-17] ticket | Add file-disjoint DATE and ETC coordinating chat
+
+User authorized more chats as needed. Created Sol6.1 medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8 for T24010 with two workers T24011 DATE80141EE0/8015A640 and T24012 ETC80132880, isolated branches and one compile job each. Parent workers T24001 MAIN8006CB30,T24002 OPTION801389A0,T24003 BUNKAKEN80140F60/8013B510 use at most two jobs each. Parent owns verification/integration; no contributor overlap. [[tickets/T-24000-complete-matching]] remains active.
+## [2026-10-18] ticket | Claim BUNKAKEN remainder
+
+Created [[tickets/T-24003-complete-bunkaken]] for the two assigned BUNKAKEN objects on isolated branch codex/complete-bunkaken. Read [[bunka-family-results]], [[matching-notes]] and coding standards; archived drafts will be rescored against current headers.
+
+## [2026-10-18] build | Match BUNKAKEN selector
+
+[[tickets/T-24003-complete-bunkaken]]: func_80140F60 passes literal default linked proof for 296 bytes. Reused the existing BunkaDispatch8 and CharFlags views; recorded the source-form transfer in [[bunka-family-results]].
+
+## [2026-10-18] build | Match BUNKAKEN heroine selection
+
+[[tickets/T-24003-complete-bunkaken]]: func_8013BD84 passes literal default linked proof for 540 bytes; BUNKAKEN SHA1 OK. Fixed heroine tests use a u8 flags local, indexed loop retains inline byte accesses, with the target sum operand order. [[bunka-family-results]] records successful and rejected forms. Accepted package gain is two functions / 836 bytes so far.
+
+## [2026-10-18] decision | Preserve BUNKAKEN loader blocker
+
+[[tickets/T-24003-complete-bunkaken]]: bounded func_8013B510 variants leave a3/v1 heroine-allocation and temporary-numbering differences. Archived current typed candidate (318 cost) and provenance in drafts/T-24003/; production remains INCLUDE_ASM. [[bunka-family-results]] records the rejected forms. Two accepted functions add 836 bytes.
+
+## [2026-10-18] ticket | Submit BUNKAKEN completion pass for review
+
+[[tickets/T-24003-complete-bunkaken]] moves to In Review, matching its board card. Accepted result: two functions / 836 bytes, literal default proofs and affected-overlay checksum pass. The date-loader blocker remains archived and is not counted. Full default build and final guards are running; review is required before Done.
 ## [2026-10-17] ticket | Begin OPTION completion package
 
 Created [[tickets/T-24002-complete-option]] on branch codex/complete-option for five functions in src/ovl/OPTION/801389A0.c; consulted [[option-family-results]] and [[matching-notes]].
@@ -18166,6 +18188,31 @@ Created [[tickets/T-24002-complete-option]] on branch codex/complete-option for 
 ## [2026-10-17] build | OPTION completion checks pass
 
 [[tickets/T-24002-complete-option]] final header/global/prototype checks passed (prototype branch check: 0 new disagreements, 15 known). Official guarded funcdiff confirms func_80139F8C remains five differing rows; no match claimed for it.
+## [2026-10-17] ticket | Start isolated DATE and ETC matching
+Created [[tickets/T-24010-date-etc-coordination]], [[tickets/T-24011-date-dispatch-family]] and [[tickets/T-24012-etc-render-family]] from c485bb71a. Read [[index]], local instructions, standards, [[date-family-results]] and [[etc-family-results]]. Limited to explicitly assigned files, Docker builds at one job per worker; parent owns integration and contributor monitoring.
+
+## [2026-10-17] setup | T-24012 isolated ETC lane
+
+Created `codex/complete-etc` from `4c5123f11`, reused local data and existing Docker image. [[tickets/T-24012-etc-render-family]] records the dispatch sibling and compile prerequisite; no verified match yet.
+
+## [2026-10-17] build | T-24012 verified ETC dispatcher
+
+[[tickets/T-24012-etc-render-family]] and [[etc-family-results]] record 1,280 verified literal linked bytes for `func_80136448` in `src/ovl/ETC/80132880.c`; explicit default proof and ETC checksum pass in Docker. Accurate dispatch callee declarations in `include/ovl/ETC.h`; marked FAKE return view, no main API changes. Header/global guards pass; prototype guard 0 new / 15 known. Ticket moved to In Review for coordinator review; three remaining targets stay assembly.
+## [2026-10-18] ticket | T-24001 main schedule final instruction
+
+Created [[tickets/T-24001-main-schedule-final-row]] after reading [[tickets/T-23003-w5-big-p03]] and [[matching-notes]]. Source-only follow-up of the one-row counter fold, isolated branch `codex/complete-main`.
+
+## [2026-10-18] build | T-24001 final counter fold remains
+
+[[tickets/T-24001-main-schedule-final-row]] moved In Progress to In Review. Baseline plus 20 source-only forms leave one linked C instruction different; production src/main/8006CB30.c is unchanged. Archived Docker diagnostic drafts/T-24001/counter_forms.py, appended [[matching-notes]]. Default linked function MATCH (4,692 bytes), main SHA1 matches, ninja -j2 complete, headers/globals/prototypes pass. No new verified C bytes.
+
+## [2026-10-18] ticket | Reopen main schedule final row for Astra
+
+[[tickets/T-24001-main-schedule-final-row]] moved In Review to In Progress for a bounded compiler-informed source pass; the existing one-row guard is retained pending evidence.
+
+## [2026-10-18] build | Astra final-row follow-up retains main guard
+
+[[tickets/T-24001-main-schedule-final-row]] returns In Progress to In Review after 19 new source variants (18 compile, one as1 error), archived in drafts/T-24001/astra_forms.py. Genuine loop backedges retain the desired increment but add loop control; single-trip loops, representation changes and timer switches do not close the row. [[matching-notes]] records the mechanism. Fresh full-TU C diff remains row 94 only; default fallback MATCHes 4,692 bytes and main SHA1 is unchanged. Production source and compiler tools are untouched; no new matching bytes.
 
 ## [2026-10-17] ticket | Begin SHOUGATU scene completion package
 
@@ -18175,6 +18222,9 @@ Created [[tickets/T-24004-complete-shougatu]] for five functions of src/ovl/SHOU
 
 [[tickets/T-24004-complete-shougatu]] recovered func_801430A0 (352 bytes) in src/ovl/SHOUGATU/80141780.c. Typed callback table, direct counter mutation and consistent record-base accesses reproduce the original allocation and store/load schedule; no FAKE needed. Default linked proof and SHOUGATU checksum pass. Details in [[shougatu-family-results]].
 
+## [2026-10-17] build | Publish first five matches of the100% run
+
+[[completion-run-2026-10-17]] records five independently verified matches/3,328 bytes on main8052373f7: BUNKAKEN296+540, OPTION860, ETC1280 and SHOUGATU352. All27 binary hashes and header/global/prototype guards pass; coverage1,816,796/2,279,368 (79.7%). Sol/Astra MAIN counter negative evidence preserved. User requested a dedicated Astra chat for largest hard targets; reserved dialogue/TEL/EVENT files underT24020, separate from activeSol families. RootAstra closes recoveredBUNKAKEN8-row draft. Goal remains active; no contributor overlap.
 ## [2026-10-17] ticket | SHOUGATU scene package enters review
 
 [[tickets/T-24004-complete-shougatu]] ends with one verified function / 352 bytes. Four others remain assembly, with corrected source drafts and allocation/scheduling blockers in drafts/T-24004/README.md. Header/global/prototype checks pass (0 new prototype disagreements, 15 known). Ticket and board moved to In Review; independent review required before Done. See [[shougatu-family-results]].
@@ -18187,9 +18237,118 @@ Created [[tickets/T-24007-complete-geko]] for five functions of src/ovl/GEKO/801
 
 [[tickets/T-24007-complete-geko]] recovered func_80133598 (452 bytes) in src/ovl/GEKO/801323E0.c. A genuine call-result local restores the saved status-byte slot; corrected Rec38 word test and direct signed amount update preserve all instructions. No FAKE. Default linked proof and GEKO checksum pass; see [[scenes-family-results]].
 
+## [2026-10-18] build | Validate BUNKAKEN completion package
+
+[[tickets/T-24003-complete-bunkaken]]: full default Docker ninja -j2 succeeds. Combined default literal linked proofs confirm func_80140F60 (296 bytes) and func_8013BD84 (540 bytes). Headers/globals pass; prototype branch check has 0 new / 15 known disagreements. Package remains In Review pending independent standards review.
+
+## [2026-10-18] ticket | Claim BUNKAKEN date state machine
+
+Created [[tickets/T-24005-bunkaken-date-state-machine]] for func_80143DD0 alone, reusing the built isolated checkout. Read [[bunka-family-results]] and prior T-9960 evidence in [[matching-notes]]; seek the archived eight-line near miss before new source hypotheses.
+
+## [2026-10-18] build | Recover BUNKAKEN date-state-machine near miss
+
+[[tickets/T-24005-bunkaken-date-state-machine]] recovers the lost T-9960 eight-row source from T-18500 with current headers. Guarded C differs at four masked-selector register words only; default assembly fallback passes literal proof for 3,232 bytes. Two required self-stores are FAKE-labelled. [[bunka-family-results]] and drafts/T-24005/README.md record provenance, failed forms and the focused closer blocker. Zero new C bytes.
+
+## [2026-10-18] ticket | Submit recovered BUNKAKEN near miss for review
+
+[[tickets/T-24005-bunkaken-date-state-machine]] moves to In Review with matching board/index status. Guarded C is 8 rows / 4 words different; explicit default fallback proof, Docker ninja -j1, BUNKAKEN SHA1, headers and globals pass; prototype branch check reports 0 new / 15 known. No new C match is claimed.
+
+## [2026-10-18] ticket | T-24005 bounded selector closer
+
+Reopened [[tickets/T-24005-bunkaken-date-state-machine]] for novel selector lifetime probes. Prior guarded source has four differing words; no verified C-byte gain.
+
+## [2026-10-18] decision | T-24005 selector lifetime candidate
+
+A narrow-selector empty test before the switch resolves the four-word residue in full-unit scoring. Installed the marked FAKE in src/ovl/BUNKAKEN/80143DD0.c and removed the function guard; literal default verification pending in [[tickets/T-24005-bunkaken-date-state-machine]].
+
+## [2026-10-18] build | T-24005 unguarded C matches 3,232 bytes
+
+The narrow-selector empty test resolves the four-word residue in src/ovl/BUNKAKEN/80143DD0.c; marked FAKE and removed the guard/fallback. Explicit default linked funcdiff matches 3,232 bytes. BUNKAKEN SHA1, headers and globals pass; prototype guard has 0 new / 15 known disagreements. Updated [[bunka-family-results]], [[index]] and drafts/T-24005/README.md. Moved [[tickets/T-24005-bunkaken-date-state-machine]] to In Review for independent parent review. No further probes after the first exact result.
+## [2026-10-17] ticket | T-24006 MAIN render family
+
+Created [[tickets/T-24006-main-render-family]], exclusive src/main/8004C3F0.c scope from f704501. Read [[main-family-results]], T-17000 recipes and CODING_STANDARDS.md.
+
+## [2026-10-17] build | T-24006 bounded renderer family
+
+Archived five source-only typed hypotheses in drafts/T-24006/; 0 new verified bytes, production source and headers unchanged. [[main-family-results]] records ModRec14 evidence, SDK packet/rectangle types, corrected word strides and byte buffers, stable aligned costs and concrete blockers. Existing Docker serial probes only. Fresh default linked literal proof passed six ASM-backed targets and four C siblings; MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26, headers/globals OK, prototypes 0 new/15 known. [[tickets/T-24006-main-render-family]] moved In Progress to In Review for parent review; card moved with it.
+
+## [2026-10-17] ticket | T-24012 dispatcher reviewed, remaining work resumes
+
+Independent Standards and Spec review axes both PASS with 0 actionable findings for frozen `a0675cafe604146244c5d762cd915467b41a46a2`; recorded in [[tickets/T-24012-etc-render-family]]. Reviewed source checkpoint preserved. Ticket/card returned to In Progress for the three pending ETC routines; full ticket is not Done.
+
+## [2026-10-17] decision | T-24012 preserve bounded remaining-target evidence
+
+No new verified bytes after the reviewed dispatcher. [[tickets/T-24012-etc-render-family]] and [[etc-family-results]] record source-only drafts in `drafts/T-24012/`: filter 217, quad 180, background selector 150 resolved diagnostic cost, all independently compiling and nonmatching. Captured frame/row-base, colour allocation and table-base-sharing blockers; stopped bounded probes without weakening types or adding guessed padding. Production source/header preserve `a0675cafe`; three targets remain pending, ticket In Progress.
+
+## [2026-10-17] ticket | T-24012 archive ready for review
+
+Moved [[tickets/T-24012-etc-render-family]] and its card to In Review for the source-only archive delta. Result is 1 of 4 targets verified, 1,280 bytes; three explicit blockers remain pending. No Done claim; coordinator handles review and next disposition.
+
+## [2026-10-17] build | Two more verified functions published
+
+GEKO func_80133598 (452 bytes) and BUNKAKEN func_80143DD0 (3,232 bytes) passed independent source review, unguarded default linked-byte proof, all 27 checksums and guards, then pushed to main. Docker progress now 6,473/6,958 functions, 1,820,480/2,279,368 bytes (79.9%). T24005 Done; T24007 family continues. Updated [[completion-run-2026-10-17]]; assigned fresh TAIIKU T24008 to Sol medium and ENDING T24009 to Astra using existing worktrees.
 ## [2026-10-17] ticket | GEKO scene package enters review
 
 [[tickets/T-24007-complete-geko]] ends with one verified function / 452 bytes, one guarded 36-row near match, and three source-only archived follow-ups. Default linked func_80133598 proof and GEKO checksum pass after the guard edit; official guarded comparison confirms func_80133024 still differs. Header/global/prototype checks pass (0 new, 15 known). Ticket and board moved to In Review; independent review remains required. Every loose experiment and diagnostic is preserved under ignored build/T-24007-probes; automatic review rejected deletion of temporary files. See [[scenes-family-results]].
+## [2026-10-17] setup | T-24011 isolated DATE dispatcher probes
+
+Created codex/complete-date from 4c5123f11, copied ignored inputs and local skills, and read [[date-family-results]] plus [[matching-notes]] T-17207/T-17208. Keep the three assigned production fallbacks while testing recovered GameState pointer views; the libgte helper has an established hand-assembly blocker.
+
+## [2026-10-17] setup | T-24011 isolated DATE dispatcher probes
+
+Created codex/complete-date from 4c5123f11, copied ignored inputs and local skills, and read [[date-family-results]] plus [[matching-notes]] T-17207/T-17208. Keep the three assigned production fallbacks while testing recovered GameState pointer views; the libgte helper has an established hand-assembly blocker.
+
+## [2026-10-17] setup | T-24011 isolated DATE dispatcher probes
+
+Created codex/complete-date from 4c5123f11, copied ignored inputs and local skills, and read [[date-family-results]] plus [[matching-notes]] T-17207/T-17208. Keep the three assigned production fallbacks while testing recovered GameState pointer views; the libgte helper has an established hand-assembly blocker.
+
+## [2026-10-17] query | T-24011 pointer view fixes dispatcher registers
+
+[[date-family-results]] records a source-only 23-row resolved near miss for func_801449D4; no match claim. The probe setup harness accidentally appended its identical setup entry three times on reruns; those entries remain under the append-only log rule and that side effect has been removed.
+
+## [2026-10-17] query | T-24011 recovered views improve both dispatchers
+
+[[date-family-results]] records exact-frame source-only near misses: func_801449D4 at 11 isolated resolved +/- rows and func_80144E20 at 72. Ordinary pointer views fix shifted allocation; return-view/default/canonical compare probes do not finish either target. Production fallbacks remain intact.
+
+## [2026-10-17] build | T-24011 source-only checkpoint and fallback proof
+
+Preserved source-only dispatcher near misses and Docker reproducers under drafts/T-24011; [[date-family-results]] records full-unit 48/72 resolved rows, isolated small 11, and the bounded Astra as1-stage observation. DATE checksum, headers, globals and branch prototype guard pass (0 new disagreements, 15 known). Explicit default linked comparisons match all three unchanged assembly fallbacks; zero new C bytes. Exploration artifacts moved into ignored build/date24011-scratch. No original assembly or executable data committed.
+
+## [2026-10-17] ticket | T-24011 awaits archive review
+
+Moved [[tickets/T-24011-date-dispatch-family]] and its [[kanban]] card to In Review. Both dispatchers retain production INCLUDE_ASM; libgte helper retains its established hand-assembly blocker. Coordinator owns the required two-axis review.
+
+## [2026-10-17] build | T-24011 resolve diagnostic failure reporting review finding
+
+Standards review found P2: drafts/T-24011/probe.py and stage.py ignored funcdiff return status and could report zero rows after tool failure. Added shared validated reporting and failure-contract checks; Docker tests pass (5 tests, 12 cases), real full-unit diagnostics remain 48/72, and stage passes twice consecutively at 11. The stage rerun also exposed an existing-listing IDO -S -o collision; removed the unnecessary output flag. [[tickets/T-24011-date-dispatch-family]] remains In Review; no source-body or production changes.
+
+## [2026-10-17] decision | DATE review failure-handling finding resolved
+Independent re-review of 2f7bd397b...5c14a3c40 passes Standards and Spec with zero remaining actionable findings. [[tickets/T-24011-date-dispatch-family]] records P2 resolved, five Docker tests covering twelve contracts, real full-unit diagnostics 48/72 and two stage reproductions at eleven edit rows. Production unchanged; no new C bytes or full-ticket completion claim.
+## [2026-10-17] decision | ETC final archive passes both review axes
+Independent Standards and Spec reviewers pass a0675cafe...920cbb61b with zero actionable findings. [[tickets/T-24012-etc-render-family]] records one verified 1,280-byte function and three pending source-only drafts; production code is unchanged by the archive. Parent owns integration; worktree preserved.
+## [2026-10-17] query | Reuse established DATE assembly blocker
+[[gcc-objects]] and [[matching-notes]] T-17208 establish DATE func_8015A640 as hand-written libgte assembly, superseding older compiler-swap hypotheses. [[tickets/T-24010-date-etc-coordination]] records the boundary; DATE worker focuses dispatcher recovery without repeating exhausted compiler sweeps. No new verified bytes or denominator adjustment.
+
+## [2026-10-17] query | Keep linked proof within worker build cap
+Inspected tools/funcdiff.py freshness/header subprocesses: internal ninja calls omit -j1. [[tickets/T-24010-date-etc-coordination]] records prebuild at -j1 then --no-build default linked proof, preserving freshness checks. Workers notified; no tracked tooling change.
+
+## [2026-10-17] build | Verified ETC checkpoint awaits two-axis review
+[[tickets/T-24012-etc-render-family]] checkpoint a0675cafe verifies ETC func_80136448, 1,280 default linked bytes, affected checksum and header/global/prototype guards. [[tickets/T-24010-date-etc-coordination]] records exact branch/proof paths. Standards/spec reviewers inspect pinned 4c5123f11...a0675cafe; parent retains integration ownership. Other assigned targets remain assembly.
+
+## [2026-10-17] decision | Hand reviewed ETC checkpoint to parent
+Independent Standards and Spec reviews pass 4c5123f11...a0675cafe with zero actionable findings on each axis. [[tickets/T-24010-date-etc-coordination]] records the 1,280-byte checkpoint as ready for parent integration; [[tickets/T-24012-etc-render-family]] remains open for three targets. No merge, push or worktree removal performed by this lane.
+
+## [2026-10-17] decision | Escalate concrete DATE constant-scheduling blocker
+[[tickets/T-24011-date-dispatch-family]] small dispatcher has exact frame/table placement and eleven added/removed isolated diff rows after bounded failed source probes. [[tickets/T-24010-date-etc-coordination]] authorizes the requested Astra blocker-only scratch analysis; Sol retains source ownership. Larger dispatcher and ETC remaining targets continue independently; no new verified bytes claimed.
+
+## [2026-10-17] ingest | ETC pending-draft archive handed off
+[[tickets/T-24012-etc-render-family]] bounded pass ends at 920cbb61b with reviewed source checkpoint unchanged. Source-only drafts/T-24012 preserves three compiling diagnostic nonmatches and precise blockers; [[tickets/T-24010-date-etc-coordination]] records commit dependencies and review boundary. Parent notified; worktree preserved and no further files claimed.
+
+## [2026-10-17] decision | Review archives and repair DATE probe failure reporting
+ETC final archive passes both independent review axes. DATE source-only archive 2f7bd397b passes Spec; Standards identifies P2 subprocess-failure handling in drafts/T-24011/probe.py and stage.py. [[tickets/T-24011-date-dispatch-family]] worker is repairing and verifying the failure path; [[tickets/T-24010-date-etc-coordination]] withholds DATE archive acceptance until resolved. No production mismatch or new byte claim.
+
+## [2026-10-17] ticket | Hand off reviewed DATE and ETC bounded pass
+[[tickets/T-24010-date-etc-coordination]], [[tickets/T-24011-date-dispatch-family]] and [[tickets/T-24012-etc-render-family]] move to In Review. One ETC dispatcher adds 1,280 verified C bytes; six targets remain assembly with useful source-only drafts and blockers. Both independent review axes pass final archives and DATE P2 repair; five Docker failure-contract tests pass. Worktrees remain available, parent owns integration/push, and no further files claimed.
 
 ## [2026-10-17] ticket | Begin RPG_BAT battle completion package
 
@@ -18199,14 +18358,125 @@ Created [[tickets/T-24013-complete-rpg-bat]] for three functions in src/ovl/RPG_
 
 Independent review of [[tickets/T-24007-complete-geko]] found swallowed candidate exceptions. drafts/T-24007/probe.py now exits 1 if any candidate fails while preserving labeled diagnostics. A Docker invalid-candidate run confirms exit 1 and the ERROR label; verified production C is unchanged.
 
+## [2026-10-17] ingest | Preserve completed family handoffs and refresh contributor state
+
+Published GEKO residual guard/drafts, DATE source-only hypotheses and diagnostic fixes, and DATE/ETC final review handoffs. No new C bytes from these archives; coverage remains 79.9%. GitHub check at 06:16 UTC found no open PRs or updated contributor claims. Updated [[completion-run-2026-10-17]] with RPG_BAT T24013 and TACO T24014 assignments. ENDING T24009 found a source-level scheduling improvement but no match; its pinned archive awaits integration.
+## [2026-10-17] ticket | T-24008 TAIIKU runners
+
+Created [[tickets/T-24008-taiiku-runners]] from 8f88afff with exclusive src/ovl/TAIIKU/80133C80.c ownership. Read [[taiiku-family-results]] and typed/sibling recipes before bounded Docker probes.
+
+## [2026-10-17] build | T-24008 finish-line candidate
+
+Ported the matched TAIIKU game-C sibling func_80146D18 to func_80137EA8 with canonical runner/display fields. Scratch linked literal proof matches 692 bytes; promoting for default build verification. Local definition of the zeroed four-byte result array preserves shared stores. Explicit final else and first-slot-first assignment recover original allocation/store-back. See [[tickets/T-24008-taiiku-runners]].
+
+## [2026-10-17] build | T-24008 verifies 692-byte finish helper
+
+Default linked literal proof of func_80137EA8 passes (692 bytes), TAIIKU SHA1 306d1013b9be465819525d1fb4dc0e86b422a846 passes after ninja -j1 target build. [[taiiku-family-results]] records matched sibling source, explicit-else allocation and promoted first-byte store-back idioms. [[tickets/T-24008-taiiku-runners]] continues the remaining bounded targets.
+
+## [2026-10-18] ticket | T-24009 ENDING scheduler closer
+
+Created [[tickets/T-24009-ending-scheduler-closer]] for source-level call-result and control-flow hypotheses on the T-23002 twelve-row residue. No existing compiler/deletion experiments will be repeated.
+
+## [2026-10-18] query | T-24009 discarded call-result probes
+
+Twelve full-unit probes leave the twelve-row baseline best. Void call views change other allocation; ordinary result discards do not change output. Recorded in [[tickets/T-24009-ending-scheduler-closer]]; production source unchanged.
+
+## [2026-10-18] query | T-24009 explicit string lifetime changes scheduling
+
+The pointer-plus-empty-test form fills the original load delay and aligns all 1,162 instructions, but leaves the low string address and second flag mask scheduled differently (10 cost). [[tickets/T-24009-ending-scheduler-closer]] records the new evidence.
+
+## [2026-10-18] ticket | T-24009 bounded closer archived without a match
+
+76 source probes found no exact match. Production guard and source remain unchanged. `drafts/T-24009/probe.py` reproduces weighted scores 12 and 10; the latter still differs in eight words (16 diagnostic rows). Explicit default proof matches the 4,648-byte assembly fallback and fresh ENDING SHA1 passes; zero new verified C bytes. Updated [[matching-notes]] and moved [[tickets/T-24009-ending-scheduler-closer]] to In Review for independent archive review.
 ## [2026-10-17] build | Recover RPG_BAT rectangle state machine
 
 [[tickets/T-24013-complete-rpg-bat]] recovered func_80139510 (2,424 literal linked bytes) in src/ovl/RPG_BAT/80137280.c. Paired RECT comma-expression stores and direct counters recover the old T-9960 lead; FAKE two-word padding preserves the original frame. Existing callee view solves the prior power-counter gap. Default linked proof and RPG_BAT checksum pass; details in [[rpg-bat-family-results]].
 
+## [2026-10-17] build | Cross 80 percent verified game-code bytes
+
+Published TAIIKU func_80137EA8 (692 bytes) and RPG_BAT func_80139510 (2424 bytes) after independent default linked proofs, all 27 hashes and guards. Docker progress: 6475/6958 functions, 1823596/2279368 bytes (80.0%). The 100% goal remains active; 455772 bytes remain. Updated [[completion-run-2026-10-17]] and per-family review records. ENDING scheduling source-only archive also preserved on main without claiming C progress.
 ## [2026-10-17] ticket | RPG_BAT battle package enters review
 
 [[tickets/T-24013-complete-rpg-bat]] ends with one verified function / 2,424 literal linked bytes, two unresolved source-only archives, and passing header/global/prototype checks (0 new, 15 known). Ticket/board moved to In Review for independent integration verification. Updated [[tickets/T-21001-recover-wave-10-list-6-near-misses]] with the recovered RPG_BAT half; its BUNKAKEN half stays open. Every loose experimental file is preserved under ignored build/T-24013-probes. See [[rpg-bat-family-results]].
 
+## [2026-10-18] ticket | T-24014 TACO PRE source closer
+
+Created [[tickets/T-24014-taco-pre-closer]] for two new source hypotheses on the one-word inserted-reload operand-order residue. Other TACO functions are outside scope.
+
+## [2026-10-18] query | T-24014 dot-form PRE tradeoff
+
+The all-dot state region fixes the inserted reload but reverses two earlier address additions. Empty dot reads do not help. [[tickets/T-24014-taco-pre-closer]] records the sixteen-probe result; production source unchanged.
+
+## [2026-10-18] ticket | T-24014 TACO PRE closer archived
+
+47 focused probes produced no match. The all-dot region corrects the inserted reload but reverses two earlier address additions; empty-use seeds and mixed forms do not resolve the tradeoff. Production source remains unchanged. The three-case reproducer in drafts/T-24014/ verifies costs 2/4/32. Explicit default proof matches the 796-byte assembly fallback and fresh TACO SHA1 passes; zero new C bytes. Updated [[matching-notes]] and moved [[tickets/T-24014-taco-pre-closer]] to In Review for independent archive review.
+
+## [2026-10-17] decision | Reuse the closer slot for fresh Sol matching work
+
+RPG_BAT residual source archive and TACO PRE reproducer are published; neither archive adds C coverage. Root Astra T24014 stopped after its bounded hypotheses were exhausted. Reused its clean built checkout for Sol 6.1 medium T24016 BUNKASAI; T24015 MAIN work also assigned to Sol medium. Refreshed current/completed ownership in [[completion-run-2026-10-17]] to remove stale active claims. Dedicated Astra large-function chat remains active.
+## [2026-10-18] ticket | BUNKASAI state-machine recovery
+Started [[tickets/T-24016-bunkasai-state-machines]] in existing complete-bunkaken worktree; read project rules and [[bunkasai-family-results]]. Targets func_80135C4C and func_80158764 currently use assembly; prior draft scores 264/332.
+
+## [2026-10-18] build | BUNKASAI func_80135C4C matched
+[[tickets/T-24016-bunkasai-state-machines]] recovered default unguarded C for 1,508 bytes with direct dialogue-field updates and a GameState pointer. Docker ninja -j1 BUNKASAI checksum OK and literal default linked funcdiff MATCH. No FAKE or header change; [[bunkasai-family-results]] records the recipe.
+
+## [2026-10-18] build | Correct production-install guard and reverify BUNKASAI C
+Root review found that bulk_m2c.insert_draft had left a NON_MATCHING guard in the first installation, so the earlier default result still checked fallback assembly. Removed guard and fallback from src/ovl/BUNKASAI/801354B0.c, recompiled/relinked normal default with ninja -j1, and reran literal default funcdiff: checksum OK, linked MATCH 1,508 bytes. This corrected proof supports the C claim in [[tickets/T-24016-bunkasai-state-machines]].
+
+## [2026-10-17] build | Verify BUNKASAI C and refresh sibling priorities
+
+Rejected an initial guarded fallback claim before integration, then independently verified corrected unguarded BUNKASAI func_80135C4C (1508 bytes) with all27 hashes/guards. Added a local source gate with positive/negative checks. Docker progress now 6476/6958 functions and 1825104/2279368 bytes (80.1%). Refreshed sibling census:45 targets >=0.80, including3 exact opcode/register clones. Priorities and evidence recorded in [[completion-run-2026-10-17]].
+## [2026-10-18] build | Both BUNKASAI state machines verified as default C
+[[tickets/T-24016-bunkasai-state-machines]] matched func_80158764 (1,652 bytes) through ascending nested switch arms and repeated direct byte-field reads. Both unguarded C bodies compile together: BUNKASAI checksum OK and literal default linked funcdiff MATCH for 1,508 plus 1,652 bytes. No FAKE or header change. Preserved source-only near/matching variants in drafts/T-24016/ and moved all private exploration intact to ignored build/T-24016-private/exploration; [[bunkasai-family-results]] updated.
+
+## [2026-10-18] ticket | BUNKASAI state machines ready for review
+Moved [[tickets/T-24016-bunkasai-state-machines]] to In Review and moved its kanban card. Root review/integration remains; no push or merge by worker.
+## [2026-10-17] build | T-24008 closes bounded runner pass
+
+1 of 5 matched, 692 verified bytes. Added a guarded func_801365C8 draft with all 188 instructions/frame/spill exact and nine register/operand differences; source-only hypotheses and stable costs in drafts/T-24008/. [[taiiku-family-results]] records indexed/nested rolled loops and derived-coordinate induction. Final default literal proofs for all five targets and TAIIKU SHA1 306d1013b9be465819525d1fb4dc0e86b422a846 pass, headers/globals pass, prototypes 0 new/15 known. [[tickets/T-24008-taiiku-runners]] moved In Progress to In Review with its card for independent parent review. No new compiler exceptions, raw assets or previous archive changes.
+
+## [2026-10-17] build | T-24008 guarded translation-unit confirmation
+
+Full NON_MATCHING translation-unit funcdiff compiled the retained updater and reproduced its nine instruction differences. Final branch prototype check completed: 0 new disagreements, 15 known. [[tickets/T-24008-taiiku-runners]] remains In Review.
+
+## [2026-10-17] decision | Resume stopped chats and close the BUNKASAI pair
+
+User explicitly requested keeping stopped chats going, especially the large-function chat. Confirmed Astra and DATE/ETC coordinator idle, sent new scoped work, and verified both active. Astra continues EVENT and retains largest targets with two new reserved functions; Sol coordinator takes BUNKASAI sibling pair T24030. Updated [[completion-run-2026-10-17]]. Independently verified second BUNKASAI C target1652 bytes (both3160), all27 hashes/guards pass; T24016 reviewed Done. TAIIKU residual guard/drafts published without extra byte claim. Clone1128 and GYOZI392 wins remain queued for integration.
+## [2026-10-17] ticket | T-24017 exact clone ports
+
+Created [[tickets/T-24017-clone-ports]] for three disjoint EVENT/GEKO/SHUGAKU targets from 0f2b9818f. Read prior compile/register negatives and matched-sibling recipes; Docker-only, unguarded default literal proof required.
+
+## [2026-10-17] build | T-24017 GEKO polygon clone candidate
+
+Ported matched ENDING func_80139B48 to GEKO func_8013FD88 using SDK POLY_G4 and inherited documented colour masks/source-line grouping. Target has no INCLUDE_ASM or guard. Starting default linked and unit checksum verification; see [[tickets/T-24017-clone-ports]].
+
+## [2026-10-17] build | T-24017 SHUGAKU copy clone candidate
+
+Ported the matched DATE history-copy recipe to SHUGAKU func_80133038, removing its old T-10510 guard and fallback. Testing explicit destination narrowing/product order before considering data ownership changes. [[tickets/T-24017-clone-ports]].
+
+## [2026-10-17] build | T-24017 GEKO clone verifies 476 bytes
+
+GEKO func_8013FD88 is unguarded C, no INCLUDE_ASM. Fresh default linked literal proof matches 476 bytes and GEKO SHA1 passes. [[geko-family-results]] and [[tickets/T-24017-clone-ports]] record the matched ENDING source and inherited FAKE colour masks.
+
+## [2026-10-17] build | T-24017 SHUGAKU clone verifies 176 bytes
+
+SHUGAKU func_80133038 now unguarded C with no INCLUDE_ASM. Fresh default linked literal proof and unit checksum pass, 176 bytes. [[shugaku-family-results]] records DATE product-narrowing/copy-order recipe, no FAKE or data ownership changes. Added the new [[geko-family-results]] page to [[index]] and its metadata. [[tickets/T-24017-clone-ports]] checkpoint: 2 of 3, 652 bytes.
+
+## [2026-10-17] build | T-24017 legacy EVENT renderer candidate
+
+Ported ENDING polygon source using the original legacy EVENT names and its 64-byte ordering-table stride. Added measured word/address-only globals and unused-return call-site declarations once in main_api.h; allocator declaration outside current MAIN range in EVENT.h. Existing EventStateView now names signed coordinate halfword pairs at +0x14/+0x18 without shifting later members. Target is unguarded C. [[tickets/T-24017-clone-ports]].
+
+## [2026-10-17] build | T-24017 legacy EVENT verifies 476 bytes
+
+EVENT func_80108B24 is unguarded C with no target INCLUDE_ASM. Fresh default literal proof matches476 bytes; full EVENT SHA1 passes. [[event-family-results]] and [[data-types]] record old helper names, word index,64-byte table stride, and signed coordinate pairs in existing padding. [[tickets/T-24017-clone-ports]] reaches3 of3,1128 bytes. Shared declarations coordinated with root for all27 integration checks.
+
+## [2026-10-17] build | T-24017 closes three clone ports
+
+All3 targets have unguarded C definitions and pass root source-only claim gate; no target INCLUDE_ASM. Current-header default literal proof verifies1128 bytes and EVENT/GEKO/SHUGAKU unit SHA1 checks pass. Headers/globals pass, branch prototypes0new/15known. [[tickets/T-24017-clone-ports]] records pinned win commits and hashes, moved In Progress to In Review with card for independent parent review. Root coordinates all27 shared-header integration. No failed source archives needed.
+
+## [2026-10-18] build | Clone matches published and stopped chats resumed
+
+Published979a83671 after independent review, all27 binary hashes, guards and three explicit C/literal proofs. [[tickets/T-24017-clone-ports]] Done:1128 new bytes. [[completion-run-2026-10-17]] records6480 functions/1827884 bytes,80.2%. Both user-owned chats active; Astra prioritizes the large dialogue function, Sol returned another844-byte BUNKASAI win queued for verification. Root workers continue T24026/T24027/T24028. Contributor check06:43UTC: no open PRs, claims50/56/57 unchanged. Pending archive pins and code wins remain excluded from coverage until verified.
 ## [2026-10-17] ticket | Begin MAIN menu completion package
 
 Created [[tickets/T-24015-complete-main-menu]] for five functions of src/main/8005A0B0.c after consulting [[main-family-results]], T-17000, T-16000 and T-16510 notes. Preserve all prior package commits; only this MAIN source file is owned.
@@ -18228,6 +18498,16 @@ Created [[tickets/T-24019-gyozi-sibling-ports]] In Progress for four exclusive f
 ## [2026-10-17] decision | T-24019 bounded selector negatives retained
 
 [[tickets/T-24019-gyozi-sibling-ports]] moves to In Review: one of four matched (392 bytes). E82424 and39E4C27 reproduce prior negatives; 3907C meaningful result/local and natural control flow leave12 aligned edits. Updated [[event-family-results]] with blockers; source-only drafts and scorer archived. All loose experiments preserved in ignored build/T-24019-probes/. No additional production changes. Independent review pending.
+## [2026-10-17] ticket | Resume coordinator with BUNKASAI sibling package
+Created [[tickets/T-24030-bunkasai-sibling-package]] before implementation. Reused clean built /private/tmp/tokimemo-complete-etc on codex/complete-bunkasai-siblings, fast-forwarding to a6fa29a65 without resetting prior history. Read [[index]], [[completion-run-2026-10-17]], [[bunkasai-family-results]], [[bunka-family-results]] and T-22012 negative evidence. Exclusive targets func_80142700 and func_80151364; Docker single compiler, root owns final integration/checks/push.
+
+## [2026-10-17] build | T-24030 BUNKASAI year-read match
+
+[[tickets/T-24030-bunkasai-sibling-package]] and [[bunkasai-family-results]] record actual unguarded default C for func_80151364, 844 literal linked bytes. Fresh GameState year reads resolve the T-22012 two-lui blocker; existing FAKE pointer reassignment retained. Docker explicit default linked proof, BUNKASAI checksum and header/global/prototype guards pass (0 new / 15 known). No header or other matching function changes. Ticket remains In Progress for func_80142700.
+
+## [2026-10-17] build | T-24030 both BUNKASAI siblings verified
+
+[[tickets/T-24030-bunkasai-sibling-package]] and [[bunkasai-family-results]] record actual default C for func_80142700 (1,176 bytes), adding to func_80151364 (844): 2 of 2, 2,020 bytes. Typed loops plus void callee view and sibling's marked FAKE store-order view resolve the second target; necessary overlay-header additions reported first. No main API change. Final joint default proof/checksum and guards recorded; exact pre-existing body audit and source-only provenance preserved. [[matching-notes]] supersedes T-22012's old two-lui blocker. Ticket/card moved to In Review for coordinator review/integration.
 
 ## [2026-10-17] ticket | T-24027 RPG_BAT state-machine completion
 
@@ -18241,6 +18521,52 @@ Created [[tickets/T-24027-rpg-bat-state-machines]] In Progress for three exclusi
 ## [2026-10-17] decision | T-24027 state-machine package in review
 
 [[tickets/T-24027-rpg-bat-state-machines]] moves to In Review with one of three matched (1656 bytes). Remaining aggregate/quotient and geometry-loop allocation blockers recorded in [[rpg-bat-family-results]]; source-only forms and scorer archived in drafts/T-24027/. All loose experiments preserved in ignored build/T-24027-probes/. Production unchanged since verified win319f4b09e. Independent review pending.
+## [2026-10-17] ticket | T-24026 SHOUGATU sibling ports
+
+Created [[tickets/T-24026-shougatu-sibling-ports]] In Progress after reading [[shougatu-family-results]] and related sibling evidence. Scope is three functions in two source files.
+
+## [2026-10-17] build | T-24026 SHOUGATU two sibling C wins
+
+[[tickets/T-24026-shougatu-sibling-ports]] moves to In Review: 708 bytes of unguarded C verified by source gate, normal default linked literal proof and full SHOUGATU checksum. [[shougatu-family-results]] records recipes and the four-word stack layout blocker for the guarded dispatcher; source-only draft archived in drafts/T-24026. No shared-header changes.
+## [2026-10-17] ticket | Reserve Astra hard-function lane
+
+Created [[tickets/T-24020-astra-hard-functions]] and children [[tickets/T-24021-dialogue-scheduling]], [[tickets/T-24022-tel-frame]], [[tickets/T-24023-event-handler]]. Exclusive files and isolated branch/base recorded in the coordinating ticket. Read [[build-step-gaps]] and prior dialogue experiments; new bounded call-path hypothesis avoids repeating line-grouping probes. Configuring existing Docker toolchain with APFS-cloned immutable disc data.
+
+## [2026-10-17] query | Dialogue call-path scheduling hypothesis exhausted
+
+[[tickets/T-24021-dialogue-scheduling]] tested six new block-order/shared-tail variants. None improves the baseline aligned cost 4 (historical printed rows: 16). Preserved replay script and results in drafts/T-24021. Production source unchanged. Dialogue moves to In Review for parent review; [[tickets/T-24022-tel-frame]] moves Ready to In Progress, beginning with the two month-normalization stores that suppress uopt global promotion in [[tickets/T-23001-w5-big-p01]].
+
+## [2026-10-17] query | TEL month range probes do not restore promotion
+
+[[tickets/T-24022-tel-frame]] recorded 23 serial full-TU compiles (including baseline). Conditional stores improve aligned cost but contradict original store placement; type views and bit-field grouping do not help. Source-only replay material saved in drafts/T-24022. Baseline TEL SHA1 passes; zero C progress. Move TEL to In Review; [[tickets/T-24023-event-handler]] moves Ready to In Progress. EVENT hypothesis: recover outer girl dispatch as a structured switch while retaining per-girl fallthrough and early-return semantics, then inspect range differences.
+
+## [2026-10-17] query | EVENT dispatch and byte-local evidence
+
+[[tickets/T-24023-event-handler]] records improved else-if control flow, the recovered stack-byte gap, rejected distinct-Boolean frame expansion, and allocator tracing with an existing diagnostic binary. No verified C progress. All experimental objects remain under ignored build/t24023; source-only checkpoint will preserve the useful alternatives and exact metrics.
+
+## [2026-10-17] lint | Correct experimental EVENT dispatch transformation
+
+Review found that [[tickets/T-24023-event-handler]]'s experimental else-if rewrite deleted nested common-tail jumps. Invalidated all dependent scores, corrected the transformer to remove only each arm's terminal jump, and added explicit preservation assertions. Rerunning before source checkpoint. Production files and verified coverage remain unchanged.
+
+## [2026-10-17] build | Verify and preserve hard-function checkpoint
+
+[[tickets/T-24020-astra-hard-functions]] and [[tickets/T-24023-event-handler]] move to In Review; dialogue and TEL already await review. Corrected EVENT source independently recompiles at aligned cost 214, 826 printed rows, 1712/1712 instructions; final body SHA256 recorded in drafts/T-24023/measurement.json. The saved source includes FAKE explanations and removes its unused scalar. Production src/include/config/tools remain unchanged. Docker main/TEL/EVENT SHA1, headers, globals and prototype guard (0 new, 15 known) pass. No new matching C bytes or linked C proof claimed. Parent retains formal review and integration responsibility.
+
+## [2026-10-17] lint | Check research artifact scope and handoff
+
+Final checkpoint lint: 17 replay/inspection scripts parse in Docker; all recorded candidates compiled; four ticket statuses match their In Review cards. Independent hashes: main e823bd844a8f8fa4d05483b59c66bc54b8393b26, TEL d37c3ae6beb7ab361f39366b8274cde0f7c96b5c, EVENT ff7184d7e92b7aff372450ac3b8c2bdd42e55a5e. Added explicit draft/FAKE explanations to the rejected TEL alternative and removed a dead probe statement. Formal code-review gate remains pending; no ticket moved to Done.
+
+## [2026-10-18] ticket | Large DATE and EVENT sibling state machines
+Started [[tickets/T-24018-large-sibling-state-machines]] from 9d7049463 in the existing complete-bunkaken worktree. Read [[date-family-results]], T-12100 and T-23004 before recovery. DATE2 references are read-only; assigned source files only, single Docker compiler.
+
+## [2026-10-18] query | Large movie sibling ports remain source-only leads
+[[tickets/T-24018-large-sibling-state-machines]] ported matched DATE2/DATE source to the three assigned targets. DATE 462B0 reaches exact 951 instructions/frame with first 442 instructions exact but 434 printable rows left; EVENT C750 reaches 167 rows/924 versus 925 instructions; EVENT DDB8 remains worse than T-23004 at 357 rows/1005 versus 998. Bounded callback arrays, return views and byte/stage access probes do not match. Preserved source-only candidates and tested reproduction in drafts/T-24018/; private scratch stays ignored. Updated [[date-family-results]] and [[event-family-results]].
+
+## [2026-10-18] build | Unchanged DATE and EVENT controls remain exact
+Docker ninja -j1 DATE.ok/EVENT.ok has no work; independent Docker SHA1 comparisons match both configured targets. All three requested functions still use assembly fallback, so these controls contribute zero C bytes. No source/header/compiler change.
+
+## [2026-10-18] ticket | Large movie sibling follow-up ready for review
+Moved [[tickets/T-24018-large-sibling-state-machines]] and its board card to In Review. Root review remains; no push or merge by worker.
 
 ## [2026-10-17] ticket | T-24032 DATE/TACO rotation clone provenance
 
@@ -18259,3 +18585,38 @@ Created [[tickets/T-24033-valen-selector-ports]] In Progress. Read T-19016 and [
 ## [2026-10-17] decision | T-24033 VALEN seven-row selector draft
 
 [[tickets/T-24033-valen-selector-ports]] moves to In Review. Direct GameState girl access and meaningful mode local leave func_80132D0C at7 rows, retained under NON_MATCHING;34030 remains its prior27-row guard. Zero matches or verified-byte gain. Default VALEN SHA1 and declaration checks pass; [[event-family-results]] updated. Source-only probes preserved, all loose experiments retained ignored in build/T-24033-probes/. Independent review pending.
+## [2026-10-18] build | Six more verified functions integrated
+
+[[completion-run-2026-10-17]] records6486/6958 functions and1832660/2279368 bytes,80.4%. Independent review plus all27 hashes, guards and actual default C proofs passed for T24019GYOZI392, T24030BUNKASAI2020, T24027RPG_BAT1656 and T24026SHOUGATU708 bytes. T24030 moves to Done; partially completed families remain In Review. Continued workers own fresh T24028/T24029/T24031/T24032/T24033 scopes. Negative source archives remain explicitly non-matching.
+
+## [2026-10-17] ticket | T-24029 seasonal scene sibling pair
+
+Created [[tickets/T-24029-seasonal-scene-siblings]] In Progress for a bounded typed sibling reconstruction. Read prior [[shougatu-family-results]] and T-15100/T-17500 evidence.
+
+## [2026-10-17] decision | T-24029 bounded scene pair archive
+
+[[tickets/T-24029-seasonal-scene-siblings]] moves to In Review with source-only typed checkpoints in drafts/T-24029. No C win; production sources restored. Current aligned edit costs GYOZI 586 / SHOUGATU 656 leave broad copy scheduling and live-range blockers, recorded in [[shougatu-family-results]] and the archive. No shared-header changes or toolchain modifications.
+## [2026-10-18] ticket | Short DATE and EVENT movie sibling recovery
+Started [[tickets/T-24028-date-event-short-movie-siblings]] from 9d8cd8719 after reviewing T-17201/T-22009 and [[date-family-results]]/[[event-family-results]]. DATE2 func_801348F0 is read-only reference for DATE func_8014718C and EVENT func_8011D5C4. Bounded source-shape pass, one Docker compiler, owned source files only.
+
+## [2026-10-18] query | Shared short-movie timer gap isolated
+[[tickets/T-24028-date-event-short-movie-siblings]] ported matched DATE2 fade shape: DATE func_8014718C improves from 26 to 11 differing instructions; EVENT func_8011D5C4 reaches seven. Both instruction counts and 0x40 frames exact. The seven-word timer-narrowing gap is shared; focused natural and marked-FAKE scratch probes do not close it. Kept useful source-only drafts and tested reproduction in drafts/T-24028/, updating [[date-family-results]] and [[event-family-results]].
+
+## [2026-10-18] build | Improved DATE guard preserves normal checksum
+Updated only the existing DATE func_8014718C guarded body and ticket note; its assembly fallback remains. Docker probe rechecks show 22/14 printable rows for DATE/EVENT candidates; normal ninja -j1 rebuilt DATE with headers/checksum OK. EVENT source/header unchanged. Zero new verified C bytes.
+
+## [2026-10-18] ticket | Short movie source work ready for review
+Moved [[tickets/T-24028-date-event-short-movie-siblings]] and kanban card to In Review; root standards review remains. No push or merge.
+
+## [2026-10-18] lint | Refresh current ownership and matching priorities
+
+[[completion-run-2026-10-17]] reconciled stale queued/pending claims with published commits, updated T24033/T24034/T24035 ownership and recorded the Docker sibling refresh:36 strong-sibling targets/29088 instruction bytes, no exact clones in the filtered set. [[tickets/T-24029-seasonal-scene-siblings]] source checkpoint preserved; T24028 reviewed guarded DATE improvement and source-only EVENT seven-instruction blocker published after all27 default binary hashes and guards. Zero new verified bytes for these drafts.
+
+## [2026-10-18] lint | T24028 archive whitespace cleanup
+
+The integration's all27 hashes and guards passed, but its final staged diff check found one trailing-space-only line in the source archive. The subsequent wiki commit included the verified merge before that hygiene fix; remove the archive whitespace in this forward correction. No production bytes or matching claims changed.
+
+
+## [2026-10-17] setup | T-24036 clean main integration
+
+Merged latest main into the clean codex/complete-option tree as authorized for T-24036. Four wiki-only conflicts resolved by preserving both histories/cards; no C conflict. Existing T-24017 GEKO matched body retained unchanged.

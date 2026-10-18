@@ -203,6 +203,23 @@ the first-argument constant and the narrowing on an earlier source line than the
 
 `80058D20.c`: no match of the three remaining T-0018 functions ([[matching-notes]], section T-17017). Type work: the model record walked by `func_8005938C` is a local 0x88-byte `ModelRec88` (active/flag bytes, object at +4, handle at +8, `MATRIX coord` at +0x18, `SVECTOR` rot/scale/pos/vel at +0x64..+0x7C) in `drafts/T-17017/main/func_8005938C/`; the word at `D_800E731C` is read as `*(s32 *)&D_800E6280.unk_1095[7]` (+0x109C, like the +0x1098 word other units read through the same array). `func_800590CC` (16 rows) and `func_800591D8` (32 rows) stay guarded with aliased width and height variables.
 
+## Bounded renderer follow-up (T-24006)
+
+[[tickets/T-24006-main-render-family]] reused complete-main at f70450137580e684e20f8ecd28e7a93062385ac7. Exclusive source scope: src/main/8004C3F0.c. No production C/header changes and **0 new verified bytes**. Source-only hypotheses and stable aligned scoring metadata are in drafts/T-24006/. Historical printable row counts are not directly comparable with the current stable insert/delete cost (a substitution costs two).
+
+| Function / archived form | Aligned cost | Instructions built / target | Concrete blocker |
+| --- | ---: | ---: | --- |
+| mod_trans_vram, ModRec14 plus corrected word stride and byte buffer | 241 | 197 / 188 | frame 0x1A8 versus 0x1A0, buffer/divisor slots and selector allocation; natural loops change switch storage and loop register allocation |
+| mod_set_gpu, ModRec14 plus SDK SPRT_8 | 225 | 204 / 201 | frame 0xB0 versus 0xA8; selector goes through v1, record/divisor spill offsets differ |
+| mod_set, actual sprite request aggregate | 295 | 198 / 195 | frame 0xB8 versus 0xE8; original request at sp+0xB0, aggregate/selector allocation unresolved |
+| get_fnt, natural byte-buffer loops | 251 | 266 / 259 | loop counter lifetime hoists the second loop counter into an extra saved register; buffer offset and horizontal mirror scheduling differ |
+| srn_tpage_show, SDK POLY_FT4 / RECT | 1032 | 814 / 806 | first frame mismatch and repeated packet allocation/scheduling; no additional speculative variants |
+
+New type hypothesis: `ModRec14`, size 0x14, follows func_8004E44C's writes and the three model consumers: pointer table +0, word map +4, format byte +8, halfword +0xA, four byte dimensions at +0xC..0xF, halfwords +0x10/+0x12. It stays local to archived drafts pending a verified migration. SDK SPRT_8 describes the 0x10-byte GPU packet in mod_set_gpu; SDK POLY_FT4 and RECT describe srn_tpage_show packets and input rectangle. The mod_set stack request has the observed 0x24-byte sprite layout; unrelated scalar locals in the old m2c draft lose most stores when only the address of the first is passed. Its original `var_s5 += 4` also advances a word pointer by sixteen bytes; the corrected hypothesis advances one word.
+
+The T-17015 srn_set body remains unchanged. Its fresh aligned cost is 146 (149 / 149 instructions); yoff as s16 and unsigned cols both stay 146, wid/hgt as u16 gives 148, and xoff/yoff/y as s16 gives 138 with four extra instructions. No frame/register solution was found, so no redundant archive was added. get_fnt's m2c buffer was three words despite memcpy of 0x100 bytes, and its mirror operations contained incorrect word accesses; correcting bytes/strides alone leaves 338 cost versus 251 for the natural rewrite. The two unused pointer locals in that exploratory rewrite carry a FAKE frame note.
+
+Verification in the existing Docker image: ninja -j1 for build/src/main/8004C3F0.o and build/SLPM_86.053.ok reports no work; fresh direct SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 equals config/SLPM_86.053.sha1. Fresh funcdiff --resolve --no-build --version default gives linked literal MATCH for all six assigned ASM-backed functions plus srn_vram_set, move_255_line, srn_init and func_8004E44C. These prove production preservation, not new C recovery. Literal sizes of mod_set_gpu/mod_set/mod_trans_vram are 804/780/752; the work-list sizes included 24 padding bytes each. check_headers: OK; migrate_globals --check: OK; sync_protos --check-branch: 0 new disagreements, 15 known, branch check OK. Logs remain ignored under /tmp/T24006-*.log. Ticket awaits integration review.
 
 ### Completion package T-24015
 

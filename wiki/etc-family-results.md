@@ -165,3 +165,11 @@ Eight file-disjoint packages from the orchestrator's `mklists3.py` (lists in its
 | w3-etc-p06 | T-17306 | `8013F980.c` | 2 | 1,048 |
 | w3-etc-p07 | T-17307 | `80143240.c` | 6 | 2,072 |
 | w3-etc-p08 | T-17308 | `801492C0.c`, `8013FF80.c` | 4 | 3,436 |
+
+## T-24012 dispatcher checkpoint
+
+[[tickets/T-24012-etc-render-family]] verifies `func_80136448`, 1,280 literal linked bytes, in `src/ovl/ETC/80132880.c`. The known NAME_ENT `func_80140044` sibling confirms the dispatch family. The void return view leaves one instruction out of the shared epilogue and shifts branch displacements; an `s32` view with no explicit return reproduces all 320 instruction words and passes explicit default linked-byte proof and the ETC checksum. The view is marked FAKE since the historical source declaration is unknown. Its existing void callees gain accurate overlay-header declarations. Header/global guards pass; prototype guard reports 0 new / 15 known disagreements. Proof logs: `build/etc24012/final-proof.log`, `final-build.log`, `header-guard.log`, `global-guard.log`, `proto-guard.log`. Other assigned rendering functions remain assembly; review pending.
+
+### T-24012 remaining rendering drafts
+
+The follow-up pass adds no verified bytes. `drafts/T-24012/` preserves three source-only compiling drafts, independently measured in the reviewed full TU: RGB filter `func_801328A4` cost 217, SDK quad renderer `func_80132C3C` 180, background selector `func_80132FB0` 150. Costs are aligned differing-instruction diagnostics after relocation, not match proofs. The RGB draft recovers a legal flat 822-record buffer, correct frame/RECT position, and remains blocked on the +24-byte row base and saved-register/arithmetic allocation. Quad frame/spill and colour loads differ. Background code uses the real 22-pointer table and legal absorbed-alias indices, but original address rematerialization differs from compiler base sharing. Draft README records the bounded rejected variants; no guessed frame padding or scalar aliases were added. Production remains at the reviewed dispatcher checkpoint and the other three functions remain assembly. [[tickets/T-24012-etc-render-family]] is In Review for the archive delta, with those targets pending.

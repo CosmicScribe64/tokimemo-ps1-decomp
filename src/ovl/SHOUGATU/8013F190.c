@@ -1,6 +1,10 @@
 #include "common.h"
 #include "game.h"
+#include "psx_types.h"
 #include "ovl/SHOUGATU.h"
+
+void func_80140698(void);
+
 
 void func_8013F190(void) {
     D_80146130 = (u8 *)0x801D6360;
@@ -17,7 +21,29 @@ void func_8013F1E0(void) {
     D_80146154 = 0x801DB000;
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_8013F224);
+/* Fall-through return preserves the sibling callback schedule (T-24026). */
+s32 func_8013F224(void) {
+    s32 idx; /* Index precedes the copied table (T-3330, T-20006). */
+    FnTbl27 table;
+
+    table = D_8014616C;
+    idx = D_800E6280.unk_110A;
+    table.f[idx](0x80);
+    if (D_800E6280.unk_110A < 8) {
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = D_800B593C;
+        if (((DisplayActor44 *)D_8011ECD0)[96].unk_18 == 0 && ((DisplayActor44 *)D_8011ECD0)[96].unk_08 == 0) {
+            if (++((DisplayActor44 *)D_8011ECD0)[96].unk_16 >= 3) {
+                ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 0;
+            }
+        }
+    }
+    if (D_800E6280.unk_110A >= 0xA && D_80146160 != 0) {
+        func_80140314();
+    }
+    if (D_800E6280.unk_110A >= 0xA && D_80146164 != 0) {
+        func_80140698();
+    }
+}
 
 void func_8013F360(void) {
     if ((D_80146168[D_80146158] == 0xB) && (D_800E6280.unk_03E == 0x60)) {
@@ -241,7 +267,27 @@ void func_80140284(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_80140314);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_80140510);
+/* Fall-through int return follows the matched DATE builder (T-24026). */
+s32 func_80140510(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1, s32 z, s32 trans) {
+    GameState *g;
+    POLY_G3 *poly;
+
+    g = &D_800E6280;
+    poly = func_800490F0(0x1C, D_8011ECA0);
+    func_8009F004(poly);
+    SetSemiTrans(poly, trans);
+    /* FAKE: explicit colour masks and comma lines retain the matched sibling register schedule (T-20600, T-24026). */
+    poly->r0 = (c0 >> 16) & 0xFF, poly->g0 = (c0 >> 8) & 0xFF, poly->b0 = c0 & 0xFF;
+    poly->r1 = (c1 >> 16) & 0xFF, poly->g1 = (c1 >> 8) & 0xFF, poly->b1 = c1 & 0xFF;
+    poly->r2 = (c1 >> 16) & 0xFF, poly->g2 = (c1 >> 8) & 0xFF, poly->b2 = c1 & 0xFF;
+    poly->x0 = g->unk_014[D_8011ECA0] + x0;
+    poly->y0 = g->unk_018[D_8011ECA0] + y0;
+    poly->x1 = g->unk_014[D_8011ECA0] + x1;
+    poly->y1 = g->unk_018[D_8011ECA0] + y1;
+    poly->x2 = g->unk_014[D_8011ECA0] + x2;
+    poly->y2 = g->unk_018[D_8011ECA0] + y2;
+    func_8009EED0(&D_800E8CA0[(D_8011ECA0 << 10) + z * 4], poly);
+}
 
 void func_80140698(void) {
     s16 i;

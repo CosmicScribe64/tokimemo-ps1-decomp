@@ -1,0 +1,10 @@
+{
+  "name": "func_801365C8",
+  "tag": "update-derived-loop-init",
+  "aligned_cost": 18,
+  "expected_instructions": 188,
+  "built_instructions": 188,
+  "status": "nonmatching",
+  "base": "d2c844fb3df7a3f57eaa74942517fdac07a0b4c5",
+  "source_sha256": "e30f32e42a1755da50543d3a13b1c0cd79bbf742fec282bc485d85eec53f14bb"
+}
