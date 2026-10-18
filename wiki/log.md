@@ -19138,3 +19138,12 @@ claim carried over604 behavior without verification. Cast adds one MOVE in each
 arm, no new dependency or extension. Keep604 numeric best and628 causal frontier;
 624 is an added-copy control, not a structural gain. Source/replay preserved;
 no new probe or production change, same function active.
+
+## [2026-10-18] build | T24078 private void view is neutral and changes matched caller
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] retain628
+s32 form. Authorized private void view has identical target628/592words/A0,
+but full-TU35-function audit finds9 changed C330 words (v1-to-v0 aftercalls),
+other34 unchanged. All six calls ignore result and original has no explicit
+return; neither proves original void. Exact forward/source/replay preserved,
+no production/header change or invented return. Active same function.
