@@ -19309,3 +19309,14 @@ view adds copies and worsens650/594words. Frame90/poly84/88/UV50/54 unchanged.
 FAKE/semantic-domain proofs and predictions in drafts/T-24078/height-lifetimes.md.
 No additional masks/widths/suffixes, logger or production edit. Same target active,
 no impossibility or match claim;618/606/604 retained independently.
+
+## [2026-10-18] build | T24078 separates saved-pool recovery from height expression fidelity
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve three
+bounded sequential expressions: stagedH normalizes618; negatedH616/588words
+recovers original saved roles but distributes height160 into Y+59; one marked
+low16 boundary retains four H LI/SUB pairs yet adds shifts/copies635/599words.
+All frame90/poly84/88/UV50/54 retained. Semantic-domain proofs and predictions
+in drafts/T-24078/height-lifetimes.md, source/replays preserved. No further
+width/mask/suffix grid, instrumentation or production edit. Same target active,
+no match/impossibility claim; original word count alone is insufficient.
