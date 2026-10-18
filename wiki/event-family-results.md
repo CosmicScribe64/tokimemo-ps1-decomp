@@ -251,3 +251,6 @@ Production C/headers and earlier BUNKASAI wins remain untouched. Both default ov
 ## T-24059 GYOZI copy-chain recovery
 
 [[tickets/T-24059-short-copy-siblings]] matches GYOZI func_80137F48 (164 actual default C bytes), alongside SHOUGATU func_80136948. DATE/SHUGAKU's existing s16 narrowed-global recipe transfers when selector arithmetic is between the saved and replacement asset-copy groups. Current direct/local controls40/34, narrowed-global0/0; no grid or header change. GYOZI uses its canonical aggregate girl field. Literal default C proof and GYOZI SHA1 `43f92523116e7b6cd772d4397712a52eeda89703` pass, as do interface guards. No new FAKE; source explanation follows T-17205/T-24017.
+## T-24061 bounded short control/copy pass (2026-10-18)
+
+GYOZI func_8014494C scratch s32 setup40050 return view fixes the full counter prefix, reducing96 to84 rows with exact74 words. Two68-byte copies still have temporary-lifetime gaps;64+explicit4 gives44 rows but two extra words. Pointer/original pool indexing adds no gain. Current void shared callee/header stay unchanged; no viable match and no C bytes. Full source/reproduction/negative ledger: drafts/T-24061/README.md and [[tickets/T-24061-short-control-and-copy]] (In Review).

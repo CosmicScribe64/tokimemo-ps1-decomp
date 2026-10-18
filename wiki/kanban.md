@@ -72,6 +72,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
 - [ ] [[tickets/T-24043-master-large-handler|T-24043 Recover larger MASTER final-event handler]]
 - [ ] [[tickets/T-24031-gyozi-shougatu-pairs|T-24031 Recover GYOZI and SHOUGATU particle pairs]]
+- [ ] [[tickets/T-24061-short-control-and-copy|T-24061 Recover short GEKO SHOUGATU GYOZI handlers]]
 - [ ] [[tickets/T-24056-shougatu-short-siblings|T-24056 Match three short SHOUGATU siblings]]
 - [ ] [[tickets/T-24049-etc-exam-ranking|T-24049 Recover ETC exam ranking generator]]
 - [ ] [[tickets/T-24039-tel-date-menu|T-24039 Recover large TEL date menu C]]

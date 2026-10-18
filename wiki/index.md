@@ -712,3 +712,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Review; no match, assigning default restores switch layout and improves 72 to 28 rows; all 21 table mappings audited).
 
 - [[tickets/T-24056-shougatu-short-siblings]] - three SHOUGATU source-only leads,62/72/12 rows; In Review.
+
+- [[tickets/T-24061-short-control-and-copy]] - source-only short control/copy pass: GEKO44, SHOUGATU56, GYOZI84 rows; zero C bytes, In Review.

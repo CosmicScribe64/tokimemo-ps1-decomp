@@ -252,3 +252,6 @@ GEKO func_80134228 matches normal unguarded C (244 literal bytes) by porting fun
 ## T-24036 GEKO tail follow-up
 
 [[tickets/T-24036-geko-shugaku-siblings]] restores the GEKO40040 guard's current91-row mixed-field baseline to7 with the matched EVENT byte-view recipe, explicitly marked FAKE as in T-20900. The original unconditionally reloads the counter at the tail; meaningful locals and a scratch signed declaration leave7, while whole signed alias forces reload but leaves8 register rows. No header edit or new GEKO coverage. Existing matched GEKO3FD88 unchanged; default checksum and declaration guards pass. SHUGAKU sibling in the same package matches244 bytes; source/provenance in drafts/T-24036/.
+## T-24061 bounded short control/copy pass (2026-10-18)
+
+GEKO func_80141870 natural byte postincrement plus the T-23005 word/reload lifetime improves51 to44 printable rows (67 target/69 candidate words). Selector loads still choose temporaries rather than a0; tail has two extra words. Explicit selector locals add no gain; eager boolean evaluation adds AND. No production change or C bytes. Full source/reproduction/negative ledger: drafts/T-24061/README.md and [[tickets/T-24061-short-control-and-copy]] (In Review).
