@@ -48,6 +48,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24068-etc-album-interaction|T-24068 Match ETC album interaction]]
+
 
 
 

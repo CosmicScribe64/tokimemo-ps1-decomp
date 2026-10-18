@@ -18618,3 +18618,7 @@ Parent requested [[tickets/T-24067-etc-album-copy]] move to In Review and stop s
 ## [2026-10-18] ingest | T-24064 model-loop provenance
 
 Added source-only drafts/T-24064/README.md with matched MAIN cursor provenance, corrected record strides, exact10→4→0 private contexts, FAKE line-group rationale/plain-header control and actual-default replay commands. [[matching-notes]] and [[tickets/T-24064-etc-count-trio]] link the frozen production win0f3496877; documentation only, no source amendment. Parent owns independent review/all27/integration; ticket remains In Review.
+
+## [2026-10-18] ticket | Claim only ETC album interaction
+
+Created [[tickets/T-24068-etc-album-interaction]] before source work on func_80140AE4 in ETC/8013FF80.c, from clean732e7c96d. Primary main6d1d52101 still uses assembly for this target; parent assigns exclusive scope. Same sole Sol medium worker and serial Docker compiler, no extra agents. Read [[etc-family-results]] and T-13103 prior48-row/switch54/58 negatives before new evidence-driven controls. Preserve published T-24064 and unresolved T-24067.

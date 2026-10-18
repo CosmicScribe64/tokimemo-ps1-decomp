@@ -1,0 +1,25 @@
+---
+id: T-24068
+title: Match ETC album interaction
+status: In Progress
+assignee: Codex
+created: 2026-10-18
+updated: 2026-10-18
+links: ["[[etc-family-results]]", "[[tickets/T-13103-etc-memory-card-family]]", "[[tickets/T-17300-types-first-etc]]", "[[tickets/T-24000-complete-matching]]"]
+---
+
+## Goal
+Recover only ETC func_80140AE4 (224 bytes) in src/ovl/ETC/8013FF80.c. Preserve every other function, verified T-24064 model loop and unresolved T-24067 album-copy evidence.
+
+## Acceptance criteria
+- Reuse clean built checkout from 732e7c96d on codex/complete-etc-album-interaction; primary main6d1d52101 still has target INCLUDE_ASM and parent exclusively assigned it.
+- Read current wiki and T-13103/T-17300 plus earlier 48-row controls before edits. Use siblings and target-driven type/control-flow evidence, not repeated blind sweeps.
+- One existing GPT-6.1 Sol medium worker/compiler, Docker only and serial ninja -j1; no additional agents or Astra.
+- Report exact shared-header/config scope before mutations. Actual C requires unguarded default body, explicit default linked literal proof, ETC checksum and interface guards plus unchanged-body audit.
+- Parent owns independent review/integration; ticket remains In Review until reviewed.
+
+## Notes
+Prior GameState pointer transfer remains48 rows; ordinary switch controls54/58. Earlier unsigned-compare constant sharing, selector/result widths, clamp locals and temporary-order experiments failed. Do not repeat without concrete new evidence. T-24064 is independently published252-byte C; its other deferred scope is superseded only for this assigned function. T-24067 remains unresolved and receives no probes.
+
+## Comments
+Parent requests function-by-function work using the same sole worker. Clean checkpoint732e7c96d and independently published main6d1d52101 confirmed before starting; primary source target still assembly.
