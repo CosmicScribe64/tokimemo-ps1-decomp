@@ -18236,3 +18236,8 @@ Created [[tickets/T-24027-rpg-bat-state-machines]] In Progress for three exclusi
 ## [2026-10-17] build | T-24027 RPG_BAT state-machine match
 
 [[tickets/T-24027-rpg-bat-state-machines]] verifies func_80154760 as1656 default linked bytes. Direct selected-index global and natural remaining-flag loop resolve the old shape blocker. Two existing recipe FAKE sites marked; required implicit-int callee view retained. RPG_BAT SHA1 passes; literal default no-build proof matches. Updated [[rpg-bat-family-results]].
+
+
+## [2026-10-17] decision | T-24027 state-machine package in review
+
+[[tickets/T-24027-rpg-bat-state-machines]] moves to In Review with one of three matched (1656 bytes). Remaining aggregate/quotient and geometry-loop allocation blockers recorded in [[rpg-bat-family-results]]; source-only forms and scorer archived in drafts/T-24027/. All loose experiments preserved in ignored build/T-24027-probes/. Production unchanged since verified win319f4b09e. Independent review pending.
