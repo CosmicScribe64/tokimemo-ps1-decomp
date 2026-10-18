@@ -18866,3 +18866,11 @@ Root Docker measurement at publishedc7690151b:6516/6958 functions,1866672/227936
 Parent completed read-only GitHub check around2026-10-18 12:44UTC: no open
 PRs; only open claims57(updated2026-10-17T22:16:21Z) and50(updated2026-10-17T15:45:07Z),
 unchanged. No external messages. Next check planned13:14UTC. No added matching scope. See [[completion-run-2026-10-17]].
+
+## [2026-10-18] build | Correct T-24075 replay after C promotion
+
+[[tickets/T-24075-etc-random-selection]] handoff helper now exact-replaces the
+pinned matched body rather than requiring the removed ASM fallback. Fresh
+Docker replay on matched checkout reports zero; production unchanged assertion
+passes. [[etc-family-results]] and drafts/T-24075 record the correction; verified
+904-byte production/source/review and Done status are unchanged.

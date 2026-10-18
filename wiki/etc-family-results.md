@@ -334,3 +334,9 @@ mainc7690151b; ticket/card/index Done. Exact production5d083af5 and source/repla
 provenance remain preserved. Coverage measurement pending, no inferred totals.
 
 Root Docker measurement at publishedc7690151b:6516/6958 functions,1866672/2279368 bytes (81.9%),412696 remaining; gain904 bytes. T-24075 is Done after independent review/publication.
+
+Replay handoff correction: parent found the old helper required the removed
+ASM fallback after promotion. It now exact-matches/replaces the pinned current
+C body, strips only archive banners and asserts production unchanged. Fresh
+Docker replay on matched checkout reports zero; verified production5d083af5
+unchanged and Done status retained.

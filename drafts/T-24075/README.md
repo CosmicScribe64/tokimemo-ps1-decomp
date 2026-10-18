@@ -42,7 +42,8 @@ python3 drafts/T-24075/replay.py
 python3 drafts/T-24075/replay.py --variant baseline
 ```
 
-The helper replaces only the assigned fallback in a private full TU, strips the
+The helper exact-matches and replaces only the pinned production C body in a
+private full TU, strips the
 archive banner to preserve measured source placement, compiles with stock
 project flags, and checks funcdiff --built --no-build --resolve --version default
 --unit ETC func_8013C8EC. It validates the process result before counting rows
@@ -79,3 +80,8 @@ Parent full standards/spec review reports no findings; independent all27
 checksums/interfaces/actual-C gate and literal904B pass. Published mainc7690151b.
 The exact production body remains frozen5d083af5; this packet preserves source
 and replay. Root Docker measurement at publishedc7690151b:6516/6958 functions,1866672/2279368 bytes (81.9%),412696 remaining; gain904 bytes.
+
+Post-publication replay correction: the previous helper still required the
+removed ASM fallback. It now replaces the exact pinned matched body and keeps
+the production-unchanged assertion. Fresh Docker replay on the matched checkout
+reports zero (build/etc24075/post-promotion-replay.log); production is unchanged.
