@@ -957,7 +957,8 @@ extern s32 D_80150E98;
 extern s32 D_80151358[];
 void func_8014354C(void);
 void func_80143758(void);
-void func_8014407C(void);
+/* T-24073: original reads incoming a0; preserve historical callers without an argument expression. */
+void func_8014407C();
 extern s16 D_80150138;
 s32 func_8014BDE0(void);
 void func_801332F0(void);
