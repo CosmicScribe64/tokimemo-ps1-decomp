@@ -17940,3 +17940,7 @@ Package w4-p16 for [[tickets/T-22016-w4-p16]]: KANGEI `func_80135004`, `func_801
 ## [2026-10-18] ticket | T-22016 Done
 
 Review of [[tickets/T-22016-w4-p16]] against `CODING_STANDARDS.md` passed after one wiki fix (ticket, index and [[matching-notes]] still called `func_8013769C` guarded after the closer matched it). 2 of 4 matched: KANGEI `func_801362F0` (420 bytes) and `func_8013769C` (1,268 bytes); `func_80135004` guarded at 16 rows, `func_80134724` back to `INCLUDE_ASM`.
+
+## [2026-10-17] ticket | T-22027 In Progress
+
+Started [[tickets/T-22027-w4-p27]] (wave 4 package w4-p27, branch `w4-p27` from `w2-good`): GEKO `src/ovl/GEKO/801338F0.c`, `func_80133AA0` and `func_80133C50`.
