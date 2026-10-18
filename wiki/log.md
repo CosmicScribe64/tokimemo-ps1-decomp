@@ -20184,3 +20184,12 @@ LW replaces LB but repeated reloads remain; saved mode/136/160/page allocation
 unchanged. Source retains explicit unknown-aggregate FAKE; geometry/signature
 fixed. Reject as frontier, retain604 numeric/628 causal. Exact source/replay
 preserved, production unchanged and same target active; no further diagnostic.
+
+## [2026-10-18] query | T24078 maps stack homes without guessing declarations
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve
+original/current stack map in drafts/T-24078/stack-map.md. Originalpoly84/88
+leaves unknown8C above it; UV50/54 versus current90/94 anchors differ. Existing
+604 frontend has72 declared bytes plus hidden4-byte selector, optimizedDEF76;
+no628 snapshot exists. Unaccessed original homes remain unknown. No new compile,
+capture, padding or declaration permutation. Same function remains active.
