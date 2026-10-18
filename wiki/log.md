@@ -18350,6 +18350,10 @@ ETC final archive passes both independent review axes. DATE source-only archive 
 ## [2026-10-17] ticket | Hand off reviewed DATE and ETC bounded pass
 [[tickets/T-24010-date-etc-coordination]], [[tickets/T-24011-date-dispatch-family]] and [[tickets/T-24012-etc-render-family]] move to In Review. One ETC dispatcher adds 1,280 verified C bytes; six targets remain assembly with useful source-only drafts and blockers. Both independent review axes pass final archives and DATE P2 repair; five Docker failure-contract tests pass. Worktrees remain available, parent owns integration/push, and no further files claimed.
 
+## [2026-10-17] ticket | Begin RPG_BAT battle completion package
+
+Created [[tickets/T-24013-complete-rpg-bat]] for three functions in src/ovl/RPG_BAT/80137280.c and 801525B0.c after consulting [[rpg-bat-family-results]]. Existing branch history preserved; one compiler/ninja job.
+
 ## [2026-10-17] build | Repair GEKO probe failure exit status
 
 Independent review of [[tickets/T-24007-complete-geko]] found swallowed candidate exceptions. drafts/T-24007/probe.py now exits 1 if any candidate fails while preserving labeled diagnostics. A Docker invalid-candidate run confirms exit 1 and the ERROR label; verified production C is unchanged.
@@ -18384,3 +18388,6 @@ The pointer-plus-empty-test form fills the original load delay and aligns all 1,
 ## [2026-10-18] ticket | T-24009 bounded closer archived without a match
 
 76 source probes found no exact match. Production guard and source remain unchanged. `drafts/T-24009/probe.py` reproduces weighted scores 12 and 10; the latter still differs in eight words (16 diagnostic rows). Explicit default proof matches the 4,648-byte assembly fallback and fresh ENDING SHA1 passes; zero new verified C bytes. Updated [[matching-notes]] and moved [[tickets/T-24009-ending-scheduler-closer]] to In Review for independent archive review.
+## [2026-10-17] build | Recover RPG_BAT rectangle state machine
+
+[[tickets/T-24013-complete-rpg-bat]] recovered func_80139510 (2,424 literal linked bytes) in src/ovl/RPG_BAT/80137280.c. Paired RECT comma-expression stores and direct counters recover the old T-9960 lead; FAKE two-word padding preserves the original frame. Existing callee view solves the prior power-counter gap. Default linked proof and RPG_BAT checksum pass; details in [[rpg-bat-family-results]].
