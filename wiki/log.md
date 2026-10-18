@@ -19221,3 +19221,14 @@ sequential controls: matched D32C direct-work alias removal is resolved-identica
 583/frame90. No other UV/height-width sweep. Original loaded UVcopies live only
 across polygon stores, while persistent words live across calls. Exact source,
 replay and next capture-lifetime question preserved; no production change.
+
+## [2026-10-18] build | T24078 recovers original UV word-copy lifetime and load order
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve two
+sequential UV snapshot controls. Existing dead arm scratch locals capture the
+FAKE persistent pair once each; LW v0/v1 now feed both stores without reloads
+or across-call promotion. Moving second capture into u1 RHS restores original
+poly-address-before-UV160 load order. Both624cost/592words/frame90, no extra
+homes. Latest causal frontier uv-capture-store remains distinct from604 numeric
+best. Source/replay/evidence pinned; saved160/page and earlyH remain unresolved,
+no type guess, instrumentation or production change. Same function active.
