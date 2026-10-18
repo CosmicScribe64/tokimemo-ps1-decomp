@@ -18859,3 +18859,6 @@ Created [[tickets/T-24050-geko-scene-near-match]] In Progress after reading [[ge
 ## [2026-10-18] build | Three function-count wins published
 
 T24052 SHOUGATU488-byte sibling publishedf90483388; T24053 EVENT100 and BUNKA_SD132 publishedd40a1ece7. Root independently reviewed sources and verified actual default C, literal bytes,27 binary hashes and interface guards. [[completion-run-2026-10-17]] now6503/6958 functions,1850368/2279368 bytes(81.2%),429000 remaining. T24050 corrected source-only archive published9bf7361e4. Active families retain unfinished targets and no draft is counted as matched.
+## [2026-10-18] decision | Short-function lane closes with two wins
+
+[[tickets/T-24053-short-function-lane]] moves to In Review:2 of3 matched,232 bytes independently published at d40a1ece7. [[shugaku-family-results]] records the third target's38-to8-row source-only improvement and selector/call-move blocker. No SHUGAKU production/header change; selected body/reproducer retained and traces remain ignored. Root's all27 hash/interface verification of the two wins is not repeated for archive-only work.

@@ -93,3 +93,7 @@ the callback-table idiom, which the header now makes visible to m2c.
 ## T-24036 short selector sibling
 
 func_80134C98 matched244 default linked bytes from matched func_80133F6C using canonical GameState accesses and additional state/flag stores. No new FAKE or header change; the stale typed temporary draft differs46 rows while the direct sibling matches. Default literal no-build proof, SHUGAKU checksum and header/global/prototype checks pass. See [[tickets/T-24036-geko-shugaku-siblings]].
+
+## T-24053 short selector source pass
+
+[[tickets/T-24053-short-function-lane]] leaves func_8013A1D4 (160 bytes) as ASM. A natural byte assignment removes the generated source's redundant mask (38 to10 rows); meaningful s32 girl before u8 result fixes its sp2B home and reaches8/8. Only initial selector allocation/call move differ; byte-view, unsigned girl and direct-selector/full-word result forms stay8, GameState pointer16, int-return liveness10. No header or production change; source-only selected body and reproducer in drafts/T-24053/.

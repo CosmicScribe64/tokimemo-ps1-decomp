@@ -38,7 +38,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
-- [[tickets/T-24053-short-function-lane|T-24053]] two short C wins232 bytes, SHUGAKU In Progress.
+- [[tickets/T-24053-short-function-lane|T-24053]] two short C wins232 bytes, SHUGAKU8-row source lead, In Review.
 - [[tickets/T-24048-master-animation|T-24048]] MASTER source-only reconstruction434/428, zero matches, In Review.
 - [[tickets/T-24044-taiiku-taco-siblings|T-24044]] TAIIKU/TACO bounded sibling retry: zero matches, corrected counter and improved output-index source leads archived; In Review.
 - [[tickets/T-24040-option-menu-siblings|T-24040]] two of three matched (1028 bytes), selector guarded at5 rows; In Review.
