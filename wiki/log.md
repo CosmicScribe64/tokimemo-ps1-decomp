@@ -18897,3 +18897,7 @@ Created [[tickets/T-24055-etc-short-helpers]] and claimed src/ovl/ETC/80143240.c
 ## [2026-10-18] decision | ETC short-helper source pass closes
 
 [[tickets/T-24055-etc-short-helpers]] moves to In Review with zero matches and no production/header/config changes. [[etc-family-results]] records fresh13/111/70-row source leads, corrected stale word reads of the byte-coordinate table, SDK vector/prologue and counter/index lifetime blockers, and bounded negative forms. Selected sources/reproducer saved; all loose traces remain ignored. Baseline ETC hash passes, no ASM fallback coverage claim.
+
+## [2026-10-18] ingest | Near-match archives and active ownership reconciled
+
+Published DATE T24051 source-only checkpointc3b3afe09, KANGEI T24054 archivee2dbe9b84 and ETC T24055 archive76d373139. No production or coverage change. Reconciled the authoritative ownership block in [[completion-run-2026-10-17]] with six active lanes and reserved DATE follow-up; older dated notes remain historical. Scope updates T24057/T24058/T24059 continue the requested count pass while large EVENT/ENDING remain active.

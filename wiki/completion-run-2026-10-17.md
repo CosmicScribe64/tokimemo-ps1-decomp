@@ -54,11 +54,16 @@ Each was independently checked against default linked function bytes, all27 bina
 
 ## Active ownership
 
-- T24050 Sol medium root worker, codex/complete-main: GEKO80134040 func80134808. T24046 corrected renderer source-only archive published d211334e2.
-- T24049 Sol medium root worker, codex/complete-bunkaken: ETC80146400 func801480D0. T24045 TEL match verified and on main.
-- T24048 Sol medium root worker, codex/complete-option: MASTER80133680 func801344E0. T24044 corrected source archive is on main.
-- Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687: dialogue_speak_part completed and independently integrated. Continues EVENT8010FE10 func801103A0; reserved MAIN8006CB30 ONLYfunc8007132C, GEKO80142760 ONLYfunc80142C9C, TEL80132000. T24042 is the renamed TEL helper follow-up; T24026 remains the earlier SHOUGATU ticket. One compiler.
-- Sol medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: T24051 DATE80141EE0 func80144E20, roughly3.2KB. T24043 corrected MASTER source archive published cec8f5843. One compiler.
+This section is authoritative; later dated handoff notes preserve history.
+
+- T24058 Sol6.1 medium root worker, codex/complete-main: SHOUGATU80134120 func801347E0 and GYOZI80136220 func80137188. T24054 source-only archive published e2dbe9b84.
+- T24056 Sol6.1 medium root worker, codex/complete-bunkaken: SHOUGATU8013D660 funcs8013D820/8013D92C and SHOUGATU8013DD90 func8013DF14. Minimal s16 D80145FDC declaration approved if needed for a verified match; scratch-only until viable. T24052 pair is verified and Done.
+- T24059 Sol6.1 medium root worker, codex/complete-option: GYOZI801372B0 func80137F48 and SHOUGATU80135B90 func80136948. T24055 source-only archive published76d373139.
+- Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687: EVENT8010FE10 func801103A0 active; reserved MAIN8006CB30 onlyfunc8007132C, GEKO80142760 onlyfunc80142C9C, TEL80132000. Dialogue renderer already verified. Trace locates14 remaining operand reversals in conversion pass; source recovery continues with unchanged build rules.
+- Sol6.1 medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: T24057 ENDING80133C10 funcs80134B18/80134C2C. DATE80141EE0 func80144E20 reserved for future recipe transfer;28-row source checkpoint publishedc3b3afe09.
+- Sol6.1 medium chat01a1410a-cead-7cf3-9bfa-aa44f25f055b: T24047 ENDING80134D20 func80135F4C active in /private/tmp/tokimemo-ending-large. Remaining loop scheduling/hoisted addresses; no C match yet.
+
+One compiler per worker, no overlapping source ownership. Contributor exclusions remain NAME_ENT and TT; DATE2 is not a local target.
 
 ## Completed bounded passes
 
