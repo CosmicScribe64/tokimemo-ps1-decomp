@@ -4,19 +4,23 @@ T-24067 owns only func_80141ABC in src/ovl/ETC/80140F50.c. Production retains as
 
 | Source | Cost | Added/removed rows | Remaining differences |
 | --- | ---: | ---: | --- |
-| body.c, typed indexed loop | 16 | 16 | Four end/save assignment words, four second-copy t5/t6 words |
+| body.c, indexed loop with early continue | 8 | 8 | Four second-copy t5/t6 words |
+| indexed-body.c, earlier indexed loop | 16 | 16 | Four end/save assignment words, four second-copy t5/t6 words |
 | cursor-body.c, earlier cursor loop | 16 | 20 | Two preheader HI/LO swaps, two stack stores, four copy words |
 
-Both have frame 0x48 and 75 instruction words. Safe replay uses the existing Docker image, serially:
+All have frame 0x48 and 75 instruction words. Safe replay uses the existing Docker image, serially:
 
 ```
 python3 drafts/T-24067/replay.py
+python3 drafts/T-24067/replay.py --variant indexed
 python3 drafts/T-24067/replay.py --variant cursor
 ```
 
 The indexed body walks all 256 GsRec75E records through the actual GameState array. Induction elimination generates the original byte cursor and offsets. Existing Work800E7D10.unk_058 supplies the 0x800-byte album; count/mode are unk_027[1]/[0]. Byte-only aggregate assignment gives the unaligned word copies. Reading the stored mode byte for the final printf restores the tail schedule.
 
-Only the count-initializer/for source-line group is FAKE in the indexed body. Removing that grouping changes the preheader schedule. The format identity used by the earlier cursor body is unnecessary here and has been removed. Canonical fields cover all addresses, with no alias, header or symbol export changes. Safe logs are build/etc24067/indexed-safe.log and cursor-safe.log.
+Only the count-initializer/for source-line group is FAKE in the indexed bodies. Removing that grouping changes the preheader schedule. The format identity used by the earlier cursor body is unnecessary here and has been removed. Canonical fields cover all addresses, with no alias, header or symbol export changes. Safe logs are build/etc24067/continue-safe.log, indexed-safe.log and cursor-safe.log.
+
+The early-continue form rejects a record when any flag is zero or the masked selector differs. It preserves the same reads, order and copies, and corrects all saved end/save allocation words. Exact tagged full-TU replay under `--no-build --resolve --version default --unit ETC` reports only four differing instructions: rows51/52/54/55 use t5 for the second unaligned copy word where the original uses t6. This is an explicit-object diagnostic; production remains its assembly fallback. Current eight-row source is a further gain, not a claim that the known B/F compiler analogy has been verified with a private4.1 target compile.
 
 The earlier cursor form retains two FAKE idioms: its format-pointer identity restores saved allocation, and its initializer/do line group improves scheduling. It complements the indexed form, whose schedule agrees but whose saved end/save allocation is reversed. Earlier source checkpoints are eadad3134 (cost 18 / 28 rows) and 47c7d6151 (cursor cost 16 / 20 rows).
 
@@ -65,7 +69,7 @@ Thus save's bit precedes end because the copy block is traversed before the loop
 To reproduce the logger, mount the existing /private/tmp/t24047-uopt read-only at /scratch in the existing image, then run serially from /work:
 
 ```
-python3 drafts/T-24067/replay.py
+python3 drafts/T-24067/replay.py --variant indexed
 python3 drafts/T-24067/trace_creation.py
 cc -std=c11 -Os -fno-strict-aliasing -I/scratch/recomp -o build/etc24067/creation-v3/trace-create build/etc24067/creation-v3/trace-create.c /scratch/recomp/build/5.3/libc_impl.o /scratch/recomp/build/5.3/version_info.o -lm
 python3 tools/uopt_eval.py compile build/etc24067/archive/indexed/source.c build/etc24067/creation-v3/indexed.o --uopt /work/build/etc24067/creation-v3/trace-create --trace --jobs 1
