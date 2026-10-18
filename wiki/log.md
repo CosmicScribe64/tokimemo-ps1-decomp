@@ -19076,3 +19076,13 @@ Original X0+136 web returns with two extra copies; no semantic repair or new
 phase observation claimed. drafts/T-24078/x1-narrow.c/replay preserve result.
 Remaining P-order origin precedes current capture; no further diagnostic or
 source probe begun, target active and production unchanged.
+
+## [2026-10-18] build | T24078 stock optimizer proves P-order reversal boundary
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] record one
+parent-approved stock input/raw/post capture with same604 whole-object fidelity
+first. Frontend and converted target bytes agree, Q11 beforeP. Stockuopt raw
+reverses them; postconversion wholefile unchanged, previous ugen target matches.
+Internal transform remains unknown; no source defect, compiler exception or
+new dependence asserted. drafts/T-24078/phase.md/uopt_capture.py/manifest preserve
+recipe; raw stages ignored. Same sole worker/function active, production intact.
