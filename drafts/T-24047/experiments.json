@@ -839,5 +839,45 @@
     "cost": 756,
     "printed": 772,
     "matching_claim": false
+  },
+  {
+    "label": "closer_default_compound_scope",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_default_do_once",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_default_stores_in_arg0",
+    "expected": 805,
+    "got": 804,
+    "cost": 47,
+    "printed": 47,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_default_stores_in_arg3",
+    "expected": 805,
+    "got": 804,
+    "cost": 51,
+    "printed": 51,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_false_negative_backedge",
+    "expected": 805,
+    "got": 802,
+    "cost": 723,
+    "printed": 793,
+    "matching_claim": false
   }
 ]

@@ -290,3 +290,27 @@ ledger now has105 measurements. Five backend controls and exact provenance are
 retained in drafts/T-24047/backend-evidence.json and [[ending-allocator-trace]].
 Scope/standards review finds no production changes or new findings in this
 evidence-only follow-up. Keep task In Progress on the same sole AS1 blocker.
+
+After checkpoint d6c4f72b3, default compound-block and do-once wrappers are
+both neutral35. The existing VALEN34030 note in [[matching-notes]] describes
+the same unknown second-entry/bound problem; do not repeat its outlier-case
+or duplicate-range experiments. Test only a call-argument sequence difference
+next: equivalent ordered comma assignments can change pre-scheduling order
+without new storage, unlike declaration views already shown neutral.
+
+Comma-store sequencing inside arg0/arg3 expands the frame to168 and leaves
+the same motion (804/cost47 and51); both rejected. One late false-backedge
+control now tests the known unsigned-load conversion boundary: `(s32)u8 < 0`
+cannot execute in valid C, but the optimizer's temporary signed load model may
+retain its CFG edge until the existing post-pass restores LBU. Put it after
+all real calls to avoid changing earlier temporary allocation. No claim or
+production adoption without literal default proof.
+
+Late false-backedge diagnostic is rejected at802 instructions/cost723: frame136,
+large allocation changes, and the LBU/BLTZ pair survives into final output.
+AS1 does not eliminate this unsigned-impossible branch, so it cannot supply a
+temporary extra entry without extra instructions. The ledger now has110 source
+measurements. Compound-block/do-once controls remain804/cost35; comma-store
+arg0/arg3 controls are804/cost47 and51. Production stays guarded at35, zero
+new verified C bytes. Evidence-only scope/standards review finds no new issue;
+ticket and board remain In Progress.
