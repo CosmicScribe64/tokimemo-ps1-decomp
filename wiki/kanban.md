@@ -53,6 +53,7 @@ kanban-plugin: board
 
 ## In Review
 
+
 ## Done
 
 - [ ] [[tickets/T-20011-name-ent-coordinate-selection|T-20011 NAME_ENT pointer-coordinate hit test]]
