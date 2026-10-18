@@ -66,7 +66,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24069-etc-menu-state|T-24069 ETC menu state machine verified820B]]
 
 - [ ] [[tickets/T-24068-etc-album-interaction|T-24068 ETC album interaction unresolved48-row checkpoint]]
 
@@ -102,6 +101,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24001-main-schedule-final-row|T-24001 Close main schedule final instruction]]
 
 ## Done
+
+- [ ] [[tickets/T-24069-etc-menu-state|T-24069 ETC menu state machine verified820B]]
 
 - [ ] [[tickets/T-24005-bunkaken-date-state-machine|T-24005 Match BUNKAKEN date state machine]]
 - [ ] [[tickets/T-22000-wave-4-conveyor|T-22000 Wave 4 conveyor]]
