@@ -619,3 +619,27 @@ not8, because removing the earlier declaration changes its negative offset.
 No arithmetic or register allocation gain; one real source home removal yields
 8bytes through alignment. Remaining8B frame excess and UV placement remain
 separate unresolved questions. No further merge or layout control follows.
+
+
+Two further disjoint lifetime controls were executed strictly sequentially.
+First, base-height reuses existing temp_a0 for the horizontal E base in cases1/3,
+then H after x2. E's last use computes rightX before x1/y1/x2; H starts afterx2,
+so no overlap or cross-call/arm/iteration value. Only temp_v1_2 declaration and
+uses change. Predicted72-to68 homes, unchanged frame98, poly8C/90, UV84/88 and
+page60. All observed offsets match;628cost/856rows/592words, no arithmetic gain.
+
+Second, right-scratch reuses temp_lo_4 for Q68 in cases0/2 and rightX in cases1/3,
+removing only temp_a2 declaration and replacing its uses. These are mutually
+exclusive arm-local s32 lifetimes, never crossing calls or iterations. Formulas,
+store order and every other declaration remain fixed. Original local identity
+is uncertain; the merge is source-level lifetime reuse, not recovered naming.
+Predicted68-to64 homes/frame90, poly84/88, UV1607C/UV2480, page5C. All observed
+slots and frame match predictions. Result624cost/852 diagnostic rows/592words.
+The four-cost gain matches original frame allocation/deallocation; no added
+operations or arithmetic/register change. This is a new frame-correct structural
+frontier, distinct from the earlier X1-cast624/594words/frameA0 negative.
+Keep604 numeric best and all628 corrected-order checkpoints separately.
+No frontend capture was made for these controls; home byte totals are the
+source-derived model validated by final offsets/frame, not measured DEF records.
+UV50/54 and page-register allocation remain unresolved. No padding or further
+layout permutation accompanied these controls; production remains ASM.
