@@ -2133,21 +2133,18 @@ s32 func_80140574(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8014068C);
 
-/* NON_MATCHING: T-11570, 15 lines: the in-place global form through the u8 view gives a0/t6 and both stores of the global like the original (the plain field gives the global $v0, 25 lines); the six fade stores use t6 where the original keeps one more `andi v0,t6,0xff` value in $v0 (T-10710: locals, casts, masks, separate stores and an empty test all fold it) */
-#ifdef NON_MATCHING
-void func_80140B20(void) {
+/* FAKE: s32 with no return value; the void form keeps the six fade stores in $t6 where the original copies the value to $v0 (T-22023) */
+s32 func_80140B20(void) {
     /* FAKE: unk_03A is already u8; the (u8 *) view only moves the global to $a0 like the original (T-11570) */
     if (*(u8 *)&D_800E6280.unk_03A >= 3) {
         *(u8 *)&D_800E6280.unk_03A -= 2;
-        D_801220E0 = D_801220E1 = D_801220E2 = D_80122104 = D_80122105 = D_80122106 = *(u8 *)&D_800E6280.unk_03A;
+        /* the chain order sets the store order: D_801220E0 is stored last, the others from D_80122106 outward */
+        D_801220E1 = D_801220E2 = D_80122104 = D_80122105 = D_80122106 = D_801220E0 = *(u8 *)&D_800E6280.unk_03A;
         if (*(u8 *)&D_800E6280.unk_03A < 0x80) {
             func_80057390(*(u8 *)&D_800E6280.unk_03A);
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140B20);
-#endif
 
 void func_80140BA4(void) {
     if (D_800E6280.unk_110D++ >= 0x41U) {
