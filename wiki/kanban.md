@@ -72,7 +72,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24075-etc-random-selection|T-24075 Recover ETC random selection]]
 
 - [ ] [[tickets/T-24074-etc-record-scene|T-24074 Recover ETC record scene]]
 
@@ -118,6 +117,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24001-main-schedule-final-row|T-24001 Close main schedule final instruction]]
 
 ## Done
+
+- [ ] [[tickets/T-24075-etc-random-selection|T-24075 Recover ETC random selection]]
 
 - [ ] [[tickets/T-24073-etc-record-init|T-24073 Recover ETC typed record initializer]]
 

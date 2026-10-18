@@ -327,3 +327,10 @@ words. Real GameState/word-pair types, no shared interface/config changes;
 unproven s32 fallthrough view conservatively FAKE-tagged, sole caller ignores
 result. All34 other function words and neighbor text unchanged. Headers/globals
 OK, protos0new/15known; In Review pending parent all27/integration.
+
+Parent independently verified T-24075 literal904B/actual-C gate, all27 checksums
+and interfaces, with full standards/spec review no findings. Published
+mainc7690151b; ticket/card/index Done. Exact production5d083af5 and source/replay
+provenance remain preserved. Coverage measurement pending, no inferred totals.
+
+Root Docker measurement at publishedc7690151b:6516/6958 functions,1866672/2279368 bytes (81.9%),412696 remaining; gain904 bytes. T-24075 is Done after independent review/publication.

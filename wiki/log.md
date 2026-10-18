@@ -18847,3 +18847,22 @@ audit verifies34 other function bodies plus exact neighbor source text. Only
 target fallback replaced; no guard/header/config change. [[etc-family-results]]
 and drafts/T-24075 record source/proofs. Ticket/card/index move to In Review
 awaiting parent independent all27 and integration; not Done yet.
+
+## [2026-10-18] ticket | T-24075 independently verified and published
+
+[[tickets/T-24075-etc-random-selection]] moves to Done after parent full
+standards/spec review no findings, all27/checksum/interface/actual-C gates and
+literal904B PASS. Published mainc7690151b; exact production5d083af5 and
+drafts/T-24075 source/replay preserved. Card/index and [[etc-family-results]]
+aligned. Root coverage measurement pending; no estimated totals called measured.
+
+## [2026-10-18] build | Root measured T-24075 publication
+
+Root Docker measurement at publishedc7690151b:6516/6958 functions,1866672/2279368 bytes (81.9%),412696 remaining; gain904 bytes. [[tickets/T-24075-etc-random-selection]] is independently reviewed/published Done;
+[[completion-run-2026-10-17]] and [[etc-family-results]] record the measured result.
+
+## [2026-10-18] query | Completed contributor check at 12:44 UTC
+
+Parent completed read-only GitHub check around2026-10-18 12:44UTC: no open
+PRs; only open claims57(updated2026-10-17T22:16:21Z) and50(updated2026-10-17T15:45:07Z),
+unchanged. No external messages. Next check planned13:14UTC. No added matching scope. See [[completion-run-2026-10-17]].

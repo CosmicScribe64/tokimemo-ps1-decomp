@@ -33,7 +33,7 @@ calls, rejection sets, mutation timing and final helper calls are preserved.
 The inherited s32 fallthrough return view is unproven; no return-type experiment
 was performed. No instrumentation, forced store, alias/header/config change or
 compiler-impossibility claim follows from this checkpoint. Ticket is
-In Review pending parent independent all27/review integration.
+Done after parent independent verification and publicationc7690151b.
 
 Replay serially in existing tokimemo-decomp-arm64 Docker:
 
@@ -75,5 +75,7 @@ object comparison verifies34 non-target function resolved-word bodies. Six
 .L assembly labels are excluded from the function inventory and covered by
 their enclosing function. Exact whole-source substitution proves all neighbor
 text unchanged, with no target guard or fallback. No header/config mutation.
-Parent standards/spec preliminary review reports no findings; independent
-all27/checksum/review integration is pending. Do not mark Done before it passes.
+Parent full standards/spec review reports no findings; independent all27
+checksums/interfaces/actual-C gate and literal904B pass. Published mainc7690151b.
+The exact production body remains frozen5d083af5; this packet preserves source
+and replay. Root Docker measurement at publishedc7690151b:6516/6958 functions,1866672/2279368 bytes (81.9%),412696 remaining; gain904 bytes.

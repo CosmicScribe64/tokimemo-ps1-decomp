@@ -1,6 +1,6 @@
 ---
 type: coordination
-updated: 2026-10-17
+updated: 2026-10-18
 ---
 
 # Current 100% matching run
@@ -77,3 +77,18 @@ New-C proof safeguard: T24016's first installation helper accidentally retained 
 ## Contributor check 2026-10-18 12:14 UTC
 
 Parent completed read-only GitHub check: no open PRs; only open claims57(updated2026-10-17T22:16:21Z) and50(updated2026-10-17T15:45:07Z), unchanged. No external messages. Next check planned12:44UTC. No matching scope added.
+
+## T-24075 independent completion and measured progress
+
+ETC func_8013C8EC904B is published mainc7690151b after parent full standards/spec
+review no findings, all27 checksums/interfaces/actual-C gate and literal904B.
+[[tickets/T-24075-etc-random-selection]] is Done; exact production5d083af5 and
+drafts/T-24075 preserve source/replay.
+
+Root Docker measurement at publishedc7690151b:6516/6958 functions,1866672/2279368 bytes (81.9%),412696 remaining; gain904 bytes.
+
+## Contributor check 2026-10-18 12:44 UTC
+
+Parent completed read-only GitHub check around2026-10-18 12:44UTC: no open
+PRs; only open claims57(updated2026-10-17T22:16:21Z) and50(updated2026-10-17T15:45:07Z),
+unchanged. No external messages. Next check planned13:14UTC. No added matching scope.

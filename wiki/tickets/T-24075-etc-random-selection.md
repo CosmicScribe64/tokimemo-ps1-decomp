@@ -1,7 +1,7 @@
 ---
 id: T-24075
 title: Recover ETC random selection with current pointer layout
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -52,3 +52,11 @@ change. See drafts/T-24075/README.md and build/etc24075 proof logs.
 
 Parent preliminary standards/spec review has no findings. Ticket/card move to
 In Review, awaiting independent parent all27/integration, not Done yet.
+
+## Independent completion
+
+Parent independently reviewed full production source against standards/spec with
+no findings, verified all27 checksums/interfaces/actual-C gate and literal904B,
+and published mainc7690151b. Ticket/card/index now Done. Exact verified source
+remains5d083af5 with source/proof provenance8312fb4ce; replay body is identical
+after its archive banner. Root Docker measurement at publishedc7690151b:6516/6958 functions,1866672/2279368 bytes (81.9%),412696 remaining; gain904 bytes.
