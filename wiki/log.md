@@ -18660,3 +18660,10 @@ Created [[tickets/T-24036-geko-shugaku-siblings]] In Progress after clean latest
 ## [2026-10-18] decision | T-24036 sibling package in review
 
 [[tickets/T-24036-geko-shugaku-siblings]] moves to In Review: one244-byte SHUGAKU match, GEKO guard refreshed from current91 to7 rows without additional coverage. Signed-declaration control rejects a header change; matched GEKO neighbor unchanged. Source/control and exact negatives archived; all loose probes preserved ignored in build/T-24036-probes/. Updated [[scenes-family-results]]. Unit checksums and guards pass; independent review pending.
+## [2026-10-17] ticket | T-24037 EVENT scene siblings
+
+Created [[tickets/T-24037-event-scene-siblings]] In Progress after reading earlier unresolved-type negatives and [[event-family-results]].
+
+## [2026-10-18] build | T-24037 typed EVENT updater
+
+[[tickets/T-24037-event-scene-siblings]] moves to In Review with a 628 B unguarded C updater and a guarded six-edit initializer, documented in [[event-family-results]] and drafts/T-24037. Root-approved per-overlay array declarations preserve canonical main scalar types. No new FAKE or compiler exception.

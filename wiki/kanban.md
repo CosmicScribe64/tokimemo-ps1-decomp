@@ -56,6 +56,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24036-geko-shugaku-siblings|T-24036 GEKO and SHUGAKU sibling completion]]
 - [ ] [[tickets/T-24033-valen-selector-ports|T-24033 VALEN selector sibling completion]]
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
+- [ ] [[tickets/T-24037-event-scene-siblings|T-24037 Recover EVENT scene siblings]]
 - [ ] [[tickets/T-24029-seasonal-scene-siblings|T-24029 Recover GYOZI and SHOUGATU scene sibling pair]]
 - [ ] [[tickets/T-24026-shougatu-sibling-ports|T-24026 Port three SHOUGATU high-similarity siblings]]
 - [ ] [[tickets/T-24008-taiiku-runners|T-24008 Recover TAIIKU runner family]]
