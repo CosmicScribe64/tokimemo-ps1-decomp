@@ -129,3 +129,56 @@ Copy `build/t24047/switch-metadata/default.T` to the output sidecar before that
 replay. Run it in the cached amd64 image with scratch writable and the project
 read-only. [[ido-52-evaluation]] documents the other pass interfaces and archive
 provenance. Compiler data and reconstructed C remain private, never committed.
+
+## Native switch-order control
+
+`drafts/T-24047/native-switch-evidence.json` records captured-input hashes and
+native trace observations. Run the stock assembler on each unchanged `.G` with
+its matching `.T`, normal arguments above, and `-R -xbbdbg 8`. The debug value
+must be a separate argument. Both traced target outputs equal the corresponding
+stock objects. Logs remain ignored in `build/t24047/switch-metadata/`.
+
+The dispatch header has weight1 and its two successors weight4 in both inputs.
+Normal source numbers default37/dispatch38; rejected explicitcase12 source
+numbers dispatch37/default38. Normal motion imports two default LUIs; case12
+imports the dispatch SLL. These local weights do not explain the difference.
+
+Read-only reconstructed AS1 identifies candidate-skip bit5 in block flags at
+offset68. Internal label kind25 sets it; `create_label_pinst` emits kind26.
+The captured target labels are all binasm ILABEL, not ILAB. The external
+print-only diagnostic below proves both default blocks have identical flags
+0xfffff840, bit5 clear. This flag does not explain the difference.
+
+## Inspecting the actual AS1 rejection gate
+
+`drafts/T-24047/as1_trace.py` generates print-only instrumentation of the pinned
+AS1 reconstruction and verifies its outputs. Reference source SHA256 is
+`905927751a79aba82d332bdce254b2b30a4312ae14a4108897e11b48487d17a1`.
+The generator rejects another source hash or unexpected anchor counts. It
+adds only `fprintf` calls: no scheduling decisions, game names or source markers.
+Generated compiler source/binary remain external under `/private/tmp/t24047-uopt`.
+
+In the existing Docker image, mount that directory as `/scratch`, this worktree
+as `/work`, and run from `/work`:
+
+```sh
+python3 drafts/T-24047/as1_trace.py instrument \
+  /scratch/as1-reference.c /scratch/variants/as1-trace.c
+gcc -std=c11 -Os -fno-strict-aliasing -I/scratch/recomp \
+  /scratch/variants/as1-trace.c /scratch/recomp/build/5.3/libc_impl_53.o \
+  /scratch/recomp/build/5.3/version_info.o -lm -o /scratch/variants/as1-trace
+python3 drafts/T-24047/as1_trace.py verify --binary /scratch/variants/as1-trace
+```
+
+The verifier replays unchanged captures with normal arguments plus diagnostics,
+requires exact stock section inventory/bytes for code/data/relocations and exact
+target words, and exits nonzero on failure. Both controls pass,804/805 target
+instructions respectively. Logs/results stay in `build/t24047/as1-tracer-fidelity/`.
+
+For normal default, both LUIs pass movability, graph and path checks. For case12,
+both pass movability/graph but fail path acceptance in `func_429928`: its path
+set includes dispatch block37, flags0xffff784b. Bit6 rejects that intervening
+indirect-jump block. The extra table edge introduces this barrier; numbering and
+equal weights alone are not the cause. The original table has12 distinct case
+destinations, no default, and the next table starts immediately at0x8013C040.
+Thus this is explanatory diagnostic evidence, not an accepted extra-case source.

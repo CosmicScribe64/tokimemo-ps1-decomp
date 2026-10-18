@@ -314,3 +314,72 @@ measurements. Compound-block/do-once controls remain804/cost35; comma-store
 arg0/arg3 controls are804/cost47 and51. Production stays guarded at35, zero
 new verified C bytes. Evidence-only scope/standards review finds no new issue;
 ticket and board remain In Progress.
+
+Fresh native AS1 traces of captured default/case12 inputs each reproduce their
+stock target words exactly. Both assign weight1 to dispatch header and4 to the
+two successor blocks. Normal form numbers default37, dispatch38; explicitcase12
+numbers dispatch37, default38. Native motion is two default LUIs versus the
+dispatch SLL, respectively. Thus this is not a difference in these block weights.
+The read-only reference identifies bit5 as a candidate skip flag and internal
+label kind25 as one setter (internally created labels are26), but its involvement
+in this pair is not proven. Logs remain ignored under build/t24047/switch-metadata/.
+Test a default block after the returning common tail, with ordinary gotos, to
+vary CFG traversal order without changing the case set or table bound.
+
+After-tail default/back-goto is rejected at806/cost73: common tail remains before
+default, adds branches, and both LUIs still move. Three single-access volatile
+controls now isolate the default entry (first load, second load, first store),
+since the previous all-load and final-store controls also changed later ordering.
+These are diagnostic only; no production qualifier change.
+
+Individual first-load/second-load/first-store volatile controls give805
+instructions at costs54/50/54. Each still imports default address work and
+changes the address temporary sequence, so all are rejected. Ledger now114;
+native-switch-evidence.json retains capture hashes, equal local weights and
+observed motion without claiming label-flag causality. [[ending-allocator-trace]]
+documents exact debug arguments and the unproven flag boundary. Scope/standards
+review finds no new issue; no production source, headers or toolchain changed.
+
+Next isolate whole-switch source CFG: one do-once wrapper and explicit common
+exit gotos replacing the case breaks. Earlier compound/do-once controls wrapped
+only the default arm. Both new controls preserve the12-case set and semantics;
+no new locals, declaration overrides or production compiler changes.
+
+Both whole-switch controls are neutral804/cost35. Next build a print-only AS1
+diagnostic from the existing external pinned reference: log candidate flags and
+scanner results, with no decision edits. Use existing Docker gcc/runtime only,
+external output, one compiler at a time; compare stock target and section bytes
+before interpreting its trace. Production assembler remains unchanged.
+
+External print-only AS1 built successfully. Captured default and case12 outputs
+each equal stock in text/data/rodata and all associated relocations, plus complete
+target words. Source default37 and case12 default38 both have flags0xfffff840;
+candidate-skip bit5 is clear in both. Thus that flag does not explain this pair.
+Add only diagnostic scanner-stage prints to identify the actual rejection gate.
+
+Scanner trace now identifies the gate: both normal default LUIs pass movability,
+graph and path checks; case12 default LUIs pass movability/graph but fail path
+acceptance. Print-only `func_429928` rejection logging reports intervening block37,
+flags0xffff784b: the indirect-jump dispatch block, bit6 set. The extra table entry
+adds that predecessor path. No differing label flag or local weight is needed.
+Latest traced outputs again equal stock code/data/relocations and target words.
+Verify the original table's destination mapping before pursuing another CFG form.
+
+Original generated function/table source confirms12 distinct case destinations,
+none the default; the next table begins immediately at0x8013C040. The original
+table therefore supplies no evidence for explicitcase12. Next narrow
+source control puts the default label inside a false if/while statement: switch
+entry still executes its body once, but CFE may retain different entry metadata.
+This differs from wrapping statements after an ordinary default label. No new
+case or assembly edits; diagnostic source only.
+
+Both nested-label controls remain804/cost35. Ledger118 includes them and the two
+whole-switch controls. Reusable drafts/T-24047/as1_trace.py now generates the
+external print-only diagnostic with exact source-hash/anchor checks, and verifies
+stock section inventory/bytes plus target words. Regenerated diagnostic source
+equals the already-built source byte-for-byte; verifier passes both controls.
+[[ending-allocator-trace]] records full build/replay commands and corrects the
+earlier unproven label-flag hypothesis with the measured bit6 path barrier.
+Review against standards: diagnostic only, Python3/Docker, explicit inputs and
+failure exits, no game/compiler dumps committed, no production changes. Task
+remains In Progress with zero new verified C bytes.
