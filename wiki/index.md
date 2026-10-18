@@ -48,6 +48,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-24040-option-menu-siblings|T-24040]] two of three matched (1028 bytes), selector guarded at5 rows; In Review.
 - [[tickets/T-24036-geko-shugaku-siblings|T-24036]] one of two matched (244 bytes); GEKO guard refreshed to7 rows, In Review.
 - [[tickets/T-24033-valen-selector-ports|T-24033]] VALEN sibling retry:32D0C guarded at7 rows,34030 remains27; zero matches, In Review.
+- [[tickets/T-24067-etc-album-copy|T-24067]] single ETC album record copy, In Progress.
 - [[tickets/T-24064-etc-count-trio|T-24064]] three small ETC functions (Ready; user deferred while DATE remains the sole worker focus).
 - [[tickets/T-24057-ending-small-pair|T-24057]] two small ENDING fade handlers (In Review; no matches, both source leads at cost 4 / 12 rows).
 - [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI sibling package (In Review; 2 matches, 2,020 bytes).
