@@ -17827,3 +17827,7 @@ Wave 4 package w4-p22 (GYOZI, four functions in `src/ovl/GYOZI/`), branch `w4-p2
 ## [2026-10-17] ticket | T-22022 In Progress to In Review
 
 0 of 4 matched, no guard left in the files. [[tickets/T-22022-w4-p22]] In Review.
+
+## [2026-10-17] build | T-22022 final checks
+
+Clean build 27/27, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK on `w4-p22` (only wiki and `drafts/` changed against `w2-good`). [[tickets/T-22022-w4-p22]] stays In Review.
