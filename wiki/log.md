@@ -18154,3 +18154,10 @@ User resumed after contributor/Claude waves. Read latest index, wave4/5 completi
 ## [2026-10-17] ticket | Add file-disjoint DATE and ETC coordinating chat
 
 User authorized more chats as needed. Created Sol6.1 medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8 for T24010 with two workers T24011 DATE80141EE0/8015A640 and T24012 ETC80132880, isolated branches and one compile job each. Parent workers T24001 MAIN8006CB30,T24002 OPTION801389A0,T24003 BUNKAKEN80140F60/8013B510 use at most two jobs each. Parent owns verification/integration; no contributor overlap. [[tickets/T-24000-complete-matching]] remains active.
+## [2026-10-18] ticket | Claim BUNKAKEN remainder
+
+Created [[tickets/T-24003-complete-bunkaken]] for the two assigned BUNKAKEN objects on isolated branch codex/complete-bunkaken. Read [[bunka-family-results]], [[matching-notes]] and coding standards; archived drafts will be rescored against current headers.
+
+## [2026-10-18] build | Match BUNKAKEN selector
+
+[[tickets/T-24003-complete-bunkaken]]: func_80140F60 passes literal default linked proof for 296 bytes. Reused the existing BunkaDispatch8 and CharFlags views; recorded the source-form transfer in [[bunka-family-results]].

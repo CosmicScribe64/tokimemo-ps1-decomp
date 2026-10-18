@@ -143,3 +143,7 @@ their size measure):
 | --- | --- | --- | --- | --- |
 | `w3-bunkaken-p01` | T-18501 | `80144F70.c`, `80143DD0.c`, `801428D0.c` | 3: `func_801428D0` (guarded, 12), `func_80144F70` (hand draft, 118), `func_80143DD0` (330) | 5,368 |
 | `w3-bunkaken-p02` | T-18502 | `80140F60.c`, `8013B510.c` | 3: `func_80140F60` (37), `func_8013BD84` (hand draft, 87), `func_8013B510` (census, 297) | 3,236 |
+
+## Completion pass T-24003
+
+The matched BunkaDispatch8 view from func_801428D0 transfers directly to func_80140F60: write unk_04 through the view, switch on unk_00, and use the existing heroine-2 CharFlags b2. The scalar-global draft allocated the outer selector in v0 and delayed the nested calendar load; the aggregate form restores v1 and the original delay slot. Literal default linked proof passes for 296 bytes (`build/t24003/selector-proof.txt`). The two date-loader functions remain under investigation in [[tickets/T-24003-complete-bunkaken]].
