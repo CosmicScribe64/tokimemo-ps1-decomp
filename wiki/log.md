@@ -18158,3 +18158,7 @@ Created [[tickets/T-24003-complete-bunkaken]] for the two assigned BUNKAKEN obje
 ## [2026-10-18] build | Match BUNKAKEN selector
 
 [[tickets/T-24003-complete-bunkaken]]: func_80140F60 passes literal default linked proof for 296 bytes. Reused the existing BunkaDispatch8 and CharFlags views; recorded the source-form transfer in [[bunka-family-results]].
+
+## [2026-10-18] build | Match BUNKAKEN heroine selection
+
+[[tickets/T-24003-complete-bunkaken]]: func_8013BD84 passes literal default linked proof for 540 bytes; BUNKAKEN SHA1 OK. Fixed heroine tests use a u8 flags local, indexed loop retains inline byte accesses, with the target sum operand order. [[bunka-family-results]] records successful and rejected forms. Accepted package gain is two functions / 836 bytes so far.

@@ -25,3 +25,4 @@ Isolated branch codex/complete-bunkaken from w2-good. Starting archived scores: 
 ## Comments
 
 - Selector func_80140F60: literal default linked MATCH, 296 bytes (`build/t24003/selector-proof.txt`). The existing BunkaDispatch8 view of D_80122EB8/D_80122EBC supplies the original v1 selector allocation and permits the nested calendar load to occupy the original delay slot. Existing CharFlags b2 supplies the original sign-bit test. No FAKE needed.
+- Heroine-selection loop func_8013BD84: literal default linked MATCH, 540 bytes (`build/t24003/bd-proof.txt`); BUNKAKEN SHA1 OK (`build/t24003/checksum.txt`). Archived hand draft 87 -> 38 -> 0 search cost. Explicit `u8 flags` for the fixed heroine-0 tests supplies the original unshifted byte in v1; the indexed loop keeps its inline byte expression, and its sum is written unk_06 + unk_02. Conditional-local and reload variants scored worse (65 and 91). No FAKE or header changes.
