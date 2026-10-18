@@ -18150,3 +18150,6 @@ Both conveyors stopped at the user's request when the weekly usage limit was rea
 ## [2026-10-17] decision | Resume orchestration toward100% matching
 
 User resumed after contributor/Claude waves. Read latest index, wave4/5 completion, source-recovery research and build gaps; fetched main283b86fca, no open PRs, active claims#50/#56/#57 respected. Baseline79.6%,465,900 unmatched game bytes. Opened [[tickets/T-24000-complete-matching]] with Sol6.1 medium workers and Astra escalation for concrete blockers. Contributor PR/issue heartbeat runs every30minutes. Existing integration heartbeat remains paused.
+
+## [2026-10-17] ticket | Start isolated DATE and ETC matching
+Created [[tickets/T-24010-date-etc-coordination]], [[tickets/T-24011-date-dispatch-family]] and [[tickets/T-24012-etc-render-family]] from c485bb71a. Read [[index]], local instructions, standards, [[date-family-results]] and [[etc-family-results]]. Limited to explicitly assigned files, Docker builds at one job per worker; parent owns integration and contributor monitoring.

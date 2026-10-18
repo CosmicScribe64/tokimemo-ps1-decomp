@@ -46,6 +46,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
+- [ ] [[tickets/T-24010-date-etc-coordination|T-24010 Coordinate DATE and ETC matching]]
+- [ ] [[tickets/T-24011-date-dispatch-family|T-24011 Match DATE dispatch family]]
+- [ ] [[tickets/T-24012-etc-render-family|T-24012 Match ETC rendering family]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 
 
