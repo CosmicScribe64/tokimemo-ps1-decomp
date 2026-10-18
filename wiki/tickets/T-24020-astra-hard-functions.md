@@ -1,7 +1,7 @@
 ---
 id: T-24020
 title: Investigate three largest hard functions
-status: In Review
+status: In Progress
 assignee: Astra hard-function lane
 created: 2026-10-17
 updated: 2026-10-17
@@ -20,7 +20,7 @@ Work ahead on dialogue, TEL and EVENT, one hard target at a time, using new evid
 
 ## Notes
 
-Exclusive reservations: `src/main/8007C030.c`, `src/ovl/TEL/80132000.c`, `src/ovl/EVENT/8010FE10.c`.
+Exclusive reservations: `src/main/8007C030.c`, `src/ovl/TEL/80132000.c`, `src/ovl/EVENT/8010FE10.c`. Resumed scope adds only `func_8007132C` in `src/main/8006CB30.c` and only `func_80142C9C` in `src/ovl/GEKO/80142760.c`; the parked `func_8006D7EC` is excluded.
 Branch `codex/astra-hard-functions`, worktree `/private/tmp/tokimemo-astra-hard`, base `w2-good` at `8052373f747054e2682b37dfbbdbe3be9f88b80a`.
 Existing Docker image only, one compiler or `ninja -j1`. Disc copied by APFS clone. No integration/main changes, pushes or worktree deletion.
 

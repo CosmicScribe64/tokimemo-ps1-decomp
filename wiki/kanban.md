@@ -42,11 +42,23 @@ kanban-plugin: board
 
 ## Ready
 
+- [ ] [[tickets/T-24042-tel-helper-closure|T-24042 Close TEL dialogue helper register allocation]]
+
+- [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
+
+- [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
+
 
 - [ ] [[tickets/T-20013-name-ent-fade-page-followup|T-20013 NAME_ENT fade and page selection]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
+
+- [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Investigate dialogue argument scheduling]]
+
+
+- [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 
 
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
@@ -57,12 +69,11 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]
+
 
 - [ ] [[tickets/T-24022-tel-frame|T-24022 Recover TEL large handler allocation]]
 
-- [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Investigate dialogue argument scheduling]]
 
 - [ ] [[tickets/T-24012-etc-render-family|T-24012 Match ETC rendering family]]
 - [ ] [[tickets/T-24003-complete-bunkaken|T-24003 Complete BUNKAKEN selector and date-loader remainder]]

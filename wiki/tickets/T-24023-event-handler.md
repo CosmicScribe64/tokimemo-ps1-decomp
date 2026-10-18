@@ -37,3 +37,11 @@ The intermediate else-if transformation incorrectly used a global substring repl
 Corrected replay: baseline 1618, else-if 1544, recovered byte gap 1540; signed call arguments plus the ordinary seasonal predicate 1062; combining that predicate with conditional-expression date Booleans 934; explicit selector byte views **214**. Both sides have 1712 instructions, the 48-byte frame and sp+0x2B/sp+0x29 saved bytes agree. Printed rows are 826, not 214. Source-only draft, not a match or guard candidate. Tail aggregate stores preserve 214; removing the unused var_at declaration also preserves it. The saved body marks both allocation-only byte views and the redundant gap local FAKE.
 
 Preserved `drafts/T-24023/body.c`, corrected replay scripts, compact results and independent measurement. The remaining structural gap starts at original instruction 1280 (date Boolean materialization vs direct inequality/zero paths), plus one tail-load placement; several selector comparisons have exchanged operands. Detailed negative hypotheses and next-step criterion are in `drafts/T-24023/README.md`. No production C/header/tool/config changes. Review pending.
+
+### Resume
+
+User requests continued large-function work. Preserve checkpoint b312d1e24. New bounded hypothesis: register-qualified Boolean locals change front-end narrowing and value-number lifetime without changing conditional exits. If exhausted, proceed to the newly reserved MAIN dispatcher and GEKO hallway picker. Header edits require root coordination because another worker is extending EVENT.h.
+
+### Register lifetime follow-up (2026-10-17)
+
+Six new register-qualified Boolean forms did not beat 214. Explicit narrow/word Boolean blocks scored 1782/1008; logical and reused ternary Boolean forms 1000/1164. `register u8` alone stayed 214. Saved the script and results in `drafts/T-24023/resume/`. Preferred body remains byte-for-byte unchanged from b312d1e24. Returning to In Review and continuing MAIN under [[tickets/T-24024-main-dispatcher]].
