@@ -213,7 +213,29 @@ void func_8014306C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_801430A0);
+/* Fall-through s32 return retains the counter result in v0. T-24004 */
+s32 func_801430A0(void) {
+    s32 idx;
+    FnTbl48 tbl;
+    tbl = D_80146970;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x3C);
+    if (D_800E6280.unk_110A < 0x11U) {
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = D_800B593C;
+        if (((DisplayActor44 *)D_8011ECD0)[96].unk_18 == 0 && ((DisplayActor44 *)D_8011ECD0)[96].unk_08 == 0) {
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_16 += 1;
+            if (((DisplayActor44 *)D_8011ECD0)[96].unk_16 >= 3) ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 0;
+        }
+    }
+    if (D_80122D04 != 0) {
+        ((DisplayActor44 *)D_8011ECD0)[98].unk_03 |= 0x80;
+        D_801206DF = ((DisplayActor44 *)D_8011ECD0)[96].unk_07;
+        if ((u32)D_800E6280.unk_10F8 % 300U == 0) {
+            func_80143228();
+            D_801206DA = 3;
+        }
+    } else { ((DisplayActor44 *)D_8011ECD0)[98].unk_03 &= 0xFF7F; }
+}
 
 void func_80143200(void) {
     func_80044750(0x205);

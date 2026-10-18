@@ -47,6 +47,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 - [ ] [[tickets/T-24010-date-etc-coordination|T-24010 Coordinate DATE and ETC matching]]
 - [ ] [[tickets/T-24011-date-dispatch-family|T-24011 Match DATE dispatch family]]

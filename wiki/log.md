@@ -18213,3 +18213,11 @@ Created [[tickets/T-24001-main-schedule-final-row]] after reading [[tickets/T-23
 ## [2026-10-18] build | Astra final-row follow-up retains main guard
 
 [[tickets/T-24001-main-schedule-final-row]] returns In Progress to In Review after 19 new source variants (18 compile, one as1 error), archived in drafts/T-24001/astra_forms.py. Genuine loop backedges retain the desired increment but add loop control; single-trip loops, representation changes and timer switches do not close the row. [[matching-notes]] records the mechanism. Fresh full-TU C diff remains row 94 only; default fallback MATCHes 4,692 bytes and main SHA1 is unchanged. Production source and compiler tools are untouched; no new matching bytes.
+
+## [2026-10-17] ticket | Begin SHOUGATU scene completion package
+
+Created [[tickets/T-24004-complete-shougatu]] for five functions of src/ovl/SHOUGATU/80141780.c after consulting [[shougatu-family-results]]. Reuse the OPTION worktree without changing its pinned commits.
+
+## [2026-10-17] build | Match SHOUGATU scene dispatcher
+
+[[tickets/T-24004-complete-shougatu]] recovered func_801430A0 (352 bytes) in src/ovl/SHOUGATU/80141780.c. Typed callback table, direct counter mutation and consistent record-base accesses reproduce the original allocation and store/load schedule; no FAKE needed. Default linked proof and SHOUGATU checksum pass. Details in [[shougatu-family-results]].
