@@ -1,7 +1,7 @@
 ---
 id: T-24064
 title: Match ETC model initialization loop
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -28,6 +28,10 @@ Verified252-byte default C win: matched MAIN func_8006190C/T-17010 supplies the 
 
 Docker ninja -j1 build/ovl/ETC.ok passes; actual unguarded `tools/funcdiff.py --no-build --resolve --version default --unit ETC func_8013F980` reports MATCH252 linked bytes. Header/global/prototype guards pass (0 new/15 known disagreements). Exact replacement audit preserves every other TU byte, including matched func_8013FC64; target guard/fallback absent. Evidence: build/etc24064/default-build.log, default-proof.log, headers.log, globals.log, prototypes.log, body-audit.log. In Review pending parent independent review; other40AE4 deferred and41ABC unresolved, no new work on either.
 
+Source-only provenance is drafts/T-24064/README.md, with exact10→4→0 private contexts, plain-header control, FAKE line-layout rationale and actual-default commands. Reviewed production checkpoint remains0f34968776ed3fc3254f5ac4f83ae6862f4932b1; documentation follows separately without source amendments.
+
 User deferred this ETC package while the sole worker focuses on DATE func_80144E20. Status is Ready, not Done; no ETC compiler probes or production edits began in this package. Current read-only notes are the existing 48-row album interaction, pointer-loop prologue lead and 27-row unaligned album-copy history linked in the ticket. Resume only after new coordination.
 
 Parent reports main 1911789b2, 6,507 functions / 1,851,416 verified bytes (81.2%). This package claims none of those prior gains. No additional DATE compiler or trace investigation.
+
+Root independent review: actual unguarded default C proof MATCH252; all27 binary hashes and header/global/prototype guards pass at6d1d52101. C89, canonical record strides, unchanged neighbors and explicitly FAKE source-line grouping reviewed against CODING_STANDARDS.md; no unresolved findings. Done applies only to the resumed single-function3F980 scope. Former40AE4 receives a separate ticket;41ABC remains unresolved in T24067.

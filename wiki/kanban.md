@@ -56,7 +56,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24064-etc-count-trio|T-24064 Match three small ETC functions]]
 - [ ] [[tickets/T-24067-etc-album-copy|T-24067 Match ETC album record copy]]
 - [ ] [[tickets/T-24063-taco-short-count|T-24063 TACO short count helpers]]
 - [ ] [[tickets/T-24060-shugaku-short-selectors|T-24060 SHUGAKU short selectors]]
@@ -107,6 +106,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24064-etc-count-trio|T-24064 Match three small ETC functions]]
 - [ ] [[tickets/T-20013-name-ent-fade-page-followup|T-20013 NAME_ENT fade and page selection]]
 - [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
 - [ ] [[tickets/T-11890-tt-ratan2-aspsx|T-11890 TT func_8014D260 ASPSX pass]]

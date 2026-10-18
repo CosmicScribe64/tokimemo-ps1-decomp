@@ -214,3 +214,7 @@ No open PRs. NAME_ENT claims #50/#57 remain open; TT follow-up is now issue #63 
 ## Contributor check 2026-10-18 10:09 UTC
 
 PR #64 supplies wiki-only TT toolchain/signature measurements. Integrated as contributor-reported evidence with its permanent-assembly proposal explicitly unaccepted and unreleased-toolchain inference qualified. No source/config/tool change or scope/count adjustment. Claim issues #50/#57 unchanged; #63 contains this follow-up. Two Sol workers remain on ENDING35F4C and ETC41ABC. Next check around10:39 UTC.
+
+## Verified ETC model loop 2026-10-18
+
+Main6d1d52101 adds func_8013F980,252 verified linked C bytes. Independent literal proof, all27 hashes and interface guards pass; root standards review has no findings. Docker progress:6513/6958 functions,1864596/2279368 bytes(81.8%),414772 bytes remain. T24064 single-function scope Done. Same Sol worker moves to ETC80140AE4 under a new ticket; ENDING worker is idle after its documented unresolved investigation. No additional agents.

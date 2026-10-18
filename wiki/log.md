@@ -19619,3 +19619,11 @@ Parent requested [[tickets/T-24067-etc-album-copy]] move to In Review and stop s
 ## [2026-10-18] build | T-24064 verified252-byte ETC model loop
 
 [[tickets/T-24064-etc-count-trio]] reaches actual unguarded default linked MATCH252 for func_8013F980, with ETC SHA1 and header/global/prototype guards passing. Matched MAIN integer TMD cursor plus corrected record strides fixes folding; initializer order and FAKE same-line do grouping finish setup schedule. Plain shared prototype works, so no local override/interface change retained. Every other TU byte including matched8013FC64 preserved. [[etc-family-results]]/index/board updated to In Review pending parent review; other40AE4 deferred/41ABC unresolved. Proof logs build/etc24064/default-build.log, default-proof.log, headers.log, globals.log, prototypes.log, body-audit.log.
+
+## [2026-10-18] ingest | T-24064 model-loop provenance
+
+Added source-only drafts/T-24064/README.md with matched MAIN cursor provenance, corrected record strides, exact10→4→0 private contexts, FAKE line-group rationale/plain-header control and actual-default replay commands. [[matching-notes]] and [[tickets/T-24064-etc-count-trio]] link the frozen production win0f3496877; documentation only, no source amendment. Parent owns independent review/all27/integration; ticket remains In Review.
+
+## [2026-10-18] ticket | ETC model loop independently verified and Done
+
+[[tickets/T-24064-etc-count-trio]] resumed single-function3F980 scope passes independent actualC252 proof, all27 hashes and interfaces; root standards review has no findings. Main6d1d52101, Docker total6513/6958 functions and1864596/2279368 bytes. [[completion-run-2026-10-17]] records new totals and one-worker continuation; board/index synchronized. Earlier deferred targets are not marked matched.
