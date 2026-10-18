@@ -23,3 +23,7 @@ Prior GameState pointer transfer remains48 rows; ordinary switch controls54/58. 
 
 ## Comments
 Parent requests function-by-function work using the same sole worker. Clean checkpoint732e7c96d and independently published main6d1d52101 confirmed before starting; primary source target still assembly.
+
+Fresh current baseline reproduces48 resolved rows,56 words/frame0x28, with real unk_F80 and documented unsigned byte compare. Required-call comma sequencing is neutral48. One DATE/EVENT-inspired neighboring selector read (D8+4=DC, word width/alignment preserved, FAKE unknown aggregate) is48 and flips another comparison operand; rejected without a base/type sweep. Existing sibling report has none>=0.70. Source-only body/replay/provenance retained in drafts/T-24068; production unchanged.
+
+Existing read-only allocator tracer passes same-input whole-object identity SHAe4ce1543013767591dacbbed4d00f4889d9b3595e1773b10c82a549c92aba6ee. Selector bit0 priority0.5 takes cheapest cost0 color3(a0); constant1 bit27 priority0.666666687 takes color2(v1) cost1 first. Not an equal-priority tie. Trace only gives best costs, so v0 call-result conflict/liveness remains a specific question; no new source sweep or compiler changes. Ticket remains In Progress.
