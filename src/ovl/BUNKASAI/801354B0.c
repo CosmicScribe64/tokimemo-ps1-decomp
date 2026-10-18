@@ -277,8 +277,6 @@ void func_80135914(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11190 bulk_m2c draft */
 void func_80135C4C(void) {
     GameState *state;
     u32 choice;
@@ -474,9 +472,6 @@ void func_80135C4C(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/801354B0", func_80135C4C);
-#endif
 
 void func_80136230(void) {
     func_800847B8(1);
