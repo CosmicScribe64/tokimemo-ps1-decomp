@@ -18758,3 +18758,11 @@ Created [[tickets/T-24072-etc-model-init]] before edits on only func_8014354C in
 ## [2026-10-18] ticket | Correct ETC record initializer from actual Rec24 layout
 
 Created [[tickets/T-24073-etc-record-init]] before edits for only func_8014407C in ETC/80143240.c. Parent confirms single-worker reservation and final prior archive fe932f320. Stale array-object arithmetic conflicts with real Rec24 start/stride; matched MAIN80084E90 supplies read-only typed initialization evidence. Reuse55ff6f88e and same sole Sol medium Docker compiler; preserve all other functions and signed remainder/store semantics.
+
+## [2026-10-18] build | T-24073 valid Rec24 baseline129
+
+[[tickets/T-24073-etc-record-init]]/[[etc-family-results]] record fresh valid full-TU baseline129 with real Rec24 records2..4/current GameState flags/signed RNG. Private header view corrects actual incoming-a0 conflict; parent approves eventual narrow void() declaration preserving matched no-expression caller. Baseline s16-local narrowing and frame50 versus48 remain. Production/header unchanged; historical ERROR is not matching evidence.
+
+## [2026-10-18] build | T-24073 source-led record initialization20
+
+[[tickets/T-24073-etc-record-init]]/[[etc-family-results]] preserve source-only forms under drafts/T-24073:129,124,115,84,64,22,20, with early-ID30 rejected. Real Rec24/current fields, word values and matched unsigned SDK width fix source defects/frame; early y-store/postincrement ID leave only i++ across signedDIV guard. Private approved header() view; production/interfaces unchanged, no verified gain. In Progress.
