@@ -154,3 +154,7 @@ Result of w3-date-p03 ([[tickets/T-17203-w3-date-p03]]): 3 of 4 matched (`func_8
 ### Package w3-date-p05 (T-17205)
 
 Result: 5 of 5 matched in plain C (`func_801496C4` 1,020 B, `func_801556D8` 744 B, `func_801560E0` 712 B, `func_80155E40` 484 B, and in the closer pass `func_80149F48` 176 B with `(s16)(D_8015D084 * 3) + D_8015D090`; 3,136 bytes). New in `DATE.h`: `DateFix32`, `DateMover44` (display records 98..105 as the eight-object scene uses them), `D_8015F9A0[8]` (state) and `D_8015F9A8[8]` (idle counters), `void func_801560E0(void);`, and `s32 func_80155E40(void);`. What fixed each function, and the register-cheatsheet rows it added, are in [[matching-notes]], "T-17205". The eight objects: `func_801556D8` sets them up, `func_801560E0` updates them and is called from the step-table handler `func_80155E40` when `unk_110A` is 0x11..0x13.
+
+## T-24018 source-based movie sibling follow-up
+
+Matched DATE2 func_80133AF0 gives a much closer structural starting point for DATE func_801462B0 than the census. Adding DATE's callback branches and 300-frame timer, with an early break in case 14, restores the exact 0x68 frame and 951 instructions; first 442 instructions exact, 434 printable diff rows remain. Callback-save arrays, direct stage/record views and s32 return diagnostics do not solve later allocation. No production change or new C bytes. Source-only draft and reproduction in drafts/T-24018/, [[tickets/T-24018-large-sibling-state-machines]] In Review.

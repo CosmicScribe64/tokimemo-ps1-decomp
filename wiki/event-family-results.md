@@ -202,3 +202,7 @@ header types moved little; the dumpling arrays fix a wrong scale in the drafts b
 ### Packages
 
 T-17601..T-17608 (`w3-gyozi-p01`..`p08`): 33 functions, 19,180 bytes.
+
+## T-24018 source-based movie siblings
+
+DATE2 func_80133AF0 ports to EVENT func_8011C750 through existing movie/state/Rec24 views. After callback/resource substitutions and the 300-frame timer, a direct exit-state reload improves 317 to 167 printable diff rows (924 versus 925 target instructions); callback return views and page-byte access forms do not match. DATE func_80147958 ports to func_8011DDB8 only after adapting EVENT's sound/timer/resource-selector/callback cases; it remains 357 rows, frame 0x68 versus 0x60, and T-23004 remains the better source. Numbers use printable rows and are not directly comparable with T-23004's normalized metrics. No production source/header change or new matching C. Drafts and reproducible scratch-only return views: drafts/T-24018/ and [[tickets/T-24018-large-sibling-state-machines]] (In Review).

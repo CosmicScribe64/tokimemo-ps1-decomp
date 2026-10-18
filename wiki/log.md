@@ -18241,3 +18241,15 @@ Root review found that bulk_m2c.insert_draft had left a NON_MATCHING guard in th
 
 ## [2026-10-18] ticket | BUNKASAI state machines ready for review
 Moved [[tickets/T-24016-bunkasai-state-machines]] to In Review and moved its kanban card. Root review/integration remains; no push or merge by worker.
+
+## [2026-10-18] ticket | Large DATE and EVENT sibling state machines
+Started [[tickets/T-24018-large-sibling-state-machines]] from 9d7049463 in the existing complete-bunkaken worktree. Read [[date-family-results]], T-12100 and T-23004 before recovery. DATE2 references are read-only; assigned source files only, single Docker compiler.
+
+## [2026-10-18] query | Large movie sibling ports remain source-only leads
+[[tickets/T-24018-large-sibling-state-machines]] ported matched DATE2/DATE source to the three assigned targets. DATE 462B0 reaches exact 951 instructions/frame with first 442 instructions exact but 434 printable rows left; EVENT C750 reaches 167 rows/924 versus 925 instructions; EVENT DDB8 remains worse than T-23004 at 357 rows/1005 versus 998. Bounded callback arrays, return views and byte/stage access probes do not match. Preserved source-only candidates and tested reproduction in drafts/T-24018/; private scratch stays ignored. Updated [[date-family-results]] and [[event-family-results]].
+
+## [2026-10-18] build | Unchanged DATE and EVENT controls remain exact
+Docker ninja -j1 DATE.ok/EVENT.ok has no work; independent Docker SHA1 comparisons match both configured targets. All three requested functions still use assembly fallback, so these controls contribute zero C bytes. No source/header/compiler change.
+
+## [2026-10-18] ticket | Large movie sibling follow-up ready for review
+Moved [[tickets/T-24018-large-sibling-state-machines]] and its board card to In Review. Root review remains; no push or merge by worker.
