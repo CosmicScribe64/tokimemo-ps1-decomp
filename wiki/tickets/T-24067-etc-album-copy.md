@@ -1,7 +1,7 @@
 ---
 id: T-24067
 title: Match ETC album record copy
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -63,3 +63,7 @@ Existing rejected-store comparison has its own same-input whole-object/section a
 Authorized narrow writer follow-up records matching helper writes: baseline final required comparison f_jump→f_emit_branch_rrll:L41c21c spills a2=9 into the reused address; rejected store f_unaligned_loadstore→f_loadstore:L4278fc saves gp=0x10000 there. Static frame/dispatch inspection narrowed candidates before logging; only explicitly listed helpers' stack writes enter a native bounded record, not a general memory trace. Both existing inputs re-pass separate whole-object/four-section equality. README pins final generator/binary hashes and limits (unobserved same-value writes not excluded). Address evaluations run deeper and leave this slot unchanged. No legal required-expression route/new source probe established; production and four-word checkpoint preserved, ticket In Progress.
 
 Final predicate-helper inspection rejects an unsupported operand-flip probe without compilation. Scalar immediate emitter requires RHS constant opcode0x49, whereas both compared bytes are variable; preserving the two-register BNE supplies no route to it. Operand reversal only spills another register number0..31, which cannot cross the stale-value-plus8 threshold0x7FF9. Bool/XOR/subtraction adds instructions or normalizes back. No distinct legal C89 equivalent predicate/sequencing form established; README records this unresolved gap without claiming exhaustive source impossibility or an older-compiler requirement.
+
+Parent-authorized existing52 ugen stage comparison is neutral. Capture wrappers first reproduce full stock object28fc..., then captured53 replay reproduces the raw as1 object before52 runs. Cached amd64 image/existing qemu only; no install/settings change. Both53/52 backends on identical current O/T through identical current frame/as1 produce raw object7211475ad0a8b8410ae27f588b8d5296fcfb0cdebae9e92009627fac6f735629 and target75 words/frame0x48/cost8/8rows (same four t5/t6 words). Raw binasm differs but assembled object agrees. drafts/T-24067/ugen52.py/README retain source-only harness, hashes, commands and stage compatibility limits: only52 backend, not full52 pipeline or production C proof. Production unchanged, In Progress, unresolved source gap retained.
+
+Parent requested the unresolved checkpoint move to In Review and stopped further speculative41ABC probes. No verified C match/bytes were produced; the four-word draft and audited compiler-mechanism evidence are retained for independent review. Production INCLUDE_ASM remains. This ticket is not Done.

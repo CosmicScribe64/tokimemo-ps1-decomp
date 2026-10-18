@@ -18597,3 +18597,12 @@ Authorized narrow writer diagnostic, preceded by static stack/dispatch analysis,
 ## [2026-10-18] decision | T-24067 prune unsupported final-predicate control
 
 Read-only f_jump path inspection requires constant RHS for the scalar immediate emitter, while both actual compared bytes are variable. Reversing operands only changes a physical register number0..31 and cannot cross the stale-value-plus8 threshold0x7FF9. No new predicate probe justified; bool/XOR/subtraction would add instructions or normalize back. [[tickets/T-24067-etc-album-copy]] and [[etc-family-results]] preserve the unresolved four-word source checkpoint with unchanged production/In Progress. drafts/T-24067/README.md records exact path predicates and avoids exhaustive-source or older-compiler claims.
+
+## [2026-10-18] build | T-24067 existing52 backend stage is neutral
+
+Parent-authorized existing IDO5.2 ugen replay uses cached amd64 Docker/qemu and captured current53 O/T, with full-pipeline capture and same-stage stock fidelity passing first. Both backends assembled through identical current frame/as1 give raw object7211475ad0a8b8410ae27f588b8d5296fcfb0cdebae9e92009627fac6f735629; assigned target75 words/frame0x48/cost8/8rows, same four t5/t6 words. Raw binasm differs but object agrees. [[tickets/T-24067-etc-album-copy]] and [[etc-family-results]] retain unresolved source gap/In Progress and unchanged production. drafts/T-24067/ugen52.py/README hold source-only harness/provenance and stage compatibility limits; no download/install/full52-pipeline or C-match claim.
+
+
+## [2026-10-18] ticket | T-24067 unresolved checkpoint In Review
+
+Parent requested [[tickets/T-24067-etc-album-copy]] move to In Review and stop speculative41ABC probes after the neutral52 diagnostic. Board/index/[[etc-family-results]] agree. Four-word source and audited mechanism packet retained, production INCLUDE_ASM unchanged, no verified C match/byte gain and no Done claim. Parent will set up the next exclusive branch before new production edits.

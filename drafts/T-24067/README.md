@@ -139,3 +139,22 @@ Parent authorized a narrow logging-only follow-up to that writer question. Stati
 Both existing inputs again pass their separate whole-object and four-section audits with the hashes above. The records identify matching causal helper writes, rather than a general memory trace; they do not exclude an unobserved intervening write of the same value. The required comparison leaves9, whereas the rejected extra scalar store's helper leaves0x10000. Ordinary destination/source evaluation runs in deeper frames and observed slot values remain unchanged throughout. No legal required-expression transformation is established from this evidence, so no new source control was invented. Production and the four-word checkpoint remain unchanged.
 
 Final required-comparison inspection prunes an operand-order probe before compilation. f_jump's scalar immediate route L424f84→L42501c→emit_rill requires the RHS node opcode0x49 (a constant); the actual masked year and record year are both variable. Preserving their two-register BNE therefore does not establish a route to that helper. Reversing operands would only change the spilled physical register number, still0..31. The copy path tests the stale value plus length8 against0x7FF9, with an earlier stale-value0x7FF8 check; all register numbers remain in the one-burn path. Materializing subtraction/XOR/boolean would require extra instructions unless normalized back to the same comparison path. Prior scripts contain no final-predicate flip control, but this mechanism gives no reason to run one. No different legal C89 predicate/sequencing form that preserves all required words and changes the reused slot has been established. This is an unresolved source-recovery gap, not proof that all possible source forms or older compiler hypotheses are exhausted.
+
+Parent authorized one existing IDO5.2 backend-stage comparison, using the cached tokimemo-decomp-ido52 amd64 image (`sha256:855a4ece089d8cfd99cdfca36c3b1383cce1c8d4e4c59ddb0574372f05d78d17`) and existing read-only /scratch/ido5.2. ugen52.py first captures unchanged current53 ugen/as1 inputs and checks the complete wrapped object equals stock28fc0f816f0d4471f7536aa32ae4c94f7446caf909b358c8dfb3f2048df72d7f. It then replays53's captured stage in the cached amd64 image, assembles with the current frame/as1 passes, and requires raw-object equality to captured stock as1 output before52 is allowed.
+
+Exact input O/T hashes are `b0d7ee1d471634d3998cda5c840bd81a37bc88d278974392455ff9b754a4ac5d` / `58ef385b8341f3bc551595c977174128d951822e63b538334b45ee0185fa700a`. Existing52 ugen hash is `43db097dc6b462d7741b511c612f8d3de02aa2f5b713cab13ac0ce14e193e006`, qemu-irix `9dc3d30412961dedcb60d45201061458b8051af0a1930e3d3732940c0c372675`. No download/install or production setting changed. Replay serially, mounting /work and the same read-only /scratch:
+
+```
+# tokimemo-decomp-arm64
+python3 drafts/T-24067/ugen52.py capture
+# cached tokimemo-decomp-ido52, --platform linux/amd64
+python3 drafts/T-24067/ugen52.py stage 53
+# tokimemo-decomp-arm64
+python3 drafts/T-24067/ugen52.py assemble-stock
+# cached tokimemo-decomp-ido52, --platform linux/amd64
+python3 drafts/T-24067/ugen52.py stage 52
+# tokimemo-decomp-arm64
+python3 drafts/T-24067/ugen52.py assemble
+```
+
+Both outputs yield the identical raw assembled object SHA256 `7211475ad0a8b8410ae27f588b8d5296fcfb0cdebae9e92009627fac6f735629`; target75 words/frame0x48/cost8/8 rows, only the same four t5/t6 words. Raw binasm hashes differ (53 `a82b8fdd3696c8ce2aabe3325d45f4440b088f0cb4a8571ddb62e4e02acbbe56`,52 `242bbdf68b0f17f53b10cbf5812cbae6e6ff9e577fa2b9faa57f22a6fbc5cbf7`) but final object bytes agree. Evidence remains ignored under build/etc24067/ugen52, including result.json and target.diff. This is only52 ugen accepting current53 frontend/uopt O/T and using current frame/as1; it is not a full52 pipeline, a proof of identical internal stack history, or a production C match. The release substitution does not improve this target under the measured stage interface.

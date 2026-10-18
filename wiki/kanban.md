@@ -49,7 +49,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24067-etc-album-copy|T-24067 Match ETC album record copy]]
 
 
 
@@ -64,6 +63,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24067-etc-album-copy|T-24067 ETC album copy unresolved four-word checkpoint]]
 
 - [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
 
