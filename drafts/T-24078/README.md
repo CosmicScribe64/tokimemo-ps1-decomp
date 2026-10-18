@@ -43,6 +43,9 @@ Historical T17300 plain792/typed957 are different contexts, not fresh results.
 | indexed-texture.c |624|852|592|0x90|
 | indexed-uv-right.c |618|846|592|0x90|
 | height-unsigned.c |606|836|592|0x90|
+| height-x0.c |618|846|592|0x90|
+| height-capture.c |618|846|592|0x90|
+| height-first-narrow.c |650|804|594|0x90|
 
 Original588 words/frame0x90. Rank with tools/funcdiff.py diff_score on resolved
 instruction keys (insertion/deletion1, substitution2). Printed rows use different
@@ -401,3 +404,6 @@ Keep606 as a separate FAKE diagnostic frontier,618 original-order/six-use view,
 and604 numeric best independently. No further suffix, width or expression split
 was authorized or tested by this packet. Production remains ASM, same function
 active. The observed result is not permission for a signedness permutation search.
+
+height-lifetimes.md preserves the three independent lateH predictions and
+negative outcomes; no form moved the current earlyH definition.

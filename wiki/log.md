@@ -20327,3 +20327,13 @@ poly/UV offsets and Q/P order retained; mode6/136s7 now original, but160takesfp
 and page still spills60. Two signed lower-right formulas reassociate to immediate
 ADDIU160. No literal match or new priority observation;618 and604 kept separately.
 No automatic suffix/width permutation, production unchanged and same target active.
+
+## [2026-10-18] build | T24078 bounds three late-height lifetime controls
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve a
+small sequential set against signed618: disjoint X0reuse fully normalizes;
+firstY2capture changes ADDU ordering without H movement; low16 first-consumer
+view adds copies and worsens650/594words. Frame90/poly84/88/UV50/54 unchanged.
+FAKE/semantic-domain proofs and predictions in drafts/T-24078/height-lifetimes.md.
+No additional masks/widths/suffixes, logger or production edit. Same target active,
+no impossibility or match claim;618/606/604 retained independently.
