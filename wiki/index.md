@@ -644,4 +644,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[tickets/T-24049-etc-exam-ranking]] - ETC ranking source-only checkpoint,885 rows; In Review.
 
-- [[tickets/T-24052-shougatu-dialogue-siblings]] - source sibling closure for SHOUGATU dialogue handlers.
+- [[tickets/T-24052-shougatu-dialogue-siblings]] - two SHOUGATU matches,1032 literal bytes; In Review.

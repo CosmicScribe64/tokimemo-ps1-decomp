@@ -18304,3 +18304,6 @@ Read T-17500 target/type drafts and T-20004's verified GYOZI implementations. Re
 
 ## [2026-10-18] build | T-24052 first SHOUGATU sibling,488 actual C bytes
 func_80133208 is installed as unguarded normal C without its target INCLUDE_ASM. Ported matched GYOZI source plus SHOUGATU input skip and0x28 byte bound; inherited unchanged-byte store is marked FAKE/T-24052. Fresh Docker ninja -j1 compiles/links SHOUGATU with checksum/headers OK; literal default linked funcdiff MATCH488 bytes. [[shougatu-family-results]] and [[tickets/T-24052-shougatu-dialogue-siblings]] updated; second sibling remains In Progress. No header/config changes, no push/merge.
+
+## [2026-10-18] build | T-24052 second SHOUGATU sibling,544 actual C bytes
+func_801333F0 is unguarded normal C with no target INCLUDE_ASM. Direct unchanged halfword self-stores survive and match, unlike the earlier GYOZI byte negative; both are marked FAKE/T-24052. Fresh Docker ninja -j1 compiles/links SHOUGATU, checksum/headers OK; literal default linked proofs MATCH544 and recheckedMATCH488 for the first target. Ticket total1032 bytes. Preserved source-only bodies and finite negative ledger in drafts/T-24052. Updated [[shougatu-family-results]], [[register-cheatsheet]] and [[tickets/T-24052-shougatu-dialogue-siblings]], now In Review. No headers/configs or push/merge.

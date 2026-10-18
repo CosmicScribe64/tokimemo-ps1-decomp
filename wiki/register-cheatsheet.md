@@ -393,3 +393,5 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 - Don't keep m2c's `temp_*` locals by default. They add values the original doesn't have.
 
 T-24045 TEL func_8013D03C: a deliberately volatile local base can reproduce surrounding pointer reloads, while a narrow nonvolatile read view `(*(GameState **)&q)` at a pair of packed-field reads permits the original single word load. This is a marked compiler-specific FAKE requiring standards review, not a portable volatile-access idiom. Dedicated word locals and reused pointer ranges changed earlier allocation. See [[tickets/T-24045-tel-profile-screen]] and drafts/T-24045/README.md; actual default linked match2128 bytes.
+
+T-24052 SHOUGATU func_801333F0: do not transfer an unchanged-byte-store negative directly to a signed halfword. `D_80143B04 = D_80143B04;` survives and matches the target SH in both arms. Halfword `|=0` adds signed extension; a u16 store view adds a mask; assignment-in-test retains one phantom temporary and shifts seven later instructions. The self-stores are marked FAKE. Actual default linked match544 bytes; see [[tickets/T-24052-shougatu-dialogue-siblings]].

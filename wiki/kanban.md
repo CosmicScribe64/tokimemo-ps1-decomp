@@ -47,7 +47,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24052-shougatu-dialogue-siblings|T-24052 Match SHOUGATU dialogue siblings]]
 
 
 
@@ -67,6 +66,9 @@ kanban-plugin: board
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24052-shougatu-dialogue-siblings|T-24052 Match SHOUGATU dialogue siblings]]
+
 
 - [ ] [[tickets/T-24049-etc-exam-ranking|T-24049 Recover ETC exam ranking generator]]
 
