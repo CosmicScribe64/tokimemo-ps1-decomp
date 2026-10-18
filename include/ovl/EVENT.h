@@ -1201,7 +1201,7 @@ extern u8 D_80125304;
 extern u8 D_80125308;
 void func_80033E88();
 extern s8 D_80125310;
-void func_801103A0();
+s32 func_801103A0(void);
 void func_800FBE90();
 void func_800F7640();
 void func_800F77A0();

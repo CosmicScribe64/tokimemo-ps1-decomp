@@ -18957,3 +18957,30 @@ Reserved only GEKO80140A00:func80141870, SHOUGATU80134890:func801359FC and GYOZI
 
 ## [2026-10-18] decision | T-24061 corrected short handlers, no promotion
 Read prior negatives and matched setup/dialogue forms; serial source-semantic/lifetime checks preserve GEKO byte postincrement plus word reload (44 rows), SHOUGATU correct girl/seed/halfword views (56 rows), and GYOZI scratch setup return prefix (84 rows). Table alignment, separate selector lifetimes, eager bool and record pointer/prefix-copy hypotheses failed; finite ledger and tested source reproduction in drafts/T-24061. No production/header/config edits, no forced registers/compiler patches; zero C bytes. Updated [[scenes-family-results]], [[shougatu-family-results]], [[event-family-results]] and [[tickets/T-24061-short-control-and-copy]], now In Review. Production control hashes pass through ASM fallbacks; prior matches preserved. No push/merge.
+## [2026-10-18] ticket | Resume EVENT through full-match closure
+
+[[tickets/T-24023-event-handler]] moves In Review to In Progress after dialogue commit 0a6f9e4b8. Inspect repeated date Boolean ranges and test the measured early-definition idiom from [[tickets/T-24021-dialogue-scheduling]]. Remaining scope and parent notifications follow [[tickets/T-24020-astra-hard-functions]].
+
+## [2026-10-18] query | EVENT separates the three Boolean materializations
+
+[[tickets/T-24023-event-handler]] finds a source-shape lead: distinct no-op month operands stop the unwanted shared comparison. Two sites match their original Boolean blocks; a middle byte mask emits one extra instruction. Test distinct wrappers that lower without instructions. Dialogue parent reports independent all-27 verification and publication as main f55a2d7e9; formal review accepted its marked FAKE idiom.
+
+## [2026-10-18] query | EVENT reaches exact structure with 29 exchanged branch operands
+
+[[tickets/T-24023-event-handler]] now has the exact 1,712 instructions in source-only drafts/T-24023/closure/body.c. Distinct no-op operands stop Boolean commoning; a positive date guard replaces both gotos without losing either failure exit and fixes tail load scheduling. Remaining cost 58 is 29 equality-operand swaps. Rejected two unrelated precedence-bug probe results during source audit. Continue through literal match; no C promotion yet.
+
+## [2026-10-18] query | Trace EVENT final operand reversals through conversion pass
+
+[[tickets/T-24023-event-handler]] reaches cost 28, fourteen branch operand pairs. Constant assignment through an existing word local fixes the other fifteen. Captured the unchanged conversion pass input/output and identified its constant-register ordering rule. Experimental pointer/local/call forms do not improve the remaining pairs; compiler and production source remain unchanged.
+
+## [2026-10-18] query | EVENT narrows to nine selector branch pairs
+
+[[tickets/T-24023-event-handler]] now has cost18 and exact structure through per-arm unsigned selector copies and separate byte-local comparison constants. Input/output ucode captures remain read-only diagnostics of the normal compiler. Target individual remaining source sites; preserve the selector value across later tests in each arm.
+
+## [2026-10-18] build | EVENT handler matches default C and full overlay checksum
+
+[[tickets/T-24023-event-handler]] moves In Progress to In Review. Default C matches all 1,712 instructions / 6,848 literal text bytes; normal EVENT SHA1 ff7184d7e92b7aff372450ac3b8c2bdd42e55a5e and header/global/prototype guards pass. Parent coordinated s32 func_801103A0(void); its sole C caller ignores the result and remains byte-identical. Updated [[matching-notes]], [[event-family-results]], [[register-cheatsheet]], index and coordinator. Final source marks the unknown-aggregate neighboring-byte view, Boolean identity operands and constant-capture byte local FAKE. Retained replay in drafts/T-24023/closure/. Parent retains formal review and main integration.
+
+## [2026-10-18] query | Record EVENT return view and closure controls
+
+[[tickets/T-24023-event-handler]] documents the intentional s32 fallthrough tail requested by parent preview review: original calls func_80011DFC then returns with its v0 unchanged, and the sole C caller ignores the result. The retained full-TU replay confirms literal6,848-byte match; direct selector symbol costs18, shared month equality967, literal comparison constants8, historical checkpoint214. No production cleanup or compiler changes after successful verification.

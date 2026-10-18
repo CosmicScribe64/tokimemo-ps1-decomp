@@ -1,6 +1,6 @@
 ---
 id: T-24020
-title: Investigate three largest hard functions
+title: Match reserved hard functions
 status: In Progress
 assignee: Astra hard-function lane
 created: 2026-10-17
@@ -37,3 +37,7 @@ Production `src/`, `include/`, `config/` and `tools/` are unchanged from base. D
 ## Active completion requirement (2026-10-18)
 
 User requires the remaining reserved biggest/hardest targets to reach full matches, not additional near-match stopping points. Dialogue is complete at 8,672 linked text bytes ([[tickets/T-24021-dialogue-scheduling]]). Continue EVENT, TEL, MAIN func_8007132C and GEKO func_80142C9C serially. Inform the orchestrator after each verified match so it can review, integrate and push main. The published research checkpoint remains useful but its zero-byte production statement is historical.
+
+## Second verified closure (2026-10-18)
+
+EVENT func_801103A0 is now default C with 6,848 literal text bytes and its full overlay checksum verified. Together with dialogue, this lane has closed two functions / 15,520 literal text bytes. Parent received the successful scratch proof and coordinated the EVENT declaration; send the frozen production pin after documentation checks. Continue TEL func_80136724, MAIN func_8007132C and GEKO func_80142C9C through full matches. The reserved helper remains T-24042.

@@ -105,11 +105,11 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Match dialogue argument scheduling]]
 - [ ] [[tickets/T-24059-short-copy-siblings|T-24059 Short copy-chain siblings]]
 - [ ] [[tickets/T-24052-shougatu-dialogue-siblings|T-24052 Match SHOUGATU dialogue siblings]]
 - [ ] [[tickets/T-24045-tel-profile-screen|T-24045 Recover TEL profile screen from retained near miss]]
 - [ ] [[tickets/T-24038-etc-master-siblings|T-24038 Recover ETC renderer and MASTER sibling handlers]]
-- [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Investigate dialogue argument scheduling]]
 - [ ] [[tickets/T-24030-bunkasai-sibling-package|T-24030 Recover BUNKASAI sibling package]]
 - [ ] [[tickets/T-24034-event-render-siblings|T-24034 Port EVENT rendering siblings]]
 - [ ] [[tickets/T-24016-bunkasai-state-machines|T-24016 Recover BUNKASAI festival state machines]]
