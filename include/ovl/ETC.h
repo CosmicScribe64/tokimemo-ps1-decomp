@@ -1308,6 +1308,8 @@ extern s32 D_80150148;
 extern s32 D_80150390;
 extern s32 D_801503C4;
 extern s32 D_80150EA4;
+/* T-24038: ten (u, v) digit pairs; extent ends at the separate sign bytes below. */
+extern u8 D_801500A0[20];
 extern u8 D_801500B4;
 extern u8 D_801500B5;
 extern u8 D_80150748[10];
