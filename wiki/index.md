@@ -42,6 +42,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-24033-valen-selector-ports|T-24033]] VALEN sibling retry:32D0C guarded at7 rows,34030 remains27; zero matches, In Review.
 - [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI sibling package (In Review; 2 matches, 2,020 bytes).
 - [[tickets/T-24035-small-bunka-geko-siblings|T-24035]] Small BUNKA_SD/GEKO sibling ports (In Progress).
+- [[tickets/T-24035-small-bunka-geko-siblings|T-24035]] Small BUNKA_SD/GEKO sibling ports (In Review; 2 matches, 396 bytes; fade-in guard 4 rows).
 - [[tickets/T-24028-date-event-short-movie-siblings|T-24028]] Short DATE/EVENT movie siblings (In Review; DATE 11-instruction guard, EVENT 7-instruction source lead).
 - [[tickets/T-24018-large-sibling-state-machines|T-24018]] Large DATE/EVENT sibling state machines (In Review; source-only leads, 0 new C bytes).
 - [[tickets/T-24016-bunkasai-state-machines|T-24016]] BUNKASAI state machines (Done; 2 matches, 3,160 bytes).
