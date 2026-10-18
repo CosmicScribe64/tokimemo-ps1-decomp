@@ -19177,3 +19177,20 @@ runtime as the next dependency; no compiler changes or new verified bytes.
 ## [2026-10-18] ingest | Reuse rebuilt diagnostic allocator across two workers
 
 [[completion-run-2026-10-17]] records restored external tracer path and worker stock-output equivalence evidence. Shared read-only binary with [[tickets/T-24067-etc-album-copy]] for its22cost/26row pointer/copy register residual. ENDING continues same target. No new matched bytes or production-toolchain change; two Sol workers only.
+## [2026-10-18] ingest | T-24067 album-copy semantic audit
+Read prior T-9720/T-17300 evidence and current types for [[tickets/T-24067-etc-album-copy]]. Cursor arithmetic must advance eight bytes over 256 records, not eight GameState elements. Existing GameState/Work800E7D10/GsRec75E views cover source, save bytes and unaligned eight-byte assignment without new headers. Only this ETC function is under investigation; DATE publication reported by parent and all other ETC targets remain deferred.
+
+## [2026-10-18] decision | T-24067 save byte offsets
+The destination root is 0x800E7D10: count/mode at 0x800E7D38/37 are offsets +0x28/+0x27, hence existing unk_027 indices 1/0. Corrected this arithmetic before interpreting source comparisons. Initial compile identifies common-base CSE and loop-end placement as concrete allocation differences; bounded endpoint and printf temporary controls follow.
+
+## [2026-10-18] build | T-24067 reproduces prior album-copy boundary
+Canonical typed source gives35 diagnostic rows; independent endpoint identity reproduces prior27. Bounded copy-alignment, argument-width, signed store, count-postincrement and loop-preheader controls have no gain. [[tickets/T-24067-etc-album-copy]] records exact unresolved groups. Tests remain ignored scratch; production/interface scope unchanged. Direct repeated printf reads and existing-byte reuse are next source hypotheses, avoiding new frame homes.
+
+## [2026-10-18] build | T-24067 stored-mode read improves diagnostic
+Passing the saved mode byte to the final printf lets the compiler share the constant in a1 and restores that tail schedule: private cost27→22 (26 differing rows). Existing SDK printf, K&R/private return views and four source-line grouping controls do not change the remaining result. No compiler/header changes were made; [[tickets/T-24067-etc-album-copy]] remains In Progress with saved-register, argument-store and copy-temp differences under focused investigation.
+
+## [2026-10-18] query | T-24067 allocator tie isolated
+Existing read-only tracer shows fmt/save/end hoisted constants share priority3.33333325 and first-use numbering52/53/54 in [[tickets/T-24067-etc-album-copy]]. Identical-input stock and instrumented code/data/relocations agree. No production compiler change. Testing one endpoint assignment inside the loop to change first-use order while retaining semantics; prior explicit pre-loop endpoints, eliminated zero terms and postcondition controls do not improve cost22.
+
+## [2026-10-18] build | T-24067 canonical allocation checkpoint
+Retained drafts/T-24067/body.c and safe replay at cost18/28 rows, exact0x48 frame/75 words. FAKE format identity restores saved allocation; canonical GameState endpoint avoids any header/export alias. Source-only checkpoint preserves provenance while [[tickets/T-24067-etc-album-copy]] remains In Progress. No other function or production source changed.
