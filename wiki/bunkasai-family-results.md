@@ -105,3 +105,7 @@ Starting points: `func_801509A4` (T-16100 draft, 59), `func_80151364` (guarded b
 `D_800CA148` in v0/v1 where the draft uses t registers; undeclared callees did not change it),
 `func_80150B7C`, `func_80158764` and `func_80142700` (T-18700 typed drafts), `func_80142BE8` (census hand
 repair 445, or the T-18700 hand draft for the switch shape).
+
+## T-24016 state-machine follow-up
+
+`func_80135C4C` matched in default unguarded C (1,508 literal bytes). Starting T-16510 draft: 264 printable diff rows. Replacing the redundant dialogue temporary with direct `D_800CA148` updates reduced it to 130; accessing GameState through a local pointer reduced it to zero. The correctly indexed assessment value is `unk_66C[1].unk_00` (0x800E68F0). No FAKE or header change. Normal Docker overlay checksum and literal default linked funcdiff both pass. Second target `func_80158764` remains in progress under [[tickets/T-24016-bunkasai-state-machines]].

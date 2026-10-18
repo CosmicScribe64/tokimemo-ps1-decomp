@@ -18226,3 +18226,9 @@ The all-dot state region fixes the inserted reload but reverses two earlier addr
 ## [2026-10-18] ticket | T-24014 TACO PRE closer archived
 
 47 focused probes produced no match. The all-dot region corrects the inserted reload but reverses two earlier address additions; empty-use seeds and mixed forms do not resolve the tradeoff. Production source remains unchanged. The three-case reproducer in drafts/T-24014/ verifies costs 2/4/32. Explicit default proof matches the 796-byte assembly fallback and fresh TACO SHA1 passes; zero new C bytes. Updated [[matching-notes]] and moved [[tickets/T-24014-taco-pre-closer]] to In Review for independent archive review.
+
+## [2026-10-18] ticket | BUNKASAI state-machine recovery
+Started [[tickets/T-24016-bunkasai-state-machines]] in existing complete-bunkaken worktree; read project rules and [[bunkasai-family-results]]. Targets func_80135C4C and func_80158764 currently use assembly; prior draft scores 264/332.
+
+## [2026-10-18] build | BUNKASAI func_80135C4C matched
+[[tickets/T-24016-bunkasai-state-machines]] recovered default unguarded C for 1,508 bytes with direct dialogue-field updates and a GameState pointer. Docker ninja -j1 BUNKASAI checksum OK and literal default linked funcdiff MATCH. No FAKE or header change; [[bunkasai-family-results]] records the recipe.
