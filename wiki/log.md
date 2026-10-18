@@ -17988,3 +17988,7 @@ Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` 
 ## [2026-10-17] ticket | T-23005 In Review
 
 [[tickets/T-23005-w5-big-p05]]: 1 of 6 matched (`func_80144270`). `func_80142C9C` (3,700 B): frame and stack offsets exact, 492 register-allocation rows left, back to `INCLUDE_ASM`; `func_80143F48` (106 rows), `func_80144198` (57) and `func_80141870` (51) above the guard limit, back to `INCLUDE_ASM`; `func_8013E950` not started. Drafts in `drafts/T-23005/GEKO/`, levers in [[matching-notes]] (T-23005).
+
+## [2026-10-18] ticket | T-23005 Done
+
+[[tickets/T-23005-w5-big-p05]]: code review against `CODING_STANDARDS.md` passed with no findings. 1 of 6 functions matched: `func_80144270` is plain C (one FAKE unused local, T-23005); `func_80142C9C`, `func_80143F48`, `func_80144198`, `func_80141870` and `func_8013E950` stay `INCLUDE_ASM` with hand drafts in `drafts/T-23005/GEKO/`. Only `src/ovl/GEKO/80142760.c` changed among C files; no contributor claim touched. Ticket Done, card moved to Done, index line updated.

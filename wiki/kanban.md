@@ -53,8 +53,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-23005-w5-big-p05|T-23005 Wave 5 big package w5-big-p05]]
-
 
 ## Done
 
@@ -66,6 +64,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-22020-w4-p20|T-22020 Wave 4 package w4-p20]]
 - [ ] [[tickets/T-22021-w4-p21|T-22021 Wave 4 package w4-p21]]
 - [ ] [[tickets/T-22018-w4-p18|T-22018 Wave 4 package w4-p18]]
+- [ ] [[tickets/T-23005-w5-big-p05|T-23005 Wave 5 big package w5-big-p05]]
 - [ ] [[tickets/T-23003-w5-big-p03|T-23003 Wave 5 big package w5-big-p03]]
 - [ ] [[tickets/T-22014-w4-p14|T-22014 Wave 4 package w4-p14]]
 - [ ] [[tickets/T-22015-w4-p15|T-22015 Wave 4 package w4-p15]]
