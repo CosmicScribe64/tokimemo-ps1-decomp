@@ -165,3 +165,7 @@ Eight file-disjoint packages from the orchestrator's `mklists3.py` (lists in its
 | w3-etc-p06 | T-17306 | `8013F980.c` | 2 | 1,048 |
 | w3-etc-p07 | T-17307 | `80143240.c` | 6 | 2,072 |
 | w3-etc-p08 | T-17308 | `801492C0.c`, `8013FF80.c` | 4 | 3,436 |
+
+## T-24012 dispatcher checkpoint
+
+[[tickets/T-24012-etc-render-family]] verifies `func_80136448`, 1,280 literal linked bytes, in `src/ovl/ETC/80132880.c`. The known NAME_ENT `func_80140044` sibling confirms the dispatch family. The void return view leaves one instruction out of the shared epilogue and shifts branch displacements; an `s32` view with no explicit return reproduces all 320 instruction words and passes explicit default linked-byte proof and the ETC checksum. The view is marked FAKE since the historical source declaration is unknown. Its existing void callees gain accurate overlay-header declarations. Header/global guards pass; prototype guard reports 0 new / 15 known disagreements. Proof logs: `build/etc24012/final-proof.log`, `final-build.log`, `header-guard.log`, `global-guard.log`, `proto-guard.log`. Other assigned rendering functions remain assembly; review pending.

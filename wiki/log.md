@@ -18153,3 +18153,11 @@ User resumed after contributor/Claude waves. Read latest index, wave4/5 completi
 
 ## [2026-10-17] ticket | Start isolated DATE and ETC matching
 Created [[tickets/T-24010-date-etc-coordination]], [[tickets/T-24011-date-dispatch-family]] and [[tickets/T-24012-etc-render-family]] from c485bb71a. Read [[index]], local instructions, standards, [[date-family-results]] and [[etc-family-results]]. Limited to explicitly assigned files, Docker builds at one job per worker; parent owns integration and contributor monitoring.
+
+## [2026-10-17] setup | T-24012 isolated ETC lane
+
+Created `codex/complete-etc` from `4c5123f11`, reused local data and existing Docker image. [[tickets/T-24012-etc-render-family]] records the dispatch sibling and compile prerequisite; no verified match yet.
+
+## [2026-10-17] build | T-24012 verified ETC dispatcher
+
+[[tickets/T-24012-etc-render-family]] and [[etc-family-results]] record 1,280 verified literal linked bytes for `func_80136448` in `src/ovl/ETC/80132880.c`; explicit default proof and ETC checksum pass in Docker. Accurate dispatch callee declarations in `include/ovl/ETC.h`; marked FAKE return view, no main API changes. Header/global guards pass; prototype guard 0 new / 15 known. Ticket moved to In Review for coordinator review; three remaining targets stay assembly.
