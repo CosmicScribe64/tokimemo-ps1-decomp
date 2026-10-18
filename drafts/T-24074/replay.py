@@ -9,7 +9,8 @@ from diagnostic import report
 variants = {'inline-phase': 'body.c', 'baseline': 'baseline.c',
     'join-values': 'join-values.c', 'direct-lookup': 'direct-lookup.c',
     'unsigned-frame': 'unsigned-frame.c', 'quotient-first': 'quotient-first.c',
-    'state-pointer': 'state-pointer.c', 'signed-cycle': 'signed-cycle.c'}
+    'state-pointer': 'state-pointer.c', 'signed-cycle': 'signed-cycle.c',
+    'postinc-cursor': 'postinc-cursor.c'}
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--variant', choices=variants, default='inline-phase')
 args = parser.parse_args()

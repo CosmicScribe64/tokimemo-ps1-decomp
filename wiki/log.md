@@ -19822,3 +19822,19 @@ Created [[tickets/T-24074-etc-record-scene]] before edits on only func_80144224 
 ## [2026-10-18] build | T-24074 source-only166 checkpoint
 
 [[tickets/T-24074-etc-record-scene]]/[[etc-family-results]] preserve baseline209 and bounded controls under drafts/T-24074. Inlinephase166 restores frame38/initiala3/orderindexv1 after semantic helper/table/reload repairs. Quotient/frame/table/fade differences remain; pointer226 rejected, quotient type166 neutral. No instrumentation, alias/helper/header/config/production changes or actual C claim; In Progress.
+
+## [2026-10-18] build | T-24074 reject post-increment cursor control
+
+[[tickets/T-24074-etc-record-scene]] and [[etc-family-results]] retain the
+parent-approved single post-review cursor control in drafts/T-24074. Current
+full-TU explicit-object --resolve --version default diagnostic241/frame40
+worsens best166/frame38; required post-call frame reloads remain. Source-only
+replay updated, production/interfaces unchanged, ticket remains In Progress.
+
+## [2026-10-18] ticket | T-24074 unresolved review checkpoint
+
+[[tickets/T-24074-etc-record-scene]] moves to In Review with card/index aligned.
+Best166/frame38 and rejected post-increment241/frame40 remain source-only in
+drafts/T-24074; production ASM and all neighbors/interfaces unchanged. No
+match, Done status or impossibility claim. Further probes stopped; parent
+reviews the combined bounded handoff before any new target assignment.

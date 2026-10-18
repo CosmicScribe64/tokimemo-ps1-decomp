@@ -1,7 +1,7 @@
 ---
 id: T-24074
 title: Recover ETC record scene with proven helper calls
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -23,3 +23,16 @@ New verified4407C exposes a semantic omission in the retained T-17300 draft, jus
 Fresh valid current full-TU baseline209, frame58 versus original38. Corrected proven helper args/table/Rec24 plus post-call frame-counter reloads: original reloads after helper groups, while old retained draft incorrectly cached stale initial frame. No production/interface edit. First source cleanup joins disjoint fade/spill aliases and phase temporaries before allocation work.
 
 Bounded controls:209/frame58 baseline; joined203/48; directlookup186/40; unsignedframe187/40; quotient-first187; consistentpointer226 rejected; inlinephase166/38 best; signedquotient166 neutral (max6126914). Inlinephase removes copied remainder web and restores initiala3/orderindexv1. Remaining quotient a0/sp34 vs scratcht6/sp30, framecopya2, table-base bias/redundant-store and later fade/register gaps. Source-only forms/replay under drafts/T-24074; no instrumentation/production/helper/header/config changes, no actual C proof. In Progress pending focused coordination.
+
+Parent-approved bounded post-review cursor control uses actual order pointer and
+post-increment loads only in the interior table arm. Valid default-resolved
+full-TU diagnostic241/frame40 is worse than166/frame38; orderindexv1 becomesa1,
+quotient spillsp34 becomessp3C. Rejected and retained as source-only replay.
+No other source choices, production or interfaces changed; ownership remains
+active In Progress pending a concrete next lead, without further pointer sweep.
+
+Final bounded result: UNRESOLVED, In Review, never Done or matched. Best166
+retains semantic corrections and exact frame38; post-increment control241 is
+rejected. Production remains assembly. No supported next faithful source form
+is isolated, and this is not a compiler-impossibility claim. Stop further
+probes/instrumentation; parent reviews the source-only handoff.
