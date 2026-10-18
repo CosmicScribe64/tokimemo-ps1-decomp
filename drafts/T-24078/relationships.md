@@ -74,3 +74,25 @@ Read-only tools/cc.py and drafts/T-24071/backend_capture.py show an existing
 stock-stage copy wrapper and full-object identity check. A target/path adapter
 could observe ugen input/output without a modified compiler, but no capture,
 new instrumentation, toolchain change or diagnostic compile was performed.
+
+
+Origin-first control (cases0/2 only) changes X0 from (P-Q11)-R+24 to
+((24-Q11)+P)-R, matching the original-backed lower-X3 association. It produces
+628 aligned cost /856 diagnostic rows /592 words /frame0xA0. Numeric best604 is
+retained separately; origin-first is the causal frontier because final code now
+executes Q11 DIV, then P MULTU, then R DIV as original. No invented dependency,
+new operation or barrier. Actual callers pass0 or counter*2 with counter0..40;
+within A0..80 and i0/1 the reassociation is equivalent without signed overflow.
+Cases1/3 were unchanged: saved604 already emits their Q141 before P.
+
+Read-only region comparison uses each object's own switch-arm boundaries,
+not fixed offsets. Original boundaries0/57/167/274/402/524/588;604 boundaries
+0/59/168/276/403/526/592;628 boundaries0/59/167/275/402/526/592. Regional aligned
+costs (prologue, arms0..3, tail) are604:[40,121,51,165,153,74] and
+628:[38,108,129,143,134,76]. These independent regional alignments do not sum
+to the whole-function score and do not replace literal matching. An unchanged
+arm1 can change allocation when the neighboring expression graph changes.
+Original X1 uses X0-Q68+136; optimization folds the retained word expression to
+B-Q68+160. The earlier X1-only narrow control changed that web but added two
+copies against604. Its behavior with the corrected Q/P order is not measured.
+This checkpoint includes no further source control or diagnostic scope.

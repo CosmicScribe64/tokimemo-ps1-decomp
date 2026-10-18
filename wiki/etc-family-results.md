@@ -538,3 +538,11 @@ operandfirstreemission, notswapofsurvivingassignments; exactearlierpassunknown.
 reemit.md/patch/fidelity preserveminimalrecipe/hash/observations; rawbinary/logs
 ignored. One faithfulsourceassociation lead isoriginfirst24-Q11+P-R mirroring
 lowerX3origin160; no newsourceprobe yet. Samefunctionactive, noextra logger.
+
+
+Origin-first cases0/2 control restores original Q11-DIV/P-MULTU/R-DIV order,
+628cost/856 diagnostic rows/592words/frameA0. Keep604 numeric best and628 causal
+frontier separately; neither matches. Actual caller A0..80/i0..1 supports exact
+reassociation, no invented dependency. Source/replay and regional comparison
+are in drafts/T-24078; cases1/3 unchanged. Remaining X1+160 versus original
+X0+136 dependency needs read-only analysis before any further control. Active.

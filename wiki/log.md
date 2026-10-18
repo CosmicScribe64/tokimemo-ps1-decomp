@@ -20140,3 +20140,19 @@ Root completed read-only GitHub query at14:08UTC: no open PRs; only #57 updated
 2026-10-17T22:16:21Z and #50 updated2026-10-17T15:45:07Z, unchanged. No external
 messages sent; next around14:38UTC. [[completion-run-2026-10-17]] records this
 completed check; no matching scope change.
+
+## [2026-10-18] build | T24078 preserves origin-first causal frontier
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] retain604
+numeric best plus628 original-order control. Only X0 association in cases0/2
+changed; Q11 DIV now precedes P MULTU, with592words/frameA0. Caller-domain and
+regional alignment evidence are preserved in drafts/T-24078/relationships.md.
+Production remains ASM, active same function. No new logger or other control.
+
+## [2026-10-18] lint | T24078 observer patch integration format verification
+
+Root published observer checkpoint7d505 asd2ce952bb after removing two space-only
+context lines from archived patch representation. patch --fuzz0 still reproduces
+generated source SHA2563ce7370e5302c5500b17042f18a60226b1a5420cd0f28874a8ea72db30b2c7de;
+no compiler rebuild or production change. This packet does not touch that patch.
+[[tickets/T-24078-etc-two-poly-renderer]] records continuing source recovery.
