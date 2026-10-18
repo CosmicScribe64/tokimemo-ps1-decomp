@@ -74,3 +74,22 @@ without either global160 pooling or distributing160 into Y+59, and without
 non-original narrow/copy instructions. No faithful solution is established.
 Current source forms all remain archived separately;618/606/604 frontiers are
 not overwritten, production remains ASM and same function remains active.
+
+
+The parent-authorized unsigned boundary followup changes ONLY the same four
+negated H definitions to `(u16) -(arg0 - 0xA0)`; H/E storage remains s32.
+For normal A0..80, the intermediate is -160..-80, negation is80..160 and
+conversion to u16 then s32 preserves that exact value. All signed DIVs, other
+literals/formulas, SDK widths and store order remain fixed. Inline FAKE notes
+state the boundary purpose and unproven original type.
+
+Prediction was an unsigned mask might disappear at the existing low16 stores
+while retaining the H expression boundary, or survive/canonicalize. Measured
+615 aligned cost /753 diagnostic rows /595 words /frame90. Four local LI160/SUB
+pairs remain, with four ANDI0xffff and four extra MOVE instructions. Against
+original, opcode counts differ LI-2, ADDIU+2, ADDU-2, ANDI+4, MOVE+4, NOP+1;
+all other counts equal. Mode s6,136s7,pagefp, poly84/88 and UV50/54 remain;
+Q11-before-P is retained. The mask does NOT vanish, so this fails the intended
+no-extra-operation boundary. A one-point lower aligned cost than616 does not
+make its seven extra words a source solution. Preserve as a separate negative;
+618/606/604 and616 stay unchanged. No production edit or further width grid.
