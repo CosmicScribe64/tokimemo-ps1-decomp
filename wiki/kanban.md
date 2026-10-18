@@ -47,6 +47,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24060-etc-count-trio|T-24060 Match three small ETC functions]]
+
 
 
 

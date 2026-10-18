@@ -18493,3 +18493,7 @@ Created [[tickets/T-24057-ending-small-pair]] before source work and started cod
 ## [2026-10-18] ticket | T-24057 paired ENDING scheduling leads archived
 
 [[tickets/T-24057-ending-small-pair]] moves with its board card to In Review. [[ending-family-results]] records zero new C matches and two real-record leads at diagnostic cost 4 / 12 positional rows, exact 0x30 frames. `drafts/T-24057/` retains source, tagged byte-promotion provenance, safe full-TU replay and concrete early fade-load scheduling blocker. Terminal C2C flag ordering is fixed through its real aggregate; bounded source/callee controls are recorded. Production src/include/config and every other function remain unchanged, with no extra header/config scope.
+
+## [2026-10-18] ticket | Claim three small ETC count targets
+
+Created [[tickets/T-24060-etc-count-trio]] before source work on codex/complete-etc-count-trio from frozen acf7fa2c3. Current primary sources confirm all three assigned functions remain INCLUDE_ASM; parent owns coordination and disjoint scope. Read [[etc-family-results]] and prior temporary-order, pointer-folding and unaligned-copy evidence. One serial Docker compiler; DATE remains frozen and parent handles review/integration.
