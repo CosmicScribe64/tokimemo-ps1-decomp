@@ -18241,3 +18241,12 @@ Created [[tickets/T-24027-rpg-bat-state-machines]] In Progress for three exclusi
 ## [2026-10-17] decision | T-24027 state-machine package in review
 
 [[tickets/T-24027-rpg-bat-state-machines]] moves to In Review with one of three matched (1656 bytes). Remaining aggregate/quotient and geometry-loop allocation blockers recorded in [[rpg-bat-family-results]]; source-only forms and scorer archived in drafts/T-24027/. All loose experiments preserved in ignored build/T-24027-probes/. Production unchanged since verified win319f4b09e. Independent review pending.
+
+## [2026-10-17] ticket | T-24032 DATE/TACO rotation clone provenance
+
+Created [[tickets/T-24032-date-taco-rotation-clones]] after reading prior SDK/libgte evidence in [[date-family-results]] and [[taco-family-results]]. Parent narrows work to one fresh typed control and provenance notes; no per-function toolchain exceptions or reclassification.
+
+
+## [2026-10-17] decision | T-24032 rotation provenance retained
+
+[[tickets/T-24032-date-taco-rotation-clones]] moves to In Review after one fresh SDK MATRIX control. All six helpers remain ASM; no production changes or new coverage. Source/provenance archived; [[date-family-results]] and [[taco-family-results]] updated. Every loose probe retained in ignored build/T-24032-probes/.

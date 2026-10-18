@@ -58,6 +58,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24032-date-taco-rotation-clones|T-24032 DATE and TACO rotation clone provenance]]
+
 - [ ] [[tickets/T-24027-rpg-bat-state-machines|T-24027 RPG_BAT state-machine completion]]
 
 - [ ] [[tickets/T-24019-gyozi-sibling-ports|T-24019 GYOZI sibling completion ports]]

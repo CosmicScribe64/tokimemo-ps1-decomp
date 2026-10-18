@@ -154,3 +154,8 @@ Result of w3-date-p03 ([[tickets/T-17203-w3-date-p03]]): 3 of 4 matched (`func_8
 ### Package w3-date-p05 (T-17205)
 
 Result: 5 of 5 matched in plain C (`func_801496C4` 1,020 B, `func_801556D8` 744 B, `func_801560E0` 712 B, `func_80155E40` 484 B, and in the closer pass `func_80149F48` 176 B with `(s16)(D_8015D084 * 3) + D_8015D090`; 3,136 bytes). New in `DATE.h`: `DateFix32`, `DateMover44` (display records 98..105 as the eight-object scene uses them), `D_8015F9A0[8]` (state) and `D_8015F9A8[8]` (idle counters), `void func_801560E0(void);`, and `s32 func_80155E40(void);`. What fixed each function, and the register-cheatsheet rows it added, are in [[matching-notes]], "T-17205". The eight objects: `func_801556D8` sets them up, `func_801560E0` updates them and is called from the step-table handler `func_80155E40` when `unk_110A` is 0x11..0x13.
+
+
+## T-24032 SDK rotation clone control
+
+[[tickets/T-24032-date-taco-rotation-clones]] performs one fresh SDK MATRIX control on DATE A640, retaining all six DATE/TACO rotation helpers as ASM (zero new coverage). Source/control/provenance archived in drafts/T-24032/. Existing SDK-style classification remains; no per-function toolchain exception or impossibility claim.
