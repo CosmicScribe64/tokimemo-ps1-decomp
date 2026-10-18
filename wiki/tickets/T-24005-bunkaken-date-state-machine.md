@@ -1,7 +1,7 @@
 ---
 id: T-24005
 title: Match BUNKAKEN date state machine func_80143DD0
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -35,3 +35,7 @@ T-9960 reported an eight-line near miss (signed-halfword nibble cast, explicit b
 
 - Closure validation: unguarded default C reports `MATCH (linked function bytes equal target (3232 bytes))` with `python3 tools/funcdiff.py --unit BUNKAKEN --version default --resolve func_80143DD0`. `ninja -j1 build/ovl/BUNKAKEN.ok` passes SHA1. `check_headers.py include src`, `migrate_globals.py --check`, and `sync_protos.py --check-branch` pass (0 new / 15 known prototype disagreements). Gain is 3,232 verified C bytes.
 - Closer stopped after 14 sequential full-unit probes at the first exact candidate. Three marked FAKE devices remain: two call-delay self-stores and one empty selector test. No build flags, passes, or generated assembly changed. Self-check against CODING_STANDARDS.md found no new issue; independent parent review is pending, so status is In Review.
+
+## Independent integration review
+
+2026-10-17 root: reviewed the full added C against CODING_STANDARDS.md. C89, fixed-width temporaries, existing shared aggregate accesses, explicit K&R view, and all three FAKE statements explained. No generated assembly, compiler exceptions or raw data changes. Integrated default literal proof matches all 3,232 bytes; all 27 binary hashes and header/global/prototype guards pass (0 new prototype disagreements). Published c0662e257. No unresolved findings; Done.

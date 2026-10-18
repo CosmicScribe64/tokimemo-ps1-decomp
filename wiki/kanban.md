@@ -55,7 +55,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24005-bunkaken-date-state-machine|T-24005 Match BUNKAKEN date state machine]]
 - [ ] [[tickets/T-24003-complete-bunkaken|T-24003 Complete BUNKAKEN selector and date-loader remainder]]
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
 - [ ] [[tickets/T-24002-complete-option|T-24002 Complete OPTION matching package]]
@@ -65,6 +64,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24005-bunkaken-date-state-machine|T-24005 Match BUNKAKEN date state machine]]
 - [ ] [[tickets/T-22000-wave-4-conveyor|T-22000 Wave 4 conveyor]]
 - [ ] [[tickets/T-23000-wave-5-big-conveyor|T-23000 Wave 5 biggest-first conveyor alongside wave 4]]
 - [ ] [[tickets/T-23006-w5-big-p06|T-23006 Wave 5 big package w5-big-p06]]

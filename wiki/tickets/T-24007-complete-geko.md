@@ -26,3 +26,5 @@ Bounded types-first follow-up of T-17700 and source-family pass T-13900. Reuse e
 2026-10-17: Read wiki index, scenes-family results and unstarted w4-p35 list. Earlier func_80133598 four-row scratch is unavailable under the referenced build/scenes13900 path, so reconstruct from documented field types and source.
 
 2026-10-17: Recovered func_80133598 in plain C (452 bytes). Reconstructed prior four-row recipe with one saved status byte, correct full-word Rec38 bit test, and direct signed amount field update. A genuine s32 call-result local before the byte fixes the stack slot (0x2F to original 0x2B). No FAKE or padding. Docker ninja -j1 build/ovl/GEKO.ok passes; funcdiff.py --unit GEKO --resolve --version default --no-build func_80133598 confirms linked target-byte equality (452 bytes).
+
+2026-10-17 root: independently reviewed the 452-byte func_80133598 source against CODING_STANDARDS.md, no findings. Genuine result/status locals, shared Rec38 fields, C89, no FAKE or header changes. Published 5e67c0f6d after literal default proof, all 27 hashes and header/global/prototype guards. Remaining family work stays separate from this verified claim.
