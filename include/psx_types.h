@@ -346,4 +346,21 @@ typedef struct DR_STP {
 
 #include "libgte.h"
 
+/* Two-colour line DMA packet; offsets from func_80049FF0 (T-24041). */
+typedef struct LINE_G2 {
+    /* 0x00 */ u32 tag;
+    /* 0x04 */ u8 r0;
+    /* 0x05 */ u8 g0;
+    /* 0x06 */ u8 b0;
+    /* 0x07 */ u8 code;
+    /* 0x08 */ s16 x0;
+    /* 0x0A */ s16 y0;
+    /* 0x0C */ u8 r1;
+    /* 0x0D */ u8 g1;
+    /* 0x0E */ u8 b1;
+    /* 0x0F */ u8 pad;
+    /* 0x10 */ s16 x1;
+    /* 0x12 */ s16 y1;
+} LINE_G2; /* size 0x14 */
+
 #endif /* PSX_TYPES_H */

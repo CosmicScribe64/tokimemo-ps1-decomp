@@ -18681,3 +18681,11 @@ After the guard update, Docker probe reproduces four fade-in rows and normal nin
 
 ## [2026-10-18] ticket | Small sibling package ready for review
 Moved [[tickets/T-24035-small-bunka-geko-siblings]] and its kanban card to In Review. Root standards review remains; no push or merge.
+
+## [2026-10-18] ticket | T-24041 MAIN renderer and CD dispatcher
+
+Created [[tickets/T-24041-main-render-cd-siblings]] In Progress after reading older matching negatives.
+
+## [2026-10-18] build | T-24041 MAIN line renderer win
+
+[[tickets/T-24041-main-render-cd-siblings]] adds348 B verified unguarded C with the approved SDK LINE_G2 packet type. [[main-family-results]] records layout evidence, K&R ABI and marked colour grouping provenance. Default literal proof and full MAIN checksum pass; larger CD dispatcher work continues.
