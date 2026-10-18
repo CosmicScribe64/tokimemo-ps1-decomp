@@ -109,4 +109,28 @@ void func_80138F98(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80138B40", func_80138FC0);
+void func_80138FC0(void) {
+    s32 isA; /* high nibble of GameState.unk_0F4 is 4 */
+    s32 isB; /* high nibble of the Rec38 flag byte +2 of record 3 is 4 */
+
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2 = 1;
+    if ((D_800E6280.unk_0F4.h >> 0xC) == 4) {
+        isA = 1;
+    } else {
+        isA = 0;
+    }
+    if ((D_800E6280.unk_1BC[3].unk_0C.b[2] >> 4) == 4) {
+        isB = 1;
+    } else {
+        isB = 0;
+    }
+    if ((isA == 0) || (isB == 0)) {
+        if (isB != 0) {
+            D_80144E08 += 2;
+        } else {
+            D_80144E08 += 4;
+            D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2 = 0;
+        }
+    }
+    func_8004284C();
+}

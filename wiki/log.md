@@ -17846,3 +17846,22 @@ Review against `CODING_STANDARDS.md`: no findings; only `src/ovl/DATE/80132000.c
 ## [2026-10-17] ticket | T-20012 Done
 
 [[tickets/T-20012-stable-search-scoring]]: PR #59 (KakarottoCake) merged. viewsweep, order_search and autotweak now rank candidates by one aligned insert/delete cost (`funcdiff.diff_score`) instead of printable diff rows, so equal and unequal lengths score consistently. Tool tests 1,514 OK. Closes issue #58.
+## [2026-10-17] ticket | T-22020 In Progress
+
+Wave 4 package w4-p20 started: three SHOUGATU functions in `src/ovl/SHOUGATU/801390C0.c`, `80137FF0.c`, `80138B40.c`. [[tickets/T-22020-w4-p20]], [[kanban]].
+
+## [2026-10-17] build | T-22020 match SHOUGATU:func_80138FC0
+
+`func_80138FC0` (252 bytes) in `src/ovl/SHOUGATU/80138B40.c` matches; unit sha1 OK. The flags are set in both branches and the flag bit goes through `Rec38Flags.f.b2`. Notes in [[matching-notes]], ticket [[tickets/T-22020-w4-p20]].
+
+## [2026-10-17] ticket | T-22020 In Review
+
+1 of 3 matched; `func_80138240` and `func_80139334` not started (time), both still `INCLUDE_ASM`. Final checks run before the move. [[tickets/T-22020-w4-p20]], [[kanban]].
+
+## [2026-10-17] build | T-22020 final checks
+
+Clean rebuild 27/27 units OK, check_headers, migrate_globals --check and sync_protos --check-branch all OK on branch w4-p20. [[tickets/T-22020-w4-p20]] stays In Review.
+
+## [2026-10-17] ticket | T-22020 Done
+
+Review against `CODING_STANDARDS.md` found nothing to fix; 1 of 3 matched (`func_80138FC0`, 252 bytes), `func_80138240` and `func_80139334` stay `INCLUDE_ASM`. [[tickets/T-22020-w4-p20]], [[kanban]].
