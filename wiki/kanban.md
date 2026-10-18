@@ -42,12 +42,13 @@ kanban-plugin: board
 
 ## Ready
 
-- [ ] [[tickets/T-24064-etc-count-trio|T-24064 Match three small ETC functions]]
 
 - [ ] [[tickets/T-20013-name-ent-fade-page-followup|T-20013 NAME_ENT fade and page selection]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
+- [ ] [[tickets/T-24064-etc-count-trio|T-24064 Match ETC model initialization loop]]
 
 
 

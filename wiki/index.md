@@ -38,7 +38,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-24067-etc-album-copy|T-24067]] single ETC album record copy, In Review; unresolved four-word draft, no C match.
-- [[tickets/T-24064-etc-count-trio|T-24064]] three small ETC functions (Ready; user deferred while DATE remains the sole worker focus).
+- [[tickets/T-24064-etc-count-trio|T-24064]] ETC model initialization loop only (In Progress; other former trio targets deferred or unresolved).
 - [[tickets/T-24057-ending-small-pair|T-24057]] two small ENDING fade handlers (In Review; no matches, both source leads at cost 4 / 12 rows).
 - [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI sibling package (In Review; 2 matches, 2,020 bytes).
 - [[tickets/T-24016-bunkasai-state-machines|T-24016]] BUNKASAI state machines (In Review; 2 matches, 3,160 bytes).

@@ -18606,3 +18606,7 @@ Parent-authorized existing IDO5.2 ugen replay uses cached amd64 Docker/qemu and 
 ## [2026-10-18] ticket | T-24067 unresolved checkpoint In Review
 
 Parent requested [[tickets/T-24067-etc-album-copy]] move to In Review and stop speculative41ABC probes after the neutral52 diagnostic. Board/index/[[etc-family-results]] agree. Four-word source and audited mechanism packet retained, production INCLUDE_ASM unchanged, no verified C match/byte gain and no Done claim. Parent will set up the next exclusive branch before new production edits.
+
+## [2026-10-18] ticket | Resume only ETC model initialization loop
+
+[[tickets/T-24064-etc-count-trio]] moves Ready to In Progress with scope narrowed to func_8013F980 in ETC/8013F980.c. Parent authorizes the same sole Sol medium worker and built worktree on codex/complete-etc-model-loop from unresolved T-24067 pin842583d66. Preserve matched func_8013FC64; func_80140AE4 stays deferred and [[tickets/T-24067-etc-album-copy]] stays unresolved with no speculative probes. Read latest primary/origin source and prior prologue/constant-folding evidence before edits.
