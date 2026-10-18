@@ -17940,3 +17940,23 @@ Package w4-p16 for [[tickets/T-22016-w4-p16]]: KANGEI `func_80135004`, `func_801
 ## [2026-10-18] ticket | T-22016 Done
 
 Review of [[tickets/T-22016-w4-p16]] against `CODING_STANDARDS.md` passed after one wiki fix (ticket, index and [[matching-notes]] still called `func_8013769C` guarded after the closer matched it). 2 of 4 matched: KANGEI `func_801362F0` (420 bytes) and `func_8013769C` (1,268 bytes); `func_80135004` guarded at 16 rows, `func_80134724` back to `INCLUDE_ASM`.
+
+## [2026-10-17] ticket | T-22022 In Progress
+
+Wave 4 package w4-p22 (GYOZI, four functions in `src/ovl/GYOZI/`), branch `w4-p22`. [[tickets/T-22022-w4-p22]] In Progress.
+
+## [2026-10-17] build | T-22022 no matches
+
+`src/ovl/GYOZI/`: 0 of 4. `func_80143160` best 39 rows (prototypes, `s32` no-return, second girl index read as `unk_F2F`), `func_8013C118` 50 (the shared `li a0,7` not reachable), `func_8013E824` 188 without the m2c goto. `func_80140464` not reached. Guards back to `INCLUDE_ASM`, drafts in `drafts/T-22022/GYOZI/`. See [[matching-notes]].
+
+## [2026-10-17] ticket | T-22022 In Progress to In Review
+
+0 of 4 matched, no guard left in the files. [[tickets/T-22022-w4-p22]] In Review.
+
+## [2026-10-17] build | T-22022 final checks
+
+Clean build 27/27, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK on `w4-p22` (only wiki and `drafts/` changed against `w2-good`). [[tickets/T-22022-w4-p22]] stays In Review.
+
+## [2026-10-18] ticket | T-22022 Done
+
+Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` and wiki changed, the four functions stay `INCLUDE_ASM`, drafts are plain source. 0 of 4 matched. [[tickets/T-22022-w4-p22]] Done.
