@@ -18150,3 +18150,11 @@ Both conveyors stopped at the user's request when the weekly usage limit was rea
 ## [2026-10-17] decision | Resume orchestration toward100% matching
 
 User resumed after contributor/Claude waves. Read latest index, wave4/5 completion, source-recovery research and build gaps; fetched main283b86fca, no open PRs, active claims#50/#56/#57 respected. Baseline79.6%,465,900 unmatched game bytes. Opened [[tickets/T-24000-complete-matching]] with Sol6.1 medium workers and Astra escalation for concrete blockers. Contributor PR/issue heartbeat runs every30minutes. Existing integration heartbeat remains paused.
+
+## [2026-10-18] ticket | T-24001 main schedule final instruction
+
+Created [[tickets/T-24001-main-schedule-final-row]] after reading [[tickets/T-23003-w5-big-p03]] and [[matching-notes]]. Source-only follow-up of the one-row counter fold, isolated branch `codex/complete-main`.
+
+## [2026-10-18] build | T-24001 final counter fold remains
+
+[[tickets/T-24001-main-schedule-final-row]] moved In Progress to In Review. Baseline plus 20 source-only forms leave one linked C instruction different; production src/main/8006CB30.c is unchanged. Archived Docker diagnostic drafts/T-24001/counter_forms.py, appended [[matching-notes]]. Default linked function MATCH (4,692 bytes), main SHA1 matches, ninja -j2 complete, headers/globals/prototypes pass. No new verified C bytes.
