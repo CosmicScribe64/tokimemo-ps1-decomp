@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""usage (in docker, repo root): python3 build/p04/try.py UNIT:func [--hunks N] [--ctx K] BODY.c ...
+"""usage (in docker, repo root): python3 drafts/T-23004/try.py UNIT:func [--hunks N] [--ctx K] BODY.c ...
 Each BODY.c replaces the guarded body of func in the unit file (in memory), compiled in the exact full-unit way."""
 import sys, os, re, difflib, hashlib, concurrent.futures as cf
 from pathlib import Path

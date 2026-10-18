@@ -17842,3 +17842,7 @@ Review against `CODING_STANDARDS.md`: no findings; only `src/ovl/DATE/80132000.c
 ## [2026-10-17] build | T-23004 checks
 
 [[tickets/T-23004-w5-big-p04]]: clean build 27/27 (668 steps), `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` all pass. Package left In Review for the lead.
+
+## [2026-10-18] ticket | T-23004 Done
+
+[[tickets/T-23004-w5-big-p04]]: code review against `CODING_STANDARDS.md` done, two small findings fixed (usage line of `drafts/T-23004/try.py`, minutes in [[matching-notes]]); no C source changed, both functions stay `INCLUDE_ASM`. 0 of 2 functions matched. Ticket Done, card moved to Done.
