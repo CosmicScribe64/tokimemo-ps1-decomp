@@ -1,7 +1,7 @@
 ---
 id: T-24017
 title: Port three exact opcode clones
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
 updated: 2026-10-17
@@ -49,3 +49,7 @@ After the EVENT shared-header additions, serial Docker ninja -j1 rebuilt all cur
 ### Review handoff
 
 Self-review against CODING_STANDARDS.md: C89 only; SDK POLY_G4 reused, no duplicate SDK structs; target placeholders retained; inherited FAKE masks documented in both polygon ports; SHUGAKU product narrowing follows the already-reviewed DATE recipe without FAKE. Shared declarations are unique, legacy names remain unknown, coordinate pairs replace padding without changing later EventStateView offsets. Only the three assigned function bodies and required includes/forward declaration changed in source; no other function body changed. No toolchain changes, ASM edits, game assets, old archive edits, pushes or merges. In Review for independent parent review.
+
+## Independent root review
+
+Reviewed production source/header changes against CODING_STANDARDS.md: SDK types, fixed-width fields, shared declarations and explicit FAKE scheduling notes retained. No unresolved findings. Integration979a83671 passes all27 original binary hashes, headers/globals/prototype guards and target-INCLUDE_ASM rejection followed by default linked proofs: GEKO476, SHUGAKU176, EVENT476 bytes. Ticket Done.

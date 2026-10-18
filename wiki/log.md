@@ -18473,3 +18473,7 @@ EVENT func_80108B24 is unguarded C with no target INCLUDE_ASM. Fresh default lit
 ## [2026-10-17] build | T-24017 closes three clone ports
 
 All3 targets have unguarded C definitions and pass root source-only claim gate; no target INCLUDE_ASM. Current-header default literal proof verifies1128 bytes and EVENT/GEKO/SHUGAKU unit SHA1 checks pass. Headers/globals pass, branch prototypes0new/15known. [[tickets/T-24017-clone-ports]] records pinned win commits and hashes, moved In Progress to In Review with card for independent parent review. Root coordinates all27 shared-header integration. No failed source archives needed.
+
+## [2026-10-18] build | Clone matches published and stopped chats resumed
+
+Published979a83671 after independent review, all27 binary hashes, guards and three explicit C/literal proofs. [[tickets/T-24017-clone-ports]] Done:1128 new bytes. [[completion-run-2026-10-17]] records6480 functions/1827884 bytes,80.2%. Both user-owned chats active; Astra prioritizes the large dialogue function, Sol returned another844-byte BUNKASAI win queued for verification. Root workers continue T24026/T24027/T24028. Contributor check06:43UTC: no open PRs, claims50/56/57 unchanged. Pending archive pins and code wins remain excluded from coverage until verified.

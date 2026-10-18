@@ -5,7 +5,7 @@ updated: 2026-10-17
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Current published code checkpoint `a6fa29a65` has **6,477/6,958 functions and 1,826,756/2,279,368 bytes (80.1%)**, measured in Docker. Since baseline `283b86fca`: 11 functions / 13,288 bytes added. The active goal remains 100%, with 452,612 game-code bytes remaining. SDK assembly is separately reported and excluded.
+User resumed work toward 100% verified game-code matching. Current published code checkpoint `979a83671` has **6,480/6,958 functions and 1,827,884/2,279,368 bytes (80.2%)**, measured in Docker. Since baseline `283b86fca`: 14 functions / 14,416 bytes added. The active goal remains 100%, with 451,484 game-code bytes remaining. SDK assembly is separately reported and excluded.
 
 ## Verified gains
 
@@ -22,14 +22,17 @@ User resumed work toward 100% verified game-code matching. Current published cod
 | T24013 | RPG_BAT func_80139510 |2424|
 | T24016 | BUNKASAI func_80135C4C |1508|
 | T24016 | BUNKASAI func_80158764 |1652|
+| T24017 | GEKO func_8013FD88 |476|
+| T24017 | SHUGAKU func_80133038 |176|
+| T24017 | EVENT func_80108B24 |476|
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
 
 ## Active ownership
 
-- T24017 Sol medium, root worker: EVENT80107FC0, GEKO8013F360, SHUGAKU80132000 clone ports. Three wins (1128 bytes) queued for root integration; minimal shared EVENT/main_api header additions. Reuses codex/complete-main.
-- T24018 Sol medium, root worker: DATE801461B0 and EVENT8011C650 large sibling ports; no other EVENT files. Reuses codex/complete-bunkaken.
-- T24019 Sol medium, root worker: GYOZI80138B50/80139920/8013E5B0/801418B0. First392-byte win queued; remainder active. Reuses codex/complete-option.
+- T24026 Sol medium, root worker: SHOUGATU80137FF0/8013F190. Two worker-proven wins (708 bytes) await a pinned handoff; third target remains under investigation. Reuses codex/complete-main.
+- T24028 Sol medium, root worker: DATE func8014718C and EVENT func8011D5C4 in DATE801461B0/EVENT8011C650; matched DATE2func801348F0 is reference-only. T24018 source-only checkpoint9d8cd8719 awaits archival integration. Reuses codex/complete-bunkaken.
+- T24027 Sol medium, root worker: RPG_BAT80154430, functions80154DD8/80154760/8015528C. T24019 GYOZI392-byte win and T24015 source archive await root integration at c502785b1. Reuses codex/complete-option.
 - Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687 resumed at explicit user request. Owns MAIN8007C030, TEL80132000, EVENT8010FE10. Continues corrected EVENT214-edit checkpoint. Added targets T24024 MAIN8006CB30 ONLY func8007132C and T24025 GEKO80142760 ONLY func80142C9C; do not alter parked MAIN8006D7EC. Existing b312d1e2 archive pending integration. One compiler, continue useful rounds across reserved targets.
 - Sol medium coordinator chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8 resumed at user request for T24030: BUNKASAI80142700/801511E0, targets80142700/80151364. Reuse preserved built trees, one compiler total. Existing DATE/ETC work remains completed.
 
@@ -58,7 +61,7 @@ Docker only for Python, toolchains and builds. Reuse built worker trees; immutab
 
 ## Latest contributor and archive check
 
-2026-10-18 06:16 UTC (Oct17 local): GitHub had no open PRs. Issues #50, #56, #57 remain open with no new comments; reservations unchanged. Next periodic check around 06:46 UTC. No messages posted.
+2026-10-18 06:43 UTC (Oct17 local): GitHub had no open PRs. Issues #50, #56, #57 remain open with no new comments; reservations unchanged. Next periodic check around 07:13 UTC. No messages posted.
 
 DATE and ETC final coordinator/worker handoffs are now on main, including source-only residual drafts and fixed DATE diagnostic failure handling. No additional C bytes are claimed for these archives. The GEKO probe failure accounting was also repaired after review: candidate errors retain diagnostics and exit nonzero. All current source wins retain independent literal proofs.
 
@@ -77,3 +80,7 @@ Queued clone ports for T24017: EVENT func_80108B24 and GEKO func_8013FD88 (476 b
 Large follow-up candidates: DATE func_801462B0 (3,804 bytes) and EVENT func_8011C750 (3,700) now have matched DATE2 func_80133AF0 as a strong reference; EVENT func_8011DDB8 (3,992) has matched DATE func_80147958. Read T12100/T23004 negative evidence before another attempt; DATE2 is reference-only, still excluded from edits.
 
 New-C proof safeguard: T24016's first installation helper accidentally retained NON_MATCHING, so its first default proof was an assembly fallback and was rejected before integration. Corrected commit7baa1683c removes the guard, recompiles normal C and passes literal proof. The local verify-new-c.py integration helper now rejects any target retaining INCLUDE_ASM before running default linked-byte verification. Positive TAIIKU and negative guarded-TACO checks passed. No false C bytes were published or counted.
+
+## Restart follow-through
+
+Both user-owned chats were confirmed active after the restart. Astra is concentrating on the roughly9KB dialogue function after preserving EVENT and MAIN investigations. Sol returned BUNKASAI func80151364 (844 bytes), pinned f41f35d3a, for independent integration; its other target remains active. These queued wins are not included in published coverage. T24017 was reviewed against CODING_STANDARDS.md and independently passed all27 hashes, guards and allthree literal C proofs before publication979a83671; its ticket is Done.
