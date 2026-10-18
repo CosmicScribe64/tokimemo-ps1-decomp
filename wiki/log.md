@@ -17865,3 +17865,7 @@ Clean rebuild 27/27 units OK, check_headers, migrate_globals --check and sync_pr
 ## [2026-10-17] ticket | T-22020 Done
 
 Review against `CODING_STANDARDS.md` found nothing to fix; 1 of 3 matched (`func_80138FC0`, 252 bytes), `func_80138240` and `func_80139334` stay `INCLUDE_ASM`. [[tickets/T-22020-w4-p20]], [[kanban]].
+
+## [2026-10-17] ticket | T-22024 In Progress
+
+Package w4-p24 started in worktree w4-p24 (branch from w2-good): five EVENT functions in `src/ovl/EVENT/8010FE10.c`. [[tickets/T-22024-w4-p24]], [[kanban]].
