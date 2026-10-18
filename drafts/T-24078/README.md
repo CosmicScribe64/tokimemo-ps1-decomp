@@ -34,6 +34,7 @@ Historical T17300 plain792/typed957 are different contexts, not fresh results.
 | shared-x0.c |628|856|592|0x98|
 | base-height.c |628|856|592|0x98|
 | right-scratch.c |624|852|592|0x90|
+| if-chain.c |632|862|590|0x90|
 
 Original588 words/frame0x90. Rank with tools/funcdiff.py diff_score on resolved
 instruction keys (insertion/deletion1, substitution2). Printed rows use different
@@ -245,3 +246,21 @@ No frontend capture was made for these controls; home byte totals are the
 source-derived model validated by final offsets/frame, not measured DEF records.
 UV50/54 and page-register allocation remain unresolved. No padding or further
 layout permutation accompanied these controls; production remains ASM.
+
+
+Original dispatch graph established before control: D620/D62C/D638/D644 collect
+four mode0/1/2/3 comparisons, then default D64C branches toDDA4 with UV load in
+its delay slot. Arms0/1/2 jumpDDA0, arm3 fallsDDA0; DDA0 loads UV, then common
+DDA4 tail. Current right-scratch switch has this same graph; its load is LB,
+not original LW. No branch-graph correction was needed.
+
+One source-equivalent if/else chain tested the single copied-switch-selector
+versus direct predicate reads. All declarations, formulas, stores and signature
+fixed. Prediction frame90 and all observed slots unchanged confirmed. Result
+632cost/862rows/590words, worse624 despite two fewer words. Final code interleaves
+conditions with arms: first BNE mode!=0 goes to the next condition, rather than
+original four contiguous BEQs before arm0. Mode7/160s6/136fp, page5C, UV7C/80
+and poly84/88 unchanged. This is faithful behavior but not original final CFG;
+reject as frontier, no alternate if/goto/condition spelling sweep. No frontend
+capture exists, so no claim that a hidden home was removed or relocated. The
+original/current switch graph remains the supported structural frontier.
