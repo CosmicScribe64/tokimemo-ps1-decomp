@@ -52,6 +52,7 @@ kanban-plugin: board
 
 ## In Review
 
+
 ## Done
 
 - [ ] [[tickets/T-20012-stable-search-scoring|T-20012 Stable search scoring]]
