@@ -20271,3 +20271,13 @@ poly84/88 original. No padding/extra operations or UV aggregate guess. Original
 local identity remains uncertain; source/replay/offset predictions preserved.
 604 numeric best remains separate. Saved160/page and earlyH still differ;
 no literal match, production ASM and same-function active ownership unchanged.
+
+## [2026-10-18] query | T24078 isolates current constant-web inventory gap
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve
+read-only current618/original inventory. Only LI-5,LW+2,SW+2,MOVE-1,NOP+6 differ;
+all geometry/store/branch mnemonic counts agree. Page-spill overhead and shared
+160 load reduction explain those count classes, not exact allocator/scheduler
+cause. inventory.md records current618 capture limit and one source-condition
+question; no speculative width/literal control or instrumentation. Same target
+active, production unchanged.
