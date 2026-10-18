@@ -35,6 +35,8 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
+- [[tickets/T-24013-complete-rpg-bat|T-24013]] RPG_BAT battle completion: func_80139510 matched (2,424 linked bytes), bounded remainder probes ongoing.
+
 - [[tickets/T-24007-complete-geko|T-24007]] GEKO scene completion: func_80133598 matched (452 bytes), month helper guarded at 36 rows; package in review.
 
 - [[tickets/T-24004-complete-shougatu|T-24004]] SHOUGATU scene completion: dispatcher func_801430A0 matched (352 bytes), four unresolved drafts archived; package in review.
