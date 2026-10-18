@@ -18689,3 +18689,11 @@ Created [[tickets/T-24041-main-render-cd-siblings]] In Progress after reading ol
 ## [2026-10-18] build | T-24041 MAIN line renderer win
 
 [[tickets/T-24041-main-render-cd-siblings]] adds348 B verified unguarded C with the approved SDK LINE_G2 packet type. [[main-family-results]] records layout evidence, K&R ABI and marked colour grouping provenance. Default literal proof and full MAIN checksum pass; larger CD dispatcher work continues.
+
+## [2026-10-18] ticket | T-24040 OPTION menu sibling completion
+
+Created [[tickets/T-24040-option-menu-siblings]] after reading [[option-family-results]], T-17800 and T-20910. Three assigned menu functions only; existing same-file matches preserved. One Docker compiler and bounded sibling/type hypotheses.
+
+## [2026-10-18] build | T-24040 OPTION page sibling pair matched
+
+[[tickets/T-24040-option-menu-siblings]] verifies1028 actual default linked C bytes in342A8/3493C after explicit ASM replacement. Meaningful cached mode and marked frame/same-line workarounds recorded in [[option-family-results]]. OPTION checksum and declaration guards pass; no header or existing matched-body changes.3394C remains a five-row miss under investigation.

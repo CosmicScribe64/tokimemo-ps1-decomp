@@ -230,7 +230,41 @@ void func_80134210(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801342A8);
+void func_801342A8(void) {
+    u8 mode;
+    s32 i;
+    s32 frame[16]; /* FAKE: observed unused 0x40-byte frame gap, T-24040. */
+    Arrs4x8 rows;
+
+    func_8006509C();
+    icon_disp_switch(0);
+    mode = D_800E6280.unk_110D;
+    if (mode == 0) {
+        /* FAKE: inherited same-line loop scheduling recipe, T-7020, T-24040. */
+        icon_disp_switch(0);
+        for (i = 0; i < 3; i++) ((DisplayActor44 *)D_8011ECD0)[i + 107].unk_03 &= ~0x80;
+        D_80120912[0] = D_80120912[0] / 9 * 8;
+        if (D_80120912[0] < 9) {
+            D_800E6280.unk_110D += 1;
+        }
+    } else if (mode == 2) {
+        /* FAKE: inherited same-line loop scheduling recipe, T-7020, T-24040. */
+        icon_disp_switch(0);
+        for (i = 0; i < 3; i++) ((DisplayActor44 *)D_8011ECD0)[i + 107].unk_03 &= ~0x80;
+        D_80120912[0] = D_80120912[0] * 9 / 8;
+        D_80120912[1] = D_80120912[1] * 9 / 8;
+        if (D_80120912[0] >= 0x4000) {
+            D_800E6280.unk_110D = 1;
+        }
+    } else {
+        func_801325A0(&rows);
+        menu_set(0, 8, rows.a, rows.b, rows.c, rows.d);
+        func_80042908(0);
+        func_80042940(2);
+    }
+    func_80132384();
+    D_801208FB = 0;
+}
 
 void func_8013447C(void) {
     switch (D_800E6280.unk_110A) {
@@ -287,7 +321,37 @@ void func_80134804(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_8013493C);
+void func_8013493C(void) {
+    s32 i;
+    s32 frame[18]; /* FAKE: observed unused 0x48-byte frame area, T-24040. */
+    Arrs4x8 rows;
+
+    if (D_800E6280.unk_110D == 0) {
+        /* FAKE: inherited same-line loop scheduling recipe, T-7020, T-24040. */
+        icon_disp_switch(0);
+        for (i = 0; i < 9; i++) ((DisplayActor44 *)D_8011ECD0)[i + 107].unk_03 &= ~0x80;
+        D_80120912[0] = D_80120912[0] / 9 * 8;
+        if (D_80120912[0] < 9) {
+            D_800E6280.unk_110D += 1;
+        }
+    } else if (D_800E6280.unk_110D == 2) {
+        /* FAKE: inherited same-line loop scheduling recipe, T-7020, T-24040. */
+        icon_disp_switch(0);
+        for (i = 0; i < 9; i++) ((DisplayActor44 *)D_8011ECD0)[i + 107].unk_03 &= ~0x80;
+        D_80120912[0] = D_80120912[0] * 9 / 8;
+        D_80120912[1] = D_80120912[1] * 9 / 8;
+        if (D_80120912[0] >= 0x4000) {
+            D_800E6280.unk_110D = 1;
+        }
+    } else {
+        func_801325A0(&rows);
+        menu_set(0, 8, rows.a, rows.b, rows.c, rows.d);
+        func_80042908(0);
+        func_80042940(2);
+    }
+    func_80132384();
+    D_801208FB = 0;
+}
 
 void func_80134B6C(void) {
     s32 i;
