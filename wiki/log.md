@@ -18909,3 +18909,11 @@ field address views restore the two final selector reloads and reach90; signed
 raw-code comparison view worsens294, rejected without width alternatives. Best
 frame28/177words versus179 original, production/header/config unchanged. All
 source controls and bounds/type caveats retained in drafts/T-24076.
+
+## [2026-10-18] build | T-24076 bounded reuse and return-view controls
+
+[[tickets/T-24076-etc-album-search]] parent-approved unsigned reuse is neutral90
+and whole-object identical. Separate no-arg s32 fallthrough control on original
+best90 reaches71, restoring epilogue placement without invented return value;
+FAKE original-type caveat inline and private signature coherent. Best frame28/178words
+versus179 original, source-only; production/header/config unchanged.

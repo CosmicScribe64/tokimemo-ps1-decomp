@@ -368,3 +368,11 @@ conditions restore original independent reloads and improve to90, explicitly
 FAKE-tagged. Signed raw-code comparison views worsen294 and are rejected; no
 additional type alternatives/sweep. Best90 retains frame28 and177words versus
 179 original; production/header/config unchanged, active source-only checkpoint.
+
+Parent/Astra unsigned search-index/code reuse is neutral90 and whole-object
+identical to void best90; retained, no further reuse forms. Separately authorized
+no-arg s32 fallthrough on originalbest90 improves to71, restoring epilogue/join
+placement. FAKE original-return uncertainty is inline; no value invented and
+private forward matches actual selected signature. Best71/frame28/178words versus
+179 original, early cached-index/search and scratch gaps remain. No production/
+header/config changes; checkpoint active pending bounded coordination.
