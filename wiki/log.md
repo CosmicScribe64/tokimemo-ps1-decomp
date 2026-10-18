@@ -18847,3 +18847,11 @@ Created [[tickets/T-24053-short-function-lane]] before edits, following [[ticket
 ## [2026-10-18] build | Two short C matches add232 bytes
 
 [[tickets/T-24053-short-function-lane]] verifies EVENT func_8010B614100 bytes and BUNKA_SD func_801355AC132 bytes from unguarded default C, with affected unit checksums and header/global/prototype guards. [[event-family-results]] records the unintegrated T-20620 recipe and rejected canonical-member form; [[bunka-sd-family-results]] records the T-22021 fade recipe. Both scheduling tricks explicitly FAKE marked, no toolchain/header changes. SHUGAKU short target remains in progress.
+
+## [2026-10-18] ticket | T-24050 GEKO scene near match
+
+Created [[tickets/T-24050-geko-scene-near-match]] In Progress after reading [[geko-family-results]] and the historical T-9510 entry.
+
+## [2026-10-18] decision | T-24050 GEKO bounded selection checkpoint
+
+[[tickets/T-24050-geko-scene-near-match]] moves to In Review, with unchanged production and an80-edit typed source/reproducer in drafts/T-24050. [[geko-family-results]] records the word-flag fix and remaining induction/lifetime/CFG blockers. No speculative header edits or expanded random sweeps.

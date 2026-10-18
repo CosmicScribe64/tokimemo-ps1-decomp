@@ -703,3 +703,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24049-etc-exam-ranking]] - ETC ranking source-only checkpoint,885 rows; In Review.
 
 - [[tickets/T-24052-shougatu-dialogue-siblings]] - source sibling closure for SHOUGATU dialogue handlers.
+- [[tickets/T-24050-geko-scene-near-match]] — GEKO selection source checkpoint and tested replay; no C win.

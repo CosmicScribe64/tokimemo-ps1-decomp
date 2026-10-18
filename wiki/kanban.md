@@ -58,6 +58,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24050-geko-scene-near-match|T-24050 Close GEKO scene setup near match]]
 - [ ] [[tickets/T-24046-screen-page-renderer|T-24046 Recover the MAIN screen page renderer]]
 - [ ] [[tickets/T-24041-main-render-cd-siblings|T-24041 Recover MAIN renderer and CD dispatcher]]
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
