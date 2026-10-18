@@ -121,3 +121,7 @@ not in a package.
 | w3-master-p01 | T-18601 | `80132140.c` | `func_80132444` (start from `hand.c`), `func_801326B4` | 4,044 |
 | w3-master-p02 | T-18602 | `80139000.c` | `func_8013B804` (`hand.c`), `func_8013B448`, `func_801391E4` | 3,056 |
 | w3-master-p03 | T-18603 | `80133680.c` | `func_80135FB8` (start from `drafts/T-18600/.../hand.c`), `func_801363F4` | 3,772 |
+
+## T-24048 animation source pass
+
+[[tickets/T-24048-master-animation]] retried func_801344E0 in its own TU, without changing production C or headers. Fresh shared-type control reproduces475 rows/469 aligned; natural clone-pointer lifetime, explicit primary fade updates and direct counter increments produce a readable434/428 source lead. No match or new bytes. The current frame is72 versus64; the clone end pointer is hoisted across RNG and copy setup consumes a different temporary rotation. The scratch end-label hypothesis does not fix either. Historical T-10630's350-row handoff is unavailable in this checkout, so434 is not claimed as the historical best. Source-only selection, bounded negatives and reproducer: drafts/T-24048/README.md. No compiler-impossibility conclusion; no per-function patch.

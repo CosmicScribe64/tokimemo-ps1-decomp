@@ -18655,3 +18655,15 @@ Created [[tickets/T-24044-taiiku-taco-siblings]] after reading [[taiiku-family-r
 ## [2026-10-18] decision | T-24044 bounded sibling negatives archived
 
 [[tickets/T-24044-taiiku-taco-siblings]] moves to In Review with zero matches and no production/header edits. Current counter semantic repairs and renderer output-index lead recorded in [[taiiku-family-results]] and [[taco-family-results]]; source-only forms/scorer archived. Every loose probe preserved ignored in build/T-24044-probes/. Baseline unit checksums and declaration guards pass; independent review pending.
+
+## [2026-10-18] ticket | MASTER animation reconstruction
+
+Created [[tickets/T-24048-master-animation]], claimed only src/ovl/MASTER/80133680.c and read [[master-family-results]], current main [[completion-run-2026-10-17]], T-9960/T-10630/T-18600 prior evidence. No source or header change yet.
+
+## [2026-10-18] decision | MASTER animation source lead retained
+
+[[tickets/T-24048-master-animation]] moves to In Review with zero C matches. Fresh475-row control and bounded type/control-flow/lifetime forms yield434/428 readable source;72-versus64 frame, clone-bound hoisting and copy temporary rotation remain. [[master-family-results]] records the distinction from historical unavailable350-row scratch evidence. Production source/header/config unchanged; source-only archives and reproducer retained, instruction diagnostics remain ignored.
+
+## [2026-10-18] build | MASTER source-only checkpoint guards
+
+[[tickets/T-24048-master-animation]] baseline unit checksum passes (`7303c196a7a2fd8423da1e66e5a49511e9805bbc`), header/global checks pass and prototype branch check has0 new/15 known disagreements. Final saved-source reproducer compiles434/428. No actual C promotion or default ASM fallback coverage claim.
