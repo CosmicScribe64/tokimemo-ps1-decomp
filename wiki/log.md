@@ -18477,3 +18477,7 @@ Created [[tickets/T-24043-master-large-handler]] before source work on codex/com
 
 ## [2026-10-18] ticket | Reopen only the large DATE dispatcher with a novelty gate
 Created [[tickets/T-24051-date-large-dispatcher]] before source work; reused built tree from frozen 6be3243b1, preserving ancestry. Read [[index]], [[date-family-results]], T-17207 and [[tickets/T-24011-date-dispatch-family]] archives and exhausted hypotheses. Exclusive target func_80144E20 in DATE/80141EE0.c; callback ABI/table-subobject semantics are fresh bounded leads, smaller dispatcher and all other DATE functions remain outside scope. One serial Docker compiler; root owns final checks and integration.
+
+## [2026-10-18] ticket | T-24051 DATE callback hypotheses archived
+
+[[tickets/T-24051-date-large-dispatcher]] moves with its board card to In Review. [[date-family-results]] records zero new C bytes and a 72-to-28-row source improvement: an assigning default with no preinitializer restores both redundant switch branches, displacements and padding. Fourteen symmetric compare-operand words remain. `drafts/T-24051/` provides the improved body, safe target-only replay, negative callback/representation/type controls, and audit of all 21 table mappings/extents. Production src/include/config and every other TU body remain unchanged; no header/config scope was requested.

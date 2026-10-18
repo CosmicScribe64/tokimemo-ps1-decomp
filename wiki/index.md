@@ -662,4 +662,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[tickets/T-24043-master-large-handler|T-24043]] Larger MASTER final-event handler (In Review; no match, corrected exact-frame source archived at diagnostic cost 342).
 
-- [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up with callback ABI/table-selection hypotheses; prior exact-frame 72-row source retained.
+- [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Review; no match, assigning default restores switch layout and improves 72 to 28 rows; all 21 table mappings audited).
