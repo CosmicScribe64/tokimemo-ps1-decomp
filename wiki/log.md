@@ -18459,3 +18459,7 @@ Created [[tickets/T-24031-gyozi-shougatu-pairs]] before code work. Reused built 
 
 ## [2026-10-17] ticket | Start ETC and MASTER matched-sibling package
 Created [[tickets/T-24038-etc-master-siblings]] before code edits, preserving T-24031 archive 5ef7c0dd5 and T-24030 verified ancestry in reused built tree. Read [[index]], [[etc-family-results]], [[master-family-results]], T-17013 number-renderer recipe and old MASTER draft limitations. Exclusive ETC 8013F980.c / MASTER 80139000.c targets, one serial Docker compiler, bounded novel pass; root owns integration and independent checks.
+
+## [2026-10-18] build | T-24038 ETC renderer verified
+
+[[tickets/T-24038-etc-master-siblings]] and [[etc-family-results]] record an unguarded default C match for `func_8013FC64` (796 bytes). Docker serial build passes ETC and MASTER checksums; explicit default linked proof and header/global/prototype guards pass (0 new / 15 known prototype disagreements). ETC font-table declaration was approved before editing. The MASTER companion will be committed separately; ticket remains In Progress.

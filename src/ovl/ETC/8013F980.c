@@ -53,4 +53,64 @@ void func_8013FC08(void) {
     func_8009C674(0);
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013F980", func_8013FC64);
+void func_8013FC64(s32 a, s32 b, s32 c, s32 d) {
+    SPRT *p;
+    s32 v;
+    s32 xoff;
+    s32 n;
+    s32 negative;
+    s32 tpx;
+
+    if (a < 0) {
+        negative = 1;
+        v = -a;
+    } else {
+        negative = 0;
+        v = a;
+    }
+    n = 0;
+    if (v >= 0) {
+        tpx = d * 16;
+        do {
+            p = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+            func_8009F0A4(p);
+            p->w = 8;
+            p->h = 8;
+            SetSemiTrans(p, 0);
+            p->r0 = 0x80;
+            p->g0 = 0x80;
+            p->b0 = 0x80;
+            p->x0 = D_800E6280.unk_014[D_8011ECA0] + b - n * 8;
+            p->y0 = D_800E6280.unk_018[D_8011ECA0] + c;
+            p->u0 = D_801500A0[(v % 10) * 2];
+            p->v0 = D_801500A0[(v % 10) * 2 + 1];
+            p->clut = func_8009ED74(tpx, 0x1FD);
+            AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, p);
+            if (v < 10) {
+                break;
+            }
+            v = v / 10;
+            n++;
+        } while (v >= 0);
+    }
+    if (negative != 0) {
+        tpx = d * 16;
+        n++;
+        xoff = n * 8;
+        p = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+        func_8009F0A4(p);
+        p->w = 8;
+        p->h = 8;
+        SetSemiTrans(p, 0);
+        p->r0 = 0x80;
+        p->g0 = 0x80;
+        p->b0 = 0x80;
+        p->x0 = D_800E6280.unk_014[D_8011ECA0] + b - xoff;
+        p->y0 = D_800E6280.unk_018[D_8011ECA0] + c;
+        p->u0 = D_801500B4;
+        p->v0 = D_801500B5;
+        p->clut = func_8009ED74(tpx, 0x1FD);
+        AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, p);
+    }
+    dtd_on_tpage(0x3C0, 0, 1, 0, 1);
+}
