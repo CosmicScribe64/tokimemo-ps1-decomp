@@ -17854,3 +17854,7 @@ Review against `CODING_STANDARDS.md`: no findings; only `src/ovl/DATE/80132000.c
 ## [2026-10-17] ticket | T-22023 In Review
 
 [[tickets/T-22023-w4-p23]]: `func_8013D2AC` matched (viewsweep `s32 func_80053CE0();`, gstate, `D_800E7D10.slot_status[i]` loop, `pad[2]` frame); `func_8013DF88` guarded (13 rows); `func_8013AF78` and `func_8013CB44` back to `INCLUDE_ASM` with drafts in `drafts/T-22023/`; `func_80140B20` not touched. Notes in [[matching-notes]] (section T-22023). Moved to In Review.
+
+## [2026-10-18] ticket | T-22023 Done
+
+[[tickets/T-22023-w4-p23]]: review against `CODING_STANDARDS.md` clean (only `src/ovl/NAME_ENT/80139740.c` and the `main_api.h` override guard changed; FAKE and NON_MATCHING comments ticketed; check_headers, migrate_globals, sync_protos pass). 2 of 5 matched (`func_8013D2AC`, `func_80140B20`); `func_8013DF88` guarded at 11 register rows; `func_8013AF78` and `func_8013CB44` back to `INCLUDE_ASM`. Moved to Done.

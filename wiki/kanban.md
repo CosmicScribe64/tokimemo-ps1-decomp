@@ -52,10 +52,10 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-22023-w4-p23|T-22023 Wave 4 package w4-p23]]
 
 ## Done
 
+- [ ] [[tickets/T-22023-w4-p23|T-22023 Wave 4 package w4-p23]]
 - [ ] [[tickets/T-20012-stable-search-scoring|T-20012 Stable search scoring]]
 - [ ] [[tickets/T-20010-name-ent-resource-loader|T-20010 Match NAME_ENT resource loader]]
 - [ ] [[tickets/T-22019-w4-p19|T-22019 Wave 4 package w4-p19]]
