@@ -18030,3 +18030,7 @@ Wave 4 package w4-p30 started on branch `w4-p30` from `w2-good`: RENSYU `src/ovl
 ## [2026-10-17] ticket | T-22030 In Progress to In Review
 
 0 of 4 matched: `func_80133628` guarded at 4 rows (21 before), `func_80133990` tried and restored to `INCLUDE_ASM`, two functions not started. Section in [[matching-notes]]. [[tickets/T-22030-w4-p30]]
+
+## [2026-10-17] ticket | T-22030 Done
+
+[[tickets/T-22030-w4-p30]]: 0 matched; func_80133628 guard down to 4 rows. Merged after the conveyors stopped at the usage limit.
