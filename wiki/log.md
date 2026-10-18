@@ -18633,3 +18633,11 @@ Created [[tickets/T-24036-geko-shugaku-siblings]] In Progress after clean latest
 ## [2026-10-18] decision | T-24036 sibling package in review
 
 [[tickets/T-24036-geko-shugaku-siblings]] moves to In Review: one244-byte SHUGAKU match, GEKO guard refreshed from current91 to7 rows without additional coverage. Signed-declaration control rejects a header change; matched GEKO neighbor unchanged. Source/control and exact negatives archived; all loose probes preserved ignored in build/T-24036-probes/. Updated [[scenes-family-results]]. Unit checksums and guards pass; independent review pending.
+
+## [2026-10-18] ticket | T-24040 OPTION menu sibling completion
+
+Created [[tickets/T-24040-option-menu-siblings]] after reading [[option-family-results]], T-17800 and T-20910. Three assigned menu functions only; existing same-file matches preserved. One Docker compiler and bounded sibling/type hypotheses.
+
+## [2026-10-18] build | T-24040 OPTION page sibling pair matched
+
+[[tickets/T-24040-option-menu-siblings]] verifies1028 actual default linked C bytes in342A8/3493C after explicit ASM replacement. Meaningful cached mode and marked frame/same-line workarounds recorded in [[option-family-results]]. OPTION checksum and declaration guards pass; no header or existing matched-body changes.3394C remains a five-row miss under investigation.

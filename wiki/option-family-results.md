@@ -257,3 +257,7 @@ remain assembly: current typed `func_801394F4` improves 215 to 115 differing row
 merging split temporary ranges (a natural clamp form has 56 aligned edits but 134 literal
 diff rows), while corrected input fields in `func_80139A30` leave 223 rows. Source drafts
 and concrete blockers are in drafts/T-24002/README.md; no shared header types changed.
+
+## T-24040 menu sibling completion
+
+func_801342A8 and func_8013493C matched1028 default linked bytes (468+560). Direct same-file hide/shrink/restore recipe and Arrs4x8 remove stale m2c loop/control problems. 342A8 needs a meaningful cached u8 mode after its initial calls; then only frame layout differs. Explicit FAKE frame words before rows reproduce frame0xC0 while keeping active rows at0x38/0x34:16words for342A8,18for3493C. Marked same-line loop scheduling follows T-7020. No header edits or other matched-body changes;3493C void view also matches. Default literal no-build proofs, OPTION SHA1 and declaration guards pass. See [[tickets/T-24040-option-menu-siblings]].
