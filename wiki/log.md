@@ -18501,3 +18501,15 @@ Created [[tickets/T-24060-etc-count-trio]] before source work on codex/complete-
 ## [2026-10-18] decision | Correct ETC ticket allocation to T-24064
 
 Parent reports T-24060 belongs to an independently frozen SHUGAKU package. Renamed this lane's newly created ETC ticket/card/index link to [[tickets/T-24064-etc-count-trio]], preserving history and source scope. The earlier local claim log names the provisional colliding ID; it does not supersede SHUGAKU ownership. No existing SHUGAKU ticket is present in this older checkout or modified here.
+
+## [2026-10-18] ticket | Reopen T-24051 for neighboring-base recipe
+
+[[tickets/T-24051-date-large-dispatcher]] reopens In Progress with its card and index. Parent Astra EVENT evidence motivates a bounded source-only neighboring-base byte view, not a repeated conversion-pass trace: selector D_800CA2F4 + 4, optional BF44 + 4, and the existing movie-work fade byte +0x1C. Exact addresses and byte load widths must remain; unknown aggregate ownership is FAKE. Preserve the frozen 28-row source, one serial Docker compiler and unchanged headers/config. [[tickets/T-24064-etc-count-trio]] remains queued In Progress for the same worker after DATE.
+
+## [2026-10-18] ticket | T-24051 recipe transfer leaves source checkpoint unchanged
+
+[[tickets/T-24051-date-large-dispatcher]] returns to In Review before [[tickets/T-24064-etc-count-trio]] compiler work. [[date-family-results]] and `drafts/T-24051/` retain six bounded EVENT-inspired controls: selector neighbor44, flag/fade/grouped28, captured byte constants132. Selector adds eight reversed pairs; other views fix none of the original14; captured locals shift all table offsets/base spill -4 despite frame0xE38. The exact28 source, production and prior matching bodies are preserved. No pass trace, compiler patch, header or config change was made.
+
+## [2026-10-18] decision | User narrows sole-worker focus to DATE
+
+Latest user steering continues [[tickets/T-24051-date-large-dispatcher]] In Progress after this checkpoint, with reduced usage and evidence-driven source hypotheses for func_80144E20 only. [[tickets/T-24064-etc-count-trio]] moves to Ready with its board card and index; ETC has only read-only prior notes and no new compiler probes. This supersedes the immediately preceding plan to resume ETC. No new agents, duplicate conversion-pass trace or compiler/header patch is authorized.

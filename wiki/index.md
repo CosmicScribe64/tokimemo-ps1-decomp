@@ -37,7 +37,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
-- [[tickets/T-24064-etc-count-trio|T-24064]] three small ETC functions, In Progress.
+- [[tickets/T-24064-etc-count-trio|T-24064]] three small ETC functions (Ready; user deferred while DATE remains the sole worker focus).
 - [[tickets/T-24057-ending-small-pair|T-24057]] two small ENDING fade handlers (In Review; no matches, both source leads at cost 4 / 12 rows).
 - [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI sibling package (In Review; 2 matches, 2,020 bytes).
 - [[tickets/T-24016-bunkasai-state-machines|T-24016]] BUNKASAI state machines (In Review; 2 matches, 3,160 bytes).
@@ -664,4 +664,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[tickets/T-24043-master-large-handler|T-24043]] Larger MASTER final-event handler (In Review; no match, corrected exact-frame source archived at diagnostic cost 342).
 
-- [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Review; no match, assigning default restores switch layout and improves 72 to 28 rows; all 21 table mappings audited).
+- [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Progress; 28-row source preserved after bounded EVENT recipe transfer, sole worker focus).

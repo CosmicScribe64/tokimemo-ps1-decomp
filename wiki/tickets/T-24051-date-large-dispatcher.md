@@ -1,7 +1,7 @@
 ---
 id: T-24051
 title: Recover DATE large table dispatcher with new source evidence
-status: In Review
+status: In Progress
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -24,6 +24,12 @@ T-17207 improved the original table-copy draft; T-24011 fixed all GameState read
 New hypotheses to evaluate: callback pointer return/ABI view (distinct from overall dispatcher return, informed by recent return-liveness matches), actual C table/subobject pointer expressions and their source/control-flow implications, and fresh verification that table-selection branches have the recovered semantics. Treat any ABI/codegen-only construction as FAKE if promoted, with explanation; no compiler/assembler exception.
 
 ## Comments
+Latest user steering keeps this ticket In Progress after the transfer checkpoint: continue only func_80144E20 with reduced usage and bounded evidence-driven source hypotheses. ETC work is deferred; no additional agents or compiler-pass patches. The failed transfer controls are frozen separately before further DATE work, and the 28-row source remains unchanged.
+
+Bounded EVENT recipe transfer complete without gain. Selector neighbor D_800CA2F4 + 4 preserves u8 width and exact frame/table offsets but gives 44 rows: original 14 reversed pairs plus eight new selector pairs. BF44 + 4, the movie-work byte at +0x1C, and their grouped control retain 28. Byte-shade captures with ordinary/const g give 132, retain frame 0xE38, shift all table offsets and base spill -4, and do not fix the original pairs. Six named controls are retained in `drafts/T-24051/probe.py`; unknown neighboring aggregate ownership is FAKE. The 28-row body is unchanged, production is untouched, and ticket/card return to In Review before ETC work resumes.
+
+Reopened for a bounded recipe transfer from the parent Astra EVENT investigation. Parent reports that `_constant_first` distinguishes direct global-backed comparisons from constant-only ranges; a neighboring-base byte read fixed remaining EVENT selector pairs without a compiler patch. Proposed DATE selector view is `((u8 *)&D_800CA2F4)[4]` (0x800CA2F4 + 4 = 0x800CA2F8), preserving its existing unsigned-byte load. This is an explicitly FAKE address view of unknown aggregate ownership. If needed, grouped controls use BF48 from BF44 + 4 and the existing movie-work fade byte at D_800B5920 + 0x1C. No header/compiler/config edits are authorized or proposed. Preserve the exact-frame 28-row source checkpoint.
+
 Source checkpoint improves 72 to 28 validated full-TU rows with zero new verified C bytes. Remove the pre-switch initializer and assign table 0 in an explicit default arm, keeping cases 0 and 20. This restores both redundant switch branches, all displacements and terminal padding. Earlier empty-default controls kept the preinitializer, so this form was not exhausted. `drafts/T-24051/` retains the improved body, safe target-only full-TU reproducer and table audit. Only 14 symmetric branch-operand words remain: two selector comparisons, one BF48 comparison and eleven fade comparisons. No new FAKE is introduced beyond the preserved T-24011 pointer-home tag.
 
 The audit verifies 21 contiguous source tables totaling 0xE00 bytes, stack interval +0x34..+0xE34, all source-copy extents, and exact selector 0..20 mappings. No semantic mapping correction was found. Callback return and aggregate/word-table representation controls retain old 72; selector-derived offsets worsen to 720. Against new 28, unsigned casts/constants and the real movie subobject view do not improve; signed counter/BF48 views, XOR-zero and real constant-one homes worsen allocation/frame. README records precise controls. Both direct-cc and padded/trimmed diagnostics confirm the new 28-row checkpoint.

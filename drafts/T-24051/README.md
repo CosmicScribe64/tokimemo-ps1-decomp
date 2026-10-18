@@ -54,3 +54,13 @@ The audit verifies all 21 local table extents, totaling 0xE00 bytes in the conti
 The improved body has exactly 14 reversed equality-branch operand words: two selector-versus-1 comparisons, one BF48-versus-1 comparison, and eleven fade-versus-128 comparisons. The other instructions, frame, tables, switch branches, displacements and padding agree in both full-TU diagnostics. This is not a literal default C proof and does not establish a compiler-version defect.
 
 No header/config/data scope was needed. Future promotion still requires evidence-backed BF48/callback declarations and actual unguarded default linked proof. Logs remain ignored under `build/date24051/`, including `improved-safe.log`, `archive-proof.log`, `word-safe.log`, `table-audit.log`, `production-audit.log`, and regression/guard logs. No generated original assembly, executable, or game asset is committed.
+
+## Bounded EVENT recipe transfer
+
+The parent Astra EVENT investigation reported a source workaround for global-backed comparison ordering, using a neighboring-base byte read and captured constants. This follow-up tested that recipe without repeating its conversion-pass trace or changing tooling.
+
+The selector view `((u8 *)&D_800CA2F4)[4]` resolves to 0x800CA2F8 and preserves the unsigned-byte load. It worsens 28 to 44 rows: all original 14 reversed branches remain and eight previously correct selector comparisons now reverse. BF48 via `((u8 *)&D_8015BF44)[4]` resolves to 0x8015BF48 and retains 28. Fade via `((u8 *)D_800B5920)[0x1C]` resolves to 0x800B593C, within the existing observed movie-work view, and retains 28. The grouped flag/fade view also retains 28. Selector and BF48 neighboring-base views are FAKE controls of unknown aggregate ownership, not recovered declarations.
+
+Capturing 0x80 in a `register u8 shade` local, with ordinary or const-qualified g, scores 132. Both retain frame 0xE38 but shift all 21 table offsets and base spill down four bytes; the original 14 reversed branches remain. No source body is promoted. The exact-frame 28-row checkpoint is unchanged.
+
+All six controls are retained in `probe.py` as named `--variant` choices. Ignored transfer logs are under `build/date24051-transfer/`; primary groups are 14 old branch pairs (two selector/one flag/eleven fade), or 22 under the selector-neighbor control. This is a negative recipe-transfer result, not a finding that the parent EVENT result is invalid.

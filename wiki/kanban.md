@@ -42,12 +42,16 @@ kanban-plugin: board
 
 ## Ready
 
+- [ ] [[tickets/T-24064-etc-count-trio|T-24064 Match three small ETC functions]]
+
 - [ ] [[tickets/T-20013-name-ent-fade-page-followup|T-20013 NAME_ENT fade and page selection]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
 
-- [ ] [[tickets/T-24064-etc-count-trio|T-24064 Match three small ETC functions]]
+- [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
+
+
 
 
 
@@ -60,9 +64,9 @@ kanban-plugin: board
 
 ## In Review
 
+
 - [ ] [[tickets/T-24057-ending-small-pair|T-24057 Match two small ENDING fade handlers]]
 
-- [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
 
 - [ ] [[tickets/T-24043-master-large-handler|T-24043 Recover larger MASTER final-event handler]]
 
