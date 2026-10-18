@@ -96,3 +96,16 @@ Original X1 uses X0-Q68+136; optimization folds the retained word expression to
 B-Q68+160. The earlier X1-only narrow control changed that web but added two
 copies against604. Its behavior with the corrected Q/P order is not measured.
 This checkpoint includes no further source control or diagnostic scope.
+
+
+Correction after inspecting final words: origin-first628 ALREADY uses actual
+X0-Q68+136 in cases0/2 without a narrow cast. The prior pending-X1 description
+was an unverified carryover from604's folded160 expression. The one subsequent
+origin-x1 control adds only X1-use (s16) casts, otherwise identical628 source.
+It measures624 aligned cost /792 diagnostic rows /594 words /frameA0, but adds
+MOVE a0-to-t5 in each arm. It preserves Q11/P order and changes allocation;
+it does NOT restore a previously missing dependency or add a sign extension.
+Retain604 numeric best and628 no-extra-copy causal frontier. Preserve624 only
+as a measured added-copy control, not a semantic/structural improvement. Its
+FAKE comments describe intent; final code shows the dependency already existed.
+No further control follows from this result. Active same target, production ASM.
