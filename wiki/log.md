@@ -18830,3 +18830,11 @@ ordinary global short-circuit loop gain92 to12, frame30/226words. Real word-pair
 loads and equivalent address operand reversal are neutral12. Six tail address
 words remain; drafts/T-24075 preserves all forms and safe replay. Production
 ASM/interfaces/neighbors unchanged, status In Progress; no actual C proof.
+
+## [2026-10-18] build | T-24075 same-table call source reaches private zero
+
+[[tickets/T-24075-etc-random-selection]] ports matched8013F320 direct pair-call
+arguments into the faithful rejection-loop source. Explicit-object default
+resolved comparison reports904 equal bytes. Return-view uncertainty is marked
+FAKE; sole caller ignores result, existing interface retained. Production still
+ASM pending actual linked proof/hash/interfaces/neighbor audit.

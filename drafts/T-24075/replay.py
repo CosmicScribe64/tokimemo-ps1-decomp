@@ -6,11 +6,11 @@ import sys
 sys.path.insert(0, 'drafts/T-24011')
 from diagnostic import report
 
-variants = {'global-loop': 'body.c', 'baseline': 'baseline.c',
+variants = {'direct-pair': 'body.c', 'global-loop': 'global-loop.c', 'baseline': 'baseline.c',
     'join-remainder': 'join-remainder.c', 'word-pair': 'word-pair.c',
     'pair-order': 'pair-order.c'}
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--variant', choices=variants, default='global-loop')
+parser.add_argument('--variant', choices=variants, default='direct-pair')
 args = parser.parse_args()
 p = Path('src/ovl/ETC/8013BEF0.c')
 before = p.read_text()

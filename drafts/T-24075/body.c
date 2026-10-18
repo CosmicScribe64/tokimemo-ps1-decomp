@@ -1,6 +1,7 @@
-/* NON_MATCHING: T-24075 source-only diagnostic, 12 resolved rows. */
+/* NON_MATCHING: T-24075 private zero; actual default production proof pending. */
+/* FAKE: retain the s32 fallthrough matching view; original return type is unproven,
+ * and the sole caller ignores the result. T-24075. */
 s32 func_8013C8EC(void) {
-    u8 *temp_v0;
 
     if ((D_800E6280.unk_F5F == 0xC) || (D_800E6280.unk_F5F == 0xB)) {
         func_8004284C();
@@ -33,8 +34,7 @@ s32 func_8013C8EC(void) {
                 } while ((D_801500C0 == D_80150078));
             }
             D_80150078 = D_801500C0;
-            temp_v0 = (u8 *) (D_801500C4 + (D_801500C0 * 2));
-            func_80046290((*(s32 *)temp_v0), *(s32 *)((unsigned char *)temp_v0 + (4)), (s32) D_800E6280.unk_F5F);
+            func_80046290(D_801500C4[D_801500C0 * 2], D_801500C4[D_801500C0 * 2 + 1], D_800E6280.unk_F5F);
             func_80044750(0x300);
             D_800E6280.unk_110D += 1;
             break;
