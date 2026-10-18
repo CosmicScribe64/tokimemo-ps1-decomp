@@ -18422,3 +18422,7 @@ Started [[tickets/T-24016-bunkasai-state-machines]] in existing complete-bunkake
 
 ## [2026-10-18] build | Correct production-install guard and reverify BUNKASAI C
 Root review found that bulk_m2c.insert_draft had left a NON_MATCHING guard in the first installation, so the earlier default result still checked fallback assembly. Removed guard and fallback from src/ovl/BUNKASAI/801354B0.c, recompiled/relinked normal default with ninja -j1, and reran literal default funcdiff: checksum OK, linked MATCH 1,508 bytes. This corrected proof supports the C claim in [[tickets/T-24016-bunkasai-state-machines]].
+
+## [2026-10-17] build | Verify BUNKASAI C and refresh sibling priorities
+
+Rejected an initial guarded fallback claim before integration, then independently verified corrected unguarded BUNKASAI func_80135C4C (1508 bytes) with all27 hashes/guards. Added a local source gate with positive/negative checks. Docker progress now 6476/6958 functions and 1825104/2279368 bytes (80.1%). Refreshed sibling census:45 targets >=0.80, including3 exact opcode/register clones. Priorities and evidence recorded in [[completion-run-2026-10-17]].

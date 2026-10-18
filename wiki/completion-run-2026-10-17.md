@@ -5,7 +5,7 @@ updated: 2026-10-17
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Current published code checkpoint `12e1afca5` has **6,475/6,958 functions and 1,823,596/2,279,368 bytes (80.0%)**, measured with `tools/progress.py` in Docker. Relative to resumed baseline `283b86fca`: 9 functions / 10,128 bytes added. The earlier 80% milestone has been crossed; the active goal remains 100%, with 455,772 game-code bytes remaining. SDK library assembly remains separately reported and excluded from this scope.
+User resumed work toward 100% verified game-code matching. Current published code checkpoint `81c347467` has **6,476/6,958 functions and 1,825,104/2,279,368 bytes (80.1%)**, measured with `tools/progress.py` in Docker. Since baseline `283b86fca`: 10 functions / 11,636 bytes added. The 80% milestone has been crossed; the active goal remains 100%, with 454,264 game-code bytes remaining. SDK assembly remains separately reported and excluded from this scope.
 
 ## Verified gains
 
@@ -20,6 +20,7 @@ User resumed work toward 100% verified game-code matching. Current published cod
 | T24005 | BUNKAKEN func_80143DD0 |3232|
 | T24008 | TAIIKU func_80137EA8 |692|
 | T24013 | RPG_BAT func_80139510 |2424|
+| T24016 | BUNKASAI func_80135C4C |1508|
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
 
@@ -62,3 +63,13 @@ Local wiki-only and source-archive merge helpers reject staged production paths 
 ## 80% milestone verification
 
 TAIIKU func_80137EA8 (692 bytes) and RPG_BAT func_80139510 (2,424 bytes) were independently reviewed against CODING_STANDARDS.md and verified from unguarded default linked function bytes before publication. Both integrations pass all 27 binary hashes and header/global/prototype guards. TAIIKU uses a matched sibling and a real four-byte result array; RPG_BAT uses SDK RECTs, shared aggregates, required callback declarations and explicitly marked two-word frame padding. No unresolved source findings. Family tickets remain open while their remaining functions are investigated.
+
+## Refreshed sibling priority evidence
+
+The Docker sibling census at main 1a8d22a06 indexed 6,475 matched functions and 460 remaining targets after excluding TT, DATE2 and NAME_ENT from targets. There are 22 targets at opcode similarity >=0.90 (20,456 instruction bytes), another 23 at >=0.80 (14,388 bytes), and three exact opcode/register clones. These are prioritization measurements, not verified coverage or the canonical progress denominator. Reports are ignored under build/complete-siblings.json and build/complete-siblings.log in the main checkout.
+
+Queued clone ports for T24017: EVENT func_80108B24 and GEKO func_8013FD88 (476 bytes each), both similar to matched ENDING func_80139B48; SHUGAKU func_80133038 (176 bytes), similar to matched DATE func_80149F48 / GEKO func_80137580. Wait for T24008 closure before reassigning its worker; no overlap with active large-function EVENT ownership.
+
+Large follow-up candidates: DATE func_801462B0 (3,804 bytes) and EVENT func_8011C750 (3,700) now have matched DATE2 func_80133AF0 as a strong reference; EVENT func_8011DDB8 (3,992) has matched DATE func_80147958. Read T12100/T23004 negative evidence before another attempt; DATE2 is reference-only, still excluded from edits.
+
+New-C proof safeguard: T24016's first installation helper accidentally retained NON_MATCHING, so its first default proof was an assembly fallback and was rejected before integration. Corrected commit7baa1683c removes the guard, recompiles normal C and passes literal proof. The local verify-new-c.py integration helper now rejects any target retaining INCLUDE_ASM before running default linked-byte verification. Positive TAIIKU and negative guarded-TACO checks passed. No false C bytes were published or counted.

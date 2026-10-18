@@ -27,3 +27,5 @@ func_80135C4C: unguarded default C, 1,508 literal target bytes (census size, rat
 Docker verification: `ninja -j1 build/ovl/BUNKASAI.ok` reports BUNKASAI.bin OK; `python3 tools/funcdiff.py func_80135C4C --unit BUNKASAI --resolve --no-build --version default` reports compared default build, linked function bytes equal target (1508 bytes).
 
 Production-install correction: bulk_m2c.insert_draft adds NON_MATCHING, unlike fresh_context used by the scorer. Initial production proof therefore still read the fallback and was not C evidence. Removed the guard and fallback from the actual source, then repeated ninja -j1 (CC/LD/OBJCOPY ran): BUNKASAI checksum OK and literal default linked funcdiff MATCH (1508 bytes). Only this second proof establishes default C progress.
+
+Independent root review: actual unguarded func_80135C4C uses ordinary C89, shared GameState fields and direct dialogue stores; no FAKE, header or compiler changes. Corrected source gate, literal default linked proof1508 bytes, all27 hashes and header/global/prototype guards pass before publication. Initial guarded proof was rejected and superseded.
