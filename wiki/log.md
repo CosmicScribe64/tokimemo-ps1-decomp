@@ -19183,3 +19183,22 @@ confirmed;628cost/592words unchanged. Poly8C/90, UV84/88, page5C, savesunchanged
 No formulas/types/storeorder changed, no further merge/layout. Remaining8B frame
 excess is unresolved, not padding evidence. Exact source/replay preserved,
 production ASM and same-function active ownership unchanged.
+
+## [2026-10-18] build | T24078 disjoint lifetimes recover original frame and polygon slots
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve two
+sequential same-s32 reuse controls: E/H neutral628/592/frame98, then mutually
+exclusive Q68/rightX624/592/frame90. Predicted frame/slots confirmed: poly84/88
+now original, UV7C/80 and page5C still differ. No added instructions, changed
+formula/store order or padding. Original variable identity remains uncertain;
+new frame-correct frontier is distinct from older added-copy624 negative.
+Source/replay/stack evidence preserved; same function active, production ASM.
+
+## [2026-10-18] query | 14:34 UTC contributor coordination check
+
+Root completed read-only GitHub query at14:34UTC after initial sandbox network
+failure and successful authorized network retry. No open PRs; #57 updated
+2026-10-17T22:16:21Z and #50 updated2026-10-17T15:45:07Z remain unchanged.
+No external messages; next around15:04UTC. Antigravity remains pending user
+shell approval, no restart. [[completion-run-2026-10-17]] ownership unchanged;
+no matching scope change. Observer patch representation remains untouched here.
