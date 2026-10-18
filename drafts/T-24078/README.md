@@ -37,6 +37,8 @@ Historical T17300 plain792/typed957 are different contexts, not fresh results.
 | if-chain.c |632|862|590|0x90|
 | direct-work.c |624|852|592|0x90|
 | uv-first-word.c |671|873|583|0x90|
+| uv-captures.c |624|852|592|0x90|
+| uv-capture-store.c |624|852|592|0x90|
 
 Original588 words/frame0x90. Rank with tools/funcdiff.py diff_score on resolved
 instruction keys (insertion/deletion1, substitution2). Printed rows use different
@@ -293,3 +295,29 @@ coordinate scratch locals at shared tail, preserving exact original load/store
 positions. That would add no homes and explicitly retain per-iteration snapshots
 across potentially aliasing polygon stores. No such control has run here, and
 unknown original persistent aggregate remains FAKE if used. No H width guess.
+
+
+Two UV lifetime controls executed sequentially from direct-work624. First,
+uv-captures represents persistent UVs as the previously audited FAKE s32pair,
+but captures pair[1] into dead X0 scratch before u0 and pair[0] into dead H
+scratch before u1. Captures feed both corresponding vertex stores. No added
+home: the arm values are dead at the shared tail. SDK stores and geometry
+remain ordered identically. Prediction frame90/no new homes confirmed.
+Result624cost/852rows/592words/frame90; UVstill7C/80, poly84/88, page5C,
+mode s7/160s6/136fp unchanged. Two LW copies v0/v1 each now feed
+u0/u2 and u1/u3 without reloads or saved-register UV promotion. This restores
+original memory-across-calls versus register-copy-across-stores lifetimes.
+Unknown original persistent aggregate remains explicitly FAKE, not a new type
+claim. No additional snapshots escape the tail or cross AddPrim.
+
+Second uv-capture-store changes only second capture placement: u1 receives
+(temp_a0 = texture_u[0]) rather than a separate immediately preceding capture.
+The first capture remains separate, matching original UV24-before-poly order.
+Prediction no count/frame/home change confirmed:624/852rows/592words/frame90.
+Final second sequence now matches original ordering: poly-address LW, UV160 LW,
+li a2,128, then SB. Previously separate capture emitted UV160 LW before poly.
+This is a restored original-backed dependency/order despite unchanged global
+score. Retain uv-capture-store as the latest causal structural frontier, with
+604 numeric best and earlier624/628 forms kept independently. Main remaining
+observations are saved160/page displacement and early H, not UV load/reuse.
+No H type guess, logger, source permutation or production edit accompanied it.
