@@ -18517,3 +18517,6 @@ Latest user steering continues [[tickets/T-24051-date-large-dispatcher]] In Prog
 ## [2026-10-18] build | T-24051 reaches four-row source checkpoint
 
 [[tickets/T-24051-date-large-dispatcher]] and [[date-family-results]] record exact EVENT assignment-capture transfer: constants assigned inside comparisons fix twelve of fourteen branch pairs. Declaring the real byte after base preserves all21table offsets, base home and frame0xE38; four rows remain at source selector comparisons411/495. `drafts/T-24051/func_80144E20-4rows.c` is tagged FAKE and preserved beside the older28-row body. No production/header/pass changes or new verified bytes. Sole-worker DATE work continues In Progress.
+
+## [2026-10-18] build | T-24051 zero diagnostic and missing export
+The consistent existing s16 selector-neighbor base plus assignment captures closes the remaining comparisons in [[date-family-results]]. Frozen source and canonical callback evidence are retained under drafts/T-24051. Literal replay fails closed on absent D_800CA2E8 export; parent approved one absolute symbol export plus the necessary DATE declarations before actual C promotion. [[tickets/T-24051-date-large-dispatcher]] remains In Progress; no default C proof claimed yet.

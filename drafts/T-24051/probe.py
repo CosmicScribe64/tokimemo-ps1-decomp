@@ -17,9 +17,9 @@ fallback = 'INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80141EE0", ' + NAME + ')
 if original.count(fallback) != 1:
     raise SystemExit("assigned production fallback changed")
 declarations = "extern u8 D_8015BF48;\n" + "\n".join(
-    "void " + name + "(void);" for name in sorted(
+    (("s32 " if name in {"func_801407D0", "func_80140D38"} else "void ") + name) + "(void);" for name in sorted(
         set(re.findall(r"func_801[0-9A-F]+", base)) - {NAME}))
-variants = {"baseline": base}
+variants = {"baseline": base, "closure": Path("drafts/T-24051/func_80144E20-zero.c").read_text()}
 view = base.replace("void (**base)();", "s32 (**base)();")
 view = re.sub(r"base = (sp\w+)\.f;", r"base = (s32 (**)()) \1.f;", view)
 for name in ("normal_date_move_place", "func_80146224"):
