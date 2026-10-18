@@ -18310,3 +18310,15 @@ Created [[tickets/T-24058-short-pair-count]] In Progress for two176-byte guarded
 ## [2026-10-18] build | T-24058 verified GYOZI selector
 
 [[tickets/T-24058-short-pair-count]]: unguarded GYOZI func_80137188 normal default literal proof MATCH176 bytes, GYOZI SHA1 43f92523116e7b6cd772d4397712a52eeda89703; target assembly fallback absent and header/global/prototype guards pass. No new FAKE or header edit. SHOUGATU remains old cost6; source-only targeted negative replay preserved in drafts/T-24058. Updated [[shougatu-family-results]] and moved ticket to In Review for independent standards review. One new C function.
+
+## [2026-10-18] ticket | T-24062 main audio helpers
+
+Created [[tickets/T-24062-main-audio-short]] In Progress for four short helpers in src/main/80079B10.c. Read prior T-17000/T-17012 and type/negative evidence; no other source ownership, one Docker compiler, headers coordinated before edits.
+
+## [2026-10-18] decision | T-24062 mixer C candidate
+
+[[tickets/T-24062-main-audio-short]]: func_8007BCFC scratch cost0 after typed four-byte buffer, paired work-field copy order, byte grouping and unsigned member view (FAKE marked). Installed unguarded C and root-approved s32 func_80087DC8(u8 *) declaration; wrapper/CD_vol in asm/libcd_rest.s establish return1 and four input bytes. Initial scratch address-versus-offset misreading corrected before production; T17000 original member offsets were right. Normal build/proof pending.
+
+## [2026-10-18] build | T-24062 verified mixer stopping point
+
+[[tickets/T-24062-main-audio-short]]: normal default func_8007BCFC literal MATCH236 bytes; four matched local audio siblings also MATCH. MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 and source/header/global/prototype guards pass. One approved wrapper declaration, two source FAKE constraints; no other function changed. Corrected unmatched queue/flag/table sources and results preserved in drafts/T-24062. Updated [[main-family-results]], moved ticket In Review. User requested stop after current verified work; no next function.
