@@ -22,6 +22,9 @@ Historical T17300 plain792/typed957 are different contexts, not fresh results.
 | tile-width.c |648|806|594|0xA0|
 | indexed-page.c |638|800|594|0x98|
 | body.c / word-coordinates.c |604|670|592|0xA0|
+| word-uv-pair.c |606|682|594|0xA0|
+| case-lifetimes.c |604|670|592|0xD0|
+| case0-compound.c |635|703|593|0xA0|
 
 Original588 words/frame0x90. Rank with tools/funcdiff.py diff_score on resolved
 instruction keys (insertion/deletion1, substitution2). Printed rows use different
@@ -85,3 +88,24 @@ Whole object SHA25667fbefa6e2af48b3ac7a8e508b774cea8c8efd2c4f824bce6269755d29163
 The first divergent arithmetic still places MULTU i*136 before the first signed
 Q11 DIV, whereas original executes DIV before MULTU. UV signed-byte loads and
 early160-A remain. No additional width, UV combination or ordering probe begun.
+
+Further original-backed controls against604, one at a time:
+
+- word-uv-pair preserves two persistent UV words until SDK SB stores; unknown
+  original aggregate remains FAKE-tagged. It restores LW but606cost/+2words is
+  worse, so retained best stays604.
+- case-lifetimes scopes only arithmetic temporaries within each switch arm,
+  preserving existing relative declaration order, types, formulas and stores.
+  No such value crosses an arm or any call. It is neutral604 but grows frame toD0;
+  IDO does not reuse these lexical homes. No declaration-order sweep followed.
+- case0-compound inlines only Q11/P/R aliases into case0 X0/X3 expressions with
+  exact original grouping; other arms fixed.635cost/593words/A0 is worse. First
+  arithmetic still MULTU-before-DIV; no transfer to other arms attempted.
+
+All twelve variants remain source-only; helper output prints aligned cost,
+word count and first frame instruction. Retained604 is NOT a byte match.
+The unresolved question is why invariant tile-spacing and height computations
+move ahead of the original first Q11 DIV despite agreeing arithmetic. These
+controls do not identify a wrong operation or prove a compiler limitation.
+Recovery remains active on this one function; next read-only work must find a
+supported source relationship before another compile, not a width/order sweep.

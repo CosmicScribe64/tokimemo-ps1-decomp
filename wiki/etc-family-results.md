@@ -469,3 +469,19 @@ MULTU. UV LB and early160-A remain. drafts/T-24078/body.c/replay and full-VA
 relationships.md preserve result plus all9 controls. No other width/control or
 production edit; active ownership continues. This is structural evidence, not a
 proven behavior bug or original C type.
+
+With full-word coordinates fixed, UV-word-pair control606cost/682rows/594words/
+A0 restores LW but is worse than604. Case-local arithmetic declarations keep
+604/670/592 yet enlarge frame toD0: lexical scopes do not reuse these homes.
+Both rejected as best; no declaration-order sweep. Next source-only check is
+case0 Q11/P/R alias inlining into exact unchanged X0/X3 associations; all other
+arms fixed. Inputs A/i do not mutate within the arm and no calls occur there.
+
+Further one-at-a-time controls against604: original-backed UVwordpair606/682rows/
+594words/A0 restores LW but is worse; true case-local arithmetic lifetimes604/
+670/592/D0 reject enlarged lexical homes; case0-only compound Q11/P/R aliases
+635/703/593/A0 reject, first arithmetic remains MULTU-before-DIV. All12 variants
+and exact sources/replay retained drafts/T-24078. Best604 unchanged; source
+math agrees, no wrongop or compiler-limitation proof. Active same-function
+read-only investigation continues before any supported new compile; no sweep,
+new instrumentation, production/helper/header/config change or target churn.

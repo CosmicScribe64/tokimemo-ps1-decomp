@@ -8,7 +8,8 @@ from diagnostic import report
 
 variants = {'shared-temps': 'shared-temps.c', 'baseline': 'baseline.c',
     'sdk-uv': 'sdk-uv.c', 'uv-pair': 'uv-pair.c', 'case-height': 'case-height.c',
-    'inline-height': 'inline-height.c', 'tile-width': 'tile-width.c', 'indexed-page': 'indexed-page.c', 'word-coordinates': 'body.c'}
+    'inline-height': 'inline-height.c', 'tile-width': 'tile-width.c', 'indexed-page': 'indexed-page.c', 'word-coordinates': 'body.c', 'word-uv-pair': 'word-uv-pair.c',
+    'case-lifetimes': 'case-lifetimes.c', 'case0-compound': 'case0-compound.c'}
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--variant', choices=variants, default='word-coordinates')
 args = parser.parse_args()
