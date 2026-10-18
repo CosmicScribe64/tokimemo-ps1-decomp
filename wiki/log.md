@@ -19074,3 +19074,36 @@ Confirmed agy CLI model gemini-4-argon-medium and launched T24065 OPTION3394C an
 ## [2026-10-18] decision | Antigravity shell approval pending
 
 Both new Antigravity CLI runs terminated after denied shell actions in noninteractive default request-review mode. No permission bypass or retry performed; user approval requested. [[completion-run-2026-10-17]] records terminal handles. Two Sol workers continue DATE/ENDING. New DATE four-row source checkpoint preserves exact frame/table layouts but is not a production match.
+## [2026-10-18] ticket | Continue focused ENDING initializer closure
+
+[[tickets/T-24047-ending-sprite-scene]] returns to In Progress for focused
+default-arm dependency and grid-constant lifetime probes. Reviewed checkpoint
+b0111332c is preserved. Scope remains one function, one compiler, no new workers.
+
+## [2026-10-18] query | ENDING dependency and constant probes remain negative
+
+[[tickets/T-24047-ending-sprite-scene]] records six bounded source probes.
+Default address roundtrips/volatile views and explicit constant locals worsen
+output. Early palette-store reordering is neutral; late reordering worsens it.
+The reviewed804/805-instruction checkpoint remains preferred, zero new bytes.
+
+## [2026-10-18] query | Explicit ENDING range control rejected
+
+[[tickets/T-24047-ending-sprite-scene]] outer if/switch variants retain duplicate
+range checks and selector lifetime changes,834 instructions each. Neither
+improves the checkpoint; production remains unchanged.
+
+## [2026-10-18] query | ENDING declaration metadata hypothesis ruled out
+
+[[tickets/T-24047-ending-sprite-scene]] constant casts and unsigned lvalue view
+are neutral. Scratch-only distinct default-cell symbols also retain804/cost43;
+the matrix declaration is not the source of speculative address motion. No
+header or production source changes are justified by these results.
+
+## [2026-10-18] ticket | ENDING focused continuation checkpoint
+
+[[tickets/T-24047-ending-sprite-scene]] returns to In Review after fourteen
+negative probes. Register constants also expand the frame. The ledger and
+[[ending-family-results]] retain results; production source/replay body remain
+unchanged from b0111332c. Scope and standards review has no new findings; no
+production revalidation is needed for this evidence-only update. Zero new bytes.

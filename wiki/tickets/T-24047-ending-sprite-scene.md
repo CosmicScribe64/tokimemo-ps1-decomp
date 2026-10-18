@@ -79,3 +79,34 @@ its SHA1. Header/global checks and branch prototype check pass (zero new
 disagreements,15 known). All27 built binary hashes pass after rebuilding stale
 copied GEKO/GYOZI cache outputs. Those rebuilds required no source changes.
 Ignored build/t24047/ retains verification logs; git diff --check is clean.
+
+2026-10-18 continuation: reopen the same function for a small set of
+evidence-driven source hypotheses. Preserve b0111332c as the reviewed checkpoint;
+no new worker or other function. First examine default-arm address dependencies
+and the grid-loop constant declaration lifetime.
+
+Continuation probes: default-arm integer-address views produce807 instructions,
+cost64; volatile loads803/cost52. Both are rejected. Named palette and signed
+origin locals each retain804 instructions/cost55, including a frame expansion;
+no allocation improvement. Moving the palette store to the start of the grid
+loop is output-neutral (804/cost43); moving it after UV is much worse
+(803/cost636). Production source stays at the reviewed checkpoint.
+
+Explicit outer range control does not explain the switch: both normal-first
+and default-first if/switch forms emit834 instructions (cost109 and369). The
+compiler retains a second range test and changes selector lifetime across calls.
+These are rejected; no control-flow changes retained.
+
+Constant type probes (u16/u32 palette casts and unsigned palette view) are all
+output-neutral804/cost43. A scratch-only default-arm declaration probe using
+three distinct symbol names instead of the matrix is also804/cost43. Thus the
+shared matrix's symbol metadata does not explain speculative default addresses;
+no shared header change is warranted.
+
+Register-qualified palette/origin locals also give804/cost55 with the same
+frame expansion as ordinary locals. Fourteen continuation scores are retained
+in drafts/T-24047/experiments.json. No closer source emerged; production C and
+the preferred replay body are unchanged from b0111332c. Return to In Review
+with the same two blockers and zero verified byte gain. Scope/standards review
+of this follow-up finds no code changes or new findings; it records only
+negative evidence. Previously passing production validation remains applicable.

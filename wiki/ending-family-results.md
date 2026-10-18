@@ -213,3 +213,10 @@ and the register cycle of the scene switch. Preferred source still differs:
 Explicit case12/default prevents that motion but changes the bound and table,
 so its five-word diagnostic is not accepted. Draft and replay: drafts/T-24047/.
 No new verified C bytes; normal builds retain ASM.
+
+The focused T-24047 continuation retained fourteen negative source probes.
+Distinct default-cell symbol declarations leave the same residual, ruling out
+the matrix declaration as the address-motion cause. Outer range checks retain
+a second check; ordinary/register constant locals expand the frame; constant
+casts and an early palette-store move are neutral. Preferred guarded source
+remains unchanged at804/805 instructions and cost43, zero verified byte gain.
