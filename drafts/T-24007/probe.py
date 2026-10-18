@@ -15,6 +15,7 @@ idx=text.index(inc)
 start=text.rfind('#ifdef NON_MATCHING\n',0,idx)
 if start < 0 or '#endif' in text[start:idx]: start,end=idx,idx+len(inc)
 else: end=text.index('#endif',idx)+len('#endif')
+failed = False
 for label,body in json.loads(Path(sys.argv[2]).read_text()):
     d=Path(tempfile.mkdtemp(dir='/tmp'))
     src=d/'candidate.c'
@@ -28,4 +29,8 @@ for label,body in json.loads(Path(sys.argv[2]).read_text()):
         out=Path('drafts/T-24007')/label
         out.with_suffix('.diff').write_text('\n'.join(diff))
         out.with_suffix('.c').write_text(body)
-    except Exception as ex: print(label,'ERROR',ex,flush=True)
+    except Exception as ex:
+        failed = True
+        print(label, 'ERROR', ex, flush=True)
+if failed:
+    sys.exit(1)

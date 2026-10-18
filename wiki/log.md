@@ -18349,3 +18349,7 @@ ETC final archive passes both independent review axes. DATE source-only archive 
 
 ## [2026-10-17] ticket | Hand off reviewed DATE and ETC bounded pass
 [[tickets/T-24010-date-etc-coordination]], [[tickets/T-24011-date-dispatch-family]] and [[tickets/T-24012-etc-render-family]] move to In Review. One ETC dispatcher adds 1,280 verified C bytes; six targets remain assembly with useful source-only drafts and blockers. Both independent review axes pass final archives and DATE P2 repair; five Docker failure-contract tests pass. Worktrees remain available, parent owns integration/push, and no further files claimed.
+
+## [2026-10-17] build | Repair GEKO probe failure exit status
+
+Independent review of [[tickets/T-24007-complete-geko]] found swallowed candidate exceptions. drafts/T-24007/probe.py now exits 1 if any candidate fails while preserving labeled diagnostics. A Docker invalid-candidate run confirms exit 1 and the ERROR label; verified production C is unchanged.
