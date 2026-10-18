@@ -52,5 +52,23 @@
     "source_sha256": "9199e60016e301f66bbf06146aef026f9b83d5609a0b14e26315710e0fa33dee",
     "body_sha256": "9c68bc747adba1416d15a9423dc187fe1bf94f9cb1c9c834ee222aab51a15fc4",
     "source_checkpoint": "e500e504e"
+  },
+  {
+    "control": "original-mips53-as1",
+    "assembler": "original MIPS IDO5.3 under QEMU",
+    "got": 804,
+    "cost": 35,
+    "identical_target_to_native": true,
+    "identical_sections_to_native": true,
+    "matching_claim": false
+  },
+  {
+    "control": "original-mips53-full-chain",
+    "compiler": "original MIPS5.3 under QEMU with existing uniform passes",
+    "candidate_instructions": 804,
+    "identical_to_stock": true,
+    "identical_sections_to_stock": true,
+    "aligned_cost": 35,
+    "matching_claim": false
   }
 ]

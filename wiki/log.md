@@ -19116,3 +19116,25 @@ updated native evidence preserve the bit6 path-barrier result. Both stock
 section/target fidelity checks pass. [[ending-allocator-trace]] has exact commands
 and replaces the unproven label-flag hypothesis. Standards review finds no new
 issue; production guarded35, zero coverage gain, In Progress.
+
+## [2026-10-18] query | ENDING original AS1 execution-fidelity control
+
+[[tickets/T-24047-ending-sprite-scene]] replay unchanged input with existing original
+MIPS5.3 as1/libraries under cached QEMU, project read-only, output external. This
+tests the same version's reconstruction fidelity, with no downloads or version
+sweep; production remains unchanged.
+
+## [2026-10-18] query | ENDING original AS1 agrees; check remaining reconstruction boundary
+
+[[tickets/T-24047-ending-sprite-scene]] original MIPS53 AS1 is identical to native
+in target words and code/data/relocation sections at804/cost35. Replay the complete
+existing MIPS53 pass chain once with uniform conversions/frame correction to
+rule out earlier reconstructed-pass CFG differences. No new version or download.
+
+## [2026-10-18] query | ENDING original full compiler agrees with reconstruction
+
+[[tickets/T-24047-ending-sprite-scene]] all four original MIPS53 passes with the
+existing uniform corrections reproduce native full-TU code/data/relocations and
+target804/cost35. Both exact-version execution controls are retained with prior
+backend evidence; [[ending-allocator-trace]] records their limit. No production
+change, no further backend sweeps indicated, no new review findings.

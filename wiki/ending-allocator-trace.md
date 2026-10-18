@@ -182,3 +182,11 @@ indirect-jump block. The extra table edge introduces this barrier; numbering and
 equal weights alone are not the cause. The original table has12 distinct case
 destinations, no default, and the next table starts immediately at0x8013C040.
 Thus this is explanatory diagnostic evidence, not an accepted extra-case source.
+
+Two same-version reconstruction controls also pass. Original MIPS5.3 as1 with
+its existing libraries, run under the cached QEMU executable, gives identical
+target and code/data/relocation bytes. Replaying all four original MIPS53 passes
+with existing conversion/frame corrections, native preprocessing and the normal
+driver gives the same full-TU sections and804/cost35 target. These controls are
+in `drafts/T-24047/backend-evidence.json`. They use only existing external files
+and cached images; no native reconstruction discrepancy explains this source.
