@@ -18186,3 +18186,15 @@ Created [[tickets/T-24005-bunkaken-date-state-machine]] for func_80143DD0 alone,
 ## [2026-10-18] ticket | Submit recovered BUNKAKEN near miss for review
 
 [[tickets/T-24005-bunkaken-date-state-machine]] moves to In Review with matching board/index status. Guarded C is 8 rows / 4 words different; explicit default fallback proof, Docker ninja -j1, BUNKAKEN SHA1, headers and globals pass; prototype branch check reports 0 new / 15 known. No new C match is claimed.
+
+## [2026-10-18] ticket | T-24005 bounded selector closer
+
+Reopened [[tickets/T-24005-bunkaken-date-state-machine]] for novel selector lifetime probes. Prior guarded source has four differing words; no verified C-byte gain.
+
+## [2026-10-18] decision | T-24005 selector lifetime candidate
+
+A narrow-selector empty test before the switch resolves the four-word residue in full-unit scoring. Installed the marked FAKE in src/ovl/BUNKAKEN/80143DD0.c and removed the function guard; literal default verification pending in [[tickets/T-24005-bunkaken-date-state-machine]].
+
+## [2026-10-18] build | T-24005 unguarded C matches 3,232 bytes
+
+The narrow-selector empty test resolves the four-word residue in src/ovl/BUNKAKEN/80143DD0.c; marked FAKE and removed the guard/fallback. Explicit default linked funcdiff matches 3,232 bytes. BUNKAKEN SHA1, headers and globals pass; prototype guard has 0 new / 15 known disagreements. Updated [[bunka-family-results]], [[index]] and drafts/T-24005/README.md. Moved [[tickets/T-24005-bunkaken-date-state-machine]] to In Review for independent parent review. No further probes after the first exact result.

@@ -1,4 +1,4 @@
-#define MAIN_API_OVERRIDE_func_800847B8 /* T-24005: guarded caller passes a word; callee narrows it. */
+#define MAIN_API_OVERRIDE_func_800847B8 /* T-24005: matched caller passes a word; callee narrows it. */
 #include "common.h"
 #include "ovl/BUNKAKEN.h"
 
@@ -9,8 +9,6 @@ typedef struct {
 } Tbl6_80144D38;
 extern Tbl6_80144D38 D_80155F70;
 
-/* NON_MATCHING: T-24005, four masked-selector register words (8 diff rows). */
-#ifdef NON_MATCHING
 void func_80143DD0(void) {
     s32 temp_v0_3;
     s32 temp_v0_6;
@@ -347,6 +345,8 @@ void func_80143DD0(void) {
             var_v0 = get_g_zyotai_s(D_80122EBC);
         }
         temp_t4 = var_v0 & 0x7F;
+        /* FAKE: empty test keeps the mask in t4 and the switch index in t5. T-24005. */
+        if (temp_t4) {}
         switch (temp_t4) {
         case 0:
         case 1:
@@ -423,10 +423,6 @@ void func_80143DD0(void) {
         break;
     }
 }
-
-#else
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80143DD0", func_80143DD0);
-#endif
 
 void func_80144A70(void) {
     switch (D_800E6280.unk_110A) {
