@@ -49,3 +49,13 @@ Capture source SHA guard refuses changed context. Full-object fidelity must pass
 before reading copied input/output. tools/cvt_pass.py.parse and
  tools/frame_pass.py.parse/procedures decoded the existing stage files; no new
 binary decoder or instrumentation is required.
+
+## Approved use-site control result
+
+Exact X1-only cast in cases0/2 measured638 alignedcost/800rows/594words/frameA0
+against604/670/592/A0; rejected as best. Final machine dataflow shows X0/a0 ->
+SH x0, MOVE t5=a0 -> subtract Q68 -> add136 -> SH x1, replacing folded base+160.
+Case2 also adds136. This confirms a changed final value web, not a new uopt-stage
+capture. It adds two copy words and worsens allocation; no explicit halfword
+extension appears. FAKE explains matching-only narrowing and original-type
+uncertainty. No further casts or phase instrumentation followed.

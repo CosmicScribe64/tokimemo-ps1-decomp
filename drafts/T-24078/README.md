@@ -25,6 +25,7 @@ Historical T17300 plain792/typed957 are different contexts, not fresh results.
 | word-uv-pair.c |606|682|594|0xA0|
 | case-lifetimes.c |604|670|592|0xD0|
 | case0-compound.c |635|703|593|0xA0|
+| x1-narrow.c |638|800|594|0xA0|
 
 Original588 words/frame0x90. Rank with tools/funcdiff.py diff_score on resolved
 instruction keys (insertion/deletion1, substitution2). Printed rows use different
@@ -109,3 +110,18 @@ move ahead of the original first Q11 DIV despite agreeing arithmetic. These
 controls do not identify a wrong operation or prove a compiler limitation.
 Recovery remains active on this one function; next read-only work must find a
 supported source relationship before another compile, not a width/order sweep.
+
+The one phase-backed X1-only s16 use-site cast (cases0/2, storage and other uses
+remain word-sized) reaches638cost/800rows/594words/A0, worse than604. Final
+code confirms the intended dependency change: X0 stored from a0, copied to t5,
+then X1 subtracts Q68 from that copy and adds136. Case2 likewise restores136.
+No explicit sign-extension instruction is emitted, but two copies add two words.
+Thus original X1 association is restored without an overall gain; retain604.
+The matching-only casts are explicitly FAKE, not a semantic repair. No other
+width, ordering or new stage capture accompanied this test.
+
+Current smallest phase question: source statements assign Q11 before P, yet
+ugen input already orders P before Q11. Existing capture does not show whether
+this originates in frontend output or optimization. No pre-uopt observation
+exists for this input and no additional diagnostic compile has been authorized
+or executed by this packet. Further source forms need a supported relationship.

@@ -503,3 +503,11 @@ x2SH124, so earlyHfinal movement is POST-ugen; prior joint'uopt hoist' claim is
 superseded, no broaderphase attribution. Input183..188 also folds X0=B+24 and
 X1=X0-Q68+136 intoB-Q68+160. One approved matching-only use-site narrow in X1
 cases0/2 follows; no other type/barrier/instrumentation change.
+
+Approved X1-only s16 use-site cast in cases0/2 changes final offset web back to
+X0-Q68+136 but costs638/800rows/594words/A0, worse than604. X0storedfroma0 then
+MOVEto t5 beforeX1 creates extra copies (2words); no explicit halfword extension.
+Matching-only FAKE, notsemanticrepair; source/replay preserved x1-narrow.c.
+No additional cast orstagecapture. Next narrow unresolved phase question is
+frontend vsoptimizer origin ofP-before-Q11: current capture begins afterthat
+boundary. Samefunctionactive, production unchanged.
