@@ -19435,3 +19435,7 @@ inner switch is rejected at807/cost756. The105-entry source ledger and five
 backend controls remain explicit about zero coverage gain. [[ending-allocator-trace]]
 records cached image, approved archive hash, paths and replay interface. Parent
 scope/standards review has no new findings; production source is unchanged.
+
+## [2026-10-18] query | T-24067 address-bit creation measured
+
+Parent approved private logging only. Separate diagnostic binary records first eligible address encounters in makelivranges, with save bit55/block7 before end bit56/block8; format is54/block2. Its full object SHA and all code/data/relocations equal stock. Retained logging-only generator, exact hashes and replay/audit commands under drafts/T-24067; no generated compiler source/binary committed and shared tracer untouched. One derived goto-first indexed loop is neutral16/16 and rejected. [[tickets/T-24067-etc-album-copy]] remains In Progress; production remains assembly and only this target is active.

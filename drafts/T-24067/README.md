@@ -46,4 +46,30 @@ The exact cursor checkpoint has a different balance: format bit67 priority5, exp
 
 An attempted bridge initializes the real end pointer and uses `i < ((u8 *)end - (u8 *)&D_800E6280) / 8`. It gives68 rows: uopt retains an address-typed subtraction of two loads from the same machine register plus800, division and an entry guard. It does not reduce the bound to256. Consistent unsigned integer address subtraction also fails (108 rows). An empty endpoint reference after printf creates an extra saved range (64 cost/66 rows). None of these forms is promoted.
 
-Prior destination controls already cover base/index operand order, byte/integer pointer additions, root-array offset11, count postincrement and computing destination before increment. They either normalize to the same constant use, reverse an ADDU operand, or add live addresses/instructions. No evidence yet shows a destination spelling that places end ahead of save while retaining the indexed shape. The next diagnostic question is when the two constant bits are created: the existing trace shows final ranges but not constant identity at creation. A creation-event trace would distinguish a source-order lever from an endpoint that is invariably introduced after the save candidate; no new tracer or compiler modification has been made.
+Prior destination controls already cover base/index operand order, byte/integer pointer additions, root-array offset11, count postincrement and computing destination before increment. They either normalize to the same constant use, reverse an ADDU operand, or add live addresses/instructions. No evidence yet shows a destination spelling that places end ahead of save while retaining the indexed shape. The former gap about constant bit creation is answered below by an approved private logging diagnostic.
+
+Parent approved a separate creation-event logger, with no changes to the shared read-only tracer or production tools. `trace_creation.py` requires the existing generated base source SHA256 `59767ece4ae04ffd19ed97909d3f4099ca46e08035a2fecf59c599a8c704c75c`. It adds only logging and native logging-context variables. The generated diagnostic source hash is `ef023e424f030f4b96648257e57dac4c67f6372a124785d2c1f2ed0a6f5fe78f`; measured private binary hash is `b55d0e3d5c2702ab1abc35eda0ec21c16e396c93f9725ebba4515769e00971d7`. Both stock and private full objects have SHA256 `6ad70e1533db02398f0a136b6048880fdf78aa37942d55c96815df21eac6cc99`, including equal code/data/relocations. Evidence is in ignored build/etc24067/creation-v3/indexed.log, audit.log and provenance.json.
+
+New address bits are assigned on first eligible encounter during `makelivranges`, after induction elimination. The `func_464e50` address arm calls `newbit` only when the IChain has no bit yet; generated address ranges can also use another path into `newbit`. The logger at `newbit` with the current range-preparation block captures all five events:
+
+| Bit | Block | Global identity | Addend |
+| --- | ---: | --- | ---: |
+| 53 | 0 | Work800E7D10, symbol99 | 0x58 |
+| 54 | 2 | first format, symbol100 | 0 |
+| 55 | 7 | Work800E7D10, symbol99 | 0 |
+| 56 | 8 | GameState, symbol7 | 0x800 |
+| 57 | 10 | final format, symbol101 | 0 |
+
+Thus save's bit precedes end because the copy block is traversed before the loop test. Endpoint introduction during induction elimination alone does not establish its final numbering. One source hypothesis derived from this evidence uses the documented T-16552 `goto first; for (; i < 256; i++) { first: ... }` form, with count/i initialized before the jump. It bypasses the entry test and puts the lexical test before the body. The compiler normalizes it to the same16/16 result, so that single control is rejected; no goto/layout sweep was run.
+
+To reproduce the logger, mount the existing /private/tmp/t24047-uopt read-only at /scratch in the existing image, then run serially from /work:
+
+```
+python3 drafts/T-24067/replay.py
+python3 drafts/T-24067/trace_creation.py
+cc -std=c11 -Os -fno-strict-aliasing -I/scratch/recomp -o build/etc24067/creation-v3/trace-create build/etc24067/creation-v3/trace-create.c /scratch/recomp/build/5.3/libc_impl.o /scratch/recomp/build/5.3/version_info.o -lm
+python3 tools/uopt_eval.py compile build/etc24067/archive/indexed/source.c build/etc24067/creation-v3/indexed.o --uopt /work/build/etc24067/creation-v3/trace-create --trace --jobs 1
+python3 drafts/T-24067/trace_creation.py --audit
+```
+
+The audit must pass before using event evidence. This is diagnostic logging; no allocator decision, compiler option, generated instruction, production tool or source exception is changed.
