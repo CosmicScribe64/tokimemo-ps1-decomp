@@ -1,7 +1,7 @@
 ---
 id: T-11890
 title: Match TT func_8014D260 (gcc ratan2) through an ASPSX pass on the gcc path
-status: In Progress
+status: Done
 assignee: diman8 (claim #56)
 created: 2026-10-18
 updated: 2026-10-18
@@ -15,10 +15,10 @@ Match TT `func_8014D260` (object `TT/8014D260`, PsyQ gcc `ratan2`), the last TT 
 ## Acceptance criteria
 
 - [x] Each modelled behaviour measured over the ASPSX-built SDK asm of the main exe; rule and exceptions written down (CODING_STANDARDS 7a)
-- [ ] Pass is uniform, fails loudly, has synthetic unit tests, and is documented in a module docstring, [[toolchain]] and [[matching-notes]]
-- [ ] `TT/8014D260` listed in `config/toolchains.txt`; `func_8014D260` matches
-- [ ] Every other function unchanged: clean rebuild 27/27, `TAIIKU/801488F0` still matches
-- [ ] Code review against CODING_STANDARDS.md
+- [ ] ~~Pass is uniform, fails loudly, has synthetic unit tests, and is documented in a module docstring, [[toolchain]] and [[matching-notes]]~~ (dropped: no ASPSX behaviour to model)
+- [ ] ~~`TT/8014D260` listed in `config/toolchains.txt`; `func_8014D260` matches~~ (not reached: the habits come from the compiler, not ASPSX)
+- [x] Every other function unchanged: clean rebuild 27/27, `TAIIKU/801488F0` still matches
+- [x] Code review against CODING_STANDARDS.md
 
 ## Notes
 
@@ -38,3 +38,5 @@ Match TT `func_8014D260` (object `TT/8014D260`, PsyQ gcc `ratan2`), the last TT 
 - Open lead, not tried: a gcc build that prints the divide expanded with checks and splits symbol addresses (a Sony/SN `cc1psx`, or an old-gcc option set), checked against the SDK habits above.
 
 ## Comments
+
+2026-10-18, closed as Done without a match (outcome: evidence and tooling only). `func_8014D260` stays `INCLUDE_ASM`; the open lead is a compiler that emits the expanded divide (see Notes). Review against CODING_STANDARDS.md: the only code is `tools/aspsx_survey.py`, a read-only measurement script (module docstring, prints counts only, no game bytes, runs in Docker); no source, config or build change, no FAKE. No findings. PR from diman8, claim #56.

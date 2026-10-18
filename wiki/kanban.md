@@ -46,7 +46,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-11890-tt-ratan2-aspsx|T-11890 TT func_8014D260 ASPSX pass]]
 
 - [ ] [[tickets/T-22000-wave-4-conveyor|T-22000 Wave 4 conveyor]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
@@ -56,6 +55,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-11890-tt-ratan2-aspsx|T-11890 TT func_8014D260 ASPSX pass]]
 
 - [ ] [[tickets/T-22014-w4-p14|T-22014 Wave 4 package w4-p14]]
 - [ ] [[tickets/T-22015-w4-p15|T-22015 Wave 4 package w4-p15]]

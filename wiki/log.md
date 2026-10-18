@@ -17761,3 +17761,7 @@ ratan2 96 instructions against the original's 97). None of the three SDK habits 
 An emulation pass would model behaviour the real assembler does not have, so none is built; `TT/8014D260` stays
 INCLUDE_ASM and the ticket stays In Progress. The open lead is a compiler that emits the expanded divide and split
 symbol loads itself.
+
+## [2026-10-18] ticket | T-11890 Done (not matched)
+
+Review against CODING_STANDARDS.md: the only code is the read-only `tools/aspsx_survey.py`; no source, config or build change; no findings. [[tickets/T-11890-tt-ratan2-aspsx]] closed as Done without a match: the real ASPSX shows none of the three habits of [[gcc-objects]], so no pass models them; `func_8014D260` stays `INCLUDE_ASM` with the compiler lead in the ticket. [[kanban]], [[index]] updated.
