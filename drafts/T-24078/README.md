@@ -416,3 +416,6 @@ from a635 narrow-boundary negative; neither is a byte match.
 
 The explicit parent-authorized u16-boundary followup is archived in
 height-lifetimes.md:615/595words/frame90, four masks survive. Not a match.
+
+counted-loop.md preserves the matched-sibling loop-form test:612/592words/frame90,
+geometry arms unchanged from618, no saved160/page repair. Replay counted-for.

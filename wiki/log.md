@@ -19338,3 +19338,13 @@ no open PRs; claims #57 and #50 retain their15:00UTC update timestamps
 (2026-10-17T22:16:21Z and2026-10-17T15:45:07Z respectively). No external
 messages sent; next check approximately15:57UTC. Completed query only;
 [[completion-run-2026-10-17]] ownership and matching scope unchanged.
+
+## [2026-10-18] build | T24078 counted loop changes only initialization and tail
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve one
+matched-D32C canonical-for control after checking historical do/while sources.
+Exact two-iteration semantics retained. Result612 aligned cost/592words/frame90;
+all geometry-arm words and opcode counts identical to618, only15 initialization
+and tail scratch/scheduling words change. No160/page allocation fix or match
+claim; source/replay and prediction in drafts/T-24078/counted-loop.md. Production
+unchanged, same target active, no loop-form permutations or new instrumentation.

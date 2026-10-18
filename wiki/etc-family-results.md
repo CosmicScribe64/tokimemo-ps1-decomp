@@ -870,3 +870,13 @@ Q11-before-P is retained. The mask does NOT vanish, so this fails the intended
 no-extra-operation boundary. A one-point lower aligned cost than616 does not
 make its seven extra words a source solution. Preserve as a separate negative;
 618/606/604 and616 stay unchanged. No production edit or further width grid.
+
+
+One matched-D32C canonical-for control against signed618 reaches612 aligned
+cost/840 rows/592words/frame90. All geometry-arm words and opcode counts agree
+with618; only15 prologue/tail initialization and reload scratch words differ.
+No160/page allocation repair: mode7/160s6/136fp/page60 remain, UV50/54/poly84/88
+and Q/P order preserved. Historical T14500/T17300 forms were do/while only.
+Exact semantic proof, prediction and comparison are in drafts/T-24078/counted-loop.md;
+replay counted-for, marked unproven loop spelling. No loop permutation grid,
+production unchanged and same function remains active.
