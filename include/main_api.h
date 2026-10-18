@@ -2154,7 +2154,9 @@ void func_8004C360();
 void func_8004C46C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 void func_8004C670();
 void func_8004C6A0();
+#ifndef MAIN_API_OVERRIDE_func_8004C6B0
 void func_8004C6B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+#endif
 void func_8004C808();
 void func_8004C90C();
 void func_8004C984();

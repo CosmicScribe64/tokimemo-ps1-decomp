@@ -41,9 +41,11 @@ class ProgressTest(unittest.TestCase):
             progress.unit_totals(progress.read_sizes(progress.asm_files(base)), [c])
 
     def test_sdk_totals_are_separate(self):
-        asm(self.root / "libx.s", "a", 0x10)
-        (self.root / "libx.s").write_text((self.root / "libx.s").read_text() + "\nnonmatching b, 0x20\n")
-        self.assertEqual(progress.sdk_totals([self.root / "libx.s"]), (2, 0x30))
+        asm(self.root / "asm" / "libx.s", "a", 0x10)
+        (self.root / "asm" / "libx.s").write_text((self.root / "asm" / "libx.s").read_text() + "\nnonmatching b, 0x20\n")
+        asm(self.root / "asm" / "ovl" / "DATE" / "libgte_rot.s", "c", 0x198)
+        files = sorted((self.root / "asm").glob("*.s")) + sorted((self.root / "asm" / "ovl").glob("*/*.s"))
+        self.assertEqual(progress.sdk_totals(files), (3, 0x1C8))
 
     def test_sum_and_format(self):
         t = progress.sum_totals([progress.Totals(2, 20, 1, 12), progress.Totals(1, 4, 0, 0)])

@@ -745,7 +745,11 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24085-event-geko-twins-b|T-24085]] EVENT and GEKO twin cluster B (`func_80105DF8`/`func_8013E950` matched 1,712 B; `func_80109404`/`func_801406CC` diagnosed as `ugen` block-copy state gap, Done).
 - [[tickets/T-24086-issue-63-tt-ratan2-reevaluation|T-24086]] Issue 63 (`TT:func_8014D260` `ratan2`) Sony workstation assembler pass (`tools/sdk_aspsx_pass.py`), 400 B C match (`303/303` C functions in `TT`), and repo-wide SDK toolchain survey (Done).
 - [[tickets/T-24087-guarded-near-misses-and-option-twins|T-24087]] Guarded near misses and twin pairs in OPTION, VALEN, TAIIKU, and main (In Progress).
-- [[tickets/T-24088-gyozi-shougatu-valen-siblings-c|T-24088]] GYOZI, SHOUGATU, and VALEN sibling batch C (`func_8013907C`, `func_80139E4C`/`func_80134030`, `func_80138240`, `func_8013DF14`, In Progress).
+- [[tickets/T-24088-gyozi-shougatu-valen-siblings-c|T-24088]] GYOZI, SHOUGATU, and VALEN sibling batch C (`SHOUGATU:func_8013DF14` matched 436 B, Done).
 - [[tickets/T-24089-date-event-movie-sibling-pairs|T-24089]] DATE and EVENT movie sibling pairs (`func_8014718C`/`func_8011D5C4`, `func_801462B0`/`func_8011C750`, In Progress).
-- [[tickets/T-24090-geko-event-twins-and-near-misses-c|T-24090]] GEKO and EVENT twin pair and guarded near misses C (`func_80137120`/`func_801372D4`, `func_80102E54`, `func_80133AA0`, `func_8013F894`, In Progress).
-
+- [[tickets/T-24090-geko-event-twins-and-near-misses-c|T-24090]] GEKO and EVENT twin pair and guarded near misses C (`GEKO:func_80137120` 436 B, `GEKO:func_801372D4` 468 B, `GEKO:func_80140040` 300 B, `GEKO:func_80133AA0` 432 B, `EVENT:func_80102E54` 672 B, Done; 5 matches, 2,308 B verified default C).
+- [[tickets/T-24091-etc-shugaku-shougatu-siblings-d|T-24091]] ETC, SHUGAKU, and SHOUGATU sibling batch D (`SHUGAKU:func_8013ABAC` 356 B, `SHUGAKU:func_801352B0` 384 B, Done; 2 matches, 740 B verified default C).
+- [[tickets/T-24092-ugen-block-copy-state-pass|T-24092]] Prototype and evaluate `ugen` block-copy state (`F` vs `B`) uniform pass (In Progress).
+- [[tickets/T-24093-reclassify-date-taco-libgte-asm|T-24093]] Reclassify hand-written `LIBGTE` `RotMatrixX/Y/Z` overlay objects (`DATE/8015A640..A980`, `TACO/8015CF30..D270`) to `asm` subsegments (Done).
+- [[tickets/T-24094-etc-data-island-and-near-complete-overlays|T-24094]] Add `ETC/80143240` `.data` island to match `func_8014354C` and attack final functions of `DATE2`, `BUNKA_SD`, `BUNKASAI`, and `OMIMAI` (In Progress).
+- [[tickets/T-24095-geko-event-batch-d|T-24095]] Match GEKO and EVENT batch D (`func_8013A3C4`, `func_8013AB4C`, `func_8013B10C`, `func_801404FC`, `func_80134808`, `func_801035BC`, In Progress).

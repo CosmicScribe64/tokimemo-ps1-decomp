@@ -23,7 +23,9 @@ void func_80139018(void);
 void func_801386C4(void);
 
 void func_80134970(void);
+#ifndef SHUGAKU_OVERRIDE_func_801343B0
 void func_801343B0(void);
+#endif
 void func_80134B94(void);
 
 extern s16 D_8013B084;
@@ -46,7 +48,7 @@ extern s16 D_8013C2DC;
 extern s32 D_8013C2E0;
 extern s16 D_801C26A0;
 extern s32 D_8013AEE0;
-void func_8013ABAC(u8 arg0);
+s32 func_8013ABAC(void);
 
 extern s32 D_8013B06C;
 extern s32 D_8013B070;

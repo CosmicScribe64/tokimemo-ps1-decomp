@@ -1,5 +1,9 @@
+/* FAKE: s32 return view keeps count in $v1 across the call in func_801352B0 because void return lets uopt colour count into $v0. T-24091 */
+#define SHUGAKU_OVERRIDE_func_801343B0
 #include "common.h"
 #include "ovl/SHUGAKU.h"
+
+s32 func_801343B0(void);
 
 void func_80134880(void) {
     D_8013C190 = (u8 *)0x801EA87C;
@@ -218,11 +222,10 @@ void func_80135278(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11310, about 20 rows: frame is 8 bytes short (page spills to sp+0x28, original sp+0x30) and count takes $v0 where the original has $v1. */
-#ifdef NON_MATCHING
 void func_801352B0(void) {
-    s32 count;
+    s32 pad; /* FAKE: unused local above page and count gives the 0x38 frame and puts page at sp+0x30 and count at sp+0x2C; real source unknown. T-24091 */
     s32 page;
+    s32 count;
 
     if (*(u8 *)&D_800E6280.unk_03C == 2) {
         *(u8 *)&D_800E6280.unk_03C = 1;
@@ -242,7 +245,8 @@ void func_801352B0(void) {
     }
     if (page != D_800E6280.unk_1104.w) {
         if (D_801206FE >= -0xBF) {
-            D_800E6280.unk_110A = page;
+            /* FAKE: u32 view prevents uopt from CSE-caching the s32 load of page across the branch, reproducing the reload from sp+0x30. T-24091 */
+            D_800E6280.unk_110A = *(u32 *)&page;
             D_800CA2E4 = 9;
             D_800CA2E8 = 0;
         } else {
@@ -251,6 +255,3 @@ void func_801352B0(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_801352B0);
-#endif

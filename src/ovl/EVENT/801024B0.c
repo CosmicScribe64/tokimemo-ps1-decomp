@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_8004C6B0 /* s32 return (like DATE sibling func_800850D4 in src/main/8007C030.c): consumes $v0 in ugen for func_80102E54 (T-24090) */
 #include "common.h"
 #include "ovl/EVENT.h"
+
+s32 func_8004C6B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void func_801024B0(void) {
     D_80122680 = 0x801CE0F4;
@@ -206,8 +209,6 @@ void func_80102D40(void) {
     func_80011DFC();
 }
 
-/* NON_MATCHING: T-24037, six edits in the initial constant/base schedule. */
-#ifdef NON_MATCHING
 void func_80102E54(void) {
     DisplayActor44 *m = (DisplayActor44 *)D_800E9620;
     s16 i;
@@ -237,9 +238,6 @@ void func_80102E54(void) {
     m[98].unk_16 = 4;
     func_80011DFC();
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801024B0", func_80102E54);
-#endif
 
 void func_801030F4(void) {
     D_80120678 = D_80120454;

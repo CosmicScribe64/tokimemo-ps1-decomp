@@ -1137,39 +1137,6 @@
       }
     },
     {
-      "name": "src/ovl/DATE/8015A640",
-      "target_path": "expected/ovl/DATE/8015A640.o",
-      "base_path": "build/ovl/DATE/src/ovl/DATE/8015A640.o",
-      "metadata": {
-        "source_path": "src/ovl/DATE/8015A640.c",
-        "progress_categories": [
-          "overlays"
-        ]
-      }
-    },
-    {
-      "name": "src/ovl/DATE/8015A7E0",
-      "target_path": "expected/ovl/DATE/8015A7E0.o",
-      "base_path": "build/ovl/DATE/src/ovl/DATE/8015A7E0.o",
-      "metadata": {
-        "source_path": "src/ovl/DATE/8015A7E0.c",
-        "progress_categories": [
-          "overlays"
-        ]
-      }
-    },
-    {
-      "name": "src/ovl/DATE/8015A980",
-      "target_path": "expected/ovl/DATE/8015A980.o",
-      "base_path": "build/ovl/DATE/src/ovl/DATE/8015A980.o",
-      "metadata": {
-        "source_path": "src/ovl/DATE/8015A980.c",
-        "progress_categories": [
-          "overlays"
-        ]
-      }
-    },
-    {
       "name": "src/ovl/DATE2/80132000",
       "target_path": "expected/ovl/DATE2/80132000.o",
       "base_path": "build/ovl/DATE2/src/ovl/DATE2/80132000.o",
@@ -4211,39 +4178,6 @@
       "base_path": "build/ovl/TACO/src/ovl/TACO/8015ABF0.o",
       "metadata": {
         "source_path": "src/ovl/TACO/8015ABF0.c",
-        "progress_categories": [
-          "overlays"
-        ]
-      }
-    },
-    {
-      "name": "src/ovl/TACO/8015CF30",
-      "target_path": "expected/ovl/TACO/8015CF30.o",
-      "base_path": "build/ovl/TACO/src/ovl/TACO/8015CF30.o",
-      "metadata": {
-        "source_path": "src/ovl/TACO/8015CF30.c",
-        "progress_categories": [
-          "overlays"
-        ]
-      }
-    },
-    {
-      "name": "src/ovl/TACO/8015D0D0",
-      "target_path": "expected/ovl/TACO/8015D0D0.o",
-      "base_path": "build/ovl/TACO/src/ovl/TACO/8015D0D0.o",
-      "metadata": {
-        "source_path": "src/ovl/TACO/8015D0D0.c",
-        "progress_categories": [
-          "overlays"
-        ]
-      }
-    },
-    {
-      "name": "src/ovl/TACO/8015D270",
-      "target_path": "expected/ovl/TACO/8015D270.o",
-      "base_path": "build/ovl/TACO/src/ovl/TACO/8015D270.o",
-      "metadata": {
-        "source_path": "src/ovl/TACO/8015D270.c",
         "progress_categories": [
           "overlays"
         ]

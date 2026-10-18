@@ -128,8 +128,8 @@ def read_overlays():
 
 
 def overlay_data_files(name):
-    """Asm objects splat writes for the data subsegments (`rodata`/`data`/`bss`, not the
-    dot-prefixed siblings that the C object provides) of overlay `name` (T-1340)."""
+    """Asm objects splat writes for the asm and data subsegments (`asm` and `rodata`/`data`/`bss`,
+    not the dot-prefixed siblings that the C object provides) of overlay `name` (T-1340, T-24093)."""
     with open("config/overlays/%s.yaml" % name) as f:
         cfg = yaml.safe_load(f)
     out = []
@@ -138,7 +138,9 @@ def overlay_data_files(name):
             continue
         for sub in seg.get("subsegments", []):
             typ, sname = (sub["type"], sub["name"]) if isinstance(sub, dict) else (sub[1], sub[2])
-            if typ in ("rodata", "data", "bss"):
+            if typ == "asm":
+                out.append("asm/ovl/%s/%s.s" % (name, sname))
+            elif typ in ("rodata", "data", "bss"):
                 out.append("asm/ovl/%s/data/%s.%s.s" % (name, sname, typ))
     return out
 

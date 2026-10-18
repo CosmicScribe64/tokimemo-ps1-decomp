@@ -20422,3 +20422,23 @@ Verified and reviewed 8 new default C function matches (+4,180 B total) across f
 - [[tickets/T-24085-event-geko-twins-b]] (`Done`, +2 functions / +1,712 B): `GEKO:func_8013E950` (856 B in `src/ovl/GEKO/8013DF70.c`) and `EVENT:func_80105DF8` (856 B in `src/ovl/EVENT/801050D0.c`).
 - [[tickets/T-24086-issue-63-tt-ratan2-reevaluation]] (`Done`, +1 function / +400 B, `TT` now 100% matched at `303/303` C functions): Implemented `tools/sdk_aspsx_pass.py` and `tools/test_sdk_aspsx_pass.py` (43/43 toolchain tests passing) per `CODING_STANDARDS.md` section 7a, added `TT/8014D260 gcc 2.7.2-psx 2.56` to `config/toolchains.txt`, matched `TT:func_8014D260` (`ratan2` from `LIBGTE.LIB(RATAN.OBJ)`) in `src/ovl/TT/8014D260.c`, updated [[gcc-objects]] and [[toolchain]], and surveyed all remaining `INCLUDE_ASM` functions in `src/` (0 GCC-compiled C functions remain) and all 49 `asm/lib*.s` files in `SLPM_86.053` (~445 SDK functions use `gcc 2.7.2-psx` + `sdk_aspsx_pass.py`).
 Started [[tickets/T-24087-guarded-near-misses-and-option-twins]], [[tickets/T-24088-gyozi-shougatu-valen-siblings-c]], [[tickets/T-24089-date-event-movie-sibling-pairs]], and [[tickets/T-24090-geko-event-twins-and-near-misses-c]] (`In Progress`).
+
+## [2026-10-18] ticket | Complete T-24088 (Done, +1 function / +436 B); start T-24091
+
+Subagent on [[tickets/T-24088-gyozi-shougatu-valen-siblings-c]] matched `SHOUGATU:func_8013DF14` (436 B in `src/ovl/SHOUGATU/8013DD90.c`) by pairing `GameState *state = &D_800E6280;` for the `unk_1BC[12].unk_0C.f.f9` increment/compare with direct `D_800E6280.unk_1BC[12].unk_0C.f.f9 = 3;` inside the clamp body (`FAKE`). Moved [[tickets/T-24088-gyozi-shougatu-valen-siblings-c]] to `Done` and started [[tickets/T-24091-etc-shugaku-shougatu-siblings-d]] (`In Progress`).
+
+## [2026-10-18] ticket | Start T-24092 (`ugen` block-copy state `F` vs `B` pass prototype)
+
+Created [[tickets/T-24092-ugen-block-copy-state-pass]] (`In Progress`) and spawned a dedicated Lane A subagent to reverse-engineer IDO 5.3 vs IDO 4.1 `ugen` struct block-copy state (`F` vs `B` register rotation) and prototype a uniform pass tested against `tools/ido_eval_cases/ugen_copy_state/` and all matched functions.
+
+## [2026-10-18] ticket | Complete T-24093 and T-24032 (reclassify 6 hand-written LIBGTE overlay objects to `asm`)
+
+Reclassified the six trailing hand-written Sony `LIBGTE.LIB` `RotMatrixX`/`RotMatrixY`/`RotMatrixZ` assembly objects in `config/overlays/DATE.yaml` (`libgte_8015A640`, `libgte_8015A7E0`, `libgte_8015A980`) and `config/overlays/TACO.yaml` (`libgte_8015CF30`, `libgte_8015D0D0`, `libgte_8015D270`) from `c` subsegments to `asm` subsegments, matching `config/SLPM_86.053.yaml`. Updated `configure.py` (`overlay_data_files`), `tools/progress.py` (`sdk_totals`), `tools/test_progress.py` (4/4 passing), and [[gcc-objects]]; removed the 6 placeholder `INCLUDE_ASM`-only `.c` files; verified `build/ovl/DATE.ok`, `build/ovl/TACO.ok`, `tools/gcc_fingerprint.py` (0 hits), and `tools/progress.py` (`6,540 / 6,952` C functions, `728` SDK asm functions). Moved [[tickets/T-24093-reclassify-date-taco-libgte-asm]] and [[tickets/T-24032-date-taco-rotation-clones]] to `Done`.
+
+## [2026-10-18] ticket | Complete T-24091 (Done, +2 functions / +740 B); start T-24094
+
+Verified and reviewed 2 matched functions in [[tickets/T-24091-etc-shugaku-shougatu-siblings-d]] (`SHUGAKU:func_8013ABAC` 356 B in `src/ovl/SHUGAKU/8013AA70.c` and `SHUGAKU:func_801352B0` 384 B in `src/ovl/SHUGAKU/80134880.c`, +740 B total) against `CODING_STANDARDS.md`. Moved [[tickets/T-24091-etc-shugaku-shougatu-siblings-d]] to `Done` and started [[tickets/T-24094-etc-data-island-and-near-complete-overlays]] (`In Progress`) to add the `ETC/80143240` `.data` island (`ETC:func_8014354C`, 248 B) and attack the final remaining functions of `DATE2`, `BUNKA_SD`, `BUNKASAI`, and `OMIMAI`.
+
+## [2026-10-18] ticket | Complete T-24090 (Done, +5 functions / +2,308 B); start T-24095
+
+Verified and reviewed all 5 matched functions in [[tickets/T-24090-geko-event-twins-and-near-misses-c]] (`GEKO:func_80137120` 436 B and `GEKO:func_801372D4` 468 B in `src/ovl/GEKO/80134D10.c`, `GEKO:func_80140040` 300 B in `src/ovl/GEKO/8013F360.c`, `GEKO:func_80133AA0` 432 B in `src/ovl/GEKO/801338F0.c`, and `EVENT:func_80102E54` 672 B in `src/ovl/EVENT/801024B0.c` via `MAIN_API_OVERRIDE_func_8004C6B0`, +2,308 B total) against `CODING_STANDARDS.md` (renamed `sp2B` -> `state`). Moved [[tickets/T-24090-geko-event-twins-and-near-misses-c]] to `Done` and started [[tickets/T-24095-geko-event-batch-d]] (`In Progress`).

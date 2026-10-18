@@ -320,9 +320,9 @@ void func_8013FF64(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-10310, T-17700, T-24036: the EVENT sibling func_80108DD4 form (do-while second loop); 7 rows remain at the tail: the original branches over the call to a block that loads $ra after D_801470AC, IDO fills the branch delay slot with the $ra load */
-#ifdef NON_MATCHING
-/* FAKE: byte-offset display-record view matches the EVENT sibling; fields add one register (T-20900, T-24036). */
+/* FAKE: byte-offset display-record view matches the EVENT sibling (fields add one register, T-20900);
+ * `if (any == 0 && func_800AE0D0()) {}` (where EVENT sibling func_80108DD4 has a sound trigger inside the if)
+ * keeps the post-call label that prevents as1 from hoisting $ra into the branch delay slot. T-24090 */
 void func_80140040(void) {
     s16 i;
     s32 any;
@@ -346,14 +346,10 @@ void func_80140040(void) {
         }
         i++;
     } while (i < 0xA);
-    if (any == 0) {
-        func_800AE0D0();
+    if (any == 0 && func_800AE0D0()) {
     }
     D_801470AC += 1;
 }
-#else
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_80140040);
-#endif
 
 void func_8014016C(void) {
     D_800E6280.unk_F5F = 0xA;

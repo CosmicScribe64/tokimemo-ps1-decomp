@@ -122,7 +122,8 @@ def main():
                 ovl_rows[cf.unit] = sum_totals([ovl_rows.get(cf.unit, ZERO), t])
         if not sum_totals(main_rows.values()).functions:
             raise ValueError("no asm/nonmatchings found (run ninja first)")
-        sdk = sdk_totals(sorted((root / "asm").glob("*.s")))
+        sdk = sdk_totals(sorted((root / "asm").glob("*.s"))
+                         + sorted((root / "asm" / "ovl").glob("*/*.s")))
     except (ValueError, OSError) as e:
         print("error: %s" % e, file=sys.stderr)
         return 1

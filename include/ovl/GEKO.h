@@ -226,6 +226,12 @@ extern s32 D_80145040;
 extern s8 D_80144C54;
 extern s8 D_8014507C;
 extern u8 D_80145074;
+extern s32 D_80145078;
+extern s16 D_80145080;
+extern s16 D_80145084;
+s32 func_80137120(void);
+s32 func_801372D4(void);
+s32 func_80133AA0();
 
 void func_801394B0(void);
 void func_8013C5B0(void);

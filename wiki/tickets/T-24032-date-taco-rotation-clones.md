@@ -1,11 +1,11 @@
 ---
 id: T-24032
 title: DATE and TACO rotation clone provenance
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
-updated: 2026-10-17
-links: ["[[date-family-results]]", "[[taco-family-results]]"]
+updated: 2026-10-18
+links: ["[[date-family-results]]", "[[taco-family-results]]", "[[tickets/T-24093-reclassify-date-taco-libgte-asm]]"]
 ---
 
 ## Goal
@@ -16,7 +16,7 @@ Inspect six416-byte DATE/TACO rotation clones and perform one fresh SDK-typed co
 
 - [x] Preserve fresh source control, measured result and prior provenance without inflating coverage.
 - [x] No unsupported compiler exception, inline assembly or target reclassification.
-- [ ] Independent review.
+- [x] Independent review (reclassified to `asm` subsegments in [[tickets/T-24093-reclassify-date-taco-libgte-asm]]).
 
 ## Notes
 
