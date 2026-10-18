@@ -18162,3 +18162,11 @@ Created [[tickets/T-24003-complete-bunkaken]] for the two assigned BUNKAKEN obje
 ## [2026-10-18] build | Match BUNKAKEN heroine selection
 
 [[tickets/T-24003-complete-bunkaken]]: func_8013BD84 passes literal default linked proof for 540 bytes; BUNKAKEN SHA1 OK. Fixed heroine tests use a u8 flags local, indexed loop retains inline byte accesses, with the target sum operand order. [[bunka-family-results]] records successful and rejected forms. Accepted package gain is two functions / 836 bytes so far.
+
+## [2026-10-18] decision | Preserve BUNKAKEN loader blocker
+
+[[tickets/T-24003-complete-bunkaken]]: bounded func_8013B510 variants leave a3/v1 heroine-allocation and temporary-numbering differences. Archived current typed candidate (318 cost) and provenance in drafts/T-24003/; production remains INCLUDE_ASM. [[bunka-family-results]] records the rejected forms. Two accepted functions add 836 bytes.
+
+## [2026-10-18] ticket | Submit BUNKAKEN completion pass for review
+
+[[tickets/T-24003-complete-bunkaken]] moves to In Review, matching its board card. Accepted result: two functions / 836 bytes, literal default proofs and affected-overlay checksum pass. The date-loader blocker remains archived and is not counted. Full default build and final guards are running; review is required before Done.
