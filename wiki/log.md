@@ -18557,3 +18557,7 @@ Read parent pointers to [[register-cheatsheet]]41 and [[matching-notes]]6294-631
 
 ## [2026-10-18] build | T-24067 typed index-loop gain
 Natural typed record indexing plus induction elimination fixes printf stack-store order and preheader schedule, reaching16 cost/16 rows with75 words/frame0x48. Removed unnecessary format-pointer identity; only source-line grouping remains FAKE. Preserve complementary cursor16/20 source and replay both under drafts/T-24067. [[tickets/T-24067-etc-album-copy]] remains In Progress; four saved-assignment and four copy-temp words remain.
+
+## [2026-10-18] query | T-24067 indexed allocation and copy-state evidence
+
+Indexed tracing confirms format/save/end bits54/55/56 share priority3.33333325 and save precedes end in numbering. Inclusive/do loops retain16/16; local-limit/narrow/top-exit forms lose induction elimination; split copies and explicit record/album pointers worsen. Read existing T-20710 block-copy state evidence in [[ido-52-evaluation]] as a supporting analogy for t5/t6, not a fresh4.1 result or exhausted-source claim. Updated drafts/T-24067/README.md and [[tickets/T-24067-etc-album-copy]]; production unchanged and target remains active.
