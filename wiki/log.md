@@ -18235,3 +18235,9 @@ Started [[tickets/T-24016-bunkasai-state-machines]] in existing complete-bunkake
 
 ## [2026-10-18] build | Correct production-install guard and reverify BUNKASAI C
 Root review found that bulk_m2c.insert_draft had left a NON_MATCHING guard in the first installation, so the earlier default result still checked fallback assembly. Removed guard and fallback from src/ovl/BUNKASAI/801354B0.c, recompiled/relinked normal default with ninja -j1, and reran literal default funcdiff: checksum OK, linked MATCH 1,508 bytes. This corrected proof supports the C claim in [[tickets/T-24016-bunkasai-state-machines]].
+
+## [2026-10-18] build | Both BUNKASAI state machines verified as default C
+[[tickets/T-24016-bunkasai-state-machines]] matched func_80158764 (1,652 bytes) through ascending nested switch arms and repeated direct byte-field reads. Both unguarded C bodies compile together: BUNKASAI checksum OK and literal default linked funcdiff MATCH for 1,508 plus 1,652 bytes. No FAKE or header change. Preserved source-only near/matching variants in drafts/T-24016/ and moved all private exploration intact to ignored build/T-24016-private/exploration; [[bunkasai-family-results]] updated.
+
+## [2026-10-18] ticket | BUNKASAI state machines ready for review
+Moved [[tickets/T-24016-bunkasai-state-machines]] to In Review and moved its kanban card. Root review/integration remains; no push or merge by worker.

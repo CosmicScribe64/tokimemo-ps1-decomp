@@ -1,7 +1,7 @@
 ---
 id: T-24016
 title: Recover BUNKASAI festival state machines
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -12,9 +12,9 @@ links: ["[[bunkasai-family-results]]"]
 Recover matching default C for func_80135C4C and func_80158764 in the existing complete-bunkaken worktree without changing other functions.
 
 ## Acceptance criteria
-- [ ] Inspect previous drafts and recover plausible types and sibling forms.
-- [ ] Verify any promoted C with literal default funcdiff and BUNKASAI checksum in Docker.
-- [ ] Preserve useful source-only drafts and negative evidence; leave In Review for root review.
+- [x] Inspect previous drafts and recover plausible types and sibling forms.
+- [x] Verify any promoted C with literal default funcdiff and BUNKASAI checksum in Docker.
+- [x] Preserve useful source-only drafts and negative evidence; leave In Review for root review.
 
 ## Notes
 Bounded 25-minute pass, single compiler and ninja -j1. Starting head 15133a84a6c4803c6a5064a2b0831d37252b3d60. Targets remain INCLUDE_ASM. Previous best scores: 264 and 332.
@@ -27,3 +27,10 @@ func_80135C4C: unguarded default C, 1,508 literal target bytes (census size, rat
 Docker verification: `ninja -j1 build/ovl/BUNKASAI.ok` reports BUNKASAI.bin OK; `python3 tools/funcdiff.py func_80135C4C --unit BUNKASAI --resolve --no-build --version default` reports compared default build, linked function bytes equal target (1508 bytes).
 
 Production-install correction: bulk_m2c.insert_draft adds NON_MATCHING, unlike fresh_context used by the scorer. Initial production proof therefore still read the fallback and was not C evidence. Removed the guard and fallback from the actual source, then repeated ninja -j1 (CC/LD/OBJCOPY ran): BUNKASAI checksum OK and literal default linked funcdiff MATCH (1508 bytes). Only this second proof establishes default C progress.
+
+### Second match and final verification
+func_80158764: default unguarded C, 1,652 literal target bytes (rather than the 1,804-byte queue estimate). Recovered sibling-style direct dialogue stores and ascending switch arms; direct repeated byte-field reads preserve the target's promoted byte range. Score 332 to 239 to 223 to zero. No FAKE, prototype/header change, compiler change, or flags.
+
+After installing the second body through a direct INCLUDE_ASM replacement, Docker ninja -j1 build/ovl/BUNKASAI.ok ran CC/LD/OBJCOPY and reported BUNKASAI.bin OK. Both literal default linked funcdiff checks passed together: func_80158764 1652 bytes; func_80135C4C 1508 bytes. Header check passed during build; git diff --check clean. Neither target has a guard or fallback. Total new verified C: 3,160 bytes.
+
+Reproduction and useful source-only near/matching candidates: drafts/T-24016/. All private exploratory files remain intact under ignored build/T-24016-private/exploration; no objects or instruction listings committed. Status In Review pending root CODING_STANDARDS review and integration; no push or merge performed.
