@@ -17960,3 +17960,19 @@ Clean build 27/27, `check_headers` OK, `migrate_globals --check` OK, `sync_proto
 ## [2026-10-18] ticket | T-22022 Done
 
 Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` and wiki changed, the four functions stay `INCLUDE_ASM`, drafts are plain source. 0 of 4 matched. [[tickets/T-22022-w4-p22]] Done.
+
+## [2026-10-17] ticket | T-23003 Wave 5 big package w5-big-p03 opened
+
+[[tickets/T-23003-w5-big-p03]] (In Progress) under [[tickets/T-23000-wave-5-big-conveyor]]: `src/main/8006CB30.c`, `func_8006D7EC` (4,692 B), `func_8007132C` (4,292 B), `func_8006D138` (920 B). Branch `w5-big-p03` from `w2-good`.
+
+## [2026-10-17] ticket | T-23003 In Review
+
+[[tickets/T-23003-w5-big-p03]]: 0 of 3 matched in `src/main/8006CB30.c`. `func_8006D7EC` (4,692 B) is a typed hand draft, opcode-aligned in all 1,173 instructions, guarded under `NON_MATCHING` at 13 rows (`idx++` folded to `li`, the second call result narrowed instead of copied); `func_8007132C` (4,292 B) and `func_8006D138` (920 B) stay `INCLUDE_ASM`. Levers, failed forms and tool notes in [[matching-notes]] section T-23003; hand drafts and the aligned-diff scripts in `drafts/T-23003/`.
+
+## [2026-10-17] build | T-23003 closer: func_8006D7EC at 1 row
+
+[[tickets/T-23003-w5-big-p03]]: Opus closer on `func_8006D7EC` in `src/main/8006CB30.c`, 13 rows to 1 (still guarded). A `u8 func_8006BDA8();` view with `s32 res` fixes the copy of the second call result; the `idx++` fold after `idx = 0` is left (uopt, confirmed with `cc -S`). Notes in [[matching-notes]] (T-23003) and the ticket comment.
+
+## [2026-10-18] ticket | T-23003 Done
+
+[[tickets/T-23003-w5-big-p03]]: code review against `CODING_STANDARDS.md` passed after three small wiki fixes (stale 13-row claims in [[index]] and [[matching-notes]], the ticket's FAKE count). 0 of 3 functions matched: `func_8006D7EC` stays guarded under `NON_MATCHING` at 1 row (`idx++` fold), `func_8007132C` and `func_8006D138` stay `INCLUDE_ASM`; only `src/main/8006CB30.c` changed among C files. Ticket Done, card moved to Done.
