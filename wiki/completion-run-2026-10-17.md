@@ -144,3 +144,9 @@ TEL T24045 published f828daec1 after independent all27 hashes, interface guards 
 Contributor check 2026-10-18 07:21 UTC: no open PRs; issues50/56/57 unchanged. Keep NAME_ENT and TT claims excluded. Next periodic check around07:51 UTC. DATE T24051 confirmed active in same built /private/tmp/tokimemo-complete-etc tree, branch codex/complete-date-large-followup; target callback-pointer return-view hypothesis differs from earlier whole-function return tests.
 
 Latest ownership override: ETC T24049 source-only archive published b57b6e50b (corrected eleven-record bonus bound, no match). Its worker now owns T24052 SHOUGATU801330C0 funcs80133208/801333F0, using matched GYOZI siblings. ENDING T24047 remains active: full-TU aligned cost114,803/805 instructions, frame176 versus160 target; no verified C claim.
+
+## Function-count pass requested by user
+
+Filtered the prior sibling census against current production INCLUDE_ASM references and sorted targets up to300 instruction bytes. Existing contributor and live-TU exclusions still apply. T24053 Sol medium worker owns EVENT8010B360 func8010B614(100), BUNKA_SD80135160 func801355AC(132), SHUGAKU80139D00 func8013A1D4(160). First lead: T20620 already reported a scratch EVENT match withheld for conveyor ownership; matching-notes retains byte-store/later-read recipe. Must reproduce against current types and prove actual default C before counting.
+
+After preserving T24050, its Sol medium worker continues T24054: main80042A00 func80043010(176), OPTION80132000 func80132000(176), KANGEI80137B90 func8013852C(180). Short size alone is not evidence of easy matching: historical failed experiments must be checked first. Large EVENT, ENDING and DATE chats stay active. T24052 SHOUGATU sibling pair stays active. T24048 MASTER source-only archive published444be6846; no new matching bytes.

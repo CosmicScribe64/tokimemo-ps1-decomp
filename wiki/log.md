@@ -18831,3 +18831,7 @@ Created [[tickets/T-24048-master-animation]], claimed only src/ovl/MASTER/801336
 ## [2026-10-18] build | MASTER source-only checkpoint guards
 
 [[tickets/T-24048-master-animation]] baseline unit checksum passes (`7303c196a7a2fd8423da1e66e5a49511e9805bbc`), header/global checks pass and prototype branch check has0 new/15 known disagreements. Final saved-source reproducer compiles434/428. No actual C promotion or default ASM fallback coverage claim.
+
+## [2026-10-18] decision | Add short-function count pass
+
+User requested easy wins to raise function count. Current-filtered sibling census identified short unresolved targets; assigned Sol medium T24053 and T24054 packages with disjoint files and current-byte proof gates, recorded in [[completion-run-2026-10-17]]. Prior T20620 EVENT100-byte scratch-match recipe is the first reproduction lead. Preserved T24048 corrected MASTER archive at444be6846. Existing large-function chats continue; no speculative count increase claimed.
