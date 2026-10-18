@@ -37,7 +37,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
-- [[tickets/T-24076-etc-album-search|T-24076]] ETC album search, In Progress;103-row faithful source-only lead, production ASM.
+- [[tickets/T-24076-etc-album-search|T-24076]] ETC album search, In Progress;90-row source-only lead, production ASM.
 - [[tickets/T-24075-etc-random-selection|T-24075]] ETC random selection, Done;904-byte C match independently verified/publishedc7690151b.
 - [[tickets/T-24074-etc-record-scene|T-24074]] ETC record scene, unresolved In Review;166-row source-only checkpoint, production assembly.
 - [[tickets/T-24073-etc-record-init|T-24073]] ETC typed record initializer Done;352 actual default C bytes independently reviewed/published c4847ad5d.
