@@ -95,3 +95,37 @@ separate default-arm AS1 cross-block motion; no compiler decision changes are
 enabled in the normal build. The current35-cost source fixes that tie by moving
 UV before palette, spelling the later quotient directly, and placing the zero
 store after UV. All loops/case bodies match; only default-arm motion remains.
+
+## Original-version controls
+
+T-24047 reused the cached `tokimemo-decomp-ido52` image (`linux/amd64`) and
+the private-use approval in [[tickets/T-3110-test-ido-52-and-41]]. The archive
+SHA256 is the existing
+`870cd946d31d6abee24d47926328d15909771520240a0a4f5cb7d27aea90e1ad`.
+Archive/extraction stay at `/private/tmp/t24047-uopt/ido5.2.tar.xz` and
+`/private/tmp/t24047-uopt/ido5.2` (37 MB extracted). No OS image or host package
+was installed; no production settings changed.
+
+Five target controls are in `drafts/T-24047/backend-evidence.json`: substitute
+only52 as1, only52 ugen, only52 cfe, only52 uopt, then all four52 stages together.
+Every result is identical to stock53:804 instructions/cost35. A stock amd64/arm64
+target equality control passes. All runs retain the existing conversion/frame
+passes; no per-function or instruction patch is used. A simple3.18/3.19 release
+difference does not explain this source's remaining motion.
+
+As1/ugen inputs and symbol sidecars were copied by scratch wrappers, then passed
+unchanged to the stock stages to verify capture fidelity. Captures, replay
+scripts and output objects remain in ignored `build/t24047/` or external scratch.
+The approved runtime invokes a pass as:
+
+```sh
+/scratch/ido5.2/usr/bin/qemu-irix -silent -L /scratch/ido5.2 \
+  /scratch/ido5.2/usr/lib/as1 -elf -G 0 -p0 -EL -g0 -O2 \
+  /work/build/t24047/switch-metadata/default.G \
+  -o /scratch/as1-52.o -t /scratch/as1-52.T
+```
+
+Copy `build/t24047/switch-metadata/default.T` to the output sidecar before that
+replay. Run it in the cached amd64 image with scratch writable and the project
+read-only. [[ido-52-evaluation]] documents the other pass interfaces and archive
+provenance. Compiler data and reconstructed C remain private, never committed.

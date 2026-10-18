@@ -240,3 +240,53 @@ Message-table and EdScriptSet pointer-type views are also neutral35. The
 ledger now retains100 diagnostics, including explicitly rejected wrong-table
 and extra-instruction forms. The remaining blocker is assembler cross-block
 motion, not a script pointer-versus-integer declaration difference.
+
+After source checkpoint e500e504e, assigning the selector to existing row or i
+locals is neutral35. Read-only AS1 reconstruction reference identifies the LUI
+opcode as unconditionally eligible for speculation; ordinary value types alone
+cannot stop it. The candidate must be blocked by dependencies/control flow or
+an earlier instruction-sequence difference. No assembler binary was built or
+changed; reference source stays external in /private/tmp/t24047-uopt/.
+
+The full-width bit-field view is also neutral35. A cached
+tokimemo-decomp-ido52 image is available; T-3110 records the user's prior private
+IDO5.2 evaluation approval. No compiler archives remain in the usual caches.
+Use one bounded5.2 assembler replay of the captured, unchanged input to test
+whether the last motion is backend-version-specific. Production settings remain
+unchanged; no per-function compiler exception is proposed.
+
+IDO5.2 archive matches the previously recorded SHA256
+870cd946d31d6abee24d47926328d15909771520240a0a4f5cb7d27aea90e1ad.
+Extracted37MB only under external scratch and reused cached amd64 evaluation
+image. Replay uses captured post-frame input plus copied symbol sidecar; the
+project mount is read-only. No host installs or production build changes.
+
+IDO5.2 as1 replay is identical to stock53 for the complete target:804
+instructions/cost35. Thus the assembler version alone does not close this gap.
+Capture post-optimizer input for one isolated5.2 ugen replay next, keeping the
+production front end, uniform passes and stock assembler fixed.
+
+IDO5.2 ugen on the captured production optimizer output also reproduces stock
+target words exactly (804/cost35), through the existing frame pass and stock53
+as1. Older generator/assembler versions alone do not explain the missing barrier.
+Check the front end next with a stock amd64/arm64 equality control first; reuse
+the same approved archive and private image, no new toolchain installation.
+
+The stock amd64/arm64 target control agrees exactly. Substituting only5.2 cfe
+also gives identical804/cost35, with expected ucode3.18/3.19 warning accepted
+by the stock optimizer. Only the optimizer remains to isolate before ruling
+out a simple minor-version explanation; conversion/frame passes stay uniform.
+
+Isolated5.2 uopt and the complete5.2 front-end/optimizer/generator/assembler
+path, with only the existing uniform conversion/frame passes, also reproduce
+stock target words exactly:804/cost35. A simple3.18 versus3.19 explanation is
+ruled out for this source. Return to source-level CFG entry metadata; test a
+referenced forward C default label (earlier outside-switch control fell through
+without such a label). No production compiler change or exception.
+
+Referenced forward default label is neutral35. A diagnostic empty inner switch
+adds code and disrupts allocation (807/cost756), so is rejected. The source
+ledger now has105 measurements. Five backend controls and exact provenance are
+retained in drafts/T-24047/backend-evidence.json and [[ending-allocator-trace]].
+Scope/standards review finds no production changes or new findings in this
+evidence-only follow-up. Keep task In Progress on the same sole AS1 blocker.

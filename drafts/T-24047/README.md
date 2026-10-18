@@ -72,3 +72,9 @@ this guarded35-cost form and ASM fallback. Replay the intermediate closer with:
 ```
 python3 drafts/T-24047/replay.py --body drafts/T-24047/closer.c --out build/t24047-closer
 ```
+
+`backend-evidence.json` records five IDO5.2 controls: isolated as1, ugen, cfe,
+uopt, and the complete pipeline with today's uniform passes. All reproduce the
+same804-instruction/cost35 target. Stock amd64/arm64 output also agrees. These
+are private diagnostics using the T-3110-approved archive; they do not change
+production settings. See `wiki/ending-allocator-trace.md` for paths/provenance.
