@@ -18565,3 +18565,7 @@ Indexed tracing confirms format/save/end bits54/55/56 share priority3.33333325 a
 ## [2026-10-18] query | T-24067 explicit endpoint range constraint
 
 Copied stock uopt stages without altering bytes; full-TU code/data/relocations equal ordinary replay. Indexed frontend has no end address; final format/save/end ranges tie, while cursor's explicit end entry store raises priority2.75 above save2.5. Endpoint-derived index bounds retain subtraction/entry guards rather than folding, and an empty endpoint reference adds a range. Retained source-only capture helper and minimal packet in drafts/T-24067/README.md; [[tickets/T-24067-etc-album-copy]] stays In Progress. Reviewed prior destination operand/count controls without repeating a broad sweep. Next evidence question is constant identity at bit creation, not a proposed compiler change.
+
+## [2026-10-18] query | T-24067 address-bit creation measured
+
+Parent approved private logging only. Separate diagnostic binary records first eligible address encounters in makelivranges, with save bit55/block7 before end bit56/block8; format is54/block2. Its full object SHA and all code/data/relocations equal stock. Retained logging-only generator, exact hashes and replay/audit commands under drafts/T-24067; no generated compiler source/binary committed and shared tracer untouched. One derived goto-first indexed loop is neutral16/16 and rejected. [[tickets/T-24067-etc-album-copy]] remains In Progress; production remains assembly and only this target is active.
