@@ -87,3 +87,24 @@ missing ANDI is a later lowering effect, not an absent pre-allocation range or
 proof that v0 was unavailable. The unchanged trace does not establish every
 interference constraint. Previously measured word-local mask hoisting remains
 a separate source obstacle; this packet does not justify a width sweep.
+
+
+Bounded read-only inspection used the existing generated ugen reference at
+build/etc24067/ugen-reference/ugen.c, SHA256 `4079660f9ebb068a791c6f54abb67cf7c3bb792207c89a6eb9ac2d9e146341ec`.
+No reference/compiler was generated or executed for this inspection.
+f_translate_cvtl (0x44BD8C), unsigned default path L44c1f4/L44c240, constructs
+AND(value,(1<<width)-1). This supports the separate CVTL8 argument mask.
+f_eval_int_int_cvt (0x43677C) routes ordinary J/L conversions through
+func_436008, which evaluates the child and moves the result rather than
+introducing byte truncation itself.
+
+The exact rule removing the first per-arm AND was not isolated. The measured
+boundary is final post-cvt uopt output versus final object; attributing it
+specifically to ugen rather than the ugen/as1 interval would overstate the
+capture. The earlier statement about later lowering remains limited to that
+interval. MAIN8005D448 lacks the empty-slot callback arm, so its matched source
+does not supply a proven condition for the target's byte argument. No
+supported untried source condition emerged beyond the prior24 narrowing forms.
+No new source control, binary, instrumentation or compiler execution followed
+this read-only inspection. The source remains57 rows, with no impossibility
+claim.
