@@ -1,11 +1,11 @@
 ---
 type: coordination
-updated: 2026-10-17
+updated: 2026-10-18
 ---
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Current published code checkpoint verified DATE T24051 integration (worker2da9bb5f8) has **6,510/6,958 functions and 1,861,692/2,279,368 bytes (81.7%)**, measured in Docker. Since baseline `283b86fca`: 44 functions / 48,224 bytes added. The active goal remains 100%, with 417,676 game-code bytes remaining. SDK assembly is separately reported and excluded.
+User resumed work toward 100% verified game-code matching. Latest measured code checkpoint `fd700bf3f` has **6,514/6,958 functions and 1,865,416/2,279,368 bytes (81.8%)**, measured in Docker after T24069. Since baseline `283b86fca`: 48 functions / 51,948 bytes added. The active goal remains 100%, with 413,952 game-code bytes remaining. Later source-only archives through `fe932f320` add no verified bytes. SDK assembly is separately reported and excluded.
 
 ## Verified gains
 
@@ -55,6 +55,10 @@ User resumed work toward 100% verified game-code matching. Current published cod
 | T24023 | EVENT func_801103A0 |6848|
 | T24062 | MAIN func_8007BCFC |236|
 | T24051 | DATE func_80144E20 |3200|
+| T20013 / PR62 | NAME_ENT func_80132320 |396|
+| T20013 / PR62 | NAME_ENT func_80134248 |2256|
+| T24064 | ETC func_8013F980 |252|
+| T24069 | ETC func_8013BFFC |820|
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
 
@@ -62,9 +66,9 @@ Each was independently checked against default linked function bytes, all27 bina
 
 User clarified on2026-10-18: keep the100% goal active, limit matching to1–2Sol6.1medium workers, each persistent on one function; avoid batch churn and conserve usage. No routine Astra. User subsequently authorized two additional Antigravity Gemini4Argon Medium workers using separate account usage (see below). Root handles independent integration and quiet30-minute PR/issue monitoring.
 
-- Sol6.1 chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: one existing worker moves to T24067 ETC80140F50 func80141ABC only after completed DATE44E20; other T24064 functions deferred. Coordinator does no duplicate probe work.
-- Sol6.1 chat01a1410a-cead-7cf3-9bfa-aa44f25f055b: ENDING80134D20 func80135F4C only, no extra agents.
-- Astra stopped after EVENT T24023 match. TEL/MAIN7132C/GEKO42C9C reservations are inactive until explicit reassignment.
+- Sol6.1 chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: sole existing medium worker active on T24073 ETC func8014407C in80143240.c. Fresh typed record baseline replaces the old compile-error draft. Coordinator does no duplicate probe work.
+- Sol6.1 chat01a1410a-cead-7cf3-9bfa-aa44f25f055b: idle after unresolved T24047 ENDING35F4C archive.
+- Astra idle after bounded read-only T24072 advice; its one pointer control was object-identical and rejected. T24067/68/70/71/72 are unresolved In Review, production assembly. TEL/MAIN7132C/GEKO42C9C reservations are inactive until explicit reassignment.
 - All three root subagents stopped after saving T24061/T24063 archives and T24062 mixer match. Do not restart automatically.
 
 Contributor exclusions NAME_ENT/TT and DATE2 continue. Existing30-minute read-only contributor heartbeat stays ACTIVE; unchanged checks remain quiet. No contributor messages authorized. Old integration automation remains paused.
