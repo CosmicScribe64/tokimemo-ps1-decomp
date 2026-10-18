@@ -18395,3 +18395,6 @@ The pointer-plus-empty-test form fills the original load delay and aligns all 1,
 ## [2026-10-17] build | Cross 80 percent verified game-code bytes
 
 Published TAIIKU func_80137EA8 (692 bytes) and RPG_BAT func_80139510 (2424 bytes) after independent default linked proofs, all 27 hashes and guards. Docker progress: 6475/6958 functions, 1823596/2279368 bytes (80.0%). The 100% goal remains active; 455772 bytes remain. Updated [[completion-run-2026-10-17]] and per-family review records. ENDING scheduling source-only archive also preserved on main without claiming C progress.
+## [2026-10-17] ticket | RPG_BAT battle package enters review
+
+[[tickets/T-24013-complete-rpg-bat]] ends with one verified function / 2,424 literal linked bytes, two unresolved source-only archives, and passing header/global/prototype checks (0 new, 15 known). Ticket/board moved to In Review for independent integration verification. Updated [[tickets/T-21001-recover-wave-10-list-6-near-misses]] with the recovered RPG_BAT half; its BUNKAKEN half stays open. Every loose experimental file is preserved under ignored build/T-24013-probes. See [[rpg-bat-family-results]].

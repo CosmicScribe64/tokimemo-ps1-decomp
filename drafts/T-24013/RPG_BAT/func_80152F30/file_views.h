@@ -1,0 +1,2 @@
+#define RPG_BAT_OVERRIDE_func_8013E7C0
+#define RPG_BAT_OVERRIDE_func_8013E97C
