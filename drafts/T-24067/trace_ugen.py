@@ -7,6 +7,9 @@ import subprocess
 import sys
 
 ROOT = Path('build/etc24067/ugen-state')
+PRIVATE_BINARY = ROOT / 'ugen-log'
+PRIVATE_SOURCE = ROOT / 'ugen-log.c'
+SOURCE = Path('build/etc24067/archive/continue/source.c')
 REFERENCE = Path('build/etc24067/ugen-reference/ugen.c')
 EXPECTED = '4079660f9ebb068a791c6f54abb67cf7c3bb792207c89a6eb9ac2d9e146341ec'
 
@@ -22,13 +25,15 @@ def generate():
     helper = r'''
 /* Native logging state only; no emulated-memory or allocator writes. */
 static void etc_copy_log(uint8_t *mem, const char *phase,
-                         uint32_t size, uint32_t src, uint32_t dst) {
+                         uint32_t size, uint32_t src, uint32_t dst, uint32_t frame) {
     if (size == 8 && src == 0x75e) {
-        fprintf(stderr, "ETC_COPY %s src=%x dst=%x free=%u/%u used=%u/%u fp-free=%u/%u\n",
+        fprintf(stderr, "ETC_COPY %s src=%x dst=%x free=%u/%u used=%u/%u fp-free=%u/%u slot232=%08x dest=%08x align=%u/%u\n",
                 phase, src, dst,
                 MEM_U8(0x10019da4), MEM_U8(0x10019da5),
                 MEM_U8(0x10019da8), MEM_U8(0x10019da9),
-                MEM_U8(0x10019dac), MEM_U8(0x10019dad));
+                MEM_U8(0x10019dac), MEM_U8(0x10019dad),
+                MEM_U32(frame + 232), MEM_U32(frame + 272),
+                MEM_U32(frame + 276), MEM_U32(frame + 280));
     }
 }
 '''
@@ -39,6 +44,9 @@ static void etc_copy_log(uint8_t *mem, const char *phase,
     for label, phase in [('L42a8e0', 'before-destination'),
                          ('L42a904', 'after-destination-before-source'),
                          ('L42a914', 'after-source'),
+                         ('L42a934', 'path-input'),
+                         ('L42a988', 'aligned-dummy'),
+                         ('L42a9e0', 'double-dummy'),
                          ('L42aa44', 'before-dummy'),
                          ('L42aa84', 'after-dummy'),
                          ('L42ab84', 'before-copy-selection'),
@@ -47,7 +55,7 @@ static void etc_copy_log(uint8_t *mem, const char *phase,
         if text.count(needle) != 1:
             raise SystemExit('label changed: ' + label)
         text = text.replace(needle, needle +
-            'etc_copy_log(mem, "' + phase + '", s1, s2, s3);\n')
+            'etc_copy_log(mem, "' + phase + '", s1, s2, s3, sp);\n')
     ROOT.mkdir(parents=True, exist_ok=True)
     output = ROOT / 'ugen-log.c'
     output.write_text(text)
@@ -61,7 +69,8 @@ static void etc_copy_log(uint8_t *mem, const char *phase,
 def compile_and_audit():
     sys.path.insert(0, 'tools')
     import cc
-    source = Path('build/etc24067/archive/continue/source.c')
+    source = SOURCE
+    ROOT.mkdir(parents=True, exist_ok=True)
     stock, logged = ROOT / 'stock.o', ROOT / 'logged.o'
     saved_env = cc.ido_frame_env
     cc.main(['cc.py', str(source), str(stock), 'ido', '5.3'])
@@ -72,7 +81,7 @@ def compile_and_audit():
         if not shim.is_symlink() or str(shim.readlink()) != '/opt/ido/5.3/ugen':
             raise RuntimeError('unexpected production ugen path')
         shim.unlink()
-        shim.symlink_to((ROOT / 'ugen-log').resolve())
+        shim.symlink_to(PRIVATE_BINARY.resolve())
         return env
 
     cc.ido_frame_env = environment
@@ -86,7 +95,7 @@ def compile_and_audit():
 def audit():
     sys.path.insert(0, 'tools')
     from trailing_pad import Elf
-    source = Path('build/etc24067/archive/continue/source.c')
+    source = SOURCE
     stock, logged = ROOT / 'stock.o', ROOT / 'logged.o'
     sections = {}
     a, b = Elf(stock.read_bytes()), Elf(logged.read_bytes())
@@ -98,7 +107,7 @@ def audit():
     if stock.read_bytes() != logged.read_bytes():
         raise SystemExit('whole object differs; do not trust logs')
     manifest = {str(path): digest(path) for path in [source, REFERENCE,
-        ROOT / 'ugen-log.c', ROOT / 'ugen-log', stock, logged]}
+        PRIVATE_SOURCE, PRIVATE_BINARY, stock, logged]}
     manifest['equal_sections'] = sections
     (ROOT / 'audit.json').write_text(json.dumps(manifest, indent=2) + '\n')
     print('PASS: same-input whole object and code/data/relocations identical.')
@@ -108,7 +117,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--compile-audit', action='store_true')
     parser.add_argument('--audit', action='store_true')
+    parser.add_argument('--variant', choices=['continue', 'store-control'], default='continue')
     args = parser.parse_args()
+    if args.variant == 'store-control':
+        if not (args.audit or args.compile_audit):
+            parser.error('generate the common private logger without --variant')
+        ROOT = ROOT / 'store-control'
+        SOURCE = Path('build/etc24067/archive/store-control/source.c')
     if args.audit:
         audit()
     elif args.compile_audit:
