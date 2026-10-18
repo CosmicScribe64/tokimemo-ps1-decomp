@@ -46,6 +46,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+- [ ] [[tickets/T-24002-complete-option|T-24002 Complete OPTION matching package]]
+
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 
 
