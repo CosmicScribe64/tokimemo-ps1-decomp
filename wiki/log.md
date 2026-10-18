@@ -18165,3 +18165,11 @@ Created `codex/complete-etc` from `4c5123f11`, reused local data and existing Do
 ## [2026-10-17] ticket | T-24012 dispatcher reviewed, remaining work resumes
 
 Independent Standards and Spec review axes both PASS with 0 actionable findings for frozen `a0675cafe604146244c5d762cd915467b41a46a2`; recorded in [[tickets/T-24012-etc-render-family]]. Reviewed source checkpoint preserved. Ticket/card returned to In Progress for the three pending ETC routines; full ticket is not Done.
+
+## [2026-10-17] decision | T-24012 preserve bounded remaining-target evidence
+
+No new verified bytes after the reviewed dispatcher. [[tickets/T-24012-etc-render-family]] and [[etc-family-results]] record source-only drafts in `drafts/T-24012/`: filter 217, quad 180, background selector 150 resolved diagnostic cost, all independently compiling and nonmatching. Captured frame/row-base, colour allocation and table-base-sharing blockers; stopped bounded probes without weakening types or adding guessed padding. Production source/header preserve `a0675cafe`; three targets remain pending, ticket In Progress.
+
+## [2026-10-17] ticket | T-24012 archive ready for review
+
+Moved [[tickets/T-24012-etc-render-family]] and its card to In Review for the source-only archive delta. Result is 1 of 4 targets verified, 1,280 bytes; three explicit blockers remain pending. No Done claim; coordinator handles review and next disposition.
