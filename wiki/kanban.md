@@ -48,7 +48,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24069-etc-menu-state|T-24069 Match ETC menu state machine]]
 
 
 
@@ -66,6 +65,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24069-etc-menu-state|T-24069 ETC menu state machine verified820B]]
 
 - [ ] [[tickets/T-24068-etc-album-interaction|T-24068 ETC album interaction unresolved48-row checkpoint]]
 

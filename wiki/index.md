@@ -37,7 +37,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
-- [[tickets/T-24069-etc-menu-state|T-24069]] ETC menu state machine, In Progress.
+- [[tickets/T-24069-etc-menu-state|T-24069]] ETC menu state machine, In Review;820 default linked C bytes verified.
 - [[tickets/T-24068-etc-album-interaction|T-24068]] ETC album interaction, In Review; unresolved48-row source-only packet, production assembly.
 - [[tickets/T-24067-etc-album-copy|T-24067]] single ETC album record copy, In Review; unresolved four-word draft, no C match.
 - [[tickets/T-24064-etc-count-trio|T-24064]] ETC model initialization loop verified252B, In Review; other former trio targets deferred or unresolved.
