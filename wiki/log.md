@@ -18221,3 +18221,31 @@ Created [[tickets/T-24004-complete-shougatu]] for five functions of src/ovl/SHOU
 ## [2026-10-17] build | Match SHOUGATU scene dispatcher
 
 [[tickets/T-24004-complete-shougatu]] recovered func_801430A0 (352 bytes) in src/ovl/SHOUGATU/80141780.c. Typed callback table, direct counter mutation and consistent record-base accesses reproduce the original allocation and store/load schedule; no FAKE needed. Default linked proof and SHOUGATU checksum pass. Details in [[shougatu-family-results]].
+
+## [2026-10-17] ticket | Reserve Astra hard-function lane
+
+Created [[tickets/T-24020-astra-hard-functions]] and children [[tickets/T-24021-dialogue-scheduling]], [[tickets/T-24022-tel-frame]], [[tickets/T-24023-event-handler]]. Exclusive files and isolated branch/base recorded in the coordinating ticket. Read [[build-step-gaps]] and prior dialogue experiments; new bounded call-path hypothesis avoids repeating line-grouping probes. Configuring existing Docker toolchain with APFS-cloned immutable disc data.
+
+## [2026-10-17] query | Dialogue call-path scheduling hypothesis exhausted
+
+[[tickets/T-24021-dialogue-scheduling]] tested six new block-order/shared-tail variants. None improves the baseline aligned cost 4 (historical printed rows: 16). Preserved replay script and results in drafts/T-24021. Production source unchanged. Dialogue moves to In Review for parent review; [[tickets/T-24022-tel-frame]] moves Ready to In Progress, beginning with the two month-normalization stores that suppress uopt global promotion in [[tickets/T-23001-w5-big-p01]].
+
+## [2026-10-17] query | TEL month range probes do not restore promotion
+
+[[tickets/T-24022-tel-frame]] recorded 23 serial full-TU compiles (including baseline). Conditional stores improve aligned cost but contradict original store placement; type views and bit-field grouping do not help. Source-only replay material saved in drafts/T-24022. Baseline TEL SHA1 passes; zero C progress. Move TEL to In Review; [[tickets/T-24023-event-handler]] moves Ready to In Progress. EVENT hypothesis: recover outer girl dispatch as a structured switch while retaining per-girl fallthrough and early-return semantics, then inspect range differences.
+
+## [2026-10-17] query | EVENT dispatch and byte-local evidence
+
+[[tickets/T-24023-event-handler]] records improved else-if control flow, the recovered stack-byte gap, rejected distinct-Boolean frame expansion, and allocator tracing with an existing diagnostic binary. No verified C progress. All experimental objects remain under ignored build/t24023; source-only checkpoint will preserve the useful alternatives and exact metrics.
+
+## [2026-10-17] lint | Correct experimental EVENT dispatch transformation
+
+Review found that [[tickets/T-24023-event-handler]]'s experimental else-if rewrite deleted nested common-tail jumps. Invalidated all dependent scores, corrected the transformer to remove only each arm's terminal jump, and added explicit preservation assertions. Rerunning before source checkpoint. Production files and verified coverage remain unchanged.
+
+## [2026-10-17] build | Verify and preserve hard-function checkpoint
+
+[[tickets/T-24020-astra-hard-functions]] and [[tickets/T-24023-event-handler]] move to In Review; dialogue and TEL already await review. Corrected EVENT source independently recompiles at aligned cost 214, 826 printed rows, 1712/1712 instructions; final body SHA256 recorded in drafts/T-24023/measurement.json. The saved source includes FAKE explanations and removes its unused scalar. Production src/include/config/tools remain unchanged. Docker main/TEL/EVENT SHA1, headers, globals and prototype guard (0 new, 15 known) pass. No new matching C bytes or linked C proof claimed. Parent retains formal review and integration responsibility.
+
+## [2026-10-17] lint | Check research artifact scope and handoff
+
+Final checkpoint lint: 17 replay/inspection scripts parse in Docker; all recorded candidates compiled; four ticket statuses match their In Review cards. Independent hashes: main e823bd844a8f8fa4d05483b59c66bc54b8393b26, TEL d37c3ae6beb7ab361f39366b8274cde0f7c96b5c, EVENT ff7184d7e92b7aff372450ac3b8c2bdd42e55a5e. Added explicit draft/FAKE explanations to the rejected TEL alternative and removed a dead probe statement. Formal code-review gate remains pending; no ticket moved to Done.

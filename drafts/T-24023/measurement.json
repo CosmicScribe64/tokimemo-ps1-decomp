@@ -1,0 +1,10 @@
+{
+  "variant": "saved",
+  "aligned_cost": 214,
+  "printed_rows": 826,
+  "expected_instructions": 1712,
+  "draft_instructions": 1712,
+  "body_sha256": "1f9869534fbea7468bb3d20ec271c68ffa805b738cdab16f36550417d3af636b",
+  "matching_claim": false,
+  "coverage_bytes_added": 0
+}
