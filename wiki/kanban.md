@@ -56,6 +56,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24008-taiiku-runners|T-24008 Recover TAIIKU runner family]]
 - [ ] [[tickets/T-24014-taco-pre-closer|T-24014 Close TACO PRE operand order]]
 - [ ] [[tickets/T-24009-ending-scheduler-closer|T-24009 Close ENDING scheduler residue]]
+- [ ] [[tickets/T-24027-rpg-bat-state-machines|T-24027 RPG_BAT state-machine completion]]
 - [ ] [[tickets/T-24019-gyozi-sibling-ports|T-24019 GYOZI sibling completion ports]]
 - [ ] [[tickets/T-24015-complete-main-menu|T-24015 Complete MAIN menu family package]]
 - [ ] [[tickets/T-24013-complete-rpg-bat|T-24013 Complete RPG_BAT battle family package]]

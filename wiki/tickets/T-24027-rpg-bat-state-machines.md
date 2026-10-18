@@ -1,0 +1,42 @@
+---
+id: T-24027
+title: RPG_BAT state-machine completion
+status: In Review
+assignee: Codex
+created: 2026-10-17
+updated: 2026-10-17
+links: ["[[rpg-bat-family-results]]"]
+---
+
+## Goal
+
+Bounded current-type reconstruction of func_80154DD8, func_80154760 and func_8015528C in src/ovl/RPG_BAT/80154430.c. Other files remain unchanged.
+
+## Acceptance criteria
+
+- [x] Default literal linked C proof without target INCLUDE_ASM and affected RPG_BAT checksum for every match.
+- [x] Preserve useful source drafts and provenance for unresolved functions.
+- [x] Header/global/prototype checks pass.
+- [ ] Independent review.
+
+## Notes
+
+Read wiki index, RPG_BAT family, T-17100, T-17106 and related matched sibling recipes. Earlier evidence: inner selector scalar-address view may fix v0/v1, direct aggregate updates affect allocation; 54760 has unresolved post-loop index/address shape, 54DD8 quotient webs. Avoid repeating exhausted brute force. Docker only, one compiler/ninja-j1, bounded25min.
+
+## Verified batch 1
+
+func_80154760 matched1656 default linked bytes. Natural post-loop flag stores (record136 separately, for i=1..5) reproduce the original peeled loop and li s3,2; directly writing selected index D_8015EC70 fixes remaining index v0/v1 allocation. Existing implicit-int func_8013E97C override is required (without it85 rows); extra F0F4 override is unnecessary. Two FAKE marks retain known scalar selector-address view (T-17114) and unsigned palette constant (T-17106). Only header addition is the recovered function's s32 prototype. Actual target INCLUDE_ASM removed; default --resolve --version default --no-build proves1656 linked bytes; RPG_BAT checksum passes, SHA1 142d13e317aa7ae6def6a300085c38f645c19db6.
+
+Batch1 guard checks: headers OK, globals OK, prototype branch check0 new/15 known disagreements. Independent review pending.
+
+## Bounded final result
+
+One of three matched: func_80154760, 1656 literal default linked bytes. Win commit319f4b09e removes target ASM; other two remain ASM. No other production C file changed. Header adds only the recovered s32 prototype. Fresh affected RPG_BAT SHA1 is142d13e317aa7ae6def6a300085c38f645c19db6; default --resolve --version default --no-build proves1656 bytes. Headers/globals pass; prototype branch check0 new/15 known.
+
+The successful source uses D_8015EC70 directly rather than a selected-index local, and writes record136's flag separately followed by for(i=1;i<6;i++) for the remainder. IDO peels this into the original li s3,2/address block. The natural loop reduces current213/189 to26/22 rows/aligned; direct global index closes it to0. Only implicit-int func_8013E97C view is required (without it85 rows); a second F0F4 view is unnecessary. Selector-address view and unsigned palette1U are marked FAKE in production. These resolve the old T-17106 blockers without compiler changes.
+
+Unresolved forms:
+- func_80154DD8: repaired current aggregate fields EC5C/EC64 as RpgRec18 members; current baseline338/300, selector-address view326/288. Reversing the compound condition gives292/286 but changes its branch shape, so preserved separately, not promoted. Void with a proper forward declaration gives the same result; removing homes342/306; cached state338/302. Four inherited frame homes are explicitly FAKE. The old scalar draft's216-row historical result is not a current score. Remaining differences cover condition scheduling, constant webs, aggregate access allocation and quotient webs. No compiler-limitation claim.
+- func_8015528C: old compiling loop498/274 current; fresh natural bounds/clamp556/296, direct phase decrement506/298. Explicitly initializing the phase pointer before the loop304/248; meaningful shared work base and later i initialization302/246. Selected body retains that lead, with an unresolved cross-scalar work-array view marked FAKE. Broad division/control-flow/register differences remain; no near match. Its initial loop sentinel and interpolation calls preserve target semantics.
+
+Provenance: wiki/index, rpg-bat-family-results, T-17100, T-17106, T-17114 and current matched sibling C consulted first. Forms derive from those archives with fresh natural loop/global reconstructions, not unreviewed raw m2c promotion. Rejected signature, selector, pointer and loop hypotheses remain in ignored build/T-24027-probes/. No older archive was edited.

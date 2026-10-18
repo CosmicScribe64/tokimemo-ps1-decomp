@@ -18508,3 +18508,16 @@ Created [[tickets/T-24030-bunkasai-sibling-package]] before implementation. Reus
 ## [2026-10-17] build | T-24030 both BUNKASAI siblings verified
 
 [[tickets/T-24030-bunkasai-sibling-package]] and [[bunkasai-family-results]] record actual default C for func_80142700 (1,176 bytes), adding to func_80151364 (844): 2 of 2, 2,020 bytes. Typed loops plus void callee view and sibling's marked FAKE store-order view resolve the second target; necessary overlay-header additions reported first. No main API change. Final joint default proof/checksum and guards recorded; exact pre-existing body audit and source-only provenance preserved. [[matching-notes]] supersedes T-22012's old two-lui blocker. Ticket/card moved to In Review for coordinator review/integration.
+
+## [2026-10-17] ticket | T-24027 RPG_BAT state-machine completion
+
+Created [[tickets/T-24027-rpg-bat-state-machines]] In Progress for three exclusive functions in80154430.c. Read [[rpg-bat-family-results]], T-17100 and T-17106 before reconstruction; retain prior negatives and use current aggregates/sibling recipes.
+
+## [2026-10-17] build | T-24027 RPG_BAT state-machine match
+
+[[tickets/T-24027-rpg-bat-state-machines]] verifies func_80154760 as1656 default linked bytes. Direct selected-index global and natural remaining-flag loop resolve the old shape blocker. Two existing recipe FAKE sites marked; required implicit-int callee view retained. RPG_BAT SHA1 passes; literal default no-build proof matches. Updated [[rpg-bat-family-results]].
+
+
+## [2026-10-17] decision | T-24027 state-machine package in review
+
+[[tickets/T-24027-rpg-bat-state-machines]] moves to In Review with one of three matched (1656 bytes). Remaining aggregate/quotient and geometry-loop allocation blockers recorded in [[rpg-bat-family-results]]; source-only forms and scorer archived in drafts/T-24027/. All loose experiments preserved in ignored build/T-24027-probes/. Production unchanged since verified win319f4b09e. Independent review pending.

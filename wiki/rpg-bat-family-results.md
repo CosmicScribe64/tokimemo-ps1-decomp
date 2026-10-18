@@ -161,3 +161,9 @@ updates worsen it. No experimental views or homes were added to production for t
 functions. Source-only drafts and exact attempts are in drafts/T-24013/README.md;
 all loose diagnostics are preserved in ignored build/T-24013-probes. Final
 header/global/prototype checks pass (0 new, 15 known prototype disagreements).
+
+## T-24027 state-machine completion
+
+func_80154760 matched1656 default linked bytes: use D_8015EC70 directly for selected record index, then record136's flag separately and for(i=1;i<6;i++) for the remaining flags. IDO peels/unrolls this to the previously unexplained li s3,2 and unfolded pointer block, so the T-17106 loop-shape blocker is resolved. Implicit-int func_8013E97C view remains necessary; F0F4 override is not. Known selector-address view and unsigned palette constant are explicitly FAKE. A minimal s32 prototype is added. Target ASM removed, default literal no-build proof and RPG_BAT checksum pass. See [[tickets/T-24027-rpg-bat-state-machines]].
+
+T-24027 final bounded outcome: one of three matched (1656 bytes). Two current-type source forms remain ASM: 54DD8 selector view326 rows/288 aligned (condition-order alternate292/286), 5528C explicit phase pointer plus shared work base302/246 from498/274. Historic scalar scores are not current measurements. Source-only forms and concrete blockers are preserved in drafts/T-24027/; every loose experiment retained ignored in build/T-24027-probes/. Ticket In Review.
