@@ -44,6 +44,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-23000-wave-5-big-conveyor|T-23000]] Wave 5 biggest-first conveyor alongside wave 4 (In Progress).
 - [[tickets/T-23001-w5-big-p01|T-23001]] Wave 5 big package w5-big-p01: TEL `80132000.c`, `func_80136724` (7,044 B) and `func_80134FE4` (800 B) both back to `INCLUDE_ASM`; frame rule for many locals, `func_80134FE4` structurally equal with 140 register rows (Done; 0 of 2 matched).
 - [[tickets/T-23002-w5-big-p02|T-23002]] Wave 5 big package w5-big-p02: ENDING `801396E0.c`, `func_8013A2E8` (4,648 B) from 1,667 rows to a 12-line guard; `func_8013B640` is `s32` (Done; 0 of 1 matched).
+- [[tickets/T-22030-w4-p30|T-22030]] Wave 4 package w4-p30: RENSYU `80132040.c`; `func_80133628` guarded at 4 rows (21 before; `s32 girl`, truthiness test, pre-increment; In Review; 0 of 4 matched).
 - [[tickets/T-22028-w4-p28|T-22028]] Wave 4 package w4-p28: ENDING `80133030.c` and `80137340.c`; `func_80137BB4` guarded at 23 rows (`u32` word copy, 58 before), `func_80137E40` at 32 rows (Done; 0 of 5 matched).
 - [[tickets/T-22025-w4-p25|T-22025]] Wave 4 package w4-p25: TACO `80149F90.c` and `8015ABF0.c`, `func_801511C0` (5 rows), `func_8014F5F0` (6), `func_8014A480` (1, closer 2), `func_8015B1B8` (8) stay guarded with refreshed notes, `func_8014F820` not started (Done; 0 of 5 matched).
 - [[tickets/T-22027-w4-p27|T-22027]] Wave 4 package w4-p27: GEKO `801338F0.c`: `func_80133AA0` guarded (8 rows, operand order of the compares against the shared constant 1), `func_80133C50` stays `INCLUDE_ASM`; in review.

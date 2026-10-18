@@ -18094,3 +18094,15 @@ Started [[tickets/T-22027-w4-p27]] (wave 4 package w4-p27, branch `w4-p27` from 
 ## [2026-10-17] ticket | T-22027 Done
 
 [[tickets/T-22027-w4-p27]]: 0 of the list matched; func_80133AA0 guarded at 8 rows, func_80133C50 back to INCLUDE_ASM. Merged after the conveyors stopped at the usage limit.
+
+## [2026-10-17] ticket | T-22030 In Progress
+
+Wave 4 package w4-p30 started on branch `w4-p30` from `w2-good`: RENSYU `src/ovl/RENSYU/80132040.c`, four functions. [[tickets/T-22030-w4-p30]], [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] ticket | T-22030 In Progress to In Review
+
+0 of 4 matched: `func_80133628` guarded at 4 rows (21 before), `func_80133990` tried and restored to `INCLUDE_ASM`, two functions not started. Section in [[matching-notes]]. [[tickets/T-22030-w4-p30]]
+
+## [2026-10-17] ticket | T-22030 Done
+
+[[tickets/T-22030-w4-p30]]: 0 matched; func_80133628 guard down to 4 rows. Merged after the conveyors stopped at the usage limit.
