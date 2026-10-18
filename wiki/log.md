@@ -18941,3 +18941,10 @@ Created [[tickets/T-24057-ending-small-pair]] before source work and started cod
 ## [2026-10-18] ticket | T-24057 paired ENDING scheduling leads archived
 
 [[tickets/T-24057-ending-small-pair]] moves with its board card to In Review. [[ending-family-results]] records zero new C matches and two real-record leads at diagnostic cost 4 / 12 positional rows, exact 0x30 frames. `drafts/T-24057/` retains source, tagged byte-promotion provenance, safe full-TU replay and concrete early fade-load scheduling blocker. Terminal C2C flag ordering is fixed through its real aggregate; bounded source/callee controls are recorded. Production src/include/config and every other function remain unchanged, with no extra header/config scope.
+## [2026-10-18] ticket | SHUGAKU short-selector reconstruction
+
+Created [[tickets/T-24060-shugaku-short-selectors]] after reading [[shugaku-family-results]], old T-14500/T-18000 sources and T-10310 selector evidence. Own src/ovl/SHUGAKU/80138A60.c only; current types and bounded local/control-flow hypotheses, no header change yet.
+
+## [2026-10-18] decision | SHUGAKU short source corrections retained
+
+[[tickets/T-24060-shugaku-short-selectors]] moves to In Review with zero matches, production/header/config unchanged. [[shugaku-family-results]] records phase52/52 after repairing a phantom callee argument, and selector62/58 with meaningful shared-byte lifetime; old58-row context not surpassed. Valid structured source/reproducer saved; all loose diagnostics ignored. Baseline unit checksum passes, no default ASM coverage claim or compiler impossibility assertion.

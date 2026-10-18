@@ -56,6 +56,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24060-shugaku-short-selectors|T-24060 SHUGAKU short selectors]]
 - [ ] [[tickets/T-24055-etc-short-helpers|T-24055 ETC short helpers]]
 - [ ] [[tickets/T-24053-short-function-lane|T-24053 Recover three short functions]]
 - [ ] [[tickets/T-24058-short-pair-count|T-24058 Close short SHOUGATU GYOZI pair]]
