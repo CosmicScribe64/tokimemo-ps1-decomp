@@ -1,7 +1,7 @@
 ---
 id: T-24052
 title: Match SHOUGATU dialogue siblings
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -31,3 +31,7 @@ First488-byte sibling independently reviewed against CODING_STANDARDS.md and pub
 func_801333F0 also matches as actual unguarded normal default C:544 linked bytes, no fallback. Plain halfword selector self-stores survive this target compiler and match; compound no-ops, unsigned views, locals, volatile stores and assignment predicates did not. Both unchanged halfword stores are marked FAKE/T-24052; the inherited unchanged-byte store remains marked. No volatile access or custom compiler behavior in accepted source.
 
 Fresh Docker ninja -j1 compiled the actual TU, linked SHOUGATU and passed checksum/headers. Both literal default resolved proofs rerun: func_801333F0 MATCH544 and func_80133208 MATCH488, total1032 new C bytes in this ticket. No header/config changes. Source-only bodies and bounded negative ledger in drafts/T-24052/README.md. In Review for root review/integration; no push/merge.
+
+## Root final review
+
+Second544-byte handler reviewed against CODING_STANDARDS.md: C89, canonical fields, no headers/config/compiler changes; both unchanged halfword stores explicitly FAKE and justified by target compiler/negative controls. Independent Docker all27 checksums, header/global/prototype guards and actual-C gates passed; literal default MATCH544 and488. Published44ab1ad82. Both ticket targets verified, no open findings; moved In Review to Done.

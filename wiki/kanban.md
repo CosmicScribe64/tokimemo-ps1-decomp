@@ -56,7 +56,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24052-shougatu-dialogue-siblings|T-24052 Match SHOUGATU dialogue siblings]]
 - [ ] [[tickets/T-24053-short-function-lane|T-24053 Recover three short functions]]
 - [ ] [[tickets/T-24050-geko-scene-near-match|T-24050 Close GEKO scene setup near match]]
 - [ ] [[tickets/T-24046-screen-page-renderer|T-24046 Recover the MAIN screen page renderer]]
@@ -98,6 +97,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24052-shougatu-dialogue-siblings|T-24052 Match SHOUGATU dialogue siblings]]
 - [ ] [[tickets/T-24045-tel-profile-screen|T-24045 Recover TEL profile screen from retained near miss]]
 - [ ] [[tickets/T-24038-etc-master-siblings|T-24038 Recover ETC renderer and MASTER sibling handlers]]
 - [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Investigate dialogue argument scheduling]]
