@@ -18879,3 +18879,66 @@ range priority/cost data and aborts at ecvt. regdiff confirms the instrumented
 allocator is unavailable in the container. The coordinating lane previously
 found no host trace binary and requested no rebuild here. Record that diagnostic
 runtime as the next dependency; no compiler changes or new verified bytes.
+
+## [2026-10-18] ticket | Repair ENDING allocator diagnostic prerequisite
+
+[[tickets/T-24047-ending-sprite-scene]] returns to In Progress after coordinating
+authorization for a bounded15-minute Docker rebuild of the documented tracer.
+No reusable source found in research/acceleration trees or user cache. External
+scratch /private/tmp/t24047-uopt, pinned revision and existing patches only;
+verify stock instruction equality before diagnostic use. Checkpoint4428f8789 saved.
+
+## [2026-10-18] build | Pinned ENDING diagnostic source verified
+
+[[tickets/T-24047-ending-sprite-scene]] generated uopt source matches the
+documented SHA256, ecvt patch applies with zero fuzz, and setup/generation uses
+56MB. Serial bounded Docker compilation of only the diagnostic allocator begins;
+no production compiler changes.
+
+## [2026-10-18] build | ENDING allocator tracer repaired and fidelity verified
+
+[[tickets/T-24047-ending-sprite-scene]] diagnostic rebuild succeeds in about3
+minutes,62MB external scratch. Patched and traced allocators reproduce stock
+code/data/relocation section inventories and bytes; target equals the preferred
+804-instruction checkpoint. Native diagnostic completes successfully. Detailed
+allocation analysis resumes with no production compiler changes.
+
+## [2026-10-18] ingest | Reusable ENDING allocator tracer and exact tie evidence
+
+[[ending-allocator-trace]] records external paths, pinned source/hash, exact
+Docker build/use/fidelity commands and the reusable verifier in
+drafts/T-24047/trace_fidelity.py. regdiff confirms both constants have priority5
+and cost0; first-use bit order528/529 gives the swapped colours. No compiler
+decision change or coverage gain. [[index]] links the new page.
+
+## [2026-10-18] query | ENDING scratch lifetime hypotheses measured
+
+[[tickets/T-24047-ending-sprite-scene]] confirms CFE does not reuse table stack
+homes across lexical blocks. Early UV local/table-slot forms worsen output.
+Union-member copying changes aligned stores to swl/swr; whole-union copy is
+the next control. Preferred source remains unchanged, zero new bytes.
+
+## [2026-10-18] query | ENDING constant order coupled to quotient priority
+
+[[tickets/T-24047-ending-sprite-scene]] whole-union control matches the preferred
+checkpoint but early UV forms worsen. Tracing the minimal UV/palette reorder
+shows why: constant order flips, while quotient priority drops15 to10 and its
+colour changes v1 to a0, shifting the grid constants and temporary pool. Test
+only a direct late quotient spelling next; no production changes retained.
+
+## [2026-10-18] query | ENDING constant-register tie closed in source lead
+
+[[tickets/T-24047-ending-sprite-scene]] direct late quotient spelling restores
+allocation after moving UV first. New closer804/cost37 fixes all four constant
+words; one zero store is early and default-arm LUI motion remains. Preserve
+drafts/T-24047/closer.c and --body replay support; production remains guarded at
+the reviewed checkpoint. [[ending-family-results]] and [[ending-allocator-trace]]
+record evidence and reusable diagnostics. Zero new verified bytes.
+
+## [2026-10-18] build | ENDING reusable tracer checkpoint validated
+
+[[tickets/T-24047-ending-sprite-scene]] default replay remains804/cost43 and
+archived closer reproduces804/cost37 with --body. Retained fidelity verifier
+reproduces stock code/data/relocations across both diagnostic binaries. Scope
+and standards review finds no production changes or open findings in the helper;
+all diagnostic outputs remain ignored/external. Task stays In Progress.

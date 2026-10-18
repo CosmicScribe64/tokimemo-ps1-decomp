@@ -36,6 +36,7 @@ Read this first. Update on every ingest or new page.
 - [[bunkasai-family-results]] - BUNKASAI type map (name, text and per-girl tables), the implicit-int v0/v1 fix of the BUNKAKEN port, the types-first redraft and its numbers, packages (T-18700)
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
+- [[ending-allocator-trace]] - reusable external T-24047 allocator tracer, exact rebuild/fidelity commands and measured constant tie.
 
 ## Tickets
 - [[tickets/T-24040-option-menu-siblings|T-24040]] two of three matched (1028 bytes), selector guarded at5 rows; In Review.

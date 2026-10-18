@@ -50,6 +50,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24047-ending-sprite-scene|T-24047 ENDING sprite scene initializer]]
+
 
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
@@ -57,7 +59,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24047-ending-sprite-scene|T-24047 ENDING sprite scene initializer]]
 
 - [ ] [[tickets/T-24041-main-render-cd-siblings|T-24041 Recover MAIN renderer and CD dispatcher]]
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]

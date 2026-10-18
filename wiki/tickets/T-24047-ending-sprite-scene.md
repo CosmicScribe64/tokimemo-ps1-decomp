@@ -1,7 +1,7 @@
 ---
 id: T-24047
 title: Recover ENDING sprite scene initializer
-status: In Review
+status: In Progress
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -148,18 +148,64 @@ prologue, so it offers no empty-stall counterexample to AS1 cross-block motion.
 Private preprocessed-TU views of func_80132000 as implicit-int or unprototyped
 void are also neutral804/cost43; shared declarations remain unchanged.
 
-## Current dependency
+## Diagnostic prerequisite history
 
-The next grounded allocator investigation needs the instrumented uopt from
+The allocator investigation initially needed the instrumented uopt from
 [[uopt-register-allocation]] to expose priorities, costs and forbidden colours.
 Stock listings expose assignments but not those inputs and abort at the ecvt
 stub; regdiff confirms its traced binary is not available in this container.
 The coordinating lane previously found no existing host trace binary and asked
 that it not be rebuilt in this source lane. No compiler rebuild was attempted.
-That diagnostic runtime is the concrete dependency for further allocation work.
+That diagnostic runtime was the dependency for further allocation work; it is
+now repaired below and documented in [[ending-allocator-trace]].
 
 Eleven additional source scores are archived, all negative. The production
 source and preferred replay body remain exactly b0111332c. Scope/standards
 review finds no new production changes or findings. Ticket returns to In Review
 with unchanged804/805 instructions/cost43, zero new verified bytes, and all
 previous normal-build validation still applicable.
+
+2026-10-18 prerequisite repair: coordinating lane now authorizes a bounded
+15-minute rebuild of only the documented instrumented uopt in external scratch.
+Checkpoint4428f8789 preserves the preceding evidence. No reusable source found
+in the existing research/acceleration trees or user cache. Use pinned revision,
+source hash and existing ecvt/trace patches in Docker; verify stock output before
+using diagnostics. No production compiler or headers will change.
+
+Pinned reconstruction fetched successfully; generated5.3/uopt.c SHA256 exactly
+matches b0058f1559441c1a194d649271eb43b8637ec255682cfdd629031340b915b13f.
+The existing ecvt patch applies with zero fuzz. Setup/generation uses56MB and
+serial Docker build proceeds within the15-minute bound. This repairs the
+diagnostic prerequisite only; all production compiler binaries remain unchanged.
+
+Diagnostic prerequisite repaired in about3 minutes,62MB external scratch. The
+patched baseline and instrumented allocator both reproduce stock .text,
+.rel.text, .rodata and .rel.rodata bytes and section inventories exactly on the
+complete preferred TU. Target resolved words also equal the804-instruction
+checkpoint. Native trace now exits successfully. Use
+/private/tmp/t24047-uopt/variants/trace mounted as /scratch/variants/trace;
+no production toolchain changes. Detailed allocator diagnosis can continue.
+
+regdiff confirms a true tie:499 range528 and128 range529 each have priority5,
+cheapest cost0; ascending bit order chooses a3/t0. Separate lexical scopes do
+not reuse CFE stack homes: an unused UV local alone expands frame160 to168
+(804/cost55), and early computed UV worsens to802/cost639. Reusing a table
+halfword produces805/cost632. A union-member table copy preserves the frame but
+changes aligned stores to swl/swr (811/cost66); inspect whole-union copying
+before using that alternate storage. No production changes retained.
+
+Whole-union copy restores the exact checkpoint (804/cost43), but early UV
+computation still worsens it (802/cost633); byte scratch worsens to811/cost668.
+Moving the UV store immediately before palette is803/cost636. The new tracer
+explains the coupled regression: constant first-use order does flip, but the
+quotient loses a counted use, dropping priority15 to10 and allocation v1 to a0.
+That shifts all grid constants one colour higher (128 t0,499 t1) and reserves
+another temporary register across the function. A direct late quotient spelling
+is the next narrowly targeted use-count probe, not a compiler tie-break change.
+
+The direct late quotient probe improves804/cost37: it fixes all four constant
+words while preserving the frame and temporary pool. Remaining loop difference
+is one zero-halfword store issued early; default-arm speculative LUIs and
+branch-offset cascade remain. Preserve as drafts/T-24047/closer.c, replay with
+--body; production guarded body remains unchanged pending closure. Tracer recipe,
+fidelity verifier and all91 source measurements are checkpointed for reuse.
