@@ -18820,3 +18820,14 @@ Current-view reconstruction of func_801480D0 compiles at885 rows,709 versus702 t
 ## [2026-10-18] ingest | ETC corrected draft retained and worker continued
 
 Published T24049 source-only archive b57b6e50b; production/header unchanged and no new verified bytes. Current types, signed random divisors and target eleven-record bonus bound replace obsolete draft errors. Continued worker on disjoint SHOUGATU sibling pair T24052, recorded in [[completion-run-2026-10-17]]. Live ENDING chat reports concrete source recovery at114 aligned edits; still unmatched.
+## [2026-10-18] ticket | MASTER animation reconstruction
+
+Created [[tickets/T-24048-master-animation]], claimed only src/ovl/MASTER/80133680.c and read [[master-family-results]], current main [[completion-run-2026-10-17]], T-9960/T-10630/T-18600 prior evidence. No source or header change yet.
+
+## [2026-10-18] decision | MASTER animation source lead retained
+
+[[tickets/T-24048-master-animation]] moves to In Review with zero C matches. Fresh475-row control and bounded type/control-flow/lifetime forms yield434/428 readable source;72-versus64 frame, clone-bound hoisting and copy temporary rotation remain. [[master-family-results]] records the distinction from historical unavailable350-row scratch evidence. Production source/header/config unchanged; source-only archives and reproducer retained, instruction diagnostics remain ignored.
+
+## [2026-10-18] build | MASTER source-only checkpoint guards
+
+[[tickets/T-24048-master-animation]] baseline unit checksum passes (`7303c196a7a2fd8423da1e66e5a49511e9805bbc`), header/global checks pass and prototype branch check has0 new/15 known disagreements. Final saved-source reproducer compiles434/428. No actual C promotion or default ASM fallback coverage claim.
