@@ -1,8 +1,8 @@
-#define MAIN_API_OVERRIDE_func_8004A8EC /* matched with void(s32) (main_api.h: void(u8)) */
+#define MAIN_API_OVERRIDE_func_8004A8EC /* matched with s32(s32) (main_api.h: void(u8)); the s32 return fixes func_80118010 registers, T-22024 */
 #include "common.h"
 #include "ovl/EVENT.h"
 
-void func_8004A8EC(s32 arg0);
+s32 func_8004A8EC(s32 arg0);
 
 void func_8010FE10(void) {
     D_801251D0 = 0x801A427C;
@@ -916,7 +916,12 @@ void func_80114948(void) {
 
 /* NON_MATCHING: T-10330, T-11600, 4 differing lines: base registers of D_80124394/D_8012439C swapped (t1/t2). regdiff: both
  * hoisted addresses have priority 2.5 and D_8012439C, used first by `v = *r`, is coloured first; v = *p = *r, *p = *r; v = *p,
- * array views and statement orders did not reverse it. The u8 copy of D_800B0F2C fixed the bne order (autotweak). */
+ * array views and statement orders did not reverse it. The u8 copy of D_800B0F2C fixed the bne order (autotweak).
+ * T-22024: the DATE twin's form (`(&D_80124394)[i] = (&D_8012439C)[i]`, no temporary) puts the bases in the right order, but
+ * stores through `(&D)[i]` or `*(&D + i)` have a known base, so the D_800B0F2C load moves out of the loop (62 lines). The
+ * original reloads it every pass, so its stores go through pointers set inside the loop. Only q as such a pointer: right
+ * bases and the reload, but i * 2 is computed twice (59 lines). Pointers set before the loop, an s32 v, p = r - 4 and
+ * `*p = *r; v = *p` did not help. */
 #ifdef NON_MATCHING
 void func_80114B0C(void) {
     u8 sel;
@@ -1939,7 +1944,48 @@ void func_80117D80(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118010);
+void func_80118010(void) {
+    EventStateView *g;
+    s16 sp32;
+    u8 temp_v0;
+
+    g = (EventStateView *)D_800B0860;
+    temp_v0 = func_8002328C(g->unk_EE6);
+    if (((EventMovieState *)&D_800B1AF0)->unk_09++ == 0) {
+        D_80124354 = (((temp_v0 & 0x7F) >= 2U) + ((temp_v0 & 0x7F) >= 3U) + ((temp_v0 & 0x7F) >= 4U)) * 3;
+    }
+    sp32 = (&D_801243A4)[D_800EECBC] + D_80124354;
+    if (g->unk_6E5 != 0) {
+        sp32 = 0xA;
+    }
+    if ((g->unk_6E5 != 0) && ((u32) (temp_v0 & 0x7F) < 2U) && (g->unk_EE6 == 6)) {
+        sp32 = 0x12;
+    } else if ((D_800EECE4 >= 0) && (D_800EECE4 == g->unk_6D5[g->unk_EE6]) && (((EventMovieState *)&D_800B1AF0)->pad04 == 0x50) && ((u8) D_80125310 == 0)) {
+        sp32 = 0xB;
+        if ((g->unk_6E5 != 0) && ((u32) (temp_v0 & 0x7F) < 2U) && (g->unk_EE6 == 6)) {
+            sp32 = 0x13;
+        }
+        if (((EventMovieState *)&D_800B1AF0)->unk_09 == 1) {
+            func_8004A8EC(3);
+            g->unk_1A4[g->unk_EE6].unk_02 -= 1;
+            g->unk_1A4[g->unk_EE6].unk_06 -= 2;
+            g->unk_1A4[g->unk_EE6].unk_0A += 5;
+            func_8004C250();
+            func_80033E88();
+        }
+    }
+    D_8009471C = (u8 *) &sp32;
+    D_80094720 = &D_80124358;
+    temp_v0 = func_8002328C(g->unk_EE6);
+    if ((g->unk_EE6 == 1) && ((temp_v0 & 0x7F) < 2U) && (*(s16 *)&D_80124358 == 3)) {
+        func_8004A8EC(1);
+        func_80033E88();
+    }
+    D_80094724 = D_80124258;
+    D_80094728 = D_801242C4;
+    D_8009472C = D_80124330;
+    func_80049B20(D_800EECBC, 1, 0);
+}
 
 s32 func_801182B8(void) {
     u8 x;
@@ -2061,7 +2107,11 @@ void func_80118848(void) {
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-11110, T-11600, 8 lines: chained halfword store scheduling and $v0 vs $t6 for third chain (regdiff: the
    original's third 3 is a uopt colour, the draft's a ugen temporary); separate stores, chain orders, one-line chains and an
-   s16/s32/u8 local for the constant did not reach it. */
+   s16/s32/u8 local for the constant did not reach it.
+   T-22024: the innermost store of each chain is written last. Splitting the 2 chain gives the original store order exactly:
+   `(&D_8012439C)[0] = (&D_8012439C)[3] = 2;`, the D_8012438C chain, `(&D_801243A4)[0] = (&D_8012439C)[2] = (&D_8012439C)[3];`,
+   the D_80124394 chain. The re-read (&D_8012439C)[3] then holds 2 in $v1 and the 3s move to $t4/$t5 (13 register lines).
+   (s16)3, 3U, loops, and `(&D_80124394)[2] = 3;` followed by copies of it did not give the original's $v0. */
 void func_80118868(void) {
     if (D_800B1746 != 6) {
         func_80011DFC();
@@ -2747,7 +2797,49 @@ s32 func_8011A874(void) {
     return func_80045FF4();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011A8E4);
+void func_8011A8E4(void) {
+    s32 var_a1; /* declared above the tables: their stack slots sit 4 bytes lower (T-22024) */
+    U16x21 sp90;
+    U16x21 sp64;
+    U16x21 sp38;
+    s32 var_a2;
+
+    sp90 = D_80125454;
+    sp64 = D_80125480;
+    sp38 = D_801254AC;
+    var_a1 = 0xAF42;
+    var_a2 = 0xAF23;
+    if (D_801243B0 == 2) {
+        var_a1 = 0xB384;
+        var_a2 = 0xB381;
+    } else if (D_801243B0 == 0x11) {
+        var_a1 = 0xB3DA;
+        var_a2 = 0xB3CB;
+    } else if ((D_801243B0 == 1) || (D_801243B0 == 3)) {
+        var_a1 = 0xB163;
+        var_a2 = 0xB14D;
+    } else if ((D_801243B0 == 0xA) || (D_801243B0 == 9)) {
+        var_a1 = 0xB172;
+        var_a2 = 0xB165;
+    } else if (D_801243B0 == 0xC) {
+        var_a1 = 0xB444;
+        var_a2 = 0xB42F;
+    } else if ((D_801243B0 == 0x11) || (D_801243B0 == 0x10)) { /* the 0x11 half is dead; the original tests it twice */
+        var_a1 = 0xB3DA;
+        var_a2 = 0xB3CB;
+    } else if ((D_801243B0 == 0x14) || (D_801243B0 == 0x13)) {
+        var_a1 = 0xB41D;
+        var_a2 = 0xB410;
+    } else if (D_801243B0 == 8) {
+        var_a1 = 0xB054;
+        var_a2 = 0xB04A;
+    } else if (D_801243B0 == 7) {
+        var_a1 = 0xB304;
+        var_a2 = 0xB2EB;
+    }
+    func_800143DC(1, var_a1, var_a2, sp64.v[D_801243B0], sp38.v[D_801243B0], sp90.v[D_801243B0]);
+    func_80011DFC();
+}
 
 void func_8011AB00(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

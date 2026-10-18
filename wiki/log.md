@@ -18022,3 +18022,18 @@ Clean build 27/27 (all SHA1 OK), `check_headers` OK, `migrate_globals --check` O
 ## [2026-10-18] ticket | T-22028 Done
 
 Review against `CODING_STANDARDS.md`: no findings; only `src/ovl/ENDING/80137340.c` changed among C files, the other three claimed functions stay `INCLUDE_ASM`, guards carry `T-22028` and the one FAKE is marked. 0 of 5 matched. [[tickets/T-22028-w4-p28]] Done.
+## [2026-10-17] ticket | T-22024 In Progress
+
+Package w4-p24 started in worktree w4-p24 (branch from w2-good): five EVENT functions in `src/ovl/EVENT/8010FE10.c`. [[tickets/T-22024-w4-p24]], [[kanban]].
+
+## [2026-10-17] build | T-22024 EVENT results
+
+`func_80118010` matched (viewsweep: `func_8004A8EC` as `s32(s32)` in the file's override) and `func_8011A8E4` matched (plain if/else chain, `var_a1` above the stack tables); `func_8011C164` back to `INCLUDE_ASM` at 70 rows (draft in `drafts/T-22024/EVENT/func_8011C164/body.c`). Notes in [[matching-notes]]; source `src/ovl/EVENT/8010FE10.c`.
+
+## [2026-10-17] ticket | T-22024 In Review
+
+Work done, awaiting review against `CODING_STANDARDS.md`. [[tickets/T-22024-w4-p24]], [[kanban]].
+
+## [2026-10-18] ticket | T-22024 Done
+
+Review against `CODING_STANDARDS.md` found one small item (a redundant `(s16 *)` cast on `D_801243A4` in `func_80118010`), fixed; 2 of 5 matched (`func_80118010`, 680 bytes; `func_8011A8E4`, 540 bytes), `func_8011C164` stays `INCLUDE_ASM`, two guards unchanged. [[tickets/T-22024-w4-p24]], [[kanban]].
