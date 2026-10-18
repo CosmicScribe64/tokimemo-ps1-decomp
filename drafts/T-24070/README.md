@@ -60,3 +60,33 @@ The next precise question is why the first index range cannot choose v0.
 Existing unchanged allocator trace plus same-input whole-object fidelity may
 distinguish interference from priority before any new source hypothesis.
 The proposal uses the existing tracer without rebuilding or changing allocation.
+
+Parent approved the existing unchanged tracer for the 39-row input. Whole-object
+fidelity passes before interpreting the log, including .text12736,
+.rel.text8552, .rodata736 and .rel.rodata248. Input SHA256 is
+`73c73dcbc9e8f137a3caaff17210e08cb79005644c46e3a60058be18f0ad0f44`;
+whole object is `d597f00bf1b5f61de61d0245f98e27a7c928b75891768e4cd3be052f65eae61e`.
+Existing tracer source is pinned59767ece... as in T-24068; no binary is built.
+Mount /private/tmp/t24047-uopt read-only at /scratch in Docker:
+
+```
+python3 tools/uopt_eval.py compile build/etc24070/direct-caps/source.c build/etc24070/trace39/baseline.o --uopt /scratch/variants/trace --trace --jobs 1
+python3 drafts/T-24070/trace_fidelity.py
+```
+
+The synthetic first-mask local is bit16, priority3, chosen color1(v0).
+Retained index bit22 has priority1.5 and gets color2(v1). First address bit76
+and counter bit77 also have priority1.5, chosen colors3(a0)/4(a1).
+This matches the observed register rotation. The existing tracer reports best
+costs, not per-range forbidden masks, so it does not prove the complete reason
+the index cannot choose v0.
+
+One derived ordinary source form removes the synthetic first-mask local,
+loads the first byte through the masked expression, then captures the retained
+index. It gives105 rows. The expected mask scratch/copy returns, but index
+still gets v1 and a duplicate first-array address appears. Retaining an actual
+byte-element pointer gives110; it also changes the required +0x53C access into
+offset0 plus an extra addiu. Both are rejected and retained as
+inline-first-mask.c/inline-retained-address.c with replay variants. These
+results limit the priority explanation; removal of the named local alone does
+not establish v0 availability. Best remains39 with production unchanged.

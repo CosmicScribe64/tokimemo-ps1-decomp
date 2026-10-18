@@ -7,7 +7,9 @@ sys.path.insert(0, 'drafts/T-24011')
 from diagnostic import report
 
 variants = {'direct-caps': 'body.c', 'baseline': 'baseline-body.c',
-    'state-pointer': 'state-pointer.c', 'raw-index-capture': 'raw-index-capture.c'}
+    'state-pointer': 'state-pointer.c', 'raw-index-capture': 'raw-index-capture.c',
+    'inline-first-mask': 'inline-first-mask.c',
+    'inline-retained-address': 'inline-retained-address.c'}
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--variant', choices=variants, default='direct-caps')
 args = parser.parse_args()
