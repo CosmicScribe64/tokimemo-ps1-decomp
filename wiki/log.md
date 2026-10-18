@@ -18620,3 +18620,11 @@ Started [[tickets/T-24035-small-bunka-geko-siblings]] after reading T-12090/T-95
 
 ## [2026-10-18] build | Two small sibling matches verified as actual default C
 [[tickets/T-24035-small-bunka-geko-siblings]] matched GEKO func_80134228 (244 bytes) and BUNKA_SD func_801344A8 (152 bytes) from reviewed matched siblings. Removed their actual guards/fallbacks, rebuilt both units with Docker ninja -j1: headers and both checksums OK; literal default linked funcdiff MATCH for both. Retained/reticketed required FAKE reasons, no headers changed. Updated [[scenes-family-results]] and [[bunka-sd-family-results]]. Third target still in progress.
+
+## [2026-10-17] ticket | T-24034 EVENT rendering siblings
+
+Created [[tickets/T-24034-event-render-siblings]] In Progress after reading prior negatives and matched DATE renderer source.
+
+## [2026-10-17] build | T-24034 EVENT three sibling C wins
+
+[[tickets/T-24034-event-render-siblings]] moves to In Review: three unguarded C targets, 1,808 B, pass normal default literal proof and full EVENT checksum. [[event-family-results]] records promoted-argument and typed SDK renderer recipes plus inherited FAKE provenance. One notified main_api.h declaration added; no EVENT.h changes.

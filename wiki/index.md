@@ -672,3 +672,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24026-shougatu-sibling-ports]] — SHOUGATU sibling ports: 708 B verified C; dispatcher stack-layout near miss.
 
 - [[tickets/T-24029-seasonal-scene-siblings]] — source-only GYOZI/SHOUGATU typed scene checkpoints; no verified bytes.
+
+- [[tickets/T-24034-event-render-siblings]] — EVENT matched DATE sibling ports, 1,808 B verified C.
