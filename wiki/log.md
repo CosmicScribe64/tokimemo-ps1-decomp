@@ -19032,3 +19032,19 @@ Root completed read-only GitHub query at13:40UTC: no open PRs; only open claims
 #57 updated2026-10-17T22:16:21Z and #50 updated2026-10-17T15:45:07Z unchanged.
 No external messages sent; next check around14:10UTC. Recorded in
 [[completion-run-2026-10-17]]; no expansion of matching scope.
+
+## [2026-10-18] build | T24078 UV words and case-local lifetimes measured
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] record UVpair
+606cost/594words/frameA0 and case-local scope604/592/D0. Both rejected versus
+604/592/A0; no lexical-home reuse. Next check preserves case0 compound X
+association while removing only recovered Q11/P/R aliases from that arm.
+
+## [2026-10-18] decision | T24078 retain word-coordinate gain after three structural controls
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve
+wordUVpair606/594/A0, case-local604/592/D0 and case0compound635/593/A0 against
+retained604/592/A0. Source-only drafts/T-24078 now replays all12 variants.
+Original formulas agree; first DIV/MULTU order and early invariant height
+remain unexplained, not proof of impossibility or compiler limitation. Same
+sole worker/function active; no unsupported probes or production changes.
