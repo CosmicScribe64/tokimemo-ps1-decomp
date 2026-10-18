@@ -37,7 +37,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
-- [[tickets/T-24070-etc-save-card-state|T-24070]] ETC save-card state machine, In Progress.
+- [[tickets/T-24070-etc-save-card-state|T-24070]] ETC save-card state machine, unresolved/In Review;39-row source packet, production assembly.
 - [[tickets/T-24069-etc-menu-state|T-24069]] ETC menu state machine Done;820 default linked C bytes independently reviewed/published fd700bf3f.
 - [[tickets/T-24068-etc-album-interaction|T-24068]] ETC album interaction, In Review; unresolved48-row source-only packet, production assembly.
 - [[tickets/T-24067-etc-album-copy|T-24067]] single ETC album record copy, In Review; unresolved four-word draft, no C match.

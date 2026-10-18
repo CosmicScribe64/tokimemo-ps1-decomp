@@ -48,7 +48,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24070-etc-save-card-state|T-24070 Match ETC save-card state machine]]
 
 
 
@@ -67,6 +66,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24070-etc-save-card-state|T-24070 ETC save-card state unresolved39-row checkpoint]]
 
 
 - [ ] [[tickets/T-24068-etc-album-interaction|T-24068 ETC album interaction unresolved48-row checkpoint]]

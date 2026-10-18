@@ -125,3 +125,10 @@ Parent stops new probes/instrumentation while an existing Astra chat analyzes
 only this source read-only, without compiling, editing or spawning agents.
 The Sol scope stays reserved and the draft remains intact pending at most
 two concrete hypotheses. No new target is assigned.
+
+Astra's read-only analysis has completed without a supported untried source
+lead. The matched NAME_ENT case0 lacks both caps and cannot establish their
+allocation. Original t6 mask/indexv0 differs from the draft's common-maskv0;
+existing trace does not fully separate priority from interference. T-24070
+is unresolved/In Review, not Done or a compiler-impossibility claim. The39
+draft and negative controls are preserved; all44F74 tracing/probes stop.
