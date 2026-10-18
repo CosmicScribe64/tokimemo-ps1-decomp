@@ -18810,3 +18810,7 @@ Best166/frame38 and rejected post-increment241/frame40 remain source-only in
 drafts/T-24074; production ASM and all neighbors/interfaces unchanged. No
 match, Done status or impossibility claim. Further probes stopped; parent
 reviews the combined bounded handoff before any new target assignment.
+
+## [2026-10-18] ticket | Claim ETC random selection from current pointer-layout defect
+
+Created [[tickets/T-24075-etc-random-selection]] before edits on only func_8013C8EC in ETC/8013BEF0.c. Primary source/history confirms ASM/no later active claim; preserve verified neighbors. Old s32-pointer indexing scales target8-byte records incorrectly; validate original DIVU arms and current promotions with fresh full-TU baseline before further controls. Same sole Sol medium Docker compiler; no extra agents/instrumentation. Earlier43758 proposal withdrawn because primary T-24055 already fixed its claimed defect, avoiding repeated work.

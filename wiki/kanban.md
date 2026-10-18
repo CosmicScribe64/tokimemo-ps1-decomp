@@ -48,6 +48,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24075-etc-random-selection|T-24075 Recover ETC random selection]]
+
 
 
 
