@@ -18007,3 +18007,18 @@ Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` 
 ## [2026-10-18] ticket | T-23004 Done
 
 [[tickets/T-23004-w5-big-p04]]: code review against `CODING_STANDARDS.md` done, two small findings fixed (usage line of `drafts/T-23004/try.py`, minutes in [[matching-notes]]); no C source changed, both functions stay `INCLUDE_ASM`. 0 of 2 functions matched. Ticket Done, card moved to Done.
+## [2026-10-17] ticket | T-22028 In Progress
+
+Package w4-p28 started: ENDING `src/ovl/ENDING/80133030.c` and `src/ovl/ENDING/80137340.c`, five functions. [[tickets/T-22028-w4-p28]] In Progress, card in `wiki/kanban.md`.
+
+## [2026-10-17] ticket | T-22028 In Progress to In Review
+
+0 of 5 matched: `func_80137BB4` guarded at 23 rows, `func_80137E40` at 32 rows, `func_8013759C` back to `INCLUDE_ASM`, two functions not started. Section in [[matching-notes]]. [[tickets/T-22028-w4-p28]] In Review.
+
+## [2026-10-17] build | T-22028 final checks
+
+Clean build 27/27 (all SHA1 OK), `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK on `w4-p28`. [[tickets/T-22028-w4-p28]] stays In Review.
+
+## [2026-10-18] ticket | T-22028 Done
+
+Review against `CODING_STANDARDS.md`: no findings; only `src/ovl/ENDING/80137340.c` changed among C files, the other three claimed functions stay `INCLUDE_ASM`, guards carry `T-22028` and the one FAKE is marked. 0 of 5 matched. [[tickets/T-22028-w4-p28]] Done.
