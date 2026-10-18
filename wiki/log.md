@@ -18004,3 +18004,7 @@ Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` 
 ## [2026-10-17] ticket | T-22029 In Review
 
 [[tickets/T-22029-w4-p29]] moved to In Review (1 of 4 matched, one guard at 7 rows). Clean build and header checks recorded in the ticket.
+
+## [2026-10-17] ticket | T-22029 Done
+
+[[tickets/T-22029-w4-p29]]: 2 of 4 matched: ETC func_80146400 and func_80148BC8. Merged after the conveyors stopped at the usage limit.
