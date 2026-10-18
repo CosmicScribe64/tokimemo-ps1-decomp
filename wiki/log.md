@@ -18185,3 +18185,6 @@ Moved [[tickets/T-24011-date-dispatch-family]] and its [[kanban]] card to In Rev
 ## [2026-10-17] build | T-24011 resolve diagnostic failure reporting review finding
 
 Standards review found P2: drafts/T-24011/probe.py and stage.py ignored funcdiff return status and could report zero rows after tool failure. Added shared validated reporting and failure-contract checks; Docker tests pass (5 tests, 12 cases), real full-unit diagnostics remain 48/72, and stage passes twice consecutively at 11. The stage rerun also exposed an existing-listing IDO -S -o collision; removed the unnecessary output flag. [[tickets/T-24011-date-dispatch-family]] remains In Review; no source-body or production changes.
+
+## [2026-10-17] decision | DATE review failure-handling finding resolved
+Independent re-review of 2f7bd397b...5c14a3c40 passes Standards and Spec with zero remaining actionable findings. [[tickets/T-24011-date-dispatch-family]] records P2 resolved, five Docker tests covering twelve contracts, real full-unit diagnostics 48/72 and two stage reproductions at eleven edit rows. Production unchanged; no new C bytes or full-ticket completion claim.
