@@ -1,7 +1,7 @@
 ---
 id: T-24012
 title: Match assigned ETC rendering family
-status: In Review
+status: In Progress
 assignee: Codex ETC worker
 created: 2026-10-17
 updated: 2026-10-17
@@ -26,3 +26,7 @@ Setup: isolated `codex/complete-etc` worktree at `/private/tmp/tokimemo-complete
 Docker proof at `build/etc24012/final-proof.log`: `func_80136448: compared default build`; `MATCH (linked function bytes equal target (1280 bytes))`, from `tools/funcdiff.py --unit ETC --no-build --resolve --version default func_80136448` after `ninja -j1 build/ovl/ETC.ok`. `build/etc24012/final-build.log`: `build/ovl/ETC.bin: OK`. Guards: `header-guard.log` headers OK; `global-guard.log` globals OK; `proto-guard.log` 0 new / 15 known disagreements, branch check OK.
 
 The other three assigned routines remain on their original INCLUDE_ASM paths while bounded typed-source experiments continue. This checkpoint awaits the coordinator's required two-axis review; In Review does not claim all four functions matched.
+
+## Independent checkpoint review
+
+Coordinator reports the required two-axis review of frozen `a0675cafe604146244c5d762cd915467b41a46a2`: Standards PASS, 0 actionable findings (FAKE tagged, overlay declarations match existing void definitions, explicit 1,280-byte linked proof and ETC checksum); Spec PASS, 0 actionable findings (assigned scope and gates correct, three remaining targets explicitly pending). Reviewed source checkpoint is preserved without amendment. Ticket returned to In Progress for bounded work on the three remaining routines; this does not invalidate the accepted dispatcher checkpoint or claim the whole ticket Done.
