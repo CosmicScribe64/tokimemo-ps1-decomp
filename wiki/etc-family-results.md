@@ -381,3 +381,24 @@ T-24076 final handoff is unresolved In Review, best71/frame28/178words versus
 179 original. Production remains ASM, all source controls/replays and inline
 FAKE boundary/reload/return caveats preserved. No helper/header/config or
 neighbor changes, no matched/Done/impossibility claim. Further F054 probes stopped.
+
+Read correction before baseline: retained PLAIN165 already selects the actual
+D_8014DBF8[girl] row correctly; only typed archive has malformed whole-array
+arithmetic. No untried overall pair-indexing fix is claimed. Original full VRAM
+8013D118..8013D12C confirms eight-byte row/two words; B118 was ROM-offset shorthand.
+Fresh baseline uses actual fields, correct row pointer/columns and real Rec24
+flags64/65. Scratch-only actual one-word void E1DC/F320 forwards; no shared edit.
+
+Fresh current full-TU row-pointer baseline132/frame28. It exposes a necessary
+state-byte view: shared GameState.unk_110C is s8, so direct increments use LB,
+while original target reads all state values with LBU. Next exact u8 address
+view preserves original byte reads/writes without changing the shared header.
+
+Unsigned state view reaches122; direct-pair call and natural default are neutral
+122 and whole-object identical. Target-only s32 fallthrough126 rejected, no
+helper/caller overrides; current ETC caller407F0 ignores result. Matched BFFC
+word-join alone122, complete consistent-GameState plus word-join recipe102;
+explicit FAKE graph purpose. Original206 words/frame28 versus best206/28.
+Remaining girl/case2 statusv0-v1, later scratchrotation and early terminal
+constant scheduling gaps; source-only packet/replay drafts/T-24077. Production/
+headers/config untouched, active In Progress, no match/impossibility claim.
