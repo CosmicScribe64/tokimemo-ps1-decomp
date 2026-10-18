@@ -5,7 +5,7 @@ status: In Progress
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
-links: ["[[etc-family-results]]", "[[tickets/T-20900-types-etc]]", "[[tickets/T-24000-complete-matching]]"]
+links: ["[[etc-family-results]]", "[[tickets/T-20900-shared-type-unification]]", "[[tickets/T-24000-complete-matching]]"]
 ---
 
 ## Goal
