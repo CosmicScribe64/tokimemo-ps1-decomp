@@ -17925,3 +17925,7 @@ One of three BUNKAKEN functions matched: `func_801428D0` (`BunkaDispatch8` view)
 ## [2026-10-17] ticket | T-20011 Done
 
 [[tickets/T-20011-name-ent-coordinate-selection]]: PR #60 (KakarottoCake) merged, NAME_ENT `func_80134110` (152 bytes) matches. Clean build 27/27, linked funcdiff MATCH. `func_80132320` and `func_80134248` stay claimed (#57) under T-20013.
+
+## [2026-10-17] ticket | T-22026 In Progress
+
+[[tickets/T-22026-w4-p26]]: wave 4 package w4-p26 started, ETC `src/ovl/ETC/8013B1F0.c` `func_8013B1F0` (3120 B), branch w4-p26 from w2-good.
