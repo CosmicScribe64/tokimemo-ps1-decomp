@@ -55,6 +55,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-24002-complete-option|T-24002]] OPTION completion follow-up: func_80139198 matched (860 bytes), one guarded draft improved; package in review.
 
 - [[tickets/T-24008-taiiku-runners|T-24008]] TAIIKU runner family (In Progress).
+- [[tickets/T-24008-taiiku-runners|T-24008]] TAIIKU runners: 692-byte match and nine-instruction updater draft (In Review).
 - [[tickets/T-24006-main-render-family|T-24006]] MAIN renderer family, five typed source hypotheses, zero new verified bytes (In Review).
 - [[tickets/T-20012-stable-search-scoring|T-20012]] Stable candidate ranking in viewsweep/order_search, 230 tests pass, issue #58 (Done).
 - [[tickets/T-20013-name-ent-fade-page-followup|T-20013]] NAME_ENT fade/page follow-up, 2,652 bytes still guarded, claim #57 (Ready).

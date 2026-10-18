@@ -18431,3 +18431,10 @@ Rejected an initial guarded fallback claim before integration, then independentl
 
 ## [2026-10-18] ticket | BUNKASAI state machines ready for review
 Moved [[tickets/T-24016-bunkasai-state-machines]] to In Review and moved its kanban card. Root review/integration remains; no push or merge by worker.
+## [2026-10-17] build | T-24008 closes bounded runner pass
+
+1 of 5 matched, 692 verified bytes. Added a guarded func_801365C8 draft with all 188 instructions/frame/spill exact and nine register/operand differences; source-only hypotheses and stable costs in drafts/T-24008/. [[taiiku-family-results]] records indexed/nested rolled loops and derived-coordinate induction. Final default literal proofs for all five targets and TAIIKU SHA1 306d1013b9be465819525d1fb4dc0e86b422a846 pass, headers/globals pass, prototypes 0 new/15 known. [[tickets/T-24008-taiiku-runners]] moved In Progress to In Review with its card for independent parent review. No new compiler exceptions, raw assets or previous archive changes.
+
+## [2026-10-17] build | T-24008 guarded translation-unit confirmation
+
+Full NON_MATCHING translation-unit funcdiff compiled the retained updater and reproduced its nine instruction differences. Final branch prototype check completed: 0 new disagreements, 15 known. [[tickets/T-24008-taiiku-runners]] remains In Review.
