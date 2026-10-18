@@ -177,3 +177,7 @@ The follow-up pass adds no verified bytes. `drafts/T-24012/` preserves three sou
 ## T-24038 signed-number renderer
 
 [[tickets/T-24038-etc-master-siblings]] recovers `func_8013FC64` in `src/ovl/ETC/8013F980.c`: 796 default linked bytes match, and the ETC checksum passes. MAIN `func_8004AE54` supplies the digit-loop family, while this target uses full SDK `SPRT` packets with explicit 8x8 dimensions and no enable guard. Division precedes the digit increment. A real sign-offset local and explicit sign count increment reproduce the 0x78 frame without padding or new FAKE code. The approved 20-byte font declaration describes ten coordinate pairs and preserves the separate sign bytes. Proof and guard logs are under `build/etc-master24038/`; other production bodies are textually unchanged.
+
+## T-24067 focused album-copy follow-up
+
+Source-only checkpoint drafts/T-24067/body.c reaches cost18/28 diagnostic rows with exact0x48 frame and75 instruction words. Reading the stored mode byte restores the final printf/store schedule. A FAKE format-pointer identity test retains the format range and restores s2=format/s3=end/s4=save. The end uses canonical GameState+0x800; no header/export change. Remaining differences are preheader order, two equal-value stack-argument stores and copy scratch t5/t6. Existing private tracing confirms an equal-priority first-use tie before the identity workaround, with code/data/relocations identical to stock. Production unchanged; [[tickets/T-24067-etc-album-copy]] remains In Progress.
