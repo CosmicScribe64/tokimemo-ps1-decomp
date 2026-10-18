@@ -192,3 +192,7 @@ Antigravity startup follow-up: both CLI sessions terminated after shell permissi
 ## 2026-10-18 DATE dispatcher closure
 
 T24051 independently verified as actual unguarded default C: literal3200bytes, all27 binary hashes and header/global/prototype guards pass. Exact21 local tables and0xE38 frame retained. Neighboring selector byte view, comparison captures and pointer home are explicitly FAKE. Five DATE declarations reflect observed callbacks/data; one absolute D800CA2E8 export adds no storage. Root standards review complete; ticket Done. Two Sol lanes now ETC41ABC and ENDING35F4C; Antigravity remains pending shell approval.
+
+## Shared diagnostic allocator restored2026-10-18
+
+ENDING worker rebuilt the documented pinned tracer in Docker in about3minutes/62MB. Generated uopt source hash matches the documented pin; patched and traced outputs reproduce stock text/rodata/relocations and section inventories for the preferred TU. Host binary `/private/tmp/t24047-uopt/variants/trace`; `TOKIMEMO_SCRATCH=/private/tmp/t24047-uopt` mounts it at `/scratch/variants/trace`. Use explicit `regdiff --uopt` path per tool help. Production compiler unchanged. ETC T24067 was given this read-only binary for its save/end pointer colour mismatch; workers write separate traces in their own ignored build directories, one compiler each. No extra agent or duplicated rebuild. Binary and raw traces remain uncommitted.

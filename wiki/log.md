@@ -19173,3 +19173,7 @@ range priority/cost data and aborts at ecvt. regdiff confirms the instrumented
 allocator is unavailable in the container. The coordinating lane previously
 found no host trace binary and requested no rebuild here. Record that diagnostic
 runtime as the next dependency; no compiler changes or new verified bytes.
+
+## [2026-10-18] ingest | Reuse rebuilt diagnostic allocator across two workers
+
+[[completion-run-2026-10-17]] records restored external tracer path and worker stock-output equivalence evidence. Shared read-only binary with [[tickets/T-24067-etc-album-copy]] for its22cost/26row pointer/copy register residual. ENDING continues same target. No new matched bytes or production-toolchain change; two Sol workers only.
