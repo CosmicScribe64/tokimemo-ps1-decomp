@@ -19280,3 +19280,12 @@ contributor messages; the planned next check is15:30UTC. No matching scope
 change; Antigravity remains
 pending user shell approval with no restart. [[completion-run-2026-10-17]]
 ownership unchanged.
+
+## [2026-10-18] query | T24078 saved160 has exactly six geometry uses
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve
+bounded existing-data use map: allocateds6 feeds fourH and twolower-right SUBUs,
+noUV/page uses. UV init and rightX immediate160 are separate. ExactoriginalVAs
+and candidateoffsets in drafts/T-24078/constant-use-map.md; case2 LIroles checked
+byconsumers. Parent read-only followup found no faithful edit. No build, logger,
+source/type spelling split or impossibility claim; same function active.
