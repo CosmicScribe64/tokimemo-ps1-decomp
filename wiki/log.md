@@ -18173,3 +18173,6 @@ No new verified bytes after the reviewed dispatcher. [[tickets/T-24012-etc-rende
 ## [2026-10-17] ticket | T-24012 archive ready for review
 
 Moved [[tickets/T-24012-etc-render-family]] and its card to In Review for the source-only archive delta. Result is 1 of 4 targets verified, 1,280 bytes; three explicit blockers remain pending. No Done claim; coordinator handles review and next disposition.
+
+## [2026-10-17] decision | ETC final archive passes both review axes
+Independent Standards and Spec reviewers pass a0675cafe...920cbb61b with zero actionable findings. [[tickets/T-24012-etc-render-family]] records one verified 1,280-byte function and three pending source-only drafts; production code is unchanged by the archive. Parent owns integration; worktree preserved.
