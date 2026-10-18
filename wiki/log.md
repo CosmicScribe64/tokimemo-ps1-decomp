@@ -17758,3 +17758,7 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E
 ## [2026-10-17] ticket | T-23003 Wave 5 big package w5-big-p03 opened
 
 [[tickets/T-23003-w5-big-p03]] (In Progress) under [[tickets/T-23000-wave-5-big-conveyor]]: `src/main/8006CB30.c`, `func_8006D7EC` (4,692 B), `func_8007132C` (4,292 B), `func_8006D138` (920 B). Branch `w5-big-p03` from `w2-good`.
+
+## [2026-10-17] ticket | T-23003 In Review
+
+[[tickets/T-23003-w5-big-p03]]: 0 of 3 matched in `src/main/8006CB30.c`. `func_8006D7EC` (4,692 B) is a typed hand draft, opcode-aligned in all 1,173 instructions, guarded under `NON_MATCHING` at 13 rows (`idx++` folded to `li`, the second call result narrowed instead of copied); `func_8007132C` (4,292 B) and `func_8006D138` (920 B) stay `INCLUDE_ASM`. Levers, failed forms and tool notes in [[matching-notes]] section T-23003; hand drafts and the aligned-diff scripts in `drafts/T-23003/`.
