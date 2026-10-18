@@ -18223,3 +18223,8 @@ Created [[tickets/T-24019-gyozi-sibling-ports]] In Progress for four exclusive f
 ## [2026-10-17] build | T-24019 GYOZI triangle sibling match
 
 [[tickets/T-24019-gyozi-sibling-ports]] verifies func_80142A8C as392 default linked bytes after replacing its ASM with the typed DATE sibling. GYOZI SHA1 passes, literal default no-build proof matches, headers/globals pass and prototype branch check has zero new/fifteen known disagreements. Updated [[event-family-results]].
+
+
+## [2026-10-17] decision | T-24019 bounded selector negatives retained
+
+[[tickets/T-24019-gyozi-sibling-ports]] moves to In Review: one of four matched (392 bytes). E82424 and39E4C27 reproduce prior negatives; 3907C meaningful result/local and natural control flow leave12 aligned edits. Updated [[event-family-results]] with blockers; source-only drafts and scorer archived. All loose experiments preserved in ignored build/T-24019-probes/. No additional production changes. Independent review pending.
