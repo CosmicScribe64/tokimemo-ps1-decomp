@@ -52,6 +52,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24055-etc-short-helpers|T-24055 ETC short helpers]]
 - [ ] [[tickets/T-24053-short-function-lane|T-24053 Recover three short functions]]
 - [ ] [[tickets/T-24048-master-animation|T-24048 MASTER animation reconstruction]]
 - [ ] [[tickets/T-24044-taiiku-taco-siblings|T-24044 TAIIKU and TACO sibling completion]]

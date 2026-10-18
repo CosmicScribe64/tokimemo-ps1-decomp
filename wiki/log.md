@@ -18679,3 +18679,11 @@ Created [[tickets/T-24053-short-function-lane]] before edits, following [[ticket
 ## [2026-10-18] decision | Short-function lane closes with two wins
 
 [[tickets/T-24053-short-function-lane]] moves to In Review:2 of3 matched,232 bytes independently published at d40a1ece7. [[shugaku-family-results]] records the third target's38-to8-row source-only improvement and selector/call-move blocker. No SHUGAKU production/header change; selected body/reproducer retained and traces remain ignored. Root's all27 hash/interface verification of the two wins is not repeated for archive-only work.
+
+## [2026-10-18] ticket | ETC short-helper count pass
+
+Created [[tickets/T-24055-etc-short-helpers]] and claimed src/ovl/ETC/80143240.c only after reading [[etc-family-results]] and prior model/record-loop negatives. First step is current-type source repair, one Docker compiler; headers unchanged.
+
+## [2026-10-18] decision | ETC short-helper source pass closes
+
+[[tickets/T-24055-etc-short-helpers]] moves to In Review with zero matches and no production/header/config changes. [[etc-family-results]] records fresh13/111/70-row source leads, corrected stale word reads of the byte-coordinate table, SDK vector/prologue and counter/index lifetime blockers, and bounded negative forms. Selected sources/reproducer saved; all loose traces remain ignored. Baseline ETC hash passes, no ASM fallback coverage claim.
