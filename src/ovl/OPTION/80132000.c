@@ -173,7 +173,57 @@ void func_801335E8(void) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133718);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-24040, 5 resolved rows. Original keeps move v0,a2 in the first selector branch delay slot; candidate removes it, shifting branch offsets. */
+s32 func_8013394C(void) {
+    s32 i;
+    s32 j;
+    u32 sel;
+
+    /* one table: as1 keeps the loads after the store only when both go through D_8011ECD0 (T-9020) */
+    ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0x80;
+    func_8004F984(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    func_8004FC10(1);
+    func_801320C0();
+    sel = D_800E6280.unk_1094;
+    for (i = 0, j = 0; i < 3; i++, j += 2) {
+        if (i == sel) {
+            ((DisplayActor44 *)D_80120650)[i + 11].unk_18 = j + 0xD;
+        } else {
+            ((DisplayActor44 *)D_80120650)[i + 11].unk_18 = j + 0xE;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (sel) {
+        case 0:
+            k_speed_set(0);
+            D_800E6280.unk_1124 |= 0x80;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 1:
+            k_speed_set(1);
+            D_800E6280.unk_1124 |= 0x80;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 2:
+            k_speed_set(3);
+            D_800E6280.unk_1124 |= 0x80;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_8004284C();
+        D_800E6280.unk_110D = 2;
+    }
+}
+
+#else
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_8013394C);
+#endif
 
 s32 func_80133AD8(void) {
     s32 i;
