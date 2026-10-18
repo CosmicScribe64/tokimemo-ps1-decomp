@@ -17846,3 +17846,7 @@ Review against `CODING_STANDARDS.md`: no findings; only `src/ovl/DATE/80132000.c
 ## [2026-10-17] ticket | T-20012 Done
 
 [[tickets/T-20012-stable-search-scoring]]: PR #59 (KakarottoCake) merged. viewsweep, order_search and autotweak now rank candidates by one aligned insert/delete cost (`funcdiff.diff_score`) instead of printable diff rows, so equal and unequal lengths score consistently. Tool tests 1,514 OK. Closes issue #58.
+
+## [2026-10-17] ticket | T-22023 In Progress
+
+[[tickets/T-22023-w4-p23]]: wave 4 package w4-p23 started, `src/ovl/NAME_ENT/80139740.c`, five functions (`func_80140B20`, `func_8013DF88`, `func_8013AF78`, `func_8013D2AC`, `func_8013CB44`). Branch `w4-p23` from `w2-good`; part of [[tickets/T-22000-wave-4-conveyor]].
