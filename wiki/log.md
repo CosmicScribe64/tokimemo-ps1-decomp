@@ -17996,3 +17996,11 @@ Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` 
 ## [2026-10-17] ticket | T-22029 In Progress
 
 [[tickets/T-22029-w4-p29]] created and started: ETC `src/ovl/ETC/80146400.c`, four functions from the w4-p29 work list (branch `w4-p29` from `w2-good`).
+
+## [2026-10-17] build | T-22029 func_80148BC8 matched
+
+[[tickets/T-22029-w4-p29]]: `func_80148BC8` (ETC, `src/ovl/ETC/80146400.c`, 720 bytes) matches in plain C: three exam-ranking arrays instead of the `EtcExamRank` struct view, implicit-int definition, `for` loop, `D_80150684[i]` in every test (draft score 64 to 0, ETC.bin sha1 OK). `func_80146400` stays guarded (7 rows); `func_8014790C` stopped at 44 rows and went back to ASM (draft `drafts/T-22029/ETC/func_8014790C/body.c`); `func_80148F7C` not started. See [[matching-notes]].
+
+## [2026-10-17] ticket | T-22029 In Review
+
+[[tickets/T-22029-w4-p29]] moved to In Review (1 of 4 matched, one guard at 7 rows). Clean build and header checks recorded in the ticket.

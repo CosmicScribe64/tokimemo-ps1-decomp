@@ -75,7 +75,7 @@ declaration changed (`D_8015014C[0]` in `func_80143240`; `EtcWork40` moved out o
 
 | Type | Symbols | Evidence |
 | --- | --- | --- |
-| `EtcExamRank` (`s16 value[14]`, `s32 order[14]`, `s32 rank[14]`, 0x8C) | `D_80150668` (`D_801506F0` is `rank[13]`) | `func_801480D0` fills it (debug prints `[%d:%d]` of value, order, rank), `func_8014790C` and `func_80148BC8` draw it; the layout is the one the T-14500 repair draft of `func_801480D0` found |
+| Exam ranking, three symbols since T-22029 (was `EtcExamRank`, 0x8C; a struct view made uopt hoist a base register): `s16 D_80150668[14]` value, `s32 D_80150684[14]` order, `s32 D_801506BC[14]` rank, scalar names for rows read by constant index | `D_80150668` (`D_801506F0` is `rank[13]`) | `func_801480D0` fills it (debug prints `[%d:%d]` of value, order, rank), `func_8014790C` and `func_80148BC8` draw it; the layout is the one the T-14500 repair draft of `func_801480D0` found |
 | `s16 [14]` | `D_80150630`, `D_8015064C` | x and y of the 14 ranking rows (`func_8014790C`, `func_80148BC8`) |
 | `u8 [13]` | `D_80150728`, `D_80150738`, `D_8014E0A4` | per-girl base score and spread of the ranking; per-girl pick counts of `func_8013C8EC` |
 | `s32 [13][2]` | `D_8014DB90`, `D_8014DBF8` | two words per girl passed to `func_80046290(s32, s32, s32)` (`lw 0` / `lw 4` at `unk_F5F * 8`) |

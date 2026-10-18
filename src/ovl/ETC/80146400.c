@@ -1,7 +1,9 @@
 #include "common.h"
 #include "ovl/ETC.h"
 
-/* NON_MATCHING: T-10850, 14 differing listing lines; see the ticket scratch evidence. */
+/* NON_MATCHING: T-22029, 7 differing rows (T-10850: 14); the original puts the string's lui a0 into the delay slot of
+ * the first beq of the second test, IDO puts lui t7 of D_801506F8 there. No C form found: viewsweep, autotweak and the
+ * T-10850 permuter runs gave no gain. */
 #ifdef NON_MATCHING
 /* FAKE: unused padding array preserves the frame layout. T-10850 */
 s32 func_80146400(void)
