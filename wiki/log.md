@@ -18290,3 +18290,37 @@ GEKO func_80133598 (452 bytes) and BUNKAKEN func_80143DD0 (3,232 bytes) passed i
 ## [2026-10-17] ticket | GEKO scene package enters review
 
 [[tickets/T-24007-complete-geko]] ends with one verified function / 452 bytes, one guarded 36-row near match, and three source-only archived follow-ups. Default linked func_80133598 proof and GEKO checksum pass after the guard edit; official guarded comparison confirms func_80133024 still differs. Header/global/prototype checks pass (0 new, 15 known). Ticket and board moved to In Review; independent review remains required. Every loose experiment and diagnostic is preserved under ignored build/T-24007-probes; automatic review rejected deletion of temporary files. See [[scenes-family-results]].
+## [2026-10-17] setup | T-24011 isolated DATE dispatcher probes
+
+Created codex/complete-date from 4c5123f11, copied ignored inputs and local skills, and read [[date-family-results]] plus [[matching-notes]] T-17207/T-17208. Keep the three assigned production fallbacks while testing recovered GameState pointer views; the libgte helper has an established hand-assembly blocker.
+
+## [2026-10-17] setup | T-24011 isolated DATE dispatcher probes
+
+Created codex/complete-date from 4c5123f11, copied ignored inputs and local skills, and read [[date-family-results]] plus [[matching-notes]] T-17207/T-17208. Keep the three assigned production fallbacks while testing recovered GameState pointer views; the libgte helper has an established hand-assembly blocker.
+
+## [2026-10-17] setup | T-24011 isolated DATE dispatcher probes
+
+Created codex/complete-date from 4c5123f11, copied ignored inputs and local skills, and read [[date-family-results]] plus [[matching-notes]] T-17207/T-17208. Keep the three assigned production fallbacks while testing recovered GameState pointer views; the libgte helper has an established hand-assembly blocker.
+
+## [2026-10-17] query | T-24011 pointer view fixes dispatcher registers
+
+[[date-family-results]] records a source-only 23-row resolved near miss for func_801449D4; no match claim. The probe setup harness accidentally appended its identical setup entry three times on reruns; those entries remain under the append-only log rule and that side effect has been removed.
+
+## [2026-10-17] query | T-24011 recovered views improve both dispatchers
+
+[[date-family-results]] records exact-frame source-only near misses: func_801449D4 at 11 isolated resolved +/- rows and func_80144E20 at 72. Ordinary pointer views fix shifted allocation; return-view/default/canonical compare probes do not finish either target. Production fallbacks remain intact.
+
+## [2026-10-17] build | T-24011 source-only checkpoint and fallback proof
+
+Preserved source-only dispatcher near misses and Docker reproducers under drafts/T-24011; [[date-family-results]] records full-unit 48/72 resolved rows, isolated small 11, and the bounded Astra as1-stage observation. DATE checksum, headers, globals and branch prototype guard pass (0 new disagreements, 15 known). Explicit default linked comparisons match all three unchanged assembly fallbacks; zero new C bytes. Exploration artifacts moved into ignored build/date24011-scratch. No original assembly or executable data committed.
+
+## [2026-10-17] ticket | T-24011 awaits archive review
+
+Moved [[tickets/T-24011-date-dispatch-family]] and its [[kanban]] card to In Review. Both dispatchers retain production INCLUDE_ASM; libgte helper retains its established hand-assembly blocker. Coordinator owns the required two-axis review.
+
+## [2026-10-17] build | T-24011 resolve diagnostic failure reporting review finding
+
+Standards review found P2: drafts/T-24011/probe.py and stage.py ignored funcdiff return status and could report zero rows after tool failure. Added shared validated reporting and failure-contract checks; Docker tests pass (5 tests, 12 cases), real full-unit diagnostics remain 48/72, and stage passes twice consecutively at 11. The stage rerun also exposed an existing-listing IDO -S -o collision; removed the unnecessary output flag. [[tickets/T-24011-date-dispatch-family]] remains In Review; no source-body or production changes.
+
+## [2026-10-17] decision | DATE review failure-handling finding resolved
+Independent re-review of 2f7bd397b...5c14a3c40 passes Standards and Spec with zero remaining actionable findings. [[tickets/T-24011-date-dispatch-family]] records P2 resolved, five Docker tests covering twelve contracts, real full-unit diagnostics 48/72 and two stage reproductions at eleven edit rows. Production unchanged; no new C bytes or full-ticket completion claim.
