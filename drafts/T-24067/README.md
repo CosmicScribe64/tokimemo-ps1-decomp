@@ -31,3 +31,19 @@ Follow-up controls preserve the indexed 16/16 checkpoint. An inclusive `i <= 255
 The existing tracer on the indexed source reports format/save/end bits 54/55/56 at equal priority 3.33333325; save is numbered before end. `build/etc24067/indexed-trace.log` records the allocation. The separate copy discrepancy is consistent with the already measured B/F block-copy state distinction in wiki/ido-52-evaluation.md (T-20710): IDO 5.3 changes state at conditional block starts, while the historical 4.1 control retained B. The current native listing has two `.set noat` directives before the eight-byte copy and uses t5 for its second word. That is supporting analogy, not a new 4.1 experiment or proof that source recovery is exhausted.
 
 A single conditional-identity bound, `(i == 0 ? i : i) < 256`, tests whether a retained control-flow boundary changes the tied endpoint range. It instead loses induction elimination (cost70/72 rows), so it is rejected; no further identity-bound variants are retained.
+
+Stock stage capture can be reproduced with `python3 drafts/T-24067/capture.py` in Docker. It first replays the indexed source, copies uopt's actual input/output without modifying them, then requires equal full-TU code/data/relocations against the ordinary compile. Validated sizes are .text 7216, .rel.text 5632, .rodata 1488 and .rel.rodata 336 bytes. Files stay under build/etc24067/archive/ucode. No compiler binary, option or transformation changes.
+
+The indexed frontend contains scalar `i < 256`, with no endpoint address. The post-uopt stream contains the endpoint and these materializations:
+
+| Value | Allocator bit | Priority | Output register |
+| --- | ---: | ---: | --- |
+| format | 54 | 3.33333325 | 18 / s2 |
+| save root | 55 | 3.33333325 | 19 / s3 |
+| GameState root + 0x800 | 56 | 3.33333325 | 20 / s4 |
+
+The exact cursor checkpoint has a different balance: format bit67 priority5, explicit end bit3 priority2.75, save bit68 priority2.5. End's entry store contributes1 and its loop use10 over four blocks; save has only10 over four. Thus cursor selects format/end/save correctly, while indexed ties save/end. The captures establish the input/output and final numbering; they do not timestamp the internal bit-creation phase.
+
+An attempted bridge initializes the real end pointer and uses `i < ((u8 *)end - (u8 *)&D_800E6280) / 8`. It gives68 rows: uopt retains an address-typed subtraction of two loads from the same machine register plus800, division and an entry guard. It does not reduce the bound to256. Consistent unsigned integer address subtraction also fails (108 rows). An empty endpoint reference after printf creates an extra saved range (64 cost/66 rows). None of these forms is promoted.
+
+Prior destination controls already cover base/index operand order, byte/integer pointer additions, root-array offset11, count postincrement and computing destination before increment. They either normalize to the same constant use, reverse an ADDU operand, or add live addresses/instructions. No evidence yet shows a destination spelling that places end ahead of save while retaining the indexed shape. The next diagnostic question is when the two constant bits are created: the existing trace shows final ranges but not constant identity at creation. A creation-event trace would distinguish a source-order lever from an endpoint that is invariably introduced after the save candidate; no new tracer or compiler modification has been made.

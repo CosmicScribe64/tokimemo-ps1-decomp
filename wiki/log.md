@@ -18561,3 +18561,7 @@ Natural typed record indexing plus induction elimination fixes printf stack-stor
 ## [2026-10-18] query | T-24067 indexed allocation and copy-state evidence
 
 Indexed tracing confirms format/save/end bits54/55/56 share priority3.33333325 and save precedes end in numbering. Inclusive/do loops retain16/16; local-limit/narrow/top-exit forms lose induction elimination; split copies and explicit record/album pointers worsen. Read existing T-20710 block-copy state evidence in [[ido-52-evaluation]] as a supporting analogy for t5/t6, not a fresh4.1 result or exhausted-source claim. Updated drafts/T-24067/README.md and [[tickets/T-24067-etc-album-copy]]; production unchanged and target remains active.
+
+## [2026-10-18] query | T-24067 explicit endpoint range constraint
+
+Copied stock uopt stages without altering bytes; full-TU code/data/relocations equal ordinary replay. Indexed frontend has no end address; final format/save/end ranges tie, while cursor's explicit end entry store raises priority2.75 above save2.5. Endpoint-derived index bounds retain subtraction/entry guards rather than folding, and an empty endpoint reference adds a range. Retained source-only capture helper and minimal packet in drafts/T-24067/README.md; [[tickets/T-24067-etc-album-copy]] stays In Progress. Reviewed prior destination operand/count controls without repeating a broad sweep. Next evidence question is constant identity at bit creation, not a proposed compiler change.
