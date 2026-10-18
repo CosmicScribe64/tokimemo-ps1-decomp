@@ -18410,3 +18410,7 @@ The all-dot state region fixes the inserted reload but reverses two earlier addr
 ## [2026-10-18] ticket | T-24014 TACO PRE closer archived
 
 47 focused probes produced no match. The all-dot region corrects the inserted reload but reverses two earlier address additions; empty-use seeds and mixed forms do not resolve the tradeoff. Production source remains unchanged. The three-case reproducer in drafts/T-24014/ verifies costs 2/4/32. Explicit default proof matches the 796-byte assembly fallback and fresh TACO SHA1 passes; zero new C bytes. Updated [[matching-notes]] and moved [[tickets/T-24014-taco-pre-closer]] to In Review for independent archive review.
+
+## [2026-10-17] decision | Reuse the closer slot for fresh Sol matching work
+
+RPG_BAT residual source archive and TACO PRE reproducer are published; neither archive adds C coverage. Root Astra T24014 stopped after its bounded hypotheses were exhausted. Reused its clean built checkout for Sol 6.1 medium T24016 BUNKASAI; T24015 MAIN work also assigned to Sol medium. Refreshed current/completed ownership in [[completion-run-2026-10-17]] to remove stale active claims. Dedicated Astra large-function chat remains active.

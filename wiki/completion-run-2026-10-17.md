@@ -25,19 +25,23 @@ Each was independently checked against default linked function bytes, all27 bina
 
 ## Active ownership
 
-- Root Sol worker T24013: RPG_BAT `80137280.c` / `801525B0.c`, three remaining helpers; reuses `codex/complete-option`.
-- Root Astra closer T24014: TACO `80149F90.c`, `func_8014A480`; test specific PRE expression representative hypotheses after T22025, reuses `codex/complete-bunkaken`.
+- T24008, Sol 6.1 medium: TAIIKU `80133C80.c`; one of five runner helpers matched, bounded remainder in progress. Worktree `codex/complete-main`.
+- T24015, Sol 6.1 medium: MAIN `8005A0B0.c`, five unstarted helpers from w4-p41. Worktree `codex/complete-option`.
+- T24016, Sol 6.1 medium: BUNKASAI `801354B0.c` / `80154018.c`, two unstarted helpers from w4-p44. Reuses the now-idle Astra worktree `codex/complete-bunkaken` at 15133a84a; no new checkout.
+- T24020, dedicated Astra chat `01a14d9f-757c-7661-a87e-e183dc7e7687`: MAIN `8007C030.c` dialogue_speak_part, TEL `80132000.c` func_80136724, EVENT `8010FE10.c` func_801103A0. One target at a time; last observed on EVENT. All three files remain reserved.
 
-- Root Sol worker T24008: TAIIKU `80133C80.c`, five runner helpers; reuses `codex/complete-main`.
-- Completed bounded Astra pass T24009 (source archive b7d446437 published as 4375a2858): ENDING `801396E0.c`, `func_8013A2E8` (4,648 instruction bytes), bounded novel source hypotheses for the documented assembler scheduling limit; reuses `codex/complete-bunkaken`.
+## Completed bounded passes
 
-- Completed bounded pass T24006: MAIN8004C3F0 rendering family, Sol6.1 medium; reuses codex/complete-main checkout. MAIN8006CB30 counter is parked after Sol20 + Astra19 negative variants; draft differs by one increment instruction. ArchivesT24001 are on main.
-- Completed bounded pass T24007: GEKO801323E0 family, Sol6.1 medium; reuses codex/complete-option. Earlier OPTION and SHOUGATU bounded packages have committed residual drafts.
-- Completed Astra closer T24005: BUNKAKEN80143DD0, 3,232 bytes, now unguarded and verified. Marked FAKE empty selector test fixed the final four instruction words. Reuses codex/complete-bunkaken. Earlier BUNKAKEN packageT24003 has2/3 matched; remaining loader draft318 rows preserved.
-- Completed Sol coordinating chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8, T24010: DATE80141EE0/8015A640 (T24011) and ETC80132880 (T24012); two workers, bounded Astra assistance for a concrete DATE near miss. Parent alone integrates/pushes.
-- Dedicated Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687, T24020: reserved MAIN8007C030 dialogue_speak_part (~8980B), TEL80132000 func_80136724, EVENT8010FE10 func_801103A0. Starts dialogue, one hard target at a time. These files are excluded from other assignments.
+- T24001 MAIN counter: Sol and Astra negative variants archived; one increment-instruction mismatch remains.
+- T24002 OPTION: one match; residual drafts archived. T24003 BUNKAKEN: two matches, loader draft remains. T24004 SHOUGATU: one match, residual drafts archived.
+- T24005 BUNKAKEN state machine: complete 3232-byte match, independent review recorded, ticket Done.
+- T24006 MAIN render family: no matches, source hypotheses and blockers archived. T24007 GEKO: one match, residual guard/drafts and diagnostic error-handling fix published.
+- T24009 ENDING: no match; pointer-lifetime scheduling improvement and reproducer published at 4375a2858.
+- T24010 DATE/ETC coordinator chat `01a14d91-82a4-7eb1-89d3-8c3dc2d084f8`: finished; all worker/coordinator handoffs on main. T24011 DATE no matches; T24012 ETC one match and three residual drafts.
+- T24013 RPG_BAT: one 2424-byte match; two residual source drafts published at ae111b687.
+- T24014 TACO: no match after specific PRE hypotheses; three-case reproducer and negative evidence published at 76dd4762f. Root Astra closer stopped; its slot now runs Sol medium T24016.
 
-TT/DATE2 local reservations and GitHub contributor claims#50/#56/#57 are excluded. Check-decomp-contributor-updates heartbeat checks PRs/issues every30minutes. Initial check found no open PRs. Do not message contributors without user authorization. Old integration automation remains paused; this explicit goal run is active.
+TT/DATE2 reservations and contributor claims #50/#56/#57 remain excluded. Contributor heartbeat runs every 30 minutes; no contributor messages are authorized. The old integration automation remains paused; this explicit 100% goal run is active.
 
 ## Integration and resource rules
 
@@ -53,7 +57,7 @@ Docker only for Python, toolchains and builds. Reuse built worker trees; immutab
 
 DATE and ETC final coordinator/worker handoffs are now on main, including source-only residual drafts and fixed DATE diagnostic failure handling. No additional C bytes are claimed for these archives. The GEKO probe failure accounting was also repaired after review: candidate errors retain diagnostics and exit nonzero. All current source wins retain independent literal proofs.
 
-Local wiki-only merge helper rejects any staged path outside wiki/ and retains the integration lock/ancestry checks; binary checks are repeated for source integration, not solely for prose updates.
+Local wiki-only and source-archive merge helpers reject staged production paths and retain the integration lock/ancestry checks. Reviewed draft/prose-only changes do not require repeated binary builds; production source/header changes retain all 27 hashes, guards and literal proofs.
 
 ## 80% milestone verification
 
