@@ -18210,3 +18210,7 @@ Ported the matched DATE history-copy recipe to SHUGAKU func_80133038, removing i
 ## [2026-10-17] build | T-24017 GEKO clone verifies 476 bytes
 
 GEKO func_8013FD88 is unguarded C, no INCLUDE_ASM. Fresh default linked literal proof matches 476 bytes and GEKO SHA1 passes. [[geko-family-results]] and [[tickets/T-24017-clone-ports]] record the matched ENDING source and inherited FAKE colour masks.
+
+## [2026-10-17] build | T-24017 SHUGAKU clone verifies 176 bytes
+
+SHUGAKU func_80133038 now unguarded C with no INCLUDE_ASM. Fresh default linked literal proof and unit checksum pass, 176 bytes. [[shugaku-family-results]] records DATE product-narrowing/copy-order recipe, no FAKE or data ownership changes. Added the new [[geko-family-results]] page to [[index]] and its metadata. [[tickets/T-24017-clone-ports]] checkpoint: 2 of 3, 652 bytes.

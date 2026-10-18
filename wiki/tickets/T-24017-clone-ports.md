@@ -25,3 +25,7 @@ Read wiki/index, prior negative evidence and matched sibling recipes from T-2093
 ## GEKO checkpoint
 
 func_8013FD88 matches 476 default linked literal bytes as unguarded C; no target INCLUDE_ASM. GEKO SHA1 check passes after ninja -j1. Exact ENDING SDK polygon sibling port with inherited FAKE masks/grouped colour trios, no new toolchain behavior. See [[geko-family-results]].
+
+## SHUGAKU checkpoint
+
+func_80133038 matches 176 default linked literal bytes as unguarded C, old guard/fallback removed. Exact DATE copy-chain recipe, no data-island or header changes and no FAKE. SHUGAKU SHA1 passes after ninja -j1; four pre-existing pointer warnings outside target remain. See [[shugaku-family-results]]. Total checkpoint 2 of 3 / 652 bytes.

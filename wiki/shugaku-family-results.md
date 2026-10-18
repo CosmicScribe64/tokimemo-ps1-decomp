@@ -85,3 +85,7 @@ the callback-table idiom, which the header now makes visible to m2c.
 `w3-shugaku-p01` (5 functions, 2,328 bytes: `80133D60.c`, `80135430.c`, with both hand drafts), T-18002
 `w3-shugaku-p02` (6, 2,316 bytes), T-18003 `w3-shugaku-p03` (5, 1,672 bytes), T-18004 `w3-shugaku-p04`
 (4, 1,344 bytes).
+
+## Exact history-copy clone (T-24017)
+
+[[tickets/T-24017-clone-ports]] matched func_80133038 (176 literal linked bytes) in src/ovl/SHUGAKU/80132000.c by porting DATE func_80149F48. The two destination assignments, including the signed-halfword product narrowing, precede the last three pointer copies. This replaces the T-10510 guard with unguarded C; no INCLUDE_ASM remains. No data-island conversion, header change or FAKE needed. Fresh Docker ninja -j1 SHUGAKU checksum and default funcdiff --resolve --no-build pass. Existing pointer-type warnings in func_80132F44 / func_80132FC0 remain outside scope.

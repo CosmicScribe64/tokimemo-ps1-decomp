@@ -8,6 +8,7 @@ updated: 2026-10-18
 Read this first. Update on every ingest or new page.
 
 ## Core
+- [[geko-family-results]] - exact renderer clone ports and verification (T-24017).
 - [[flagged-draft-pass]] - Sol6.1 medium pass:165 reviewed,93 repaired,116 remaining flagged; no new verified bytes.
 - [[stopping-point-2026-10-15]] - final handoff: 1,066/1,066 compiling draft scopes, 63.7% verified bytes, reconstruction limitations and restart instructions; user-requested stop.
 - [[overview]] - project goal, stack, pointers to fact pages

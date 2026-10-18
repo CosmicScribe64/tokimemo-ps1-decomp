@@ -1,3 +1,9 @@
+---
+type: research
+updated: 2026-10-17
+---
+
+# GEKO family results
 
 ## Exact polygon clone (T-24017)
 
