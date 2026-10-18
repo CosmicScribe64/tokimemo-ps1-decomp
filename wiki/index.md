@@ -135,6 +135,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-22024-w4-p24|T-22024]] Wave 4 package w4-p24: EVENT `8010FE10.c`, five functions: `func_80118010` (680 B, `func_8004A8EC` as `s32`) and `func_8011A8E4` (540 B, plain if/else chain, scalar above the stack tables) matched; `func_8011C164` back to `INCLUDE_ASM` (70 rows, `i`/`pos` register swap); `func_80118868` and `func_80114B0C` keep their guards (Done; 2 of 5 matched).
 - [[tickets/T-22023-w4-p23|T-22023]] Wave 4 package w4-p23: NAME_ENT `80139740.c`, 2 of 5 matched (`func_8013D2AC`, `func_80140B20`), `func_8013DF88` guarded at 11 register rows, `func_8013AF78` and `func_8013CB44` drafts in `drafts/T-22023/` (Done; 2 of 5 matched).
 - [[tickets/T-11880-date2-remainder|T-11880]] DATE2: the remaining nine functions, claim #49 (Done; 8 of 9 matched, DATE2 101/102, 91.9% of bytes).
+- [[tickets/T-11890-tt-ratan2-aspsx|T-11890]] TT `func_8014D260` (gcc ratan2) through an ASPSX pass on the gcc path, claim #56 (Done; not matched: real ASPSX shows none of the three habits, they come from the compiler).
 - [[tickets/T-20008-large-name-introduction|T-20008]] NAME_ENT introduction reconstruction archive (4,308-byte scope), claim #50; compiling, still nonmatching (In Progress; draft checkpoint merged, PR #51).
 - [[tickets/T-20010-name-ent-resource-loader|T-20010]] NAME_ENT resource loader, 1,652-byte verified plain-C match, claim #52 (Done).
 - [[tickets/T-20009-name-ent-loader|T-20009]] NAME_ENT CD-level display helper, 484-byte verified match, claim #52 (Done, PR #53 merged).
@@ -533,7 +534,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[executable]] - SLPM_86.053 header, memory map, bss, segment layout
 - [[overlays]] - the 26 .EXN overlays: loader, load addresses, entries, split and build
 - [[obin]] - O.BIN: ECOFF format and header fields (`obin_syms.py --headers`), symbol table, mapping onto the main exe, stats, generated rename list
-- [[gcc-objects]] - PsyQ-gcc-built objects inside overlays: fingerprint (`tools/gcc_fingerprint.py`), verdicts, per-object toolchain table (T-9200)
+- [[gcc-objects]] - PsyQ-gcc-built objects inside overlays: fingerprint (`tools/gcc_fingerprint.py`), verdicts, per-object toolchain table (T-9200); ASPSX habits measured over the SDK asm (`tools/aspsx_survey.py`, T-11890)
 - [[toolchain]] - Docker image (native arm64/amd64, T-3310), pinned versions, compiler choice (IDO 5.3 for game code), frame-layout emulation pass
 - [[psyq-sdk]] - per-library SDK versions, lib/object layout, signature method
 - [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), work queue and T-0018 detector (T-1320), matched/unmatched functions, idioms

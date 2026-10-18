@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-17
+updated: 2026-10-18
 sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 ---
@@ -7495,6 +7495,27 @@ Harness: a 40-line script that imports `order_search.make_text_scorer`, takes a 
 
 Lesson for both guarded and matched cases: in a function with a function-wide hoisted constant 1, the original colours that constant first. Splitting which accesses go through a `GameState *` local changed that order in `func_80150B7C`; try the same split (record reads only, selector direct) on the next one before reaching for the permuter.
 
+## TT func_8014D260 and the ASPSX pass (T-11890)
+
+TT `func_8014D260` is PsyQ `ratan2` built with gcc ([[gcc-objects]]). The C is settled: the quotient needs its own
+variable (`q`) so the table value lands in `$v1` as in the original; gcc 2.7.2-psx then gives the original's registers
+and block layout. What is left is assembler output that maspsx does not model: (1) where ASPSX puts the `mflo` of an
+expanded `div` (right after `div $zero` for the two divides whose rd is neither rs nor rt, after the checks for the
+other two), (2) the `mflo` hazard nops before a label or a gcc `.set noreorder` branch, (3) `lh rd,sym(rs)` through rd
+instead of `$at`. Applied by hand to a scratch copy of the maspsx output, the three give all 97 instructions.
+
+No build pass was added. Measured over the SDK asm of the main exe (`tools/aspsx_survey.py`), habits 2 and 3 are
+uniform (290 of 290 and 103 of 103 sites) but habit 1 is not: 4 of 67 sites contradict it, the SDK has no site of the
+exact kind TT needs, and maspsx's real-ASPSX fixture for `div $2,$4,$6` has the `mflo` after the checks in every
+version. A pass that moves the `mflo` would be a rule fitted to this one function, which CODING_STANDARDS 7a rules out.
+The function stays `INCLUDE_ASM`; next step is running the real ASPSX binaries on test cases (ticket
+[[tickets/T-11890-tt-ratan2-aspsx]]).
+
+Update (same day): the real ASPSX (versions 2.56 to 2.86 under wine, measurement only) does none of the three habits:
+it puts every divide move after the checks (with a nop before a reader of rd), adds no hazard nop before labels or
+branches, and expands every symbol+register load through `$at`, exactly as maspsx does. The original's layout is
+therefore not ASPSX output of gcc's macros but most likely compiler output that was already expanded; none of our
+old-gcc builds produces it. No pass; [[gcc-objects]], "The real ASPSX on synthetic input (T-11890)".
 ## T-22013: RPG_BAT package w4-p13 (801484E0.c, 8015A1F0.c)
 
 [[tickets/T-22013-w4-p13]], package of [[tickets/T-22000-wave-4-conveyor]]. Three guarded functions, all 3 matched (`func_80148714`, 1,012 bytes, 28 diff lines to 0; `func_8015A8B4`, 236 bytes, 14 rows to 0; `func_8015A744`, 368 bytes, 4 rows to 0 in the closer pass). About 80 minutes for the first pass.

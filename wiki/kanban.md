@@ -108,6 +108,7 @@ kanban-plugin: board
 ## Done
 
 - [ ] [[tickets/T-20013-name-ent-fade-page-followup|T-20013 NAME_ENT fade and page selection]]
+- [ ] [[tickets/T-11890-tt-ratan2-aspsx|T-11890 TT func_8014D260 ASPSX pass]]
 - [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
 - [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]
 - [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Match dialogue argument scheduling]]

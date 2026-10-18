@@ -17720,6 +17720,51 @@ Clean rebuild 27/27, check_headers, migrate_globals --check and sync_protos --ch
 
 Code review against CODING_STANDARDS.md found nothing to fix; 2 of 4 matched (`BUNKASAI:func_8013B25C`, `BUNKASAI:func_80150B7C`), `func_801509A4` (19 rows) and `func_80151364` (2 rows) stay guarded. [[tickets/T-22012-w4-p12]], [[kanban]].
 
+## [2026-10-18] ticket | T-11890 created (In Progress)
+
+Claim #56: TT `func_8014D260`, the last TT function, through the gcc/maspsx path. Created [[tickets/T-11890-tt-ratan2-aspsx]]. First step is measuring the three ASPSX behaviours of [[gcc-objects]] over the SDK asm of the main exe before writing any rule.
+
+## [2026-10-18] build | T-11890 baseline
+
+Clean rebuild of branch `gcc-d260` (asm/ and build/ removed, configure.py, ninja): 27/27 SHA1 OK. A rebuild over the old
+asm/ tree failed on stale NAME_ENT rodata paths; the clean split fixed it.
+
+## [2026-10-18] query | T-11890 ASPSX habits over the SDK asm
+
+New `tools/aspsx_survey.py` (counts only, no game bytes) over every `asm/lib*.s`. `mflo`/`mfhi` hazard nops: 290 of 290
+sites follow one rule (pad before mult/div, a label or a gcc `.set noreorder` branch). `l* rd,sym(rs)`: 103 of 103 loads
+with rd != rs go through rd; rd == rs and stores use `$at`. Divide move position: 63 of 67 sites fit "right after the
+divide unless the checks read rd", 4 libspu `rem` sites do not, there is no SDK site with a signed quotient and rd
+distinct, and maspsx's real-ASPSX fixture `div.yaml` contradicts it; ASPSX scheduled other instructions into 44 of the
+67 expansions. Written to [[gcc-objects]] ("ASPSX habits in the SDK asm (T-11890)").
+
+## [2026-10-18] decision | T-11890 no ASPSX pass for now
+
+The divide-move habit has no uniform rule backed by the evidence, so no pass and no change to `tools/cc.py`,
+`config/toolchains.txt` or `src/ovl/TT/8014D260.c` (CODING_STANDARDS 7a, claim #56 condition). The ratan2 C is settled
+(draft in [[gcc-objects]]): with the three habits applied by hand to a scratch copy it gives all 97 instructions.
+Next step proposed: run the real ASPSX binaries on test cases. Notes in [[tickets/T-11890-tt-ratan2-aspsx]],
+[[matching-notes]], [[toolchain]]; the ticket stays In Progress.
+
+## [2026-10-18] query | T-11890 real ASPSX on synthetic input
+
+User-approved download of the maspsx author's `aspsx-binaries.tar.gz` into the scratchpad; ASPSX 2.56, 2.67, 2.77,
+2.79, 2.81 and 2.86 run under wine in a throwaway container (nothing committed). 36 synthetic divide cases, hazard and
+symbol-load cases, and the gcc 2.7.2-psx output of the ratan2 draft: all six versions agree with each other and with
+maspsx (move after the checks, nop before a reader, no nop before labels or branches, symbol loads through `$at`;
+ratan2 96 instructions against the original's 97). None of the three SDK habits is ASPSX behaviour. Results in
+[[gcc-objects]] ("The real ASPSX on synthetic input (T-11890)"), [[tickets/T-11890-tt-ratan2-aspsx]], [[matching-notes]],
+[[toolchain]].
+
+## [2026-10-18] decision | T-11890 no ASPSX pass (confirmed by the real ASPSX)
+
+An emulation pass would model behaviour the real assembler does not have, so none is built; `TT/8014D260` stays
+INCLUDE_ASM and the ticket stays In Progress. The open lead is a compiler that emits the expanded divide and split
+symbol loads itself.
+
+## [2026-10-18] ticket | T-11890 Done (not matched)
+
+Review against CODING_STANDARDS.md: the only code is the read-only `tools/aspsx_survey.py`; no source, config or build change; no findings. [[tickets/T-11890-tt-ratan2-aspsx]] closed as Done without a match: the real ASPSX shows none of the three habits of [[gcc-objects]], so no pass models them; `func_8014D260` stays `INCLUDE_ASM` with the compiler lead in the ticket. [[kanban]], [[index]] updated.
 ## [2026-10-17] ticket | T-22013 Wave 4 package w4-p13 In Progress
 
 Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E0.c` and `src/ovl/RPG_BAT/8015A1F0.c`, three guarded functions (`func_8015A8B4`, `func_8015A744`, `func_80148714`). See [[tickets/T-22013-w4-p13]].
