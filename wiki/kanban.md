@@ -60,12 +60,17 @@ kanban-plugin: board
 
 
 
+
+
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 
 
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24056-shougatu-short-siblings|T-24056 Match three short SHOUGATU siblings]]
+
 
 - [ ] [[tickets/T-24052-shougatu-dialogue-siblings|T-24052 Match SHOUGATU dialogue siblings]]
 
