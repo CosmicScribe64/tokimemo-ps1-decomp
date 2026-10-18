@@ -36,6 +36,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-24003-complete-bunkaken|T-24003]] BUNKAKEN selector and date-loader remainder (In Review; 2 of 3 matched, 836 bytes).
+- [[tickets/T-24002-complete-option|T-24002]] OPTION completion follow-up: func_80139198 matched (860 bytes), one guarded draft improved; package in review.
 
 - [[tickets/T-20012-stable-search-scoring|T-20012]] Stable candidate ranking in viewsweep/order_search, 230 tests pass, issue #58 (Done).
 - [[tickets/T-20013-name-ent-fade-page-followup|T-20013]] NAME_ENT fade/page follow-up, 2,652 bytes still guarded, claim #57 (Ready).

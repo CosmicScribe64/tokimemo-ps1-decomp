@@ -237,3 +237,23 @@ drafts in the template shape and `gs-local` on them: `func_80135E48` 364 to 20, 
 - `func_80133718`, `func_80133CB8`, `func_80136688` (46 to 50): the stack offsets and the register order of
   the `j` counter; the layout probe (scalars or arrays first, no pad to `pad[3]`) gives 46 to 60.
 
+
+## T-24002 completion follow-up
+
+`func_80139198` matched (860 bytes) on codex/complete-option. The T-17800 hand draft
+uses the current `DisplayActor44` name. Moving the existing `unk_03A = 0` store into
+a comma expression in a `menu_set` row argument reproduces the original delayed store
+and HI16 schedule; all four row argument positions scored zero. This is marked FAKE:
+the expression controls evaluation order and the real source is unknown. Default proof:
+`funcdiff.py --unit OPTION --resolve --version default func_80139198` reports linked
+function bytes equal target (860 bytes); `ninja -j2 build/ovl/OPTION.ok` passes its checksum.
+See [[tickets/T-24002-complete-option]].
+
+The bounded follow-up retains the GameState-local `func_80139F8C` guard at 5 differing
+rows (11 before). Width, assignment-stage and shared-compare forms did not recover the
+original `move a0,t1` before OR/mask. `func_80139E3C` stays guarded at 60 rows after
+input-local, width/narrowing, return-type and index-form probes. The larger routines
+remain assembly: current typed `func_801394F4` improves 215 to 115 differing rows by
+merging split temporary ranges (a natural clamp form has 56 aligned edits but 134 literal
+diff rows), while corrected input fields in `func_80139A30` leave 223 rows. Source drafts
+and concrete blockers are in drafts/T-24002/README.md; no shared header types changed.

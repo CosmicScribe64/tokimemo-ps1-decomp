@@ -248,7 +248,67 @@ void func_80138FC0(void) {
     func_8013A484();
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139198);
+s32 func_80139198(void) {
+    s32 i;
+    DisplayActor44 *p;
+
+    func_8004ADAC(4);
+    draw2d3d(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    back_clear_switch(0);
+    tpage_buf_clear();
+    D_800E6280.unk_10A2 = 0;
+    *(s32 *)&D_800E6280.unk_1095[3] = 0xA0;
+    func_8004E58C();
+    func_8006612C((s32) "オプション画面");
+    k_disp_start(1);
+    set_kanji_string(D_8013D364[0], D_8013D372[0], 0, "ＸＡコール", 0);
+    set_kanji_string(D_8013D364[1], D_8013D372[1], 0, "メインＶＡＢトランス", 0);
+    set_kanji_string(D_8013D364[2], D_8013D372[2], 0, "サブＶＡＢトランス", 0);
+    set_kanji_string(D_8013D364[3], D_8013D372[3], 0, "メインＳＥＱコール", 0);
+    set_kanji_string(D_8013D364[4], D_8013D372[4], 0, "サブＳＥＱコール", 0);
+    set_kanji_string(D_8013D364[5], D_8013D372[5], 0, "メインＳＥコール", 0);
+    set_kanji_string(D_8013D364[6], D_8013D372[6], 3, "ＳＥＱーＮＵＭ", 0);
+    D_800E6280.unk_1093 = 0;
+    D_800E6280.unk_1094 = 0;
+    D_800E6280.unk_1092 = 0;
+    func_8006BC28(0);
+    ((DisplayActor44 *)D_8011ECD0)[0].unk_03 |= 1;
+    D_8013D3B0 = 0;
+    D_8013D3B4 = 0;
+    D_801220E2 = 0;
+    D_801220E1 = 0;
+    D_801220E0 = 0;
+    /* FAKE: argument evaluation delays the flag clear until after row-address
+     * setup, preserving the original store schedule. T-24002 */
+    func_8004F870(0, 7, (D_800E6280.unk_03A = 0, D_8013D364), D_8013D372, D_8013D380, D_8013D38E);
+    menu_bar_color(0, 0x5F7F3F, 9, 8);
+    menu_bar_color(1, 0x7F7F7F, 2, 1);
+    for (i = 0, p = (DisplayActor44 *)D_8011ECD0; i < 13; i++, p++) {
+        func_80048F64(i + 0x60);
+        p[96].unk_01 = 2;
+        p[96].unk_02 = 0x40;
+        p[96].unk_38 = 0x40000000;
+        p[96].unk_03 = 0x94;
+        p[96].unk_0C = D_800C5FD4;
+        p[96].unk_10 = D_800C6010;
+        p[96].unk_34 = &D_800C5FCC;
+        p[96].unk_14 = D_800C6014;
+        p[96].unk_04 = 8;
+        p[96].unk_05 = 1;
+        p[96].unk_16 = 0;
+        p[96].unk_18 = i;
+        p[96].unk_2E = 3 - (func_800AE0D0() & 7);
+        p[96].unk_32 = 4 - (func_800AE0D0() & 7);
+        p[96].unk_2C = func_800AE0D0();
+        p[96].unk_30 = func_800AE0D0();
+        p[96].unk_26 = 0;
+        p[96].unk_2A = 0;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_801394F4);
 
@@ -354,15 +414,17 @@ void func_80139F04(void) {
     func_80044750((D_8013E730 | 0x500) & 0xFFFF);
 }
 
-/* NON_MATCHING: T-10850, 11 differing listing lines; see the ticket scratch evidence. */
+/* NON_MATCHING: T-24002, 5 differing rows: original copies the byte to a0
+ * before OR/mask; IDO combines the value range. */
 #ifdef NON_MATCHING
 /* FAKE: width-staged locals preserve raw-byte and call-argument ranges. T-10850 */
 void func_80139F8C(void)
 {
+    GameState *g = &D_800E6280;
     s32 t;
     u32 value;
     u16 code;
-    t = D_800E6280.unk_F88 & 0x60;
+    t = g->unk_F88 & 0x60;
     if (t != 0x20)
     {
         if (t == 0x40)

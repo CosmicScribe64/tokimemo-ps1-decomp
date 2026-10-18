@@ -18173,3 +18173,18 @@ Created [[tickets/T-24003-complete-bunkaken]] for the two assigned BUNKAKEN obje
 ## [2026-10-18] ticket | Submit BUNKAKEN completion pass for review
 
 [[tickets/T-24003-complete-bunkaken]] moves to In Review, matching its board card. Accepted result: two functions / 836 bytes, literal default proofs and affected-overlay checksum pass. The date-loader blocker remains archived and is not counted. Full default build and final guards are running; review is required before Done.
+## [2026-10-17] ticket | Begin OPTION completion package
+
+Created [[tickets/T-24002-complete-option]] on branch codex/complete-option for five functions in src/ovl/OPTION/801389A0.c; consulted [[option-family-results]] and [[matching-notes]].
+
+## [2026-10-17] build | Match OPTION initialization
+
+[[tickets/T-24002-complete-option]] recovered func_80139198 in src/ovl/OPTION/801389A0.c (860 bytes). The marked FAKE comma expression delays the existing flag clear to match the original schedule. Docker default linked proof reports literal target-byte equality and OPTION checksum passes; details in [[option-family-results]].
+
+## [2026-10-17] ticket | OPTION completion package enters review
+
+[[tickets/T-24002-complete-option]]: one verified function / 860 bytes, the func_80139F8C guard improved to 5 rows, the other three remain unresolved. Retained useful typed source drafts and scheduling/allocation blockers in drafts/T-24002/README.md. Header and aggregate-global checks passed; OPTION checksum and the literal default match were reconfirmed after the guard edit. Ticket and board now In Review; independent review remains required.
+
+## [2026-10-17] build | OPTION completion checks pass
+
+[[tickets/T-24002-complete-option]] final header/global/prototype checks passed (prototype branch check: 0 new disagreements, 15 known). Official guarded funcdiff confirms func_80139F8C remains five differing rows; no match claimed for it.
