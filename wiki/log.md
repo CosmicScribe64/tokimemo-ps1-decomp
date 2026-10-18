@@ -18236,3 +18236,31 @@ Created [[tickets/T-24007-complete-geko]] for five functions of src/ovl/GEKO/801
 ## [2026-10-17] build | Match GEKO status transition helper
 
 [[tickets/T-24007-complete-geko]] recovered func_80133598 (452 bytes) in src/ovl/GEKO/801323E0.c. A genuine call-result local restores the saved status-byte slot; corrected Rec38 word test and direct signed amount update preserve all instructions. No FAKE. Default linked proof and GEKO checksum pass; see [[scenes-family-results]].
+
+## [2026-10-18] build | Validate BUNKAKEN completion package
+
+[[tickets/T-24003-complete-bunkaken]]: full default Docker ninja -j2 succeeds. Combined default literal linked proofs confirm func_80140F60 (296 bytes) and func_8013BD84 (540 bytes). Headers/globals pass; prototype branch check has 0 new / 15 known disagreements. Package remains In Review pending independent standards review.
+
+## [2026-10-18] ticket | Claim BUNKAKEN date state machine
+
+Created [[tickets/T-24005-bunkaken-date-state-machine]] for func_80143DD0 alone, reusing the built isolated checkout. Read [[bunka-family-results]] and prior T-9960 evidence in [[matching-notes]]; seek the archived eight-line near miss before new source hypotheses.
+
+## [2026-10-18] build | Recover BUNKAKEN date-state-machine near miss
+
+[[tickets/T-24005-bunkaken-date-state-machine]] recovers the lost T-9960 eight-row source from T-18500 with current headers. Guarded C differs at four masked-selector register words only; default assembly fallback passes literal proof for 3,232 bytes. Two required self-stores are FAKE-labelled. [[bunka-family-results]] and drafts/T-24005/README.md record provenance, failed forms and the focused closer blocker. Zero new C bytes.
+
+## [2026-10-18] ticket | Submit recovered BUNKAKEN near miss for review
+
+[[tickets/T-24005-bunkaken-date-state-machine]] moves to In Review with matching board/index status. Guarded C is 8 rows / 4 words different; explicit default fallback proof, Docker ninja -j1, BUNKAKEN SHA1, headers and globals pass; prototype branch check reports 0 new / 15 known. No new C match is claimed.
+
+## [2026-10-18] ticket | T-24005 bounded selector closer
+
+Reopened [[tickets/T-24005-bunkaken-date-state-machine]] for novel selector lifetime probes. Prior guarded source has four differing words; no verified C-byte gain.
+
+## [2026-10-18] decision | T-24005 selector lifetime candidate
+
+A narrow-selector empty test before the switch resolves the four-word residue in full-unit scoring. Installed the marked FAKE in src/ovl/BUNKAKEN/80143DD0.c and removed the function guard; literal default verification pending in [[tickets/T-24005-bunkaken-date-state-machine]].
+
+## [2026-10-18] build | T-24005 unguarded C matches 3,232 bytes
+
+The narrow-selector empty test resolves the four-word residue in src/ovl/BUNKAKEN/80143DD0.c; marked FAKE and removed the guard/fallback. Explicit default linked funcdiff matches 3,232 bytes. BUNKAKEN SHA1, headers and globals pass; prototype guard has 0 new / 15 known disagreements. Updated [[bunka-family-results]], [[index]] and drafts/T-24005/README.md. Moved [[tickets/T-24005-bunkaken-date-state-machine]] to In Review for independent parent review. No further probes after the first exact result.
