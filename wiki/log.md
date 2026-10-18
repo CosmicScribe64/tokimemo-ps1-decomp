@@ -19627,3 +19627,21 @@ Added source-only drafts/T-24064/README.md with matched MAIN cursor provenance, 
 ## [2026-10-18] ticket | ETC model loop independently verified and Done
 
 [[tickets/T-24064-etc-count-trio]] resumed single-function3F980 scope passes independent actualC252 proof, all27 hashes and interfaces; root standards review has no findings. Main6d1d52101, Docker total6513/6958 functions and1864596/2279368 bytes. [[completion-run-2026-10-17]] records new totals and one-worker continuation; board/index synchronized. Earlier deferred targets are not marked matched.
+## [2026-10-18] query | ENDING independent review clean; inspect late branch removal
+
+[[tickets/T-24047-ending-sprite-scene]] existing worker reviewed the tracer and
+exact-version controls with no findings or compiler runs. No new supported C89
+probe found. Inspect AS1 pass order for branch/metadata removal after speculation
+before further source experiments; original12-entry barrier input remains absent.
+
+## [2026-10-18] query | ENDING late-pass inspection leaves input evidence gap
+
+[[tickets/T-24047-ending-sprite-scene]] XBB precedes emission and final branch-delay
+filling. Inspected later code reuses delay slots/adjusts targets, but supplies no
+extra-edge deletion recipe. No new supported source probe, no impossibility or
+matching claim. Missing evidence remains original AS1 input/build metadata or a
+demonstrable12-entry C input with the required barrier. Task remains In Progress.
+
+## [2026-10-18] ticket | Preserve unresolved ENDING handoff
+
+[[tickets/T-24047-ending-sprite-scene]] moves to In Review after its worker completed the diagnostic investigation. Guarded source remains unmatched; no Done or coverage claim. Prior evidence/review preserved on main. One existing Sol worker continues ETC40AE4; overall completion goal remains active.

@@ -1,7 +1,7 @@
 ---
 id: T-24047
 title: Recover ENDING sprite scene initializer
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -401,3 +401,22 @@ and full-TU code/data/relocation sections. The source's residual is not a native
 reconstruction artifact. Both controls are retained in backend-evidence.json;
 no further backend-version or execution sweeps are indicated. Evidence-only
 review finds no new issue. Sole source remains guarded at35, no new C coverage.
+
+Existing ENDING worker independently reviewed948aa669f/2eb32973b and found no
+actionable standards issue; ran no compilers. It found no defensible novel C89
+construction under the measured table/instruction constraints. Missing evidence
+is a source-derived input retaining12 table destinations where the LUIs fail a
+scanner check, or original compiler input exposing the barrier metadata. Before
+another source probe, inspect whether AS1 removes branches/metadata after XBB;
+only such a later removal could preserve a barrier without extra final words.
+
+Read-only AS1 pass-order check confirms XBB precedes final emission and
+do_branch_opt. The latter fills delay slots by copying an eligible target
+instruction and adjusting the branch; the inspected emission path can reuse a
+previous empty delay slot. Neither establishes a source edge that survives XBB
+but vanishes entirely afterwards. No new source probe is supported by this
+inspection. Preserve the remaining evidence boundary: unavailable original AS1
+input/build metadata, or a demonstrable12-entry C-generated barrier input.
+No match or impossibility proof is claimed; ticket stays In Progress.
+
+Root handoff: existing worker turn completed and is idle. Move this unresolved checkpoint to In Review, not Done; guarded source and evidence remain preserved, zero new matching bytes. Revisit when a concrete new source or input-metadata lead exists. The overall100% goal remains active with the sole Sol worker on ETC40AE4.
