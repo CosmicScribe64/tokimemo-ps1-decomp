@@ -18234,3 +18234,11 @@ Created [[tickets/T-24026-shougatu-sibling-ports]] In Progress after reading [[s
 ## [2026-10-17] build | T-24026 SHOUGATU two sibling C wins
 
 [[tickets/T-24026-shougatu-sibling-ports]] moves to In Review: 708 bytes of unguarded C verified by source gate, normal default linked literal proof and full SHOUGATU checksum. [[shougatu-family-results]] records recipes and the four-word stack layout blocker for the guarded dispatcher; source-only draft archived in drafts/T-24026. No shared-header changes.
+
+## [2026-10-17] ticket | T-24029 seasonal scene sibling pair
+
+Created [[tickets/T-24029-seasonal-scene-siblings]] In Progress for a bounded typed sibling reconstruction. Read prior [[shougatu-family-results]] and T-15100/T-17500 evidence.
+
+## [2026-10-17] decision | T-24029 bounded scene pair archive
+
+[[tickets/T-24029-seasonal-scene-siblings]] moves to In Review with source-only typed checkpoints in drafts/T-24029. No C win; production sources restored. Current aligned edit costs GYOZI 586 / SHOUGATU 656 leave broad copy scheduling and live-range blockers, recorded in [[shougatu-family-results]] and the archive. No shared-header changes or toolchain modifications.

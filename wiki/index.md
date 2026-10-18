@@ -635,3 +635,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24001-main-schedule-final-row|T-24001]] Close main schedule final instruction (In Review; Astra backedge follow-up remains one row, no new C match).
 
 - [[tickets/T-24026-shougatu-sibling-ports]] — SHOUGATU sibling ports: 708 B verified C; dispatcher stack-layout near miss.
+
+- [[tickets/T-24029-seasonal-scene-siblings]] — source-only GYOZI/SHOUGATU typed scene checkpoints; no verified bytes.

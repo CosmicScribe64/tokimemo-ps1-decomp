@@ -104,3 +104,7 @@ Two unguarded C matches in src/ovl/SHOUGATU/8013F190.c add 708 bytes: func_8013F
 func_80138240 remains guarded: typed FnTbl37 port matches all opcode/register choices but four stack frame/table-offset words (208/56 versus target 200/48). Source-only evidence and exhausted alternatives are in drafts/T-24026; avoid repeating return type, index declaration order, narrow index and direct-index variants. Default assembly fallback is retained, and no C win is claimed for it.
 
 The full SHOUGATU checksum passes. Both claimed wins pass the source gate (no target INCLUDE_ASM) and normal linked literal proof with --resolve --no-build --version default. [[tickets/T-24026-shougatu-sibling-ports]] awaits independent review.
+
+## T-24029 seasonal scene sibling checkpoint
+
+[[tickets/T-24029-seasonal-scene-siblings]] is a bounded source-only pass over GYOZI func_801368B8 and SHOUGATU func_801350F8. No new C match; production sources unchanged. Typed fixed-point arithmetic and source-level conditions yield current aligned edit costs 586 / 656; the broad string-copy scheduling, actor-base and live-range mismatches remain. The initialized SHOUGATU selector before local string copies saves six edits but does not solve the prologue. Source bodies and concrete negative evidence are in drafts/T-24029. No shared headers changed. Avoid repeating the small return-type, counter, and selector probes listed there.
