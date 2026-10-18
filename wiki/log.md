@@ -18786,3 +18786,10 @@ Created [[tickets/T-24044-taiiku-taco-siblings]] after reading [[taiiku-family-r
 ## [2026-10-18] build | TEL profile screen published
 
 [[tickets/T-24045-tel-profile-screen]] passed root review and independent Docker checks:27 hashes, interface guards, actual-C literal MATCH2128 bytes; published f828daec1, moved to Done. [[completion-run-2026-10-17]] records6500/6958 functions,1849648/2279368 bytes(81.1%),429720 remaining. T24044 source archives published73e1ab681. Continued disjoint large targets T24047/T24048/T24049.
+## [2026-10-18] ticket | T-24046 MAIN screen page renderer
+
+Created [[tickets/T-24046-screen-page-renderer]] In Progress after reading [[main-family-results]] and the earlier source-only T-24006 evidence.
+
+## [2026-10-18] decision | T-24046 renderer structural checkpoint
+
+[[tickets/T-24046-screen-page-renderer]] moves to In Review with source-only drafts/T-24046. Correct word texture-offset and unused argument5 ABI-slot recovery plus automatic expression spills bring the frame to target120 and aligned cost to504 (812 vs806 instructions), still unmatched. [[main-family-results]] records the concrete fixes and bounded negatives. Production source/header fallback remains unchanged.

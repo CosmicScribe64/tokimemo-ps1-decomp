@@ -244,3 +244,7 @@ The historical guarded 16-row dialogue gap is resolved by [[tickets/T-24021-dial
 ## T-24041 CD dispatcher source checkpoint
 
 func_800455C4 remains unchanged assembly. [[tickets/T-24041-main-render-cd-siblings]] archives repaired typed source in drafts/T-24041: normal full-file aligned cost512/frame104, then499/frame88 after removing artificial temporary homes; target frame80. Ring18 indices, word payload-header access and SDK-shaped stack locals are repaired, but broad branch/register differences remain. Exact negative hypotheses and scratch-only declarations are recorded in the archive; no speculative CD headers added. The separate348 B renderer win and final MAIN checksum/guard evidence stand.
+
+## T-24046 screen page structural follow-up
+
+[[tickets/T-24046-screen-page-renderer]] adds no production C. Source-only drafts/T-24046 fixes two concrete old-draft defects: signed-byte narrowing of a positive128 texture offset before texture-page arithmetic, and the missing unused argument5 slot that shifts all clut/depth stack inputs. Reused POLY_FT4 plus inlined common expressions produces the target120-byte frame, versus200 for the prior-style source. Fresh aligned costs1032 baseline,1026 pointer reuse,637 named derived values,562 automatic spills,524 ABI/local ordering,504 consecutive RGB initialization. Best812 vs806 instructions remains broad; named word-offset/global-state alternate523 is rejected. No shared headers changed and no raw instructions archived. Preserve these structural fixes before any closer pass.

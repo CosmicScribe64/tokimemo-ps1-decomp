@@ -694,3 +694,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24041-main-render-cd-siblings]] — MAIN LINE_G2 renderer348 B verified; CD dispatcher source-only499-edit checkpoint.
 
 - [[tickets/T-24045-tel-profile-screen]] - TEL profile-screen match, 2128 literal bytes; In Review.
+- [[tickets/T-24046-screen-page-renderer]] — source-only renderer ABI/word-offset/frame recovery; no new verified C.

@@ -56,6 +56,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24046-screen-page-renderer|T-24046 Recover the MAIN screen page renderer]]
 - [ ] [[tickets/T-24041-main-render-cd-siblings|T-24041 Recover MAIN renderer and CD dispatcher]]
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
 - [ ] [[tickets/T-24044-taiiku-taco-siblings|T-24044 TAIIKU and TACO sibling completion]]
