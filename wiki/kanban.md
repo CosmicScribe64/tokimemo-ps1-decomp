@@ -48,6 +48,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24077-etc-pair-scene|T-24077 Recover ETC pair-table scene]]
+
 
 
 

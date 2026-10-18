@@ -18925,3 +18925,7 @@ Best71/frame28/178words remains source-only; all controls/proofs and explicit
 FAKE boundary/reload/return caveats retained in drafts/T-24076. Production ASM
 and all neighbors/interfaces unchanged. No Done/match/impossibility claim;
 parent-directed further F054 probes stopped. See [[etc-family-results]].
+
+## [2026-10-18] ticket | Claim ETC scene from current pair-table layout defect
+
+Created [[tickets/T-24077-etc-pair-scene]] before edits for only func_8013CF2C in ETC/8013BEF0.c. Old165/149 scores acknowledged; current two-dimensional table makes retained whole-array scaling wrong. Newly verified [[tickets/T-24075-etc-random-selection]]/matched F320 pair-call source supports direct indexing after original-address verification. Same sole Sol medium worker with target-only delegated reservation; no extra agents/instrumentation. Preserve all neighbors and final unresolved [[tickets/T-24076-etc-album-search]].
