@@ -430,3 +430,14 @@ reach790/frame98. Source-only controls/replay are drafts/T-24078; production,
 headers/config and helpers remain unchanged. Original frame90; recovery active,
 no match or linked C proof claimed. Initial field-substitution syntax error was
 repaired before scoring and is not a baseline result.
+
+Metric correction: printed +/- rows are diagnostic only, with different equal-
+length alignment rules. Existing tools/funcdiff.py diff_score measures aligned
+resolved-key cost. Original588words/frame90: baseline638cost/800rows/594words/C0;
+joined638/800/594/98 is retained; scalar SDK UV678/790/582/98 is WORSE despite
+fewer rows. UVpair638/800/596/98 restores LW/saved136 but adds2words; per-case
+height638/800/596/A8, inlineheight678/790/582/98, namedwidth648/806/594/A0 are
+rejected. drafts/T-24078 replay now prints alignedcost/words/frame evidence.
+No supported form simultaneously restores original stackUV50/54, saved136/320
+and DIV-before-MULTU scheduling. Active In Progress pending focused direction;
+no further unsupported probes, no match/impossibility claim. Production ASM.

@@ -96,13 +96,13 @@ s32 func_8013D570(s32 arg0, s32 arg1) {
             (*var_s0)->y3 = (s16) ((D_800E6280.unk_018[D_8011ECA0] + temp_lo_8 + temp_a0) - 0x65);
             break;
         }
-        (*var_s0)->u0 = sp54;
+        (*var_s0)->u0 = (s8) sp54;
         (*var_s0)->v0 = 0x13;
-        (*var_s0)->u1 = sp50;
+        (*var_s0)->u1 = (s8) sp50;
         (*var_s0)->v1 = 0x13;
-        (*var_s0)->u2 = sp54;
+        (*var_s0)->u2 = (s8) sp54;
         (*var_s0)->v2 = 0xB3;
-        (*var_s0)->u3 = sp50;
+        (*var_s0)->u3 = (s8) sp50;
         (*var_s0)->v3 = 0xB3;
         (*var_s0)->r0 = 0x80;
         (*var_s0)->g0 = 0x80;
