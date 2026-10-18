@@ -19072,3 +19072,47 @@ rejected. Ledger114 and native capture hashes preserve completed evidence.
 [[ending-allocator-trace]] records equal local weights, swapped block numbering,
 and the candidate-skip flag whose involvement remains unproven. Evidence-only
 review has no new findings; zero new verified C bytes, task In Progress.
+
+## [2026-10-18] query | ENDING whole-switch source CFG controls
+
+[[tickets/T-24047-ending-sprite-scene]] next isolates a whole-switch do-once wrapper
+and explicit common exit gotos, preserving all12 cases. Earlier wrappers changed
+only the default arm. Production remains unchanged.
+
+## [2026-10-18] query | ENDING whole-switch controls neutral; inspect candidate flags
+
+[[tickets/T-24047-ending-sprite-scene]] both whole-switch wrappers remain804/cost35.
+Build an external print-only diagnostic from the existing pinned AS1 reference,
+then require stock-output fidelity before interpreting candidate flags/results.
+No optimization decisions or production compiler settings change.
+
+## [2026-10-18] query | ENDING AS1 flag hypothesis ruled out by faithful trace
+
+[[tickets/T-24047-ending-sprite-scene]] external print-only AS1 preserves complete
+target and code/data/relocation sections for both captures. Both default blocks
+have identical0xfffff840 flags, with candidate-skip bit5 clear. Trace scanner
+stages next; production assembler and optimization decisions stay unchanged.
+
+## [2026-10-18] query | ENDING default motion barrier identified
+
+[[tickets/T-24047-ending-sprite-scene]] faithful print-only scanner trace locates
+the case12 rejection in func_429928: its default path includes indirect dispatch
+block37 (flags0xffff784b, bit6 set). Normal default LUIs pass all three checks.
+This establishes an intervening CFG barrier rather than a label/weight difference.
+Verify original table destinations next; production remains guarded at35.
+
+## [2026-10-18] query | ENDING original table excludes a hidden default entry
+
+[[tickets/T-24047-ending-sprite-scene]] original table has12 distinct case targets
+and no default; next table begins immediately. Test default labels nested inside
+false if/while controls to vary entry metadata without adding a case. Ordinary C
+only, diagnostic copies; production remains unchanged.
+
+## [2026-10-18] query | ENDING path barrier reproducible; nested labels neutral
+
+[[tickets/T-24047-ending-sprite-scene]] nested false-if/while defaults remain804/
+cost35. Ledger118, reusable hash-guarded print-only AS1 generator/verifier, and
+updated native evidence preserve the bit6 path-barrier result. Both stock
+section/target fidelity checks pass. [[ending-allocator-trace]] has exact commands
+and replaces the unproven label-flag hypothesis. Standards review finds no new
+issue; production guarded35, zero coverage gain, In Progress.

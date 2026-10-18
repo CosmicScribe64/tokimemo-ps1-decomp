@@ -40,6 +40,13 @@ native AS1 traces, objects and dumps stay ignored under `build/t24047/`. Tracing
 used a scratch wrapper to add native diagnostics after the unchanged frame pass;
 stock text, data, rodata and relocation sections were verified identical.
 
+`as1_trace.py` generates a hash-guarded, print-only external AS1 diagnostic and
+verifies captured-input output fidelity. [The wiki](../../wiki/ending-allocator-trace.md)
+contains build commands and the measured rejection gate: an extra table edge
+puts the indirect dispatch's bit6 barrier on the default path. Both default
+blocks have the same flags; the label-skip hypothesis is ruled out. No traced
+compiler output is used as a production matching candidate.
+
 The focused continuation added 14 negative measurements to the ledger. Changing
 default loads to integer-address or volatile views worsens output. Distinct
 default-cell symbol names produce the same residual, so no matrix declaration

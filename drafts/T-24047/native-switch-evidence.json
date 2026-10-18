@@ -27,5 +27,28 @@
     "case12.G": "f2b84d631db840f25604bdcc0708c4d8d93db7d1f4cfd314d7f58582aec98f6b",
     "case12.T": "5ebc643d7d84d38e58b8ce3ae839472c1952efaae2a7f2dae125eff36a2d07bc"
   },
-  "label_skip_flag_causality": "not established"
+  "label_skip_flag_causality": "ruled out: both default blocks have flags0xfffff840 and bit5 clear",
+  "scanner_gate": {
+    "normal_default_luis": {
+      "movable": 1,
+      "graph_reject": 0,
+      "path_accept": 1
+    },
+    "case12_default_luis": {
+      "movable": 1,
+      "graph_reject": 0,
+      "path_accept": 0
+    },
+    "case12_path_barrier": {
+      "block": 37,
+      "kind": "indirect jump dispatch",
+      "flags": "0xffff784b",
+      "bit": 6
+    }
+  },
+  "instrumented_section_fidelity": {
+    "default": true,
+    "case12": true
+  },
+  "reference_source_sha256": "905927751a79aba82d332bdce254b2b30a4312ae14a4108897e11b48487d17a1"
 }

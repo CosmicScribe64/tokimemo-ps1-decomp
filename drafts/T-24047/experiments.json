@@ -911,5 +911,37 @@
     "cost": 54,
     "printed": 668,
     "matching_claim": false
+  },
+  {
+    "label": "closer_whole_switch_do_once",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_whole_switch_explicit_exits",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_default_label_in_false_if",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_default_label_in_false_while",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
   }
 ]
