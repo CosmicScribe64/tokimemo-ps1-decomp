@@ -18414,3 +18414,11 @@ The all-dot state region fixes the inserted reload but reverses two earlier addr
 ## [2026-10-17] decision | Reuse the closer slot for fresh Sol matching work
 
 RPG_BAT residual source archive and TACO PRE reproducer are published; neither archive adds C coverage. Root Astra T24014 stopped after its bounded hypotheses were exhausted. Reused its clean built checkout for Sol 6.1 medium T24016 BUNKASAI; T24015 MAIN work also assigned to Sol medium. Refreshed current/completed ownership in [[completion-run-2026-10-17]] to remove stale active claims. Dedicated Astra large-function chat remains active.
+## [2026-10-18] ticket | BUNKASAI state-machine recovery
+Started [[tickets/T-24016-bunkasai-state-machines]] in existing complete-bunkaken worktree; read project rules and [[bunkasai-family-results]]. Targets func_80135C4C and func_80158764 currently use assembly; prior draft scores 264/332.
+
+## [2026-10-18] build | BUNKASAI func_80135C4C matched
+[[tickets/T-24016-bunkasai-state-machines]] recovered default unguarded C for 1,508 bytes with direct dialogue-field updates and a GameState pointer. Docker ninja -j1 BUNKASAI checksum OK and literal default linked funcdiff MATCH. No FAKE or header change; [[bunkasai-family-results]] records the recipe.
+
+## [2026-10-18] build | Correct production-install guard and reverify BUNKASAI C
+Root review found that bulk_m2c.insert_draft had left a NON_MATCHING guard in the first installation, so the earlier default result still checked fallback assembly. Removed guard and fallback from src/ovl/BUNKASAI/801354B0.c, recompiled/relinked normal default with ninja -j1, and reran literal default funcdiff: checksum OK, linked MATCH 1,508 bytes. This corrected proof supports the C claim in [[tickets/T-24016-bunkasai-state-machines]].
