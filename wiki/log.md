@@ -18607,3 +18607,11 @@ Moved [[tickets/T-24028-date-event-short-movie-siblings]] and kanban card to In 
 ## [2026-10-18] lint | T24028 archive whitespace cleanup
 
 The integration's all27 hashes and guards passed, but its final staged diff check found one trailing-space-only line in the source archive. The subsequent wiki commit included the verified merge before that hygiene fix; remove the archive whitespace in this forward correction. No production bytes or matching claims changed.
+## [2026-10-17] ticket | T-24033 VALEN selector sibling completion
+
+Created [[tickets/T-24033-valen-selector-ports]] In Progress. Read T-19016 and [[tickets/T-24019-gyozi-sibling-ports]] negative evidence before ports; only two assigned VALEN functions owned, one Docker compiler.
+
+
+## [2026-10-17] decision | T-24033 VALEN seven-row selector draft
+
+[[tickets/T-24033-valen-selector-ports]] moves to In Review. Direct GameState girl access and meaningful mode local leave func_80132D0C at7 rows, retained under NON_MATCHING;34030 remains its prior27-row guard. Zero matches or verified-byte gain. Default VALEN SHA1 and declaration checks pass; [[event-family-results]] updated. Source-only probes preserved, all loose experiments retained ignored in build/T-24033-probes/. Independent review pending.

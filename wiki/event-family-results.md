@@ -218,3 +218,8 @@ DATE2 func_80133AF0 ports to EVENT func_8011C750 through existing movie/state/Re
 ## T-24028 short movie source port
 
 DATE/DATE2 source structure recovers EVENT func_8011D5C4 to seven differing instructions (14 printable rows), exact 509 instructions and 0x40 frame, versus T-22009's distant draft and wrong frame. All record loops, fades and callback spills match. Only timer narrowing has the same raw/masked range split as DATE func_8014718C's old T-17201 gap. The selected scratch body needs s32 own-return view; existing void header and production INCLUDE_ASM remain unchanged. No new C bytes or header change. Source-only near miss, tested reproduction and failed hypotheses: drafts/T-24028/; [[tickets/T-24028-date-event-short-movie-siblings]] In Review.
+
+
+## T-24033 VALEN selector sibling retry
+
+[[tickets/T-24033-valen-selector-ports]] recovers a seven-row guarded form of func_80132D0C: use direct girl accesses through a local GameState pointer and a meaningful s32 mode local. This fixes prior operand allocation; only early/late dispatch shift scheduling, one nop and branch offsets remain. func_80134030 reproduces the27-row default-block LUI gap shared with GYOZI39E4C. Zero matches or verified-byte gain; default VALEN checksum and header/global/prototype checks pass. Selected sources and bounded negative provenance are in drafts/T-24033/.
