@@ -19736,3 +19736,7 @@ Created [[tickets/T-24071-etc-menu-selection]] before edits for only func_80144D
 ## [2026-10-18] build | T-24071 button snapshot57 checkpoint
 
 [[tickets/T-24071-etc-menu-selection]]/[[etc-family-results]] retain source-only drafts/replay under drafts/T-24071. Required F88 snapshot reduces61 to57 fixes selection spill28; frame30 versus38/per-arm masks remain. Real Work fields61, stored-argument57 and named-status frame/spill tradeoffs57 rejected. No repeated width sweep, guessed buffer, return override, production/interface/compiler change or verified gain. In Progress.
+
+## [2026-10-18] query | T-24071 masked ranges survive allocation
+
+[[tickets/T-24071-etc-menu-selection]]/[[etc-family-results]] record approved unchanged trace57 and stock capture, both requiring whole-object/four-section fidelity before interpretation. Masked ranges64/65 get v0; final uopt retains AND255/CVT L/register store, while final byte-store lowering removes the mask. No new binary or source sweep. Source-only capture/fidelity helpers retained under drafts/T-24071; production unchanged, In Progress.
