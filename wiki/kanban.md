@@ -48,6 +48,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24072-etc-model-init|T-24072 Match ETC model initializer]]
+
 
 
 

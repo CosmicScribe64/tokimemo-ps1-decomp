@@ -18734,3 +18734,7 @@ Parent reports completed read-only GitHub check at11:44UTC: no open PRs; only op
 ## [2026-10-18] ticket | T-24071 unresolved In Review
 
 [[tickets/T-24071-etc-menu-selection]] moves with card/index to In Review, not Done. Source57 and all faithful trace/stock-stage capture evidence remain in drafts/T-24071; production ASM unchanged. AS1 stage deletion proven, candidate exact width-rule attribution remains runtime-unobserved. No verified bytes or impossibility claim. Stop44DF0 diagnostics; next lead screening is read-only and requires separate ownership/ticket before edits.
+
+## [2026-10-18] ticket | Revisit ETC model initializer with newly verified cursor recipe
+
+Created [[tickets/T-24072-etc-model-init]] before edits on only func_8014354C in ETC/80143240.c. Parent specifically releases archived [[tickets/T-24055-etc-short-helpers]] ownership, confirming old worker completed clean. New matched [[tickets/T-24064-etc-count-trio]] integer-cursor recipe postdates old13-row controls; preserve target map/calls/strides/SVECTOR order. Same sole Sol medium worker reuses5b221cb12, no agents or broad sweeps. Current maince538a96a preserves final T-24071; all other bodies remain outside scope.
