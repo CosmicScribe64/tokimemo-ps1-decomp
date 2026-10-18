@@ -632,3 +632,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-17102-w3-rpg-bat-p02|T-17102]] Wave 3 package w3-rpg-bat-p02: RPG_BAT `80151C10.c`, `80156CC0.c`, 3 of 3 functions matched (3,056 B: `func_80151C10`, `func_80156D78`, `func_80157158`); the `$v1`-selector miss fixed by an int-returning callee view (Done).
 
 - [[tickets/T-24010-date-etc-coordination|T-24010]] Isolated DATE and ETC coordinator; workers [[tickets/T-24011-date-dispatch-family|T-24011]] and [[tickets/T-24012-etc-render-family|T-24012]].
+- [[tickets/T-24001-main-schedule-final-row|T-24001]] Close main schedule final instruction (In Review; Astra backedge follow-up remains one row, no new C match).

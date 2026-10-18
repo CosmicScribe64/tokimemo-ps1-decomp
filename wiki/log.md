@@ -18198,3 +18198,18 @@ Created `codex/complete-etc` from `4c5123f11`, reused local data and existing Do
 ## [2026-10-17] build | T-24012 verified ETC dispatcher
 
 [[tickets/T-24012-etc-render-family]] and [[etc-family-results]] record 1,280 verified literal linked bytes for `func_80136448` in `src/ovl/ETC/80132880.c`; explicit default proof and ETC checksum pass in Docker. Accurate dispatch callee declarations in `include/ovl/ETC.h`; marked FAKE return view, no main API changes. Header/global guards pass; prototype guard 0 new / 15 known. Ticket moved to In Review for coordinator review; three remaining targets stay assembly.
+## [2026-10-18] ticket | T-24001 main schedule final instruction
+
+Created [[tickets/T-24001-main-schedule-final-row]] after reading [[tickets/T-23003-w5-big-p03]] and [[matching-notes]]. Source-only follow-up of the one-row counter fold, isolated branch `codex/complete-main`.
+
+## [2026-10-18] build | T-24001 final counter fold remains
+
+[[tickets/T-24001-main-schedule-final-row]] moved In Progress to In Review. Baseline plus 20 source-only forms leave one linked C instruction different; production src/main/8006CB30.c is unchanged. Archived Docker diagnostic drafts/T-24001/counter_forms.py, appended [[matching-notes]]. Default linked function MATCH (4,692 bytes), main SHA1 matches, ninja -j2 complete, headers/globals/prototypes pass. No new verified C bytes.
+
+## [2026-10-18] ticket | Reopen main schedule final row for Astra
+
+[[tickets/T-24001-main-schedule-final-row]] moved In Review to In Progress for a bounded compiler-informed source pass; the existing one-row guard is retained pending evidence.
+
+## [2026-10-18] build | Astra final-row follow-up retains main guard
+
+[[tickets/T-24001-main-schedule-final-row]] returns In Progress to In Review after 19 new source variants (18 compile, one as1 error), archived in drafts/T-24001/astra_forms.py. Genuine loop backedges retain the desired increment but add loop control; single-trip loops, representation changes and timer switches do not close the row. [[matching-notes]] records the mechanism. Fresh full-TU C diff remains row 94 only; default fallback MATCHes 4,692 bytes and main SHA1 is unchanged. Production source and compiler tools are untouched; no new matching bytes.
