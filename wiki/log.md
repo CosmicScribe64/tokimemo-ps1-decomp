@@ -19374,3 +19374,7 @@ Published64ef469bf after actual default C proofs396/2256 bytes and all27 hashes/
 ## [2026-10-18] build | Preserve PR61 compiler evidence
 
 Integrated5397dc7f7 after reviewing tools/aspsx_survey.py, running its survey in Docker, and passing all27 hashes and interface guards. GitHub confirms PR61/62 merged. Survey is read-only; no production/toolchain changes and zero new coverage from PR61. [[gcc-objects]] and [[tickets/T-11890-tt-ratan2-aspsx]] preserve contributor findings; [[completion-run-2026-10-17]] updates handoff state.
+
+## [2026-10-18] query | T-24067 indexed allocation and copy-state evidence
+
+Indexed tracing confirms format/save/end bits54/55/56 share priority3.33333325 and save precedes end in numbering. Inclusive/do loops retain16/16; local-limit/narrow/top-exit forms lose induction elimination; split copies and explicit record/album pointers worsen. Read existing T-20710 block-copy state evidence in [[ido-52-evaluation]] as a supporting analogy for t5/t6, not a fresh4.1 result or exhausted-source claim. Updated drafts/T-24067/README.md and [[tickets/T-24067-etc-album-copy]]; production unchanged and target remains active.
