@@ -18174,3 +18174,15 @@ Created [[tickets/T-24003-complete-bunkaken]] for the two assigned BUNKAKEN obje
 ## [2026-10-18] build | Validate BUNKAKEN completion package
 
 [[tickets/T-24003-complete-bunkaken]]: full default Docker ninja -j2 succeeds. Combined default literal linked proofs confirm func_80140F60 (296 bytes) and func_8013BD84 (540 bytes). Headers/globals pass; prototype branch check has 0 new / 15 known disagreements. Package remains In Review pending independent standards review.
+
+## [2026-10-18] ticket | Claim BUNKAKEN date state machine
+
+Created [[tickets/T-24005-bunkaken-date-state-machine]] for func_80143DD0 alone, reusing the built isolated checkout. Read [[bunka-family-results]] and prior T-9960 evidence in [[matching-notes]]; seek the archived eight-line near miss before new source hypotheses.
+
+## [2026-10-18] build | Recover BUNKAKEN date-state-machine near miss
+
+[[tickets/T-24005-bunkaken-date-state-machine]] recovers the lost T-9960 eight-row source from T-18500 with current headers. Guarded C differs at four masked-selector register words only; default assembly fallback passes literal proof for 3,232 bytes. Two required self-stores are FAKE-labelled. [[bunka-family-results]] and drafts/T-24005/README.md record provenance, failed forms and the focused closer blocker. Zero new C bytes.
+
+## [2026-10-18] ticket | Submit recovered BUNKAKEN near miss for review
+
+[[tickets/T-24005-bunkaken-date-state-machine]] moves to In Review with matching board/index status. Guarded C is 8 rows / 4 words different; explicit default fallback proof, Docker ninja -j1, BUNKAKEN SHA1, headers and globals pass; prototype branch check reports 0 new / 15 known. No new C match is claimed.
