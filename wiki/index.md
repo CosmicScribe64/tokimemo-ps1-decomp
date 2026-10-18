@@ -697,3 +697,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24046-screen-page-renderer]] — source-only renderer ABI/word-offset/frame recovery; no new verified C.
 
 - [[tickets/T-24043-master-large-handler|T-24043]] Larger MASTER final-event handler (In Review; no match, corrected exact-frame source archived at diagnostic cost 342).
+
+- [[tickets/T-24049-etc-exam-ranking]] - ETC ranking source-only checkpoint,885 rows; In Review.
