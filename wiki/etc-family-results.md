@@ -267,3 +267,9 @@ T-24071 actual button snapshot reduces61 to57 fixes selection spill28 without gu
 T-24071 approved unchanged trace57 and stock-stage capture pass same-input whole-object/four-section fidelity. Masked ranges64/65 already receive v0; final uopt output retains AND255/CVT L/register store, but byte-store lowering removes the ANDI and narrows the call argument separately. This is not a demonstrated v0-interference blocker. No new binary or unsupported source control; drafts/T-24071 preserves source-only audit helpers.
 
 T-24071 read-only ugen reference identifies unsigned CVTL8 argument-mask construction but not the exact earlier mask-removal rule. Proven boundary remains post-cvt uopt output versus final object across ugen/as1. No supported new source condition; no further probes or binary. Source57 unresolved, production ASM.
+
+T-24071 subsequent stock backend capture resolves prior interval uncertainty: identical ugen output/as1 input retains per-arm AND masks, final object removes them, locating deletion in stock as1 processing. Same pinned57 input passes whole-object/four-section identity; backend_capture.py retained. No new source control/compiler binary; production ASM remains.
+
+T-24071 bounded AS1 reference identifies a candidate needed-bit-width ANDI-to-copy gate (func41917c) plus mask-chain combination; runtime gate execution remains unobserved. No supported new expression beyond prior word/argument controls. Precise source gap is per-arm full-word mask retention without redundant narrowing/hoisting; no source sweep or assembler changes.
+
+T-24071 final handoff is unresolved/In Review, not Done. Best57/source controls/fidelity/stage capture preserved; production ASM unchanged. Candidate AS1 width-rule attribution remains a hypothesis without runtime gate values. Stop44DF0 probes/tracing; no impossibility claim.

@@ -108,3 +108,57 @@ supported untried source condition emerged beyond the prior24 narrowing forms.
 No new source control, binary, instrumentation or compiler execution followed
 this read-only inspection. The source remains57 rows, with no impossibility
 claim.
+
+
+A subsequent parent-approved stock ugen/as1 capture resolves that stage limit:
+**the masks survive ugen and disappear during stock as1 processing**.
+backend_capture.py uses the existing wrapper pattern, unchanged binaries and
+options, and the same pinned57 input. Whole-object/four-section identity passes;
+ugen.output and as1.input are byte-identical. ENT165, the assigned procedure,
+still contains AND v0,v1,255, SB v0, then AND a0,v0,255 in the first arm.
+The later arm also has an AND into v0 followed by a second mask/copy before
+byte stores. Final object lacks those earlier masks. No claim of a ugen mask
+deletion remains; the read-only unsigned-CVTL construction explains why the
+redundant mask reaches as1.
+
+Run after replay, serially in the same existing Docker image:
+
+```
+python3 drafts/T-24071/backend_capture.py
+```
+
+The helper checks the pinned full-TU source, whole-object/four-section identity,
+identical stage boundary and target-only mask presence. Stage bytes/symbol tables
+stay ignored under build/etc24071/backend57. Source controls would need to avoid
+the redundant argument narrowing while retaining each arm's full-word mask;
+prior word-local controls hoisted masks, so this is a concrete gap rather than
+an untried cast proposal. No source probe, compiler patch or new binary follows
+this observation.
+
+
+Bounded read-only AS1 inspection used existing /scratch/as1-reference.c,
+SHA256 `905927751a79aba82d332bdce254b2b30a4312ae14a4108897e11b48487d17a1`. A candidate rule appears in
+func_41917c. L4191c8 recognizes opcode0xC (ANDI) and uses the per-register width
+table at0x10023130 to compute the needed-bit mask. L41923c calls
+change_bb(kind3) when the immediate covers that mask. change_bb's kind3
+creates a register copy. L419330/L419450 also combines consecutive ANDI masks.
+These static rules are consistent with a byte store followed by another
+ANDI allowing the earlier mask to become a copy. Runtime width-table values
+and this exact executed branch were not observed, so the boundary proof
+is stronger than the identification of the particular AS1 rule.
+
+A required full-word use before the later truncation could defeat that
+candidate gate. Existing word-local/argument source controls already cover
+that route and can hoist the common mask out of the arms. The matched MAIN
+reference offers no equivalent callback arm to establish another source
+condition. No supported untried ordinary expression was found. The precise
+remaining source gap is preserving per-arm full-word masked values without
+redundant byte narrowing or known common-mask hoisting. No assembler edits,
+options, logging build or extra source controls were attempted.
+
+backend_capture.py's copied docstring now correctly identifies stock IDO5.3;
+its unused import was removed. Those two nonfunctional edits require no
+compiler replay. The preceding verified capture/fidelity results still apply.
+
+Final status: unresolved/In Review, not Done. Production remains assembly.
+All44DF0 probes/tracing stop at this handoff; no impossibility claim.

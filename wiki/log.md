@@ -19748,3 +19748,15 @@ Created [[tickets/T-24071-etc-menu-selection]] before edits for only func_80144D
 ## [2026-10-18] query | Parent GitHub ownership check11:44UTC
 
 Parent reports completed read-only GitHub check at11:44UTC: no open PRs; only open contributor claims50/57 with unchanged timestamps. No messages sent. Next check planned12:14UTC. Coordination record only; T-24071 matching scope unchanged.
+
+## [2026-10-18] build | T-24071 stock as1 mask deletion isolated
+
+[[tickets/T-24071-etc-menu-selection]]/[[etc-family-results]] record newly approved stock ugen/as1 capture. Same57 input passes whole-object/four-section fidelity; ugen output equals as1 input with target per-arm AND masks still present, while final object deletes them. This resolves the prior stage uncertainty and corrects any ugen-specific attribution. Source-only backend_capture.py retained, stage files ignored. No new source probe/binary/options or production change; In Progress.
+
+## [2026-10-18] query | T-24071 AS1 candidate gate and source gap
+
+[[tickets/T-24071-etc-menu-selection]]/[[etc-family-results]] record bounded read-only existing-AS1 candidate ANDI width gate/mask combination. Runtime gate execution not observed; stock stage boundary remains proven. No supported untried source expression beyond old word/argument controls; per-arm mask retention without narrowing/hoisting remains unresolved. No new compile/binary/options/probe. Capture docstring corrected to stock5.3 and unused import removed without compiler replay; production unchanged.
+
+## [2026-10-18] ticket | T-24071 unresolved In Review
+
+[[tickets/T-24071-etc-menu-selection]] moves with card/index to In Review, not Done. Source57 and all faithful trace/stock-stage capture evidence remain in drafts/T-24071; production ASM unchanged. AS1 stage deletion proven, candidate exact width-rule attribution remains runtime-unobserved. No verified bytes or impossibility claim. Stop44DF0 diagnostics; next lead screening is read-only and requires separate ownership/ticket before edits.
