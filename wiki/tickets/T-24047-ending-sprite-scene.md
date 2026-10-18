@@ -1,7 +1,7 @@
 ---
 id: T-24047
 title: Recover ENDING sprite scene initializer
-status: In Review
+status: In Progress
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -148,18 +148,145 @@ prologue, so it offers no empty-stall counterexample to AS1 cross-block motion.
 Private preprocessed-TU views of func_80132000 as implicit-int or unprototyped
 void are also neutral804/cost43; shared declarations remain unchanged.
 
-## Current dependency
+## Diagnostic prerequisite history
 
-The next grounded allocator investigation needs the instrumented uopt from
+The allocator investigation initially needed the instrumented uopt from
 [[uopt-register-allocation]] to expose priorities, costs and forbidden colours.
 Stock listings expose assignments but not those inputs and abort at the ecvt
 stub; regdiff confirms its traced binary is not available in this container.
 The coordinating lane previously found no existing host trace binary and asked
 that it not be rebuilt in this source lane. No compiler rebuild was attempted.
-That diagnostic runtime is the concrete dependency for further allocation work.
+That diagnostic runtime was the dependency for further allocation work; it is
+now repaired below and documented in [[ending-allocator-trace]].
 
 Eleven additional source scores are archived, all negative. The production
 source and preferred replay body remain exactly b0111332c. Scope/standards
 review finds no new production changes or findings. Ticket returns to In Review
 with unchanged804/805 instructions/cost43, zero new verified bytes, and all
 previous normal-build validation still applicable.
+
+2026-10-18 prerequisite repair: coordinating lane now authorizes a bounded
+15-minute rebuild of only the documented instrumented uopt in external scratch.
+Checkpoint4428f8789 preserves the preceding evidence. No reusable source found
+in the existing research/acceleration trees or user cache. Use pinned revision,
+source hash and existing ecvt/trace patches in Docker; verify stock output before
+using diagnostics. No production compiler or headers will change.
+
+Pinned reconstruction fetched successfully; generated5.3/uopt.c SHA256 exactly
+matches b0058f1559441c1a194d649271eb43b8637ec255682cfdd629031340b915b13f.
+The existing ecvt patch applies with zero fuzz. Setup/generation uses56MB and
+serial Docker build proceeds within the15-minute bound. This repairs the
+diagnostic prerequisite only; all production compiler binaries remain unchanged.
+
+Diagnostic prerequisite repaired in about3 minutes,62MB external scratch. The
+patched baseline and instrumented allocator both reproduce stock .text,
+.rel.text, .rodata and .rel.rodata bytes and section inventories exactly on the
+complete preferred TU. Target resolved words also equal the804-instruction
+checkpoint. Native trace now exits successfully. Use
+/private/tmp/t24047-uopt/variants/trace mounted as /scratch/variants/trace;
+no production toolchain changes. Detailed allocator diagnosis can continue.
+
+regdiff confirms a true tie:499 range528 and128 range529 each have priority5,
+cheapest cost0; ascending bit order chooses a3/t0. Separate lexical scopes do
+not reuse CFE stack homes: an unused UV local alone expands frame160 to168
+(804/cost55), and early computed UV worsens to802/cost639. Reusing a table
+halfword produces805/cost632. A union-member table copy preserves the frame but
+changes aligned stores to swl/swr (811/cost66); inspect whole-union copying
+before using that alternate storage. No production changes retained.
+
+Whole-union copy restores the exact checkpoint (804/cost43), but early UV
+computation still worsens it (802/cost633); byte scratch worsens to811/cost668.
+Moving the UV store immediately before palette is803/cost636. The new tracer
+explains the coupled regression: constant first-use order does flip, but the
+quotient loses a counted use, dropping priority15 to10 and allocation v1 to a0.
+That shifts all grid constants one colour higher (128 t0,499 t1) and reserves
+another temporary register across the function. A direct late quotient spelling
+is the next narrowly targeted use-count probe, not a compiler tie-break change.
+
+The direct late quotient probe improves804/cost37: it fixes all four constant
+words while preserving the frame and temporary pool. Remaining loop difference
+is one zero-halfword store issued early; default-arm speculative LUIs and
+branch-offset cascade remain. Preserve as drafts/T-24047/closer.c, replay with
+--body; production guarded body remains unchanged pending closure. Tracer recipe,
+fidelity verifier and all91 source measurements are checkpointed for reuse.
+
+After checkpoint7689bcca3, placing the zero-halfword store after the UV source
+statement closes its scheduling gap:804/cost35, with all initialization loops
+and scene bodies exact. Only default-arm cross-block LUI motion remains. The
+rejected explicitcase12 diagnostic now has805 instructions/cost2, just the
+wrong bound13 versus12 (and extra table entry), confirming isolation. Keep
+that form diagnostic-only; zero verified bytes until the real table matches.
+
+Register qualifiers and range-preserving s16 selector cast are neutral35.
+Final-store volatile pointer view scores23 only through offset cancellation:
+both LUIs still move and its body gains address instructions (806 total), so
+it is rejected. Direct volatile script-global/selector-field declaration views
+and an ordinary default C label are neutral35. Private assembler-input capture
+preserves normal output exactly and shows the explicitcase12 form adds three
+records: bound, table entry and default-entry alias. No assembler input is edited.
+
+Current guarded production reconstruction and drafts/T-24047/body.c now use
+the35-cost source. Only four C source lines move/change; the ASM fallback stays.
+All initializer loops, constants and scene bodies agree. Normal default build
+and reusable tracer fidelity are revalidated before the next checkpoint.
+
+Validation complete: default replay804/cost35, reusable stock/patched/traced
+code/data/relocation equality, and freshly rebuilt ENDING SHA1 all pass. Parent
+standards/scope review finds no new findings: C89, existing shared types,
+ticketed ASM guard and both FAKE explanations retained; no headers or production
+toolchain changed. The improvement does not count as new matching C coverage.
+
+Message-table and EdScriptSet pointer-type views are also neutral35. The
+ledger now retains100 diagnostics, including explicitly rejected wrong-table
+and extra-instruction forms. The remaining blocker is assembler cross-block
+motion, not a script pointer-versus-integer declaration difference.
+
+After source checkpoint e500e504e, assigning the selector to existing row or i
+locals is neutral35. Read-only AS1 reconstruction reference identifies the LUI
+opcode as unconditionally eligible for speculation; ordinary value types alone
+cannot stop it. The candidate must be blocked by dependencies/control flow or
+an earlier instruction-sequence difference. No assembler binary was built or
+changed; reference source stays external in /private/tmp/t24047-uopt/.
+
+The full-width bit-field view is also neutral35. A cached
+tokimemo-decomp-ido52 image is available; T-3110 records the user's prior private
+IDO5.2 evaluation approval. No compiler archives remain in the usual caches.
+Use one bounded5.2 assembler replay of the captured, unchanged input to test
+whether the last motion is backend-version-specific. Production settings remain
+unchanged; no per-function compiler exception is proposed.
+
+IDO5.2 archive matches the previously recorded SHA256
+870cd946d31d6abee24d47926328d15909771520240a0a4f5cb7d27aea90e1ad.
+Extracted37MB only under external scratch and reused cached amd64 evaluation
+image. Replay uses captured post-frame input plus copied symbol sidecar; the
+project mount is read-only. No host installs or production build changes.
+
+IDO5.2 as1 replay is identical to stock53 for the complete target:804
+instructions/cost35. Thus the assembler version alone does not close this gap.
+Capture post-optimizer input for one isolated5.2 ugen replay next, keeping the
+production front end, uniform passes and stock assembler fixed.
+
+IDO5.2 ugen on the captured production optimizer output also reproduces stock
+target words exactly (804/cost35), through the existing frame pass and stock53
+as1. Older generator/assembler versions alone do not explain the missing barrier.
+Check the front end next with a stock amd64/arm64 equality control first; reuse
+the same approved archive and private image, no new toolchain installation.
+
+The stock amd64/arm64 target control agrees exactly. Substituting only5.2 cfe
+also gives identical804/cost35, with expected ucode3.18/3.19 warning accepted
+by the stock optimizer. Only the optimizer remains to isolate before ruling
+out a simple minor-version explanation; conversion/frame passes stay uniform.
+
+Isolated5.2 uopt and the complete5.2 front-end/optimizer/generator/assembler
+path, with only the existing uniform conversion/frame passes, also reproduce
+stock target words exactly:804/cost35. A simple3.18 versus3.19 explanation is
+ruled out for this source. Return to source-level CFG entry metadata; test a
+referenced forward C default label (earlier outside-switch control fell through
+without such a label). No production compiler change or exception.
+
+Referenced forward default label is neutral35. A diagnostic empty inner switch
+adds code and disrupts allocation (807/cost756), so is rejected. The source
+ledger now has105 measurements. Five backend controls and exact provenance are
+retained in drafts/T-24047/backend-evidence.json and [[ending-allocator-trace]].
+Scope/standards review finds no production changes or new findings in this
+evidence-only follow-up. Keep task In Progress on the same sole AS1 blocker.

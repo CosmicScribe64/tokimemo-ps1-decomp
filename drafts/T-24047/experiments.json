@@ -654,5 +654,190 @@
     "cost": 43,
     "printed": 43,
     "matching_claim": false
+  },
+  {
+    "label": "scoped_tables_control",
+    "expected": 805,
+    "got": 804,
+    "cost": 55,
+    "printed": 55,
+    "matching_claim": false
+  },
+  {
+    "label": "scoped_early_uv",
+    "expected": 805,
+    "got": 802,
+    "cost": 639,
+    "printed": 647,
+    "matching_claim": false
+  },
+  {
+    "label": "table_slot_early_uv",
+    "expected": 805,
+    "got": 805,
+    "cost": 632,
+    "printed": 1276,
+    "matching_claim": false
+  },
+  {
+    "label": "union_table_control",
+    "expected": 805,
+    "got": 811,
+    "cost": 66,
+    "printed": 66,
+    "matching_claim": false
+  },
+  {
+    "label": "union_whole_copy_control",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "union_early_uv",
+    "expected": 805,
+    "got": 802,
+    "cost": 633,
+    "printed": 641,
+    "matching_claim": false
+  },
+  {
+    "label": "union_early_uv_byte",
+    "expected": 805,
+    "got": 811,
+    "cost": 668,
+    "printed": 718,
+    "matching_claim": false
+  },
+  {
+    "label": "uv_immediately_before_palette",
+    "expected": 805,
+    "got": 803,
+    "cost": 636,
+    "printed": 852,
+    "matching_claim": false
+  },
+  {
+    "label": "early_uv_inline_page_quotient",
+    "expected": 805,
+    "got": 804,
+    "cost": 37,
+    "printed": 37,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_zero_after_uv",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_register_scalars",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_selector_s16",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_default_last_store_volatile",
+    "expected": 805,
+    "got": 806,
+    "cost": 23,
+    "printed": 23,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_direct_volatile_scripts",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_default_named_label",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_volatile_selector_field",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "explicit_case12_closer35",
+    "expected": 805,
+    "got": 805,
+    "cost": 2,
+    "printed": 2,
+    "case12_diagnostic": true,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_script_pointer_view",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_selector_reuse_row",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_selector_reuse_i",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_default_full_word_bits",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_default_forward_goto",
+    "expected": 805,
+    "got": 804,
+    "cost": 35,
+    "printed": 35,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_empty_default_dispatch",
+    "expected": 805,
+    "got": 807,
+    "cost": 756,
+    "printed": 772,
+    "matching_claim": false
   }
 ]

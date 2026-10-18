@@ -19256,3 +19256,214 @@ habits. lab313ru signatures of 12 libraries in 16 PsyQ releases against the 722 
 `func_8009E108` differ from 3.70/4.00 only at the habit spots, many others also in instruction order. The SDK C code
 comes from a toolchain no released set reproduces. [[gcc-objects]], [[tickets/T-11890-tt-ratan2-aspsx]] (status
 unchanged).
+## [2026-10-18] ticket | Repair ENDING allocator diagnostic prerequisite
+
+[[tickets/T-24047-ending-sprite-scene]] returns to In Progress after coordinating
+authorization for a bounded15-minute Docker rebuild of the documented tracer.
+No reusable source found in research/acceleration trees or user cache. External
+scratch /private/tmp/t24047-uopt, pinned revision and existing patches only;
+verify stock instruction equality before diagnostic use. Checkpoint4428f8789 saved.
+
+## [2026-10-18] build | Pinned ENDING diagnostic source verified
+
+[[tickets/T-24047-ending-sprite-scene]] generated uopt source matches the
+documented SHA256, ecvt patch applies with zero fuzz, and setup/generation uses
+56MB. Serial bounded Docker compilation of only the diagnostic allocator begins;
+no production compiler changes.
+
+## [2026-10-18] build | ENDING allocator tracer repaired and fidelity verified
+
+[[tickets/T-24047-ending-sprite-scene]] diagnostic rebuild succeeds in about3
+minutes,62MB external scratch. Patched and traced allocators reproduce stock
+code/data/relocation section inventories and bytes; target equals the preferred
+804-instruction checkpoint. Native diagnostic completes successfully. Detailed
+allocation analysis resumes with no production compiler changes.
+
+## [2026-10-18] ingest | Reusable ENDING allocator tracer and exact tie evidence
+
+[[ending-allocator-trace]] records external paths, pinned source/hash, exact
+Docker build/use/fidelity commands and the reusable verifier in
+drafts/T-24047/trace_fidelity.py. regdiff confirms both constants have priority5
+and cost0; first-use bit order528/529 gives the swapped colours. No compiler
+decision change or coverage gain. [[index]] links the new page.
+
+## [2026-10-18] query | ENDING scratch lifetime hypotheses measured
+
+[[tickets/T-24047-ending-sprite-scene]] confirms CFE does not reuse table stack
+homes across lexical blocks. Early UV local/table-slot forms worsen output.
+Union-member copying changes aligned stores to swl/swr; whole-union copy is
+the next control. Preferred source remains unchanged, zero new bytes.
+
+## [2026-10-18] query | ENDING constant order coupled to quotient priority
+
+[[tickets/T-24047-ending-sprite-scene]] whole-union control matches the preferred
+checkpoint but early UV forms worsen. Tracing the minimal UV/palette reorder
+shows why: constant order flips, while quotient priority drops15 to10 and its
+colour changes v1 to a0, shifting the grid constants and temporary pool. Test
+only a direct late quotient spelling next; no production changes retained.
+
+## [2026-10-18] query | ENDING constant-register tie closed in source lead
+
+[[tickets/T-24047-ending-sprite-scene]] direct late quotient spelling restores
+allocation after moving UV first. New closer804/cost37 fixes all four constant
+words; one zero store is early and default-arm LUI motion remains. Preserve
+drafts/T-24047/closer.c and --body replay support; production remains guarded at
+the reviewed checkpoint. [[ending-family-results]] and [[ending-allocator-trace]]
+record evidence and reusable diagnostics. Zero new verified bytes.
+
+## [2026-10-18] build | ENDING reusable tracer checkpoint validated
+
+[[tickets/T-24047-ending-sprite-scene]] default replay remains804/cost43 and
+archived closer reproduces804/cost37 with --body. Retained fidelity verifier
+reproduces stock code/data/relocations across both diagnostic binaries. Scope
+and standards review finds no production changes or open findings in the helper;
+all diagnostic outputs remain ignored/external. Task stays In Progress.
+
+## [2026-10-18] query | Contributor check at08:40 UTC
+
+Read-only GitHub query: no open PRs; issues #50/#56/#57 retain prior update timestamps. Existing ownership exclusions retained; next check around09:10 UTC. [[completion-run-2026-10-17]] records the check. No contributor messages sent.
+
+## [2026-10-18] decision | T-24067 counterfactual unavailable
+Parent preserved source checkpoint eadad3134 on main ebf0aa7b1. Optional private4.1-ugen comparison cannot run with existing tools; no downloads/install/image changes or expanded search. Further source controls have not improved cost18. Native listing identifies loop-header source-location boundary as the next narrow preheader-scheduling test. [[tickets/T-24067-etc-album-copy]] remains active; no production change or compiler-gap claim.
+
+## [2026-10-18] build | T-24067 source-line boundary gain
+Retained exact initializer/do source-line grouping in drafts/T-24067/body.c with FAKE scheduling explanation. Diagnostic improves cost18/28 rows to16/20, frame0x48/75 words unchanged. Safe replay validates exact tagged body. Independent endpoint symbol does not improve it, so canonical GameState endpoint remains. [[tickets/T-24067-etc-album-copy]] remains In Progress; no actual C match claimed.
+## [2026-10-18] query | ENDING loop scheduling fully recovered
+
+[[tickets/T-24047-ending-sprite-scene]] moving the zero store after UV closes
+the remaining initialization-loop gap:804/cost35. All scene bodies also agree.
+Explicitcase12 diagnostic leaves only the wrong bound word (cost2) and extra
+table entry, so it remains rejected. Only real default-arm AS1 motion remains.
+
+## [2026-10-18] query | ENDING address-motion metadata probes remain negative
+
+[[tickets/T-24047-ending-sprite-scene]] direct volatile views, selector cast,
+register qualifiers and ordinary default C label are neutral35. Volatile pointer
+store's lower score23 is offset cancellation with extra instructions, rejected.
+Unchanged assembler-input capture isolates the extra-case label/table/bound
+records. Guarded production reconstruction and archived body advance to35;
+default ASM fallback remains pending normal validation.
+
+## [2026-10-18] build | ENDING35 guarded source validated
+
+[[tickets/T-24047-ending-sprite-scene]] preferred replay804/cost35, reusable
+stock/diagnostic code-data-relocation fidelity, and fresh ENDING SHA1 all pass.
+Parent scope/standards review has no findings; guard and FAKE notes remain.
+[[ending-family-results]] and [[index]] reflect the sole AS1 blocker. Zero new
+verified C bytes; ticket remains In Progress.
+
+## [2026-10-18] query | ENDING script pointer metadata ruled out for current residue
+
+[[tickets/T-24047-ending-sprite-scene]] private pointer-table/EdScriptSet views
+are neutral35. The100-entry ledger retains all rejected diagnostics explicitly;
+no shared header change is supported. Guarded35 source is validated and ready
+for a source checkpoint while AS1 closure continues.
+
+## [2026-10-18] query | T-24067 source analogies checked
+Read parent pointers to [[register-cheatsheet]]41 and [[matching-notes]]6294-6310. Masked-byte-store recipe does not map to word printf arguments (mask emits ANDI); real stack-backed temporary adds frame and storage, while constant-first copy addresses retain16/20. [[tickets/T-24067-etc-album-copy]] records rejection evidence and next natural indexed-loop hypothesis. Production and compiler interfaces unchanged.
+
+## [2026-10-18] build | T-24067 typed index-loop gain
+Natural typed record indexing plus induction elimination fixes printf stack-store order and preheader schedule, reaching16 cost/16 rows with75 words/frame0x48. Removed unnecessary format-pointer identity; only source-line grouping remains FAKE. Preserve complementary cursor16/20 source and replay both under drafts/T-24067. [[tickets/T-24067-etc-album-copy]] remains In Progress; four saved-assignment and four copy-temp words remain.
+## [2026-10-18] ticket | Resume reserved NAME_ENT fade and page work
+
+PR #60 is merged; maintainer independently verified all 27 hashes and the 152-byte coordinate C match. [[tickets/T-20013-name-ent-fade-page-followup]] moves to In Progress for the two remaining functions reserved in issue #57. Work starts from ebf0aa7b1 on codex/name-ent-fade-page-followup.
+
+## [2026-10-18] build | Both reserved NAME_ENT functions reach zero
+
+[[tickets/T-20013-name-ent-fade-page-followup]] recovers func_80132320 (396 bytes) and func_80134248 (2256 bytes) in complete-file source probes. Fade store identities preserve A1; page index reuse restores the original frame and selector reloads, with measured indirect remainder, empty-test and OR-zero constraints. Individual removal controls are recorded in the ticket; all retained matching-only forms carry FAKE comments. No flags, tooling, headers or other function bodies change. Default build and actual linked proof are running before any match submission.
+
+## [2026-10-18] build | T-20013 default linked C independently verified
+
+[[tickets/T-20013-name-ent-fade-page-followup]] passes the default Docker build, all27 independent binary SHA1s, actual default linked funcdiff MATCH396/2256 bytes, headers/globals and prototype guard0new/15known. Integrated upstream2e7376c68; preserved both contributors' append entries and the unchanged tested NAME_ENT source blob22925eedc2793094c6a4e429399a5c3bef59ded9. Both functions are unguarded C with no ASM fallback; source-only contribution.
+
+## [2026-10-18] ticket | T-20013 ready for maintainer review
+
+[[tickets/T-20013-name-ent-fade-page-followup]] and [[kanban]] move to In Review after CODING_STANDARDS.md self-review. Only the two claimed function bodies change; all matching-only identities/read/test forms are marked FAKE and measured individually. [[matching-notes]] and [[name-ent-family-results]] record the source recovery. Maintainer review pending.
+
+## [2026-10-18] decision | Preserve final PR append history
+
+PR #62 integrates upstream708a0f02b after concurrent T-24067 archive/wiki updates. Both log histories are retained. Git confirms src/include/tools/config are identical to verified249ca2384, including the tested NAME_ENT blob; prior linked/hash/interface evidence still applies. No build repetition is needed for the archive/docs-only integration.
+
+## [2026-10-18] build | Integrate and independently verify PR62 NAME_ENT matches
+
+Published64ef469bf after actual default C proofs396/2256 bytes and all27 hashes/interface guards. Root standards review resolved T-20013 to Done and synchronized board. Docker progress6512/6958 functions,1864344/2279368 bytes (81.8%). [[completion-run-2026-10-17]] records contributor check and pending PR61 evidence; [[tickets/T-20013-name-ent-fade-page-followup]] records review. No new worker launched.
+
+## [2026-10-18] build | Preserve PR61 compiler evidence
+
+Integrated5397dc7f7 after reviewing tools/aspsx_survey.py, running its survey in Docker, and passing all27 hashes and interface guards. GitHub confirms PR61/62 merged. Survey is read-only; no production/toolchain changes and zero new coverage from PR61. [[gcc-objects]] and [[tickets/T-11890-tt-ratan2-aspsx]] preserve contributor findings; [[completion-run-2026-10-17]] updates handoff state.
+
+## [2026-10-18] query | T-24067 indexed allocation and copy-state evidence
+
+Indexed tracing confirms format/save/end bits54/55/56 share priority3.33333325 and save precedes end in numbering. Inclusive/do loops retain16/16; local-limit/narrow/top-exit forms lose induction elimination; split copies and explicit record/album pointers worsen. Read existing T-20710 block-copy state evidence in [[ido-52-evaluation]] as a supporting analogy for t5/t6, not a fresh4.1 result or exhausted-source claim. Updated drafts/T-24067/README.md and [[tickets/T-24067-etc-album-copy]]; production unchanged and target remains active.
+
+## [2026-10-18] query | T-24067 explicit endpoint range constraint
+
+Copied stock uopt stages without altering bytes; full-TU code/data/relocations equal ordinary replay. Indexed frontend has no end address; final format/save/end ranges tie, while cursor's explicit end entry store raises priority2.75 above save2.5. Endpoint-derived index bounds retain subtraction/entry guards rather than folding, and an empty endpoint reference adds a range. Retained source-only capture helper and minimal packet in drafts/T-24067/README.md; [[tickets/T-24067-etc-album-copy]] stays In Progress. Reviewed prior destination operand/count controls without repeating a broad sweep. Next evidence question is constant identity at bit creation, not a proposed compiler change.
+## [2026-10-18] query | ENDING AS1 candidate check isolated
+
+[[tickets/T-24047-ending-sprite-scene]] existing-local selector views are neutral.
+Read-only generated AS1 reference shows LUI is always an eligible opcode; focus
+on dependencies/control flow or pre-scheduling sequences. No assembler binary
+build or production compiler changes.
+
+## [2026-10-18] query | ENDING original-backend diagnostic prepared
+
+[[tickets/T-24047-ending-sprite-scene]] full-width bit-field view is neutral.
+Cached private diagnostic image exists and [[tickets/T-3110-test-ido-52-and-41]]
+records prior approval. Prepare one5.2 as1 replay of captured input plus symbol
+table, preserving production settings and the original trace-fidelity controls.
+
+## [2026-10-18] ingest | Existing IDO52 diagnostic provenance verified
+
+[[tickets/T-24047-ending-sprite-scene]] archive SHA256 equals the T-3110 record.
+Private extraction is37MB in external scratch; cached evaluation image replays
+the unchanged captured assembler input and symbol sidecar with project read-only.
+No production build change or host installation.
+
+## [2026-10-18] query | IDO52 assembler does not close ENDING motion
+
+[[tickets/T-24047-ending-sprite-scene]] original5.2 as1 produces identical target
+words to stock53,804/cost35. Capture fidelity remains exact. Next isolate the
+generator using existing approved diagnostic tools; production stays unchanged.
+
+## [2026-10-18] query | IDO52 generator is also identical for ENDING
+
+[[tickets/T-24047-ending-sprite-scene]] isolated52 ugen with production optimizer,
+uniform frame pass and53 as1 gives identical804/cost35 target words. Probe old
+front end only after a stock architecture equality control; production unchanged.
+
+## [2026-10-18] query | IDO52 front end and architecture controls agree
+
+[[tickets/T-24047-ending-sprite-scene]] stock x86/arm target output agrees, and
+isolated52 cfe with today's uniform passes also produces identical804/cost35.
+Test only the remaining optimizer stage; no production configuration changes.
+
+## [2026-10-18] query | Full IDO52 pipeline leaves ENDING residue unchanged
+
+[[tickets/T-24047-ending-sprite-scene]] isolated52 optimizer and complete52
+pipeline with today's uniform passes reproduce identical804/cost35 target
+words. Backend-version hypothesis closed for this source; return to referenced
+C default-label CFG metadata, without compiler exceptions or production changes.
+
+## [2026-10-18] query | ENDING source controls and IDO52 evidence checkpoint
+
+[[tickets/T-24047-ending-sprite-scene]] forward default goto is neutral35; empty
+inner switch is rejected at807/cost756. The105-entry source ledger and five
+backend controls remain explicit about zero coverage gain. [[ending-allocator-trace]]
+records cached image, approved archive hash, paths and replay interface. Parent
+scope/standards review has no new findings; production source is unchanged.
+
+## [2026-10-18] query | T-24067 address-bit creation measured
+
+Parent approved private logging only. Separate diagnostic binary records first eligible address encounters in makelivranges, with save bit55/block7 before end bit56/block8; format is54/block2. Its full object SHA and all code/data/relocations equal stock. Retained logging-only generator, exact hashes and replay/audit commands under drafts/T-24067; no generated compiler source/binary committed and shared tracer untouched. One derived goto-first indexed loop is neutral16/16 and rejected. [[tickets/T-24067-etc-album-copy]] remains In Progress; production remains assembly and only this target is active.
+
+## [2026-10-18] build | T-24067 early-continue allocation gain
+
+Early rejection/continue corrects saved end/save allocation and improves cost16/16 to8/8 rows. Exact tagged full-TU explicit-object default replay confirms only four second-copy t5/t6 instructions remain, with75 words/frame0x48. Retained improved body.c and previous indexed-body.c/cursor-body.c in drafts/T-24067; capture helpers explicitly retain the indexed baseline for prior trace provenance. [[tickets/T-24067-etc-album-copy]] stays In Progress; no production/header/config change or verified C claim.
+
+## [2026-10-18] query | Contributor TT toolchain report and ownership check
+
+Read issue63 and its new SDK signature/toolchain findings; no open PRs, NAME_ENT claims50/57 unchanged. [[completion-run-2026-10-17]] records the report as unverified evidence and retains TT ownership exclusion. No permanent assembly exception or scope/count change accepted. No contributor messages sent. ETC improved source-only checkpoint7083b5f14 is on main; both existing Sol workers remain active.
+## [2026-10-18] decision | T-24067 reject added-store state diagnostic
+
+Retained separate FAKE store-control.c: direct stack store before aggregate copy makes all four scratch-register words agree in current5.3, but adds SW, grows frame0x48→0x58 and changes branch offsets. Tagged full-TU default explicit-object replay reports15 rows, so it is rejected for promotion. Aggregate volatile qualifiers stay8/8. Required printf/tail/copy store sequencing supplies no immediate faithful direct-store substitute; [[tickets/T-24067-etc-album-copy]] records reasons. No compiler-version necessity inferred; continue read-only backend classification analysis within this function only.

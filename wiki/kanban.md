@@ -46,11 +46,11 @@ kanban-plugin: board
 - [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
 - [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
 - [ ] [[tickets/T-24064-etc-count-trio|T-24064 Match three small ETC functions]]
-- [ ] [[tickets/T-20013-name-ent-fade-page-followup|T-20013 NAME_ENT fade and page selection]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
 
+- [ ] [[tickets/T-24047-ending-sprite-scene|T-24047 ENDING sprite scene initializer]]
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24067-etc-album-copy|T-24067 Match ETC album record copy]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
@@ -67,7 +67,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24054-short-function-count|T-24054 Recover short MAIN OPTION KANGEI functions]]
 - [ ] [[tickets/T-24050-geko-scene-near-match|T-24050 Close GEKO scene setup near match]]
 - [ ] [[tickets/T-24046-screen-page-renderer|T-24046 Recover the MAIN screen page renderer]]
-- [ ] [[tickets/T-24047-ending-sprite-scene|T-24047 ENDING sprite scene initializer]]
 - [ ] [[tickets/T-24041-main-render-cd-siblings|T-24041 Recover MAIN renderer and CD dispatcher]]
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
 - [ ] [[tickets/T-24048-master-animation|T-24048 MASTER animation reconstruction]]
@@ -108,6 +107,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-20013-name-ent-fade-page-followup|T-20013 NAME_ENT fade and page selection]]
 - [ ] [[tickets/T-11890-tt-ratan2-aspsx|T-11890 TT func_8014D260 ASPSX pass]]
 - [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
 - [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]

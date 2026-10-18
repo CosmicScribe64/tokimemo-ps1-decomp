@@ -196,3 +196,17 @@ T24051 independently verified as actual unguarded default C: literal3200bytes, a
 ## Shared diagnostic allocator restored2026-10-18
 
 ENDING worker rebuilt the documented pinned tracer in Docker in about3minutes/62MB. Generated uopt source hash matches the documented pin; patched and traced outputs reproduce stock text/rodata/relocations and section inventories for the preferred TU. Host binary `/private/tmp/t24047-uopt/variants/trace`; `TOKIMEMO_SCRATCH=/private/tmp/t24047-uopt` mounts it at `/scratch/variants/trace`. Use explicit `regdiff --uopt` path per tool help. Production compiler unchanged. ETC T24067 was given this read-only binary for its save/end pointer colour mismatch; workers write separate traces in their own ignored build directories, one compiler each. No extra agent or duplicated rebuild. Binary and raw traces remain uncommitted.
+
+## Contributor check 2026-10-18 08:40 UTC
+
+No open PRs. Open claims #50, #56 and #57 have unchanged update timestamps; NAME_ENT and TT reservations remain excluded. No contributor messages sent. Next check around09:10 UTC. ENDING and ETC workers remain active; their latest source-only archives are published at833561fb7 andebf0aa7b1 respectively. Verified coverage remains81.7%.
+
+## Contributor integration 2026-10-18 09:10 UTC
+
+PR #62 integrated at64ef469bf: NAME_ENT func_80132320 and func_80134248 independently verified as default C396/2256 bytes. All27 hashes and interface guards pass. T-20013 reviewed and Done. Authoritative Docker progress now6512/6958 functions,1864344/2279368 bytes (81.8%);415024 bytes remain. Gain2652 bytes. PR #61 contains TT compiler measurements and a read-only survey, no match claim; fetched for follow-up integration. Open claim timestamps #50/#57 unchanged; #56 updated with that evidence. Next contributor check around09:40 UTC. No contributor messages sent.
+
+PR #61 follow-up: integrated at5397dc7f7. Root inspected the read-only survey and reproduced its counts in Docker; all27 hashes and interface guards pass. GitHub confirms PRs #61 and #62 MERGED. TT remains ASM with zero new matched bytes; contributor evidence narrows the open lead to compiler-emitted divide/address expansion. No assembler workaround was introduced. Two existing Sol matching workers continue ENDING35F4C and ETC41ABC. Next contributor check remains around09:40 UTC.
+
+## Contributor check 2026-10-18 09:39 UTC
+
+No open PRs. NAME_ENT claims #50/#57 remain open; TT follow-up is now issue #63 (replacing closed #56). Its new contributor report compares public PsyQ/ASPSX toolchains and SDK signatures, suggesting TT func_8014D260 derives from library ratan2 but retains three unexplained compiler patterns. These are contributor-reported measurements, not independently reproduced here. The proposed permanent assembly exception is not accepted: retain the existing scope/counts and investigate provenance before any reclassification. No contributor message sent, no compiler/config/source change. Next check around10:09 UTC. Source: https://github.com/CosmicScribe64/tokimemo-ps1-decomp/issues/63#issuecomment-6248335737 . Two existing Sol workers continue ENDING35F4C and ETC41ABC; ETC's four-word residual draft is published at7083b5f14.

@@ -36,6 +36,7 @@ Read this first. Update on every ingest or new page.
 - [[bunkasai-family-results]] - BUNKASAI type map (name, text and per-girl tables), the implicit-int v0/v1 fix of the BUNKAKEN port, the types-first redraft and its numbers, packages (T-18700)
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
+- [[ending-allocator-trace]] - reusable external T-24047 allocator tracer, exact rebuild/fidelity commands and measured constant tie.
 
 ## Tickets
 - [[tickets/T-24063-taco-short-count|T-24063]] TACO corrected buffer source and refreshed controls, zero matches, In Review.
@@ -92,7 +93,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-24008-taiiku-runners|T-24008]] TAIIKU runners: 692-byte match and nine-instruction updater draft (In Review).
 - [[tickets/T-24006-main-render-family|T-24006]] MAIN renderer family, five typed source hypotheses, zero new verified bytes (In Review).
 - [[tickets/T-20012-stable-search-scoring|T-20012]] Stable candidate ranking in viewsweep/order_search, 230 tests pass, issue #58 (Done).
-- [[tickets/T-20013-name-ent-fade-page-followup|T-20013]] NAME_ENT fade/page follow-up, 2,652 bytes still guarded, claim #57 (Ready).
+- [[tickets/T-20013-name-ent-fade-page-followup|T-20013]] NAME_ENT fade/page selection, 2,652 verified C bytes, claim #57 (In Review).
 - [[tickets/T-20012-stable-search-scoring|T-20012]] Stable candidate ranking in viewsweep/order_search, 230 tests pass, issue #58 (In Review).
 
 - [[tickets/T-20011-name-ent-coordinate-selection|T-20011]] NAME_ENT pointer-coordinate helper, 152-byte verified C match, claim #57 (Done).
@@ -722,3 +723,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24047-ending-sprite-scene|T-24047]] ENDING sprite scene initializer, 80135F4C (In Review;804/805 source-only checkpoint, zero verified bytes).
 - [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Progress; exact-frame 4-row assignment-capture checkpoint, earlier 28-row source preserved; sole worker focus).
 - [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Review; actual default C match, 3,200 linked bytes; DATE checksum and guards pass).
+- [[tickets/T-24047-ending-sprite-scene|T-24047]] ENDING sprite scene initializer, 80135F4C (In Progress;804/805 instructions, cost35, only default-arm AS1 motion remains; zero verified bytes).
