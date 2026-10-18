@@ -17972,3 +17972,7 @@ Package w4-p28 started: ENDING `src/ovl/ENDING/80133030.c` and `src/ovl/ENDING/8
 ## [2026-10-17] build | T-22028 final checks
 
 Clean build 27/27 (all SHA1 OK), `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK on `w4-p28`. [[tickets/T-22028-w4-p28]] stays In Review.
+
+## [2026-10-18] ticket | T-22028 Done
+
+Review against `CODING_STANDARDS.md`: no findings; only `src/ovl/ENDING/80137340.c` changed among C files, the other three claimed functions stay `INCLUDE_ASM`, guards carry `T-22028` and the one FAKE is marked. 0 of 5 matched. [[tickets/T-22028-w4-p28]] Done.

@@ -53,10 +53,10 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-22028-w4-p28|T-22028 Wave 4 package w4-p28]]
 
 ## Done
 
+- [ ] [[tickets/T-22028-w4-p28|T-22028 Wave 4 package w4-p28]]
 - [ ] [[tickets/T-20011-name-ent-coordinate-selection|T-20011 NAME_ENT pointer-coordinate hit test]]
 - [ ] [[tickets/T-20012-stable-search-scoring|T-20012 Stable search scoring]]
 - [ ] [[tickets/T-22022-w4-p22|T-22022 Wave 4 package w4-p22]]
