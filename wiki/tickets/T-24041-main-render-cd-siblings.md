@@ -1,7 +1,7 @@
 ---
 id: T-24041
 title: Recover MAIN renderer and CD dispatcher
-status: In Progress
+status: In Review
 assignee: complete_render_family
 created: 2026-10-18
 updated: 2026-10-18
@@ -30,3 +30,8 @@ The large CD dispatcher remains in progress; no claim yet. Renderer self-review:
 ## Independent root combined verification
 
 Production changes reviewed against CODING_STANDARDS.md: existing SDK/aggregate types and necessary declaration views retained, new LINE_G2 layout documented, matching-specific forms explicitly marked FAKE, no per-function compiler exception. All new targets lack assembly fallbacks and pass normal linked byte proofs. Combined integration passes all27 original binary hashes and header/global/prototype guards. No unresolved findings for the verified matches. Published on main after all checks; unresolved siblings remain excluded.
+## Closure
+
+Renderer final guards pass: target source gate, normal default literal MATCH348 B, MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26, headers/globals/main_api and whitespace. Renderer win pinned e33246ea20de74a06e9f57b51379b3bf708c79a1.
+
+CD dispatcher is source-only, production unchanged. The repaired foundation scores512 with frame104 vs target80; removing artificial temporaries scores499 with frame88. Correct typed ring indexing, full word payload-header read, four-byte location/eight-byte response locals, retry-loop cleanup, and exact exhausted hypotheses are in drafts/T-24041. No speculative CD header edits. Bounded pass closed; independent review pending for code and checkpoint.

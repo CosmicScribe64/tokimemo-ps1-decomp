@@ -18756,3 +18756,6 @@ Read the prior T-15900 compile repair and adjacent T-19027 results. Reserved onl
 
 ## [2026-10-18] decision | T-24039 source-only checkpoint; no C promotion
 Corrected TEL func_8013D88C menu-array and flag induction strides, text table indexing and switch bounds. Archived corrected reconstruction (885 rows/frame232) and marked mechanical lower-row diagnostic (850 rows), with reproduced full-TU counts and negative evidence in drafts/T-24039/README.md. Production target remains INCLUDE_ASM; no new verified bytes. Fixed GameState base, indexed flags, eleven-element arrays, wider coordinate intermediates and volatile pointer reloads failed. Docker ninja -j1 TEL control was current and independent overlay SHA1 passed. [[matching-notes]] updated; [[tickets/T-24039-tel-date-menu]] moved to In Review for root review. No push/merge.
+## [2026-10-18] decision | T-24041 bounded CD checkpoint and renderer closure
+
+[[tickets/T-24041-main-render-cd-siblings]] moves to In Review. The348 B MAIN renderer retains actual source gate, default literal proof, full MAIN checksum and headers/globals/main_api passes. The CD dispatcher stays unchanged; drafts/T-24041 preserves typed Ring18/payload/buffer corrections and a499-edit/frame88 checkpoint (target80). [[main-family-results]] records concrete blockers instead of an expanded search.

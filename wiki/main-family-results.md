@@ -240,3 +240,7 @@ Baseline MAIN SHA-1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 matches config/SLPM
 ## Dialogue closure update (2026-10-18)
 
 The historical guarded 16-row dialogue gap is resolved by [[tickets/T-24021-dialogue-scheduling]]. Default C matches 8,672 text bytes and main SHA1. Two early constant argument definitions use a marked zero-mask FAKE; prior negative experiments remain historical evidence. Replay is in drafts/T-24021/replay_closure.py.
+
+## T-24041 CD dispatcher source checkpoint
+
+func_800455C4 remains unchanged assembly. [[tickets/T-24041-main-render-cd-siblings]] archives repaired typed source in drafts/T-24041: normal full-file aligned cost512/frame104, then499/frame88 after removing artificial temporary homes; target frame80. Ring18 indices, word payload-header access and SDK-shaped stack locals are repaired, but broad branch/register differences remain. Exact negative hypotheses and scratch-only declarations are recorded in the archive; no speculative CD headers added. The separate348 B renderer win and final MAIN checksum/guard evidence stand.
