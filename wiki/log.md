@@ -18298,3 +18298,15 @@ Created [[tickets/T-24054-short-function-count]] In Progress for three exclusive
 ## [2026-10-18] build | T-24054 checkpoint verification
 
 [[tickets/T-24054-short-function-count]] scratch reproducer returns cost4. Three unchanged default unit checksums pass; header/global/prototype guards pass. No target INCLUDE_ASM removed, no C-match claim. Archive awaits independent review.
+
+## [2026-10-18] ticket | T-24058 short SHOUGATU GYOZI pair
+
+Created [[tickets/T-24058-short-pair-count]] In Progress for two176-byte guarded functions, scoped to src/ovl/SHOUGATU/80134120.c and src/ovl/GYOZI/80136220.c. Read historical call/field lifetime negatives; one Docker compiler and no broad permutation.
+
+## [2026-10-18] decision | T-24058 promoted byte selector
+
+[[tickets/T-24058-short-pair-count]]: GYOZI func_80137188 scratch cost0 using D_80146178 directly for initial masked selector, conditional decrement and post-call tests. Removed the target guard for production verification; no new FAKE or header edit. SHOUGATU remains cost6.
+
+## [2026-10-18] build | T-24058 verified GYOZI selector
+
+[[tickets/T-24058-short-pair-count]]: unguarded GYOZI func_80137188 normal default literal proof MATCH176 bytes, GYOZI SHA1 43f92523116e7b6cd772d4397712a52eeda89703; target assembly fallback absent and header/global/prototype guards pass. No new FAKE or header edit. SHOUGATU remains old cost6; source-only targeted negative replay preserved in drafts/T-24058. Updated [[shougatu-family-results]] and moved ticket to In Review for independent standards review. One new C function.

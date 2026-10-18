@@ -65,6 +65,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24058-short-pair-count|T-24058 Close short SHOUGATU GYOZI pair]]
 - [ ] [[tickets/T-24054-short-function-count|T-24054 Recover short MAIN OPTION KANGEI functions]]
 - [ ] [[tickets/T-24050-geko-scene-near-match|T-24050 Close GEKO scene setup near match]]
 
