@@ -53,6 +53,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24031-gyozi-shougatu-pairs|T-24031 Recover GYOZI and SHOUGATU particle pairs]]
 - [ ] [[tickets/T-24036-geko-shugaku-siblings|T-24036 GEKO and SHUGAKU sibling completion]]
 - [ ] [[tickets/T-24033-valen-selector-ports|T-24033 VALEN selector sibling completion]]
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
@@ -84,8 +85,8 @@ kanban-plugin: board
 
 ## Done
 
-- [ ] [[tickets/T-24034-event-render-siblings|T-24034 Port EVENT rendering siblings]]
 - [ ] [[tickets/T-24030-bunkasai-sibling-package|T-24030 Recover BUNKASAI sibling package]]
+- [ ] [[tickets/T-24034-event-render-siblings|T-24034 Port EVENT rendering siblings]]
 - [ ] [[tickets/T-24016-bunkasai-state-machines|T-24016 Recover BUNKASAI festival state machines]]
 - [ ] [[tickets/T-24017-clone-ports|T-24017 Port three exact opcode clones]]
 - [ ] [[tickets/T-24005-bunkaken-date-state-machine|T-24005 Match BUNKAKEN date state machine]]

@@ -678,3 +678,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24034-event-render-siblings]] — EVENT matched DATE sibling ports, 1,808 B verified C.
 
 - [[tickets/T-24037-event-scene-siblings]] — EVENT typed updater, 628 B; initializer six-edit archive.
+
+- [[tickets/T-24031-gyozi-shougatu-pairs|T-24031]] Paired GYOZI/SHOUGATU handlers (In Review; no matches, four corrected source-only drafts).
