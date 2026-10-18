@@ -1139,7 +1139,7 @@ s32 func_8013DD94(void) {
 }
 
 
-/* NON_MATCHING: T-22023, 13 register rows plus one `move v0,a2`: the album index D_800E7398 is loaded with base $a1 in the original and $a2 here (the later loads of it follow), and the store of D_800E7D36 goes through a $v0 copy. Frame, selector and arms match without the `state` and `result` locals. */
+/* NON_MATCHING: T-22023, 11 instructions differ in registers only: the promoted album index D_800E6280.unk_1118 (D_800E7398) is in $a2 here, $a1 in the original (cases 1, 2, 3 and 6). regdiff: the cvt(D_800E7D36) range of case 5 (priority 3) takes $a1 before the unk_1118 range (0.33). Without the cast D_800E7D36 is promoted to $v0 instead (one more `move`); printf of unk_1118, a selected_slot member store, s8 casts and locals do not help. */
 #ifdef NON_MATCHING
 void func_8013DF88(void) {
     s32 pad[2]; /* FAKE: unused words, the original frame has them. T-22023 */
@@ -1202,7 +1202,8 @@ void func_8013DF88(void) {
         func_80041878();
         func_80042058();
         func_80042058();
-        D_800E6280.unk_1118 = D_800E7D36;
+        /* FAKE: the (s32) cast of the u8 global stops uopt from keeping D_800E7D36 in $v0 (the `move v0,a2` in case 3) (T-22023) */
+        D_800E6280.unk_1118 = (s32)D_800E7D36;
         func_800AE0B0("s->file_no %x \n", D_800E7D36);
         D_800E6280.unk_110D += 1;
         break;
