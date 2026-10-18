@@ -1,0 +1,46 @@
+{
+  "constant160": {
+    "bit": 159,
+    "kind": 2,
+    "dtype": 6,
+    "priority": 12,
+    "state": 1,
+    "chosen_internal_color": 20,
+    "saved_candidates": [
+      20,
+      21,
+      22
+    ],
+    "candidate_cost": 4.5
+  },
+  "page320": {
+    "bit": 6,
+    "kind": 3,
+    "dtype": 6,
+    "priority": 6.19999981,
+    "state_before_coloring": 1,
+    "initial_ir_location": {
+      "mtype": 1,
+      "block": 56,
+      "offset": -48,
+      "length": 4
+    }
+  },
+  "interference_bidirectional_before_choice": true,
+  "both_available_saved_before_160": "00000e00/00000000",
+  "page_forbidden_before_160": "7f03f000/00000000",
+  "page_forbidden_after_160": "7f03f800/00000000",
+  "page_available_saved_after_160": "00000600/00000000",
+  "page_saved_candidates_all_forbidden_when_considered": [
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22
+  ],
+  "qualification": "Other ranges fill colors21/22 between the observed decisions; this narrow logger does not identify them. Initial priority snapshots before each range compute_save are not interpreted; post-uncolor/split snapshots are not the original allocation state."
+}

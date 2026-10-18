@@ -763,3 +763,17 @@ shared saved160 replaces six per-armLI with one, while extraNOPs offset savings.
 Exact scheduling/IRcause remains unproven and current618 stagecapture absent.
 inventory.md states one narrow constant-web/source-condition question; no H
 width guess, literal/type sweep or new instrumentation. Same function active.
+
+
+Parent bounded Astra CURRENT618 review returned no supported source edit.
+One subsequently approved private read-only allocation observer passes exact
+stock WHOLEOBJECT000d7483... and all code/data/relocation sections FIRST.
+Actual input IR identifies page320 M/block56/-48, not an assumed offset.
+Constant160 bit159 priority12 and page bit6 priority6.2 both initially eligible,
+with bidirectional interference. Both have colors20..22 before160 chooses20;
+page availability loses20 immediately, and all saved colors are forbidden by
+its later consideration. Thus current competition, not intrinsic initial page
+ineligibility. Other consumers of21/22 unlogged; no source edit or impossibility
+claim follows. allocation.md/patch/recipe/fidelity preserve bounded evidence;
+generated compiler/raw logs ignored. No production/options/source change, same
+function active. Signed/unsigned160 or H width guesses remain untested.

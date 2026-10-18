@@ -1,0 +1,85 @@
+--- a/uopt.c
++++ b/uopt.c
+@@ -1,0 +2,62 @@
++
++/* T-24078 native read-only diagnostic; no state enters the emulated program. */
++static uint32_t t78_lr[2];
++static unsigned t78_records, t78_active;
++static int t78_target(uint8_t *mem) {
++    static const char n[] = "func_8013D570";
++    if (MEM_U32(0x1001c8d0) != sizeof(n)-1) return 0;
++    for (unsigned i=0;i<sizeof(n)-1;i++)
++        if (MEM_U8(0x1001c4d0+i) != (unsigned char)n[i]) return 0;
++    return 1;
++}
++static unsigned t78_focus(uint32_t lr) { return lr && (lr==t78_lr[0] || lr==t78_lr[1]); }
++static int t78_edge(uint8_t *mem, uint32_t a, uint32_t b) {
++    unsigned count=0;
++    for(uint32_t n=MEM_U32(a+56);n && count++<4096;n=MEM_U32(n+4))
++        if(MEM_U32(n)==b) return 1;
++    return count>=4096 ? -1 : 0;
++}
++static void t78_init(uint8_t *mem) {
++    t78_active=t78_target(mem);t78_records=0;t78_lr[0]=t78_lr[1]=0;
++    if(!t78_active) return;
++    const char *o=getenv("T24078_PAGE_OFFSET"), *b=getenv("T24078_PAGE_BLOCK"), *m=getenv("T24078_PAGE_MTYPE");
++    if(!o||!b||!m) {fprintf(stderr,"T78 missing-page-input-identity\n");return;}
++    int32_t off=(int32_t)strtol(o,0,0);
++    unsigned block=(unsigned)strtoul(b,0,0), mt=(unsigned)strtoul(m,0,0);
++    uint32_t count=MEM_U32(0x1001cb38), table=MEM_U32(0x1001cc30);
++    unsigned hits[2]={0,0};
++    if(count>4096) {fprintf(stderr,"T78 bit-limit %u\n",count);return;}
++    for(uint32_t i=0;i<count;i++) {
++        uint32_t ic=MEM_U32(table+i*8),lr=MEM_U32(table+i*8+4);
++        if(!ic||!lr) continue;
++        unsigned kind=MEM_U8(ic), which=2;
++        if(kind==2 && MEM_U32(ic+16)==160) which=0;
++        if(kind==3 && MEM_S32(ic+16)==off && MEM_U16(ic+20)==block && MEM_U8(ic+22)==mt) which=1;
++        if(which<2) {
++            hits[which]++;t78_lr[which]=lr;
++            fprintf(stderr,"T78 ID which=%u bit=%u lr=%u kind=%u dtype=%u value_or_offset=%d block=%u mt=%u\n",which,MEM_U16(ic+2),lr,kind,MEM_U8(ic+1),MEM_S32(ic+16),MEM_U16(ic+20),MEM_U8(ic+22));
++        }
++    }
++    fprintf(stderr,"T78 IDCOUNTS constant=%u page=%u saved=%u..%u\n",hits[0],hits[1],MEM_U32(0x1001e5d8),MEM_U32(0x1001e5e8));
++    if(hits[0]!=1||hits[1]!=1) {t78_lr[0]=t78_lr[1]=0;return;}
++    fprintf(stderr,"T78 EDGE initial 160_to_page=%d page_to_160=%d\n",t78_edge(mem,t78_lr[0],t78_lr[1]),t78_edge(mem,t78_lr[1],t78_lr[0]));
++}
++static void t78_snapshot(uint8_t *mem,const char *phase,uint32_t chosen,int color) {
++    if(!t78_active || !t78_focus(chosen) || t78_records++>=256) return;
++    fprintf(stderr,"T78 EVENT %s chosen=%u color=%d\n",phase,chosen,color);
++    for(unsigned j=0;j<2;j++) {
++        uint32_t p=t78_lr[j],bits=MEM_U32(p+48);float priority;memcpy(&priority,&bits,4);
++        uint32_t lo=MEM_U32(0x1001e5d8),hi=MEM_U32(0x1001e5e8);
++        uint32_t avail0=0,avail1=0;
++        for(uint32_t k=lo;k<=hi && k<64;k++)
++            if(!(MEM_U32(p+40+(k/32)*4)&(0x80000000u>>(k%32)))) {
++                if(k<32)avail0|=0x80000000u>>k;else avail1|=0x80000000u>>(k%32);
++            }
++        fprintf(stderr,"T78 LR which=%u bit=%u priority=%.9g state=%u assigned=%d colorsleft=%u forbidden=%08x/%08x available_saved=%08x/%08x\n",j,MEM_U16(MEM_U32(p)+2),(double)priority,MEM_U8(p+35),MEM_S8(p+32),MEM_U8(p+33),MEM_U32(p+40),MEM_U32(p+44),avail0,avail1);
++    }
++    fprintf(stderr,"T78 EDGE current 160_to_page=%d page_to_160=%d\n",t78_edge(mem,t78_lr[0],t78_lr[1]),t78_edge(mem,t78_lr[1],t78_lr[0]));
++}
++static void t78_candidate(uint8_t *mem,const char *phase,uint32_t lr,uint32_t color,double cost,double best) {
++    if(!t78_active||!t78_focus(lr)||t78_records++>=256) return;
++    fprintf(stderr,"T78 CAND %s which=%u color=%u forbidden=%u cost=%.9g best=%.9g\n",phase,lr==t78_lr[0]?0:1,color,(MEM_U32(lr+40+(color/32)*4)&(0x80000000u>>(color%32)))!=0,cost,best);
++}
+@@ -154544,0 +154607 @@
++t78_snapshot(mem,"priority",s1,-1);
+@@ -157382,0 +157446 @@
++t78_init(mem);
+@@ -158236,0 +158301 @@
++t78_candidate(mem,"saved-entry",s5,s2,0.0,0.0);
+@@ -158347,0 +158413 @@
++t78_candidate(mem,"saved-cost",s5,s2,(double)f2.f[0],(double)f20.f[0]);
+@@ -158564,0 +158631 @@
++t78_snapshot(mem,"choice-before",s5,(int)MEM_U32(sp+220));
+@@ -158922,0 +158990 @@
++t78_snapshot(mem,"neighbors-after",s5,(int)MEM_U32(sp+220));
+@@ -159192,0 +159261 @@
++t78_candidate(mem,"saved-entry",s5,s2,0.0,0.0);
+@@ -159303,0 +159373 @@
++t78_candidate(mem,"saved-cost",s5,s2,(double)f2.f[0],(double)f20.f[0]);
+@@ -159491,0 +159562 @@
++t78_snapshot(mem,"choice-before",s5,(int)MEM_U32(sp+220));
+@@ -159794,0 +159866 @@
++t78_snapshot(mem,"neighbors-after",s5,(int)MEM_U32(sp+220));
