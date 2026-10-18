@@ -47,7 +47,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24008-taiiku-runners|T-24008 Recover TAIIKU runner family]]
 
 
 
@@ -57,6 +56,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24008-taiiku-runners|T-24008 Recover TAIIKU runner family]]
 
 - [ ] [[tickets/T-24006-main-render-family|T-24006 Recover MAIN render family]]
 

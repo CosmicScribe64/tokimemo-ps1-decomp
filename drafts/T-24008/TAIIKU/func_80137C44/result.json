@@ -1,0 +1,10 @@
+{
+  "name": "func_80137C44",
+  "tag": "sprite-copies",
+  "aligned_cost": 187,
+  "expected_instructions": 153,
+  "built_instructions": 154,
+  "status": "nonmatching",
+  "base": "d2c844fb3df7a3f57eaa74942517fdac07a0b4c5",
+  "source_sha256": "f22def9116fec0ade23ccc5141710a3cd4294ecaeaae0b67b608b248fe83ed23"
+}
