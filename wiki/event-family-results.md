@@ -202,3 +202,7 @@ header types moved little; the dumpling arrays fix a wrong scale in the drafts b
 ### Packages
 
 T-17601..T-17608 (`w3-gyozi-p01`..`p08`): 33 functions, 19,180 bytes.
+
+## T-24019 GYOZI sibling completion
+
+func_80142A8C matched 392 default linked bytes by porting DATE func_80152E34 with SDK POLY_G3 and existing GyoziWork. Local work pointer plus comma colour assignments match; direct global reads leave22 rows. No new FAKE or header change. Explicit target ASM replaced, GYOZI checksum and default literal no-build comparison pass; shared declaration checks pass. Other three assigned selector ports remain under bounded investigation; earlier T-13201 negatives retained. See [[tickets/T-24019-gyozi-sibling-ports]].

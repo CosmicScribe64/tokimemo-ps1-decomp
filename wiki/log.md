@@ -18215,3 +18215,11 @@ Created [[tickets/T-24015-complete-main-menu]] for five functions of src/main/80
 ## [2026-10-17] decision | T-24015 bounded MAIN retry archived
 
 [[tickets/T-24015-complete-main-menu]] moves to In Review with zero of five matched and no production C/header changes. Signed coordinate loads and a same-array bound bring A410 to 41 rows; blockers and scores recorded in [[main-family-results]] and source-only drafts/T-24015/. Loose experiments preserved in ignored build/T-24015-probes/. Fresh MAIN SHA-1 matches; headers/globals pass and prototype branch check has zero new/fifteen known disagreements. Independent review pending.
+
+## [2026-10-17] ticket | T-24019 GYOZI sibling completion ports
+
+Created [[tickets/T-24019-gyozi-sibling-ports]] In Progress for four exclusive functions; consulted [[event-family-results]], [[shougatu-family-results]] and earlier negative evidence before code. Prior packages and other functions remain unchanged.
+
+## [2026-10-17] build | T-24019 GYOZI triangle sibling match
+
+[[tickets/T-24019-gyozi-sibling-ports]] verifies func_80142A8C as392 default linked bytes after replacing its ASM with the typed DATE sibling. GYOZI SHA1 passes, literal default no-build proof matches, headers/globals pass and prototype branch check has zero new/fifteen known disagreements. Updated [[event-family-results]].

@@ -35,6 +35,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
+- [[tickets/T-24019-gyozi-sibling-ports|T-24019]] GYOZI sibling ports: triangle helper matched392 bytes; remaining selector investigation.
 - [[tickets/T-24015-complete-main-menu|T-24015]] MAIN menu bounded retry: zero of five matched, A410 improved to 41 rows; source-only drafts in review.
 - [[tickets/T-24013-complete-rpg-bat|T-24013]] RPG_BAT battle completion: func_80139510 matched (2,424 linked bytes), two unresolved source drafts archived; package in review.
 
