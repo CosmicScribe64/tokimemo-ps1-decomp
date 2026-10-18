@@ -18901,3 +18901,7 @@ Created [[tickets/T-24055-etc-short-helpers]] and claimed src/ovl/ETC/80143240.c
 ## [2026-10-18] ingest | Near-match archives and active ownership reconciled
 
 Published DATE T24051 source-only checkpointc3b3afe09, KANGEI T24054 archivee2dbe9b84 and ETC T24055 archive76d373139. No production or coverage change. Reconciled the authoritative ownership block in [[completion-run-2026-10-17]] with six active lanes and reserved DATE follow-up; older dated notes remain historical. Scope updates T24057/T24058/T24059 continue the requested count pass while large EVENT/ENDING remain active.
+
+## [2026-10-18] build | DATE near-match independently reproduced
+
+Replayed [[tickets/T-24051-date-large-dispatcher]] archive in Docker on current integrated main: all21 table mappings/extents audit clean, assigning-default source reproduces28 differing rows, production unchanged. Confirmed live EVENT, large ENDING and small ENDING chats; small ENDING has improved register allocation with scheduling unresolved. No new verified bytes claimed.

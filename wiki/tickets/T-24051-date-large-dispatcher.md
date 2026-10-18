@@ -32,3 +32,7 @@ Production src/include/config are unchanged from setup 824c6fddc; no necessary h
 
 Metric context: the early private search helper reported 71/71 for the unchanged old baseline because it supplied terminal padding; validated direct-cc full-TU replay reports the historical 72 rows. The assigning-default checkpoint is 28 rows in both contexts. README distinguishes the older representation table's direct-cc totals from private helper cost/row counts.
 Archived small dispatcher and libgte work are reference-only. T-24043 semantic/ownership archive remains frozen; T-24038 wins are published on main f55a2d7e9. Root reports current main f089f1f89 at 81.1% (6,500 functions / 1,849,648 bytes), including published TEL 2,128-byte gain; this lane does not re-count those as its own progress.
+
+## Root archive replay
+
+Independent Docker replay on integrated current main: audit.py validates all21 table entries, contiguous0xE00-byte source extent and stack+0x34..+0xE34; probe.py --variant assigned-default reproduces28 resolved +/- rows and confirms production unchanged. This validates the retained handoff, not a default C match. Target remains ASM pending branch-order closure.
