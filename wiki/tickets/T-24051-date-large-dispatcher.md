@@ -1,7 +1,7 @@
 ---
 id: T-24051
 title: Recover DATE large table dispatcher with new source evidence
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -42,3 +42,5 @@ Metric context: the early private search helper reported 71/71 for the unchanged
 Archived small dispatcher and libgte work are reference-only. T-24043 semantic/ownership archive remains frozen; T-24038 wins are published on main f55a2d7e9. Root reports current main f089f1f89 at 81.1% (6,500 functions / 1,849,648 bytes), including published TEL 2,128-byte gain; this lane does not re-count those as its own progress.
 
 Closure candidate: consistent selector byte view D_800CA2E8 + 0x10 and captures of 17/16 reach zero resolved-word differences with exact frame/table layout. Both source idioms carry FAKE provenance. Canonical callbacks are FD6C/40788 void(void), 407D0/40D38 s32(void), supported by actual definitions or original argument/return paths. Literal replay exposed missing linker export D_800CA2E8; parent approved its single absolute export and narrow DATE.h declarations. Production promotion and default literal proof remain pending.
+
+Actual C checkpoint: target fallback replaced unconditionally; 3,200 linked bytes MATCH under explicit default/resolve/no-build. Whole DATE checksum passes after canonical headers rebuild all callers. Header/global guards PASS; prototype branch check zero new, fifteen known. Only target body changed in its TU; smaller fallback preserved. Approved header declarations and one absolute existing-symbol export are included. All three FAKE rationales are visible in production. Ticket/card move to In Review for root's independent two-axis review; no push or full completion claim.

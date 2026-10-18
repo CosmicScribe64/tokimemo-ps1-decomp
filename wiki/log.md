@@ -18520,3 +18520,6 @@ Latest user steering continues [[tickets/T-24051-date-large-dispatcher]] In Prog
 
 ## [2026-10-18] build | T-24051 zero diagnostic and missing export
 The consistent existing s16 selector-neighbor base plus assignment captures closes the remaining comparisons in [[date-family-results]]. Frozen source and canonical callback evidence are retained under drafts/T-24051. Literal replay fails closed on absent D_800CA2E8 export; parent approved one absolute symbol export plus the necessary DATE declarations before actual C promotion. [[tickets/T-24051-date-large-dispatcher]] remains In Progress; no default C proof claimed yet.
+
+## [2026-10-18] build | T-24051 actual DATE dispatcher match
+Promoted only func_80144E20 to unconditional C: explicit default linked proof MATCH 3,200 bytes, whole DATE checksum OK, header/global guards OK, prototype branch guard zero new disagreements (15 known). The approved single D_800CA2E8 absolute export resolves the prior missing-symbol dependency without allocation. Canonical DATE callback declarations and BF48 are included; production FAKE notes preserve source uncertainty. [[tickets/T-24051-date-large-dispatcher]] and board move to In Review for independent root review; [[date-family-results]] records closure. No other functions or ETC work changed.

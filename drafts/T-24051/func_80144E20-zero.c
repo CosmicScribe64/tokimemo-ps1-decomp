@@ -25,6 +25,8 @@ void func_80144E20(void) {
     FnTbl31 spB0;
     FnTbl31 sp34;
     void (**base)();
+    /* FAKE: in-comparison constant captures preserve operand order; declaring
+     * this byte after base preserves all 21 table offsets and frame. T-24051 */
     u8 comparison;
 
     spDEC = D_8015C080;

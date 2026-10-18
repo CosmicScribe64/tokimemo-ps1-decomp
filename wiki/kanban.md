@@ -49,7 +49,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
 
 
 
@@ -63,6 +62,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
 
 
 - [ ] [[tickets/T-24057-ending-small-pair|T-24057 Match two small ENDING fade handlers]]
