@@ -58,6 +58,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24033-valen-selector-ports|T-24033 VALEN selector sibling completion]]
+
 - [ ] [[tickets/T-24032-date-taco-rotation-clones|T-24032 DATE and TACO rotation clone provenance]]
 
 - [ ] [[tickets/T-24027-rpg-bat-state-machines|T-24027 RPG_BAT state-machine completion]]

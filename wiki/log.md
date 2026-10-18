@@ -18250,3 +18250,12 @@ Created [[tickets/T-24032-date-taco-rotation-clones]] after reading prior SDK/li
 ## [2026-10-17] decision | T-24032 rotation provenance retained
 
 [[tickets/T-24032-date-taco-rotation-clones]] moves to In Review after one fresh SDK MATRIX control. All six helpers remain ASM; no production changes or new coverage. Source/provenance archived; [[date-family-results]] and [[taco-family-results]] updated. Every loose probe retained in ignored build/T-24032-probes/.
+
+## [2026-10-17] ticket | T-24033 VALEN selector sibling completion
+
+Created [[tickets/T-24033-valen-selector-ports]] In Progress. Read T-19016 and [[tickets/T-24019-gyozi-sibling-ports]] negative evidence before ports; only two assigned VALEN functions owned, one Docker compiler.
+
+
+## [2026-10-17] decision | T-24033 VALEN seven-row selector draft
+
+[[tickets/T-24033-valen-selector-ports]] moves to In Review. Direct GameState girl access and meaningful mode local leave func_80132D0C at7 rows, retained under NON_MATCHING;34030 remains its prior27-row guard. Zero matches or verified-byte gain. Default VALEN SHA1 and declaration checks pass; [[event-family-results]] updated. Source-only probes preserved, all loose experiments retained ignored in build/T-24033-probes/. Independent review pending.
