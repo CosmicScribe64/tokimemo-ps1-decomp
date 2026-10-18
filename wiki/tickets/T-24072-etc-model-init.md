@@ -23,3 +23,7 @@ T-24055 archived13/13 pointer/for model draft; literal argument108/12, byte poin
 
 ## Comments
 Parent approved exclusive target after read-only rationale and releases its old archive ownership. Primary ce538a96a includes final T-24071 archive; original target remains ASM. Earlier unresolved packets remain intact with no new probes. No edit/compile before this setup.
+
+Fresh valid current full-TU baseline reproduces13 resolved rows. One adaptation of verified3F980 integer cursor/TaiikuBig/u32 do-loop improves to5; prologue, map cursor and loop agree. Residual is SVECTOR vz/vx/vy tail base/store grouping. Production/neighbors/interfaces unchanged. No old chained-zero/array-view controls repeated; known aggregate rule precludes silently restoring scalar50140 alias.
+
+Source-only checkpoint under drafts/T-24072 retains baseline13/new integer-recipe5 plus neutral vz*=0 and exact two-field vy=vx=0 controls. Tail is3 AT/LUI groups versus original2 sharing vx/vy, with ra reload schedule affected. Original248B; draft adds one setup instruction. Known SVECTOR preserved; no unsupported scalar alias/keep exception. No new faithful source form established or impossibility claim; In Progress pending focused coordination.

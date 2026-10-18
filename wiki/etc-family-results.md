@@ -265,3 +265,7 @@ T-24071 subsequent stock backend capture resolves prior interval uncertainty: id
 T-24071 bounded AS1 reference identifies a candidate needed-bit-width ANDI-to-copy gate (func41917c) plus mask-chain combination; runtime gate execution remains unobserved. No supported new expression beyond prior word/argument controls. Precise source gap is per-arm full-word mask retention without redundant narrowing/hoisting; no source sweep or assembler changes.
 
 T-24071 final handoff is unresolved/In Review, not Done. Best57/source controls/fidelity/stage capture preserved; production ASM unchanged. Candidate AS1 width-rule attribution remains a hypothesis without runtime gate values. Stop44DF0 probes/tracing; no impossibility claim.
+
+T-24072 fresh4354C baseline13; verified3F980 integer-cursor/do-loop adaptation5. Prologue/map cursor/loop now exact, only realSVECTOR tail base/store grouping remains. Production ASM unchanged; no header/config edit or actual C proof.
+
+T-24072 retains new integer-recipe5 under drafts/T-24072; zero-identity/pair controls both neutral5. Residual is3 vector AT address groups versus original2 sharing vx/vy. Known SDK aggregate retained without scalar alias or interface/config edit. No actual C proof/verified gain; In Progress.
