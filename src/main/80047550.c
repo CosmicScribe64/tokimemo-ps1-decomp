@@ -56,24 +56,19 @@ void _sys_default_tpage_set(void) {
     D_800E6280.unk_1228[59] = D_800C5FD0;
 }
 
-/* NON_MATCHING: T-23006, 20 differing lines; ugen temporaries one slot off (swap t9 against t7, andi t0 against t9, li t5/t7/t6). */
-#ifdef NON_MATCHING
 void load_tpage_buf_lock(arg0, arg1, arg2)
 s32 arg0;
 s32 arg1;
 u8 arg2;
 {
-    /* FAKE: T-23006, `arg2 & 0xFF` and the `(u8)` cast of the index are equivalent forms chosen for the temporary numbering (29 to 20 differing lines). */
-    D_800E6280.unk_1228[arg0] = arg1;
+    /* FAKE: T-23006, the store through an integer address (index first) is `D_800E6280.unk_1228[arg0] = arg1`; uopt then treats it as a possible alias and reloads arg0 and arg1, as the original does. */
+    *(s32 *)(arg0 * 4 + (s32)D_800E6280.unk_1228) = arg1;
     if (arg0 < 0x20) {
-        load_csr_tp(arg1, (u8)(arg0 & 0x1F), arg2 & 0xFF, 0, 0, 0x80, 0x80);
+        load_csr_tp(arg1, (u8)(arg0 & 0x1F), (s32)arg2, 0, 0, 0x80, 0x80);
     } else {
-        load_csr_tp(arg1, (u8)(arg0 & 0x1F), arg2 & 0xFF, 0, 0x80, 0x80, 0x80);
+        load_csr_tp(arg1, (u8)(arg0 & 0x1F), (s32)arg2, 0, 0x80, 0x80, 0x80);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80047550", load_tpage_buf_lock);
-#endif
 
 s32 search_load_tpage_buf_lock(s32 arg0, u8 arg1) {
     GameState *var_v0;
