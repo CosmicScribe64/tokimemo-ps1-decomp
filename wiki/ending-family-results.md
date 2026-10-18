@@ -228,3 +228,11 @@ with adjacent ranges528/529 assigned colours6/7, before its ecvt runtime stub
 aborts. Detailed priority/cost diagnosis needs the unavailable instrumented
 uopt from [[uopt-register-allocation]]. No compiler rebuild was attempted in
 this source lane; guarded source and verified coverage remain unchanged.
+
+The allocator prerequisite was subsequently repaired in bounded Docker scratch;
+[[ending-allocator-trace]] gives exact reuse/build/fidelity commands. Tracing
+identifies an equal priority5/cost0 tie and explains the source coupling to
+quotient priority. Moving UV before palette while spelling the later quotient
+directly fixes the constant colours: latest closer804/805 instructions/cost37.
+Only an early zero-halfword store and default-arm address speculation remain.
+Source: drafts/T-24047/closer.c; guarded production body is unchanged, zero gain.

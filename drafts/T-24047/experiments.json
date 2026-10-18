@@ -654,5 +654,77 @@
     "cost": 43,
     "printed": 43,
     "matching_claim": false
+  },
+  {
+    "label": "scoped_tables_control",
+    "expected": 805,
+    "got": 804,
+    "cost": 55,
+    "printed": 55,
+    "matching_claim": false
+  },
+  {
+    "label": "scoped_early_uv",
+    "expected": 805,
+    "got": 802,
+    "cost": 639,
+    "printed": 647,
+    "matching_claim": false
+  },
+  {
+    "label": "table_slot_early_uv",
+    "expected": 805,
+    "got": 805,
+    "cost": 632,
+    "printed": 1276,
+    "matching_claim": false
+  },
+  {
+    "label": "union_table_control",
+    "expected": 805,
+    "got": 811,
+    "cost": 66,
+    "printed": 66,
+    "matching_claim": false
+  },
+  {
+    "label": "union_whole_copy_control",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "union_early_uv",
+    "expected": 805,
+    "got": 802,
+    "cost": 633,
+    "printed": 641,
+    "matching_claim": false
+  },
+  {
+    "label": "union_early_uv_byte",
+    "expected": 805,
+    "got": 811,
+    "cost": 668,
+    "printed": 718,
+    "matching_claim": false
+  },
+  {
+    "label": "uv_immediately_before_palette",
+    "expected": 805,
+    "got": 803,
+    "cost": 636,
+    "printed": 852,
+    "matching_claim": false
+  },
+  {
+    "label": "early_uv_inline_page_quotient",
+    "expected": 805,
+    "got": 804,
+    "cost": 37,
+    "printed": 37,
+    "matching_claim": false
   }
 ]

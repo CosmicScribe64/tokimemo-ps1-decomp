@@ -14,6 +14,8 @@ import permute
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--body", type=Path,
+                        default=Path(__file__).with_name("body.c"))
     parser.add_argument("--case12", action="store_true",
                         help="diagnostic only: adds a table entry and changes the bound")
     parser.add_argument("--out", default="build/t24047-replay")
@@ -22,7 +24,7 @@ def main():
     directory.mkdir(parents=True, exist_ok=True)
     name = "func_80135F4C"
     context = funcdiff.locate(name, "ENDING")
-    body = Path(__file__).with_name("body.c").read_text()
+    body = args.body.read_text()
     if args.case12:
         assert body.count("    default:") == 1
         body = body.replace("    default:", "    case 12:\n    default:")

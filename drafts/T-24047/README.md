@@ -55,3 +55,18 @@ provide the priorities/costs needed to distinguish allocation causes. The next
 diagnostic needs the instrumented uopt described in
 `wiki/uopt-register-allocation.md`; `regdiff` reports that binary unavailable.
 No compiler rebuild or production change was made.
+
+The diagnostic prerequisite is now repaired. See
+`wiki/ending-allocator-trace.md` for the exact external paths and reusable
+Docker build/use/fidelity commands. `trace_fidelity.py` verifies stock output
+before interpreting the instrumented allocator.
+
+Latest source lead: `closer.c` fixes the constant registers and remains804/805
+instructions, cost37. It moves the UV store immediately before palette and
+spells the later page quotient directly. One zero-halfword store is early;
+the two default-arm LUIs still move across the switch. Production still uses
+the reviewed43-cost body and ASM fallback. Replay the closer with:
+
+```
+python3 drafts/T-24047/replay.py --body drafts/T-24047/closer.c --out build/t24047-closer
+```

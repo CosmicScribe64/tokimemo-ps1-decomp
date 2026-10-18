@@ -51,6 +51,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24047-ending-sprite-scene|T-24047 ENDING sprite scene initializer]]
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24067-etc-album-copy|T-24067 Match ETC album record copy]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
@@ -67,7 +68,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24054-short-function-count|T-24054 Recover short MAIN OPTION KANGEI functions]]
 - [ ] [[tickets/T-24050-geko-scene-near-match|T-24050 Close GEKO scene setup near match]]
 - [ ] [[tickets/T-24046-screen-page-renderer|T-24046 Recover the MAIN screen page renderer]]
-- [ ] [[tickets/T-24047-ending-sprite-scene|T-24047 ENDING sprite scene initializer]]
 - [ ] [[tickets/T-24041-main-render-cd-siblings|T-24041 Recover MAIN renderer and CD dispatcher]]
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
 - [ ] [[tickets/T-24048-master-animation|T-24048 MASTER animation reconstruction]]
