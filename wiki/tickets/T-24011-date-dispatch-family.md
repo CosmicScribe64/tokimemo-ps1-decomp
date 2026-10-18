@@ -1,7 +1,7 @@
 ---
 id: T-24011
 title: Match assigned DATE dispatch family
-status: In Progress
+status: In Review
 assignee: Codex DATE worker
 created: 2026-10-17
 updated: 2026-10-17

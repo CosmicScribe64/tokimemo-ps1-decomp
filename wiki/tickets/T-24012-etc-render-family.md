@@ -1,7 +1,7 @@
 ---
 id: T-24012
 title: Match assigned ETC rendering family
-status: In Progress
+status: In Review
 assignee: Codex ETC worker
 created: 2026-10-17
 updated: 2026-10-17
