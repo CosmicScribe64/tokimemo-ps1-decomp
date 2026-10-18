@@ -18643,3 +18643,7 @@ Parent-approved ONE `(void)func_80140E80();` control retains true prototype/all 
 ## [2026-10-18] query | Parent read-only contributor coordination checkpoint
 
 Parent reports GitHub checked about10:39 UTC on2026-10-18: no open PRs; issue63 closed at10:10:30 after merged PR64. NAME_ENT claims50/57 remain OPEN and must be preserved. No contributor messages were sent. Parent's next coordination check is planned about11:09 UTC. This records completed read-only coordination only and does not expand matching scope or create a new task/schedule.
+
+## [2026-10-18] build | T-24068 block-mask fidelity and neutral label boundary
+
+[[tickets/T-24068-etc-album-interaction]] and [[etc-family-results]] record one parent-authorized private helper-only logging extension, bit0/bb3/11. Pinned same-input entire object and four code/data/relocation sections equal stock before interpretation. bb3 source40000000/0 adds forbidden v0; bb11 adds zero. Exact marker creation inside bb3 remains unknown. One approved label-only boundary after E80/before selector is48 resolved rows and entire-object neutral, rejected without a label/goto sweep. drafts/T-24068/trace_blocks.py and replay/provenance retained. Production/header/config/compiler decisions unchanged, no C match or verified bytes; ticket remains In Progress pending direction on the precise mask-origin gap.
