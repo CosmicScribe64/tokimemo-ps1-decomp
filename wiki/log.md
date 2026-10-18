@@ -18186,3 +18186,7 @@ Created [[tickets/T-24007-complete-geko]] for five functions of src/ovl/GEKO/801
 ## [2026-10-17] build | Match GEKO status transition helper
 
 [[tickets/T-24007-complete-geko]] recovered func_80133598 (452 bytes) in src/ovl/GEKO/801323E0.c. A genuine call-result local restores the saved status-byte slot; corrected Rec38 word test and direct signed amount update preserve all instructions. No FAKE. Default linked proof and GEKO checksum pass; see [[scenes-family-results]].
+
+## [2026-10-17] ticket | GEKO scene package enters review
+
+[[tickets/T-24007-complete-geko]] ends with one verified function / 452 bytes, one guarded 36-row near match, and three source-only archived follow-ups. Default linked func_80133598 proof and GEKO checksum pass after the guard edit; official guarded comparison confirms func_80133024 still differs. Header/global/prototype checks pass (0 new, 15 known). Ticket and board moved to In Review; independent review remains required. Every loose experiment and diagnostic is preserved under ignored build/T-24007-probes; automatic review rejected deletion of temporary files. See [[scenes-family-results]].

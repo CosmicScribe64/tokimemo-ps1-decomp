@@ -234,3 +234,13 @@ the initial ranges. No padding local or FAKE is needed. Docker `ninja -j1
 build/ovl/GEKO.ok` passes and default `funcdiff --resolve --version default
 --no-build` reports literal linked target equality (452 bytes).
 See [[tickets/T-24007-complete-geko]].
+
+The bounded T-24007 remainder retains `func_80133024` behind a guard at 36 rows
+(40 before): initialize `i` after resetting the overlay flag to reproduce the original
+constant schedule. Frame and table placement match; month/day/table result ranges
+still differ. Other three stay assembly. Current corrected source drafts score 130
+rows / 114 aligned edits for `func_80132D04` after range consolidation and correct
+packed-byte access, 152 for `func_80132B24` after recovering the original frame/table
+layout, and 163 for a width variant of `func_80133308` (164 plain current-header form).
+Details and provenance in drafts/T-24007/README.md. Header/global/prototype checks pass
+(0 new prototype disagreements, 15 known); no shared header change or FAKE added.
