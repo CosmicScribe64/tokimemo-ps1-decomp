@@ -156,3 +156,33 @@ the writer. No new legal source condition follows from this evidence yet.
 Smallest missing observation is bb3's mask-writer PC plus the creating
 statement opcode/memory type/offset, before attributing it to a source use.
 No new logging build or source probe was performed in this read-only pass.
+
+Parent approved one bounded private observation of those identified writers,
+strictly target/bb3, with writer PC, statement opcode/type/raw fields20/24 and
+mask before/after. `trace_writers.py` uses a separate native logging-only
+binary and preserves every earlier tracer. Reproduce serially in Docker:
+
+```
+python3 drafts/T-24068/trace_writers.py
+python3 tools/uopt_eval.py compile build/etc24068/baseline/source.c build/etc24068/mask-writer/baseline.o --uopt /work/build/etc24068/mask-writer/trace-writers --trace --jobs 1
+python3 drafts/T-24068/trace_writers.py --audit
+```
+
+Native source SHA is
+`ed57347eab0c13dcb385d0469b32a4c23cf49012ff712c90004d394867b2354b`;
+binary SHA is `45ad825535f1a3791653d64660f9ccec6f7b496daa5ee93afe56690df259c86e`.
+Mandatory pinned-input whole-object and four-section equality PASS before
+reading logs. bb3 initialization468BD4 sets its mask to0/0. Neither observed
+candidate statement writer469748 nor46A230 executes for bb3, so no statement
+fields are reported and neither is established as its contributor. This is a
+negative causal result, not a match or proof that all mask writers were traced.
+
+Further existing-source reading locates later `localcolor` mask writes,
+including0x46C76C's allocation of a passed-in/precolored range into an absent
+BB live unit. Its static gates include range membership, `passedinreg` and a
+free desired register. Execution for the target's bb3 is unobserved. The
+precise unresolved blocker is which later creation/propagation path supplies
+bb3's fixed-v0 mask and from which live range; no faithful required-expression
+C89 route is established. No additional instrumentation or speculative
+control follows. Production remains INCLUDE_ASM,48 rows/56 words/frame0x28,
+with no verified-byte gain. Ticket remains In Progress pending parent direction.
