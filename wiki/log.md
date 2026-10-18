@@ -19147,3 +19147,12 @@ but full-TU35-function audit finds9 changed C330 words (v1-to-v0 aftercalls),
 other34 unchanged. All six calls ignore result and original has no explicit
 return; neither proves original void. Exact forward/source/replay preserved,
 no production/header change or invented return. Active same function.
+
+## [2026-10-18] build | T24078 current-order word UV control restores loads without gain
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve one
+approved628 word-UV-pair transfer,634cost/862 diagnostic rows/594words/A0.
+LW replaces LB but repeated reloads remain; saved mode/136/160/page allocation
+unchanged. Source retains explicit unknown-aggregate FAKE; geometry/signature
+fixed. Reject as frontier, retain604 numeric/628 causal. Exact source/replay
+preserved, production unchanged and same target active; no further diagnostic.
