@@ -20,3 +20,9 @@ Recover verified C in the two assigned families from c485bb71a. Parent integrate
 
 ## Comments
 Baseline 1,813,468 / 2,279,368 game bytes (79.6%). Two focused GPT-6.1 Sol medium workers authorized; Astra reserved for evidenced blockers. Shared headers require coordination.
+
+Initial source query: [[gcc-objects]] settles DATE func_8015A640 as hand-written libgte assembly (register order, multu, hazard nops and local jump; multiple gcc versions previously failed). Older [[matching-notes]] suggestions of a compiler swap are superseded by that measured result. Worker skips repeat compiler sweeps and focuses on T-17207 dispatcher evidence. This remains assembly and does not count as a new C match; no denominator change is proposed.
+
+Worker branches: codex/complete-date at /private/tmp/tokimemo-complete-date and codex/complete-etc at /private/tmp/tokimemo-complete-etc. Common ticket ancestor 4c5123f11. Parent chat notified of scope, setup and established libgte blocker.
+
+Resource audit: tools/funcdiff.py invokes ninja without a job cap in freshness/header checks. Workers instructed to prebuild affected .ok with ninja -j1 and then use --no-build --resolve --version default (freshness and header checks retained), or an untracked PATH wrapper that appends -j1. No tracked toolchain or per-function exception is introduced.

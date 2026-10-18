@@ -18153,3 +18153,9 @@ User resumed after contributor/Claude waves. Read latest index, wave4/5 completi
 
 ## [2026-10-17] ticket | Start isolated DATE and ETC matching
 Created [[tickets/T-24010-date-etc-coordination]], [[tickets/T-24011-date-dispatch-family]] and [[tickets/T-24012-etc-render-family]] from c485bb71a. Read [[index]], local instructions, standards, [[date-family-results]] and [[etc-family-results]]. Limited to explicitly assigned files, Docker builds at one job per worker; parent owns integration and contributor monitoring.
+
+## [2026-10-17] query | Reuse established DATE assembly blocker
+[[gcc-objects]] and [[matching-notes]] T-17208 establish DATE func_8015A640 as hand-written libgte assembly, superseding older compiler-swap hypotheses. [[tickets/T-24010-date-etc-coordination]] records the boundary; DATE worker focuses dispatcher recovery without repeating exhausted compiler sweeps. No new verified bytes or denominator adjustment.
+
+## [2026-10-17] query | Keep linked proof within worker build cap
+Inspected tools/funcdiff.py freshness/header subprocesses: internal ninja calls omit -j1. [[tickets/T-24010-date-etc-coordination]] records prebuild at -j1 then --no-build default linked proof, preserving freshness checks. Workers notified; no tracked tooling change.
