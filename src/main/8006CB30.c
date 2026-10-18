@@ -216,7 +216,7 @@ s32 func_8006D6E0(void) {
     }
 }
 
-/* NON_MATCHING: T-23003, 13 rows; idx++ is folded to li, and the second call result is narrowed with andi where the original copies it with or. */
+/* NON_MATCHING: T-23003, 1 row; the first idx++ (right after idx = 0) is folded by uopt to li v1,1 where the original keeps addiu v1,v1,1. */
 #ifdef NON_MATCHING
 /* T-23003: the 3-bit counter in bits 5..7 of the byte at GameState +0xF6 (read with lbu, decremented as a bit-field). */
 typedef struct F6Bits {
@@ -225,10 +225,13 @@ typedef struct F6Bits {
     u32 pad1 : 24;
 } F6Bits;
 
+/* FAKE: T-23003, u8 view of func_8006BDA8 (defined s32 in 800674B0.c, not in main_api.h): the second result is then copied into $a0 with or in the beqz delay slot, as in the original, instead of narrowed with andi */
+u8 func_8006BDA8();
+
 void func_8006D7EC(void) {
     GameState *gs;
-    /* FAKE: T-23003, the original frame has seven register locals (two words above idx); res holds the second call result in $a0 (u8: narrows with andi where the original copies with or) */
-    u8 res;
+    /* FAKE: T-23003, the original frame has seven register locals (two words above idx); res holds the second call result in $a0 */
+    s32 res;
     s32 idx;
     s32 wd;
     s32 month;

@@ -17762,3 +17762,7 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E
 ## [2026-10-17] ticket | T-23003 In Review
 
 [[tickets/T-23003-w5-big-p03]]: 0 of 3 matched in `src/main/8006CB30.c`. `func_8006D7EC` (4,692 B) is a typed hand draft, opcode-aligned in all 1,173 instructions, guarded under `NON_MATCHING` at 13 rows (`idx++` folded to `li`, the second call result narrowed instead of copied); `func_8007132C` (4,292 B) and `func_8006D138` (920 B) stay `INCLUDE_ASM`. Levers, failed forms and tool notes in [[matching-notes]] section T-23003; hand drafts and the aligned-diff scripts in `drafts/T-23003/`.
+
+## [2026-10-17] build | T-23003 closer: func_8006D7EC at 1 row
+
+[[tickets/T-23003-w5-big-p03]]: Opus closer on `func_8006D7EC` in `src/main/8006CB30.c`, 13 rows to 1 (still guarded). A `u8 func_8006BDA8();` view with `s32 res` fixes the copy of the second call result; the `idx++` fold after `idx = 0` is left (uopt, confirmed with `cc -S`). Notes in [[matching-notes]] (T-23003) and the ticket comment.
