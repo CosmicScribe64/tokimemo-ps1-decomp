@@ -77,3 +77,13 @@ python3 drafts/T-24067/trace_creation.py --audit
 ```
 
 The audit must pass before using event evidence. This is diagnostic logging; no allocator decision, compiler option, generated instruction, production tool or source exception is changed.
+
+The current 5.3 copy-state diagnostic is preserved separately in store-control.c. A FAKE volatile stack-word store of count immediately before the required copy changes its second-word scratch from t5 to the expected t6. All four former copy-register differences disappear. This is rejected for promotion: it adds `SW s1,0x48(sp)`, enlarges frame0x48 to0x58 and changes five branch offsets. Exact tagged full-TU replay reports15 differing rows, not a match:
+
+```
+python3 drafts/T-24067/replay.py --variant store-control
+```
+
+Logs are build/etc24067/store-control-safe.log and archive/store-control/diagnostic.txt. The source is a counterfactual state probe, not a reconstruction of an original required store. Volatile qualifiers on the aggregate copy itself are neutral8/8 and rejected. No 4.1 target comparison or old-compiler necessity is inferred.
+
+Faithful store sequencing offers no immediate substitute for the extra store. Required printf argument stores must precede the call that consumes them. Count/mode stores belong after the loop; moving them into the copy path changes global mutation across subsequent calls. The required first-word copy store uses the dynamic destination register, which the existing store-kind evidence leaves in state F. Splitting into two four-byte aggregate assignments was already rejected (31 rows, both word copies using AT). Further analysis must examine the actual backend address/state classification; it cannot assume that adding a source store is a valid solution.

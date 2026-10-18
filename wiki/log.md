@@ -19447,3 +19447,6 @@ Early rejection/continue corrects saved end/save allocation and improves cost16/
 ## [2026-10-18] query | Contributor TT toolchain report and ownership check
 
 Read issue63 and its new SDK signature/toolchain findings; no open PRs, NAME_ENT claims50/57 unchanged. [[completion-run-2026-10-17]] records the report as unverified evidence and retains TT ownership exclusion. No permanent assembly exception or scope/count change accepted. No contributor messages sent. ETC improved source-only checkpoint7083b5f14 is on main; both existing Sol workers remain active.
+## [2026-10-18] decision | T-24067 reject added-store state diagnostic
+
+Retained separate FAKE store-control.c: direct stack store before aggregate copy makes all four scratch-register words agree in current5.3, but adds SW, grows frame0x48→0x58 and changes branch offsets. Tagged full-TU default explicit-object replay reports15 rows, so it is rejected for promotion. Aggregate volatile qualifiers stay8/8. Required printf/tail/copy store sequencing supplies no immediate faithful direct-store substitute; [[tickets/T-24067-etc-album-copy]] records reasons. No compiler-version necessity inferred; continue read-only backend classification analysis within this function only.
