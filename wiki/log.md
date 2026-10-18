@@ -19995,3 +19995,7 @@ girl/status shared-word recipe, equal-count scratch rotation and early flag
 constant supply no new observed source mechanism. Best102/frame28/206words and
 all source/proofs/FAKE caveats retained; production ASM unchanged. Unsupported
 probes stopped, no Done/match/impossibility claim. See [[etc-family-results]].
+
+## [2026-10-18] ticket | Recover ETC renderer from actual two-slot polygon layout
+
+Created [[tickets/T-24078-etc-two-poly-renderer]] before edits on only func_8013D570 in ETC/8013BEF0.c. Both old drafts retain a scalar despite original two four-byte slots at sp84/88; matched same-TU D32C supplies a real SDK polygon-array idiom. Establish faithful current-type baseline, retaining original target fields/calls/order and acknowledging old792/957 scores. Same sole Sol medium worker/Docker compiler, no agents/instrumentation; all neighbors and unresolved T-24077 preserved.
