@@ -17755,3 +17755,7 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E
 ## [2026-10-17] ticket | T-22021 In Review
 
 [[tickets/T-22021-w4-p21]] moved to In Review: 2 of 4 matched, no guards left, clean build and the header checks run before the final commit.
+
+## [2026-10-18] ticket | T-22021 Done
+
+[[tickets/T-22021-w4-p21]]: code review against `CODING_STANDARDS.md`, two small findings fixed (record-array form of the five-record loop in `func_80134850`, `s32`-without-return explained in its FAKE comment; objects unchanged). 2 of 4 matched (`func_8013987C` 148 bytes, `func_80134850` 232 bytes).

@@ -98,7 +98,7 @@ void func_80134800(void) {
     }
 }
 
-/* FAKE: T-22021. The bytes D_800E6280.unk_110B and unk_110C are read and written only as u8 views, so uopt promotes each to one register (see func_8013987C in 801388D0.c); `*= 0` keeps the `move v1,zero` that a plain `= 0` folds into `sb zero`; the original source is unknown. */
+/* FAKE: T-22021. The bytes D_800E6280.unk_110B and unk_110C are read and written only as u8 views, so uopt promotes each to one register (see func_8013987C in 801388D0.c); `*= 0` keeps the `move v1,zero` that a plain `= 0` folds into `sb zero`; `s32` without a return matches the implicit-int call earlier in this file (no prototype); the original source is unknown. */
 s32 func_80134850(void) {
     s32 i;
     u32 q;
@@ -114,7 +114,7 @@ s32 func_80134850(void) {
         *(u8 *)&D_800E6280.unk_110C += 1;
     }
     for (i = 0; i < 5; i++) {
-        D_8011ECD0[0x1987 + i * 0x44] = *(u8 *)&D_800E6280.unk_110B;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_07 = *(u8 *)&D_800E6280.unk_110B;
     }
     *(u8 *)&D_800E6280.unk_110B -= 2;
     if (*(u8 *)&D_800E6280.unk_110B == 0) {
