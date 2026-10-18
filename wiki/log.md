@@ -18011,3 +18011,11 @@ Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` 
 ## [2026-10-17] ticket | T-23006 Wave 5 big package w5-big-p06 opened
 
 [[tickets/T-23006-w5-big-p06]] (In Progress) under [[tickets/T-23000-wave-5-big-conveyor]]: `src/main/80047550.c`, `func_800476C0` (3.1 KB), `func_80047560` (352 B) and `load_tpage_buf_lock` (168 B, guarded at 29 rows). Branch `w5-big-p06` from `w2-good`.
+
+## [2026-10-17] ticket | T-23006 In Review
+
+[[tickets/T-23006-w5-big-p06]]: 0 of 3 matched in `src/main/80047550.c`. `func_800476C0` (3,132 B) and `func_80047560` (352 B) stay `INCLUDE_ASM`; `load_tpage_buf_lock` keeps its guard at 20 differing lines (29 before) with a `FAKE` comment. `func_800476C0` is typed (`DisplayFixActor44`, `DisplayImage78`, `Rec24`), the frame is word-exact, the first 100 rows differ in register numbers and load placement only; the register order of the nine saved registers is open. Levers and numbers in [[matching-notes]] section T-23006; drafts and scorer in `drafts/T-23006/`.
+
+## [2026-10-17] build | T-23006 checks
+
+[[tickets/T-23006-w5-big-p06]]: clean build 27/27 (668 steps; `SHA1 CHECK` of every binary OK), `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass; a later comment-only edit of `src/main/80047550.c` rebuilt with `SLPM_86.053.bin: OK`. Package left In Review for the lead.

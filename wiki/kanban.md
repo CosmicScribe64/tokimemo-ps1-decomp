@@ -50,10 +50,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-22000-wave-4-conveyor|T-22000 Wave 4 conveyor]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 - [ ] [[tickets/T-23000-wave-5-big-conveyor|T-23000 Wave 5 biggest-first conveyor alongside wave 4]]
-- [ ] [[tickets/T-23006-w5-big-p06|T-23006 Wave 5 big package w5-big-p06]]
 
 ## In Review
 
+- [ ] [[tickets/T-23006-w5-big-p06|T-23006 Wave 5 big package w5-big-p06]]
 
 ## Done
 
