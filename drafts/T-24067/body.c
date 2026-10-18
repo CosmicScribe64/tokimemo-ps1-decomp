@@ -1,4 +1,4 @@
-/* NON_MATCHING: T-24067; indexed source-only cost16/16 rows. */
+/* NON_MATCHING: T-24067; source-only cost8/8 rows, not a verified C match. */
 void func_80141ABC(void) {
     s32 count;
     u8 value;
@@ -11,11 +11,12 @@ void func_80141ABC(void) {
         value = D_800E6280.unk_75E[i].unk_02;
         func_800AE0B0("%d %d %d %d %d \n", D_800E6280.unk_75E[i].unk_04,
             D_800E6280.unk_75E[i].unk_05, D_800E6280.unk_75E[i].unk_06, value, value);
-        if (D_800E6280.unk_03E && D_800E6280.unk_03F && D_800E6280.unk_040 &&
-            (D_800E6280.unk_F5F & 0xF) == D_800E6280.unk_75E[i].unk_00) {
-            ((GsRec75E *)D_800E7D10.unk_058)[count] = D_800E6280.unk_75E[i];
-            count++;
+        if (!D_800E6280.unk_03E || !D_800E6280.unk_03F || !D_800E6280.unk_040 ||
+            (D_800E6280.unk_F5F & 0xF) != D_800E6280.unk_75E[i].unk_00) {
+            continue;
         }
+        ((GsRec75E *)D_800E7D10.unk_058)[count] = D_800E6280.unk_75E[i];
+        count++;
     }
     D_800E7D10.unk_027[1] = count;
     D_800E7D10.unk_027[0] = 1;

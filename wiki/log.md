@@ -18569,3 +18569,7 @@ Copied stock uopt stages without altering bytes; full-TU code/data/relocations e
 ## [2026-10-18] query | T-24067 address-bit creation measured
 
 Parent approved private logging only. Separate diagnostic binary records first eligible address encounters in makelivranges, with save bit55/block7 before end bit56/block8; format is54/block2. Its full object SHA and all code/data/relocations equal stock. Retained logging-only generator, exact hashes and replay/audit commands under drafts/T-24067; no generated compiler source/binary committed and shared tracer untouched. One derived goto-first indexed loop is neutral16/16 and rejected. [[tickets/T-24067-etc-album-copy]] remains In Progress; production remains assembly and only this target is active.
+
+## [2026-10-18] build | T-24067 early-continue allocation gain
+
+Early rejection/continue corrects saved end/save allocation and improves cost16/16 to8/8 rows. Exact tagged full-TU explicit-object default replay confirms only four second-copy t5/t6 instructions remain, with75 words/frame0x48. Retained improved body.c and previous indexed-body.c/cursor-body.c in drafts/T-24067; capture helpers explicitly retain the indexed baseline for prior trace provenance. [[tickets/T-24067-etc-album-copy]] stays In Progress; no production/header/config change or verified C claim.

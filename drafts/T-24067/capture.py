@@ -39,7 +39,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '--uopt':
 
 production = Path('src/ovl/ETC/80140F50.c')
 original = production.read_bytes()
-subprocess.run([sys.executable, 'drafts/T-24067/replay.py'], check=True)
+subprocess.run([sys.executable, 'drafts/T-24067/replay.py', '--variant', 'indexed'], check=True)
 base = Path('build/etc24067/archive/indexed')
 original_environment = cc.ido_frame_env
 
