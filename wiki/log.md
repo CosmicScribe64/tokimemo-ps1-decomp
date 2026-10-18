@@ -20478,3 +20478,13 @@ Reviewed against `CODING_STANDARDS.md` and verified with `tools/funcdiff.py --re
   - `DATE:func_8013EB8C` (688 B): `MATCH`
   - `DATE:func_801407D0` (684 B): `MATCH`
 - Created and dispatched [[tickets/T-24099-date-80132000-final-six]] (`In Progress`) for the final 6 unmatched functions in `src/ovl/DATE/80132000.c`.
+
+## [2026-10-18] ticket | T-24087 Done (3 matches in main and OPTION, 1,792 B) and T-24100 In Progress
+
+Reviewed against `CODING_STANDARDS.md` and verified with `tools/funcdiff.py --resolve`:
+- [[tickets/T-24087-guarded-near-misses-and-option-twins]] (`Done`, +3 functions / +1,792 B):
+  - `main:file_checksum_ok` (`func_8004556C`, 124 B in `src/main/800451D0.c` — `src/main/800451D0.c` is now 100% matched!): `MATCH`
+  - `OPTION:func_801378DC` (832 B in `src/ovl/OPTION/80132000.c`): `MATCH`
+  - `OPTION:func_80138080` (836 B in `src/ovl/OPTION/80132000.c` — `src/ovl/OPTION/80132000.c` is now 100% matched!): `MATCH`
+- Created and dispatched [[tickets/T-24100-taiiku-data-defs-and-islands]] (`In Progress`) to convert `TAIIKU` `.data` `INCLUDE_RODATA` definitions to C and close `TAIIKU` and `OPTION/801389A0.c` near misses.
+

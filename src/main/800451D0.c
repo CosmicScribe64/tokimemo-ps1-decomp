@@ -191,49 +191,38 @@ void cd_read_sectors(u8 arg0, s32 arg1, s32 arg2) {
     D_800B3D60 = 1;
 }
 
-/* NON_MATCHING: T-12010, 4 differing listing lines; see the ticket scratch evidence. */
-#ifdef NON_MATCHING
-s32 file_checksum_ok(arg0, arg1)
-u8 arg0;
-u8 *arg1;
+s32 file_checksum_ok(blocks, buf)
+u8 blocks;
+u8 *buf;
 {
     u32 lo;
-    s32 temp_t0;
-    u32 var_v0;
-    u32 temp_a2;
-    u32 var_v1;
-    u8 *var_a0;
-    u8 *var_a3;
-    u8 *temp_a0;
-    var_v0 = 0;
-    var_v1 = 0;
-    if (((arg0 << 0xB) - 4) != 0)
-    {
-        var_a0 = arg1;
-        var_a3 = arg1 + 1;
-        do
-        {
-            var_v1 += 2;
-            var_v0 += (*var_a0) + (*var_a3);
-            temp_t0 = var_v0 & 0xFFFF;
-            var_a0 += 2;
-            var_a3 += 2;
-            var_v0 = temp_t0;
+    u16 sum;
+    u32 hi;
+    u32 i;
+    u8 *p0;
+    u8 *p1;
+    u8 *end;
+
+    sum = 0;
+    i = 0;
+    if (((blocks << 11) - 4) != 0) {
+        p0 = buf;
+        p1 = buf + 1;
+        /* FAKE: goto into for-loop body omits the redundant entry test while keeping the u16 sum narrowing in the for-step after sltu. T-24087 */
+        goto loop;
+        for (; i < (blocks << 11) - 4; i += 2, p0 += 2, p1 += 2) {
+        loop:
+            sum += *p0 + *p1;
         }
-        while (var_v1 < ((arg0 << 0xB) - 4));
     }
-    temp_a0 = var_v1 + arg1;
-    temp_a2 = temp_a0[0];
-    lo = temp_a0[1];
-    if (var_v0 != ((temp_a2 << 8) + lo))
-    {
+    end = i + buf;
+    hi = end[0];
+    lo = end[1];
+    if (sum != ((hi << 8) + lo)) {
         return 0;
     }
     return 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800451D0", file_checksum_ok);
-#endif
 
 /* s32 fallthrough preserves original constant scheduling (T-9710). */
 s32 func_800463E8(void) {

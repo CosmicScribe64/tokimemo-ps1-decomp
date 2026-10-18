@@ -49,12 +49,12 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24100-taiiku-data-defs-and-islands|T-24100 Convert TAIIKU .data INCLUDE_RODATA definitions to C and close TAIIKU/OPTION near misses]]
 - [ ] [[tickets/T-24099-date-80132000-final-six|T-24099 Close out remaining DATE 80132000.c functions (func_80132000, func_80137154, func_8013C190, func_8013D5FC, func_8013FAD0, func_8013FD6C)]]
 - [ ] [[tickets/T-24098-gyozi-shougatu-80143ad0-80141780-twins|T-24098 Match GYOZI/80143AD0 and SHOUGATU/80141780 1.000 twin cluster (10 functions, 8,544 B)]]
 - [ ] [[tickets/T-24097-event-movie-final-and-date-event-twins|T-24097 Match EVENT:func_8011DDB8 (3,992 B) and DATE/EVENT movie/scene siblings (func_8013FD6C/func_8011B848)]]
 - [ ] [[tickets/T-24094-etc-data-island-and-near-complete-overlays|T-24094 Add ETC/80143240 .data island to match func_8014354C and attack final functions of DATE2, BUNKA_SD, BUNKASAI, and OMIMAI]]
 - [ ] [[tickets/T-24092-ugen-block-copy-state-pass|T-24092 Prototype and evaluate ugen block-copy state (F vs B) uniform pass]]
-- [ ] [[tickets/T-24087-guarded-near-misses-and-option-twins|T-24087 Close guarded near misses and twin pairs in OPTION, VALEN, TAIIKU, and main]]
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24078-etc-two-poly-renderer|T-24078 Recover ETC two-slot polygon renderer]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
@@ -119,6 +119,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24087-guarded-near-misses-and-option-twins|T-24087 Close guarded near misses and twin pairs in OPTION, VALEN, TAIIKU, and main]]
 - [ ] [[tickets/T-24083-date-80132000-siblings-b|T-24083 Match DATE 80132000.c sibling batch B (func_80147BB0, func_8013A94C, func_8014EF60, func_80151110)]]
 - [ ] [[tickets/T-24095-geko-event-batch-d|T-24095 Match GEKO and EVENT batch D (func_8013A3C4, func_8013AB4C, func_8013B10C, func_801404FC, func_80134808, func_801035BC)]]
 - [ ] [[tickets/T-24089-date-event-movie-sibling-pairs|T-24089 Match DATE and EVENT movie sibling pairs (func_8014718C/func_8011D5C4, func_801462B0/func_8011C750)]]

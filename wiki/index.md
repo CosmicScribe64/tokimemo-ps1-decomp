@@ -744,7 +744,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24084-shougatu-gyozi-siblings-b|T-24084]] SHOUGATU and GYOZI sibling batch B (`func_801359FC` 276 B, `func_8013C118` 504 B, `func_8013E824` 748 B, Done; 3 matches, 1,528 B verified default C).
 - [[tickets/T-24085-event-geko-twins-b|T-24085]] EVENT and GEKO twin cluster B (`func_80105DF8`/`func_8013E950` matched 1,712 B; `func_80109404`/`func_801406CC` diagnosed as `ugen` block-copy state gap, Done).
 - [[tickets/T-24086-issue-63-tt-ratan2-reevaluation|T-24086]] Issue 63 (`TT:func_8014D260` `ratan2`) Sony workstation assembler pass (`tools/sdk_aspsx_pass.py`), 400 B C match (`303/303` C functions in `TT`), and repo-wide SDK toolchain survey (Done).
-- [[tickets/T-24087-guarded-near-misses-and-option-twins|T-24087]] Guarded near misses and twin pairs in OPTION, VALEN, TAIIKU, and main (In Progress).
+- [[tickets/T-24087-guarded-near-misses-and-option-twins|T-24087]] Guarded near misses and twin pairs in OPTION, VALEN, TAIIKU, and main (`main:file_checksum_ok` 124 B, `OPTION:func_801378DC` 832 B, `OPTION:func_80138080` 836 B, Done; 3 matches, 1,792 B verified default C).
 - [[tickets/T-24088-gyozi-shougatu-valen-siblings-c|T-24088]] GYOZI, SHOUGATU, and VALEN sibling batch C (`SHOUGATU:func_8013DF14` matched 436 B, Done).
 - [[tickets/T-24089-date-event-movie-sibling-pairs|T-24089]] DATE and EVENT movie sibling pairs (`DATE:func_8014718C` 1,996 B, `EVENT:func_8011D5C4` 2,036 B, `DATE:func_801462B0` 3,804 B, `EVENT:func_8011C750` 3,700 B, Done; 4 matches, 11,536 B verified default C).
 - [[tickets/T-24090-geko-event-twins-and-near-misses-c|T-24090]] GEKO and EVENT twin pair and guarded near misses C (`GEKO:func_80137120` 436 B, `GEKO:func_801372D4` 468 B, `GEKO:func_80140040` 300 B, `GEKO:func_80133AA0` 432 B, `EVENT:func_80102E54` 672 B, Done; 5 matches, 2,308 B verified default C).
@@ -757,6 +757,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24097-event-movie-final-and-date-event-twins|T-24097]] Match `EVENT:func_8011DDB8` (3,992 B) and `EVENT` scene siblings (`func_8011B848`, `func_8011C164`, In Progress).
 - [[tickets/T-24098-gyozi-shougatu-80143ad0-80141780-twins|T-24098]] Match `GYOZI/80143AD0` and `SHOUGATU/80141780` 1.000 twin cluster (10 functions, 8,544 B, In Progress).
 - [[tickets/T-24099-date-80132000-final-six|T-24099]] Close out remaining `DATE` `80132000.c` functions (`func_80132000`, `func_80137154`, `func_8013C190`, `func_8013D5FC`, `func_8013FAD0`, `func_8013FD6C`, In Progress).
+- [[tickets/T-24100-taiiku-data-defs-and-islands|T-24100]] Convert `TAIIKU` `.data` `INCLUDE_RODATA` definitions to C and close `TAIIKU` and `OPTION/801389A0.c` near misses (In Progress).
 
 
 
