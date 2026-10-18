@@ -23,3 +23,7 @@ Matched sibling8005D448 (292 bytes, ratio0.753) has menu selection spilled acros
 
 ## Comments
 Read-only selection/rationale sent before assignment. Parent approved same-worker source-led work conditional on checking prior evidence, and confirms TU ownership released. Ticket unique/current main108379749 checked before edits. Prior unresolved packets and published C wins preserved.
+
+Fresh valid current-type baseline61 rows, distinct from historical plain67/typed130. Correct selection snapshot indexes slot_status after k_disp_inc; old plain draft indexed current global+1 after that call. Explicit sp28 copy/reload reflects original cross-call value, without adding guessed storage. Frame30/spill2C differs from original38/spill28. One GameState pointer is65 (spill28 but initial selectionv0), rejected. Existing-byte selected-slot comparison capture remains61 and flips branch operand, rejected. No per-arm narrowing/width sweep, FAKE buffer, return assumption, production or interface change.
+
+Button snapshot reduces61 to57 fixes selection spill28, while frame remains30 versus38. Stored selected-field argument readback is neutral57. Named required status result first reaches frame38 but shifts spill2C; declaring it after existing locals restores frame30/spill28, also57. Both rejected; no declaration sweep. Real Work members are neutral61. Source-only forms/replay retained under drafts/T-24071; production unchanged, no C proof or verified bytes. Remains In Progress for a concrete next hypothesis.
