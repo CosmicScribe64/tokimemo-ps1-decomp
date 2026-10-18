@@ -40,3 +40,5 @@ Filter: real flat 822-record RGB buffer (three 274-record rolling rows) and SDK 
 Declared-variable-order, register-cache/assignment-chain and explicit byte-offset experiments are bounded negatives. More source-form variation without evidence is not justified. Three targets remain pending; ticket/card moved to In Review for the coordinator's archive review and next disposition. Accepted production C/header remain exactly the reviewed `a0675cafe` checkpoint. No raw assembly, copyrighted assets or build outputs are archived.
 
 Checkpoint result: **1 of 4 targets verified (1,280 bytes); three explicit blockers archived.** Full ticket remains incomplete; do not mark Done while those targets are pending.
+
+Final archive review: independent Standards and Spec reviewers both PASS with zero actionable findings for a0675cafe...920cbb61b. Production source and header remain identical to the reviewed 1,280-byte checkpoint. This completes the bounded pass and review, while the three nonmatching targets remain explicitly pending; no full-ticket completion claim.

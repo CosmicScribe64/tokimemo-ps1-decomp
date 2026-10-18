@@ -18324,3 +18324,5 @@ Standards review found P2: drafts/T-24011/probe.py and stage.py ignored funcdiff
 
 ## [2026-10-17] decision | DATE review failure-handling finding resolved
 Independent re-review of 2f7bd397b...5c14a3c40 passes Standards and Spec with zero remaining actionable findings. [[tickets/T-24011-date-dispatch-family]] records P2 resolved, five Docker tests covering twelve contracts, real full-unit diagnostics 48/72 and two stage reproductions at eleven edit rows. Production unchanged; no new C bytes or full-ticket completion claim.
+## [2026-10-17] decision | ETC final archive passes both review axes
+Independent Standards and Spec reviewers pass a0675cafe...920cbb61b with zero actionable findings. [[tickets/T-24012-etc-render-family]] records one verified 1,280-byte function and three pending source-only drafts; production code is unchanged by the archive. Parent owns integration; worktree preserved.
