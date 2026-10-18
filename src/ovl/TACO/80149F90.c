@@ -96,7 +96,7 @@ void func_8014A42C(void) {
     func_8014F820();
 }
 
-/* NON_MATCHING: T-19003, 12 differing lines; the spill slots of arg1 * 2 and &D_80127480[arg0] sit 4 bytes low (0x38/0x34, original 0x3C/0x38): the original has four slot-taking locals and one more word below the spills. With o inline the spills sit right under the locals but the frame is 8 bytes short; chain assignments put their temporaries above the spills. s32 with no return fixed the lui order of the second 0x40000000 branch. */
+/* NON_MATCHING: T-22025, 6 rows; the spill slots of arg1 * 2 and &D_80127480[arg0] sit 4 bytes low (0x38/0x34, original 0x3C/0x38): the original has four slot-taking locals and one more word below the spills. With o inline the spills sit right under the locals but the frame is 8 bytes short; chain assignments put their temporaries above the spills. s32 with no return fixed the lui order of the second 0x40000000 branch. T-22025: the original has four slot-taking locals (0x4C/0x48/0x44 stored, 0x40 unused, spills at 0x3C/0x38) and the 4 bytes freed sit below the spills, but dropping any one of sel, px or py (inlined, alone or in pairs, with and without a FAKE pad) turns the 6 rows into 150 to 4000: the address CSE of those locals is what produces the stores. T-19003 */
 #ifdef NON_MATCHING
 s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5) {
     MATRIX m;
@@ -1275,7 +1275,7 @@ void func_8014F2A0(void) {
     }
 }
 
-/* NON_MATCHING: T-19003, 11 differing lines; the two + 1 stores share $v0 and the unk_038++ store-back comes after the unk_1104 one, as in the original, but the ++ adds 1 again (addiu t8,a1,1) where the original stores $v0. Writing it as = unk_038 + 1 or += 1 shares the sum but drops the store-back (78 lines). */
+/* NON_MATCHING: T-22025, 6 rows (four branch targets shifted by one word, one extra addiu t8,a1,1 and its sb); the two + 1 stores share $v0 and the unk_038++ store-back comes after the unk_1104 one, as in the original, but the ++ adds 1 again (addiu t8,a1,1) where the original stores $v0. Writing it as = unk_038 + 1 or += 1 shares the sum but drops the store-back (78 lines). T-22025: the chain unk_038 = unk_036 = unk_037 = unk_038 + 1 (stores in the original order) gives 14 rows; unk_037 = unk_036 = unk_038 + 1 then unk_038 = unk_036 gives 14 rows; reading the sum back through unk_037 or unk_036 gives 65 to 120. T-19003 */
 #ifdef NON_MATCHING
 void func_8014F5F0(void) {
     if (D_800E6280.unk_1104.u < 0x64U) {
@@ -1571,22 +1571,17 @@ void func_80150F44(s32 arg0) {
     }
 }
 
-/* NON_MATCHING: T-10850, 10 differing lines; only the sw a1,0x3C(sp) home store sits after the inits. The empty test gives arg1 a split range in $a1 for the first block, so uopt stores it back at the end of that block; without it arg1 stays in memory, the home store moves up, but ugen spends $t6 on the home reload and every temporary is one higher. Comparing arg1 with the constant 0 lets IDO rewrite the test as p != D_8016024C (28-31 lines). T-19003 */
+/* NON_MATCHING: T-22025, 5 rows (rows 9-13); only the sw a1,0x3C(sp) home store is late: the original stores arg1 right after the first use (before addu s2, or s0, or s1, li s3), the draft after them, as the store-back at the end of the block. The empty test gives arg1 its register range in that block; without it arg1 stays in memory, the home store moves up, but ugen spends $t6 on a home reload and every temporary is one higher (T-10850). T-22025: 15 orders of the inits and the empty test, a plain for loop and the do/while all keep the store last; the base and zero locals of the older draft are not needed. T-19003 */
 #ifdef NON_MATCHING
-/* FAKE: split pointer setup and empty test preserve address temporaries. T-10850 */
+/* FAKE: the empty test splits the range of arg1 so that the home store exists. T-22025 */
 void func_801511C0(s32 arg0, s32 arg1)
 {
   s32 i;
-  s32 zero;
   s32 n;
   s32 *p;
-  s32 *base;
   i = 0;
   n = arg0;
-  base = D_8016024C;
-  zero = 0;
-  p = base;
-  p = p + arg1;
+  p = D_8016024C + arg1;
   if (arg1)
   {
   }
@@ -1598,7 +1593,7 @@ void func_801511C0(s32 arg0, s32 arg1)
     p += 1;
   }
   while (i != 6);
-  if (arg1 != zero)
+  if (arg1 != 0)
   {
     func_801478F8(0x1B, D_80160280);
     return;

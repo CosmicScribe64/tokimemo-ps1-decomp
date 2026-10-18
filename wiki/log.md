@@ -17913,3 +17913,11 @@ Review against `CODING_STANDARDS.md` found nothing to fix; 1 of 3 matched (`func
 ## [2026-10-17] ticket | T-22025 In Progress
 
 [[tickets/T-22025-w4-p25]] created and started (wave 4 package w4-p25, TACO `src/ovl/TACO/80149F90.c` and `src/ovl/TACO/8015ABF0.c`), part of [[tickets/T-22000-wave-4-conveyor]]. Worktree `w4-p25` from `w2-good`.
+
+## [2026-10-17] build | T-22025 variant batches
+
+[[tickets/T-22025-w4-p25]]: hand-picked variant batches scored with `autotweak.BuildScorer` plus the exact rescorer (machine load 30 to 65, full-unit `funcdiff` 5 minutes). `func_801511C0`: 15 init orders, plain loops, no match, draft simplified to one FAKE; `func_8014F5F0`: chain assignments give 14 rows; `func_8014A480`: dropping `sel`, `px` or `py` breaks the code. Notes in [[matching-notes]] (section T-22025) and in `src/ovl/TACO/80149F90.c`, `src/ovl/TACO/8015ABF0.c`.
+
+## [2026-10-17] ticket | T-22025 In Review
+
+[[tickets/T-22025-w4-p25]] moved to In Review: 0 of 5 matched, four guards kept (5, 6, 6, 8 rows), `func_8014F820` not started. Clean build 27/27 sha1 OK; header checks run before the final commit.
