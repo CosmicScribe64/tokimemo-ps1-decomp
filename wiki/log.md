@@ -18357,3 +18357,14 @@ Independent review of [[tickets/T-24007-complete-geko]] found swallowed candidat
 ## [2026-10-17] ingest | Preserve completed family handoffs and refresh contributor state
 
 Published GEKO residual guard/drafts, DATE source-only hypotheses and diagnostic fixes, and DATE/ETC final review handoffs. No new C bytes from these archives; coverage remains 79.9%. GitHub check at 06:16 UTC found no open PRs or updated contributor claims. Updated [[completion-run-2026-10-17]] with RPG_BAT T24013 and TACO T24014 assignments. ENDING T24009 found a source-level scheduling improvement but no match; its pinned archive awaits integration.
+## [2026-10-17] ticket | T-24008 TAIIKU runners
+
+Created [[tickets/T-24008-taiiku-runners]] from 8f88afff with exclusive src/ovl/TAIIKU/80133C80.c ownership. Read [[taiiku-family-results]] and typed/sibling recipes before bounded Docker probes.
+
+## [2026-10-17] build | T-24008 finish-line candidate
+
+Ported the matched TAIIKU game-C sibling func_80146D18 to func_80137EA8 with canonical runner/display fields. Scratch linked literal proof matches 692 bytes; promoting for default build verification. Local definition of the zeroed four-byte result array preserves shared stores. Explicit final else and first-slot-first assignment recover original allocation/store-back. See [[tickets/T-24008-taiiku-runners]].
+
+## [2026-10-17] build | T-24008 verifies 692-byte finish helper
+
+Default linked literal proof of func_80137EA8 passes (692 bytes), TAIIKU SHA1 306d1013b9be465819525d1fb4dc0e86b422a846 passes after ninja -j1 target build. [[taiiku-family-results]] records matched sibling source, explicit-else allocation and promoted first-byte store-back idioms. [[tickets/T-24008-taiiku-runners]] continues the remaining bounded targets.
