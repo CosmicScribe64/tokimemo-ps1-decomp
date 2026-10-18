@@ -50,12 +50,15 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 
 
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24028-date-event-short-movie-siblings|T-24028 Recover DATE and EVENT short movie siblings]]
 
 - [ ] [[tickets/T-24018-large-sibling-state-machines|T-24018 Recover large DATE and EVENT sibling state machines]]
 

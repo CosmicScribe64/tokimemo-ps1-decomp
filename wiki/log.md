@@ -18253,3 +18253,15 @@ Docker ninja -j1 DATE.ok/EVENT.ok has no work; independent Docker SHA1 compariso
 
 ## [2026-10-18] ticket | Large movie sibling follow-up ready for review
 Moved [[tickets/T-24018-large-sibling-state-machines]] and its board card to In Review. Root review remains; no push or merge by worker.
+
+## [2026-10-18] ticket | Short DATE and EVENT movie sibling recovery
+Started [[tickets/T-24028-date-event-short-movie-siblings]] from 9d8cd8719 after reviewing T-17201/T-22009 and [[date-family-results]]/[[event-family-results]]. DATE2 func_801348F0 is read-only reference for DATE func_8014718C and EVENT func_8011D5C4. Bounded source-shape pass, one Docker compiler, owned source files only.
+
+## [2026-10-18] query | Shared short-movie timer gap isolated
+[[tickets/T-24028-date-event-short-movie-siblings]] ported matched DATE2 fade shape: DATE func_8014718C improves from 26 to 11 differing instructions; EVENT func_8011D5C4 reaches seven. Both instruction counts and 0x40 frames exact. The seven-word timer-narrowing gap is shared; focused natural and marked-FAKE scratch probes do not close it. Kept useful source-only drafts and tested reproduction in drafts/T-24028/, updating [[date-family-results]] and [[event-family-results]].
+
+## [2026-10-18] build | Improved DATE guard preserves normal checksum
+Updated only the existing DATE func_8014718C guarded body and ticket note; its assembly fallback remains. Docker probe rechecks show 22/14 printable rows for DATE/EVENT candidates; normal ninja -j1 rebuilt DATE with headers/checksum OK. EVENT source/header unchanged. Zero new verified C bytes.
+
+## [2026-10-18] ticket | Short movie source work ready for review
+Moved [[tickets/T-24028-date-event-short-movie-siblings]] and kanban card to In Review; root standards review remains. No push or merge.

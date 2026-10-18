@@ -158,3 +158,7 @@ Result: 5 of 5 matched in plain C (`func_801496C4` 1,020 B, `func_801556D8` 744 
 ## T-24018 source-based movie sibling follow-up
 
 Matched DATE2 func_80133AF0 gives a much closer structural starting point for DATE func_801462B0 than the census. Adding DATE's callback branches and 300-frame timer, with an early break in case 14, restores the exact 0x68 frame and 951 instructions; first 442 instructions exact, 434 printable diff rows remain. Callback-save arrays, direct stage/record views and s32 return diagnostics do not solve later allocation. No production change or new C bytes. Source-only draft and reproduction in drafts/T-24018/, [[tickets/T-24018-large-sibling-state-machines]] In Review.
+
+## T-24028 short movie near miss
+
+The matched DATE2 func_801348F0 fade form fixes DATE func_8014718C's three fades: explicit x/y copies on one source line, marked FAKE as in the sibling. Existing guard improves from 26 to 11 differing instructions (52 to 22 printable rows), with exact 499 instructions and 0x40 frame. Seven timer-narrowing register words and four final store-order words remain. The same seven-word timer gap appears in the recovered EVENT func_8011D5C4 port; no new C bytes. Source-only drafts/reproduction and bounded negatives are in drafts/T-24028/, [[tickets/T-24028-date-event-short-movie-siblings]] In Review. Normal guarded DATE checksum and headers pass.
