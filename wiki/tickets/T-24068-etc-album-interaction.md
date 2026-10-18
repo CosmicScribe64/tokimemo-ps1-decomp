@@ -1,7 +1,7 @@
 ---
 id: T-24068
 title: Match ETC album interaction
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -39,3 +39,5 @@ Parent authorized one helper-only logging extension for bit0/bb3/11. Separate pr
 Bounded read-only generated-source analysis finds makelivranges mask initialization at468BD4 (BB+52/+56 from1001E660) and candidate explicit register writers469748/46A230. The latter opcode0x64 path computes class/register from statement fields before ORing its mask; execution for bb3 is not observed. R0 offset2 bit4 alone does not establish E80's discarded return as the contributor. Smallest missing observation is creating writer PC plus statement opcode/memory type/offset for bb3. No new supported C89 source control, instrumentation build or production change; precise gap reported to parent, ticket In Progress.
 
 One parent-authorized private writer diagnostic passes same pinned-input entire-object/four-section fidelity first. bb3 initialization468BD4 sets mask0/0; neither candidate statement writer469748 nor46A230 executes for bb3, so exact contributor remains unknown. Subsequent read-only source finds later localcolor mask creation (including passed-in/precolored absent-unit path46C76C), without observed execution for this block. No faithful required-expression route or new C89 control is established. drafts/T-24068/trace_writers.py/README preserve generator, hashes, replay and precise causal limit. Production stays assembly,48 rows, no verified bytes; further instrumentation/probes stop pending specific parent scope. In Progress.
+
+Parent closes this focused pass as unresolved/In Review. Production remains INCLUDE_ASM;48 resolved rows are diagnostic only, not a C match or impossibility claim. Frozen source-only packet bed9333e1 retains the bounded controls and audited private evidence. No further trace/probes; a later specifically scoped investigation may address the exact localcolor/live-range mask origin. Ticket is not Done.
