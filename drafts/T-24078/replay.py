@@ -6,9 +6,11 @@ import sys
 sys.path.insert(0, 'drafts/T-24011')
 from diagnostic import report
 
-variants = {'sdk-uv': 'body.c', 'baseline': 'baseline.c', 'shared-temps': 'shared-temps.c'}
+variants = {'shared-temps': 'body.c', 'baseline': 'baseline.c',
+    'sdk-uv': 'sdk-uv.c', 'uv-pair': 'uv-pair.c', 'case-height': 'case-height.c',
+    'inline-height': 'inline-height.c', 'tile-width': 'tile-width.c'}
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--variant', choices=variants, default='sdk-uv')
+parser.add_argument('--variant', choices=variants, default='shared-temps')
 args = parser.parse_args()
 p = Path('src/ovl/ETC/8013BEF0.c')
 before = p.read_text()
@@ -32,6 +34,16 @@ result = subprocess.run([sys.executable, 'tools/funcdiff.py', '--built', str(obj
     '--no-build', '--resolve', '--version', 'default', '--unit', 'ETC',
     'func_8013D570'], capture_output=True, text=True)
 report(result, 'func_8013D570', root / 'diagnostic.txt')
+sys.path.insert(0, 'tools')
+import funcdiff as fd
+candidate = fd.locate('func_8013D570', 'ETC')
+expected, error = fd.expected_object(candidate, False)
+if error:
+    raise SystemExit(error)
+want = fd.resolved_functions(expected, ['func_8013D570'], candidate)['func_8013D570']
+got = fd.resolved_functions(obj, ['func_8013D570'])['func_8013D570']
+print('Aligned cost=%d; words=%d (original %d); first=%s' %
+      (fd.diff_score(want, got), len(got), len(want), got[0][1]))
 if p.read_text() != before:
     raise SystemExit('production changed')
 print('Private source-only diagnostic, no actual default C match claimed.')

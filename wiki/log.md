@@ -18988,3 +18988,13 @@ controls and original two-slot/frame-index evidence; production unchanged.
 Recovery remains In Progress. [[completion-run-2026-10-17]] active ownership
 refreshed: sole Sol T24078, Astra idle after T24077 read-only review, Antigravity
 pending user shell approval with no restart. No extra matching scope.
+
+## [2026-10-18] decision | T24078 aligned metric correction and bounded controls
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] correct the
+previous row-count ranking: scalar SDK UV790rows costs678, worse than joined
+638cost/800rows. Original588words/frame90; retained joined594/98. UVpair tied638
+but596words; per-case height enlarges frame, inlining is no gain, namedwidth648
+rejects. Source-only drafts/T-24078 preserves all7 controls and safe aligned
+replay. Remaining source/scheduling gap is explicit, not impossibility. No
+production/helper/header/config edits; sole worker remains active T24078.
