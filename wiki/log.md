@@ -18250,3 +18250,11 @@ Created [[tickets/T-24034-event-render-siblings]] In Progress after reading prio
 ## [2026-10-17] build | T-24034 EVENT three sibling C wins
 
 [[tickets/T-24034-event-render-siblings]] moves to In Review: three unguarded C targets, 1,808 B, pass normal default literal proof and full EVENT checksum. [[event-family-results]] records promoted-argument and typed SDK renderer recipes plus inherited FAKE provenance. One notified main_api.h declaration added; no EVENT.h changes.
+
+## [2026-10-17] ticket | T-24037 EVENT scene siblings
+
+Created [[tickets/T-24037-event-scene-siblings]] In Progress after reading earlier unresolved-type negatives and [[event-family-results]].
+
+## [2026-10-18] build | T-24037 typed EVENT updater
+
+[[tickets/T-24037-event-scene-siblings]] moves to In Review with a 628 B unguarded C updater and a guarded six-edit initializer, documented in [[event-family-results]] and drafts/T-24037. Root-approved per-overlay array declarations preserve canonical main scalar types. No new FAKE or compiler exception.

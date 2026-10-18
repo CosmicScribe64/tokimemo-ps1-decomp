@@ -212,3 +212,9 @@ T-17601..T-17608 (`w3-gyozi-p01`..`p08`): 33 functions, 19,180 bytes.
 [[tickets/T-24034-event-render-siblings]] adds 1,808 B of unguarded verified C: func_800FEF74 (940 B), func_800FFA4C (404 B), func_800F9730 (464 B). All pass the target source gate, normal default linked literal proof and full EVENT checksum.
 
 The large DATE func_80152268 port retains the documented FAKE dead copies that keep v live across calls. EVENT requires promoted int arguments to func_800FF320: removing DATE's argument-site s16 casts avoids duplicate narrowing and closes the port. The two SDK polygon builders reuse T-24017's EventStateView offsets, word viewport selector and byte ordering-table base with 64-byte stride. The quad uses a meaningful state pointer in place of the DATE dummy frame slot; no dummy remains. Explicit masks and colour source-line grouping are marked FAKE. Main_api.h adds the evidence-backed void func_80067628(); legacy name is preserved; EVENT.h unchanged.
+
+## T-24037 typed scene sibling port
+
+[[tickets/T-24037-event-scene-siblings]] ports func_80103774 (628 B) from DATE func_801560E0 with existing DisplayFixActor44/EvPairs8 and real global coordinate arrays instead of copied DATE arrays. Clearing unk_03 before unk_02 matches the target. No new FAKE. Four EVENT load-time arrays are recovered: u8 D_8012274C[8] flags, s16 D_80122754[8] x, s16 D_80122764[8] y, u8 D_80122774[8] counters. Standard override guards retain the canonical main-context scalars at the same addresses; root approved the access-width/extent evidence before production header edits.
+
+func_80102E54 remains guarded with six edits around constant8 and flag-table base scheduling. drafts/T-24037 preserves its typed source and the bounded negative hypotheses. Independent stores worsen85; reverse chain, full-pool accesses, and a meaningful flags pointer leave6. No raw instruction listings are committed.

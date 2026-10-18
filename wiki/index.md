@@ -639,3 +639,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24029-seasonal-scene-siblings]] — source-only GYOZI/SHOUGATU typed scene checkpoints; no verified bytes.
 
 - [[tickets/T-24034-event-render-siblings]] — EVENT matched DATE sibling ports, 1,808 B verified C.
+
+- [[tickets/T-24037-event-scene-siblings]] — EVENT typed updater, 628 B; initializer six-edit archive.

@@ -54,12 +54,15 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 
 
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24037-event-scene-siblings|T-24037 Recover EVENT scene siblings]]
 
 - [ ] [[tickets/T-24034-event-render-siblings|T-24034 Port EVENT rendering siblings]]
 

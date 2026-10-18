@@ -1,6 +1,10 @@
 #ifndef OVL_EVENT_H
 #define OVL_EVENT_H
 
+#define MAIN_API_OVERRIDE_D_8012274C /* EVENT load-time array view, main context is s32 (T-24037). */
+#define MAIN_API_OVERRIDE_D_80122754 /* EVENT load-time array view, main context is s32 (T-24037). */
+#define MAIN_API_OVERRIDE_D_80122764 /* EVENT load-time array view, main context is s32 (T-24037). */
+#define MAIN_API_OVERRIDE_D_80122774 /* EVENT load-time array view, main context is s32 (T-24037). */
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
 #define MAIN_API_OVERRIDE_D_80120674 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120678 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
@@ -1851,4 +1855,14 @@ void func_8010AFE4(void); /* T-17400: defined in 8010A210.c after its first call
 /* Legacy address is outside the current MAIN executable range. The returned
  * word is consumed as a packet pointer by func_80108B24. T-24017. */
 void *func_80019D00();
+#endif
+
+#ifndef OVL_EVENT_SCENE_ARRAYS_T24037
+#define OVL_EVENT_SCENE_ARRAYS_T24037
+/* T-24037: EVENT load-time aliases; loops bound each array to eight entries. */
+extern u8 D_8012274C[8]; /* flags, lbu/sb stride 1 */
+extern s16 D_80122754[8]; /* x coordinates, lh stride 2 */
+extern s16 D_80122764[8]; /* y coordinates, lh stride 2 */
+extern u8 D_80122774[8]; /* counters, lbu/sb stride 1 */
+
 #endif

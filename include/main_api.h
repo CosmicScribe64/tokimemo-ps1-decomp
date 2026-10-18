@@ -1700,19 +1700,27 @@ extern u32 D_80122640[];
 extern s32 D_80122740;
 extern s32 D_80122744;
 extern s32 D_80122748;
+#ifndef MAIN_API_OVERRIDE_D_8012274C
 extern s32 D_8012274C;
+#endif
 extern s32 D_80122750;
+#ifndef MAIN_API_OVERRIDE_D_80122754
 extern s32 D_80122754;
+#endif
 extern s32 D_80122758;
 extern s32 D_8012275C;
 extern s32 D_80122760;
+#ifndef MAIN_API_OVERRIDE_D_80122764
 extern s32 D_80122764;
+#endif
 extern s32 D_80122768;
 extern u8 D_8012276C;
 extern u8 D_8012276D;
 extern u8 D_8012276E;
 extern s32 D_80122770;
+#ifndef MAIN_API_OVERRIDE_D_80122774
 extern s32 D_80122774;
+#endif
 extern s32 D_80122778;
 extern u8 D_8012277C;
 extern u8 D_8012277D;
