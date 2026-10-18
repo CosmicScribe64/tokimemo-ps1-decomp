@@ -19443,3 +19443,7 @@ Parent approved private logging only. Separate diagnostic binary records first e
 ## [2026-10-18] build | T-24067 early-continue allocation gain
 
 Early rejection/continue corrects saved end/save allocation and improves cost16/16 to8/8 rows. Exact tagged full-TU explicit-object default replay confirms only four second-copy t5/t6 instructions remain, with75 words/frame0x48. Retained improved body.c and previous indexed-body.c/cursor-body.c in drafts/T-24067; capture helpers explicitly retain the indexed baseline for prior trace provenance. [[tickets/T-24067-etc-album-copy]] stays In Progress; no production/header/config change or verified C claim.
+
+## [2026-10-18] query | Contributor TT toolchain report and ownership check
+
+Read issue63 and its new SDK signature/toolchain findings; no open PRs, NAME_ENT claims50/57 unchanged. [[completion-run-2026-10-17]] records the report as unverified evidence and retains TT ownership exclusion. No permanent assembly exception or scope/count change accepted. No contributor messages sent. ETC improved source-only checkpoint7083b5f14 is on main; both existing Sol workers remain active.
