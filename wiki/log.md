@@ -18782,3 +18782,7 @@ Parent reports completed read-only check at12:14UTC: no open PRs; only open clai
 ## [2026-10-18] query | Parent measured progress after T-24073
 
 Parent fresh Docker measurement at main c4847ad5d:6515/6958 functions,1865768/2279368 bytes (81.9%),413600 bytes remaining; ETC367/394 functions,82816/107284 bytes. These are measured totals after [[tickets/T-24073-etc-record-init]], replacing earlier expected estimates.
+
+## [2026-10-18] ticket | Reconstruct ETC record scene using verified helper contracts
+
+Created [[tickets/T-24074-etc-record-scene]] before edits on only func_80144224 in ETC/80143240.c. Newly verified [[tickets/T-24073-etc-record-init]] proves a missing argument in the old draft; matched441DC/current aggregates expose additional phantom arguments/alias errors. Parent reserves one target to the same Sol medium worker, with fresh faithful baseline before controls. Preserve all helpers/neighbors and prior archives; no extra agents/instrumentation. Current primary7837b7e4e includes final T-24073.

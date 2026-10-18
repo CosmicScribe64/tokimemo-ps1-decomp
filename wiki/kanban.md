@@ -48,6 +48,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24074-etc-record-scene|T-24074 Recover ETC record scene]]
+
 
 
 
