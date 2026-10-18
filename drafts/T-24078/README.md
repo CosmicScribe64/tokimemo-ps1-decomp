@@ -29,6 +29,7 @@ Historical T17300 plain792/typed957 are different contexts, not fresh results.
 | origin-first.c |628|856|592|0xA0|
 | origin-x1.c |624|792|594|0xA0|
 | origin-void.c |628|856|592|0xA0|
+| origin-uv-pair.c |634|862|594|0xA0|
 
 Original588 words/frame0x90. Rank with tools/funcdiff.py diff_score on resolved
 instruction keys (insertion/deletion1, substitution2). Printed rows use different
@@ -177,3 +178,15 @@ callers can depend on return liveness for matching. Reject promotion of void;
 retain conservative FAKE s32 fallthrough, no invented return value. The private
 control remains reproducible via --variant origin-void, with its exact forward.
 No new structural source lead follows from this neutral result. Same target active.
+
+
+One current628 word-UV-pair transfer follows explicit verification that628
+still uses LB at UV accesses. Geometry, coordinate types, source ordering and
+s32 signature remain fixed. The existing FAKE aggregate view is unproven as
+original C but represents the two observed persistent stack words. Measured
+634cost/862 diagnostic rows/594words/frameA0, worse628 and two extra words.
+It restores LW atsp94/sp90 (originalsp54/sp50), with repeated reloads before
+u2/u3 rather than original word reuse. Mode stays s7,136 staysfp,160 stayss6,
+page320 remainssp64; no cross-call/register/frame repair. Reject as frontier,
+preserve exact source/replay. Earlier638/604 pair results were not assumed to
+predict this outcome. No new stage capture or geometry claim. Same target active.
