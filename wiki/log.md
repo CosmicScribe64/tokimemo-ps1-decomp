@@ -17877,3 +17877,7 @@ Package w4-p24 started in worktree w4-p24 (branch from w2-good): five EVENT func
 ## [2026-10-17] ticket | T-22024 In Review
 
 Work done, awaiting review against `CODING_STANDARDS.md`. [[tickets/T-22024-w4-p24]], [[kanban]].
+
+## [2026-10-18] ticket | T-22024 Done
+
+Review against `CODING_STANDARDS.md` found one small item (a redundant `(s16 *)` cast on `D_801243A4` in `func_80118010`), fixed; 2 of 5 matched (`func_80118010`, 680 bytes; `func_8011A8E4`, 540 bytes), `func_8011C164` stays `INCLUDE_ASM`, two guards unchanged. [[tickets/T-22024-w4-p24]], [[kanban]].

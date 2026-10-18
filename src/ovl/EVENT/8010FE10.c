@@ -1954,7 +1954,7 @@ void func_80118010(void) {
     if (((EventMovieState *)&D_800B1AF0)->unk_09++ == 0) {
         D_80124354 = (((temp_v0 & 0x7F) >= 2U) + ((temp_v0 & 0x7F) >= 3U) + ((temp_v0 & 0x7F) >= 4U)) * 3;
     }
-    sp32 = ((s16 *)&D_801243A4)[D_800EECBC] + D_80124354;
+    sp32 = (&D_801243A4)[D_800EECBC] + D_80124354;
     if (g->unk_6E5 != 0) {
         sp32 = 0xA;
     }
