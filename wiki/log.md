@@ -17992,3 +17992,7 @@ Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` 
 ## [2026-10-18] ticket | T-22026 Done
 
 [[tickets/T-22026-w4-p26]]: code review against `CODING_STANDARDS.md` clean (one comment added to the empty case labels of `src/ovl/ETC/8013B1F0.c`, no byte change), 1 of 1 matched (`func_8013B1F0`, 1,948 bytes). ETC.bin sha1 OK after the rebuild. Moved to Done.
+
+## [2026-10-17] ticket | T-22029 In Progress
+
+[[tickets/T-22029-w4-p29]] created and started: ETC `src/ovl/ETC/80146400.c`, four functions from the w4-p29 work list (branch `w4-p29` from `w2-good`).
