@@ -1,4 +1,4 @@
-/* NON_MATCHING: T-24067; source-only cost18 checkpoint, not a verified C match. */
+/* NON_MATCHING: T-24067; source-only cost16 checkpoint, not a verified C match. */
 void func_80141ABC(void) {
     GameState *cursor;
     s32 count;
@@ -7,11 +7,9 @@ void func_80141ABC(void) {
     GameState *end;
 
     func_800AE080(D_800E7D10.unk_058, 0x800);
-    format = "%d %d %d %d %d \n";
-    end = (GameState *)((u8 *)&D_800E6280 + 0x800);
-    cursor = &D_800E6280;
-    count = 0;
-    do {
+    /* FAKE: retain this initializer/do source-line group so as1 schedules
+     * hoisted addresses together. Original line layout unknown. T-24067 */
+    cursor = &D_800E6280; end = (GameState *)((u8 *)&D_800E6280 + 0x800); format = "%d %d %d %d %d \n"; count = 0; do {
         value = cursor->unk_75E[0].unk_02;
         /* FAKE: eliminated identity test retains the format range so fmt/end/save
          * receive the original saved registers. Original source unknown. T-24067 */

@@ -18545,3 +18545,9 @@ Existing read-only tracer shows fmt/save/end hoisted constants share priority3.3
 
 ## [2026-10-18] build | T-24067 canonical allocation checkpoint
 Retained drafts/T-24067/body.c and safe replay at cost18/28 rows, exact0x48 frame/75 words. FAKE format identity restores saved allocation; canonical GameState endpoint avoids any header/export alias. Source-only checkpoint preserves provenance while [[tickets/T-24067-etc-album-copy]] remains In Progress. No other function or production source changed.
+
+## [2026-10-18] decision | T-24067 counterfactual unavailable
+Parent preserved source checkpoint eadad3134 on main ebf0aa7b1. Optional private4.1-ugen comparison cannot run with existing tools; no downloads/install/image changes or expanded search. Further source controls have not improved cost18. Native listing identifies loop-header source-location boundary as the next narrow preheader-scheduling test. [[tickets/T-24067-etc-album-copy]] remains active; no production change or compiler-gap claim.
+
+## [2026-10-18] build | T-24067 source-line boundary gain
+Retained exact initializer/do source-line grouping in drafts/T-24067/body.c with FAKE scheduling explanation. Diagnostic improves cost18/28 rows to16/20, frame0x48/75 words unchanged. Safe replay validates exact tagged body. Independent endpoint symbol does not improve it, so canonical GameState endpoint remains. [[tickets/T-24067-etc-album-copy]] remains In Progress; no actual C match claimed.
