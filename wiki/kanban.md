@@ -48,6 +48,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24070-etc-save-card-state|T-24070 Match ETC save-card state machine]]
+
 
 
 

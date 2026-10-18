@@ -18670,3 +18670,7 @@ Created [[tickets/T-24069-etc-menu-state]] before edits for only func_8013BFFC i
 ## [2026-10-18] ticket | T-24069 reviewed published and Done
 
 Parent independently reviews e3750f110 full92-line standards change PASS/no findings and publishes primary fd700bf3f after actual-C/literal820, all27 hashes, interface/prototype0 new15 known gates. [[tickets/T-24069-etc-menu-state]]/card/index move Done after review; [[etc-family-results]] records publication. Source-only drafts/T-24069 controls/reproducer preserve provenance; zero replay passes without production edits. Read-only Docker tools/progress.py on primary fd700bf3f measures6514/6958 functions and1865416/2279368 bytes(81.8%),413952 bytes remaining; log build/etc24069/primary-progress.log. Next work is read-only selection pending assignment/ticket, no new target compile.
+
+## [2026-10-18] ticket | Claim ETC save-card state machine from matched reference
+
+Created [[tickets/T-24070-etc-save-card-state]] before edits on only func_80144F74 in ETC/80143240.c. Read [[etc-family-results]] and frozen [[tickets/T-24055-etc-short-helpers]] closure; app inventory shows no active other matching chat, while parent assigns this function. Same sole Sol medium worker reuses f76548701, preserving all TU neighbors and contributor scopes. Matched NAME_ENT8013F758 is read-only reference; prior46-row draft needs a fresh current-type baseline before source-led controls. No NAME_ENT or other target edits authorized.
