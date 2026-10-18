@@ -18489,3 +18489,7 @@ Created [[tickets/T-24051-date-large-dispatcher]] before source work; reused bui
 ## [2026-10-18] ticket | Claim two small ENDING fade handlers
 
 Created [[tickets/T-24057-ending-small-pair]] before source work and started codex/complete-ending-small-pair from frozen DATE tip 71833d4e2. Read [[ending-family-results]] and prior T-18300/T-20930 aliasing and promotion findings. Scope is only func_80134B18/func_80134C2C in ENDING/80133C10.c, one serial Docker compiler; ENDING/80134D20.c belongs to another chat. Parent owns review/integration. DATE remains reserved with no further compilation while Astra investigates a shared branch-order mechanism.
+
+## [2026-10-18] ticket | T-24057 paired ENDING scheduling leads archived
+
+[[tickets/T-24057-ending-small-pair]] moves with its board card to In Review. [[ending-family-results]] records zero new C matches and two real-record leads at diagnostic cost 4 / 12 positional rows, exact 0x30 frames. `drafts/T-24057/` retains source, tagged byte-promotion provenance, safe full-TU replay and concrete early fade-load scheduling blocker. Terminal C2C flag ordering is fixed through its real aggregate; bounded source/callee controls are recorded. Production src/include/config and every other function remain unchanged, with no extra header/config scope.

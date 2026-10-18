@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-16
+updated: 2026-10-18
 ---
 
 # ENDING family results
@@ -183,3 +183,9 @@ on the tree before the type changes (172ab7ce), "after" on b035184a (types done,
   the same score; the register of the promoted portrait field is what is left.
 - `func_8013A2E8`: no compiling fresh draft (`M2C_LWL` from the 27-byte string copy); the patterns of
   `func_80132420` (old-style definition, `u8 col` prototype, `D_8013CAC0` rows) should carry over.
+
+## T-24057 fade pair source checkpoint
+
+[[tickets/T-24057-ending-small-pair]] adds no verified C bytes. `drafts/T-24057/` preserves `func_80134B18` and `func_80134C2C` source leads measured in private full TUs at aligned cost 4 / 12 positional rows each, with frame 0x30. The guarded B18 source is removed before candidate substitution so these numbers measure the candidate C. Explicit GameState byte views restore colour v1 and are tagged FAKE; real separate record96/97 views preserve fade a1. C2C uses one real aggregate only for its terminal flag pair, restoring the tail schedule without changing separate fade aliasing.
+
+Only fade96's early LUI/LBU placement across the GameState037 and record97 stores remains. The matched BUNKA_SD zero-multiply analogy adds nothing here. Real previous-fade locals, ordinary independent-update orderings, explicit narrowing, matched ENDING comma-call form and scoped callee views do not close that block; the README records exact controls. Callback fade reloads remain unchanged. Production, headers and config are identical to setup 496724768, and default checks validate fallback integrity only. The source archive awaits independent review.
