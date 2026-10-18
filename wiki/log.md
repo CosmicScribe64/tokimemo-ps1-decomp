@@ -18174,3 +18174,7 @@ Created [[tickets/T-24004-complete-shougatu]] for five functions of src/ovl/SHOU
 ## [2026-10-17] build | Match SHOUGATU scene dispatcher
 
 [[tickets/T-24004-complete-shougatu]] recovered func_801430A0 (352 bytes) in src/ovl/SHOUGATU/80141780.c. Typed callback table, direct counter mutation and consistent record-base accesses reproduce the original allocation and store/load schedule; no FAKE needed. Default linked proof and SHOUGATU checksum pass. Details in [[shougatu-family-results]].
+
+## [2026-10-17] ticket | SHOUGATU scene package enters review
+
+[[tickets/T-24004-complete-shougatu]] ends with one verified function / 352 bytes. Four others remain assembly, with corrected source drafts and allocation/scheduling blockers in drafts/T-24004/README.md. Header/global/prototype checks pass (0 new prototype disagreements, 15 known). Ticket and board moved to In Review; independent review required before Done. See [[shougatu-family-results]].

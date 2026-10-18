@@ -110,3 +110,13 @@ shared-base form matches. No padding local or return-value cast is needed. The o
 header addition is the forward declaration of its existing callee `func_80143228`.
 Docker `ninja -j1 build/ovl/SHOUGATU.ok` passes; default no-build funcdiff reports linked
 function bytes equal target (352 bytes). See [[tickets/T-24004-complete-shougatu]].
+
+The four unresolved functions stay assembly. Source-only current-header drafts and
+concrete blockers are archived in drafts/T-24004/README.md. `func_8014265C`'s archived
+m2c had a semantic error: it tests the old counter before increment, not the new one.
+The corrected typed double copy leaves allocation differences. The two setup routines
+`func_801421D4` / `func_80142DA0` now score 114 / 116 after correcting fixed-point word
+copies and byte-array indexing; original keeps divisor 320 in fp, current IDO hoists
+the work-array base there instead and eliminates generic division checks. The large
+`func_80141D20` baseline is 491 literal diff rows / 387 aligned edits after semantic/type
+repairs. Header/global/prototype branch checks all pass (0 new prototype disagreements).
