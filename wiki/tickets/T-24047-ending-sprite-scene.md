@@ -383,3 +383,21 @@ earlier unproven label-flag hypothesis with the measured bit6 path barrier.
 Review against standards: diagnostic only, Python3/Docker, explicit inputs and
 failure exits, no game/compiler dumps committed, no production changes. Task
 remains In Progress with zero new verified C bytes.
+
+One same-version execution-fidelity control now replays the captured input
+through original MIPS5.3 as1 under the already-cached QEMU runtime. Both5.3
+binary/libraries are already in external recomp scratch; no new download or
+version sweep. This distinguishes native reconstruction behavior from original
+assembler execution. Project mount stays read-only, all output external.
+
+Original MIPS5.3 AS1 under QEMU gives identical804/cost35 target words and exact
+code/data/relocation section bytes to native53. One complete same-version MIPS53
+front-end/optimizer/generator/assembler replay now closes the earlier-pass
+reconstruction question, retaining uniform conversion/frame passes and native
+preprocessor/driver. Existing files/image only; no production changes.
+
+Complete original MIPS53 pass-chain replay is also identical: target804/cost35
+and full-TU code/data/relocation sections. The source's residual is not a native
+reconstruction artifact. Both controls are retained in backend-evidence.json;
+no further backend-version or execution sweeps are indicated. Evidence-only
+review finds no new issue. Sole source remains guarded at35, no new C coverage.
