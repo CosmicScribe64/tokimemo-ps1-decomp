@@ -18198,3 +18198,19 @@ A narrow-selector empty test before the switch resolves the four-word residue in
 ## [2026-10-18] build | T-24005 unguarded C matches 3,232 bytes
 
 The narrow-selector empty test resolves the four-word residue in src/ovl/BUNKAKEN/80143DD0.c; marked FAKE and removed the guard/fallback. Explicit default linked funcdiff matches 3,232 bytes. BUNKAKEN SHA1, headers and globals pass; prototype guard has 0 new / 15 known disagreements. Updated [[bunka-family-results]], [[index]] and drafts/T-24005/README.md. Moved [[tickets/T-24005-bunkaken-date-state-machine]] to In Review for independent parent review. No further probes after the first exact result.
+
+## [2026-10-18] ticket | T-24009 ENDING scheduler closer
+
+Created [[tickets/T-24009-ending-scheduler-closer]] for source-level call-result and control-flow hypotheses on the T-23002 twelve-row residue. No existing compiler/deletion experiments will be repeated.
+
+## [2026-10-18] query | T-24009 discarded call-result probes
+
+Twelve full-unit probes leave the twelve-row baseline best. Void call views change other allocation; ordinary result discards do not change output. Recorded in [[tickets/T-24009-ending-scheduler-closer]]; production source unchanged.
+
+## [2026-10-18] query | T-24009 explicit string lifetime changes scheduling
+
+The pointer-plus-empty-test form fills the original load delay and aligns all 1,162 instructions, but leaves the low string address and second flag mask scheduled differently (10 cost). [[tickets/T-24009-ending-scheduler-closer]] records the new evidence.
+
+## [2026-10-18] ticket | T-24009 bounded closer archived without a match
+
+76 source probes found no exact match. Production guard and source remain unchanged. `drafts/T-24009/probe.py` reproduces weighted scores 12 and 10; the latter still differs in eight words (16 diagnostic rows). Explicit default proof matches the 4,648-byte assembly fallback and fresh ENDING SHA1 passes; zero new verified C bytes. Updated [[matching-notes]] and moved [[tickets/T-24009-ending-scheduler-closer]] to In Review for independent archive review.
