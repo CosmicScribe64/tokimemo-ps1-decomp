@@ -215,3 +215,11 @@ the matrix declaration as the address-motion cause. Outer range checks retain
 a second check; ordinary/register constant locals expand the frame; constant
 casts and an early palette-store move are neutral. Preferred guarded source
 remains unchanged at804/805 instructions and cost43, zero verified byte gain.
+
+Eleven later probes also remain negative. Native AS1 DAG identifies a later
+cross-block pass as the source of both default-arm LUI moves; line grouping
+does not inhibit it. Partial stock uopt listing completes target allocation,
+with adjacent ranges528/529 assigned colours6/7, before its ecvt runtime stub
+aborts. Detailed priority/cost diagnosis needs the unavailable instrumented
+uopt from [[uopt-register-allocation]]. No compiler rebuild was attempted in
+this source lane; guarded source and verified coverage remain unchanged.
