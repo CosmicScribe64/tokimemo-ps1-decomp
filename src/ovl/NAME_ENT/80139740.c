@@ -137,39 +137,7 @@ void func_8013ACA4(void) {
     func_80139740(((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].metrics[8].unk_02, 128, 78);
 }
 
-#ifdef NON_MATCHING
-s32 func_8013AF78(s32 arg0) {
-    s32 pad[2]; /* FAKE: unused words above the flags, the original frame has them. T-22023 */
-    s32 sel[3];
-    s32 *p;
-
-    p = sel;
-    do {
-        *p++ = 0;
-    } while (p < &sel[3]);
-    D_80120B5F &= 0x7F;
-    D_80120BA3 &= 0x7F;
-    D_80120BE7 &= 0x7F;
-    D_80120C2B &= 0x7F;
-    if (arg0 == 0) {
-        return 0;
-    }
-    sel[D_8014D0D4 % 3] = 1;
-    if (sel[0] != 0) {
-        D_80120BE7 |= 0x80;
-        D_80120BA3 |= 0x80;
-    }
-    if (sel[1] != 0) {
-        D_80120B5F |= 0x80;
-    }
-    if (sel[2] != 0) {
-        D_80120C2B |= 0x80;
-        D_80120BA3 |= 0x80;
-    }
-}
-#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013AF78);
-#endif
 
 s32 func_8013B0A0(void) {
     s32 a;
@@ -774,105 +742,7 @@ s32 func_8013C9F0(void) {
     }
 }
 
-#ifdef NON_MATCHING
-void func_8013CB44(void) {
-    s32 i;
-    s32 sel;
-    s32 slot;
-    s32 sp30;
-    u8 state;
-
-    state = D_800E6280.unk_110D;
-    switch (state) {
-    case 0:
-        func_80053CE0();
-        D_800E6280.unk_110D++;
-        break;
-    case 1:
-        if (func_80054284() == 3) {
-            func_80053D10();
-            D_800E6280.unk_110D++;
-        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
-            func_80053D10();
-            func_80056284();
-            func_80042908(1);
-        }
-        break;
-    case 2:
-        if (func_800552DC(0) == -1) {
-            D_800E6280.unk_110D++;
-        } else {
-            func_8004E58C();
-            func_8013BB10();
-            sel = D_800E7D10.selected_slot;
-            slot = 0xFF;
-            if (D_800E7D10.slot_status[sel] == 1) {
-                slot = sel - 1;
-            } else {
-                for (i = 1; i < 14; i++) {
-                    if (D_800E7D10.slot_status[i] == 1) {
-                        D_800E7D10.selected_slot = i;
-                        slot = i - 1;
-                        break;
-                    }
-                }
-            }
-            if (slot != 0xFF) {
-                func_8013B51C(slot);
-            }
-            func_80139CB4();
-            func_8004EA98();
-            func_8004EAD4(0);
-            D_8014D0D4 = 1;
-            func_8004284C();
-        }
-        break;
-    case 3:
-        func_8004E58C();
-        func_8004E788(-0x40, 0x20, 0xF, (s32) "システムファイルは", 0);
-        func_8004E788(-0x40, 0x30, 0xF, (s32) "壊れています。", 0);
-        func_8004E884(2);
-        func_80053D10();
-        D_800E6280.unk_110D++;
-        break;
-    case 4:
-        if (D_800E6280.unk_F88 & 0x60) {
-            D_800E6280.unk_110D = state + 1;
-        }
-        break;
-    case 5:
-        func_8004E58C();
-        func_8004E788(-0x40, 0x20, 0xF, (s32) "システムファイルを", 0);
-        func_8004E788(-0x40, 0x30, 0xF, (s32) "作り直しますか？", 0);
-        func_8004E788(-0x40, 0x40, 0xF, (s32) D_800B3C70, 0);
-        func_8004E788(0x14, 0x40, 1, (s32) func_8006CA9C(), 0);
-        func_8004E788(-0x40, 0x50, 0xF, (s32) D_800B3C88, 0);
-        func_8004E788(0x14, 0x50, 2, (s32) func_8006CAE0(), 0);
-        func_8004E884(6);
-        D_800E6280.unk_110D++;
-        break;
-    case 6:
-        sel = D_800E6280.unk_F88;
-        if (sel & 0x20) {
-            D_800E6280.unk_110D = state + 1;
-        } else if (sel & 0x40) {
-            for (i = 0; i < 4; i++) {
-                sp30 = i;
-                if (func_80054704(0) == 1) {
-                    break;
-                }
-            }
-            func_80042908(1);
-        }
-        break;
-    case 7:
-        func_80042908(0xD0);
-        break;
-    }
-}
-#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CB44);
-#endif
 
 void func_8013CEC8(void) {
     s32 pad[2]; /* FAKE: unused, gives the original's 0x38 frame; real source unknown. T-16920 */
@@ -1269,16 +1139,13 @@ s32 func_8013DD94(void) {
 }
 
 
-/* NON_MATCHING: T-10880, 11 file-index register substitutions. */
+/* NON_MATCHING: T-22023, 13 register rows plus one `move v0,a2`: the album index D_800E7398 is loaded with base $a1 in the original and $a2 here (the later loads of it follow), and the store of D_800E7D36 goes through a $v0 copy. Frame, selector and arms match without the `state` and `result` locals. */
 #ifdef NON_MATCHING
 void func_8013DF88(void) {
-    s32 result;
-    u8 state;
+    s32 pad[2]; /* FAKE: unused words, the original frame has them. T-22023 */
     s32 i;
-
     u8 text[256];
-    state = D_800E6280.unk_110D;
-    switch (state) {
+    switch (D_800E6280.unk_110D) {
     case 0:
         func_8004E58C();
         func_800AE0F0(text, D_800B32CC[D_800E6280.unk_1118 - 1]);
@@ -1291,14 +1158,14 @@ void func_8013DF88(void) {
     default:
         break;
     case 1:
-        if ((result = func_80054694((s32) D_800E6280.unk_1118)) == 1) {
+        if (func_80054694((s32) D_800E6280.unk_1118) == 1) {
             D_800E6280.unk_110D += 1;
         } else {
             func_80042908(4);
         }
         break;
     case 2:
-        if ((result = func_80054694(0)) == 1) {
+        if (func_80054694(0) == 1) {
             D_800E6280.unk_110D += 1;
         } else {
             func_80054704((s32) D_800E6280.unk_1118);
@@ -1307,7 +1174,7 @@ void func_8013DF88(void) {
         break;
     case 3:
         func_80053D10();
-        D_800E7D10.selected_slot = D_800E6280.unk_1118;
+        D_800E7D36 = D_800E6280.unk_1118;
         i = 0;
         while (i < 15) {
             D_800E7D10.slot_status[i] = 0;
@@ -1321,7 +1188,7 @@ void func_8013DF88(void) {
         D_800E6280.unk_110D += 1;
         break;
     case 4:
-        if ((result = func_80054388()) == 0x13) {
+        if (func_80054388() == 0x13) {
             func_80053D10();
             D_800E6280.unk_110D += 1;
         } else if (((u32) (*(u32 *)&D_800E6280.unk_1120) >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
@@ -1335,12 +1202,12 @@ void func_8013DF88(void) {
         func_80041878();
         func_80042058();
         func_80042058();
-        D_800E6280.unk_1118 = D_800E7D10.selected_slot;
-        func_800AE0B0("s->file_no %x \n", D_800E7D10.selected_slot);
+        D_800E6280.unk_1118 = D_800E7D36;
+        func_800AE0B0("s->file_no %x \n", D_800E7D36);
         D_800E6280.unk_110D += 1;
         break;
     case 6:
-        if ((result = func_80054590()) == 0x14) {
+        if (func_80054590() == 0x14) {
             D_800E7D14[D_800E6280.unk_1118] = 1;
             D_800E6280.unk_110D += 1;
         } else if (((u32) (*(u32 *)&D_800E6280.unk_1120) >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {

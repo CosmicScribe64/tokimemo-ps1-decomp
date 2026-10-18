@@ -47,12 +47,12 @@ kanban-plugin: board
 ## In Progress
 
 - [ ] [[tickets/T-22000-wave-4-conveyor|T-22000 Wave 4 conveyor]]
-- [ ] [[tickets/T-22023-w4-p23|T-22023 Wave 4 package w4-p23]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 - [ ] [[tickets/T-23000-wave-5-big-conveyor|T-23000 Wave 5 biggest-first conveyor alongside wave 4]]
 
 ## In Review
 
+- [ ] [[tickets/T-22023-w4-p23|T-22023 Wave 4 package w4-p23]]
 
 ## Done
 

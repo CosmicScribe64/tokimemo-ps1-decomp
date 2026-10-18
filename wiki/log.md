@@ -17850,3 +17850,7 @@ Review against `CODING_STANDARDS.md`: no findings; only `src/ovl/DATE/80132000.c
 ## [2026-10-17] ticket | T-22023 In Progress
 
 [[tickets/T-22023-w4-p23]]: wave 4 package w4-p23 started, `src/ovl/NAME_ENT/80139740.c`, five functions (`func_80140B20`, `func_8013DF88`, `func_8013AF78`, `func_8013D2AC`, `func_8013CB44`). Branch `w4-p23` from `w2-good`; part of [[tickets/T-22000-wave-4-conveyor]].
+
+## [2026-10-17] ticket | T-22023 In Review
+
+[[tickets/T-22023-w4-p23]]: `func_8013D2AC` matched (viewsweep `s32 func_80053CE0();`, gstate, `D_800E7D10.slot_status[i]` loop, `pad[2]` frame); `func_8013DF88` guarded (13 rows); `func_8013AF78` and `func_8013CB44` back to `INCLUDE_ASM` with drafts in `drafts/T-22023/`; `func_80140B20` not touched. Notes in [[matching-notes]] (section T-22023). Moved to In Review.
