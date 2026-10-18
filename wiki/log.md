@@ -17921,3 +17921,7 @@ Review against `CODING_STANDARDS.md` found nothing to fix; 1 of 3 matched (`func
 ## [2026-10-17] ticket | T-22025 In Review
 
 [[tickets/T-22025-w4-p25]] moved to In Review: 0 of 5 matched, four guards kept (5, 6, 6, 8 rows), `func_8014F820` not started. Clean build 27/27 sha1 OK; header checks run before the final commit.
+
+## [2026-10-17] ticket | T-22025 closer 2
+
+[[tickets/T-22025-w4-p25]] Opus closer on the three guarded near misses: no match; `func_8014A480` 6 rows to 1 (the `st` local dropped, uopt inserts the reload), `func_801511C0` and `func_8014F5F0` unchanged with new notes in `src/ovl/TACO/80149F90.c` and [[matching-notes]].
