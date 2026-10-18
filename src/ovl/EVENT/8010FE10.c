@@ -2788,7 +2788,49 @@ s32 func_8011A874(void) {
     return func_80045FF4();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011A8E4);
+void func_8011A8E4(void) {
+    s32 var_a1; /* declared above the tables: their stack slots sit 4 bytes lower (T-22024) */
+    U16x21 sp90;
+    U16x21 sp64;
+    U16x21 sp38;
+    s32 var_a2;
+
+    sp90 = D_80125454;
+    sp64 = D_80125480;
+    sp38 = D_801254AC;
+    var_a1 = 0xAF42;
+    var_a2 = 0xAF23;
+    if (D_801243B0 == 2) {
+        var_a1 = 0xB384;
+        var_a2 = 0xB381;
+    } else if (D_801243B0 == 0x11) {
+        var_a1 = 0xB3DA;
+        var_a2 = 0xB3CB;
+    } else if ((D_801243B0 == 1) || (D_801243B0 == 3)) {
+        var_a1 = 0xB163;
+        var_a2 = 0xB14D;
+    } else if ((D_801243B0 == 0xA) || (D_801243B0 == 9)) {
+        var_a1 = 0xB172;
+        var_a2 = 0xB165;
+    } else if (D_801243B0 == 0xC) {
+        var_a1 = 0xB444;
+        var_a2 = 0xB42F;
+    } else if ((D_801243B0 == 0x11) || (D_801243B0 == 0x10)) { /* the 0x11 half is dead; the original tests it twice */
+        var_a1 = 0xB3DA;
+        var_a2 = 0xB3CB;
+    } else if ((D_801243B0 == 0x14) || (D_801243B0 == 0x13)) {
+        var_a1 = 0xB41D;
+        var_a2 = 0xB410;
+    } else if (D_801243B0 == 8) {
+        var_a1 = 0xB054;
+        var_a2 = 0xB04A;
+    } else if (D_801243B0 == 7) {
+        var_a1 = 0xB304;
+        var_a2 = 0xB2EB;
+    }
+    func_800143DC(1, var_a1, var_a2, sp64.v[D_801243B0], sp38.v[D_801243B0], sp90.v[D_801243B0]);
+    func_80011DFC();
+}
 
 void func_8011AB00(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
