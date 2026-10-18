@@ -72,6 +72,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24048-master-animation|T-24048 MASTER animation reconstruction]]
 - [ ] [[tickets/T-24044-taiiku-taco-siblings|T-24044 TAIIKU and TACO sibling completion]]
 - [ ] [[tickets/T-24040-option-menu-siblings|T-24040 OPTION menu sibling completion]]
+- [ ] [[tickets/T-24069-etc-menu-state|T-24069 ETC menu state machine verified820B]]
 - [ ] [[tickets/T-24057-ending-small-pair|T-24057 Match two small ENDING fade handlers]]
 - [ ] [[tickets/T-24043-master-large-handler|T-24043 Recover larger MASTER final-event handler]]
 - [ ] [[tickets/T-24031-gyozi-shougatu-pairs|T-24031 Recover GYOZI and SHOUGATU particle pairs]]
