@@ -1,0 +1,23 @@
+{
+  "frontend.B": "49f3c7137c0b627d9f15d90e6f369d0aafe446df20efa754bb9b14fbcc9490c1",
+  "pre.B": "c0fea67d8978626dd3b2f1e849c0c32e4cdda707b15264c71bd9669e1dd3f02f",
+  "raw.O": "4e5b20c156975d0df68227557a200324472a118711e1e7e0091caa3849f9ec2a",
+  "post.O": "4e5b20c156975d0df68227557a200324472a118711e1e7e0091caa3849f9ec2a",
+  "stock.o": "67fbefa6e2af48b3ac7a8e508b774cea8c8efd2c4f824bce6269755d29163a00",
+  "source": "609467db3b985d285c786a9db47057fbb59b4276268d12d39ed6aab98d30713d",
+  "baseline": "67fbefa6e2af48b3ac7a8e508b774cea8c8efd2c4f824bce6269755d29163a00",
+  "stock_uopt": "d5f703d7ebde55cb5c1347ecbba32c19786f6c3450adb622237f0713cc8f5602",
+  "flags": [
+    "-c",
+    "-EL",
+    "-O2",
+    "-mips1",
+    "-G",
+    "0",
+    "-non_shared",
+    "-Wo,-nokpicopt",
+    "-cckr",
+    "-Xcpluscomm",
+    "-Iinclude"
+  ]
+}

@@ -511,3 +511,13 @@ Matching-only FAKE, notsemanticrepair; source/replay preserved x1-narrow.c.
 No additional cast orstagecapture. Next narrow unresolved phase question is
 frontend vsoptimizer origin ofP-before-Q11: current capture begins afterthat
 boundary. Samefunctionactive, production unchanged.
+
+Second exact stock capture locates P reversal: frontend target818records has
+Q11DIV106 thenPMPY111; actualconvertedpre.B target BYTEIDENTICAL. Stockraw.O
+762records hasPMPY130 thenQ11DIV136. Postconversion WHOLEFILEidentical toraw.O;
+previousugeninput targetbytes identical. Wholeobject67fb... and sections pass
+FIRST, unchanged options/default405=1. Thus P-order change is inside stock
+optimizer, not frontend or conversion rewrite; internaltransform stillunknown,
+no faithful new source dependency identified. phase.md/uopt_capture.py/manifest
+preserve exactprovenance. H movement remains separately post-ugen, not this
+phase. No further compile/probe/instrumentation or production edit; active.
