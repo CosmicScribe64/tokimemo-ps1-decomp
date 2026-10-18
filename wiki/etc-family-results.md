@@ -257,3 +257,5 @@ Fresh func_80144DF0 baseline61 rows uses current fields, captured selection inde
 T-24071 actual button snapshot reduces61 to57 fixes selection spill28 without guessed storage, but frame30/per-arm byte-value differences remain. Field-readback57 and status frame/spill tradeoffs57 rejected; real Work members61. drafts/T-24071 retains source-only forms/replay. Production unchanged, no actual C proof; In Progress.
 
 T-24071 approved unchanged trace57 and stock-stage capture pass same-input whole-object/four-section fidelity. Masked ranges64/65 already receive v0; final uopt output retains AND255/CVT L/register store, but byte-store lowering removes the ANDI and narrows the call argument separately. This is not a demonstrated v0-interference blocker. No new binary or unsupported source control; drafts/T-24071 preserves source-only audit helpers.
+
+T-24071 read-only ugen reference identifies unsigned CVTL8 argument-mask construction but not the exact earlier mask-removal rule. Proven boundary remains post-cvt uopt output versus final object across ugen/as1. No supported new source condition; no further probes or binary. Source57 unresolved, production ASM.

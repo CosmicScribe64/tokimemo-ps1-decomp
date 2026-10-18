@@ -18714,3 +18714,11 @@ Created [[tickets/T-24071-etc-menu-selection]] before edits for only func_80144D
 ## [2026-10-18] query | T-24071 masked ranges survive allocation
 
 [[tickets/T-24071-etc-menu-selection]]/[[etc-family-results]] record approved unchanged trace57 and stock capture, both requiring whole-object/four-section fidelity before interpretation. Masked ranges64/65 get v0; final uopt retains AND255/CVT L/register store, while final byte-store lowering removes the mask. No new binary or source sweep. Source-only capture/fidelity helpers retained under drafts/T-24071; production unchanged, In Progress.
+
+## [2026-10-18] query | T-24071 bounded lowering-rule limit
+
+[[tickets/T-24071-etc-menu-selection]]/[[etc-family-results]] record read-only existing ugen reference: unsigned CVTL8 builds argument AND, while exact earlier mask removal remains unisolated between post-cvt uopt output and final object. No supported source condition beyond prior24 narrowing controls, no new probe/binary or impossibility claim. Production ASM/source57 unchanged.
+
+## [2026-10-18] query | Parent GitHub ownership check11:44UTC
+
+Parent reports completed read-only GitHub check at11:44UTC: no open PRs; only open contributor claims50/57 with unchanged timestamps. No messages sent. Next check planned12:14UTC. Coordination record only; T-24071 matching scope unchanged.
