@@ -18862,3 +18862,6 @@ T24052 SHOUGATU488-byte sibling publishedf90483388; T24053 EVENT100 and BUNKA_SD
 ## [2026-10-18] decision | Short-function lane closes with two wins
 
 [[tickets/T-24053-short-function-lane]] moves to In Review:2 of3 matched,232 bytes independently published at d40a1ece7. [[shugaku-family-results]] records the third target's38-to8-row source-only improvement and selector/call-move blocker. No SHUGAKU production/header change; selected body/reproducer retained and traces remain ignored. Root's all27 hash/interface verification of the two wins is not repeated for archive-only work.
+
+## [2026-10-18] build | T-24052 second SHOUGATU sibling,544 actual C bytes
+func_801333F0 is unguarded normal C with no target INCLUDE_ASM. Direct unchanged halfword self-stores survive and match, unlike the earlier GYOZI byte negative; both are marked FAKE/T-24052. Fresh Docker ninja -j1 compiles/links SHOUGATU, checksum/headers OK; literal default linked proofs MATCH544 and recheckedMATCH488 for the first target. Ticket total1032 bytes. Preserved source-only bodies and finite negative ledger in drafts/T-24052. Updated [[shougatu-family-results]], [[register-cheatsheet]] and [[tickets/T-24052-shougatu-dialogue-siblings]], now In Review. No headers/configs or push/merge.

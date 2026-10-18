@@ -704,3 +704,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[tickets/T-24052-shougatu-dialogue-siblings]] - source sibling closure for SHOUGATU dialogue handlers.
 - [[tickets/T-24050-geko-scene-near-match]] — GEKO selection source checkpoint and tested replay; no C win.
+- [[tickets/T-24052-shougatu-dialogue-siblings]] - two SHOUGATU matches,1032 literal bytes; In Review.
