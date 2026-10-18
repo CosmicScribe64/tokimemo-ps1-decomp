@@ -18221,3 +18221,7 @@ Created [[tickets/T-24004-complete-shougatu]] for five functions of src/ovl/SHOU
 ## [2026-10-17] build | Match SHOUGATU scene dispatcher
 
 [[tickets/T-24004-complete-shougatu]] recovered func_801430A0 (352 bytes) in src/ovl/SHOUGATU/80141780.c. Typed callback table, direct counter mutation and consistent record-base accesses reproduce the original allocation and store/load schedule; no FAKE needed. Default linked proof and SHOUGATU checksum pass. Details in [[shougatu-family-results]].
+
+## [2026-10-17] build | Publish first five matches of the100% run
+
+[[completion-run-2026-10-17]] records five independently verified matches/3,328 bytes on main8052373f7: BUNKAKEN296+540, OPTION860, ETC1280 and SHOUGATU352. All27 binary hashes and header/global/prototype guards pass; coverage1,816,796/2,279,368 (79.7%). Sol/Astra MAIN counter negative evidence preserved. User requested a dedicated Astra chat for largest hard targets; reserved dialogue/TEL/EVENT files underT24020, separate from activeSol families. RootAstra closes recoveredBUNKAKEN8-row draft. Goal remains active; no contributor overlap.
