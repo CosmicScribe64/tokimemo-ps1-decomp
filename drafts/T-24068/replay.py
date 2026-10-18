@@ -7,7 +7,7 @@ sys.path.insert(0, 'drafts/T-24011')
 from diagnostic import report
 
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--variant', choices=['baseline', 'calls-comma', 'neighbor-selector'], default='baseline')
+parser.add_argument('--variant', choices=['baseline', 'calls-comma', 'neighbor-selector', 'target-return'], default='baseline')
 args = parser.parse_args()
 p = Path('src/ovl/ETC/8013FF80.c')
 before = p.read_text()
@@ -21,6 +21,8 @@ if args.variant == 'calls-comma':
     body = body.replace(old, '    func_80140BC4(), func_80140DC8(), func_80140E80();')
 elif args.variant == 'neighbor-selector':
     body = '/* FAKE DIAGNOSTIC: DC through existing D8+4; aggregate unknown. T-24068. */\n' + body.replace('D_801500DC', '((s32 *)&D_801500D8)[1]')
+elif args.variant == 'target-return':
+    body = '/* FAKE DIAGNOSTIC: s32 fallthrough return view; original type unproven. T-24068. */\n' + body.replace('void func_80140AE4(void)', 's32 func_80140AE4(void)')
 root = Path('build/etc24068/archive') / args.variant
 root.mkdir(parents=True, exist_ok=True)
 source, obj = root / 'source.c', root / 'source.o'

@@ -18626,3 +18626,7 @@ Created [[tickets/T-24068-etc-album-interaction]] before source work on func_801
 ## [2026-10-18] query | T-24068 baseline and allocator evidence
 
 [[tickets/T-24068-etc-album-interaction]] reproduces48-row baseline with correct56 words/frame0x28. New required-call comma sequencing and one FAKE D8+4 selector-address control remain48, rejected without widening. Existing read-only tracer whole-object fidelity passes (e4ce1543...); selector priority0.5/color3(a0) and constant1 priority0.6667/color2(v1) are not a tie. [[etc-family-results]] records the specific v0 call-result/liveness question. drafts/T-24068 preserves source-only controls/replay/provenance; production/header/config unchanged, ticket In Progress, no C match.
+
+## [2026-10-18] decision | T-24068 target return-liveness control is neutral
+
+Parent approved one isolated s32 fallthrough/no-return target view after exact-history uncertainty check; it reproduces48 baseline rows with callee prototypes/all other source fixed. Rejected FAKE diagnostic retained in drafts/T-24068/replay.py; no result/width sweep. [[tickets/T-24068-etc-album-interaction]]/[[etc-family-results]] remain In Progress with unchanged production. Read-only globalcolor candidate-mask/cost sites identify the exact v0 interference-versus-cost observation gap; no private diagnostic build before scope approval.

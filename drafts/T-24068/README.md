@@ -53,3 +53,18 @@ python3 tools/uopt_eval.py compile build/etc24068/baseline/source.c build/etc240
 build/etc24068/trace.log holds priority/cost observations;
 trace/baseline.o.trace holds the target's bit identities/flow. No compiler,
 header, config, production source or allocator decision was modified.
+
+Parent approved exactly one target s32 fallthrough/no-return control after
+checking history: T-9560 only retains generic20/16/16 variant counts, and
+T-17300's void draft does not prove this exact view was exhausted. All callee
+prototypes and other source choices were fixed. It reproduces the exact48-row
+baseline register differences and is rejected; no width/result sweep follows.
+The diagnostic is explicitly FAKE (original return type unproven) and retained
+as `replay.py --variant target-return`. No production/interface change occurs.
+
+The existing trace's best-color report cannot establish whether v0 is
+forbidden by a fixed call-result live range or simply has higher call cost.
+Read-only globalcolor inspection locates LR forbidden masks at+40/+44 and
+candidate loops L47187c/L4719cc, with costs before choice atL47190c/L471afc.
+These are the precise observation points needed for a narrow logging-only
+diagnostic, subject to parent scope approval and full same-input object audit.
