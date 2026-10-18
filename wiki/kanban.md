@@ -47,6 +47,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24008-taiiku-runners|T-24008 Recover TAIIKU runner family]]
+
 
 
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]

@@ -18174,3 +18174,15 @@ Created [[tickets/T-24006-main-render-family]], exclusive src/main/8004C3F0.c sc
 ## [2026-10-17] build | T-24006 bounded renderer family
 
 Archived five source-only typed hypotheses in drafts/T-24006/; 0 new verified bytes, production source and headers unchanged. [[main-family-results]] records ModRec14 evidence, SDK packet/rectangle types, corrected word strides and byte buffers, stable aligned costs and concrete blockers. Existing Docker serial probes only. Fresh default linked literal proof passed six ASM-backed targets and four C siblings; MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26, headers/globals OK, prototypes 0 new/15 known. [[tickets/T-24006-main-render-family]] moved In Progress to In Review for parent review; card moved with it.
+
+## [2026-10-17] ticket | T-24008 TAIIKU runners
+
+Created [[tickets/T-24008-taiiku-runners]] from 8f88afff with exclusive src/ovl/TAIIKU/80133C80.c ownership. Read [[taiiku-family-results]] and typed/sibling recipes before bounded Docker probes.
+
+## [2026-10-17] build | T-24008 finish-line candidate
+
+Ported the matched TAIIKU game-C sibling func_80146D18 to func_80137EA8 with canonical runner/display fields. Scratch linked literal proof matches 692 bytes; promoting for default build verification. Local definition of the zeroed four-byte result array preserves shared stores. Explicit final else and first-slot-first assignment recover original allocation/store-back. See [[tickets/T-24008-taiiku-runners]].
+
+## [2026-10-17] build | T-24008 verifies 692-byte finish helper
+
+Default linked literal proof of func_80137EA8 passes (692 bytes), TAIIKU SHA1 306d1013b9be465819525d1fb4dc0e86b422a846 passes after ninja -j1 target build. [[taiiku-family-results]] records matched sibling source, explicit-else allocation and promoted first-byte store-back idioms. [[tickets/T-24008-taiiku-runners]] continues the remaining bounded targets.
