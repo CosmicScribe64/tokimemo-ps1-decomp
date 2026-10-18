@@ -1,7 +1,7 @@
 ---
 id: T-24038
 title: Recover ETC renderer and MASTER sibling handlers
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-17
 updated: 2026-10-18
@@ -23,8 +23,10 @@ links: ["[[etc-family-results]]", "[[master-family-results]]", "[[tickets/T-2400
 T-17013 matched MAIN func_8004AE54 in src/main/8004AD60.c using SPRT_8, paired font-table bytes, do/while inside the sign-range guard, explicit texture-coordinate locals tpx then tpy for the spill, and division before digit-index increment. Its apparently redundant signed-range tests correspond to target branches and are documented. T-18600 MASTER func_8013B448 typed draft reached 264 rows from 329; fresh m2c still failed, and shifted operand registers were noted. Prefer matched sibling/control-flow/type evidence over re-running those broad redrafts.
 
 ## Comments
-ETC checkpoint: `func_8013FC64` is actual unguarded C, verified against the default linked target (796 bytes). The renderer uses SDK `SPRT` with explicit 8x8 dimensions, ten paired glyph coordinates, division before the digit increment, and a real sign-offset local. The approved `extern u8 D_801500A0[20]` ends before the separately named sign bytes. No new FAKE idiom is required. MASTER companion is verified locally and will be committed separately; status remains In Progress until that handoff.
+Both targets are actual unguarded C: ETC `func_8013FC64` (796 bytes, `ea53c475e`) and MASTER `func_8013B448` (956 bytes, `d3faacf8`), totaling 1,752 default linked bytes. The renderer uses SDK `SPRT` with explicit 8x8 dimensions, ten paired glyph coordinates, division before the digit increment, and a real sign-offset local. The approved `extern u8 D_801500A0[20]` ends before the separately named sign bytes. MASTER uses direct typed event-record fields and a consistent GameState pointer; its void return view follows the matched logger sibling and unused caller result. The approved prototype rebuilds the earlier caller without changing the whole MASTER checksum. No new FAKE idiom is required. Independent review and coordinator integration remain pending.
 
 Proof: `build/etc-master24038/final-proof.log` (`--no-build --resolve --version default`); `final-build.log` contains both overlay checksum successes after `ninja -j1`. Header/global checks pass; prototype check reports 0 new / 15 known disagreements. `body-audit.log` confirms only the assigned target replacement changed each production C file.
+
+Source-only provenance and bounded rejected controls: `drafts/T-24038/README.md`. No generated assembly, executable, or copyrighted asset is archived.
 
 T-24031 source-only archive is frozen at 5ef7c0dd5237fc006d1f94ac3957d5605e75fc13 with zero new C bytes; T-24030 BUNKASAI two matches remain preserved in ancestry. No other files claimed, no main API edits without prior notification, no new checkout/reset or host install.

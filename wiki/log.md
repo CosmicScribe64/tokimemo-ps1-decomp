@@ -18704,3 +18704,7 @@ Created [[tickets/T-24038-etc-master-siblings]] before code edits, preserving T-
 ## [2026-10-18] build | T-24038 ETC renderer verified
 
 [[tickets/T-24038-etc-master-siblings]] and [[etc-family-results]] record an unguarded default C match for `func_8013FC64` (796 bytes). Docker serial build passes ETC and MASTER checksums; explicit default linked proof and header/global/prototype guards pass (0 new / 15 known prototype disagreements). ETC font-table declaration was approved before editing. The MASTER companion will be committed separately; ticket remains In Progress.
+
+## [2026-10-18] ticket | T-24038 complete pair ready for review
+
+[[tickets/T-24038-etc-master-siblings]] moves to In Review with its board card: ETC `ea53c475e` and MASTER `d3faacf8` verify 796 + 956 = 1,752 default linked bytes. [[master-family-results]] records typed record stores, the sibling void view and full-overlay caller validation; [[etc-family-results]] records the renderer recipe. Source-only provenance and bounded controls are saved in `drafts/T-24038/README.md`. Both checksums, literal proofs, header/global/prototype guards and unchanged-other-body audit pass. No new FAKE code; coordinator independent review and integration remain pending.

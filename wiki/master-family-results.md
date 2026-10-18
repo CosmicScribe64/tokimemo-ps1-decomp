@@ -121,3 +121,7 @@ not in a package.
 | w3-master-p01 | T-18601 | `80132140.c` | `func_80132444` (start from `hand.c`), `func_801326B4` | 4,044 |
 | w3-master-p02 | T-18602 | `80139000.c` | `func_8013B804` (`hand.c`), `func_8013B448`, `func_801391E4` | 3,056 |
 | w3-master-p03 | T-18603 | `80133680.c` | `func_80135FB8` (start from `drafts/T-18600/.../hand.c`), `func_801363F4` | 3,772 |
+
+## T-24038 event-record handler
+
+[[tickets/T-24038-etc-master-siblings]] recovers `func_8013B448` in `src/ovl/MASTER/80139000.c`: 956 default linked bytes match. The matched `func_80138088` logger provides the direct `GameState.unk_75E[index]` field idiom. Correcting the old case 3/12 pointer truncation artifacts, retaining one GameState pointer, and using ordinary increment then unsigned clamp closes the draft. The sibling's void view is supported by the unused caller result; the approved prototype also rebuilds the earlier caller, and the whole MASTER checksum passes. No new FAKE code is needed. Source-only provenance and rejected controls are in `drafts/T-24038/README.md`; proof/guards are under `build/etc-master24038/`. The two-target package totals 1,752 bytes and awaits independent review.

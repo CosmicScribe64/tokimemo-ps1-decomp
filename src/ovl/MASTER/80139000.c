@@ -577,6 +577,84 @@ void func_8013B354(void) {
     D_80120668 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80139000", func_8013B448);
+void func_8013B448(void) {
+    GameState *g = &D_800E6280;
+
+    g->unk_75E[g->unk_F5E].unk_00 = g->unk_F5F;
+    g->unk_75E[g->unk_F5E].unk_02 = 0x15;
+    g->unk_75E[g->unk_F5E].unk_04 = g->unk_03E;
+    g->unk_75E[g->unk_F5E].unk_05 = g->unk_03F;
+    g->unk_75E[g->unk_F5E].unk_06 = g->unk_040;
+    g->unk_75E[g->unk_F5E].unk_07 = g->unk_041;
+    switch ((u16) g->unk_0F4.h >> 0xC) {
+    case 7:
+        g->unk_75E[g->unk_F5E].unk_01 = 7;
+        break;
+    case 8:
+        g->unk_75E[g->unk_F5E].unk_01 = 8;
+        break;
+    case 9:
+        g->unk_75E[g->unk_F5E].unk_01 = 9;
+        break;
+    case 10:
+        g->unk_75E[g->unk_F5E].unk_01 = 0xA;
+        break;
+    }
+    switch (g->unk_F5F) {
+    case 0:
+        g->unk_75E[g->unk_F5E].unk_03 = 1;
+        break;
+    case 1:
+        g->unk_75E[g->unk_F5E].unk_03 = 1;
+        break;
+    case 2:
+        g->unk_75E[g->unk_F5E].unk_03 = 1;
+        break;
+    case 3:
+        g->unk_75E[g->unk_F5E].unk_03 = 1;
+        break;
+    case 4:
+        if (((g->unk_1BC[4].unk_0C.b[2] >> 4) == 7) && (((u16) g->unk_0F4.h >> 0xC) == 7)) {
+            g->unk_75E[g->unk_F5E].unk_03 = 5;
+            g->unk_75E[g->unk_F5E].unk_07 = 0xFF;
+        } else {
+            g->unk_75E[g->unk_F5E].unk_03 = 1;
+        }
+        break;
+    case 5:
+        g->unk_75E[g->unk_F5E].unk_03 = 1;
+        break;
+    case 6:
+        if (((u16) g->unk_0F4.h >> 0xC) == 9) {
+            g->unk_75E[g->unk_F5E].unk_03 = 1;
+        } else {
+            g->unk_75E[g->unk_F5E].unk_03 = 0;
+        }
+        break;
+    case 7:
+        g->unk_75E[g->unk_F5E].unk_03 = 0;
+        break;
+    case 8:
+        g->unk_75E[g->unk_F5E].unk_03 = 1;
+        break;
+    case 9:
+        g->unk_75E[g->unk_F5E].unk_03 = 5;
+        g->unk_75E[g->unk_F5E].unk_07 = 0xFF;
+        break;
+    case 10:
+        g->unk_75E[g->unk_F5E].unk_03 = 1;
+        break;
+    case 11:
+        g->unk_75E[g->unk_F5E].unk_03 = 1;
+        break;
+    case 12:
+        g->unk_75E[g->unk_F5E].unk_03 = 1;
+        break;
+    }
+    g->unk_F5E++;
+    if (g->unk_F5E >= 0xFFU) {
+        g->unk_F5E = 0xFE;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80139000", func_8013B804);
