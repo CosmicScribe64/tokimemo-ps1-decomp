@@ -60,6 +60,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
 - [ ] [[tickets/T-24040-option-menu-siblings|T-24040 OPTION menu sibling completion]]
 - [ ] [[tickets/T-24031-gyozi-shougatu-pairs|T-24031 Recover GYOZI and SHOUGATU particle pairs]]
+- [ ] [[tickets/T-24045-tel-profile-screen|T-24045 Recover TEL profile screen from retained near miss]]
 - [ ] [[tickets/T-24039-tel-date-menu|T-24039 Recover large TEL date menu C]]
 - [ ] [[tickets/T-24035-small-bunka-geko-siblings|T-24035 Match small BUNKA_SD and GEKO siblings]]
 - [ ] [[tickets/T-24036-geko-shugaku-siblings|T-24036 GEKO and SHUGAKU sibling completion]]
