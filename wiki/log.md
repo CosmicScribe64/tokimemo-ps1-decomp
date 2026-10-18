@@ -18353,3 +18353,7 @@ ETC final archive passes both independent review axes. DATE source-only archive 
 ## [2026-10-17] build | Repair GEKO probe failure exit status
 
 Independent review of [[tickets/T-24007-complete-geko]] found swallowed candidate exceptions. drafts/T-24007/probe.py now exits 1 if any candidate fails while preserving labeled diagnostics. A Docker invalid-candidate run confirms exit 1 and the ERROR label; verified production C is unchanged.
+
+## [2026-10-17] ingest | Preserve completed family handoffs and refresh contributor state
+
+Published GEKO residual guard/drafts, DATE source-only hypotheses and diagnostic fixes, and DATE/ETC final review handoffs. No new C bytes from these archives; coverage remains 79.9%. GitHub check at 06:16 UTC found no open PRs or updated contributor claims. Updated [[completion-run-2026-10-17]] with RPG_BAT T24013 and TACO T24014 assignments. ENDING T24009 found a source-level scheduling improvement but no match; its pinned archive awaits integration.
