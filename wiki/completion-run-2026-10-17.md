@@ -172,3 +172,7 @@ Latest active ownership: T24052 pair complete and verified; worker continues T24
 Published T24057 ENDING fade-pair source archive2a97faf17 and T24060 SHUGAKU source archive89ba6cc66; both change only drafts/wiki and add no matched functions. Current verified totals remain6507/6958 and1851416/2279368 bytes. Astra reports a6848-byte literal scratch EVENT match; do not count until independent default production proof. Its neighbor-base selector access recipe has been transferred to the DATE coordinator. T24064 corrects a provisional coordinator ticket-ID collision with existing SHUGAKU T24060.
 
 Contributor check07:47UTC: no open PRs; claims#50/#56/#57 unchanged. NAME_ENT and TT exclusions continue.
+
+## 2026-10-18 focused-worker checkpoints
+
+DATE negative-transfer checkpoint33ce56acce published96301444d. ENDING checkpointb0111332c reviewed and integrated with guarded C, explicit FAKE width/alias views, original ASM fallback, all27 hashes and interface guards passing; one trailing blank line removed from archived body. No new matching functions or bytes. Both Sol workers remain on their assigned functions. DATE subsequently reports scratch4-row result with exact frame/tables and only two reversed selector comparisons; not a literal production match and not counted.

@@ -19058,3 +19058,7 @@ Created [[tickets/T-24047-ending-sprite-scene]] at main4496b0dc7 in isolated cod
 ## [2026-10-18] build | ENDING checkpoint validation and review complete
 
 [[tickets/T-24047-ending-sprite-scene]] independent standards review has no actionable findings; parent scope review confirms the owned function is the only production change. Matching acceptance remains unmet and status stays In Review. Docker full-TU replay reproduces804/805 instructions/cost43, ENDING default rebuild passes SHA1, and headers/globals/branch prototypes pass with zero new disagreements. All27 built binaries pass manifest SHA1 checks after rebuilding inherited stale GEKO/GYOZI cache outputs without source edits. No coverage gain claimed.
+
+## [2026-10-18] ingest | Preserve focused DATE and ENDING checkpoints
+
+Published DATE33ce56acce source-only checkpoint as96301444d. Reviewed ENDINGb0111332c guarded reconstruction against CODING_STANDARDS; explicit FAKE casts, canonical fields, C89 and default ASM retained. Removed one trailing blank line; integration all27 hashes and interface guards pass. [[completion-run-2026-10-17]] records two continuing workers and uncounted DATE scratch four-row lead. No coverage change.
