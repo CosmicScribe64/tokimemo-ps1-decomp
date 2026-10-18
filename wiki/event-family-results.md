@@ -223,3 +223,7 @@ DATE2 func_80133AF0 ports to EVENT func_8011C750 through existing movie/state/Re
 ## T-24028 short movie source port
 
 DATE/DATE2 source structure recovers EVENT func_8011D5C4 to seven differing instructions (14 printable rows), exact 509 instructions and 0x40 frame, versus T-22009's distant draft and wrong frame. All record loops, fades and callback spills match. Only timer narrowing has the same raw/masked range split as DATE func_8014718C's old T-17201 gap. The selected scratch body needs s32 own-return view; existing void header and production INCLUDE_ASM remain unchanged. No new C bytes or header change. Source-only near miss, tested reproduction and failed hypotheses: drafts/T-24028/; [[tickets/T-24028-date-event-short-movie-siblings]] In Review.
+
+## T-24053 short-function recovery
+
+[[tickets/T-24053-short-function-lane]] integrated the previously scratch-only T-20620 recipe for func_8010B614: both initial selector store and later selector read use byte lvalues. Actual unguarded default C matches100 literal bytes, EVENT SHA1 `ff7184d7e92b7aff372450ac3b8c2bdd42e55a5e`. Canonical EventStateView flag-member byte access was freshly tested and differs26 rows; the retained opaque stride and byte-view scheduling are explicitly FAKE marked. No header change; declaration guards pass.

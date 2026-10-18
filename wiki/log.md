@@ -18667,3 +18667,11 @@ Created [[tickets/T-24048-master-animation]], claimed only src/ovl/MASTER/801336
 ## [2026-10-18] build | MASTER source-only checkpoint guards
 
 [[tickets/T-24048-master-animation]] baseline unit checksum passes (`7303c196a7a2fd8423da1e66e5a49511e9805bbc`), header/global checks pass and prototype branch check has0 new/15 known disagreements. Final saved-source reproducer compiles434/428. No actual C promotion or default ASM fallback coverage claim.
+
+## [2026-10-18] ticket | Three short-function count targets
+
+Created [[tickets/T-24053-short-function-lane]] before edits, following [[tickets/T-20620-as1-scheduling]] and the current EVENT guard evidence. Scope is EVENT8010B360, BUNKA_SD80135160 and SHUGAKU80139D00 only; one Docker compiler.
+
+## [2026-10-18] build | Two short C matches add232 bytes
+
+[[tickets/T-24053-short-function-lane]] verifies EVENT func_8010B614100 bytes and BUNKA_SD func_801355AC132 bytes from unguarded default C, with affected unit checksums and header/global/prototype guards. [[event-family-results]] records the unintegrated T-20620 recipe and rejected canonical-member form; [[bunka-sd-family-results]] records the T-22021 fade recipe. Both scheduling tricks explicitly FAKE marked, no toolchain/header changes. SHUGAKU short target remains in progress.

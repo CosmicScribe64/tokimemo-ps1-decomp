@@ -59,20 +59,19 @@ void func_8010B570(void) {
     }
 }
 
-/* NON_MATCHING: T-10610, 33 diff rows left (T-17400 score), the original stores the constant 4 straight from $a0 (li a0,4; sb a0 in the jal delay slot); every form tried gets a separate li (u8 store narrows the shared constant) */
-#ifdef NON_MATCHING
+/* FAKE: byte lvalues keep the shared constant in a0 and prevent the later
+ * index read from being promoted. The opaque record stride also preserves
+ * index/base allocation; the canonical EventStateView flag member differs
+ * by 26 rows. T-9770/T-20620 recipe verified in T-24053. */
 void func_8010B614(void) {
     u8 *p;
-    s32 i;
-    D_800B1746 = i = 4;
-    func_8004BC20(i);
-    p = D_800B0860 + D_800B1746 * 0x34;
+
+    *(u8 *)&D_800B1746 = 4;
+    func_8004BC20(D_800B1746);
+    p = D_800B0860 + *(u8 *)&D_800B1746 * 0x34;
     p[0x1B0] &= 0xFFFD;
     func_80011DFC();
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010B360", func_8010B614);
-#endif
 
 extern s16 D_800E9E3E;
 extern s16 D_800EC194;
