@@ -18580,3 +18580,11 @@ Created [[tickets/T-24032-date-taco-rotation-clones]] after reading prior SDK/li
 ## [2026-10-18] build | Six more verified functions integrated
 
 [[completion-run-2026-10-17]] records6486/6958 functions and1832660/2279368 bytes,80.4%. Independent review plus all27 hashes, guards and actual default C proofs passed for T24019GYOZI392, T24030BUNKASAI2020, T24027RPG_BAT1656 and T24026SHOUGATU708 bytes. T24030 moves to Done; partially completed families remain In Review. Continued workers own fresh T24028/T24029/T24031/T24032/T24033 scopes. Negative source archives remain explicitly non-matching.
+
+## [2026-10-17] ticket | T-24029 seasonal scene sibling pair
+
+Created [[tickets/T-24029-seasonal-scene-siblings]] In Progress for a bounded typed sibling reconstruction. Read prior [[shougatu-family-results]] and T-15100/T-17500 evidence.
+
+## [2026-10-17] decision | T-24029 bounded scene pair archive
+
+[[tickets/T-24029-seasonal-scene-siblings]] moves to In Review with source-only typed checkpoints in drafts/T-24029. No C win; production sources restored. Current aligned edit costs GYOZI 586 / SHOUGATU 656 leave broad copy scheduling and live-range blockers, recorded in [[shougatu-family-results]] and the archive. No shared-header changes or toolchain modifications.

@@ -53,6 +53,7 @@ kanban-plugin: board
 ## In Review
 
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
+- [ ] [[tickets/T-24029-seasonal-scene-siblings|T-24029 Recover GYOZI and SHOUGATU scene sibling pair]]
 - [ ] [[tickets/T-24026-shougatu-sibling-ports|T-24026 Port three SHOUGATU high-similarity siblings]]
 - [ ] [[tickets/T-24008-taiiku-runners|T-24008 Recover TAIIKU runner family]]
 - [ ] [[tickets/T-24018-large-sibling-state-machines|T-24018 Recover large DATE and EVENT sibling state machines]]
