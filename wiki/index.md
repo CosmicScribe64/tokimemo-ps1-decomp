@@ -755,9 +755,10 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24095-geko-event-batch-d|T-24095]] GEKO and EVENT batch D (`GEKO:func_8013A3C4` 416 B, `GEKO:func_8013AB4C` 404 B, `GEKO:func_8013B10C` 416 B, `GEKO:func_801404FC` 464 B, Done; 4 matches, 1,700 B verified default C).
 - [[tickets/T-24096-speedup-audit-and-automation|T-24096]] Speedup audit and automation (`audit_speedups.py` for `.data` islands and `O.BIN` return types, `idiom_sweep.py`, `port_sibling.py`, Done).
 - [[tickets/T-24097-event-movie-final-and-date-event-twins|T-24097]] Match `EVENT:func_8011DDB8` (3,992 B) and `EVENT` scene siblings (`func_8011B848`, `func_8011C164`, In Progress).
-- [[tickets/T-24098-gyozi-shougatu-80143ad0-80141780-twins|T-24098]] Match `GYOZI/80143AD0` and `SHOUGATU/80141780` 1.000 twin cluster (10 functions, 8,544 B, In Progress).
+- [[tickets/T-24098-gyozi-shougatu-80143ad0-80141780-twins|T-24098]] Match `GYOZI/80143AD0` and `SHOUGATU/80141780` 1.000 twin cluster (8 of 10 functions matched, 7,952 B verified default C, Done).
 - [[tickets/T-24099-date-80132000-final-six|T-24099]] Close out remaining `DATE` `80132000.c` functions (`func_80132000`, `func_80137154`, `func_8013C190`, `func_8013D5FC`, `func_8013FAD0`, `func_8013FD6C`, In Progress).
 - [[tickets/T-24100-taiiku-data-defs-and-islands|T-24100]] Convert `TAIIKU` `.data` `INCLUDE_RODATA` definitions to C and close `TAIIKU` and `OPTION/801389A0.c` near misses (In Progress).
+- [[tickets/T-24101-gyozi-shougatu-valen-data-island-siblings|T-24101]] Add `.data` islands for `GYOZI/801418B0`, `SHOUGATU/8013F190`, and `VALEN/80132760` and match 5-function sibling cluster (4,404 B, In Progress).
 
 
 

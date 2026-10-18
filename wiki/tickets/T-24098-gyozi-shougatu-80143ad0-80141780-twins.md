@@ -1,7 +1,7 @@
 ---
 id: T-24098
 title: Match GYOZI/80143AD0 and SHOUGATU/80141780 1.000 twin cluster (10 functions, 8,544 B)
-status: In Progress
+status: Done
 priority: high
 created: 2026-10-18
 updated: 2026-10-18
@@ -22,6 +22,19 @@ Solving each `GYOZI` function immediately ports to its `SHOUGATU` twin.
 
 ## Acceptance criteria
 
-- [ ] Close as many of the 5 twin pairs (10 functions, 8,544 B) as possible to `score=0` in `build/scratch/t24098/`
-- [ ] Promote all matched functions to unguarded default C and verify `tools/funcdiff.py --resolve`, `ninja`, `tools/check_headers.py`, `tools/migrate_globals.py --check`, and `tools/sync_protos.py --check-branch`
-- [ ] Review against `CODING_STANDARDS.md` and record findings in `wiki/log.md`
+- [x] Close as many of the 5 twin pairs (10 functions, 8,544 B) as possible to `score=0` in `build/scratch/t24098/`
+- [x] Promote all matched functions to unguarded default C and verify `tools/funcdiff.py --resolve`, `ninja`, `tools/check_headers.py`, `tools/migrate_globals.py --check`, and `tools/sync_protos.py --check-branch`
+- [x] Review against `CODING_STANDARDS.md` and record findings in `wiki/log.md`
+
+## Results
+
+- Matched **8 of 10 functions** (**7,952 B** of 8,544 B) across 4 of the 5 twin pairs:
+  - `SHOUGATU:func_80141D20` (1,204 B in `src/ovl/SHOUGATU/80141780.c`): `MATCH`
+  - `GYOZI:func_80144018` (1,204 B in `src/ovl/GYOZI/80143AD0.c`): `MATCH`
+  - `SHOUGATU:func_801421D4` (760 B in `src/ovl/SHOUGATU/80141780.c`): `MATCH`
+  - `GYOZI:func_801444CC` (752 B in `src/ovl/GYOZI/80143AD0.c`): `MATCH`
+  - `SHOUGATU:func_8014288C` (1,300 B in `src/ovl/SHOUGATU/80141780.c`): `MATCH`
+  - `GYOZI:func_80144B70` (1,300 B in `src/ovl/GYOZI/80143AD0.c`): `MATCH`
+  - `SHOUGATU:func_80142DA0` (716 B in `src/ovl/SHOUGATU/80141780.c`): `MATCH`
+  - `GYOZI:func_80145084` (716 B in `src/ovl/GYOZI/80143AD0.c`): `MATCH`
+- `GYOZI:func_8014494C` (296 B) & `SHOUGATU:func_8014265C` (296 B) have exact C structure recovered and are blocked only by the `ugen` block-copy state (`F` vs `B`) register rotation investigated in [[tickets/T-24092-ugen-block-copy-state-pass]].

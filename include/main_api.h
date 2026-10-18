@@ -2780,7 +2780,9 @@ void func_8008FEB0();
 void func_8008FED0();
 void func_8008FEF0();
 void func_8008FF5C();
+#ifndef MAIN_API_OVERRIDE_func_8008FF60
 void func_8008FF60();
+#endif
 void func_80090580(s16);
 void func_8009068C();
 void func_800907E0(s16);

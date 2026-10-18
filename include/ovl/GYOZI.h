@@ -492,7 +492,8 @@ extern volatile s16 D_8012B920; /* volatile: func_801427E4 only matches with it 
 extern s32 D_8012E668;
 void func_80140050();
 
-void func_80144018();
+s32 func_80144018(void);
+s32 func_80144B70(void);
 
 /* Three consecutive records at D_8012B8C0 (T-4070): accessing the flag bytes through one base symbol
  * keeps IDO from hoisting loads above earlier stores, as in the original. */

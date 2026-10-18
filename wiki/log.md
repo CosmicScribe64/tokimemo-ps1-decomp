@@ -20488,3 +20488,14 @@ Reviewed against `CODING_STANDARDS.md` and verified with `tools/funcdiff.py --re
   - `OPTION:func_80138080` (836 B in `src/ovl/OPTION/80132000.c` — `src/ovl/OPTION/80132000.c` is now 100% matched!): `MATCH`
 - Created and dispatched [[tickets/T-24100-taiiku-data-defs-and-islands]] (`In Progress`) to convert `TAIIKU` `.data` `INCLUDE_RODATA` definitions to C and close `TAIIKU` and `OPTION/801389A0.c` near misses.
 
+## [2026-10-18] ticket | T-24098 Done (8 matches in SHOUGATU and GYOZI, 7,952 B) and T-24101 In Progress
+
+Reviewed against `CODING_STANDARDS.md` and verified with `tools/funcdiff.py --resolve`:
+- [[tickets/T-24098-gyozi-shougatu-80143ad0-80141780-twins]] (`Done`, +8 functions / +7,952 B across `src/ovl/SHOUGATU/80141780.c` and `src/ovl/GYOZI/80143AD0.c`):
+  - `SHOUGATU:func_80141D20` (1,204 B) & `GYOZI:func_80144018` (1,204 B): `MATCH`
+  - `SHOUGATU:func_801421D4` (760 B) & `GYOZI:func_801444CC` (752 B): `MATCH`
+  - `SHOUGATU:func_8014288C` (1,300 B) & `GYOZI:func_80144B70` (1,300 B): `MATCH`
+  - `SHOUGATU:func_80142DA0` (716 B) & `GYOZI:func_80145084` (716 B): `MATCH`
+- Created and dispatched [[tickets/T-24101-gyozi-shougatu-valen-data-island-siblings]] (`In Progress`) to add `.data` islands for `GYOZI/801418B0`, `SHOUGATU/8013F190`, and `VALEN/80132760` and match the 5-function sibling cluster (`func_801421B4`, `func_8013FB28`, `func_80132834`, `func_801428EC`, `func_80140314`, 4,404 B).
+
+

@@ -940,6 +940,9 @@ extern s32 D_80146540[50];
 extern s32 D_80146608[50];
 extern s32 D_801466D0[50];
 extern s16 D_80146798[50];
+extern u32 D_80146800;
+s32 func_80141D20(void);
+s32 func_8014288C(void);
 #endif
 
 #endif /* OVL_SHOUGATU_H */
