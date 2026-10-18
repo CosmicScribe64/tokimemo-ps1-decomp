@@ -19780,3 +19780,6 @@ Created [[tickets/T-24072-etc-model-init]] before edits on only func_8014354C in
 ## [2026-10-18] ticket | T-24072 unresolved In Review
 
 [[tickets/T-24072-etc-model-init]] moves with card/index to In Review, not Done. New5-row integer-recipe source and neutral controls preserved, production ASM unchanged. Stop4354C probes/instrumentation; no verified bytes or compiler-impossibility claim. Next lead screening is read-only, with new ownership/ticket before edits.
+
+## [2026-10-18] lint | Refresh current completion handoff
+Corrected the stale headline and active ownership in [[completion-run-2026-10-17]] under [[tickets/T-24000-complete-matching]]. Latest measured main code fd700bf3f is6514/6958 functions,1865416/2279368 bytes; source-only archives through fe932f320 add no coverage. Recorded four subsequent verified gains and sole active Sol medium T24073; ENDING/Astra idle. T24073 header proposal checked against original incoming-a0 spill and existing no-argument caller: standards permit unspecified-argument declaration, preserving caller; narrow correction authorized with interface/neighbor verification required.
