@@ -17869,3 +17869,11 @@ Review against `CODING_STANDARDS.md` found nothing to fix; 1 of 3 matched (`func
 ## [2026-10-17] ticket | T-22024 In Progress
 
 Package w4-p24 started in worktree w4-p24 (branch from w2-good): five EVENT functions in `src/ovl/EVENT/8010FE10.c`. [[tickets/T-22024-w4-p24]], [[kanban]].
+
+## [2026-10-17] build | T-22024 EVENT results
+
+`func_80118010` matched (viewsweep: `func_8004A8EC` as `s32(s32)` in the file's override) and `func_8011A8E4` matched (plain if/else chain, `var_a1` above the stack tables); `func_8011C164` back to `INCLUDE_ASM` at 70 rows (draft in `drafts/T-22024/EVENT/func_8011C164/body.c`). Notes in [[matching-notes]]; source `src/ovl/EVENT/8010FE10.c`.
+
+## [2026-10-17] ticket | T-22024 In Review
+
+Work done, awaiting review against `CODING_STANDARDS.md`. [[tickets/T-22024-w4-p24]], [[kanban]].
