@@ -18588,3 +18588,18 @@ Created [[tickets/T-24029-seasonal-scene-siblings]] In Progress for a bounded ty
 ## [2026-10-17] decision | T-24029 bounded scene pair archive
 
 [[tickets/T-24029-seasonal-scene-siblings]] moves to In Review with source-only typed checkpoints in drafts/T-24029. No C win; production sources restored. Current aligned edit costs GYOZI 586 / SHOUGATU 656 leave broad copy scheduling and live-range blockers, recorded in [[shougatu-family-results]] and the archive. No shared-header changes or toolchain modifications.
+## [2026-10-18] ticket | Short DATE and EVENT movie sibling recovery
+Started [[tickets/T-24028-date-event-short-movie-siblings]] from 9d8cd8719 after reviewing T-17201/T-22009 and [[date-family-results]]/[[event-family-results]]. DATE2 func_801348F0 is read-only reference for DATE func_8014718C and EVENT func_8011D5C4. Bounded source-shape pass, one Docker compiler, owned source files only.
+
+## [2026-10-18] query | Shared short-movie timer gap isolated
+[[tickets/T-24028-date-event-short-movie-siblings]] ported matched DATE2 fade shape: DATE func_8014718C improves from 26 to 11 differing instructions; EVENT func_8011D5C4 reaches seven. Both instruction counts and 0x40 frames exact. The seven-word timer-narrowing gap is shared; focused natural and marked-FAKE scratch probes do not close it. Kept useful source-only drafts and tested reproduction in drafts/T-24028/, updating [[date-family-results]] and [[event-family-results]].
+
+## [2026-10-18] build | Improved DATE guard preserves normal checksum
+Updated only the existing DATE func_8014718C guarded body and ticket note; its assembly fallback remains. Docker probe rechecks show 22/14 printable rows for DATE/EVENT candidates; normal ninja -j1 rebuilt DATE with headers/checksum OK. EVENT source/header unchanged. Zero new verified C bytes.
+
+## [2026-10-18] ticket | Short movie source work ready for review
+Moved [[tickets/T-24028-date-event-short-movie-siblings]] and kanban card to In Review; root standards review remains. No push or merge.
+
+## [2026-10-18] lint | Refresh current ownership and matching priorities
+
+[[completion-run-2026-10-17]] reconciled stale queued/pending claims with published commits, updated T24033/T24034/T24035 ownership and recorded the Docker sibling refresh:36 strong-sibling targets/29088 instruction bytes, no exact clones in the filtered set. [[tickets/T-24029-seasonal-scene-siblings]] source checkpoint preserved; T24028 reviewed guarded DATE improvement and source-only EVENT seven-instruction blocker published after all27 default binary hashes and guards. Zero new verified bytes for these drafts.

@@ -56,6 +56,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24029-seasonal-scene-siblings|T-24029 Recover GYOZI and SHOUGATU scene sibling pair]]
 - [ ] [[tickets/T-24026-shougatu-sibling-ports|T-24026 Port three SHOUGATU high-similarity siblings]]
 - [ ] [[tickets/T-24008-taiiku-runners|T-24008 Recover TAIIKU runner family]]
+- [ ] [[tickets/T-24028-date-event-short-movie-siblings|T-24028 Recover DATE and EVENT short movie siblings]]
 - [ ] [[tickets/T-24018-large-sibling-state-machines|T-24018 Recover large DATE and EVENT sibling state machines]]
 - [ ] [[tickets/T-24014-taco-pre-closer|T-24014 Close TACO PRE operand order]]
 - [ ] [[tickets/T-24009-ending-scheduler-closer|T-24009 Close ENDING scheduler residue]]

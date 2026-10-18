@@ -36,9 +36,9 @@ Each was independently checked against default linked function bytes, all27 bina
 
 ## Active ownership
 
-- T24029 Sol medium root worker, codex/complete-main: GYOZI80136220 func801368B8 and SHOUGATU80134890 func801350F8, a shared source family.
-- T24028 Sol medium root worker, codex/complete-bunkaken: DATE801461B0 func8014718C and EVENT8011C650 func8011D5C4; matched DATE2func801348F0 is reference-only.
-- T24032/T24033 Sol medium root worker, codex/complete-option: six DATE/TACO416-byte SDK-like matrix routines get one provenance/control pass, then VALEN80133C70 func80134030 and VALEN80132760 func80132D0C. No per-function compiler exceptions or coverage reclassification.
+- T24034 Sol medium root worker, codex/complete-main: EVENT800FDC20 funcs800FEF74/800FFA4C and EVENT800F9680 func800F9730. Exact main_api void func80067628() addition reserved if needed for a verified port.
+- T24035 Sol medium root worker, codex/complete-bunkaken: BUNKA_SD80134260 funcs80134418/801344A8 and GEKO80134040 func80134228. T24028 near-miss package is preserved; shared seven-instruction timer blocker is available for a later compiler-focused pass.
+- T24033 Sol medium root worker, codex/complete-option: VALEN80133C70 func80134030 and VALEN80132760 func80132D0C. T24032 matrix provenance/control archive is on main; no coverage reclassification.
 - Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687 active on MAIN8007C030 dialogue_speak_part; owns TEL80132000, EVENT8010FE10, MAIN8006CB30 ONLYfunc8007132C and GEKO80142760 ONLYfunc80142C9C as reserved follow-ups. Do not touch parked MAIN8006D7EC. One compiler.
 - Sol medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8 active on T24031, paired GYOZI80143AD0 funcs80144B70/80144018 and SHOUGATU80141780 funcs8014288C/80141D20. Reuses built private/tmp tree, one compiler.
 
@@ -51,9 +51,9 @@ Each was independently checked against default linked function bytes, all27 bina
 - T24009 ENDING: no match; pointer-lifetime scheduling improvement and reproducer published at 4375a2858.
 - T24010 DATE/ETC coordinator chat `01a14d91-82a4-7eb1-89d3-8c3dc2d084f8`: finished; all worker/coordinator handoffs on main. T24011 DATE no matches; T24012 ETC one match and three residual drafts.
 - T24013 RPG_BAT: one 2424-byte match; two residual source drafts published at ae111b687.
-- T24008 TAIIKU closure and guarded updater archived on main; T24015 MAIN closure archive a260c269a pending integration.
+- T24008 TAIIKU closure and guarded updater archived on main; T24015 MAIN closure archive integrated with336627a64.
 - T24016 BUNKASAI: both targets verified,3160 bytes, independent root review complete.
-- T24014 TACO: no match after specific PRE hypotheses; three-case reproducer and negative evidence published at 76dd4762f. Root Astra closer stopped; its slot now runs Sol medium T24016.
+- T24014 TACO: no match after specific PRE hypotheses; three-case reproducer and negative evidence published at 76dd4762f. Root Astra closer stopped; its slot is reused for Sol medium family work.
 
 TT/DATE2 reservations and contributor claims #50/#56/#57 remain excluded. Contributor heartbeat runs every 30 minutes; no contributor messages are authorized. The old integration automation remains paused; this explicit 100% goal run is active.
 
@@ -81,7 +81,7 @@ TAIIKU func_80137EA8 (692 bytes) and RPG_BAT func_80139510 (2,424 bytes) were in
 
 The Docker sibling census at main 1a8d22a06 indexed 6,475 matched functions and 460 remaining targets after excluding TT, DATE2 and NAME_ENT from targets. There are 22 targets at opcode similarity >=0.90 (20,456 instruction bytes), another 23 at >=0.80 (14,388 bytes), and three exact opcode/register clones. These are prioritization measurements, not verified coverage or the canonical progress denominator. Reports are ignored under build/complete-siblings.json and build/complete-siblings.log in the main checkout.
 
-Queued clone ports for T24017: EVENT func_80108B24 and GEKO func_8013FD88 (476 bytes each), both similar to matched ENDING func_80139B48; SHUGAKU func_80133038 (176 bytes), similar to matched DATE func_80149F48 / GEKO func_80137580. Wait for T24008 closure before reassigning its worker; no overlap with active large-function EVENT ownership.
+Published clone ports for T24017: EVENT func_80108B24 and GEKO func_8013FD88 (476 bytes each), both similar to matched ENDING func_80139B48; SHUGAKU func_80133038 (176 bytes), similar to matched DATE func_80149F48 / GEKO func_80137580. All three were independently verified and published at979a83671.
 
 Large follow-up candidates: DATE func_801462B0 (3,804 bytes) and EVENT func_8011C750 (3,700) now have matched DATE2 func_80133AF0 as a strong reference; EVENT func_8011DDB8 (3,992) has matched DATE func_80147958. Read T12100/T23004 negative evidence before another attempt; DATE2 is reference-only, still excluded from edits.
 
@@ -89,8 +89,14 @@ New-C proof safeguard: T24016's first installation helper accidentally retained 
 
 ## Restart follow-through
 
-Both user-owned chats were confirmed active after the restart. Astra is concentrating on the roughly9KB dialogue function after preserving EVENT and MAIN investigations. Sol returned BUNKASAI func80151364 (844 bytes), pinned f41f35d3a, for independent integration; its other target remains active. These queued wins are not included in published coverage. T24017 was reviewed against CODING_STANDARDS.md and independently passed all27 hashes, guards and allthree literal C proofs before publication979a83671; its ticket is Done.
+Both user-owned chats were confirmed active after the restart. Astra continues the roughly9KB dialogue function. Sol completed both T24030 BUNKASAI targets (2020 bytes), independently verified and published atd3965d02e, and moved to T24031. T24017 is Done after independent literal proofs and all27 hashes.
 
 ## Latest integrated follow-through
 
 GYOZI T24019, BUNKASAI T24030, RPG_BAT T24027 and SHOUGATU T24026 code handoffs were independently reviewed against CODING_STANDARDS.md and passed all27 original hashes, header/global/prototype guards, target-INCLUDE_ASM rejection and default literal C proofs. Six functions/4776 bytes added after979a83671. Shared overlay headers preserve all existing code bytes. All FAKE views and scheduling forms remain documented. T24030 is Done; other partially matched family tickets remain In Review. T24015 and T24027 residual drafts are included with their code handoffs. Source-only T24018 and Astra T24020–23 archives preserve negative results without coverage claims.
+
+## Refreshed census and near-miss evidence
+
+At27d578ee0 the Docker sibling refresh indexed6486 matched functions and449 remaining targets after excluding TT/DATE2/NAME_ENT from targets:419900 instruction bytes,68 guards. There are16 targets at similarity>=.90 (18228 bytes) and20 at.80–.90 (10860 bytes); no exact opcode/register clones remain in this filtered target set. The canonical progress denominator remains2279368 game-code bytes. New GYOZI C provides a .724 reference for MAINfunc80049FF0, but no new high-similarity reference was unlocked. Reports remain ignored under build/complete-siblings-latest.json/log.
+
+T24029 seasonal drafts and T24028 DATE/EVENT near-miss checkpoints are on main. T24028 DATE guard improves26 to11 differing instructions; EVENT source-only draft has7 remaining, both exact instruction counts and frame sizes. Both still use ASM in default builds and add zero verified bytes. Explicit FAKE fade/frame forms and timer-allocation negatives are preserved; no EVENT header mutation. Main publication checked all27 unchanged binary hashes and guards.

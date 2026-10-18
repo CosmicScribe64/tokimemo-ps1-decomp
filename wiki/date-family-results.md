@@ -177,3 +177,6 @@ Matched DATE2 func_80133AF0 gives a much closer structural starting point for DA
 ## T-24032 SDK rotation clone control
 
 [[tickets/T-24032-date-taco-rotation-clones]] performs one fresh SDK MATRIX control on DATE A640, retaining all six DATE/TACO rotation helpers as ASM (zero new coverage). Source/control/provenance archived in drafts/T-24032/. Existing SDK-style classification remains; no per-function toolchain exception or impossibility claim.
+## T-24028 short movie near miss
+
+The matched DATE2 func_801348F0 fade form fixes DATE func_8014718C's three fades: explicit x/y copies on one source line, marked FAKE as in the sibling. Existing guard improves from 26 to 11 differing instructions (52 to 22 printable rows), with exact 499 instructions and 0x40 frame. Seven timer-narrowing register words and four final store-order words remain. The same seven-word timer gap appears in the recovered EVENT func_8011D5C4 port; no new C bytes. Source-only drafts/reproduction and bounded negatives are in drafts/T-24028/, [[tickets/T-24028-date-event-short-movie-siblings]] In Review. Normal guarded DATE checksum and headers pass.
