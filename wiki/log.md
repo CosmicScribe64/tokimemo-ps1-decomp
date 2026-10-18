@@ -19450,3 +19450,24 @@ Read issue63 and its new SDK signature/toolchain findings; no open PRs, NAME_ENT
 ## [2026-10-18] decision | T-24067 reject added-store state diagnostic
 
 Retained separate FAKE store-control.c: direct stack store before aggregate copy makes all four scratch-register words agree in current5.3, but adds SW, grows frame0x48→0x58 and changes branch offsets. Tagged full-TU default explicit-object replay reports15 rows, so it is rejected for promotion. Aggregate volatile qualifiers stay8/8. Required printf/tail/copy store sequencing supplies no immediate faithful direct-store substitute; [[tickets/T-24067-etc-album-copy]] records reasons. No compiler-version necessity inferred; continue read-only backend classification analysis within this function only.
+## [2026-10-18] query | ENDING wrappers neutral; existing shared-gap note consulted
+
+[[tickets/T-24047-ending-sprite-scene]] compound/do-once controls are neutral35.
+[[matching-notes]] already records the same VALEN default-entry gap. Focus next
+on equivalent call-argument sequencing of existing stores; avoid repeating its
+failed outlier/range tests. Sole production function remains unchanged.
+
+## [2026-10-18] query | ENDING call sequencing rejected; conversion-boundary control
+
+[[tickets/T-24047-ending-sprite-scene]] comma argument forms expand the frame
+and retain motion. Test a late, semantically false negative-u8 backedge solely
+to inspect CFG survival across the existing conversion post-pass. No assembly
+or compiler exception, no matching claim.
+
+## [2026-10-18] query | ENDING block and sequencing controls preserved
+
+[[tickets/T-24047-ending-sprite-scene]] compound/do-once wrappers remain804/cost35;
+comma arg0/arg3 forms are804/cost47 and51 with enlarged frames. Late false
+backedge is802/cost723 and retains LBU/BLTZ, so rejected. The110-row source
+ledger preserves all five controls. Evidence-only standards review has no new
+findings; production remains unchanged, guarded, and In Progress.
