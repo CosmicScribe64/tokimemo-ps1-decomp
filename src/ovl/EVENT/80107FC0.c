@@ -1,5 +1,6 @@
 #include "common.h"
 #include "ovl/EVENT.h"
+#include "psx_types.h"
 
 void func_80107FC0(void) {
     D_80123880 = 0x801D21BC;
@@ -267,7 +268,32 @@ void func_80108AD8(void) {
     func_8001A16C(9);
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80107FC0", func_80108B24);
+/* FAKE: the explicit "& 0xFF" masks and one source line per colour trio, as in the matched main sibling
+ * _sprite_set_box_shade_tarao (T-17001; one colour instead of two): the masks leave the shifts in ugen
+ * temporaries (t6, t7) and as1 schedules the stores by source line. The real source is unknown. T-24017 */
+void func_80108B24(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s32 arg6) {
+    EventStateView *gs;
+    POLY_G4 *p;
+
+    p = (POLY_G4 *)func_80019D00(0x24, D_800E9600);
+    func_80067678(p);
+    func_800675A8(p, arg6);
+    gs = (EventStateView *)D_800B0860;
+    p->r0 = (arg4 >> 16) & 0xFF; p->g0 = (arg4 >> 8) & 0xFF; p->b0 = arg4 & 0xFF;
+    p->r1 = (arg4 >> 16) & 0xFF; p->g1 = (arg4 >> 8) & 0xFF; p->b1 = arg4 & 0xFF;
+    p->r2 = (arg4 >> 16) & 0xFF; p->g2 = (arg4 >> 8) & 0xFF; p->b2 = arg4 & 0xFF;
+    p->r3 = (arg4 >> 16) & 0xFF; p->g3 = (arg4 >> 8) & 0xFF; p->b3 = arg4 & 0xFF;
+    p->x0 = gs->unk_014[D_800E9600] + arg0;
+    p->y0 = gs->unk_018[D_800E9600] + arg1;
+    p->x1 = gs->unk_014[D_800E9600] + arg0 + arg2;
+    p->y1 = gs->unk_018[D_800E9600] + arg1;
+    p->x2 = gs->unk_014[D_800E9600] + arg0;
+    p->y2 = gs->unk_018[D_800E9600] + arg1 + arg3;
+    p->x3 = gs->unk_014[D_800E9600] + arg0 + arg2;
+    p->y3 = gs->unk_018[D_800E9600] + arg1 + arg3;
+    func_800674F4(D_800B2580 + (D_800E9600 << 6) + arg5 * 4, (s32)p);
+}
+
 
 void func_80108D00(void) {
     s16 i;

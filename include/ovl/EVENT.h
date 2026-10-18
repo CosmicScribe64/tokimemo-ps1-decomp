@@ -1477,7 +1477,11 @@ typedef struct EventMuseumChoices15 {
 #define OVL_EVENT_STATE_T10730
 /* T-10730: legacy EVENT state, offsets relative to D_800B0860. */
 typedef struct EventStateView {
-    /* 0x000 */ u8 pad_000[0x35];
+    /* T-24017: signed halfwords indexed by the word at D_800E9600. */
+    /* 0x000 */ u8 pad_000[0x14];
+    /* 0x014 */ s16 unk_014[2];
+    /* 0x018 */ s16 unk_018[2];
+    /* 0x01C */ u8 pad_01C[0x19];
     /* 0x035 */ u8 unk_035;
     /* 0x036 */ u8 unk_036;
     /* 0x037 */ u8 unk_037;
@@ -1840,4 +1844,11 @@ extern EvShorts5 D_80125360; /* func_80118B4C */
 #ifndef OVL_EVENT_PROTOS_T17400
 #define OVL_EVENT_PROTOS_T17400
 void func_8010AFE4(void); /* T-17400: defined in 8010A210.c after its first caller */
+#endif
+
+#ifndef OVL_EVENT_LEGACY_RENDER_T24017
+#define OVL_EVENT_LEGACY_RENDER_T24017
+/* Legacy address is outside the current MAIN executable range. The returned
+ * word is consumed as a packet pointer by func_80108B24. T-24017. */
+void *func_80019D00();
 #endif

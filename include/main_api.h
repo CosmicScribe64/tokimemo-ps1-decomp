@@ -3067,4 +3067,12 @@ void func_80060150(void);
 /* T-14200: canonical declaration of the existing MAIN definition. */
 void func_80041840(void);
 
+/* Legacy EVENT renderer call-site views, T-24017. The packet pointers are
+ * passed in a0/a1; return values are unused. Keep the unknown legacy names. */
+void func_800674F4();
+void func_800675A8();
+void func_80067678();
+extern s32 D_800E9600; /* word index used for legacy viewport and ordering-table offsets */
+extern u8 D_800B2580[]; /* address-only ordering-table base, byte extent unknown */
+
 #endif /* MAIN_API_H */

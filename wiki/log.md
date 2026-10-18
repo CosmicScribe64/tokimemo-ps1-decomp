@@ -18214,3 +18214,11 @@ GEKO func_8013FD88 is unguarded C, no INCLUDE_ASM. Fresh default linked literal 
 ## [2026-10-17] build | T-24017 SHUGAKU clone verifies 176 bytes
 
 SHUGAKU func_80133038 now unguarded C with no INCLUDE_ASM. Fresh default linked literal proof and unit checksum pass, 176 bytes. [[shugaku-family-results]] records DATE product-narrowing/copy-order recipe, no FAKE or data ownership changes. Added the new [[geko-family-results]] page to [[index]] and its metadata. [[tickets/T-24017-clone-ports]] checkpoint: 2 of 3, 652 bytes.
+
+## [2026-10-17] build | T-24017 legacy EVENT renderer candidate
+
+Ported ENDING polygon source using the original legacy EVENT names and its 64-byte ordering-table stride. Added measured word/address-only globals and unused-return call-site declarations once in main_api.h; allocator declaration outside current MAIN range in EVENT.h. Existing EventStateView now names signed coordinate halfword pairs at +0x14/+0x18 without shifting later members. Target is unguarded C. [[tickets/T-24017-clone-ports]].
+
+## [2026-10-17] build | T-24017 legacy EVENT verifies 476 bytes
+
+EVENT func_80108B24 is unguarded C with no target INCLUDE_ASM. Fresh default literal proof matches476 bytes; full EVENT SHA1 passes. [[event-family-results]] and [[data-types]] record old helper names, word index,64-byte table stride, and signed coordinate pairs in existing padding. [[tickets/T-24017-clone-ports]] reaches3 of3,1128 bytes. Shared declarations coordinated with root for all27 integration checks.

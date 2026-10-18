@@ -29,3 +29,7 @@ func_8013FD88 matches 476 default linked literal bytes as unguarded C; no target
 ## SHUGAKU checkpoint
 
 func_80133038 matches 176 default linked literal bytes as unguarded C, old guard/fallback removed. Exact DATE copy-chain recipe, no data-island or header changes and no FAKE. SHUGAKU SHA1 passes after ninja -j1; four pre-existing pointer warnings outside target remain. See [[shugaku-family-results]]. Total checkpoint 2 of 3 / 652 bytes.
+
+## EVENT checkpoint
+
+func_80108B24 matches 476 default linked literal bytes as unguarded C, no target INCLUDE_ASM. EVENT SHA1 passes after 22 header-dependent build steps. Legacy helper/global names retained, buffer stride64; shared main_api declarations and unchanged-layout EventStateView prefix fields coordinated with root. Inherited FAKE colour masks/grouped trios only. See [[event-family-results]] and [[data-types]]. All three targets now match: 1128 new verified bytes. Root will run all27 shared-header integration checks.

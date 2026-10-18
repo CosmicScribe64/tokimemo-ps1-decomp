@@ -415,3 +415,7 @@ sum of the best scores 2,397 rows before):
   scores goes from 2,397 to 1,183 rows (table in [[main-family-results]]).
 - `gs-local` (`GameState *g = &D_800E6280;`) decided two of the matches: IDO allocates other registers when the
   game state is reached through a pointer local, though the code reads the same addresses.
+
+## Legacy EVENT viewport prefix (T-24017)
+
+Existing EventStateView at D_800B0860 now exposes `s16 unk_014[2]` and `s16 unk_018[2]` in its leading padding. Evidence: func_80108B24 loads signed halfwords at base + 0x14 + 2 * D_800E9600 and base + 0x18 + 2 * D_800E9600 for each POLY_G4 vertex. The arrays occupy 0x14..0x1B; pad_01C[0x19] preserves the existing member at +0x35 and every following offset. The 476-byte unguarded C clone and full EVENT SHA1 match with this view. D_800E9600 is declared once as a word in main_api.h; D_800B2580 is an address-only byte-array base of unknown extent. [[tickets/T-24017-clone-ports]], [[event-family-results]].
