@@ -18449,3 +18449,6 @@ Created [[tickets/T-24030-bunkasai-sibling-package]] before implementation. Reus
 ## [2026-10-17] build | T-24030 both BUNKASAI siblings verified
 
 [[tickets/T-24030-bunkasai-sibling-package]] and [[bunkasai-family-results]] record actual default C for func_80142700 (1,176 bytes), adding to func_80151364 (844): 2 of 2, 2,020 bytes. Typed loops plus void callee view and sibling's marked FAKE store-order view resolve the second target; necessary overlay-header additions reported first. No main API change. Final joint default proof/checksum and guards recorded; exact pre-existing body audit and source-only provenance preserved. [[matching-notes]] supersedes T-22012's old two-lui blocker. Ticket/card moved to In Review for coordinator review/integration.
+
+## [2026-10-17] ticket | Start exact-structure GYOZI and SHOUGATU pairs
+Created [[tickets/T-24031-gyozi-shougatu-pairs]] before code work. Reused built tree on codex/complete-gyozi-shougatu-pairs from verified BUNKASAI 72cefc5d5, preserving history. Read [[index]], [[event-family-results]], [[shougatu-family-results]] and T-24004 negative evidence. Four assigned targets in two files, one serial Docker compiler, approximately 25-minute novel pass; root owns integration and final independent checks.

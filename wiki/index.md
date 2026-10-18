@@ -655,3 +655,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24001-main-schedule-final-row|T-24001]] Close main schedule final instruction (In Review; Astra backedge follow-up remains one row, no new C match).
 
 - [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI two-function sibling package, one compiler, current main reference ports.
+
+- [[tickets/T-24031-gyozi-shougatu-pairs|T-24031]] Exact-structure GYOZI/SHOUGATU particle-handler pairs, bounded source recovery and transfer.
