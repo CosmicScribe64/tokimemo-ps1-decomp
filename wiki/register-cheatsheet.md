@@ -391,3 +391,5 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 - Don't assume a value in `v0`/`v1` means a promoted global. Check which value regdiff names.
 - Don't try allocator options or compiler flags. They were exhausted in T-0014/T-0017/T-9800.
 - Don't keep m2c's `temp_*` locals by default. They add values the original doesn't have.
+
+T-24045 TEL func_8013D03C: a deliberately volatile local base can reproduce surrounding pointer reloads, while a narrow nonvolatile read view `(*(GameState **)&q)` at a pair of packed-field reads permits the original single word load. This is a marked compiler-specific FAKE requiring standards review, not a portable volatile-access idiom. Dedicated word locals and reused pointer ranges changed earlier allocation. See [[tickets/T-24045-tel-profile-screen]] and drafts/T-24045/README.md; actual default linked match2128 bytes.

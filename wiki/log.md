@@ -18286,3 +18286,9 @@ Read the prior T-15900 compile repair and adjacent T-19027 results. Reserved onl
 
 ## [2026-10-18] decision | T-24039 source-only checkpoint; no C promotion
 Corrected TEL func_8013D88C menu-array and flag induction strides, text table indexing and switch bounds. Archived corrected reconstruction (885 rows/frame232) and marked mechanical lower-row diagnostic (850 rows), with reproduced full-TU counts and negative evidence in drafts/T-24039/README.md. Production target remains INCLUDE_ASM; no new verified bytes. Fixed GameState base, indexed flags, eleven-element arrays, wider coordinate intermediates and volatile pointer reloads failed. Docker ninja -j1 TEL control was current and independent overlay SHA1 passed. [[matching-notes]] updated; [[tickets/T-24039-tel-date-menu]] moved to In Review for root review. No push/merge.
+
+## [2026-10-18] ticket | Start T-24045 adjacent TEL profile screen
+Reserved src/ovl/TEL/8013CCD0.c:func_8013D03C only, at 68126eccd. Read T-19027's typed 49-row draft and volatile-base/birthday-word negatives; test the adjacent matched function's shared-line record stores before novel source hypotheses. [[tickets/T-24045-tel-profile-screen]] is In Progress.
+
+## [2026-10-18] build | T-24045 TEL profile screen actual C match, 2128 bytes
+Promoted func_8013D03C to unguarded normal C, with no target INCLUDE_ASM. Current two-dimensional icon indexing, late pointer store, explicit age arms and a marked compiler-specific nonvolatile birthday-pair view close the retained T-19027 draft. FAKE padding/volatile base retained and reticketed. Approved TelSignDays size0x40/D_80146FD0 declaration added to TEL.h. Fresh Docker ninja -j1 compiled/linked production C; TEL checksum and headers pass; literal default resolved linked funcdiff MATCH2128 bytes. Updated [[matching-notes]], [[register-cheatsheet]], source-only evidence and [[tickets/T-24045-tel-profile-screen]]; moved to In Review for root standards review. No push/merge.

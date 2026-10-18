@@ -639,3 +639,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-17102-w3-rpg-bat-p02|T-17102]] Wave 3 package w3-rpg-bat-p02: RPG_BAT `80151C10.c`, `80156CC0.c`, 3 of 3 functions matched (3,056 B: `func_80151C10`, `func_80156D78`, `func_80157158`); the `$v1`-selector miss fixed by an int-returning callee view (Done).
 
 - [[tickets/T-24039-tel-date-menu]] - bounded large TEL date menu reconstruction.
+
+- [[tickets/T-24045-tel-profile-screen]] - TEL profile-screen match, 2128 literal bytes; In Review.

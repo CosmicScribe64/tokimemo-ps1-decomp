@@ -372,3 +372,12 @@ typedef struct TelRecordFlags {
     /* 0x00, bits 17..31 */ u32 high : 15;
 } TelRecordFlags; /* size 0x04 */
 #endif
+
+#ifndef OVL_TEL_T24045_SIGN_DAYS
+#define OVL_TEL_T24045_SIGN_DAYS
+/* Star-sign boundaries copied as sixteen words by func_8013D03C. T-24045. */
+typedef struct TelSignDays {
+    /* 0x00 */ u32 w[16];
+} TelSignDays; /* size 0x40 */
+extern TelSignDays D_80146FD0;
+#endif
