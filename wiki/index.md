@@ -35,6 +35,8 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
+- [[tickets/T-24007-complete-geko|T-24007]] GEKO scene completion: func_80133598 matched (452 bytes), bounded remainder probes ongoing.
+
 - [[tickets/T-24004-complete-shougatu|T-24004]] SHOUGATU scene completion: dispatcher func_801430A0 matched (352 bytes), four unresolved drafts archived; package in review.
 
 - [[tickets/T-24002-complete-option|T-24002]] OPTION completion follow-up: func_80139198 matched (860 bytes), one guarded draft improved; package in review.

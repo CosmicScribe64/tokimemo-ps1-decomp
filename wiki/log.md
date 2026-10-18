@@ -18178,3 +18178,11 @@ Created [[tickets/T-24004-complete-shougatu]] for five functions of src/ovl/SHOU
 ## [2026-10-17] ticket | SHOUGATU scene package enters review
 
 [[tickets/T-24004-complete-shougatu]] ends with one verified function / 352 bytes. Four others remain assembly, with corrected source drafts and allocation/scheduling blockers in drafts/T-24004/README.md. Header/global/prototype checks pass (0 new prototype disagreements, 15 known). Ticket and board moved to In Review; independent review required before Done. See [[shougatu-family-results]].
+
+## [2026-10-17] ticket | Begin GEKO scene completion package
+
+Created [[tickets/T-24007-complete-geko]] for five functions of src/ovl/GEKO/801323E0.c. Consulted [[scenes-family-results]], T-17700 types, and unstarted w4-p35 list; reuse the clean worktree and keep one compiler job.
+
+## [2026-10-17] build | Match GEKO status transition helper
+
+[[tickets/T-24007-complete-geko]] recovered func_80133598 (452 bytes) in src/ovl/GEKO/801323E0.c. A genuine call-result local restores the saved status-byte slot; corrected Rec38 word test and direct signed amount update preserve all instructions. No FAKE. Default linked proof and GEKO checksum pass; see [[scenes-family-results]].

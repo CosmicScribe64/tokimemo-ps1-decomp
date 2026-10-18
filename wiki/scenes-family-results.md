@@ -220,3 +220,17 @@ Two file-disjoint packages from the orchestrator's `mklists3.py` (lists in its s
 
 Left for later: `func_80133AF0` (3,584 B, 1,287 rows) and `func_801350A4` (3,328 B, 1,116 rows), the two large
 scene handlers of `80132DE0.c`.
+
+## T-24007 GEKO completion follow-up
+
+`func_80133598` matched (452 bytes). The T-13900 four-row source was unavailable,
+but its recipe reconstructs cleanly: one saved `u8 status`, a full-word test of
+`Rec38.unk_0C.w & 1`, and direct updates of `D_80144C3C` after signed division of
+`unk_0A`. This reaches the documented four rows (only the saved byte slot: 0x2F
+instead of 0x2B). Declaring a genuine `s32 result` before the byte and assigning
+the call result before masking it preserves the instructions and puts the byte at
+0x2B. Both signed and unsigned word result locals match; narrow result locals change
+the initial ranges. No padding local or FAKE is needed. Docker `ninja -j1
+build/ovl/GEKO.ok` passes and default `funcdiff --resolve --version default
+--no-build` reports literal linked target equality (452 bytes).
+See [[tickets/T-24007-complete-geko]].

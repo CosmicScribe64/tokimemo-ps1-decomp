@@ -46,6 +46,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+- [ ] [[tickets/T-24007-complete-geko|T-24007 Complete GEKO scene package]]
+
 
 
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
