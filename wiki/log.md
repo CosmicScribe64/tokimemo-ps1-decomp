@@ -20260,3 +20260,14 @@ poly-address-before-UV160 load order. Both624cost/592words/frame90, no extra
 homes. Latest causal frontier uv-capture-store remains distinct from604 numeric
 best. Source/replay/evidence pinned; saved160/page and earlyH remain unresolved,
 no type guess, instrumentation or production change. Same function active.
+
+## [2026-10-18] build | T24078 derives UV induction spills at original stack slots
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve three
+sequential controls. Index-derived UVs622 produce actual generated spills54/58;
+derived page624 negative; restoring genuine separate right-coordinate local
+fills predicted rounding gap and reaches618/592words/frame90 with UV50/54 and
+poly84/88 original. No padding/extra operations or UV aggregate guess. Original
+local identity remains uncertain; source/replay/offset predictions preserved.
+604 numeric best remains separate. Saved160/page and earlyH still differ;
+no literal match, production ASM and same-function active ownership unchanged.

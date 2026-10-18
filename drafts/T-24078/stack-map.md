@@ -169,3 +169,43 @@ score. Retain uv-capture-store as the latest causal structural frontier, with
 604 numeric best and earlier624/628 forms kept independently. Main remaining
 observations are saved160/page displacement and early H, not UV load/reuse.
 No H type guess, logger, source permutation or production edit accompanied it.
+
+
+Three sequential original/matched-source controls recover UV spill placement.
+First indexed-uv removes persistent UV pair declaration/init/+8 updates and
+uses captures i*8+24 beforeu0 and i*8+160 insideu1. Original i0/1 loop proves
+identical values; matched D32C similarly expresses UVs through its loop index.
+Earlier indexed-page control already showed source index expressions generate
+bottom-of-frame induction spills. Predicted possible generated spills, not a
+promised match. Result622cost/850rows/592words/frame90, poly84/88 unchanged.
+Despite NO declared UV object or source updates, output initializes two words
+at54/58 and increments8 at latch; these are proven candidate-derived induction
+spills. Original50/54 still differs4bytes. LW/reuse/store order remains correct.
+No unknown UV aggregate FAKE remains in this variant. Page explicit home64;
+mode7/160s6/136fp persists.
+
+Second indexed-texture derives page as320+i*128, removing only page local/init/
+update on indexed-uv. This matched D32C recipe was previously tested only with
+explicit UV locals, not derivedUVs.624/852rows/592words/frame90 is worse622;
+UV54/58 unchanged, generated page spill5C, latch ordering changes. It does not
+repair original pagefp or saved160. Preserve negative, do not transfer blindly.
+
+Third indexed-uv-right restores a genuine separate rightX local temp_a2 in
+cases1/3, leaving Q68 temp_lo_4 in cases0/2. The prior disjoint reuse was legal,
+but their semantic roles differ and original local identity remains unproven.
+No padding or arbitrary declaration permutation: restore the actual coordinate
+local at its pre-merge relative position, belowpoly. Prediction: fill four-byte
+rounding gap without frame growth; generated UV spills50/54, page64-to60,
+poly84/88 unchanged. All observed offsets match.618cost/846rows/592words/frame90.
+Source-derived home model: indexed-uv48declared bytes +4hidden switch +8derived
+spill bytes =60, rounded64; restored coordinate adds4 and removes the rounding
+gap. These byte totals are inferred from source and existing604 home rule, NOT
+a new frontend capture. Actual final spills/frame are measured directly.
+
+Latest causal structural frontier is indexed-uv-right618, distinct from604
+numeric best. Frame90, poly84/88, UV50/54 and two LW-copy lifetimes now agree
+with original in this candidate. This does NOT prove original declaration or
+source spelling and is NOT a linked byte match. Remaining measured differences
+include savedmode7 versus6, constant160 in s6 instead of per-arm immediates,
+136fp versus s7, page spill60 versusfp, earlyH and temporary register choices.
+No H width guess, new capture/logger, toolchain change or production edit.

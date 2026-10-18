@@ -9,7 +9,7 @@ from diagnostic import report
 variants = {'shared-temps': 'shared-temps.c', 'baseline': 'baseline.c',
     'sdk-uv': 'sdk-uv.c', 'uv-pair': 'uv-pair.c', 'case-height': 'case-height.c',
     'inline-height': 'inline-height.c', 'tile-width': 'tile-width.c', 'indexed-page': 'indexed-page.c', 'word-coordinates': 'body.c', 'word-uv-pair': 'word-uv-pair.c',
-    'case-lifetimes': 'case-lifetimes.c', 'case0-compound': 'case0-compound.c', 'x1-narrow': 'x1-narrow.c', 'origin-first': 'origin-first.c', 'origin-x1': 'origin-x1.c', 'origin-void': 'origin-void.c', 'origin-uv-pair': 'origin-uv-pair.c', 'counter-first': 'counter-first.c', 'shared-x0': 'shared-x0.c', 'base-height': 'base-height.c', 'right-scratch': 'right-scratch.c', 'if-chain': 'if-chain.c', 'direct-work': 'direct-work.c', 'uv-first-word': 'uv-first-word.c', 'uv-captures': 'uv-captures.c', 'uv-capture-store': 'uv-capture-store.c'}
+    'case-lifetimes': 'case-lifetimes.c', 'case0-compound': 'case0-compound.c', 'x1-narrow': 'x1-narrow.c', 'origin-first': 'origin-first.c', 'origin-x1': 'origin-x1.c', 'origin-void': 'origin-void.c', 'origin-uv-pair': 'origin-uv-pair.c', 'counter-first': 'counter-first.c', 'shared-x0': 'shared-x0.c', 'base-height': 'base-height.c', 'right-scratch': 'right-scratch.c', 'if-chain': 'if-chain.c', 'direct-work': 'direct-work.c', 'uv-first-word': 'uv-first-word.c', 'uv-captures': 'uv-captures.c', 'uv-capture-store': 'uv-capture-store.c', 'indexed-uv': 'indexed-uv.c', 'indexed-texture': 'indexed-texture.c', 'indexed-uv-right': 'indexed-uv-right.c'}
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--variant', choices=variants, default='word-coordinates')
 args = parser.parse_args()
