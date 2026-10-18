@@ -18278,3 +18278,11 @@ Created [[tickets/T-24046-screen-page-renderer]] In Progress after reading [[mai
 ## [2026-10-18] decision | T-24046 renderer structural checkpoint
 
 [[tickets/T-24046-screen-page-renderer]] moves to In Review with source-only drafts/T-24046. Correct word texture-offset and unused argument5 ABI-slot recovery plus automatic expression spills bring the frame to target120 and aligned cost to504 (812 vs806 instructions), still unmatched. [[main-family-results]] records the concrete fixes and bounded negatives. Production source/header fallback remains unchanged.
+
+## [2026-10-18] ticket | T-24050 GEKO scene near match
+
+Created [[tickets/T-24050-geko-scene-near-match]] In Progress after reading [[geko-family-results]] and the historical T-9510 entry.
+
+## [2026-10-18] decision | T-24050 GEKO bounded selection checkpoint
+
+[[tickets/T-24050-geko-scene-near-match]] moves to In Review, with unchanged production and an80-edit typed source/reproducer in drafts/T-24050. [[geko-family-results]] records the word-flag fix and remaining induction/lifetime/CFG blockers. No speculative header edits or expanded random sweeps.

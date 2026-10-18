@@ -645,3 +645,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24041-main-render-cd-siblings]] — MAIN LINE_G2 renderer348 B verified; CD dispatcher source-only499-edit checkpoint.
 
 - [[tickets/T-24046-screen-page-renderer]] — source-only renderer ABI/word-offset/frame recovery; no new verified C.
+
+- [[tickets/T-24050-geko-scene-near-match]] — GEKO selection source checkpoint and tested replay; no C win.
