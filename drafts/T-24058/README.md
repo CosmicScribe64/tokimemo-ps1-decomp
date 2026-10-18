@@ -1,0 +1,7 @@
+# T-24058 short pair
+
+GYOZI func_80137188 is now unguarded C,176 linked bytes, no new FAKE or header edits. The two word locals caused a promoted mask range and an artificial post-call store. Direct operations on the actual u8 global D_80146178 recover the target: assign `D_800F6468 & 7`, conditionally decrement, call with global-indexed table row, then test the global byte for0 and6. Compiler global promotion emits the observed redundant store itself. Adding an explicit `& 0xFF` to the global decrement worsens cost0 to33.
+
+SHOUGATU func_801347E0 remains production guarded C exactly unchanged, cost6 (=three register substitutions). Its post-get_g_zyotai_s F5F reload is in t7 rather than target a0. Callback-argument reuse as ANSI/K&R parameter adds an unwanted argument home store (cost9); GameState pointer24; explicit current alias `func_80051A68`6; byte girl6; direct reload field6; repeated girl comparison34; girl-as-second-call-argument6; direct global initial copy/call10, global assignment inside call37, and local initial copy/global call34. These concrete hypotheses are exhausted; no broad permutation or header change. A replay script reproduces baseline6, parameter9 and direct-global10 in scratch.
+
+Verification: normal default GYOZI literal proof MATCH176 bytes, GYOZI SHA1 43f92523116e7b6cd772d4397712a52eeda89703; target INCLUDE_ASM absent; declaration guards pass. No assembly or binary archived. Ticket is In Review pending independent standards review.

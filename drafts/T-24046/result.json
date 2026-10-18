@@ -1,0 +1,46 @@
+{
+  "function": "srn_tpage_show",
+  "status": "source-only-unmatched",
+  "parent": "5ca2b84b4d84c894f4e9f2330e62adb8fe8ea2b4",
+  "source_sha256": "dff77dcf29a765be35edae35aea5a217610707d6a4e29d5bc7af3e09826ed362",
+  "aligned_cost": 504,
+  "built_instruction_bytes": 3248,
+  "target_instruction_bytes": 3224,
+  "built_frame": 120,
+  "target_frame": 120,
+  "production_changed": false,
+  "variants": [
+    {
+      "name": "prior-T24006-current-context",
+      "cost": 1032
+    },
+    {
+      "name": "reuse-poly-state-pointer",
+      "cost": 1026,
+      "frame": 200
+    },
+    {
+      "name": "named-derived-word-offset",
+      "cost": 637,
+      "frame": 168
+    },
+    {
+      "name": "automatic-common-expression-spills",
+      "cost": 562,
+      "frame": 120
+    },
+    {
+      "name": "ABI-local-and-mode-assignment-order",
+      "cost": 524
+    },
+    {
+      "name": "consecutive-RGB-initialization",
+      "cost": 504,
+      "frame": 120
+    },
+    {
+      "name": "named-word-offset-global-state",
+      "cost": 523
+    }
+  ]
+}

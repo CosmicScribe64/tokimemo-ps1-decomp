@@ -1,0 +1,197 @@
+{
+  "metric": "aligned-insert-delete-v1",
+  "probes": [
+    {
+      "variant": "flags-base",
+      "scope": "main:func_80079C70",
+      "cost": 74,
+      "status": "no-gain"
+    },
+    {
+      "variant": "flags-current-shift",
+      "scope": "main:func_80079C70",
+      "cost": 63,
+      "status": "no-gain"
+    },
+    {
+      "variant": "flags-no-separate-shift",
+      "scope": "main:func_80079C70",
+      "cost": 37,
+      "status": "no-gain"
+    },
+    {
+      "variant": "flags-reuse",
+      "scope": "main:func_80079C70",
+      "cost": 63,
+      "status": "no-gain"
+    },
+    {
+      "variant": "flags-word-index",
+      "scope": "main:func_80079C70",
+      "cost": 65,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-adjacent-pairs",
+      "scope": "main:func_8007BCFC",
+      "cost": 6,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-array-canonical-load-order",
+      "scope": "main:func_8007BCFC",
+      "cost": 28,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-array-canonical",
+      "scope": "main:func_8007BCFC",
+      "cost": 34,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-array",
+      "scope": "main:func_8007BCFC",
+      "cost": 34,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-byte-comma-pairs",
+      "scope": "main:func_8007BCFC",
+      "cost": 8,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-byte-pairs",
+      "scope": "main:func_8007BCFC",
+      "cost": 8,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-copycomma",
+      "scope": "main:func_8007BCFC",
+      "cost": 12,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-copysemi",
+      "scope": "main:func_8007BCFC",
+      "cost": 12,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-corrected",
+      "scope": "main:func_8007BCFC",
+      "cost": 68,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-explicit-unsigned",
+      "scope": "main:func_8007BCFC",
+      "cost": 6,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-field-copy-load-order",
+      "scope": "main:func_8007BCFC",
+      "cost": 14,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-field-copy",
+      "scope": "main:func_8007BCFC",
+      "cost": 20,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-mixed-conversion",
+      "scope": "main:func_8007BCFC",
+      "cost": 34,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-mixedcomma",
+      "scope": "main:func_8007BCFC",
+      "cost": 34,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-mixedsemi",
+      "scope": "main:func_8007BCFC",
+      "cost": 34,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-narrow-expression-load-order",
+      "scope": "main:func_8007BCFC",
+      "cost": 28,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-narrow-expression",
+      "scope": "main:func_8007BCFC",
+      "cost": 34,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-reverse-pairs",
+      "scope": "main:func_8007BCFC",
+      "cost": 14,
+      "status": "no-gain"
+    },
+    {
+      "variant": "mix-sdk",
+      "scope": "main:func_8007BCFC",
+      "cost": 0,
+      "status": "matches-as-is"
+    },
+    {
+      "variant": "mix-unsigned-pair",
+      "scope": "main:func_8007BCFC",
+      "cost": 0,
+      "status": "matches-as-is"
+    },
+    {
+      "variant": "queue-array-global",
+      "scope": "main:func_8007B64C",
+      "cost": 44,
+      "status": "no-gain"
+    },
+    {
+      "variant": "queue-array-local",
+      "scope": "main:func_8007B64C",
+      "cost": 44,
+      "status": "no-gain"
+    },
+    {
+      "variant": "queue-baseline",
+      "scope": "main:func_8007B64C",
+      "cost": 51,
+      "status": "no-gain"
+    },
+    {
+      "variant": "queue-global-return",
+      "scope": "main:func_8007B64C",
+      "cost": 47,
+      "status": "no-gain"
+    },
+    {
+      "variant": "queue-global",
+      "scope": "main:func_8007B64C",
+      "cost": 46,
+      "status": "no-gain"
+    },
+    {
+      "variant": "table-direct-address",
+      "scope": "main:func_8007BBE8",
+      "cost": 111,
+      "status": "no-gain"
+    },
+    {
+      "variant": "table-record",
+      "scope": "main:func_8007BBE8",
+      "cost": 109,
+      "status": "no-gain"
+    }
+  ]
+}

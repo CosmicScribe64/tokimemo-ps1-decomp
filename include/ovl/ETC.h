@@ -864,7 +864,79 @@ void func_80133F7C(void);
 extern s32 D_8014FD90[][11];
 void func_8013EE7C(void);
 void func_8013EEAC(void);
-void func_80136448(void);
+s32 func_80136448(void);
+void func_801369D4(void);
+void func_80136AC8(void);
+void func_80136BBC(void);
+void func_80136CB0(void);
+void func_80136DA4(void);
+void func_80136E30(void);
+void func_80136F4C(void);
+void func_80137068(void);
+void func_8013715C(void);
+void func_80137250(void);
+void func_80137344(void);
+void func_80137438(void);
+void func_8013752C(void);
+void func_80137620(void);
+void func_801376AC(void);
+void func_80137738(void);
+void func_8013782C(void);
+void func_80137920(void);
+void func_80137A14(void);
+void func_80137B88(void);
+void func_80137C7C(void);
+void func_80137DC4(void);
+void func_80137EC4(void);
+void func_80137FB8(void);
+void func_801380AC(void);
+void func_80138268(void);
+void func_8013835C(void);
+void func_80138450(void);
+void func_80138544(void);
+void func_80138638(void);
+void func_8013872C(void);
+void func_80138974(void);
+void func_80138A68(void);
+void func_80138B5C(void);
+void func_80138C78(void);
+void func_80138D6C(void);
+void func_80138DF8(void);
+void func_80138F14(void);
+void func_80139008(void);
+void func_801390FC(void);
+void func_801391F0(void);
+void func_801392E4(void);
+void func_801393D8(void);
+void func_801394F4(void);
+void func_801395E8(void);
+void func_80139748(void);
+void func_8013983C(void);
+void func_80139930(void);
+void func_80139A24(void);
+void func_80139B40(void);
+void func_80139C34(void);
+void func_80139D28(void);
+void func_80139E1C(void);
+void func_80139F10(void);
+void func_8013A004(void);
+void func_8013A120(void);
+void func_8013A214(void);
+void func_8013A308(void);
+void func_8013A3FC(void);
+void func_8013A4F0(void);
+void func_8013A5E4(void);
+void func_8013A700(void);
+void func_8013A7F4(void);
+void func_8013A8E8(void);
+void func_8013A9DC(void);
+void func_8013AAD0(void);
+void func_8013ABC4(void);
+void func_8013ACB8(void);
+void func_8013AD3C(void);
+void func_8013AE58(void);
+void func_8013AEE4(void);
+void func_8013B078(void);
 void func_801408F0(void);
 void func_8013ED8C(void);
 void func_8013ED38(void);
@@ -873,7 +945,8 @@ extern s32 D_80150054;
 extern s32 D_80150058;
 extern s32 D_8015005C;
 extern s32 D_80150064;
-void func_80148BC8(void);
+s32 func_80148BC8();
+void func_80148F7C(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_80148E98(void);
 void func_80148EE8(void);
 extern s32 D_80150144;
@@ -1201,14 +1274,17 @@ s32 func_8013C330(s32 arg0, s32 arg1);
 /* T-17300: overlay data typed from the access patterns of the unmatched functions. */
 #ifndef OVL_ETC_TYPES_T17300
 #define OVL_ETC_TYPES_T17300
-/* Exam ranking of the 13 girls and the player (index 13): func_801480D0 fills it, func_8014790C and
- * func_80148BC8 draw it. D_801506F0 above is rank[13]. */
-typedef struct EtcExamRank {
-    /* 0x00 */ s16 value[14];
-    /* 0x1C */ s32 order[14];
-    /* 0x54 */ s32 rank[14];
-} EtcExamRank; /* size 0x8C */
-extern EtcExamRank D_80150668;
+/* Exam ranking of the 13 girls and the player (index 13): func_801480D0 fills the three arrays,
+ * func_8014790C and func_80148BC8 draw them. D_801506F0 above is rank[13]. The original keeps them as three
+ * symbols one after the other (a struct view makes uopt hoist one base register, T-22029). */
+extern s16 D_80150668[14]; /* exam value */
+extern s32 D_80150684[14]; /* girl index in rank order */
+extern s32 D_801506BC[14]; /* rank */
+extern s16 D_8015067C; /* value[10] */
+extern s16 D_8015067E; /* value[11] */
+extern s16 D_80150682; /* value[13] */
+extern s32 D_801506E4; /* rank[10] */
+extern s32 D_801506E8; /* rank[11] */
 /* Screen x and y of the 14 ranking rows (func_8014790C, func_80148BC8). */
 extern s16 D_80150630[14];
 extern s16 D_8015064C[14];
@@ -1232,6 +1308,8 @@ extern s32 D_80150148;
 extern s32 D_80150390;
 extern s32 D_801503C4;
 extern s32 D_80150EA4;
+/* T-24038: ten (u, v) digit pairs; extent ends at the separate sign bytes below. */
+extern u8 D_801500A0[20];
 extern u8 D_801500B4;
 extern u8 D_801500B5;
 extern u8 D_80150748[10];
@@ -1245,5 +1323,25 @@ typedef struct EtcWork40 {
     /* 0x28 */ s32 unk_28[6];
 } EtcWork40; /* size 0x40 */
 #endif /* OVL_ETC_TYPES_T17300 */
+
+
+#ifndef OVL_ETC_T22026_DISPATCH
+#define OVL_ETC_T22026_DISPATCH
+/* Callees of the dispatcher func_8013B1F0 (defined after it in src/ovl/ETC/8013B1F0.c). T-22026. */
+void func_8013B98C(s32 arg0);
+void func_8013BA3C(s32 arg0);
+void func_8013BA80(s32 arg0);
+void func_8013BAC4(s32 arg0);
+void func_8013BB08(s32 arg0, s32 arg1);
+void func_8013BB64(s32 arg0);
+void func_8013BBA8(s32 arg0);
+void func_8013BBEC(s32 arg0);
+void func_8013BC30(s32 arg0);
+void func_8013BC74(s32 arg0);
+void func_8013BCB8(s32 arg0);
+void func_8013BCFC(s32 arg0);
+void func_8013BD40(s32 arg0, s32 arg1);
+void func_8013BDEC(s32 arg0, s32 arg1);
+#endif
 
 #endif

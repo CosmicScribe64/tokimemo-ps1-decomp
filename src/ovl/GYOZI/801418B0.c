@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game.h"
 #include "ovl/GYOZI.h"
+#include "psx_types.h"
 
 void func_801418B0(void) {
     D_801487F0 = (u8 *)0x801D6360;
@@ -238,7 +239,27 @@ void func_8014288C(void) {
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_801428EC);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_80142A8C);
+/* Return type preserves the existing implicit caller ABI and original schedule. T-24019. */
+s32 func_80142A8C(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1, s32 z, s32 trans) {
+    GyoziWork *g;
+    POLY_G3 *poly;
+
+    g = &D_800F53A0;
+    poly = func_80054B60(0x1C, D_80129F10);
+    func_800ABAB8(poly);
+    func_800ABA38(poly, trans);
+    /* setRGBn-style comma lines with masks: separate statements give other registers (T-20600, T-24019). */
+    poly->r0 = (c0 >> 16) & 0xFF, poly->g0 = (c0 >> 8) & 0xFF, poly->b0 = c0 & 0xFF;
+    poly->r1 = (c1 >> 16) & 0xFF, poly->g1 = (c1 >> 8) & 0xFF, poly->b1 = c1 & 0xFF;
+    poly->r2 = (c1 >> 16) & 0xFF, poly->g2 = (c1 >> 8) & 0xFF, poly->b2 = c1 & 0xFF;
+    poly->x0 = g->unk_014[D_80129F10] + x0;
+    poly->y0 = g->unk_018[D_80129F10] + y0;
+    poly->x1 = g->unk_014[D_80129F10] + x1;
+    poly->y1 = g->unk_018[D_80129F10] + y1;
+    poly->x2 = g->unk_014[D_80129F10] + x2;
+    poly->y2 = g->unk_018[D_80129F10] + y2;
+    func_800AB984(&D_800F7710[(D_80129F10 << 10) + z * 4], poly, poly);
+}
 
 void func_80142C14(void) {
     s16 i;

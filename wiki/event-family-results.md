@@ -202,3 +202,62 @@ header types moved little; the dumpling arrays fix a wrong scale in the drafts b
 ### Packages
 
 T-17601..T-17608 (`w3-gyozi-p01`..`p08`): 33 functions, 19,180 bytes.
+
+## Legacy polygon clone (T-24017)
+
+[[tickets/T-24017-clone-ports]] ported matched ENDING func_80139B48 to legacy EVENT func_80108B24 in src/ovl/EVENT/80107FC0.c. Fresh default linked literal proof confirms 476 bytes as unguarded C (no target INCLUDE_ASM), and EVENT SHA1 passes after rebuilding all its header-dependent objects. Keep legacy helper names: func_80019D00 returns the consumed packet pointer; call-site views for func_80067678, func_800675A8 and func_800674F4 have unused returns. The legacy word buffer index is D_800E9600; its ordering-table stride is 64 bytes, versus 1024 in the GEKO/ENDING siblings, and its address-only base is D_800B2580. No semantic rename was made. EventStateView names signed two-halfword coordinate pairs at +0x14 and +0x18 in previously padded bytes; all later offsets remain unchanged. Shared declarations are centralized in main_api.h except allocator 0x80019D00, outside the current main range, in EVENT.h. Inherited FAKE colour masks/source-line trios are retained and ticketed. Root coordinates all-27 shared-header integration checks.
+## T-24019 GYOZI sibling completion
+
+func_80142A8C matched 392 default linked bytes by porting DATE func_80152E34 with SDK POLY_G3 and existing GyoziWork. Local work pointer plus comma colour assignments match; direct global reads leave22 rows. No new FAKE or header change. Explicit target ASM replaced, GYOZI checksum and default literal no-build comparison pass; shared declaration checks pass. Other three assigned selector ports remain under bounded investigation; earlier T-13201 negatives retained. See [[tickets/T-24019-gyozi-sibling-ports]].
+
+T-24019 final bounded outcome: one of four matched (392 bytes). Selectors remain ASM. E82424/24 and 39E4C27/27 reproduce the T-13201 negatives; source-line grouping and meaningful copy types do not close them. 3907C's natural control flow plus meaningful s32 result local recovers sp+0x2B, leaving56 rows/12 aligned edits (base allocation, LUI and switch-index scheduling). Its selected source corrects the byte-table index and needs a future header declaration. Unresolved forms and exact blockers are preserved in drafts/T-24019/; all loose probes retained in ignored build/T-24019-probes/. Ticket In Review, no compiler-limitation claim.
+## T-24018 source-based movie siblings
+
+DATE2 func_80133AF0 ports to EVENT func_8011C750 through existing movie/state/Rec24 views. After callback/resource substitutions and the 300-frame timer, a direct exit-state reload improves 317 to 167 printable diff rows (924 versus 925 target instructions); callback return views and page-byte access forms do not match. DATE func_80147958 ports to func_8011DDB8 only after adapting EVENT's sound/timer/resource-selector/callback cases; it remains 357 rows, frame 0x68 versus 0x60, and T-23004 remains the better source. Numbers use printable rows and are not directly comparable with T-23004's normalized metrics. No production source/header change or new matching C. Drafts and reproducible scratch-only return views: drafts/T-24018/ and [[tickets/T-24018-large-sibling-state-machines]] (In Review).
+
+## T-24028 short movie source port
+
+DATE/DATE2 source structure recovers EVENT func_8011D5C4 to seven differing instructions (14 printable rows), exact 509 instructions and 0x40 frame, versus T-22009's distant draft and wrong frame. All record loops, fades and callback spills match. Only timer narrowing has the same raw/masked range split as DATE func_8014718C's old T-17201 gap. The selected scratch body needs s32 own-return view; existing void header and production INCLUDE_ASM remain unchanged. No new C bytes or header change. Source-only near miss, tested reproduction and failed hypotheses: drafts/T-24028/; [[tickets/T-24028-date-event-short-movie-siblings]] In Review.
+
+
+## T-24033 VALEN selector sibling retry
+
+[[tickets/T-24033-valen-selector-ports]] recovers a seven-row guarded form of func_80132D0C: use direct girl accesses through a local GameState pointer and a meaningful s32 mode local. This fixes prior operand allocation; only early/late dispatch shift scheduling, one nop and branch offsets remain. func_80134030 reproduces the27-row default-block LUI gap shared with GYOZI39E4C. Zero matches or verified-byte gain; default VALEN checksum and header/global/prototype checks pass. Selected sources and bounded negative provenance are in drafts/T-24033/.
+## T-24018 source-based movie siblings
+
+## T-24034 legacy renderer and animated polygon siblings
+
+[[tickets/T-24034-event-render-siblings]] adds 1,808 B of unguarded verified C: func_800FEF74 (940 B), func_800FFA4C (404 B), func_800F9730 (464 B). All pass the target source gate, normal default linked literal proof and full EVENT checksum.
+
+The large DATE func_80152268 port retains the documented FAKE dead copies that keep v live across calls. EVENT requires promoted int arguments to func_800FF320: removing DATE's argument-site s16 casts avoids duplicate narrowing and closes the port. The two SDK polygon builders reuse T-24017's EventStateView offsets, word viewport selector and byte ordering-table base with 64-byte stride. The quad uses a meaningful state pointer in place of the DATE dummy frame slot; no dummy remains. Explicit masks and colour source-line grouping are marked FAKE. Main_api.h adds the evidence-backed void func_80067628(); legacy name is preserved; EVENT.h unchanged.
+DATE/DATE2 source structure recovers EVENT func_8011D5C4 to seven differing instructions (14 printable rows), exact 509 instructions and 0x40 frame, versus T-22009's distant draft and wrong frame. All record loops, fades and callback spills match. Only timer narrowing has the same raw/masked range split as DATE func_8014718C's old T-17201 gap. The selected scratch body needs s32 own-return view; existing void header and production INCLUDE_ASM remain unchanged. No new C bytes or header change. Source-only near miss, tested reproduction and failed hypotheses: drafts/T-24028/; [[tickets/T-24028-date-event-short-movie-siblings]] In Review.
+
+## T-24037 typed scene sibling port
+
+[[tickets/T-24037-event-scene-siblings]] ports func_80103774 (628 B) from DATE func_801560E0 with existing DisplayFixActor44/EvPairs8 and real global coordinate arrays instead of copied DATE arrays. Clearing unk_03 before unk_02 matches the target. No new FAKE. Four EVENT load-time arrays are recovered: u8 D_8012274C[8] flags, s16 D_80122754[8] x, s16 D_80122764[8] y, u8 D_80122774[8] counters. Standard override guards retain the canonical main-context scalars at the same addresses; root approved the access-width/extent evidence before production header edits.
+
+func_80102E54 remains guarded with six edits around constant8 and flag-table base scheduling. drafts/T-24037 preserves its typed source and the bounded negative hypotheses. Independent stores worsen85; reverse chain, full-pool accesses, and a meaningful flags pointer leave6. No raw instruction listings are committed.
+## T-24031 paired particle source recovery
+
+[[tickets/T-24031-gyozi-shougatu-pairs]] adds no verified bytes; all four target handlers stay assembly. `drafts/T-24031/` preserves current-header source-only pairs and a serial Docker full-TU reproducer. SHOUGATU func_80141D20 / GYOZI func_80144018 costs are 264 / 266 resolved aligned edits (the former T-24004 baseline was 387 / 491 printable rows); the 1,300-byte pair func_8014288C / func_80144B70 each costs 412 / 508 rows. These are diagnostics, not C match proofs.
+
+Corrected real Rec24 spawn/hide indexing and 50-entry work-array indices, used the actual state byte arrays, and recovered the position reset as a Fix32 low-halfword clear followed by signed high-halfword store and full-word destination copy. The prior full-word clear was not the original mutation width. Direct global counter mutation and legal i-4 entry pointers improve the smaller pair. Reusing induction/period temporaries improves the larger pair's frame 0x70 to 0x68 (target 0x50). Consistent state pointers and real Rec24[4].unk_04 fields preserve those results; explicit entry pointers in the larger pair worsen allocation. Remaining differences span live induction/array ranges around RNG calls and do not prove a compiler limitation.
+
+Production C/headers and earlier BUNKASAI wins remain untouched. Both default overlay checksums and header/global/prototype guards pass (0 new / 15 known); this preserves the assembly-backed defaults, not the archived C. GYOZI's archived s32 func_80144018 view is applied only in scratch preprocessing; its production void declaration is unchanged. Ticket/card In Review with all matching targets pending; detailed rejected controls and reproduction are in the source-only archive README.
+## T-24053 short-function recovery
+
+[[tickets/T-24053-short-function-lane]] integrated the previously scratch-only T-20620 recipe for func_8010B614: both initial selector store and later selector read use byte lvalues. Actual unguarded default C matches100 literal bytes, EVENT SHA1 `ff7184d7e92b7aff372450ac3b8c2bdd42e55a5e`. Canonical EventStateView flag-member byte access was freshly tested and differs26 rows; the retained opaque stride and byte-view scheduling are explicitly FAKE marked. No header change; declaration guards pass.
+
+## T-24059 GYOZI copy-chain recovery
+
+[[tickets/T-24059-short-copy-siblings]] matches GYOZI func_80137F48 (164 actual default C bytes), alongside SHOUGATU func_80136948. DATE/SHUGAKU's existing s16 narrowed-global recipe transfers when selector arithmetic is between the saved and replacement asset-copy groups. Current direct/local controls40/34, narrowed-global0/0; no grid or header change. GYOZI uses its canonical aggregate girl field. Literal default C proof and GYOZI SHA1 `43f92523116e7b6cd772d4397712a52eeda89703` pass, as do interface guards. No new FAKE; source explanation follows T-17205/T-24017.
+## T-24061 bounded short control/copy pass (2026-10-18)
+
+GYOZI func_8014494C scratch s32 setup40050 return view fixes the full counter prefix, reducing96 to84 rows with exact74 words. Two68-byte copies still have temporary-lifetime gaps;64+explicit4 gives44 rows but two extra words. Pointer/original pool indexing adds no gain. Current void shared callee/header stay unchanged; no viable match and no C bytes. Full source/reproduction/negative ledger: drafts/T-24061/README.md and [[tickets/T-24061-short-control-and-copy]] (In Review).
+## EVENT Boolean and branch-order closure (T-24023)
+
+EVENT func_801103A0 is default C, 1,712 instructions / 6,848 literal text bytes; its full overlay SHA1 passes. The former 214-cost draft is resolved. Three logical date tests need distinct month operands (`* 1`, `^ 0`, `| 0`) to prevent a common Boolean range. A positive date condition around the success block replaces both gotos while preserving failure exits; this restores the original common-tail load and delay slots. Both steps are required.
+
+A u32 selector copy at each dispatch-arm entry preserves plain-variable comparison order. The byte-gap local captures constants for four direct-global comparisons. The last nine swapped selector branches came from the conversion pass's constant-first rule. Reading the same byte as `((u8 *)&D_801243A4)[0xC]` avoids that classification. The containing aggregate remains unknown, so the neighboring-base view is marked FAKE under standards section 8; its address and load width are verified by literal linking and the full checksum. The identity operands and constant captures are also marked FAKE. No compiler change or artificial call arguments are used.
+
+See [[tickets/T-24023-event-handler]] and drafts/T-24023/closure/replay.py for the final source and negative controls. The canonical EVENT.h return type is s32; its sole C caller ignores the result and is covered by the overlay checksum.

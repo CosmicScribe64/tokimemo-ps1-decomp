@@ -110,3 +110,12 @@ Built with the wave-3 inventory scripts (11 functions, 5,908 bytes by their size
 | `w3-bunka-sd-p01` | T-18101 | `80137890.c`, `80133540.c`, `801369D0.c`, `80137B40.c` | 4: `func_80137890` and the three event interpreters | 2,524 |
 | `w3-bunka-sd-p02` | T-18102 | `801388D0.c`, `80134540.c` | 4 | 2,956 |
 | `w3-bunka-sd-p03` | T-18103 | `80134260.c`, `80135160.c` | 3 | 428 |
+
+## T-24035 fade sibling transfer
+
+func_801344A8 now matches default unguarded C (152 literal bytes): matched func_8013987C with decrement 2 instead of 1, retaining promoted u8 counter accesses and the marked FAKE *= 0 clear. BUNKA_SD checksum and literal default linked funcdiff pass. func_80134418 remains in progress under [[tickets/T-24035-small-bunka-geko-siblings]].
+
+T-24035 final: func_80134418's existing guard improves to four printable rows (target36 versus candidate38 instructions). Promoted byte accesses and marked FAKE clear/add cap retain the exact first-loop allocation and shared cap register; extra andi/move remain. Source-only near draft, reproduction and cap-view negatives in drafts/T-24035/. Default BUNKA_SD checksum passes; guarded function adds zero C bytes. Together with GEKO helper, package matched396 literal bytes; [[tickets/T-24035-small-bunka-geko-siblings]] In Review.
+## T-24053 short fade recovery
+
+[[tickets/T-24053-short-function-lane]] matched func_801355AC (132 literal default C bytes). T-22021's scalar byte-view promotion and `*= 0` zero retention reproduce the v1 clear and64 DisplayActor44 fade stores exactly; both choices are FAKE marked. The two leading sprite fades use records0 and2. BUNKA_SD SHA1 `173ac942ad4efbbbb176f8522fc7d273540169b0`; default actual C proof and declaration guards pass. No header/config/compiler change.

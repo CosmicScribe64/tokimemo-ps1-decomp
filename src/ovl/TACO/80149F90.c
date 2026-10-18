@@ -96,7 +96,7 @@ void func_8014A42C(void) {
     func_8014F820();
 }
 
-/* NON_MATCHING: T-19003, 12 differing lines; the spill slots of arg1 * 2 and &D_80127480[arg0] sit 4 bytes low (0x38/0x34, original 0x3C/0x38): the original has four slot-taking locals and one more word below the spills. With o inline the spills sit right under the locals but the frame is 8 bytes short; chain assignments put their temporaries above the spills. s32 with no return fixed the lui order of the second 0x40000000 branch. */
+/* NON_MATCHING: T-22025, 1 row (row 156): the reload of unk84[1] at the end of the if body is addu t4,v1,t6 (sel * 0x88 first), the original has addu t4,t6,v1. Without the st local the frame matches (4 slot-taking locals, spills at 0x3C/0x38) and uopt inserts the reload itself (partial redundancy of the join test), but the inserted address keeps the operand order of the -> form; a D_8015EDB4[sel]. or (*(...)). join test has the right order but is not merged with the first test (130 rows). (D_8015EDB4 + sel)->, (&D_8015EDB4[sel])-> and unk84 + 1 give the same 1 row; st reused through px or py, or o inlined with st kept, give 70 or more. s32 with no return fixed the lui order of the second 0x40000000 branch. T-19003 */
 #ifdef NON_MATCHING
 s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5) {
     MATRIX m;
@@ -105,7 +105,6 @@ s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 ar
     s32 sel;
     s32 px;
     s32 py;
-    u8 st;
     TcObj50 *o;
 
     sel = arg1 + 0x10;
@@ -124,13 +123,11 @@ s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 ar
     D_8015EDB4[sel].unk74 = D_80127480[0].unk18 + rot.vx + px;
     D_8015EDB4[sel].unk76 = D_80127480[0].unk1C + rot.vy + py;
     D_8015EDB4[sel].unk78 = D_80127480[0].unk20 + rot.vz;
-    st = (sel + D_8015EDB4)->unk84[1];
-    if (st < 0x15U && (sel + D_8015EDB4)->unk82 < (sel + D_8015EDB4)->unk7A) {
+    if ((sel + D_8015EDB4)->unk84[1] < 0x15U && (sel + D_8015EDB4)->unk82 < (sel + D_8015EDB4)->unk7A) {
         (sel + D_8015EDB4)->unk84[1] = *(arg1 * 2 + (u8 *)arg4);
         (sel + D_8015EDB4)->unk82 += 1;
-        st = D_8015EDB4[sel].unk84[1];
     }
-    if (st == 0) {
+    if ((sel + D_8015EDB4)->unk84[1] == 0) {
         if (arg0 != 0x19) {
             func_8015163C(arg0, arg5);
         }
@@ -1275,7 +1272,7 @@ void func_8014F2A0(void) {
     }
 }
 
-/* NON_MATCHING: T-19003, 11 differing lines; the two + 1 stores share $v0 and the unk_038++ store-back comes after the unk_1104 one, as in the original, but the ++ adds 1 again (addiu t8,a1,1) where the original stores $v0. Writing it as = unk_038 + 1 or += 1 shares the sum but drops the store-back (78 lines). */
+/* NON_MATCHING: T-22025, 6 rows (four branch targets shifted by one word, one extra addiu t8,a1,1 and its sb); the two + 1 stores share $v0 and the unk_038++ store-back comes after the unk_1104 one, as in the original, but the ++ adds 1 again (addiu t8,a1,1) where the original stores $v0. Writing it as = unk_038 + 1 or += 1 shares the sum but drops the store-back (78 lines). T-22025: the chain unk_038 = unk_036 = unk_037 = unk_038 + 1 (stores in the original order) gives 14 rows; unk_037 = unk_036 = unk_038 + 1 then unk_038 = unk_036 gives 14 rows; reading the sum back through unk_037 or unk_036 gives 65 to 120. T-19003 T-22025 closer 2: (u8) casts on the sums, ++ as prefix, 1 + unk_038 and + 1U keep the 6 rows; a local s32 x for the sum stored to all three gives 74 lines; unk_038 = unk_038 + 1 shares the sum but adds in place (old and new value both in $v0) and stores it before the unk_1104 store-back. */
 #ifdef NON_MATCHING
 void func_8014F5F0(void) {
     if (D_800E6280.unk_1104.u < 0x64U) {
@@ -1571,22 +1568,17 @@ void func_80150F44(s32 arg0) {
     }
 }
 
-/* NON_MATCHING: T-10850, 10 differing lines; only the sw a1,0x3C(sp) home store sits after the inits. The empty test gives arg1 a split range in $a1 for the first block, so uopt stores it back at the end of that block; without it arg1 stays in memory, the home store moves up, but ugen spends $t6 on the home reload and every temporary is one higher. Comparing arg1 with the constant 0 lets IDO rewrite the test as p != D_8016024C (28-31 lines). T-19003 */
+/* NON_MATCHING: T-22025, 5 rows (rows 9-13); only the sw a1,0x3C(sp) home store is late: the original stores arg1 right after the first use (before addu s2, or s0, or s1, li s3), the draft after them, as the store-back at the end of the block. The empty test gives arg1 its register range in that block; without it arg1 stays in memory, the home store moves up, but ugen spends $t6 on a home reload and every temporary is one higher (T-10850). T-22025: 15 orders of the inits and the empty test, a plain for loop and the do/while all keep the store last; the base and zero locals of the older draft are not needed. T-19003 T-22025 closer 2: index loops D_8016024C[arg1 + i] or (&D_8016024C[arg1])[i] score 31 against 4, arg0 as the counter 18, a while loop 12. */
 #ifdef NON_MATCHING
-/* FAKE: split pointer setup and empty test preserve address temporaries. T-10850 */
+/* FAKE: the empty test splits the range of arg1 so that the home store exists. T-22025 */
 void func_801511C0(s32 arg0, s32 arg1)
 {
   s32 i;
-  s32 zero;
   s32 n;
   s32 *p;
-  s32 *base;
   i = 0;
   n = arg0;
-  base = D_8016024C;
-  zero = 0;
-  p = base;
-  p = p + arg1;
+  p = D_8016024C + arg1;
   if (arg1)
   {
   }
@@ -1598,7 +1590,7 @@ void func_801511C0(s32 arg0, s32 arg1)
     p += 1;
   }
   while (i != 6);
-  if (arg1 != zero)
+  if (arg1 != 0)
   {
     func_801478F8(0x1B, D_80160280);
     return;

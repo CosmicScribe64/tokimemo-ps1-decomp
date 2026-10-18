@@ -6,3 +6,4 @@ D_800E6280 = 0x800E6280; // T-5100: GameState base (main bss 0x800E6280..0x800E7
 D_800E7D10 = 0x800E7D10; // T-20920: Work800E7D10 base (main bss work area), read by EN_NICHI C through its fields
 D_800B5920 = 0x800B5920; // T-9180: s32[4] of 80057390's own .data (dec_bg_cd_read slots), used by overlay C
 D_801217D0 = 0x801217D0; // T-10630: canonical Rec24 sprite table base used by MASTER scene handlers
+D_800CA2E8 = 0x800CA2E8; // T-24051: existing s16 symbol, DATE selector byte view at +0x10; no allocation

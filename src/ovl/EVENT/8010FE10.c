@@ -1,8 +1,8 @@
-#define MAIN_API_OVERRIDE_func_8004A8EC /* matched with void(s32) (main_api.h: void(u8)) */
+#define MAIN_API_OVERRIDE_func_8004A8EC /* matched with s32(s32) (main_api.h: void(u8)); the s32 return fixes func_80118010 registers, T-22024 */
 #include "common.h"
 #include "ovl/EVENT.h"
 
-void func_8004A8EC(s32 arg0);
+s32 func_8004A8EC(s32 arg0);
 
 void func_8010FE10(void) {
     D_801251D0 = 0x801A427C;
@@ -109,7 +109,502 @@ void func_80110234(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801103A0);
+/* Matched: T-24023.
+ * FAKE: D_801243A4 + 0xC is D_801243B0. The containing aggregate is not
+ * recovered; this byte view keeps the conversion pass from reversing selector
+ * comparisons. The local copy in each dispatch arm also preserves their order.
+ * Linked bytes and the complete EVENT binary verify the address and load width. */
+s32 func_801103A0(void) {
+    EventStateView *g;
+    u8 sp2B;
+    /* FAKE: keep the observed byte gap between saved masks. Capturing four
+     * comparison constants here preserves branch operand order. T-24023. */
+    u8 date_ok;
+    u8 sp29;
+    u32 temp_v0;
+    s32 temp_v0_2;
+
+    g = (EventStateView *)&D_800B0860;
+    temp_v0 = func_8002328C((s32)g->unk_EE6);
+    sp29 = temp_v0 & 0x80;
+    sp2B = temp_v0 & 0x7F;
+    temp_v0_2 = func_8002336C((s32)g->unk_EE6);
+    if (g->unk_EE6 == 0) {
+        temp_v0 = (((u8 *)&D_801243A4)[0xC]);
+        if ((temp_v0 == 1) && ((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U) && (g->unk_5CA[0x0] == 0) && (g->unk_1296 == 0xD)) {
+            D_800EECB0 = 4;
+            func_80011E28(0x60);
+            g->unk_5CA[0x0] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 0x10) && ((u8) g->unk_036 >= 6U) && ((u8) g->unk_036 < 9U) && (sp2B < 3U) && ((u32) temp_v0_2 < 2U) && (g->unk_5CA[0x1] == 0) && (g->unk_1A4[g->unk_EE6].pad2E[2] != 0) && (g->unk_1295 == 1) && (g->unk_1296 == 0xA)) {
+            D_800EECB0 = 6;
+            func_80011E28(0x60);
+            g->unk_5CA[0x1] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 0) && ((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU)) {
+            if (sp2B < 2U) {
+                if (temp_v0_2 == 0) {
+                    if ((g->unk_5CA[0x2] == 0) && (g->unk_1295 == 1)) {
+                        if (g->unk_1296 == 1) {
+                            D_800EECB0 = 3;
+                            func_80011E28(0x60);
+                            g->unk_5CA[0x2] = 1;
+                            return 0;
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 0xC) && ((g->unk_036 == 0xC) || (g->unk_036 == 1) || (g->unk_036 == 2)) && (sp2B == 0) && (temp_v0_2 == 0) && (sp29 != 0) && (g->unk_5CA[0x3] == 0) && (D_800EECBC == 2) && (g->unk_1295 == 1) && (g->unk_1296 == 0x23)) {
+            D_800EECB0 = 5;
+            func_80011E28(0x60);
+            g->unk_5CA[0x3] = 1;
+            return 0;
+        }
+    } else if (g->unk_EE6 == 1) {
+        temp_v0 = (((u8 *)&D_801243A4)[0xC]);
+        if ((temp_v0 == 0xC) && ((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U) && ((u8) g->unk_5CA[0x7] == 0) && (D_800EECBC == 0) && (D_80125304 != 0) && (g->unk_1295 == 1) && (g->unk_1296 == 0x23)) {
+            D_800EECB0 = 2;
+            func_80011E28(0x60);
+            return 0;
+        }
+        if ((temp_v0 == 0x11) && ((u8) g->unk_036 >= 6U) && ((u8) g->unk_036 < 9U) && (g->unk_5CA[0x8] == 0)) {
+            if (sp2B < 2U) {
+                if ((g->unk_1295 == 1) && (g->unk_1296 == 0xA)) {
+                    D_800EECB0 = 3;
+                    func_80011E28(0x60);
+                    g->unk_5CA[0x8] = 1;
+                    return 0;
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 8) && ((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU)) {
+            if (g->unk_5CA[0x9] != 0) {
+                if (g->unk_5CA[0x9] == 1) {
+                    if (!((CharFlags *)&D_800B1AE4)->b0) {
+                        goto block_64;
+                    }
+                    goto block_68;
+                }
+                goto block_67;
+            }
+block_64:
+            if ((g->unk_1295 == 1) && (g->unk_1296 == 0xA)) {
+                D_800EECB0 = 4;
+                func_80011E28(0x60);
+                g->unk_5CA[0x9] = 1;
+                return 0;
+            }
+
+        }
+block_67:
+block_68:
+        if ((temp_v0 == 0xE) && ((g->unk_036 == 0xC) || (g->unk_036 == 1) || (g->unk_036 == 2)) && (g->unk_5CA[0xA] == 0) && (D_80125314 == 6) && (g->unk_1295 == 1) && (g->unk_1296 == 0x11)) {
+            D_800EECB0 = 5;
+            func_80011E28(0x60);
+            g->unk_5CA[0xA] = 1;
+            return 0;
+        }
+    } else if (g->unk_EE6 == 2) {
+        temp_v0 = (((u8 *)&D_801243A4)[0xC]);
+        if ((temp_v0 == 4) && ((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U) && (g->unk_5CA[0xD] == 0) && ((u8) g->unk_035 >= 0x60U) && (g->unk_1295 == 1) && (g->unk_1296 == 9)) {
+            D_800EECB0 = 2;
+            func_80011E28(0x60);
+            g->unk_5CA[0xD] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 0xA) && ((u8) g->unk_036 >= 6U) && ((u8) g->unk_036 < 9U) && (g->unk_5CA[0xE] == 0) && (g->unk_035 == 0x61) && (g->unk_1295 == 1) && (g->unk_1296 == 9)) {
+            D_800EECB0 = 3;
+            func_80011E28(0x60);
+            g->unk_5CA[0xE] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 9) && ((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU) && (g->unk_5CA[0xF] == 0) && ((u8) g->unk_035 >= 0x60U) && (D_80125300 != 0) && (D_800EECBC == 1) && (g->unk_1295 == 1) && (g->unk_1296 == 0xD)) {
+            D_800EECB0 = 4;
+            func_80011E28(0x60);
+            g->unk_5CA[0xF] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 2) && ((g->unk_036 == 0xC) || (g->unk_036 == 1) || (g->unk_036 == 2)) && (D_80125324 == (date_ok = 2)) && (g->unk_1295 == 1) && (g->unk_1296 == 0xE)) {
+            D_800EECB0 = 5;
+            func_80011E28(0x60);
+            g->unk_5CA[0x10] = 1;
+            return 0;
+        }
+    } else if (g->unk_EE6 == 3) {
+        temp_v0 = (((u8 *)&D_801243A4)[0xC]);
+        if ((temp_v0 == 0xB) && ((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U) && (g->unk_5CA[0x13] == 0) && (g->unk_035 == 0x61) && (g->unk_1295 == 1) && (g->unk_1296 == 9)) {
+            D_800EECB0 = 2;
+            func_80011E28(0x60);
+            g->unk_5CA[0x13] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 0x11) && ((u8) g->unk_036 >= 6U) && ((u8) g->unk_036 < 9U)) {
+            if (g->unk_5CA[0x14] == 0) {
+                if ((g->unk_1295 == 1) && (g->unk_1296 == 0xA)) {
+                    D_800EECB0 = 3;
+                    func_80011E28(0x60);
+                    g->unk_5CA[0x14] = 1;
+                    return 0;
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 7) && ((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU) && (g->unk_5CA[0x15] == 0)) {
+            if ((D_801252F4 == (date_ok = 1)) && (g->unk_1295 == 1)) {
+                if (g->unk_1296 == 7) {
+                    D_800EECB0 = 4;
+                    func_80011E28(0x60);
+                    g->unk_5CA[0x15] = 1;
+                    return 0;
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 6) && ((g->unk_036 == 0xC) || (g->unk_036 == 1) || (g->unk_036 == 2)) && (sp2B < 2U) && (temp_v0_2 == 0) && (g->unk_5CA[0x16] == 0) && ((u8) g->unk_035 >= 0x61U) && (g->unk_1295 == 1) && (g->unk_1296 == 0xB)) {
+            D_800EECB0 = 5;
+            func_80011E28(0x60);
+            g->unk_5CA[0x16] = 1;
+            return 0;
+        }
+    } else if (g->unk_EE6 == 4) {
+        temp_v0 = (((u8 *)&D_801243A4)[0xC]);
+        if ((temp_v0 == 1) && ((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0) && (g->unk_5CA[0x19] == 0) && (g->unk_1295 == 1) && (g->unk_1296 == 0xD)) {
+            D_800EECB0 = 2;
+            func_80011E28(0x60);
+            g->unk_5CA[0x19] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 0x10) && ((u8) g->unk_036 >= 6U)) {
+            if (((u8) g->unk_036 < 9U) && (sp2B == 0) && (sp29 != 0)) {
+                if (temp_v0_2 == 0) {
+                    if (g->unk_5CA[0x1A] == 0) {
+                        if ((g->unk_1295 == 1) && (g->unk_1296 == 0xA)) {
+                            D_800EECB0 = 3;
+                            func_80011E28(0x60);
+                            g->unk_5CA[0x1A] = 1;
+                            return 0;
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 0xD) && ((u8) D_8012532C == 0) && ((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU) && (g->unk_5CA[0x1B] == 0) && ((u8) D_8012531C < 2U) && (g->unk_1295 == 1) && (g->unk_1296 == 8)) {
+            D_800EECB0 = 4;
+            func_80011E28(0x60);
+            g->unk_5CA[0x1B] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 2) && ((g->unk_036 == 0xC) || (g->unk_036 == 1) || (g->unk_036 == 2)) && (g->unk_5CA[0x1C] == 0) && (D_800EECBC == 1) && (g->unk_1295 == 1) && (g->unk_1296 == 0xE)) {
+            D_800EECB0 = 5;
+            func_80011E28(0x60);
+            g->unk_5CA[0x1C] = 1;
+            return 0;
+        }
+    } else if (g->unk_EE6 == 5) {
+        temp_v0 = (((u8 *)&D_801243A4)[0xC]);
+        if ((temp_v0 == 5) && ((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U) && (g->unk_5CA[0x20] == 0) && (g->unk_035 == 0x61) && (g->unk_1295 == 1) && (g->unk_1296 == 9)) {
+            D_800EECB0 = 3;
+            func_80011E28(0x60);
+            g->unk_5CA[0x20] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 3) && ((u8) g->unk_036 >= 6U) && ((u8) g->unk_036 < 9U) && (sp2B < 3U) && ((u32) temp_v0_2 < 2U) && (g->unk_5CA[0x21] == 0) && ((u8) g->unk_035 >= 0x61U) && (g->unk_1295 == 1) && (g->unk_1296 == 9)) {
+            D_800EECB0 = 4;
+            func_80011E28(0x60);
+            g->unk_5CA[0x21] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 1) && ((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU)) {
+            if ((g->unk_5CA[0x22] == 0) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0)) {
+                if ((g->unk_1295 == 1) && (g->unk_1296 == 0xD)) {
+                    D_800EECB0 = 5;
+                    func_80011E28(0x60);
+                    g->unk_5CA[0x22] = 1;
+                    return 0;
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 0x14) && ((g->unk_036 == 0xC) || (g->unk_036 == 1) || (g->unk_036 == 2)) && (g->unk_5CA[0x23] == 0) && (g->unk_1295 == 1) && (g->unk_1296 == 0)) {
+            D_800EECB0 = 6;
+            func_80011E28(0x60);
+            g->unk_5CA[0x23] = 1;
+            return 0;
+        }
+    } else if (g->unk_EE6 == 6) {
+        temp_v0 = (((u8 *)&D_801243A4)[0xC]);
+        if ((temp_v0 == 7) && ((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U) && (g->unk_5CA[0x26] == 0) && (D_801252F8 != 0) && (g->unk_1295 == 1) && (g->unk_1296 == 7)) {
+            D_800EECB0 = 2;
+            func_80011E28(0x60);
+            g->unk_5CA[0x26] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 0x11) && ((u8) g->unk_036 >= 6U) && ((u8) g->unk_036 < 9U) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0) && (g->unk_5CA[0x27] == 0) && (g->unk_0FE >= 0x64) && (g->unk_1295 == 1) && (g->unk_1296 == 0xA)) {
+            D_800EECB0 = 3;
+            func_80011E28(0x60);
+            g->unk_5CA[0x27] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 5) && ((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU)) {
+            if (g->unk_5CA[0x28] == 0) {
+                if ((g->unk_1295 == 1) && (g->unk_1296 == 9)) {
+                    D_800EECB0 = 4;
+                    func_80011E28(0x60);
+                    g->unk_5CA[0x28] = 1;
+                    return 0;
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 0xA) && ((g->unk_036 == 0xC) || (g->unk_036 == 1) || (g->unk_036 == 2)) && (g->unk_5CA[0x29] == 0) && (g->unk_1295 == 1) && (g->unk_1296 == 9)) {
+            D_800EECB0 = 5;
+            func_80011E28(0x60);
+            g->unk_5CA[0x29] = 1;
+            return 0;
+        }
+    } else if (g->unk_EE6 == 7) {
+        temp_v0 = (((u8 *)&D_801243A4)[0xC]);
+        if ((temp_v0 == 2) && (D_800EECBC == 0) && ((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U) && (g->unk_5CA[0x2C] == 0) && (g->unk_1295 == 1) && (g->unk_1296 == 0xF)) {
+            D_800EECB0 = 2;
+            func_80011E28(0x60);
+            g->unk_5CA[0x2C] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 0x11) && ((u8) g->unk_036 >= 6U)) {
+            if ((u8) g->unk_036 < 9U) {
+                if ((g->unk_1295 == 1) && (g->unk_1296 == 0xA)) {
+                    D_800EECB0 = 3;
+                    func_80011E28(0x60);
+                    g->unk_5CA[0x2D] = 1;
+                    return 0;
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 0xC) && (D_80125320 == (date_ok = 1)) && ((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU)) {
+            if ((g->unk_5CA[0x2E] == 0) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0)) {
+                if ((g->unk_1295 == 1) && (g->unk_1296 == 0x38)) {
+                    D_800EECB0 = 4;
+                    func_80011E28(0x60);
+                    g->unk_5CA[0x2E] = 1;
+                    return 0;
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 0x14) && ((g->unk_036 == 0xC) || (g->unk_036 == 1) || (g->unk_036 == 2)) && (g->unk_5CA[0x2F] == 0) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0) && (g->unk_1295 == 1) && (g->unk_1296 == 8)) {
+            D_800EECB0 = 5;
+            func_80011E28(0x60);
+            g->unk_5CA[0x2F] = 1;
+            return 0;
+        }
+        if ((g->unk_5CA[0x30] == 0) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0) && (g->unk_1295 == 0) && (g->unk_1296 == 0x29)) {
+            D_800EECB0 = 6;
+            func_80011E28(0x60);
+            g->unk_5CA[0x30] = 1;
+            return 0;
+        }
+    } else if (g->unk_EE6 == 8) {
+        temp_v0 = (((u8 *)&D_801243A4)[0xC]);
+        if ((temp_v0 == 9) && ((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U) && (g->unk_5CA[0x33] == 0) && ((D_80125300 == 0) || (D_800EECBC == 0)) && (g->unk_1295 == 1) && (g->unk_1296 == 0xD)) {
+            D_800EECB0 = 2;
+            func_80011E28(0x60);
+            g->unk_5CA[0x33] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 0xC) && ((u8) D_80125310 == (date_ok = 1)) && ((u8) g->unk_036 >= 6U)) {
+            if (((u8) g->unk_036 < 9U) && (sp2B == 0) && (sp29 != 0)) {
+                if (temp_v0_2 == 0) {
+                    if (g->unk_5CA[0x34] == 0) {
+                        if ((g->unk_1295 == 1) && (g->unk_1296 == 0x3C)) {
+                            D_800EECB0 = 3;
+                            func_80011E28(0x60);
+                            g->unk_5CA[0x34] = 1;
+                            return 0;
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 0xF) && (D_80125318 == 0xA) && ((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU)) {
+            if (g->unk_5CA[0x35] == 0) {
+                if ((g->unk_1295 == 1) && (g->unk_1296 == 0x11)) {
+                    D_800EECB0 = 4;
+                    func_80011E28(0x60);
+                    g->unk_5CA[0x35] = 1;
+                    return 0;
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 0x13) && ((g->unk_036 == 0xC) || (g->unk_036 == 1) || (g->unk_036 == 2)) && (g->unk_5CA[0x36] == 0) && (g->unk_1A4[g->unk_EE6].pad2E[4] != 0) && (g->unk_1295 == 1) && (g->unk_1296 == 8)) {
+            D_800EECB0 = 5;
+            func_80011E28(0x60);
+            g->unk_5CA[0x36] = 1;
+            return 0;
+        }
+        if (temp_v0 == 8) {
+            /* FAKE: distinct identity operands prevent month-equality CSE;
+             * all three materializations are required by the original. T-24023. */
+            if ((g->unk_035 = date_ok = ((g->unk_036 * 1) == 12 && g->unk_037 == 10)) ||
+                  (g->unk_035 = date_ok = ((g->unk_036 ^ 0) == 12 && g->unk_037 == 8)) ||
+                  (g->unk_035 = date_ok = ((g->unk_036 | 0) == 12 && g->unk_037 == 7))) {
+                if ((sp2B < 3U) && g->unk_0E4.f.b1 && (g->unk_1295 == 1) && (g->unk_1296 == 0)) {
+                    D_800EECB0 = 6;
+                    func_80011E28(0x60);
+                    g->unk_5CA[0x37] = 1;
+                    return 0;
+                }
+            }
+        }
+    } else if (g->unk_EE6 == 9) {
+        temp_v0 = (((u8 *)&D_801243A4)[0xC]);
+        if ((temp_v0 == 0xC) && (D_80125328 != 0) && ((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U) && (g->unk_5CA[0x3A] == 0) && (g->unk_1295 == 1) && (g->unk_1296 == 0x1B)) {
+            D_800EECB0 = 3;
+            func_80011E28(0x60);
+            g->unk_5CA[0x3A] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 1) && ((u8) g->unk_036 >= 6U)) {
+            if (((u8) g->unk_036 < 9U) && (sp2B == 0) && (sp29 != 0)) {
+                if (temp_v0_2 == 0) {
+                    if (g->unk_5CA[0x3B] == 0) {
+                        if ((g->unk_1295 == 0) && (g->unk_1296 == 0x29)) {
+                            D_800EECB0 = 4;
+                            func_80011E28(0x60);
+                            g->unk_5CA[0x3B] = 1;
+                            return 0;
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 4) && ((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU)) {
+            if ((g->unk_5CA[0x3C] == 0) && (g->unk_1295 == 1)) {
+                if (g->unk_1296 == 9) {
+                    D_800EECB0 = 5;
+                    func_80011E28(0x60);
+                    g->unk_5CA[0x3C] = 1;
+                    return 0;
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 0x13) && ((g->unk_036 == 0xC) || (g->unk_036 == 1) || (g->unk_036 == 2)) && (g->unk_5CA[0x3D] == 0) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0) && (g->unk_0FE >= 0x50) && (g->unk_1295 == 1) && (g->unk_1296 == 8)) {
+            D_800EECB0 = 6;
+            func_80011E28(0x60);
+            g->unk_5CA[0x3D] = 1;
+            return 0;
+        }
+    } else if (g->unk_EE6 == 0xA) {
+        temp_v0 = (((u8 *)&D_801243A4)[0xC]);
+        if ((temp_v0 == 0xC) && ((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U) && (g->unk_5CA[0x41] == 0) && (g->unk_1295 == 1) && (g->unk_1296 == 8)) {
+            D_800EECB0 = 3;
+            func_80011E28(0x60);
+            g->unk_5CA[0x41] = 1;
+            return 0;
+        }
+        if ((temp_v0 == 1) && ((u8) g->unk_036 >= 6U)) {
+            if (((u8) g->unk_036 < 9U) && (sp2B == 0) && (sp29 != 0)) {
+                if (temp_v0_2 == 0) {
+                    if ((g->unk_5CA[0x42] == 0) && (g->unk_1295 == 1)) {
+                        if (g->unk_1296 == 1) {
+                            D_800EECB0 = 4;
+                            func_80011E28(0x60);
+                            g->unk_5CA[0x42] = 1;
+                            return 0;
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 0xD) && ((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU) && (g->unk_5CA[0x43] == 0)) {
+            if (((u8) D_8012531C >= 2U) && (g->unk_1295 == 1)) {
+                if (g->unk_1296 == 8) {
+                    D_800EECB0 = 5;
+                    func_80011E28(0x60);
+                    g->unk_5CA[0x43] = 1;
+                    return 0;
+                }
+
+            }
+
+        }
+        if ((temp_v0 == 0x14) && ((g->unk_036 == 0xC) || (g->unk_036 == 1) || (g->unk_036 == 2)) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0) && (g->unk_5CA[0x44] == 0) && (g->unk_1295 == 1) && (g->unk_1296 == 8)) {
+            D_800EECB0 = 6;
+            func_80011E28(0x60);
+            g->unk_5CA[0x44] = 1;
+            return 0;
+        }
+    } else {
+
+        temp_v0 = (((u8 *)&D_801243A4)[0xC]);
+        if ((temp_v0 == 0xB) && (g->unk_1A4[1].pad23[3] == 2) && (g->unk_1295 == 1) && (g->unk_1296 == 9)) {
+            func_80011E28(0xD1);
+            return 0;
+        }
+    }
+    if (((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U) && ((u8) g->unk_5CA[0x46] >= 2U)) {
+        if (g->unk_5CA[0x48] == 0) {
+            if ((g->unk_1295 == 0) && (g->unk_1296 == 0x29)) {
+                D_800EECB0 = 3;
+                g->unk_6C8 = 0x50;
+                g->unk_6C9 = 0;
+                g->unk_6CA = 0xC;
+                D_800EECB4 = 0xB;
+                func_80011E28(0x60);
+                g->unk_5CA[0x48] = 1;
+                return 0;
+            }
+
+        }
+
+    }
+    if (((((u8 *)&D_801243A4)[0xC]) == 0x11) && ((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U) && ((u8) g->unk_5CA[0x46] >= 2U) && (g->unk_5CA[0x4A] == 0) && (g->unk_1295 == 0) && (g->unk_1296 == 0x29)) {
+        D_800EECB0 = 5;
+        g->unk_6C8 = 0x50;
+        g->unk_6C9 = 0;
+        g->unk_6CA = 0xC;
+        D_800EECB4 = 0xB;
+        func_80011E28(0x60);
+        g->unk_5CA[0x4A] = 1;
+        return 0;
+    }
+    func_80011DFC();
+}
 
 void func_80111E60(void) {
     D_8009473C = D_8012421C;
@@ -916,7 +1411,12 @@ void func_80114948(void) {
 
 /* NON_MATCHING: T-10330, T-11600, 4 differing lines: base registers of D_80124394/D_8012439C swapped (t1/t2). regdiff: both
  * hoisted addresses have priority 2.5 and D_8012439C, used first by `v = *r`, is coloured first; v = *p = *r, *p = *r; v = *p,
- * array views and statement orders did not reverse it. The u8 copy of D_800B0F2C fixed the bne order (autotweak). */
+ * array views and statement orders did not reverse it. The u8 copy of D_800B0F2C fixed the bne order (autotweak).
+ * T-22024: the DATE twin's form (`(&D_80124394)[i] = (&D_8012439C)[i]`, no temporary) puts the bases in the right order, but
+ * stores through `(&D)[i]` or `*(&D + i)` have a known base, so the D_800B0F2C load moves out of the loop (62 lines). The
+ * original reloads it every pass, so its stores go through pointers set inside the loop. Only q as such a pointer: right
+ * bases and the reload, but i * 2 is computed twice (59 lines). Pointers set before the loop, an s32 v, p = r - 4 and
+ * `*p = *r; v = *p` did not help. */
 #ifdef NON_MATCHING
 void func_80114B0C(void) {
     u8 sel;
@@ -1939,7 +2439,48 @@ void func_80117D80(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118010);
+void func_80118010(void) {
+    EventStateView *g;
+    s16 sp32;
+    u8 temp_v0;
+
+    g = (EventStateView *)D_800B0860;
+    temp_v0 = func_8002328C(g->unk_EE6);
+    if (((EventMovieState *)&D_800B1AF0)->unk_09++ == 0) {
+        D_80124354 = (((temp_v0 & 0x7F) >= 2U) + ((temp_v0 & 0x7F) >= 3U) + ((temp_v0 & 0x7F) >= 4U)) * 3;
+    }
+    sp32 = (&D_801243A4)[D_800EECBC] + D_80124354;
+    if (g->unk_6E5 != 0) {
+        sp32 = 0xA;
+    }
+    if ((g->unk_6E5 != 0) && ((u32) (temp_v0 & 0x7F) < 2U) && (g->unk_EE6 == 6)) {
+        sp32 = 0x12;
+    } else if ((D_800EECE4 >= 0) && (D_800EECE4 == g->unk_6D5[g->unk_EE6]) && (((EventMovieState *)&D_800B1AF0)->pad04 == 0x50) && ((u8) D_80125310 == 0)) {
+        sp32 = 0xB;
+        if ((g->unk_6E5 != 0) && ((u32) (temp_v0 & 0x7F) < 2U) && (g->unk_EE6 == 6)) {
+            sp32 = 0x13;
+        }
+        if (((EventMovieState *)&D_800B1AF0)->unk_09 == 1) {
+            func_8004A8EC(3);
+            g->unk_1A4[g->unk_EE6].unk_02 -= 1;
+            g->unk_1A4[g->unk_EE6].unk_06 -= 2;
+            g->unk_1A4[g->unk_EE6].unk_0A += 5;
+            func_8004C250();
+            func_80033E88();
+        }
+    }
+    D_8009471C = (u8 *) &sp32;
+    D_80094720 = &D_80124358;
+    temp_v0 = func_8002328C(g->unk_EE6);
+    if ((g->unk_EE6 == 1) && ((temp_v0 & 0x7F) < 2U) && (*(s16 *)&D_80124358 == 3)) {
+        func_8004A8EC(1);
+        func_80033E88();
+    }
+    D_80094724 = D_80124258;
+    D_80094728 = D_801242C4;
+    D_8009472C = D_80124330;
+    func_80049B20(D_800EECBC, 1, 0);
+}
 
 s32 func_801182B8(void) {
     u8 x;
@@ -2061,7 +2602,11 @@ void func_80118848(void) {
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-11110, T-11600, 8 lines: chained halfword store scheduling and $v0 vs $t6 for third chain (regdiff: the
    original's third 3 is a uopt colour, the draft's a ugen temporary); separate stores, chain orders, one-line chains and an
-   s16/s32/u8 local for the constant did not reach it. */
+   s16/s32/u8 local for the constant did not reach it.
+   T-22024: the innermost store of each chain is written last. Splitting the 2 chain gives the original store order exactly:
+   `(&D_8012439C)[0] = (&D_8012439C)[3] = 2;`, the D_8012438C chain, `(&D_801243A4)[0] = (&D_8012439C)[2] = (&D_8012439C)[3];`,
+   the D_80124394 chain. The re-read (&D_8012439C)[3] then holds 2 in $v1 and the 3s move to $t4/$t5 (13 register lines).
+   (s16)3, 3U, loops, and `(&D_80124394)[2] = 3;` followed by copies of it did not give the original's $v0. */
 void func_80118868(void) {
     if (D_800B1746 != 6) {
         func_80011DFC();
@@ -2747,7 +3292,49 @@ s32 func_8011A874(void) {
     return func_80045FF4();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011A8E4);
+void func_8011A8E4(void) {
+    s32 var_a1; /* declared above the tables: their stack slots sit 4 bytes lower (T-22024) */
+    U16x21 sp90;
+    U16x21 sp64;
+    U16x21 sp38;
+    s32 var_a2;
+
+    sp90 = D_80125454;
+    sp64 = D_80125480;
+    sp38 = D_801254AC;
+    var_a1 = 0xAF42;
+    var_a2 = 0xAF23;
+    if (D_801243B0 == 2) {
+        var_a1 = 0xB384;
+        var_a2 = 0xB381;
+    } else if (D_801243B0 == 0x11) {
+        var_a1 = 0xB3DA;
+        var_a2 = 0xB3CB;
+    } else if ((D_801243B0 == 1) || (D_801243B0 == 3)) {
+        var_a1 = 0xB163;
+        var_a2 = 0xB14D;
+    } else if ((D_801243B0 == 0xA) || (D_801243B0 == 9)) {
+        var_a1 = 0xB172;
+        var_a2 = 0xB165;
+    } else if (D_801243B0 == 0xC) {
+        var_a1 = 0xB444;
+        var_a2 = 0xB42F;
+    } else if ((D_801243B0 == 0x11) || (D_801243B0 == 0x10)) { /* the 0x11 half is dead; the original tests it twice */
+        var_a1 = 0xB3DA;
+        var_a2 = 0xB3CB;
+    } else if ((D_801243B0 == 0x14) || (D_801243B0 == 0x13)) {
+        var_a1 = 0xB41D;
+        var_a2 = 0xB410;
+    } else if (D_801243B0 == 8) {
+        var_a1 = 0xB054;
+        var_a2 = 0xB04A;
+    } else if (D_801243B0 == 7) {
+        var_a1 = 0xB304;
+        var_a2 = 0xB2EB;
+    }
+    func_800143DC(1, var_a1, var_a2, sp64.v[D_801243B0], sp38.v[D_801243B0], sp90.v[D_801243B0]);
+    func_80011DFC();
+}
 
 void func_8011AB00(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

@@ -806,5 +806,34 @@ class Wave8Relocations(unittest.TestCase):
                             funcdiff.keys(funcdiff.resolve(got, built)))
 
 
+class SearchScore(unittest.TestCase):
+    def test_edit_costs_and_empty_functions(self):
+        for want, got, cost in [([], [], 0), ([], ["a"], 1), (["a"], [], 1),
+                                (["a"], ["b"], 2), (["a", "b"], ["a", "x", "b"], 1)]:
+            with self.subTest(want=want, got=got):
+                self.assertEqual(funcdiff.diff_score(want, got), cost)
+                self.assertEqual(funcdiff.diff_score(got, want), cost)
+
+    def test_extra_wrong_instruction_cannot_win_by_changing_diff_mode(self):
+        want = list("abcdefghijkl")
+        shifted = ["inserted"] + want[:-1]
+        worse = shifted + ["another wrong instruction"]
+        # Positional diagnostics retain useful evidence, but invert this ranking.
+        self.assertGreater(len(funcdiff.diff_lines(want, shifted)),
+                           len(funcdiff.diff_lines(want, worse)))
+        self.assertEqual(funcdiff.diff_score(want, shifted), 2)
+        self.assertEqual(funcdiff.diff_score(want, worse), 3)
+
+    def test_display_text_is_not_part_of_the_score(self):
+        self.assertEqual(funcdiff.diff_score([("key", "old label")], [("key", "new label")]), 0)
+        self.assertGreater(funcdiff.diff_score([("key", "same")], [("other", "same")]), 0)
+
+    def test_scheduling_swap_keeps_positional_diagnostics(self):
+        want, got = ["a", "b"], ["b", "a"]
+        self.assertEqual(funcdiff.diff_score(want, got), 2)
+        self.assertEqual(len(funcdiff.diff_lines(want, got)), 4)
+        self.assertTrue(all("@row" in row for row in funcdiff.diff_lines(want, got)))
+
+
 if __name__ == "__main__":
     unittest.main()

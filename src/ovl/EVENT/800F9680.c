@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psx_types.h"
 #include "ovl/EVENT.h"
 
 void func_800F9680(void) {
@@ -20,7 +21,29 @@ void func_800F96E0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800F9730);
+/* FAKE: explicit colour masks and one line per trio retain the matched DATE schedule (T-20600, T-24034). */
+void func_800F9730(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10, s32 arg11) {
+    EventStateView *g;
+    POLY_G4 *p;
+
+    g = (EventStateView *)D_800B0860;
+    p = (POLY_G4 *)func_80019D00(0x24, D_800E9600);
+    func_80067678(p);
+    func_800675A8(p, arg11);
+    p->r0 = (((u32)arg8 >> 16) & 0xFF); p->g0 = (((u32)arg8 >> 8) & 0xFF); p->b0 = ((u32)arg8 & 0xFF);
+    p->r1 = (((u32)arg8 >> 16) & 0xFF); p->g1 = (((u32)arg8 >> 8) & 0xFF); p->b1 = ((u32)arg8 & 0xFF);
+    p->r2 = (((u32)arg9 >> 16) & 0xFF); p->g2 = (((u32)arg9 >> 8) & 0xFF); p->b2 = ((u32)arg9 & 0xFF);
+    p->r3 = (((u32)arg9 >> 16) & 0xFF); p->g3 = (((u32)arg9 >> 8) & 0xFF); p->b3 = ((u32)arg9 & 0xFF);
+    p->x0 = g->unk_014[D_800E9600] + arg0;
+    p->y0 = g->unk_018[D_800E9600] + arg1;
+    p->x1 = g->unk_014[D_800E9600] + arg2;
+    p->y1 = g->unk_018[D_800E9600] + arg3;
+    p->x2 = g->unk_014[D_800E9600] + arg4;
+    p->y2 = g->unk_018[D_800E9600] + arg5;
+    p->x3 = g->unk_014[D_800E9600] + arg6;
+    p->y3 = g->unk_018[D_800E9600] + arg7;
+    func_800674F4(&D_800B2580[(D_800E9600 << 6) + (arg10 * 4)], (s32)p);
+}
 
 void func_800F9900(void) {
     D_80120BF0 = 0x801D638C;

@@ -176,7 +176,38 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80132B24);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80132D04);
 
+/* NON_MATCHING: T-24007, 36 differing rows; frame and initialization
+ * match, but the month/day and table-value ranges use other registers. */
+#ifdef NON_MATCHING
+s32 func_80133024(void) {
+    u8 month;
+    u8 day;
+    s16 i;
+    s32 n;
+    GekoMonthDays days;
+
+    days = D_80144D28;
+    if (D_800E6280.unk_03E == 0x60) {
+        days.day[1] = 29;
+    }
+    D_80144C50 = 0;
+    i = 1;
+    do {
+        month = D_800E6280.unk_03F;
+        day = D_800E6280.unk_040;
+        n = days.day[month - 1];
+        if ((u32) n >= (u32) (day + i)) {
+            func_80132D04(0, (s16) (day + i - 1));
+        } else {
+            func_80132D04(1, (s16) (day + i - n - 1));
+        }
+        i++;
+    } while (i < 20);
+    func_80132B24();
+}
+#else
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80133024);
+#endif
 
 void func_8013313C(void) {
     bg_read_sub2(0x4032);
@@ -230,7 +261,39 @@ void func_80133250(void) {
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80133308);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80133598);
+void func_80133598(void) {
+    s32 result;
+    u8 status;
+
+    result = get_g_zyotai_s(D_800E6280.unk_F5F);
+    status = result & 0x7F;
+    if ((status == 4) || (D_80144C58 != 0) || ((D_800E6280.unk_F5F == 6) && (status < 2U))) {
+        func_80044750(0x24);
+        func_80044750(0x507);
+    }
+    if (((u8) D_80144C54 != 0) && ((D_80144C50 == 0) || (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.w & 1))) {
+        func_8004284C();
+        return;
+    }
+    if (((u8) D_80144C54 == 0) && (D_800E6280.unk_F5F == 6) && (status < 2U)) {
+        func_8004284C();
+        return;
+    }
+    if ((u8) D_80144C54 == 0) {
+        if ((status < 2U) && (D_80144C58 == 0)) {
+            D_80144C30 = D_80144BC8;
+            D_80144C34 = D_80144BF8;
+            D_80144C38 = D_80144C28;
+            D_80144C3C = D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A / 20 + 1;
+            if (D_80144C3C >= 6) {
+                D_80144C3C = 5;
+            }
+        }
+        func_8004284C();
+        return;
+    }
+    func_80042808();
+}
 
 void func_8013375C(void) {
     u8 temp_v0;

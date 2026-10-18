@@ -1,0 +1,118 @@
+{
+  "srn_set": {
+    "function": "srn_set",
+    "aligned_cost": 146,
+    "built_instructions": 149,
+    "target_instructions": 149
+  },
+  "srn-yoff16": {
+    "function": "srn_set",
+    "aligned_cost": 146,
+    "built_instructions": 149,
+    "target_instructions": 149
+  },
+  "srn-xy16": {
+    "function": "srn_set",
+    "aligned_cost": 138,
+    "built_instructions": 153,
+    "target_instructions": 149
+  },
+  "srn-wide16": {
+    "function": "srn_set",
+    "aligned_cost": 148,
+    "built_instructions": 149,
+    "target_instructions": 149
+  },
+  "srn-cols32": {
+    "function": "srn_set",
+    "aligned_cost": 146,
+    "built_instructions": 149,
+    "target_instructions": 149
+  },
+  "trans-typed": {
+    "function": "mod_trans_vram",
+    "aligned_cost": 249,
+    "built_instructions": 183,
+    "target_instructions": 188
+  },
+  "trans-m2c-fixed": {
+    "function": "mod_trans_vram",
+    "aligned_cost": 241,
+    "built_instructions": 197,
+    "target_instructions": 188
+  },
+  "trans-m2c-typed": {
+    "function": "mod_trans_vram",
+    "variant": "trans-m2c-typed",
+    "aligned_cost": 241,
+    "built_instructions": 197,
+    "target_instructions": 188,
+    "status": "unmatched",
+    "base": "f70450137580e684e20f8ecd28e7a93062385ac7",
+    "source_sha256": "4b6c0a746bb488b13ec9a4fa0b000c7776dcb25c30ed8af6b9982d7c2900a1c7"
+  },
+  "gpu-m2c-fixed": {
+    "function": "mod_set_gpu",
+    "aligned_cost": 214,
+    "built_instructions": 203,
+    "target_instructions": 201
+  },
+  "gpu-m2c-typed": {
+    "function": "mod_set_gpu",
+    "variant": "gpu-m2c-typed",
+    "aligned_cost": 225,
+    "built_instructions": 204,
+    "target_instructions": 201,
+    "status": "unmatched",
+    "base": "f70450137580e684e20f8ecd28e7a93062385ac7",
+    "source_sha256": "a9926b970d1bd0c5fab8230bdb9fb4a9c70fb84e67337072a013b01eb2b3bd97"
+  },
+  "set-m2c-fixed": {
+    "function": "mod_set",
+    "aligned_cost": 254,
+    "built_instructions": 133,
+    "target_instructions": 195
+  },
+  "get-natural": {
+    "function": "get_fnt",
+    "variant": "get-natural",
+    "aligned_cost": 251,
+    "built_instructions": 266,
+    "target_instructions": 259,
+    "status": "unmatched",
+    "base": "f70450137580e684e20f8ecd28e7a93062385ac7",
+    "source_sha256": "019407186f66517f6d88e81fc71f61b58a0dd8415b77ff9a4827ebb99cb8b82a"
+  },
+  "get-count": {
+    "function": "get_fnt",
+    "aligned_cost": 283,
+    "built_instructions": 266,
+    "target_instructions": 259
+  },
+  "get-m2c-fixed": {
+    "function": "get_fnt",
+    "aligned_cost": 338,
+    "built_instructions": 359,
+    "target_instructions": 259
+  },
+  "tpage-typed": {
+    "function": "srn_tpage_show",
+    "variant": "tpage-typed",
+    "aligned_cost": 1032,
+    "built_instructions": 814,
+    "target_instructions": 806,
+    "status": "unmatched",
+    "base": "f70450137580e684e20f8ecd28e7a93062385ac7",
+    "source_sha256": "a1252bc29d6a7b812ab18125c3385e478e6805dbb286aa465c8aa1df3232b4a9"
+  },
+  "set-typed-record": {
+    "function": "mod_set",
+    "variant": "set-typed-record",
+    "aligned_cost": 295,
+    "built_instructions": 198,
+    "target_instructions": 195,
+    "status": "unmatched",
+    "base": "f70450137580e684e20f8ecd28e7a93062385ac7",
+    "source_sha256": "c454369a854bb6f765747bfdfdaa0066e4759b90247bd6ad40bf8df5eca619ea"
+  }
+}

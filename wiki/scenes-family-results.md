@@ -220,3 +220,38 @@ Two file-disjoint packages from the orchestrator's `mklists3.py` (lists in its s
 
 Left for later: `func_80133AF0` (3,584 B, 1,287 rows) and `func_801350A4` (3,328 B, 1,116 rows), the two large
 scene handlers of `80132DE0.c`.
+
+## T-24007 GEKO completion follow-up
+
+`func_80133598` matched (452 bytes). The T-13900 four-row source was unavailable,
+but its recipe reconstructs cleanly: one saved `u8 status`, a full-word test of
+`Rec38.unk_0C.w & 1`, and direct updates of `D_80144C3C` after signed division of
+`unk_0A`. This reaches the documented four rows (only the saved byte slot: 0x2F
+instead of 0x2B). Declaring a genuine `s32 result` before the byte and assigning
+the call result before masking it preserves the instructions and puts the byte at
+0x2B. Both signed and unsigned word result locals match; narrow result locals change
+the initial ranges. No padding local or FAKE is needed. Docker `ninja -j1
+build/ovl/GEKO.ok` passes and default `funcdiff --resolve --version default
+--no-build` reports literal linked target equality (452 bytes).
+See [[tickets/T-24007-complete-geko]].
+
+The bounded T-24007 remainder retains `func_80133024` behind a guard at 36 rows
+(40 before): initialize `i` after resetting the overlay flag to reproduce the original
+constant schedule. Frame and table placement match; month/day/table result ranges
+still differ. Other three stay assembly. Current corrected source drafts score 130
+rows / 114 aligned edits for `func_80132D04` after range consolidation and correct
+packed-byte access, 152 for `func_80132B24` after recovering the original frame/table
+layout, and 163 for a width variant of `func_80133308` (164 plain current-header form).
+Details and provenance in drafts/T-24007/README.md. Header/global/prototype checks pass
+(0 new prototype disagreements, 15 known); no shared header change or FAKE added.
+## T-24035 GEKO state helper transfer
+
+GEKO func_80134228 matches normal unguarded C (244 literal bytes) by porting func_80135AC8's u8 read view/dead byte-result test (both marked FAKE), changing the flag mask to 0x40 and omitting the sibling's D_80122D4C clear. GEKO checksum and literal default linked funcdiff pass; no header change. [[tickets/T-24035-small-bunka-geko-siblings]] tracks the package.
+
+
+## T-24036 GEKO tail follow-up
+
+[[tickets/T-24036-geko-shugaku-siblings]] restores the GEKO40040 guard's current91-row mixed-field baseline to7 with the matched EVENT byte-view recipe, explicitly marked FAKE as in T-20900. The original unconditionally reloads the counter at the tail; meaningful locals and a scratch signed declaration leave7, while whole signed alias forces reload but leaves8 register rows. No header edit or new GEKO coverage. Existing matched GEKO3FD88 unchanged; default checksum and declaration guards pass. SHUGAKU sibling in the same package matches244 bytes; source/provenance in drafts/T-24036/.
+## T-24061 bounded short control/copy pass (2026-10-18)
+
+GEKO func_80141870 natural byte postincrement plus the T-23005 word/reload lifetime improves51 to44 printable rows (67 target/69 candidate words). Selector loads still choose temporaries rather than a0; tail has two extra words. Explicit selector locals add no gain; eager boolean evaluation adds AND. No production change or C bytes. Full source/reproduction/negative ledger: drafts/T-24061/README.md and [[tickets/T-24061-short-control-and-copy]] (In Review).

@@ -1,6 +1,9 @@
 #define MAIN_API_OVERRIDE_D_80122CD0 /* switched as u32 (main_api.h: s32), T-6030 */
 #include "common.h"
 #include "ovl/GEKO.h"
+#include "psx_types.h"
+
+void func_8013FD88(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s32 arg6);
 
 extern u32 D_80122CD0;
 
@@ -270,7 +273,32 @@ void func_8013FD3C(void) {
     dtd_on(9);
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_8013FD88);
+/* FAKE: the explicit "& 0xFF" masks and one source line per colour trio, as in the matched main sibling
+ * _sprite_set_box_shade_tarao (T-17001; one colour instead of two): the masks leave the shifts in ugen
+ * temporaries (t6, t7) and as1 schedules the stores by source line. The real source is unknown. T-24017 */
+void func_8013FD88(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s32 arg6) {
+    GameState *gs;
+    POLY_G4 *p;
+
+    p = (POLY_G4 *)GetWorkBase(0x24, D_8011ECA0);
+    func_8009F054(p);
+    SetSemiTrans(p, arg6);
+    gs = &D_800E6280;
+    p->r0 = (arg4 >> 16) & 0xFF; p->g0 = (arg4 >> 8) & 0xFF; p->b0 = arg4 & 0xFF;
+    p->r1 = (arg4 >> 16) & 0xFF; p->g1 = (arg4 >> 8) & 0xFF; p->b1 = arg4 & 0xFF;
+    p->r2 = (arg4 >> 16) & 0xFF; p->g2 = (arg4 >> 8) & 0xFF; p->b2 = arg4 & 0xFF;
+    p->r3 = (arg4 >> 16) & 0xFF; p->g3 = (arg4 >> 8) & 0xFF; p->b3 = arg4 & 0xFF;
+    p->x0 = gs->unk_014[D_8011ECA0] + arg0;
+    p->y0 = gs->unk_018[D_8011ECA0] + arg1;
+    p->x1 = gs->unk_014[D_8011ECA0] + arg0 + arg2;
+    p->y1 = gs->unk_018[D_8011ECA0] + arg1;
+    p->x2 = gs->unk_014[D_8011ECA0] + arg0;
+    p->y2 = gs->unk_018[D_8011ECA0] + arg1 + arg3;
+    p->x3 = gs->unk_014[D_8011ECA0] + arg0 + arg2;
+    p->y3 = gs->unk_018[D_8011ECA0] + arg1 + arg3;
+    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg5 * 4, (s32)p);
+}
+
 
 void func_8013FF64(void) {
     s16 i;
@@ -292,27 +320,28 @@ void func_8013FF64(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-10310, T-17700: the EVENT sibling func_80108DD4 form (do-while second loop); 7 rows remain at the tail: the original branches over the call to a block that loads $ra after D_801470AC, IDO fills the branch delay slot with the $ra load */
+/* NON_MATCHING: T-10310, T-17700, T-24036: the EVENT sibling func_80108DD4 form (do-while second loop); 7 rows remain at the tail: the original branches over the call to a block that loads $ra after D_801470AC, IDO fills the branch delay slot with the $ra load */
 #ifdef NON_MATCHING
+/* FAKE: byte-offset display-record view matches the EVENT sibling; fields add one register (T-20900, T-24036). */
 void func_80140040(void) {
     s16 i;
     s32 any;
 
     for (i = 0; i < 0xA; i++) {
         if (D_801470AC >= (u32)(i * 0x1E)) {
-            ((DisplayActor44 *)D_8011ECD0)[i + 99].unk_2E = -1;
-            ((DisplayActor44 *)D_8011ECD0)[i + 99].unk_32 = 1;
+            *(s16 *)&D_8011ECD0[i * 0x44 + 0x1A7A] = -1;
+            *(s16 *)&D_8011ECD0[i * 0x44 + 0x1A7E] = 1;
         }
         *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A70] += *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A78];
         *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A74] += *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A7C];
-        if (((DisplayActor44 *)D_8011ECD0)[i + 99].unk_2A > 0xA0) {
-            ((DisplayActor44 *)D_8011ECD0)[i + 99].unk_03 &= ~0x80;
+        if (*(s16 *)&D_8011ECD0[i * 0x44 + 0x1A76] > 0xA0) {
+            D_8011ECD0[i * 0x44 + 0x1A4F] &= ~0x80;
         }
     }
     any = 0;
     i = 0;
     do {
-        if (((DisplayActor44 *)D_8011ECD0)[i + 99].unk_03 & 0x80) {
+        if (D_8011ECD0[i * 0x44 + 0x1A4F] & 0x80) {
             any = 1;
         }
         i++;

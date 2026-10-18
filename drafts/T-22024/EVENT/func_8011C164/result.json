@@ -1,0 +1,8 @@
+{
+  "ticket": "T-22024",
+  "scope": "EVENT:func_8011C164",
+  "score": 70,
+  "score_kind": "full-TU resolved diff rows",
+  "matching_claim": false,
+  "note": "typed DisplayFixActor44 records, (s16) cast on the halfword read, no final return; i/pos swapped (s1/s2) and loads scheduled differently"
+}

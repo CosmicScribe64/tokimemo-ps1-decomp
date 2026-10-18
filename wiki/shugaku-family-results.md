@@ -85,3 +85,19 @@ the callback-table idiom, which the header now makes visible to m2c.
 `w3-shugaku-p01` (5 functions, 2,328 bytes: `80133D60.c`, `80135430.c`, with both hand drafts), T-18002
 `w3-shugaku-p02` (6, 2,316 bytes), T-18003 `w3-shugaku-p03` (5, 1,672 bytes), T-18004 `w3-shugaku-p04`
 (4, 1,344 bytes).
+
+## Exact history-copy clone (T-24017)
+
+[[tickets/T-24017-clone-ports]] matched func_80133038 (176 literal linked bytes) in src/ovl/SHUGAKU/80132000.c by porting DATE func_80149F48. The two destination assignments, including the signed-halfword product narrowing, precede the last three pointer copies. This replaces the T-10510 guard with unguarded C; no INCLUDE_ASM remains. No data-island conversion, header change or FAKE needed. Fresh Docker ninja -j1 SHUGAKU checksum and default funcdiff --resolve --no-build pass. Existing pointer-type warnings in func_80132F44 / func_80132FC0 remain outside scope.
+
+## T-24036 short selector sibling
+
+func_80134C98 matched244 default linked bytes from matched func_80133F6C using canonical GameState accesses and additional state/flag stores. No new FAKE or header change; the stale typed temporary draft differs46 rows while the direct sibling matches. Default literal no-build proof, SHUGAKU checksum and header/global/prototype checks pass. See [[tickets/T-24036-geko-shugaku-siblings]].
+
+## T-24053 short selector source pass
+
+[[tickets/T-24053-short-function-lane]] leaves func_8013A1D4 (160 bytes) as ASM. A natural byte assignment removes the generated source's redundant mask (38 to10 rows); meaningful s32 girl before u8 result fixes its sp2B home and reaches8/8. Only initial selector allocation/call move differ; byte-view, unsigned girl and direct-selector/full-word result forms stay8, GameState pointer16, int-return liveness10. No header or production change; source-only selected body and reproducer in drafts/T-24053/.
+
+## T-24060 short phase/selector source pass
+
+[[tickets/T-24060-shugaku-short-selectors]] leaves func_801392B4 and func_801398E8 as ASM, zero new bytes. Current canonical phase source67 to52 rows after correcting the spurious argument to the actual matched void(void) check_para_limit, using real full-word next-state arithmetic and phase-load order. Saved phase home28/2C and v0/t9 constant6 differ. Same-TU byte-range reuse gives selector62/58 (typed75), correcting selector-v1/copy and sp2B; girl remains t6 vs originala1. Historical58-row context is not claimed surpassed. No production/header/config change or selected FAKE, all bounded negatives/current-source reproducer in drafts/T-24060/README.md.

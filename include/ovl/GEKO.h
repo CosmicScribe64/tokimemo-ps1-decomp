@@ -738,6 +738,8 @@ void func_8013E760(void);
 void func_8013A2EC(void);
 void func_8013A668(void);
 void func_80134A14(void);
+s32 func_80144198(s32 arg0);
+void func_80144270(void);
 
 #endif
 
@@ -804,27 +806,42 @@ typedef struct GekoBytes209 {
 typedef struct GekoBytes132 {
     /* 0x00 */ u8 v[132];
 } GekoBytes132; /* size 0x84 */
-typedef struct GekoBytes24 {
-    /* 0x00 */ u8 v[24];
-} GekoBytes24; /* size 0x18 */
-typedef struct GekoText626 {
-    /* 0x00 */ u8 v[626];
-} GekoText626; /* size 0x272 */
-typedef struct GekoBytes36 {
-    /* 0x00 */ u8 v[36];
-} GekoBytes36; /* size 0x24 */
+typedef struct GekoText627 {
+    /* 0x00 */ u8 v[19][0x21];
+} GekoText627; /* size 0x273 */
+typedef struct GekoBytes37 {
+    /* 0x00 */ u8 v[37];
+} GekoBytes37; /* size 0x25 */
 typedef struct GekoBytes21 {
     /* 0x00 */ u8 v[21];
 } GekoBytes21; /* size 0x15 */
 extern GekoBytes209 D_80147764;
 extern GekoBytes132 D_80147850;
-extern GekoBytes24 D_80147958;
-extern GekoBytes24 D_80147970;
-extern GekoText626 D_80147988;
-extern GekoBytes36 D_80147BFC;
-extern GekoBytes24 D_80147C24;
+extern GekoBytes132 D_801478D4;
+extern GekoBytes21 D_80147958;
+extern GekoBytes21 D_80147970;
+extern GekoText627 D_80147988;
+extern GekoBytes37 D_80147BFC;
+extern GekoBytes21 D_80147C24;
 extern GekoBytes21 D_80147C3C;
 extern GekoBytes21 D_80147C6C;
+
+/* Four-byte calendar entry passed by value to func_8006B5BC by func_80143F48 (the layout of TelDateEntry in TEL.h,
+ * T-10630). */
+typedef union GekoDateEntry {
+    /* 0x00 */ GsWord word;
+    /* 0x00 */ struct {
+        u32 place : 5;  /* bits 0..4 */
+        u32 year : 7;   /* bits 5..11 */
+        u32 month : 4;  /* bits 12..15 */
+        u32 day : 5;    /* bits 16..20 */
+        u32 unk_21 : 3;
+        u32 unk_24 : 1;
+        u32 girl : 4;   /* bits 25..28 */
+        u32 active : 1; /* bit 29 */
+        u32 unk_30 : 2;
+    } bits;
+} GekoDateEntry; /* size 0x04 */
 
 /* Per-record halfwords of the Rec24 records 4..13 (D_801217D0); the code indexes them with i - 4, so the
  * relocations name D_801463D8 and D_801463F8 (func_8013E22C, func_80139E1C, func_8013E950). */

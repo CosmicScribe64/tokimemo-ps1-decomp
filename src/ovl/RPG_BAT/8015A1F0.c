@@ -110,74 +110,62 @@ void func_8015A6D4(void) {
     func_8014EBA8();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-17105, 12 differing lines; the original keeps two dead copies ($a1 = v, $a0 = x) of the values stored to D_8015EC54 and D_8015EC68 and stores x from $a0. Closer pass: no effect from chain assignments, reused or retyped locals, dead local copies, a second store or a read-back of the global (scalar or RpgMotion20 view) */
+/* FAKE: T-22013, two views of the displacement words: the scalars D_8015EC50/D_8015EC54 around the calls and
+ * the RpgMotion20 pointer m for the negation and the rect word. Only this mix gives the original's promoted
+ * registers (dx in $a0, the dead copy of dy in $a1, the copy of unk_26 in $a0 before the div); real source unknown. */
 void func_8015A744(void) {
-    u8 *p;
+    DisplayActor44 *a;
     RpgMotion20 *m;
+    s32 i;
+    s32 r;
+
+    m = (RpgMotion20 *)&D_8015EC50;
+    a = (DisplayActor44 *)D_8011ECD0;
+    for (i = 0; i < 8; i++) {
+        if (a[i + 136].unk_26 < -0xB4 || a[i + 136].unk_2A >= 0x8D) {
+            if (func_8013E9A8(5) == 0) {
+                func_8013F0F4(0x501, 2, 2);
+                func_8013E97C(i + 0x28, 0xF0, 0x28);
+                D_8015EC50 = func_8013E9A8(8) + 5;
+                D_8015EC54 = func_8013E9A8(D_8015EC50);
+                m->dx = -m->dx;
+                a[i + 136].unk_03 = 0x94;
+                a[i + 136].unk_2E = m->dx;
+                a[i + 136].unk_32 = D_8015EC54;
+            } else {
+                func_8013E810(i + 0x28, 7, 1, 0);
+            }
+        }
+        m->rect.unk_10 = a[i + 136].unk_26;
+        r = ((0x70 - m->rect.unk_10) << 12) / 240;
+        a[i + 136].unk_1A = r;
+        a[i + 136].unk_1C = r;
+    }
+}
+
+/* FAKE: T-22013, x is reused as the offset of the first store. Reassigning x makes uopt keep the original's copy of the halfword (stored to D_8015EC68 from $a0) and compute i + 0x28 in the first block; real source unknown. p walks D_8011ECD0 as raw bytes: p + 0x2446/0x244A are DisplayActor44 unk_26/unk_2A of record i + 136, and after p += 0x44 the stores at p + 0x23F6/0x23F8 are unk_1A/unk_1C of the same record. */
+void func_8015A8B4(void) {
+    u8 *p;
     s32 i;
     s32 x;
     s32 r;
-    s32 v;
-    s32 n;
     s32 y;
 
-    m = (RpgMotion20 *)&D_8015EC50;
     p = D_8011ECD0;
     i = 0;
     do {
         x = *(s16 *)(p + 0x2446);
         if (x < -0xB4 || *(s16 *)(p + 0x244A) >= 0x8D) {
-            if (func_8013E9A8(5) == 0) {
-                func_8013F0F4(0x501, 2, 2);
-                func_8013E97C(i + 0x28, 0xF0, 0x28);
-                r = func_8013E9A8(8) + 5;
-                m->dx = r;
-                v = func_8013E9A8(r);
-                n = -m->dx;
-                p[0x2423] = 0x94;
-                *(s16 *)(p + 0x244E) = n;
-                *(s16 *)(p + 0x2452) = v;
-                x = *(s16 *)(p + 0x2446);
-                m->dx = n;
-                m->dy = v;
-            } else {
-                func_8013E810(i + 0x28, 7, 1, 0);
-                x = *(s16 *)(p + 0x2446);
-            }
+            func_8013E810(i + 0x28, 7, 1, 0);
+            x = *(s16 *)(p + 0x2446);
         }
+        i++;
         y = x;
         r = ((0x70 - x) << 12) / 240;
-        i++;
         p += 0x44;
-        *(s16 *)(p + 0x23F6) = r;
+        x = 0x23F6;
+        *(s16 *)(p + x) = r;
         *(s16 *)(p + 0x23F8) = r;
-        m->rect.unk_10 = y;
+        D_8015EC68 = y;
     } while (i != 8);
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8015A1F0", func_8015A744);
-#endif
-
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-17105, 28 differing lines; the original computes i + 0x28 before the first compare (addiu a0 in the lh delay slot) and stores D_8015EC68 from a $a0 copy of the halfword */
-void func_8015A8B4(void) {
-    s32 i;
-    s32 v;
-    s32 x;
-
-    for (i = 0; i < 8; i++) {
-        x = ((DisplayActor44 *)D_8011ECD0)[i + 136].unk_26;
-        if ((x < -0xB4) || (((DisplayActor44 *)D_8011ECD0)[i + 136].unk_2A >= 0x8D)) {
-            func_8013E810(i + 0x28, 7, 1, 0);
-            x = ((DisplayActor44 *)D_8011ECD0)[i + 136].unk_26;
-        }
-        v = ((0x70 - x) << 0xC) / 240;
-        ((DisplayActor44 *)D_8011ECD0)[i + 136].unk_1A = v;
-        ((DisplayActor44 *)D_8011ECD0)[i + 136].unk_1C = v;
-        D_8015EC58.unk_10 = x;
-    }
-}
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8015A1F0", func_8015A8B4);
-#endif

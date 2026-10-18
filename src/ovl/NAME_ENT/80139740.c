@@ -1,8 +1,10 @@
 #define MAIN_API_OVERRIDE_func_80049A40 /* Original calls pass promoted integer coordinates. T-10880. */
+#define MAIN_API_OVERRIDE_func_80053CE0 /* The original reads $v0 after the call in func_8013D2AC. T-22023. */
 #include "common.h"
 #include "ovl/NAME_ENT.h"
 
 void func_80049A40();
+s32 func_80053CE0();
 
 s32 func_80139740(u32 arg0, s32 arg1, s32 arg2) {
     u8 *p;
@@ -835,7 +837,59 @@ void func_8013D054(void) {
     func_8013B1D8();
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013D2AC);
+void func_8013D2AC(void) {
+    s32 pad[2]; /* FAKE: unused words above the buffer, the original frame has them. T-22023 */
+    u8 text[256];
+    s32 i;
+    u8 state;
+    GameState *g = &D_800E6280;
+
+    switch (g->unk_110D) {
+    case 0:
+        func_80053CE0();
+        for (i = 1; i < 15; i++) {
+            if (D_800E7D10.slot_status[i] == 1) {
+                g->unk_1118 = i;
+                break;
+            }
+        }
+        if (i < 15) {
+            g->unk_110D++;
+        } else {
+            func_80053D10();
+            func_80042940(0x40);
+        }
+        func_800AE0B0("load file %d \n", g->unk_1118);
+        break;
+    case 1:
+        if (func_8005448C() == 4) {
+            g->unk_110D++;
+        } else if ((state = g->unk_1115) == 0xF0) {
+            func_80056284();
+            func_80042908(1);
+        } else if (((u32) g->unk_1120 >= 0x201U) || (state == 0xD0)) {
+            func_80053D10();
+            func_80056284();
+            func_80042908(1);
+        }
+        break;
+    case 2:
+        if (func_80055A38(0) == 1) {
+            func_8013B59C();
+            func_8004284C();
+        } else {
+            func_8004E58C();
+            func_800AE0F0(text, D_800B3288[g->unk_1118]);
+            func_800AE100(text, "番アルバムのデータは");
+            func_8004E788(-0x40, 0x20, 0xF, (s32) text, 0);
+            func_8004E788(-0x40, 0x30, 0xF, (s32) "壊れています。", 0);
+            D_800E7D14[g->unk_1118] = 0xFF;
+            func_80053D10();
+            g->unk_110D = 0;
+        }
+        break;
+    }
+}
 
 void func_8013D4CC(void) {
     s32 idx;
@@ -1085,16 +1139,13 @@ s32 func_8013DD94(void) {
 }
 
 
-/* NON_MATCHING: T-10880, 11 file-index register substitutions. */
+/* NON_MATCHING: T-22023, 11 instructions differ in registers only: the promoted album index D_800E6280.unk_1118 (D_800E7398) is in $a2 here, $a1 in the original (cases 1, 2, 3 and 6). regdiff: the cvt(D_800E7D36) range of case 5 (priority 3) takes $a1 before the unk_1118 range (0.33). Without the cast D_800E7D36 is promoted to $v0 instead (one more `move`); printf of unk_1118, a selected_slot member store, s8 casts and locals do not help. */
 #ifdef NON_MATCHING
 void func_8013DF88(void) {
-    s32 result;
-    u8 state;
+    s32 pad[2]; /* FAKE: unused words, the original frame has them. T-22023 */
     s32 i;
-
     u8 text[256];
-    state = D_800E6280.unk_110D;
-    switch (state) {
+    switch (D_800E6280.unk_110D) {
     case 0:
         func_8004E58C();
         func_800AE0F0(text, D_800B32CC[D_800E6280.unk_1118 - 1]);
@@ -1107,14 +1158,14 @@ void func_8013DF88(void) {
     default:
         break;
     case 1:
-        if ((result = func_80054694((s32) D_800E6280.unk_1118)) == 1) {
+        if (func_80054694((s32) D_800E6280.unk_1118) == 1) {
             D_800E6280.unk_110D += 1;
         } else {
             func_80042908(4);
         }
         break;
     case 2:
-        if ((result = func_80054694(0)) == 1) {
+        if (func_80054694(0) == 1) {
             D_800E6280.unk_110D += 1;
         } else {
             func_80054704((s32) D_800E6280.unk_1118);
@@ -1123,7 +1174,7 @@ void func_8013DF88(void) {
         break;
     case 3:
         func_80053D10();
-        D_800E7D10.selected_slot = D_800E6280.unk_1118;
+        D_800E7D36 = D_800E6280.unk_1118;
         i = 0;
         while (i < 15) {
             D_800E7D10.slot_status[i] = 0;
@@ -1137,7 +1188,7 @@ void func_8013DF88(void) {
         D_800E6280.unk_110D += 1;
         break;
     case 4:
-        if ((result = func_80054388()) == 0x13) {
+        if (func_80054388() == 0x13) {
             func_80053D10();
             D_800E6280.unk_110D += 1;
         } else if (((u32) (*(u32 *)&D_800E6280.unk_1120) >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
@@ -1151,12 +1202,13 @@ void func_8013DF88(void) {
         func_80041878();
         func_80042058();
         func_80042058();
-        D_800E6280.unk_1118 = D_800E7D10.selected_slot;
-        func_800AE0B0("s->file_no %x \n", D_800E7D10.selected_slot);
+        /* FAKE: the (s32) cast of the u8 global stops uopt from keeping D_800E7D36 in $v0 (the `move v0,a2` in case 3) (T-22023) */
+        D_800E6280.unk_1118 = (s32)D_800E7D36;
+        func_800AE0B0("s->file_no %x \n", D_800E7D36);
         D_800E6280.unk_110D += 1;
         break;
     case 6:
-        if ((result = func_80054590()) == 0x14) {
+        if (func_80054590() == 0x14) {
             D_800E7D14[D_800E6280.unk_1118] = 1;
             D_800E6280.unk_110D += 1;
         } else if (((u32) (*(u32 *)&D_800E6280.unk_1120) >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
@@ -2082,21 +2134,18 @@ s32 func_80140574(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8014068C);
 
-/* NON_MATCHING: T-11570, 15 lines: the in-place global form through the u8 view gives a0/t6 and both stores of the global like the original (the plain field gives the global $v0, 25 lines); the six fade stores use t6 where the original keeps one more `andi v0,t6,0xff` value in $v0 (T-10710: locals, casts, masks, separate stores and an empty test all fold it) */
-#ifdef NON_MATCHING
-void func_80140B20(void) {
+/* FAKE: s32 with no return value; the void form keeps the six fade stores in $t6 where the original copies the value to $v0 (T-22023) */
+s32 func_80140B20(void) {
     /* FAKE: unk_03A is already u8; the (u8 *) view only moves the global to $a0 like the original (T-11570) */
     if (*(u8 *)&D_800E6280.unk_03A >= 3) {
         *(u8 *)&D_800E6280.unk_03A -= 2;
-        D_801220E0 = D_801220E1 = D_801220E2 = D_80122104 = D_80122105 = D_80122106 = *(u8 *)&D_800E6280.unk_03A;
+        /* the chain order sets the store order: D_801220E0 is stored last, the others from D_80122106 outward */
+        D_801220E1 = D_801220E2 = D_80122104 = D_80122105 = D_80122106 = D_801220E0 = *(u8 *)&D_800E6280.unk_03A;
         if (*(u8 *)&D_800E6280.unk_03A < 0x80) {
             func_80057390(*(u8 *)&D_800E6280.unk_03A);
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140B20);
-#endif
 
 void func_80140BA4(void) {
     if (D_800E6280.unk_110D++ >= 0x41U) {

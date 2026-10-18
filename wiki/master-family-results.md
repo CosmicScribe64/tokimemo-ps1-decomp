@@ -121,3 +121,16 @@ not in a package.
 | w3-master-p01 | T-18601 | `80132140.c` | `func_80132444` (start from `hand.c`), `func_801326B4` | 4,044 |
 | w3-master-p02 | T-18602 | `80139000.c` | `func_8013B804` (`hand.c`), `func_8013B448`, `func_801391E4` | 3,056 |
 | w3-master-p03 | T-18603 | `80133680.c` | `func_80135FB8` (start from `drafts/T-18600/.../hand.c`), `func_801363F4` | 3,772 |
+
+## T-24038 event-record handler
+
+[[tickets/T-24038-etc-master-siblings]] recovers `func_8013B448` in `src/ovl/MASTER/80139000.c`: 956 default linked bytes match. The matched `func_80138088` logger provides the direct `GameState.unk_75E[index]` field idiom. Correcting the old case 3/12 pointer truncation artifacts, retaining one GameState pointer, and using ordinary increment then unsigned clamp closes the draft. The sibling's void view is supported by the unused caller result; the approved prototype also rebuilds the earlier caller, and the whole MASTER checksum passes. No new FAKE code is needed. Source-only provenance and rejected controls are in `drafts/T-24038/README.md`; proof/guards are under `build/etc-master24038/`. The two-target package totals 1,752 bytes and awaits independent review.
+
+## T-24043 larger final-event handler archive
+
+[[tickets/T-24043-master-large-handler]] leaves production `func_80139CC8` in assembly and adds no verified C bytes. `drafts/T-24043/` preserves a corrected full-TU source baseline with real `DisplayFixActor44`/`Fix32` fields, a legal five-byte array swap that saves both old values, and probability reloads after RNG calls. Natural thresholds/shared locals reach the target 0x48 frame without padding; a tagged FAKE scalar probability-byte view controls promotion. The archive measures cost 342 / 524 printed rows; this aligned cost is not the old T-18600 row metric or a linked match proof.
+
+Three live spill homes remain +4, the external-array swap adds a LUI, case 8/later loops rotate registers, and case 9 branches differ. Reordering declarations and bounded induction/control-flow forms did not close these gaps. A private tentative array definition emits COMMON and changes nothing; a private strong `.data` definition removes the local swap differences but leaves the other blockers (357/375). This isolates an ownership effect without establishing a full data-island solution. No production, header or config edits were made; all previous matching bodies remain exact. Archive README records the controls and reproducible measurement command.
+## T-24048 animation source pass
+
+[[tickets/T-24048-master-animation]] retried func_801344E0 in its own TU, without changing production C or headers. Fresh shared-type control reproduces475 rows/469 aligned; natural clone-pointer lifetime, explicit primary fade updates and direct counter increments produce a readable434/428 source lead. No match or new bytes. The current frame is72 versus64; the clone end pointer is hoisted across RNG and copy setup consumes a different temporary rotation. The scratch end-label hypothesis does not fix either. Historical T-10630's350-row handoff is unavailable in this checkout, so434 is not claimed as the historical best. Source-only selection, bounded negatives and reproducer: drafts/T-24048/README.md. No compiler-impossibility conclusion; no per-function patch.

@@ -1,6 +1,9 @@
 #ifndef OVL_MASTER_H
 #define OVL_MASTER_H
 
+/* T-24038: event-record logger, called before its definition; result is unused. */
+void func_8013B448(void);
+
 #include "common.h"
 #include "game.h"
 

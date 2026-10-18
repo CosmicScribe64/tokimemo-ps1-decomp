@@ -1,0 +1,303 @@
+{
+  "update-half-span": {
+    "name": "func_801365C8",
+    "tag": "update-half-span",
+    "aligned_cost": 68,
+    "expected_instructions": 188,
+    "built_instructions": 192
+  },
+  "finish-splitstores": {
+    "name": "func_80137EA8",
+    "tag": "finish-splitstores",
+    "aligned_cost": 58,
+    "expected_instructions": 173,
+    "built_instructions": 175
+  },
+  "sprite-copies": {
+    "name": "func_80137C44",
+    "tag": "sprite-copies",
+    "aligned_cost": 187,
+    "expected_instructions": 153,
+    "built_instructions": 154
+  },
+  "finish-byte-return": {
+    "name": "func_80137EA8",
+    "tag": "finish-byte-return",
+    "aligned_cost": 10,
+    "expected_instructions": 173,
+    "built_instructions": 173
+  },
+  "finish-sibling": {
+    "name": "func_80137EA8",
+    "tag": "finish-sibling",
+    "aligned_cost": 61,
+    "expected_instructions": 173,
+    "built_instructions": 178
+  },
+  "update-condition-shape": {
+    "name": "func_801365C8",
+    "tag": "update-condition-shape",
+    "aligned_cost": 143,
+    "expected_instructions": 188,
+    "built_instructions": 233
+  },
+  "sprite-void": {
+    "name": "func_80137C44",
+    "tag": "sprite-void",
+    "aligned_cost": 186,
+    "expected_instructions": 153,
+    "built_instructions": 149
+  },
+  "finish-guarded-do": {
+    "name": "func_80137EA8",
+    "tag": "finish-guarded-do",
+    "aligned_cost": 58,
+    "expected_instructions": 173,
+    "built_instructions": 175
+  },
+  "update-loop-init-order": {
+    "name": "func_801365C8",
+    "tag": "update-loop-init-order",
+    "aligned_cost": 42,
+    "expected_instructions": 188,
+    "built_instructions": 188
+  },
+  "init-reloadview": {
+    "name": "func_80135480",
+    "tag": "init-reloadview",
+    "aligned_cost": 22,
+    "expected_instructions": 152,
+    "built_instructions": 154
+  },
+  "update-nested-runners": {
+    "name": "func_801365C8",
+    "tag": "update-nested-runners",
+    "aligned_cost": 181,
+    "expected_instructions": 188,
+    "built_instructions": 243
+  },
+  "sprite-copies-void": {
+    "name": "func_80137C44",
+    "tag": "sprite-copies-void",
+    "aligned_cost": 187,
+    "expected_instructions": 153,
+    "built_instructions": 154
+  },
+  "sprite-typed": {
+    "name": "func_80137C44",
+    "tag": "sprite-typed",
+    "aligned_cost": 203,
+    "expected_instructions": 153,
+    "built_instructions": 146
+  },
+  "hit-indexgeometry": {
+    "name": "func_80137544",
+    "tag": "hit-indexgeometry",
+    "aligned_cost": 116,
+    "expected_instructions": 144,
+    "built_instructions": 146
+  },
+  "finish-firstslot-first": {
+    "name": "func_80137EA8",
+    "tag": "finish-firstslot-first",
+    "aligned_cost": 0,
+    "expected_instructions": 173,
+    "built_instructions": 173
+  },
+  "finish-postinc": {
+    "name": "func_80137EA8",
+    "tag": "finish-postinc",
+    "aligned_cost": 58,
+    "expected_instructions": 173,
+    "built_instructions": 175
+  },
+  "update-derived-flags-first": {
+    "name": "func_801365C8",
+    "tag": "update-derived-flags-first",
+    "aligned_cost": 103,
+    "expected_instructions": 188,
+    "built_instructions": 185
+  },
+  "update-break-loop": {
+    "name": "func_801365C8",
+    "tag": "update-break-loop",
+    "aligned_cost": 89,
+    "expected_instructions": 188,
+    "built_instructions": 187
+  },
+  "update-derived-coordinate": {
+    "name": "func_801365C8",
+    "tag": "update-derived-coordinate",
+    "aligned_cost": 20,
+    "expected_instructions": 188,
+    "built_instructions": 188
+  },
+  "init-t8-v16": {
+    "name": "func_80135480",
+    "tag": "init-t8-v16",
+    "aligned_cost": 92,
+    "expected_instructions": 152,
+    "built_instructions": 156
+  },
+  "finish-localdata": {
+    "name": "func_80137EA8",
+    "tag": "finish-localdata",
+    "aligned_cost": 58,
+    "expected_instructions": 173,
+    "built_instructions": 175
+  },
+  "update-copies": {
+    "name": "func_801365C8",
+    "tag": "update-copies",
+    "aligned_cost": 188,
+    "expected_instructions": 188,
+    "built_instructions": 228
+  },
+  "init-exclusive-flags": {
+    "name": "func_80135480",
+    "tag": "init-exclusive-flags",
+    "aligned_cost": 89,
+    "expected_instructions": 152,
+    "built_instructions": 159
+  },
+  "hit-widthgeometry": {
+    "name": "func_80137544",
+    "tag": "hit-widthgeometry",
+    "aligned_cost": 121,
+    "expected_instructions": 144,
+    "built_instructions": 145
+  },
+  "update-typed": {
+    "name": "func_801365C8",
+    "tag": "update-typed",
+    "aligned_cost": 214,
+    "expected_instructions": 188,
+    "built_instructions": 242
+  },
+  "finish-byteindex": {
+    "name": "func_80137EA8",
+    "tag": "finish-byteindex",
+    "aligned_cost": 74,
+    "expected_instructions": 173,
+    "built_instructions": 177
+  },
+  "update-indexed-nested": {
+    "name": "func_801365C8",
+    "tag": "update-indexed-nested",
+    "aligned_cost": 30,
+    "expected_instructions": 188,
+    "built_instructions": 188
+  },
+  "update-directstate": {
+    "name": "func_801365C8",
+    "tag": "update-directstate",
+    "aligned_cost": 186,
+    "expected_instructions": 188,
+    "built_instructions": 192
+  },
+  "finish-close": {
+    "name": "func_80137EA8",
+    "tag": "finish-close",
+    "aligned_cost": 4,
+    "expected_instructions": 173,
+    "built_instructions": 173
+  },
+  "update-promoted-timer": {
+    "name": "func_801365C8",
+    "tag": "update-promoted-timer",
+    "aligned_cost": 186,
+    "expected_instructions": 188,
+    "built_instructions": 192
+  },
+  "update-break-loop-u10": {
+    "name": "func_801365C8",
+    "tag": "update-break-loop-u10",
+    "aligned_cost": 89,
+    "expected_instructions": 188,
+    "built_instructions": 187
+  },
+  "init-local-results": {
+    "name": "func_80135480",
+    "tag": "init-local-results",
+    "aligned_cost": 22,
+    "expected_instructions": 152,
+    "built_instructions": 154
+  },
+  "update-indexed": {
+    "name": "func_801365C8",
+    "tag": "update-indexed",
+    "aligned_cost": 77,
+    "expected_instructions": 188,
+    "built_instructions": 185
+  },
+  "finish-explicit-else": {
+    "name": "func_80137EA8",
+    "tag": "finish-explicit-else",
+    "aligned_cost": 10,
+    "expected_instructions": 173,
+    "built_instructions": 173
+  },
+  "update-runner-index": {
+    "name": "func_801365C8",
+    "tag": "update-runner-index",
+    "aligned_cost": 182,
+    "expected_instructions": 188,
+    "built_instructions": 192
+  },
+  "finish-pointer-localdata": {
+    "name": "func_80137EA8",
+    "tag": "finish-pointer-localdata",
+    "aligned_cost": 73,
+    "expected_instructions": 173,
+    "built_instructions": 174
+  },
+  "update-derived-unsigned-flags": {
+    "name": "func_801365C8",
+    "tag": "update-derived-unsigned-flags",
+    "aligned_cost": 103,
+    "expected_instructions": 188,
+    "built_instructions": 185
+  },
+  "hit-sentinel": {
+    "name": "func_80137544",
+    "tag": "hit-sentinel",
+    "aligned_cost": 77,
+    "expected_instructions": 144,
+    "built_instructions": 145
+  },
+  "update-derived-loop-init": {
+    "name": "func_801365C8",
+    "tag": "update-derived-loop-init",
+    "aligned_cost": 18,
+    "expected_instructions": 188,
+    "built_instructions": 188
+  },
+  "update-nested-ne": {
+    "name": "func_801365C8",
+    "tag": "update-nested-ne",
+    "aligned_cost": 181,
+    "expected_instructions": 188,
+    "built_instructions": 243
+  },
+  "init-v16": {
+    "name": "func_80135480",
+    "tag": "init-v16",
+    "aligned_cost": 86,
+    "expected_instructions": 152,
+    "built_instructions": 156
+  },
+  "sprite-late-position": {
+    "name": "func_80137C44",
+    "tag": "sprite-late-position",
+    "aligned_cost": 187,
+    "expected_instructions": 153,
+    "built_instructions": 150
+  },
+  "init-typed-stat-pointer": {
+    "name": "func_80135480",
+    "tag": "init-typed-stat-pointer",
+    "aligned_cost": 99,
+    "expected_instructions": 152,
+    "built_instructions": 159
+  }
+}

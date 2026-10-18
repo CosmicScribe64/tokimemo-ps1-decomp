@@ -137,3 +137,33 @@ Types and header: `D_8015E740` is `u8 **` (a table of string pointers), `func_80
 ## Package w3-rpg-bat-p16 (T-17116)
 
 [[tickets/T-17116-w3-rpg-bat-p16]]: `src/ovl/RPG_BAT/80155CC0.c`, `80134D30.c`. 2 of 3 matched in plain C: `func_80156064` (828 B; `RpgObjectRecord44[147]` fields, two index loops over records `i + 96` and the words `(&D_8015EBAC)[i + 50]`, compound assignment on the word, `RPG_BAT_OVERRIDE_func_8013F0F4`). `func_80135358` (1,700 B) matched by the closer pass (the last range in `$v0` moved to `$v1` with `RPG_BAT_OVERRIDE_func_8013E97C`, the implicit int view; `h + -h` for the unfolded `subu s1,s1`, three declared locals for frame and spill); `func_80134E78` (1,248 B) stays `INCLUDE_ASM` (constant stored and passed gap, unfolded `v0 + 0x10`; draft in `drafts/T-17116/`). Type facts: `D_8015EC9C`, `D_8015ECC4`, `D_8015ECEC` start three 10-word rows (stride 0x28) of the 8-entry formation words (from x, to x, y) that sit at `D_8015EBAC + 4 * (60, 70, 80)`; `D_8015EC68/EC6C/ED08` stay scalars (struct or record views share `lui at`). Details: [[matching-notes]] "T-17116".
+
+## T-24013 battle-family completion
+
+`func_80139510` matched 2,424 literal linked bytes (worklist 2,616 includes associated
+rodata). This recovers the old T-9960 / [[tickets/T-21001-recover-wave-10-list-6-near-misses]]
+lead: four actual SDK `RECT` locals, paired comma expressions for x/y and w/h stores,
+and direct updates of the existing counter fields. The file's existing implicit-int
+`func_8013E7C0` view already fixes the old power-counter allocation gap: it remains in
+v1. The only new FAKE is two unused words above the rectangles, reproducing the
+original extra eight frame bytes while preserving their offsets. Separate assignment
+statements give 32 differing rows / 16 aligned edits; paired comma expressions match.
+Three existing callbacks needed forward declarations in RPG_BAT.h. Docker `ninja -j1
+build/ovl/RPG_BAT.ok` passes; default no-build resolved funcdiff reports exact linked
+target bytes (2,424 bytes). See [[tickets/T-24013-complete-rpg-bat]].
+
+The two other T-24013 functions stay assembly. `func_80138324` improves 176 to 142
+literal rows (138 aligned edits) with a direct counter update, experimental unsigned
+selector views and genuine spill declaration order; actor-index t0 versus source v1
+remains the blocker. `func_80152F30` stays 321 in its clean folded baseline; frame and
+implicit-callee-view experiments reach 307 / 295 aligned edits, while direct timer
+updates worsen it. No experimental views or homes were added to production for these
+functions. Source-only drafts and exact attempts are in drafts/T-24013/README.md;
+all loose diagnostics are preserved in ignored build/T-24013-probes. Final
+header/global/prototype checks pass (0 new, 15 known prototype disagreements).
+
+## T-24027 state-machine completion
+
+func_80154760 matched1656 default linked bytes: use D_8015EC70 directly for selected record index, then record136's flag separately and for(i=1;i<6;i++) for the remaining flags. IDO peels/unrolls this to the previously unexplained li s3,2 and unfolded pointer block, so the T-17106 loop-shape blocker is resolved. Implicit-int func_8013E97C view remains necessary; F0F4 override is not. Known selector-address view and unsigned palette constant are explicitly FAKE. A minimal s32 prototype is added. Target ASM removed, default literal no-build proof and RPG_BAT checksum pass. See [[tickets/T-24027-rpg-bat-state-machines]].
+
+T-24027 final bounded outcome: one of three matched (1656 bytes). Two current-type source forms remain ASM: 54DD8 selector view326 rows/288 aligned (condition-order alternate292/286), 5528C explicit phase pointer plus shared work base302/246 from498/274. Historic scalar scores are not current measurements. Source-only forms and concrete blockers are preserved in drafts/T-24027/; every loose experiment retained ignored in build/T-24027-probes/. Ticket In Review.

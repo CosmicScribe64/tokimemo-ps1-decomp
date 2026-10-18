@@ -1057,8 +1057,7 @@ void wait_sub_sub(s16 arg0) {
     }
 }
 
-/* NON_MATCHING: T-22001, 16 rows (T-10870); at the two incremented-Y calls the original schedules li a0,-40 before the sra of the incremented Y and the two string stores, as1 here puts it last. as1 breaks ties by source line before readiness and a statement has one physical line, so the original's -40 would need a lower line number than the narrowing and the stores. T-17001 tried 144 source forms and 8 toy forms, T-22001 18 more (explicit casts, increment spellings, braces, dummy -0x28 statement, s32 local, increment inside the call, for-loop reordering, #line): no gain. */
-#ifdef NON_MATCHING
+/* Matched: T-24021. The two incremented-Y calls need an early argument definition. */
 s32 dialogue_speak_part(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 u8 *arg0;
 u8 arg1;
@@ -1079,8 +1078,9 @@ u8 arg6;
     u8 sp74[8];
     u8 sp68[12];
     DialogueBytes16 sp58;
-    /* FAKE: observed 0x290-byte frame extent; T-10730. */
-    s32 pad[1];
+    /* FAKE: reuse the former padding word for the call argument's live range;
+     * the observed frame remains 0x290 bytes. T-24021. */
+    s32 render_x;
 
     dialogue = (DialogueWork *)D_80122CD0;
     sp58 = D_800CA36C;
@@ -1142,16 +1142,22 @@ u8 arg6;
             set_kanji_string(-0x78, temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "（", 0);
             dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[5], 0, "）", "", 0);
-        } else if (strcmp(sp7C, "そして…") == 0) {
+        } else if ((render_x = strcmp(sp7C, "そして…")) == 0) {
+            /* FAKE: the zero mask removes the strcmp-result dependency while
+             * retaining an early definition of a0, ahead of Y narrowing and
+             * outgoing string stores. A literal -40 schedules too late. T-24021. */
+            render_x = (render_x & 0) - 40;
             temp_s1 += 0x10;
-            dialogue_render(-0x28, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue_render(render_x, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         } else if ((strcmp(sp7C, "ガチャ") == 0) || (strcmp(sp7C, "カチャ") == 0) || (strcmp(sp7C, "ガラッ") == 0) || (strcmp(sp7C, "ごそごそ") == 0)) {
             dialogue_render(-0x80, (s32) temp_s1, 2, (s32) sp7C, 0, "", "", 0);
         } else if ((strcmp(sp7C, "ジロジロ") == 0) || (strcmp(sp7C, "ドン") == 0)) {
             dialogue_render(-0x80, (s32) temp_s1, 1, (s32) sp7C, 0, "", "", 0);
-        } else if (strcmp(sp7C, "ピンポーン") == 0) {
+        } else if ((render_x = strcmp(sp7C, "ピンポーン")) == 0) {
+            /* FAKE: preserve the same early argument definition as above. T-24021. */
+            render_x = (render_x & 0) - 40;
             temp_s1 += 0x10;
-            dialogue_render(-0x28, (s32) temp_s1, 2, (s32) sp7C, 0, "", "", 0);
+            dialogue_render(render_x, (s32) temp_s1, 2, (s32) sp7C, 0, "", "", 0);
         } else {
             dialogue_render(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         }
@@ -1565,9 +1571,6 @@ u8 arg6;
     }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", dialogue_speak_part);
-#endif
 
 void func_80081128(void) {
     if (D_800CA2AC > 0x200) {

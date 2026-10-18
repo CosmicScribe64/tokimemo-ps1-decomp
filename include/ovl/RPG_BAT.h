@@ -72,6 +72,10 @@ extern RpgBatWords4 D_8015EE30;
 extern RpgBatWords3 D_8015EE44;
 extern RpgBatWords3 D_8015EE50;
 void func_80139510(void);
+/* T-24013: callbacks reached before their definitions. */
+void func_80139E88(void);
+void func_8013A034(void);
+void func_8013A2F4(void);
 void func_8013F82C(void);
 void func_801596E8(void);
 extern s32 D_8015EB98;
@@ -126,6 +130,7 @@ extern s32 D_8015ED30;
 extern s32 D_8015ED34;
 extern s32 D_8015EC48;
 extern s32 D_8015EC4C;
+s32 func_80154760(void);
 void func_80155868(s32, s32, s32, s32, s32, s32, s32, s32, s32);
 
 /* defined in C in one object, called from another (T-0500) */

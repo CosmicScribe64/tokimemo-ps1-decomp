@@ -109,7 +109,143 @@ void func_80142A80(void) {
     D_800B3D00 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80142A80", func_80142E24);
+void func_80142E24(void) {
+    s32 row;
+    s32 addresses[8];
+    u8 step;
+
+    /* Four address columns per 0x10000-byte bank. T-20010. */
+    for (row = 0; row < 2; row++) {
+        addresses[row * 4 + 0] = 0x80180000 + row * 0x10000;
+        addresses[row * 4 + 1] = 0x80184000 + row * 0x10000;
+        addresses[row * 4 + 2] = 0x80188000 + row * 0x10000;
+        addresses[row * 4 + 3] = 0x8018C000 + row * 0x10000;
+    }
+    step = D_800E6280.unk_110D;
+    switch (step) {
+    case 0:
+        D_800E6280.unk_03A = 0x80;
+        draw2d3d(1, 0);
+        func_80048DAC(1);
+        func_8006BD6C(0);
+        func_80048DD0(0);
+        func_80048E78();
+        func_80041584();
+        func_8004E58C();
+        back_clear_switch(1);
+        D_800E6280.unk_037 = 0;
+        D_800E6280.unk_036 = 0;
+        D_800E6280.unk_038 = 0;
+        func_80044750(0x7F);
+        func_80044890(1, 0xC592, 0xC580, 0xCFA7, 0xCF8B, 0xCF83);
+        D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+        return;
+    case 1:
+        if (func_80044E8C() == 1) {
+            func_8004500C(1, 0);
+            cd_read_sectors(0x21U, 0x80180000, 0x9FD5);
+            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            return;
+        }
+    default:
+        return;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_8004A1A0((s32) addresses, 0, 4, 2, 2, 0x1FF, -0xA0, -0x78, 8, 9);
+            load_palette(0x80190000, 0x1F, 1, 3, 0);
+            ((SpriteSlot24 *)&D_801220D0)[0].unk_00 = 0x80000000;
+            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            return;
+        }
+        break;
+    case 3:
+        cd_read_sectors(0x21U, 0x80180000, 0xA048);
+        D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+        return;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            func_8004A1A0((s32) addresses, 0, 4, 2, 2, 0x1FE, -0xA0, -0x78, 8, 0xB);
+            load_palette(0x80190000, 0x1E, 1, 3, 0);
+            ((SpriteSlot24 *)&D_801220D0)[0].unk_00 = 0x80000000;
+            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            return;
+        }
+        break;
+    case 5:
+        cd_read_sectors(0x21U, 0x80180000, 0x9FF6);
+        D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+        return;
+    case 6:
+        if (cd_read_sync_status() & 1) {
+            func_8004A1A0((s32) addresses, 0, 4, 2, 2, 0x1FD, -0xA0, -0x78, 8, 0xD);
+            load_palette(0x80190000, 0x1D, 1, 3, 0);
+            ((SpriteSlot24 *)&D_801220D0)[0].unk_00 = 0x80000000;
+            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            return;
+        }
+        break;
+    case 7:
+        cd_read_sectors(0x41U, 0x80180000, 0x9F22);
+        D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+        return;
+    case 8:
+        if (cd_read_sync_status() & 1) {
+            func_8004A1A0((s32) addresses, 1, 8, 4, 2, 0x1EE, -0x140, -0x78, 8, 0x15);
+            load_palette(0x801A0000, 0xE, 1, 3, 0);
+            ((SpriteSlot24 *)&D_801220D0)[1].unk_00 = 0x51000000;
+            ((SpriteSlot24 *)&D_801220D0)[1].unk_11 = 0;
+            ((SpriteSlot24 *)&D_801220D0)[1].unk_10 = 0;
+            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            ((SpriteSlot24 *)&D_801220D0)[1].unk_12 = 0;
+            return;
+        }
+        break;
+    case 9:
+        cd_read_sectors(0x31U, 0x801B0000, 0x9FA4);
+        D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+        return;
+    case 10:
+        if (cd_read_sync_status() & 1) {
+            cd_read_sectors(0x41U, 0x80180000, 0x9EE1);
+            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            return;
+        }
+        break;
+    case 11:
+        if (cd_read_sync_status() & 1) {
+            func_8004A1A0((s32) addresses, 0, 8, 4, 2, 0x1EF, -0xA0, -0x78, 8, 5);
+            load_palette(0x801A0000, 0xF, 1, 3, 0);
+            ((SpriteSlot24 *)&D_801220D0)[0].unk_11 = 0;
+            ((SpriteSlot24 *)&D_801220D0)[0].unk_10 = 0;
+            ((SpriteSlot24 *)&D_801220D0)[0].unk_00 = 0x51000000;
+            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            ((SpriteSlot24 *)&D_801220D0)[0].unk_12 = 0;
+            return;
+        }
+        break;
+    case 12:
+        cd_read_sectors(0x41U, 0x80180000, 0x9F63);
+        D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+        return;
+    case 13:
+        if (cd_read_sync_status() & 1) {
+            func_80046290(0x06000BC8, 0x11000CBA, 0xF);
+            func_80044750(0x300);
+            func_8004E58C();
+            set_kanji_string(-0x90, 0x14, 0, "始まりがあれば終わりがあるように、", 0);
+            set_kanji_string(-0x90, 0x24, 0, "出会いがあればまた、別れもあるのです。", 0);
+            set_kanji_string(-0x90, 0x34, 0, "永遠に続く二人の関係、", 0);
+            set_kanji_string(-0x90, 0x44, 0, "それはどんなに幸せなことでしょう。", 0);
+            k_disp_start(4);
+            k_disp_switch(0, 0);
+            k_disp_switch(1, 0);
+            k_disp_switch(2, 0);
+            k_disp_switch(3, 0);
+            func_8004284C();
+        }
+        break;
+    }
+}
 
 void func_80143498(void) {
     if ((func_800460EC() & 2) && D_8014D170 == 0) {

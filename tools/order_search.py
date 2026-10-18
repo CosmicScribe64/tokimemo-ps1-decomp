@@ -20,10 +20,12 @@ line move together; that grouping matters to IDO too), and
 
 tries both `A + B` and `B + A`. Several blocks and swaps combine. Every combination is compiled with the
 same full-translation-unit path as funcdiff's guarded compile (gcc -E -DNON_MATCHING, tools/cc.py IDO 5.3,
-trailing padding, object layout) and scored by the number of funcdiff diff rows against the original, with
+trailing padding, object layout) and scored by aligned instruction insert/delete cost against the original, with
 relocations resolved (funcdiff --resolve; without it a matching variant still scores above 0 wherever a
 symbol+offset is named differently). NON_MATCHING is defined only when the function is a guarded draft, as
 in funcdiff, so the other guarded drafts of the file keep the normal build's rodata layout.
+Insertions/deletions cost one, substitutions two, regardless of function lengths (T-20012).
+Printable funcdiff rows retain positional evidence for equal lengths and are not used to rank variants.
 
 Usage (in Docker, repo root):
     python3 tools/order_search.py func_80147150 [--unit TT] [-j 8] [--max-exhaustive 2000]
@@ -322,7 +324,7 @@ def compile_variant_fast(builder, c, text, work):
 
 
 def make_text_scorer(c, name, resolve=False, fast=False, non_matching=None, log=print):
-    """score_text(text, work, label) -> diff rows of `name` in the C text `text` (the whole file of `c`)
+    """score_text(text, work, label) -> aligned row cost of `name` in the C text `text` (the whole file of `c`)
     against the original, 10**6 when it does not compile; `work` is the directory to compile in (one per
     concurrent call). fast: the approximate single-function compile (compile_variant_fast); the default is
     the exact full-unit compile. non_matching: define NON_MATCHING (default: when the function is a guarded
@@ -353,9 +355,7 @@ def make_text_scorer(c, name, resolve=False, fast=False, non_matching=None, log=
             return 10 ** 6
         if got is None:
             return 10 ** 6
-        if funcdiff.keys(got) == funcdiff.keys(want):
-            return 0
-        return len(funcdiff.diff_lines(want, got))
+        return funcdiff.diff_score(want, got)
 
     return score_text
 

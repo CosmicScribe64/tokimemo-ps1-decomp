@@ -9,7 +9,8 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801491CC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801491D4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801491D8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801491DC);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801491E0);
+/* Defined locally so the four result bytes share the original store base. T-24008. */
+u8 D_801491E0[4] = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801491E4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801491E8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801491EC);
@@ -631,7 +632,82 @@ void func_80135DF8(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135F3C);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-24008, nine differing instructions (18 aligned cost).
+ * All 188 instructions, frame 0x48 and call-save slot 0x38 agree. The selector
+ * takes t3 instead of ra; constants 255, 4 and 1 rotate through the other registers.
+ * Derive the coordinate from span to avoid a fourth local; indexed records and
+ * the while/break with nested player/CPU branches preserve the rolled inner loop. */
+#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
+void func_801365C8(void) {
+    s32 i;
+    s32 j;
+    s32 span;
+
+    for (i = 0; i < 2; i++) {
+        ++D_801492A8[i];
+        if (D_801492A8[i] >= 121U) {
+            D_801492A8[i] = 0;
+        } else if (D_801492A8[i] == 10) {
+            D_801492A4[i] = func_800AE0D0() % 20 + 10;
+        } else if (D_801492A8[i] == 27) {
+            D_801492A4[i] = 0xFF;
+        } else if (D_801492A8[i] >= 19U && D_801492A4[i] != 0xFF) {
+            DISP(46 + D_801492A4[i]).unk_2A++;
+        } else if (D_801492A8[i] >= 11U && D_801492A4[i] != 0xFF) {
+            DISP(46 + D_801492A4[i]).unk_2A--;
+        }
+    }
+    for (i = 0, span = 0; i < 30; i++, span += 32) {
+        if (span >= 320) {
+            span -= 320;
+        }
+        DISP(46 + i).unk_26 = span + 480 - D_80149298.halves.high;
+        if (i >= 10 && i < 20) {
+            DISP(46 + i).unk_26 += 16;
+        }
+        if (i == 19) {
+            DISP(46 + i).unk_02 = 0;
+            DISP(46 + i).unk_03 = 0;
+        } else if (DISP(46 + i).unk_26 >= -207 && DISP(46 + i).unk_26 < 321) {
+            DISP(46 + i).unk_02 = 1;
+            DISP(46 + i).unk_03 = 0xA4;
+        } else {
+            DISP(46 + i).unk_02 = 0;
+            DISP(46 + i).unk_03 = 0;
+        }
+        /* FAKE: contiguous four-runner view as in matching neighbors. T-24008 */
+        j = 0;
+        while (1) {
+            if (i == D_801491D8 && DISP(107).unk_02 != 0 && D_80122E94 == 1) {
+                DISP(46 + i).unk_02 = 0;
+                DISP(46 + i).unk_03 = 0;
+            } else if (i == (&D_80149208.player)[j].unk_02 && DISP(107 + j).unk_02 != 0) {
+                if (j == 0) {
+                    if (D_80122E94 == 0xFF) {
+                        DISP(46 + i).unk_02 = 0;
+                        DISP(46 + i).unk_03 = 0;
+                    }
+                } else {
+                    DISP(46 + i).unk_02 = 0;
+                    DISP(46 + i).unk_03 = 0;
+                }
+            }
+            if (i == (&D_80149208.player)[j].unk_02 && DISP(107 + j).unk_02 == 0) {
+                DISP(46 + i).unk_02 = 1;
+                DISP(46 + i).unk_03 = 0xA4;
+            }
+            j++;
+            if (j == 4) {
+                break;
+            }
+        }
+    }
+}
+#undef DISP
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_801365C8);
+#endif
 
 s32 func_801368B8() {
     s32 i;
@@ -1019,7 +1095,71 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137784);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137C44);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137EA8);
+/* Display-record view shared with the matched game-C sibling. T-24008. */
+#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
+/* Keep the explicit final else and assign result slot zero first: uopt spills
+ * the result-loop pointer and writes the promoted first byte after its neighbors. T-24008. */
+s32 func_80137EA8(void) {
+    s32 i;
+    s32 k;
+    TkS16x4 tbl;
+
+    tbl = D_8014985C;
+    if (DISP(111).unk_02 == 0 && D_80149298.halves.high >= 0x781) {
+        for (k = 0; k < 3; k++) {
+            DISP(111 + k).unk_02 = 0x40;
+            DISP(111 + k).unk_03 = 0xA4;
+            if (D_80149208.cpu[k].unk_06 == 1) {
+                DISP(112).unk_03 = 0;
+            }
+        }
+    }
+    if (DISP(112).unk_18 == 0x8D) {
+        DISP(112).unk_03 |= 0x40;
+    }
+    for (k = 0; k < 3; k++) {
+        if (D_80149208.cpu[k].unk_06 == 1 && DISP(97 + k).unk_26 >= DISP(112).unk_26 + 0x30) {
+            DISP(112).unk_03 = 0;
+            DISP(112).unk_02 = 0;
+        }
+    }
+    for (k = 0; &tbl.v[k] < &tbl.v[4]; k++) {
+        DISP(111 + k).unk_26 = tbl.v[k] - D_80149298.halves.high * 2 - 0xA0;
+    }
+    if (DISP(114).unk_26 < -0xDC && DISP(114).unk_03 != 0) {
+        DISP(114).unk_03 = 0;
+    }
+    if (DISP(112).unk_18 == 0x8D) {
+        DISP(112).unk_26 = DISP(111).unk_26 + 0x20;
+    }
+    if (DISP(96).unk_26 + 0x40 >= DISP(111).unk_26) {
+        if (D_801491E0[0] == 0) {
+            DISP(112).unk_03 = 0xE4;
+            DISP(112).unk_18 = 0x8D;
+            DISP(112).unk_26 = DISP(113).unk_26 + 0x20;
+        }
+        k = 0;
+        while (D_801491E0[k] != 0) {
+            k++;
+        }
+        D_801491E0[k] = 1;
+        for (i = k + 1; i < 4; i++) {
+            D_801491E0[i] = func_8013815C();
+        }
+        if (D_80122E94 == 1) {
+            D_801491E0[0] = 3;
+            D_801491E0[1] = 2;
+            D_801491E0[2] = 4;
+            D_801491E0[3] = 1;
+        }
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+#undef DISP
+
 
 /* FAKE: v[6] instead of three elements reproduces the original local offset
  * (0x1c); the real source is unknown. T-0016 */

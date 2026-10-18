@@ -96,3 +96,67 @@ after resetting the counter although the function's callees are `void`.
 
 Seven packages for wave 3, T-17501..T-17507 (`w3-shougatu-p01`..`p07`), 33 functions, 18,404 bytes, built with the
 wave-3 inventory scripts; `func_8014288C` (1,300 bytes, 506 rows) is not in a package.
+
+## T-24004 scene completion follow-up
+
+`func_801430A0` matched (352 bytes) using the typed sibling dispatcher recipe:
+`FnTbl48`, an `s32 idx` declared before the table, and a fall-through `s32` definition.
+The record-96 counter increments directly, then resets at three; this preserves the
+original `move v0,zero` after the reset. Its flags and counter are accessed consistently
+through `DisplayActor44` on `D_8011ECD0`. In particular record 98's flag byte must share
+that base with record 96's animation byte: the scalar flag store plus typed animation
+load lets as1 hoist the load and leaves eight diff rows (four aligned edits), while the
+shared-base form matches. No padding local or return-value cast is needed. The only
+header addition is the forward declaration of its existing callee `func_80143228`.
+Docker `ninja -j1 build/ovl/SHOUGATU.ok` passes; default no-build funcdiff reports linked
+function bytes equal target (352 bytes). See [[tickets/T-24004-complete-shougatu]].
+
+The four unresolved functions stay assembly. Source-only current-header drafts and
+concrete blockers are archived in drafts/T-24004/README.md. `func_8014265C`'s archived
+m2c had a semantic error: it tests the old counter before increment, not the new one.
+The corrected typed double copy leaves allocation differences. The two setup routines
+`func_801421D4` / `func_80142DA0` now score 114 / 116 after correcting fixed-point word
+copies and byte-array indexing; original keeps divisor 320 in fp, current IDO hoists
+the work-array base there instead and eliminates generic division checks. The large
+`func_80141D20` baseline is 491 literal diff rows / 387 aligned edits after semantic/type
+repairs. Header/global/prototype branch checks all pass (0 new prototype disagreements).
+## T-24026 high-similarity sibling ports (2026-10-17)
+
+Two unguarded C matches in src/ovl/SHOUGATU/8013F190.c add 708 bytes: func_8013F224 (316 B), from GYOZI func_80141944/T-20006, and func_80140510 (392 B), from DATE func_80152E34/T-20600. Existing FnTbl27, DisplayActor44 and GameState views suffice; the SDK POLY_G3 is reused. The callback retains the sibling fall-through s32 return, narrow counter increment and fresh selector reads. The builder retains the sibling colour comma lines and explicit masks, now explicitly marked FAKE. A local void forward declaration is needed for func_80140698; no shared headers changed.
+
+func_80138240 remains guarded: typed FnTbl37 port matches all opcode/register choices but four stack frame/table-offset words (208/56 versus target 200/48). Source-only evidence and exhausted alternatives are in drafts/T-24026; avoid repeating return type, index declaration order, narrow index and direct-index variants. Default assembly fallback is retained, and no C win is claimed for it.
+
+The full SHOUGATU checksum passes. Both claimed wins pass the source gate (no target INCLUDE_ASM) and normal linked literal proof with --resolve --no-build --version default. [[tickets/T-24026-shougatu-sibling-ports]] awaits independent review.
+
+## T-24029 seasonal scene sibling checkpoint
+
+[[tickets/T-24029-seasonal-scene-siblings]] is a bounded source-only pass over GYOZI func_801368B8 and SHOUGATU func_801350F8. No new C match; production sources unchanged. Typed fixed-point arithmetic and source-level conditions yield current aligned edit costs 586 / 656; the broad string-copy scheduling, actor-base and live-range mismatches remain. The initialized SHOUGATU selector before local string copies saves six edits but does not solve the prologue. Source bodies and concrete negative evidence are in drafts/T-24029. No shared headers changed. Avoid repeating the small return-type, counter, and selector probes listed there.
+
+## T-24031 paired particle source recovery
+
+[[tickets/T-24031-gyozi-shougatu-pairs]] adds no verified bytes; all four target handlers stay assembly. `drafts/T-24031/` preserves current-header source-only pairs and a serial Docker full-TU reproducer. SHOUGATU func_80141D20 / GYOZI func_80144018 costs are 264 / 266 resolved aligned edits (the former T-24004 baseline was 387 / 491 printable rows); the 1,300-byte pair func_8014288C / func_80144B70 each costs 412 / 508 rows. These are diagnostics, not C match proofs.
+
+Corrected real Rec24 spawn/hide indexing and 50-entry work-array indices, used the actual state byte arrays, and recovered the position reset as a Fix32 low-halfword clear followed by signed high-halfword store and full-word destination copy. The prior full-word clear was not the original mutation width. Direct global counter mutation and legal i-4 entry pointers improve the smaller pair. Reusing induction/period temporaries improves the larger pair's frame 0x70 to 0x68 (target 0x50). Consistent state pointers and real Rec24[4].unk_04 fields preserve those results; explicit entry pointers in the larger pair worsen allocation. Remaining differences span live induction/array ranges around RNG calls and do not prove a compiler limitation.
+
+Production C/headers and earlier BUNKASAI wins remain untouched. Both default overlay checksums and header/global/prototype guards pass (0 new / 15 known); this preserves the assembly-backed defaults, not the archived C. GYOZI's archived s32 func_80144018 view is applied only in scratch preprocessing; its production void declaration is unchanged. Ticket/card In Review with all matching targets pending; detailed rejected controls and reproduction are in the source-only archive README.
+## T-24052 sibling closure (2026-10-18, first checkpoint)
+
+func_80133208 now matches488 literal linked bytes as unguarded default C, ported from GYOZI func_80135280 with the skip/reset block, five-step selector and0x28 byte postincrement bound. Current D_800B3778[girl][column] is the sound byte table. The sibling's unchanged-byte |=0 store is retained and explicitly FAKE/T-24052; no header/config changes. Fresh Docker ninja -j1 passed SHOUGATU checksum/headers and literal default linked proof. func_801333F0 remains in progress (selector no-op store), so [[tickets/T-24052-shougatu-dialogue-siblings]] stays In Progress at this checkpoint.
+
+T-24052 final checkpoint: func_801333F0 also matches544 literal linked bytes as unguarded default C. Both target-specific unchanged halfword selector stores survive as plain self-assignment and are explicitly FAKE/T-24052. The byte-store negative from GYOZI does not transfer to this width. Compound no-ops, signed/unsigned views, locals, return liveness and volatile stores failed; assignment-in-condition got14 rows but retained one phantom temporary. Full source/proof/ledger in drafts/T-24052/README.md. Fresh production build passes checksum/headers and literal default proofs for both488/544 bytes, total1032. No header/config edits. [[tickets/T-24052-shougatu-dialogue-siblings]] now In Review for root review.
+## T-24059 copy-chain sibling matches
+
+[[tickets/T-24059-short-copy-siblings]] matched SHOUGATU func_80136948 and GYOZI func_80137F48 (164 literal default C bytes each). Port DATE80149F48/SHUGAKU80133038's narrowed-global recipe: save pointers, set the actual s16 selector from the girl, calculate `(s16)(selector * 3) + month - 0x60`, replace pointers, advance. Current direct and narrowed-local controls each40/34; narrowed-global0/0 for both. No new FAKE or header/config change, no blind grid. Actual C default literal proofs, affected checksums and declaration guards pass; exact hashes/provenance in drafts/T-24059/README.md. Older copy-chain negative evidence is superseded for these two targets.
+## T-24058 short selector pair
+
+[[tickets/T-24058-short-pair-count]] closes GYOZI func_80137188 (176 linked bytes) with plain direct u8 global D_80146178 operations: assignment from masked input word, conditional decrement, indexed call and two global tests. Replacing two word locals and an explicit mask recovers the target selector registers and compiler-generated store-back; no new FAKE or headers. Default literal proof and GYOZI SHA1 pass. SHOUGATU func_801347E0 remains unchanged at the old cost6 reload-register gap; callback-argument reuse, exact existing call aliases, direct field/global views and last-call argument lifetime do not close it. Replayable scoped negatives in drafts/T-24058.
+
+## T-24056 short sibling package, no promotion (2026-10-18)
+
+Three source-only ports from matched GYOZI handlers are preserved in drafts/T-24056: D82062 rows, D92C72 rows, DF1412 rows. Canonical CharFlags.f9 reads/updates replace stale word/byte reconstructions; SHOUGATU's signed threshold halves and two-half failed-gate increments are preserved. D92C uses the sibling's >=1 comparison, restoring the initially missing instruction; a named-limit diagnostic is marked FAKE. Prior D82096-variant threshold/permuter exhaustion was read and not repeated; a return-liveness view adds no gain.
+
+DF14 is the concrete near lead: target109/candidate107 words. Its initial byte load chooses an extra absolute LUI; its clamp forwards the earlier byte rather than the target's fresh read and absolute store address. GameState pointer/global clamp, explicit byte update, forced reload, postincrement, explicit assignment and register-pointer forms fail to recover both choices together (12/64/36/100 rows). Scratch-only D_80145FDC s16 declaration is supported by LH/SH evidence and approved conditionally by root, but no header change is made without a match. README records exact reproduction and negatives. Production/header/config unchanged; independent SHOUGATU checksum control passes through ASM. Zero new C bytes. [[tickets/T-24056-shougatu-short-siblings]] is In Review.
+
+## T-24061 bounded short control/copy pass (2026-10-18)
+
+SHOUGATU func_801359FC source semantics repaired: actual girl byte+F5F, word seed+10F8, choice narrowing only after decrement, and signed+11E halfword in both bonus arms. Word selector gives56 rows/exact69 words but frame0x58 versus0x50; aligned pointer storage and separate byte lifetimes are negative. No production/header change or C bytes. Full source/reproduction/negative ledger: drafts/T-24061/README.md and [[tickets/T-24061-short-control-and-copy]] (In Review).

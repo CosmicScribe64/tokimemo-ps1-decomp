@@ -202,3 +202,55 @@ the first-argument constant and the narrowing on an earlier source line than the
 ### Wave 3 package w3-main-p17 (T-17017)
 
 `80058D20.c`: no match of the three remaining T-0018 functions ([[matching-notes]], section T-17017). Type work: the model record walked by `func_8005938C` is a local 0x88-byte `ModelRec88` (active/flag bytes, object at +4, handle at +8, `MATRIX coord` at +0x18, `SVECTOR` rot/scale/pos/vel at +0x64..+0x7C) in `drafts/T-17017/main/func_8005938C/`; the word at `D_800E731C` is read as `*(s32 *)&D_800E6280.unk_1095[7]` (+0x109C, like the +0x1098 word other units read through the same array). `func_800590CC` (16 rows) and `func_800591D8` (32 rows) stay guarded with aliased width and height variables.
+
+## Bounded renderer follow-up (T-24006)
+
+[[tickets/T-24006-main-render-family]] reused complete-main at f70450137580e684e20f8ecd28e7a93062385ac7. Exclusive source scope: src/main/8004C3F0.c. No production C/header changes and **0 new verified bytes**. Source-only hypotheses and stable aligned scoring metadata are in drafts/T-24006/. Historical printable row counts are not directly comparable with the current stable insert/delete cost (a substitution costs two).
+
+| Function / archived form | Aligned cost | Instructions built / target | Concrete blocker |
+| --- | ---: | ---: | --- |
+| mod_trans_vram, ModRec14 plus corrected word stride and byte buffer | 241 | 197 / 188 | frame 0x1A8 versus 0x1A0, buffer/divisor slots and selector allocation; natural loops change switch storage and loop register allocation |
+| mod_set_gpu, ModRec14 plus SDK SPRT_8 | 225 | 204 / 201 | frame 0xB0 versus 0xA8; selector goes through v1, record/divisor spill offsets differ |
+| mod_set, actual sprite request aggregate | 295 | 198 / 195 | frame 0xB8 versus 0xE8; original request at sp+0xB0, aggregate/selector allocation unresolved |
+| get_fnt, natural byte-buffer loops | 251 | 266 / 259 | loop counter lifetime hoists the second loop counter into an extra saved register; buffer offset and horizontal mirror scheduling differ |
+| srn_tpage_show, SDK POLY_FT4 / RECT | 1032 | 814 / 806 | first frame mismatch and repeated packet allocation/scheduling; no additional speculative variants |
+
+New type hypothesis: `ModRec14`, size 0x14, follows func_8004E44C's writes and the three model consumers: pointer table +0, word map +4, format byte +8, halfword +0xA, four byte dimensions at +0xC..0xF, halfwords +0x10/+0x12. It stays local to archived drafts pending a verified migration. SDK SPRT_8 describes the 0x10-byte GPU packet in mod_set_gpu; SDK POLY_FT4 and RECT describe srn_tpage_show packets and input rectangle. The mod_set stack request has the observed 0x24-byte sprite layout; unrelated scalar locals in the old m2c draft lose most stores when only the address of the first is passed. Its original `var_s5 += 4` also advances a word pointer by sixteen bytes; the corrected hypothesis advances one word.
+
+The T-17015 srn_set body remains unchanged. Its fresh aligned cost is 146 (149 / 149 instructions); yoff as s16 and unsigned cols both stay 146, wid/hgt as u16 gives 148, and xoff/yoff/y as s16 gives 138 with four extra instructions. No frame/register solution was found, so no redundant archive was added. get_fnt's m2c buffer was three words despite memcpy of 0x100 bytes, and its mirror operations contained incorrect word accesses; correcting bytes/strides alone leaves 338 cost versus 251 for the natural rewrite. The two unused pointer locals in that exploratory rewrite carry a FAKE frame note.
+
+Verification in the existing Docker image: ninja -j1 for build/src/main/8004C3F0.o and build/SLPM_86.053.ok reports no work; fresh direct SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 equals config/SLPM_86.053.sha1. Fresh funcdiff --resolve --no-build --version default gives linked literal MATCH for all six assigned ASM-backed functions plus srn_vram_set, move_255_line, srn_init and func_8004E44C. These prove production preservation, not new C recovery. Literal sizes of mod_set_gpu/mod_set/mod_trans_vram are 804/780/752; the work-list sizes included 24 padding bytes each. check_headers: OK; migrate_globals --check: OK; sync_protos --check-branch: 0 new disagreements, 15 known, branch check OK. Logs remain ignored under /tmp/T24006-*.log. Ticket awaits integration review.
+
+### Completion package T-24015
+
+[[tickets/T-24015-complete-main-menu]] revisited five unstarted w4-p41 functions in 8005A0B0.c; source-only forms in drafts/T-24015/.
+
+Zero of five matched; no production C or header changed, zero verified bytes added. All five remain ASM. Current resolved rows/aligned: CA94 57/57, CC40 118/114, B43C 112/112, A410 41/41, F730 113/111.
+
+A410 is the strongest new lead: signed coordinate halfwords plus a same-array 64-byte end bound remove IDO alignment peeling and recover frame/spill offsets. End-label address sharing, counter allocation and scheduling remain. The form visits sixteen coordinate pairs, two per iteration; an unrelated end-label bound scores 187 rows. This is a concrete retry lead, not proof of a match or compiler limitation.
+
+CA94 repairs the lossy old GameState fold to unk_1118 and uses byte strides through Work800E7D10; selected-index spill remains four bytes high and narrowing/copy allocation differs. CC40 repairs GameState fields, byte strides and unsigned timer comparisons. Its D_800B39C4 table appears to hold two words per index, still an unresolved scratch scalar extern. Its s32 fallthrough definition preserves the existing implicit caller view; a void signature needs a deliberate canonical prototype decision before promotion.
+
+B43C uses Rec38 unk_0C.f.b2 instead of a word mask; original frame and input-nibble allocation differ. F730 follows matched F26C/FDEC siblings with five-row halfword arrays. D_800E67C4 maps to GameState unk_53C[8]. Frame matches but all four array homes are eight bytes high. Coordinate variable names are inherited from T-16510; original menu_set order and values are retained. No FAKE padding was added to selected forms; a rejected padding experiment is preserved only in the ignored probe archive.
+
+Baseline MAIN SHA-1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 matches config/SLPM_86.053.sha1. Ninja -j1 build/SLPM_86.053.ok was current. Headers/globals pass; prototype branch check reports zero new disagreements, fifteen known. Literal no-build win proof is not applicable because no function was promoted.
+## T-24041 LINE_G2 renderer
+
+[[tickets/T-24041-main-render-cd-siblings]] recovers func_80049FF0,348 B of unguarded C, using the actual two-colour line packet LINE_G2 (0x14 bytes), a meaningful GameState pointer, and the matched polygon siblings' explicit colour masks/comma grouping (FAKE marked). A K&R narrow definition keeps the existing unprototyped caller ABI; main_api.h stays unchanged. Root approved the missing shared packet declaration in psx_types.h. The allocation and individual sb/sh offsets establish its layout; no external SDK header was available locally or imported. Normal default linked literal proof and full MAIN checksum pass.
+## Dialogue closure update (2026-10-18)
+
+The historical guarded 16-row dialogue gap is resolved by [[tickets/T-24021-dialogue-scheduling]]. Default C matches 8,672 text bytes and main SHA1. Two early constant argument definitions use a marked zero-mask FAKE; prior negative experiments remain historical evidence. Replay is in drafts/T-24021/replay_closure.py.
+
+## T-24041 CD dispatcher source checkpoint
+
+func_800455C4 remains unchanged assembly. [[tickets/T-24041-main-render-cd-siblings]] archives repaired typed source in drafts/T-24041: normal full-file aligned cost512/frame104, then499/frame88 after removing artificial temporary homes; target frame80. Ring18 indices, word payload-header access and SDK-shaped stack locals are repaired, but broad branch/register differences remain. Exact negative hypotheses and scratch-only declarations are recorded in the archive; no speculative CD headers added. The separate348 B renderer win and final MAIN checksum/guard evidence stand.
+
+## T-24046 screen page structural follow-up
+
+[[tickets/T-24046-screen-page-renderer]] adds no production C. Source-only drafts/T-24046 fixes two concrete old-draft defects: signed-byte narrowing of a positive128 texture offset before texture-page arithmetic, and the missing unused argument5 slot that shifts all clut/depth stack inputs. Reused POLY_FT4 plus inlined common expressions produces the target120-byte frame, versus200 for the prior-style source. Fresh aligned costs1032 baseline,1026 pointer reuse,637 named derived values,562 automatic spills,524 ABI/local ordering,504 consecutive RGB initialization. Best812 vs806 instructions remains broad; named word-offset/global-state alternate523 is rejected. No shared headers changed and no raw instructions archived. Preserve these structural fixes before any closer pass.
+
+## T-24062 audio stopping point
+
+[[tickets/T-24062-main-audio-short]] adds unguarded func_8007BCFC236 linked bytes. Four-byte mixer input and attenuation byte, grouped byte-pair stores (FAKE) and unsigned halfword view of signed Work80125D10.unk_26 (FAKE) recover the target; canonical fields retained. Only approved main_api addition: s32 func_80087DC8(u8 *), backed by four input-byte loads and return1 in asm/libcd_rest.s wrapper/CD_vol. No CdlATV exists in current SDK headers; scratch SDK-record view also matches. Normal default literal proof, four matched audio siblings, MAIN SHA1 and declaration guards pass.
+
+Unchanged blocked sources: queue pop func_8007B64C improves51 to44 using a scratch33-halfword aggregate that preserves return-element aliasing; flag loop func_80079C70 improves74 to37 by word index, reused mask range and direct loop shift; table copy func_8007BBE8 corrected0x50 header record109 (typed m2c pointer units were wrong). Replayable drafts/T-24062 preserves them. Paused at the user's requested stopping point; no next function.

@@ -201,3 +201,15 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p25 (T-19025)
 
 [[tickets/T-19025-w3-d-p25]] (`80132220.c`, the two actor input/AI functions and their callers' helpers): `func_8013356C` (the four-way unrolled `unk13` clear of `D_8015EB30`) and `func_801328B0` (the second actor's AI, 1,848 bytes, FAKE pads for four frame words) matched; the closer pass matched `func_80132FE8` (input collector: a local `btn` for `unk_F88` that stays live across the `D_8015EDE4` tests, one FAKE empty test) and `func_8013240C` (stick mover: K&R `s32` with no `return` and no result variable), so the whole file is C. `func_80132FE8` takes no arguments (callers pass none). `D_800E7200`, `D_800E7208` and `D_800E7378` are `D_800E6280.unk_F80`, `unk_F88` and `unk_10F8`. Details, the ugen-order fix by a pointer local, the closer pass and the `funcdiff` guarded-neighbour gotcha: [[matching-notes]], "T-19025".
+
+
+T-24032 cross-unit control: DATE/TACO rotation clone provenance retained after one fresh SDK MATRIX control; zero matches or production changes. See [[tickets/T-24032-date-taco-rotation-clones]] and drafts/T-24032/. CF30 old draft offset0 word access is a semantic defect; use matrix halfwords in any future reconstruction.
+
+
+## T-24044 projected-quad sibling retry
+
+[[tickets/T-24044-taiiku-taco-siblings]] measures current424A8 sibling control162/162 and improves it to124/124 with meaningful output index k=j*2+o. Pointer, byte-offset and index-type alternatives worsen it; original matrix-copy pool still reserves an extra uopt register for a later reload. No production/header edit, no coverage gain. Selected source needs a scratch table extern/forward prototype; source-only provenance in drafts/T-24044/. Old81-row note is historical, not this measurement.
+
+## T-24063 short-count freeze
+
+[[tickets/T-24063-taco-short-count]] leaves3506C/5B1B8/472D4 guarded; zero matches or production/header/config changes. Fresh controls29/16/20 rows. For3506C, correcting `unk_163C[128+i]` to the actual `unk_183C` word-buffer view compiles identically29/29, as does moving coordinate extraction into its nonzero arm; corrected source/reproducer retained in drafts/T-24063/. The5B1B8 fresh16 raw rows are the same8 changed load/store instructions previously called8 rows. Both MATRIX guards retain known copy-temporary gaps; prior measured compiler evidence was read and exhausted source grids were not repeated. No migration or compiler exception proposed.

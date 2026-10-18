@@ -148,5 +148,28 @@ class FastRescore(unittest.TestCase):
         self.assertEqual(res[0], (3, t.identity()))
 
 
+class TextScoring(unittest.TestCase):
+    def test_full_unit_scorer_uses_stable_alignment_and_preserves_exact_zero(self):
+        import tempfile
+        from pathlib import Path
+        from types import SimpleNamespace
+        from unittest import mock
+        import funcdiff
+
+        functions = {"expected.o": ["a", "b", "c"], "shift": ["x", "a", "b"],
+                     "worse": ["x", "a", "b", "y"], "exact": ["a", "b", "c"], "missing": None}
+        c = SimpleNamespace(src=Path("synthetic.c"))
+        with mock.patch.object(funcdiff, "expected_object", return_value=("expected.o", None)), \
+                mock.patch.object(funcdiff, "resolved_functions", side_effect=lambda obj, names, *args: {"f": functions[obj]}), \
+                mock.patch.object(funcdiff, "diff_lines", side_effect=AssertionError("diagnostics are not scores")), \
+                mock.patch.object(os_, "compile_variant", side_effect=lambda c, text, work, non_matching: text):
+            score = os_.make_text_scorer(c, "f", resolve=True, non_matching=False)
+            with tempfile.TemporaryDirectory() as tmp:
+                self.assertEqual(score("shift", Path(tmp)), 2)
+                self.assertEqual(score("worse", Path(tmp)), 3)
+                self.assertEqual(score("exact", Path(tmp)), 0)
+                self.assertEqual(score("missing", Path(tmp)), 10 ** 6)
+
+
 if __name__ == "__main__":
     unittest.main()

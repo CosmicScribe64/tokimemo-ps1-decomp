@@ -1,0 +1,17 @@
+# T-24004 SHOUGATU scene package
+
+Source: codex/complete-option after ba7dc4603, bounded work on 2026-10-17. Starting archived package w4-p36 was unstarted.
+
+## Verified dispatcher
+
+func_801430A0 matches 352 bytes. Start from T-17500 body / matched func_801419D0 recipe: FnTbl48, idx before table, and s32 fall-through definition. The callback returns void, so no cast or phony explicit return is needed. Directly increment and test the record counter; this retains the original counter result and move v0,zero after reset. Access record-96 counters and record-98 flags through DisplayActor44 on D_8011ECD0. The flag store must share the base with the record-96 animation load: using scalar D_801206DB leaves eight differing rows / four aligned edits because as1 hoists the load over the store. Both flag-only and flag-plus-destination same-base forms match. An unused counter local was tested and removed: no padding local is required. The sole necessary header addition declares the existing func_80143228 before its use.
+
+Proof: Docker ninja -j1 build/ovl/SHOUGATU.ok, then funcdiff.py --unit SHOUGATU --resolve --version default --no-build func_801430A0. Overlay checksum OK; default linked bytes match target (352 bytes).
+
+## Unresolved source drafts
+
+- func_8014265C: original tests the OLD counter value, then increments; archived m2c tested the new value. body.c corrects that with postincrement and two typed DisplayActor44 assignments. It has 96 differing rows / 94 aligned edits, primarily counter allocation (original a0 and boolean v1, compiler v1 and boolean v0) and the ugen temporary sequence of the two 68-byte copies. split.c models the archive's first 64-byte block plus explicit tail word and second 68-byte copy: 54 rows, but the tail uses separate-address accesses rather than the original's walked pointers. Extra argument forms through existing func_8004ECB4 alias, signed/unsigned and boolean spellings, explicit count/flag locals, pointer locals and s32 return did not close it. No change retained in src.
+- func_801421D4 and func_80142DA0: T-17500 bodies repaired to current GameState and array views. D_800E7325 is byte array unk_10A5, not the archive's s32 pointer. D_80146608 contains fixed-point words; the initial low/high halfword stores feed a FULL word copy to D_801466D0[i-4] (archive incorrectly read only its low half). D_80146798[i-4] and D_80146540[i-4] replace interior-symbol pointer arithmetic. Single index instead of duplicate temp_s1 reduces the scores to 114 / 116 rows (120 / 124 archived). Fix32 and raw-halfword forms have the same score; integer address arithmetic worsens both to 126. Original hoists divisor 320 in fp, current source hoists the D_80146608 base there and uses immediate division; the original constant 8 range also disappears. This shifts most of the loop's allocation and omits generic division checks. No source guard retained.
+- func_80141D20: current compiling baseline at 491 literal diff rows / 387 aligned edits (495 archived). Corrected indexed GameState pointer arithmetic and work-array indexing; declaration of u32 D_80146800 and s32 fall-through definition preserve the current caller view. The large loop retains many split m2c temporaries; not pursued beyond semantic/type repairs during this bounded package. No source guard retained.
+
+probe.py takes a JSON array of [label, full function body] and compiles each in the entire original translation unit. Run only in Docker. Its .diff outputs contain instruction diagnostics and must remain temporary and uncommitted.

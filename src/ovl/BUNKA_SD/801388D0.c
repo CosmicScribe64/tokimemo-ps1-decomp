@@ -239,32 +239,22 @@ s32 func_80139100(void) {
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_80139290);
 
-/* NON_MATCHING: T-12090, 14 differing listing rows; pointer setup order and retained byte-result copy versus clear zero */
-#ifdef NON_MATCHING
+/* FAKE: T-22021. The byte D_800E6280.unk_110B is read and written only as a u8 view, so uopt promotes it to one register for the whole function (a local copy splits the range and adds a `move`). `*= 0` is the clear that survives constant folding: it keeps the `move v1,zero` and the loop stores of that register (a plain `= 0` folds to `sb zero`); the original source is unknown. */
 void func_8013987C(void) {
-    u8 v;
-    u8 *p;
     s32 i;
 
-    v = D_800E6280.unk_110B;
-    p = D_80120650;
-    do {
-        p[7] = v;
-        p += 0x44;
-    } while (p < D_80121750);
-    if (v == 0) {
-        v = 2;
+    for (i = 0; i < 0x40; i++) {
+        ((DisplayActor44 *)D_80120650)[i].unk_07 = *(u8 *)&D_800E6280.unk_110B;
     }
-    v -= 1;
-    D_800E6280.unk_110B = v;
-    if (v == 0) {
+    if (*(u8 *)&D_800E6280.unk_110B == 0) {
+        *(u8 *)&D_800E6280.unk_110B = 2;
+    }
+    *(u8 *)&D_800E6280.unk_110B -= 1;
+    if (*(u8 *)&D_800E6280.unk_110B == 0) {
+        *(u8 *)&D_800E6280.unk_110B *= 0;
         for (i = 0; i < 0x40; i++) {
-            ((DisplayActor44 *)D_80120650)[i].unk_07 = v;
+            ((DisplayActor44 *)D_80120650)[i].unk_07 = *(u8 *)&D_800E6280.unk_110B;
         }
-        *(u8 *)&D_800E6280.unk_110B = v;
         func_8004284C();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_8013987C);
-#endif

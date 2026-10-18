@@ -206,7 +206,40 @@ void func_80102D40(void) {
     func_80011DFC();
 }
 
+/* NON_MATCHING: T-24037, six edits in the initial constant/base schedule. */
+#ifdef NON_MATCHING
+void func_80102E54(void) {
+    DisplayActor44 *m = (DisplayActor44 *)D_800E9620;
+    s16 i;
+
+    D_80120678 = D_80120450;
+    D_8012067C = D_8012046C;
+    D_80120680 = D_80120488;
+    D_800B0A04[5].unk_02 += 2;
+    D_800B0A04[5].unk_06 += 1;
+    D_800B0A04[5].unk_0A -= 0x14;
+    func_8004C250();
+    func_80102610();
+    func_80012D64(D_801226E8, 0x11, 1, 2, 0);
+    func_8004C46C(D_801226EC, D_801226F0, D_801226F4, D_801226F8, D_801226FC, D_80122700);
+    func_8004C6B0(D_801226DC, D_801226E0, D_801226D8, D_801226E4);
+    m[96].unk_04 = m[97].unk_04 = 8;
+    for (i = 0; i < 8; i++) {
+        D_8012274C[i] = 0;
+    }
+    for (i = 0; i < 8; i++) {
+        m[98 + i] = ((DisplayActor44 *)D_800EAFA0)[0];
+        m[98 + i].unk_16 = 5;
+        m[98 + i].unk_26 = D_80122754[i] - 0xA0;
+        m[98 + i].unk_2A = D_80122764[i] - 0x78;
+        D_80122774[i] = func_800789A0() % 120;
+    }
+    m[98].unk_16 = 4;
+    func_80011DFC();
+}
+#else
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801024B0", func_80102E54);
+#endif
 
 void func_801030F4(void) {
     D_80120678 = D_80120454;
@@ -327,7 +360,49 @@ void func_8010374C(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801024B0", func_80103774);
+void func_80103774(void) {
+    DisplayFixActor44 *m = (DisplayFixActor44 *)D_800E9620;
+    u8 *st;
+    EvPairs8 sp68;
+    s16 i;
+
+    sp68 = D_80122990;
+    for (i = 0; i < 8; i++) {
+        st = i + D_8012274C;
+        m[98 + i].unk_07 = ((DisplayActor44 *)D_800EAFA0)[0].unk_07;
+        if (*st == 0) {
+            D_80122774[i]++;
+        }
+        if (*st == 0 && D_80122774[i] >= 0x79 && (u32)(0xB4 - D_80122774[i]) < (u32)(func_800789A0() % 60)) {
+            m[98 + i].unk_03 |= 0x80;
+            m[98 + i].unk_02 = 5;
+            *st = 1;
+        }
+        if (i == 0) {
+            if (*st == 1 && m[98 + i].unk_18 == 7 && m[98 + i].unk_08 == 0) {
+                m[98 + i].unk_30 = 0;
+                *st = 2;
+            }
+        } else if (*st == 1 && m[98 + i].unk_18 == 3 && m[98 + i].unk_08 == 7) {
+            m[98 + i].unk_30 = 0;
+            *st = 2;
+        }
+        if (*st == 2) {
+            m[98 + i].unk_30 += 0x4000;
+            m[98 + i].unk_28.w += m[98 + i].unk_30;
+            if (sp68.v[i][1] - 0x78 < m[98 + i].unk_28.h[1]) {
+                m[98 + i].unk_03 &= 0x7F;
+                m[98 + i].unk_02 = 0;
+                m[98 + i].unk_28.h[1] = D_80122764[i] - 0x78;
+                m[98 + i].unk_28.h[0] = 0;
+                m[98 + i].unk_18 = 0;
+                m[98 + i].unk_08 = 0;
+                *st = 0;
+                D_80122774[i] = 0;
+            }
+        }
+    }
+}
 
 void func_801039E8(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

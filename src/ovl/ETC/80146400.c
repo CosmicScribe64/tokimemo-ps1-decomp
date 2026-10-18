@@ -1,8 +1,6 @@
 #include "common.h"
 #include "ovl/ETC.h"
 
-/* NON_MATCHING: T-10850, 14 differing listing lines; see the ticket scratch evidence. */
-#ifdef NON_MATCHING
 /* FAKE: unused padding array preserves the frame layout. T-10850 */
 s32 func_80146400(void)
 {
@@ -46,8 +44,8 @@ s32 func_80146400(void)
     {
         x -= 1;
     }
-    p = &D_801506F8[x];
-    func_800AE0B0("補正 %d ", *p);
+    /* The assignment inside the argument makes IDO load the format string's lui first (T-22029). */
+    func_800AE0B0("補正 %d ", *(p = &D_801506F8[x]));
     r = func_800AE0D0() & 7;
     a = *p;
     d = r + a;
@@ -59,9 +57,6 @@ s32 func_80146400(void)
     /* FAKE: zero expression preserves the comparison live range. T-10850 */
     return (d > 0) * 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146400);
-#endif
 
 s32 func_801464D4(s32 mode) {
     u32 i;
@@ -628,7 +623,47 @@ void func_80148078(void) {
 }
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801480D0);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80148BC8);
+/* Implicit int in the original (no return value): $v0 stays live at the exit, which orders the loop preheader. T-22029 */
+s32 func_80148BC8() {
+    s16 *x;
+    s16 *y;
+    s32 i;
+
+    for (i = 0; i != 0xE; i++) {
+        if (D_80150684[i] == 0xD) {
+            x = &D_80150630[i];
+            y = &D_8015064C[i];
+            func_80148F7C(D_80150682, *x + 0x86, *y, 1, 0);
+            func_80148F7C(0, *x + 0x8E, *y, 0, 0);
+            func_80148F7C(D_801506F0, *x + 4, *y, 0, 1);
+            if (i >= 7) {
+                D_801506F4 = 1;
+            } else {
+                D_801506F4 = 0;
+            }
+        } else if (D_80150684[i] == 0xA) {
+            x = &D_80150630[i];
+            y = &D_8015064C[i];
+            func_80148F7C(D_8015067C, *x + 0x86, *y, 1, 0);
+            func_80148F7C(0, *x + 0x8E, *y, 0, 0);
+            func_80148F7C(D_801506E4, *x + 4, *y, 0, 1);
+        } else if (D_80150684[i] == 0xB) {
+            if (D_800E6280.unk_1BC[11].unk_0C.f.f9 != 0) {
+                x = &D_80150630[i];
+                y = &D_8015064C[i];
+                func_80148F7C(D_8015067E, *x + 0x86, *y, 1, 0);
+                func_80148F7C(0, *x + 0x8E, *y, 0, 0);
+                func_80148F7C(D_801506E8, *x + 4, *y, 0, 1);
+            }
+        } else if (D_800E6280.unk_1BC[D_80150684[i]].unk_0C.f.b1) {
+            x = &D_80150630[i];
+            y = &D_8015064C[i];
+            func_80148F7C(D_80150668[D_80150684[i]], *x + 0x86, *y, 1, 0);
+            func_80148F7C(0, *x + 0x8E, *y, 0, 0);
+            func_80148F7C(D_801506BC[D_80150684[i]], *x + 4, *y, 0, 1);
+        }
+    }
+}
 
 void func_80148E98(void) {
     func_80049A40(-0xA0, -0x68, 0x140, 0x8E, 5, 0xE0E0E0, 2);

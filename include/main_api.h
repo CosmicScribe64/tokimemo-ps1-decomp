@@ -1700,19 +1700,27 @@ extern u32 D_80122640[];
 extern s32 D_80122740;
 extern s32 D_80122744;
 extern s32 D_80122748;
+#ifndef MAIN_API_OVERRIDE_D_8012274C
 extern s32 D_8012274C;
+#endif
 extern s32 D_80122750;
+#ifndef MAIN_API_OVERRIDE_D_80122754
 extern s32 D_80122754;
+#endif
 extern s32 D_80122758;
 extern s32 D_8012275C;
 extern s32 D_80122760;
+#ifndef MAIN_API_OVERRIDE_D_80122764
 extern s32 D_80122764;
+#endif
 extern s32 D_80122768;
 extern u8 D_8012276C;
 extern u8 D_8012276D;
 extern u8 D_8012276E;
 extern s32 D_80122770;
+#ifndef MAIN_API_OVERRIDE_D_80122774
 extern s32 D_80122774;
+#endif
 extern s32 D_80122778;
 extern u8 D_8012277C;
 extern u8 D_8012277D;
@@ -2245,7 +2253,9 @@ u8 Sw_Test(void);
 void Sw_Clear(void);
 void Hw_Clear(void);
 void func_80053CC0(void);
+#ifndef MAIN_API_OVERRIDE_func_80053CE0
 void func_80053CE0(void);
+#endif
 void func_80053D10(void);
 s32 func_80053F04(void);
 s32 func_80054140(void);
@@ -2717,6 +2727,8 @@ void func_80086AB0(s32 arg0);
 s32 func_80087954(s32 arg0, u8 *arg1);
 s32 func_800879D0();
 s32 func_80087C64();
+/* Four-byte CD mixer input; wrapper returns 1 (asm/libcd_rest.s, T-24062). */
+s32 func_80087DC8(u8 *arg0);
 s32 func_80087E4C(s32 arg0, u8 *arg1);
 s32 func_80087E6C(s32 arg0, s32 arg1, s32 arg2);
 void func_80088070();
@@ -2869,7 +2881,9 @@ void func_800AE0F0(void *dst, void *src);  /* strcpy (SDK libc) */
 #endif
 void strcpy(u8 *dst, u8 *src);
 void strcat(u8 *dst, u8 *src);
+#ifndef MAIN_API_OVERRIDE_func_800AE120
 void func_800AE120(s32 arg0);
+#endif
 s32 sprintf();
 s32 strcmp(u8 *a, u8 *b);
 s32 SetSp();
@@ -3062,5 +3076,14 @@ void func_80060150(void);
 
 /* T-14200: canonical declaration of the existing MAIN definition. */
 void func_80041840(void);
+
+/* Legacy EVENT renderer call-site views, T-24017. The packet pointers are
+ * passed in a0/a1; return values are unused. Keep the unknown legacy names. */
+void func_800674F4();
+void func_800675A8();
+void func_80067678();
+void func_80067628();
+extern s32 D_800E9600; /* word index used for legacy viewport and ordering-table offsets */
+extern u8 D_800B2580[]; /* address-only ordering-table base, byte extent unknown */
 
 #endif /* MAIN_API_H */

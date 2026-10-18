@@ -237,3 +237,29 @@ drafts in the template shape and `gs-local` on them: `func_80135E48` 364 to 20, 
 - `func_80133718`, `func_80133CB8`, `func_80136688` (46 to 50): the stack offsets and the register order of
   the `j` counter; the layout probe (scalars or arrays first, no pad to `pad[3]`) gives 46 to 60.
 
+
+## T-24002 completion follow-up
+
+`func_80139198` matched (860 bytes) on codex/complete-option. The T-17800 hand draft
+uses the current `DisplayActor44` name. Moving the existing `unk_03A = 0` store into
+a comma expression in a `menu_set` row argument reproduces the original delayed store
+and HI16 schedule; all four row argument positions scored zero. This is marked FAKE:
+the expression controls evaluation order and the real source is unknown. Default proof:
+`funcdiff.py --unit OPTION --resolve --version default func_80139198` reports linked
+function bytes equal target (860 bytes); `ninja -j2 build/ovl/OPTION.ok` passes its checksum.
+See [[tickets/T-24002-complete-option]].
+
+The bounded follow-up retains the GameState-local `func_80139F8C` guard at 5 differing
+rows (11 before). Width, assignment-stage and shared-compare forms did not recover the
+original `move a0,t1` before OR/mask. `func_80139E3C` stays guarded at 60 rows after
+input-local, width/narrowing, return-type and index-form probes. The larger routines
+remain assembly: current typed `func_801394F4` improves 215 to 115 differing rows by
+merging split temporary ranges (a natural clamp form has 56 aligned edits but 134 literal
+diff rows), while corrected input fields in `func_80139A30` leave 223 rows. Source drafts
+and concrete blockers are in drafts/T-24002/README.md; no shared header types changed.
+
+## T-24040 menu sibling completion
+
+func_801342A8 and func_8013493C matched1028 default linked bytes (468+560). Direct same-file hide/shrink/restore recipe and Arrs4x8 remove stale m2c loop/control problems. 342A8 needs a meaningful cached u8 mode after its initial calls; then only frame layout differs. Explicit FAKE frame words before rows reproduce frame0xC0 while keeping active rows at0x38/0x34:16words for342A8,18for3493C. Marked same-line loop scheduling follows T-7020. No header edits or other matched-body changes;3493C void view also matches. Default literal no-build proofs, OPTION SHA1 and declaration guards pass. See [[tickets/T-24040-option-menu-siblings]].
+
+T-24040 final bounded result: two of three matched (1028 bytes).3394C retained as a five-row guarded typed sibling; original selector copy remains absent in current IDO, with two branch-offset effects. Meaningful value propagation/casts/index reuse did not close it. Old hand archive's OptSpr44 is obsolete; current source uses DisplayActor44. Source-only unresolved form and exact negatives archived in drafts/T-24040/; all loose probes preserved ignored. Ticket In Review; no additional coverage claim for guarded selector.

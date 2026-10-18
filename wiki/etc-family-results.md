@@ -75,7 +75,7 @@ declaration changed (`D_8015014C[0]` in `func_80143240`; `EtcWork40` moved out o
 
 | Type | Symbols | Evidence |
 | --- | --- | --- |
-| `EtcExamRank` (`s16 value[14]`, `s32 order[14]`, `s32 rank[14]`, 0x8C) | `D_80150668` (`D_801506F0` is `rank[13]`) | `func_801480D0` fills it (debug prints `[%d:%d]` of value, order, rank), `func_8014790C` and `func_80148BC8` draw it; the layout is the one the T-14500 repair draft of `func_801480D0` found |
+| Exam ranking, three symbols since T-22029 (was `EtcExamRank`, 0x8C; a struct view made uopt hoist a base register): `s16 D_80150668[14]` value, `s32 D_80150684[14]` order, `s32 D_801506BC[14]` rank, scalar names for rows read by constant index | `D_80150668` (`D_801506F0` is `rank[13]`) | `func_801480D0` fills it (debug prints `[%d:%d]` of value, order, rank), `func_8014790C` and `func_80148BC8` draw it; the layout is the one the T-14500 repair draft of `func_801480D0` found |
 | `s16 [14]` | `D_80150630`, `D_8015064C` | x and y of the 14 ranking rows (`func_8014790C`, `func_80148BC8`) |
 | `u8 [13]` | `D_80150728`, `D_80150738`, `D_8014E0A4` | per-girl base score and spread of the ranking; per-girl pick counts of `func_8013C8EC` |
 | `s32 [13][2]` | `D_8014DB90`, `D_8014DBF8` | two words per girl passed to `func_80046290(s32, s32, s32)` (`lw 0` / `lw 4` at `unk_F5F * 8`) |
@@ -165,3 +165,27 @@ Eight file-disjoint packages from the orchestrator's `mklists3.py` (lists in its
 | w3-etc-p06 | T-17306 | `8013F980.c` | 2 | 1,048 |
 | w3-etc-p07 | T-17307 | `80143240.c` | 6 | 2,072 |
 | w3-etc-p08 | T-17308 | `801492C0.c`, `8013FF80.c` | 4 | 3,436 |
+
+## T-24012 dispatcher checkpoint
+
+[[tickets/T-24012-etc-render-family]] verifies `func_80136448`, 1,280 literal linked bytes, in `src/ovl/ETC/80132880.c`. The known NAME_ENT `func_80140044` sibling confirms the dispatch family. The void return view leaves one instruction out of the shared epilogue and shifts branch displacements; an `s32` view with no explicit return reproduces all 320 instruction words and passes explicit default linked-byte proof and the ETC checksum. The view is marked FAKE since the historical source declaration is unknown. Its existing void callees gain accurate overlay-header declarations. Header/global guards pass; prototype guard reports 0 new / 15 known disagreements. Proof logs: `build/etc24012/final-proof.log`, `final-build.log`, `header-guard.log`, `global-guard.log`, `proto-guard.log`. Other assigned rendering functions remain assembly; review pending.
+
+### T-24012 remaining rendering drafts
+
+The follow-up pass adds no verified bytes. `drafts/T-24012/` preserves three source-only compiling drafts, independently measured in the reviewed full TU: RGB filter `func_801328A4` cost 217, SDK quad renderer `func_80132C3C` 180, background selector `func_80132FB0` 150. Costs are aligned differing-instruction diagnostics after relocation, not match proofs. The RGB draft recovers a legal flat 822-record buffer, correct frame/RECT position, and remains blocked on the +24-byte row base and saved-register/arithmetic allocation. Quad frame/spill and colour loads differ. Background code uses the real 22-pointer table and legal absorbed-alias indices, but original address rematerialization differs from compiler base sharing. Draft README records the bounded rejected variants; no guessed frame padding or scalar aliases were added. Production remains at the reviewed dispatcher checkpoint and the other three functions remain assembly. [[tickets/T-24012-etc-render-family]] is In Review for the archive delta, with those targets pending.
+
+## T-24038 signed-number renderer
+
+[[tickets/T-24038-etc-master-siblings]] recovers `func_8013FC64` in `src/ovl/ETC/8013F980.c`: 796 default linked bytes match, and the ETC checksum passes. MAIN `func_8004AE54` supplies the digit-loop family, while this target uses full SDK `SPRT` packets with explicit 8x8 dimensions and no enable guard. Division precedes the digit increment. A real sign-offset local and explicit sign count increment reproduce the 0x78 frame without padding or new FAKE code. The approved 20-byte font declaration describes ten coordinate pairs and preserves the separate sign bytes. Proof and guard logs are under `build/etc-master24038/`; other production bodies are textually unchanged.
+## T-24049 exam ranking semantic reconstruction (2026-10-18)
+
+func_801480D0 remains ASM. The T-14700 types repair is adapted to the current three arrays and existing EtcWork40 total-score field in drafts/T-24049/exam-ranking.c. Signed casts on byte spread divisors recover the target signed div operation. A substantive old-draft error is corrected: its final bonus updated15 records, but the target peels3 stores and loops over2 groups of4, updating exactly11. The malformed Shift-JIS debug spelling is restored to the source string. No header changes are needed.
+
+Current full-TU default diagnostic is885 rows,709 words versus702 target, frame216 versus208. Locals before the array do not change it. Selector/noise lifetime split, a volatile noise spill, separate generation counter and explicit next tie indices all worsen (987/1004/1053/1071 rows); README records each. The target's four saved registers, noise stack spill and loop range lifetimes remain unrecovered, so this is not a register-only closer. Annotated source reproduces885 via drafts/T-24028/probe.py. Production/header unchanged; independent ETC SHA1 control passes through ASM. Zero new C bytes. [[tickets/T-24049-etc-exam-ranking]] is In Review for root review.
+## T-24055 short model and scrolling helpers
+
+[[tickets/T-24055-etc-short-helpers]] leaves all three targets as ASM, zero matches/bytes. Fresh selected model4354C reproduces historical13/13 with split model pointer and actual SVECTOR; prologue and vz/vx/vy grouping remain. Fill43758 corrects stale first-coordinate word reads to bytes, uses real actor fields and reaches111/109; index/single-base forms193/194 are worse. Scroll43968 corrects byte reads and reaches70/70; preserving its record index before the helper call changes to109, direct counter74/72, return liveness70. Original counter caching and multiply-index lifetime remain. No production/header/config change; baseline ETC checksum passes. Source bodies, reproducer and bounded evidence in drafts/T-24055/README.md; all instruction traces ignored.
+
+## T-24067 focused album-copy follow-up
+
+Source-only checkpoint drafts/T-24067/body.c reaches cost18/28 diagnostic rows with exact0x48 frame and75 instruction words. Reading the stored mode byte restores the final printf/store schedule. A FAKE format-pointer identity test retains the format range and restores s2=format/s3=end/s4=save. The end uses canonical GameState+0x800; no header/export change. Remaining differences are preheader order, two equal-value stack-argument stores and copy scratch t5/t6. Existing private tracing confirms an equal-priority first-use tie before the identity workaround, with code/data/relocations identical to stock. Production unchanged; [[tickets/T-24067-etc-album-copy]] remains In Progress.

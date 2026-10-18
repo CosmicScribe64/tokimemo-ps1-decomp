@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-17
+updated: 2026-10-18
 ---
 
 # Wiki Index
@@ -8,6 +8,9 @@ updated: 2026-10-17
 Read this first. Update on every ingest or new page.
 
 ## Core
+- [[completion-run-2026-10-17]] - ACTIVE 100% goal: current coverage, verified gains, file ownership and contributor coordination.
+
+- [[geko-family-results]] - exact renderer clone ports and verification (T-24017).
 - [[flagged-draft-pass]] - Sol6.1 medium pass:165 reviewed,93 repaired,116 remaining flagged; no new verified bytes.
 - [[stopping-point-2026-10-15]] - final handoff: 1,066/1,066 compiling draft scopes, 63.7% verified bytes, reconstruction limitations and restart instructions; user-requested stop.
 - [[overview]] - project goal, stack, pointers to fact pages
@@ -35,14 +38,87 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
-- [[tickets/T-22000-wave-4-conveyor|T-22000]] Wave 4 conveyor until weekly usage nears 95 percent (In Progress).
-- [[tickets/T-23000-wave-5-big-conveyor|T-23000]] Wave 5 biggest-first conveyor alongside wave 4 (In Progress).
+- [[tickets/T-24063-taco-short-count|T-24063]] TACO corrected buffer source and refreshed controls, zero matches, In Review.
+- [[tickets/T-24060-shugaku-short-selectors|T-24060]] SHUGAKU52/62-row corrected source leads, zero matches, In Review.
+- [[tickets/T-24059-short-copy-siblings|T-24059]] two short copy-chain matches328 bytes, independently verified on main, Done.
+- [[tickets/T-24055-etc-short-helpers|T-24055]] ETC short source leads13/111/70 rows, zero matches, In Review.
+- [[tickets/T-24053-short-function-lane|T-24053]] two short C wins232 bytes, SHUGAKU8-row source lead, In Review.
+- [[tickets/T-24048-master-animation|T-24048]] MASTER source-only reconstruction434/428, zero matches, In Review.
+- [[tickets/T-24044-taiiku-taco-siblings|T-24044]] TAIIKU/TACO bounded sibling retry: zero matches, corrected counter and improved output-index source leads archived; In Review.
+- [[tickets/T-24040-option-menu-siblings|T-24040]] two of three matched (1028 bytes), selector guarded at5 rows; In Review.
+- [[tickets/T-24036-geko-shugaku-siblings|T-24036]] one of two matched (244 bytes); GEKO guard refreshed to7 rows, In Review.
+- [[tickets/T-24033-valen-selector-ports|T-24033]] VALEN sibling retry:32D0C guarded at7 rows,34030 remains27; zero matches, In Review.
+- [[tickets/T-24067-etc-album-copy|T-24067]] single ETC album record copy, In Progress.
+- [[tickets/T-24064-etc-count-trio|T-24064]] three small ETC functions (Ready; user deferred while DATE remains the sole worker focus).
+- [[tickets/T-24057-ending-small-pair|T-24057]] two small ENDING fade handlers (In Review; no matches, both source leads at cost 4 / 12 rows).
+- [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI sibling package (In Review; 2 matches, 2,020 bytes).
+- [[tickets/T-24035-small-bunka-geko-siblings|T-24035]] Small BUNKA_SD/GEKO sibling ports (In Progress).
+- [[tickets/T-24035-small-bunka-geko-siblings|T-24035]] Small BUNKA_SD/GEKO sibling ports (In Review; 2 matches, 396 bytes; fade-in guard 4 rows).
+- [[tickets/T-24028-date-event-short-movie-siblings|T-24028]] Short DATE/EVENT movie siblings (In Review; DATE 11-instruction guard, EVENT 7-instruction source lead).
+- [[tickets/T-24018-large-sibling-state-machines|T-24018]] Large DATE/EVENT sibling state machines (In Review; source-only leads, 0 new C bytes).
+- [[tickets/T-24016-bunkasai-state-machines|T-24016]] BUNKASAI state machines (Done; 2 matches, 3,160 bytes).
+- [[tickets/T-24014-taco-pre-closer|T-24014]] TACO func_8014A480 PRE closer (In Review; no match, expression-order tradeoff archived).
+- [[tickets/T-24009-ending-scheduler-closer|T-24009]] ENDING func_8013A2E8 scheduler closer (In Review; no match, new pointer-lifetime evidence archived).
+- [[tickets/T-24005-bunkaken-date-state-machine|T-24005]] BUNKAKEN func_80143DD0 (Done; unguarded default C matched, 3,232 bytes).
+
+- [[tickets/T-24020-astra-hard-functions|T-24020]] Astra hard-function checkpoint; zero C bytes, all three investigations In Review.
+- [[tickets/T-24021-dialogue-scheduling|T-24021]] Dialogue scheduling, six new call-path forms with no gain.
+- [[tickets/T-24042-tel-helper-closure|T-24042]] Close TEL helper allocation to produce a verified C match.
+- [[tickets/T-24020-astra-hard-functions|T-24020]] Astra hard-function lane; dialogue and EVENT verified, remaining large targets active.
+- [[tickets/T-24024-main-dispatcher|T-24024]] Reserved MAIN func_8007132C; counter function excluded.
+- [[tickets/T-24025-geko-picker|T-24025]] Reserved GEKO func_80142C9C; loop allocation follow-up.
+- [[tickets/T-24021-dialogue-scheduling|T-24021]] Dialogue now default C; 8,672 literal text bytes verified, main SHA1 passes.
+- [[tickets/T-24022-tel-frame|T-24022]] TEL month-range and structural probes, no promotion.
+- [[tickets/T-24023-event-handler|T-24023]] EVENT handler now default C; 6,848 literal bytes verified, overlay SHA1 passes.
+- [[tickets/T-24003-complete-bunkaken|T-24003]] BUNKAKEN selector and date-loader remainder (In Review; 2 of 3 matched, 836 bytes).
+- [[tickets/T-24004-complete-shougatu|T-24004]] SHOUGATU scene completion: dispatcher func_801430A0 matched (352 bytes), remaining bounded probes in progress.
+- [[tickets/T-24007-complete-geko|T-24007]] GEKO scene completion: func_80133598 matched (452 bytes), bounded remainder probes ongoing.
+- [[tickets/T-24013-complete-rpg-bat|T-24013]] RPG_BAT battle completion: func_80139510 matched (2,424 linked bytes), bounded remainder probes ongoing.
+- [[tickets/T-24033-valen-selector-ports|T-24033]] VALEN sibling retry:32D0C guarded at7 rows,34030 remains27; zero matches, In Review.
+- [[tickets/T-24032-date-taco-rotation-clones|T-24032]] Six SDK rotation clones retained as ASM; one fresh typed control, provenance notes, zero matches, In Review.
+- [[tickets/T-24027-rpg-bat-state-machines|T-24027]] RPG_BAT state-machine completion:one of three matched (1656 bytes); two current-type source forms archived, In Review.
+- [[tickets/T-24019-gyozi-sibling-ports|T-24019]] GYOZI sibling ports: one of four matched (392 bytes); three selector source forms archived, In Review.
+- [[tickets/T-24015-complete-main-menu|T-24015]] MAIN menu bounded retry: zero of five matched, A410 improved to 41 rows; source-only drafts in review.
+- [[tickets/T-24013-complete-rpg-bat|T-24013]] RPG_BAT battle completion: func_80139510 matched (2,424 linked bytes), two unresolved source drafts archived; package in review.
+
+- [[tickets/T-24007-complete-geko|T-24007]] GEKO scene completion: func_80133598 matched (452 bytes), month helper guarded at 36 rows; package in review.
+
+- [[tickets/T-24004-complete-shougatu|T-24004]] SHOUGATU scene completion: dispatcher func_801430A0 matched (352 bytes), four unresolved drafts archived; package in review.
+
+- [[tickets/T-24002-complete-option|T-24002]] OPTION completion follow-up: func_80139198 matched (860 bytes), one guarded draft improved; package in review.
+
+- [[tickets/T-24008-taiiku-runners|T-24008]] TAIIKU runner family (In Progress).
+- [[tickets/T-24017-clone-ports|T-24017]] Three unguarded C clone ports,1128 verified bytes (In Review).
+- [[tickets/T-24008-taiiku-runners|T-24008]] TAIIKU runners: 692-byte match and nine-instruction updater draft (In Review).
+- [[tickets/T-24006-main-render-family|T-24006]] MAIN renderer family, five typed source hypotheses, zero new verified bytes (In Review).
+- [[tickets/T-20012-stable-search-scoring|T-20012]] Stable candidate ranking in viewsweep/order_search, 230 tests pass, issue #58 (Done).
+- [[tickets/T-20013-name-ent-fade-page-followup|T-20013]] NAME_ENT fade/page follow-up, 2,652 bytes still guarded, claim #57 (Ready).
+- [[tickets/T-20012-stable-search-scoring|T-20012]] Stable candidate ranking in viewsweep/order_search, 230 tests pass, issue #58 (In Review).
+
+- [[tickets/T-20011-name-ent-coordinate-selection|T-20011]] NAME_ENT pointer-coordinate helper, 152-byte verified C match, claim #57 (Done).
+- [[tickets/T-22000-wave-4-conveyor|T-22000]] Wave 4 conveyor until weekly usage nears 95 percent (Done).
+- [[tickets/T-23000-wave-5-big-conveyor|T-23000]] Wave 5 biggest-first conveyor alongside wave 4 (Done).
+- [[tickets/T-23001-w5-big-p01|T-23001]] Wave 5 big package w5-big-p01: TEL `80132000.c`, `func_80136724` (7,044 B) and `func_80134FE4` (800 B) both back to `INCLUDE_ASM`; frame rule for many locals, `func_80134FE4` structurally equal with 140 register rows (Done; 0 of 2 matched).
+- [[tickets/T-23002-w5-big-p02|T-23002]] Wave 5 big package w5-big-p02: ENDING `801396E0.c`, `func_8013A2E8` (4,648 B) from 1,667 rows to a 12-line guard; `func_8013B640` is `s32` (Done; 0 of 1 matched).
+- [[tickets/T-22030-w4-p30|T-22030]] Wave 4 package w4-p30: RENSYU `80132040.c`; `func_80133628` guarded at 4 rows (21 before; `s32 girl`, truthiness test, pre-increment; In Review; 0 of 4 matched).
+- [[tickets/T-22028-w4-p28|T-22028]] Wave 4 package w4-p28: ENDING `80133030.c` and `80137340.c`; `func_80137BB4` guarded at 23 rows (`u32` word copy, 58 before), `func_80137E40` at 32 rows (Done; 0 of 5 matched).
+- [[tickets/T-22025-w4-p25|T-22025]] Wave 4 package w4-p25: TACO `80149F90.c` and `8015ABF0.c`, `func_801511C0` (5 rows), `func_8014F5F0` (6), `func_8014A480` (1, closer 2), `func_8015B1B8` (8) stay guarded with refreshed notes, `func_8014F820` not started (Done; 0 of 5 matched).
+- [[tickets/T-22027-w4-p27|T-22027]] Wave 4 package w4-p27: GEKO `801338F0.c`: `func_80133AA0` guarded (8 rows, operand order of the compares against the shared constant 1), `func_80133C50` stays `INCLUDE_ASM`; in review.
+- [[tickets/T-22021-w4-p21|T-22021]] Wave 4 package w4-p21: BUNKA_SD `801388D0.c` and `80134540.c`, `func_8013987C` and `func_80134850` matched (promoted counter byte, `*= 0` clear, FAKE); `func_80134D94` and `func_80139290` stay `INCLUDE_ASM` (Done; 2 of 4 matched).
+- [[tickets/T-23003-w5-big-p03|T-23003]] Wave 5 big package w5-big-p03: main `8006CB30.c`, `func_8006D7EC` (4,692 B) typed to 1,173 of 1,173 aligned instructions and guarded at 1 row, 13 before the closer pass (levers in [[matching-notes]]), `func_8007132C` and `func_8006D138` stay `INCLUDE_ASM` (Done; 0 of 3 matched).
+- [[tickets/T-23004-w5-big-p04|T-23004]] Wave 5 big package w5-big-p04: EVENT `8011C650.c`, `func_8011DDB8` (4,216 B) and `func_8011C750` (3,816 B) both back to `INCLUDE_ASM`; `for` loops, `s32 sv[2]` locals and `register u8` fade-chain recipe, exact first 336 and 342 rows (Done; 0 of 2 matched).
+- [[tickets/T-23005-w5-big-p05|T-23005]] Wave 5 big package w5-big-p05: GEKO `80142760.c`, `func_80144270` (1,184 B) matched; `func_80142C9C` (3,700 B) typed with frame and stack offsets exact, 492 allocation rows left, back to `INCLUDE_ASM` (levers in [[matching-notes]]; Done; 1 of 6 matched).
+- [[tickets/T-23006-w5-big-p06|T-23006]] Wave 5 big package w5-big-p06: main `80047550.c`, `func_800476C0` (3,132 B) typed, frame word-exact, register order open, `func_80047560` and `load_tpage_buf_lock` (guard 29 to 20 rows); sprite-reload and call-argument levers, `switch` tpage arms ([[matching-notes]]) (In Review; 0 of 3 matched).
 - [[tickets/T-22001-w4-p01|T-22001]] Wave 4 package w4-p01: main `8007C030.c`, `dialogue_speak_part` stays guarded at 16 rows, 18 more forms tried (Done; 0 of 1 matched).
 - [[tickets/T-22007-w4-p07|T-22007]] Wave 4 package w4-p07: `NAME_ENT` `80142A80.c`, `func_80142A80` and `func_8014472C` both matched; `rodata_pieces.py` writes pieces for owned symbols (Done; 2 of 2 matched).
+- [[tickets/T-22018-w4-p18|T-22018]] Wave 4 package w4-p18: BUNKAKEN `801428D0.c`, `80144F70.c`, `80143DD0.c`: `func_801428D0` and `func_80144F70` matched (the latter with one FAKE view of `D_80122E98`), `func_80143DD0` not started (Done; 2 of 3 matched).
 - [[tickets/T-22014-w4-p14|T-22014]] Wave 4 package w4-p14: SHUGAKU `80133D60.c` and `80135430.c`, `func_80135480`, `func_80133E10`, `func_801360B0` matched; `func_801357AC` and `func_80135EA4` stay guarded at 10 rows (block-copy end register) (Done; 3 of 5 matched).
+- [[tickets/T-22029-w4-p29|T-22029]] Wave 4 package w4-p29: ETC `80146400.c`, `func_80148BC8` matched (exam rows as three arrays, implicit int); `func_80146400` guarded at 7 rows, `func_8014790C` 44 rows back to ASM with draft archived, `func_80148F7C` not started (In Review; 1 of 4 matched).
+- [[tickets/T-22026-w4-p26|T-22026]] Wave 4 package w4-p26: ETC `8013B1F0.c`, `func_8013B1F0` matched (188 rows to 0; the jump table of the 8 arm starts at 0xE through two empty cases) (Done; 1 of 1 matched).
 - [[tickets/T-22009-w4-p09|T-22009]] Wave 4 package w4-p09: EVENT `8011C650.c`, `func_8011EDFC` matched through a data island (13 rows to 0), `func_8011D5C4` back to INCLUDE_ASM, hand draft at 409 rows (Done; 1 of 2 matched).
 - [[tickets/T-22004-w4-p04|T-22004]] Wave 4 package w4-p04: TAIIKU `80140810.c` and `80142240.c`, three functions: `func_80142400` guarded 349 to 26 rows, `func_8014357C` guarded 34 rows, `func_80140A90` restored to INCLUDE_ASM (Done; 0 of 3 matched).
 - [[tickets/T-22010-w4-p10|T-22010]] Wave 4 package w4-p10: GEKO `80134D10.c`, `func_80137580`, `func_80135AC8`, `func_801355E8` matched, `func_80136C20` guarded at 4 rows, `func_801367EC` back to INCLUDE_ASM (Done; 3 of 5 matched).
+- [[tickets/T-22013-w4-p13|T-22013]] Wave 4 package w4-p13: RPG_BAT `801484E0.c` and `8015A1F0.c`, `func_80148714` matched through the `D_8015EBAC` table symbol, `func_8015A8B4` matched with a reassigned `x` (FAKE), `func_8015A744` matched by the closer with a record array and two views of the displacement words (FAKE) (Done; 3 of 3 matched).
 - [[tickets/T-22006-w4-p06|T-22006]] Wave 4 package w4-p06: DATE `8014A1B0.c`, `func_8014A8FC` guarded at 20 rows from 34, not matched (Done; 0 of 1 matched).
 - [[tickets/T-22003-w4-p03|T-22003]] Wave 4 package w4-p03: BUNKA_SD func_80137890 and three 592-byte functions (Done; 4 of 4 matched, 2,464 bytes).
 - [[tickets/T-22012-w4-p12|T-22012]] Wave 4 package w4-p12: BUNKASAI `801511E0.c`, `8013B190.c`, `80150930.c`, four functions: `func_8013B25C` (1,068 B) and `func_80150B7C` (932 B) matched, `func_801509A4` guarded at 19 rows, `func_80151364` at 2 rows (Done; 2 of 4 matched).
@@ -51,10 +127,16 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-22008-w4-p08|T-22008]] Wave 4 package w4-p08: `NAME_ENT` `80132000.c`, 0 of 4 matched; `func_80132320` (14 lines) and `func_80134110` (26 lines) stay guarded, `func_80134248` at 455 lines, `func_80138C1C` not closer (Done; 0 of 4 matched).
 - [[tickets/T-22011-w4-p11|T-22011]] Wave 4 package w4-p11: EVENT `800FBBF0.c` and `8010BB90.c`, five functions: `func_8010F340` and `func_800FD00C` matched, `func_800FC040` and `func_8010F74C` guarded (24, 29 rows), `func_8010F55C` back to ASM (Done; 2 of 5 matched).
 - [[tickets/T-22015-w4-p15|T-22015]] Wave 4 package w4-p15: MASTER `80132140.c`, 0 of 2 matched; `func_80132444` guarded at 22 rows, `func_801326B4` stays `INCLUDE_ASM` (586 rows after cleanup, frame matches) (Done; 0 of 2 matched).
+- [[tickets/T-22017-w4-p17|T-22017]] Wave 4 package w4-p17: DATE `80132000.c`, 0 of 5 matched; `func_8013B488` best 52 rows, `func_8013D5FC` 67, `func_8013F214` 51, drafts archived, guards back to ASM (Done; 0 of 5 matched).
+- [[tickets/T-22019-w4-p19|T-22019]] Wave 4 package w4-p19: ETC `8013BEF0.c`, `func_8013C700`, `func_8013E89C`, `func_8013D32C`, `func_8013CCE4`, `func_8013E6AC`: 4 of 5 matched, `func_8013CCE4` stays `INCLUDE_ASM` at 43 rows (Done; 4 of 5 matched).
+- [[tickets/T-22020-w4-p20|T-22020]] Wave 4 package w4-p20: SHOUGATU `801390C0.c`, `80137FF0.c`, `80138B40.c`, three functions (`func_80138FC0`, `func_80138240`, `func_80139334`): `func_80138FC0` matched (252 B, `CharFlags` bit-field idiom); the other two not started (Done; 1 of 3 matched).
+- [[tickets/T-22016-w4-p16|T-22016]] Wave 4 package w4-p16: KANGEI `80135F10.c` and `80134120.c`, four functions: `func_801362F0` and `func_8013769C` matched, `func_80135004` guarded (16 rows), `func_80134724` back to ASM (Done; 2 of 4 matched, 1,688 bytes).
+- [[tickets/T-22024-w4-p24|T-22024]] Wave 4 package w4-p24: EVENT `8010FE10.c`, five functions: `func_80118010` (680 B, `func_8004A8EC` as `s32`) and `func_8011A8E4` (540 B, plain if/else chain, scalar above the stack tables) matched; `func_8011C164` back to `INCLUDE_ASM` (70 rows, `i`/`pos` register swap); `func_80118868` and `func_80114B0C` keep their guards (Done; 2 of 5 matched).
+- [[tickets/T-22023-w4-p23|T-22023]] Wave 4 package w4-p23: NAME_ENT `80139740.c`, 2 of 5 matched (`func_8013D2AC`, `func_80140B20`), `func_8013DF88` guarded at 11 register rows, `func_8013AF78` and `func_8013CB44` drafts in `drafts/T-22023/` (Done; 2 of 5 matched).
 - [[tickets/T-11880-date2-remainder|T-11880]] DATE2: the remaining nine functions, claim #49 (Done; 8 of 9 matched, DATE2 101/102, 91.9% of bytes).
 - [[tickets/T-11890-tt-ratan2-aspsx|T-11890]] TT `func_8014D260` (gcc ratan2) through an ASPSX pass on the gcc path, claim #56 (Done; not matched: real ASPSX shows none of the three habits, they come from the compiler).
 - [[tickets/T-20008-large-name-introduction|T-20008]] NAME_ENT introduction reconstruction archive (4,308-byte scope), claim #50; compiling, still nonmatching (In Progress; draft checkpoint merged, PR #51).
-- [[tickets/T-20010-name-ent-resource-loader|T-20010]] NAME_ENT resource loader follow-up, 1,652 bytes; valid table recovered, still ASM (Ready).
+- [[tickets/T-20010-name-ent-resource-loader|T-20010]] NAME_ENT resource loader, 1,652-byte verified plain-C match, claim #52 (Done).
 - [[tickets/T-20009-name-ent-loader|T-20009]] NAME_ENT CD-level display helper, 484-byte verified match, claim #52 (Done, PR #53 merged).
 - [[tickets/T-11870-tt-batch-13|T-11870]] TT batch 13: the last three guarded near misses (Done; all 3 matched, TT 302/303, 99.7% of bytes).
 - [[tickets/T-11860-tt-batch-12|T-11860]] TT batch 12: the TT remainder, one long Opus run per file group (Done; 25 of 28 matched, TT 299/303, 97.2% of bytes).
@@ -438,6 +520,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-4100-wave-3-list-10|T-4100]] Wave 3, list 10: 115 functions matched in 27 files (Done)
 - [[tickets/T-6020-wave-4-list-2|T-6020]] Wave 4, list 2: 13 functions matched in 34 files (Done)
 - [[tickets/T-5010-t0018-register-order-second-attempt|T-5010]] T-0018 register order, second attempt: entry and compare rules, unit-private data, cvt pass in the build, 44 functions (Done)
+- [[tickets/T-22022-w4-p22|T-22022]] Wave 4 package w4-p22: GYOZI `8013BD50.c`, `8013E5B0.c`, `801400D0.c`, `80143110.c`, 0 of 4 matched; `func_80143160` best at 39 rows, drafts archived, all back to ASM (Done).
 
 ## Entities / concepts / sources
 - [[register-cheatsheet]]: one-page register-miss guide, symptom to C change (regdiff loop)
@@ -601,3 +684,41 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-17203-w3-date-p03|T-17203]] Wave 3 package w3-date-p03: DATE `80154260.c`, `80152FC0.c`, `8014CC40.c`, 3 of 4 matched (`func_8014EF1C` POLY_G4 builder, `func_80154118` where `tools/cvt_pass.py` cost a frame slot, `func_8014DCCC` without a function-pointer local), `func_80155004` draft in `drafts/T-17203/` (register names only) (Done)
 - [[tickets/T-17202-w3-date-p02|T-17202]] Wave 3 package w3-date-p02: DATE `80132000.c`, 6 of 6 matched (1,972 B: `func_80139834`, `func_8013E6A4` with an `s32` view of `func_80085A60`, `func_80137DF4` as an `s32` function without `return`; closer pass: `func_801324DC`, `func_8013BEB8`, `func_80139664`) (Done).
 - [[tickets/T-17102-w3-rpg-bat-p02|T-17102]] Wave 3 package w3-rpg-bat-p02: RPG_BAT `80151C10.c`, `80156CC0.c`, 3 of 3 functions matched (3,056 B: `func_80151C10`, `func_80156D78`, `func_80157158`); the `$v1`-selector miss fixed by an int-returning callee view (Done).
+
+- [[tickets/T-24010-date-etc-coordination|T-24010]] Isolated DATE and ETC coordinator; workers [[tickets/T-24011-date-dispatch-family|T-24011]] and [[tickets/T-24012-etc-render-family|T-24012]].
+- [[tickets/T-24001-main-schedule-final-row|T-24001]] Close main schedule final instruction (In Review; Astra backedge follow-up remains one row, no new C match).
+
+- [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI two-function sibling package, one compiler, current main reference ports.
+- [[tickets/T-24026-shougatu-sibling-ports]] — SHOUGATU sibling ports: 708 B verified C; dispatcher stack-layout near miss.
+
+- [[tickets/T-24029-seasonal-scene-siblings]] — source-only GYOZI/SHOUGATU typed scene checkpoints; no verified bytes.
+
+- [[tickets/T-24034-event-render-siblings]] — EVENT matched DATE sibling ports, 1,808 B verified C.
+
+- [[tickets/T-24037-event-scene-siblings]] — EVENT typed updater, 628 B; initializer six-edit archive.
+
+- [[tickets/T-24031-gyozi-shougatu-pairs|T-24031]] Paired GYOZI/SHOUGATU handlers (In Review; no matches, four corrected source-only drafts).
+
+- [[tickets/T-24038-etc-master-siblings|T-24038]] ETC signed-number renderer and MASTER event-record handler (In Review; 2 matches, 1,752 default linked bytes).
+- [[tickets/T-24039-tel-date-menu]] - bounded large TEL date menu reconstruction.
+- [[tickets/T-24041-main-render-cd-siblings]] — MAIN LINE_G2 renderer348 B verified; CD dispatcher source-only499-edit checkpoint.
+
+- [[tickets/T-24045-tel-profile-screen]] - TEL profile-screen match, 2128 literal bytes; In Review.
+- [[tickets/T-24046-screen-page-renderer]] — source-only renderer ABI/word-offset/frame recovery; no new verified C.
+
+- [[tickets/T-24043-master-large-handler|T-24043]] Larger MASTER final-event handler (In Review; no match, corrected exact-frame source archived at diagnostic cost 342).
+
+- [[tickets/T-24049-etc-exam-ranking]] - ETC ranking source-only checkpoint,885 rows; In Review.
+
+- [[tickets/T-24052-shougatu-dialogue-siblings]] - source sibling closure for SHOUGATU dialogue handlers.
+- [[tickets/T-24050-geko-scene-near-match]] — GEKO selection source checkpoint and tested replay; no C win.
+- [[tickets/T-24052-shougatu-dialogue-siblings]] - two SHOUGATU matches,1032 literal bytes; In Review.
+- [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Review; no match, assigning default restores switch layout and improves 72 to 28 rows; all 21 table mappings audited).
+
+- [[tickets/T-24056-shougatu-short-siblings]] - three SHOUGATU source-only leads,62/72/12 rows; In Review.
+
+- [[tickets/T-24061-short-control-and-copy]] - source-only short control/copy pass: GEKO44, SHOUGATU56, GYOZI84 rows; zero C bytes, In Review.
+- [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Progress; 28-row source preserved after bounded EVENT recipe transfer, sole worker focus).
+- [[tickets/T-24047-ending-sprite-scene|T-24047]] ENDING sprite scene initializer, 80135F4C (In Review;804/805 source-only checkpoint, zero verified bytes).
+- [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Progress; exact-frame 4-row assignment-capture checkpoint, earlier 28-row source preserved; sole worker focus).
+- [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Review; actual default C match, 3,200 linked bytes; DATE checksum and guards pass).

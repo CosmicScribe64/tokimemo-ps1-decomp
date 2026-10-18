@@ -524,28 +524,37 @@ class Targets(unittest.TestCase):
 
 class Scoring(unittest.TestCase):
     def make(self, tmp, got_keys):
+        import funcdiff as real_funcdiff
         c = SimpleNamespace(unit="main", src=Path("src/main/a.c"), obj="build/a.o")
         target = vs.Target("main:target", "target", "main", c, Path("src/main/a.c"), "", True, None, "guarded draft")
         funcdiff = mock.Mock()
         funcdiff.expected_object.return_value = ("expected.o", None)
         funcdiff.resolved_functions.side_effect = lambda obj, names, c=None: {names[0]: ["a", "b", "c"] if obj == "expected.o" else got_keys}
         funcdiff.keys.side_effect = lambda rows: list(rows)
-        funcdiff.diff_lines.side_effect = lambda want, got: ["-x", "+y"] * 3
+        funcdiff.diff_score.side_effect = real_funcdiff.diff_score
+        funcdiff.diff_lines.side_effect = AssertionError("printable rows must not rank variants")
         proof = mock.Mock()
         proof.compile_unit.side_effect = lambda c, directory, non_matching, edit, source: ((directory / "guarded.o").as_posix(), [])
         with mock.patch.dict(sys.modules, {"funcdiff": funcdiff, "funcdiff_verify": proof}):
             scorer = vs.Scorer(target, Path(tmp))
         return scorer, proof
 
-    def test_rows_are_the_diff_lines_and_zero_keeps_the_object(self):
+    def test_aligned_cost_and_zero_keeps_the_object(self):
         with tempfile.TemporaryDirectory() as tmp:
             scorer, proof = self.make(tmp, ["a", "x", "c"])
-            self.assertEqual(scorer(()), 6)
+            self.assertEqual(scorer(()), 2)
             self.assertEqual(scorer.objects, {})
             self.assertFalse(any(Path(tmp).rglob("guarded.o")))
             scorer, proof = self.make(tmp, ["a", "b", "c"])
             self.assertEqual(scorer((E("c1", "s32 c1();"),)), 0)
             self.assertEqual(list(scorer.objects), [(E("c1", "s32 c1();"),)])
+
+    def test_equal_length_shift_beats_an_extra_wrong_instruction(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            better, _ = self.make(tmp, ["x", "a", "b"])
+            worse, _ = self.make(tmp, ["x", "a", "b", "y"])
+            self.assertEqual(better(()), 2)
+            self.assertEqual(worse(()), 3)
 
     def test_the_edit_is_applied_to_the_preprocessed_text_and_baseline_has_none(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -692,6 +701,17 @@ class Cli(unittest.TestCase):
                     vs.main(["a:x", "b:y", "c:z", "--json", str(outdir), "--resume"])
                     self.assertEqual(run.call_count, 3)
                     self.assertIn("resumed", out.getvalue())
+                    for n, previous in enumerate([None, "old-metric"]):
+                        cached = json.loads(Path(outdir, "a_x.json").read_text())
+                        if previous is None:
+                            cached.pop("score_metric")
+                        else:
+                            cached["score_metric"] = previous
+                        Path(outdir, "a_x.json").write_text(json.dumps(cached))
+                        vs.main(["a:x", "--json", str(outdir), "--resume"])
+                        self.assertEqual(run.call_count, 4 + n)
+                        self.assertEqual(json.loads(Path(outdir, "a_x.json").read_text())["score_metric"], vs.SCORE_METRIC)
+                    self.assertIn("score metric changed", out.getvalue())
                     vs.main(["a:x", "--json", str(Path(tmp, "all.json"))])
                     self.assertEqual(len(json.loads(Path(tmp, "all.json").read_text())), 1)
             finally:

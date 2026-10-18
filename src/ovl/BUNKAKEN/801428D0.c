@@ -1,16 +1,14 @@
 #include "common.h"
 #include "ovl/BUNKAKEN.h"
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10320, only the switch selector register ($v0 vs $v1) differs */
 void func_801428D0(void) {
-    D_80122EBC = 3;
-    switch (D_80122EB8) {
+    ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 3;
+    switch (((BunkaDispatch8 *)&D_80122EB8)->unk_00) {
     case 4:
         switch (D_800E6280.unk_03E) {
         case 0x5F:
             if (func_8008667C(3) == 4 && !D_800E6280.unk_1BC[3].unk_0C.f.b2) {
-                D_80122EBC = 0xFF;
+                ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0xFF;
                 func_80042908(5);
                 return;
             }
@@ -18,7 +16,7 @@ void func_801428D0(void) {
             return;
         case 0x60:
             if (func_8008667C(3) == 4 && !D_800E6280.unk_1BC[3].unk_0C.f.b2) {
-                D_80122EBC = 0xFF;
+                ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0xFF;
                 func_80042908(5);
                 return;
             }
@@ -26,7 +24,7 @@ void func_801428D0(void) {
             return;
         case 0x61:
             if (func_8008667C(3) == 4 && !D_800E6280.unk_1BC[3].unk_0C.f.b2) {
-                D_80122EBC = 0xFF;
+                ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0xFF;
                 func_80042908(5);
                 return;
             }
@@ -42,9 +40,6 @@ void func_801428D0(void) {
         return;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/801428D0", func_801428D0);
-#endif
 
 void func_80142A40(void) {
     GameState *g = &D_800E6280;

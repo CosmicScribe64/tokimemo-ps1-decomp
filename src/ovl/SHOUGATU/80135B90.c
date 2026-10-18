@@ -359,21 +359,19 @@ void func_80136884(void) {
     func_800AE0F0(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_800E6280.unk_03E * 0x63 + D_80122CDC * 0x21 - 0x2520]);
 }
 
-/* NON_MATCHING: T-10910, the file's own data (six variables) is defined so the schedule and shared lui at match; only registers differ: the original loads the first of the three constant-pointer globals into the uopt colour t5 and the other two into t6/t7, 14 lines */
-#ifdef NON_MATCHING
 void func_80136948(void) {
     D_80143FE8 = D_800CA160;
     D_80143FEC = D_800CA164;
     D_80143FF0 = D_800CA168;
+    D_800CA148 = D_800E6280.unk_F5F;
+    /* The intermediate narrowing skips the ugen temporary after sll, as in
+     * matched DATE func_80149F48 and SHUGAKU func_80133038. T-17205/T-24059. */
+    D_800CA148 = (s16)(D_800CA148 * 3) + D_800E6280.unk_03E - 0x60;
     D_800CA160 = D_80143EDC;
     D_800CA164 = D_80143F10;
     D_800CA168 = D_80143F44;
-    D_800CA148 = ((D_800E6280.unk_F5F * 3) + D_800E6280.unk_03E) - 0x60;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80135B90", func_80136948);
-#endif
 
 void func_801369EC(void) {
     func_80083440(D_80122CDC + 1);
