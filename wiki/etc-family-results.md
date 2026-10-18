@@ -577,3 +577,13 @@ u2/u3 rather than original word reuse. Mode stays s7,136 staysfp,160 stayss6,
 page320 remainssp64; no cross-call/register/frame repair. Reject as frontier,
 preserve exact source/replay. Earlier638/604 pair results were not assumed to
 predict this outcome. No new stage capture or geometry claim. Same target active.
+
+
+Read-only stack-map.md distinguishes original64B local region from current80B:
+poly84/88 has original unknown word8C above it;628poly98/9C has none. UV50/54
+versus90/94 and currentpage64 are actual accesses. Existing604 frontend declares
+72B plus hidden4B switch home; optimizedDEF76 survives, four-byte rounding.
+No628 frontend capture exists. First-declared-highest IDO rule explains current
+layout, but original unused homes are unidentified; no arbitrary permutation
+or padding proposed. Disjoint X0/right-coordinate roles are a possible real
+same-type reuse lead, not measured or a complete original-layout explanation.

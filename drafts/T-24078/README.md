@@ -190,3 +190,6 @@ u2/u3 rather than original word reuse. Mode stays s7,136 staysfp,160 stayss6,
 page320 remainssp64; no cross-call/register/frame repair. Reject as frontier,
 preserve exact source/replay. Earlier638/604 pair results were not assumed to
 predict this outcome. No new stage capture or geometry claim. Same target active.
+
+See stack-map.md for original/current slot classifications and the limits of
+the existing604 frontend observations. No new capture or layout control.
