@@ -19645,3 +19645,10 @@ demonstrable12-entry C input with the required barrier. Task remains In Progress
 ## [2026-10-18] ticket | Preserve unresolved ENDING handoff
 
 [[tickets/T-24047-ending-sprite-scene]] moves to In Review after its worker completed the diagnostic investigation. Guarded source remains unmatched; no Done or coverage claim. Prior evidence/review preserved on main. One existing Sol worker continues ETC40AE4; overall completion goal remains active.
+## [2026-10-18] ticket | Claim only ETC album interaction
+
+Created [[tickets/T-24068-etc-album-interaction]] before source work on func_80140AE4 in ETC/8013FF80.c, from clean732e7c96d. Primary main6d1d52101 still uses assembly for this target; parent assigns exclusive scope. Same sole Sol medium worker and serial Docker compiler, no extra agents. Read [[etc-family-results]] and T-13103 prior48-row/switch54/58 negatives before new evidence-driven controls. Preserve published T-24064 and unresolved T-24067.
+
+## [2026-10-18] query | T-24068 baseline and allocator evidence
+
+[[tickets/T-24068-etc-album-interaction]] reproduces48-row baseline with correct56 words/frame0x28. New required-call comma sequencing and one FAKE D8+4 selector-address control remain48, rejected without widening. Existing read-only tracer whole-object fidelity passes (e4ce1543...); selector priority0.5/color3(a0) and constant1 priority0.6667/color2(v1) are not a tie. [[etc-family-results]] records the specific v0 call-result/liveness question. drafts/T-24068 preserves source-only controls/replay/provenance; production/header/config unchanged, ticket In Progress, no C match.

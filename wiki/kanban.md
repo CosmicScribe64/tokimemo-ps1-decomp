@@ -50,6 +50,7 @@ kanban-plugin: board
 ## In Progress
 
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
+- [ ] [[tickets/T-24068-etc-album-interaction|T-24068 Match ETC album interaction]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
