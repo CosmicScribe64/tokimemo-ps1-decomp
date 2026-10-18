@@ -12,7 +12,7 @@ s32 func_8011D5C4(void) {
 
     g = (EventMovieState *)&D_800B1AF0;
     movie = (EventMovieWork *)D_800F1990;
-    
+
     switch (g->unk_00) {
     case 0:
         D_800EED08 = 1;

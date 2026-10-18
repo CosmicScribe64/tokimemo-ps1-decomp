@@ -18603,3 +18603,7 @@ Moved [[tickets/T-24028-date-event-short-movie-siblings]] and kanban card to In 
 ## [2026-10-18] lint | Refresh current ownership and matching priorities
 
 [[completion-run-2026-10-17]] reconciled stale queued/pending claims with published commits, updated T24033/T24034/T24035 ownership and recorded the Docker sibling refresh:36 strong-sibling targets/29088 instruction bytes, no exact clones in the filtered set. [[tickets/T-24029-seasonal-scene-siblings]] source checkpoint preserved; T24028 reviewed guarded DATE improvement and source-only EVENT seven-instruction blocker published after all27 default binary hashes and guards. Zero new verified bytes for these drafts.
+
+## [2026-10-18] lint | T24028 archive whitespace cleanup
+
+The integration's all27 hashes and guards passed, but its final staged diff check found one trailing-space-only line in the source archive. The subsequent wiki commit included the verified merge before that hygiene fix; remove the archive whitespace in this forward correction. No production bytes or matching claims changed.
