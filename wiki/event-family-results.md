@@ -202,3 +202,7 @@ header types moved little; the dumpling arrays fix a wrong scale in the drafts b
 ### Packages
 
 T-17601..T-17608 (`w3-gyozi-p01`..`p08`): 33 functions, 19,180 bytes.
+
+## Legacy polygon clone (T-24017)
+
+[[tickets/T-24017-clone-ports]] ported matched ENDING func_80139B48 to legacy EVENT func_80108B24 in src/ovl/EVENT/80107FC0.c. Fresh default linked literal proof confirms 476 bytes as unguarded C (no target INCLUDE_ASM), and EVENT SHA1 passes after rebuilding all its header-dependent objects. Keep legacy helper names: func_80019D00 returns the consumed packet pointer; call-site views for func_80067678, func_800675A8 and func_800674F4 have unused returns. The legacy word buffer index is D_800E9600; its ordering-table stride is 64 bytes, versus 1024 in the GEKO/ENDING siblings, and its address-only base is D_800B2580. No semantic rename was made. EventStateView names signed two-halfword coordinate pairs at +0x14 and +0x18 in previously padded bytes; all later offsets remain unchanged. Shared declarations are centralized in main_api.h except allocator 0x80019D00, outside the current main range, in EVENT.h. Inherited FAKE colour masks/source-line trios are retained and ticketed. Root coordinates all-27 shared-header integration checks.

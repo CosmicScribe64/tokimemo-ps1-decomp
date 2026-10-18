@@ -52,6 +52,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24017-clone-ports|T-24017 Port three exact opcode clones]]
 - [ ] [[tickets/T-24008-taiiku-runners|T-24008 Recover TAIIKU runner family]]
 - [ ] [[tickets/T-24014-taco-pre-closer|T-24014 Close TACO PRE operand order]]
 - [ ] [[tickets/T-24009-ending-scheduler-closer|T-24009 Close ENDING scheduler residue]]

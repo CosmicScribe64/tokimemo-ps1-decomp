@@ -18442,3 +18442,34 @@ Full NON_MATCHING translation-unit funcdiff compiled the retained updater and re
 ## [2026-10-17] decision | Resume stopped chats and close the BUNKASAI pair
 
 User explicitly requested keeping stopped chats going, especially the large-function chat. Confirmed Astra and DATE/ETC coordinator idle, sent new scoped work, and verified both active. Astra continues EVENT and retains largest targets with two new reserved functions; Sol coordinator takes BUNKASAI sibling pair T24030. Updated [[completion-run-2026-10-17]]. Independently verified second BUNKASAI C target1652 bytes (both3160), all27 hashes/guards pass; T24016 reviewed Done. TAIIKU residual guard/drafts published without extra byte claim. Clone1128 and GYOZI392 wins remain queued for integration.
+## [2026-10-17] ticket | T-24017 exact clone ports
+
+Created [[tickets/T-24017-clone-ports]] for three disjoint EVENT/GEKO/SHUGAKU targets from 0f2b9818f. Read prior compile/register negatives and matched-sibling recipes; Docker-only, unguarded default literal proof required.
+
+## [2026-10-17] build | T-24017 GEKO polygon clone candidate
+
+Ported matched ENDING func_80139B48 to GEKO func_8013FD88 using SDK POLY_G4 and inherited documented colour masks/source-line grouping. Target has no INCLUDE_ASM or guard. Starting default linked and unit checksum verification; see [[tickets/T-24017-clone-ports]].
+
+## [2026-10-17] build | T-24017 SHUGAKU copy clone candidate
+
+Ported the matched DATE history-copy recipe to SHUGAKU func_80133038, removing its old T-10510 guard and fallback. Testing explicit destination narrowing/product order before considering data ownership changes. [[tickets/T-24017-clone-ports]].
+
+## [2026-10-17] build | T-24017 GEKO clone verifies 476 bytes
+
+GEKO func_8013FD88 is unguarded C, no INCLUDE_ASM. Fresh default linked literal proof matches 476 bytes and GEKO SHA1 passes. [[geko-family-results]] and [[tickets/T-24017-clone-ports]] record the matched ENDING source and inherited FAKE colour masks.
+
+## [2026-10-17] build | T-24017 SHUGAKU clone verifies 176 bytes
+
+SHUGAKU func_80133038 now unguarded C with no INCLUDE_ASM. Fresh default linked literal proof and unit checksum pass, 176 bytes. [[shugaku-family-results]] records DATE product-narrowing/copy-order recipe, no FAKE or data ownership changes. Added the new [[geko-family-results]] page to [[index]] and its metadata. [[tickets/T-24017-clone-ports]] checkpoint: 2 of 3, 652 bytes.
+
+## [2026-10-17] build | T-24017 legacy EVENT renderer candidate
+
+Ported ENDING polygon source using the original legacy EVENT names and its 64-byte ordering-table stride. Added measured word/address-only globals and unused-return call-site declarations once in main_api.h; allocator declaration outside current MAIN range in EVENT.h. Existing EventStateView now names signed coordinate halfword pairs at +0x14/+0x18 without shifting later members. Target is unguarded C. [[tickets/T-24017-clone-ports]].
+
+## [2026-10-17] build | T-24017 legacy EVENT verifies 476 bytes
+
+EVENT func_80108B24 is unguarded C with no target INCLUDE_ASM. Fresh default literal proof matches476 bytes; full EVENT SHA1 passes. [[event-family-results]] and [[data-types]] record old helper names, word index,64-byte table stride, and signed coordinate pairs in existing padding. [[tickets/T-24017-clone-ports]] reaches3 of3,1128 bytes. Shared declarations coordinated with root for all27 integration checks.
+
+## [2026-10-17] build | T-24017 closes three clone ports
+
+All3 targets have unguarded C definitions and pass root source-only claim gate; no target INCLUDE_ASM. Current-header default literal proof verifies1128 bytes and EVENT/GEKO/SHUGAKU unit SHA1 checks pass. Headers/globals pass, branch prototypes0new/15known. [[tickets/T-24017-clone-ports]] records pinned win commits and hashes, moved In Progress to In Review with card for independent parent review. Root coordinates all27 shared-header integration. No failed source archives needed.
