@@ -916,7 +916,12 @@ void func_80114948(void) {
 
 /* NON_MATCHING: T-10330, T-11600, 4 differing lines: base registers of D_80124394/D_8012439C swapped (t1/t2). regdiff: both
  * hoisted addresses have priority 2.5 and D_8012439C, used first by `v = *r`, is coloured first; v = *p = *r, *p = *r; v = *p,
- * array views and statement orders did not reverse it. The u8 copy of D_800B0F2C fixed the bne order (autotweak). */
+ * array views and statement orders did not reverse it. The u8 copy of D_800B0F2C fixed the bne order (autotweak).
+ * T-22024: the DATE twin's form (`(&D_80124394)[i] = (&D_8012439C)[i]`, no temporary) puts the bases in the right order, but
+ * stores through `(&D)[i]` or `*(&D + i)` have a known base, so the D_800B0F2C load moves out of the loop (62 lines). The
+ * original reloads it every pass, so its stores go through pointers set inside the loop. Only q as such a pointer: right
+ * bases and the reload, but i * 2 is computed twice (59 lines). Pointers set before the loop, an s32 v, p = r - 4 and
+ * `*p = *r; v = *p` did not help. */
 #ifdef NON_MATCHING
 void func_80114B0C(void) {
     u8 sel;
@@ -2102,7 +2107,11 @@ void func_80118848(void) {
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-11110, T-11600, 8 lines: chained halfword store scheduling and $v0 vs $t6 for third chain (regdiff: the
    original's third 3 is a uopt colour, the draft's a ugen temporary); separate stores, chain orders, one-line chains and an
-   s16/s32/u8 local for the constant did not reach it. */
+   s16/s32/u8 local for the constant did not reach it.
+   T-22024: the innermost store of each chain is written last. Splitting the 2 chain gives the original store order exactly:
+   `(&D_8012439C)[0] = (&D_8012439C)[3] = 2;`, the D_8012438C chain, `(&D_801243A4)[0] = (&D_8012439C)[2] = (&D_8012439C)[3];`,
+   the D_80124394 chain. The re-read (&D_8012439C)[3] then holds 2 in $v1 and the 3s move to $t4/$t5 (13 register lines).
+   (s16)3, 3U, loops, and `(&D_80124394)[2] = 3;` followed by copies of it did not give the original's $v0. */
 void func_80118868(void) {
     if (D_800B1746 != 6) {
         func_80011DFC();
