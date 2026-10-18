@@ -20,6 +20,7 @@ Historical T17300 plain792/typed957 are different contexts, not fresh results.
 | case-height.c |638|800|596|0xA8|
 | inline-height.c |678|790|582|0x98|
 | tile-width.c |648|806|594|0xA0|
+| indexed-page.c |638|800|594|0x98|
 
 Original588 words/frame0x90. Rank with tools/funcdiff.py diff_score on resolved
 instruction keys (insertion/deletion1, substitution2). Printed rows use different
@@ -61,3 +62,13 @@ callers ignore its result, but original return type is unproven.
 The remaining eight-byte frame excess and expression scheduling require a new
 source mechanism before further probes. No allocation/type sweep or compiler
 instrumentation; ownership remains active pending focused direction.
+
+The parent-authorized bounded Astra read-only review supplied one untried form:
+matched D32C derives pageX from its loop index. Against shared-temps only,
+indexed-page removes var_fp declaration/init/increment and passes
+0x140 + var_s4 * 0x80 to ECB0. Original two iterations make this equivalent.
+Measured neutral638cost/800rows/594words/frame98; compiler recreates320 induction
+but spills it atsp50 instead ofsp60. Mode remains s7, constant160 s6,136 fp.
+This does not restore original fp320 or frame90. Source and diagnostic preserved;
+no other review hypothesis or new control was tested. Astra idle; no further
+unsupported probes or instrumentation. Ticket remains active pending direction.

@@ -18998,3 +18998,12 @@ but596words; per-case height enlarges frame, inlining is no gain, namedwidth648
 rejects. Source-only drafts/T-24078 preserves all7 controls and safe aligned
 replay. Remaining source/scheduling gap is explicit, not impossibility. No
 production/helper/header/config edits; sole worker remains active T24078.
+
+## [2026-10-18] build | T24078 derived page induction control neutral
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve the
+single parent-approved bounded Astra source lead, indexed pageX from matched
+D32C. Exact shared-temporary baseline otherwise fixed; neutral638 alignedcost,
+800 diagnostic rows,594words/frame98. Compiler recreates spilled320 induction,
+not originalfp320/frame90. drafts/T-24078/indexed-page.c/replay preserve it;
+production unchanged, no further probes/instrumentation, active pending direction.
