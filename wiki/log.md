@@ -18869,3 +18869,13 @@ func_801333F0 is unguarded normal C with no target INCLUDE_ASM. Direct unchanged
 ## [2026-10-18] build | SHOUGATU dialogue pair complete
 
 [[tickets/T-24052-shougatu-dialogue-siblings]] second handler independently verified544 bytes and published44ab1ad82; first488-byte handler rechecked. All27 hashes and interface guards pass, standards review has no open findings, ticket Done. [[completion-run-2026-10-17]] now6504/6958 functions,1850912/2279368 bytes(81.2%),428456 remaining. T24053 final unmatched SHUGAKU draft published1f42091ee; active short-worker scopes continue as T24055/T24056.
+## [2026-10-18] ticket | Reopen only the large DATE dispatcher with a novelty gate
+Created [[tickets/T-24051-date-large-dispatcher]] before source work; reused built tree from frozen 6be3243b1, preserving ancestry. Read [[index]], [[date-family-results]], T-17207 and [[tickets/T-24011-date-dispatch-family]] archives and exhausted hypotheses. Exclusive target func_80144E20 in DATE/80141EE0.c; callback ABI/table-subobject semantics are fresh bounded leads, smaller dispatcher and all other DATE functions remain outside scope. One serial Docker compiler; root owns final checks and integration.
+
+## [2026-10-18] ticket | T-24051 DATE callback hypotheses archived
+
+[[tickets/T-24051-date-large-dispatcher]] moves with its board card to In Review. [[date-family-results]] records zero new C bytes and a 72-to-28-row source improvement: an assigning default with no preinitializer restores both redundant switch branches, displacements and padding. Fourteen symmetric compare-operand words remain. `drafts/T-24051/` provides the improved body, safe target-only replay, negative callback/representation/type controls, and audit of all 21 table mappings/extents. Production src/include/config and every other TU body remain unchanged; no header/config scope was requested.
+
+## [2026-10-18] decision | T-24051 diagnostic contexts clarified
+
+[[tickets/T-24051-date-large-dispatcher]] and the archive README distinguish the early private helper's old-baseline 71/71 from the validated direct-cc 72-row replay; terminal padding explains that difference. The improved assigning-default body remains 28 rows in both contexts. Source checkpoint 8f4958fd2 is unchanged.
