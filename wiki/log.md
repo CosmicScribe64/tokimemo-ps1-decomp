@@ -19652,3 +19652,20 @@ Created [[tickets/T-24068-etc-album-interaction]] before source work on func_801
 ## [2026-10-18] query | T-24068 baseline and allocator evidence
 
 [[tickets/T-24068-etc-album-interaction]] reproduces48-row baseline with correct56 words/frame0x28. New required-call comma sequencing and one FAKE D8+4 selector-address control remain48, rejected without widening. Existing read-only tracer whole-object fidelity passes (e4ce1543...); selector priority0.5/color3(a0) and constant1 priority0.6667/color2(v1) are not a tie. [[etc-family-results]] records the specific v0 call-result/liveness question. drafts/T-24068 preserves source-only controls/replay/provenance; production/header/config unchanged, ticket In Progress, no C match.
+
+## [2026-10-18] decision | T-24068 target return-liveness control is neutral
+
+Parent approved one isolated s32 fallthrough/no-return target view after exact-history uncertainty check; it reproduces48 baseline rows with callee prototypes/all other source fixed. Rejected FAKE diagnostic retained in drafts/T-24068/replay.py; no result/width sweep. [[tickets/T-24068-etc-album-interaction]]/[[etc-family-results]] remain In Progress with unchanged production. Read-only globalcolor candidate-mask/cost sites identify the exact v0 interference-versus-cost observation gap; no private diagnostic build before scope approval.
+
+## [2026-10-18] query | T-24068 selector colors are forbidden
+
+Parent-approved private bit0/colors1..3 logger passes same-input whole-object/code/data/relocation fidelity before interpretation. Mask60000000/0 forbids v0/v1, a0 cost0; not a higher-price v0 choice. Static block-mask union points to selector bb3/bb11, without exact fixed contributor. [[tickets/T-24068-etc-album-interaction]]/[[etc-family-results]] record ONE derived explicit-void-discard hypothesis at final leading check call, preserving prototype/calls; no result claimed. drafts/T-24068/trace_colors.py and README retain source-only generator/hashes/audit. No production/allocator changes.
+
+
+## [2026-10-18] decision | T-24068 explicit final discard is neutral
+
+Parent-approved ONE `(void)func_80140E80();` control retains true prototype/all other source and reproduces48 rows/whole baseline object, rejected. [[tickets/T-24068-etc-album-interaction]]/[[etc-family-results]] stay In Progress with production unchanged. Source-only replay/logger/provenance retain exact masks, fidelity and controls. Next work is existing trace/source mapping only for bb3/bb11 fixed v0 contributor; any missing observation requires reporting scope before new logging build.
+
+## [2026-10-18] query | Parent read-only contributor coordination checkpoint
+
+Parent reports GitHub checked about10:39 UTC on2026-10-18: no open PRs; issue63 closed at10:10:30 after merged PR64. NAME_ENT claims50/57 remain OPEN and must be preserved. No contributor messages were sent. Parent's next coordination check is planned about11:09 UTC. This records completed read-only coordination only and does not expand matching scope or create a new task/schedule.
