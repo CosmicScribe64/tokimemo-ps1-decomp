@@ -209,3 +209,7 @@ T-24032 cross-unit control: DATE/TACO rotation clone provenance retained after o
 ## T-24044 projected-quad sibling retry
 
 [[tickets/T-24044-taiiku-taco-siblings]] measures current424A8 sibling control162/162 and improves it to124/124 with meaningful output index k=j*2+o. Pointer, byte-offset and index-type alternatives worsen it; original matrix-copy pool still reserves an extra uopt register for a later reload. No production/header edit, no coverage gain. Selected source needs a scratch table extern/forward prototype; source-only provenance in drafts/T-24044/. Old81-row note is historical, not this measurement.
+
+## T-24063 short-count freeze
+
+[[tickets/T-24063-taco-short-count]] leaves3506C/5B1B8/472D4 guarded; zero matches or production/header/config changes. Fresh controls29/16/20 rows. For3506C, correcting `unk_163C[128+i]` to the actual `unk_183C` word-buffer view compiles identically29/29, as does moving coordinate extraction into its nonzero arm; corrected source/reproducer retained in drafts/T-24063/. The5B1B8 fresh16 raw rows are the same8 changed load/store instructions previously called8 rows. Both MATRIX guards retain known copy-temporary gaps; prior measured compiler evidence was read and exhausted source grids were not repeated. No migration or compiler exception proposed.

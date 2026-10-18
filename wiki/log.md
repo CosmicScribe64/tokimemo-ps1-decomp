@@ -18703,3 +18703,11 @@ Created [[tickets/T-24060-shugaku-short-selectors]] after reading [[shugaku-fami
 ## [2026-10-18] decision | SHUGAKU short source corrections retained
 
 [[tickets/T-24060-shugaku-short-selectors]] moves to In Review with zero matches, production/header/config unchanged. [[shugaku-family-results]] records phase52/52 after repairing a phantom callee argument, and selector62/58 with meaningful shared-byte lifetime; old58-row context not surpassed. Valid structured source/reproducer saved; all loose diagnostics ignored. Baseline unit checksum passes, no default ASM coverage claim or compiler impossibility assertion.
+
+## [2026-10-18] ticket | TACO short-helper count lane
+
+Created [[tickets/T-24063-taco-short-count]], confirmed three guarded targets and parent-owned disjoint scope. Read [[taco-family-results]], [[ido-52-evaluation]], copy-state and keep-line negatives. Two copies get fresh controls only; random-buffer view/control-flow are the concrete novel source hypothesis. One Docker compiler, no production/header edits yet.
+
+## [2026-10-18] decision | TACO short-count pass freezes known gaps
+
+[[tickets/T-24063-taco-short-count]] moves to In Review with zero C gain, production/header/config unchanged. [[taco-family-results]] records fresh29/16/20-row controls and a correct GameState unk_183C word-buffer view compiling identically29. Read prior copy-state compiler evidence and did not repeat exhausted grids. Five measured forms only; corrected body/reproducer retained, all loose instruction traces ignored. Baseline TACO checksum passes, no ASM fallback coverage claim.
