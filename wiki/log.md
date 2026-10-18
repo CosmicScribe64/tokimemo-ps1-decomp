@@ -20469,3 +20469,12 @@ Reviewed against `CODING_STANDARDS.md` and verified with `tools/funcdiff.py --re
   - `GEKO:func_8013B10C` (416 B / 388 B code in `src/ovl/GEKO/8013AF80.c` + `include/ovl/GEKO.h`): `MATCH`
   - `GEKO:func_801404FC` (464 B in `src/ovl/GEKO/8013F360.c`): `MATCH`
 - Created and dispatched [[tickets/T-24098-gyozi-shougatu-80143ad0-80141780-twins]] (`In Progress`) for the 5-pair (10-function, 8,544 B) `1.000` / `0.995` twin cluster between `src/ovl/GYOZI/80143AD0.c` and `src/ovl/SHOUGATU/80141780.c`.
+
+## [2026-10-18] ticket | T-24083 Done (3 matches in DATE 80132000.c, 2,580 B) and T-24099 In Progress
+
+Reviewed against `CODING_STANDARDS.md` and verified with `tools/funcdiff.py --resolve`:
+- [[tickets/T-24083-date-80132000-siblings-b]] (`Done`, +3 functions / +2,580 B in `src/ovl/DATE/80132000.c`):
+  - `DATE:func_8013A94C` (1,208 B): `MATCH`
+  - `DATE:func_8013EB8C` (688 B): `MATCH`
+  - `DATE:func_801407D0` (684 B): `MATCH`
+- Created and dispatched [[tickets/T-24099-date-80132000-final-six]] (`In Progress`) for the final 6 unmatched functions in `src/ovl/DATE/80132000.c`.

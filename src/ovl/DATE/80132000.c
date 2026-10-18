@@ -2745,7 +2745,73 @@ void func_8013A898(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013A94C);
+/* FAKE: 1-element array indexing on unk_03F/unk_03E produces uixa instead of direct isvar so uopt keeps the global live range split and register coloring in bb=5..18 matching the original; s16 pointer cast on counts_b[3] emits direct halfword load/store; zero-multiplied expressions keep uopt expression order in the birthday comparison blocks; single-line else-if preserves Uloc line deltas for as1 scheduling at row 26. T-24083 */
+void func_8013A94C(void) {
+    u32 month_diff;
+    u8 status;
+    DateCounts22 counts_a;
+    DateCounts22 counts_b;
+    u8 first_clear;
+    s32 heart;
+
+    counts_a = D_8015B75C;
+    counts_b = D_8015B774;
+    if ((D_800E6280.unk_03E == 0x61) && ((&D_800E6280.unk_03F)[0] >= 6U)) {
+        ((s16 *)&counts_b)[3] += 1;
+    } else if (D_800E6280.unk_03E == 0x62) { ((s16 *)&counts_b)[3] += 1; }
+    D_8015BF1C = D_80122CDC;
+    D_8015BF20 = (u32)D_800E6280.unk_10F8 % (u32)(((D_80122CDC == 0) * counts_a.value[D_800E6280.unk_F5F]) + (counts_b.value[D_800E6280.unk_F5F] * (D_80122CDC == 1)));
+    D_8015B65C = 0;
+    first_clear = 0;
+    if ((&D_800E6280.unk_03F)[0] == D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_10.date.month) {
+        if (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_10.u * 0 + D_800E6280.unk_040 < D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_10.date.day) {
+            D_8015B65C = 1;
+        }
+    } else {
+        month_diff = ((&D_800E6280.unk_03F)[0] == 2U) * 0 + (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_10.date.month - (&D_800E6280.unk_03F)[0]) + 12;
+        if ((month_diff % 12) == 1) {
+            D_8015B65C = 1;
+        }
+    }
+    D_8015B660 = 0;
+    if ((((D_800E6280.unk_03E == 0x61) && ((&D_800E6280.unk_03F)[0] >= 3U)) || (D_800E6280.unk_03E == 0x62)) && (func_800AE0D0() % 2)) {
+        D_8015B660 = 1;
+    }
+    status = func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+    heart = func_80051B48(D_800E6280.unk_F5F);
+    if ((status == 0) && ((heart & 0xFF) == 0)) {
+        if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b5) {
+            D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b5 = 1;
+            first_clear = 1;
+        }
+    }
+    if ((first_clear != 0) && (D_80122CDC == 0)) {
+        D_8015BF1C = 4;
+        D_8015BF20 = 0;
+    } else if ((D_8015B65C != 0) && (D_80122CDC == 0)) {
+        D_8015BF1C = 2;
+        D_8015BF20 = D_800E6280.unk_03E - 0x5F;
+        if (((D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_10.date.month == 1) && ((&D_800E6280.unk_03F)[0] == 1)) ||
+            ((D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_10.date.month == 2) && (((&D_800E6280.unk_03F)[0] == 1) || ((&D_800E6280.unk_03F)[0] == 2))) ||
+            ((D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_10.date.month == 3) && (((&D_800E6280.unk_03F)[0] == 1) || ((&D_800E6280.unk_03F)[0] == 2) || ((&D_800E6280.unk_03F)[0] == 3)))) {
+            D_8015BF20 = (&D_800E6280.unk_03E)[0] - 0x60;
+        }
+        if (D_800E6280.unk_F5F == 6) {
+            if ((status < 2U) && ((heart & 0xFF) < 2U)) {
+                D_8015BF20 = 1;
+            } else {
+                D_8015BF20 = 0;
+            }
+        }
+    } else if ((D_8015B660 != 0) && (D_80122CDC == 0)) {
+        D_8015BF1C = 3;
+        D_8015BF20 = 0;
+    }
+    if ((D_800E6280.unk_F5F == 5) && (D_8015BF1C == 0) && (D_8015BF20 == 3)) {
+        D_800E6280.unk_1BC[5].unk_0C.f.b14 = 1;
+    }
+    func_8004284C();
+}
 
 s32 func_8013AE04(void) {
     if ((date_arrival != 0) || (D_8015BF4C == 1)) {
@@ -4095,7 +4161,67 @@ s32 func_8013EB1C(void) {
     return normal_date_girl_in();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013EB8C);
+void func_8013EB8C(void) {
+    /* FAKE: 4-byte stack padding reproduces the 0x138-byte frame and stack offsets of the copied tables. T-24083 */
+    s32 unused;
+    DateWords21 words_a;
+    DateWords21 words_b;
+    DateWords21 words_c;
+    s32 arg1;
+    s32 arg2;
+    Tbl21 next_ids;
+
+    words_a = D_8015B888;
+    words_b = D_8015B8DC;
+    words_c = D_8015B930;
+    /* FAKE: dead read of D_800CA2F8 before the first call creates its live unit in the entry block so uopt colors D_800CA2F8 across the branch chain. T-24083 */
+    arg1 = D_800CA2F8;
+    arg1 = 0xBF98;
+    arg2 = 0xBF79;
+    next_ids = D_8015B984;
+    func_80044750(0xCF);
+    D_800B3D60 = 0;
+    if (D_800CA2F8 == 2) {
+        arg1 = 0xC517;
+        arg2 = 0xC514;
+    } else if (D_800CA2F8 == 0x11) {
+        arg1 = 0xC57E;
+        arg2 = 0xC56F;
+    } else if ((D_800CA2F8 == 1) || (D_800CA2F8 == 3)) {
+        arg1 = 0xC1C3;
+        arg2 = 0xC1AD;
+    } else if ((D_800CA2F8 == 0xA) || (D_800CA2F8 == 9)) {
+        arg1 = 0xC1D2;
+        arg2 = 0xC1C5;
+    } else if (D_800CA2F8 == 0xC) {
+        arg1 = 0xC657;
+        arg2 = 0xC623;
+    } else if ((D_800CA2F8 == 0x11) || (D_800CA2F8 == 0x10)) {
+        arg1 = 0xC57E;
+        arg2 = 0xC56F;
+    } else if ((D_800CA2F8 == 0x14) || (D_800CA2F8 == 0x13)) {
+        arg1 = 0xC611;
+        arg2 = 0xC604;
+    } else if (D_800CA2F8 == 8) {
+        arg1 = 0xC0C0;
+        arg2 = 0xC0B6;
+    } else if (D_800CA2F8 == 7) {
+        arg1 = 0xC493;
+        arg2 = 0xC47A;
+    } else if (D_800CA2F8 == 0x12) {
+        arg1 = 0xC4C5;
+        arg2 = 0xC495;
+    } else if (D_800CA2F8 == 0xE) {
+        arg1 = 0xC5C9;
+        arg2 = 0xC5B9;
+    }
+    func_80044890(1, arg1, arg2, words_b.v[D_800CA2F8], words_c.v[D_800CA2F8], words_a.v[D_800CA2F8]);
+    if (func_80044E8C() == 1) {
+        func_80044750(next_ids.v[D_800CA2F8]);
+        func_8004284C();
+    }
+    func_8004284C();
+}
 
 void func_8013EE3C(void) {
     /* FAKE: 4 spare bytes reproduce the original frame (0x60) and the table's offset 0x30; real locals unknown. T-9180 */
@@ -4438,7 +4564,44 @@ void func_80140788(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801407D0);
+/* s32 with no return (K&R): the early returns set $v0 = 0; falling off the loop leaves $v0 untouched. */
+s32 func_801407D0(void) {
+    s16 i;
+    s16 size_variant;
+    s32 choice;
+    s32 scale;
+    s32 random_span;
+    s32 divisor;
+
+    if (D_800CA2FC == 1) {
+        return 0;
+    }
+    if ((D_800CA2FC != 2) && ((D_800E6280.unk_03F < 9U) || (D_800E6280.unk_03F >= 12U))) {
+        return 0;
+    }
+    for (i = 0; i < 20; i++) {
+        ((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_07 = D_800B593C;
+        ((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_03 |= 0x80;
+        ((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_2C += (D_8015BD40[i].w - ((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_24.w) >> 8;
+        ((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_24.w += ((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_2C;
+        ((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_28.w += ((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_30;
+        if (((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_28.h[1] >= 0x29) {
+            ((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_28.h[1] = -0x78;
+            choice = func_800AE0D0() % 2;
+            size_variant = (s16)choice;
+            scale = 0x1000 / (((s16)choice * 2) + 2);
+            ((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_1A = scale;
+            ((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_1C = scale;
+            ((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_24.h[1] = (func_800AE0D0() % 300) - 0x96;
+            D_8015BD40[i].w = ((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_24.w;
+            random_span = func_800AE0D0();
+            divisor = size_variant + 1;
+            /* FAKE: s16 lvalue cast on GsWord.h[1] emits lh with += operand order in ugen. T-24083 */
+            *(s16 *)&D_8015BD40[i].h[1] += ((((func_800AE0D0() % 2) * 2) - 1) * (random_span % 8) + 8) / divisor;
+            ((DisplayFixActor44 *)D_8011ECD0)[i + 98].unk_30 = (((D_800CA2FC != 2) << 15) + 0x8000) / divisor;
+        }
+    }
+}
 
 s32 func_80140A7C(void) {
     u32 t;
