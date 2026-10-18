@@ -17766,3 +17766,7 @@ Package of [[tickets/T-22000-wave-4-conveyor]]: RPG_BAT `src/ovl/RPG_BAT/801484E
 ## [2026-10-17] build | T-23003 closer: func_8006D7EC at 1 row
 
 [[tickets/T-23003-w5-big-p03]]: Opus closer on `func_8006D7EC` in `src/main/8006CB30.c`, 13 rows to 1 (still guarded). A `u8 func_8006BDA8();` view with `s32 res` fixes the copy of the second call result; the `idx++` fold after `idx = 0` is left (uopt, confirmed with `cc -S`). Notes in [[matching-notes]] (T-23003) and the ticket comment.
+
+## [2026-10-18] ticket | T-23003 Done
+
+[[tickets/T-23003-w5-big-p03]]: code review against `CODING_STANDARDS.md` passed after three small wiki fixes (stale 13-row claims in [[index]] and [[matching-notes]], the ticket's FAKE count). 0 of 3 functions matched: `func_8006D7EC` stays guarded under `NON_MATCHING` at 1 row (`idx++` fold), `func_8007132C` and `func_8006D138` stay `INCLUDE_ASM`; only `src/main/8006CB30.c` changed among C files. Ticket Done, card moved to Done.
