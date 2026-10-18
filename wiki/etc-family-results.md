@@ -806,3 +806,12 @@ Keep606 as a separate FAKE diagnostic frontier,618 original-order/six-use view,
 and604 numeric best independently. No further suffix, width or expression split
 was authorized or tested by this packet. Production remains ASM, same function
 active. The observed result is not permission for a signedness permutation search.
+
+
+Bounded lateH set of three independent signed618 controls: deadX0scratch reuse
+is target-identical618; firstY2capture neutral618 but changes six ADDU words;
+firstHconsumer SDKs16 view650/594words, adds4MOVE/removes2NOP. All retain frame90,
+poly84/88, UV50/54, Q/P order, same earlyH v0 and saved160/page mismatch. Semantic
+lifetime/domain proofs and before-predictions are in height-lifetimes.md; FAKE
+choices explicit, no type recovery claim. No further width/mask/placement sweep;
+618/606/604 frontiers separate, production unchanged and same target active.
