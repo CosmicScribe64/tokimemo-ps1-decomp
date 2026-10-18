@@ -42,6 +42,7 @@ Historical T17300 plain792/typed957 are different contexts, not fresh results.
 | indexed-uv.c |622|850|592|0x90|
 | indexed-texture.c |624|852|592|0x90|
 | indexed-uv-right.c |618|846|592|0x90|
+| height-unsigned.c |606|836|592|0x90|
 
 Original588 words/frame0x90. Rank with tools/funcdiff.py diff_score on resolved
 instruction keys (insertion/deletion1, substitution2). Printed rows use different
@@ -373,3 +374,30 @@ mandatory whole-object fidelity. It supplies no supported new source edit.
 
 constant-use-map.md follows the six saved160 geometry reads to original LI
 sites; it finds no allocated-register UV sharing or supported source edit.
+
+
+One parent-authorized H-only unsigned-literal diagnostic follows the allocation
+observation, not a suffix/type sweep. Exactly four temp_a0=0xA0-arg0 statements
+become0xA0U-arg0. Other lower-right160 literals, s32 shared H/E local, every
+signed DIV/product cast, geometry formula/store order and declaration remain
+fixed. Inline same-line FAKE comments state priority-partition purpose and
+unproven original signedness; no newline/statement-group change. For actual
+normal callers A0..80, both signed and unsigned expressions yield80..160,
+exactly representable in existing s32, so no overflow or implementation-defined
+assignment in this domain. Subsequent word additions/low16 SDK stores agree.
+
+Prediction was typed constant web might partition six geometry uses, or normalize
+neutral; no page/frame/register fix was promised. Measured606cost/836rows/
+592words/frame90. Poly84/88, UV50/54 and Q11 DIV-before-P MULTU remain. Mode now
+s6 and136s7, as original; constant160 instead occupiesfp, still displacing page
+which remains memory home60. Final allocated160 register now feeds ONLY four
+height SUBUs. Two signed lower-right formulas fold to P-Q11-R-Q68+ADDIU160,
+losing original origin160-before-Q11 association. Counts versus618 change only
+ADDU41-to39 and ADDIU35-to37, all others unchanged. Thus source typing affects
+allocation but does not free page, prove original signedness, or produce match.
+No new priority trace was run on606; do not transfer618 priority measurements.
+
+Keep606 as a separate FAKE diagnostic frontier,618 original-order/six-use view,
+and604 numeric best independently. No further suffix, width or expression split
+was authorized or tested by this packet. Production remains ASM, same function
+active. The observed result is not permission for a signedness permutation search.
