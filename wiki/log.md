@@ -18816,3 +18816,7 @@ Read current main coordination, ETC family/type evidence and prior ranking draft
 
 ## [2026-10-18] decision | T-24049 corrected ETC ranking source; no promotion
 Current-view reconstruction of func_801480D0 compiles at885 rows,709 versus702 target words, frame216 versus208. Corrected signed byte-spread division, existing aggregate seed/score access, debug string and the earlier repair's incorrect fifteen-record bonus bound (target updates11). Selector/noise spills and separate phase/tie-counter hypotheses worsen; reproducible source and ledger in drafts/T-24049. Production/header unchanged, default ETC checksum control passes through ASM; zero new C bytes. Updated [[etc-family-results]] and [[tickets/T-24049-etc-exam-ranking]], now In Review for root archive review. TEL pin unchanged. No push/merge.
+
+## [2026-10-18] ingest | ETC corrected draft retained and worker continued
+
+Published T24049 source-only archive b57b6e50b; production/header unchanged and no new verified bytes. Current types, signed random divisors and target eleven-record bonus bound replace obsolete draft errors. Continued worker on disjoint SHOUGATU sibling pair T24052, recorded in [[completion-run-2026-10-17]]. Live ENDING chat reports concrete source recovery at114 aligned edits; still unmatched.
