@@ -18280,3 +18280,9 @@ After the guard update, Docker probe reproduces four fade-in rows and normal nin
 
 ## [2026-10-18] ticket | Small sibling package ready for review
 Moved [[tickets/T-24035-small-bunka-geko-siblings]] and its kanban card to In Review. Root standards review remains; no push or merge.
+
+## [2026-10-18] ticket | Start T-24039 large TEL date menu
+Read the prior T-15900 compile repair and adjacent T-19027 results. Reserved only src/ovl/TEL/8013CCD0.c:func_8013D88C in the existing branch at 8e742c12d. [[tickets/T-24039-tel-date-menu]] is In Progress; inspect array strides and data views before source/control-flow scoring.
+
+## [2026-10-18] decision | T-24039 source-only checkpoint; no C promotion
+Corrected TEL func_8013D88C menu-array and flag induction strides, text table indexing and switch bounds. Archived corrected reconstruction (885 rows/frame232) and marked mechanical lower-row diagnostic (850 rows), with reproduced full-TU counts and negative evidence in drafts/T-24039/README.md. Production target remains INCLUDE_ASM; no new verified bytes. Fixed GameState base, indexed flags, eleven-element arrays, wider coordinate intermediates and volatile pointer reloads failed. Docker ninja -j1 TEL control was current and independent overlay SHA1 passed. [[matching-notes]] updated; [[tickets/T-24039-tel-date-menu]] moved to In Review for root review. No push/merge.
