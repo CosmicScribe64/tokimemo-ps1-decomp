@@ -643,3 +643,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24037-event-scene-siblings]] — EVENT typed updater, 628 B; initializer six-edit archive.
 
 - [[tickets/T-24041-main-render-cd-siblings]] — MAIN LINE_G2 renderer348 B verified; CD dispatcher source-only499-edit checkpoint.
+
+- [[tickets/T-24046-screen-page-renderer]] — source-only renderer ABI/word-offset/frame recovery; no new verified C.

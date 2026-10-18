@@ -18270,3 +18270,11 @@ Created [[tickets/T-24041-main-render-cd-siblings]] In Progress after reading ol
 ## [2026-10-18] decision | T-24041 bounded CD checkpoint and renderer closure
 
 [[tickets/T-24041-main-render-cd-siblings]] moves to In Review. The348 B MAIN renderer retains actual source gate, default literal proof, full MAIN checksum and headers/globals/main_api passes. The CD dispatcher stays unchanged; drafts/T-24041 preserves typed Ring18/payload/buffer corrections and a499-edit/frame88 checkpoint (target80). [[main-family-results]] records concrete blockers instead of an expanded search.
+
+## [2026-10-18] ticket | T-24046 MAIN screen page renderer
+
+Created [[tickets/T-24046-screen-page-renderer]] In Progress after reading [[main-family-results]] and the earlier source-only T-24006 evidence.
+
+## [2026-10-18] decision | T-24046 renderer structural checkpoint
+
+[[tickets/T-24046-screen-page-renderer]] moves to In Review with source-only drafts/T-24046. Correct word texture-offset and unused argument5 ABI-slot recovery plus automatic expression spills bring the frame to target120 and aligned cost to504 (812 vs806 instructions), still unmatched. [[main-family-results]] records the concrete fixes and bounded negatives. Production source/header fallback remains unchanged.
