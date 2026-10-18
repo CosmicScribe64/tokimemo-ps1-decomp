@@ -49,8 +49,8 @@ Each was independently checked against default linked function bytes, all27 bina
 
 ## Active ownership
 
-- T24046 Sol medium root worker, codex/complete-main: MAIN8004C3F0 srn_tpage_show, roughly3.2KB. T24041 renderer verified; CD source-only checkpoint5ca2b84b4 queued for archival integration.
-- T24045 Sol medium root worker, codex/complete-bunkaken: TEL8013CCD0 func8013D03C, roughly2.1KB, using existing49-row draft and matched local recipe. T24035 final guard is integrated; T24039 source-only checkpoint68126eccd queued.
+- T24046 Sol medium root worker, codex/complete-main: MAIN8004C3F0 srn_tpage_show, roughly3.2KB. T24041 renderer verified; CD source-only checkpoint5ca2b84b4 archived on main.
+- T24045 Sol medium root worker, codex/complete-bunkaken: TEL8013CCD0 func8013D03C, roughly2.1KB, using existing49-row draft and matched local recipe. T24035 final guard is integrated; T24039 source-only checkpoint68126eccd archived on main.
 - T24044 Sol medium root worker, codex/complete-option: TAIIKU80138950 func8013B3B0 and TACO80141DE0 func801424A8. T24040 two OPTION wins and final guarded selector are integrated.
 - Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687: dialogue_speak_part completed and independently integrated. Continues EVENT8010FE10 func801103A0; reserved MAIN8006CB30 ONLYfunc8007132C, GEKO80142760 ONLYfunc80142C9C, TEL80132000. T24042 is the renamed TEL helper follow-up; T24026 remains the earlier SHOUGATU ticket. One compiler.
 - Sol medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: T24043 MASTER80139000 func80139CC8, roughly2.7KB. T24038 both matches are independently integrated. One compiler.
@@ -80,7 +80,7 @@ Docker only for Python, toolchains and builds. Reuse built worker trees; immutab
 
 ## Latest contributor and archive check
 
-2026-10-18 06:43 UTC (Oct17 local): GitHub had no open PRs. Issues #50, #56, #57 remain open with no new comments; reservations unchanged. Next periodic check around 07:13 UTC. No messages posted.
+2026-10-18 07:11 UTC (Oct18 local): GitHub had no open PRs. Issues #50, #56, #57 remain open with no new comments; reservations unchanged. Next periodic check around 07:41 UTC. No messages posted.
 
 DATE and ETC final coordinator/worker handoffs are now on main, including source-only residual drafts and fixed DATE diagnostic failure handling. No additional C bytes are claimed for these archives. The GEKO probe failure accounting was also repaired after review: candidate errors retain diagnostics and exit nonzero. All current source wins retain independent literal proofs.
 
@@ -102,7 +102,7 @@ New-C proof safeguard: T24016's first installation helper accidentally retained 
 
 ## Restart follow-through
 
-Both user-owned chats were confirmed active after the restart. Astra continues the roughly9KB dialogue function. Sol completed both T24030 BUNKASAI targets (2020 bytes), independently verified and published atd3965d02e, and moved to T24031. T24017 is Done after independent literal proofs and all27 hashes.
+Both user-owned chats were confirmed active after the restart. Astra completed the 8672-byte dialogue function and continues the large EVENT handler. Sol completed both T24030 BUNKASAI targets (2020 bytes), independently verified and published atd3965d02e, and moved to T24031. T24017 is Done after independent literal proofs and all27 hashes.
 
 ## Latest integrated follow-through
 
@@ -116,7 +116,7 @@ T24029 seasonal drafts and T24028 DATE/EVENT near-miss checkpoints are on main. 
 
 ## Latest verification
 
-T24035 first pair and allthree T24034 targets passed independent root review, all27 default binary hashes, header/global/prototype guards and explicit target-INCLUDE_ASM rejection plus linked C proofs. EVENT940-byte recovery removes duplicate argument-site narrowing from the legacy K&R calls while preserving the sibling’s marked dead-copy liveness. SDK primitives and existing EventStateView are used. T24034 Done; T24035 final guarded-draft checkpoint8e742c12d is queued. T24033 VALEN32D0C guarded draft was also published at e5bddd3cf with no added verified bytes. Local integration helper now checks staged whitespace before expensive builds as well as afterward.
+T24035 first pair and allthree T24034 targets passed independent root review, all27 default binary hashes, header/global/prototype guards and explicit target-INCLUDE_ASM rejection plus linked C proofs. EVENT940-byte recovery removes duplicate argument-site narrowing from the legacy K&R calls while preserving the sibling’s marked dead-copy liveness. SDK primitives and existing EventStateView are used. T24034 Done; T24035 final guarded-draft checkpoint8e742c12d is archived on main. T24033 VALEN32D0C guarded draft was also published at e5bddd3cf with no added verified bytes. Local integration helper now checks staged whitespace before expensive builds as well as afterward.
 
 Coverage uses canonical splat sizes, not the sum of linked proof extents: T24035 BUNKA_SD344A8 is148 canonical bytes versus152 linked proof bytes; T24034 EVENT800FFA4C is392 canonical versus404 linked. This batch adds2188 canonical bytes,2204 linked proof bytes. The Docker progress total above is authoritative.
 
