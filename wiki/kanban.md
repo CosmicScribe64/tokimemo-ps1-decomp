@@ -45,7 +45,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24042-tel-helper-closure|T-24042 Close TEL dialogue helper register allocation]]
 - [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
 - [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
-- [ ] [[tickets/T-24064-etc-count-trio|T-24064 Match three small ETC functions]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
@@ -57,6 +56,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24064-etc-count-trio|T-24064 Match three small ETC functions]]
 - [ ] [[tickets/T-24067-etc-album-copy|T-24067 Match ETC album record copy]]
 - [ ] [[tickets/T-24063-taco-short-count|T-24063 TACO short count helpers]]
 - [ ] [[tickets/T-24060-shugaku-short-selectors|T-24060 SHUGAKU short selectors]]
@@ -107,8 +107,8 @@ kanban-plugin: board
 
 ## Done
 
-- [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
 - [ ] [[tickets/T-20013-name-ent-fade-page-followup|T-20013 NAME_ENT fade and page selection]]
+- [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
 - [ ] [[tickets/T-11890-tt-ratan2-aspsx|T-11890 TT func_8014D260 ASPSX pass]]
 - [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]
 - [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Match dialogue argument scheduling]]

@@ -50,7 +50,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-24036-geko-shugaku-siblings|T-24036]] one of two matched (244 bytes); GEKO guard refreshed to7 rows, In Review.
 - [[tickets/T-24033-valen-selector-ports|T-24033]] VALEN sibling retry:32D0C guarded at7 rows,34030 remains27; zero matches, In Review.
 - [[tickets/T-24067-etc-album-copy|T-24067]] single ETC album record copy, In Review; unresolved four-word draft, no C match.
-- [[tickets/T-24064-etc-count-trio|T-24064]] three small ETC functions (Ready; user deferred while DATE remains the sole worker focus).
+- [[tickets/T-24064-etc-count-trio|T-24064]] ETC model initialization loop verified252B, In Review; other former trio targets deferred or unresolved.
 - [[tickets/T-24057-ending-small-pair|T-24057]] two small ENDING fade handlers (In Review; no matches, both source leads at cost 4 / 12 rows).
 - [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI sibling package (In Review; 2 matches, 2,020 bytes).
 - [[tickets/T-24035-small-bunka-geko-siblings|T-24035]] Small BUNKA_SD/GEKO sibling ports (In Progress).
