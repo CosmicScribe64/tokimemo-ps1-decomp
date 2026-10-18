@@ -49,7 +49,31 @@ void func_801339AC(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-22027, 8 rows; all of them swap the operands of the compares against the constant 1 that the original keeps in $v1 (original bne t7,v1 and xor v0,v1,t8; built bne v1,t7 and xor v0,t8,v1). Source operand order and casts do not change it. */
+#ifdef NON_MATCHING
+s32 func_80133AA0() {
+    /* FAKE: `old` is a word local above sp2B that puts sp2B at 0x2B(sp) as in the original; the unsigned 1U constants keep one shared $v1 constant for the C50 and counter compares. T-22027 */
+    s32 old;
+    u8 sp2B;
+
+    sp2B = get_g_zyotai_h(D_800E6280.unk_F5F);
+    func_801322E8();
+    if (*(s16 *)&D_80144C40 == 2 && D_800E6280.unk_F5F == 8 && D_80144C50 == 1U && (old = D_800E6280.unk_1104.u++) == 1U) {
+        func_80083440(3U);
+    }
+    if (*(s16 *)&D_80144C40 == 4 && D_800E6280.unk_F5F == 8 && D_80144C50 == 1U && (old = D_800E6280.unk_1104.u++) == 1U) {
+        func_80083440(sp2B);
+    }
+    if ((*(s16 *)&D_80144C40 == 1 || *(s16 *)&D_80144C40 == 5) && D_800E6280.unk_F5F == 0xA && D_80144C50 == 1U && (old = D_800E6280.unk_1104.u++) == 1U) {
+        func_80083440(2U);
+    }
+    if (*(s16 *)&D_80144C40 == 3 && D_800E6280.unk_F5F == 0xA && D_80144C50 == 1U && (old = D_800E6280.unk_1104.u++) == 1U) {
+        func_80083440(3U);
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801338F0", func_80133AA0);
+#endif
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801338F0", func_80133C50);
 
