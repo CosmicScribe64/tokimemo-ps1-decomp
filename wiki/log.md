@@ -18973,3 +18973,57 @@ verified C bytes; ticket remains In Progress.
 are neutral35. The100-entry ledger retains all rejected diagnostics explicitly;
 no shared header change is supported. Guarded35 source is validated and ready
 for a source checkpoint while AS1 closure continues.
+
+## [2026-10-18] query | ENDING AS1 candidate check isolated
+
+[[tickets/T-24047-ending-sprite-scene]] existing-local selector views are neutral.
+Read-only generated AS1 reference shows LUI is always an eligible opcode; focus
+on dependencies/control flow or pre-scheduling sequences. No assembler binary
+build or production compiler changes.
+
+## [2026-10-18] query | ENDING original-backend diagnostic prepared
+
+[[tickets/T-24047-ending-sprite-scene]] full-width bit-field view is neutral.
+Cached private diagnostic image exists and [[tickets/T-3110-test-ido-52-and-41]]
+records prior approval. Prepare one5.2 as1 replay of captured input plus symbol
+table, preserving production settings and the original trace-fidelity controls.
+
+## [2026-10-18] ingest | Existing IDO52 diagnostic provenance verified
+
+[[tickets/T-24047-ending-sprite-scene]] archive SHA256 equals the T-3110 record.
+Private extraction is37MB in external scratch; cached evaluation image replays
+the unchanged captured assembler input and symbol sidecar with project read-only.
+No production build change or host installation.
+
+## [2026-10-18] query | IDO52 assembler does not close ENDING motion
+
+[[tickets/T-24047-ending-sprite-scene]] original5.2 as1 produces identical target
+words to stock53,804/cost35. Capture fidelity remains exact. Next isolate the
+generator using existing approved diagnostic tools; production stays unchanged.
+
+## [2026-10-18] query | IDO52 generator is also identical for ENDING
+
+[[tickets/T-24047-ending-sprite-scene]] isolated52 ugen with production optimizer,
+uniform frame pass and53 as1 gives identical804/cost35 target words. Probe old
+front end only after a stock architecture equality control; production unchanged.
+
+## [2026-10-18] query | IDO52 front end and architecture controls agree
+
+[[tickets/T-24047-ending-sprite-scene]] stock x86/arm target output agrees, and
+isolated52 cfe with today's uniform passes also produces identical804/cost35.
+Test only the remaining optimizer stage; no production configuration changes.
+
+## [2026-10-18] query | Full IDO52 pipeline leaves ENDING residue unchanged
+
+[[tickets/T-24047-ending-sprite-scene]] isolated52 optimizer and complete52
+pipeline with today's uniform passes reproduce identical804/cost35 target
+words. Backend-version hypothesis closed for this source; return to referenced
+C default-label CFG metadata, without compiler exceptions or production changes.
+
+## [2026-10-18] query | ENDING source controls and IDO52 evidence checkpoint
+
+[[tickets/T-24047-ending-sprite-scene]] forward default goto is neutral35; empty
+inner switch is rejected at807/cost756. The105-entry source ledger and five
+backend controls remain explicit about zero coverage gain. [[ending-allocator-trace]]
+records cached image, approved archive hash, paths and replay interface. Parent
+scope/standards review has no new findings; production source is unchanged.
