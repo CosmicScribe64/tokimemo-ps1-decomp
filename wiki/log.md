@@ -18190,3 +18190,7 @@ Created [[tickets/T-24007-complete-geko]] for five functions of src/ovl/GEKO/801
 ## [2026-10-17] ticket | GEKO scene package enters review
 
 [[tickets/T-24007-complete-geko]] ends with one verified function / 452 bytes, one guarded 36-row near match, and three source-only archived follow-ups. Default linked func_80133598 proof and GEKO checksum pass after the guard edit; official guarded comparison confirms func_80133024 still differs. Header/global/prototype checks pass (0 new, 15 known). Ticket and board moved to In Review; independent review remains required. Every loose experiment and diagnostic is preserved under ignored build/T-24007-probes; automatic review rejected deletion of temporary files. See [[scenes-family-results]].
+
+## [2026-10-17] build | Repair GEKO probe failure exit status
+
+Independent review of [[tickets/T-24007-complete-geko]] found swallowed candidate exceptions. drafts/T-24007/probe.py now exits 1 if any candidate fails while preserving labeled diagnostics. A Docker invalid-candidate run confirms exit 1 and the ERROR label; verified production C is unchanged.
