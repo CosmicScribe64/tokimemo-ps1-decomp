@@ -441,7 +441,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-4100-wave-3-list-10|T-4100]] Wave 3, list 10: 115 functions matched in 27 files (Done)
 - [[tickets/T-6020-wave-4-list-2|T-6020]] Wave 4, list 2: 13 functions matched in 34 files (Done)
 - [[tickets/T-5010-t0018-register-order-second-attempt|T-5010]] T-0018 register order, second attempt: entry and compare rules, unit-private data, cvt pass in the build, 44 functions (Done)
-- [[tickets/T-22022-w4-p22|T-22022]] Wave 4 package w4-p22: GYOZI `8013BD50.c`, `8013E5B0.c`, `801400D0.c`, `80143110.c`, four functions (In Progress).
+- [[tickets/T-22022-w4-p22|T-22022]] Wave 4 package w4-p22: GYOZI `8013BD50.c`, `8013E5B0.c`, `801400D0.c`, `80143110.c`, 0 of 4 matched; `func_80143160` best at 39 rows, drafts archived, all back to ASM (In Review).
 
 ## Entities / concepts / sources
 - [[register-cheatsheet]]: one-page register-miss guide, symptom to C change (regdiff loop)
