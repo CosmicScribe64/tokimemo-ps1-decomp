@@ -120,7 +120,29 @@ void func_80137854(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801372B0", func_801378D0);
+void func_801378D0(void) {
+    s32 r;
+
+    r = func_8005E0E0(D_800F53A0.unk_F2F);
+    if ((D_800F53E0 == ((u32)(D_800F53A0.girl[D_800F53A0.unk_F2F].unk_14 << 0x17) >> 0x1B)) &&
+        (D_800F53DF == (D_800F53A0.girl[D_800F53A0.unk_F2F].unk_14 & 0xF)) &&
+        (D_80145F60 == 0) &&
+        (D_800F53A0.unk_F2F == 0)) {
+        D_800F5AAE |= 1;
+        /* FAKE: reach D_800F647A through D_800F5AAE (as in func_80137D70) so as1 keeps the load below the store, and use indirect reads of D_800F53E0/D_800F5490 and the (u8) r cast (T-2020) as in SHOUGATU twin func_80136204; real source unknown. T-24080 */
+        (&D_800F5AAE)[0x9CC] += 4;
+    } else if (((&D_800F53DF)[1] == ((u32)((*(s32 *)&D_800F5490) << 0x17) >> 0x1B)) &&
+               (D_800F53DF == ((*(s32 *)&D_800F5490) & 0xF)) &&
+               (D_80145F60 == 0)) {
+        if ((u32)((u8)r & 0x7F) < 2U) {
+            D_800F5AAE |= 4;
+            (&D_800F5AAE)[0x9CC] += 0x1B;
+        } else {
+            D_800F5AAE |= 8;
+        }
+    }
+    func_8004DE1C();
+}
 
 void func_80137A0C(void) {
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */

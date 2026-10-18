@@ -2884,7 +2884,56 @@ void func_8013B208(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013B488);
+void func_8013B488(void) {
+    GameState *g;
+    s16 sel;
+    u8 rank;
+    u8 r2;
+
+    g = &D_800E6280;
+    rank = func_80051A68(g->unk_F5F) & 0x7F;
+    if (g->unk_110D >= 0xBU) {
+        g->unk_110D = 0xA;
+    }
+    if (g->unk_110D++ == 0) {
+        D_800CA158 = ((rank >= 2U) + (rank >= 3U) + (rank >= 4U)) * 3;
+        if (rank == 4) {
+            func_80083440(4);
+            D_800CA234[D_80122CDC] = 0;
+        }
+    }
+    sel = D_800CA234[D_80122CDC] + D_800CA158;
+    if (g->unk_75C != 0) {
+        sel = 0xA;
+    }
+    if ((g->unk_75C != 0) && (rank < 2U) && (g->unk_F5F == 6)) {
+        sel = 0x12;
+    }
+    /* FAKE: u8 cast on D_8015B680 emits lbu, and *(s16 *)&D_800CA15C emits lh to match original load instructions. T-24079 */
+    if ((D_80122D08 >= 0) && (D_80122D08 == g->unk_72C[g->unk_F5F]) && (g->unk_73C[g->unk_F5F] != 0) && (g->unk_1108 == 0x50) && ((u8)D_8015B680 == 0) && (g->unk_75C == 0) && (D_800CA2F8 != 0) && (D_800CA2F8 != 0x12)) {
+        sel = 0xB;
+        if (g->unk_110D == 1) {
+            func_80083440(3);
+            g->unk_1BC[g->unk_F5F].unk_02 -= 1;
+            g->unk_1BC[g->unk_F5F].unk_06 -= 2;
+            g->unk_1BC[g->unk_F5F].unk_0A += 5;
+            func_80084D3C();
+        }
+        if ((rank < 2U) && (g->unk_F5F == 6)) {
+            sel = 0x13;
+        }
+    }
+    D_800CA134 = (u8 *) &sel;
+    D_800CA138 = &D_800CA15C;
+    r2 = func_80051A68(g->unk_F5F);
+    if (((g->unk_F5F == 1) || (g->unk_F5F == 5)) && ((r2 & 0x7F) < 2U) && (*(s16 *)&D_800CA15C == 3)) {
+        func_80083440(1);
+    }
+    D_800CA13C = D_8015BE18;
+    D_800CA140 = D_8015BE84;
+    D_800CA144 = D_8015BEF0;
+    func_80082764(D_80122CDC, 1, 0);
+}
 
 s32 func_8013B7B0(void) {
     u8 x;
@@ -2987,7 +3036,8 @@ void func_8013BBF0(void) {
     func_80082764(0xFF, 1, 0);
 }
 
-void func_8013BC68(void) {
+/* FAKE: non-void return type keeps $v0 live across the call in func_8013F214 so ugen allocates $v1 for D_800E6280.unk_110A. T-24079 */
+s32 func_8013BC68(void) {
     D_800CA134 = &D_8015BF3C;
     D_800CA138 = &D_8015BF40;
     D_800CA13C = D_8015BD94;
@@ -3138,7 +3188,76 @@ void func_8013C0A4(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013C190);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013C410);
+void func_8013C410(s16 arg0, s32 *arg1, s32 *arg2) {
+    /* FAKE: 8 bytes of scalar locals before tbl place it at sp+0x18 in the 0x108 frame, goto loops keep the threshold-break branch layout, and empty row test forces $v0 load. T-24079 */
+    s32 row;
+    s16 i;
+    u8 val;
+    DateBytes11x21 tbl;
+
+    tbl = D_8015B7A0;
+    if (arg0 > 0) {
+        i = 0;
+loop1:
+        if (D_800E6280.unk_110.unk_02 >= (0x64 - (i * 0x19))) {
+            *arg1 = 5 - i;
+        } else {
+            i += 1;
+            if (i < 5) {
+                goto loop1;
+            }
+        }
+        if (D_800E6280.unk_110.unk_02 == 0) {
+            *arg1 = 0;
+        }
+        row = D_800E6280.unk_F5F;
+        if (row) {}
+        val = tbl.v[row][D_800CA2F8];
+        if (val == 0) {
+            *arg2 = 5;
+            return;
+        }
+        if ((val == 1) || (val == 2)) {
+            *arg2 = 4;
+            return;
+        }
+        if (val == 3) {
+            *arg2 = 3;
+            return;
+        }
+        *arg2 = 2;
+        return;
+    }
+    i = 0;
+loop2:
+    if (D_800E6280.unk_110.unk_02 >= (0x64 - (i * 0x19))) {
+        *arg1 = i + 3;
+    } else {
+        i += 1;
+        if (i < 5) {
+            goto loop2;
+        }
+    }
+    if (D_800E6280.unk_110.unk_02 == 0) {
+        *arg1 = 8;
+    }
+    row = D_800E6280.unk_F5F;
+    if (row) {}
+    val = tbl.v[row][D_800CA2F8];
+    if (val == 0) {
+        *arg2 = 3;
+        return;
+    }
+    if ((val == 1) || (val == 2)) {
+        *arg2 = 4;
+        return;
+    }
+    if (val == 3) {
+        *arg2 = 5;
+        return;
+    }
+    *arg2 = 6;
+}
 
 void func_8013C624(void) {
     func_80083440(D_800CA21C[D_80122CDC]);
@@ -4008,7 +4127,43 @@ void func_8013EF1C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013EFA0);
+s32 func_8013EFA0(void) {
+    /* FAKE: unused word reserves top frame slot so DatePlaceNames2D6 tbl sits at sp+0x2C in a 0x308 frame, and dead entry read lets cvt_pass strip CVTs on unk_724..unk_727 (same as EVENT twin func_8011AC18, T-11110). T-24079 */
+    s32 pad;
+    DatePlaceNames2D6 tbl;
+
+    pad = D_800E6280.unk_724 + D_800E6280.unk_725 + D_800E6280.unk_726 + D_800E6280.unk_727;
+    tbl = date_place_names;
+    func_80065F34(1);
+    /* FAKE: u8 view on the store and (u8) cast on the call result keep the original $v0/$a0 load and ugen t-register numbering. T-24079 */
+    D_80122CD4 = *(u8 *)&D_800E6280.unk_F5F;
+    if (((u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F) == 4) {
+        D_8015BF3C = 8;
+        D_800E6280.unk_110A += 0x24;
+        return;
+    }
+    if (((D_800E6280.unk_725 == D_800E6280.unk_724) && (date_arrival == 1)) ||
+        (D_800E6280.unk_726 == 0xFF) ||
+        ((D_800E6280.unk_726 == D_800E6280.unk_725) && (D_800E6280.unk_727 == 0xFF)) ||
+        ((D_800E6280.unk_726 == D_800E6280.unk_725) && (D_800E6280.unk_727 == D_800E6280.unk_725))) {
+        D_800E6280.unk_110A += 0x11;
+        return;
+    }
+    if (D_800E6280.unk_726 == D_800E6280.unk_724) {
+        func_800AE0F0(D_800CA25C, tbl.unk_00[D_800E6280.unk_725]);
+    } else {
+        func_800AE0F0(D_800CA25C, tbl.unk_00[(s32)D_800E6280.unk_726]);
+    }
+    if (D_800E6280.unk_727 != 0xFF) {
+        D_8015BF3C = 3;
+        if (D_800E6280.unk_727 == D_800E6280.unk_724) {
+            func_800AE0F0(D_800CA280, tbl.unk_00[D_800E6280.unk_725]);
+        } else {
+            func_800AE0F0(D_800CA280, tbl.unk_00[(s32)D_800E6280.unk_727]);
+        }
+    }
+    func_8004284C();
+}
 
 void func_8013F184(void) {
     place_init();
@@ -4020,7 +4175,55 @@ void func_8013F184(void) {
     D_800CA14C = 0;
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013F214);
+void func_8013F214(void) {
+    /* FAKE: unused locals pad frame to 0x38 with prev at sp+0x2C, and dead date_arrival read forces the second lbu on date_arrival after date_arrival = 2. T-24079 */
+    u8 v;
+    u8 sel;
+    s32 pad;
+    s32 prev;
+
+    sel = date_arrival;
+    if ((D_800E6280.unk_725 == D_800E6280.unk_724) && (D_80122CDC == 0)) {
+        prev = D_800E6280.unk_110A;
+        func_8013BC68();
+        if (prev != D_800E6280.unk_110A) {
+            D_8015BF4C = 1;
+            D_8015BF04 += 1;
+            D_800E6280.unk_110A += 0xC;
+        }
+        return;
+    }
+    if ((D_800E6280.unk_725 != D_800E6280.unk_724) && (D_80122CDC == 0)) {
+        /* FAKE: empty test on unk_110A loads it into $v1 before addiu. T-24079 */
+        if ((s32)D_800E6280.unk_110A) {}
+        D_800E6280.unk_110A += 0x1E;
+        return;
+    }
+    D_8015BF3C += D_80122CDC;
+    date_arrival = 2;
+    v = func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+    D_8015BF04 = ((v >= 2) + (v >= 3)) * ((date_arrival == 0) + 1) + date_arrival * 6 - (date_arrival == 2) * 3;
+    if (D_80122CDC == 1) {
+        if (D_800E6280.unk_726 == D_800E6280.unk_724) {
+            D_800CA2F8 = D_800E6280.unk_725;
+        } else {
+            D_800CA2F8 = D_800E6280.unk_726;
+        }
+        D_800CA148 = 0;
+    }
+    if (D_80122CDC == 2) {
+        if (D_800E6280.unk_727 == D_800E6280.unk_724) {
+            D_800CA2F8 = D_800E6280.unk_725;
+            D_800CA148 = 0;
+        } else {
+            D_800CA2F8 = D_800E6280.unk_727;
+            /* FAKE: u16 view gives STR dtype L instead of J so uopt keeps D_800CA148 = 0 inside both arms instead of hoisting it above the branch. T-24079 */
+            *(u16 *)&D_800CA148 = 0;
+        }
+    }
+    D_800E6280.unk_F5E -= 1;
+    func_8004284C();
+}
 
 void func_8013F400(void) {
     u8 *temp_v0;

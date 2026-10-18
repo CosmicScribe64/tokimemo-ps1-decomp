@@ -547,7 +547,7 @@ void func_80132004(void);
 void func_80151720(void);
 void func_80132288(void);
 void func_8014F300(void);
-void func_80083440(s32 arg0);
+s32 func_80083440(s32 arg0);
 void func_80145EC4(void);
 extern u8 D_8015B670;
 extern u8 date_arrival;
@@ -1748,6 +1748,11 @@ extern DatePairs8 D_8015FB3C;
  * state (0 idle, 1 armed, 2 moving), D_8015F9A8 the idle counters (T-17205). */
 extern u8 D_8015F9A0[8];
 extern u8 D_8015F9A8[8];
+
+typedef struct DatePlaceNames2D6 {
+    /* 0x00 */ u8 unk_00[22][33];
+} DatePlaceNames2D6; /* size 0x2D6; func_8013EFA0 copies date_place_names to the stack */
+extern DatePlaceNames2D6 date_place_names;
 
 #endif
 

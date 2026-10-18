@@ -46,33 +46,31 @@ void func_80136454(void) {
     func_8004DE1C();
 }
 
-/* NON_MATCHING: T-10850, 19 differing listing lines; see the ticket scratch evidence. */
-#ifdef NON_MATCHING
 void func_80136488(void) {
-    s16 var_s0;
+    s16 i;
 
     D_801461A0 = 0;
     func_80136220();
     func_8004EE18(D_80146170, 0x11, 1, 2, 0);
-    for (var_s0 = 0; var_s0 < 3; var_s0++) {
-        func_800549E8(var_s0 + 0x60);
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_01 = 0xA;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_02 = 0;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_38 = 0x01000000;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_03 = 4;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_0C = (u8 *)D_80146158;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_10 = (u8 *)D_80146160;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_34 = (u8 *)D_80146150;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_16 = 0;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_18 = 0;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_06 = 1;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_43 = 0x11;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_26 = -0xA0;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_2A = -0x78;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_07 = 0x80;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_05 = 0;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_04 = 0;
-        ((DisplayActor44 *)D_80129F40)[var_s0 + 0x60].unk_14 = D_80146168;
+    for (i = 0; i < 3; i++) {
+        func_800549E8(i + 0x60);
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_01 = 0xA;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_02 = 0;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_38 = 0x01000000;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_03 = 4;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_0C = (u8 *)D_80146158;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_10 = (u8 *)D_80146160;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_34 = (u8 *)D_80146150;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_14 = D_80146168;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_16 = 0;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_18 = 0;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_06 = 1;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_43 = 0x11;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_26 = -0xA0;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_2A = -0x78;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_07 = 0x80;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_05 = 0;
+        ((DisplayActor44 *)D_80129F40)[i + 0x60].unk_04 = 0;
     }
     ((DisplayActor44 *)D_80129F40)[0x60].unk_26 = 0;
     ((DisplayActor44 *)D_80129F40)[0x61].unk_16 = 3;
@@ -98,9 +96,6 @@ void func_80136488(void) {
     ((DisplayActor44 *)D_80129F40)[0x63].unk_04 = 0;
     func_8004DE1C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80136220", func_80136488);
-#endif
 
 void func_801366E4(void) {
     func_80086AB0(0x201);

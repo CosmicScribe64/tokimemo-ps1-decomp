@@ -49,6 +49,10 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24084-shougatu-gyozi-siblings-b|T-24084 Match SHOUGATU and GYOZI sibling batch B (func_801359FC, func_80132148/func_80134100, func_801345BC/func_80135EB0, func_80137480)]]
+- [ ] [[tickets/T-24083-date-80132000-siblings-b|T-24083 Match DATE 80132000.c sibling batch B (func_80147BB0, func_8013A94C, func_8014EF60, func_80151110)]]
+- [ ] [[tickets/T-24082-guarded-near-misses-rensyu-option-bunkasd|T-24082 Close guarded 4-8 row near misses in RENSYU, OPTION, and BUNKA_SD]]
+- [ ] [[tickets/T-24081-event-geko-twins-a|T-24081 Match EVENT and GEKO 1.000 twin cluster A (func_800FAA04/func_8013A820, func_800FA25C/func_80139E1C)]]
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24078-etc-two-poly-renderer|T-24078 Recover ETC two-slot polygon renderer]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
@@ -114,6 +118,8 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24080-gyozi-shougatu-twins|T-24080 Match GYOZI and SHOUGATU 1.000 twin pair cluster (func_80136488/func_80134CB4, func_801378D0/func_80136204)]]
+- [ ] [[tickets/T-24079-date-80132000-event-siblings|T-24079 Match DATE 80132000.c siblings from matched EVENT 8010FE10.c]]
 - [ ] [[tickets/T-24075-etc-random-selection|T-24075 Recover ETC random selection]]
 - [ ] [[tickets/T-24073-etc-record-init|T-24073 Recover ETC typed record initializer]]
 - [ ] [[tickets/T-24064-etc-count-trio|T-24064 ETC model loop verified252B; review pending]]

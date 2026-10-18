@@ -49,6 +49,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-24040-option-menu-siblings|T-24040]] two of three matched (1028 bytes), selector guarded at5 rows; In Review.
 - [[tickets/T-24036-geko-shugaku-siblings|T-24036]] one of two matched (244 bytes); GEKO guard refreshed to7 rows, In Review.
 - [[tickets/T-24033-valen-selector-ports|T-24033]] VALEN sibling retry:32D0C guarded at7 rows,34030 remains27; zero matches, In Review.
+- [[tickets/T-24079-date-80132000-event-siblings|T-24079]] DATE 80132000.c EVENT sibling ports (`func_8013C410`, `func_8013EFA0`, `func_8013F214`, `func_8013B488`), In Progress.
 - [[tickets/T-24078-etc-two-poly-renderer|T-24078]] ETC two-slot polygon renderer, In Progress.
 - [[tickets/T-24077-etc-pair-scene|T-24077]] ETC two-word table scene, unresolved In Review;102-row source-only checkpoint, production ASM.
 - [[tickets/T-24076-etc-album-search|T-24076]] ETC album search, unresolved In Review;71-row source-only lead, production ASM.
@@ -735,3 +736,9 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Progress; exact-frame 4-row assignment-capture checkpoint, earlier 28-row source preserved; sole worker focus).
 - [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Review; actual default C match, 3,200 linked bytes; DATE checksum and guards pass).
 - [[tickets/T-24047-ending-sprite-scene|T-24047]] ENDING sprite scene initializer, 80135F4C (In Progress;804/805 instructions, cost35, only default-arm AS1 motion remains; zero verified bytes).
+- [[tickets/T-24079-date-80132000-event-siblings|T-24079]] DATE `80132000.c` siblings from matched EVENT `8010FE10.c` (Done; 4 matches, 2,316 B verified default C).
+- [[tickets/T-24080-gyozi-shougatu-twins|T-24080]] GYOZI and SHOUGATU 1.000 twin pair cluster (`func_80136488`/`func_80134CB4`, `func_801378D0`/`func_80136204`, Done; 4 matches, 1,840 B verified default C).
+- [[tickets/T-24081-event-geko-twins-a|T-24081]] EVENT and GEKO 1.000 twin cluster A (`func_800FAA04`/`func_8013A820`, `func_800FA25C`/`func_80139E1C`, In Progress).
+- [[tickets/T-24082-guarded-near-misses-rensyu-option-bunkasd|T-24082]] Guarded 4-8 row near misses in RENSYU, OPTION, and BUNKA_SD (In Progress).
+- [[tickets/T-24083-date-80132000-siblings-b|T-24083]] DATE 80132000.c sibling batch B (`func_80147BB0`, `func_8013A94C`, `func_8014EF60`, `func_80151110`, In Progress).
+- [[tickets/T-24084-shougatu-gyozi-siblings-b|T-24084]] SHOUGATU and GYOZI sibling batch B (`func_801359FC`, `func_80132148`/`func_80134100`, `func_801345BC`/`func_80135EB0`, `func_80137480`, In Progress).

@@ -20386,3 +20386,26 @@ Y-A+59, failing original standalone H/ADD boundary. Original saved roles and
 stack UV/poly positions remain. Source/replay and opcode deltas in
 drafts/T-24078/height-lifetimes.md. No production change, match claim or new
 width/mask grid; same function remains active for source reasoning.
+## [2026-10-18] ticket | Start T-24079 DATE 80132000.c EVENT sibling ports
+
+Created [[tickets/T-24079-date-80132000-event-siblings]] (In Progress) to port `DATE` `src/ovl/DATE/80132000.c` functions `func_8013C410` (532 B), `func_8013EFA0` (484 B), `func_8013F214` (492 B), and `func_8013B488` (808 B) from their matched `EVENT` `src/ovl/EVENT/8010FE10.c` siblings (`func_80118DAC`, `func_8011AC18`, `func_8011AD7C`, `func_80118010`).
+
+
+## [2026-10-18] ticket | Start T-24080, T-24081, and T-24082 for parallel subagent orchestration
+
+Created three additional disjoint work packages to run alongside [[tickets/T-24079-date-80132000-event-siblings]]:
+- [[tickets/T-24080-gyozi-shougatu-twins]] (`In Progress`): 1.000 twin pairs `GYOZI:func_80136488` + `SHOUGATU:func_80134CB4` (1,208 B) and `GYOZI:func_801378D0` + `SHOUGATU:func_80136204` (632 B) in `src/ovl/GYOZI/80136220.c` and `src/ovl/SHOUGATU/80134900.c`.
+- [[tickets/T-24081-event-geko-twins-a]] (`In Progress`): 1.000 twin pairs `EVENT:func_800FAA04` + `GEKO:func_8013A820` (1,016 B, sibling `EVENT:func_8010564C`) and `EVENT:func_800FA25C` + `GEKO:func_80139E1C` (1,616 B, sibling `EVENT:func_80104E20`) in `src/ovl/EVENT/800F9600.c` and `src/ovl/GEKO/80138D18.c`.
+- [[tickets/T-24082-guarded-near-misses-rensyu-option-bunkasd]] (`In Progress`): guarded 4-8 row near misses `RENSYU:func_80133628` (404 B), `OPTION:func_8013394C` (648 B), and `BUNKA_SD:func_80134418` (464 B).
+
+## [2026-10-18] ticket | T-24079 subagent matched 4 DATE functions (2,316 B); start T-24083
+
+Subagent on [[tickets/T-24079-date-80132000-event-siblings]] matched all four target functions in `src/ovl/DATE/80132000.c` (`DATE:func_8013B488` 808 B, `DATE:func_8013C410` 532 B, `DATE:func_8013EFA0` 484 B, `DATE:func_8013F214` 492 B — 2,316 B total). Renamed remaining `m2c` local names (`sp3A`/`sp39`/`temp_v0` in `func_8013B488`, `var_v0`/`temp_v1`/`sp18` in `func_8013C410`) per `CODING_STANDARDS.md`. Created [[tickets/T-24083-date-80132000-siblings-b]] (`In Progress`) for the next `src/ovl/DATE/80132000.c` batch (`DATE:func_80147BB0` 468 B, `DATE:func_8014EF60` 580 B, `DATE:func_80151110` 632 B, `DATE:func_8013A94C` 1,208 B).
+
+## [2026-10-18] ticket | T-24080 subagent matched 4 GYOZI/SHOUGATU functions (1,840 B); start T-24084
+
+Subagent on [[tickets/T-24080-gyozi-shougatu-twins]] matched all four target functions across `GYOZI` and `SHOUGATU` (`GYOZI:func_80136488` 604 B in `src/ovl/GYOZI/80136220.c`, `SHOUGATU:func_80134CB4` 604 B in `src/ovl/SHOUGATU/80134890.c`, `SHOUGATU:func_80136204` 316 B in `src/ovl/SHOUGATU/80135B90.c`, `GYOZI:func_801378D0` 316 B in `src/ovl/GYOZI/801372B0.c` — 1,840 B total). Renamed remaining `m2c` local names (`var_s0` -> `i`, `temp_v0` -> `r`) per `CODING_STANDARDS.md`. Created [[tickets/T-24084-shougatu-gyozi-siblings-b]] (`In Progress`) for the next `SHOUGATU`/`GYOZI` batch (`SHOUGATU:func_801359FC` 276 B, `SHOUGATU:func_801345BC` 364 B + `GYOZI:func_80135EB0` 340 B, `SHOUGATU:func_80132148` 572 B + `GYOZI:func_80134100` 580 B, `SHOUGATU:func_80137480` 428 B).
+
+## [2026-10-18] ticket | Complete T-24079 and T-24080 (Done, +8 functions / +4,156 B)
+
+Verified all 8 matched functions across [[tickets/T-24079-date-80132000-event-siblings]] (`DATE:func_8013B488` 808 B, `DATE:func_8013C410` 532 B, `DATE:func_8013EFA0` 484 B, `DATE:func_8013F214` 492 B in `src/ovl/DATE/80132000.c`) and [[tickets/T-24080-gyozi-shougatu-twins]] (`GYOZI:func_80136488` 604 B in `src/ovl/GYOZI/80136220.c`, `SHOUGATU:func_80134CB4` 604 B in `src/ovl/SHOUGATU/80134890.c`, `SHOUGATU:func_80136204` 316 B in `src/ovl/SHOUGATU/80135B90.c`, `GYOZI:func_801378D0` 316 B in `src/ovl/GYOZI/801372B0.c`) with `tools/funcdiff.py --resolve`, `tools/migrate_globals.py --check`, `tools/sync_protos.py --check-branch`, and `CODING_STANDARDS.md` review. Moved both tickets to `Done`.
