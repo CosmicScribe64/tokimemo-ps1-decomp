@@ -19902,3 +19902,22 @@ pinned matched body rather than requiring the removed ASM fallback. Fresh
 Docker replay on matched checkout reports zero; production unchanged assertion
 passes. [[etc-family-results]] and drafts/T-24075 record the correction; verified
 904-byte production/source/review and Done status are unchanged.
+
+## [2026-10-18] ticket | Claim ETC album search using actual helper contract
+
+Created [[tickets/T-24076-etc-album-search]] before edits for only func_8013F054 in ETC/8013BEF0.c. Prior249/238 scores acknowledged; new current matched helper exposes phantom arguments/incoming parameter and stale GameState scaling. Establish faithful full-TU baseline from original/current types, preserving backward-search index0 semantics. Same sole Sol medium worker, no extra agents/instrumentation; coordinate any F320 header declaration before shared edit. Preserve T-24075 and all other functions.
+
+## [2026-10-18] build | T-24076 faithful current-type album baseline
+
+[[tickets/T-24076-etc-album-search]] establishes174 resolved rows/frame28 with
+actual one-argument helper, real eight-byte record semantics and index0-safe
+search. Historical249/238 remains prior context. One original predecrement/
+unsigned-address-bound source control follows; no production/header mutation.
+
+## [2026-10-18] build | T-24076 source semantics narrow to103 rows
+
+[[tickets/T-24076-etc-album-search]] retains174 indexed baseline,162 original
+address-bound cursor,143 natural short-circuit tail,139 selected-code word and
+103 selected-event word controls in drafts/T-24076. Field loads stay bytes;
+frame28 matches. Source-led narrowing/copy and constant-sharing evidence drives
+each control, no sweep/instrumentation. Production/header unchanged; In Progress.

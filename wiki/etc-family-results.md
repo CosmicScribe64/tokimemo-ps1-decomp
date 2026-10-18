@@ -348,3 +348,18 @@ ASM fallback after promotion. It now exact-matches/replaces the pinned current
 C body, strips only archive banners and asserts production unchanged. Fresh
 Docker replay on matched checkout reports zero; verified production5d083af5
 unchanged and Done status retained.
+
+Fresh faithful current full-TU baseline174 rows, exact frame28. Record view uses
+whole-GameState byte offsets with integer loop index through0, plus actual saved
+album bytes, correct one-arg helper and no incomingarg2. This is new measurement,
+not historical249/238. Original predecrement/unsigned address-bound loop differs
+from generated biased-pointer induction, motivating one target-address cursor
+control without forming a before-object C pointer. No production/header change.
+
+Predecrement/unsigned target-address cursor improves174 to162; natural shared-
+call short-circuit tail143; selected-code word local139 removes extra ANDI;
+selected-event-type word local103 restores original constant2 sharing with mode.
+Byte record fields remain unchanged, frame28 exact. All source-only controls and
+replay retained in drafts/T-24076; production/header/config unchanged, In Progress.
+Remaining index-load sinking, register/web/global reload and branch differences
+are unresolved; no match or impossibility claim.
