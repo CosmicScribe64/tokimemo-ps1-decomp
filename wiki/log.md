@@ -18159,3 +18159,9 @@ Created [[tickets/T-24010-date-etc-coordination]], [[tickets/T-24011-date-dispat
 
 ## [2026-10-17] query | Keep linked proof within worker build cap
 Inspected tools/funcdiff.py freshness/header subprocesses: internal ninja calls omit -j1. [[tickets/T-24010-date-etc-coordination]] records prebuild at -j1 then --no-build default linked proof, preserving freshness checks. Workers notified; no tracked tooling change.
+
+## [2026-10-17] build | Verified ETC checkpoint awaits two-axis review
+[[tickets/T-24012-etc-render-family]] checkpoint a0675cafe verifies ETC func_80136448, 1,280 default linked bytes, affected checksum and header/global/prototype guards. [[tickets/T-24010-date-etc-coordination]] records exact branch/proof paths. Standards/spec reviewers inspect pinned 4c5123f11...a0675cafe; parent retains integration ownership. Other assigned targets remain assembly.
+
+## [2026-10-17] decision | Hand reviewed ETC checkpoint to parent
+Independent Standards and Spec reviews pass 4c5123f11...a0675cafe with zero actionable findings on each axis. [[tickets/T-24010-date-etc-coordination]] records the 1,280-byte checkpoint as ready for parent integration; [[tickets/T-24012-etc-render-family]] remains open for three targets. No merge, push or worktree removal performed by this lane.
