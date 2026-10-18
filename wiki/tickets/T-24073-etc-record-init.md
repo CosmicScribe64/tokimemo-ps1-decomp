@@ -1,7 +1,7 @@
 ---
 id: T-24073
 title: Recover ETC typed record initializer
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -23,3 +23,9 @@ Matched MAIN80084E90 has the real Rec24 initialization fields/constants80/1F1/10
 Original incoming a0 is spilled atsp48 and compared to0xE. Existing ETC.h void(void) conflicts with actual s32 argument; only current matched caller43334 intentionally supplies no argument expression. Parent approves narrowly changing the header to voidfunc8014407C() with evidence comment, definitionvoid(s32arg0), preserving caller unchanged. Private scratch-only header view establishes fresh valid baseline129, not historical ERROR. Baseline has s16 local narrowing shifts/extra saved register/frame50 versus original48; production/header unchanged pending source improvement.
 
 Measured source-led sequence:129 baseline, wordx124, wordnext_id115, matched unsigned SDK width84/exactframe48, directID64, early required y-store22, postincrementID20 best. Moving IDstore before pointeradvance30 rejected. Best20 has original instruction count/frame/allotherwords; only i++ lies after9-instruction signedDIV guard rather than before it. Source/controls/private-header replay retained under drafts/T-24073. Production/header unchanged; no actual C proof/verified bytes. In Progress pending one focused scheduling hypothesis.
+
+## Verified C handoff
+Source pin e89ce5f375d233303c559676fa7d34a0d2b4c718 replaces only assigned fallback and approved ETC.h declaration. Canonical for-loop20→4; ordered i/x initializer4→0. Actual default linked352B MATCH, ETC checksumOK, headers/globalsOK, prototypes0new15known,42 neighbor resolved-word bodies unchanged and exact assigned-only source substitution audit. Signed RNG/current Rec24 fields/old-style no-expression caller preserved. Sole FAKE is matched MAIN unsigned SDK width view. Parent preliminary full standards/spec review reports PASS/no findings; ticket/card In Review pending independent all27/publication. drafts/T-24073/body.c now records exact production; post-id.c preserves20 checkpoint.
+
+## Independent review and publication
+Parent independently verified all27 hashes, interfaces/prototypes0new15known, actual-C gate and literal352 proof; root standards/spec review PASS with no findings. Published on main c4847ad5d, merge log .claude/orchestrator/state/merge-logs/e89ce5f375.log. Moved Done with card/index after review. Parent fresh Docker measurement at c4847ad5d:6515/6958 functions,1865768/2279368 bytes (81.9%),413600 bytes remaining. ETC367/394 functions,82816/107284 bytes.

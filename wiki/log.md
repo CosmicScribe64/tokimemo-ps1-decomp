@@ -19794,3 +19794,19 @@ Created [[tickets/T-24073-etc-record-init]] before edits for only func_8014407C 
 ## [2026-10-18] build | T-24073 source-led record initialization20
 
 [[tickets/T-24073-etc-record-init]]/[[etc-family-results]] preserve source-only forms under drafts/T-24073:129,124,115,84,64,22,20, with early-ID30 rejected. Real Rec24/current fields, word values and matched unsigned SDK width fix source defects/frame; early y-store/postincrement ID leave only i++ across signedDIV guard. Private approved header() view; production/interfaces unchanged, no verified gain. In Progress.
+
+## [2026-10-18] build | T-24073 verified352 default C
+
+[[tickets/T-24073-etc-record-init]]/[[etc-family-results]]/[[matching-notes]] record source pin e89ce5f3: canonical ordered for-loop closes20/4 to0. Actual default linked352B MATCH, ETC checksumOK, interface guards0new15known,42 neighbor words/source bodies unchanged. Approved unspecified-argument header view preserves original incominga0/matched caller. Sole SDK-width FAKE documented; card/index In Review pending parent independent all27/publication. Source/provenance only; no compiler/config exceptions.
+
+## [2026-10-18] query | Parent GitHub ownership check12:14UTC
+
+Parent reports completed read-only check at12:14UTC: no open PRs; only open claims57(updated2026-10-17T22:16:21Z) and50(updated2026-10-17T15:45:07Z), timestamps unchanged. No external messages. Next check planned12:44UTC. Coordination record only; matching scope unchanged.
+
+## [2026-10-18] ticket | T-24073 reviewed and published Done
+
+[[tickets/T-24073-etc-record-init]] moves with card/index to Done after parent independent all27 hashes/interfaces/actual-C gate/literal352 checks and standards/spec review PASS/no findings. Main publication c4847ad5d, source e89ce5f3, merge log .claude/orchestrator/state/merge-logs/e89ce5f375.log. Source controls/provenance retained; authoritative progress measurement remains parent-owned, no expected totals asserted.
+
+## [2026-10-18] query | Parent measured progress after T-24073
+
+Parent fresh Docker measurement at main c4847ad5d:6515/6958 functions,1865768/2279368 bytes (81.9%),413600 bytes remaining; ETC367/394 functions,82816/107284 bytes. These are measured totals after [[tickets/T-24073-etc-record-init]], replacing earlier expected estimates.

@@ -5,7 +5,7 @@ updated: 2026-10-18
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Latest measured code checkpoint `fd700bf3f` has **6,514/6,958 functions and 1,865,416/2,279,368 bytes (81.8%)**, measured in Docker after T24069. Since baseline `283b86fca`: 48 functions / 51,948 bytes added. The active goal remains 100%, with 413,952 game-code bytes remaining. Later source-only archives through `fe932f320` add no verified bytes. SDK assembly is separately reported and excluded.
+User resumed work toward 100% verified game-code matching. Latest measured code checkpoint `c4847ad5d` has **6,515/6,958 functions and 1,865,768/2,279,368 bytes (81.9%)**, measured in Docker after T24073. Since baseline `283b86fca`: 49 functions / 52,300 bytes added. The active goal remains 100%, with 413,600 game-code bytes remaining. Source-only archives add no verified bytes. SDK assembly is separately reported and excluded.
 
 ## Verified gains
 
@@ -59,6 +59,8 @@ User resumed work toward 100% verified game-code matching. Latest measured code 
 | T20013 / PR62 | NAME_ENT func_80134248 |2256|
 | T24064 | ETC func_8013F980 |252|
 | T24069 | ETC func_8013BFFC |820|
+| T24073 | ETC func_8014407C |352|
+
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
 
@@ -222,3 +224,6 @@ PR #64 supplies wiki-only TT toolchain/signature measurements. Integrated as con
 ## Verified ETC model loop 2026-10-18
 
 Main6d1d52101 adds func_8013F980,252 verified linked C bytes. Independent literal proof, all27 hashes and interface guards pass; root standards review has no findings. Docker progress:6513/6958 functions,1864596/2279368 bytes(81.8%),414772 bytes remain. T24064 single-function scope Done. Same Sol worker moves to ETC80140AE4 under a new ticket; ENDING worker is idle after its documented unresolved investigation. No additional agents.
+## Contributor check 2026-10-18 12:14 UTC
+
+Parent completed read-only GitHub check: no open PRs; only open claims57(updated2026-10-17T22:16:21Z) and50(updated2026-10-17T15:45:07Z), unchanged. No external messages. Next check planned12:44UTC. No matching scope added.
