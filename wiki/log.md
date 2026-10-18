@@ -18628,3 +18628,8 @@ Created [[tickets/T-24036-geko-shugaku-siblings]] In Progress after clean latest
 ## [2026-10-17] build | T-24036 SHUGAKU selector match
 
 [[tickets/T-24036-geko-shugaku-siblings]] verifies func_80134C98 as244 actual default linked C bytes. Canonical direct sibling, no FAKE or header changes; unit checksum and declaration guards pass. Updated [[shugaku-family-results]].
+
+
+## [2026-10-18] decision | T-24036 sibling package in review
+
+[[tickets/T-24036-geko-shugaku-siblings]] moves to In Review: one244-byte SHUGAKU match, GEKO guard refreshed from current91 to7 rows without additional coverage. Signed-declaration control rejects a header change; matched GEKO neighbor unchanged. Source/control and exact negatives archived; all loose probes preserved ignored in build/T-24036-probes/. Updated [[scenes-family-results]]. Unit checksums and guards pass; independent review pending.

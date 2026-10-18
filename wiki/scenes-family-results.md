@@ -244,3 +244,8 @@ packed-byte access, 152 for `func_80132B24` after recovering the original frame/
 layout, and 163 for a width variant of `func_80133308` (164 plain current-header form).
 Details and provenance in drafts/T-24007/README.md. Header/global/prototype checks pass
 (0 new prototype disagreements, 15 known); no shared header change or FAKE added.
+
+
+## T-24036 GEKO tail follow-up
+
+[[tickets/T-24036-geko-shugaku-siblings]] restores the GEKO40040 guard's current91-row mixed-field baseline to7 with the matched EVENT byte-view recipe, explicitly marked FAKE as in T-20900. The original unconditionally reloads the counter at the tail; meaningful locals and a scratch signed declaration leave7, while whole signed alias forces reload but leaves8 register rows. No header edit or new GEKO coverage. Existing matched GEKO3FD88 unchanged; default checksum and declaration guards pass. SHUGAKU sibling in the same package matches244 bytes; source/provenance in drafts/T-24036/.
