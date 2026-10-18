@@ -1,0 +1,52 @@
+/* NON_MATCHING: T-24074, private source-only diagnostic; production remains ASM. */
+s32 func_80144224(void) {
+    u32 sp30;
+    s32 temp_a2;
+    GameState *g;
+    u32 temp_hi;
+
+    g = &D_800E6280;
+    D_801217D0[0].unk_00 = 0x80000000;
+    D_801217D0[1].unk_00 = 0x80000000;
+    func_80143968();
+    sp30 = g->unk_1104.u / 701U;
+    temp_hi = g->unk_1104.u % 701U;
+    if (temp_hi == 1) {
+        if (D_80150148 == 0) {
+            func_801436E4((s32) g->unk_F5F);
+        } else if (D_80150148 < 0xF) {
+            if (g->unk_F5F == D_8015014C[D_80150148]) {
+                D_80150148++;
+            }
+            func_801436E4(D_8015014C[D_80150148]);
+        } else {
+            func_801436E4((s32) g->unk_F5F);
+        }
+        D_80150148 += 1;
+    } else if ((s32) sp30 < 0xF) {
+        if (temp_hi == 2) {
+            func_8014407C((s32) sp30);
+        } else if (temp_hi < 0xA0U) {
+            temp_a2 = temp_hi * 3;
+            func_801441DC(2, temp_a2 / 4);
+            func_801441DC(3, (s32) (temp_a2 - 0x3C) / 4);
+            func_801441DC(4, (temp_a2 - 0x78) / 4);
+        }
+    }
+    if (D_80150148 < 0x10) {
+        temp_hi = g->unk_1104.u % 701U;
+        if (temp_hi >= 0x21EU) {
+            temp_a2 = (0x2BD - temp_hi) * 3;
+            func_801441DC(2, (temp_a2 - 0x78) / 4);
+            func_801441DC(3, (s32) (temp_a2 - 0x3C) / 4);
+            func_801441DC(4, temp_a2 / 4);
+        }
+    }
+    if ((g->unk_1104.u >= 0x259U) && (func_800460EC() & 2)) {
+        func_80042940(2);
+    }
+    func_8004B19C((s32) g->unk_1104.u, 0, -0xA);
+    func_8004B19C((s32) sp30, 0, 0);
+    func_8004B19C(D_80150148, 0, 0xA);
+    func_8004B19C(D_8015014C[D_80150148], 0, 0x14);
+}
