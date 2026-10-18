@@ -18153,3 +18153,31 @@ User resumed after contributor/Claude waves. Read latest index, wave4/5 completi
 
 ## [2026-10-17] ticket | Start isolated DATE and ETC matching
 Created [[tickets/T-24010-date-etc-coordination]], [[tickets/T-24011-date-dispatch-family]] and [[tickets/T-24012-etc-render-family]] from c485bb71a. Read [[index]], local instructions, standards, [[date-family-results]] and [[etc-family-results]]. Limited to explicitly assigned files, Docker builds at one job per worker; parent owns integration and contributor monitoring.
+
+## [2026-10-17] setup | T-24011 isolated DATE dispatcher probes
+
+Created codex/complete-date from 4c5123f11, copied ignored inputs and local skills, and read [[date-family-results]] plus [[matching-notes]] T-17207/T-17208. Keep the three assigned production fallbacks while testing recovered GameState pointer views; the libgte helper has an established hand-assembly blocker.
+
+## [2026-10-17] setup | T-24011 isolated DATE dispatcher probes
+
+Created codex/complete-date from 4c5123f11, copied ignored inputs and local skills, and read [[date-family-results]] plus [[matching-notes]] T-17207/T-17208. Keep the three assigned production fallbacks while testing recovered GameState pointer views; the libgte helper has an established hand-assembly blocker.
+
+## [2026-10-17] setup | T-24011 isolated DATE dispatcher probes
+
+Created codex/complete-date from 4c5123f11, copied ignored inputs and local skills, and read [[date-family-results]] plus [[matching-notes]] T-17207/T-17208. Keep the three assigned production fallbacks while testing recovered GameState pointer views; the libgte helper has an established hand-assembly blocker.
+
+## [2026-10-17] query | T-24011 pointer view fixes dispatcher registers
+
+[[date-family-results]] records a source-only 23-row resolved near miss for func_801449D4; no match claim. The probe setup harness accidentally appended its identical setup entry three times on reruns; those entries remain under the append-only log rule and that side effect has been removed.
+
+## [2026-10-17] query | T-24011 recovered views improve both dispatchers
+
+[[date-family-results]] records exact-frame source-only near misses: func_801449D4 at 11 isolated resolved +/- rows and func_80144E20 at 72. Ordinary pointer views fix shifted allocation; return-view/default/canonical compare probes do not finish either target. Production fallbacks remain intact.
+
+## [2026-10-17] build | T-24011 source-only checkpoint and fallback proof
+
+Preserved source-only dispatcher near misses and Docker reproducers under drafts/T-24011; [[date-family-results]] records full-unit 48/72 resolved rows, isolated small 11, and the bounded Astra as1-stage observation. DATE checksum, headers, globals and branch prototype guard pass (0 new disagreements, 15 known). Explicit default linked comparisons match all three unchanged assembly fallbacks; zero new C bytes. Exploration artifacts moved into ignored build/date24011-scratch. No original assembly or executable data committed.
+
+## [2026-10-17] ticket | T-24011 awaits archive review
+
+Moved [[tickets/T-24011-date-dispatch-family]] and its [[kanban]] card to In Review. Both dispatchers retain production INCLUDE_ASM; libgte helper retains its established hand-assembly blocker. Coordinator owns the required two-axis review.
