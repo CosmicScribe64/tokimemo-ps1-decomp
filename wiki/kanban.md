@@ -43,11 +43,9 @@ kanban-plugin: board
 ## Ready
 
 - [ ] [[tickets/T-20013-name-ent-fade-page-followup|T-20013 NAME_ENT fade and page selection]]
-
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-
 
 - [ ] [[tickets/T-22000-wave-4-conveyor|T-22000 Wave 4 conveyor]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
@@ -56,8 +54,6 @@ kanban-plugin: board
 ## In Review
 
 - [ ] [[tickets/T-20011-name-ent-coordinate-selection|T-20011 NAME_ENT pointer-coordinate hit test]]
-
-- [ ] [[tickets/T-20012-stable-search-scoring|T-20012 Stable search scoring]]
 
 ## Done
 
