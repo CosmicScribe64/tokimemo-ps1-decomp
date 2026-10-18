@@ -140,4 +140,9 @@ functions are not in a package: `func_80138C1C`, `func_80138F60`, `func_801398EC
 
 ## Pointer-coordinate hit test matched (T-20011)
 
-[[tickets/T-20011-name-ent-coordinate-selection]] matches func_80134110 (152 bytes) from the T-22008 leftovers. The shared DisplayActor44 pointer and integer no-value exits recover the original coordinate registers; the measured return-liveness constraint is FAKE. No dead initializer or scratch label is retained. Actual default linked C proof, all27 hashes and declaration guards pass. The remaining396-byte fade and2256-byte character-page functions stay guarded under claim #57 and [[tickets/T-20013-name-ent-fade-page-followup]].
+[[tickets/T-20011-name-ent-coordinate-selection]] matches func_80134110 (152 bytes) from the T-22008 leftovers. The shared DisplayActor44 pointer and integer no-value exits recover the original coordinate registers; the measured return-liveness constraint is FAKE. No dead initializer or scratch label is retained. Actual default linked C proof, all27 hashes and declaration guards pass. The remaining396-byte fade and2256-byte character-page functions are now verified C under [[tickets/T-20013-name-ent-fade-page-followup]], completing claim #57.
+
+
+## Fade and character-page selection matched (T-20013)
+
+[[tickets/T-20013-name-ent-fade-page-followup]] matches func_80132320 (396 bytes) and func_80134248 (2,256 bytes) in80132000.c. The page picker reuses its index for byte snapshots and preserves the original0x38 frame, kana selection, kanji bounds and two-byte destination writes. Fade AND-minus-one identities and page indirect-read/empty-test/OR-zero controls are explicitly FAKE with individual removal evidence. Both functions use canonical existing declarations and real shared layouts. Default linked C MATCH, independent27/27 hashes and all interface guards pass. Claim #57's coordinate/fade/page scope is now covered by PR #60 and this follow-up; the separately claimed T-20008 introduction remains in progress.

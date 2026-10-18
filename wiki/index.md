@@ -93,7 +93,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-24008-taiiku-runners|T-24008]] TAIIKU runners: 692-byte match and nine-instruction updater draft (In Review).
 - [[tickets/T-24006-main-render-family|T-24006]] MAIN renderer family, five typed source hypotheses, zero new verified bytes (In Review).
 - [[tickets/T-20012-stable-search-scoring|T-20012]] Stable candidate ranking in viewsweep/order_search, 230 tests pass, issue #58 (Done).
-- [[tickets/T-20013-name-ent-fade-page-followup|T-20013]] NAME_ENT fade/page follow-up, 2,652 bytes still guarded, claim #57 (Ready).
+- [[tickets/T-20013-name-ent-fade-page-followup|T-20013]] NAME_ENT fade/page selection, 2,652 verified C bytes, claim #57 (In Review).
 - [[tickets/T-20012-stable-search-scoring|T-20012]] Stable candidate ranking in viewsweep/order_search, 230 tests pass, issue #58 (In Review).
 
 - [[tickets/T-20011-name-ent-coordinate-selection|T-20011]] NAME_ENT pointer-coordinate helper, 152-byte verified C match, claim #57 (Done).

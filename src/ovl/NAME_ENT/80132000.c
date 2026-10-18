@@ -176,8 +176,8 @@ void func_80132198(void)
   }
 }
 
-/* NON_MATCHING: T-22008, 14 differing lines: the masked byte (D_800B593C + 4) & 0xFF is a ugen temporary ($t2) where the original keeps it in a uopt range ($a1); about 40 local width, cast, chain, repeated-expression, compare-source and array-view forms, autotweak (950 edits) and viewsweep tried; D_800B593C += 4 with the stores and the compare read from the global gives the range, but one register low ($a0) and kept through the join (4 more instructions) */
-#ifdef NON_MATCHING
+/* FAKE: the five & -1 identities retain the masked byte in the original
+ * register. Removing any one loses the match; see T-20013. */
 void func_80132320(void) {
     s32 i;
     s32 val;
@@ -198,11 +198,11 @@ void func_80132320(void) {
         }
     } else {
         val = (D_800B593C + 4) & 0xFF;
-        D_801220E1 = val;
-        D_801220E0 = val;
-        D_800B593C = val;
-        D_801220E2 = val;
-        D_800E6280.unk_03A = val;
+        D_801220E1 = (val & -1);
+        D_801220E0 = (val & -1);
+        D_800B593C = (val & -1);
+        D_801220E2 = (val & -1);
+        D_800E6280.unk_03A = (val & -1);
         if ((u32)val >= 0x80) {
             func_80057640(0xF0);
             func_801324AC();
@@ -216,9 +216,6 @@ void func_80132320(void) {
     func_8004B19C(D_800B593C, 0, 0);
     func_8004B19C(D_801220E0, 0, 0x10);
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80132320);
-#endif
 
 void func_801324AC(void) {
     s32 index;
@@ -945,15 +942,17 @@ void func_801341A8(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-22008, about 455 differing lines, character-page selection; the first switch already differs (the original loads D_8014CC70 into $v0 and copies it to $a1; viewsweep no gain, autotweak 455 to 393 with an empty test, not kept) */
+/* FAKE: indirect remainder loads and empty column tests preserve distinct
+ * value ranges; | 0 preserves comparison operand order. T-20013 records the
+ * individual removal controls for these matching constraints. */
 void func_80134248(s32 arg0) {
     s32 selected;
     u32 index;
     s32 column;
     u8 *dest;
 
-    selected = D_8014CC70;
+    index = D_8014CC70;
+    selected = index;
     switch (arg0) {
     case 0:
         if (selected >= 3) {
@@ -961,13 +960,15 @@ void func_80134248(s32 arg0) {
         }
         break;
     case 1:
-        selected = *(u8 *)&D_8014CC70 - 3;
+        index = D_8014CC70;
+        selected = index - 3;
         if (selected >= 3) {
             selected = 2;
         }
         break;
     case 2:
-        selected = *(u8 *)&D_8014CC70 - 6;
+        index = D_8014CC70;
+        selected = index - 6;
         if (selected >= 5) {
             selected = 4;
         }
@@ -986,8 +987,8 @@ void func_80134248(s32 arg0) {
     }
     switch (D_8014CCC8) {
     case 0:
-        column = (s32)D_8014CCC0 % 6;
-        if (column == 5) {
+        column = *(s32 *)&D_8014CCC0 % 6;
+        if ((column | 0) == 5) {
             dest[selected * 2] = D_800B3644[0];
             dest[selected * 2 + 1] = D_800B3644[1];
         } else if (D_8014CCC4 == 2 && (D_8014CCC0 == 9 || D_8014CCC0 == 10)) {
@@ -1005,8 +1006,8 @@ void func_80134248(s32 arg0) {
         }
         break;
     case 1:
-        column = (s32)D_8014CCC0 % 6;
-        if (column == 5) {
+        column = *(s32 *)&D_8014CCC0 % 6;
+        if ((column | 0) == 5) {
             dest[selected * 2] = D_800B3644[0];
             dest[selected * 2 + 1] = D_800B3644[1];
         } else if (D_8014CCC4 == 2 && (D_8014CCC0 == 9 || D_8014CCC0 == 10)) {
@@ -1024,6 +1025,8 @@ void func_80134248(s32 arg0) {
         }
         break;
     case 2:
+        if (D_8014CCC0) {
+        }
         if (D_8014CCC0 < 16) {
             index = D_8014CCC4 * 16 + D_8014CCAC * 16 + D_8014CCC0;
             if (index < D_8014CE64[38]) {
@@ -1036,6 +1039,8 @@ void func_80134248(s32 arg0) {
         }
         break;
     case 3:
+        if (D_8014CCC0) {
+        }
         if (D_8014CCC0 < 16) {
             if (D_8014CCB4 == 38) {
                 index = D_8014CCC4 * 16 + D_8014CCAC * 16 + D_8014CCC0;
@@ -1069,10 +1074,6 @@ void func_80134248(s32 arg0) {
     }
     D_8014CC70++;
 }
-
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134248);
-#endif
 
 void func_80134B18(void) {
     k_sub_reset();
