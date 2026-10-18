@@ -17976,3 +17976,7 @@ Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` 
 ## [2026-10-18] ticket | T-23003 Done
 
 [[tickets/T-23003-w5-big-p03]]: code review against `CODING_STANDARDS.md` passed after three small wiki fixes (stale 13-row claims in [[index]] and [[matching-notes]], the ticket's FAKE count). 0 of 3 functions matched: `func_8006D7EC` stays guarded under `NON_MATCHING` at 1 row (`idx++` fold), `func_8007132C` and `func_8006D138` stay `INCLUDE_ASM`; only `src/main/8006CB30.c` changed among C files. Ticket Done, card moved to Done.
+
+## [2026-10-17] ticket | T-23005 In Progress
+
+[[tickets/T-23005-w5-big-p05]]: wave 5 big package w5-big-p05 (branch `w5-big-p05` from `w2-good`), GEKO `src/ovl/GEKO/80142760.c`, `src/ovl/GEKO/8013DF70.c`, `src/ovl/GEKO/80140A00.c`, six functions biggest first starting with `func_80142C9C` (3,700 B). Part of [[tickets/T-23000-wave-5-big-conveyor]].
