@@ -61,9 +61,9 @@ This section is authoritative; later dated handoff notes preserve history.
 
 - T24062 Sol6.1 medium root worker, codex/complete-main: main80079B10 funcs8007B64C/80079C70/8007BCFC/8007BBE8. T24058 GYOZI win independently published19468a8ec; SHOUGATU guard remains.
 - T24061 Sol6.1 medium root worker, codex/complete-bunkaken: GEKO80140A00 func80141870, SHOUGATU80134890 func801359FC, GYOZI80143AD0 func8014494C. T24056 source-only archive publishedc5c7f1eef, no header changes.
-- T24060 Sol6.1 medium root worker, codex/complete-option: SHUGAKU80138A60 funcs801392B4/801398E8. Both T24059 wins independently published19468a8ec.
-- Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687: EVENT8010FE10 func801103A0 active; reserved MAIN8006CB30 onlyfunc8007132C, GEKO80142760 onlyfunc80142C9C, TEL80132000. Dialogue renderer already verified. Trace locates14 remaining operand reversals in conversion pass; source recovery continues with unchanged build rules.
-- Sol6.1 medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: T24057 ENDING80133C10 funcs80134B18/80134C2C. DATE80141EE0 func80144E20 reserved for future recipe transfer;28-row source checkpoint publishedc3b3afe09.
+- T24063 Sol6.1 medium root worker, codex/complete-option: TACO80134930 func8013506C, TACO8015ABF0 func8015B1B8, TACO80146D60 func801472D4. T24060 SHUGAKU corrected drafts published89ba6cc66, no new matches.
+- Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687: EVENT8010FE10 func801103A0 active; reserved MAIN8006CB30 onlyfunc8007132C, GEKO80142760 onlyfunc80142C9C, TEL80132000. Dialogue renderer already verified. Literal scratch C match reported for EVENT103A0 (6848 bytes); production pin and independent integration proof pending. Source-only neighbor-base selector view avoids conversion-pass operand reversal; no compiler change.
+- Sol6.1 medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: T24064 ETC8013FF80 func80140AE4, ETC8013F980 singleton, ETC80140F50 func80141ABC; bounded DATE80141EE0 func80144E20 recipe trial first, serial compiler. T24057 ENDING pair archive published2a97faf17 at4 diagnostic cost/12 rows each, no new matches.
 - Sol6.1 medium chat01a1410a-cead-7cf3-9bfa-aa44f25f055b: T24047 ENDING80134D20 func80135F4C active in /private/tmp/tokimemo-ending-large. Remaining loop scheduling/hoisted addresses; no C match yet.
 
 One compiler per worker, no overlapping source ownership. Contributor exclusions remain NAME_ENT and TT; DATE2 is not a local target.
@@ -166,3 +166,9 @@ After preserving T24050, its Sol medium worker continues T24054: main80042A00 fu
 Latest count-pass publication: T24052 first sibling f90483388 and T24053 two short wins d40a1ece7 are independently verified on main. Both tickets remain active for unfinished targets. T24050 source-only archive9bf7361e4 adds no bytes; worker proceeds with T24054. DATE T24051 and EVENT Astra now have operand-order-only near misses; exchanged comparison-source evidence, no additional match claimed.
 
 Latest active ownership: T24052 pair complete and verified; worker continues T24056 SHOUGATU8013D660 funcs8013D820/8013D92C and SHOUGATU8013DD90 func8013DF14. T24053 final eight-row SHUGAKU source archive published1f42091ee; its worker continues T24055 ETC80143240 funcs8014354C/80143758/80143968. T24054 short main/OPTION/KANGEI lane and large EVENT/DATE/ENDING chats remain active.
+
+## 2026-10-18 source checkpoints and recipe transfer
+
+Published T24057 ENDING fade-pair source archive2a97faf17 and T24060 SHUGAKU source archive89ba6cc66; both change only drafts/wiki and add no matched functions. Current verified totals remain6507/6958 and1851416/2279368 bytes. Astra reports a6848-byte literal scratch EVENT match; do not count until independent default production proof. Its neighbor-base selector access recipe has been transferred to the DATE coordinator. T24064 corrects a provisional coordinator ticket-ID collision with existing SHUGAKU T24060.
+
+Contributor check07:47UTC: no open PRs; claims#50/#56/#57 unchanged. NAME_ENT and TT exclusions continue.

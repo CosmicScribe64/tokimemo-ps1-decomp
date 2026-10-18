@@ -39,7 +39,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-24060-shugaku-short-selectors|T-24060]] SHUGAKU52/62-row corrected source leads, zero matches, In Review.
-- [[tickets/T-24059-short-copy-siblings|T-24059]] two short copy-chain matches328 bytes, In Review.
+- [[tickets/T-24059-short-copy-siblings|T-24059]] two short copy-chain matches328 bytes, independently verified on main, Done.
 - [[tickets/T-24055-etc-short-helpers|T-24055]] ETC short source leads13/111/70 rows, zero matches, In Review.
 - [[tickets/T-24053-short-function-lane|T-24053]] two short C wins232 bytes, SHUGAKU8-row source lead, In Review.
 - [[tickets/T-24048-master-animation|T-24048]] MASTER source-only reconstruction434/428, zero matches, In Review.

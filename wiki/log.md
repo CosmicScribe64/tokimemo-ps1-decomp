@@ -18948,3 +18948,7 @@ Created [[tickets/T-24060-shugaku-short-selectors]] after reading [[shugaku-fami
 ## [2026-10-18] decision | SHUGAKU short source corrections retained
 
 [[tickets/T-24060-shugaku-short-selectors]] moves to In Review with zero matches, production/header/config unchanged. [[shugaku-family-results]] records phase52/52 after repairing a phantom callee argument, and selector62/58 with meaningful shared-byte lifetime; old58-row context not surpassed. Valid structured source/reproducer saved; all loose diagnostics ignored. Baseline unit checksum passes, no default ASM coverage claim or compiler impossibility assertion.
+
+## [2026-10-18] ingest | Draft checkpoints and EVENT recipe transfer
+
+Preserved [[tickets/T-24057-ending-small-pair]] source-only archive2a97faf17 and [[tickets/T-24060-shugaku-short-selectors]] archive89ba6cc66 on main, with no production delta or coverage gain. Updated [[completion-run-2026-10-17]] ownership for fresh TACO/ETC lanes, corrected provisional ticket collision, transferred Astra neighbor-base selector recipe to DATE. EVENT scratch6848-byte match awaits production pin and independent proof. Read-only contributor check07:47UTC found no open PRs and unchanged claims#50/#56/#57.
