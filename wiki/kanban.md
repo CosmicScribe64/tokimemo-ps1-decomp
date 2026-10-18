@@ -52,11 +52,11 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-22022-w4-p22|T-22022 Wave 4 package w4-p22]]
 - [ ] [[tickets/T-20012-stable-search-scoring|T-20012 Stable search scoring]]
 
 ## Done
 
+- [ ] [[tickets/T-22022-w4-p22|T-22022 Wave 4 package w4-p22]]
 - [ ] [[tickets/T-20010-name-ent-resource-loader|T-20010 Match NAME_ENT resource loader]]
 - [ ] [[tickets/T-22014-w4-p14|T-22014 Wave 4 package w4-p14]]
 - [ ] [[tickets/T-22015-w4-p15|T-22015 Wave 4 package w4-p15]]
