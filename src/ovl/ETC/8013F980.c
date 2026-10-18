@@ -8,7 +8,32 @@ typedef struct {
     s16 pad;
 } EtcSVec; /* SVECTOR layout */
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013F980", func_8013F980);
+void func_8013F980(void) {
+    s32 model;
+    TaiikuBig *record;
+    u32 *object;
+
+    model = 0x801FA804;
+    func_8009B3C0(model);
+    model += 4;
+    func_800AE0B0("NOBJ %x\n", *(u32 *)model);
+    model += 4;
+    /* FAKE: initializer/do line grouping reproduces setup order; original line layout unknown. T-24064. */
+    object = D_80122640; record = D_801227A0; do {
+        func_8009B430(model, (u8 *)object, 0);
+        object[1] = (u32)record;
+        record++;
+        object += 4;
+        object[-4] = 0x80000000;
+    } while (record != D_80122CA0);
+    func_8009B430(model, (u8 *)D_80122640, 0);
+    D_80122640[1] = (u32)D_801227A0;
+    D_80122640[0] = 0;
+    D_801500C8 = 0x9F;
+    D_801500CC = -0x78;
+    D_801500D0 = 0;
+    D_801500D4 = 0xC00;
+}
 
 
 

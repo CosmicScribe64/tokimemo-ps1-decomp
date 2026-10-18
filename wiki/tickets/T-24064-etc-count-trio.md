@@ -1,7 +1,7 @@
 ---
 id: T-24064
 title: Match ETC model initialization loop
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -23,6 +23,10 @@ Recover only ETC func_8013F980 (252 bytes) in src/ovl/ETC/8013F980.c. Preserve m
 
 ## Comments
 Parent resumed only func_8013F980 after the unresolved T-24067 checkpoint. One existing Sol medium worker continues on this one function; no batches or added agents. DATE is independently published; preserve its source. The historical deferral and trio below record prior scope, not current authorization.
+
+Verified252-byte default C win: matched MAIN func_8006190C/T-17010 supplies the integer TMD cursor, preventing the header-count load from folding into an absolute load. Real TaiikuBig/u32 pointers advance by one record/four words, correcting old draft scale errors. Source initializer order reduces10→4 rows; FAKE initializer/do same-line grouping resolves the final two setup instructions (original physical line layout unknown). The plain existing main_api declaration also matches, so the approved local three-argument override is unnecessary and was omitted; no interface/header/config change.
+
+Docker ninja -j1 build/ovl/ETC.ok passes; actual unguarded `tools/funcdiff.py --no-build --resolve --version default --unit ETC func_8013F980` reports MATCH252 linked bytes. Header/global/prototype guards pass (0 new/15 known disagreements). Exact replacement audit preserves every other TU byte, including matched func_8013FC64; target guard/fallback absent. Evidence: build/etc24064/default-build.log, default-proof.log, headers.log, globals.log, prototypes.log, body-audit.log. In Review pending parent independent review; other40AE4 deferred and41ABC unresolved, no new work on either.
 
 User deferred this ETC package while the sole worker focuses on DATE func_80144E20. Status is Ready, not Done; no ETC compiler probes or production edits began in this package. Current read-only notes are the existing 48-row album interaction, pointer-loop prologue lead and 27-row unaligned album-copy history linked in the ticket. Resume only after new coordination.
 
