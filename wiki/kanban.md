@@ -57,6 +57,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 
 
@@ -68,9 +69,10 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]
+
 - [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Match dialogue argument scheduling]]
 
-- [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]
 
 
 - [ ] [[tickets/T-24022-tel-frame|T-24022 Recover TEL large handler allocation]]

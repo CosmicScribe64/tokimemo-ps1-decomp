@@ -4,18 +4,18 @@ title: Recover EVENT large handler
 status: In Review
 assignee: Astra hard-function lane
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-18
 links: ["[[tickets/T-24020-astra-hard-functions]]"]
 ---
 
 ## Goal
 
-Investigate `func_801103A0` (6,848 bytes) in exclusively reserved `src/ovl/EVENT/8010FE10.c`, after TEL.
+Match `func_801103A0` (6,848 bytes) in exclusively reserved `src/ovl/EVENT/8010FE10.c`, after TEL.
 
 ## Acceptance criteria
 
 - [x] Read T-15200 and T-17400 evidence, test a new hypothesis.
-- [x] Preserve source provenance; no win claimed, unchanged unit SHA verified.
+- [x] Promote only verified C; 6,848 literal bytes and full EVENT SHA1 pass.
 - [ ] Standards review before Done.
 
 ## Notes
@@ -45,3 +45,39 @@ User requests continued large-function work. Preserve checkpoint b312d1e24. New 
 ### Register lifetime follow-up (2026-10-17)
 
 Six new register-qualified Boolean forms did not beat 214. Explicit narrow/word Boolean blocks scored 1782/1008; logical and reused ternary Boolean forms 1000/1164. `register u8` alone stayed 214. Saved the script and results in `drafts/T-24023/resume/`. Preferred body remains byte-for-byte unchanged from b312d1e24. Returning to In Review and continuing MAIN under [[tickets/T-24024-main-dispatcher]].
+
+### Full-match continuation (2026-10-18)
+
+Dialogue is verified. Reopen this target under the user's full-match requirement. Test whether zero-masked early definitions can split repeated month Boolean ranges without the extra long-lived CSE value. Preserve both nested tail exits and measure whole-function changes, including instruction bytes at equal aligned scores.
+
+### Boolean reconstruction evidence (2026-10-18)
+
+Zero-mask constants alone retain the previous 214/1000 scores. Reused month locals introduce extra copies or narrowing. A new distinct-expression probe is more informative despite a worse aggregate score: `month * 1`, `month & 255`, and `month << 0` in the three logical tests reproduce all three separate Boolean materializations and original register choices at the date block. The middle mask adds an unwanted `andi` and shifts later ugen temporary numbers. Testing distinct instruction-free operand wrappers next; do not discard structural progress merely because aligned score worsens. All outputs remain ignored under build/t24023-zero, build/t24023-lifetime and build/t24023-compare.
+
+### Structurally exact checkpoint
+
+Distinct month operands `* 1`, `^ 0`, `| 0` preserve all three required Boolean materializations. Replacing the negative date exit plus terminal jump with an equivalent positive date condition around the success block removes both explicit gotos while preserving every failure path. The common-tail month load and branch delay slots then match. Full-TU output now has exactly 1,712 instructions, aligned cost 58 / 58 printed rows: all 29 mismatching instructions only exchange the operands of equality branches. Saved the source-only checkpoint in drafts/T-24023/closure/body.c; not promoted.
+
+Audit rejected month-assignment probe variants 11 and 14 despite their apparent 74 score: a missing pair of parentheses changed `month >= 3` to `month != 0` through `|` precedence. They are not evidence of progress and remain ignored. The structured positive condition was inspected directly and retains the original date failure behavior.
+
+### Fourteen operand pairs remain
+
+Assigning comparison constants through the existing word temporary fixes 15 of the 29 reversed branches, including four direct-global comparisons. Preferred experimental source is build/t24023-firstconst/four_globals/body.c (cost 28, 1,712 instructions). Captured unmodified cvt_pass pre/post ucode shows its `_constant_first` postpass exchanges loads for constant-only registers; constants 2, 7, 8 and 12 remain affected. Word-local copies, identity wrappers, pointer views and redundant call-argument diagnostics have not closed this. No diagnostic call-argument changes are accepted for production. Investigating signed-load/unsigned-value views without changing the compiler.
+
+### Nine selector pairs remain
+
+A `u32` selector copy at the start of each girl-dispatch arm preserves the exact 1,712 instructions while fixing additional branch operands. Use the existing `date_ok` byte for the four direct-global comparison constants so the selector copy is never clobbered. This source is build/t24023-armmutate/four_globals_byte/body.c, cost 18 / 18 printed rows (nine swapped instructions). The remaining constants vary by region: a register holding 12 earlier holds 3 in the girl-5 arm. The trace maps exact ucode comparisons, avoiding assumptions from register names. No production promotion yet.
+
+### Verified default-C closure (2026-10-18)
+
+Promoted `func_801103A0` into src/ovl/EVENT/8010FE10.c. Default `funcdiff.py EVENT:func_801103A0 --resolve` reports MATCH for all 6,848 linked bytes (1,712 instructions). Normal `ninja -j1 build/ovl/EVENT.ok` passes SHA1 ff7184d7e92b7aff372450ac3b8c2bdd42e55a5e. Header/global guards pass; prototype branch check reports 0 new / 15 known disagreements. Parent coordinated the canonical declaration `s32 func_801103A0(void)` in include/ovl/EVENT.h. The sole C caller, func_80119A60 in the same source file, ignores its result; the complete overlay checksum covers it and every rebuilt EVENT unit.
+
+The final source keeps a u32 selector copy per dispatch arm and a positive date guard around the success block. Three distinct identity operands prevent unwanted month-equality commoning. The existing byte-gap local captures four comparison constants. The selector view `((u8 *)&D_801243A4)[0xC]` reaches the same byte as D_801243B0 while avoiding the conversion pass's global classification that reversed the last nine branch pairs. This neighboring-base view is explicitly FAKE under standards section 8: the containing aggregate is unknown, so no invented aggregate declaration is claimed. Literal linking and the full checksum verify the address/load width. These source workarounds are marked and documented; no toolchain changes or diagnostic extra arguments were accepted.
+
+Retained final body and full-TU replay/negative controls in drafts/T-24023/closure/. Earlier body.c remains the immutable research checkpoint. Self-review checks C89, initialized locals, preserved date failure exits, alias explanation, coordinated prototype and source scope. Formal review and main integration remain with the orchestrator; ticket is In Review, not Done.
+
+### Return-view rationale and replay controls
+
+The s32 view preserves the target's return-register behavior. Early exits explicitly return zero. On the final path the original calls func_80011DFC and immediately restores the frame/returns, leaving v0 as the callee left it. There is deliberately no invented `return 0` after that call. The sole C caller discards the result, so no caller relies on a C fallthrough return value. Parent preview requested this clarification; the complete EVENT checksum verifies this tail and the caller.
+
+Retained replay results: matched 0/0 with literal6848; canonical selector symbol18/18; shared month equality967 aligned/969 printed,1709 instructions; literal comparison constants8/8; historical checkpoint214/826. Except the shared-month control, all have1712 instructions. These are measured negative controls, not unverified match claims.

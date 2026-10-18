@@ -395,3 +395,7 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 ## Early constant argument definition (T-24021)
 
 When a constant call argument is scheduled after narrowing and outgoing stores, a reused word local can preserve an earlier definition. Dialogue captures the preceding strcmp result, then assigns `render_x = (render_x & 0) - 40` before the Y increment. Plain subtraction fixes order but retains a register dependency; the zero mask removes that dependency. This marked FAKE closes both sites and passes literal/default-unit proof. It is measured evidence for this source shape, not a universal scheduler rule. See [[matching-notes]] and [[tickets/T-24021-dialogue-scheduling]].
+
+## Repeated Boolean and selector-operand closure (T-24023)
+
+Three repeated logical month tests can acquire a shared Boolean range that changes allocation. Distinct identity operands on the month keep separate materializations without emitted arithmetic; mark this FAKE. EVENT func_801103A0 then needed a u32 selector copy per arm, byte-local constant captures, and an explicitly marked neighboring-base byte view for the remaining conversion-pass operand reversals. Full literal proof is 6,848 bytes and EVENT SHA1 passes. The view is justified only while the aggregate remains unknown, per standards section 8; see [[matching-notes]] and [[tickets/T-24023-event-handler]].

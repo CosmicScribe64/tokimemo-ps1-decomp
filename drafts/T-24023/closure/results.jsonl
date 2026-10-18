@@ -1,0 +1,5 @@
+{"variant": "matched", "aligned_cost": 0, "printed_rows": 0, "expected_instructions": 1712, "built_instructions": 1712, "literal_equal": true, "detail": "linked function bytes equal target (6848 bytes)"}
+{"variant": "direct_selector_symbol", "aligned_cost": 18, "printed_rows": 18, "expected_instructions": 1712, "built_instructions": 1712}
+{"variant": "shared_month_equality", "aligned_cost": 967, "printed_rows": 969, "expected_instructions": 1712, "built_instructions": 1709}
+{"variant": "literal_comparison_constants", "aligned_cost": 8, "printed_rows": 8, "expected_instructions": 1712, "built_instructions": 1712}
+{"variant": "old_checkpoint", "aligned_cost": 214, "printed_rows": 826, "expected_instructions": 1712, "built_instructions": 1712}

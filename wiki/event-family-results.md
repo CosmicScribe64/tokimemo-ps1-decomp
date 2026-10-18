@@ -202,3 +202,11 @@ header types moved little; the dumpling arrays fix a wrong scale in the drafts b
 ### Packages
 
 T-17601..T-17608 (`w3-gyozi-p01`..`p08`): 33 functions, 19,180 bytes.
+
+## EVENT Boolean and branch-order closure (T-24023)
+
+EVENT func_801103A0 is default C, 1,712 instructions / 6,848 literal text bytes; its full overlay SHA1 passes. The former 214-cost draft is resolved. Three logical date tests need distinct month operands (`* 1`, `^ 0`, `| 0`) to prevent a common Boolean range. A positive date condition around the success block replaces both gotos while preserving failure exits; this restores the original common-tail load and delay slots. Both steps are required.
+
+A u32 selector copy at each dispatch-arm entry preserves plain-variable comparison order. The byte-gap local captures constants for four direct-global comparisons. The last nine swapped selector branches came from the conversion pass's constant-first rule. Reading the same byte as `((u8 *)&D_801243A4)[0xC]` avoids that classification. The containing aggregate remains unknown, so the neighboring-base view is marked FAKE under standards section 8; its address and load width are verified by literal linking and the full checksum. The identity operands and constant captures are also marked FAKE. No compiler change or artificial call arguments are used.
+
+See [[tickets/T-24023-event-handler]] and drafts/T-24023/closure/replay.py for the final source and negative controls. The canonical EVENT.h return type is s32; its sole C caller ignores the result and is covered by the overlay checksum.

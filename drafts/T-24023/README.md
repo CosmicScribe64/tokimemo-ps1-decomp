@@ -1,6 +1,6 @@
-# T-24023 EVENT reconstruction checkpoint
+# Historical T-24023 EVENT reconstruction checkpoint
 
-No matching C claim; zero verified bytes added. Production retains `INCLUDE_ASM`.
+The verified default-C closure on 2026-10-18 replaces this research checkpoint. See [closure/README.md](closure/README.md) for the 6,848-byte match and replay. The evidence below records the earlier research state.
 
 `body.c` is the preferred source-only reconstruction of `EVENT:func_801103A0`, based on T-15200's typed body and the current translation unit at base `8052373f7`. It uses existing EventStateView fields, including the three final parameter-byte stores. No supplementary externs are needed. The experiment hides the existing void declaration only in its scratch translation unit; promotion would require a reviewed s32 declaration and caller validation.
 
