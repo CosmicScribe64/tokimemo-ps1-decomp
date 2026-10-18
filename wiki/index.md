@@ -700,3 +700,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24043-master-large-handler|T-24043]] Larger MASTER final-event handler (In Review; no match, corrected exact-frame source archived at diagnostic cost 342).
 
 - [[tickets/T-24049-etc-exam-ranking]] - ETC ranking source-only checkpoint,885 rows; In Review.
+
+- [[tickets/T-24052-shougatu-dialogue-siblings]] - source sibling closure for SHOUGATU dialogue handlers.

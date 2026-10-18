@@ -18835,3 +18835,8 @@ Created [[tickets/T-24048-master-animation]], claimed only src/ovl/MASTER/801336
 ## [2026-10-18] decision | Add short-function count pass
 
 User requested easy wins to raise function count. Current-filtered sibling census identified short unresolved targets; assigned Sol medium T24053 and T24054 packages with disjoint files and current-byte proof gates, recorded in [[completion-run-2026-10-17]]. Prior T20620 EVENT100-byte scratch-match recipe is the first reproduction lead. Preserved T24048 corrected MASTER archive at444be6846. Existing large-function chats continue; no speculative count increase claimed.
+## [2026-10-18] ticket | Start T-24052 SHOUGATU dialogue siblings
+Read T-17500 target/type drafts and T-20004's verified GYOZI implementations. Reserved only src/ovl/SHOUGATU/801330C0.c:func_80133208/func_801333F0 at 8be265d2a. Both target functions add an input-skip block to the matched sibling control flow; threshold0x28 differs. [[tickets/T-24052-shougatu-dialogue-siblings]] is In Progress; no shared edits or push/merge.
+
+## [2026-10-18] build | T-24052 first SHOUGATU sibling,488 actual C bytes
+func_80133208 is installed as unguarded normal C without its target INCLUDE_ASM. Ported matched GYOZI source plus SHOUGATU input skip and0x28 byte bound; inherited unchanged-byte store is marked FAKE/T-24052. Fresh Docker ninja -j1 compiles/links SHOUGATU with checksum/headers OK; literal default linked funcdiff MATCH488 bytes. [[shougatu-family-results]] and [[tickets/T-24052-shougatu-dialogue-siblings]] updated; second sibling remains In Progress. No header/config changes, no push/merge.
