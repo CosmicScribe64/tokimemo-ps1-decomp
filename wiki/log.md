@@ -18712,3 +18712,34 @@ Created [[tickets/T-24038-etc-master-siblings]] before code edits, preserving T-
 ## [2026-10-18] decision | T-24040 OPTION menu package in review
 
 [[tickets/T-24040-option-menu-siblings]] moves to In Review with two verified page matches(1028 bytes) and3394C guarded at5 rows. Existing matched bodies and shared headers unchanged; frame and scheduling FAKE rationale recorded in [[option-family-results]]. Selected unresolved source/scorer archived and every loose probe preserved ignored in build/T-24040-probes/. Final OPTION default checksum and declaration guards pass; independent review pending.
+## [2026-10-17] ticket | Resume large-function lane and reserve next targets
+
+User requests continued work. Reopen [[tickets/T-24020-astra-hard-functions]] and [[tickets/T-24023-event-handler]]; preserve committed checkpoint b312d1e24. Create Ready reservations [[tickets/T-24024-main-dispatcher]] for only func_8007132C and [[tickets/T-24025-geko-picker]] for only func_80142C9C. Read T-23003/T-23005 results and prior negatives. One Docker compiler, no new agents, production scope limited to the named functions. EVENT header changes require root coordination.
+
+## [2026-10-17] ticket | EVENT register lifetime round and MAIN start
+
+Six Boolean lifetime probes did not improve the aligned score of 214; saved source-only evidence in `drafts/T-24023/resume/`. [[tickets/T-24023-event-handler]] returns to In Review. [[tickets/T-24024-main-dispatcher]] moves Ready to In Progress for date-load and pointer-lifetime recovery. No production source changed.
+
+## [2026-10-17] decision | Prioritize closing a verified match
+
+User explicitly requests closing near matches instead of accumulating drafts. [[tickets/T-24024-main-dispatcher]] pauses to Ready after scalar date-view probes (1013 to 892 aligned cost, still far). [[tickets/T-24021-dialogue-scheduling]] reopens In Progress for call-prototype scheduling hypotheses. No production changes.
+
+## [2026-10-17] ticket | Close TEL helper allocation
+
+Created [[tickets/T-24026-tel-helper-closure]] In Progress within the reserved TEL file. T-23001 has exact instruction structure; investigate pointer and argument ranges to finish a match as requested by the user. Dialogue call-type probes did not close its scheduler gap.
+
+## [2026-10-17] decision | Dialogue is the sole completion target
+
+User explicitly requires `dialogue_speak_part` to match before stopping. [[tickets/T-24026-tel-helper-closure]] pauses to Ready. [[tickets/T-24021-dialogue-scheduling]] remains In Progress and is the sole active compiler target. No production changes.
+
+## [2026-10-17] query | Dialogue closure source and compiler boundary probes
+
+[[tickets/T-24021-dialogue-scheduling]] remains the sole active matching task. Full-TU constant/lifetime/call-ABI probes have not improved aligned cost 4. Captured unmodified binasm confirms statement-level line attribution at both sites; wide-argument runtime helpers rule out that path. Investigating removable argument-internal barriers inspired by the linked primary experiment guide. Production untouched; no matching claim.
+
+## [2026-10-18] ticket | Renumber unpublished TEL helper reservation
+
+Parent identified a collision with published SHOUGATU T-24026. Renamed the local TEL helper ticket and draft directory to [[tickets/T-24042-tel-helper-closure]], including current index and board references. Earlier append-only entries retain their original ID; those TEL-helper references now mean T-24042. The helper remains Ready while dialogue closes.
+
+## [2026-10-18] build | Dialogue matches default C and full executable checksum
+
+[[tickets/T-24021-dialogue-scheduling]] moves In Progress to In Review. Two early zero-masked constant definitions close both scheduling sites; all 2,168 instructions / 8,672 linked text bytes match. Independent three-stage replay reproduces 16, 4, then 0 printed rows. Main SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 and header/global/prototype guards pass. Updated [[matching-notes]], [[register-cheatsheet]], [[main-family-results]], [[data/t0018-cases]] and [[tickets/T-24020-astra-hard-functions]]. Parent notified with proof; formal review and main integration remain its responsibility. User extends full-match requirement to remaining reserved hard functions and authorizes orchestrator notifications after every match.

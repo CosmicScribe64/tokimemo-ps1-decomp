@@ -42,24 +42,28 @@ kanban-plugin: board
 
 ## Ready
 
+- [ ] [[tickets/T-24042-tel-helper-closure|T-24042 Close TEL dialogue helper register allocation]]
+- [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
+- [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
 - [ ] [[tickets/T-20013-name-ent-fade-page-followup|T-20013 NAME_ENT fade and page selection]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
 
 - [ ] [[tickets/T-24041-main-render-cd-siblings|T-24041 Recover MAIN renderer and CD dispatcher]]
+- [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
 
+- [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
 - [ ] [[tickets/T-24040-option-menu-siblings|T-24040 OPTION menu sibling completion]]
 - [ ] [[tickets/T-24038-etc-master-siblings|T-24038 Recover ETC renderer and MASTER sibling handlers]]
 - [ ] [[tickets/T-24031-gyozi-shougatu-pairs|T-24031 Recover GYOZI and SHOUGATU particle pairs]]
 - [ ] [[tickets/T-24035-small-bunka-geko-siblings|T-24035 Match small BUNKA_SD and GEKO siblings]]
 - [ ] [[tickets/T-24036-geko-shugaku-siblings|T-24036 GEKO and SHUGAKU sibling completion]]
 - [ ] [[tickets/T-24033-valen-selector-ports|T-24033 VALEN selector sibling completion]]
-- [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
 - [ ] [[tickets/T-24037-event-scene-siblings|T-24037 Recover EVENT scene siblings]]
 - [ ] [[tickets/T-24029-seasonal-scene-siblings|T-24029 Recover GYOZI and SHOUGATU scene sibling pair]]
 - [ ] [[tickets/T-24026-shougatu-sibling-ports|T-24026 Port three SHOUGATU high-similarity siblings]]
@@ -75,7 +79,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24013-complete-rpg-bat|T-24013 Complete RPG_BAT battle family package]]
 - [ ] [[tickets/T-24010-date-etc-coordination|T-24010 Coordinate DATE and ETC matching]]
 - [ ] [[tickets/T-24011-date-dispatch-family|T-24011 Match DATE dispatch family]]
-- [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]
 - [ ] [[tickets/T-24022-tel-frame|T-24022 Recover TEL large handler allocation]]
 - [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Investigate dialogue argument scheduling]]

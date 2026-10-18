@@ -237,3 +237,6 @@ Baseline MAIN SHA-1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 matches config/SLPM
 ## T-24041 LINE_G2 renderer
 
 [[tickets/T-24041-main-render-cd-siblings]] recovers func_80049FF0,348 B of unguarded C, using the actual two-colour line packet LINE_G2 (0x14 bytes), a meaningful GameState pointer, and the matched polygon siblings' explicit colour masks/comma grouping (FAKE marked). A K&R narrow definition keeps the existing unprototyped caller ABI; main_api.h stays unchanged. Root approved the missing shared packet declaration in psx_types.h. The allocation and individual sb/sh offsets establish its layout; no external SDK header was available locally or imported. Normal default linked literal proof and full MAIN checksum pass.
+## Dialogue closure update (2026-10-18)
+
+The historical guarded 16-row dialogue gap is resolved by [[tickets/T-24021-dialogue-scheduling]]. Default C matches 8,672 text bytes and main SHA1. Two early constant argument definitions use a marked zero-mask FAKE; prior negative experiments remain historical evidence. Replay is in drafts/T-24021/replay_closure.py.

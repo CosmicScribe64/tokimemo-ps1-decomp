@@ -1,0 +1,6 @@
+{"variant": "register_byte_ternary", "aligned_cost": 214}
+{"variant": "register_u8_explicit", "aligned_cost": 1782}
+{"variant": "register_s32_explicit", "aligned_cost": 1008}
+{"variant": "register_u32_explicit", "aligned_cost": 1008}
+{"variant": "register_byte_logical", "aligned_cost": 1000}
+{"variant": "register_byte_ternary_reuse", "aligned_cost": 1164}
