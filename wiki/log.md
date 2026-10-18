@@ -19174,3 +19174,12 @@ poly94/98, UV8C/90, page60, frameA0; neutral628cost/592words. Confirms anchor
 mechanism without recovering unknown original8C or fixing16B excess. Explicit
 FAKE source/replay preserved; no other declaration, geometry or production edit.
 Same function active, no new capture or sweep.
+
+## [2026-10-18] build | T24078 common-X0 reuse removes one genuine home
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve one
+same-s32 disjoint X0 reuse on counter-first628. Predicted76-to72 homes/frame98
+confirmed;628cost/592words unchanged. Poly8C/90, UV84/88, page5C, savesunchanged.
+No formulas/types/storeorder changed, no further merge/layout. Remaining8B frame
+excess is unresolved, not padding evidence. Exact source/replay preserved,
+production ASM and same-function active ownership unchanged.

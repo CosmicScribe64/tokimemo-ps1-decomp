@@ -210,3 +210,16 @@ unchanged. This confirms the declaration anchor mechanism, not identity of
 original8C or a16B frame fix. No UV move, removed local, padding or sweep.
 Original poly84/88 is still16bytes below the new array, so the unknown local
 count/lifetime gap remains separate from this one-word anchor.
+
+
+One disjoint common-X0 reuse on counter-first628 removes only temp_a1's s32
+declaration and uses temp_v1 for its assignments/reads in cases1/3. Cases0/2
+already use temp_v1 for the same X0 role. No value crosses arms/calls/iterations;
+all formulas, types, stores and relative declarations remain fixed. Before
+compile the predicted home count was76 to72 bytes and frameA0 to98, poly down8.
+Measured628cost/856rows/592words/frame98, exactly that frame prediction.
+Poly8C/90, UV16084/UV2488, page3205C; saves18..3C unchanged. Page home moves4,
+not8, because removing the earlier declaration changes its negative offset.
+No arithmetic or register allocation gain; one real source home removal yields
+8bytes through alignment. Remaining8B frame excess and UV placement remain
+separate unresolved questions. No further merge or layout control follows.
