@@ -141,3 +141,18 @@ Production remains assembly and no verified bytes are claimed. Precise gap:
 the origin of bb3's fixed-v0 mask before `updateforbidden`, and whether any
 legal required-expression representation can change it without emitted ops.
 No further instrumentation or source control is implied by this packet.
+
+Parent's next read-only pass follows mask creation in the existing generated
+source (same pinned59767ece... input, no rebuild). `makelivranges` starts at
+0x468998. At0x468BD4 each BB+52/+56 is initialized from global0x1001E660.
+Later candidate writers include0x469748 (opcode0x7B's precolored-expression
+path) and0x46A230. The latter ORs register `s1` into
+BB+(class<<3)+44/+48; entry via0x469E00 checks statement opcode0x64,
+then0x469E5C..0x469FCC selects the class/register from statement fields
+(including+24, or the assigned-register path). These are static candidate
+paths, not observed writer execution for bb3. The existing listing's R0
+offset2 bit4 and final bb3 mask do not prove that E80's discarded return is
+the writer. No new legal source condition follows from this evidence yet.
+Smallest missing observation is bb3's mask-writer PC plus the creating
+statement opcode/memory type/offset, before attributing it to a source use.
+No new logging build or source probe was performed in this read-only pass.
