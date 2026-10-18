@@ -49,6 +49,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24067-etc-album-copy|T-24067 Match ETC album record copy]]
+
 
 
 
