@@ -48,7 +48,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24076-etc-album-search|T-24076 Recover ETC album search]]
 
 
 
@@ -73,6 +72,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24076-etc-album-search|T-24076 Recover ETC album search]]
 
 
 - [ ] [[tickets/T-24074-etc-record-scene|T-24074 Recover ETC record scene]]

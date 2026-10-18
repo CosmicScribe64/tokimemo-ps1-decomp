@@ -45,7 +45,7 @@ These are separate bounded controls, not a width sweep.
 
 Best90 frame0x28 matches; word counts are recorded in the follow-up below. Global-index load sinking, register/web choices,
 GameState reload placement and branch words still differ. No literal C match,
-production promotion or impossibility claim follows. Ticket remains In Progress.
+production promotion or impossibility claim follows. Ticket is unresolved In Review.
 
 Replay serially in existing tokimemo-decomp-arm64 Docker:
 
@@ -93,3 +93,8 @@ index load sinking/duplication versus original earlya0-to-v1 copy, search branch
 operand/temporary choices and album/final reload scratch registers remain.
 Fresh default replay validates this source-only checkpoint; production/header/
 config unchanged, no actual C match or compiler-impossibility claim.
+
+Final parent-directed handoff: unresolved In Review, never Done or matched.
+All source/proofs and explicit FAKE boundary/return caveats are preserved.
+Production remains assembly, with no helper/header/config or neighbor edits.
+Further F054 probes stopped; no exhaustive impossibility claim.
