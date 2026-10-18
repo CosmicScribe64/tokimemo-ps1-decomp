@@ -223,9 +223,11 @@ DATE/DATE2 source structure recovers EVENT func_8011D5C4 to seven differing inst
 ## T-24033 VALEN selector sibling retry
 
 [[tickets/T-24033-valen-selector-ports]] recovers a seven-row guarded form of func_80132D0C: use direct girl accesses through a local GameState pointer and a meaningful s32 mode local. This fixes prior operand allocation; only early/late dispatch shift scheduling, one nop and branch offsets remain. func_80134030 reproduces the27-row default-block LUI gap shared with GYOZI39E4C. Zero matches or verified-byte gain; default VALEN checksum and header/global/prototype checks pass. Selected sources and bounded negative provenance are in drafts/T-24033/.
+## T-24018 source-based movie siblings
 
 ## T-24034 legacy renderer and animated polygon siblings
 
 [[tickets/T-24034-event-render-siblings]] adds 1,808 B of unguarded verified C: func_800FEF74 (940 B), func_800FFA4C (404 B), func_800F9730 (464 B). All pass the target source gate, normal default linked literal proof and full EVENT checksum.
 
 The large DATE func_80152268 port retains the documented FAKE dead copies that keep v live across calls. EVENT requires promoted int arguments to func_800FF320: removing DATE's argument-site s16 casts avoids duplicate narrowing and closes the port. The two SDK polygon builders reuse T-24017's EventStateView offsets, word viewport selector and byte ordering-table base with 64-byte stride. The quad uses a meaningful state pointer in place of the DATE dummy frame slot; no dummy remains. Explicit masks and colour source-line grouping are marked FAKE. Main_api.h adds the evidence-backed void func_80067628(); legacy name is preserved; EVENT.h unchanged.
+DATE/DATE2 source structure recovers EVENT func_8011D5C4 to seven differing instructions (14 printable rows), exact 509 instructions and 0x40 frame, versus T-22009's distant draft and wrong frame. All record loops, fades and callback spills match. Only timer narrowing has the same raw/masked range split as DATE func_8014718C's old T-17201 gap. The selected scratch body needs s32 own-return view; existing void header and production INCLUDE_ASM remain unchanged. No new C bytes or header change. Source-only near miss, tested reproduction and failed hypotheses: drafts/T-24028/; [[tickets/T-24028-date-event-short-movie-siblings]] In Review.

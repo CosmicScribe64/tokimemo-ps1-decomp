@@ -18577,6 +18577,14 @@ Created [[tickets/T-24032-date-taco-rotation-clones]] after reading prior SDK/li
 
 [[tickets/T-24032-date-taco-rotation-clones]] moves to In Review after one fresh SDK MATRIX control. All six helpers remain ASM; no production changes or new coverage. Source/provenance archived; [[date-family-results]] and [[taco-family-results]] updated. Every loose probe retained in ignored build/T-24032-probes/.
 
+## [2026-10-17] ticket | T-24033 VALEN selector sibling completion
+
+Created [[tickets/T-24033-valen-selector-ports]] In Progress. Read T-19016 and [[tickets/T-24019-gyozi-sibling-ports]] negative evidence before ports; only two assigned VALEN functions owned, one Docker compiler.
+
+
+## [2026-10-17] decision | T-24033 VALEN seven-row selector draft
+
+[[tickets/T-24033-valen-selector-ports]] moves to In Review. Direct GameState girl access and meaningful mode local leave func_80132D0C at7 rows, retained under NON_MATCHING;34030 remains its prior27-row guard. Zero matches or verified-byte gain. Default VALEN SHA1 and declaration checks pass; [[event-family-results]] updated. Source-only probes preserved, all loose experiments retained ignored in build/T-24033-probes/. Independent review pending.
 ## [2026-10-18] build | Six more verified functions integrated
 
 [[completion-run-2026-10-17]] records6486/6958 functions and1832660/2279368 bytes,80.4%. Independent review plus all27 hashes, guards and actual default C proofs passed for T24019GYOZI392, T24030BUNKASAI2020, T24027RPG_BAT1656 and T24026SHOUGATU708 bytes. T24030 moves to Done; partially completed families remain In Review. Continued workers own fresh T24028/T24029/T24031/T24032/T24033 scopes. Negative source archives remain explicitly non-matching.
@@ -18634,3 +18642,21 @@ Created [[tickets/T-24034-event-render-siblings]] In Progress after reading prio
 Published T24035GEKO244/BUNKA_SD152 plus T24034EVENT940/404/464 after independent review, all27 hashes, guards and actualCsourcegate/literal proofs. [[completion-run-2026-10-17]] records6491functions/1834848bytes,80.5%. T24034 Done; T24035 finaldraft queued. T24036SHUGAKU244 workerwin queued and excluded untilrootverified. Source-only VALEN improvement preserved; local merge helper checks staged hygiene before expensive builds.
 
 Canonical progress audit: this batch adds2188 bytes; its2204 linked-proof bytes include16 bytes outside the canonical function sizes (BUNKA_SD344A8 +4, EVENT800FFA4C +12). Coverage records Docker progress output, not summed proof extents. The local runner was resumed after an in-place helper edit interrupted its post-build script; all final verification gates then passed before publication.
+
+
+## [2026-10-17] setup | T-24036 clean main integration
+
+Merged latest main into the clean codex/complete-option tree as authorized for T-24036. Four wiki-only conflicts resolved by preserving both histories/cards; no C conflict. Existing T-24017 GEKO matched body retained unchanged.
+
+## [2026-10-17] ticket | T-24036 GEKO and SHUGAKU sibling completion
+
+Created [[tickets/T-24036-geko-shugaku-siblings]] In Progress after clean latest-main merge. Read [[scenes-family-results]], [[shugaku-family-results]] and prior seven-row GEKO tail evidence. Existing matched GEKO body unchanged.
+
+## [2026-10-17] build | T-24036 SHUGAKU selector match
+
+[[tickets/T-24036-geko-shugaku-siblings]] verifies func_80134C98 as244 actual default linked C bytes. Canonical direct sibling, no FAKE or header changes; unit checksum and declaration guards pass. Updated [[shugaku-family-results]].
+
+
+## [2026-10-18] decision | T-24036 sibling package in review
+
+[[tickets/T-24036-geko-shugaku-siblings]] moves to In Review: one244-byte SHUGAKU match, GEKO guard refreshed from current91 to7 rows without additional coverage. Signed-declaration control rejects a header change; matched GEKO neighbor unchanged. Source/control and exact negatives archived; all loose probes preserved ignored in build/T-24036-probes/. Updated [[scenes-family-results]]. Unit checksums and guards pass; independent review pending.

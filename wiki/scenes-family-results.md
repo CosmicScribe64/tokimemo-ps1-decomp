@@ -247,3 +247,8 @@ Details and provenance in drafts/T-24007/README.md. Header/global/prototype chec
 ## T-24035 GEKO state helper transfer
 
 GEKO func_80134228 matches normal unguarded C (244 literal bytes) by porting func_80135AC8's u8 read view/dead byte-result test (both marked FAKE), changing the flag mask to 0x40 and omitting the sibling's D_80122D4C clear. GEKO checksum and literal default linked funcdiff pass; no header change. [[tickets/T-24035-small-bunka-geko-siblings]] tracks the package.
+
+
+## T-24036 GEKO tail follow-up
+
+[[tickets/T-24036-geko-shugaku-siblings]] restores the GEKO40040 guard's current91-row mixed-field baseline to7 with the matched EVENT byte-view recipe, explicitly marked FAKE as in T-20900. The original unconditionally reloads the counter at the tail; meaningful locals and a scratch signed declaration leave7, while whole signed alias forces reload but leaves8 register rows. No header edit or new GEKO coverage. Existing matched GEKO3FD88 unchanged; default checksum and declaration guards pass. SHUGAKU sibling in the same package matches244 bytes; source/provenance in drafts/T-24036/.
