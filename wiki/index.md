@@ -49,7 +49,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-24040-option-menu-siblings|T-24040]] two of three matched (1028 bytes), selector guarded at5 rows; In Review.
 - [[tickets/T-24036-geko-shugaku-siblings|T-24036]] one of two matched (244 bytes); GEKO guard refreshed to7 rows, In Review.
 - [[tickets/T-24033-valen-selector-ports|T-24033]] VALEN sibling retry:32D0C guarded at7 rows,34030 remains27; zero matches, In Review.
-- [[tickets/T-24077-etc-pair-scene|T-24077]] ETC two-word table scene, In Progress;102-row source-only checkpoint, production ASM.
+- [[tickets/T-24077-etc-pair-scene|T-24077]] ETC two-word table scene, unresolved In Review;102-row source-only checkpoint, production ASM.
 - [[tickets/T-24076-etc-album-search|T-24076]] ETC album search, unresolved In Review;71-row source-only lead, production ASM.
 - [[tickets/T-24075-etc-random-selection|T-24075]] ETC random selection, Done;904-byte C match independently verified/publishedc7690151b.
 - [[tickets/T-24074-etc-record-scene|T-24074]] ETC record scene, unresolved In Review;166-row source-only checkpoint, production assembly.

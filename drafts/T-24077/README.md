@@ -61,3 +61,11 @@ after promotion, strips the source banner, matches private forwards to selected
 return view, and validates funcdiff --built --no-build --resolve --version default
 --unit ETC func_8013CF2C before counting rows. Production-unchanged assertion
 remains. All objects, original instruction dumps and binaries stay ignored.
+
+Final parent-directed handoff is unresolved In Review. Bounded read-only Astra
+review found no supported new form: shared-word girl/status recipe is already
+present, scratch rotation alone identifies no missing operation/lifetime, and
+correct terminal stores expose no dependency that delays the early constant.
+No edit/build came from that review. Further unsupported probes stopped; no
+compiler-impossibility claim. Production remains ASM; parent published the
+active source packet at9a522dac3.

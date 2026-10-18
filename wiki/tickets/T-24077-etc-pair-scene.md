@@ -1,7 +1,7 @@
 ---
 id: T-24077
 title: Recover ETC scene with actual two-word table indexing
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -41,3 +41,15 @@ explicit FAKE graph purpose. Original206 words/frame28 versus best206/28.
 Remaining girl/case2 statusv0-v1, later scratchrotation and early terminal
 constant scheduling gaps; source-only packet/replay drafts/T-24077. Production/
 headers/config untouched, active In Progress, no match/impossibility claim.
+
+## Final bounded handoff
+
+UNRESOLVED In Review, not Done or matched. Best102/frame28/206words remains
+source-only; production ASM and all helpers/headers/neighbors unchanged. Parent
+bounded read-only Astra review found no supported new faithful form: girl and
+case2 already share the word source; repeating that recipe supplies no new
+mechanism. Equal instruction count plus scratch rotation does not isolate an
+absent operation or lifetime. Terminal flag stores are semantically correct,
+but no observed dependency justifies delaying the early80000000 constant.
+Preserve source/proofs/FAKE caveats, stop unsupported probes; no impossibility
+claim. Parent published the active packet at9a522dac3.

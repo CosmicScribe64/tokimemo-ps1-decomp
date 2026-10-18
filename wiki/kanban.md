@@ -50,12 +50,12 @@ kanban-plugin: board
 ## In Progress
 
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
-- [ ] [[tickets/T-24077-etc-pair-scene|T-24077 Recover ETC pair-table scene]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
 
+- [ ] [[tickets/T-24077-etc-pair-scene|T-24077 Recover ETC pair-table scene]]
 - [ ] [[tickets/T-24076-etc-album-search|T-24076 Recover ETC album search]]
 - [ ] [[tickets/T-24074-etc-record-scene|T-24074 Recover ETC record scene]]
 - [ ] [[tickets/T-24072-etc-model-init|T-24072 Match ETC model initializer]]

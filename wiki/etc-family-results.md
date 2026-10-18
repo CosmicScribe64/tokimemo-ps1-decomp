@@ -410,3 +410,9 @@ explicit FAKE graph purpose. Original206 words/frame28 versus best206/28.
 Remaining girl/case2 statusv0-v1, later scratchrotation and early terminal
 constant scheduling gaps; source-only packet/replay drafts/T-24077. Production/
 headers/config untouched, active In Progress, no match/impossibility claim.
+
+T-24077 final unresolved In Review preserves102/frame28/206words. Bounded Astra
+read-only review found no supported untried form: shared-word recipe already
+present; scratch rotation/equal count do not isolate missing op/lifetime; no
+observed dependency delays early flag constant. No additional probe, no match/
+Done/impossibility claim. Production ASM; active packet published9a522dac3.
