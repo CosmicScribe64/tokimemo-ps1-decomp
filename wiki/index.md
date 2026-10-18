@@ -64,6 +64,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-22017-w4-p17|T-22017]] Wave 4 package w4-p17: DATE `80132000.c`, 0 of 5 matched; `func_8013B488` best 52 rows, `func_8013D5FC` 67, `func_8013F214` 51, drafts archived, guards back to ASM (Done; 0 of 5 matched).
 - [[tickets/T-22019-w4-p19|T-22019]] Wave 4 package w4-p19: ETC `8013BEF0.c`, `func_8013C700`, `func_8013E89C`, `func_8013D32C`, `func_8013CCE4`, `func_8013E6AC`: 4 of 5 matched, `func_8013CCE4` stays `INCLUDE_ASM` at 43 rows (Done; 4 of 5 matched).
 - [[tickets/T-22020-w4-p20|T-22020]] Wave 4 package w4-p20: SHOUGATU `801390C0.c`, `80137FF0.c`, `80138B40.c`, three functions (`func_80138FC0`, `func_80138240`, `func_80139334`): `func_80138FC0` matched (252 B, `CharFlags` bit-field idiom); the other two not started (Done; 1 of 3 matched).
+- [[tickets/T-22016-w4-p16|T-22016]] Wave 4 package w4-p16: KANGEI `80135F10.c` and `80134120.c`, four functions: `func_801362F0` and `func_8013769C` matched, `func_80135004` guarded (16 rows), `func_80134724` back to ASM (Done; 2 of 4 matched, 1,688 bytes).
 - [[tickets/T-11880-date2-remainder|T-11880]] DATE2: the remaining nine functions, claim #49 (Done; 8 of 9 matched, DATE2 101/102, 91.9% of bytes).
 - [[tickets/T-20008-large-name-introduction|T-20008]] NAME_ENT introduction reconstruction archive (4,308-byte scope), claim #50; compiling, still nonmatching (In Progress; draft checkpoint merged, PR #51).
 - [[tickets/T-20010-name-ent-resource-loader|T-20010]] NAME_ENT resource loader, 1,652-byte verified plain-C match, claim #52 (Done).

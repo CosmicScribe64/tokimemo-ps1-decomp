@@ -53,7 +53,6 @@ kanban-plugin: board
 
 ## In Review
 
-
 ## Done
 
 - [ ] [[tickets/T-20011-name-ent-coordinate-selection|T-20011 NAME_ENT pointer-coordinate hit test]]
@@ -69,6 +68,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-23001-w5-big-p01|T-23001 Wave 5 big package w5-big-p01]]
 - [ ] [[tickets/T-22017-w4-p17|T-22017 Wave 4 package w4-p17]]
 - [ ] [[tickets/T-23002-w5-big-p02|T-23002 Wave 5 big package w5-big-p02]]
+- [ ] [[tickets/T-22016-w4-p16|T-22016 Wave 4 package w4-p16]]
 - [ ] [[tickets/T-22009-w4-p09|T-22009 Wave 4 package w4-p09]]
 - [ ] [[tickets/T-22008-w4-p08|T-22008 Wave 4 package w4-p08]]
 - [ ] [[tickets/T-22011-w4-p11|T-22011 Wave 4 package w4-p11]]

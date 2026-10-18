@@ -17925,3 +17925,18 @@ One of three BUNKAKEN functions matched: `func_801428D0` (`BunkaDispatch8` view)
 ## [2026-10-17] ticket | T-20011 Done
 
 [[tickets/T-20011-name-ent-coordinate-selection]]: PR #60 (KakarottoCake) merged, NAME_ENT `func_80134110` (152 bytes) matches. Clean build 27/27, linked funcdiff MATCH. `func_80132320` and `func_80134248` stay claimed (#57) under T-20013.
+## [2026-10-17] ticket | T-22016 started
+Package w4-p16 for [[tickets/T-22016-w4-p16]]: KANGEI `func_80135004`, `func_801362F0`, `func_80134724` and `func_8013769C` in `src/ovl/KANGEI/80135F10.c` and `src/ovl/KANGEI/80134120.c`. Status In Progress.
+
+## [2026-10-17] build | T-22016 results
+[[tickets/T-22016-w4-p16]]: KANGEI `func_801362F0` (420 bytes) matched with `s32 func_800AE120();` as a file-level override (`include/main_api.h` prototype wrapped in `#ifndef`) and a byte view of the switch selector. `func_8013769C` guarded at 2 rows (name tables 8 bytes high), `func_80135004` guarded at 16 rows, `func_80134724` restored to `INCLUDE_ASM`. Best forms in `drafts/T-22016/KANGEI/`; details in [[matching-notes]].
+
+## [2026-10-17] ticket | T-22016 In Review
+[[tickets/T-22016-w4-p16]] moved from In Progress to In Review after the clean build and header checks.
+
+## [2026-10-17] build | T-22016 closer: KANGEI func_8013769C matched
+[[tickets/T-22016-w4-p16]]: Opus closer matched KANGEI `func_8013769C` (2 rows, stack offsets of the two name tables). `s16 var_s0` declared before the tables plus a FAKE `s32 pad;` gave the original offsets 0x13C/0x54. Row added to [[register-cheatsheet]].
+
+## [2026-10-18] ticket | T-22016 Done
+
+Review of [[tickets/T-22016-w4-p16]] against `CODING_STANDARDS.md` passed after one wiki fix (ticket, index and [[matching-notes]] still called `func_8013769C` guarded after the closer matched it). 2 of 4 matched: KANGEI `func_801362F0` (420 bytes) and `func_8013769C` (1,268 bytes); `func_80135004` guarded at 16 rows, `func_80134724` back to `INCLUDE_ASM`.
