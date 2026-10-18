@@ -19696,3 +19696,17 @@ Created [[tickets/T-24069-etc-menu-state]] before edits for only func_8013BFFC i
 ## [2026-10-18] ticket | T-24069 reviewed published and Done
 
 Parent independently reviews e3750f110 full92-line standards change PASS/no findings and publishes primary fd700bf3f after actual-C/literal820, all27 hashes, interface/prototype0 new15 known gates. [[tickets/T-24069-etc-menu-state]]/card/index move Done after review; [[etc-family-results]] records publication. Source-only drafts/T-24069 controls/reproducer preserve provenance; zero replay passes without production edits. Read-only Docker tools/progress.py on primary fd700bf3f measures6514/6958 functions and1865416/2279368 bytes(81.8%),413952 bytes remaining; log build/etc24069/primary-progress.log. Next work is read-only selection pending assignment/ticket, no new target compile.
+
+## [2026-10-18] ticket | Claim ETC save-card state machine from matched reference
+
+Created [[tickets/T-24070-etc-save-card-state]] before edits on only func_80144F74 in ETC/80143240.c. Read [[etc-family-results]] and frozen [[tickets/T-24055-etc-short-helpers]] closure; app inventory shows no active other matching chat, while parent assigns this function. Same sole Sol medium worker reuses f76548701, preserving all TU neighbors and contributor scopes. Matched NAME_ENT8013F758 is read-only reference; prior46-row draft needs a fresh current-type baseline before source-led controls. No NAME_ENT or other target edits authorized.
+## [2026-10-18] build | T-24070 current baseline isolates case0
+
+[[tickets/T-24070-etc-save-card-state]] establishes valid current-type full-TU117 rows. One GameState pointer improves47 and reproduces cases1–3 exactly; two capped-byte updates remain. Shared byte local49 and its word promotion49 are rejected, no width sweep. [[etc-family-results]] records the context difference from historical scalar-alias46. Production/all neighbors untouched, no interface/config changes or C proof.
+
+## [2026-10-18] query | Parent contributor coordination at11:09 UTC
+
+Parent reports completed GitHub read-only check about11:09 UTC2026-10-18: no open PRs; only OPEN claims50/57 have unchanged timestamps. No contributor messages sent. Next parent check planned about11:39 UTC. This records completed coordination only and adds no matching scope or schedule.
+## [2026-10-18] build | T-24070 source-only direct-cap checkpoint39
+
+[[tickets/T-24070-etc-save-card-state]]/[[etc-family-results]] preserve direct-array cap/increment source at39 resolved rows, replayed independently with production byte-identical to pre-task source. Second cap now matches a0/call schedule; first index/address/counter allocation and masked-index copy remain. Rejected controls are actual pointer47, byte-index111, raw captures49, reused pointer103 and required argument capture49. drafts/T-24070 contains sources/provenance/safe replay only. No C match/verified bytes, shared interface/config or compiler change. Ticket In Progress; next proposal is existing unchanged allocator trace with mandatory fidelity for specific v0 interference/priority evidence, no new logging binary.
