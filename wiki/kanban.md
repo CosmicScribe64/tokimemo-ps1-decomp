@@ -45,12 +45,14 @@ kanban-plugin: board
 - [ ] [[tickets/T-24042-tel-helper-closure|T-24042 Close TEL dialogue helper register allocation]]
 - [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
 - [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
+- [ ] [[tickets/T-24064-etc-count-trio|T-24064 Match three small ETC functions]]
 - [ ] [[tickets/T-20013-name-ent-fade-page-followup|T-20013 NAME_ENT fade and page selection]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
 
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
+- [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
@@ -71,7 +73,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24044-taiiku-taco-siblings|T-24044 TAIIKU and TACO sibling completion]]
 - [ ] [[tickets/T-24040-option-menu-siblings|T-24040 OPTION menu sibling completion]]
 - [ ] [[tickets/T-24057-ending-small-pair|T-24057 Match two small ENDING fade handlers]]
-- [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
 - [ ] [[tickets/T-24043-master-large-handler|T-24043 Recover larger MASTER final-event handler]]
 - [ ] [[tickets/T-24031-gyozi-shougatu-pairs|T-24031 Recover GYOZI and SHOUGATU particle pairs]]
 - [ ] [[tickets/T-24061-short-control-and-copy|T-24061 Recover short GEKO SHOUGATU GYOZI handlers]]

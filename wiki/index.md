@@ -48,6 +48,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-24040-option-menu-siblings|T-24040]] two of three matched (1028 bytes), selector guarded at5 rows; In Review.
 - [[tickets/T-24036-geko-shugaku-siblings|T-24036]] one of two matched (244 bytes); GEKO guard refreshed to7 rows, In Review.
 - [[tickets/T-24033-valen-selector-ports|T-24033]] VALEN sibling retry:32D0C guarded at7 rows,34030 remains27; zero matches, In Review.
+- [[tickets/T-24064-etc-count-trio|T-24064]] three small ETC functions (Ready; user deferred while DATE remains the sole worker focus).
 - [[tickets/T-24057-ending-small-pair|T-24057]] two small ENDING fade handlers (In Review; no matches, both source leads at cost 4 / 12 rows).
 - [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI sibling package (In Review; 2 matches, 2,020 bytes).
 - [[tickets/T-24035-small-bunka-geko-siblings|T-24035]] Small BUNKA_SD/GEKO sibling ports (In Progress).
@@ -715,3 +716,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24056-shougatu-short-siblings]] - three SHOUGATU source-only leads,62/72/12 rows; In Review.
 
 - [[tickets/T-24061-short-control-and-copy]] - source-only short control/copy pass: GEKO44, SHOUGATU56, GYOZI84 rows; zero C bytes, In Review.
+- [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Progress; 28-row source preserved after bounded EVENT recipe transfer, sole worker focus).
