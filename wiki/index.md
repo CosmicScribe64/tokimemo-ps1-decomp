@@ -695,3 +695,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[tickets/T-24045-tel-profile-screen]] - TEL profile-screen match, 2128 literal bytes; In Review.
 - [[tickets/T-24046-screen-page-renderer]] — source-only renderer ABI/word-offset/frame recovery; no new verified C.
+
+- [[tickets/T-24043-master-large-handler|T-24043]] Larger MASTER final-event handler (In Review; no match, corrected exact-frame source archived at diagnostic cost 342).
