@@ -384,3 +384,8 @@ placement. FAKE original-return uncertainty is inline; no value invented and
 private forward matches actual selected signature. Best71/frame28/178words versus
 179 original, early cached-index/search and scratch gaps remain. No production/
 header/config changes; checkpoint active pending bounded coordination.
+
+T-24076 final handoff is unresolved In Review, best71/frame28/178words versus
+179 original. Production remains ASM, all source controls/replays and inline
+FAKE boundary/reload/return caveats preserved. No helper/header/config or
+neighbor changes, no matched/Done/impossibility claim. Further F054 probes stopped.

@@ -1,7 +1,7 @@
 ---
 id: T-24076
 title: Recover ETC album search with actual helper signature
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -56,3 +56,12 @@ placement. FAKE original-return uncertainty is inline; no value invented and
 private forward matches actual selected signature. Best71/frame28/178words versus
 179 original, early cached-index/search and scratch gaps remain. No production/
 header/config changes; checkpoint active pending bounded coordination.
+
+## Final bounded handoff
+
+UNRESOLVED In Review, not Done or matched. Best71/frame28/178words versus179
+original remains source-only in drafts/T-24076 with all controls/proofs. Whole-
+GameState boundary/integer-address, final reload and s32 return-view FAKE caveats
+are inline; original source type/spelling remains unproven. Fresh archive replay
+confirms71. Production remains ASM, no helper/header/config or neighbor changes.
+Stop F054 probes under parent direction; no compiler-impossibility claim.
