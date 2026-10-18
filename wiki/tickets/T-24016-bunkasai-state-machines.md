@@ -1,7 +1,7 @@
 ---
 id: T-24016
 title: Recover BUNKASAI festival state machines
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -35,3 +35,5 @@ func_80158764: default unguarded C, 1,652 literal target bytes (rather than the 
 After installing the second body through a direct INCLUDE_ASM replacement, Docker ninja -j1 build/ovl/BUNKASAI.ok ran CC/LD/OBJCOPY and reported BUNKASAI.bin OK. Both literal default linked funcdiff checks passed together: func_80158764 1652 bytes; func_80135C4C 1508 bytes. Header check passed during build; git diff --check clean. Neither target has a guard or fallback. Total new verified C: 3,160 bytes.
 
 Reproduction and useful source-only near/matching candidates: drafts/T-24016/. All private exploratory files remain intact under ignored build/T-24016-private/exploration; no objects or instruction listings committed. Status In Review pending root CODING_STANDARDS review and integration; no push or merge performed.
+
+Independent root closure review: func_80158764 is ordinary C89 using existing GameState fields, direct dialogue stores and narrow byte reads. No FAKE, header or compiler changes. Source gate confirms no target assembly fallback; default literal1652-byte proof and all27 hashes/guards pass at a52115475. Both requested targets are now verified (3160 bytes). No unresolved findings; Done.

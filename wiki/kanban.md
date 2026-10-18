@@ -53,7 +53,6 @@ kanban-plugin: board
 ## In Review
 
 - [ ] [[tickets/T-24008-taiiku-runners|T-24008 Recover TAIIKU runner family]]
-- [ ] [[tickets/T-24016-bunkasai-state-machines|T-24016 Recover BUNKASAI festival state machines]]
 - [ ] [[tickets/T-24014-taco-pre-closer|T-24014 Close TACO PRE operand order]]
 - [ ] [[tickets/T-24009-ending-scheduler-closer|T-24009 Close ENDING scheduler residue]]
 - [ ] [[tickets/T-24013-complete-rpg-bat|T-24013 Complete RPG_BAT battle family package]]
@@ -69,6 +68,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24016-bunkasai-state-machines|T-24016 Recover BUNKASAI festival state machines]]
 - [ ] [[tickets/T-24005-bunkaken-date-state-machine|T-24005 Match BUNKAKEN date state machine]]
 - [ ] [[tickets/T-22000-wave-4-conveyor|T-22000 Wave 4 conveyor]]
 - [ ] [[tickets/T-23000-wave-5-big-conveyor|T-23000 Wave 5 biggest-first conveyor alongside wave 4]]

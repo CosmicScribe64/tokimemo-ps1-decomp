@@ -18438,3 +18438,7 @@ Moved [[tickets/T-24016-bunkasai-state-machines]] to In Review and moved its kan
 ## [2026-10-17] build | T-24008 guarded translation-unit confirmation
 
 Full NON_MATCHING translation-unit funcdiff compiled the retained updater and reproduced its nine instruction differences. Final branch prototype check completed: 0 new disagreements, 15 known. [[tickets/T-24008-taiiku-runners]] remains In Review.
+
+## [2026-10-17] decision | Resume stopped chats and close the BUNKASAI pair
+
+User explicitly requested keeping stopped chats going, especially the large-function chat. Confirmed Astra and DATE/ETC coordinator idle, sent new scoped work, and verified both active. Astra continues EVENT and retains largest targets with two new reserved functions; Sol coordinator takes BUNKASAI sibling pair T24030. Updated [[completion-run-2026-10-17]]. Independently verified second BUNKASAI C target1652 bytes (both3160), all27 hashes/guards pass; T24016 reviewed Done. TAIIKU residual guard/drafts published without extra byte claim. Clone1128 and GYOZI392 wins remain queued for integration.

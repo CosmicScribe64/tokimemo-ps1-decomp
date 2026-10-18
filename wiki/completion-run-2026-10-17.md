@@ -5,7 +5,7 @@ updated: 2026-10-17
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Current published code checkpoint `81c347467` has **6,476/6,958 functions and 1,825,104/2,279,368 bytes (80.1%)**, measured with `tools/progress.py` in Docker. Since baseline `283b86fca`: 10 functions / 11,636 bytes added. The 80% milestone has been crossed; the active goal remains 100%, with 454,264 game-code bytes remaining. SDK assembly remains separately reported and excluded from this scope.
+User resumed work toward 100% verified game-code matching. Current published code checkpoint `a6fa29a65` has **6,477/6,958 functions and 1,826,756/2,279,368 bytes (80.1%)**, measured in Docker. Since baseline `283b86fca`: 11 functions / 13,288 bytes added. The active goal remains 100%, with 452,612 game-code bytes remaining. SDK assembly is separately reported and excluded.
 
 ## Verified gains
 
@@ -21,15 +21,17 @@ User resumed work toward 100% verified game-code matching. Current published cod
 | T24008 | TAIIKU func_80137EA8 |692|
 | T24013 | RPG_BAT func_80139510 |2424|
 | T24016 | BUNKASAI func_80135C4C |1508|
+| T24016 | BUNKASAI func_80158764 |1652|
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
 
 ## Active ownership
 
-- T24008, Sol 6.1 medium: TAIIKU `80133C80.c`; one of five runner helpers matched, bounded remainder in progress. Worktree `codex/complete-main`.
-- T24015, Sol 6.1 medium: MAIN `8005A0B0.c`, five unstarted helpers from w4-p41. Worktree `codex/complete-option`.
-- T24016, Sol 6.1 medium: BUNKASAI `801354B0.c` / `80154018.c`, two unstarted helpers from w4-p44. Reuses the now-idle Astra worktree `codex/complete-bunkaken` at 15133a84a; no new checkout.
-- T24020, dedicated Astra chat `01a14d9f-757c-7661-a87e-e183dc7e7687`: MAIN `8007C030.c` dialogue_speak_part, TEL `80132000.c` func_80136724, EVENT `8010FE10.c` func_801103A0. One target at a time; last observed on EVENT. All three files remain reserved.
+- T24017 Sol medium, root worker: EVENT80107FC0, GEKO8013F360, SHUGAKU80132000 clone ports. Three wins (1128 bytes) queued for root integration; minimal shared EVENT/main_api header additions. Reuses codex/complete-main.
+- T24018 Sol medium, root worker: DATE801461B0 and EVENT8011C650 large sibling ports; no other EVENT files. Reuses codex/complete-bunkaken.
+- T24019 Sol medium, root worker: GYOZI80138B50/80139920/8013E5B0/801418B0. First392-byte win queued; remainder active. Reuses codex/complete-option.
+- Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687 resumed at explicit user request. Owns MAIN8007C030, TEL80132000, EVENT8010FE10. Continues corrected EVENT214-edit checkpoint. Added targets T24024 MAIN8006CB30 ONLY func8007132C and T24025 GEKO80142760 ONLY func80142C9C; do not alter parked MAIN8006D7EC. Existing b312d1e2 archive pending integration. One compiler, continue useful rounds across reserved targets.
+- Sol medium coordinator chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8 resumed at user request for T24030: BUNKASAI80142700/801511E0, targets80142700/80151364. Reuse preserved built trees, one compiler total. Existing DATE/ETC work remains completed.
 
 ## Completed bounded passes
 
@@ -40,6 +42,8 @@ Each was independently checked against default linked function bytes, all27 bina
 - T24009 ENDING: no match; pointer-lifetime scheduling improvement and reproducer published at 4375a2858.
 - T24010 DATE/ETC coordinator chat `01a14d91-82a4-7eb1-89d3-8c3dc2d084f8`: finished; all worker/coordinator handoffs on main. T24011 DATE no matches; T24012 ETC one match and three residual drafts.
 - T24013 RPG_BAT: one 2424-byte match; two residual source drafts published at ae111b687.
+- T24008 TAIIKU closure and guarded updater archived on main; T24015 MAIN closure archive a260c269a pending integration.
+- T24016 BUNKASAI: both targets verified,3160 bytes, independent root review complete.
 - T24014 TACO: no match after specific PRE hypotheses; three-case reproducer and negative evidence published at 76dd4762f. Root Astra closer stopped; its slot now runs Sol medium T24016.
 
 TT/DATE2 reservations and contributor claims #50/#56/#57 remain excluded. Contributor heartbeat runs every 30 minutes; no contributor messages are authorized. The old integration automation remains paused; this explicit 100% goal run is active.
