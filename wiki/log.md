@@ -18879,3 +18879,14 @@ Created [[tickets/T-24051-date-large-dispatcher]] before source work; reused bui
 ## [2026-10-18] decision | T-24051 diagnostic contexts clarified
 
 [[tickets/T-24051-date-large-dispatcher]] and the archive README distinguish the early private helper's old-baseline 71/71 from the validated direct-cc 72-row replay; terminal padding explains that difference. The improved assigning-default body remains 28 rows in both contexts. Source checkpoint 8f4958fd2 is unchanged.
+## [2026-10-18] ticket | T-24054 short function-count package
+
+Created [[tickets/T-24054-short-function-count]] In Progress for three exclusive short functions, after reviewing family notes and target instructions.
+
+## [2026-10-18] build | T-24054 short function checkpoint
+
+[[tickets/T-24054-short-function-count]]: Docker-only focused source probes improve KANGEI func_8013852C current aligned cost34 to6 to4; frame and promoted input registers recovered, remaining sum temporary and scheduling unresolved. OPTION remains52 and MAIN canonical-array/name forms70/64, no historical improvement. Source-only drafts/T-24054 preserves closest body, probe metadata and reproducer; all production/header files unchanged. Updated [[kangei-family-results]], moved ticket to In Review pending independent archive review. Zero new C matches.
+
+## [2026-10-18] build | T-24054 checkpoint verification
+
+[[tickets/T-24054-short-function-count]] scratch reproducer returns cost4. Three unchanged default unit checksums pass; header/global/prototype guards pass. No target INCLUDE_ASM removed, no C-match claim. Archive awaits independent review.

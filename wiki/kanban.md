@@ -57,6 +57,7 @@ kanban-plugin: board
 ## In Review
 
 - [ ] [[tickets/T-24053-short-function-lane|T-24053 Recover three short functions]]
+- [ ] [[tickets/T-24054-short-function-count|T-24054 Recover short MAIN OPTION KANGEI functions]]
 - [ ] [[tickets/T-24050-geko-scene-near-match|T-24050 Close GEKO scene setup near match]]
 - [ ] [[tickets/T-24046-screen-page-renderer|T-24046 Recover the MAIN screen page renderer]]
 - [ ] [[tickets/T-24041-main-render-cd-siblings|T-24041 Recover MAIN renderer and CD dispatcher]]
