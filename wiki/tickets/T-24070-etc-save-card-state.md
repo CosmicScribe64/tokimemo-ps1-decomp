@@ -1,7 +1,7 @@
 ---
 id: T-24070
 title: Match ETC save-card state machine
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -33,3 +33,9 @@ Parent-approved unchanged trace on39 input passes exact full-object/four-section
 Approved unchanged-tracer105 comparison passes same-input entire-object/four-section equality (input7c5a2f24..., object446a2ed1...). Common global mask expression becomes bit80 priority3/v0; retained index23 priority2/v1. Removing named mask local therefore leaves a competing expression range. No per-color availability inference or new binary. Next ONE proposed source form expresses only conditional reload as unsigned modulo16 instead of &15, same byte/index domain, to test separate pre-allocation expression ranges; pending parent scope, not yet compiled. Best39 and production unchanged.
 
 Parent approves exactly that conditional reload modulo16 control after this fidelity pin; first mask and all other choices fixed. Reject if neutral/worse or added operations. Mark FAKE if retained solely for expression-web codegen. No width/color/base sweep or new diagnostic binary.
+
+Approved conditional-modulo control is neutral105 and entire TU object equals inline105 stock446a2ed1... exactly. Rejected/FAKE diagnostic retained with replay variant; no further sweep. Best39/production unchanged. Remaining exact gap is common mask/index interference or cost beyond unchanged tracer's best-color output; no supported further legal source form currently identified. No new instrumentation/target switch or compiler-impossibility claim. In Progress pending specific parent direction.
+
+Parent stops new probes/instrumentation now. An existing Astra chat receives read-only source analysis for this function only, without compiler/edits/subagents. This Sol worker retains exclusive reserved matching scope and intact39 draft while awaiting at most two concrete hypotheses. No new targets; In Progress pending that bounded analysis.
+
+Astra read-only analysis completed with no supported untried source lead. Original first mask uses t6 and retained indexv0; the draft's common mask takesv0. NAME_ENT's matched sibling lacks the two caps, so it supplies no allocation evidence for this subgroup. The bounded pointer/width/capture controls did not close it; unchanged trace does not distinguish priority from interference fully. Final handoff is unresolved/In Review, not Done or an impossibility claim. Preserve39 source and all recorded negatives; stop all44F74 tracing/probes. No production or verified-byte gain.

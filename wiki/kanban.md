@@ -50,12 +50,12 @@ kanban-plugin: board
 ## In Progress
 
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
-- [ ] [[tickets/T-24070-etc-save-card-state|T-24070 Match ETC save-card state machine]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
 
+- [ ] [[tickets/T-24070-etc-save-card-state|T-24070 Match ETC save-card state machine]]
 - [ ] [[tickets/T-24068-etc-album-interaction|T-24068 Match ETC album interaction]]
 - [ ] [[tickets/T-24047-ending-sprite-scene|T-24047 ENDING sprite scene initializer]]
 - [ ] [[tickets/T-24067-etc-album-copy|T-24067 Match ETC album record copy]]
@@ -108,9 +108,9 @@ kanban-plugin: board
 
 ## Done
 
-- [ ] [[tickets/T-24069-etc-menu-state|T-24069 ETC menu state machine verified820B]]
 - [ ] [[tickets/T-24064-etc-count-trio|T-24064 ETC model loop verified252B; review pending]]
 - [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
+- [ ] [[tickets/T-24069-etc-menu-state|T-24069 ETC menu state machine verified820B]]
 - [ ] [[tickets/T-20013-name-ent-fade-page-followup|T-20013 NAME_ENT fade and page selection]]
 - [ ] [[tickets/T-11890-tt-ratan2-aspsx|T-11890 TT func_8014D260 ASPSX pass]]
 - [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]

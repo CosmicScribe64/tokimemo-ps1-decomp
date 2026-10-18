@@ -110,3 +110,25 @@ unsigned modulo16, preserving the byte's0–255 domain and0–15 index. It tests
 whether the front end retains separate expression ranges before a late ANDI.
 Parent subsequently approved that one conditional reload control, after this
 fidelity checkpoint is pinned. No result is claimed here; other choices stay fixed.
+
+The approved conditional unsigned-modulo reload is neutral105 and its whole
+TU object equals the inline105 stock object446a2ed1... exactly. The first
+mask and all other source choices stayed fixed; the rejected diagnostic has
+an explicit FAKE annotation for the expression-web purpose. Replay with
+`--variant conditional-modulo`. Best remains39. Current observations support
+no further legal source form. The unresolved question is the
+common mask/index interference or cost beyond the existing best-color output;
+that output does not expose per-range forbidden masks. No new instrumentation,
+source sweep, production change or compiler-impossibility claim follows.
+
+Parent stops new probes/instrumentation while an existing Astra chat analyzes
+only this source read-only, without compiling, editing or spawning agents.
+The Sol scope stays reserved and the draft remains intact pending at most
+two concrete hypotheses. No new target is assigned.
+
+Astra's read-only analysis has completed without a supported untried source
+lead. The matched NAME_ENT case0 lacks both caps and cannot establish their
+allocation. Original t6 mask/indexv0 differs from the draft's common-maskv0;
+existing trace does not fully separate priority from interference. T-24070
+is unresolved/In Review, not Done or a compiler-impossibility claim. The39
+draft and negative controls are preserved; all44F74 tracing/probes stop.
