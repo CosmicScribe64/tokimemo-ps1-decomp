@@ -213,9 +213,107 @@ void func_80137AA8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80137340", func_80137BB4);
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-22028, 23 rows; `u32 temp` for the GameState word (autotweak inline_multi) took it from 58 to 23: left are the operand order of three `bne` against the shared constant 1 (the original compares `t2,v0`, the draft `v0,t2`) and the `li v0,1` of the `D_8013C360 == 1` test, which the draft hoists into the load slot before `beqz a0` where the original has `nop` and then `li v0,1` */
+void func_80137BB4(void) {
+    u32 remainder;
+    u32 temp;
 
+    if (D_8013C35C == 1) {
+        if (D_8013C360 == 0) {
+            *(s16 *)&D_8011ECD0[0x852] = 7;
+            func_801396A4(0, 0xFF);
+            D_80122D0C = 0;
+            D_8013CAA0 = 0;
+        }
+    } else if (D_8013C35C == 0xE) {
+        if (D_8013CAA0 == 0 && (u8)D_8013C364 == 0x32) {
+            D_8013CAA0 = 1;
+            D_8013C364 = 0;
+        }
+        if ((u8)D_8013C364 == 1 && D_8011F4DE == 0 && D_8013CAA0 == 1) {
+            func_801396A4(1, 5);
+            D_80122D0C = 1;
+        }
+    } else if (D_8013C35C == 0x11 && D_8013C360 != 0) {
+        if (D_8013C360 == 1) {
+            *(s16 *)&D_8011ECD0[0x852] = 8;
+            func_801396A4(2, 1);
+            D_80122D0C = 1;
+        } else if (D_8013C360 == 0x28) {
+            func_801396A4(3, 5);
+        } else if (D_8011F4DE == 3 && D_8011F4E0 == 5) {
+            func_801396A4(2, 1);
+        } else if (D_8013C360 == 0x78) {
+            func_801396A4(4, 5);
+        } else if (D_8011F4DE == 4 && D_8011F4E0 == 7) {
+            func_801396A4(5, 1);
+            D_80122D0C = 0;
+        }
+    }
+    if (D_8013C35C >= 0x12) {
+        /* FAKE: T-22028; the dead test on a word copy selects v1, the unsigned copy keeps divu (T-9410). */
+        temp = D_800E6280.unk_10F8;
+        if (temp) {
+        }
+        remainder = temp % 240;
+        if (remainder == 0) {
+            D_8011F4E0 = 0;
+            D_8011F4D0 = 0;
+            D_8011F4DE = 6;
+        }
+        if (remainder >= 0xCU) {
+            D_8011F4E0 = 0;
+            D_8011F4CA = 1;
+            D_8011F4D0 = 0;
+            D_8011F4DE = 5;
+        }
+    }
+    if (D_800E6280.unk_110A == 2) {
+        D_8011F4CA = 1;
+        D_8011F4DE = 5;
+    }
+    D_8013C360 += 1;
+}
+#else
+INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80137340", func_80137BB4);
+#endif
+
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-22028, 32 rows; registers only: the original holds the flag word in a0 and the shifted word and the offset in v0 (a promoted local `w` puts the word in a0 but then the offset leaves v0) */
+void func_80137E40(void) {
+    s32 off;
+
+    if (D_8013C35C == 1) {
+        if (D_8013C360 == 0) {
+            *(s16 *)&D_8011ECD0[0x852] = 4;
+            func_801396A4(0, 0xFF);
+            D_80122D0C = 0;
+        }
+    } else {
+        off = D_800E6280.unk_1BC[1].unk_0C.f.b14 == 0;
+        off = (off ^ 1) * 2;
+        if (D_8013C35C == off + 0x13) {
+            if (D_8013C360 == 1) {
+                *(s16 *)&D_8011ECD0[0x852] = 5;
+                func_801396A4(1, 1);
+                D_80122D0C = 1;
+            }
+        } else if (D_8013C35C == off + 0x16) {
+            if (D_8013C360 == 1) {
+                func_801396A4(2, 0);
+                D_80122D0C = 0;
+            }
+        } else if (D_8013C35C == off + 0x17 && D_8013C360 == 1) {
+            func_801396A4(3, 5);
+            D_80122D0C = 1;
+        }
+    }
+    D_8013C360 += 1;
+}
+#else
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80137340", func_80137E40);
+#endif
 
 /* D_8011F4D0/F4DE/F4E0/F522 are fields +0x18/+0x26/+0x28 of the 0x44-byte records 30 and 31 of the
  * D_8011ECD0 table; read through the table they compare in the original's operand order (T-9020). */
