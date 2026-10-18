@@ -51,12 +51,15 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 
 
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24026-shougatu-sibling-ports|T-24026 Port three SHOUGATU high-similarity siblings]]
 
 - [ ] [[tickets/T-24017-clone-ports|T-24017 Port three exact opcode clones]]
 

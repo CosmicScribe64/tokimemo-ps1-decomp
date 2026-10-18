@@ -18226,3 +18226,11 @@ EVENT func_80108B24 is unguarded C with no target INCLUDE_ASM. Fresh default lit
 ## [2026-10-17] build | T-24017 closes three clone ports
 
 All3 targets have unguarded C definitions and pass root source-only claim gate; no target INCLUDE_ASM. Current-header default literal proof verifies1128 bytes and EVENT/GEKO/SHUGAKU unit SHA1 checks pass. Headers/globals pass, branch prototypes0new/15known. [[tickets/T-24017-clone-ports]] records pinned win commits and hashes, moved In Progress to In Review with card for independent parent review. Root coordinates all27 shared-header integration. No failed source archives needed.
+
+## [2026-10-17] ticket | T-24026 SHOUGATU sibling ports
+
+Created [[tickets/T-24026-shougatu-sibling-ports]] In Progress after reading [[shougatu-family-results]] and related sibling evidence. Scope is three functions in two source files.
+
+## [2026-10-17] build | T-24026 SHOUGATU two sibling C wins
+
+[[tickets/T-24026-shougatu-sibling-ports]] moves to In Review: 708 bytes of unguarded C verified by source gate, normal default linked literal proof and full SHOUGATU checksum. [[shougatu-family-results]] records recipes and the four-word stack layout blocker for the guarded dispatcher; source-only draft archived in drafts/T-24026. No shared-header changes.
