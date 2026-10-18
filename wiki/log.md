@@ -20114,3 +20114,29 @@ reverses them; postconversion wholefile unchanged, previous ugen target matches.
 Internal transform remains unknown; no source defect, compiler exception or
 new dependence asserted. drafts/T-24078/phase.md/uopt_capture.py/manifest preserve
 recipe; raw stages ignored. Same sole worker/function active, production intact.
+
+## [2026-10-18] query | T24078 internal optimizer decision narrowed read-only
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] record existing
+stock-reference copy/motion/reemit call sites and first-arm dependency table in
+drafts/T-24078/phase.md. No Q11-to-P value edge; exact internal rewrite not proven.
+Minimal missing observation is first-arm statement/DAG order at reemit entry,
+not broader compiler reverse engineering. No logger/build/probe or production
+change; same target remains active.
+
+## [2026-10-18] build | T24078 bounded reemit graph observation passes stock fidelity
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve one
+approved diagnostic variant: same604 full-object67fb.../allsections match FIRST.
+Q11/P assignments are already NOP at reemit entry; first X0 tree has leftP/rightQ11
+and corresponding emission follows that order. Exact earlier elimination pass
+remains unproven. drafts/T-24078/reemit.md/patch/fidelity preserve observations
+and bounded recipe; generated compiler/logs ignored. Origin-first geometry is
+one source lead, not yet tested; production unchanged, active same function.
+
+## [2026-10-18] query | 14:08 UTC contributor coordination check
+
+Root completed read-only GitHub query at14:08UTC: no open PRs; only #57 updated
+2026-10-17T22:16:21Z and #50 updated2026-10-17T15:45:07Z, unchanged. No external
+messages sent; next around14:38UTC. [[completion-run-2026-10-17]] records this
+completed check; no matching scope change.
