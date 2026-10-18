@@ -60,6 +60,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24060-shugaku-short-selectors|T-24060 SHUGAKU short selectors]]
 - [ ] [[tickets/T-24055-etc-short-helpers|T-24055 ETC short helpers]]
 - [ ] [[tickets/T-24053-short-function-lane|T-24053 Recover three short functions]]
+- [ ] [[tickets/T-24062-main-audio-short|T-24062 Recover short main audio helpers]]
 - [ ] [[tickets/T-24058-short-pair-count|T-24058 Close short SHOUGATU GYOZI pair]]
 - [ ] [[tickets/T-24054-short-function-count|T-24054 Recover short MAIN OPTION KANGEI functions]]
 - [ ] [[tickets/T-24050-geko-scene-near-match|T-24050 Close GEKO scene setup near match]]

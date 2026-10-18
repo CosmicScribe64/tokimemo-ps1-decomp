@@ -2727,6 +2727,8 @@ void func_80086AB0(s32 arg0);
 s32 func_80087954(s32 arg0, u8 *arg1);
 s32 func_800879D0();
 s32 func_80087C64();
+/* Four-byte CD mixer input; wrapper returns 1 (asm/libcd_rest.s, T-24062). */
+s32 func_80087DC8(u8 *arg0);
 s32 func_80087E4C(s32 arg0, u8 *arg1);
 s32 func_80087E6C(s32 arg0, s32 arg1, s32 arg2);
 void func_80088070();

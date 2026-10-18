@@ -720,7 +720,36 @@ void func_8007BAAC(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007BBE8);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007BCFC);
+void func_8007BCFC(s32 arg0) {
+    u8 volume[4];
+    u8 attenuation;
+
+    /* FAKE: paired assignments share source lines to reproduce independent
+     * byte-store scheduling; original spelling unknown. T-24062 */
+    if ((arg0 & 0xFFFF) == 1) {
+        func_80090E40();
+        D_80125D10.unk_00 &= ~0x10;
+        D_80125D10.unk_00 |= 0x20;
+        volume[2] = 0x4F; volume[0] = 0x4F;
+        volume[3] = 0x4F; volume[1] = 0x4F;
+        attenuation = 0x18;
+    } else {
+        func_80090E50();
+        D_80125D10.unk_00 &= ~0x20;
+        D_80125D10.unk_00 |= 0x10;
+        volume[2] = 0x7F; volume[0] = 0x7F;
+        volume[3] = 0;
+        volume[1] = 0;
+        attenuation = 0;
+    }
+    func_80087DC8(volume);
+    D_80125D10.unk_22 = 0x50 - attenuation;
+    D_80125D10.unk_20 = D_80125D10.unk_22;
+    /* FAKE: unsigned halfword view preserves the target conversion and
+     * temporary numbering; the canonical member stays signed. T-24062 */
+    *(u16 *)&D_80125D10.unk_26 = 0x5A - attenuation;
+    D_80125D10.unk_24 = *(u16 *)&D_80125D10.unk_26;
+}
 
 void func_8007BDE8(void) {
     s16 var_s0;
