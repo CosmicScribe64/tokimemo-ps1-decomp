@@ -1,7 +1,7 @@
 ---
 id: T-24095
 title: Match GEKO and EVENT batch D (func_8013A3C4, func_8013AB4C, func_8013B10C, func_801404FC, func_80134808, func_801035BC)
-status: In Progress
+status: Done
 priority: high
 created: 2026-10-18
 updated: 2026-10-18
@@ -21,6 +21,14 @@ Following [[tickets/T-24090-geko-event-twins-and-near-misses-c]] (where all 5 ta
 
 ## Acceptance criteria
 
-- [ ] Close as many of the 6 targets as possible to `score=0` in `build/scratch/t24095/`
-- [ ] Promote all matched functions to unguarded default C and verify `tools/funcdiff.py --resolve`, `tools/check_headers.py`, `tools/migrate_globals.py --check`, and `tools/sync_protos.py --check-branch`
-- [ ] Review against `CODING_STANDARDS.md`
+- [x] Close as many of the 6 targets as possible to `score=0` in `build/scratch/t24095/`
+- [x] Promote all matched functions to unguarded default C and verify `tools/funcdiff.py --resolve`, `tools/check_headers.py`, `tools/migrate_globals.py --check`, and `tools/sync_protos.py --check-branch`
+- [x] Review against `CODING_STANDARDS.md`
+
+## Notes
+
+- Matched 4 of 6 functions (+1,700 B symbol bytes / +1,672 B linked bytes):
+  - `GEKO:func_8013A3C4` (416 B in `src/ovl/GEKO/80139910.c`): `MATCH`
+  - `GEKO:func_8013AB4C` (404 B in `src/ovl/GEKO/80139910.c`): `MATCH`
+  - `GEKO:func_8013B10C` (416 B / 388 B code in `src/ovl/GEKO/8013AF80.c` + `include/ovl/GEKO.h`): `MATCH`
+  - `GEKO:func_801404FC` (464 B in `src/ovl/GEKO/8013F360.c`): `MATCH`

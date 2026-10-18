@@ -752,7 +752,9 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24092-ugen-block-copy-state-pass|T-24092]] Prototype and evaluate `ugen` block-copy state (`F` vs `B`) uniform pass (In Progress).
 - [[tickets/T-24093-reclassify-date-taco-libgte-asm|T-24093]] Reclassify hand-written `LIBGTE` `RotMatrixX/Y/Z` overlay objects (`DATE/8015A640..A980`, `TACO/8015CF30..D270`) to `asm` subsegments (Done).
 - [[tickets/T-24094-etc-data-island-and-near-complete-overlays|T-24094]] Add `ETC/80143240` `.data` island to match `func_8014354C` and attack final functions of `DATE2`, `BUNKA_SD`, `BUNKASAI`, and `OMIMAI` (In Progress).
-- [[tickets/T-24095-geko-event-batch-d|T-24095]] Match GEKO and EVENT batch D (`func_8013A3C4`, `func_8013AB4C`, `func_8013B10C`, `func_801404FC`, `func_80134808`, `func_801035BC`, In Progress).
+- [[tickets/T-24095-geko-event-batch-d|T-24095]] GEKO and EVENT batch D (`GEKO:func_8013A3C4` 416 B, `GEKO:func_8013AB4C` 404 B, `GEKO:func_8013B10C` 416 B, `GEKO:func_801404FC` 464 B, Done; 4 matches, 1,700 B verified default C).
 - [[tickets/T-24096-speedup-audit-and-automation|T-24096]] Speedup audit and automation (`audit_speedups.py` for `.data` islands and `O.BIN` return types, `idiom_sweep.py`, `port_sibling.py`, Done).
 - [[tickets/T-24097-event-movie-final-and-date-event-twins|T-24097]] Match `EVENT:func_8011DDB8` (3,992 B) and `DATE`/`EVENT` movie/scene siblings (`func_8013FD6C`/`func_8011B848`, In Progress).
+- [[tickets/T-24098-gyozi-shougatu-80143ad0-80141780-twins|T-24098]] Match `GYOZI/80143AD0` and `SHOUGATU/80141780` 1.000 twin cluster (10 functions, 8,544 B, In Progress).
+
 

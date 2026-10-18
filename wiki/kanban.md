@@ -49,8 +49,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24098-gyozi-shougatu-80143ad0-80141780-twins|T-24098 Match GYOZI/80143AD0 and SHOUGATU/80141780 1.000 twin cluster (10 functions, 8,544 B)]]
 - [ ] [[tickets/T-24097-event-movie-final-and-date-event-twins|T-24097 Match EVENT:func_8011DDB8 (3,992 B) and DATE/EVENT movie/scene siblings (func_8013FD6C/func_8011B848)]]
-- [ ] [[tickets/T-24095-geko-event-batch-d|T-24095 Match GEKO and EVENT batch D (func_8013A3C4, func_8013AB4C, func_8013B10C, func_801404FC, func_80134808, func_801035BC)]]
 - [ ] [[tickets/T-24094-etc-data-island-and-near-complete-overlays|T-24094 Add ETC/80143240 .data island to match func_8014354C and attack final functions of DATE2, BUNKA_SD, BUNKASAI, and OMIMAI]]
 - [ ] [[tickets/T-24092-ugen-block-copy-state-pass|T-24092 Prototype and evaluate ugen block-copy state (F vs B) uniform pass]]
 - [ ] [[tickets/T-24087-guarded-near-misses-and-option-twins|T-24087 Close guarded near misses and twin pairs in OPTION, VALEN, TAIIKU, and main]]
@@ -119,6 +119,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24095-geko-event-batch-d|T-24095 Match GEKO and EVENT batch D (func_8013A3C4, func_8013AB4C, func_8013B10C, func_801404FC, func_80134808, func_801035BC)]]
 - [ ] [[tickets/T-24089-date-event-movie-sibling-pairs|T-24089 Match DATE and EVENT movie sibling pairs (func_8014718C/func_8011D5C4, func_801462B0/func_8011C750)]]
 - [ ] [[tickets/T-24096-speedup-audit-and-automation|T-24096 Speedup audit and automation (O.BIN return-type sweep, .data island audit, recipe transforms)]]
 - [ ] [[tickets/T-24090-geko-event-twins-and-near-misses-c|T-24090 Match GEKO and EVENT twin pair and guarded near misses C (func_80137120/func_801372D4, func_80102E54, func_80133AA0, func_8013F894)]]

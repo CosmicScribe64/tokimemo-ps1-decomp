@@ -53,7 +53,45 @@ void func_8013B0D0(void) {
     func_80046500();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013AF80", func_8013B10C);
+s32 func_8013B10C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    s32 level;
+    GekoFnTbl42 tbl;
+
+    tbl = D_80146630;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+    if (D_80122D04 != 0) {
+        /* FAKE: DisplayActor44 view on the first two stores keeps as1 from hoisting the unk_03C load above sb D_80120723. T-24095 */
+        ((DisplayActor44 *)D_80120650)[3].unk_07 = D_800B593C;
+        ((DisplayActor44 *)D_80120650)[3].unk_03 |= 0x80;
+        if ((u8)D_800E6280.unk_03C != 0) {
+            if (!D_8014662C) {
+                D_8012071E = 3;
+            }
+            if (D_80120734 == 6 && !D_8014662C) {
+                D_8012071E = 0;
+            }
+            if (func_800460EC() & 4) {
+                level = getCDlevel();
+            } else {
+                level = 0;
+            }
+            if (level != 0) {
+                if (!D_8014662C) {
+                    D_8012071E = 3;
+                    D_8014662C = 1;
+                }
+            }
+        } else if (!D_8014662C) {
+            D_8012071E = 3;
+            D_80120734 = 1;
+            D_8014662C = 1;
+        }
+    } else {
+        D_8012071F &= 0xFF7F;
+    }
+}
 
 void func_8013B290(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x80FF);

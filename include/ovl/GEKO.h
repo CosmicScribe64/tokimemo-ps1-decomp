@@ -670,7 +670,12 @@ extern s32 D_80146DC0;
 extern s32 D_80146DC4;
 extern s32 D_80146DC8;
 
-extern s8 D_8014662C;
+extern u8 D_8014662C;
+void func_80138B74(void);
+s32 func_8013A3C4(void);
+void func_8013AB4C(void);
+s32 func_8013B10C(void);
+void func_801404FC(void);
 void func_8013AD6C(void);
 void func_8013BA6C(void);
 void func_8013BAA8(void);

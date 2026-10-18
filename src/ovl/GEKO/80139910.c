@@ -272,7 +272,36 @@ void func_8013A2EC(void) {
     func_8013A668();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_8013A3C4);
+s32 func_8013A3C4(void) {
+    u16 ca154;
+
+    /* FAKE: u16 temp on the first D_800CA154 test keeps uopt from CSE-promoting D_800CA154 to $v0. T-24095 */
+    if ((D_800E6280.unk_F88 & 0x400040) && (ca154 = D_800CA154) != 0 && D_800CA154 < 4U && D_800E6280.unk_1104.u >= 2U) {
+        func_80044750(0x1508);
+        D_80122D00 = 0;
+        k_reset(1);
+        D_800CA2AC = 0;
+        D_800CA154 = 3;
+    } else if (check_end_k() != 0 && D_800CA154 < 4U) {
+        if (D_800E6280.unk_110D++ < 0x40U) {
+            return 0;
+        }
+        D_800E6280.unk_110D = 0;
+        k_reset(1);
+    }
+    if (D_800CA154 < 3U) {
+        func_80138B74();
+    } else {
+        func_80138AF8();
+    }
+    /* FAKE: u16 cast on D_800CA150 emits lhu instead of lh. T-24095 */
+    if (D_800E6280.unk_1104.u++ == 0 && D_800CA154 < 4U && (u16)D_800CA150 == 0) {
+        func_80044750(0x609);
+    }
+    if (D_800E6280.unk_1104.u++ == 1 && D_800CA154 == 5) {
+        func_80044750(0x60A);
+    }
+}
 
 void func_8013A564(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x80BA);
@@ -414,7 +443,44 @@ void func_8013AA1C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_8013AB4C);
+void func_8013AB4C(void) {
+    s16 i;
+
+    func_8006509C();
+    for (i = 0; i < 0xF; i++) {
+        icon_can_use_set(i, 0);
+    }
+    func_80065B0C(1);
+    parameter_show_init();
+    parameter_show_init();
+    func_8008585C();
+    message_window_init();
+    func_80084E4C();
+    hizuke_init();
+    func_8008585C();
+    /* FAKE: u8 pointer cast on unk_71E emits lbu for the bitwise OR. T-24095 */
+    *(u8 *)&D_800E6280.unk_71E |= 5;
+    D_80122D38 = 1;
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0x80;
+    D_800B5940 = 0;
+    func_800AE120(D_800E6280.unk_10F8);
+    D_800E6280.unk_F5F = 0;
+    func_800AE0F0(D_800CA19C, "詩織の部屋");
+    func_800AE0F0(D_800CA1DC, "自宅前");
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    addr_init_bustup();
+    func_800847B8(D_800E6280.unk_F5F);
+    func_80137990();
+    D_80146274 = D_80145EF4;
+    D_80146278 = D_80146030;
+    D_8014627C = D_8014616C;
+    D_800E6280.unk_1BC[0].unk_02 += 2;
+    D_800E6280.unk_1BC[0].unk_06 += 2;
+    check_para_limit();
+    func_8004284C();
+}
 
 void func_8013ACE0(void) {
     draw2d3d(1, 0);

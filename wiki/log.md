@@ -20459,3 +20459,13 @@ Reviewed against `CODING_STANDARDS.md` and verified with `tools/funcdiff.py --re
   - `DATE:func_801462B0` (3,804 B in `src/ovl/DATE/801461B0.c` — `src/ovl/DATE/801461B0.c` is now 100% matched!): `MATCH`
   - `EVENT:func_8011C750` (3,700 B in `src/ovl/EVENT/8011C650.c` + `include/main_api.h` `MAIN_API_OVERRIDE_func_8004AFB8`): `MATCH`
 - Created and dispatched [[tickets/T-24097-event-movie-final-and-date-event-twins]] (`In Progress`) to match `EVENT:func_8011DDB8` (3,992 B in `src/ovl/EVENT/8011C650.c`), `DATE:func_8013FD6C` (1,436 B), and `EVENT:func_8011B848` (1,460 B).
+
+## [2026-10-18] ticket | T-24095 Done (4 matches in GEKO, 1,700 B) and T-24098 In Progress
+
+Reviewed against `CODING_STANDARDS.md` and verified with `tools/funcdiff.py --resolve`:
+- [[tickets/T-24095-geko-event-batch-d]] (`Done`, +4 functions / +1,700 B symbol bytes):
+  - `GEKO:func_8013A3C4` (416 B in `src/ovl/GEKO/80139910.c`): `MATCH`
+  - `GEKO:func_8013AB4C` (404 B in `src/ovl/GEKO/80139910.c`): `MATCH`
+  - `GEKO:func_8013B10C` (416 B / 388 B code in `src/ovl/GEKO/8013AF80.c` + `include/ovl/GEKO.h`): `MATCH`
+  - `GEKO:func_801404FC` (464 B in `src/ovl/GEKO/8013F360.c`): `MATCH`
+- Created and dispatched [[tickets/T-24098-gyozi-shougatu-80143ad0-80141780-twins]] (`In Progress`) for the 5-pair (10-function, 8,544 B) `1.000` / `0.995` twin cluster between `src/ovl/GYOZI/80143AD0.c` and `src/ovl/SHOUGATU/80141780.c`.
