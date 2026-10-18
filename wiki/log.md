@@ -18699,3 +18699,7 @@ Parent stops new probes/instrumentation for [[tickets/T-24070-etc-save-card-stat
 ## [2026-10-18] ticket | T-24070 unresolved source packet enters review
 
 Parent reports Astra read-only analysis completed with no supported untried source lead for [[tickets/T-24070-etc-save-card-state]]. NAME_ENT sibling lacks both caps and supplies no allocation evidence; original t6 mask/indexv0 versus common-maskv0 remains unresolved, with priority/interference not fully distinguished. Ticket/card/index move In Review, not Done; [[etc-family-results]] and drafts/T-24070 preserve39 source/all recorded negatives. No C match, verified gain or impossibility claim. Stop all44F74 tracing/probes; next selection is read-only pending ownership/assignment/ticket.
+
+## [2026-10-18] ticket | Claim ETC menu selection from matched MAIN reference
+
+Created [[tickets/T-24071-etc-menu-selection]] before edits for only func_80144DF0 in ETC/80143240.c. Parent releases prior completed-worker TU reservation to this lane; preserve all helpers and unresolved T-24070 ASM. Current primary108379749 includes final [[tickets/T-24070-etc-save-card-state]] archive. Matched MAIN8005D448 and concrete stale field/call artifacts motivate a fresh faithful baseline; prior67/130 scores are historical, not claimed gains. One existing Sol medium worker/Docker compiler, no agents or broad sweeps.

@@ -48,6 +48,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24071-etc-menu-selection|T-24071 Match ETC menu selection handler]]
+
 
 
 
