@@ -228,6 +228,14 @@ The allocator prerequisite was subsequently repaired in bounded Docker scratch;
 [[ending-allocator-trace]] gives exact reuse/build/fidelity commands. Tracing
 identifies an equal priority5/cost0 tie and explains the source coupling to
 quotient priority. Moving UV before palette while spelling the later quotient
-directly fixes the constant colours: latest closer804/805 instructions/cost37.
+directly fixes the constant colours: intermediate closer804/805 instructions/cost37.
 Only an early zero-halfword store and default-arm address speculation remain.
-Source: drafts/T-24047/closer.c; guarded production body is unchanged, zero gain.
+Source: drafts/T-24047/closer.c; no verified byte gain.
+
+Moving the zero-halfword store after UV closes that final loop gap, advancing
+the guarded production body and drafts/T-24047/body.c to804/805 instructions,
+cost35. Every initializer loop, constant and scene body agrees. Only default-arm
+cross-block LUI motion and its branch-offset cascade remain. The case12
+diagnostic now differs only in the bound word and extra table entry, so remains
+rejected. Direct volatile views, a named label and register/selector metadata
+views do not fix the motion. Normal ENDING rebuild and tracer fidelity pass.

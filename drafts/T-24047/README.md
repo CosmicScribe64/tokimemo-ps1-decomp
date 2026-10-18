@@ -2,7 +2,7 @@
 
 T-24047 owns only `src/ovl/ENDING/80134D20.c`, pinned at main `4496b0dc7`.
 There are **zero new verified C bytes**. The production function keeps its ASM
-fallback. `body.c` is the readable guarded reconstruction; both alias and width
+fallback. `body.c` is the current35-cost guarded reconstruction; both alias and width
 allocation devices carry FAKE comments.
 
 Run in the existing Docker image, from the repository root:
@@ -17,7 +17,7 @@ private source copy. It writes the result and diff under `build/` and never edit
 production source. Errors exit nonzero. Successful scoring is a diagnostic,
 not a linked-byte match proof.
 
-The preferred source has the original 160-byte frame and both 28-byte table
+The original43-cost checkpoint has the original 160-byte frame and both 28-byte table
 homes at `sp+0x7C`/`sp+0x60`. First two initialization loops and all case bodies
 agree. It has 804 of 805 instructions, aligned cost 43, with two residual causes:
 
@@ -28,8 +28,9 @@ agree. It has 804 of 805 instructions, aligned cost 43, with two residual causes
   These are the default arm's addresses, not the common continuation's globals.
 
 The `--case12` diagnostic adds an explicit case sharing the default body. This
-prevents the speculative address motion and has 805 instructions with five
-differing words, but changes the bound from 12 to 13 and adds a jump-table entry.
+prevents the speculative address motion and has 805 instructions with one
+differing bound word on the current body, but changes the bound from 12 to 13
+and adds a jump-table entry.
 It is not an accepted alternative or a matching claim.
 
 `experiments.json` retains the bounded probe scores, each explicitly marked as
@@ -61,11 +62,12 @@ The diagnostic prerequisite is now repaired. See
 Docker build/use/fidelity commands. `trace_fidelity.py` verifies stock output
 before interpreting the instrumented allocator.
 
-Latest source lead: `closer.c` fixes the constant registers and remains804/805
+Intermediate source lead: `closer.c` fixes the constant registers and remains804/805
 instructions, cost37. It moves the UV store immediately before palette and
 spells the later page quotient directly. One zero-halfword store is early;
-the two default-arm LUIs still move across the switch. Production still uses
-the reviewed43-cost body and ASM fallback. Replay the closer with:
+the two default-arm LUIs still move across the switch. The current `body.c`
+also fixes that zero store and is804/805 instructions, cost35. Production uses
+this guarded35-cost form and ASM fallback. Replay the intermediate closer with:
 
 ```
 python3 drafts/T-24047/replay.py --body drafts/T-24047/closer.c --out build/t24047-closer

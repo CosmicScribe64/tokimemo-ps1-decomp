@@ -693,4 +693,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24039-tel-date-menu]] - bounded large TEL date menu reconstruction.
 - [[tickets/T-24041-main-render-cd-siblings]] — MAIN LINE_G2 renderer348 B verified; CD dispatcher source-only499-edit checkpoint.
 
-- [[tickets/T-24047-ending-sprite-scene|T-24047]] ENDING sprite scene initializer, 80135F4C (In Review;804/805 source-only checkpoint, zero verified bytes).
+- [[tickets/T-24047-ending-sprite-scene|T-24047]] ENDING sprite scene initializer, 80135F4C (In Progress;804/805 instructions, cost35, only default-arm AS1 motion remains; zero verified bytes).

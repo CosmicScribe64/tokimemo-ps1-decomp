@@ -209,3 +209,34 @@ is one zero-halfword store issued early; default-arm speculative LUIs and
 branch-offset cascade remain. Preserve as drafts/T-24047/closer.c, replay with
 --body; production guarded body remains unchanged pending closure. Tracer recipe,
 fidelity verifier and all91 source measurements are checkpointed for reuse.
+
+After checkpoint7689bcca3, placing the zero-halfword store after the UV source
+statement closes its scheduling gap:804/cost35, with all initialization loops
+and scene bodies exact. Only default-arm cross-block LUI motion remains. The
+rejected explicitcase12 diagnostic now has805 instructions/cost2, just the
+wrong bound13 versus12 (and extra table entry), confirming isolation. Keep
+that form diagnostic-only; zero verified bytes until the real table matches.
+
+Register qualifiers and range-preserving s16 selector cast are neutral35.
+Final-store volatile pointer view scores23 only through offset cancellation:
+both LUIs still move and its body gains address instructions (806 total), so
+it is rejected. Direct volatile script-global/selector-field declaration views
+and an ordinary default C label are neutral35. Private assembler-input capture
+preserves normal output exactly and shows the explicitcase12 form adds three
+records: bound, table entry and default-entry alias. No assembler input is edited.
+
+Current guarded production reconstruction and drafts/T-24047/body.c now use
+the35-cost source. Only four C source lines move/change; the ASM fallback stays.
+All initializer loops, constants and scene bodies agree. Normal default build
+and reusable tracer fidelity are revalidated before the next checkpoint.
+
+Validation complete: default replay804/cost35, reusable stock/patched/traced
+code/data/relocation equality, and freshly rebuilt ENDING SHA1 all pass. Parent
+standards/scope review finds no new findings: C89, existing shared types,
+ticketed ASM guard and both FAKE explanations retained; no headers or production
+toolchain changed. The improvement does not count as new matching C coverage.
+
+Message-table and EdScriptSet pointer-type views are also neutral35. The
+ledger now retains100 diagnostics, including explicitly rejected wrong-table
+and extra-instruction forms. The remaining blocker is assembler cross-block
+motion, not a script pointer-versus-integer declaration difference.
