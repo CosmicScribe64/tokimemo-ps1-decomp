@@ -7,7 +7,7 @@ sys.path.insert(0, 'drafts/T-24011')
 from diagnostic import report
 
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--variant', choices=['baseline', 'calls-comma', 'neighbor-selector', 'target-return', 'discard-final'], default='baseline')
+parser.add_argument('--variant', choices=['baseline', 'calls-comma', 'neighbor-selector', 'target-return', 'discard-final', 'label-boundary'], default='baseline')
 args = parser.parse_args()
 p = Path('src/ovl/ETC/8013FF80.c')
 before = p.read_text()
@@ -27,6 +27,9 @@ elif args.variant == 'target-return':
     body = '/* FAKE DIAGNOSTIC: s32 fallthrough return view; original type unproven. T-24068. */\n' + body.replace('void func_80140AE4(void)', 's32 func_80140AE4(void)')
 elif args.variant == 'discard-final':
     body = body.replace('    func_80140E80();', '    (void)func_80140E80();')
+elif args.variant == 'label-boundary':
+    body = body.replace('    func_80140E80();\n    if',
+        '    func_80140E80();\n    /* FAKE DIAGNOSTIC: split call-result block from selector; T-24068. */\nalbum_state:\n    if')
 root = Path('build/etc24068') / args.variant
 root.mkdir(parents=True, exist_ok=True)
 source, obj = root / 'source.c', root / 'source.o'

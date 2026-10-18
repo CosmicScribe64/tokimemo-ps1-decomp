@@ -108,3 +108,36 @@ discard-final`. Callee prototypes and all other source choices stay fixed.
 The exact unresolved question is which existing bb3/bb11 register-mask
 contributor supplies forbidden v0; next work is existing trace/source mapping
 only until any smaller missing observation is reported and authorized.
+
+Parent then authorized one helper-only diagnostic, bit0 and bb3/bb11 only.
+`trace_blocks.py` preserves the earlier tracer and writes a separate private
+binary. It logs class/precolor, block source masks and LR masks immediately
+before/after existing `updateforbidden` (0x46DFB0), with no emulated writes or
+allocator changes. Existing pinned source/dependencies are reused in Docker:
+
+```
+python3 drafts/T-24068/trace_blocks.py
+python3 tools/uopt_eval.py compile build/etc24068/baseline/source.c build/etc24068/block-mask/baseline.o --uopt /work/build/etc24068/block-mask/trace-blocks --trace --jobs 1
+python3 drafts/T-24068/trace_blocks.py --audit
+```
+
+Generated native source SHA is
+`aa60d79b6232a7c396454a91fad8af906edc3a52bac7d2c0d8403294f74fae04`;
+binary SHA is `acf6976d6f00eb27b1c0b9b9cd6d349df8b87dd94c7384d0a1340adab79470aa`.
+Same pinned input, whole-object SHAe4ce1543... and all four sections pass
+equality before interpretation. bb3/class1/precolor0 contributes source
+40000000/0, changing LR0/0 to40000000/0; bb11 contributes0/0 and leaves it
+unchanged. Thus initial forbidden v0 comes from bb3, just after the final
+leading E80 call. This does not yet identify the exact marker-creation
+statement inside that block. The later v1 restriction is separate from this
+initial fixed block mask.
+
+One parent-approved derived source control puts a label only after E80 and
+before selector evaluation. This tests a block boundary without a goto or
+changed call/memory choices. `replay.py --variant label-boundary` retains its
+FAKE diagnostic annotation. It remains48 resolved rows and its entire object
+is identical to baseline: rejected as normalized, with no label/goto sweep.
+Production remains assembly and no verified bytes are claimed. Precise gap:
+the origin of bb3's fixed-v0 mask before `updateforbidden`, and whether any
+legal required-expression representation can change it without emitted ops.
+No further instrumentation or source control is implied by this packet.
