@@ -241,7 +241,19 @@ void func_80137E84(void) {
     func_800BCE10(D_800D9334, &table.bytes[girl * 0x129 + D_800F53DE * 0x63 + D_8012E66C * 0x21 - 0x2520]);
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801372B0", func_80137F48);
+void func_80137F48(void) {
+    D_80146358 = D_800D9258;
+    D_8014635C = D_800D925C;
+    D_80146360 = D_800D9260;
+    D_800D9248 = D_800F53A0.unk_F2F;
+    /* The intermediate narrowing skips the ugen temporary after sll, as in
+     * matched DATE func_80149F48 and SHUGAKU func_80133038. T-17205/T-24059. */
+    D_800D9248 = (s16)(D_800D9248 * 3) + D_800F53DE - 0x60;
+    D_800D9258 = D_8014624C;
+    D_800D925C = D_80146280;
+    D_800D9260 = D_801462B4;
+    func_8004DE1C();
+}
 
 void func_80137FEC(void) {
     func_8008E408(D_8012E66C + 1);

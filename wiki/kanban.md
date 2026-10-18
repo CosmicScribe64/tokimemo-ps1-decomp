@@ -56,6 +56,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24059-short-copy-siblings|T-24059 Short copy-chain siblings]]
 - [ ] [[tickets/T-24055-etc-short-helpers|T-24055 ETC short helpers]]
 - [ ] [[tickets/T-24053-short-function-lane|T-24053 Recover three short functions]]
 - [ ] [[tickets/T-24054-short-function-count|T-24054 Recover short MAIN OPTION KANGEI functions]]

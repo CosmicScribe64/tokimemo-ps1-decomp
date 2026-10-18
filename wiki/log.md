@@ -18905,3 +18905,10 @@ Published DATE T24051 source-only checkpointc3b3afe09, KANGEI T24054 archivee2db
 ## [2026-10-18] build | DATE near-match independently reproduced
 
 Replayed [[tickets/T-24051-date-large-dispatcher]] archive in Docker on current integrated main: all21 table mappings/extents audit clean, assigning-default source reproduces28 differing rows, production unchanged. Confirmed live EVENT, large ENDING and small ENDING chats; small ENDING has improved register allocation with scheduling unresolved. No new verified bytes claimed.
+## [2026-10-18] ticket | Short copy-chain sibling pass
+
+Created [[tickets/T-24059-short-copy-siblings]] after historical T-9560/T-10020 and matched DATE/SHUGAKU recipe review. Only GYOZI801372B0 and SHOUGATU80135B90 are claimed; one Docker compiler, no header/config changes or repeated statement grids.
+
+## [2026-10-18] build | Two short copy-chain matches add328 bytes
+
+[[tickets/T-24059-short-copy-siblings]] moves to In Review with2 of2 verified default actual C matches: GYOZI func_80137F48164 bytes and SHOUGATU func_80136948164 bytes. Matched DATE/SHUGAKU narrowed-global selector recipe gives zero for both after40/34 controls; no blind grids, headers/config changes or new FAKE forms. Affected unit hashes and header/global/prototype guards pass0 new/15 known. [[event-family-results]] and [[shougatu-family-results]] record the superseding evidence; all loose probes preserved ignored.
