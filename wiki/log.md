@@ -17830,3 +17830,7 @@ Review against `CODING_STANDARDS.md`: no findings; only `src/ovl/DATE/80132000.c
 ## [2026-10-17] ticket | T-23002 Done
 
 [[tickets/T-23002-w5-big-p02]]: code review against `CODING_STANDARDS.md` done, one finding fixed (`FAKE (T-23002)` comment on the `s32` return type of `func_8013B640` in `src/ovl/ENDING/801396E0.c`, unit sha1 still OK). 0 of 1 functions matched; `func_8013A2E8` stays under `#ifdef NON_MATCHING` at 12 differing lines. Ticket Done, card moved to Done.
+
+## [2026-10-17] ticket | T-23004 Wave 5 big package w5-big-p04 opened
+
+[[tickets/T-23004-w5-big-p04]] (In Progress) under [[tickets/T-23000-wave-5-big-conveyor]]: `src/ovl/EVENT/8011C650.c`, `func_8011DDB8` (4,216 B) and `func_8011C750` (3,816 B). Branch `w5-big-p04` from `w2-good`.
