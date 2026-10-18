@@ -20,3 +20,17 @@ Recover only ETC func_8013D570 (2352 bytes), src/ovl/ETC/8013BEF0.c. Preserve ma
 
 ## Notes
 Both retained drafts use a singleton pointer despite two-slot accesses; typed fixed pointer step to one but not buffer extent, plain step4 scales sixteen bytes. Correcting actual layout is new faithful reconstruction, not a compiler workaround. Preserve exact SDK field widths/order and original two-iteration/draw-buffer semantics. T-24077 remains unresolved In Review with probes stopped.
+
+Original full VRAM8013D5BC sets cursor tosp84, 8013DE64 steps4bytes and
+8013DE4C/DE68 enforce two iterations, proving slots84/88 in frame90. Fresh
+baseline repairs singleton to real POLY_FT4*poly[2], typed pointer step1, all16
+GameState.unk_018 frame-index reads and exact two-argument AddPrim byte-ordering
+table address. Old plain792/typed957 remain history. No production/header change.
+
+Fresh valid current baseline800/frameC0; joining12 disjoint same-type aliases
+preserves expressions/store order and reduces frame to98 with800 rows. Direct
+SDK UV assignments remove inherited signed-byte casts, restore word loads and
+reach790/frame98. Source-only controls/replay are drafts/T-24078; production,
+headers/config and helpers remain unchanged. Original frame90; recovery active,
+no match or linked C proof claimed. Initial field-substitution syntax error was
+repaired before scoring and is not a baseline result.

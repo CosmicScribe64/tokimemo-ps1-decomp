@@ -26,10 +26,10 @@ Each was independently checked against default linked function bytes, all27 bina
 
 ## Active ownership
 
-- T24008, Sol 6.1 medium: TAIIKU `80133C80.c`; one of five runner helpers matched, bounded remainder in progress. Worktree `codex/complete-main`.
-- T24015, Sol 6.1 medium: MAIN `8005A0B0.c`, five unstarted helpers from w4-p41. Worktree `codex/complete-option`.
-- T24016, Sol 6.1 medium: BUNKASAI `801354B0.c` / `80154018.c`, two unstarted helpers from w4-p44. Reuses the now-idle Astra worktree `codex/complete-bunkaken` at 15133a84a; no new checkout.
-- T24020, dedicated Astra chat `01a14d9f-757c-7661-a87e-e183dc7e7687`: MAIN `8007C030.c` dialogue_speak_part, TEL `80132000.c` func_80136724, EVENT `8010FE10.c` func_801103A0. One target at a time; last observed on EVENT. All three files remain reserved.
+- Sole Sol 6.1 medium compiler: T24078 ETC func_8013D570 only, src/ovl/ETC/8013BEF0.c; active recovery in /private/tmp/tokimemo-complete-etc. One existing Docker compiler, ninja -j1. Earlier T24072/T24073 activity is superseded.
+- Astra idle after T24077 bounded read-only review; no build or editing assignment.
+- Antigravity pending user shell approval; no restart authorized.
+- TT/DATE2 and NAME_ENT contributor reservations remain excluded. No new worker or target is implied by this ownership refresh.
 
 ## Completed bounded passes
 
