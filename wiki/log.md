@@ -17980,3 +17980,11 @@ Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` 
 ## [2026-10-17] ticket | T-23005 In Progress
 
 [[tickets/T-23005-w5-big-p05]]: wave 5 big package w5-big-p05 (branch `w5-big-p05` from `w2-good`), GEKO `src/ovl/GEKO/80142760.c`, `src/ovl/GEKO/8013DF70.c`, `src/ovl/GEKO/80140A00.c`, six functions biggest first starting with `func_80142C9C` (3,700 B). Part of [[tickets/T-23000-wave-5-big-conveyor]].
+
+## [2026-10-17] build | T-23005 match func_80144270
+
+[[tickets/T-23005-w5-big-p05]]: `func_80144270` (1,184 B) in `src/ovl/GEKO/80142760.c` is plain C and the GEKO unit SHA1 is OK. Scalar views of the girl/year/month/day bytes, one test per event, an unused `s32` first for the frame (FAKE). `include/ovl/GEKO.h` table types now follow the copy sizes. Notes in [[matching-notes]] (T-23005).
+
+## [2026-10-17] ticket | T-23005 In Review
+
+[[tickets/T-23005-w5-big-p05]]: 1 of 6 matched (`func_80144270`). `func_80142C9C` (3,700 B): frame and stack offsets exact, 492 register-allocation rows left, back to `INCLUDE_ASM`; `func_80143F48` (106 rows), `func_80144198` (57) and `func_80141870` (51) above the guard limit, back to `INCLUDE_ASM`; `func_8013E950` not started. Drafts in `drafts/T-23005/GEKO/`, levers in [[matching-notes]] (T-23005).
