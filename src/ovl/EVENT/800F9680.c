@@ -281,7 +281,69 @@ void func_800FA194(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FA25C);
+/* FAKE: s32 return type without a return statement keeps $v0 live so as1 fills the beqz delay slot from the target block. T-24081 */
+s32 func_800FA25C(void) {
+    s16 i;
+
+    for (i = 4; i < 0x13; i++) {
+        ((Rec24 *)D_800EC190)[i].unk_06 += 0xA;
+        if (((func_800789A0() & 3) == 0 && ((Rec24 *)D_800EC190)[i].unk_06 >= 0x11 && D_80120CF0[i - 4] == 0 && D_80120D10[i - 4] == 0) ||
+            D_80120CF0[i - 4] != 0 || D_80120D10[i - 4] != 0) {
+            ((Rec24 *)D_800EC190)[i].unk_06 -= 0xA;
+            if (D_80120CF0[i - 4] == 0) {
+                if (D_80120D10[i - 4] == 0) {
+                    if (((Rec24 *)D_800EC190)[i].unk_04 < -0x57) {
+                        ((Rec24 *)D_800EC190)[i].unk_06 = func_800789A0() % 4 + 0x1C;
+                    } else {
+                        ((Rec24 *)D_800EC190)[i].unk_06 = func_800789A0() % 15 + 0x11;
+                    }
+                    ((Rec24 *)D_800EC190)[i].unk_04 -= 0xC;
+                    /* FAKE: EventRec24 signed views of unk_0E/unk_0A share constants 8 and 0x18 with unk_08 in $s3/$s5 while preserving ixa addressing. T-24081 */
+                    ((EventRec24 *)D_800EC190)[i].unk_0E = 8;
+                    ((Rec24 *)D_800EC190)[i].unk_08 = 0x18;
+                    ((EventRec24 *)D_800EC190)[i].unk_0A = 8;
+                    D_80120D10[i - 4] += 1;
+                } else {
+                    D_80120D10[i - 4] = 0;
+                    D_80120CF0[i - 4] += 1;
+                }
+            } else if (D_80120CF0[i - 4] == 5) {
+                ((Rec24 *)D_800EC190)[i].unk_0E = 0;
+                ((Rec24 *)D_800EC190)[i].unk_08 = 8;
+                ((EventRec24 *)D_800EC190)[i].unk_0A = 0x18;
+                ((Rec24 *)D_800EC190)[i].unk_04 = func_800789A0() % 167 - 0x9F;
+                if (((Rec24 *)D_800EC190)[i].unk_04 >= -0x57) {
+                    ((Rec24 *)D_800EC190)[i].unk_04 += 0x99;
+                }
+                ((Rec24 *)D_800EC190)[i].unk_06 = -0x5F;
+                D_80120CF0[i - 4] = 0;
+                D_80120D10[i - 4] = 0;
+            } else if (D_80120CF0[i - 4] == 4) {
+                if (D_80120D10[i - 4] == 0) {
+                    ((Rec24 *)D_800EC190)[i].unk_0E -= 0x18;
+                    D_80120D10[i - 4] += 1;
+                } else {
+                    D_80120D10[i - 4] = 0;
+                    D_80120CF0[i - 4] += 1;
+                }
+            } else {
+                if (D_80120D10[i - 4] == 0) {
+                    ((Rec24 *)D_800EC190)[i].unk_0E += 0x18;
+                    D_80120D10[i - 4] += 1;
+                } else {
+                    D_80120D10[i - 4] = 0;
+                    D_80120CF0[i - 4] += 1;
+                }
+            }
+        } else if (((Rec24 *)D_800EC190)[i].unk_06 >= 0x11 && D_80120CF0[i - 4] == 0 && D_80120D10[i - 4] == 0) {
+            ((Rec24 *)D_800EC190)[i].unk_04 = func_800789A0() % 167 - 0x9F;
+            if (((Rec24 *)D_800EC190)[i].unk_04 >= -0x57) {
+                ((Rec24 *)D_800EC190)[i].unk_04 += 0x99;
+            }
+            ((Rec24 *)D_800EC190)[i].unk_06 = -0x5F;
+        }
+    }
+}
 
 void func_800FA584(void) {
     if (D_800B1AF5 == 0) {
@@ -391,7 +453,45 @@ void func_800FA8B8(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FAA04);
+void func_800FAA04(void) {
+    s16 i;
+    Rec24 *p;
+    u16 clut;
+
+    func_800F9900();
+    func_80012D64(D_80120C00, 0x11, 1, 2, 0);
+    func_8004C46C(D_80120C08, D_80120C0C, D_80120C10, D_80120C14, D_80120C18, D_80120C1C);
+    func_8004C6B0(D_80120BF4, D_80120BF8, D_80120BF0, D_80120BFC);
+    func_80012D64(D_80120C04, 0x12, 1, 3, 0);
+    for (i = 4; i < 0x13; i++) {
+        p = (Rec24 *)(D_800EC190 + i * 0x24);
+        /* FAKE: u16 clut local before unk_04 call shifts the i * 2 CSE temporary to $v0. T-24081 */
+        clut = 0x1F2;
+        p->unk_00 = 0xC1000000;
+        p->unk_04 = func_800789A0() % 320 - 0x9F;
+        p->unk_06 = -0x78;
+        p->unk_08 = 8;
+        /* FAKE: s16 view of the u16 member shares constant 8 with unk_08 in $s2. T-24081 */
+        *(s16 *)&p->unk_0A = 8;
+        p->unk_0C = 5;
+        p->unk_0E = 0;
+        p->unk_0F = 0;
+        p->unk_10 = 0;
+        p->unk_12 = clut;
+        p->unk_14 = 0;
+        p->unk_15 = 0;
+        p->unk_16 = 0;
+        p->unk_18 = 0;
+        p->unk_1A = 0;
+        p->unk_1C = 0x1000;
+        p->unk_1E = 0x1000;
+        p->unk_20 = 0;
+        D_800B188D[i] = 0xC;
+        ((s16 *)&D_80120CE8)[i] = 0;
+        D_80120D08[i] = 0;
+    }
+    func_80011DFC();
+}
 
 void func_800FAC00(void) {
     D_800B1746 = 0;

@@ -311,7 +311,7 @@ void func_80139B44(void);
 void func_8013E4F0(void);
 void func_8013B2C8(void);
 void func_8013CAD0(void);
-void func_80139E1C(void);
+s32 func_80139E1C(void);
 extern s32 D_801463B4, D_801463B8, D_801463BC, D_801463C4, D_801463C8, D_801463CC, D_801463D0, D_801463D4, D_801463D8, D_801463DC;
 extern s16 D_801463C0;
 void func_801399DC(void);

@@ -138,7 +138,69 @@ void func_80139D54(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_80139E1C);
+/* FAKE: s32 return type without a return statement keeps $v0 live so as1 fills the beqz delay slot from the target block. T-24081 */
+s32 func_80139E1C(void) {
+    s16 i;
+
+    for (i = 4; i < 0x13; i++) {
+        D_801217D0[i].unk_06 += 0xA;
+        if (((func_800AE0D0() & 3) == 0 && D_801217D0[i].unk_06 >= 0x11 && D_801463E0[i - 4] == 0 && D_80146400[i - 4] == 0) ||
+            D_801463E0[i - 4] != 0 || D_80146400[i - 4] != 0) {
+            D_801217D0[i].unk_06 -= 0xA;
+            if (D_801463E0[i - 4] == 0) {
+                if (D_80146400[i - 4] == 0) {
+                    if (D_801217D0[i].unk_04 < -0x57) {
+                        D_801217D0[i].unk_06 = func_800AE0D0() % 4 + 0x1C;
+                    } else {
+                        D_801217D0[i].unk_06 = func_800AE0D0() % 15 + 0x11;
+                    }
+                    D_801217D0[i].unk_04 -= 0xC;
+                    /* FAKE: signed views of unk_0E/unk_0A share constants 8 and 0x18 with unk_08 in $s3/$s5. T-24081 */
+                    *(s8 *)&D_801217D0[i].unk_0E = 8;
+                    D_801217D0[i].unk_08 = 0x18;
+                    *(s16 *)&D_801217D0[i].unk_0A = 8;
+                    D_80146400[i - 4] += 1;
+                } else {
+                    D_80146400[i - 4] = 0;
+                    D_801463E0[i - 4] += 1;
+                }
+            } else if (D_801463E0[i - 4] == 5) {
+                D_801217D0[i].unk_0E = 0;
+                D_801217D0[i].unk_08 = 8;
+                *(s16 *)&D_801217D0[i].unk_0A = 0x18;
+                D_801217D0[i].unk_04 = func_800AE0D0() % 167 - 0x9F;
+                if (D_801217D0[i].unk_04 >= -0x57) {
+                    D_801217D0[i].unk_04 += 0x99;
+                }
+                D_801217D0[i].unk_06 = -0x5F;
+                D_801463E0[i - 4] = 0;
+                D_80146400[i - 4] = 0;
+            } else if (D_801463E0[i - 4] == 4) {
+                if (D_80146400[i - 4] == 0) {
+                    D_801217D0[i].unk_0E -= 0x18;
+                    D_80146400[i - 4] += 1;
+                } else {
+                    D_80146400[i - 4] = 0;
+                    D_801463E0[i - 4] += 1;
+                }
+            } else {
+                if (D_80146400[i - 4] == 0) {
+                    D_801217D0[i].unk_0E += 0x18;
+                    D_80146400[i - 4] += 1;
+                } else {
+                    D_80146400[i - 4] = 0;
+                    D_801463E0[i - 4] += 1;
+                }
+            }
+        } else if (D_801217D0[i].unk_06 >= 0x11 && D_801463E0[i - 4] == 0 && D_80146400[i - 4] == 0) {
+            D_801217D0[i].unk_04 = func_800AE0D0() % 167 - 0x9F;
+            if (D_801217D0[i].unk_04 >= -0x57) {
+                D_801217D0[i].unk_04 += 0x99;
+            }
+            D_801217D0[i].unk_06 = -0x5F;
+        }
+    }
+}
 
 void func_8013A144(void) {
     if (D_800E6280.unk_1109 == 0) {
@@ -281,7 +343,45 @@ void func_8013A6D0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_8013A820);
+void func_8013A820(void) {
+    s16 i;
+    Rec24 *p;
+    u16 clut;
+
+    func_80139910();
+    func_80043914(D_80146390, 0x11, 1, 2, 0);
+    func_80084E90(D_80146398, D_8014639C, D_801463A0, D_801463A4, D_801463A8, D_801463AC);
+    func_800850D4(D_80146384, D_80146388, D_80146380, D_8014638C);
+    func_80043914(D_80146394, 0x12, 1, 3, 0);
+    for (i = 4; i < 0x13; i++) {
+        p = &D_801217D0[i];
+        /* FAKE: u16 clut local before unk_04 call shifts the i * 2 CSE temporary to $v0. T-24081 */
+        clut = 0x1F2;
+        p->unk_00 = 0xC1000000;
+        p->unk_04 = func_800AE0D0() % 320 - 0x9F;
+        p->unk_06 = -0x78;
+        p->unk_08 = 8;
+        /* FAKE: s16 view of the u16 member shares constant 8 with unk_08 in $s2. T-24081 */
+        *(s16 *)&p->unk_0A = 8;
+        p->unk_0C = 5;
+        p->unk_0E = 0;
+        p->unk_0F = 0;
+        p->unk_10 = 0;
+        p->unk_12 = clut;
+        p->unk_14 = 0;
+        p->unk_15 = 0;
+        p->unk_16 = 0;
+        p->unk_18 = 0;
+        p->unk_1A = 0;
+        p->unk_1C = 0x1000;
+        p->unk_1E = 0x1000;
+        p->unk_20 = 0;
+        D_800E6280.unk_10A5[i] = 0xC;
+        D_801463E0[i - 4] = 0;
+        D_80146400[i - 4] = 0;
+    }
+    func_8004284C();
+}
 
 void func_8013AA1C(void) {
     D_800E6280.unk_F5F = 0;

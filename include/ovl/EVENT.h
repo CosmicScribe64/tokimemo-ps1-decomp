@@ -1224,7 +1224,22 @@ void func_8010B490();
 extern u8 D_8012436C;
 extern s16 D_80124370;
 extern u8 D_80125314;
-void func_800FA25C();
+s32 func_800FA25C(void);
+extern s16 D_80120CF0[16];
+extern s16 D_80120D10[16];
+
+/* T-24081: signed-field view of Rec24 at +0x0A/+0x0E so constant 8 ($s3) and 0x18 ($s5) are shared with s16 unk_08
+ * without taking the address of a cast u8[] element (which folds into base + offset instead of ixa). */
+typedef struct EventRec24 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ s16 unk_0C;
+    /* 0x0E */ s8 unk_0E;
+    /* 0x0F */ u8 pad_0F[0x15];
+} EventRec24; /* size 0x24 */
 
 extern u8 D_80125328;
 void func_800FD4FC();

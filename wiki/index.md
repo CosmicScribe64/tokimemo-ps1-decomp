@@ -738,7 +738,9 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24047-ending-sprite-scene|T-24047]] ENDING sprite scene initializer, 80135F4C (In Progress;804/805 instructions, cost35, only default-arm AS1 motion remains; zero verified bytes).
 - [[tickets/T-24079-date-80132000-event-siblings|T-24079]] DATE `80132000.c` siblings from matched EVENT `8010FE10.c` (Done; 4 matches, 2,316 B verified default C).
 - [[tickets/T-24080-gyozi-shougatu-twins|T-24080]] GYOZI and SHOUGATU 1.000 twin pair cluster (`func_80136488`/`func_80134CB4`, `func_801378D0`/`func_80136204`, Done; 4 matches, 1,840 B verified default C).
-- [[tickets/T-24081-event-geko-twins-a|T-24081]] EVENT and GEKO 1.000 twin cluster A (`func_800FAA04`/`func_8013A820`, `func_800FA25C`/`func_80139E1C`, In Progress).
+- [[tickets/T-24081-event-geko-twins-a|T-24081]] EVENT and GEKO 1.000 twin cluster A (`func_800FAA04`/`func_8013A820`, `func_800FA25C`/`func_80139E1C`, Done; 4 matches, 2,632 B verified default C).
 - [[tickets/T-24082-guarded-near-misses-rensyu-option-bunkasd|T-24082]] Guarded 4-8 row near misses in RENSYU, OPTION, and BUNKA_SD (In Progress).
 - [[tickets/T-24083-date-80132000-siblings-b|T-24083]] DATE 80132000.c sibling batch B (`func_80147BB0`, `func_8013A94C`, `func_8014EF60`, `func_80151110`, In Progress).
 - [[tickets/T-24084-shougatu-gyozi-siblings-b|T-24084]] SHOUGATU and GYOZI sibling batch B (`func_801359FC`, `func_80132148`/`func_80134100`, `func_801345BC`/`func_80135EB0`, `func_80137480`, In Progress).
+- [[tickets/T-24085-event-geko-twins-b|T-24085]] EVENT and GEKO twin cluster B (`func_80105DF8`/`func_8013E950`, `func_80109404`/`func_801406CC`, In Progress).
+- [[tickets/T-24086-issue-63-tt-ratan2-reevaluation|T-24086]] Re-evaluate Issue 63 (`TT:func_8014D260` `ratan2`) toolchain, provenance, and matching route (In Progress).
