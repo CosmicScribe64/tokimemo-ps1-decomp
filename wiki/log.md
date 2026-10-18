@@ -18452,3 +18452,7 @@ Created [[tickets/T-24030-bunkasai-sibling-package]] before implementation. Reus
 
 ## [2026-10-17] ticket | Start exact-structure GYOZI and SHOUGATU pairs
 Created [[tickets/T-24031-gyozi-shougatu-pairs]] before code work. Reused built tree on codex/complete-gyozi-shougatu-pairs from verified BUNKASAI 72cefc5d5, preserving history. Read [[index]], [[event-family-results]], [[shougatu-family-results]] and T-24004 negative evidence. Four assigned targets in two files, one serial Docker compiler, approximately 25-minute novel pass; root owns integration and final independent checks.
+
+## [2026-10-17] decision | T-24031 preserve paired particle semantics and blockers
+
+[[tickets/T-24031-gyozi-shougatu-pairs]], [[event-family-results]] and [[shougatu-family-results]] record zero verified bytes and four corrected source-only drafts in `drafts/T-24031/`. Legal array/record indices, Fix32 halfword reset, actual shared counter mutations and joined induction ranges reduce smaller-pair costs to 264/266 and larger-pair costs to 412/412. Remaining frame/live-range differences are not declared compiler limitations. Serial archive reproducer compiles all four; default GYOZI/SHOUGATU checksums and header/global/prototype guards pass as preservation checks (0 new / 15 known). Production/headers and BUNKASAI wins untouched. Ticket/card moved to In Review; all four matching targets remain pending.

@@ -656,4 +656,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI two-function sibling package, one compiler, current main reference ports.
 
-- [[tickets/T-24031-gyozi-shougatu-pairs|T-24031]] Exact-structure GYOZI/SHOUGATU particle-handler pairs, bounded source recovery and transfer.
+- [[tickets/T-24031-gyozi-shougatu-pairs|T-24031]] Paired GYOZI/SHOUGATU handlers (In Review; no matches, four corrected source-only drafts).

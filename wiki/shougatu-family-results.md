@@ -120,3 +120,11 @@ copies and byte-array indexing; original keeps divisor 320 in fp, current IDO ho
 the work-array base there instead and eliminates generic division checks. The large
 `func_80141D20` baseline is 491 literal diff rows / 387 aligned edits after semantic/type
 repairs. Header/global/prototype branch checks all pass (0 new prototype disagreements).
+
+## T-24031 paired particle source recovery
+
+[[tickets/T-24031-gyozi-shougatu-pairs]] adds no verified bytes; all four target handlers stay assembly. `drafts/T-24031/` preserves current-header source-only pairs and a serial Docker full-TU reproducer. SHOUGATU func_80141D20 / GYOZI func_80144018 costs are 264 / 266 resolved aligned edits (the former T-24004 baseline was 387 / 491 printable rows); the 1,300-byte pair func_8014288C / func_80144B70 each costs 412 / 508 rows. These are diagnostics, not C match proofs.
+
+Corrected real Rec24 spawn/hide indexing and 50-entry work-array indices, used the actual state byte arrays, and recovered the position reset as a Fix32 low-halfword clear followed by signed high-halfword store and full-word destination copy. The prior full-word clear was not the original mutation width. Direct global counter mutation and legal i-4 entry pointers improve the smaller pair. Reusing induction/period temporaries improves the larger pair's frame 0x70 to 0x68 (target 0x50). Consistent state pointers and real Rec24[4].unk_04 fields preserve those results; explicit entry pointers in the larger pair worsen allocation. Remaining differences span live induction/array ranges around RNG calls and do not prove a compiler limitation.
+
+Production C/headers and earlier BUNKASAI wins remain untouched. Both default overlay checksums and header/global/prototype guards pass (0 new / 15 known); this preserves the assembly-backed defaults, not the archived C. GYOZI's archived s32 func_80144018 view is applied only in scratch preprocessing; its production void declaration is unchanged. Ticket/card In Review with all matching targets pending; detailed rejected controls and reproduction are in the source-only archive README.
