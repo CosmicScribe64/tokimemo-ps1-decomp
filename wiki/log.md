@@ -18222,3 +18222,7 @@ Ported ENDING polygon source using the original legacy EVENT names and its 64-by
 ## [2026-10-17] build | T-24017 legacy EVENT verifies 476 bytes
 
 EVENT func_80108B24 is unguarded C with no target INCLUDE_ASM. Fresh default literal proof matches476 bytes; full EVENT SHA1 passes. [[event-family-results]] and [[data-types]] record old helper names, word index,64-byte table stride, and signed coordinate pairs in existing padding. [[tickets/T-24017-clone-ports]] reaches3 of3,1128 bytes. Shared declarations coordinated with root for all27 integration checks.
+
+## [2026-10-17] build | T-24017 closes three clone ports
+
+All3 targets have unguarded C definitions and pass root source-only claim gate; no target INCLUDE_ASM. Current-header default literal proof verifies1128 bytes and EVENT/GEKO/SHUGAKU unit SHA1 checks pass. Headers/globals pass, branch prototypes0new/15known. [[tickets/T-24017-clone-ports]] records pinned win commits and hashes, moved In Progress to In Review with card for independent parent review. Root coordinates all27 shared-header integration. No failed source archives needed.

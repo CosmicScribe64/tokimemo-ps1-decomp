@@ -47,7 +47,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24017-clone-ports|T-24017 Port three exact opcode clones]]
 
 
 
@@ -58,6 +57,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24017-clone-ports|T-24017 Port three exact opcode clones]]
 
 - [ ] [[tickets/T-24008-taiiku-runners|T-24008 Recover TAIIKU runner family]]
 
