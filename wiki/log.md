@@ -18641,3 +18641,8 @@ Created [[tickets/T-24040-option-menu-siblings]] after reading [[option-family-r
 ## [2026-10-18] build | T-24040 OPTION page sibling pair matched
 
 [[tickets/T-24040-option-menu-siblings]] verifies1028 actual default linked C bytes in342A8/3493C after explicit ASM replacement. Meaningful cached mode and marked frame/same-line workarounds recorded in [[option-family-results]]. OPTION checksum and declaration guards pass; no header or existing matched-body changes.3394C remains a five-row miss under investigation.
+
+
+## [2026-10-18] decision | T-24040 OPTION menu package in review
+
+[[tickets/T-24040-option-menu-siblings]] moves to In Review with two verified page matches(1028 bytes) and3394C guarded at5 rows. Existing matched bodies and shared headers unchanged; frame and scheduling FAKE rationale recorded in [[option-family-results]]. Selected unresolved source/scorer archived and every loose probe preserved ignored in build/T-24040-probes/. Final OPTION default checksum and declaration guards pass; independent review pending.
