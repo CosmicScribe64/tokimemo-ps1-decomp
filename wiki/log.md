@@ -18690,3 +18690,9 @@ Parent reports completed GitHub read-only check about11:09 UTC2026-10-18: no ope
 ## [2026-10-18] build | T-24070 unchanged tracer confirms common mask range
 
 Parent-approved105 comparison for [[tickets/T-24070-etc-save-card-state]] passes same-input full-object/four-section equality before interpretation (input7c5a2f24..., object446a2ed1...). Global mask expression80 priority3 still takesv0 before retained index23 priority2/v1; removal of named local leaves the common expression range. No per-color mask inference, diagnostic build or production change. drafts/T-24070/trace_fidelity.py/README and [[etc-family-results]] retain pins/commands. Best39 unchanged. One conditional-reload unsigned modulo16 source proposal is pending parent scope, not executed.
+## [2026-10-18] build | T-24070 conditional modulo normalizes unchanged
+
+The one parent-approved conditional unsigned-modulo reload for [[tickets/T-24070-etc-save-card-state]] gives105 rows and entire TU object identical to inline105 stock446a2ed1...; rejected/FAKE diagnostic retained in drafts/T-24070 with replay. Best39/production unchanged. [[etc-family-results]] records unresolved common mask/index interference or cost beyond existing best-color output; no supported next legal source form, new instrumentation, source sweep, target switch or impossibility claim. Ticket In Progress pending specific direction.
+## [2026-10-18] decision | T-24070 holds probes for bounded read-only analysis
+
+Parent stops new probes/instrumentation for [[tickets/T-24070-etc-save-card-state]] and requests source-only read-only analysis from an existing Astra chat, this function only with no compiler/edits/subagents. Sol scope remains reserved and39 draft intact pending at most two concrete hypotheses. No new targets or production changes; ticket In Progress.
