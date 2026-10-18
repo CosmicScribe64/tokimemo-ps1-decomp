@@ -1,7 +1,7 @@
 ---
 id: T-24034
 title: Port EVENT rendering siblings
-status: In Review
+status: Done
 assignee: complete_render_family
 created: 2026-10-17
 updated: 2026-10-17
@@ -33,3 +33,7 @@ Both renderers reuse SDK POLY_G3/POLY_G4 and the existing EventStateView coordin
 Self-review against CODING_STANDARDS.md: C89 and SDK/recovered types, target INCLUDE_ASM absent for all three, normal toolchain and flags, explicit FAKE comments, no raw data/assembly, no renamed legacy semantics. Awaiting independent root standards review and all-overlay integration.
 
 Final validation: source gates pass for all three targets; default literal proofs match 940/404/464 B. EVENT SHA1 `ff7184d7e92b7aff372450ac3b8c2bdd42e55a5e`. Headers, globals, main_api and whitespace checks pass. Root reviewed the production diff as consistent with standards before pinning; integration remains with root.
+
+## Independent root verification
+
+Reviewed production changes against CODING_STANDARDS.md. SDK/aggregate types and explicit FAKE annotations retained; no unresolved findings. All27 default hashes, header/global/prototype guards and actual unguarded C literal proofs passed before publication. Only the proven targets count as coverage.

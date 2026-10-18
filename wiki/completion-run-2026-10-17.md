@@ -5,7 +5,7 @@ updated: 2026-10-17
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Current published code checkpoint `4d66bf645` has **6,486/6,958 functions and 1,832,660/2,279,368 bytes (80.4%)**, measured in Docker. Since baseline `283b86fca`: 20 functions / 19,192 bytes added. The active goal remains 100%, with 446,708 game-code bytes remaining. SDK assembly is separately reported and excluded.
+User resumed work toward 100% verified game-code matching. Current published code checkpoint `03acf729b` has **6,491/6,958 functions and 1,834,848/2,279,368 bytes (80.5%)**, measured in Docker. Since baseline `283b86fca`: 25 functions / 21,380 bytes added. The active goal remains 100%, with 444,520 game-code bytes remaining. SDK assembly is separately reported and excluded.
 
 ## Verified gains
 
@@ -31,16 +31,21 @@ User resumed work toward 100% verified game-code matching. Current published cod
 | T24027 | RPG_BAT func_80154760 |1656|
 | T24026 | SHOUGATU func_8013F224 |316|
 | T24026 | SHOUGATU func_80140510 |392|
+| T24035 | GEKO func_80134228 |244|
+| T24035 | BUNKA_SD func_801344A8 |152|
+| T24034 | EVENT func_800FEF74 |940|
+| T24034 | EVENT func_800FFA4C |404|
+| T24034 | EVENT func_800F9730 |464|
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
 
 ## Active ownership
 
-- T24034 Sol medium root worker, codex/complete-main: EVENT800FDC20 funcs800FEF74/800FFA4C and EVENT800F9680 func800F9730. Exact main_api void func80067628() addition reserved if needed for a verified port.
+- T24037 Sol medium root worker, codex/complete-main: EVENT801024B0 funcs80102E54/80103774. Four main_api canonical scalar guards plus EVENT array views reserved if verified ports require them; main types retained.
 - T24035 Sol medium root worker, codex/complete-bunkaken: BUNKA_SD80134260 funcs80134418/801344A8 and GEKO80134040 func80134228. T24028 near-miss package is preserved; shared seven-instruction timer blocker is available for a later compiler-focused pass.
-- T24033 Sol medium root worker, codex/complete-option: VALEN80133C70 func80134030 and VALEN80132760 func80132D0C. T24032 matrix provenance/control archive is on main; no coverage reclassification.
+- T24036 Sol medium root worker, codex/complete-option: GEKO8013F360 func80140040 and SHUGAKU80134880 func80134C98. SHUGAKU244-byte worker win e8662459b queued for root verification; excluded from published coverage. T24033 VALEN guarded improvement is now on main.
 - Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687 active on MAIN8007C030 dialogue_speak_part; owns TEL80132000, EVENT8010FE10, MAIN8006CB30 ONLYfunc8007132C and GEKO80142760 ONLYfunc80142C9C as reserved follow-ups. Do not touch parked MAIN8006D7EC. One compiler.
-- Sol medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8 active on T24031, paired GYOZI80143AD0 funcs80144B70/80144018 and SHOUGATU80141780 funcs8014288C/80141D20. Reuses built private/tmp tree, one compiler.
+- Sol medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8 finishes T24031 source-only archive, then T24038 ETC8013F980 func8013FC64 and MASTER80139000 func8013B448. Reuses built tree, one compiler.
 
 ## Completed bounded passes
 
@@ -100,3 +105,9 @@ GYOZI T24019, BUNKASAI T24030, RPG_BAT T24027 and SHOUGATU T24026 code handoffs 
 At27d578ee0 the Docker sibling refresh indexed6486 matched functions and449 remaining targets after excluding TT/DATE2/NAME_ENT from targets:419900 instruction bytes,68 guards. There are16 targets at similarity>=.90 (18228 bytes) and20 at.80–.90 (10860 bytes); no exact opcode/register clones remain in this filtered target set. The canonical progress denominator remains2279368 game-code bytes. New GYOZI C provides a .724 reference for MAINfunc80049FF0, but no new high-similarity reference was unlocked. Reports remain ignored under build/complete-siblings-latest.json/log.
 
 T24029 seasonal drafts and T24028 DATE/EVENT near-miss checkpoints are on main. T24028 DATE guard improves26 to11 differing instructions; EVENT source-only draft has7 remaining, both exact instruction counts and frame sizes. Both still use ASM in default builds and add zero verified bytes. Explicit FAKE fade/frame forms and timer-allocation negatives are preserved; no EVENT header mutation. Main publication checked all27 unchanged binary hashes and guards.
+
+## Latest verification
+
+T24035 first pair and allthree T24034 targets passed independent root review, all27 default binary hashes, header/global/prototype guards and explicit target-INCLUDE_ASM rejection plus linked C proofs. EVENT940-byte recovery removes duplicate argument-site narrowing from the legacy K&R calls while preserving the sibling’s marked dead-copy liveness. SDK primitives and existing EventStateView are used. T24034 Done; T24035 final guarded-draft checkpoint8e742c12d is queued. T24033 VALEN32D0C guarded draft was also published at e5bddd3cf with no added verified bytes. Local integration helper now checks staged whitespace before expensive builds as well as afterward.
+
+Coverage uses canonical splat sizes, not the sum of linked proof extents: T24035 BUNKA_SD344A8 is148 canonical bytes versus152 linked proof bytes; T24034 EVENT800FFA4C is392 canonical versus404 linked. This batch adds2188 canonical bytes,2204 linked proof bytes. The Docker progress total above is authoritative.

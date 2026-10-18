@@ -18628,3 +18628,9 @@ Created [[tickets/T-24034-event-render-siblings]] In Progress after reading prio
 ## [2026-10-17] build | T-24034 EVENT three sibling C wins
 
 [[tickets/T-24034-event-render-siblings]] moves to In Review: three unguarded C targets, 1,808 B, pass normal default literal proof and full EVENT checksum. [[event-family-results]] records promoted-argument and typed SDK renderer recipes plus inherited FAKE provenance. One notified main_api.h declaration added; no EVENT.h changes.
+
+## [2026-10-18] build | Five more verified sibling matches
+
+Published T24035GEKO244/BUNKA_SD152 plus T24034EVENT940/404/464 after independent review, all27 hashes, guards and actualCsourcegate/literal proofs. [[completion-run-2026-10-17]] records6491functions/1834848bytes,80.5%. T24034 Done; T24035 finaldraft queued. T24036SHUGAKU244 workerwin queued and excluded untilrootverified. Source-only VALEN improvement preserved; local merge helper checks staged hygiene before expensive builds.
+
+Canonical progress audit: this batch adds2188 bytes; its2204 linked-proof bytes include16 bytes outside the canonical function sizes (BUNKA_SD344A8 +4, EVENT800FFA4C +12). Coverage records Docker progress output, not summed proof extents. The local runner was resumed after an in-place helper edit interrupted its post-build script; all final verification gates then passed before publication.

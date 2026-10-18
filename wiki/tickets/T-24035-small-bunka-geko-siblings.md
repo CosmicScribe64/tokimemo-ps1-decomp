@@ -27,3 +27,7 @@ GEKO func_80134228: copied matched func_80135AC8 with the flag mask 0x40 and wit
 BUNKA_SD func_801344A8: copied matched func_8013987C with decrement 2 rather than 1. Promoted u8 views and *= 0 clear retain the sibling's disclosed FAKE reason. Actual normal C, no guard/fallback. Literal default linked funcdiff MATCH 152 bytes including original padding.
 
 Docker ninja -j1 rebuilt both units, headers OK, BUNKA_SD and GEKO checksums OK. Existing GEKO pointer-assignment warnings at D_800CA134/D_800CA138 are outside these changed functions. New verified C: 396 bytes. Third target remains in progress.
+
+## Independent root verification
+
+Reviewed production changes against CODING_STANDARDS.md. SDK/aggregate types and explicit FAKE annotations retained; no unresolved findings. All27 default hashes, header/global/prototype guards and actual unguarded C literal proofs passed before publication. Only the proven targets count as coverage.
