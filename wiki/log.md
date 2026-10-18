@@ -19138,3 +19138,18 @@ existing uniform corrections reproduce native full-TU code/data/relocations and
 target804/cost35. Both exact-version execution controls are retained with prior
 backend evidence; [[ending-allocator-trace]] records their limit. No production
 change, no further backend sweeps indicated, no new review findings.
+
+## [2026-10-18] query | ENDING independent review clean; inspect late branch removal
+
+[[tickets/T-24047-ending-sprite-scene]] existing worker reviewed the tracer and
+exact-version controls with no findings or compiler runs. No new supported C89
+probe found. Inspect AS1 pass order for branch/metadata removal after speculation
+before further source experiments; original12-entry barrier input remains absent.
+
+## [2026-10-18] query | ENDING late-pass inspection leaves input evidence gap
+
+[[tickets/T-24047-ending-sprite-scene]] XBB precedes emission and final branch-delay
+filling. Inspected later code reuses delay slots/adjusts targets, but supplies no
+extra-edge deletion recipe. No new supported source probe, no impossibility or
+matching claim. Missing evidence remains original AS1 input/build metadata or a
+demonstrable12-entry C input with the required barrier. Task remains In Progress.
