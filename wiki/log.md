@@ -18214,3 +18214,15 @@ The pointer-plus-empty-test form fills the original load delay and aligns all 1,
 ## [2026-10-18] ticket | T-24009 bounded closer archived without a match
 
 76 source probes found no exact match. Production guard and source remain unchanged. `drafts/T-24009/probe.py` reproduces weighted scores 12 and 10; the latter still differs in eight words (16 diagnostic rows). Explicit default proof matches the 4,648-byte assembly fallback and fresh ENDING SHA1 passes; zero new verified C bytes. Updated [[matching-notes]] and moved [[tickets/T-24009-ending-scheduler-closer]] to In Review for independent archive review.
+
+## [2026-10-18] ticket | T-24014 TACO PRE source closer
+
+Created [[tickets/T-24014-taco-pre-closer]] for two new source hypotheses on the one-word inserted-reload operand-order residue. Other TACO functions are outside scope.
+
+## [2026-10-18] query | T-24014 dot-form PRE tradeoff
+
+The all-dot state region fixes the inserted reload but reverses two earlier address additions. Empty dot reads do not help. [[tickets/T-24014-taco-pre-closer]] records the sixteen-probe result; production source unchanged.
+
+## [2026-10-18] ticket | T-24014 TACO PRE closer archived
+
+47 focused probes produced no match. The all-dot region corrects the inserted reload but reverses two earlier address additions; empty-use seeds and mixed forms do not resolve the tradeoff. Production source remains unchanged. The three-case reproducer in drafts/T-24014/ verifies costs 2/4/32. Explicit default proof matches the 796-byte assembly fallback and fresh TACO SHA1 passes; zero new C bytes. Updated [[matching-notes]] and moved [[tickets/T-24014-taco-pre-closer]] to In Review for independent archive review.
