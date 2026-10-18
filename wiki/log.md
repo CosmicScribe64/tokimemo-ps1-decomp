@@ -18470,3 +18470,7 @@ Created [[tickets/T-24038-etc-master-siblings]] before code edits, preserving T-
 
 ## [2026-10-18] ticket | Start larger MASTER handler recovery
 Created [[tickets/T-24043-master-large-handler]] before source work on codex/complete-master-large, reusing built tree and preserving 87e08d84b ancestry. Read [[index]], [[master-family-results]] and [[matching-notes]] old swap/data-ownership findings. Exclusive target MASTER func_80139CC8, one serial Docker compiler, bounded novel pass; any necessary extra file/header/config scope must be reported first.
+
+## [2026-10-18] ticket | T-24043 corrected MASTER draft archived
+
+[[tickets/T-24043-master-large-handler]] moves with its board card to In Review after the bounded source pass. [[master-family-results]] records no new verified C bytes, corrected two-byte swap/global mutation semantics, real record types, and a 0x48-frame draft at diagnostic cost 342 (524 printed rows). `drafts/T-24043/` contains source, measurement driver and specific spill/scheduling/branch blockers. Private COMMON versus strong-data controls distinguish the local ownership effect; no config/data change was made. Production src/include/config remain identical to setup 99d4f69e7 and preserve all previous wins. Independent archive review remains pending.
