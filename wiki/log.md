@@ -19370,3 +19370,7 @@ PR #62 integrates upstream708a0f02b after concurrent T-24067 archive/wiki update
 ## [2026-10-18] build | Integrate and independently verify PR62 NAME_ENT matches
 
 Published64ef469bf after actual default C proofs396/2256 bytes and all27 hashes/interface guards. Root standards review resolved T-20013 to Done and synchronized board. Docker progress6512/6958 functions,1864344/2279368 bytes (81.8%). [[completion-run-2026-10-17]] records contributor check and pending PR61 evidence; [[tickets/T-20013-name-ent-fade-page-followup]] records review. No new worker launched.
+
+## [2026-10-18] build | Preserve PR61 compiler evidence
+
+Integrated5397dc7f7 after reviewing tools/aspsx_survey.py, running its survey in Docker, and passing all27 hashes and interface guards. GitHub confirms PR61/62 merged. Survey is read-only; no production/toolchain changes and zero new coverage from PR61. [[gcc-objects]] and [[tickets/T-11890-tt-ratan2-aspsx]] preserve contributor findings; [[completion-run-2026-10-17]] updates handoff state.
