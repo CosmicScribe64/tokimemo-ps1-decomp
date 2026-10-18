@@ -37,6 +37,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
+- [[tickets/T-24009-ending-scheduler-closer|T-24009]] ENDING func_8013A2E8 scheduler closer (In Review; no match, new pointer-lifetime evidence archived).
 - [[tickets/T-24005-bunkaken-date-state-machine|T-24005]] BUNKAKEN func_80143DD0 (In Review; unguarded default C matched, 3,232 bytes).
 
 - [[tickets/T-24003-complete-bunkaken|T-24003]] BUNKAKEN selector and date-loader remainder (In Review; 2 of 3 matched, 836 bytes).

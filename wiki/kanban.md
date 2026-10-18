@@ -53,6 +53,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24009-ending-scheduler-closer|T-24009 Close ENDING scheduler residue]]
 - [ ] [[tickets/T-24010-date-etc-coordination|T-24010 Coordinate DATE and ETC matching]]
 - [ ] [[tickets/T-24011-date-dispatch-family|T-24011 Match DATE dispatch family]]
 - [ ] [[tickets/T-24012-etc-render-family|T-24012 Match ETC rendering family]]

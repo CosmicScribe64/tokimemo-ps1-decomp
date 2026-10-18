@@ -18368,3 +18368,19 @@ Ported the matched TAIIKU game-C sibling func_80146D18 to func_80137EA8 with can
 ## [2026-10-17] build | T-24008 verifies 692-byte finish helper
 
 Default linked literal proof of func_80137EA8 passes (692 bytes), TAIIKU SHA1 306d1013b9be465819525d1fb4dc0e86b422a846 passes after ninja -j1 target build. [[taiiku-family-results]] records matched sibling source, explicit-else allocation and promoted first-byte store-back idioms. [[tickets/T-24008-taiiku-runners]] continues the remaining bounded targets.
+
+## [2026-10-18] ticket | T-24009 ENDING scheduler closer
+
+Created [[tickets/T-24009-ending-scheduler-closer]] for source-level call-result and control-flow hypotheses on the T-23002 twelve-row residue. No existing compiler/deletion experiments will be repeated.
+
+## [2026-10-18] query | T-24009 discarded call-result probes
+
+Twelve full-unit probes leave the twelve-row baseline best. Void call views change other allocation; ordinary result discards do not change output. Recorded in [[tickets/T-24009-ending-scheduler-closer]]; production source unchanged.
+
+## [2026-10-18] query | T-24009 explicit string lifetime changes scheduling
+
+The pointer-plus-empty-test form fills the original load delay and aligns all 1,162 instructions, but leaves the low string address and second flag mask scheduled differently (10 cost). [[tickets/T-24009-ending-scheduler-closer]] records the new evidence.
+
+## [2026-10-18] ticket | T-24009 bounded closer archived without a match
+
+76 source probes found no exact match. Production guard and source remain unchanged. `drafts/T-24009/probe.py` reproduces weighted scores 12 and 10; the latter still differs in eight words (16 diagnostic rows). Explicit default proof matches the 4,648-byte assembly fallback and fresh ENDING SHA1 passes; zero new verified C bytes. Updated [[matching-notes]] and moved [[tickets/T-24009-ending-scheduler-closer]] to In Review for independent archive review.
