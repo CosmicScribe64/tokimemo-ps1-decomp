@@ -20076,3 +20076,22 @@ retained604/592/A0. Source-only drafts/T-24078 now replays all12 variants.
 Original formulas agree; first DIV/MULTU order and early invariant height
 remain unexplained, not proof of impossibility or compiler limitation. Same
 sole worker/function active; no unsupported probes or production changes.
+
+## [2026-10-18] query | T24078 broader matched geometry analogues and phase limits
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] document primary
+matched signed/80 and SDK geometry search in drafts/T-24078/relationships.md.
+Nearest TACO/TAIIKU/RPG_BAT forms provide no new repeated-interpolation recipe.
+Current final-object evidence cannot locate the P/H scheduling change in uopt,
+ugen or as1; prior phase attribution is unproven. Existing stock capture pattern
+inspected read-only, no new compile/instrumentation or source change. Active
+sole worker remains on T24078.
+
+## [2026-10-18] build | T24078 stock phase capture separates P and H scheduling
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve
+one parent-approved unchanged stock ugen input/output capture, whole-object
+identity first. P order is already pre-ugen; H nearY2 persists through ugen and
+moves early only post-ugen. Folded X1base+160 identified separately from original
+X0+136. drafts/T-24078/phase.md/capture.py/manifest preserve replay/provenance;
+raw stages ignored. No production or compiler/option change.

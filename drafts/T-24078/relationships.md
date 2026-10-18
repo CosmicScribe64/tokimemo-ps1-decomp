@@ -45,3 +45,32 @@ would follow the observed register values. Parent subsequently approved exactly 
 remains MULTU-before-DIV, so the width correction does not close the dependency
 schedule. No other source choice changed.
 This is not authorization for other width/layout permutations or instrumentation.
+
+## Broader matched semantic search and phase limit
+
+Read-only current primary at9d0d6a8e097caa224f5a6b50fea26a7091ac7920, also
+compared this worktree. Search literal signed /80 or /0x50, SDK polygon X/Y
+assignments with division, widths68/136 and slopes11/141/112; do not use the
+existing opcode-sibling0.70 cutoff as semantic evidence.
+
+| Actual matched C read | Genuine relationship | Limit for D570 |
+| --- | --- | --- |
+| TACO80139170.c func80139BCC | signed scale*0x7000/80, s32 temp/scale | one scalar passed to helper; no quad interpolation/UV iteration |
+| TACO8013D1E0.c func8013D528 | SVECTOR projection into s32 pt[4], then SDK halfword vertex stores | projection calls and /127 depth, no corresponding P/H/Q11 dependencies |
+| TACO8013F250.c func80140ADC | same word projected-points/halfword output; depth quotient | no equivalent slope or signed/80 repeated-coordinate calculation |
+| TAIIKU80138950.c func8013D9B4 | SDK tiled UV, explicit narrow-before-add FAKE | shifts/UV only; not a type or scheduling recipe for this geometry |
+| RPG_BAT801525B0.c func80154220 | s32 coordinate/UV input arrays narrow at SDK fields | no interpolation/division and arrays are actual incoming objects |
+
+No additional testable original-backed relationship found. TACO UV macro
+expansion line grouping affects its eight byte stores; that does not explain
+D570's first arithmetic dependency, so no speculative macro/line-group test.
+
+Current build/etc24078/word-coordinates contains source.c, source.o, dependency,
+measurement and final diagnostic only. No stock uopt/ugen input/output was
+retained. The observed final sequence is MULTU P before Q11 DIV plus early H;
+it does NOT identify which compiler phase moved these operations. Earlier
+'uopt hoist' descriptions are hypotheses, not measured phase attribution.
+Read-only tools/cc.py and drafts/T-24071/backend_capture.py show an existing
+stock-stage copy wrapper and full-object identity check. A target/path adapter
+could observe ugen input/output without a modified compiler, but no capture,
+new instrumentation, toolchain change or diagnostic compile was performed.
