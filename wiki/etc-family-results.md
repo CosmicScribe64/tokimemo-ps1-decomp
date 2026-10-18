@@ -321,3 +321,9 @@ index/base/shift among t5/t6/t7 and reverse ADDU operands in the tail pair looku
 Actual s32* pair loads and equivalent address operand reversal each remain12;
 no sweep follows. Source-only checkpoint/replay in drafts/T-24075, production
 ASM unchanged, ticket In Progress pending concrete source investigation.
+
+Matched same-TU8013F320 uses direct arguments from the same s32 pair table.
+Porting that source idiom closes all six tail words: private default-resolved
+full-TU zero/904B, pending actual production proof. Sole caller8013BF34 ignores
+result, original epilogue does not establish return; retain existing implicit
+s32 matching view with conservative FAKE note, no header/config change.
