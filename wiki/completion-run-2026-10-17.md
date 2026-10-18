@@ -50,11 +50,11 @@ Each was independently checked against default linked function bytes, all27 bina
 
 ## Active ownership
 
-- T24046 Sol medium root worker, codex/complete-main: MAIN8004C3F0 srn_tpage_show, roughly3.2KB. T24041 renderer verified; CD source-only checkpoint5ca2b84b4 archived on main.
-- T24045 Sol medium root worker, codex/complete-bunkaken: TEL8013CCD0 func8013D03C, roughly2.1KB, using existing49-row draft and matched local recipe. T24035 final guard is integrated; T24039 source-only checkpoint68126eccd archived on main.
-- T24044 Sol medium root worker, codex/complete-option: TAIIKU80138950 func8013B3B0 and TACO80141DE0 func801424A8. T24040 two OPTION wins and final guarded selector are integrated.
+- T24050 Sol medium root worker, codex/complete-main: GEKO80134040 func80134808. T24046 corrected renderer source-only archive published d211334e2.
+- T24049 Sol medium root worker, codex/complete-bunkaken: ETC80146400 func801480D0. T24045 TEL match verified and on main.
+- T24048 Sol medium root worker, codex/complete-option: MASTER80133680 func801344E0. T24044 corrected source archive is on main.
 - Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687: dialogue_speak_part completed and independently integrated. Continues EVENT8010FE10 func801103A0; reserved MAIN8006CB30 ONLYfunc8007132C, GEKO80142760 ONLYfunc80142C9C, TEL80132000. T24042 is the renamed TEL helper follow-up; T24026 remains the earlier SHOUGATU ticket. One compiler.
-- Sol medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: T24043 MASTER80139000 func80139CC8, roughly2.7KB. T24038 both matches are independently integrated. One compiler.
+- Sol medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: T24051 DATE80141EE0 func80144E20, roughly3.2KB. T24043 corrected MASTER source archive published cec8f5843. One compiler.
 
 ## Completed bounded passes
 

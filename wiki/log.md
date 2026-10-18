@@ -18799,3 +18799,11 @@ Created [[tickets/T-24043-master-large-handler]] before source work on codex/com
 ## [2026-10-18] ticket | T-24043 corrected MASTER draft archived
 
 [[tickets/T-24043-master-large-handler]] moves with its board card to In Review after the bounded source pass. [[master-family-results]] records no new verified C bytes, corrected two-byte swap/global mutation semantics, real record types, and a 0x48-frame draft at diagnostic cost 342 (524 printed rows). `drafts/T-24043/` contains source, measurement driver and specific spill/scheduling/branch blockers. Private COMMON versus strong-data controls distinguish the local ownership effect; no config/data change was made. Production src/include/config remain identical to setup 99d4f69e7 and preserve all previous wins. Independent archive review remains pending.
+
+## [2026-10-18] ingest | Corrected renderer and MASTER drafts published
+
+Source-only checkpoints T24046 at d211334e2 and T24043 at cec8f5843 preserve corrected ABI/texture arithmetic and swap/record logic respectively. Neither changes production or matching coverage. Updated [[completion-run-2026-10-17]] ownership: available workers continued on GEKO T24050 and large DATE T24051; other large targets remain active.
+
+## [2026-10-18] build | MASTER archive independently replayed
+
+Docker replay of drafts/T-24043/measure.py on integrated current main reproduces cost342 and524 printed rows, with production source unchanged. The source-only handoff in [[tickets/T-24043-master-large-handler]] is reproducible; no matching bytes are added.
