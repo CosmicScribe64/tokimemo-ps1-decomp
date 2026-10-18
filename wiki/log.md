@@ -18912,3 +18912,15 @@ Created [[tickets/T-24059-short-copy-siblings]] after historical T-9560/T-10020 
 ## [2026-10-18] build | Two short copy-chain matches add328 bytes
 
 [[tickets/T-24059-short-copy-siblings]] moves to In Review with2 of2 verified default actual C matches: GYOZI func_80137F48164 bytes and SHOUGATU func_80136948164 bytes. Matched DATE/SHUGAKU narrowed-global selector recipe gives zero for both after40/34 controls; no blind grids, headers/config changes or new FAKE forms. Affected unit hashes and header/global/prototype guards pass0 new/15 known. [[event-family-results]] and [[shougatu-family-results]] record the superseding evidence; all loose probes preserved ignored.
+
+## [2026-10-18] ticket | T-24058 short SHOUGATU GYOZI pair
+
+Created [[tickets/T-24058-short-pair-count]] In Progress for two176-byte guarded functions, scoped to src/ovl/SHOUGATU/80134120.c and src/ovl/GYOZI/80136220.c. Read historical call/field lifetime negatives; one Docker compiler and no broad permutation.
+
+## [2026-10-18] decision | T-24058 promoted byte selector
+
+[[tickets/T-24058-short-pair-count]]: GYOZI func_80137188 scratch cost0 using D_80146178 directly for initial masked selector, conditional decrement and post-call tests. Removed the target guard for production verification; no new FAKE or header edit. SHOUGATU remains cost6.
+
+## [2026-10-18] build | T-24058 verified GYOZI selector
+
+[[tickets/T-24058-short-pair-count]]: unguarded GYOZI func_80137188 normal default literal proof MATCH176 bytes, GYOZI SHA1 43f92523116e7b6cd772d4397712a52eeda89703; target assembly fallback absent and header/global/prototype guards pass. No new FAKE or header edit. SHOUGATU remains old cost6; source-only targeted negative replay preserved in drafts/T-24058. Updated [[shougatu-family-results]] and moved ticket to In Review for independent standards review. One new C function.

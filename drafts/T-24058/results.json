@@ -1,0 +1,131 @@
+{
+  "metric": "aligned-insert-delete-v1",
+  "probes": [
+    {
+      "variant": "alias-call",
+      "scope": "SHOUGATU:func_801347E0",
+      "cost": 6,
+      "status": "no-gain"
+    },
+    {
+      "variant": "byte-reload-local",
+      "scope": "SHOUGATU:func_801347E0",
+      "cost": 6,
+      "status": "no-gain"
+    },
+    {
+      "variant": "byte-selector-explicit",
+      "scope": "GYOZI:func_80137188",
+      "cost": 28,
+      "status": "no-gain"
+    },
+    {
+      "variant": "byte-selector",
+      "scope": "GYOZI:func_80137188",
+      "cost": 51,
+      "status": "no-gain"
+    },
+    {
+      "variant": "girl-call-assignment",
+      "scope": "SHOUGATU:func_801347E0",
+      "cost": 6,
+      "status": "no-gain"
+    },
+    {
+      "variant": "girl-call-variable",
+      "scope": "SHOUGATU:func_801347E0",
+      "cost": 6,
+      "status": "no-gain"
+    },
+    {
+      "variant": "girl-gstate",
+      "scope": "SHOUGATU:func_801347E0",
+      "cost": 24,
+      "status": "no-gain"
+    },
+    {
+      "variant": "girl-kr-parameter",
+      "scope": "SHOUGATU:func_801347E0",
+      "cost": 9,
+      "status": "no-gain"
+    },
+    {
+      "variant": "girl-parameter",
+      "scope": "SHOUGATU:func_801347E0",
+      "cost": 9,
+      "status": "no-gain"
+    },
+    {
+      "variant": "global-call-assignment",
+      "scope": "SHOUGATU:func_801347E0",
+      "cost": 37,
+      "status": "no-gain"
+    },
+    {
+      "variant": "global-call-field",
+      "scope": "SHOUGATU:func_801347E0",
+      "cost": 34,
+      "status": "no-gain"
+    },
+    {
+      "variant": "global-explicit-mask",
+      "scope": "GYOZI:func_80137188",
+      "cost": 33,
+      "status": "no-gain"
+    },
+    {
+      "variant": "global-girl",
+      "scope": "SHOUGATU:func_801347E0",
+      "cost": 10,
+      "status": "no-gain"
+    },
+    {
+      "variant": "global-selector",
+      "scope": "GYOZI:func_80137188",
+      "cost": 0,
+      "status": "matches-as-is"
+    },
+    {
+      "variant": "gyozi-base",
+      "scope": "GYOZI:func_80137188",
+      "cost": 44,
+      "status": "no-gain"
+    },
+    {
+      "variant": "raw-reload-field",
+      "scope": "SHOUGATU:func_801347E0",
+      "cost": 6,
+      "status": "no-gain"
+    },
+    {
+      "variant": "repeated-reload",
+      "scope": "SHOUGATU:func_801347E0",
+      "cost": 34,
+      "status": "no-gain"
+    },
+    {
+      "variant": "shougatu-base",
+      "scope": "SHOUGATU:func_801347E0",
+      "cost": 6,
+      "status": "no-gain"
+    },
+    {
+      "variant": "signed-selector",
+      "scope": "GYOZI:func_80137188",
+      "cost": 52,
+      "status": "no-gain"
+    },
+    {
+      "variant": "unsigned-word-view",
+      "scope": "GYOZI:func_80137188",
+      "cost": 44,
+      "status": "no-gain"
+    },
+    {
+      "variant": "word-selector",
+      "scope": "GYOZI:func_80137188",
+      "cost": 44,
+      "status": "no-gain"
+    }
+  ]
+}
