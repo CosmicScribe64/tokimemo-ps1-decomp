@@ -131,6 +131,36 @@ compiler already expanded (explicit `div $zero`, checks and `mflo` that the comp
 releases we have reproduces (2.6.3 to 2.95.2 all print the `div rd,rs,rt` macro or `div $0` + `mflo` without checks).
 An ASPSX emulation pass would model something ASPSX does not do, so none is built.
 
+## Sony/SN cc1psx (PsyQ 3.3 to 4.6) on the same input (T-11890)
+The PsyQ compiler binaries that decomp.me uses (mkst/esa release `psyq-binaries`: `psyq-compilers.tar.gz` with 4.0,
+4.1, 4.3, 4.5, 4.6, and `psyq3.3`/`psyq3.5`/`psyq3.6`) were run in throwaway containers outside the repo
+(measurement only, nothing committed): the Win32 4.x `CC1PSX.EXE` + `ASPSX.EXE` under wine, the DOS 3.x ones under
+dosemu2 with the archive's `dosemurc`. Input: the ratan2 draft preprocessed with old-gcc cpp, and small synthetic C
+functions (quotient and remainder with rd distinct and rd = rs, unsigned divide, a `short` table load by index,
+`mult` + `mflo` before a branch).
+
+| PsyQ | cc1psx | ratan2 (original: 97 instructions) |
+|---|---|---|
+| 3.3 | GNU C 2.6.0 (SN) | 98, 41 differing words (ASPSX 2.21: `li` as `ori`, `addiu $at` load form) |
+| 3.5, 3.6 | GNU C 2.6.0 (SN) | 96, 41 differing words |
+| 4.0 | GNU C 2.7.2.SN32.3.7.0002 | 96, identical to our gcc 2.7.2-psx + maspsx path (relocations aside) |
+| 4.1, 4.3, 4.5 | cygnus-2.7.2 SN32 | 95, more different (compiler splits `%hi`/`%lo` and indexes through another register) |
+| 4.6 | gcc 2.8 class | 71 |
+
+What the compilers print (`.s`, all versions; `-O1`, `-O3`, `-mno-gas`, `-fschedule-insns`, `-mips2`,
+`-membedded-pic`, `-mlong-calls` change nothing for 4.0):
+- 3.3 to 4.5 print the `div rd,rs,rt` macro; ASPSX expands it with the move after the checks, as measured above.
+  4.6 prints `div $0,rs,rt; mflo rd` and only a zero check (`bne rt,$0,1f; nop; break 7`), without the overflow check
+  the original has.
+- 3.3 to 4.0 print `lh rd,sym(rs)`, which ASPSX expands through `$at`; 4.1 and later split the address with another
+  register (`lui`/`addiu` of the full address, then `addu` with the index and `lh rd,0(...)`). None gives the
+  original's `lui rd,%hi; addu rd,rd,rs; l* rd,%lo(sym)(rd)`.
+- No version prints its own hazard nops; `mflo` before a branch or label gets none after ASPSX.
+
+No PsyQ compiler from 3.3 to 4.6 produces the original `func_8014D260` or the three SDK habits, so the question of
+TAIIKU `func_801488F0` under one of them does not arise. Where the original's code generator comes from stays open
+(not tried: other cc1psx builds, such as the `psyq_263_221` set decomp.me lists, and the libraries' own object files).
+
 ## Build integration
 - `config/toolchains.txt` names the toolchain of an object (`<subsegment name> gcc <ver> <aspsx>`); `configure.py` validates it and passes it to `tools/cc.py`. The gcc path has no asm-processor, so only objects whose functions are all C belong there. Test: `tools/test_configure_toolchains.py`.
 - `tools/cc.py` runs maspsx with `--expand-div` (ASPSX expands the three-operand divide with its zero and overflow checks).

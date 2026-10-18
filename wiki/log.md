@@ -19239,3 +19239,11 @@ Existing read-only tracer shows fmt/save/end hoisted constants share priority3.3
 
 ## [2026-10-18] build | T-24067 canonical allocation checkpoint
 Retained drafts/T-24067/body.c and safe replay at cost18/28 rows, exact0x48 frame/75 words. FAKE format identity restores saved allocation; canonical GameState endpoint avoids any header/export alias. Source-only checkpoint preserves provenance while [[tickets/T-24067-etc-album-copy]] remains In Progress. No other function or production source changed.
+
+## [2026-10-18] query | T-11890 Sony/SN cc1psx versions on ratan2
+
+User-approved downloads of the mkst/esa `psyq-binaries` compiler sets (PsyQ 3.3, 3.5, 3.6 under dosemu2; 4.0, 4.1,
+4.3, 4.5, 4.6 under wine; throwaway containers in the scratchpad, nothing committed). None reproduces TT
+`func_8014D260` or the SDK habits: every version up to 4.5 prints the `div` macro and ASPSX expands it with the move
+after the checks; 4.0 equals our gcc 2.7.2-psx + maspsx output; no version prints the rd-through load or hazard nops.
+Results in [[gcc-objects]] and [[tickets/T-11890-tt-ratan2-aspsx]] (status unchanged, Done). Branch `cc1psx-d260`.

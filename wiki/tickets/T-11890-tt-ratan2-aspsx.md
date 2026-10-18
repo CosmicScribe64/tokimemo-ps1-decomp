@@ -37,6 +37,11 @@ Match TT `func_8014D260` (object `TT/8014D260`, PsyQ gcc `ratan2`), the last TT 
 - Conclusion: none of the three habits is ASPSX behaviour on gcc's macro output; the SDK and this function were most likely produced by a compiler that emits the expanded divide, the split `%hi`/`%lo` loads and its own hazard nops, which none of our old-gcc builds (2.6.3 to 2.95.2) does. An ASPSX pass would model something ASPSX does not do, so none is built and `TT/8014D260` stays INCLUDE_ASM. Details: [[gcc-objects]], "The real ASPSX on synthetic input (T-11890)".
 - Open lead, not tried: a gcc build that prints the divide expanded with checks and splits symbol addresses (a Sony/SN `cc1psx`, or an old-gcc option set), checked against the SDK habits above.
 
+2026-10-18, Sony/SN cc1psx (after Done; user-approved downloads of the mkst/esa `psyq-binaries` assets, run in throwaway wine and dosemu2 containers in the scratchpad, nothing committed):
+- PsyQ 3.3, 3.5, 3.6 (DOS, cc1psx = GNU C 2.6.0 SN, ASPSX 2.21/2.34) and 4.0, 4.1, 4.3, 4.5, 4.6 (Win32) all compiled and assembled the ratan2 draft and the synthetic cases. None gives the original: 4.0 is identical to our gcc 2.7.2-psx + maspsx path (96 instructions); 3.x give 96 to 98 with 41 differing words; 4.1 to 4.5 give 95 and 4.6 gives 71.
+- 3.3 to 4.5 print the `div rd,rs,rt` macro (ASPSX puts the move after the checks); 4.6 prints `div $0; mflo` with only the zero check. No version prints the `lui rd; addu rd,rd,rs; l* rd,%lo(rd)` load or its own hazard nops. Flag variations on 4.0 (`-O1`, `-O3`, `-mno-gas`, scheduling, `-mips2` and others) change nothing.
+- No match, so TAIIKU `func_801488F0` was not re-checked and nothing needs wiring. Details: [[gcc-objects]], "Sony/SN cc1psx (PsyQ 3.3 to 4.6) on the same input (T-11890)".
+
 ## Comments
 
 2026-10-18, closed as Done without a match (outcome: evidence and tooling only). `func_8014D260` stays `INCLUDE_ASM`; the open lead is a compiler that emits the expanded divide (see Notes). Review against CODING_STANDARDS.md: the only code is `tools/aspsx_survey.py`, a read-only measurement script (module docstring, prints counts only, no game bytes, runs in Docker); no source, config or build change, no FAKE. No findings. PR from diman8, claim #56.
