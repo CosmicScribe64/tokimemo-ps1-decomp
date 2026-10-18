@@ -56,12 +56,17 @@ kanban-plugin: board
 
 
 
+
+
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 
 
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24049-etc-exam-ranking|T-24049 Recover ETC exam ranking generator]]
+
 
 - [ ] [[tickets/T-24045-tel-profile-screen|T-24045 Recover TEL profile screen from retained near miss]]
 

@@ -165,3 +165,9 @@ Eight file-disjoint packages from the orchestrator's `mklists3.py` (lists in its
 | w3-etc-p06 | T-17306 | `8013F980.c` | 2 | 1,048 |
 | w3-etc-p07 | T-17307 | `80143240.c` | 6 | 2,072 |
 | w3-etc-p08 | T-17308 | `801492C0.c`, `8013FF80.c` | 4 | 3,436 |
+
+## T-24049 exam ranking semantic reconstruction (2026-10-18)
+
+func_801480D0 remains ASM. The T-14700 types repair is adapted to the current three arrays and existing EtcWork40 total-score field in drafts/T-24049/exam-ranking.c. Signed casts on byte spread divisors recover the target signed div operation. A substantive old-draft error is corrected: its final bonus updated15 records, but the target peels3 stores and loops over2 groups of4, updating exactly11. The malformed Shift-JIS debug spelling is restored to the source string. No header changes are needed.
+
+Current full-TU default diagnostic is885 rows,709 words versus702 target, frame216 versus208. Locals before the array do not change it. Selector/noise lifetime split, a volatile noise spill, separate generation counter and explicit next tie indices all worsen (987/1004/1053/1071 rows); README records each. The target's four saved registers, noise stack spill and loop range lifetimes remain unrecovered, so this is not a register-only closer. Annotated source reproduces885 via drafts/T-24028/probe.py. Production/header unchanged; independent ETC SHA1 control passes through ASM. Zero new C bytes. [[tickets/T-24049-etc-exam-ranking]] is In Review for root review.

@@ -641,3 +641,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24039-tel-date-menu]] - bounded large TEL date menu reconstruction.
 
 - [[tickets/T-24045-tel-profile-screen]] - TEL profile-screen match, 2128 literal bytes; In Review.
+
+- [[tickets/T-24049-etc-exam-ranking]] - ETC ranking source-only checkpoint,885 rows; In Review.
