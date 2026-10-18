@@ -18391,3 +18391,7 @@ The pointer-plus-empty-test form fills the original load delay and aligns all 1,
 ## [2026-10-17] build | Recover RPG_BAT rectangle state machine
 
 [[tickets/T-24013-complete-rpg-bat]] recovered func_80139510 (2,424 literal linked bytes) in src/ovl/RPG_BAT/80137280.c. Paired RECT comma-expression stores and direct counters recover the old T-9960 lead; FAKE two-word padding preserves the original frame. Existing callee view solves the prior power-counter gap. Default linked proof and RPG_BAT checksum pass; details in [[rpg-bat-family-results]].
+
+## [2026-10-17] build | Cross 80 percent verified game-code bytes
+
+Published TAIIKU func_80137EA8 (692 bytes) and RPG_BAT func_80139510 (2424 bytes) after independent default linked proofs, all 27 hashes and guards. Docker progress: 6475/6958 functions, 1823596/2279368 bytes (80.0%). The 100% goal remains active; 455772 bytes remain. Updated [[completion-run-2026-10-17]] and per-family review records. ENDING scheduling source-only archive also preserved on main without claiming C progress.

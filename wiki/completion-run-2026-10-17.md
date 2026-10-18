@@ -5,7 +5,7 @@ updated: 2026-10-17
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Current published code checkpoint `c0662e257` has **6,473/6,958 functions and 1,820,480/2,279,368 bytes (79.9%)**, measured with `tools/progress.py` in Docker. Relative to resumed baseline `283b86fca`: seven functions / 7,012 bytes added. There are 458,888 game bytes remaining; 80% is 3,016 bytes away. SDK library assembly remains separately reported; never change classification merely to inflate completion.
+User resumed work toward 100% verified game-code matching. Current published code checkpoint `12e1afca5` has **6,475/6,958 functions and 1,823,596/2,279,368 bytes (80.0%)**, measured with `tools/progress.py` in Docker. Relative to resumed baseline `283b86fca`: 9 functions / 10,128 bytes added. The earlier 80% milestone has been crossed; the active goal remains 100%, with 455,772 game-code bytes remaining. SDK library assembly remains separately reported and excluded from this scope.
 
 ## Verified gains
 
@@ -18,6 +18,8 @@ User resumed work toward 100% verified game-code matching. Current published cod
 | T24004 | SHOUGATU func_801430A0 |352|
 | T24007 | GEKO func_80133598 |452|
 | T24005 | BUNKAKEN func_80143DD0 |3232|
+| T24008 | TAIIKU func_80137EA8 |692|
+| T24013 | RPG_BAT func_80139510 |2424|
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
 
@@ -27,7 +29,7 @@ Each was independently checked against default linked function bytes, all27 bina
 - Root Astra closer T24014: TACO `80149F90.c`, `func_8014A480`; test specific PRE expression representative hypotheses after T22025, reuses `codex/complete-bunkaken`.
 
 - Root Sol worker T24008: TAIIKU `80133C80.c`, five runner helpers; reuses `codex/complete-main`.
-- Completed bounded Astra pass T24009 (source archive b7d446437 pending integration): ENDING `801396E0.c`, `func_8013A2E8` (4,648 instruction bytes), bounded novel source hypotheses for the documented assembler scheduling limit; reuses `codex/complete-bunkaken`.
+- Completed bounded Astra pass T24009 (source archive b7d446437 published as 4375a2858): ENDING `801396E0.c`, `func_8013A2E8` (4,648 instruction bytes), bounded novel source hypotheses for the documented assembler scheduling limit; reuses `codex/complete-bunkaken`.
 
 - Completed bounded pass T24006: MAIN8004C3F0 rendering family, Sol6.1 medium; reuses codex/complete-main checkout. MAIN8006CB30 counter is parked after Sol20 + Astra19 negative variants; draft differs by one increment instruction. ArchivesT24001 are on main.
 - Completed bounded pass T24007: GEKO801323E0 family, Sol6.1 medium; reuses codex/complete-option. Earlier OPTION and SHOUGATU bounded packages have committed residual drafts.
@@ -52,3 +54,7 @@ Docker only for Python, toolchains and builds. Reuse built worker trees; immutab
 DATE and ETC final coordinator/worker handoffs are now on main, including source-only residual drafts and fixed DATE diagnostic failure handling. No additional C bytes are claimed for these archives. The GEKO probe failure accounting was also repaired after review: candidate errors retain diagnostics and exit nonzero. All current source wins retain independent literal proofs.
 
 Local wiki-only merge helper rejects any staged path outside wiki/ and retains the integration lock/ancestry checks; binary checks are repeated for source integration, not solely for prose updates.
+
+## 80% milestone verification
+
+TAIIKU func_80137EA8 (692 bytes) and RPG_BAT func_80139510 (2,424 bytes) were independently reviewed against CODING_STANDARDS.md and verified from unguarded default linked function bytes before publication. Both integrations pass all 27 binary hashes and header/global/prototype guards. TAIIKU uses a matched sibling and a real four-byte result array; RPG_BAT uses SDK RECTs, shared aggregates, required callback declarations and explicitly marked two-word frame padding. No unresolved source findings. Family tickets remain open while their remaining functions are investigated.
