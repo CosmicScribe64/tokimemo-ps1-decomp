@@ -358,3 +358,12 @@ source spelling and is NOT a linked byte match. Remaining measured differences
 include savedmode7 versus6, constant160 in s6 instead of per-arm immediates,
 136fp versus s7, page spill60 versusfp, earlyH and temporary register choices.
 No H width guess, new capture/logger, toolchain change or production edit.
+
+
+Read-only current618 instruction inventory isolates all mnemonic differences:
+LI-5,LW+2,SW+2,MOVE-1,NOP+6, totaling four words; every other count agrees,
+including14DIV/16MULTU/33SH/11SB. Page spill explains memory/move overhead;
+shared saved160 replaces six per-armLI with one, while extraNOPs offset savings.
+Exact scheduling/IRcause remains unproven and current618 stagecapture absent.
+inventory.md states one narrow constant-web/source-condition question; no H
+width guess, literal/type sweep or new instrumentation. Same function active.

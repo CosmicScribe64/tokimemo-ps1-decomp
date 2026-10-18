@@ -364,3 +364,6 @@ source spelling and is NOT a linked byte match. Remaining measured differences
 include savedmode7 versus6, constant160 in s6 instead of per-arm immediates,
 136fp versus s7, page spill60 versusfp, earlyH and temporary register choices.
 No H width guess, new capture/logger, toolchain change or production edit.
+
+See inventory.md for current618 opcode counts and the precise remaining
+constant160/page-spill question; counts are not a match or scheduling proof.
