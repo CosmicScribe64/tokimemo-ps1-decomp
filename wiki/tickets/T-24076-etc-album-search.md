@@ -20,3 +20,18 @@ Recover only ETC func_8013F054 (716 bytes), src/ovl/ETC/8013BEF0.c. Preserve ver
 
 ## Notes
 Current same-TU F320 definition is void(s32); stale draft's phantom parameters cause incompatible redeclaration and incorrect incoming-argument inference. Fresh semantic reconstruction is justified, not a match promise. Existing matched464D4 supplies typed event-record access evidence. T-24075 is independently published with corrected archive replay; preserve its source and all neighbors.
+
+Fresh faithful current full-TU baseline174 rows, exact frame28. Record view uses
+whole-GameState byte offsets with integer loop index through0, plus actual saved
+album bytes, correct one-arg helper and no incomingarg2. This is new measurement,
+not historical249/238. Original predecrement/unsigned address-bound loop differs
+from generated biased-pointer induction, motivating one target-address cursor
+control without forming a before-object C pointer. No production/header change.
+
+Predecrement/unsigned target-address cursor improves174 to162; natural shared-
+call short-circuit tail143; selected-code word local139 removes extra ANDI;
+selected-event-type word local103 restores original constant2 sharing with mode.
+Byte record fields remain unchanged, frame28 exact. All source-only controls and
+replay retained in drafts/T-24076; production/header/config unchanged, In Progress.
+Remaining index-load sinking, register/web/global reload and branch differences
+are unresolved; no match or impossibility claim.
