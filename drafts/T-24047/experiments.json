@@ -566,5 +566,93 @@
     "cost": 55,
     "printed": 55,
     "matching_claim": false
+  },
+  {
+    "label": "swap_halfword_declarations",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "default_entry_negative_1",
+    "expected": 805,
+    "got": 805,
+    "cost": 770,
+    "printed": 1592,
+    "matching_claim": false
+  },
+  {
+    "label": "default_entry_256",
+    "expected": 805,
+    "got": 805,
+    "cost": 770,
+    "printed": 1592,
+    "matching_claim": false
+  },
+  {
+    "label": "switch_one_line",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "default_loads_one_line",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "row_is_uv_result",
+    "expected": 805,
+    "got": 802,
+    "cost": 623,
+    "printed": 643,
+    "matching_claim": false
+  },
+  {
+    "label": "row_is_page_result",
+    "expected": 805,
+    "got": 802,
+    "cost": 621,
+    "printed": 655,
+    "matching_claim": false
+  },
+  {
+    "label": "size_s16_current",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "size_u8_current",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "loader_implicit_int",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "loader_unprototyped_void",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
   }
 ]

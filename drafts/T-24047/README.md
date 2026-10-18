@@ -45,3 +45,13 @@ default-cell symbol names produce the same residual, so no matrix declaration
 change is supported. Explicit outer range checks add another range check.
 Palette casts and an early palette-store move are neutral; named constants,
 including register locals, expand the frame. The preferred body is unchanged.
+
+Eleven further trace-led probes are also negative. AS1's first block schedule
+leaves the selector load stall empty; its later cross-block pass imports the
+default-arm LUIs. Whole-switch/default-load line grouping does not stop it.
+Stock uopt listings reach target allocation/reemission before the `wrapper_ecvt`
+assertion, showing adjacent ranges 528/529 assigned colours 6/7. They do not
+provide the priorities/costs needed to distinguish allocation causes. The next
+diagnostic needs the instrumented uopt described in
+`wiki/uopt-register-allocation.md`; `regdiff` reports that binary unavailable.
+No compiler rebuild or production change was made.

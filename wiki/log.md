@@ -19123,3 +19123,53 @@ Created [[tickets/T-24067-etc-album-copy]] before work on only func_80141ABC in 
 ## [2026-10-18] query | Contributor check08:13UTC
 
 Read-only GitHub check: no open PRs, claims#50/#56/#57 unchanged. NAME_ENT/TT exclusions continue. [[completion-run-2026-10-17]] retains two active Sol lanes: ENDING35F4C and [[tickets/T-24067-etc-album-copy]]. Both confirmed active via current chat handles; no new verified match. Antigravity approval still pending, no retries.
+
+## [2026-10-18] ticket | ENDING trace-led closure continues
+
+[[tickets/T-24047-ending-sprite-scene]] returns to In Progress. Existing AS1 DAG
+shows the first per-block schedule has the target's empty load slot; a later
+cross-block pass imports the default LUI into that stall. Inspect stock uopt
+listing support next, without rebuilding tracing tools or changing production.
+
+## [2026-10-18] query | Stock ENDING allocator listing blocked by runtime stub
+
+[[tickets/T-24047-ending-sprite-scene]] stock uopt listing attempt confirms the
+documented wrapper_ecvt assertion. Normal compilation is unaffected. No tracer
+rebuild or production flag change; existing AS1 DAG remains available.
+
+## [2026-10-18] query | ENDING extra default entries rejected
+
+[[tickets/T-24047-ending-sprite-scene]] packed scalar declaration swap is neutral.
+Out-of-range case -1/256 entries radically change frame/allocation at cost770;
+no useful control-flow barrier. Existing AS1 evidence motivates line grouping.
+
+## [2026-10-18] query | Partial ENDING stock trace includes complete target allocation
+
+[[tickets/T-24047-ending-sprite-scene]] corrects the tracing blocker: native
+uopt lists complete target allocation/reemission before crashing in a later
+function. Target ranges528/529 receive constrained colours6/7, matching the
+observed swapped constants. Line-grouping probes are neutral804/cost43.
+
+## [2026-10-18] query | ENDING result-local probes rejected; trace failure narrowed
+
+[[tickets/T-24047-ending-sprite-scene]] UV/page-result locals worsen to802
+instructions/cost623/621. A TU prefix ending after the target still hits ecvt
+in final statistics after target reemission; failure is not limited to later
+functions. Check lower native listing verbosity without compiler changes.
+
+## [2026-10-18] query | ENDING call metadata and narrow size views are neutral
+
+[[tickets/T-24047-ending-sprite-scene]] native listing level5 still hits ecvt;
+s16/u8 size views and implicit-int/unprototyped-void loader views are neutral.
+Matched neighbour36EE4 fills both selector stalls with its prologue and offers
+no empty-stall counterexample. Shared headers and production source unchanged.
+
+## [2026-10-18] ticket | ENDING trace-led checkpoint and allocator dependency
+
+[[tickets/T-24047-ending-sprite-scene]] returns to In Review with eleven more
+negative scores and unchanged production source. Native AS1 trace isolates
+cross-block motion; stock uopt trace exposes assignment order but lacks detailed
+range priority/cost data and aborts at ecvt. regdiff confirms the instrumented
+allocator is unavailable in the container. The coordinating lane previously
+found no host trace binary and requested no rebuild here. Record that diagnostic
+runtime as the next dependency; no compiler changes or new verified bytes.

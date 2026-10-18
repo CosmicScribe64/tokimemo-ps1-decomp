@@ -110,3 +110,56 @@ the preferred replay body are unchanged from b0111332c. Return to In Review
 with the same two blockers and zero verified byte gain. Scope/standards review
 of this follow-up finds no code changes or new findings; it records only
 negative evidence. Previously passing production validation remains applicable.
+
+2026-10-18 continued closure: inspect the existing native AS1 DAG and available
+stock uopt listing support before another source probe. Native AS1 trace shows
+the default LUI entering the selector's load stall during a later cross-block
+scheduling pass; the first per-block schedule has the target's empty load slot.
+No compiler binary or production options change.
+
+Existing tools/uopt_eval.py stock listing diagnostic fails at the documented
+libc_impl.c:1135 wrapper_ecvt stub. This is a tracing-runtime dependency, not a
+source compile failure. Do not rebuild the tracer; use the existing AS1 evidence
+for source control-flow probes. Diagnostic outputs stay ignored.
+
+Packed halfword declaration swap is neutral804/cost43. Unreachable case -1 or
+256 sharing default each emit805 instructions but disrupt whole-function frame
+and allocation (cost770); they do not provide a usable default-entry barrier.
+These diagnostic forms are rejected. Source-line grouping is the next measured
+lever, supported by the existing assembler scheduling notes.
+
+Correction to stock-listing blocker: the full-TU diagnostic crashes only in a
+later function. Its partial listing contains complete35F4C global coloring and
+reemission, including constrained ranges528/529 assigned colours6/7 (a3/t0).
+Thus allocation for the two constants is observable without a tracer rebuild;
+the whole diagnostic compile still fails and produces no accepted proof object.
+Whole-switch and default-load source-line grouping both remain804/cost43.
+
+UV/page-result reuse of the quotient local worsens output to802 instructions,
+cost623/621. These do not change the source checkpoint. Truncating only later
+functions still triggers ecvt during final statistics, after target reemission;
+the earlier claim that only a later function triggers it is too narrow. Lower
+native listing verbosity is being checked for an unchanged-code diagnostic.
+
+Native listing level5 also reaches the ecvt assertion; no diagnostic object
+is accepted. Narrow size declarations s16 and u8 are neutral804/cost43.
+Matched neighbour func_80136EE4 has both selector slots occupied by the
+prologue, so it offers no empty-stall counterexample to AS1 cross-block motion.
+Private preprocessed-TU views of func_80132000 as implicit-int or unprototyped
+void are also neutral804/cost43; shared declarations remain unchanged.
+
+## Current dependency
+
+The next grounded allocator investigation needs the instrumented uopt from
+[[uopt-register-allocation]] to expose priorities, costs and forbidden colours.
+Stock listings expose assignments but not those inputs and abort at the ecvt
+stub; regdiff confirms its traced binary is not available in this container.
+The coordinating lane previously found no existing host trace binary and asked
+that it not be rebuilt in this source lane. No compiler rebuild was attempted.
+That diagnostic runtime is the concrete dependency for further allocation work.
+
+Eleven additional source scores are archived, all negative. The production
+source and preferred replay body remain exactly b0111332c. Scope/standards
+review finds no new production changes or findings. Ticket returns to In Review
+with unchanged804/805 instructions/cost43, zero new verified bytes, and all
+previous normal-build validation still applicable.
