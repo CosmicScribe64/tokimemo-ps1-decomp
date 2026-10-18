@@ -46,6 +46,9 @@ Historical T17300 plain792/typed957 are different contexts, not fresh results.
 | height-x0.c |618|846|592|0x90|
 | height-capture.c |618|846|592|0x90|
 | height-first-narrow.c |650|804|594|0x90|
+| height-staged.c |618|846|592|0x90|
+| height-negated.c |616|846|588|0x90|
+| height-negated-boundary.c |635|769|599|0x90|
 
 Original588 words/frame0x90. Rank with tools/funcdiff.py diff_score on resolved
 instruction keys (insertion/deletion1, substitution2). Printed rows use different
@@ -407,3 +410,6 @@ active. The observed result is not permission for a signedness permutation searc
 
 height-lifetimes.md preserves the three independent lateH predictions and
 negative outcomes; no form moved the current earlyH definition.
+
+The second height-lifetimes.md set distinguishes exact-count/saved-pool616
+from a635 narrow-boundary negative; neither is a byte match.

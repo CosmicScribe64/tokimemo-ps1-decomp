@@ -823,3 +823,39 @@ poly84/88, UV50/54, Q/P order, same earlyH v0 and saved160/page mismatch. Semant
 lifetime/domain proofs and before-predictions are in height-lifetimes.md; FAKE
 choices explicit, no type recovery claim. No further width/mask/placement sweep;
 618/606/604 frontiers separate, production unchanged and same target active.
+
+
+A second bounded expression/lifetime set follows, no random search or type grid.
+Staged-H sets the existing H local160 then compound-subtracts A at its original
+post-x2 location. This plausible marked two-stage assignment tests whether a
+local initial-value lifetime survives copy propagation. Actual A0..80 semantics
+are identical; result TARGET IDENTICAL618/592words/frame90, no new evidence.
+
+Negated-H changes only four H expressions to -(A-160). Actual A0..80 gives
+intermediate-160..-80 then result80..160 without overflow. MIPS can encode
+subtraction of160 as immediate arithmetic, so prediction was canonicalization
+or a different immediate/negation web without saved160. Measured616cost/846rows/
+588words/frame90. All saved roles now agree with original: mode6,136s7,pagefp,
+no page memory spill; UV50/54 and poly84/88 retained. But final H is early NEGU
+v0,A; optimizer distributes160 into Y's final offset, yielding Y-A+59 instead
+of original standalone160-A followed byY+H-101. Two lower-right formulas still
+fold to ADDIU160. Original word count is not a match: current counts differ
+LI-6, ADDIU+2, ADDU-2, NEGU+4, SUBU-4, NOP+6, all other counts equal. Preserve
+616 as a separate exact-count/saved-pool diagnostic, not a recovered spelling.
+
+One further typed-boundary control against that NEW616 representation adds only
+(s16) around the four negated H definitions, leaving the shared H/E local s32.
+This is an exact value identity for H80..160; its explicit FAKE purpose tests
+stopping the observed affine distribution, not recovering original type. The
+prediction was a boundary might retain H while SDK low16 consumers drop narrow
+operations, or leave extra operations. It DOES retain four local LI160/SUBH and
+keeps original saved roles, but four SLL/four SRA/four MOVE survive; NOP80-to75.
+Measured635cost/769 diagnostic rows/599words/frame90, reject extra instructions.
+Rows769 lower than846 is not improvement. No alternate widths/masks/suffix
+permutation followed. Original low16 field stores alone do not prove H width.
+
+This isolates a remaining source question: retain a real word-valued H boundary
+without either global160 pooling or distributing160 into Y+59, and without
+non-original narrow/copy instructions. No faithful solution is established.
+Current source forms all remain archived separately;618/606/604 frontiers are
+not overwritten, production remains ASM and same function remains active.
