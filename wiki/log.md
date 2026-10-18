@@ -20230,3 +20230,13 @@ failure and successful authorized network retry. No open PRs; #57 updated
 No external messages; next around15:04UTC. Antigravity remains pending user
 shell approval, no restart. [[completion-run-2026-10-17]] ownership unchanged;
 no matching scope change. Observer patch representation remains untouched here.
+
+## [2026-10-18] build | T24078 rejects if-chain after original branch-graph audit
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve one
+faithful if-chain-only control on624/frame90. Original and retained switch
+collect four BEQs before arms, default skips first UV load via delay slot; new
+if-chain interleaves conditions and arms.632cost/590words/frame90, slots and
+saved allocations unchanged. Fewer words is not a match gain. No frontend home
+claim, CFG spelling sweep or production edit. Retain624 structural frontier,
+604 numeric best, same-function active ownership.
