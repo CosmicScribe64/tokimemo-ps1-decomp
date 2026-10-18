@@ -17992,3 +17992,18 @@ Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` 
 ## [2026-10-18] ticket | T-22026 Done
 
 [[tickets/T-22026-w4-p26]]: code review against `CODING_STANDARDS.md` clean (one comment added to the empty case labels of `src/ovl/ETC/8013B1F0.c`, no byte change), 1 of 1 matched (`func_8013B1F0`, 1,948 bytes). ETC.bin sha1 OK after the rebuild. Moved to Done.
+## [2026-10-17] ticket | T-23004 Wave 5 big package w5-big-p04 opened
+
+[[tickets/T-23004-w5-big-p04]] (In Progress) under [[tickets/T-23000-wave-5-big-conveyor]]: `src/ovl/EVENT/8011C650.c`, `func_8011DDB8` (4,216 B) and `func_8011C750` (3,816 B). Branch `w5-big-p04` from `w2-good`.
+
+## [2026-10-17] ticket | T-23004 In Review
+
+[[tickets/T-23004-w5-big-p04]]: 0 of 2 matched in `src/ovl/EVENT/8011C650.c`; `func_8011DDB8` (4,216 B) and `func_8011C750` (3,816 B) stay `INCLUDE_ASM`. Rows 0 to 342 and 0 to 336 are exact with the typed `Rec24` redraft (for loops, `s32 sv[2]`, `register u8` chain locals, s32 callee views); about 95 and 185 aligned rows left. Drafts in `drafts/T-23004/EVENT/`, harness `drafts/T-23004/try.py`, notes in [[matching-notes]]. Clean build and checks still to run.
+
+## [2026-10-17] build | T-23004 checks
+
+[[tickets/T-23004-w5-big-p04]]: clean build 27/27 (668 steps), `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` all pass. Package left In Review for the lead.
+
+## [2026-10-18] ticket | T-23004 Done
+
+[[tickets/T-23004-w5-big-p04]]: code review against `CODING_STANDARDS.md` done, two small findings fixed (usage line of `drafts/T-23004/try.py`, minutes in [[matching-notes]]); no C source changed, both functions stay `INCLUDE_ASM`. 0 of 2 functions matched. Ticket Done, card moved to Done.
