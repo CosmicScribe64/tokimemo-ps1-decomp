@@ -20035,3 +20035,28 @@ D32C. Exact shared-temporary baseline otherwise fixed; neutral638 alignedcost,
 800 diagnostic rows,594words/frame98. Compiler recreates spilled320 induction,
 not originalfp320/frame90. drafts/T-24078/indexed-page.c/replay preserve it;
 production unchanged, no further probes/instrumentation, active pending direction.
+
+## [2026-10-18] ingest | T24078 original arithmetic and lifetime relationships
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] link
+read-only drafts/T-24078/relationships.md with original full-VA/source evidence
+for all4 arms/shared tail and cross-call values. No formula/address correction
+found; possible3-local word-until-SDK-store representation is explicitly
+untested, low16-equivalent and not proof of original C types. No compile or
+production change; same sole worker/function remains active.
+
+## [2026-10-18] build | T24078 full-word coordinate intermediates improve aligned cost
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve exact
+parent-approved three-temp s16-to-s32 structural control.604 alignedcost/670rows,
+592words/frameA0 versus638/594/98; original588/90. First DIV/MULTU dependency
+schedule still differs. drafts/T-24078/body.c/replay/relationships.md archive
+all9 source controls and exact full-VA arithmetic/lifetime evidence. No production
+change, no further controls begun; same worker/function active.
+
+## [2026-10-18] query | 13:40 UTC contributor coordination check
+
+Root completed read-only GitHub query at13:40UTC: no open PRs; only open claims
+#57 updated2026-10-17T22:16:21Z and #50 updated2026-10-17T15:45:07Z unchanged.
+No external messages sent; next check around14:10UTC. Recorded in
+[[completion-run-2026-10-17]]; no expansion of matching scope.

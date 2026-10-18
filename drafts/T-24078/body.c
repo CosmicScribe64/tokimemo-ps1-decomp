@@ -5,9 +5,9 @@ s32 func_8013D570(s32 arg0, s32 arg1) {
     POLY_FT4 *poly[2];
     s32 sp54;
     s32 sp50;
-    s16 temp_a1;
-    s16 temp_a2;
-    s16 temp_v1;
+    s32 temp_a1;
+    s32 temp_a2;
+    s32 temp_v1;
     s32 temp_a0;
     s32 temp_lo;
     s32 temp_lo_2;
