@@ -18555,3 +18555,15 @@ Review found that [[tickets/T-24023-event-handler]]'s experimental else-if rewri
 ## [2026-10-17] lint | Check research artifact scope and handoff
 
 Final checkpoint lint: 17 replay/inspection scripts parse in Docker; all recorded candidates compiled; four ticket statuses match their In Review cards. Independent hashes: main e823bd844a8f8fa4d05483b59c66bc54b8393b26, TEL d37c3ae6beb7ab361f39366b8274cde0f7c96b5c, EVENT ff7184d7e92b7aff372450ac3b8c2bdd42e55a5e. Added explicit draft/FAKE explanations to the rejected TEL alternative and removed a dead probe statement. Formal code-review gate remains pending; no ticket moved to Done.
+
+## [2026-10-18] ticket | Large DATE and EVENT sibling state machines
+Started [[tickets/T-24018-large-sibling-state-machines]] from 9d7049463 in the existing complete-bunkaken worktree. Read [[date-family-results]], T-12100 and T-23004 before recovery. DATE2 references are read-only; assigned source files only, single Docker compiler.
+
+## [2026-10-18] query | Large movie sibling ports remain source-only leads
+[[tickets/T-24018-large-sibling-state-machines]] ported matched DATE2/DATE source to the three assigned targets. DATE 462B0 reaches exact 951 instructions/frame with first 442 instructions exact but 434 printable rows left; EVENT C750 reaches 167 rows/924 versus 925 instructions; EVENT DDB8 remains worse than T-23004 at 357 rows/1005 versus 998. Bounded callback arrays, return views and byte/stage access probes do not match. Preserved source-only candidates and tested reproduction in drafts/T-24018/; private scratch stays ignored. Updated [[date-family-results]] and [[event-family-results]].
+
+## [2026-10-18] build | Unchanged DATE and EVENT controls remain exact
+Docker ninja -j1 DATE.ok/EVENT.ok has no work; independent Docker SHA1 comparisons match both configured targets. All three requested functions still use assembly fallback, so these controls contribute zero C bytes. No source/header/compiler change.
+
+## [2026-10-18] ticket | Large movie sibling follow-up ready for review
+Moved [[tickets/T-24018-large-sibling-state-machines]] and its board card to In Review. Root review remains; no push or merge by worker.

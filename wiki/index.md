@@ -39,6 +39,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI sibling package (In Review; 2 matches, 2,020 bytes).
+- [[tickets/T-24018-large-sibling-state-machines|T-24018]] Large DATE/EVENT sibling state machines (In Review; source-only leads, 0 new C bytes).
 - [[tickets/T-24016-bunkasai-state-machines|T-24016]] BUNKASAI state machines (In Review; 2 matches, 3,160 bytes).
 - [[tickets/T-24014-taco-pre-closer|T-24014]] TACO func_8014A480 PRE closer (In Review; no match, expression-order tradeoff archived).
 - [[tickets/T-24009-ending-scheduler-closer|T-24009]] ENDING func_8013A2E8 scheduler closer (In Review; no match, new pointer-lifetime evidence archived).
