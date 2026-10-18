@@ -18786,3 +18786,11 @@ Parent fresh Docker measurement at main c4847ad5d:6515/6958 functions,1865768/22
 ## [2026-10-18] ticket | Reconstruct ETC record scene using verified helper contracts
 
 Created [[tickets/T-24074-etc-record-scene]] before edits on only func_80144224 in ETC/80143240.c. Newly verified [[tickets/T-24073-etc-record-init]] proves a missing argument in the old draft; matched441DC/current aggregates expose additional phantom arguments/alias errors. Parent reserves one target to the same Sol medium worker, with fresh faithful baseline before controls. Preserve all helpers/neighbors and prior archives; no extra agents/instrumentation. Current primary7837b7e4e includes final T-24073.
+
+## [2026-10-18] build | T-24074 faithful scene baseline209
+
+[[tickets/T-24074-etc-record-scene]]/[[etc-family-results]] record fresh valid full-TU209/frame58 versus38. Correct actual quotient argument/two-arg helper/order table/Rec24 and required frame reloads after calls, absent from old draft. Production/interfaces unchanged; source-led cleanup joins disjoint m2c temporaries before allocation work.
+
+## [2026-10-18] build | T-24074 source-only166 checkpoint
+
+[[tickets/T-24074-etc-record-scene]]/[[etc-family-results]] preserve baseline209 and bounded controls under drafts/T-24074. Inlinephase166 restores frame38/initiala3/orderindexv1 after semantic helper/table/reload repairs. Quotient/frame/table/fade differences remain; pointer226 rejected, quotient type166 neutral. No instrumentation, alias/helper/header/config/production changes or actual C claim; In Progress.

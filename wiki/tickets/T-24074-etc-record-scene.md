@@ -19,3 +19,7 @@ Recover only ETC func_80144224 (796 bytes), src/ovl/ETC/80143240.c. Preserve ver
 
 ## Notes
 New verified4407C exposes a semantic omission in the retained T-17300 draft, justifying reconstruction beyond old scores. No opcode sibling above0.7 or match promise. Parent published final T-24073 archive7837b7e4e, measured6515 functions/81.9%; preserve source and prior unresolved archives. Ticket uniqueness/current ASM checked before edits.
+
+Fresh valid current full-TU baseline209, frame58 versus original38. Corrected proven helper args/table/Rec24 plus post-call frame-counter reloads: original reloads after helper groups, while old retained draft incorrectly cached stale initial frame. No production/interface edit. First source cleanup joins disjoint fade/spill aliases and phase temporaries before allocation work.
+
+Bounded controls:209/frame58 baseline; joined203/48; directlookup186/40; unsignedframe187/40; quotient-first187; consistentpointer226 rejected; inlinephase166/38 best; signedquotient166 neutral (max6126914). Inlinephase removes copied remainder web and restores initiala3/orderindexv1. Remaining quotient a0/sp34 vs scratcht6/sp30, framecopya2, table-base bias/redundant-store and later fade/register gaps. Source-only forms/replay under drafts/T-24074; no instrumentation/production/helper/header/config changes, no actual C proof. In Progress pending focused coordination.

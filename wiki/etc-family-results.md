@@ -281,3 +281,7 @@ T-24073 current Rec24 repair129 improves through word values/known MAIN unsigned
 T-24073 func8014407C now matches352 actual default linked C bytes at e89ce5f3. Real Rec24/current fields, word values, matched unsigned SDK width view, early required y-store and canonical ordered for-loop recover all instructions. Approved void() declaration preserves original incoming-a0 behavior and matched caller without argument expression. ETC checksum/interfaces/42 neighbor-word bodies pass; In Review pending parent independent all27/publication.
 
 T-24073 parent independent all27/hash/interface/actual-C/literal352 checks pass, standards/spec review no findings. Published main c4847ad5d; ticket/card/index Done. Source/provenance retained.
+
+T-24074 fresh faithful44224 baseline209/frame58 versus38, after real helper arguments/order/Rec24 and required frame reloads across calls. Old stale-frame cache was a semantic error. No production/helper/header/config edit; source-led lifetime cleanup begins.
+
+T-24074 faithful baseline209 improves through ordinary disjoint-value/directlookup/inlinephase cleanup to166/exactframe38. Current source corrects actual helper arguments, real arrays and post-call frame reloads. Pointer226 and quotient type/order controls do not close it. Remaining copied-frame/quotient allocation, table bias/redundant stores and later fade scheduling; source-only drafts/T-24074 retained, production/helper/interfaces unchanged. In Progress, no C proof.
