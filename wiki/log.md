@@ -19953,3 +19953,36 @@ Best71/frame28/178words remains source-only; all controls/proofs and explicit
 FAKE boundary/reload/return caveats retained in drafts/T-24076. Production ASM
 and all neighbors/interfaces unchanged. No Done/match/impossibility claim;
 parent-directed further F054 probes stopped. See [[etc-family-results]].
+
+## [2026-10-18] ticket | Claim ETC scene from current pair-table layout defect
+
+Created [[tickets/T-24077-etc-pair-scene]] before edits for only func_8013CF2C in ETC/8013BEF0.c. Old165/149 scores acknowledged; current two-dimensional table makes retained whole-array scaling wrong. Newly verified [[tickets/T-24075-etc-random-selection]]/matched F320 pair-call source supports direct indexing after original-address verification. Same sole Sol medium worker with target-only delegated reservation; no extra agents/instrumentation. Preserve all neighbors and final unresolved [[tickets/T-24076-etc-album-search]].
+
+## [2026-10-18] query | T-24077 distinguish prior pair-table drafts
+
+[[tickets/T-24077-etc-pair-scene]] corrects selection rationale: plain165 already
+uses correct row selection, typed archive alone has malformed whole-array
+scaling. Original full VRAM8013D118..8013D12C confirms row8/two words; B118 is
+ROM offset. Fresh actual-type baseline follows with scratch forwards only, no
+production/header edit. See [[etc-family-results]].
+
+## [2026-10-18] build | T-24077 fresh baseline and unsigned state view
+
+[[tickets/T-24077-etc-pair-scene]] establishes132/frame28 from current actual
+types and corrected aggregate flags. Shared state field is s8 but original
+uses LBU for all reads; an exact u8 field-address view follows, without header
+change. Historical plain row access already correct, no old-score match claim.
+
+## [2026-10-18] build | T-24077 matched shared-state recipe reaches102 rows
+
+[[tickets/T-24077-etc-pair-scene]] records132 fresh baseline,122 unsigned state
+view, neutral direct-pair/default and rejected126 target return view. Matched
+BFFC word-join alone122, complete pointer+join102, explicitly FAKE-tagged. All
+source/proofs in drafts/T-24077; production/header/config unchanged, In Progress.
+
+## [2026-10-18] query | Completed contributor check at 13:13 UTC
+
+Parent completed read-only GitHub check at2026-10-18 13:13UTC (near13:14due):
+no open PRs; only open claims57(updated2026-10-17T22:16:21Z) and50(updated2026-10-17T15:45:07Z),
+unchanged. No external messages; next check planned13:43UTC. Completed
+coordination only, no added matching scope. See [[completion-run-2026-10-17]].
