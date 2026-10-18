@@ -17976,3 +17976,19 @@ Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` 
 ## [2026-10-18] ticket | T-23003 Done
 
 [[tickets/T-23003-w5-big-p03]]: code review against `CODING_STANDARDS.md` passed after three small wiki fixes (stale 13-row claims in [[index]] and [[matching-notes]], the ticket's FAKE count). 0 of 3 functions matched: `func_8006D7EC` stays guarded under `NON_MATCHING` at 1 row (`idx++` fold), `func_8007132C` and `func_8006D138` stay `INCLUDE_ASM`; only `src/main/8006CB30.c` changed among C files. Ticket Done, card moved to Done.
+
+## [2026-10-17] ticket | T-22026 In Progress
+
+[[tickets/T-22026-w4-p26]]: wave 4 package w4-p26 started, ETC `src/ovl/ETC/8013B1F0.c` `func_8013B1F0` (3120 B), branch w4-p26 from w2-good.
+
+## [2026-10-17] build | T-22026 func_8013B1F0 matched
+
+[[tickets/T-22026-w4-p26]]: `func_8013B1F0` (ETC, `src/ovl/ETC/8013B1F0.c`, 1,948 bytes) matches in plain C from the T-14500 draft: `func_8013BBEC(arg2)` with one argument and `case 0xE: case 0x46: break;` in the `arg0 == 8` switch (188 rows to 0, unit sha1 OK). Callee prototypes in `include/ovl/ETC.h`. See [[matching-notes]].
+
+## [2026-10-17] ticket | T-22026 In Review
+
+[[tickets/T-22026-w4-p26]] moved to In Review (1 of 1 matched). check_headers, migrate_globals --check and sync_protos --check-branch pass; clean build result in the ticket.
+
+## [2026-10-18] ticket | T-22026 Done
+
+[[tickets/T-22026-w4-p26]]: code review against `CODING_STANDARDS.md` clean (one comment added to the empty case labels of `src/ovl/ETC/8013B1F0.c`, no byte change), 1 of 1 matched (`func_8013B1F0`, 1,948 bytes). ETC.bin sha1 OK after the rebuild. Moved to Done.

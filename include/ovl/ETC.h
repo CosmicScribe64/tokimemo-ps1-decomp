@@ -1246,4 +1246,24 @@ typedef struct EtcWork40 {
 } EtcWork40; /* size 0x40 */
 #endif /* OVL_ETC_TYPES_T17300 */
 
+
+#ifndef OVL_ETC_T22026_DISPATCH
+#define OVL_ETC_T22026_DISPATCH
+/* Callees of the dispatcher func_8013B1F0 (defined after it in src/ovl/ETC/8013B1F0.c). T-22026. */
+void func_8013B98C(s32 arg0);
+void func_8013BA3C(s32 arg0);
+void func_8013BA80(s32 arg0);
+void func_8013BAC4(s32 arg0);
+void func_8013BB08(s32 arg0, s32 arg1);
+void func_8013BB64(s32 arg0);
+void func_8013BBA8(s32 arg0);
+void func_8013BBEC(s32 arg0);
+void func_8013BC30(s32 arg0);
+void func_8013BC74(s32 arg0);
+void func_8013BCB8(s32 arg0);
+void func_8013BCFC(s32 arg0);
+void func_8013BD40(s32 arg0, s32 arg1);
+void func_8013BDEC(s32 arg0, s32 arg1);
+#endif
+
 #endif
