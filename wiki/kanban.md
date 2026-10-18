@@ -61,7 +61,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24044-taiiku-taco-siblings|T-24044 TAIIKU and TACO sibling completion]]
 - [ ] [[tickets/T-24040-option-menu-siblings|T-24040 OPTION menu sibling completion]]
 - [ ] [[tickets/T-24031-gyozi-shougatu-pairs|T-24031 Recover GYOZI and SHOUGATU particle pairs]]
-- [ ] [[tickets/T-24045-tel-profile-screen|T-24045 Recover TEL profile screen from retained near miss]]
 - [ ] [[tickets/T-24039-tel-date-menu|T-24039 Recover large TEL date menu C]]
 - [ ] [[tickets/T-24035-small-bunka-geko-siblings|T-24035 Match small BUNKA_SD and GEKO siblings]]
 - [ ] [[tickets/T-24036-geko-shugaku-siblings|T-24036 GEKO and SHUGAKU sibling completion]]
@@ -92,6 +91,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24045-tel-profile-screen|T-24045 Recover TEL profile screen from retained near miss]]
 - [ ] [[tickets/T-24038-etc-master-siblings|T-24038 Recover ETC renderer and MASTER sibling handlers]]
 - [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Investigate dialogue argument scheduling]]
 - [ ] [[tickets/T-24030-bunkasai-sibling-package|T-24030 Recover BUNKASAI sibling package]]

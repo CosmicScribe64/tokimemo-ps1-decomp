@@ -5,7 +5,7 @@ updated: 2026-10-17
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Current published code checkpoint `f55a2d7e9` has **6,499/6,958 functions and 1,847,520/2,279,368 bytes (81.1%)**, measured in Docker. Since baseline `283b86fca`: 33 functions / 34,052 bytes added. The active goal remains 100%, with 431,848 game-code bytes remaining. SDK assembly is separately reported and excluded.
+User resumed work toward 100% verified game-code matching. Current published code checkpoint `f828daec1` has **6,500/6,958 functions and 1,849,648/2,279,368 bytes (81.1%)**, measured in Docker. Since baseline `283b86fca`: 34 functions / 36,180 bytes added. The active goal remains 100%, with 429,720 game-code bytes remaining. SDK assembly is separately reported and excluded.
 
 ## Verified gains
 
@@ -44,6 +44,7 @@ User resumed work toward 100% verified game-code matching. Current published cod
 | T24040 | OPTION func_8013493C |560|
 | T24038 | ETC func_8013FC64 |796|
 | T24038 | MASTER func_8013B448 |956|
+| T24045 | TEL func_8013D03C |2128|
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
 
@@ -135,3 +136,7 @@ The line renderer, two OPTION menus, ETC number renderer and MASTER event-record
 User requested restarting stopped chats, especially large functions. Astra and the MASTER T24043 chat were confirmed active; no duplicate assignment was sent. Restarted chat `01a1410a-cead-7cf3-9bfa-aa44f25f055b` with Sol6.1 medium on T24047, ENDING func_80135F4C (~3220 instruction bytes), revoking its obsolete MAIN/EVENT/TEL ownership. Confirmed the new turn is active. Reassigned the idle OPTION worker to T24048, MASTER func_801344E0 (~2912 instruction bytes), excluding T24043's file. Workers create their own tickets before code work.
 
 T24044 closed with source-only pin `2c7dbab72`, pending archive integration. T24045 delivered actual-C TEL func_8013D03C pin `c6847bd31` (2128 literal bytes); worker proof passes, root independent review/integration pending. Neither handoff changes the published 81.1% coverage yet.
+
+## Latest verified checkpoint
+
+TEL T24045 published f828daec1 after independent all27 hashes, interface guards and actual-C literal proof2128 bytes. T24044 corrected TAIIKU/TACO source archives published73e1ab681, no new C claim. Superseding earlier ownership: T24049 worker owns ETC80146400 func801480D0; T24048 worker owns MASTER80133680 func801344E0; T24047 chat owns ENDING80134D20 func80135F4C in /private/tmp/tokimemo-ending-large. MAIN T24046, MASTER T24043 and Astra EVENT remain active.

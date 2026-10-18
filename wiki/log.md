@@ -18782,3 +18782,7 @@ Created [[tickets/T-24044-taiiku-taco-siblings]] after reading [[taiiku-family-r
 ## [2026-10-18] decision | T-24044 bounded sibling negatives archived
 
 [[tickets/T-24044-taiiku-taco-siblings]] moves to In Review with zero matches and no production/header edits. Current counter semantic repairs and renderer output-index lead recorded in [[taiiku-family-results]] and [[taco-family-results]]; source-only forms/scorer archived. Every loose probe preserved ignored in build/T-24044-probes/. Baseline unit checksums and declaration guards pass; independent review pending.
+
+## [2026-10-18] build | TEL profile screen published
+
+[[tickets/T-24045-tel-profile-screen]] passed root review and independent Docker checks:27 hashes, interface guards, actual-C literal MATCH2128 bytes; published f828daec1, moved to Done. [[completion-run-2026-10-17]] records6500/6958 functions,1849648/2279368 bytes(81.1%),429720 remaining. T24044 source archives published73e1ab681. Continued disjoint large targets T24047/T24048/T24049.
