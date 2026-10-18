@@ -18763,3 +18763,7 @@ Corrected TEL func_8013D88C menu-array and flag induction strides, text table in
 ## [2026-10-18] lint | Preserve final archives and refresh contributor state
 
 T24039 TEL and T24041 CD source-only checkpoints are on main, with no coverage claims. [[completion-run-2026-10-17]] no longer lists those or T24035 as queued and reflects the completed dialogue function. Contributor check07:11UTC found no open PRs; open claims50/56/57 unchanged. Next check around07:41UTC; no contributor messages sent. Main coverage remains6499functions/1847520bytes,81.1%.
+
+## [2026-10-18] decision | Continue stopped large-function workers
+
+Per user request, checked chat status and restarted the older large-function chat on exclusive ENDING func_80135F4C with Sol6.1 medium. Reassigned the idle OPTION worker to MASTER func_801344E0. Astra and T24043 remain active. Recorded ownership and pending T24044/T24045 handoffs in [[completion-run-2026-10-17]]; no new verified bytes claimed.

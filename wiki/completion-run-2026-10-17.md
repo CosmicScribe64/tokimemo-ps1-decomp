@@ -129,3 +129,9 @@ T24036 SHUGAKU244-byte match and T24037 EVENT628-byte match passed independent r
 MAIN dialogue_speak_part now compiles as actual matching C:2168 instructions/8672 literal text bytes, original0x290-byte frame. Replacing an unused padding word with an argument local and explicitly marked `(render_x & 0) - 40` expressions gives the early constant lifetime required at two calls. Baseline replay remained4 aligned edits/16 printed rows; the accepted form is0/0. Root verified target fallback absence and normal linked bytes independently. T24021 Done; remaining hard targets stay open.
 
 The line renderer, two OPTION menus, ETC number renderer and MASTER event-record handler were reviewed and staged locally, then verified together with dialogue using one build, all27 original hashes, all six explicit C proofs and all header/global/prototype guards. Main and w2-good advanced only after success. This reduces repeated shared-header builds without weakening verification. T24038 Done; T24040/T24041 remain In Review for their unresolved siblings.
+
+## Worker continuation, 2026-10-18
+
+User requested restarting stopped chats, especially large functions. Astra and the MASTER T24043 chat were confirmed active; no duplicate assignment was sent. Restarted chat `01a1410a-cead-7cf3-9bfa-aa44f25f055b` with Sol6.1 medium on T24047, ENDING func_80135F4C (~3220 instruction bytes), revoking its obsolete MAIN/EVENT/TEL ownership. Confirmed the new turn is active. Reassigned the idle OPTION worker to T24048, MASTER func_801344E0 (~2912 instruction bytes), excluding T24043's file. Workers create their own tickets before code work.
+
+T24044 closed with source-only pin `2c7dbab72`, pending archive integration. T24045 delivered actual-C TEL func_8013D03C pin `c6847bd31` (2128 literal bytes); worker proof passes, root independent review/integration pending. Neither handoff changes the published 81.1% coverage yet.
