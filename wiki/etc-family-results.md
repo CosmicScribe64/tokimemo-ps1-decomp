@@ -258,3 +258,8 @@ Approved105 unchanged-tracer comparison also passes same-input whole-object/four
 The one approved conditional unsigned-modulo control is neutral105/whole-object identical to inline105 and rejected. FAKE diagnostic/replay retained. Best39 remains; no supported next legal source form identified. Existing trace cannot establish per-range mask/cost details, so further work needs a specific hypothesis/scope rather than another source sweep. Production unchanged, no impossibility claim.
 
 Astra read-only review completed without a supported untried source lead. NAME_ENT's sibling lacks both caps and offers no allocation evidence for them; original t6 mask/indexv0 remains distinct from common-maskv0 in the draft. T-24070 closes this pass unresolved/In Review with39 source/negative controls preserved, no verified gain or impossibility claim. All44F74 tracing stops.
+## T-24071 focused menu selection
+
+Fresh func_80144DF0 baseline61 rows uses current fields, captured selection indexing across k_disp_inc, true helper calls and unsigned ready-byte load. Historical plain67/typed130 are separate contexts. GameState pointer65 and selected-byte comparison capture61 do not improve. Original frame38/spill28 versus current30/spill2C and per-arm narrowing remain. [[tickets/T-24071-etc-menu-selection]] In Progress; production/neighbors unchanged, no C proof or guessed spill padding.
+
+T-24071 actual button snapshot reduces61 to57 fixes selection spill28 without guessed storage, but frame30/per-arm byte-value differences remain. Field-readback57 and status frame/spill tradeoffs57 rejected; real Work members61. drafts/T-24071 retains source-only forms/replay. Production unchanged, no actual C proof; In Progress.

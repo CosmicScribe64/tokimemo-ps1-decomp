@@ -19725,3 +19725,14 @@ Parent stops new probes/instrumentation for [[tickets/T-24070-etc-save-card-stat
 ## [2026-10-18] ticket | T-24070 unresolved source packet enters review
 
 Parent reports Astra read-only analysis completed with no supported untried source lead for [[tickets/T-24070-etc-save-card-state]]. NAME_ENT sibling lacks both caps and supplies no allocation evidence; original t6 mask/indexv0 versus common-maskv0 remains unresolved, with priority/interference not fully distinguished. Ticket/card/index move In Review, not Done; [[etc-family-results]] and drafts/T-24070 preserve39 source/all recorded negatives. No C match, verified gain or impossibility claim. Stop all44F74 tracing/probes; next selection is read-only pending ownership/assignment/ticket.
+
+## [2026-10-18] ticket | Claim ETC menu selection from matched MAIN reference
+
+Created [[tickets/T-24071-etc-menu-selection]] before edits for only func_80144DF0 in ETC/80143240.c. Parent releases prior completed-worker TU reservation to this lane; preserve all helpers and unresolved T-24070 ASM. Current primary108379749 includes final [[tickets/T-24070-etc-save-card-state]] archive. Matched MAIN8005D448 and concrete stale field/call artifacts motivate a fresh faithful baseline; prior67/130 scores are historical, not claimed gains. One existing Sol medium worker/Docker compiler, no agents or broad sweeps.
+## [2026-10-18] build | T-24071 valid captured-selection baseline61
+
+[[tickets/T-24071-etc-menu-selection]]/[[etc-family-results]] record fresh valid baseline61 after actual GameState fields and captured selection slot indexing across k_disp_inc, preserving target calls/unsigned byte. Historical67/130 are not fresh results. GameState pointer65 and selected-slot byte capture61 are rejected; no width/per-arm narrowing sweep or guessed storage. Production/neighbors/interfaces unchanged. Frame/spill and per-arm register differences remain; In Progress.
+
+## [2026-10-18] build | T-24071 button snapshot57 checkpoint
+
+[[tickets/T-24071-etc-menu-selection]]/[[etc-family-results]] retain source-only drafts/replay under drafts/T-24071. Required F88 snapshot reduces61 to57 fixes selection spill28; frame30 versus38/per-arm masks remain. Real Work fields61, stored-argument57 and named-status frame/spill tradeoffs57 rejected. No repeated width sweep, guessed buffer, return override, production/interface/compiler change or verified gain. In Progress.
