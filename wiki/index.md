@@ -719,3 +719,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Progress; 28-row source preserved after bounded EVENT recipe transfer, sole worker focus).
 - [[tickets/T-24047-ending-sprite-scene|T-24047]] ENDING sprite scene initializer, 80135F4C (In Review;804/805 source-only checkpoint, zero verified bytes).
 - [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Progress; exact-frame 4-row assignment-capture checkpoint, earlier 28-row source preserved; sole worker focus).
+- [[tickets/T-24051-date-large-dispatcher|T-24051]] DATE func_80144E20 follow-up (In Review; actual default C match, 3,200 linked bytes; DATE checksum and guards pass).

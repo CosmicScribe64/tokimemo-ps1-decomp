@@ -69,6 +69,12 @@ extern s32 D_8015BDB4;
 s32 func_8013272C(void);
 s32 date_event_choose(void);
 void func_80146224(void);
+/* T-24051: callbacks used by the large DATE dispatcher. */
+void func_8013FD6C(void);
+void func_80140788(void);
+s32 func_801407D0(void);
+s32 func_80140D38(void);
+extern u8 D_8015BF48;
 extern s32 D_8015EE20;
 extern s16 D_8015DE40;
 extern s16 D_8015DE44;

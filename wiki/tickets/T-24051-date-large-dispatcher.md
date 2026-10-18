@@ -1,7 +1,7 @@
 ---
 id: T-24051
 title: Recover DATE large table dispatcher with new source evidence
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -44,3 +44,6 @@ Archived small dispatcher and libgte work are reference-only. T-24043 semantic/o
 ## Root archive replay
 
 Independent Docker replay on integrated current main: audit.py validates all21 table entries, contiguous0xE00-byte source extent and stack+0x34..+0xE34; probe.py --variant assigned-default reproduces28 resolved +/- rows and confirms production unchanged. This validates the retained handoff, not a default C match. Target remains ASM pending branch-order closure.
+Closure candidate: consistent selector byte view D_800CA2E8 + 0x10 and captures of 17/16 reach zero resolved-word differences with exact frame/table layout. Both source idioms carry FAKE provenance. Canonical callbacks are FD6C/40788 void(void), 407D0/40D38 s32(void), supported by actual definitions or original argument/return paths. Literal replay exposed missing linker export D_800CA2E8; parent approved its single absolute export and narrow DATE.h declarations. Production promotion and default literal proof remain pending.
+
+Actual C checkpoint: target fallback replaced unconditionally; 3,200 linked bytes MATCH under explicit default/resolve/no-build. Whole DATE checksum passes after canonical headers rebuild all callers. Header/global guards PASS; prototype branch check zero new, fifteen known. Only target body changed in its TU; smaller fallback preserved. Approved header declarations and one absolute existing-symbol export are included. All three FAKE rationales are visible in production. Ticket/card move to In Review for root's independent two-axis review; no push or full completion claim.

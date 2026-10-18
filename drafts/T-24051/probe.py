@@ -13,13 +13,18 @@ OUT.mkdir(parents=True, exist_ok=True)
 base = Path("drafts/T-24011/func_80144E20.c").read_text()
 production = Path("src/ovl/DATE/80141EE0.c")
 original = production.read_text()
+template = original
 fallback = 'INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80141EE0", ' + NAME + ');'
-if original.count(fallback) != 1:
-    raise SystemExit("assigned production fallback changed")
+if template.count(fallback) != 1:
+    promoted = Path("drafts/T-24051/func_80144E20-zero.c").read_text().replace(
+        "/* T-24051: source-only diagnostic zero; linked C proof pending. */\n", "")
+    if template.count(promoted) != 1:
+        raise SystemExit("assigned production body changed")
+    template = template.replace(promoted, fallback)
 declarations = "extern u8 D_8015BF48;\n" + "\n".join(
-    "void " + name + "(void);" for name in sorted(
+    (("s32 " if name in {"func_801407D0", "func_80140D38"} else "void ") + name) + "(void);" for name in sorted(
         set(re.findall(r"func_801[0-9A-F]+", base)) - {NAME}))
-variants = {"baseline": base}
+variants = {"baseline": base, "closure": Path("drafts/T-24051/func_80144E20-zero.c").read_text()}
 view = base.replace("void (**base)();", "s32 (**base)();")
 view = re.sub(r"base = (sp\w+)\.f;", r"base = (s32 (**)()) \1.f;", view)
 for name in ("normal_date_move_place", "func_80146224"):
@@ -67,7 +72,7 @@ for label, body in variants.items():
     directory.mkdir(exist_ok=True)
     source = directory / "source.c"
     obj = directory / "source.o"
-    changed = original.replace(fallback, body).replace(
+    changed = template.replace(fallback, body).replace(
         '#include "ovl/DATE.h"', '#include "ovl/DATE.h"\n' + declarations, 1)
     source.write_text(changed)
     subprocess.run([sys.executable, "tools/cc.py", str(source), str(obj), "ido", "5.3"], check=True)
