@@ -18695,3 +18695,11 @@ Created [[tickets/T-24059-short-copy-siblings]] after historical T-9560/T-10020 
 ## [2026-10-18] build | Two short copy-chain matches add328 bytes
 
 [[tickets/T-24059-short-copy-siblings]] moves to In Review with2 of2 verified default actual C matches: GYOZI func_80137F48164 bytes and SHOUGATU func_80136948164 bytes. Matched DATE/SHUGAKU narrowed-global selector recipe gives zero for both after40/34 controls; no blind grids, headers/config changes or new FAKE forms. Affected unit hashes and header/global/prototype guards pass0 new/15 known. [[event-family-results]] and [[shougatu-family-results]] record the superseding evidence; all loose probes preserved ignored.
+
+## [2026-10-18] ticket | SHUGAKU short-selector reconstruction
+
+Created [[tickets/T-24060-shugaku-short-selectors]] after reading [[shugaku-family-results]], old T-14500/T-18000 sources and T-10310 selector evidence. Own src/ovl/SHUGAKU/80138A60.c only; current types and bounded local/control-flow hypotheses, no header change yet.
+
+## [2026-10-18] decision | SHUGAKU short source corrections retained
+
+[[tickets/T-24060-shugaku-short-selectors]] moves to In Review with zero matches, production/header/config unchanged. [[shugaku-family-results]] records phase52/52 after repairing a phantom callee argument, and selector62/58 with meaningful shared-byte lifetime; old58-row context not surpassed. Valid structured source/reproducer saved; all loose diagnostics ignored. Baseline unit checksum passes, no default ASM coverage claim or compiler impossibility assertion.

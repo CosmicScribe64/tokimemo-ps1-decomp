@@ -52,6 +52,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24060-shugaku-short-selectors|T-24060 SHUGAKU short selectors]]
 - [ ] [[tickets/T-24059-short-copy-siblings|T-24059 Short copy-chain siblings]]
 - [ ] [[tickets/T-24055-etc-short-helpers|T-24055 ETC short helpers]]
 - [ ] [[tickets/T-24053-short-function-lane|T-24053 Recover three short functions]]
