@@ -18577,3 +18577,7 @@ Early rejection/continue corrects saved end/save allocation and improves cost16/
 ## [2026-10-18] decision | T-24067 reject added-store state diagnostic
 
 Retained separate FAKE store-control.c: direct stack store before aggregate copy makes all four scratch-register words agree in current5.3, but adds SW, grows frame0x48→0x58 and changes branch offsets. Tagged full-TU default explicit-object replay reports15 rows, so it is rejected for promotion. Aggregate volatile qualifiers stay8/8. Required printf/tail/copy store sequencing supplies no immediate faithful direct-store substitute; [[tickets/T-24067-etc-album-copy]] records reasons. No compiler-version necessity inferred; continue read-only backend classification analysis within this function only.
+
+## [2026-10-18] query | T-24067 read-only ugen copy mechanism
+
+[[tickets/T-24067-etc-album-copy]] and [[etc-family-results]] record the existing backend's tiny-copy scratch sequence and aggregate emit_rob path, which bypasses scalar store classification. Parent-authorized reference generation used pinned existing local inputs in Docker; no regenerated compiler was built/run. drafts/T-24067/README.md pins hashes and exact addresses. The proposed wide-integer address control was conditional on an existing project C89 type; no such type exists, and parent agreed to reject the extension before compilation. Best remains four differing words, production unchanged, ticket In Progress; next investigation stays within legal C89 mechanisms and prior-control exclusions.
