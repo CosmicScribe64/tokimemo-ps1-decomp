@@ -559,3 +559,17 @@ Retain604 numeric best and628 no-extra-copy causal frontier. Preserve624 only
 as a measured added-copy control, not a semantic/structural improvement. Its
 FAKE comments describe intent; final code shows the dependency already existed.
 No further control follows from this result. Active same target, production ASM.
+
+
+One private void(s32,s32) return-view control against628 is target-neutral:
+identical resolved target,628cost/856rows/592words/A0. Private full-TU forward
+matches definition exactly; production/header unchanged. Audit finds six actual
+calls (three each C330/C700), all ignored results; original DE44..DE9C epilogue
+sets no explicit return. Matched D32C is s32 fallthrough, so this evidence does
+not prove original void. All35 full-TU function bodies were compared: C330
+alone changes9 words (alignedcost18), from v1 to v0 for post-call F5F tests and
+1104 increment. Other34 including target identical. Thus even ignored-result
+callers can depend on return liveness for matching. Reject promotion of void;
+retain conservative FAKE s32 fallthrough, no invented return value. The private
+control remains reproducible via --variant origin-void, with its exact forward.
+No new structural source lead follows from this neutral result. Same target active.
