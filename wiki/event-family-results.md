@@ -227,3 +227,7 @@ DATE/DATE2 source structure recovers EVENT func_8011D5C4 to seven differing inst
 ## T-24053 short-function recovery
 
 [[tickets/T-24053-short-function-lane]] integrated the previously scratch-only T-20620 recipe for func_8010B614: both initial selector store and later selector read use byte lvalues. Actual unguarded default C matches100 literal bytes, EVENT SHA1 `ff7184d7e92b7aff372450ac3b8c2bdd42e55a5e`. Canonical EventStateView flag-member byte access was freshly tested and differs26 rows; the retained opaque stride and byte-view scheduling are explicitly FAKE marked. No header change; declaration guards pass.
+
+## T-24059 GYOZI copy-chain recovery
+
+[[tickets/T-24059-short-copy-siblings]] matches GYOZI func_80137F48 (164 actual default C bytes), alongside SHOUGATU func_80136948. DATE/SHUGAKU's existing s16 narrowed-global recipe transfers when selector arithmetic is between the saved and replacement asset-copy groups. Current direct/local controls40/34, narrowed-global0/0; no grid or header change. GYOZI uses its canonical aggregate girl field. Literal default C proof and GYOZI SHA1 `43f92523116e7b6cd772d4397712a52eeda89703` pass, as do interface guards. No new FAKE; source explanation follows T-17205/T-24017.

@@ -131,3 +131,7 @@ The full SHOUGATU checksum passes. Both claimed wins pass the source gate (no ta
 ## T-24029 seasonal scene sibling checkpoint
 
 [[tickets/T-24029-seasonal-scene-siblings]] is a bounded source-only pass over GYOZI func_801368B8 and SHOUGATU func_801350F8. No new C match; production sources unchanged. Typed fixed-point arithmetic and source-level conditions yield current aligned edit costs 586 / 656; the broad string-copy scheduling, actor-base and live-range mismatches remain. The initialized SHOUGATU selector before local string copies saves six edits but does not solve the prologue. Source bodies and concrete negative evidence are in drafts/T-24029. No shared headers changed. Avoid repeating the small return-type, counter, and selector probes listed there.
+
+## T-24059 copy-chain sibling matches
+
+[[tickets/T-24059-short-copy-siblings]] matched SHOUGATU func_80136948 and GYOZI func_80137F48 (164 literal default C bytes each). Port DATE80149F48/SHUGAKU80133038's narrowed-global recipe: save pointers, set the actual s16 selector from the girl, calculate `(s16)(selector * 3) + month - 0x60`, replace pointers, advance. Current direct and narrowed-local controls each40/34; narrowed-global0/0 for both. No new FAKE or header/config change, no blind grid. Actual C default literal proofs, affected checksums and declaration guards pass; exact hashes/provenance in drafts/T-24059/README.md. Older copy-chain negative evidence is superseded for these two targets.

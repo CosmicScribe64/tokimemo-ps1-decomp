@@ -38,6 +38,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
+- [[tickets/T-24059-short-copy-siblings|T-24059]] two short copy-chain matches328 bytes, In Review.
 - [[tickets/T-24055-etc-short-helpers|T-24055]] ETC short source leads13/111/70 rows, zero matches, In Review.
 - [[tickets/T-24053-short-function-lane|T-24053]] two short C wins232 bytes, SHUGAKU8-row source lead, In Review.
 - [[tickets/T-24048-master-animation|T-24048]] MASTER source-only reconstruction434/428, zero matches, In Review.
