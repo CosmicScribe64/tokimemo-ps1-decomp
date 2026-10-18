@@ -659,3 +659,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24031-gyozi-shougatu-pairs|T-24031]] Paired GYOZI/SHOUGATU handlers (In Review; no matches, four corrected source-only drafts).
 
 - [[tickets/T-24038-etc-master-siblings|T-24038]] ETC signed-number renderer and MASTER event-record handler (In Review; 2 matches, 1,752 default linked bytes).
+
+- [[tickets/T-24043-master-large-handler|T-24043]] Larger MASTER final-event handler: semantic swap repair, real display-record views and bounded allocation recovery.

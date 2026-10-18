@@ -18467,3 +18467,6 @@ Created [[tickets/T-24038-etc-master-siblings]] before code edits, preserving T-
 ## [2026-10-18] ticket | T-24038 complete pair ready for review
 
 [[tickets/T-24038-etc-master-siblings]] moves to In Review with its board card: ETC `ea53c475e` and MASTER `d3faacf8` verify 796 + 956 = 1,752 default linked bytes. [[master-family-results]] records typed record stores, the sibling void view and full-overlay caller validation; [[etc-family-results]] records the renderer recipe. Source-only provenance and bounded controls are saved in `drafts/T-24038/README.md`. Both checksums, literal proofs, header/global/prototype guards and unchanged-other-body audit pass. No new FAKE code; coordinator independent review and integration remain pending.
+
+## [2026-10-18] ticket | Start larger MASTER handler recovery
+Created [[tickets/T-24043-master-large-handler]] before source work on codex/complete-master-large, reusing built tree and preserving 87e08d84b ancestry. Read [[index]], [[master-family-results]] and [[matching-notes]] old swap/data-ownership findings. Exclusive target MASTER func_80139CC8, one serial Docker compiler, bounded novel pass; any necessary extra file/header/config scope must be reported first.

@@ -47,6 +47,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24043-master-large-handler|T-24043 Recover larger MASTER final-event handler]]
+
 
 
 
