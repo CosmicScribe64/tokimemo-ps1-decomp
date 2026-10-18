@@ -873,7 +873,8 @@ extern s32 D_80150054;
 extern s32 D_80150058;
 extern s32 D_8015005C;
 extern s32 D_80150064;
-void func_80148BC8(void);
+s32 func_80148BC8();
+void func_80148F7C(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_80148E98(void);
 void func_80148EE8(void);
 extern s32 D_80150144;
@@ -1201,14 +1202,17 @@ s32 func_8013C330(s32 arg0, s32 arg1);
 /* T-17300: overlay data typed from the access patterns of the unmatched functions. */
 #ifndef OVL_ETC_TYPES_T17300
 #define OVL_ETC_TYPES_T17300
-/* Exam ranking of the 13 girls and the player (index 13): func_801480D0 fills it, func_8014790C and
- * func_80148BC8 draw it. D_801506F0 above is rank[13]. */
-typedef struct EtcExamRank {
-    /* 0x00 */ s16 value[14];
-    /* 0x1C */ s32 order[14];
-    /* 0x54 */ s32 rank[14];
-} EtcExamRank; /* size 0x8C */
-extern EtcExamRank D_80150668;
+/* Exam ranking of the 13 girls and the player (index 13): func_801480D0 fills the three arrays,
+ * func_8014790C and func_80148BC8 draw them. D_801506F0 above is rank[13]. The original keeps them as three
+ * symbols one after the other (a struct view makes uopt hoist one base register, T-22029). */
+extern s16 D_80150668[14]; /* exam value */
+extern s32 D_80150684[14]; /* girl index in rank order */
+extern s32 D_801506BC[14]; /* rank */
+extern s16 D_8015067C; /* value[10] */
+extern s16 D_8015067E; /* value[11] */
+extern s16 D_80150682; /* value[13] */
+extern s32 D_801506E4; /* rank[10] */
+extern s32 D_801506E8; /* rank[11] */
 /* Screen x and y of the 14 ranking rows (func_8014790C, func_80148BC8). */
 extern s16 D_80150630[14];
 extern s16 D_8015064C[14];
