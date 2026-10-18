@@ -18052,3 +18052,22 @@ Review against `CODING_STANDARDS.md` found one small item (a redundant `(s16 *)`
 ## [2026-10-18] ticket | T-23005 Done
 
 [[tickets/T-23005-w5-big-p05]]: code review against `CODING_STANDARDS.md` passed with no findings. 1 of 6 functions matched: `func_80144270` is plain C (one FAKE unused local, T-23005); `func_80142C9C`, `func_80143F48`, `func_80144198`, `func_80141870` and `func_8013E950` stay `INCLUDE_ASM` with hand drafts in `drafts/T-23005/GEKO/`. Only `src/ovl/GEKO/80142760.c` changed among C files; no contributor claim touched. Ticket Done, card moved to Done, index line updated.
+## [2026-10-17] ticket | T-22025 In Progress
+
+[[tickets/T-22025-w4-p25]] created and started (wave 4 package w4-p25, TACO `src/ovl/TACO/80149F90.c` and `src/ovl/TACO/8015ABF0.c`), part of [[tickets/T-22000-wave-4-conveyor]]. Worktree `w4-p25` from `w2-good`.
+
+## [2026-10-17] build | T-22025 variant batches
+
+[[tickets/T-22025-w4-p25]]: hand-picked variant batches scored with `autotweak.BuildScorer` plus the exact rescorer (machine load 30 to 65, full-unit `funcdiff` 5 minutes). `func_801511C0`: 15 init orders, plain loops, no match, draft simplified to one FAKE; `func_8014F5F0`: chain assignments give 14 rows; `func_8014A480`: dropping `sel`, `px` or `py` breaks the code. Notes in [[matching-notes]] (section T-22025) and in `src/ovl/TACO/80149F90.c`, `src/ovl/TACO/8015ABF0.c`.
+
+## [2026-10-17] ticket | T-22025 In Review
+
+[[tickets/T-22025-w4-p25]] moved to In Review: 0 of 5 matched, four guards kept (5, 6, 6, 8 rows), `func_8014F820` not started. Clean build 27/27 sha1 OK; header checks run before the final commit.
+
+## [2026-10-17] ticket | T-22025 closer 2
+
+[[tickets/T-22025-w4-p25]] Opus closer on the three guarded near misses: no match; `func_8014A480` 6 rows to 1 (the `st` local dropped, uopt inserts the reload), `func_801511C0` and `func_8014F5F0` unchanged with new notes in `src/ovl/TACO/80149F90.c` and [[matching-notes]].
+
+## [2026-10-18] ticket | T-22025 Done
+
+[[tickets/T-22025-w4-p25]]: code review against `CODING_STANDARDS.md`, one small finding fixed (stale row count for `func_8014A480` in [[index]]); guards, FAKE and ticket references checked, no inline asm or game data. 0 of 5 matched (`func_801511C0` 5 rows, `func_8014F5F0` 6, `func_8014A480` 1, `func_8015B1B8` 8; `func_8014F820` not started).
