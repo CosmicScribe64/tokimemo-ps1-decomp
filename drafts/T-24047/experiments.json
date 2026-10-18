@@ -1,0 +1,458 @@
+[
+  {
+    "label": "actor_y_temporary",
+    "expected": 805,
+    "got": 804,
+    "cost": 457,
+    "printed": 609,
+    "matching_claim": false
+  },
+  {
+    "label": "coordinate_locals",
+    "expected": 805,
+    "got": 803,
+    "cost": 90,
+    "printed": 90,
+    "matching_claim": false
+  },
+  {
+    "label": "dead_origin_init",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "default_first",
+    "expected": 805,
+    "got": 804,
+    "cost": 273,
+    "printed": 309,
+    "matching_claim": false
+  },
+  {
+    "label": "default_outside_switch",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "explicit_case12",
+    "expected": 805,
+    "got": 805,
+    "cost": 10,
+    "printed": 10,
+    "matching_claim": false
+  },
+  {
+    "label": "fade_after_y",
+    "expected": 805,
+    "got": 804,
+    "cost": 49,
+    "printed": 49,
+    "matching_claim": false
+  },
+  {
+    "label": "hand1",
+    "expected": 805,
+    "got": 805,
+    "cost": 340,
+    "printed": 1034,
+    "matching_claim": false
+  },
+  {
+    "label": "hand2_types",
+    "expected": 805,
+    "got": 803,
+    "cost": 114,
+    "printed": 114,
+    "matching_claim": false
+  },
+  {
+    "label": "hand3_inline",
+    "expected": 805,
+    "got": 803,
+    "cost": 114,
+    "printed": 114,
+    "matching_claim": false
+  },
+  {
+    "label": "implicit_int_return",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "inline_both",
+    "expected": 805,
+    "got": 803,
+    "cost": 104,
+    "printed": 104,
+    "matching_claim": false
+  },
+  {
+    "label": "inline_sprite",
+    "expected": 805,
+    "got": 803,
+    "cost": 114,
+    "printed": 114,
+    "matching_claim": false
+  },
+  {
+    "label": "integer_both_menu_loops",
+    "expected": 805,
+    "got": 804,
+    "cost": 91,
+    "printed": 91,
+    "matching_claim": false
+  },
+  {
+    "label": "integer_both_record_loops",
+    "expected": 805,
+    "got": 804,
+    "cost": 75,
+    "printed": 75,
+    "matching_claim": false
+  },
+  {
+    "label": "integer_menu_address",
+    "expected": 805,
+    "got": 802,
+    "cost": 677,
+    "printed": 893,
+    "matching_claim": false
+  },
+  {
+    "label": "integer_record_address",
+    "expected": 805,
+    "got": 800,
+    "cost": 679,
+    "printed": 729,
+    "matching_claim": false
+  },
+  {
+    "label": "loop1_group",
+    "expected": 805,
+    "got": 803,
+    "cost": 104,
+    "printed": 104,
+    "matching_claim": false
+  },
+  {
+    "label": "menu_address_roundtrip",
+    "expected": 805,
+    "got": 804,
+    "cost": 59,
+    "printed": 59,
+    "matching_claim": false
+  },
+  {
+    "label": "menu_before_coords",
+    "expected": 805,
+    "got": 803,
+    "cost": 74,
+    "printed": 74,
+    "matching_claim": false
+  },
+  {
+    "label": "menu_byte_view",
+    "expected": 805,
+    "got": 803,
+    "cost": 104,
+    "printed": 104,
+    "matching_claim": false
+  },
+  {
+    "label": "menu_coordinate_zero",
+    "expected": 805,
+    "got": 803,
+    "cost": 64,
+    "printed": 64,
+    "matching_claim": false
+  },
+  {
+    "label": "menu_first",
+    "expected": 805,
+    "got": 803,
+    "cost": 108,
+    "printed": 108,
+    "matching_claim": false
+  },
+  {
+    "label": "menu_last",
+    "expected": 805,
+    "got": 803,
+    "cost": 82,
+    "printed": 82,
+    "matching_claim": false
+  },
+  {
+    "label": "menu_latch",
+    "expected": 805,
+    "got": 803,
+    "cost": 84,
+    "printed": 84,
+    "matching_claim": false
+  },
+  {
+    "label": "menu_postincrement",
+    "expected": 805,
+    "got": 803,
+    "cost": 64,
+    "printed": 64,
+    "matching_claim": false
+  },
+  {
+    "label": "page_local_quotient_zero",
+    "expected": 805,
+    "got": 804,
+    "cost": 61,
+    "printed": 61,
+    "matching_claim": false
+  },
+  {
+    "label": "page_local_reused",
+    "expected": 805,
+    "got": 804,
+    "cost": 61,
+    "printed": 61,
+    "matching_claim": false
+  },
+  {
+    "label": "page_s16_local",
+    "expected": 805,
+    "got": 807,
+    "cost": 362,
+    "printed": 436,
+    "matching_claim": false
+  },
+  {
+    "label": "page_u16_local",
+    "expected": 805,
+    "got": 807,
+    "cost": 362,
+    "printed": 436,
+    "matching_claim": false
+  },
+  {
+    "label": "page_unsigned",
+    "expected": 805,
+    "got": 803,
+    "cost": 64,
+    "printed": 64,
+    "matching_claim": false
+  },
+  {
+    "label": "page_unsigned_view",
+    "expected": 805,
+    "got": 803,
+    "cost": 64,
+    "printed": 64,
+    "matching_claim": false
+  },
+  {
+    "label": "register_size_index",
+    "expected": 805,
+    "got": 803,
+    "cost": 114,
+    "printed": 114,
+    "matching_claim": false
+  },
+  {
+    "label": "roundtrip_first_menu",
+    "expected": 805,
+    "got": 804,
+    "cost": 43,
+    "printed": 43,
+    "matching_claim": false
+  },
+  {
+    "label": "row_after_clear",
+    "expected": 805,
+    "got": 803,
+    "cost": 74,
+    "printed": 74,
+    "matching_claim": false
+  },
+  {
+    "label": "row_scalars_first",
+    "expected": 805,
+    "got": 803,
+    "cost": 74,
+    "printed": 74,
+    "matching_claim": false
+  },
+  {
+    "label": "row_short",
+    "expected": 805,
+    "got": 807,
+    "cost": 362,
+    "printed": 436,
+    "matching_claim": false
+  },
+  {
+    "label": "scalars_first",
+    "expected": 805,
+    "got": 803,
+    "cost": 108,
+    "printed": 108,
+    "matching_claim": false
+  },
+  {
+    "label": "signed_menu_addresses",
+    "expected": 805,
+    "got": 804,
+    "cost": 91,
+    "printed": 91,
+    "matching_claim": false
+  },
+  {
+    "label": "size_u16",
+    "expected": 805,
+    "got": 805,
+    "cost": 340,
+    "printed": 1034,
+    "matching_claim": false
+  },
+  {
+    "label": "size_u16_cast",
+    "expected": 805,
+    "got": 805,
+    "cost": 96,
+    "printed": 1010,
+    "matching_claim": false
+  },
+  {
+    "label": "size_u32",
+    "expected": 805,
+    "got": 803,
+    "cost": 312,
+    "printed": 462,
+    "matching_claim": false
+  },
+  {
+    "label": "size_u8_cast",
+    "expected": 805,
+    "got": 805,
+    "cost": 96,
+    "printed": 1010,
+    "matching_claim": false
+  },
+  {
+    "label": "state_local",
+    "expected": 805,
+    "got": 803,
+    "cost": 114,
+    "printed": 114,
+    "matching_claim": false
+  },
+  {
+    "label": "tail_both_byte",
+    "expected": 805,
+    "got": 804,
+    "cost": 49,
+    "printed": 49,
+    "matching_claim": false
+  },
+  {
+    "label": "tail_flag_byte",
+    "expected": 805,
+    "got": 804,
+    "cost": 49,
+    "printed": 49,
+    "matching_claim": false
+  },
+  {
+    "label": "tail_girl_byte",
+    "expected": 805,
+    "got": 804,
+    "cost": 49,
+    "printed": 49,
+    "matching_claim": false
+  },
+  {
+    "label": "tail_group",
+    "expected": 805,
+    "got": 803,
+    "cost": 66,
+    "printed": 66,
+    "matching_claim": false
+  },
+  {
+    "label": "tail_label",
+    "expected": 805,
+    "got": 804,
+    "cost": 49,
+    "printed": 49,
+    "matching_claim": false
+  },
+  {
+    "label": "uv_after_row",
+    "expected": 805,
+    "got": 803,
+    "cost": 638,
+    "printed": 854,
+    "matching_claim": false
+  },
+  {
+    "label": "uv_origin_local",
+    "expected": 805,
+    "got": 804,
+    "cost": 55,
+    "printed": 55,
+    "matching_claim": false
+  },
+  {
+    "label": "uv_size_signed",
+    "expected": 805,
+    "got": 804,
+    "cost": 49,
+    "printed": 49,
+    "matching_claim": false
+  },
+  {
+    "label": "uv_unsigned",
+    "expected": 805,
+    "got": 803,
+    "cost": 628,
+    "printed": 694,
+    "matching_claim": false
+  },
+  {
+    "label": "while_loop1",
+    "expected": 805,
+    "got": 803,
+    "cost": 82,
+    "printed": 82,
+    "matching_claim": false
+  },
+  {
+    "label": "width_literal",
+    "expected": 805,
+    "got": 805,
+    "cost": 652,
+    "printed": 1172,
+    "matching_claim": false
+  },
+  {
+    "label": "width_unsigned_view",
+    "expected": 805,
+    "got": 803,
+    "cost": 64,
+    "printed": 64,
+    "matching_claim": false
+  },
+  {
+    "label": "xy_group",
+    "expected": 805,
+    "got": 803,
+    "cost": 114,
+    "printed": 114,
+    "matching_claim": false
+  }
+]
