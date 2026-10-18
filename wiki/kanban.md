@@ -47,6 +47,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24017-clone-ports|T-24017 Port three exact opcode clones]]
+
 
 
 

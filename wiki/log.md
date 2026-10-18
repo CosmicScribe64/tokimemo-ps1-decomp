@@ -18194,3 +18194,19 @@ Default linked literal proof of func_80137EA8 passes (692 bytes), TAIIKU SHA1 30
 ## [2026-10-17] build | T-24008 guarded translation-unit confirmation
 
 Full NON_MATCHING translation-unit funcdiff compiled the retained updater and reproduced its nine instruction differences. Final branch prototype check completed: 0 new disagreements, 15 known. [[tickets/T-24008-taiiku-runners]] remains In Review.
+
+## [2026-10-17] ticket | T-24017 exact clone ports
+
+Created [[tickets/T-24017-clone-ports]] for three disjoint EVENT/GEKO/SHUGAKU targets from 0f2b9818f. Read prior compile/register negatives and matched-sibling recipes; Docker-only, unguarded default literal proof required.
+
+## [2026-10-17] build | T-24017 GEKO polygon clone candidate
+
+Ported matched ENDING func_80139B48 to GEKO func_8013FD88 using SDK POLY_G4 and inherited documented colour masks/source-line grouping. Target has no INCLUDE_ASM or guard. Starting default linked and unit checksum verification; see [[tickets/T-24017-clone-ports]].
+
+## [2026-10-17] build | T-24017 SHUGAKU copy clone candidate
+
+Ported the matched DATE history-copy recipe to SHUGAKU func_80133038, removing its old T-10510 guard and fallback. Testing explicit destination narrowing/product order before considering data ownership changes. [[tickets/T-24017-clone-ports]].
+
+## [2026-10-17] build | T-24017 GEKO clone verifies 476 bytes
+
+GEKO func_8013FD88 is unguarded C, no INCLUDE_ASM. Fresh default linked literal proof matches 476 bytes and GEKO SHA1 passes. [[geko-family-results]] and [[tickets/T-24017-clone-ports]] record the matched ENDING source and inherited FAKE colour masks.
