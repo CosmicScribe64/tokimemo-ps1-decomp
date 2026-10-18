@@ -1,7 +1,7 @@
 ---
 id: T-24059
 title: Recover two short copy-chain siblings
-status: In Review
+status: Done
 assignee: codex/complete-option
 created: 2026-10-18
 updated: 2026-10-18
@@ -30,3 +30,7 @@ Read T-9560/T-10020 evidence and matching-notes copy-chain history, including T-
 Two of2 matched,328 actual C bytes. Current direct expression40/34 for each; matched-sibling narrowed-global recipe0/0 for both; narrowed local40/34. No grids or repeated blind permutation search. The canonical aggregate girl access and existing selector s16 globals preserve real types; no new FAKE form, header/config/compiler change or unused local. Prior scratch probes are preserved ignored; production is the selected source. Details/provenance in drafts/T-24059/README.md.
 
 One-job affected builds/checksums pass. Literal default no-build proofs verify GYOZI func_80137F48 and SHOUGATU func_80136948 at164 bytes each, from unguarded actual C with no target INCLUDE_ASM. GYOZI SHA1 `43f92523116e7b6cd772d4397712a52eeda89703`; SHOUGATU SHA1 `d956b1df6fbf9d1f8261d7e1f98ea301f7eb66a9`. Headers/globals pass, prototype check0 new/15 known; git diff --check clean. Ticket In Review pending independent source/standards review.
+
+## Root final review
+
+Both164-byte functions independently verified as actual default C in combined19468a8ec: literal byte matches, all27 hashes and header/global/prototype guards pass. Reviewed CODING_STANDARDS.md: ordinary C89, existing global types, sibling-derived signed narrowing explained, no new FAKE/header/compiler changes. No findings; both targets complete, ticket Done.

@@ -5,7 +5,7 @@ updated: 2026-10-17
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Current published code checkpoint `44ab1ad82` has **6,504/6,958 functions and 1,850,912/2,279,368 bytes (81.2%)**, measured in Docker. Since baseline `283b86fca`: 38 functions / 37,444 bytes added. The active goal remains 100%, with 428,456 game-code bytes remaining. SDK assembly is separately reported and excluded.
+User resumed work toward 100% verified game-code matching. Current published code checkpoint `19468a8ec` has **6,507/6,958 functions and 1,851,416/2,279,368 bytes (81.2%)**, measured in Docker. Since baseline `283b86fca`: 41 functions / 37,948 bytes added. The active goal remains 100%, with 427,952 game-code bytes remaining. SDK assembly is separately reported and excluded.
 
 ## Verified gains
 
@@ -49,6 +49,9 @@ User resumed work toward 100% verified game-code matching. Current published cod
 | T24052 | SHOUGATU func_801333F0 |544|
 | T24053 | EVENT func_8010B614 |100|
 | T24053 | BUNKA_SD func_801355AC |132|
+| T24059 | GYOZI func_80137F48 |164|
+| T24059 | SHOUGATU func_80136948 |164|
+| T24058 | GYOZI func_80137188 |176|
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
 
@@ -56,9 +59,9 @@ Each was independently checked against default linked function bytes, all27 bina
 
 This section is authoritative; later dated handoff notes preserve history.
 
-- T24058 Sol6.1 medium root worker, codex/complete-main: SHOUGATU80134120 func801347E0 and GYOZI80136220 func80137188. T24054 source-only archive published e2dbe9b84.
-- T24056 Sol6.1 medium root worker, codex/complete-bunkaken: SHOUGATU8013D660 funcs8013D820/8013D92C and SHOUGATU8013DD90 func8013DF14. Minimal s16 D80145FDC declaration approved if needed for a verified match; scratch-only until viable. T24052 pair is verified and Done.
-- T24059 Sol6.1 medium root worker, codex/complete-option: GYOZI801372B0 func80137F48 and SHOUGATU80135B90 func80136948. T24055 source-only archive published76d373139.
+- T24062 Sol6.1 medium root worker, codex/complete-main: main80079B10 funcs8007B64C/80079C70/8007BCFC/8007BBE8. T24058 GYOZI win independently published19468a8ec; SHOUGATU guard remains.
+- T24061 Sol6.1 medium root worker, codex/complete-bunkaken: GEKO80140A00 func80141870, SHOUGATU80134890 func801359FC, GYOZI80143AD0 func8014494C. T24056 source-only archive publishedc5c7f1eef, no header changes.
+- T24060 Sol6.1 medium root worker, codex/complete-option: SHUGAKU80138A60 funcs801392B4/801398E8. Both T24059 wins independently published19468a8ec.
 - Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687: EVENT8010FE10 func801103A0 active; reserved MAIN8006CB30 onlyfunc8007132C, GEKO80142760 onlyfunc80142C9C, TEL80132000. Dialogue renderer already verified. Trace locates14 remaining operand reversals in conversion pass; source recovery continues with unchanged build rules.
 - Sol6.1 medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: T24057 ENDING80133C10 funcs80134B18/80134C2C. DATE80141EE0 func80144E20 reserved for future recipe transfer;28-row source checkpoint publishedc3b3afe09.
 - Sol6.1 medium chat01a1410a-cead-7cf3-9bfa-aa44f25f055b: T24047 ENDING80134D20 func80135F4C active in /private/tmp/tokimemo-ending-large. Remaining loop scheduling/hoisted addresses; no C match yet.

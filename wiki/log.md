@@ -18929,3 +18929,7 @@ Reserved only src/ovl/SHOUGATU/8013D660.c:func_8013D820/func_8013D92C and src/ov
 
 ## [2026-10-18] decision | T-24056 canonical short sibling drafts, no matches
 Preserved D820/D92C/DF14 source-only ports in drafts/T-24056, annotated full-TU reproduction62/72/12 rows. Correct f9 and threshold types, sibling >=1 predicate and field updates are retained. Read prior D820 threshold exhaustion without repeating it. Pointer/byte/reload/update-lifetime probes fail to recover DF14's initial byte address plus clamp reload together; ledger in README. Conditional FDC s16 header addition remains scratch-only. Production/header/config unchanged, independent default SHOUGATU SHA1 control passes through ASM; zero new C bytes. Updated [[shougatu-family-results]] and [[tickets/T-24056-shougatu-short-siblings]], now In Review. Prior matches unchanged; no push/merge.
+
+## [2026-10-18] build | Three more short functions verified
+
+Combined19468a8ec publishes GYOZI80137F48(164), SHOUGATU80136948(164), GYOZI80137188(176) after independent actual-C literal proofs,27 hashes and interface guards. T24059 reviewed Done; T24058 retains unmatched sibling. [[completion-run-2026-10-17]] now6507/6958 functions,1851416/2279368 bytes(81.2%),427952 remaining. T24056 source-only archive publishedc5c7f1eef; worker scopes updated to T24060/T24061/T24062.

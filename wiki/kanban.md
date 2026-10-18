@@ -56,7 +56,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24059-short-copy-siblings|T-24059 Short copy-chain siblings]]
 - [ ] [[tickets/T-24055-etc-short-helpers|T-24055 ETC short helpers]]
 - [ ] [[tickets/T-24053-short-function-lane|T-24053 Recover three short functions]]
 - [ ] [[tickets/T-24058-short-pair-count|T-24058 Close short SHOUGATU GYOZI pair]]
@@ -103,6 +102,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24059-short-copy-siblings|T-24059 Short copy-chain siblings]]
 - [ ] [[tickets/T-24052-shougatu-dialogue-siblings|T-24052 Match SHOUGATU dialogue siblings]]
 - [ ] [[tickets/T-24045-tel-profile-screen|T-24045 Recover TEL profile screen from retained near miss]]
 - [ ] [[tickets/T-24038-etc-master-siblings|T-24038 Recover ETC renderer and MASTER sibling handlers]]

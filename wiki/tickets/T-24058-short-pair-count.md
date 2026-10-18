@@ -28,3 +28,7 @@ Direct D_80146178 byte operations eliminate the draft's two word locals and expl
 ## Verified result
 
 One unguarded C match, GYOZI func_80137188,176 linked bytes. Normal target build and `funcdiff --unit GYOZI --resolve --no-build --version default func_80137188` MATCH; GYOZI SHA1 43f92523116e7b6cd772d4397712a52eeda89703. Source gate confirms target INCLUDE_ASM absent. Header/global/prototype guards pass. No shared-header or new FAKE change. SHOUGATU source untouched and still guarded at cost6; scoped source hypotheses and tested replay preserved in drafts/T-24058. Await independent code review before Done.
+
+## Root independent review
+
+GYOZI176-byte function independently verified actual default C, literal proof, all27 hashes and interface guards in19468a8ec. Standards review clean: direct real byte-global operations, no new FAKE or headers. SHOUGATU remains unmatched with source evidence; ticket remains In Review.
