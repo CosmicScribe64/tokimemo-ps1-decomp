@@ -17929,3 +17929,11 @@ One of three BUNKAKEN functions matched: `func_801428D0` (`BunkaDispatch8` view)
 ## [2026-10-17] ticket | T-22026 In Progress
 
 [[tickets/T-22026-w4-p26]]: wave 4 package w4-p26 started, ETC `src/ovl/ETC/8013B1F0.c` `func_8013B1F0` (3120 B), branch w4-p26 from w2-good.
+
+## [2026-10-17] build | T-22026 func_8013B1F0 matched
+
+[[tickets/T-22026-w4-p26]]: `func_8013B1F0` (ETC, `src/ovl/ETC/8013B1F0.c`, 1,948 bytes) matches in plain C from the T-14500 draft: `func_8013BBEC(arg2)` with one argument and `case 0xE: case 0x46: break;` in the `arg0 == 8` switch (188 rows to 0, unit sha1 OK). Callee prototypes in `include/ovl/ETC.h`. See [[matching-notes]].
+
+## [2026-10-17] ticket | T-22026 In Review
+
+[[tickets/T-22026-w4-p26]] moved to In Review (1 of 1 matched). check_headers, migrate_globals --check and sync_protos --check-branch pass; clean build result in the ticket.
