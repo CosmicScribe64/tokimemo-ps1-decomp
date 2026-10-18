@@ -47,6 +47,8 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-24004-complete-shougatu|T-24004]] SHOUGATU scene completion: dispatcher func_801430A0 matched (352 bytes), remaining bounded probes in progress.
 - [[tickets/T-24007-complete-geko|T-24007]] GEKO scene completion: func_80133598 matched (452 bytes), bounded remainder probes ongoing.
 - [[tickets/T-24013-complete-rpg-bat|T-24013]] RPG_BAT battle completion: func_80139510 matched (2,424 linked bytes), bounded remainder probes ongoing.
+- [[tickets/T-24019-gyozi-sibling-ports|T-24019]] GYOZI sibling ports: one of four matched (392 bytes); three selector source forms archived, In Review.
+- [[tickets/T-24015-complete-main-menu|T-24015]] MAIN menu bounded retry: zero of five matched, A410 improved to 41 rows; source-only drafts in review.
 - [[tickets/T-24013-complete-rpg-bat|T-24013]] RPG_BAT battle completion: func_80139510 matched (2,424 linked bytes), two unresolved source drafts archived; package in review.
 
 - [[tickets/T-24007-complete-geko|T-24007]] GEKO scene completion: func_80133598 matched (452 bytes), month helper guarded at 36 rows; package in review.

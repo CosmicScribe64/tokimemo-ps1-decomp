@@ -18477,3 +18477,24 @@ All3 targets have unguarded C definitions and pass root source-only claim gate; 
 ## [2026-10-18] build | Clone matches published and stopped chats resumed
 
 Published979a83671 after independent review, all27 binary hashes, guards and three explicit C/literal proofs. [[tickets/T-24017-clone-ports]] Done:1128 new bytes. [[completion-run-2026-10-17]] records6480 functions/1827884 bytes,80.2%. Both user-owned chats active; Astra prioritizes the large dialogue function, Sol returned another844-byte BUNKASAI win queued for verification. Root workers continue T24026/T24027/T24028. Contributor check06:43UTC: no open PRs, claims50/56/57 unchanged. Pending archive pins and code wins remain excluded from coverage until verified.
+## [2026-10-17] ticket | Begin MAIN menu completion package
+
+Created [[tickets/T-24015-complete-main-menu]] for five functions of src/main/8005A0B0.c after consulting [[main-family-results]], T-17000, T-16000 and T-16510 notes. Preserve all prior package commits; only this MAIN source file is owned.
+
+
+## [2026-10-17] decision | T-24015 bounded MAIN retry archived
+
+[[tickets/T-24015-complete-main-menu]] moves to In Review with zero of five matched and no production C/header changes. Signed coordinate loads and a same-array bound bring A410 to 41 rows; blockers and scores recorded in [[main-family-results]] and source-only drafts/T-24015/. Loose experiments preserved in ignored build/T-24015-probes/. Fresh MAIN SHA-1 matches; headers/globals pass and prototype branch check has zero new/fifteen known disagreements. Independent review pending.
+
+## [2026-10-17] ticket | T-24019 GYOZI sibling completion ports
+
+Created [[tickets/T-24019-gyozi-sibling-ports]] In Progress for four exclusive functions; consulted [[event-family-results]], [[shougatu-family-results]] and earlier negative evidence before code. Prior packages and other functions remain unchanged.
+
+## [2026-10-17] build | T-24019 GYOZI triangle sibling match
+
+[[tickets/T-24019-gyozi-sibling-ports]] verifies func_80142A8C as392 default linked bytes after replacing its ASM with the typed DATE sibling. GYOZI SHA1 passes, literal default no-build proof matches, headers/globals pass and prototype branch check has zero new/fifteen known disagreements. Updated [[event-family-results]].
+
+
+## [2026-10-17] decision | T-24019 bounded selector negatives retained
+
+[[tickets/T-24019-gyozi-sibling-ports]] moves to In Review: one of four matched (392 bytes). E82424 and39E4C27 reproduce prior negatives; 3907C meaningful result/local and natural control flow leave12 aligned edits. Updated [[event-family-results]] with blockers; source-only drafts and scorer archived. All loose experiments preserved in ignored build/T-24019-probes/. No additional production changes. Independent review pending.
