@@ -18007,3 +18007,7 @@ Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` 
 ## [2026-10-18] ticket | T-23004 Done
 
 [[tickets/T-23004-w5-big-p04]]: code review against `CODING_STANDARDS.md` done, two small findings fixed (usage line of `drafts/T-23004/try.py`, minutes in [[matching-notes]]); no C source changed, both functions stay `INCLUDE_ASM`. 0 of 2 functions matched. Ticket Done, card moved to Done.
+
+## [2026-10-17] ticket | T-23006 Wave 5 big package w5-big-p06 opened
+
+[[tickets/T-23006-w5-big-p06]] (In Progress) under [[tickets/T-23000-wave-5-big-conveyor]]: `src/main/80047550.c`, `func_800476C0` (3.1 KB), `func_80047560` (352 B) and `load_tpage_buf_lock` (168 B, guarded at 29 rows). Branch `w5-big-p06` from `w2-good`.
