@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -24,6 +25,14 @@ def generate():
     text = REFERENCE.read_text()
     helper = r'''
 /* Native logging state only; no emulated-memory or allocator writes. */
+static struct { uint32_t address, value; const char *site; } etc_writes[256];
+static unsigned etc_write_count;
+static void etc_stack_write(const char *site, uint32_t address, uint32_t value) {
+    unsigned n = etc_write_count++ % 256;
+    etc_writes[n].address = address;
+    etc_writes[n].value = value;
+    etc_writes[n].site = site;
+}
 static void etc_copy_log(uint8_t *mem, const char *phase,
                          uint32_t size, uint32_t src, uint32_t dst, uint32_t frame) {
     if (size == 8 && src == 0x75e) {
@@ -34,13 +43,47 @@ static void etc_copy_log(uint8_t *mem, const char *phase,
                 MEM_U8(0x10019dac), MEM_U8(0x10019dad),
                 MEM_U32(frame + 232), MEM_U32(frame + 272),
                 MEM_U32(frame + 276), MEM_U32(frame + 280));
+        if (!strcmp(phase, "before-destination")) {
+            unsigned limit = etc_write_count < 256 ? etc_write_count : 256;
+            for (unsigned k = 0; k < limit; k++) {
+                unsigned n = (etc_write_count - 1 - k) % 256;
+                if (etc_writes[n].address == frame + 232) {
+                    fprintf(stderr, "ETC_LAST_CANDIDATE %s value=%08x current=%08x age=%u\n",
+                            etc_writes[n].site, etc_writes[n].value,
+                            MEM_U32(frame + 232), k);
+                    break;
+                }
+            }
+        }
     }
 }
 '''
     anchor = 'static void f_eval_mov(uint8_t *mem, uint32_t sp, uint32_t a0) {'
     if text.count(anchor) != 1:
         raise SystemExit('eval_mov definition changed')
-    text = text.replace(anchor, helper + '\n' + anchor)
+    include = '#include "header.h"'
+    if text.count(include) != 1:
+        raise SystemExit('reference include changed')
+    text = text.replace(include, include + '\n' + helper)
+    selected = {'f_emit_branch_rill', 'f_emit_branch_rrll', 'f_emit_rill',
+                'f_emit_rrll', 'f_emit_rii', 'f_emit_ri_', 'f_free_reg',
+                'f_get_dest', 'f_get_reg', 'f_get_free_reg', 'f_get_one_reg',
+                'f_get_one_free_reg', 'f_unaligned_loadstore', 'f_loadstore'}
+    lines, function, label = [], '', ''
+    for line in text.splitlines(keepends=True):
+        match = re.match(r'static (?:void|uint32_t) (\w+)\([^;\n]*\) \{', line)
+        if match:
+            function, label = match[1], ''
+        match = re.match(r'(L[0-9a-f]+):', line)
+        if match:
+            label = match[1]
+        lines.append(line)
+        match = re.fullmatch(r'MEM_U32\(sp \+ (\d+)\) = [^;]+;\n', line)
+        if function in selected and match:
+            offset = match[1]
+            lines.append('etc_stack_write("' + function + ':' + label +
+                         '", sp + ' + offset + ', MEM_U32(sp + ' + offset + '));\n')
+    text = ''.join(lines)
     for label, phase in [('L42a8e0', 'before-destination'),
                          ('L42a904', 'after-destination-before-source'),
                          ('L42a914', 'after-source'),
