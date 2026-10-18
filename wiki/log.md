@@ -19302,3 +19302,22 @@ Read parent pointers to [[register-cheatsheet]]41 and [[matching-notes]]6294-631
 
 ## [2026-10-18] build | T-24067 typed index-loop gain
 Natural typed record indexing plus induction elimination fixes printf stack-store order and preheader schedule, reaching16 cost/16 rows with75 words/frame0x48. Removed unnecessary format-pointer identity; only source-line grouping remains FAKE. Preserve complementary cursor16/20 source and replay both under drafts/T-24067. [[tickets/T-24067-etc-album-copy]] remains In Progress; four saved-assignment and four copy-temp words remain.
+## [2026-10-18] ticket | Resume reserved NAME_ENT fade and page work
+
+PR #60 is merged; maintainer independently verified all 27 hashes and the 152-byte coordinate C match. [[tickets/T-20013-name-ent-fade-page-followup]] moves to In Progress for the two remaining functions reserved in issue #57. Work starts from ebf0aa7b1 on codex/name-ent-fade-page-followup.
+
+## [2026-10-18] build | Both reserved NAME_ENT functions reach zero
+
+[[tickets/T-20013-name-ent-fade-page-followup]] recovers func_80132320 (396 bytes) and func_80134248 (2256 bytes) in complete-file source probes. Fade store identities preserve A1; page index reuse restores the original frame and selector reloads, with measured indirect remainder, empty-test and OR-zero constraints. Individual removal controls are recorded in the ticket; all retained matching-only forms carry FAKE comments. No flags, tooling, headers or other function bodies change. Default build and actual linked proof are running before any match submission.
+
+## [2026-10-18] build | T-20013 default linked C independently verified
+
+[[tickets/T-20013-name-ent-fade-page-followup]] passes the default Docker build, all27 independent binary SHA1s, actual default linked funcdiff MATCH396/2256 bytes, headers/globals and prototype guard0new/15known. Integrated upstream2e7376c68; preserved both contributors' append entries and the unchanged tested NAME_ENT source blob22925eedc2793094c6a4e429399a5c3bef59ded9. Both functions are unguarded C with no ASM fallback; source-only contribution.
+
+## [2026-10-18] ticket | T-20013 ready for maintainer review
+
+[[tickets/T-20013-name-ent-fade-page-followup]] and [[kanban]] move to In Review after CODING_STANDARDS.md self-review. Only the two claimed function bodies change; all matching-only identities/read/test forms are marked FAKE and measured individually. [[matching-notes]] and [[name-ent-family-results]] record the source recovery. Maintainer review pending.
+
+## [2026-10-18] decision | Preserve final PR append history
+
+PR #62 integrates upstream708a0f02b after concurrent T-24067 archive/wiki updates. Both log histories are retained. Git confirms src/include/tools/config are identical to verified249ca2384, including the tested NAME_ENT blob; prior linked/hash/interface evidence still applies. No build repetition is needed for the archive/docs-only integration.
