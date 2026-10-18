@@ -19253,3 +19253,30 @@ all geometry/store/branch mnemonic counts agree. Page-spill overhead and shared
 cause. inventory.md records current618 capture limit and one source-condition
 question; no speculative width/literal control or instrumentation. Same target
 active, production unchanged.
+
+## [2026-10-18] query | T24078 bounded current618 review finds no supported source edit
+
+Parent's existing Astra read-only review of CURRENT618 constant160/page question
+completed with no supported edit. [[tickets/T-24078-etc-two-poly-renderer]] and
+[[etc-family-results]] preserve that limit. Parent then authorized one narrow
+native-read-only allocation observation, not a type sweep or production change.
+
+## [2026-10-18] build | T24078 current618 allocation shows eligible-page competition
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve one
+private observer with exact stock whole-object000d7483.../allsections fidelity
+FIRST. Constant160 priority12 and page6.2 are eligible/interfering;160 selects20,
+removing that saved color from page, whose later saved candidates are all
+forbidden. Other consumers21/22 not logged. No new source condition established;
+no intrinsic-ineligibility, impossibility or match claim. Own patch/recipe/hash/
+observations in drafts/T-24078, generated binary/rawlogs ignored. Same function
+active, original production ASM and default toolchain unchanged.
+
+## [2026-10-18] query | 15:00 UTC contributor coordination check
+
+Parent completed read-only GitHub query around15:00UTC: no open PRs; #57 updated
+2026-10-17T22:16:21Z and #50 updated2026-10-17T15:45:07Z unchanged. This check sent no
+contributor messages; the planned next check is15:30UTC. No matching scope
+change; Antigravity remains
+pending user shell approval with no restart. [[completion-run-2026-10-17]]
+ownership unchanged.

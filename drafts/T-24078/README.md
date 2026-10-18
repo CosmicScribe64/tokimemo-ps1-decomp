@@ -367,3 +367,6 @@ No H width guess, new capture/logger, toolchain change or production edit.
 
 See inventory.md for current618 opcode counts and the precise remaining
 constant160/page-spill question; counts are not a match or scheduling proof.
+
+allocation.md records the current618 priority/interference observation and
+mandatory whole-object fidelity. It supplies no supported new source edit.

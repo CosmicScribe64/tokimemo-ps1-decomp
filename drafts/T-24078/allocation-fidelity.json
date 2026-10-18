@@ -1,0 +1,41 @@
+{
+  "whole_object_equal": true,
+  "stock_sha256": "000d7483829f12355913baf14c0a307571fef51be47df2f6c7d93fe4c5906dda",
+  "diagnostic_sha256": "000d7483829f12355913baf14c0a307571fef51be47df2f6c7d93fe4c5906dda",
+  "equal_sections": {
+    ".text": {
+      "size": 15008,
+      "sha256": "9abcd6cae73466148cbe0ea03c0eb0f393c014d75be2fc2044f1c73ca22ee491"
+    },
+    ".rodata": {
+      "size": 224,
+      "sha256": "fe5dee2979bfae7cb2718b33fb2a47bcd49d68bbaa71cb5953e588f0d07ad3b0"
+    },
+    ".rel.text": {
+      "size": 10696,
+      "sha256": "08f26e620a10e66e90710aca848863b2e362624f7ac3c6ae9a9efac41a14f444"
+    },
+    ".rel.rodata": {
+      "size": 448,
+      "sha256": "e8fd70fb25f4107059395a374950c848510926470d1ff8dc305db446aaa750c4"
+    }
+  },
+  "generator": {
+    "/scratch/recomp/build/5.3/uopt.c": "b0058f1559441c1a194d649271eb43b8637ec255682cfdd629031340b915b13f",
+    "build/etc24078/alloc618/uopt-alloc.c": "598d762433d154fe1bbbc4c7c078785694b50afbb8b915fedd6f0d1af817bb0b",
+    "build/etc24078/alloc618/uopt-alloc": "7e4bcbf00b638a2c2e019c281a8528aebfa058cb341c06bc70276a563e80905d",
+    "/scratch/recomp/build/5.3/libc_impl.o": "fec0c2e2bbf4ae01b51a69a6dfc2864a29adb8c5cb221fa401658dec9d766700",
+    "/scratch/recomp/build/5.3/version_info.o": "c73507ec924f3187b5a57f5de66d1c865e3e312f00c7a75c5bd56b5f2851eea0"
+  },
+  "actual_input_identity": {
+    "input_sha256": "ce1d0cc2396bfb72b050884a26d320b7b00248acd229207df33b9bb873b9237a",
+    "actual_page_store": {
+      "mtype": 1,
+      "block": 56,
+      "offset": -48,
+      "length": 4
+    }
+  },
+  "options_changed": false,
+  "zero_fuzz_patch_generated_sha256": "598d762433d154fe1bbbc4c7c078785694b50afbb8b915fedd6f0d1af817bb0b"
+}
