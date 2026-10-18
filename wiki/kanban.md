@@ -61,6 +61,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-20011-name-ent-coordinate-selection|T-20011 NAME_ENT pointer-coordinate hit test]]
 - [ ] [[tickets/T-22024-w4-p24|T-22024 Wave 4 package w4-p24]]
 - [ ] [[tickets/T-22025-w4-p25|T-22025 Wave 4 package w4-p25]]
+- [ ] [[tickets/T-22023-w4-p23|T-22023 Wave 4 package w4-p23]]
 - [ ] [[tickets/T-20012-stable-search-scoring|T-20012 Stable search scoring]]
 - [ ] [[tickets/T-22022-w4-p22|T-22022 Wave 4 package w4-p22]]
 - [ ] [[tickets/T-23004-w5-big-p04|T-23004 Wave 5 big package w5-big-p04]]

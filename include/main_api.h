@@ -2245,7 +2245,9 @@ u8 Sw_Test(void);
 void Sw_Clear(void);
 void Hw_Clear(void);
 void func_80053CC0(void);
+#ifndef MAIN_API_OVERRIDE_func_80053CE0
 void func_80053CE0(void);
+#endif
 void func_80053D10(void);
 s32 func_80053F04(void);
 s32 func_80054140(void);
