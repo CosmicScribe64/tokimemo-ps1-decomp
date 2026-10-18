@@ -44,6 +44,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-23000-wave-5-big-conveyor|T-23000]] Wave 5 biggest-first conveyor alongside wave 4 (In Progress).
 - [[tickets/T-23001-w5-big-p01|T-23001]] Wave 5 big package w5-big-p01: TEL `80132000.c`, `func_80136724` (7,044 B) and `func_80134FE4` (800 B) both back to `INCLUDE_ASM`; frame rule for many locals, `func_80134FE4` structurally equal with 140 register rows (Done; 0 of 2 matched).
 - [[tickets/T-23002-w5-big-p02|T-23002]] Wave 5 big package w5-big-p02: ENDING `801396E0.c`, `func_8013A2E8` (4,648 B) from 1,667 rows to a 12-line guard; `func_8013B640` is `s32` (Done; 0 of 1 matched).
+- [[tickets/T-22025-w4-p25|T-22025]] Wave 4 package w4-p25: TACO `80149F90.c` and `8015ABF0.c`, `func_801511C0`, `func_8015B1B8`, `func_8014F5F0`, `func_8014A480`, `func_8014F820` (In Progress).
 - [[tickets/T-22021-w4-p21|T-22021]] Wave 4 package w4-p21: BUNKA_SD `801388D0.c` and `80134540.c`, `func_8013987C` and `func_80134850` matched (promoted counter byte, `*= 0` clear, FAKE); `func_80134D94` and `func_80139290` stay `INCLUDE_ASM` (Done; 2 of 4 matched).
 - [[tickets/T-22001-w4-p01|T-22001]] Wave 4 package w4-p01: main `8007C030.c`, `dialogue_speak_part` stays guarded at 16 rows, 18 more forms tried (Done; 0 of 1 matched).
 - [[tickets/T-22007-w4-p07|T-22007]] Wave 4 package w4-p07: `NAME_ENT` `80142A80.c`, `func_80142A80` and `func_8014472C` both matched; `rodata_pieces.py` writes pieces for owned symbols (Done; 2 of 2 matched).

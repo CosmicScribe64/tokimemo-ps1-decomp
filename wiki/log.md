@@ -17909,3 +17909,7 @@ Review against `CODING_STANDARDS.md` found nothing to fix; 1 of 3 matched (`func
 ## [2026-10-18] ticket | T-22021 Done
 
 [[tickets/T-22021-w4-p21]]: code review against `CODING_STANDARDS.md`, two small findings fixed (record-array form of the five-record loop in `func_80134850`, `s32`-without-return explained in its FAKE comment; objects unchanged). 2 of 4 matched (`func_8013987C` 148 bytes, `func_80134850` 232 bytes).
+
+## [2026-10-17] ticket | T-22025 In Progress
+
+[[tickets/T-22025-w4-p25]] created and started (wave 4 package w4-p25, TACO `src/ovl/TACO/80149F90.c` and `src/ovl/TACO/8015ABF0.c`), part of [[tickets/T-22000-wave-4-conveyor]]. Worktree `w4-p25` from `w2-good`.
