@@ -224,3 +224,7 @@ scene handlers of `80132DE0.c`.
 ## T-24035 GEKO state helper transfer
 
 GEKO func_80134228 matches normal unguarded C (244 literal bytes) by porting func_80135AC8's u8 read view/dead byte-result test (both marked FAKE), changing the flag mask to 0x40 and omitting the sibling's D_80122D4C clear. GEKO checksum and literal default linked funcdiff pass; no header change. [[tickets/T-24035-small-bunka-geko-siblings]] tracks the package.
+
+## T-24061 bounded short control/copy pass (2026-10-18)
+
+GEKO func_80141870 natural byte postincrement plus the T-23005 word/reload lifetime improves51 to44 printable rows (67 target/69 candidate words). Selector loads still choose temporaries rather than a0; tail has two extra words. Explicit selector locals add no gain; eager boolean evaluation adds AND. No production change or C bytes. Full source/reproduction/negative ledger: drafts/T-24061/README.md and [[tickets/T-24061-short-control-and-copy]] (In Review).

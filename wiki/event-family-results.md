@@ -210,3 +210,7 @@ DATE2 func_80133AF0 ports to EVENT func_8011C750 through existing movie/state/Re
 ## T-24028 short movie source port
 
 DATE/DATE2 source structure recovers EVENT func_8011D5C4 to seven differing instructions (14 printable rows), exact 509 instructions and 0x40 frame, versus T-22009's distant draft and wrong frame. All record loops, fades and callback spills match. Only timer narrowing has the same raw/masked range split as DATE func_8014718C's old T-17201 gap. The selected scratch body needs s32 own-return view; existing void header and production INCLUDE_ASM remain unchanged. No new C bytes or header change. Source-only near miss, tested reproduction and failed hypotheses: drafts/T-24028/; [[tickets/T-24028-date-event-short-movie-siblings]] In Review.
+
+## T-24061 bounded short control/copy pass (2026-10-18)
+
+GYOZI func_8014494C scratch s32 setup40050 return view fixes the full counter prefix, reducing96 to84 rows with exact74 words. Two68-byte copies still have temporary-lifetime gaps;64+explicit4 gives44 rows but two extra words. Pointer/original pool indexing adds no gain. Current void shared callee/header stay unchanged; no viable match and no C bytes. Full source/reproduction/negative ledger: drafts/T-24061/README.md and [[tickets/T-24061-short-control-and-copy]] (In Review).
