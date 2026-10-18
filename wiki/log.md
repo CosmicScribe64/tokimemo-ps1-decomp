@@ -18814,3 +18814,19 @@ reviews the combined bounded handoff before any new target assignment.
 ## [2026-10-18] ticket | Claim ETC random selection from current pointer-layout defect
 
 Created [[tickets/T-24075-etc-random-selection]] before edits on only func_8013C8EC in ETC/8013BEF0.c. Primary source/history confirms ASM/no later active claim; preserve verified neighbors. Old s32-pointer indexing scales target8-byte records incorrectly; validate original DIVU arms and current promotions with fresh full-TU baseline before further controls. Same sole Sol medium Docker compiler; no extra agents/instrumentation. Earlier43758 proposal withdrawn because primary T-24055 already fixed its claimed defect, avoiding repeated work.
+
+## [2026-10-18] build | T-24075 fresh current-type baseline
+
+[[tickets/T-24075-etc-random-selection]] establishes92 rows/frame30 with correct
+eight-byte table-pair indexing in a private current full TU. All six divisions
+are DIVU under K&R u8 promotion. Joining remainder locals worsens116; rejected.
+One ordinary global rejection-loop control follows observed repeated-store and
+constant-lifetime gaps; no production/interface change or old-score proof.
+
+## [2026-10-18] build | T-24075 global rejection loops reach twelve rows
+
+[[tickets/T-24075-etc-random-selection]] and [[etc-family-results]] record the
+ordinary global short-circuit loop gain92 to12, frame30/226words. Real word-pair
+loads and equivalent address operand reversal are neutral12. Six tail address
+words remain; drafts/T-24075 preserves all forms and safe replay. Production
+ASM/interfaces/neighbors unchanged, status In Progress; no actual C proof.

@@ -19,3 +19,18 @@ Recover only ETC func_8013C8EC (904 bytes), src/ovl/ETC/8013BEF0.c. Preserve all
 
 ## Notes
 Six disjoint old remainder temporaries may differ from target's single v1 web; inspect fresh output before joining them. Existing u8[13] pick-count arrays and actual pointer types provide semantic evidence, not a match promise. Historical score improved244 to92 with width recovery. T-24069 BFFC is independently Done in this TU. Rejected43758 selection was withdrawn after primary T-24055 showed its byte defect already corrected; avoid stale worktree history.
+
+Fresh faithful full-TU corrected-pair baseline92/frame30. Actual object has six
+DIVU, zero signedDIV: K&R u8 promotion already supplies unsigned modulo, so no
+explicit unsigned cast control is justified. Joined disjoint remainder locals
+worsen116; rejected. Baseline extra s1 constants and eliminated repeated global
+stores motivate one ordinary global-assignment/short-circuit rejection-loop
+control, preserving RNG call count and rejection sets. Production unchanged.
+
+Ordinary global assignment plus short-circuit rejection loops improves92 to12
+resolved rows, exact frame30/226words. All six RNG loops now agree, including
+repeated global stores and at-immediates. Remaining six real words rotate
+index/base/shift among t5/t6/t7 and reverse ADDU operands in the tail pair lookup.
+Actual s32* pair loads and equivalent address operand reversal each remain12;
+no sweep follows. Source-only checkpoint/replay in drafts/T-24075, production
+ASM unchanged, ticket In Progress pending concrete source investigation.

@@ -298,3 +298,18 @@ post-increment cursor241/frame40 rejected. Required post-call frame reload
 corrections and all source controls/replay retained. Production remains ASM;
 no supported next faithful form or compiler-impossibility claim. Further
 probes stopped under parent direction.
+
+Fresh faithful full-TU corrected-pair baseline92/frame30. Actual object has six
+DIVU, zero signedDIV: K&R u8 promotion already supplies unsigned modulo, so no
+explicit unsigned cast control is justified. Joined disjoint remainder locals
+worsen116; rejected. Baseline extra s1 constants and eliminated repeated global
+stores motivate one ordinary global-assignment/short-circuit rejection-loop
+control, preserving RNG call count and rejection sets. Production unchanged.
+
+Ordinary global assignment plus short-circuit rejection loops improves92 to12
+resolved rows, exact frame30/226words. All six RNG loops now agree, including
+repeated global stores and at-immediates. Remaining six real words rotate
+index/base/shift among t5/t6/t7 and reverse ADDU operands in the tail pair lookup.
+Actual s32* pair loads and equivalent address operand reversal each remain12;
+no sweep follows. Source-only checkpoint/replay in drafts/T-24075, production
+ASM unchanged, ticket In Progress pending concrete source investigation.
