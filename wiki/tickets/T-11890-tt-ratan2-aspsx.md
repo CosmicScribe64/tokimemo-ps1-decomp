@@ -49,3 +49,5 @@ Match TT `func_8014D260` (object `TT/8014D260`, PsyQ gcc `ratan2`), the last TT 
 ## Comments
 
 2026-10-18, closed as Done without a match (outcome: evidence and tooling only). `func_8014D260` stays `INCLUDE_ASM`; the open lead is a compiler that emits the expanded divide (see Notes). Review against CODING_STANDARDS.md: the only code is `tools/aspsx_survey.py`, a read-only measurement script (module docstring, prints counts only, no game bytes, runs in Docker); no source, config or build change, no FAKE. No findings. PR from diman8, claim #56.
+
+2026-10-18, proposal on issue #63: keep `func_8014D260` as `INCLUDE_ASM` permanently with the reason in [[gcc-objects]] (PsyQ 3.70/4.00 `RATAN.OBJ` from an unreleased toolchain). Wiki-only PR from diman8 with the cc1psx, old-ASPSX and signature findings.

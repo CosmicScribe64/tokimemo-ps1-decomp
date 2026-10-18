@@ -26,7 +26,9 @@ Not gcc: TACO `func_801420DC` and `func_801421AC` (listed as gcc-shaped by wave 
 ## Which gcc
 Chosen by compiling the C and comparing bytes. `func_801488F0`: 2.7.2-psx and 2.6.3-psx end the function with `addu $sp; j $31; nop`, while the original has `jr $ra` with the stack release in its delay slot; gcc 2.8.0-psx and 2.8.1-psx print that epilogue (`.set noreorder`) and match byte for byte (ASPSX version 2.79). 2.8.0 and 2.8.1 are not told apart by this function; 2.8.1 is used.
 
-## `func_8014D260` (open, T-11890: the original is not ASPSX output of gcc 2.7.2)
+## `func_8014D260` (stays `INCLUDE_ASM`, T-11890: Sony's prebuilt `ratan2` from an unreleased toolchain)
+**Status (2026-10-18, proposed on issue #63):** stays `INCLUDE_ASM` with this reason. The function is PsyQ 3.70/4.00 `LIBGTE.LIB` `RATAN.OBJ`, instruction for instruction, except at the three habit spots. No public ASPSX (1.05 to 2.86) or PsyQ `cc1psx` (3.3 to 4.6) produces those habits, and the game's SDK libraries match no single PsyQ release (sections below). Matching it from C would need that toolchain, and a pass imitating it would model behaviour no real tool has (CODING_STANDARDS 7a). The paragraphs below are the history.
+
 With gcc 2.7.2-psx / 2.6.3-psx and maspsx `--expand-div`, the C in [[tickets/T-9200-gcc-built-sdk-objects-in-overlays]] is identical to the original up to the first division and has the same block structure, but is 4 bytes shorter. The divisions differ in layout: ASPSX expands `div rd,rs,rt` as `div $zero,rs,rt; mflo rd; <checks>` when `rd` is neither `rs` nor `rt` and as `div; <checks>; mflo rd` otherwise (original: four divisions, two of each kind), and puts the `mflo` hazard nops in other places (`mflo a0; nop; nop; j; sll v0,a0,1` against `mflo a0; nop; sll`). GNU as always puts the `mflo` after the checks. A pass in front of `maspsx` could model it; one function is too little evidence for CODING_STANDARDS 7a, so this waits for a second division site in gcc-built code.
 
 T-11800 (2026-10-15) tried every existing combination: gcc 2.6.3-psx, 2.7.2-cdk, 2.7.2-psx, 2.8.0-psx, 2.8.1-psx and

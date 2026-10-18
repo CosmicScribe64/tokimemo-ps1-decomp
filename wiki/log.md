@@ -19467,3 +19467,7 @@ Read issue63 and its new SDK signature/toolchain findings; no open PRs, NAME_ENT
 ## [2026-10-18] decision | T-24067 reject added-store state diagnostic
 
 Retained separate FAKE store-control.c: direct stack store before aggregate copy makes all four scratch-register words agree in current5.3, but adds SW, grows frame0x48→0x58 and changes branch offsets. Tagged full-TU default explicit-object replay reports15 rows, so it is rejected for promotion. Aggregate volatile qualifiers stay8/8. Required printf/tail/copy store sequencing supplies no immediate faithful direct-store substitute; [[tickets/T-24067-etc-album-copy]] records reasons. No compiler-version necessity inferred; continue read-only backend classification analysis within this function only.
+
+## [2026-10-18] decision | func_8014D260 stays INCLUDE_ASM (proposed, issue #63)
+
+[[gcc-objects]] now states the reason: TT `func_8014D260` is PsyQ 3.70/4.00 `RATAN.OBJ` from a toolchain no public ASPSX or `cc1psx` release reproduces. [[tickets/T-11890-tt-ratan2-aspsx]] notes the proposal; wiki-only PR from diman8.
