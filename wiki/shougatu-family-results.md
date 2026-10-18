@@ -120,3 +120,10 @@ copies and byte-array indexing; original keeps divisor 320 in fp, current IDO ho
 the work-array base there instead and eliminates generic division checks. The large
 `func_80141D20` baseline is 491 literal diff rows / 387 aligned edits after semantic/type
 repairs. Header/global/prototype branch checks all pass (0 new prototype disagreements).
+## T-24026 high-similarity sibling ports (2026-10-17)
+
+Two unguarded C matches in src/ovl/SHOUGATU/8013F190.c add 708 bytes: func_8013F224 (316 B), from GYOZI func_80141944/T-20006, and func_80140510 (392 B), from DATE func_80152E34/T-20600. Existing FnTbl27, DisplayActor44 and GameState views suffice; the SDK POLY_G3 is reused. The callback retains the sibling fall-through s32 return, narrow counter increment and fresh selector reads. The builder retains the sibling colour comma lines and explicit masks, now explicitly marked FAKE. A local void forward declaration is needed for func_80140698; no shared headers changed.
+
+func_80138240 remains guarded: typed FnTbl37 port matches all opcode/register choices but four stack frame/table-offset words (208/56 versus target 200/48). Source-only evidence and exhausted alternatives are in drafts/T-24026; avoid repeating return type, index declaration order, narrow index and direct-index variants. Default assembly fallback is retained, and no C win is claimed for it.
+
+The full SHOUGATU checksum passes. Both claimed wins pass the source gate (no target INCLUDE_ASM) and normal linked literal proof with --resolve --no-build --version default. [[tickets/T-24026-shougatu-sibling-ports]] awaits independent review.

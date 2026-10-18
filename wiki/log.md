@@ -18521,3 +18521,10 @@ Created [[tickets/T-24027-rpg-bat-state-machines]] In Progress for three exclusi
 ## [2026-10-17] decision | T-24027 state-machine package in review
 
 [[tickets/T-24027-rpg-bat-state-machines]] moves to In Review with one of three matched (1656 bytes). Remaining aggregate/quotient and geometry-loop allocation blockers recorded in [[rpg-bat-family-results]]; source-only forms and scorer archived in drafts/T-24027/. All loose experiments preserved in ignored build/T-24027-probes/. Production unchanged since verified win319f4b09e. Independent review pending.
+## [2026-10-17] ticket | T-24026 SHOUGATU sibling ports
+
+Created [[tickets/T-24026-shougatu-sibling-ports]] In Progress after reading [[shougatu-family-results]] and related sibling evidence. Scope is three functions in two source files.
+
+## [2026-10-17] build | T-24026 SHOUGATU two sibling C wins
+
+[[tickets/T-24026-shougatu-sibling-ports]] moves to In Review: 708 bytes of unguarded C verified by source gate, normal default linked literal proof and full SHOUGATU checksum. [[shougatu-family-results]] records recipes and the four-word stack layout blocker for the guarded dispatcher; source-only draft archived in drafts/T-24026. No shared-header changes.
