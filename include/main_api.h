@@ -2919,7 +2919,9 @@ s32 func_80049FF0();
 void place_init2(void);
 void normal_date_bg_out(void);
 void func_8004A9CC();
+#ifndef MAIN_API_OVERRIDE_func_8004AFB8
 void func_8004AFB8();
+#endif
 void func_800651F8();
 void func_80065234();
 void func_8006B5BC(GsWord arg0);

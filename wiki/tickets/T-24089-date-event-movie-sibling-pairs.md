@@ -1,7 +1,7 @@
 ---
 id: T-24089
 title: Match DATE and EVENT movie sibling pairs (func_8014718C/func_8011D5C4, func_801462B0/func_8011C750)
-status: In Progress
+status: Done
 priority: high
 created: 2026-10-18
 updated: 2026-10-18
@@ -21,10 +21,14 @@ In `src/ovl/DATE/801461B0.c` and `src/ovl/EVENT/8011C650.c`, two pairs of movie 
 
 ## Acceptance criteria
 
-- [ ] Close `DATE:func_8014718C` (1,996 B) and `EVENT:func_8011D5C4` (2,036 B) to `score=0`, and investigate/close `DATE:func_801462B0` and `EVENT:func_8011C750` in `build/scratch/t24089/`
-- [ ] Promote all matched functions to unguarded default C and verify `tools/funcdiff.py --resolve`, `ninja`, `tools/check_headers.py`, `tools/migrate_globals.py --check`, and `tools/sync_protos.py --check-branch`
-- [ ] Review against `CODING_STANDARDS.md` and record findings in `wiki/log.md`
+- [x] Close `DATE:func_8014718C` (1,996 B) and `EVENT:func_8011D5C4` (2,036 B) to `score=0`, and investigate/close `DATE:func_801462B0` and `EVENT:func_8011C750` in `build/scratch/t24089/`
+- [x] Promote all matched functions to unguarded default C and verify `tools/funcdiff.py --resolve`, `ninja`, `tools/check_headers.py`, `tools/migrate_globals.py --check`, and `tools/sync_protos.py --check-branch`
+- [x] Review against `CODING_STANDARDS.md` and record findings in `wiki/log.md`
 
 ## Notes
 
-- Subagent scratch workspace: `build/scratch/t24089/`
+- Matched all 4 functions (+11,536 B total; `src/ovl/DATE/801461B0.c` is now 100% matched!):
+  - `DATE:func_8014718C` (1,996 B in `src/ovl/DATE/801461B0.c`): `MATCH`
+  - `EVENT:func_8011D5C4` (2,036 B in `src/ovl/EVENT/8011C650.c`): `MATCH`
+  - `DATE:func_801462B0` (3,804 B in `src/ovl/DATE/801461B0.c`): `MATCH`
+  - `EVENT:func_8011C750` (3,700 B in `src/ovl/EVENT/8011C650.c`): `MATCH`

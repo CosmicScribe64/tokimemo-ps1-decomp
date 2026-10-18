@@ -20442,3 +20442,20 @@ Verified and reviewed 2 matched functions in [[tickets/T-24091-etc-shugaku-shoug
 ## [2026-10-18] ticket | Complete T-24090 (Done, +5 functions / +2,308 B); start T-24095
 
 Verified and reviewed all 5 matched functions in [[tickets/T-24090-geko-event-twins-and-near-misses-c]] (`GEKO:func_80137120` 436 B and `GEKO:func_801372D4` 468 B in `src/ovl/GEKO/80134D10.c`, `GEKO:func_80140040` 300 B in `src/ovl/GEKO/8013F360.c`, `GEKO:func_80133AA0` 432 B in `src/ovl/GEKO/801338F0.c`, and `EVENT:func_80102E54` 672 B in `src/ovl/EVENT/801024B0.c` via `MAIN_API_OVERRIDE_func_8004C6B0`, +2,308 B total) against `CODING_STANDARDS.md` (renamed `sp2B` -> `state`). Moved [[tickets/T-24090-geko-event-twins-and-near-misses-c]] to `Done` and started [[tickets/T-24095-geko-event-batch-d]] (`In Progress`).
+
+## [2026-10-18] ticket | T-24096 Done: Speedup audit and automation (`audit_speedups.py`, `idiom_sweep.py`, `port_sibling.py`)
+
+Implemented the 3 decomp speedup tools in `build/scratch/t24096/` under [[tickets/T-24096-speedup-audit-and-automation]]:
+1. `build/scratch/t24096/audit_speedups.py`: audited all remaining unmatched functions for shared-`%hi` accesses to their own object's `.data` range (18 functions across 11 objects: 6 objects need `tools/data_island.py` — `GYOZI/801418B0`, `MASTER/80139000`, `RENSYU/80132040`, `SHOUGATU/8013F190`, `VALEN/80132760`, `main/80075320`; 12 functions in `ETC/80143240` and `TAIIKU` already have `.data` islands and need C variable definitions replacing `INCLUDE_RODATA`) and audited `EVENT` `O.BIN` return types (`EVENT/80107FC0:func_80109404` calls `s32 func_8004C6B0` and `EVENT/8010FE10:func_80118B4C` calls `s32 func_8004A8EC`).
+2. `build/scratch/t24096/idiom_sweep.py`: one-command batch idiom scorer testing `cmp_ior_zero`, `cse_u32_view`, `ptr_mul_zero`, `pad_sweep`, and `autotweak`/`recipes` transforms in a single Docker invocation.
+3. `build/scratch/t24096/port_sibling.py`: instruction-aligned symbol-map transplanter from matched siblings to unmatched targets; refreshed `build/siblings.json` across all 6,952 functions.
+
+## [2026-10-18] ticket | T-24089 Done (4 matches, 11,536 B across DATE and EVENT) and T-24097 In Progress
+
+Reviewed against `CODING_STANDARDS.md` and verified with `tools/funcdiff.py --resolve`:
+- [[tickets/T-24089-date-event-movie-sibling-pairs]] (`Done`, +4 functions / +11,536 B):
+  - `DATE:func_8014718C` (1,996 B in `src/ovl/DATE/801461B0.c`): `MATCH`
+  - `EVENT:func_8011D5C4` (2,036 B in `src/ovl/EVENT/8011C650.c` + `include/ovl/EVENT.h`): `MATCH`
+  - `DATE:func_801462B0` (3,804 B in `src/ovl/DATE/801461B0.c` — `src/ovl/DATE/801461B0.c` is now 100% matched!): `MATCH`
+  - `EVENT:func_8011C750` (3,700 B in `src/ovl/EVENT/8011C650.c` + `include/main_api.h` `MAIN_API_OVERRIDE_func_8004AFB8`): `MATCH`
+- Created and dispatched [[tickets/T-24097-event-movie-final-and-date-event-twins]] (`In Progress`) to match `EVENT:func_8011DDB8` (3,992 B in `src/ovl/EVENT/8011C650.c`), `DATE:func_8013FD6C` (1,436 B), and `EVENT:func_8011B848` (1,460 B).

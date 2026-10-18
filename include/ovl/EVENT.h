@@ -1414,7 +1414,7 @@ extern EventTableE7 D_8012536C;
 /* Forward declarations for the original object, T-10040. */
 void func_8011C650(void);
 u16 func_8011C750(void);
-void func_8011D5C4(void);
+s32 func_8011D5C4(void);
 void func_8011DDB8(void);
 void func_8011EDFC(void);
 
