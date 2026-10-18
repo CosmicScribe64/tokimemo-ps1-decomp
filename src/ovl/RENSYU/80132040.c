@@ -206,11 +206,11 @@ void func_80132F10(void) {
 INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_8013325C);
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-19020, 21 differing lines; frame, control flow and case 5 match. In case 3 the address of
- * unk_66C[girl] gets v0 and diff v1 (original: swapped; equal priority, the address is numbered first), and in
- * case 0 D_801342C0 is copied from v1 to v0 (original: one register v0) */
+/* NON_MATCHING: T-22030, 8 rows (4 pairs); frame, control flow, case 3 and case 5 match. In case 0 the original
+ * keeps D_801342C0 in one register v0, with its lui hoisted above the test of D_80120652 (before the bnez); the
+ * draft puts the lui after the branch and copies the count to v1 (move v1,v0) for the +1 */
 void func_80133628(void) {
-    u32 girl;
+    s32 girl;
     s16 diff;
     RensyuTbl11 tbl;
 
@@ -218,7 +218,7 @@ void func_80133628(void) {
     switch (D_800E6280.unk_110A) {
     case 0:
         if (((DisplayActor44 *)D_8011ECD0)[96].unk_02 == 0) {
-            if ((D_801342C0 >= 5U) || ((D_801342C0 != 0) && (((u16) D_800E6280.unk_0F4.h >> 0xC) == 9))) {
+            if ((D_801342C0 >= 5U) || (D_801342C0 && (((u16) D_800E6280.unk_0F4.h >> 0xC) == 9))) {
                 func_8004284C();
             } else {
                 ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0x84;
