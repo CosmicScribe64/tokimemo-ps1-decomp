@@ -20240,3 +20240,12 @@ if-chain interleaves conditions and arms.632cost/590words/frame90, slots and
 saved allocations unchanged. Fewer words is not a match gain. No frontend home
 claim, CFG spelling sweep or production edit. Retain624 structural frontier,
 604 numeric best, same-function active ownership.
+
+## [2026-10-18] build | T24078 separates persistent UV storage from loaded-copy lifetime
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] group two
+sequential controls: matched D32C direct-work alias removal is resolved-identical
+624/592/frame90; first UV use word-view promotes persistentUV24 and worsens671/
+583/frame90. No other UV/height-width sweep. Original loaded UVcopies live only
+across polygon stores, while persistent words live across calls. Exact source,
+replay and next capture-lifetime question preserved; no production change.

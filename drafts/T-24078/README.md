@@ -35,6 +35,8 @@ Historical T17300 plain792/typed957 are different contexts, not fresh results.
 | base-height.c |628|856|592|0x98|
 | right-scratch.c |624|852|592|0x90|
 | if-chain.c |632|862|590|0x90|
+| direct-work.c |624|852|592|0x90|
+| uv-first-word.c |671|873|583|0x90|
 
 Original588 words/frame0x90. Rank with tools/funcdiff.py diff_score on resolved
 instruction keys (insertion/deletion1, substitution2). Printed rows use different
@@ -264,3 +266,30 @@ and poly84/88 unchanged. This is faithful behavior but not original final CFG;
 reject as frontier, no alternate if/goto/condition spelling sweep. No frontend
 capture exists, so no claim that a hidden home was removed or relocated. The
 original/current switch graph remains the supported structural frontier.
+
+
+Two sequential ordinary controls, not a width/layout sweep. First direct-work
+uses matched D32C organization: assign GetWorkBase directly into *var_s0 and
+pass *var_s0 to F040, remove only immediate temp_v0 alias declaration. No
+intervening side effect. Predicted model64-to60 homes/frame90 unchanged through
+rounding, visible slots unchanged; final target is resolved IDENTICAL to624
+right-scratch (592words/frame90). This cleaner source remains a separate replay.
+
+Second uv-first-word removes only (s8) from first sp54 use at u0, holding second
+u2 cast and all sp50 uses fixed. Original DDA0 LW v0 remains live across SBs
+to u0/u2; current scalar form uses LB. Predicted a word view might change
+load/reuse, but actual result promotes UV24 to saved s7 across calls, mode tofp,
+and136 no longer saved. No original tail LW appears;671cost/873rows/583words/
+frame90, worse despite fewer words. The one-use matching-only control has an
+explicit FAKE comment; original spelling is unproven. No mirrored other-UV,
+height-width or cast sweep followed.
+
+Original UV lifetime distinction is now precise: persistent two words are
+memory-resident across calls/iterations; loaded copies v0/v1 each feed two
+SDK SBs before AddPrim. Word-pair controls kept memory but reloaded before
+second uses; scalar full-word controls promoted persistent values acrosscalls.
+A possible faithful recipe is capturing the persistent pair into already-dead
+coordinate scratch locals at shared tail, preserving exact original load/store
+positions. That would add no homes and explicitly retain per-iteration snapshots
+across potentially aliasing polygon stores. No such control has run here, and
+unknown original persistent aggregate remains FAKE if used. No H width guess.
