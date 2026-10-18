@@ -1,0 +1,7 @@
+{"variant": "baseline", "aligned_cost": 4}
+{"variant": "backward_goto", "aligned_cost": 4}
+{"variant": "backward_goto_reversed", "aligned_cost": 4}
+{"variant": "do_goto", "aligned_cost": 4}
+{"variant": "shared_call", "aligned_cost": 1546}
+{"variant": "common_tail_s32", "aligned_cost": 518}
+{"variant": "common_tail_s16", "aligned_cost": 518}

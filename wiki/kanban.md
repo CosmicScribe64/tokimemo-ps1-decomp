@@ -52,6 +52,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
 - [ ] [[tickets/T-24030-bunkasai-sibling-package|T-24030 Recover BUNKASAI sibling package]]
 - [ ] [[tickets/T-24026-shougatu-sibling-ports|T-24026 Port three SHOUGATU high-similarity siblings]]
 - [ ] [[tickets/T-24008-taiiku-runners|T-24008 Recover TAIIKU runner family]]
@@ -63,10 +64,13 @@ kanban-plugin: board
 - [ ] [[tickets/T-24013-complete-rpg-bat|T-24013 Complete RPG_BAT battle family package]]
 - [ ] [[tickets/T-24010-date-etc-coordination|T-24010 Coordinate DATE and ETC matching]]
 - [ ] [[tickets/T-24011-date-dispatch-family|T-24011 Match DATE dispatch family]]
+- [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
+- [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]
+- [ ] [[tickets/T-24022-tel-frame|T-24022 Recover TEL large handler allocation]]
+- [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Investigate dialogue argument scheduling]]
 - [ ] [[tickets/T-24012-etc-render-family|T-24012 Match ETC rendering family]]
 - [ ] [[tickets/T-24007-complete-geko|T-24007 Complete GEKO scene package]]
 - [ ] [[tickets/T-24003-complete-bunkaken|T-24003 Complete BUNKAKEN selector and date-loader remainder]]
-- [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
 - [ ] [[tickets/T-24002-complete-option|T-24002 Complete OPTION matching package]]
 - [ ] [[tickets/T-24006-main-render-family|T-24006 Recover MAIN render family]]
 - [ ] [[tickets/T-24001-main-schedule-final-row|T-24001 Close main schedule final instruction]]
