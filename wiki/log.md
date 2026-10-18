@@ -18019,3 +18019,7 @@ Review against `CODING_STANDARDS.md`: no findings; only `drafts/T-22022/GYOZI/` 
 ## [2026-10-17] build | T-23006 checks
 
 [[tickets/T-23006-w5-big-p06]]: clean build 27/27 (668 steps; `SHA1 CHECK` of every binary OK), `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` pass; a later comment-only edit of `src/main/80047550.c` rebuilt with `SLPM_86.053.bin: OK`. Package left In Review for the lead.
+
+## [2026-10-17] ticket | T-23006 closer: load_tpage_buf_lock matches
+
+[[tickets/T-23006-w5-big-p06]]: the Opus closer matched `main:load_tpage_buf_lock` in `src/main/80047550.c` (`funcdiff --resolve` MATCH, 168 bytes). The store goes through an integer address with the index first, so uopt reloads the parameters after it (FAKE comment); notes in [[matching-notes]]. Package now 1 of 3, still In Review.
