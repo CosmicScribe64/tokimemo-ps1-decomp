@@ -17677,3 +17677,7 @@ Package w4-p16 for [[tickets/T-22016-w4-p16]]: KANGEI `func_80135004`, `func_801
 
 ## [2026-10-17] build | T-22016 closer: KANGEI func_8013769C matched
 [[tickets/T-22016-w4-p16]]: Opus closer matched KANGEI `func_8013769C` (2 rows, stack offsets of the two name tables). `s16 var_s0` declared before the tables plus a FAKE `s32 pad;` gave the original offsets 0x13C/0x54. Row added to [[register-cheatsheet]].
+
+## [2026-10-18] ticket | T-22016 Done
+
+Review of [[tickets/T-22016-w4-p16]] against `CODING_STANDARDS.md` passed after one wiki fix (ticket, index and [[matching-notes]] still called `func_8013769C` guarded after the closer matched it). 2 of 4 matched: KANGEI `func_801362F0` (420 bytes) and `func_8013769C` (1,268 bytes); `func_80135004` guarded at 16 rows, `func_80134724` back to `INCLUDE_ASM`.
