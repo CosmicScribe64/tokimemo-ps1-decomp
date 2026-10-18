@@ -90,3 +90,23 @@ offset0 plus an extra addiu. Both are rejected and retained as
 inline-first-mask.c/inline-retained-address.c with replay variants. These
 results limit the priority explanation; removal of the named local alone does
 not establish v0 availability. Best remains39 with production unchanged.
+
+Parent next approved only an unchanged-tracer comparison on the already-tested
+inline105 source. Same-input whole-object and all four sections pass first.
+Input SHA256 is `7c5a2f24a580ebffc5b5f7098b7ed12923697e0ec79b8e17e474bd062f5612aa`;
+object is `446a2ed155f3a7ab8b0615bcf361179f585526d14ce85c07ccacf49168eaa0ff`.
+
+```
+python3 tools/uopt_eval.py compile build/etc24070/inline-first-mask/source.c build/etc24070/trace105/baseline.o --uopt /scratch/variants/trace --trace --jobs 1
+python3 drafts/T-24070/trace_fidelity.py --variant 105
+```
+
+The common global mask expression becomes bit80, priority3, and still takes
+v0 first. Retained index bit23 has priority2 and takes v1. Removing the named
+local changes its representation but does not remove the competing expression
+range. This is observed priority/choice, not a per-color forbidden-mask result.
+The next source proposal changes only the conditional reload from &15 to
+unsigned modulo16, preserving the byte's0–255 domain and0–15 index. It tests
+whether the front end retains separate expression ranges before a late ANDI.
+Parent subsequently approved that one conditional reload control, after this
+fidelity checkpoint is pinned. No result is claimed here; other choices stay fixed.
