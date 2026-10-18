@@ -879,5 +879,37 @@
     "cost": 723,
     "printed": 793,
     "matching_claim": false
+  },
+  {
+    "label": "closer_default_after_tail_backgoto",
+    "expected": 805,
+    "got": 806,
+    "cost": 73,
+    "printed": 73,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_default_first_load_volatile",
+    "expected": 805,
+    "got": 805,
+    "cost": 54,
+    "printed": 668,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_default_second_load_volatile",
+    "expected": 805,
+    "got": 805,
+    "cost": 50,
+    "printed": 666,
+    "matching_claim": false
+  },
+  {
+    "label": "closer_default_first_store_volatile",
+    "expected": 805,
+    "got": 805,
+    "cost": 54,
+    "printed": 668,
+    "matching_claim": false
   }
 ]

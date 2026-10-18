@@ -1,0 +1,31 @@
+{
+  "matching_claim": false,
+  "assembler": "stock IDO5.3, -R -xbbdbg 8",
+  "capture_output_fidelity": {
+    "default": true,
+    "case12": true
+  },
+  "header_weight": 1,
+  "successor_weights": [
+    4,
+    4
+  ],
+  "default": {
+    "default_block": 37,
+    "dispatch_block": 38,
+    "selected_motion": "first two default address LUIs"
+  },
+  "case12_rejected_diagnostic": {
+    "default_block": 38,
+    "dispatch_block": 37,
+    "selected_motion": "dispatch SLL",
+    "invalid_table_entries": 13
+  },
+  "capture_sha256": {
+    "default.G": "10ae389ba54d97feb9ab22b86015e9f665cc7eb177ac3ef1ecdb7bcdc6bc0229",
+    "default.T": "3ad4e3bed29856108f30a97f13f3c8f881ab49ca473fed562f6ad1c783df7a62",
+    "case12.G": "f2b84d631db840f25604bdcc0708c4d8d93db7d1f4cfd314d7f58582aec98f6b",
+    "case12.T": "5ebc643d7d84d38e58b8ce3ae839472c1952efaae2a7f2dae125eff36a2d07bc"
+  },
+  "label_skip_flag_causality": "not established"
+}

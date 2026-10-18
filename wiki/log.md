@@ -19049,3 +19049,26 @@ comma arg0/arg3 forms are804/cost47 and51 with enlarged frames. Late false
 backedge is802/cost723 and retains LBU/BLTZ, so rejected. The110-row source
 ledger preserves all five controls. Evidence-only standards review has no new
 findings; production remains unchanged, guarded, and In Progress.
+
+## [2026-10-18] query | ENDING native traces isolate switch CFG order
+
+[[tickets/T-24047-ending-sprite-scene]] captured default/case12 native traces
+preserve target output and show equal local weights, reversed default/dispatch
+block numbering, and different selected motion (LUIs versus SLL). Label skip
+flag setter found read-only but not yet tied to this pair. Probe only an ordinary
+after-tail default block with back goto; production source remains unchanged.
+
+## [2026-10-18] query | ENDING after-tail CFG order rejected
+
+[[tickets/T-24047-ending-sprite-scene]] after-tail default/back-goto gives806/cost73
+and keeps both LUI moves. Isolate three entry access qualifiers individually;
+earlier all-load/final-store variants did not isolate this entry. No adoption.
+
+## [2026-10-18] query | ENDING native ordering evidence and access controls
+
+[[tickets/T-24047-ending-sprite-scene]] single first-load/second-load/first-store
+volatile forms give805 instructions at54/50/54, retain address motion and are
+rejected. Ledger114 and native capture hashes preserve completed evidence.
+[[ending-allocator-trace]] records equal local weights, swapped block numbering,
+and the candidate-skip flag whose involvement remains unproven. Evidence-only
+review has no new findings; zero new verified C bytes, task In Progress.

@@ -129,3 +129,22 @@ Copy `build/t24047/switch-metadata/default.T` to the output sidecar before that
 replay. Run it in the cached amd64 image with scratch writable and the project
 read-only. [[ido-52-evaluation]] documents the other pass interfaces and archive
 provenance. Compiler data and reconstructed C remain private, never committed.
+
+## Native switch-order control
+
+`drafts/T-24047/native-switch-evidence.json` records captured-input hashes and
+native trace observations. Run the stock assembler on each unchanged `.G` with
+its matching `.T`, normal arguments above, and `-R -xbbdbg 8`. The debug value
+must be a separate argument. Both traced target outputs equal the corresponding
+stock objects. Logs remain ignored in `build/t24047/switch-metadata/`.
+
+The dispatch header has weight1 and its two successors weight4 in both inputs.
+Normal source numbers default37/dispatch38; rejected explicitcase12 source
+numbers dispatch37/default38. Normal motion imports two default LUIs; case12
+imports the dispatch SLL. These local weights do not explain the difference.
+
+Read-only reconstructed AS1 identifies candidate-skip bit5 in block flags at
+offset68. Internal label kind25 sets it; `create_label_pinst` emits kind26.
+The captured target labels are all binasm ILABEL, not ILAB. No evidence yet
+establishes that this flag differs between the two switch controls. Do not
+treat a C named label as a proven speculation barrier.

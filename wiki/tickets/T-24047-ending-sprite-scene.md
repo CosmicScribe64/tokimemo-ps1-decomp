@@ -314,3 +314,28 @@ measurements. Compound-block/do-once controls remain804/cost35; comma-store
 arg0/arg3 controls are804/cost47 and51. Production stays guarded at35, zero
 new verified C bytes. Evidence-only scope/standards review finds no new issue;
 ticket and board remain In Progress.
+
+Fresh native AS1 traces of captured default/case12 inputs each reproduce their
+stock target words exactly. Both assign weight1 to dispatch header and4 to the
+two successor blocks. Normal form numbers default37, dispatch38; explicitcase12
+numbers dispatch37, default38. Native motion is two default LUIs versus the
+dispatch SLL, respectively. Thus this is not a difference in these block weights.
+The read-only reference identifies bit5 as a candidate skip flag and internal
+label kind25 as one setter (internally created labels are26), but its involvement
+in this pair is not proven. Logs remain ignored under build/t24047/switch-metadata/.
+Test a default block after the returning common tail, with ordinary gotos, to
+vary CFG traversal order without changing the case set or table bound.
+
+After-tail default/back-goto is rejected at806/cost73: common tail remains before
+default, adds branches, and both LUIs still move. Three single-access volatile
+controls now isolate the default entry (first load, second load, first store),
+since the previous all-load and final-store controls also changed later ordering.
+These are diagnostic only; no production qualifier change.
+
+Individual first-load/second-load/first-store volatile controls give805
+instructions at costs54/50/54. Each still imports default address work and
+changes the address temporary sequence, so all are rejected. Ledger now114;
+native-switch-evidence.json retains capture hashes, equal local weights and
+observed motion without claiming label-flag causality. [[ending-allocator-trace]]
+documents exact debug arguments and the unproven flag boundary. Scope/standards
+review finds no new issue; no production source, headers or toolchain changed.
