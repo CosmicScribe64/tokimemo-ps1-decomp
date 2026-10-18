@@ -206,9 +206,10 @@ void func_80132F10(void) {
 INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_8013325C);
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-22030, 8 rows (4 pairs); frame, control flow, case 3 and case 5 match. In case 0 the original
- * keeps D_801342C0 in one register v0, with its lui hoisted above the test of D_80120652 (before the bnez); the
- * draft puts the lui after the branch and copies the count to v1 (move v1,v0) for the +1 */
+/* NON_MATCHING: T-22030, 4 rows (2 pairs); frame, registers, control flow and cases 1 to 6 match. In case 0 the
+ * original has `lui v0,%hi(D_801342C0)` before the bnez on D_80120652 (with a nop in the branch slot); the draft
+ * puts the lui into the branch slot (nop before the bnez). Tried: s32 return type, early break, nested else-if,
+ * !test, permuter (150 s), a local copy of the count (frame grows by 8) */
 void func_80133628(void) {
     s32 girl;
     s16 diff;
@@ -230,7 +231,7 @@ void func_80133628(void) {
                 } else {
                     ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 1;
                 }
-                D_801342C0 += 1;
+                ++D_801342C0;
             }
         }
         break;
