@@ -1,7 +1,7 @@
 ---
 id: T-24068
 title: Match ETC album interaction
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -35,3 +35,9 @@ Parent approved exactly bit0/colors1..3 logging in a separate private binary. Wh
 Parent-approved explicit final-call void discard is neutral48 and whole-object identical to baseline; rejected and retained as replay --variant discard-final. No result/width sweep or instrumentation expansion. Next work is existing trace/source mapping only to identify bb3/bb11's fixed v0 contributor; any missing observation/scope must be reported before a new logging build. Production remains unchanged, In Progress.
 
 Parent authorized one helper-only logging extension for bit0/bb3/11. Separate private binary passes pinned same-input whole-object and four-section equality before interpretation. updateforbidden receives bb3/class1/precolor0 source40000000/0 and adds forbidden v0; bb11 source0/0 adds nothing. Exact marker creation inside bb3 remains unobserved. One approved label-only boundary after E80/before selector is neutral48 and whole-object identical, rejected without a goto/label sweep. drafts/T-24068/trace_blocks.py and replay --variant label-boundary retain source-only provenance. No production, header, config or allocator change; no match/verified bytes. Next gap is the creation of bb3's fixed-v0 mask and a legal required-expression route, not a supported new source probe. In Progress pending parent direction.
+
+Bounded read-only generated-source analysis finds makelivranges mask initialization at468BD4 (BB+52/+56 from1001E660) and candidate explicit register writers469748/46A230. The latter opcode0x64 path computes class/register from statement fields before ORing its mask; execution for bb3 is not observed. R0 offset2 bit4 alone does not establish E80's discarded return as the contributor. Smallest missing observation is creating writer PC plus statement opcode/memory type/offset for bb3. No new supported C89 source control, instrumentation build or production change; precise gap reported to parent, ticket In Progress.
+
+One parent-authorized private writer diagnostic passes same pinned-input entire-object/four-section fidelity first. bb3 initialization468BD4 sets mask0/0; neither candidate statement writer469748 nor46A230 executes for bb3, so exact contributor remains unknown. Subsequent read-only source finds later localcolor mask creation (including passed-in/precolored absent-unit path46C76C), without observed execution for this block. No faithful required-expression route or new C89 control is established. drafts/T-24068/trace_writers.py/README preserve generator, hashes, replay and precise causal limit. Production stays assembly,48 rows, no verified bytes; further instrumentation/probes stop pending specific parent scope. In Progress.
+
+Parent closes this focused pass as unresolved/In Review. Production remains INCLUDE_ASM;48 resolved rows are diagnostic only, not a C match or impossibility claim. Frozen source-only packet bed9333e1 retains the bounded controls and audited private evidence. No further trace/probes; a later specifically scoped investigation may address the exact localcolor/live-range mask origin. Ticket is not Done.
