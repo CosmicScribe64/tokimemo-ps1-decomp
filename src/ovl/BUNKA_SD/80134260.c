@@ -44,23 +44,23 @@ s32 func_80134314(void) {
     }
 }
 
-/* NON_MATCHING: T-12090, 26 differing listing rows; selector/base allocation and shared 0x80 constant. */
+/* NON_MATCHING: T-24035, four printable diff rows: two extra narrowing instructions (andi/move) after the cap constant, plus its changed branch offset. */
 #ifdef NON_MATCHING
+/* FAKE: u8 views keep one promoted counter range as in func_8013987C; original source unknown. T-24035. */
 void func_80134418(void) {
     s32 i;
-    s32 sel;
 
-    sel = *(u8 *)&D_800E6280.unk_110B;
-    for (i = 0; i < 64; i++) {
-        ((DisplayActor44 *)D_80120650)[i].unk_07 = sel;
+    for (i = 0; i < 0x40; i++) {
+        ((DisplayActor44 *)D_80120650)[i].unk_07 = *(u8 *)&D_800E6280.unk_110B;
     }
-    sel = (u8)(sel + 2);
-    D_800E6280.unk_110B = sel;
-    if (sel > 0x80) {
-        for (i = 0; i < 64; i++) {
-            ((DisplayActor44 *)D_80120650)[i].unk_07 = 0x80;
+    *(u8 *)&D_800E6280.unk_110B += 2;
+    if (*(u8 *)&D_800E6280.unk_110B > 0x80) {
+        /* FAKE: clear/add preserves the promoted cap range instead of splitting the constant; two redundant narrowing instructions remain. T-24035. */
+        *(u8 *)&D_800E6280.unk_110B *= 0;
+        *(u8 *)&D_800E6280.unk_110B += 0x80;
+        for (i = 0; i < 0x40; i++) {
+            ((DisplayActor44 *)D_80120650)[i].unk_07 = *(u8 *)&D_800E6280.unk_110B;
         }
-        *(u8 *)&D_800E6280.unk_110B = 0x80;
         func_8004284C();
     }
 }

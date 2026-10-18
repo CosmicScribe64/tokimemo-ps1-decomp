@@ -35,7 +35,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
-- [[tickets/T-24035-small-bunka-geko-siblings|T-24035]] Small BUNKA_SD/GEKO sibling ports (In Progress).
+- [[tickets/T-24035-small-bunka-geko-siblings|T-24035]] Small BUNKA_SD/GEKO sibling ports (In Review; 2 matches, 396 bytes; fade-in guard 4 rows).
 - [[tickets/T-24028-date-event-short-movie-siblings|T-24028]] Short DATE/EVENT movie siblings (In Review; DATE 11-instruction guard, EVENT 7-instruction source lead).
 - [[tickets/T-24018-large-sibling-state-machines|T-24018]] Large DATE/EVENT sibling state machines (In Review; source-only leads, 0 new C bytes).
 - [[tickets/T-24016-bunkasai-state-machines|T-24016]] BUNKASAI state machines (In Review; 2 matches, 3,160 bytes).

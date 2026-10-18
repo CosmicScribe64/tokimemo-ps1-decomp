@@ -114,3 +114,5 @@ Built with the wave-3 inventory scripts (11 functions, 5,908 bytes by their size
 ## T-24035 fade sibling transfer
 
 func_801344A8 now matches default unguarded C (152 literal bytes): matched func_8013987C with decrement 2 instead of 1, retaining promoted u8 counter accesses and the marked FAKE *= 0 clear. BUNKA_SD checksum and literal default linked funcdiff pass. func_80134418 remains in progress under [[tickets/T-24035-small-bunka-geko-siblings]].
+
+T-24035 final: func_80134418's existing guard improves to four printable rows (target36 versus candidate38 instructions). Promoted byte accesses and marked FAKE clear/add cap retain the exact first-loop allocation and shared cap register; extra andi/move remain. Source-only near draft, reproduction and cap-view negatives in drafts/T-24035/. Default BUNKA_SD checksum passes; guarded function adds zero C bytes. Together with GEKO helper, package matched396 literal bytes; [[tickets/T-24035-small-bunka-geko-siblings]] In Review.

@@ -18271,3 +18271,12 @@ Started [[tickets/T-24035-small-bunka-geko-siblings]] after reading T-12090/T-95
 
 ## [2026-10-18] build | Two small sibling matches verified as actual default C
 [[tickets/T-24035-small-bunka-geko-siblings]] matched GEKO func_80134228 (244 bytes) and BUNKA_SD func_801344A8 (152 bytes) from reviewed matched siblings. Removed their actual guards/fallbacks, rebuilt both units with Docker ninja -j1: headers and both checksums OK; literal default linked funcdiff MATCH for both. Retained/reticketed required FAKE reasons, no headers changed. Updated [[scenes-family-results]] and [[bunka-sd-family-results]]. Third target still in progress.
+
+## [2026-10-18] query | BUNKA_SD fade-in reduced to two extra instructions
+[[tickets/T-24035-small-bunka-geko-siblings]] retains func_80134418 behind its existing guard at four printable rows: two extra narrowing instructions plus branch-offset consequence. Promoted byte and marked FAKE clear/add cap fix its counter/base allocation; alternate signed/logical/local caps fail. Preserved source-only near draft and reproduction in drafts/T-24035/, updating [[bunka-sd-family-results]]. No matching-C claim for this guard.
+
+## [2026-10-18] build | Small sibling package final normal-C proof
+After the guard update, Docker probe reproduces four fade-in rows and normal ninja -j1 rebuilds BUNKA_SD with headers/checksum OK. Actual C targets func_801344A8 and GEKO func_80134228 retain literal default linked proof and no fallback; package gain396 bytes. GEKO source/header unchanged since its verified build.
+
+## [2026-10-18] ticket | Small sibling package ready for review
+Moved [[tickets/T-24035-small-bunka-geko-siblings]] and its kanban card to In Review. Root standards review remains; no push or merge.
