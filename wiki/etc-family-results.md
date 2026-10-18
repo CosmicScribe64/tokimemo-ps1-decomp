@@ -277,3 +277,7 @@ T-24072 final status unresolved/In Review, not Done. Best5 baseline/controls/rep
 T-24073 fresh faithful Rec24[2] baseline129, replacing stale array scaling and raw field casts. Original incoming a0 requires one word argument; parent approves narrow unspecified-argument header declaration to preserve matched no-expression caller, no caller change. Private baseline still narrows m2c s16 locals and has frame50 versus48; production untouched.
 
 T-24073 current Rec24 repair129 improves through word values/known MAIN unsigned width84 to early required y-store22 and postincrementID20. Best20 original frame/instruction count, with only counter increment across signedDIV guard unresolved; early IDstore30 rejected. Source-only packet/replay uses approved private header() view. Production/header unchanged, no C proof; In Progress.
+
+T-24073 func8014407C now matches352 actual default linked C bytes at e89ce5f3. Real Rec24/current fields, word values, matched unsigned SDK width view, early required y-store and canonical ordered for-loop recover all instructions. Approved void() declaration preserves original incoming-a0 behavior and matched caller without argument expression. ETC checksum/interfaces/42 neighbor-word bodies pass; In Review pending parent independent all27/publication.
+
+T-24073 parent independent all27/hash/interface/actual-C/literal352 checks pass, standards/spec review no findings. Published main c4847ad5d; ticket/card/index Done. Source/provenance retained.

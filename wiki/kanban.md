@@ -48,7 +48,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24073-etc-record-init|T-24073 Recover ETC typed record initializer]]
 
 
 
@@ -70,6 +69,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
 
 - [ ] [[tickets/T-24072-etc-model-init|T-24072 Match ETC model initializer]]
 
@@ -112,6 +112,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24001-main-schedule-final-row|T-24001 Close main schedule final instruction]]
 
 ## Done
+
+- [ ] [[tickets/T-24073-etc-record-init|T-24073 Recover ETC typed record initializer]]
 
 - [ ] [[tickets/T-24069-etc-menu-state|T-24069 ETC menu state machine verified820B]]
 
