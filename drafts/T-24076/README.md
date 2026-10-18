@@ -4,6 +4,9 @@ Only func_8013F054 (716 bytes), src/ovl/ETC/8013BEF0.c. Production/header/config
 remain unchanged. Historical T-20900 scores249/238 are prior context. Fresh
 current full-TU explicit-object default resolved diagnostics:
 
+Selected body.c is the71-row source; the90/103-row forms below are intermediate
+checkpoints retained for comparison.
+
 | Form | Rows |
 | --- | ---: |
 | Faithful indexed baseline |174|
@@ -14,6 +17,8 @@ current full-TU explicit-object default resolved diagnostics:
 | Consistent GameState pointer |107|
 | Two final scalar field-address reload views |90|
 | Signed raw-code comparison views |294|
+| Unsigned index/code reuse (parent/Astra control) |90|
+| Separate no-arg s32 fallthrough |71|
 
 Current matched helper8013F320 is void(s32), so all phantom arguments and the
 old invented incomingarg2 are removed. Both actual callers ignore target result;
@@ -69,6 +74,22 @@ They change only the two final selector reads and are explicitly FAKE-tagged.
 The whole-GameState+756/integer-cursor FAKE note is also inline; annotated103
 was freshly replayed unchanged before this control. A surgical signed view of
 the two raw-code comparisons worsens90 to294, rotating selected registers;
-rejected, no additional type alternatives or width sweep. Best remains90.
+rejected, no additional type alternatives or width sweep. That stage retained90.
 Original179 words versus best177 (frame28); header/config/production remain
 unchanged. All actual views are diagnostic, not proof of original source type.
+
+Parent/Astra approved one unsigned index/code reuse: initialize u32 search from
+index, then reuse it for the loaded byte code after forming the cursor. It is
+neutral90, whole-object identical to void best90 (SHA256
+8066173a64b843cb65aaab9e20a2191dc29c7c3c4c570ca87f8a372933c8cf61).
+No second reuse form was tried. Separately, parent approved a no-argument s32
+fallthrough against the original best90, not a cross-product. It improves to71
+by restoring epilogue/join placement; original return type remains unproven,
+explicitly FAKE-tagged, and no return value is invented. Private forward
+signature exactly follows each selected definition.
+
+Best71 uses178 words versus179 original with exact frame28. Early
+index load sinking/duplication versus original earlya0-to-v1 copy, search branch
+operand/temporary choices and album/final reload scratch registers remain.
+Fresh default replay validates this source-only checkpoint; production/header/
+config unchanged, no actual C match or compiler-impossibility claim.

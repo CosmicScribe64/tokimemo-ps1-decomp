@@ -6,12 +6,12 @@ import sys
 sys.path.insert(0, 'drafts/T-24011')
 from diagnostic import report
 
-variants = {'tail-reloads': 'body.c', 'word-event': 'word-event.c', 'baseline': 'baseline.c',
+variants = {'return-view': 'body.c', 'tail-reloads': 'tail-reloads.c', 'word-event': 'word-event.c', 'baseline': 'baseline.c',
     'address-cursor': 'address-cursor.c', 'short-tail': 'short-tail.c',
     'word-code': 'word-code.c', 'state-pointer': 'state-pointer.c',
-    'signed-code-tests': 'signed-code-tests.c'}
+    'signed-code-tests': 'signed-code-tests.c', 'search-reuse': 'search-reuse.c'}
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--variant', choices=variants, default='tail-reloads')
+parser.add_argument('--variant', choices=variants, default='return-view')
 args = parser.parse_args()
 p = Path('src/ovl/ETC/8013BEF0.c')
 before = p.read_text()
@@ -29,7 +29,13 @@ root = Path('build/etc24076/replay') / args.variant
 root.mkdir(parents=True, exist_ok=True)
 source, obj = root / 'source.c', root / 'source.o'
 private = before.replace(matched, body.rstrip())
-private = private.replace('#include "ovl/ETC.h"', '#include "ovl/ETC.h"\nvoid func_8013F054(void);\nvoid func_8013F320(s32 arg0);')
+if 's32 func_8013F054(void) {' in body:
+    target_forward = 's32 func_8013F054(void);'
+elif 'void func_8013F054(void) {' in body:
+    target_forward = 'void func_8013F054(void);'
+else:
+    raise SystemExit('unknown target signature')
+private = private.replace('#include "ovl/ETC.h"', '#include "ovl/ETC.h"\n' + target_forward + '\nvoid func_8013F320(s32 arg0);')
 source.write_text(private)
 subprocess.run([sys.executable, 'tools/cc.py', str(source), str(obj), 'ido', '5.3'], check=True)
 result = subprocess.run([sys.executable, 'tools/funcdiff.py', '--built', str(obj),

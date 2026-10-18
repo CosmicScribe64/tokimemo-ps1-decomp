@@ -1,5 +1,6 @@
-/* NON_MATCHING: T-24076 scalar tail reload view, 90 resolved rows. */
-void func_8013F054(void) {
+/* NON_MATCHING: T-24076 no-arg s32 fallthrough diagnostic, 71 resolved rows. */
+/* FAKE DIAGNOSTIC: no-arg s32 fallthrough, original return type unproven. T-24076. */
+s32 func_8013F054(void) {
     /* FAKE: the whole-GameState byte view at +0x756 covers index0 before the
      * known unk_75E subarray. The integer address cursor preserves the unsigned
      * boundary without forming a before-object pointer; original C type and
