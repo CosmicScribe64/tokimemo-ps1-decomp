@@ -18438,3 +18438,6 @@ Moved [[tickets/T-24016-bunkasai-state-machines]] to In Review and moved its kan
 ## [2026-10-17] build | T-24008 guarded translation-unit confirmation
 
 Full NON_MATCHING translation-unit funcdiff compiled the retained updater and reproduced its nine instruction differences. Final branch prototype check completed: 0 new disagreements, 15 known. [[tickets/T-24008-taiiku-runners]] remains In Review.
+
+## [2026-10-17] ticket | Resume coordinator with BUNKASAI sibling package
+Created [[tickets/T-24030-bunkasai-sibling-package]] before implementation. Reused clean built /private/tmp/tokimemo-complete-etc on codex/complete-bunkasai-siblings, fast-forwarding to a6fa29a65 without resetting prior history. Read [[index]], [[completion-run-2026-10-17]], [[bunkasai-family-results]], [[bunka-family-results]] and T-22012 negative evidence. Exclusive targets func_80142700 and func_80151364; Docker single compiler, root owns final integration/checks/push.
