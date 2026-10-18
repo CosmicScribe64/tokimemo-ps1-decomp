@@ -47,6 +47,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24035-small-bunka-geko-siblings|T-24035 Match small BUNKA_SD and GEKO siblings]]
+
 
 
 

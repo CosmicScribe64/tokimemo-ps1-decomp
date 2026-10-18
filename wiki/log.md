@@ -18265,3 +18265,9 @@ Updated only the existing DATE func_8014718C guarded body and ticket note; its a
 
 ## [2026-10-18] ticket | Short movie source work ready for review
 Moved [[tickets/T-24028-date-event-short-movie-siblings]] and kanban card to In Review; root standards review remains. No push or merge.
+
+## [2026-10-18] ticket | Small BUNKA_SD and GEKO sibling ports
+Started [[tickets/T-24035-small-bunka-geko-siblings]] after reading T-12090/T-9530/T-17700 negatives and matched T-22021/T-22010 siblings. Only BUNKA_SD/80134260.c and GEKO/80134040.c assigned; one Docker compiler. Relevant pages [[bunka-sd-family-results]] and [[scenes-family-results]].
+
+## [2026-10-18] build | Two small sibling matches verified as actual default C
+[[tickets/T-24035-small-bunka-geko-siblings]] matched GEKO func_80134228 (244 bytes) and BUNKA_SD func_801344A8 (152 bytes) from reviewed matched siblings. Removed their actual guards/fallbacks, rebuilt both units with Docker ninja -j1: headers and both checksums OK; literal default linked funcdiff MATCH for both. Retained/reticketed required FAKE reasons, no headers changed. Updated [[scenes-family-results]] and [[bunka-sd-family-results]]. Third target still in progress.

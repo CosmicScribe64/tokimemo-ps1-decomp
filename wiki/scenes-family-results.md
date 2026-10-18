@@ -220,3 +220,7 @@ Two file-disjoint packages from the orchestrator's `mklists3.py` (lists in its s
 
 Left for later: `func_80133AF0` (3,584 B, 1,287 rows) and `func_801350A4` (3,328 B, 1,116 rows), the two large
 scene handlers of `80132DE0.c`.
+
+## T-24035 GEKO state helper transfer
+
+GEKO func_80134228 matches normal unguarded C (244 literal bytes) by porting func_80135AC8's u8 read view/dead byte-result test (both marked FAKE), changing the flag mask to 0x40 and omitting the sibling's D_80122D4C clear. GEKO checksum and literal default linked funcdiff pass; no header change. [[tickets/T-24035-small-bunka-geko-siblings]] tracks the package.

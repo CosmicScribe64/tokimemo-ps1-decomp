@@ -68,4 +68,22 @@ void func_80134418(void) {
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80134260", func_80134418);
 #endif
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80134260", func_801344A8);
+/* FAKE: T-24035. The u8 views keep the counter in one promoted range; *= 0 preserves its zero register for the clear loop instead of folding the stores to sb zero, as in matched sibling func_8013987C. Original source unknown. */
+void func_801344A8(void) {
+    s32 i;
+
+    for (i = 0; i < 0x40; i++) {
+        ((DisplayActor44 *)D_80120650)[i].unk_07 = *(u8 *)&D_800E6280.unk_110B;
+    }
+    if (*(u8 *)&D_800E6280.unk_110B == 0) {
+        *(u8 *)&D_800E6280.unk_110B = 2;
+    }
+    *(u8 *)&D_800E6280.unk_110B -= 2;
+    if (*(u8 *)&D_800E6280.unk_110B == 0) {
+        *(u8 *)&D_800E6280.unk_110B *= 0;
+        for (i = 0; i < 0x40; i++) {
+            ((DisplayActor44 *)D_80120650)[i].unk_07 = *(u8 *)&D_800E6280.unk_110B;
+        }
+        func_8004284C();
+    }
+}
