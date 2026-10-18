@@ -8,6 +8,8 @@
 /* SHOUGATU data. */
 extern u8 D_80146160;
 extern u8 D_80146164;
+void func_80143228(void); /* T-24004: called by dispatcher before definition */
+
 void func_801391F4();
 void func_8013AF30();
 extern s16 D_80145F2C;

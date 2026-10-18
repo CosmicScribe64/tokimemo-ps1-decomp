@@ -18166,3 +18166,11 @@ Created [[tickets/T-24002-complete-option]] on branch codex/complete-option for 
 ## [2026-10-17] build | OPTION completion checks pass
 
 [[tickets/T-24002-complete-option]] final header/global/prototype checks passed (prototype branch check: 0 new disagreements, 15 known). Official guarded funcdiff confirms func_80139F8C remains five differing rows; no match claimed for it.
+
+## [2026-10-17] ticket | Begin SHOUGATU scene completion package
+
+Created [[tickets/T-24004-complete-shougatu]] for five functions of src/ovl/SHOUGATU/80141780.c after consulting [[shougatu-family-results]]. Reuse the OPTION worktree without changing its pinned commits.
+
+## [2026-10-17] build | Match SHOUGATU scene dispatcher
+
+[[tickets/T-24004-complete-shougatu]] recovered func_801430A0 (352 bytes) in src/ovl/SHOUGATU/80141780.c. Typed callback table, direct counter mutation and consistent record-base accesses reproduce the original allocation and store/load schedule; no FAKE needed. Default linked proof and SHOUGATU checksum pass. Details in [[shougatu-family-results]].

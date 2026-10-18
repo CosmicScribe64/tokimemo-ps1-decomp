@@ -35,6 +35,8 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
+- [[tickets/T-24004-complete-shougatu|T-24004]] SHOUGATU scene completion: dispatcher func_801430A0 matched (352 bytes), remaining bounded probes in progress.
+
 - [[tickets/T-24002-complete-option|T-24002]] OPTION completion follow-up: func_80139198 matched (860 bytes), one guarded draft improved; package in review.
 
 - [[tickets/T-20012-stable-search-scoring|T-20012]] Stable candidate ranking in viewsweep/order_search, 230 tests pass, issue #58 (Done).

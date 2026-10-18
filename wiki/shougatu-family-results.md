@@ -96,3 +96,17 @@ after resetting the counter although the function's callees are `void`.
 
 Seven packages for wave 3, T-17501..T-17507 (`w3-shougatu-p01`..`p07`), 33 functions, 18,404 bytes, built with the
 wave-3 inventory scripts; `func_8014288C` (1,300 bytes, 506 rows) is not in a package.
+
+## T-24004 scene completion follow-up
+
+`func_801430A0` matched (352 bytes) using the typed sibling dispatcher recipe:
+`FnTbl48`, an `s32 idx` declared before the table, and a fall-through `s32` definition.
+The record-96 counter increments directly, then resets at three; this preserves the
+original `move v0,zero` after the reset. Its flags and counter are accessed consistently
+through `DisplayActor44` on `D_8011ECD0`. In particular record 98's flag byte must share
+that base with record 96's animation byte: the scalar flag store plus typed animation
+load lets as1 hoist the load and leaves eight diff rows (four aligned edits), while the
+shared-base form matches. No padding local or return-value cast is needed. The only
+header addition is the forward declaration of its existing callee `func_80143228`.
+Docker `ninja -j1 build/ovl/SHOUGATU.ok` passes; default no-build funcdiff reports linked
+function bytes equal target (352 bytes). See [[tickets/T-24004-complete-shougatu]].
