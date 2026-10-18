@@ -19289,3 +19289,13 @@ noUV/page uses. UV init and rightX immediate160 are separate. ExactoriginalVAs
 and candidateoffsets in drafts/T-24078/constant-use-map.md; case2 LIroles checked
 byconsumers. Parent read-only followup found no faithful edit. No build, logger,
 source/type spelling split or impossibility claim; same function active.
+
+## [2026-10-18] build | T24078 one marked H-only unsigned control changes saved allocation
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve exactly
+one authorized four-literal H-only suffix control, marked FAKE/unproven original
+signedness. Actual caller A0..80 semantics proven equal.606cost/592words/frame90,
+poly/UV offsets and Q/P order retained; mode6/136s7 now original, but160takesfp
+and page still spills60. Two signed lower-right formulas reassociate to immediate
+ADDIU160. No literal match or new priority observation;618 and604 kept separately.
+No automatic suffix/width permutation, production unchanged and same target active.
