@@ -18615,3 +18615,8 @@ Created [[tickets/T-24033-valen-selector-ports]] In Progress. Read T-19016 and [
 ## [2026-10-17] decision | T-24033 VALEN seven-row selector draft
 
 [[tickets/T-24033-valen-selector-ports]] moves to In Review. Direct GameState girl access and meaningful mode local leave func_80132D0C at7 rows, retained under NON_MATCHING;34030 remains its prior27-row guard. Zero matches or verified-byte gain. Default VALEN SHA1 and declaration checks pass; [[event-family-results]] updated. Source-only probes preserved, all loose experiments retained ignored in build/T-24033-probes/. Independent review pending.
+## [2026-10-18] ticket | Small BUNKA_SD and GEKO sibling ports
+Started [[tickets/T-24035-small-bunka-geko-siblings]] after reading T-12090/T-9530/T-17700 negatives and matched T-22021/T-22010 siblings. Only BUNKA_SD/80134260.c and GEKO/80134040.c assigned; one Docker compiler. Relevant pages [[bunka-sd-family-results]] and [[scenes-family-results]].
+
+## [2026-10-18] build | Two small sibling matches verified as actual default C
+[[tickets/T-24035-small-bunka-geko-siblings]] matched GEKO func_80134228 (244 bytes) and BUNKA_SD func_801344A8 (152 bytes) from reviewed matched siblings. Removed their actual guards/fallbacks, rebuilt both units with Docker ninja -j1: headers and both checksums OK; literal default linked funcdiff MATCH for both. Retained/reticketed required FAKE reasons, no headers changed. Updated [[scenes-family-results]] and [[bunka-sd-family-results]]. Third target still in progress.

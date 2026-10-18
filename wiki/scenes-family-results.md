@@ -244,3 +244,6 @@ packed-byte access, 152 for `func_80132B24` after recovering the original frame/
 layout, and 163 for a width variant of `func_80133308` (164 plain current-header form).
 Details and provenance in drafts/T-24007/README.md. Header/global/prototype checks pass
 (0 new prototype disagreements, 15 known); no shared header change or FAKE added.
+## T-24035 GEKO state helper transfer
+
+GEKO func_80134228 matches normal unguarded C (244 literal bytes) by porting func_80135AC8's u8 read view/dead byte-result test (both marked FAKE), changing the flag mask to 0x40 and omitting the sibling's D_80122D4C clear. GEKO checksum and literal default linked funcdiff pass; no header change. [[tickets/T-24035-small-bunka-geko-siblings]] tracks the package.

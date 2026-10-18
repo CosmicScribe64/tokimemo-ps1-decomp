@@ -47,6 +47,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24035-small-bunka-geko-siblings|T-24035 Match small BUNKA_SD and GEKO siblings]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
