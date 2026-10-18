@@ -17948,3 +17948,7 @@ Started [[tickets/T-22027-w4-p27]] (wave 4 package w4-p27, branch `w4-p27` from 
 ## [2026-10-17] ticket | T-22027 In Review
 
 [[tickets/T-22027-w4-p27]]: GEKO `src/ovl/GEKO/801338F0.c`, 0 of 2 matched. `func_80133AA0` guarded at 8 rows (compare operand order against the shared `$v1` constant 1), `func_80133C50` restored to `INCLUDE_ASM`. Notes in [[matching-notes]] (section T-22027); card moved to In Review.
+
+## [2026-10-17] ticket | T-22027 Done
+
+[[tickets/T-22027-w4-p27]]: 0 of the list matched; func_80133AA0 guarded at 8 rows, func_80133C50 back to INCLUDE_ASM. Merged after the conveyors stopped at the usage limit.
