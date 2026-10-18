@@ -18287,3 +18287,6 @@ Moved [[tickets/T-24012-etc-render-family]] and its card to In Review for the so
 ## [2026-10-17] build | Two more verified functions published
 
 GEKO func_80133598 (452 bytes) and BUNKAKEN func_80143DD0 (3,232 bytes) passed independent source review, unguarded default linked-byte proof, all 27 checksums and guards, then pushed to main. Docker progress now 6,473/6,958 functions, 1,820,480/2,279,368 bytes (79.9%). T24005 Done; T24007 family continues. Updated [[completion-run-2026-10-17]]; assigned fresh TAIIKU T24008 to Sol medium and ENDING T24009 to Astra using existing worktrees.
+## [2026-10-17] ticket | GEKO scene package enters review
+
+[[tickets/T-24007-complete-geko]] ends with one verified function / 452 bytes, one guarded 36-row near match, and three source-only archived follow-ups. Default linked func_80133598 proof and GEKO checksum pass after the guard edit; official guarded comparison confirms func_80133024 still differs. Header/global/prototype checks pass (0 new, 15 known). Ticket and board moved to In Review; independent review remains required. Every loose experiment and diagnostic is preserved under ignored build/T-24007-probes; automatic review rejected deletion of temporary files. See [[scenes-family-results]].
