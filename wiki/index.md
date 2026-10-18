@@ -691,3 +691,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24038-etc-master-siblings|T-24038]] ETC signed-number renderer and MASTER event-record handler (In Review; 2 matches, 1,752 default linked bytes).
 - [[tickets/T-24039-tel-date-menu]] - bounded large TEL date menu reconstruction.
 - [[tickets/T-24041-main-render-cd-siblings]] — MAIN LINE_G2 renderer348 B verified; CD dispatcher source-only499-edit checkpoint.
+
+- [[tickets/T-24047-ending-sprite-scene|T-24047]] ENDING sprite scene initializer, 80135F4C (In Review;804/805 source-only checkpoint, zero verified bytes).

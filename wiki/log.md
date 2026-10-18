@@ -18763,3 +18763,35 @@ Corrected TEL func_8013D88C menu-array and flag induction strides, text table in
 ## [2026-10-18] lint | Preserve final archives and refresh contributor state
 
 T24039 TEL and T24041 CD source-only checkpoints are on main, with no coverage claims. [[completion-run-2026-10-17]] no longer lists those or T24035 as queued and reflects the completed dialogue function. Contributor check07:11UTC found no open PRs; open claims50/56/57 unchanged. Next check around07:41UTC; no contributor messages sent. Main coverage remains6499functions/1847520bytes,81.1%.
+
+## [2026-10-18] ticket | T-24047 ENDING initializer restart
+
+Created [[tickets/T-24047-ending-sprite-scene]] at main4496b0dc7 in isolated codex/complete-ending-large. Own only src/ovl/ENDING/80134D20.c; prior MAIN/EVENT/TEL scope revoked. One compiler, Docker only. Read [[ending-family-results]] and [[completion-run-2026-10-17]].
+
+## [2026-10-18] query | ENDING initializer source recovery
+
+[[tickets/T-24047-ending-sprite-scene]] hand reconstruction restores805/805 instructions, frame176 versus target160. Corrected typed menu arrays and ordinary loops; shared transfer-size and grid-divisor lifetime hypotheses are being tested. No match claimed.
+
+## [2026-10-18] query | ENDING initializer frame recovered
+
+[[tickets/T-24047-ending-sprite-scene]]: ordinary direct record indexing and two scalar locals recover original160-byte frame and stack table homes. Bitfield access restores scene-switch instructions. Current803/805-instruction source has aligned cost104; loop scheduling remains.
+
+## [2026-10-18] query | ENDING initializer narrowed to scheduling and constant types
+
+[[tickets/T-24047-ending-sprite-scene]] source reaches aligned cost64 with exact160-byte frame; normal branch/case bodies agree. Unsigned size/width typing and named quotient lifetime are material. Native AS1 tracing fails current shim validation, so tracing was discarded without production changes.
+
+## [2026-10-18] query | ENDING native AS1 trace fidelity established
+
+[[tickets/T-24047-ending-sprite-scene]] corrects earlier trace failure classification: optional .data lookup was a script error. Scratch native AS1 tracing now retains26784 DAG lines with stock code/data/relocation equality. Source Y/fade store order restores display loop; current aligned cost49.
+
+## [2026-10-18] query | ENDING initializer two blockers isolated
+
+[[tickets/T-24047-ending-sprite-scene]] reaches804/805 instructions, aligned cost43; first two initialization loops and all scene bodies now agree. Remaining constant-colour tie and cross-switch address scheduling remain unverified C. First menu-address roundtrip needs FAKE marking if retained.
+
+## [2026-10-18] ticket | ENDING initializer checkpoint in review
+
+[[tickets/T-24047-ending-sprite-scene]] enters In Review with source/replay/negative ledger under drafts/T-24047/. Preferred source804/805 instructions, aligned cost43. Explicitcase12 diagnostic has five differing words but wrong bound/table and is rejected. [[ending-family-results]] records recovered layout, loop order and remaining blockers. Zero new verified bytes.
+
+## [2026-10-18] build | ENDING checkpoint validation and review complete
+
+[[tickets/T-24047-ending-sprite-scene]] independent standards review has no actionable findings; parent scope review confirms the owned function is the only production change. Matching acceptance remains unmet and status stays In Review. Docker full-TU replay reproduces804/805 instructions/cost43, ENDING default rebuild passes SHA1, and headers/globals/branch prototypes pass with zero new disagreements. All27 built binaries pass manifest SHA1 checks after rebuilding inherited stale GEKO/GYOZI cache outputs without source edits. No coverage gain claimed.

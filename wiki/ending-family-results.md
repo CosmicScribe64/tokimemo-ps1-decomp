@@ -183,3 +183,28 @@ on the tree before the type changes (172ab7ce), "after" on b035184a (types done,
   the same score; the register of the promoted portrait field is what is left.
 - `func_8013A2E8`: no compiling fresh draft (`M2C_LWL` from the 27-byte string copy); the patterns of
   `func_80132420` (old-style definition, `u8 col` prototype, `D_8013CAC0` rows) should carry over.
+
+## T-24047 initializer recovery
+
+[[tickets/T-24047-ending-sprite-scene]] reconstructs `func_80135F4C` in
+`src/ovl/ENDING/80134D20.c` from current main4496b0dc7. One signed-halfword counter,
+one unsigned-halfword size and a signed-word quotient precede the two stack
+aggregates. Direct record indexing removes machine-temporary pointer homes and
+recovers the original160-byte frame with tables at sp+0x7C/sp+0x60.
+
+Use GameState.unk_10A5[i+16] for the first three menu bytes and [i+4] for the
+last twelve. The first loop needs a FAKE address roundtrip on that member to
+retain the original alias dependency. Writing the width halfword through a
+FAKE unsigned view lets its value share the size register with height/colour
+and image-transfer arguments. The shared Rec24 declaration remains unchanged.
+A named i/6 quotient immediately after the third loop's byte clear restores
+its ten-store block; literal divisors naturally become register divisors.
+
+Actor Y assignment before the fade-byte assignment restores the complete
+second loop. The bit14 field view preserves the original shift/sign branch
+and the register cycle of the scene switch. Preferred source still differs:
+804/805 instructions, aligned cost43. Four words exchange the grid constants
+128/499 between a3/t0. Two default-arm script-address LUIs move into dispatch.
+Explicit case12/default prevents that motion but changes the bound and table,
+so its five-word diagnostic is not accepted. Draft and replay: drafts/T-24047/.
+No new verified C bytes; normal builds retain ASM.
