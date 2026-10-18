@@ -102,3 +102,49 @@ python3 drafts/T-24078/uopt_capture.py
 
 Use only after full-object fidelity passes. Raw stage files remain ignored in
 build/etc24078/uopt604; no binary, original assembly or ucode dump is committed.
+
+## Read-only internal decision limit
+
+Existing generated stock reference, /private/tmp/t24047-uopt/recomp/build/5.3/uopt.c,
+was read without building/executing it. oneproc calls copypropagate at126696,
+findinduct at126870, codemotion at126887, localcolor at127263, globalcolor at127425
+and reemit at127597. These are static call sites, not proof of the executed
+transform that reversed this input. reemit begins at54385 (PC42e450), traverses
+BB statements and calls expression helper426dfc/genrop paths. Static existence
+of copy/motion and DAG traversal leaves multiple explanations.
+
+First-arm dependency adjacency table, verified from source/frontend and raw
+optimized records (all word-sized, no calls between these operations):
+
+| Node | Inputs | Result uses |
+| --- | --- | --- |
+| Q11 | A,11,80 | first SUB and lower-right X3 |
+| P | i,136 | first SUB and lower-right X3 |
+| R | A,i,68,80 | subtraction after P-Q11 and lower-right X3 |
+| B | P,Q11,R | X0=B+24 and optimized X1=B-Q68+160 |
+| X0 | B,24 | SH x0/x2 |
+
+There is NO value edge from Q11 to P. Frontend sequences Q11 assignment first;
+optimized output emits P first. Source statement order is not observable memory
+ordering and does not itself create such an edge. Inlining the first-arm aliases
+was already tested/rejected; repeating it, adding labels/dummy dependencies or
+changing widths without another measured relationship is unsupported.
+
+Smallest missing runtime observation: at ENTRY to reemit, inspect only the first
+arm associated with source LOC450 / optimized label159. Does its statement/DAG
+still retain Q11 assignment before P, or has that assignment already been elided
+or reordered? Paired with already captured emitted P/Q11 order, this separates
+an earlier graph transform from final re-emission. No statement snapshot exists
+in the current stock stage files; generated source alone cannot answer it.
+No logger, diagnostic build, option change or additional source probe was made.
+
+## Bounded re-emission observation
+
+reemit.md / reemit-observer.patch / reemit-fidelity.json preserve one exact
+parent-approved native logging variant and same-source stock-fidelity proof.
+At reemit ENTRY first-arm BB11 Q11/P/R assignments are already NOP96; first
+vertex store holds ADD(SUB(SUB(P,Q11),R),24). Output then emits leftP before
+rightQ11. Assignment elimination predates reemit; the exact earlier pass is not
+identified. This is not swapping surviving statements. Origin-first24-Q11+P-R,
+like the existing lower-right160-Q11+P-R-Q68 formula, is one source-backed
+association to consider; no new source test in this observation packet.

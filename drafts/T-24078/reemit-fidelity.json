@@ -1,0 +1,17 @@
+{
+  "source": "609467db3b985d285c786a9db47057fbb59b4276268d12d39ed6aab98d30713d",
+  "whole_object_identical": true,
+  "baseline": "67fbefa6e2af48b3ac7a8e508b774cea8c8efd2c4f824bce6269755d29163a00",
+  "diagnostic": "67fbefa6e2af48b3ac7a8e508b774cea8c8efd2c4f824bce6269755d29163a00",
+  "private_binary": "68d6a8ff4e167f7ed7df4a5377582e3a4b0eec80d2865b6c77ff75212d95e5f0",
+  "generated_source": "3ce7370e5302c5500b17042f18a60226b1a5420cd0f28874a8ea72db30b2c7de",
+  "sections": {
+    ".text": 15008,
+    ".rel.text": 10696,
+    ".rodata": 224,
+    ".rel.rodata": 448
+  },
+  "libc_impl": "fec0c2e2bbf4ae01b51a69a6dfc2864a29adb8c5cb221fa401658dec9d766700",
+  "version_info": "c73507ec924f3187b5a57f5de66d1c865e3e312f00c7a75c5bd56b5f2851eea0",
+  "trace_options_added": false
+}

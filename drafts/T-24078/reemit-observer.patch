@@ -1,0 +1,77 @@
+--- a/uopt.c
++++ b/uopt.c
+@@ -1,4 +1,58 @@
+ #include "header.h"
++
++/* T-24078 diagnostic only: native logging state, never used by emulated code. */
++static unsigned t24078_emit_arm, t24078_emit_count;
++static int t24078_target(uint8_t *mem) {
++    static const char name[] = "func_8013D570";
++    if (MEM_U32(0x1001c8d0) != sizeof(name) - 1) return 0;
++    for (unsigned i = 0; i < sizeof(name) - 1; i++)
++        if (MEM_U8(0x1001c4d0 + i) != (unsigned char)name[i]) return 0;
++    return 1;
++}
++static void t24078_expr(uint8_t *mem, uint32_t p, unsigned depth, unsigned *budget) {
++    if (!p || !*budget || depth > 8) return;
++    --*budget;
++    unsigned kind = MEM_U8(p), op = MEM_U8(p + 32);
++    fprintf(stderr, "T24078_EXPR depth=%u ptr=%08x kind=%u dtype=%u op32=%u w20=%08x w24=%08x w28=%08x w32=%08x w36=%08x w40=%08x copy48=%08x\n",
++        depth,p,kind,MEM_U8(p+1),op,MEM_U32(p+20),MEM_U32(p+24),MEM_U32(p+28),MEM_U32(p+32),MEM_U32(p+36),MEM_U32(p+40),MEM_U32(p+48));
++    if (kind == 4 && (op == 1 || op == 125 || op == 91 || op == 29)) {
++        t24078_expr(mem,MEM_U32(p+36),depth+1,budget);
++        t24078_expr(mem,MEM_U32(p+40),depth+1,budget);
++    } else if ((kind == 3 || kind == 6) && MEM_U32(p+48) && MEM_U32(p+48) != p) {
++        t24078_expr(mem,MEM_U32(p+48),depth+1,budget);
++    }
++}
++static void t24078_entry(uint8_t *mem) {
++    if (!t24078_target(mem)) return;
++    uint32_t bb=MEM_U32(0x1001c8f8), stmt=MEM_U32(bb+28);
++    unsigned active=0, budget=80;
++    fprintf(stderr,"T24078_REEMIT_ENTRY headbb=%08x firststmt=%08x\n",bb,stmt);
++    for (unsigned i=0; stmt && i<4096; i++,stmt=MEM_U32(stmt+8)) {
++        unsigned op=MEM_U8(stmt);
++        if ((op==66 && MEM_U32(stmt+20)==159) || (op==81 && MEM_U32(stmt+24)==450)) active=1;
++        if (active && op==81 && MEM_U32(stmt+24)>=455) break;
++        if (!active) continue;
++        fprintf(stderr,"T24078_STMT order=%u ptr=%08x op=%u bb=%u root4=%08x u20=%08x u24=%08x\n",
++            i,stmt,op,MEM_U16(MEM_U32(stmt+16)+8),MEM_U32(stmt+4),MEM_U32(stmt+20),MEM_U32(stmt+24));
++        if (op==123 || op==63) {
++            t24078_expr(mem,MEM_U32(stmt+4),0,&budget);
++            t24078_expr(mem,MEM_U32(stmt+20),0,&budget);
++        }
++    }
++}
++static void t24078_emit(uint8_t *mem,uint32_t rec) {
++    if (!t24078_target(mem)) return;
++    unsigned op=MEM_U8(rec);
++    if (op==66) {
++        t24078_emit_arm=MEM_U32(rec+4)==159;
++        if(t24078_emit_arm)t24078_emit_count=0;
++    }
++    if (!t24078_emit_arm) return;
++    if (op==81 && MEM_U32(rec+4)>=455) {t24078_emit_arm=0;return;}
++    if(t24078_emit_count++ < 32)
++        fprintf(stderr,"T24078_EMIT order=%u op=%u w1=%08x w2=%08x w3=%08x\n",t24078_emit_count,op,MEM_U32(rec+4),MEM_U32(rec+8),MEM_U32(rec+12));
++}
++
+ static const uint32_t rodata[] = {
+ 0x25733a20,0x25732c20,0x0,0x25733a20,0x6572726f,0x72202564,0x20286572,0x726f7220,
+ 0x636f6465,0x20756e6b,0x6e6f776e,0x292c2000,0x6f70656e,0x696e6720,0x66656564,0x6261636b,
+@@ -54383,6 +54437,7 @@
+ }
+ 
+ static void f_reemit(uint8_t *mem, uint32_t sp) {
++t24078_entry(mem);
+ const uint32_t zero = 0;
+ uint32_t at = 0, v1 = 0, t0 = 0, t1 = 0, t2 = 0,
+ t3 = 0, t4 = 0, t5 = 0, t6 = 0, t7 = 0, s0 = 0, s1 = 0, s2 = 0, s3 = 0, s4 = 0, s5 = 0,
+@@ -197048,6 +197103,7 @@
+ }
+ 
+ static void f_uwrite(uint8_t *mem, uint32_t sp, uint32_t a0, uint32_t a1, uint32_t a2, uint32_t a3) {
++t24078_emit(mem,a0);
+ const uint32_t zero = 0;
+ uint32_t at = 0, v1 = 0, t0 = 0, t1 = 0, t2 = 0,
+ t3 = 0, t4 = 0, t5 = 0, t6 = 0, t7 = 0, s0 = 0, s1 = 0, s2 = 0, s3 = 0, s4 = 0, s5 = 0,

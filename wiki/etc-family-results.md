@@ -513,3 +513,20 @@ optimizer, not frontend or conversion rewrite; internaltransform stillunknown,
 no faithful new source dependency identified. phase.md/uopt_capture.py/manifest
 preserve exactprovenance. H movement remains separately post-ugen, not this
 phase. No further compile/probe/instrumentation or production edit; active.
+
+Read-only existing stockuopt generatedreference: oneproc statically calls copy
+propagation, findinduct/codemotion, coloring thenreemit. Firstarmactualgraph has
+independentQ11 andP feedingSUB; no valueedgeQ11→P, so statementorder isn'tbarrier.
+Earliergraphrewrite vsfinalDAGre-emission remain unproven internalcandidates.
+phase.md records referencecalls/dependencytable andsmallestmissingobservation:
+firstarmLOC450/label159 statement/DAG order atENTRYreemit. No suchsnapshot,
+no supportednewsourceform, no logger/build/options/probe executed. Active.
+
+One approved bounded native reemit observer PASS same604 WHOLEOBJECT67fb...
+FIRST, allsections/options unchanged. ENTRY BB11 LOC450/451/452/453 arithmetic
+assignments are alreadyNOP96; firstX0store DAG ADD(SUB(SUB(P,Q11),R),24).
+Correspondingoutput emitsleftP beforeQ11. Thus priorassignmentelimination plus
+operandfirstreemission, notswapofsurvivingassignments; exactearlierpassunknown.
+reemit.md/patch/fidelity preserveminimalrecipe/hash/observations; rawbinary/logs
+ignored. One faithfulsourceassociation lead isoriginfirst24-Q11+P-R mirroring
+lowerX3origin160; no newsourceprobe yet. Samefunctionactive, noextra logger.
