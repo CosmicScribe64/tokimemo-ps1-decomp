@@ -391,3 +391,7 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 - Don't assume a value in `v0`/`v1` means a promoted global. Check which value regdiff names.
 - Don't try allocator options or compiler flags. They were exhausted in T-0014/T-0017/T-9800.
 - Don't keep m2c's `temp_*` locals by default. They add values the original doesn't have.
+
+## Early constant argument definition (T-24021)
+
+When a constant call argument is scheduled after narrowing and outgoing stores, a reused word local can preserve an earlier definition. Dialogue captures the preceding strcmp result, then assigns `render_x = (render_x & 0) - 40` before the Y increment. Plain subtraction fixes order but retains a register dependency; the zero mask removes that dependency. This marked FAKE closes both sites and passes literal/default-unit proof. It is measured evidence for this source shape, not a universal scheduler rule. See [[matching-notes]] and [[tickets/T-24021-dialogue-scheduling]].

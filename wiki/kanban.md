@@ -55,7 +55,6 @@ kanban-plugin: board
 ## In Progress
 
 
-- [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Investigate dialogue argument scheduling]]
 
 
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
@@ -68,6 +67,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Match dialogue argument scheduling]]
 
 - [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]
 

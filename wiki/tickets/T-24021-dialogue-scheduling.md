@@ -1,10 +1,10 @@
 ---
 id: T-24021
-title: Investigate dialogue argument scheduling
-status: In Progress
+title: Match dialogue argument scheduling
+status: In Review
 assignee: Astra hard-function lane
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-18
 links: ["[[tickets/T-24020-astra-hard-functions]]", "[[tickets/T-22001-w4-p01]]", "[[tickets/T-17001-w3-main-p01]]"]
 ---
 
@@ -37,3 +37,11 @@ User: "do not stop until the dialogue_speak_part is a match". This is the sole a
 Additional full-TU probes tested branch-known word/short values, secondary constant uses, reused coordinate locals, aggregate argument pairs, and removable conditional barriers. None yet improves the verified baseline (2168 text instructions, aligned cost 4 / 16 printed rows). Wide integer shifting introduced runtime helpers and is rejected. Some coordinate variants score 12 but retain the same ordering gap, so they are not progress on the blocker. The captured unmodified binasm confirms the increment carries line 4204, while `li a0,-40` and all outgoing argument stores carry line 4205 (second site 4211/4212). Capture files remain ignored under `build/t24021-trace/`. Argument-internal conditional barriers are the active hypothesis.
 
 External research consulted: [IDO field guide, own compiler experiments](https://github.com/akratch/n64-decomp-workbench/blob/main/docs/field-guide.md), especially conditional branch-to-next barriers. Its IDO 7.1 claims are hypotheses here, not evidence about our 5.3 compiler. No toolchain or source-production changes.
+
+### Verified closure (2026-10-18)
+
+Promoted `dialogue_speak_part` to default C. Capture each of the two preceding `strcmp` results in `render_x`, replacing the existing padding word. Assign `render_x = (render_x & 0) - 40` before incrementing Y. The zero mask eliminates the value dependency while preserving an early argument definition. Both reordered `li a0,-40` instructions now match. This source idiom is marked FAKE at the declaration and affected calls; it uses initialized values and retains the 0x290 frame.
+
+Independent Docker replay from b312d1e24 gives baseline cost 4 / 16 printed rows, early dependent assignment cost 4 / 4 rows, then masked constant cost 0 / 0 rows. Every variant has 2,168 instructions. The final candidate links to exactly 8,672 text bytes. Default `funcdiff.py main:dialogue_speak_part --resolve` also reports MATCH. `ninja -j1 build/SLPM_86.053.ok` passes SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26. Header/global checks pass; prototype branch guard reports 0 new disagreements and 15 known. No compiler, header or flag changes.
+
+Replay and explanation are in drafts/T-24021/replay_closure.py and drafts/T-24021/README.md. Source checklist inspection found no C89, FAKE-comment or scope issue. Parent retains formal review and integration; ticket remains In Review until that gate is complete. Earlier near-match conclusions above and in T-17001/T-22001 are superseded by this proof.

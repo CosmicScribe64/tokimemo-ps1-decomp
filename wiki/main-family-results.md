@@ -202,3 +202,7 @@ the first-argument constant and the narrowing on an earlier source line than the
 ### Wave 3 package w3-main-p17 (T-17017)
 
 `80058D20.c`: no match of the three remaining T-0018 functions ([[matching-notes]], section T-17017). Type work: the model record walked by `func_8005938C` is a local 0x88-byte `ModelRec88` (active/flag bytes, object at +4, handle at +8, `MATRIX coord` at +0x18, `SVECTOR` rot/scale/pos/vel at +0x64..+0x7C) in `drafts/T-17017/main/func_8005938C/`; the word at `D_800E731C` is read as `*(s32 *)&D_800E6280.unk_1095[7]` (+0x109C, like the +0x1098 word other units read through the same array). `func_800590CC` (16 rows) and `func_800591D8` (32 rows) stay guarded with aliased width and height variables.
+
+## Dialogue closure update (2026-10-18)
+
+The historical guarded 16-row dialogue gap is resolved by [[tickets/T-24021-dialogue-scheduling]]. Default C matches 8,672 text bytes and main SHA1. Two early constant argument definitions use a marked zero-mask FAKE; prior negative experiments remain historical evidence. Replay is in drafts/T-24021/replay_closure.py.

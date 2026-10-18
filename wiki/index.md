@@ -36,10 +36,10 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-24042-tel-helper-closure|T-24042]] Close TEL helper allocation to produce a verified C match.
-- [[tickets/T-24020-astra-hard-functions|T-24020]] Astra hard-function lane resumed; zero C bytes at b312d1e24.
+- [[tickets/T-24020-astra-hard-functions|T-24020]] Astra hard-function lane; dialogue verified, remaining large targets active.
 - [[tickets/T-24024-main-dispatcher|T-24024]] Reserved MAIN func_8007132C; counter function excluded.
 - [[tickets/T-24025-geko-picker|T-24025]] Reserved GEKO func_80142C9C; loop allocation follow-up.
-- [[tickets/T-24021-dialogue-scheduling|T-24021]] Dialogue scheduling, six new call-path forms with no gain.
+- [[tickets/T-24021-dialogue-scheduling|T-24021]] Dialogue now default C; 8,672 literal text bytes verified, main SHA1 passes.
 - [[tickets/T-24022-tel-frame|T-24022]] TEL month-range and structural probes, no promotion.
 - [[tickets/T-24023-event-handler|T-24023]] EVENT source-only reconstruction: aligned cost 1618 to 214, 1712/1712 instructions; not matched.
 - [[tickets/T-24003-complete-bunkaken|T-24003]] BUNKAKEN selector and date-loader remainder (In Review; 2 of 3 matched, 836 bytes).

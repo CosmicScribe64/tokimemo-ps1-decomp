@@ -18277,3 +18277,7 @@ User explicitly requires `dialogue_speak_part` to match before stopping. [[ticke
 ## [2026-10-18] ticket | Renumber unpublished TEL helper reservation
 
 Parent identified a collision with published SHOUGATU T-24026. Renamed the local TEL helper ticket and draft directory to [[tickets/T-24042-tel-helper-closure]], including current index and board references. Earlier append-only entries retain their original ID; those TEL-helper references now mean T-24042. The helper remains Ready while dialogue closes.
+
+## [2026-10-18] build | Dialogue matches default C and full executable checksum
+
+[[tickets/T-24021-dialogue-scheduling]] moves In Progress to In Review. Two early zero-masked constant definitions close both scheduling sites; all 2,168 instructions / 8,672 linked text bytes match. Independent three-stage replay reproduces 16, 4, then 0 printed rows. Main SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 and header/global/prototype guards pass. Updated [[matching-notes]], [[register-cheatsheet]], [[main-family-results]], [[data/t0018-cases]] and [[tickets/T-24020-astra-hard-functions]]. Parent notified with proof; formal review and main integration remain its responsibility. User extends full-match requirement to remaining reserved hard functions and authorizes orchestrator notifications after every match.
