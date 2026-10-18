@@ -26,6 +26,7 @@ Historical T17300 plain792/typed957 are different contexts, not fresh results.
 | case-lifetimes.c |604|670|592|0xD0|
 | case0-compound.c |635|703|593|0xA0|
 | x1-narrow.c |638|800|594|0xA0|
+| origin-first.c |628|856|592|0xA0|
 
 Original588 words/frame0x90. Rank with tools/funcdiff.py diff_score on resolved
 instruction keys (insertion/deletion1, substitution2). Printed rows use different
@@ -125,3 +126,25 @@ ugen input already orders P before Q11. Existing capture does not show whether
 this originates in frontend output or optimization. No pre-uopt observation
 exists for this input and no additional diagnostic compile has been authorized
 or executed by this packet. Further source forms need a supported relationship.
+
+
+Origin-first control (cases0/2 only) changes X0 from (P-Q11)-R+24 to
+((24-Q11)+P)-R, matching the original-backed lower-X3 association. It produces
+628 aligned cost /856 diagnostic rows /592 words /frame0xA0. Numeric best604 is
+retained separately; origin-first is the causal frontier because final code now
+executes Q11 DIV, then P MULTU, then R DIV as original. No invented dependency,
+new operation or barrier. Actual callers pass0 or counter*2 with counter0..40;
+within A0..80 and i0/1 the reassociation is equivalent without signed overflow.
+Cases1/3 were unchanged: saved604 already emits their Q141 before P.
+
+Read-only region comparison uses each object's own switch-arm boundaries,
+not fixed offsets. Original boundaries0/57/167/274/402/524/588;604 boundaries
+0/59/168/276/403/526/592;628 boundaries0/59/167/275/402/526/592. Regional aligned
+costs (prologue, arms0..3, tail) are604:[40,121,51,165,153,74] and
+628:[38,108,129,143,134,76]. These independent regional alignments do not sum
+to the whole-function score and do not replace literal matching. An unchanged
+arm1 can change allocation when the neighboring expression graph changes.
+Original X1 uses X0-Q68+136; optimization folds the retained word expression to
+B-Q68+160. The earlier X1-only narrow control changed that web but added two
+copies against604. Its behavior with the corrected Q/P order is not measured.
+This checkpoint includes no further source control or diagnostic scope.
