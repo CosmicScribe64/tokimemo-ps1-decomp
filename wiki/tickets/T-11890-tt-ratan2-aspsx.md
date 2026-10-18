@@ -42,6 +42,10 @@ Match TT `func_8014D260` (object `TT/8014D260`, PsyQ gcc `ratan2`), the last TT 
 - 3.3 to 4.5 print the `div rd,rs,rt` macro (ASPSX puts the move after the checks); 4.6 prints `div $0; mflo` with only the zero check. No version prints the `lui rd; addu rd,rd,rs; l* rd,%lo(rd)` load or its own hazard nops. Flag variations on 4.0 (`-O1`, `-O3`, `-mno-gas`, scheduling, `-mips2` and others) change nothing.
 - No match, so TAIIKU `func_801488F0` was not re-checked and nothing needs wiring. Details: [[gcc-objects]], "Sony/SN cc1psx (PsyQ 3.3 to 4.6) on the same input (T-11890)".
 
+2026-10-18, issue #63 follow-up (old ASPSX and library signatures; measurement only, nothing committed but wiki text):
+- DOS ASPSX 1.05, 1.07, 2.05, 2.08, 2.21, 2.30, 2.34 (the archive has nothing between 2.34 and 2.56) under dosemu2, on the gcc 2.7.2-psx and PsyQ 4.0 `.s` of ratan2 and on the synthetic cases: none gives TT's 97 instructions (96 or 98) and none shows any of the three habits. Pre-2.30 versions also lack the `mflo`/`mult` nops and the `lui; addu` load form the SDK has, so they are out on the SDK's own pattern as well.
+- lab313ru signatures (12 libraries x 16 releases) against the 722 main-exe SDK functions: no single release. libgte/libc are 3.3-era, libgpu/libcd/libetc best at 3.70/4.00, libsnd/libspu match badly everywhere. TT ratan2 and libgpu `func_8009E108` differ from 3.70/4.00 only at the habit spots; most other compiled functions also differ in instruction order (a compiler difference). So the game's SDK C code was built with a toolchain none of the released PsyQ sets reproduces, from roughly 3.5 to 4.0 sources. Details: [[gcc-objects]], "Old ASPSX and the PsyQ library signatures".
+
 ## Comments
 
 2026-10-18, closed as Done without a match (outcome: evidence and tooling only). `func_8014D260` stays `INCLUDE_ASM`; the open lead is a compiler that emits the expanded divide (see Notes). Review against CODING_STANDARDS.md: the only code is `tools/aspsx_survey.py`, a read-only measurement script (module docstring, prints counts only, no game bytes, runs in Docker); no source, config or build change, no FAKE. No findings. PR from diman8, claim #56.

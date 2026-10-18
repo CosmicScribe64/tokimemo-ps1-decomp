@@ -19247,3 +19247,12 @@ User-approved downloads of the mkst/esa `psyq-binaries` compiler sets (PsyQ 3.3,
 `func_8014D260` or the SDK habits: every version up to 4.5 prints the `div` macro and ASPSX expands it with the move
 after the checks; 4.0 equals our gcc 2.7.2-psx + maspsx output; no version prints the rd-through load or hazard nops.
 Results in [[gcc-objects]] and [[tickets/T-11890-tt-ratan2-aspsx]] (status unchanged, Done). Branch `cc1psx-d260`.
+
+## [2026-10-18] query | T-11890 old ASPSX and PsyQ library signatures (issue #63)
+
+DOS ASPSX 1.05 to 2.34 under dosemu2 (scratch container): no version reproduces TT `func_8014D260` or any of the three
+habits. lab313ru signatures of 12 libraries in 16 PsyQ releases against the 722 main-exe SDK functions: mixed vintages
+(libgte/libc 3.3-era, libgpu/libcd/libetc 3.7/4.0-era, libsnd/libspu poor everywhere); TT ratan2 and libgpu
+`func_8009E108` differ from 3.70/4.00 only at the habit spots, many others also in instruction order. The SDK C code
+comes from a toolchain no released set reproduces. [[gcc-objects]], [[tickets/T-11890-tt-ratan2-aspsx]] (status
+unchanged).
