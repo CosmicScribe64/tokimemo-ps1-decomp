@@ -18258,3 +18258,11 @@ Created [[tickets/T-24037-event-scene-siblings]] In Progress after reading earli
 ## [2026-10-18] build | T-24037 typed EVENT updater
 
 [[tickets/T-24037-event-scene-siblings]] moves to In Review with a 628 B unguarded C updater and a guarded six-edit initializer, documented in [[event-family-results]] and drafts/T-24037. Root-approved per-overlay array declarations preserve canonical main scalar types. No new FAKE or compiler exception.
+
+## [2026-10-18] ticket | T-24041 MAIN renderer and CD dispatcher
+
+Created [[tickets/T-24041-main-render-cd-siblings]] In Progress after reading older matching negatives.
+
+## [2026-10-18] build | T-24041 MAIN line renderer win
+
+[[tickets/T-24041-main-render-cd-siblings]] adds348 B verified unguarded C with the approved SDK LINE_G2 packet type. [[main-family-results]] records layout evidence, K&R ABI and marked colour grouping provenance. Default literal proof and full MAIN checksum pass; larger CD dispatcher work continues.
