@@ -1,5 +1,9 @@
 #include "common.h"
+#include "psx_types.h"
 #include "ovl/EVENT.h"
+
+void func_800FF320();
+
 
 void func_800FDC20(void) {
     D_80121800 = 0x801CE11C;
@@ -312,7 +316,63 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FEAE8);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FEDC8);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FEF74);
+s32 func_800FEF74(void) {
+    s16 i;
+    s32 v;
+    s32 j;
+    u32 n;
+
+    if (D_800B1AE4 % 51 == 0) {
+        for (i = 0; i < 12; ) {
+            D_801218DC[i] = func_800789A0() % 4;
+            ++i;
+        }
+    }
+    /* Legacy calls pass promoted ints; argument-site s16 casts add duplicate narrowing (T-24034). */
+    n = 1000;
+    /* FAKE: the dead copies `j = v` after each call keep `v` live across the call, so uopt promotes it to $s0 (with its
+     * narrowing and the copy `move s0,tN`) and puts the divisor constants in $s1, as the original has; without them the
+     * variable is folded away and `n` takes $s0. The original's real use of `v` after the calls is unknown. T-17204, T-24034 */
+    v = (s16)((D_800B1AE4 * 16) % n);
+    func_800FF320(v, 0, 9);
+    j = v;
+    v = (s16)((D_800B1AE4 * 16) % n);
+    func_800FF320(v - 0xA, 1, 9);
+    j = v;
+    v = (s16)((D_800B1AE4 * 16) % n);
+    func_800FF320(v - 0x14, 2, 9);
+    j = v;
+    v = (s16)((D_800B1AE4 * 16 + 0x1F4) % n);
+    func_800FF320(v, 6, 9);
+    j = v;
+    v = (s16)((D_800B1AE4 * 16 + 0x1F4) % n);
+    func_800FF320(v - 0xA, 7, 9);
+    j = v;
+    v = (s16)((D_800B1AE4 * 16 + 0x1F4) % n);
+    func_800FF320(v - 0x14, 8, 9);
+    j = v;
+    func_8001A0CC(0, 0, 9, 3, 0);
+    n = 0x320;
+    v = (s16)(n - (D_800B1AE4 * 16) % n);
+    func_800FF320(v, 3, 0xD);
+    j = v;
+    v = (s16)(n - (D_800B1AE4 * 16) % n);
+    func_800FF320(v + 0xA, 4, 0xD);
+    j = v;
+    v = (s16)(n - (D_800B1AE4 * 16) % n);
+    func_800FF320(v + 0x14, 5, 0xD);
+    j = v;
+    v = (s16)(n - (D_800B1AE4 * 16 + 0x190) % n);
+    func_800FF320(v, 9, 0xD);
+    j = v;
+    v = (s16)(n - (D_800B1AE4 * 16 + 0x190) % n);
+    func_800FF320(v + 0xA, 0xA, 0xD);
+    j = v;
+    v = (s16)(n - (D_800B1AE4 * 16 + 0x190) % n);
+    func_800FF320(v + 0x14, 0xB, 0xD);
+    j = v;
+    func_8001A0CC(0, 0, 0xD, 3, 0);
+}
 
 void func_800FF320(arg0, arg1, arg2)
     s16 arg0;
@@ -439,4 +499,23 @@ void func_800FFA10(void) {
     func_8004A764();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FFA4C);
+s32 func_800FFA4C(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1, s32 z, s32 trans) {
+    EventStateView *g;
+    POLY_G3 *poly;
+
+    g = (EventStateView *)D_800B0860;
+    poly = func_80019D00(0x1C, D_800E9600);
+    func_80067628(poly);
+    func_800675A8(poly, trans);
+    /* FAKE: explicit colour masks/comma lines preserve the matched DATE schedule (T-20600, T-24034). */
+    poly->r0 = (c0 >> 16) & 0xFF, poly->g0 = (c0 >> 8) & 0xFF, poly->b0 = c0 & 0xFF;
+    poly->r1 = (c1 >> 16) & 0xFF, poly->g1 = (c1 >> 8) & 0xFF, poly->b1 = c1 & 0xFF;
+    poly->r2 = (c1 >> 16) & 0xFF, poly->g2 = (c1 >> 8) & 0xFF, poly->b2 = c1 & 0xFF;
+    poly->x0 = g->unk_014[D_800E9600] + x0;
+    poly->y0 = g->unk_018[D_800E9600] + y0;
+    poly->x1 = g->unk_014[D_800E9600] + x1;
+    poly->y1 = g->unk_018[D_800E9600] + y1;
+    poly->x2 = g->unk_014[D_800E9600] + x2;
+    poly->y2 = g->unk_018[D_800E9600] + y2;
+    func_800674F4(&D_800B2580[(D_800E9600 << 6) + z * 4], poly);
+}

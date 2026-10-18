@@ -3072,6 +3072,7 @@ void func_80041840(void);
 void func_800674F4();
 void func_800675A8();
 void func_80067678();
+void func_80067628();
 extern s32 D_800E9600; /* word index used for legacy viewport and ordering-table offsets */
 extern u8 D_800B2580[]; /* address-only ordering-table base, byte extent unknown */
 

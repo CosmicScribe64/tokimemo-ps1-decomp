@@ -18242,3 +18242,11 @@ Created [[tickets/T-24029-seasonal-scene-siblings]] In Progress for a bounded ty
 ## [2026-10-17] decision | T-24029 bounded scene pair archive
 
 [[tickets/T-24029-seasonal-scene-siblings]] moves to In Review with source-only typed checkpoints in drafts/T-24029. No C win; production sources restored. Current aligned edit costs GYOZI 586 / SHOUGATU 656 leave broad copy scheduling and live-range blockers, recorded in [[shougatu-family-results]] and the archive. No shared-header changes or toolchain modifications.
+
+## [2026-10-17] ticket | T-24034 EVENT rendering siblings
+
+Created [[tickets/T-24034-event-render-siblings]] In Progress after reading prior negatives and matched DATE renderer source.
+
+## [2026-10-17] build | T-24034 EVENT three sibling C wins
+
+[[tickets/T-24034-event-render-siblings]] moves to In Review: three unguarded C targets, 1,808 B, pass normal default literal proof and full EVENT checksum. [[event-family-results]] records promoted-argument and typed SDK renderer recipes plus inherited FAKE provenance. One notified main_api.h declaration added; no EVENT.h changes.
