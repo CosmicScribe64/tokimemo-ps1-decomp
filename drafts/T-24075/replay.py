@@ -14,16 +14,18 @@ parser.add_argument('--variant', choices=variants, default='direct-pair')
 args = parser.parse_args()
 p = Path('src/ovl/ETC/8013BEF0.c')
 before = p.read_text()
-fallback = 'INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013C8EC);'
-if before.count(fallback) != 1:
-    raise SystemExit('assigned fallback changed')
+matched = (Path('drafts/T-24075') / 'body.c').read_text()
+assert matched.startswith('/* T-24075:')
+matched = matched.split('\n', 1)[1].rstrip()
+if before.count(matched) != 1:
+    raise SystemExit('pinned production body changed')
 body = (Path('drafts/T-24075') / variants[args.variant]).read_text()
-assert body.startswith('/* NON_MATCHING:')
+assert body.startswith(('/* NON_MATCHING:', '/* T-24075:'))
 body = body.split('\n', 1)[1]
 root = Path('build/etc24075/replay') / args.variant
 root.mkdir(parents=True, exist_ok=True)
 source, obj = root / 'source.c', root / 'source.o'
-source.write_text(before.replace(fallback, body))
+source.write_text(before.replace(matched, body.rstrip()))
 subprocess.run([sys.executable, 'tools/cc.py', str(source), str(obj), 'ido', '5.3'], check=True)
 result = subprocess.run([sys.executable, 'tools/funcdiff.py', '--built', str(obj),
     '--no-build', '--resolve', '--version', 'default', '--unit', 'ETC',

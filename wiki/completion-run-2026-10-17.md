@@ -5,7 +5,7 @@ updated: 2026-10-18
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Latest measured code checkpoint `c4847ad5d` has **6,515/6,958 functions and 1,865,768/2,279,368 bytes (81.9%)**, measured in Docker after T24073. Since baseline `283b86fca`: 49 functions / 52,300 bytes added. The active goal remains 100%, with 413,600 game-code bytes remaining. Source-only archives add no verified bytes. SDK assembly is separately reported and excluded.
+User resumed work toward 100% verified game-code matching. Latest measured code checkpoint `c7690151b` has **6,516/6,958 functions and 1,866,672/2,279,368 bytes (81.9%)**, measured in Docker after T24075. Since baseline `283b86fca`: 50 functions / 53,204 bytes added. The active goal remains 100%, with 412,696 game-code bytes remaining. Source-only archives add no verified bytes. SDK assembly is separately reported and excluded.
 
 ## Verified gains
 
@@ -60,6 +60,8 @@ User resumed work toward 100% verified game-code matching. Latest measured code 
 | T24064 | ETC func_8013F980 |252|
 | T24069 | ETC func_8013BFFC |820|
 | T24073 | ETC func_8014407C |352|
+| T24075 | ETC func_8013C8EC |904|
+
 
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
@@ -227,3 +229,18 @@ Main6d1d52101 adds func_8013F980,252 verified linked C bytes. Independent litera
 ## Contributor check 2026-10-18 12:14 UTC
 
 Parent completed read-only GitHub check: no open PRs; only open claims57(updated2026-10-17T22:16:21Z) and50(updated2026-10-17T15:45:07Z), unchanged. No external messages. Next check planned12:44UTC. No matching scope added.
+
+## T-24075 independent completion and measured progress
+
+ETC func_8013C8EC904B is published mainc7690151b after parent full standards/spec
+review no findings, all27 checksums/interfaces/actual-C gate and literal904B.
+[[tickets/T-24075-etc-random-selection]] is Done; exact production5d083af5 and
+drafts/T-24075 preserve source/replay.
+
+Root Docker measurement at publishedc7690151b:6516/6958 functions,1866672/2279368 bytes (81.9%),412696 remaining; gain904 bytes.
+
+## Contributor check 2026-10-18 12:44 UTC
+
+Parent completed read-only GitHub check around2026-10-18 12:44UTC: no open
+PRs; only open claims57(updated2026-10-17T22:16:21Z) and50(updated2026-10-17T15:45:07Z),
+unchanged. No external messages. Next check planned13:14UTC. No added matching scope.

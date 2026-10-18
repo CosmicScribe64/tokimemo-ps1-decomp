@@ -327,3 +327,24 @@ Porting that source idiom closes all six tail words: private default-resolved
 full-TU zero/904B, pending actual production proof. Sole caller8013BF34 ignores
 result, original epilogue does not establish return; retain existing implicit
 s32 matching view with conservative FAKE note, no header/config change.
+
+T-24075 production5d083af5 passes actual default linked904B and ETC checksum.
+Global rejection loops reproduce repeated stores and immediate comparison
+constants; matched same-table8013F320 direct pair arguments close the six tail
+words. Real GameState/word-pair types, no shared interface/config changes;
+unproven s32 fallthrough view conservatively FAKE-tagged, sole caller ignores
+result. All34 other function words and neighbor text unchanged. Headers/globals
+OK, protos0new/15known; In Review pending parent all27/integration.
+
+Parent independently verified T-24075 literal904B/actual-C gate, all27 checksums
+and interfaces, with full standards/spec review no findings. Published
+mainc7690151b; ticket/card/index Done. Exact production5d083af5 and source/replay
+provenance remain preserved. Coverage measurement pending, no inferred totals.
+
+Root Docker measurement at publishedc7690151b:6516/6958 functions,1866672/2279368 bytes (81.9%),412696 remaining; gain904 bytes. T-24075 is Done after independent review/publication.
+
+Replay handoff correction: parent found the old helper required the removed
+ASM fallback after promotion. It now exact-matches/replaces the pinned current
+C body, strips only archive banners and asserts production unchanged. Fresh
+Docker replay on matched checkout reports zero; verified production5d083af5
+unchanged and Done status retained.
