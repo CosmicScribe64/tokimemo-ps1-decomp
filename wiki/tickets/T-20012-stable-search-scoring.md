@@ -1,7 +1,7 @@
 ---
 id: T-20012
 title: Keep search ranking consistent across instruction counts
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
 updated: 2026-10-17
@@ -34,3 +34,5 @@ Default ninja build passes (five steps), headers/globals OK; independent SHA1 ch
 ## Review
 
 Self-review against CODING_STANDARDS.md: Python 3 in Docker; pinned dependency reused; shared metric and focused search integration; synthetic tests for behavioral regression; zero still goes through the existing exact proof gate; diagnostic formatting unchanged; cache metric migration documented. No compiler settings, game C, generated assembly, raw assets, binaries, compiled objects or comparison instruction listings submitted. Ticket/kanban In Review; maintainer review pending.
+
+- 2026-10-17 review (orchestrator, CODING_STANDARDS.md): tools only (funcdiff.diff_score, viewsweep and order_search scoring, cache metric versioning), no game C, Levenshtein already pinned in tools/Dockerfile. Merged as PR #59 in one clean build: 27/27 SHA1, headers, globals, prototypes, tool tests (1,514 OK, 3 skipped). Done.

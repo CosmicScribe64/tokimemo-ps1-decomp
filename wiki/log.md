@@ -17842,3 +17842,7 @@ Review against `CODING_STANDARDS.md`: no findings; only `src/ovl/DATE/80132000.c
 ## [2026-10-17] ticket | T-22019 Done
 
 [[tickets/T-22019-w4-p19]]: code review against `CODING_STANDARDS.md` passed; one finding (the byte pointer into `D_800E7D10` in `func_8013E6AC` was only half explained) fixed with a comment, `ETC.bin` SHA1 OK. 4 of 5 functions matched (`func_8013C700`, `func_8013E89C`, `func_8013D32C`, `func_8013E6AC`; 2,232 bytes), `func_8013CCE4` stays `INCLUDE_ASM`. Ticket Done, card moved to Done.
+
+## [2026-10-17] ticket | T-20012 Done
+
+[[tickets/T-20012-stable-search-scoring]]: PR #59 (KakarottoCake) merged. viewsweep, order_search and autotweak now rank candidates by one aligned insert/delete cost (`funcdiff.diff_score`) instead of printable diff rows, so equal and unequal lengths score consistently. Tool tests 1,514 OK. Closes issue #58.
