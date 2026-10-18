@@ -20156,3 +20156,13 @@ context lines from archived patch representation. patch --fuzz0 still reproduces
 generated source SHA2563ce7370e5302c5500b17042f18a60226b1a5420cd0f28874a8ea72db30b2c7de;
 no compiler rebuild or production change. This packet does not touch that patch.
 [[tickets/T-24078-etc-two-poly-renderer]] records continuing source recovery.
+
+## [2026-10-18] build | T24078 corrects X1 dependency inference
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve the
+single X1 narrow control against628:624cost/792 diagnostic rows/594words/A0.
+Final-word inspection establishes628 ALREADY uses X0-Q68+136; prior pending-X1
+claim carried over604 behavior without verification. Cast adds one MOVE in each
+arm, no new dependency or extension. Keep604 numeric best and628 causal frontier;
+624 is an added-copy control, not a structural gain. Source/replay preserved;
+no new probe or production change, same function active.
