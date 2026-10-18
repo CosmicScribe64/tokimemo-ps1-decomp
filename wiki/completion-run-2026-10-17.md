@@ -5,7 +5,7 @@ updated: 2026-10-17
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Current published code checkpoint EVENT4d037cc13 plus verified T24062 mixer integration has **6,509/6,958 functions and 1,858,500/2,279,368 bytes (81.5%)**, measured in Docker. Since baseline `283b86fca`: 43 functions / 45,032 bytes added. The active goal remains 100%, with 420,868 game-code bytes remaining. SDK assembly is separately reported and excluded.
+User resumed work toward 100% verified game-code matching. Current published code checkpoint verified DATE T24051 integration (worker2da9bb5f8) has **6,510/6,958 functions and 1,861,692/2,279,368 bytes (81.7%)**, measured in Docker. Since baseline `283b86fca`: 44 functions / 48,224 bytes added. The active goal remains 100%, with 417,676 game-code bytes remaining. SDK assembly is separately reported and excluded.
 
 ## Verified gains
 
@@ -54,6 +54,7 @@ User resumed work toward 100% verified game-code matching. Current published cod
 | T24058 | GYOZI func_80137188 |176|
 | T24023 | EVENT func_801103A0 |6848|
 | T24062 | MAIN func_8007BCFC |236|
+| T24051 | DATE func_80144E20 |3200|
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
 
@@ -61,7 +62,7 @@ Each was independently checked against default linked function bytes, all27 bina
 
 User clarified on2026-10-18: keep the100% goal active, limit matching to1–2Sol6.1medium workers, each persistent on one function; avoid batch churn and conserve usage. No routine Astra. User subsequently authorized two additional Antigravity Gemini4Argon Medium workers using separate account usage (see below). Root handles independent integration and quiet30-minute PR/issue monitoring.
 
-- Sol6.1 chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: one existing worker on DATE80141EE0 func80144E20 only. ETC T24064 deferred. Coordinator does no duplicate probe work.
+- Sol6.1 chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: one existing worker moves to T24067 ETC80140F50 func80141ABC only after completed DATE44E20; other T24064 functions deferred. Coordinator does no duplicate probe work.
 - Sol6.1 chat01a1410a-cead-7cf3-9bfa-aa44f25f055b: ENDING80134D20 func80135F4C only, no extra agents.
 - Astra stopped after EVENT T24023 match. TEL/MAIN7132C/GEKO42C9C reservations are inactive until explicit reassignment.
 - All three root subagents stopped after saving T24061/T24063 archives and T24062 mixer match. Do not restart automatically.
@@ -187,3 +188,7 @@ User authorized two Antigravity workers using Gemini4Argon Medium; explicitly re
 Launch flags `--model gemini-4-argon-medium --effort medium --output-format stream-json --print`. Auto mode is unavailable for this account; CLI retained default request-review permissions. No bypass flag used. Monitor logs for approval blockers and live process handles before restarting. Both own only one function, one Docker compiler, preserve evidence and local commits; root alone verifies/publishes. New tickets created by workers before edits.
 
 Antigravity startup follow-up: both CLI sessions terminated after shell permission denials in default request-review mode (70265 and78281 are finished). No matching progress claimed. User approval for routine project commands was requested; do not restart with bypass flags or repeat denied actions before approval. Sol DATE/ENDING work continues independently.
+
+## 2026-10-18 DATE dispatcher closure
+
+T24051 independently verified as actual unguarded default C: literal3200bytes, all27 binary hashes and header/global/prototype guards pass. Exact21 local tables and0xE38 frame retained. Neighboring selector byte view, comparison captures and pointer home are explicitly FAKE. Five DATE declarations reflect observed callbacks/data; one absolute D800CA2E8 export adds no storage. Root standards review complete; ticket Done. Two Sol lanes now ETC41ABC and ENDING35F4C; Antigravity remains pending shell approval.

@@ -57,7 +57,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
 - [ ] [[tickets/T-24063-taco-short-count|T-24063 TACO short count helpers]]
 - [ ] [[tickets/T-24060-shugaku-short-selectors|T-24060 SHUGAKU short selectors]]
 - [ ] [[tickets/T-24055-etc-short-helpers|T-24055 ETC short helpers]]
@@ -108,6 +107,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24051-date-large-dispatcher|T-24051 Recover DATE large table dispatcher]]
 - [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]
 - [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Match dialogue argument scheduling]]
 - [ ] [[tickets/T-24059-short-copy-siblings|T-24059 Short copy-chain siblings]]
