@@ -115,6 +115,7 @@ void func_8013B1F0(u32 arg0, s32 arg1, s32 arg2, s32 arg3) {
             return;
         case 0xE:
         case 0x46:
+            /* empty cases: they pull the jump table down to 0xE; without them IDO emits a compare chain (T-22026) */
             break;
         default:
             func_8013BD40(arg2, arg3);
