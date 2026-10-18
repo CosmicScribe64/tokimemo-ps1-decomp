@@ -19348,3 +19348,13 @@ all geometry-arm words and opcode counts identical to618, only15 initialization
 and tail scratch/scheduling words change. No160/page allocation fix or match
 claim; source/replay and prediction in drafts/T-24078/counted-loop.md. Production
 unchanged, same target active, no loop-form permutations or new instrumentation.
+
+## [2026-10-18] build | T24078 negative offset exposes subtraction normalization
+
+[[tickets/T-24078-etc-two-poly-renderer]] / [[etc-family-results]] preserve one
+signed coordinate-offset control with normal-domain proof and no new local/type.
+Result630/584words/frame90; subtract consumers absorb four negations and retain
+Y-A+59, failing original standalone H/ADD boundary. Original saved roles and
+stack UV/poly positions remain. Source/replay and opcode deltas in
+drafts/T-24078/height-lifetimes.md. No production change, match claim or new
+width/mask grid; same function remains active for source reasoning.

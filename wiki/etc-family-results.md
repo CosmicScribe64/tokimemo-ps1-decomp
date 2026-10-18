@@ -880,3 +880,11 @@ and Q/P order preserved. Historical T14500/T17300 forms were do/while only.
 Exact semantic proof, prediction and comparison are in drafts/T-24078/counted-loop.md;
 replay counted-for, marked unproven loop spelling. No loop permutation grid,
 production unchanged and same function remains active.
+
+
+Signed negative-offset control (C=A-160, eight Y-C consumers) is equivalent on
+normal domain but measures630/584words/frame90. It absorbs all H negations into
+eight Y-A+59 forms; no original H/ADD boundary recovered. Original saved roles,
+UV50/54/poly84/88 and Q/P order preserved. Source/replay height-offset and
+height-lifetimes.md retain prediction/opcode deltas; no width/mask grid,
+production unchanged, same function active.

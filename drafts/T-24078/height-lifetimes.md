@@ -93,3 +93,22 @@ Q11-before-P is retained. The mask does NOT vanish, so this fails the intended
 no-extra-operation boundary. A one-point lower aligned cost than616 does not
 make its seven extra words a source solution. Preserve as a separate negative;
 618/606/604 and616 stay unchanged. No production edit or further width grid.
+
+
+A separate signed-offset control uses the existing H/E scratch as C=A-160,
+then subtracts C at all eight y2/y3 uses. No new local, type, width, DIV, global
+load or SDK store order. For A0..80, C=-160..-80, and Y-C equals Y+(160-A);
+with signed-halfword Y and Q1120..112 all normal-domain additions fit s32.
+Prediction was a shared SUB-consumer tree might preserve the offset differently
+from unary NEG plus ADD, or normalize616. This was not a width/mask experiment;
+FAKE original signed-offset spelling unproven.
+
+Replay height-offset measures630 aligned cost /822 rows /584 words /frame90.
+It does not retain H: all eight lower Y expressions become Y-A+59 (plus Q112
+where present). Against616, four NEGU and eight ADDU disappear, eight SUBU
+appear. Against original, LI-6, ADDIU+2, ADDU-10, SUBU+4, NOP+6; all other
+counts agree. Mode s6,136s7,pagefp, UV50/54, poly84/88 and Q11-before-P remain.
+It demonstrates the consumer operation matters: SUB can absorb the negation,
+but this is further from original standalone H followed by ADD. Reject as a
+matching candidate; preserve the concrete normalization evidence, no new mask
+or expression grid. Production remains ASM and same function remains active.
