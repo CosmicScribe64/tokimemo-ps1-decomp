@@ -18576,3 +18576,7 @@ Created [[tickets/T-24032-date-taco-rotation-clones]] after reading prior SDK/li
 ## [2026-10-17] decision | T-24032 rotation provenance retained
 
 [[tickets/T-24032-date-taco-rotation-clones]] moves to In Review after one fresh SDK MATRIX control. All six helpers remain ASM; no production changes or new coverage. Source/provenance archived; [[date-family-results]] and [[taco-family-results]] updated. Every loose probe retained in ignored build/T-24032-probes/.
+
+## [2026-10-18] build | Six more verified functions integrated
+
+[[completion-run-2026-10-17]] records6486/6958 functions and1832660/2279368 bytes,80.4%. Independent review plus all27 hashes, guards and actual default C proofs passed for T24019GYOZI392, T24030BUNKASAI2020, T24027RPG_BAT1656 and T24026SHOUGATU708 bytes. T24030 moves to Done; partially completed families remain In Review. Continued workers own fresh T24028/T24029/T24031/T24032/T24033 scopes. Negative source archives remain explicitly non-matching.

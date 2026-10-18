@@ -28,3 +28,7 @@ Two unguarded C wins: func_8013F224 316 B and func_80140510 392 B (708 B total).
 Self-review against CODING_STANDARDS.md: plain C89, typed recovered views/SDK structures, target assembly fallback absent for both wins, FAKE explained, no flags/toolchain/raw data changes. In Review for parent's independent standards review and all-overlay integration.
 
 Validation: SHOUGATU SHA1 `d956b1df6fbf9d1f8261d7e1f98ea301f7eb66a9`; `check_headers.py` headers OK; `migrate_globals.py --check` globals OK; `sync_protos.py --check` main_api OK; `git diff --check` clean.
+
+## Independent root integration review
+
+Production changes reviewed against CODING_STANDARDS.md. No unresolved findings; existing SDK types and aggregates retained, necessary ABI views explained, FAKE forms marked, no compiler/config exceptions. All27 binary hashes and header/global/prototype guards pass. Each new target lacks its INCLUDE_ASM fallback and passes normal-default literal linked-byte proof. Root published verified code on main; unresolved family functions are not counted.

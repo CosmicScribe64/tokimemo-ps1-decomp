@@ -39,3 +39,7 @@ Unresolved current rows/aligned:
 - func_8013E824: direct sibling-style stores188/188; narrow unsigned result followed by split mask24/24, reproducing T-13201. u16 gives the same; signed byte worsens237/201. Meaningful result-copy types, declaration order and grouped mask/init do not close the24 rows. The prologue lacks target's result copy and uses exchanged result/counter registers; case bodies otherwise match. No claim of compiler impossibility.
 
 Read wiki/event-family-results.md (GYOZI family), shougatu-family-results.md, T-17600, T-13201, T-22022 and current siblings. The ranking input is the primary tree's build/complete-siblings.json. No earlier archived negatives were modified.
+
+## Independent root integration review
+
+Production changes reviewed against CODING_STANDARDS.md. No unresolved findings; existing SDK types and aggregates retained, necessary ABI views explained, FAKE forms marked, no compiler/config exceptions. All27 binary hashes and header/global/prototype guards pass. Each new target lacks its INCLUDE_ASM fallback and passes normal-default literal linked-byte proof. Root published verified code on main; unresolved family functions are not counted.

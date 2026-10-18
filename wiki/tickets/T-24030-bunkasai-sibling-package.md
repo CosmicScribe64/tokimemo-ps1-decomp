@@ -1,7 +1,7 @@
 ---
 id: T-24030
 title: Recover BUNKASAI sibling package
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
 updated: 2026-10-17
@@ -39,3 +39,7 @@ Actual unguarded default C matches **1,176 literal linked bytes**, for **2 of 2 
 Necessary overlay-header additions were reported before edit: func_80142B98 is an existing void C definition; func_801433C0 remains assembly. Its void view is supported by the matched BUNKAKEN void sibling, the census's void reconstruction, the callee assembly tail's lack of an explicit return value, its sole C caller ignoring the result, and normal-default matching code generation. No claim of an existing C definition for func_801433C0. main_api.h remains unchanged.
 
 Both actual default C bodies pass `tools/funcdiff.py --unit BUNKASAI --no-build --resolve --version default func_80142700 func_80151364` after `ninja -j1 build/ovl/BUNKASAI.ok`: 1,176 and 844 linked bytes equal target. Final logs `build/bunkasai24030/final-{proof,build,headers,globals,protos}.log`; prototype guard 0 new / 15 known, branch check OK. `body-audit.log` checks all pre-existing matching C bodies in the owned files remain textually identical. Source-only provenance and bounded controls are in `drafts/T-24030/README.md`. No config, compiler, generated-assembly, unrelated function, or main API edits. Ticket/card In Review for independent review; coordinator owns all-27 verification and integration.
+
+## Independent root integration review
+
+Production changes reviewed against CODING_STANDARDS.md. No unresolved findings; existing SDK types and aggregates retained, necessary ABI views explained, FAKE forms marked, no compiler/config exceptions. All27 binary hashes and header/global/prototype guards pass. Each new target lacks its INCLUDE_ASM fallback and passes normal-default literal linked-byte proof. Root published verified code on main; unresolved family functions are not counted.

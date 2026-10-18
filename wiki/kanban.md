@@ -53,7 +53,6 @@ kanban-plugin: board
 ## In Review
 
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
-- [ ] [[tickets/T-24030-bunkasai-sibling-package|T-24030 Recover BUNKASAI sibling package]]
 - [ ] [[tickets/T-24026-shougatu-sibling-ports|T-24026 Port three SHOUGATU high-similarity siblings]]
 - [ ] [[tickets/T-24008-taiiku-runners|T-24008 Recover TAIIKU runner family]]
 - [ ] [[tickets/T-24018-large-sibling-state-machines|T-24018 Recover large DATE and EVENT sibling state machines]]
@@ -79,6 +78,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24030-bunkasai-sibling-package|T-24030 Recover BUNKASAI sibling package]]
 - [ ] [[tickets/T-24016-bunkasai-state-machines|T-24016 Recover BUNKASAI festival state machines]]
 - [ ] [[tickets/T-24017-clone-ports|T-24017 Port three exact opcode clones]]
 - [ ] [[tickets/T-24005-bunkaken-date-state-machine|T-24005 Match BUNKAKEN date state machine]]

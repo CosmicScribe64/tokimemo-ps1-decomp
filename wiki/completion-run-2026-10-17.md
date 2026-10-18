@@ -5,7 +5,7 @@ updated: 2026-10-17
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Current published code checkpoint `979a83671` has **6,480/6,958 functions and 1,827,884/2,279,368 bytes (80.2%)**, measured in Docker. Since baseline `283b86fca`: 14 functions / 14,416 bytes added. The active goal remains 100%, with 451,484 game-code bytes remaining. SDK assembly is separately reported and excluded.
+User resumed work toward 100% verified game-code matching. Current published code checkpoint `4d66bf645` has **6,486/6,958 functions and 1,832,660/2,279,368 bytes (80.4%)**, measured in Docker. Since baseline `283b86fca`: 20 functions / 19,192 bytes added. The active goal remains 100%, with 446,708 game-code bytes remaining. SDK assembly is separately reported and excluded.
 
 ## Verified gains
 
@@ -25,16 +25,22 @@ User resumed work toward 100% verified game-code matching. Current published cod
 | T24017 | GEKO func_8013FD88 |476|
 | T24017 | SHUGAKU func_80133038 |176|
 | T24017 | EVENT func_80108B24 |476|
+| T24019 | GYOZI func_80142A8C |392|
+| T24030 | BUNKASAI func_80142700 |1176|
+| T24030 | BUNKASAI func_80151364 |844|
+| T24027 | RPG_BAT func_80154760 |1656|
+| T24026 | SHOUGATU func_8013F224 |316|
+| T24026 | SHOUGATU func_80140510 |392|
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
 
 ## Active ownership
 
-- T24026 Sol medium, root worker: SHOUGATU80137FF0/8013F190. Two worker-proven wins (708 bytes) await a pinned handoff; third target remains under investigation. Reuses codex/complete-main.
-- T24028 Sol medium, root worker: DATE func8014718C and EVENT func8011D5C4 in DATE801461B0/EVENT8011C650; matched DATE2func801348F0 is reference-only. T24018 source-only checkpoint9d8cd8719 awaits archival integration. Reuses codex/complete-bunkaken.
-- T24027 Sol medium, root worker: RPG_BAT80154430, functions80154DD8/80154760/8015528C. T24019 GYOZI392-byte win and T24015 source archive await root integration at c502785b1. Reuses codex/complete-option.
-- Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687 resumed at explicit user request. Owns MAIN8007C030, TEL80132000, EVENT8010FE10. Continues corrected EVENT214-edit checkpoint. Added targets T24024 MAIN8006CB30 ONLY func8007132C and T24025 GEKO80142760 ONLY func80142C9C; do not alter parked MAIN8006D7EC. Existing b312d1e2 archive pending integration. One compiler, continue useful rounds across reserved targets.
-- Sol medium coordinator chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8 resumed at user request for T24030: BUNKASAI80142700/801511E0, targets80142700/80151364. Reuse preserved built trees, one compiler total. Existing DATE/ETC work remains completed.
+- T24029 Sol medium root worker, codex/complete-main: GYOZI80136220 func801368B8 and SHOUGATU80134890 func801350F8, a shared source family.
+- T24028 Sol medium root worker, codex/complete-bunkaken: DATE801461B0 func8014718C and EVENT8011C650 func8011D5C4; matched DATE2func801348F0 is reference-only.
+- T24032/T24033 Sol medium root worker, codex/complete-option: six DATE/TACO416-byte SDK-like matrix routines get one provenance/control pass, then VALEN80133C70 func80134030 and VALEN80132760 func80132D0C. No per-function compiler exceptions or coverage reclassification.
+- Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687 active on MAIN8007C030 dialogue_speak_part; owns TEL80132000, EVENT8010FE10, MAIN8006CB30 ONLYfunc8007132C and GEKO80142760 ONLYfunc80142C9C as reserved follow-ups. Do not touch parked MAIN8006D7EC. One compiler.
+- Sol medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8 active on T24031, paired GYOZI80143AD0 funcs80144B70/80144018 and SHOUGATU80141780 funcs8014288C/80141D20. Reuses built private/tmp tree, one compiler.
 
 ## Completed bounded passes
 
@@ -84,3 +90,7 @@ New-C proof safeguard: T24016's first installation helper accidentally retained 
 ## Restart follow-through
 
 Both user-owned chats were confirmed active after the restart. Astra is concentrating on the roughly9KB dialogue function after preserving EVENT and MAIN investigations. Sol returned BUNKASAI func80151364 (844 bytes), pinned f41f35d3a, for independent integration; its other target remains active. These queued wins are not included in published coverage. T24017 was reviewed against CODING_STANDARDS.md and independently passed all27 hashes, guards and allthree literal C proofs before publication979a83671; its ticket is Done.
+
+## Latest integrated follow-through
+
+GYOZI T24019, BUNKASAI T24030, RPG_BAT T24027 and SHOUGATU T24026 code handoffs were independently reviewed against CODING_STANDARDS.md and passed all27 original hashes, header/global/prototype guards, target-INCLUDE_ASM rejection and default literal C proofs. Six functions/4776 bytes added after979a83671. Shared overlay headers preserve all existing code bytes. All FAKE views and scheduling forms remain documented. T24030 is Done; other partially matched family tickets remain In Review. T24015 and T24027 residual drafts are included with their code handoffs. Source-only T24018 and Astra T24020–23 archives preserve negative results without coverage claims.

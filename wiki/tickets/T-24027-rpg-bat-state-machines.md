@@ -40,3 +40,7 @@ Unresolved forms:
 - func_8015528C: old compiling loop498/274 current; fresh natural bounds/clamp556/296, direct phase decrement506/298. Explicitly initializing the phase pointer before the loop304/248; meaningful shared work base and later i initialization302/246. Selected body retains that lead, with an unresolved cross-scalar work-array view marked FAKE. Broad division/control-flow/register differences remain; no near match. Its initial loop sentinel and interpolation calls preserve target semantics.
 
 Provenance: wiki/index, rpg-bat-family-results, T-17100, T-17106, T-17114 and current matched sibling C consulted first. Forms derive from those archives with fresh natural loop/global reconstructions, not unreviewed raw m2c promotion. Rejected signature, selector, pointer and loop hypotheses remain in ignored build/T-24027-probes/. No older archive was edited.
+
+## Independent root integration review
+
+Production changes reviewed against CODING_STANDARDS.md. No unresolved findings; existing SDK types and aggregates retained, necessary ABI views explained, FAKE forms marked, no compiler/config exceptions. All27 binary hashes and header/global/prototype guards pass. Each new target lacks its INCLUDE_ASM fallback and passes normal-default literal linked-byte proof. Root published verified code on main; unresolved family functions are not counted.
