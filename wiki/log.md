@@ -18984,3 +18984,10 @@ Read prior negatives and matched setup/dialogue forms; serial source-semantic/li
 ## [2026-10-18] query | Record EVENT return view and closure controls
 
 [[tickets/T-24023-event-handler]] documents the intentional s32 fallthrough tail requested by parent preview review: original calls func_80011DFC then returns with its v0 unchanged, and the sole C caller ignores the result. The retained full-TU replay confirms literal6,848-byte match; direct selector symbol costs18, shared month equality967, literal comparison constants8, historical checkpoint214. No production cleanup or compiler changes after successful verification.
+## [2026-10-18] ticket | TACO short-helper count lane
+
+Created [[tickets/T-24063-taco-short-count]], confirmed three guarded targets and parent-owned disjoint scope. Read [[taco-family-results]], [[ido-52-evaluation]], copy-state and keep-line negatives. Two copies get fresh controls only; random-buffer view/control-flow are the concrete novel source hypothesis. One Docker compiler, no production/header edits yet.
+
+## [2026-10-18] decision | TACO short-count pass freezes known gaps
+
+[[tickets/T-24063-taco-short-count]] moves to In Review with zero C gain, production/header/config unchanged. [[taco-family-results]] records fresh29/16/20-row controls and a correct GameState unk_183C word-buffer view compiling identically29. Read prior copy-state compiler evidence and did not repeat exhausted grids. Five measured forms only; corrected body/reproducer retained, all loose instruction traces ignored. Baseline TACO checksum passes, no ASM fallback coverage claim.
