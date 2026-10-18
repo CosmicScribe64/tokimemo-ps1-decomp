@@ -441,3 +441,12 @@ rejected. drafts/T-24078 replay now prints alignedcost/words/frame evidence.
 No supported form simultaneously restores original stackUV50/54, saved136/320
 and DIV-before-MULTU scheduling. Active In Progress pending focused direction;
 no further unsupported probes, no match/impossibility claim. Production ASM.
+
+Parent-authorized bounded Astra read-only review returned one source-backed
+D32C transfer: derive pageX as0x140 + var_s4*0x80 and remove only independent
+var_fp declaration/init/increment. Single indexed-page control neutral638cost/
+800rows/594words/frame98. Compiler reconstructs320 induction but spills atsp50
+rather thanbaseline60; no targetfp320/frame90 gain. drafts/T-24078/indexed-page.c
+and replay preserve exact source; measured ignored build/etc24078/indexed-page.
+Astra idle, no further unsupported control/instrumentation; still active pending
+direction, production unchanged.
