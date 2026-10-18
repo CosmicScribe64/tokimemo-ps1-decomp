@@ -1,0 +1,10 @@
+{
+  "function": "mod_set_gpu",
+  "variant": "gpu-m2c-typed",
+  "aligned_cost": 225,
+  "built_instructions": 204,
+  "target_instructions": 201,
+  "status": "unmatched",
+  "base": "f70450137580e684e20f8ecd28e7a93062385ac7",
+  "source_sha256": "a9926b970d1bd0c5fab8230bdb9fb4a9c70fb84e67337072a013b01eb2b3bd97"
+}

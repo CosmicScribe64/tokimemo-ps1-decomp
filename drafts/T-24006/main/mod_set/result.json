@@ -1,0 +1,10 @@
+{
+  "function": "mod_set",
+  "variant": "set-typed-record",
+  "aligned_cost": 295,
+  "built_instructions": 198,
+  "target_instructions": 195,
+  "status": "unmatched",
+  "base": "f70450137580e684e20f8ecd28e7a93062385ac7",
+  "source_sha256": "c454369a854bb6f765747bfdfdaa0066e4759b90247bd6ad40bf8df5eca619ea"
+}

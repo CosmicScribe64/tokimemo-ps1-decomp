@@ -1,0 +1,10 @@
+{
+  "function": "mod_trans_vram",
+  "variant": "trans-m2c-typed",
+  "aligned_cost": 241,
+  "built_instructions": 197,
+  "target_instructions": 188,
+  "status": "unmatched",
+  "base": "f70450137580e684e20f8ecd28e7a93062385ac7",
+  "source_sha256": "4b6c0a746bb488b13ec9a4fa0b000c7776dcb25c30ed8af6b9982d7c2900a1c7"
+}

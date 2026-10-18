@@ -1,0 +1,10 @@
+{
+  "function": "srn_tpage_show",
+  "variant": "tpage-typed",
+  "aligned_cost": 1032,
+  "built_instructions": 814,
+  "target_instructions": 806,
+  "status": "unmatched",
+  "base": "f70450137580e684e20f8ecd28e7a93062385ac7",
+  "source_sha256": "a1252bc29d6a7b812ab18125c3385e478e6805dbb286aa465c8aa1df3232b4a9"
+}

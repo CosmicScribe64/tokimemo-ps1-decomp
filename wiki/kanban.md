@@ -60,6 +60,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
 - [ ] [[tickets/T-24002-complete-option|T-24002 Complete OPTION matching package]]
 - [ ] [[tickets/T-24012-etc-render-family|T-24012 Match ETC rendering family]]
+- [ ] [[tickets/T-24006-main-render-family|T-24006 Recover MAIN render family]]
 - [ ] [[tickets/T-24001-main-schedule-final-row|T-24001 Close main schedule final instruction]]
 
 ## Done

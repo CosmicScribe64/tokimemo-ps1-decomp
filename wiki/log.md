@@ -18264,3 +18264,10 @@ A narrow-selector empty test before the switch resolves the four-word residue in
 ## [2026-10-18] build | T-24005 unguarded C matches 3,232 bytes
 
 The narrow-selector empty test resolves the four-word residue in src/ovl/BUNKAKEN/80143DD0.c; marked FAKE and removed the guard/fallback. Explicit default linked funcdiff matches 3,232 bytes. BUNKAKEN SHA1, headers and globals pass; prototype guard has 0 new / 15 known disagreements. Updated [[bunka-family-results]], [[index]] and drafts/T-24005/README.md. Moved [[tickets/T-24005-bunkaken-date-state-machine]] to In Review for independent parent review. No further probes after the first exact result.
+## [2026-10-17] ticket | T-24006 MAIN render family
+
+Created [[tickets/T-24006-main-render-family]], exclusive src/main/8004C3F0.c scope from f704501. Read [[main-family-results]], T-17000 recipes and CODING_STANDARDS.md.
+
+## [2026-10-17] build | T-24006 bounded renderer family
+
+Archived five source-only typed hypotheses in drafts/T-24006/; 0 new verified bytes, production source and headers unchanged. [[main-family-results]] records ModRec14 evidence, SDK packet/rectangle types, corrected word strides and byte buffers, stable aligned costs and concrete blockers. Existing Docker serial probes only. Fresh default linked literal proof passed six ASM-backed targets and four C siblings; MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26, headers/globals OK, prototypes 0 new/15 known. [[tickets/T-24006-main-render-family]] moved In Progress to In Review for parent review; card moved with it.
