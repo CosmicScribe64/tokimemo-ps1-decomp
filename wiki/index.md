@@ -38,6 +38,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
+- [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI sibling package (In Review; 2 matches, 2,020 bytes).
 - [[tickets/T-24016-bunkasai-state-machines|T-24016]] BUNKASAI state machines (In Review; 2 matches, 3,160 bytes).
 - [[tickets/T-24014-taco-pre-closer|T-24014]] TACO func_8014A480 PRE closer (In Review; no match, expression-order tradeoff archived).
 - [[tickets/T-24009-ending-scheduler-closer|T-24009]] ENDING func_8013A2E8 scheduler closer (In Review; no match, new pointer-lifetime evidence archived).
@@ -656,3 +657,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[tickets/T-24010-date-etc-coordination|T-24010]] Isolated DATE and ETC coordinator; workers [[tickets/T-24011-date-dispatch-family|T-24011]] and [[tickets/T-24012-etc-render-family|T-24012]].
 - [[tickets/T-24001-main-schedule-final-row|T-24001]] Close main schedule final instruction (In Review; Astra backedge follow-up remains one row, no new C match).
+
+- [[tickets/T-24030-bunkasai-sibling-package|T-24030]] BUNKASAI two-function sibling package, one compiler, current main reference ports.

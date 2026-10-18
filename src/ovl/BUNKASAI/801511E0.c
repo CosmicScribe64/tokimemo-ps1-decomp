@@ -53,10 +53,7 @@ void func_801511E0(void) {
     }
 }
 
-/* NON_MATCHING: T-10040, T-22012, 2 rows: in case 5 the two address `lui`s before the year compare come out in the other order (built: D_800CA148 then D_800E62BE; original: D_800E62BE then D_800CA148); everything else matches. uopt puts the D_800CA148 range load at the top of the join block, so ugen emits it before the year load, and the as1 trace shows both `lui`s tied (aftercycles 4), which as1 breaks by original index; the original needs the year load first on the same source line. Not reachable from C so far: compound/plain add, year statement or in-condition, operand order, one-line forms (all on one line swaps the loads instead), a tmp or s16 copy of D_800CA148, cast and volatile reads, a second year read, direct D_800E6280 reads, a pointer reassignment, viewsweep, autotweak and a 240 s permuter run. */
-#ifdef NON_MATCHING
 void func_80151364(void) {
-    u8 year;
     GameState *game = &D_800E6280;
     u32 temp_v0;
 
@@ -105,7 +102,7 @@ void func_80151364(void) {
                 D_800CA148 = 8;
                 break;
             }
-            if ((year = game->unk_03E) == 0x60) {
+            if (game->unk_03E == 0x60) {
                 D_800CA148 += 0xC;
             }
             func_80153FA4();
@@ -132,21 +129,21 @@ void func_80151364(void) {
         break;
     case 12:
         if (func_8008667C(0) == 4) {
-            if ((u16) game->unk_66C[0].unk_00 >= (u32) (((year = game->unk_03E) * 0x64) - 0x24B8)) {
+            if ((u16) game->unk_66C[0].unk_00 >= (u32) ((game->unk_03E * 0x64) - 0x24B8)) {
                 D_800CA148 = 0xC;
             } else {
                 D_800CA148 = 0xD;
             }
         } else {
-            if ((u16) game->unk_66C[0].unk_00 >= (u32) (((year = game->unk_03E) * 0x64) - 0x24B8)) {
+            if ((u16) game->unk_66C[0].unk_00 >= (u32) ((game->unk_03E * 0x64) - 0x24B8)) {
                 D_800CA148 = 0xA;
             } else {
                 D_800CA148 = 0xB;
             }
         }
 
-        /* FAKE: pointer reassignment splits the year/base live ranges. T-10040. */
-        if ((year = (game = &D_800E6280)->unk_03E) == 0x60) {
+        /* FAKE: pointer reassignment splits the state/base live ranges. T-10040, T-24030. */
+        if ((game = &D_800E6280)->unk_03E == 0x60) {
             D_800CA148 = D_800CA148 + 0xC;
         }
         func_8004284C();
@@ -175,9 +172,6 @@ void func_80151364(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/801511E0", func_80151364);
-#endif
 
 void func_801516B0(void) {
     u32 temp_v0;

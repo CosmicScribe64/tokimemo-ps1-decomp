@@ -18498,3 +18498,13 @@ Created [[tickets/T-24019-gyozi-sibling-ports]] In Progress for four exclusive f
 ## [2026-10-17] decision | T-24019 bounded selector negatives retained
 
 [[tickets/T-24019-gyozi-sibling-ports]] moves to In Review: one of four matched (392 bytes). E82424 and39E4C27 reproduce prior negatives; 3907C meaningful result/local and natural control flow leave12 aligned edits. Updated [[event-family-results]] with blockers; source-only drafts and scorer archived. All loose experiments preserved in ignored build/T-24019-probes/. No additional production changes. Independent review pending.
+## [2026-10-17] ticket | Resume coordinator with BUNKASAI sibling package
+Created [[tickets/T-24030-bunkasai-sibling-package]] before implementation. Reused clean built /private/tmp/tokimemo-complete-etc on codex/complete-bunkasai-siblings, fast-forwarding to a6fa29a65 without resetting prior history. Read [[index]], [[completion-run-2026-10-17]], [[bunkasai-family-results]], [[bunka-family-results]] and T-22012 negative evidence. Exclusive targets func_80142700 and func_80151364; Docker single compiler, root owns final integration/checks/push.
+
+## [2026-10-17] build | T-24030 BUNKASAI year-read match
+
+[[tickets/T-24030-bunkasai-sibling-package]] and [[bunkasai-family-results]] record actual unguarded default C for func_80151364, 844 literal linked bytes. Fresh GameState year reads resolve the T-22012 two-lui blocker; existing FAKE pointer reassignment retained. Docker explicit default linked proof, BUNKASAI checksum and header/global/prototype guards pass (0 new / 15 known). No header or other matching function changes. Ticket remains In Progress for func_80142700.
+
+## [2026-10-17] build | T-24030 both BUNKASAI siblings verified
+
+[[tickets/T-24030-bunkasai-sibling-package]] and [[bunkasai-family-results]] record actual default C for func_80142700 (1,176 bytes), adding to func_80151364 (844): 2 of 2, 2,020 bytes. Typed loops plus void callee view and sibling's marked FAKE store-order view resolve the second target; necessary overlay-header additions reported first. No main API change. Final joint default proof/checksum and guards recorded; exact pre-existing body audit and source-only provenance preserved. [[matching-notes]] supersedes T-22012's old two-lui blocker. Ticket/card moved to In Review for coordinator review/integration.
