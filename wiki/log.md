@@ -19239,6 +19239,23 @@ Existing read-only tracer shows fmt/save/end hoisted constants share priority3.3
 
 ## [2026-10-18] build | T-24067 canonical allocation checkpoint
 Retained drafts/T-24067/body.c and safe replay at cost18/28 rows, exact0x48 frame/75 words. FAKE format identity restores saved allocation; canonical GameState endpoint avoids any header/export alias. Source-only checkpoint preserves provenance while [[tickets/T-24067-etc-album-copy]] remains In Progress. No other function or production source changed.
+
+## [2026-10-18] query | T-11890 Sony/SN cc1psx versions on ratan2
+
+User-approved downloads of the mkst/esa `psyq-binaries` compiler sets (PsyQ 3.3, 3.5, 3.6 under dosemu2; 4.0, 4.1,
+4.3, 4.5, 4.6 under wine; throwaway containers in the scratchpad, nothing committed). None reproduces TT
+`func_8014D260` or the SDK habits: every version up to 4.5 prints the `div` macro and ASPSX expands it with the move
+after the checks; 4.0 equals our gcc 2.7.2-psx + maspsx output; no version prints the rd-through load or hazard nops.
+Results in [[gcc-objects]] and [[tickets/T-11890-tt-ratan2-aspsx]] (status unchanged, Done). Branch `cc1psx-d260`.
+
+## [2026-10-18] query | T-11890 old ASPSX and PsyQ library signatures (issue #63)
+
+DOS ASPSX 1.05 to 2.34 under dosemu2 (scratch container): no version reproduces TT `func_8014D260` or any of the three
+habits. lab313ru signatures of 12 libraries in 16 PsyQ releases against the 722 main-exe SDK functions: mixed vintages
+(libgte/libc 3.3-era, libgpu/libcd/libetc 3.7/4.0-era, libsnd/libspu poor everywhere); TT ratan2 and libgpu
+`func_8009E108` differ from 3.70/4.00 only at the habit spots, many others also in instruction order. The SDK C code
+comes from a toolchain no released set reproduces. [[gcc-objects]], [[tickets/T-11890-tt-ratan2-aspsx]] (status
+unchanged).
 ## [2026-10-18] ticket | Repair ENDING allocator diagnostic prerequisite
 
 [[tickets/T-24047-ending-sprite-scene]] returns to In Progress after coordinating
@@ -19483,3 +19500,11 @@ Parent authorized a separate logging-only backend diagnostic; drafts/T-24067/tra
 ## [2026-10-18] query | T-24067 isolate stale backend stack input
 
 Parent-requested existing rejected-store comparison passes separate same-input whole-object and code/data/relocation equality. [[tickets/T-24067-etc-album-copy]] and [[etc-family-results]] record equal copy-entry/address-evaluation free lists but eval_mov slot sp+232=9 versus0x10000. Original pinned ugen disassembly confirms indirect destination skips its only local assignment before reading the slot; its value selects one/two dummy allocations and t5/t6. drafts/T-24067/trace_ugen.py and README preserve comparison/provenance. No legal source transition established; next precise evidence is last-writer provenance of that backend address. Best stays four words off, production unchanged, ticket In Progress; no compiler patch/older-toolchain necessity claim.
+
+## [2026-10-18] decision | func_8014D260 stays INCLUDE_ASM (proposed, issue #63)
+
+[[gcc-objects]] now states the reason: TT `func_8014D260` is PsyQ 3.70/4.00 `RATAN.OBJ` from a toolchain no public ASPSX or `cc1psx` release reproduces. [[tickets/T-11890-tt-ratan2-aspsx]] notes the proposal; wiki-only PR from diman8.
+
+## [2026-10-18] decision | Preserve PR64 findings without a permanent assembly exception
+
+Reviewed the wiki-only contributor diff against the 100% goal. [[gcc-objects]] distinguishes reported toolchain measurements from unproven unreleased-toolchain provenance; [[tickets/T-11890-tt-ratan2-aspsx]] remains Done for evidence only. Permanent assembly exception not accepted, existing matching scope/counts unchanged. [[completion-run-2026-10-17]] records the contributor check and next10:39UTC check. No production files changed and no match claimed; independent reproduction of the external toolchain survey remains outstanding.

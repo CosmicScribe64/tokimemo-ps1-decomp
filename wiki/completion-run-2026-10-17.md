@@ -210,3 +210,7 @@ PR #61 follow-up: integrated at5397dc7f7. Root inspected the read-only survey an
 ## Contributor check 2026-10-18 09:39 UTC
 
 No open PRs. NAME_ENT claims #50/#57 remain open; TT follow-up is now issue #63 (replacing closed #56). Its new contributor report compares public PsyQ/ASPSX toolchains and SDK signatures, suggesting TT func_8014D260 derives from library ratan2 but retains three unexplained compiler patterns. These are contributor-reported measurements, not independently reproduced here. The proposed permanent assembly exception is not accepted: retain the existing scope/counts and investigate provenance before any reclassification. No contributor message sent, no compiler/config/source change. Next check around10:09 UTC. Source: https://github.com/CosmicScribe64/tokimemo-ps1-decomp/issues/63#issuecomment-6248335737 . Two existing Sol workers continue ENDING35F4C and ETC41ABC; ETC's four-word residual draft is published at7083b5f14.
+
+## Contributor check 2026-10-18 10:09 UTC
+
+PR #64 supplies wiki-only TT toolchain/signature measurements. Integrated as contributor-reported evidence with its permanent-assembly proposal explicitly unaccepted and unreleased-toolchain inference qualified. No source/config/tool change or scope/count adjustment. Claim issues #50/#57 unchanged; #63 contains this follow-up. Two Sol workers remain on ENDING35F4C and ETC41ABC. Next check around10:39 UTC.

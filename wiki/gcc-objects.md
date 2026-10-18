@@ -26,7 +26,9 @@ Not gcc: TACO `func_801420DC` and `func_801421AC` (listed as gcc-shaped by wave 
 ## Which gcc
 Chosen by compiling the C and comparing bytes. `func_801488F0`: 2.7.2-psx and 2.6.3-psx end the function with `addu $sp; j $31; nop`, while the original has `jr $ra` with the stack release in its delay slot; gcc 2.8.0-psx and 2.8.1-psx print that epilogue (`.set noreorder`) and match byte for byte (ASPSX version 2.79). 2.8.0 and 2.8.1 are not told apart by this function; 2.8.1 is used.
 
-## `func_8014D260` (open, T-11890: the original is not ASPSX output of gcc 2.7.2)
+## `func_8014D260` (unmatched, T-11890: SDK ratan2 provenance and unresolved toolchain)
+**Status (2026-10-18):** production retains `INCLUDE_ASM` while matching remains unresolved. Contributor PR #64 reports close agreement with PsyQ 3.70/4.00 `LIBGTE.LIB` `RATAN.OBJ` except for three instruction patterns, and unsuccessful reproduction with the tested ASPSX/cc1psx versions. The measurements below are contributor-reported and have not been independently reproduced by the orchestrator. An unreleased toolchain is a hypothesis, not established provenance or proof that no source/toolchain route can match. The proposed permanent assembly exception is not accepted; completion scope and coverage accounting stay unchanged. No speculative compiler pass is authorized by these findings.
+
 With gcc 2.7.2-psx / 2.6.3-psx and maspsx `--expand-div`, the C in [[tickets/T-9200-gcc-built-sdk-objects-in-overlays]] is identical to the original up to the first division and has the same block structure, but is 4 bytes shorter. The divisions differ in layout: ASPSX expands `div rd,rs,rt` as `div $zero,rs,rt; mflo rd; <checks>` when `rd` is neither `rs` nor `rt` and as `div; <checks>; mflo rd` otherwise (original: four divisions, two of each kind), and puts the `mflo` hazard nops in other places (`mflo a0; nop; nop; j; sll v0,a0,1` against `mflo a0; nop; sll`). GNU as always puts the `mflo` after the checks. A pass in front of `maspsx` could model it; one function is too little evidence for CODING_STANDARDS 7a, so this waits for a second division site in gcc-built code.
 
 T-11800 (2026-10-15) tried every existing combination: gcc 2.6.3-psx, 2.7.2-cdk, 2.7.2-psx, 2.8.0-psx, 2.8.1-psx and
@@ -130,6 +132,79 @@ compiler already expanded (explicit `div $zero`, checks and `mflo` that the comp
 `%hi`/`%lo` through the destination; the compiler's own hazard nops), from a compiler build none of the old-gcc
 releases we have reproduces (2.6.3 to 2.95.2 all print the `div rd,rs,rt` macro or `div $0` + `mflo` without checks).
 An ASPSX emulation pass would model something ASPSX does not do, so none is built.
+
+## Sony/SN cc1psx (PsyQ 3.3 to 4.6) on the same input (T-11890)
+The PsyQ compiler binaries that decomp.me uses (mkst/esa release `psyq-binaries`: `psyq-compilers.tar.gz` with 4.0,
+4.1, 4.3, 4.5, 4.6, and `psyq3.3`/`psyq3.5`/`psyq3.6`) were run in throwaway containers outside the repo
+(measurement only, nothing committed): the Win32 4.x `CC1PSX.EXE` + `ASPSX.EXE` under wine, the DOS 3.x ones under
+dosemu2 with the archive's `dosemurc`. Input: the ratan2 draft preprocessed with old-gcc cpp, and small synthetic C
+functions (quotient and remainder with rd distinct and rd = rs, unsigned divide, a `short` table load by index,
+`mult` + `mflo` before a branch).
+
+| PsyQ | cc1psx | ratan2 (original: 97 instructions) |
+|---|---|---|
+| 3.3 | GNU C 2.6.0 (SN) | 98, 41 differing words (ASPSX 2.21: `li` as `ori`, `addiu $at` load form) |
+| 3.5, 3.6 | GNU C 2.6.0 (SN) | 96, 41 differing words |
+| 4.0 | GNU C 2.7.2.SN32.3.7.0002 | 96, identical to our gcc 2.7.2-psx + maspsx path (relocations aside) |
+| 4.1, 4.3, 4.5 | cygnus-2.7.2 SN32 | 95, more different (compiler splits `%hi`/`%lo` and indexes through another register) |
+| 4.6 | gcc 2.8 class | 71 |
+
+What the compilers print (`.s`, all versions; `-O1`, `-O3`, `-mno-gas`, `-fschedule-insns`, `-mips2`,
+`-membedded-pic`, `-mlong-calls` change nothing for 4.0):
+- 3.3 to 4.5 print the `div rd,rs,rt` macro; ASPSX expands it with the move after the checks, as measured above.
+  4.6 prints `div $0,rs,rt; mflo rd` and only a zero check (`bne rt,$0,1f; nop; break 7`), without the overflow check
+  the original has.
+- 3.3 to 4.0 print `lh rd,sym(rs)`, which ASPSX expands through `$at`; 4.1 and later split the address with another
+  register (`lui`/`addiu` of the full address, then `addu` with the index and `lh rd,0(...)`). None gives the
+  original's `lui rd,%hi; addu rd,rd,rs; l* rd,%lo(sym)(rd)`.
+- No version prints its own hazard nops; `mflo` before a branch or label gets none after ASPSX.
+
+No PsyQ compiler from 3.3 to 4.6 produces the original `func_8014D260` or the three SDK habits, so the question of
+TAIIKU `func_801488F0` under one of them does not arise. Where the original's code generator comes from stays open
+(not tried: other cc1psx builds, such as the `psyq_263_221` set decomp.me lists, and the libraries' own object files).
+
+## Old ASPSX and the PsyQ library signatures (T-11890, issue #63)
+**DOS ASPSX 1.05 to 2.34** (all DOS versions in the maspsx author's archive; there is no 2.31, 2.32 or anything
+between 2.34 and 2.56), run under dosemu2 in a throwaway container. Input: the gcc 2.7.2-psx `.s` and the PsyQ 4.0
+cc1psx `.s` of the ratan2 draft, plus synthetic cases (quotient with rd distinct and rd = rs, `divu`, each before a
+reader or a noreorder branch; `mflo` before a label, a noreorder branch and `mult`; symbol+register loads):
+- ratan2: 1.05, 1.07, 2.21 give 98 instructions (41 words differ from TT), 2.05 and 2.08 give 98 (49), 2.30 and 2.34
+  give 96 (41). 2.30/2.34 equal 2.56 to 2.86 except `li` as `ori`. No version gives TT's 97.
+- Divide: every version puts the move after the checks with a nop before a reader of rd (2.05 and 2.08 use `tge`
+  instead of `break 6`). Hazard nops: none before a label or a branch in any version; before `mult`, two nops from
+  2.30 on and none before. Loads: always through `$at` (`lui; addiu; addu` before 2.30).
+None of the tested ASPSX versions reproduced the three habits on these inputs. The SDK asm cannot come from a pre-2.30 ASPSX anyway:
+it has the `mflo`/`mult` pads (153 sites) and the `lui; addu` load form those versions do not produce.
+
+**Main exe SDK functions vs the lab313ru/psx_psyq_signatures sets** (12 libraries x 16 releases, 2.60 to 4.70;
+function ranges cut at named labels, `loc_`/`text_` labels are inside functions). Each of the 722 functions under
+`asm/lib*.s` is compared exactly (signature wildcards ignored), then after normalising the three habits away (nops
+dropped, divide checks dropped, `lui; addu; l*` through `$at` or rd folded), then as the same normalised instruction
+multiset in another order:
+
+| lib | functions | matched any way | best releases (functions matched) |
+|---|---|---|---|
+| libapi | 66 | 66 | all (60 to 66) |
+| libgte | 198 | 174 | 3.30 to 3.61 (169 to 171); 3.70/4.00: 135 |
+| libgpu | 96 | 57 | 3.70, 4.00 (53); 4.10+: 44 to 46; 3.x: 9 to 23 |
+| libcd | 65 | 35 | 3.70 (26), 4.00 (24); 4.10+: 22 |
+| libetc | 31 | 22 | 3.70, 4.00 (20); 3.30 to 3.61: 17 |
+| libgs | 36 | 24 | 3.00 to 4.70 (17 or 18 each) |
+| libpress | 22 | 12 | 3.30, 3.40 (10) |
+| libsnd | 142 | 55 | 3.00 (38); 4.10/4.20 (33); 3.70/4.00 (27) |
+| libspu | 63 | 11 | 3.70, 4.00 (9) |
+| libc, libcard | 3 | 3 | 3.30 |
+
+- The game's SDK is not one release: the mixed vintages of [[psyq-sdk]] show again (libgte and libc 3.3-era, libgpu,
+  libcd, libetc 3.7/4.0-era), and libsnd/libspu match badly everywhere (39 % and 17 %).
+- 39 functions carry a habit (an rd-through `lui; addu; l*` or an early divide move). 4 are hand-written libgte code
+  that matches the signatures exactly (`RotMatrix`, `SquareRoot0`, `SquareRoot12` and one more; Sony's own asm uses the
+  rd form). Of the compiled ones, 2 differ from a signature only at the habit spots (libgpu `func_8009E108`: 3.50 to
+  4.00; TT `func_8014D260`: 3.70/4.00), 2 more also in instruction order (libcd `func_800893F0`: 3.50 to 4.00; libsnd
+  `func_80090EDC`: 3.50), and 31 (23 in libsnd) differ more.
+- Many compiled functions without habits are the official code in another instruction order (e.g. libgs
+  `GsInitCoordinate2`, 3.00: the word copies of a matrix in another order). That is a compiler difference, not an
+  assembler one, which suggests a different compiler build or configuration around 3.5 to 4.0 sources. The tested tools did not reproduce it; this does not exhaust every build, source form or configuration.
 
 ## Build integration
 - `config/toolchains.txt` names the toolchain of an object (`<subsegment name> gcc <ver> <aspsx>`); `configure.py` validates it and passes it to `tools/cc.py`. The gcc path has no asm-processor, so only objects whose functions are all C belong there. Test: `tools/test_configure_toolchains.py`.
