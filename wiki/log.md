@@ -18271,3 +18271,15 @@ Created [[tickets/T-24006-main-render-family]], exclusive src/main/8004C3F0.c sc
 ## [2026-10-17] build | T-24006 bounded renderer family
 
 Archived five source-only typed hypotheses in drafts/T-24006/; 0 new verified bytes, production source and headers unchanged. [[main-family-results]] records ModRec14 evidence, SDK packet/rectangle types, corrected word strides and byte buffers, stable aligned costs and concrete blockers. Existing Docker serial probes only. Fresh default linked literal proof passed six ASM-backed targets and four C siblings; MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26, headers/globals OK, prototypes 0 new/15 known. [[tickets/T-24006-main-render-family]] moved In Progress to In Review for parent review; card moved with it.
+
+## [2026-10-17] ticket | T-24012 dispatcher reviewed, remaining work resumes
+
+Independent Standards and Spec review axes both PASS with 0 actionable findings for frozen `a0675cafe604146244c5d762cd915467b41a46a2`; recorded in [[tickets/T-24012-etc-render-family]]. Reviewed source checkpoint preserved. Ticket/card returned to In Progress for the three pending ETC routines; full ticket is not Done.
+
+## [2026-10-17] decision | T-24012 preserve bounded remaining-target evidence
+
+No new verified bytes after the reviewed dispatcher. [[tickets/T-24012-etc-render-family]] and [[etc-family-results]] record source-only drafts in `drafts/T-24012/`: filter 217, quad 180, background selector 150 resolved diagnostic cost, all independently compiling and nonmatching. Captured frame/row-base, colour allocation and table-base-sharing blockers; stopped bounded probes without weakening types or adding guessed padding. Production source/header preserve `a0675cafe`; three targets remain pending, ticket In Progress.
+
+## [2026-10-17] ticket | T-24012 archive ready for review
+
+Moved [[tickets/T-24012-etc-render-family]] and its card to In Review for the source-only archive delta. Result is 1 of 4 targets verified, 1,280 bytes; three explicit blockers remain pending. No Done claim; coordinator handles review and next disposition.
