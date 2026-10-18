@@ -37,6 +37,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
+- [[tickets/T-24078-etc-two-poly-renderer|T-24078]] ETC two-slot polygon renderer, In Progress.
 - [[tickets/T-24077-etc-pair-scene|T-24077]] ETC two-word table scene, unresolved In Review;102-row source-only checkpoint, production ASM.
 - [[tickets/T-24076-etc-album-search|T-24076]] ETC album search, unresolved In Review;71-row source-only lead, production ASM.
 - [[tickets/T-24075-etc-random-selection|T-24075]] ETC random selection, Done;904-byte C match independently verified/publishedc7690151b.
