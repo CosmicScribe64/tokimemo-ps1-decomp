@@ -58,6 +58,7 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-24041-main-render-cd-siblings|T-24041 Recover MAIN renderer and CD dispatcher]]
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
+- [ ] [[tickets/T-24044-taiiku-taco-siblings|T-24044 TAIIKU and TACO sibling completion]]
 - [ ] [[tickets/T-24040-option-menu-siblings|T-24040 OPTION menu sibling completion]]
 - [ ] [[tickets/T-24031-gyozi-shougatu-pairs|T-24031 Recover GYOZI and SHOUGATU particle pairs]]
 - [ ] [[tickets/T-24045-tel-profile-screen|T-24045 Recover TEL profile screen from retained near miss]]

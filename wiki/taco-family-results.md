@@ -204,3 +204,8 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 
 
 T-24032 cross-unit control: DATE/TACO rotation clone provenance retained after one fresh SDK MATRIX control; zero matches or production changes. See [[tickets/T-24032-date-taco-rotation-clones]] and drafts/T-24032/. CF30 old draft offset0 word access is a semantic defect; use matrix halfwords in any future reconstruction.
+
+
+## T-24044 projected-quad sibling retry
+
+[[tickets/T-24044-taiiku-taco-siblings]] measures current424A8 sibling control162/162 and improves it to124/124 with meaningful output index k=j*2+o. Pointer, byte-offset and index-type alternatives worsen it; original matrix-copy pool still reserves an extra uopt register for a later reload. No production/header edit, no coverage gain. Selected source needs a scratch table extern/forward prototype; source-only provenance in drafts/T-24044/. Old81-row note is historical, not this measurement.

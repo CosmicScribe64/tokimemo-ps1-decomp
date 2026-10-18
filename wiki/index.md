@@ -38,6 +38,7 @@ Read this first. Update on every ingest or new page.
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
 
 ## Tickets
+- [[tickets/T-24044-taiiku-taco-siblings|T-24044]] TAIIKU/TACO bounded sibling retry: zero matches, corrected counter and improved output-index source leads archived; In Review.
 - [[tickets/T-24040-option-menu-siblings|T-24040]] two of three matched (1028 bytes), selector guarded at5 rows; In Review.
 - [[tickets/T-24036-geko-shugaku-siblings|T-24036]] one of two matched (244 bytes); GEKO guard refreshed to7 rows, In Review.
 - [[tickets/T-24033-valen-selector-ports|T-24033]] VALEN sibling retry:32D0C guarded at7 rows,34030 remains27; zero matches, In Review.

@@ -18773,3 +18773,12 @@ Reserved src/ovl/TEL/8013CCD0.c:func_8013D03C only, at 68126eccd. Read T-19027's
 
 ## [2026-10-18] build | T-24045 TEL profile screen actual C match, 2128 bytes
 Promoted func_8013D03C to unguarded normal C, with no target INCLUDE_ASM. Current two-dimensional icon indexing, late pointer store, explicit age arms and a marked compiler-specific nonvolatile birthday-pair view close the retained T-19027 draft. FAKE padding/volatile base retained and reticketed. Approved TelSignDays size0x40/D_80146FD0 declaration added to TEL.h. Fresh Docker ninja -j1 compiled/linked production C; TEL checksum and headers pass; literal default resolved linked funcdiff MATCH2128 bytes. Updated [[matching-notes]], [[register-cheatsheet]], source-only evidence and [[tickets/T-24045-tel-profile-screen]]; moved to In Review for root standards review. No push/merge.
+
+## [2026-10-18] ticket | T-24044 TAIIKU and TACO sibling completion
+
+Created [[tickets/T-24044-taiiku-taco-siblings]] after reading [[taiiku-family-results]], [[taco-family-results]] and historical counter/renderer negatives. Current-type sibling reconstruction, two assigned bodies only, one Docker compiler.
+
+
+## [2026-10-18] decision | T-24044 bounded sibling negatives archived
+
+[[tickets/T-24044-taiiku-taco-siblings]] moves to In Review with zero matches and no production/header edits. Current counter semantic repairs and renderer output-index lead recorded in [[taiiku-family-results]] and [[taco-family-results]]; source-only forms/scorer archived. Every loose probe preserved ignored in build/T-24044-probes/. Baseline unit checksums and declaration guards pass; independent review pending.
