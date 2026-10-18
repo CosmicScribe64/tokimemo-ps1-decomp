@@ -19471,3 +19471,7 @@ comma arg0/arg3 forms are804/cost47 and51 with enlarged frames. Late false
 backedge is802/cost723 and retains LBU/BLTZ, so rejected. The110-row source
 ledger preserves all five controls. Evidence-only standards review has no new
 findings; production remains unchanged, guarded, and In Progress.
+
+## [2026-10-18] query | T-24067 read-only ugen copy mechanism
+
+[[tickets/T-24067-etc-album-copy]] and [[etc-family-results]] record the existing backend's tiny-copy scratch sequence and aggregate emit_rob path, which bypasses scalar store classification. Parent-authorized reference generation used pinned existing local inputs in Docker; no regenerated compiler was built/run. drafts/T-24067/README.md pins hashes and exact addresses. The proposed wide-integer address control was conditional on an existing project C89 type; no such type exists, and parent agreed to reject the extension before compilation. Best remains four differing words, production unchanged, ticket In Progress; next investigation stays within legal C89 mechanisms and prior-control exclusions.

@@ -87,3 +87,15 @@ python3 drafts/T-24067/replay.py --variant store-control
 Logs are build/etc24067/store-control-safe.log and archive/store-control/diagnostic.txt. The source is a counterfactual state probe, not a reconstruction of an original required store. Volatile qualifiers on the aggregate copy itself are neutral8/8 and rejected. No 4.1 target comparison or old-compiler necessity is inferred.
 
 Faithful store sequencing offers no immediate substitute for the extra store. Required printf argument stores must precede the call that consumes them. Count/mode stores belong after the loop; moving them into the copy path changes global mutation across subsequent calls. The required first-word copy store uses the dynamic destination register, which the existing store-kind evidence leaves in state F. Splitting into two four-byte aggregate assignments was already rejected (31 rows, both word copies using AT). Further analysis must examine the actual backend address/state classification; it cannot assume that adding a source store is a valid solution.
+
+Parent authorized a read-only backend reference from existing local inputs. It was generated in Docker, never compiled or executed as a replacement compiler:
+
+```
+/scratch/recomp/build/recomp.elf --conservative /scratch/recomp/ido/5.3/usr/lib/ugen > build/etc24067/ugen-reference/ugen.c
+```
+
+The existing /private/tmp/t24047-uopt mount was read-only at /scratch. SHA256 hashes are ugen `4d6ae5a5ea8a6ee77bfcc4c95195800823d4b1217e757cc516e219d05bbf5345`, recomp.elf `ac03f6a0b8c7d917a4ff4da5067d32fb52739077ed73ec98d4f214e1f63fc483`, and generated reference `4079660f9ebb068a791c6f54abb67cf7c3bb792207c89a6eb9ac2d9e146341ec`. The large reference remains ignored, rather than being committed with the source packet.
+
+In f_eval_mov (0x42A078; reference line50898), L42aa44 allocates/frees one scratch, then L42ab84 selects AT plus the second scratch for this unaligned tiny-copy path. Word stores go directly through emit_rob; they do not revisit the scalar store/address classifier. Thus the first aggregate word store cannot stand in for the rejected extra direct stack store. The alternative paths L42a9e0/L42ab18 use additional scratch allocations for large offsets; the actual record offsets and eight-byte length do not satisfy those conditions. Forcing those paths is not established as a faithful source change.
+
+get_free_reg (0x43E124; line82429) uses its dtype bitset0x5010000 to select paired registers for wide integer nodes. The narrowing helper at0x4365B0 selects the low word on MIPS1. This suggested unsigned 64-bit destination arithmetic narrowed to u32 as a single private control, conditional on an existing project C89 type. That condition fails: common.h defines only s8/u8/s16/u16/s32/u32, and include has no 64-bit integer typedef. Parent agreed to reject the non-C89 extension before compilation. No control was run and no allocation result is claimed. The four-word best, production source, interfaces and toolchain remain unchanged.
