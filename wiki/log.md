@@ -18206,3 +18206,12 @@ Independent review of [[tickets/T-24007-complete-geko]] found swallowed candidat
 ## [2026-10-17] ticket | RPG_BAT battle package enters review
 
 [[tickets/T-24013-complete-rpg-bat]] ends with one verified function / 2,424 literal linked bytes, two unresolved source-only archives, and passing header/global/prototype checks (0 new, 15 known). Ticket/board moved to In Review for independent integration verification. Updated [[tickets/T-21001-recover-wave-10-list-6-near-misses]] with the recovered RPG_BAT half; its BUNKAKEN half stays open. Every loose experimental file is preserved under ignored build/T-24013-probes. See [[rpg-bat-family-results]].
+
+## [2026-10-17] ticket | Begin MAIN menu completion package
+
+Created [[tickets/T-24015-complete-main-menu]] for five functions of src/main/8005A0B0.c after consulting [[main-family-results]], T-17000, T-16000 and T-16510 notes. Preserve all prior package commits; only this MAIN source file is owned.
+
+
+## [2026-10-17] decision | T-24015 bounded MAIN retry archived
+
+[[tickets/T-24015-complete-main-menu]] moves to In Review with zero of five matched and no production C/header changes. Signed coordinate loads and a same-array bound bring A410 to 41 rows; blockers and scores recorded in [[main-family-results]] and source-only drafts/T-24015/. Loose experiments preserved in ignored build/T-24015-probes/. Fresh MAIN SHA-1 matches; headers/globals pass and prototype branch check has zero new/fifteen known disagreements. Independent review pending.

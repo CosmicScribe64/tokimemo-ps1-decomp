@@ -50,12 +50,15 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 
 
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24015-complete-main-menu|T-24015 Complete MAIN menu family package]]
 - [ ] [[tickets/T-24013-complete-rpg-bat|T-24013 Complete RPG_BAT battle family package]]
 - [ ] [[tickets/T-24007-complete-geko|T-24007 Complete GEKO scene package]]
 - [ ] [[tickets/T-24004-complete-shougatu|T-24004 Complete SHOUGATU scene package]]
