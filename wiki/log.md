@@ -18022,3 +18022,7 @@ Clean build 27/27 (all SHA1 OK), `check_headers` OK, `migrate_globals --check` O
 ## [2026-10-18] ticket | T-22028 Done
 
 Review against `CODING_STANDARDS.md`: no findings; only `src/ovl/ENDING/80137340.c` changed among C files, the other three claimed functions stay `INCLUDE_ASM`, guards carry `T-22028` and the one FAKE is marked. 0 of 5 matched. [[tickets/T-22028-w4-p28]] Done.
+
+## [2026-10-17] ticket | T-22030 In Progress
+
+Wave 4 package w4-p30 started on branch `w4-p30` from `w2-good`: RENSYU `src/ovl/RENSYU/80132040.c`, four functions. [[tickets/T-22030-w4-p30]], [[tickets/T-22000-wave-4-conveyor]].
