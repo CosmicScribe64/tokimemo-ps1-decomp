@@ -304,7 +304,7 @@ scratch before u1. Captures feed both corresponding vertex stores. No added
 home: the arm values are dead at the shared tail. SDK stores and geometry
 remain ordered identically. Prediction frame90/no new homes confirmed.
 Result624cost/852rows/592words/frame90; UVstill7C/80, poly84/88, page5C,
-mode s7/160s6/136fp unchanged. Crucially two LW copies v0/v1 each now feed
+mode s7/160s6/136fp unchanged. Two LW copies v0/v1 each now feed
 u0/u2 and u1/u3 without reloads or saved-register UV promotion. This restores
 original memory-across-calls versus register-copy-across-stores lifetimes.
 Unknown original persistent aggregate remains explicitly FAKE, not a new type
