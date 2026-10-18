@@ -18326,3 +18326,26 @@ Standards review found P2: drafts/T-24011/probe.py and stage.py ignored funcdiff
 Independent re-review of 2f7bd397b...5c14a3c40 passes Standards and Spec with zero remaining actionable findings. [[tickets/T-24011-date-dispatch-family]] records P2 resolved, five Docker tests covering twelve contracts, real full-unit diagnostics 48/72 and two stage reproductions at eleven edit rows. Production unchanged; no new C bytes or full-ticket completion claim.
 ## [2026-10-17] decision | ETC final archive passes both review axes
 Independent Standards and Spec reviewers pass a0675cafe...920cbb61b with zero actionable findings. [[tickets/T-24012-etc-render-family]] records one verified 1,280-byte function and three pending source-only drafts; production code is unchanged by the archive. Parent owns integration; worktree preserved.
+## [2026-10-17] query | Reuse established DATE assembly blocker
+[[gcc-objects]] and [[matching-notes]] T-17208 establish DATE func_8015A640 as hand-written libgte assembly, superseding older compiler-swap hypotheses. [[tickets/T-24010-date-etc-coordination]] records the boundary; DATE worker focuses dispatcher recovery without repeating exhausted compiler sweeps. No new verified bytes or denominator adjustment.
+
+## [2026-10-17] query | Keep linked proof within worker build cap
+Inspected tools/funcdiff.py freshness/header subprocesses: internal ninja calls omit -j1. [[tickets/T-24010-date-etc-coordination]] records prebuild at -j1 then --no-build default linked proof, preserving freshness checks. Workers notified; no tracked tooling change.
+
+## [2026-10-17] build | Verified ETC checkpoint awaits two-axis review
+[[tickets/T-24012-etc-render-family]] checkpoint a0675cafe verifies ETC func_80136448, 1,280 default linked bytes, affected checksum and header/global/prototype guards. [[tickets/T-24010-date-etc-coordination]] records exact branch/proof paths. Standards/spec reviewers inspect pinned 4c5123f11...a0675cafe; parent retains integration ownership. Other assigned targets remain assembly.
+
+## [2026-10-17] decision | Hand reviewed ETC checkpoint to parent
+Independent Standards and Spec reviews pass 4c5123f11...a0675cafe with zero actionable findings on each axis. [[tickets/T-24010-date-etc-coordination]] records the 1,280-byte checkpoint as ready for parent integration; [[tickets/T-24012-etc-render-family]] remains open for three targets. No merge, push or worktree removal performed by this lane.
+
+## [2026-10-17] decision | Escalate concrete DATE constant-scheduling blocker
+[[tickets/T-24011-date-dispatch-family]] small dispatcher has exact frame/table placement and eleven added/removed isolated diff rows after bounded failed source probes. [[tickets/T-24010-date-etc-coordination]] authorizes the requested Astra blocker-only scratch analysis; Sol retains source ownership. Larger dispatcher and ETC remaining targets continue independently; no new verified bytes claimed.
+
+## [2026-10-17] ingest | ETC pending-draft archive handed off
+[[tickets/T-24012-etc-render-family]] bounded pass ends at 920cbb61b with reviewed source checkpoint unchanged. Source-only drafts/T-24012 preserves three compiling diagnostic nonmatches and precise blockers; [[tickets/T-24010-date-etc-coordination]] records commit dependencies and review boundary. Parent notified; worktree preserved and no further files claimed.
+
+## [2026-10-17] decision | Review archives and repair DATE probe failure reporting
+ETC final archive passes both independent review axes. DATE source-only archive 2f7bd397b passes Spec; Standards identifies P2 subprocess-failure handling in drafts/T-24011/probe.py and stage.py. [[tickets/T-24011-date-dispatch-family]] worker is repairing and verifying the failure path; [[tickets/T-24010-date-etc-coordination]] withholds DATE archive acceptance until resolved. No production mismatch or new byte claim.
+
+## [2026-10-17] ticket | Hand off reviewed DATE and ETC bounded pass
+[[tickets/T-24010-date-etc-coordination]], [[tickets/T-24011-date-dispatch-family]] and [[tickets/T-24012-etc-render-family]] move to In Review. One ETC dispatcher adds 1,280 verified C bytes; six targets remain assembly with useful source-only drafts and blockers. Both independent review axes pass final archives and DATE P2 repair; five Docker failure-contract tests pass. Worktrees remain available, parent owns integration/push, and no further files claimed.
