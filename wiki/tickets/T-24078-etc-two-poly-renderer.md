@@ -54,3 +54,22 @@ rather thanbaseline60; no targetfp320/frame90 gain. drafts/T-24078/indexed-page.
 and replay preserve exact source; measured ignored build/etc24078/indexed-page.
 Astra idle, no further unsupported control/instrumentation; still active pending
 direction, production unchanged.
+
+Read-only original/source relationship audit: drafts/T-24078/relationships.md
+maps all4 arms/shared tail to full VRAM formulas. Signed Q11/Q141/Q68/Q112 and
+R=(A*i*68)/80, distinct upper/lower right expressions, repeated signed center
+reloads, UV words and all persistent values agree; no missingop/address/formula
+correction found. One structural question is full-word coordinate intermediates
+until SDK SH versus3 inherited s16 locals; their later low16-only uses make early
+narrowing observationally equivalent, NOT a proven semantic bug/original C type.
+Proposed single3-local s32 control is source-backed but UNTESTED; no compiler,
+new instrumentation, source sweep or production change in this read-only pass.
+
+Exact parent-approved word-until-SDK-store control changes ONLY temp_a1,
+temp_a2,temp_v1 froms16 tos32 againstjoined638. New best604 alignedcost/670
+printedrows/592words/frameA0 (original588/90), frame8B larger thanjoined98.
+First divergent arithmetic still MULTU i*136 before Q11 DIV; original DIV then
+MULTU. UV LB and early160-A remain. drafts/T-24078/body.c/replay and full-VA
+relationships.md preserve result plus all9 controls. No other width/control or
+production edit; active ownership continues. This is structural evidence, not a
+proven behavior bug or original C type.

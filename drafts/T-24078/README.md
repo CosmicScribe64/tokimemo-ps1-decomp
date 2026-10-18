@@ -14,20 +14,21 @@ Historical T17300 plain792/typed957 are different contexts, not fresh results.
 | Current full-TU source | Aligned cost | Printed +/- rows | Words | Frame |
 | --- | ---: | ---: | ---: | ---: |
 | baseline.c |638|800|594|0xC0|
-| body.c / shared-temps.c |638|800|594|0x98|
+| shared-temps.c |638|800|594|0x98|
 | sdk-uv.c |678|790|582|0x98|
 | uv-pair.c |638|800|596|0x98|
 | case-height.c |638|800|596|0xA8|
 | inline-height.c |678|790|582|0x98|
 | tile-width.c |648|806|594|0xA0|
 | indexed-page.c |638|800|594|0x98|
+| body.c / word-coordinates.c |604|670|592|0xA0|
 
 Original588 words/frame0x90. Rank with tools/funcdiff.py diff_score on resolved
 instruction keys (insertion/deletion1, substitution2). Printed rows use different
 alignment rules for equal/unequal lengths and are diagnostic ONLY. The earlier
 790-row wording did not establish improvement: sdk-uv has WORSE aligned cost.
-The retained body is the joined-temporary638-cost form, with the smaller frame
-and fewer words than the tied UV-array form. None is a match.
+The retained body is now the604-cost word-coordinate form; it has fewer
+words but a larger frame than the638-cost joined form. None is a match.
 
 The shared-temp control joins12 same-type aliases whose lifetimes occupy
 mutually exclusive switch arms, preserving expressions and store order. It
@@ -72,3 +73,15 @@ but spills it atsp50 instead ofsp60. Mode remains s7, constant160 s6,136 fp.
 This does not restore original fp320 or frame90. Source and diagnostic preserved;
 no other review hypothesis or new control was tested. Astra idle; no further
 unsupported probes or instrumentation. Ticket remains active pending direction.
+
+Read-only arithmetic/lifetime audit: relationships.md maps all four original
+arms and shared tail, with exact full VAs. No missing operation, wrong formula
+or address was found. The three inherited s16 coordinate temporaries narrow
+earlier than original register values; later low16-only uses mean this is NOT a
+proven behavior bug, nor proof of original C declarations. Parent approved one
+structural control changing ONLY temp_a1/temp_a2/temp_v1 to s32 against the
+joined638 baseline. It reaches604cost/670rows/592words/frameA0 (original588/90).
+Whole object SHA25667fbefa6e2af48b3ac7a8e508b774cea8c8efd2c4f824bce6269755d29163a00.
+The first divergent arithmetic still places MULTU i*136 before the first signed
+Q11 DIV, whereas original executes DIV before MULTU. UV signed-byte loads and
+early160-A remain. No additional width, UV combination or ordering probe begun.
