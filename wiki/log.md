@@ -17937,3 +17937,7 @@ One of three BUNKAKEN functions matched: `func_801428D0` (`BunkaDispatch8` view)
 ## [2026-10-17] ticket | T-22026 In Review
 
 [[tickets/T-22026-w4-p26]] moved to In Review (1 of 1 matched). check_headers, migrate_globals --check and sync_protos --check-branch pass; clean build result in the ticket.
+
+## [2026-10-18] ticket | T-22026 Done
+
+[[tickets/T-22026-w4-p26]]: code review against `CODING_STANDARDS.md` clean (one comment added to the empty case labels of `src/ovl/ETC/8013B1F0.c`, no byte change), 1 of 1 matched (`func_8013B1F0`, 1,948 bytes). ETC.bin sha1 OK after the rebuild. Moved to Done.
