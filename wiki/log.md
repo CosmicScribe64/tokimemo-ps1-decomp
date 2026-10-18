@@ -17695,3 +17695,6 @@ Started: BUNKAKEN `src/ovl/BUNKAKEN/80144F70.c`, `src/ovl/BUNKAKEN/80143DD0.c` a
 
 ## [2026-10-17] ticket | T-22018 Wave 4 package w4-p18 In Review
 One of three BUNKAKEN functions matched: `func_801428D0` (`BunkaDispatch8` view). `func_80144F70` guarded at 4 rows (from 335): two-local frame, operand order, `GameState *g`. `func_80143DD0` not started. Notes in [[matching-notes]], ticket [[tickets/T-22018-w4-p18]].
+
+## [2026-10-17] ticket | T-22018 closer: BUNKAKEN func_80144F70 matched
+[[tickets/T-22018-w4-p18]]: Opus closer matched `func_80144F70` (1,424 bytes) in `src/ovl/BUNKAKEN/80144F70.c`, package now 2 of 3. The last 4 rows were an as1 load hoist in case 0; `(&D_80122E98)[10] += 1;` (FAKE, one-block view) keeps the `D_80122EC0` load after the `D_80122E98` store. Notes in [[matching-notes]] (section T-22018), example added to the store-through-base row of [[register-cheatsheet]]. Ticket stays In Review.

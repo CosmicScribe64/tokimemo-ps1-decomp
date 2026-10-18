@@ -4,8 +4,6 @@
 
 s32 get_g_zyotai_h();
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-22018, 4 rows; case 0: as1 hoists the D_80122EC0 load above the D_80122E98 store, the original keeps it after */
 void func_80144F70(void) {
     s32 i;
     GameState *g = &D_800E6280;
@@ -33,7 +31,8 @@ void func_80144F70(void) {
         parameter_disp_switch(0);
         D_80122EA4 = 0xFF;
         D_80122E98 = 0;
-        D_80122EC0 += 1;
+        /* FAKE: T-22018, D_80122EC0 read through the D_80122E98 base (one block, aggregate not recovered) so as1 keeps the load after the D_80122E98 store */
+        (&D_80122E98)[10] += 1;
         D_80122EBC = 0xFF;
         break;
     case 1:
@@ -126,9 +125,6 @@ void func_80144F70(void) {
         Default_Disp();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80144F70", func_80144F70);
-#endif
 
 void func_80145500(void) {
     if (D_800E6280.unk_110A != 0) {
