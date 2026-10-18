@@ -89,3 +89,7 @@ the callback-table idiom, which the header now makes visible to m2c.
 ## Exact history-copy clone (T-24017)
 
 [[tickets/T-24017-clone-ports]] matched func_80133038 (176 literal linked bytes) in src/ovl/SHUGAKU/80132000.c by porting DATE func_80149F48. The two destination assignments, including the signed-halfword product narrowing, precede the last three pointer copies. This replaces the T-10510 guard with unguarded C; no INCLUDE_ASM remains. No data-island conversion, header change or FAKE needed. Fresh Docker ninja -j1 SHUGAKU checksum and default funcdiff --resolve --no-build pass. Existing pointer-type warnings in func_80132F44 / func_80132FC0 remain outside scope.
+
+## T-24036 short selector sibling
+
+func_80134C98 matched244 default linked bytes from matched func_80133F6C using canonical GameState accesses and additional state/flag stores. No new FAKE or header change; the stale typed temporary draft differs46 rows while the direct sibling matches. Default literal no-build proof, SHUGAKU checksum and header/global/prototype checks pass. See [[tickets/T-24036-geko-shugaku-siblings]].

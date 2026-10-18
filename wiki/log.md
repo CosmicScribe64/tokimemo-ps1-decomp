@@ -18620,3 +18620,11 @@ The integration's all27 hashes and guards passed, but its final staged diff chec
 ## [2026-10-17] setup | T-24036 clean main integration
 
 Merged latest main into the clean codex/complete-option tree as authorized for T-24036. Four wiki-only conflicts resolved by preserving both histories/cards; no C conflict. Existing T-24017 GEKO matched body retained unchanged.
+
+## [2026-10-17] ticket | T-24036 GEKO and SHUGAKU sibling completion
+
+Created [[tickets/T-24036-geko-shugaku-siblings]] In Progress after clean latest-main merge. Read [[scenes-family-results]], [[shugaku-family-results]] and prior seven-row GEKO tail evidence. Existing matched GEKO body unchanged.
+
+## [2026-10-17] build | T-24036 SHUGAKU selector match
+
+[[tickets/T-24036-geko-shugaku-siblings]] verifies func_80134C98 as244 actual default linked C bytes. Canonical direct sibling, no FAKE or header changes; unit checksum and declaration guards pass. Updated [[shugaku-family-results]].
