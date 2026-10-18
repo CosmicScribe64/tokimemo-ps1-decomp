@@ -19003,3 +19003,7 @@ Created [[tickets/T-24062-main-audio-short]] In Progress for four short helpers 
 ## [2026-10-18] build | T-24062 verified mixer stopping point
 
 [[tickets/T-24062-main-audio-short]]: normal default func_8007BCFC literal MATCH236 bytes; four matched local audio siblings also MATCH. MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 and source/header/global/prototype guards pass. One approved wrapper declaration, two source FAKE constraints; no other function changed. Corrected unmatched queue/flag/table sources and results preserved in drafts/T-24062. Updated [[main-family-results]], moved ticket In Review. User requested stop after current verified work; no next function.
+
+## [2026-10-18] decision | Two focused Sol workers and verified EVENT/mixer gains
+
+User clarified keep goal active while reducing usage to1–2Sol6.1 agents, one function each. [[completion-run-2026-10-17]] records DATE44E20 and ENDING35F4C as the only continuing workers; Astra and three root workers stopped. Contributor30-minute heartbeat remains active. Independently integrated EVENT6848bytes and MAIN mixer236bytes, all27 hashes/literal C/interface gates pass. [[tickets/T-24023-event-handler]] Done after standards review; [[tickets/T-24062-main-audio-short]] remains In Review for residual drafts. T24061 archive6a0ef66b9 and T24063 archive3ef3fc8f1 published without production changes. Verified total6509functions/1858500bytes81.5%; goal remains100%.

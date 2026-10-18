@@ -32,3 +32,7 @@ Correction: absolute D_80125D30/34/32/36 are Work80125D10 offsets20/24/22/26; th
 One unguarded C match: func_8007BCFC236 bytes. Normal default literal proof MATCH, MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26. Source gate confirms no target INCLUDE_ASM. Matched siblings func_8007B5EC/B640/BDE8/B8F8 also pass default literal proofs. Header/global/prototype guards pass. Only source target changed; only shared addition is the root-approved mixer wrapper declaration. Two FAKE constraints documented in source.
 
 Other source unchanged; best archived queue-array44, flag-loop37, corrected table-record109. Source-only reproducer/results in drafts/T-24062. User requested stopping point then pause; no next function. Await independent standards review and root all-unit integration before Done.
+
+## Root integration review2026-10-18
+
+Reviewed mixer against CODING_STANDARDS: canonical four-byte pointer declaration, C89, explicitly FAKE store grouping and unsigned halfword view. Actual default C literal236bytes independently verified along with all27 hashes and header/global/prototype guards. Other three targets remain unmatched source checkpoints; ticket stays In Review. Root worker stopped; only DATE and ENDING Sol workers continue.

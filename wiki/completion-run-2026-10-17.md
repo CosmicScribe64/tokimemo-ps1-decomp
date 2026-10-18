@@ -5,7 +5,7 @@ updated: 2026-10-17
 
 # Current 100% matching run
 
-User resumed work toward 100% verified game-code matching. Current published code checkpoint `19468a8ec` has **6,507/6,958 functions and 1,851,416/2,279,368 bytes (81.2%)**, measured in Docker. Since baseline `283b86fca`: 41 functions / 37,948 bytes added. The active goal remains 100%, with 427,952 game-code bytes remaining. SDK assembly is separately reported and excluded.
+User resumed work toward 100% verified game-code matching. Current published code checkpoint EVENT4d037cc13 plus verified T24062 mixer integration has **6,509/6,958 functions and 1,858,500/2,279,368 bytes (81.5%)**, measured in Docker. Since baseline `283b86fca`: 43 functions / 45,032 bytes added. The active goal remains 100%, with 420,868 game-code bytes remaining. SDK assembly is separately reported and excluded.
 
 ## Verified gains
 
@@ -52,21 +52,21 @@ User resumed work toward 100% verified game-code matching. Current published cod
 | T24059 | GYOZI func_80137F48 |164|
 | T24059 | SHOUGATU func_80136948 |164|
 | T24058 | GYOZI func_80137188 |176|
+| T24023 | EVENT func_801103A0 |6848|
+| T24062 | MAIN func_8007BCFC |236|
 
 Each was independently checked against default linked function bytes, all27 binary hashes, headers, global views and prototype guards before main publication. OPTION argument evaluation and ETC return liveness have explicit FAKE explanations. A default ASM fallback MATCH is not new C progress.
 
 ## Active ownership
 
-This section is authoritative; later dated handoff notes preserve history.
+User clarified on2026-10-18: keep the100% goal active, limit matching to1–2Sol6.1medium workers, each persistent on one function; avoid batch churn and conserve usage. No routine Astra or additional agents. Root handles independent integration and quiet30-minute PR/issue monitoring.
 
-- T24062 Sol6.1 medium root worker, codex/complete-main: main80079B10 funcs8007B64C/80079C70/8007BCFC/8007BBE8. T24058 GYOZI win independently published19468a8ec; SHOUGATU guard remains.
-- T24061 Sol6.1 medium root worker, codex/complete-bunkaken: GEKO80140A00 func80141870, SHOUGATU80134890 func801359FC, GYOZI80143AD0 func8014494C. T24056 source-only archive publishedc5c7f1eef, no header changes.
-- T24063 Sol6.1 medium root worker, codex/complete-option: TACO80134930 func8013506C, TACO8015ABF0 func8015B1B8, TACO80146D60 func801472D4. T24060 SHUGAKU corrected drafts published89ba6cc66, no new matches.
-- Astra chat01a14d9f-757c-7661-a87e-e183dc7e7687: EVENT8010FE10 func801103A0 active; reserved MAIN8006CB30 onlyfunc8007132C, GEKO80142760 onlyfunc80142C9C, TEL80132000. Dialogue renderer already verified. Literal scratch C match reported for EVENT103A0 (6848 bytes); production pin and independent integration proof pending. Source-only neighbor-base selector view avoids conversion-pass operand reversal; no compiler change.
-- Sol6.1 medium chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: T24064 ETC8013FF80 func80140AE4, ETC8013F980 singleton, ETC80140F50 func80141ABC; bounded DATE80141EE0 func80144E20 recipe trial first, serial compiler. T24057 ENDING pair archive published2a97faf17 at4 diagnostic cost/12 rows each, no new matches.
-- Sol6.1 medium chat01a1410a-cead-7cf3-9bfa-aa44f25f055b: T24047 ENDING80134D20 func80135F4C active in /private/tmp/tokimemo-ending-large. Remaining loop scheduling/hoisted addresses; no C match yet.
+- Sol6.1 chat01a14d91-82a4-7eb1-89d3-8c3dc2d084f8: one existing worker on DATE80141EE0 func80144E20 only. ETC T24064 deferred. Coordinator does no duplicate probe work.
+- Sol6.1 chat01a1410a-cead-7cf3-9bfa-aa44f25f055b: ENDING80134D20 func80135F4C only, no extra agents.
+- Astra stopped after EVENT T24023 match. TEL/MAIN7132C/GEKO42C9C reservations are inactive until explicit reassignment.
+- All three root subagents stopped after saving T24061/T24063 archives and T24062 mixer match. Do not restart automatically.
 
-One compiler per worker, no overlapping source ownership. Contributor exclusions remain NAME_ENT and TT; DATE2 is not a local target.
+Contributor exclusions NAME_ENT/TT and DATE2 continue. Existing30-minute read-only contributor heartbeat stays ACTIVE; unchanged checks remain quiet. No contributor messages authorized. Old integration automation remains paused.
 
 ## Completed bounded passes
 

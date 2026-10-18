@@ -96,7 +96,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24013-complete-rpg-bat|T-24013 Complete RPG_BAT battle family package]]
 - [ ] [[tickets/T-24010-date-etc-coordination|T-24010 Coordinate DATE and ETC matching]]
 - [ ] [[tickets/T-24011-date-dispatch-family|T-24011 Match DATE dispatch family]]
-- [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]
 - [ ] [[tickets/T-24022-tel-frame|T-24022 Recover TEL large handler allocation]]
 - [ ] [[tickets/T-24012-etc-render-family|T-24012 Match ETC rendering family]]
 - [ ] [[tickets/T-24007-complete-geko|T-24007 Complete GEKO scene package]]
@@ -107,6 +106,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24023-event-handler|T-24023 Recover EVENT large handler]]
 - [ ] [[tickets/T-24021-dialogue-scheduling|T-24021 Match dialogue argument scheduling]]
 - [ ] [[tickets/T-24059-short-copy-siblings|T-24059 Short copy-chain siblings]]
 - [ ] [[tickets/T-24052-shougatu-dialogue-siblings|T-24052 Match SHOUGATU dialogue siblings]]

@@ -1,7 +1,7 @@
 ---
 id: T-24023
 title: Recover EVENT large handler
-status: In Review
+status: Done
 assignee: Astra hard-function lane
 created: 2026-10-17
 updated: 2026-10-18
@@ -81,3 +81,7 @@ Retained final body and full-TU replay/negative controls in drafts/T-24023/closu
 The s32 view preserves the target's return-register behavior. Early exits explicitly return zero. On the final path the original calls func_80011DFC and immediately restores the frame/returns, leaving v0 as the callee left it. There is deliberately no invented `return 0` after that call. The sole C caller discards the result, so no caller relies on a C fallthrough return value. Parent preview requested this clarification; the complete EVENT checksum verifies this tail and the caller.
 
 Retained replay results: matched 0/0 with literal6848; canonical selector symbol18/18; shared month equality967 aligned/969 printed,1709 instructions; literal comparison constants8/8; historical checkpoint214/826. Except the shared-month control, all have1712 instructions. These are measured negative controls, not unverified match claims.
+
+## Root integration review2026-10-18
+
+Reviewed against CODING_STANDARDS: C89, sole canonical return prototype, explicit FAKE neighboring selector view/byte constant captures/identity expressions, no compiler/config changes. Final nonvoid fallthrough preserves target return-register behavior; sole caller ignores result. Independently verified actual default C and literal6848bytes, all27 checksums, headers/globals/prototype guards. Published4d037cc13. No unresolved findings; Done.
