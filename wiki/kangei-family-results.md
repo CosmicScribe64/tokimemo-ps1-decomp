@@ -94,3 +94,7 @@ Three file-disjoint packages from the wave-3 scripts (lists in the orchestrator'
 | w3-kangei-p01 | T-18401 | `80135F10.c`, `80134120.c` | 4 | 2,624 |
 | w3-kangei-p02 | T-18402 | `80132E40.c`, `80132090.c` | 3 | 3,188 |
 | w3-kangei-p03 | T-18403 | `80137B90.c` | 2 | 1,024 |
+
+## T-24054 short-function closure
+
+[[tickets/T-24054-short-function-count]] improves func_8013852C from current typed cost34 to6 with repeated field arithmetic `(F5F << 2) - F5F`, then4 with u16 intermediate conversion (FAKE marked in archive). Frame, girl v0, year v1 and subtract temporary agree; sum temporary t5 versus t6 and destination-base scheduling remain. Local index/declaration orders, signedness, narrowing, lifetime-only tests and line grouping did not close. Production stays assembly; drafts/T-24054 has source and a scratch-only reproducer. No new verified function or header change.

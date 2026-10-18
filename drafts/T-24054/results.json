@@ -1,0 +1,307 @@
+{
+  "metric": "aligned-insert-delete-v1",
+  "new_c_matches": 0,
+  "probes": [
+    {
+      "name": "baseline",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 34,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "both-narrow",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 4,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "bothterms16",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 6,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "castshift",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 13,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "empty-after",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 34,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "empty-before",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 34,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "empty-first",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 34,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "field-reuse",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 6,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "girl-reuse",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 34,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "grouped-result",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 4,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "grouped-tail",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 4,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "index-s16-after",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 4,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "index-s16-before",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 4,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "index-u16-after",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 4,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "index-u16-before",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 4,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "index-u32-after",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 6,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "index-u32-before",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 6,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "main-array",
+      "scope": "main:func_80043010",
+      "cost": 70,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "main-named",
+      "scope": "main:func_80043010",
+      "cost": 64,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "main-register",
+      "scope": "main:func_80043010",
+      "cost": 64,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "mul4",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 6,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "narrow-sub",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 4,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "narrowuse",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 6,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "nestedmul",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 8,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "option-aggregate-selector",
+      "scope": "OPTION:func_80132000",
+      "cost": 52,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "option-aggregate",
+      "scope": "OPTION:func_80132000",
+      "cost": 52,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "option-scalar-selector",
+      "scope": "OPTION:func_80132000",
+      "cost": 52,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "option-scalar",
+      "scope": "OPTION:func_80132000",
+      "cost": 52,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "parenthesized-reuse",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 14,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "repeated-mul",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 14,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "shift-signed16",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 8,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "shift16",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 6,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "shift8",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 11,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "signed-mul",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 34,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "signed-sub",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 6,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "signed16",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 4,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "signed8",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 12,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "total16",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 6,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "unsigned-year",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 10,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "unsignedmul4",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 6,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "year-empty",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 34,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "year16",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 4,
+      "compiled": 1,
+      "status": "no-gain"
+    },
+    {
+      "name": "year32",
+      "scope": "KANGEI:func_8013852C",
+      "cost": 4,
+      "compiled": 1,
+      "status": "no-gain"
+    }
+  ]
+}
