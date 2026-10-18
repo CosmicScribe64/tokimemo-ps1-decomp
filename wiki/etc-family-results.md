@@ -281,3 +281,7 @@ T-24072 retains new integer-recipe5 under drafts/T-24072; zero-identity/pair con
 T-24072 one parent-approved post-vz SVECTOR pointer control is neutral5/full-TU whole-object identical to retained integer recipe. rotation-pointer.c/replay preserved; no further pointer variants/instrumentation, production unchanged.
 
 T-24072 final status unresolved/In Review, not Done. Best5 baseline/controls/replay retained; production ASM unchanged. Stop4354C diagnostics; no verified gain or compiler-impossibility claim.
+
+T-24073 fresh faithful Rec24[2] baseline129, replacing stale array scaling and raw field casts. Original incoming a0 requires one word argument; parent approves narrow unspecified-argument header declaration to preserve matched no-expression caller, no caller change. Private baseline still narrows m2c s16 locals and has frame50 versus48; production untouched.
+
+T-24073 current Rec24 repair129 improves through word values/known MAIN unsigned width84 to early required y-store22 and postincrementID20. Best20 original frame/instruction count, with only counter increment across signedDIV guard unresolved; early IDstore30 rejected. Source-only packet/replay uses approved private header() view. Production/header unchanged, no C proof; In Progress.
