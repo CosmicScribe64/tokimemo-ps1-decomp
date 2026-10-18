@@ -18497,3 +18497,7 @@ Created [[tickets/T-24057-ending-small-pair]] before source work and started cod
 ## [2026-10-18] ticket | Claim three small ETC count targets
 
 Created [[tickets/T-24060-etc-count-trio]] before source work on codex/complete-etc-count-trio from frozen acf7fa2c3. Current primary sources confirm all three assigned functions remain INCLUDE_ASM; parent owns coordination and disjoint scope. Read [[etc-family-results]] and prior temporary-order, pointer-folding and unaligned-copy evidence. One serial Docker compiler; DATE remains frozen and parent handles review/integration.
+
+## [2026-10-18] decision | Correct ETC ticket allocation to T-24064
+
+Parent reports T-24060 belongs to an independently frozen SHUGAKU package. Renamed this lane's newly created ETC ticket/card/index link to [[tickets/T-24064-etc-count-trio]], preserving history and source scope. The earlier local claim log names the provisional colliding ID; it does not supersede SHUGAKU ownership. No existing SHUGAKU ticket is present in this older checkout or modified here.
