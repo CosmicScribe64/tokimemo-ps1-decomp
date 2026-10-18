@@ -128,7 +128,23 @@ s32 func_801354C8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80135160", func_801355AC);
+/* FAKE: byte-view promotion and *= 0 retain the original v1 zero stores;
+ * plain assignment folds them to zero-register stores. T-22021/T-24053. */
+s32 func_801355AC(void) {
+    s32 i;
+
+    func_80066334();
+    ((DisplayActor44 *)D_80120650)[0].unk_07 = *(u8 *)&D_800E6280.unk_110B;
+    ((DisplayActor44 *)D_80120650)[2].unk_07 = *(u8 *)&D_800E6280.unk_110B;
+    *(u8 *)&D_800E6280.unk_110B -= 2;
+    if (*(u8 *)&D_800E6280.unk_110B == 0) {
+        *(u8 *)&D_800E6280.unk_110B *= 0;
+        for (i = 0; i < 0x40; i++) {
+            ((DisplayActor44 *)D_80120650)[i].unk_07 = *(u8 *)&D_800E6280.unk_110B;
+        }
+        func_8004284C();
+    }
+}
 
 void func_80135630(void) {
     s32 var_s0;

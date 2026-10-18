@@ -18840,3 +18840,10 @@ Read T-17500 target/type drafts and T-20004's verified GYOZI implementations. Re
 
 ## [2026-10-18] build | T-24052 first SHOUGATU sibling,488 actual C bytes
 func_80133208 is installed as unguarded normal C without its target INCLUDE_ASM. Ported matched GYOZI source plus SHOUGATU input skip and0x28 byte bound; inherited unchanged-byte store is marked FAKE/T-24052. Fresh Docker ninja -j1 compiles/links SHOUGATU with checksum/headers OK; literal default linked funcdiff MATCH488 bytes. [[shougatu-family-results]] and [[tickets/T-24052-shougatu-dialogue-siblings]] updated; second sibling remains In Progress. No header/config changes, no push/merge.
+## [2026-10-18] ticket | Three short-function count targets
+
+Created [[tickets/T-24053-short-function-lane]] before edits, following [[tickets/T-20620-as1-scheduling]] and the current EVENT guard evidence. Scope is EVENT8010B360, BUNKA_SD80135160 and SHUGAKU80139D00 only; one Docker compiler.
+
+## [2026-10-18] build | Two short C matches add232 bytes
+
+[[tickets/T-24053-short-function-lane]] verifies EVENT func_8010B614100 bytes and BUNKA_SD func_801355AC132 bytes from unguarded default C, with affected unit checksums and header/global/prototype guards. [[event-family-results]] records the unintegrated T-20620 recipe and rejected canonical-member form; [[bunka-sd-family-results]] records the T-22021 fade recipe. Both scheduling tricks explicitly FAKE marked, no toolchain/header changes. SHUGAKU short target remains in progress.
