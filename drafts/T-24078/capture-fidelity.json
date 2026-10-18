@@ -1,0 +1,22 @@
+{
+  "input": "609467db3b985d285c786a9db47057fbb59b4276268d12d39ed6aab98d30713d",
+  "stock_object": "67fbefa6e2af48b3ac7a8e508b774cea8c8efd2c4f824bce6269755d29163a00",
+  "captured_object": "67fbefa6e2af48b3ac7a8e508b774cea8c8efd2c4f824bce6269755d29163a00",
+  "ugen_input": "4b98da43af2c60623c36503c3bccd40f16d83137eef2f0d81fa954b9d03aad9b",
+  "ugen_symbols": "8fa7c9a283bb7c3dc70995dcfbbcf7c51519cd25acb773b3938c0c29ffea82e5",
+  "ugen_output": "f6a56336138ff873a5e54bc9f8931f81773d2f487858d8cf72832bcaa1b0efcc",
+  "ugen_binary": "7b1f113b6318a8a82d5ab9a8867b2a6e5d217bc1f481f664ff9871ee109ec347",
+  "ido_flags": [
+    "-c",
+    "-EL",
+    "-O2",
+    "-mips1",
+    "-G",
+    "0",
+    "-non_shared",
+    "-Wo,-nokpicopt",
+    "-cckr",
+    "-Xcpluscomm",
+    "-Iinclude"
+  ]
+}

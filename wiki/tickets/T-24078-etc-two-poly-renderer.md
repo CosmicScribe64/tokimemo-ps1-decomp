@@ -89,3 +89,21 @@ and exact sources/replay retained drafts/T-24078. Best604 unchanged; source
 math agrees, no wrongop or compiler-limitation proof. Active same-function
 read-only investigation continues before any supported new compile; no sweep,
 new instrumentation, production/helper/header/config change or target churn.
+
+Broader read-only PRIMARY matched semantic search at9d0d6a8e0 found only scalar
+TACO39BCC signed/80; matched TACO3D528/40ADC use projected word points and/127
+depth, TAIIKU3D9B4 tiledUV shifts, RPG_BAT54220 incoming word arrays. No genuine
+68/136 slope11/141/112 repeated-division quad analogue or new supported source
+form. relationships.md records search/limits. Existing target evidence has only
+final objects, NO compiler-stage inputs: cannot attribute earlyP/H to uopt vs
+ugen/as1; previous 'uopt hoist' causal wording is unproven. Existing stock-capture
+pattern read only, no new diagnostic scope executed. Same target active.
+
+Stock ugen capture of saved604 source passed SAME-SOURCE WHOLEOBJECT identity
+67fbefa6... before interpretation, all code/data/relocation sections equal.
+phase.md/capture.py/capture-fidelity.json record exact provenance. P-before-Q11
+alreadyugenINPUT128..137. H remainsnearY2 input208..211 andugenOUTPUT127after
+x2SH124, so earlyHfinal movement is POST-ugen; prior joint'uopt hoist' claim is
+superseded, no broaderphase attribution. Input183..188 also folds X0=B+24 and
+X1=X0-Q68+136 intoB-Q68+160. One approved matching-only use-site narrow in X1
+cases0/2 follows; no other type/barrier/instrumentation change.
