@@ -7568,3 +7568,7 @@ viewsweep JSON preserves the rows/baseline/best_rows field names and adds score_
 - The `(u16)` and `(u8)` casts of the draft are redundant on `h` and `b[2]`; dropping them changes nothing.
 
 Lesson: when the original does `lbu; ori; sb` on a Rec38 flag byte and the temporaries after the load are one lower than the original's, try the `CharFlags` bit-field (`unk_0C.f.bN`) before the `Bits64B8` cast or a mask. `autotweak` found its 41-line improvement through a `& 0xFFFF` mask on the other flag, which was a dead end here.
+
+## T-20011 NAME_ENT pointer-coordinate helper
+
+[[tickets/T-20011-name-ent-coordinate-selection]] matches func_80134110 (152 bytes). Use an existing DisplayActor44 pointer rooted at D_8011ECD0, with signed X/Y fields unk_26/unk_2A. Test -119 <= X < 152 and 57 <= Y < 104, then write the two /16 grid coordinates; otherwise write -1/-1. Explicit return values kept unnecessary copies in A0/A1. Integer no-value exits with the actor pointer reproduce the original V0/V1 lifetimes; void differs in five instructions, direct actor fields in eight. Only that return constraint is FAKE. The initial y = x and scratch end label remove with no differences and are omitted. All three callers discard the result; one overlay prototype suffices. Default linked C MATCH, 27/27 hashes, headers/globals and prototype0new/15known pass. Fade/page follow-up: [[tickets/T-20013-name-ent-fade-page-followup]].

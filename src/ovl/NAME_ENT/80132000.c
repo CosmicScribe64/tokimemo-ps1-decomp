@@ -912,29 +912,26 @@ void func_80133FC4(void) {
     D_80120C96 = -0xB4;
 }
 
-/* NON_MATCHING: T-22008, 26 rows; the returned y sits in $a0/$a1 with a final move to $v0, the original keeps it in $v0 and x in $v1 (s16/s32, no-return, chain, global-promoted and void forms tried) */
-#ifdef NON_MATCHING
+/* FAKE: implicit integer exit liveness is required; void differs in five
+ * instructions. Callers use only the coordinate outputs. T-20011. */
 s32 func_80134110(void) {
-    s32 y;
+    DisplayActor44 *actor;
     s32 x;
+    s32 y;
 
-    x = D_8011ECF6;
-    y = x;
+    actor = (DisplayActor44 *)D_8011ECD0;
+    x = actor->unk_26;
     if (x >= -0x77 && x < 0x98) {
-        y = D_8011ECFA;
+        y = actor->unk_2A;
         if (y >= 0x39 && y < 0x68) {
             D_8014CCB8 = (x + 0x78) / 16;
             D_8014CCBC = (y - 0x38) / 16;
-            return y;
+            return;
         }
     }
     D_8014CCB8 = -1;
     D_8014CCBC = -1;
-    return y;
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134110);
-#endif
 
 void func_801341A8(void) {
     s32 prev;

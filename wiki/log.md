@@ -17865,3 +17865,31 @@ Clean rebuild 27/27 units OK, check_headers, migrate_globals --check and sync_pr
 ## [2026-10-17] ticket | T-22020 Done
 
 Review against `CODING_STANDARDS.md` found nothing to fix; 1 of 3 matched (`func_80138FC0`, 252 bytes), `func_80138240` and `func_80139334` stay `INCLUDE_ASM`. [[tickets/T-22020-w4-p20]], [[kanban]].
+
+## [2026-10-17] ticket | Claim completed-package NAME_ENT leftovers
+
+[[tickets/T-20011-name-ent-coordinate-selection]] starts In Progress under issue #57 for exactly func_80134110 (152 B), func_80132320 (396 B) and func_80134248 (2,256 B) in 80132000.c. Prior package [[tickets/T-22008-w4-p08]] is Done; wave 5 excludes previously attempted wave-4 functions. Source guards and neighboring functions remain unchanged before proof. PR #55 has no feedback; large scene claim #50 remains active with no new match from its current controls.
+
+## [2026-10-17] build | T-20011 source controls remain guarded
+
+[[tickets/T-20011-name-ent-coordinate-selection]] preserves all default ASM fallbacks. Coordinate actor views reach13 aligned edits (bare-failure-exit diagnostic10); fade remains7; character page remains227. No C match claimed or promoted. Investigation also reproduces an independent search-ranking defect: funcdiff.diff_lines switches to positional rows only at equal instruction counts, while viewsweep and order_search use its printable row count as the score. An insertion/deletion shift can therefore rank worse until an unrelated extra instruction changes the comparison mode. Fix the search metric separately, preserving the positional diagnostic output.
+
+## [2026-10-17] build | T-20011 coordinate helper reaches zero
+
+[[tickets/T-20011-name-ent-coordinate-selection]] recovers func_80134110 (152 B) with the existing DisplayActor44 pointer and signed X/Y fields. No-value integer exits remove the extra return-copy ranges; void misses5, direct fields8. Dead initialization and the scratch exit label remove with no change. Retain only an annotated FAKE integer-exit control and one overlay prototype. Default build/actual linked proof pending; no neighboring body changes.
+
+## [2026-10-17] ticket | Separate the remaining NAME_ENT selection work
+
+[[tickets/T-20013-name-ent-fade-page-followup]] is Ready under claim #57 for the still-guarded fade396B and character-page2256B. Bounded source searches and current-context controls do not match; invalid uninitialized-pointer diagnostics are discarded. PRs #55 and #59 are merged, with the maintainer independently confirming the loader's1652-byte MATCH and27/27 hashes. T-20011 remains In Progress until final checks complete.
+
+## [2026-10-17] build | T-20011 actual coordinate C verified
+
+[[tickets/T-20011-name-ent-coordinate-selection]]: default Docker build14steps, headers/globals OK; independent hashes27/27; sync_protos0new/15known branchOK. Actual default linked C MATCH152bytes with no fallback. Only the real actor view, signed field reads and measured FAKE integer exits remain; unused initializer and scratch label removed. No neighboring body or shared declaration changes.
+
+## [2026-10-17] ticket | T-20011 coordinate match ready for review
+
+[[tickets/T-20011-name-ent-coordinate-selection]] and [[kanban]] move to In Review after self-review against CODING_STANDARDS.md. Source-only152-byte match and one overlay prototype. [[tickets/T-20013-name-ent-fade-page-followup]] remains Ready for the unmatched2652-byte scope; claim #57 remains open. Maintainer review pending.
+
+## [2026-10-17] build | T-20011 documentation integration verified
+
+[[tickets/T-20011-name-ent-coordinate-selection]] rebased onto main 5860bc1c, retaining both new wiki sections. Validated NAME_ENT source/header and tool/configuration blobs are unchanged. The concurrent DATE edit only moves guarded drafts to archives: Docker preprocessing proves identical default tokens, so the existing linked proof, hashes and guards remain applicable.

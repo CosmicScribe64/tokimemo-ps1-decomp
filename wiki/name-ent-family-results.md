@@ -137,3 +137,7 @@ functions are not in a package: `func_80138C1C`, `func_80138F60`, `func_801398EC
 ## Resource loader matched (T-20010)
 
 [[tickets/T-20010-name-ent-resource-loader]] matches func_80142E24 (1,652 bytes), completing the loader claim #52 after T-20009's 484-byte helper. Recover the two-row/four-column table with explicit column assignments using row * 0x10000; the source induction, rather than manually maintained streams, gives the original AT step and A3 bound. Declare the row index before the exact eight-word table for the original frame/offsets. No new FAKE constraints or declaration changes; default linked C MATCH, all 27 hashes and header/global/prototype guards pass. The separately claimed 4,308-byte T-20008 scene remains ASM and is not a new match here.
+
+## Pointer-coordinate hit test matched (T-20011)
+
+[[tickets/T-20011-name-ent-coordinate-selection]] matches func_80134110 (152 bytes) from the T-22008 leftovers. The shared DisplayActor44 pointer and integer no-value exits recover the original coordinate registers; the measured return-liveness constraint is FAKE. No dead initializer or scratch label is retained. Actual default linked C proof, all27 hashes and declaration guards pass. The remaining396-byte fade and2256-byte character-page functions stay guarded under claim #57 and [[tickets/T-20013-name-ent-fade-page-followup]].
