@@ -6,6 +6,10 @@
 
 /* BUNKASAI overlay (load address 0x80132000): externs and types. */
 
+/* T-24030: side-effect-only helpers called by func_80142700. */
+void func_80142B98(void);
+void func_801433C0(void);
+
 extern u32 D_801604F0; /* three data pointers set by the 0x34-byte setters at the start */
 extern u32 D_801604F4;
 extern u32 D_801604F8;

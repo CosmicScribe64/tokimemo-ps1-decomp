@@ -18445,3 +18445,7 @@ Created [[tickets/T-24030-bunkasai-sibling-package]] before implementation. Reus
 ## [2026-10-17] build | T-24030 BUNKASAI year-read match
 
 [[tickets/T-24030-bunkasai-sibling-package]] and [[bunkasai-family-results]] record actual unguarded default C for func_80151364, 844 literal linked bytes. Fresh GameState year reads resolve the T-22012 two-lui blocker; existing FAKE pointer reassignment retained. Docker explicit default linked proof, BUNKASAI checksum and header/global/prototype guards pass (0 new / 15 known). No header or other matching function changes. Ticket remains In Progress for func_80142700.
+
+## [2026-10-17] build | T-24030 both BUNKASAI siblings verified
+
+[[tickets/T-24030-bunkasai-sibling-package]] and [[bunkasai-family-results]] record actual default C for func_80142700 (1,176 bytes), adding to func_80151364 (844): 2 of 2, 2,020 bytes. Typed loops plus void callee view and sibling's marked FAKE store-order view resolve the second target; necessary overlay-header additions reported first. No main API change. Final joint default proof/checksum and guards recorded; exact pre-existing body audit and source-only provenance preserved. [[matching-notes]] supersedes T-22012's old two-lui blocker. Ticket/card moved to In Review for coordinator review/integration.
