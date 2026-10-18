@@ -1,7 +1,7 @@
 ---
 id: T-24072
 title: Match ETC model initializer with verified cursor recipe
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-18
 updated: 2026-10-18
@@ -27,3 +27,8 @@ Parent approved exclusive target after read-only rationale and releases its old 
 Fresh valid current full-TU baseline reproduces13 resolved rows. One adaptation of verified3F980 integer cursor/TaiikuBig/u32 do-loop improves to5; prologue, map cursor and loop agree. Residual is SVECTOR vz/vx/vy tail base/store grouping. Production/neighbors/interfaces unchanged. No old chained-zero/array-view controls repeated; known aggregate rule precludes silently restoring scalar50140 alias.
 
 Source-only checkpoint under drafts/T-24072 retains baseline13/new integer-recipe5 plus neutral vz*=0 and exact two-field vy=vx=0 controls. Tail is3 AT/LUI groups versus original2 sharing vx/vy, with ra reload schedule affected. Original248B; draft adds one setup instruction. Known SVECTOR preserved; no unsupported scalar alias/keep exception. No new faithful source form established or impossibility claim; In Progress pending focused coordination.
+
+Parent-approved single post-vz real SVECTOR*rotation control is neutral5, with complete full-TU object identical to integer-recipe. Source/replay retained as rotation-pointer.c. Read-only review suggested this one form with limited confidence; no further pointer sweep/instrumentation. Production unchanged, best5.
+
+## Final handoff
+Unresolved/In Review, not Done. Best source5 is preserved with baseline13 and all neutral controls; production remains ASM. The new integer-cursor recipe closes prologue/model-loop gaps, but the SDK vector tail still adds an address setup. No supported untried source control is established; no further4354C probes/instrumentation. No compiler-impossibility claim or verified-byte gain.

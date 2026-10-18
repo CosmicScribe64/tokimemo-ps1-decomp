@@ -48,7 +48,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24072-etc-model-init|T-24072 Match ETC model initializer]]
 
 
 
@@ -69,6 +68,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24072-etc-model-init|T-24072 Match ETC model initializer]]
 
 - [ ] [[tickets/T-24071-etc-menu-selection|T-24071 Match ETC menu selection handler]]
 

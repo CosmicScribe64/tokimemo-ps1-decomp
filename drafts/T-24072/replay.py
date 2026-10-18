@@ -7,7 +7,8 @@ sys.path.insert(0, 'drafts/T-24011')
 from diagnostic import report
 
 variants = {'integer-recipe': 'body.c', 'baseline': 'baseline.c',
-    'vz-times-zero': 'vz-times-zero.c', 'vector-pair': 'vector-pair.c'}
+    'vz-times-zero': 'vz-times-zero.c', 'vector-pair': 'vector-pair.c',
+    'rotation-pointer': 'rotation-pointer.c'}
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--variant', choices=variants, default='integer-recipe')
 args = parser.parse_args()

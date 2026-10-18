@@ -18746,3 +18746,11 @@ Created [[tickets/T-24072-etc-model-init]] before edits on only func_8014354C in
 ## [2026-10-18] build | T-24072 five-row model checkpoint
 
 [[tickets/T-24072-etc-model-init]]/[[etc-family-results]] preserve baseline13, new integer-recipe5 and neutral zero-identity/two-field-pair controls under drafts/T-24072. Prologue/model loop exact; tail adds one AT setup and differs in store/ra schedule. Preserve known SDK aggregate, no scalar alias/interface/config edit or compiler-impossibility claim. Production ASM/neighbors unchanged; In Progress.
+
+## [2026-10-18] build | T-24072 approved rotation pointer neutral
+
+[[tickets/T-24072-etc-model-init]]/[[etc-family-results]] record exactly one parent-approved real-SVECTOR pointer after vz. Neutral5 and whole-TU object identical to integer recipe; source/replay retained under drafts/T-24072. No pointer sweep/instrumentation or alias/header/config edit. Production unchanged; best5 remains.
+
+## [2026-10-18] ticket | T-24072 unresolved In Review
+
+[[tickets/T-24072-etc-model-init]] moves with card/index to In Review, not Done. New5-row integer-recipe source and neutral controls preserved, production ASM unchanged. Stop4354C probes/instrumentation; no verified bytes or compiler-impossibility claim. Next lead screening is read-only, with new ownership/ticket before edits.
