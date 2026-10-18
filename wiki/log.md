@@ -18083,3 +18083,14 @@ Review against `CODING_STANDARDS.md` found one small item (a redundant `(s16 *)`
 ## [2026-10-18] ticket | T-22023 Done
 
 [[tickets/T-22023-w4-p23]]: review against `CODING_STANDARDS.md` clean (only `src/ovl/NAME_ENT/80139740.c` and the `main_api.h` override guard changed; FAKE and NON_MATCHING comments ticketed; check_headers, migrate_globals, sync_protos pass). 2 of 5 matched (`func_8013D2AC`, `func_80140B20`); `func_8013DF88` guarded at 11 register rows; `func_8013AF78` and `func_8013CB44` back to `INCLUDE_ASM`. Moved to Done.
+## [2026-10-17] ticket | T-22027 In Progress
+
+Started [[tickets/T-22027-w4-p27]] (wave 4 package w4-p27, branch `w4-p27` from `w2-good`): GEKO `src/ovl/GEKO/801338F0.c`, `func_80133AA0` and `func_80133C50`.
+
+## [2026-10-17] ticket | T-22027 In Review
+
+[[tickets/T-22027-w4-p27]]: GEKO `src/ovl/GEKO/801338F0.c`, 0 of 2 matched. `func_80133AA0` guarded at 8 rows (compare operand order against the shared `$v1` constant 1), `func_80133C50` restored to `INCLUDE_ASM`. Notes in [[matching-notes]] (section T-22027); card moved to In Review.
+
+## [2026-10-17] ticket | T-22027 Done
+
+[[tickets/T-22027-w4-p27]]: 0 of the list matched; func_80133AA0 guarded at 8 rows, func_80133C50 back to INCLUDE_ASM. Merged after the conveyors stopped at the usage limit.
