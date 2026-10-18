@@ -277,3 +277,7 @@ T-24071 final handoff is unresolved/In Review, not Done. Best57/source controls/
 T-24072 fresh4354C baseline13; verified3F980 integer-cursor/do-loop adaptation5. Prologue/map cursor/loop now exact, only realSVECTOR tail base/store grouping remains. Production ASM unchanged; no header/config edit or actual C proof.
 
 T-24072 retains new integer-recipe5 under drafts/T-24072; zero-identity/pair controls both neutral5. Residual is3 vector AT address groups versus original2 sharing vx/vy. Known SDK aggregate retained without scalar alias or interface/config edit. No actual C proof/verified gain; In Progress.
+
+T-24072 one parent-approved post-vz SVECTOR pointer control is neutral5/full-TU whole-object identical to retained integer recipe. rotation-pointer.c/replay preserved; no further pointer variants/instrumentation, production unchanged.
+
+T-24072 final status unresolved/In Review, not Done. Best5 baseline/controls/replay retained; production ASM unchanged. Stop4354C diagnostics; no verified gain or compiler-impossibility claim.

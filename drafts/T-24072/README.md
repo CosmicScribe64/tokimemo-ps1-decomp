@@ -54,3 +54,20 @@ measured layout, uses explicit-object --resolve --version default --no-build
 and checks production unchanged. It validates process results before reporting
 scores. Outputs remain ignored in build/etc24072; only source/prose is retained.
 Actual default C proof/checksum/interface review has not been reached.
+
+
+The parent obtained a bounded read-only review, then approved exactly one
+additional control: declare SVECTOR *rotation, keep vz=0, take the real
+aggregate address after that store, and write vx/vy through the pointer.
+rotation-pointer.c is neutral5 with the same residual address/store rows.
+The complete full-TU object is identical to the integer-recipe object
+(SHA256 `7e87912a5ce7fa6919399ff3ddeca70c005881820d756d4b9fae0cd2b54b903c`).
+No aliases, headers or other source choices changed. No pointer sweep or
+instrumentation followed; the5-row source remains the checkpoint.
+
+```
+python3 drafts/T-24072/replay.py --variant rotation-pointer
+```
+
+Final status: unresolved/In Review, not Done. Production remains ASM.
+Stop4354C diagnostics at this checkpoint; no compiler-impossibility claim.
