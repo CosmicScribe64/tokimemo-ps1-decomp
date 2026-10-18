@@ -1,10 +1,6 @@
 #include "common.h"
 #include "ovl/ETC.h"
 
-/* NON_MATCHING: T-22029, 7 differing rows (T-10850: 14); the original puts the string's lui a0 into the delay slot of
- * the first beq of the second test, IDO puts lui t7 of D_801506F8 there. No C form found: viewsweep, autotweak and the
- * T-10850 permuter runs gave no gain. */
-#ifdef NON_MATCHING
 /* FAKE: unused padding array preserves the frame layout. T-10850 */
 s32 func_80146400(void)
 {
@@ -48,8 +44,8 @@ s32 func_80146400(void)
     {
         x -= 1;
     }
-    p = &D_801506F8[x];
-    func_800AE0B0("補正 %d ", *p);
+    /* The assignment inside the argument makes IDO load the format string's lui first (T-22029). */
+    func_800AE0B0("補正 %d ", *(p = &D_801506F8[x]));
     r = func_800AE0D0() & 7;
     a = *p;
     d = r + a;
@@ -61,9 +57,6 @@ s32 func_80146400(void)
     /* FAKE: zero expression preserves the comparison live range. T-10850 */
     return (d > 0) * 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146400);
-#endif
 
 s32 func_801464D4(s32 mode) {
     u32 i;
