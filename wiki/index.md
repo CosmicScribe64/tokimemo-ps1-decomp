@@ -40,8 +40,8 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-20012-stable-search-scoring|T-20012]] Stable candidate ranking in viewsweep/order_search, 230 tests pass, issue #58 (In Review).
 
 - [[tickets/T-20011-name-ent-coordinate-selection|T-20011]] NAME_ENT pointer-coordinate helper, 152-byte verified C match, claim #57 (Done).
-- [[tickets/T-22000-wave-4-conveyor|T-22000]] Wave 4 conveyor until weekly usage nears 95 percent (In Progress).
-- [[tickets/T-23000-wave-5-big-conveyor|T-23000]] Wave 5 biggest-first conveyor alongside wave 4 (In Progress).
+- [[tickets/T-22000-wave-4-conveyor|T-22000]] Wave 4 conveyor until weekly usage nears 95 percent (Done).
+- [[tickets/T-23000-wave-5-big-conveyor|T-23000]] Wave 5 biggest-first conveyor alongside wave 4 (Done).
 - [[tickets/T-23001-w5-big-p01|T-23001]] Wave 5 big package w5-big-p01: TEL `80132000.c`, `func_80136724` (7,044 B) and `func_80134FE4` (800 B) both back to `INCLUDE_ASM`; frame rule for many locals, `func_80134FE4` structurally equal with 140 register rows (Done; 0 of 2 matched).
 - [[tickets/T-23002-w5-big-p02|T-23002]] Wave 5 big package w5-big-p02: ENDING `801396E0.c`, `func_8013A2E8` (4,648 B) from 1,667 rows to a 12-line guard; `func_8013B640` is `s32` (Done; 0 of 1 matched).
 - [[tickets/T-22030-w4-p30|T-22030]] Wave 4 package w4-p30: RENSYU `80132040.c`; `func_80133628` guarded at 4 rows (21 before; `s32 girl`, truthiness test, pre-increment; In Review; 0 of 4 matched).

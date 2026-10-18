@@ -18142,3 +18142,7 @@ Wave 4 package w4-p30 started on branch `w4-p30` from `w2-good`: RENSYU `src/ovl
 ## [2026-10-17] ticket | T-23006 Done
 
 [[tickets/T-23006-w5-big-p06]]: 1 of 3 matched: main load_tpage_buf_lock (168 bytes, one ticketed FAKE store form); func_800476C0 and func_80047560 stay INCLUDE_ASM. Merged after the conveyors stopped at the usage limit.
+
+## [2026-10-17] ticket | T-22000 and T-23000 Done: waves stopped at the usage limit
+
+Both conveyors stopped at the user's request when the weekly usage limit was reached; the four packages that had finished but not merged (w4-p27, w4-p29, w4-p30, w5-big-p06) were reviewed and merged. [[tickets/T-22000-wave-4-conveyor]]: 29 packages, 40 matches. [[tickets/T-23000-wave-5-big-conveyor]]: 6 packages, 2 matches. Contributor PRs merged today: #55 (T-20010), #59 (T-20012 tooling), #60 (T-20011). Main: 6,466/6,958 functions, 79.6% of bytes.

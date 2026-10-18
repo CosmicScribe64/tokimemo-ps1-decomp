@@ -1,7 +1,7 @@
 ---
 id: T-23000
 title: Wave 5 biggest-first conveyor alongside wave 4
-status: In Progress
+status: Done
 assignee: claude-orchestrator
 created: 2026-10-17
 updated: 2026-10-17
@@ -14,7 +14,9 @@ User decision 2026-10-17: run a second conveyor next to [[tickets/T-22000-wave-4
 
 ## Acceptance criteria
 
-- [ ] Every started package reviewed and merged or dropped, ticket Done
-- [ ] Results recorded here
+- [x] Every started package reviewed and merged or dropped, ticket Done
+- [x] Results recorded here
 
 ## Comments
+
+- 2026-10-17 result: stopped at the user's request when the weekly usage limit was reached. 6 of 27 packages merged (w5-big-p01..p06, every started package reviewed, ticket Done), 2 functions matched (GEKO func_80144270, main load_tpage_buf_lock); the biggest functions (TEL func_80136724, ENDING func_8013A2E8, main func_8006D7EC, EVENT func_8011DDB8) stay unmatched, notes in [[matching-notes]]. Done.
