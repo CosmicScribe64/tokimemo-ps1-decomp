@@ -19066,3 +19066,11 @@ Published DATE33ce56acce source-only checkpoint as96301444d. Reviewed ENDINGb011
 ## [2026-10-18] decision | Add two user-authorized Antigravity CLI workers
 
 Confirmed agy CLI model gemini-4-argon-medium and launched T24065 OPTION3394C and T24066 BUNKA_SD34418 in two clean reused checkouts. [[completion-run-2026-10-17]] records conversation/process handles and logs. Existing two Sol workers retain DATE/ENDING; no overlap or subagents. CLI auto mode unavailable, default review permissions retained. No new match claimed.
+
+## [2026-10-18] build | T-24051 reaches four-row source checkpoint
+
+[[tickets/T-24051-date-large-dispatcher]] and [[date-family-results]] record exact EVENT assignment-capture transfer: constants assigned inside comparisons fix twelve of fourteen branch pairs. Declaring the real byte after base preserves all21table offsets, base home and frame0xE38; four rows remain at source selector comparisons411/495. `drafts/T-24051/func_80144E20-4rows.c` is tagged FAKE and preserved beside the older28-row body. No production/header/pass changes or new verified bytes. Sole-worker DATE work continues In Progress.
+
+## [2026-10-18] decision | Antigravity shell approval pending
+
+Both new Antigravity CLI runs terminated after denied shell actions in noninteractive default request-review mode. No permission bypass or retry performed; user approval requested. [[completion-run-2026-10-17]] records terminal handles. Two Sol workers continue DATE/ENDING. New DATE four-row source checkpoint preserves exact frame/table layouts but is not a production match.

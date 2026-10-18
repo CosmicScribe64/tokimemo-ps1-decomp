@@ -185,3 +185,5 @@ User authorized two Antigravity workers using Gemini4Argon Medium; explicitly re
 - T24066 BUNKA_SD func80134418, src/ovl/BUNKA_SD/80134260.c. Reused clean complete-bunkaken checkout, fast-forwarded to main b493b6d48. Conversation abd1a788-0787-4e42-a019-383201090726; exec session78281; logs /tmp/t24066-argon.jsonl and .stderr.
 
 Launch flags `--model gemini-4-argon-medium --effort medium --output-format stream-json --print`. Auto mode is unavailable for this account; CLI retained default request-review permissions. No bypass flag used. Monitor logs for approval blockers and live process handles before restarting. Both own only one function, one Docker compiler, preserve evidence and local commits; root alone verifies/publishes. New tickets created by workers before edits.
+
+Antigravity startup follow-up: both CLI sessions terminated after shell permission denials in default request-review mode (70265 and78281 are finished). No matching progress claimed. User approval for routine project commands was requested; do not restart with bypass flags or repeat denied actions before approval. Sol DATE/ENDING work continues independently.

@@ -1,6 +1,6 @@
 # T-24051 DATE large-dispatcher follow-up
 
-`func_80144E20.c` preserves a source improvement from the old 72-row diagnostic to 28 rows in both direct-cc and padded/trimmed full-TU comparisons. Production still uses assembly; there are no newly verified C bytes. The frame remains 0xE38 and all 21 table offsets remain exact.
+`func_80144E20-4rows.c` is the latest source checkpoint: four rows, consisting of two reversed selector branch operands. `func_80144E20.c` preserves the earlier 72-to-28-row improvement. Production still uses assembly; there are no newly verified C bytes. Both retain frame 0xE38 and all 21 table offsets.
 
 ## Reproduce
 
@@ -9,6 +9,7 @@ Run from the repository root in the existing Docker environment:
 ```sh
 tools/docker.sh python3 drafts/T-24051/audit.py
 tools/docker.sh python3 drafts/T-24051/probe.py --variant assigned-default
+tools/docker.sh python3 drafts/T-24051/probe.py --variant capture-below
 tools/docker.sh python3 drafts/T-24051/probe.py
 ```
 
@@ -64,3 +65,9 @@ The selector view `((u8 *)&D_800CA2F4)[4]` resolves to 0x800CA2F8 and preserves 
 Capturing 0x80 in a `register u8 shade` local, with ordinary or const-qualified g, scores 132. Both retain frame 0xE38 but shift all 21 table offsets and base spill down four bytes; the original 14 reversed branches remain. No source body is promoted. The exact-frame 28-row checkpoint is unchanged.
 
 All six controls are retained in `probe.py` as named `--variant` choices. Ignored transfer logs are under `build/date24051-transfer/`; primary groups are 14 old branch pairs (two selector/one flag/eleven fade), or 22 under the selector-neighbor control. This is a negative recipe-transfer result, not a finding that the parent EVENT result is invalid.
+
+## Exact assignment-capture transfer: four-row checkpoint
+
+Reading the frozen EVENT closure at c8c8f190b exposed a distinction: its successful constants are assignments inside comparisons, not entry initializers. A real `u8 comparison` with `D == (comparison = constant)` fixes eleven fade pairs and the BF48 pair. Declaring it above the tables shifts their offsets -4 and gives 108 rows. Declaring it after the existing base pointer preserves every frame/table/base offset and reaches four rows. The capture idiom is explicitly FAKE; the original g-home provenance remains intact.
+
+The remaining instructions are the source selector != 1 test in the move-place guard (row 411) and selector == 1 test in the first else-if (row 495). They are unrelated to the dispatch jump table. Reversing the captured side into the same byte leaves four. A separate word selector plus neighboring-base read expands the frame to 0xE40 and worsens to 350. Halfword/word comparison captures below the tables also remain four. The 28-row body is preserved separately; no production or header was changed. Ongoing focused work is still In Progress.
