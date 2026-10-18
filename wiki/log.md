@@ -18646,3 +18646,12 @@ Created [[tickets/T-24040-option-menu-siblings]] after reading [[option-family-r
 ## [2026-10-18] decision | T-24040 OPTION menu package in review
 
 [[tickets/T-24040-option-menu-siblings]] moves to In Review with two verified page matches(1028 bytes) and3394C guarded at5 rows. Existing matched bodies and shared headers unchanged; frame and scheduling FAKE rationale recorded in [[option-family-results]]. Selected unresolved source/scorer archived and every loose probe preserved ignored in build/T-24040-probes/. Final OPTION default checksum and declaration guards pass; independent review pending.
+
+## [2026-10-18] ticket | T-24044 TAIIKU and TACO sibling completion
+
+Created [[tickets/T-24044-taiiku-taco-siblings]] after reading [[taiiku-family-results]], [[taco-family-results]] and historical counter/renderer negatives. Current-type sibling reconstruction, two assigned bodies only, one Docker compiler.
+
+
+## [2026-10-18] decision | T-24044 bounded sibling negatives archived
+
+[[tickets/T-24044-taiiku-taco-siblings]] moves to In Review with zero matches and no production/header edits. Current counter semantic repairs and renderer output-index lead recorded in [[taiiku-family-results]] and [[taco-family-results]]; source-only forms/scorer archived. Every loose probe preserved ignored in build/T-24044-probes/. Baseline unit checksums and declaration guards pass; independent review pending.
