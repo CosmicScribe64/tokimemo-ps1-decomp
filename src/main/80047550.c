@@ -63,7 +63,7 @@ s32 arg0;
 s32 arg1;
 u8 arg2;
 {
-    /* FAKE: T-23006, `arg2 & 0xFF` and the `(u8)` cast of the index are equivalent forms chosen for the temporary numbering (diff 28 to 18 rows). */
+    /* FAKE: T-23006, `arg2 & 0xFF` and the `(u8)` cast of the index are equivalent forms chosen for the temporary numbering (29 to 20 differing lines). */
     D_800E6280.unk_1228[arg0] = arg1;
     if (arg0 < 0x20) {
         load_csr_tp(arg1, (u8)(arg0 & 0x1F), arg2 & 0xFF, 0, 0, 0x80, 0x80);
