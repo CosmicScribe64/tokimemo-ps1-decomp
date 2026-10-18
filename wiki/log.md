@@ -18675,3 +18675,7 @@ Created [[tickets/T-24053-short-function-lane]] before edits, following [[ticket
 ## [2026-10-18] build | Two short C matches add232 bytes
 
 [[tickets/T-24053-short-function-lane]] verifies EVENT func_8010B614100 bytes and BUNKA_SD func_801355AC132 bytes from unguarded default C, with affected unit checksums and header/global/prototype guards. [[event-family-results]] records the unintegrated T-20620 recipe and rejected canonical-member form; [[bunka-sd-family-results]] records the T-22021 fade recipe. Both scheduling tricks explicitly FAKE marked, no toolchain/header changes. SHUGAKU short target remains in progress.
+
+## [2026-10-18] decision | Short-function lane closes with two wins
+
+[[tickets/T-24053-short-function-lane]] moves to In Review:2 of3 matched,232 bytes independently published at d40a1ece7. [[shugaku-family-results]] records the third target's38-to8-row source-only improvement and selector/call-move blocker. No SHUGAKU production/header change; selected body/reproducer retained and traces remain ignored. Root's all27 hash/interface verification of the two wins is not repeated for archive-only work.

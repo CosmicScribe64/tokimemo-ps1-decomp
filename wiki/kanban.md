@@ -47,12 +47,12 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24053-short-function-lane|T-24053 Recover three short functions]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
 
+- [ ] [[tickets/T-24053-short-function-lane|T-24053 Recover three short functions]]
 - [ ] [[tickets/T-24048-master-animation|T-24048 MASTER animation reconstruction]]
 - [ ] [[tickets/T-24044-taiiku-taco-siblings|T-24044 TAIIKU and TACO sibling completion]]
 
