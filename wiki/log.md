@@ -18551,3 +18551,9 @@ Parent preserved source checkpoint eadad3134 on main ebf0aa7b1. Optional private
 
 ## [2026-10-18] build | T-24067 source-line boundary gain
 Retained exact initializer/do source-line grouping in drafts/T-24067/body.c with FAKE scheduling explanation. Diagnostic improves cost18/28 rows to16/20, frame0x48/75 words unchanged. Safe replay validates exact tagged body. Independent endpoint symbol does not improve it, so canonical GameState endpoint remains. [[tickets/T-24067-etc-album-copy]] remains In Progress; no actual C match claimed.
+
+## [2026-10-18] query | T-24067 source analogies checked
+Read parent pointers to [[register-cheatsheet]]41 and [[matching-notes]]6294-6310. Masked-byte-store recipe does not map to word printf arguments (mask emits ANDI); real stack-backed temporary adds frame and storage, while constant-first copy addresses retain16/20. [[tickets/T-24067-etc-album-copy]] records rejection evidence and next natural indexed-loop hypothesis. Production and compiler interfaces unchanged.
+
+## [2026-10-18] build | T-24067 typed index-loop gain
+Natural typed record indexing plus induction elimination fixes printf stack-store order and preheader schedule, reaching16 cost/16 rows with75 words/frame0x48. Removed unnecessary format-pointer identity; only source-line grouping remains FAKE. Preserve complementary cursor16/20 source and replay both under drafts/T-24067. [[tickets/T-24067-etc-album-copy]] remains In Progress; four saved-assignment and four copy-temp words remain.

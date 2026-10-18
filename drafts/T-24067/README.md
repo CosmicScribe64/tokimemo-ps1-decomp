@@ -1,21 +1,27 @@
-# ETC album-copy checkpoint
+# ETC album-copy checkpoints
 
-T-24067 owns only func_80141ABC in src/ovl/ETC/80140F50.c. This source-only checkpoint has diagnostic cost 16 / 20 added-and-removed rows, exact frame 0x48 and 75 instruction words. It is not a default C match. Production retains its assembly fallback.
+T-24067 owns only func_80141ABC in src/ovl/ETC/80140F50.c. Production retains assembly. These are source-only diagnostics, not default C matches.
 
-Run in the existing Docker image, serially:
+| Source | Cost | Added/removed rows | Remaining differences |
+| --- | ---: | ---: | --- |
+| body.c, typed indexed loop | 16 | 16 | Four end/save assignment words, four second-copy t5/t6 words |
+| cursor-body.c, earlier cursor loop | 16 | 20 | Two preheader HI/LO swaps, two stack stores, four copy words |
+
+Both have frame 0x48 and 75 instruction words. Safe replay uses the existing Docker image, serially:
 
 ```
 python3 drafts/T-24067/replay.py
+python3 drafts/T-24067/replay.py --variant cursor
 ```
 
-The source walks 256 eight-byte GsRec75E records using a byte-advanced GameState cursor. Existing Work800E7D10.unk_058 supplies the 0x800-byte album; count/mode are unk_027[1]/[0]. Byte-only aggregate assignment gives the observed unaligned word copies. The endpoint uses the canonical GameState address +0x800, so no separate alias, header or symbol export is needed.
+The indexed body walks all 256 GsRec75E records through the actual GameState array. Induction elimination generates the original byte cursor and offsets. Existing Work800E7D10.unk_058 supplies the 0x800-byte album; count/mode are unk_027[1]/[0]. Byte-only aggregate assignment gives the unaligned word copies. Reading the stored mode byte for the final printf restores the tail schedule.
 
-Compared with the previous 27-row lead, reading the saved mode field for the final printf restores that tail. An eliminated format-pointer identity test is explicitly FAKE: it retains the format range and produces s2=format, s3=end, s4=save. Original source is unknown. Explicit endpoint and format locals preserve the target frame.
+Only the count-initializer/for source-line group is FAKE in the indexed body. Removing that grouping changes the preheader schedule. The format identity used by the earlier cursor body is unnecessary here and has been removed. Canonical fields cover all addresses, with no alias, header or symbol export changes. Safe logs are build/etc24067/indexed-safe.log and cursor-safe.log.
 
-Remaining differences are the preheader instruction order, reversed equal-value stack-argument stores and second-word copy scratch t5 rather than t6. Grouping the initializer statements and do header on one source line reaches cost 16 / 20 rows. The grouping is FAKE and must be retained exactly. Canonical field endpoints, argument widths, signed save stores, pointer variants, counter postincrement, aggregate alignment, K&R/SDK printf views and the recorded identity controls do not close these differences.
+The earlier cursor form retains two FAKE idioms: its format-pointer identity restores saved allocation, and its initializer/do line group improves scheduling. It complements the indexed form, whose schedule agrees but whose saved end/save allocation is reversed. Earlier source checkpoints are eadad3134 (cost 18 / 28 rows) and 47c7d6151 (cursor cost 16 / 20 rows).
 
-Private allocation diagnosis used the existing read-only /private/tmp/t24047-uopt/variants/trace. An identical-input stock control has identical .text, .rel.text, .rodata and .rel.rodata. Before the format identity, hoisted format/save/end bits 52/53/54 all have priority 3.33333325; their first-use tie explains the wrong s3/s4 allocation. No production compiler change is proposed. Logs and traces remain ignored under build/etc24067; no game assembly or binary is archived.
+Private diagnosis used the existing read-only /private/tmp/t24047-uopt/variants/trace. Identical-input stock and instrumented .text, .rel.text, .rodata and .rel.rodata agree. Before the cursor format identity, hoisted format/save/end bits 52/53/54 all have priority 3.33333325; first-use order explains their saved allocation. No production compiler change is proposed.
 
-The earlier cost 18 / 28-row body is frozen at eadad3134. The current grouping control is supported by the native listing: implicit loop-address materialization follows the do source location. Sharing that source location with explicit initializers permits the improved schedule. The remaining preheader differences are two swapped LUI instructions and two swapped ADDIU instructions for end/save. The printf stack stores and four t5/t6 copy instructions also differ. The exact tagged source replays 20 rows in build/etc24067/archive16-safe.log. Ticket stays In Progress.
+Relevant failed controls include pointer/copy alignment views, argument conversions and captures, explicit counter-update ordering, mixed local/field arguments, constant-first copy addresses and stack-backed printf temporaries. Signed != or unsigned indexed bounds retain 16 rows; explicit record/byte address bounds create a second induction pointer and worsen. The T-17001 masked-byte-store analogy does not directly apply to word printf arguments: its mask remains an actual ANDI. TACO's store-kind rotation rule is consistent with the listing, but a real stack temporary adds frame/storage/masking instructions here.
 
-The authorized private IDO 4.1-ugen comparison is unavailable because no existing 4.1 compiler directory is present; the image has only 5.3/7.1. No download, install, new image or expanded search was performed. This does not establish a compiler defect.
+The authorized private IDO 4.1-ugen comparison is unavailable because no existing 4.1 compiler directory is present; the image has only 5.3/7.1. No download, install, new image or expanded search was performed. This does not establish a compiler defect. Detailed logs remain ignored under build/etc24067; no game assembly or binary is archived. Ticket remains In Progress.
