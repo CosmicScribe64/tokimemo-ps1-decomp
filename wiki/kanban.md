@@ -47,7 +47,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24041-main-render-cd-siblings|T-24041 Recover MAIN renderer and CD dispatcher]]
 
 
 
@@ -63,6 +62,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
+
+- [ ] [[tickets/T-24041-main-render-cd-siblings|T-24041 Recover MAIN renderer and CD dispatcher]]
 
 - [ ] [[tickets/T-24037-event-scene-siblings|T-24037 Recover EVENT scene siblings]]
 

@@ -224,3 +224,7 @@ Verification in the existing Docker image: ninja -j1 for build/src/main/8004C3F0
 ## T-24041 LINE_G2 renderer
 
 [[tickets/T-24041-main-render-cd-siblings]] recovers func_80049FF0,348 B of unguarded C, using the actual two-colour line packet LINE_G2 (0x14 bytes), a meaningful GameState pointer, and the matched polygon siblings' explicit colour masks/comma grouping (FAKE marked). A K&R narrow definition keeps the existing unprototyped caller ABI; main_api.h stays unchanged. Root approved the missing shared packet declaration in psx_types.h. The allocation and individual sb/sh offsets establish its layout; no external SDK header was available locally or imported. Normal default linked literal proof and full MAIN checksum pass.
+
+## T-24041 CD dispatcher source checkpoint
+
+func_800455C4 remains unchanged assembly. [[tickets/T-24041-main-render-cd-siblings]] archives repaired typed source in drafts/T-24041: normal full-file aligned cost512/frame104, then499/frame88 after removing artificial temporary homes; target frame80. Ring18 indices, word payload-header access and SDK-shaped stack locals are repaired, but broad branch/register differences remain. Exact negative hypotheses and scratch-only declarations are recorded in the archive; no speculative CD headers added. The separate348 B renderer win and final MAIN checksum/guard evidence stand.

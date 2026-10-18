@@ -18266,3 +18266,7 @@ Created [[tickets/T-24041-main-render-cd-siblings]] In Progress after reading ol
 ## [2026-10-18] build | T-24041 MAIN line renderer win
 
 [[tickets/T-24041-main-render-cd-siblings]] adds348 B verified unguarded C with the approved SDK LINE_G2 packet type. [[main-family-results]] records layout evidence, K&R ABI and marked colour grouping provenance. Default literal proof and full MAIN checksum pass; larger CD dispatcher work continues.
+
+## [2026-10-18] decision | T-24041 bounded CD checkpoint and renderer closure
+
+[[tickets/T-24041-main-render-cd-siblings]] moves to In Review. The348 B MAIN renderer retains actual source gate, default literal proof, full MAIN checksum and headers/globals/main_api passes. The CD dispatcher stays unchanged; drafts/T-24041 preserves typed Ring18/payload/buffer corrections and a499-edit/frame88 checkpoint (target80). [[main-family-results]] records concrete blockers instead of an expanded search.
