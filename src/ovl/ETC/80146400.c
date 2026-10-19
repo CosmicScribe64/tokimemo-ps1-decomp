@@ -685,4 +685,66 @@ void func_80148F34(void) {
     func_8009C884(&rect, &D_80150754);
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80148F7C);
+/* FAKE: unused pad[2] preserves the 0x78 frame and 0x5C CSE slot (T-24121). */
+void func_80148F7C(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s32 pad[2];
+    SPRT *temp_v0;
+    u32 var_s1;
+    s32 var_s4;
+
+    var_s4 = 0;
+    if (arg4 == 1) {
+        if (arg0 < 0xAU) {
+            arg3 = 0;
+        } else if (arg0 < 0x64U) {
+            arg3 = 1;
+        } else {
+            arg3 = 2;
+        }
+    }
+    var_s1 = arg0;
+    if (var_s1 >= 0) {
+        do {
+            temp_v0 = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+            func_8009F0A4(temp_v0);
+            SetSemiTrans(temp_v0, 0);
+            temp_v0->r0 = 0x80;
+            temp_v0->g0 = 0x80;
+            temp_v0->b0 = 0x80;
+            switch (arg3) {
+            case 0:
+                temp_v0->x0 = ((D_800E6280.unk_014[D_8011ECA0] + arg1) - (var_s4 * 8)) - (arg4 * 2);
+                temp_v0->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2;
+                temp_v0->w = 8;
+                temp_v0->h = 0xC;
+                temp_v0->u0 = D_80150748[var_s1 % 10U];
+                temp_v0->v0 = 0;
+                break;
+            case 1:
+                temp_v0->x0 = ((D_800E6280.unk_014[D_8011ECA0] + arg1) - (var_s4 * 8)) + (arg4 * 4);
+                temp_v0->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2;
+                temp_v0->w = 8;
+                temp_v0->h = 0xC;
+                temp_v0->u0 = D_80150748[var_s1 % 10U];
+                temp_v0->v0 = 0x10;
+                break;
+            case 2:
+                temp_v0->x0 = ((D_800E6280.unk_014[D_8011ECA0] + arg1) - (var_s4 * 6)) + (arg4 * 4);
+                temp_v0->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2;
+                temp_v0->w = 6;
+                temp_v0->h = 0xC;
+                temp_v0->u0 = D_80150748[var_s1 % 10U];
+                temp_v0->v0 = 0x20;
+                break;
+            }
+            temp_v0->clut = func_8009ED74(0x100, arg4 + 0x1F0);
+            AddPrim(D_8011ECA0 * 0x400 + 4 + D_800E8CA0, temp_v0);
+            if (var_s1 < 0xAU) {
+                dtd_on_tpage(0x140, 0, 1, 0, 0);
+                return;
+            }
+            var_s4 += 1;
+            var_s1 = var_s1 / 10U;
+        } while (var_s1 >= 0);
+    }
+}

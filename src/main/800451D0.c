@@ -1,3 +1,4 @@
+#define MAIN_API_OVERRIDE_func_80045414 /* K&R u8 arg0 narrows the command byte on entry (T-24123). */
 #include "common.h"
 #include "game.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
@@ -79,7 +80,58 @@ s32 arg2;
     D_80125129 = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_80045414);
+void func_80045414(arg0, arg1, arg2)
+u8 arg0;
+s32 arg1;
+u8 *arg2;
+{
+    u8 buf[0x20];
+
+    arg1 = ((u32) arg1 >= 0x4AB51U) ? 0x4AB50 : arg1;
+    switch (arg0) {
+    case 0:
+        func_80045318(0, 0, 0);
+        break;
+    case 9:
+        func_80045318(9, 0, 0);
+        break;
+    case 6:
+        D_800B3D6C = arg1;
+        func_80045318(6, arg1, (s32) arg2);
+        break;
+    case 14:
+        func_80045318(0xE, 0, (s32) arg2);
+        break;
+    case 13:
+        if (arg1 == 0) {
+            func_80045318(0xD, 0, (s32) arg2);
+        } else {
+            func_80045318(0xD, 0, (s32) arg2);
+            func_80045318(2, arg1, 0);
+            func_80045318(0x1B, arg1, 0);
+            D_800B3D6C = arg1;
+        }
+        break;
+    case 2:
+        func_80045318(2, arg1, 0);
+        break;
+    case 21:
+        func_80045318(2, arg1, 0);
+        func_80045318(0x15, arg1, 0);
+        break;
+    case 10:
+        func_80045318(0xA, arg1, 0);
+        break;
+    case 3:
+        buf[0x10] = 5;
+        func_80045318(0xE, 0, (s32) &buf[0x10]);
+        func_80045318(2, arg1, 0);
+        func_80045318(3, 0, 0);
+        break;
+    case 27:
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_800455C4);
 

@@ -305,7 +305,62 @@ void func_80141ABC(void) {
     func_800AE0B0("ALBUM_MODE IN SAVE %d \n", D_800E7D10.unk_027[0]);
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80141BE8);
+/* Retain the earlier caller's K&R implicit-int view. */
+s32 func_80141BE8(void) {
+    s32 girl;
+    s32 *pair;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80053CE0();
+        func_80141ABC();
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (func_80054388() == 0x13) {
+            func_80053D10();
+            D_800E6280.unk_110D += 1;
+        } else if (((u32)D_800E6280.unk_1120 >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
+            func_80053D10();
+            func_80042940(0xFF);
+        }
+        break;
+    case 2:
+        func_800AE0B0("[C_GIRL]%d \n", D_800E6280.unk_F5F);
+        if (D_800E6280.unk_53C[D_800E6280.unk_F5F & 0xF] & 1) {
+            /* FAKE: cast stops uopt from folding the +26 word offset into lw. */
+            girl = D_800E6280.unk_F5F & 0xF;
+            pair = (s32 *)((u32)&D_800B37D4[26]) + girl * 2;
+            func_80046290(pair[0], pair[1], girl);
+        } else {
+            pair = D_800B37D4 + (D_800E6280.unk_F5F & 0xF) * 2;
+            func_80046290(pair[0], pair[1], D_800E6280.unk_F5F & 0xF);
+        }
+        func_80044750(0x300);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 3:
+        if (func_800460EC() & 4) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 4:
+        if (func_800460EC() & 2) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 5:
+        if (D_800E6280.unk_03A-- < 8) {
+            D_800E6280.unk_03A = 0;
+            func_8004482C();
+            main_state_set(0xC4);
+            D_800E6280.unk_F5F += 0x10;
+        }
+        set_dec_bri(D_800E6280.unk_03A);
+        break;
+    }
+    func_800578F4(2);
+}
 
 void func_80141E10(void) {
     GameState *g = &D_800E6280;

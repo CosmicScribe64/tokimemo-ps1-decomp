@@ -50,7 +50,27 @@ void func_80079B34(void) {
     func_8007B640();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80079C70);
+void func_80079C70(void) {
+    void func_80079D28(s16 arg0);
+    s32 sp2C;
+    s32 i;
+    s32 mask;
+    s32 flags;
+
+    flags = D_80125D10.unk_04 & 0xFF000000;
+    for (i = 0; i < 4; i++) {
+        mask = (0x01000000 << i) & 0x0F000000;
+        /* FAKE: signed ~0x0FFFFFFF in the loop condition vs unsigned 0xF0000000U in the body keeps the two 0xF0000000 masks in separate uopt constant entries so 0x0F000000 takes $a2, 0xF0000000 takes $a3, and the body mask uses $at. T-24123 */
+        if ((flags & mask) && !(flags & ~0x0FFFFFFF)) {
+            sp2C = (0x10000000 << i) & 0xF0000000U;
+            D_80125D10.unk_04 &= ~mask;
+            D_80125D10.unk_04 |= sp2C;
+            func_80079D28(i);
+            D_80125D10.unk_04 &= ~sp2C;
+            return;
+        }
+    }
+}
 
 void func_80079D28(s16 arg0) {
     s32 off;
@@ -583,7 +603,45 @@ void func_8007AEC0(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007AF0C);
+void func_8007AF0C(void) {
+    s16 func_800900A0();
+    s32 func_8008C720(s16, s16, s16);
+    u8 sp2C[0x24];
+
+    if ((func_80079524() == 0) && (func_80079554() == 0) && (D_80125D4C != 2)) {
+        func_8007B7E0();
+    }
+    if (D_80125D10.unk_00 & 0x10000000) {
+        if (func_80079578() != 0) {
+            func_8008FF5C(0, 0);
+        }
+    } else {
+        /* FAKE: explicit 16-bit sign-extension reproduces sll 16 / sra 16 for $a1 when calling unprototyped func_8008FF5C. T-24123 */
+        func_8008FF5C(D_80125E20[(u16)D_80125D4A][D_80125D3A], (D_80125E20[(u16)D_80125D4A][D_80125D3A] << 16) >> 16);
+    }
+    D_80125D38 = func_800900A0(D_80125DA0[(u16)D_80125D4A][D_80125D3A], (s16)D_80125D4C);
+    if (D_80125D38 == -1) {
+        func_80059B04(((D_80125D4C << 8) & 0xFF00) | 0x01040000 | ((u16)D_80125D4A & 0xFF));
+        func_8007AD6C();
+        return;
+    }
+    D_80125D10.unk_20 = D_80125D10.unk_22;
+    D_80125D10.unk_00 |= 0x100;
+    D_80125D10.unk_00 &= ~0x1000;
+    D_80125D10.unk_04 &= ~2;
+    D_80125D10.unk_04 &= ~1;
+    D_80125D10.unk_00 &= ~0x100000;
+    D_80125D10.unk_04 &= ~2;
+    func_80090270(D_80125D10.unk_3C, sp2C);
+    D_80125D10.unk_20 = sp2C[0x18] - 0x19;
+    if (D_80125D10.unk_00 & 0x20) {
+        D_80125D10.unk_20 -= 0x18;
+    }
+    D_80125D10.unk_22 = D_80125D10.unk_20;
+    func_8008B750(0x7F, 0x7F);
+    func_8008C720(D_80125D38, D_80125D10.unk_20, D_80125D10.unk_20);
+    func_80090350(D_80125D38, 1, 1);
+}
 
 /* FAKE: the constant branch retains the selector in v0 as in func_8007B2B4. T-10020, T-24111 */
 void func_8007B144(arg0)

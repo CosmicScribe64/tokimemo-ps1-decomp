@@ -635,7 +635,56 @@ void func_80144CC4(void) {
 }
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144DF0);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144F74);
+void func_80144F74(void) {
+    GameState *g = &D_800E6280;
+
+    switch (g->unk_110D) {
+    case 0:
+        k_sub_reset();
+        if (g->unk_53C[g->unk_F5F & 0xF] < 0x63U) {
+            g->unk_53C[g->unk_F5F & 0xF] += 1;
+        }
+        if (D_800E7D10.flags[g->unk_F5F & 0xF] < 0x63U) {
+            D_800E7D10.flags[g->unk_F5F & 0xF] += 1;
+        }
+        set_kanji_string(-0x80, 0x32, 1, (s32) "データセーブ中です", 0);
+        set_kanji_string(-0x80, 0x42, 1, (s32) "しばらくお待ち下さい", 0);
+        k_sub_disp_start(2);
+        g->unk_110D += 1;
+        break;
+    case 1:
+        if (func_80054590() == 0x14) {
+            D_800E7D14[g->unk_1118] = 1;
+            g->unk_110D += 1;
+            func_80053D10();
+        } else if (((u32) g->unk_1120 >= 0x201U) || (g->unk_1115 == 0xF0)) {
+            func_80053D10();
+            func_80042940(0xFF);
+        }
+        break;
+    case 2:
+        if ((u8) D_800E8BEE != 0) {
+            func_80053CE0();
+            g->unk_111B = 1;
+            D_800E7D36 = g->unk_1118;
+            g->unk_1118 = 0;
+            func_80054E6C();
+            g->unk_110D += 1;
+        } else {
+            func_80042908(2);
+        }
+        break;
+    case 3:
+        if (func_80054388() == 0x13) {
+            func_80053D10();
+            func_80042908(2);
+        } else if (((u32) g->unk_1120 >= 0x201U) || (g->unk_1115 == 0xF0)) {
+            func_80042940(0xFF);
+        }
+        break;
+    }
+    func_8005C7FC();
+}
 
 s32 func_801451D4(void) {
     /* FAKE: scalar selector view keeps the selector in v1 for every compare. T-11350 */
@@ -883,7 +932,74 @@ s32 func_80145AF8(void)
     func_800494BC(0, 0, 2, 0, 0);
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80145C00);
+/* FAKE: unused pad[2] places sp5C at 0x5C in the 0x88 frame, and the single-line for loop
+ * prevents uopt from unrolling (T-24121). */
+void func_80145C00(void) {
+    s32 i;
+    s32 j;
+    s32 count;
+    s32 sp5C[8];
+    s32 pad[2];
+
+    for (i = 0; i < 8; i++) { sp5C[i] = 0x80180000 + i * 0x4000; }
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        if (D_800E6280.unk_F5F >= 0xDU) {
+            main_state_set(0xC4);
+            return;
+        }
+        (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_037)[0] = (&D_800E6280.unk_038)[0] = 0xFF;
+        back_clear_switch(1);
+        draw2d3d(1, 0);
+        func_80041584();
+        func_80048E78();
+        count = 0;
+        j = 0xF;
+        if (D_800E6280.unk_F80 & 0x800) {
+            cd_read_sectors(0x31U, 0x80180000, D_801503C4);
+            D_800E6280.unk_110D += 2;
+        } else if ((D_800E6280.unk_03E == 0x62) && (D_800E6280.unk_03F == 3) && (D_800E6280.unk_040 == 1)) {
+            for (i = 0; i < 0xD; i++) {
+                if ((D_800E6280.unk_53C[i] != 0) || (D_800E7D10.flags[i] != 0)) {
+                    count += 1;
+                } else {
+                    j = i;
+                }
+            }
+            if ((j == (D_800E6280.unk_F5F & 0xF)) && (count >= 0xC)) {
+                cd_read_sectors(0x31U, 0x80180000, D_801503C4);
+                D_800E6280.unk_110D += 2;
+            } else {
+                cd_read_sectors(0x21U, 0x80180000, (&D_80150390)[D_800E6280.unk_F5F]);
+                D_800E6280.unk_110D += 1;
+            }
+        } else {
+            cd_read_sectors(0x21U, 0x80180000, (&D_80150390)[D_800E6280.unk_F5F]);
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 1:
+        if (cd_read_sync_status() & 1) {
+            func_800590CC(1);
+            func_8004A1A0(sp5C, 0, 4, 2, 2, 0x1FF, -0x80, -0x78, 8, 9);
+            load_palette(0x80190000, 0x1F, 1, 3, 0);
+            func_80042808();
+            func_80042940(0);
+        }
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_8004A1A0(sp5C, 0, 6, 3, 2, 0x1FF, -0xA0, -0x78, 8, 9);
+            load_palette(0x80198000, 0x1F, 1, 3, 0);
+            func_80042808();
+            func_80046290(0x1D000077, 0x1000007B, 0);
+            func_80044750(0x300);
+            func_80042940(1);
+        }
+        break;
+    }
+    func_8004AC18(0xFF);
+}
 
 void func_80145F74(void) {
     if (D_800E6280.unk_110A == 0) {

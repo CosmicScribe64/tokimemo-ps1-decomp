@@ -391,7 +391,66 @@ s32 func_8014A32C(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A360);
+void func_8014A360(void) {
+    if (D_800E6280.unk_0F6.b[1]) {
+        switch (D_80150E98) {
+        case 2:
+            if (func_8014A2C4() < 2) {
+                D_800E6280.unk_0F6.b[1] = 0x20;
+            } else if (func_8014A2C4() == 2 && func_8014A32C()) {
+                D_800E6280.unk_0F6.b[1] = 0x20;
+            } else {
+                D_800E6280.unk_0F6.b[1] = 0xA0;
+            }
+            break;
+        case 1:
+            if (func_8014A2C4() < 2) {
+                D_800E6280.unk_0F6.b[1] = 0x10;
+            } else if (func_8014A2C4() == 2 && func_8014A32C()) {
+                D_800E6280.unk_0F6.b[1] = 0x10;
+            } else {
+                D_800E6280.unk_0F6.b[1] = 0x90;
+            }
+            break;
+        case 0:
+        default:
+            if (func_8014A2C4() < 2) {
+                D_800E6280.unk_0F6.b[1] = 8;
+            } else if (func_8014A2C4() == 2 && func_8014A32C()) {
+                D_800E6280.unk_0F6.b[1] = 8;
+            } else {
+                D_800E6280.unk_0F6.b[1] = 0x88;
+            }
+            break;
+        }
+    } else {
+        switch (D_80150E98) {
+        case 2:
+            if (func_8014A2C4() < 2) {
+                D_800E6280.unk_0F6.b[1] = 4;
+            } else {
+                D_800E6280.unk_0F6.b[1] = 0x84;
+            }
+            break;
+        case 1:
+            if (func_8014A2C4() < 2) {
+                D_800E6280.unk_0F6.b[1] = 2;
+            } else {
+                D_800E6280.unk_0F6.b[1] = 0x82;
+            }
+            break;
+        case 0:
+        default:
+            if (func_8014A2C4() < 2) {
+                D_800E6280.unk_0F6.b[1] = 1;
+            } else {
+                D_800E6280.unk_0F6.b[1] = 0x81;
+            }
+            break;
+        }
+    }
+    func_800AE0B0("shinro %x \n", D_800E6280.unk_0F6.b[1]);
+}
 
 void func_8014A534(void) {
     u32 temp_v0;

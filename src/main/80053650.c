@@ -523,7 +523,69 @@ s32 func_8005478C(s32 arg0) {
     return 1;
 }
 
+/* NON_MATCHING: T-24123, score=36 (18 instructions, register-only: ugen temp numbering shifted by 1 from block 4 onwards). */
+#ifdef NON_MATCHING
+s32 func_80054884(s32 arg0) {
+    u8 name[28];
+    s32 idx;
+    s32 pad1[2];
+    u8 sp47;
+    u8 sp46;
+    s32 pad2[1];
+    s32 retry;
+
+    retry = 0;
+    func_80054C4C();
+    func_80056070(name, arg0);
+    close(D_800B58E4);
+    D_800B58E4 = open(name, 0x8002);
+    if (D_800B58E4 == -1) {
+        do {
+            retry++;
+            if (func_80054694(arg0) == -1) {
+                return -1;
+            }
+            if (retry >= 16) {
+                return -1;
+            }
+        } while ((D_800B58E4 = open(name, 0x8002)) == -1);
+        retry = 0;
+    }
+    strncpy(D_80123120, "SC", 2);
+    D_80123122 = 0x13;
+    D_80123123 = 1;
+    bzero(D_80123124, 0x40);
+    strncpy(D_80123124, "ときめきメモリアル", 0x14);
+    if (arg0 != 0) {
+        strncat(D_80123124, D_800B32CC[arg0 - 1], 6);
+    } else {
+        strncat(D_80123124, "・システム", 0xC);
+    }
+    bzero(D_80123164, 0x1C);
+    func_8006C988(&sp47, &sp46, arg0);
+    idx = sp47;
+    if (idx >= 0xD) {
+        idx = 0;
+    }
+    memcpy(D_80123180, &D_800B4390[idx << 5], 0x20);
+    memcpy(D_801231A0, (&D_800B58B0)[idx], 0x180);
+    if (arg0 != 0) {
+        func_8005557C(0);
+    } else {
+        func_80054FC0(0);
+    }
+    D_80123320[1] = D_80123320[0];
+    while (write(D_800B58E4, D_80123120, 0x2000) == -1) {
+        retry++;
+        if (retry >= 16) {
+            return -1;
+        }
+    }
+    return 1;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054884);
+#endif
 
 s32 func_80054AF4(s32 arg0) {
     u8 name[0x1C];
@@ -627,7 +689,35 @@ s32 func_80054C74(s32 arg0) {
     return 1;
 }
 
+/* NON_MATCHING: T-24123, score=84 (CSE spill of &D_800E7D10+slot and &D_800E7D10+slot*8 at sp+0x34 and sp+0x30). */
+#ifdef NON_MATCHING
+void func_80054E6C(void) {
+    s32 i;
+    s32 slot;
+
+    slot = D_800E7D36;
+    slot &= 0xF;
+    ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot))->year[0] = D_800E6280.unk_03E;
+    ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot))->month[0] = D_800E6280.unk_03F;
+    ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot))->day[0] = D_800E6280.unk_040;
+    memcpy(((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 8))->family_name[0], D_800E6280.unk_0D4, 8);
+    memcpy(((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 8))->given_name[0], D_800E6280.unk_0DC, 8);
+    memcpy(D_800E7D10.nickname[slot], D_800E6280.unk_0E4, 0x10);
+    for (i = 0; i < 9; i++) {
+        *(s32 *)&D_800E7D10.metrics[i][slot] = (&D_800E6280.unk_0F8)[i + 1];
+    }
+    for (i = 0; i != 4; i++) {
+        ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 1] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 1];
+        ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 2] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 2];
+        ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 3] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 3];
+        ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 0] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 0];
+    }
+    i = D_800E6280.unk_0F4.h >> 12;
+    ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot))->club[0] = i;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054E6C);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054FC0);
 
@@ -671,7 +761,69 @@ s32 func_80055A38(s32 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80055AFC);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80056070);
+s32 func_80056070(u8 *buf, s32 arg1) {
+    s32 i;
+
+    /* FAKE: same-line zero init and while condition places move v1, zero after li a0, 20. T-24123 */
+    i = 0; while (i < 0x14) {
+        buf[i] = 0;
+        i++;
+    }
+    strcpy(buf, D_800B3938);
+    switch (arg1) {
+    case 0:
+        strcat(buf, "0");
+        break;
+    case 1:
+        strcat(buf, "1");
+        break;
+    case 2:
+        strcat(buf, "2");
+        break;
+    case 3:
+        strcat(buf, "3");
+        break;
+    case 4:
+        strcat(buf, "4");
+        break;
+    case 5:
+        strcat(buf, "5");
+        break;
+    case 6:
+        strcat(buf, "6");
+        break;
+    case 7:
+        strcat(buf, "7");
+        break;
+    case 8:
+        strcat(buf, "8");
+        break;
+    case 9:
+        strcat(buf, "9");
+        break;
+    case 10:
+        strcat(buf, "A");
+        break;
+    case 11:
+        strcat(buf, "B");
+        break;
+    case 12:
+        strcat(buf, "C");
+        break;
+    case 13:
+        strcat(buf, "D");
+        break;
+    case 14:
+        strcat(buf, "E");
+        break;
+    case 15:
+        strcat(buf, "F");
+        break;
+    default:
+        return 0;
+    }
+    return 1;
+}
 
 void func_80056284(void) {
     s32 i;

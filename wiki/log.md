@@ -20662,6 +20662,22 @@ Completed and reviewed [[tickets/T-24119-option-remaining-sweep]] (`Done`, +5 fu
 - `OPTION:func_801373C8` (736 B): `MATCH`
 Created and dispatched [[tickets/T-24125-shougatu-gyozi-bunkasd-remaining-sweep]] (`In Progress`) for remaining `SHOUGATU`, `GYOZI`, and `BUNKA_SD` functions.
 
+## [2026-10-19] build | T-24121 -> Done (+5 functions, +3,348 B in ETC); T-24126 dispatched
 
+Completed and reviewed [[tickets/T-24121-etc-remaining-sweep]] (`Done`, +5 functions / +3,348 B in `src/ovl/ETC/` — **`src/ovl/ETC/80140F50.c` 100.0% matched**):
+- `ETC:func_80141BE8` (552 B in `src/ovl/ETC/80140F50.c`): `MATCH`
+- `ETC:func_80144F74` (608 B in `src/ovl/ETC/80143240.c`): `MATCH`
+- `ETC:func_80145C00` (884 B in `src/ovl/ETC/80143240.c`): `MATCH`
+- `ETC:func_80148F7C` (836 B in `src/ovl/ETC/80146400.c`): `MATCH`
+- `ETC:func_8014A360` (468 B in `src/ovl/ETC/801492C0.c`): `MATCH`
+Created and dispatched [[tickets/T-24126-geko-tel-bunkaken-omimai-option-sweep]] (`In Progress`) for remaining `GEKO`, `OPTION`, `TEL`, `BUNKAKEN`, and `OMIMAI` functions.
 
+## [2026-10-19] build | T-24123 -> Done (+5 functions, +2,284 B in src/main/); T-24127 dispatched
 
+Completed and reviewed [[tickets/T-24123-main-remaining-sweep-b]] (`Done`, +5 functions / +2,284 B in `src/main/`):
+- `main:func_80045414` (432 B in `src/main/800451D0.c`): `MATCH`
+- `main:func_8004B358` (568 B in `src/main/8004AD60.c`): `MATCH`
+- `main:func_80056070` (532 B in `src/main/80053650.c`): `MATCH`
+- `main:func_80079C70` (184 B in `src/main/80079B10.c`): `MATCH`
+- `main:func_8007AF0C` (568 B in `src/main/80079B10.c`): `MATCH`
+Created and dispatched [[tickets/T-24127-main-remaining-sweep-c]] (`In Progress`) for wave C of `src/main/`.

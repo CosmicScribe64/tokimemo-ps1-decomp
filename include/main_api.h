@@ -676,6 +676,7 @@ extern u8 D_800B3750[][3];
 extern u8 D_800B3778[13][7];
 extern s32 D_800B37D4[];
 extern u8 *club_name_table[];
+extern u8 D_800B3938[];
 extern s32 D_800B394C[];
 extern s32 D_800B39C4[];
 extern s32 D_800B3A3C[];
@@ -2082,7 +2083,9 @@ s32 func_800451D0();
 #ifndef MAIN_API_OVERRIDE_func_800452C4
 void func_800452C4(void);
 #endif
+#ifndef MAIN_API_OVERRIDE_func_80045414
 void func_80045414(s32 arg0, s32 arg1, u8 *arg2);
+#endif
 void func_80045B14(void);
 s32 func_80045FF4(void);
 #ifndef MAIN_API_OVERRIDE_func_80046094
@@ -2149,7 +2152,7 @@ void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3);
 void func_8004AEB0();
 void func_8004B19C(s32 a, s32 b, s32 c);
 void func_8004B338(s32 arg0, s32 arg1, s32 arg2);
-void func_8004B358(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+s32 func_8004B358(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8004BB54();
 s32 func_8004BC20(s32 arg0);
 void func_8004C060();
@@ -2278,7 +2281,7 @@ void *func_80054B60();
 void func_80054C4C(void);
 s32 func_80055A38(s32);
 s32 func_80055AFC(s32 arg0);
-void func_80056070(u8 *buf, s32 arg1);
+s32 func_80056070(u8 *buf, s32 arg1);
 void func_80056284(void);
 void set_movie_offset(s16 arg0, s16 arg1);
 void strKickCD(s32 arg0);

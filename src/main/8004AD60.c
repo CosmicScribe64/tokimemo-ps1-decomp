@@ -133,7 +133,62 @@ void func_8004B338(s32 arg0, s32 arg1, s32 arg2) {
     func_8004B358(arg0, arg1, arg2, 0xF);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004B358);
+s32 func_8004B358(s32 a0, s32 a1, s32 a2, s32 a3) {
+    SPRT *p;
+    s32 x;
+    u8 c;
+    s32 flag;
+    u8 *ptr;
+    s32 tpx;
+    s32 tpy;
+    /* FAKE: unused local pads stack frame to 0x88 and places spilled tpy at sp+0x5C. T-24123 */
+    s32 pad;
+
+    if (D_800B3D80 < 4) {
+        return 0;
+    }
+    if (D_800B3220 == 0) {
+        return 0;
+    }
+    ptr = (u8 *)a0;
+    x = a1;
+    while (*ptr != 0) {
+        c = *ptr & 0x1F;
+        flag = *ptr & 0x20;
+        tpx = (a3 & 8) * 2 + 0x100;
+        tpy = (a3 & 7) + 0x1F8;
+        p = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+        func_8009F0A4(p);
+        SetSemiTrans(p, 0);
+        p->r0 = 0x80;
+        p->g0 = 0x80;
+        p->b0 = 0x80;
+        p->x0 = D_800E6280.unk_014[D_8011ECA0] + x;
+        p->y0 = D_800E6280.unk_018[D_8011ECA0] + a2;
+        if (flag != 0) {
+            x += 6;
+        } else {
+            x += 8;
+        }
+        if (flag != 0) {
+            p->u0 = D_800B3D84[0x14] + c * 8 - 8;
+            p->v0 = D_800B3D84[0x15];
+        } else {
+            p->u0 = D_800B3D84[0x14] + c * 8 - 8;
+            p->v0 = D_800B3D84[0x15] - 0x10;
+        }
+        if (flag != 0) {
+            setWH(p, 6, 0xC);
+        } else {
+            setWH(p, 8, 8);
+        }
+        p->clut = func_8009ED74(tpx, tpy);
+        AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + 4, p);
+        ptr++;
+    }
+    dtd_on_tpage(0x2C0, 0x100, 1, 0, 0);
+    return 0;
+}
 
 /* Two 5-5-5 colours per word (CLUT entries): read as u32 fields, written as u16 fields. */
 typedef struct {
