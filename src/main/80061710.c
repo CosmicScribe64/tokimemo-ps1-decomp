@@ -162,8 +162,6 @@ void func_8006218C(void) {
     func_80062948();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-17010, 24 differing lines; the eight s16 stores to x, y, w, h come out in source order, the original stores h, w, x, y per row while its li order is y, x, w, h; loop: sh unk_18 after ori and addiu s2 before addiu s0 */
 void func_80062210(void) {
     s16 pad[4]; /* FAKE: unused pad grows the frame to the original 0x80; real source unknown. T-17010 */
     s16 x[2];
@@ -173,14 +171,9 @@ void func_80062210(void) {
     s32 i;
     s32 j;
 
-    y[0] = 0x42;
-    x[0] = -0x30;
-    w[0] = 0xA0;
-    h[0] = 0x14;
-    y[1] = 0x52;
-    x[1] = -0x30;
-    w[1] = 0xA0;
-    h[1] = 0x14;
+    /* FAKE: same-line stores per row let as1 schedule sh in h, w, x, y order while li loads y, x, w, h. T-24111 */
+    y[0] = 0x42; x[0] = -0x30; w[0] = 0xA0; h[0] = 0x14;
+    y[1] = 0x52; x[1] = -0x30; w[1] = 0xA0; h[1] = 0x14;
     menu_set(0, 2, x, y, w, h);
     D_801230D0 = 0;
     (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_037)[0] = (&D_800E6280.unk_038)[0] = 0xFF;
@@ -189,10 +182,8 @@ void func_80062210(void) {
     func_8006BC28(0);
     func_8006BD6C(1);
     func_800623E4();
-    for (i = 0, j = 0; i < 3; i++) {
+    for (i = 0, j = 0; i < 3; i++, j += 2) {
         func_80048F64(i + 0x60);
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_18 = j;
-        j += 2;
         ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_01 = 0xD;
         ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_02 = 0x40;
         ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_38 = 0x01000000;
@@ -200,6 +191,7 @@ void func_80062210(void) {
         ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_0C = (u8 *)0x801EAB3C;
         ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_10 = (u8 *)0x801EAB6C;
         ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_34 = (u8 *)0x801EAB20;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_18 = j;
         ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_04 = 8;
         ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_05 = 0x80;
         ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_26 = -0xA0;
@@ -211,9 +203,6 @@ void func_80062210(void) {
     D_801206FE = -0xAA;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80061710", func_80062210);
-#endif
 
 void func_800623E4(void) {
     if (D_800E6280.unk_F74 != 0) {

@@ -64,27 +64,22 @@ void func_80075468(void) {
     func_80065B0C(0);
 }
 
-/* NON_MATCHING: T-17006, 9 differing lines; the local m keeps the month in v0 as the original does, but the
- * beq delay slot gets move a1,v0 instead of lui a0 and the jal slot stays empty. Same 9 lines with m as u8/u32,
- * (u8)m in the call, the tests nested, m assigned in the condition, or the test and call on one source line;
- * the call reading D_800E6280.unk_03F again puts the month in a1 (lui a0 then fills the slot, 10 lines); a switch
- * on m adds 8 bytes of frame. */
-#ifdef NON_MATCHING
+/* FAKE: T-24108, dead entry read of unk_03F satisfies cvt_pass's entry condition and keeps m's stack slot (placing rank/points at sp+0x4C/0x2C) so unk_03F is promoted to $v0 across the month tests and copied to $a1 in the appointment_find_today delay slot. */
 s32 func_800754C0(void) {
     s32 m;
     u8 rank[16];
     s16 points[16];
 
+    m = D_800E6280.unk_03F;
     func_80053418(rank, points);
     if (((D_800E6280.unk_0F8 & 0xF) != (D_800E6280.unk_1BC[0].unk_10.w & 0xF)) ||
         (((u32)(D_800E6280.unk_0F8 << 0x17) >> 0x1B) != ((u32)(D_800E6280.unk_1BC[0].unk_10.w << 0x17) >> 0x1B))) {
         return 0;
     }
-    m = D_800E6280.unk_03F;
-    if ((m != 3) && ((m != 4) || ((u8)D_800E6280.unk_040 >= 4U))) {
+    if ((D_800E6280.unk_03F != 3) && ((D_800E6280.unk_03F != 4) || ((u8)D_800E6280.unk_040 >= 4U))) {
         return 0;
     }
-    if (appointment_find_today(D_800E6280.unk_03E, m, D_800E6280.unk_040) > 0) {
+    if (appointment_find_today(D_800E6280.unk_03E, D_800E6280.unk_03F, D_800E6280.unk_040) > 0) {
         return 0;
     }
     if (birth_day_check(0xF) != 1) {
@@ -95,9 +90,6 @@ s32 func_800754C0(void) {
     }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800754C0);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800755B4);
 
@@ -515,19 +507,9 @@ void func_80077C50(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-17006, 28 differing lines; the original copies the selector into v0 (or v0,v1,zero) in the delay
- * slot of the first beq, before the dispatch, so the case blocks keep their own lui v0 and the dispatch slots hold
- * the next li at. Every form tried (selector local, return local, s32/u32 return, comma and assignment in the
- * switch) leaves the copy at the default return (move v0,v1 or andi v0,v1,0xff) and hoists lui v0 into the beq
- * slots. */
-#ifdef NON_MATCHING
+/* FAKE: T-24108, omitting default return keeps the selector copy in the first beq delay slot; the always-true >= 0 check in case 0x62 promotes unk_03F to $v0 across the branch and is folded away by uopt. */
 u8 func_80077CA8(void) {
-    s32 x;
-
-    x = D_800E6280.unk_03E;
-    switch (x) {
-    default:
-        return x;
+    switch (D_800E6280.unk_03E) {
     case 0x5F:
         if (D_800E6280.unk_03F < 5U) {
             return 0;
@@ -574,12 +556,12 @@ u8 func_80077CA8(void) {
         if (D_800E6280.unk_03F < 2U) {
             return 0xB;
         }
-        return 0xC;
+        if (D_800E6280.unk_03F >= 0) {
+            return 0xC;
+        }
+        break;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077CA8);
-#endif
 
 void func_80077E30(void) {
     magazine_base_show();

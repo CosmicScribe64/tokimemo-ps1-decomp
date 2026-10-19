@@ -986,10 +986,79 @@ void func_8010F4B8(void) {
     func_8004AEB0();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010BB90", func_8010F55C);
+s32 func_8010F55C(void) {
+    s32 pad[5]; /* FAKE: 20 bytes above tbl place tbl at sp+0x30 in the 0x138 frame (T-3330) */
+    FnTbl61 tbl;
 
-/* NON_MATCHING: T-22011, 29 rows; case 0 of the table switch folds into the pre-switch assignment (the original has an explicit `or v0,v1,zero`), and the last D_800B1AF6 read lands in $t9 not $v1 */
-#ifdef NON_MATCHING
+    tbl = D_801243B8;
+    if (tbl.f[D_800B1AF6] == func_80111E60) {
+        /* FAKE: second-block reference to D_800B1AF6 promotes it to $a1 at function entry */
+        switch (D_800B1AF6 * 0 + D_801243B0) {
+        case 1:
+            tbl.f[D_800B1AF6] = func_80111F04;
+            break;
+        case 2:
+            tbl.f[D_800B1AF6] = func_801139CC;
+            break;
+        case 3:
+            tbl.f[D_800B1AF6] = func_8011220C;
+            break;
+        case 4:
+            tbl.f[D_800B1AF6] = func_80112460;
+            break;
+        case 5:
+            tbl.f[D_800B1AF6] = func_80112750;
+            break;
+        case 6:
+            tbl.f[D_800B1AF6] = func_80112930;
+            break;
+        case 7:
+            tbl.f[D_800B1AF6] = func_80112BEC;
+            break;
+        case 8:
+            tbl.f[D_800B1AF6] = func_801130F0;
+            break;
+        case 9:
+            tbl.f[D_800B1AF6] = func_80113300;
+            break;
+        case 10:
+            tbl.f[D_800B1AF6] = func_80113520;
+            break;
+        case 11:
+            tbl.f[D_800B1AF6] = func_801136FC;
+            break;
+        case 12:
+            tbl.f[D_800B1AF6] = func_801138D8;
+            break;
+        case 13:
+            tbl.f[D_800B1AF6] = func_80113A40;
+            break;
+        case 14:
+            tbl.f[D_800B1AF6] = func_80113CA0;
+            break;
+        case 15:
+            tbl.f[D_800B1AF6] = func_80113FD4;
+            break;
+        case 16:
+            tbl.f[D_800B1AF6] = func_801142E8;
+            break;
+        case 17:
+            tbl.f[D_800B1AF6] = func_801144AC;
+            break;
+        case 18:
+            tbl.f[D_800B1AF6] = func_801146B4;
+            break;
+        case 19:
+            tbl.f[D_800B1AF6] = func_80114784;
+            break;
+        case 20:
+            tbl.f[D_800B1AF6] = func_80114948;
+            break;
+        }
+    }
+    tbl.f[D_800B1AF6](0x80);
+}
+
 s32 func_8010F74C(void) {
     s32 pad; /* FAKE: unused, declared first so the 21 tables sit 4 bytes lower as in the original; T-22011 */
     FnTbl18 spD04;
@@ -1101,20 +1170,22 @@ s32 func_8010F74C(void) {
     case 20:
         tbl = sp30.f;
         break;
+    default:
+        /* FAKE: redundant default store is eliminated instead of case 0, preserving case 0's `or v0,v1,zero` and case 20's branch */
+        tbl = spD04.f;
+        break;
     }
     tbl[D_800B1AF6](0x80);
     if (D_800EECF0 != 0) {
         func_8011B848();
     }
-    if ((tbl == spC78.f) && ((u8) D_800B1AF6 >= 0xCU) && ((u8) D_800B1AF6 < 0x15U)) {
+    /* FAKE: zero-multiplied block references keep tbl in $v0 and promote D_800B1AF6 to $v1 at .L8010FDD8 */
+    if ((tbl == spC78.f) && ((u8) D_800B1AF6 + ((s32)tbl * 0) >= 0xCU) && ((u8) D_800B1AF6 + ((s32)tbl * 0) < 0x15U)) {
         func_8011C164();
     }
-    if (tbl == spC78.f) {
-        if (D_800B1AF6 == 0x15) {
+    if (tbl == spC78.f + D_800B1AF6 * 0) {
+        if (D_800B1AF6 + ((s32)tbl * 0) == 0x15) {
             func_8011C11C();
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010BB90", func_8010F74C);
-#endif

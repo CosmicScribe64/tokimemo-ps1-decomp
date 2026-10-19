@@ -1,5 +1,17 @@
+#define MAIN_API_OVERRIDE_D_80122760 /* three-light block (3 x 16 bytes) sharing base symbol for as1 load hoisting (T-24107) */
 #include "common.h"
 #include "ovl/TACO.h"
+
+typedef struct {
+    s32 unk00[3];
+    u8 r0, g0, b0, pad0;
+    s32 unk10[3];
+    u8 r1, g1, b1, pad1;
+    s32 unk20[3];
+    u8 r2, g2, b2, pad2;
+} TacoLightBlock;
+
+extern TacoLightBlock D_80122760;
 
 void func_80134930(void) {
     D_800E6280.unk_037 = 0;
@@ -23,19 +35,19 @@ void func_80134930(void) {
     D_8015F3E8 = 0;
 }
 
-/* NON_MATCHING: T-19011, 36 differing lines; light block register allocation only: the original keeps the three loaded bytes in $v1/$a2/$a3 and the third sum in $v0, IDO gives $v0/$v1/$a2 and $t9. */
-#ifdef NON_MATCHING
 s32 func_80134A18(void) {
     s32 i;
     s32 frame;
 
     frame = D_8015F3E8;
     if (frame < 0x20) {
-        if (D_8012276C < 0xC0) {
+        if (D_80122760.r0 < 0xC0) {
             /* Chained stores: IDO stores the middle and left targets first and the read one last, the original order. */
-            D_8012276C = D_8012276D = D_8012276E = D_8012276E + 6;
-            D_8012277C = D_8012277D = D_8012277E = D_8012277E + 1;
-            D_8012278C = D_8012278D = D_8012278E = D_8012278E + 1;
+            D_80122760.r0 = D_80122760.g0 = D_80122760.b0 = D_80122760.b0 + 6;
+            D_80122760.r1 = D_80122760.g1 = D_80122760.b1 = D_80122760.b1 + 1;
+            /* FAKE: repeated masked sum makes a uopt CSE range in $v0 while keeping the ugen temporary slot (T-22006, T-24107). */
+            D_80122760.g2 = (D_80122760.b2 + 1) & 0xFF;
+            D_80122760.r2 = D_80122760.b2 = (D_80122760.b2 + 1) & 0xFF;
             func_8009AD70(0, (s32) &D_80122760);
             func_8009AD70(1, (s32) &D_80122770);
             func_8009AD70(2, (s32) &D_80122780);
@@ -77,9 +89,7 @@ s32 func_80134A18(void) {
     D_8015F3E8 = D_8015F3E8 + 1;
     return 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_80134A18);
-#endif
+
 
 void func_80134D8C(void) {
     D_800E6280.unk_1104.w += 1;

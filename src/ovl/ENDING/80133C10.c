@@ -175,29 +175,25 @@ void func_80134AA8(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, only the register of the promoted D_80120657 differs ($v0 here, $a1 in the original: one range across the calls), 9 lines */
+/* FAKE: explicit GameState byte views preserve the promoted colour register; shared base symbol D_80120650 lets as1 hoist the fade-alpha load across the second actor's store (T-24057, T-24108). */
 void func_80134B18(void) {
     s16 i;
 
-    D_800E6280.unk_036 += 8;
-    if (D_800E6280.unk_036 == 0 || D_800E6280.unk_036 == 7) {
-        D_800E6280.unk_036 = 0xFF;
+    (*(u8 *)&D_800E6280.unk_036) += 8;
+    if ((*(u8 *)&D_800E6280.unk_036) == 0 || (*(u8 *)&D_800E6280.unk_036) == 7) {
+        (*(u8 *)&D_800E6280.unk_036) = 0xFF;
     }
-    D_800E6280.unk_037 = D_800E6280.unk_038 = D_800E6280.unk_036;
-    D_80120657 += 4;
-    D_8012069B += 4;
+    (*(u8 *)&D_800E6280.unk_037) = (*(u8 *)&D_800E6280.unk_038) = (*(u8 *)&D_800E6280.unk_036);
+    ((DisplayActor44 *)D_80120650)->unk_07 += 4;
+    ((DisplayActor44 *)D_80120650)[1].unk_07 += 4;
     for (i = 4; i < 0xA; i++) {
-        func_80084C98(i, D_80120657);
+        func_80084C98(i, ((DisplayActor44 *)D_80120650)->unk_07);
     }
-    if (D_80120657 >= 0x80) {
-        D_80120652 = 5;
+    if (((DisplayActor44 *)D_80120650)->unk_07 >= 0x80) {
+        ((DisplayActor44 *)D_80120650)->unk_02 = 5;
         func_8004284C();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133C10", func_80134B18);
-#endif
 
 void func_80134BE8(void) {
     if (D_80120668 == 2) {
@@ -207,4 +203,24 @@ void func_80134BE8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133C10", func_80134C2C);
+/* FAKE: explicit GameState byte views preserve the promoted colour register; shared base symbol D_80120650 lets as1 hoist the fade-alpha load across the second actor's store (T-24057, T-24108). */
+void func_80134C2C(void) {
+    s16 i;
+
+    (*(u8 *)&D_800E6280.unk_036) -= 8;
+    if ((*(u8 *)&D_800E6280.unk_036) == 7 || (*(u8 *)&D_800E6280.unk_036) == 0xF8) {
+        (*(u8 *)&D_800E6280.unk_036) = 0;
+    }
+    (*(u8 *)&D_800E6280.unk_037) = (*(u8 *)&D_800E6280.unk_038) = (*(u8 *)&D_800E6280.unk_036);
+    ((DisplayActor44 *)D_80120650)->unk_07 -= 4;
+    ((DisplayActor44 *)D_80120650)[1].unk_07 -= 4;
+    for (i = 4; i < 0xA; i++) {
+        func_80084C98(i, ((DisplayActor44 *)D_80120650)->unk_07);
+    }
+    if (((DisplayActor44 *)D_80120650)->unk_07 < 4) {
+        ((DisplayActor44 *)D_80120650)->unk_03 &= 0xFF7F;
+        ((DisplayActor44 *)D_80120650)[1].unk_03 &= 0xFF7F;
+        func_8004284C();
+    }
+}
+

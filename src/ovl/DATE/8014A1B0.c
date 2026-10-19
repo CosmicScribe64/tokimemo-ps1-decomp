@@ -1,6 +1,18 @@
+#define MAIN_API_OVERRIDE_D_80122760 /* three-light block (3 x 16 bytes) sharing base symbol for as1 load hoisting (T-24107, T-24108) */
 #include "common.h"
 #include "libgte.h"
 #include "ovl/DATE.h"
+
+typedef struct {
+    s32 unk00[3];
+    u8 r0, g0, b0, pad0;
+    s32 unk10[3];
+    u8 r1, g1, b1, pad1;
+    s32 unk20[3];
+    u8 r2, g2, b2, pad2;
+} DateLightBlock;
+
+extern DateLightBlock D_80122760;
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 s16 D_8015DDD0[0x2C] = { 0 };
@@ -207,8 +219,6 @@ void func_8014A810(void) {
     func_8014B1C4();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-22006, 20 rows (10 per fade block); registers and the order of the sums now match, only the schedule of the byte loads differs: the original loads 6E, 8E and 7E in a row before the first sum, IDO loads each byte just before its group. */
 /* FAKE: s32 without a return keeps the s16 counter in $v0 at the exit (sll/sra before the sh), the real return type is unknown. T-17208 */
 s32 func_8014A8FC(void) {
     s32 frame;
@@ -220,13 +230,13 @@ s32 func_8014A8FC(void) {
     func_80066334();
     frame = D_8015DE4C;
     if (frame < 0x20) {
-        if (D_8012276C < 0xC0U) {
-            D_8012276C = D_8012276D = (D_8012276E += 6);
-            D_8012277C = D_8012277D = (D_8012277E += 1);
-            /* FAKE: the two equal masked sums make the third group a uopt range ($v0, the bytes get $v1/$a2/$a3) and keep its ugen slot, as in the original. T-22006 */
-            D_8012278D = (D_8012278E + 1) & 0xFF;
-            D_8012278C = D_8012278E = (D_8012278E + 1) & 0xFF;
-            func_8009AD70(0, &D_80122760);
+        if (D_80122760.r0 < 0xC0U) {
+            D_80122760.r0 = D_80122760.g0 = (D_80122760.b0 += 6);
+            D_80122760.r1 = D_80122760.g1 = (D_80122760.b1 += 1);
+            /* FAKE: the two equal masked sums make the third group a uopt range ($v0, the bytes get $v1/$a2/$a3) and keep its ugen slot, as in the original (T-22006, T-24107, T-24108). */
+            D_80122760.g2 = (D_80122760.b2 + 1) & 0xFF;
+            D_80122760.r2 = D_80122760.b2 = (D_80122760.b2 + 1) & 0xFF;
+            func_8009AD70(0, (s32 *)&D_80122760);
             func_8009AD70(1, &D_80122770);
             func_8009AD70(2, &D_80122780);
         }
@@ -262,13 +272,13 @@ s32 func_8014A8FC(void) {
             func_8014AD9C(i, D_8015DE34[i], 7);
         }
     } else if (frame >= 0x10E && frame < 0x12E) {
-        if (D_8012276C != 0) {
-            D_8012276C = D_8012276D = (D_8012276E -= 6);
-            D_8012277C = D_8012277D = (D_8012277E -= 1);
-            /* FAKE: the two equal masked sums make the third group a uopt range ($v0, the bytes get $v1/$a2/$a3) and keep its ugen slot, as in the original. T-22006 */
-            D_8012278D = (D_8012278E - 1) & 0xFF;
-            D_8012278C = D_8012278E = (D_8012278E - 1) & 0xFF;
-            func_8009AD70(0, &D_80122760);
+        if (D_80122760.r0 != 0) {
+            D_80122760.r0 = D_80122760.g0 = (D_80122760.b0 -= 6);
+            D_80122760.r1 = D_80122760.g1 = (D_80122760.b1 -= 1);
+            /* FAKE: the two equal masked sums make the third group a uopt range ($v0, the bytes get $v1/$a2/$a3) and keep its ugen slot, as in the original (T-22006, T-24107, T-24108). */
+            D_80122760.g2 = (D_80122760.b2 - 1) & 0xFF;
+            D_80122760.r2 = D_80122760.b2 = (D_80122760.b2 - 1) & 0xFF;
+            func_8009AD70(0, (s32 *)&D_80122760);
             func_8009AD70(1, &D_80122770);
             func_8009AD70(2, &D_80122780);
         }
@@ -290,9 +300,6 @@ s32 func_8014A8FC(void) {
     }
     D_8015DE4C = D_8015DE4C + 1;
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014A1B0", func_8014A8FC);
-#endif
 
 void func_8014AD70(void) {
     draw2d3d(1, 0);
@@ -348,13 +355,14 @@ void func_8014AF88(void) {
 }
 
 void func_8014B080(void) {
-    D_80122760 = 0x64;
+
+    D_80122760.unk00[0] = 0x64;
     D_80122764 = 0x1E;
     D_80122768 = -0x32;
     D_8012276C = 0;
     D_8012276D = 0;
     D_8012276E = 0;
-    func_8009AD70(0, &D_80122760);
+    func_8009AD70(0, (s32 *)&D_80122760);
     D_80122770 = 0x14;
     D_80122774 = 0xA;
     D_80122778 = -0x64;

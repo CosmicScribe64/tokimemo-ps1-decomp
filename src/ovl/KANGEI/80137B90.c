@@ -202,7 +202,28 @@ void func_80138470(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-24054, T-24107, 3 rows (rows 35..37): the final sum into D_80139ADC gets $t5 instead of $t6 and as1 schedules lui $at, %hi(D_80139ADC) before addu instead of after. */
+#ifdef NON_MATCHING
+void func_8013852C(void) {
+    u8 year;
+
+    if (D_800E6280.unk_03F >= 4) {
+        year = D_800E6280.unk_03E - 0x5F;
+    } else {
+        year = D_800E6280.unk_03E - 0x60;
+    }
+    D_80139AD0 = (KObj *) D_8013A170[1][0][11];
+    D_80139AD4 = D_8013A170[1][1][11];
+    D_80139AD8 = D_8013A170[1][2][11];
+    /* FAKE: repeated field use and halfword conversion recover the promoted
+     * girl byte and arithmetic temporary numbering; original source unknown. T-24054 */
+    D_80139ADC = (s16)((u16)((D_800E6280.unk_F5F << 2) - D_800E6280.unk_F5F) + year);
+    D_8013A2AC = year;
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_8013852C);
+#endif
 
 void func_801385E0(void) {
     D_80139AD0 = (KObj *)D_8013A170[1][0][1];

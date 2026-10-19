@@ -1251,7 +1251,7 @@ extern s16 D_80124344;
 extern u8 D_80124374;
 extern s16 D_80124378;
 extern u8 D_80125318;
-void func_800FC040();
+s32 func_800FC040(void);
 void func_80102950();
 void func_80102A24();
 void func_801085C0();
@@ -1274,7 +1274,8 @@ void func_800FD00C();
 void func_80102890();
 void func_801028F0();
 void func_801034E8();
-void func_801035BC();
+s32 func_801035BC(void);
+void func_80103774(void);
 void func_801039E8();
 void func_80103ABC();
 void func_801084A0();
@@ -1525,7 +1526,9 @@ typedef struct EventStateView {
     /* 0x6E5 */ u8 unk_6E5;
     /* 0x6E6 */ u8 pad_6E6[0x800];
     /* 0xEE6 */ u8 unk_EE6;
-    /* 0xEE7 */ u8 pad_EE7[0x150];
+    /* 0xEE7 */ u8 pad_EE7[0x25];
+    /* 0xF0C */ s32 unk_F0C;
+    /* 0xF10 */ u8 pad_F10[0x127];
     /* 0x1037 */ u8 unk_1037;
     /* 0x1038 */ u8 pad_1038[0x25D];
     /* 0x1295 */ u8 unk_1295;
@@ -1533,12 +1536,69 @@ typedef struct EventStateView {
     /* 0x1297 */ u8 pad_1297;
 } EventStateView; /* minimum size 0x1298 */
 
+/* Unsigned counter view at D_800B1AF0 (func_800FEAE8, matching DATE D_800E6280.unk_1104.u). */
+typedef struct EventFrameCounter {
+    /* 0x00 */ u32 u;
+} EventFrameCounter; /* size 0x04 */
+
 /* Bit 1 of Rec34.unk_0C is tested with a word shift/sign test (T-14300). */
 typedef struct EventRecordFlags {
     /* 0x00 */ u32 lo : 1;
     /* 0x00 */ u32 bit1 : 1;
     /* 0x00 */ u32 hi : 30;
 } EventRecordFlags; /* size 0x04 */
+
+/* T-24103: Rec34 view with Rec38Flags at +0x0C, GsWord at +0x10 and the 0x20-byte
+ * place-visit counter array at +0x14 (func_8011767C, func_80119110). */
+typedef struct EventGirlRec34 {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ Rec38Flags unk_0C;
+    /* 0x10 */ GsWord unk_10;
+    /* 0x14 */ u8 unk_14[0x20];
+} EventGirlRec34; /* size 0x34 */
+
+typedef struct EventStateGirlView {
+    /* 0x000 */ u8 pad_000[0x35];
+    /* 0x035 */ u8 unk_035;
+    /* 0x036 */ u8 unk_036;
+    /* 0x037 */ u8 unk_037;
+    /* 0x038 */ u8 pad_038[0xCE];
+    /* 0x106 */ s16 unk_106;
+    /* 0x108 */ u8 pad_108[0x9C];
+    /* 0x1A4 */ EventGirlRec34 unk_1A4[12];
+    /* 0x414 */ u8 pad_414[0x2B8];
+    /* 0x6CC */ u8 unk_6CC;
+    /* 0x6CD */ u8 pad_6CD[8];
+    /* 0x6D5 */ u8 unk_6D5[12];
+    /* 0x6E1 */ u8 pad_6E1[0x805];
+    /* 0xEE6 */ u8 unk_EE6;
+    /* 0xEE7 */ u8 pad_EE7[0x39D];
+    /* 0x1284 */ s32 unk_1284;
+    /* 0x1288 */ u8 pad_1288[8];
+    /* 0x1290 */ s32 unk_1290;
+    /* 0x1294 */ u8 unk_1294;
+} EventStateGirlView; /* minimum size 0x1298 */
+
+/* T-24103: 16.16 fixed-point word view of Rec34 +0x00/+0x04/+0x08 (func_80118B4C). */
+typedef struct EventGirlRec34Fix {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ u8 pad_0C[0x28];
+} EventGirlRec34Fix; /* size 0x34 */
+
+typedef struct EventStateFixView {
+    /* 0x000 */ u8 pad_000[0x1A4];
+    /* 0x1A4 */ EventGirlRec34Fix unk_1A4[12];
+} EventStateFixView; /* size 0x414 */
+
+extern u8 D_801252EC;
+extern u8 D_801252F0;
 #endif
 
 #ifndef OVL_EVENT_MOVIE_STATE_T10830_H
@@ -1821,6 +1881,7 @@ typedef struct {
 typedef struct {
     EvEnt e[4];
 } EvTbl; /* size 0x20: four (a, b) pairs, copied to the stack whole */
+extern EvEnt D_80121A2C;
 extern EvTbl D_80120A74;
 extern EvTbl D_80121AD8;
 #endif
@@ -1841,8 +1902,8 @@ typedef struct {
 } EvPairs8; /* size 0x20: func_80103774 reads v[i][1] (lh 0x6A + 4 * i) */
 extern EvPairs8 D_80122990;
 typedef struct {
-    s16 v[0x52];
-} EvShorts82; /* size 0xA4 */
+    s16 v[41][2];
+} EvShorts82; /* size 0xA4: 41 (start, end) frame pairs in func_800FEAE8 */
 extern EvShorts82 D_80121A34; /* func_800FEAE8 */
 typedef struct {
     s16 v[10];
@@ -1864,6 +1925,35 @@ extern EvShorts5 D_80125360; /* func_80118B4C */
 #ifndef OVL_EVENT_PROTOS_T17400
 #define OVL_EVENT_PROTOS_T17400
 void func_8010AFE4(void); /* T-17400: defined in 8010A210.c after its first caller */
+s32 func_800FEAE8(void);
+s32 func_800FEDC8(void);
+s32 func_8010F55C(void);
+s32 func_8010F74C(void);
+void func_80111E60(void);
+void func_80111F04(void);
+void func_8011220C(void);
+void func_80112460(void);
+void func_80112750(void);
+void func_80112930(void);
+void func_80112BEC(void);
+void func_801130F0(void);
+void func_80113300(void);
+void func_80113520(void);
+void func_801136FC(void);
+void func_801138D8(void);
+void func_801139CC(void);
+void func_80113A40(void);
+void func_80113CA0(void);
+void func_80113FD4(void);
+void func_801142E8(void);
+void func_801144AC(void);
+void func_801146B4(void);
+void func_80114784(void);
+void func_80114948(void);
+void func_80114B0C(void);
+void func_8011B848(void);
+void func_8011C11C(void);
+s32 func_8011C164(void);
 #endif
 
 #ifndef OVL_EVENT_LEGACY_RENDER_T24017
@@ -1880,5 +1970,7 @@ extern u8 D_8012274C[8]; /* flags, lbu/sb stride 1 */
 extern s16 D_80122754[8]; /* x coordinates, lh stride 2 */
 extern s16 D_80122764[8]; /* y coordinates, lh stride 2 */
 extern u8 D_80122774[8]; /* counters, lbu/sb stride 1 */
+typedef s16 EvMovieShort;
+extern EvMovieShort D_800F19D0[4]; /* func_800FEDC8 */
 
 #endif

@@ -276,52 +276,32 @@ void func_8013B77C(void) {
     func_8013B994();
 }
 
-/* NON_MATCHING: T-11120, about 60 lines: the original loop (two coordinate pairs per 8-byte record, `a0 += 8`, end pointer in $a1) stays rolled; every form tried (index, pointer, do-while, nested j<2) gets unrolled or loses the pointer shape. Frame 0x48 in the original (sp+0x2C/0x30/0x34 spills), 0x40 here. */
-#ifdef NON_MATCHING
 void func_8013B994(void) {
+    s32 i;
+    /* FAKE: unused words preserve the 0x48 stack frame and place err/zero/saved spills at sp+0x34/0x30/0x2C. T-24106 */
+    s32 pad[3];
     s32 err;
     s32 zero;
-    s32 i;
-    s32 x;
-    s32 y;
-    u8 saved;
+    s32 saved;
 
     err = 0;
     zero = 0;
+    /* FAKE: pointer view on unk_F6C emits lbu (declared s8 in header). T-24106 */
     if (*(u8 *)&D_800E6280.unk_F6C == 2) {
-        for (i = 0; i < 8; i++) {
-            x = ((s16 *)D_80125C10)[i * 4];
-            if (x >= 0x7D) {
+        for (i = 0; i < 16; i++) {
+            if (((s16 *)D_80125C10)[i * 2] >= 0x7D) {
                 err++;
             }
-            if (x < -0x86) {
+            if (((s16 *)D_80125C10)[i * 2] < -0x86) {
                 err++;
             }
-            y = ((s16 *)D_80125C10)[i * 4 + 1];
-            if (y < -0x54) {
+            if (((s16 *)D_80125C10)[i * 2 + 1] < -0x54) {
                 err++;
             }
-            if (y >= 0x55) {
+            if (((s16 *)D_80125C10)[i * 2 + 1] >= 0x55) {
                 err++;
             }
-            if (x == 0 && y == 0) {
-                zero++;
-            }
-            x = ((s16 *)D_80125C10)[i * 4 + 2];
-            if (x >= 0x7D) {
-                err++;
-            }
-            if (x < -0x86) {
-                err++;
-            }
-            y = ((s16 *)D_80125C10)[i * 4 + 3];
-            if (y < -0x54) {
-                err++;
-            }
-            if (y >= 0x55) {
-                err++;
-            }
-            if (x == 0 && y == 0) {
+            if (((s16 *)D_80125C10)[i * 2] == 0 && ((s16 *)D_80125C10)[i * 2 + 1] == 0) {
                 zero++;
             }
         }
@@ -338,9 +318,6 @@ void func_8013B994(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013B994);
-#endif
 
 void func_8013BB10(void) {
     D_8014D0A8 = 0;
@@ -349,8 +326,6 @@ void func_8013BB10(void) {
 void func_8013BB1C(void) {
 }
 
-/* NON_MATCHING: T-11570, 28 rows (14 swaps): seven pairs of 'lui a0,string' / 'lui at,store' swapped; writing the kanji_speed store and its printf on one line fixed that pair (T-11010 had 16 swaps) */
-#ifdef NON_MATCHING
 void func_8013BB24(void) {
     u8 speed;
 
@@ -366,21 +341,23 @@ void func_8013BB24(void) {
             func_800AE0B0("option setting!");
             D_8014D0AC = D_800E6280.unk_1124;
             speed = get_k_speed();
+            /* FAKE: single-line store+call schedules sb D_8014D0B0 before jal func_800AE0B0. T-11570 */
             D_8014D0B0 = speed; func_800AE0B0("kanji_speed%d \n", speed);
-            D_8014D0B4 = *(u8 *)&D_800E6280.unk_F6C;
-            func_800AE0B0("icon_mode %d \n", *(u8 *)&D_800E6280.unk_F6C);
-            D_8014D0B8 = *(u8 *)&D_800E6280.unk_1092;
-            func_800AE0B0("menu_mode %d \n", *(u8 *)&D_800E6280.unk_1092);
-            D_8014D0BC = *(u8 *)&D_800E6280.unk_F6F;
-            func_800AE0B0("cursor_speed %d \n", *(u8 *)&D_800E6280.unk_F6F);
-            D_8014D0C0 = *(u8 *)&D_800E6280.unk_03C;
-            func_800AE0B0("sound_mode %d \n", *(u8 *)&D_800E6280.unk_03C);
-            D_8014D0C4 = *(u8 *)&D_800E6280.unk_F70;
-            func_800AE0B0("click_mode %d \n", *(u8 *)&D_800E6280.unk_F70);
-            D_8014D0C8 = *(u8 *)&D_800E6280.unk_F73;
-            func_800AE0B0("click_speed %d \n", *(u8 *)&D_800E6280.unk_F73);
-            D_8014D0CC = *(u8 *)&D_800E6280.unk_F75;
-            func_800AE0B0("mouse_ok %d \n", *(u8 *)&D_800E6280.unk_F75);
+            /* FAKE: pointer views avoid cvt_pass widening on D_8014D0B4..D_8014D0CC so uopt CSEs the stores and schedules lui $a0 before lui $at. T-24106 */
+            D_8014D0B4 = D_800E6280.unk_F6C;
+            func_800AE0B0("icon_mode %d \n", *(u8 *)&D_8014D0B4);
+            D_8014D0B8 = D_800E6280.unk_1092;
+            func_800AE0B0("menu_mode %d \n", *(u8 *)&D_8014D0B8);
+            D_8014D0BC = D_800E6280.unk_F6F;
+            func_800AE0B0("cursor_speed %d \n", *(u8 *)&D_8014D0BC);
+            D_8014D0C0 = D_800E6280.unk_03C;
+            func_800AE0B0("sound_mode %d \n", *(u8 *)&D_8014D0C0);
+            D_8014D0C4 = D_800E6280.unk_F70;
+            func_800AE0B0("click_mode %d \n", *(u8 *)&D_8014D0C4);
+            D_8014D0C8 = D_800E6280.unk_F73;
+            func_800AE0B0("click_speed %d \n", *(u8 *)&D_8014D0C8);
+            D_8014D0CC = D_800E6280.unk_F75;
+            func_800AE0B0("mouse_ok %d \n", *(u8 *)&D_8014D0CC);
         } else {
             D_8014D0AC = 0;
         }
@@ -405,8 +382,8 @@ void func_8013BB24(void) {
         D_8014D0E8 = -0x50;
         D_8014D0EC = 8;
         D_8014D0F0 = 8;
-        make_color_bar16(&D_800E6280.unk_163C, 0xDF7FCF, 0xDF7FCF, 0x10, 0);
-        load_palette(&D_800E6280.unk_163C, 0x17, 1, 1, 0);
+        make_color_bar16(D_800E6280.unk_163C, 0xDF7FCF, 0xDF7FCF, 0x10, 0);
+        load_palette(D_800E6280.unk_163C, 0x17, 1, 1, 0);
         func_80046754(0x80180000, 0x1A, 0);
         func_80044890(0, 0xBF98, 0xBF79, 0xCD21, 0xCCD9, 0xCCD1);
         D_800E6280.unk_110D++;
@@ -418,9 +395,6 @@ void func_8013BB24(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013BB24);
-#endif
 
 void func_8013BE18(void) {
     /* FAKE: the fields are read through a GameState pointer declared before the rect. Written as direct D_800E6280 reads the
@@ -742,7 +716,97 @@ s32 func_8013C9F0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CB44);
+void func_8013CB44(void) {
+    /* FAKE: unused words preserve the 0x40 stack frame. T-22023 */
+    s32 pad[2];
+    s32 slot;
+    s32 i;
+    GameState *g = &D_800E6280;
+
+    switch (g->unk_110D) {
+    case 0:
+        func_80053CE0();
+        g->unk_110D++;
+        break;
+    case 1:
+        if (func_80054284() == 3) {
+            func_80053D10();
+            g->unk_110D++;
+        } else if (((u32) g->unk_1120 >= 0x201U) || (g->unk_1115 == 0xF0)) {
+            func_80053D10();
+            func_80056284();
+            func_80042908(1);
+        }
+        break;
+    case 2:
+        if (func_800552DC(0) == -1) {
+            g->unk_110D++;
+        } else {
+            func_8004E58C();
+            func_8013BB10();
+            slot = 0xFF;
+            if (D_800E7D10.slot_status[D_800E7D10.selected_slot] == 1) {
+                slot = D_800E7D10.selected_slot - 1;
+            } else {
+                for (i = 1; i < 14; i++) {
+                    if (D_800E7D10.slot_status[i] == 1) {
+                        D_800E7D10.selected_slot = i;
+                        slot = i - 1;
+                        break;
+                    }
+                }
+            }
+            if (slot != 0xFF) {
+                func_8013B51C(slot);
+            }
+            func_80139CB4();
+            func_8004EA98();
+            func_8004EAD4(0);
+            D_8014D0D4 = 1;
+            func_8004284C();
+        }
+        break;
+    case 3:
+        func_8004E58C();
+        func_8004E788(-0x40, 0x20, 0xF, (s32) "システムファイルは", 0);
+        func_8004E788(-0x40, 0x30, 0xF, (s32) "壊れています。", 0);
+        func_8004E884(2);
+        func_80053D10();
+        g->unk_110D++;
+        break;
+    case 4:
+        if (g->unk_F88 & 0x60) {
+            g->unk_110D++;
+        }
+        break;
+    case 5:
+        func_8004E58C();
+        func_8004E788(-0x40, 0x20, 0xF, (s32) "システムファイルを", 0);
+        func_8004E788(-0x40, 0x30, 0xF, (s32) "作り直しますか？", 0);
+        func_8004E788(-0x40, 0x40, 0xF, (s32) D_800B3C70, 0);
+        func_8004E788(0x14, 0x40, 1, (s32) func_8006CA9C(), 0);
+        func_8004E788(-0x40, 0x50, 0xF, (s32) D_800B3C88, 0);
+        func_8004E788(0x14, 0x50, 2, (s32) func_8006CAE0(), 0);
+        func_8004E884(6);
+        g->unk_110D++;
+        break;
+    case 6:
+        if (g->unk_F88 & 0x20) {
+            g->unk_110D++;
+        } else if (g->unk_F88 & 0x40) {
+            for (i = 0; i < 4; i++) {
+                if (func_80054704(0) == 1) {
+                    break;
+                }
+            }
+            func_80042908(1);
+        }
+        break;
+    case 7:
+        func_80042908(0xD0);
+        break;
+    }
+}
 
 void func_8013CEC8(void) {
     s32 pad[2]; /* FAKE: unused, gives the original's 0x38 frame; real source unknown. T-16920 */
@@ -1139,10 +1203,9 @@ s32 func_8013DD94(void) {
 }
 
 
-/* NON_MATCHING: T-22023, 11 instructions differ in registers only: the promoted album index D_800E6280.unk_1118 (D_800E7398) is in $a2 here, $a1 in the original (cases 1, 2, 3 and 6). regdiff: the cvt(D_800E7D36) range of case 5 (priority 3) takes $a1 before the unk_1118 range (0.33). Without the cast D_800E7D36 is promoted to $v0 instead (one more `move`); printf of unk_1118, a selected_slot member store, s8 casts and locals do not help. */
-#ifdef NON_MATCHING
 void func_8013DF88(void) {
-    s32 pad[2]; /* FAKE: unused words, the original frame has them. T-22023 */
+    /* FAKE: unused words, the original frame has them. T-22023 */
+    s32 pad[2];
     s32 i;
     u8 text[256];
     switch (D_800E6280.unk_110D) {
@@ -1202,9 +1265,9 @@ void func_8013DF88(void) {
         func_80041878();
         func_80042058();
         func_80042058();
-        /* FAKE: the (s32) cast of the u8 global stops uopt from keeping D_800E7D36 in $v0 (the `move v0,a2` in case 3) (T-22023) */
-        D_800E6280.unk_1118 = (s32)D_800E7D36;
-        func_800AE0B0("s->file_no %x \n", D_800E7D36);
+        D_800E6280.unk_1118 = D_800E7D36;
+        /* FAKE: pointer view avoids cvt_pass widening on unk_1118 so uopt keeps unk_1118 in $a1 across the switch. T-24106 */
+        func_800AE0B0("s->file_no %x \n", *(u8 *)&D_800E6280.unk_1118);
         D_800E6280.unk_110D += 1;
         break;
     case 6:
@@ -1224,9 +1287,6 @@ void func_8013DF88(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013DF88);
-#endif
 
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80139740.rodata", D_8014BB8C);
 

@@ -99,23 +99,19 @@ u8 func_800460EC(void) {
     return D_801255B4;
 }
 
-/* NON_MATCHING: T-12010, 17 listing lines; zero stores and local homes. */
-#ifdef NON_MATCHING
 s32 func_800460FC(void) {
-    u8 status[8];
-    u8 local[4];
-    s32 saved;
-    u8 *index = &D_80125128;
+    u8 pad[8]; /* FAKE: unused pad places local/saved/status at 0x44/0x3C/0x34 in the 0x58 frame. T-24111 */
     s32 retries;
     WordBytes4 *state;
+    u8 local[4];
+    u8 *index = &D_80125128;
+    s32 saved;
+    u8 status[8];
 
     saved = D_801255D0.word;
     state = &D_801255D0;
-    retries = 0;
-    /* FAKE: reuse the zero retry value for the byte-clear chain while
-     * investigating the original v0 stores. T-12010 */
-    state->bytes[0] = state->bytes[1] = state->bytes[2] = retries;
-    state->bytes[3] = 0;
+    /* FAKE: same-line zero init and 4-byte clear chain emit move v0, zero and sb v0 for bytes 2..0. T-24111 */
+    retries = 0; (&state->bytes[0])[0] = (&state->bytes[1])[0] = (&state->bytes[2])[0] = (&state->bytes[3])[0] = 0;
     if (func_80087954(1, status) != 0) {
         while (func_80087C64(0x10, 0, state) == 0) {
             retries++;
@@ -143,9 +139,6 @@ s32 func_800460FC(void) {
     if (retries > 0) return retries;
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_800460FC);
-#endif
 
 s32 func_80046274(void) {
     return D_801255B0;

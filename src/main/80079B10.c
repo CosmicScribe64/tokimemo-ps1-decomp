@@ -404,12 +404,16 @@ void func_8007AEC0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007AF0C);
 
-/* NON_MATCHING: T-17012, 21 diff rows (about 10 differing lines); with the K&R u8 parameter the temporaries match but the selector sits in t6 where the original has `andi v0,a0,0xFF` plus an unused t6 temp; an s32 parameter with a u8 local gets v0 but starts the temporaries at t6. */
-#ifdef NON_MATCHING
+/* FAKE: the constant branch retains the selector in v0 as in func_8007B2B4. T-10020, T-24111 */
 void func_8007B144(arg0)
-u8 arg0;
+u16 arg0;
 {
-    switch (arg0) {
+    s32 temp_v0;
+
+    if (1) {
+        temp_v0 = arg0 & 0xFF;
+    }
+    switch (temp_v0) {
     case 0x71:
         if ((D_80125D10.unk_00 & 0x100) || (D_80125D10.unk_00 & 0x1000)) {
             func_8008C720(D_80125D38, 0, 0);
@@ -435,9 +439,6 @@ u8 arg0;
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B144);
-#endif
 
 /* FAKE: the constant branch retains the selector in v0. Keeping it on the
  * flag-store line also preserves the ORI scheduling. T-10020. */

@@ -763,11 +763,15 @@ extern s8 D_8014615C;
 
 #ifndef OVL_SHOUGATU_T15600_DISPATCH
 #define OVL_SHOUGATU_T15600_DISPATCH
-/* T-15600: definitions in 80136F90.c, called by the earlier dispatcher. */
+/* T-15600: definitions in 80136F90.c / 8013F190.c, called by the earlier dispatcher. */
 void func_80137664(void); /* T-17500 */
 void func_801377CC(void);
 void func_80137818(void);
 void func_80137A04(void);
+void func_80141224(void); /* T-24109 */
+void func_801413F4(void);
+void func_801414E0(void);
+void func_80141678(void);
 #endif
 
 #ifndef OVL_SHOUGATU_STEP_TABLES_T17500

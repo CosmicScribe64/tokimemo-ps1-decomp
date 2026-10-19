@@ -101,26 +101,30 @@ void func_800FBFE0(void) {
     func_80015FE0();
 }
 
-/* NON_MATCHING: T-22011, 24 rows; the table sits at sp+52 not sp+40 (frame 224 against 216) and the third D_801212B4 read takes $t2 not $v0 */
-#ifdef NON_MATCHING
-void func_800FC040(void) {
-    s32 idx;
+/* FAKE: s32 return type and unused pad local keep $v0 live at epilogue and place tbl at sp+0x28 in the 0xD8 frame (T-3330); *(u8 *)&D_801212B4 avoids signed load promotion; T-24105 */
+s32 func_800FC040(void) {
+    s32 pad;
+    s32 v;
     FnTbl42 tbl;
 
     tbl = D_801212B8;
-    idx = D_800B1AF6;
-    tbl.f[idx](0x80);
+    tbl.f[D_800B1AF6](0x80);
     if (D_800EECE0 != 0) {
         D_800EB06F |= 0x80;
         D_800EB073 = D_800F19AB;
-        if ((u8) D_801212B4 == 0) {
+        if ((*(u8 *)&D_801212B4) == 0) {
             D_800EB06E = 3;
         }
-        if ((D_800EB084 == 6) && ((u8) D_801212B4 == 0)) {
+        if ((D_800EB084 == 6) && ((*(u8 *)&D_801212B4) == 0)) {
             D_800EB06E = 0;
         }
-        if ((func_80015A64() & 4 ? func_800458E0() : 0) != 0) {
-            if ((u8) D_801212B4 == 0) {
+        if (func_80015A64() & 4) {
+            v = func_800458E0();
+        } else {
+            v = 0;
+        }
+        if (v != 0) {
+            if ((*(u8 *)&D_801212B4) == 0) {
                 D_800EB06E = 3;
                 D_801212B4 = 1;
             }
@@ -129,9 +133,6 @@ void func_800FC040(void) {
     }
     D_800EB06F &= 0xFF7F;
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FC040);
-#endif
 
 void func_800FC184(void) {
     func_80015D28(0x45, 0x801B0000, 0x7D8F);

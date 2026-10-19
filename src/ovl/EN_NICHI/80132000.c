@@ -441,7 +441,44 @@ void func_80132E3C(void) {
     D_80121531 = 3;
 }
 
+#ifdef NON_MATCHING
+void func_80132EE8(void) {
+    s32 i;
+
+    D_80139AFC++;
+    if (D_80139AF4 >= 80 && D_80139AFC >= 30) {
+        for (i = 0; i < 10; i++) {
+            if (D_8013984C[i].unk_00 & 0x80) {
+                D_8013984C[i].unk_00 &= 0x7F;
+                if (D_8013984C[i].unk_00 == 4) {
+                    D_80139B04--;
+                } else {
+                    D_80139B00--;
+                }
+            }
+        }
+        D_800E6280.unk_F7A = ((DisplayActor44 *)D_8011ECD0)[152].unk_26;
+        D_800E6280.unk_F7C = ((DisplayActor44 *)D_8011ECD0)[152].unk_2A;
+        func_80135A48(((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+        func_801369F4(0x502);
+        D_80139AF8 = 3;
+    }
+    if (D_80139AFC >= 60) {
+        D_800E6280.unk_F7A = ((DisplayActor44 *)D_8011ECD0)[152].unk_26;
+        D_800E6280.unk_F7C = ((DisplayActor44 *)D_8011ECD0)[152].unk_2A;
+        D_80139AFC = 0;
+        D_80139AF8 = 0;
+        func_801369F4(0x50D);
+        for (i = 0; i < 10; i++) {
+            if (D_8013984C[i].unk_00 & 0x80) {
+                D_8013984C[i].unk_00 = 0;
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132EE8);
+#endif
 
 /* Moves display record 0 by the pad bits of D_800E6280.unk_F80 in 16.16 steps (diagonals
  * by v * 0xB505, v / sqrt 2), clamps its integer position and copies it to record 152. The words go
@@ -1457,9 +1494,188 @@ void func_80135F54(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135FBC);
+void func_80135FBC(s32 arg0, s32 arg1) {
+    POLY_FT4 *poly;
+    s32 p[4][2];
+    s32 u0;
+    s32 u1;
+    s32 u2;
+    s32 u3;
+    s32 v0;
+    s32 v1;
+    s32 v2;
+    s32 v3;
+    s32 ofs;
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801362A4);
+    p[0][0] = D_801392AC[arg0][arg1].unk_00.h[1] + arg0 * 25 - 25;
+    u1 = arg0; /* FAKE: an extra use of u1 (found with the permuter) gives the original s-register order; T-20920 */
+    p[1][0] = D_801392AC[arg0 + 1][arg1].unk_00.h[1] + arg0 * 25 - 1;
+    p[2][0] = D_801392AC[u1][arg1 + 1].unk_00.h[1] + arg0 * 25 - 25;
+    p[3][0] = D_801392AC[arg0 + 1][arg1 + 1].unk_00.h[1] + arg0 * 25 - 1;
+    p[0][1] = D_801392AC[arg0][arg1].unk_04.h[1] + arg1 * 25 - 25;
+    p[1][1] = D_801392AC[arg0 + 1][arg1].unk_04.h[1] + arg1 * 25 - 25;
+    p[2][1] = D_801392AC[arg0][arg1 + 1].unk_04.h[1] + arg1 * 25 - 1;
+    p[3][1] = D_801392AC[arg0 + 1][arg1 + 1].unk_04.h[1] + arg1 * 25 - 1;
+    u2 = u0 = arg0 * 25 + D_801392A4 + 0x27;
+    u3 = u1 = arg0 * 25 + D_801392A4 + 0x3F;
+    v1 = v0 = arg1 * 25 + D_801392A8 + 0x27;
+    v3 = v2 = arg1 * 25 + D_801392A8 + 0x3F;
+    while (u0 > 0xC0) {
+        u0 -= 0x80;
+        u1 -= 0x80;
+        u2 -= 0x80;
+        u3 -= 0x80;
+    }
+    while (v0 > 0xC0) {
+        v0 -= 0x80;
+        v1 -= 0x80;
+        v2 -= 0x80;
+        v3 -= 0x80;
+    }
+    poly = func_800490F0(0x28, D_8011ECA0);
+    func_8009F040(poly);
+    func_8009EFB0(poly, 0);
+    func_8009EF84(poly, 1);
+    poly->r0 = D_8013921C;
+    poly->g0 = D_8013921C;
+    poly->b0 = D_8013921C;
+    poly->clut = func_8009ED74(0, 0x1FF);
+    poly->tpage = func_8009ECB0(1, 4, 0x1C0, 0);
+    ofs = -D_8011ECA0 * 0xF0 + 0xF0;
+    poly->x0 = p[0][0];
+    poly->y0 = p[0][1] + ofs;
+    poly->x1 = p[1][0] + 1;
+    poly->y1 = p[1][1] + ofs;
+    poly->x2 = p[2][0];
+    poly->y2 = p[2][1] + ofs + 1;
+    poly->x3 = p[3][0] + 1;
+    poly->y3 = p[3][1] + ofs + 1;
+    /* FAKE: single-line grouping makes as1 schedule the 4 UV +1 byte stores in target order (T-24107) */
+    poly->u1 = u1 + 1; poly->v2 = v2 + 1; poly->u3 = u3 + 1; poly->v3 = v3 + 1;
+    poly->u2 = u2;
+    poly->v1 = v1;
+    poly->v0 = v0;
+    poly->u0 = u0;
+    func_8009EED0(D_8011ECA0 * 0x400 + 0x14 + D_800E8CA0, poly);
+}
+
+s32 func_801362A4(void) {
+    s32 pad; /* FAKE: unused word above x/y preserves frame size 0x38 and spill offsets 0x2C/0x30 (T-24107) */
+    s32 x;
+    s32 y;
+
+    func_80136A2C();
+    func_8013556C();
+    func_80132ADC();
+    func_801338EC();
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80136700();
+        break;
+    case 1:
+        if (D_80139B00 == 0 && D_80139B04 == 0) {
+            func_80044750(0x204);
+        } else {
+            func_80044750(0x202);
+        }
+        if (D_80139B00 >= 100) {
+            D_80139B00 = 99;
+        }
+        if (D_80139B04 >= 100) {
+            D_80139B04 = 99;
+        }
+        func_8004284C();
+        break;
+    case 2:
+        D_800E6280.unk_1104.u++;
+        if (D_800E6280.unk_1104.u % 15 == 0) {
+            x = D_800E6280.unk_110D;
+            y = x;
+            if (D_80139B00 < y) {
+                y = x; /* FAKE: kills uopt copy-propagation of $v0 across the branch so as1 folds $v0 into $a2 (T-24107) */
+                x = D_80139B00;
+            }
+            if (D_80139B04 < y) {
+                y = D_80139B04;
+            }
+            if (x == D_80139B00 && y == D_80139B04) {
+                func_80044750(0x505);
+                func_80136904(D_80139B00, D_80139B04);
+                func_8004284C();
+            }
+            func_80136904(x, y);
+            if (D_800E6280.unk_110D != 0) {
+                func_80044750(0x505);
+            }
+            D_800E6280.unk_110D++;
+        }
+        if (D_800E6280.unk_F88 & 0x40) {
+            func_80136904(D_80139B00, D_80139B04);
+            if (D_80139B00 == 0 && D_80139B04 == 0) {
+                func_8004284C();
+            } else {
+                func_8004284C();
+                func_8004284C();
+                func_8004284C();
+            }
+        }
+        break;
+    case 3:
+        if (D_80139B00 == 0 && D_80139B04 == 0) {
+            switch (D_800E6280.unk_110D) {
+            case 0:
+                if (func_800460EC() == 2) {
+                    D_800E6280.unk_110D++;
+                }
+                break;
+            case 1:
+                func_80046290(0x01000007, 0x03000015, 0xE);
+                func_80044750(0x300);
+                D_800E6280.unk_110D++;
+                break;
+            case 2:
+                if (func_800460EC() == 4) {
+                    D_800E6280.unk_110D++;
+                }
+                break;
+            case 3:
+                if (func_800460EC() == 2) {
+                    func_80044750(0x505);
+                    func_80136904(1, 0);
+                    func_8004284C();
+                }
+                break;
+            }
+            D_800E6280.unk_1104.u++;
+            if (D_800E6280.unk_1104.u >= 361) {
+                func_80044750(0x7F);
+                func_8004284C();
+                func_8004284C();
+            }
+            if (D_800E6280.unk_F88 & 0x800) {
+                func_80044750(0x7F);
+                func_8004284C();
+                func_8004284C();
+            }
+        } else {
+            func_8004284C();
+        }
+        break;
+    case 4:
+        D_800E6280.unk_1104.u++;
+        if (D_800E6280.unk_F88 & 0x60) {
+            func_80044750(0x7F);
+            func_8004284C();
+        }
+        break;
+    case 5:
+        func_80132C4C();
+        if (D_8013921C == 0) {
+            func_80042808();
+        }
+        break;
+    }
+}
 
 void func_80136700(void) {
     s32 pad; /* FAKE: unused word above poly, puts poly at sp+0x30 as in the original (T-3330 slot rule) */

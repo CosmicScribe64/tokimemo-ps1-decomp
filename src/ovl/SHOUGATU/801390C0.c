@@ -57,7 +57,47 @@ void func_80139304(void) {
     func_8004284C();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: score=17 (120/120 insns). Post-increment on D_800E6280.unk_1104.u++ and nested if match exact length and all branch delay slots; remaining diff is uopt coloring D_80144E0C to $v1 (with 2 in $v0 and D_800E7384 in $a0) instead of $a0 (with 2 and D_800E7384 in $v1). T-24109. */
+void func_80139334(void) {
+    if (D_80144E0C == 2) {
+        D_800E6280.unk_F5F = 7;
+    }
+    func_80137AB4();
+    if (D_80144E0C == 2) {
+        D_8011ED5B &= 0xFF7F;
+    }
+    if (D_80144E0C == 3) {
+        D_80122D20 = 1;
+        D_8011ED5B &= 0xFF7F;
+    } else {
+        D_80122D20 = 0;
+    }
+    if (D_80144E0C == 2 && check_end_k() != 0 &&
+        (*(u8 *)&D_800E6280.unk_03C == 0 || (*(u8 *)&D_800E6280.unk_03C != 0 && func_80046094() == 9))) {
+        k_reset(1);
+        D_80122CE4 = 0;
+        D_80122CF0 = 0;
+        D_8011ED5B &= 0xFF7F;
+        D_800CA2AC = 0;
+        D_800E6280.unk_1104.w = 0;
+    } else if (D_800E6280.unk_1104.u++ >= 0x1AU) {
+        if (D_80144E0C == 3 && check_end_k() != 0 &&
+            (*(u8 *)&D_800E6280.unk_03C == 0 || (*(u8 *)&D_800E6280.unk_03C != 0 && func_80046094() == 9))) {
+            D_80122D20 = 1;
+            D_80144E08 += 1;
+            D_80122CE4 = 0;
+            D_80122CF0 = 0;
+            D_8011ED5B &= 0xFF7F;
+            D_800CA2AC = 0;
+            D_80144E0C = 0;
+            func_8004284C();
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801390C0", func_80139334);
+#endif
 
 void func_80139514(void) {
     func_800438DC(1, 0);

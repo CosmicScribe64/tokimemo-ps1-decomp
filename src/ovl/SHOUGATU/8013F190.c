@@ -594,7 +594,53 @@ void func_80140D80(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_80140DC0);
+s32 func_80140DC0(void) {
+    if (D_800E6280.unk_110A == 0) {
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 = 0x46;
+        func_800847B8(D_800E6280.unk_F5F);
+    }
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        func_80046500();
+        break;
+    case 1:
+        func_80140F54();
+        break;
+    case 2:
+        func_8014102C();
+        break;
+    case 3:
+        func_80141180();
+        break;
+    case 4:
+        func_80141224();
+        break;
+    case 5:
+        func_80141358();
+        break;
+    case 6:
+        func_801413F4();
+        break;
+    case 7:
+        func_801414E0();
+        break;
+    case 8:
+        func_801415C8();
+        break;
+    case 9:
+        func_80141678();
+        break;
+    case 10:
+        func_80046500();
+        break;
+    }
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = D_800B593C;
+    if (((DisplayActor44 *)D_8011ECD0)[96].unk_18 == 0 && ((DisplayActor44 *)D_8011ECD0)[96].unk_08 == 0) {
+        if (++((DisplayActor44 *)D_8011ECD0)[96].unk_16 >= 3) {
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 0;
+        }
+    }
+}
 
 void func_80140F54(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

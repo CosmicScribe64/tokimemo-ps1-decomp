@@ -4,6 +4,8 @@
 
 /* Canonical gnsx stays void; this historical call view reserves the return range. */
 s32 func_80050DFC();
+/* get_now_k (8004E500.c) returns u8; prologue_line_run needs that view (same as xa_wait, T-17018). T-24106 */
+u8 get_now_k(void);
 
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
@@ -79,9 +81,104 @@ void func_80144AD0(void) {
         return;
     }
 }
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", prologue_line_start);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", prologue_line_run);
+void prologue_line_start(void) {
+    /* FAKE: unsigned byte view on D_8014D180 (declared s8 in header) and 1D word view on D_8014DA30 keep index arithmetic in ugen without sll/sra widening. T-24106 */
+    k_sub_reset();
+    if ((D_8014DA04[*(u8 *)&D_8014D180] & 0xF) == 0xF) {
+        gnsx(D_800E6280.unk_0D4);
+    } else if (D_8014DA04[*(u8 *)&D_8014D180] == 0x1E) {
+        gnsx("女子Ａ");
+    } else if (D_8014DA04[*(u8 *)&D_8014D180] == 0x2E) {
+        gnsx("女子Ｂ");
+    } else {
+        gnsx(girl_short_name_table[D_8014DA04[*(u8 *)&D_8014D180]]);
+    }
+    sndisp(D_8014D958[*(u8 *)&D_8014D180], 0, D_8014DA04[*(u8 *)&D_8014D180]);
+    if ((D_8014DA04[*(u8 *)&D_8014D180] & 0xF) != 0xF) {
+        func_80046290(((s32 *)D_8014DA30)[*(u8 *)&D_8014D180 * 2], ((s32 *)D_8014DA30)[*(u8 *)&D_8014D180 * 2 + 1], D_8014DA04[*(u8 *)&D_8014D180]);
+        func_80044750(0x300);
+    }
+    D_800E6280.unk_F5F = D_8014DA04[*(u8 *)&D_8014D180];
+    D_8014D188 = 0;
+    k_sub_disp_start(1);
+}
+
+void prologue_line_run(void) {
+    s32 now;
+    s32 ph;
+    s32 r;
+    u8 *a;
+    u8 *b;
+    u32 t;
+
+    r = 0;
+    now = get_now_k();
+    /* FAKE: pointer views on unk_F62/unk_F61 avoid cvt_pass widening so uopt keeps the scroll fields in caller-saved temps, and redundant `else if (ph != 0)` preserves the branch (same as xa_wait, T-17018). T-24106 */
+    if (*(u8 *)&D_800E6280.unk_F62 & 0x80) {
+        ph = *(u8 *)&D_800E6280.unk_F62 & 0x7F;
+        if (*(u8 *)&D_800E6280.unk_F61 + 2 >= (u32)now) {
+            r = k_disp_inc();
+            now = get_now_k();
+            t = D_800E6280.unk_F61;
+            if (now == t + 3) {
+                if (D_800E6280.unk_F60 >= t + 3) {
+                    k_disp_switch(now, 0);
+                }
+            }
+        } else if (ph == 0) {
+            k_disp_switch(*(u8 *)&D_800E6280.unk_F61, 0);
+            a = get_k_work(D_800E6280.unk_F61 + 1);
+            b = get_k_work(D_800E6280.unk_F61 + 2);
+            *(s16 *)(a + 2) -= 2;
+            *(s16 *)(b + 2) -= 2;
+            D_800E6280.unk_F62 += 1;
+        } else if (ph != 0) {
+            a = get_k_work(*(u8 *)&D_800E6280.unk_F61 + 1);
+            b = get_k_work(D_800E6280.unk_F61 + 2);
+            *(s16 *)(a + 2) -= 2;
+            *(s16 *)(b + 2) -= 2;
+            if (*(s16 *)(a + 2) < 0x33) {
+                *(s16 *)(a + 2) = 0x32;
+                *(s16 *)(b + 2) = 0x42;
+                D_800E6280.unk_F62 -= 1;
+                D_800E6280.unk_F61 += 1;
+                k_disp_switch(D_800E6280.unk_F61 + 2, 1);
+            }
+        }
+    } else {
+        r = k_disp_inc();
+        get_now_k();
+    }
+    if (func_800460EC() & 4) {
+        D_8014D188 = 1;
+    }
+    t = func_80046284();
+    if ((D_800E6280.unk_F5F & 0xF) != 0xF) {
+        if (D_8014D188 != 0) {
+            if (func_800460EC() & 2) {
+                if ((((s32 *)D_8014DA30)[*(u8 *)&D_8014D180 * 2] != ((s32 *)D_8014DB88)[*(u8 *)&D_8014D180 * 2]) && (((s32 *)D_8014DB88)[*(u8 *)&D_8014D180 * 2] != ((s32 *)t)[2])) {
+                    func_80046290(((s32 *)D_8014DB88)[*(u8 *)&D_8014D180 * 2], ((s32 *)D_8014DB88)[*(u8 *)&D_8014D180 * 2 + 1], D_8014DA04[*(u8 *)&D_8014D180]);
+                    func_80044750(0x300);
+                } else if (r == 1) {
+                    D_800E6280.unk_1104.w += 1;
+                    D_800E6280.unk_F62 = 0;
+                }
+            } else {
+                D_800E6280.unk_1104.w = 0;
+            }
+        }
+    } else if (r == 1) {
+        D_800E6280.unk_1104.w += 1;
+        D_800E6280.unk_F62 = 0;
+    } else {
+        D_800E6280.unk_1104.w = 0;
+    }
+    if (D_800E6280.unk_1104.u >= 0x3DU) {
+        D_800E6280.unk_1104.w = 0;
+        D_800E6280.unk_110D += 1;
+    }
+}
 
 void func_80144F98(void) {
     func_80044890(0, 0xC592, 0xC580, 0xD15F, 0xD110, 0xD102);
@@ -500,14 +597,23 @@ void func_80145F74(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80145FB0);
+void func_80145FB0(u32 arg0, s32 arg1) {
+    s32 i;
+    u32 addr[6];
+    /* FAKE: unused local preserves the 0x70 stack frame and places arg0 + 0x18000 spill at sp+0x4C. T-24106 */
+    s32 pad;
 
-/* NON_MATCHING: T-10860, one conversion instruction and six register choices remain. */
-#ifdef NON_MATCHING
+    /* FAKE: single-line loop orders the unrolled stores in as1. T-24106 */
+    for (i = 0; i < 6; i++) { addr[i] = arg0 + i * 0x4000; }
+    func_8004A1A0(addr, 0, 6, 3, 2, arg1 + 0x1E0, -0xA0, -0x78, 8, 8);
+    load_palette((u8 *)(arg0 + 0x18000), 0xF, 1, 2, 0);
+    func_8004B590(arg0 + 0x18000, (s32) D_800E6280.unk_163C);
+    load_palette(D_800E6280.unk_163C, 0xE, 1, 2, 0);
+    D_800E6280.unk_10EC[0] = 0xD;
+    ((SpriteSlot24 *)&D_801220D0)[0].unk_00 = 0x41000000;
+}
+
 void func_801460D8(void) {
-    u8 temp_a1;
-    u32 temp_v1;
-
     switch (D_800E6280.unk_110D) {
     case 0:
         D_8014D180 = 3;
@@ -520,10 +626,10 @@ void func_801460D8(void) {
         D_800E6280.unk_110D += 1;
         break;
     case 1:
-        temp_a1 = ((u8 *)&D_801220E0)[0];
-        if (temp_a1 < 0x81U) {
-            D_801220E0 = D_801220E2 = D_801220E1 = temp_v1 = temp_a1 + 4;
-            func_80057390(temp_v1 & 0xFF, temp_a1);
+        /* FAKE: pointer views on D_801220E0/D_801220E1 give LDA D_801220E1 colour $v0 (folded in ugen), +4 colour $v1, and D_801220E0 colour $a1. T-24106 */
+        if (*(u8 *)&D_801220E0 < 0x81U) {
+            *(u8 *)&D_801220E0 = *(u8 *)&D_801220E1 = D_801220E2 = *(u8 *)&D_801220E0 + 4;
+            set_dec_bri(*(u8 *)&D_801220E0);
         }
         prologue_line_run();
         break;
@@ -551,9 +657,6 @@ void func_801460D8(void) {
     }
     func_800578F4(1);
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_801460D8);
-#endif
 
 void func_80146288(void) {
     if (D_800E6280.unk_110A == 0) {

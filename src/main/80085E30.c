@@ -101,11 +101,11 @@ void Default_Disp(void) {
     func_80047560();
 }
 
-/* NON_MATCHING: T-17022, 24 differing lines; the original keeps the two record sums in $a0/$a1 and the list entry in $a2 (uopt ranges), the draft has ugen temporaries ($t) and the entry in $a0; naming them as locals gives those registers but 8 bytes too much frame */
-#ifdef NON_MATCHING
 s32 func_8008647C(void) {
+    s32 sum1;
+    s32 sum2;
     s32 cur;
-    s32 list[16];
+    s32 list[14]; /* FAKE: 14-word list keeps list at 0x6C($sp) in the 0xB0 frame alongside sum1/sum2/cur. T-24111 */
     u32 n;
     s32 i;
     s32 best;
@@ -133,7 +133,10 @@ s32 func_8008647C(void) {
             t = func_8008667C(best) & 0xFF;
             if (t >= func_8008667C(list[i])) {
                 cur = list[i];
-                if (D_800E6280.unk_1BC[best].unk_06 + D_800E6280.unk_1BC[best].unk_02 < D_800E6280.unk_1BC[cur].unk_06 + D_800E6280.unk_1BC[cur].unk_02) {
+                /* FAKE: explicit (s32) cast on unk_06 evaluates unk_06 before unk_02 while keeping the sum in $a0/$a1. T-24111 */
+                sum1 = D_800E6280.unk_1BC[best].unk_02 + (s32)D_800E6280.unk_1BC[best].unk_06;
+                sum2 = D_800E6280.unk_1BC[cur].unk_02 + (s32)D_800E6280.unk_1BC[cur].unk_06;
+                if (sum1 < sum2) {
                     bscore = score;
                     best = cur;
                 }
@@ -142,9 +145,6 @@ s32 func_8008647C(void) {
     }
     return best;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80085E30", func_8008647C);
-#endif
 
 /* FAKE: same-line swap and pointer read retain the original halfword load order. T-9550 */
 s32 func_80086640(void)

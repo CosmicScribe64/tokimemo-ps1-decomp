@@ -345,7 +345,29 @@ void func_80103584(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801024B0", func_801035BC);
+/* FAKE: s32 return type (implicit int from forward call at line 85) keeps $v0 live at epilogue, and unused pad local places tbl at sp+0x28 in the 0xE0 frame (T-3330); T-24105 */
+s32 func_801035BC(void) {
+    s32 pad;
+    s16 i;
+    EvFnTbl44 tbl;
+
+    tbl = D_801228E0;
+    func_80078950("%d\n", D_800B1AF6);
+    tbl.f[D_800B1AF6](0x80);
+    if (tbl.f[D_800B1AF6] == func_8004C984) {
+        for (i = 0; i < 8; i++) {
+            ((DisplayActor44 *)D_800E9620)[i + 98].unk_07 = ((DisplayActor44 *)D_800E9620)[96].unk_07;
+        }
+        if (((DisplayActor44 *)D_800E9620)[96].unk_07 < 9) {
+            for (i = 0; i < 8; i++) {
+                ((DisplayActor44 *)D_800E9620)[i + 98].unk_03 &= 0x7F;
+            }
+        }
+    }
+    if ((D_800B1AF6 >= 0x11) && (D_800B1AF6 < 0x14)) {
+        func_80103774();
+    }
+}
 
 void func_80103714(void) {
     func_80015D28(0x3D, 0x801B0000, 0x84B3);

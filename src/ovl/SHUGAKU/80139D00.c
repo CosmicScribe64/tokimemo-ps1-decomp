@@ -1,5 +1,8 @@
+#define SHUGAKU_OVERRIDE_func_801386C4 /* s32 return view occupies $v0 after call so unk_F5F promotes to $v1 (T-24108) */
 #include "common.h"
 #include "ovl/SHUGAKU.h"
+
+s32 func_801386C4(void);
 
 void func_80139D00(void) {
     D_8013CAF0 = 0x801E20DC;
@@ -107,7 +110,25 @@ void func_8013A1B4(void) {
     func_80042940(0x22);
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_8013A1D4);
+/* FAKE: T-24108, dead entry read of unk_F5F satisfies cvt_pass's entry condition; dead s32 result from func_801386C4 takes the sp+0x2C slot (placing temp_a0 at sp+0x2B) and blocks $v0 after the call so unk_F5F is promoted to $v1. */
+void func_8013A1D4(void) {
+    s32 pad;
+    u8 temp_a0;
+
+    pad = D_800E6280.unk_F5F;
+    pad = func_801386C4();
+    if (D_800E6280.unk_F5F == 2) {
+        temp_a0 = get_g_zyotai_h(D_800E6280.unk_F5F);
+        if ((D_800CA2E0 == 7) && (D_80122CDC != 0)) {
+            func_80083440(temp_a0);
+        }
+        if (D_800CA2E0 == 6) {
+            if (D_80122CDC == 0) {
+                func_80083440(temp_a0);
+            }
+        }
+    }
+}
 
 void func_8013A274(void) {
     if (D_800E6280.unk_F5F == 2) {

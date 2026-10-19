@@ -20,7 +20,9 @@ void func_80135430(void);
 void func_80135CC8(void);
 void func_80136380(void);
 void func_80139018(void);
+#ifndef SHUGAKU_OVERRIDE_func_801386C4
 void func_801386C4(void);
+#endif
 
 void func_80134970(void);
 #ifndef SHUGAKU_OVERRIDE_func_801343B0

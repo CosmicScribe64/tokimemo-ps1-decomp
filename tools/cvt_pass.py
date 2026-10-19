@@ -419,26 +419,34 @@ def _constant_first(insns, rewritten):
     `k == cvt(D)`; without it uopt keeps `D == k`. The order is visible when uopt keeps the
     constant in a register (`bne v1,v0` vs `bne v0,v1`). Operands are recognised in uopt's
     output: a LOD of a rewritten location, or a register LOD of a register that the procedure
-    loads only by an RLOD of a rewritten location; constants are LDC records or registers
-    loaded only by RLDC.
+    loads only by an RLOD of a rewritten location (or also by an outgoing-call `STR R` before
+    `RPAR` when compared against a callee-saved constant register `r >= 16`); constants are
+    LDC records or registers loaded only by RLDC.
     """
     out = list(insns)
     for start, end in _procedures(out):
         defs = {}
-        for i in out[start:end]:
+        rpar_regs = set()
+        for idx in range(start, end):
+            i = out[idx]
             if i.opc == OP["rlod"]:
                 defs.setdefault(i.lexlev, set()).add("var" if i.location() in rewritten else "other")
             elif i.opc == OP["rldc"]:
                 defs.setdefault(i.words[1], set()).add("const")
             elif i.opc == OP["str"] and i.mtype == MT_R:
-                defs.setdefault(i.words[3], set()).add("other")
+                if idx + 1 < end and out[idx + 1].opc == OP["rpar"]:
+                    rpar_regs.add(i.words[3])
+                else:
+                    defs.setdefault(i.words[3], set()).add("other")
         var_regs = {r for r, kinds in defs.items() if kinds == {"var"}}
         const_regs = {r for r, kinds in defs.items() if kinds == {"const"}}
 
-        def is_var(i):
+        def is_var(i, const):
             if i.opc != OP["lod"]:
                 return False
             if i.mtype == MT_R:
+                if i.words[3] in rpar_regs and not (const.opc == OP["lod"] and const.mtype == MT_R and const.words[3] >= 16):
+                    return False
                 return i.words[3] in var_regs
             return i.location() in rewritten
 
@@ -446,7 +454,7 @@ def _constant_first(insns, rewritten):
             return i.opc == OP["ldc"] or (i.opc == OP["lod"] and i.mtype == MT_R and i.words[3] in const_regs)
 
         for k in range(start + 2, end):
-            if out[k].opc in (OP["equ"], OP["neq"]) and is_var(out[k - 2]) and is_const(out[k - 1]):
+            if out[k].opc in (OP["equ"], OP["neq"]) and is_var(out[k - 2], out[k - 1]) and is_const(out[k - 1]):
                 out[k - 2], out[k - 1] = out[k - 1], out[k - 2]
     return out
 

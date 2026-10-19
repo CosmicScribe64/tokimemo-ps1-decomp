@@ -183,14 +183,13 @@ void menu_bar_show(menu)
     }
 }
 
-/* NON_MATCHING: T-12050, 24 differing listing rows; array homes are eight bytes too high. */
-#ifdef NON_MATCHING
 void x_taku_menu_set(s32 menu, s32 count)
 {
+    s32 pad; /* FAKE: unused local shifts array homes down by 8 bytes within the 0x70 frame. T-24111 */
+    s32 i;
     s16 x[4];
     s16 width[4];
     s16 height[4];
-    s32 i;
 
     for (i = 0; i < count; i++) {
         x[i] = -120;
@@ -203,9 +202,6 @@ void x_taku_menu_set(s32 menu, s32 count)
     }
     menu_set(menu, 2, x, D_800B40F0, width, height);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", x_taku_menu_set);
-#endif
 
 void x_taku_string_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     set_kanji_string(-0x78, 0x32, 0, arg0, 0);

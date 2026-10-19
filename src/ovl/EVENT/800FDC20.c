@@ -312,9 +312,134 @@ void func_800FEA38(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FEAE8);
+s32 func_800FEAE8(void) {
+    s16 i;
+    s16 hit;
+    s32 found;
+    EvEnt ent;
+    EvShorts82 tbl;
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FEDC8);
+    ent = D_80121A2C;
+    tbl = D_80121A34;
+    if (((EventFrameCounter *)&D_800B1AF0)->u == 0) {
+        func_80015C34(ent.a, ent.b, 0xF);
+        func_800433D0(0x71);
+        func_800433D0(0x300);
+        ((EventFrameCounter *)&D_800B1AF0)->u += 1;
+    } else if (func_80015A0C() == 9) {
+        func_80011DFC();
+        func_800433D0(0x202);
+    } else if (((EventStateView *)&D_800B0860)->unk_F0C & 0x400040) {
+        func_80011DFC();
+        func_800433D0(0xB4);
+        func_800433D0(0x202);
+    } else {
+        found = 0;
+        hit = 0;
+        for (i = 0; i < 41; i++) {
+            if (((EventFrameCounter *)&D_800B1AF0)->u >= tbl.v[i][0] && tbl.v[i][1] >= ((EventFrameCounter *)&D_800B1AF0)->u) {
+                found = 1;
+                if (i == 6) {
+                    D_800EAFB8 = 2;
+                    hit = 1;
+                } else if (i == 0xC) {
+                    D_800EAFB8 = 2;
+                    hit = 1;
+                } else if (i == 0x16) {
+                    D_800EAFB8 = 0;
+                    hit = 1;
+                } else if (i == 0x17) {
+                    D_800EAFB8 = 1;
+                    hit = 1;
+                } else if (i == 0x18) {
+                    D_800EAFB8 = 2;
+                    hit = 1;
+                } else if (i == 0x19) {
+                    D_800EAFB8 = 2;
+                    hit = 1;
+                } else if (i == 0x1A) {
+                    D_800EAFB8 = 0;
+                    hit = 1;
+                } else if (i == 0x1D) {
+                    D_800EAFB8 = 0;
+                    hit = 1;
+                } else if (i == 0x21) {
+                    D_800EAFB8 = 0;
+                    hit = 1;
+                } else if (i == 0x24) {
+                    D_800EAFB8 = 0;
+                    hit = 1;
+                } else if (i == 0x28) {
+                    D_800EAFB8 = 0;
+                    hit = 1;
+                }
+            }
+        }
+        if (found == 0) {
+            D_800EAFB8 = 3;
+        } else if (hit == 0) {
+            func_800FEDC8();
+        }
+    }
+    if (func_80015A64() & 4) {
+        ((EventFrameCounter *)&D_800B1AF0)->u += 1;
+    }
+}
+
+s32 func_800FEDC8(void) {
+    s16 i;
+    s32 max;
+    s32 max_idx;
+    s32 avg;
+    s32 q;
+
+    if (func_80015A64() & 4) {
+        func_800458E0();
+    }
+    max = D_800F19D0[0];
+    max_idx = 0;
+    if (max < D_800F19D0[1]) {
+        max = D_800F19D0[1];
+        max_idx = 1;
+    }
+    if (max < D_800F19D0[2]) {
+        max = D_800F19D0[2];
+        max_idx = 2;
+    }
+    if (max < D_800F19D0[3]) {
+        max = D_800F19D0[3];
+        max_idx = 3;
+    }
+    max = 0;
+    for (i = 0; i < 4; i++) {
+        if (i != max_idx) {
+            /* FAKE: tautology in inner block gives max_idx a second loop-block reference so uopt assigns $a1 to max_idx and $a2 to &D_800F19D0. */
+            if (max_idx == max_idx) {
+            }
+            if (max < D_800F19D0[i]) {
+                max = D_800F19D0[i];
+            }
+        }
+    }
+    avg = (D_800F19D0[0] + D_800F19D0[1] + D_800F19D0[2] + D_800F19D0[3]) / 4;
+    q = avg; /* FAKE: dead copy keeps avg in the pre-branch block so uopt does not sink the sum/divide into the if body. */
+    if ((D_800EAFB8 == 0) || !(D_800B1AE4 & 3)) {
+        if (avg == 0) {
+            D_800EAFB8 = 3;
+        } else {
+            q = avg / 16;
+            if (q == 0) {
+                D_800EAFB8 = 3;
+            } else if (q == 1) {
+                D_800EAFB8 = 2;
+            } else if (q == 2) {
+                D_800EAFB8 = 1;
+            } else if (q >= 3) {
+                D_800EAFB8 = 0;
+            }
+        }
+    }
+}
 
 s32 func_800FEF74(void) {
     s16 i;

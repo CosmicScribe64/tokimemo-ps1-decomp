@@ -284,6 +284,52 @@ class Post(unittest.TestCase):
         cp.post(insns, {(S, 6, 0, 1)})
         self.assertEqual(names(insns), ["lodL6", "rlodL6", "lodJ7", "lodJ6"])
 
+    def test_constant_first_ignores_rpar_register_store(self):
+        # Outgoing call argument store (`str mt=MT_R` followed by `rpar`) into r5 ($a1)
+        # does not disqualify r5 from var_regs, so `r5 == r18` swaps to `r18 == r5` (T-24103).
+        insns = proc(
+            rec("rlod", J, S, 5, 6, 1, 0),
+            rec("rldc", J, 0, 0, 18, 4, 0, 0, 37),
+            lod(J, 0, 4, 5, mtype=cp.MT_R),
+            lod(J, 0, 4, 18, mtype=cp.MT_R),
+            op("equ"),
+            ldc(120),
+            st(J, 0, 4, 5, mtype=cp.MT_R),
+            rec("rpar", J, 2, 0, 0, 4, 5),
+        )
+        out = cp.post(insns, {(S, 6, 0, 1)})
+        self.assertEqual([out[3].words[3], out[4].words[3]], [18, 5])
+
+    def test_constant_first_rpar_register_with_caller_saved_const_keeps_order(self):
+        # When r5 ($a1) has an rpar store and the constant is in a caller-saved register
+        # (r3 / $v1, < 16), the order is kept as `r5 == r3` (func_80117D80).
+        insns = proc(
+            rec("rlod", J, S, 5, 6, 1, 0),
+            rec("rldc", J, 0, 0, 3, 4, 0, 0, 1),
+            lod(J, 0, 4, 5, mtype=cp.MT_R),
+            lod(J, 0, 4, 3, mtype=cp.MT_R),
+            op("equ"),
+            ldc(120),
+            st(J, 0, 4, 5, mtype=cp.MT_R),
+            rec("rpar", J, 2, 0, 0, 4, 5),
+        )
+        out = cp.post(insns, {(S, 6, 0, 1)})
+        self.assertEqual([out[3].words[3], out[4].words[3]], [5, 3])
+
+    def test_constant_first_non_rpar_register_store_disqualifies(self):
+        insns = proc(
+            rec("rlod", J, S, 5, 6, 1, 0),
+            rec("rldc", J, 0, 0, 18, 4, 0, 0, 37),
+            lod(J, 0, 4, 5, mtype=cp.MT_R),
+            lod(J, 0, 4, 18, mtype=cp.MT_R),
+            op("equ"),
+            ldc(120),
+            st(J, 0, 4, 5, mtype=cp.MT_R),
+            fjp(),
+        )
+        out = cp.post(insns, {(S, 6, 0, 1)})
+        self.assertEqual([out[3].words[3], out[4].words[3]], [5, 18])
+
 
 @unittest.skipUnless(os.path.exists("/opt/ido/5.3/cc"), "IDO 5.3 not installed")
 class IdoIntegration(unittest.TestCase):

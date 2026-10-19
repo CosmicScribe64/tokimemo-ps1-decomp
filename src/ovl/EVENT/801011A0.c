@@ -360,7 +360,28 @@ void func_80102288(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801011A0", func_801022C0);
+void func_801022C0(void) {
+    /* FAKE: unused local reserves the 4 bytes above tbl in the 0x108 frame (T-3330 layout); T-24105 */
+    s32 pad;
+    s16 i;
+    EvFnTbl53 tbl;
+
+    tbl = D_801225A8;
+    func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);
+    tbl.f[D_800B1AF6](0x80);
+    if ((D_800B1AF6 == 0xE) && !(D_800B1AE4 & 1)) {
+        if (D_800F19AB == 0x80) {
+            D_800F19AB = 0x60;
+        } else {
+            D_800F19AB = 0x80;
+        }
+        ((DisplayActor44 *)D_800E9620)[96].unk_07 = D_800F19AB;
+        ((DisplayActor44 *)D_800E9620)[97].unk_07 = D_800F19AB;
+        for (i = 0; i < 6; i++) {
+            ((Rec24 *)D_800EC190)[i + 2].unk_14 = ((Rec24 *)D_800EC190)[i + 2].unk_15 = ((Rec24 *)D_800EC190)[i + 2].unk_16 = D_800F19AB;
+        }
+    }
+}
 
 void func_801023F4(void) {
     func_80015D28(0x3D, 0x801B0000, 0x838B);

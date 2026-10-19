@@ -20570,3 +20570,34 @@ Created [[tickets/T-24108-ending-shugaku-date-main-near-misses]], added its card
 
 ## [2026-10-18] build | T-24099, T-24100, T-24101 -> Done (+9 functions, +7,992 B; DATE/80132000.c at 100.0%)
 Completed, reviewed against `CODING_STANDARDS.md`, and verified [[tickets/T-24099-date-80132000-final-six]] (+6 functions / +6,032 B in `src/ovl/DATE/80132000.c`: `func_80132000` 648 B via leading-nop/alabel support in `tools/trailing_pad.py`, `func_80137154` 1,896 B with a `keepproof.py` necessity proof in `config/migrate_globals.txt`, `func_8013C190` 640 B, `func_8013D5FC` 692 B, `func_8013FAD0` 668 B, `func_8013FD6C` 1,488 B — bringing `src/ovl/DATE/80132000.c` to 100.0% matched), [[tickets/T-24100-taiiku-data-defs-and-islands]] (+1 function / +1,036 B in `src/ovl/TAIIKU/80142240.c`: `func_80142400` + `D_8014A130[3]` in C), and [[tickets/T-24101-gyozi-shougatu-valen-data-island-siblings]] (+2 functions / +924 B + 3 `.data` islands in `GYOZI/801418B0`, `SHOUGATU/8013F190`, `VALEN/80132760`: `GYOZI:func_801428EC` 416 B, `SHOUGATU:func_80140314` 508 B). Created and dispatched [[tickets/T-24109-shougatu-gyozi-valen-master-near-misses]], [[tickets/T-24110-option-80132000-and-801389a0-sweep]], and [[tickets/T-24111-main-near-misses-sweep]] (`In Progress` on [[kanban]]).
+
+## [2026-10-18] build | T-24103, T-24105..T-24111 -> Done (+42 functions, +26,360 B; EVENT overlay at 100.0%, 6,646/6,952 functions / 86.30% code)
+
+Completed, reviewed against `CODING_STANDARDS.md`, and verified with the full CI check suite (`check_headers.py include src`, `test_check_headers.py`, `test_sync_protos.py`, `test_cvt_pass.py` 45/45, `configure.py`, `ninja` 27/27 `.ok` SHA1 checks, `report_objs.py` + `objdiff-cli` 437/437 units):
+- [[tickets/T-24103-cvt-pass-rpar-and-event-8011b848]] (`Done`, `tools/cvt_pass.py` `_constant_first` `rpar_regs` refinement + `tools/test_cvt_pass.py` + 6 functions / +5,896 B in `src/ovl/EVENT/8010FE10.c` — also fixes CI build of `DATE:func_8013FD6C`):
+  - `EVENT:func_8011B848` (1,460 B), `EVENT:func_80114C5C` (1,732 B), `EVENT:func_8011767C` (916 B), `EVENT:func_80118B4C` (608 B), `EVENT:func_80119110` (608 B), `EVENT:func_8011B60C` (572 B): `MATCH`
+- [[tickets/T-24105-event-final-eight]] (`Done`, +8 functions / +4,608 B — **`EVENT` overlay 100.0% matched, 456/456 functions, 0 `INCLUDE_ASM`**):
+  - `EVENT:func_800FC040` (324 B in `src/ovl/EVENT/800FBBF0.c` — `800FBBF0.c` 100.0%): `MATCH`
+  - `EVENT:func_800FEAE8` (736 B) and `EVENT:func_800FEDC8` (428 B in `src/ovl/EVENT/800FDC20.c` — `800FDC20.c` 100.0%): `MATCH`
+  - `EVENT:func_801022C0` (308 B in `src/ovl/EVENT/801011A0.c` — `801011A0.c` 100.0%): `MATCH`
+  - `EVENT:func_801035BC` (344 B in `src/ovl/EVENT/801024B0.c` — `801024B0.c` 100.0%): `MATCH`
+  - `EVENT:func_8010F55C` (496 B) and `EVENT:func_8010F74C` (1,732 B in `src/ovl/EVENT/8010BB90.c` — `8010BB90.c` 100.0%): `MATCH`
+  - `EVENT:func_80114B0C` (240 B in `src/ovl/EVENT/8010FE10.c` — `8010FE10.c` 100.0%): `MATCH`
+- [[tickets/T-24106-name-ent-remaining-19]] (`Done`, +8 functions / +4,772 B linked / +4,988 B asm in `src/ovl/NAME_ENT/` — **`src/ovl/NAME_ENT/80144AD0.c` 100.0% matched**):
+  - `NAME_ENT:prologue_line_start` (328 B), `NAME_ENT:prologue_line_run` (780 B), `NAME_ENT:func_80145FB0` (296 B), `NAME_ENT:func_801460D8` (432 B) in `src/ovl/NAME_ENT/80144AD0.c`: `MATCH`
+  - `NAME_ENT:func_8013B994` (380 B), `NAME_ENT:func_8013BB24` (756 B), `NAME_ENT:func_8013CB44` (900 B), `NAME_ENT:func_8013DF88` (900 B) in `src/ovl/NAME_ENT/80139740.c`: `MATCH`
+- [[tickets/T-24107-etc-taco-ennichi-kangei-geko-near-misses]] (`Done`, +4 functions / +3,044 B):
+  - `ETC:func_80141ABC` (300 B in `src/ovl/ETC/80140F50.c`): `MATCH`
+  - `TACO:func_80134A18` (884 B in `src/ovl/TACO/80134930.c` via `MAIN_API_OVERRIDE_D_80122760` `TacoLightBlock`): `MATCH`
+  - `EN_NICHI:func_80135FBC` (744 B) and `EN_NICHI:func_801362A4` (1,116 B in `src/ovl/EN_NICHI/80132000.c`): `MATCH`
+- [[tickets/T-24108-ending-shugaku-date-main-near-misses]] (`Done`, +6 functions / +2,388 B):
+  - `SHUGAKU:func_8013A1D4` (160 B in `src/ovl/SHUGAKU/80139D00.c` — **`80139D00.c` 100.0% matched**): `MATCH`
+  - `DATE:func_8014A8FC` (1,140 B in `src/ovl/DATE/8014A1B0.c` — **`8014A1B0.c` 100.0% matched**): `MATCH`
+  - `ENDING:func_80134B18` (208 B) and `ENDING:func_80134C2C` (244 B in `src/ovl/ENDING/80133C10.c`): `MATCH`
+  - `main:func_800754C0` (244 B) and `main:func_80077CA8` (392 B in `src/main/80075320.c`): `MATCH`
+- [[tickets/T-24109-shougatu-gyozi-valen-master-near-misses]] (`Done`, +1 function / +404 B + 2 improved `#ifdef NON_MATCHING` guards):
+  - `SHOUGATU:func_80140DC0` (404 B in `src/ovl/SHOUGATU/8013F190.c`): `MATCH`
+- [[tickets/T-24110-option-80132000-and-801389a0-sweep]] (`Done`, +2 functions / +1,892 B + corrected `OPTION:func_801394F4` guard):
+  - `OPTION:func_8013554C` (1,112 B) and `OPTION:func_80136C30` (780 B in `src/ovl/OPTION/80132000.c`): `MATCH`
+- [[tickets/T-24111-main-near-misses-sweep]] (`Done`, +7 functions / +3,140 B in `src/main/`):
+  - `main:func_8007B144` (368 B in `src/main/80079B10.c`), `main:x_taku_menu_set` (340 B in `src/main/8004F870.c`), `main:func_800460FC` (376 B in `src/main/800451D0.c`), `main:func_80054140` (324 B in `src/main/80053650.c`), `main:func_8008647C` (452 B in `src/main/80085E30.c`), `main:func_80062210` (468 B in `src/main/80061710.c`), `main:func_8005CC40` (812 B in `src/main/8005A0B0.c`): `MATCH`

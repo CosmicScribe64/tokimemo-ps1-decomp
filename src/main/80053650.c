@@ -294,7 +294,39 @@ s32 func_80054108(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054140);
+s32 func_80054140(void) {
+    GameState *g = &D_800E6280;
+
+    g->unk_1120 += 1;
+    if (g->unk_035 != 0) {
+        if (g->unk_111C == 0) {
+            g->unk_1115 = 0;
+            g->unk_1118 = g->unk_111C;
+            if (func_80054AF4(g->unk_111C) == 1) {
+                D_800E8BEE = 1;
+                func_80053CC0();
+            } else {
+                g->unk_111D += 1;
+                if (g->unk_111D >= 3U) {
+                    D_800E8BEE = 0;
+                    func_80053CC0();
+                }
+            }
+        } else if (g->unk_111C < 0xFU) {
+            g->unk_1118 = g->unk_111C;
+            if (func_80054AF4(g->unk_1118) == 1) {
+                D_800E7D14[g->unk_1118] = 1;
+            } else {
+                D_800E7D14[g->unk_1118] = 0;
+            }
+            g->unk_111C += 1;
+        } else {
+            g->unk_035 = 0;
+            g->unk_1115 = 2;
+        }
+    }
+    return (s32) g->unk_1115;
+}
 
 u8 func_80054284(void) {
     D_800E6280.unk_1120 += 1;

@@ -251,6 +251,7 @@ typedef struct NameProfileFlags {
 #ifndef OVL_NAME_ENT_T10860_FORWARD_H
 #define OVL_NAME_ENT_T10860_FORWARD_H
 void func_80145EA4(void);
+void func_80145FB0(u32 arg0, s32 arg1);
 void func_801478E0(void);
 #endif
 

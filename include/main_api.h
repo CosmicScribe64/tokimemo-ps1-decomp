@@ -677,6 +677,7 @@ extern u8 D_800B3778[13][7];
 extern s32 D_800B37D4[];
 extern u8 *club_name_table[];
 extern s32 D_800B394C[];
+extern s32 D_800B39C4[];
 extern s32 D_800B3A3C[];
 extern s32 D_800B3B9C[];
 extern u8 D_800B3C6C;
@@ -1710,7 +1711,9 @@ extern s32 D_80122754;
 #endif
 extern s32 D_80122758;
 extern s32 D_8012275C;
+#ifndef MAIN_API_OVERRIDE_D_80122760
 extern s32 D_80122760;
+#endif
 #ifndef MAIN_API_OVERRIDE_D_80122764
 extern s32 D_80122764;
 #endif

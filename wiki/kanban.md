@@ -49,13 +49,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24111-main-near-misses-sweep|T-24111 Close low-score near misses in main (80043510, 800451D0, 8004F870, 80053650, 80058D20, 8005A0B0, 80061710, 80079B10, 80085E30)]]
-- [ ] [[tickets/T-24110-option-80132000-and-801389a0-sweep|T-24110 Close low-score near misses in OPTION/80132000.c and OPTION/801389A0.c]]
-- [ ] [[tickets/T-24109-shougatu-gyozi-valen-master-near-misses|T-24109 Close low-score near misses in SHOUGATU, GYOZI, VALEN, and MASTER]]
-- [ ] [[tickets/T-24108-ending-shugaku-date-main-near-misses|T-24108 Close top live-scored near misses in ENDING/80133C10, ENDING/801396E0, SHUGAKU/80139D00, DATE/8014A1B0, and main]]
-- [ ] [[tickets/T-24107-etc-taco-ennichi-kangei-geko-near-misses|T-24107 Close top live-scored near misses in ETC/80140F50, KANGEI, GEKO, EN_NICHI, and TACO]]
-- [ ] [[tickets/T-24106-name-ent-remaining-19|T-24106 Close out the remaining 19 unmatched functions of the NAME_ENT overlay]]
-- [ ] [[tickets/T-24105-event-final-eight|T-24105 Close out the final 8 unmatched functions of the EVENT overlay]]
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24078-etc-two-poly-renderer|T-24078 Recover ETC two-slot polygon renderer]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
@@ -120,6 +113,13 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24111-main-near-misses-sweep|T-24111 Close low-score near misses in main (80043510, 800451D0, 8004F870, 80053650, 80058D20, 8005A0B0, 80061710, 80079B10, 80085E30)]]
+- [ ] [[tickets/T-24110-option-80132000-and-801389a0-sweep|T-24110 Close low-score near misses in OPTION/80132000.c and OPTION/801389A0.c]]
+- [ ] [[tickets/T-24109-shougatu-gyozi-valen-master-near-misses|T-24109 Close low-score near misses in SHOUGATU, GYOZI, VALEN, and MASTER]]
+- [ ] [[tickets/T-24108-ending-shugaku-date-main-near-misses|T-24108 Close top live-scored near misses in ENDING/80133C10, ENDING/801396E0, SHUGAKU/80139D00, DATE/8014A1B0, and main]]
+- [ ] [[tickets/T-24107-etc-taco-ennichi-kangei-geko-near-misses|T-24107 Close top live-scored near misses in ETC/80140F50, KANGEI, GEKO, EN_NICHI, and TACO]]
+- [ ] [[tickets/T-24106-name-ent-remaining-19|T-24106 Close out the remaining 19 unmatched functions of the NAME_ENT overlay]]
+- [ ] [[tickets/T-24105-event-final-eight|T-24105 Close out the final 8 unmatched functions of the EVENT overlay]]
 - [ ] [[tickets/T-24099-date-80132000-final-six|T-24099 Close out remaining DATE 80132000.c functions (func_80132000, func_80137154, func_8013C190, func_8013D5FC, func_8013FAD0, func_8013FD6C)]]
 - [ ] [[tickets/T-24100-taiiku-data-defs-and-islands|T-24100 Convert TAIIKU .data INCLUDE_RODATA definitions to C and close TAIIKU/OPTION near misses]]
 - [ ] [[tickets/T-24101-gyozi-shougatu-valen-data-island-siblings|T-24101 Add .data islands for GYOZI/801418B0, SHOUGATU/8013F190, and VALEN/80132760 and match 5-function sibling cluster (4,404 B)]]
