@@ -125,7 +125,80 @@ void func_80139DE0(void) {
     func_8004DE1C();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: C draft for T-24137 (switch-triple pattern of SHOUGATU func_8013EE30).
+ * FAKE: the switch discriminant goes through the base of D_800F5AAE
+ * ((&D_800F5AAE)[0x821] = D_800F62CF) so the byte store stays before the load;
+ * same idiom as func_801381DC (as1 keeps the store before a same-base load).
+ * Real source unknown. */
+void func_80139E4C(void) {
+    func_80137524();
+    D_800F5AAE &= ~8;
+    D_800F5AAE |= 4;
+    switch ((&D_800F5AAE)[0x821]) {
+    case 0:
+        D_8014718C = D_801462C0;
+        D_80147190 = D_801462F4;
+        D_80147194 = D_80146328;
+        break;
+    case 1:
+        D_8014718C = D_801462D4;
+        D_80147190 = D_80146308;
+        D_80147194 = D_8014633C;
+        break;
+    case 2:
+        D_8014718C = D_801462C8;
+        D_80147190 = D_801462FC;
+        D_80147194 = D_80146330;
+        break;
+    case 3:
+        D_8014718C = D_801462CC;
+        D_80147190 = D_80146300;
+        D_80147194 = D_80146334;
+        break;
+    case 4:
+        D_8014718C = D_801462E4;
+        D_80147190 = D_80146318;
+        D_80147194 = D_8014634C;
+        break;
+    case 5:
+        D_8014718C = D_801462D8;
+        D_80147190 = D_8014630C;
+        D_80147194 = D_80146340;
+        break;
+    case 6:
+        D_8014718C = D_801462DC;
+        D_80147190 = D_80146310;
+        D_80147194 = D_80146344;
+        break;
+    case 7:
+        D_8014718C = D_801462D0;
+        D_80147190 = D_80146304;
+        D_80147194 = D_80146338;
+        break;
+    case 8:
+        D_8014718C = D_801462BC;
+        D_80147190 = D_801462F0;
+        D_80147194 = D_80146324;
+        break;
+    case 9:
+        D_8014718C = D_801462E0;
+        D_80147190 = D_80146314;
+        D_80147194 = D_80146348;
+        break;
+    default:
+        D_8014718C = D_801462EC;
+        D_80147190 = D_80146320;
+        D_80147194 = D_80146354;
+        break;
+    }
+    D_80147198 = 1;
+    D_8014719C = 0;
+    func_8004DE1C();
+}
+#else
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80139920", func_80139E4C);
+#endif
 
 void func_8013A104(void) {
     func_8004DEAC(D_800F5AB1);

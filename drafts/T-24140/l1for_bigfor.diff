@@ -1,0 +1,147 @@
+-10000095  ; b 12a4 <func_80133010+0x294>
++10000099  ; b 12b4 <func_80133010+0x2a4>
+-14610092  ; bne v1,at,12a4 <func_80133010+0x294>
++14610096  ; bne v1,at,12b4 <func_80133010+0x2a4>
++3c0d8012  ; lui t5,0x0
++3c188012  ; lui t8,0x0
++25ad1750  ; addiu t5,t5,0
++ac2fd300  ; sw t7,0(at)
++27180651  ; addiu t8,t8,1
++01b8082b  ; sltu at,t5,t8
+-3c0d8012  ; lui t5,0x0
++1420001f  ; bnez at,110c <func_80133010+0xfc>
++24420650  ; addiu v0,v0,0
+-ac2fd300  ; sw t7,0(at)
+-25ad1750  ; addiu t5,t5,0
+-24420650  ; addiu v0,v0,0
+-30b800ff  ; andi t8,a1,0xff
+-03002825  ; move a1,t8
++30b900ff  ; andi t9,a1,0xff
++03202825  ; move a1,t9
+-3c11801c  ; lui s1,0x801c
+-3631bef0  ; ori s1,s1,0xbef0
++3c12801c  ; lui s2,0x801c
+-24120004  ; li s2,4
++24110004  ; li s1,4
++3652bef0  ; ori s2,s2,0xbef0
+-30b900ff  ; andi t9,a1,0xff
+-03202825  ; move a1,t9
+-02202025  ; move a0,s1
++30ae00ff  ; andi t6,a1,0xff
++01c02825  ; move a1,t6
++02402025  ; move a0,s2
+-1612fff7  ; bne s0,s2,1164 <func_80133010+0x154>
++1611fff7  ; bne s0,s1,1174 <func_80133010+0x164>
+-240eff60  ; li t6,-160
+-a42e0676  ; sh t6,0(at)
++240fff60  ; li t7,-160
++a42f0676  ; sh t7,38(at)
+-240fff88  ; li t7,-120
+-a42f067a  ; sh t7,0(at)
+-3c188012  ; lui t8,0x8012
+-93180653  ; lbu t8,1619(t8)
++2418ff88  ; li t8,-120
++a438067a  ; sh t8,42(at)
++3c198012  ; lui t9,0x0
++93390653  ; lbu t9,3(t9)
+-37190080  ; ori t9,t8,0x80
+-a0390653  ; sb t9,1619(at)
++372e0080  ; ori t6,t9,0x80
++a02e0653  ; sb t6,3(at)
+-240e0008  ; li t6,8
+-a02e0651  ; sb t6,0(at)
++240f0008  ; li t7,8
++a02f0651  ; sb t7,1(at)
+-240f000a  ; li t7,10
+-a42f06ac  ; sh t7,0(at)
++2418000a  ; li t8,10
++a43806ac  ; sh t8,92(at)
++3c018012  ; lui at,0x0
++2419ff60  ; li t9,-160
++a43906ba  ; sh t9,106(at)
++3c018012  ; lui at,0x0
++240eff88  ; li t6,-120
++a42e06be  ; sh t6,110(at)
++3c0f8012  ; lui t7,0x0
++91ef0697  ; lbu t7,71(t7)
++3c018012  ; lui at,0x0
++35f80080  ; ori t8,t7,0x80
++a0380697  ; sb t8,71(at)
++3c018012  ; lui at,0x0
++24190003  ; li t9,3
++a0390695  ; sb t9,69(at)
++3c018012  ; lui at,0x0
++240e0007  ; li t6,7
++a42e0910  ; sh t6,-2(at)
++3c018012  ; lui at,0x0
++240fff60  ; li t7,-160
++a42f091e  ; sh t7,0(at)
++3c018012  ; lui at,0x0
++2418ff88  ; li t8,-120
++a4380922  ; sh t8,0(at)
++3c018012  ; lui at,0x0
++24190024  ; li t9,36
++a03908fb  ; sb t9,0(at)
++3c018012  ; lui at,0x0
++240e0001  ; li t6,1
++a02e08f9  ; sb t6,681(at)
++3c018012  ; lui at,0x0
++240f0007  ; li t7,7
++a42f1724  ; sh t7,4308(at)
+-a43806ba  ; sh t8,0(at)
++a4381732  ; sh t8,4322(at)
+-a43906be  ; sh t9,0(at)
+-3c0e8012  ; lui t6,0x0
+-91ce0697  ; lbu t6,0(t6)
++a4391736  ; sh t9,4326(at)
+-35cf0080  ; ori t7,t6,0x80
+-a02f0697  ; sb t7,0(at)
++240e0024  ; li t6,36
++a02e170f  ; sb t6,4287(at)
+-24180003  ; li t8,3
+-a0380695  ; sb t8,0(at)
+-3c018012  ; lui at,0x0
+-24190007  ; li t9,7
+-a4390910  ; sh t9,0(at)
+-3c018012  ; lui at,0x0
+-240eff60  ; li t6,-160
+-a42e091e  ; sh t6,0(at)
+-3c018012  ; lui at,0x0
+-240fff88  ; li t7,-120
+-a42f0922  ; sh t7,0(at)
+-3c018012  ; lui at,0x0
+-24180024  ; li t8,36
+-a03808fb  ; sb t8,0(at)
+-3c018012  ; lui at,0x0
+-24190001  ; li t9,1
+-a03908f9  ; sb t9,0(at)
+-3c018012  ; lui at,0x0
+-240e0007  ; li t6,7
+-a42e1724  ; sh t6,0(at)
+-3c018012  ; lui at,0x0
+-240fff60  ; li t7,-160
+-a42f1732  ; sh t7,0(at)
+-3c018012  ; lui at,0x0
+-2418ff88  ; li t8,-120
+-a4381736  ; sh t8,0(at)
+-3c018012  ; lui at,0x0
+-24190024  ; li t9,36
+-a039170f  ; sb t9,0(at)
+-3c018012  ; lui at,0x0
+-240e0001  ; li t6,1
+-a02e170d  ; sb t6,0(at)
++240f0001  ; li t7,1
++a02f170d  ; sb t7,4285(at)
+-10600015  ; beqz v1,1308 <func_80133010+0x2f8>
++10600016  ; beqz v1,131c <func_80133010+0x30c>
+-304f00ff  ; andi t7,v0,0xff
+-2de10081  ; sltiu at,t7,129
+-10200005  ; beqz at,12e4 <func_80133010+0x2d4>
+-01e01025  ; move v0,t7
++305800ff  ; andi t8,v0,0xff
++2f010081  ; sltiu at,t8,129
++10200006  ; beqz at,12f8 <func_80133010+0x2e8>
++03001025  ; move v0,t8
+-14610002  ; bne v1,at,12e4 <func_80133010+0x2d4>
++14610003  ; bne v1,at,12f8 <func_80133010+0x2e8>
++00000000  ; nop

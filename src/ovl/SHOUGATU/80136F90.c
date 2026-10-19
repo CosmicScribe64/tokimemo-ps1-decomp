@@ -169,9 +169,8 @@ s32 func_8013737C(void) {
     func_80072B5C(1);
 }
 
-/* NON_MATCHING: GameState D_800E6280 unification makes unk_F5F store kill ILOD CSE of unk_69C[unk_71C].unk_01. T-24116. */
-#ifdef NON_MATCHING
 void func_80137664(void) {
+    GameState *g = &D_800E6280;
     s32 a1;
     s32 a2;
 
@@ -186,11 +185,12 @@ void func_80137664(void) {
     hizuke_init();
     message_window_init();
     func_8008585C();
-    D_800E6280.unk_F5F = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01;
+    /* FAKE: g-view store keeps ILOD CSE of unk_69C[unk_71C].unk_01. T-24137 */
+    g->unk_F5F = g->unk_69C[g->unk_71C].unk_01;
     D_80144E14 = D_80122CD0;
-    D_80144E10 = D_800E6280.unk_F5F;
-    if (D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 == 2 ||
-        D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 == 6) {
+    D_80144E10 = g->unk_F5F;
+    if (g->unk_69C[g->unk_71C].unk_01 == 2 ||
+        g->unk_69C[g->unk_71C].unk_01 == 6) {
         a1 = 0xC063;
         a2 = 0xC045;
     } else {
@@ -198,18 +198,15 @@ void func_80137664(void) {
         a2 = 0xC01D;
     }
     func_80044890(1, a1, a2,
-                  D_800B3688[D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01],
-                  D_800B36C8[D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01],
-                  D_800B3708[D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01]);
+                  D_800B3688[g->unk_69C[g->unk_71C].unk_01],
+                  D_800B36C8[g->unk_69C[g->unk_71C].unk_01],
+                  D_800B3708[g->unk_69C[g->unk_71C].unk_01]);
     if (func_80044E8C() == 1) {
         func_80042808();
     }
-    D_800E6280.unk_1BC[D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01].unk_06 = 0x46;
+    g->unk_1BC[g->unk_69C[g->unk_71C].unk_01].unk_06 = 0x46;
     func_80042808();
 }
-#else
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80136F90", func_80137664);
-#endif
 
 void func_801377CC(void) {
     func_80044750(0xCF);

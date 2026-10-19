@@ -56,7 +56,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24138-small-overlays-wave-3-closers|T-24138 Wave 3 closer sweep across EN_NICHI (2), RENSYU (3), KANGEI (4), VALEN (4), ENDING (5), and MASTER (6)]]
 - [ ] [[tickets/T-24137-shougatu-gyozi-bunkasd-wave-3-closers|T-24137 Wave 3 closer sweep across SHOUGATU (10), GYOZI (9), and BUNKA_SD (2)]]
 - [ ] [[tickets/T-24136-taco-and-etc-wave-3-closers|T-24136 Wave 3 closer sweep across TACO (21) and ETC (12)]]
-- [ ] [[tickets/T-24132-name-ent-final-4|T-24132 Close remaining 4 unmatched functions of NAME_ENT (func_80138C1C, func_801398EC, func_8013AF78, func_80143580)]]
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24078-etc-two-poly-renderer|T-24078 Recover ETC two-slot polygon renderer]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
@@ -64,6 +63,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24132-name-ent-final-4|T-24132 Close remaining 4 unmatched functions of NAME_ENT (func_80138C1C, func_801398EC, func_8013AF78, func_80143580)]]
 - [ ] [[tickets/T-24077-etc-pair-scene|T-24077 Recover ETC pair-table scene]]
 - [ ] [[tickets/T-24076-etc-album-search|T-24076 Recover ETC album search]]
 - [ ] [[tickets/T-24074-etc-record-scene|T-24074 Recover ETC record scene]]

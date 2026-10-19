@@ -1315,9 +1315,10 @@ void func_8014F5F0(void) {
     D_800E6280.unk_1104.u += 1;
 }
 
-/* NON_MATCHING: T-24120, 4 rows (100/100 instructions): IDO 5.3 as1 folds away andi $v0, $t9, 0xFF when $v0 is only used in sb, leaving $t9 in the two sb instructions instead of $v0. */
+/* NON_MATCHING: T-24136 (from T-24120), 7 rows: s32 return view keeps andi $v0,$t9,0xFF alive (v0 live at exit; the void form folds it away, leaving $t9 in the sb's). Remaining: raw sub lands in $v0 instead of $t9, masked andi in $v1 instead of $v0, plus the return move $v0,$v1. Temp-split and (u8)-cast forms both lose the andi; autotweak 328 edits no better. T-24136 sweep: 2-masked+1-raw tree (037=036=masked, 038=raw) drops the andi entirely; raw/masked s32 locals with return-masked grows the frame to 0x40; both worse, fallback kept. */
+/* FAKE: s32 return view preserves the original epilogue allocation; callers ignore the result. T-24136 */
 #ifdef NON_MATCHING
-void func_8014F820(void) {
+s32 func_8014F820(void) {
     s32 i;
 
     if (D_800E6280.unk_1104.u == 1) {

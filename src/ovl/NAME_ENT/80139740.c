@@ -35,7 +35,59 @@ s32 func_80139740(u32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-24132, ~260 resolved rows, all register allocation. Shape follows the asm and the
+ * matched sibling func_80139F30: tmp is D_8014D0D4 % 3, the 13 NameRecord flags (record stride 0xF00
+ * by D_800E8BEF, bytes at +0x688) drive Rec24 records 0..12 two per loop trip (i = 1,3,..,11, exit on
+ * i == 13, records step 2 = 0x48 bytes), zero/0x80000000 stores with the (i/8)*0x30 +
+ * (((unk_10F8>>2)%3)*0x10)+0x80 sprite byte. The original keeps the D_80123120 base, the D_800E8BEF
+ * byte and unk_10F8 in $t0/$a3/$a2 across all six trips; this draft reloads them inside the loop. */
+void func_801398EC(void) {
+    Rec24 *rec;
+    s32 tmp;
+    s32 i;
+
+    tmp = D_8014D0D4 % 3;
+    if (tmp == 0) {
+        if (((NameRecordF00 *)D_80123120)[D_800E8BEF].flags[0] == 0) {
+            D_801217D0[0].unk_00 = 0;
+            D_801217D0[0].unk_0E = ((D_800E6280.unk_10F8 >> 2) % 3) * 0x10 + 0x80;
+        } else {
+            D_801217D0[0].unk_00 = 0x80000000;
+        }
+    } else {
+        D_801217D0[0].unk_00 = 0x80000000;
+    }
+    i = 1;
+    rec = &D_801217D0[1];
+    do {
+        if (tmp == 0) {
+            if (((NameRecordF00 *)D_80123120)[D_800E8BEF].flags[i] == 0) {
+                rec->unk_00 = 0;
+                rec->unk_0E = (i / 8) * 0x30 + ((D_800E6280.unk_10F8 >> 2) % 3) * 0x10 + 0x80;
+            } else {
+                rec->unk_00 = 0x80000000;
+            }
+        } else {
+            rec->unk_00 = 0x80000000;
+        }
+        if (tmp == 0) {
+            if (((NameRecordF00 *)D_80123120)[D_800E8BEF].flags[i + 1] == 0) {
+                rec[1].unk_00 = 0;
+                rec[1].unk_0E = ((i + 1) / 8) * 0x30 + ((D_800E6280.unk_10F8 >> 2) % 3) * 0x10 + 0x80;
+            } else {
+                rec[1].unk_00 = 0x80000000;
+            }
+        } else {
+            rec[1].unk_00 = 0x80000000;
+        }
+        i += 2;
+        rec += 2;
+    } while (i != 13);
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_801398EC);
+#endif
 
 void func_80139AD8(s32 arg0, s32 arg1, s32 arg2) {
     u8 *p;
@@ -370,7 +422,61 @@ void func_8013ACA4(void) {
     func_80139740(((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].metrics[8].unk_02, 128, 78);
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-24132, ~99 resolved rows. Frame is exact (0x30, pad above the 3-word sel) and the
+ * exit is s32 with a bare fallthrough (void loses five instructions); arg0 == 0 stores the four
+ * masked bytes and returns 0. Open: the zeroing loop (for gives bne over the bounds, the original
+ * is an sltu pointer loop) and the raw byte loads, which the original keeps in $a2/$a1/$v1/$v0
+ * where this draft spills them (extra move of arg0 to $a3, shifted temporaries). T-22023 draft. */
+/* FAKE: s32 with a bare fallthrough exit keeps the original $v0 liveness; void loses five instructions. T-24132 */
+s32 func_8013AF78(s32 arg0) {
+    s32 pad[2];
+    s32 i;
+    s32 sel[3];
+    u8 a;
+    u8 b;
+    u8 c;
+    u8 d;
+
+    for (i = 0; i < 3; i++) {
+        sel[i] = 0;
+    }
+    a = D_80120BE7;
+    b = D_80120B5F;
+    c = D_80120BA3;
+    d = D_80120C2B;
+    b &= 0x7F;
+    c &= 0x7F;
+    a &= 0x7F;
+    d &= 0x7F;
+    if (arg0 == 0) {
+        D_80120BE7 = a;
+        D_80120B5F = b;
+        D_80120BA3 = c;
+        D_80120C2B = d;
+        return 0;
+    }
+    sel[D_8014D0D4 % 3] = 1;
+    D_80120BE7 = a;
+    if (sel[0] != 0) {
+        c |= 0x80;
+        D_80120BE7 = a | 0x80;
+    }
+    D_80120B5F = b;
+    if (sel[1] != 0) {
+        D_80120B5F = b | 0x80;
+    }
+    D_80120C2B = d;
+    D_80120BA3 = c;
+    if (sel[2] != 0) {
+        d |= 0x80;
+        D_80120C2B = d;
+        D_80120BA3 = c | 0x80;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013AF78);
+#endif
 
 s32 func_8013B0A0(void) {
     s32 a;

@@ -2380,7 +2380,68 @@ void func_80138BCC(void) {
     func_8004284C();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-24132, ~200 resolved rows. Structure follows the asm: two clear loops over the
+ * GameState text buffers, three name-copy loops that skip space pairs and zero pairs, a
+ * strncpy-combine through buf, and the month/day/blood nibble writes. No plain-C form hoists both
+ * full-width-space bytes (D_800B3644[0] into $a2 and D_800B3644[1] into $t0) before the copy loops:
+ * IDO promotes only [0] and reloads [1] inside the conditional block whatever the local type
+ * (T-0018 promo row, T-11650/T-22008 notes). s32 with no return keeps the exit liveness. */
+s32 func_80138C1C(void) {
+    s32 n;
+    s32 count;
+    u8 *p;
+    u8 sp0;
+    u8 sp1;
+    u8 buf[0x18];
+
+    for (n = 0; n < 8; n++) {
+        D_800E6280.unk_0D4[n] = 0;
+        D_800E6280.unk_0DC[n] = 0;
+    }
+    for (n = 0; n < 0x10; n++) {
+        D_800E6280.unk_0C4[n] = 0;
+        D_800E6280.unk_0E4[n] = 0;
+    }
+    sp0 = D_800B3644[0];
+    sp1 = D_800B3644[1];
+    count = 0;
+    for (p = D_8014CC74; p < &D_8014CC74[6]; p += 2) {
+        if ((p[0] != sp0 || p[1] != sp1) && (p[0] != 0 || p[1] != 0)) {
+            D_800E6280.unk_0D4[count * 2] = p[0];
+            D_800E6280.unk_0D4[count * 2 + 1] = p[1];
+            count++;
+        }
+    }
+    count = 0;
+    for (p = D_8014CC7C; p < &D_8014CC7C[6]; p += 2) {
+        if ((p[0] != sp0 || p[1] != sp1) && (p[0] != 0 || p[1] != 0)) {
+            D_800E6280.unk_0DC[count * 2] = p[0];
+            D_800E6280.unk_0DC[count * 2 + 1] = p[1];
+            count++;
+        }
+    }
+    count = 0;
+    for (p = D_8014CC84; p != &D_8014CC8E; p += 2) {
+        if ((p[0] != sp0 || p[1] != sp1) && (p[0] != 0 || p[1] != 0)) {
+            D_800E6280.unk_0E4[count * 2] = p[0];
+            D_800E6280.unk_0E4[count * 2 + 1] = p[1];
+            count++;
+        }
+    }
+    func_800AE090(buf, D_800E6280.unk_0D4, 8);
+    func_800AE110(buf, D_800E6280.unk_0DC, 8);
+    func_800AE090(D_800E6280.unk_0C4, buf, 0x10);
+    D_800E6280.unk_0F8 = (u8)(((D_8014CC90 + 1) & 0xF) | (D_800E6280.unk_0F8 & 0xFFF0));
+    *(u16 *)((u8 *)(&D_800E6280) + 0xF8) = (u16)((((D_8014CC94 + 1) * 0x10) & 0x1F0) | (*(u16 *)((u8 *)(&D_800E6280) + 0xF8) & 0xFE0F));
+    *(u8 *)((u8 *)(&D_800E6280) + 0xF9) = (u8)((((D_8014CC98 + 1) * 2) & 6) | (*(u8 *)((u8 *)(&D_800E6280) + 0xF9) & 0xFFF9));
+    D_800E6280.unk_1BC[0].unk_10.b[0] = ((D_8014CC9C + 1) & 0xF) | (D_800E6280.unk_1BC[0].unk_10.b[0] & 0xFFF0);
+    D_800E6280.unk_1BC[0].unk_10.h[0] = (((D_8014CCA0 + 1) * 0x10) & 0x1F0) | (D_800E6280.unk_1BC[0].unk_10.h[0] & 0xFE0F);
+    D_800E6280.unk_1BC[0].unk_10.b[1] = (((D_8014CCA4 + 1) * 2) & 6) | (D_800E6280.unk_1BC[0].unk_10.b[1] & 0xFFF9);
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138C1C);
+#endif
 
 void func_80138F00(void) {
     D_800E6280.unk_1A3C = 0x801AAF58;

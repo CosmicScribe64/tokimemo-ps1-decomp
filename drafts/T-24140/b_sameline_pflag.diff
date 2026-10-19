@@ -1,0 +1,16 @@
+-@row 22 240f0001  ; li t7,1
++@row 22 3c028012  ; lui v0,0x0
+-@row 23 3c018014  ; lui at,0x0
++@row 23 240f0001  ; li t7,1
+-@row 24 3c028012  ; lui v0,0x0
++@row 24 3c018014  ; lui at,0x0
+-@row 30 352932d8  ; ori t1,t1,0x32d8
++@row 30 24420650  ; addiu v0,v0,0
+-@row 31 354a34e0  ; ori t2,t2,0x34e0
++@row 31 352932d8  ; ori t1,t1,0x32d8
+-@row 32 356b32c8  ; ori t3,t3,0x32c8
++@row 32 354a34e0  ; ori t2,t2,0x34e0
+-@row 33 25ad1750  ; addiu t5,t5,0
++@row 33 356b32c8  ; ori t3,t3,0x32c8
+-@row 34 24420650  ; addiu v0,v0,0
++@row 34 25ad1750  ; addiu t5,t5,0

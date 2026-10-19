@@ -34,7 +34,7 @@ void func_80132810(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: score=749 (304/310 insns). .data island D_80134540[4] resolves the 0xFF/sp50/D_80134540 shift chain; IDO 5.3 uopt treats (unk_06 + unk_02) and (unk_02 + unk_06) as commutative in isearchloop and CSEs all 6 into $v0, eliminating 4 loads from &D_800E6280 + i * 56 and swapping $s0/$s1. T-24101. */
+/* NON_MATCHING: score=749 (304/310 insns). .data island D_80134540[4] resolves the 0xFF/sp50/D_80134540 shift chain; IDO 5.3 uopt treats (unk_06 + unk_02) and (unk_02 + unk_06) as commutative in isearchloop and CSEs all 6 into $v0, eliminating 4 loads from &D_800E6280 + i * 56 and swapping $s0/$s1. T-24101. T-24138: guarded compile fixed (VALEN.h func_8013387C prototype + ValenStateView for unk_11C halfwords); production build unaffected (NON_MATCHING off). */
 void func_80132834(void) {
     s16 i;
     s16 j;
@@ -113,7 +113,7 @@ INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80132834);
 #endif
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-24033, 7 resolved rows. Dispatch shift is late in a branch delay slot; original shifts earlier and keeps one extra nop, changing two branch offsets. */
+/* NON_MATCHING: T-24033, 7 resolved rows. Dispatch shift is late in a branch delay slot; original shifts earlier and keeps one extra nop, changing two branch offsets. T-24138: `switch (D_800E6280.unk_F5F)` spelling tried (CSE merges, no change); autotweak 644 edits, no match. T-24138b: `s32 sel` copy before switch keeps the 7-row shape (u8 sel adds andi, worse); using sel in the mode ifs recolors a0/a1/v1, worse. T-24138c: mode-reloads, u8 mode, nested if1/if3 all output-identical (same 7); mixed/all-direct spellings and explicit sel+(sel<<2) recolor (39-55, switch index is MUL so no CSE merge); mode-copy coalesces (same 7), fsel-copy recolors (39). */
 s32 func_80132D0C(void) {
     s32 mode;
     GameState *state;
@@ -205,11 +205,11 @@ INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80132D0C);
 #endif
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: score=171 (278/277 insns). D_80134548 promotes to $v0 across the % 8, % 2, and switch blocks; remaining diffs are CVTL 8 on the initial % 8 assignment and uopt hoisting D_800E6280.unk_F5F into $a0 at .L80133208. T-24101. */
+/* NON_MATCHING: score=171 (278/277 insns). D_80134548 promotes to $v0 across the % 8, % 2, and switch blocks; remaining diffs are CVTL 8 on the initial % 8 assignment and uopt hoisting D_800E6280.unk_F5F into $a0 at .L80133208. T-24101. T-24138: `.h` on u32 unk_10F8 replaced by word `& 0xFFFF` (original: lw D_800E7378 + andi 7 head); unk_11C halfwords via ValenStateView. Still far (initial-sum shape differs). */
 void func_80133088(void) {
     D_80134548 = (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 +
                   D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 +
-                  (D_800E6280.unk_10F8.h & 0xFFFF)) % 8;
+                  (D_800E6280.unk_10F8 & 0xFFFF)) % 8;
     if ((get_h_tokimeki(D_800E6280.unk_F5F) < 0x46U && D_800E6280.unk_F5F != 0) ||
         (D_800E6280.unk_1BC[0].unk_02 < 0x46 && D_800E6280.unk_F5F == 0)) {
         if ((D_80134548 % 2) != 0) {
@@ -225,36 +225,36 @@ void func_80133088(void) {
     }
     switch (D_80134548) {
     case 0:
-        D_800E6280.unk_11C.unk_02 += 2;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_02 += 2;
         break;
     case 1:
-        D_800E6280.unk_11C.unk_02 -= 3;
-        D_800E6280.unk_11C.unk_04 += 0xA;
-        D_800E6280.unk_11C.unk_06 += 0xA;
-        D_800E6280.unk_11C.unk_08 += 0xA;
-        D_800E6280.unk_11C.unk_0A += 0xA;
-        D_800E6280.unk_11C.unk_0E += 0xA;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_02 -= 3;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_04 += 0xA;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_06 += 0xA;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_08 += 0xA;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0A += 0xA;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0E += 0xA;
         break;
     case 2:
-        D_800E6280.unk_11C.unk_04 += 5;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_04 += 5;
         break;
     case 3:
-        D_800E6280.unk_11C.unk_02 -= 5;
-        D_800E6280.unk_11C.unk_06 += 0xA;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_02 -= 5;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_06 += 0xA;
         break;
     case 4:
-        D_800E6280.unk_11C.unk_02 += 2;
-        D_800E6280.unk_11C.unk_0A += 3;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_02 += 2;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0A += 3;
         break;
     case 5:
-        D_800E6280.unk_11C.unk_08 += 0xA;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_08 += 0xA;
         break;
     case 6:
-        D_800E6280.unk_11C.unk_0E += 5;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0E += 5;
         break;
     case 7:
-        D_800E6280.unk_11C.unk_04 += 5;
-        D_800E6280.unk_11C.unk_0E += 5;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_04 += 5;
+        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0E += 5;
         break;
     }
     if (D_800E6280.unk_F5F == 9 && D_80134544 == 1) {

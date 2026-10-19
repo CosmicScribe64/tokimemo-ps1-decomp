@@ -1,0 +1,5 @@
+[["narrow_plus_t",[["        v0 = D_800E6280.unk_03A;\n        v0 -= 4;\n        v0 &= 0xFF;","        t = (u8)(D_800E6280.unk_03A - 4);\n        v0 = t;"],["    u8 v0;\n    u8 v1;","    u8 t;\n    u8 v0;\n    u8 v1;"]]],
+["narrow_t_first",[["        v0 = D_800E6280.unk_03A;\n        v0 -= 4;\n        v0 &= 0xFF;","        t = (u8)(D_800E6280.unk_03A - 4);\n        v0 = t;"],["    DisplayActor44 *p;","    DisplayActor44 *p;\n    u8 t;"]]],
+["head_v1local",[["    if (D_800E6280.unk_110D == 0) {","    v1 = D_800E6280.unk_110D;\n    if (v1 == 0) {"]]],
+["tail_direct110d",[["    v1 = D_800E6280.unk_110D;\n    if (v1 != 0) {","    if (D_800E6280.unk_110D != 0) {\n        v1 = D_800E6280.unk_110D;"]]]
+]

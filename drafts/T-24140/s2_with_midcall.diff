@@ -1,0 +1,32 @@
+-@row 30 352932d8  ; ori t1,t1,0x32d8
++@row 30 24420650  ; addiu v0,v0,0
+-@row 31 354a34e0  ; ori t2,t2,0x34e0
++@row 31 352932d8  ; ori t1,t1,0x32d8
+-@row 32 356b32c8  ; ori t3,t3,0x32c8
++@row 32 354a34e0  ; ori t2,t2,0x34e0
+-@row 33 25ad1750  ; addiu t5,t5,0
++@row 33 356b32c8  ; ori t3,t3,0x32c8
+-@row 34 24420650  ; addiu v0,v0,0
++@row 34 25ad1750  ; addiu t5,t5,0
+-@row 74 3c04801b  ; lui a0,0x801b
++@row 74 24110004  ; li s1,4
+-@row 75 2405001f  ; li a1,31
++@row 75 3c04801b  ; lui a0,0x801b
+-@row 76 24060001  ; li a2,1
++@row 76 2405001f  ; li a1,31
+-@row 77 24070001  ; li a3,1
++@row 77 24060001  ; li a2,1
+-@row 78 0c010e45  ; jal 0 <func_80132000>
++@row 78 24070001  ; li a3,1
+-@row 79 afa00010  ; sw zero,16(sp)
++@row 79 0c010e45  ; jal 0 <func_80132000>
+-@row 80 3c11801c  ; lui s1,0x801c
++@row 80 afa00010  ; sw zero,16(sp)
+-@row 81 3631bef0  ; ori s1,s1,0xbef0
++@row 81 3c12801c  ; lui s2,0x801c
+-@row 83 24120004  ; li s2,4
++@row 83 3652bef0  ; ori s2,s2,0xbef0
+-@row 87 02202025  ; move a0,s1
++@row 87 02402025  ; move a0,s2
+-@row 93 1612fff7  ; bne s0,s2,1164 <func_80133010+0x154>
++@row 93 1611fff7  ; bne s0,s1,1164 <func_80133010+0x154>

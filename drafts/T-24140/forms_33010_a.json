@@ -1,0 +1,8 @@
+[["control","",""],
+["v1s32","    u8 v1;","    s32 v1;"],
+["v0narrow","        v0 = D_800E6280.unk_03A;\n        v0 -= 4;\n        v0 &= 0xFF;","        v0 = (u8)(D_800E6280.unk_03A - 4);"],
+["decl_p_first","    s32 s0;\n    s32 s2;\n    u8 *s1;\n    u8 v0;\n    u8 v1;\n    DisplayActor44 *p;","    DisplayActor44 *p;\n    s32 s0;\n    s32 s2;\n    u8 *s1;\n    u8 v0;\n    u8 v1;"],
+["decl_s1s2","    s32 s0;\n    s32 s2;\n    u8 *s1;","    s32 s0;\n    u8 *s1;\n    s32 s2;"],
+["decl_v1v0","    u8 v0;\n    u8 v1;","    u8 v1;\n    u8 v0;"],
+["star0_s1","            func_80043914(s1, (s0 + 0x1A) & 0xFF, 1, 1, s0);","            func_80043914(s1 + ((s32)s1 * 0), (s0 + 0x1A) & 0xFF, 1, 1, s0);"],
+["star0_v0store","        D_800E6280.unk_03A = v0;","        D_800E6280.unk_03A = v0 + (v0 * 0);"]]

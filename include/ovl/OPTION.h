@@ -21,6 +21,7 @@ extern s8 D_8013D39C;
 
 void func_80132AB8(void);
 void func_80132BA8(void);
+void func_80133010(void);
 
 void func_8013A09C(void);
 void func_8013A1BC(void);
