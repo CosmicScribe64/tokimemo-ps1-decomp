@@ -166,12 +166,10 @@ s32 func_80075FA0(void) {
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076000);
 
 
-/* NON_MATCHING: T-10910, structure matches (97 of 97 instructions) with the bit-field entry view, the 5 explicit clears and an if (1) around cnt[idx]++ (found by decomp-permuter, FAKE); only register choice differs: the original colours n, m, arg0, idx in that order (..), 24 lines */
-#ifdef NON_MATCHING
 s32 func_800764AC(u32 *arg0) {
+    /* FAKE: T-10910, T-24135, padA places cnt at sp+0x2C within the 0xB0 frame, and if (1) around cnt[...]++ reproduces the original branch/delay-slot layout. */
     s32 padA[1];
     s32 cnt[32];
-    s32 padB[1];
     s32 i;
     s32 n;
     s32 m;
@@ -216,8 +214,7 @@ s32 func_800764AC(u32 *arg0) {
             if (!((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active) {
                 break;
             }
-            if (cnt[((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_00] != 0) {
-                idx = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_00;
+            if (cnt[idx = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_00] != 0) {
                 arg0[m] = idx;
                 m++;
                 cnt[((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_00] = 0;
@@ -229,11 +226,39 @@ s32 func_800764AC(u32 *arg0) {
         return n;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800764AC);
-#endif
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076630);
+void func_80076630(void) {
+    /* FAKE: T-24135, 4-byte stack slot above buf[32] places buf at sp+0x2C as in the original. */
+    s32 pad[1];
+    u32 buf[32];
+
+    D_800E6280.unk_724 = 0xFF;
+    D_800E6280.unk_725 = 0xFF;
+    D_800E6280.unk_726 = 0xFF;
+    D_800E6280.unk_727 = 0xFF;
+    func_8006B640();
+    if (func_800764AC(buf) >= 2) {
+        k_reset(1);
+        k_sub_reset_point_set();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp((u8 *)"どこで、 待ち合わせだったかな？）", 0, 0x1F);
+        k_sub_disp_start(1);
+        func_8004284C();
+        return;
+    } else {
+        D_800E6280.unk_724 = D_800E6280.unk_54C_0.unk_00;
+        D_800E6280.unk_725 = D_800E6280.unk_54C_0.unk_00;
+        D_800E6280.unk_726 = 0xFF;
+        D_800E6280.unk_727 = 0xFF;
+        D_800E6280.unk_69C[D_800E6280.unk_71C].unk_00 = 0x80;
+        D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->unk_25;
+        D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02 = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->unk_00;
+        D_800E6280.unk_F5F = D_800E6280.unk_54C_0.unk_25;
+        D_800E6280.unk_75D = D_800E6280.unk_54C_0.unk_25;
+        D_800E6280.unk_75C = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->b24;
+    }
+    func_80042940(2);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800767A4);
 
@@ -307,7 +332,31 @@ s32 func_80076C7C(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", appointment_launch);
+void appointment_launch(void) {
+    GameState *g;
+    s32 i;
+    s32 j;
+    s32 arr[3];
+
+    g = &D_800E6280;
+    arr[0] = D_800E6280.unk_725;
+    arr[1] = D_800E6280.unk_726;
+    arr[2] = D_800E6280.unk_727;
+    D_800E6280.unk_725 = D_800E6280.unk_54C_0.unk_00;
+    for (i = 0, j = 2; i < 3; i++) {
+        if (arr[i] != (g->unk_54C[0].w & 0x1F)) {
+            (&D_800E6280.unk_724)[j] = arr[i];
+            j++;
+        }
+    }
+    D_800E6280.unk_69C[D_800E6280.unk_71C].unk_00 = 0x80;
+    D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 = D_800E6280.unk_54C_0.unk_25;
+    D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02 = D_800E6280.unk_54C_0.unk_00;
+    D_800E6280.unk_F5F = D_800E6280.unk_54C_0.unk_25;
+    D_800E6280.unk_75D = D_800E6280.unk_54C_0.unk_25;
+    D_800E6280.unk_75C = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->b24;
+    main_state_set(0x50);
+}
 
 void func_80076EC0(void) {
     switch (D_800E6280.unk_110A) {

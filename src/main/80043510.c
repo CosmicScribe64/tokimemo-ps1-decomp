@@ -121,8 +121,6 @@ u16 arg6;
     return 0;
 }
 
-/* NON_MATCHING: T-10850, T-17019, 24 differing listing lines (12 instructions, registers only: ugen temporary numbering of the three computed arguments). The u16 locals x, y, w give the original order of the three andi 0xFFFF (a0, a1, a2); see wiki/matching-notes.md T-17019. */
-#ifdef NON_MATCHING
 void csr_load_vram(s32 arg0) {
     GameState *base;
     s32 var_s1;
@@ -135,13 +133,13 @@ void csr_load_vram(s32 arg0) {
     var_s1 = 0;
     if (base->unk_1429 != 0) {
         do {
-            temp_v0 = base->unk_142C[var_s1].unk_04;
-            if (temp_v0 == 0) {
+            if ((temp_v0 = base->unk_142C[var_s1].unk_04) == 0) {
                 LoadSquare(base->unk_142C[var_s1].unk_08, base->unk_142C[var_s1].unk_0A, base->unk_142C[var_s1].unk_0C, base->unk_142C[var_s1].unk_0E, (void *) base->unk_142C[var_s1].unk_00);
             } else {
-                x = (((temp_v0 & 0xF) << 6) + base->unk_142C[var_s1].unk_08);
-                y = (((temp_v0 & 0x10) * 0x10) + base->unk_142C[var_s1].unk_0A);
-                w = ((u16) base->unk_142C[var_s1].unk_0C >> base->unk_142C[var_s1].unk_05);
+                /* FAKE: self-assignment gives the shift subtree greater expression depth so cfe evaluates it before the array-indexed load. T-24135 */
+                x = base->unk_142C[var_s1].unk_08 + (((temp_v0 = temp_v0) & 0xF) << 6);
+                y = base->unk_142C[var_s1].unk_0A + (((temp_v0 = temp_v0) & 0x10) * 0x10);
+                w = (u16) base->unk_142C[var_s1].unk_0C >> base->unk_142C[var_s1].unk_05;
                 LoadSquare(x, y, w, base->unk_142C[var_s1].unk_0E, (void *) base->unk_142C[var_s1].unk_00);
             }
             var_s1 += 1;
@@ -149,9 +147,6 @@ void csr_load_vram(s32 arg0) {
     }
     base->unk_1429 = 0U;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80043510", csr_load_vram);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80043510", palette_load_vram);
 

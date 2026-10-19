@@ -11,9 +11,54 @@ typedef struct MenuSelection5 {
     /* 0x03 */ s8 current[2];
 } MenuSelection5; /* size 0x05 */
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_set);
+s32 menu_set(menu, count, x, y, w, h)
+    s32 menu;
+    u8 count;
+    s16 *x;
+    s16 *y;
+    s16 *w;
+    s16 *h;
+{
+    GameState *g;
+    s32 i;
+    s16 *px;
+    s16 *py;
+    s16 *pw;
+    s16 *ph;
 
-s8 menu_check(arg0, arg1, arg2)
+    g = &D_800E6280;
+    for (i = 0; i < 16; i++) {
+        ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_07 = 0;
+        ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_05 = 0;
+        ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_04 = 0;
+    }
+    px = x;
+    py = y;
+    pw = w;
+    ph = h;
+    if (count >= 17) {
+        return -1;
+    }
+    ((MenuSelection5 *)&g->unk_1090)->count[menu] = count;
+    g->unk_1095[menu] = -1;
+    if (menu >= 2) {
+        return -1;
+    }
+    for (i = 0; i < count; i++) {
+        ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_00 = *px++;
+        ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_02 = *py++;
+        if ((*pw * *ph) == 0) {
+            ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_07 = 1;
+        } else {
+            ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_07 = 0;
+        }
+        ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_04 = *pw++;
+        ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_05 = *ph++;
+        ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_06 = 0;
+    }
+}
+
+s32 menu_check(arg0, arg1, arg2)
     s32 arg0;
     s16 arg1;
     s16 arg2;
@@ -44,10 +89,7 @@ s8 menu_check(arg0, arg1, arg2)
     return menu_check_1(arg0, arg1, arg2);
 }
 
-/* NON_MATCHING: T-17018 (inherited T-12050), 27 differing lines; cnt/sel take $v0/$v1 and the loop count base $a3 where the original has base $v0, cnt $v1, sel $a3, and the s8 return is sign-extended (an s8 sel moves the extension into the loop, worse) */
-#ifdef NON_MATCHING
-/* FAKE: duplicate GameState pointer steers record/base allocation. T-17018 (inherited T-12050) */
-s8 menu_check_1(arg0, arg1, arg2)
+s32 menu_check_1(arg0, arg1, arg2)
     s32 arg0;
     s16 arg1;
     s16 arg2;
@@ -55,49 +97,31 @@ s8 menu_check_1(arg0, arg1, arg2)
     GameState *g;
     s32 cnt;
     s32 sel;
-    s32 d;
     u32 i;
-    GameState *new_var;
+
     g = &D_800E6280;
     cnt = 0;
     sel = -1;
-    new_var = g;
-    i = 0;
-    if (((MenuSelection5 *) (&new_var->unk_1090))->count[arg0] != 0)
-    {
-        do
-        {
-            d = arg1 - ((GsRecF90 (*)[2]) new_var->unk_F90)[i][arg0].unk_00;
-            ((GsRecF90 (*)[2]) new_var->unk_F90)[i][arg0].unk_06 = 0;
-            if (((s32) ((d - ((GsRecF90 (*)[2]) new_var->unk_F90)[i][arg0].unk_04) * d)) < 0)
-            {
-                d = arg2 - ((GsRecF90 (*)[2]) new_var->unk_F90)[i][arg0].unk_02;
-                if (((s32) ((d - ((GsRecF90 (*)[2]) new_var->unk_F90)[i][arg0].unk_05) * d)) < 0)
-                {
-                    ((GsRecF90 (*)[2]) new_var->unk_F90)[i][arg0].unk_06 = 1;
-                    cnt += 1;
-                    sel = i;
-                }
+    for (i = 0; i < ((MenuSelection5 *)&g->unk_1090)->count[arg0]; i++) {
+        ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_06 = 0;
+        if ((s32)((arg1 - ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_00) * ((arg1 - ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_00) - ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_04)) < 0) {
+            if ((s32)((arg2 - ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_02) * ((arg2 - ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_02) - ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_05)) < 0) {
+                ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_06 = 1;
+                cnt += 1;
+                sel = i;
             }
-            i += 1;
         }
-        while (i < ((MenuSelection5 *) (&new_var->unk_1090))->count[arg0]);
     }
-    if (cnt == 0)
-    {
-        ((MenuSelection5 *) (&new_var->unk_1090))->current[arg0] = -1;
+    if (cnt == 0) {
+        ((MenuSelection5 *)&g->unk_1090)->current[arg0] = -1;
     }
-    if ((!(g->unk_F80 & 4)) && (sel != (-1)))
-    {
+    if (!(g->unk_F80 & 4) && sel != -1) {
         g->unk_1095[arg0] = sel;
     }
     return sel;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_check_1);
-#endif
 
-s8 menu_check_2(arg0, arg1, arg2)
+s32 menu_check_2(arg0, arg1, arg2)
     s32 arg0;
     s32 arg1;
     s32 arg2;

@@ -285,4 +285,50 @@ s32 arg0;
     text_list_count.total += 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", glyph_expand_1bpp);
+void glyph_expand_1bpp(s32 arg0, s32 *arg1) {
+    s32 i;
+    s32 j;
+    u8 buf[144];
+    u8 *p;
+    u8 *q;
+
+    p = &font_glyphs[arg0 * 18];
+    for (i = 0; i < 18; i++) {
+        buf[i * 8 + 0] = (p[i] & 0x80) >> 7;
+        buf[i * 8 + 1] = (p[i] & 0x40) >> 6;
+        buf[i * 8 + 2] = (p[i] & 0x20) >> 5;
+        buf[i * 8 + 3] = (p[i] & 0x10) >> 4;
+        buf[i * 8 + 4] = (p[i] & 0x08) >> 3;
+        buf[i * 8 + 5] = (p[i] & 0x04) >> 2;
+        buf[i * 8 + 6] = (p[i] & 0x02) >> 1;
+        buf[i * 8 + 7] = p[i] & 0x01;
+    }
+    for (i = 0, q = buf; i < 6; i++) {
+        *arg1 = 0;
+        for (j = 0; j < 0x20; j += 4) {
+            *arg1 += *q << j;
+            q++;
+        }
+        arg1++;
+        *arg1 = 0;
+        for (j = 0; j < 0x10; j += 4) {
+            *arg1 += *q << j;
+            q++;
+        }
+        arg1++;
+        *arg1 = 0;
+        for (j = 0; j < 0x20; j += 4) {
+            *arg1 += *q << j;
+            q++;
+        }
+        arg1++;
+        *arg1 = 0;
+        for (j = 0; j < 0x10; j += 4) {
+            *arg1 += *q << j;
+            q++;
+        }
+        arg1++;
+    }
+    /* FAKE: T-24135, keeps arg0 live in $a0 across the second loop so j and the loop bound take $a2/$a3. */
+    if (arg0 == i) {}
+}

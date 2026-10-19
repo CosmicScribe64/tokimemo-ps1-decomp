@@ -20793,3 +20793,7 @@ Completed and reviewed [[tickets/T-24134-geko-option-tel-bunkaken-omimai-wave-2-
 - `OPTION:func_80132000` (176 B in `src/ovl/OPTION/80132000.c`): `MATCH`
 - `OPTION:func_801320C0` (708 B in `src/ovl/OPTION/80132000.c`): `MATCH`
 Created and dispatched [[tickets/T-24140-geko-option-tel-omimai-wave-3-closers]] (`In Progress`) for the remaining `GEKO` (12), `OPTION` (8), `TEL` (2), and `OMIMAI` (1) functions.
+
+## [2026-10-19] ticket | Complete T-24135 (+7 functions / +2,240 B in src/main/) and start T-24141
+
+Completed [[tickets/T-24135-main-remaining-sweep-d]] (Done): matched `main:csr_load_vram` (240 B in `src/main/80043510.c`), `main:glyph_expand_1bpp` (448 B in `src/main/8004E500.c`), `main:menu_set` (276 B) and `main:menu_check_1` (228 B in `src/main/8004F870.c`), and `main:func_800764AC` (388 B), `main:func_80076630` (372 B), and `main:appointment_launch` (288 B in `src/main/80075320.c`). Created [[tickets/T-24141-main-remaining-sweep-e]] (In Progress).

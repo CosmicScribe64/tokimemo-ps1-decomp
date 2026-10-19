@@ -2229,9 +2229,9 @@ void func_8004F860();
 #ifndef MAIN_API_OVERRIDE_func_8004F870
 void func_8004F870();
 #endif
-s8 menu_check();
-s8 menu_check_1();
-s8 menu_check_2();
+s32 menu_check();
+s32 menu_check_1();
+s32 menu_check_2();
 void func_8004FC10();
 void func_800504CC();
 s32 func_80050AB8();

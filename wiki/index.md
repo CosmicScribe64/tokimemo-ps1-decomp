@@ -792,12 +792,14 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24132-name-ent-final-4|T-24132]] Close remaining 4 unmatched functions of `NAME_ENT` (`func_80138C1C`, `func_801398EC`, `func_8013AF78`, `func_80143580`, In Progress).
 - [[tickets/T-24133-taiiku-rpg-bat-wave-2-closers|T-24133]] Close 9 functions in `TAIIKU` (`func_80135480` 608 B, `func_801365C8` 752 B, `func_80137544` 576 B, `func_8013B78C` 448 B, `func_8013BCEC` 524 B, `func_8013D2B4` 1,236 B, `func_8013D788` 556 B, `func_8014357C` 664 B — `80142240.c` 100.0%; `func_8014607C` 700 B, Done; 9 matches, 6,064 B verified default C).
 - [[tickets/T-24134-geko-option-tel-bunkaken-omimai-wave-2-closers|T-24134]] Close 3 functions across `BUNKAKEN` and `OPTION` (`BUNKAKEN:func_8013B510` 2,164 B — **`BUNKAKEN` overlay 100.0% matched, 60/60 functions!**; `OPTION:func_80132000` 176 B, `OPTION:func_801320C0` 708 B, Done; 3 matches, 3,048 B verified default C).
-- [[tickets/T-24135-main-remaining-sweep-d|T-24135]] Sweep remaining unmatched functions in `src/main/` (wave D, In Progress).
+- [[tickets/T-24135-main-remaining-sweep-d|T-24135]] Close 7 functions in `src/main/` (`csr_load_vram` 240 B, `glyph_expand_1bpp` 448 B, `menu_set` 276 B, `menu_check_1` 228 B, `func_800764AC` 388 B, `func_80076630` 372 B, `appointment_launch` 288 B, Done; 7 matches, 2,240 B verified default C).
 - [[tickets/T-24136-taco-and-etc-wave-3-closers|T-24136]] Wave 3 closer sweep across `TACO` (21) and `ETC` (12) (In Progress).
 - [[tickets/T-24137-shougatu-gyozi-bunkasd-wave-3-closers|T-24137]] Wave 3 closer sweep across `SHOUGATU` (10), `GYOZI` (9), and `BUNKA_SD` (2) (In Progress).
 - [[tickets/T-24138-small-overlays-wave-3-closers|T-24138]] Wave 3 closer sweep across `EN_NICHI` (2), `RENSYU` (3), `KANGEI` (4), `VALEN` (4), `ENDING` (5), and `MASTER` (6) (In Progress).
 - [[tickets/T-24139-taiiku-rpg-bat-wave-3-closers|T-24139]] Wave 3 closer sweep across `TAIIKU` (12 remaining) and `RPG_BAT` (8 remaining) (In Progress).
 - [[tickets/T-24140-geko-option-tel-omimai-wave-3-closers|T-24140]] Wave 3 closer sweep across `GEKO` (12), `OPTION` (8), `TEL` (2), and `OMIMAI` (1) (In Progress).
+- [[tickets/T-24141-main-remaining-sweep-e|T-24141]] Sweep remaining unmatched functions in `src/main/` (wave E, In Progress).
+
 
 
 
