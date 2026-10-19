@@ -49,9 +49,9 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24107-etc-taco-ennichi-kangei-geko-near-misses|T-24107 Close top live-scored near misses in ETC/80140F50, KANGEI, GEKO, EN_NICHI, and TACO]]
 - [ ] [[tickets/T-24106-name-ent-remaining-19|T-24106 Close out the remaining 19 unmatched functions of the NAME_ENT overlay]]
 - [ ] [[tickets/T-24105-event-final-eight|T-24105 Close out the final 8 unmatched functions of the EVENT overlay]]
-- [ ] [[tickets/T-24104-ugen-pass-and-cvt-pass-near-miss-sweep|T-24104 Sweep remaining unmatched functions under ugen_pass and cvt_pass rpar fix and close unlocked near misses]]
 - [ ] [[tickets/T-24101-gyozi-shougatu-valen-data-island-siblings|T-24101 Add .data islands for GYOZI/801418B0, SHOUGATU/8013F190, and VALEN/80132760 and match 5-function sibling cluster (4,404 B)]]
 - [ ] [[tickets/T-24100-taiiku-data-defs-and-islands|T-24100 Convert TAIIKU .data INCLUDE_RODATA definitions to C and close TAIIKU/OPTION near misses]]
 - [ ] [[tickets/T-24099-date-80132000-final-six|T-24099 Close out remaining DATE 80132000.c functions (func_80132000, func_80137154, func_8013C190, func_8013D5FC, func_8013FAD0, func_8013FD6C)]]
@@ -119,6 +119,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24104-ugen-pass-and-cvt-pass-near-miss-sweep|T-24104 Sweep remaining unmatched functions under ugen_pass and cvt_pass rpar fix and close unlocked near misses]]
 - [ ] [[tickets/T-24102-etc-80143240-rensyu-master-data-islands|T-24102 Match ETC/80143240 remaining functions and add RENSYU/80132040 and MASTER/80139000 .data islands]]
 - [ ] [[tickets/T-24103-cvt-pass-rpar-and-event-8011b848|T-24103 Refine cvt_pass _constant_first to ignore rpar argument stores and match EVENT:func_8011B848 + remaining EVENT/8010FE10 functions]]
 - [ ] [[tickets/T-24092-ugen-block-copy-state-pass|T-24092 Prototype and evaluate ugen block-copy state (F vs B) uniform pass]]

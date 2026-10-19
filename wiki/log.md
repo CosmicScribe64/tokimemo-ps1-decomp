@@ -20555,3 +20555,11 @@ Created [[tickets/T-24106-name-ent-remaining-19]], added its card to `In Progres
 ## [2026-10-18] ticket | T-24102 Match ETC/80143240 remaining functions and add RENSYU/80132040 and MASTER/80139000 .data islands (Done)
 
 Completed [[tickets/T-24102-etc-80143240-rensyu-master-data-islands]] and moved its card to `Done` in [[kanban]]. Enabled `.data` islands in `config/overlays/RENSYU.yaml` (`src/ovl/RENSYU/80132040.c`) and `config/overlays/MASTER.yaml` (`src/ovl/MASTER/80139000.c`), promoted `.data` definitions in `src/ovl/ETC/80143240.c`, `src/ovl/RENSYU/80132040.c`, and `src/ovl/MASTER/80139000.c`, and matched 5 functions (5,480 B): `ETC:func_80143758` (292 B), `ETC:func_80143968` (288 B), `ETC:func_80143A88` (1,180 B), `RENSYU:func_8013325C` (972 B), and `MASTER:func_80139CC8` (2,748 B). Reviewed against `CODING_STANDARDS.md`; `ETC.ok`, `RENSYU.ok`, `MASTER.ok`, `check_headers.py`, `migrate_globals.py --check`, and `sync_protos.py --check-branch` all pass.
+
+## [2026-10-18] ticket | T-24107 Close top live-scored near misses in ETC/80140F50, KANGEI, GEKO, EN_NICHI, and TACO (In Progress)
+
+Created [[tickets/T-24107-etc-taco-ennichi-kangei-geko-near-misses]], added its card to `In Progress` in [[kanban]], and assigned subagent `b22dc939` to promote `ETC:func_80141ABC` (`score=0`) and close the top near misses in `src/ovl/KANGEI/80137B90.c`, `src/ovl/GEKO/80134D10.c`, `src/ovl/EN_NICHI/80132000.c`, and `src/ovl/TACO/{80149F90,8013D1E0,80134930}.c`.
+
+## [2026-10-18] ticket | T-24104 Sweep remaining unmatched functions under ugen_pass and cvt_pass rpar fix and close unlocked near misses (Done)
+
+Completed [[tickets/T-24104-ugen-pass-and-cvt-pass-near-miss-sweep]] and moved its card to `Done` in [[kanban]]. Ran a repo-wide live score sweep across all remaining `INCLUDE_ASM` functions (`build/scratch/t24104/ranked_drafts.txt`) and matched 4 functions (1,584 B) in `src/ovl/SHUGAKU/801344B0.c` (`SHUGAKU:func_80134658` 368 B — bringing `801344B0.c` to 100.0%), `src/ovl/SHUGAKU/80138A60.c` (`SHUGAKU:func_801392B4` 272 B), and `src/ovl/ENDING/80137340.c` (`ENDING:func_80137BB4` 652 B, `ENDING:func_80137E40` 292 B). Reviewed against `CODING_STANDARDS.md`; `SHUGAKU.ok` and `ENDING.ok` pass.

@@ -143,7 +143,34 @@ void func_80139054(void) {
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80139118);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_801392B4);
+s32 func_801392B4(void) {
+    /* FAKE: `six` reserves the top stack word and `(six & 0) + six` promotes the constant 6 to $v0;
+     * `*(s16 *)&D_800CA2DC` keeps the first store out of the second block's scalar web (T-24104). */
+    s32 six;
+    s32 previous_phase;
+
+    if (D_80122CDC == 0) {
+        if (D_800E6280.unk_F5F == 8) {
+            previous_phase = D_800E6280.unk_110A;
+            six = 6;
+            *(s16 *)&D_800CA2DC = (six & 0) + six;
+            func_801386C4();
+            if (previous_phase == D_800E6280.unk_110A) {
+                return 0;
+            }
+            D_800E6280.unk_110A--;
+        }
+        D_8013C970 = D_800CA2DC = D_800CA2CC + 0x1A;
+        func_8004284C();
+        func_8004284C();
+        func_8004284C();
+    } else {
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 -= 1;
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 -= 2;
+        check_para_limit();
+    }
+    func_8004284C();
+}
 
 void func_801393C4(void) {
     D_800CA2DC = (D_800CA2DC - D_800CA2CC) + 2;

@@ -37,7 +37,26 @@ void func_80134620(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801344B0", func_80134658);
+/* FAKE: `* 0 + 8` folds to `li v1, 8` after uopt copy propagation, promoting D_80120698 to $v1 across the block (T-24104, cf. T-22021). */
+void func_80134658(void) {
+    func_801365F4();
+    D_8013BFFC = D_8013C57C;
+    D_8013C000 = D_8013C6B8;
+    D_8013C004 = D_8013C7F4;
+    func_801344B0();
+    load_palette(D_8013C0D0, 0x11, 1, 2, 0);
+    func_80084E90(D_8013C0D4, D_8013C0D8, D_8013C0DC, D_8013C0E0, D_8013C0E4, D_8013C0E8);
+    func_800850D4(D_8013C0C4, D_8013C0C8, D_8013C0C0, D_8013C0CC);
+    D_80120698 = D_80120698 * 0 + 8;
+    D_80120654 = D_80120698;
+    D_800CA2E4 = 0;
+    D_800CA2E8 = 0;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 1;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 2;
+    check_para_limit();
+    func_800AE0F0(D_800CA19C, "ホテル・廊下");
+    func_8004284C();
+}
 
 void func_801347C8(void) {
     bg_read_sub2(0x4285);

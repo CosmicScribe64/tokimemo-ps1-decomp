@@ -50,7 +50,7 @@ extern s16 D_8013CA1C[];
 extern u8 D_8013CC48[];
 
 void func_80134140();
-void func_80137BB4();
+s32 func_80137BB4();
 void func_80137E40();
 void func_80137F64();
 void func_801380B0();

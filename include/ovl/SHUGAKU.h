@@ -495,6 +495,8 @@ void func_80138B20(void);
 void func_80139C80(void);
 void func_80139D40(void);
 
+extern s16 D_8013C970;
+
 #endif /* OVL_SHUGAKU_H */
 
 #ifndef T9540_SHUGAKU_FN68
