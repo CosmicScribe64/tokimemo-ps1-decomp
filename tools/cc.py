@@ -9,9 +9,11 @@ ido: SGI IDO (decompals/ido-static-recomp) run through asm-processor, which
      splices the INCLUDE_ASM functions in and assembles them with GNU as.
      Used for the game code (T-0013, wiki/matching-notes.md). Every IDO
      compile also runs the frame-layout emulation pass (tools/frame_pass.py,
-     T-0016): the original's frames are 16 bytes larger than IDO's, and the
+     T-0016): the original's frames are 16 bytes larger than IDO's, the
      unsigned-load conversion pass around uopt (tools/cvt_pass.py, T-1321,
-     T-5010): the original keeps unsigned byte and halfword globals in a register.
+     T-5010): the original keeps unsigned byte and halfword globals in a register,
+     and the block-copy direction state pass around ugen (tools/ugen_pass.py,
+     T-24092).
      IDO runs in K&R mode (-cckr, T-7000): unsigned char/short promote to
      unsigned int, as in the original.
 gcc: the PsyQ way, cpp | cc1 | maspsx | sdk_aspsx_pass | as. Every GCC compile
@@ -85,11 +87,13 @@ ASM_PROCESSOR = "/opt/asm-processor/build.py"
 ASM_PRELUDE = "include/asmproc_prelude.inc"
 FRAME_PASS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "frame_pass.py")
 CVT_PASS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cvt_pass.py")
+UGEN_PASS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ugen_pass.py")
 # IDO passes replaced by a shim that runs a toolchain emulation pass and then the real pass.
 # tools/cvt_pass.py (T-1321, entry and compare rules T-5010) is in the build since T-5010:
 # with those rules it leaves every matched function unchanged except the ones on unit-private
 # data, which switch on a local copy (wiki/matching-notes.md, "Selector register rule").
-SHIMS = {"as1": FRAME_PASS, "uopt": CVT_PASS}
+# tools/ugen_pass.py (T-24092) steers ugen's sp+240 block-copy direction state (B vs F).
+SHIMS = {"as1": FRAME_PASS, "uopt": CVT_PASS, "ugen": UGEN_PASS}
 
 
 def run_stage(cmd, data, env=None):
@@ -151,8 +155,10 @@ def ido_frame_env(ido_ver, tmp, extra_shims=None):
     extra_shims): `as1` applies the frame-layout emulation pass
     (tools/frame_pass.py, T-0016) to ugen's output before the real as1, for
     every function; `uopt` runs the unsigned-load conversion pass
-    (tools/cvt_pass.py, T-1321, T-5010) around the real uopt. extra_shims
-    adds or replaces shims for experiments; a None value removes one.
+    (tools/cvt_pass.py, T-1321, T-5010) around the real uopt; `ugen` runs the
+    block-copy direction state pass (tools/ugen_pass.py, T-24092) around the
+    real ugen. extra_shims adds or replaces shims for experiments; a None
+    value removes one.
     """
     ido = "/opt/ido/%s" % ido_ver
     shims = {k: v for k, v in dict(SHIMS, **(extra_shims or {})).items() if v}

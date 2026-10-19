@@ -749,7 +749,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24089-date-event-movie-sibling-pairs|T-24089]] DATE and EVENT movie sibling pairs (`DATE:func_8014718C` 1,996 B, `EVENT:func_8011D5C4` 2,036 B, `DATE:func_801462B0` 3,804 B, `EVENT:func_8011C750` 3,700 B, Done; 4 matches, 11,536 B verified default C).
 - [[tickets/T-24090-geko-event-twins-and-near-misses-c|T-24090]] GEKO and EVENT twin pair and guarded near misses C (`GEKO:func_80137120` 436 B, `GEKO:func_801372D4` 468 B, `GEKO:func_80140040` 300 B, `GEKO:func_80133AA0` 432 B, `EVENT:func_80102E54` 672 B, Done; 5 matches, 2,308 B verified default C).
 - [[tickets/T-24091-etc-shugaku-shougatu-siblings-d|T-24091]] ETC, SHUGAKU, and SHOUGATU sibling batch D (`SHUGAKU:func_8013ABAC` 356 B, `SHUGAKU:func_801352B0` 384 B, Done; 2 matches, 740 B verified default C).
-- [[tickets/T-24092-ugen-block-copy-state-pass|T-24092]] Prototype and evaluate `ugen` block-copy state (`F` vs `B`) uniform pass (In Progress).
+- [[tickets/T-24092-ugen-block-copy-state-pass|T-24092]] Uniform `ugen` block-copy state (`F` vs `B`) pass (`tools/ugen_pass.py`, `tools/test_ugen_pass.py`) and 12 promoted block-copy matches across `DATE`, `TACO`, `main`, `TAIIKU`, `SHUGAKU`, `GEKO`, `EVENT`, `GYOZI`, and `SHOUGATU` (Done; 12 matches, 6,748 B verified default C).
 - [[tickets/T-24093-reclassify-date-taco-libgte-asm|T-24093]] Reclassify hand-written `LIBGTE` `RotMatrixX/Y/Z` overlay objects (`DATE/8015A640..A980`, `TACO/8015CF30..D270`) to `asm` subsegments (Done).
 - [[tickets/T-24094-etc-data-island-and-near-complete-overlays|T-24094]] Add `ETC/80143240` `.data` island to match `func_8014354C` (248 B) and match final functions of `DATE2` (`func_801395C8` 2,644 B — `DATE2` 100.0%) and `BUNKASAI` (`func_80142BE8` 1,516 B, `func_801433C0` 944 B, `func_801509A4` 472 B — `BUNKASAI` 100.0%) (Done; 5 matches, 5,824 B verified default C).
 - [[tickets/T-24095-geko-event-batch-d|T-24095]] GEKO and EVENT batch D (`GEKO:func_8013A3C4` 416 B, `GEKO:func_8013AB4C` 404 B, `GEKO:func_8013B10C` 416 B, `GEKO:func_801404FC` 464 B, Done; 4 matches, 1,700 B verified default C).
@@ -761,6 +761,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24101-gyozi-shougatu-valen-data-island-siblings|T-24101]] Add `.data` islands for `GYOZI/801418B0`, `SHOUGATU/8013F190`, and `VALEN/80132760` and match 5-function sibling cluster (4,404 B, In Progress).
 - [[tickets/T-24102-etc-80143240-rensyu-master-data-islands|T-24102]] Match `ETC/80143240` remaining functions and add `RENSYU/80132040` and `MASTER/80139000` `.data` islands (In Progress).
 - [[tickets/T-24103-cvt-pass-rpar-and-event-8011b848|T-24103]] Refine `cvt_pass` `_constant_first` to ignore `rpar` argument stores and match `EVENT:func_8011B848` + remaining `EVENT/8010FE10` functions (In Progress).
+- [[tickets/T-24104-ugen-pass-and-cvt-pass-near-miss-sweep|T-24104]] Sweep remaining unmatched functions under `ugen_pass` and `cvt_pass` `rpar` fix and close unlocked near misses (In Progress).
 
 
 

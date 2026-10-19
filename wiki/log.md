@@ -20518,6 +20518,20 @@ Reviewed against `CODING_STANDARDS.md` and verified with `tools/funcdiff.py --re
   - `EVENT:func_8011C164` (656 B in `src/ovl/EVENT/8010FE10.c`): `MATCH`
 - Created and dispatched [[tickets/T-24103-cvt-pass-rpar-and-event-8011b848]] (`In Progress`) to test ignoring `str mt=MT_R` before `rpar` in `tools/cvt_pass.py`'s `_constant_first` pass and match `EVENT:func_8011B848` (1,460 B) + remaining `src/ovl/EVENT/8010FE10.c` functions.
 
+## [2026-10-18] ticket | T-24092 Done (tools/ugen_pass.py + 12 matches, 6,748 B; 5 C files at 100.0%) and T-24104 In Progress
 
-
-
+Reviewed against `CODING_STANDARDS.md` (including section 7a uniform pass adoption rules) and verified with `tools/test_ugen_pass.py`, `tools/funcdiff.py --resolve`, and `ninja`:
+- [[tickets/T-24092-ugen-block-copy-state-pass]] (`Done`, `tools/ugen_pass.py` + `tools/test_ugen_pass.py` + 12 functions / +6,748 B verified default C, with `0 / 6,337` regressions across all 431 compilation units):
+  - `DATE:func_801518B8` (360 B in `src/ovl/DATE/80151460.c`): `MATCH`
+  - `TACO:func_8013B2A0` (248 B in `src/ovl/TACO/8013B170.c`): `MATCH`
+  - `TACO:func_801472D4` (300 B in `src/ovl/TACO/80146D60.c`): `MATCH`
+  - `TACO:func_8015B1B8` (244 B in `src/ovl/TACO/8015ABF0.c`): `MATCH`
+  - `main:func_80054C74` (504 B in `src/main/80053650.c`): `MATCH`
+  - `TAIIKU:func_80140A90` (2,032 B in `src/ovl/TAIIKU/80140810.c` — **`src/ovl/TAIIKU/80140810.c` is now 100% matched!**): `MATCH`
+  - `SHUGAKU:func_801357AC` (396 B in `src/ovl/SHUGAKU/80135430.c`): `MATCH`
+  - `SHUGAKU:func_80135EA4` (524 B in `src/ovl/SHUGAKU/80135430.c` — **`src/ovl/SHUGAKU/80135430.c` is now 100% matched!**): `MATCH`
+  - `GEKO:func_801406CC` (780 B in `src/ovl/GEKO/8013F360.c`): `MATCH`
+  - `EVENT:func_80109404` (768 B in `src/ovl/EVENT/80107FC0.c` — **`src/ovl/EVENT/80107FC0.c` is now 100% matched!**): `MATCH`
+  - `GYOZI:func_8014494C` (296 B in `src/ovl/GYOZI/80143AD0.c` — **`src/ovl/GYOZI/80143AD0.c` is now 100% matched!**): `MATCH`
+  - `SHOUGATU:func_8014265C` (296 B in `src/ovl/SHOUGATU/80141780.c` — **`src/ovl/SHOUGATU/80141780.c` is now 100% matched!**): `MATCH`
+- Created [[tickets/T-24104-ugen-pass-and-cvt-pass-near-miss-sweep]] (`In Progress`) and relaunched the 6-subagent pool across `T-24099`..`T-24104`.

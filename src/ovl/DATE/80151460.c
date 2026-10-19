@@ -101,13 +101,6 @@ void func_801517C8(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-17204, 14 differing lines; the copy's end pointer takes $t6 where the original has $t7 (one ugen
- * temporary more is consumed before it), which shifts the later constant temporaries by one. Closer pass: in our
- * ugen the copy skips two temporaries only when a direct memory store (global or stack local) is the last store or
- * branch before it; here the loop's back-edge branch is last, and calls, stack arguments, register locals and copy
- * spellings do not change that. A dead store to a local array after the loop does, but adds a `sw` and 8 bytes of
- * frame. */
-#ifdef NON_MATCHING
 void func_801518B8(void) {
     s16 i;
 
@@ -126,9 +119,6 @@ void func_801518B8(void) {
     ((DisplayActor44 *)D_8011ECD0)[97].unk_18 = 3;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_801518B8);
-#endif
 
 void func_80151A20(void) {
     D_8015E208 = D_8015DEB8;

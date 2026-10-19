@@ -1,6 +1,9 @@
+#define SHOUGATU_OVERRIDE_func_8013D5D8 /* s32 return consumes $v0 in ugen for func_8014265C (T-24098) */
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 #include "game.h"
+
+s32 func_8013D5D8();
 
 void func_80141780(void) {
     D_801464B0 = 0x801DA680;
@@ -288,7 +291,21 @@ void func_8014262C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_8014265C);
+void func_8014265C(void) {
+    func_8013D5D8();
+    if (D_800E6280.unk_1104.w++ == 0) {
+        /* FAKE: duplicate copy advances ugen's block-copy state to State B. T-24092 */
+        ((DisplayActor44 *)D_80120650)[2] = ((DisplayActor44 *)D_80120650)[0];
+        ((DisplayActor44 *)D_80120650)[2] = ((DisplayActor44 *)D_80120650)[0];
+        ((DisplayActor44 *)D_80120650)[2].unk_16 = 4;
+    }
+    if ((u16)D_800CA150 == 7 && D_800CA154 == 1 && check_end_k() == 0) {
+        ((DisplayActor44 *)D_80120650)[2].unk_02 = 1;
+    } else {
+        ((DisplayActor44 *)D_80120650)[2].unk_02 = 0;
+        ((DisplayActor44 *)D_80120650)[2].unk_18 = 0;
+    }
+}
 
 void func_80142784(void) {
     if (D_80122CDC != 0) {

@@ -480,7 +480,44 @@ void func_801404FC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_801406CC);
+void func_801406CC(void) {
+    /* FAKE: unused 4-byte local places t0..t2 at the original stack offsets; real source unknown. T-24092 */
+    s32 pad;
+    s16 i;
+    GekoShorts10 t0;
+    GekoShorts10 t1;
+    GekoShorts10 t2;
+
+    t0 = D_801472C4;
+    t1 = D_801472D8;
+    t2 = D_801472EC;
+    func_8013F410();
+    func_80043914(D_8014708C, 0x11, 1, 2, 0);
+    func_80084E90(D_80147090, D_80147094, D_80147098, D_8014709C, D_801470A0, D_801470A4);
+    for (i = 0; i < 6; i++) {
+        D_800E6280.unk_10A5[i + 0x3A] = 0xC;
+    }
+    func_800850D4(D_80147080, D_80147084, D_8014707C, D_80147088);
+    D_800CA360 = 1;
+    ((DisplayActor44 *)D_80120650)[1].unk_04 = 8;
+    ((DisplayActor44 *)D_80120650)->unk_04 = 8;
+    ((DisplayActor44 *)D_80120650)[1].unk_01 = 0xC;
+    ((DisplayActor44 *)D_80120650)->unk_01 = 0xC;
+    ((DisplayActor44 *)D_80120650)[2] = ((DisplayActor44 *)D_80120650)[0];
+    ((DisplayActor44 *)D_80120650)[2].unk_01 = 0xB;
+    ((DisplayActor44 *)D_80120650)[2].unk_02 = 0x40;
+    ((DisplayActor44 *)D_80120650)[2].unk_18 = 0x14;
+    ((DisplayActor44 *)D_80120650)[2].unk_26 = -6;
+    ((DisplayActor44 *)D_80120650)[2].unk_2A = -0x30;
+    ((DisplayActor44 *)D_80120650)[2].unk_07 = 0x80;
+    for (i = 0; i < 0xA; i++) {
+        ((DisplayActor44 *)D_8011ECD0)[i + 99] = ((DisplayActor44 *)D_80120650)[2];
+        ((DisplayActor44 *)D_8011ECD0)[i + 99].unk_18 = t0.v[i];
+        ((DisplayActor44 *)D_8011ECD0)[i + 99].unk_26 = t1.v[i] - 0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 99].unk_2A = t2.v[i] - 0x78;
+    }
+    func_8004284C();
+}
 
 void func_801409D8(void) {
     bg_read_sub2(0x4045);

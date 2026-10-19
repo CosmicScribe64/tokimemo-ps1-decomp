@@ -1,8 +1,10 @@
 #define MAIN_API_OVERRIDE_func_8008FF60 /* s32 return (like DATE sibling func_800850D4 in main_api.h): consumes $v0 in ugen for func_801444CC and func_80145084 (T-24098) */
+#define GYOZI_OVERRIDE_func_80140050 /* s32 return consumes $v0 in ugen for func_8014494C (T-24098) */
 #include "common.h"
 #include "ovl/GYOZI.h"
 
 s32 func_8008FF60();
+s32 func_80140050();
 
 void func_80143AD0(void) {
     D_80148B60 = 0x801DA680;
@@ -289,7 +291,21 @@ void func_8014491C(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143AD0", func_8014494C);
+void func_8014494C(void) {
+    func_80140050();
+    if (D_800F6474++ == 0) {
+        /* FAKE: duplicate copy advances ugen's block-copy state to State B. T-24092 */
+        D_8012B8C0[2] = D_8012B8C0[0];
+        D_8012B8C0[2] = D_8012B8C0[0];
+        D_8012B8C0[2].unk_16 = 4;
+    }
+    if ((u16)D_800D9250 == 7 && (u16)D_800D9254 == 1 && func_8005B32C() == 0) {
+        D_8012B8C0[2].unk_02 = 1;
+    } else {
+        D_8012B8C0[2].unk_02 = 0;
+        D_8012B8C0[2].unk_18 = 0;
+    }
+}
 
 void func_80144A74(void) {
     if (D_8012E66C == 0) {

@@ -89,12 +89,6 @@ void func_80135630(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-22014, 10 rows; ugen takes t8 for the end pointer of the block copy where the original takes t7 (one
- * temporary fewer skipped; the known copy-state gap), every later t register follows. The last global byte store puts
- * ugen in the two-skip state; a label, goto, empty block, moved 0xFFFFFF constant, store loop, bit-field, common or
- * static symbol keeps it, and only a store through a register base (volatile, absolute address) gives the original's
- * one skip, with other code. Viewsweep and autotweak (365 tries) found nothing. */
 void func_801357AC(void) {
     s16 i;
 
@@ -117,9 +111,6 @@ void func_801357AC(void) {
     func_80046754(0x801C4000, 0x25, 0x80);
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_801357AC);
-#endif
 
 void func_80135938(void) {
     func_80044750(0x203);
@@ -251,10 +242,6 @@ void func_80135DB8(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-22014, 10 rows; ugen takes t3 for the end pointer of the block copy where the original takes t2 (one
- * more temporary skipped; the known copy-state gap, same as func_801357AC, whose note lists the forms tried), every
- * later t register follows. Viewsweep and autotweak (673 tries) found nothing. */
 void func_80135EA4(void) {
     s16 i;
 
@@ -290,9 +277,6 @@ void func_80135EA4(void) {
     func_80046754(0x801C4000, 0x25, 0x80);
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_80135EA4);
-#endif
 
 /* Record 99 of the D_8011ECD0 display table: unk_24..unk_30 are two 16.16 position pairs (the s32 views below).
  * FAKE: D_8013C2E8 is read and written through an address-taken view, so uopt does not promote the counter into a

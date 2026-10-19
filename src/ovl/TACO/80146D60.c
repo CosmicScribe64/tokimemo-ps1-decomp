@@ -103,13 +103,6 @@ void func_801471D0(u32 *arg0) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-19015 (T-16561), 20 differing lines (10 rows); frame and body match (local MATRIX at sp+0x2C, `s32 pad` declared first for the 4 spare bytes, one-line inner `for` keeps the increments in the original order); the ugen temporaries of the block copy are $t7/$t8 against the original $t8/$t9, one temporary short (T-10520, rows in wiki/data/t0018-cases.md).
- * T-16561 closer: the struct copy skips one ugen register after its address registers when the last store before it
- * went through a pointer register (the loop stores here), two after a store through $sp or a global, after a call or
- * at function entry; the original has two. Copy, record and loop spellings, labels and no-op blocks do not change it.
- * T-19015 closer: still 20 lines. A global store after the loops gives the original's $t8 (one `.set noat` in cc -S)
- * but adds 3 instructions; `if (i) {}`, `arg4 = arg4;` and `*(MATRIX *)` casts on both sides keep $t7 */
 s32 func_801472D4(arg0, arg1, arg2, arg3, arg4, arg5)
 s32 arg0;
 s32 arg1;
@@ -122,7 +115,7 @@ u8 arg5;
     MATRIX m;
     s32 i;
     s32 j;
-    s32 pad;
+    s32 pad; /* FAKE: unused 4-byte local places m at sp+0x2C; real source unknown. T-16561 */
 
     if (((s32)arg2 & 3) || ((s32)arg3 & 3)) {
         return -1;
@@ -142,9 +135,6 @@ u8 arg5;
     ((TcTransformObj50 *)rec->unk4[0])->unk_00 = 0;
     return (s32)rec;
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_801472D4);
-#endif
 
 /* s32 counter against a u32 bound: IDO cannot count the trips and keeps the loop rolled, like the
  * original (T-5020). */

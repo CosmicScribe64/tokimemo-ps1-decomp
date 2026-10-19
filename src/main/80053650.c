@@ -551,10 +551,6 @@ void func_80054C4C(void) {
     bzero(D_80123120, 0x2000);
 }
 
-/* NON_MATCHING: T-17007, 2 differing lines; only the struct copy's end pointer differs (t4, the original t5): ugen's
-   block copy is in the one-skip state after the if/else of calls, the original in the two-skip state (T-19001 rule,
-   a compiler-version gap, no C form found) */
-#ifdef NON_MATCHING
 s32 func_80054C74(s32 arg0) {
     u8 name[0x1C];
     u32 i;
@@ -598,9 +594,6 @@ s32 func_80054C74(s32 arg0) {
     }
     return 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054C74);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054E6C);
 

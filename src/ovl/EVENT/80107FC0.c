@@ -456,7 +456,43 @@ void func_801092C8(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80107FC0", func_80109404);
+void func_80109404(void) {
+    /* FAKE: unused 8-byte local places t0..t2 at the original stack offsets; real source unknown. T-24092 */
+    s32 pad[2];
+    EvShorts10 t0;
+    EvShorts10 t1;
+    EvShorts10 t2;
+    s16 i;
+
+    t0 = D_80123B7C;
+    t1 = D_80123B90;
+    t2 = D_80123BA4;
+    func_80108330();
+    func_80012D64(D_8012396C, 0x11, 1, 2, 0);
+    func_8004C46C(D_80123970, D_80123974, D_80123978, D_8012397C, D_80123980, D_80123984);
+    for (i = 0; i < 6; i++) {
+        D_800B0860[i + 0x1091] = 0xC;
+    }
+    func_8004C6B0(D_80123960, D_80123964, D_8012395C, D_80123968);
+    ((DisplayActor44 *)D_800EAFA0)[1].unk_04 = 8;
+    ((DisplayActor44 *)D_800EAFA0)->unk_04 = 8;
+    ((DisplayActor44 *)D_800EAFA0)[1].unk_01 = 0xC;
+    ((DisplayActor44 *)D_800EAFA0)->unk_01 = 0xC;
+    ((DisplayActor44 *)D_800EAFA0)[2] = ((DisplayActor44 *)D_800EAFA0)[0];
+    ((DisplayActor44 *)D_800EAFA0)[2].unk_01 = 0xB;
+    ((DisplayActor44 *)D_800EAFA0)[2].unk_02 = 0x40;
+    ((DisplayActor44 *)D_800EAFA0)[2].unk_18 = 0x14;
+    ((DisplayActor44 *)D_800EAFA0)[2].unk_26 = -6;
+    ((DisplayActor44 *)D_800EAFA0)[2].unk_2A = -0x30;
+    ((DisplayActor44 *)D_800EAFA0)[2].unk_07 = 0x80;
+    for (i = 0; i < 0xA; i++) {
+        ((DisplayActor44 *)D_800E9620)[i + 99] = ((DisplayActor44 *)D_800EAFA0)[2];
+        ((DisplayActor44 *)D_800E9620)[i + 99].unk_18 = t0.v[i];
+        ((DisplayActor44 *)D_800E9620)[i + 99].unk_26 = t1.v[i] - 0xA0;
+        ((DisplayActor44 *)D_800E9620)[i + 99].unk_2A = t2.v[i] - 0x78;
+    }
+    func_80011DFC();
+}
 
 void func_80109704(void) {
     D_80120678 = D_801205CC;

@@ -109,21 +109,7 @@ s32 func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g) {
     return id;
 }
 
-/* NON_MATCHING: T-22025, 8 rows (T-19026, T-16563); frame and MATRIX offset match (declare i, j before matrix: later-declared
- * locals sit lower), only the struct-copy temporary differs (ugen t2 against t3, T-0018).
- * Closer pass: before the copy's data register ugen skips one free temporary when the last store it emitted went
- * through a pointer (here the loop's stores to matrix), two after a direct stack or global store or at function entry.
- * The original copy register is t3, as if it skipped two (t9, t2). A stack store such as `matrix.m[0][0] = 0;` before
- * the copy gives t3 but adds code; a uopt range in t2 gives t3 but moves the loop registers. No form without extra
- * code found; TACO func_801472D4 has the same miss. T-19026: empty tests on the parameters (removed by uopt or they
- * change the frame), swapped operands of the two multiplies and both orders of the copy and the flag store do not
- * move it either. T-19026 closer: still 8 lines. In `cc -S` ugen loads &matrix into its own temporary t2
- * (`addu t2,sp,16; move v1,t2; move t0,t2`, which as1 folds to `addiu t0,sp,32; or v1,t0,zero`), so t2 is used once
- * before the loop. The original's temporaries (t3/t4 in the loop, t5..t8 after it, copy t3) are exactly what IDO gives
- * when t2 is a uopt register and &matrix is held in it. No C form found that does this: counter and parameter
- * types, table-typed parameters, pointer walks, a MATRIX pointer in obj's slot, do/while and != loops (about 110 more
- * variants) give 16 to 80 listing lines. */
-#ifdef NON_MATCHING
+/* Declare i, j before matrix so matrix sits at the original stack offset (T-16563). */
 void func_8015B1B8(arg0, arg1, arg2, arg3)
     s32 arg0;
     s16 *arg1;
@@ -147,9 +133,6 @@ void func_8015B1B8(arg0, arg1, arg2, arg3)
     obj->transform = matrix;
     obj->unk_00 = 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015B1B8);
-#endif
 
 void func_8015B2AC(s32 arg0, s16 *arg1) {
     s32 pad[7]; /* FAKE: unused local reproduces the original frame (0x60) and spill offsets; real source unknown. T-6070 */
