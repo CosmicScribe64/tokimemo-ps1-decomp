@@ -33,13 +33,22 @@ typedef struct RensyuTbl11 {
 typedef struct RensyuTbl13 {
     s16 v[13];
 } RensyuTbl13; /* size 0x1A */
+/* T-24138: 13 words at D_801342F4 and D_80134328, copied to the stack by func_80132390 (52 bytes each). */
+typedef struct RensyuWords13 {
+    s32 v[13];
+} RensyuWords13; /* size 0x34 */
+extern RensyuWords13 D_801342F4;
+extern RensyuWords13 D_80134328;
 extern RensyuTbl11 D_80134378;
 extern RensyuTbl11 D_80134390;
+extern RensyuTbl13 D_8013435C;
 extern RensyuTbl13 D_801343A8;
 extern u8 D_801342C0;
 extern u8 D_801342C8[5];
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80132000(void);
+void func_80133E5C(void);
 void func_801340B0(void);
 void func_80133FB4(void);
 void func_8013405C(void);

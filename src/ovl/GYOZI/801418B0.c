@@ -181,8 +181,7 @@ void func_8014210C(void) {
     func_8004DE1C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: score=54 (268/272 insns). First 231 instructions match 100% with the .data island; in the bottom condition block IDO 5.3 uopt CSEs (g->unk_03E == 0x5F) into $a1 instead of keeping 0x5F in $a1 via RLDC. T-24101. */
+/* Fall-through s32 return preserves the early-return register ($v0 = 0). T-24137. */
 s32 func_801421B4(void) {
     s16 i;
     GyoziWork *g;
@@ -245,14 +244,15 @@ s32 func_801421B4(void) {
                 + (g->unk_03E == 0x61) * 0x17
                 - (D_80148828[D_80148818] == 0xB && g->unk_03E == 0x5F)
                 + 1;
-            ((DisplayActor44 *)D_80129F40)[97].unk_26 = D_80148818 * 0x4E - D_80148818 - 0x75;
+            /* FAKE: *(u8 *)& keeps D_80148818 unwidened ($a2); !(!=) and * 0 keep 0x5F in $a1 without CSE. T-24137. */
+            ((DisplayActor44 *)D_80129F40)[97].unk_26 = *(u8 *)&D_80148818 * 0x4E - *(u8 *)&D_80148818 - 0x75;
             ((DisplayActor44 *)D_80129F40)[97].unk_2A = -0x3C;
             ((DisplayActor44 *)D_80129F40)[97].unk_1C = 0;
             D_80148620 += D_80148828[D_80148818] * 3 + g->unk_03E - 0x5F;
             D_80148820 = 1;
-            if ((g->unk_03E == 0x5F && D_80148828[D_80148818] == 0 && g->unk_100.unk_02 >= 0x64)
+            if ((!(g->unk_03E != 0x5F) && D_80148828[D_80148818] == 0 && g->unk_100.unk_02 >= 0x64)
                 || ((D_80148828[D_80148818] == 0 & g->unk_03E == 0x5F) && g->unk_670 >= 0x64)
-                || ((D_80148828[D_80148818] == 1 & g->unk_03E == 0x5F) && g->unk_0FA >= 0x46)
+                || ((D_80148828[D_80148818] == 1 & (g->unk_03E + (g->unk_03E * 0)) == 0x5F) && g->unk_0FA >= 0x46)
                 || ((D_80148828[D_80148818] == 1 & g->unk_03E == 0x61) && g->unk_0FA >= 0x64)
                 || ((D_80148828[D_80148818] == 2 & g->unk_03E == 0x60) && g->unk_0FA >= 0x64)) {
                 D_80148624 = 1;
@@ -261,9 +261,6 @@ s32 func_801421B4(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_801421B4);
-#endif
 
 void func_801425F4(void) {
     func_8008A0D4(0x4183);

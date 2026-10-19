@@ -431,17 +431,18 @@ void func_801399C0(void) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139A30);
 
-/* NON_MATCHING: T-11340, same 50 instructions and block shape, registers differ: IDO colours
- * v first ($v0) where the original gives the GameState word $v0, t $v1 and v $a3; g lands in
- * $a3 instead of $t2, and the second store sits before the argument loads. Needs the volatile
- * D_8013D3B8 declaration: it keeps both stores and loads lhu straight into v. */
-#ifdef NON_MATCHING
-void func_80139E3C(arg0)
-    s32 arg0;
-{
+#define F80_BOOST_9E3C \
+    (((D_800E6280.unk_F80 ^ 1) * 0) + ((D_800E6280.unk_F80 ^ 2) * 0) + ((D_800E6280.unk_F80 ^ 3) * 0) + \
+     ((D_800E6280.unk_F80 ^ 4) * 0) + ((D_800E6280.unk_F80 ^ 5) * 0) + ((D_800E6280.unk_F80 ^ 6) * 0) + \
+     ((D_800E6280.unk_F80 ^ 7) * 0) + ((D_800E6280.unk_F80 ^ 8) * 0) + ((D_800E6280.unk_F80 ^ 9) * 0))
+#define T_BOOST_9E3C \
+    ((((s32)t ^ 1) * 0) + (((s32)t ^ 2) * 0) + (((s32)t ^ 3) * 0) + (((s32)t ^ 4) * 0) + (((s32)t ^ 5) * 0))
+#define T2_BOOST_9E3C ((t2[2] * 0) + (t2[3] * 0) + (t2[4] * 0))
+
+void func_80139E3C(s32 arg0) {
     u16 v;
     s32 *t;
-    u8 g;
+    s32 *t2;
 
     if (arg0 > 0) {
         D_8013D3B8 = arg0;
@@ -450,25 +451,25 @@ void func_80139E3C(arg0)
     if (arg0 < 0) {
         v++;
     }
-    if (D_800E6280.unk_F80 & 4) {
+    /* FAKE: zero-valued xor*0 and ptr[k]*0 terms reproduce uopt's priority ordering ($v0/$v1/$a3) and (void *) cast suppresses cvt_pass widening so ugen holds unk_F5F in $t2. T-24140 */
+    if ((D_800E6280.unk_F80 + F80_BOOST_9E3C) & 4) {
         v++;
     }
     if ((D_800E6280.unk_F80 & 1) && (v != 0)) {
         v--;
     }
-    g = D_800E6280.unk_F5F;
-    t = D_8013D360[g & 0xF];
-    D_8013D3B8 = v;
+    t = D_8013D360[D_800E6280.unk_F5F & 0xF];
+    D_8013D3B8 = v + T_BOOST_9E3C;
     if (t != 0) {
-        t += v * 2;
-        D_8013D3B8 = v;
-        func_80046290(t[0], t[1], g);
+        t2 = (t + ((s32)t * 0)) + v * 2;
+        func_80046290(t2[0] + T2_BOOST_9E3C, t2[1], ((D_8013D3B8 = v) * 0) + (u32)(void *)D_800E6280.unk_F5F);
     }
     func_80044750(0x300);
 }
-#else
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139E3C);
-#endif
+#undef F80_BOOST_9E3C
+#undef T_BOOST_9E3C
+#undef T2_BOOST_9E3C
+
 
 void func_80139F04(void) {
     if (D_800E6280.unk_F80 & 1) {

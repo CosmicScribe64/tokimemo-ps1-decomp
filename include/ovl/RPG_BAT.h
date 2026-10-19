@@ -559,6 +559,7 @@ typedef struct RpgMotion20 {
 void func_8015A6D4(void);
 void func_8015A744(void);
 void func_8015A8B4(void);
+s32 func_80132B34(void);
 void func_80132CE4(void);
 void func_80132DE8(void);
 void func_80132EE0(void);

@@ -183,8 +183,7 @@ void func_801347B4(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11310, T-24125, 2 rows: passing girl to func_8004284C colors girl to $a0; only &D_800E6280 base register ($v1 vs $a0) on rows 13-14 differs. */
-#ifdef NON_MATCHING
+/* FAKE: passing girl to func_800847B8 colors the entry range to $a0, and the outer * 0 subtree reserves $v1 so D_800E6280.unk_F5F is promoted to $a0 after get_g_zyotai_s without emitting instructions in ugen. T-24137 */
 void func_801347E0(void) {
     u32 state;
     s32 girl;
@@ -194,14 +193,10 @@ void func_801347E0(void) {
     func_800847B8(girl);
     D_80122CDC = D_80122CEC;
     state = (u8)get_g_zyotai_s(6) & 0x7F;
-    girl = D_800E6280.unk_F5F;
-    if ((girl == 6) && (state < 2) && (D_80143B20 == 0)) {
+    if ((((((D_80143B00 * 0) + (D_80143B00 * 0) + (D_80143B00 * 0)) * 0) + D_800E6280.unk_F5F) == ((D_800E6280.unk_F5F * 0) + 6)) && (state < 2) && (D_80143B20 == 0)) {
         D_80143AF4 = D_80143A60;
         D_80143AF8 = D_80143A9C;
         D_80143AFC = D_80143AD8;
     }
-    func_8004284C(girl);
+    func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134120", func_801347E0);
-#endif

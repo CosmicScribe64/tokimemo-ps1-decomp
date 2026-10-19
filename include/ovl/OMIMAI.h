@@ -16,6 +16,7 @@ extern s32 D_80134ABC;
 extern s32 D_80134AEC;
 void func_80133424();
 void func_801337EC();
+void func_801340E4(void);
 
 /* three parallel tables per object (13 words each), indexed by a fixed slot per value of
  * D_800E6280.unk_F5F (func_8013285C, func_80132EB0, func_801340E4; T-0500) */

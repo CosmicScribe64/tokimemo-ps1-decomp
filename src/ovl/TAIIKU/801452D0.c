@@ -1012,7 +1012,57 @@ void func_80147A6C(s32 index) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147B14);
+void func_80147B14(s32 index) {
+    s32 i;
+    Fix32 px;
+    Fix32 py;
+    TaiikuHalf10 t60;
+    TaiikuHalf10 t4C;
+    TaiikuHalf8 t3C;
+    TaiikuHalf8 t2C;
+
+    t60 = D_8014A620;
+    t4C = D_8014A634;
+    t3C = D_8014A648;
+    t2C = D_8014A658;
+    px.w = ((DisplayFixActor44 *)D_8011ECD0)[index + 96].unk_24.w;
+    px.w += *(s32 *)&D_8014A454[index].unk_00;
+    py.w = ((DisplayFixActor44 *)D_8011ECD0)[index + 96].unk_28.w;
+    py.w += *(s32 *)&D_8014A454[index].unk_04;
+    i = 0;
+    do {
+        if (DISP(index + 96).unk_18 == D_8014A4C4[i] + index * 0x13) {
+            py.h[1] += t60.h[i];
+            px.h[1] += t4C.h[i];
+        }
+        i++;
+    } while (&D_8014A4C4[i] < D_8014A4D4);
+    i = 2;
+    do {
+        if (DISP(index + 96).unk_18 == D_8014A4D4[i] + index * 0x13) {
+            px.h[1] += 0x16;
+            py.h[1] -= 4;
+            py.h[1] += t3C.h[i];
+        }
+        i++;
+    } while (&D_8014A4D4[i] < &D_8014A4D4[8]);
+    for (i = 2; i < 8; i++) {
+        if (DISP(index + 96).unk_18 == D_8014A4E4[i] + index * 0x13) {
+            px.h[1] -= 0xC;
+            py.h[1] -= 4;
+            py.h[1] += t2C.h[i];
+        }
+    }
+    DISP(index + 100).unk_26 = px.h[1];
+    DISP(index + 100).unk_2A = py.h[1];
+    for (index = 0; index < 3; index++) {
+        if (D_8014A400[index].position.h[1] - D_8014A3DE >= 0x1E1 || D_8014A400[index].position.h[1] - D_8014A3DE < -0xA0) {
+            DISP(101 + index).unk_03 = 0;
+        } else {
+            DISP(101 + index).unk_03 = 0xA4;
+        }
+    }
+}
 
 void func_80147F10(void) {
     s32 var_s0;

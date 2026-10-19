@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "psx_types.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/data/main/8004E500.data", text_list);
@@ -225,7 +226,86 @@ u8 get_now_k(void) {
     return 0xFF;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", disp_string);
+void disp_string(void) {
+    SPRT_8 *p;
+    s32 i;
+    u32 k;
+    s32 j;
+    u32 ot;
+    s32 flag;
+
+    j = 0;
+    ot = ((Entry8 *)text_list)[0].unk_06;
+    if (ot == 0) {
+        ot = 1;
+    }
+    flag = 1;
+    for (i = 0, k = 0; i < text_list_count.total && i < text_list_count.pos; i++, k++) {
+        if (k >= ((Entry8 *)text_list)[j].unk_05) {
+            k = 0;
+            j++;
+        }
+        if (((Entry8 *)text_list)[j].unk_07 == 1) {
+            if (ot != ((Entry8 *)text_list)[j].unk_06) {
+                ot = ((Entry8 *)text_list)[j].unk_06;
+                flag = 1;
+                if (ot == 0) {
+                    ot = 1;
+                }
+            }
+            p = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
+            func_8009F090(p);
+            SetSemiTrans(p, 0);
+            SetShadeTex(p, 0);
+            p->r0 = D_800E6280.unk_03A;
+            p->g0 = D_800E6280.unk_03A;
+            p->b0 = D_800E6280.unk_03A;
+            p->x0 = ((Entry8 *)text_list)[j].unk_00 + D_800E6280.unk_014[D_8011ECA0] + k * text_list_count.unk_6A;
+            p->y0 = ((Entry8 *)text_list)[j].unk_02 + D_800E6280.unk_018[D_8011ECA0];
+            /* FAKE: T-24141, same-line UV/Y stores reproduce original as1 instruction scheduling. */
+            p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
+            p->clut = func_8009ED74((((Entry8 *)text_list)[j].unk_04 & 8) * 4 + 0x100, (((Entry8 *)text_list)[j].unk_04 & 7) + 0x1F8);
+            AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + ot * 4], p);
+
+            p = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
+            func_8009F090(p);
+            SetSemiTrans(p, 0);
+            SetShadeTex(p, 0);
+            p->r0 = 0;
+            p->g0 = 0;
+            p->b0 = 0;
+            p->x0 = ((Entry8 *)text_list)[j].unk_00 + D_800E6280.unk_014[D_8011ECA0] + k * text_list_count.unk_6A + 1;
+            /* FAKE: T-24141, same-line Y/UV stores reproduce original as1 instruction scheduling. */
+            p->y0 = ((Entry8 *)text_list)[j].unk_02 + D_800E6280.unk_018[D_8011ECA0] + 1; p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
+            p->clut = func_8009ED74((((Entry8 *)text_list)[j].unk_04 & 8) * 4 + 0x110, (((Entry8 *)text_list)[j].unk_04 & 7) + 0x1F8);
+            AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + ot * 4], p);
+
+            if (i == 0x7F) {
+                goto_tpage(0x300, 0x100, ot, 0, 0);
+                flag = 0;
+            } else if (i == 0xFF) {
+                goto_tpage(0x340, 0x100, ot, 0, 0);
+                flag = 0;
+            } else if (flag != 0) {
+                flag = 0;
+                if (i >= 0x100) {
+                    goto_tpage(0x380, 0x100, ot, 0, 0);
+                } else if (i >= 0x80) {
+                    goto_tpage(0x340, 0x100, ot, 0, 0);
+                } else {
+                    goto_tpage(0x300, 0x100, ot, 0, 0);
+                }
+            }
+        }
+    }
+    if (i >= 0x100) {
+        goto_tpage(0x380, 0x100, ot, 0, 0);
+    } else if (i >= 0x80) {
+        goto_tpage(0x340, 0x100, ot, 0, 0);
+    } else {
+        goto_tpage(0x300, 0x100, ot, 0, 0);
+    }
+}
 
 /* Declaration order: IDO gives every local a stack slot once one local (start) lives in memory, and the
  * locals declared before it sit above it; these six reproduce the original frame (T-17020, T-3330). The

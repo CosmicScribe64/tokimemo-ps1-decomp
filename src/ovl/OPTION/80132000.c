@@ -70,7 +70,49 @@ void func_801320C0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132384);
+void func_80132384(void) {
+    s32 i;
+    s32 n;
+    s32 y;
+    s16 *p;
+    Arrs4x8 sp50;
+    s32 pad[2]; /* FAKE: places sp50 at sp+0x50 (0xA0 frame); real source unknown. T-24140 */
+
+    if (D_80120676 < -0xA0) {
+        D_80120676 += 0xC;
+    } else {
+        D_80120676 = -0xA0;
+    }
+    func_801325A0(&sp50);
+    i = 0;
+    do {
+        n = i + 1;
+        if ((n ^ 0) != D_800E6280.unk_1109) { /* FAKE: '^ 0' swaps the beq operand order to the original's; real source unknown. T-24140 */
+            p = func_8004E970(i);
+            if (p[0] < -0x78) {
+                p[0] += 0xC;
+            } else {
+                p[0] = -0x78;
+            }
+        } else {
+            /* FAKE: 20-byte array stride (Uixa 20) and i++ prevent uopt from hoisting 20 into $s5 or strength-reducing i * 20; real source unknown. T-24140 */
+            y = (s32)(*(u8 (*)[8][20])0)[i] - 0x58;
+            p = func_8004E970(i++);
+            if (p[1] < y) {
+                p[1] += 0xC;
+                D_801206BE += 0xC;
+                if (p[1] >= y) {
+                    p[1] = y;
+                    D_801206BE = sp50.b[D_800E6280.unk_1093] + 6;
+                }
+            } else {
+                p[1] = y;
+                D_801206BE = sp50.b[D_800E6280.unk_1093] + 6;
+            }
+        }
+        i = n;
+    } while (n != 8);
+}
 
 void func_801324E8(void) {
     s32 i;

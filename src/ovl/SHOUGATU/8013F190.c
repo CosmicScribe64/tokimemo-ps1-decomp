@@ -207,8 +207,7 @@ void func_8013FA80(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: score=61 (285/288 insns). First 231 instructions match 100% with the .data island; in the bottom condition block IDO 5.3 uopt CSEs (g->unk_03E == 0x5F) into $a1 instead of keeping 0x5F in $a1 via RLDC. T-24101. */
+/* Fall-through s32 return preserves the early-return register ($v0 = 0). T-24137. */
 s32 func_8013FB28(void) {
     s16 i;
     GameState *g;
@@ -274,14 +273,15 @@ s32 func_8013FB28(void) {
                 + (g->unk_03E == 0x61) * 0x17
                 - (D_80146168[D_80146158] == 0xB && g->unk_03E == 0x5F)
                 + 1;
-            ((DisplayActor44 *)D_8011ECD0)[97].unk_26 = D_80146158 * 0x4E - D_80146158 - 0x75;
+            /* FAKE: *(u8 *)& keeps D_80146158 unwidened ($a2); !(!=) and * 0 keep 0x5F in $a1 without CSE. T-24137. */
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_26 = *(u8 *)&D_80146158 * 0x4E - *(u8 *)&D_80146158 - 0x75;
             ((DisplayActor44 *)D_8011ECD0)[97].unk_2A = -0x3C;
             ((DisplayActor44 *)D_8011ECD0)[97].unk_1C = 0;
             D_80145F2C += D_80146168[D_80146158] * 3 + g->unk_03E - 0x5F;
             D_80146160 = 1;
-            if ((g->unk_03E == 0x5F && D_80146168[D_80146158] == 0 && g->unk_108.unk_02 >= 0x64)
+            if ((!(g->unk_03E != 0x5F) && D_80146168[D_80146158] == 0 && g->unk_108.unk_02 >= 0x64)
                 || ((D_80146168[D_80146158] == 0 & g->unk_03E == 0x5F) && g->unk_66C[5].unk_00 >= 0x64)
-                || ((D_80146168[D_80146158] == 1 & g->unk_03E == 0x5F) && g->unk_100.unk_02 >= 0x46)
+                || ((D_80146168[D_80146158] == 1 & (g->unk_03E + (g->unk_03E * 0)) == 0x5F) && g->unk_100.unk_02 >= 0x46)
                 || ((D_80146168[D_80146158] == 1 & g->unk_03E == 0x61) && g->unk_100.unk_02 >= 0x64)
                 || ((D_80146168[D_80146158] == 2 & g->unk_03E == 0x60) && g->unk_100.unk_02 >= 0x64)) {
                 D_80145F30 = 1;
@@ -290,9 +290,6 @@ s32 func_8013FB28(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_8013FB28);
-#endif
 
 void func_8013FFA8(void) {
     bg_read_sub2(0x41E4);

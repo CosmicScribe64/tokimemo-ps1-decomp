@@ -117,9 +117,297 @@ void func_801320E0(void) {
     Default_Disp();
 }
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80132390);
+/* FAKE: T-24138. Reading D_800E6280.unk_03F into unused `pad2` at entry puts it in
+ * cvt_pass's entry set so its comparisons lose CVT J<-L; `unk_03F + (unk_03F * 0)` in
+ * the 3rd `&&` clause keeps CVT J<-L on both loads so uopt CSEs `cvt(unk_03F)` into $v0
+ * there; `((unk_03F < kU) * 0)` in the two `else if` conditions strips CVT J<-L via
+ * COMPARE_OPS and extends unk_03F's live range so uopt emits RLOD into $v0 at .L801324CC
+ * while ugen discards `* 0` with zero instructions. */
+void func_80132390(void) {
+    s32 sum0;
+    s32 sum10;
+    s32 temp_a0;
+    s32 var_s0;
+    s32 pad2;
+    RensyuWords13 tbl1;
+    RensyuWords13 tbl2;
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80132A28);
+    pad2 = D_800E6280.unk_03F;
+    tbl1 = D_801342F4;
+    tbl2 = D_80134328;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        temp_a0 = func_8008647C();
+        if (((((u32)D_800E6280.unk_54C[0].w << 2) >> 31) == 1) &&
+            (D_800E6280.unk_03E == (((u32)D_800E6280.unk_54C[0].w << 20) >> 25)) &&
+            ((D_800E6280.unk_03F + (D_800E6280.unk_03F * 0)) == (D_800E6280.unk_54C[0].h[0] >> 12)) &&
+            (D_800E6280.unk_040 == (D_800E6280.unk_54C[0].h[1] & 0x1F))) {
+            D_801342D0 = 0xFF;
+            func_80042940(6);
+        } else if ((((((u32)D_800E6280.unk_1BC[11].unk_0C.w << 20) >> 29) + ((D_800E6280.unk_03F < 1U) * 0)) >= 3U) &&
+                   ((D_800E6280.unk_1BC[11].unk_14[0xB] + ((D_800E6280.unk_03F < 2U) * 0)) == 0)) {
+            D_800E6280.unk_1BC[11].unk_14[0xB] = 1;
+            D_801342D0 = 0xB;
+            if ((D_800E6280.unk_03F >= 6U) && (D_800E6280.unk_03F < 10U)) {
+                func_80062CD0(tbl1.v[11]);
+            } else {
+                func_80062CD0(tbl2.v[11]);
+            }
+            func_8004284C();
+        } else if (((D_800E6280.unk_1BC[12].unk_0C.b[3] + ((D_800E6280.unk_03F < 3U) * 0)) >= 0x41U) &&
+                   ((D_800E6280.unk_1BC[12].unk_14[0xC] + ((D_800E6280.unk_03F < 4U) * 0)) == 0)) {
+            D_800E6280.unk_1BC[12].unk_14[0xC] = 1;
+            D_801342D0 = 0xC;
+            if ((D_800E6280.unk_03F >= 6U) && (D_800E6280.unk_03F < 10U)) {
+                func_80062CD0(tbl1.v[12]);
+            } else {
+                func_80062CD0(tbl2.v[12]);
+            }
+            func_8004284C();
+        } else {
+            if (func_8008667C(temp_a0) < 2) {
+                D_801342D0 = temp_a0;
+                for (var_s0 = 0; var_s0 < 11; var_s0++) {
+                    if ((((u16)D_800E6280.unk_0F4.h >> 12) == ((u8)D_800E6280.unk_1BC[var_s0].unk_0C.b[2] >> 4)) &&
+                        ((((u32)D_800E6280.unk_1BC[var_s0].unk_0C.w << 30) >> 31) == 1)) {
+                        if (func_8008667C(var_s0) < 2) {
+                            D_801342D0 = var_s0;
+                        }
+                        if ((((u8)D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4) == 10) &&
+                            (((u16)D_800E6280.unk_0F4.h >> 12) == 10) &&
+                            ((((u32)D_800E6280.unk_1BC[10].unk_0C.w << 30) >> 31) == 1)) {
+                            if ((func_8008667C(0) < 2) && (func_8008667C(10) >= 2)) {
+                                D_801342D0 = 0;
+                            } else if ((func_8008667C(0) >= 2) && (func_8008667C(10) < 2)) {
+                                D_801342D0 = 10;
+                            } else if ((func_8008667C(0) < 2) && (func_8008667C(10) < 2)) {
+                                sum0 = D_800E6280.unk_1BC[0].unk_06 + D_800E6280.unk_1BC[0].unk_02;
+                                sum10 = D_800E6280.unk_1BC[10].unk_06 + D_800E6280.unk_1BC[10].unk_02;
+                                if (sum0 >= sum10) {
+                                    D_801342D0 = 0;
+                                } else {
+                                    D_801342D0 = 10;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (((u16)D_800E6280.unk_0F4.h >> 12) == ((u8)D_800E6280.unk_1BC[D_801342D0].unk_0C.b[2] >> 4)) {
+                    func_80133E5C();
+                } else if ((D_800E6280.unk_03F >= 6U) && (D_800E6280.unk_03F < 10U)) {
+                    func_80062CD0(tbl1.v[D_801342D0]);
+                } else {
+                    func_80062CD0(tbl2.v[D_801342D0]);
+                }
+                func_8004284C();
+            } else {
+                D_801342D0 = 0xFF;
+                func_80042940(6);
+            }
+        }
+        break;
+    case 1:
+        func_8004284C();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            switch ((u16)D_800E6280.unk_0F4.h >> 12) {
+            case 6:
+            case 7:
+            case 8:
+                func_8005742C(0x4097, 1);
+                break;
+            case 9:
+                func_8005742C(0x40A0, 1);
+                break;
+            case 10:
+                func_8005742C(0x40A9, 1);
+                break;
+            default:
+                func_80046500();
+                break;
+            }
+            func_8004284C();
+        }
+        break;
+    case 3:
+        if (cd_read_sync_status() & 1) {
+            func_80065F34(1);
+            D_80125CA0 = 0xC0;
+            func_80057418(1, func_8005751C(1));
+            func_80044750(0xC1);
+            func_80044890(1, 0xC043, 0xC01D, D_800B3688[D_801342D0], D_800B36C8[D_801342D0], D_800B3708[D_801342D0]);
+            func_8004284C();
+        }
+        break;
+    case 4:
+        func_8007E81C();
+        break;
+    case 5:
+        func_80044750(0x71);
+        func_80042808();
+        break;
+    case 6:
+        func_8004284C();
+        break;
+    case 7:
+        D_800CA148 = 0x10;
+        D_800CA14C = 0;
+        func_8004284C();
+    case 8:
+        normal_date_speak();
+        break;
+    case 9:
+        func_80042908(3);
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    Default_Disp();
+}
+
+/* FAKE: T-24138. Unused `pad` and `a` place `tbl` at 0x30(sp) and `sp2F` at 0x2F(sp);
+ * reading D_801342D0 before func_80083808() puts it in cvt_pass's entry set; adding
+ * `(((pad + 1) + (pad + 1)) * 0)` in case 6 places a CSE into $v0 inside `* 0` (discarded
+ * by ugen with zero instructions) so cvt_pass's `_constant_first` does not swap $v0 first
+ * in `D_801342D0 == 6` and `D_801342D0 == 10` in case 11. */
+void func_80132A28(void) {
+    s32 pad;
+    s16 a;
+    RensyuTbl13 tbl;
+    u8 sp2F;
+
+    tbl = D_8013435C;
+    a = D_801342D0;
+    func_80083808();
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        if (func_80044E8C() == 1) {
+            cd_read_sectors(7U, (void *)0x801E8000, 0xB037);
+            func_8004284C();
+        }
+        break;
+    case 2:
+    case 4:
+    case 10:
+        normal_date_speak();
+        break;
+    case 1:
+        if (cd_read_sync_status() & 1) {
+            func_8004500C(1, 0);
+            func_800847B8(D_801342D0);
+            func_80132000();
+            D_800CA160 = D_801342B0;
+            D_800CA164 = D_801342B4;
+            D_800CA168 = D_801342B8;
+            D_800CA148 = tbl.v[D_801342D0];
+            D_800CA14C = 0;
+            func_8007C740();
+            D_800E6280.unk_F5F = D_801342D0;
+            func_80083474();
+            if (D_801342D0 == 0xC) {
+                func_80083440(0);
+            }
+            if (D_801342D0 == 0xB) {
+                func_80044750(0x500);
+                func_80047550();
+            }
+        }
+        break;
+    case 3:
+        func_8007E390();
+        break;
+    case 5:
+        if (D_801342D0 == 0xB) {
+            func_8007E5A0();
+            D_800CA148 = 0x5E;
+        } else {
+            D_800CA148 = 0x10;
+            func_8004284C();
+        }
+        break;
+    case 6:
+        func_80044750(0xC1 + (((pad + 1) + (pad + 1)) * 0));
+        func_80085ED0();
+        func_8004284C();
+        break;
+    case 7:
+        if (D_801342D0 == 0xB) {
+            normal_date_speak();
+        } else {
+            func_8004284C();
+        }
+        break;
+    case 8:
+        if (D_801342D0 == 0xB) {
+            normal_date_bg_fadeout();
+        } else {
+            func_8007E99C();
+        }
+        break;
+    case 9:
+        func_8004500C(0, 6);
+        if (D_801342D0 == 0xB) {
+            func_8004284C();
+            func_8004284C();
+        } else {
+            func_8004284C();
+        }
+        break;
+    case 11:
+        switch ((u16) D_800E6280.unk_0F4.h >> 0xC) {
+        case 6:
+            if (((((u8) D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4) == 6) && (D_801342D0 == 0)) ||
+                ((((u8) D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4) == 6) && (D_801342D0 == 4))) {
+                sp2F = 5;
+            } else {
+                sp2F = 0;
+            }
+            break;
+        case 7:
+            if (((((u8) D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4) == 7) && (D_801342D0 == 0)) ||
+                ((((u8) D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4) == 7) && (D_801342D0 == 4))) {
+                sp2F = 6;
+            } else {
+                sp2F = 1;
+            }
+            break;
+        case 8:
+            if (((((u8) D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4) == 8) && (D_801342D0 == 0)) ||
+                (D_801342D0 == 5)) {
+                sp2F = 7;
+            } else {
+                sp2F = 2;
+            }
+            break;
+        case 9:
+            if (((((u8) D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4) == 9) && (D_801342D0 == 0)) ||
+                (D_801342D0 == 6)) {
+                sp2F = 8;
+            } else {
+                sp2F = 3;
+            }
+            break;
+        case 10:
+            if (((((u8) D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4) == 10) && (D_801342D0 == 0)) ||
+                ((((u8) D_800E6280.unk_1BC[10].unk_0C.b[2] >> 4) == 10) && (D_801342D0 == 10))) {
+                sp2F = 9;
+            } else {
+                sp2F = 4;
+            }
+            break;
+        }
+        func_80085B3C(0x12, sp2F);
+        func_80065F34(0);
+        func_80042808();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    Default_Disp();
+}
 
 void func_80132F10(void) {
     s32 var_s0;
@@ -318,14 +606,10 @@ void func_8013325C(void) {
     func_80086424();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-22030, T-24082, 4 rows (2 pairs); frame, registers, control flow and cases 1 to 6 match. In case 0
- * the original has `lui v0,%hi(D_801342C0)` before the bnez on D_80120652 (with a nop in the branch slot); the draft
- * puts the lui into the branch slot (nop before the bnez). Root cause (T-24082): uopt promotes &tbl to $a0 (RLDA) in
- * BB0 and emits UNAL(1,$4,$gp) before `tbl = D_80134390` and UNAL(0,$4,$gp) at the end of BB0 after XJP/CLAB/UJP; ugen
- * emits `.alias $4,$gp` (I_IALIAS) between the jump-table `.text` switch and the case-0 label, which makes IDO 5.3 as1
- * schedule `lui v0` into the bnez slot instead of the lbu load-delay slot (moving or dropping that single I_IALIAS
- * record in binasm gives score=0). */
+/* FAKE: T-24138. Adding `(s32)&tbl * 0` in `case 0` keeps `&tbl` ($a0) live across
+ * the jump-table entry into `case 0` so uopt does not emit `UNAL(0,$4,$gp)` (`.alias $4,$gp`)
+ * immediately before the `case 0` label; ugen discards `(s32)&tbl * 0` with zero instructions
+ * emitted and as1 schedules `lui $v0` into the `lbu $t1` load-delay slot. */
 void func_80133628(void) {
     s32 girl;
     s16 diff;
@@ -334,7 +618,7 @@ void func_80133628(void) {
     tbl = D_80134390;
     switch (D_800E6280.unk_110A) {
     case 0:
-        if (((DisplayActor44 *)D_8011ECD0)[96].unk_02 == 0) {
+        if ((((DisplayActor44 *)D_8011ECD0)[96].unk_02 + ((s32)&tbl * 0)) == 0) {
             if ((D_801342C0 >= 5U) || (D_801342C0 && (((u16) D_800E6280.unk_0F4.h >> 0xC) == 9))) {
                 func_8004284C();
             } else {
@@ -408,9 +692,6 @@ void func_80133628(void) {
     }
     Default_Disp();
 }
-#else
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80133628);
-#endif
 
 /* FAKE: T-24122. Unused `pad` and `a` place `tbl` at 0x30(sp); reading D_801342D0 before
  * func_80083808() puts it in cvt_pass's entry set so uopt promotes it to $a0 across the
