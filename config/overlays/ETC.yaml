@@ -82,4 +82,6 @@ segments:
       - [0x1B860, .rodata, ETC/801492C0]
       - [0x1B970, .rodata, ETC/8014ABD0]
       - [0x1BB80, data, ETC_data]
+      - [0x1E130, .data, ETC/80143240]
+      - [0x1E630, data, ETC_data_80150630]
   - [0x30000]

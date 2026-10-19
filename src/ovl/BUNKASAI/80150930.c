@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_800AE120 /* T-24094: int-returning view for func_801509A4 */
 #include "common.h"
 #include "ovl/BUNKASAI.h"
+
+s32 func_800AE120();
 
 typedef struct {
     void (*f[165])();
@@ -15,26 +18,22 @@ void func_80150930(void) {
     tbl.f[idx]();
 }
 
-/* NON_MATCHING: T-22012, 19 rows; frame, loop shape and increment match. The loop-invariant constant 1 gets $a1 where the original has $v0 (original order: 1, i, row pointer, count; built: i, row pointer, count, 1), which shifts the loop registers and later ugen temps. Named constant local, loop forms, index types, a `GameState *` for the record walk, viewsweep, autotweak and a 240 s permuter run did not move it. */
-#ifdef NON_MATCHING
 void func_801509A4(void) {
     s32 temp_v1;
-    u8 var_a1;
-    s32 var_v1;
-    s32 sp30[11];
+    u8 count;
+    s32 i;
+    BunkasaiGirlList sp30;
 
-    *(BunkasaiGirlList *)sp30 = D_80160AA4;
+    sp30 = D_80160AA4;
     func_800AE120(D_800E6280.unk_10F4);
-    var_a1 = 0;
-    var_v1 = 0;
-    do {
-        if (D_800E6280.unk_1BC[var_v1].unk_0C.f.b1 == 1) {
-            sp30[var_a1] = var_v1;
-            var_a1++;
+    count = 0;
+    for (i = 0; i < 11; i++) {
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b1 == 1) {
+            sp30.v[count] = i;
+            count++;
         }
-        var_v1 += 1;
-    } while (var_v1 != 0xB);
-    temp_v1 = sp30[func_800AE0D0() % var_a1];
+    }
+    temp_v1 = sp30.v[func_800AE0D0() % count];
     D_80122EBC = temp_v1;
     switch (temp_v1) {
     case 0:
@@ -75,9 +74,6 @@ void func_801509A4(void) {
         return;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80150930", func_801509A4);
-#endif
 
 void func_80150B7C(void) {
     u16 temp_v1_2;

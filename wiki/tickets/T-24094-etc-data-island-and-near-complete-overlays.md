@@ -1,7 +1,7 @@
 ---
 id: T-24094
 title: Add ETC/80143240 .data island to match func_8014354C and attack final functions of DATE2, BUNKA_SD, BUNKASAI, and OMIMAI
-status: In Progress
+status: Done
 priority: high
 created: 2026-10-18
 updated: 2026-10-18
@@ -21,6 +21,15 @@ depends_on: []
 
 ## Acceptance criteria
 
-- [ ] Add `ETC/80143240` `.data` island and match `ETC:func_8014354C` (248 B)
-- [ ] Close as many of the final overlay functions (`DATE2`, `BUNKA_SD`, `BUNKASAI`, `OMIMAI`) as possible to `score=0` in `build/scratch/t24094/`
-- [ ] Verify all matches with `tools/funcdiff.py --resolve`, `ninja`, `tools/check_headers.py`, `tools/migrate_globals.py --check`, and `tools/sync_protos.py --check-branch`
+- [x] Add `ETC/80143240` `.data` island and match `ETC:func_8014354C` (248 B)
+- [x] Close as many of the final overlay functions (`DATE2`, `BUNKA_SD`, `BUNKASAI`, `OMIMAI`) as possible to `score=0` in `build/scratch/t24094/`
+- [x] Verify all matches with `tools/funcdiff.py --resolve`, `ninja`, `tools/check_headers.py`, `tools/migrate_globals.py --check`, and `tools/sync_protos.py --check-branch`
+
+## Results
+
+- Matched **5 functions (+5,824 B)**, bringing **both `DATE2` (`102/102`, 100.0%) and `BUNKASAI` (`207/207`, 100.0%) to 100% matched**:
+  - `ETC:func_8014354C` (248 B in `src/ovl/ETC/80143240.c` + `config/overlays/ETC.yaml`): `MATCH`
+  - `DATE2:func_801395C8` (2,644 B in `src/ovl/DATE2/80137D50.c` — `DATE2` is now 100.0% matched!): `MATCH`
+  - `BUNKASAI:func_80142BE8` (1,516 B in `src/ovl/BUNKASAI/80142700.c`): `MATCH`
+  - `BUNKASAI:func_801433C0` (944 B in `src/ovl/BUNKASAI/80142700.c`): `MATCH`
+  - `BUNKASAI:func_801509A4` (472 B in `src/ovl/BUNKASAI/80150930.c` — `BUNKASAI` is now 100.0% matched!): `MATCH`

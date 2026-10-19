@@ -1,7 +1,9 @@
 #define MAIN_API_OVERRIDE_D_800B3CFC /* T-11880: func_801388C0 matched with the word as a u8[4] (main_api.h: u8 scalar); the scalar view keeps a second register range */
 #define MAIN_API_OVERRIDE_func_8004F870 /* T-11880: func_801385CC keeps the call result live in v0 (implicit int view; main_api.h: void) */
+#define func_8004E788 func_8004E788_main_api /* T-24094: func_801395C8 passes void * string pointers as arg 3 without A->J cvt */
 #include "common.h"
 #include "ovl/DATE2.h"
+#undef func_8004E788
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/80137D50.data", D_8013B540);
@@ -279,6 +281,7 @@ void func_8013856C(void) {
 }
 
 s32 func_801385CC(void) {
+    s32 func_8004E788(s16 x, s16 y, s32 c, s32 d, s32 e);
     GameState *g = &D_800E6280;
     s16 i;
     s16 *p;
@@ -440,6 +443,7 @@ void func_80138BEC(void) {
 
 /* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
 void func_80138E0C(void) {
+    s32 func_8004E788(s16 x, s16 y, s32 c, s32 d, s32 e);
     s16 index;
     s16 selected;
     Date2Threshold30 thresholds;
@@ -465,6 +469,7 @@ void func_80138E0C(void) {
 
 /* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
 void func_80138F8C(void) {
+    s32 func_8004E788(s16 x, s16 y, s32 c, s32 d, s32 e);
     s16 index;
     s16 selected;
     Date2Threshold51 thresholds;
@@ -490,6 +495,7 @@ void func_80138F8C(void) {
 
 /* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
 void func_801391A0(void) {
+    s32 func_8004E788(s16 x, s16 y, s32 c, s32 d, s32 e);
     s16 index;
     s16 selected;
     Date2Threshold39 thresholds;
@@ -515,6 +521,7 @@ void func_801391A0(void) {
 
 /* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
 void func_801393B4(void) {
+    s32 func_8004E788(s16 x, s16 y, s32 c, s32 d, s32 e);
     s16 index;
     s16 selected;
     Date2Threshold81 thresholds;
@@ -538,11 +545,11 @@ void func_801393B4(void) {
     if (D_8013B5C8 == 4620) func_8004E9F4(1);
 }
 
-#ifdef NON_MATCHING
-/* T-11880: 84 diff rows left (funcdiff --resolve --version c). Frame, registers and code shape match; the two spill homes sit at sp+0x40/0x44 where the original has sp+0x44/0x48 (IDO reserves one more temp slot above them here), which also changes how the first case-1 spill is stored. */
+/* FAKE: reuse p for the last call result to save one cfe vreg slot (-2532) so uopt places the two spill homes at sp+0x44/0x48. T-24094 */
 void func_801395C8(arg0)
     s16 arg0;
 {
+    s32 func_8004E788(s16 x, s16 y, s32 c, void *d, s32 e);
     u8 buf[81][31];
     s16 i;
     u8 (*p)[31];
@@ -572,54 +579,57 @@ void func_801395C8(arg0)
     }
     if (arg0 % 6 == 0) {
         p = &buf[arg0];
-        func_8004E788(-0x74, 0x36, 2, (s32)p[0], 0);
-        func_8004E788((s16)(func_800AE0E0(p[0]) * 7 - 0x74), 0x36, 0, (s32)p[1], 0);
-        func_8004E788((s16)(func_800AE0E0(p[0]) * 7 + func_800AE0E0(p[1]) * 7 - 0x74), 0x36, 0, (s32)p[2], 0);
-        func_8004E788(-0x54, 0x4A, 0, (s32)p[3], 0);
-        func_8004E788((s16)(func_800AE0E0(p[3]) * 7 - 0x54), 0x4A, 0, (s32)p[4], 0);
-        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[3]) * 7 + func_800AE0E0(p[4]) * 7 - 0x54), 0x4A, 0, (s32)p[5], 0));
+        func_8004E788(-0x74, 0x36, 2, p[0], 0);
+        func_8004E788((s16)(func_800AE0E0(p[0]) * 7 - 0x74), 0x36, 0, p[1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[0]) * 7 + func_800AE0E0(p[1]) * 7 - 0x74), 0x36, 0, p[2], 0);
+        func_8004E788(-0x54, 0x4A, 0, p[3], 0);
+        func_8004E788((s16)(func_800AE0E0(p[3]) * 7 - 0x54), 0x4A, 0, p[4], 0);
+        p = (void *)func_8004E788((s16)(func_800AE0E0(p[3]) * 7 + func_800AE0E0(p[4]) * 7 - 0x54), 0x4A, 0, p[5], 0);
+        func_8004E884((s32)p);
     } else if (arg0 % 6 == 1) {
         p = &buf[arg0];
-        func_8004E788(-0x74, 0x36, 2, (s32)p[-1], 0);
-        func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 - 0x74), 0x36, 2, (s32)p[0], 0);
-        func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 + func_800AE0E0(p[0]) * 7 - 0x74), 0x36, 0, (s32)p[1], 0);
-        func_8004E788(-0x54, 0x4A, 0, (s32)p[2], 0);
-        func_8004E788((s16)(func_800AE0E0(p[2]) * 7 - 0x54), 0x4A, 0, (s32)p[3], 0);
-        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[2]) * 7 + func_800AE0E0(p[3]) * 7 - 0x54), 0x4A, 0, (s32)p[4], 0));
+        func_8004E788(-0x74, 0x36, 2, p[-1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 - 0x74), 0x36, 2, p[0], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 + func_800AE0E0(p[0]) * 7 - 0x74), 0x36, 0, p[1], 0);
+        func_8004E788(-0x54, 0x4A, 0, p[2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[2]) * 7 - 0x54), 0x4A, 0, p[3], 0);
+        p = (void *)func_8004E788((s16)(func_800AE0E0(p[2]) * 7 + func_800AE0E0(p[3]) * 7 - 0x54), 0x4A, 0, p[4], 0);
+        func_8004E884((s32)p);
     } else if (arg0 % 6 == 2) {
         p = &buf[arg0];
-        func_8004E788(-0x74, 0x36, 2, (s32)p[-2], 0);
-        func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 - 0x74), 0x36, 2, (s32)p[-1], 0);
-        func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 + func_800AE0E0(p[-1]) * 7 - 0x74), 0x36, 2, (s32)p[0], 0);
-        func_8004E788(-0x54, 0x4A, 0, (s32)p[1], 0);
-        func_8004E788((s16)(func_800AE0E0(p[1]) * 7 - 0x54), 0x4A, 0, (s32)p[2], 0);
-        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[1]) * 7 + func_800AE0E0(p[2]) * 7 - 0x54), 0x4A, 0, (s32)p[3], 0));
+        func_8004E788(-0x74, 0x36, 2, p[-2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 - 0x74), 0x36, 2, p[-1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 + func_800AE0E0(p[-1]) * 7 - 0x74), 0x36, 2, p[0], 0);
+        func_8004E788(-0x54, 0x4A, 0, p[1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[1]) * 7 - 0x54), 0x4A, 0, p[2], 0);
+        p = (void *)func_8004E788((s16)(func_800AE0E0(p[1]) * 7 + func_800AE0E0(p[2]) * 7 - 0x54), 0x4A, 0, p[3], 0);
+        func_8004E884((s32)p);
     } else if (arg0 % 6 == 3) {
         p = &buf[arg0];
-        func_8004E788(-0x74, 0x36, 0, (s32)p[3], 0);
-        func_8004E788((s16)(func_800AE0E0(p[3]) * 7 - 0x74), 0x36, 0, (s32)p[4], 0);
-        func_8004E788((s16)(func_800AE0E0(p[3]) * 7 + func_800AE0E0(p[4]) * 7 - 0x74), 0x36, 0, (s32)p[5], 0);
-        func_8004E788(-0x54, 0x4A, 2, (s32)p[0], 0);
-        func_8004E788((s16)(func_800AE0E0(p[0]) * 7 - 0x54), 0x4A, 0, (s32)p[1], 0);
-        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[0]) * 7 + func_800AE0E0(p[1]) * 7 - 0x54), 0x4A, 0, (s32)p[2], 0));
+        func_8004E788(-0x74, 0x36, 0, p[3], 0);
+        func_8004E788((s16)(func_800AE0E0(p[3]) * 7 - 0x74), 0x36, 0, p[4], 0);
+        func_8004E788((s16)(func_800AE0E0(p[3]) * 7 + func_800AE0E0(p[4]) * 7 - 0x74), 0x36, 0, p[5], 0);
+        func_8004E788(-0x54, 0x4A, 2, p[0], 0);
+        func_8004E788((s16)(func_800AE0E0(p[0]) * 7 - 0x54), 0x4A, 0, p[1], 0);
+        p = (void *)func_8004E788((s16)(func_800AE0E0(p[0]) * 7 + func_800AE0E0(p[1]) * 7 - 0x54), 0x4A, 0, p[2], 0);
+        func_8004E884((s32)p);
     } else if (arg0 % 6 == 4) {
         p = &buf[arg0];
-        func_8004E788(-0x74, 0x36, 0, (s32)p[2], 0);
-        func_8004E788((s16)(func_800AE0E0(p[2]) * 7 - 0x74), 0x36, 0, (s32)p[3], 0);
-        func_8004E788((s16)(func_800AE0E0(p[2]) * 7 + func_800AE0E0(p[3]) * 7 - 0x74), 0x36, 0, (s32)p[4], 0);
-        func_8004E788(-0x54, 0x4A, 2, (s32)p[-1], 0);
-        func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 - 0x54), 0x4A, 2, (s32)p[0], 0);
-        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 + func_800AE0E0(p[0]) * 7 - 0x54), 0x4A, 0, (s32)p[1], 0));
+        func_8004E788(-0x74, 0x36, 0, p[2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[2]) * 7 - 0x74), 0x36, 0, p[3], 0);
+        func_8004E788((s16)(func_800AE0E0(p[2]) * 7 + func_800AE0E0(p[3]) * 7 - 0x74), 0x36, 0, p[4], 0);
+        func_8004E788(-0x54, 0x4A, 2, p[-1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 - 0x54), 0x4A, 2, p[0], 0);
+        p = (void *)func_8004E788((s16)(func_800AE0E0(p[-1]) * 7 + func_800AE0E0(p[0]) * 7 - 0x54), 0x4A, 0, p[1], 0);
+        func_8004E884((s32)p);
     } else {
         p = &buf[arg0];
-        func_8004E788(-0x74, 0x36, 0, (s32)p[1], 0);
-        func_8004E788((s16)(func_800AE0E0(p[1]) * 7 - 0x74), 0x36, 0, (s32)p[2], 0);
-        func_8004E788((s16)(func_800AE0E0(p[1]) * 7 + func_800AE0E0(p[2]) * 7 - 0x74), 0x36, 0, (s32)p[3], 0);
-        func_8004E788(-0x54, 0x4A, 2, (s32)p[-2], 0);
-        func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 - 0x54), 0x4A, 2, (s32)p[-1], 0);
-        func_8004E884(func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 + func_800AE0E0(p[-1]) * 7 - 0x54), 0x4A, 2, (s32)p[0], 0));
+        func_8004E788(-0x74, 0x36, 0, p[1], 0);
+        func_8004E788((s16)(func_800AE0E0(p[1]) * 7 - 0x74), 0x36, 0, p[2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[1]) * 7 + func_800AE0E0(p[2]) * 7 - 0x74), 0x36, 0, p[3], 0);
+        func_8004E788(-0x54, 0x4A, 2, p[-2], 0);
+        func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 - 0x54), 0x4A, 2, p[-1], 0);
+        p = (void *)func_8004E788((s16)(func_800AE0E0(p[-2]) * 7 + func_800AE0E0(p[-1]) * 7 - 0x54), 0x4A, 2, p[0], 0);
+        func_8004E884((s32)p);
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_801395C8);
-#endif

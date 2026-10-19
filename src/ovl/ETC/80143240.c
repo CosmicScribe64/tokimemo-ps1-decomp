@@ -1,5 +1,21 @@
 #include "common.h"
 #include "ovl/ETC.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150130);
+INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150134);
+INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150138);
+SVECTOR D_8015013C = { 0, 0, 0, 0 };
+INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150144);
+INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150148);
+INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_8015014C);
+INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150150);
+INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150188);
+INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_8015018C);
+INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150190);
+INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150390);
+INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_801503C4);
+INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_801503C8);
 
 s32 func_80143240(void) {
     s32 i;
@@ -73,7 +89,33 @@ void func_801433E4(void) {
     D_801227A0->unk0 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_8014354C);
+void func_8014354C(void) {
+    s32 model;
+    TaiikuBig *record;
+    u32 *object;
+
+    model = 0x801F9004;
+    func_8009B3C0(model);
+    model += 4;
+    model += 4;
+    /* FAKE: initializer/do line grouping reproduces setup order; original line layout unknown. T-24094 */
+    object = D_80122640; record = D_801227A0; do {
+        func_8009B430(model, (u8 *)object, 0);
+        object[1] = (u32)record;
+        record++;
+        object += 4;
+        object[-4] = 0x80000000;
+    } while (record != D_80122CA0);
+    func_8009B430(model, (u8 *)D_80122640, 0);
+    D_80122640[1] = (u32)D_801227A0;
+    D_80122640[0] = 0;
+    D_80150130 = -0x60;
+    D_80150134 = 0x20;
+    D_80150138 = -0x300;
+    D_8015013C.vz = 0;
+    D_8015013C.vx = 0;
+    D_8015013C.vy = 0;
+}
 
 void func_80143644(void) {
     switch (D_800E6280.unk_110A) {

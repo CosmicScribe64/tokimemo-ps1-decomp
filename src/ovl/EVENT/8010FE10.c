@@ -2599,15 +2599,9 @@ void func_80118848(void) {
     func_80011DFC();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11110, T-11600, 8 lines: chained halfword store scheduling and $v0 vs $t6 for third chain (regdiff: the
-   original's third 3 is a uopt colour, the draft's a ugen temporary); separate stores, chain orders, one-line chains and an
-   s16/s32/u8 local for the constant did not reach it.
-   T-22024: the innermost store of each chain is written last. Splitting the 2 chain gives the original store order exactly:
-   `(&D_8012439C)[0] = (&D_8012439C)[3] = 2;`, the D_8012438C chain, `(&D_801243A4)[0] = (&D_8012439C)[2] = (&D_8012439C)[3];`,
-   the D_80124394 chain. The re-read (&D_8012439C)[3] then holds 2 in $v1 and the 3s move to $t4/$t5 (13 register lines).
-   (s16)3, 3U, loops, and `(&D_80124394)[2] = 3;` followed by copies of it did not give the original's $v0. */
 void func_80118868(void) {
+    s32 x;
+
     if (D_800B1746 != 6) {
         func_80011DFC();
         D_800B1AF6 += 8;
@@ -2619,14 +2613,14 @@ void func_80118868(void) {
         D_800B1AF6 += 8;
         return;
     }
-    (&D_801243A4)[0] = (&D_8012439C)[2] = (&D_8012439C)[0] = (&D_8012439C)[3] = 2;
+    x = (&D_8012439C)[0] = (&D_8012439C)[3] = 2;
     (&D_8012438C)[0] = (&D_8012438C)[1] = (&D_8012438C)[2] = 3;
-    (&D_80124394)[0] = (&D_80124394)[1] = (&D_80124394)[2] = 3;
+    (&D_8012439C)[2] = x;
+    (&D_801243A4)[0] = x;
+    /* FAKE: the u16 view of the row gives its constant 3 the original's $v0 (autotweak, T-17202). */
+    ((u16 *)&D_80124394)[0] = ((u16 *)&D_80124394)[1] = ((u16 *)&D_80124394)[2] = 3;
     func_80011DFC();
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118868);
-#endif
 
 void func_80118950(void) {
     if (D_801243B0 == 0x12) {
@@ -3631,7 +3625,44 @@ void func_8011C11C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011C164);
+/* s32 with no return (K&R): the early returns set $v0 = 0; falling off the loop leaves $v0 untouched. */
+s32 func_8011C164(void) {
+    s16 i;
+    s16 size_variant;
+    s32 choice;
+    s32 scale;
+    s32 random_span;
+    s32 divisor;
+
+    if (D_8012531C == 1) {
+        return 0;
+    }
+    if ((D_8012531C != 2) && ((D_800B0896 < 9U) || (D_800B0896 >= 12U))) {
+        return 0;
+    }
+    for (i = 0; i < 20; i++) {
+        ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_03 |= 0x80;
+        ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_2C += (D_80125868[i].w - ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_24.w) >> 8;
+        ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_24.w += ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_2C;
+        ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_28.w += ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_30;
+        if (((DisplayFixActor44 *)D_800E9620)[i + 98].unk_28.h[1] >= 0x29) {
+            ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_28.h[1] = -0x78;
+            choice = func_800789A0() % 2;
+            scale = 0x1000 / (((s16)choice * 2) + 2);
+            size_variant = (s16)choice;
+            ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_1A = scale;
+            ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_1C = scale;
+            ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_07 = 0x80;
+            ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_24.h[1] = (func_800789A0() % 300) - 0x96;
+            D_80125868[i].w = ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_24.w;
+            random_span = func_800789A0();
+            divisor = size_variant + 1;
+            /* FAKE: s16 lvalue cast on GsWord.h[1] emits lh with += operand order in ugen. T-24083 */
+            *(s16 *)&D_80125868[i].h[1] += ((((func_800789A0() % 2) * 2) - 1) * (random_span % 8) + 8) / divisor;
+            ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_30 = 0x8000 / divisor;
+        }
+    }
+}
 
 void func_8011C3F4(void) {
     u32 v;

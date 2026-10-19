@@ -121,7 +121,61 @@ void func_80142BC8(void) {
     D_80122EC0 = 8;
 }
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80142700", func_80142BE8);
+/* FAKE: s32 return type reserves $v0 in uopt so bonus gets $a3; pad1/pad2 place amount at sp+0x11C; (&g->unk_0FC) indexes across the 4-entry Sub_0FC block. T-24094 */
+s32 func_80142BE8(void) {
+    s32 i;
+    GameState *g = &D_800E6280;
+    u8 pad1;
+    u8 pad2;
+    u8 val;
+    u8 amount;
+    BunkasaiColumns sel;
+    BunkasaiGirlColumns first;
+    BunkasaiGirlColumns second;
+    BunkasaiGirlColumns third;
+    u32 bonus;
+
+    sel = D_8016052C;
+    first = D_80160534;
+    second = D_80160584;
+    third = D_801605D4;
+    bonus = ((u32) (g->unk_66C[g->unk_0F4.h >> 12].unk_00 >> 3) / (u32) (g->unk_03E - 94) +
+             (&g->unk_0FC)[sel.v[g->unk_0F4.h >> 12]].unk_02 / 20) & 0xFF;
+    if (bonus >= 11) {
+        bonus = 10;
+    }
+    switch ((g->unk_03E - 95) & 0xFF) {
+    case 0:
+        for (i = 0; i < 13; i++) {
+            val = first.v[i][g->unk_0F4.h >> 12] >> 1;
+            g->unk_1BC[i].unk_02 += bonus;
+            g->unk_1BC[i].unk_02 += val;
+        }
+        amount = first.v[D_80122EBC][g->unk_0F4.h >> 12];
+        break;
+    case 1:
+        for (i = 0; i < 13; i++) {
+            val = second.v[i][g->unk_0F4.h >> 12] >> 1;
+            g->unk_1BC[i].unk_02 += bonus;
+            g->unk_1BC[i].unk_02 += val;
+        }
+        amount = second.v[D_80122EBC][g->unk_0F4.h >> 12];
+        break;
+    case 2:
+        for (i = 0; i < 13; i++) {
+            val = third.v[i][g->unk_0F4.h >> 12] >> 1;
+            g->unk_1BC[i].unk_02 += bonus;
+            g->unk_1BC[i].unk_02 += val;
+        }
+        amount = third.v[D_80122EBC][g->unk_0F4.h >> 12];
+        break;
+    }
+    if (amount != 0) {
+        amount--;
+    }
+    g->unk_1BC[D_80122EBC].unk_06 += 2;
+    g->unk_1BC[D_80122EBC].unk_02 += amount;
+}
 
 void func_801431D4(void) {
     k_reset(0);
@@ -186,4 +240,75 @@ void func_8014338C(void) {
     k_disp_start(1);
 }
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80142700", func_801433C0);
+void func_801433C0(void) {
+    /* FAKE: 4-byte stack pad places sp2B at sp+0x2B instead of sp+0x2F. T-24094 */
+    s32 pad;
+    u8 sp2B;
+    GameState *game = &D_800E6280;
+
+    switch (game->unk_0F4.h >> 12) {
+    case 0:
+        if ((((u8) game->unk_1BC[0].unk_0C.b[2] >> 4) == 0) ||
+            ((((u8) game->unk_1BC[1].unk_0C.b[2] >> 4) == 0) && (game->unk_1BC[1].unk_0C.f.b1 == 1))) {
+            sp2B = 2;
+        } else {
+            sp2B = 1;
+        }
+        break;
+    case 1:
+        if ((((u8) game->unk_1BC[0].unk_0C.b[2] >> 4) == 1) ||
+            ((((u8) game->unk_1BC[1].unk_0C.b[2] >> 4) == 1) && (game->unk_1BC[1].unk_0C.f.b1 == 1))) {
+            sp2B = 6;
+        } else {
+            sp2B = 5;
+        }
+        break;
+    case 2:
+        if ((((u8) game->unk_1BC[0].unk_0C.b[2] >> 4) == 2) ||
+            ((((u8) game->unk_1BC[2].unk_0C.b[2] >> 4) == 2) && (game->unk_1BC[2].unk_0C.f.b1 == 1))) {
+            sp2B = 10;
+        } else {
+            sp2B = 9;
+        }
+        break;
+    case 3:
+        if ((((u8) game->unk_1BC[0].unk_0C.b[2] >> 4) == 3) ||
+            ((((u8) game->unk_1BC[2].unk_0C.b[2] >> 4) == 3) && (game->unk_1BC[2].unk_0C.f.b1 == 1))) {
+            sp2B = 14;
+        } else {
+            sp2B = 13;
+        }
+        break;
+    case 4:
+        if ((((u8) game->unk_1BC[0].unk_0C.b[2] >> 4) == 4) ||
+            ((((u8) game->unk_1BC[3].unk_0C.b[2] >> 4) == 4) && (game->unk_1BC[3].unk_0C.f.b1 == 1))) {
+            sp2B = 18;
+        } else {
+            if ((D_80122EBC == 10) && (func_8008667C(10) == 4)) {
+                sp2B = 17;
+                return;
+            }
+            sp2B = 17;
+        }
+        break;
+    case 5:
+        if ((((u8) game->unk_1BC[0].unk_0C.b[2] >> 4) == 5) ||
+            ((((u8) game->unk_1BC[3].unk_0C.b[2] >> 4) == 5) && (game->unk_1BC[3].unk_0C.f.b1 == 1))) {
+            sp2B = 22;
+        } else {
+            sp2B = 21;
+        }
+        break;
+    }
+    game->unk_75E[game->unk_F5E].unk_00 = D_80122EBC;
+    game->unk_75E[game->unk_F5E].unk_02 = 20;
+    game->unk_75E[game->unk_F5E].unk_01 = sp2B;
+    game->unk_75E[game->unk_F5E].unk_03 = func_80051B48(D_80122EBC);
+    game->unk_75E[game->unk_F5E].unk_04 = game->unk_03E;
+    game->unk_75E[game->unk_F5E].unk_05 = game->unk_03F;
+    game->unk_75E[game->unk_F5E].unk_06 = game->unk_040;
+    game->unk_75E[game->unk_F5E].unk_07 = game->unk_041;
+    if (++game->unk_F5E >= 0xFF) {
+        game->unk_F5E = 0xFE;
+    }
+}

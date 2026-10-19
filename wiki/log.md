@@ -20498,4 +20498,26 @@ Reviewed against `CODING_STANDARDS.md` and verified with `tools/funcdiff.py --re
   - `SHOUGATU:func_80142DA0` (716 B) & `GYOZI:func_80145084` (716 B): `MATCH`
 - Created and dispatched [[tickets/T-24101-gyozi-shougatu-valen-data-island-siblings]] (`In Progress`) to add `.data` islands for `GYOZI/801418B0`, `SHOUGATU/8013F190`, and `VALEN/80132760` and match the 5-function sibling cluster (`func_801421B4`, `func_8013FB28`, `func_80132834`, `func_801428EC`, `func_80140314`, 4,404 B).
 
+## [2026-10-18] ticket | T-24094 Done (5 matches, 5,824 B; DATE2 and BUNKASAI at 100.0%) and T-24102 In Progress
+
+Reviewed against `CODING_STANDARDS.md` and verified with `tools/funcdiff.py --resolve`:
+- [[tickets/T-24094-etc-data-island-and-near-complete-overlays]] (`Done`, +5 functions / +5,824 B):
+  - `ETC:func_8014354C` (248 B in `src/ovl/ETC/80143240.c` + `config/overlays/ETC.yaml`): `MATCH`
+  - `DATE2:func_801395C8` (2,644 B in `src/ovl/DATE2/80137D50.c` — **`DATE2` is now 100.0% matched, 102/102!**): `MATCH`
+  - `BUNKASAI:func_80142BE8` (1,516 B in `src/ovl/BUNKASAI/80142700.c`): `MATCH`
+  - `BUNKASAI:func_801433C0` (944 B in `src/ovl/BUNKASAI/80142700.c`): `MATCH`
+  - `BUNKASAI:func_801509A4` (472 B in `src/ovl/BUNKASAI/80150930.c` — **`BUNKASAI` is now 100.0% matched, 207/207!**): `MATCH`
+- Created and dispatched [[tickets/T-24102-etc-80143240-rensyu-master-data-islands]] (`In Progress`) for the remaining functions of `src/ovl/ETC/80143240.c` (`func_80143A88`, `func_80143758`) and the `.data` islands of `RENSYU/80132040` (`func_8013325C`, `func_80133628`) and `MASTER/80139000` (`func_80139CC8`).
+
+## [2026-10-18] ticket | T-24097 Done (3 matches in EVENT, 4,880 B; EVENT/8011C650.c at 100.0%) and T-24103 In Progress
+
+Reviewed against `CODING_STANDARDS.md` and verified with `tools/funcdiff.py --resolve`:
+- [[tickets/T-24097-event-movie-final-and-date-event-twins]] (`Done`, +3 functions / +4,880 B):
+  - `EVENT:func_8011DDB8` (3,992 B in `src/ovl/EVENT/8011C650.c` + `include/ovl/EVENT.h` — **`src/ovl/EVENT/8011C650.c` is now 100.0% matched!**): `MATCH`
+  - `EVENT:func_80118868` (232 B in `src/ovl/EVENT/8010FE10.c`): `MATCH`
+  - `EVENT:func_8011C164` (656 B in `src/ovl/EVENT/8010FE10.c`): `MATCH`
+- Created and dispatched [[tickets/T-24103-cvt-pass-rpar-and-event-8011b848]] (`In Progress`) to test ignoring `str mt=MT_R` before `rpar` in `tools/cvt_pass.py`'s `_constant_first` pass and match `EVENT:func_8011B848` (1,460 B) + remaining `src/ovl/EVENT/8010FE10.c` functions.
+
+
+
 

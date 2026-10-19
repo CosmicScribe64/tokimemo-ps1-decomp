@@ -751,14 +751,16 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24091-etc-shugaku-shougatu-siblings-d|T-24091]] ETC, SHUGAKU, and SHOUGATU sibling batch D (`SHUGAKU:func_8013ABAC` 356 B, `SHUGAKU:func_801352B0` 384 B, Done; 2 matches, 740 B verified default C).
 - [[tickets/T-24092-ugen-block-copy-state-pass|T-24092]] Prototype and evaluate `ugen` block-copy state (`F` vs `B`) uniform pass (In Progress).
 - [[tickets/T-24093-reclassify-date-taco-libgte-asm|T-24093]] Reclassify hand-written `LIBGTE` `RotMatrixX/Y/Z` overlay objects (`DATE/8015A640..A980`, `TACO/8015CF30..D270`) to `asm` subsegments (Done).
-- [[tickets/T-24094-etc-data-island-and-near-complete-overlays|T-24094]] Add `ETC/80143240` `.data` island to match `func_8014354C` and attack final functions of `DATE2`, `BUNKA_SD`, `BUNKASAI`, and `OMIMAI` (In Progress).
+- [[tickets/T-24094-etc-data-island-and-near-complete-overlays|T-24094]] Add `ETC/80143240` `.data` island to match `func_8014354C` (248 B) and match final functions of `DATE2` (`func_801395C8` 2,644 B — `DATE2` 100.0%) and `BUNKASAI` (`func_80142BE8` 1,516 B, `func_801433C0` 944 B, `func_801509A4` 472 B — `BUNKASAI` 100.0%) (Done; 5 matches, 5,824 B verified default C).
 - [[tickets/T-24095-geko-event-batch-d|T-24095]] GEKO and EVENT batch D (`GEKO:func_8013A3C4` 416 B, `GEKO:func_8013AB4C` 404 B, `GEKO:func_8013B10C` 416 B, `GEKO:func_801404FC` 464 B, Done; 4 matches, 1,700 B verified default C).
 - [[tickets/T-24096-speedup-audit-and-automation|T-24096]] Speedup audit and automation (`audit_speedups.py` for `.data` islands and `O.BIN` return types, `idiom_sweep.py`, `port_sibling.py`, Done).
-- [[tickets/T-24097-event-movie-final-and-date-event-twins|T-24097]] Match `EVENT:func_8011DDB8` (3,992 B) and `EVENT` scene siblings (`func_8011B848`, `func_8011C164`, In Progress).
+- [[tickets/T-24097-event-movie-final-and-date-event-twins|T-24097]] Match `EVENT:func_8011DDB8` (3,992 B — `EVENT/8011C650.c` 100.0%) and `EVENT` scene siblings (`func_80118868` 232 B, `func_8011C164` 656 B, Done; 3 matches, 4,880 B verified default C).
 - [[tickets/T-24098-gyozi-shougatu-80143ad0-80141780-twins|T-24098]] Match `GYOZI/80143AD0` and `SHOUGATU/80141780` 1.000 twin cluster (8 of 10 functions matched, 7,952 B verified default C, Done).
 - [[tickets/T-24099-date-80132000-final-six|T-24099]] Close out remaining `DATE` `80132000.c` functions (`func_80132000`, `func_80137154`, `func_8013C190`, `func_8013D5FC`, `func_8013FAD0`, `func_8013FD6C`, In Progress).
 - [[tickets/T-24100-taiiku-data-defs-and-islands|T-24100]] Convert `TAIIKU` `.data` `INCLUDE_RODATA` definitions to C and close `TAIIKU` and `OPTION/801389A0.c` near misses (In Progress).
 - [[tickets/T-24101-gyozi-shougatu-valen-data-island-siblings|T-24101]] Add `.data` islands for `GYOZI/801418B0`, `SHOUGATU/8013F190`, and `VALEN/80132760` and match 5-function sibling cluster (4,404 B, In Progress).
+- [[tickets/T-24102-etc-80143240-rensyu-master-data-islands|T-24102]] Match `ETC/80143240` remaining functions and add `RENSYU/80132040` and `MASTER/80139000` `.data` islands (In Progress).
+- [[tickets/T-24103-cvt-pass-rpar-and-event-8011b848|T-24103]] Refine `cvt_pass` `_constant_first` to ignore `rpar` argument stores and match `EVENT:func_8011B848` + remaining `EVENT/8010FE10` functions (In Progress).
 
 
 
