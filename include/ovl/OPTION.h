@@ -40,7 +40,7 @@ void func_801368FC(void);
 void func_80136A50(void);
 void func_80136C30(void);
 s32 func_80136F3C(void);
-void func_801373C8(void);
+s32 func_801373C8(void);
 s32 func_801376A8(void);
 void func_80139878(void);
 

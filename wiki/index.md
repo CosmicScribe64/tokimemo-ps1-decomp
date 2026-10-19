@@ -776,12 +776,14 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24116-gyozi-shougatu-mid-score-batch|T-24116]] Close 2 functions in `GYOZI` (`func_8013A5F4` 376 B — `8013A140.c` 100.0%; `func_80143160` 436 B — `80143110.c` 100.0%) and add 13 improved `#ifdef NON_MATCHING` guards across `GYOZI` and `SHOUGATU` (Done; 2 matches, 812 B verified default C).
 - [[tickets/T-24117-taiiku-and-option-mid-score-sweep|T-24117]] Close 6 functions in `OPTION/80132000.c` (`func_80133330` 588 B, `func_80133F50` 704 B, `func_80135110` 492 B, `func_801359A4` 616 B, `func_801361FC` 568 B, `func_801376A8` 444 B, Done; 6 matches, 3,412 B verified default C).
 - [[tickets/T-24118-main-and-rpg-bat-mid-score-sweep|T-24118]] Close 6 functions in `main` (`func_80043010` 176 B, `func_8007739C` 760 B, `func_8007A080` 468 B, `func_8007A6AC` 444 B, `func_8007A98C` 408 B, `func_8007ABE0` 396 B, Done; 6 matches, 2,652 B verified default C).
-- [[tickets/T-24119-option-remaining-sweep|T-24119]] Close remaining 13 unmatched functions in `OPTION` (`80132000.c` and `8013A550.c`, In Progress).
+- [[tickets/T-24119-option-remaining-sweep|T-24119]] Close 5 of 13 remaining unmatched functions in `OPTION/80132000.c` (`func_801328C0` 460 B, `func_80133718` 564 B, `func_80133CB8` 664 B, `func_80136688` 628 B, `func_801373C8` 736 B, Done; 5 matches, 3,052 B verified default C).
 - [[tickets/T-24120-taco-remaining-sweep|T-24120]] Sweep and close remaining unmatched functions in `TACO` (29 functions, In Progress).
 - [[tickets/T-24121-etc-remaining-sweep|T-24121]] Sweep and close remaining unmatched functions in `ETC` (21 functions, In Progress).
 - [[tickets/T-24122-shugaku-final-3-and-small-overlays-sweep|T-24122]] Close `SHUGAKU` final 3 girl-picker loops and sweep `KANGEI`, `MASTER`, `EN_NICHI`, `RENSYU`, `ENDING`, and `VALEN` (In Progress).
 - [[tickets/T-24123-main-remaining-sweep-b|T-24123]] Sweep remaining unmatched functions in `src/main/` (wave B, In Progress).
 - [[tickets/T-24124-taiiku-and-rpg-bat-remaining-sweep|T-24124]] Sweep remaining uninvestigated functions in `TAIIKU` and `RPG_BAT` (In Progress).
+- [[tickets/T-24125-shougatu-gyozi-bunkasd-remaining-sweep|T-24125]] Sweep remaining `SHOUGATU`, `GYOZI`, and `BUNKA_SD` functions (In Progress).
+
 
 
 

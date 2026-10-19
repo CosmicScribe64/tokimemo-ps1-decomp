@@ -20652,5 +20652,16 @@ Completed and reviewed [[tickets/T-24112-name-ent-80139740-remaining-8]] (`Done`
 - `NAME_ENT:func_80141820` (1,924 B): `MATCH`
 Created and dispatched [[tickets/T-24124-taiiku-and-rpg-bat-remaining-sweep]] (`In Progress`) for the remaining uninvestigated functions in `TAIIKU` and `RPG_BAT`.
 
+## [2026-10-19] build | T-24119 -> Done (+5 functions, +3,052 B in OPTION/80132000.c); T-24125 dispatched
+
+Completed and reviewed [[tickets/T-24119-option-remaining-sweep]] (`Done`, +5 functions / +3,052 B in `src/ovl/OPTION/80132000.c`):
+- `OPTION:func_801328C0` (460 B): `MATCH`
+- `OPTION:func_80133718` (564 B): `MATCH`
+- `OPTION:func_80133CB8` (664 B): `MATCH`
+- `OPTION:func_80136688` (628 B): `MATCH`
+- `OPTION:func_801373C8` (736 B): `MATCH`
+Created and dispatched [[tickets/T-24125-shougatu-gyozi-bunkasd-remaining-sweep]] (`In Progress`) for remaining `SHOUGATU`, `GYOZI`, and `BUNKA_SD` functions.
+
+
 
 

@@ -71,7 +71,50 @@ void func_80132624(OptionGrid80 *grid) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801326BC);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801328C0);
+void func_801328C0(void) {
+    s32 i;
+    s32 j;
+    u8 t; /* FAKE: single load of D_800E6280.unk_03A into $v0 for unk_10..unk_12; real source may use macro. T-24119 */
+    void *p; /* FAKE: dead pointer stores order outer/inner induction variables in uopt bittab; real source unknown. T-24119 */
+
+    ((SpriteSlot24 *)&D_801220D0)->unk_00 = 0x01000000;
+    ((SpriteSlot24 *)&D_801220D0)->unk_04 = -0xA0;
+    ((SpriteSlot24 *)&D_801220D0)->unk_06 = -0x78;
+    ((SpriteSlot24 *)&D_801220D0)->unk_08 = 0x200;
+    ((SpriteSlot24 *)&D_801220D0)->unk_0A = 0x140;
+    ((SpriteSlot24 *)&D_801220D0)->unk_0C = 0;
+    ((SpriteSlot24 *)&D_801220D0)->unk_0E = 0;
+    t = D_800E6280.unk_03A;
+    ((SpriteSlot24 *)&D_801220D0)->unk_10 = t;
+    ((SpriteSlot24 *)&D_801220D0)->unk_11 = t;
+    ((SpriteSlot24 *)&D_801220D0)->unk_12 = t;
+    ((SpriteSlot24 *)&D_801220D0)->unk_14 = (u32)&D_80122120[0];
+    ((SpriteSlot24 *)&D_801220D0)->unk_18 = 0;
+    ((SpriteSlot24 *)&D_801220D0)->unk_1A = 0;
+    ((SpriteSlot24 *)&D_801220D0)->unk_1C = 0x1000;
+    ((SpriteSlot24 *)&D_801220D0)->unk_1E = 0x1000;
+    ((SpriteSlot24 *)&D_801220D0)->unk_20 = 0;
+    D_80122120[0].cellw = 0x80;
+    D_80122120[0].cellh = 0x40;
+    D_80122120[0].ncellw = 4;
+    D_80122120[0].ncellh = 5;
+    D_80122120[0].base = D_80122140[0];
+    D_80122120[0].index = D_80122540[0].v;
+
+    p = &D_80122540[0].v[i * 4];
+    for (i = 0; i < 4; i++) {
+        p = &D_80122140[0][j + i * 4];
+        for (j = 0; j < 5; j++) {
+            D_80122540[0].v[j + i * 4] = 0;
+            D_80122140[0][j + i * 4].cba = func_8009ED74(0, 0x1FA);
+            D_80122140[0][j + i * 4].u = 0;
+            D_80122140[0][j + i * 4].v = 0;
+            D_80122140[0][j + i * 4].tpage = 5;
+            D_80122140[0][j + i * 4].flag = 0;
+        }
+    }
+    D_800E6280.unk_10EC[0] = 0xD;
+}
 
 void func_80132A8C(void) {
     if (D_800E6280.unk_110A == 0) {
@@ -237,7 +280,58 @@ void func_801335E8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133718);
+s32 func_80133718(void) {
+    s32 i;
+    s32 j;
+    s32 pad[2]; /* FAKE: unused 8-byte local reproduces the original 0x90 frame and row offsets (T-4070). T-24119 */
+    s16 a[6];
+    s16 b[6];
+    s16 c[6];
+    s16 d[6];
+
+    if (D_800E6280.unk_110D == 0) {
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_18 = 1;
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_26 = -0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_2A = -0x78;
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0;
+        D_80120912[1] = 0x7FFF;
+        D_800E6280.unk_110D = 1;
+        D_80120912[0] = 0x7FFF;
+        return;
+    }
+    D_80120912[0] = D_80120912[0] / 17 * 16;
+    D_80120912[1] = D_80120912[1] / 17 * 16;
+    if (D_80120912[0] <= 0x1000) {
+        D_80120912[1] = 0x1000;
+        D_80120912[0] = 0x1000;
+        for (i = 0; i < 3; i++) {
+            a[i] = 0x10;
+            b[i] = i * 0x28 - 0x58;
+            c[i] = 0x28;
+            d[i] = 0x10;
+            j = i * 2 + 0xE;
+            /* FAKE: actor stores on one line so as1 schedules lbu unk_03 before sh unk_18 (T-7020). T-24119 */
+            ((DisplayActor44 *)D_80120650)[i + 11].unk_18 = j; ((DisplayActor44 *)D_80120650)[i + 11].unk_26 = a[i]; ((DisplayActor44 *)D_80120650)[i + 11].unk_2A = b[i]; ((DisplayActor44 *)D_80120650)[i + 11].unk_03 |= 0x80;
+        }
+        menu_set(1, 3, a, b, c, d);
+        switch (get_k_speed()) {
+        case 0:
+            D_800E6280.unk_1094 = 0;
+            break;
+        case 1:
+            D_800E6280.unk_1094 = 1;
+            break;
+        case 2:
+            D_800E6280.unk_1094 = 2;
+            break;
+        default:
+            k_speed_set(0);
+            D_800E6280.unk_1094 = 0;
+            break;
+        }
+        func_8004284C();
+    }
+}
 
 s32 func_8013394C(void) {
     s32 i;
@@ -325,7 +419,61 @@ s32 func_80133C4C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133CB8);
+void func_80133CB8(void) {
+    GameState *g = &D_800E6280;
+    s32 i;
+    s32 j;
+    s16 a[4];
+    s16 b[4];
+    s16 c[4];
+    s16 d[4];
+
+    if (g->unk_110D == 0) {
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_18 = 2;
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_26 = -0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_2A = -0x78;
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0;
+        D_80120912[1] = 0x7FFF;
+        g->unk_110D = 1;
+        D_80120912[0] = 0x7FFF;
+        if (0) {} /* FAKE: separates the store line from UBJP so as1 keeps li $t2, 0x7FFF before lui $at. T-24119 */
+    } else {
+        D_80120912[0] = D_80120912[0] / 17 * 16;
+        D_80120912[1] = D_80120912[1] / 17 * 16;
+        if (D_80120912[0] <= 0x1000) {
+            D_80120912[1] = 0x1000;
+            D_80120912[0] = 0x1000;
+            for (i = 0; i < 3; i++) {
+                a[i] = -0x20;
+                b[i] = i * 0x18 - 0x38;
+                c[i] = 0x50;
+                d[i] = 0x10;
+                j = i * 2 + 0x16;
+                /* FAKE: actor stores on one line so as1 schedules lbu unk_03 before sh unk_18 (T-7020). T-24119 */
+                ((DisplayActor44 *)D_80120650)[i + 11].unk_18 = j; ((DisplayActor44 *)D_80120650)[i + 11].unk_26 = a[i]; ((DisplayActor44 *)D_80120650)[i + 11].unk_2A = b[i]; ((DisplayActor44 *)D_80120650)[i + 11].unk_03 |= 0x80;
+            }
+            menu_set(1, 3, a, b, c, d);
+            switch ((u8)g->unk_F6C % 3) {
+            case 0:
+            default:
+                g->unk_1094 = 0;
+                break;
+            case 1:
+                g->unk_1094 = 1;
+                break;
+            case 2:
+                g->unk_1094 = 2;
+                break;
+            }
+            func_8006509C();
+            /* FAKE: loop body on the for line, as in the matched func_80134210 (T-7020). T-24119 */
+            for (i = 0; i < 16; i++) *(s16 *)&D_80125C10[i * 4] += 200;
+            func_800654D0((u8)g->unk_F6D);
+            func_8004284C();
+        }
+    }
+    func_801324E8();
+}
 
 void func_80133F50(void) {
     s32 pad; /* FAKE: unused 4-byte local reproduces the 0x40 stack frame and stack slot offsets; real source unknown. T-24117 */
@@ -1182,7 +1330,60 @@ s32 func_8013661C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80136688);
+void func_80136688(void) {
+    GameState *g = &D_800E6280;
+    s32 i;
+    s32 j;
+    s16 a[6];
+    s16 b[6];
+    s16 c[6];
+    s16 d[6];
+
+    if (g->unk_110D == 0) {
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_18 = 5;
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_26 = -0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_2A = -0x78;
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0;
+        D_80120912[1] = 0x7FFF;
+        g->unk_110D = 1;
+        D_80120912[0] = 0x7FFF;
+        if (0) {} /* FAKE: separates the store line from UBJP so as1 keeps li $t2, 0x7FFF before lui $at. T-24119 */
+    } else {
+        D_80120912[0] = D_80120912[0] / 17 * 16;
+        D_80120912[1] = D_80120912[1] / 17 * 16;
+        if (D_80120912[0] <= 0x1000) {
+            D_80120912[1] = 0x1000;
+            D_80120912[0] = 0x1000;
+            for (i = 0; i < 3; i++) {
+                a[i] = 0;
+                b[i] = i * 0x18 + 0x18;
+                c[i] = 0x80;
+                d[i] = 0x10;
+                j = i * 2 + 0x2E;
+                /* FAKE: actor stores on one line so as1 schedules lbu unk_03 before sh unk_18 (T-7020). T-24119 */
+                ((DisplayActor44 *)D_80120650)[i + 11].unk_18 = j; ((DisplayActor44 *)D_80120650)[i + 11].unk_26 = a[i]; ((DisplayActor44 *)D_80120650)[i + 11].unk_2A = b[i]; ((DisplayActor44 *)D_80120650)[i + 11].unk_03 |= 0x80;
+            }
+            menu_set(1, 3, a, b, c, d);
+            switch ((u8)g->unk_03C % 3) {
+            case 1:
+                ((DisplayActor44 *)D_80120650)[11].unk_18++;
+                g->unk_1094 = 0;
+                break;
+            case 0:
+                ((DisplayActor44 *)D_80120650)[12].unk_18++;
+                g->unk_1094 = 1;
+                break;
+            case 2:
+            default:
+                ((DisplayActor44 *)D_80120650)[13].unk_18++;
+                g->unk_1094 = 2;
+                break;
+            }
+            func_8004284C();
+        }
+    }
+    func_801324E8();
+}
 
 void func_801368FC(void) {
     s32 i;
@@ -1410,7 +1611,79 @@ void func_801371FC(void) {
     D_801208FB = 0;
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801373C8);
+/* FAKE: s32 without an explicit return plus the z/p pointer read before the last stores sets $v0 = 0 (as in func_801378DC, T-24087). T-24119 */
+s32 func_801373C8(void) {
+    s32 i;
+    s32 j;
+    s32 *p;
+    s32 z;
+    s16 a[6];
+    s16 b[6];
+    s16 c[6];
+    s16 d[6];
+
+    if (D_800E6280.unk_110D != 0) {
+        D_80121726 = D_80121726 / 17 * 16;
+        D_80121728 = D_80121728 / 17 * 16;
+        if (D_80121726 <= 0x1000) {
+            if (D_80121726) {} /* FAKE: empty reads promote D_80121726 and D_80121728 to $t1 and $t3 across the zoom clamp (T-24087). T-24119 */
+            if (D_80121728) {}
+            D_80121726 = 0x1000;
+            D_80121728 = 0x1000;
+            for (i = 0; i < 2; i++) {
+                a[i] = -0x50;
+                b[i] = i * 0x10 + 8;
+                c[i] = 0xC4;
+                d[i] = 0x10;
+                j = i * 2 + 0x3C;
+                /* FAKE: actor stores on one line so as1 schedules lbu unk_03 before sh unk_18 (T-7020). T-24119 */
+                ((DisplayActor44 *)D_80120650)[i + 15].unk_18 = j; ((DisplayActor44 *)D_80120650)[i + 15].unk_26 = a[i]; ((DisplayActor44 *)D_80120650)[i + 15].unk_2A = b[i]; ((DisplayActor44 *)D_80120650)[i + 15].unk_03 |= 0x80;
+            }
+            ((DisplayActor44 *)D_80120650)[15].unk_03 = 0;
+            ((DisplayActor44 *)D_80120650)[16].unk_03 = 0;
+            if (D_800B3220 == 0) {
+                if (!(D_800E7D4F & 1)) {
+                    c[0] = 0;
+                }
+                /* FAKE: word load view reproduces the original lw $t9, D_800E7D50 before masking bit 0. T-24119 */
+                if (!(*(s32 *)&D_800E7D50 & 1)) {
+                    c[1] = 0;
+                }
+            }
+            menu_set(1, 2, a, b, c, d);
+        }
+    }
+    if (D_800E6280.unk_110D == 0) {
+        ((DisplayActor44 *)D_8011ECD0)[159].unk_18 = 7;
+        ((DisplayActor44 *)D_8011ECD0)[159].unk_26 = -0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[159].unk_2A = -0x78;
+        /* FAKE: folded s16 casts advance ugen's 5-register temp ring back to $t5 without extra reads of unk_110D. T-24119 */
+        i = D_800E6280.unk_110D;
+        i = (s16)i;
+        i = (s16)i;
+        i = (s16)i;
+        i = (s16)i;
+        D_800E6280.unk_110D = i + 1;
+        if (0) {}
+    } else if (D_800E6280.unk_110D == 1) {
+        /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
+        for (i = 0; i < 4; i++) ((u8 *)D_80120912)[0x2D + i * 0x44] &= ~0x80;
+        D_80120912[0] = D_80120912[0] / 9 * 8;
+        if (D_80120912[0] < 9) {
+            D_800E6280.unk_110D = 2;
+        }
+    } else {
+        func_8004284C();
+    }
+    ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[159].unk_03 = 0;
+    z = 0;
+    p = &z;
+    D_80121726 = 0x1000;
+    if (*p) {}
+    D_80121728 = 0x1000;
+    if (0) {}
+}
 
 /* FAKE: s32 without an explicit return retains `or $v0, $a2, $zero` in the switch delay slot. T-24117 */
 s32 func_801376A8(void) {
