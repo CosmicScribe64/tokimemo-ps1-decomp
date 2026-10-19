@@ -20698,3 +20698,11 @@ Completed and reviewed [[tickets/T-24120-taco-remaining-sweep]] (`Done`, +6 func
 - `TACO:func_8014A480` (796 B in `src/ovl/TACO/80149F90.c`): `MATCH`
 - `TACO:func_8014F5F0` (560 B in `src/ovl/TACO/80149F90.c`): `MATCH`
 Created and dispatched [[tickets/T-24129-taco-and-etc-remaining-closers]] (`In Progress`) for wave 2 of `TACO` and `ETC`.
+
+## [2026-10-19] build | T-24128 -> Done (+3 functions, +1,048 B in SHOUGATU and GYOZI); T-24130 dispatched
+
+Completed and reviewed [[tickets/T-24128-shougatu-gyozi-bunkasd-closer-tricks]] (`Done`, +3 functions / +1,048 B in `SHOUGATU` and `GYOZI` — **`src/ovl/SHOUGATU/80132550.c` and `src/ovl/GYOZI/80134520.c` 100.0% matched**):
+- `SHOUGATU:func_8013288C` (424 B in `src/ovl/SHOUGATU/80132550.c`): `MATCH`
+- `GYOZI:func_801347D4` (356 B in `src/ovl/GYOZI/80134520.c`): `MATCH`
+- `SHOUGATU:func_8013D820` (268 B in `src/ovl/SHOUGATU/8013D660.c`): `MATCH`
+Created and dispatched [[tickets/T-24130-shougatu-gyozi-bunkasd-wave-2-closers]] (`In Progress`) for wave 2 of `SHOUGATU`, `GYOZI`, and `BUNKA_SD`.

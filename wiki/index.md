@@ -785,8 +785,9 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24125-shougatu-gyozi-bunkasd-remaining-sweep|T-24125]] Match `SHOUGATU:func_8013BA7C` (432 B — `8013BA00.c` 100.0%) via `uopt` CSE priority boost, improve `SHOUGATU:func_801347E0` to 2 rows, and reach 379/379 insns on `BUNKA_SD:func_80139290` (Done; 1 match, 432 B verified default C).
 - [[tickets/T-24126-geko-tel-bunkaken-omimai-option-sweep|T-24126]] Sweep remaining `GEKO`, `OPTION`, `TEL`, `BUNKAKEN`, and `OMIMAI` functions (In Progress).
 - [[tickets/T-24127-main-remaining-sweep-c|T-24127]] Sweep remaining unmatched functions in `src/main/` (wave C, In Progress).
-- [[tickets/T-24128-shougatu-gyozi-bunkasd-closer-tricks|T-24128]] Apply `SHUGAKU` girl-picker recipe and `uopt` CSE priority tricks to `SHOUGATU`, `GYOZI`, and `BUNKA_SD` (In Progress).
+- [[tickets/T-24128-shougatu-gyozi-bunkasd-closer-tricks|T-24128]] Close 3 functions in `SHOUGATU` and `GYOZI` (`SHOUGATU:func_8013288C` 424 B — `80132550.c` 100.0%; `GYOZI:func_801347D4` 356 B — `80134520.c` 100.0%; `SHOUGATU:func_8013D820` 268 B, Done; 3 matches, 1,048 B verified default C).
 - [[tickets/T-24129-taco-and-etc-remaining-closers|T-24129]] Close remaining near misses in `TACO` and `ETC` (wave 2, In Progress).
+- [[tickets/T-24130-shougatu-gyozi-bunkasd-wave-2-closers|T-24130]] Close remaining near misses in `SHOUGATU`, `GYOZI`, and `BUNKA_SD` (wave 2, In Progress).
 
 
 

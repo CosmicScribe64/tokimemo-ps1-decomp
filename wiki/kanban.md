@@ -49,8 +49,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24130-shougatu-gyozi-bunkasd-wave-2-closers|T-24130 Close remaining near misses in SHOUGATU, GYOZI, and BUNKA_SD (wave 2)]]
 - [ ] [[tickets/T-24129-taco-and-etc-remaining-closers|T-24129 Close remaining near misses in TACO and ETC (wave 2)]]
-- [ ] [[tickets/T-24128-shougatu-gyozi-bunkasd-closer-tricks|T-24128 Apply SHUGAKU girl-picker recipe and uopt CSE priority tricks to SHOUGATU, GYOZI, and BUNKA_SD]]
 - [ ] [[tickets/T-24127-main-remaining-sweep-c|T-24127 Sweep remaining unmatched functions in src/main/ (wave C)]]
 - [ ] [[tickets/T-24126-geko-tel-bunkaken-omimai-option-sweep|T-24126 Sweep remaining GEKO, OPTION, TEL, BUNKAKEN, and OMIMAI functions]]
 - [ ] [[tickets/T-24124-taiiku-and-rpg-bat-remaining-sweep|T-24124 Sweep remaining uninvestigated functions in TAIIKU and RPG_BAT]]
@@ -120,6 +120,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24128-shougatu-gyozi-bunkasd-closer-tricks|T-24128 Apply SHUGAKU girl-picker recipe and uopt CSE priority tricks to SHOUGATU, GYOZI, and BUNKA_SD]]
 - [ ] [[tickets/T-24120-taco-remaining-sweep|T-24120 Sweep and close remaining unmatched functions in TACO (29 functions)]]
 - [ ] [[tickets/T-24125-shougatu-gyozi-bunkasd-remaining-sweep|T-24125 Sweep remaining SHOUGATU, GYOZI, and BUNKA_SD functions]]
 - [ ] [[tickets/T-24123-main-remaining-sweep-b|T-24123 Sweep remaining unmatched functions in src/main/ (wave B)]]

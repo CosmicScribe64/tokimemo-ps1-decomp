@@ -2248,8 +2248,12 @@ void xa_wait(void);
 void func_80051DD8();
 void func_80052000();
 void func_80052060();
+#ifndef MAIN_API_OVERRIDE_get_h_tokimeki
 u32 get_h_tokimeki(s32 arg0);
+#endif
+#ifndef MAIN_API_OVERRIDE_get_h_yuukou
 u32 get_h_yuukou(s32 arg0);
+#endif
 s32 birth_day_check_days(s32 arg0, s32 arg1, s32 arg2);
 void func_800530E0();
 s32 func_8005352C();

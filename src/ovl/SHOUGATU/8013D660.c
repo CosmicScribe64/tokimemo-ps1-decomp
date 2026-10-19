@@ -41,14 +41,10 @@ void func_8013D7F8(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: score=13 (67/67 insns). Removing the level local lets uopt CSE D_800E6280.unk_1BC[12].unk_0C.f.f9 into $v1; remaining diff is uopt coloring thresh to $a0 instead of $v0 and operand evaluation order on D_800E6280.unk_10C.unk_02. T-24109. */
 void func_8013D820(void) {
-    s32 thresh = D_800E6280.unk_1BC[12].unk_0C.f.f9 * 25 + 150;
+    s16 thresh = D_800E6280.unk_1BC[12].unk_0C.f.f9 * 25 + 150;
 
-    if (thresh) {
-    }
-    if (D_800E6280.unk_10C.unk_02 >= (s16)thresh &&
+    if (D_800E6280.unk_10C.unk_02 >= thresh &&
         D_800E6280.unk_1BC[14].unk_0C.f.f9 != 0) {
         func_8004284C();
         func_8004284C();
@@ -65,9 +61,6 @@ void func_8013D820(void) {
     func_8004284C();
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013D660", func_8013D820);
-#endif
 
 /* NON_MATCHING: uopt promotes D_800E6280.unk_1BC[14].unk_0C to $v0 in the if body instead of $t2. T-24116. */
 #ifdef NON_MATCHING

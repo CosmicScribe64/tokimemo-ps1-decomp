@@ -1,5 +1,10 @@
+#define MAIN_API_OVERRIDE_get_h_tokimeki /* u8 return narrows the metric byte on return (T-24128). */
+#define MAIN_API_OVERRIDE_get_h_yuukou   /* u8 return narrows the metric byte on return (T-24128). */
 #include "common.h"
 #include "ovl/SHOUGATU.h"
+
+u8 get_h_tokimeki(s32 arg0);
+u8 get_h_yuukou(s32 arg0);
 
 void func_80132550(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -82,24 +87,25 @@ void func_80132864(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: score=110 (106/106 insns). Remaining diff is $s2/$s3 swap between best_s and s and the redundant s == best_s re-check before the tie-break sum. T-24116. */
 void func_8013288C(void) {
-    u8 i;
+    s32 i;
     u8 best_i;
-    u32 best_s;
+    u8 best_s;
     u8 s;
 
     best_i = 0xFF;
     best_s = 4;
     D_80122D40 = 0;
     for (i = 0; i < 11; i++) {
+        /* FAKE: dead branch adjusts the loop basic-block count so uopt assigns best_s to $s5 (T-24122, T-24128). */
+        if (1) {}
         if (D_800E6280.unk_1BC[i].unk_0C.f.b1 != 0) {
             s = get_g_zyotai_s(i) & 0x7F;
+            /* FAKE: duplicate `s == best_s` shifts uopt's live-range priority between s and best_s (T-24122). */
             if (s < best_s ||
                 (s == best_s && s == best_s &&
-                 (get_h_tokimeki(i) & 0xFF) + (get_h_yuukou(i) & 0xFF) >
-                     get_h_yuukou(best_i) + (get_h_tokimeki(best_i) & 0xFF))) {
+                 get_h_tokimeki(i) + get_h_yuukou(i) >
+                     get_h_tokimeki(best_i) + get_h_yuukou(best_i))) {
                 best_i = i;
                 best_s = s;
             }
@@ -108,7 +114,8 @@ void func_8013288C(void) {
     s = get_g_zyotai_s(best_i) & 0x7F;
     if (best_i != 0xFF && s < 2U) {
         D_80143B1C = best_i;
-        D_800E6280.unk_F5F = best_i;
+        /* FAKE: `(best_i & 0) +` keeps cfe's CVT J L narrowing so uopt emits `andi $a0, $fp, 0xff` (T-24122). */
+        D_800E6280.unk_F5F = (best_i & 0) + best_i;
         func_800847B8(D_800E6280.unk_F5F);
         func_80132A34();
         D_80143B00 = 0;
@@ -122,9 +129,6 @@ void func_8013288C(void) {
         func_80042908(2);
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80132550", func_8013288C);
-#endif
 
 void func_80132A34(void) {
     u8 state;
