@@ -62,15 +62,15 @@ void func_8013D820(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: uopt promotes D_800E6280.unk_1BC[14].unk_0C to $v0 in the if body instead of $t2. T-24116. */
-#ifdef NON_MATCHING
 void func_8013D92C(void) {
     s16 v;
+    /* FAKE: GameState *g splits the second unk_1BC[14].unk_0C access from the first so uopt keeps it in $t2 instead of promoting to $v0. T-24130 */
+    GameState *g = &D_800E6280;
 
     v = D_800E6280.unk_1BC[12].unk_0C.f.f9 * 25 + 150;
     if (D_800E6280.unk_10C.unk_02 >= v) {
         D_80145F2C = (D_800E6280.unk_1BC[14].unk_0C.f.f9 >= 1) * 3 + 4;
-        D_800E6280.unk_1BC[14].unk_0C.f.f9 += 1;
+        g->unk_1BC[14].unk_0C.f.f9 += 1;
         func_8004284C();
         return;
     }
@@ -87,9 +87,6 @@ void func_8013D92C(void) {
     func_8004284C();
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013D660", func_8013D92C);
-#endif
 
 void func_8013DA5C(void) {
     if (((u32) (D_800E6280.unk_1BC[14].unk_0C.w << 0x14) >> 0x1D) == 1) {
@@ -103,6 +100,8 @@ void func_8013DA5C(void) {
 /* NON_MATCHING: unk_71E bit-flag check delay-slot scheduling and D_80145F20 struct-copy coloring. T-24116. */
 #ifdef NON_MATCHING
 s32 func_8013DAAC(void) {
+    GameState *g;
+
     if (D_800E6280.unk_1BC[0].unk_10.date.month == 12 &&
         D_800E6280.unk_1BC[0].unk_10.date.day == 24 &&
         !(D_800E6280.unk_71E & 0x20)) {
@@ -138,11 +137,12 @@ s32 func_8013DAAC(void) {
     hizuke_init();
     message_window_init();
     func_80084E4C();
-    strcpy(D_800CA16C, D_800E6280.unk_0D4);
-    if (D_800E6280.unk_1BC[12].unk_0C.f.f9 >= 3) {
-        D_800E6280.unk_1BC[12].unk_0C.f.f9 = 2;
+    g = &D_800E6280;
+    strcpy(D_800CA16C, g->unk_0D4);
+    if (g->unk_1BC[12].unk_0C.f.f9 >= 3) {
+        g->unk_1BC[12].unk_0C.f.f9 = 2;
     }
-    if (D_800E6280.unk_1BC[12].unk_0C.f.f9 == 0) {
+    if (g->unk_1BC[12].unk_0C.f.f9 == 0) {
         strcpy(D_800CA188, "黒服");
     } else {
         strcpy(D_800CA188, "外井");

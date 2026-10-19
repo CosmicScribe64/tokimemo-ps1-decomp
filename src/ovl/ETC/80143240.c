@@ -633,7 +633,52 @@ void func_80144CC4(void) {
     }
     func_8005C7FC();
 }
+/* NON_MATCHING: T-24129, 26 rows: uopt promotes D_800E6280.unk_1118 to $v0 across the slot check */
+#ifdef NON_MATCHING
+void func_80144DF0(void) {
+    s32 pad[2];
+    s32 slot;
+
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(1);
+    menu_bar_show(1);
+    slot = D_800E6280.unk_1094 + 1;
+    k_disp_inc();
+    if (D_800E6280.unk_F88 & 0x20) {
+        if (D_800E6280.unk_1094 != -1) {
+            if (D_800E7D10.slot_status[slot] == 0) {
+                D_800E6280.unk_1118 = slot & 0xFF;
+                if (func_80054694(slot & 0xFF) == 1) {
+                    func_80053CE0();
+                    func_8004284C();
+                } else {
+                    func_80042940(0xF0);
+                }
+            } else if (slot == D_800E6280.unk_1118) {
+                func_80053CE0();
+                func_8004284C();
+            } else {
+                if ((u8) D_800E8BEE != 0) {
+                    D_800E7D36 = slot & 0xFF;
+                    D_800E6280.unk_1118 = slot & 0xFF;
+                    func_800696DC(0, 0);
+                    func_8005C7C0();
+                    D_800E6280.unk_1094 = D_800E7D36 - 1;
+                } else {
+                    D_800E6280.unk_1118 = slot & 0xFF;
+                    func_80042940(0xC0);
+                }
+            }
+        }
+    } else if (D_800E6280.unk_F88 & 0x40) {
+        func_80042908(2);
+    }
+    k_disp_inc();
+    func_8005C7FC();
+}
+#else
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144DF0);
+#endif
 
 void func_80144F74(void) {
     GameState *g = &D_800E6280;

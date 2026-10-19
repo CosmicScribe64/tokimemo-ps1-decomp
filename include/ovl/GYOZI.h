@@ -218,13 +218,27 @@ typedef struct GyoziWork {
     /* 0x000 */ u8 unk_000[0x14];
     /* 0x014 */ s16 unk_014[2];
     /* 0x018 */ s16 unk_018[2];
-    /* 0x01C */ u8 unk_01C[0x18C];
+    /* 0x01C */ u8 unk_01C[0x22];
+    /* 0x03E */ u8 unk_03E;
+    /* 0x03F */ u8 unk_03F[0xBB];
+    /* 0x0FA */ s16 unk_0FA;
+    /* 0x0FC */ u8 unk_0FC[4];
+    /* 0x100 */ GsRec0FC unk_100;
+    /* 0x104 */ u8 unk_104[0xA4];
     /* 0x1A8 */ GyoziGirl girl[11];
-    /* 0x410 */ u8 unk_410[0xB1F];
+    /* 0x410 */ u8 unk_410[0x260];
+    /* 0x670 */ u16 unk_670;
+    /* 0x672 */ u8 unk_672[0x8BD];
     /* 0xF2F */ u8 unk_F2F;   /* D_800F62CF, the girl index; read as a member where the original reloads it after a girl[] store (T-9210) */
-    /* 0xF30 */ u8 unk_F30[0x188];
+    /* 0xF30 */ u8 unk_F30[0x28];
+    /* 0xF58 */ s32 unk_F58;
+    /* 0xF5C */ u8 unk_F5C[4];
+    /* 0xF60 */ GsRecF90 unk_F60[8];
+    /* 0xFA0 */ u8 unk_FA0[0x118];
     /* 0x10B8 */ s32 unk_10B8; /* D_800F6458; a member where a later girl[] bit-field load stays below its store (T-17600) */
-} GyoziWork; /* size 0x10BC; the object goes on (D_800F6474 and up are still main_api.h scalars) */
+    /* 0x10BC */ u8 unk_10BC[0xC];
+    /* 0x10C8 */ u32 unk_10C8;
+} GyoziWork; /* size 0x10CC; the object goes on (D_800F6474 and up are still main_api.h scalars) */
 extern GyoziWork D_800F53A0;
 void func_8013D5B0();
 void func_8013D62C();

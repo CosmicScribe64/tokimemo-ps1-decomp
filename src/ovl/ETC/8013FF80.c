@@ -92,7 +92,33 @@ void func_801408F0(void) {
     }
 }
 
+/* NON_MATCHING: T-24129, 20 rows: ugen temp rotor starts at $t7 instead of $t6 after func_80143240 call */
+#ifdef NON_MATCHING
+void func_80140AE4(void) {
+    func_80140BC4();
+    func_80140DC8();
+    func_80140E80();
+    if (D_801500DC == 0) {
+        if ((func_80143240() == 1) && (D_800E6280.unk_F80 & 0x09000000)) {
+            if (D_801500D8 != 1) {
+                func_80044750(0x50E);
+            }
+            D_801500D8 = 1;
+        }
+    } else if (D_801500DC == 1) {
+        if (D_800B3CFC == 1) {
+            func_80044750(0x50E);
+            if (D_801500D8 == 1) {
+                D_801500D8 = 3;
+            } else {
+                D_801500D8 = 2;
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013FF80", func_80140AE4);
+#endif
 
 s32 func_80140BC4(void) {
     s32 r;

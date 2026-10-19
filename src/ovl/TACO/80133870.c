@@ -168,7 +168,109 @@ void func_80133C08(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_80133E98);
+/* FAKE: retain s32 fallthrough view and word stores into unk_1095[3]/[7]
+ * (+0x1098/+0x109C); two consecutive increments in case 0 match the folded
+ * addiu v0,t7,2 reload sequence. T-24129. */
+s32 func_80133E98(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_800462C8(1, 0x8018A000, 0xB3F2);
+        func_800462C8(5, 0x8018A800, 0xB413);
+        func_800462C8(0x12, 0x8018D000, 0xB438);
+        D_800E6280.unk_110D += 1;
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 5:
+        func_800462C8(7, 0x80196000, 0xB45B);
+        D_800E6280.unk_110D += 1;
+        func_800462C8(3, 0x80199800, 0xB478);
+        func_800462C8(2, 0x8019B000, 0xB47B);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+        if (cd_read_sync_status() & 1) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 10:
+        func_800462C8(1, 0x8019C000, 0xB486);
+        func_800462C8(2, 0x8019C800, 0xB487);
+        func_800462C8(4, 0x8019D800, 0xB4A9);
+        func_800462C8(6, 0x8019F800, 0xB4AD);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 11:
+    case 12:
+    case 13:
+    case 14:
+        if (cd_read_sync_status() & 1) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 15:
+        func_800462C8(2, 0x801A2800, 0xB4B3);
+        func_800462C8(4, 0x801A3800, 0xB4B5);
+        func_800462C8(3, 0x801A5800, 0xB4B9);
+        func_800462C8(0xA, 0x801A7000, 0xB515);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 16:
+    case 17:
+    case 18:
+    case 19:
+        if (cd_read_sync_status() & 1) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 20:
+        func_800462C8(1, 0x801AC000, 0xB534);
+        func_800462C8(3, 0x801AC800, 0xB668);
+        func_800462C8(3, 0x801AE000, 0xB66B);
+        func_800462C8(3, 0x801AF800, 0xB66E);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 21:
+    case 22:
+    case 23:
+    case 24:
+        if (cd_read_sync_status() & 1) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 25:
+        func_800462C8(2, 0x801B1000, 0xB671);
+        func_800462C8(3, 0x801B2000, 0xB673);
+        func_800462C8(3, 0x801B3800, 0xB676);
+        func_800462C8(2, 0x801B5000, 0xB679);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 26:
+    case 27:
+    case 28:
+    case 29:
+        if (cd_read_sync_status() & 1) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 30:
+        D_8015EDB4 = (TcActor *) D_8011ED58;
+        *(s32 *)&D_800E6280.unk_1095[3] = 1;
+        *(s32 *)&D_800E6280.unk_1095[7] = 2;
+        func_8004284C();
+        break;
+    }
+}
 
 /* implicit-int function (called before its definition): s32 with no return. The loop re-reads and re-writes one word (buf[0x80]) 16 times, as the asm does. */
 s32 func_801342CC(void) {

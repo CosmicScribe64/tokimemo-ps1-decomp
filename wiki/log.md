@@ -20751,3 +20751,23 @@ Completed and reviewed [[tickets/T-24127-main-remaining-sweep-c]] (`Done`, +3 fu
 - `main:func_8007BBE8` (276 B in `src/main/80079B10.c`): `MATCH`
 - `main:Scroll` (760 B in `src/main/80085E30.c`): `MATCH`
 Also replaced `func_80085F0C` call-site aliases in `src/ovl/TAIIKU/*.c` with `Scroll`. Created and dispatched [[tickets/T-24135-main-remaining-sweep-d]] (`In Progress`) for wave D of `src/main/`.
+
+## [2026-10-19] build | T-24129, T-24130, T-24131 -> Done (+15 functions, +10,972 B linked); T-24136, T-24137, T-24138 dispatched
+
+Completed and reviewed [[tickets/T-24129-taco-and-etc-remaining-closers]], [[tickets/T-24130-shougatu-gyozi-bunkasd-wave-2-closers]], and [[tickets/T-24131-small-overlays-wave-2-closers]] (`Done`, +15 functions / +10,972 B linked across `ETC`, `TACO`, `SHOUGATU`, `GYOZI`, `KANGEI`, `EN_NICHI`, `MASTER`, and `ENDING` — **`src/ovl/ETC/80142B80.c`, `src/ovl/ETC/801492C0.c`, `src/ovl/TACO/80133870.c`, `src/ovl/SHOUGATU/801390C0.c`, and `src/ovl/EN_NICHI/80132000.c` 100.0% matched!**):
+- `ETC:func_80132FB0` (832 B in `src/ovl/ETC/80132880.c`): `MATCH`
+- `ETC:func_8013CF2C` (824 B in `src/ovl/ETC/8013BEF0.c`): `MATCH`
+- `ETC:func_80142B80` (1,728 B linked / 1,404 B asm in `src/ovl/ETC/80142B80.c`): `MATCH`
+- `ETC:func_80149F48` (568 B in `src/ovl/ETC/801492C0.c`): `MATCH`
+- `TACO:func_80133E98` (1,076 B linked / 884 B asm in `src/ovl/TACO/80133870.c`): `MATCH`
+- `TACO:func_80146754` (1,548 B linked / 1,516 B asm in `src/ovl/TACO/801447D0.c`): `MATCH`
+- `SHOUGATU:func_8013737C` (744 B in `src/ovl/SHOUGATU/80136F90.c`): `MATCH`
+- `SHOUGATU:func_80139334` (480 B in `src/ovl/SHOUGATU/801390C0.c`): `MATCH`
+- `SHOUGATU:func_8013D92C` (304 B in `src/ovl/SHOUGATU/8013D660.c`): `MATCH`
+- `GYOZI:func_801393C8` (784 B in `src/ovl/GYOZI/80138B50.c`): `MATCH`
+- `KANGEI:func_80135004` (220 B in `src/ovl/KANGEI/80134120.c`): `MATCH`
+- `EN_NICHI:func_80132EE8` (488 B in `src/ovl/EN_NICHI/80132000.c`): `MATCH`
+- `EN_NICHI:func_8013358C` (596 B in `src/ovl/EN_NICHI/80132000.c`): `MATCH`
+- `MASTER:func_8013B804` (428 B in `src/ovl/MASTER/80139000.c`): `MATCH`
+- `ENDING:func_8013759C` (352 B in `src/ovl/ENDING/80137340.c`): `MATCH`
+Created and dispatched [[tickets/T-24136-taco-and-etc-wave-3-closers]], [[tickets/T-24137-shougatu-gyozi-bunkasd-wave-3-closers]], and [[tickets/T-24138-small-overlays-wave-3-closers]] (`In Progress`).

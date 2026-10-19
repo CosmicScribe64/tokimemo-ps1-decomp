@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_800BCE10 /* matched with implicit int return view (main_api.h: void) */
 #include "common.h"
 #include "ovl/GYOZI.h"
+
+s32 func_800BCE10();
 
 void func_80138B50(void) {
     func_8008A0D4(0x3FED);
@@ -180,16 +183,16 @@ s32 func_8013907C(void) {
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80138B50", func_8013907C);
 #endif
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: direct D_80147244 assignments promote D_80147244 to $v0 across the function and s32 pad places bg at sp+0x28; remaining diff is cvt_pass.py entry rule (T-20610) keeping CVT on D_800F62CF (first touched after the D_80147244 == 0 branch), which shifts D_8014723C - 1 ($v1 -> $v0) and D_800F62CF ($a1 -> $a0). T-24116. */
 void func_801393C8(void) {
     s32 pad;
     s32 bg;
 
-    D_80147244 = D_800F6468 & 7;
-    if (D_80147244 == 0) {
+    /* FAKE: dead stores touch D_800F62CF at entry for cvt_pass.py (T-20610) and promote D_80147244 to $v0; capturing func_800BCE10 into pad reserves $v0 across the switch and post-switch check. T-24130 */
+    D_80147244 = D_800F62CF;
+    D_80147244 = D_800F6468;
+    if ((D_800F6468 & 7) == 0) {
         D_80147244 = 3;
-    } else if (D_80147244 < 4U) {
+    } else if ((D_800F6468 & 7) < 4U) {
         D_80147244 = 0;
     } else {
         D_80147244 = 1;
@@ -199,26 +202,28 @@ void func_801393C8(void) {
     }
     switch (D_80147244) {
     case 0:
-        func_800BCE10(&D_800D92E0, "廊下");
+        pad = func_800BCE10(&D_800D92E0, "廊下");
         bg = 0x3FED;
         break;
     case 1:
-        func_800BCE10(&D_800D92E0, "教室");
+        pad = func_800BCE10(&D_800D92E0, "教室");
         bg = 0x3FFF;
         break;
     case 2:
-        func_800BCE10(&D_800D92E0, "校舎裏");
+        pad = func_800BCE10(&D_800D92E0, "校舎裏");
         bg = 0x401A;
         break;
     default:
-        func_800BCE10(&D_800D92E0, "屋上");
+        pad = func_800BCE10(&D_800D92E0, "屋上");
         bg = 0x4023;
         break;
     }
+    if (pad) {}
     if (D_80147220 == D_8014723C - 1) {
-        func_800BCE10(&D_800D92E0, "校門前");
+        pad = func_800BCE10(&D_800D92E0, "校門前");
         bg = 0x3FDA;
     }
+    if (pad) {}
     if (D_80147220 == D_8014723C - 1 && D_800F62CF == 0 &&
         func_8005EBE0(D_800F62CF) >= 0x46U) {
         func_800BCE10(&D_800D92E0, "自宅前");
@@ -255,9 +260,6 @@ void func_801393C8(void) {
     func_8008A0D4(bg);
     func_8004DE1C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80138B50", func_801393C8);
-#endif
 
 void func_801396D8(void) {
     D_80147220 += 1;

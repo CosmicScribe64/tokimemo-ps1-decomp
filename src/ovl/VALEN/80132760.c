@@ -209,7 +209,7 @@ INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80132D0C);
 void func_80133088(void) {
     D_80134548 = (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 +
                   D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 +
-                  (D_800E6280.unk_10F8 & 0xFFFF)) % 8;
+                  (D_800E6280.unk_10F8.h & 0xFFFF)) % 8;
     if ((get_h_tokimeki(D_800E6280.unk_F5F) < 0x46U && D_800E6280.unk_F5F != 0) ||
         (D_800E6280.unk_1BC[0].unk_02 < 0x46 && D_800E6280.unk_F5F == 0)) {
         if ((D_80134548 % 2) != 0) {

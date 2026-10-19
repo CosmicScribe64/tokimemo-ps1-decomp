@@ -1157,7 +1157,10 @@ s32 func_801464D4(s32 mode);
 #ifndef OVL_ETC_W9_2_GLOBALS_H
 #define OVL_ETC_W9_2_GLOBALS_H
 /* Positive and negative values select the record fade direction. T-9720. */
+extern s32 D_80150188;
 extern s32 D_8015018C;
+extern s32 D_80150190;
+void func_80142A4C(void);
 #endif
 
 #ifndef OVL_ETC_W9_2_COORD_TABLE_H
@@ -1273,6 +1276,7 @@ void func_8013D264(void);
 void func_8013D2C0(void);
 void func_8013EE28(void);
 void func_8013EEFC(void);
+void func_8013E1DC();
 s32 func_8013C330(s32 arg0, s32 arg1);
 
 /* T-17300: overlay data typed from the access patterns of the unmatched functions. */
@@ -1297,7 +1301,7 @@ extern u8 D_80150728[13];
 extern u8 D_80150738[13];
 /* Two words per girl passed to func_80046290 (func_8013CF2C, func_8013FFAC). */
 extern s32 D_8014DB90[13][2];
-extern s32 D_8014DBF8[13][2];
+extern s32 D_8014DBF8[26];
 /* Per-girl pointers to word pairs of the same shape (func_8013FFAC). */
 extern s32 *D_8014E070[13];
 /* Per-girl counts for the random pick of func_8013C8EC. */

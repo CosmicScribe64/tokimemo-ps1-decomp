@@ -441,13 +441,14 @@ void func_80132E3C(void) {
     D_80121531 = 3;
 }
 
-#ifdef NON_MATCHING
+/* FAKE: end before i = 0 on one line and non-invariant * 0 on LHS of != align preheader la order and bne v0,a3 operand order. T-24131 */
 void func_80132EE8(void) {
     s32 i;
+    EnObj *end;
 
     D_80139AFC++;
     if (D_80139AF4 >= 80 && D_80139AFC >= 30) {
-        for (i = 0; i < 10; i++) {
+        end = &D_8013984C[10], i = 0; do {
             if (D_8013984C[i].unk_00 & 0x80) {
                 D_8013984C[i].unk_00 &= 0x7F;
                 if (D_8013984C[i].unk_00 == 4) {
@@ -456,7 +457,8 @@ void func_80132EE8(void) {
                     D_80139B00--;
                 }
             }
-        }
+            i++;
+        } while ((EnObj *)((u8 *)end + (D_8013984C->unk_00 * 0)) != &D_8013984C[i]);
         D_800E6280.unk_F7A = ((DisplayActor44 *)D_8011ECD0)[152].unk_26;
         D_800E6280.unk_F7C = ((DisplayActor44 *)D_8011ECD0)[152].unk_2A;
         func_80135A48(((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
@@ -476,9 +478,6 @@ void func_80132EE8(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132EE8);
-#endif
 
 /* Moves display record 0 by the pad bits of D_800E6280.unk_F80 in 16.16 steps (diagonals
  * by v * 0xB505, v / sqrt 2), clamps its integer position and copies it to record 152. The words go
@@ -578,8 +577,54 @@ s32 func_801333B0(void) {
     }
 }
 
+/* FAKE: * 0 and | 0 idioms align uopt constant LIFO order ($t0..$t2), CSE priority
+ * ($v0/$v1), and bne operand order without emitting instructions in ugen. T-24131 */
+s32 func_8013358C(void) {
+    s32 i;
+    s32 v;
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_8013358C);
+    func_801330D0();
+    D_80139AFC += 1;
+    if (D_80139AFC >= 0x19) {
+        D_80139AFC = 0;
+        D_80139AF4 += 1;
+        if (D_80139AF4 >= 0x50) {
+            D_80139AF8 = 3;
+            return 0;
+        }
+    }
+    if (!(D_800E6280.unk_F80 & 0x20) && D_80139AFC >= 4) {
+        func_80135A48(D_8011ECF6, D_8011ECFA);
+        func_801369F4(0x502);
+        D_80139AF8 = 0;
+        D_80121531 = 3;
+        D_80139AFC = 0;
+        func_801337E0();
+        for (i = 0; i < 10; i++) {
+            if (D_80139B08[i] == 2) {
+                v = ((D_80139B04 == 4) * 0) + D_8013984C[i].unk_00;
+                D_80139AF8 = ((s32)&D_8013984C[i] * 0) + 2;
+                if ((v | 0) == 4) {
+                    D_80139AF4 += 0x50;
+                    D_80139B04 += 1;
+                } else {
+                    D_80139AF4 += 0x10;
+                    D_80139B00 += 1;
+                }
+                D_8013984C[i].unk_00 = v | 0x80;
+            } else if (D_80139B08[i] == 1) {
+                v = D_8013984C[i].unk_00;
+                D_80139AF8 = ((s32)&D_8013984C[i] * 0) + 2;
+                if ((v | 0) == 4) {
+                    D_80139B04 += 1;
+                } else {
+                    D_80139B00 += 1;
+                }
+                D_8013984C[i].unk_00 = v | 0x80;
+            }
+        }
+    }
+}
 
 
 void func_801337E0(void) {

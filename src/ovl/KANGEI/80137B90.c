@@ -220,9 +220,9 @@ void func_8013852C(void) {
     D_80139AD0 = (KObj *) D_8013A170[1][0][11];
     D_80139AD4 = D_8013A170[1][1][11];
     D_80139AD8 = D_8013A170[1][2][11];
-    /* FAKE: repeated field use and halfword conversion recover the promoted
-     * girl byte and arithmetic temporary numbering; original source unknown. T-24054, T-24122 */
-    D_80139ADC = (s16)((D_800E6280.unk_F5F << 2) - D_800E6280.unk_F5F) + year;
+    /* FAKE: repeated field use and halfword conversions recover the promoted
+     * girl byte and $t2/$t4/$t6 temporary numbering; original source unknown. T-24054, T-24122, T-24131 */
+    D_80139ADC = (u16)((D_800E6280.unk_F5F << 2) - D_800E6280.unk_F5F) + (u16)(s16)year;
     D_8013A2AC = year;
     func_8004284C();
 }

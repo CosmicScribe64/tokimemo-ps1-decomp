@@ -353,7 +353,95 @@ void func_8013CC74(void) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013CCE4);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013CF2C);
+/* FAKE: retain the s32 fallthrough matching view so v0 stays live at the
+ * epilogue and as1 hoists li t9,0xC00 instead of lui v0,0x8000 in case 5;
+ * dummy entry read of unk_F5F seeds cvt_pass.py entry_locations so uopt
+ * promotes unk_F5F to v1 in case 0. T-24129. */
+s32 func_8013CF2C(void) {
+    u8 unused;
+
+    unused = D_800E6280.unk_F5F;
+    if ((D_80150064 == 0) || (D_801500E0 == 1)) {
+        *(u8 *)&D_800E6280.unk_110C = 5;
+    }
+    switch (*(u8 *)&D_800E6280.unk_110C) {
+    case 0:
+        if ((u32) D_800E6280.unk_1100 >= 0x79U) {
+            if (D_800E6280.unk_F5F == 0) {
+                func_8013F320(0x14);
+                if (D_8015006C >= 3) {
+                    *(u8 *)&D_800E6280.unk_110C += 1;
+                    D_8015006C = 0;
+                }
+            } else if (D_800E6280.unk_F5F == 2) {
+                func_8013F320(8);
+                if (D_8015006C == 2) {
+                    D_800E6280.unk_1100 = 0;
+                }
+                if (D_8015006C >= 3) {
+                    if ((u32) D_800E6280.unk_1100 >= 0x3DU) {
+                        *(u8 *)&D_800E6280.unk_110C += 1;
+                        D_8015006C = 0;
+                    } else {
+                        D_800E6280.unk_1100 += 1;
+                    }
+                }
+            } else if (D_800E6280.unk_F5F == 4) {
+                func_8013F320(0xD);
+                if (D_8015006C >= 3) {
+                    *(u8 *)&D_800E6280.unk_110C += 1;
+                    D_8015006C = 0;
+                }
+            } else if (D_800E6280.unk_F5F == 0xC) {
+                func_8013F320(7);
+                if (D_8015006C >= 3) {
+                    *(u8 *)&D_800E6280.unk_110C += 1;
+                    D_8015006C = 0;
+                }
+            } else {
+                *(u8 *)&D_800E6280.unk_110C += 1;
+            }
+        }
+        break;
+    case 1:
+        func_80046290(D_8014DBF8[D_800E6280.unk_F5F * 2], D_8014DBF8[D_800E6280.unk_F5F * 2 + 1], D_800E6280.unk_F5F);
+        func_80044750(0x300);
+        *(u8 *)&D_800E6280.unk_110C += 1;
+        break;
+    case 2:
+        if (func_800460EC() & 4) {
+            *(u8 *)&D_800E6280.unk_110C += 1;
+        }
+        break;
+    case 3:
+        if (func_800460EC() & 2) {
+            D_800E6280.unk_1100 = 0;
+            *(u8 *)&D_800E6280.unk_110C += 1;
+        }
+        break;
+    case 4:
+        if ((u32) D_800E6280.unk_1100 >= 0x79U) {
+            D_800E6280.unk_1100 = 0;
+            *(u8 *)&D_800E6280.unk_110C += 1;
+        }
+        break;
+    case 5:
+        func_8013E1DC(D_800E6280.unk_1100);
+        if ((u32) D_800E6280.unk_1100 >= 0x12DU) {
+            D_801500E0 = 0;
+            D_80150070 = 0;
+            D_80150064 = 0;
+            D_801500D8 = 0;
+            D_801500DC = 0;
+            *(s32 *)&D_801220D0 = 0x80000000;
+            D_801220F4 = 0x80000000;
+            D_801500D4 = 0xC00;
+            func_8013FA7C();
+            func_80042908(0xFF);
+        }
+        break;
+    }
+}
 
 void func_8013D264(void) {
     s32 pad; /* FAKE: unused 4-byte local puts rect at the original offset; real source unknown. T-2040 */
@@ -828,7 +916,8 @@ loop_4:
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013F054);
 
-void func_8013F320(s32 arg0) {
+/* T-24129: retain the earlier caller's K&R implicit-int view (func_8013CF2C). */
+s32 func_8013F320(s32 arg0) {
     switch (D_8015006C) {
     case 0:
         func_80046290(D_801500C4[arg0 * 2], D_801500C4[arg0 * 2 + 1], D_800E6280.unk_F5F);

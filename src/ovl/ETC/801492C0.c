@@ -325,7 +325,72 @@ void func_80149E68(void) {
     load_palette(D_80125CA4, 0x10, 1, 1, 0);
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_80149F48);
+void func_80149F48(void) {
+    /* FAKE: dead register load from unsigned global before switch triggers OPTN zcopy:0 in cvt_pass.py (T-24129). */
+    register s32 pad;
+    s32 var_a1;
+    s32 var_v0;
+    s32 var_v1;
+
+    pad = D_800E6280.unk_110D;
+    var_a1 = 0;
+    switch (D_80150E94 % 3) {
+    case 0:
+        var_v0 = D_800E6280.unk_66C[0].unk_00 >> 4;
+        var_v1 = D_800E6280.unk_100.unk_02;
+        if ((var_v0 > 0) && (var_v0 >= 0x15)) {
+            var_v0 = 0x14;
+        }
+        var_v1 += var_v0;
+        if (D_800E6280.unk_0F4.b[1] & 0xF) {
+            var_v1 = var_v1 / 2;
+        }
+        break;
+    case 1:
+        var_v0 = D_800E6280.unk_66C[2].unk_00 >> 4;
+        var_v1 = D_800E6280.unk_104.unk_02;
+        if ((var_v0 > 0) && (var_v0 >= 0x15)) {
+            var_v0 = 0x14;
+        }
+        var_v1 += var_v0;
+        if (D_800E6280.unk_0F4.b[1] & 0xF) {
+            var_v1 = var_v1 / 2;
+        }
+        break;
+    default:
+        func_800AE0B0("DEFAUT:");
+        /* fallthrough */
+    case 2:
+        var_v0 = D_800E6280.unk_66C[4].unk_00 >> 4;
+        var_v1 = D_800E6280.unk_108.unk_02;
+        if ((var_v0 > 0) && (var_v0 >= 0x15)) {
+            var_v0 = 0x14;
+        }
+        var_v1 += var_v0;
+        if (D_800E6280.unk_0F4.b[1] & 0xF) {
+            var_v1 = var_v1 / 2;
+        }
+        break;
+    }
+    if (D_80150E98 == 1) {
+        var_v1 += 0x26;
+    }
+    if (D_80150E98 == 2) {
+        var_v1 += 0x36;
+    }
+    D_80150E94 += 1;
+    if (var_v1 < (&D_80150EA4)[(D_80150EA0 + D_80150E94) % 12]) {
+        var_a1 = 1;
+    }
+    if (var_a1 == 0) {
+        D_80150E9C += 1;
+    }
+    ((DisplayActor44 *)D_80120650)->unk_02 = 5;
+    ((DisplayActor44 *)D_80120650)->unk_08 = 0;
+    ((DisplayActor44 *)D_80120650)->unk_16 = var_a1;
+    ((DisplayActor44 *)D_80120650)->unk_18 = 0;
+    D_800E6280.unk_110D += 1;
+}
 
 s32 func_8014A180(void) {
     if (D_80120652 & 1) {

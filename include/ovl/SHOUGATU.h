@@ -13,7 +13,9 @@ void func_80143228(void); /* T-24004: called by dispatcher before definition */
 void func_801391F4();
 void func_8013AF30();
 extern s16 D_80145F2C;
+#ifndef SHOUGATU_OVERRIDE_func_80137AB4
 void func_80137AB4(void);
+#endif
 extern s32 D_80143FE8;
 extern s32 D_80143FEC;
 extern s32 D_80143FF0;

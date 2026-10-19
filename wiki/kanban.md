@@ -49,13 +49,13 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24138-small-overlays-wave-3-closers|T-24138 Wave 3 closer sweep across EN_NICHI (2), RENSYU (3), KANGEI (4), VALEN (4), ENDING (5), and MASTER (6)]]
+- [ ] [[tickets/T-24137-shougatu-gyozi-bunkasd-wave-3-closers|T-24137 Wave 3 closer sweep across SHOUGATU (10), GYOZI (9), and BUNKA_SD (2)]]
+- [ ] [[tickets/T-24136-taco-and-etc-wave-3-closers|T-24136 Wave 3 closer sweep across TACO (21) and ETC (12)]]
 - [ ] [[tickets/T-24135-main-remaining-sweep-d|T-24135 Sweep remaining unmatched functions in src/main/ (wave D)]]
 - [ ] [[tickets/T-24134-geko-option-tel-bunkaken-omimai-wave-2-closers|T-24134 Wave 2 closer sweep across GEKO (12), OPTION (10), TEL (2), BUNKAKEN (1), and OMIMAI (1)]]
 - [ ] [[tickets/T-24133-taiiku-rpg-bat-wave-2-closers|T-24133 Wave 2 closer sweep across TAIIKU (21 remaining) and RPG_BAT (8 remaining)]]
 - [ ] [[tickets/T-24132-name-ent-final-4|T-24132 Close remaining 4 unmatched functions of NAME_ENT (func_80138C1C, func_801398EC, func_8013AF78, func_80143580)]]
-- [ ] [[tickets/T-24131-small-overlays-wave-2-closers|T-24131 Wave 2 closer sweep across KANGEI, RENSYU, MASTER, EN_NICHI, ENDING, and VALEN]]
-- [ ] [[tickets/T-24130-shougatu-gyozi-bunkasd-wave-2-closers|T-24130 Close remaining near misses in SHOUGATU, GYOZI, and BUNKA_SD (wave 2)]]
-- [ ] [[tickets/T-24129-taco-and-etc-remaining-closers|T-24129 Close remaining near misses in TACO and ETC (wave 2)]]
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24078-etc-two-poly-renderer|T-24078 Recover ETC two-slot polygon renderer]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
@@ -120,6 +120,9 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24131-small-overlays-wave-2-closers|T-24131 Wave 2 closer sweep across KANGEI, RENSYU, MASTER, EN_NICHI, ENDING, and VALEN]]
+- [ ] [[tickets/T-24130-shougatu-gyozi-bunkasd-wave-2-closers|T-24130 Close remaining near misses in SHOUGATU, GYOZI, and BUNKA_SD (wave 2)]]
+- [ ] [[tickets/T-24129-taco-and-etc-remaining-closers|T-24129 Close remaining near misses in TACO and ETC (wave 2)]]
 - [ ] [[tickets/T-24127-main-remaining-sweep-c|T-24127 Sweep remaining unmatched functions in src/main/ (wave C)]]
 - [ ] [[tickets/T-24126-geko-tel-bunkaken-omimai-option-sweep|T-24126 Sweep remaining GEKO, OPTION, TEL, BUNKAKEN, and OMIMAI functions]]
 - [ ] [[tickets/T-24124-taiiku-and-rpg-bat-remaining-sweep|T-24124 Sweep remaining uninvestigated functions in TAIIKU and RPG_BAT]]

@@ -1,5 +1,8 @@
+#define SHOUGATU_OVERRIDE_func_80137AB4 /* matched with implicit int return view (SHOUGATU.h: void) */
 #include "common.h"
 #include "ovl/SHOUGATU.h"
+
+s32 func_80137AB4(void);
 
 void func_801390C0(void) {
     D_80145270 = (u8 *)0x801E8088;
@@ -57,22 +60,25 @@ void func_80139304(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: score=17 (120/120 insns). Post-increment on D_800E6280.unk_1104.u++ and nested if match exact length and all branch delay slots; remaining diff is uopt coloring D_80144E0C to $v1 (with 2 in $v0 and D_800E7384 in $a0) instead of $a0 (with 2 and D_800E7384 in $v1). T-24109. */
-void func_80139334(void) {
+s32 func_80139334(void) {
+    s32 x;
+
     if (D_80144E0C == 2) {
         D_800E6280.unk_F5F = 7;
     }
-    func_80137AB4();
+    /* FAKE: capturing implicit-int return of func_80137AB4 and referencing x after the branches reserves $v0 and colors D_80144E0C to $a0 and 2 to $v1. T-24130 */
+    x = func_80137AB4();
     if (D_80144E0C == 2) {
         D_8011ED5B &= 0xFF7F;
     }
+    if (x) {}
     if (D_80144E0C == 3) {
         D_80122D20 = 1;
         D_8011ED5B &= 0xFF7F;
     } else {
         D_80122D20 = 0;
     }
+    if (x) {}
     if (D_80144E0C == 2 && check_end_k() != 0 &&
         (*(u8 *)&D_800E6280.unk_03C == 0 || (*(u8 *)&D_800E6280.unk_03C != 0 && func_80046094() == 9))) {
         k_reset(1);
@@ -95,9 +101,6 @@ void func_80139334(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801390C0", func_80139334);
-#endif
 
 void func_80139514(void) {
     func_800438DC(1, 0);

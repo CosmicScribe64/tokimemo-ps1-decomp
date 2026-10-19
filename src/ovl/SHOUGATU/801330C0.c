@@ -275,7 +275,8 @@ void func_80133A88(void) {
 /* NON_MATCHING: triple-dereference of D_80143AF4 allocates 4 temps vs 6 in target. T-24116. */
 #ifdef NON_MATCHING
 void func_80133B44(void) {
-    s32 pad;
+    s32 pad1;
+    s32 pad2;
     s32 sp44;
     u8 sp40[3] = "　";
 

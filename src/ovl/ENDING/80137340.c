@@ -57,7 +57,37 @@ s32 func_80137574(void)
   }
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80137340", func_8013759C);
+void func_8013759C(void) {
+    s16 i;
+    s32 r;
+    s32 g;
+    s32 c1;
+    s32 c2;
+
+    func_8004E9F4(0);
+    D_8011ECD0[0x843] -= 1;
+    if (D_8011ECD0[0x843] < 8U) {
+        D_8011ECD0[0x843] = 0;
+        func_8004284C();
+    }
+    D_8011ECD0[0x7FF] = D_8011ECD0[0x843];
+    for (i = 4; i < 0x13; i++) {
+        func_80084C98(i, D_8011ECD0[0x843]);
+    }
+    for (i = 0; i < 0xE; i++) {
+        (D_8011ECD0 + i * 0x44)[0x1987] = D_8011ECD0[0x843];
+    }
+    /* FAKE: T-24131; dead CSE seed gives the 0xFF channel $v0 ahead of r ($v1) and c1 ($t0), and the dead store in the 7th call argument makes cfe evaluate (c2 << 16) | (g << 8) before the 0xFF CSE operand. */
+    r = (((u32)(D_8011ECD0[0x843] * 0xFF) >> 7) & 0xFF) + (((u32)(D_8011ECD0[0x843] * 0xFF) >> 7) & 0xFF);
+    c1 = r;
+    r = ((u32)(D_8011ECD0[0x843] * 0xC0) >> 7) & 0xFF;
+    c1 = (r << 16) | (r << 8);
+    c1 |= ((u32)(D_8011ECD0[0x843] * 0xFF) >> 7) & 0xFF;
+    c2 = ((u32)(D_8011ECD0[0x843] * 0x40) >> 7) & 0xFF;
+    g = ((u32)(D_8011ECD0[0x843] * 0x80) >> 7) & 0xFF;
+    _sprite_set_box_shade_tarao(-0xA0, -0x78, 0x140, 0xF0, 0xE, c1, (((u32)(D_8011ECD0[0x843] * 0xFF) >> 7) & 0xFF) | (r = (c2 << 16) | (g << 8)));
+    dtd_on(0xE);
+}
 
 void func_801376FC(void) {
     D_80122CE4 = 0;

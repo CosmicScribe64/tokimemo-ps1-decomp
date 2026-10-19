@@ -141,6 +141,22 @@ typedef union GsWord {
     /* 0x00 */ u8 b[4];
 } GsWord; /* size 0x04 */
 
+typedef struct GsEntry54C {
+    /* 0x00 */ u32 unk_00 : 5;
+    /* 0x00 */ u32 unk_05 : 19;
+    /* 0x00 */ u32 b24 : 1;
+    /* 0x00 */ u32 unk_25 : 4;
+    /* 0x00 */ u32 active : 1;
+    /* 0x00 */ u32 unk_30 : 2;
+} GsEntry54C; /* size 0x04 */
+
+typedef union GsSlot54C {
+    /* 0x00 */ GsWord a[8];
+    /* 0x00 */ GsEntry54C e0;
+} GsSlot54C; /* size 0x20 */
+#define unk_54C u54C.a
+#define unk_54C_0 u54C.e0
+
 /* A halfword read as a whole (lhu) and through its bytes (lbu). */
 typedef union GsHalf {
     /* 0x00 */ u16 h;
@@ -445,7 +461,7 @@ typedef struct GameState {
     /* 0x120 */ u8 unk_120[0x9C];
     /* 0x1BC */ Rec38 unk_1BC[16];
     /* 0x53C */ u8 unk_53C[0x10];
-    /* 0x54C */ GsWord unk_54C[8];
+    /* 0x54C */ GsSlot54C u54C;
     /* 0x56C */ u8 unk_56C[0xFC];
     /* 0x668 */ u8 unk_668[4];
     /* 0x66C */ GsRec66C unk_66C[12];
@@ -2920,7 +2936,9 @@ s32 format(u8 *path);
 s32 open(u8 *name, s32 mode);
 s32 GetSp(void);
 void func_800BCDF0();
+#ifndef MAIN_API_OVERRIDE_func_800BCE10
 void func_800BCE10();
+#endif
 s32 func_800BDC20();
 void func_801040F0(void);
 s32 func_80067DFC(void);

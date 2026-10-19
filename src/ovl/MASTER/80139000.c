@@ -960,4 +960,32 @@ void func_8013B448(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80139000", func_8013B804);
+void func_8013B804(void) {
+    GameState *g = &D_800E6280;
+
+    switch ((u16) g->unk_0F4.h >> 0xC) {
+    case 7:
+        g->unk_75E[g->unk_F5E].unk_01 = 7;
+        break;
+    case 8:
+        g->unk_75E[g->unk_F5E].unk_01 = 8;
+        break;
+    case 9:
+        g->unk_75E[g->unk_F5E].unk_01 = 9;
+        break;
+    case 10:
+        g->unk_75E[g->unk_F5E].unk_01 = 0xA;
+        break;
+    }
+    g->unk_75E[g->unk_F5E].unk_00 = g->unk_F5F;
+    g->unk_75E[g->unk_F5E].unk_02 = 0x15;
+    g->unk_75E[g->unk_F5E].unk_03 = 5;
+    g->unk_75E[g->unk_F5E].unk_04 = g->unk_03E;
+    g->unk_75E[g->unk_F5E].unk_05 = g->unk_03F;
+    g->unk_75E[g->unk_F5E].unk_06 = g->unk_040;
+    g->unk_75E[g->unk_F5E].unk_07 = g->unk_041;
+    g->unk_F5E++;
+    if (g->unk_F5E >= 0xFFU) {
+        g->unk_F5E = 0xFE;
+    }
+}

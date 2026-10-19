@@ -383,21 +383,19 @@ void func_80134F00(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-22016, T-24122, 7 rows; reading D_800E6280.unk_F5F into `one` before
- * func_80133EF8() puts unk_F5F in cvt_pass's entry set and reusing `one = 1` keeps the
- * 64-byte frame with `rect` at 0x34($sp); only the $v0/$v1 choice between `one` and
- * D_800E6280.unk_F5F remains swapped. */
+/* FAKE: entry read of unk_F5F puts it in cvt_pass's entry set ($v1) and keeps rect at
+ * 0x34($sp); empty `if (rect.x == 1U)` promotes LDC 1U to $v0; pointer dereference on
+ * unk_1104 puts $v0 first in `bne $v0, $t7` via uoptinput's == swap (T-22016, T-24122, T-24131). */
 void func_80135004(void) {
-    s32 one;
+    u8 pad;
     RECT rect;
 
-    one = D_800E6280.unk_F5F;
+    pad = D_800E6280.unk_F5F;
     func_80133EF8();
     if (D_80139AE0 == 2) {
-        one = 1;
-        if (one == D_800E6280.unk_1104.w) {
-            if ((D_800E6280.unk_F5F == one) || (D_800E6280.unk_F5F == 3)) {
+        if (rect.x == 1U) {}
+        if (*(u32 *)&D_800E6280.unk_1104 == 1U) {
+            if ((D_800E6280.unk_F5F == 1) || (D_800E6280.unk_F5F == 3)) {
                 rect.x = 0x140;
                 rect.y = 0x80;
                 rect.w = 0x180;
@@ -411,9 +409,6 @@ void func_80135004(void) {
     }
     D_800E6280.unk_1104.w += 1;
 }
-#else
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80135004);
-#endif
 
 void func_801350E0(void) {
     RECT rect;

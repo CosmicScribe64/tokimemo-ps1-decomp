@@ -115,9 +115,14 @@ void func_80137144(void) {
     func_80047560();
 }
 
-/* NON_MATCHING: cvt_pass entry rule (T-20610) swaps $v0/$v1 on D_80144E10/D_80144E14. T-24116. */
-#ifdef NON_MATCHING
 s32 func_8013737C(void) {
+    GameState *g = &D_800E6280;
+    s32 pad;
+
+    /* FAKE: touch narrow unsigned globals at entry for cvt_pass.py (T-20610); dead-store eliminated by uopt. T-24130 */
+    pad = D_80144E10;
+    pad = D_80144E14;
+    pad = D_800E6280.unk_03F;
     if (D_800E6280.unk_110D == 0) {
         func_80044750(0xCF);
         func_800674B0();
@@ -153,8 +158,8 @@ s32 func_8013737C(void) {
     if (D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 != 8) {
         D_800E6280.unk_1BC[D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01].unk_0C.f.b1 = 1;
     } else {
-        D_800E6280.unk_1BC[8].unk_0C.f.f9 += 1;
-        if (D_800E6280.unk_1BC[8].unk_0C.f.f9 == 4) {
+        g->unk_1BC[8].unk_0C.f.f9 += 1;
+        if (g->unk_1BC[8].unk_0C.f.f9 == 4) {
             D_800E6280.unk_1BC[D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01].unk_0C.f.b1 = 1;
         }
     }
@@ -163,15 +168,12 @@ s32 func_8013737C(void) {
     func_80044750(0x2F);
     func_80072B5C(1);
 }
-#else
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80136F90", func_8013737C);
-#endif
 
 /* NON_MATCHING: GameState D_800E6280 unification makes unk_F5F store kill ILOD CSE of unk_69C[unk_71C].unk_01. T-24116. */
 #ifdef NON_MATCHING
 void func_80137664(void) {
-    u16 a1;
-    u16 a2;
+    s32 a1;
+    s32 a2;
 
     D_800B3D60 = 0;
     draw2d3d(1, 0);
