@@ -1,4 +1,21 @@
 #include "ovl/MASTER.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80139000.data", D_8013C760);
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80139000.data", D_8013C764);
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80139000.data", D_8013C768);
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80139000.data", D_8013C76C);
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80139000.data", D_8013C770);
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80139000.data", D_8013C780);
+u8 D_8013C784 = 0;
+u8 D_8013C788[5] = { 0 };
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80139000.data", D_8013C790);
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80139000.data", D_8013C794);
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80139000.data", D_8013C798);
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80139000.data", D_8013C7B4);
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80139000.data", D_8013C7E8);
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80139000.data", D_8013C804);
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80139000.data", D_8013C820);
 
 void func_80139000(void) {
     D_8013C760 = 0x801A42D4;
@@ -181,7 +198,293 @@ void func_80139910(void) {
 }
 
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80139000", func_80139CC8);
+/* FAKE: scalar byte views on D_8013C780 and D_8013C784 preserve the target live ranges,
+ * and value is reused as the second shuffle index to preserve the frame layout (T-10630, T-24102). */
+void func_80139CC8(void) {
+    u8 swap;
+    u8 other;
+    s32 value;
+    s32 first;
+    u8 *a;
+    s32 i;
+    s32 swap_count;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        switch ((u16) D_800E6280.unk_0F4.h >> 0xC) {
+        case 7:
+            dec_bg_cd_read(0x4183, 1);
+            break;
+        case 8:
+            dec_bg_cd_read(0x419E, 1);
+            break;
+        case 9:
+            dec_bg_cd_read(0x4195, 1);
+            break;
+        case 10:
+            dec_bg_cd_read(0x418D, 1);
+            break;
+        default:
+            func_80046500();
+            break;
+        }
+        k_reset(0);
+        func_8006612C((s32) "決勝戦");
+        D_80125CA0 = 0xC0;
+        func_8004284C();
+        break;
+    case 1:
+        if (cd_read_sync_status() & 1) {
+            dec_bg_show_set(1, func_8005751C(1));
+            switch ((u16) D_800E6280.unk_0F4.h >> 0xC) {
+            case 7:
+                cd_read_sectors(0x1AU, 0x80197000, 0xAFE7);
+                break;
+            case 8:
+                cd_read_sectors(0x1BU, 0x80197000, 0xB01C);
+                break;
+            case 9:
+                cd_read_sectors(0x1BU, 0x80197000, 0xB001);
+                break;
+            case 10:
+                cd_read_sectors(0x1BU, 0x80197000, 0xAFCC);
+                break;
+            default:
+                func_80046500();
+                break;
+            }
+            func_8004284C();
+        }
+        break;
+    case 2:
+        normal_date_bg_fadein();
+        break;
+    case 3:
+        D_800CA148 = 0xC;
+        func_8004284C();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            switch ((u16) D_800E6280.unk_0F4.h >> 0xC) {
+            case 7:
+                func_80139054();
+                break;
+            case 8:
+                func_801390FC();
+                break;
+            case 9:
+                func_801390A8();
+                break;
+            case 10:
+                func_80139000();
+                break;
+            default:
+                func_80046500();
+                break;
+            }
+            for (i = 0; i < 5; i++) {
+                load_palette(D_8013C770, (i + 0x10) & 0xFF, 1, 1, i);
+            }
+            func_8004284C();
+        }
+        break;
+    case 5:
+    case 11:
+    case 13:
+        normal_date_speak();
+        break;
+    case 6:
+        value = (s16)(D_800E6280.unk_66C[(u16)D_800E6280.unk_0F4.h >> 0xC].unk_00 - 350);
+        if (value < -0x1E) {
+            (*(u8 *)&D_8013C784) = 0;
+        } else if (value < -0x14) {
+            (*(u8 *)&D_8013C784) = 1;
+        } else if (value < -0xA) {
+            (*(u8 *)&D_8013C784) = 1;
+        } else if (value < 0) {
+            (*(u8 *)&D_8013C784) = 2;
+        } else if (value >= 0x1E) {
+            (*(u8 *)&D_8013C784) = 5;
+        } else if (value >= 0x14) {
+            (*(u8 *)&D_8013C784) = 4;
+        } else if (value >= 0xA) {
+            (*(u8 *)&D_8013C784) = 4;
+        } else if (value >= 0) {
+            (*(u8 *)&D_8013C784) = 3;
+        }
+        func_8004284C();
+        break;
+    case 7:
+        for (a = D_8013C788; a < D_8013C788 + 5; a++) {
+            *a = 0;
+        }
+        for (i = 0; i < (u8)(*(u8 *)&D_8013C784); i++) {
+            D_8013C788[i] = 1;
+        }
+        i = 0;
+        swap_count = func_800AE0D0() & 0xF;
+        if ((u8)(*(u8 *)&D_8013C784) >= 3U) {
+            swap = D_8013C788[0];
+            other = D_8013C788[4];
+            D_8013C788[0] = other;
+            D_8013C788[4] = swap;
+        }
+        if (swap_count > 0) {
+            do {
+                first = func_800AE0D0() & 3;
+                value = func_800AE0D0() & 3;
+                swap = D_8013C788[first];
+                i++;
+                other = D_8013C788[value];
+                D_8013C788[first] = other;
+                D_8013C788[value] = swap;
+            } while (i != swap_count);
+        }
+        if (((u16)D_800E6280.unk_0F4.h >> 0xC) == 9) {
+            if ((u8)(*(u8 *)&D_8013C784) >= 3U) {
+                D_8013C788[0] = 1;
+            } else {
+                D_8013C788[0] = 0;
+            }
+        }
+        func_8004284C();
+        break;
+    case 8:
+        func_80048F64(0x60);
+        ((DisplayFixActor44 *)D_80120650)->unk_01 = 3;
+        ((DisplayFixActor44 *)D_80120650)->unk_38 = 0x01000000;
+        ((DisplayFixActor44 *)D_80120650)->unk_05 = 0x80;
+        ((DisplayFixActor44 *)D_80120650)->unk_1A = 0x1000;
+        ((DisplayFixActor44 *)D_80120650)->unk_1C = 0x1000;
+        ((DisplayFixActor44 *)D_80120650)->unk_06 = 1;
+        ((DisplayFixActor44 *)D_80120650)->unk_07 = 0x80;
+        ((DisplayFixActor44 *)D_80120650)->unk_43 = (func_800AE0D0() % 5) + 0x10;
+        ((DisplayFixActor44 *)D_80120650)->unk_24.h[1] = -0x60;
+        ((DisplayFixActor44 *)D_80120650)->unk_28.h[1] = 0x20;
+        ((DisplayFixActor44 *)D_80120650)->unk_0C = (u8 *) D_8013C764;
+        ((DisplayFixActor44 *)D_80120650)->unk_10 = (u8 *) D_8013C768;
+        ((DisplayFixActor44 *)D_80120650)->unk_34 = (u8 *) D_8013C760;
+        ((DisplayFixActor44 *)D_80120650)->unk_14 = D_8013C76C;
+        D_8013C780 = 0;
+        func_8004284C();
+        break;
+    case 9:
+        if (((DisplayFixActor44 *)D_80120650)->unk_02 == 0) {
+            if (((*(u8 *)&D_8013C780) >= 5U) || ((*(u8 *)&D_8013C780) && (((u16) D_800E6280.unk_0F4.h >> 0xC) == 9))) {
+                func_8004284C();
+            } else {
+                ((DisplayFixActor44 *)D_80120650)->unk_03 = 0x84;
+                ((DisplayFixActor44 *)D_80120650)->unk_02 = 5;
+                ((DisplayFixActor44 *)D_80120650)->unk_18 = 0;
+                ((DisplayFixActor44 *)D_80120650)->unk_08 = 0;
+                if (D_8013C788[(*(u8 *)&D_8013C780)] == 1) {
+                    ((DisplayFixActor44 *)D_80120650)->unk_16 = 0;
+                } else {
+                    ((DisplayFixActor44 *)D_80120650)->unk_16 = 1;
+                }
+                (*(u8 *)&D_8013C780) += 1;
+            }
+        }
+        break;
+    case 10:
+        if ((u8) (*(u8 *)&D_8013C784) >= 3U) {
+            D_800CA148 = 0xD;
+            func_80044750(0x204);
+        } else {
+            D_800CA148 = D_8013C794 + 0x10;
+            func_80044750(0x205);
+        }
+        func_8004284C();
+        break;
+    case 12:
+        switch ((u16) D_800E6280.unk_0F4.h >> 0xC) {
+        case 7:
+            if ((u8) (*(u8 *)&D_8013C784) >= 3U) {
+                D_800CA148 = 0x17;
+            } else {
+                D_800CA148 = 0x66;
+            }
+            break;
+        case 8:
+            if ((u8) (*(u8 *)&D_8013C784) >= 3U) {
+                D_800CA148 = 0x18;
+            } else {
+                D_800CA148 = 0x67;
+            }
+            break;
+        case 9:
+            if ((u8) (*(u8 *)&D_8013C784) >= 3U) {
+                D_800CA148 = 0x19;
+            } else {
+                D_800CA148 = 0x68;
+            }
+            break;
+        case 10:
+            if ((u8) (*(u8 *)&D_8013C784) >= 3U) {
+                D_800CA148 = 0x1A;
+            } else {
+                D_800CA148 = 0x69;
+            }
+            break;
+        default:
+            func_80046500();
+            break;
+        }
+        func_8004284C();
+        break;
+    case 14:
+        if (((DisplayFixActor44 *)D_80120650)->unk_07 < 4U) {
+            ((DisplayFixActor44 *)D_80120650)->unk_07 = 0;
+        } else {
+            ((DisplayFixActor44 *)D_80120650)->unk_07 -= 4;
+        }
+        normal_date_bg_fadeout();
+        break;
+    case 15:
+        func_80048F64(0x60);
+        if (D_8013C790 == 0xFF) {
+            if ((u8) (*(u8 *)&D_8013C784) >= 3U) {
+                D_800E6280.unk_1BC[0].unk_02 += 0x19;
+                for (i = 1; i < 13; i++) {
+                    D_800E6280.unk_1BC[i].unk_02 += 0x19;
+                }
+            } else {
+                D_800E6280.unk_1BC[0].unk_02 += 0x12;
+                for (i = 1; i < 13; i++) {
+                    D_800E6280.unk_1BC[i].unk_02 += 0x12;
+                }
+            }
+            func_80042908(6);
+        } else {
+            k_reset(0);
+            if (((u16) D_800E6280.unk_0F4.h >> 0xC) == 7) {
+                func_8006612C((s32) "国立競技場");
+            } else {
+                func_8006612C((s32) "選手控え室");
+            }
+            D_80125CA0 = 0xC0;
+            D_800E6280.unk_1BC[D_8013C790].unk_06 += 2;
+            if ((u8) (*(u8 *)&D_8013C784) >= 3U) {
+                D_800E6280.unk_1BC[0].unk_02 += 0x19;
+                for (i = 1; i < 13; i++) {
+                    D_800E6280.unk_1BC[i].unk_02 += 0x19;
+                }
+                func_80042808();
+            } else {
+                D_800E6280.unk_1BC[0].unk_02 += 0x12;
+                for (i = 1; i < 13; i++) {
+                    D_800E6280.unk_1BC[i].unk_02 += 0x12;
+                }
+                func_80042908(5);
+            }
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    Default_Disp();
+}
 
 /* FAKE: scalar byte views preserve the selector live ranges; the cached
  * girls pointer reproduces the copied-table stack offset (T-13001).

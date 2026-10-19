@@ -2,14 +2,14 @@
 #include "ovl/ETC.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
-INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150130);
-INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150134);
-INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150138);
+s16 D_80150130 = -0x60;
+s16 D_80150134 = 0x20;
+s16 D_80150138 = -0x300;
 SVECTOR D_8015013C = { 0, 0, 0, 0 };
-INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150144);
-INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150148);
-INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_8015014C);
-INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150150);
+s32 D_80150144 = 0;
+s32 D_80150148 = 0;
+s32 D_8015014C = 0;
+s32 D_80150150[14] = { 0, 10, 13, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11 };
 INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150188);
 INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_8015018C);
 INCLUDE_RODATA("asm/ovl/ETC/data/ETC/80143240.data", D_80150190);
@@ -48,7 +48,7 @@ s32 func_80143240(void) {
 void func_80143334(void) {
     D_80150144 = 0;
     func_80143758();
-    if (D_8015014C[0] == 1) {
+    if (D_8015014C == 1) {
         draw2d3d(1, 1);
         func_80061710();
         func_80061790();
@@ -141,7 +141,36 @@ void func_801436E4(s32 arg0) {
     load_tpage_buf_lock(7, 0x801EC000 - (arg0 << 15), 2);
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80143758);
+void func_80143758(void) {
+    s32 i;
+    s32 j;
+
+    for (i = 0; i < 7; i++) {
+        j = i + 0x60;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_01 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_02 = 0x40;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_38 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_03 = 0xA4;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_0C = (u8 *)0x801F86EC;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_10 = (u8 *)0x801F897C;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_34 = (u8 *)0x801F86A4;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_04 = 8;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_18 = D_801503C8[D_80150144 * 2];
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_43 = 0xF;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_05 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_26 = D_801503C8[D_80150144 * 2 + 1] - 0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_2A = i * 0x28 + 0x8C;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_2E = 0;
+        ((DisplayFixActor44 *)D_8011ECD0)[i + 0x60].unk_30 = -1;
+        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_07 = 0x80;
+        if (((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_18 >= 0xF1) {
+            ((DisplayActor44 *)D_8011ECD0)[j].unk_03 = 0x34;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[j].unk_03 = 0xB4;
+        }
+        D_80150144 += 1;
+    }
+}
 
 void func_8014387C(s32 arg0, s32 arg1, s32 arg2) {
     u8 *p;
@@ -176,9 +205,122 @@ void func_8014387C(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80143968);
+/* Written as s32 (K&R implicit int) with no return statement so caller func_80143A88
+ * sees a return value in v0 after jal func_80143968, matching the original register allocation (T-24102). */
+s32 func_80143968(void) {
+    s32 i;
+    s32 j;
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80143A88);
+    if (D_80150144 < 0x11D) {
+        func_8004B19C(D_80150144, 0x28, 0x28);
+        for (i = 0; i < 7; i++) {
+            j = i + 0x60;
+            ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_2A -= 1;
+            if (((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_2A < -0x8C) {
+                func_8014387C(i, D_801503C8[D_80150144 * 2], D_801503C8[D_80150144 * 2 + 1]);
+                D_80150144 += 1;
+            }
+            ((DisplayActor44 *)D_8011ECD0)[j].unk_1A = 0x1000;
+            ((DisplayActor44 *)D_8011ECD0)[j].unk_1C = 0x1000;
+        }
+    }
+}
+
+void func_80143A88(void) {
+    /* FAKE: unused pad locals and address-taken stores to sp30 (0x30(sp)) and sp28 (0x28(sp))
+     * reproduce the original stack slots and spill reloads across the calls; real source unknown. T-24102 */
+    s32 pad;
+    s32 sp30;
+    s32 pad2;
+    s32 sp28;
+
+    func_80143968();
+    *(u32 *)&sp30 = (u32)D_800E6280.unk_1104.w / 701U;
+    if (((u32)D_800E6280.unk_1104.w % 701U) == 1) {
+        if (D_80150148 == 0) {
+            func_801436E4(D_800E6280.unk_F5F);
+        } else if (D_80150148 < 0xF) {
+            if (D_800E6280.unk_F5F == D_80150150[D_80150148 - 1]) {
+                D_80150148 += 1;
+            }
+            func_801436E4(D_80150150[D_80150148 - 1]);
+        } else {
+            func_801436E4(D_800E6280.unk_F5F);
+        }
+        D_80150148 += 1;
+    } else if ((sp30 < 0xF) && (sp30 != 0)) {
+        if (((u32)D_800E6280.unk_1104.w % 701U) == 0) {
+            D_80150130 = -0x60;
+            D_80150134 = 0x20;
+            D_8015013C.vz = 0;
+            D_8015013C.vx = 0;
+            D_8015013C.vy = 0;
+            D_80150138 = -0x72D8;
+        } else if (((u32)D_800E6280.unk_1104.w % 701U) < 0x50U) {
+            D_80150138 += 0x172;
+        }
+    }
+    if (D_80150148 < 0xF) {
+        if (((u32)D_800E6280.unk_1104.w % 701U) >= 0x26EU) {
+            D_80150138 += 0x12C;
+            *(s32 *)&sp28 = sp30 * 0x23D;
+            D_80150134 += func_800A0070(sp28) / 256;
+            D_80150130 += func_800A0140(sp28) / 256;
+        }
+    }
+    if (((u32)D_800E6280.unk_1104.w >= 0x259U) && (func_800460EC() & 2)) {
+        func_8004284C();
+    }
+    func_8004B19C(D_80150130, 0x14, -0x28);
+    func_8004B19C(D_80150134, 0x14, -0x1E);
+    func_8004B19C(D_80150138, 0x14, -0x14);
+    func_8004B19C(D_800E6280.unk_1104.w, 0, -0xA);
+    func_8004B19C(sp30, 0, 0);
+    func_8004B19C(D_80150148, 0, 0xA);
+    func_8004B19C(D_80150150[D_80150148 - 1], 0, 0x14);
+    if (D_800E6280.unk_F80 & 0x8000) {
+        D_80150130 += 0x14;
+    }
+    if (D_800E6280.unk_F80 & 0x2000) {
+        D_80150130 -= 0x14;
+    }
+    if (D_800E6280.unk_F80 & 0x4000) {
+        D_80150134 += 0x14;
+    }
+    if (D_800E6280.unk_F80 & 0x1000) {
+        D_80150134 -= 0x14;
+    }
+    if (D_800E6280.unk_F80 & 4) {
+        D_80150138 -= 0x14;
+    }
+    if (D_800E6280.unk_F80 & 1) {
+        D_80150138 += 0x14;
+    }
+    if (D_800E6280.unk_F80 & 0xFA) {
+        if (D_800E6280.unk_F80 & 8) {
+            D_8015013C.vz += 0xA;
+        }
+        if (D_800E6280.unk_F80 & 2) {
+            D_8015013C.vz -= 0xA;
+        }
+        if (D_800E6280.unk_F80 & 0x80) {
+            D_8015013C.vx += 0xA;
+        }
+        if (D_800E6280.unk_F80 & 0x20) {
+            D_8015013C.vx -= 0xA;
+        }
+        if (D_800E6280.unk_F80 & 0x10) {
+            D_8015013C.vy += 0xA;
+        }
+        if (D_800E6280.unk_F80 & 0x40) {
+            D_8015013C.vy -= 0xA;
+        }
+    } else {
+        D_8015013C.vz -= 3;
+        D_8015013C.vx -= 4;
+        D_8015013C.vy -= 5;
+    }
+}
 
 void func_80143F24(void) {
     /* FAKE: GameState pointer plus one chain assignment of the three bytes of a record: the pointer makes uopt keep the

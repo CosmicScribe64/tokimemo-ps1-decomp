@@ -20535,3 +20535,23 @@ Reviewed against `CODING_STANDARDS.md` (including section 7a uniform pass adopti
   - `GYOZI:func_8014494C` (296 B in `src/ovl/GYOZI/80143AD0.c` — **`src/ovl/GYOZI/80143AD0.c` is now 100% matched!**): `MATCH`
   - `SHOUGATU:func_8014265C` (296 B in `src/ovl/SHOUGATU/80141780.c` — **`src/ovl/SHOUGATU/80141780.c` is now 100% matched!**): `MATCH`
 - Created [[tickets/T-24104-ugen-pass-and-cvt-pass-near-miss-sweep]] (`In Progress`) and relaunched the 6-subagent pool across `T-24099`..`T-24104`.
+
+## [2026-10-18] ticket | T-24103 Done (tools/cvt_pass.py rpar refinement + 6 EVENT matches, 5,896 B) and T-24105 In Progress
+
+Reviewed against `CODING_STANDARDS.md` (including section 7a uniform pass adoption rules) and verified with `tools/test_cvt_pass.py`, `tools/funcdiff.py --resolve`, and `ninja`:
+- [[tickets/T-24103-cvt-pass-rpar-and-event-8011b848]] (`Done`, `tools/cvt_pass.py` `_constant_first` `rpar` refinement + 2 unit tests in `tools/test_cvt_pass.py` + 6 functions / +5,896 B in `src/ovl/EVENT/8010FE10.c`):
+  - `EVENT:func_8011B848` (1,460 B symbol / 1,408 B code in `src/ovl/EVENT/8010FE10.c`): `MATCH`
+  - `EVENT:func_80114C5C` (1,732 B in `src/ovl/EVENT/8010FE10.c`): `MATCH`
+  - `EVENT:func_8011767C` (916 B in `src/ovl/EVENT/8010FE10.c`): `MATCH`
+  - `EVENT:func_80118B4C` (608 B in `src/ovl/EVENT/8010FE10.c`): `MATCH`
+  - `EVENT:func_80119110` (608 B in `src/ovl/EVENT/8010FE10.c`): `MATCH`
+  - `EVENT:func_8011B60C` (572 B in `src/ovl/EVENT/8010FE10.c`): `MATCH`
+- Created and dispatched [[tickets/T-24105-event-final-eight]] (`In Progress`) for the final 8 unmatched functions remaining in the `EVENT` overlay.
+
+## [2026-10-18] ticket | T-24106 Close out the remaining 19 unmatched functions of the NAME_ENT overlay (In Progress)
+
+Created [[tickets/T-24106-name-ent-remaining-19]], added its card to `In Progress` in [[kanban]], and dispatched a subagent to score and close the remaining 19 `INCLUDE_ASM` functions (22,272 B) across `src/ovl/NAME_ENT/80132000.c`, `src/ovl/NAME_ENT/80139740.c`, `src/ovl/NAME_ENT/80142A80.c`, and `src/ovl/NAME_ENT/80144AD0.c`.
+
+## [2026-10-18] ticket | T-24102 Match ETC/80143240 remaining functions and add RENSYU/80132040 and MASTER/80139000 .data islands (Done)
+
+Completed [[tickets/T-24102-etc-80143240-rensyu-master-data-islands]] and moved its card to `Done` in [[kanban]]. Enabled `.data` islands in `config/overlays/RENSYU.yaml` (`src/ovl/RENSYU/80132040.c`) and `config/overlays/MASTER.yaml` (`src/ovl/MASTER/80139000.c`), promoted `.data` definitions in `src/ovl/ETC/80143240.c`, `src/ovl/RENSYU/80132040.c`, and `src/ovl/MASTER/80139000.c`, and matched 5 functions (5,480 B): `ETC:func_80143758` (292 B), `ETC:func_80143968` (288 B), `ETC:func_80143A88` (1,180 B), `RENSYU:func_8013325C` (972 B), and `MASTER:func_80139CC8` (2,748 B). Reviewed against `CODING_STANDARDS.md`; `ETC.ok`, `RENSYU.ok`, `MASTER.ok`, `check_headers.py`, `migrate_globals.py --check`, and `sync_protos.py --check-branch` all pass.

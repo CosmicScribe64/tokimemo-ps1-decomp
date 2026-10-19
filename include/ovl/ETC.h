@@ -950,13 +950,16 @@ void func_80148F7C(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_80148E98(void);
 void func_80148EE8(void);
 extern s32 D_80150144;
-/* Word 0 is a flag (func_80142B80, func_80143334); words 1..15 are the order of the girls that
- * func_80143A88 and func_80144224 step through with D_80150148 (T-17300). */
-extern s32 D_8015014C[16];
+/* Flag set by func_80142B80 and checked by func_80143334; D_80150150 is the 14-girl order
+ * that func_80143A88 and func_80144224 step through 1-based with D_80150148 (T-17300, T-24102). */
+extern s32 D_8015014C;
+extern s32 D_80150150[14];
 extern s32 D_80150E98;
 extern s32 D_80151358[];
 void func_8014354C(void);
 void func_80143758(void);
+s32 func_80143968(void);
+void func_80143A88(void);
 /* T-24073: original reads incoming a0; preserve historical callers without an argument expression. */
 void func_8014407C();
 extern s16 D_80150138;

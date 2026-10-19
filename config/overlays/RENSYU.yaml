@@ -60,4 +60,5 @@ segments:
       - [0x40, c, RENSYU/80132040]
       - [0x2110, .rodata, RENSYU/80132040]
       - [0x22B0, data, RENSYU_data]
+      - [0x22C0, .data, RENSYU/80132040]
   - [0x30000]

@@ -71,4 +71,5 @@ segments:
       - [0x9FB0, .rodata, MASTER/80138490]
       - [0xA0C0, .rodata, MASTER/80139000]
       - [0xA2D0, data, MASTER_data]
+      - [0xA760, .data, MASTER/80139000]
   - [0x30000]

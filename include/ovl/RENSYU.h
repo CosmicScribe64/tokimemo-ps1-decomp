@@ -29,9 +29,10 @@ typedef struct RensyuClubCount {
 typedef struct RensyuTbl11 {
     u16 v[11];
 } RensyuTbl11; /* size 0x16 */
+extern RensyuTbl11 D_80134378;
 extern RensyuTbl11 D_80134390;
 extern u8 D_801342C0;
-extern u8 D_801342C8[];
+extern u8 D_801342C8[5];
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 void func_801340B0(void);

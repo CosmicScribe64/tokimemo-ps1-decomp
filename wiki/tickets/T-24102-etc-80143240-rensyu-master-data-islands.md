@@ -1,7 +1,7 @@
 ---
 id: T-24102
 title: Match ETC/80143240 remaining functions and add RENSYU/80132040 and MASTER/80139000 .data islands
-status: In Progress
+status: Done
 priority: high
 created: 2026-10-18
 updated: 2026-10-18
@@ -22,6 +22,16 @@ Following [[tickets/T-24094-etc-data-island-and-near-complete-overlays]] (which 
 
 ## Acceptance criteria
 
-- [ ] Close as many of the target functions in `src/ovl/ETC/80143240.c`, `src/ovl/RENSYU/80132040.c`, and `src/ovl/MASTER/80139000.c` as possible to `score=0` in `build/scratch/t24102/`
-- [ ] Promote all `score=0` functions to unguarded default C and verify `tools/funcdiff.py --resolve`, `ninja`, `tools/check_headers.py`, `tools/migrate_globals.py --check`, and `tools/sync_protos.py --check-branch`
-- [ ] Review against `CODING_STANDARDS.md` and record findings in `wiki/log.md`
+- [x] Close as many of the target functions in `src/ovl/ETC/80143240.c`, `src/ovl/RENSYU/80132040.c`, and `src/ovl/MASTER/80139000.c` as possible to `score=0` in `build/scratch/t24102/`
+- [x] Promote all `score=0` functions to unguarded default C and verify `tools/funcdiff.py --resolve`, `ninja`, `tools/check_headers.py`, `tools/migrate_globals.py --check`, and `tools/sync_protos.py --check-branch`
+- [x] Review against `CODING_STANDARDS.md` and record findings in `wiki/log.md`
+
+## Result
+
+5 functions (5,480 B) matched and promoted to unguarded default C:
+- `ETC:func_80143758` (292 B in `src/ovl/ETC/80143240.c`)
+- `ETC:func_80143968` (288 B in `src/ovl/ETC/80143240.c`)
+- `ETC:func_80143A88` (1,180 B in `src/ovl/ETC/80143240.c`)
+- `RENSYU:func_8013325C` (972 B in `src/ovl/RENSYU/80132040.c`)
+- `MASTER:func_80139CC8` (2,748 B in `src/ovl/MASTER/80139000.c`)
+

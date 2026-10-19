@@ -1,4 +1,22 @@
 #include "ovl/RENSYU.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/80132040.data", D_801342C0);
+u8 D_801342C4 = 0;
+u8 D_801342C8[5] = { 0 };
+INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/80132040.data", D_801342D0);
+INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/80132040.data", D_801342D4);
+INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/80132040.data", D_801342F4);
+INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/80132040.data", D_80134328);
+INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/80132040.data", D_8013435C);
+RensyuTbl11 D_80134378 = { { 0x1E, 0x3C, 0x5A, 0x78, 0x96, 0xB4, 0xD2, 0xF0, 0x10E, 0x12C, 0x14A } };
+RensyuTbl11 D_80134390 = { { 0x1E, 0x3C, 0x5A, 0x78, 0x96, 0xB4, 0xD2, 0xF0, 0x10E, 0x12C, 0x14A } };
+INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/80132040.data", D_801343A8);
+INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/80132040.data", D_801343D0);
+INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/80132040.data", D_801343D4);
+INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/80132040.data", D_801343D8);
+INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/80132040.data", D_801343DC);
+INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/80132040.data", D_801343E0);
 
 typedef struct {
     void (*f[8])();
@@ -203,7 +221,102 @@ void func_80132F10(void) {
     func_80086424();
 }
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_8013325C);
+/* FAKE: scalar byte views on unk_110A and D_801342C4 preserve the target live ranges and
+ * swap_count store placement; unused local `a` and reusing `value` as the second shuffle
+ * index place `tbl` at 0x40(sp) and `swap_count` at 0x64(sp) (T-19020, T-24102). */
+void func_8013325C(void) {
+    u8 swap;
+    u8 other;
+    s32 i;
+    s32 swap_count;
+    u8 *a;
+    s32 first;
+    s32 value;
+    RensyuTbl11 tbl;
+
+    tbl = D_80134378;
+    switch (*(u8 *)&D_800E6280.unk_110A) {
+    case 0:
+        value = (s16)(D_800E6280.unk_66C[(u16) D_800E6280.unk_0F4.h >> 0xC].unk_00 - tbl.v[((RensyuClubCount *)&D_800E6280.unk_66C[(u16) D_800E6280.unk_0F4.h >> 0xC])->count]);
+        if (value < -0x1E) {
+            (*(u8 *)&D_801342C4) = 0;
+        } else if (value < -0x14) {
+            (*(u8 *)&D_801342C4) = 1;
+        } else if (value < -0xA) {
+            (*(u8 *)&D_801342C4) = 1;
+        } else if (value < 0) {
+            (*(u8 *)&D_801342C4) = 2;
+        } else if (value >= 0x1E) {
+            (*(u8 *)&D_801342C4) = 5;
+        } else if (value >= 0x14) {
+            (*(u8 *)&D_801342C4) = 4;
+        } else if (value >= 0xA) {
+            (*(u8 *)&D_801342C4) = 4;
+        } else if (value >= 0) {
+            (*(u8 *)&D_801342C4) = 3;
+        }
+        func_8004284C();
+        break;
+    case 1:
+        for (i = 0; i < 5; i++) {
+            D_801342C8[i] = 0;
+        }
+        for (i = 0; i < (u8)(*(u8 *)&D_801342C4); i++) {
+            D_801342C8[i] = 1;
+        }
+        i = 0;
+        swap_count = func_800AE0D0() & 0xF;
+        if ((u8)(*(u8 *)&D_801342C4) >= 3U) {
+            swap = D_801342C8[0];
+            other = D_801342C8[4];
+            D_801342C8[4] = swap;
+            D_801342C8[0] = other;
+        }
+        if (swap_count > 0) {
+            do {
+                first = func_800AE0D0() & 3;
+                value = func_800AE0D0() & 3;
+                swap = D_801342C8[first];
+                i++;
+                other = D_801342C8[value];
+                D_801342C8[first] = other;
+                D_801342C8[value] = swap;
+            } while (i != swap_count);
+        }
+        if (((u16) D_800E6280.unk_0F4.h >> 0xC) == 9) {
+            if ((u8)(*(u8 *)&D_801342C4) >= 3U) {
+                D_801342C8[0] = 1;
+            } else {
+                D_801342C8[0] = 0;
+            }
+        }
+        func_8004284C();
+        break;
+    case 2:
+        func_80048F64(0x60);
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 3;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_38 = 0x01000000;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_1A = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_06 = 1;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_43 = ((RensyuClubCount *)&D_800E6280.unk_66C[(u16) D_800E6280.unk_0F4.h >> 0xC])->count % 5U + 0x10;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0x60;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = 0x20;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_0C = (u8 *) D_801343D4;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_10 = (u8 *) D_801343D8;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_34 = (u8 *) D_801343D0;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_14 = D_801343DC;
+        D_801342C0 = 0;
+        func_80042808();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    func_80086424();
+}
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-22030, T-24082, 4 rows (2 pairs); frame, registers, control flow and cases 1 to 6 match. In case 0
