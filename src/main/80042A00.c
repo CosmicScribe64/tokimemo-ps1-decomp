@@ -76,7 +76,84 @@ void func_80042C74(void) {
     D_800E6280.unk_F88 = 0;
 }
 
+/* NON_MATCHING: T-24127, score=155; mouse/pad polling and double-click state machine matches in instruction count and control flow, with register coloring diffs on dx/dy ($a0/$a1 vs $v0/$a0) and unsigned-byte loads of unk_F70..unk_F73 (struct fields are s8 in game.h). */
+#ifdef NON_MATCHING
+void func_80042CB0(void) {
+    s32 dx;
+    s32 dy;
+    s16 qx;
+    s16 qy;
+    s32 b2;
+    s32 b3;
+
+    dx = *(s8 *)&D_800E8BF0[4];
+    dy = *(s8 *)&D_800E8BF0[5];
+    qx = (s32)(dx * D_800E6280.unk_F6F) / 3;
+    qy = (s32)(dy * D_800E6280.unk_F6F) / 3;
+    dx = 0;
+    dy = 0;
+    D_800E6280.unk_F7A += qx;
+    D_800E6280.unk_F7C += qy;
+    if (D_800E6280.unk_F7A >= 0x8D) {
+        D_800E6280.unk_F7A = 0x8C;
+    }
+    if (D_800E6280.unk_F7A < -0x96) {
+        D_800E6280.unk_F7A = -0x96;
+    }
+    if (D_800E6280.unk_F7C < -0x64) {
+        D_800E6280.unk_F7C = -0x64;
+    }
+    if (D_800E6280.unk_F7C >= 0x65) {
+        D_800E6280.unk_F7C = 0x64;
+    }
+    D_8011ECF6 = D_800E6280.unk_F7A;
+    D_8011ECFA = D_800E6280.unk_F7C;
+    D_800E6280.unk_F76 = ~D_800E8BF0[3];
+    D_800E6280.unk_F84 = D_800E6280.unk_F80;
+    D_800E6280.unk_F77 = D_800E6280.unk_F76 & ~D_800E6280.unk_F78;
+    if (*(u8 *)&D_800E6280.unk_F70 != 0 && (*(u8 *)&D_800E6280.unk_F71 == 0 || D_800E6280.unk_F77 != D_800E6280.unk_F72) && D_800E6280.unk_F77 != 0) {
+        if (D_800E6280.unk_F77 & 4) {
+            D_800E6280.unk_F72 = D_800E6280.unk_F77;
+            *(u8 *)&D_800E6280.unk_F71 = *(u8 *)&D_800E6280.unk_F73 + 8;
+        } else if (D_800E6280.unk_F77 & 8) {
+            D_800E6280.unk_F72 = D_800E6280.unk_F77;
+            *(u8 *)&D_800E6280.unk_F71 = *(u8 *)&D_800E6280.unk_F73 + 8;
+        }
+    }
+    D_800E6280.unk_F80 = 0;
+    if (*(u8 *)&D_800E6280.unk_F70 == 0 || (*(u8 *)&D_800E6280.unk_F70 != 0 && *(u8 *)&D_800E6280.unk_F71 != 0 && *(u8 *)&D_800E6280.unk_F73 + 8 != *(u8 *)&D_800E6280.unk_F71 && D_800E6280.unk_F77 == D_800E6280.unk_F72)) {
+        D_800E6280.unk_F72 = 0;
+        *(u8 *)&D_800E6280.unk_F71 = 0;
+        if (D_800E6280.unk_F75 != 0) {
+            if (D_800E6280.unk_F76 & 4) {
+                D_800E6280.unk_F80 |= 0x20;
+            } else if (D_800E6280.unk_F76 & 8) {
+                D_800E6280.unk_F80 |= 0x40;
+            }
+        } else if (D_800E6280.unk_F76 & 8) {
+            D_800E6280.unk_F80 |= 0x20;
+        } else if (D_800E6280.unk_F76 & 4) {
+            D_800E6280.unk_F80 |= 0x40;
+        }
+    }
+    if (*(u8 *)&D_800E6280.unk_F71 != 0) {
+        *(u8 *)&D_800E6280.unk_F71 -= 1;
+    } else {
+        *(u8 *)&D_800E6280.unk_F71 = 0;
+        D_800E6280.unk_F72 = 0;
+    }
+    if (D_800E8C30[0] == 0 && (D_800E8C30[1] & 0xF0) == 0x40) {
+        b2 = ~D_800E8C30[3];
+        b3 = D_800E8C30[2];
+        D_800E6280.unk_F80 = (D_800E6280.unk_F80 | (~b3 << 24)) | ((b2 & 0xFF) << 16);
+    }
+    D_800E6280.unk_F88 = ~D_800E6280.unk_F84 & D_800E6280.unk_F80;
+    D_800E6280.unk_F8C = D_800E6280.unk_F84 & (u32)~D_800E6280.unk_F80;
+    D_800E6280.unk_F78 = D_800E6280.unk_F76;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80042CB0);
+#endif
 
 /* Implicit int (no return value on the unk_F74 == 0xFF path in the original). */
 s32 func_80043010(void) {

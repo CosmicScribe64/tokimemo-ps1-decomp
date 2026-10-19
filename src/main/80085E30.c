@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "psx_types.h"
 
 void func_80085E30(s32 arg0, s32 arg1) {
     draw2d3d(1, 0);
@@ -30,7 +31,48 @@ s32 Vblnk_Timer(void) {
     return D_800E36F4;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80085E30", Scroll);
+void Scroll(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4) {
+    POLY_FT4 *p;
+    s32 i;
+    u16 lo;
+    s32 pad1;
+    s32 pad2;
+
+    for (i = 0; i < 5; i++) {
+        p = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+        func_8009F040(p);
+        SetSemiTrans(p, 0);
+        SetShadeTex(p, 0);
+        p->r0 = D_800E6280.unk_03A;
+        p->g0 = D_800E6280.unk_03A;
+        p->b0 = D_800E6280.unk_03A;
+        lo = (arg0 * 2 + (i % 2) * 0x40) & 0x7F;
+        p->u1 = lo + 0x40;
+        p->u3 = lo + 0x40;
+        p->u0 = lo;
+        p->u2 = lo;
+        /* FAKE: dead stores to pad1/pad2 order the loop-invariant expression bit positions and stack home slots (`i * 0x20` before `i * 0x40`, `(u32)arg4` at 0x60($sp)). T-24127 */
+        pad1 = i * 0x20;
+        pad2 = (u32)arg4;
+        p->v3 = arg2 + arg3;
+        p->v2 = arg2 + arg3;
+        p->v1 = arg2;
+        p->v0 = arg2;
+        p->x0 = D_800E6280.unk_014[D_8011ECA0] + i * 0x40 - 0xA0;
+        p->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2 - 0x78;
+        p->x1 = D_800E6280.unk_014[D_8011ECA0] + i * 0x40 - 0x60;
+        p->y1 = D_800E6280.unk_018[D_8011ECA0] + arg2 - 0x78;
+        p->x2 = D_800E6280.unk_014[D_8011ECA0] + i * 0x40 - 0xA0;
+        p->y2 = D_800E6280.unk_018[D_8011ECA0] + arg2 + arg3 - 0x78;
+        p->x3 = D_800E6280.unk_014[D_8011ECA0] + i * 0x40 - 0x60;
+        p->y3 = D_800E6280.unk_018[D_8011ECA0] + arg2 + arg3 - 0x78;
+        p->tpage = func_8009ECB0(1, 0, (((u32)(i * 0x20) + (u32)arg0) / 0x40 * 0x40) % (u32)arg4 + 0x140, 0);
+        p->clut = func_8009ED74(0, 0x1F0);
+        AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg1 * 4, p);
+    }
+    /* FAKE: raises `(u8)arg2` priority above `arg3` and `arg2 + arg3` so `$s6 = arg2, $s7 = arg3, $s8 = arg2 + arg3`. T-24127 */
+    if ((u8)arg2) {}
+}
 
 void Rot_2D(s32 arg0, s32 *arg1, s32 *arg2, s32 *arg3, s32 *arg4) {
     s32 s;

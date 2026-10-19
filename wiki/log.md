@@ -20743,3 +20743,11 @@ Completed and reviewed [[tickets/T-24126-geko-tel-bunkaken-omimai-option-sweep]]
 - `OPTION:func_801394F4` (900 B in `src/ovl/OPTION/801389A0.c`): `MATCH`
 - `TEL:func_80134FE4` (780 B in `src/ovl/TEL/80132000.c`): `MATCH`
 Created and dispatched [[tickets/T-24134-geko-option-tel-bunkaken-omimai-wave-2-closers]] (`In Progress`) for wave 2 of `GEKO` (12), `OPTION` (10), `TEL` (2), `BUNKAKEN` (1), and `OMIMAI` (1).
+
+## [2026-10-19] build | T-24127 -> Done (+3 functions, +1,184 B in src/main/; 80079B10.c and 80085E30.c 100.0% matched!); T-24135 dispatched
+
+Completed and reviewed [[tickets/T-24127-main-remaining-sweep-c]] (`Done`, +3 functions / +1,184 B in `src/main/` — **`src/main/80079B10.c` and `src/main/80085E30.c` 100.0% matched**):
+- `main:func_8007B64C` (148 B in `src/main/80079B10.c`): `MATCH`
+- `main:func_8007BBE8` (276 B in `src/main/80079B10.c`): `MATCH`
+- `main:Scroll` (760 B in `src/main/80085E30.c`): `MATCH`
+Also replaced `func_80085F0C` call-site aliases in `src/ovl/TAIIKU/*.c` with `Scroll`. Created and dispatched [[tickets/T-24135-main-remaining-sweep-d]] (`In Progress`) for wave D of `src/main/`.

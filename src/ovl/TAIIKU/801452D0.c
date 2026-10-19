@@ -285,8 +285,8 @@ void func_80145A78(void) {
         }
         break;
     case 3:
-        func_80085F0C(D_8014A3DE, 0xF, 0, 0x70, 0x280);
-        func_80085F0C(D_8014A3DE % 128, 0xF, 0x70, 0x80, 0x80);
+        Scroll(D_8014A3DE, 0xF, 0, 0x70, 0x280);
+        Scroll(D_8014A3DE % 128, 0xF, 0x70, 0x80, 0x80);
         if (func_800862F0() != 0) {
             func_80044750(0xC2);
             func_80148370();
@@ -682,8 +682,8 @@ void func_80146C20(void) {
         D_8014A3E0 = 0;
     }
     D_8014A3DC += D_8014A3E0; /* the fixed-point high half (+2) is read as an s16 below */
-    func_80085F0C(((s16 *)&D_8014A3DC)[1] / 2 % 640, 0xF, 0, 0x70, 0x280);
-    func_80085F0C(((s16 *)&D_8014A3DC)[1] % 128, 0xF, 0x70, 0x80, 0x80);
+    Scroll(((s16 *)&D_8014A3DC)[1] / 2 % 640, 0xF, 0, 0x70, 0x280);
+    Scroll(((s16 *)&D_8014A3DC)[1] % 128, 0xF, 0x70, 0x80, 0x80);
 }
 
 s32 func_80146D18(void) {

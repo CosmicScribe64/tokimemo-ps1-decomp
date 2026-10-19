@@ -216,10 +216,10 @@ void func_80138DF8(void) {
                 func_8004284C();
             }
         }
-        func_80085F0C(0, 0xF, 0, 0xF0, 0x280);
+        Scroll(0, 0xF, 0, 0xF0, 0x280);
         break;
     case 2:
-        func_80085F0C(0, 0xF, 0, 0xF0, 0x280);
+        Scroll(0, 0xF, 0, 0xF0, 0x280);
         func_80139FE4();
         func_800863D4(0x6B);
         if (D_800E6280.unk_F88 & 0xF0) {
@@ -238,14 +238,14 @@ void func_80138DF8(void) {
         }
         break;
     case 3:
-        func_80085F0C(0, 0xF, 0, 0xF0, 0x280);
+        Scroll(0, 0xF, 0, 0xF0, 0x280);
         if (func_800460EC() == 2) {
             cd_read_sectors(0x87, 0x8018F000, 0xB98F);
             func_8004284C();
         }
         break;
     case 4:
-        func_80085F0C(0, 0xF, 0, 0xF0, 0x280);
+        Scroll(0, 0xF, 0, 0xF0, 0x280);
         if (Fade_Out_Main() != 0) {
             func_8004284C();
         }
@@ -399,7 +399,7 @@ void func_80139610(void) {
             func_80085ED0();
             func_8004284C();
         }
-        func_80085F0C(0, 0xF, 0, 0xF0, 0xC0);
+        Scroll(0, 0xF, 0, 0xF0, 0xC0);
         break;
     case 3:
         if (func_80085EEC() >= 0x5B) {
@@ -414,7 +414,7 @@ void func_80139610(void) {
             func_80085ED0();
             func_8004284C();
         }
-        func_80085F0C(0, 0xF, 0, 0xF0, 0xC0);
+        Scroll(0, 0xF, 0, 0xF0, 0xC0);
         break;
     case 4:
         D_801499D8++;
@@ -423,14 +423,14 @@ void func_80139610(void) {
             func_80085ED0();
             func_8004284C();
         }
-        func_80085F0C(0, 0xF, 0, 0xF0, 0xC0);
+        Scroll(0, 0xF, 0, 0xF0, 0xC0);
         break;
     case 5:
         if (func_80085EEC() >= 0xF1) {
             Fade_Out_Init();
             func_8004284C();
         }
-        func_80085F0C(0, 0xF, 0, 0xF0, 0xC0);
+        Scroll(0, 0xF, 0, 0xF0, 0xC0);
         break;
     case 6:
         if (Fade_Out_Main() != 0) {
@@ -449,7 +449,7 @@ void func_80139610(void) {
             }
             func_80042808();
         }
-        func_80085F0C(0, 0xF, 0, 0xF0, 0xC0);
+        Scroll(0, 0xF, 0, 0xF0, 0xC0);
         break;
     default:
         func_80046500();

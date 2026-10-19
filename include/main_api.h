@@ -2728,8 +2728,7 @@ void func_80085E30(s32 arg0, s32 arg1);
 #endif
 void Vblnk_Timer_Init(void);
 s32 Vblnk_Timer(void);
-void Scroll(s32, s32, s32, s32, s32);
-void func_80085F0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void Scroll(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4);
 void Rot_2D(s32 arg0, s32 *arg1, s32 *arg2, s32 *arg3, s32 *arg4);
 void Default_Disp(void);
 void func_80086424();

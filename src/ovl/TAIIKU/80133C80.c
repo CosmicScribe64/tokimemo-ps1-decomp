@@ -236,8 +236,8 @@ void func_801346FC(void) {
         func_80136BB4();
         func_80136E80();
         func_80137C44();
-        func_80085F0C((s32) ((s16) D_80149298.halves.high >> 1) % 640, 0xF, 0, 0x70, 0x280);
-        func_80085F0C(((s16) D_80149298.halves.high >> 1) & 0x7F, 0xF, 0x70, 0x80, 0x80);
+        Scroll((s32) ((s16) D_80149298.halves.high >> 1) % 640, 0xF, 0, 0x70, 0x280);
+        Scroll(((s16) D_80149298.halves.high >> 1) & 0x7F, 0xF, 0x70, 0x80, 0x80);
         func_80132E20((s32) D_80149298.halves.high, 3);
         func_80137EA8();
         func_80137440();
@@ -279,8 +279,8 @@ void func_801346FC(void) {
         func_80137C44();
         func_80137544();
         func_801365C8();
-        func_80085F0C((s32) ((s16) D_80149298.halves.high >> 1) % 640, 0xF, 0, 0x70, 0x280);
-        func_80085F0C(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
+        Scroll((s32) ((s16) D_80149298.halves.high >> 1) % 640, 0xF, 0, 0x70, 0x280);
+        Scroll(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
         func_80132E20((s32) D_80149298.halves.high, 3);
         func_80137EA8();
         if (D_80149208.player.unk_01 != 0) {
@@ -292,8 +292,8 @@ void func_801346FC(void) {
         func_80136E80();
         func_80137C44();
         func_801365C8();
-        func_80085F0C((s32) ((s16) D_80149298.halves.high >> 1) % 640, 0xF, 0, 0x70, 0x280);
-        func_80085F0C(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
+        Scroll((s32) ((s16) D_80149298.halves.high >> 1) % 640, 0xF, 0, 0x70, 0x280);
+        Scroll(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
         func_80137EA8();
         if (func_80137784(0) != 0) {
             D_80149208.player.unk_01 = 0U;
@@ -827,8 +827,8 @@ s32 func_80136DA4() {
         D_8014929C = 0;
     }
     D_80149298.word += D_8014929C;
-    func_80085F0C(((D_80149298.halves.high >> 1)) % 640, 0xF, 0, 0x70, 0x280);
-    func_80085F0C(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
+    Scroll(((D_80149298.halves.high >> 1)) % 640, 0xF, 0, 0x70, 0x280);
+    Scroll(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
 }
 
 void func_80136E80(void) {

@@ -784,37 +784,25 @@ void func_8007B640(void) {
     D_80125CC0 = 0;
 }
 
-/* NON_MATCHING: T-17012, 51 diff rows (about 26 differing lines); the structure is right (return value read before the shift loop, u16 loop counter), but IDO hoists `move v0,zero` for `return 0` and colours the count $v1 and the loop counter $v0 where the original has the count in $v0, the counter in $a0 and the saved element in $v1 (T-0018, promo). */
-#ifdef NON_MATCHING
 u16 func_8007B64C(void) {
-    u16 n;
     u16 i;
     u16 ret;
 
-    n = D_80125CC0;
-    if (n > 0x20) {
-        n = 0x20;
+    if (D_80125CC0 > 0x20) {
+        D_80125CC0 = 0x20;
     }
-    if (n == 0) {
-        D_80125CC0 = n;
-        return 0;
-    }
-    ret = D_80125CC2;
-    i = 1;
-    if (n >= 2) {
-        D_80125CC0 = n;
-        do {
+    if (D_80125CC0 == 0) {
+        ret = 0;
+    } else {
+        ret = D_80125CC2;
+        /* FAKE: (&D_80125CC0)[i] indexes the queue through the scalar count symbol while keeping D_80125CC2 as a separate scalar relocation. T-24127 */
+        for (i = 1; i < D_80125CC0; i++) {
             (&D_80125CC0)[i] = (&D_80125CC0)[i + 1];
-            i++;
-        } while (i < D_80125CC0);
-        n = D_80125CC0;
+        }
+        D_80125CC0--;
     }
-    D_80125CC0 = n - 1;
     return ret;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B64C);
-#endif
 
 void func_8007B6E0(void) {
     func_8007A98C(0x74);
@@ -958,7 +946,20 @@ void func_8007BAAC(void) {
     D_80125D10.unk_48[7] = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007BBE8);
+s32 func_8007BBE8(u8 *arg0, u16 arg1) {
+    s32 i;
+    s32 off;
+
+    for (i = 0; i < 0x10; i++) {
+        /* FAKE: (u32)arg0 converts i * 4 from signed to unsigned before adding arg0, keeping i * 4 as the 4x-unrolled induction variable without folding arg0 into it. T-24127 */
+        off = *(s32 *)(i * 4 + (u32)arg0);
+        if (off == 0) {
+            off = *(s32 *)arg0;
+        }
+        D_80125DA0[arg1][i] = (s32)(arg0 + off + 0x10);
+        D_80125E20[arg1][i] = arg0[i + 0x40];
+    }
+}
 
 void func_8007BCFC(s32 arg0) {
     u8 volume[4];
