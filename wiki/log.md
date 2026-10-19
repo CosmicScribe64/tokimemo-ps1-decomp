@@ -20805,3 +20805,7 @@ All subagents hit the individual quota limit (resets in about 147 h). Checkpoint
 ## [2026-10-19] ticket | Start T-24142, single-agent restart
 
 Seven-agent pool retired (individual quota, errored). Per the user, one Sonnet 5.5 subagent now continues the matching under [[tickets/T-24142-single-agent-closer-sweep]]; the orchestrator keeps the wiki, review, CI and pushes. About 183 INCLUDE_ASM functions remain across 16 overlays plus src/main/.
+
+## [2026-10-19] ticket | Pause T-24142 and record current state
+
+Paused at the user's request: subagent and check-in timer stopped. Promoted `OPTION:func_80139F8C` (`src/ovl/OPTION/801389A0.c`), verified with funcdiff and a full build (27/27 SHA1, headers OK). State: about 182 INCLUDE_ASM functions remain (TACO 20, ETC 12, GEKO 12, TAIIKU 11, GYOZI 8, RPG_BAT 7, OPTION 5, SHOUGATU 6, MASTER 6, ENDING 5, NAME_ENT 4, KANGEI 4, VALEN 4, BUNKA_SD 2, EN_NICHI 2, TEL 2, plus src/main/). [[tickets/T-24142-single-agent-closer-sweep]] stays In Progress; GYOZI `func_8013907C` and `func_80140464` remain guarded drafts. Next: review of the wave-3 checkpoint, then resume matching.

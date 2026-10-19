@@ -487,9 +487,6 @@ void func_80139F04(void) {
     func_80044750((D_8013E730 | 0x500) & 0xFFFF);
 }
 
-/* NON_MATCHING: T-24002, 5 differing rows: original copies the byte to a0
- * before OR/mask; IDO combines the value range. */
-#ifdef NON_MATCHING
 /* FAKE: width-staged locals preserve raw-byte and call-argument ranges. T-10850 */
 void func_80139F8C(void)
 {
@@ -512,14 +509,10 @@ void func_80139F8C(void)
     if (D_8013D3A8 > 0x10)
     {
         value = D_8013D3A8;
-        code = value | 0x1200;
-        t = code & 0xFFFF;
-        func_80044750(t);
+        code = (value & 0xFFFF) | 0x1200; /* FAKE: the redundant mask makes IDO copy the byte to a0 first. T-24142 */
+        func_80044750(code);
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139F8C);
-#endif
 
 void func_8013A010(void) {
     func_8004500C(0, D_8013D3A8);
