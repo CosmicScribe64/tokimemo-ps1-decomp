@@ -20716,3 +20716,11 @@ Completed and reviewed [[tickets/T-24122-shugaku-final-3-and-small-overlays-swee
 - `KANGEI:func_80138F88` (844 B in `src/ovl/KANGEI/80137B90.c`): `MATCH`
 - `RENSYU:func_80133990` (808 B in `src/ovl/RENSYU/80132040.c`): `MATCH`
 Created and dispatched [[tickets/T-24131-small-overlays-wave-2-closers]] (`In Progress`) for wave 2 of `KANGEI`, `RENSYU`, `MASTER`, `EN_NICHI`, `ENDING`, and `VALEN`.
+
+## [2026-10-19] build | T-24113 -> Done (+3 functions, +2,824 B; DATE 100.0% matched!); T-24132 dispatched
+
+Completed and reviewed [[tickets/T-24113-name-ent-80132000-80142a80-and-date-final]] (`Done`, +3 functions / +2,824 B across `DATE` and `NAME_ENT` — **`DATE` overlay 100.0% matched, 290/290 functions**):
+- `DATE:func_801449D4` (1,100 B in `src/ovl/DATE/80141EE0.c`): `MATCH`
+- `NAME_ENT:func_80138F60` (1,248 B in `src/ovl/NAME_ENT/80132000.c` + 36 B `.data` `D_8014D03C` and `D_8014D04C` promoted to C): `MATCH`
+- `NAME_ENT:func_8014472C` (476 B in `src/ovl/NAME_ENT/80142A80.c`): `MATCH`
+Created and dispatched [[tickets/T-24132-name-ent-final-4]] (`In Progress`) for the final 4 remaining unmatched functions in `NAME_ENT` (`func_80138C1C`, `func_801398EC`, `func_8013AF78`, `func_80143580`).

@@ -86,8 +86,19 @@ INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CF5C);
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014D010);
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014D014);
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014D028);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014D03C);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014D04C);
+u8 D_8014D03C[16] = {
+    1, 4, 3, 2,
+    3, 1, 2, 2,
+    2, 3, 3, 4,
+    3, 2, 3, 1,
+};
+u8 D_8014D04C[20] = {
+    0x2D, 0x0A, 0x0A,
+    0x32, 0x14, 0x00,
+    0x32, 0x19, 0x00,
+    0x37, 0x19, 0x00,
+    0, 0, 0, 0, 0, 0, 0, 0,
+};
 
 void func_80132000(s32 arg0) {
     s32 rem;
@@ -2380,7 +2391,83 @@ void func_80138F00(void) {
     D_800E6280.unk_1A7C = 0x80192200;
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138F60);
+void func_80138F60(void) {
+    /* FAKE: register + pre-call initializers place month/day/idx on $v0/$a2/$a1 after func_80138C1C. T-24113 */
+    register u32 month;
+    u32 day;
+    u32 idx;
+    u32 var_t0;
+
+    month = D_8014CC70;
+    day = 0;
+    idx = 0;
+    func_80041878();
+    func_80138C1C();
+    month = D_800E6280.unk_1BC[0].unk_10.date.month;
+    day = D_800E6280.unk_1BC[0].unk_10.date.day;
+    D_800E6280.unk_1BC[0].unk_0C.f.f20 = (s32)(day * 3 + month) % 11;
+    idx = D_8014D03C[D_800E6280.unk_1BC[0].unk_10.date.unk_09 + (*(NameProfileFlags *)&D_800E6280.unk_0F8).blood_type * 4] - 1;
+    D_800E6280.unk_1BC[0].unk_06 = D_8014D04C[idx * 3];
+    D_800E6280.unk_1BC[0].unk_02 = D_8014D04C[idx * 3 + 1];
+    D_800E6280.unk_1BC[0].unk_0A = D_8014D04C[idx * 3 + 2];
+    var_t0 = D_800E6280.unk_1BC[0].unk_0C.f.f20;
+    if (var_t0 == 0) {
+        D_800E6280.unk_1BC[1].unk_0C.f.f20 = 1;
+    } else if (var_t0 == 1) {
+        D_800E6280.unk_1BC[1].unk_0C.f.f20 = 0;
+    } else if (func_800AE0D0() & 1) {
+        D_800E6280.unk_1BC[1].unk_0C.f.f20 = 1;
+    } else {
+        D_800E6280.unk_1BC[1].unk_0C.f.f20 = 0;
+    }
+    D_800E6280.unk_1BC[1].unk_10.date.unk_09 = 1;
+    if (var_t0 == 2) {
+        D_800E6280.unk_1BC[2].unk_0C.f.f20 = 3;
+    } else if (var_t0 == 3) {
+        D_800E6280.unk_1BC[2].unk_0C.f.f20 = 2;
+    } else if (func_800AE0D0() & 1) {
+        D_800E6280.unk_1BC[2].unk_0C.f.f20 = 3;
+    } else {
+        D_800E6280.unk_1BC[2].unk_0C.f.f20 = 2;
+    }
+    D_800E6280.unk_1BC[2].unk_10.date.unk_09 = 1;
+    if (var_t0 == 4) {
+        D_800E6280.unk_1BC[3].unk_0C.f.f20 = 5;
+    } else if (var_t0 == 5) {
+        D_800E6280.unk_1BC[3].unk_0C.f.f20 = 4;
+    } else if (func_800AE0D0() & 1) {
+        D_800E6280.unk_1BC[3].unk_0C.f.f20 = 5;
+    } else {
+        D_800E6280.unk_1BC[3].unk_0C.f.f20 = 4;
+    }
+    D_800E6280.unk_1BC[3].unk_10.date.unk_09 = 2;
+    if (var_t0 == 6) {
+        D_800E6280.unk_1BC[4].unk_0C.f.f20 = 7;
+    } else if (var_t0 == 7) {
+        D_800E6280.unk_1BC[4].unk_0C.f.f20 = 6;
+    } else if (func_800AE0D0() & 1) {
+        D_800E6280.unk_1BC[4].unk_0C.f.f20 = 7;
+    } else {
+        D_800E6280.unk_1BC[4].unk_0C.f.f20 = 6;
+    }
+    D_800E6280.unk_1BC[4].unk_10.date.unk_09 = 1;
+    D_800E6280.unk_1BC[5].unk_0C.f.f20 = 8;
+    D_800E6280.unk_1BC[5].unk_10.date.unk_09 = 2;
+    D_800E6280.unk_1BC[6].unk_0C.f.f20 = 9;
+    D_800E6280.unk_1BC[6].unk_10.date.unk_09 = 1;
+    D_800E6280.unk_1BC[7].unk_0C.f.f20 = 11;
+    D_800E6280.unk_1BC[7].unk_10.date.unk_09 = 0;
+    D_800E6280.unk_1BC[8].unk_0C.f.f20 = 11;
+    D_800E6280.unk_1BC[8].unk_10.date.unk_09 = 2;
+    D_800E6280.unk_1BC[9].unk_0C.f.f20 = 11;
+    D_800E6280.unk_1BC[9].unk_10.date.unk_09 = 1;
+    D_800E6280.unk_1BC[10].unk_0C.f.f20 = 10;
+    D_800E6280.unk_1BC[10].unk_10.date.unk_09 = 0;
+    D_800E6280.unk_1BC[11].unk_0C.f.f20 = 11;
+    D_800E6280.unk_1BC[11].unk_10.date.unk_09 = 1;
+    D_800E6280.unk_1BC[12].unk_10.date.unk_09 = 3;
+    func_80139440();
+}
 
 /* The nine GsRec0FC members of GameState (+0xFC..+0x11C) are walked as one array, as in main
  * 8007C030: IDO unrolls each nine-record loop into one peeled store and two groups of four. */

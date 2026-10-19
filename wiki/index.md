@@ -770,7 +770,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24110-option-80132000-and-801389a0-sweep|T-24110]] Close `OPTION:func_8013554C` (1,112 B) and `OPTION:func_80136C30` (780 B) in `OPTION/80132000.c` and replace mistaken `ETC` draft of `OPTION:func_801394F4` with 12-row `OPTION` guard (Done; 2 matches, 1,892 B verified default C).
 - [[tickets/T-24111-main-near-misses-sweep|T-24111]] Close 7 low-score near misses in `main` (`func_8007B144` 368 B, `x_taku_menu_set` 340 B, `func_800460FC` 376 B, `func_80054140` 324 B, `func_8008647C` 452 B, `func_80062210` 468 B, `func_8005CC40` 812 B, Done; 7 matches, 3,140 B verified default C).
 - [[tickets/T-24112-name-ent-80139740-remaining-8|T-24112]] Close 6 of 8 remaining unmatched functions in `NAME_ENT/80139740.c` (`func_80139F30` 2,712 B, `func_8013A9C8` 732 B, `func_8013B1D8` 836 B, `func_8014068C` 1,172 B linked / 1,240 B asm, `func_80140F90` 2,192 B, `func_80141820` 1,924 B, Done; 6 matches, 9,568 B linked / 9,636 B asm verified default C).
-- [[tickets/T-24113-name-ent-80132000-80142a80-and-date-final|T-24113]] Close remaining `NAME_ENT` functions in `80132000.c` and `80142A80.c` plus final `DATE` function `func_801449D4` (In Progress).
+- [[tickets/T-24113-name-ent-80132000-80142a80-and-date-final|T-24113]] Close `DATE:func_801449D4` (1,100 B — **`DATE` overlay 100.0% matched, 290/290 functions**), `NAME_ENT:func_80138F60` (1,248 B + 36 B `.data`), and `NAME_ENT:func_8014472C` (476 B, Done; 3 matches, 2,824 B verified default C).
 - [[tickets/T-24114-bunkaken-omimai-bunkasd-shugaku-closers|T-24114]] Close 5 of 8 remaining functions of `SHUGAKU` (`func_80137CFC` 520 B, `func_80138740` 408 B, `func_801388D8` 392 B — `801378B0.c` 100.0%; `func_80138E40` 364 B, `func_801398E8` 268 B, Done; 5 matches, 1,952 B verified default C).
 - [[tickets/T-24115-geko-remaining-16|T-24115]] Close 4 of 16 remaining functions in `GEKO` (`func_80141870` 268 B — `80140A00.c` 100.0%; `func_80138E10` 364 B, `func_80132D04` 800 B, `func_80143F48` 592 B, Done; 4 matches, 2,024 B verified default C).
 - [[tickets/T-24116-gyozi-shougatu-mid-score-batch|T-24116]] Close 2 functions in `GYOZI` (`func_8013A5F4` 376 B — `8013A140.c` 100.0%; `func_80143160` 436 B — `80143110.c` 100.0%) and add 13 improved `#ifdef NON_MATCHING` guards across `GYOZI` and `SHOUGATU` (Done; 2 matches, 812 B verified default C).
@@ -789,6 +789,8 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24129-taco-and-etc-remaining-closers|T-24129]] Close remaining near misses in `TACO` and `ETC` (wave 2, In Progress).
 - [[tickets/T-24130-shougatu-gyozi-bunkasd-wave-2-closers|T-24130]] Close remaining near misses in `SHOUGATU`, `GYOZI`, and `BUNKA_SD` (wave 2, In Progress).
 - [[tickets/T-24131-small-overlays-wave-2-closers|T-24131]] Wave 2 closer sweep across `KANGEI`, `RENSYU`, `MASTER`, `EN_NICHI`, `ENDING`, and `VALEN` (In Progress).
+- [[tickets/T-24132-name-ent-final-4|T-24132]] Close remaining 4 unmatched functions of `NAME_ENT` (`func_80138C1C`, `func_801398EC`, `func_8013AF78`, `func_80143580`, In Progress).
+
 
 
 
