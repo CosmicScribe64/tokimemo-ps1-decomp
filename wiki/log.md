@@ -20735,3 +20735,11 @@ Completed and reviewed [[tickets/T-24124-taiiku-and-rpg-bat-remaining-sweep]] (`
 - `RPG_BAT:func_8014B294` (1,188 B in `src/ovl/RPG_BAT/8014ADD0.c`): `MATCH`
 - `RPG_BAT:func_80152F30` (1,716 B in `src/ovl/RPG_BAT/801525B0.c`): `MATCH`
 Created and dispatched [[tickets/T-24133-taiiku-rpg-bat-wave-2-closers]] (`In Progress`) for wave 2 of `TAIIKU` (21 remaining) and `RPG_BAT` (8 remaining).
+
+## [2026-10-19] build | T-24126 -> Done (+3 functions, +2,480 B in OPTION and TEL); T-24134 dispatched
+
+Completed and reviewed [[tickets/T-24126-geko-tel-bunkaken-omimai-option-sweep]] (`Done`, +3 functions / +2,480 B across `OPTION` and `TEL`):
+- `OPTION:func_801344E4` (800 B in `src/ovl/OPTION/80132000.c`): `MATCH`
+- `OPTION:func_801394F4` (900 B in `src/ovl/OPTION/801389A0.c`): `MATCH`
+- `TEL:func_80134FE4` (780 B in `src/ovl/TEL/80132000.c`): `MATCH`
+Created and dispatched [[tickets/T-24134-geko-option-tel-bunkaken-omimai-wave-2-closers]] (`In Progress`) for wave 2 of `GEKO` (12), `OPTION` (10), `TEL` (2), `BUNKAKEN` (1), and `OMIMAI` (1).

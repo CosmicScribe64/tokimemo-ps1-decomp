@@ -45,7 +45,7 @@ s32 func_801376A8(void);
 void func_80139878(void);
 
 void func_80139A30();
-void func_801394F4(void);
+s32 func_801394F4(void);
 void func_801399C0();
 
 extern u8 D_8013D3F4;

@@ -2234,6 +2234,9 @@ void func_80050E8C(u8 *arg0, s32 arg1, s32 arg2);
 void sndisp();
 void func_80051010();
 void sndi(u8 *arg0, s32 arg1, s32 arg2);
+#ifndef MAIN_API_OVERRIDE_set_c_girl
+void set_c_girl(u8 arg0);
+#endif
 s32 get_g_name(u8 *arg0, s32 arg1);
 void func_80051508(u8 *arg0, s32 arg1);
 void get_p_name();

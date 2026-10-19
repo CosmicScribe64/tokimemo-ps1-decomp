@@ -310,114 +310,79 @@ s32 func_80139198(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-24110, 12 differing lines (T-24002: 100+): the first loop (`var_s0[96]`) and
- * `var_s3 == 0xD` block match after using `DisplayFixActor44` for the 32-bit `unk_28.w` add and
- * keeping `var_s0 = &((DisplayActor44 *)D_8011ECD0)[1]` after `unk_26 = -0x96`, and the third loop
- * (`var_s3 >= 5`) matches in body when indexed via `((DisplayActor44 *)D_8011ECD0)[var_s2 + 96]`,
- * leaving only the preheader register swap between `$s2` (`&D_8011ECD0[13]`) and `$s3` (`40`) plus
- * a dead `move $v0, $zero` in the preheader. */
-#ifdef NON_MATCHING
-void func_801394F4(void) {
-    DisplayActor44 *var_s0;
+/* FAKE: s32 without an explicit return keeps $v0 live at epilogue so as1 retains move $v0, $zero in the third loop preheader. T-24126 */
+s32 func_801394F4(void) {
+    s32 i;
+    DisplayActor44 *p;
     s16 temp_v0;
-    s32 var_a0;
-    s32 var_a1;
-    s32 var_a2;
-    s32 var_v1;
-    s32 temp_s1;
-    s32 temp_v1_2;
-    s32 var_s2;
-    s32 var_s3;
-    u8 temp_v1;
+    s32 dx;
+    s32 dy;
+    s32 count;
+    u8 flags;
 
-    var_s3 = 0;
-    var_s0 = (DisplayActor44 *)D_8011ECD0;
-    var_s2 = -0x64;
-    do {
-        temp_s1 = func_800AE0C0((((DisplayActor44 *)D_8011ECD0)->unk_26 - var_s0[96].unk_26) & 0x3FF);
-        func_8004AE54(func_800AE0C0((((DisplayActor44 *)D_8011ECD0)->unk_2A - var_s0[96].unk_2A) & 0x1FF) + temp_s1, -0x8C, var_s2, 6);
-        temp_s1 = func_800AE0C0((((DisplayActor44 *)D_8011ECD0)->unk_26 - var_s0[96].unk_26) & 0x3FF);
-        if (((func_800AE0C0((((DisplayActor44 *)D_8011ECD0)->unk_2A - var_s0[96].unk_2A) & 0x1FF) + temp_s1) < 0x20) && (D_800E6280.unk_F88 & 0x20)) {
-            temp_v1 = var_s0[96].unk_03;
-            if (temp_v1 & 0x10) {
-                var_s0[96].unk_03 = (u8)(temp_v1 & 0xFFEF);
-                if (var_s0[96].unk_26 < -0x200) {
-                    var_s0[96].unk_26 = 0x200;
+    count = 0;
+    for (i = 0, p = (DisplayActor44 *)D_8011ECD0; i < 13; i++, p++) {
+        dx = func_800AE0C0((((DisplayActor44 *)D_8011ECD0)->unk_26 - p[96].unk_26) & 0x3FF);
+        func_8004AE54(func_800AE0C0((((DisplayActor44 *)D_8011ECD0)->unk_2A - p[96].unk_2A) & 0x1FF) + dx, -0x8C, i * 8 - 0x64, 6);
+        dx = func_800AE0C0((((DisplayActor44 *)D_8011ECD0)->unk_26 - p[96].unk_26) & 0x3FF);
+        if (((func_800AE0C0((((DisplayActor44 *)D_8011ECD0)->unk_2A - p[96].unk_2A) & 0x1FF) + dx) < 0x20) && (D_800E6280.unk_F88 & 0x20)) {
+            flags = p[96].unk_03;
+            if (flags & 0x10) {
+                p[96].unk_03 = flags & 0xFFEF;
+                if (p[96].unk_26 < -0x200) {
+                    p[96].unk_26 = 0x200;
                 }
-                if (var_s0[96].unk_26 >= 0x201) {
-                    var_s0[96].unk_26 = -0x200;
+                if (p[96].unk_26 >= 0x201) {
+                    p[96].unk_26 = -0x200;
                 }
-                if (var_s0[96].unk_2A < -0x200) {
-                    var_s0[96].unk_2A = 0x200;
+                if (p[96].unk_2A < -0x200) {
+                    p[96].unk_2A = 0x200;
                 }
-                if (var_s0[96].unk_2A >= 0x201) {
-                    var_s0[96].unk_2A = -0x200;
+                if (p[96].unk_2A >= 0x201) {
+                    p[96].unk_2A = -0x200;
                 }
             } else {
-                var_s0[96].unk_03 = (u8)(temp_v1 | 0x10);
+                p[96].unk_03 = flags | 0x10;
             }
         }
-        if (!(var_s0[96].unk_03 & 0x10)) {
-            temp_v0 = var_s0[96].unk_08;
-            var_s0[96].unk_08 = (s16)(temp_v0 + 1);
-            ((DisplayFixActor44 *)var_s0)[96].unk_28.w += func_800A0070(temp_v0 << 6) * 4;
-            var_s3 += 1;
+        if (!(p[96].unk_03 & 0x10)) {
+            temp_v0 = p[96].unk_08;
+            p[96].unk_08 = temp_v0 + 1;
+            ((DisplayFixActor44 *)p)[96].unk_28.w += func_800A0070(temp_v0 << 6) * 4;
+            count += 1;
         }
-        var_s2 += 8;
-        var_s0 += 1;
-    } while (var_s2 < 4);
-    func_8004AE54(var_s3, 0, -0x64, 6);
-    if (var_s3 == 0xD) {
-        ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0x96;
-        ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = -0x64;
-        var_s0 = &((DisplayActor44 *)D_8011ECD0)[1];
-        var_a0 = -0x76;
-        var_a1 = -0x56;
-        var_a2 = -0x36;
-        var_v1 = -0x16;
-        do {
-            var_s0[99].unk_26 = var_v1;
-            var_v1 += 0x80;
-            var_s0[97].unk_26 = var_a1;
-            var_s0[98].unk_26 = var_a2;
-            var_s0[96].unk_26 = var_a0;
-            var_a0 += 0x80;
-            var_a2 += 0x80;
-            var_a1 += 0x80;
-            var_s0[97].unk_2A = -0x64;
-            var_s0[98].unk_2A = -0x64;
-            var_s0[99].unk_2A = -0x64;
-            var_s0 += 4;
-            var_s0[92].unk_2A = -0x64;
-        } while (var_v1 != 0x16A);
-        return;
     }
-    if (var_s3 >= 5) {
-        for (var_s2 = 0; var_s2 < 13; var_s2++) {
-            if (!(((DisplayActor44 *)D_8011ECD0)[var_s2 + 96].unk_03 & 0x10)) {
-                temp_s1 = ((DisplayActor44 *)D_8011ECD0)[var_s2 + 96].unk_26 - (func_800A0070(((DisplayActor44 *)D_8011ECD0)[var_s2 + 96].unk_08) / 32);
-                temp_v1_2 = ((DisplayActor44 *)D_8011ECD0)[var_s2 + 96].unk_2A - (func_800A0140(((DisplayActor44 *)D_8011ECD0)[var_s2 + 96].unk_08) / 40);
-                if ((temp_s1 < -0x10) || (temp_s1 >= 0x11)) {
-                    if (temp_s1 > 0) {
-                        ((DisplayActor44 *)D_8011ECD0)[var_s2 + 96].unk_26--;
+    func_8004AE54(count, 0, -0x64, 6);
+    if (count == 13) {
+        for (i = 0, p = (DisplayActor44 *)D_8011ECD0; i < 13; i++, p++) {
+            p[96].unk_26 = i * 0x20 - 0x96;
+            p[96].unk_2A = -0x64;
+        }
+    } else if (count >= 5) {
+        /* FAKE: i = 0; p = ...; do { on one line with &D_8011ECD0[i + 13] folds D_8011F044 into $s2 before 40 ($s3). T-24126 */
+        i = 0; p = (DisplayActor44 *)D_8011ECD0; do {
+            if (!(p[96].unk_03 & 0x10)) {
+                dx = p[96].unk_26 - (func_800A0070(p[96].unk_08) / 32);
+                dy = p[96].unk_2A - (func_800A0140(p[96].unk_08) / 40);
+                if ((dx < -0x10) || (dx >= 0x11)) {
+                    if (dx > 0) {
+                        p[96].unk_26--;
                     } else {
-                        ((DisplayActor44 *)D_8011ECD0)[var_s2 + 96].unk_26++;
+                        p[96].unk_26++;
                     }
                 }
-                if ((temp_v1_2 < -0x10) || (temp_v1_2 >= 0x11)) {
-                    if (temp_v1_2 > 0) {
-                        ((DisplayActor44 *)D_8011ECD0)[var_s2 + 96].unk_2A--;
+                if ((dy < -0x10) || (dy >= 0x11)) {
+                    if (dy > 0) {
+                        p[96].unk_2A--;
                     } else {
-                        ((DisplayActor44 *)D_8011ECD0)[var_s2 + 96].unk_2A++;
+                        p[96].unk_2A++;
                     }
                 }
             }
-        }
+            p++;
+        } while (p != &((DisplayActor44 *)D_8011ECD0)[i + 13]);
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_801394F4);
-#endif
 
 void func_80139878(void) {
     u8 t;

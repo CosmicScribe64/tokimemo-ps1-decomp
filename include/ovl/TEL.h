@@ -89,8 +89,14 @@ void func_8013226C(void);
 void func_80132FC4(void);
 void func_80133D54(void);
 void func_801345C4(void);
+void func_80134FE4(void);
 void func_801352F0(void);
 void func_80136724(void);
+
+/* Greeting text pointers and XA tables for func_80134FE4, T-24126. */
+extern u8 *D_801406E0[];
+extern u32 D_80140710[];
+extern u32 D_80140770[];
 
 
 /* Dialogue text pointers and XA tables, T-10040. */
