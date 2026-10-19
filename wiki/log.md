@@ -20801,3 +20801,7 @@ Completed [[tickets/T-24135-main-remaining-sweep-d]] (Done): matched `main:csr_l
 ## [2026-10-19] build | Quota-pause checkpoint of in-progress wave-3 work
 
 All subagents hit the individual quota limit (resets in about 147 h). Checkpointed the verified working-tree matches from [[tickets/T-24136-taco-and-etc-wave-3-closers]], [[tickets/T-24137-shougatu-gyozi-bunkasd-wave-3-closers]], [[tickets/T-24138-small-overlays-wave-3-closers]], [[tickets/T-24139-taiiku-rpg-bat-wave-3-closers]], [[tickets/T-24140-geko-option-tel-omimai-wave-3-closers]] and [[tickets/T-24141-main-remaining-sweep-e]] (15 `INCLUDE_ASM` converted to C, every trick annotated `FAKE` with its ticket). Reverted two unfinished GYOZI drafts (`func_8013907C`, `func_80140464`; their guards had been removed but they still differed and broke `GYOZI.bin`) to the committed `NON_MATCHING` versions. Full local CI passed: check_headers, test_check_headers, test_sync_protos, migrate_globals --check, configure, ninja, 27/27 SHA1. Tickets stay In Progress pending per-ticket review when work resumes.
+
+## [2026-10-19] ticket | Start T-24142, single-agent restart
+
+Seven-agent pool retired (individual quota, errored). Per the user, one Sonnet 5.5 subagent now continues the matching under [[tickets/T-24142-single-agent-closer-sweep]]; the orchestrator keeps the wiki, review, CI and pushes. About 183 INCLUDE_ASM functions remain across 16 overlays plus src/main/.

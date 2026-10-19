@@ -808,3 +808,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 
 
+- [[tickets/T-24142-single-agent-closer-sweep|T-24142]] Single-agent closer sweep after the quota restart: one Sonnet 5.5 subagent owns all of `src/`, ~183 `INCLUDE_ASM` functions left (In Progress).
