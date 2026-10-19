@@ -108,7 +108,62 @@ void func_8005A3E8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005A410);
+void func_8005A410(void) {
+    /* FAKE: unused words preserve the 0x40 stack frame and the saved spill at sp+0x28. T-24142 */
+    s32 pad[2];
+    s32 i;
+    s32 err;
+    s32 zero;
+    s32 saved;
+
+    err = 0;
+    zero = 0;
+    /* FAKE: pointer view on unk_F6C emits lbu (declared s8 in header). T-24142 */
+    if (*(u8 *)&D_800E6280.unk_F6C == 2) {
+        for (i = 0; i < 8; i++) {
+            if (((s16 *)D_80125C10)[i * 4 + 0] >= 0x7D) {
+                err++;
+            }
+            if (((s16 *)D_80125C10)[i * 4 + 0] < -0x86) {
+                err++;
+            }
+            if (((s16 *)D_80125C10)[i * 4 + 1] < -0x54) {
+                err++;
+            }
+            if (((s16 *)D_80125C10)[i * 4 + 1] >= 0x55) {
+                err++;
+            }
+            if (((s16 *)D_80125C10)[i * 4 + 0] == 0 && ((s16 *)D_80125C10)[i * 4 + 1] == 0) {
+                zero++;
+            }
+            if (((s16 *)D_80125C10)[i * 4 + 2] >= 0x7D) {
+                err++;
+            }
+            if (((s16 *)D_80125C10)[i * 4 + 2] < -0x86) {
+                err++;
+            }
+            if (((s16 *)D_80125C10)[i * 4 + 3] < -0x54) {
+                err++;
+            }
+            if (((s16 *)D_80125C10)[i * 4 + 3] >= 0x55) {
+                err++;
+            }
+            if (((s16 *)D_80125C10)[i * 4 + 2] == 0 && ((s16 *)D_80125C10)[i * 4 + 3] == 0) {
+                zero++;
+            }
+        }
+    }
+    if (zero >= 2) {
+        if (err != 0) {
+            D_800E6280.unk_F6D = 0xF;
+            saved = *(u8 *)&D_800E6280.unk_F6C;
+            *(u8 *)&D_800E6280.unk_F6C = 0;
+            func_8006509C();
+            icon_disp_switch(0);
+            *(u8 *)&D_800E6280.unk_F6C = saved;
+        }
+    }
+}
 
 void func_8005A560(void) {
     if (D_800E6280.unk_110D == 0) {
