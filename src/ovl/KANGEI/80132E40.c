@@ -155,4 +155,44 @@ void func_80133A14(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132E40", func_80133A54);
+/* Non-void return type and pointer local `state = &D_80120666` match week_day_main0
+ * (src/main/800737A0.c) and ETC:func_80147414 (T-6050, T-24122). */
+s32 func_80133A54(void) {
+    s16 *state;
+    u8 a;
+    u8 b;
+    u32 club;
+
+    if (!(D_80120652 & 1)) {
+        if (D_80120658 == 0) {
+            state = &D_80120666;
+            switch ((u32)(*state & 1)) {
+            case 0:
+                func_80044750(0x601);
+                break;
+            case 1:
+                func_80044750(0x602);
+                break;
+            }
+            a = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01;
+            b = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02;
+            D_800E6280.unk_66C[(u16)D_800E6280.unk_0F4.h >> 12].unk_00 += 2;
+            club = (u16)D_800E6280.unk_0F4.h >> 12;
+            if (club < 2U) {
+                ((KangeiStateView *)&D_800E6280)->unk_100 += 0x18000;
+            } else if (club < 4U) {
+                ((KangeiStateView *)&D_800E6280)->unk_104 += 0x18000;
+            } else if (club < 6U) {
+                ((KangeiStateView *)&D_800E6280)->unk_108 += 0x18000;
+            } else {
+                ((KangeiStateView *)&D_800E6280)->unk_10C += 0x18000;
+                ((KangeiStateView *)&D_800E6280)->unk_118 += 0x18000;
+            }
+            parameter_up_down(a, 0, b);
+            parameter_show_init();
+        }
+        if (D_80120658++ >= 5) {
+            func_80042808();
+        }
+    }
+}

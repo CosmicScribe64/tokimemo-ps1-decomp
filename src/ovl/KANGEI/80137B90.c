@@ -1,5 +1,10 @@
+#define MAIN_API_OVERRIDE_get_h_tokimeki /* u8 return narrows the metric byte on return (T-24122). */
+#define MAIN_API_OVERRIDE_get_h_yuukou   /* u8 return narrows the metric byte on return (T-24122). */
 #include "common.h"
 #include "ovl/KANGEI.h"
+
+u8 get_h_tokimeki(s32 arg0);
+u8 get_h_yuukou(s32 arg0);
 
 typedef struct {
     u8 s[0xCC3];
@@ -202,7 +207,7 @@ void func_80138470(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-24054, T-24107, 3 rows (rows 35..37): the final sum into D_80139ADC gets $t5 instead of $t6 and as1 schedules lui $at, %hi(D_80139ADC) before addu instead of after. */
+/* NON_MATCHING: T-24054, T-24107, T-24122, 2 rows (rows 35..36): as1 schedules lui $at, %hi(D_80139ADC) before addu $t6, $t4, $v1 instead of after. */
 #ifdef NON_MATCHING
 void func_8013852C(void) {
     u8 year;
@@ -216,8 +221,8 @@ void func_8013852C(void) {
     D_80139AD4 = D_8013A170[1][1][11];
     D_80139AD8 = D_8013A170[1][2][11];
     /* FAKE: repeated field use and halfword conversion recover the promoted
-     * girl byte and arithmetic temporary numbering; original source unknown. T-24054 */
-    D_80139ADC = (s16)((u16)((D_800E6280.unk_F5F << 2) - D_800E6280.unk_F5F) + year);
+     * girl byte and arithmetic temporary numbering; original source unknown. T-24054, T-24122 */
+    D_80139ADC = (s16)((D_800E6280.unk_F5F << 2) - D_800E6280.unk_F5F) + year;
     D_8013A2AC = year;
     func_8004284C();
 }
@@ -493,7 +498,86 @@ void func_80138F54(void) {
     D_80139AD8 = D_8013A170[1][2][1];
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138F88);
+s32 func_80138F88(void) {
+    s16 i;
+    u8 best_i;
+    u8 best_s;
+    u8 s;
+
+    best_i = 0xFF;
+    best_s = 4;
+    for (i = 0; i < 11; i++) {
+        /* FAKE: dead branch adjusts the loop basic-block count so uopt assigns best_s to $s6 (T-24122). */
+        if (1) {}
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b1 != 0) {
+            s = get_g_zyotai_s(i) & 0x7F;
+            if (s < best_s ||
+                (s == best_s &&
+                 get_h_tokimeki(i) + get_h_yuukou(i) >
+                     get_h_tokimeki(best_i) + get_h_yuukou(best_i))) {
+                best_i = i;
+                best_s = s;
+            }
+        }
+    }
+    s = get_g_zyotai_s(best_i) & 0x7F;
+    if (best_i != 0xFF && s < 2U) {
+        D_800E6280.unk_F5F = best_i;
+        func_80085B3C(0xD, 0x2A);
+    } else {
+        func_8008585C();
+        D_80139ADC = 0;
+        D_80139AE0 = 0;
+        D_80139AD0 = (KObj *) D_8013A170[0][0][11];
+        D_80139AD4 = D_8013A170[0][1][11];
+        D_80139AD8 = D_8013A170[0][2][11];
+        func_8006509C();
+        for (i = 0; i < 15; i++) {
+            func_80065048(i, 0);
+        }
+        func_80065B0C(1);
+        func_800639D8();
+        func_800639D8();
+        func_800847B8(0);
+        D_80139AC0 = 1;
+        D_800E6280.unk_110A += 0x1E;
+        return 0;
+    }
+    D_800E6280.unk_F5F = best_i;
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_800438F0(1);
+    func_80048EB8(0);
+    func_80064E84();
+    func_800649D4();
+    func_80048390();
+    func_8004E58C();
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    D_800B593C = 0;
+    func_8008585C();
+    func_80063930(0);
+    func_80064FA4(0);
+    D_80139ADC = 0;
+    D_80139AE0 = 0;
+    func_8007C740();
+    func_80084E4C();
+    func_800847B8(D_800E6280.unk_F5F);
+    func_80132E74();
+    D_80139AD0 = (KObj *) D_80139A5C[0][6];
+    D_80139AD4 = D_80139A5C[1][6];
+    D_80139AD8 = D_80139A5C[2][6];
+    D_80139AC0 = 0;
+    D_80139ADC = 0;
+    D_80139AE0 = 0;
+    func_800847B8(D_800E6280.unk_F5F);
+    func_801392D4();
+    if ((u8)D_80139AC4 != 0 && (u8)D_8013A2A8 == 0) {
+        D_800E6280.unk_110A += 2;
+    }
+    func_8004284C();
+}
 
 void func_801392D4(void) {
     switch (D_800E6280.unk_F5F) {

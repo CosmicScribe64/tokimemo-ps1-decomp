@@ -29,8 +29,13 @@ typedef struct RensyuClubCount {
 typedef struct RensyuTbl11 {
     u16 v[11];
 } RensyuTbl11; /* size 0x16 */
+/* T-24122: 13 halfwords at D_801343A8, copied to the stack by func_80133990 (26 bytes: six word moves and one halfword). */
+typedef struct RensyuTbl13 {
+    s16 v[13];
+} RensyuTbl13; /* size 0x1A */
 extern RensyuTbl11 D_80134378;
 extern RensyuTbl11 D_80134390;
+extern RensyuTbl13 D_801343A8;
 extern u8 D_801342C0;
 extern u8 D_801342C8[5];
 

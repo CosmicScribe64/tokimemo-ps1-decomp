@@ -56,7 +56,7 @@ extern s32 D_80139DC0;
 extern s32 D_80139DC4;
 extern s32 D_80139DC8;
 extern s8 D_80139AC8;
-void func_80133A54(void);
+s32 func_80133A54(void);
 void func_80133EF8(void);
 void func_801349D4(void);
 void func_801392D4(void);
@@ -144,9 +144,22 @@ typedef struct KangeiModeFlags {
     u32 high : 5;
 } KangeiModeFlags; /* size 0x04 */
 
-/* T-9580: overlay view keeps the packed records at their GameState offset. */
+/* T-9580: overlay view keeps the packed records at their GameState offset;
+ * T-24122 adds the 4-bit club nibble at +0x0F4 (bits 12..15) for func_80134724
+ * and 32-bit fixed-point stat words at +0x100..+0x118 for func_80133A54. */
 typedef struct KangeiStateView {
-    /* 0x000 */ u8 pad_000[0x66C];
+    /* 0x000 */ u8 pad_000[0x0F4];
+    /* 0x0F4 */ u16 club_low : 12;
+    /* 0x0F4 */ u16 club : 4;
+    /* 0x0F6 */ u8 pad_0F6[0x00A];
+    /* 0x100 */ s32 unk_100;
+    /* 0x104 */ s32 unk_104;
+    /* 0x108 */ s32 unk_108;
+    /* 0x10C */ s32 unk_10C;
+    /* 0x110 */ s32 unk_110;
+    /* 0x114 */ s32 unk_114;
+    /* 0x118 */ s32 unk_118;
+    /* 0x11C */ u8 pad_11C[0x550];
     /* 0x66C */ KangeiModeFlags modes[12];
 } KangeiStateView; /* size 0x69C */
 

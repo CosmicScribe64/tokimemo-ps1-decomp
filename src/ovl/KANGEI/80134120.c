@@ -141,7 +141,90 @@ void func_8013454C(void) {
     func_8004284C();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-24122, 2 rows (1 pair); frame, registers ($v0=v, $v1=s, $a0=unk_66C,
+ * $a1=unk_0F4>>12, $a2=c2) and all switch cases match. Only the 1-instruction IDO 5.3 as1
+ * default-block delay-slot hoist remains: as1 hoists `sll t0, v0, 0x2` from `default:` into
+ * the delay slot of `beqz at, default` (identical to VALEN:func_80134030, T-19016 / T-20620). */
+void func_80134724(void) {
+    u8 s;
+    s16 v;
+    s16 c2;
+
+    s = func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+    if (s < 2U) {
+        s = 0;
+    } else if (s == 2) {
+        s = 1;
+    } else if (s == 3) {
+        s = 2;
+    } else {
+        s = 3;
+    }
+    v = D_800E6280.unk_66C[(u16)D_800E6280.unk_0F4.h >> 12].unk_00 / 50;
+    if (D_800E6280.unk_66C[(u16)D_800E6280.unk_0F4.h >> 12].unk_00 >= 0x64U) {
+        v = 2;
+    }
+    if (D_800E6280.unk_66C[(u16)D_800E6280.unk_0F4.h >> 12].unk_00 >= 0xC8U) {
+        v = 3;
+    }
+    if (D_800E6280.unk_66C[(u16)D_800E6280.unk_0F4.h >> 12].unk_00 >= 0x164U) {
+        v = 4;
+    }
+    D_80139AE0 = 0;
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        c2 = (u16)D_800E6280.unk_0F4.h >> 12;
+        if (((u16)D_800E6280.unk_0F4.h >> 12) == 9) {
+            c2 = 8;
+            if (D_800E6280.unk_66C[(u16)D_800E6280.unk_0F4.h >> 12].unk_00 >= 0x164U) {
+                v = 5;
+            }
+        }
+        if (((u16)D_800E6280.unk_0F4.h >> 12) == 10) {
+            c2 = 8;
+            if (D_800E6280.unk_66C[(u16)D_800E6280.unk_0F4.h >> 12].unk_00 >= 0x164U) {
+                v = 6;
+            }
+        }
+        D_80139ADC = c2 * 20 + v * 4 + s + 3;
+        if (D_800E6280.unk_03E == 0x61 && ((u16)D_800E6280.unk_0F4.h >> 12) == 6) {
+            D_80139ADC = s + 0xBF;
+        }
+        break;
+    case 1:
+        D_80139ADC = ((u16)D_800E6280.unk_0F4.h >> 12) * 20 + v * 4 + s + 8;
+        break;
+    case 2:
+        D_80139ADC = ((u16)D_800E6280.unk_0F4.h >> 12) * 20 + v * 4 + s - 0x20;
+        break;
+    case 3:
+        D_80139ADC = ((u16)D_800E6280.unk_0F4.h >> 12) * 20 + v * 4 + s - 0x48;
+        break;
+    case 4:
+        D_80139ADC = ((u16)D_800E6280.unk_0F4.h >> 12) * 24 + v * 4 + s - 0x89;
+        if (D_800E6280.unk_03E == 0x61) {
+            if (((KangeiStateView *)&D_800E6280)->club == 6) {
+                D_80139ADC = s + 0x1B;
+            }
+        }
+        break;
+    case 5:
+        D_80139ADC = v * 4 + s + 7;
+        break;
+    case 6:
+        D_80139ADC = v * 4 + s + 7;
+        break;
+    default:
+        D_80139ADC = v * 4 + s + 3;
+        break;
+    }
+    func_801349D4();
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134724);
+#endif
 
 void func_801349D4(void) {
     func_80132E74();
@@ -300,24 +383,30 @@ void func_80134F00(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-22016, 16 rows; the original keeps the constant 1 in $v0 for both compares (bne v0,t7 / beq v0,v1) and the girl byte in $v1; a FAKE `one` local gives that code but costs 8 frame bytes (72 against 64), and the draft form uses li at,1. */
 #ifdef NON_MATCHING
+/* NON_MATCHING: T-22016, T-24122, 7 rows; reading D_800E6280.unk_F5F into `one` before
+ * func_80133EF8() puts unk_F5F in cvt_pass's entry set and reusing `one = 1` keeps the
+ * 64-byte frame with `rect` at 0x34($sp); only the $v0/$v1 choice between `one` and
+ * D_800E6280.unk_F5F remains swapped. */
 void func_80135004(void) {
-    u8 girl;
+    s32 one;
     RECT rect;
 
+    one = D_800E6280.unk_F5F;
     func_80133EF8();
-    if ((D_80139AE0 == 2) && (D_800E6280.unk_1104.w == 1)) {
-        girl = D_800E6280.unk_F5F;
-        if ((girl == 1) || (girl == 3)) {
-            rect.x = 0x140;
-            rect.y = 0x80;
-            rect.w = 0x180;
-            rect.h = 0x80;
-            func_8009C8E0(&rect, (void *)0x80180000);
-            func_8009C674(0);
-            func_80062DBC(D_800CA130, D_800CA120, D_800CA124, D_800CA128, get_g_zyotai_h(D_800E6280.unk_F5F) & 0x7F);
-            func_80063668();
+    if (D_80139AE0 == 2) {
+        one = 1;
+        if (one == D_800E6280.unk_1104.w) {
+            if ((D_800E6280.unk_F5F == one) || (D_800E6280.unk_F5F == 3)) {
+                rect.x = 0x140;
+                rect.y = 0x80;
+                rect.w = 0x180;
+                rect.h = 0x80;
+                func_8009C8E0(&rect, (void *)0x80180000);
+                func_8009C674(0);
+                func_80062DBC(D_800CA130, D_800CA120, D_800CA124, D_800CA128, (u8)get_g_zyotai_h(D_800E6280.unk_F5F) & 0x7F);
+                func_80063668();
+            }
         }
     }
     D_800E6280.unk_1104.w += 1;

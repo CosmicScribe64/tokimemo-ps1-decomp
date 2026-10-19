@@ -20706,3 +20706,13 @@ Completed and reviewed [[tickets/T-24128-shougatu-gyozi-bunkasd-closer-tricks]] 
 - `GYOZI:func_801347D4` (356 B in `src/ovl/GYOZI/80134520.c`): `MATCH`
 - `SHOUGATU:func_8013D820` (268 B in `src/ovl/SHOUGATU/8013D660.c`): `MATCH`
 Created and dispatched [[tickets/T-24130-shougatu-gyozi-bunkasd-wave-2-closers]] (`In Progress`) for wave 2 of `SHOUGATU`, `GYOZI`, and `BUNKA_SD`.
+## [2026-10-19] build | T-24122 -> Done (+6 functions, +3,516 B; SHUGAKU 100.0% matched!); T-24131 dispatched
+
+Completed and reviewed [[tickets/T-24122-shugaku-final-3-and-small-overlays-sweep]] (`Done`, +6 functions / +3,516 B across `SHUGAKU`, `KANGEI`, and `RENSYU` — **`SHUGAKU` overlay 100.0% matched, 190/190 functions**):
+- `SHUGAKU:func_8013243C` (388 B in `src/ovl/SHUGAKU/80132000.c`): `MATCH`
+- `SHUGAKU:func_801337FC` (620 B in `src/ovl/SHUGAKU/80133430.c`): `MATCH`
+- `SHUGAKU:func_80139118` (412 B in `src/ovl/SHUGAKU/80138A60.c`): `MATCH`
+- `KANGEI:func_80133A54` (444 B in `src/ovl/KANGEI/80132E40.c`): `MATCH`
+- `KANGEI:func_80138F88` (844 B in `src/ovl/KANGEI/80137B90.c`): `MATCH`
+- `RENSYU:func_80133990` (808 B in `src/ovl/RENSYU/80132040.c`): `MATCH`
+Created and dispatched [[tickets/T-24131-small-overlays-wave-2-closers]] (`In Progress`) for wave 2 of `KANGEI`, `RENSYU`, `MASTER`, `EN_NICHI`, `ENDING`, and `VALEN`.

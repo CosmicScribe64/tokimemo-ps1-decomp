@@ -1,5 +1,10 @@
+#define MAIN_API_OVERRIDE_get_h_tokimeki /* u8 return narrows the metric byte on return (T-24122). */
+#define MAIN_API_OVERRIDE_get_h_yuukou   /* u8 return narrows the metric byte on return (T-24122). */
 #include "common.h"
 #include "ovl/SHUGAKU.h"
+
+u8 get_h_tokimeki(s32 arg0);
+u8 get_h_yuukou(s32 arg0);
 
 void func_80138A60(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -179,7 +184,44 @@ void func_80139054(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80139118);
+void func_80139118(void) {
+    s16 i;
+    u8 best_i;
+    u8 best_s;
+    u8 s;
+
+    D_8013C978 = 0;
+    best_i = 0xFF;
+    best_s = 4;
+    D_8013C980 = 0;
+    for (i = 0; i < 10; i++) {
+        /* FAKE: dead branch adjusts the loop basic-block count so uopt assigns best_s to $s6 (T-24122). */
+        if (1) {}
+        if (D_800CA2B0[i] != 0) {
+            s = get_g_zyotai_s(i) & 0x7F;
+            if (s < best_s ||
+                (s == best_s &&
+                 get_h_tokimeki(i) + get_h_yuukou(i) >
+                     get_h_tokimeki(best_i) + get_h_yuukou(best_i))) {
+                best_i = i;
+                best_s = s;
+            }
+        }
+    }
+    s = get_g_zyotai_s(best_i) & 0x7F;
+    if (best_i != 0xFF && s < 2U) {
+        D_8013C980 = best_i + 0x32;
+        /* FAKE: `(best_i & 0) +` keeps cfe's CVT J L narrowing so uopt emits `andi $a0, $s7, 0xff` (T-24122). */
+        D_800E6280.unk_F5F = (best_i & 0) + best_i;
+        func_800847B8(D_800E6280.unk_F5F);
+        func_801399F4();
+    } else {
+        D_800CA2DC += 4;
+        D_800E6280.unk_110A += 0x1E;
+        D_800E6280.unk_F5F = 0xFF;
+    }
+    func_8004284C();
+}
 
 s32 func_801392B4(void) {
     /* FAKE: `six` reserves the top stack word and `(six & 0) + six` promotes the constant 6 to $v0;

@@ -498,6 +498,7 @@ void func_80139C80(void);
 void func_80139D40(void);
 
 extern s16 D_8013C970;
+extern u8 D_8013C978;
 extern u8 D_8013C980;
 void func_801399F4(void);
 

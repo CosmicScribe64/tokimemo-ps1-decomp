@@ -1,8 +1,12 @@
 #define MAIN_API_OVERRIDE_func_80083440 /* matched with void(s32) (main_api.h: void(u8)) */
+#define MAIN_API_OVERRIDE_get_h_tokimeki /* u8 return narrows the metric byte on return (T-24122). */
+#define MAIN_API_OVERRIDE_get_h_yuukou   /* u8 return narrows the metric byte on return (T-24122). */
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
 void func_80083440(s32 arg0);
+u8 get_h_tokimeki(s32 arg0);
+u8 get_h_yuukou(s32 arg0);
 
 typedef struct {
     u8 s[0xCC3];
@@ -97,7 +101,39 @@ void func_80132364(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_8013243C);
+s32 func_8013243C(void) {
+    s16 i;
+    u8 best_i;
+    u8 best_s;
+    u8 s;
+
+    best_i = 0xFF;
+    best_s = 4;
+    if (D_800E6280.unk_03F != ((GsWord *)&D_800E6280.unk_0F8)->date.month ||
+        D_800E6280.unk_040 != ((GsWord *)&D_800E6280.unk_0F8)->date.day) {
+        func_8004284C();
+        return 0;
+    }
+    for (i = 0; i < 10; i++) {
+        if (D_800CA2B0[i] != 0) {
+            s = get_g_zyotai_s(i) & 0x7F;
+            /* FAKE: duplicate `s == best_s` shifts uopt's live-range priority between s and best_s (T-24122). */
+            if (s < best_s ||
+                (s == best_s && s == best_s &&
+                 get_h_tokimeki(i) + get_h_yuukou(i) >
+                     get_h_tokimeki(best_i) + get_h_yuukou(best_i))) {
+                best_i = i;
+                best_s = s;
+            }
+        }
+    }
+    s = get_g_zyotai_s(best_i) & 0x7F;
+    if (s < 2U && best_i == 0) {
+        func_80042940(0x32);
+        return 0;
+    }
+    func_8004284C();
+}
 
 void func_801325C0(void) {
     func_80044890(0, 0xBF98, 0xBF79, 0xCA95, 0xCA4F, 0xCA3E);

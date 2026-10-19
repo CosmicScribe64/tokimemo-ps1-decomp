@@ -412,7 +412,102 @@ void func_80133628(void) {
 INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80133628);
 #endif
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80133990);
+/* FAKE: T-24122. Unused `pad` and `a` place `tbl` at 0x30(sp); reading D_801342D0 before
+ * func_80083808() puts it in cvt_pass's entry set so uopt promotes it to $a0 across the
+ * switch; the empty raw-byte test on unk_1BC[4].unk_0C.b[2] retains separate live ranges
+ * for the raw byte ($a1) and its high nibble ($v0), matching SHOUGATU:func_801341E4. */
+void func_80133990(void) {
+    s32 pad;
+    s16 a;
+    RensyuTbl13 tbl;
+
+    tbl = D_801343A8;
+    a = D_801342D0;
+    func_80083808();
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8004500C(1, 0);
+        func_80083474();
+        func_800573F8(1);
+        break;
+    case 1:
+        func_8007E884();
+        break;
+    case 2:
+        if (D_801342C4 >= 3U) {
+            D_800CA148 = tbl.v[D_801342D0] + 2;
+            if (D_801342D0 == 4) {
+                if (D_800E6280.unk_1BC[4].unk_0C.b[2]) {
+                }
+                if (((u16)D_800E6280.unk_0F4.h >> 12) != ((u8)D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4)) {
+                    if (((u8)D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4) == 7) {
+                        D_800CA148 += 1;
+                    }
+                    if (((u8)D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4) == 6) {
+                        D_800CA148 += 2;
+                    }
+                }
+            }
+            if (D_801342D0 == 6) {
+                if (((u8)D_800E6280.unk_1BC[6].unk_0C.b[2] >> 4) != ((u16)D_800E6280.unk_0F4.h >> 12)) {
+                    D_800CA148 += 1;
+                }
+            }
+        } else {
+            D_800CA148 = tbl.v[D_801342D0] + 3;
+            if (D_801342D0 == 4) {
+                D_800CA148 += 2;
+            }
+            if (D_801342D0 == 6) {
+                D_800CA148 += 1;
+            }
+        }
+        func_8004284C();
+        break;
+    case 3:
+    case 6:
+        normal_date_speak();
+        break;
+    case 4:
+        if (D_801342C4 >= 3U) {
+            if (D_801342D0 == 0xC) {
+                D_800CA148 = 0x26;
+            } else {
+                D_800CA148 = 0x25;
+            }
+        } else {
+            if (D_800E6280.unk_03E == 0x61 && D_800E6280.unk_03F == 0xC) {
+                D_800CA148 = 0x28;
+            } else {
+                D_800CA148 = 0x27;
+            }
+        }
+        func_8004284C();
+        break;
+    case 5:
+        if (D_801342D0 == 0xC) {
+            func_8007E5A0();
+        } else {
+            func_8004284C();
+        }
+        break;
+    case 7:
+        if (D_801342D0 == 0xC) {
+            func_8007E934();
+        } else {
+            func_8007E99C();
+        }
+        break;
+    case 8:
+        func_80044750(0xC1);
+        func_80042808();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    Default_Disp();
+}
 
 void func_80133CB8(void) {
     s32 i;
