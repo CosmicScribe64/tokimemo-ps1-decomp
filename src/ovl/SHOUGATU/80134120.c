@@ -183,7 +183,7 @@ void func_801347B4(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11310, 3 rows: the unk_F5F reload after get_g_zyotai_s goes to ugen temp $t7, the original allocates $a0. */
+/* NON_MATCHING: T-11310, T-24125, 2 rows: passing girl to func_8004284C colors girl to $a0; only &D_800E6280 base register ($v1 vs $a0) on rows 13-14 differs. */
 #ifdef NON_MATCHING
 void func_801347E0(void) {
     u32 state;
@@ -193,14 +193,14 @@ void func_801347E0(void) {
     D_800E6280.unk_F5F = girl;
     func_800847B8(girl);
     D_80122CDC = D_80122CEC;
-    state = get_g_zyotai_s(6) & 0x7F;
+    state = (u8)get_g_zyotai_s(6) & 0x7F;
     girl = D_800E6280.unk_F5F;
     if ((girl == 6) && (state < 2) && (D_80143B20 == 0)) {
         D_80143AF4 = D_80143A60;
         D_80143AF8 = D_80143A9C;
         D_80143AFC = D_80143AD8;
     }
-    func_8004284C();
+    func_8004284C(girl);
 }
 #else
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134120", func_801347E0);

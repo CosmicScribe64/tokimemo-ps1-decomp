@@ -777,14 +777,16 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24117-taiiku-and-option-mid-score-sweep|T-24117]] Close 6 functions in `OPTION/80132000.c` (`func_80133330` 588 B, `func_80133F50` 704 B, `func_80135110` 492 B, `func_801359A4` 616 B, `func_801361FC` 568 B, `func_801376A8` 444 B, Done; 6 matches, 3,412 B verified default C).
 - [[tickets/T-24118-main-and-rpg-bat-mid-score-sweep|T-24118]] Close 6 functions in `main` (`func_80043010` 176 B, `func_8007739C` 760 B, `func_8007A080` 468 B, `func_8007A6AC` 444 B, `func_8007A98C` 408 B, `func_8007ABE0` 396 B, Done; 6 matches, 2,652 B verified default C).
 - [[tickets/T-24119-option-remaining-sweep|T-24119]] Close 5 of 13 remaining unmatched functions in `OPTION/80132000.c` (`func_801328C0` 460 B, `func_80133718` 564 B, `func_80133CB8` 664 B, `func_80136688` 628 B, `func_801373C8` 736 B, Done; 5 matches, 3,052 B verified default C).
-- [[tickets/T-24120-taco-remaining-sweep|T-24120]] Sweep and close remaining unmatched functions in `TACO` (29 functions, In Progress).
+- [[tickets/T-24120-taco-remaining-sweep|T-24120]] Close 6 of 29 remaining unmatched functions in `TACO` (`func_8013506C` 240 B, `func_8013D838` 840 B — `8013D1E0.c` 100.0%; `func_801424A8` 888 B — `80141DE0.c` 100.0%; `func_80147B24` 372 B, `func_8014A480` 796 B, `func_8014F5F0` 560 B, Done; 6 matches, 3,696 B verified default C).
 - [[tickets/T-24121-etc-remaining-sweep|T-24121]] Close 5 of 21 remaining unmatched functions in `ETC` (`func_80141BE8` 552 B — `80140F50.c` 100.0%; `func_80144F74` 608 B, `func_80145C00` 884 B, `func_80148F7C` 836 B, `func_8014A360` 468 B, Done; 5 matches, 3,348 B verified default C).
 - [[tickets/T-24122-shugaku-final-3-and-small-overlays-sweep|T-24122]] Close `SHUGAKU` final 3 girl-picker loops and sweep `KANGEI`, `MASTER`, `EN_NICHI`, `RENSYU`, `ENDING`, and `VALEN` (In Progress).
 - [[tickets/T-24123-main-remaining-sweep-b|T-24123]] Close 5 functions in `main` (`func_80045414` 432 B, `func_8004B358` 568 B, `func_80056070` 532 B, `func_80079C70` 184 B, `func_8007AF0C` 568 B, Done; 5 matches, 2,284 B verified default C).
 - [[tickets/T-24124-taiiku-and-rpg-bat-remaining-sweep|T-24124]] Sweep remaining uninvestigated functions in `TAIIKU` and `RPG_BAT` (In Progress).
-- [[tickets/T-24125-shougatu-gyozi-bunkasd-remaining-sweep|T-24125]] Sweep remaining `SHOUGATU`, `GYOZI`, and `BUNKA_SD` functions (In Progress).
+- [[tickets/T-24125-shougatu-gyozi-bunkasd-remaining-sweep|T-24125]] Match `SHOUGATU:func_8013BA7C` (432 B — `8013BA00.c` 100.0%) via `uopt` CSE priority boost, improve `SHOUGATU:func_801347E0` to 2 rows, and reach 379/379 insns on `BUNKA_SD:func_80139290` (Done; 1 match, 432 B verified default C).
 - [[tickets/T-24126-geko-tel-bunkaken-omimai-option-sweep|T-24126]] Sweep remaining `GEKO`, `OPTION`, `TEL`, `BUNKAKEN`, and `OMIMAI` functions (In Progress).
 - [[tickets/T-24127-main-remaining-sweep-c|T-24127]] Sweep remaining unmatched functions in `src/main/` (wave C, In Progress).
+- [[tickets/T-24128-shougatu-gyozi-bunkasd-closer-tricks|T-24128]] Apply `SHUGAKU` girl-picker recipe and `uopt` CSE priority tricks to `SHOUGATU`, `GYOZI`, and `BUNKA_SD` (In Progress).
+- [[tickets/T-24129-taco-and-etc-remaining-closers|T-24129]] Close remaining near misses in `TACO` and `ETC` (wave 2, In Progress).
 
 
 

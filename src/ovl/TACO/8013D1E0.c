@@ -145,19 +145,6 @@ s32 func_8013D528(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-19018, 10 differing lines; the first load of arg3 in the UV stores takes $v1 and the shifted value
- * $t4 where the original has $t4 and $t5 (the other rows are that rename). poly and dist are declared before m: the
- * original has two scalar slots above the MATRIX, and size, o, j, t fill the six below pt (spill slots 0x58/0x64/0x78
- * then match). Closer pass, still 10 lines: that load carries the colour of the uopt range shl(arg3, 6), which gets
- * $v1 (the call result holds $v0); the original needs $t4 while the four v/u1 ranges keep $a1..$t0, and no tie order
- * gives that, because u1's range is numbered after the shift. Layout notes: matching-notes, "T-19018".
- * T-22005: regdiff (traced uopt) agrees: the shl range (priority 3) takes colour 2 ($v1) and the original has an
- * interfering range in $v1 with no instruction in this block. No change from autotweak (1,308 tries in two runs),
- * 150 permutations of the eight UV stores, one statement per store, two lines, dummy tests, `u8`/`s32` for `t`,
- * `arg3 * 64`, or early-return shapes of the two ifs (those give 22 lines).
- * T-22005 closer: viewsweep finds no gain (10 views); writing `(arg3 & 4) << 4` without the `t` local gives 66 lines, 132
- * without its frame word. */
 s32 func_8013D838(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
     POLY_FT4 *poly;
     s32 dist;
@@ -169,7 +156,8 @@ s32 func_8013D838(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
     s32 depth;
     s32 flag;
     s32 j;
-    u16 t;
+    /* FAKE: sixth word slot below pt matches the original 0xC0 frame and spill offsets 0x58/0x64/0x78 (T-19018, T-24120). */
+    s32 pad;
 
     size = 0x100;
     m = D_80129C40;
@@ -203,8 +191,8 @@ s32 func_8013D838(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
             poly->b0 = 0x80;
             poly->tpage = func_8009ECB0(0, 1, 0x380, 0x100);
             poly->clut = func_8009ED74(0, 0x1E5);
-            t = arg3 & 4;
-            poly->u0 = arg3 << 6, poly->v0 = (t << 4) + 0x80, poly->u1 = (arg3 << 6) + 0x3F, poly->v1 = (t << 4) + 0x80, poly->u2 = arg3 << 6, poly->v2 = (t << 4) + 0x80 + 0x3F, poly->u3 = (arg3 << 6) + 0x3F, poly->v3 = (t << 4) + 0x80 + 0x3F;
+            /* FAKE: hand expansion of setUVWH(poly, (arg3 & 3) << 6, ((arg3 & 4) << 4) + 0x80, 0x3F, 0x3F) on one line (T-19018, T-24120). */
+            poly->u0 = (arg3 & 3) << 6, poly->v0 = ((arg3 & 4) << 4) + 0x80, poly->u1 = ((arg3 & 3) << 6) + 0x3F, poly->v1 = ((arg3 & 4) << 4) + 0x80, poly->u2 = (arg3 & 3) << 6, poly->v2 = ((arg3 & 4) << 4) + 0x80 + 0x3F, poly->u3 = ((arg3 & 3) << 6) + 0x3F, poly->v3 = ((arg3 & 4) << 4) + 0x80 + 0x3F;
             poly->x0 = ((s16 *)pt)[0];
             poly->y0 = ((s16 *)pt)[1];
             poly->x1 = ((s16 *)pt)[2];
@@ -217,6 +205,4 @@ s32 func_8013D838(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013D1E0", func_8013D838);
-#endif
+

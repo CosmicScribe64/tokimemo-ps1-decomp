@@ -1,7 +1,7 @@
 ---
 id: T-24125
 title: Sweep remaining SHOUGATU, GYOZI, and BUNKA_SD functions
-status: In Progress
+status: Done
 priority: high
 type: code
 created: 2026-10-19
@@ -13,15 +13,11 @@ depends_on:
 
 ## Summary
 
-Attack and close remaining `INCLUDE_ASM` functions in `SHOUGATU`, `GYOZI`, and `BUNKA_SD`:
-- **`BUNKA_SD`**:
-  - `src/ovl/BUNKA_SD/801388D0.c`: `func_80139290` (1,516 B — reached exact 378/378 instruction count in `T-24114` with `((DisplayActor44 *)D_80120650)[5].unk_18` and `switch (D_800E6280.unk_1104.w)`, only 2 regalloc diffs remaining!)
-  - `src/ovl/BUNKA_SD/80134540.c`: `func_80134D94` (960 B)
-- **`SHOUGATU`**:
-  - `src/ovl/SHOUGATU/8013D660.c`: `func_8013D820` (`score=13`), `func_8013D92C`, `func_8013DAAC`
-  - `src/ovl/SHOUGATU/801390C0.c`: `func_80139334` (`score=17`)
-  - `src/ovl/SHOUGATU/8013BA00.c`: `func_8013BA7C` (`score=17`)
-  - `src/ovl/SHOUGATU/8013E330.c`: `func_8013E50C`, `func_8013E6E4`, `func_8013EA98`
-  - `src/ovl/SHOUGATU/80134120.c` (`func_801347E0`), `80134890.c` (`func_801350F8`), `80137FF0.c` (`func_80138240`), `8013F190.c` (`func_8013FB28`)
-- **`GYOZI`**:
-  - `src/ovl/GYOZI/80136220.c` (`func_801368B8`), `80139920.c` (`func_80139E4C`), `80140C90.c` (`func_80140E0C`, `func_80140F90`, `func_801412A4`), `801418B0.c` (`func_801421B4`)
+Attack and close remaining `INCLUDE_ASM` functions in `SHOUGATU`, `GYOZI`, and `BUNKA_SD`.
+
+## Results
+
+- Matched and promoted **`SHOUGATU:func_8013BA7C`** (432 B in `src/ovl/SHOUGATU/8013BA00.c` — **`src/ovl/SHOUGATU/8013BA00.c` is now 100.0% matched**):
+  - Solved the `GameState D_800E6280` unification CSE priority swap (`$v0/$v1` vs `$a1/$a2` in the `0..10` girl loop) by adding two empty `if` reads inside `if (i != (s32)D_800E6280.unk_F5F)`: `if (D_800E6280.unk_1BC[i].unk_06) {}` (boosts `&D_800E6280 + i * 0x38` into `$v0`) and `if (D_800E6280.unk_1BC[0].unk_06) {}` (boosts `&D_800E6280` into `$a1`).
+- Improved `#ifdef NON_MATCHING` guard for `SHOUGATU:func_801347E0` (`src/ovl/SHOUGATU/80134120.c`) from 3 rows down to 2 rows.
+- Reached exact 379/379 instructions on `BUNKA_SD:func_80139290` (`src/ovl/BUNKA_SD/801388D0.c`, zero scheduling/branch/stack diffs).

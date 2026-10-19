@@ -641,6 +641,8 @@ u8 func_80142F34(void);
 void func_80142DE0(void);
 void func_80142820(void);
 
+extern u16 D_8015F590;
+void func_801424A8(s32 arg0, s32 arg1);
 #endif
 
 /* Font UV pairs (u, v), T-16562: digits 0-9, letters A-Z, then '.', '-', ' ' and a fallback glyph. */

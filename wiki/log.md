@@ -20681,3 +20681,20 @@ Completed and reviewed [[tickets/T-24123-main-remaining-sweep-b]] (`Done`, +5 fu
 - `main:func_80079C70` (184 B in `src/main/80079B10.c`): `MATCH`
 - `main:func_8007AF0C` (568 B in `src/main/80079B10.c`): `MATCH`
 Created and dispatched [[tickets/T-24127-main-remaining-sweep-c]] (`In Progress`) for wave C of `src/main/`.
+
+## [2026-10-19] build | T-24125 -> Done (+1 function, +432 B in SHOUGATU/8013BA00.c); T-24128 dispatched
+
+Completed and reviewed [[tickets/T-24125-shougatu-gyozi-bunkasd-remaining-sweep]] (`Done`, +1 function / +432 B in `src/ovl/SHOUGATU/8013BA00.c` — **`src/ovl/SHOUGATU/8013BA00.c` 100.0% matched**):
+- `SHOUGATU:func_8013BA7C` (432 B in `src/ovl/SHOUGATU/8013BA00.c`): `MATCH`
+Created and dispatched [[tickets/T-24128-shougatu-gyozi-bunkasd-closer-tricks]] (`In Progress`) to apply the `T-24122` girl-picker loop recipe (`if (1) {}` + `s == best_s && s == best_s &&`) and `uopt` CSE priority boost tricks across `SHOUGATU`, `GYOZI`, and `BUNKA_SD`.
+
+## [2026-10-19] build | T-24120 -> Done (+6 functions, +3,696 B in TACO); T-24129 dispatched
+
+Completed and reviewed [[tickets/T-24120-taco-remaining-sweep]] (`Done`, +6 functions / +3,696 B in `src/ovl/TACO/` — **`src/ovl/TACO/8013D1E0.c` and `src/ovl/TACO/80141DE0.c` 100.0% matched**):
+- `TACO:func_8013506C` (240 B in `src/ovl/TACO/80134930.c`): `MATCH`
+- `TACO:func_8013D838` (840 B in `src/ovl/TACO/8013D1E0.c`): `MATCH`
+- `TACO:func_801424A8` (888 B in `src/ovl/TACO/80141DE0.c`): `MATCH`
+- `TACO:func_80147B24` (372 B in `src/ovl/TACO/80146D60.c`): `MATCH`
+- `TACO:func_8014A480` (796 B in `src/ovl/TACO/80149F90.c`): `MATCH`
+- `TACO:func_8014F5F0` (560 B in `src/ovl/TACO/80149F90.c`): `MATCH`
+Created and dispatched [[tickets/T-24129-taco-and-etc-remaining-closers]] (`In Progress`) for wave 2 of `TACO` and `ETC`.

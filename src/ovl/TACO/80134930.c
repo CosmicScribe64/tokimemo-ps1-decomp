@@ -170,36 +170,30 @@ void func_80134FB8(void) {
     D_8011ED3E = -0x64;
 }
 
-/* NON_MATCHING: T-19011, 29 differing lines; frame 0x38 against 0x48: the original keeps the first quotient in $a3 saved around the second call (x of loop 2 is also $a3) and the loop 2 values in y=$v0, v=$v1, x=$a3; IDO puts the quotient in $s1 and gives x=$v1, v=$a3. */
-#ifdef NON_MATCHING
 void func_8013506C(void) {
+    /* FAKE: unused 4-byte local reserves the top frame word so the $a3 spill sits at 0x3C($sp) in the 0x48 frame (T-24120). */
+    s32 pad[1];
     s32 i;
-    s32 t;
-    u32 v;
     u32 x;
     u32 y;
 
     for (i = 0; i < 0x80; i++) {
         if (D_800E6280.unk_163C[128 + i] == 0) {
-            /* Own statement: written inline, IDO calls both functions first. */
-            t = func_800AE0D0() % 320;
-            D_800E6280.unk_163C[128 + i] = (t << 16) + func_800AE0D0() % 240;
+            x = func_800AE0D0() % 320;
+            y = func_800AE0D0() % 240;
+            D_800E6280.unk_163C[128 + i] = (x << 16) + y;
             break;
         }
     }
     for (i = 0; i < 0x80; i++) {
-        v = D_800E6280.unk_163C[128 + i];
-        /* y before x: the mask range gets $v0 as in the original. */
-        y = v & 0xFFFF;
-        x = v >> 16;
-        if (v != 0) {
+        if (D_800E6280.unk_163C[128 + i] != 0) {
+            x = (u32)D_800E6280.unk_163C[128 + i] >> 16;
+            y = D_800E6280.unk_163C[128 + i] & 0xFFFF;
             func_80143574(x - 0xA0, y - 0x78, (x * y + D_800E6280.unk_10F8) & 0xFFFFFF);
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_8013506C);
-#endif
+
 
 s32 func_8013515C(void) {
     s32 i;

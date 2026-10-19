@@ -96,8 +96,7 @@ void func_8014A42C(void) {
     func_8014F820();
 }
 
-/* NON_MATCHING: T-22025, 1 row (row 156): the reload of unk84[1] at the end of the if body is addu t4,v1,t6 (sel * 0x88 first), the original has addu t4,t6,v1. Without the st local the frame matches (4 slot-taking locals, spills at 0x3C/0x38) and uopt inserts the reload itself (partial redundancy of the join test), but the inserted address keeps the operand order of the -> form; a D_8015EDB4[sel]. or (*(...)). join test has the right order but is not merged with the first test (130 rows). (D_8015EDB4 + sel)->, (&D_8015EDB4[sel])-> and unk84 + 1 give the same 1 row; st reused through px or py, or o inlined with st kept, give 70 or more. s32 with no return fixed the lui order of the second 0x40000000 branch. T-19003 */
-#ifdef NON_MATCHING
+/* s32 with no return fixes the lui order of the second 0x40000000 branch (T-19003, T-22025). */
 s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5) {
     MATRIX m;
     SVECTOR vec;
@@ -120,7 +119,8 @@ s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 ar
     vec.vy = o->unk1C;
     vec.vz = o->unk20;
     func_800A0ECC(&m, &vec, &rot);
-    D_8015EDB4[sel].unk74 = D_80127480[0].unk18 + rot.vx + px;
+    /* FAKE: byte-pointer addition seeds uopt's Uadd ichain with D_8015EDB4 first for the partial-redundancy reload at the end of the if body (T-24120). */
+    ((TcActor *)((u8 *)D_8015EDB4 + sel * 0x88))->unk74 = D_80127480[0].unk18 + rot.vx + px;
     D_8015EDB4[sel].unk76 = D_80127480[0].unk1C + rot.vy + py;
     D_8015EDB4[sel].unk78 = D_80127480[0].unk20 + rot.vz;
     if ((sel + D_8015EDB4)->unk84[1] < 0x15U && (sel + D_8015EDB4)->unk82 < (sel + D_8015EDB4)->unk7A) {
@@ -144,9 +144,6 @@ s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 ar
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014A480);
-#endif
 
 void func_8014A79C(void) {
     s32 i;
@@ -1272,8 +1269,6 @@ void func_8014F2A0(void) {
     }
 }
 
-/* NON_MATCHING: T-22025, 6 rows (four branch targets shifted by one word, one extra addiu t8,a1,1 and its sb); the two + 1 stores share $v0 and the unk_038++ store-back comes after the unk_1104 one, as in the original, but the ++ adds 1 again (addiu t8,a1,1) where the original stores $v0. Writing it as = unk_038 + 1 or += 1 shares the sum but drops the store-back (78 lines). T-22025: the chain unk_038 = unk_036 = unk_037 = unk_038 + 1 (stores in the original order) gives 14 rows; unk_037 = unk_036 = unk_038 + 1 then unk_038 = unk_036 gives 14 rows; reading the sum back through unk_037 or unk_036 gives 65 to 120. T-19003 T-22025 closer 2: (u8) casts on the sums, ++ as prefix, 1 + unk_038 and + 1U keep the 6 rows; a local s32 x for the sum stored to all three gives 74 lines; unk_038 = unk_038 + 1 shares the sum but adds in place (old and new value both in $v0) and stores it before the unk_1104 store-back. */
-#ifdef NON_MATCHING
 void func_8014F5F0(void) {
     if (D_800E6280.unk_1104.u < 0x64U) {
         func_8014FBD4(1);
@@ -1284,9 +1279,9 @@ void func_8014F5F0(void) {
         func_8014FBD4((D_800E6280.unk_1104.u - 0x3C) / 40U);
     } else if (D_800E6280.unk_1104.u >= 0x226U) {
         if (D_800E6280.unk_036 < 0xFFU) {
-            D_800E6280.unk_037 = D_800E6280.unk_038 + 1;
-            D_800E6280.unk_036 = D_800E6280.unk_038 + 1;
-            D_800E6280.unk_038++;
+            /* FAKE: repeated masked sum makes a uopt CSE range in $v0 while keeping the ugen temporary slot (T-22006, T-24120). */
+            D_800E6280.unk_037 = (D_800E6280.unk_038 + 1) & 0xFF;
+            D_800E6280.unk_036 = D_800E6280.unk_038 = (D_800E6280.unk_038 + 1) & 0xFF;
             func_801517AC(D_800E6280.unk_1104.u - 0x226);
         } else {
             D_80122760 = 0x64;
@@ -1319,11 +1314,37 @@ void func_8014F5F0(void) {
     }
     D_800E6280.unk_1104.u += 1;
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014F5F0);
-#endif
 
+/* NON_MATCHING: T-24120, 4 rows (100/100 instructions): IDO 5.3 as1 folds away andi $v0, $t9, 0xFF when $v0 is only used in sb, leaving $t9 in the two sb instructions instead of $v0. */
+#ifdef NON_MATCHING
+void func_8014F820(void) {
+    s32 i;
+
+    if (D_800E6280.unk_1104.u == 1) {
+        for (i = 0; i < 0x21; i++) {
+            D_8015EDB4[i + 27].unk78 = (func_800AE0D0() % 8) + 5;
+        }
+    }
+    for (i = 0; i < 0x21; i++) {
+        D_80127480[i + 1].unk1C += D_8015EDB4[i + 27].unk78;
+    }
+    if (D_800E6280.unk_036 != 0) {
+        D_800E6280.unk_037 = (D_800E6280.unk_038 - 1) & 0xFF;
+        D_800E6280.unk_036 = D_800E6280.unk_038 = (D_800E6280.unk_038 - 1) & 0xFF;
+    }
+    if (D_800E6280.unk_1104.u < 0x191U) {
+        func_80147E80(0x11);
+    }
+    if (D_800E6280.unk_1104.u >= 0x258U) {
+        D_8015EDCC += 1;
+        func_80042908(0x2D);
+        return;
+    }
+    D_800E6280.unk_1104.u += 1;
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014F820);
+#endif
 
 void func_8014F9B0(void) {
     if ((func_80147B24(0xB, D_8015FEAC) != D_8015EDB4[20].unk2) != 0) { /* FAKE: the redundant != 0 burns the $t7 temporary the original skips (permuter); real source unknown. T-9320 */

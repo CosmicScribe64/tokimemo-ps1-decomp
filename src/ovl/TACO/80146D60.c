@@ -258,7 +258,20 @@ void func_80147928(s32 arg0, s32 arg1, s32 arg2, void *arg3, void *arg4, s32 arg
     D_8015EDB4[slot].unk4.unk4[0] = (s32)&D_80127480[arg0];
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_80147B24);
+s32 func_80147B24(s32 arg0, void *arg1) {
+    s32 i;
+    s32 num;
+    s32 den;
+
+    den = 0;
+    num = 0;
+    for (i = 0; i < arg0; i++) {
+        /* FAKE: byte-pointer Uadd instead of Uixa keeps uopt from replacing the loop exit test i != arg0 with a pointer bound (T-24120). */
+        num += ((TcActor *)((u8 *)D_8015EDB4 + (i + 16) * 0x88))->unk84[1];
+        den += ((u8 *)arg1)[i * 2] * (i + 16 + D_8015EDB4)->unk7A;
+    }
+    return 100 - (num * 100) / den;
+}
 
 /* No pointer locals for D_80128880[arg0] / D_80127480[...]: each would add a stack home and move the locals 4 bytes. T-16561 */
 void func_80147C98(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6) {
