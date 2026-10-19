@@ -106,7 +106,9 @@ extern u8 D_80143B24;
 extern s32 D_80143EB4;
 extern s32 D_80143EE8;
 extern s32 D_80143F1C;
+#ifndef SHOUGATU_OVERRIDE_func_8013D5D8
 void func_8013D5D8();
+#endif
 void func_80136F90();
 extern u8 D_80145FE4;
 extern u8 D_80144E10;

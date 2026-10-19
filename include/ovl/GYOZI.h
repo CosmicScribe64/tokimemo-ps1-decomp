@@ -490,7 +490,9 @@ extern u8 D_80148828[4]; /* T-17600: D_8014882C follows */
 extern volatile s16 D_8012B920; /* volatile: func_801427E4 only matches with it (decomp-permuter, T-4090) */
 
 extern s32 D_8012E668;
+#ifndef GYOZI_OVERRIDE_func_80140050
 void func_80140050();
+#endif
 
 s32 func_80144018(void);
 s32 func_80144B70(void);
