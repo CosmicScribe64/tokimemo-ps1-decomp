@@ -487,6 +487,8 @@ extern s32 D_80145EA4;
 extern u8 D_801460C4[];
 extern u8 D_80148818;
 extern u8 D_80148828[4]; /* T-17600: D_8014882C follows */
+extern u32 D_8014882C[6][2];
+extern u8 D_8014885C[36];
 extern volatile s16 D_8012B920; /* volatile: func_801427E4 only matches with it (decomp-permuter, T-4090) */
 
 extern s32 D_8012E668;

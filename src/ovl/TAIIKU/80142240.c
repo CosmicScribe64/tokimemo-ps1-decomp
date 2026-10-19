@@ -11,9 +11,8 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A120);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A124);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A128);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A12C);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A130);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A134);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A138);
+/* Defined in the unit (not island pieces) so that the three stores in func_8014357C share one lui at; T-24100. */
+s32 D_8014A130[3] = { 0 };
 TaiRunnerB D_8014A13C[4] = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A1CC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A1D0);
@@ -97,19 +96,12 @@ void func_801423A4(void) {
     }
 }
 
-/* NON_MATCHING: T-22004, 26 rows; only the saved registers of case 3 are left: the original keeps the tpage
- * pointer in $s0, its end in $s1, then the palette counter in $s1 and the bound 16 in $s0; the draft has all four
- * swapped (regdiff: the pointer range, priority 20.5, is coloured before the end range, priority 5, and takes $s1).
- * The pointer needs the counter `j` shared with the palette loop to keep the `sltu` form; a separate counter, a
- * pointer local (a stack word, frame 200), `<=`/`!=`/unsigned bounds, u32/s16 `j` and autotweak (513 edits) did not
- * move it. Needs MAIN_API_OVERRIDE_func_80085E30 (int call: 74 to 52 rows) and the unit-defined D_8014A1E8 (one
- * shared `lui at`). Forms to keep: D_8014A1D4 and D_8014A1FC are reached through their first symbol as in the matched
- * users of this file (rodata islands, aggregates not recovered); D_8014A1E8 is peeled by two stores because IDO unrolls the
- * plain 0..10 loop by four (207 rows). */
-#ifdef NON_MATCHING
+/* FAKE: `pad` reserves the unused local word in the 192-byte frame while sharing `i` across case 0 and case 3
+ * gives `i` a higher uopt priority than the case 3 tpage induction pointer, assigning `$s0/$s1` in the target order.
+ * D_8014A1E8 is peeled by two stores because IDO unrolls a plain 0..10 loop by four. T-22004, T-24100 */
 void func_80142400(void) {
     s32 i;
-    s32 j;
+    s32 pad;
     TaiikuHalf10 sp_a;
     TaiikuHalf10 sp_b;
     TaiWords8 sp_c;
@@ -167,11 +159,11 @@ void func_80142400(void) {
         if ((Fade_Out_Main() != 0) && (cd_read_sync_status() & 1)) {
             func_80140810();
             func_80145190();
-            for (j = 0; j < 3; j++) {
-                search_load_tpage_buf_lock(((s32 *)&D_8014A1FC)[j], 1);
+            for (i = 0; i < 3; i++) {
+                search_load_tpage_buf_lock(((s32 *)&D_8014A1FC)[i], 1);
             }
-            for (j = 0; j < 0x10; j++) {
-                load_palette(D_8014A378, (j + 0x10) & 0xFF, 1, 1, j);
+            for (i = 0; i < 0x10; i++) {
+                load_palette(D_8014A378, (i + 0x10) & 0xFF, 1, 1, i);
             }
             func_8014357C();
             func_80143398();
@@ -185,9 +177,6 @@ void func_80142400(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80142400);
-#endif
 
 /* FAKE: `pad` reserves the top local word: the original keeps the two loop spills of the
  * tpage loops at 0x38 and 0x30 (sp). The u8 views of the flag D_8014A110 keep its lbu loads and
@@ -516,15 +505,10 @@ void func_80143470(void) {
     D_80120656 = 2;
 }
 
-/* NON_MATCHING: T-19010, 34 differing lines (T-16554: 38; statement order from tools/order_search.py), one window: the original keeps the
- * masked flags byte in $v1 (a uopt variable), loads the s16 rating straight into $v0 and loads the three
- * constants 0x7E0000/0x7F0000/0x7D0000 together before three stores that share one `lui at`; IDO leaves the
- * flags in a ugen temporary, promotes the rating field into $a1 with a move and emits each constant
- * next to its store. Same family as TAIIKU func_8013D2B4 (wiki/data/t0018-cases.md). T-19010 also tried, no
- * gain: a raw byte local, separate rating and speed locals, direct access instead of `gs`, the doubled
- * flags expression instead of `temp_v1`. T-22004 (34 rows, unchanged): `temp_v1` as u8/u16/u32/s8, the flags and rating
- * reads in the natural order, `temp_v1 & 3`, a doubled flags expression and viewsweep (6 callee views) gave no
- * gain; autotweak skips it (its isolated compile has 8 instructions more than the target). */
+/* NON_MATCHING: T-24100, 22 differing lines (T-19010: 34; defining D_8014A130[3] in the unit folds its three
+ * stores onto one shared `lui at`), one window: the original keeps the masked flags byte in $v1 (a uopt variable)
+ * and loads the s16 rating straight into $v0; IDO copy-propagates the flags and promotes the rating field into $a1
+ * with a move. Same family as TAIIKU func_80135480, func_8014607C, and func_8013D2B4 (wiki/data/t0018-cases.md). */
 #ifdef NON_MATCHING
 void func_8014357C(void) {
     GameState *gs;
@@ -592,8 +576,8 @@ void func_8014357C(void) {
     D_8014A118 = 0;
     D_8014A130[0] = 0x7E0000;
     D_8014A130[1] = 0x7F0000;
-    var_v0 = gs->unk_10C.unk_02;
     D_8014A130[2] = 0x7D0000;
+    var_v0 = gs->unk_10C.unk_02;
     temp_v1 = gs->unk_0F4.b[1] & 0xF;
     if ((temp_v1 & 1) || (temp_v1 & 2)) {
         var_v0 = (s16) (var_v0 >> 1);

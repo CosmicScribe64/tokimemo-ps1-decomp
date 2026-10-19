@@ -1,7 +1,7 @@
 ---
 id: T-24101
 title: Add .data islands for GYOZI/801418B0, SHOUGATU/8013F190, and VALEN/80132760 and match 5-function sibling cluster (4,404 B)
-status: In Progress
+status: Done
 priority: high
 created: 2026-10-18
 updated: 2026-10-18
@@ -22,9 +22,17 @@ The [[tickets/T-24096-speedup-audit-and-automation]] `.data` island audit (`buil
    - `GYOZI:func_801428EC` (416 B in `src/ovl/GYOZI/801418B0.c`, the only other unmatched function in `801418B0.c`)
    - `SHOUGATU:func_80140314` (508 B in `src/ovl/SHOUGATU/8013F190.c`)
 
+## Results
+
+- Configured `.data` islands in `config/overlays/{GYOZI,SHOUGATU,VALEN}.yaml`, `src/ovl/{GYOZI/801418B0,SHOUGATU/8013F190,VALEN/80132760}.c`, and `include/ovl/{GYOZI,SHOUGATU,VALEN}.h`.
+- **Matched & promoted (+2 functions, +924 B):**
+  - `GYOZI:func_801428EC` (416 B in `src/ovl/GYOZI/801418B0.c`)
+  - `SHOUGATU:func_80140314` (508 B in `src/ovl/SHOUGATU/8013F190.c`)
+- Archived `#ifdef NON_MATCHING` drafts for `GYOZI:func_801421B4` (`score=54`, first 231/272 insns exact), `SHOUGATU:func_8013FB28` (`score=61`, first 231/288 insns exact), `VALEN:func_80132834` (`score=51`, 308/310 insns), and `VALEN:func_80133088` (`score=171`).
+
 ## Acceptance criteria
 
-- [ ] Configure `tools/data_island.py` in `config/overlays/{GYOZI,SHOUGATU,VALEN}.yaml` and define the required `.data` variables in C where needed
-- [ ] Close as many of the 5 functions (`func_801421B4`, `func_8013FB28`, `func_80132834`, `func_801428EC`, `func_80140314`, 4,404 B total) as possible to `score=0` in `build/scratch/t24101/`
-- [ ] Promote all `score=0` functions to unguarded default C and verify `tools/funcdiff.py --resolve`, `ninja`, `tools/check_headers.py`, `tools/migrate_globals.py --check`, and `tools/sync_protos.py --check-branch`
-- [ ] Review against `CODING_STANDARDS.md` and record findings in `wiki/log.md`
+- [x] Configure `tools/data_island.py` in `config/overlays/{GYOZI,SHOUGATU,VALEN}.yaml` and define the required `.data` variables in C where needed
+- [x] Close as many of the 5 functions (`func_801421B4`, `func_8013FB28`, `func_80132834`, `func_801428EC`, `func_80140314`, 4,404 B total) as possible to `score=0` in `build/scratch/t24101/`
+- [x] Promote all `score=0` functions to unguarded default C and verify `tools/funcdiff.py --resolve`, `ninja`, `tools/check_headers.py`, `tools/migrate_globals.py --check`, and `tools/sync_protos.py --check-branch`
+- [x] Review against `CODING_STANDARDS.md` and record findings in `wiki/log.md`

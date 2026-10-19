@@ -105,8 +105,8 @@ void func_801339D0(void);
 
 extern s16 D_80134524[];
 
-extern u8 D_80134540;
-extern u8 D_80134541;
-extern u8 D_80134542;
+extern u8 D_80134540[];
+extern u8 D_80134548;
 
 #endif /* OVL_VALEN_H */
+

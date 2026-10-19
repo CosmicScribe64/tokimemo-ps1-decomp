@@ -931,10 +931,12 @@ typedef struct ShoColors6x2 {
     /* 0x00 */ u32 v[6][2];
 } ShoColors6x2; /* size 0x30 */
 typedef struct ShoBytes3x12 {
-    /* 0x00 */ u8 v[3][12];
+    /* 0x00 */ u8 v[36];
 } ShoBytes3x12; /* size 0x24 */
 extern ShoColors6x2 D_801461D8;
 extern ShoBytes3x12 D_80146208;
+extern u8 D_80146054;
+extern u8 D_80146058;
 
 /* Work arrays of the func_80141D20 family, 50 entries each (counter D_801467FC < 0x32). The
  * original writes D_80146540[i - 1] as %lo(D_8014653C)+i*4; D_8014653C itself is a separate u8. */

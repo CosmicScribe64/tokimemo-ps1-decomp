@@ -43,9 +43,13 @@ SHT_REL = 9
 SHT_NOBITS = 8
 STT_SECTION = 3
 STT_FUNC = 2
+STB_GLOBAL = 1
+SHN_UNDEF = 0
 R_MIPS_32 = 2
 R_MIPS_26 = 4
 
+GLABEL_RE = re.compile(r"^glabel\s+(\S+)\s*$")
+ALABEL_RE = re.compile(r"^\s*alabel\s+(\S+)\s*$")
 ENDLABEL_RE = re.compile(r"^(endlabel|\.end)\b")
 NOP_RE = re.compile(r"^\s*/\*[^*]*\*/\s+nop\s*$")
 
@@ -131,9 +135,11 @@ def text_functions(path):
     return {s[0]: (s[1], s[2]) for s in syms if s[5] == text and s[3] & 0xf == STT_FUNC}
 
 
-def insert_zero_words(data, pads):
+def insert_zero_words(data, pads, lead_pads=None):
     """Return ELF object bytes with `pads` ({function name: zero words}) inserted after each
-    named function (at symbol value + size), all offsets, symbols and relocations fixed."""
+    named function (at symbol value + size) and `lead_pads` ({function name: (lwords, alias)}
+    or {function name: lwords}) inserted at the start of each named function, with all offsets,
+    symbols and relocations fixed."""
     elf = Elf(data)
     text = elf.find(".text")
     symtab = elf.find(".symtab")
@@ -151,6 +157,28 @@ def insert_zero_words(data, pads):
         del tsec["data"][code_end:]
 
     edits = {}                                  # insertion offset -> byte count
+    lead_syms = {}                              # symtab index -> (orig_value, byte_count, alias)
+    for name, spec in (lead_pads or {}).items():
+        words, alias = spec if isinstance(spec, tuple) else (spec, None)
+        if words <= 0:
+            fail("%s: leading pad of %d words" % (name, words))
+        hit = [i for i, s in enumerate(syms) if s[0] == name and s[5] == text and s[3] & 0xf == STT_FUNC]
+        if len(hit) != 1:
+            fail("%s: expected one function symbol in .text, found %d" % (name, len(hit)))
+        idx = hit[0]
+        value, size = syms[idx][1], syms[idx][2]
+        if size == 0:
+            fail("%s: function symbol has no size" % name)
+        if value % 4 or value > tlen:
+            fail("%s: bad function start 0x%x" % (name, value))
+        if value in edits:
+            fail("%s: two pads at 0x%x" % (name, value))
+        for s in syms:
+            if s[5] == text and value < s[1] < value + size:
+                fail("%s: symbol %s inside the function" % (name, s[0]))
+        edits[value] = 4 * words
+        lead_syms[idx] = (value, 4 * words, alias)
+
     for name, words in pads.items():
         if words <= 0:
             fail("%s: pad of %d words" % (name, words))
@@ -174,6 +202,9 @@ def insert_zero_words(data, pads):
     def shift(x):
         return x + sum(edits[c] for c in cuts if x >= c)
 
+    def shift_before(x):
+        return x + sum(edits[c] for c in cuts if x > c)
+
     new = bytearray()
     prev = 0
     for c in cuts:
@@ -188,9 +219,37 @@ def insert_zero_words(data, pads):
             continue
         if s[3] & 0xf == STT_SECTION:
             s[2] = len(new)
+        elif i in lead_syms:
+            orig_val, lbytes, _alias = lead_syms[i]
+            s[1] = shift_before(orig_val)
+            s[2] += lbytes
         else:
             s[1] = shift(s[1])
         struct.pack_into("<IIIBBH", ssec["data"], 16 * i, s[6], s[1], s[2], s[3], s[4], s[5])
+
+    strtab = elf.sections[ssec["link"]]["data"]
+    for idx, (orig_val, lbytes, alias) in lead_syms.items():
+        if not alias:
+            continue
+        alias_val = shift_before(orig_val) + lbytes
+        alias_info = (STB_GLOBAL << 4) | STT_FUNC
+        existing = [j for j, s in enumerate(syms) if s[0] == alias]
+        if existing:
+            j = existing[0]
+            if syms[j][5] != SHN_UNDEF:
+                fail("%s: alias %s already defined" % (syms[idx][0], alias))
+            syms[j][1] = alias_val
+            syms[j][2] = 0
+            syms[j][3] = alias_info
+            syms[j][4] = 0
+            syms[j][5] = text
+            struct.pack_into("<IIIBBH", ssec["data"], 16 * j,
+                             syms[j][6], syms[j][1], syms[j][2], syms[j][3], syms[j][4], syms[j][5])
+        else:
+            name_off = len(strtab)
+            strtab += alias.encode() + b"\0"
+            ssec["data"] += struct.pack("<IIIBBH", name_off, alias_val, 0, alias_info, 0, text)
+            syms.append([alias, alias_val, 0, alias_info, 0, text, name_off])
 
     for sec in elf.sections:
         if sec["type"] != SHT_REL:
@@ -242,6 +301,26 @@ def pad_text_to(path, align):
         f.write(elf.to_bytes())
 
 
+def leading_words(path):
+    """(lwords, alias) of leading nop words before `alabel <alias>` after `glabel` in a splat
+    function file, or (0, None) when the function does not start with leading nops before `alabel`."""
+    with open(path) as f:
+        lines = f.read().split(RODATA_MARK)[0].splitlines()
+    glabels = [i for i, l in enumerate(lines) if GLABEL_RE.match(l)]
+    if not glabels:
+        return 0, None
+    body = [l for l in lines[glabels[0] + 1:] if l.strip()]
+    lwords = 0
+    while lwords < len(body) and NOP_RE.match(body[lwords]):
+        lwords += 1
+    if lwords == 0 or lwords >= len(body):
+        return 0, None
+    m = ALABEL_RE.match(body[lwords])
+    if not m:
+        return 0, None
+    return lwords, m.group(1)
+
+
 def trailing_words(path):
     """Number of nop words after the `endlabel` line of a splat function file. The rodata that
     tools/rodata_pieces.py appends after a marker line (T-1340) is not part of the function."""
@@ -275,6 +354,7 @@ def pad_functions(obj, src, include_asm_names, root="."):
     """Apply the rule to the compiled object `obj` of source `src`; return the .s files read."""
     used = []
     pads = {}
+    lead_pads = {}
     for name in text_functions(obj):
         if name in include_asm_names:
             continue
@@ -282,12 +362,15 @@ def pad_functions(obj, src, include_asm_names, root="."):
         if path is None:
             continue                            # static helper or SDK-only symbol: no original words
         used.append(path)
+        lwords, alias = leading_words(path)
+        if lwords:
+            lead_pads[name] = (lwords, alias)
         words = trailing_words(path)
         if words:
             pads[name] = words
-    if pads:
+    if pads or lead_pads:
         with open(obj, "rb") as f:
             data = f.read()
         with open(obj, "wb") as f:
-            f.write(insert_zero_words(data, pads))
+            f.write(insert_zero_words(data, pads, lead_pads))
     return used

@@ -989,6 +989,7 @@ extern u16 D_800E36EA;
 extern s32 D_800E36F0;
 extern s32 D_800E36F4;
 extern GameState D_800E6280;
+extern u8 D_800E71DF; /* selected girl, GameState.unk_F5F: kept as a separate symbol by keep lines with a proof (config/migrate_globals.txt, T-20820, T-24099) */
 extern s32 D_800E7384; /* frame counter, GameState.unk_1104.w: kept as a separate symbol by keep lines with a proof (config/migrate_globals.txt, T-20820) */
 #ifndef MAIN_API_OVERRIDE_D_800E7D10
 extern Work800E7D10 D_800E7D10;

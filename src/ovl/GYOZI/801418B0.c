@@ -2,6 +2,36 @@
 #include "game.h"
 #include "ovl/GYOZI.h"
 #include "psx_types.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/801418B0.data", D_801487F0);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/801418B0.data", D_801487F4);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/801418B0.data", D_801487F8);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/801418B0.data", D_801487FC);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/801418B0.data", D_80148800);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/801418B0.data", D_80148804);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/801418B0.data", D_80148808);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/801418B0.data", D_8014880C);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/801418B0.data", D_80148810);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/801418B0.data", D_80148814);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/801418B0.data", D_80148818);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/801418B0.data", D_8014881C);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/801418B0.data", D_80148820);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/801418B0.data", D_80148824);
+u8 D_80148828[4] = { 0 };
+u32 D_8014882C[6][2] = {
+    { 0x00F870A0, 0x00F8A0C0 },
+    { 0x0030C050, 0x0070E090 },
+    { 0x005078F8, 0x0098C0F8 },
+    { 0x00F8A828, 0x00F8D868 },
+    { 0x00F88030, 0x00F8D078 },
+    { 0x005850B0, 0x009098E8 },
+};
+u8 D_8014885C[36] = {
+    0, 1, 2, 3, 4, 3, 2, 4, 4, 1, 0, 2,
+    1, 2, 3, 0, 1, 0, 2, 4, 1, 3, 0, 3,
+    2, 3, 0, 1, 0, 1, 4, 2, 3, 0, 5, 1,
+};
 
 void func_801418B0(void) {
     D_801487F0 = (u8 *)0x801D6360;
@@ -151,7 +181,89 @@ void func_8014210C(void) {
     func_8004DE1C();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: score=54 (268/272 insns). First 231 instructions match 100% with the .data island; in the bottom condition block IDO 5.3 uopt CSEs (g->unk_03E == 0x5F) into $a1 instead of keeping 0x5F in $a1 via RLDC. T-24101. */
+s32 func_801421B4(void) {
+    s16 i;
+    GyoziWork *g;
+
+    g = &D_800F53A0;
+    D_80148828[0] = g->unk_10C8 % 4;
+    i = 1;
+    while (1) {
+        D_80148828[1] = (g->unk_10C8 * 2 + i) % 4;
+        if (D_80148828[0] != D_80148828[1]) {
+            break;
+        }
+        i++;
+    }
+    while (1) {
+        D_80148828[2] = (g->unk_10C8 / 10 + i) % 4;
+        if (D_80148828[0] != D_80148828[2] && D_80148828[1] != D_80148828[2]) {
+            break;
+        }
+        i++;
+    }
+    while (1) {
+        D_80148828[3] = i % 4;
+        if (D_80148828[0] != D_80148828[3] && D_80148828[1] != D_80148828[3] && D_80148828[2] != D_80148828[3]) {
+            break;
+        }
+        i++;
+    }
+    for (i = 0; i < 4; i++) {
+        if (D_80148828[i] == 1) {
+            D_80148828[i] = 0xB;
+        } else if (D_80148828[i] == 2) {
+            D_80148828[i] = D_80148754;
+        } else if (D_80148828[i] == 3) {
+            D_80148828[i] = D_80148758;
+        }
+    }
+    func_8005BE34(0, ((DisplayActor44 *)D_80129F40)[0].unk_26, ((DisplayActor44 *)D_80129F40)[0].unk_2A, D_80148828);
+    func_8005C1B8(0);
+    if (g->unk_F58 & 0x600060) {
+        if (func_8005B32C() != 0) {
+            if (g->unk_F60[0].unk_06 != 0) {
+                D_80148818 = 0;
+            } else if (g->unk_F60[2].unk_06 != 0) {
+                D_80148818 = 1;
+            } else if (g->unk_F60[4].unk_06 != 0) {
+                D_80148818 = 2;
+            } else if (g->unk_F60[6].unk_06 != 0) {
+                D_80148818 = 3;
+            } else {
+                return 0;
+            }
+            ((DisplayActor44 *)D_80129F40)[0].unk_03 &= 0xFF7F;
+            D_8012E6C0 = 0;
+            func_8005B06C(1);
+            ((DisplayActor44 *)D_80129F40)[97].unk_03 |= 0x80;
+            ((DisplayActor44 *)D_80129F40)[97].unk_18 =
+                D_80148828[D_80148818]
+                + (g->unk_03E == 0x60) * 0xB
+                + (g->unk_03E == 0x61) * 0x17
+                - (D_80148828[D_80148818] == 0xB && g->unk_03E == 0x5F)
+                + 1;
+            ((DisplayActor44 *)D_80129F40)[97].unk_26 = D_80148818 * 0x4E - D_80148818 - 0x75;
+            ((DisplayActor44 *)D_80129F40)[97].unk_2A = -0x3C;
+            ((DisplayActor44 *)D_80129F40)[97].unk_1C = 0;
+            D_80148620 += D_80148828[D_80148818] * 3 + g->unk_03E - 0x5F;
+            D_80148820 = 1;
+            if ((g->unk_03E == 0x5F && D_80148828[D_80148818] == 0 && g->unk_100.unk_02 >= 0x64)
+                || ((D_80148828[D_80148818] == 0 & g->unk_03E == 0x5F) && g->unk_670 >= 0x64)
+                || ((D_80148828[D_80148818] == 1 & g->unk_03E == 0x5F) && g->unk_0FA >= 0x46)
+                || ((D_80148828[D_80148818] == 1 & g->unk_03E == 0x61) && g->unk_0FA >= 0x64)
+                || ((D_80148828[D_80148818] == 2 & g->unk_03E == 0x60) && g->unk_0FA >= 0x64)) {
+                D_80148624 = 1;
+            }
+            func_8004DE1C();
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_801421B4);
+#endif
 
 void func_801425F4(void) {
     func_8008A0D4(0x4183);
@@ -237,7 +349,40 @@ void func_8014288C(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_801428EC);
+/* Return type preserves the existing caller declaration and original fall-through schedule. T-24101. */
+s32 func_801428EC(void) {
+    s32 unused; /* FAKE: unused local pads stack frame to 0x48 bytes. T-24101. */
+    s16 dy;
+    s16 dx;
+
+    dy = 0x1C - (((DisplayActor44 *)D_80129F40)[97].unk_1C / 512) * 4;
+    dx = 1;
+    if (((DisplayActor44 *)D_80129F40)[97].unk_1C == 0x1000) {
+        dy = 0;
+        dx = 0;
+    }
+    func_80142A8C(
+        ((DisplayActor44 *)D_80129F40)[97].unk_26 - dx - 0x1C,
+        ((DisplayActor44 *)D_80129F40)[97].unk_2A + dy - 0x1C,
+        ((DisplayActor44 *)D_80129F40)[97].unk_26 - 1,
+        ((DisplayActor44 *)D_80129F40)[97].unk_2A + dy - 0x1C,
+        ((DisplayActor44 *)D_80129F40)[97].unk_26 - dx - 0x1C,
+        ((DisplayActor44 *)D_80129F40)[97].unk_2A - 1,
+        D_8014882C[D_8014885C[(D_800F53DE - 0x5F) * 12 + D_80148828[D_80148818]]][0],
+        D_8014882C[D_8014885C[(D_800F53DE - 0x5F) * 12 + D_80148828[D_80148818]]][1],
+        9, 0);
+    func_80142A8C(
+        ((DisplayActor44 *)D_80129F40)[97].unk_26 + dx + 0x1C,
+        ((DisplayActor44 *)D_80129F40)[97].unk_2A - dy + 0x1C,
+        ((DisplayActor44 *)D_80129F40)[97].unk_26 + dx + 0x1C,
+        ((DisplayActor44 *)D_80129F40)[97].unk_2A,
+        ((DisplayActor44 *)D_80129F40)[97].unk_26,
+        ((DisplayActor44 *)D_80129F40)[97].unk_2A - dy + 0x1C,
+        D_8014882C[D_8014885C[(D_800F53DE - 0x5F) * 12 + D_80148828[D_80148818]]][0],
+        D_8014882C[D_8014885C[(D_800F53DE - 0x5F) * 12 + D_80148828[D_80148818]]][1],
+        9, 0);
+    func_80054FCC(0xB);
+}
 
 /* Return type preserves the existing implicit caller ABI and original schedule. T-24019. */
 s32 func_80142A8C(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1, s32 z, s32 trans) {

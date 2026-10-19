@@ -250,6 +250,35 @@ class AsmLookup(unittest.TestCase):
             want = link(tmp, assemble(tmp, "want", source(1, 0)), "want")
             self.assertEqual(got, want)
 
+    def test_leading_words_and_alabel_alias(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d = "asm/ovl/TT/nonmatchings/TT"
+            os.makedirs(os.path.join(tmp, d), exist_ok=True)
+            with open(os.path.join(tmp, d, "f1.s"), "w") as f:
+                f.write("glabel f1\n"
+                        "    /* 0 80100000 00000000 */  nop\n"
+                        "  alabel f1_inner\n"
+                        "    /* 4 80100004 0800E003 */  jr         $ra\n"
+                        "    /* 8 80100008 00000000 */   nop\n"
+                        "endlabel f1\n")
+            self.mk(tmp, d, "f2", "")
+            self.mk(tmp, d, "f3", "")
+            self.assertEqual(tp.leading_words(os.path.join(tmp, d, "f1.s")), (1, "f1_inner"))
+            self.assertEqual(tp.leading_words(os.path.join(tmp, d, "f2.s")), (0, None))
+            caller = "\n.globl call_inner\n.type call_inner,@function\ncall_inner:\n jal f1_inner\n nop\n.size call_inner, .-call_inner\n"
+            obj = assemble(tmp, "got", source(0, 0, extra=caller))
+            tp.pad_functions(obj, "src/ovl/TT.c", set(), tmp)
+            funcs = tp.text_functions(obj)
+            self.assertEqual(funcs["f1"], (0, 12))
+            self.assertEqual(funcs["f1_inner"], (4, 0))
+            want_asm = PREAMBLE + (
+                ".globl f1\n.type f1,@function\nf1:\n nop\n"
+                ".globl f1_inner\n.type f1_inner,@function\nf1_inner:\n jr $ra\n nop\n.size f1, .-f1\n"
+            ) + FUNCS.split(".size f1, .-f1\n%(pad1)s\n", 1)[1] % {"pad2": ""} + caller + DATA
+            got = link(tmp, obj, "got")
+            want = link(tmp, assemble(tmp, "want", want_asm), "want")
+            self.assertEqual(got, want)
+
 
 if __name__ == "__main__":
     unittest.main()

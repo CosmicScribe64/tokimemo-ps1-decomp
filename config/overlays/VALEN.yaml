@@ -66,4 +66,6 @@ segments:
       - [0x23B0, .rodata, VALEN/801339D0]
       - [0x23C0, .rodata, VALEN/80133C70]
       - [0x23F0, data, VALEN_data]
+      - [0x2520, .data, VALEN/80132760]
+      - [0x2630, data, VALEN_data_80134630]
   - [0x30000]

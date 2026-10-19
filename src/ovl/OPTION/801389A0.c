@@ -310,7 +310,70 @@ s32 func_80139198(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-24100, 14 differing lines (T-22003: 56): using an explicit `p` pointer and `*(s32 *)&p[96].unk_24`
+ * (`unk_28`) matches the loop setup and 32-bit fixed-point arithmetic; only 14 lines remain in the `unk_26 >= 0x100`
+ * and `unk_2A >= 0xC0` clamp blocks where IDO folds the clamp constant into the following store's `addiu` instead
+ * of storing first and reloading the clamped halfword with `lh`. */
+#ifdef NON_MATCHING
+void func_801394F4(void) {
+    s32 i;
+    DisplayActor44 *p;
+
+    for (i = 0, p = (DisplayActor44 *)D_8011ECD0; i < 13; i++, p++) {
+        p[96].unk_1A = rsin(p[96].unk_2C);
+        p[96].unk_1C = rsin(p[96].unk_30);
+        p[96].unk_2C += p[96].unk_2E << 5;
+        p[96].unk_30 += p[96].unk_32 << 5;
+        if (p[96].unk_26 >= 0x100) {
+            p[96].unk_26 = 0x100;
+            p[96].unk_2E = -p[96].unk_2E;
+        }
+        if (p[96].unk_26 < -0x100) {
+            p[96].unk_26 = -0x100;
+            p[96].unk_2E = -p[96].unk_2E;
+        }
+        if (p[96].unk_2A >= 0xC0) {
+            p[96].unk_2A = 0xC0;
+            p[96].unk_32 = -p[96].unk_32;
+        }
+        if (p[96].unk_2A < -0xC0) {
+            p[96].unk_2A = -0xC0;
+            p[96].unk_32 = -p[96].unk_32;
+        }
+        *(s32 *)&p[96].unk_24 += p[96].unk_2E << 16;
+        *(s32 *)&p[96].unk_28 += p[96].unk_32 << 16;
+        p[96].unk_1E += p[96].unk_2E << 2;
+        p[96].unk_20 += p[96].unk_32 << 3;
+        p[96].unk_22 += (p[96].unk_32 + p[96].unk_2E) * 4;
+        if (D_800E6280.unk_F84 & 0x1000) {
+            p[96].unk_2A -= 8;
+        }
+        if (D_800E6280.unk_F84 & 0x4000) {
+            p[96].unk_2A += 8;
+        }
+        if (D_800E6280.unk_F84 & 0x8000) {
+            p[96].unk_26 -= 8;
+        }
+        if (D_800E6280.unk_F84 & 0x2000) {
+            p[96].unk_26 += 8;
+        }
+        if (D_800E6280.unk_F84 & 0x200) {
+            p[96].unk_34 = &D_800C5FD0;
+        }
+        if (D_800E6280.unk_F84 & 0x800) {
+            p[96].unk_34 = &D_800C5FCC;
+        }
+        if (D_800E6280.unk_F84 & 0x400) {
+            p[96].unk_03 |= 4;
+        }
+        if (D_800E6280.unk_F84 & 0x100) {
+            p[96].unk_03 &= 0xFB;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_801394F4);
+#endif
 
 void func_80139878(void) {
     u8 t;

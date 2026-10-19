@@ -2,6 +2,39 @@
 #include "game.h"
 #include "psx_types.h"
 #include "ovl/SHOUGATU.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146130);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146134);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146138);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_8014613C);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146140);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146144);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146148);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_8014614C);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146150);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146154);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146158);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_8014615C);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146160);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146164);
+u8 D_80146168[4] = { 0 };
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_8014616C);
+ShoColors6x2 D_801461D8 = { {
+    { 0x00F870A0, 0x00F8A0C0 },
+    { 0x0030C050, 0x0070E090 },
+    { 0x005078F8, 0x0098C0F8 },
+    { 0x00F8A828, 0x00F8D868 },
+    { 0x00F88030, 0x00F8D078 },
+    { 0x005850B0, 0x009098E8 },
+} };
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146208);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146230);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146234);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146238);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_8014623C);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146240);
+INCLUDE_RODATA("asm/ovl/SHOUGATU/data/SHOUGATU/8013F190.data", D_80146244);
 
 void func_80140698(void);
 
@@ -174,7 +207,92 @@ void func_8013FA80(void) {
     func_8004284C();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: score=61 (285/288 insns). First 231 instructions match 100% with the .data island; in the bottom condition block IDO 5.3 uopt CSEs (g->unk_03E == 0x5F) into $a1 instead of keeping 0x5F in $a1 via RLDC. T-24101. */
+s32 func_8013FB28(void) {
+    s16 i;
+    GameState *g;
+
+    g = &D_800E6280;
+    D_80146168[0] = g->unk_10F8 % 4;
+    i = 1;
+    while (1) {
+        D_80146168[1] = (g->unk_10F8 * 2 + i) % 4;
+        if (D_80146168[0] != D_80146168[1]) {
+            break;
+        }
+        i++;
+    }
+    while (1) {
+        D_80146168[2] = (g->unk_10F8 / 10 + i) % 4;
+        if (D_80146168[0] != D_80146168[2] && D_80146168[1] != D_80146168[2]) {
+            break;
+        }
+        i++;
+    }
+    while (1) {
+        D_80146168[3] = i % 4;
+        if (D_80146168[0] != D_80146168[3] && D_80146168[1] != D_80146168[3] && D_80146168[2] != D_80146168[3]) {
+            break;
+        }
+        i++;
+    }
+    for (i = 0; i < 4; i++) {
+        if (D_80146168[i] == 1) {
+            D_80146168[i] = 0xB;
+        } else if (D_80146168[i] == 2) {
+            D_80146168[i] = D_80146054;
+        } else if (D_80146168[i] == 3) {
+            D_80146168[i] = D_80146058;
+        }
+    }
+    menu_check(0, ((DisplayActor44 *)D_8011ECD0)[0].unk_26, ((DisplayActor44 *)D_8011ECD0)[0].unk_2A, D_80146168);
+    func_8004FC10(0);
+    if ((g->unk_F88 & 0xF000) && ((g->unk_1092 & 3) == 1 || (g->unk_1092 & 3) == 3)) {
+        func_80044750(0x502);
+    }
+    if (g->unk_F88 & 0x200020) {
+        if (check_end_k() != 0) {
+            if (g->unk_F90[0].unk_06 != 0) {
+                D_80146158 = 0;
+            } else if (g->unk_F90[2].unk_06 != 0) {
+                D_80146158 = 1;
+            } else if (g->unk_F90[4].unk_06 != 0) {
+                D_80146158 = 2;
+            } else if (g->unk_F90[6].unk_06 != 0) {
+                D_80146158 = 3;
+            } else {
+                return 0;
+            }
+            ((DisplayActor44 *)D_8011ECD0)[0].unk_03 &= 0xFF7F;
+            D_80122D30 = 0;
+            k_reset(1);
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_03 |= 0x80;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_18 =
+                D_80146168[D_80146158]
+                + (g->unk_03E == 0x60) * 0xB
+                + (g->unk_03E == 0x61) * 0x17
+                - (D_80146168[D_80146158] == 0xB && g->unk_03E == 0x5F)
+                + 1;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_26 = D_80146158 * 0x4E - D_80146158 - 0x75;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_2A = -0x3C;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_1C = 0;
+            D_80145F2C += D_80146168[D_80146158] * 3 + g->unk_03E - 0x5F;
+            D_80146160 = 1;
+            if ((g->unk_03E == 0x5F && D_80146168[D_80146158] == 0 && g->unk_108.unk_02 >= 0x64)
+                || ((D_80146168[D_80146158] == 0 & g->unk_03E == 0x5F) && g->unk_66C[5].unk_00 >= 0x64)
+                || ((D_80146168[D_80146158] == 1 & g->unk_03E == 0x5F) && g->unk_100.unk_02 >= 0x46)
+                || ((D_80146168[D_80146158] == 1 & g->unk_03E == 0x61) && g->unk_100.unk_02 >= 0x64)
+                || ((D_80146168[D_80146158] == 2 & g->unk_03E == 0x60) && g->unk_100.unk_02 >= 0x64)) {
+                D_80145F30 = 1;
+            }
+            func_8004284C();
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_8013FB28);
+#endif
 
 void func_8013FFA8(void) {
     bg_read_sub2(0x41E4);
@@ -265,7 +383,44 @@ void func_80140284(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_80140314);
+/* Fall-through return preserves the sibling callback schedule (T-24101). */
+s32 func_80140314(void) {
+    s32 unused; /* FAKE: unused local pads stack frame to 0xA0 bytes. T-24101. */
+    s16 dy;
+    s16 dx;
+    ShoColors6x2 colors;
+    ShoBytes3x12 sel;
+
+    colors = D_801461D8;
+    sel = D_80146208;
+    dy = 0x1C - (((DisplayActor44 *)D_8011ECD0)[97].unk_1C / 512) * 4;
+    dx = 1;
+    if (((DisplayActor44 *)D_8011ECD0)[97].unk_1C == 0x1000) {
+        dy = 0;
+        dx = 0;
+    }
+    func_80140510(
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_26 - dx - 0x1C,
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_2A + dy - 0x1C,
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_26 - 1,
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_2A + dy - 0x1C,
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_26 - dx - 0x1C,
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_2A - 1,
+        colors.v[sel.v[(D_800E6280.unk_03E - 0x5F) * 12 + D_80146168[D_80146158]]][0],
+        colors.v[sel.v[(D_800E6280.unk_03E - 0x5F) * 12 + D_80146168[D_80146158]]][1],
+        9, 0);
+    func_80140510(
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_26 + dx + 0x1C,
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_2A - dy + 0x1C,
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_26 + dx + 0x1C,
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_2A,
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_26,
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_2A - dy + 0x1C,
+        colors.v[sel.v[(D_800E6280.unk_03E - 0x5F) * 12 + D_80146168[D_80146158]]][0],
+        colors.v[sel.v[(D_800E6280.unk_03E - 0x5F) * 12 + D_80146168[D_80146158]]][1],
+        9, 0);
+    func_8004955C(0xB);
+}
 
 /* Fall-through int return follows the matched DATE builder (T-24026). */
 s32 func_80140510(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1, s32 z, s32 trans) {

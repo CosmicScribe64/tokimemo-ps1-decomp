@@ -119,4 +119,6 @@ segments:
       - [0x11DB0, .rodata, GYOZI/80143110]
       - [0x11DE0, .rodata, GYOZI/80143AD0]
       - [0x11E00, data, GYOZI_data]
+      - [0x147F0, .data, GYOZI/801418B0]
+      - [0x14880, data, GYOZI_data_80148880]
   - [0x30000]
