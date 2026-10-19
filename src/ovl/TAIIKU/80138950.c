@@ -996,7 +996,55 @@ void func_8013B200(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B3B0);
+/* FAKE: T-24124. The counter and flag use volatile/u16 views (as in func_8013B608 and func_8013C33C), and
+ * tmp/v reproduce the original's stack word and ugen temporary before the 80 / 48 term. */
+void func_8013B3B0(void) {
+    s32 tmp;
+    s16 v;
+
+    if (D_801499A2 == 0x258) {
+        func_80044750(0x802);
+        ((u16 *)D_801499B0)[0] = 1;
+        D_801499A0.unk_08 = 0;
+        D_801499A0.unk_0C = 0;
+        ((u16 *)D_801499B0)[1] = 0;
+        D_801206AC = 0x7F;
+    } else if (D_801499A2 >= 0x2D1) {
+        ((u16 *)D_801499B0)[0] = 0;
+        ((u16 *)&D_801499A0)[1] = 0;
+    } else if (((u16 *)&D_801499A0)[1] >= 0x259) {
+        if (D_801206BE < 0x30) {
+            D_801206BE++;
+        }
+    } else {
+        func_8013C5C8(0x10000);
+        func_8013C694();
+        if (!(((u16 *)&D_801499A0)[1] & 8)) {
+            func_8013C4E4(0x8000);
+        }
+        if (!(((u16 *)&D_801499A0)[1] & 0xF)) {
+            ((s16 *)&tmp)[0] = 0;
+            v = D_80149968.unk_1C[0] >> 3;
+            v += (D_80149968.unk_1C[0] >> 3) * 80 / 48;
+            if (D_80122EC4 % 3 != 0 && (D_80149968.unk_1C[0] >= 0 || D_80149968.unk_0C > 0)) {
+                v = (D_80149968.unk_1C[0] >> 3) + 0x20;
+            }
+            D_801499A0.unk_04 = v;
+            D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
+            ((s16 *)&tmp)[1] = v;
+        }
+    }
+    if (((u16 *)D_801499B0)[0] == 0 && ((u16 *)&D_801499A0)[1] != 0 && ((u16 *)&D_801499A0)[1] % 45 == 0) {
+        if (((u16 *)D_801499B0)[1] == 0) {
+            ((u16 *)D_801499B0)[1] = 1;
+            func_80044750(0x800);
+        } else {
+            ((u16 *)D_801499B0)[1] = 0;
+            func_80044750(0x801);
+        }
+        ((u16 *)&D_801499A0)[1]++;
+    }
+}
 
 void func_8013B5C0(void) {
     if (D_801499A0.unk_02 == 1) {
@@ -1051,7 +1099,48 @@ void func_8013B608(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B78C);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B94C);
+/* FAKE: T-24124. Same counter/flag pointer views and split-half stack word tmp as func_8013BB3C and
+ * func_8013C33C. */
+void func_8013B94C(void) {
+    s32 tmp;
+
+    if (D_801499A2 == 1) {
+        if (((D_80149968.unk_1C[0] >> 3) - D_801206BA >= 0x21 && D_80149974 > 0) ||
+            ((D_80149968.unk_1C[0] >> 3) - D_801206BA < -0x20 && D_80149968.unk_0C < 0)) {
+            func_80044750(0x802);
+            D_801499B2 = 2;
+        }
+    }
+    if (((u16 *)&D_801499A0)[1] >= 0x88) {
+        ((u16 *)&D_801499A0)[1] = 0;
+    }
+    func_8013C5C8(0x12000);
+    func_8013C694();
+    if (!(((u16 *)&D_801499A0)[1] & 0x1F)) {
+        func_8013C4E4(0xC000);
+    }
+    if (!(((u16 *)&D_801499A0)[1] & 0xF)) {
+        ((s16 *)&tmp)[0] = 0;
+        ((s16 *)&tmp)[1] = D_80149968.unk_1C[0] >> 3;
+        ((s16 *)&tmp)[1] += (D_80149968.unk_1C[0] >> 3) * 79 / 48;
+        D_801499A0.unk_04 = ((s16 *)&tmp)[1];
+        D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
+    }
+    if (D_801499B2 == 2 && *(u16 *)&D_801499A2 >= 0x79) {
+        D_801499B2 = 0;
+    }
+    if (((u16 *)&D_801499A0)[1] != 0 && ((u16 *)&D_801499A0)[1] % 90 == 0) {
+        if (((u16 *)D_801499B0)[1] == 0) {
+            D_801499B2 = 1;
+            func_80044750(0x800);
+            ((u16 *)&D_801499A0)[1]++;
+        } else if (*(u16 *)&D_801499B2 == 1) {
+            D_801499B2 = 0;
+            func_80044750(0x801);
+            ((u16 *)&D_801499A0)[1]++;
+        }
+    }
+}
 
 /* FAKE: T-11640, same views as func_8013C33C (counter and flag reloaded per block, tmp split into s16 halves). */
 void func_8013BB3C(void) {

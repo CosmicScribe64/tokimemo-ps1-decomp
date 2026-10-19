@@ -20724,3 +20724,14 @@ Completed and reviewed [[tickets/T-24113-name-ent-80132000-80142a80-and-date-fin
 - `NAME_ENT:func_80138F60` (1,248 B in `src/ovl/NAME_ENT/80132000.c` + 36 B `.data` `D_8014D03C` and `D_8014D04C` promoted to C): `MATCH`
 - `NAME_ENT:func_8014472C` (476 B in `src/ovl/NAME_ENT/80142A80.c`): `MATCH`
 Created and dispatched [[tickets/T-24132-name-ent-final-4]] (`In Progress`) for the final 4 remaining unmatched functions in `NAME_ENT` (`func_80138C1C`, `func_801398EC`, `func_8013AF78`, `func_80143580`).
+
+## [2026-10-19] build | T-24124 -> Done (+6 functions, +6,388 B in TAIIKU and RPG_BAT); T-24133 dispatched
+
+Completed and reviewed [[tickets/T-24124-taiiku-and-rpg-bat-remaining-sweep]] (`Done`, +6 functions / +6,388 B across `TAIIKU` and `RPG_BAT` — **`src/ovl/RPG_BAT/80134D30.c` and `src/ovl/RPG_BAT/801525B0.c` 100.0% matched**):
+- `TAIIKU:func_8013B3B0` (528 B in `src/ovl/TAIIKU/80138950.c`): `MATCH`
+- `TAIIKU:func_8013B94C` (496 B in `src/ovl/TAIIKU/80138950.c`): `MATCH`
+- `RPG_BAT:func_80134E78` (1,248 B in `src/ovl/RPG_BAT/80134D30.c`): `MATCH`
+- `RPG_BAT:func_8014ADD0` (1,212 B / 1,220 B linked in `src/ovl/RPG_BAT/8014ADD0.c`): `MATCH`
+- `RPG_BAT:func_8014B294` (1,188 B in `src/ovl/RPG_BAT/8014ADD0.c`): `MATCH`
+- `RPG_BAT:func_80152F30` (1,716 B in `src/ovl/RPG_BAT/801525B0.c`): `MATCH`
+Created and dispatched [[tickets/T-24133-taiiku-rpg-bat-wave-2-closers]] (`In Progress`) for wave 2 of `TAIIKU` (21 remaining) and `RPG_BAT` (8 remaining).

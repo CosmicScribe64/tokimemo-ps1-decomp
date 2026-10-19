@@ -781,7 +781,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24121-etc-remaining-sweep|T-24121]] Close 5 of 21 remaining unmatched functions in `ETC` (`func_80141BE8` 552 B — `80140F50.c` 100.0%; `func_80144F74` 608 B, `func_80145C00` 884 B, `func_80148F7C` 836 B, `func_8014A360` 468 B, Done; 5 matches, 3,348 B verified default C).
 - [[tickets/T-24122-shugaku-final-3-and-small-overlays-sweep|T-24122]] Close `SHUGAKU` final 3 girl-picker loops (`func_8013243C` 388 B, `func_801337FC` 620 B, `func_80139118` 412 B — **`SHUGAKU` overlay 100.0% matched, 190/190 functions**), `KANGEI:func_80133A54` (444 B), `KANGEI:func_80138F88` (844 B), and `RENSYU:func_80133990` (808 B, Done; 6 matches, 3,516 B verified default C).
 - [[tickets/T-24123-main-remaining-sweep-b|T-24123]] Close 5 functions in `main` (`func_80045414` 432 B, `func_8004B358` 568 B, `func_80056070` 532 B, `func_80079C70` 184 B, `func_8007AF0C` 568 B, Done; 5 matches, 2,284 B verified default C).
-- [[tickets/T-24124-taiiku-and-rpg-bat-remaining-sweep|T-24124]] Sweep remaining uninvestigated functions in `TAIIKU` and `RPG_BAT` (In Progress).
+- [[tickets/T-24124-taiiku-and-rpg-bat-remaining-sweep|T-24124]] Close 6 functions across `TAIIKU` and `RPG_BAT` (`TAIIKU:func_8013B3B0` 528 B, `TAIIKU:func_8013B94C` 496 B, `RPG_BAT:func_80134E78` 1,248 B — `80134D30.c` 100.0%; `RPG_BAT:func_8014ADD0` 1,212 B / 1,220 B linked, `RPG_BAT:func_8014B294` 1,188 B, `RPG_BAT:func_80152F30` 1,716 B — `801525B0.c` 100.0%, Done; 6 matches, 6,388 B / 6,396 B linked verified default C).
 - [[tickets/T-24125-shougatu-gyozi-bunkasd-remaining-sweep|T-24125]] Match `SHOUGATU:func_8013BA7C` (432 B — `8013BA00.c` 100.0%) via `uopt` CSE priority boost, improve `SHOUGATU:func_801347E0` to 2 rows, and reach 379/379 insns on `BUNKA_SD:func_80139290` (Done; 1 match, 432 B verified default C).
 - [[tickets/T-24126-geko-tel-bunkaken-omimai-option-sweep|T-24126]] Sweep remaining `GEKO`, `OPTION`, `TEL`, `BUNKAKEN`, and `OMIMAI` functions (In Progress).
 - [[tickets/T-24127-main-remaining-sweep-c|T-24127]] Sweep remaining unmatched functions in `src/main/` (wave C, In Progress).
@@ -790,6 +790,8 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24130-shougatu-gyozi-bunkasd-wave-2-closers|T-24130]] Close remaining near misses in `SHOUGATU`, `GYOZI`, and `BUNKA_SD` (wave 2, In Progress).
 - [[tickets/T-24131-small-overlays-wave-2-closers|T-24131]] Wave 2 closer sweep across `KANGEI`, `RENSYU`, `MASTER`, `EN_NICHI`, `ENDING`, and `VALEN` (In Progress).
 - [[tickets/T-24132-name-ent-final-4|T-24132]] Close remaining 4 unmatched functions of `NAME_ENT` (`func_80138C1C`, `func_801398EC`, `func_8013AF78`, `func_80143580`, In Progress).
+- [[tickets/T-24133-taiiku-rpg-bat-wave-2-closers|T-24133]] Wave 2 closer sweep across `TAIIKU` (21 remaining) and `RPG_BAT` (8 remaining) (In Progress).
+
 
 
 

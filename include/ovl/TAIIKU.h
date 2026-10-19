@@ -10,8 +10,10 @@ void func_80136AB0(void);
 void func_80136B18(void);
 void func_80136BB4(void);
 void func_8013B200(void);
+void func_8013B3B0(void);
 void func_8013B608(void);
 void func_8013B78C(void);
+void func_8013B94C(void);
 void func_8013BB3C(void);
 void func_8013BCEC(void);
 void func_8013C33C(void);
@@ -116,6 +118,8 @@ typedef struct TaiikuPair {
 } TaiikuPair; /* size 0x4 */
 extern TaiikuPair D_801499B0[];
 extern volatile u16 D_801499B2; /* D_801499B0[0].val as a u16 flag; volatile is FAKE (func_8013C33C), T-11640 */
+extern volatile u16 D_801499A2; /* D_801499A0.unk_02 as a u16 counter; volatile is FAKE (func_8013B3B0, func_8013B94C), T-24124 */
+extern volatile s32 D_80149974; /* D_80149968.unk_0C as a volatile s32; volatile is FAKE (func_8013B94C), T-24124 */
 
 extern s32 D_80149FB0;
 extern s32 D_80149FC0;

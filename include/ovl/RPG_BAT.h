@@ -349,6 +349,8 @@ void func_8013673C(void);
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 void func_80137204(void);
 void func_80137148(s32 arg0, s32 arg1);
+s32 func_8014ADD0(s32 arg0, s32 arg1);
+void func_8015785C(void);
 
 #endif
 extern u8 D_8015E9E0[];

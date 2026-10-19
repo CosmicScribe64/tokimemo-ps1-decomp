@@ -1,6 +1,9 @@
+#define MAIN_API_OVERRIDE_func_80049A40 /* unprototyped view: keeps 16-bit widening off the negative x/y arguments in func_80152F30 (T-24124) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 #include "psx_types.h"
+
+void func_80049A40();
 
 void func_801525B0(void) {
     s32 sp28; /* FAKE (T-17100): dead copy of the column; without it the 0x28 spill of var_a3 and the frame change */
@@ -209,7 +212,171 @@ void func_801529B4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80152F30);
+/* FAKE: x and y are unused locals that place color at sp+0x3C in the 0x48 frame; *(u8 *)&D_800E6280.unk_110A bypasses cvt_pass.py
+ * widening so the four loads of unk_110A stay in ugen temporaries ($t7..$t9); in case 3, the *(s32 *)& reads of D_8015EC38/3C/40/44/4C
+ * keep D_8015EC38 and D_8015EC3C promoted to $a1/$a2 across the function and allocate $v0, $v1, $a3 to D_8015EC44, D_8015EC40,
+ * D_8015EC4C so uopt flushes the six stores in the original order. T-24124 */
+void func_80152F30(void) {
+    s32 x;
+    s32 y;
+    RpgColorWord color;
+    u32 selector;
+
+    selector = func_8013E9A8(8);
+    switch (selector) {
+    case 0:
+        color.word = 0x9F9F9F;
+        break;
+    case 1:
+        color.word = 0x6F6F6F;
+        break;
+    case 2:
+        color.word = 0xBF0000;
+        break;
+    case 3:
+        color.word = 0xBF00;
+        break;
+    case 4:
+        color.word = 0xBF;
+        break;
+    case 5:
+        color.word = 0xAFAF00;
+        break;
+    case 6:
+        color.word = 0xAF00AF;
+        break;
+    case 7:
+        color.word = 0xAFAF;
+        break;
+    }
+    func_8014B79C();
+    switch (*(u8 *)&D_800E6280.unk_110A) {
+    case 0:
+        D_800E6280.unk_F5F = 0xE;
+        func_80046290(0x1C0000A8, 0x0F0000B7, 0xE);
+        func_80044750(0x300);
+        func_8004284C();
+        break;
+    case 1:
+        func_80044750(0xE4);
+        func_8004284C();
+        break;
+    case 2:
+        if (func_800460EC() & 4) {
+            func_8004284C();
+        }
+        break;
+    case 3:
+        func_8013E810(0x30, 1, 1, 1);
+        func_8013E810(0x1D, 0x17, 1, 1);
+        func_8013E97C(0x30, 0x160, 0x58);
+        func_8013E97C(0x1D, 0x168, 0x88);
+        D_8015EC48 = 0;
+        D_8015EC44 = 0;
+        D_8015EC40 = 0;
+        D_8015EC4C = 0;
+        D_8015EC44 = *(s32 *)&D_8015EC44;
+        D_8015EC40 = *(s32 *)&D_8015EC40;
+        D_8015EC4C = *(s32 *)&D_8015EC4C;
+        D_8015EC38 = 0;
+        D_8015EC3C = -0x1E;
+        func_8013E97C(0x2F, *(s32 *)&D_8015EC38, *(s32 *)&D_8015EC3C);
+        func_8013E810(0x2F, 2, 1, 1);
+        func_8013E97C(0x2E, D_8015EC38, D_8015EC3C);
+        func_8013E810(0x2E, 6, 1, 1);
+        func_8004284C();
+        break;
+    case 4:
+        func_8013E97C(0x30, 0x160 - D_800E6280.unk_1104.u, 0x58);
+        func_8013E97C(0x1D, 0x168 - D_800E6280.unk_1104.u, 0x88);
+        D_800E6280.unk_1104.u += 4;
+        if (D_800E6280.unk_1104.u >= 0x51U) {
+            func_8013E97C(0x30, 0, 0);
+            func_8013E7C0(0x30, 0, 1, 1);
+            func_8013E97C(0x1D, 0, 0);
+            func_8013E7C0(0x1D, 0x18, 1, 1);
+            func_8013E97C(0x38, 0, 0);
+            func_8013E7C0(0x38, 9, 1, 1);
+            ((DisplayActor44 *)D_8011ECD0)[152].unk_01 = 2;
+            func_8004284C();
+        }
+        break;
+    case 5:
+        func_80049A40(-0x5C - (D_800E6280.unk_1104.u >> 1), -0x78, (D_800E6280.unk_1104.u >> 1) * 2, 0xA8, 3, color.word, 0x81);
+        func_800494BC(0, 0, 3, 1, 0);
+        D_800E6280.unk_1104.u += 1;
+        if (D_800E6280.unk_1104.u >= 0x41U) {
+            func_8004284C();
+        }
+        break;
+    case 6:
+        func_80049A40(-0x7C, -0x78, 0x40, 0xA8, 3, color.word, 0x81);
+        func_800494BC(0, 0, 3, 1, 0);
+        func_8013E97C(0x3B, 0x48, D_800E6280.unk_1104.u - 0x80);
+        func_8013E810(0x3B, 8, 1, 1);
+        D_800E6280.unk_1104.u += 1;
+        if (D_800E6280.unk_1104.u >= 0xE9U) {
+            k_disp_switch(D_8015EDE8, 1);
+            func_8004284C();
+        }
+        break;
+    case 7:
+        func_80049A40(-0x7C, -0x78, 0x40, 0xA8, 3, color.word, 0x81);
+        D_800E6280.unk_1104.u += 1;
+        func_800494BC(0, 0, 3, 1, 0);
+        if (D_800E6280.unk_1104.u >= 0x79U) {
+            func_8004284C();
+        }
+        break;
+    case 8:
+        func_80049A40(D_800E6280.unk_1104.u - 0x7C, -0x78, 0x40 - (D_800E6280.unk_1104.u * 2), 0xA8, 3, color.word, 0x81);
+        func_800494BC(0, 0, 3, 1, 0);
+        D_800E6280.unk_1104.u += 1;
+        if (D_800E6280.unk_1104.u >= 0x21U) {
+            func_8004284C();
+        }
+        break;
+    case 9:
+        D_8015EC38 = 0x40;
+        D_8015EC3C = D_800E6280.unk_1104.u - 0x40;
+        D_800E6280.unk_1104.u += 1;
+        if (D_800E6280.unk_1104.u >= 0x59U) {
+            func_8004284C();
+        }
+        break;
+    case 10:
+        func_800AE0F0(D_8015E9E0, "宇宙人が襲ってきた！");
+        func_8014B738((s32)D_8015EB70, 1, 0x5A);
+        func_8013E7C0(0x38, 0xFF, 1, 0);
+        func_8013E97C(0x3B, 0, 0);
+        func_8013E7C0(0x3B, 0, 1, 1);
+        func_8004284C();
+        break;
+    case 11:
+        if (D_8015EE48 == 0) {
+            func_8004284C();
+        }
+        break;
+    case 12:
+        func_8013E97C(0x1E, 0, 0);
+        func_8013E7C0(0x1E, 0, 5, 1);
+        func_8004284C();
+        break;
+    case 13:
+        func_801535E4();
+        break;
+    case 14:
+        D_8015EDF0 = 0x10001000;
+        func_80042808();
+        break;
+    }
+    if (*(u8 *)&D_800E6280.unk_110A >= 9) {
+        func_8015785C();
+    }
+    if ((*(u8 *)&D_800E6280.unk_110A >= 5) && (*(u8 *)&D_800E6280.unk_110A < 8)) {
+        func_8013F15C(0x505, 0x6E, 7);
+    }
+}
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_801535E4(void) {

@@ -49,13 +49,13 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24133-taiiku-rpg-bat-wave-2-closers|T-24133 Wave 2 closer sweep across TAIIKU (21 remaining) and RPG_BAT (8 remaining)]]
 - [ ] [[tickets/T-24132-name-ent-final-4|T-24132 Close remaining 4 unmatched functions of NAME_ENT (func_80138C1C, func_801398EC, func_8013AF78, func_80143580)]]
 - [ ] [[tickets/T-24131-small-overlays-wave-2-closers|T-24131 Wave 2 closer sweep across KANGEI, RENSYU, MASTER, EN_NICHI, ENDING, and VALEN]]
 - [ ] [[tickets/T-24130-shougatu-gyozi-bunkasd-wave-2-closers|T-24130 Close remaining near misses in SHOUGATU, GYOZI, and BUNKA_SD (wave 2)]]
 - [ ] [[tickets/T-24129-taco-and-etc-remaining-closers|T-24129 Close remaining near misses in TACO and ETC (wave 2)]]
 - [ ] [[tickets/T-24127-main-remaining-sweep-c|T-24127 Sweep remaining unmatched functions in src/main/ (wave C)]]
 - [ ] [[tickets/T-24126-geko-tel-bunkaken-omimai-option-sweep|T-24126 Sweep remaining GEKO, OPTION, TEL, BUNKAKEN, and OMIMAI functions]]
-- [ ] [[tickets/T-24124-taiiku-and-rpg-bat-remaining-sweep|T-24124 Sweep remaining uninvestigated functions in TAIIKU and RPG_BAT]]
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24078-etc-two-poly-renderer|T-24078 Recover ETC two-slot polygon renderer]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
@@ -120,6 +120,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24124-taiiku-and-rpg-bat-remaining-sweep|T-24124 Sweep remaining uninvestigated functions in TAIIKU and RPG_BAT]]
 - [ ] [[tickets/T-24113-name-ent-80132000-80142a80-and-date-final|T-24113 Close remaining NAME_ENT functions in 80132000.c and 80142A80.c plus final DATE function func_801449D4]]
 - [ ] [[tickets/T-24122-shugaku-final-3-and-small-overlays-sweep|T-24122 Close SHUGAKU final 3 girl-picker loops and sweep KANGEI, MASTER, EN_NICHI, RENSYU, ENDING, and VALEN]]
 - [ ] [[tickets/T-24128-shougatu-gyozi-bunkasd-closer-tricks|T-24128 Apply SHUGAKU girl-picker recipe and uopt CSE priority tricks to SHOUGATU, GYOZI, and BUNKA_SD]]
