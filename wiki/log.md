@@ -20632,3 +20632,13 @@ Completed, reviewed against `CODING_STANDARDS.md`, and verified with the full lo
 - [[tickets/T-24118-main-and-rpg-bat-mid-score-sweep]] (`Done`, +6 functions / +2,652 B in `src/main/`):
   - `main:func_80043010` (176 B in `src/main/80042A00.c`), `main:func_8007739C` (760 B in `src/main/80075320.c`), `main:func_8007A080` (468 B), `main:func_8007A6AC` (444 B), `main:func_8007A98C` (408 B), `main:func_8007ABE0` (396 B in `src/main/80079B10.c`): `MATCH`
 
+## [2026-10-19] ticket | T-24119..T-24123 created and dispatched (In Progress)
+
+Created and dispatched 5 disjoint tickets across the 5 freed subagents (while [[tickets/T-24112-name-ent-80139740-remaining-8]] and [[tickets/T-24113-name-ent-80132000-80142a80-and-date-final]] continue closing `NAME_ENT`):
+- [[tickets/T-24119-option-remaining-sweep]] (`In Progress`): remaining 13 functions in `src/ovl/OPTION/80132000.c` and `src/ovl/OPTION/8013A550.c`.
+- [[tickets/T-24120-taco-remaining-sweep]] (`In Progress`): remaining 29 functions in `src/ovl/TACO/`.
+- [[tickets/T-24121-etc-remaining-sweep]] (`In Progress`): remaining 21 functions in `src/ovl/ETC/`.
+- [[tickets/T-24122-shugaku-final-3-and-small-overlays-sweep]] (`In Progress`): final 3 girl-picker loops in `SHUGAKU` (`MAIN_API_OVERRIDE_get_h_tokimeki`/`get_h_yuukou`) + `KANGEI`, `MASTER`, `EN_NICHI`, `RENSYU`, `ENDING`, `VALEN`.
+- [[tickets/T-24123-main-remaining-sweep-b]] (`In Progress`): wave B sweep of remaining functions in `src/main/`.
+
+

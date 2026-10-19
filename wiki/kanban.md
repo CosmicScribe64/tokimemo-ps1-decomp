@@ -49,6 +49,11 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24123-main-remaining-sweep-b|T-24123 Sweep remaining unmatched functions in src/main/ (wave B)]]
+- [ ] [[tickets/T-24122-shugaku-final-3-and-small-overlays-sweep|T-24122 Close SHUGAKU final 3 girl-picker loops and sweep KANGEI, MASTER, EN_NICHI, RENSYU, ENDING, and VALEN]]
+- [ ] [[tickets/T-24121-etc-remaining-sweep|T-24121 Sweep and close remaining unmatched functions in ETC (21 functions)]]
+- [ ] [[tickets/T-24120-taco-remaining-sweep|T-24120 Sweep and close remaining unmatched functions in TACO (29 functions)]]
+- [ ] [[tickets/T-24119-option-remaining-sweep|T-24119 Close remaining 13 unmatched functions in OPTION (80132000.c and 8013A550.c)]]
 - [ ] [[tickets/T-24113-name-ent-80132000-80142a80-and-date-final|T-24113 Close remaining NAME_ENT functions in 80132000.c and 80142A80.c plus final DATE function func_801449D4]]
 - [ ] [[tickets/T-24112-name-ent-80139740-remaining-8|T-24112 Close remaining 8 unmatched functions in NAME_ENT/80139740.c]]
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
