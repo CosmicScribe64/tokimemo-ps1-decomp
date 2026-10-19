@@ -769,7 +769,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24109-shougatu-gyozi-valen-master-near-misses|T-24109]] Close `SHOUGATU:func_80140DC0` (404 B) and improve `#ifdef NON_MATCHING` guards for `SHOUGATU:func_8013D820` (`score=13`) and `SHOUGATU:func_80139334` (`score=17`) (Done; 1 match, 404 B verified default C).
 - [[tickets/T-24110-option-80132000-and-801389a0-sweep|T-24110]] Close `OPTION:func_8013554C` (1,112 B) and `OPTION:func_80136C30` (780 B) in `OPTION/80132000.c` and replace mistaken `ETC` draft of `OPTION:func_801394F4` with 12-row `OPTION` guard (Done; 2 matches, 1,892 B verified default C).
 - [[tickets/T-24111-main-near-misses-sweep|T-24111]] Close 7 low-score near misses in `main` (`func_8007B144` 368 B, `x_taku_menu_set` 340 B, `func_800460FC` 376 B, `func_80054140` 324 B, `func_8008647C` 452 B, `func_80062210` 468 B, `func_8005CC40` 812 B, Done; 7 matches, 3,140 B verified default C).
-- [[tickets/T-24112-name-ent-80139740-remaining-8|T-24112]] Close remaining 8 unmatched functions in `NAME_ENT/80139740.c` (In Progress).
+- [[tickets/T-24112-name-ent-80139740-remaining-8|T-24112]] Close 6 of 8 remaining unmatched functions in `NAME_ENT/80139740.c` (`func_80139F30` 2,712 B, `func_8013A9C8` 732 B, `func_8013B1D8` 836 B, `func_8014068C` 1,172 B linked / 1,240 B asm, `func_80140F90` 2,192 B, `func_80141820` 1,924 B, Done; 6 matches, 9,568 B linked / 9,636 B asm verified default C).
 - [[tickets/T-24113-name-ent-80132000-80142a80-and-date-final|T-24113]] Close remaining `NAME_ENT` functions in `80132000.c` and `80142A80.c` plus final `DATE` function `func_801449D4` (In Progress).
 - [[tickets/T-24114-bunkaken-omimai-bunkasd-shugaku-closers|T-24114]] Close 5 of 8 remaining functions of `SHUGAKU` (`func_80137CFC` 520 B, `func_80138740` 408 B, `func_801388D8` 392 B — `801378B0.c` 100.0%; `func_80138E40` 364 B, `func_801398E8` 268 B, Done; 5 matches, 1,952 B verified default C).
 - [[tickets/T-24115-geko-remaining-16|T-24115]] Close 4 of 16 remaining functions in `GEKO` (`func_80141870` 268 B — `80140A00.c` 100.0%; `func_80138E10` 364 B, `func_80132D04` 800 B, `func_80143F48` 592 B, Done; 4 matches, 2,024 B verified default C).
@@ -781,5 +781,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24121-etc-remaining-sweep|T-24121]] Sweep and close remaining unmatched functions in `ETC` (21 functions, In Progress).
 - [[tickets/T-24122-shugaku-final-3-and-small-overlays-sweep|T-24122]] Close `SHUGAKU` final 3 girl-picker loops and sweep `KANGEI`, `MASTER`, `EN_NICHI`, `RENSYU`, `ENDING`, and `VALEN` (In Progress).
 - [[tickets/T-24123-main-remaining-sweep-b|T-24123]] Sweep remaining unmatched functions in `src/main/` (wave B, In Progress).
+- [[tickets/T-24124-taiiku-and-rpg-bat-remaining-sweep|T-24124]] Sweep remaining uninvestigated functions in `TAIIKU` and `RPG_BAT` (In Progress).
+
 
 

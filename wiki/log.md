@@ -20641,4 +20641,16 @@ Created and dispatched 5 disjoint tickets across the 5 freed subagents (while [[
 - [[tickets/T-24122-shugaku-final-3-and-small-overlays-sweep]] (`In Progress`): final 3 girl-picker loops in `SHUGAKU` (`MAIN_API_OVERRIDE_get_h_tokimeki`/`get_h_yuukou`) + `KANGEI`, `MASTER`, `EN_NICHI`, `RENSYU`, `ENDING`, `VALEN`.
 - [[tickets/T-24123-main-remaining-sweep-b]] (`In Progress`): wave B sweep of remaining functions in `src/main/`.
 
+## [2026-10-19] build | T-24112 -> Done (+6 functions, +9,568 B linked / +9,636 B asm in NAME_ENT/80139740.c); T-24124 dispatched
+
+Completed and reviewed [[tickets/T-24112-name-ent-80139740-remaining-8]] (`Done`, +6 functions / +9,568 B linked / +9,636 B asm in `src/ovl/NAME_ENT/80139740.c`):
+- `NAME_ENT:func_80139F30` (2,712 B): `MATCH`
+- `NAME_ENT:func_8013A9C8` (732 B): `MATCH`
+- `NAME_ENT:func_8013B1D8` (836 B): `MATCH`
+- `NAME_ENT:func_8014068C` (1,172 B linked / 1,240 B asm): `MATCH`
+- `NAME_ENT:func_80140F90` (2,192 B): `MATCH`
+- `NAME_ENT:func_80141820` (1,924 B): `MATCH`
+Created and dispatched [[tickets/T-24124-taiiku-and-rpg-bat-remaining-sweep]] (`In Progress`) for the remaining uninvestigated functions in `TAIIKU` and `RPG_BAT`.
+
+
 

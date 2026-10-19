@@ -197,6 +197,9 @@ extern s32 D_8014CDAC;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 void func_80137AA0(void);
+void func_80139F30(void);
+void func_80140F90(void);
+s32 func_80141820(void);
 
 #endif /* OVL_NAME_ENT_H */
 extern u8 D_8014CC70;
