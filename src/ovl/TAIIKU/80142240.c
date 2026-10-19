@@ -505,15 +505,13 @@ void func_80143470(void) {
     D_80120656 = 2;
 }
 
-/* NON_MATCHING: T-24100, 22 differing lines (T-19010: 34; defining D_8014A130[3] in the unit folds its three
- * stores onto one shared `lui at`), one window: the original keeps the masked flags byte in $v1 (a uopt variable)
- * and loads the s16 rating straight into $v0; IDO copy-propagates the flags and promotes the rating field into $a1
- * with a move. Same family as TAIIKU func_80135480, func_8014607C, and func_8013D2B4 (wiki/data/t0018-cases.md). */
-#ifdef NON_MATCHING
+/* FAKE: T-24133. `u32 raw` with `if (raw) {}` and `raw = 0` keeps the raw flags byte in $a0 and its `& 0xF` mask in $v1
+ * without a J<-L widening CVT, while reading `unk_02` through `gs` loads it directly into $v0. */
 void func_8014357C(void) {
     GameState *gs;
     s32 var_v0;
     s32 temp_v1;
+    u32 raw;
 
     gs = &D_800E6280;
     D_8014A120[0] = 0;
@@ -577,8 +575,11 @@ void func_8014357C(void) {
     D_8014A130[0] = 0x7E0000;
     D_8014A130[1] = 0x7F0000;
     D_8014A130[2] = 0x7D0000;
+    raw = gs->unk_0F4.b[1];
+    if (raw) {}
     var_v0 = gs->unk_10C.unk_02;
-    temp_v1 = gs->unk_0F4.b[1] & 0xF;
+    temp_v1 = raw & 0xF;
+    raw = 0;
     if ((temp_v1 & 1) || (temp_v1 & 2)) {
         var_v0 = (s16) (var_v0 >> 1);
     }
@@ -605,9 +606,6 @@ void func_8014357C(void) {
     D_8014A12C = var_v0;
     func_800AE120(gs->unk_10F4);
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_8014357C);
-#endif
 
 /* FAKE: the dead `i = 0;` at the end keeps `i` live after the loop, so IDO tests the loop with
  * `slti` like the original and not as `i != 9`. T-19010 */

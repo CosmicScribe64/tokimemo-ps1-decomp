@@ -777,6 +777,7 @@ typedef struct {
 extern TaiikuW2 D_80149E2C;
 extern TaiikuW18 D_80149E34;
 extern TaiikuW5 D_80149E7C;
+extern s32 D_80149964;
 extern s16 D_80149966;
 /* GTE layouts used by func_8013D2B4 and func_8013FEF0 (moved from 80138950.c, T-11640). */
 typedef struct {

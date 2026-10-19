@@ -374,17 +374,15 @@ void func_80134D94(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80134F98);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-19004, 22 differing lines (11 instructions): the original keeps `t` in $v1 and loads `v` straight into $v0;
- * here `t` is a ugen temporary ($t3) and `v` comes through a promoted range of the global ($a1, then move v0,a1). Frame: i and t
- * declared above sp38 reproduce its offset (0x38) and the 0x58 frame; unused/promoted word locals take slots. Tried in T-19004
- * without effect: `t` read before `v`, `t` as the repeated expression `(b & 0xF) & k`, both reads through a `GameState *` local
- * (frame 8 bytes larger), the field read in each arm of the `if`, autotweak (278 edits). */
+/* FAKE: T-24133. `u32 raw` with `if (raw) {}` and `raw = 0` keeps the raw flags byte in $a0 and its `& 0xF` mask in $v1
+ * without a J<-L widening CVT; sharing `GameState *t` for the `unk_02` read and packing `s16 v` above `sp38` keeps the
+ * 0x58 frame and loads `unk_02` directly into $v0. */
 void func_80135480(void) {
     s32 i;
-    s32 t;
+    GameState *t;
+    s16 v;
     TaiikuS11 sp38;
-    s32 v;
+    u32 raw;
 
     sp38 = D_801494F0;
     for (i = 0; i < 11; i++) {
@@ -417,10 +415,14 @@ void func_80135480(void) {
     D_801491D4 = 0;
     D_8014929C = 0;
     D_80149298.word = 0;
-    v = D_800E6280.unk_10C.unk_02;
-    t = D_800E6280.unk_0F4.b[1] & 0xF;
     D_801492A0 = 0;
-    if ((t & 1) || (t & 2)) {
+    t = &D_800E6280;
+    raw = t->unk_0F4.b[1];
+    if (raw) {}
+    v = t->unk_10C.unk_02;
+    t = (GameState *)(raw & 0xF);
+    raw = 0;
+    if (((u32)t & 1) || ((u32)t & 2)) {
         v = (s16) (v >> 1);
     }
     if (v >= 0xA0) {
@@ -448,9 +450,6 @@ void func_80135480(void) {
     D_80122E94 = 0xFF;
     D_801491DC = 0xFF;
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135480);
-#endif
 
 void func_801356E0(void) {
     s32 i;
@@ -632,13 +631,6 @@ void func_80135DF8(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135F3C);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-24008, nine differing instructions (18 aligned cost).
- * All 188 instructions, frame 0x48 and call-save slot 0x38 agree. The selector
- * takes t3 instead of ra; constants 255, 4 and 1 rotate through the other registers.
- * Derive the coordinate from span to avoid a fourth local; indexed records and
- * the while/break with nested player/CPU branches preserve the rolled inner loop. */
-#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
 void func_801365C8(void) {
     s32 i;
     s32 j;
@@ -653,49 +645,54 @@ void func_801365C8(void) {
         } else if (D_801492A8[i] == 27) {
             D_801492A4[i] = 0xFF;
         } else if (D_801492A8[i] >= 19U && D_801492A4[i] != 0xFF) {
-            DISP(46 + D_801492A4[i]).unk_2A++;
+            ((DisplayActor44 *)D_8011ECD0)[46 + D_801492A4[i]].unk_2A++;
         } else if (D_801492A8[i] >= 11U && D_801492A4[i] != 0xFF) {
-            DISP(46 + D_801492A4[i]).unk_2A--;
+            ((DisplayActor44 *)D_8011ECD0)[46 + D_801492A4[i]].unk_2A--;
         }
     }
     for (i = 0, span = 0; i < 30; i++, span += 32) {
         if (span >= 320) {
             span -= 320;
         }
-        DISP(46 + i).unk_26 = span + 480 - D_80149298.halves.high;
+        ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_26 = span + 480 - D_80149298.halves.high;
         if (i >= 10 && i < 20) {
-            DISP(46 + i).unk_26 += 16;
+            ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_26 += 16;
         }
         if (i == 19) {
-            DISP(46 + i).unk_02 = 0;
-            DISP(46 + i).unk_03 = 0;
-        } else if (DISP(46 + i).unk_26 >= -207 && DISP(46 + i).unk_26 < 321) {
-            DISP(46 + i).unk_02 = 1;
-            DISP(46 + i).unk_03 = 0xA4;
+            ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_02 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_03 = 0;
+        } else if (((DisplayActor44 *)D_8011ECD0)[46 + i].unk_26 >= -207 && ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_26 < 321) {
+            ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_02 = 1;
+            ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_03 = 0xA4;
         } else {
-            DISP(46 + i).unk_02 = 0;
-            DISP(46 + i).unk_03 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_02 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_03 = 0;
         }
-        /* FAKE: contiguous four-runner view as in matching neighbors. T-24008 */
+        /* FAKE: contiguous four-runner view and empty constant comparisons to order loop constants. */
+        if ((u32)i == 1U) {}
+        if ((u32)i == 0xA4U) {}
+        if (i == 1) {}
+        if (i == 4) {}
+        if (i == 0xFF) {}
         j = 0;
         while (1) {
-            if (i == D_801491D8 && DISP(107).unk_02 != 0 && D_80122E94 == 1) {
-                DISP(46 + i).unk_02 = 0;
-                DISP(46 + i).unk_03 = 0;
-            } else if (i == (&D_80149208.player)[j].unk_02 && DISP(107 + j).unk_02 != 0) {
+            if (D_801491D8 == i && ((DisplayActor44 *)D_8011ECD0)[107].unk_02 != 0 && (&D_80122E94)[0] == 1) {
+                ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_02 = 0;
+                ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_03 = 0;
+            } else if (i == (&D_80149208.player)[j].unk_02 && ((DisplayActor44 *)D_8011ECD0)[107 + j].unk_02 != 0) {
                 if (j == 0) {
-                    if (D_80122E94 == 0xFF) {
-                        DISP(46 + i).unk_02 = 0;
-                        DISP(46 + i).unk_03 = 0;
+                    if ((&D_80122E94)[0] == 0xFF) {
+                        ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_02 = 0;
+                        ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_03 = 0;
                     }
                 } else {
-                    DISP(46 + i).unk_02 = 0;
-                    DISP(46 + i).unk_03 = 0;
+                    ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_02 = 0;
+                    ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_03 = 0;
                 }
             }
-            if (i == (&D_80149208.player)[j].unk_02 && DISP(107 + j).unk_02 == 0) {
-                DISP(46 + i).unk_02 = 1;
-                DISP(46 + i).unk_03 = 0xA4;
+            if (i == (&D_80149208.player)[j].unk_02 && ((DisplayActor44 *)D_8011ECD0)[107 + j].unk_02 == 0) {
+                ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_02 = 1;
+                ((DisplayActor44 *)D_8011ECD0)[46 + i].unk_03 = 0xA4;
             }
             j++;
             if (j == 4) {
@@ -704,10 +701,6 @@ void func_801365C8(void) {
         }
     }
 }
-#undef DISP
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_801365C8);
-#endif
 
 s32 func_801368B8() {
     s32 i;
@@ -1013,12 +1006,6 @@ s32 func_80137440(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-19004, 26 differing lines (13 instructions, registers only): the loop counter i takes $a3 and the hoisted
- * D_8012091E + 11 takes $a2, the original has them the other way round (regdiff: the hoisted constant outranks i, priority 7
- * against 6.4); the ugen temporaries t8/t3 against t9/t5 follow. Declaration order, initialisation order and autotweak's 628 edits
- * (T-16551) and `register`, no `pos` local, D_8012091E/D_80120922 as fields of display record 106, a for/while loop (T-19004) did
- * not move it: a loop with the init next to it gives i priority 10.67 and $a0 before a and b, the original needs 7 to 8.2. */
 void func_80137544(void) {
     u8 sel;
     s32 i;
@@ -1027,7 +1014,7 @@ void func_80137544(void) {
     s16 lo;
     s16 hi;
     s32 pos;
-    s32 one; /* FAKE: names the constant 1 so that it is the first operand of the three compares (bne v0,t8); real source unknown. T-16551 */
+    s32 one; /* FAKE: names the constant 1 so that it is the first operand of the three compares (bne v0,t8). */
 
     one = 1;
     func_800863D4(0x6A);
@@ -1052,17 +1039,16 @@ void func_80137544(void) {
             } else {
                 sel = 0x80;
             }
-            pos = D_8012091E + 0xB;
             do {
                 lo = a;
                 hi = b;
                 if (sel == 10) {
-                    lo = a + 0x10;
-                    hi = b + 0x10;
+                    lo += 0x10;
+                    hi += 0x10;
                 }
                 a += 0x20;
-                if (lo < pos && pos < hi) {
-                    sel = sel + (s8) i; /* FAKE: the cast only moves the ugen temporaries (andi t7); autotweak. T-16551 */
+                if (lo < (&D_8012091E)[0] + 0xB && (&D_8012091E)[0] + 0xB < hi) {
+                    sel += i;
                     break;
                 }
                 i++;
@@ -1081,15 +1067,15 @@ void func_80137544(void) {
                 D_80122E94 = 0xFF;
                 D_801491DC = 0xFF;
             } else {
+                /* FAKE: extends the hoisted CSE live range past the loop so i outranks it. */
+                pos = (&D_8012091E)[0] + 0xB;
+                pos = pos;
                 func_80044750(0x600);
             }
             D_80149208.player.unk_07 = 0;
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137544);
-#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137784);
 

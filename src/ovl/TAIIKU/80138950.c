@@ -13,7 +13,7 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149948);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014994C);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149950);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149954);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149958);
+s16 D_80149958 = 0;
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014995C);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149960);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149964);
@@ -1097,7 +1097,54 @@ void func_8013B608(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B78C);
+/* FAKE: T-24133. Same counter/flag u16 pointer views and split-half stack word `tmp` as `func_8013BEF8`;
+ * `tmp2 = ((u16 *)&D_801499A0)[1]; tmp2 = tmp2;` keeps the promoted counter live into the call block and
+ * raises its priority into `$v1` ahead of `D_801206BA` (`$a0`). */
+void func_8013B78C(void) {
+    s32 tmp;
+    s32 tmp2;
+
+    if (((u16 *)&D_801499A0)[1] >= 0x230) {
+        ((u16 *)D_801499B0)[1] = 0;
+        func_80044750(0x802);
+        ((u16 *)&D_801499A0)[1] = 0;
+    }
+    tmp2 = ((u16 *)&D_801499A0)[1];
+    tmp2 = tmp2;
+    func_8013C5C8(0x15000);
+    func_8013C694();
+    if (!(((u16 *)&D_801499A0)[1] & 4)) {
+        func_8013C4E4(0xF000);
+    }
+    if (!(((u16 *)&D_801499A0)[1] & 0xC)) {
+        if (((u16 *)&D_801499A0)[1] >= 0x227 && ((u16 *)&D_801499A0)[1] < 0x258) {
+            if (D_801206BA + 0x1E < D_80120676) {
+                D_801499A0.unk_04 = D_80120676 - 0x1E;
+            } else if (D_80120676 < D_801206BA - 0x1E) {
+                D_801499A0.unk_04 = D_80120676 + 0x1E;
+            }
+            D_801499A0.unk_06 = D_8012067A;
+        } else {
+            ((s16 *)&tmp)[0] = 0;
+            ((s16 *)&tmp)[1] = D_80149968.unk_1C[0] >> 3;
+            tmp += D_80149968.unk_0C * 80;
+            D_801499A0.unk_04 = ((s16 *)&tmp)[1];
+            D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
+        }
+    }
+    if (((u16 *)&D_801499A0)[1] != 0) {
+        if (((u16 *)&D_801499A0)[1] % 35 == 0) {
+            if (((u16 *)D_801499B0)[1] == 0) {
+                ((u16 *)D_801499B0)[1] = 1;
+                func_80044750(0x800);
+            } else {
+                ((u16 *)D_801499B0)[1] = 0;
+                func_80044750(0x801);
+            }
+            ((u16 *)&D_801499A0)[1]++;
+        }
+    }
+}
 
 /* FAKE: T-24124. Same counter/flag pointer views and split-half stack word tmp as func_8013BB3C and
  * func_8013C33C. */
@@ -1181,17 +1228,12 @@ void func_8013BB3C(void) {
     }
 }
 
-/* NON_MATCHING: T-19008, 2 instructions missing (12 differing lines with the shifted branch offsets): the
- * original writes the counter back (lui at; sh v0,D_801499A2) before the call to func_8013C5C8, although no
- * path to it changes the counter. A self-assignment of the counter there brings the store back, but its u16
- * normalisation takes one more ugen temporary before the cnt & 8 test and moves the counter reload of the
- * cnt & 8 block to the join; no form without the temporary was found.
- * FAKE (T-19008): the counter and the flag are read through u16 pointer views as in func_8013BEF8. v takes
- * x >> 3 first and adds the x * 79 / 48 term in a second statement (the ugen temporary the original has
- * before the chain). */
-#ifdef NON_MATCHING
+/* FAKE: T-19008, T-24133. The counter and the flag are read through u16 pointer views as in func_8013BEF8,
+ * and `tmp = ((u16 *)&D_801499A0)[1]; tmp = tmp;` keeps the promoted counter live into the call block so
+ * uopt spills `$v0` back to `D_801499A2` before `func_8013C5C8` without taking a ugen temporary. */
 void func_8013BCEC(void) {
     s16 v;
+    s32 tmp;
 
     if (((u16 *)&D_801499A0)[1] == 0x12C) {
         ((u16 *)D_801499B0)[0] = 1;
@@ -1229,6 +1271,8 @@ void func_8013BCEC(void) {
         ((u16 *)&D_801499A0)[1] = 0;
         return;
     }
+    tmp = ((u16 *)&D_801499A0)[1];
+    tmp = tmp;
     func_8013C5C8(0x12000);
     func_8013C694();
     if (!(((u16 *)&D_801499A0)[1] & 8)) {
@@ -1244,9 +1288,6 @@ void func_8013BCEC(void) {
         D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013BCEC);
-#endif
 
 /* FAKE: T-11640. The counter D_801499A0.unk_02 and the flag D_801499B0[0].val are read through u16 pointer
  * views: with the plain field IDO keeps a CVT copy of the promoted counter in a second register, and the
@@ -1745,9 +1786,162 @@ void func_8013D254(void) {
     D_801207A7 |= 0x80;
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013D2B4);
+/* FAKE: T-24133. `u32 raw` with `if (D_800E6280.unk_10C.unk_02 + raw) {}` and `raw = 0` places both promoted global
+ * loads (`$a0`, `$a1`) in the entry block and keeps the `& 0xF` mask in `$v0` (`func_8013D2B4`) or `$v1` (`func_8013D788`);
+ * `pad` reserves the top frame slot in `func_8013D2B4`. */
+void func_8013D2B4(void) {
+    s32 pad;
+    s32 sp90;
+    TaiikuSVec rot;
+    MATRIX m1;
+    MATRIX m2;
+    VECTOR scale;
+    s16 var_v1;
+    s32 temp_v0;
+    u32 raw;
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013D788);
+    raw = D_800E6280.unk_0F4.b[1];
+    if (D_800E6280.unk_10C.unk_02 + raw) {}
+    temp_v0 = raw & 0xF;
+    var_v1 = D_800E6280.unk_10C.unk_02;
+    raw = 0;
+    if ((temp_v0 & 1) || (temp_v0 & 2)) {
+        var_v1 = D_800E6280.unk_10C.unk_02 >> 1;
+    }
+    sp90 = func_800AE0C0(D_80149968.unk_10 * 8);
+    if ((D_80149990.unk_08 > 0) && (D_801499A0.unk_0C > 0)) {
+        if (var_v1 >= 0xA0) {
+            sp90 = func_800AE0C0(D_80149968.unk_10 * 0x10);
+        } else if (var_v1 >= 0x64) {
+            sp90 += func_800AE0C0(D_80149968.unk_0C * 2) * 3;
+        } else if (var_v1 >= 0x4B) {
+            sp90 += func_800AE0C0(D_80149968.unk_0C * 4);
+        } else if (var_v1 >= 0x32) {
+            sp90 += func_800AE0C0(D_80149968.unk_0C * 2);
+        }
+    } else if (D_80149940 == 2) {
+        if (var_v1 >= 0x190) {
+            sp90 = func_800AE0C0(D_80149968.unk_10 * 0x10);
+        } else if (var_v1 >= 0x12C) {
+            sp90 += func_800AE0C0(D_80149968.unk_0C * 2) * 3;
+        } else if (var_v1 >= 0xC8) {
+            sp90 += func_800AE0C0(D_80149968.unk_0C * 4);
+        } else if (var_v1 >= 0x64) {
+            sp90 += func_800AE0C0(D_80149968.unk_0C * 2);
+        }
+    }
+    if (D_80149990.unk_00 == 0) {
+        if (D_80149940 == 6) {
+            ((s16 *)&sp90)[1] += 8;
+        }
+        if (D_80149940 == 0xA) {
+            ((s16 *)&sp90)[1] += 4;
+        }
+    }
+    if (D_80149990.unk_00 == 0) {
+        D_80149958 -= ((s16 *)&sp90)[1];
+    } else if ((D_8014994C == 4) && (D_80149950 == 4)) {
+        if (D_80149990.unk_00 == 1) {
+            D_80149958 += 8;
+            (&D_80149958)[1] = 0x400;
+        } else {
+            D_80149958 += 8;
+            (&D_80149958)[1] = -0x400;
+        }
+    }
+    m1 = *(MATRIX *)D_80125C60;
+    rot.vx = 0;
+    rot.vz = 0;
+    rot.vy = (&D_80149958)[1];
+    func_800A09D0(&rot, &m1);
+    m2 = *(MATRIX *)D_80125C60;
+    rot.vy = 0;
+    rot.vz = 0;
+    rot.vx = D_80149958;
+    func_800A09D0(&rot, &m2);
+    func_800A0C64(&m1, &m2);
+    scale.vx = 0x1200;
+    scale.vy = 0x1200;
+    scale.vz = 0x1200;
+    func_800A0F4C(&m2, &scale);
+    func_800A0C64(&m1, &m2);
+    m1.t[0] = D_80149968.unk_1C[0];
+    m1.t[1] = D_80149968.unk_1C[1];
+    m1.t[2] = 0x1B58;
+    *(MATRIX *)D_801227A4 = m1;
+    D_801227A0->unk0 = 0;
+}
+
+/* FAKE: T-24133. `u32 raw` with `if (D_800E6280.unk_10C.unk_02 + raw) {}` and `raw = 0` keeps the raw flags byte in $a0
+ * and its `& 0xF` mask in $v1 without a J<-L widening CVT, while loading `unk_02` directly into $v0. */
+void func_8013D788(void) {
+    s16 var_v0;
+    s32 var_v1;
+    s32 temp_v1;
+    u32 raw;
+
+    raw = D_800E6280.unk_0F4.b[1];
+    if (D_800E6280.unk_10C.unk_02 + raw) {}
+    temp_v1 = raw & 0xF;
+    var_v0 = D_800E6280.unk_10C.unk_02;
+    raw = 0;
+    if ((temp_v1 & 1) || (temp_v1 & 2)) {
+        var_v0 = D_800E6280.unk_10C.unk_02 >> 1;
+    }
+    if (var_v0 >= 0xA0) {
+        var_v1 = 0x18000;
+    } else if (var_v0 >= 0x64) {
+        var_v1 = 0x16000;
+    } else if (var_v0 >= 0x4B) {
+        var_v1 = 0x14000;
+    } else if (var_v0 >= 0x32) {
+        var_v1 = 0x12000;
+    } else {
+        var_v1 = 0x10000;
+    }
+    if (D_80149940 == 2) {
+        if (var_v0 >= 0x190) {
+            var_v1 = 0x18000;
+        } else if (var_v0 >= 0x12C) {
+            var_v1 = 0x16000;
+        } else if (var_v0 >= 0xC8) {
+            var_v1 = 0x14000;
+        } else if (var_v0 >= 0x64) {
+            var_v1 = 0x12000;
+        } else {
+            var_v1 = 0x10000;
+        }
+    }
+    if (D_801499E0 >= 0xB) {
+        if (D_80149968.unk_04 > 0) {
+            D_80149960 += 0x2000;
+        } else if (D_80149960 >= 0x10001) {
+            D_80149960 -= 0x4000;
+        } else {
+            D_80149960 -= 0x1800;
+        }
+        if ((D_80149960 >= 0xE001) && (D_80149990.unk_08 <= 0)) {
+            D_80149960 -= 0x4000;
+            if (D_80149960 < 0xE000) {
+                D_80149960 = 0xE000;
+            }
+        }
+        if (var_v1 < D_80149960) {
+            D_80149960 = var_v1;
+        }
+        if (D_80149960 < 0) {
+            D_80149960 = 0;
+        }
+        D_801499E0 = 0;
+    }
+    D_80149964 -= D_80149960;
+    if (((s16 *)&D_80149964)[1] < 0) {
+        ((s16 *)&D_80149964)[1] = 0x80;
+    }
+    func_8013D9B4();
+    func_8004B19C(D_80149960, 0, -0x64);
+    D_801499C0.word += D_80149960;
+}
 
 /* FAKE: T-11640, the (u8) narrowing of v before "+ 8" changes no stored value (the fields are u8) but
  * reproduces the original's ugen temporaries; perhaps a u8 texture-coordinate macro in the real source. */

@@ -790,12 +790,14 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-24130-shougatu-gyozi-bunkasd-wave-2-closers|T-24130]] Close 4 functions across `SHOUGATU` and `GYOZI` (`SHOUGATU:func_8013737C` 744 B, `SHOUGATU:func_80139334` 480 B — `801390C0.c` 100.0%; `SHOUGATU:func_8013D92C` 304 B, `GYOZI:func_801393C8` 784 B, Done; 4 matches, 2,312 B verified default C).
 - [[tickets/T-24131-small-overlays-wave-2-closers|T-24131]] Close 5 functions across `KANGEI`, `EN_NICHI`, `MASTER`, and `ENDING` (`KANGEI:func_80135004` 220 B, `EN_NICHI:func_80132EE8` 488 B, `EN_NICHI:func_8013358C` 596 B — `src/ovl/EN_NICHI/80132000.c` 100.0%; `MASTER:func_8013B804` 428 B, `ENDING:func_8013759C` 352 B, Done; 5 matches, 2,084 B verified default C).
 - [[tickets/T-24132-name-ent-final-4|T-24132]] Close remaining 4 unmatched functions of `NAME_ENT` (`func_80138C1C`, `func_801398EC`, `func_8013AF78`, `func_80143580`, In Progress).
-- [[tickets/T-24133-taiiku-rpg-bat-wave-2-closers|T-24133]] Wave 2 closer sweep across `TAIIKU` (21 remaining) and `RPG_BAT` (8 remaining) (In Progress).
-- [[tickets/T-24134-geko-option-tel-bunkaken-omimai-wave-2-closers|T-24134]] Wave 2 closer sweep across `GEKO` (12), `OPTION` (10), `TEL` (2), `BUNKAKEN` (1), and `OMIMAI` (1) (In Progress).
+- [[tickets/T-24133-taiiku-rpg-bat-wave-2-closers|T-24133]] Close 9 functions in `TAIIKU` (`func_80135480` 608 B, `func_801365C8` 752 B, `func_80137544` 576 B, `func_8013B78C` 448 B, `func_8013BCEC` 524 B, `func_8013D2B4` 1,236 B, `func_8013D788` 556 B, `func_8014357C` 664 B — `80142240.c` 100.0%; `func_8014607C` 700 B, Done; 9 matches, 6,064 B verified default C).
+- [[tickets/T-24134-geko-option-tel-bunkaken-omimai-wave-2-closers|T-24134]] Close 3 functions across `BUNKAKEN` and `OPTION` (`BUNKAKEN:func_8013B510` 2,164 B — **`BUNKAKEN` overlay 100.0% matched, 60/60 functions!**; `OPTION:func_80132000` 176 B, `OPTION:func_801320C0` 708 B, Done; 3 matches, 3,048 B verified default C).
 - [[tickets/T-24135-main-remaining-sweep-d|T-24135]] Sweep remaining unmatched functions in `src/main/` (wave D, In Progress).
 - [[tickets/T-24136-taco-and-etc-wave-3-closers|T-24136]] Wave 3 closer sweep across `TACO` (21) and `ETC` (12) (In Progress).
 - [[tickets/T-24137-shougatu-gyozi-bunkasd-wave-3-closers|T-24137]] Wave 3 closer sweep across `SHOUGATU` (10), `GYOZI` (9), and `BUNKA_SD` (2) (In Progress).
 - [[tickets/T-24138-small-overlays-wave-3-closers|T-24138]] Wave 3 closer sweep across `EN_NICHI` (2), `RENSYU` (3), `KANGEI` (4), `VALEN` (4), `ENDING` (5), and `MASTER` (6) (In Progress).
+- [[tickets/T-24139-taiiku-rpg-bat-wave-3-closers|T-24139]] Wave 3 closer sweep across `TAIIKU` (12 remaining) and `RPG_BAT` (8 remaining) (In Progress).
+- [[tickets/T-24140-geko-option-tel-omimai-wave-3-closers|T-24140]] Wave 3 closer sweep across `GEKO` (12), `OPTION` (8), `TEL` (2), and `OMIMAI` (1) (In Progress).
 
 
 

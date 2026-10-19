@@ -411,21 +411,14 @@ void func_80145F8C(void) {
     D_80120656 = 2;
 }
 
-/* NON_MATCHING: T-16553, 20 differing lines; the tail loads D_800E638E into a1 and the masked D_800E6375 into t5, the original loads it into v0 (the variable itself) and keeps the mask in v1.
- * IDO propagates both local copies into their uses after the ||: with a then-arm that does not read var_v0_2 the lh goes straight into v0, and a volatile access between the
- * definitions and the if stops the propagation (mask in v1) but materializes the address. Statement order (order_search, 720 orders), local types, labels, if/else forms and
- * record-view stores do not change it. T-19007: a u8 nibble bit-field view of the byte (`lo : 4`) puts the raw lbu in a0 like the original, but the mask stays a ugen temporary (20 lines).
- * T-19007 closer: `cc -S` shows that uopt keeps both copies and swaps the source in for the copy in later blocks: `move v1,a0` for temp_v1, but the
- * second test reads a0 (the masked byte) and the then-arm reads a1 (the promoted s16), so as1 cannot fold the moves. A dead redefinition of a
- * raw-byte local (`raw = byte; temp_v1 = raw & 0xF; raw = 0;`) stops the mask swap (both tests read temp_v1, temporaries from t5 as in the
- * original) but colours raw first (priority 2 against 1.5: raw v1, temp_v1 a0, 74 lines). Reusing i for raw gives the exact `lbu a0; andi v1`
- * but stops the second loop's unrolling (166 lines). No form keeps the s16 out of the then-arm (local chains, ?:, the definition after the stores,
- * absolute-address stores). */
-#ifdef NON_MATCHING
+/* FAKE: T-24133. `u32 raw` with `if (raw) {}` and `raw = 0` keeps the raw flags byte in $a0 and its `& 0xF` mask in $v1
+ * without a J<-L widening CVT, while reading `unk_02` through `gs` loads it directly into $v0. */
 void func_8014607C(void) {
+    GameState *gs;
     s32 i;
     s32 var_v0_2;
     s32 temp_v1;
+    u32 raw;
 
     D_8014A3E4.unk_00 = 0;
     D_8014A3E4.unk_08 = 0;
@@ -458,11 +451,15 @@ void func_8014607C(void) {
         D_8014A454[i].unk_0F = 0;
     }
     D_8014A3E4.position.h[1] = -0xA0;
-    var_v0_2 = D_800E6280.unk_10C.unk_02;
-    temp_v1 = D_800E6280.unk_0F4.b[1] & 0xF;
     D_8014A3E0 = 0;
     D_8014A3DC = 0;
     D_8014A3C4 = 0;
+    gs = &D_800E6280;
+    raw = gs->unk_0F4.b[1];
+    if (raw) {}
+    var_v0_2 = gs->unk_10C.unk_02;
+    temp_v1 = raw & 0xF;
+    raw = 0;
     if ((temp_v1 & 1) || (temp_v1 & 2)) {
         var_v0_2 = (s16) (var_v0_2 >> 1);
     }
@@ -484,9 +481,6 @@ void func_8014607C(void) {
     }
     func_800AE120(D_800E6280.unk_10F4);
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_8014607C);
-#endif
 
 void func_80146338(void) {
     s32 i;

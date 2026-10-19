@@ -1,8 +1,25 @@
+#define MAIN_API_OVERRIDE_func_80049A40 /* unprototyped view avoids 16-bit coordinate narrowing in func_80132000 (T-24134) */
 #include "common.h"
 #include "ovl/OPTION.h"
 /* FAKE: scoped minimum aggregate view of the word and adjacent flags, based on observed +0x14 indexing. T-9540 */
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132000);
+void func_80049A40();
+
+void func_80132000(void) {
+    if ((D_800E6280.unk_110A != 0x21) && (D_800E6280.unk_110A != 0x22) && (D_800E6280.unk_110A != 0x23)) {
+        if (D_800E6280.unk_03A != 0) {
+            /* FAKE: dead tests extend unk_110A in $v0 and promote unk_03A ($v1), D_80120676 ($v0), D_8012067A ($v1). T-24134 */
+            if ((s32)D_800E6280.unk_110A) {}
+            if ((s32)D_800E6280.unk_03A) {}
+            if ((u8) D_801220E0 >= 0x7FU) {
+                if (D_80120676) {}
+                if (D_8012067A) {}
+                func_80049A40(D_80120676 + 0x18, D_8012067A + 0x10, 0x7C, 0xBC, 0xA, 0x10907, 0x83);
+                func_800494BC(0, 0, 0xA, 0, 0);
+            }
+        }
+    }
+}
 
 void func_801320B0(void) {
 }
@@ -10,7 +27,48 @@ void func_801320B0(void) {
 void func_801320B8(void) {
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801320C0);
+void func_801320C0(void) {
+    if ((D_800E6280.unk_110A != 0x21) && (D_800E6280.unk_110A != 0x22) && (D_800E6280.unk_110A != 0x23)) {
+        if (D_800E6280.unk_03A != 0) {
+            switch (D_800E6280.unk_1109) {
+            case 0:
+                break;
+            case 1:
+                func_80049A40(8, -0x68, 0x40, 0x90, 8, 0x10907, 0x80);
+                break;
+            case 2:
+            case 4:
+                func_80049A40(-0x28, -0x48, 0xB0, 0x80, 8, 0x10907, 0x80);
+                break;
+            case 3:
+                func_80049A40(-0x80, -0x30, 0x100, 0x80, 8, 0x10907, 0x80);
+                break;
+            case 5:
+                func_80049A40(8, -0x20, 0x40, 0x80, 8, 0x10907, 0x80);
+                break;
+            case 6:
+                func_80049A40(-0x10, 0x10, 0x90, 0x50, 8, 0x10907, 0x80);
+                break;
+            case 7:
+                if ((u8) D_800E6280.unk_110A < 0xAU) {
+                    func_80049A40(-0x50, 8, 0x80, 0x58, 8, 0x10907, 0x80);
+                } else if ((u8) D_800E6280.unk_110A < 0x14U) {
+                    func_80049A40(-0x58, -8, 0xDC, 0x40, 8, 0x10907, 0x80);
+                } else {
+                    func_80049A40(-0x90, -0x58, 0x130, 0x90, 8, 0x10907, 0x80);
+                }
+                break;
+            case 8:
+                func_80049A40(-0x50, 8, 0x80, 0x58, 8, 0x10907, 0x80);
+                break;
+            default:
+                func_80049A40(8, -0x68, 0x40, 0x90, 8, 0x10907, 0x80);
+                break;
+            }
+            func_800494BC(0, 0, 8, 0, 0);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132384);
 

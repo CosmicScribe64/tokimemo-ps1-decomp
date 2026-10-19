@@ -20771,3 +20771,25 @@ Completed and reviewed [[tickets/T-24129-taco-and-etc-remaining-closers]], [[tic
 - `MASTER:func_8013B804` (428 B in `src/ovl/MASTER/80139000.c`): `MATCH`
 - `ENDING:func_8013759C` (352 B in `src/ovl/ENDING/80137340.c`): `MATCH`
 Created and dispatched [[tickets/T-24136-taco-and-etc-wave-3-closers]], [[tickets/T-24137-shougatu-gyozi-bunkasd-wave-3-closers]], and [[tickets/T-24138-small-overlays-wave-3-closers]] (`In Progress`).
+
+## [2026-10-19] build | T-24133 -> Done (+9 functions, +6,064 B in TAIIKU; 80142240.c 100.0% matched!); T-24139 dispatched
+
+Completed and reviewed [[tickets/T-24133-taiiku-rpg-bat-wave-2-closers]] (`Done`, +9 functions / +6,064 B in `src/ovl/TAIIKU/` — **`src/ovl/TAIIKU/80142240.c` 100.0% matched**):
+- `TAIIKU:func_80135480` (608 B in `src/ovl/TAIIKU/80133C80.c`): `MATCH`
+- `TAIIKU:func_801365C8` (752 B in `src/ovl/TAIIKU/80133C80.c`): `MATCH`
+- `TAIIKU:func_80137544` (576 B in `src/ovl/TAIIKU/80133C80.c`): `MATCH`
+- `TAIIKU:func_8013B78C` (448 B in `src/ovl/TAIIKU/80138950.c`): `MATCH`
+- `TAIIKU:func_8013BCEC` (524 B in `src/ovl/TAIIKU/80138950.c`): `MATCH`
+- `TAIIKU:func_8013D2B4` (1,236 B in `src/ovl/TAIIKU/80138950.c` + `.data` `s16 D_80149958 = 0;`): `MATCH`
+- `TAIIKU:func_8013D788` (556 B in `src/ovl/TAIIKU/80138950.c`): `MATCH`
+- `TAIIKU:func_8014357C` (664 B in `src/ovl/TAIIKU/80142240.c`): `MATCH`
+- `TAIIKU:func_8014607C` (700 B in `src/ovl/TAIIKU/801452D0.c`): `MATCH`
+Created and dispatched [[tickets/T-24139-taiiku-rpg-bat-wave-3-closers]] (`In Progress`) for the remaining 12 `TAIIKU` and 8 `RPG_BAT` functions.
+
+## [2026-10-19] build | T-24134 -> Done (+3 functions, +3,048 B; BUNKAKEN 100.0% matched!); T-24140 dispatched
+
+Completed and reviewed [[tickets/T-24134-geko-option-tel-bunkaken-omimai-wave-2-closers]] (`Done`, +3 functions / +3,048 B across `BUNKAKEN` and `OPTION` — **`BUNKAKEN` overlay 100.0% matched, 60/60 functions!**):
+- `BUNKAKEN:func_8013B510` (2,164 B in `src/ovl/BUNKAKEN/8013B510.c`): `MATCH`
+- `OPTION:func_80132000` (176 B in `src/ovl/OPTION/80132000.c`): `MATCH`
+- `OPTION:func_801320C0` (708 B in `src/ovl/OPTION/80132000.c`): `MATCH`
+Created and dispatched [[tickets/T-24140-geko-option-tel-omimai-wave-3-closers]] (`In Progress`) for the remaining `GEKO` (12), `OPTION` (8), `TEL` (2), and `OMIMAI` (1) functions.
