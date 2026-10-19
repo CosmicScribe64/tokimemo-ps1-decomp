@@ -82,7 +82,49 @@ void func_80132864(void) {
     func_8004284C();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: score=110 (106/106 insns). Remaining diff is $s2/$s3 swap between best_s and s and the redundant s == best_s re-check before the tie-break sum. T-24116. */
+void func_8013288C(void) {
+    u8 i;
+    u8 best_i;
+    u32 best_s;
+    u8 s;
+
+    best_i = 0xFF;
+    best_s = 4;
+    D_80122D40 = 0;
+    for (i = 0; i < 11; i++) {
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b1 != 0) {
+            s = get_g_zyotai_s(i) & 0x7F;
+            if (s < best_s ||
+                (s == best_s && s == best_s &&
+                 (get_h_tokimeki(i) & 0xFF) + (get_h_yuukou(i) & 0xFF) >
+                     get_h_yuukou(best_i) + (get_h_tokimeki(best_i) & 0xFF))) {
+                best_i = i;
+                best_s = s;
+            }
+        }
+    }
+    s = get_g_zyotai_s(best_i) & 0x7F;
+    if (best_i != 0xFF && s < 2U) {
+        D_80143B1C = best_i;
+        D_800E6280.unk_F5F = best_i;
+        func_800847B8(D_800E6280.unk_F5F);
+        func_80132A34();
+        D_80143B00 = 0;
+        D_80143B04 = 0;
+        D_80143B14 = 1;
+        D_80122D40 = best_i + 1;
+        D_800E6280.unk_71E |= 0x80;
+        func_80042908(1);
+    } else {
+        D_80143B14 = 0;
+        func_80042908(2);
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80132550", func_8013288C);
+#endif
 
 void func_80132A34(void) {
     u8 state;

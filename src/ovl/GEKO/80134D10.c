@@ -1418,7 +1418,47 @@ void func_80138DE4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80138E10);
+s32 func_80138E10(void) {
+    u8 state;
+
+    /* FAKE: read through a u8 view so the base and the result share $v0 (T-22010, T-24115). */
+    state = *(u8 *)&D_800E6280.unk_110D;
+    if (state == 0) {
+        func_80044750(0xB2);
+        func_800674B0();
+        state = D_800E6280.unk_110D + 1;
+    }
+    D_800E6280.unk_110D = state;
+    if (state == 1) {
+        if ((u32)D_800E6280.unk_1104.w++ >= 0x400U) {
+            func_800452C4();
+            func_8004482C();
+            D_800E6280.unk_110D = 0;
+        }
+        if (func_80044E8C() != 1) {
+            return 0;
+        }
+    }
+    func_80044750(0x22);
+    func_80044750(0x21);
+    func_80044750(0x2F);
+    /* FAKE: dead (s32) read hoists lui $a1, %hi(D_800CA368) into the load delay of D_80122CD4 (T-24115). */
+    if ((s32)D_800CA368) {}
+    D_800E6280.unk_F5F = D_80122CD4;
+    if (D_800CA368 != 0xFF) {
+        func_80085B3C(2, D_800CA368);
+        if (D_800CA368 == 0x14) {
+            if (D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_02 == 2 &&
+                D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_01 == D_800CA368) {
+                D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_03 = 4;
+            } else {
+                D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 4;
+            }
+        }
+    }
+    D_80122D44 = 0;
+    return func_80072B5C(1);
+}
 
 void func_80138F7C(void) {
     switch (D_800E6280.unk_F5F) {

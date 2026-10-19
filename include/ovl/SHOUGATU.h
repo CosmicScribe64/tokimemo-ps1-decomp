@@ -721,6 +721,7 @@ s32 func_8013E330(void);
 /* Scene initializer; original byte stores at D_80143B1C (T-9740). */
 extern u8 D_80143B1C;
 void func_801326F8(void);
+void func_80132A34(void);
 
 #ifndef OVL_SHOUGATU_BYTE_FLAGS_T10010
 #define OVL_SHOUGATU_BYTE_FLAGS_T10010
@@ -764,6 +765,7 @@ extern s8 D_8014615C;
 #ifndef OVL_SHOUGATU_T15600_DISPATCH
 #define OVL_SHOUGATU_T15600_DISPATCH
 /* T-15600: definitions in 80136F90.c / 8013F190.c, called by the earlier dispatcher. */
+s32 func_8013737C(void);
 void func_80137664(void); /* T-17500 */
 void func_801377CC(void);
 void func_80137818(void);

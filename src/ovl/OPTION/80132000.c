@@ -114,7 +114,73 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132BA8);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133010);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133330);
+/* FAKE: s32 without an explicit return matches the unprototyped call at func_80132B30. T-24117 */
+s32 func_80133330(void) {
+    s32 pad; /* FAKE: unused 4-byte local places sp2C at sp+0x2C (0x70 frame); real source unknown. T-24117 */
+    Arrs4x8 sp2C;
+
+    menu_check(0, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    func_8004FC10(0);
+    if (D_800E6280.unk_1093 == -1) {
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_03 &= 0xFF7F;
+    } else {
+        func_801325A0(&sp2C);
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_03 |= 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_26 = sp2C.a[D_800E6280.unk_1093] + 0x30;
+        /* FAKE: '^ 0' prevents uopt from sharing the scaled byte offset with sp2C.a[]; real source unknown. T-24117 */
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_2A = sp2C.b[D_800E6280.unk_1093 ^ 0] + 6;
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (D_800E6280.unk_1093) {
+        case 0:
+            func_80044750(0x501);
+            func_80042908(1);
+            break;
+        case 1:
+            func_80044750(0x501);
+            func_80042908(2);
+            break;
+        case 2:
+            if (D_800E6280.unk_F74 == 0) {
+                func_80044750(0x501);
+                func_80042908(3);
+            }
+            break;
+        case 3:
+            if (D_800E6280.unk_F74 == 1) {
+                func_80044750(0x501);
+                func_80042908(4);
+            }
+            break;
+        case 4:
+            func_80044750(0x501);
+            func_80042908(5);
+            break;
+        case 5:
+            func_80044750(0x501);
+            func_80042908(6);
+            break;
+        case 6:
+            func_80044750(0x501);
+            func_80042908(7);
+            break;
+        case 7:
+            func_80044750(0x501);
+            func_80042908(8);
+            break;
+        }
+    }
+    if ((D_800B3220 == 1) && ((D_800E6280.unk_F80 & 0xF) == 0xF)) {
+        main_state_set(0x21);
+    }
+    /* FAKE: 8-bit bitfield view prevents uopt from CSE-ing D_800B3220 across the untaken first branch; real source unknown. T-24117 */
+    if ((((OptionByteBf *)&D_800B3220)->x == 1) && ((D_800E6280.unk_F80 & 0xF0000) == 0xF0000)) {
+        main_state_set(0x22);
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        D_800E6280.unk_1093 = 7;
+    }
+}
 
 /* FAKE: s32 without an explicit return retains the original dead v0 loop initialization; no meaningful return is established. T-9540 */
 s32 func_8013357C(void) {
@@ -261,7 +327,77 @@ s32 func_80133C4C(void) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133CB8);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133F50);
+void func_80133F50(void) {
+    s32 pad; /* FAKE: unused 4-byte local reproduces the 0x40 stack frame and stack slot offsets; real source unknown. T-24117 */
+    GameState *g;
+    s32 i;
+    s32 keep;
+    s32 old;
+    s32 j;
+
+    ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0x80;
+    g = &D_800E6280;
+    old = g->unk_1094;
+    menu_check(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    func_8004FC10(1);
+    func_801320C0();
+    for (i = 0, j = 0; i < 3; i++, j += 2) {
+        if (i == g->unk_1094) {
+            ((DisplayActor44 *)D_80120650)[i + 11].unk_18 = j + 0x15;
+        } else {
+            ((DisplayActor44 *)D_80120650)[i + 11].unk_18 = j + 0x16;
+        }
+    }
+    if (old != g->unk_1094) {
+        switch (g->unk_1094) {
+        case 0:
+            keep = (u8)g->unk_F6C;
+            g->unk_F6C = 0;
+            func_8006509C();
+            /* FAKE: loop body on the for line, as in the matched func_80134210 (T-7020). T-24117 */
+            for (i = 0; i < 16; i++) *(s16 *)&D_80125C10[i * 4] += 200;
+            func_800654D0(g->unk_F6D = 0xE);
+            g->unk_F6C = keep;
+            break;
+        case 1:
+            keep = (u8)g->unk_F6C;
+            g->unk_F6C = 1;
+            func_8006509C();
+            /* FAKE: loop body on the for line, as in the matched func_80134210 (T-7020). T-24117 */
+            for (i = 0; i < 16; i++) *(s16 *)&D_80125C10[i * 4] += 200;
+            func_800654D0(g->unk_F6D = 0xE);
+            g->unk_F6C = keep;
+            break;
+        }
+    }
+    if (g->unk_F88 & 0x20) {
+        switch (g->unk_1094) {
+        case 0:
+            g->unk_F6C = 3;
+            func_80134210();
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 1:
+            g->unk_F6C = 4;
+            func_80134210();
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 2:
+            g->unk_F6C = 5;
+            func_80134210();
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        }
+    }
+    if (g->unk_F88 & 0x40) {
+        func_80134210();
+        func_8004284C();
+        g->unk_110D = 2;
+    }
+}
 
 void func_80134210(void) {
     s32 i;
@@ -574,7 +710,58 @@ void func_80135034(void) {
     func_801320C0();
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80135110);
+void func_80135110(void) {
+    s32 i;
+    s32 j;
+    s32 sel;
+
+    func_8004F984(1, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(1);
+    func_801320C0();
+    sel = D_800E6280.unk_1094;
+    for (i = 0, j = 0; i < 2; i++, j += 2) {
+        if (i == sel) {
+            ((DisplayActor44 *)D_80120650)[i + 18].unk_18 = j + 0x29;
+        } else {
+            ((DisplayActor44 *)D_80120650)[i + 18].unk_18 = j + 0x2A;
+        }
+    }
+    if (((D_800E6280.unk_F75 != 0) && (D_800E6280.unk_F77 & 4)) || ((D_800E6280.unk_F75 == 0) && (D_800E6280.unk_F77 & 8))) {
+        switch (sel) {
+        case 0:
+            D_800E6280.unk_1124 |= 0x20;
+            *(u8 *)&D_800E6280.unk_F73 = 0x20;
+            func_80044750(0x501);
+            func_8004284C();
+            break;
+        case 1:
+            if (*(u8 *)&D_8013D180 != 0) {
+                D_800E6280.unk_1124 |= 0x20;
+                *(u8 *)&D_800E6280.unk_F73 = 0xFF - *(u8 *)&D_8013D180;
+                if (*(u8 *)&D_800E6280.unk_F73 < 0x10U) {
+                    *(u8 *)&D_800E6280.unk_F73 = 0x10;
+                }
+                if (*(u8 *)&D_800E6280.unk_F73 >= 0x41U) {
+                    *(u8 *)&D_800E6280.unk_F73 = 0x40;
+                }
+                func_80044750(0x501);
+                func_8004284C();
+                *(u8 *)&D_8013D180 = 0;
+            } else {
+                *(u8 *)&D_8013D180 = 0xFF;
+            }
+            break;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        D_80120BA3 &= 0xFF7F;
+        func_8004284C();
+    }
+    func_801352FC();
+    if (*(u8 *)&D_8013D180 != 0) {
+        *(u8 *)&D_8013D180 -= 1;
+    }
+}
 
 void func_801352FC(void) {
     if ((*(u8 *)&D_800E6280.unk_F73 != 0) && ((u32) ((D_800E6280.unk_10F8 / *(u8 *)&D_800E6280.unk_F73) & 3) < 2U)) {
@@ -730,7 +917,64 @@ void func_8013554C(void) {
     func_801324E8();
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801359A4);
+void func_801359A4(void) {
+    s32 i;
+    s32 k;
+    GameState *g;
+
+    ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0x80;
+    menu_check(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    func_8004FC10(1);
+    func_801320C0();
+    g = &D_800E6280;
+    for (i = 0; i < 4; i++) {
+        if (i == g->unk_1094) {
+            k_disp_switch(i * 3 + 0xC, 1);
+            k_disp_switch(i * 3 + 0xD, 1);
+            k_disp_switch(i * 3 + 0xE, 1);
+            ((Entry8 *)text_list)[i + 8].unk_04 = 0;
+            k = i * 2 + 0x7A;
+            ((DisplayActor44 *)D_80120650)[i + 11].unk_18 = k;
+        } else {
+            k_disp_switch(i * 3 + 0xC, 0);
+            k_disp_switch(i * 3 + 0xD, 0);
+            k_disp_switch(i * 3 + 0xE, 0);
+            ((Entry8 *)text_list)[i + 8].unk_04 = 1;
+            k = i * 2 + 0x7B;
+            ((DisplayActor44 *)D_80120650)[i + 11].unk_18 = k;
+        }
+    }
+    func_80049A40(-0x85, 0x3A, 0x100, 0x34, 8, 0x80808, 0x80);
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (g->unk_1094) {
+        case 0:
+            D_800E6280.unk_1092 = 4;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 1:
+            D_800E6280.unk_1092 = 5;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 2:
+            D_800E6280.unk_1092 = 7;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 3:
+            D_800E6280.unk_1092 = 6;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        k_sub_reset();
+        func_8004284C();
+        D_800E6280.unk_110D = 2;
+    }
+}
 
 void func_80135C0C(void) {
     s32 i;
@@ -835,7 +1079,69 @@ s32 func_80135E48(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801361FC);
+/* FAKE: s32 without an explicit return retains the original dead v0 loop initialization; no meaningful return is established. T-24117 */
+s32 func_801361FC(void) {
+    s32 i;
+    s32 j;
+    s32 sel;
+
+    /* one table: as1 keeps the loads after the store only when both go through D_8011ECD0 (T-9020) */
+    ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0x80;
+    func_8004F984(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    func_8004FC10(1);
+    func_801320C0();
+    sel = D_800E6280.unk_1094;
+    for (i = 0, j = 0; i < 5; i++, j += 2) {
+        if (i == sel) {
+            ((DisplayActor44 *)D_80120650)[i + 11].unk_18 = j + 0xB;
+        } else {
+            ((DisplayActor44 *)D_80120650)[i + 11].unk_18 = j + 0xC;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (sel) {
+        case 0:
+            D_800E6280.unk_F6F = 1;
+            D_800E6280.unk_F74 = 0xFF;
+            D_800E6280.unk_1124 |= 8;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 1:
+            D_800E6280.unk_F6F = 2;
+            D_800E6280.unk_F74 = 0xFF;
+            D_800E6280.unk_1124 |= 8;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 2:
+            D_800E6280.unk_F6F = 3;
+            D_800E6280.unk_F74 = 0xFF;
+            D_800E6280.unk_1124 |= 8;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 3:
+            D_800E6280.unk_F6F = 4;
+            D_800E6280.unk_F74 = 0xFF;
+            D_800E6280.unk_1124 |= 8;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 4:
+            D_800E6280.unk_F6F = 6;
+            D_800E6280.unk_F74 = 0xFF;
+            D_800E6280.unk_1124 |= 8;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_8004284C();
+        D_800E6280.unk_110D = 2;
+    }
+}
 
 s32 func_80136434(void) {
     s32 i;
@@ -1106,7 +1412,61 @@ void func_801371FC(void) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801373C8);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801376A8);
+/* FAKE: s32 without an explicit return retains `or $v0, $a2, $zero` in the switch delay slot. T-24117 */
+s32 func_801376A8(void) {
+    s32 i;
+    s32 j;
+    GameState *g;
+
+    /* one table: as1 keeps the loads after the stores only when both go through D_8011ECD0 (T-9020, T-16930) */
+    ((DisplayActor44 *)D_8011ECD0)[159].unk_03 = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[159].unk_1A = 0x1000;
+    ((DisplayActor44 *)D_8011ECD0)[159].unk_1C = 0x1000;
+    menu_check(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    func_8004FC10(1);
+    func_801320C0();
+    if ((D_800E7D4F & 1) == 1) {
+        ((DisplayActor44 *)D_8011ECD0)[111].unk_03 = 0x80;
+    }
+    /* FAKE: 1U matches u8 D_800E7D4F's -cckr unsigned promotion so uopt CSEs constant 1 into $t1. T-24117 */
+    if ((D_800E7D50 & 1U) == 1) {
+        ((DisplayActor44 *)D_8011ECD0)[112].unk_03 = 0x80;
+    }
+    g = &D_800E6280;
+    for (i = 0, j = 0; i < 2; i++, j += 2) {
+        if (i == g->unk_1094) {
+            ((DisplayActor44 *)D_80120650)[i + 15].unk_18 = j + 0x3B;
+        } else {
+            ((DisplayActor44 *)D_80120650)[i + 15].unk_18 = j + 0x3C;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (g->unk_1094) {
+        case 0:
+            if ((D_800E7D4F & 1) == 1) {
+                /* FAKE: Work800E7D10 view prevents uopt from CSE-ing the byte load with D_800E7D4F across the loop (as in 800674B0.c). T-24117 */
+                D_800E7D10.unk_027[0x18] &= 0xFFFD;
+                func_80044750(0x501);
+                func_80048EB8(0);
+                func_8004E58C();
+                main_state_set(0xD0);
+            }
+            break;
+        case 1:
+            if ((D_800E7D50 & 1U) == 1) {
+                /* FAKE: Work800E7D10 view emits byte load-modify-store without CSE-ing D_800E7D50. T-24117 */
+                D_800E7D10.unk_027[0x19] &= 0xFFFD;
+                func_80044750(0x501);
+                func_80048EB8(0);
+                func_8004E58C();
+                main_state_set(0x90);
+            }
+            break;
+        }
+    } else if (D_800E6280.unk_F88 & 0x40) {
+        func_8004284C();
+    }
+}
 
 void func_80137864(void) {
     s32 i;

@@ -21,7 +21,64 @@ void func_80143110(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143110", func_80143160);
+void func_80143314(void);
+void func_801433E0(void);
+void func_80143520(void);
+void func_801435C4(void);
+void func_801436E4(void);
+void func_80143780(void);
+void func_80143858(void);
+void func_80143940(void);
+void func_801439F0(void);
+
+s16 func_80143160(void) {
+    if (D_800F647A == 0) {
+        D_80148970 = *(Word4 *)&D_800F53A0.girl[D_800F53A0.unk_F2F].unk_08[0];
+        D_800F53A0.girl[D_800F62CF].unk_0A = 0x32;
+    }
+    switch (D_800F53A0.unk_F2F) {
+    case 0:
+        func_80052060();
+        break;
+    case 1:
+        func_80143314();
+        break;
+    case 2:
+        func_801433E0();
+        break;
+    case 3:
+        func_80143520();
+        break;
+    case 4:
+        func_801435C4();
+        break;
+    case 5:
+        func_801436E4();
+        break;
+    case 6:
+        func_80143780();
+        break;
+    case 7:
+        func_80143858();
+        break;
+    case 8:
+        func_80143940();
+        break;
+    case 9:
+        func_801439F0();
+        break;
+    case 10:
+        func_80052060();
+        break;
+    }
+    *(s8 *)(&D_8012B8C2 + 5) = *(u8 *)&D_801317EB;
+    if ((*(s16 *)(&D_8012B8C2 + 0x16) == 0) && (*(s16 *)(&D_8012B8C2 + 6) == 0)) {
+        *(s16 *)(&D_8012B8C2 + 0x14) = *(s16 *)(&D_8012B8C2 + 0x14) + 1;
+        if (*(s16 *)(&D_8012B8C2 + 0x14) >= 3) {
+            *(s16 *)(&D_8012B8C2 + 0x14) = 0;
+        }
+    }
+}
 
 typedef struct {
     void (*f[16])();

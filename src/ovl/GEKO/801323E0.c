@@ -174,7 +174,64 @@ s32 func_80132A4C(s16 arg0) {
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80132B24);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80132D04);
+void func_80132D04(s16 arg0, s16 arg1) {
+    s32 pad; /* FAKE: unused local that places status at sp+0x33 and the frame at 0x38 (T-3330) */
+    u8 status;
+
+    status = get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
+    /* FAKE: indirect byte reads keep D_80144C50 in $t7 across the two compares instead of promoting it to $v1 (T-24115) */
+    if ((*(u8 *)&D_80144C50 != 1) && (*(u8 *)&D_80144C50 != 0x10)) {
+        if (D_800E6280.unk_044[arg0].unk_20[arg1 + 1] == 0xC) {
+            if (D_800E6280.unk_F5F == 0) {
+                if (((u32) ((u16) D_800E6280.unk_0F4.h >> 0xC) < 6U) || ((u32) (D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4) < 6U)) {
+                    func_80132A4C(2);
+                }
+            } else {
+                func_80132A4C(2);
+            }
+        }
+        if (D_800E6280.unk_044[arg0].unk_20[arg1 + 1] == 4) {
+            func_80132A4C(6);
+        }
+        if (D_800E6280.unk_044[arg0].unk_20[arg1 + 1] == 0xB) {
+            if ((status < 2U) || (D_800E6280.unk_F5F == 0xA)) {
+                func_80132A4C(7);
+            } else {
+                func_80132A4C(8);
+            }
+        }
+        if ((D_800E6280.unk_03E == 0x61) && (D_800E6280.unk_03F == 9) && ((u8) D_800E6280.unk_040 < 0xEU) && (D_800E6280.unk_F5F == 0xA)) {
+            func_80132A4C(8);
+        }
+        if (D_800E6280.unk_044[arg0].unk_20[arg1 + 1] == 6) {
+            func_80132A4C(0xB);
+        }
+        if (D_800E6280.unk_044[arg0].unk_20[arg1 + 1] == 0xE) {
+            func_80132A4C(0xC);
+        }
+        if (D_800E6280.unk_044[arg0].unk_20[arg1 + 1] == 0x14) {
+            func_80132A4C(0xD);
+        }
+        /* FAKE: indirect byte reads stop uopt from CSE-sharing unk_03E with the earlier 0x61 compare across calls (T-24115) */
+        if ((*(u8 *)&D_800E6280.unk_03E == 0x60) && (D_800E6280.unk_044[arg0].unk_20[arg1 + 1] == 2)) {
+            func_80132A4C(0xE);
+        }
+        if ((*(u8 *)&D_800E6280.unk_03E == 0x61) && (D_800E6280.unk_044[arg0].unk_20[arg1 + 1] == 2)) {
+            func_80132A4C(0xF);
+        }
+        if (D_800E6280.unk_044[arg0].unk_20[arg1 + 1] == 0xF) {
+            func_80132A4C(9);
+        }
+    }
+    if ((D_800E6280.unk_044[arg0].unk_20[arg1 + 1] == 5) && (D_80144C50 != 0x10)) {
+        D_80144C50 = 0;
+        func_80132A4C(1);
+    }
+    if (D_800E6280.unk_044[arg0].unk_20[arg1 + 1] == 0x15) {
+        D_80144C50 = 0;
+        func_80132A4C(0x10);
+    }
+}
 
 /* NON_MATCHING: T-24007, 36 differing rows; frame and initialization
  * match, but the month/day and table-value ranges use other registers. */

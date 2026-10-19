@@ -10,7 +10,44 @@ void func_8013BA00(void) {
     tbl.f[idx](0x80);
 }
 
+/* NON_MATCHING: GameState D_800E6280 unification swaps $v0/$v1 vs $a1/$a2 in the 0..10 loop. T-24116. */
+#ifdef NON_MATCHING
+s32 func_8013BA7C(void) {
+    s16 i;
+
+    if (D_800E6280.unk_110D == 0) {
+        func_800674B0();
+        D_800E6280.unk_110D += 1;
+    }
+    if (D_800E6280.unk_110D == 1) {
+        if (D_800E6280.unk_1104.u++ >= 0x400U) {
+            func_800452C4();
+            func_8004482C();
+            D_800E6280.unk_110D = 0;
+        }
+        if (func_80044E8C() == 1) {
+            D_800E6280.unk_110D += 1;
+        } else {
+            return 0;
+        }
+    }
+    for (i = 0; i < 11; i++) {
+        if (((ShouByteFlags *)&D_800E6280.unk_1BC[i].unk_0C.b[1])->b0 != 0) {
+            ((ShouByteFlags *)&D_800E6280.unk_1BC[i].unk_0C.b[1])->b0 = 0;
+            if (i != (s32)D_800E6280.unk_F5F) {
+                D_800E6280.unk_1BC[i].unk_06 = D_800E6280.unk_1BC[i].unk_06 + 1;
+            }
+        }
+    }
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 8;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 8;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A -= 10;
+    check_para_limit();
+    func_80072B5C(1);
+}
+#else
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013BA00", func_8013BA7C);
+#endif
 
 void func_8013BC2C(void) {
     s16 i;

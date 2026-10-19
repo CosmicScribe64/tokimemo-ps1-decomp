@@ -380,7 +380,29 @@ void func_8014181C(void) {
     normal_date_girl_in();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80140A00", func_80141870);
+s32 func_80141870(void) {
+    /* FAKE: dead entry-block read puts D_800CA154 in cvt_pass _entry_locations so uopt promotes it to $a0 (T-24115) */
+    if (D_800CA154) {}
+    if (check_end_k() != 0 && D_800CA154 == 1) {
+        if (D_800E6280.unk_110D++ < 0x40U) {
+            return 0;
+        }
+        D_800E6280.unk_110D = 0;
+        k_reset(1);
+    }
+    if (D_800CA154 == 0 || D_800CA154 == 8) {
+        func_80138B74();
+    } else {
+        func_80138AF8();
+    }
+    /* FAKE: signed .w in the first test and unsigned .u++ in the second stops uopt from CSE-merging the == 1 boolean while still CSE-ing the load (T-24115) */
+    if (D_800E6280.unk_1104.w == 1 && D_800CA154 == 1) {
+        func_80044750(0x609);
+    }
+    if (D_800E6280.unk_1104.u++ == 1 && D_800CA154 == 9) {
+        func_80044750(0x60B);
+    }
+}
 
 void func_8014197C(void) {
     func_80044750(0x24);

@@ -88,7 +88,65 @@ void func_8014041C(void) {
     func_8004DE1C();
 }
 
+extern u8 D_800D9264[];
+
+/* NON_MATCHING: the original hoists the `D_800F5AAE | 0x20` and `D_800F5AAE | 0x40` stores into the branch delay slots of the month/day checks (`sb $t6, D_800F5AAE` repeated per branch). T-24116. */
+#ifdef NON_MATCHING
+s32 func_80140464(void) {
+    u8 v;
+
+    v = D_800F5AAE;
+    if (((GsWord *)&D_800F53A0.girl[0].unk_14)->date.month == 12 &&
+        ((GsWord *)&D_800F53A0.girl[0].unk_14)->date.day == 24 &&
+        (D_800F5AAE = v | 0x20)) {
+        D_800F5AAE |= 1;
+        D_800F53A0.unk_410[0x27D + D_800F5AAC * 4] = 0;
+        func_8004DE48(0x57);
+        return 0;
+    }
+    if (((GsWord *)&D_800F5490)->date.month == 12 &&
+        ((GsWord *)&D_800F5490)->date.day == 24 &&
+        (D_800F5AAE = v | 0x40)) {
+        D_800F5AAE = (v | 0x40) | 4;
+        func_8004DE48(0x56);
+        return 0;
+    }
+    func_8004EDE0(1, 0);
+    func_80054864(1);
+    func_8004C670();
+    func_8005493C(0);
+    func_8004EDF4(1);
+    func_80053EFC();
+    func_8005ABC0();
+    func_8009068C();
+    func_800BCE10(&D_800D92A0, "伊集院邸");
+    D_800F6412 = 0;
+    D_800F6458 = 1;
+    D_800F53DA = 0x80;
+    D_801317EB = 0;
+    D_800C51C4 = 0;
+    D_80148620 = 0;
+    D_80148624 = 0;
+    func_80089200();
+    func_800744A0();
+    func_80074950();
+    func_8008FC10();
+    func_800BCE10(D_800D9264, "プレイ");
+    if (D_800F594E == 0) {
+        func_800BCE10((s32 *)&D_800D9280, "黒服");
+    } else {
+        func_800BCE10((s32 *)&D_800D9280, "外井");
+    }
+    D_800F62CF = 0xC;
+    func_8013EB10();
+    D_80148614 = D_801481FC;
+    D_80148618 = D_80148230;
+    D_8014861C = D_80148264;
+    func_8004DE1C();
+}
+#else
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801400D0", func_80140464);
+#endif
 
 void func_801406A4(void) {
     func_8008A0D4(0x4169);

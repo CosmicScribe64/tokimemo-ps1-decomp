@@ -24,8 +24,10 @@ extern s32 D_8014635C;
 extern s32 D_80146360;
 void func_80137E84(void);
 extern s16 D_80147220;
+extern s16 D_80147224[];
 extern u8 D_80147240;
 extern s16 D_8014723C;
+extern u8 D_80147244;
 extern u8 D_80145F60;
 s32 func_801343A4(void);
 extern u8 D_80145EC8;
@@ -985,3 +987,5 @@ extern s32 D_80148EB0; /* T-17600: frame counter of the dumpling scene, next to 
 extern s16 D_8014875C[8];
 extern s16 D_8014876C[8];
 #endif /* OVL_GYOZI_T17600_TYPES */
+
+

@@ -41,7 +41,35 @@ void func_80140DCC(void) {
     func_8004DE1C();
 }
 
+/* NON_MATCHING: the original promotes 0 into $a1 before the first branch (`or $a1,$zero,$zero; sb $a1,D_800F62CF; or $a0,$a1,$zero`), shifting the post-call temporaries and loop register by one. T-24116. */
+#ifdef NON_MATCHING
+void func_80140E0C(void) {
+    s16 i;
+
+    D_80148750 = 0;
+    if (((GyoziBits32 *)D_800F53A0.girl[9].unk_10)->b1 == 0 &&
+        D_800F53A0.girl[9].unk_06 >= 20 && (D_800F6468 & 1)) {
+        D_80148750 = 1;
+    }
+    D_800F53A0.unk_F2F = 0;
+    D_80148620 = ((func_8005E0E0(0) & 0x7F) == 4) * 4;
+    D_80148614 = D_801481D4;
+    D_80148618 = D_80148208;
+    D_8014861C = D_8014823C;
+    func_8008F618(D_800F53A0.unk_F2F);
+    D_800F53A0.girl[D_800F53A0.unk_F2F].unk_0A += 4;
+    for (i = 0; i < 7; i++) {
+        if (D_800F54AE < D_8014875C[i]) {
+            break;
+        }
+    }
+    D_800F53A0.girl[D_800F53A0.unk_F2F].unk_06 += D_8014876C[i];
+    func_80090960(4, 0);
+    func_8004DE1C();
+}
+#else
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140C90", func_80140E0C);
+#endif
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140C90", func_80140F90);
 

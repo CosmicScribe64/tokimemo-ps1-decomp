@@ -131,7 +131,42 @@ void func_8013A4E8(void) {
     func_80081D30(1);
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013A140", func_8013A5F4);
+extern s32 D_800C3280[];
+extern s32 D_800C32C0[];
+extern s32 D_800C3300[];
+
+void func_8013A5F4(void) {
+    u16 a1;
+    u16 a2;
+
+    func_8004EDE0(1, 0);
+    func_80054864(1);
+    func_8004C670();
+    func_8005493C(0);
+    func_8004EDF4(1);
+    func_80053EFC();
+    func_8005ABC0();
+    func_800744A0();
+    func_80074950();
+    func_8009068C();
+    D_800F53A0.unk_F2F = D_800F53A0.unk_410[0x27D + D_800F53A0.unk_410[0x2FC] * 4];
+    D_801474B8 = D_8012E660;
+    if (D_800F53A0.unk_410[0x27D + D_800F53A0.unk_410[0x2FC] * 4] == 2 ||
+        D_800F53A0.unk_410[0x27D + D_800F53A0.unk_410[0x2FC] * 4] == 6) {
+        a1 = 0xB33B;
+        a2 = 0xB322;
+    } else {
+        a1 = 0xB320;
+        a2 = 0xB2FD;
+    }
+    func_800504CC(1, a1, a2,
+                  D_800C3280[D_800F53A0.unk_410[0x27D + D_800F53A0.unk_410[0x2FC] * 4]],
+                  D_800C32C0[D_800F53A0.unk_410[0x27D + D_800F53A0.unk_410[0x2FC] * 4]],
+                  D_800C3300[D_800F53A0.unk_410[0x27D + D_800F53A0.unk_410[0x2FC] * 4]]);
+    D_801474B4 = *(GyoziWord4 *)&D_800F53A0.girl[D_800F53A0.unk_410[0x27D + D_800F53A0.unk_410[0x2FC] * 4]].unk_08[0];
+    D_800F53A0.girl[D_800F53A0.unk_410[0x27D + D_800F5AAC * 4]].unk_0A = 0x32;
+    func_8004DDD8();
+}
 
 void func_8013A76C(void) {
     if (func_80050AB8() == 1) {

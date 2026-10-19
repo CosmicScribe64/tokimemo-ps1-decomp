@@ -272,7 +272,38 @@ void func_80133A88(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: triple-dereference of D_80143AF4 allocates 4 temps vs 6 in target. T-24116. */
+#ifdef NON_MATCHING
+void func_80133B44(void) {
+    s32 pad;
+    s32 sp44;
+    u8 sp40[3] = "　";
+
+    if (D_800E6280.unk_F5F != 0) {
+        if (D_800E6280.unk_110D == 0) {
+            set_kanji_string((s16)(-0x68 - func_800AE0E0(D_800CA16C) * 4), 0x30, 0, (s32)D_800CA16C, 0);
+            set_kanji_string(-0x56, 0x30, 0, (s32)"『 ", 0);
+            dialogue_render(-0x48, 0x30, 0, (s32)"それじゃ、神社に行くか。", 0, "", "", 0);
+            D_80143B00 = 0;
+            D_80143B04 = 0;
+            ((u8 **)D_80143AF8)[0][0] = 7;
+            ((u8 ***)D_80143AF4)[0][0][0] = sp40[0];
+            ((u8 ***)D_80143AF4)[0][0][1] = sp40[1];
+            ((u8 ***)D_80143AF4)[0][0][2] = 0;
+            D_800E6280.unk_110D = 1;
+        }
+        sp44 = D_800E6280.unk_110A;
+        func_801323D4();
+        if (sp44 != D_800E6280.unk_110A) {
+            func_80042808();
+        }
+    } else {
+        func_8004284C();
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_80133B44);
+#endif
 
 void func_80133CDC(void) {
     D_80143B00 = 0xF;

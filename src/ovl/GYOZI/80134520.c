@@ -71,7 +71,47 @@ void func_801347AC(void) {
     func_8004DE1C();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: score=110 (90/90 insns). Remaining diff is $s0/$s1/$s2/$s3 allocation order for i/best_i/best_s/s and the +0x1B2/+0x1AE base-address reuse in the tie-break comparison. T-24116. */
+void func_801347D4(void) {
+    s32 i;
+    u8 best_i;
+    u8 best_s;
+    u8 s;
+    GyoziGirl *g;
+
+    best_i = 0xFF;
+    best_s = 4;
+    for (i = 0; i < 11; i++) {
+        if (((GyoziBits32 *)D_800F53A0.girl[i].unk_10)->b1 != 0) {
+            s = func_8005E0E0(i);
+            s &= 0x7F;
+            if (s < best_s ||
+                (s == best_s &&
+                 (g = &D_800F53A0.girl[best_i],
+                  g->unk_0A + g->unk_06 <
+                      D_800F53A0.girl[i].unk_06 + D_800F53A0.girl[i].unk_0A))) {
+                best_i = i;
+                best_s = s;
+            }
+        }
+    }
+    s = func_8005E0E0(best_i) & 0x7F;
+    if (best_i != 0xFF && s < 2U) {
+        func_8008F618(D_800F62CF = best_i);
+        func_80134938();
+        D_80145EB4 = 0;
+        D_80145EB8 = 0;
+        D_80145EC4 = 1;
+        func_8004DEAC(1);
+    } else {
+        D_80145EC4 = 0;
+        func_8004DEAC(2);
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80134520", func_801347D4);
+#endif
 
 void func_80134938(void) {
     u32 temp_v0;

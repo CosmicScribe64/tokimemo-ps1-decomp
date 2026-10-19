@@ -27,8 +27,11 @@ void func_8013A1BC(void);
 void func_801320C0(void);
 void func_8013A484(void);
 void func_80133CB8(void);
+s32 func_80133330(void);
 void func_80133F50(void);
 void func_801342A8(void);
+void func_80135110(void);
+void func_801352FC(void);
 void func_8013554C(void);
 void func_801359A4(void);
 void func_80135C0C(void);
@@ -37,6 +40,8 @@ void func_801368FC(void);
 void func_80136A50(void);
 void func_80136C30(void);
 s32 func_80136F3C(void);
+void func_801373C8(void);
+s32 func_801376A8(void);
 void func_80139878(void);
 
 void func_80139A30();
@@ -209,5 +214,10 @@ typedef struct OptionDateBits {
     /* 0x00 */ u32 unk_11 : 21;
 } OptionDateBits; /* size 0x04 */
 
+
+/* 8-bit bitfield view used to prevent uopt from CSE-ing the second D_800B3220 load in func_80133330 (T-24117). */
+typedef struct OptionByteBf {
+    /* 0x00 */ u8 x : 8;
+} OptionByteBf; /* size 0x01 */
 
 #endif /* OVL_OPTION_H */

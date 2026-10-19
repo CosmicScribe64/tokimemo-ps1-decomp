@@ -100,7 +100,54 @@ void func_80137CC0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_80137CFC);
+void func_80137CFC(void) {
+    s16 i;
+
+    draw2d3d(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    back_clear_switch(1);
+    tpage_buf_clear();
+    func_8004E58C();
+    func_8008585C();
+    func_800AE0F0(D_800CA19C, "修学旅行");
+    k_reset(1);
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0x80;
+    D_800B5940 = 0;
+    hizuke_init();
+    message_window_init();
+    func_8006509C();
+    for (i = 0; i < 0xF; i++) {
+        icon_can_use_set(i, 0);
+    }
+    func_80065B0C(1);
+    parameter_show_init();
+    parameter_show_init();
+    D_800B593C = 0x80;
+    D_800CA2DC = 0;
+    D_800CA2E0 = 0;
+    addr_init_bustup();
+    hizuke_init();
+    func_80084E4C();
+    func_800847B8(0);
+    func_800AE0F0(D_800CA188, D_800E6280.unk_0D4);
+    func_80136380();
+    D_800CA2D0 = D_8013C44C;
+    D_800CA2D4 = D_8013C480;
+    D_800CA2D8 = D_8013C4B4;
+    D_80122CE0 = 0xFF;
+    D_800CA2EC = 0;
+    for (i = 0; i < 0xA; i++) {
+        D_800CA2B0[i] = D_800E6280.unk_1BC[i].unk_0C.f.b1 >= 1;
+    }
+    D_800CA2B0[10] = 0;
+    D_800CA2F0 = 0;
+    func_8004284C();
+}
 
 void func_80137F04(void) {
     s32 temp_v0;
@@ -319,6 +366,74 @@ void func_801386C4(void) {
     func_80082764(D_80122CDC, 1, 0);
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_80138740);
+void func_80138740(void) {
+    /* FAKE: `g = &D_800E6280` breaks uopt's global-load tie so unk_03F gets $a0 and unk_1BC[0].unk_10.w gets $v1; dead entry read `s = D_800CA2CC` puts D_800CA2CC in cvt_pass entry locations (T-24114). */
+    GameState *g = &D_800E6280;
+    s32 s;
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_801388D8);
+    s = D_800CA2CC;
+    s = get_g_zyotai_s(g->unk_F5F);
+    if (((g->unk_1BC[0].unk_10.w & 0xF) == g->unk_03F) && (((u32) (g->unk_1BC[0].unk_10.w << 0x17) >> 0x1B) == g->unk_040)) {
+        g->unk_721 = g->unk_1109 + 1;
+        g->unk_722 = 0;
+        g->unk_75D = g->unk_F5F;
+        g->unk_F5F = 0;
+        func_80042908(6);
+        return;
+    }
+    if ((g->unk_03F == (g->unk_0F8 & 0xF)) && (g->unk_040 == ((u32) (g->unk_0F8 << 0x17) >> 0x1B))) {
+        g->unk_721 = g->unk_1109 + 1;
+        g->unk_722 = 0;
+        g->unk_75D = g->unk_F5F;
+        func_80042908(7);
+        return;
+    }
+    if ((g->unk_1109 == 4) && (g->unk_F5F == 2) && (D_800CA2CC == 2)) {
+        g->unk_721 = g->unk_1109 + 1;
+        g->unk_722 = 0;
+        func_80042908(8);
+        return;
+    }
+    if ((g->unk_1109 == 2) && (g->unk_F5F == 5) && ((u8) (s & 0x7F) < 2)) {
+        g->unk_721 = g->unk_1109 + 1;
+        g->unk_722 = 0;
+        func_80042908(0xB);
+        return;
+    }
+    func_8004284C();
+}
+
+void func_801388D8(void) {
+    /* FAKE: `g = &D_800E6280` breaks uopt's global-load tie so unk_03F gets $a0 and unk_1BC[0].unk_10.w gets $v1 (T-24114). */
+    GameState *g = &D_800E6280;
+    s32 s;
+
+    s = get_g_zyotai_s(g->unk_F5F);
+    if (((g->unk_1BC[0].unk_10.w & 0xF) == g->unk_03F) && (((u32) (g->unk_1BC[0].unk_10.w << 0x17) >> 0x1B) == g->unk_040)) {
+        if ((g->unk_F5F == 4) && ((u8) (s & 0x7F) < 2)) {
+            g->unk_721 = g->unk_1109;
+            g->unk_722 = g->unk_110A + 1;
+        } else {
+            g->unk_721 = g->unk_1109 + 1;
+            g->unk_722 = 0;
+        }
+        g->unk_75D = g->unk_F5F;
+        g->unk_F5F = 0;
+        func_80042908(6);
+        return;
+    }
+    if ((g->unk_03F == (g->unk_0F8 & 0xF)) && (g->unk_040 == ((u32) (g->unk_0F8 << 0x17) >> 0x1B))) {
+        if ((g->unk_F5F == 4) && ((u8) (s & 0x7F) < 2)) {
+            g->unk_721 = g->unk_1109;
+            g->unk_722 = g->unk_110A + 1;
+        } else {
+            g->unk_721 = g->unk_1109 + 1;
+            g->unk_722 = 0;
+        }
+        g->unk_75D = g->unk_F5F;
+        g->unk_F5F = g->unk_F5F;
+        func_80042908(7);
+        return;
+    }
+    func_8004284C();
+}

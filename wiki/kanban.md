@@ -49,6 +49,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24113-name-ent-80132000-80142a80-and-date-final|T-24113 Close remaining NAME_ENT functions in 80132000.c and 80142A80.c plus final DATE function func_801449D4]]
+- [ ] [[tickets/T-24112-name-ent-80139740-remaining-8|T-24112 Close remaining 8 unmatched functions in NAME_ENT/80139740.c]]
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24078-etc-two-poly-renderer|T-24078 Recover ETC two-slot polygon renderer]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
@@ -113,6 +115,11 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24118-main-and-rpg-bat-mid-score-sweep|T-24118 Close mid-score batch in main (score 48..116) and RPG_BAT (score 108..138)]]
+- [ ] [[tickets/T-24117-taiiku-and-option-mid-score-sweep|T-24117 Close low-to-mid-score functions in TAIIKU and OPTION]]
+- [ ] [[tickets/T-24116-gyozi-shougatu-mid-score-batch|T-24116 Close mid-score batch in GYOZI and SHOUGATU (score 62..252)]]
+- [ ] [[tickets/T-24115-geko-remaining-16|T-24115 Close remaining 16 unmatched functions in GEKO]]
+- [ ] [[tickets/T-24114-bunkaken-omimai-bunkasd-shugaku-closers|T-24114 Close final functions of BUNKAKEN, OMIMAI, BUNKA_SD, and remaining 8 functions of SHUGAKU]]
 - [ ] [[tickets/T-24111-main-near-misses-sweep|T-24111 Close low-score near misses in main (80043510, 800451D0, 8004F870, 80053650, 80058D20, 8005A0B0, 80061710, 80079B10, 80085E30)]]
 - [ ] [[tickets/T-24110-option-80132000-and-801389a0-sweep|T-24110 Close low-score near misses in OPTION/80132000.c and OPTION/801389A0.c]]
 - [ ] [[tickets/T-24109-shougatu-gyozi-valen-master-near-misses|T-24109 Close low-score near misses in SHOUGATU, GYOZI, VALEN, and MASTER]]

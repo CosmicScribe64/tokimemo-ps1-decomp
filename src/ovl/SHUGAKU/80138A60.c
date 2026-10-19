@@ -96,7 +96,45 @@ void func_80138DD8(void) {
     D_80122CF4 = 1;
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80138E40);
+s32 func_80138E40(void) {
+    /* FAKE: `pad` reserves the top stack word; `(D_800E6280.unk_110D & 0) +` places an entry load of unk_110D before the first branch so cvt_pass strips its widenings (T-24114). */
+    s32 pad;
+    s32 saved_phase;
+    s32 step;
+
+    if (((D_800E6280.unk_110D & 0) + D_800E6280.unk_F5F != 4) || (D_8013C980 != 0x36)) {
+        normal_date_bg_fadeout();
+        return;
+    }
+    saved_phase = (s32) D_800E6280.unk_110A;
+    if ((D_800E6280.unk_1104.w == 0) && (D_800E6280.unk_110D == 0)) {
+        D_800CA2DC = 0x10;
+    }
+    if (D_800E6280.unk_110D == 0) {
+        D_800E6280.unk_1104.w += 1;
+    }
+    step = (s32) D_800E6280.unk_110D;
+    if (D_800E6280.unk_110D == 0) {
+        func_801386C4();
+    } else if (D_800E6280.unk_110D == 1) {
+        normal_date_girl_in();
+    } else if (D_800E6280.unk_110D == 2) {
+        func_801386C4();
+    } else if (D_800E6280.unk_110D == 3) {
+        normal_date_girl_out();
+    } else {
+        normal_date_bg_fadeout();
+    }
+    if (saved_phase != D_800E6280.unk_110A) {
+        if (step < 4) {
+            D_800E6280.unk_110D = step + 1;
+            D_800E6280.unk_110A = saved_phase;
+            return;
+        }
+        D_800CA2DC = D_8013C970;
+        D_800E6280.unk_110D = step + 1;
+    }
+}
 
 void func_80138FAC(void) {
     if (D_800E6280.unk_F5F != 3 || D_800CA2CC != 1) {
@@ -324,7 +362,42 @@ void func_801398B8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_801398E8);
+s32 func_801398E8(void) {
+    s32 selection;
+    u8 value;
+
+    selection = D_80122CDC;
+    value = D_800E6280.unk_F5F;
+    if (value == selection) {
+        value = D_800E6280.unk_110A;
+        func_801386C4();
+        if (value != D_800E6280.unk_110A) {
+            D_800CA2DC -= 2;
+            D_800E6280.unk_110A -= 3;
+        }
+        return 0;
+    }
+    value = selection;
+    /* FAKE: second read of unk_F5F across the entry branch causes uopt to promote unk_F5F to $a1 while folding the unsigned >= 0 guard (T-24114). */
+    if (D_800E6280.unk_F5F >= 0) {
+        if (selection == 0xB) {
+            D_800CA2DC = 0;
+            D_800CA2D0 = D_8013C450;
+            D_800CA2D4 = D_8013C484;
+            D_800CA2D8 = D_8013C4B8;
+            D_800CA2EC = 1;
+            value = 0xD;
+            D_800E6280.unk_F5F = value;
+            func_800847B8(value);
+            D_800E6280.unk_110A = 0x33;
+            return 0;
+        }
+    }
+    D_800E6280.unk_F5F = value;
+    func_800847B8(value);
+    func_801399F4();
+    func_8004284C();
+}
 
 void func_801399F4(void) {
     switch (D_800E6280.unk_F5F) {

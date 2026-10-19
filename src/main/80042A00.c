@@ -78,7 +78,33 @@ void func_80042C74(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80042CB0);
 
-INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80043010);
+/* Implicit int (no return value on the unk_F74 == 0xFF path in the original). */
+s32 func_80043010(void) {
+    s32 b0;
+    s32 b1;
+    s32 b2;
+    s32 b3;
+    s32 a0;
+
+    if (D_800E6280.unk_F74 != 0xFF) {
+        if (D_800E6280.unk_F74 != 0) {
+            b0 = ~D_800E8BF0[3];
+            b1 = ~D_800E8BF0[2];
+            b2 = ~D_800E8C30[3];
+            b3 = D_800E8C30[2];
+            return (~b3 << 24) + ((b2 & 0xFF) << 16) + ((b1 & 0xFF) << 8) + (b0 & 0xFF);
+        }
+        a0 = 0;
+        b0 = ~D_800E8BF0[3] & 0xFF;
+        if (b0 & 8) {
+            a0 = 0x20;
+        }
+        if (b0 & 4) {
+            a0 |= 0x40;
+        }
+        return a0;
+    }
+}
 
 s32 func_800430C0(void) {
     s32 raw;

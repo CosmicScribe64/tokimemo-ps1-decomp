@@ -4,6 +4,9 @@
 #include "common.h"
 #include "game.h"
 
+void func_8007A254(u16 arg0);
+void func_8007A354(u16 arg0);
+void func_8007A43C(u8 arg0);
 void func_8008BFB0(s32, s16, s16);
 
 void func_80079B10(u16 arg0) {
@@ -133,7 +136,63 @@ void func_8007A008(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A080);
+void func_8007A080(arg0)
+u16 arg0;
+{
+    void func_8007B2B4(u16 arg0);
+
+    switch (arg0 & 0xF0) {
+    case 0x10:
+        func_8007A254(arg0);
+        break;
+    case 0x20:
+        func_8007A354(arg0);
+        break;
+    case 0x70:
+        if (arg0 & 1) {
+            func_8007B144(0x71);
+        }
+        if (arg0 & 2) {
+            func_8007B7E0();
+        }
+        if (arg0 & 4) {
+            func_8007A98C(0x74);
+            func_8007A868();
+        }
+        break;
+    case 0xE0:
+        if (arg0 & 1) {
+            func_8007B144(0xE1);
+        }
+        if (arg0 & 4) {
+            func_8007A98C(0xE4);
+            func_8007A868();
+        }
+        break;
+    case 0xF0:
+        if (arg0 & 1) {
+            func_8007B144(0xF1);
+        }
+        if (arg0 & 4) {
+            func_8007A98C(0xF4);
+            func_8007A868();
+        }
+        break;
+    case 0xB0:
+    case 0xC0:
+    case 0xD0:
+        if (arg0 & 1) {
+            func_8007B2B4(arg0 & 0xFFF1);
+        }
+        if (arg0 & 4) {
+            func_8007AB24(arg0 & 0xFFF4);
+        }
+        break;
+    default:
+        func_8007A43C(arg0 & 0xFF);
+        break;
+    }
+}
 
 void func_8007A254(u16 arg0) {
     arg0 = arg0 & 0xFF;
@@ -291,7 +350,54 @@ void func_8007A618(u32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A6AC);
+void func_8007A6AC(arg0)
+u16 arg0;
+{
+    /* FAKE: unused 4-byte local reproduces the original 0x30 stack frame size; real source unknown. T-24118 */
+    s32 pad;
+    u32 temp_a0;
+    s32 temp_v1;
+    s32 *temp_v0_2;
+
+    switch (arg0 & 0xF000) {
+    case 0x0:
+        temp_v0_2 = (s32 *)func_80046284();
+        temp_a0 = temp_v0_2[0];
+        temp_v1 = temp_v0_2[1];
+        D_80125D10.unk_10 = temp_v0_2[2];
+        D_80125D10.unk_14 = temp_v0_2[3];
+        /* FAKE: u32 view of the s32 sector fields emits lbu at +0 instead of sra 24 and lw/and for the 24-bit mask; real field type/union unknown. T-24118 */
+        D_80125D10.unk_48[5] = (*(u32 *)&D_80125D10.unk_10 >> 24) & 0xFF;
+        D_80125D10.unk_48[7] = (*(u32 *)&D_80125D10.unk_14 >> 24) & 0xFF;
+        *(u32 *)&D_80125D10.unk_10 &= 0xFFFFFF;
+        *(u32 *)&D_80125D10.unk_14 &= 0xFFFFFF;
+        func_8007A618(temp_a0);
+        if (temp_a0 == 0xF) {
+            temp_a0 = 8;
+        } else {
+            temp_a0 = 0x20;
+        }
+        D_80125D10.unk_10 = (D_80125D10.unk_10 * temp_a0) + D_80125D5D + temp_v1 - 0x10;
+        D_80125D10.unk_14 = (D_80125D10.unk_14 * temp_a0) + D_80125D5D + temp_v1 + 0x10;
+        if (D_80125D10.unk_00 & 0x400) {
+            func_8007AB24(0xB4);
+        } else if (!(D_80125D10.unk_04 & 0x200) && !(D_80125D10.unk_00 & 0x4000)) {
+            func_8007A868();
+            func_8007A924(D_80125D10.unk_08);
+        }
+        break;
+    case 0x1000:
+        func_8007A98C(0x74);
+        func_8007A868();
+        break;
+    case 0x2000:
+        func_8007A98C(0xE4);
+        break;
+    case 0x4000:
+        func_8007A98C(0xF4);
+        break;
+    }
+}
 
 void func_8007A868(void) {
     s32 t;
@@ -322,7 +428,52 @@ void func_8007A924(s32 arg0) {
     func_80045414(0xD, arg0, D_80125D10.unk_48);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A98C);
+/* FAKE: the constant branch and empty tests in cases 0xE4/0xF4 keep the selector in $v0 across the flag loads so D_80125D10.unk_00 takes $v1 and D_80125D14 takes $a0. T-24118 */
+void func_8007A98C(arg0)
+u16 arg0;
+{
+    s32 temp_v0;
+
+    if (1) {
+        temp_v0 = arg0 & 0xFF;
+    }
+    switch (temp_v0) {
+    case 0x74:
+        func_8008BEE0(0, 0, 0);
+        func_80045414(9, 0, 0);
+        D_80125D10.unk_00 &= ~0x400;
+        D_80125D10.unk_00 &= ~0x4000;
+        D_80125D14 &= ~0x200;
+        D_80125D14 &= ~0x100;
+        break;
+    case 0xE4:
+        if (D_80125D14 & 0x200) {
+            if (temp_v0) {
+            }
+            D_80125D10.unk_00 |= 0x4000;
+            func_80045414(9, 0, 0);
+        } else if (D_80125D10.unk_00 & 0x400) {
+            D_80125D10.unk_18 = func_80046274();
+            if ((u32) D_80125D10.unk_08 >= (u32) D_80125D10.unk_18) {
+                D_80125D10.unk_18 = D_80125D10.unk_08;
+            }
+            D_80125D10.unk_00 = (D_80125D10.unk_00 & ~0x400) | 0x4000;
+            func_8007AB24(0xB4);
+        }
+        break;
+    case 0xF4:
+        if (D_80125D10.unk_00 & 0x4000) {
+            D_80125D10.unk_00 &= ~0x4000;
+            if (D_80125D10.unk_10 != 0) {
+                func_8007A5BC();
+            } else {
+                func_8007A924(D_80125D10.unk_18);
+            }
+        } else if (temp_v0) {
+        }
+        break;
+    }
+}
 
 void func_8007AB24(u16 arg0) {
     if (!(D_80125D10.unk_04 & 0x100)) {
@@ -349,7 +500,37 @@ void func_8007AB24(u16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007ABE0);
+void func_8007ABE0(void) {
+    s16 var_a0;
+
+    if ((D_80125D14 & 2) && (func_80079E00((s16)D_80125D4C) != 0)) {
+        func_8007AF0C();
+    }
+    if ((D_80125D10.unk_00 & 0x100) && (D_80125D14 & 1)) {
+        /* FAKE: u16 views of unk_2E/unk_30/unk_32 emit lhu as in the original while keeping SoundState's s16 fields for sibling functions. T-24118 */
+        *(u16 *)&D_80125D10.unk_2E += *(u16 *)&D_80125D10.unk_32;
+        if ((D_80125D10.unk_2E & 0xFF00) != 0) {
+            *(u16 *)&D_80125D10.unk_2E &= 0xFF;
+            D_80125D10.unk_20 -= *(u16 *)&D_80125D10.unk_30;
+            if (D_80125D10.unk_20 < 0) {
+                func_8007AD6C();
+                return;
+            }
+            if ((D_80125D10.unk_00 & 0x100000) && !(D_80125D10.unk_00 & 0x400)) {
+                if (D_80125D10.unk_22 == 0) {
+                    var_a0 = 0;
+                } else {
+                    var_a0 = (D_80125D10.unk_20 * 0x7F) / D_80125D10.unk_22;
+                }
+                /* FAKE: explicit 16-bit sign-extension reproduces the second sll 16 / sra 16 for $a1 when calling unprototyped func_8008B750. T-24118 */
+                func_8008B750(var_a0, (var_a0 << 16) >> 16);
+                return;
+            }
+            /* FAKE: explicit 16-bit sign-extension reproduces the second lh / sll 16 / sra 16 for $a2 when calling unprototyped func_8008C720. T-24118 */
+            func_8008C720(D_80125D38, D_80125D10.unk_20, (D_80125D10.unk_20 << 16) >> 16);
+        }
+    }
+}
 
 void func_8007AD6C(void) {
     if ((D_80125D10.unk_00 & 0x100000) && !(D_80125D10.unk_00 & 0x400)) {

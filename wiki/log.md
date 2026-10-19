@@ -20601,3 +20601,34 @@ Completed, reviewed against `CODING_STANDARDS.md`, and verified with the full CI
   - `OPTION:func_8013554C` (1,112 B) and `OPTION:func_80136C30` (780 B in `src/ovl/OPTION/80132000.c`): `MATCH`
 - [[tickets/T-24111-main-near-misses-sweep]] (`Done`, +7 functions / +3,140 B in `src/main/`):
   - `main:func_8007B144` (368 B in `src/main/80079B10.c`), `main:x_taku_menu_set` (340 B in `src/main/8004F870.c`), `main:func_800460FC` (376 B in `src/main/800451D0.c`), `main:func_80054140` (324 B in `src/main/80053650.c`), `main:func_8008647C` (452 B in `src/main/80085E30.c`), `main:func_80062210` (468 B in `src/main/80061710.c`), `main:func_8005CC40` (812 B in `src/main/8005A0B0.c`): `MATCH`
+
+## [2026-10-18] ticket | T-24112..T-24118 created and dispatched (In Progress)
+
+Created and dispatched 7 disjoint tickets across the 7-subagent pool:
+- [[tickets/T-24112-name-ent-80139740-remaining-8]] (`In Progress`): remaining 8 functions in `src/ovl/NAME_ENT/80139740.c`.
+- [[tickets/T-24113-name-ent-80132000-80142a80-and-date-final]] (`In Progress`): remaining 3 functions in `src/ovl/NAME_ENT/{80132000,80142A80}.c` + the final remaining function in `DATE` (`DATE:func_801449D4` in `src/ovl/DATE/80141EE0.c`).
+- [[tickets/T-24114-bunkaken-omimai-bunkasd-shugaku-closers]] (`In Progress`): final functions of `BUNKAKEN` (1), `OMIMAI` (1), `BUNKA_SD` (2), and `SHUGAKU` (8).
+- [[tickets/T-24115-geko-remaining-16]] (`In Progress`): remaining 16 functions in `GEKO`.
+- [[tickets/T-24116-gyozi-shougatu-mid-score-batch]] (`In Progress`): mid-score batch (`score=62..252`) in `GYOZI` and `SHOUGATU`.
+- [[tickets/T-24117-taiiku-and-option-mid-score-sweep]] (`In Progress`): low-to-mid-score functions in `TAIIKU` and `OPTION`.
+- [[tickets/T-24118-main-and-rpg-bat-mid-score-sweep]] (`In Progress`): mid-score batch in `main` (`score=48..116`) and `RPG_BAT` (`score=108..138`).
+
+## [2026-10-19] build | T-24114..T-24118 -> Done (+23 functions, +10,852 B across SHUGAKU, GEKO, GYOZI, OPTION, and main)
+
+Completed, reviewed against `CODING_STANDARDS.md`, and verified with the full local CI check suite (`check_headers.py include src`, `test_check_headers.py`, `test_sync_protos.py`, `test_cvt_pass.py`, `ninja` 27/27 `.ok` SHA1 checks, `report_objs.py` + `objdiff-cli` 437/437 units):
+- [[tickets/T-24114-bunkaken-omimai-bunkasd-shugaku-closers]] (`Done`, +5 functions / +1,952 B in `SHUGAKU` — **`src/ovl/SHUGAKU/801378B0.c` 100.0% matched**):
+  - `SHUGAKU:func_80137CFC` (520 B), `SHUGAKU:func_80138740` (408 B), `SHUGAKU:func_801388D8` (392 B in `src/ovl/SHUGAKU/801378B0.c`): `MATCH`
+  - `SHUGAKU:func_80138E40` (364 B) and `SHUGAKU:func_801398E8` (268 B in `src/ovl/SHUGAKU/80138A60.c`): `MATCH`
+- [[tickets/T-24115-geko-remaining-16]] (`Done`, +4 functions / +2,024 B in `GEKO` — **`src/ovl/GEKO/80140A00.c` 100.0% matched**):
+  - `GEKO:func_80141870` (268 B in `src/ovl/GEKO/80140A00.c`): `MATCH`
+  - `GEKO:func_80138E10` (364 B in `src/ovl/GEKO/80134D10.c`): `MATCH`
+  - `GEKO:func_80132D04` (800 B in `src/ovl/GEKO/801323E0.c`): `MATCH`
+  - `GEKO:func_80143F48` (592 B in `src/ovl/GEKO/80142760.c`): `MATCH`
+- [[tickets/T-24116-gyozi-shougatu-mid-score-batch]] (`Done`, +2 functions / +812 B in `GYOZI` + 13 improved `#ifdef NON_MATCHING` guards across `GYOZI` and `SHOUGATU`):
+  - `GYOZI:func_8013A5F4` (376 B in `src/ovl/GYOZI/8013A140.c` — **`8013A140.c` 100.0% matched**): `MATCH`
+  - `GYOZI:func_80143160` (436 B in `src/ovl/GYOZI/80143110.c` — **`80143110.c` 100.0% matched**): `MATCH`
+- [[tickets/T-24117-taiiku-and-option-mid-score-sweep]] (`Done`, +6 functions / +3,412 B in `src/ovl/OPTION/80132000.c`):
+  - `OPTION:func_80133330` (588 B), `OPTION:func_80133F50` (704 B), `OPTION:func_80135110` (492 B), `OPTION:func_801359A4` (616 B), `OPTION:func_801361FC` (568 B), `OPTION:func_801376A8` (444 B): `MATCH`
+- [[tickets/T-24118-main-and-rpg-bat-mid-score-sweep]] (`Done`, +6 functions / +2,652 B in `src/main/`):
+  - `main:func_80043010` (176 B in `src/main/80042A00.c`), `main:func_8007739C` (760 B in `src/main/80075320.c`), `main:func_8007A080` (468 B), `main:func_8007A6AC` (444 B), `main:func_8007A98C` (408 B), `main:func_8007ABE0` (396 B in `src/main/80079B10.c`): `MATCH`
+
