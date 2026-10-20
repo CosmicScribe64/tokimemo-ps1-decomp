@@ -13,11 +13,8 @@ void func_80153AA0(s32 arg0, s32 arg1, s32 arg2) {
     func_80049450(4);
 }
 
-/* NON_MATCHING: T-24502, 26 aligned diff lines (12 target words versus 14 built),
- * confined to the color decode; two extra copies. Default remains original asm.
- * Geometry, polygon loop, original 0x1C8 frame and point home 0x78 agree.
- * FAKE: implicit-int fallthrough preserves the original loop/result view. T-24502 */
-#ifdef NON_MATCHING
+/* FAKE: integer return type with fallthrough preserves the original loop/result view.
+ * T-24603. */
 s32 func_80153B38(buf, arg1, col, r)
 POLY_G3 **buf;
 s32 *arg1;
@@ -45,6 +42,12 @@ s32 r;
             v[i].vz = 0;
         }
     }
+    cr = (col >> 16) & 0xFF;
+    cg = (col >> 8) & 0xFF;
+    cb = col & 0xFF;
+    /* FAKE: this empty combined test preserves the blue-byte spill at sp+0x5C;
+     * without it the compiler uses sp+0x54. T-24603. */
+    if (cr | cg | cb) {}
     p = buf;
     for (i = 0; i != 40; i++) {
         *p = (POLY_G3 *)GetWorkBase(sizeof(POLY_G3), D_8011ECA0);
@@ -67,9 +70,6 @@ s32 r;
             (*p)->x2 = v[i + 2].vx;
             (*p)->y2 = v[i + 2].vy;
         }
-        cr = (col >> 16) & 0xFF;
-        cg = (col >> 8) & 0xFF;
-        cb = col & 0xFF;
         dr = (cr & 0xFF) - 0x25;
         dg = (cg & 0xFF) - 0x25;
         db = (cb & 0xFF) - 0x25;
@@ -86,10 +86,6 @@ s32 r;
         p++;
     }
 }
-
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80153AA0", func_80153B38);
-#endif
 
 void func_80153E78(s32 arg0, u8 arg1, u8 arg2, u8 arg3) {
     POLY_F4 *poly;

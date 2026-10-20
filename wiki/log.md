@@ -2973,3 +2973,35 @@ Created [[tickets/T-24602-geko-date-selector]] In Progress under [[tickets/T-246
 ## [2026-10-20] lint | Date-selector completion wiki checks
 
 Refreshed ticket/function catalogs for [[tickets/T-24602-geko-date-selector]]. Docker wiki lint: zero broken links and zero ticket/board mismatches; only the existing large-page warnings for [[data/t0018-cases]] and [[log]]. `git diff --check` passes.
+
+## [2026-10-20] build | Save reviewed GEKO match and continue allocation work
+
+Committed [[tickets/T-24602-geko-date-selector]] as b3130966e. [[tickets/T-24600-finish-matching]] continues: the result-array mechanism does not improve MAIN func_8006C988 in a bounded follow-up; candidate array forms add stack/register differences. Next scratch investigation checks entry-block global references around NAME_ENT func_8013AF78's initialization loop. No additional production changes or coverage credit.
+
+## [2026-10-20] build | Separate NAME_ENT lifetime negatives from the next renderer target
+
+[[tickets/T-24600-finish-matching]] records bounded NAME_ENT entry-reference, result-array, return-value and load-order negatives in [[matching-notes]]. No literal match or source promotion. Replaying the existing typed srn_set packet in the current full translation unit before examining its loop-bound allocation.
+
+## [2026-10-20] decision | User-authorized matching fan-out
+
+User explicitly requested fan-out. Three agents own disjoint GEKO, NAME_ENT and TACO source lanes under [[tickets/T-24600-finish-matching]]; root continues MAIN srn_set. Agents use private full-TU scratch, promote only literal-proven functions, and report shared-header needs. Root retains wiki, integration checks and review coordination; no external chat messages or pushes authorized/performed.
+
+## [2026-10-20] query | Trace renderer tie and collect independent lane results
+
+[[tickets/T-24600-finish-matching]]: MAIN srn_set's equal-priority wid/cols tie is reproducible and can be changed with an early bound seed, but load-delay scheduling and y-origin priorities remain unresolved. Recorded the precise baselines and GEKO/TACO lane negative results in [[matching-notes]]. NAME_ENT continues a distinct indexed-loop candidate. Production unchanged after b3130966e.
+
+## [2026-10-20] ticket | TACO fan candidate reaches zero instruction cost
+
+Created [[tickets/T-24603-taco-fan-colors]] In Progress under [[tickets/T-24600-finish-matching]]. The TACO agent recovers 208/208 words by separating bright extraction from per-polygon fade subtraction; a combined empty color test fixes the last blue spill offset. Literal linked proof and cleaned source verification are pending, so no coverage credit yet.
+
+## [2026-10-20] ticket | TACO fan enters review after full checks
+
+[[tickets/T-24603-taco-fan-colors]] In Progress -> In Review. Private and production literal proofs pass for 832 bytes; root production build/global check and fresh all-27 hashes pass. Independent standards/spec reviewers have no findings. Clarified the explicit integer return type's fallthrough annotation; geometry, palette wrapping and triangle ordering remain faithful.
+
+## [2026-10-20] ticket | TACO fan complete after independent reviews
+
+[[tickets/T-24603-taco-fan-colors]] In Review -> Done. Both review axes have no findings and every integration gate passed. Updated [[status]] to 6,819/6,952 functions and 2,093,652/2,276,920 bytes (92.0%), 133 functions remaining. [[tickets/T-24600-finish-matching]] continues across four disjoint lanes.
+
+## [2026-10-20] lint | Fan completion wiki and patch checks
+
+Refreshed catalogs for [[tickets/T-24603-taco-fan-colors]]. Docker wiki lint reports zero broken links and zero status mismatches; existing large-page warnings remain for [[data/t0018-cases]] and [[log]]. `git diff --check` passes.
