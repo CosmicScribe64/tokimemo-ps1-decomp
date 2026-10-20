@@ -2834,3 +2834,11 @@ User rejected the recent low-yield method and explicitly restored Sol6.1 medium 
 ## [2026-10-20] decision | Stop text variants and preserve final source candidate
 
 [[tickets/T-24501-main-tail]] preserves unverified `sndi`150/265words, with183 control reconstructible by parity width. Target263; correct buffer/index/flag homes and semantics retained, integer-address idiom FAKE-marked. User directed stopping variants; no further compiles or production changes. Bounded read-only family assessment follows. See [[matching-notes]].
+
+## [2026-10-20] build | Match save-image loader with recovered records
+
+[[tickets/T-24501-main-tail]] recovers20/24-byte settings objects and serialized bank layout for `func_800552DC`. Typed copies plus documented FAKE integer-address grouping match672 literal default-C bytes in a private link; declaration/global guards pass. Parent standards review clear, affected MAIN checksum pending. See [[matching-notes]].
+
+## [2026-10-20] build | Verify loader MAIN checksum
+
+[[tickets/T-24501-main-tail]] default MAIN rebuild passes target SHA1 after `func_800552DC` and game-header promotion, capped at two jobs. Private default-C proof equals all 672 target bytes; headers, main prototypes and migrated globals pass. Parent's source/header review has no findings; full 27-unit integration verification remains central.

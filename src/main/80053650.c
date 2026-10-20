@@ -720,7 +720,45 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054E6C);
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054FC0);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_800552DC);
+s32 func_800552DC(s32 arg0) {
+    SaveImageView *bank;
+
+    if (func_80055A38(0) == -1) {
+        return -1;
+    }
+    /* FAKE: T-24501, integer address arithmetic keeps the bank offset grouped
+     * before adding the image base; pointer arithmetic reassociates +0x200 and
+     * changes temporary numbering throughout both aggregate copies. */
+    bank = (SaveImageView *)((D_800E6280.unk_1117 * 0xF00 + 0x200) + (u32)D_80123120);
+    memcpy(D_800E7D10.flags, bank->flags, 16);
+    D_800E7D10.unk_024[0] |= bank->unk_24[0];
+    D_800E7D10.unk_024[1] = bank->unk_24[1];
+    D_800E7D10.selected_slot = bank->selected_slot;
+    if ((((SaveWorkView *)&D_800E7D10)->config0.flags.b[3] & 1) == 0) {
+        ((SaveWorkView *)&D_800E7D10)->config0 = bank->config0;
+    }
+    if (D_800E7D10.bits.flag == 0) {
+        ((SaveWorkView *)&D_800E7D10)->config1 = bank->config1;
+    }
+    D_800E7D10.unk_027[0] = bank->unk_54[0];
+    D_800E7D10.unk_027[1] = bank->unk_54[1];
+    memcpy(D_800E7D10.unk_058, bank->records, 0x800);
+    memcpy(D_800E7D10.year, bank->year, 16);
+    memcpy(D_800E7D10.month, bank->month, 16);
+    memcpy(D_800E7D10.day, bank->day, 16);
+    memcpy(D_800E7D10.family_name, bank->family_name, 0x80);
+    memcpy(D_800E7D10.given_name, bank->given_name, 0x80);
+    memcpy(D_800E7D10.nickname, bank->nickname, 0x100);
+    memcpy(D_800E7D10.club, bank->club, 16);
+    memcpy(D_800E7D10.metrics, bank->metrics, 0x240);
+    memcpy(D_800E7D10.unk_CC8, bank->unk_CD8, 0x100);
+    memcpy(&D_800E7D10.unk_CC8[0x100], bank->unk_DD8, 0x100);
+    memcpy(D_80125C10, &D_800E7D10.unk_CC8[0x100], 0x40);
+    memcpy(&D_80125C50, &D_800E7D10.unk_CC8[0x1F0], 4);
+    D_800B5C08 = D_800E7D10.unk_CC8[0x1F4];
+    D_80125C54 = D_800E7D10.unk_CC8[0x1F5];
+    D_80125C55 = D_800E7D10.unk_CC8[0x1F6];
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005557C);
 

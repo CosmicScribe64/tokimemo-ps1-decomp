@@ -10,6 +10,65 @@
 /* Game types (structs) of the main exe. The declarations of its functions and globals live in
  * main_api.h (T-3340); this file only adds types that need a struct definition. */
 
+/* T-24501: saved records copied as whole objects by func_800552DC/func_80054FC0.
+ * HYPOTHESIS: these are settings records; field meanings remain unknown. The 20-byte
+ * record owns the protection flag in its last byte. The 24-byte record preserves
+ * Work800E7D10 bits, names and words without changing their canonical declarations. */
+typedef struct SaveSettings20 {
+    /* 0x000 */ u16 unk_00;
+    /* 0x002 */ u16 unk_02;
+    /* 0x004 */ u16 unk_04;
+    /* 0x006 */ u8 unk_06[10];
+    /* 0x010 */ GsWord flags;
+} SaveSettings20; /* size 0x14 */
+
+typedef struct SaveSettings24 {
+    /* 0x000 */ WorkSetBits bits;
+    /* 0x002 */ u8 name0[3];
+    /* 0x005 */ u8 name1[3];
+    /* 0x008 */ u8 name2[3];
+    /* 0x00B */ u8 unk_0B;
+    /* 0x00C */ s32 w0;
+    /* 0x010 */ s32 w1;
+    /* 0x014 */ s32 w2;
+} SaveSettings24; /* size 0x18 */
+
+typedef union SaveMetricWord {
+    /* 0x000 */ NameMetric4 metric;
+    /* 0x000 */ GsWord word;
+} SaveMetricWord; /* size 0x4 */
+
+typedef struct SaveImageView {
+    /* 0x000 */ s32 checksum;
+    /* 0x004 */ u8 slot_status[16];
+    /* 0x014 */ u8 flags[16];
+    /* 0x024 */ u8 unk_24[2];
+    /* 0x026 */ u8 selected_slot;
+    /* 0x027 */ u8 unk_27;
+    /* 0x028 */ SaveSettings20 config0;
+    /* 0x03C */ SaveSettings24 config1;
+    /* 0x054 */ u8 unk_54[2];
+    /* 0x056 */ u8 records[0x800];
+    /* 0x856 */ u8 year[16];
+    /* 0x866 */ u8 month[16];
+    /* 0x876 */ u8 day[16];
+    /* 0x886 */ u8 family_name[16][8];
+    /* 0x906 */ u8 given_name[16][8];
+    /* 0x986 */ u8 nickname[16][16];
+    /* 0xA86 */ u8 club[16];
+    /* 0xA96 */ u8 pad_A96[2];
+    /* 0xA98 */ SaveMetricWord metrics[9][16];
+    /* 0xCD8 */ u8 unk_CD8[0x100];
+    /* 0xDD8 */ u8 unk_DD8[0x100];
+    /* 0xED8 */ u8 unk_ED8[0x28];
+} SaveImageView; /* size 0xF00 */
+
+typedef struct SaveWorkView {
+    /* 0x000 */ u8 prefix[0x2C];
+    /* 0x02C */ SaveSettings20 config0;
+    /* 0x040 */ SaveSettings24 config1;
+} SaveWorkView; /* size 0x58 */
+
 /* 8-byte record of the array at text_list (stride 8; see k_disp_switch). */
 typedef struct Entry8 {
     /* 0x00 */ s16 unk_00;
