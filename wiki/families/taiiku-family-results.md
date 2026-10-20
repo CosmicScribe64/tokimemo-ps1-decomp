@@ -175,3 +175,7 @@ Final Docker validation after adding the updater guard: ninja -j1 rebuilt the ob
 ## T-24044 counter sibling retry
 
 [[tickets/T-24044-taiiku-taco-siblings]] corrects oldB3B0 draft's threshold and position-field defects, retains current-type source at164 rows/160 aligned with matched unsigned counter/flag views. The original repeated counter reloads remain promoted by current IDO; split-result and pointer alternatives do not close it. No production edit or new coverage. Source/provenance in drafts/T-24044/; baseline checksum and declaration guards pass.
+
+### T-24521 loader completion (2026-10-20)
+
+`func_80134060` is now literal C, 1,348 verified linked bytes. Three existing `TaiShorts12` tables and lookup-first handle loops recover the original structure. An upper frame word and an unsigned view of the first texture-page store are documented FAKEs; the view prevents the repeated constant taking `$v1` and aligns the whole ugen ring. Private TAIIKU checksum passes. Details: [[matching-notes#T-24521: TAIIKU loader func_80134060]], [[tickets/T-24521-taiiku]]. Ten TAIIKU functions remain in this lane.

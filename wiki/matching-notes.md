@@ -570,3 +570,9 @@ Default linked C matches all 2,292 bytes; all 27 binaries SHA1 OK after adding i
 - The two-entry tail loops use `tail = &D_8016024C[4]` and `tail[i]`. Walking `tail++` leaves six call-delay stores early; direct `D_8016024C[i + 4]` retains the displacement on every load rather than on the initial pointer.
 - Group `i = 0; do {` for the first loop and `tail = &D_8016024C[4]; i = 0; do {` for the tail loops. It places each synthesized base load before the zero-counter move, as the original. Marked FAKE source grouping. No callee view change helps (own void/s32 and func_80147674 void/s32, K&R/prototype all tested).
 - Parent source review found no blockers. Header/global guards and prototype branch check pass (0 new disagreements). No asm, toolchain or raw data edits.
+
+## T-24521: TAIIKU loader func_80134060
+
+`func_80134060` matches 1,348 literal default-C bytes. Reuse `TaiShorts12` for the three nine-halfword stack tables and share the lookup/modulo local across cases. Compute each page handle after its lookup; computing it before the call extends its live range into a saved register and increases the frame. The 5/6/10 handle loops use indices and the last loop tests `!= 10`. An unused upper scalar (FAKE) places the tables at the original 0x68/0x54/0x40 homes in the 0x88 frame.
+
+The final 140 differing rows were one constant allocation followed by the ugen ring. The first page-table store must use `((u32 *)D_800E6280.unk_1228)[idx] = 0x80000206;` while the scalar store uses `(s32)0x80000206`. This prevents uopt promoting the shared constant to `$v1`: the constant instead takes `$t1`, and all later temporaries align. Marked FAKE because this particular view is required for the bytes. Chain assignments, a signed cast alone and defining D_801492F4 in the unit did not solve it. No toolchain change or assembly fallback is involved. See [[tickets/T-24521-taiiku]] for checks and parent review.

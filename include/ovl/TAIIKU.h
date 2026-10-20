@@ -5,6 +5,9 @@
 #include "game.h"
 
 /* Overlay-local externs (T-1300). */
+void func_80135830(void);
+void func_80135AD0(void);
+void func_80135DF8(void);
 void func_80136A28(void);
 void func_80136AB0(void);
 void func_80136B18(void);

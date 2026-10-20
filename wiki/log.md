@@ -2142,3 +2142,19 @@ func_8014FFDC now matches 2,292 linked bytes in default C. Shared loop locals, e
 ## [2026-10-20] build | Five verified matches integrated to main
 
 [[tickets/T-24500-completion-orchestration]] integrated MAIN func_800654D0, TACO func_80140028 and func_8014FFDC, GEKO func_80134808 and func_80133308 through source head e51680da0: five functions, 5,280 bytes. Each integration independently passed 27 SHA1 checks, default-C linked proofs and header/global/prototype guards. Docker progress now reports 6,798/6,952 functions and 2,072,284/2,276,920 bytes (91.0%); [[status]] updated. [[tickets/T-24510-parallel-overlay-coordination]] handoff published at b128b443b; six Sol workers span MAIN, TACO, GEKO/OPTION, TEL, ENDING and ETC. Latest read-only GitHub check found issue #65 unchanged and no open PR; contributor still unavailable until Friday. Bounded Astra consult for GEKO func_80133024 found no new source hypothesis; preserve the two-row checkpoint and avoid further blind grids.
+
+## [2026-10-20] ticket | T-24521 TAIIKU matching lane
+
+Created [[tickets/T-24521-taiiku]] In Progress in isolated branch codex/t24521-taiiku from dba33c4f5. Read [[index]], [[status]], [[playbook]], function history and standards. The eleven remaining functions are unchanged; new source hypotheses will use Docker with one compiler job.
+
+## [2026-10-20] build | T-24521 typed loader hypothesis
+
+Reconstructed `func_80134060` from the archived T-15700 draft with three `TaiShorts12` aggregate copies, shared index loops, and canonical GameState accesses. Initial compilation exposed stale aliases and missing void declarations; no match claimed. Docker reads the existing extracted disc directly; mounting the game archive caused `prepare_disc.py` to attempt extraction on the read-only disc mount, so the archive mount was removed. Notes in [[tickets/T-24521-taiiku]].
+
+## [2026-10-20] build | T-24521 loader lifetimes and frame
+
+`func_80134060` now compiles in literal C. Constructing handles after the lookup, reusing the lookup/modulo local, and retaining one upper scalar slot bring the instruction count, frame and stack-table homes into line with the original. Remaining 140 diagnostic rows begin at a constant allocation and follow the ugen ring. Evidence in [[tickets/T-24521-taiiku]]; no coverage claimed.
+
+## [2026-10-20] build | T-24521 TAIIKU func_80134060 matched
+
+Matched 1,348 literal default-C bytes in `src/ovl/TAIIKU/80133C80.c`. The unsigned first handle store resolves the constant allocation and subsequent ring; both it and the upper frame scalar are documented FAKEs. Private TAIIKU SHA1 and default linked function proof pass; 27/27 hashes combine that private output with 26 unchanged root outputs read-only. Header and branch prototype guards pass; global guard rerun after generating DATE/TACO original proof assembly. Parent source review has no blocking finding. Details in [[tickets/T-24521-taiiku]] and [[matching-notes]].
