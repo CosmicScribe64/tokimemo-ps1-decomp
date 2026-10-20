@@ -2247,3 +2247,7 @@ The one corrected owned func_80137784 foundation compiles at 396 rows, 296 versu
 ## [2026-10-20] build | T-24521 runner restoration verified
 
 Restored private TAIIKU checksum, both literal linked matches, 27 hashes and header/global/prototype guards all pass; prototype baseline stays zero new/twelve known. README deslop scan has zero hits. Source-only self-review finds no unresolved issue; no production/header diff remains. Evidence in [[tickets/T-24521-taiiku]], pending parent archive review; ticket remains In Progress.
+
+## [2026-10-20] decision | T-24521 runner archive reviewed and F3A4 read-only triage
+
+Parent independently reviewed the 37784 archive with no blocking code finding; recorded resolution in [[tickets/T-24521-taiiku]]. Read F3A4's T-9710/T-11010/T-11640 history and best catalog drafts before considering a probe. Original per-case actor-base reconstruction versus IDO whole-switch hoisting remains the documented blocker; per-case pointers already failed. Identified the folded first flag-clear's wrong source field, but no new causal hoisting solution. Matched F948/FC5C ownership/helper templates add no untried recipe. Updated [[families/taiiku-family-results]]; no compiler or new baseline ran. Ticket stays In Progress for coordinator direction. Future commit titles start with T-24521; existing shared pins remain intact.
