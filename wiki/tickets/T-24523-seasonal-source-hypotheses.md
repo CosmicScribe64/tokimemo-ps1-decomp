@@ -66,3 +66,19 @@ Removed the incorrect NON_MATCHING `func_80133088` body only; retained its match
 Private `ninja -j1 build/ovl/VALEN.ok` passes SHA1 `356aed2481987108f908d7013cc0392cea9dcc8c`. Header/global/prototype guards pass; final all27 hashes pass with private GYOZI, SHOUGATU and VALEN plus24 unchanged read-only baseline binaries. Parent and self standards/spec review found no blockers: assembly fallback retained, no header or compiler edit in this cleanup, no unverified coverage claim.
 
 Batch outcome: **2 verified functions / 1,196 bytes** (`SHOUGATU:func_80133B44`408B and `GYOZI:func_80140F90`788B), one unmatched source-only checkpoint, one stale guarded-body cleanup. Fourteen seasonal functions remain unmatched. In Review for integration handoff; no additional searches queued.
+
+### Focused new-donor follow-up
+
+At the coordinator's request, compared immutable original opcode sequences for the two newly verified donors against only the fourteen remaining seasonal functions. Tokens use tools/siblings.py op_token (registers/immediates/targets erased), with donor-to-target SequenceMatcher ratio and no autojunk. No broad historical sweep.
+
+| Remaining target | Best new donor | Opcode ratio | Outcome |
+| --- | --- | ---: | --- |
+| SHOUGATU func_8013E6E4 | GYOZI func_80140F90 | 0.770 | Already tested source-only cost187; excluded from repeat work |
+| GYOZI func_801412A4 | GYOZI func_80140F90 | 0.745 | New direct transplant218; explicit flag219; neither matches |
+| SHOUGATU func_8013EA98 | GYOZI func_80140F90 | 0.707 | Already tested broad typed port284; excluded from repeat work |
+| All other remaining targets | GYOZI func_80140F90 | <=0.347 | No fresh close structural relative |
+| GYOZI func_80140E0C / SHOUGATU func_8013E50C | SHOUGATU func_80133B44 | 0.291 each | Best remaining relatives still structurally distant; no transplant |
+
+The GYOZI func_801412A4 experiment transferred the newly verified counted-bitfield spelling, named state fields and true bounded unknown byte-array accesses, removed the debug/status block and used the aggregate random-word field. Two causal forms only: direct reused flag expression and explicit u32 flag local. Both remain broad: work base shifts from original a3 to t0, the count-loop temporary sequence differs, and the random word hoists ahead of the retry loop instead of being reloaded each iteration. The donor's decisive integer debug return view and narrowed status-call result are absent from this target, so those wins do not transfer. Its older T-24301 source-only foundation (~100 reported rows) remains the better starting point; scores from different contexts are not claimed as a direct metric comparison. Worse transplant bodies discarded, no additional archive or production source edits.
+
+Follow-up outcome: no additional matches or coverage. Parent notes-only review found no blockers (ratios and source-level descriptions, no instruction listings). Returned to In Review; no further compiler searches queued.

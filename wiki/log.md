@@ -2182,3 +2182,15 @@ Parent and self review of drafts/T-24523/SHOUGATU/func_8013E6E4 found no blocker
 ## [2026-10-20] ticket | Seasonal lane enters integration review
 
 Moved [[tickets/T-24523-seasonal-source-hypotheses]] from In Progress to In Review, with matching kanban card. Two exact literal-C matches total1,196 bytes; fourteen assigned seasonal targets remain. The source-only checkpoint and stale draft cleanup are separate commits. No compiler changes or copyrighted assets committed.
+
+## [2026-10-20] ticket | Reopen seasonal fresh-donor triage
+
+Moved [[tickets/T-24523-seasonal-source-hypotheses]] back to In Progress at the coordinator's explicit request. Compare newly verified SHOUGATU func_80133B44 and GYOZI func_80140F90 against the fourteen remaining seasonal targets; compile only a genuinely new source transplant. The tested SHOUGATU func_8013E6E4 port is excluded.
+
+## [2026-10-20] query | Close seasonal new-donor follow-up
+
+[[tickets/T-24523-seasonal-source-hypotheses]] compares the two new donors with the fourteen remaining originals. GYOZI func_80140F90's nearest targets are SHOUGATU func_8013E6E4 (0.770, already tested), GYOZI func_801412A4 (0.745) and SHOUGATU func_8013EA98 (0.707, already tested). SHOUGATU func_80133B44 has no remaining relative above0.291. Two new GYOZI func_801412A4 transplants give218/219 resolved cost and remain broad; prior T-24301 foundation retained, worse new bodies discarded. No production change or coverage. Parent notes review has no blockers.
+
+## [2026-10-20] ticket | Return seasonal donor pass to review
+
+Moved [[tickets/T-24523-seasonal-source-hypotheses]] from In Progress to In Review after the bounded donor pass; kanban matches. The earlier four pins remain unchanged. No further compiler work queued.
