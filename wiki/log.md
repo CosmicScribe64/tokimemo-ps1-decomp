@@ -2808,3 +2808,10 @@ Reviewed Luna's negative MAIN54E6C evidence and confirmed restored production/he
 ## [2026-10-20] decision | MAIN metric aggregate escalation remains negative
 
 [[tickets/T-24501-main-tail]] follows [[tickets/T-24570-main-80054e6c-metric-record-view]] with one true record assignment: full-TU cost105/90words versus84/87 baseline, frame40 unchanged. Target80 has no surviving array/argument accesses supporting a64B local. Preserved focused source-only replay and uncertainty; no production/header edits, padding grid or backend-defect claim. Details in [[matching-notes]].
+## [2026-10-20] ticket | T24571 ENDING mixed portrait view
+
+Created [[tickets/T-24571-ending-first-portrait-view]] after confirming the single first-portrait16 canonical-symbol view remains untested: T-24512's blanket typed-view negatives and T-18300's record/scalar draft are recorded, while matched `func_8013855C` uses `D_8011F4DE` for portrait16 and typed fields for portrait18/08. Worktree `codex/t24560-ending-slot` was clean at `b6e3f5057`; experiment is limited to one fresh full-TU baseline and one trial.
+
+## [2026-10-20] build | T24571 canonical portrait16 view negative
+
+Fresh Docker full-TU baseline and the single canonical `D_8011F4DE` trial both score 148 distance cost / 156 printable diff rows (expected187 instructions, built185). Candidate and target frames both0x28; first-guard constant uses v1 in target and a1 in candidate, with branch targets displaced by two instructions. Production unchanged; no match claim. [[tickets/T-24571-ending-first-portrait-view]].
