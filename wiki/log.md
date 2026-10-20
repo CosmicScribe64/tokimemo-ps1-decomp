@@ -20897,3 +20897,11 @@ Cloud packet results merged. T-24206: main `func_800590CC` (268 bytes) matches, 
 ## [2026-10-20] lint | T-11890 superseded
 
 [[tickets/T-11890-tt-ratan2-aspsx]] said `func_8014D260` stays INCLUDE_ASM; it matches on main since 56b2c4f0d (toolchain update, issue #63). Note added to the ticket.
+
+## [2026-10-20] ticket | T-24211 cloud packet: VALEN func_80134030
+
+Created [[tickets/T-24211-cloud-packet-valen-80134030]] (In Progress): single-function match packet for `func_80134030` in `src/ovl/VALEN/80133C70.c` (guarded at 27 lines since T-19016); packet asm stays under the gitignored `asm/`, scratch compile under `build/scratch/`.
+
+## [2026-10-20] ticket | T-24211 In Review: VALEN func_80134030 still guarded
+
+[[tickets/T-24211-cloud-packet-valen-80134030]]: setup proven (asm-fallback scratch copy equals the packet reference); about 30 C variants leave `func_80134030` in `src/ovl/VALEN/80133C70.c` at 6 instruction lines. The miss is as1 hoisting the head of the single-predecessor default block above the range check; only a jump-table reference (`case 10:`, wrong bound) stops it. A scan of 174 matched files shows the original's as1 hoists the same way (OMIMAI `func_801340E4`). Guard comment now T-24211; notes in [[matching-notes]] (T-24211). Local linked proof and review due.
