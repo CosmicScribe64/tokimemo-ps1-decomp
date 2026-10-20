@@ -60,3 +60,13 @@ python3 drafts/T-24502/TACO/func_8013EAA4/replay.py
 ```
 
 The helper retains the complete current TU and leaves other guards at default. Four texture-table declarations are scratch only; no production header changes. The candidate file is byte-for-byte the tested private body; no extra compile was performed merely for handoff. Narrow consult question: infer genuine local/aggregate/spill organization consistent with the home table and then explain the first CLUT web; do not run a padding/declaration/scheduling grid.
+
+## Fresh current-candidate CLUT trace
+
+After the bounded frame consult found no supported missing-object/call-ABI explanation, root requested this trace only. Stock491 words and traced487 words have an exactly identical487-word prefix; traced output omits only the four trailing stock padding words. Thus current trace fidelity is verified for the complete instruction sequence, unlike merely assuming an older trace applies.
+
+First CLUT divergence is position146, kind reload into a2 instead of target a3. It maps to split bit13/lr253, priority0.5, two uses/no defs, two units over two blocks, denominator2, selected a2. No draft live range overlaps it in a3. Earlier allocation #33 is first-cycle frame remainder bit115: priority1.5, one use/two defs, three units over two blocks, denominator2, v0. This is evidence of an original interference/lifetime difference, not a demonstrated source fix. No source variant, zero-use or padding experiment follows this trace.
+
+Exact private current report: build/T24502/eaa-third-coordinate-for/reg-clut-current.txt; first-only explanation clut-first.txt in the same directory. Raw traced artifacts remain private build/scratch/regdiff/func_8013EAA4/draft.o, draft.log, draft.B and draft.o.trace. They must not be committed. The report's automatic first-divergence alignment is outside the CLUT region; the narrow explanation explicitly selects position146 from the identical stock/traced positional instruction stream.
+
+Adjacent matched E778/F468 use the same GetWorkBase/init/SetSemiTrans/GetTPage/GetClut declarations, with simple constant or affine CLUT arguments. Neither contains this zero-count/modulo conditional, so no supported missing live value or call-view donor emerged. Current unsigned phase, count guard, modulo and row offset match target semantics, and both emit one count read after CSE. No sourcewise CLUT fix or new wrong-value/width gap identified; preserve this candidate rather than force a3 or invent frame objects.
