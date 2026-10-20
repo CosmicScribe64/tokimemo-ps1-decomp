@@ -2495,3 +2495,7 @@ All five actual full-TU C bodies in drafts/T-24516 reproduce their recorded word
 ## [2026-10-20] decision | Resume deep structural matching and consolidate remaining archives
 
 [[tickets/T-24510-parallel-overlay-coordination]] returns to In Progress at parent's explicit request. Two medium workers restart in fresh trees: MASTER363F4 T-24517 and ETC3FFAC T-24518, original-flow region reconstruction until match or isolated backend blocker. Consolidated reviewed MASTER/NAME_ENT/family archives through source-only cherry-picks retaining original refs and exact append suffixes. No production ancestry imported; no raw-source or active-worker mutation.
+
+## [2026-10-20] build | T-24502 Gouraud quad renderer matched
+
+func_80144E3C matches all1,888 linked target bytes in default C. Correct u8 arg4 and SDK POLY_G4 pointers replace the stale draft. Parent review found no blockers; all27 binary hashes and source/prototype guards pass. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record frame/layout and bounded expression recovery. Campaign total5 matches7644 bytes.

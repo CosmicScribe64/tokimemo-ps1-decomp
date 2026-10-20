@@ -194,7 +194,7 @@ void func_80143FF4(void);
 extern u8 D_8015EDCC;
 extern s16 D_8015EDEC;
 
-void func_80144E3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+void func_80144E3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5, s32 arg6);
 void func_80136024(void);
 void func_801361E8(void);
 void func_80136438(void);
