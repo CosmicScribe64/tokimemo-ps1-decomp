@@ -2222,3 +2222,7 @@ The authorized assignment-only identity probe in [[tickets/T-24523-seasonal-sour
 ## [2026-10-20] build | Correct VALEN candidate source and stale-guard cleanup
 
 [[tickets/T-24523-seasonal-source-hypotheses]] archives the correct typed func_80132834 reconstruction at381 resolved edits, reproduced from exact annotated source. Removed structurally wrong guard and preserved matching INCLUDE_ASM. Full private VALEN SHA1, all27 hashes (three private seasonal binaries and24 unchanged read-only root binaries), header/global/prototype guards and diff whitespace check pass. No new coverage. Source/archive and cleanup remain separate reviewable changes; [[matching-notes]] records target provenance.
+
+## [2026-10-20] decision | Pin reviewed VALEN stale-guard cleanup
+
+Parent and self standards/source review found no blockers in the func_80132834 stale-guard removal: immutable target/control-flow mismatch established, original fallback/address order preserved, no header/compiler change, private complete VALEN SHA1 and27 hashes/guards pass. Correct unmatched381 source is separately pinned; this cleanup earns no coverage under [[tickets/T-24523-seasonal-source-hypotheses]].
