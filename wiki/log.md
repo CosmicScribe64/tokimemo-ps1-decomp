@@ -2125,3 +2125,11 @@ GEKO func_80144198 remains ASM and has multiple archived campaigns; verified cur
 ## [2026-10-20] query | T-24503 fresh GEKO ranking source
 
 Repaired the previously untried func_801420E4 source's missing rodata declaration and reconstructed its top-six insertion loop with paired arrays. Full-unit cost444 to357; original0x480 frame differs from natural0x60. No padding or production promotion. Archived body, declaration and replay under drafts/T-24503/ with current limits. [[tickets/T-24503-geko-option-completion]].
+
+## [2026-10-20] query | T-24503 reconstruct GEKO scene entry and icon loop
+
+Continued func_80135DC0 using current-pass instruction regions. Fixed invented helper arguments/formal, direct early exits and the actual sp62 counter home; first setup and icon loop now have exact local evidence. Scoped-pointer frame is already0x68 (correcting prior baseline wording). Compiler-only conclusions deferred while calendar/source structure is reconstructed. [[tickets/T-24503-geko-option-completion]].
+
+## [2026-10-20] decision | T-24503 reconstruct 35DC0 source regions
+
+[[tickets/T-24503-geko-option-completion]]: GEKO func_80135DC0 archive improves from 547 to 336 through control-flow, counter, call, date and RECT repairs. Target and candidate have 565 and 563 resolved instructions. The frame is 0x68, RECT is at sp+0x34, counter at sp+0x62 and status byte at sp+0x3F. Opcode/immediate differences remain in appointment reloads/copies at offsets 0x208 through 0x274; registers still differ elsewhere. Updated drafts/T-24503/README.md corrects the earlier baseline frame attribution. Production remains ASM; coverage is unchanged.

@@ -1,21 +1,17 @@
-/* T-24503 unmatched typed repair: correct the Rec38 byte2 stride and use a
- * scoped GameState record base. Remaining structure/frame differs; see README. */
-s32 func_80135DC0(s32 arg0) {
+/* FAKE: T-24503 unmatched reconstruction. Identity byte views preserve selected
+ * independent loads; unused local homes and declaration order retain the observed
+ * frame while source recovery continues. See README for remaining regions.
+ * The normal path deliberately has no explicit return, as in the original. */
+s32 func_80135DC0(void) {
     GameState *g = &D_800E6280;
     s16 sp62;
-    u8 sp3F;
-    s16 sp3A;
-    s16 sp38;
-    s16 sp36;
-    s16 sp34;
     s16 var_a0;
     s32 temp_t5;
     s32 temp_t7;
     s32 var_t9;
     s32 var_v0;
     u32 temp_v1;
-    u8 temp_a1;
-    u8 temp_a3;
+    u32 temp_a1;
     u8 temp_t1;
     u8 temp_t4;
     u8 temp_t6;
@@ -24,19 +20,19 @@ s32 func_80135DC0(s32 arg0) {
     u8 temp_v0_2;
     u8 temp_v1_2;
     u8 var_v0_2;
+    u8 sp3F;
+    RECT rect;
 
-    temp_t9 = g->unk_69C[D_800E6280.unk_71C].unk_01;
-    D_800E6280.unk_F5F = temp_t9;
-    if (((temp_t9 == 0) && (D_800E6280.unk_71E & 1)) || ((D_800E6280.unk_F5F != 0) && (D_800E6280.unk_71E & 2))) {
-        func_80135AC8(arg0);
-        var_v0 = 0;
+    D_800E6280.unk_F5F = g->unk_69C[D_800E6280.unk_71C].unk_01;
+    if (((D_800E6280.unk_F5F == 0) && ((*(u8 *)&D_800E6280.unk_71E) & 1)) || ((*(u8 *)&D_800E6280.unk_F5F != 0) && ((*(u8 *)&D_800E6280.unk_71E) & 2))) {
+        func_80135AC8();
+        return 0;
     } else {
-        temp_t6 = D_800E6280.unk_F5F;
-        if (!(g->unk_1BC[temp_t6].unk_0C.w & 0x40) && (temp_t6 != 0)) {
-            func_80135AC8(1);
-            var_v0 = 0;
+        if (!(g->unk_1BC[*(u8 *)&D_800E6280.unk_F5F].unk_0C.f.b6) && (*(u8 *)&D_800E6280.unk_F5F != 0)) {
+            func_80135AC8();
+            return 0;
         } else {
-            D_80145074 = (D_800E6280.unk_71E & 0x10) != 0;
+            D_80145074 = (D_800E6280.unk_71E & 0x10) >= 1U;
             draw2d3d(1, 0);
             func_80048DAC(1);
             func_80041584();
@@ -45,24 +41,27 @@ s32 func_80135DC0(s32 arg0) {
             func_8006509C();
             parameter_show_init();
             parameter_show_init();
-            var_a0 = 0;
+            sp62 = 0;
             do {
-                sp62 = var_a0;
-                icon_can_use_set(var_a0, 0);
-                var_a0 += 1;
-            } while (var_a0 < 0xF);
+                icon_can_use_set(sp62, 0);
+                sp62 += 1;
+            } while (sp62 < 0xF);
             func_80065B0C(1);
             func_8004E58C();
             D_8014507C = 0;
             D_80145090 = 0;
             D_80145088 = 1;
             if ((D_800E6280.unk_03F != 0xC) || (D_800E6280.unk_040 != 0x18)) {
-                temp_t1 = D_800E6280.unk_040;
-                if ((D_800E6280.unk_041 != 6) && (temp_v0 = D_800E6280.unk_044[0].unk_20[temp_t1], (temp_v0 != 0xA)) && (temp_v0 != 0x10) && (temp_v0_2 = D_800E6280.unk_044[0].unk_00[temp_t1], (temp_v0_2 != 1)) && (temp_v0_2 != 2) && (temp_v0_2 != 3) && (D_80145074 == 0)) {
+                temp_t1 = *(u8 *)&D_800E6280.unk_040;
+                if ((D_800E6280.unk_041 != 6) && (temp_v0 = D_800E6280.unk_044[0].unk_20[temp_t1 - 1 + 1], (temp_v0 != 0xA)) && (temp_v0 != 0x10) && (temp_v0_2 = D_800E6280.unk_044[0].unk_00[temp_t1 - 1 + 1], (temp_v0_2 != 1)) && (temp_v0_2 != 2) && (temp_v0_2 != 3) && (D_80145074 == 0)) {
                     D_80145088 = 0;
-                } else if ((((u8) D_800E6280.unk_F68.b[0] >> 4) == 4) && (((u16) D_800E6280.unk_0F4.h >> 0xC) == (g->unk_1BC[D_800E6280.unk_F5F].unk_0C.b[2] >> 4)) && ((appointment_find_today((s32) D_800E6280.unk_03E, (s32) D_800E6280.unk_03F, (s32) D_800E6280.unk_040) <= 0) || (D_800E6280.unk_F5F != ((u32) (D_800E6280.unk_54C[0].w * 8) >> 0x1C)))) {
-                    D_80145088 = 0;
-                    D_80145090 = 1;
+                } else {
+                    temp_t5 = *(u8 *)&D_800E6280.unk_03F;
+                    temp_t7 = *(u8 *)&D_800E6280.unk_040;
+                    if ((((u8) D_800E6280.unk_F68.b[0] >> 4) == 4) && ((*(u16 *)&D_800E6280.unk_0F4.h >> 0xC) == (D_800E6280.unk_1BC[*(u8 *)&D_800E6280.unk_F5F].unk_0C.b[2] >> 4)) && ((appointment_find_today((s32) D_800E6280.unk_03E, temp_t5, temp_t7) <= 0) || (D_800E6280.unk_F5F != ((u32) (D_800E6280.unk_54C[0].w * 8) >> 0x1C)))) {
+                        D_80145088 = 0;
+                        D_80145090 = 1;
+                    }
                 }
             }
             D_8014508C = 0;
@@ -90,17 +89,14 @@ s32 func_80135DC0(s32 arg0) {
             D_80145084 = ((u32) D_800E6280.unk_10F8 % 3U) + 2;
             temp_a1 = get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
             temp_v1 = temp_a1 & 0xFF;
-            temp_t5 = temp_v1 < 2U;
-            temp_t7 = temp_v1 < 3U;
             D_80145060 = 0;
             D_80145064 = 0;
-            D_800CA148 = (temp_t5 ^ 1) + (temp_t7 ^ 1) + (temp_v1 >= 4U) + 0x1E;
+            D_800CA148 = (temp_v1 >= 2U) + (temp_v1 >= 3U) + (temp_v1 >= 4U) + 0x1E;
             sp3F = temp_a1;
             D_800CA14C = 0;
             func_800847B8(D_800E6280.unk_F5F);
             func_80134D10();
-            temp_t4 = D_800E6280.unk_F5F;
-            switch (temp_t4) {
+            switch (*(u8 *)&D_800E6280.unk_F5F) {
             case 0:
                 func_800AE0F0(D_800CA1DC, "自宅前");
                 D_80145048 = D_80144F14;
@@ -156,10 +152,8 @@ s32 func_80135DC0(s32 arg0) {
                 break;
             case 7:
                 D_80145048 = D_80144F20;
-                var_t9 = D_80144F88;
                 D_8014504C = D_80144F54;
-block_42:
-                D_80145050 = var_t9;
+                D_80145050 = D_80144F88;
                 break;
             case 8:
                 D_80145048 = D_80144F10;
@@ -173,11 +167,11 @@ block_42:
                 break;
             case 10:
                 D_80145048 = D_80144F40;
-                var_t9 = D_80144FA8;
                 D_8014504C = D_80144F74;
-                goto block_42;
+                D_80145050 = D_80144FA8;
+                break;
             }
-            temp_v1_2 = D_800E6280.unk_03F;
+            temp_v1_2 = *(u8 *)&D_800E6280.unk_03F;
             if (temp_v1_2 >= 4U) {
                 var_v0_2 = D_800E6280.unk_03E;
                 D_8014506C = var_v0_2 - 0x5F;
@@ -187,34 +181,29 @@ block_42:
             }
             D_80145070 = 0;
             D_80145078 = 0;
-            if (((var_v0_2 != 0x5F) || (temp_v1_2 != 6) || (D_800E6280.unk_040 != 3)) && ((temp_a3 = D_800E6280.unk_040, (var_v0_2 != 0x60)) || (temp_v1_2 != 6) || (temp_a3 != 1))) {
-                if (((var_v0_2 != 0x61) || (temp_v1_2 != 6) || (temp_a3 != 7)) && ((var_v0_2 != 0x5F) || (temp_v1_2 != 0xA) || (temp_a3 != 0xE)) && ((var_v0_2 != 0x60) || (temp_v1_2 != 0xA) || (temp_a3 != 0xC))) {
-                    if ((var_v0_2 == 0x61) && (temp_v1_2 == 0xA) && (temp_a3 == 0xB)) {
-                        goto block_64;
-                    }
-                } else {
-                    goto block_65;
-                }
-            } else {
-block_64:
-block_65:
-                sp34 = 0x140;
-                sp36 = 0x1A0;
-                sp38 = 0x140;
-                sp3A = 0x58;
-                func_8009C7F8((RECT *) &sp34, 8, 0, 0);
-                sp34 = 0x2C0;
-                sp36 = 0xA0;
-                func_8009C7F8((RECT *) &sp34, 8, 0, 0);
+            if ((0x5F == var_v0_2 && 6 == temp_v1_2 && *(u8 *)&D_800E6280.unk_040 == 3) ||
+                (0x60 == var_v0_2 && 6 == temp_v1_2 && *(u8 *)&D_800E6280.unk_040 == 1) ||
+                (0x61 == var_v0_2 && 6 == temp_v1_2 && *(u8 *)&D_800E6280.unk_040 == 7) ||
+                (0x5F == var_v0_2 && 10 == temp_v1_2 && *(u8 *)&D_800E6280.unk_040 == 14) ||
+                (0x60 == var_v0_2 && 10 == temp_v1_2 && *(u8 *)&D_800E6280.unk_040 == 12) ||
+                (0x61 == var_v0_2 && 10 == temp_v1_2 && *(u8 *)&D_800E6280.unk_040 == 11)) {
+                rect.x = 0x140;
+                rect.y = 0x1A0;
+                rect.w = 0x140;
+                rect.h = 0x58;
+                func_8009C7F8(&rect, 8, 0, 0);
+                rect.x = 0x2C0;
+                rect.y = 0xA0;
+                func_8009C7F8(&rect, 8, 0, 0);
             }
-            var_v0 = func_8004284C();
+            func_8004284C();
             if ((D_80145074 != 0) || (D_800E6280.unk_71E & 0x20)) {
-                var_v0 = func_80042940(0x43);
+                func_80042940(0x43);
             }
             if (D_80145088 != 0) {
-                var_v0 = func_80042940(0x43);
+                func_80042940(0x43);
             }
         }
     }
-    return var_v0;
+
 }
