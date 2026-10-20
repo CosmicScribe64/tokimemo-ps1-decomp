@@ -2222,3 +2222,46 @@ All eight archived full-TU cases reproduce their negative metrics with explicit-
 ## [2026-10-20] ticket | Hand off completed bounded overlay investigations
 
 [[tickets/T-24510-parallel-overlay-coordination]] moves to In Review after all six source-backed lane tickets finish bounded work. Family1b212b6f7 source-only review no findings, five actual-C replay cases and all27 built hashes/guards pass. Earlier archive0abd29391 integrated127bba16c; MASTER8b76c1b46, NAME_ENT30b4f5716 and family1b212b6f7 await root acceptance. Zero new C matches/bytes, production unchanged across every worker. Durable sources/blockers preserved; no workers remain compiling.
+
+## [2026-10-20] ticket | T-24514 MASTER lane initialized
+
+[[tickets/T-24514-master]] is In Progress in isolated /private/tmp/tokimemo-t24514
+from dba33c4f5. Root reassigned the finished ENDING research lane to MASTER.
+Read [[notes/functions]] and [[families/master-family-results]] before source
+work; no main_api edits and no duplicate compiler work.
+
+## [2026-10-20] build | T-24514 MASTER twin lifetime probes
+
+[[tickets/T-24514-master]]: MASTER baseline checksum OK. Current typed35FB8
+matched-twin port scores58. Separate end marker148, do-marker58, absolute
+initializer62, absolute endpoints150; no match. Existing early s2 lifetime
+remains. Production and shared headers unchanged; next source reconstruction
+uses the related animation handlers rather than more lifetime permutations.
+
+## [2026-10-20] build | T-24514 animation reconstruction
+
+[[tickets/T-24514-master]]:363F4 target-specific source with archived344E0 typed
+shared-loop donor compiles at420 aligned. Indexed clone363, indexed points424;
+frame remains72 versus64. No match or compiler-limit proof. Donor344E0 is not
+matched C.35FB8 explicit shuffle pointer58 gives no further improvement.
+
+## [2026-10-20] build | T-24514 recovered animation frame
+
+[[tickets/T-24514-master]]:363F4 indexed clone with one-use RNG local removed
+scores342 and recovers frame64. First213 instructions match; aligned-copy end
+temporary and later loop/spill differences remain.326B4 historical correct-frame
+baseline scores538. Zero new C bytes; no production/header/compiler changes.
+
+## [2026-10-20] build | T-24514 narrow archive verification
+
+[[tickets/T-24514-master]] replay compiles35FB8 at58 and363F4 at342. MASTER unit
+checksum passes; headers/globals pass after reference-only DATE/TACO splits;
+prototype branch guard0 new disagreements,12 known. Source/header/tool/config
+diff empty. Standards/spec self-review and deslop review of the README complete.
+No full27 rebuild repeated for archive-only work, per root instruction.
+
+## [2026-10-20] ticket | T-24514 source checkpoint in review
+
+[[tickets/T-24514-master]] moves In Progress -> In Review for coordinator review.
+Zero new C bytes. Preserve the concrete copy-end register, loop-compare and
+spill-home residuals; no compiler-impossibility claim. No ownership beyond MASTER.
