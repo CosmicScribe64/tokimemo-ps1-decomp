@@ -2150,3 +2150,7 @@ func_8014FFDC now matches 2,292 linked bytes in default C. Shared loop locals, e
 ## [2026-10-20] lint | Verify T-24520 coordination wiki consistency
 
 Docker tools/wiki.py lint reports zero broken links and zero ticket/kanban mismatches; the existing data/t0018-cases size warning remains. Coordinator read the indexed T-24301/T-24303 and T-24029 negative evidence. GYOZI func_80140E0C's five-row blocker is constant-zero range and frame placement; RPG_BAT func_8014BB80's 22-row checkpoint uses a volatile read to block promotion but adds an address calculation. Workers received bounded byte-view/alias hypotheses based on existing [[playbook]] recipes. No source change or new coverage claimed.
+
+## [2026-10-20] query | New source hypotheses reach exact instruction candidates
+
+Seasonal T-24523 reports SHOUGATU func_80133B44 resolved score 82 to zero by narrowing the text-width product before the existing final s16 cast. Parent source review finds no standards blocker: default C, redundant modulo narrowing and two padding slots explicitly marked FAKE, existing strings unchanged. RPG_BAT T-24522 reports target instructions for func_8014BB80 after using a GameState pointer in both switches; pointer slot/frame cleanup remains. Neither candidate counts as coverage until private linked proof, 27 checksums and guards pass. See [[tickets/T-24520-parallel-tail-coordination]].
