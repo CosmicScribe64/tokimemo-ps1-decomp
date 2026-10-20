@@ -2819,3 +2819,11 @@ Fresh Docker full-TU baseline and the single canonical `D_8011F4DE` trial both s
 ## [2026-10-20] decision | Focus remaining compute on sndi reconstruction
 
 [[status]] records the sole active Sol worker on MAIN sndi, corrected found-flag behavior and diagnostic259/263-word gap. MAIN54E6C completed Luna/Sol/Astra escalation: no supported source/ABI explanation for unused64 frame bytes, no Astra compiles or padding grid. ENDING387B0 hybrid negative is preserved at0cd20d65a; Luna and Astra idle. Latest contributor check remains no open PRs and unchanged issue65. No new verified coverage; [[tickets/T-24500-completion-orchestration]] remains active.
+
+## [2026-10-20] decision | Recover text substitution buffers and control joins
+
+[[tickets/T-24501-main-tail]] reconstructs `sndi` string arrays and corrects inherited flag-reset semantics. Existing scalar before arrays reproduces observed frame/buffer homes; best210/259words, branch-reset211/260 versus263 target. Separate scan ranges fail310; signed view rejected for LB mismatch. No production edit, compiler escalation or padding grid. Continued structural evidence in [[matching-notes]].
+
+## [2026-10-20] decision | Freeze text substitution IV packet
+
+[[tickets/T-24501-main-tail]] preserves `sndi` source210/259words and branch-reset211/260 versus263 target, exact observed buffer homes/frame118. Two-base forms and final approved conditional increments do not recover target cursor recomputation; final303/262/frame120 rejected. Source-only replay, precise LBU/induction evidence and capacity cautions archived; no production/header edit or compiler-defect claim. See [[matching-notes]].

@@ -35,7 +35,11 @@ variant = folder / 'variant.c'
 variant.write_text('\n'.join(prefix) + '\n' + source.replace(marker, body))
 obj, _ = verify.compile_unit(ctx, folder, source=variant)
 got = diff.resolved_functions(obj, [name])[name]
-print(name, 'resolved instruction edit cost', diff.diff_score(want, got))
+print(name, 'resolved instruction edit cost', diff.diff_score(want, got),
+      'padded words target/candidate', len(want), len(got))
 
 (folder / 'resolved.diff').write_text('\n'.join(diff.diff_lines(want, got)))
 print('diagnostic source/object/diff:', folder)
+
+for label, rows in [('target', want), ('got', got)]:
+    (folder / (label + '.txt')).write_text('\n'.join(row[1] for row in rows))
