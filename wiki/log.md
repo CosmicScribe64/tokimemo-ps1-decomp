@@ -2853,6 +2853,19 @@ Root reassigns TACO EAA4 in existing clean worktree. Read latest notes and origi
 ## [2026-10-20] decision | T-24502 EAA4 structural handoff
 
 Real middle row use plus separate height/width recover independent row count, height spill and saved Y/stride; third Y512 endpoint recovered. Full-TU491-word candidate has aligned cost186 and192 positional rows, predominantly real home differences; original121 control retained. Source-only replay, home/size/lifetime table and twelve non-stack-word classification saved; no new compilation merely for handoff. No padding/zero controls, production changes or coverage credit. [[tickets/T-24502-taco-completion]] and [[matching-notes]].
+
+## [2026-10-20] query | T-24502 current CLUT trace fidelity
+
+Root-requested current-candidate trace matches all487 stock instruction words; only four trailing stock padding words are absent. Narrow first CLUT divergence146 maps kind split range to a2 instead of targeta3, priority0.5, while first-cycle frame priority1.5 was allocated earlier to v0. No original interference/source fix yet established; exact private paths and scope saved in packet NOTES, no source variants or padding experiments. [[tickets/T-24502-taco-completion]] and [[matching-notes]].
+
+## [2026-10-20] query | T-24502 adjacent CLUT donor audit
+
+Matched E778/F468 use the same call declarations but no conditional modulo pattern; no supported missing value/call-view fix emerged. Existing EAA4 semantics agree, candidate preserved without forced interference/frame objects. Root requested concise trace/negative pin and an existing-notes-only next-defect check. [[tickets/T-24502-taco-completion]] and [[matching-notes]].
+
+## [2026-10-20] decision | T-24502 no supported next semantic defect
+
+Bounded existing-notes check finds prior semantic/type repairs already preserved in remaining NAME_ENT/TACO packets; documented residuals are allocation/home/copy or previously tested controls. No supported uncorrected semantic defect selected and no new scan/compile run. Idle per root instruction, keeping EAA4 candidate intact. [[tickets/T-24502-taco-completion]].
+
 ## [2026-10-20] decision | Preserve inverse serializer copy-ring packet
 
 [[tickets/T-24501-main-tail]] recovers `func_80054FC0` record copies and natural byte checksum; unsigned counter restores target multiply shape. Source-only 113/200 words versus 199 target, first 45 resolved rows exact, frame 0x28. Explicit return-ABI controls unchanged. Narrow unrolled-copy temporary and epilogue evidence/replay archived; production remains ASM. Parent requested freeze for consultation. See [[matching-notes]].
