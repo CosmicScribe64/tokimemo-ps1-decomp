@@ -558,3 +558,15 @@ Default linked C matches all 2,292 bytes; all 27 binaries SHA1 OK after adding i
 - The two-entry tail loops use `tail = &D_8016024C[4]` and `tail[i]`. Walking `tail++` leaves six call-delay stores early; direct `D_8016024C[i + 4]` retains the displacement on every load rather than on the initial pointer.
 - Group `i = 0; do {` for the first loop and `tail = &D_8016024C[4]; i = 0; do {` for the tail loops. It places each synthesized base load before the zero-counter move, as the original. Marked FAKE source grouping. No callee view change helps (own void/s32 and func_80147674 void/s32, K&R/prototype all tested).
 - Parent source review found no blockers. Header/global guards and prototype branch check pass (0 new disagreements). No asm, toolchain or raw data edits.
+
+### T-24502: typed TACO func_80145650 checkpoint
+
+`drafts/T-24502/TACO/func_80145650/` contains a repaired SDK-typed draft (POLY_FT4 **, MATRIX, two SVECTORs). Production remains INCLUDE_ASM. Angle declared before the aggregates gives the exact 0x88 frame and matrix/input/output homes 0x54/0x7C/0x74. All words through the second matrix copy agree. First divergence is the copy's alternating register t8 instead of t5 (source t3 agrees); the next input.vx reload is t7 instead of t8, then temporary-ring differences propagate. Scratch 480 words includes three alignment nops beyond the target's 477; resolved search cost 401. XYZ input order helps scheduling; translation order, 9 narrowing forms, and 8 own/callee return-view combinations do not close it. No claim of an unreachable compiler gap; moved to another stale draft rather than a broad scheduler search.
+
+### T-24502: typed TACO func_8013EAA4 checkpoint
+
+Fresh three-quad renderer C in `drafts/T-24502/TACO/func_8013EAA4/` compiles (stale draft failed); production stays asm. Distinct y accumulators but shared o/j counters reduce the new baseline's resolved cost 415 to 125. Four texture byte arrays needed only in the scratch declaration. First projection's v/pt/pos homes and instruction registers match; matrix needs C8 -> E8 and frame232 ->272, depth/flag and kind/phase homes differ. Middle projection still promotes size in s5 instead of spilling it and keeping the step in s2, eliminates the original s4 row count, and CLUT remainder registers differ. Third latch compares the derived offset8 instead of y512. Counter/size splitting and a pointer-walk variant worsen it. Saved exact diagnostics and moved on without a broad source grid.
+
+### T-24502: typed TACO func_8013FBF0 checkpoint
+
+SDK SPRT rewrite in `drafts/T-24502/TACO/func_8013FBF0/` remains a draft (resolved cost154, same260-word length, frame72 versus96). Natural four-arm thresholds reproduce the original redundant red assignments; the m2c factored form does not. Target fourth argument to func_80049A40 has no s16 narrowing, so the scratch uses its existing override guard with a wide K&R view and removes the explicit cast. Channel `*= value` assignments help, but first multiply destinations still differ (original s0/t0/t1) and later ring differences propagate. No production override or source change.

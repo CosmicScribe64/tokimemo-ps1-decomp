@@ -1,0 +1,7 @@
+# T-24502 typed three-quad renderer checkpoint
+
+Production remains INCLUDE_ASM. Fresh SDK-typed C compiles; old T-16560 draft did not. Scratch requires `extern u8 D_8015F560[8], D_8015F568[8], D_8015F570[8], D_8015F578[8];` before the body; these were not added to production headers.
+
+Best typed body uses one o/j pair for all projection loops, distinct y0/y1/y2 accumulators. Resolved search cost125 (old fresh baseline415); scratch484 words versus target487, where target has four trailing nops. Frame232 versus target272. First-loop instructions/registers match except homes and initial zero scheduling; v/pt/pos homes already match C0/B0/A8, matrix is C8 versus E8, depth/flag A4/A0 versus94/90, kind/phase9C/98 versus88/84. Main remaining structural miss: middle projection loop promotes wave size in s5, step spills; original spills size at74 and keeps step in s2 plus outer row count in s4. Current optimizer replaces outer count with the derived byte offset. Its CLUT remainder/selector registers also differ. Third outer-loop latch compares derived offset8 rather than y accumulator512.
+
+Bounded experiments: shared loop accumulators gave415; splitting only y gives125; splitting only o309, only j471, o+y367, all499. Splitting the middle o/size separately or writing the middle loop as an explicit pointer walk worsens allocation. No broad scheduler search or compiler edits performed. Continue from this body only with a concrete induction/spill hypothesis.

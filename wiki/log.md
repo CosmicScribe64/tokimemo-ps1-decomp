@@ -2093,3 +2093,15 @@ After the parent review's header placement fix, default func_80140028 matches 82
 ## [2026-10-20] build | T-24502 largest TACO function matched
 
 func_8014FFDC now matches 2,292 linked bytes in default C. Shared loop locals, existing table indexing and marked initializer grouping replace stale split-variable code. Parent review found no blockers; all 27 binary SHA1 checks and source guards pass after its own header declaration. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the source forms and failed alternatives.
+
+## [2026-10-20] decision | T-24502 checkpoint typed quad transform
+
+Archived repaired func_80145650 C and concrete second-copy/register diagnostics in `drafts/T-24502/TACO/func_80145650/`; source remains asm. Bounded type, layout and return-view probes did not close its propagated ring differences. [[matching-notes]] records the exact first divergence; continuing other TACO functions under [[tickets/T-24502-taco-completion]].
+
+## [2026-10-20] decision | T-24502 typed renderer checkpoint
+
+Saved repaired func_8013EAA4 in `drafts/T-24502/TACO/func_8013EAA4/`: baseline cost415 reduced to125 by separating y accumulators. Remaining induction/spill differences are documented in [[matching-notes]]; production remains asm. Moving to a different TACO stale draft.
+
+## [2026-10-20] decision | T-24502 checkpoint typed sprite renderer
+
+Archived func_8013FBF0 typed SPRT draft with natural threshold branches and documented wide argument view. It remains asm: multiply destinations and later temporary numbering differ. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record all three archived TACO checkpoints and concrete first differences.
