@@ -10,7 +10,7 @@ updated: 2026-10-18
 
 ## Summary
 
-Investigated and implemented `tools/ugen_pass.py`, a uniform ucode-to-binasm shim for IDO 5.3's `ugen` block-copy direction state (`F` vs `B`) difference documented in `[[build-step-gaps]]`, `[[ido-52-evaluation]]`, `[[tickets/T-20710-remaining-build-step-gaps]]`, and `[[tickets/T-24085-event-geko-twins-b]]`.
+Investigated and implemented `tools/ugen_pass.py`, a uniform ucode-to-binasm shim for IDO 5.3's `ugen` block-copy direction state (`F` vs `B`) difference documented in `[[build-step-gaps]]`, `[[ido-52-evaluation]]`, `[[tickets/T-20710-true-gap-census]]`, and `[[tickets/T-24085-event-geko-twins-b]]`.
 
 ## Findings & Implementation
 
