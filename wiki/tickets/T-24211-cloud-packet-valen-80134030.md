@@ -1,7 +1,7 @@
 ---
 id: T-24211
 title: Cloud packet: VALEN func_80134030
-status: In Review
+status: Done
 assignee: claude (cloud)
 created: 2026-10-20
 updated: 2026-10-20
@@ -25,3 +25,5 @@ Packet asm lives only under the gitignored `asm/`; never committed.
 ## Comments
 
 - 2026-10-20: setup proven (asm-fallback scratch copy equals the packet reference, 0 lines; the draft 6 instruction lines). Not matched: as1 hoists the default block's first two `lui` into the single predecessor (range-check block); only a jump-table reference to the default (`case 10:`, bound 11) stops it. About 30 variants and a scan of 174 matched files (OMIMAI `func_801340E4` hoists the same way in the original). Guard comment now T-24211. Details in [[matching-notes]] (T-24211). Local linked build proof (comment-only change in code) and review due.
+
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): cloud branch changed only its C file and wiki, no asm or game data; merged with a clean 27/27 build and header/global/prototype checks. No match; guard down to 6 rows with an updated note. Done.

@@ -20932,3 +20932,7 @@ Created [[tickets/T-24211-cloud-packet-valen-80134030]] (In Progress): single-fu
 ## [2026-10-20] ticket | T-24211 In Review: VALEN func_80134030 still guarded
 
 [[tickets/T-24211-cloud-packet-valen-80134030]]: setup proven (asm-fallback scratch copy equals the packet reference); about 30 C variants leave `func_80134030` in `src/ovl/VALEN/80133C70.c` at 6 instruction lines. The miss is as1 hoisting the head of the single-predecessor default block above the range check; only a jump-table reference (`case 10:`, wrong bound) stops it. A scan of 174 matched files shows the original's as1 hoists the same way (OMIMAI `func_801340E4`). Guard comment now T-24211; notes in [[matching-notes]] (T-24211). Local linked proof and review due.
+
+## [2026-10-20] ticket | T-24207, T-24209, T-24210, T-24211 Done
+
+Cloud packet results merged with the linked proof here: ETC `func_80140AE4` (224 B), ETC `func_80144DF0` (388 B) and main `func_800591D8` (304 B) match. VALEN `func_80134030` stays guarded at 6 rows.

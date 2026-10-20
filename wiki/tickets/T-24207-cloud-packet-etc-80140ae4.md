@@ -1,7 +1,7 @@
 ---
 id: T-24207
 title: "Cloud packet: ETC func_80140AE4"
-status: In Review
+status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
@@ -30,3 +30,5 @@ are applied", the only differing row is `D_800E6280+0xF80` against `D_800E7200`)
 `INCLUDE_ASM` removed; two marked FAKEs. Details in [[matching-notes]] (T-24207).
 
 ## Comments
+
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): cloud branch changed only its C file and wiki, no asm or game data; merged with a clean 27/27 build and header/global/prototype checks. Matches: linked funcdiff --resolve MATCH; FAKE comments ticketed. Done.
