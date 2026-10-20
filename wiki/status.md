@@ -9,12 +9,14 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Progress (2026-10-20)
 
-- Game code: 6,815 / 6,952 functions, 2,090,540 / 2,276,920 bytes (91.8%), measured with Docker `tools/progress.py` after source integration `97a004d39`. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
+- Game code: 6,816 / 6,952 functions, 2,091,568 / 2,276,920 bytes (91.9%), measured with Docker `tools/progress.py` after source integration `87df21291`. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
 - Complete units: TT 303/303, DATE2 102/102, and every overlay not listed below.
-- Remaining by unit (137 functions): main 54, TACO 13, GEKO 9, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
+- Remaining by unit (136 functions): main 53, TACO 13, GEKO 9, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
 
 ## Active work
+
+- Latest: MAIN `func_8004A814` adds 1,028 literal default-C bytes at `87df21291`; all 27 executable checksums and declaration guards pass, root source review has no findings. Resumed-run total: 23 functions / 24,564 bytes. Sol 6.1 medium continues the GPU family using the confirmed erased-coordinate-conversion behavior; Astra is idle after the bounded consultation. Other workers are idle to conserve usage. Source-only `func_8004A414` remains unmatched at resolved cost 132; no coverage credit for drafts. Earlier campaign entries below are historical.
 
 - T-24520 isolated lanes delivered six verified default-C functions/5,848 bytes: TAIIKU T-24521 two, RPG_BAT T-24522 two, GYOZI/SHOUGATU T-24523 two. Originating chat serializes integration and owns global progress totals. Follow-up structural probes and fresh-donor comparisons yielded no additional matches; 27 functions remain across these lanes. Tickets remain In Progress while workers investigate concrete owned hypotheses. One private consolidated branch contains all three archive heads plus coordinator notes; source-only checkpoints and stale VALEN guard cleanup add no coverage.
 
