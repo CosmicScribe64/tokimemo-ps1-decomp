@@ -1245,11 +1245,11 @@ s16 func_8006C934(void) {
     }
 }
 
-/* NON_MATCHING: T-24301, 37 rows; control flow and loops match. Left: the unk_00 value of both arms is a
- * uopt range in $t0 (copied to sel and to the last value) where this keeps it in $a0, spilling `first`
- * to its home slot; every later t register is one off. */
+/* NON_MATCHING: T-24301, 11 rows; the record pointer and the unk_00 value swap $t0/$t1, and the last-value
+ * copy is `andi v1,t1,0xff` in both arms where the original has one `move v1,t0` at the join. */
 #ifdef NON_MATCHING
 s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
+    GameState *g = &D_800E6280;
     s32 i;
     s32 n;
     u8 sel;
@@ -1261,19 +1261,19 @@ s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
     i = 0;
     do {
         i++;
-        if (D_800E6280.unk_75E[n].unk_04 == 0) {
+        if (g->unk_75E[n].unk_04 == 0) {
             break;
         }
-        cur = D_800E6280.unk_75E[n].unk_02;
+        cur = g->unk_75E[n].unk_02;
         if (cur != 0 && cur != 1 && cur != 2 && cur != 0xF) {
         } else {
-            sel = D_800E6280.unk_75E[n].unk_00;
+            sel = g->unk_75E[n].unk_00;
         }
-        cur = D_800E6280.unk_75E[n].unk_00;
+        cur = g->unk_75E[n].unk_00;
         n++;
     } while (i < 0x100);
     for (i = n; i < 0x100; i++) {
-        D_800E6280.unk_75E[i].unk_04 = 0;
+        g->unk_75E[i].unk_04 = 0;
     }
     *first = sel;
     *last = cur;
