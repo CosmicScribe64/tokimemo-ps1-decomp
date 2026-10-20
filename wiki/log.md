@@ -20920,3 +20920,7 @@ Created [[tickets/T-24209-cloud-packet-etc-80144df0]] for `func_80144DF0` in `sr
 ## [2026-10-20] ticket | T-24209 In Review: ETC func_80144DF0 instruction match
 
 [[tickets/T-24209-cloud-packet-etc-80144df0]]: asm fallback equals the packet reference (single-function scratch setup; `funcdiff --resolve` differs only by the reference's trailing alignment nops). `func_80144DF0` from 47 scratch row-diff lines to 0 in plain C, guard and `INCLUDE_ASM` removed in `src/ovl/ETC/80143240.c`. FAKEs: byte-view store of `D_800E6280.unk_1118` re-read as the plain field (uopt promotes it to `$v0`), a repeated view store in the `D_800E8BEE` arm, `s32 pad[3]` for the `slot` spill offset. Notes in [[matching-notes]] (T-24209), idiom row in [[register-cheatsheet]], funcdiff label-noise and 429 notes in [[cloud-matching]]. Local linked proof and review due.
+
+## [2026-10-20] ticket | T-24210 In Review: main func_800591D8 matches (cloud packet)
+
+[[tickets/T-24210-cloud-packet-main-800591d8]]: match packet for `func_800591D8` in src/main/80058D20.c. Asm fallback equals the packet reference; the T-24206 `u16 *` re-read view and else-arm store order plus `unk_002` written first in the if arm give 0 differing lines (from the T-17017 guard's 32). Plain C with one FAKE; notes in [[matching-notes]] (T-24210). Local linked proof and review still due.

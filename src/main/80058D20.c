@@ -156,54 +156,37 @@ void func_800590CC(s32 arg0) {
     func_8009C5E0(1);
 }
 
-/* NON_MATCHING: T-17017, 32 differing lines. Left: frame 0x38 (two extra parameters, which
- * main_api.h does not allow, give 28 lines and frame 0x30), the store of w after the compare
- * load and the stores of w/h before each call (T-0018 constant-in-register family). */
-#ifdef NON_MATCHING
-/* FAKE: aliased `w`/`h` (pw, ph), as in the old T-17017 draft of func_800590CC, keep IDO
- * from propagating the constants; `w` is loaded in the compare so the loaded halfword sits
- * in a0 as in the original. T-17017 */
+/* FAKE: the call re-reads the stored halfwords through a `u16 *` view of D_800E6280 so uopt
+ * forwards the stored registers into a0-a2; each arm writes unk_002 (and the else arm unk_000)
+ * before the unk_014 stores so as1 hoists their li into the branch delay slots, as in
+ * func_800590CC (T-24206). T-24210 */
 void func_800591D8(s32 arg0) {
-    s32 w;
-    s32 h;
-    s32 *pw;
-    s32 *ph;
-
-    pw = &w;
-    ph = &h;
     func_80059308();
     func_8009C674(0);
     func_8009C210(1);
     func_8009C5E0(0);
-    if ((arg0 != 0) && ((w = D_800E6280.unk_000) != 0x200)) {
-        h = 0xF0;
+    if ((arg0 != 0) && (D_800E6280.unk_000 != 0x200)) {
+        D_800E6280.unk_002 = 0xF0;
         D_800E6280.unk_014[0] = 0x100;
         D_800E6280.unk_014[1] = 0x100;
-        w = 0x200;
-        D_800E6280.unk_000 = *pw;
-        D_800E6280.unk_002 = *ph;
+        D_800E6280.unk_000 = 0x200;
         D_800E6280.unk_004 = 0;
-        func_80097F58(*pw, *ph, 0, 0, 0);
+        func_80097F58(((u16 *)&D_800E6280)[0], ((u16 *)&D_800E6280)[1], ((u16 *)&D_800E6280)[2], 0, 0);
         func_8005907C();
         back_clear_switch(1);
-    } else if ((arg0 == 0) && ((w = D_800E6280.unk_000) != 0x140)) {
-        h = 0xF0;
+    } else if ((arg0 == 0) && (D_800E6280.unk_000 != 0x140)) {
+        D_800E6280.unk_000 = 0x140;
+        D_800E6280.unk_002 = 0xF0;
         D_800E6280.unk_014[0] = 0xA0;
         D_800E6280.unk_014[1] = 0xA0;
-        w = 0x140;
-        D_800E6280.unk_000 = *pw;
-        D_800E6280.unk_002 = *ph;
         D_800E6280.unk_004 = 0;
-        func_80097F58(*pw, *ph, 0, 0, 0);
+        func_80097F58(((u16 *)&D_800E6280)[0], ((u16 *)&D_800E6280)[1], ((u16 *)&D_800E6280)[2], 0, 0);
         func_8005907C();
         back_clear_switch(1);
     }
     func_800AD950(0);
     func_8009C5E0(1);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_800591D8);
-#endif
 
 /* FAKE: the RECT field stores sharing a source line are scheduled as a unit by as1, which gives the original's store order (h before w). T-8010 */
 void func_80059308(void) {
