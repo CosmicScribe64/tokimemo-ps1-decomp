@@ -2210,3 +2210,11 @@ All eight archived full-TU cases reproduce their negative metrics with explicit-
 ## [2026-10-20] query | Review MASTER narrow handoff and fixed-copy distinction
 
 [[tickets/T-24510-parallel-overlay-coordination]] records MASTER dfec4bf72/8b76c1b46, unchanged production, zero new C bytes, retained candidate replay/unit hash/interface checks passed. Coordinator narrow archive review no remaining findings. Current aligned68bytecopy register issue is distinct/unproven; T-24092 already fixes historical direction state. NAME_ENT/family continue; parent reports8 matches91.2% outside these lanes.
+
+## [2026-10-20] query | Preserve real semantic repairs without match claims
+
+[[tickets/T-24510-parallel-overlay-coordination]] records NAME_ENT width/cache repairs and BUNKA_SD inverted-condition/draw-coordinate/argument-order repairs, plus EN_NICHI typed reconstruction. None matches. Workers stop bounded negatives and prepare exact narrow source replay and final checks; no production changes, no repeated copy-direction experiments.
+
+## [2026-10-20] query | Return reviewed NAME_ENT handoff
+
+[[tickets/T-24510-parallel-overlay-coordination]]: NAME_ENT00bfc328d/30b4f5716 reviewed source-only/no dumps/context/productiondiff,32 replay controls and all27 built hashes/guards pass, zero matches. Ticket In Review for root acceptance. Parent integrated earlier consolidated archive as127bba16c; MASTER8b76c1b46 also ready, family final checks pending.
