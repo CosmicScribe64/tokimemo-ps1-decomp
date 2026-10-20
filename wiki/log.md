@@ -2815,3 +2815,7 @@ Created [[tickets/T-24571-ending-first-portrait-view]] after confirming the sing
 ## [2026-10-20] build | T24571 canonical portrait16 view negative
 
 Fresh Docker full-TU baseline and the single canonical `D_8011F4DE` trial both score 148 distance cost / 156 printable diff rows (expected187 instructions, built185). Candidate and target frames both0x28; first-guard constant uses v1 in target and a1 in candidate, with branch targets displaced by two instructions. Production unchanged; no match claim. [[tickets/T-24571-ending-first-portrait-view]].
+
+## [2026-10-20] decision | Focus remaining compute on sndi reconstruction
+
+[[status]] records the sole active Sol worker on MAIN sndi, corrected found-flag behavior and diagnostic259/263-word gap. MAIN54E6C completed Luna/Sol/Astra escalation: no supported source/ABI explanation for unused64 frame bytes, no Astra compiles or padding grid. ENDING387B0 hybrid negative is preserved at0cd20d65a; Luna and Astra idle. Latest contributor check remains no open PRs and unchanged issue65. No new verified coverage; [[tickets/T-24500-completion-orchestration]] remains active.
