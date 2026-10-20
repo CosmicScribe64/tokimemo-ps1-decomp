@@ -9,12 +9,14 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Progress (2026-10-20)
 
-- Game code: 6,785 / 6,952 functions, about 90.5% of bytes. SDK libraries (722 functions) stay asm by design ([[psyq-sdk]]).
+- Game code: 6,793 / 6,952 functions, 2,067,004 / 2,276,920 bytes (90.8%), measured with Docker `tools/progress.py` at `2c7293275`. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
 - Complete units: TT 303/303, DATE2 102/102, and every overlay not listed below.
-- Remaining by unit (functions left): main 66 (in 20 files), TACO 19, GEKO 11, TAIIKU 11, ETC 10, GYOZI 8, RPG_BAT 6, ENDING 5, OPTION 5, SHOUGATU 5, KANGEI 4, MASTER 4, NAME_ENT 4, VALEN 4, BUNKA_SD 2, EN_NICHI 2, TEL 2.
+- Remaining by unit (159 functions): main 61, TACO 19, GEKO 11, TAIIKU 11, ETC 10, GYOZI 7, RPG_BAT 6, ENDING 5, SHOUGATU 5, MASTER 4, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
 
 ## Active work
+
+- T-24500: Codex resumed with three Sol 6.1 medium workers: MAIN (T-24501), TACO (T-24502), GEKO/OPTION (T-24503). The user authorized covering issue #65 while its contributor is out of tokens until Friday. Record exact completed functions for handoff; Astra is reserved for specific blockers.
 
 - Local matching sessions on file-disjoint lists: T-24301, T-24302, T-24303 merged (5 matches); next lists from a fresh inventory. Lists: `.claude/orchestrator/lists/l6-p0N-list.txt` (local).
 - Cloud "match packets" ([[cloud-matching]]): T-24200..T-24214 done, 7 matches; paused (cloud usage spent).
