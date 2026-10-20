@@ -54,6 +54,7 @@ kanban-plugin: board
 ## In Progress
 
 
+
 - [ ] [[tickets/T-24502-taco-completion|T-24502 Match remaining TACO functions]]
 
 
@@ -61,7 +62,10 @@ kanban-plugin: board
 
 
 
+
 ## Done
+
+- [ ] [[tickets/T-24525-name-ent-indexed-posttest|T-24525 Test NAME_ENT indexed post-test record loop]]
 
 - [ ] [[tickets/T-24524-name-ent-copy-reads|T-24524 Investigate NAME_ENT copy-loop source read timing]]
 

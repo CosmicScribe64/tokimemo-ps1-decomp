@@ -638,3 +638,7 @@ Scope correction: the preceding70-cost/aligned-tail claims are standalone only. 
 ## T-24524: NAME_ENT copy input-read timing negative
 
 After T-24515/lane histories, tested only the fresh input-read hypothesis for38C1C in full TU. Control181 words/104 rows is identical for volatile first-character read, second-byte reads, or complete input pointer. The three hoisted byte loads in target nop slots persist, so input volatility does not explain the scheduling boundary. No production/header edits, generated archive or matching claim. Exact replay and private output paths are in [[tickets/T-24524-name-ent-copy-reads]]; existing T-24515 reconstruction remains best. No scheduling/qualifier grid follows.
+
+## T-24525: NAME_ENT indexed post-test negative
+
+398EC's direct-global indexed for loop and fresh direct-global indexed post-test do/while both give126 words/173 rows against123 target in full TU; decoded comparisons identical. Earlier post-test controls used pointer aliasing, so this combination was tested once after lane history review. It does not change the allocation/arithmetic gap; no further loop grid or production/header edit. Concise replay/private paths in [[tickets/T-24525-name-ent-indexed-posttest]].

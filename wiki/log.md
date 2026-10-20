@@ -2179,3 +2179,15 @@ All four full-TU controls give181 words/104 rows: unchanged, volatile first read
 ## [2026-10-20] ticket | T-24524 investigation reviewed
 
 Root standards review passes with no findings; concise full-TU negative meets investigation acceptance. Moved In Review to Done, board synchronized. No production changes or coverage claim. [[tickets/T-24524-name-ent-copy-reads]].
+
+## [2026-10-20] ticket | T-24525 indexed post-test hypothesis
+
+Root assigned NAME_ENT80139740.c after read-only lane triage. Test one direct-global indexed do/while against T-24515 for-loop control; earlier do-loop used Rec24 pointer aliasing. No shared header or production change. [[tickets/T-24525-name-ent-indexed-posttest]].
+
+## [2026-10-20] decision | T-24525 indexed post-test unchanged
+
+Full-TU control and sole direct-global indexed post-test variant both126 words/173 rows; decoded comparisons identical. Loop header form does not explain remaining allocation/arithmetic differences, so no grid follows. Moved In Progress to In Review; source/header/config/tools unchanged. [[tickets/T-24525-name-ent-indexed-posttest]] and [[matching-notes]].
+
+## [2026-10-20] ticket | T-24525 investigation reviewed
+
+Root standards review passes with no findings; full-TU unchanged result meets investigation acceptance. Moved In Review to Done, board synchronized; production unchanged. [[tickets/T-24525-name-ent-indexed-posttest]].
