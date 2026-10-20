@@ -124,65 +124,45 @@ void func_8005907C(void) {
     D_8011ECA0 = func_80098370();
 }
 
-/* NON_MATCHING: T-17017, 16 differing lines. Left: the entry spills of a1/a2 and the
- * stores of w/h to their home slots before each call, which the original does not have
- * (T-0018 constant-in-register family). Closer pass: element-target assignments in the call
- * arguments share a0/a1 but put lui before li and drop the else-arm hoist (36 lines); `(&w)[0]`
- * locals alias w/h but grow the frame to 0x38 (31); `*&w` and plain parameters propagate (40, 42);
- * only w aliased gives 34. */
-#ifdef NON_MATCHING
-/* FAKE: `w` and `h` are extra parameters (the main_api.h prototype is `()`) whose
- * addresses are read (pw, ph). Aliased variables keep IDO from propagating the
- * constants, so 0x140/0xF0 are loaded into a0/a1 before the branch and stored and
- * passed from those registers as in the original; the parameters' home slots in the
- * caller's area keep the frame at 0x30 (locals cost 8 bytes, 22 lines). T-17017 */
-void func_800590CC(s32 arg0, s32 w, s32 h) {
-    s32 *pw;
-    s32 *ph;
-
+/* FAKE: the call arguments re-read the three halfwords just stored through a `u16 *` view of
+ * D_800E6280; uopt then passes the stored registers (a0/a1) instead of folding the constants,
+ * which plain field reads do (18 lines). The else arm stores unk_000/unk_002 before unk_014 so
+ * their `li` lead the arm and as1 hoists them above the branch, as in the original. T-24206 */
+void func_800590CC(s32 arg0) {
     func_8009C674(0);
     func_8009C210(1);
     func_800AD950(0);
     func_8009C5E0(0);
-    w = 0x140;
-    h = 0xF0;
-    pw = &w;
-    ph = &h;
     if (arg0 != 0) {
         D_800E6280.unk_014[0] = 0x80;
         D_800E6280.unk_014[1] = 0x80;
-        w = 0x100;
-        D_800E6280.unk_000 = *pw;
-        h = 0xF0;
-        D_800E6280.unk_002 = *ph;
+        D_800E6280.unk_000 = 0x100;
+        D_800E6280.unk_002 = 0xF0;
         D_800E6280.unk_004 = 0;
-        func_80097F58(*pw, *ph, 0, 0, 0);
+        func_80097F58(((u16 *)&D_800E6280)[0], ((u16 *)&D_800E6280)[1], ((u16 *)&D_800E6280)[2], 0, 0);
         func_8005907C();
         back_clear_switch(1);
     } else {
+        D_800E6280.unk_000 = 0x140;
+        D_800E6280.unk_002 = 0xF0;
         D_800E6280.unk_014[0] = 0xA0;
         D_800E6280.unk_014[1] = 0xA0;
-        D_800E6280.unk_000 = *pw;
-        D_800E6280.unk_002 = *ph;
         D_800E6280.unk_004 = 0;
-        func_80097F58(*pw, *ph, 0, 0, 0);
+        func_80097F58(((u16 *)&D_800E6280)[0], ((u16 *)&D_800E6280)[1], ((u16 *)&D_800E6280)[2], 0, 0);
         func_8005907C();
         back_clear_switch(1);
     }
     func_800AD950(0);
     func_8009C5E0(1);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_800590CC);
-#endif
 
 /* NON_MATCHING: T-17017, 32 differing lines. Left: frame 0x38 (two extra parameters, which
  * main_api.h does not allow, give 28 lines and frame 0x30), the store of w after the compare
  * load and the stores of w/h before each call (T-0018 constant-in-register family). */
 #ifdef NON_MATCHING
-/* FAKE: aliased `w`/`h` (pw, ph) as in func_800590CC keep IDO from propagating the
- * constants; `w` is loaded in the compare so the loaded halfword sits in a0 as in the
- * original. T-17017 */
+/* FAKE: aliased `w`/`h` (pw, ph), as in the old T-17017 draft of func_800590CC, keep IDO
+ * from propagating the constants; `w` is loaded in the compare so the loaded halfword sits
+ * in a0 as in the original. T-17017 */
 void func_800591D8(s32 arg0) {
     s32 w;
     s32 h;

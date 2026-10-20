@@ -41,6 +41,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-24203-cloud-packet-geko-80136c20|T-24203]] cloud packet, GEKO `func_80136C20` still 4 rows guarded (as1 places the selector `lui`), In Review.
+- [[tickets/T-24206-cloud-packet-main-800590cc|T-24206]] cloud packet, main `func_800590CC` 16 rows -> instruction match (FAKE `u16 *` re-read view), In Review.
 - [[tickets/T-24200-cloud-packet-taco-8013b460|T-24200]] cloud packet pilot, TACO `func_8013B460` 41 -> 2 rows guarded, toolchain recipe in [[cloud-matching]], In Review.
 - [[tickets/T-24063-taco-short-count|T-24063]] TACO corrected buffer source and refreshed controls, zero matches, In Review.
 - [[tickets/T-24060-shugaku-short-selectors|T-24060]] SHUGAKU52/62-row corrected source leads, zero matches, In Review.

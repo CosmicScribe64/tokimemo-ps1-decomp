@@ -20875,3 +20875,7 @@ Created [[tickets/T-24203-cloud-packet-geko-80136c20]] (In Progress): single-fun
 ## [2026-10-20] ticket | T-24201, T-24203 Done
 
 Cloud packet sessions finished without a match: [[tickets/T-24201-cloud-packet-kangei-80134724]] KANGEI `func_80134724` stays at 2 rows, T-24203 GEKO `func_80136C20` at 4 rows; notes merged.
+
+## [2026-10-20] ticket | T-24206 In Review: main func_800590CC instruction match
+
+[[tickets/T-24206-cloud-packet-main-800590cc]] (cloud packet): `func_800590CC` in `src/main/80058D20.c` from the T-17017 guard (16 lines) to 0 differing instructions in the scratch single-function diff; plain C, guard and `INCLUDE_ASM` removed. FAKE: the call arguments re-read the stored `D_800E6280` halfwords through a `u16 *` view (uopt forwards the stored registers), one statement per line, else arm stores `unk_000/002` first. Notes in [[matching-notes]] (T-24206), idiom row in [[register-cheatsheet]]. Local linked proof and review still due.
