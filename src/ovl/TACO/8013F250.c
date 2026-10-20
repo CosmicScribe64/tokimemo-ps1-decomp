@@ -131,7 +131,80 @@ void func_80140000(void) {
     func_80140028(1);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013F250", func_80140028);
+
+void func_80140028(s32 arg0) {
+    Tc14 *particle;
+    Tc14 *base;
+    s32 target;
+    s32 pad; /* FAKE: preserve the original vector homes and frame. T-24502 */
+    VECTOR offset;
+    VECTOR velocity;
+    TcActor *actor;
+    TcActor *player;
+    s32 i;
+
+    if (arg0 == 0) {
+        player = D_8015EDB4;
+        base = D_8015E4F0;
+    } else {
+        base = D_8015E630;
+        player = D_8015EDB4 + 8;
+    }
+    i = 0;
+    particle = base;
+    do {
+        particle->unk12++;
+        if (particle->unk12 == 0xFF) {
+            particle->unk13 = 0;
+        }
+        if (particle->unk4 < -0x7D00) {
+            particle->unk13 = 0;
+        }
+        if (player->unk78 + 0x400 < particle->unk4) {
+            particle->unk13 = 0;
+        }
+        if (particle->unk13 & 0x80) {
+            if ((particle->unk13 & 1) && particle->unk12 >= 0x11) {
+                if (!(D_800E6280.unk_10F8 & 3)) {
+                    target = particle->unk11;
+                    if (target != -1) {
+                        actor = D_8015EDB4 + target;
+                        if (actor->unk78 < particle->unk4 && (actor->unk0[1] & 0x80) && (actor->unk84[3] & 1)) {
+                            offset.vx = actor->unk74 - particle->unk0;
+                            offset.vy = actor->unk76 - particle->unk2;
+                            offset.vz = 0;
+                            func_800AA460(&offset, &velocity);
+                            particle->unk8 = (particle->unk8 + velocity.vx / 64) / 2;
+                            if (particle->unk8 >= 0x41) {
+                                particle->unk8 = 0x40;
+                            }
+                            particle->unkA = (particle->unkA + velocity.vy / 64) / 2;
+                            if (particle->unkA >= 0x41) {
+                                particle->unk8 = 0x40;
+                            }
+                        }
+                    } else {
+                        func_801407D4(&target, *(TcPos *)particle);
+                        particle->unk11 = target;
+                    }
+                }
+            } else if (particle->unk12 >= 0x11 && particle->unk11 == 0) {
+                particle->unk11 = 1;
+                particle->unk12 = 0;
+                particle->unkC = -0x200;
+                particle->unk8 /= 16;
+                particle->unkA /= 16;
+            }
+            particle->unk0 += particle->unk8;
+            particle->unk2 += particle->unkA;
+            particle->unk4 += particle->unkC;
+            func_80140ADC(base, i);
+        }
+        i++;
+        particle++;
+    } while (i != 16);
+}
+
 
 s32 func_80140364(s32 arg0, s32 arg1) {
     /* FAKE: the unused k reserves the original's top frame home (i sits at 0x38, the frame is

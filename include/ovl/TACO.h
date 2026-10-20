@@ -250,6 +250,7 @@ typedef struct Tc14 {
     /* 0x12 */ u8 unk12;
     /* 0x13 */ u8 unk13;
 } Tc14; /* size 0x14; same record as TacoParticle14 (two TcPos, four bytes), T-16560 */
+void func_80140ADC(Tc14 *arg0, s32 arg1);
 void func_80151F94(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_801522B0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3);
 void func_80152C60(s32 arg0);

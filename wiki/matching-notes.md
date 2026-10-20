@@ -537,3 +537,15 @@ Parked as INCLUDE_ASM with drafts in drafts/T-24301/ (each file's header says wh
 - Further drafts (far in rows): main func_8006BA40 (41: D_8011ECF6 as the promoted global), func_8006D138, mod_set, mod_set_gpu, srn_set, hizuke_init, get_fnt, func_8004A1A0; OPTION func_801326BC; GEKO func_80133C50; GYOZI func_801412A4; RPG_BAT func_8014BFE4.
 
 Tools: viewsweep (`--targets FILE` with `UNIT:func BODY.c` lines) found the one OPTION match and nothing for the eleven parked drafts or the eighteen untried T-14500/T-17000 drafts; permuter runs gave the func_80140E0C counter trick (220 to 180) and `s32 cur` plus a one-line loop head for func_8006C988 (11 to 10 rows, not taken).
+
+## T-24502: TACO particle update func_80140028
+
+[[tickets/T-24502-taco-completion]]: fresh typed C in `src/ovl/TACO/8013F250.c` matches the default linked function bytes (828 bytes). The older T-16100 draft had stale pointer arithmetic (`Tc14 * += 0x14`, `TcActor * + 0x440`), obsolete fields, and a missing by-value argument. Use ordinary `particle++`, actor index 8, and `func_801407D4(&target, *(TcPos *)particle)`.
+
+- `VECTOR offset, velocity` preserves the original temporary registers; replacing them with word arrays changes the operand evaluation order and register ring.
+- Declare `particle` and `base` before `target`, then one documented FAKE scalar home, then the two vectors. This gives target sp+0x8C, offset sp+0x78, velocity sp+0x68 and frame 0x98. Merely adding padding without moving the pointers does not give those homes; bounded vector/array and padding-only layouts failed.
+- Assign offset x, y, z in that order. The original's zero z store then schedules between the y loads, and the second-argument address schedules before the x subtraction. x, z, y leaves precisely those two instructions swapped.
+- The original tests `unkA >= 0x41` but clamps `unk8` again; preserve it. Its target byte is promoted to a word and compared to -1; preserve that comparison too.
+- `func_80140ADC` gets its existing `void (Tc14 *, s32)` definition declared once in `include/ovl/TACO.h`; no override needed.
+
+Close-tail probe: fusing func_8013B460's y3 store and UV comma stores into one comma expression leaves the documented two moved halfword stores unchanged. Restored its baseline and moved on.

@@ -2085,3 +2085,14 @@ The l6-p01 merge carried 9 matches, not 1; listed in [[tickets/T-24301-local-lis
 ## [2026-10-20] query | Rank the remaining large functions
 
 Docker scan of current source INCLUDE_ASM entries and generated size headers identifies TEL func_80136724 as the largest remaining function (6,580 code bytes; older 7,044 includes jump tables). Ranked next targets and the prior exhausted TEL month-promotion avenue are recorded in [[tickets/T-24500-completion-orchestration]]. Three Sol workers remain active; no additional match claimed.
+## [2026-10-20] ticket | T-24502 TACO completion
+
+Created [[tickets/T-24502-taco-completion]] In Progress in an isolated worktree from 2c7293275. Read [[index]], [[status]], [[playbook]] and project standards; TACO source ownership only.
+
+## [2026-10-20] build | T-24502 TACO func_80140028 literal match
+
+Fresh typed particle-update C matches all 828 linked target bytes in the default build. Corrected stale draft strides/fields and the TcPos argument; declaration layout and XYZ store order closed the remaining stack and scheduling differences. Recorded experiments in [[matching-notes]]. Full 27-binary build and header/prototype verification pending before integration; [[tickets/T-24502-taco-completion]] remains active.
+
+## [2026-10-20] build | T-24502 verified TACO particle update
+
+After the parent review's header placement fix, default func_80140028 matches 828 linked bytes and all 27 built binaries independently match their pinned SHA1 values. Header/global guards and prototype branch check pass (0 new disagreements). [[tickets/T-24502-taco-completion]] records the resolved review finding; campaign continues.
