@@ -2485,7 +2485,7 @@ void cal_base_show(void);
 void func_80069128();
 void cal_sprite_init(void);
 void func_800696DC(s32, s32);
-void func_8006A044();
+s32 func_8006A044();
 void func_8006A2CC();
 void func_8006B0C8();
 void club_list_menu(void);

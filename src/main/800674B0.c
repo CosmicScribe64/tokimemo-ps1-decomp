@@ -583,7 +583,92 @@ void func_800696DC(s32 arg0, s32 arg1) {
     k_sub_disp_start(6);
 }
 
+/* NON_MATCHING: T-24301, 86 rows; F64[1] is a promoted global in $v0 (store-backs, `move; ori; andi` per |=),
+ * the month in $v1; the FAKE empty test gets the numbering but hoists the first F64[1] load. */
+#ifdef NON_MATCHING
+s32 func_8006A044(arg0, arg1)
+s32 arg0;
+s32 arg1;
+{
+    if (D_800E6280.unk_F64[1]) {} /* FAKE: T-24301, numbers F64[1] before the month */
+    if (D_800E6280.unk_03F != 2 && D_800E6280.unk_03F != 5 && D_800E6280.unk_03F != 8 && D_800E6280.unk_03F != 11) {
+        D_800E6280.unk_F64[1] |= 0x40;
+    } else {
+        D_800E6280.unk_F64[1] |= 0x20;
+    }
+    if (D_800E6280.unk_03E == 0x5F && D_800E6280.unk_03F == 4) {
+        D_800E6280.unk_F64[1] |= 0x60;
+    }
+    switch (D_800E6280.unk_03F) {
+    case 2:
+    case 3:
+    case 4:
+        if (D_800E6280.unk_03E == 0x5F) {
+            D_800E6280.unk_F64[0] |= 1;
+        }
+        if (D_800E6280.unk_03E == 0x60) {
+            D_800E6280.unk_F64[0] |= 0x10;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            D_800E6280.unk_F64[1] |= 1;
+        }
+        break;
+    case 5:
+    case 6:
+    case 7:
+        if (D_800E6280.unk_03E == 0x5F) {
+            D_800E6280.unk_F64[0] |= 2;
+        }
+        if (D_800E6280.unk_03E == 0x60) {
+            D_800E6280.unk_F64[0] |= 0x20;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            D_800E6280.unk_F64[1] |= 2;
+        }
+        D_800E6280.unk_F64[1] |= 0x80;
+        break;
+    case 8:
+    case 9:
+    case 10:
+        if (D_800E6280.unk_03E == 0x5F) {
+            D_800E6280.unk_F64[0] |= 4;
+        }
+        if (D_800E6280.unk_03E == 0x60) {
+            D_800E6280.unk_F64[0] |= 0x40;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            D_800E6280.unk_F64[1] |= 4;
+        }
+        break;
+    case 11:
+    case 12:
+    case 13:
+        if (D_800E6280.unk_03E == 0x5F) {
+            D_800E6280.unk_F64[0] |= 8;
+        }
+        if (D_800E6280.unk_03E == 0x60) {
+            D_800E6280.unk_F64[0] |= 0x80;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            D_800E6280.unk_F64[1] |= 8;
+        }
+        break;
+    case 1:
+        if (D_800E6280.unk_03E == 0x60) {
+            D_800E6280.unk_F64[0] |= 8;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            D_800E6280.unk_F64[0] |= 0x80;
+        }
+        if (D_800E6280.unk_03E == 0x62) {
+            D_800E6280.unk_F64[1] |= 8;
+        }
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A044);
+#endif
 
 /* FAKE: each record triple (unk_18/unk_26/unk_2A) after the loop is written on one line, as from a macro (none is known):
  * as1 schedules by source line and the grouping sets the store order in each branch. T-11690 */
