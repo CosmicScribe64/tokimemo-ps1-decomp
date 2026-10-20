@@ -2065,3 +2065,7 @@ Local list l6-p01 merged: OPTION `func_80132BA8` matches (linked proof here); fo
 ## [2026-10-20] lint | T-24400 wiki reorganization
 
 New [[index]] hub, [[status]], [[playbook]], [[tooling]], generated [[tickets/catalog]] and [[notes/functions]]; `tools/wiki.py` rotates [[log]] and [[matching-notes]] verbatim into `log/` and `notes/`. Old index kept as [[archive/index-2026-10-20]]. [[tickets/T-24400-wiki-reorganization]].
+
+## [2026-10-20] ticket | T-24400 Done
+
+Wiki reorganization merged: [[index]] 4.7 KB (was 135 KB), [[log]] 200 KB (was 1.9 MB), [[matching-notes]] 155 KB (was 1.7 MB); older parts in `log/` and `notes/`, lookups in [[notes/functions]] and [[tickets/catalog]]. [[tickets/T-24400-wiki-reorganization]].

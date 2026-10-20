@@ -1,7 +1,7 @@
 ---
 id: T-24400
 title: Reorganize the wiki so important information is easy to find
-status: In Review
+status: Done
 assignee: claude-orchestrator
 created: 2026-10-20
 updated: 2026-10-20
@@ -28,3 +28,5 @@ User request 2026-10-20: the wiki had grown hard to search (index.md 135 KB with
 - [x] `tools/wiki.py lint` reports no broken links or status mismatches
 
 ## Comments
+
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): tools/wiki.py is stdlib-only with a docstring and tests (tools/test_wiki.py, 4 tests); rotation verified lossless (4,772 log entries before and after; every notes section in exactly one file); lint 0 broken links, 0 status mismatches; clean 27/27 merge. Done.
