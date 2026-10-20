@@ -2148,3 +2148,42 @@ Standards/spec self-review of `23e1a20fb...b24b039f4` found no unresolved findin
 ## [2026-10-20] lint | T-24511 closure wiki check
 
 Docker `tools/wiki.py lint`:0 broken links,0 status mismatches; one existing large-page notice for [[data/t0018-cases]]. No new wiki page requiring an index entry; ticket remains on the board.
+## [2026-10-20] ticket | T-24512 ENDING lane initialized
+
+[[tickets/T-24512-ending]] is In Progress in isolated /private/tmp/tokimemo-t24512 from 23e1a20fb. Read [[notes/functions]] and ENDING history; scope is remaining ENDING functions, bounded source hypotheses, Docker-only analysis.
+
+## [2026-10-20] build | T-24512 bounded ENDING reconstructions
+
+[[tickets/T-24512-ending]]: Docker ENDING baseline SHA1 OK. 330E4 existing draft aligned104 ->84 after scalar/array frame reconstruction and removal of a redundant extracted-value local; level-spill and bonus-expression differences remain. Typed scene387B0 reconstruction148/177. Production source restored; zero new C bytes. Existing large scheduling blockers not repeated.
+
+## [2026-10-20] query | T-24512 ENDING source handoff
+
+[[tickets/T-24512-ending]] records all bounded causal outcomes in
+`drafts/T-24512/README.md`; [[families/ending-family-results]] has the330E4 frame
+lead. Full-unit scorer scores are diagnostic, no match claims. Production C,
+headers and compiler unchanged. Full baseline checksum/guard verification runs
+in Docker with immutable original disc mounted read-only.
+
+## [2026-10-20] build | T-24512 verified research handoff
+
+[[tickets/T-24512-ending]] moves In Progress -> In Review. Docker baseline build
+and explicit manifests pass27/27, header/global guards pass, prototype branch
+check has0 new disagreements (15 known). Archived reproduction scripts pass
+py_compile; standards/spec self-review and diff check pass. Production diff is
+empty, zero new C bytes. Research archive preserves the unresolved330E4 frame
+lead, without changing existing scheduler guards.
+
+## [2026-10-20] lint | T-24512 archive scope review
+
+[[tickets/T-24512-ending]] removes redundant generated full translation-unit
+context and empty declarations from its research archive. Reproduction scripts
+use current source/header context, so neither removed file was needed. Existing
+source-only candidate and score provenance remain; no original assembly dump.
+
+## [2026-10-20] build | T-24512 retained body validation
+
+[[tickets/T-24512-ending]] independently compiled both retained source bodies
+against current headers in Docker:330E4 aligned84,34270 aligned504. The earlier
+typed redraft report890 predates finish processing, so the source archive now
+makes the distinction explicit. No C match; replaced stale context hashes with
+exact baseline/source references.
