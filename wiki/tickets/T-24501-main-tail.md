@@ -103,3 +103,5 @@ Astra grid source improves164->132/256 with exact frame/all homes; adopted uncha
 TILE sibling `func_8004A814` source-only300->114, exact257-word count/frameB8/x and RGB homes; all saved-register roles match. Uniform+4 CSE/depth homes and ugen/scheduling remain; packet/replay archived for bounded consultation. Target dimension quirk, six abs calls and signed/clamped colors preserved. No production/header changes. See [[matching-notes]].
 
 TILE adopted real abs_y local reaches94/257 with every stack home/saved role exact; ordinary replay and diagnostic pre-as1 capture output agree. First apparent preload difference originates in late latch; earliest emission ring difference is geometry-y. Provenance and exhausted controls recorded; no speculative edge load.
+
+`func_8004A814` now literal-matches1,028 default-C bytes; isolated y0 cast closes94->0 with faithful pre-as1 erased-temp proof. Affected MAIN SHA1 and header/prototype/global guards pass. Root production body/header standards review has no findings; canonical prototype added once. T-24501 remains In Progress for other unfinished MAIN work, root handles27-unit integration. See [[matching-notes]].

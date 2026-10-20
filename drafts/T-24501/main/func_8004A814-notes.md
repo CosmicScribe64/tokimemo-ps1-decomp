@@ -1,6 +1,6 @@
 # T-24501 circular TILE falloff packet
 
-Source-only, **not matching**. Production src/main/80049FF0.c remains ASM; no header/prototype changes. Function is 1,028 bytes. Private target asm/nonmatchings/main/80049FF0/func_8004A814.s and immutable MAIN binary; no raw dump committed. Typed primitive/natural arithmetic recovery transfers only target-supported lessons from func_8004A414 and matched rendering neighbors.
+Historical source-only 94-cost control; the final y0 cast now matches production src/main/80049FF0.c, with its canonical prototype in main_api.h. See final proof below. Function is 1,028 bytes. Private target asm/nonmatchings/main/80049FF0/func_8004A814.s and immutable MAIN binary; no raw dump committed. Typed primitive/natural arithmetic recovery transfers only target-supported lessons from func_8004A414 and matched rendering neighbors.
 
 ## Replay
 
@@ -60,3 +60,11 @@ Scratch-only diagnostic wrapper captures the normal frame-transformed binasm, th
 First apparent x-preload mismatch (resolved row57) originates at the OUTER LATCH, local binasm record238, and is moved into the inner-entry branch delay by as1. It is not a source operation at entry. The current skip label precedes one common arg4 load at records230/232, then y-add/backedge; target skip edge has its own preloaded arg4 and draw edge reloads after AddPrim, with their common label after those loads. No fabricated edge load proposed.
 
 Earliest emitted geometry ring difference: current y field is LH gy(t7), ADDU t8=gy+s6, SUBU t9=t8-s4, SH. Target has the same gy, full-width s6 and half-height operands/association but ADDU t1 and SUBU t0. Neither target nor current visible instruction sequence narrows y early. A possible explicit s16(y) converted only for y0 would explain erased temporary slots t8/t9; this is not proven original source and would be FAKE-marked if solely needed for temporary numbering. Full-width y must remain in circle/abs/increment paths. No cast control tested at this checkpoint.
+
+## Final match: erased y0 conversion
+
+One isolated diagnostic `(s16)y` in the y0 coordinate expression closes94->0, 257/257 words. It does not change the full32-bit loop, circle test, abs inputs or increments. Original early-width intent is unproved; production explicitly marks this FAKE T-24501 and explains erased-conversion temporary allocation. The final stored16-bit coordinate is unchanged by this local truncation; no other cast/control changed.
+
+Matched pre-as1 capture directly confirms SLL t8,s6,16; SRA t9,t8,16; ADDU t1,gy,t9; SUBU t0,t1,s4; SH. as1 removes the conversion, using full s6 in exact target arithmetic. Its two temporary allocations also repair all later ring/load scheduling. Captured output equals ordinary matched257-word output. Private matched capture .scratch/t24501/tile-match-pre and earlier94 control remain; no raw binasm committed.
+
+Final promoted default-C complete-TU private link proves all1,028 bytes equal immutable target (.scratch/t24501/tile-match-proof). Affected MAIN `ninja -j2 build/SLPM_86.053.ok` passes SHA1; check_headers, sync_protos --check and migrate_globals --check pass. Exact void(s32 x8) prototype added once to main_api.h; both width/height use arg3, all six abs calls and signed/upper-only clamp behavior retained. Parent reviewed production body/header against CODING_STANDARDS with no findings. Full27 integration checks remain central. Historical draft/replay remains94 for reproducing the causal control after production promotion; final matched body is canonical source.

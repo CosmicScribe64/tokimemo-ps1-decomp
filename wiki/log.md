@@ -2224,3 +2224,7 @@ Post-prototype/string 520-step two-job build passed; explicit hashes passed all2
 ## [2026-10-20] decision | Recover TILE abs-result ownership and locate scheduling cause
 
 [[tickets/T-24501-main-tail]] adopts real abs_y source local,94/257 with exact homes/register roles; ordinary replay confirms. Scratch pre-as1 capture preserves normal output and traces first apparent preload to outer latch, while geometry-y temp emission is earliest substantive ring difference. Consult loop controls recorded, no extra slots or fabricated load. See [[matching-notes]].
+
+## [2026-10-20] build | Match circular TILE falloff renderer
+
+[[tickets/T-24501-main-tail]] promotes `func_8004A814`,1,028 literal default-C bytes equal target, affected MAIN SHA1 passes at-j2 and declaration/global guards pass. Isolated FAKE-marked y0 cast closes94->0; faithful pre-as1 capture proves erased conversion's temporary allocations. Six abs calls, signed colors and target dimension quirk retained. Root standards review found no findings; coordinating ticket stays In Progress, full27 checks central. See [[matching-notes]].

@@ -16,9 +16,22 @@ d = Path(args.scratch)
 d.mkdir(parents=True, exist_ok=True)
 base = Path(c.src).read_text()
 marker = 'INCLUDE_ASM("asm/nonmatchings/main/80049FF0", ' + name + ');'
-assert base.count(marker) == 1
+body = Path(args.source).read_text()
+if marker in base:
+    assert base.count(marker) == 1
+    text = base.replace(marker, body)
+else:
+    # This historical control remains reproducible after the matched promotion.
+    start = base.index("void " + name + "(")
+    pos = base.index("{", start)
+    depth = 1
+    end = pos + 1
+    while depth:
+        depth += (base[end] == "{") - (base[end] == "}")
+        end += 1
+    text = base[:start] + body + base[end:]
 src = d / "variant.c"
-src.write_text(base.replace(marker, Path(args.source).read_text()))
+src.write_text(text)
 obj, _ = v.compile_unit(c, d, source=src)
 e, _ = f.expected_object(c)
 want = f.resolved_functions(e, [name])[name]

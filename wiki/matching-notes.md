@@ -677,3 +677,10 @@ T-24501 TILE sibling recovery reaches114/257 words/frameB8 (target exact count/f
 
 
 T-24501 TILE consult supplies real abs_y local:114->94/257, all stack homes/saved-register roles exact, first57 rows exact. Adopted unchanged and independently replayed; inner-for identical, split increments rejected132/261. Faithful pre-as1 capture localizes first apparent x-preload mismatch to a late latch load hoisted by as1, not entry source; common skip/draw arg4 load placement differs from target's two-edge loads. Earliest emitted geometry-y ring differs despite same visible widths/association. No fabricated load, padding or compiler change. Provenance/evidence in TILE packet notes; no new source control yet.
+
+
+### T-24501 circular TILE literal match (2026-10-20)
+
+`func_8004A814` (1,028 bytes) now matches default C. Natural bounds/distances, typed TILE/setWH, real abs-result locals recover frame/homes and six-call signed falloff; the isolated y0 `(s16)y` closes94->0. Matched pre-as1 proves SLL t8/SRA t9 consume the predicted temporary slots, then as1 erases conversion into exact target ADDU/SUBU/SH. This does not establish original early-width intent, so source marks FAKE T-24501; full32 loop/abs/distance behavior stays unchanged.
+
+Default-C complete-TU private literal link equals all1,028 target bytes, affected MAIN SHA1 passes at-j2, header/prototype/global guards pass. Exact canonical void(s32 x8) prototype added. Parent production body/header standards review has no findings; all27 integration checks remain central. Actual width-for-height quirk, six abs calls and upper-only255 clamp preserved. Historical94 control/replay and full causal record remain in TILE packet notes.
