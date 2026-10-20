@@ -2208,3 +2208,7 @@ Post-prototype/string 520-step two-job build passed; explicit hashes passed all2
 ## [2026-10-20] decision | Freeze narrowed GPU grid lifetime packet
 
 [[tickets/T-24501-main-tail]] recovers typed `func_8004A414` primitive/grid source,390->164 with exact256 words/frame98/x-y homes. Natural bounds/distances repair real source lifetime errors; remaining invariant spills and register ranks documented with exact replay. Source-only archive, no production/header change. Parent requested bounded consultation and idle. Inverse54FC0 consult remains negative113/200. See [[matching-notes]].
+
+## [2026-10-20] decision | Adopt grid source lifetime correction and faithful trace
+
+[[tickets/T-24501-main-tail]] adopts bounded consultation source132/256 with exact frame and all invariant homes. Independent ordinary replay confirms result; instrumented output identical. Priority table explains remaining colours before allocation, without proving original source ranks or a compiler defect. No production/header change; next read-only comparison targets actual coordinate/CLUT reuse. See [[matching-notes]].
