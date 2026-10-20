@@ -211,9 +211,10 @@ void func_8013478C(void) {
     func_80082764(D_80122CDC, 1, 0);
 }
 
-/* NON_MATCHING: T-24302, 16 rows; the three equality branches have reversed
- * operands (beq t2,s2 / bne s6,a0), and the loop tail converts next to s16
- * twice (once for the test, once for i), so as1 fills the branch delay slots
+/* NON_MATCHING: T-24302, 15 rows; sibling of func_801358CC (matched with the
+ * same idioms). Left: the second equality branch gets "move v0,s6; bne a0,v0"
+ * (the "* 1" FAKE is CSEd), "next != D_80122D40" compares a temporary, and the
+ * loop tail converts next to s16 twice, so as1 fills the branch delay slots
  * with the first sll and later ugen temporaries are one higher. cur and
  * newState are the extra s-register values that stop uopt from hoisting the
  * record base out of the loop. */
@@ -242,7 +243,7 @@ s32 func_80134808(void) {
             state = get_g_zyotai_s(i) & 0x7F;
             newState = state & 0xFF;
             if ((u8) state < bestState ||
-                ((u8) state == bestState && (cur = best, (u8) state == bestState) &&
+                (bestState * 1 == (u8) state && (cur = best, bestState * 1 == (u8) state) &&
                  (yuukou = get_h_yuukou(i), tokimeki = get_h_tokimeki(i),
                   bestTokimeki = get_h_tokimeki(cur),
                   get_h_yuukou(cur) + bestTokimeki < tokimeki + yuukou))) {
