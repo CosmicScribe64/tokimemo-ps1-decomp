@@ -53,13 +53,14 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24510-parallel-overlay-coordination|T-24510 Coordinate isolated TEL ENDING ETC matching lanes]]
 
 
 - [ ] [[tickets/T-24500-completion-orchestration|T-24500 Orchestrate the remaining matching functions]]
 
 
 ## In Review
+
+- [ ] [[tickets/T-24510-parallel-overlay-coordination|T-24510 Coordinate isolated TEL ENDING ETC matching lanes]]
 
 - [ ] [[tickets/T-24512-ending|T-24512 Match remaining ENDING functions]]
 

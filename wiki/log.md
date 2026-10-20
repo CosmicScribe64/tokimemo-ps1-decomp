@@ -2218,3 +2218,7 @@ All eight archived full-TU cases reproduce their negative metrics with explicit-
 ## [2026-10-20] query | Return reviewed NAME_ENT handoff
 
 [[tickets/T-24510-parallel-overlay-coordination]]: NAME_ENT00bfc328d/30b4f5716 reviewed source-only/no dumps/context/productiondiff,32 replay controls and all27 built hashes/guards pass, zero matches. Ticket In Review for root acceptance. Parent integrated earlier consolidated archive as127bba16c; MASTER8b76c1b46 also ready, family final checks pending.
+
+## [2026-10-20] ticket | Hand off completed bounded overlay investigations
+
+[[tickets/T-24510-parallel-overlay-coordination]] moves to In Review after all six source-backed lane tickets finish bounded work. Family1b212b6f7 source-only review no findings, five actual-C replay cases and all27 built hashes/guards pass. Earlier archive0abd29391 integrated127bba16c; MASTER8b76c1b46, NAME_ENT30b4f5716 and family1b212b6f7 await root acceptance. Zero new C matches/bytes, production unchanged across every worker. Durable sources/blockers preserved; no workers remain compiling.
