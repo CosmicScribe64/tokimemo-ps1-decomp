@@ -36,6 +36,9 @@ ever committed, pushed or quoted in issues/PRs. Before every commit: `git status
        awk -v C=$C '{print} /^FROM /{print "COPY ca.crt " C; print "ENV SSL_CERT_FILE=" C " PIP_CERT=" C " GIT_SSL_CAINFO=" C " CURL_CA_BUNDLE=" C " REQUESTS_CA_BUNDLE=" C}' tools/Dockerfile > $S/Dockerfile
        docker build --platform linux/amd64 --label dockerfile.sha256=$(sha256sum tools/Dockerfile | cut -d' ' -f1) -t tokimemo-decomp $S
 
+   If Docker Hub answers `429 Too Many Requests` for `ubuntu:22.04`, pull `mirror.gcr.io/library/ubuntu:22.04`
+   and `docker tag` it as `ubuntu:22.04` before the build (T-24212).
+
    The full build (old-gcc, IDO 5.3/7.1 release binaries, asm-processor, permuter, objdiff) took
    about 8 minutes. The CA is only in the cloud image; never commit this Dockerfile variant.
    If the build stops at `ubuntu:22.04` with `429 Too Many Requests` (Docker Hub rate limit),

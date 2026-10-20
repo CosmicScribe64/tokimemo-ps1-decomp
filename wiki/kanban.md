@@ -63,6 +63,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24212-cloud-packet-valen-80132d0c|T-24212 Cloud packet: VALEN func_80132D0C]]
 - [ ] [[tickets/T-24207-cloud-packet-etc-80140ae4|T-24207 Cloud packet: ETC func_80140AE4]]
 - [ ] [[tickets/T-24209-cloud-packet-etc-80144df0|T-24209 Cloud packet: ETC func_80144DF0]]
 - [ ] [[tickets/T-24132-name-ent-final-4|T-24132 Close remaining 4 unmatched functions of NAME_ENT (func_80138C1C, func_801398EC, func_8013AF78, func_80143580)]]

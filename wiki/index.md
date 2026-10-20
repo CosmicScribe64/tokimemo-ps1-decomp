@@ -40,6 +40,7 @@ Read this first. Update on every ingest or new page.
 - [[ending-allocator-trace]] - reusable external T-24047 allocator tracer, exact rebuild/fidelity commands and measured constant tie.
 
 ## Tickets
+- [[tickets/T-24212-cloud-packet-valen-80132d0c|T-24212]] cloud packet, VALEN `func_80132D0C` still guarded at 3 rows (as1 global scheduler fills the `== 9` slot with the mode `lui v0`, not the dispatch `sll`), In Review.
 - [[tickets/T-24209-cloud-packet-etc-80144df0|T-24209]] cloud packet, ETC `func_80144DF0` 26 rows -> instruction match (FAKE byte-view store of `unk_1118`, `pad[3]`), In Review.
 - [[tickets/T-24203-cloud-packet-geko-80136c20|T-24203]] cloud packet, GEKO `func_80136C20` still 4 rows guarded (as1 places the selector `lui`), In Review.
 - [[tickets/T-24207-cloud-packet-etc-80140ae4|T-24207]] cloud packet, ETC `func_80140AE4` 20 rows -> instruction match (FAKE `!= 0` temporary, `do/while` block), In Review.
