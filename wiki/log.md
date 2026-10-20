@@ -20957,3 +20957,15 @@ Local work list l6-p02 (53 functions, best first) in worktree `../tokimemo-wt/l6
 ## [2026-10-20] ticket | T-24302 In Review
 
 Local list l6-p02: GEKO `func_801358CC` matched (416 B); guards GEKO `func_80133024` (5 rows), `func_80134808` (15), `func_80132B24` (about 30). Findings in [[matching-notes]] (T-24302 section): [[tickets/T-24302-local-list-l6-p02]].
+
+## [2026-10-20] ticket | T-24303 In Progress: local list l6-p03
+
+Created [[tickets/T-24303-local-list-l6-p03]] (In Progress): local session works the 54-function list l6-p03 (best first) in worktree `l6-p03`, owned C files only; matches committed one by one, checkpoints merged by the orchestrator.
+
+## [2026-10-20] build | T-24303 checkpoint 1
+
+[[tickets/T-24303-local-list-l6-p03]]: clean build 27/27 and the header, globals and prototype checks OK. main `func_800755B4` matched (data island for main/80075320, two key-ring symbols, [[data-types]]); main `func_80047560` guarded at 22 rows.
+
+## [2026-10-20] ticket | T-24303 In Review: local list l6-p03
+
+[[tickets/T-24303-local-list-l6-p03]]: 3 of 54 matched (main `func_800755B4` with a `.data` island and two key-ring symbols, RPG_BAT `func_80138324` from its siblings plus a `viewsweep` callee view, main `menu_girl_taku_set` by a plain rewrite); main `func_80047560` guarded at 22 rows; misses archived in `drafts/T-24303/`. Notes in [[matching-notes]] (T-24303), [[data-types]] updated. Review due.

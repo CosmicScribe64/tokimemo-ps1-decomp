@@ -448,7 +448,39 @@ s32 get_g_zyotai_h(s32 arg0) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_girl_taku_set);
+void menu_girl_taku_set(s32 menu, s32 *arg1)
+{
+    s32 i;
+    s32 g;
+    Rec38 *p;
+    s16 x[12];
+    s16 y[12];
+    s16 w[12];
+    s16 h[12];
+
+    i = 0;
+    do {
+        if (i == 11) {
+            g = 12;
+        } else {
+            g = i;
+        }
+        p = &D_800E6280.unk_1BC[g];
+        if (p->unk_0C.f.b1) {
+            *arg1 = set_kanji_string((i / 3) * 64 - 0x80, (i % 3) * 16 + 0x32, 0, girl_short_name_table[g], 0);
+        }
+        x[i] = (i / 3) * 64 - 0x80;
+        y[i] = (i % 3) * 16 + 0x32;
+        if (p->unk_0C.f.b1) {
+            w[i] = 0x30;
+        } else {
+            w[i] = 0;
+        }
+        h[i] = 0x10;
+        menu_set(menu, 12, x, y, w, h);
+        i++;
+    } while (i != 12);
+}
 
 void xa_wait(void) {
     /* FAKE: two unused home words above the spills; the original frame is 8 bytes larger. T-17018 */

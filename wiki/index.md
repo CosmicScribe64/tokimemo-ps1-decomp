@@ -41,6 +41,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-24212-cloud-packet-valen-80132d0c|T-24212]] cloud packet, VALEN `func_80132D0C` still guarded at 3 rows (as1 global scheduler fills the `== 9` slot with the mode `lui v0`, not the dispatch `sll`), In Review.
+- [[tickets/T-24303-local-list-l6-p03|T-24303]] local work list l6-p03 (54 hard-tail functions): 3 matched (main `func_800755B4`, RPG_BAT `func_80138324`, main `menu_girl_taku_set`), `func_80047560` guarded at 22 rows, In Review.
 - [[tickets/T-24209-cloud-packet-etc-80144df0|T-24209]] cloud packet, ETC `func_80144DF0` 26 rows -> instruction match (FAKE byte-view store of `unk_1118`, `pad[3]`), In Review.
 - [[tickets/T-24210-cloud-packet-main-800591d8|T-24210]] cloud packet, main `func_800591D8` 32 rows -> instruction match (T-24206 `u16 *` view, `unk_002` first in the if arm), In Review.
 - [[tickets/T-24211-cloud-packet-valen-80134030|T-24211]] cloud packet, VALEN `func_80134030` still guarded at 6 instruction lines (as1 hoists the default block head; only `case 10:` stops it), In Review.

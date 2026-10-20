@@ -205,6 +205,8 @@ segments:
       - [0x738F0, data, data_800B40F0]
       - [0x75120, .data, main/80057390]
       - [0x75150, data, data_800B5950]
+      - [0x76190, .data, main/80075320]
+      - [0x76530, data, data_800B6D30]
       - [0x89760, .data, main/8007C030]
       - [0x89B80, data, data_800CA380]
       - [0xA2EC0, .data, main/80059710]
