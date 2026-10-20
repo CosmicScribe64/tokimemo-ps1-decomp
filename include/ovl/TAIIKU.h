@@ -5,6 +5,11 @@
 #include "game.h"
 
 /* Overlay-local externs (T-1300). */
+void func_80138800(void);
+void func_80138950(void);
+void func_80135830(void);
+void func_80135AD0(void);
+void func_80135DF8(void);
 void func_80136A28(void);
 void func_80136AB0(void);
 void func_80136B18(void);
@@ -893,7 +898,7 @@ extern s32 D_80149364; /* func_80133CFC */
 extern TaiikuW5 D_80149368; /* func_80133CFC */
 extern TaiWords7 D_8014937C; /* func_80133CFC */
 extern TaiWords10 D_80149398; /* func_80133CFC */
-extern TaiWords10 D_801494C4; /* func_80134F98 */
+extern TaiWords11 D_801494C4; /* 0x2C-byte table copied by func_80134F98. T-24521. */
 extern TaiikuS11 D_801494F0; /* func_80135480 */
 extern TaiShorts20 D_80149508; /* func_80135830 */
 extern TaiShorts20 D_80149530; /* func_80135830 */

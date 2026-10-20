@@ -166,7 +166,120 @@ void func_80133CFC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80134060);
+void func_80134060(void) {
+    s32 i;
+    s32 idx;
+    s32 j; /* FAKE: unused upper word reproduces the original table homes. T-24521. */
+    TaiShorts12 a;
+    TaiShorts12 b;
+    TaiShorts12 c;
+
+    a = D_801493C0;
+    b = D_801493D4;
+    c = D_801493E8;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        if (cd_read_sync_status() & 1) {
+            idx = search_load_tpage_buf_lock(D_801492F4, 1);
+            /* FAKE: unsigned handle view keeps the shared constant in a ugen temporary, matching the original ring. T-24521. */
+            ((u32 *)D_800E6280.unk_1228)[idx] = 0x80000206;
+            D_801492F4 = (s32)0x80000206;
+            for (i = 0; i < 5; i++) {
+                idx = search_load_tpage_buf_lock(D_801492C8[i], 1);
+                D_800E6280.unk_1228[idx] = i + 0x80000100;
+                D_801492C8[i] = i + 0x80000100;
+            }
+            for (i = 0; i < 6; i++) {
+                idx = search_load_tpage_buf_lock(D_801492DC[i], 1);
+                D_800E6280.unk_1228[idx] = i + 0x80000200;
+                D_801492DC[i] = i + 0x80000200;
+            }
+            for (i = 0; i != 10; i++) {
+                idx = search_load_tpage_buf_lock(D_801492F8[i], 1);
+                D_800E6280.unk_1228[idx] = i + 0x80000300;
+                D_801492F8[i] = i + 0x80000300;
+            }
+            func_8004284C();
+        }
+        break;
+    case 1:
+        Fade_In_Init();
+        func_80044750(0x204);
+        func_8004284C();
+        break;
+    case 2:
+        if (Fade_In_Main() != 0) {
+            func_8004284C();
+        }
+        if (D_80120652 == 0) {
+            idx = func_800AE0D0();
+            D_80120652 = 5;
+            D_80120653 = 0xA4;
+            idx %= 9;
+            D_80120676 = a.value[idx];
+            D_8012067A = b.value[idx];
+            D_80120668 = 0;
+            D_80120666 = c.value[idx];
+        }
+        if (D_800E6280.unk_F88 & 0xF0) {
+            Fade_Out_Init();
+            func_80042940(4);
+        }
+        Scroll(0, 0xF, 0, 0xF0, 0x280);
+        break;
+    case 3:
+        Scroll(0, 0xF, 0, 0xF0, 0x280);
+        if (D_80120652 == 0) {
+            idx = func_800AE0D0();
+            D_80120652 = 5;
+            D_80120653 = 0xA4;
+            idx %= 9;
+            D_80120676 = a.value[idx];
+            D_8012067A = b.value[idx];
+            D_80120668 = 0;
+            D_80120666 = c.value[idx];
+        }
+        if (D_800E6280.unk_F88 & 0xF0) {
+            Fade_Out_Init();
+            func_80044750(0x74);
+            func_8004284C();
+        }
+        break;
+    case 4:
+        Scroll(0, 0xF, 0, 0xF0, 0x280);
+        if (func_800460EC() == 2) {
+            cd_read_sectors(0x87U, 0x8018F000, 0xB98F);
+            func_8004284C();
+        }
+        break;
+    case 5:
+        Scroll(0, 0xF, 0, 0xF0, 0x280);
+        if ((Fade_Out_Main() != 0) && (cd_read_sync_status() & 1)) {
+            func_80048F64(0x60);
+            D_800E6280.unk_1228[21] = -1;
+            func_80133C30();
+            for (i = 0; i < 6; i++) {
+                search_load_tpage_buf_lock(D_8014A070[i], 1);
+            }
+            func_8004284C();
+        }
+        break;
+    case 6:
+        func_801330D4();
+        func_80132BD0();
+        func_80135830();
+        func_80135AD0();
+        func_80135DF8();
+        func_80135F3C();
+        func_80044750(0x505);
+        Fade_In_Init();
+        func_80042808();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 void func_801345A4(void) {
     switch (D_800E6280.unk_110A) {
@@ -372,7 +485,108 @@ void func_80134D94(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80134F98);
+void func_80134F98(void) {
+    s32 j; /* FAKE: upper word preserves the table and counter spill homes. T-24521. */
+    s32 i;
+    TaiWords11 table;
+
+    table = D_801494C4;
+    Scroll(0, 0xF, 0, 0x70, 0x280);
+    Scroll(0, 0xF, 0x70, 0x80, 0x80);
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80044750(0x60B);
+        Fade_In_Init();
+        func_8004284C();
+        break;
+    case 1:
+        if (Fade_In_Main() != 0) {
+            if ((D_801491E0[0] == 1) || (D_801491E0[1] == 1)) {
+                func_8004500C(1, 0x205);
+            } else {
+                func_8004500C(1, 0x206);
+            }
+            D_80149208.player.unk_03 = 0;
+            D_80149208.player.unk_0C = 0;
+            func_8004284C();
+        }
+        break;
+    case 2:
+        D_80149208.player.unk_0C += 1;
+        func_80138800();
+        for (i = 0; i < 4; i++) {
+            ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 -= 1;
+        }
+        for (i = 0; i < 4; i++) {
+            ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_26 -= 1;
+        }
+        if ((((DisplayActor44 *)D_8011ECD0)[107].unk_26 < -0x9F) || (((DisplayActor44 *)D_8011ECD0)[108].unk_26 < -0x9F) || (((DisplayActor44 *)D_8011ECD0)[109].unk_26 < -0x9F) || (((DisplayActor44 *)D_8011ECD0)[110].unk_26 < -0x9F)) {
+            if (D_80122E94 == 1) {
+                func_80138950();
+            } else {
+                for (i = 0; i != 4; i++) {
+                    if (D_801491E0[i] == 1) {
+                        func_8013384C(table.value[D_801491EC], (u8)i);
+                    }
+                }
+            }
+            Vblnk_Timer_Init();
+            func_8004284C();
+        }
+        break;
+    case 3:
+        func_80138800();
+        if (D_80122E94 == 1) {
+            if (D_80120ABA < -0x58) {
+                D_80120ABA += 4;
+            } else if (D_80120ABA == -0x58) {
+                func_80044750(0x50D);
+                D_80120ABA = -0x54;
+            }
+        }
+        if (Vblnk_Timer() >= 0x79) {
+            func_8004284C();
+        }
+        break;
+    case 4:
+        if (func_800460EC() == 2) {
+            Vblnk_Timer_Init();
+            func_8004284C();
+        }
+        break;
+    case 5:
+        if (Vblnk_Timer() >= 0x79) {
+            Fade_Out_Init();
+            func_8004284C();
+        }
+        break;
+    case 6:
+        if (Fade_Out_Main() != 0) {
+            if ((u8) D_801491DC < 0xBU) {
+                D_800E6280.unk_1BC[D_801491DC].unk_06 += 2;
+            } else {
+                D_800E6280.unk_1BC[table.value[D_801491EC]].unk_06 += 1;
+            }
+            if (D_801491E0[0] == 1) {
+                D_800E6280.unk_1BC[0].unk_02 += 6;
+                for (i = 1; i < 13; i++) {
+                    D_800E6280.unk_1BC[i].unk_02 += 6;
+                }
+            } else if (D_801491E0[1] == 1) {
+                D_800E6280.unk_1BC[0].unk_02 += 3;
+                for (i = 1; i < 13; i++) {
+                    D_800E6280.unk_1BC[i].unk_02 += 3;
+                }
+            }
+            func_80042808();
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
+
 
 /* FAKE: T-24133. `u32 raw` with `if (raw) {}` and `raw = 0` keeps the raw flags byte in $a0 and its `& 0xF` mask in $v1
  * without a J<-L widening CVT; sharing `GameState *t` for the `unk_02` read and packing `s16 v` above `sp38` keeps the
