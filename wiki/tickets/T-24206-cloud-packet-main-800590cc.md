@@ -1,7 +1,7 @@
 ---
 id: T-24206
 title: "Cloud packet: main func_800590CC"
-status: In Review
+status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
@@ -30,3 +30,5 @@ removed. One parameter as in the asm and `main_api.h` (no extra K&R parameters, 
 Details in [[matching-notes]] (T-24206).
 
 ## Comments
+
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): cloud branch changed only its C file and wiki, no asm or game data; merged with a clean 27/27 build and header/global/prototype checks. func_800590CC matches: linked funcdiff --resolve MATCH (268 bytes); FAKE comments ticketed. Done.

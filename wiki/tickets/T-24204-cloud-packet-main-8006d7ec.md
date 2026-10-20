@@ -1,7 +1,7 @@
 ---
 id: T-24204
 title: "Cloud packet: main func_8006D7EC"
-status: In Review
+status: Done
 assignee: cloud
 created: 2026-10-20
 updated: 2026-10-20
@@ -37,3 +37,5 @@ No match. The guarded C stays as it is; only the `NON_MATCHING` comment now name
 ## Review notes
 
 Self-check against CODING_STANDARDS.md: one comment line changed in `src/main/8006CB30.c` (guard and FAKE comments of T-23003 unchanged, default build still `INCLUDE_ASM`); no asm, packet or game data committed. Needs the local linked build and an integrating review.
+
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): cloud branch changed only its C file and wiki, no asm or game data; merged with a clean 27/27 build and header/global/prototype checks. No match; the guard stays with an updated note. Done.

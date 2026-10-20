@@ -20889,3 +20889,7 @@ Cloud packet sessions finished without a match: [[tickets/T-24201-cloud-packet-k
 ## [2026-10-20] ticket | T-24204 In Review: main func_8006D7EC stays at 1 row
 
 [[tickets/T-24204-cloud-packet-main-8006d7ec]]: cloud match packet for `src/main/8006CB30.c`. Asm fallback agrees with the packet reference; the guarded C is still the one `li v1,1` row. 11 function variants and about 30 small-file probes: uopt folds the first `idx++` in every source form (phis, aggregates, unions, algebraic zeros, constant-false loops and gotos). Guard comment now names T-24204; notes in [[matching-notes]] (T-24204). Local linked proof and review still due.
+
+## [2026-10-20] ticket | T-24202, T-24204, T-24206 Done
+
+Cloud packet results merged. T-24206: main `func_800590CC` (268 bytes) matches, the first cloud-packet match (linked proof here). T-24202 KANGEI `func_8013852C` stays at 2 rows, T-24204 main `func_8006D7EC` at 1 row (compiler-ordering tails).
