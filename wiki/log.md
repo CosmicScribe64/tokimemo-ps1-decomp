@@ -2221,3 +2221,10 @@ One real raw-bonus local replacing one pad word plus direct0xE00 predicate gives
 ## [2026-10-20] decision | T24560 worker resource handoff
 
 Stopped new probes/builds under resource-conservation steering. Preserved4a90979c7 and recorded the untested387B0 mixed-alias sibling lead in [[tickets/T-24560-ending-slot]]. Documentation only; no overall-goal pause or production change.
+## [2026-10-20] ticket | T24571 ENDING mixed portrait view
+
+Created [[tickets/T-24571-ending-first-portrait-view]] after confirming the single first-portrait16 canonical-symbol view remains untested: T-24512's blanket typed-view negatives and T-18300's record/scalar draft are recorded, while matched `func_8013855C` uses `D_8011F4DE` for portrait16 and typed fields for portrait18/08. Worktree `codex/t24560-ending-slot` was clean at `b6e3f5057`; experiment is limited to one fresh full-TU baseline and one trial.
+
+## [2026-10-20] build | T24571 canonical portrait16 view negative
+
+Fresh Docker full-TU baseline and the single canonical `D_8011F4DE` trial both score 148 distance cost / 156 printable diff rows (expected187 instructions, built185). Candidate and target frames both0x28; first-guard constant uses v1 in target and a1 in candidate, with branch targets displaced by two instructions. Production unchanged; no match claim. [[tickets/T-24571-ending-first-portrait-view]].
