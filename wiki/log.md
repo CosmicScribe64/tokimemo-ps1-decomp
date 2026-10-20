@@ -2360,3 +2360,13 @@ Started [[tickets/T-24523-seasonal-source-hypotheses]] in /private/tmp/tokimemo-
 ## [2026-10-20] build | Verified GYOZI selection-loop match
 
 [[tickets/T-24523-seasonal-source-hypotheses]] matches GYOZI func_80140F90: literal default C privately links to 788 original bytes, complete private GYOZI hash passes. Typed loops, named work-area fields, documented redundant narrowing and a guarded local integer debug-call view resolve the original register sequence. Header/global/prototype guards pass. Parent standards review has no blockers. [[matching-notes]] records the causal improvements and discarded lifetime probes.
+
+
+## [2026-10-20] build | T-24502 fourth TACO match and stage-handler checkpoint
+
+func_8014CB24 matches 1,756 linked target bytes in default C. All 27 binary hashes and source/prototype guards pass. The repaired func_8014AB50 remains a NON_MATCHING guard with exactly seven constant-register instruction differences (28 bytes); its default fallback matches 1,876 bytes. Six zero-store chains isolate x=z=y as the original store order; remaining allocator evidence and bounded failed views are in [[matching-notes]]. Campaign [[tickets/T-24502-taco-completion]] reaches four matches, 5,756 bytes; awaiting parent source review before committing.
+
+
+## [2026-10-20] decision | T-24502 stage-handler review complete
+
+Parent reviewed CB24, guarded AB50 and the two own TACO.h declarations against CODING_STANDARDS.md, with no blocking findings. The implicit-int return view is documented in [[tickets/T-24502-taco-completion]]. Next target func_80144E3C compiles as SDK POLY_G4 pointer-array C (cost600,464 words versus472); no production change yet.
