@@ -2214,3 +2214,11 @@ At the coordinator's explicit request, reopened [[tickets/T-24523-seasonal-sourc
 ## [2026-10-20] query | Candidate-list ownership and MAIN donors
 
 [[tickets/T-24523-seasonal-source-hypotheses]] records GYOZI func_80138C9C original local/global ownership evidence and four bounded probes: baseline103, stage scopes112, count/rotation scratch reuse103, direct global aggregate111, local work pointer150. The real list starts sp+0x4C; no local record prefix inferred. No production/header change or coverage. New MAIN76000/767A4 donors against14 remaining seasonal originals give maximum normalized ratios0.240/0.230; all28 negative and no donor transplant compiled. See [[matching-notes]].
+
+## [2026-10-20] query | VALEN ranking guard provenance
+
+The authorized assignment-only identity probe in [[tickets/T-24523-seasonal-source-hypotheses]] gives484 baseline/491 modified. Immutable target bounds and source comparison show the old func_80132834 guard describes a different control flow; its near-tail metric is stale. Correct historical drafts at T-14500/T-16100 match the target's initial special-girl test, strict ranking and gather/rotate/reorder stages. Original normalized ratio to GYOZI38C9C is0.60215. No production change or coverage; no further compile before the sibling-port hypothesis review.
+
+## [2026-10-20] build | Correct VALEN candidate source and stale-guard cleanup
+
+[[tickets/T-24523-seasonal-source-hypotheses]] archives the correct typed func_80132834 reconstruction at381 resolved edits, reproduced from exact annotated source. Removed structurally wrong guard and preserved matching INCLUDE_ASM. Full private VALEN SHA1, all27 hashes (three private seasonal binaries and24 unchanged read-only root binaries), header/global/prototype guards and diff whitespace check pass. No new coverage. Source/archive and cleanup remain separate reviewable changes; [[matching-notes]] records target provenance.
