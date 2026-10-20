@@ -1,0 +1,20 @@
+[
+  {"donor":"func_80134F98","target":"func_8013DDB8","ratio":0.28960817717206133,"donor_insns":314,"target_insns":273,"blocks":[[38,15,7],[267,116,5],[272,132,5],[85,81,4]]},
+  {"donor":"func_80134F98","target":"func_80135F3C","ratio":0.2373806275579809,"donor_insns":314,"target_insns":419,"blocks":[[6,19,10],[234,122,5],[256,129,4],[1,2,3]]},
+  {"donor":"func_80134F98","target":"func_8013F3A4","ratio":0.22814814814814816,"donor_insns":314,"target_insns":361,"blocks":[[36,72,9],[169,194,5],[174,207,4],[250,333,4]]},
+  {"donor":"func_80134F98","target":"func_80137C44","ratio":0.22269807280513917,"donor_insns":314,"target_insns":153,"blocks":[[266,115,6],[243,86,4],[17,0,3],[28,21,3]]},
+  {"donor":"func_80134060","target":"func_80135F3C","ratio":0.2222222222222222,"donor_insns":337,"target_insns":419,"blocks":[[6,37,13],[20,69,8],[144,190,5],[151,284,5]]},
+  {"donor":"func_80134060","target":"func_8013DDB8","ratio":0.21967213114754097,"donor_insns":337,"target_insns":273,"blocks":[[50,15,7],[332,268,5],[126,34,4],[172,59,4]]},
+  {"donor":"func_80134F98","target":"func_8013E894","ratio":0.21543985637342908,"donor_insns":314,"target_insns":243,"blocks":[[15,21,5],[29,39,5],[90,158,4],[2,0,3]]},
+  {"donor":"func_80134060","target":"func_80139AB0","ratio":0.2074074074074074,"donor_insns":337,"target_insns":203,"blocks":[[292,102,5],[332,198,5],[72,88,4],[1,14,3]]},
+  {"donor":"func_80134F98","target":"func_80139AB0","ratio":0.20502901353965183,"donor_insns":314,"target_insns":203,"blocks":[[267,91,5],[295,121,5],[17,41,4],[1,30,3]]},
+  {"donor":"func_80134060","target":"func_8013EC60","ratio":0.18622448979591838,"donor_insns":337,"target_insns":447,"blocks":[[332,442,5],[1,8,4],[9,35,4],[90,146,4]]},
+  {"donor":"func_80134F98","target":"func_8013EC60","ratio":0.17608409986859397,"donor_insns":314,"target_insns":447,"blocks":[[3,140,5],[15,224,5],[29,242,5],[90,363,4]]},
+  {"donor":"func_80134060","target":"func_8013E894","ratio":0.16896551724137931,"donor_insns":337,"target_insns":243,"blocks":[[332,238,5],[1,9,4],[90,160,4],[5,85,3]]},
+  {"donor":"func_80134060","target":"func_8013E1FC","ratio":0.1686429512516469,"donor_insns":337,"target_insns":422,"blocks":[[2,30,6],[332,417,5],[11,218,4],[90,336,4]]},
+  {"donor":"func_80134F98","target":"func_80137784","ratio":0.1650485436893204,"donor_insns":314,"target_insns":304,"blocks":[[163,23,5],[231,277,5],[25,10,4],[269,290,4]]},
+  {"donor":"func_80134060","target":"func_80137784","ratio":0.15600624024961,"donor_insns":337,"target_insns":304,"blocks":[[91,258,4],[333,300,4],[2,116,3],[51,247,3]]},
+  {"donor":"func_80134060","target":"func_80137C44","ratio":0.15510204081632653,"donor_insns":337,"target_insns":153,"blocks":[[332,148,5],[150,122,4],[207,126,4],[71,2,3]]},
+  {"donor":"func_80134060","target":"func_8013F3A4","ratio":0.15472779369627507,"donor_insns":337,"target_insns":361,"blocks":[[48,72,9],[64,99,3],[123,233,3],[8,63,2]]},
+  {"donor":"func_80134F98","target":"func_8013E1FC","ratio":0.14945652173913043,"donor_insns":314,"target_insns":422,"blocks":[[4,225,5],[29,239,5],[149,402,5],[90,334,4]]}
+]

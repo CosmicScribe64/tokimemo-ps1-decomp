@@ -1,7 +1,7 @@
 ---
 id: T-24523
 title: Match seasonal overlay tails using new source hypotheses
-status: In Review
+status: In Progress
 assignee: Codex
 created: 2026-10-20
 updated: 2026-10-20
@@ -92,3 +92,47 @@ Source-only checkpoint: drafts/T-24523/VALEN/func_80133088/body.c and README.md.
 Negative follow-ups: nested one-case dispatch unchanged; explicit case3/default alias worse21; two physical id/call line groups, destination comma assignments, and named string-pointer ranges all remain14. A previously started13-single semantic-view pass found no gain; the final requested func_800AE0F0-only integer/pointer return checks also remain14. No callee views retained. No broad historical scheduler grids repeated.
 
 - Fourteen-edit checkpoint review: parent and self found no blockers. C89; union active member written before use in disjoint phases; redundant byte override remains equivalent under the following &1; forward-label topology and FAKE controls are documented; scratch extern canonical-declaration warning explicit. Exact annotated body recompiled at14. No production/header changes, bulk instruction listings, target words or assets. Returned to In Review for this focused source/evidence handoff; verified coverage remains two functions/1,196 bytes.
+
+### Candidate-list ownership and new MAIN donors
+
+Read T-24116 before reconstructing GYOZI `func_80138C9C` (992 bytes). Original local accesses establish a thirteen-halfword list at sp+0x4C through sp+0x64, with final pointer spill at sp+0x44. They do not establish metadata at sp+0x48/0x4A or an encompassing local record. No local record was invented from unused stack space. The original keeps its shared signed-halfword index in s0 across gather, print, rotation and reorder stages, including the no-call rotation loop. Gather uses both a local count and independently loaded/stored global count around opaque callbacks.
+
+Current full-unit baseline resolved cost103 remains best. Four bounded source forms: natural C89 stage scopes with separate index locals112 (frame0x70, list+0x54, rotation index v0); reuse the real gather-count scalar for the later disjoint rotation offset103 (unchanged); direct global candidate-work aggregate111; local typed global-work pointer150 (s6/s7 and frame0x78). The latter two were scratch proof only. No production or header edits retained, no new archive of worse bodies, no coverage.
+
+The global aggregate hypothesis had address/width evidence: signed-halfword current at D_80147220+0, values[12] at+4 (24 bytes), signed-halfword count at+0x1C, unsigned-byte special at+0x20 and mode at+0x24; next known table begins+0x28. Unknown gaps remain byte padding. Original reload of count after each rotation values store motivated testing shared aggregate alias ownership. Direct aggregate still reloads that count but does not fix the s3/s4 swap, v0 rotation offset, early bound guard or hoisted second format pointer; it adds reloads in reorder branches. Local pointer adds saved-register/frame pressure. The scratch cast from the first old scalar is not proposed as a production declaration: any future successful aggregate must be owned by the overlay header and migrate all overlapping aliases/users.
+
+Also compared immutable original normalized opcodes from new MAIN `func_80076000` (1196 bytes) and `func_800767A4` (932 bytes) against the fourteen remaining seasonal targets, using the same op_token/SequenceMatcher method as the prior donor pass. MAIN76000's maximum ratio is0.240 to VALEN33088 (next GYOZI412A4,0.238). MAIN767A4's maximum is0.230 to SHOUGATU3E6E4 (next GYOZI38C9C,0.216). All28 pairs are structurally distant; no source transplant compiled. MAIN76000's available source manages packed menu icons rather than the candidate gather/rotation dataflow. No broad historic sweep or exhausted scheduler grid repeated.
+
+- Candidate-list/donor notes review: parent found no blockers in the precise deltas and raw-source scope. Self-review agrees; notes only, production unchanged, no instruction listings or coverage claim. Ticket stays In Progress for the newly assigned bounded VALEN32834 factoring hypothesis.
+
+### VALEN ranking identity probe exposes stale guard
+
+Read T-24101/T-24138 and indexed history before one assignment-only identity experiment. Current guarded VALEN func_80132834 compiles at resolved cost484; multiplying the first operand by1 in its three assignment sums (comparisons untouched) gives491. No source retained. The failure is structurally broader than the guard's historical CSE claim: immutable target_span confirms address0x80132834, length0x4D8 (1240), end0x80132D0B, padding0, with next function0x80132D0C. Target clears current/count/mode/special and tests girl9 state before a strict top-three ranking pass, then gathers, rotates and reorders a candidate list. Guarded body instead starts an eleven-entry0xFF list initialization, invokes func_8013387C before ranking, uses >= comparisons and a different final counting loop. Its historical near metric must not be used for the actual target.
+
+Correct structural decompiler checkpoints already exist at drafts/T-14500/VALEN/func_80132834 and drafts/T-16100/batch-1/VALEN/func_80132834 (historical509, not current rerun). Target signed-halfword top scores live at sp+0x50/0x52/0x54; candidate list at sp+0x5C uses halfword stores. Original normalized VALEN32834-to-GYOZI38C9C opcode ratio is0.60215. Their gather/rotate/reorder stages share real structure, but VALEN has the initial ranking stage, lacks GYOZI's debug-print loops and retains reorder traversal instead of breaking. No additional compiler run or production cleanup yet; precise sibling-port hypothesis is being reviewed.
+
+The single correct typed sibling reconstruction gives381 resolved edits. Exact annotated archive text in drafts/T-24523/VALEN/func_80132834/body.c independently reproduces381 after cleanup (scratch fallback replacement, literal C). Frame0x70 differs from target0x78 and ranking values/register lifetimes remain broad. List capacity13 is explicitly FAKE/uncertain; no invented local aggregate, declaration grid or coverage claim. Named GameState fields and CharFlags replace old scratch extern accesses without header changes.
+
+Removed only the structurally incorrect guard, retaining original INCLUDE_ASM in address order with a concise source-checkpoint reference. Private `ninja -j1 build/ovl/VALEN.ok` passes SHA1 `356aed2481987108f908d7013cc0392cea9dcc8c`. All27 checksums pass (private GYOZI/SHOUGATU/VALEN, other24 unchanged binaries mounted read-only from root); headers OK, globals OK, 0 new/15 known prototype disagreements, branch check OK, git diff --check passes. Separate source/archive and cleanup commits await parent standards/source review. Ticket remains In Progress for active lane coordination; verified coverage remains1,196 bytes.
+
+- Parent and self review of the correct381 source checkpoint and wrong-guard removal found no blockers: real CharFlags/strict signed-halfword semantics, explicit FAKE capacity uncertainty, precise target bounds, no header/compiler changes and unchanged full-unit/checksum/guard proof. Approved separate archive and cleanup pins. Next permitted probe is a real three-element s16 score array replacing only the independent score scalars, based on adjacent observed score homes.
+
+The single approved real rank_scores[3] ownership probe improves381 to336. It restores exact frame0x78 and candidate listsp+0x5C, with actual signed-halfword score homes atsp+0x54/0x56/0x58 (target0x50/0x52/0x54). Ranking index/base still use swapped saved registers and load/expression scheduling remains broad. Updated source-only archive to this better semantic foundation; no production/header edits, declaration grid or additional identity probe. Score-array change awaits parent review, no coverage.
+
+- Parent and self review of the336 score-array update found no blockers: real adjacent-halfword score ownership, no added padding or matching control, source-only with no default-match claim. Exact archived source is the measured336 body. The subsequent approved identity probe changed only the first operands of the first two assignment sums, preserving all comparisons/third assignment:371, frame0x80, score homes0x5C/0x5E/0x60. It retained comparison fields in registers and recomputed reversed sums rather than restoring four target loads. Discarded;336 remains best, no local layout grid or compiler-limit claim.
+
+### Read-only near-guard provenance audit
+
+At the coordinator's request, audited only the seven remaining near guards. No compiler run, broad sibling sweep or production edit. For each function, generated assembly code bytes within the exact immutable target_span bounds equal the target bytes; late-rodata words are excluded. Compared opening control/data operations and the complete call multiset, resolving get_h_tokimeki through config/symbol_addrs_obin.txt (0x80052648).
+
+| Target | Immutable VRAM span (inclusive) | Bytes | Opening/control and call provenance |
+| --- | --- | ---: | --- |
+| VALEN32D0C | 0x80132D0C..0x80133087 | 892 | Correct current/count equality exit, candidate selection, affinity mode and triple-table switch; all4 calls agree |
+| VALEN34030 | 0x80134030..0x801342E7 | 696 | Correct scene helper, flag-bit update and selector triple-table switch; both calls agree |
+| GYOZI39E4C | 0x80139E4C..0x8013A103 | 696 | Correct scene helper, flag-bit update and selector triple-table switch; both calls agree |
+| GYOZI3907C | 0x8013907C..0x801393C7 | 844 | Correct current/count equality exit, selected girl/status/affinity and triple-table switch; all5 calls agree |
+| GYOZI40E0C | 0x80140E0C..0x80140F8F | 388 | Correct special-girl/random test, player selection, threshold scan and stat updates; all4 calls agree |
+| GYOZI38C9C | 0x80138C9C..0x8013907B | 992 | Correct state clears, special-girl test, gather/print/rotate/print/reorder; all8 call sites agree |
+| SHOUGATU3E50C | 0x8013E50C..0x8013E6E3 | 472 | Correct local table copies, special-girl test and threshold/stat/helper sequence; all5 calls agree, but random field is wrong |
+
+SHOUGATU3E50C has a precise source error: original reads D_800E7378, GameState+0x10F8; guard reads unk_0F8, GameState+0xF8 =D_800E6378. Header offsets confirm the missing0x1000. Correct canonical field is unk_10F8. No source change made during this read-only audit. GYOZI40E0C and SHOUGATU3E50C share the established algorithm family, but the latter's two copied seven-halfword tables and extra helper make them388/472-byte related functions rather than opcode-identical twins. No fresh matched sibling identified, no further pair ranking or invented matching hypothesis.
