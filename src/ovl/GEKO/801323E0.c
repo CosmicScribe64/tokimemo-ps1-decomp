@@ -233,8 +233,9 @@ void func_80132D04(s16 arg0, s16 arg1) {
     }
 }
 
-/* NON_MATCHING: T-24007, 36 differing rows; frame and initialization
- * match, but the month/day and table-value ranges use other registers. */
+/* NON_MATCHING: T-24302, 5 rows; month comes out in $a1 instead of $a3 (and
+ * the day load's lui base in $a0 instead of $a2). The two empty tests are FAKE
+ * (T-24302): they give day $a2 and n $v1 as in the original (36 rows without). */
 #ifdef NON_MATCHING
 s32 func_80133024(void) {
     u8 month;
@@ -250,8 +251,10 @@ s32 func_80133024(void) {
     D_80144C50 = 0;
     i = 1;
     do {
-        month = D_800E6280.unk_03F;
         day = D_800E6280.unk_040;
+        if (day) {}
+        month = D_800E6280.unk_03F;
+        if (month) {}
         n = days.day[month - 1];
         if ((u32) n >= (u32) (day + i)) {
             func_80132D04(0, (s16) (day + i - 1));
