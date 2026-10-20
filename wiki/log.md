@@ -20849,3 +20849,11 @@ Ran the project image in a claude.ai cloud container: `dockerd` started by hand,
 ## [2026-10-20] query | T-24200 second pass on the y3 store
 
 Five more variants (y3 temporary with every UV store order) of `func_8013B460`: none beats the guarded 4 lines. Notes in [[matching-notes]] (T-24200). The other ~170 `INCLUDE_ASM` functions need their own packets: this cloud session holds the original asm of `src/ovl/TACO/8013B170.c` only.
+
+## [2026-10-20] ticket | T-24203 cloud packet: GEKO func_80136C20
+
+Created [[tickets/T-24203-cloud-packet-geko-80136c20]] (In Progress): single-function match packet for `func_80136C20` in `src/ovl/GEKO/80134D10.c`; packet asm stays under the gitignored `asm/`, the file is compiled as a scratch copy under `build/scratch/` with the other INCLUDE_ASM/INCLUDE_RODATA lines removed.
+
+## [2026-10-20] ticket | T-24203 In Review: GEKO func_80136C20 still 4 rows
+
+[[tickets/T-24203-cloud-packet-geko-80136c20]]: setup proven (asm-fallback scratch copy equals the packet reference); 28 more C variants leave `func_80136C20` at 4 rows in `src/ovl/GEKO/80134D10.c`. ugen's listing shows the miss is in as1 (it places the selector `lui` in the `D_80145090` load delay, the original in the `D_80145088` branch slot). Guard comment now T-24203. Notes in [[matching-notes]] (T-24203), single-function setup in [[cloud-matching]]. Local linked proof and review due.
