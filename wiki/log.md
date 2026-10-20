@@ -2158,3 +2158,11 @@ Created [[tickets/T-24522-rpg-bat]] in isolated codex/t24522-rpg-bat worktree fr
 ## [2026-10-20] build | T-24522 staged battle calculator match
 
 `func_801447E0` matches924 literal default linked bytes using the result global as the arithmetic variable and ordering the real k/lim locals. Private RPG_BAT SHA1 and linked proof pass; parent standards review has no findings. See [[tickets/T-24522-rpg-bat]], [[families/rpg-bat-family-results]].
+
+## [2026-10-20] query | T-24522 preserve remaining RPG_BAT lead
+
+Preserved annotated28-row `func_80144C84` source-only draft and bounded negative results in drafts/T-24522. `func_8014BFE4` actor/argument-pointer forms were worse; recent DD8/5528C history provided no fresh targeted hypothesis. No further coverage claimed. Lane has two verified matches,2,048 bytes; four remain assembly. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] ticket | T-24522 lane archive In Review
+
+Moved [[tickets/T-24522-rpg-bat]] and its board card to In Review. Two production matches passed independent source review and verification; complete lane evidence and28-row source-only draft await coordinator archive review.

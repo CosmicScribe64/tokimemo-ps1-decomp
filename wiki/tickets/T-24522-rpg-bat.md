@@ -1,7 +1,7 @@
 ---
 id: T-24522
 title: Match remaining RPG_BAT functions
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-20
 updated: 2026-10-20
@@ -49,3 +49,11 @@ The same staged-result reconstruction solved the other battle calculator: put th
 Docker `ninja -j1 build/ovl/RPG_BAT.ok` passes and default `funcdiff.py --resolve --version default --no-build RPG_BAT:func_801447E0` reports MATCH,924 linked bytes equal immutable target. The literal production C replaces INCLUDE_ASM; it has no fallback/define. Parent source review against CODING_STANDARDS.md found no blockers: C89, real locals, canonical GameState aggregate, no new FAKE/header/asm/game-data changes. Worker self-review agrees. Guard and27-hash evidence follows.
 
 Final second-match checks: check_headers OK; migrate_globals --check globals OK; sync_protos --check-branch0 new/15 known, branch check OK.27/27 SHA1 verified with private RPG_BAT142d13e317aa7ae6def6a300085c38f645c19db6 and26 unchanged root outputs mounted read-only. Source standards self-review and independent coordinator review pass.
+
+### 2026-10-20 bounded remaining-lane outcome
+
+func_80144C84 reaches28/28 after matched sibling's comma-return spelling; typed threshold/clamp/trailing-record pointers and switch/while/else forms did not solve the remaining third-arm reload/store gap. Annotated source-only lead saved at drafts/T-24522/RPG_BAT/func_80144C84/body.c; no production edit. Its frame home, operand wrappers and comma return are explicitly FAKE.
+
+func_8014BFE4 current baseline128/128; meaningful actor-base pointer207/201, addressed-argument form185/185, combined247/247. These are negative results; no production change. Recent T-24027 DD8/5528C drafts and negatives were read; no new hypothesis justified rerunning their broad gaps. Source archive README documents the lane and retains every loose probe under ignored build/T-24522. Two exact matches total2,048 bytes; four remain assembly.
+
+Final archive compilation confirmed28 literal rows /28 aligned after documentation and formatting. Work is In Review for the complete lane archive; both production functions already have independent coordinator source review and complete verification.
