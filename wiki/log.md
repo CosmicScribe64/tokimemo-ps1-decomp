@@ -2096,3 +2096,18 @@ Fresh typed particle-update C matches all 828 linked target bytes in the default
 ## [2026-10-20] build | T-24502 verified TACO particle update
 
 After the parent review's header placement fix, default func_80140028 matches 828 linked bytes and all 27 built binaries independently match their pinned SHA1 values. Header/global guards and prototype branch check pass (0 new disagreements). [[tickets/T-24502-taco-completion]] records the resolved review finding; campaign continues.
+## [2026-10-20] ticket | T-24501 MAIN hard tails
+
+Created [[tickets/T-24501-main-tail]] In Progress on an isolated worktree from `2c7293275`. Start with `func_8006C988` and its documented 11-row pointer/value ordering tail; preserve MAIN-only ownership and use existing Docker data.
+
+## [2026-10-20] build | T-24501 reproduce MAIN tails and reconstruct icon menu setup
+
+[[tickets/T-24501-main-tail]] reproduces `func_8006C988` and `func_8006509C` in Docker full-TU comparisons, without production edits. Reconstructed `func_800654D0` from the original indexed-array and actor loop patterns; investigate its loop resets and stack declarations before promotion. Existing 11-row scan tail did not improve through targeted value lifetime/grouping variants.
+
+## [2026-10-20] build | T-24501 literal MAIN icon menu setup match
+
+`func_800654D0` in `src/main/80062CD0.c` passes literal default-C private-link proof: all 1,072 bytes equal the target. [[matching-notes]] records pair-array indexing, the second-loop initializer/store order, and the two marked FAKE layout details. Header and prototype branch checks pass; full 27-unit build is running. Other tested MAIN tails stay unchanged.
+
+## [2026-10-20] build | T-24501 all 27 checksums verified
+
+Fresh Docker `ninja -j 6` exited zero and reported all 27 executable checksum checks OK for the literal `func_800654D0` C change. Header and prototype checks pass. Parent source review against CODING_STANDARDS.md has no outstanding finding; [[tickets/T-24501-main-tail]] remains In Progress for further MAIN work.

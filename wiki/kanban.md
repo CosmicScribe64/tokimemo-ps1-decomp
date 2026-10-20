@@ -55,6 +55,7 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-24500-completion-orchestration|T-24500 Orchestrate the remaining matching functions]]
 - [ ] [[tickets/T-24502-taco-completion|T-24502 Match remaining TACO functions]]
+- [ ] [[tickets/T-24501-main-tail|T-24501 Match MAIN remaining functions]]
 
 
 ## In Review
