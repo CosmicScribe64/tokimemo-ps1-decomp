@@ -685,6 +685,10 @@ s32 get_icon_can_use(s32 arg0) {
     return 0;
 }
 
+/* NON_MATCHING: T-24301, 57 rows; GameState pointer `g` (kept in $a1 for the F6D loop tests), u8 views for
+ * the s8 F6C/F6D reads, the 15-pair copy as an index loop (IDO unrolls it 3 + 3x4). Left: the copy loops'
+ * dest/src pointers swap $v0/$v1, case 2 keeps the base in $a0 where the original has the count, and the
+ * `i = 0` reset sits in the second block. */
 #ifdef NON_MATCHING
 void func_8006509C(void) {
     GameState *g = &D_800E6280;
@@ -727,9 +731,9 @@ void func_8006509C(void) {
             ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_0C = sprite_frame_table;
             ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_10 = D_800C9A14;
             ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_34 = D_800C9730;
+            ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_14 = D_800C9A54;
             ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_04 = 8;
             ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_05 = 1;
-            ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_14 = D_800C9A54;
             ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_18 = 2;
             i++;
         } while (i < *(u8 *)&g->unk_F6D);
