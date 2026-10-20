@@ -2085,3 +2085,19 @@ The l6-p01 merge carried 9 matches, not 1; listed in [[tickets/T-24301-local-lis
 ## [2026-10-20] query | Rank the remaining large functions
 
 Docker scan of current source INCLUDE_ASM entries and generated size headers identifies TEL func_80136724 as the largest remaining function (6,580 code bytes; older 7,044 includes jump tables). Ranked next targets and the prior exhausted TEL month-promotion avenue are recorded in [[tickets/T-24500-completion-orchestration]]. Three Sol workers remain active; no additional match claimed.
+
+## [2026-10-20] ticket | T-24511 isolated TEL matching lane
+
+Created [[tickets/T-24511-tel]] in progress from `23e1a20fb`, isolated worktree `/private/tmp/tokimemo-t24511`. Read prior T-19022/T-23001/T-24022 evidence; month-promotion probes remain exhausted. Current source has `func_80134FE4` matched; target the remaining `func_8013D88C` before the large handler.
+
+## [2026-10-20] query | T-24511 menu reconstruction audit
+
+[[tickets/T-24511-tel]] records two fresh control-flow hypotheses for `func_8013D88C`: exclusive page-two condition chain and the omitted `arg2 == 14` bypass. The latter is distinct from the incompatible `case 14` in the old index dispatch. Docker baseline rebuild is underway; no production source changed.
+
+## [2026-10-20] build | T-24511 fresh baseline configure
+
+Existing `tokimemo-decomp-arm64` image configured a new build in `/private/tmp/tokimemo-t24511`, with the original root `disc/` mounted read-only. No dependency installs or game/build copies. `ninja -j2` is rebuilding all units before scratch probes; source remains unchanged.
+
+## [2026-10-20] build | T-24511 bounded TEL menu reconstruction
+
+Sixteen serial Docker probes reproduced the prior control and tested control-flow corrections, pointer lifetimes, frame topology and explicit F64 capture. Packed-word capture removes thirty words versus signed-index control; preserved corrected body is755 words/844 rows against745 target words. No match or production change. Source-only replay and negative ledger saved in drafts/T-24511; [[matching-notes]] and [[tickets/T-24511-tel]] record the result. Fresh673-step j2 baseline build passed all27 checksums and header/global checks. Limited large-handler audit found no new semantic repair; exhausted month probes remain untouched.
