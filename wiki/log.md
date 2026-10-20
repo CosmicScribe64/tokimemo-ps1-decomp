@@ -20857,3 +20857,7 @@ Five more variants (y3 temporary with every UV store order) of `func_8013B460`: 
 ## [2026-10-20] ticket | T-24142 draft archived
 
 An uncommitted T-24142 draft of TAIIKU `func_8013E1FC` (about 210 differing lines) was left in the main checkout; moved to drafts/T-24142/TAIIKU/func_8013E1FC/ and the source file restored, so the checkout matches main. [[tickets/T-24142-single-agent-closer-sweep]].
+
+## [2026-10-20] ticket | T-24206 In Review: main func_800590CC instruction match
+
+[[tickets/T-24206-cloud-packet-main-800590cc]] (cloud packet): `func_800590CC` in `src/main/80058D20.c` from the T-17017 guard (16 lines) to 0 differing instructions in the scratch single-function diff; plain C, guard and `INCLUDE_ASM` removed. FAKE: the call arguments re-read the stored `D_800E6280` halfwords through a `u16 *` view (uopt forwards the stored registers), one statement per line, else arm stores `unk_000/002` first. Notes in [[matching-notes]] (T-24206), idiom row in [[register-cheatsheet]]. Local linked proof and review still due.
