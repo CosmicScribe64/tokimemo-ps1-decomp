@@ -1,7 +1,8 @@
 # MASTER later-region and 326B4 checkpoint
 
-Base036407cd5, isolated branch codex/t24517-master-later. No production files change.
-The original consultation tree is preserved. T-24517 stays In Progress.
+Base036407cd5, isolated branch codex/t24517-master-later. The following checkpoint
+history describes the archive commits before promotion. The original consultation
+tree is preserved; production verification is recorded in the final section.
 
 The later363F4 read-only map finds119 differing rows /152 register fields in cases6..10,
 all explained by one target-to-candidate bijection:
@@ -87,3 +88,40 @@ scalar fade symbol48. The two326B4 switch/join lifetime-separation controls each
 give533/807 and discard the correct reload structure; they are not retained.
 Replay the new narrow source with python3 drafts/T-24517/later/replay35.py in the
 same Docker setup. Standards/spec self-review finds no new archive scope issue.
+
+## Default C promotion
+
+The preceding normal_date_bg_fadeout callee view closes the final six rows:
+s32(void) gives0/271; Default_Disp s32(void) remains12. Own s32/no-return is also
+neutral12. A byte-local fade control worsens to40, a compound-assignment condition
+stays12, and reusing the existing signed value local gives16. No register grid was run.
+
+The exact12 seed's traced and stock uopt agree in complete text/rodata/relocation
+sections and target keys. Its fade byte is a uopt-assigned global range S115+7,
+priority0.5, allocated#16 to v0. This differs from363F4's ugen temporary issue.
+The s32 callee view changes that live-range constraint and gives the target v1.
+
+Production now contains literal default C for35FB8, with no assembly fallback.
+The return view is confined to src/ovl/MASTER/80133680.c under the documented
+MAIN_API override; main_api.h's default void declaration is unchanged for others.
+The whole MASTER checksum proves the other matched functions in the TU survive.
+Replay35 supports both the earlier assembly anchor and the promoted C definition;
+it now sees the production return view and reports0/271,271 equal diagnostic keys.
+
+Verification in the existing Docker image, original disc read-only:
+
+    ninja -j2
+    python3 tools/funcdiff.py func_80135FB8 --unit MASTER --version default --resolve --no-build
+    python3 tools/check_headers.py
+    python3 tools/migrate_globals.py --check
+    python3 tools/sync_protos.py --check-branch
+
+Literal linked-byte proof reports1084 bytes equal. All27 checksums, header/global
+checks and the prototype guard pass (0 new disagreements,15 known). Evidence is
+ignored build/t24517-later/{literal35.log,checksums27.log,headers.log,globals.log,
+protos.log}. No binaries, original ASM, ucode or full context are archived.
+
+Standards/spec self-review and coordinator review found no unresolved finding.
+The production comment describes the observed return-view effect without claiming
+to know the original declaration. Inherited probability-byte FAKE views retain
+reason and T10630/T24514/T24517 provenance. Three MASTER functions remain unsolved.

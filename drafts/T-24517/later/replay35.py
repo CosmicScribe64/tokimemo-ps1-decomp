@@ -9,14 +9,19 @@ import sys
 sys.path.insert(0, 'tools')
 import funcdiff
 import order_search
+import dupes
 
 name = 'func_80135FB8'
 context = funcdiff.locate(name, 'MASTER')
 source = Path(context.src).read_text()
 body = Path('drafts/T-24517/later/' + name + '.c').read_text()
 anchor = 'INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", ' + name + ');'
-assert source.count(anchor) == 1
-text = source.replace(anchor, body)
+if source.count(anchor) == 1:
+    text = source.replace(anchor, body)
+else:
+    span = dupes.extract_c(source, name)
+    assert span is not None, 'expected one C definition after promotion'
+    text = source[:span[0]] + body + source[span[1]:]
 work = Path('build/t24517-later/checkpoint35')
 work.mkdir(parents=True, exist_ok=True)
 cost = order_search.make_text_scorer(context, name, resolve=True)(text, work)

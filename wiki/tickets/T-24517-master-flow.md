@@ -1,7 +1,7 @@
 ---
 id: T-24517
 title: Reconstruct MASTER animation flow and pointer lifetimes
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-20
 updated: 2026-10-20
@@ -60,3 +60,11 @@ Fresh MASTER baseline checksum passes on036407cd5. T22015 clean body538/832 cand
 ## Closest owned sibling35FB8
 
 Matched33F80 twin baseline58/271. Indexed zero-initialization recovers original pointer comparison and defers saved s2 base until shuffle row109, scoring48. Using the existing pointer for the shuffle avoids an unused local. Equivalent threshold reassociation shifted_stat-(0x140-club_score) restores original first-sum and downstream t7/t8 order:12/271,232 exact diagnostic prefix positions, six register-only rows232,233,235,236,240,243 in final fade v1(target)/v0(candidate). Target/candidate lengths271; no literal match claimed. Narrow source/replay35 preserved before final fade check; inherited scalar probability FAKE views remain marked. Two326B4 separation controls533/807 discard correct reloads and are rejected. No production edits.
+
+## Verified35FB8 promotion and review
+
+The immediately preceding fade callee's s32 view closes the six remaining register rows; own s32/no-return and Default_Disp s32 remain12. Production uses plain default C, no assembly fallback. Scoped override in `src/ovl/MASTER/80133680.c` plus the essential two-line `include/main_api.h` guard follows standards8a and preserves every other caller's default view. Root explicitly coordinated this shared guard.
+
+Default linked bytes:1084 equal, MASTER SHA1 pass, full27 checksum pass. Header/global checks pass; prototype branch guard0 new disagreements/15 known. The fullunit checksum audits all matched neighbours under the override. Evidence: build/t24517-later/literal35.log, checksums27.log, headers.log, globals.log, protos.log. Existing scalar probability FAKE views are marked with reason and tickets; no new allocation-only dummy value or compiler patch.
+
+Standards self-review: C89, shared extern/override rules, literal default C, attribution/commit format, no raw game data or generated context, focused source/wiki scope. Spec self-review: original flow/conditions remain byte-identical; closest-sibling source recipe is causally measured; unsolved326B4/363F4 research is labelled nonmatching and no backend impossibility is claimed. Coordinator review resolved only comment wording and active-ticket provenance. Ready for root integration review.

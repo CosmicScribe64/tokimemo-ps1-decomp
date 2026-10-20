@@ -2091,3 +2091,7 @@ Fresh unchanged MASTER baseline checksum passed on036407cd5. Read T22015 history
 ## [2026-10-20] build | T24517 MASTER35FB8 matched-sibling source lead
 
 Read latest35FB8 twin history. Indexed zero-fill plus actual shuffle pointer lifetime and equivalent threshold reassociation improve58->48->12, with271 target/candidate positions and232 exact diagnostic prefix; six final fade v1/v0 register rows remain. Preserved narrow candidate/replay35 before final check. Two326B4 switch/join separation controls533/807 are no gain. No C match or production change; [[tickets/T-24517-master-flow]] remains In Progress.
+
+## [2026-10-20] build | T24517 MASTER35FB8 literal1084-byte match
+
+The preceding fade callee's s32 view closes six remaining rows after indexed initialization, scoped shuffle pointer and threshold reassociation. Plain default C matches1084 linked bytes; MASTER and all27 checksums pass. Source-local MAIN_API override and essential shared guard are coordinated with root; other default views remain unchanged. Header/global guards pass and prototype check has0 new/15 known. Standards/spec self-review and coordinator comment review resolved findings. [[tickets/T-24517-master-flow]] moves to In Review for integration; research checkpoints remain explicitly nonmatching. No production compiler change, raw dump or assembly fallback for35FB8.
