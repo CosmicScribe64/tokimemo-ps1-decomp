@@ -2085,3 +2085,15 @@ The l6-p01 merge carried 9 matches, not 1; listed in [[tickets/T-24301-local-lis
 ## [2026-10-20] query | Rank the remaining large functions
 
 Docker scan of current source INCLUDE_ASM entries and generated size headers identifies TEL func_80136724 as the largest remaining function (6,580 code bytes; older 7,044 includes jump tables). Ranked next targets and the prior exhausted TEL month-promotion avenue are recorded in [[tickets/T-24500-completion-orchestration]]. Three Sol workers remain active; no additional match claimed.
+
+## [2026-10-20] ticket | T-24513 isolated ETC lane
+Created [[tickets/T-24513-etc-matching]] In Progress on codex/t24513-etc from 23e1a20fb, isolated /private/tmp/tokimemo-t24513. Read [[index]], [[status]], [[playbook]], function catalog and local standards. Largest target func_801480D0; no shared-root writes.
+
+## [2026-10-20] build | T-24513 ETC baseline and bounded source controls
+Fresh isolated Docker ETC build passes SHA1 681c93b6e57c885f86e074c885a8bf6c3cca2319. [[tickets/T-24513-etc-matching]] records rejected ranking pointer/return-liveness controls and grade direct-array controls. Reconstructed six-entry scene initializer buffer and correct element stride from original addresses; private draft only, no literal match or new C bytes. No shared header/config/compiler edits.
+
+## [2026-10-20] ticket | T-24513 archive self-review, In Review
+[[tickets/T-24513-etc-matching]] moves to In Review after standards/scope self-review, no findings. Coordinator approved focused negative-results archive, no production changes or matching C-byte gain. Fresh Docker ninja -j2 completes all 27 checksum targets. Archive retains corrected six-entry scene source, rejected ranking pointer reconstruction and exact full-TU replay; no generated assembly/data committed.
+
+## [2026-10-20] build | T-24513 final replay and 27 built hashes
+All eight archived full-TU cases reproduce their negative metrics with explicit-object DIFF and production unchanged. Final headers/globals/prototype guards pass (0 new, 15 known prototype disagreements). Independent hashing of actual build/SLPM_86.053.bin and build/ovl/*.bin passes 27/27. Corrected replay handling of expected DIFF exit1 and a separate checksum command's overlay working-directory error; no source promotion. [[tickets/T-24513-etc-matching]] remains In Review.
