@@ -1528,11 +1528,11 @@ The l6-p01 merge carried 9 matches, not 1; listed in [[tickets/T-24301-local-lis
 
 ## [2026-10-20] decision | Resume completion with three Sol workers
 
-[[tickets/T-24500-completion-orchestration]] records the resumed run: MAIN T-24501, TACO T-24502, GEKO/OPTION T-24503 in isolated worktrees, GPT-6.1 Sol medium. Astra reserved for evidenced blockers. GitHub issue #65 contributor is out of tokens until Friday; the user authorized covering those functions meanwhile. No contributor messages sent. Remote main equals local `2c7293275`; no open PR returned. Docker `tools/progress.py` reports 6,793/6,952 game functions, 2,067,004/2,276,920 bytes (90.8%); corrected [[status]] and the remaining counts. Existing integration automation remains untouched.
+[[tickets/T-24900-completion-orchestration]] records the resumed run: MAIN T-24501, TACO T-24502, GEKO/OPTION T-24503 in isolated worktrees, GPT-6.1 Sol medium. Astra reserved for evidenced blockers. GitHub issue #65 contributor is out of tokens until Friday; the user authorized covering those functions meanwhile. No contributor messages sent. Remote main equals local `2c7293275`; no open PR returned. Docker `tools/progress.py` reports 6,793/6,952 game functions, 2,067,004/2,276,920 bytes (90.8%); corrected [[status]] and the remaining counts. Existing integration automation remains untouched.
 
 ## [2026-10-20] query | Rank the remaining large functions
 
-Docker scan of current source INCLUDE_ASM entries and generated size headers identifies TEL func_80136724 as the largest remaining function (6,580 code bytes; older 7,044 includes jump tables). Ranked next targets and the prior exhausted TEL month-promotion avenue are recorded in [[tickets/T-24500-completion-orchestration]]. Three Sol workers remain active; no additional match claimed.
+Docker scan of current source INCLUDE_ASM entries and generated size headers identifies TEL func_80136724 as the largest remaining function (6,580 code bytes; older 7,044 includes jump tables). Ranked next targets and the prior exhausted TEL month-promotion avenue are recorded in [[tickets/T-24900-completion-orchestration]]. Three Sol workers remain active; no additional match claimed.
 
 ## [2026-10-20] ticket | T-24502 TACO completion
 
@@ -1592,7 +1592,7 @@ func_8014FFDC now matches 2,292 linked bytes in default C. Shared loop locals, e
 
 ## [2026-10-20] build | Five verified matches integrated to main
 
-[[tickets/T-24500-completion-orchestration]] integrated MAIN func_800654D0, TACO func_80140028 and func_8014FFDC, GEKO func_80134808 and func_80133308 through source head e51680da0: five functions, 5,280 bytes. Each integration independently passed 27 SHA1 checks, default-C linked proofs and header/global/prototype guards. Docker progress now reports 6,798/6,952 functions and 2,072,284/2,276,920 bytes (91.0%); [[status]] updated. [[tickets/T-24510-parallel-overlay-coordination]] handoff published at b128b443b; six Sol workers span MAIN, TACO, GEKO/OPTION, TEL, ENDING and ETC. Latest read-only GitHub check found issue #65 unchanged and no open PR; contributor still unavailable until Friday. Bounded Astra consult for GEKO func_80133024 found no new source hypothesis; preserve the two-row checkpoint and avoid further blind grids.
+[[tickets/T-24900-completion-orchestration]] integrated MAIN func_800654D0, TACO func_80140028 and func_8014FFDC, GEKO func_80134808 and func_80133308 through source head e51680da0: five functions, 5,280 bytes. Each integration independently passed 27 SHA1 checks, default-C linked proofs and header/global/prototype guards. Docker progress now reports 6,798/6,952 functions and 2,072,284/2,276,920 bytes (91.0%); [[status]] updated. [[tickets/T-24510-parallel-overlay-coordination]] handoff published at b128b443b; six Sol workers span MAIN, TACO, GEKO/OPTION, TEL, ENDING and ETC. Latest read-only GitHub check found issue #65 unchanged and no open PR; contributor still unavailable until Friday. Bounded Astra consult for GEKO func_80133024 found no new source hypothesis; preserve the two-row checkpoint and avoid further blind grids.
 
 ## [2026-10-20] build | T-24501 literal color interpolation match
 
@@ -1648,7 +1648,7 @@ Created [[tickets/T-24522-rpg-bat]] in isolated codex/t24522-rpg-bat worktree fr
 
 ## [2026-10-20] build | Eight new matches and refreshed sibling scan
 
-MAIN make_color_bar16, TACO func_8013F468 and RPG_BAT func_8014BB80 are integrated with literal default-C proofs, 27 independently checked binary hashes and declaration guards. Source head d2665864e brings this run to eight functions / 8,824 bytes. Docker progress reports 6,801/6,952 functions,2,075,828/2,276,920 bytes (91.2%); [[status]] updated. Reviewed guarded GEKO and source-only OPTION/TACO checkpoints are also on main, with no coverage credit. The fresh global twin sweep has zero automatic candidates; five higher-similarity targets and three unmatched sibling pairs are recorded in [[tickets/T-24500-completion-orchestration]]. New T-24520 coordinator covers TAIIKU, RPG_BAT and seasonal overlays in isolated lanes.
+MAIN make_color_bar16, TACO func_8013F468 and RPG_BAT func_8014BB80 are integrated with literal default-C proofs, 27 independently checked binary hashes and declaration guards. Source head d2665864e brings this run to eight functions / 8,824 bytes. Docker progress reports 6,801/6,952 functions,2,075,828/2,276,920 bytes (91.2%); [[status]] updated. Reviewed guarded GEKO and source-only OPTION/TACO checkpoints are also on main, with no coverage credit. The fresh global twin sweep has zero automatic candidates; five higher-similarity targets and three unmatched sibling pairs are recorded in [[tickets/T-24900-completion-orchestration]]. New T-24520 coordinator covers TAIIKU, RPG_BAT and seasonal overlays in isolated lanes.
 
 ## [2026-10-20] lint | Correct stale block-copy compiler guidance
 
@@ -1961,11 +1961,11 @@ func_80144E3C matches all1,888 linked target bytes in default C. Correct u8 arg4
 
 ## [2026-10-20] build | Sixteen verified matches pushed, 91.5 percent
 
-[[tickets/T-24500-completion-orchestration]] records source head3741db7e2 and fresh Docker progress:6809/6952 functions,2084280/2276920 bytes,143 remaining. Eight additional matches since the prior root checkpoint bring this run to16 functions/17276 bytes. Each passed root source review, literal default-C proof,27 hashes and declaration guards. [[status]] refreshed. Reviewed archive integrations127bba16c/37a9e5296 preserve source-only drafts without coverage credit. All independent appended wiki histories retained; stale coordinator stopped-status corrected.
+[[tickets/T-24900-completion-orchestration]] records source head3741db7e2 and fresh Docker progress:6809/6952 functions,2084280/2276920 bytes,143 remaining. Eight additional matches since the prior root checkpoint bring this run to16 functions/17276 bytes. Each passed root source review, literal default-C proof,27 hashes and declaration guards. [[status]] refreshed. Reviewed archive integrations127bba16c/37a9e5296 preserve source-only drafts without coverage credit. All independent appended wiki histories retained; stale coordinator stopped-status corrected.
 
 ## [2026-10-20] query | Small-copy control and continued structural matching
 
-Bounded Astra synthetic control shows an8-byte temporary-ring effect but no change to the tested32-byte copy. Actual strCallback control produces identical default/skip-small objects and remains75 differing instruction positions, rejecting the proposed cause for that draft. No production compiler change. [[tickets/T-24500-completion-orchestration]] records evidence paths and pending archives. Sol lanes continue source reconstruction and fresh donor checks. GitHub read-only check finds no open PR or changed issue65; no contributor messages sent.
+Bounded Astra synthetic control shows an8-byte temporary-ring effect but no change to the tested32-byte copy. Actual strCallback control produces identical default/skip-small objects and remains75 differing instruction positions, rejecting the proposed cause for that draft. No production compiler change. [[tickets/T-24900-completion-orchestration]] records evidence paths and pending archives. Sol lanes continue source reconstruction and fresh donor checks. GitHub read-only check finds no open PR or changed issue65; no contributor messages sent.
 
 ## [2026-10-20] decision | T-24501 park status display stack reconstruction
 
@@ -1989,7 +1989,7 @@ Repaired the previously untried func_801420E4 source's missing rodata declaratio
 
 ## [2026-10-20] ingest | Publish remaining MAIN and GEKO draft checkpoints
 
-Root reviewed and published MAIN b44f1e302 as e5d03aebd and GEKO9de2cd7cd as b90f0e4e4. Source-only archives retain exact nonmatching metrics and replay requirements, without coverage credit. MAIN scratch whitespace repaired; independent wiki append histories preserved. [[tickets/T-24500-completion-orchestration]] records continued deep source work and the bounded Astra seven-word TACO constant-allocation consultation. MAIN76000 has zero diagnostic differences but remains uncounted pending literal proof, shared-type correction and final integration checks.
+Root reviewed and published MAIN b44f1e302 as e5d03aebd and GEKO9de2cd7cd as b90f0e4e4. Source-only archives retain exact nonmatching metrics and replay requirements, without coverage credit. MAIN scratch whitespace repaired; independent wiki append histories preserved. [[tickets/T-24900-completion-orchestration]] records continued deep source work and the bounded Astra seven-word TACO constant-allocation consultation. MAIN76000 has zero diagnostic differences but remains uncounted pending literal proof, shared-type correction and final integration checks.
 
 ## [2026-10-20] build | T-24501 menu dispatcher literal match
 
@@ -2009,11 +2009,11 @@ Parent review found the BAC4 raw instruction comparison exceeded standards10 exc
 
 ## [2026-10-20] build | Seventeenth match integrated, 91.6 percent
 
-MAIN func_80076000 is pushed at8253c1d73 after root standards review, shared-type correction, full build,27 hashes, literal default-C1196-byte proof and declaration guards. Fresh Docker census6810/6952 functions,2085476/2276920 bytes,142 remaining. [[status]] and [[tickets/T-24500-completion-orchestration]] updated. Corrected TACO source archive integrated at3c8582d6a using clean ancestry excluding the raw comparison dump. No archive coverage credit. Active Sol lanes continue; bounded Astra4AB50 test negative and preserved, no compiler change.
+MAIN func_80076000 is pushed at8253c1d73 after root standards review, shared-type correction, full build,27 hashes, literal default-C1196-byte proof and declaration guards. Fresh Docker census6810/6952 functions,2085476/2276920 bytes,142 remaining. [[status]] and [[tickets/T-24900-completion-orchestration]] updated. Corrected TACO source archive integrated at3c8582d6a using clean ancestry excluding the raw comparison dump. No archive coverage credit. Active Sol lanes continue; bounded Astra4AB50 test negative and preserved, no compiler change.
 
 ## [2026-10-20] lint | Rotate oversized active log without losing history
 
-Under [[tickets/T-24500-completion-orchestration]], Docker tools/wiki.py rotate-log moved111 older entries to existing [[log/2026-W42]], retaining353 in the active page. Compared multisets of normalized entries across all log pages before/after: exact equality, including duplicate counts. No historical entry changed or disappeared. Lint0 broken links,0 ticket/status mismatches; only pre-existing large data/t0018-cases warning remains. Read-only GitHub check again found no open PR and unchanged issue65. No contributor messages sent.
+Under [[tickets/T-24900-completion-orchestration]], Docker tools/wiki.py rotate-log moved111 older entries to existing [[log/2026-W42]], retaining353 in the active page. Compared multisets of normalized entries across all log pages before/after: exact equality, including duplicate counts. No historical entry changed or disappeared. Lint0 broken links,0 ticket/status mismatches; only pre-existing large data/t0018-cases warning remains. Read-only GitHub check again found no open PR and unchanged issue65. No contributor messages sent.
 ## [2026-10-20] query | T-24503 reconstruct GEKO scene entry and icon loop
 
 Continued func_80135DC0 using current-pass instruction regions. Fixed invented helper arguments/formal, direct early exits and the actual sp62 counter home; first setup and icon loop now have exact local evidence. Scoped-pointer frame is already0x68 (correcting prior baseline wording). Compiler-only conclusions deferred while calendar/source structure is reconstructed. [[tickets/T-24503-geko-option-completion]].
@@ -2069,7 +2069,7 @@ pass; no original ASM, binary, ucode or full context archived. In Progress.
 
 ## [2026-10-20] build | Eighteenth match integrated, 91.7 percent
 
-TACO func_8013A790 is pushed at735e50bd9 after root review,27 hashes, declaration guards and literal default-C1492-byte proof. Fresh Docker census6811/6952 functions,2086968/2276920 bytes,141 remaining. Resumed run18 functions/19964 bytes; [[status]] refreshed. Deeper GEKO source archiveb1e6b6601 and MASTER consultation packet036407cd5 preserve useful nonmatching evidence. [[tickets/T-24500-completion-orchestration]] tracks Astra's isolated MASTER copy-end consult and queued MAIN767A4 stack-only packet, while Sol lanes continue structural matching. No archive coverage credit or compiler modification.
+TACO func_8013A790 is pushed at735e50bd9 after root review,27 hashes, declaration guards and literal default-C1492-byte proof. Fresh Docker census6811/6952 functions,2086968/2276920 bytes,141 remaining. Resumed run18 functions/19964 bytes; [[status]] refreshed. Deeper GEKO source archiveb1e6b6601 and MASTER consultation packet036407cd5 preserve useful nonmatching evidence. [[tickets/T-24900-completion-orchestration]] tracks Astra's isolated MASTER copy-end consult and queued MAIN767A4 stack-only packet, while Sol lanes continue structural matching. No archive coverage credit or compiler modification.
 
 
 ## [2026-10-20] decision | T-24502 font quad checkpoint
@@ -2140,7 +2140,7 @@ Post-prototype/string 520-step two-job build passed; explicit hashes passed all2
 
 ## [2026-10-20] build | Nineteenth resumed match published and twins rechecked
 
-Published MAIN func_800767A4 at f294c7f36:932 literal default-C bytes,27 independent binary hashes and declaration guards pass after source review. Docker progress6812/6952 functions,2087900/2276920 bytes (91.7%),140 remaining; run gain19 functions/20896 bytes. Updated [[status]] and [[tickets/T-24500-completion-orchestration]]. The preceding6811/141 Docker twin scan found no automatic copies or identical unmatched groups. Astra's bounded TACO color-copy consultation found no match; evidence is recorded for worker handoff, and Sol lanes continue fresh structural and sibling leads. No contributor message sent.
+Published MAIN func_800767A4 at f294c7f36:932 literal default-C bytes,27 independent binary hashes and declaration guards pass after source review. Docker progress6812/6952 functions,2087900/2276920 bytes (91.7%),140 remaining; run gain19 functions/20896 bytes. Updated [[status]] and [[tickets/T-24900-completion-orchestration]]. The preceding6811/141 Docker twin scan found no automatic copies or identical unmatched groups. Astra's bounded TACO color-copy consultation found no match; evidence is recorded for worker handoff, and Sol lanes continue fresh structural and sibling leads. No contributor message sent.
 ## [2026-10-20] decision | T-24503 reconstruct GEKO eligibility loops
 
 [[tickets/T-24503-geko-option-completion]]: func_80142C9C draft improves from 450 to 135 after narrowing, packed-word, store-order and documented allocator repairs. Frame is 0x558, with 914 target and 913 candidate resolved instructions. Remaining load-base, register and operand differences are recorded in drafts/T-24503/README.md. Checked the sibling scene initializer's strcpy view; it leaves these instructions unchanged. Production remains ASM and coverage is unchanged.
@@ -2193,7 +2193,7 @@ The preceding fade callee's s32 view closes six remaining rows after indexed ini
 
 ## [2026-10-20] build | Twentieth resumed match published
 
-MASTER func_80135FB8 is main ca34dcf7f after root review, literal1084-byte proof,27 independent hashes and declaration guards. Docker census6813/6952 functions,2088984/2276920 bytes (91.7%),139 remaining. [[status]] and [[tickets/T-24500-completion-orchestration]] record20 new matches/21980 bytes this run, source archives throughf1e2511ff, the negative RPG consultation and active TACO/queued CD consultations. Read-only GitHub check found no open PR and unchanged issue65; no contributor messages.
+MASTER func_80135FB8 is main ca34dcf7f after root review, literal1084-byte proof,27 independent hashes and declaration guards. Docker census6813/6952 functions,2088984/2276920 bytes (91.7%),139 remaining. [[status]] and [[tickets/T-24900-completion-orchestration]] record20 new matches/21980 bytes this run, source archives throughf1e2511ff, the negative RPG consultation and active TACO/queued CD consultations. Read-only GitHub check found no open PR and unchanged issue65; no contributor messages.
 ## [2026-10-20] decision | T-24503 recover the GEKO birthday-check frame
 
 [[tickets/T-24503-geko-option-completion]]: func_80132B24 now has a separate cost 73 source candidate with frame 0x50 and exact table offsets, using the packed record field directly and retaining the real day home. The cost 61 production guard still has frame 0x58. Further return-coalescing and register differences remain. Bounded sibling/type/control-flow tests did not close it; archived source and replay preserve the structural repair without a match claim.
@@ -2215,7 +2215,7 @@ Independent DEE4 consult finds additional post-projection allocation differences
 
 ## [2026-10-20] build | Twenty-first match raises coverage to 91.8 percent
 
-Published MAIN func_80046754 at6a2c6eb4b:884 literal C bytes,27 independent hashes and declaration guards pass after root review. Docker census6814/6952 functions,2089868/2276920 bytes,138 remaining. [[status]] and [[tickets/T-24500-completion-orchestration]] record21 new matches/22864 bytes, archived GEKO/TACO findings, negative consultations and active ownership. MAIN continues46AC8; former TACO worker maps NAME_ENT43580 after two bounded negatives. Research completion is not function coverage.
+Published MAIN func_80046754 at6a2c6eb4b:884 literal C bytes,27 independent hashes and declaration guards pass after root review. Docker census6814/6952 functions,2089868/2276920 bytes,138 remaining. [[status]] and [[tickets/T-24900-completion-orchestration]] record21 new matches/22864 bytes, archived GEKO/TACO findings, negative consultations and active ownership. MAIN continues46AC8; former TACO worker maps NAME_ENT43580 after two bounded negatives. Research completion is not function coverage.
 ## [2026-10-20] decision | T-24503 reconstruct GEKO club flag writes
 
 [[tickets/T-24503-geko-option-completion]]: func_80133C50 improves from 113 to 66 with existing named flag-bit stores, restoring the original 209-instruction sequence and frame 0x128. A documented matching-only empty test improves to 44 without structural instruction gaps. Archived both source forms and the local strcpy ABI view; bounded follow-ups leave temporary numbering and two comparison operand pairs. The production fallback is retained.
@@ -2246,7 +2246,7 @@ Root standards review passes with no findings; full-TU unchanged result meets in
 
 ## [2026-10-20] decision | Conserve usage with two matching workers
 
-User requested slower usage consumption and permitted Luna high for simple tasks. [[status]] and [[tickets/T-24500-completion-orchestration]] record MAIN/NAME_ENT as the two continuing Solmedium lanes, checkpoint-and-idle instructions to the others, narrow-only Astra escalation, and centralized full27 integration checks. Goal remains100%. Latest wiki lint had0 broken links/0 status mismatches and only the pre-existing large data/t0018-cases warning.
+User requested slower usage consumption and permitted Luna high for simple tasks. [[status]] and [[tickets/T-24900-completion-orchestration]] record MAIN/NAME_ENT as the two continuing Solmedium lanes, checkpoint-and-idle instructions to the others, narrow-only Astra escalation, and centralized full27 integration checks. Goal remains100%. Latest wiki lint had0 broken links/0 status mismatches and only the pre-existing large data/t0018-cases warning.
 ## [2026-10-20] decision | T-24503 preserve OPTION decrement repair
 
 [[tickets/T-24503-geko-option-completion]]: OPTION func_80139A30 source improves from223 to186 with an unsigned menu read and separate decrement cases. Target259/candidate257 instructions retain frame0x28; further source/control and narrowing differences remain. Added the unmatched body to drafts/T-24503/replay.py. Recorded current OPTION326BC indexed157 versus its historical99 header; the existing pointer144 remains better. Paused worker activity at the parent's usage checkpoint with production unchanged.
@@ -2723,7 +2723,7 @@ Frozen full-TU1075-word/864-row source replay after true X-width fix and natural
 
 ## [2026-10-20] build | Consolidated archives verified and cheaper-first matching resumed
 
-Root published TAIIKU/RPG/VALEN archive consolidation at6e9467a90 after all27 executable hashes and header/global/prototype guards passed. VALEN stale guard removal preserves its original fallback; no coverage gain. Reviewed NAME_ENT regional source packet762014be1 for archive preservation. Latest GitHub read shows no open PRs and unchanged issue65 timestamp14:31:11Z. Luna high now tests one fresh MAIN54E6C aggregate-access hypothesis; prior Sol workers are idle. [[status]] retains6814/6952 functions and91.8% bytes; [[tickets/T-24500-completion-orchestration]] goal remains100%.
+Root published TAIIKU/RPG/VALEN archive consolidation at6e9467a90 after all27 executable hashes and header/global/prototype guards passed. VALEN stale guard removal preserves its original fallback; no coverage gain. Reviewed NAME_ENT regional source packet762014be1 for archive preservation. Latest GitHub read shows no open PRs and unchanged issue65 timestamp14:31:11Z. Luna high now tests one fresh MAIN54E6C aggregate-access hypothesis; prior Sol workers are idle. [[status]] retains6814/6952 functions and91.8% bytes; [[tickets/T-24900-completion-orchestration]] goal remains100%.
 
 ## [2026-10-20] ticket | T24519 MASTER animation sibling transfer
 
@@ -2804,7 +2804,7 @@ Stopped new probes/builds under resource-conservation steering. Preserved4a90979
 
 ## [2026-10-20] decision | Two-worker cheaper-first handoff
 
-Reviewed Luna's negative MAIN54E6C evidence and confirmed restored production/header state; overall matching ticket remains open. [[status]] now identifies Sol MAIN54E6C and Luna ENDING387B0 as the two active assignments. Recent Docker wiki lint had0 broken links and0 status mismatches, with size warnings for log and existing data/t0018-cases. Completed diagnostic archives are preserved without coverage credit; [[tickets/T-24500-completion-orchestration]] continues toward100%.
+Reviewed Luna's negative MAIN54E6C evidence and confirmed restored production/header state; overall matching ticket remains open. [[status]] now identifies Sol MAIN54E6C and Luna ENDING387B0 as the two active assignments. Recent Docker wiki lint had0 broken links and0 status mismatches, with size warnings for log and existing data/t0018-cases. Completed diagnostic archives are preserved without coverage credit; [[tickets/T-24900-completion-orchestration]] continues toward100%.
 ## [2026-10-20] decision | MAIN metric aggregate escalation remains negative
 
 [[tickets/T-24501-main-tail]] follows [[tickets/T-24570-main-80054e6c-metric-record-view]] with one true record assignment: full-TU cost105/90words versus84/87 baseline, frame40 unchanged. Target80 has no surviving array/argument accesses supporting a64B local. Preserved focused source-only replay and uncertainty; no production/header edits, padding grid or backend-defect claim. Details in [[matching-notes]].
@@ -2818,7 +2818,7 @@ Fresh Docker full-TU baseline and the single canonical `D_8011F4DE` trial both s
 
 ## [2026-10-20] decision | Focus remaining compute on sndi reconstruction
 
-[[status]] records the sole active Sol worker on MAIN sndi, corrected found-flag behavior and diagnostic259/263-word gap. MAIN54E6C completed Luna/Sol/Astra escalation: no supported source/ABI explanation for unused64 frame bytes, no Astra compiles or padding grid. ENDING387B0 hybrid negative is preserved at0cd20d65a; Luna and Astra idle. Latest contributor check remains no open PRs and unchanged issue65. No new verified coverage; [[tickets/T-24500-completion-orchestration]] remains active.
+[[status]] records the sole active Sol worker on MAIN sndi, corrected found-flag behavior and diagnostic259/263-word gap. MAIN54E6C completed Luna/Sol/Astra escalation: no supported source/ABI explanation for unused64 frame bytes, no Astra compiles or padding grid. ENDING387B0 hybrid negative is preserved at0cd20d65a; Luna and Astra idle. Latest contributor check remains no open PRs and unchanged issue65. No new verified coverage; [[tickets/T-24900-completion-orchestration]] remains active.
 
 ## [2026-10-20] decision | Recover text substitution buffers and control joins
 
@@ -2830,7 +2830,7 @@ Fresh Docker full-TU baseline and the single canonical `D_8011F4DE` trial both s
 
 ## [2026-10-20] decision | Return to Sol medium workers with Astra
 
-User rejected the recent low-yield method and explicitly restored Sol6.1 medium with Astra. [[status]] supersedes Luna-first policy, limits active matching to two workers, and prioritizes verified-byte payoff. MAIN worker freezes sndi variation sequence and performs a brief evidence-based family selection; former TACO worker resumes separate NAME_ENT/TACO ownership. No new Luna assignments or broad repeated sweeps. [[tickets/T-24500-completion-orchestration]] remains active toward100%.
+User rejected the recent low-yield method and explicitly restored Sol6.1 medium with Astra. [[status]] supersedes Luna-first policy, limits active matching to two workers, and prioritizes verified-byte payoff. MAIN worker freezes sndi variation sequence and performs a brief evidence-based family selection; former TACO worker resumes separate NAME_ENT/TACO ownership. No new Luna assignments or broad repeated sweeps. [[tickets/T-24900-completion-orchestration]] remains active toward100%.
 ## [2026-10-20] decision | Stop text variants and preserve final source candidate
 
 [[tickets/T-24501-main-tail]] preserves unverified `sndi`150/265words, with183 control reconstructible by parity width. Target263; correct buffer/index/flag homes and semantics retained, integer-address idiom FAKE-marked. User directed stopping variants; no further compiles or production changes. Bounded read-only family assessment follows. See [[matching-notes]].
@@ -2845,7 +2845,7 @@ User rejected the recent low-yield method and explicitly restored Sol6.1 medium 
 
 ## [2026-10-20] build | Save loader adds672 verified C bytes
 
-Root reviewed and integrated func_800552DC at97a004d39 with default-C literal672-byte proof, all27 binary hashes and declaration guards. Fresh Docker progress6815/6952 functions,2090540/2276920 bytes,137 remaining; [[status]] refreshed. Resumed-run total22 functions/23536 bytes. Save-image view types support the inverse54FC0 investigation; TACO EAA4 coordinate reconstruction continues independently. [[tickets/T-24500-completion-orchestration]] remains active.
+Root reviewed and integrated func_800552DC at97a004d39 with default-C literal672-byte proof, all27 binary hashes and declaration guards. Fresh Docker progress6815/6952 functions,2090540/2276920 bytes,137 remaining; [[status]] refreshed. Resumed-run total22 functions/23536 bytes. Save-image view types support the inverse54FC0 investigation; TACO EAA4 coordinate reconstruction continues independently. [[tickets/T-24900-completion-orchestration]] remains active.
 ## [2026-10-20] decision | T-24502 resumed coordinate-loop reconstruction
 
 Root reassigns TACO EAA4 in existing clean worktree. Read latest notes and original loop regions: middle inner loop counts pixel offsets256 through512, third outer latch compares Y512, unlike archived row-index forms. Recover those source controls serially with full-TU control; no repeated scalar/grid/Astra negatives. [[tickets/T-24502-taco-completion]].
@@ -3125,3 +3125,6 @@ Recorded final MAIN matrix/background, TACO font, NAME_ENT introduction and ETC 
 ## [2026-10-20] lint | Final handoff checks
 
 Catalog refreshed:729 tickets,428 sections,3,077 functions. Docker wiki lint reports zero broken links and zero ticket/board mismatches; only the two existing large-page warnings remain ([[data/t0018-cases]], [[log]]). `git diff --check` passes. Matching goal paused at the user's wrap-up request; completed source and handoff documentation prepared for commit and push to origin/main.
+## [2026-10-20] query | as1 global delay-slot filler rule and the volatile lever
+
+[[tickets/T-24900-completion-orchestration]] research branch `as1-lever`. Traced as1's global filler with the T-24047 print-only build plus a relocation print: blocks with a stall are visited by (weight, number); candidates are dominated blocks in that order up to weight +5; a volatile access and its `lui` are never candidates; an indirect jump on the path or a live destination register rejects. Confirmed on OMIMAI `func_801340E4`, SHOUGATU `func_8013EE30`, TAIIKU `func_8013C33C`. Lever: `volatile` on the default arm's three globals matches VALEN `func_80134030` and GYOZI `func_80139E4C` (FAKE in VALEN.h/GYOZI.h). VALEN `func_80132D0C`, GEKO `func_80136C20`, KANGEI `func_8013852C` stay guarded with T-24900 notes. New page [[as1-scheduler-rule]]; [[playbook]] section 5 and known limits updated.
