@@ -2142,3 +2142,7 @@ func_8014FFDC now matches 2,292 linked bytes in default C. Shared loop locals, e
 ## [2026-10-20] build | Five verified matches integrated to main
 
 [[tickets/T-24500-completion-orchestration]] integrated MAIN func_800654D0, TACO func_80140028 and func_8014FFDC, GEKO func_80134808 and func_80133308 through source head e51680da0: five functions, 5,280 bytes. Each integration independently passed 27 SHA1 checks, default-C linked proofs and header/global/prototype guards. Docker progress now reports 6,798/6,952 functions and 2,072,284/2,276,920 bytes (91.0%); [[status]] updated. [[tickets/T-24510-parallel-overlay-coordination]] handoff published at b128b443b; six Sol workers span MAIN, TACO, GEKO/OPTION, TEL, ENDING and ETC. Latest read-only GitHub check found issue #65 unchanged and no open PR; contributor still unavailable until Friday. Bounded Astra consult for GEKO func_80133024 found no new source hypothesis; preserve the two-row checkpoint and avoid further blind grids.
+
+## [2026-10-20] ticket | Start isolated TAIIKU RPG_BAT and seasonal lanes
+
+[[tickets/T-24520-parallel-tail-coordination]] coordinates three user-authorized Sol 6.1 medium workers from dba33c4f5: TAIIKU T-24521, RPG_BAT T-24522, GYOZI/VALEN/SHOUGATU T-24523. Each owns an isolated /private/tmp worktree with Docker-only tools and one compiler job. Existing twin-sweep and scheduler negatives are carried forward to avoid repeated grids. [[status]] records lane ownership; parent chat retains serialized integration. No new verified coverage claimed.
