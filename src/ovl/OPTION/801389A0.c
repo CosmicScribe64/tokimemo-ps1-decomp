@@ -429,7 +429,142 @@ void func_801399C0(void) {
     func_8004B19C(D_8013D3F4 & 1, 0x78, 0xA);
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139A30);
+/* FAKE: T-11900 plain u16 view of the counter that the header declares volatile for func_80139E3C (T-11340):
+ * the original keeps each case's load in $v1 and reloads it once after the switch. */
+#define D_8013D3B8_PLAIN (*(u16 *)&D_8013D3B8)
+
+void func_80139A30(void) {
+    u16 v;
+    u8 s;
+    GameState *g = &D_800E6280;
+
+    if (g->unk_F88 & 0x08000000) {
+        D_8013D3F0 = 1 - D_8013D3F0;
+    }
+    if (D_8013D3F0 != 0 && (func_800460EC() & 2)) {
+        g->unk_F88 |= 0x20;
+        g->unk_F80 |= 4;
+    }
+    if (g->unk_F80 & 5) {
+        if (g->unk_F88 & 0x8000) {
+            s = g->unk_F5F;
+            g->unk_F5F = s + 1;
+        }
+        s = g->unk_F5F;
+        if (g->unk_F88 & 0x2000) {
+            s--;
+        }
+        if (s == 0xFF) {
+            s = 0xF;
+        }
+        g->unk_F5F = s;
+        if (s > 0x10) {
+            g->unk_F5F = 0;
+        }
+    }
+    if (D_8013D3B0 | D_8013D3B4) {
+        func_8013A060();
+    } else if (g->unk_F88 & 0x860) {
+        /* FAKE: T-11900 u8 view of the s8 menu index: lbu with no sign extension before the table bound */
+        switch (*(u8 *)&g->unk_1093) {
+        case 0:
+            func_80139E3C(0);
+            break;
+        case 1:
+            func_80042940(3);
+            break;
+        case 2:
+            func_80042940(4);
+            break;
+        case 3:
+            func_8013A010();
+            break;
+        case 4:
+            func_8013A038();
+            break;
+        case 5:
+            if (g->unk_F88 & 0x800) {
+                func_80042940(5);
+            } else {
+                func_80139F04();
+            }
+            break;
+        case 6:
+            func_80139F8C();
+            break;
+        }
+    }
+    if (g->unk_F80 & 0x50000) {
+        switch (g->unk_F80 & 0xF00000) {
+        case 0x200000:
+            v = D_8013D3B8_PLAIN;
+            D_8013D3B8_PLAIN = v + 1;
+            break;
+        case 0x400000:
+            v = D_8013D3B8_PLAIN;
+            D_8013D3B8_PLAIN = v + 10;
+            break;
+        case 0x800000:
+            v = D_8013D3B8_PLAIN;
+            D_8013D3B8_PLAIN = v + 100;
+            break;
+        case 0x100000:
+            v = D_8013D3B8_PLAIN;
+            D_8013D3B8_PLAIN = v + 1000;
+            break;
+        }
+        v = D_8013D3B8_PLAIN;
+    } else {
+        switch (g->unk_F88 & 0xF00000) {
+        case 0x200000:
+            v = D_8013D3B8_PLAIN + 1;
+            break;
+        case 0x400000:
+            v = D_8013D3B8_PLAIN + 10;
+            break;
+        case 0x800000:
+            v = D_8013D3B8_PLAIN + 100;
+            break;
+        case 0x100000:
+            v = D_8013D3B8_PLAIN + 1000;
+            break;
+        default:
+            v = D_8013D3B8_PLAIN;
+            break;
+        }
+    }
+    /* v is u16, so under -cckr `v - k` is unsigned: `>= 0` always holds and `> 0` tests `!= 0`. */
+    if (g->unk_F80 & 0xA0000) {
+        switch (g->unk_F80 & 0xF00000) {
+        case 0x200000:
+            if (v - 1 >= 0) {
+                v -= 1;
+            }
+            break;
+        case 0x400000:
+            if (v - 10 > 0) {
+                v -= 10;
+            }
+            break;
+        case 0x800000:
+            if (v - 100 > 0) {
+                v -= 100;
+            }
+            break;
+        case 0x100000:
+            if (v - 1000 > 0) {
+                v -= 1000;
+            }
+            break;
+        }
+    }
+    D_8013D3B8_PLAIN = v;
+    if (v > 2899) {
+        D_8013D3B8_PLAIN = 0;
+    }
+    func_8013A334();
+}
+#undef D_8013D3B8_PLAIN
 
 #define F80_BOOST_9E3C \
     (((D_800E6280.unk_F80 ^ 1) * 0) + ((D_800E6280.unk_F80 ^ 2) * 0) + ((D_800E6280.unk_F80 ^ 3) * 0) + \
