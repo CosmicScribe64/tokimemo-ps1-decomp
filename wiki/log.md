@@ -2089,3 +2089,7 @@ Fresh typed particle-update C matches all 828 linked target bytes in the default
 ## [2026-10-20] build | T-24502 verified TACO particle update
 
 After the parent review's header placement fix, default func_80140028 matches 828 linked bytes and all 27 built binaries independently match their pinned SHA1 values. Header/global guards and prototype branch check pass (0 new disagreements). [[tickets/T-24502-taco-completion]] records the resolved review finding; campaign continues.
+
+## [2026-10-20] build | T-24502 largest TACO function matched
+
+func_8014FFDC now matches 2,292 linked bytes in default C. Shared loop locals, existing table indexing and marked initializer grouping replace stale split-variable code. Parent review found no blockers; all 27 binary SHA1 checks and source guards pass after its own header declaration. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the source forms and failed alternatives.

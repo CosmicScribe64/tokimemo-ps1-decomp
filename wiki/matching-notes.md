@@ -549,3 +549,12 @@ Tools: viewsweep (`--targets FILE` with `UNIT:func BODY.c` lines) found the one 
 - `func_80140ADC` gets its existing `void (Tc14 *, s32)` definition declared once in `include/ovl/TACO.h`; no override needed.
 
 Close-tail probe: fusing func_8013B460's y3 store and UV comma stores into one comma expression leaves the documented two moved halfword stores unchanged. Restored its baseline and moved on.
+
+### T-24502: largest TACO function func_8014FFDC
+
+Default linked C matches all 2,292 bytes; all 27 binaries SHA1 OK after adding its own `s32 (s32)` header declaration. Replaced the stale draft's dozens of split locals with `i`, `random`, and a tail pointer into the existing `D_8016024C` aggregate.
+
+- First loops index `D_8016024C[i]` and call with `i + 1`, then increment `i`; IDO derives the original's walking pointer in s2, counter in s1, and next counter in s0. Writing a pointer walk plus `next = i + 1; call(next,...); i = next` gives the wrong priorities and call argument scheduling.
+- The two-entry tail loops use `tail = &D_8016024C[4]` and `tail[i]`. Walking `tail++` leaves six call-delay stores early; direct `D_8016024C[i + 4]` retains the displacement on every load rather than on the initial pointer.
+- Group `i = 0; do {` for the first loop and `tail = &D_8016024C[4]; i = 0; do {` for the tail loops. It places each synthesized base load before the zero-counter move, as the original. Marked FAKE source grouping. No callee view change helps (own void/s32 and func_80147674 void/s32, K&R/prototype all tested).
+- Parent source review found no blockers. Header/global guards and prototype branch check pass (0 new disagreements). No asm, toolchain or raw data edits.

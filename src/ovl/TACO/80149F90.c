@@ -1443,7 +1443,172 @@ void func_8014FDC0(void) {
     D_8015EDB4[18].unk3 += 1;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014FFDC);
+s32 func_8014FFDC(s32 arg0) {
+    s32 i;
+    s32 random;
+    s32 *tail;
+    /* FAKE: group loop initializers on the do line to preserve scheduling. T-24502 */
+    if (arg0 < 0xA) {
+        i = 0; do {
+            func_80147674(i + 1, (s16 *)D_8016024C[i], 1, 0, 0);
+            i++;
+        } while (i != 6);
+        func_80147674(0x1A, (s16 *) D_80160264, 1, 0, 0);
+        return;
+    }
+    if (arg0 >= 0xE) {
+        i = 0;
+        if (arg0 < 0x18) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 2, 0, 0);
+                i++;
+            } while (i != 4);
+            return;
+        }
+    }
+    if (arg0 == 0x1B) {
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        return;
+    }
+    if (arg0 >= 0x1C) {
+        i = 0;
+        if (arg0 < 0x1E) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 3, 0, 0);
+                i++;
+            } while (i < 4);
+            tail = &D_8016024C[4]; i = 0; do {
+                func_80147674(i + 5, (s16 *)tail[i], 2, 0, 0);
+                i += 1;
+            } while (i != 2);
+            func_80147674(0x1A, (s16 *) D_80160264, 2, 0, 0);
+            return;
+        }
+    }
+    if (arg0 >= 0x1E) {
+        i = 0;
+        if (arg0 < 0x22) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 4, 0, 0);
+                i++;
+            } while (i < 4);
+            tail = &D_8016024C[4]; i = 0; do {
+                func_80147674(i + 5, (s16 *)tail[i], 3, 0, 0);
+                i += 1;
+            } while (i != 2);
+            func_80147674(0x1A, (s16 *) D_80160264, 3, 0, 0);
+            return;
+        }
+    }
+    if (arg0 == 0x22) {
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x12C, 0xC1);
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x1F4, 0xC1);
+        return;
+    }
+    if (arg0 >= 0x23) {
+        i = 0;
+        if (arg0 < 0x25) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 3, 0, 0);
+                i++;
+            } while (i < 4);
+            tail = &D_8016024C[4]; i = 0; do {
+                func_80147674(i + 5, (s16 *)tail[i], 2, 0, 0);
+                i += 1;
+            } while (i != 2);
+            func_80147674(0x1A, (s16 *) D_80160264, 2, 0, 0);
+            return;
+        }
+    }
+    if (arg0 >= 0x25) {
+        i = 0;
+        if (arg0 < 0x29) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 4, 0, 0);
+                i++;
+            } while (i < 4);
+            tail = &D_8016024C[4]; i = 0; do {
+                func_80147674(i + 5, (s16 *)tail[i], 3, 0, 0);
+                i += 1;
+            } while (i != 2);
+            func_80147674(0x1A, (s16 *) D_80160264, 3, 0, 0);
+            return;
+        }
+    }
+    if (arg0 == 0x29) {
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x12C, 0xC1);
+        return;
+    }
+    if (arg0 >= 0x2A) {
+        i = 0;
+        if (arg0 < 0x2C) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 3, 0, 0);
+                i++;
+            } while (i < 4);
+            tail = &D_8016024C[4]; i = 0; do {
+                func_80147674(i + 5, (s16 *)tail[i], 2, 0, 0);
+                i += 1;
+            } while (i != 2);
+            func_80147674(0x1A, (s16 *) D_80160264, 2, 0, 0);
+            return;
+        }
+    }
+    if (arg0 >= 0x2C) {
+        i = 0;
+        if (arg0 < 0x31) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 4, 0, 0);
+                i++;
+            } while (i < 4);
+            tail = &D_8016024C[4]; i = 0; do {
+                func_80147674(i + 5, (s16 *)tail[i], 3, 0, 0);
+                i += 1;
+            } while (i != 2);
+            func_80147674(0x1A, (s16 *) D_80160264, 3, 0, 0);
+            return;
+        }
+    }
+    if (arg0 >= 0x35) {
+        i = 0;
+        if (arg0 < 0x3F) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 5, 0, 0);
+                i++;
+            } while (i != 4);
+            func_80147674(6, (s16 *)D_8016024C[5], 4, 0, 0);
+            func_80147674(0x1A, (s16 *) D_80160264, 4, 0, 0);
+            return;
+        }
+    }
+    if (arg0 >= 0x43) {
+        i = 0;
+        if (arg0 < 0x4D) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 6, 0, 0);
+                i++;
+            } while (i != 4);
+            func_80147674(5, (s16 *)D_8016024C[4], 4, 0, 0);
+            func_80147674(6, (s16 *)D_8016024C[5], 5, 0, 0);
+            func_80147674(0x1A, (s16 *) D_80160264, 5, 0, 0);
+        }
+    }
+}
+
 
 void func_801508D0(void) {
     s32 i;
