@@ -4,6 +4,3 @@
 # chosen by compiling: the epilogue and register habits of the object, wiki/toolchain.md).
 TAIIKU/801488F0 gcc 2.8.1-psx 2.79
 TT/8014D260 gcc 2.7.2-psx 2.56
-
-# FAKE (T-24800, wiki/as1-scheduling.md): as1 without its cross-block scheduler; func_80134030 matches with it
-# and no other function of the file changes. An option change for one file, so a fakematch (CODING_STANDARDS 7a).
