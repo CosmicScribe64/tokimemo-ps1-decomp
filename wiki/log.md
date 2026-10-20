@@ -20940,3 +20940,7 @@ Cloud packet results merged with the linked proof here: ETC `func_80140AE4` (224
 ## [2026-10-20] ticket | T-24303 In Progress: local list l6-p03
 
 Created [[tickets/T-24303-local-list-l6-p03]] (In Progress): local session works the 54-function list l6-p03 (best first) in worktree `l6-p03`, owned C files only; matches committed one by one, checkpoints merged by the orchestrator.
+
+## [2026-10-20] build | T-24303 checkpoint 1
+
+[[tickets/T-24303-local-list-l6-p03]]: clean build 27/27 and the header, globals and prototype checks OK. main `func_800755B4` matched (data island for main/80075320, two key-ring symbols, [[data-types]]); main `func_80047560` guarded at 22 rows.

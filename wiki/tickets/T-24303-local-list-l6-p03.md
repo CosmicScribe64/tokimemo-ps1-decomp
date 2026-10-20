@@ -22,3 +22,7 @@ Match as many of the 54 functions of local work list l6-p03 (`.claude/orchestrat
 ## Notes
 
 ## Comments
+
+### 2026-10-20 checkpoint 1
+
+Clean build 27/27 sha1 OK; check_headers, migrate_globals --check, sync_protos --check-branch OK. Matched: main `func_800755B4` (1,200 B; `.data` island for main/80075320, keys ring split into `D_800B6990[8]` and `D_800B6998`, both defined in the file). Guarded: main `func_80047560` at 22 rows (was INCLUDE_ASM, 78). Drafts archived in `drafts/T-24303/`: ETC `func_80146D4C` (104 rows), main `func_80075C84` (notes only).
