@@ -53,6 +53,9 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
+
+
 
 ## In Review
 

@@ -211,14 +211,11 @@ void func_8013478C(void) {
     func_80082764(D_80122CDC, 1, 0);
 }
 
-/* NON_MATCHING: T-24302, 15 rows; sibling of func_801358CC (matched with the
- * same idioms). Left: the second equality branch gets "move v0,s6; bne a0,v0"
- * (the "* 1" FAKE is CSEd), "next != D_80122D40" compares a temporary, and the
- * loop tail converts next to s16 twice, so as1 fills the branch delay slots
- * with the first sll and later ugen temporaries are one higher. cur and
- * newState are the extra s-register values that stop uopt from hoisting the
- * record base out of the loop. */
-#ifdef NON_MATCHING
+/* FAKE: T-24503, the two equality wrappers prevent a shared compare copy;
+ * the unsigned selector view reverses the branch operands. The empty loop-tail
+ * test keeps the s16 conversion in the latch, and the call-result mask spends
+ * the deleted narrowing temporary needed by the following ugen registers.
+ * cur and newState keep the record base from being hoisted out of the loop. */
 s32 func_80134808(void) {
     s16 i;
     s32 next;
@@ -238,12 +235,12 @@ s32 func_80134808(void) {
     do {
         if (!D_800E6280.unk_1BC[i].unk_0C.f.b1) {
             next = i + 1;
-        } else if (!(D_800E6280.unk_71E & 0x80) || (next = i + 1, D_80122D40 != next)) {
+        } else if (!(D_800E6280.unk_71E & 0x80) || (next = i + 1, next != (*(u32 *)&D_80122D40))) {
             next = i + 1;
             state = get_g_zyotai_s(i) & 0x7F;
             newState = state & 0xFF;
             if ((u8) state < bestState ||
-                (bestState * 1 == (u8) state && (cur = best, bestState * 1 == (u8) state) &&
+                (bestState * 1 == (u8) state && (cur = best, bestState << 0 == (u8) state) &&
                  (yuukou = get_h_yuukou(i), tokimeki = get_h_tokimeki(i),
                   bestTokimeki = get_h_tokimeki(cur),
                   get_h_yuukou(cur) + bestTokimeki < tokimeki + yuukou))) {
@@ -251,9 +248,9 @@ s32 func_80134808(void) {
                 bestState = (u8) newState;
             }
         }
-        i = next;
+        i = (s16) next; if (i) {}
     } while (i < 11);
-    state = get_g_zyotai_s(best);
+    state = get_g_zyotai_s(best) & 0xFF;
     D_80122D40 = 0;
     if ((state & 0x7F) >= 2 || best == 0xFF || (girl = best, D_800E6280.unk_71E & 8)) {
         func_80042940(0x17);
@@ -265,9 +262,6 @@ s32 func_80134808(void) {
     func_80134A14();
     return func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_80134808);
-#endif
 
 void func_801349B8(void) {
     func_80134F84();

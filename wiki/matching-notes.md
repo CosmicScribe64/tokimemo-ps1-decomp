@@ -537,3 +537,7 @@ Parked as INCLUDE_ASM with drafts in drafts/T-24301/ (each file's header says wh
 - Further drafts (far in rows): main func_8006BA40 (41: D_8011ECF6 as the promoted global), func_8006D138, mod_set, mod_set_gpu, srn_set, hizuke_init, get_fnt, func_8004A1A0; OPTION func_801326BC; GEKO func_80133C50; GYOZI func_801412A4; RPG_BAT func_8014BFE4.
 
 Tools: viewsweep (`--targets FILE` with `UNIT:func BODY.c` lines) found the one OPTION match and nothing for the eleven parked drafts or the eighteen untried T-14500/T-17000 drafts; permuter runs gave the func_80140E0C counter trick (220 to 180) and `s32 cur` plus a one-line loop head for func_8006C988 (11 to 10 rows, not taken).
+
+## T-24503: GEKO and OPTION completion
+
+[[tickets/T-24503-geko-option-completion]], source baseline 2c7293275. GEKO `func_80134808` matches 432 default linked bytes: the loop tail `i = (s16)next; if(i) {}` removes the duplicated narrowing; using `bestState * 1` for the first equality and `bestState << 0` for the second prevents the unwanted shared compare copy. Read D_80122D40 through a u32 view to reverse the comparison operands. Mask the final get_g_zyotai_s result with 0xFF: the deleted narrowing spends the missing ugen temporary slot. All non-obvious controls marked FAKE. No shared-header change.
