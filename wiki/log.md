@@ -2162,3 +2162,15 @@ Started [[tickets/T-24523-seasonal-source-hypotheses]] in /private/tmp/tokimemo-
 ## [2026-10-20] build | Verified GYOZI selection-loop match
 
 [[tickets/T-24523-seasonal-source-hypotheses]] matches GYOZI func_80140F90: literal default C privately links to 788 original bytes, complete private GYOZI hash passes. Typed loops, named work-area fields, documented redundant narrowing and a guarded local integer debug-call view resolve the original register sequence. Header/global/prototype guards pass. Parent standards review has no blockers. [[matching-notes]] records the causal improvements and discarded lifetime probes.
+
+## [2026-10-20] query | Adjacent SHOUGATU retry-loop checkpoint
+
+[[tickets/T-24523-seasonal-source-hypotheses]] preserves a source-only func_8013E6E4 foundation under drafts/T-24523. Typed port, corrected field/table accesses and sequential retry flow reach full-unit resolved cost187; remaining saved-constant and selector-cache differences are broad. Production fallback retained; no additional coverage claimed.
+
+## [2026-10-20] query | Seasonal follow-up triage
+
+[[tickets/T-24523-seasonal-source-hypotheses]] records broad SHOUGATU func_8013EA98 port (cost284, discarded), negative GYOZI func_80138C9C integer-debug view, and the existing correct T-19016 VALEN func_80133088 foundation. Current VALEN guarded body is stale relative to its immutable target; prior dispatch-layout work remains the reference. No further match or production changes claimed.
+
+## [2026-10-20] decision | Review seasonal source-only checkpoint
+
+Parent and self review of drafts/T-24523/SHOUGATU/func_8013E6E4 found no blockers against the source-only archive rules. [[tickets/T-24523-seasonal-source-hypotheses]] retains its explicit no-coverage status and production assembly fallback.
