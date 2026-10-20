@@ -54,3 +54,5 @@ T-24510 archived bounded TEL/ENDING/ETC and MASTER/NAME_ENT/BUNKA_SD/EN_NICHI/KA
 ## Usage-conserving mode (2026-10-20)
 
 The user requested lower usage before capacity runs out. Keep only two active Sol6.1 medium workers: MAIN T-24501 and the former TACO worker's NAME_ENT reconstruction. All other workers/coordinators finish their current bounded experiment, preserve checkpoints, and remain idle. Astra stays idle unless a specific narrow blocker warrants escalation. Luna high may handle clearly mechanical tasks when useful; do not spawn extra work merely to fill slots. Workers prove literal C and affected-unit/declaration checks; root runs the full27 integration gate once. Reduce polling, repeated context reads, duplicate builds and verbose diagnostics. The100% goal remains active.
+
+The user's refined escalation order is **Luna high -> Sol6.1 medium -> Astra** for new assignments. Retain the two current Sol workers' existing function context; after they finish, route new work through Luna high first and escalate with a concise evidence packet only when needed. Do not add parallel workers beyond the two-worker limit.

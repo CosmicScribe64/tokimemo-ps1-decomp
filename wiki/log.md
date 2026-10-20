@@ -2247,3 +2247,10 @@ Root standards review passes with no findings; full-TU unchanged result meets in
 ## [2026-10-20] decision | Conserve usage with two matching workers
 
 User requested slower usage consumption and permitted Luna high for simple tasks. [[status]] and [[tickets/T-24500-completion-orchestration]] record MAIN/NAME_ENT as the two continuing Solmedium lanes, checkpoint-and-idle instructions to the others, narrow-only Astra escalation, and centralized full27 integration checks. Goal remains100%. Latest wiki lint had0 broken links/0 status mismatches and only the pre-existing large data/t0018-cases warning.
+## [2026-10-20] decision | T-24503 preserve OPTION decrement repair
+
+[[tickets/T-24503-geko-option-completion]]: OPTION func_80139A30 source improves from223 to186 with an unsigned menu read and separate decrement cases. Target259/candidate257 instructions retain frame0x28; further source/control and narrowing differences remain. Added the unmatched body to drafts/T-24503/replay.py. Recorded current OPTION326BC indexed157 versus its historical99 header; the existing pointer144 remains better. Paused worker activity at the parent's usage checkpoint with production unchanged.
+
+## [2026-10-20] decision | Apply the user's model escalation ladder
+
+New assignments start with Luna high, then escalate to Sol6.1 medium and Astra only as needed. [[status]] records the refined policy and two-worker limit. Current MAIN/NAME_ENT Sol contexts continue without an expensive restart; GEKO/OPTION has stopped after its preserved checkpoint. Other coordinators are finalizing their stop checkpoints.
