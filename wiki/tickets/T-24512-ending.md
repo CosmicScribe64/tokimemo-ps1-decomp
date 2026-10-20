@@ -43,3 +43,5 @@ Spec: bounded function-by-function causal hypotheses, current typed draft contro
 - `check_headers.py`: headers OK; `migrate_globals.py --check`: globals OK; `sync_protos.py --check-branch`:0 new disagreements,15 known; branch check OK.
 - Archived Python scripts pass Docker py_compile. `git diff --check` passes. Final src/include diff is empty.
 - Moving research checkpoint to In Review for coordinator handoff. Matching objective remains unresolved; zero new C bytes. Avoid repeating the measured negative controls. No linked C MATCH claim is made, because no candidate reached equality.
+
+- Archive follow-up self-review: generated34270 context.c merely copied the existing translation-unit siblings; none of the reproduction scripts reads it. Removed that unnecessary full context and empty declarations.h. Retained the compiling nonmatching body and score/provenance JSON only; no original ASM dump is present. Ticket stays In Review pending root acceptance.

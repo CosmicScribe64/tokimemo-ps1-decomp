@@ -2110,3 +2110,10 @@ check has0 new disagreements (15 known). Archived reproduction scripts pass
 py_compile; standards/spec self-review and diff check pass. Production diff is
 empty, zero new C bytes. Research archive preserves the unresolved330E4 frame
 lead, without changing existing scheduler guards.
+
+## [2026-10-20] lint | T-24512 archive scope review
+
+[[tickets/T-24512-ending]] removes redundant generated full translation-unit
+context and empty declarations from its research archive. Reproduction scripts
+use current source/header context, so neither removed file was needed. Existing
+source-only candidate and score provenance remain; no original assembly dump.
