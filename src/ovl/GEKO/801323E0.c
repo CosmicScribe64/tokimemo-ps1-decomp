@@ -274,9 +274,10 @@ void func_80132D04(s16 arg0, s16 arg1) {
     }
 }
 
-/* NON_MATCHING: T-24302, 5 rows; month comes out in $a1 instead of $a3 (and
- * the day load's lui base in $a0 instead of $a2). The two empty tests are FAKE
- * (T-24302): they give day $a2 and n $v1 as in the original (36 rows without). */
+/* NON_MATCHING: T-24503, two rows: the day-address base is a1 rather than a2.
+ * FAKE: empty day/month tests assign the day and table value to a2/v1;
+ * the table-element test in the true arm moves month from a1 to a3.
+ * Global-day and local-day ranges still tie at priority 10; see ticket. */
 #ifdef NON_MATCHING
 s32 func_80133024(void) {
     u8 month;
@@ -298,6 +299,7 @@ s32 func_80133024(void) {
         if (month) {}
         n = days.day[month - 1];
         if ((u32) n >= (u32) (day + i)) {
+            if (days.day[month - 1]) {}
             func_80132D04(0, (s16) (day + i - 1));
         } else {
             func_80132D04(1, (s16) (day + i - n - 1));
