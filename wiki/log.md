@@ -2145,3 +2145,7 @@ Continued func_80135DC0 using current-pass instruction regions. Fixed invented h
 ## [2026-10-20] decision | T-24503 reconstruct GEKO club flag writes
 
 [[tickets/T-24503-geko-option-completion]]: func_80133C50 improves from 113 to 66 with existing named flag-bit stores, restoring the original 209-instruction sequence and frame 0x128. A documented matching-only empty test improves to 44 without structural instruction gaps. Archived both source forms and the local strcpy ABI view; bounded follow-ups leave temporary numbering and two comparison operand pairs. The production fallback is retained.
+
+## [2026-10-20] decision | T-24503 preserve OPTION decrement repair
+
+[[tickets/T-24503-geko-option-completion]]: OPTION func_80139A30 source improves from223 to186 with an unsigned menu read and separate decrement cases. Target259/candidate257 instructions retain frame0x28; further source/control and narrowing differences remain. Added the unmatched body to drafts/T-24503/replay.py. Recorded current OPTION326BC indexed157 versus its historical99 header; the existing pointer144 remains better. Paused worker activity at the parent's usage checkpoint with production unchanged.
