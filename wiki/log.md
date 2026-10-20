@@ -2149,3 +2149,8 @@ Archived repaired SDK func_80139424 (cost513,404/419 words) with concise frame/r
 ## [2026-10-20] build | T-24502 fan close guard reviewed
 
 Retained func_80153B38 NON_MATCHING guard at26 aligned diff lines, confined to color copies; default832-byte fallback and all27 SHA1 checks pass. Parent review accepted the guard; SDK declaration finding is resolved once in include/libgpu.h, preserving original symbol and unchanged guarded output. [[matching-notes]], source packet and [[tickets/T-24502-taco-completion]] record the negative bounded consult and518-target rebuild. Focused donor check leads to E778-based DEE4 reconstruction (cost108, original frame/homes), no new global sweep.
+
+
+## [2026-10-20] lint | T-24502 fan packet final review
+
+Parent final SDK declaration review passes; removed the extra blank line at the archived body EOF found by the staged diff check. Production source and prior all27/default proof are unchanged. [[tickets/T-24502-taco-completion]].
