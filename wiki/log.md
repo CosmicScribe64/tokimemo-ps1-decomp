@@ -2546,3 +2546,7 @@ Archived typed func_8013BAC4 (cost330, down from stale817) and func_8013C6D4 (co
 ## [2026-10-20] decision | T-24502 archive review and AB50 consult
 
 Parent review found the BAC4 raw instruction comparison exceeded standards10 excerpt guidance; removed the dump and kept concise NOTES plus replay wrapper/commands. Independent AB50 consult still has seven constant-register words; chain stores worsen instruction count. [[matching-notes]] records the concrete allocator finding to avoid repeats. No production change under [[tickets/T-24502-taco-completion]].
+
+## [2026-10-20] build | Seventeenth match integrated, 91.6 percent
+
+MAIN func_80076000 is pushed at8253c1d73 after root standards review, shared-type correction, full build,27 hashes, literal default-C1196-byte proof and declaration guards. Fresh Docker census6810/6952 functions,2085476/2276920 bytes,142 remaining. [[status]] and [[tickets/T-24500-completion-orchestration]] updated. Corrected TACO source archive integrated at3c8582d6a using clean ancestry excluding the raw comparison dump. No archive coverage credit. Active Sol lanes continue; bounded Astra4AB50 test negative and preserved, no compiler change.
