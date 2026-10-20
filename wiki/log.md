@@ -2251,3 +2251,17 @@ Restored private TAIIKU checksum, both literal linked matches, 27 hashes and hea
 ## [2026-10-20] decision | T-24521 runner archive reviewed and F3A4 read-only triage
 
 Parent independently reviewed the 37784 archive with no blocking code finding; recorded resolution in [[tickets/T-24521-taiiku]]. Read F3A4's T-9710/T-11010/T-11640 history and best catalog drafts before considering a probe. Original per-case actor-base reconstruction versus IDO whole-switch hoisting remains the documented blocker; per-case pointers already failed. Identified the folded first flag-clear's wrong source field, but no new causal hoisting solution. Matched F948/FC5C ownership/helper templates add no untried recipe. Updated [[families/taiiku-family-results]]; no compiler or new baseline ran. Ticket stays In Progress for coordinator direction. Future commit titles start with T-24521; existing shared pins remain intact.
+
+
+## [2026-10-20] decision | T-24521 runner pointer phase ownership
+
+Audited corrected 37784's def-use before compiling: contact, clear and initialize/move actor pointers die at phase boundaries, so six aliases can share one actor cursor. Two Fix32 accumulator pointers are branch-exclusive; keep the separate typed counter pointer. Three delta/tick temporaries are branch-exclusive; source/effect x values overlap and remain distinct. Runner pointer alone survives the first k_reset call, matching the original sp+0x30 save. Sixteen declarations become eight; eight removed word homes predict a 32-byte frame reduction if all had homes, not an assured exact 56-byte frame. Prepared one causal reuse probe, without changing stride, views, control flow or padding. [[tickets/T-24521-taiiku]] stays In Progress.
+
+
+## [2026-10-20] build | T-24521 phase reuse removes eight runner homes
+
+One audited local-reuse compile confirms the predicted 32-byte frame reduction, 120→88, with 391 diagnostic rows/295 instructions versus target304 and frame56. Saved phase-cursors source-only body; initial stride mismatch remains. Restored production/header with no further source probe. Exact role lifetimes and source reproduction are in [[tickets/T-24521-taiiku]] and [[families/taiiku-family-results]].
+
+## [2026-10-20] decision | T-24521 checkpoint and idle
+
+Coordinator requested usage reduction: checkpoint only, no new compiler/build/review repetition. The already-launched restoration verification had completed with checksum/two literal matches/27 hashes/guards passing; no further checks started. [[tickets/T-24521-taiiku]] remains In Progress for coordinator direction; preserve clean source-only checkpoint and idle.
