@@ -142,10 +142,14 @@ void func_8013454C(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-24122, 2 rows (1 pair); frame, registers ($v0=v, $v1=s, $a0=unk_66C,
- * $a1=unk_0F4>>12, $a2=c2) and all switch cases match. Only the 1-instruction IDO 5.3 as1
- * default-block delay-slot hoist remains: as1 hoists `sll t0, v0, 0x2` from `default:` into
- * the delay slot of `beqz at, default` (identical to VALEN:func_80134030, T-19016 / T-20620). */
+/* NON_MATCHING: T-24201, 2 rows (1 pair); frame, registers ($v0=v, $v1=s, $a0=unk_66C,
+ * $a1=unk_0F4>>12, $a2=c2) and all switch cases match (T-24122 draft). Only the IDO 5.3 as1
+ * default-block delay-slot hoist remains: as1 moves `sll t0, v0, 0x2` from `default:` into the
+ * delay slot of `beqz at, default`; the original fills it with the dispatch `sll t1, t1, 0x2`.
+ * A second reference to the default label (`case 7:`, a guard `if`/`goto def`) gives the
+ * original slot but also the bound 8 or a second range check and rotates $a0/$a1/$v1, so the
+ * original's extra reference is not a uopt edge. No effect: default spellings, scopes, line
+ * layout, selector casts and locals, explicit join label (VALEN:func_80134030, T-19016). */
 void func_80134724(void) {
     u8 s;
     s16 v;

@@ -20833,3 +20833,11 @@ Findings from the single-agent sweep ([[tickets/T-24142-single-agent-closer-swee
 ## [2026-10-19] query | T-24142 TAIIKU func_8013E1FC progress and CPU search results
 
 `TAIIKU func_8013E1FC` (not yet matched): hand-structured C reaches a 98.8% mnemonic match (422 target vs 424 insns) with frame size, p/q offsets, `ox`/`oy` slots and both spills (sp+0x60, sp+0x78) matching exactly; the remaining diff is register numbering of the two inner `k<2` loops. Best draft kept in `build/scratch/t24142/` (not committed). Tricks: IDO strength-reduces `p[k*2]` into pointer increments but not `p[k<<1]`, so write the index as `(k << 1)`; `i << 3` instead of `i * 8` avoids an extra induction variable; a uniform `s32 padt[3]` at the top plus `padm[1]` between two arrays reproduces stack holes, and since every scalar local reserves a slot, removing one scalar is how to add a hole without growing the frame; `s64` does not exist in this build; layout sweeps against one source file must run serially (concurrent sweeps corrupt each other's builds); a variant that fails to compile shows as `rows=0` in sweep output. Permuter (`tools/permute.py`, 300 s, 4 jobs) over 12 guarded drafts found no score-0 candidate (best: `SHOUGATU func_80133B44` at 190); `tools/permuter_farm.sh run` exited at once because its 35 queued candidates were all already searched.
+
+## [2026-10-20] ticket | T-24201 cloud packet KANGEI func_80134724 opened
+
+[[tickets/T-24201-cloud-packet-kangei-80134724]] created In Progress: cloud session matches `KANGEI:func_80134724` (src/ovl/KANGEI/80134120.c) from a match packet per [[cloud-matching]], starting from the guarded T-24122 draft (2 rows).
+
+## [2026-10-20] ticket | T-24201 KANGEI func_80134724: 2 rows, guard kept, In Review
+
+[[tickets/T-24201-cloud-packet-kangei-80134724]] moved to In Review. The cloud toolchain ([[cloud-matching]]) reproduced the local sha1 of src/ovl/KANGEI/80134120.c. About 35 source variants did not remove the as1 default-block delay-slot hoist (2 rows). A second reference to the default label gives the original slot but changes the bound or adds a range check, and it rotates the allocation, so the original's extra reference is not a uopt edge. Only the NON_MATCHING comment changed (T-24201). Notes in [[matching-notes]]. The local linked proof and the review are still due.
