@@ -2246,3 +2246,11 @@ Coordinator reviewed430699874 with no blockers. Final source peek of MAIN767A4 f
 ## [2026-10-20] query | T-24522 uniform scalar addresses restore register roles
 
 One authorized uniform scalar-address form produces41/39 and fixes all register and pointer-operand roles. Residual is save/restore and correction-store scheduling plus one nop. Preserved separately from best4 source, with no coverage change. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 distinct C84 read-class hypothesis
+
+After freezing5528C, reviewed the precise C84 load dependency and prior negatives. Proposed one full-width signed bit-field read view at the two missing reload sites, leaving plain stores/clamps unchanged. No compile yet; the view would be FAKE. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 C84 full-width read view negative
+
+Single authorized signed32-bit bit-field read view gives28/28 and byte-identical baseline diagnostic. No read dependency/extraction survives, so missing reloads remain unresolved. Rejected with no further variants. See [[tickets/T-24522-rpg-bat]].
