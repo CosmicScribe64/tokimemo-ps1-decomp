@@ -2184,3 +2184,10 @@ Archived func_8013FBF0 typed SPRT draft with natural threshold branches and docu
 ## [2026-10-20] build | T-24502 TACO billboard matched
 
 func_8013F468 default C matches880 linked target bytes; all27 binary SHA1 checks and source guards pass. Parent review found no blockers. Typed point array, canonical UV macro order and marked frame/source grouping close the stale draft. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the third match (campaign4000 bytes).
+## [2026-10-20] ticket | T-24522 isolated RPG_BAT lane
+
+Created [[tickets/T-24522-rpg-bat]] in isolated codex/t24522-rpg-bat worktree from dba33c4f5. Read current status/playbook, standards, and prior RPG_BAT negatives. Six functions remain; no coverage claimed.
+
+## [2026-10-20] build | T-24522 RPG_BAT menu-choice match
+
+`func_8014BB80` now matches 1,124 default linked bytes using typed GameState pointer switches and plain condition field read. Removed old volatile read and fake frame home. Private RPG_BAT checksum and 27/27 hashes (26 unchanged reference outputs) pass; headers pass. Source review by worker and coordinator found only repaired indentation. Evidence: [[tickets/T-24522-rpg-bat]], [[families/rpg-bat-family-results]].
