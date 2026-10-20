@@ -99,6 +99,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24560-ending-slot|T-24560 Reconstruct ENDING level halfword slot]]
+
 - [ ] [[tickets/T-24519-master-sibling|T-24519 Transfer recovered MASTER animation sibling lifetimes]]
 
 
