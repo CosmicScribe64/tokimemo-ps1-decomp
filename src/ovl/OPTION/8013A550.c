@@ -60,7 +60,86 @@ void func_8013A604(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013A7EC);
+/* s32 with no return: $v0 stays live at the exit, so as1 leaves the case 2 test's delay slot empty. */
+s32 func_8013A7EC(void) {
+    GameState *g = &D_800E6280;
+    s32 i;
+    u8 old;
+
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(0);
+    menu_bar_show(0);
+    for (i = 0; i < 16; i++) {
+        func_8004B338(D_8013E744[i], -0x20, i * 12 - 0x60);
+    }
+    func_8004AE28(g->unk_03E, 0x20, -0x60);
+    func_8004AE28(g->unk_03F, 0x20, -0x54);
+    func_8004AE28(g->unk_040, 0x20, -0x48);
+    func_8004AE28(g->unk_041, 0x20, -0x3C);
+    func_8004AE28(g->unk_03D, 0x20, -0x30);
+    func_8004AE28(g->unk_042, 0x20, -0x24);
+    func_8004AE28(((OptionDateBits *)&g->unk_0F8)->f0, 0x20, 0xC);
+    func_8004AE28(((OptionDateBits *)&g->unk_0F8)->f4, 0x20, 0x18);
+    func_8004AE28(((OptionDateBits *)&g->unk_0F8)->f9, 0x20, 0x24);
+    func_8004AE28(((ScheduleFlags *)&g->unk_0F4)->unk_12, 0x20, 0x30);
+    func_8004AE28(((OptionDateBits *)&g->unk_1BC[0].unk_10)->f0, 0x20, 0x3C);
+    func_8004AE28(((OptionDateBits *)&g->unk_1BC[0].unk_10)->f4, 0x20, 0x48);
+    func_8004AE28(((OptionDateBits *)&g->unk_1BC[0].unk_10)->f9, 0x20, 0x54);
+    if (g->unk_F80 & 0x90) {
+        switch (g->unk_1093) {
+        case 0: /* empty label: the jump table starts at 0 */
+            break;
+        case 2:
+            if (g->unk_F88 & 0x90) {
+                old = g->unk_03F;
+                if (g->unk_041 != 6) {
+                    for (i = g->unk_041; i < 6; i++) {
+                        func_80072338();
+                    }
+                } else {
+                    for (i = 0; i < 7; i++) {
+                        func_80072338();
+                    }
+                }
+                if (old != g->unk_03F) {
+                    func_80042940(0xFE);
+                }
+            }
+            break;
+        case 4:
+            g->unk_03D = func_8013A550(g->unk_03D, 3, 0);
+            break;
+        case 9:
+            ((OptionDateBits *)&g->unk_0F8)->f0 = func_8013A550(((OptionDateBits *)&g->unk_0F8)->f0, 12, 1);
+            break;
+        case 10:
+            ((OptionDateBits *)&g->unk_0F8)->f4 = func_8013A550(((OptionDateBits *)&g->unk_0F8)->f4, 31, 1);
+            break;
+        case 11:
+            ((OptionDateBits *)&g->unk_0F8)->f9 = func_8013A550(((OptionDateBits *)&g->unk_0F8)->f9, 3, 0);
+            break;
+        case 12:
+            ((ScheduleFlags *)&g->unk_0F4)->unk_12 = func_8013A550(((ScheduleFlags *)&g->unk_0F4)->unk_12, 11, 0);
+            break;
+        case 13:
+            ((OptionDateBits *)&g->unk_1BC[0].unk_10)->f0 =
+                func_8013A550(((OptionDateBits *)&g->unk_1BC[0].unk_10)->f0, 12, 1);
+            break;
+        case 14:
+            ((OptionDateBits *)&g->unk_1BC[0].unk_10)->f4 =
+                func_8013A550(((OptionDateBits *)&g->unk_1BC[0].unk_10)->f4, 31, 1);
+            break;
+        case 15:
+            ((OptionDateBits *)&g->unk_1BC[0].unk_10)->f9 =
+                func_8013A550(((OptionDateBits *)&g->unk_1BC[0].unk_10)->f9, 3, 0);
+            break;
+        }
+    }
+    if (g->unk_F88 & 0x800) {
+        func_80041878();
+        func_80042940(0);
+    }
+}
 
 /* No return value on purpose: the original is an implicit-int function (the `or v0,v1,zero` in the first delay slot). T-6070 */
 s32 func_8013AC30(void) {
