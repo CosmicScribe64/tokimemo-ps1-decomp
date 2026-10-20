@@ -35,3 +35,17 @@ Verification: Docker `ninja -j1 build/ovl/RPG_BAT.ok` passes. Docker `funcdiff.p
 Standards self-review: C89 declarations at block head, fixed-width project types and existing GameState aggregate; no asm/header/global edits or added fake idioms, no game data staged. Coordinator independently reviewed source against CODING_STANDARDS.md and requested only indentation repair, applied before proof. Ticket remains In Progress for the remaining five functions.
 
 Final declaration guards passed: headers OK; migrate_globals --check globals OK with unchanged generated reference asm read-only; sync_protos --check-branch 0 new disagreements, 15 known, branch check OK.
+
+### 2026-10-20 func_80144C84 source reconstruction
+
+Current scorer: archived T-17113 baseline252/224 aligned. Write the damage result directly through D_8015EBB0:138/134. Read/write unk_00 through a typed RpgStat pointer:92/88; replacing missing frame home:82/78. Staged D_8015EBB0 multiplication and divisions recover original v1 intermediate ranges:44/44. Multiplication operand spellings close4 rows; multiply-by-one wrappers on the five sum operands close10:30/30. These wrappers and the extra frame word would require FAKE documentation if promoted. No production edit yet.
+
+Remaining30 rows come from third-arm unk_08/EBE0 store/reload scheduling plus branch distances and one earlier store order. Additional signed casts do not change code. Reusing the roll local, pointer accesses for all stats, explicit field writebacks, alternate clamp-local form and threshold/clamp pointer views did not close this; no coverage claimed.
+
+### 2026-10-20 func_801447E0 matched
+
+The same staged-result reconstruction solved the other battle calculator: put the random result directly in D_8015EBB0, then explicitly multiply/divide that global in sequence. This lets uopt promote the original shared v1 range and places the two flag webs in a0/a1. The typed source scores154/148 baseline,146/146 staged local,8/8 staged global. Declare actual locals `k` before `lim` to place the limit spill at0x38:0/0. No fake home, override, or compiler modification.
+
+Docker `ninja -j1 build/ovl/RPG_BAT.ok` passes and default `funcdiff.py --resolve --version default --no-build RPG_BAT:func_801447E0` reports MATCH,924 linked bytes equal immutable target. The literal production C replaces INCLUDE_ASM; it has no fallback/define. Parent source review against CODING_STANDARDS.md found no blockers: C89, real locals, canonical GameState aggregate, no new FAKE/header/asm/game-data changes. Worker self-review agrees. Guard and27-hash evidence follows.
+
+Final second-match checks: check_headers OK; migrate_globals --check globals OK; sync_protos --check-branch0 new/15 known, branch check OK.27/27 SHA1 verified with private RPG_BAT142d13e317aa7ae6def6a300085c38f645c19db6 and26 unchanged root outputs mounted read-only. Source standards self-review and independent coordinator review pass.

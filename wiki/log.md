@@ -2150,3 +2150,11 @@ Created [[tickets/T-24522-rpg-bat]] in isolated codex/t24522-rpg-bat worktree fr
 ## [2026-10-20] build | T-24522 RPG_BAT menu-choice match
 
 `func_8014BB80` now matches 1,124 default linked bytes using typed GameState pointer switches and plain condition field read. Removed old volatile read and fake frame home. Private RPG_BAT checksum and 27/27 hashes (26 unchanged reference outputs) pass; headers pass. Source review by worker and coordinator found only repaired indentation. Evidence: [[tickets/T-24522-rpg-bat]], [[families/rpg-bat-family-results]].
+
+## [2026-10-20] query | T-24522 typed battle decision lead
+
+`func_80144C84` reconstructed from archived252-row draft to30 literal rows via typed first-counter pointer and staged output-global arithmetic. The remaining gap is third-arm counter store/reload scheduling; no production change or coverage claimed. Bounded negatives and metrics in [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] build | T-24522 staged battle calculator match
+
+`func_801447E0` matches924 literal default linked bytes using the result global as the arithmetic variable and ordering the real k/lim locals. Private RPG_BAT SHA1 and linked proof pass; parent standards review has no findings. See [[tickets/T-24522-rpg-bat]], [[families/rpg-bat-family-results]].

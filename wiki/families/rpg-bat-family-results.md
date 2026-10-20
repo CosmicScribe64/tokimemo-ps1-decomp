@@ -171,3 +171,5 @@ T-24027 final bounded outcome: one of three matched (1656 bytes). Two current-ty
 ## T-24522 menu-choice pointer reconstruction
 
 `func_8014BB80` matches 1,124 literal default linked bytes. Read both menu-choice switches through a typed `GameState *gs`, retaining the condition's plain field read; the alias distinction prevents the two switch ranges from absorbing that load. The pointer also replaces the inherited fake frame home, so removing `pad` gives the original frame. No volatile read, new FAKE, or new header view is needed. RPG_BAT checksum and all 27 binary hashes pass (private RPG_BAT plus 26 unchanged reference outputs). See [[tickets/T-24522-rpg-bat]].
+
+`func_801447E0` also matches924 default linked bytes under T-24522. Use D_8015EBB0 itself for the random result and multiply/divide it in sequential statements; uopt then promotes the original v1 range and the flag globals receive a0/a1. Declare the actual `k` local before `lim` to recover its spill at0x38. No FAKE, new override or header change. Parent source review passes; private overlay checksum and literal linked proof pass. See [[tickets/T-24522-rpg-bat]].
