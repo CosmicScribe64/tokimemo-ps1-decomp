@@ -1,0 +1,2 @@
+T-24142 hand-structured draft of TAIIKU func_8013E1FC, found uncommitted in the main checkout on 2026-10-20.
+NON_MATCHING full-unit funcdiff: about 210 differing lines (too far for a guard in src/, CODING_STANDARDS); kept here as a starting point.

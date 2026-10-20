@@ -20853,3 +20853,7 @@ Five more variants (y3 temporary with every UV store order) of `func_8013B460`: 
 ## [2026-10-20] ticket | T-24200 Done
 
 [[tickets/T-24200-cloud-packet-taco-8013b460]]: cloud packet pilot merged. TACO `func_8013B460` 41 to 2 rows (guarded); cloud toolchain recipe in [[cloud-matching]]. Packets for KANGEI, GEKO and main near misses went to new cloud sessions (T-24201..T-24204).
+
+## [2026-10-20] ticket | T-24142 draft archived
+
+An uncommitted T-24142 draft of TAIIKU `func_8013E1FC` (about 210 differing lines) was left in the main checkout; moved to drafts/T-24142/TAIIKU/func_8013E1FC/ and the source file restored, so the checkout matches main. [[tickets/T-24142-single-agent-closer-sweep]].
