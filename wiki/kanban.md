@@ -64,8 +64,6 @@ kanban-plugin: board
 ## In Review
 
 - [ ] [[tickets/T-24213-cloud-packet-taco-8014f820|T-24213 Cloud packet: TACO func_8014F820]]
-- [ ] [[tickets/T-24208-cloud-packet-master-80132444|T-24208 Cloud packet: MASTER func_80132444]]
-- [ ] [[tickets/T-24205-cloud-packet-taco-801511c0|T-24205 Cloud packet: TACO func_801511C0]]
 - [ ] [[tickets/T-24132-name-ent-final-4|T-24132 Close remaining 4 unmatched functions of NAME_ENT (func_80138C1C, func_801398EC, func_8013AF78, func_80143580)]]
 - [ ] [[tickets/T-24077-etc-pair-scene|T-24077 Recover ETC pair-table scene]]
 - [ ] [[tickets/T-24076-etc-album-search|T-24076 Recover ETC album search]]
@@ -124,13 +122,13 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24208-cloud-packet-master-80132444|T-24208 Cloud packet: MASTER func_80132444]]
+- [ ] [[tickets/T-24205-cloud-packet-taco-801511c0|T-24205 Cloud packet: TACO func_801511C0]]
 - [ ] [[tickets/T-24207-cloud-packet-etc-80140ae4|T-24207 Cloud packet: ETC func_80140AE4]]
 - [ ] [[tickets/T-24209-cloud-packet-etc-80144df0|T-24209 Cloud packet: ETC func_80144DF0]]
 - [ ] [[tickets/T-24210-cloud-packet-main-800591d8|T-24210 Cloud packet: main func_800591D8]]
 - [ ] [[tickets/T-24211-cloud-packet-valen-80134030|T-24211 Cloud packet: VALEN func_80134030]]
 - [ ] [[tickets/T-24206-cloud-packet-main-800590cc|T-24206 Cloud packet: main func_800590CC]]
-- [ ] [[tickets/T-24208-cloud-packet-master-80132444|T-24208 Cloud packet: MASTER func_80132444]]
-- [ ] [[tickets/T-24205-cloud-packet-taco-801511c0|T-24205 Cloud packet: TACO func_801511C0]]
 - [ ] [[tickets/T-24202-cloud-packet-kangei-8013852c|T-24202 Cloud packet: KANGEI func_8013852C]]
 - [ ] [[tickets/T-24204-cloud-packet-main-8006d7ec|T-24204 Cloud packet: main func_8006D7EC]]
 - [ ] [[tickets/T-24200-cloud-packet-taco-8013b460|T-24200 Cloud packet pilot: TACO func_8013B460]]
