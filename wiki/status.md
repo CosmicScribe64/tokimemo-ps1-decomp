@@ -9,12 +9,14 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Progress (2026-10-20)
 
-- Game code: 6,821 / 6,952 functions, 2,095,956 / 2,276,920 bytes (92.1%), measured with Docker `tools/progress.py` after T-24605 ranking promotion. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
+- Game code: 6,822 / 6,952 functions, 2,097,048 / 2,276,920 bytes (92.1%), measured with Docker `tools/progress.py` after T-24606 calendar promotion. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
 - Complete units: TT 303/303, DATE2 102/102, and every overlay not listed below.
-- Remaining by unit (131 functions): main 51, TACO 12, GEKO 7, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
+- Remaining by unit (130 functions): main 51, TACO 12, GEKO 7, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 2, BUNKA_SD 2, EN_NICHI 2, TEL 2.
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
 
 ## Active work
+
+- T-24606 OPTION `func_8013A7EC` adds1,092 literal default-C bytes with all27 hashes, declaration guards and independent reviews passing. This continuation has completed six functions /5,480 bytes;130 remain. Root continues MAIN matrix reconstruction while agents continue OPTION numeric editing, TACO font rendering and NAME_ENT introduction. Completion goal remains active.
 
 - T-24605 GEKO `func_801420E4` adds1,256 literal default-C bytes, with all27 hashes, declaration guards and independent reviews passing. This continuation has completed five functions /4,388 bytes;131 remain. Root continues MAIN; agents continue TACO, OPTION and NAME_ENT reconstruction. Earlier scratch checkpoints remain preserved without coverage credit.
 

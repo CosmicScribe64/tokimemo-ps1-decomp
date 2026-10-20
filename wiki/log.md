@@ -3073,3 +3073,35 @@ Created [[tickets/T-24605-geko-ranking]] In Progress under [[tickets/T-24600-fin
 ## [2026-10-20] lint | GEKO ranking completion checks
 
 Refreshed catalogs for [[tickets/T-24605-geko-ranking]]:727 tickets,426 sections,3,076 functions. Docker wiki lint reports zero broken links and zero ticket/board mismatches. Large-page warnings now include [[matching-notes]] alongside [[data/t0018-cases]] and [[log]]; notes should be archived in the continuing maintenance pass. `git diff --check` passes.
+
+## [2026-10-20] decision | Correct NAME_ENT decrement-width interpretation
+
+Independent re-audit during [[tickets/T-24600-finish-matching]] found that NAME_ENT43580 narrows decremented X to s16 before both store and call. Corrected the earlier full-word claim in [[tickets/T-24526-name-ent-intro-regions]] and [[matching-notes]]; its1075-word scratch metrics included an incorrect width control, never promoted. Active reconstruction restores the narrowing. Old log entries remain untouched.
+
+## [2026-10-20] build | MAIN matrix reconstruction and lane refresh
+
+Recorded schedule-sort frame controls and fresh MAIN62948 typed recovery in [[matching-notes]]. Current candidates remain unmatched. TACO moves from its documented BAC4 assembler-lifetime gap to FBF0 sprite channels; OPTION calendar and NAME_ENT introduction continue independently under [[tickets/T-24600-finish-matching]]. No additional production changes or coverage credit.
+
+## [2026-10-20] build | Matrix aggregate homes recovered
+
+Recorded MAIN62948's184-word typed reconstruction in [[matching-notes]]. Correct post-call reload, distinct unsigned negation and declaration placement restore the original operation count and SDK aggregate homes; frame and final copy scheduling remain. OPTION A7EC independently reaches a single missing delay-slot NOP; TACO font39424 recovers original byte-argument entry and independent coordinates. No additional match claimed.
+
+## [2026-10-20] lint | Rotate active matching notes
+
+Moved the oldest active sections verbatim into existing [[notes/matching-07]] with Docker `tools/wiki.py rotate-notes --keep-bytes 200000`, then refreshed function/section catalogs. This resolves the new active-note size warning while preserving findings. Log history remains untouched; the current matching work continues under [[tickets/T-24600-finish-matching]].
+
+## [2026-10-20] ticket | OPTION calendar private literal match
+
+Created [[tickets/T-24606-option-calendar]] In Progress under [[tickets/T-24600-finish-matching]]. Private OPTION A7EC proof matches1,092 linked bytes. Existing flag/selector views, weekday lifetime, identity update and integer fallthrough recover the remaining instructions. Final cleanup, production integration and both independent reviews are pending; no coverage credit yet.
+
+## [2026-10-20] ticket | OPTION calendar passes integration and reviews
+
+[[tickets/T-24606-option-calendar]] In Progress -> In Review. Root default linked proof matches1,092 bytes, full ninja and fresh27 executable hashes pass, prototype guard reports zero new disagreements/15 known. Both independent reviews have no unresolved findings after clarifying the explicit integer-return annotation. Removed unnecessary identity multiplication; retained source controls have omission evidence and FAKE explanations. No header/data/compiler change.
+
+## [2026-10-20] ticket | OPTION calendar complete
+
+[[tickets/T-24606-option-calendar]] In Review -> Done after all reviews and integration gates passed. Updated [[status]], [[matching-notes]] and [[tickets/T-24600-finish-matching]]:6,822 functions /2,097,048 bytes,130 functions remaining. Six functions /5,480 bytes completed in this continuation; all four matching lanes continue.
+
+## [2026-10-20] lint | OPTION calendar completion wiki checks
+
+Refreshed catalogs:728 tickets,427 sections,3,076 functions. Docker wiki lint reports zero broken links, zero ticket/board mismatches and only the two existing large-page warnings ([[data/t0018-cases]], [[log]]). Active [[matching-notes]] size warning is resolved by the preserved archive rotation. `git diff --check` passes.
