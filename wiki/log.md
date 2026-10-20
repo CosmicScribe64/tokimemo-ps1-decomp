@@ -2169,3 +2169,18 @@ Archived unmatched OPTION func_8013A7EC (cost90) and func_801326BC (cost144) sou
 ## [2026-10-20] lint | T-24503 archive FAKE source comments
 
 Parent archive review requested source-local FAKE comments in addition to the README descriptions. Added T-24503 comments to both unmatched OPTION bodies without changing C expressions. No replay required for comments; previous source-only costs remain90/144. [[tickets/T-24503-geko-option-completion]].
+## [2026-10-20] decision | T-24502 checkpoint typed quad transform
+
+Archived repaired func_80145650 C and concrete second-copy/register diagnostics in `drafts/T-24502/TACO/func_80145650/`; source remains asm. Bounded type, layout and return-view probes did not close its propagated ring differences. [[matching-notes]] records the exact first divergence; continuing other TACO functions under [[tickets/T-24502-taco-completion]].
+
+## [2026-10-20] decision | T-24502 typed renderer checkpoint
+
+Saved repaired func_8013EAA4 in `drafts/T-24502/TACO/func_8013EAA4/`: baseline cost415 reduced to125 by separating y accumulators. Remaining induction/spill differences are documented in [[matching-notes]]; production remains asm. Moving to a different TACO stale draft.
+
+## [2026-10-20] decision | T-24502 checkpoint typed sprite renderer
+
+Archived func_8013FBF0 typed SPRT draft with natural threshold branches and documented wide argument view. It remains asm: multiply destinations and later temporary numbering differ. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record all three archived TACO checkpoints and concrete first differences.
+
+## [2026-10-20] build | T-24502 TACO billboard matched
+
+func_8013F468 default C matches880 linked target bytes; all27 binary SHA1 checks and source guards pass. Parent review found no blockers. Typed point array, canonical UV macro order and marked frame/source grouping close the stale draft. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the third match (campaign4000 bytes).

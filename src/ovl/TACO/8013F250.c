@@ -33,7 +33,74 @@ void func_8013F430(void) {
     func_8013FBF0();
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013F250", func_8013F468);
+void func_8013F468(void) {
+    s32 top[2]; /* FAKE: eight original frame bytes above matrix; real locals unknown. T-24502 */
+    MATRIX matrix;
+    SVECTOR v;
+    s32 pt[4];
+    s32 middle[4]; /* FAKE: original 16-byte gap above scalar homes. T-24502 */
+    POLY_FT4 *poly;
+    s32 y;
+    s32 depth;
+    s32 flag;
+    s32 o;
+    s32 j;
+
+    matrix = D_80129C40;
+    func_800A1100(&matrix);
+    func_800A1070(&matrix);
+    v.vz = -0x7000;
+    /* FAKE: one source line preserves pointer/counter initialization order. T-24502 */
+    y = 0; for (o = 0; o != 2; o++) {
+        v.vy = D_8015EDB4->unk76 + y;
+        for (j = 0; j < 2; j++) {
+            v.vx = D_8015EDB4->unk74 + j * 0x200 - 0x100;
+            func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
+        }
+        y += 0x200;
+    }
+    poly = GetWorkBase(0x28, D_8011ECA0);
+    func_8009F040(poly);
+    SetSemiTrans(poly, 1);
+    poly->r0 = 0x80;
+    poly->g0 = 0x80;
+    poly->b0 = 0x80;
+    poly->tpage = func_8009ECB0(0, 1, 0x340, 0x100);
+    poly->clut = func_8009ED74(0x10, 0x1EF);
+    /* FAKE: UV macro expansion shares one line to preserve constant registers and store order. T-24502 */
+    poly->u0 = 0x81, poly->v0 = 1, poly->u1 = 0x9F, poly->v1 = 1, poly->u2 = 0x81, poly->v2 = 0x1F, poly->u3 = 0x9F, poly->v3 = 0x1F;
+    poly->x0 = ((s16 *)pt)[0];
+    poly->y0 = ((s16 *)pt)[1];
+    poly->x1 = ((s16 *)pt)[2];
+    poly->y1 = ((s16 *)pt)[3];
+    poly->x2 = ((s16 *)pt)[4];
+    poly->y2 = ((s16 *)pt)[5];
+    poly->x3 = ((s16 *)pt)[6];
+    poly->y3 = ((s16 *)pt)[7];
+    AddPrim(D_800E8CA0 + (D_8011ECA0 << 0xA) + 4, poly);
+    if (D_800E6280.unk_10F8 & 8) {
+        poly = GetWorkBase(0x28, D_8011ECA0);
+        func_8009F040(poly);
+        SetSemiTrans(poly, 1);
+        poly->r0 = 0x80;
+        poly->g0 = 0x80;
+        poly->b0 = 0x80;
+        poly->tpage = func_8009ECB0(0, 1, 0x340, 0x100);
+        poly->clut = func_8009ED74(0x10, 0x1EF);
+        /* Same UV macro expansion shape as above. */
+        poly->u0 = 0x81, poly->v0 = 0x21, poly->u1 = 0x9F, poly->v1 = 0x21, poly->u2 = 0x81, poly->v2 = 0x3F, poly->u3 = 0x9F, poly->v3 = 0x3F;
+        poly->x0 = ((s16 *)pt)[0];
+        poly->y0 = ((s16 *)pt)[1];
+        poly->x1 = ((s16 *)pt)[2];
+        poly->y1 = ((s16 *)pt)[3];
+        poly->x2 = ((s16 *)pt)[4];
+        poly->y2 = ((s16 *)pt)[5];
+        poly->x3 = ((s16 *)pt)[6];
+        poly->y3 = ((s16 *)pt)[7];
+        AddPrim(D_800E8CA0 + (D_8011ECA0 << 0xA) + 4, poly);
+    }
+}
+
 
 void func_8013F7D8(void) {
     s16 v;

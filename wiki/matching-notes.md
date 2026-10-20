@@ -579,3 +579,20 @@ Further clean drafts tried: `func_80065964` natural pair-table bounds and four-c
 ## T-24503: GEKO date guard checkpoint
 
 The unresolved GEKO `func_80133024` guard improves from five differing words to two by adding an empty table-element test before the true-arm call. The month is then in a3; only the day-address base differs (a1 instead of a2 at function offsets0x84/0x8C). The FAKE control is documented. regdiff shows global day and local day tied at priority10, with the local allocated first. Additional empty tests, first-use references, source grouping, widths/views and priority expressions do not close it. Independent bounded diagnosis found no new source hypothesis; this is not proof that a source match is impossible. Zero C coverage gained for this guard; default fallback stays intact.
+### T-24502: typed TACO func_80145650 checkpoint
+
+`drafts/T-24502/TACO/func_80145650/` contains a repaired SDK-typed draft (POLY_FT4 **, MATRIX, two SVECTORs). Production remains INCLUDE_ASM. Angle declared before the aggregates gives the exact 0x88 frame and matrix/input/output homes 0x54/0x7C/0x74. All words through the second matrix copy agree. First divergence is the copy's alternating register t8 instead of t5 (source t3 agrees); the next input.vx reload is t7 instead of t8, then temporary-ring differences propagate. Scratch 480 words includes three alignment nops beyond the target's 477; resolved search cost 401. XYZ input order helps scheduling; translation order, 9 narrowing forms, and 8 own/callee return-view combinations do not close it. No claim of an unreachable compiler gap; moved to another stale draft rather than a broad scheduler search.
+
+### T-24502: typed TACO func_8013EAA4 checkpoint
+
+Fresh three-quad renderer C in `drafts/T-24502/TACO/func_8013EAA4/` compiles (stale draft failed); production stays asm. Distinct y accumulators but shared o/j counters reduce the new baseline's resolved cost 415 to 125. Four texture byte arrays needed only in the scratch declaration. First projection's v/pt/pos homes and instruction registers match; matrix needs C8 -> E8 and frame232 ->272, depth/flag and kind/phase homes differ. Middle projection still promotes size in s5 instead of spilling it and keeping the step in s2, eliminates the original s4 row count, and CLUT remainder registers differ. Third latch compares the derived offset8 instead of y512. Counter/size splitting and a pointer-walk variant worsen it. Saved exact diagnostics and moved on without a broad source grid.
+
+### T-24502: typed TACO func_8013FBF0 checkpoint
+
+SDK SPRT rewrite in `drafts/T-24502/TACO/func_8013FBF0/` remains a draft (resolved cost154, same260-word length, frame72 versus96). Natural four-arm thresholds reproduce the original redundant red assignments; the m2c factored form does not. Target fourth argument to func_80049A40 has no s16 narrowing, so the scratch uses its existing override guard with a wide K&R view and removes the explicit cast. Channel `*= value` assignments help, but first multiply destinations still differ (original s0/t0/t1) and later ring differences propagate. No production override or source change.
+
+### T-24502: TACO func_8013F468 matched
+
+SDK-typed billboard loop in `src/ovl/TACO/8013F250.c` matches 880 literal linked bytes in the default build; all27 binary SHA1 checks and guards pass. Parent source review found no blockers.
+
+The stale draft split the four projected points into unrelated scalar stack aliases. One `s32 pt[4]`, SDK MATRIX/SVECTOR, and the matched sibling's nested projection loop reproduce all instructions. Canonical u0/v0/u1/v1/u2/v2/u3/v3 UV assignments on one comma-expression line give the original constant registers (1/0x1F in v1/a2 and 0x81/0x9F in s2/s3); the stale store order swapped them. `y = 0; for (...)` shares a line to keep the pointer copy before the zero initialization. Frame 0xC8 needs marked unused top8/middle16 bytes, and y declared before depth moves depth/flag to0x6C/0x68 while matrix/v/pt sit at0xA0/0x98/0x88. All source controls carry FAKE comments; existing header prototype unchanged.
