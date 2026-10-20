@@ -29,3 +29,5 @@ Result: 9 matches (GYOZI func_80140464; main func_8005CA94, func_80042CB0, func_
 - 2026-10-19 wrap-up at the orchestrator's request (about 2h40m in): final clean build 27/27 and checks; ticket In Review.
 
 - 2026-10-20 review (orchestrator, CODING_STANDARDS.md): only owned C files, notes and C drafts changed; no asm or game data; guards under 30 rows with ticketed notes. Merged with a clean 27/27 build, header/global/prototype checks and linked funcdiff MATCH for OPTION func_80132BA8. Done.
+
+- 2026-10-20 correction: the merge carried 9 matches, not 1 (OPTION func_80132BA8, func_80133010; main func_80065F34, func_8005F730, func_8005A668, func_80042CB0, func_8005CA94; KANGEI func_80132FF8; GYOZI func_80140464); all are on main and the clean 27/27 build covers them.
