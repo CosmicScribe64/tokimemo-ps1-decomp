@@ -570,3 +570,9 @@ Fresh three-quad renderer C in `drafts/T-24502/TACO/func_8013EAA4/` compiles (st
 ### T-24502: typed TACO func_8013FBF0 checkpoint
 
 SDK SPRT rewrite in `drafts/T-24502/TACO/func_8013FBF0/` remains a draft (resolved cost154, same260-word length, frame72 versus96). Natural four-arm thresholds reproduce the original redundant red assignments; the m2c factored form does not. Target fourth argument to func_80049A40 has no s16 narrowing, so the scratch uses its existing override guard with a wide K&R view and removes the explicit cast. Channel `*= value` assignments help, but first multiply destinations still differ (original s0/t0/t1) and later ring differences propagate. No production override or source change.
+
+### T-24502: TACO func_8013F468 matched
+
+SDK-typed billboard loop in `src/ovl/TACO/8013F250.c` matches 880 literal linked bytes in the default build; all27 binary SHA1 checks and guards pass. Parent source review found no blockers.
+
+The stale draft split the four projected points into unrelated scalar stack aliases. One `s32 pt[4]`, SDK MATRIX/SVECTOR, and the matched sibling's nested projection loop reproduce all instructions. Canonical u0/v0/u1/v1/u2/v2/u3/v3 UV assignments on one comma-expression line give the original constant registers (1/0x1F in v1/a2 and 0x81/0x9F in s2/s3); the stale store order swapped them. `y = 0; for (...)` shares a line to keep the pointer copy before the zero initialization. Frame 0xC8 needs marked unused top8/middle16 bytes, and y declared before depth moves depth/flag to0x6C/0x68 while matrix/v/pt sit at0xA0/0x98/0x88. All source controls carry FAKE comments; existing header prototype unchanged.

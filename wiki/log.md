@@ -2105,3 +2105,7 @@ Saved repaired func_8013EAA4 in `drafts/T-24502/TACO/func_8013EAA4/`: baseline c
 ## [2026-10-20] decision | T-24502 checkpoint typed sprite renderer
 
 Archived func_8013FBF0 typed SPRT draft with natural threshold branches and documented wide argument view. It remains asm: multiply destinations and later temporary numbering differ. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record all three archived TACO checkpoints and concrete first differences.
+
+## [2026-10-20] build | T-24502 TACO billboard matched
+
+func_8013F468 default C matches880 linked target bytes; all27 binary SHA1 checks and source guards pass. Parent review found no blockers. Typed point array, canonical UV macro order and marked frame/source grouping close the stale draft. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the third match (campaign4000 bytes).
