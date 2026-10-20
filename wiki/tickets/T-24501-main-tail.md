@@ -45,3 +45,13 @@ Parent source review accepted the interpolation body with no findings but found 
 Final pre-header prototype branch check passed with `0 new disagreement(s), 15 known`; no new prototype disagreement was introduced. All 27 image hashes were explicitly recomputed as expected. Shared declaration validation is running after that review fix.
 
 Post-declaration verification completed: fresh affected rebuild `ninja -j 8` exited zero, then `funcdiff --resolve --version default main:make_color_bar16` again proved all 1,540 linked bytes. Explicit SHA1 recomputation passed 27/27 images, including both caller units NAME_ENT and SHUGAKU. Header check passed; prototype branch check reports zero new disagreements (15 known). Parent source review had no body findings, and its only declaration finding is resolved by the canonical prototype.
+
+### Bounded post-match repairs
+
+Archived four readable, non-production drafts under `drafts/T-24501/main/`: CD dispatcher `func_800455C4` (resolved edit cost 439), `palette_load_vram` (clean 419, padded experiment 394), `make_color_bar` (330), and `_sprite_set_light_effect1` (374). Additional typed menu `func_80076000` remains at 214 after 11 bounded view compiles; existing `func_80054E6C` guard remains at 84. Exact hypotheses and remaining structural misses are in [[matching-notes]]. Production source and headers are unchanged during this phase; this diagnostic checkpoint needs no executable rebuild. Continue with smaller untried helpers rather than repeating documented row grids.
+
+### Third match: palette helper
+
+`menu_bar_color` (84 bytes) now passes literal default linked proof. `D_800E3680[16] = {0}` owns exactly 0x40 initialized data bytes through a YAML island at 0xA2E80; previous raw range and next owner `80059710` retain their boundaries. A marked redundant nibble mask restores the last five register differences. Parent approved the missing exact canonical prototype in `main_api.h`; post-header full build, 27 hashes and branch checks are running. Parent code review is pending. Source/config details and boundary proof are in [[matching-notes]].
+
+Post-header verification completed: fresh affected 520-step build exited zero; explicit SHA1 recomputation passed all 27 executable images, including all four call sites' units. Literal default proof again reports all 84 linked bytes equal target. Header check passes; prototype branch check reports zero new disagreements (15 known). Parent reviewed the exact source/config/header diff and linked data boundaries against CODING_STANDARDS.md, with no blocking findings. Removed the cosmetic blank after the FAKE comment; the final source was recompiled during literal proof. Focused match is ready for integration; broader ticket remains In Progress.
