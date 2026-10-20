@@ -2507,3 +2507,10 @@ func_80144E3C matches all1,888 linked target bytes in default C. Correct u8 arg4
 ## [2026-10-20] query | Small-copy control and continued structural matching
 
 Bounded Astra synthetic control shows an8-byte temporary-ring effect but no change to the tested32-byte copy. Actual strCallback control produces identical default/skip-small objects and remains75 differing instruction positions, rejecting the proposed cause for that draft. No production compiler change. [[tickets/T-24500-completion-orchestration]] records evidence paths and pending archives. Sol lanes continue source reconstruction and fresh donor checks. GitHub read-only check finds no open PR or changed issue65; no contributor messages sent.
+## [2026-10-20] decision | T-24501 park status display stack reconstruction
+
+Recovered the four timestamps/color array and by-value RECT call for `func_8004443C`; bounded order/gap/grouped-record variants leave broad allocation and home differences. Archived clean cost-109 scratch body, exact target/build homes, and declaration requirements in `drafts/T-24501/main/func_8004443C.c` and [[matching-notes]]. Production C and shared headers unchanged; [[tickets/T-24501-main-tail]] stays In Progress.
+
+## [2026-10-20] decision | T-24501 bound key-ring alias follow-up
+
+Local struct views of the canonical two-symbol ring do not restore the position reload in `func_80075C84` (resolved cost 154 unchanged); integer-base and position-relative variants are worse. Recorded exact forms/costs in [[matching-notes]] and [[tickets/T-24501-main-tail]], with no production/header edits. Same ownership scan confirms prior mouse fix and separate sndisp blockers.
