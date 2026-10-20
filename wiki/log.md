@@ -2265,3 +2265,10 @@ No full27 rebuild repeated for archive-only work, per root instruction.
 [[tickets/T-24514-master]] moves In Progress -> In Review for coordinator review.
 Zero new C bytes. Preserve the concrete copy-end register, loop-compare and
 spill-home residuals; no compiler-impossibility claim. No ownership beyond MASTER.
+
+## [2026-10-20] query | T-24514 copy residual distinction
+
+[[tickets/T-24514-master]] clarifies that enabled T-24092 already fixes the old
+unaligned-copy F/B direction issue. Current aligned68-byte copy t2/t3 setup is
+distinct and unproven; no compiler defect or impossibility is claimed. Research
+README updated without rerunning any old backend audit.

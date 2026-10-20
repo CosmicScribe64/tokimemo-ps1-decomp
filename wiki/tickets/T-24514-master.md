@@ -52,3 +52,5 @@ Spec: bounded function-by-function causal hypotheses with measured negative cont
 - Header guard passes. Global guard initially lacked five existing DATE/TACO proof references because only MASTER was split; generated those two reference splits without compiling their C, then globals OK.
 - Prototype branch guard:0 new disagreements,12 known. Three stale baseline entries are noted absent because their other reference units were not generated; no config change made.
 - replay.py passes Docker py_compile. `git diff --check` passes; src/include/tools/config diff is empty. Prose review read README fully and removed two weak colon-title patterns.
+
+- Root clarification: T-24092 ugen_pass is enabled and already fixes the historical unaligned-copy F/B direction state. Current aligned68-byte copy t2/t3 register setup is a distinct, unproven residual. README now states the distinction; no old fix or backend audit repeated.

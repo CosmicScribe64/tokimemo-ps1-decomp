@@ -35,6 +35,12 @@ Later the clone loop compares with bne where the original uses pointer sltu
 and a conditional branch. Live spill homes and later temporary numbering also
 differ. These observations do not establish compiler impossibility.
 
+The enabled T-24092 ugen_pass already fixes the historical F/B direction state
+of unaligned block copies. This residual is the register setup of an aligned
+68-byte copy. It is distinct from that fixed direction issue; no uniform
+compiler defect has been established here. No old direction fix or backend
+audit was repeated.
+
 | Causal control | Aligned score |
 | --- | ---: |
 | Target-specific source plus archived typed shared loops |420|
