@@ -1,10 +1,10 @@
 ---
 id: T-24043
 title: Recover larger MASTER final-event handler
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[master-family-results]]", "[[tickets/T-24000-complete-matching]]"]
 ---
 
@@ -28,3 +28,5 @@ Remaining blockers: three live spill homes are +4 relative to the target, extern
 
 Production src/include/config are byte-for-byte identical to setup 99d4f69e7, preserving every previous match. Default MASTER checksum and guards are checked as regression evidence only; the target still uses its assembly fallback. T-24038 is now published at f55a2d7e9, T-24030 at d3965d02e, and T-24031 archive at 8cc5fe522. Archive delta awaits independent review.
 Parent confirms both T-24038 wins reviewed and staged for combined verification, not yet published at assignment. T-24030 BUNKASAI is published at d3965d02e; T-24031 archive is published at 8cc5fe522. Preserve all completed source bodies, headers and proof provenance; only the newly assigned large MASTER target is claimed.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

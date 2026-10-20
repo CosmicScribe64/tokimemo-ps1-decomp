@@ -1,10 +1,10 @@
 ---
 id: T-24012
 title: Match assigned ETC rendering family
-status: In Review
+status: Done
 assignee: Codex ETC worker
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: ["[[tickets/T-24010-date-etc-coordination]]", "[[etc-family-results]]"]
 ---
 
@@ -42,3 +42,5 @@ Declared-variable-order, register-cache/assignment-chain and explicit byte-offse
 Checkpoint result: **1 of 4 targets verified (1,280 bytes); three explicit blockers archived.** Full ticket remains incomplete; do not mark Done while those targets are pending.
 
 Final archive review: independent Standards and Spec reviewers both PASS with zero actionable findings for a0675cafe...920cbb61b. Production source and header remain identical to the reviewed 1,280-byte checkpoint. This completes the bounded pass and review, while the three nonmatching targets remain explicitly pending; no full-ticket completion claim.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

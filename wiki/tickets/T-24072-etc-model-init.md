@@ -1,10 +1,10 @@
 ---
 id: T-24072
 title: Match ETC model initializer with verified cursor recipe
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[etc-family-results]]", "[[tickets/T-24055-etc-short-helpers]]", "[[tickets/T-24064-etc-count-trio]]", "[[tickets/T-24000-complete-matching]]"]
 ---
 
@@ -32,3 +32,5 @@ Parent-approved single post-vz real SVECTOR*rotation control is neutral5, with c
 
 ## Final handoff
 Unresolved/In Review, not Done. Best source5 is preserved with baseline13 and all neutral controls; production remains ASM. The new integer-cursor recipe closes prologue/model-loop gaps, but the SDK vector tail still adds an address setup. No supported untried source control is established; no further4354C probes/instrumentation. No compiler-impossibility claim or verified-byte gain.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

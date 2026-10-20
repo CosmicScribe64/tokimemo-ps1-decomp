@@ -1,10 +1,10 @@
 ---
 id: T-24058
 title: Close short SHOUGATU GYOZI pair
-status: In Review
+status: Done
 assignee: complete_render_family
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ['[[shougatu-family-results]]', '[[register-cheatsheet]]']
 ---
 
@@ -32,3 +32,7 @@ One unguarded C match, GYOZI func_80137188,176 linked bytes. Normal target build
 ## Root independent review
 
 GYOZI176-byte function independently verified actual default C, literal proof, all27 hashes and interface guards in19468a8ec. Standards review clean: direct real byte-global operations, no new FAKE or headers. SHOUGATU remains unmatched with source evidence; ticket remains In Review.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

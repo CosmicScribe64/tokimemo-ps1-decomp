@@ -1,10 +1,10 @@
 ---
 id: T-24067
 title: Match ETC album record copy
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[etc-family-results]]", "[[tickets/T-24064-etc-count-trio]]", "[[tickets/T-24000-complete-matching]]"]
 ---
 
@@ -67,3 +67,5 @@ Final predicate-helper inspection rejects an unsupported operand-flip probe with
 Parent-authorized existing52 ugen stage comparison is neutral. Capture wrappers first reproduce full stock object28fc..., then captured53 replay reproduces the raw as1 object before52 runs. Cached amd64 image/existing qemu only; no install/settings change. Both53/52 backends on identical current O/T through identical current frame/as1 produce raw object7211475ad0a8b8410ae27f588b8d5296fcfb0cdebae9e92009627fac6f735629 and target75 words/frame0x48/cost8/8rows (same four t5/t6 words). Raw binasm differs but assembled object agrees. drafts/T-24067/ugen52.py/README retain source-only harness, hashes, commands and stage compatibility limits: only52 backend, not full52 pipeline or production C proof. Production unchanged, In Progress, unresolved source gap retained.
 
 Parent requested the unresolved checkpoint move to In Review and stopped further speculative41ABC probes. No verified C match/bytes were produced; the four-word draft and audited compiler-mechanism evidence are retained for independent review. Production INCLUDE_ASM remains. This ticket is not Done.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

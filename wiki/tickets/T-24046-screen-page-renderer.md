@@ -1,10 +1,10 @@
 ---
 id: T-24046
 title: Recover the MAIN screen page renderer
-status: In Review
+status: Done
 assignee: complete_render_family
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ['[[main-family-results]]']
 ---
 
@@ -30,3 +30,7 @@ Novel corrections: positive word texture offset (old s8 narrows128 to-128), unus
 Self-review: source/JSON/markdown only, no raw assets/instruction listings or toolchain exceptions. Production matching fallback preserved. Awaiting independent standards review.
 
 Production preservation verified: ninja -j1 reports no work; MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 passes. Headers/globals/main_api/whitespace checks pass. These verify preservation of the ASM fallback, not a new C win.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

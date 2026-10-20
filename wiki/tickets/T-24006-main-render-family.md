@@ -1,10 +1,10 @@
 ---
 id: T-24006
 title: Recover MAIN render family
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: []
 ---
 
@@ -33,3 +33,5 @@ Docker IDO 5.3 probes, no host dependencies or compiler exceptions. Default targ
 ### Review status
 
 Moved to In Review for parent integration review. Self-audit: no production code edits, no raw bytes/generated assembly/assets, no changes to old archives, C89 source hypotheses, offsets/sizes documented for new record/request types, exploratory unused get_fnt pointer slots marked FAKE. New SDK packet types reuse psx_types.h. No new verified-byte claim.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

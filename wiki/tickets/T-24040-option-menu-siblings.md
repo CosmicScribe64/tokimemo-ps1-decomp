@@ -1,10 +1,10 @@
 ---
 id: T-24040
 title: OPTION menu sibling completion
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[option-family-results]]"]
 ---
 
@@ -17,7 +17,7 @@ Recover OPTION func_8013394C, func_801342A8 and func_8013493C in80132000.c using
 - [x] Actual default C linked proof plus OPTION checksum for every win.
 - [x] Preserve useful source-only negatives with provenance.
 - [x] Header/global/prototype checks pass.
-- [ ] Independent review.
+- [x] Independent review.
 
 ## Notes
 
@@ -42,3 +42,7 @@ Read index, OPTION family, T-17800 and T-20910 before work. Only three assigned 
 ## Independent root combined verification
 
 Production changes reviewed against CODING_STANDARDS.md: existing SDK/aggregate types and necessary declaration views retained, new LINE_G2 layout documented, matching-specific forms explicitly marked FAKE, no per-function compiler exception. All new targets lack assembly fallbacks and pass normal linked byte proofs. Combined integration passes all27 original binary hashes and header/global/prototype guards. No unresolved findings for the verified matches. Published on main after all checks; unresolved siblings remain excluded.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

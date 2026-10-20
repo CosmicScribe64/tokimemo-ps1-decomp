@@ -1,10 +1,10 @@
 ---
 id: T-24011
 title: Match assigned DATE dispatch family
-status: In Review
+status: Done
 assignee: Codex DATE worker
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: ["[[tickets/T-24010-date-etc-coordination]]", "[[date-family-results]]"]
 ---
 
@@ -24,3 +24,5 @@ Assigned isolated worker; no other C files claimed.
 2026-10-17 review correction: Standards review found P2 in the diagnostic harnesses: they ignored funcdiff process status and could print zero rows after an objdump failure or traceback. Both now share explicit status/verdict validation before reporting: exit 1 requires a named resolved DIFF with instruction rows; exit 0 requires a named MATCH; other statuses, incomplete verdicts, and exception diagnostics fail without a score. Docker failure-contract tests pass (5 tests, 12 cases); real full-unit harness remains 48/72 and stage harness passes twice consecutively at 11. Rerunning stage also exposed IDO rejecting an existing listing supplied via -o; the unnecessary -o flag was removed while retaining ignored working storage. Source bodies and nonmatching status are unchanged. P2 addressed; ticket remains In Review pending coordinator re-review.
 
 Final independent review: Spec PASS (0 findings) for archive 4c5123f11...2f7bd397b. Standards initially reported P2 diagnostic subprocess-failure handling; fix 5c14a3c40 adds strict status/verdict validation and failure-path tests. Re-review of 2f7bd397b...5c14a3c40: Standards PASS, P2 resolved with 0 new findings; Spec PASS, 0 findings. Docker tests: five tests / twelve cases pass; full-unit diagnostics remain 48/72; stage reproducer runs twice at eleven isolated edit rows. No production source/header/C-body changes. Bounded pass and review complete; all three targets remain pending assembly, zero new verified C bytes.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

@@ -1,10 +1,10 @@
 ---
 id: T-24020
 title: Match reserved hard functions
-status: In Progress
+status: Backlog
 assignee: Astra hard-function lane
 created: 2026-10-17
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[tickets/T-24021-dialogue-scheduling]]", "[[tickets/T-24022-tel-frame]]", "[[tickets/T-24023-event-handler]]"]
 ---
 
@@ -41,3 +41,5 @@ User requires the remaining reserved biggest/hardest targets to reach full match
 ## Second verified closure (2026-10-18)
 
 EVENT func_801103A0 is now default C with 6,848 literal text bytes and its full overlay checksum verified. Together with dialogue, this lane has closed two functions / 15,520 literal text bytes. Parent received the successful scratch proof and coordinated the EVENT declaration; send the frozen production pin after documentation checks. Continue TEL func_80136724, MAIN func_8007132C and GEKO func_80142C9C through full matches. The reserved helper remains T-24042.
+
+- closing (2026-10-20): lane stopped after two closures (dialogue, EVENT func_801103A0, on main). Left: TEL func_80136724, MAIN func_8007132C, GEKO func_80142C9C, all still INCLUDE_ASM. Backlog.

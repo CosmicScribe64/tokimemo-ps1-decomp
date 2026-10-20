@@ -1,11 +1,11 @@
 ---
 id: T-24132
 title: Close remaining 4 unmatched functions of NAME_ENT (func_80138C1C, func_801398EC, func_8013AF78, func_80143580)
-status: In Review
+status: Done
 priority: high
 type: code
 created: 2026-10-19
-updated: 2026-10-19
+updated: 2026-10-20
 depends_on:
   - T-24112
   - T-24113
@@ -26,3 +26,7 @@ Attack the final 4 remaining unmatched functions in `NAME_ENT` (`func_80138C1C` 
 - `include/ovl/NAME_ENT.h`: added `void func_801398EC(void);` and `s32 func_8013AF78(s32 arg0);`.
 
 Verification (Docker): `--version default` MATCH on all 4 (production bytes unchanged); `--version c` compiles all 3 guards (DIFF as documented); `check_headers` OK; `sync_protos --check-branch` OK. Full-tree `ninja` still stops in another lane's file (`src/ovl/SHOUGATU/80135B90.c`, untouched here).
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

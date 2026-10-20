@@ -1,10 +1,10 @@
 ---
 id: T-24070
 title: Match ETC save-card state machine
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[etc-family-results]]", "[[tickets/T-20900-shared-type-unification]]", "[[tickets/T-24000-complete-matching]]"]
 ---
 
@@ -39,3 +39,5 @@ Approved conditional-modulo control is neutral105 and entire TU object equals in
 Parent stops new probes/instrumentation now. An existing Astra chat receives read-only source analysis for this function only, without compiler/edits/subagents. This Sol worker retains exclusive reserved matching scope and intact39 draft while awaiting at most two concrete hypotheses. No new targets; In Progress pending that bounded analysis.
 
 Astra read-only analysis completed with no supported untried source lead. Original first mask uses t6 and retained indexv0; the draft's common mask takesv0. NAME_ENT's matched sibling lacks the two caps, so it supplies no allocation evidence for this subgroup. The bounded pointer/width/capture controls did not close it; unchanged trace does not distinguish priority from interference fully. Final handoff is unresolved/In Review, not Done or an impossibility claim. Preserve39 source and all recorded negatives; stop all44F74 tracing/probes. No production or verified-byte gain.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

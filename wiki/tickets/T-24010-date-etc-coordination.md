@@ -1,10 +1,10 @@
 ---
 id: T-24010
 title: Coordinate isolated DATE and ETC matching
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: ["[[tickets/T-24000-complete-matching]]", "[[date-family-results]]", "[[etc-family-results]]"]
 ---
 
@@ -45,3 +45,5 @@ Final archive review: ETC a0675cafe...920cbb61b passes independent Standards and
 - DATE P2 fixed and independently re-reviewed: Standards PASS and Spec PASS, zero remaining actionable findings. Five Docker tests cover twelve result contracts; full-TU harness remains 48/72 and stage reproducer succeeds twice at eleven isolated edit rows.
 - Astra scratch investigation found no better candidate; as1-stage constant hoisting observed, original assembler mismatch not established. Six of seven functions remain assembly; no denominator or verified-byte inflation.
 - All worktrees preserved, no integration/push or further file claims. Parent owns integration and continued 100-percent effort. T-24010/11/12 In Review reflects the reviewed bounded handoff with unmatched targets still pending, not completion of all matching goals.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

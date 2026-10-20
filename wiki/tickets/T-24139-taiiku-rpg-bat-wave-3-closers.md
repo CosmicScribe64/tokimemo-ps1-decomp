@@ -1,11 +1,11 @@
 ---
 id: T-24139
 title: Wave 3 closer sweep across TAIIKU (12 remaining) and RPG_BAT (8 remaining)
-status: In Progress
+status: Done
 priority: high
 type: code
 created: 2026-10-19
-updated: 2026-10-19
+updated: 2026-10-20
 depends_on:
   - T-24133
 ---
@@ -23,3 +23,7 @@ Attack the remaining 12 unmatched functions in `TAIIKU` and 8 unmatched function
   - `src/ovl/RPG_BAT/801447E0.c` (2 remaining): `func_801447E0`, `func_80144C84`
   - `src/ovl/RPG_BAT/8014ADD0.c` (2 remaining): `func_8014BB80`, `func_8014BFE4`
   - `src/ovl/RPG_BAT/80154430.c` (2 remaining): `func_80154DD8`, `func_8015528C`
+
+## Comments
+
+- closing (2026-10-20): wave-3 sweep; its matches are on main (checkpoint 6d3d78ed8, reviewed: every new FAKE names its ticket, no inline asm, no guard over 30 rows). Remaining functions were consolidated into T-24142. Done.

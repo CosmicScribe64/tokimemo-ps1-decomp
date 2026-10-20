@@ -39,6 +39,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-0302-sdk-version-conflict|T-0302 Resolve mixed SDK vintages (libcd, libsnd, libpress newer than libgte, libc)]]
 - [ ] [[tickets/T-0200-event-gyozi-loader-and-address|T-0200 Find how EVENT and GYOZI overlays are loaded]]
 - [ ] [[tickets/T-0601-obin-med-confidence-review|T-0601 Review medium and low confidence O.BIN mappings]]
+- [ ] [[tickets/T-24142-single-agent-closer-sweep|T-24142 Single-agent closer sweep (post-quota restart)]]
+- [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
+- [ ] [[tickets/T-24078-etc-two-poly-renderer|T-24078 Recover ETC two-slot polygon renderer]]
+- [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## Ready
 
@@ -49,20 +53,19 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24142-single-agent-closer-sweep|T-24142 Single-agent closer sweep (post-quota restart)]]
+
+## In Review
+
+
+## Done
+
 - [ ] [[tickets/T-24141-main-remaining-sweep-e|T-24141 Sweep remaining unmatched functions in src/main/ (wave E)]]
 - [ ] [[tickets/T-24140-geko-option-tel-omimai-wave-3-closers|T-24140 Wave 3 closer sweep across GEKO (12), OPTION (8), TEL (2), and OMIMAI (1)]]
 - [ ] [[tickets/T-24139-taiiku-rpg-bat-wave-3-closers|T-24139 Wave 3 closer sweep across TAIIKU (12 remaining) and RPG_BAT (8 remaining)]]
 - [ ] [[tickets/T-24138-small-overlays-wave-3-closers|T-24138 Wave 3 closer sweep across EN_NICHI (2), RENSYU (3), KANGEI (4), VALEN (4), ENDING (5), and MASTER (6)]]
 - [ ] [[tickets/T-24137-shougatu-gyozi-bunkasd-wave-3-closers|T-24137 Wave 3 closer sweep across SHOUGATU (10), GYOZI (9), and BUNKA_SD (2)]]
 - [ ] [[tickets/T-24136-taco-and-etc-wave-3-closers|T-24136 Wave 3 closer sweep across TACO (21) and ETC (12)]]
-- [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
-- [ ] [[tickets/T-24078-etc-two-poly-renderer|T-24078 Recover ETC two-slot polygon renderer]]
 - [ ] [[tickets/T-24000-complete-matching|T-24000 Reach 100 percent verified matching]]
-- [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
-
-## In Review
-
 - [ ] [[tickets/T-24132-name-ent-final-4|T-24132 Close remaining 4 unmatched functions of NAME_ENT (func_80138C1C, func_801398EC, func_8013AF78, func_80143580)]]
 - [ ] [[tickets/T-24077-etc-pair-scene|T-24077 Recover ETC pair-table scene]]
 - [ ] [[tickets/T-24076-etc-album-search|T-24076 Recover ETC album search]]
@@ -118,9 +121,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24002-complete-option|T-24002 Complete OPTION matching package]]
 - [ ] [[tickets/T-24006-main-render-family|T-24006 Recover MAIN render family]]
 - [ ] [[tickets/T-24001-main-schedule-final-row|T-24001 Close main schedule final instruction]]
-
-## Done
-
 - [ ] [[tickets/T-24400-wiki-reorganization|T-24400 Reorganize the wiki so important information is easy to find]]
 - [ ] [[tickets/T-24301-local-list-l6-p01|T-24301 Local list l6-p01]]
 - [ ] [[tickets/T-24303-local-list-l6-p03|T-24303 Local list l6-p03]]

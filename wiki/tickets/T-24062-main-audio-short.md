@@ -1,10 +1,10 @@
 ---
 id: T-24062
 title: Recover short main audio helpers
-status: In Review
+status: Done
 assignee: complete_render_family
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ['[[main-family-results]]', '[[data-types]]']
 ---
 
@@ -36,3 +36,7 @@ Other source unchanged; best archived queue-array44, flag-loop37, corrected tabl
 ## Root integration review2026-10-18
 
 Reviewed mixer against CODING_STANDARDS: canonical four-byte pointer declaration, C89, explicitly FAKE store grouping and unsigned halfword view. Actual default C literal236bytes independently verified along with all27 hashes and header/global/prototype guards. Other three targets remain unmatched source checkpoints; ticket stays In Review. Root worker stopped; only DATE and ENDING Sol workers continue.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

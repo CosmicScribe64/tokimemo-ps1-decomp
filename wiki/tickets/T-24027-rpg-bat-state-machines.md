@@ -1,10 +1,10 @@
 ---
 id: T-24027
 title: RPG_BAT state-machine completion
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: ["[[rpg-bat-family-results]]"]
 ---
 
@@ -17,7 +17,7 @@ Bounded current-type reconstruction of func_80154DD8, func_80154760 and func_801
 - [x] Default literal linked C proof without target INCLUDE_ASM and affected RPG_BAT checksum for every match.
 - [x] Preserve useful source drafts and provenance for unresolved functions.
 - [x] Header/global/prototype checks pass.
-- [ ] Independent review.
+- [x] Independent review.
 
 ## Notes
 
@@ -44,3 +44,7 @@ Provenance: wiki/index, rpg-bat-family-results, T-17100, T-17106, T-17114 and cu
 ## Independent root integration review
 
 Production changes reviewed against CODING_STANDARDS.md. No unresolved findings; existing SDK types and aggregates retained, necessary ABI views explained, FAKE forms marked, no compiler/config exceptions. All27 binary hashes and header/global/prototype guards pass. Each new target lacks its INCLUDE_ASM fallback and passes normal-default literal linked-byte proof. Root published verified code on main; unresolved family functions are not counted.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

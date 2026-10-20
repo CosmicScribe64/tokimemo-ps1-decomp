@@ -1,10 +1,10 @@
 ---
 id: T-24050
 title: Close GEKO scene setup near match
-status: In Review
+status: Done
 assignee: complete_render_family
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ['[[geko-family-results]]']
 ---
 
@@ -30,3 +30,7 @@ Correct word CharFlags.b1 test and natural control flow score103; independent re
 Concrete blocker: target next-index and best-index lifetimes and common-update CFG still allocate saved registers differently. No type/header expansion is justified. Self-review: source/markdown/tested reproducer only; no assembly listing, raw game data or compiler exceptions. Independent review pending.
 
 Final preservation: GEKO SHA1 fa37853a9bd8df628c6313b0a4af8ec7568482cd passes; headers/globals/main_api and whitespace checks pass. Tested reproducer returns aligned cost80 without modifying production source.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

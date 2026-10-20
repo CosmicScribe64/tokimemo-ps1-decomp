@@ -1,10 +1,10 @@
 ---
 id: T-24041
 title: Recover MAIN renderer and CD dispatcher
-status: In Review
+status: Done
 assignee: complete_render_family
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ['[[main-family-results]]']
 ---
 
@@ -35,3 +35,7 @@ Production changes reviewed against CODING_STANDARDS.md: existing SDK/aggregate 
 Renderer final guards pass: target source gate, normal default literal MATCH348 B, MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26, headers/globals/main_api and whitespace. Renderer win pinned e33246ea20de74a06e9f57b51379b3bf708c79a1.
 
 CD dispatcher is source-only, production unchanged. The repaired foundation scores512 with frame104 vs target80; removing artificial temporaries scores499 with frame88. Correct typed ring indexing, full word payload-header read, four-byte location/eight-byte response locals, retry-loop cleanup, and exact exhausted hypotheses are in drafts/T-24041. No speculative CD header edits. Bounded pass closed; independent review pending for code and checkpoint.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

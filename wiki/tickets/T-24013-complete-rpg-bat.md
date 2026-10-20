@@ -1,10 +1,10 @@
 ---
 id: T-24013
 title: Complete RPG_BAT battle family package
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: ["[[rpg-bat-family-results]]"]
 ---
 
@@ -15,7 +15,7 @@ Recover verified C for RPG_BAT func_80138324, func_80152F30 and func_80139510 in
 ## Acceptance criteria
 
 - [ ] Default literal linked proof and RPG_BAT checksum for recovered C.
-- [ ] Header/global/prototype checks and independent review.
+- [x] Header/global/prototype checks and independent review.
 
 ## Notes
 
@@ -29,3 +29,5 @@ Bounded types/sibling/control-flow pass from unstarted w4-p40. Reuse clean workt
 
 2026-10-17 independent root integration review: func_80139510: reviewed C89 source, SDK RECT fields, shared aggregates and callback declarations. Two unused frame words have precise FAKE explanation. Independent default literal MATCH 2424 bytes; all 27 hashes and guards pass; published 12e1afca5. No unresolved findings in this match; remaining family work is separate.
 2026-10-17 final: Package result 1 of 3 matched, 2,424 literal linked bytes. Other two remain INCLUDE_ASM with selected source-only drafts and concrete blockers in drafts/T-24013/README.md. All loose experimental candidates, scripts, input files and instruction diagnostics are preserved under ignored build/T-24013-probes. Header/global checks pass; branch prototype check passes (0 new disagreements, 15 known). FAKE frame words are explicit. Self-review found no unresolved C89/type/guard/raw-data issues; parent independently reviewed the source/header delta and is verifying integration. Ticket/board moved In Review pending that verification.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

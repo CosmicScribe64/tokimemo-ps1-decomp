@@ -1,10 +1,10 @@
 ---
 id: T-24031
 title: Recover paired GYOZI and SHOUGATU particle handlers
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: ["[[event-family-results]]", "[[shougatu-family-results]]", "[[tickets/T-24000-complete-matching]]"]
 ---
 
@@ -41,3 +41,5 @@ Recovered semantics: spawn Rec24[count+3], period/velocity[count-1], update work
 Remaining blockers are broad source live-range/induction allocation around RNG calls. The 1,204-byte frame matches 0x50 but its initial count is in a0 rather than a1 and later array ranges differ; the 1,300-byte frame still has 24 excess bytes and does not reproduce the original stride/array-base ranges. These results do not establish a compiler limitation. Rejected controls and reproduction are in the archive README.
 
 Preservation checks: `ninja -j1 build/ovl/GYOZI.ok build/ovl/SHOUGATU.ok` in Docker passes both checksums (`build/pairs24031/final-build.log`). Header/global guards pass; prototype guard 0 new / 15 known, branch check OK (`final-{headers,globals,protos}.log`). These verify unchanged default assembly builds, not the archived C. A Git diff against 8ad16d265 confirms both owned production files, both overlay headers, main_api.h and the BUNKASAI win files are untouched. Ticket/card In Review for archive review and next disposition; all four matching targets remain pending.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

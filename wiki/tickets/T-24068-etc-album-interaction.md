@@ -1,10 +1,10 @@
 ---
 id: T-24068
 title: Match ETC album interaction
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[etc-family-results]]", "[[tickets/T-13103-etc-memory-card-family]]", "[[tickets/T-17300-types-first-etc]]", "[[tickets/T-24000-complete-matching]]"]
 ---
 
@@ -41,3 +41,5 @@ Bounded read-only generated-source analysis finds makelivranges mask initializat
 One parent-authorized private writer diagnostic passes same pinned-input entire-object/four-section fidelity first. bb3 initialization468BD4 sets mask0/0; neither candidate statement writer469748 nor46A230 executes for bb3, so exact contributor remains unknown. Subsequent read-only source finds later localcolor mask creation (including passed-in/precolored absent-unit path46C76C), without observed execution for this block. No faithful required-expression route or new C89 control is established. drafts/T-24068/trace_writers.py/README preserve generator, hashes, replay and precise causal limit. Production stays assembly,48 rows, no verified bytes; further instrumentation/probes stop pending specific parent scope. In Progress.
 
 Parent closes this focused pass as unresolved/In Review. Production remains INCLUDE_ASM;48 resolved rows are diagnostic only, not a C match or impossibility claim. Frozen source-only packet bed9333e1 retains the bounded controls and audited private evidence. No further trace/probes; a later specifically scoped investigation may address the exact localcolor/live-range mask origin. Ticket is not Done.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

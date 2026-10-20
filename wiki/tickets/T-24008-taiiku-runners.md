@@ -1,10 +1,10 @@
 ---
 id: T-24008
 title: Recover TAIIKU runner family
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: []
 ---
 
@@ -46,3 +46,5 @@ Docker ninja -j1 object and TAIIKU checksum pass after final guard. SHA1 306d101
 Self-review: C89 and SDK/game types; guarded draft ticketed; FAKE view documented; no raw data/generated assembly/assets; no previous archives modified; focused commits and wiki/board consistent. In Review for parent independent review; no Done claim.
 
 Full NON_MATCHING translation-unit funcdiff also compiles and reproduces exactly the same nine differing updater instructions; this confirms the retained scratch diagnosis with the other guards active. Default proof remains literal MATCH through ASM.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

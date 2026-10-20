@@ -1,10 +1,10 @@
 ---
 id: T-24071
 title: Match ETC menu selection handler
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[etc-family-results]]", "[[tickets/T-17300-types-first-etc]]", "[[tickets/T-24000-complete-matching]]"]
 ---
 
@@ -38,3 +38,5 @@ Bounded existing-AS1 inspection identifies candidate func41917c ANDI needed-bit-
 
 ## Final handoff
 Unresolved/In Review, not Done. Best source57 remains private; production stays INCLUDE_ASM. Whole-object-fidelity trace and stock ugen/as1 capture establish that per-arm masks survive ugen and disappear in stock as1 processing. Candidate AS1 width-rule attribution remains a hypothesis because runtime gate/table values were not observed. No supported untried expression; no further tracing, casts or compiler diagnostics in this pass. No impossibility claim. All sources, controls and safe reproducers are retained under drafts/T-24071.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

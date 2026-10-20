@@ -1,10 +1,10 @@
 ---
 id: T-24019
 title: GYOZI sibling completion ports
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: ["[[event-family-results]]", "[[shougatu-family-results]]"]
 ---
 
@@ -17,7 +17,7 @@ Bounded matched-sibling ports for GYOZI func_8013907C, func_80139E4C, func_8013E
 - [x] Remove target INCLUDE_ASM only for independently verified default literal C matches; affected unit SHA-1 passes.
 - [x] Source-only failed forms and prior evidence retained.
 - [x] Header/global/prototype checks pass.
-- [ ] Independent review.
+- [x] Independent review.
 
 ## Notes
 
@@ -43,3 +43,7 @@ Read wiki/event-family-results.md (GYOZI family), shougatu-family-results.md, T-
 ## Independent root integration review
 
 Production changes reviewed against CODING_STANDARDS.md. No unresolved findings; existing SDK types and aggregates retained, necessary ABI views explained, FAKE forms marked, no compiler/config exceptions. All27 binary hashes and header/global/prototype guards pass. Each new target lacks its INCLUDE_ASM fallback and passes normal-default literal linked-byte proof. Root published verified code on main; unresolved family functions are not counted.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.
