@@ -1,7 +1,7 @@
 ---
 id: T-24200
 title: "Cloud packet pilot: TACO func_8013B460"
-status: In Review
+status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
@@ -36,3 +36,5 @@ No packet content (asm) is committed; branch `cloud/t24200-taco-8013b460` holds 
 - `func_8013B460`: not matched. 41 -> 4 differing lines (2 rows, one per quad: the `sh` of `p->y3` sits before the UV byte stores instead of after the `lui` of the `AddPrim` argument). Guarded `NON_MATCHING` in `src/ovl/TACO/8013B170.c`; the default build is unchanged (same sha1). Details in [[matching-notes]] (T-24200).
 - Still due: the local linked proof (full `ninja`, funcdiff on the default build, SHA1) and the code review against `CODING_STANDARDS.md`.
 
+
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): only src/ovl/TACO/8013B170.c and wiki changed, no asm or game data in the branch; guard ticketed. Merged with a clean 27/27 build, headers, globals, prototypes. func_8013B460 stays guarded at 2 rows; the packet flow and the cloud toolchain recipe ([[cloud-matching]]) work. Done.

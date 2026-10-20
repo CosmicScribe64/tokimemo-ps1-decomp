@@ -63,7 +63,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24200-cloud-packet-taco-8013b460|T-24200 Cloud packet pilot: TACO func_8013B460]]
 - [ ] [[tickets/T-24132-name-ent-final-4|T-24132 Close remaining 4 unmatched functions of NAME_ENT (func_80138C1C, func_801398EC, func_8013AF78, func_80143580)]]
 - [ ] [[tickets/T-24077-etc-pair-scene|T-24077 Recover ETC pair-table scene]]
 - [ ] [[tickets/T-24076-etc-album-search|T-24076 Recover ETC album search]]
@@ -122,6 +121,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24200-cloud-packet-taco-8013b460|T-24200 Cloud packet pilot: TACO func_8013B460]]
 - [ ] [[tickets/T-24135-main-remaining-sweep-d|T-24135 Sweep remaining unmatched functions in src/main/ (wave D)]]
 - [ ] [[tickets/T-24134-geko-option-tel-bunkaken-omimai-wave-2-closers|T-24134 Wave 2 closer sweep across GEKO, OPTION, TEL, BUNKAKEN, and OMIMAI]]
 - [ ] [[tickets/T-24133-taiiku-rpg-bat-wave-2-closers|T-24133 Close remaining near misses in TAIIKU and RPG_BAT (wave 2)]]
