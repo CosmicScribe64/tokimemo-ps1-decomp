@@ -53,6 +53,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24500-completion-orchestration|T-24500 Orchestrate the remaining matching functions]]
+
 
 ## In Review
 
