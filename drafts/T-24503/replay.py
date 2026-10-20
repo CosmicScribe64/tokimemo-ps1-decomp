@@ -24,6 +24,9 @@ def main():
         declarations = Path(__file__).parent / unit / name / "declarations.h"
         if declarations.exists():
             body = declarations.read_text() + body
+        prefix = Path(__file__).parent / unit / name / "prefix.h"
+        if prefix.exists():
+            text = prefix.read_text() + text
         pattern = r'INCLUDE_ASM\("[^\"]+",\s*' + name + r'\);'
         text, replaced = re.subn(pattern, lambda match: body, text)
         if replaced != 1:

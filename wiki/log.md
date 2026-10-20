@@ -2014,3 +2014,10 @@ MAIN func_80076000 is pushed at8253c1d73 after root standards review, shared-typ
 ## [2026-10-20] lint | Rotate oversized active log without losing history
 
 Under [[tickets/T-24500-completion-orchestration]], Docker tools/wiki.py rotate-log moved111 older entries to existing [[log/2026-W42]], retaining353 in the active page. Compared multisets of normalized entries across all log pages before/after: exact equality, including duplicate counts. No historical entry changed or disappeared. Lint0 broken links,0 ticket/status mismatches; only pre-existing large data/t0018-cases warning remains. Read-only GitHub check again found no open PR and unchanged issue65. No contributor messages sent.
+## [2026-10-20] query | T-24503 reconstruct GEKO scene entry and icon loop
+
+Continued func_80135DC0 using current-pass instruction regions. Fixed invented helper arguments/formal, direct early exits and the actual sp62 counter home; first setup and icon loop now have exact local evidence. Scoped-pointer frame is already0x68 (correcting prior baseline wording). Compiler-only conclusions deferred while calendar/source structure is reconstructed. [[tickets/T-24503-geko-option-completion]].
+
+## [2026-10-20] decision | T-24503 reconstruct 35DC0 source regions
+
+[[tickets/T-24503-geko-option-completion]]: GEKO func_80135DC0 archive improves from 547 to 336 through control-flow, counter, call, date and RECT repairs. Target and candidate have 565 and 563 resolved instructions. The frame is 0x68, RECT is at sp+0x34, counter at sp+0x62 and status byte at sp+0x3F. Opcode/immediate differences remain in appointment reloads/copies at offsets 0x208 through 0x274; registers still differ elsewhere. Updated drafts/T-24503/README.md corrects the earlier baseline frame attribution. Production remains ASM; coverage is unchanged.
