@@ -859,7 +859,57 @@ void func_8005C968(void) {
     func_8005C7FC();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005CA94);
+/* The menu handler of ETC func_80144DF0 with the cancel arm first (T-24301). */
+void func_8005CA94(void) {
+    s32 pad[2]; /* FAKE: T-24301, with `pad2` reproduces the 0x40 frame and the slots of status/slot */
+    u8 *status;
+    s32 slot;
+    s32 pad2; /* FAKE: T-24301, see pad */
+
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(1);
+    menu_bar_show(1);
+    slot = D_800E6280.unk_1094 + 1;
+    k_disp_inc();
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_8005C4CC(1);
+        func_80042908(0);
+        func_80042940(2);
+        D_800E6280.unk_111B = 0;
+    } else if (D_800E6280.unk_F88 & 0x20) {
+        if (D_800E6280.unk_1094 != -1) {
+            status = &D_800E7D10.slot_status[slot];
+            if (*status == 0) {
+                /* FAKE: T-24301 (as T-24209), byte view store + plain re-read promote unk_1118 to v0 */
+                ((u8 *)&D_800E6280)[0x1118] = slot;
+                if (func_80054694(D_800E6280.unk_1118) == 1) {
+                    func_80054704(D_800E6280.unk_1118);
+                    *status = 0xFF;
+                    func_80053CE0();
+                    func_8004284C();
+                } else {
+                    func_80042940(0xF0);
+                }
+            } else if (slot == D_800E6280.unk_1118) {
+                func_80053CE0();
+                func_8004284C();
+            } else {
+                D_800E6280.unk_1118 = slot;
+                if ((u8) D_800E8BEE != 0) {
+                    /* FAKE: T-24301 (as T-24209), the repeated view store keeps unk_1118 promoted in both arms */
+                    ((u8 *)&D_800E6280)[0x1118] = slot;
+                    D_800E7D36 = D_800E6280.unk_1118;
+                    func_800696DC(0, 0);
+                    D_800E6280.unk_1094 = D_800E7D36 - 1;
+                } else {
+                    func_80042940(0xC0);
+                }
+            }
+        }
+    }
+    k_disp_inc();
+    func_8005C7FC();
+}
 
 /* FAKE: u8 view of the switch selector keeps the compares on the global ($v1), as in the original (T-5010, T-24111) */
 s32 func_8005CC40(void) {
