@@ -2176,3 +2176,7 @@ Post-prototype/string 520-step two-job build passed; explicit hashes passed all2
 ## [2026-10-20] ticket | Record negative MAIN metric-record view result
 
 [[tickets/T-24570-main-80054e6c-metric-record-view]] records the Docker full-TU baseline and diagnostic union-view trial: each has 84 printable diff rows and remains DIFF. The expected frame is 0x80 versus 0x40 in the C draft; the single word-view hypothesis changed allocator choices without reducing differences. The trial source was reverted. The ticket is In Review; no production or shared-header change remains.
+
+## [2026-10-20] decision | MAIN metric aggregate escalation remains negative
+
+[[tickets/T-24501-main-tail]] follows [[tickets/T-24570-main-80054e6c-metric-record-view]] with one true record assignment: full-TU cost105/90words versus84/87 baseline, frame40 unchanged. Target80 has no surviving array/argument accesses supporting a64B local. Preserved focused source-only replay and uncertainty; no production/header edits, padding grid or backend-defect claim. Details in [[matching-notes]].

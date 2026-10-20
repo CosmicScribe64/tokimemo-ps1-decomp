@@ -629,3 +629,8 @@ Final radial verification:484-step post-header rebuild, explicit27/27 SHA1 hashe
 `func_80046AC8` (2,684 bytes) remains ASM. Typed primitive fields838 from raw1048; semantic locals/GameState view810; keeping texture page row bit unscaled and scaling at use restores target saved-register ranks and gives738. Explicit updates/shift spelling do not improve; comma-grouped UV stores and scoped case locals fail their specific tail/frame hypotheses. Broad frame/order and inherited channel/extent narrowings remain; no narrow compiler consult justified. Source-only draft and exact replay/width cautions archived under `drafts/T-24501/main/func_80046AC8*`. Stop this probe phase rather than repeat type/frame grids.
 
 Parent CD26 consult also negative: relative spacing repair grows frame by8 (66); address/counter reuse changes codegen (223); grouped flags/status assignment leaves26. Preserve baseline26 and its packet; no compiler changes.
+
+
+### T-24501/T-24570 metric aggregate escalation (2026-10-20)
+
+After Luna's union-word view negative, one fresh full-TU true `GsRec0FC` assignment probe for `func_80054E6C` gives105/90 padded words versus baseline84/87; frame stays40, saves18/1C. Record alignment2 introduces halfword copy operations instead of target word copy. Target80-frame has only saved18/1C and CSE30/34 SP accesses, no surviving local-buffer or incoming-argument use; three memcpy arguments do not explain64 unused bytes. No evidence-backed array/argument structure recovered, no fabricated padding or compiler-defect claim. Production/header unchanged. Exact focused replay and source uncertainties: `drafts/T-24501/metric_aggregate.py`, `drafts/T-24501/main/func_80054E6C-notes.md`.
