@@ -2141,3 +2141,6 @@ Post-prototype/string 520-step two-job build passed; explicit hashes passed all2
 ## [2026-10-20] build | Nineteenth resumed match published and twins rechecked
 
 Published MAIN func_800767A4 at f294c7f36:932 literal default-C bytes,27 independent binary hashes and declaration guards pass after source review. Docker progress6812/6952 functions,2087900/2276920 bytes (91.7%),140 remaining; run gain19 functions/20896 bytes. Updated [[status]] and [[tickets/T-24500-completion-orchestration]]. The preceding6811/141 Docker twin scan found no automatic copies or identical unmatched groups. Astra's bounded TACO color-copy consultation found no match; evidence is recorded for worker handoff, and Sol lanes continue fresh structural and sibling leads. No contributor message sent.
+## [2026-10-20] decision | T-24503 reconstruct GEKO eligibility loops
+
+[[tickets/T-24503-geko-option-completion]]: func_80142C9C draft improves from 450 to 135 after narrowing, packed-word, store-order and documented allocator repairs. Frame is 0x558, with 914 target and 913 candidate resolved instructions. Remaining load-base, register and operand differences are recorded in drafts/T-24503/README.md. Checked the sibling scene initializer's strcpy view; it leaves these instructions unchanged. Production remains ASM and coverage is unchanged.
