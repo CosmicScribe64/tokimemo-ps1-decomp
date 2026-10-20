@@ -3045,3 +3045,31 @@ Reusing the inner-sort counter for the two month-adjustment loops improves the t
 ## [2026-10-20] lint | Date display completion wiki checks
 
 Refreshed catalogs for [[tickets/T-24604-hizuke-init]]. Docker wiki lint reports zero broken links and zero ticket/board status mismatches; existing large-page warnings remain for [[data/t0018-cases]] and [[log]]. `git diff --check` passes.
+
+## [2026-10-20] build | Schedule key assignment recovers natural unroll
+
+Recorded the assignment-expression and independent scan-index experiments in [[matching-notes]] under [[tickets/T-24600-finish-matching]]. The inner loop now naturally unrolls four ways; first-scan base retention, frame and address calculations remain unresolved. Private interior-label diagnostics are not promoted. Matching agents continue srn_set, flag dispatch and TACO collision.
+
+## [2026-10-20] build | Schedule sort reaches original control-flow size
+
+Recorded the317-word schedule-sort reconstruction in [[matching-notes]]. Register/frame differences remain under [[tickets/T-24600-finish-matching]]. TACO collision independently reaches460 words with four comparison operand differences; srn_set and GEKO33024 probes remain unmatched. Reassigned the former date-display lane to a fresh remaining overlay candidate to avoid repeating exhausted probes.
+
+## [2026-10-20] build | Register trace and ranking reconstruction
+
+Logged schedule-sort allocation evidence in [[matching-notes]]. GEKO420E4's independent typed reconstruction reaches the original314 words by repeating the record sum at its real use sites and putting scalar locals before the six-element arrays; frame, array-register and scheduling differences remain. No production promotion or coverage credit for these candidates.
+
+## [2026-10-20] ticket | GEKO ranking private literal match
+
+Created [[tickets/T-24605-geko-ranking]] In Progress under [[tickets/T-24600-finish-matching]]. The private GEKO420E4 candidate matches1,256 linked bytes. Final cleanup, minimized FAKE controls, default production proof and independent review remain pending; coverage has not yet changed.
+
+## [2026-10-20] ticket | GEKO ranking passes integration and reviews
+
+[[tickets/T-24605-geko-ranking]] In Progress -> In Review. Root default linked proof matches1,256 bytes; full ninja, fresh27 executable hashes, global/header checks and prototype guard pass (zero new disagreements,15 known). Independent behavior and standards reviews have no findings on the final production diff. Actor stores were recovered through existing DisplayActor44 fields; all retained frame/allocation/scheduling controls have minimized evidence and FAKE annotations.
+
+## [2026-10-20] ticket | GEKO ranking complete
+
+[[tickets/T-24605-geko-ranking]] In Review -> Done after all review and integration gates pass. Updated [[status]], [[matching-notes]] and [[tickets/T-24600-finish-matching]]:6,821 functions /2,095,956 bytes,131 functions remaining. Five functions /4,388 bytes completed in this continuation. Root and three agents continue matching; the full completion goal remains active.
+
+## [2026-10-20] lint | GEKO ranking completion checks
+
+Refreshed catalogs for [[tickets/T-24605-geko-ranking]]:727 tickets,426 sections,3,076 functions. Docker wiki lint reports zero broken links and zero ticket/board mismatches. Large-page warnings now include [[matching-notes]] alongside [[data/t0018-cases]] and [[log]]; notes should be archived in the continuing maintenance pass. `git diff --check` passes.

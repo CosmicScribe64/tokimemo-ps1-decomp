@@ -9,12 +9,14 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Progress (2026-10-20)
 
-- Game code: 6,820 / 6,952 functions, 2,094,700 / 2,276,920 bytes (92.0%), measured with Docker `tools/progress.py` after T-24604 date-display promotion. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
+- Game code: 6,821 / 6,952 functions, 2,095,956 / 2,276,920 bytes (92.1%), measured with Docker `tools/progress.py` after T-24605 ranking promotion. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
 - Complete units: TT 303/303, DATE2 102/102, and every overlay not listed below.
-- Remaining by unit (132 functions): main 51, TACO 12, GEKO 8, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
+- Remaining by unit (131 functions): main 51, TACO 12, GEKO 7, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
 
 ## Active work
+
+- T-24605 GEKO `func_801420E4` adds1,256 literal default-C bytes, with all27 hashes, declaration guards and independent reviews passing. This continuation has completed five functions /4,388 bytes;131 remain. Root continues MAIN; agents continue TACO, OPTION and NAME_ENT reconstruction. Earlier scratch checkpoints remain preserved without coverage credit.
 
 - T-24604 MAIN `hizuke_init` adds 1,048 literal default-C bytes, with all 27 hashes, declaration guards and independent reviews passing. This continuation has completed four functions / 3,132 bytes; 132 remain. Current disjoint lanes: root schedule sort, agents MAIN flag dispatch, MAIN srn_set and TACO collision reconstruction. GEKO/NAME_ENT/OPTION scratch checkpoints are preserved without coverage credit.
 
