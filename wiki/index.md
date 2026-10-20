@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-18
+updated: 2026-10-20
 ---
 
 # Wiki Index
@@ -36,9 +36,11 @@ Read this first. Update on every ingest or new page.
 - [[bunkasai-family-results]] - BUNKASAI type map (name, text and per-girl tables), the implicit-int v0/v1 fix of the BUNKAKEN port, the types-first redraft and its numbers, packages (T-18700)
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 - [[build-step-gaps]] - what the build still cannot reproduce, gap by gap (uopt, as1, ugen block-copy state) and what would close each (T-20700, T-20710)
+- [[cloud-matching]] - matching one C file in a claude.ai cloud container from a match packet: dockerd, proxy CA in the image, disc-free comparison (T-24200).
 - [[ending-allocator-trace]] - reusable external T-24047 allocator tracer, exact rebuild/fidelity commands and measured constant tie.
 
 ## Tickets
+- [[tickets/T-24200-cloud-packet-taco-8013b460|T-24200]] cloud packet pilot, TACO `func_8013B460` 41 -> 2 rows guarded, toolchain recipe in [[cloud-matching]], In Review.
 - [[tickets/T-24063-taco-short-count|T-24063]] TACO corrected buffer source and refreshed controls, zero matches, In Review.
 - [[tickets/T-24060-shugaku-short-selectors|T-24060]] SHUGAKU52/62-row corrected source leads, zero matches, In Review.
 - [[tickets/T-24059-short-copy-siblings|T-24059]] two short copy-chain matches328 bytes, independently verified on main, Done.

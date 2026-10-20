@@ -20833,3 +20833,16 @@ Findings from the single-agent sweep ([[tickets/T-24142-single-agent-closer-swee
 ## [2026-10-19] query | T-24142 TAIIKU func_8013E1FC progress and CPU search results
 
 `TAIIKU func_8013E1FC` (not yet matched): hand-structured C reaches a 98.8% mnemonic match (422 target vs 424 insns) with frame size, p/q offsets, `ox`/`oy` slots and both spills (sp+0x60, sp+0x78) matching exactly; the remaining diff is register numbering of the two inner `k<2` loops. Best draft kept in `build/scratch/t24142/` (not committed). Tricks: IDO strength-reduces `p[k*2]` into pointer increments but not `p[k<<1]`, so write the index as `(k << 1)`; `i << 3` instead of `i * 8` avoids an extra induction variable; a uniform `s32 padt[3]` at the top plus `padm[1]` between two arrays reproduces stack holes, and since every scalar local reserves a slot, removing one scalar is how to add a hole without growing the frame; `s64` does not exist in this build; layout sweeps against one source file must run serially (concurrent sweeps corrupt each other's builds); a variant that fails to compile shows as `rows=0` in sweep output. Permuter (`tools/permute.py`, 300 s, 4 jobs) over 12 guarded drafts found no score-0 candidate (best: `SHOUGATU func_80133B44` at 190); `tools/permuter_farm.sh run` exited at once because its 35 queued candidates were all already searched.
+
+## [2026-10-20] ticket | T-24200 cloud packet pilot: TACO func_8013B460
+
+Created [[tickets/T-24200-cloud-packet-taco-8013b460]] (In Progress): one-file match packet for `src/ovl/TACO/8013B170.c` run in a cloud container; packet asm stays under the gitignored `asm/`.
+
+## [2026-10-20] setup | cloud toolchain for match packets
+
+Ran the project image in a claude.ai cloud container: `dockerd` started by hand, `tools/Dockerfile` built from a copy with the proxy CA injected and labelled with the original's hash so `tools/docker.sh` uses it. The unchanged `src/ovl/TACO/8013B170.c` compiles to the original object's sha1. Without the disc funcdiff cannot prove or diff, so a scratch objdump diff with resolved symbol addresses was used. New page [[cloud-matching]], linked from [[index]].
+
+## [2026-10-20] ticket | T-24200 In Review: TACO func_8013B460 at 2 rows
+
+[[tickets/T-24200-cloud-packet-taco-8013b460]]: 41 rows -> 4 differing lines (2 rows), guarded `NON_MATCHING` in `src/ovl/TACO/8013B170.c` (setUV4-shaped comma statement, `gray` local dropped); left is the `sh y3` slot. Notes in [[matching-notes]] (T-24200). Local linked proof and review still due.
+
