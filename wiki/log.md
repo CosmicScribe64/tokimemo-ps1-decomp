@@ -2514,3 +2514,15 @@ Recovered the four timestamps/color array and by-value RECT call for `func_80044
 ## [2026-10-20] decision | T-24501 bound key-ring alias follow-up
 
 Local struct views of the canonical two-symbol ring do not restore the position reload in `func_80075C84` (resolved cost 154 unchanged); integer-base and position-relative variants are worse. Recorded exact forms/costs in [[matching-notes]] and [[tickets/T-24501-main-tail]], with no production/header edits. Same ownership scan confirms prior mouse fix and separate sndisp blockers.
+
+## [2026-10-20] query | T-24503 larger GEKO draft repair evidence
+
+Repaired a concrete halfword-pointer stride error in func_80135DC0 and tested original frame/type/lifetime hypotheses (best cost547). Fresh evaluation of the exact-frame T-23005 hallway-picker draft gives cost480, reduced to450 by unsigned-seven compares and a year-range test. Traced compiles show structural differences in both drafts, so prior “all registers” wording is not current. Details in [[tickets/T-24503-geko-option-completion]].
+
+## [2026-10-20] query | T-24503 short-leaf history correction
+
+GEKO func_80144198 remains ASM and has multiple archived campaigns; verified current main and indexed histories before four new selector-lifetime tests. Baseline57 and no prototype-view gain; lifetime tests worsen68/74. No source promotion. Larger GEKO source checkpoints replay547/450 and are retained under drafts/T-24503/; the scene initializer's known text-call view gives525 only. [[tickets/T-24503-geko-option-completion]].
+
+## [2026-10-20] query | T-24503 fresh GEKO ranking source
+
+Repaired the previously untried func_801420E4 source's missing rodata declaration and reconstructed its top-six insertion loop with paired arrays. Full-unit cost444 to357; original0x480 frame differs from natural0x60. No padding or production promotion. Archived body, declaration and replay under drafts/T-24503/ with current limits. [[tickets/T-24503-geko-option-completion]].
