@@ -2897,3 +2897,7 @@ Bounded existing-notes check finds prior semantic/type repairs already preserved
 ## [2026-10-20] build | Verified TILE match integrated and census refreshed
 
 MAIN `func_8004A814` is on main at `87df21291`: 1,028 linked default-C bytes match, all 27 executable checksums and declaration guards pass, root standards review has no findings. Docker census confirms 6,816/6,952 functions and 2,091,568/2,276,920 bytes (91.9%), 136 functions remaining. The real abs_y local restores stack ownership; a marked coordinate cast reproduces erased-conversion temporary allocation without changing full-width loop/distance values. Sol continues a bounded sibling transfer; Astra is idle. See [[status]], [[matching-notes]], [[tickets/T-24501-main-tail]].
+
+## [2026-10-20] decision | Preserve font tile upload ownership packet
+
+[[tickets/T-24501-main-tail]] proves real256B glyph buffer and20B record view in `mod_trans_vram`, typed232/196 words/frame1A0 versus188 target. Reduced row/cell capture control loses target ranges; direct switch corrects selector promotion. Source-only replay and exact caller/callee/homes evidence archived for bounded consultation. No production/header/compiler change or padding.4A414 transfer inspection finds no missing narrowing, no cast sweep. See [[matching-notes]].
