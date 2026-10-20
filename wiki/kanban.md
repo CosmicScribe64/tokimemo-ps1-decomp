@@ -63,6 +63,7 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-24512-ending|T-24512 Match remaining ENDING functions]]
 
+- [ ] [[tickets/T-24513-etc-matching|T-24513 Match remaining ETC functions]]
 
 
 ## Done
