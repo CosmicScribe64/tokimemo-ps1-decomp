@@ -2869,3 +2869,7 @@ Bounded existing-notes check finds prior semantic/type repairs already preserved
 ## [2026-10-20] decision | Preserve inverse serializer copy-ring packet
 
 [[tickets/T-24501-main-tail]] recovers `func_80054FC0` record copies and natural byte checksum; unsigned counter restores target multiply shape. Source-only 113/200 words versus 199 target, first 45 resolved rows exact, frame 0x28. Explicit return-ABI controls unchanged. Narrow unrolled-copy temporary and epilogue evidence/replay archived; production remains ASM. Parent requested freeze for consultation. See [[matching-notes]].
+
+## [2026-10-20] decision | Freeze narrowed GPU grid lifetime packet
+
+[[tickets/T-24501-main-tail]] recovers typed `func_8004A414` primitive/grid source,390->164 with exact256 words/frame98/x-y homes. Natural bounds/distances repair real source lifetime errors; remaining invariant spills and register ranks documented with exact replay. Source-only archive, no production/header change. Parent requested bounded consultation and idle. Inverse54FC0 consult remains negative113/200. See [[matching-notes]].

@@ -23,3 +23,5 @@ The first 45 resolved instruction rows agree. In the 20-byte copy, source/destin
 Checksum source now has the correct byte accesses, four-way unrolled additions, bound, pointer stride and frame. Remaining ring assignments differ, and its final checksum store/epilogue ordering produces one additional word (candidate trailing nop). Void versus s32 does not change this. No dummy padding, forced-register variables, volatile, inline assembly, or new compiler pass was attempted.
 
 Private controls retained at .scratch/t24501/save_inverse{171,116,113}.c and corresponding save_inverse_{typed,byte_loop,unsigned_count,void}.diff. No raw instruction dump is committed. Consult should isolate the unrolled copy's skipped temporary and/or final store scheduling with at most a few causal source hypotheses; do not run a source-spelling grid.
+
+Parent's bounded Astra consult was negative: omitting the existing ugen shim leaves resolved instructions identical (113/200), and putting checksum store/function end on one line leaves the extra epilogue word. No further causal source hypothesis was found; freeze this lead. Loader's independent 672-byte match remains verified.
