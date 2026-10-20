@@ -2142,3 +2142,19 @@ func_8014FFDC now matches 2,292 linked bytes in default C. Shared loop locals, e
 ## [2026-10-20] build | Five verified matches integrated to main
 
 [[tickets/T-24500-completion-orchestration]] integrated MAIN func_800654D0, TACO func_80140028 and func_8014FFDC, GEKO func_80134808 and func_80133308 through source head e51680da0: five functions, 5,280 bytes. Each integration independently passed 27 SHA1 checks, default-C linked proofs and header/global/prototype guards. Docker progress now reports 6,798/6,952 functions and 2,072,284/2,276,920 bytes (91.0%); [[status]] updated. [[tickets/T-24510-parallel-overlay-coordination]] handoff published at b128b443b; six Sol workers span MAIN, TACO, GEKO/OPTION, TEL, ENDING and ETC. Latest read-only GitHub check found issue #65 unchanged and no open PR; contributor still unavailable until Friday. Bounded Astra consult for GEKO func_80133024 found no new source hypothesis; preserve the two-row checkpoint and avoid further blind grids.
+
+## [2026-10-20] ticket | Seasonal isolated source hypotheses
+
+Started [[tickets/T-24523-seasonal-source-hypotheses]] in /private/tmp/tokimemo-t24523 at dba33c4f5. GYOZI, VALEN and SHOUGATU only; scheduler negatives are known and broad exhausted grids will not be repeated.
+
+## [2026-10-20] build | SHOUGATU narrow product candidate
+
+[[tickets/T-24523-seasonal-source-hypotheses]] found full-unit score zero for SHOUGATU func_80133B44 by adding a redundant signed-halfword product cast; all later temporary registers align. Default-C linked proof and 27 hashes are in progress. GYOZI func_80140E0C alias-store probes did not improve its nine-edit baseline and were discarded.
+
+## [2026-10-20] query | Seasonal ring hypothesis and declaration guards
+
+[[matching-notes]] records the new SHOUGATU product-narrowing recipe and negative GYOZI alias-store experiment for [[tickets/T-24523-seasonal-source-hypotheses]]. `check_headers.py` and `sync_protos.py --check-branch` pass (0 new disagreements, 15 known). Early `migrate_globals.py --check` lacked five DATE/TACO asm proofs before those split stages; rerun after the complete build. Parent standards review found no blockers in the product-cast C and explicit FAKE padding comments.
+
+## [2026-10-20] build | Verified 408-byte SHOUGATU match
+
+[[tickets/T-24523-seasonal-source-hypotheses]] matches func_80133B44 with literal default C and private linked 408-byte proof. Private SHOUGATU SHA1 passes; all 27 hashes pass using private SHOUGATU plus 26 unchanged read-only root binaries. Header, global and prototype guards pass; four original TACO asm proof files are read-only baseline symlinks. Parent standards review has no blockers. No compiler or assembly changes. Remaining seasonal functions continue.
