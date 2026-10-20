@@ -2166,3 +2166,7 @@ T-24523 pinned c182f981586a85cebf11675dea9ea0d731d75ff1 for SHOUGATU func_80133B
 ## [2026-10-20] query | Review TAIIKU default-C reconstruction candidate
 
 Parent reviewed the restored T-24521 TAIIKU func_80134060 candidate: existing aligned TaiShorts12 aggregates, index loops, canonical overlay-local declarations; unsigned first-store view and unused frame slot explicitly marked FAKE. The unrelated data-definition probe was excluded. No blocking source finding; private whole-overlay SHA1 remains necessary because three newly canonical declarations are visible across TAIIKU. T-24522 meanwhile reduced func_80144C84's current draft from 252 to 44 rows through typed stat pointers and staged output-global arithmetic; no second RPG_BAT match claimed. See [[tickets/T-24520-parallel-tail-coordination]].
+
+## [2026-10-20] build | TAIIKU reconstruction verified and pinned
+
+T-24521 pinned f278c1b6cbdc8793c0175ae41d6acc364bc1140d for TAIIKU func_80134060, 1,348 literal default linked bytes. Private TAIIKU SHA1 306d1013b9be465819525d1fb4dc0e86b422a846; all 27 hashes pass using private TAIIKU plus 26 unchanged root binaries mounted read-only. Header/global/prototype checks pass (0 new, 12 known prototype disagreements). Parent source review recorded no blockers. The three lane commits now total three functions and 2,880 bytes, pending serialized parent integration. [[tickets/T-24520-parallel-tail-coordination]] lists pinned commits. All workers continue on remaining tails.

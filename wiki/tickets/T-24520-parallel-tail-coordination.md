@@ -33,5 +33,6 @@ Exact/near/lenient/wider-shape automatic copying was already exhausted by the pa
 | --- | --- | ---: | --- |
 | RPG_BAT | func_8014BB80 | 1,124 | bf7e243bd214f8e52a4d81f130776c1c4638de36 |
 | SHOUGATU | func_80133B44 | 408 | c182f981586a85cebf11675dea9ea0d731d75ff1 |
+| TAIIKU | func_80134060 | 1,348 | f278c1b6cbdc8793c0175ae41d6acc364bc1140d |
 
-Both compile as literal default C and match privately linked target bytes. Each passes 27 binary SHA1 checks using its private modified overlay plus 26 unchanged root outputs mounted read-only; the worker tickets state that provenance. Headers, globals and prototype checks pass. Parent source review found no blocking findings after RPG_BAT indentation repair. The originating chat has queued RPG_BAT for independent serialized integration; workers continue. No global progress total is changed in this isolated coordinator tree.
+All three compile as literal default C and match privately linked target bytes, totaling 2,880 bytes. Each passes 27 binary SHA1 checks using its private modified overlay plus 26 unchanged root outputs mounted read-only; the worker tickets state that provenance. Headers, globals and prototype checks pass. Parent source review found no blocking findings after RPG_BAT indentation repair. The originating chat has queued RPG_BAT for independent serialized integration; workers continue. No global progress total is changed in this isolated coordinator tree.
