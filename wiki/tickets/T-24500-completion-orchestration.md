@@ -16,3 +16,9 @@ Assignments: T-24501 MAIN, T-24502 TACO, T-24503 GEKO/OPTION. Each owns an isola
 GitHub issue #65 claims GEKO and three OPTION functions, but the contributor reports being out of tokens until Friday. The user explicitly authorized working these areas meanwhile. Keep completed and remaining functions documented for handoff. No contributor comments or issue closure authorized. Current remote main equals local main; no open PR was returned on October 20.
 
 Require literal default C evidence and matching binary checksums; numerical diff improvements alone are not matches. Preserve source-only drafts and useful blocker evidence. Avoid repeating exhausted compiler experiments. Keep contributor checks at the existing interval and preserve the paused integration automation.
+
+## Next large targets
+
+October 20 Docker scan of current INCLUDE_ASM sizes (code bytes, excluding jump tables): TEL `func_80136724` 6,580; MAIN `func_8006D7EC` 4,692; ENDING `func_8013A2E8` 4,648; NAME_ENT `func_80143580` 4,308; MAIN `func_8007132C` 3,992; GEKO `func_80142C9C` 3,656. Prioritize tractable source work, not size alone.
+
+TEL's prior frame recovery and negative month-promotion experiments are in T-19022, T-23001 and T-24022. T-24022 is closed as an investigation, not a function match. Its seven normalization, eight view/type, and eight structural probes did not restore the global month range; re-running those forms is not a new avenue. A future worker must identify a distinct structural or allocation hypothesis before this target consumes a session.
