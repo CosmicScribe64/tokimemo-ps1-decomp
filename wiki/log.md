@@ -2130,3 +2130,7 @@ Docker ninja passes, and all 27 built binaries match pinned SHA1s. Headers, glob
 ## [2026-10-20] build | T-24503 match GEKO func_80133308
 
 Promoted src/ovl/GEKO/801323E0.c to default C: Docker funcdiff proves 656 linked bytes equal target. Shared quotient, remainder evaluation order and documented FAKE range/schedule/view controls close the draft. Full 27-binary and header/global/prototype checks pass; parent review found no blockers. The unresolved func_80133024 experiment is excluded from this commit and retained in scratch. See [[matching-notes]] and [[tickets/T-24503-geko-option-completion]].
+
+## [2026-10-20] build | T-24502 largest TACO function matched
+
+func_8014FFDC now matches 2,292 linked bytes in default C. Shared loop locals, existing table indexing and marked initializer grouping replace stale split-variable code. Parent review found no blockers; all 27 binary SHA1 checks and source guards pass after its own header declaration. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the source forms and failed alternatives.
