@@ -53,7 +53,7 @@ Model of the compiler: uopt colours registers (v0, v1, a0-a3, t0-t5, s0-s7 in th
 
 as1 schedules per source line. Put initial assignments on one line (`n = 0; b = 0; p = A; r = B;`) to keep ugen's order (main `func_80055A38`, T-17007); the loop init on the `do` line, the body on the `for` line (T-11650); two constant stores on one line in the constant numbering order (T-16554). Write `c++` before the record stores if the original loads early (T-23003). One statement per line is the default; the exceptions are the FAKE layout recipes above, marked in the source. `order_search` permutes lines but never joins them.
 
-Hoists from another block (as1's global filler, [[as1-scheduler-rule]]): as1 moves the head `lui` of a dominated block (for example the out-of-range default of a switch) into a stall. Fix: declare the globals of the instructions that must stay `volatile` in the header; a volatile global's `lui` and load are never moved and the code is otherwise unchanged (VALEN `func_80134030`, GYOZI `func_80139E4C`, T-24500; FAKE). Caveat: not for a global the function reads twice (uopt then loads it once, VALEN `func_80132D0C`), not for weight-limited picks (GEKO `func_80136C20`) or same-block order (KANGEI `func_8013852C`).
+Hoists from another block (as1's global filler, [[as1-scheduler-rule]]): as1 moves the head `lui` of a dominated block (for example the out-of-range default of a switch) into a stall. Fix: declare the globals of the instructions that must stay `volatile` in the header; a volatile global's `lui` and load are never moved and the code is otherwise unchanged (VALEN `func_80134030`, GYOZI `func_80139E4C`, T-24900; FAKE). Caveat: not for a global the function reads twice (uopt then loads it once, VALEN `func_80132D0C`), not for weight-limited picks (GEKO `func_80136C20`) or same-block order (KANGEI `func_8013852C`).
 
 ## 6. Constants: folded vs kept in a register
 
@@ -87,6 +87,6 @@ Flag byte `|=`: use a bit-field store `((Bits *)&x)->f = 1;` when one temporary 
 
 Do not spend a session on these without a new idea; leave a guard with the ticket id and what remains. Details and the census in [[build-step-gaps]].
 - Historical ugen block-copy direction mismatch (T-19001, T-22014): addressed by the enabled `tools/ugen_pass.py` in [[tickets/T-24092-ugen-block-copy-state-pass]]. Reproduce remaining failures with the current pipeline; 32-byte unrolled-copy register choices are a separate question.
-- as1 global scheduler picks (T-24202, T-24212, T-24203): rule and remaining cases in [[as1-scheduler-rule]]; default-block hoists are fixed with `volatile` (T-24500).
+- as1 global scheduler picks (T-24202, T-24212, T-24203): rule and remaining cases in [[as1-scheduler-rule]]; default-block hoists are fixed with `volatile` (T-24900).
 - uopt `idx = 0; idx++` fold (T-24204): proves the zero through every source form tried; only a live backedge keeps the `addiu`.
 - uopt priority and colour order with no uniform rule: apply recipes above, do not search flags (exhausted in T-0014, T-0017, T-9800).

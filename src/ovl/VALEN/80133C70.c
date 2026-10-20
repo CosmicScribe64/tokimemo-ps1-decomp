@@ -79,7 +79,7 @@ void func_80133FD0(void) {
     func_8004284C();
 }
 
-/* T-24211, T-24500: matches with the default arm's three globals declared volatile in VALEN.h
+/* T-24211, T-24900: matches with the default arm's three globals declared volatile in VALEN.h
  * (FAKE there); otherwise as1 hoists the default block's first two lui. */
 void func_80134030(void) {
     func_80133C70();

@@ -207,7 +207,7 @@ void func_80138470(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-24202, T-24500, 2 rows (rows 35..36): as1 schedules lui $at, %hi(D_80139ADC) before addu $t6, $t4, $v1 instead of after (a local, same-block choice: the T-24500 global-mover levers, volatile D_80139ADC or D_8013A2AC, leave it at 2 rows) (also T-24054, T-24107, T-24122). ~5,000 cast/order/temp variants all stay at 2 rows or worse. */
+/* NON_MATCHING: T-24202, T-24900, 2 rows (rows 35..36): as1 schedules lui $at, %hi(D_80139ADC) before addu $t6, $t4, $v1 instead of after (a local, same-block choice: the T-24900 global-mover levers, volatile D_80139ADC or D_8013A2AC, leave it at 2 rows) (also T-24054, T-24107, T-24122). ~5,000 cast/order/temp variants all stay at 2 rows or worse. */
 #ifdef NON_MATCHING
 void func_8013852C(void) {
     u8 year;

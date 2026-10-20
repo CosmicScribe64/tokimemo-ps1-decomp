@@ -125,7 +125,7 @@ void func_80139DE0(void) {
     func_8004DE1C();
 }
 
-/* T-24137 draft (switch-triple pattern of SHOUGATU func_8013EE30); matches since T-24500 with the
+/* T-24137 draft (switch-triple pattern of SHOUGATU func_8013EE30); matches since T-24900 with the
  * default arm's three globals declared volatile in GYOZI.h (FAKE there).
  * FAKE: the switch discriminant goes through the base of D_800F5AAE
  * ((&D_800F5AAE)[0x821] = D_800F62CF) so the byte store stays before the load;
