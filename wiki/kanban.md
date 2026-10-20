@@ -53,13 +53,17 @@ kanban-plugin: board
 
 ## In Progress
 
+
 - [ ] [[tickets/T-24502-taco-completion|T-24502 Match remaining TACO functions]]
 
 
 ## In Review
 
 
+
 ## Done
+
+- [ ] [[tickets/T-24524-name-ent-copy-reads|T-24524 Investigate NAME_ENT copy-loop source read timing]]
 
 - [ ] [[tickets/T-24141-main-remaining-sweep-e|T-24141 Sweep remaining unmatched functions in src/main/ (wave E)]]
 - [ ] [[tickets/T-24140-geko-option-tel-omimai-wave-3-closers|T-24140 Wave 3 closer sweep across GEKO (12), OPTION (8), TEL (2), and OMIMAI (1)]]

@@ -2167,3 +2167,15 @@ Final DEE4 zero-initializer probe is negative: chain72, pair/comma/group70; pack
 ## [2026-10-20] decision | T-24502 full-unit scope correction and carousel packet
 
 Independent DEE4 consult finds additional post-projection allocation differences in full TU69 despite default guards; standalone70 claims qualified, three loop hypotheses negative.39FB8 fresh lifetime change lowers first-loop sine priority10 to3.5; full-TU baseline280 becomes216, shared preheader web198 with remaining broad register/scheduling differences. Source-only replay packet and concise bounded negatives saved, no production/header changes or new coverage credited. [[matching-notes]] and [[tickets/T-24502-taco-completion]].
+
+## [2026-10-20] ticket | T-24524 NAME_ENT input-read timing
+
+Root assigned NAME_ENT80132000.c after the TACO checkpoint. Read T-24515 and lane histories; claim a bounded full-TU diagnostic source-byte read-view hypothesis for38C1C, preserving recovered date widths/counters/endpoints. No shared header or production edit yet. [[tickets/T-24524-name-ent-copy-reads]].
+
+## [2026-10-20] decision | T-24524 source-read timing disproved
+
+All four full-TU controls give181 words/104 rows: unchanged, volatile first read, volatile second reads, volatile pointer. Original nop-slot load-hoisting differences persist; no production/header edits or new match. Ticket moved In Progress to In Review, awaiting root standards review; bounded negative replay recorded in [[tickets/T-24524-name-ent-copy-reads]] and [[matching-notes]].
+
+## [2026-10-20] ticket | T-24524 investigation reviewed
+
+Root standards review passes with no findings; concise full-TU negative meets investigation acceptance. Moved In Review to Done, board synchronized. No production changes or coverage claim. [[tickets/T-24524-name-ent-copy-reads]].
