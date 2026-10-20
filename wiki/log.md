@@ -2105,3 +2105,7 @@ Parent review accepted the `make_color_bar16` body and identified the absent can
 ## [2026-10-20] build | T-24501 gradient declaration review resolved and 27 hashes pass
 
 The approved canonical prototype rebuild exits zero, including NAME_ENT and SHUGAKU callers. Literal default-C private-link proof for `make_color_bar16` remains MATCH (1,540 bytes), explicit SHA1 recomputation passes all 27 images, headers pass, and the prototype branch check has zero new disagreements. Parent review's declaration finding is resolved; no source-body findings remain. [[tickets/T-24501-main-tail]] stays In Progress for the remaining MAIN sweep.
+
+## [2026-10-20] decision | T-24501 archive bounded MAIN repairs
+
+Preserved four readable scratch bodies in `drafts/T-24501/main/` and recorded exact resolved edit costs and remaining structural differences in [[matching-notes]] and [[tickets/T-24501-main-tail]]. Typed CD records, palette loops and lighting packet fields improved malformed drafts but do not match. Existing calendar guard and fresh typed menu also remain blocked; a bounded 11-compile menu viewsweep gave no gain. Production C and shared headers unchanged. Parent integrated the two earlier proven matches; continuing smaller helper selection, excluding already exhausted col2sepia history.

@@ -45,3 +45,7 @@ Parent source review accepted the interpolation body with no findings but found 
 Final pre-header prototype branch check passed with `0 new disagreement(s), 15 known`; no new prototype disagreement was introduced. All 27 image hashes were explicitly recomputed as expected. Shared declaration validation is running after that review fix.
 
 Post-declaration verification completed: fresh affected rebuild `ninja -j 8` exited zero, then `funcdiff --resolve --version default main:make_color_bar16` again proved all 1,540 linked bytes. Explicit SHA1 recomputation passed 27/27 images, including both caller units NAME_ENT and SHUGAKU. Header check passed; prototype branch check reports zero new disagreements (15 known). Parent source review had no body findings, and its only declaration finding is resolved by the canonical prototype.
+
+### Bounded post-match repairs
+
+Archived four readable, non-production drafts under `drafts/T-24501/main/`: CD dispatcher `func_800455C4` (resolved edit cost 439), `palette_load_vram` (clean 419, padded experiment 394), `make_color_bar` (330), and `_sprite_set_light_effect1` (374). Additional typed menu `func_80076000` remains at 214 after 11 bounded view compiles; existing `func_80054E6C` guard remains at 84. Exact hypotheses and remaining structural misses are in [[matching-notes]]. Production source and headers are unchanged during this phase; this diagnostic checkpoint needs no executable rebuild. Continue with smaller untried helpers rather than repeating documented row grids.
