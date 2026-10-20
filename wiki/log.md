@@ -2093,3 +2093,7 @@ Promoted src/ovl/GEKO/80134040.c to default C: Docker funcdiff proves 432 linked
 ## [2026-10-20] build | T-24503 full verification
 
 Docker ninja passes, and all 27 built binaries match pinned SHA1s. Headers, global migration and branch-prototype checks pass (zero new disagreements, 15 known). Parent review found no blocking standards or scope findings on GEKO func_80134808 and func_80133308. [[tickets/T-24503-geko-option-completion]] remains in progress.
+
+## [2026-10-20] build | T-24503 match GEKO func_80133308
+
+Promoted src/ovl/GEKO/801323E0.c to default C: Docker funcdiff proves 656 linked bytes equal target. Shared quotient, remainder evaluation order and documented FAKE range/schedule/view controls close the draft. Full 27-binary and header/global/prototype checks pass; parent review found no blockers. The unresolved func_80133024 experiment is excluded from this commit and retained in scratch. See [[matching-notes]] and [[tickets/T-24503-geko-option-completion]].
