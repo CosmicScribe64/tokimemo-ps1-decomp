@@ -16,7 +16,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Active work
 
-- T-24520 coordinates three additional isolated Sol 6.1 medium lanes from dba33c4f5: TAIIKU T-24521, RPG_BAT T-24522, GYOZI/VALEN/SHOUGATU T-24523. One compiler job per worker, read-only raw inputs, no coordinator compiler grids. These 33 remaining functions are separate from MAIN/TACO/GEKO/OPTION and TEL/ENDING/ETC/MASTER ownership. No new coverage claimed yet.
+- T-24520 isolated lanes delivered six verified default-C functions/5,848 bytes: TAIIKU T-24521 two, RPG_BAT T-24522 two, GYOZI/SHOUGATU T-24523 two. Originating chat serializes integration and owns global progress totals. Follow-up structural probes and fresh-donor comparisons yielded no additional matches; 27 functions remain across these lanes. Tickets In Review, no further compiler searches queued. Pinned source archives and stale VALEN guard cleanup are documented in T-24520; no coverage counted for them.
 
 - T-24500: Codex resumed with three Sol 6.1 medium workers: MAIN (T-24501), TACO (T-24502), GEKO/OPTION (T-24503). The user authorized covering issue #65 while its contributor is out of tokens until Friday. Record exact completed functions for handoff; Astra is reserved for specific blockers.
 - Five new functions are integrated and pushed: MAIN `func_800654D0` (1,072 bytes), TACO `func_80140028` (828) and `func_8014FFDC` (2,292), GEKO `func_80134808` (432) and `func_80133308` (656). All passed default-C linked proofs, 27 binary hashes and declaration guards. The two GEKO completions belong in issue #65's eventual contributor handoff; no contributor message has been sent.

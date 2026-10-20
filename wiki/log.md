@@ -2198,3 +2198,7 @@ Originating chat confirms both RPG_BAT and both TAIIKU matches integrated at c76
 ## [2026-10-20] query | Fresh donor pass identifies one seasonal transplant
 
 TAIIKU18 donor-target comparisons: best34F98->3DDB8 similarity0.2896, generic dispatch; genuine aggregate prefix34F98->35F3C0.2374 already used. RPG_BAT8 comparisons: best447E0->44C840.2800, arithmetic transfer already applied; other best pairs0.206..0.222 are generic call/dispatch/HI-LO blocks without the newly solved source lifetime. No new compiler runs in either lane. Seasonal28 comparisons found fresh GYOZI40F90->412A4 similarity0.745/684 bytes; strongest SHOUGATU3E6E40.770 and3EA980.707 already tried. Authorized only new412A4 donor transplant and explicit-flag variant; all other pairs remain read-only evidence. See [[tickets/T-24520-parallel-tail-coordination]].
+
+## [2026-10-20] ticket | Move bounded lane coordination to review
+
+[[tickets/T-24520-parallel-tail-coordination]] moves In Review with board matching: six verified coverage commits/5,848 bytes delivered, all archive review findings resolved, source-only evidence retained separately. TAIIKU donor notes89d2721f4 and RPG_BAT donor notes852b424ed have no production changes or fresh transfer. Seasonal only-new strong relativeGYOZI412A4 failed two concrete donor forms218/219 rows, worse than older draft; notes-only pin pending. No further compiler searches queued or blanket compiler-limit claim. Root owns current integrated progress totals; [[status]] records isolated lane outcome without replacing them.

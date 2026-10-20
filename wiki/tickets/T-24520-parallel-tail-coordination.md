@@ -1,7 +1,7 @@
 ---
 id: T-24520
 title: Coordinate TAIIKU RPG_BAT and seasonal matching lanes
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-20
 updated: 2026-10-20
@@ -14,8 +14,8 @@ Find the fastest verified remaining matches in three isolated, file-disjoint lan
 
 ## Acceptance criteria
 
-- [ ] Return pinned focused commits for any default-C matches, with private linked proof, all 27 binary SHA1 checks, declaration guards and standards review.
-- [ ] Record useful negative findings without claiming coverage.
+- [x] Return pinned focused commits for any default-C matches, with private linked proof, all 27 binary SHA1 checks, declaration guards and standards review.
+- [x] Record useful negative findings without claiming coverage.
 
 ## Notes
 
@@ -41,3 +41,9 @@ Exact/near/lenient/wider-shape automatic copying was already exhausted by the pa
 All six compile as literal default C and match privately linked target bytes, totaling 5,848 bytes. Each passes 27 binary SHA1 checks using private modified overlays plus unchanged root outputs mounted read-only; the worker tickets state that provenance. Headers, globals and prototype checks pass. Parent source review found no blocking findings after RPG_BAT indentation repair. The originating chat integrated the first RPG_BAT match at d2665864e; workers continue. No global progress total is changed in this isolated coordinator tree.
 
 GYOZI shared-header change: wrap existing `void func_800BCDF0();` under `MAIN_API_OVERRIDE_func_800BCDF0`, and use local `s32 func_800BCDF0();` only in src/ovl/GYOZI/80140C90.c. This focused patch preserves the originating chat's newer make_color_bar16 prototype when integrated. GyoziWork named byte fields replace scratch offsets; parent review found no blockers.
+
+### Bounded follow-up closeout
+
+TAIIKU archive80e6861db plus review fix392e2e680 and donor notes89d2721f4; RPG_BAT archive1564d1bf1 plus dependency/snapshot/donor evidence5ea66b18c ->35f244c4d ->852b424ed; seasonal archiveda848ec19 and stale VALEN guard cleanup7a6290955. All are separate from the six coverage commits. Archive source review found no unresolved blocker. Nine TAIIKU, four RPG_BAT and fourteen seasonal functions remain assembly.
+
+Root-requested fresh-donor comparisons produced no additional matches. All18 TAIIKU and8 RPG_BAT pairs lack a new transferable structure. Seasonal28 pairs found GYOZI412A4 as the only untried strong relative; two concrete donor transplants remain broad218/219 rows and worse than its older draft. No repeated compiler grids or compiler-limit claim. No further compiler searches queued; final ticket awaits originating chat review/integration of evidence.

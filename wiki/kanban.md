@@ -53,7 +53,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24520-parallel-tail-coordination|T-24520 Coordinate TAIIKU RPG_BAT and seasonal matching lanes]]
 
 - [ ] [[tickets/T-24510-parallel-overlay-coordination|T-24510 Coordinate isolated TEL ENDING ETC matching lanes]]
 
@@ -65,6 +64,8 @@ kanban-plugin: board
 
 
 ## In Review
+
+- [ ] [[tickets/T-24520-parallel-tail-coordination|T-24520 Coordinate TAIIKU RPG_BAT and seasonal matching lanes]]
 
 
 ## Done
