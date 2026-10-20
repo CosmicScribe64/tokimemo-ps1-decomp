@@ -1,4 +1,6 @@
-/* T-24301 draft, 57 rows (gstate view; ECF6 arm loads and the hoisted ECFA lui differ). */
+/* T-24301 draft, 41 rows: D_8011ECF6 written as the promoted global (empty F80 & 0xF arm, += / -= in the
+ * switch, clamps on the global) as the original's v1 store-backs show; left: one ugen temporary short at the
+ * start (lui t0 of D_8011ECFA hoisted in the original) and the D_800B6708 value in $v0 (here $v1). */
 void func_8006BA40(void) {
     GameState *g = &D_800E6280;
     u8 speed;
@@ -18,7 +20,6 @@ void func_8006BA40(void) {
             step = speed * 2;
         }
         if (g->unk_F80 & 0xF) {
-            x = D_8011ECF6;
         } else {
             switch (g->unk_F80 & 0x5000) {
             case 0x1000:
@@ -30,21 +31,17 @@ void func_8006BA40(void) {
             }
             switch (g->unk_F80 & 0xA000) {
             case 0x2000:
-                x = D_8011ECF6 + step;
+                D_8011ECF6 += step;
                 break;
             case 0x8000:
-                x = D_8011ECF6 - step;
-                break;
-            default:
-                x = D_8011ECF6;
+                D_8011ECF6 -= step;
                 break;
             }
         }
-        if (x >= 0x8D) {
-            x = 0x8C;
+        if (D_8011ECF6 >= 0x8D) {
+            D_8011ECF6 = 0x8C;
         }
-        D_8011ECF6 = x;
-        if (x < -0x96) {
+        if (D_8011ECF6 < -0x96) {
             D_8011ECF6 = -0x96;
         }
         if (D_8011ECFA < -0x64) {
