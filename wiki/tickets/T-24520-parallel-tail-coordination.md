@@ -1,7 +1,7 @@
 ---
 id: T-24520
 title: Coordinate TAIIKU RPG_BAT and seasonal matching lanes
-status: In Review
+status: In Progress
 assignee: Codex
 created: 2026-10-20
 updated: 2026-10-20
@@ -47,3 +47,7 @@ GYOZI shared-header change: wrap existing `void func_800BCDF0();` under `MAIN_AP
 TAIIKU archive80e6861db plus review fix392e2e680 and donor notes89d2721f4; RPG_BAT archive1564d1bf1 plus dependency/snapshot/donor evidence5ea66b18c ->35f244c4d ->852b424ed; seasonal archiveda848ec19 and stale VALEN guard cleanup7a6290955. All are separate from the six coverage commits. Archive source review found no unresolved blocker. Nine TAIIKU, four RPG_BAT and fourteen seasonal functions remain assembly.
 
 Root-requested fresh-donor comparisons produced no additional matches. All18 TAIIKU and8 RPG_BAT pairs lack a new transferable structure. Seasonal28 pairs found GYOZI412A4 as the only untried strong relative; two concrete donor transplants remain broad218/219 rows and worse than its older draft. No repeated compiler grids or compiler-limit claim. No further compiler searches queued; final ticket awaits originating chat review/integration of evidence.
+
+### Structural reconstruction continuation
+
+2026-10-20: Originating chat confirms all six matches integrated and explicitly requests continued active structural work. Reopened coordinator and lane tickets. TAIIKU investigates remaining display/control functions beyond the three bounded failed reconstructions; RPG_BAT investigates fresh state/interpolation source beyond C84 and BFE4 exhausted variants; seasonal investigates correct location/background source or a genuinely new aggregate hypothesis beyond prior scheduler and donor negatives. Each must state a concrete source hypothesis before compiling, remain at j1 in Docker, and prove literal default C before claiming any new coverage. Existing pins and negative evidence remain authoritative.
