@@ -2794,3 +2794,14 @@ One approved coherent grouping of pointer init/advance pairs and correction prog
 ## [2026-10-20] decision | T24560 worker resource handoff
 
 Stopped new probes/builds under resource-conservation steering. Preserved4a90979c7 and recorded the untested387B0 mixed-alias sibling lead in [[tickets/T-24560-ending-slot]]. Documentation only; no overall-goal pause or production change.
+## [2026-10-20] ticket | Start focused MAIN metric-record view hypothesis
+
+[[tickets/T-24570-main-80054e6c-metric-record-view]] tracks a single fresh source hypothesis for `func_80054E6C`: the existing draft reads nine `GsRec0FC` records through `unk_0F8`, while the recovered canonical type models those records at `unk_0FC`. The hypothesis must preserve a supported 32-bit view and literal default-C proof; no source change is promoted before that proof.
+
+## [2026-10-20] ticket | Record negative MAIN metric-record view result
+
+[[tickets/T-24570-main-80054e6c-metric-record-view]] records the Docker full-TU baseline and diagnostic union-view trial: each has 84 printable diff rows and remains DIFF. The expected frame is 0x80 versus 0x40 in the C draft; the single word-view hypothesis changed allocator choices without reducing differences. The trial source was reverted. The ticket is In Review; no production or shared-header change remains.
+
+## [2026-10-20] decision | Two-worker cheaper-first handoff
+
+Reviewed Luna's negative MAIN54E6C evidence and confirmed restored production/header state; overall matching ticket remains open. [[status]] now identifies Sol MAIN54E6C and Luna ENDING387B0 as the two active assignments. Recent Docker wiki lint had0 broken links and0 status mismatches, with size warnings for log and existing data/t0018-cases. Completed diagnostic archives are preserved without coverage credit; [[tickets/T-24500-completion-orchestration]] continues toward100%.
