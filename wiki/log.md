@@ -2805,3 +2805,6 @@ Stopped new probes/builds under resource-conservation steering. Preserved4a90979
 ## [2026-10-20] decision | Two-worker cheaper-first handoff
 
 Reviewed Luna's negative MAIN54E6C evidence and confirmed restored production/header state; overall matching ticket remains open. [[status]] now identifies Sol MAIN54E6C and Luna ENDING387B0 as the two active assignments. Recent Docker wiki lint had0 broken links and0 status mismatches, with size warnings for log and existing data/t0018-cases. Completed diagnostic archives are preserved without coverage credit; [[tickets/T-24500-completion-orchestration]] continues toward100%.
+## [2026-10-20] decision | MAIN metric aggregate escalation remains negative
+
+[[tickets/T-24501-main-tail]] follows [[tickets/T-24570-main-80054e6c-metric-record-view]] with one true record assignment: full-TU cost105/90words versus84/87 baseline, frame40 unchanged. Target80 has no surviving array/argument accesses supporting a64B local. Preserved focused source-only replay and uncertainty; no production/header edits, padding grid or backend-defect claim. Details in [[matching-notes]].

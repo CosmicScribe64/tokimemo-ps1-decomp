@@ -824,3 +824,8 @@ Bounded step7 explicit old-byte controls remove xori but alter color webs; selec
 ## T-24560: ENDING330E4 two-byte level object
 
 [[tickets/T-24560-ending-slot]] tests the original54 level home without widening chance/points/rank arrays. Scalar84/199 spills56; s16[1]87/200 spills54 with extra stores; a FAKE-marked two-byte struct member80/199 changes exactly the sh/lh immediates56->54, preservingB0/table30/points58/rank78. First84 diagnostic keys agree; no linked match. One raw u32 local replacing one pad word and direct0xE00 predicate96/199 emits extraANDI and gives raw v1/level a0 rather than target raw a0/extracted v0. No more padding/raw variants. `drafts/T-24560/` contains narrow C/replay/provenance only; production unchanged.
+
+
+## T-24501/T-24570 metric aggregate escalation (2026-10-20)
+
+After Luna's union-word view negative, one fresh full-TU true `GsRec0FC` assignment probe for `func_80054E6C` gives105/90 padded words versus baseline84/87; frame stays40, saves18/1C. Record alignment2 introduces halfword copy operations instead of target word copy. Target80-frame has only saved18/1C and CSE30/34 SP accesses, no surviving local-buffer or incoming-argument use; three memcpy arguments do not explain64 unused bytes. No evidence-backed array/argument structure recovered, no fabricated padding or compiler-defect claim. Production/header unchanged. Exact focused replay and source uncertainties: `drafts/T-24501/metric_aggregate.py`, `drafts/T-24501/main/func_80054E6C-notes.md`.
