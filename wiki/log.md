@@ -20857,3 +20857,10 @@ Five more variants (y3 temporary with every UV store order) of `func_8013B460`: 
 ## [2026-10-20] ticket | T-24142 draft archived
 
 An uncommitted T-24142 draft of TAIIKU `func_8013E1FC` (about 210 differing lines) was left in the main checkout; moved to drafts/T-24142/TAIIKU/func_8013E1FC/ and the source file restored, so the checkout matches main. [[tickets/T-24142-single-agent-closer-sweep]].
+## [2026-10-20] ticket | T-24201 cloud packet KANGEI func_80134724 opened
+
+[[tickets/T-24201-cloud-packet-kangei-80134724]] created In Progress: cloud session matches `KANGEI:func_80134724` (src/ovl/KANGEI/80134120.c) from a match packet per [[cloud-matching]], starting from the guarded T-24122 draft (2 rows).
+
+## [2026-10-20] ticket | T-24201 KANGEI func_80134724: 2 rows, guard kept, In Review
+
+[[tickets/T-24201-cloud-packet-kangei-80134724]] moved to In Review. The cloud toolchain ([[cloud-matching]]) reproduced the local sha1 of src/ovl/KANGEI/80134120.c. About 35 source variants did not remove the as1 default-block delay-slot hoist (2 rows). A second reference to the default label gives the original slot but changes the bound or adds a range check, and it rotates the allocation, so the original's extra reference is not a uopt edge. Only the NON_MATCHING comment changed (T-24201). Notes in [[matching-notes]]. The local linked proof and the review are still due.
