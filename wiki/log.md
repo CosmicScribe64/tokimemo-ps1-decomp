@@ -2787,3 +2787,6 @@ One audited local-reuse compile confirms the predicted 32-byte frame reduction, 
 ## [2026-10-20] decision | T-24521 checkpoint and idle
 
 Coordinator requested usage reduction: checkpoint only, no new compiler/build/review repetition. The already-launched restoration verification had completed with checksum/two literal matches/27 hashes/guards passing; no further checks started. [[tickets/T-24521-taiiku]] remains In Progress for coordinator direction; preserve clean source-only checkpoint and idle.
+## [2026-10-20] query | T-24522 pointer line-grouping negative
+
+One approved coherent grouping of pointer init/advance pairs and correction progress assignment gives unchanged41/39 with byte-identical diagnostic. No source expression/control changes, no permutation grid; best4 and preferred ordinary41 source archives unchanged. See [[tickets/T-24522-rpg-bat]].
