@@ -7846,3 +7846,17 @@ ETC func_8013F980 matches252 actual default linked bytes using matched MAIN func
 ## T-24073 ETC record initialization
 
 func_8014407C matches352 actual default linked C bytes. Correct stale &array+0x48 to Rec24[2], then write real fields through a0x24 cursor. Word x/index-derived values avoid spurious short narrowing; the matched MAIN80084E90 unsigned SDK width view shares128 across unk08/0A (marked FAKE). Required y-store immediately after signed RNG%112 exposes the DIV macro early. A canonical for-loop separates ID=i+3 from induction update; ordered i/x initializer matches its prologue. Existing void(void) declaration was wrong: original spills/reads incominga0, while matched caller passes no expression. Approved void() header plus definitionvoid(s32arg0) preserves both. ETC checksum, default352 literal, guards and42 unchanged neighbor bodies pass; parent publication pending.
+
+## T-24202 KANGEI func_8013852C: as1 `lui $at` placement (cloud packet, still 2 rows)
+
+The remaining diff is one `lui $at, %hi(D_80139ADC)` that as1 hoists above `addu $t6, $t4, $v1` (target: addu, lui, sh).
+Pre-as1 (`cc -S` under the cc.py shims) shows ugen emits `sll $10; subu $11; and $12,$11,0xFFFF; and $13,$3,0xFFFF; addu $14; sh`
+and as1 deletes the redundant `and`s (and `sll/sra 16` pairs) by renaming the producer to the deleted op's destination; this is
+where the $t2/$t4/$t6 numbering comes from, and the deleted ops still shape the schedule (an extra surviving `andi 0xFF` flips
+the lui below the addu). The target's numbering needs exactly one removable op after subu and one before addu. Sweeps
+(~5,000 variants: casts on each operand, the shift, difference, year and sum; `F*3`; statement orders of all five stores; temps
+before/after the stores; struct-based `D_80139AD0` picture-set access; `year` as u8/u16/s32/u32) all stay at 2 rows or worse.
+Open leads: the and-on-year op may need to be something other than an `and` (e.g. a removable move from a different
+expression shape), or the target's uopt output ordered the year mask before the subu.
+Cloud notes: Docker Hub 429 on `ubuntu:22.04` is avoided with `--build-arg BASE=mirror.gcr.io/library/ubuntu:22.04`; IDO
+`cc -S` ignores `-o` and writes `<base>.s` to the cwd (the repo root in docker); `ld` on IDO objects needs `.mdebug` stripped first.

@@ -207,7 +207,7 @@ void func_80138470(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-24054, T-24107, T-24122, 2 rows (rows 35..36): as1 schedules lui $at, %hi(D_80139ADC) before addu $t6, $t4, $v1 instead of after. */
+/* NON_MATCHING: T-24202, 2 rows (rows 35..36): as1 schedules lui $at, %hi(D_80139ADC) before addu $t6, $t4, $v1 instead of after (also T-24054, T-24107, T-24122). ~5,000 cast/order/temp variants all stay at 2 rows or worse. */
 #ifdef NON_MATCHING
 void func_8013852C(void) {
     u8 year;

@@ -809,4 +809,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 
 - [[tickets/T-24142-single-agent-closer-sweep|T-24142]] Single-agent closer sweep after the quota restart: one Sonnet 5.5 subagent owns all of `src/`, ~183 `INCLUDE_ASM` functions left (In Progress).
-- [[tickets/T-24202-cloud-packet-kangei-8013852c|T-24202]] Cloud packet: match `KANGEI func_8013852C` (2-row guarded draft) in a cloud session (In Progress).
+- [[tickets/T-24202-cloud-packet-kangei-8013852c|T-24202]] Cloud packet: match `KANGEI func_8013852C` (2-row guarded draft) in a cloud session (In Review, still 2 rows).
