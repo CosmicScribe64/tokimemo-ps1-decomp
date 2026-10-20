@@ -1,6 +1,6 @@
 /* T-24501 source-recovery checkpoint, not a production match. */
 void sndi(u8 *arg0, s32 arg1, s32 arg2) {
-    s32 i;
+    u8 parity;
     u8 original[64];
     /* FAKE: capacities below64 inferred from adjacent target buffer homes,
      * not original declarations; diagnostic only. T-24501 */
@@ -8,9 +8,9 @@ void sndi(u8 *arg0, s32 arg1, s32 arg2) {
     u8 stage[40];
     u8 result[40];
     u8 name[20];
-    s32 found;
-    s32 parity;
     u8 *p;
+    s32 i;
+    s32 found;
 
     strncpy(original, arg0, 64);
     D_800E6280.unk_F62 = 0;
@@ -18,7 +18,9 @@ void sndi(u8 *arg0, s32 arg1, s32 arg2) {
     if ((arg2 & 15) == 15) {
         i = 0;
         while (original[i] != 0) {
-            p = &original[i];
+            /* FAKE: distinct integer address class prevents cursor IV.
+             * Requires 32-bit target pointer representation. T-24501 */
+            p = (u8 *)((u32)original + (u32)i);
             parity = i & 1;
             i++;
             if (*p == 'P' && parity == 0) {
@@ -27,17 +29,18 @@ void sndi(u8 *arg0, s32 arg1, s32 arg2) {
                 strcpy(stage, original);
                 get_p_name(name, arg2 & 15);
                 strcat(stage, name);
+                i = 0;
                 strcat(stage, p + 1);
                 break;
             }
         }
-        i = 0;
         if (found == 0) {
+            i = 0;
             strcpy(stage, original);
         }
         found = 0;
         while (stage[i] != 0) {
-            p = &stage[i];
+            p = (u8 *)((u32)stage + (u32)i);
             parity = i & 1;
             i++;
             if (*p == 'G' && parity == 0) {
@@ -56,7 +59,7 @@ void sndi(u8 *arg0, s32 arg1, s32 arg2) {
     } else {
         i = 0;
         while (original[i] != 0) {
-            p = &original[i];
+            p = (u8 *)((u32)original + (u32)i);
             parity = i & 1;
             i++;
             if (*p == 'P' && parity == 0) {

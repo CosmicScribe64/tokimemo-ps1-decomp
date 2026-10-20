@@ -24,3 +24,9 @@ Bounded negatives:
 - Separate old-index capture302/267 adds saved register/frame. Approved final conditional P/non-P increments303/262, frame120; still cursor IV. No gain, stop spelling variants.
 
 No volatile scheduling tricks, arbitrary padding, shared-header edits, production compiler changes, full executable builds, or new agents. Preserve primary210 and alternate211 rather than promoting an unverified body.
+
+## Final bounded continuation
+
+Current primary body is150/265 words (target263), not a match. Astra integer-address body cursor plus indexed zero tests restores recomputation in all three scans (195/262 with reset alternate); those address classes are FAKE-marked and target32bit only. Predicted existing-local order (parity before arrays; cursor,index,found after) gives183/262, placing index40/found3C and preserving frame118/all buffers. Current u8 parity gives150/265 without extra narrowing, but adds one old-index MOVE per scan. The183 control is reproduced by changing the primary's u8 parity back to s32; no frame/padding grid.
+
+Integer cursor storage instead of pointer produces identical183; rejected as unnecessary. Traced150 first divergence: converted original-base expression priority7.333 allocated before character constant6.667, taking a0 where target usesa1. Larger cause: parity range priority20 takesv1, cursor range11 takesa2; target cursorv1 and transient parityt9. Trace/private full TU: .scratch/t24501/sndi150-regdiff.log and sndi150-full.c. The user stopped this variant sequence; no more candidates were compiled. All production remains unchanged.

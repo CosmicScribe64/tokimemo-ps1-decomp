@@ -2831,3 +2831,6 @@ Fresh Docker full-TU baseline and the single canonical `D_8011F4DE` trial both s
 ## [2026-10-20] decision | Return to Sol medium workers with Astra
 
 User rejected the recent low-yield method and explicitly restored Sol6.1 medium with Astra. [[status]] supersedes Luna-first policy, limits active matching to two workers, and prioritizes verified-byte payoff. MAIN worker freezes sndi variation sequence and performs a brief evidence-based family selection; former TACO worker resumes separate NAME_ENT/TACO ownership. No new Luna assignments or broad repeated sweeps. [[tickets/T-24500-completion-orchestration]] remains active toward100%.
+## [2026-10-20] decision | Stop text variants and preserve final source candidate
+
+[[tickets/T-24501-main-tail]] preserves unverified `sndi`150/265words, with183 control reconstructible by parity width. Target263; correct buffer/index/flag homes and semantics retained, integer-address idiom FAKE-marked. User directed stopping variants; no further compiles or production changes. Bounded read-only family assessment follows. See [[matching-notes]].
