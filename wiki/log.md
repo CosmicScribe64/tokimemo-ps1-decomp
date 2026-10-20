@@ -2070,3 +2070,8 @@ pass; no original ASM, binary, ucode or full context archived. In Progress.
 ## [2026-10-20] build | Eighteenth match integrated, 91.7 percent
 
 TACO func_8013A790 is pushed at735e50bd9 after root review,27 hashes, declaration guards and literal default-C1492-byte proof. Fresh Docker census6811/6952 functions,2086968/2276920 bytes,141 remaining. Resumed run18 functions/19964 bytes; [[status]] refreshed. Deeper GEKO source archiveb1e6b6601 and MASTER consultation packet036407cd5 preserve useful nonmatching evidence. [[tickets/T-24500-completion-orchestration]] tracks Astra's isolated MASTER copy-end consult and queued MAIN767A4 stack-only packet, while Sol lanes continue structural matching. No archive coverage credit or compiler modification.
+
+
+## [2026-10-20] decision | T-24502 font quad checkpoint
+
+Archived repaired SDK func_80139424 (cost513,404/419 words) with concise frame/range diagnostics and replay commands. Production stays asm; matched K&R callers keep their declaration. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the bounded reconstruction. Next func_80153B38 uses its recorded in-loop color decode as the baseline.
