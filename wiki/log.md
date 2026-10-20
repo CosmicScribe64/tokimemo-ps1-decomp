@@ -2159,3 +2159,11 @@ Parent final SDK declaration review passes; removed the extra blank line at the 
 ## [2026-10-20] decision | T-24502 projection donor packet frozen
 
 DEE4 semantic donor E778 plus recovered local order and canonical inner loop improves370-row prior draft to70cost, with original frame/major homes and saved-register allocation. Archived concise body/context/NOTES under drafts/T-24502/TACO; outer counter homes/zero web remain and one extra real instruction prevents a close guard. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the exact boundary and bounded negative probes for a later narrow consult. Production unchanged.
+
+## [2026-10-20] decision | T-24502 projection handoff and carousel lifetime probe
+
+Final DEE4 zero-initializer probe is negative: chain72, pair/comma/group70; packet frozen for the parent's independent frame/counter consult. Proceeding39FB8 without repeating old shared-sine/index grids: corrected byte-table access and negation give282, scratch implicit-int font view264, bounded sine lifetime extension252. Broad allocation gap remains; production unchanged. [[tickets/T-24502-taco-completion]].
+
+## [2026-10-20] decision | T-24502 full-unit scope correction and carousel packet
+
+Independent DEE4 consult finds additional post-projection allocation differences in full TU69 despite default guards; standalone70 claims qualified, three loop hypotheses negative.39FB8 fresh lifetime change lowers first-loop sine priority10 to3.5; full-TU baseline280 becomes216, shared preheader web198 with remaining broad register/scheduling differences. Source-only replay packet and concise bounded negatives saved, no production/header changes or new coverage credited. [[matching-notes]] and [[tickets/T-24502-taco-completion]].
