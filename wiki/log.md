@@ -2157,3 +2157,11 @@ Post-prototype/string 520-step two-job build passed; explicit hashes passed all2
 ## [2026-10-20] decision | Freeze CD dispatcher at isolated frame/order boundary
 
 [[tickets/T-24501-main-tail]] reconstructs MAIN `func_800455C4` from439 to26 resolved edit cost with691 instructions. Archived reproducible source-only body and focused frame/order packet; bounded status-bitfield, expression and local-layout alternatives did not improve26. No production/header changes or executable rebuild needed. Exact structural lessons in [[matching-notes]].
+
+## [2026-10-20] build | MAIN radial texture generator literal match
+
+[[tickets/T-24501-main-tail]] reconstructs `func_80046754` (884 bytes) using clean packed-word loops, byte fill color and halfword upload coordinates; literal default C link matches target. Parent review of actual source and canonical prototype has no findings. Full27/header/branch validation running at two jobs. Lessons in [[matching-notes]].
+
+## [2026-10-20] build | Radial texture post-header validation passes
+
+[[tickets/T-24501-main-tail]] final `func_80046754` source/header passed484-step two-job rebuild, explicit27/27 executable SHA1 hashes, headers/main_api and branch prototype guard (zero new,15 known). Parent review is clean; literal default884-byte proof passed on final source. Focused source/wiki pin ready.

@@ -615,3 +615,10 @@ Final choice-string verification: the post-prototype/string 520-step build at `-
 ### T-24501 CD dispatcher structural recovery (2026-10-20)
 
 `func_800455C4` (2,768 bytes) scratch reconstruction improved resolved cost439 to26 with all691 operations/registers present. The eight-byte queue header view recovers alias-dependent scheduling while canonical command-array addressing preserves relocation addends. Correct low24-bit end-address arithmetic, pointer SDK arguments, actual SDK wait return value, removal of two spurious m2c helper arguments, retry preincrement and branch-specific phase ordering account for the improvements. No production or shared-header change. Exact source-only replay and remaining nine stack-word substitutions/two order pairs are archived in `drafts/T-24501/main/func_800455C4.c` and companion notes. Bounded bit-field/expression/layout alternatives failed; freeze26 for focused CFE consult, not a frame grid.
+
+
+### T-24501 radial texture generator match (2026-10-20)
+
+`func_80046754` (884 bytes, `src/main/80046500.c`) now passes literal default linked C proof. Replaced inherited m2c duplicated/unrolled operations with natural loops over a packed 128x128 nibble texture. Clear each word column using an advancing `u32 *`; indexed clear arithmetic changes induction allocation. A byte-sized flat-fill color reduces180 resolved edits to19 (word-sized selector incorrectly promotes its input and shifts the entire flat branch). Explicit `u16` upload coordinates reduce19 to2. Initialize the row counter inside each mode branch: moving their common zero assignment before the `if` removes the flat branch's independently scheduled initialization and leaves one nop instead. Branch-local initialization closes tozero. No FAKE, dummy locals, inline asm or compiler changes. Exact canonical prototype added to `main_api.h`; parent notified and reviewed actual body/header with no findings. Literal proof884 bytes passes; final full27 checks running.
+
+Final radial verification:484-step post-header rebuild, explicit27/27 SHA1 hashes, headers/main_api and branch guard (zero new,15 known) pass. Parent review has no findings.

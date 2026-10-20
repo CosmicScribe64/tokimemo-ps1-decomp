@@ -77,3 +77,9 @@ Final fifth-match verification completed: post-header/string 520-step build at t
 ### CD dispatcher checkpoint
 
 Resumed structural repair of `func_800455C4`, reducing439 to26 across691 instructions. All remaining differences are nine stack offsets and two four-instruction reorderings. Source-only draft/replay and precise rejected hypotheses preserved; awaiting bounded compiler consult. Production unchanged; ticket remains In Progress. See [[matching-notes]].
+
+### Sixth literal match: radial texture generator
+
+`func_80046754` (884 bytes) clean packed-word loops pass literal default proof. Byte-sized color and halfword upload coordinates recover allocation; separate branch-local row initializers preserve the final repeated zero. Parent reviewed actual C89 source and canonical prototype with no findings; no FAKE/padding. Post-header full27 and guards running at two jobs. See [[matching-notes]].
+
+Final sixth-match checks pass: post-header484-step rebuild at two jobs, explicit27/27 SHA1 hashes, headers/main_api and branch guard (zero new,15 known). Parent code review has no findings; literal default884-byte proof already passed after final source/header edit. Focused pin ready; ticket remains In Progress.
