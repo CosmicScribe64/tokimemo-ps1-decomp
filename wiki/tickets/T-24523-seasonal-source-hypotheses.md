@@ -120,3 +120,19 @@ Removed only the structurally incorrect guard, retaining original INCLUDE_ASM in
 The single approved real rank_scores[3] ownership probe improves381 to336. It restores exact frame0x78 and candidate listsp+0x5C, with actual signed-halfword score homes atsp+0x54/0x56/0x58 (target0x50/0x52/0x54). Ranking index/base still use swapped saved registers and load/expression scheduling remains broad. Updated source-only archive to this better semantic foundation; no production/header edits, declaration grid or additional identity probe. Score-array change awaits parent review, no coverage.
 
 - Parent and self review of the336 score-array update found no blockers: real adjacent-halfword score ownership, no added padding or matching control, source-only with no default-match claim. Exact archived source is the measured336 body. The subsequent approved identity probe changed only the first operands of the first two assignment sums, preserving all comparisons/third assignment:371, frame0x80, score homes0x5C/0x5E/0x60. It retained comparison fields in registers and recomputed reversed sums rather than restoring four target loads. Discarded;336 remains best, no local layout grid or compiler-limit claim.
+
+### Read-only near-guard provenance audit
+
+At the coordinator's request, audited only the seven remaining near guards. No compiler run, broad sibling sweep or production edit. For each function, generated assembly code bytes within the exact immutable target_span bounds equal the target bytes; late-rodata words are excluded. Compared opening control/data operations and the complete call multiset, resolving get_h_tokimeki through config/symbol_addrs_obin.txt (0x80052648).
+
+| Target | Immutable VRAM span (inclusive) | Bytes | Opening/control and call provenance |
+| --- | --- | ---: | --- |
+| VALEN32D0C | 0x80132D0C..0x80133087 | 892 | Correct current/count equality exit, candidate selection, affinity mode and triple-table switch; all4 calls agree |
+| VALEN34030 | 0x80134030..0x801342E7 | 696 | Correct scene helper, flag-bit update and selector triple-table switch; both calls agree |
+| GYOZI39E4C | 0x80139E4C..0x8013A103 | 696 | Correct scene helper, flag-bit update and selector triple-table switch; both calls agree |
+| GYOZI3907C | 0x8013907C..0x801393C7 | 844 | Correct current/count equality exit, selected girl/status/affinity and triple-table switch; all5 calls agree |
+| GYOZI40E0C | 0x80140E0C..0x80140F8F | 388 | Correct special-girl/random test, player selection, threshold scan and stat updates; all4 calls agree |
+| GYOZI38C9C | 0x80138C9C..0x8013907B | 992 | Correct state clears, special-girl test, gather/print/rotate/print/reorder; all8 call sites agree |
+| SHOUGATU3E50C | 0x8013E50C..0x8013E6E3 | 472 | Correct local table copies, special-girl test and threshold/stat/helper sequence; all5 calls agree, but random field is wrong |
+
+SHOUGATU3E50C has a precise source error: original reads D_800E7378, GameState+0x10F8; guard reads unk_0F8, GameState+0xF8 =D_800E6378. Header offsets confirm the missing0x1000. Correct canonical field is unk_10F8. No source change made during this read-only audit. GYOZI40E0C and SHOUGATU3E50C share the established algorithm family, but the latter's two copied seven-halfword tables and extra helper make them388/472-byte related functions rather than opcode-identical twins. No fresh matched sibling identified, no further pair ranking or invented matching hypothesis.

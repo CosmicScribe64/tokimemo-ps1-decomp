@@ -2234,3 +2234,7 @@ Under [[tickets/T-24523-seasonal-source-hypotheses]], replaced only three scalar
 ## [2026-10-20] decision | Preserve score-array foundation after identity negative
 
 Parent and self review found no blockers in the336 source-only score array checkpoint for [[tickets/T-24523-seasonal-source-hypotheses]]. One approved identity probe on only the first two assignment sums worsens336 to371 and frame0x78 to0x80; it retains operand loads and recomputes sums rather than restoring the target reloads. Discarded. Best archive remains336, production fallback unchanged, no coverage or compiler-limit claim.
+
+## [2026-10-20] query | Audit seven near seasonal guards against immutable originals
+
+[[tickets/T-24523-seasonal-source-hypotheses]] records exact target bounds, byte-equal generated-code provenance, opening control flow and complete call sets for seven near guards. Six agree at the checked opening-control and call-set level. SHOUGATU3E50C belongs to the correct function but reads GameState+0xF8 instead of original+0x10F8 in its random-bit test; no edit or compiler run. No fresh automatic sibling or broad sweep, no coverage. Audit distinguishes this field error from the previously removed wholly wrong VALEN bodies.
