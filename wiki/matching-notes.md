@@ -797,3 +797,10 @@ After T-24515/lane histories, tested only the fresh input-read hypothesis for38C
 ## T-24525: NAME_ENT indexed post-test negative
 
 398EC's direct-global indexed for loop and fresh direct-global indexed post-test do/while both give126 words/173 rows against123 target in full TU; decoded comparisons identical. Earlier post-test controls used pointer aliasing, so this combination was tested once after lane history review. It does not change the allocation/arithmetic gap; no further loop grid or production/header edit. Concise replay/private paths in [[tickets/T-24525-name-ent-indexed-posttest]].
+
+
+## T-24501 quadrant renderer and CD consult checkpoint (2026-10-20)
+
+`func_80046AC8` (2,684 bytes) remains ASM. Typed primitive fields838 from raw1048; semantic locals/GameState view810; keeping texture page row bit unscaled and scaling at use restores target saved-register ranks and gives738. Explicit updates/shift spelling do not improve; comma-grouped UV stores and scoped case locals fail their specific tail/frame hypotheses. Broad frame/order and inherited channel/extent narrowings remain; no narrow compiler consult justified. Source-only draft and exact replay/width cautions archived under `drafts/T-24501/main/func_80046AC8*`. Stop this probe phase rather than repeat type/frame grids.
+
+Parent CD26 consult also negative: relative spacing repair grows frame by8 (66); address/counter reuse changes codegen (223); grouped flags/status assignment leaves26. Preserve baseline26 and its packet; no compiler changes.

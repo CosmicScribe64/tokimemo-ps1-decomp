@@ -2254,3 +2254,6 @@ User requested slower usage consumption and permitted Luna high for simple tasks
 ## [2026-10-20] decision | Apply the user's model escalation ladder
 
 New assignments start with Luna high, then escalate to Sol6.1 medium and Astra only as needed. [[status]] records the refined policy and two-worker limit. Current MAIN/NAME_ENT Sol contexts continue without an expensive restart; GEKO/OPTION has stopped after its preserved checkpoint. Other coordinators are finalizing their stop checkpoints.
+## [2026-10-20] decision | Preserve renderer recovery and bounded CD negatives
+
+[[tickets/T-24501-main-tail]] archives `func_80046AC8` typed semantic draft at738 (raw1048); source-expression lifetime restores target saved-register ranks, but frame/order/narrowing remain broad. Grouped UV/scoped-local hypotheses fail; no compiler escalation justified. Parent CD consult confirms baseline26 preferred over relative-frame repair, local reuse and grouped stores. Production unchanged; exact replay/cautions in [[matching-notes]].
