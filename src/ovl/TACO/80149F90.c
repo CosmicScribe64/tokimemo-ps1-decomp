@@ -1315,9 +1315,7 @@ void func_8014F5F0(void) {
     D_800E6280.unk_1104.u += 1;
 }
 
-/* NON_MATCHING: T-24136 (from T-24120), 7 rows: s32 return view keeps andi $v0,$t9,0xFF alive (v0 live at exit; the void form folds it away, leaving $t9 in the sb's). Remaining: raw sub lands in $v0 instead of $t9, masked andi in $v1 instead of $v0, plus the return move $v0,$v1. Temp-split and (u8)-cast forms both lose the andi; autotweak 328 edits no better. T-24136 sweep: 2-masked+1-raw tree (037=036=masked, 038=raw) drops the andi entirely; raw/masked s32 locals with return-masked grows the frame to 0x40; both worse, fallback kept. */
-/* FAKE: s32 return view preserves the original epilogue allocation; callers ignore the result. T-24136 */
-#ifdef NON_MATCHING
+/* FAKE: s32 return view keeps v0 live at the exit, so uopt keeps the masked chain value (andi $v0,$t9,0xFF); callers ignore the result. T-24136 */
 s32 func_8014F820(void) {
     s32 i;
 
@@ -1330,8 +1328,8 @@ s32 func_8014F820(void) {
         D_80127480[i + 1].unk1C += D_8015EDB4[i + 27].unk78;
     }
     if (D_800E6280.unk_036 != 0) {
-        D_800E6280.unk_037 = (D_800E6280.unk_038 - 1) & 0xFF;
-        D_800E6280.unk_036 = D_800E6280.unk_038 = (D_800E6280.unk_038 - 1) & 0xFF;
+        /* FAKE: element chain over the selector bytes stores 037, 036, then the raw decrement to 038 in $t9 (T-24213). */
+        (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_036)[1] = --(&D_800E6280.unk_036)[2];
     }
     if (D_800E6280.unk_1104.u < 0x191U) {
         func_80147E80(0x11);
@@ -1343,9 +1341,6 @@ s32 func_8014F820(void) {
     }
     D_800E6280.unk_1104.u += 1;
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014F820);
-#endif
 
 void func_8014F9B0(void) {
     if ((func_80147B24(0xB, D_8015FEAC) != D_8015EDB4[20].unk2) != 0) { /* FAKE: the redundant != 0 burns the $t7 temporary the original skips (permuter); real source unknown. T-9320 */
