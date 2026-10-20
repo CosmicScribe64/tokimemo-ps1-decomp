@@ -20846,3 +20846,6 @@ Ran the project image in a claude.ai cloud container: `dockerd` started by hand,
 
 [[tickets/T-24200-cloud-packet-taco-8013b460]]: 41 rows -> 4 differing lines (2 rows), guarded `NON_MATCHING` in `src/ovl/TACO/8013B170.c` (setUV4-shaped comma statement, `gray` local dropped); left is the `sh y3` slot. Notes in [[matching-notes]] (T-24200). Local linked proof and review still due.
 
+## [2026-10-20] query | T-24200 second pass on the y3 store
+
+Five more variants (y3 temporary with every UV store order) of `func_8013B460`: none beats the guarded 4 lines. Notes in [[matching-notes]] (T-24200). The other ~170 `INCLUDE_ASM` functions need their own packets: this cloud session holds the original asm of `src/ovl/TACO/8013B170.c` only.
