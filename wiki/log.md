@@ -2111,3 +2111,22 @@ Created [[tickets/T-24501-main-tail]] In Progress on an isolated worktree from `
 ## [2026-10-20] build | T-24501 all 27 checksums verified
 
 Fresh Docker `ninja -j 6` exited zero and reported all 27 executable checksum checks OK for the literal `func_800654D0` C change. Header and prototype checks pass. Parent source review against CODING_STANDARDS.md has no outstanding finding; [[tickets/T-24501-main-tail]] remains In Progress for further MAIN work.
+## [2026-10-20] ticket | T-24503 GEKO and OPTION completion
+
+Created [[tickets/T-24503-geko-option-completion]] in progress after scope changed from ETC before source edits. Start from GEKO func_80133024 and func_80134808 guards; preserve a contributor handoff. Read [[playbook]] and the T-24302 history in [[matching-notes]].
+
+## [2026-10-20] query | T-24503 GEKO close-guard measurements
+
+Docker viewsweep found no prototype improvement in GEKO func_80133024, func_80134808 or func_80132B24. Focused full-unit C tests reduce func_80133024 from five differing rows to two and func_80134808 from cost30 to14. Details and measured allocator tie in [[tickets/T-24503-geko-option-completion]]; scratch under ignored build/t24503-*.
+
+## [2026-10-20] build | T-24503 match GEKO func_80134808
+
+Promoted src/ovl/GEKO/80134040.c to default C: Docker funcdiff proves 432 linked bytes equal target. Recorded the loop-tail, equality, selector-view and narrowing controls in [[matching-notes]] and [[tickets/T-24503-geko-option-completion]]. No shared-header change.
+
+## [2026-10-20] build | T-24503 full verification
+
+Docker ninja passes, and all 27 built binaries match pinned SHA1s. Headers, global migration and branch-prototype checks pass (zero new disagreements, 15 known). Parent review found no blocking standards or scope findings on GEKO func_80134808 and func_80133308. [[tickets/T-24503-geko-option-completion]] remains in progress.
+
+## [2026-10-20] build | T-24503 match GEKO func_80133308
+
+Promoted src/ovl/GEKO/801323E0.c to default C: Docker funcdiff proves 656 linked bytes equal target. Shared quotient, remainder evaluation order and documented FAKE range/schedule/view controls close the draft. Full 27-binary and header/global/prototype checks pass; parent review found no blockers. The unresolved func_80133024 experiment is excluded from this commit and retained in scratch. See [[matching-notes]] and [[tickets/T-24503-geko-option-completion]].
