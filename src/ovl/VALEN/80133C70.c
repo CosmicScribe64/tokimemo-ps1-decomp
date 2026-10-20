@@ -79,8 +79,11 @@ void func_80133FD0(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-24211, 6 rows (instruction diff lines, one instruction short); as1 hoists the first two lui of the default block into the selector load delay and the range-check slot because the default block has one predecessor; the original keeps the nop and fills the slot with the dispatch sll. case 10: before default: gives the original schedule but the bound 11. */
+/* FAKE: matches only because this object is built with -Wb,-noxbb (config/toolchains.txt): as1's
+ * cross-block scheduler would hoist the first two lui of the one-predecessor default block into the selector
+ * load delay and the range-check slot, where the original keeps the nop and fills the slot with the dispatch
+ * sll. -noxbb changes no other function of this file; the real cause (a per-function as1 heuristic) is
+ * unknown. T-24800, wiki/as1-scheduling.md. */
 void func_80134030(void) {
     func_80133C70();
     /* two statements: the single expression (x & 0xFFF7) | 4 takes $t6/$t7/$t8 where the original has $v0, $t7, $t9 */
@@ -147,9 +150,6 @@ void func_80134030(void) {
     D_8013449C = 0;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80133C70", func_80134030);
-#endif
 
 void func_801342E8(void) {
     func_80042908(D_800E6280.unk_721);

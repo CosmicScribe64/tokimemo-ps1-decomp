@@ -211,5 +211,18 @@ class SjisLiteralTest(unittest.TestCase):
         self.assertEqual(cc.sjis_literals('"表"'), '"\\225\\134"')
 
 
+class ToolchainOfTest(unittest.TestCase):
+    def test_line_or_default(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "toolchains.txt")
+            with open(p, "w") as f:
+                f.write("# comment\nVALEN/80133C70 ido 5.3 -Wb,-noxbb  # T-24800\nTT/8014D260 gcc 2.7.2-psx 2.56\n")
+            self.assertEqual(cc.toolchain_of("VALEN/80133C70", p), ["ido", "5.3", "-Wb,-noxbb"])
+            self.assertEqual(cc.toolchain_of("TT/8014D260", p), ["gcc", "2.7.2-psx", "2.56"])
+            self.assertEqual(cc.toolchain_of("main/80041000", p), ["ido", "5.3"])
+            self.assertEqual(cc.toolchain_of_source("src/ovl/VALEN/80133C70.c", p), ["ido", "5.3", "-Wb,-noxbb"])
+            self.assertEqual(cc.toolchain_of_source("src/main/80041000.c", p), ["ido", "5.3"])
+
+
 if __name__ == "__main__":
     unittest.main()
