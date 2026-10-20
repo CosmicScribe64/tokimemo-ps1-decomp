@@ -2097,3 +2097,23 @@ Docker scan of current source INCLUDE_ASM entries and generated size headers ide
 ## [2026-10-20] build | ENDING baseline and targeted frame repair
 
 [[tickets/T-24510-parallel-overlay-coordination]] records ENDING unit baseline checksum pass at `23e1a20fb`. Worker avoids documented large scheduler barriers and tests the concrete declaration/frame mismatch in `func_801330E4`; no match yet, all-27 verification remains a promotion gate.
+
+## [2026-10-20] decision | Preserve bounded negatives and move across lane targets
+
+[[tickets/T-24510-parallel-overlay-coordination]] records TEL all27 baseline and concrete missing-condition audit, ENDING exact frame recovery with84 alignedcost remaining before moving to typed scene siblings, ETC stopped ranking pointer negative and repaired stale six-element buffer draft (476cost, not promoted). No match claimed. Worker tickets preserve detailed source/evidence.
+
+## [2026-10-20] build | Close bounded overlay experiments without coverage claims
+
+[[tickets/T-24510-parallel-overlay-coordination]]: TEL packed-word lifetime reduces instruction surplus but remains nonmatching; ENDING frame reconstruction and typed scene probes do not close; ETC FFAC recovers real six-entry buffer and original frame but not instruction shape. Workers preserve faithful source and exact replay, production unchanged. No lane function promoted; final checks/review and pins pending.
+
+## [2026-10-20] query | Pin ENDING negative research checkpoint
+
+[[tickets/T-24510-parallel-overlay-coordination]] records ENDING pin `3a7bd5984`, zero verified C bytes, production unchanged, all27 baseline checksums and header/global/prototype guards passed. Coordinator inspected scoped diff and evidence. Ticket remains In Review; replay sources in `drafts/T-24512/`. Parent reports five separate matches and91.0%; no lane coverage claim.
+
+## [2026-10-20] decision | Pin TEL closure and redirect ENDING worker to MASTER
+
+[[tickets/T-24510-parallel-overlay-coordination]]: TEL evidence `b24b039f4`, closure `5544f3e03`, zero matched bytes with all27 hashes/guards passed. ENDING follow-ups `658efedab`/`71896dd66` resolve duplicate context and distinguish retained-body504 from earlier variant890; ticket stays In Review for root acceptance. Parent grants MASTER ownership; new T-24514 isolated tree starts at `dba33c4f5`. Shared header edits avoided.
+
+## [2026-10-20] query | Pin ETC bounded reconstruction checkpoint
+
+[[tickets/T-24510-parallel-overlay-coordination]] records ETC `057eeb442`, zero new C bytes, production diff empty, all27 built hashes and interface guards passed. Eight source-only replay controls preserve exact negatives; archive contains no full-context copies or ASM dumps. Ticket In Review; MASTER remains active under expanded parent authorization.
