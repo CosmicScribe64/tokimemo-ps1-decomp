@@ -2146,3 +2146,7 @@ func_8014FFDC now matches 2,292 linked bytes in default C. Shared loop locals, e
 ## [2026-10-20] ticket | Start isolated TAIIKU RPG_BAT and seasonal lanes
 
 [[tickets/T-24520-parallel-tail-coordination]] coordinates three user-authorized Sol 6.1 medium workers from dba33c4f5: TAIIKU T-24521, RPG_BAT T-24522, GYOZI/VALEN/SHOUGATU T-24523. Each owns an isolated /private/tmp worktree with Docker-only tools and one compiler job. Existing twin-sweep and scheduler negatives are carried forward to avoid repeated grids. [[status]] records lane ownership; parent chat retains serialized integration. No new verified coverage claimed.
+
+## [2026-10-20] lint | Verify T-24520 coordination wiki consistency
+
+Docker tools/wiki.py lint reports zero broken links and zero ticket/kanban mismatches; the existing data/t0018-cases size warning remains. Coordinator read the indexed T-24301/T-24303 and T-24029 negative evidence. GYOZI func_80140E0C's five-row blocker is constant-zero range and frame placement; RPG_BAT func_8014BB80's 22-row checkpoint uses a volatile read to block promotion but adds an address calculation. Workers received bounded byte-view/alias hypotheses based on existing [[playbook]] recipes. No source change or new coverage claimed.
