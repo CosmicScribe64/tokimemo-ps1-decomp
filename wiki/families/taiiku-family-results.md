@@ -179,3 +179,5 @@ Final Docker validation after adding the updater guard: ninja -j1 rebuilt the ob
 ### T-24521 loader completion (2026-10-20)
 
 `func_80134060` is now literal C, 1,348 verified linked bytes. Three existing `TaiShorts12` tables and lookup-first handle loops recover the original structure. An upper frame word and an unsigned view of the first texture-page store are documented FAKEs; the view prevents the repeated constant taking `$v1` and aligns the whole ugen ring. Private TAIIKU checksum passes. Details: [[matching-notes#T-24521: TAIIKU loader func_80134060]], [[tickets/T-24521-taiiku]]. Ten TAIIKU functions remain in this lane.
+
+T-24521 also matches `func_80134F98` (1,256 bytes): eleven-word aggregate copy, four-actor loops and twelve-character award loops; a direct table expression avoids a redundant promoted result range. The upper unused scalar is documented FAKE. Cumulative lane result: two functions, 2,604 bytes, nine remaining. See [[matching-notes#T-24521: TAIIKU results func_80134F98]].

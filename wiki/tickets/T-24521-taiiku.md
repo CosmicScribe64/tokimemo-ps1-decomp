@@ -35,3 +35,11 @@ Baseline dba33c4f5. Docker tools only, worker compilers -j1. Prior T-11640/T-165
 - 27/27 binary SHA1 checks: private TAIIKU output and 26 unchanged root outputs mounted read-only at `/baseline-build`; root independently verifies integration. No claim that this lane rebuilt those other 26 outputs.
 - `check_headers.py`: OK. `sync_protos.py --check-branch`: OK, 0 new disagreements, 12 known. Initial `migrate_globals.py --check` required DATE/TACO original assembly not generated in this focused tree; generated only their split stamps and reran the guard.
 - 2026-10-20: Standards self-review: C89, fixed-width types, existing aligned aggregates, canonical declarations, FAKE reasons, no raw data or generated assembly edits; no findings. Parent independently inspected the final source and found no blocking standards issue; private whole-overlay SHA1 confirms new void declarations preserve all callers. Lane remains In Progress for the other ten functions.
+
+### Verified match: func_80134F98 (1,256 bytes)
+
+- Literal default C, existing aggregates and natural index loops. Corrected D_801494C4 to `TaiWords11` from the original 44-byte copy. Added canonical void declarations for func_80138800/func_80138950.
+- One FAKE upper unused scalar positions the counter spill; direct table expression avoids a redundant promoted range.
+- Docker private `ninja -j1 build/ovl/TAIIKU.ok`: SHA1 `306d1013b9be465819525d1fb4dc0e86b422a846` OK. `funcdiff.py --resolve --version default TAIIKU:func_80134F98`: MATCH, privately linked 1,256 bytes equal target. Private TAIIKU plus 26 unchanged read-only root binary outputs: 27/27 hashes OK.
+- Header guard OK, globals guard OK, branch prototype guard OK (0 new, 12 known). Standards self-review and independent parent final source review: no blocking finding. Header changes preserve all callers according to the private whole-overlay checksum.
+- Lane cumulative: two functions, 2,604 matching bytes; nine remaining TAIIKU functions. No source-only draft earns coverage.

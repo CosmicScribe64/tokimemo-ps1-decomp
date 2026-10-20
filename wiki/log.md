@@ -2158,3 +2158,11 @@ Reconstructed `func_80134060` from the archived T-15700 draft with three `TaiSho
 ## [2026-10-20] build | T-24521 TAIIKU func_80134060 matched
 
 Matched 1,348 literal default-C bytes in `src/ovl/TAIIKU/80133C80.c`. The unsigned first handle store resolves the constant allocation and subsequent ring; both it and the upper frame scalar are documented FAKEs. Private TAIIKU SHA1 and default linked function proof pass; 27/27 hashes combine that private output with 26 unchanged root outputs read-only. Header and branch prototype guards pass; global guard rerun after generating DATE/TACO original proof assembly. Parent source review has no blocking finding. Details in [[tickets/T-24521-taiiku]] and [[matching-notes]].
+
+## [2026-10-20] build | T-24521 second typed state-machine draft
+
+Reconstructed `func_80134F98` using actor fields and normal 4-runner and 12-character loops. Its table is eleven words (the original copies 0x2C bytes), correcting the stale ten-word declaration. First typed pass compiles with equal instruction count; the remaining rows include one loop-counter spill home and table loads. No additional coverage claimed.
+
+## [2026-10-20] build | T-24521 TAIIKU func_80134F98 matched
+
+Matched another 1,256 literal default-C bytes. A direct table expression and the counter declaration order close the typed draft. Private TAIIKU SHA1, default linked function proof, 27-output hash manifest and all declaration guards pass. Standards self-review and independent parent source review found no blockers. Lane total: 2,604 bytes across two functions; nine remain. Details in [[tickets/T-24521-taiiku]] and [[matching-notes]].
