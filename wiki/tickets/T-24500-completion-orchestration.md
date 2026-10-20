@@ -52,3 +52,11 @@ Follow-up: pending archives above are now published, MAIN `b44f1e302` at `e5d03a
 MAIN76000 is now accepted and pushed as `8253c1d73`, after the shared type moved to game.h, full affected rebuild, 27 hashes, source/declaration guards and literal default-C proof. Fresh census: 6,810/6,952 functions, 2,085,476/2,276,920 bytes (91.6%), 142 remaining; 17 new matches / 18,472 bytes this run.
 
 TACO archive review removed a 330-line raw comparison dump. Published clean commit `7bac2d12b` (parent36aec67d9, final corrected source tree) at `3c8582d6a`, excluding the raw-dump commit from main ancestry. Source bodies, minimal context and replay instructions remain. Astra4AB50 finds chaining the two flag stores removes the only constant reuse saving and worsens 469 to471 instructions; no fix, exact seven-word guard unchanged. Evidence in `/private/tmp/tokimemo-ab50-consult/RESULT.md`; Astra idle again. Sol workers remain active on MAIN767A4, TACO3A790, GEKO35DC0 and the two coordinators' owned targets.
+
+## Eighteenth match and isolated consultations
+
+TACO3A790 passed root review, 27 hashes, literal default-C1492-byte proof and declaration guards; pushed `735e50bd9`. Docker census6811/6952 functions,2086968/2276920 bytes (91.7%),141 remaining. Run total18 matches/19964 bytes. TACO continued on clean branch ancestry excluding the removed dump.
+
+GEKO deeper35DC0 source archive2e8027498 is mainb1e6b6601; cost336 remains nonmatching. Worker moved to42C9C after isolating the date-reread region without a new source lead. MASTER source-only packet79c2f270a is main036407cd5: exact structural diagnostic652 positions with167 register substitutions, first copy-end source+3 versus targetsource+2. Stock/traced and sentinel controls agree; Astra is consulting privately. MAIN767A4 has233 instructions/registers matching but unresolved local homes: clean32-ID source needs4B gap before the array, not an unused tail. A narrow source/map/replay packet is queued for the next consultation; no additional blind frame grids.
+
+Docker log rotation preserved all historical entry contents and duplicate counts exactly, moving111 older entries to log/2026-W42. Lint has0 broken links/0 status mismatches and only the pre-existing oversized data page. Latest GitHub check again found no open PR and unchanged issue65; no contributor messages.
