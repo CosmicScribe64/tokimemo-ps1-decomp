@@ -2137,3 +2137,7 @@ Continued func_80135DC0 using current-pass instruction regions. Fixed invented h
 ## [2026-10-20] decision | T-24503 reconstruct GEKO eligibility loops
 
 [[tickets/T-24503-geko-option-completion]]: func_80142C9C draft improves from 450 to 135 after narrowing, packed-word, store-order and documented allocator repairs. Frame is 0x558, with 914 target and 913 candidate resolved instructions. Remaining load-base, register and operand differences are recorded in drafts/T-24503/README.md. Checked the sibling scene initializer's strcpy view; it leaves these instructions unchanged. Production remains ASM and coverage is unchanged.
+
+## [2026-10-20] decision | T-24503 recover the GEKO birthday-check frame
+
+[[tickets/T-24503-geko-option-completion]]: func_80132B24 now has a separate cost 73 source candidate with frame 0x50 and exact table offsets, using the packed record field directly and retaining the real day home. The cost 61 production guard still has frame 0x58. Further return-coalescing and register differences remain. Bounded sibling/type/control-flow tests did not close it; archived source and replay preserve the structural repair without a match claim.
