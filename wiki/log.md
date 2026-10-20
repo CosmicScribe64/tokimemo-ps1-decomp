@@ -2210,3 +2210,7 @@ Docker wiki lint: zero broken links, zero ticket/kanban mismatches; existing ove
 ## [2026-10-20] ticket | Resume structural reconstruction after six integrations
 
 Originating chat confirms all six original lane matches integrated (RPG_BAT447E0ca691c60a, TAIIKUc768eda88, seasonal6beeb32de plus prior4BB80) and requests continued active structural/new-donor work. [[tickets/T-24520-parallel-tail-coordination]] moves back In Progress with board synchronized. Three existing workers reopened for distinct fresh source reconstructions, retaining prior donor/scheduler negatives and requiring concrete hypotheses before j1Docker compiles. No new coverage claimed; all earlier pins preserved.
+
+## [2026-10-20] decision | Three concrete structural hypotheses selected
+
+TAIIKU3E894: recover two four-word coordinate arrays and natural rotate/translate/scale/clipping walks instead of malformed scalar pointer increments. RPG_BAT54DD8: existing RpgRec18 D_8015EC58 owns denominatorEC68 as unk_10 (matched801321D0 corroborates), so use canonical endpoint/duration aggregate and shared quotient local rather than stale scalar declaration and fake homes. VALEN33088: explicit forward dispatch labels and actual byte globalmode to recover original block layout/conversion lifetimes beyond T-19016 switch/if negatives. Workers read indexed prior histories and limit probes to these causal source forms, j1Docker. No new coverage or compiler-limit claim. See [[tickets/T-24520-parallel-tail-coordination]].
