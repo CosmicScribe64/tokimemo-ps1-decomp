@@ -99,3 +99,5 @@ Inverse `func_80054FC0` source-only typed reconstruction frozen at 113/200 words
 Circular GPU grid `func_8004A414` source recovery 390->164, exact 256-word count/frame 98/x-y homes. Natural bounds/distances and typed primitive retained in source-only packet; remaining CSE spill block/register ownership requires bounded consultation. Production/header unchanged. Inverse54FC0 consult negative 113/200; no further probes. See [[matching-notes]].
 
 Astra grid source improves164->132/256 with exact frame/all homes; adopted unchanged and independently replayed. One focused trace has identical ordinary output and identifies pre-colouring priority order; no source experiment justified yet. See packet provenance/rank table.
+
+TILE sibling `func_8004A814` source-only300->114, exact257-word count/frameB8/x and RGB homes; all saved-register roles match. Uniform+4 CSE/depth homes and ugen/scheduling remain; packet/replay archived for bounded consultation. Target dimension quirk, six abs calls and signed/clamped colors preserved. No production/header changes. See [[matching-notes]].
