@@ -2499,3 +2499,11 @@ All five actual full-TU C bodies in drafts/T-24516 reproduce their recorded word
 ## [2026-10-20] build | T-24502 Gouraud quad renderer matched
 
 func_80144E3C matches all1,888 linked target bytes in default C. Correct u8 arg4 and SDK POLY_G4 pointers replace the stale draft. Parent review found no blockers; all27 binary hashes and source/prototype guards pass. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record frame/layout and bounded expression recovery. Campaign total5 matches7644 bytes.
+
+## [2026-10-20] build | Sixteen verified matches pushed, 91.5 percent
+
+[[tickets/T-24500-completion-orchestration]] records source head3741db7e2 and fresh Docker progress:6809/6952 functions,2084280/2276920 bytes,143 remaining. Eight additional matches since the prior root checkpoint bring this run to16 functions/17276 bytes. Each passed root source review, literal default-C proof,27 hashes and declaration guards. [[status]] refreshed. Reviewed archive integrations127bba16c/37a9e5296 preserve source-only drafts without coverage credit. All independent appended wiki histories retained; stale coordinator stopped-status corrected.
+
+## [2026-10-20] query | Small-copy control and continued structural matching
+
+Bounded Astra synthetic control shows an8-byte temporary-ring effect but no change to the tested32-byte copy. Actual strCallback control produces identical default/skip-small objects and remains75 differing instruction positions, rejecting the proposed cause for that draft. No production compiler change. [[tickets/T-24500-completion-orchestration]] records evidence paths and pending archives. Sol lanes continue source reconstruction and fresh donor checks. GitHub read-only check finds no open PR or changed issue65; no contributor messages sent.

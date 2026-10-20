@@ -36,3 +36,13 @@ At 6,798 matched / 154 unmatched, Docker `tools/twin_sweep.py` finds zero exact,
 Unmatched clusters: GYOZI func_801368B8 / SHOUGATU func_801350F8 (0.920, 4,564 bytes), GYOZI func_8013907C / VALEN func_80132D0C (0.926, 1,736 bytes), and GYOZI func_80139E4C / VALEN func_80134030 (opcode ratio1.0,1,392 bytes). Seasonal pair negative history T-24029 must be read before new probes. Full scan JSON stays ignored at build/t24500-siblings.json.
 
 User requested fastest completion and explicit twins/easy-match work. New chat 01a15a31-d97a-7802-804e-bdb52f0dcf1a coordinates T-24520: TAIIKU T-24521, RPG_BAT T-24522, and GYOZI/VALEN/SHOUGATU T-24523. Up to three Sol6.1 medium workers, j1 to limit contention with the existing six. All assignments are file-disjoint; root alone integrates main. Today remains the user's target, not a verified completion forecast.
+
+## Sixteen matches integrated
+
+Source head `3741db7e2` is pushed to main. Fresh Docker census: 6,809/6,952 functions, 2,084,280/2,276,920 bytes, 91.5%; 143 functions remain. This resumed run added 16 functions and 17,276 bytes. Per-function list is in [[status]]. Every source integration passed 27 independently recomputed hashes, literal default-C proof and declaration guards; root reviewed actual source/header/config changes.
+
+Reviewed TEL/ENDING/ETC and MASTER/NAME_ENT/family source archives are on main at `127bba16c` and `37a9e5296`. They earn no coverage. T-24510 restarted deeper MASTER/ETC reconstruction with two Sol workers; root MAIN/TACO/GEKO workers and T-24520 lanes continue. Pending diagnostic archives include GEKO `9de2cd7cd` and MAIN `b44f1e302`; preserve newer follow-ups before consolidating. New matched donors warrant focused sibling checks, including GYOZI 412A4 against newly matched 40F90.
+
+Astra bounded small-copy control: the sentinel changes an 8-byte synthetic copy's temporary ring but not the tested 32-byte copy. Actual current strCallback archived source gives identical objects with/without small-copy sentinel, still 75 differing instruction positions out of 160. This rejects that proposed explanation for this draft. Evidence stays in `/private/tmp/tokimemo-small-copy-control/RESULT.md` and `/private/tmp/tokimemo-strcallback-control/RESULT.md`; raw objects/ucode must not be committed. No compiler change adopted. Astra idle until a fresh specific blocker warrants it.
+
+Latest read-only GitHub check: no open PR, issue65 unchanged at 2026-10-20T14:31:11Z. No contributor messages sent. Disk check reports 47GiB available; no cleanup needed during this wave.
