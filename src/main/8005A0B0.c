@@ -2103,7 +2103,61 @@ void func_8005F6E4(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005F730);
+/* s32 with no return, like the sibling menus (func_8005FDEC). */
+s32 func_8005F730(void) {
+    s32 pad[2]; /* FAKE: T-24301, the frame has 8 more bytes above the arrays (as func_8005F26C) */
+    s32 i;
+    s16 x[5];
+    s16 y[5];
+    s16 w[5];
+    s16 h[5];
+
+    func_8004E58C();
+    func_8006612C("カーソル速度");
+    func_8005DEA0(4);
+    for (i = 0; i < 5; i++) {
+        x[i] = -4;
+        y[i] = -0x40 + i * 0x10;
+        w[i] = 0x6C;
+        h[i] = 0x10;
+    }
+    if (D_800E7D2C >= 9 || D_800E6280.unk_53C[8] >= 2) {
+        set_kanji_string(x[0], y[0], 3U, "超遅い", 0);
+        set_kanji_string(x[1], y[1], 3U, "遅い", 0);
+        set_kanji_string(x[2], y[2], 3U, "普通", 0);
+        set_kanji_string(x[3], y[3], 3U, "速い", 0);
+        set_kanji_string(x[4], y[4], 3U, "超速い", 0);
+    } else {
+        set_kanji_string(x[0], y[0], 3U, "遅い", 0);
+        set_kanji_string(x[1], y[1], 3U, "少し遅い", 0);
+        set_kanji_string(x[2], y[2], 3U, "普通", 0);
+        set_kanji_string(x[3], y[3], 3U, "少し速い", 0);
+        set_kanji_string(x[4], y[4], 3U, "速い", 0);
+    }
+    k_sub_reset_point_set();
+    set_kanji_string(-0x80, 0x32, 0U, "カーソルの移動速度を設定します", 0);
+    menu_set(1, 5, x, y, w, h);
+    switch (D_800E6280.unk_F6F) {
+    default:
+    case 1:
+        D_800E6280.unk_1094 = 0;
+        break;
+    case 2:
+        D_800E6280.unk_1094 = 1;
+        break;
+    case 3:
+        D_800E6280.unk_1094 = 2;
+        break;
+    case 4:
+        D_800E6280.unk_1094 = 3;
+        break;
+    case 6:
+        D_800E6280.unk_1094 = 4;
+        break;
+    }
+    k_sub_disp_start(0);
+    func_8004284C();
+}
 
 void func_8005FA20(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);
