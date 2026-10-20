@@ -20904,3 +20904,7 @@ Cloud packet results merged. T-24206: main `func_800590CC` (268 bytes) matches, 
 ## [2026-10-20] ticket | T-24205 cloud packet TACO func_801511C0
 
 [[tickets/T-24205-cloud-packet-taco-801511c0]] created and worked in a cloud session ([[cloud-matching]]): asm fallback proven equal in a single-function scratch compile; the guarded draft improves from 4 to 2 diff lines (inits on one source line, FAKE), no match: only the `sw a1,0x3C(sp)` store-back is late. Guard comment in src/ovl/TACO/80149F90.c updated to T-24205; note in [[matching-notes]]. Ticket In Review; the local linked build has to prove the default build unchanged.
+
+## [2026-10-20] ticket | T-24205, T-24208 Done
+
+Cloud packet results merged. T-24208: MASTER `func_80132444` (624 bytes) matches (linked proof here). T-24205: TACO `func_801511C0` stays guarded (one late argument home store).

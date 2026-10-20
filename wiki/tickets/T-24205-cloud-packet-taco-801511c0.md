@@ -1,7 +1,7 @@
 ---
 id: T-24205
 title: "Cloud packet: TACO func_801511C0"
-status: In Review
+status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
@@ -25,3 +25,5 @@ Match TACO `func_801511C0` (164 B, `src/ovl/TACO/80149F90.c`) in a cloud session
 - Result: no match. The guarded draft goes from 4 to 2 unified-diff lines (one instruction, the `sw a1,0x3C(sp)` store-back, is displaced; positions 9-13 still differ, so funcdiff still counts 5 rows). The change: the inits and the empty test on one source line (FAKE, as1 line scheduling). About 150 variants; details and rejected forms in [[matching-notes]] (T-24205).
 
 ## Comments
+
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): cloud branch changed only its C file and wiki, no asm or game data; merged with a clean 27/27 build and header/global/prototype checks. No match; guard note updated (one late home store). Done.

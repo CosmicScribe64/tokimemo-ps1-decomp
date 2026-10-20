@@ -1,7 +1,7 @@
 ---
 id: T-24208
 title: "Cloud packet: MASTER func_80132444"
-status: In Review
+status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
@@ -24,3 +24,5 @@ Match MASTER `func_80132444` (624 B, `src/ovl/MASTER/80132140.c`) from a cloud m
 Match: in case 4, `*(u8 *)&D_800E7D50 |= 1; |= 2; |= 1;` written before the three copies. uopt promotes the byte to `$v1` and folds the ORs into one `ori 3`; the six ugen temporaries of the three ORs put the copies in `$t1..$t3` and the OR chain in `$t8`/`$t0`. One or two ORs, or the ORs after the copies, stay at 20 rows. Marked FAKE (the third OR). Details: [[matching-notes]] (T-24208).
 
 ## Comments
+
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): cloud branch changed only its C file and wiki, no asm or game data; merged with a clean 27/27 build and header/global/prototype checks. func_80132444 matches: linked funcdiff --resolve MATCH; one ticketed FAKE (repeated byte OR). Done.
