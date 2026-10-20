@@ -896,3 +896,24 @@ eight Y-A+59 forms; no original H/ADD boundary recovered. Original saved roles,
 UV50/54/poly84/88 and Q/P order preserved. Source/replay height-offset and
 height-lifetimes.md retain prediction/opcode deltas; no width/mask grid,
 production unchanged, same function active.
+# T-24518 structural initializer checkpoint
+
+`func_8013FFAC` now has a private529-word candidate (same count as original),
+190 resolved cost, in `drafts/T-24518/signed-flag.c`. Shared signed induction
+across the two real six-entry loops recovers rolled/unrolled structure and
+buffer0x54/frame0x70. A named-field scalar byte view recovers state lifetime;
+a signed first-slot flag store shares the second-slot constant. Remaining
+opcode gaps include shade constant/store ordering, case8 narrowing and final
+delay-slot hoist, alongside table scheduling and register allocation. Stock
+and existing traced uopt are byte-faithful on exact earlier candidates. No
+production changes, match or backend-blocker claim; [[tickets/T-24518-etc-flow]]
+remains In Progress.
+
+Further T-24518 reconstruction proves all10 first-table resolved words exactly:
+natural indexed loops create first addressV0/boundA0 independently of second
+indexA0. RGB element-chain order also recovers the complete shade block.
+Replay indexed-both-tables is527words/336cost (516 normalized positions),
+while raw190cost signed-flag remains preserved. Two true count gaps remain:
+case8ANDI and case13 flag-load NOP/LUI hoist; second-table differences are
+scheduling/registers. Source-backed peel and targeted callee-return controls
+do not close them. No production edit or coverage claim.

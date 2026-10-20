@@ -53,6 +53,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24518-etc-flow|T-24518 Reconstruct ETC initializer flow and live values]]
+
 - [ ] [[tickets/T-24522-rpg-bat|T-24522 Match remaining RPG_BAT functions]]
 
 - [ ] [[tickets/T-24521-taiiku|T-24521 Match remaining TAIIKU functions]]
