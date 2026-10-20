@@ -440,6 +440,8 @@ void func_80138170(void) {
     }
 }
 
+/* FAKE: pad1 (frame slot) and the u32 view of D_8015EBAC, as in the siblings func_80138170 and
+ * func_801387F0. T-24303 */
 void func_80138324(void) {
     s32 pad1;
     s32 r;
