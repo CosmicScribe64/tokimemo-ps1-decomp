@@ -2154,3 +2154,18 @@ Parent review accepted the `make_color_bar16` body and identified the absent can
 ## [2026-10-20] build | T-24501 gradient declaration review resolved and 27 hashes pass
 
 The approved canonical prototype rebuild exits zero, including NAME_ENT and SHUGAKU callers. Literal default-C private-link proof for `make_color_bar16` remains MATCH (1,540 bytes), explicit SHA1 recomputation passes all 27 images, headers pass, and the prototype branch check has zero new disagreements. Parent review's declaration finding is resolved; no source-body findings remain. [[tickets/T-24501-main-tail]] stays In Progress for the remaining MAIN sweep.
+## [2026-10-20] query | T-24503 retain GEKO date guard checkpoint
+
+Retained func_80133024 at two differing words with an explicit FAKE explanation, separately from the two matching commits. Additional causal tests on func_80132B24 did not improve cost61 (seven variants); latest func_80133C50 draft viewsweep confirms the known implicit-int text-call view but remains cost113. See [[matching-notes]] and [[tickets/T-24503-geko-option-completion]].
+
+## [2026-10-20] query | T-24503 repaired OPTION draft checkpoint
+
+GEKO matches are integrated by the parent. Recorded exact contributor handoff in [[tickets/T-24503-geko-option-completion]] (two complete, nine GEKO and three OPTION remaining). Repaired typed OPTION func_8013A7EC draft reaches cost94 from202; repaired raw pointer copy for func_801326BC reaches156. Production OPTION sources untouched.
+
+## [2026-10-20] query | T-24503 preserve OPTION handoff sources
+
+Archived unmatched OPTION func_8013A7EC (cost90) and func_801326BC (cost144) source bodies and a complete-unit replay script under drafts/T-24503/. Earlier indexed palette draft remains preferable. Corrected func_80139A30 prototype sweep gives no improvement (19 compiles, cost223). No OPTION source promoted. See [[tickets/T-24503-geko-option-completion]].
+
+## [2026-10-20] lint | T-24503 archive FAKE source comments
+
+Parent archive review requested source-local FAKE comments in addition to the README descriptions. Added T-24503 comments to both unmatched OPTION bodies without changing C expressions. No replay required for comments; previous source-only costs remain90/144. [[tickets/T-24503-geko-option-completion]].
