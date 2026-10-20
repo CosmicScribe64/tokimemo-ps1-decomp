@@ -22,3 +22,5 @@ Match as many as possible of the 53 functions on local work list l6-p02 (GEKO, B
 ## Notes
 
 ## Comments
+
+- 2026-10-20 checkpoint 1: 1 match (GEKO func_801358CC, 416 B); guards improved: GEKO func_80133024 36 -> 5 rows, GEKO func_80134808 new guard at 15 rows. Clean build OK, checks OK.
