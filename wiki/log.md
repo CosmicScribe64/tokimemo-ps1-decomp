@@ -2166,3 +2166,7 @@ Preserved annotated28-row `func_80144C84` source-only draft and bounded negative
 ## [2026-10-20] ticket | T-24522 lane archive In Review
 
 Moved [[tickets/T-24522-rpg-bat]] and its board card to In Review. Two production matches passed independent source review and verification; complete lane evidence and28-row source-only draft await coordinator archive review.
+
+## [2026-10-20] query | T-24522 residual dependency map and archive review
+
+Coordinator reviewed1564d1bf1 source archive with no blockers. Read-only analysis mapped `func_80144C84`'s first moved EBE0 load and its third-arm threshold-to-clamp register carry/reload difference. Recorded one untested local-aggregate snapshot hypothesis without a compiler run. See [[tickets/T-24522-rpg-bat]].

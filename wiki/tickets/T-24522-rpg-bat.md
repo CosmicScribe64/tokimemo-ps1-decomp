@@ -57,3 +57,16 @@ func_80144C84 reaches28/28 after matched sibling's comma-return spelling; typed 
 func_8014BFE4 current baseline128/128; meaningful actor-base pointer207/201, addressed-argument form185/185, combined247/247. These are negative results; no production change. Recent T-24027 DD8/5528C drafts and negatives were read; no new hypothesis justified rerunning their broad gaps. Source archive README documents the lane and retains every loose probe under ignored build/T-24522. Two exact matches total2,048 bytes; four remain assembly.
 
 Final archive compilation confirmed28 literal rows /28 aligned after documentation and formatting. Work is In Review for the complete lane archive; both production functions already have independent coordinator source review and complete verification.
+
+### 2026-10-20 archive review and read-only residual analysis
+
+Coordinator reviewed source archive1564d1bf1 against CODING_STANDARDS.md: no blockers. The source-only28-row body explicitly denies production coverage, fake home/wrappers/comma-return are documented, and no instruction listings/game assets or production modifications are included.
+
+Read-only C84 dependency map from saved28-row diagnostics and immutable target assembly:
+
+- First divergence: the EBE0 load at target80144D9C precedes the initial counter writebacks; the source draft moves that identical load later. The typed first-stat pointer plausibly creates a different alias dependency for this load, but that interpretation is unproven.
+- Target third threshold80144E34 loads extra weight(a3) and field08(a1), writes fields04/00 back, and tests their sum against roll.
+- Target enemy-kind branch80144E80 fills its delay slot with field08's address preparation. On the noncall successor80144EA8 it reloads field08 and EBE0, decrements/stores field08, and schedules extra-minus20 in the field08-sign-branch delay slot.
+- Current draft carries a1/a3 forward from the threshold. It speculates extra-minus20 into the enemy-kind branch delay slot and stores field08 on the call path to free a1 for the argument. Thus two target reloads disappear, an extra call-path store appears, and downstream branch distances change.
+
+One precise untested source hypothesis: represent only the third threshold's extra/field08 values as an unescaped two-word local aggregate snapshot, then keep actual clamp mutations through plain globals. This could separate the threshold ranges from mutation ranges while replacing existing scalar homes; it might still be folded away by GVN. Ordinary field-pointer and branch-spelling variants were already tested and are not this hypothesis. No compiler was run for this read-only analysis, and no compiler limitation is claimed.
