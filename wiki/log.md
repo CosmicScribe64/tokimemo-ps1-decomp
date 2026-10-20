@@ -2125,3 +2125,26 @@ Docker scan of current source INCLUDE_ASM entries and generated size headers ide
 ## [2026-10-20] decision | Reuse completed lane slots for fresh owned units
 
 [[tickets/T-24510-parallel-overlay-coordination]] records root's expanded ownership: NAME_ENT T-24515 and BUNKA_SD/EN_NICHI/KANGEI T-24516, fresh isolated trees; MASTER T-24514 continues. Three workers cap unchanged. Returned concise archive review: TEL/ETC no findings, ENDING duplicatecontext/metric attribution fixed; all zero matched gain. MASTER counted-loop reconstruction improves420to363cost but remains nonmatching.
+## [2026-10-20] ticket | T-24511 isolated TEL matching lane
+
+Created [[tickets/T-24511-tel]] in progress from `23e1a20fb`, isolated worktree `/private/tmp/tokimemo-t24511`. Read prior T-19022/T-23001/T-24022 evidence; month-promotion probes remain exhausted. Current source has `func_80134FE4` matched; target the remaining `func_8013D88C` before the large handler.
+
+## [2026-10-20] query | T-24511 menu reconstruction audit
+
+[[tickets/T-24511-tel]] records two fresh control-flow hypotheses for `func_8013D88C`: exclusive page-two condition chain and the omitted `arg2 == 14` bypass. The latter is distinct from the incompatible `case 14` in the old index dispatch. Docker baseline rebuild is underway; no production source changed.
+
+## [2026-10-20] build | T-24511 fresh baseline configure
+
+Existing `tokimemo-decomp-arm64` image configured a new build in `/private/tmp/tokimemo-t24511`, with the original root `disc/` mounted read-only. No dependency installs or game/build copies. `ninja -j2` is rebuilding all units before scratch probes; source remains unchanged.
+
+## [2026-10-20] build | T-24511 bounded TEL menu reconstruction
+
+Sixteen serial Docker probes reproduced the prior control and tested control-flow corrections, pointer lifetimes, frame topology and explicit F64 capture. Packed-word capture removes thirty words versus signed-index control; preserved corrected body is755 words/844 rows against745 target words. No match or production change. Source-only replay and negative ledger saved in drafts/T-24511; [[matching-notes]] and [[tickets/T-24511-tel]] record the result. Fresh673-step j2 baseline build passed all27 checksums and header/global checks. Limited large-handler audit found no new semantic repair; exhausted month probes remain untouched.
+
+## [2026-10-20] ticket | T-24511 reviewed bounded TEL handoff
+
+Standards/spec self-review of `23e1a20fb...b24b039f4` found no unresolved findings. All16 archived probes reproduced and independent27/27 built SHA1 passed; header/global/prototype guards pass (0 new,15 known prototype disagreements). [[tickets/T-24511-tel]] moved to Done for the bounded investigation; both matching targets remain unresolved. No production source/header/config/compiler changes, push or merge.
+
+## [2026-10-20] lint | T-24511 closure wiki check
+
+Docker `tools/wiki.py lint`:0 broken links,0 status mismatches; one existing large-page notice for [[data/t0018-cases]]. No new wiki page requiring an index entry; ticket remains on the board.
