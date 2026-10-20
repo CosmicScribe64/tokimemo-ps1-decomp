@@ -2238,3 +2238,11 @@ Independent expression ordering and original arm-local modulo/assignment orderin
 ## [2026-10-20] query | T-24522 bounded pointer normalization negatives
 
 Two authorized addressing forms fail: byte-offset230/210, integer-address373/229. Best5528C4/4 remains source-only; only initial pointer-add operand orders differ. Recorded first ownership shifts and stopped addressing variants for coordinator consult. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 integer address role normalization
+
+Coordinator reviewed430699874 with no blockers. Final source peek of MAIN767A4 finds only unrelated buffer/frame layout, no new donor transplant. Existing p545 output does fix both initial pointer-add operand roles to base-first, while splitting initial/postjoin phase owners; uniform expression ownership is a concrete uncompiled follow-up, not established uopt evidence. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 uniform scalar addresses restore register roles
+
+One authorized uniform scalar-address form produces41/39 and fixes all register and pointer-operand roles. Residual is save/restore and correction-store scheduling plus one nop. Preserved separately from best4 source, with no coverage change. See [[tickets/T-24522-rpg-bat]].
