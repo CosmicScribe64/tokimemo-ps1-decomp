@@ -2877,3 +2877,11 @@ Bounded existing-notes check finds prior semantic/type repairs already preserved
 ## [2026-10-20] decision | Adopt grid source lifetime correction and faithful trace
 
 [[tickets/T-24501-main-tail]] adopts bounded consultation source132/256 with exact frame and all invariant homes. Independent ordinary replay confirms result; instrumented output identical. Priority table explains remaining colours before allocation, without proving original source ranks or a compiler defect. No production/header change; next read-only comparison targets actual coordinate/CLUT reuse. See [[matching-notes]].
+
+## [2026-10-20] decision | Transfer typed arithmetic to circular TILE sibling
+
+[[tickets/T-24501-main-tail]] freezes 4A414 after faithful trace/read-only reuse comparison finds no further supported source change. For `func_8004A814`, typed TILE/natural-bound reconstruction improves300->187; count258 versus257 target, frameC0 versusB8. Target width-for-height quirk, six abs calls and signed/clamped falloff retained. Existing x/RGB declaration homes predict the next y-expression lifetime test. Production remains ASM. See [[matching-notes]].
+
+## [2026-10-20] decision | Preserve circular TILE CSE ownership packet
+
+[[tickets/T-24501-main-tail]] recovers `func_8004A814` typed primitive/natural arithmetic,300->114 with exact257 words/frameB8/x and RGB homes. All saved-register roles match; existing setWH restores actual dimension-store scheduling. Uniform+4 invariant homes and preload/ugen residuals documented with replay. No padding, extra slots, production/header change or literal-match claim. Parent requested bounded consultation and idle. See [[matching-notes]].

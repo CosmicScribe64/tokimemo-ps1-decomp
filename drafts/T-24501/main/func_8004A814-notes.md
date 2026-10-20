@@ -1,0 +1,50 @@
+# T-24501 circular TILE falloff packet
+
+Source-only, **not matching**. Production src/main/80049FF0.c remains ASM; no header/prototype changes. Function is 1,028 bytes. Private target asm/nonmatchings/main/80049FF0/func_8004A814.s and immutable MAIN binary; no raw dump committed. Typed primitive/natural arithmetic recovery transfers only target-supported lessons from func_8004A414 and matched rendering neighbors.
+
+## Replay
+
+Run in existing Docker image from repository root, usual work/disc mounts:
+
+    python3 drafts/T-24501/tile_grid_replay.py
+
+Default complete-TU resolved cost114, 257 target/candidate words, frame0xB8. Diagnostic normalization is not literal proof. Replay creates private complete TU/object/diff under build/scratch/t24501-tile-grid; --source PATH permits retained controls. Current measured full TU also preserved privately at .scratch/t24501/tile114-full.c. No post-freeze matching compile was run; replay syntax alone checked.
+
+## Actual target semantics
+
+- TILE16-byte primitive, masked grid steps at least2, circular squared-distance inclusion, semitransparency1.
+- Both TILE width and height are arg3 (x step), despite separate y grid step arg4. Do not fix this target quirk.
+- Exactly six abs calls: abs(x distance) staged before abs(y distance), separately for each channel. Do not factor the three falloff calculations or assume abs is pure.
+- RGB extraction uses unsigned red/green components, signed blue; each multiplication is converted to signed32 before division by signed radius. Upper clamp255 only; no lower clamp.
+- Ending dtd_on_tpage(0,0,arg7,arg6&3,0) is retained.
+
+The source uses natural repeated grid bounds and distance expressions, typed GameState/TILE accesses and existing SDK-compatible setWH(tile,arg3,arg3). No padding, unused variables, forced registers, volatile or compiler changes.
+
+## Bounded controls
+
+| Source | Cost | Target/candidate words | Frame | Finding |
+| --- | ---: | --- | --- | --- |
+| Original T-17000 full TU |300|257/257|E8|Raw pointer/scalarized baseline |
+| Typed natural bounds, explicit dx/dy |187|257/258|C0|x/RGB homes uniformly frame+8 |
+| Inline y distance only |121|257/258|B8|Exact x/RGB/frame; radius square wrongly hoisted first |
+| Inline x distance too |124|257/257|B8|Target invariant order/count restored; RGB shifts+4 |
+| Existing abs_x declaration before RGB |118|257/257|B8|RGB homes exact, no added variable |
+| Existing setWH after coordinates (primary) |114|257/257|B8|Target dimension-store scheduling restored |
+
+Each step follows actual slot/operation evidence. Inlining x was retained despite larger numeric score because it repairs invariant multiplication order and removes the extra instruction. No compensating padding or blind declaration permutation. Private controls .scratch/t24501/tile{187,121,124,118}.c; current .scratch/t24501/tile_grid.c. Diff files tile_grid_{original,typed,y_expression,xy_expressions,abs_home,setwh}.diff remain private.
+
+## Exact residual
+
+First45 resolved instruction rows agree. Frame, x homeAC and RGB homesA0/9C/98 are exact; all saved-register roles agree with target (poly s0; narrowed x then abs_x s1; y distance s2; half widths then green/red s3/s4; doubled radius s5; y counter s6; x distance s7; radius fp). GameState coordinate base is v0 as target, distinct from sibling4A414's unresolved ranks.
+
+| Invariant/slot | Target | Candidate |
+| --- | --- | --- |
+| max_x |84|88|
+| min_y/max_y |80/7C|84/80|
+| x distance squared |74|78|
+| radius squared |6C|70|
+| ordering byte offset |58|5C|
+
+All offsets hex from SP. This block is uniformly+4, but source evidence does not justify an unused compensating slot. The first non-home difference is outer x preload t0 versus t9, followed by nondraw branch delay NOP versus target arg4 load; target path loads that value before skipping the draw and after AddPrim on the draw path. The source retains the actual y increment at the common loop tail. Coordinate dimensions now schedule correctly via setWH; y arithmetic and color multiply/division/tail temporaries still differ, as does some scheduling. No missing abs call, color clamp, primitive access, or saved-register role identified.
+
+A bounded consult should investigate real CFE temporary/local ownership and branch/lifetime structure explaining the uniform+4 CSE/depth homes and common-tail preload, not add slots or assume the sibling's allocator issue applies. No further source experiments after setWH114.
