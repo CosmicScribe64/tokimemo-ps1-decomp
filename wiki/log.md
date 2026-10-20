@@ -20864,3 +20864,10 @@ An uncommitted T-24142 draft of TAIIKU `func_8013E1FC` (about 210 differing line
 ## [2026-10-20] ticket | T-24201 KANGEI func_80134724: 2 rows, guard kept, In Review
 
 [[tickets/T-24201-cloud-packet-kangei-80134724]] moved to In Review. The cloud toolchain ([[cloud-matching]]) reproduced the local sha1 of src/ovl/KANGEI/80134120.c. About 35 source variants did not remove the as1 default-block delay-slot hoist (2 rows). A second reference to the default label gives the original slot but changes the bound or adds a range check, and it rotates the allocation, so the original's extra reference is not a uopt edge. Only the NON_MATCHING comment changed (T-24201). Notes in [[matching-notes]]. The local linked proof and the review are still due.
+## [2026-10-20] ticket | T-24203 cloud packet: GEKO func_80136C20
+
+Created [[tickets/T-24203-cloud-packet-geko-80136c20]] (In Progress): single-function match packet for `func_80136C20` in `src/ovl/GEKO/80134D10.c`; packet asm stays under the gitignored `asm/`, the file is compiled as a scratch copy under `build/scratch/` with the other INCLUDE_ASM/INCLUDE_RODATA lines removed.
+
+## [2026-10-20] ticket | T-24203 In Review: GEKO func_80136C20 still 4 rows
+
+[[tickets/T-24203-cloud-packet-geko-80136c20]]: setup proven (asm-fallback scratch copy equals the packet reference); 28 more C variants leave `func_80136C20` at 4 rows in `src/ovl/GEKO/80134D10.c`. ugen's listing shows the miss is in as1 (it places the selector `lui` in the `D_80145090` load delay, the original in the `D_80145088` branch slot). Guard comment now T-24203. Notes in [[matching-notes]] (T-24203), single-function setup in [[cloud-matching]]. Local linked proof and review due.

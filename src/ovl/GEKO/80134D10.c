@@ -747,7 +747,7 @@ void func_80136BA8(void) {
     func_80082764(0xFF, 1, 0);
 }
 
-/* NON_MATCHING: T-22010, 4 rows; the original fills the delay slot of the D_80145088 branch with the lui of unk_F5F (the selector of the switch, loaded later), IDO here puts it in the load delay of D_80145090; moving the girl read, a pointer or a wider local and dead tests changed nothing; closer round: volatile views of either flag or the selector, goto and nested if/else forms, `!` tests, dead `(s32)` tests at four places and permute (300 s) do not move it (the girl local only holds the frame slot) */
+/* NON_MATCHING: T-24203, 4 rows; the original fills the delay slot of the D_80145088 branch with the lui of unk_F5F (the switch selector, loaded later) and leaves a nop after the lbu of D_80145090, IDO here puts that lui in the load delay of D_80145090; ugen already emits the selector load in the switch block, so the move is as1 scheduling: 28 more C variants (T-24203: if/else and early-return forms, the selector at the top, inline, s32, GameState pointer, byte views, C-defined or array views of both flags, literal addresses, s32 return, one local struct) and the T-22010 round (volatile views, goto, `!` tests, dead (s32) tests, permute 300 s) leave it in place (the girl local only holds the frame slot) */
 #ifdef NON_MATCHING
 void func_80136C20(void) {
     u8 girl;

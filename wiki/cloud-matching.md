@@ -68,4 +68,12 @@ A one-variant loop (splice a body file into the C file, `cc.py`, diff) takes abo
 reported 160 for a draft the scratch diff put at 4 lines, so do not trust its ranking without the disc.
 `regdiff` needs the traced uopt (not built here).
 
+Single-function packets (the file is too big to send whole, [[tickets/T-24203-cloud-packet-geko-80136c20]]):
+compile a scratch copy under `build/scratch/` with every other `INCLUDE_ASM`/`INCLUDE_RODATA` line
+removed, and a reference `.c` holding only `#include "common.h"` and the one `INCLUDE_ASM`. `cc.py`
+takes no `-D`, so the `NON_MATCHING` copy gets `#define NON_MATCHING` as its first line. The
+asm-fallback copy must equal the reference first. ugen's listing (`/opt/ido/5.3/cc -S` with the
+`IDO_CFLAGS` minus `-c` and `cc.ido_frame_env`) lands in the current directory whatever `-o` says;
+it shows which pass placed an instruction, but assembling it does not reproduce the build.
+
 The local session still has to prove every result with the full linked build (`ninja`, funcdiff MATCH, SHA1).
