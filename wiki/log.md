@@ -2154,3 +2154,8 @@ Retained func_80153B38 NON_MATCHING guard at26 aligned diff lines, confined to c
 ## [2026-10-20] lint | T-24502 fan packet final review
 
 Parent final SDK declaration review passes; removed the extra blank line at the archived body EOF found by the staged diff check. Production source and prior all27/default proof are unchanged. [[tickets/T-24502-taco-completion]].
+
+
+## [2026-10-20] decision | T-24502 projection donor packet frozen
+
+DEE4 semantic donor E778 plus recovered local order and canonical inner loop improves370-row prior draft to70cost, with original frame/major homes and saved-register allocation. Archived concise body/context/NOTES under drafts/T-24502/TACO; outer counter homes/zero web remain and one extra real instruction prevents a close guard. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the exact boundary and bounded negative probes for a later narrow consult. Production unchanged.
