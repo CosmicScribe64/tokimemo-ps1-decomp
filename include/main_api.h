@@ -847,18 +847,15 @@ extern s8 D_800B68E0[8][9];
 extern s8 D_800B6928[][9];
 /* T-20940: static data of 80075320.c. D_800B6990 is a ring of the last seven keys pressed on the holiday
  * menu (0, 1, 2 from the pad bits 0x20, 0x40, 0x10; cleared to 0xFF by func_800755B4 in a loop IDO unrolled)
- * and its write position at +8 (splat's D_800B6998): func_80075C84 stores `keys[pos] = key; pos++`, wraps pos
- * at 7 and reads the ring from pos + 7 modulo 7. One object: the original reloads pos after the store into
- * keys[pos], which IDO does only when both go through one symbol. D_800B69BC is a 0x14-byte string in .data
+ * and D_800B6998 its write position: func_80075C84 stores `keys[pos] = key; pos++`, wraps pos at 7 and reads
+ * the ring from pos + 7 modulo 7. Two variables, both defined in 80075320.c (T-24303): func_800755B4 stores
+ * the position with its own lui $at and the three remainder keys with one shared lui $at, which as1 does only
+ * for separate symbols of the same object. The original reloads pos after the store into keys[pos] in
+ * func_80075C84. D_800B69BC is a 0x14-byte string in .data
  * (strcat argument of func_800767A4). D_800B69D0 and D_800B69D8 map GameState.unk_69C[].unk_01 (0..7) to a
  * background in func_80076FDC, one table per func_80066A84() result. */
-typedef struct KeyRing {
-    /* 0x0 */ u8 keys[7];
-    /* 0x7 */ u8 pad_07;
-    /* 0x8 */ u8 pos;
-    /* 0x9 */ u8 pad_09[3];
-} KeyRing; /* size 0xC */
-extern KeyRing D_800B6990;
+extern u8 D_800B6990[8];
+extern u8 D_800B6998;
 extern u8 D_800B69BC[0x14];
 extern u8 D_800B69D0[8];
 extern u8 D_800B69D8[8];

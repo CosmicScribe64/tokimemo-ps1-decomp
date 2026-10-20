@@ -1,6 +1,44 @@
 #define MAIN_API_OVERRIDE_func_80053418 /* this object calls it as void (no v0 result in the call block, func_800754C0); main_api.h has s32 */
 #include "common.h"
 #include "game.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+u8 D_800B6990[8] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0 };
+u8 D_800B6998 = 0;
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B699C);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B69BC);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B69D0);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B69D8);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B69E0);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6A14);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6A58);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6A8C);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6AD8);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6B10);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6B4C);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6B8C);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6BCC);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6C00);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6C28);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6C50);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6C80);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6CB8);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6CE0);
+INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6CF8);
+/* pointer-only label D_800B6A14 may be inside D_800B69E0; replace its include too. */
+/* pointer-only label D_800B6A58 may be inside D_800B69E0; replace its include too. */
+/* pointer-only label D_800B6A8C may be inside D_800B69E0; replace its include too. */
+/* pointer-only label D_800B6AD8 may be inside D_800B69E0; replace its include too. */
+/* pointer-only label D_800B6B10 may be inside D_800B69E0; replace its include too. */
+/* pointer-only label D_800B6B4C may be inside D_800B69E0; replace its include too. */
+/* pointer-only label D_800B6B8C may be inside D_800B69E0; replace its include too. */
+/* pointer-only label D_800B6BCC may be inside D_800B69E0; replace its include too. */
+/* pointer-only label D_800B6C00 may be inside D_800B69E0; replace its include too. */
+/* pointer-only label D_800B6C28 may be inside D_800B69E0; replace its include too. */
+/* pointer-only label D_800B6C50 may be inside D_800B69E0; replace its include too. */
+/* pointer-only label D_800B6C80 may be inside D_800B69E0; replace its include too. */
+/* pointer-only label D_800B6CB8 may be inside D_800B69E0; replace its include too. */
+/* pointer-only label D_800B6CE0 may be inside D_800B69E0; replace its include too. */
 
 void func_80053418();
 
@@ -91,7 +129,112 @@ s32 func_800754C0(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800755B4);
+void func_800755B4(void) {
+    s32 i;
+    s32 r;
+    s32 n;
+    u8 buf[0x104];
+    u8 name[0x20];
+
+    /* FAKE: T-20940, the clear on one source line (as1 schedules a line as a unit) gives the original's order
+     * of the unrolled stores. */
+    D_800B6998 = 0;
+    for (i = 0; i < 7; i++) { D_800B6990[i] = 0xFF; }
+    hizuke_init();
+    if (func_800754C0() != 0) {
+        D_80122CD4 = 0;
+        D_80122CD0 = 8;
+        parameter_show_init();
+        parameter_show_init();
+        main_state_set(0x5D);
+        return;
+    }
+    func_80041584();
+    back_clear_switch(1);
+    tpage_buf_clear();
+    func_8004E58C();
+    func_80066104("休日コマンド画面");
+    k_disp_start(1);
+    D_800E6280.unk_F6D = 0xE;
+    func_8006509C();
+    func_800654D0((s32) (u8) D_800E6280.unk_F6D);
+    func_80075AF8();
+    gnsx(D_800E6280.unk_0D4);
+    if (D_800E6280.unk_0F6.h & 1) {
+        D_800E6280.unk_F6D = 0xE;
+        func_8006509C();
+        func_800654D0((s32) (u8) D_800E6280.unk_F6D);
+        func_8005AC70(1);
+        icon_can_use_set(0xD, 0);
+        icon_can_use_set(0, 1);
+        icon_can_use_set(1, 1);
+        icon_can_use_set(2, 1);
+        sndisp("一週間強制補習を しなければならない）", 0, 0x1F);
+    } else if ((D_800E6280.unk_0F4.b[1] & 0xF) == 3) {
+        D_800E6280.unk_F6D = 0xE;
+        func_8006509C();
+        func_800654D0((s32) (u8) D_800E6280.unk_F6D);
+        func_8005AC70(1);
+        icon_can_use_set(0xD, 0);
+        icon_can_use_set(7, 1);
+        D_800E6280.unk_1093 = 7;
+        sndisp("病気で身体が動かない）", 0, 0x1F);
+    } else {
+        n = 0;
+        if (appointment_find_today((s32) D_800E6280.unk_03E, (s32) D_800E6280.unk_03F, (s32) D_800E6280.unk_040) > 0) {
+            strcpy(buf, "今日は、");
+            get_g_name(name, (s32) ((u32) (D_800E6280.unk_54C[0].w * 8) >> 0x1C));
+            strcat(buf, name);
+            strcat(buf, "とデートだ）");
+            sndisp(buf, 0, 0x1F);
+            D_800E6280.unk_1093 = 9;
+            n = 1;
+        }
+        if ((func_8005352C() == 1) && (((u32) (D_800E6280.unk_040 + 6) / 7U) == 3) && (D_800E6280.unk_041 == 6)) {
+            if (((u8) D_800E6280.unk_03F % 3U) == 0) {
+                if (n != 0) {
+                    strcpy(buf, "（");
+                    strcat(buf, "今日は、部活の練習試合だ）");
+                    set_kanji_string(-0x56, 0x42, 0U, buf, 0);
+                } else {
+                    strcpy(buf, "今日は、部活の練習試合だ）");
+                    sndisp(buf, n, 0x1F);
+                }
+                n += 1;
+            } else {
+                if (n != 0) {
+                    strcpy(buf, "（");
+                    strcat(buf, "今日は、部活の練習日だ）");
+                    set_kanji_string(-0x56, 0x42, 0U, buf, 0);
+                } else {
+                    strcpy(buf, "今日は、部活の練習日だ）");
+                    sndisp(buf, n, 0x1F);
+                }
+                n += 1;
+            }
+            D_800E6280.unk_1093 = 4;
+        }
+        if (n == 0) {
+            sndisp("今日は何をしようかな？）", 0, 0x1F);
+        }
+    }
+    k_disp_start(5);
+    func_80048E78();
+    func_8006BC28(0);
+    parameter_show_init();
+    parameter_show_init();
+    message_window_init();
+    r = dec_bg_cd_read(D_800B5960[func_80066A2C()], 0);
+    if (r != -1) {
+        if ((r == 0) || (r == 1)) {
+            set_dec_bri(0x80U);
+            dec_bg_show_set(0, r);
+            func_80042808();
+        }
+    } else {
+        func_8004284C();
+    }
+}
 
 void func_80075A64(void) {
     if (cd_read_sync_status() & 1) {
@@ -149,7 +292,77 @@ void func_80075C24(void) {
     }
 }
 
+#ifdef NON_MATCHING
+s32 func_80075C84(void) {
+    s32 i;
+    s32 j;
+    u32 k;
+
+    if ((((DisplayActor44 *)D_8011ECD0)->unk_26 < -0x40) && (((DisplayActor44 *)D_8011ECD0)->unk_26 >= -0x4F)
+        && (((DisplayActor44 *)D_8011ECD0)->unk_2A < 0x18) && (((DisplayActor44 *)D_8011ECD0)->unk_2A >= -0xF)) {
+        switch (D_800E6280.unk_F88 & 0x70) {
+        case 0x20:
+            D_800B6990[D_800B6998] = 0;
+            D_800B6998++;
+            func_80044750(0x505);
+            break;
+        case 0x40:
+            D_800B6990[D_800B6998] = 1;
+            D_800B6998++;
+            func_80044750(0x506);
+            break;
+        case 0x10:
+            D_800B6990[D_800B6998] = 2;
+            D_800B6998++;
+            func_80044750(0x507);
+            break;
+        }
+        if (D_800B6998 >= 7) {
+            D_800B6998 = 0;
+        }
+        if (D_800E6280.unk_F88 & 0x70) {
+            for (i = 0; i < 13; i++) {
+                k = D_800B6998 + 7;
+                for (j = 0; j < 7; j++, k++) {
+                    if (D_800B6990[k % 7] != D_800B3778[i][j]) {
+                        break;
+                    }
+                    if ((j == 6) && ((u32)(D_800E6280.unk_1BC[i].unk_0C.w << 28) >> 31)) {
+                        if (i != 11) {
+                            if (i == 12) {
+                                D_801230D0 = 11;
+                                D_800E6280.unk_F5F = 11;
+                                D_800E6280.unk_1093 = 12;
+                            } else {
+                                D_801230D0 = i;
+                                D_800E6280.unk_F5F = i;
+                                D_800E6280.unk_1093 = i + 1;
+                            }
+                        }
+                        *(s32 *)&D_800E6280.unk_1BC[i].unk_00 += rand() & 0x7FFF;
+                        if (D_800E6280.unk_0F6.h & 1) {
+                            D_800E6280.unk_11C.unk_02 += 0x20;
+                        }
+                        func_80042908(0x10);
+                        func_80042940(2);
+                        D_800E6280.unk_110D = 11;
+                        func_8004E58C();
+                        icon_disp_switch(0);
+                        func_80065F34(0);
+                        telephone_class_init();
+                        k_sub_reset_point_set();
+                        k_sub_disp_start(0);
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075C84);
+#endif
 
 s32 func_80075FA0(void) {
     u8 x;
