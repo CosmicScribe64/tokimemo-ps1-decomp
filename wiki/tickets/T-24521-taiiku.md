@@ -1,7 +1,7 @@
 ---
 id: T-24521
 title: Match remaining TAIIKU functions
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-20
 updated: 2026-10-20
@@ -43,3 +43,25 @@ Baseline dba33c4f5. Docker tools only, worker compilers -j1. Prior T-11640/T-165
 - Docker private `ninja -j1 build/ovl/TAIIKU.ok`: SHA1 `306d1013b9be465819525d1fb4dc0e86b422a846` OK. `funcdiff.py --resolve --version default TAIIKU:func_80134F98`: MATCH, privately linked 1,256 bytes equal target. Private TAIIKU plus 26 unchanged read-only root binary outputs: 27/27 hashes OK.
 - Header guard OK, globals guard OK, branch prototype guard OK (0 new, 12 known). Standards self-review and independent parent final source review: no blocking finding. Header changes preserve all callers according to the private whole-overlay checksum.
 - Lane cumulative: two functions, 2,604 matching bytes; nine remaining TAIIKU functions. No source-only draft earns coverage.
+
+### Source evidence for func_80137C44
+
+Three fresh typed runner/actor variants compile but do not match (241, 229, 223 diagnostic rows). Snapshots of four originally hoisted globals are sunk back by uopt; frame and saved-register allocation remain different. This does not improve T-19004's roughly100-row result. Preserved source bodies in `drafts/T-24521/TAIIKU/func_80137C44/`; production remains INCLUDE_ASM and coverage stays at two verified matches. No exhausted allocation grids rerun.
+
+### Source evidence for func_80135F3C
+
+Fresh four-aggregate and nested dedup-loop body compiles with 543 diagnostic rows. Frame288 vs target296 and one fewer saved register; tables16 bytes low. Also identified a missing rejected-player19 store in this draft; no semantic-equivalence claim. Preserved under `drafts/T-24521/TAIIKU/func_80135F3C/`, restored production and header. No coverage gained.
+
+### Source evidence for func_80139AB0
+
+Explicit two-column source loop avoids the old full-unrolling problem but introduces induction strength reduction (frame224 vs target96,228 diagnostic rows). Narrow counters block that transform (frame88,194 rows) at the cost of real sign extensions and different allocations. Both compile; neither matches. Preserved under `drafts/T-24521/TAIIKU/func_80139AB0/`; production stays INCLUDE_ASM. Prefix scalar views are inherited experimental evidence, not suitable for production.
+
+### Original bounds and ownership of D_801494C4
+
+- Original `func_80134F98` at 0x80134FA8 computes source end = 0x801494C4 + 0x24. The copy loop at 0x80134FB0..0x80134FD0 copies three words per trip until that end, covering offsets 0x00..0x20 (nine words). Loads at 0x80134FD4 and 0x80134FD8 then read end+0 and end+4, offsets 0x24 and 0x28; stores at 0x80134FE0/0x80134FE4 complete the 44-byte copy.
+- The original data piece owns eleven words at 0x801494C4..0x801494EC, with `enddlabel D_801494C4` after the word at +0x28. The next label is D_801494F0 = start+0x2C. The corrected type ends before the next symbol.
+- `rg -n D_801494C4 src include` finds only its owning INCLUDE_RODATA line, this function's aggregate initializer, and the canonical header declaration. No other source function uses this table. Raw sources and generated assembly were read only.
+
+### Checkpoint review
+
+The final production source contains precisely the two verified replacements (2,604 bytes). The remaining nine functions retain INCLUDE_ASM. A final private overlay build and literal default linked proof of both functions pass after restoring every experiment. Source-only bodies and their reproduction limits are saved separately. Self-review found no staged raw data, generated assembly, compiler edits or unmarked production FAKEs; new README prose passed the repository deslop check. Parent review of the two production changes has no blockers; source-only archive review remains before ticket closure.

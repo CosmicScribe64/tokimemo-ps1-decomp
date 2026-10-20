@@ -2166,3 +2166,19 @@ Reconstructed `func_80134F98` using actor fields and normal 4-runner and 12-char
 ## [2026-10-20] build | T-24521 TAIIKU func_80134F98 matched
 
 Matched another 1,256 literal default-C bytes. A direct table expression and the counter declaration order close the typed draft. Private TAIIKU SHA1, default linked function proof, 27-output hash manifest and all declaration guards pass. Standards self-review and independent parent source review found no blockers. Lane total: 2,604 bytes across two functions; nine remain. Details in [[tickets/T-24521-taiiku]] and [[matching-notes]].
+
+## [2026-10-20] build | T-24521 runner display source-only variants
+
+Three natural typed forms of `func_80137C44` compile with real DIFFs but do not improve prior evidence. Snapshot locals are sunk by uopt; original global hoists and saved-register allocation remain. Preserved the bodies in `drafts/T-24521/TAIIKU/func_80137C44/`, restored production INCLUDE_ASM, and retained two verified matches only. See [[tickets/T-24521-taiiku]].
+
+## [2026-10-20] build | T-24521 selection initializer source evidence
+
+The fresh typed `func_80135F3C` body compiles but remains543 diagnostic rows from target; frame and selector-loop allocation differ. Preserved source-only evidence and the known missing rejected-player store, then restored production/header. No coverage gained. See [[tickets/T-24521-taiiku]].
+
+## [2026-10-20] build | T-24521 grid loop granularity evidence
+
+Tested an explicit two-column source loop in `func_80139AB0`: it stays rolled but IDO strength-reduces products into many induction ranges. Narrow counters prevent that optimization but retain sign extensions and allocation differences. Preserved228/194-row source-only variants and restored production INCLUDE_ASM. No compiler, flags or generated assembly changed; no new coverage. Details in [[tickets/T-24521-taiiku]].
+
+## [2026-10-20] ticket | T-24521 checkpoint In Review
+
+Added original copy instruction addresses, exact eleven-word data bounds and the source-user search for D_801494C4 to [[tickets/T-24521-taiiku]] and [[families/taiiku-family-results]]. The private final overlay and both literal linked matches pass after restoring all experiments. Saved three bounded source-only follow-ups with no coverage claims. Moved the ticket to In Review pending archive review; production changes already passed independent parent review.
