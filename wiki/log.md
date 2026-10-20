@@ -2180,3 +2180,11 @@ Post-prototype/string 520-step two-job build passed; explicit hashes passed all2
 ## [2026-10-20] decision | MAIN metric aggregate escalation remains negative
 
 [[tickets/T-24501-main-tail]] follows [[tickets/T-24570-main-80054e6c-metric-record-view]] with one true record assignment: full-TU cost105/90words versus84/87 baseline, frame40 unchanged. Target80 has no surviving array/argument accesses supporting a64B local. Preserved focused source-only replay and uncertainty; no production/header edits, padding grid or backend-defect claim. Details in [[matching-notes]].
+
+## [2026-10-20] decision | Recover text substitution buffers and control joins
+
+[[tickets/T-24501-main-tail]] reconstructs `sndi` string arrays and corrects inherited flag-reset semantics. Existing scalar before arrays reproduces observed frame/buffer homes; best210/259words, branch-reset211/260 versus263 target. Separate scan ranges fail310; signed view rejected for LB mismatch. No production edit, compiler escalation or padding grid. Continued structural evidence in [[matching-notes]].
+
+## [2026-10-20] decision | Freeze text substitution IV packet
+
+[[tickets/T-24501-main-tail]] preserves `sndi` source210/259words and branch-reset211/260 versus263 target, exact observed buffer homes/frame118. Two-base forms and final approved conditional increments do not recover target cursor recomputation; final303/262/frame120 rejected. Source-only replay, precise LBU/induction evidence and capacity cautions archived; no production/header edit or compiler-defect claim. See [[matching-notes]].
