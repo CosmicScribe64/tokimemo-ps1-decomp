@@ -2174,3 +2174,11 @@ Coordinator reviewed1564d1bf1 source archive with no blockers. Read-only analysi
 ## [2026-10-20] query | T-24522 threshold snapshot folded away
 
 Tested the coordinator-approved two-word local aggregate snapshot in three meaningful forms at j1. All34/34 retain the original28-row `func_80144C84` gap plus6 spill-offset differences. No production change; kept the28-row source-only draft. Results and minimal dependency blocker added to drafts/T-24522/README.md and [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] ticket | T-24522 fresh donor pass In Progress
+
+Reopened [[tickets/T-24522-rpg-bat]] and moved its board card to In Progress at coordinator request. Compare only newly matched BB80/447E0 donors against the four remaining RPG_BAT targets using original normalized instructions, then inspect closest source templates. No broad grid or repeated C84 arithmetic transplant.
+
+## [2026-10-20] query | T-24522 fresh donor pass negative
+
+Recorded all8 original-normalized BB80/447E0-to-remaining-target ratios and inspected the best source-template pair per target. The only useful447E0/C84 arithmetic transfer was already applied; other short overlaps do not support a new source transplant. No compiler runs or new coverage. Returned [[tickets/T-24522-rpg-bat]] and board to In Review; full evidence in drafts/T-24522/README.md.

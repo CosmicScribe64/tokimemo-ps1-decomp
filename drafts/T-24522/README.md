@@ -24,3 +24,27 @@ All experiments used the existing Docker arm64 image and one compiler process. L
 After coordinator review, a read-only dependency map motivated one new structural hypothesis: capture the third threshold's EBE0/field08 inputs in a real two-word local aggregate, then mutate plain globals. Three meaningful forms were compiled at j1: third-threshold-only capture; refresh at both initial bound and third-threshold phase boundaries; reversed member/assignment order. All score34/34. Every form retains the exact original28-row code gap and adds6 limit-spill-offset rows(0x2C to0x28); the aggregate snapshot is optimized away. No new source form was promoted. Inputs and diagnostics remain ignored under `build/T-24522/forms55.json` and `55_*.c`/`55_*.diff`.
 
 The minimal remaining dependency blocker is now explicit: target reloads field08 and EBE0 on the noncall successor of the nested enemy-kind branch; current C carries the threshold registers forward, moves extra-minus20 into the branch slot and spills field08 along the call path. The earlier initial-bound EBE0 load also moves relative to counter writebacks. Ordinary pointer forms, branch spellings and the explicit snapshot do not reproduce the target dependency. This is evidence about tested source forms, not proof that no C source exists.
+
+## Fresh donor pass after both matches integrated
+
+Compared only the two new donor originals with the four remaining target originals. The score uses `tools/siblings.py` opcode normalization (registers/immediates/shift amounts/branch and jump targets erased), donor as SequenceMatcher sequence A, target as B, `autojunk=False`. No whole-tree search or compiler run.
+
+| Rank | Donor | Target | Opcode ratio | Registers retained ratio |
+| --- | --- | --- | ---: | ---: |
+| 1 | func_801447E0 | func_80144C84 | 0.280000 | 0.163636 |
+| 2 | func_8014BB80 | func_80144C84 | 0.240000 | 0.080000 |
+| 3 | func_8014BB80 | func_8014BFE4 | 0.222222 | 0.059524 |
+| 4 | func_801447E0 | func_8015528C | 0.207921 | 0.118812 |
+| 5 | func_8014BB80 | func_80154DD8 | 0.206186 | 0.106529 |
+| 6 | func_801447E0 | func_8014BFE4 | 0.185022 | 0.079295 |
+| 7 | func_8014BB80 | func_8015528C | 0.173780 | 0.070122 |
+| 8 | func_801447E0 | func_80154DD8 | 0.157895 | 0.101504 |
+
+Source-template inspection of the best donor for each target:
+
+- 447E0 to C84: the longest original opcode block is15 words of multiply/divide arithmetic and final result storage. The useful staged-global transfer is already present in the28-row C84 body. The residual dependency gap occurs elsewhere; do not repeat this transfer.
+- BB80 to BFE4: the longest block is6 words of generic comparison-switch dispatch. BFE4's selector is an input parameter; there is no switch/condition/switch GameState-field lifetime matching the donor's successful pointer alias split. Its stack-home and digit-loop gaps are different.
+- BB80 to DD8: the longest block is7 words of call setup and a state load. DD8's inner EBAC selector is used only once, unlike the donor's repeated choice field around intervening calls. Outer state conditions are ordinary direct accesses in the donor itself. No supported pointer-template transplant follows from this block.
+- 447E0 to5528C: the longest block is8 words of multiplication/division and HI/LO hazard spacing. The target computes separate interpolation arguments rather than a shared output global. Borrowing staged work-global mutations would affect callback-visible state and is not the donor's semantics.
+
+No genuinely new structural source transplant was identified. Loose eight-pair scores and decoded top-block diagnostics remain in ignored `build/T-24522/donor-ratios.json` and donor scripts. No compiler-limit conclusion is established.
