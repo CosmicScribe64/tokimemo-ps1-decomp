@@ -20912,3 +20912,11 @@ Cloud packet results merged. T-24208: MASTER `func_80132444` (624 bytes) matches
 ## [2026-10-20] ticket | T-24207 In Review: ETC func_80140AE4 instruction match
 
 Created [[tickets/T-24207-cloud-packet-etc-80140ae4]] (cloud packet) and moved it to In Review: `func_80140AE4` in `src/ovl/ETC/8013FF80.c` from the T-24129 guard (20 rows) to an instruction match in the scratch single-function `funcdiff`; guard and `INCLUDE_ASM` removed. FAKE: `(f() == 1) != 0` costs the missing ugen temporary; `do { func_80140E80(); } while (0);` puts `D_801500DC` in `$v0`. Both found with `tools/permute.py` on the packet `.s`. Notes in [[matching-notes]] (T-24207), rows in [[register-cheatsheet]]. Docker Hub returned 429 on the first image build; a retried `docker pull ubuntu:22.04` fixed it ([[cloud-matching]]). Local linked proof and review still due.
+
+## [2026-10-20] ticket | T-24209 In Progress: cloud packet ETC func_80144DF0
+
+Created [[tickets/T-24209-cloud-packet-etc-80144df0]] for `func_80144DF0` in `src/ovl/ETC/80143240.c` (T-24129 guard, 26 rows). Toolchain per [[cloud-matching]]; Docker Hub answered the base-image pull with 429, worked around with `mirror.gcr.io` (recipe note added). Packet run from `/tmp/packet.sh`, asm under gitignored `asm/` only.
+
+## [2026-10-20] ticket | T-24209 In Review: ETC func_80144DF0 instruction match
+
+[[tickets/T-24209-cloud-packet-etc-80144df0]]: asm fallback equals the packet reference (single-function scratch setup; `funcdiff --resolve` differs only by the reference's trailing alignment nops). `func_80144DF0` from 47 scratch row-diff lines to 0 in plain C, guard and `INCLUDE_ASM` removed in `src/ovl/ETC/80143240.c`. FAKEs: byte-view store of `D_800E6280.unk_1118` re-read as the plain field (uopt promotes it to `$v0`), a repeated view store in the `D_800E8BEE` arm, `s32 pad[3]` for the `slot` spill offset. Notes in [[matching-notes]] (T-24209), idiom row in [[register-cheatsheet]], funcdiff label-noise and 429 notes in [[cloud-matching]]. Local linked proof and review due.
