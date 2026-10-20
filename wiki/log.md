@@ -2709,3 +2709,18 @@ Private codex/t24520-consolidated now includes main4c5cd6524, coordinator5090e76
 ## [2026-10-20] lint | Verify consolidated ancestry and preserve current main wiki state
 
 Confirmed all five refs main4c5cd6524, coordinator5090e769f, TAIIKUbb1abd853, RPG_BAT2781edac6 and seasonaldcc4dc9aa are ancestors of the clean consolidated head. Docker preservation check proves main log and matching-notes byte prefixes intact and all708 unrelated board cards identical in status/text. Docker wiki lint reports0 broken links and0 status mismatches; size warnings for existing data/t0018-cases and now-expanded append-only log are retained for central rotation. Only source/config/tool delta from main snapshot is src/ovl/VALEN/80132760.c wrong-guard removal. No redundant build claimed; root explicitly owns27/defaultVALEN gate. Future worker pins remain separate from this frozen consolidation.
+## [2026-10-20] ticket | T-24526 introduction semantic-region reconstruction
+
+Root assigned NAME_ENT80142A80.c function43580 after canonical full-TU/source/history audit.835-row gap includes actual opcode/type/control differences, not just registers. Start step7 explicit old-byte fade then step5 full-word decremented X; preserve real SDK/game aggregates and avoid broad grids. [[tickets/T-24526-name-ent-intro-regions]].
+
+## [2026-10-20] build | T-24526 real width and frame reconstruction
+
+Full-TU source controls confirm word old_x removes two spurious sign extensions, explicit old-byte step7 removes Boolean xori, and exact128-word palette endpoint removes extra latch sltu. Naming the real early depth value in the three-record loop restores frame90/table6C without padding. Remaining selector/fade/store allocation is broad; production/header unchanged, no literal proof or new match claimed. Exact control lineage and counts in [[tickets/T-24526-name-ent-intro-regions]].
+
+## [2026-10-20] decision | T-24526 source-only regional checkpoint
+
+Frozen full-TU1075-word/864-row source replay after true X-width fix and natural depth/frame recovery. Regional map and bounded step7/state-flow negatives retained without raw listings; production unchanged, zero new coverage. Root requested freeze then idle; investigation remains open for later work. [[tickets/T-24526-name-ent-intro-regions]] and [[matching-notes]].
+
+## [2026-10-20] build | Consolidated archives verified and cheaper-first matching resumed
+
+Root published TAIIKU/RPG/VALEN archive consolidation at6e9467a90 after all27 executable hashes and header/global/prototype guards passed. VALEN stale guard removal preserves its original fallback; no coverage gain. Reviewed NAME_ENT regional source packet762014be1 for archive preservation. Latest GitHub read shows no open PRs and unchanged issue65 timestamp14:31:11Z. Luna high now tests one fresh MAIN54E6C aggregate-access hypothesis; prior Sol workers are idle. [[status]] retains6814/6952 functions and91.8% bytes; [[tickets/T-24500-completion-orchestration]] goal remains100%.

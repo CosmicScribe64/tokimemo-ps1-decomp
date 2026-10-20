@@ -60,6 +60,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24521-taiiku|T-24521 Match remaining TAIIKU functions]]
 
 - [ ] [[tickets/T-24520-parallel-tail-coordination|T-24520 Coordinate TAIIKU RPG_BAT and seasonal matching lanes]]
+- [ ] [[tickets/T-24526-name-ent-intro-regions|T-24526 Reconstruct NAME_ENT introduction state-machine regions]]
+
 
 
 
