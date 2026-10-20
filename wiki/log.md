@@ -2118,3 +2118,14 @@ At the root's explicit request, moved [[tickets/T-24523-seasonal-source-hypothes
 ## [2026-10-20] decision | Review corrected fourteen-edit VALEN foundation
 
 Parent and self review of drafts/T-24523/VALEN/func_80133088 found no blockers: C89, safe disjoint union phases, documented FAKE choices, exact annotated14-cost reproduction, precise source-level blockers and no listings/assets. Production/header diff remains empty. [[tickets/T-24523-seasonal-source-hypotheses]] returns from In Progress to In Review with matching kanban; coverage remains two exact functions/1,196 bytes.
+## [2026-10-20] decision | T-24501 isolate choice-string setup frame gap
+
+Cleanly reconstructed `func_800767A4` string buffers, indexed zero loop, shared RNG and post-read count/sentinel stores. All 233 instruction operations/order/registers match; only frame offsets remain, with exact target/draft maps in [[matching-notes]] and `drafts/T-24501/main/func_800767A4.c`. Bounded padding/alignment/grouping forms isolate a word before the 32-ID array; no production/header change. Requested focused parent frame consult; [[tickets/T-24501-main-tail]] remains In Progress.
+
+## [2026-10-20] decision | T-24501 queue source-only frame consult packet
+
+Added `drafts/T-24501/replay.py` and a FAKE comment on the archived unused scalar, so the parent can replay the clean body and exact frame maps without any committed full-TU or assembly dump. [[matching-notes]] records the Docker replay command and bounded hypotheses. Parent will queue the isolated frame packet behind its current consult; continuing a fresh structural target.
+
+## [2026-10-20] build | T-24501 verify both source-only frame packets
+
+Replayed clean `func_800767A4` archive at resolved edit cost40 and exact diagnostic `func_800767A4-33.c` at30. The latter contains both33 candidate entries and an unused scalar after the array; [[matching-notes]] corrects the earlier abbreviated alternative description. Both archives identify FAKE locals; replay helper accepts the alternate body path. No production/header change.
