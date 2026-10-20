@@ -247,6 +247,52 @@ Pix2Out *arg1;
 
 INCLUDE_ASM("asm/nonmatchings/main/8004AD60", make_color_bar);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", make_color_bar16);
+void make_color_bar16(void *arg0, u32 start, u32 end, s32 count, s32 flag) {
+    /* T-24501: declaration order preserves the interpolation spill homes. */
+    s32 i;
+    Pix2Out *p;
+    s32 sr;
+    s32 er;
+    s32 sg;
+    s32 eg;
+    s32 sb;
+    s32 eb;
+
+    sr = (start >> 16) & 255;
+    sg = (start >> 8) & 255;
+    sb = start & 255;
+    er = (end >> 16) & 255;
+    eg = (end >> 8) & 255;
+    eb = end & 255;
+    p = arg0;
+    i = 0;
+    if ((count / 2) > 0) {
+        do {
+            p[i].r1 = ((s32)((count - (i * 2 + 1)) * er + (i * 2 + 1) * sr) / count) / 8;
+            p[i].r0 = ((s32)((count - i * 2) * er + i * 2 * sr) / count) / 8;
+            p[i].g1 = ((s32)((count - (i * 2 + 1)) * eg + (i * 2 + 1) * sg) / count) / 8;
+            p[i].g0 = ((s32)((count - i * 2) * eg + i * 2 * sg) / count) / 8;
+            p[i].b1 = ((s32)((count - (i * 2 + 1)) * eb + (i * 2 + 1) * sb) / count) / 8;
+            p[i].b0 = ((s32)((count - i * 2) * eb + i * 2 * sb) / count) / 8;
+            i++;
+        } while (i != (count / 2));
+    }
+    if (flag) {
+        for (i = 1; i < (count / 2); i++) {
+            p[i].x1 = 1;
+            p[i].x0 = 1;
+        }
+        p[0].x1 = 1;
+    } else {
+        for (i = 0; i < (count / 2); i++) {
+            p[i].x1 = 0;
+            p[i].x0 = 0;
+        }
+    }
+    p[0].x0 = 0;
+    p[0].r0 = 0;
+    p[0].g0 = 0;
+    p[0].b0 = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004AD60", col2sepia);
