@@ -2941,3 +2941,35 @@ User explicitly directs uninterrupted pursuit of completion under [[tickets/T-24
 ## [2026-10-20] lint | Refresh indexes after get_fnt promotion
 
 Docker catalog refresh reports 723 tickets, 423 sections and 3,074 indexed functions. Lint reports zero broken links and zero status mismatches, with the two existing large-page warnings. `git diff --check` passes. Generated indexes also catch up previously unindexed campaign notes.
+
+## [2026-10-20] build | Commit get_fnt and continue the remaining queue
+
+Committed reviewed [[tickets/T-24601-get-fnt-match]] as d7c7d1a97. [[tickets/T-24600-finish-matching]] continues: MAIN func_80054E6C frame-only probe removes four diagnostic edits but retained-address lifetimes remain wrong; explicit typed/integer pointer variants are worse. These are scratch experiments, not additional coverage.
+
+## [2026-10-20] query | Trace remaining save/date live ranges
+
+[[tickets/T-24600-finish-matching]] records save-helper pointer-retention and GEKO selector traces in [[matching-notes]]. GEKO table placement is now understood; a specific selector split removes its home store but not the remaining register differences. Continuing with dependency-preserving use order; production unchanged after d7c7d1a97.
+
+## [2026-10-20] build | GEKO date helper reaches target instruction count
+
+[[tickets/T-24600-finish-matching]]: Docker full-unit probes isolate the duplicated date-expression range. Splitting subtraction and addition with a range-splitting empty test reduces the candidate to 54 instructions and cost 6. Type-only variants do not help. Recorded the causal result in [[matching-notes]]; dependency-valid statement-order probes continue in ignored scratch.
+
+## [2026-10-20] ticket | GEKO date-selector candidate matches instruction words
+
+Created [[tickets/T-24602-geko-date-selector]] In Progress under [[tickets/T-24600-finish-matching]]. The date-result array closes the final two register operands; a struct does not. Recorded the result in [[matching-notes]] and added the board card. Literal linked verification and source minimization remain pending.
+
+## [2026-10-20] build | Promote literal-matching GEKO date selector
+
+[[tickets/T-24602-geko-date-selector]] replaces assembly with C in src/ovl/GEKO/80142760.c. Minimized dead initialization and selector-test requirements, removed the redundant later test, and annotated the retained allocation constraints. Docker literal verification passes for both private object and default production source (216 bytes). Full build and two independent review axes started; no review completion claimed yet.
+
+## [2026-10-20] ticket | GEKO date selector enters review
+
+[[tickets/T-24602-geko-date-selector]] In Progress -> In Review after default linked MATCH and successful incremental production build. Standards and spec reviewers independently report no findings. All three initial result stores and the first empty selector test are retained with a FAKE explanation; the later test was removed. Existing binary/header targets are current; GEKO and global checks reran successfully.
+
+## [2026-10-20] ticket | GEKO date selector complete after review
+
+[[tickets/T-24602-geko-date-selector]] In Review -> Done: both review axes have no findings, default linked proof passes, and a fresh Docker SHA1 verification passes all 27 executables. Census is 6,818/6,952 functions and 2,092,820/2,276,920 bytes; 134 remain. Updated [[status]]. [[tickets/T-24600-finish-matching]] remains In Progress.
+
+## [2026-10-20] lint | Date-selector completion wiki checks
+
+Refreshed ticket/function catalogs for [[tickets/T-24602-geko-date-selector]]. Docker wiki lint: zero broken links and zero ticket/board mismatches; only the existing large-page warnings for [[data/t0018-cases]] and [[log]]. `git diff --check` passes.

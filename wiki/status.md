@@ -9,12 +9,14 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Progress (2026-10-20)
 
-- Game code: 6,817 / 6,952 functions, 2,092,604 / 2,276,920 bytes (91.9%), measured with Docker `tools/progress.py` after T-24601 `get_fnt` promotion. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
+- Game code: 6,818 / 6,952 functions, 2,092,820 / 2,276,920 bytes (91.9%), measured with Docker `tools/progress.py` after T-24602 GEKO date-selector promotion. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
 - Complete units: TT 303/303, DATE2 102/102, and every overlay not listed below.
-- Remaining by unit (135 functions): main 52, TACO 13, GEKO 9, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
+- Remaining by unit (134 functions): main 52, TACO 13, GEKO 8, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
 
 ## Active work
+
+- T-24602 GEKO `func_80144198` adds 216 literal linked bytes with the date-result array reconstruction. Full build, fresh 27 executable hashes, and independent standards/spec reviews pass. T-24600 continues with 134 functions remaining; its two completed functions add 1,252 bytes.
 
 - T-24600 completion continues until the full goal is achieved. First verified promotion: T-24601 `get_fnt`, 1,036 default-C bytes; full 27 checksums, header/global/prototype guards and independent standards/spec reviews pass. MAIN `func_8006C988`, `func_80047560` and GEKO `func_80133024` remain unmatched after bounded scratch probes. See [[matching-notes#T-24601: get_fnt literal match]].
 
