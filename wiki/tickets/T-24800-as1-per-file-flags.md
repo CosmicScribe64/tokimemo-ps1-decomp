@@ -41,3 +41,5 @@ Worktree `tokimemo-wt/as1-flags`, branch `as1-flags` (from `w2-good`).
 - Tool changes: `tools/as1_flag_sweep.py` (new); per-object IDO options in `configure.py` and `tools/cc.py`
   (`toolchain_of`, `toolchain_of_source`); `funcdiff_verify`, `order_search` and `permute` compile with the
   object's toolchain; tests in `tools/test_cc.py` and `tools/test_configure_toolchains.py`.
+
+- 2026-10-20 orchestrator: the VALEN/80133C70 `-Wb,-noxbb` line and the func_80134030 hunk were dropped before merge: an option change with no positive evidence is a fakematch (CODING_STANDARDS 7a), and T-24900 matches the function in C with a volatile declaration. The per-object option support and the harness stay.
