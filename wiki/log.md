@@ -2109,3 +2109,11 @@ The approved canonical prototype rebuild exits zero, including NAME_ENT and SHUG
 ## [2026-10-20] decision | T-24501 archive bounded MAIN repairs
 
 Preserved four readable scratch bodies in `drafts/T-24501/main/` and recorded exact resolved edit costs and remaining structural differences in [[matching-notes]] and [[tickets/T-24501-main-tail]]. Typed CD records, palette loops and lighting packet fields improved malformed drafts but do not match. Existing calendar guard and fresh typed menu also remain blocked; a bounded 11-compile menu viewsweep gave no gain. Production C and shared headers unchanged. Parent integrated the two earlier proven matches; continuing smaller helper selection, excluding already exhausted col2sepia history.
+
+## [2026-10-20] build | T-24501 menu_bar_color literal proof
+
+Recovered the old data-ownership blocker by assigning only the 64-byte initialized menu palette array to `src/main/8004F870.c` through an explicit YAML island. Link-map boundaries preserve the prior raw range and next C data owner. Separate reset-store lines and a marked redundant high-nibble mask yield literal default linked equality for all 84 bytes. Pre-header fresh build, 27/27 hashes, headers and prototype branch checks pass. Added the missing canonical function declaration with parent approval; final validation and parent review pending. Evidence in [[matching-notes]] and [[tickets/T-24501-main-tail]].
+
+## [2026-10-20] build | T-24501 menu palette final verification and review
+
+Fresh post-prototype 520-step build passed, explicit hashes passed 27/27 images, literal default private link proved `menu_bar_color`'s 84 bytes, headers passed, and branch prototypes report zero new disagreements (15 known). Parent reviewed the exact source/config/header change and data boundaries with no blocking standards findings. Removed the cosmetic blank after the marked FAKE mask; literal proof rebuilt the final source. [[tickets/T-24501-main-tail]] remains In Progress for further MAIN work.

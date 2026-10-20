@@ -1,6 +1,9 @@
 #include "common.h"
 #include "game.h"
 
+/* Menu palette colors, data island 0x800E3680..0x800E36BF. */
+u32 D_800E3680[16] = {0};
+
 /* get_now_k (8004E500.c) returns u8; xa_wait needs that view, the other callers keep the implicit int one. T-17018 */
 u8 get_now_k(void);
 
@@ -177,18 +180,15 @@ s32 func_80050324(s32 menu, s32 reverse) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_near_menu);
 
-/* NON_MATCHING: T-17018 (inherited T-12050), 17 differing lines; the original shares one lui $at between D_800E3680 and D_800E3684, which needs a definition in this object, and its data range (config/objects/main.txt) does not cover 0x800E3680 */
-#ifdef NON_MATCHING
 void menu_bar_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     if (arg0 >= 0x10) {
-        D_800E3680[0] = 0x832F7FAF; D_800E3680[1] = 0x822F7F2F;
+        D_800E3680[0] = 0x832F7FAF;
+        D_800E3680[1] = 0x822F7F2F;
         return;
     }
-    D_800E3680[arg0] = ((arg2 & 0xF) << 0x18) + arg1 + (arg3 << 0x1C);
+    /* FAKE: redundant nibble mask preserves the original temporary numbering. T-24501 */
+    D_800E3680[arg0] = ((arg2 & 0xF) << 0x18) + arg1 + ((arg3 & 0xF) << 0x1C);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_bar_color);
-#endif
 
 void menu_bar_show(menu)
     s32 menu;

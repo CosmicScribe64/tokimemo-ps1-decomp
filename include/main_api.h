@@ -2234,6 +2234,7 @@ void func_8004FC10();
 void func_800504CC();
 s32 func_80050AB8();
 void func_80050B54();
+void menu_bar_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void menu_bar_show();
 void func_80050C24(s32 arg0, s32 arg1);
 void x_taku_menu_set(s32 arg0, s32 arg1);
