@@ -642,3 +642,9 @@ After T-24515/lane histories, tested only the fresh input-read hypothesis for38C
 ## T-24525: NAME_ENT indexed post-test negative
 
 398EC's direct-global indexed for loop and fresh direct-global indexed post-test do/while both give126 words/173 rows against123 target in full TU; decoded comparisons identical. Earlier post-test controls used pointer aliasing, so this combination was tested once after lane history review. It does not change the allocation/arithmetic gap; no further loop grid or production/header edit. Concise replay/private paths in [[tickets/T-24525-name-ent-indexed-posttest]].
+
+## T-24526: NAME_ENT introduction real width/frame reconstruction
+
+43580 canonical archive1078 words/835 rows has actual opcode/control gaps, not just registers. Target passes full-word decremented X after halfword store; s32 old_x removes two spurious sign extensions. Exact128-word palette-copy endpoint removes extra latch sltu. Naming early actor depth before index++ naturally restores target frame90/table6C without padding. Preserved full-TU body1075 words/864 rows; no production/header change or new match. Source-only body/declarations/NOTES/replay in drafts/T-24526/NAME_ENT/func_80143580.
+
+Bounded step7 explicit old-byte controls remove xori but alter color webs; selector state/counter split and direct-global state control fail, recorded with exact metrics in packet. Current trace shows separate index/cvt webs but does not prove original coalescing. Regional evidence distinguishes genuine X-width repair, frame/counter reconstruction and remaining base/color/constant/selector/store differences; no blanket compiler-limit claim. Root requested freeze and idle, no additional microgrid; [[tickets/T-24526-name-ent-intro-regions]] remains open.

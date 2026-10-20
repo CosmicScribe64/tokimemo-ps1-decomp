@@ -53,6 +53,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24526-name-ent-intro-regions|T-24526 Reconstruct NAME_ENT introduction state-machine regions]]
+
 
 
 - [ ] [[tickets/T-24502-taco-completion|T-24502 Match remaining TACO functions]]

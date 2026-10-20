@@ -2191,3 +2191,15 @@ Full-TU control and sole direct-global indexed post-test variant both126 words/1
 ## [2026-10-20] ticket | T-24525 investigation reviewed
 
 Root standards review passes with no findings; full-TU unchanged result meets investigation acceptance. Moved In Review to Done, board synchronized; production unchanged. [[tickets/T-24525-name-ent-indexed-posttest]].
+
+## [2026-10-20] ticket | T-24526 introduction semantic-region reconstruction
+
+Root assigned NAME_ENT80142A80.c function43580 after canonical full-TU/source/history audit.835-row gap includes actual opcode/type/control differences, not just registers. Start step7 explicit old-byte fade then step5 full-word decremented X; preserve real SDK/game aggregates and avoid broad grids. [[tickets/T-24526-name-ent-intro-regions]].
+
+## [2026-10-20] build | T-24526 real width and frame reconstruction
+
+Full-TU source controls confirm word old_x removes two spurious sign extensions, explicit old-byte step7 removes Boolean xori, and exact128-word palette endpoint removes extra latch sltu. Naming the real early depth value in the three-record loop restores frame90/table6C without padding. Remaining selector/fade/store allocation is broad; production/header unchanged, no literal proof or new match claimed. Exact control lineage and counts in [[tickets/T-24526-name-ent-intro-regions]].
+
+## [2026-10-20] decision | T-24526 source-only regional checkpoint
+
+Frozen full-TU1075-word/864-row source replay after true X-width fix and natural depth/frame recovery. Regional map and bounded step7/state-flow negatives retained without raw listings; production unchanged, zero new coverage. Root requested freeze then idle; investigation remains open for later work. [[tickets/T-24526-name-ent-intro-regions]] and [[matching-notes]].
