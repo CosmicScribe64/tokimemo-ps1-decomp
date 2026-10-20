@@ -2139,3 +2139,8 @@ Parent review found the BAC4 raw instruction comparison exceeded standards10 exc
 ## [2026-10-20] build | T-24502 scrolling sampler matched
 
 func_8013A790 matches1,492 default linked bytes; all27 binary hashes and source/prototype guards pass. Parent code review found no blockers. Read-only trace identified the count/bound priority gap; documented zero-subtree use fixes the eight-register-word swap without emitted arithmetic. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record all three source-local FAKE controls and campaign six matches9,136 bytes. Continued on clean archive ancestry, preserving scratch work.
+
+
+## [2026-10-20] decision | T-24502 font quad checkpoint
+
+Archived repaired SDK func_80139424 (cost513,404/419 words) with concise frame/range diagnostics and replay commands. Production stays asm; matched K&R callers keep their declaration. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the bounded reconstruction. Next func_80153B38 uses its recorded in-loop color decode as the baseline.
