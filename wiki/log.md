@@ -2182,3 +2182,31 @@ Reopened [[tickets/T-24522-rpg-bat]] and moved its board card to In Progress at 
 ## [2026-10-20] query | T-24522 fresh donor pass negative
 
 Recorded all8 original-normalized BB80/447E0-to-remaining-target ratios and inspected the best source-template pair per target. The only useful447E0/C84 arithmetic transfer was already applied; other short overlaps do not support a new source transplant. No compiler runs or new coverage. Returned [[tickets/T-24522-rpg-bat]] and board to In Review; full evidence in drafts/T-24522/README.md.
+
+## [2026-10-20] ticket | T-24522 aggregate path reconstruction In Progress
+
+Reopened [[tickets/T-24522-rpg-bat]] at coordinator request for continued structural work on DD8/5528C. Read T-24027, T-17106 and T-17114 history. New DD8 ownership evidence: denominatorEC68 is RpgRec18 D_EC58.unk10, already used canonically by matched801321D0.c. Proposed typed path pointer and shared quotient scalar replace inherited fake homes; no no-op-reference grid or compiler patch.
+
+## [2026-10-20] query | T-24522 DD8 canonical path probe
+
+Canonical RpgRec18 duration ownership and typed path pointer preserve326/288; real shared quotient331/293 worsens frame and does not establish the desired quotient lifetime. Approved one fresh explicit shared-call CFG source test from the original branch graph. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 interval accumulator and clamp ownership
+
+`func_8015528C` shared start accumulator plus direct lower-bound product improves302/246 to298/242. Original-derived clamp graph inspection identifies m2c cross-arm zero-block sharing and modulo factoring as a broad remaining structural difference. Testing one independent-clamp successor reconstruction; see [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 branch graph hypotheses fold
+
+DD8 shared sound label remains326/288. Independent 5528C start clamps worsen368/268 and still sink modulo into one merged block; source goto sharing is insufficient explanation. Recorded a single domain-proven signed-byte remainder hypothesis before compilation. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 modulo duplication source cause isolated
+
+Asymmetric s8 and conditionally approved s16 remainder views each restore original duplicated modulo blocks and saved-register ownership in5528C, but retain real extensions (408/246). Recorded the positive causal evidence without a match claim. Testing exactly one coordinator-approved multiply-by-one expression wrapper, not an identity grid. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 branch-local modulo restored
+
+One first-arm remainder-times-one expression keeps target's duplicated modulo blocks with zero extension instructions, restores saved-register ownership and exactly375-word length. Current source-only lead274/206, still nonmatching. Recorded next real start-accumulator sharing hypothesis before compilation. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 preserve structural modulo lead
+
+Preserved canonical DD8 source326/288 and improved5528C source274/206 with original375-word length and duplicated modulo blocks. Recompiled exact archived5528C text after local renaming. Initial/loop raw-value sharing worsens412/392 and is rejected. No production changes. Evidence and FAKE documentation: drafts/T-24522/README.md, [[tickets/T-24522-rpg-bat]].

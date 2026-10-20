@@ -53,6 +53,9 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24522-rpg-bat|T-24522 Match remaining RPG_BAT functions]]
+
+
 
 
 
@@ -68,7 +71,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24522-rpg-bat|T-24522 Match remaining RPG_BAT functions]]
 
 
 

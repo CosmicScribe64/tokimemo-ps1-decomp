@@ -1,7 +1,7 @@
 ---
 id: T-24522
 title: Match remaining RPG_BAT functions
-status: In Review
+status: In Progress
 assignee: Codex
 created: 2026-10-20
 updated: 2026-10-20
@@ -78,3 +78,37 @@ Coordinator explicitly authorized the new two-word snapshot hypothesis and at mo
 ### 2026-10-20 fresh BB80/447E0 donor pass
 
 Reopened In Progress for coordinator-authorized comparison of only the two newly integrated originals against the four remaining originals. All8 ranked opcode-normalized and register-retained ratios, method and source-template inspection are saved in drafts/T-24522/README.md. Best pairs:447E0/C84 .280000; BB80/BFE4 .222222;447E0/5528C .207921; BB80/DD8 .206186. The useful447E0 arithmetic transfer was already applied to C84. Other matched blocks are generic switch dispatch, call setup or HI/LO division spacing and do not carry the donor's successful selector lifetime or result-global semantics. No fresh structural transplant justified compilation; zero compiler runs in this pass. Returned ticket and board to In Review for final coordinator handoff.
+
+### 2026-10-20 continued DD8 structural reconstruction
+
+Read T-24027, T-17106 and T-17114 before testing. Ownership evidence: EC68 is D_EC58.unk10, already used by matched801321D0.c; x/y endpoints are unk04/unk0C of the same RpgRec18. Baseline326/288, canonical duration326/288, typed path pointer replacing one fake home326/288. Replacing another fake home with a shared quotient before x/y negation gives331/293, frame8 bytes larger and quotient separation still unavailable. No artificial reference padding used.
+
+Next approved causal test: explicit shared sound-call label and common switch join, reconstructed from original DD8 first basic blocks. This differs from prior predicate-order reversal: state1/counter gate and state>=2 branch converge on one call block. Target places slti(state,2) in counter-branch delay slot while current compound predicate lifts it earlier. One form only, no predicate grid.
+
+### 2026-10-20 5528C start accumulator and clamp graph
+
+Current baseline302/246; share the quotient as the mutable start accumulator301/245; remove the now-unnecessary precomputed (i-1)*stride local298/242. This is not the earlier broad natural-bounds rewrite: sentinel100, branch order and callback order remain unchanged.
+
+The saved diff exposes a causal structural mismatch: original duplicates signed modulo3 within both upper-bound arms before independent negative-start clamps. Current m2c cross-arm goto block_9 shares the else zero block, and the compiler factors modulo after both bounds/clamps; the hoisted constant3 then receives fp rather than original s5. A new one-form source test removes that cross-arm goto and uses two independent zero assignments, as the target successors show. No new global ownership claimed; work-array view remains explicitly FAKE.
+
+The explicit shared DD8 sound label compiles326/288, identical to canonical baseline. Its separate source branches do not change the optimizer's compound-predicate graph.
+
+5528C independent clamps compile368/268 and still merge modulo after both clamps: the emitted single div/mfhi survives, target has two branch-local divisions. Thus the m2c cross-arm goto alone is not the cause. No compiler-limit claim.
+
+A precise uncompiled narrowing hypothesis was sent to the coordinator: signed remainder modulo3 is always[-2,2], so an s8 conversion of just one arm's remainder is semantically redundant. If this preserves distinct uopt expressions and as1 removes the conversion, it may recover target branch-local divisions; it would be FAKE because the differing arm views lack source evidence. This is separate from prior no-op reference and predicate grids.
+
+### 2026-10-20 modulo expression identity isolated
+
+Single first-arm s8 conversion of the signed remainder restores both branch-local division/remainder blocks and the original saved-register ownership: modulo divisor3 in s5, stride s6, phase pointer s7, progress pointer fp. It is still nonmatching408/246 because real sll24/sra24/move instructions remain after mfhi. The domain[-2,2] proves semantics but the backend does not eliminate conversion. The conditionally approved s16 counterpart also408/246 and retains16-bit extension. This establishes that expression equality permits the factoring; no unreachable-CFG/compiler-limit conclusion.
+
+Coordinator authorized exactly one follow-up: first-arm remainder multiplied by1 versus second-arm plain remainder, using the already demonstrated C84 operand-wrapper idiom. No identity-operation grid. Pair-aggregate alias reconstruction remains a future ownership-backed idea if needed.
+
+### 2026-10-20 5528C branch-local modulo without conversion
+
+Exactly one first-arm `(phaseSum % 3) * 1` wrapper (second arm plain) preserves both target modulo blocks without real conversion instructions. Score274 literal/206 aligned, versus baseline302/246 and shared-start298/242. Compiled code and target are both375 words: callback case-block lengths and post-modulo dispatch addresses agree. Divisor3/stride/phase-pointer/progress-pointer saved-register ownership now matches. The expression-identity hypothesis is confirmed; still no literal match and no production edit. Wrapper is marked FAKE. Remaining initial work-base/progress-value registers, operand choices and color/call scheduling need work.
+
+New concrete sharing hypothesis sent before compilation: reuse the start accumulator for both initial raw progress value and loop quotient, removing temp_v0. Target's initial raw progress is v0 and base v1; current has v1 and t0. Real scalar sharing may free v1 for the common work base. This does not rerun the old direct phase decrement or type grids.
+
+### 2026-10-20 structural evidence checkpoint
+
+Actual p532 first-arm remainder-times-one body preserved at drafts/T-24522/RPG_BAT/func_8015528C/body.c, with meaningful local names and both FAKE sites documented. Exact archived text recompiled274/206. DD8 canonical duration ownership body preserved326/288. Reusing start accumulator for initial raw progress worsens412/392 and is rejected. Full experiment table and causal observations saved in drafts/T-24522/README.md; no production/header edits, no new coverage, no compiler-limit claim. Ticket remains In Progress for continued structural work.

@@ -48,3 +48,26 @@ Source-template inspection of the best donor for each target:
 - 447E0 to5528C: the longest block is8 words of multiplication/division and HI/LO hazard spacing. The target computes separate interpolation arguments rather than a shared output global. Borrowing staged work-global mutations would affect callback-visible state and is not the donor's semantics.
 
 No genuinely new structural source transplant was identified. Loose eight-pair scores and decoded top-block diagnostics remain in ignored `build/T-24522/donor-ratios.json` and donor scripts. No compiler-limit conclusion is established.
+
+## Continued structural reconstruction: DD8 and5528C
+
+Coordinator requested continued work after the donor pass. No production C or shared header changed. Read T-24027/T-17106/T-17114 first; all probes used one Docker compiler at a time.
+
+DD8 ownership: EC68 is the existing RpgRec18 D_EC58.unk10, already accessed canonically by matched801321D0.c. Saved `RPG_BAT/func_80154DD8/body.c` retains this canonical duration view at326/288, same as current baseline. A typed path pointer also326/288; replacing another fake frame home with a real shared quotient331/293 adds8 frame bytes and does not preserve the desired quotient lifetime. An explicit original-derived shared sound-call label graph also326/288, identical to the canonical baseline. No no-op reference or predicate grid was repeated.
+
+5528C source-only body is now `RPG_BAT/func_8015528C/body.c`:274 literal /206 aligned. Its preserved text was recompiled after replacing decompiler variable names with descriptive local names; metric remains274/206. It is not production coverage.
+
+| Source hypothesis | Literal rows | Aligned rows | Observed result |
+| --- | ---: | ---: | --- |
+| T-24027 current baseline | 302 | 246 | Modulo factored after bounds and clamp |
+| Shared quotient/start accumulator | 301 | 245 | Minimal scalar-lifetime improvement |
+| Direct lower-bound product, remove redundant temporary | 298 | 242 | Small improvement, same modulo factoring |
+| Independent negative-start clamps in both arms | 368 | 268 | Still factors modulo; source goto sharing alone insufficient |
+| First-arm s8 remainder, other arm plain | 408 | 246 | Restores both modulo blocks and saved-register ownership; retains sll24/sra24/move |
+| Conditionally approved s16 counterpart | 408 | 246 | Same causal result; real16-bit extension remains |
+| First-arm remainder-times-one, other arm plain | 274 | 206 | Restores both modulo blocks without real extensions;375 words as target |
+| Reuse start variable for initial raw progress | 412 | 392 | Worsens substantially; rejected |
+
+The modulo domain[-2,2] proves both narrow conversions preserve semantics, but the compiler retains their extensions. The single multiply-by-one wrapper is an existing project idiom and is explicitly FAKE: it distinguishes the two source expressions long enough to keep modulo in both upper-bound arms, yet generates no real multiplication. This restores original ownership of divisor3(s5), stride(s6), phase pointer(s7) and progress pointer(fp), as well as callback-case block lengths and dispatch offsets. Remaining differences include initial work-base/raw-progress registers, operand choices, and color/call scheduling. No exact match or compiler-limit conclusion.
+
+The work-array view remains explicitly FAKE because the global arena's real complete type is unresolved. Known callers use progress/phase pairs at work indexes50/51 and52/53, but the helper's interface takes separate indexes; no unproven adjacency assumption was introduced. Inputs, full candidates and diagnostics remain in ignored `build/T-24522/` (`dd8_*`, `dd9_*`, `p528_*` through `p533_*`).
