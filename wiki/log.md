@@ -2217,3 +2217,7 @@ Fresh ENDING SHA1 passes. Scalar84/199 uses56; s16[1]87/200 fixes54 with early s
 ## [2026-10-20] decision | T24560 raw-mask negative and slot handoff
 
 One real raw-bonus local replacing one pad word plus direct0xE00 predicate gives96/199, emits extraANDI and keeps raw v1/level a0, unlike target. No more raw/padding variants. Retained FAKE-marked box80 fixes exactly two spill/load immediates56->54. Docker ENDING SHA1/header and C/Python checks pass; production unchanged. [[tickets/T-24560-ending-slot]] moves to In Review after standards/spec self-review; no match or full27 claim.
+
+## [2026-10-20] decision | T24560 worker resource handoff
+
+Stopped new probes/builds under resource-conservation steering. Preserved4a90979c7 and recorded the untested387B0 mixed-alias sibling lead in [[tickets/T-24560-ending-slot]]. Documentation only; no overall-goal pause or production change.
