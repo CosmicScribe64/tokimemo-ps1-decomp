@@ -2093,3 +2093,15 @@ Created [[tickets/T-24501-main-tail]] In Progress on an isolated worktree from `
 ## [2026-10-20] build | T-24501 all 27 checksums verified
 
 Fresh Docker `ninja -j 6` exited zero and reported all 27 executable checksum checks OK for the literal `func_800654D0` C change. Header and prototype checks pass. Parent source review against CODING_STANDARDS.md has no outstanding finding; [[tickets/T-24501-main-tail]] remains In Progress for further MAIN work.
+
+## [2026-10-20] build | T-24501 literal color interpolation match
+
+`make_color_bar16` in `src/main/8004AD60.c` passes literal default-C private-link proof for all 1,540 target bytes. [[matching-notes]] records signed channel arithmetic, direct half-count expressions, alpha order, and exact declaration homes; no FAKE or header/tool changes. [[tickets/T-24501-main-tail]] also records clean-draft blockers for `make_color_bar` and `func_80065964`.
+
+## [2026-10-20] decision | T-24501 declare matched gradient API
+
+Parent review accepted the `make_color_bar16` body and identified the absent canonical declaration required by CODING_STANDARDS.md 8a. Confirmed address `0x8004BBA8` has no alias prototype, then added its exact signature to `include/main_api.h` with parent approval. Pre-header 27/27 hashes passed; rebuild must validate the NAME_ENT and SHUGAKU callers.
+
+## [2026-10-20] build | T-24501 gradient declaration review resolved and 27 hashes pass
+
+The approved canonical prototype rebuild exits zero, including NAME_ENT and SHUGAKU callers. Literal default-C private-link proof for `make_color_bar16` remains MATCH (1,540 bytes), explicit SHA1 recomputation passes all 27 images, headers pass, and the prototype branch check has zero new disagreements. Parent review's declaration finding is resolved; no source-body findings remain. [[tickets/T-24501-main-tail]] stays In Progress for the remaining MAIN sweep.

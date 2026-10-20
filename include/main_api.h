@@ -2166,6 +2166,7 @@ void func_8004AEB0();
 void func_8004B19C(s32 a, s32 b, s32 c);
 void func_8004B338(s32 arg0, s32 arg1, s32 arg2);
 s32 func_8004B358(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void make_color_bar16(void *arg0, u32 start, u32 end, s32 count, s32 flag);
 void func_8004BB54();
 s32 func_8004BC20(s32 arg0);
 void func_8004C060();
