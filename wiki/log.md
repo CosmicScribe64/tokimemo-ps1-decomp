@@ -2219,3 +2219,27 @@ Published MAIN func_80046754 at6a2c6eb4b:884 literal C bytes,27 independent hash
 ## [2026-10-20] decision | T-24503 reconstruct GEKO club flag writes
 
 [[tickets/T-24503-geko-option-completion]]: func_80133C50 improves from 113 to 66 with existing named flag-bit stores, restoring the original 209-instruction sequence and frame 0x128. A documented matching-only empty test improves to 44 without structural instruction gaps. Archived both source forms and the local strcpy ABI view; bounded follow-ups leave temporary numbering and two comparison operand pairs. The production fallback is retained.
+
+## [2026-10-20] ticket | T-24524 NAME_ENT input-read timing
+
+Root assigned NAME_ENT80132000.c after the TACO checkpoint. Read T-24515 and lane histories; claim a bounded full-TU diagnostic source-byte read-view hypothesis for38C1C, preserving recovered date widths/counters/endpoints. No shared header or production edit yet. [[tickets/T-24524-name-ent-copy-reads]].
+
+## [2026-10-20] decision | T-24524 source-read timing disproved
+
+All four full-TU controls give181 words/104 rows: unchanged, volatile first read, volatile second reads, volatile pointer. Original nop-slot load-hoisting differences persist; no production/header edits or new match. Ticket moved In Progress to In Review, awaiting root standards review; bounded negative replay recorded in [[tickets/T-24524-name-ent-copy-reads]] and [[matching-notes]].
+
+## [2026-10-20] ticket | T-24524 investigation reviewed
+
+Root standards review passes with no findings; concise full-TU negative meets investigation acceptance. Moved In Review to Done, board synchronized. No production changes or coverage claim. [[tickets/T-24524-name-ent-copy-reads]].
+
+## [2026-10-20] ticket | T-24525 indexed post-test hypothesis
+
+Root assigned NAME_ENT80139740.c after read-only lane triage. Test one direct-global indexed do/while against T-24515 for-loop control; earlier do-loop used Rec24 pointer aliasing. No shared header or production change. [[tickets/T-24525-name-ent-indexed-posttest]].
+
+## [2026-10-20] decision | T-24525 indexed post-test unchanged
+
+Full-TU control and sole direct-global indexed post-test variant both126 words/173 rows; decoded comparisons identical. Loop header form does not explain remaining allocation/arithmetic differences, so no grid follows. Moved In Progress to In Review; source/header/config/tools unchanged. [[tickets/T-24525-name-ent-indexed-posttest]] and [[matching-notes]].
+
+## [2026-10-20] ticket | T-24525 investigation reviewed
+
+Root standards review passes with no findings; full-TU unchanged result meets investigation acceptance. Moved In Review to Done, board synchronized; production unchanged. [[tickets/T-24525-name-ent-indexed-posttest]].

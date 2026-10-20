@@ -98,9 +98,14 @@ kanban-plugin: board
 
 
 
+
+
 ## Done
 
 - [ ] [[tickets/T-24511-tel|T-24511 Investigate remaining TEL functions]]
+- [ ] [[tickets/T-24525-name-ent-indexed-posttest|T-24525 Test NAME_ENT indexed post-test record loop]]
+
+- [ ] [[tickets/T-24524-name-ent-copy-reads|T-24524 Investigate NAME_ENT copy-loop source read timing]]
 
 - [ ] [[tickets/T-24141-main-remaining-sweep-e|T-24141 Sweep remaining unmatched functions in src/main/ (wave E)]]
 - [ ] [[tickets/T-24140-geko-option-tel-omimai-wave-3-closers|T-24140 Wave 3 closer sweep across GEKO (12), OPTION (8), TEL (2), and OMIMAI (1)]]
