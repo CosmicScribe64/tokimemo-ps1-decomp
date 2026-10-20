@@ -20944,3 +20944,7 @@ Created [[tickets/T-24303-local-list-l6-p03]] (In Progress): local session works
 ## [2026-10-20] build | T-24303 checkpoint 1
 
 [[tickets/T-24303-local-list-l6-p03]]: clean build 27/27 and the header, globals and prototype checks OK. main `func_800755B4` matched (data island for main/80075320, two key-ring symbols, [[data-types]]); main `func_80047560` guarded at 22 rows.
+
+## [2026-10-20] ticket | T-24303 In Review: local list l6-p03
+
+[[tickets/T-24303-local-list-l6-p03]]: 3 of 54 matched (main `func_800755B4` with a `.data` island and two key-ring symbols, RPG_BAT `func_80138324` from its siblings plus a `viewsweep` callee view, main `menu_girl_taku_set` by a plain rewrite); main `func_80047560` guarded at 22 rows; misses archived in `drafts/T-24303/`. Notes in [[matching-notes]] (T-24303), [[data-types]] updated. Review due.
