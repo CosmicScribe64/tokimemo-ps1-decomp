@@ -9,9 +9,9 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Progress (2026-10-20)
 
-- Game code: 6,814 / 6,952 functions, 2,089,868 / 2,276,920 bytes (91.8%), measured with Docker `tools/progress.py` after source integration `6a2c6eb4b`. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
+- Game code: 6,815 / 6,952 functions, 2,090,540 / 2,276,920 bytes (91.8%), measured with Docker `tools/progress.py` after source integration `97a004d39`. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
 - Complete units: TT 303/303, DATE2 102/102, and every overlay not listed below.
-- Remaining by unit (138 functions): main 55, TACO 13, GEKO 9, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
+- Remaining by unit (137 functions): main 54, TACO 13, GEKO 9, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
 
 ## Active work
