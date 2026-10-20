@@ -37,7 +37,10 @@ ever committed, pushed or quoted in issues/PRs. Before every commit: `git status
        docker build --platform linux/amd64 --label dockerfile.sha256=$(sha256sum tools/Dockerfile | cut -d' ' -f1) -t tokimemo-decomp $S
 
    The full build (old-gcc, IDO 5.3/7.1 release binaries, asm-processor, permuter, objdiff) took
-   about 8 minutes. The CA is only in the cloud image; never commit this Dockerfile variant.
+   about 8 minutes. If the build stops at `FROM` with `429 Too Many Requests` from
+   registry-1.docker.io (Docker Hub rate limit, T-24209), pull the base from Google's mirror and
+   tag it, then build with `--pull=false`: `docker pull mirror.gcr.io/library/ubuntu:22.04 &&
+   docker tag mirror.gcr.io/library/ubuntu:22.04 ubuntu:22.04`. The CA is only in the cloud image; never commit this Dockerfile variant.
 
 3. Each `tools/docker.sh` call is a fresh container: only the repo (`/work`) persists, so
    write objects under the gitignored `build/` (e.g. `build/t24200/`), not `/tmp`.
@@ -75,5 +78,11 @@ takes no `-D`, so the `NON_MATCHING` copy gets `#define NON_MATCHING` as its fir
 asm-fallback copy must equal the reference first. ugen's listing (`/opt/ido/5.3/cc -S` with the
 `IDO_CFLAGS` minus `-c` and `cc.ido_frame_env`) lands in the current directory whatever `-o` says;
 it shows which pass placed an instruction, but assembling it does not reproduce the build.
+
+On a single-function pair plain `funcdiff` still prints `DIFF` rows such as
+`jal <func_80144DF0>` / `jal <func_80143240>`: objdump names an unrelocated `jal 0` after the
+object's first symbol, which differs between the scratch file and the one-function reference;
+the relocations are equal. `funcdiff --resolve` drops that and leaves only the reference object's
+trailing alignment nops (T-24209).
 
 The local session still has to prove every result with the full linked build (`ninja`, funcdiff MATCH, SHA1).

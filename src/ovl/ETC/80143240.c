@@ -633,10 +633,8 @@ void func_80144CC4(void) {
     }
     func_8005C7FC();
 }
-/* NON_MATCHING: T-24129, 26 rows: uopt promotes D_800E6280.unk_1118 to $v0 across the slot check */
-#ifdef NON_MATCHING
 void func_80144DF0(void) {
-    s32 pad[2];
+    s32 pad[3]; /* FAKE: T-24209, oversized local puts slot at sp+0x28 */
     s32 slot;
 
     menu_check(1, D_8011ECF6, D_8011ECFA);
@@ -647,8 +645,10 @@ void func_80144DF0(void) {
     if (D_800E6280.unk_F88 & 0x20) {
         if (D_800E6280.unk_1094 != -1) {
             if (D_800E7D10.slot_status[slot] == 0) {
-                D_800E6280.unk_1118 = slot & 0xFF;
-                if (func_80054694(slot & 0xFF) == 1) {
+                /* FAKE: T-24209, byte view store + plain re-read lets uopt
+                 * promote unk_1118 to v0 (andi v0; move a0) */
+                ((u8 *)&D_800E6280)[0x1118] = slot;
+                if (func_80054694(D_800E6280.unk_1118) == 1) {
                     func_80053CE0();
                     func_8004284C();
                 } else {
@@ -658,14 +658,16 @@ void func_80144DF0(void) {
                 func_80053CE0();
                 func_8004284C();
             } else {
+                D_800E6280.unk_1118 = slot;
                 if ((u8) D_800E8BEE != 0) {
-                    D_800E7D36 = slot & 0xFF;
-                    D_800E6280.unk_1118 = slot & 0xFF;
+                    /* FAKE: T-24209, repeated store through the byte view keeps
+                     * unk_1118 promoted, so both arms store v0 before their calls */
+                    ((u8 *)&D_800E6280)[0x1118] = slot;
+                    D_800E7D36 = D_800E6280.unk_1118;
                     func_800696DC(0, 0);
                     func_8005C7C0();
                     D_800E6280.unk_1094 = D_800E7D36 - 1;
                 } else {
-                    D_800E6280.unk_1118 = slot & 0xFF;
                     func_80042940(0xC0);
                 }
             }
@@ -676,9 +678,6 @@ void func_80144DF0(void) {
     k_disp_inc();
     func_8005C7FC();
 }
-#else
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144DF0);
-#endif
 
 void func_80144F74(void) {
     GameState *g = &D_800E6280;

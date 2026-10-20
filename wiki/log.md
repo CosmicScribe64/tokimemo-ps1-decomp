@@ -20879,3 +20879,11 @@ Cloud packet sessions finished without a match: [[tickets/T-24201-cloud-packet-k
 ## [2026-10-20] ticket | T-24206 In Review: main func_800590CC instruction match
 
 [[tickets/T-24206-cloud-packet-main-800590cc]] (cloud packet): `func_800590CC` in `src/main/80058D20.c` from the T-17017 guard (16 lines) to 0 differing instructions in the scratch single-function diff; plain C, guard and `INCLUDE_ASM` removed. FAKE: the call arguments re-read the stored `D_800E6280` halfwords through a `u16 *` view (uopt forwards the stored registers), one statement per line, else arm stores `unk_000/002` first. Notes in [[matching-notes]] (T-24206), idiom row in [[register-cheatsheet]]. Local linked proof and review still due.
+
+## [2026-10-20] ticket | T-24209 In Progress: cloud packet ETC func_80144DF0
+
+Created [[tickets/T-24209-cloud-packet-etc-80144df0]] for `func_80144DF0` in `src/ovl/ETC/80143240.c` (T-24129 guard, 26 rows). Toolchain per [[cloud-matching]]; Docker Hub answered the base-image pull with 429, worked around with `mirror.gcr.io` (recipe note added). Packet run from `/tmp/packet.sh`, asm under gitignored `asm/` only.
+
+## [2026-10-20] ticket | T-24209 In Review: ETC func_80144DF0 instruction match
+
+[[tickets/T-24209-cloud-packet-etc-80144df0]]: asm fallback equals the packet reference (single-function scratch setup; `funcdiff --resolve` differs only by the reference's trailing alignment nops). `func_80144DF0` from 47 scratch row-diff lines to 0 in plain C, guard and `INCLUDE_ASM` removed in `src/ovl/ETC/80143240.c`. FAKEs: byte-view store of `D_800E6280.unk_1118` re-read as the plain field (uopt promotes it to `$v0`), a repeated view store in the `D_800E8BEE` arm, `s32 pad[3]` for the `slot` spill offset. Notes in [[matching-notes]] (T-24209), idiom row in [[register-cheatsheet]], funcdiff label-noise and 429 notes in [[cloud-matching]]. Local linked proof and review due.

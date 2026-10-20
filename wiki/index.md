@@ -40,6 +40,7 @@ Read this first. Update on every ingest or new page.
 - [[ending-allocator-trace]] - reusable external T-24047 allocator tracer, exact rebuild/fidelity commands and measured constant tie.
 
 ## Tickets
+- [[tickets/T-24209-cloud-packet-etc-80144df0|T-24209]] cloud packet, ETC `func_80144DF0` 26 rows -> instruction match (FAKE byte-view store of `unk_1118`, `pad[3]`), In Review.
 - [[tickets/T-24203-cloud-packet-geko-80136c20|T-24203]] cloud packet, GEKO `func_80136C20` still 4 rows guarded (as1 places the selector `lui`), In Review.
 - [[tickets/T-24206-cloud-packet-main-800590cc|T-24206]] cloud packet, main `func_800590CC` 16 rows -> instruction match (FAKE `u16 *` re-read view), In Review.
 - [[tickets/T-24200-cloud-packet-taco-8013b460|T-24200]] cloud packet pilot, TACO `func_8013B460` 41 -> 2 rows guarded, toolchain recipe in [[cloud-matching]], In Review.
