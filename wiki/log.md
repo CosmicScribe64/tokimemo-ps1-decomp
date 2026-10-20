@@ -2842,3 +2842,7 @@ User rejected the recent low-yield method and explicitly restored Sol6.1 medium 
 ## [2026-10-20] build | Verify loader MAIN checksum
 
 [[tickets/T-24501-main-tail]] default MAIN rebuild passes target SHA1 after `func_800552DC` and game-header promotion, capped at two jobs. Private default-C proof equals all 672 target bytes; headers, main prototypes and migrated globals pass. Parent's source/header review has no findings; full 27-unit integration verification remains central.
+
+## [2026-10-20] build | Save loader adds672 verified C bytes
+
+Root reviewed and integrated func_800552DC at97a004d39 with default-C literal672-byte proof, all27 binary hashes and declaration guards. Fresh Docker progress6815/6952 functions,2090540/2276920 bytes,137 remaining; [[status]] refreshed. Resumed-run total22 functions/23536 bytes. Save-image view types support the inverse54FC0 investigation; TACO EAA4 coordinate reconstruction continues independently. [[tickets/T-24500-completion-orchestration]] remains active.
