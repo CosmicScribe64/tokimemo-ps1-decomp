@@ -2187,3 +2187,6 @@ Read latest35FB8 twin history. Indexed zero-fill plus actual shuffle pointer lif
 ## [2026-10-20] build | T24517 MASTER35FB8 literal1084-byte match
 
 The preceding fade callee's s32 view closes six remaining rows after indexed initialization, scoped shuffle pointer and threshold reassociation. Plain default C matches1084 linked bytes; MASTER and all27 checksums pass. Source-local MAIN_API override and essential shared guard are coordinated with root; other default views remain unchanged. Header/global guards pass and prototype check has0 new/15 known. Standards/spec self-review and coordinator comment review resolved findings. [[tickets/T-24517-master-flow]] moves to In Review for integration; research checkpoints remain explicitly nonmatching. No production compiler change, raw dump or assembly fallback for35FB8.
+## [2026-10-20] decision | Freeze CD dispatcher at isolated frame/order boundary
+
+[[tickets/T-24501-main-tail]] reconstructs MAIN `func_800455C4` from439 to26 resolved edit cost with691 instructions. Archived reproducible source-only body and focused frame/order packet; bounded status-bitfield, expression and local-layout alternatives did not improve26. No production/header changes or executable rebuild needed. Exact structural lessons in [[matching-notes]].
