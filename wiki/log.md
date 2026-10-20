@@ -20897,3 +20897,6 @@ Cloud packet results merged. T-24206: main `func_800590CC` (268 bytes) matches, 
 ## [2026-10-20] lint | T-11890 superseded
 
 [[tickets/T-11890-tt-ratan2-aspsx]] said `func_8014D260` stays INCLUDE_ASM; it matches on main since 56b2c4f0d (toolchain update, issue #63). Note added to the ticket.
+## [2026-10-20] ticket | T-24208 In Review: MASTER func_80132444 matches (cloud packet)
+
+[[tickets/T-24208-cloud-packet-master-80132444]] created and worked in a cloud session: src/ovl/MASTER/80132140.c `func_80132444` from the T-22015 guard (22 rows) to 0 rows in the scratch row diff (size 0x270), guard removed. `*(u8 *)&D_800E7D50 |= 1; |= 2; |= 1;` before the copies: uopt promotes the byte to `$v1`, as1 folds the ORs to one `ori 3`, and the six deleted ugen temporaries put the copies in `$t1..$t3` (third OR marked FAKE). Notes in [[matching-notes]] (T-24208) and [[register-cheatsheet]]. Local linked-build proof and review due.

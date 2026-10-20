@@ -87,8 +87,6 @@ void func_801321B0(void) {
     func_80086424();
 }
 
-/* NON_MATCHING: T-22015, 22 rows, all in case 4 (the D_800E7388/89 copies and the D_800E7D50 |= 3): the original colours the loads and the sum $t1/$t2/$t3 (uopt ranges) and the D_800E7D50 address $v1, the draft keeps ugen temporaries $t5..$t9; locals, double uses, separate globals, byte views through D_800E7D10, statement orders, autotweak (90 edits), viewsweep (22 compiles) and a 280 s permuter run gave no gain */
-#ifdef NON_MATCHING
 void func_80132444(void) {
     u32 temp_t8;
     u8 temp_t6;
@@ -147,11 +145,15 @@ void func_80132444(void) {
     case 4:
         if (((u16) D_800E6280.unk_0F4.h >> 0xC) == 3) {
             func_80044750(0xBF);
+            /* byte view: the original does lbu/ori/sb on D_800E7D50 (main_api.h: s32), T-22015.
+             * Two or more ORs make uopt promote the byte to $v1 (folded into one ori 3).
+             * FAKE: T-24208, the third OR: its ugen temporaries move the copies to $t1..$t3 */
+            *(u8 *)&D_800E7D50 |= 1;
+            *(u8 *)&D_800E7D50 |= 2;
+            *(u8 *)&D_800E7D50 |= 1;
             D_800E6280.unk_720 = D_800E6280.unk_1108;
             D_800E6280.unk_721 = D_800E6280.unk_1109 + 1;
             D_800E6280.unk_722 = 0;
-            /* byte view: the original does lbu/ori/sb on D_800E7D50 (main_api.h: s32), T-22015 */
-            *(u8 *)&D_800E7D50 |= 3;
             main_state_set(0x90);
         } else {
             func_80042808();
@@ -163,9 +165,6 @@ void func_80132444(void) {
     }
     Default_Disp();
 }
-#else
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80132140", func_80132444);
-#endif
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80132140", func_801326B4);
 

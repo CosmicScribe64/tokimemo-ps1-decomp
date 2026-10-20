@@ -43,6 +43,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-24203-cloud-packet-geko-80136c20|T-24203]] cloud packet, GEKO `func_80136C20` still 4 rows guarded (as1 places the selector `lui`), In Review.
 - [[tickets/T-24206-cloud-packet-main-800590cc|T-24206]] cloud packet, main `func_800590CC` 16 rows -> instruction match (FAKE `u16 *` re-read view), In Review.
 - [[tickets/T-24204-cloud-packet-main-8006d7ec|T-24204]] cloud packet, main `func_8006D7EC`: no match, guard stays at 1 row (uopt folds the first `idx++` in every form), In Review.
+- [[tickets/T-24208-cloud-packet-master-80132444|T-24208]] cloud packet, MASTER `func_80132444` 22 rows -> instruction match (FAKE third OR on the `D_800E7D50` byte), In Review.
 - [[tickets/T-24200-cloud-packet-taco-8013b460|T-24200]] cloud packet pilot, TACO `func_8013B460` 41 -> 2 rows guarded, toolchain recipe in [[cloud-matching]], In Review.
 - [[tickets/T-24063-taco-short-count|T-24063]] TACO corrected buffer source and refreshed controls, zero matches, In Review.
 - [[tickets/T-24060-shugaku-short-selectors|T-24060]] SHUGAKU52/62-row corrected source leads, zero matches, In Review.

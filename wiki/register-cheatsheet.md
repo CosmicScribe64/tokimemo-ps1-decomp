@@ -403,3 +403,7 @@ T-24052 SHOUGATU func_801333F0: do not transfer an unchanged-byte-store negative
 ## Repeated Boolean and selector-operand closure (T-24023)
 
 Three repeated logical month tests can acquire a shared Boolean range that changes allocation. Distinct identity operands on the month keep separate materializations without emitted arithmetic; mark this FAKE. EVENT func_801103A0 then needed a u32 selector copy per arm, byte-local constant captures, and an explicitly marked neighboring-base byte view for the remaining conversion-pass operand reversals. Full literal proof is 6,848 bytes and EVENT SHA1 passes. The view is justified only while the aggregate remains unknown, per standards section 8; see [[matching-notes]] and [[tickets/T-24023-event-handler]].
+
+## Repeated byte read-modify-write: promoted global plus ring shift (T-24208)
+
+`lui v1,%hi(G); lbu tX,%lo(G)(v1); ...; ori tY,tX,k; lui at; sb tY,%lo(G)(at)` (load base `$v1`, store through `$at`) is a uopt-promoted narrow global, not an address temporary: write two or more `G |= ...` on it in the block. Each narrow `|=` spends two ugen ring temporaries (`or`, `and 0xFF`) that as1 later deletes, so the number of ORs and where they stand shifts the ring numbers of the neighbouring statements. MASTER `func_80132444` needed three ORs before the copies (FAKE third OR); see [[matching-notes]] (T-24208).
