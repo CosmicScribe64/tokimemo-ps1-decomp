@@ -376,7 +376,108 @@ s32 func_80075FA0(void) {
     return D_800B6780[h >> 0xC];
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076000);
+s32 func_80076000(void) {
+    s32 pad[4]; /* FAKE: preserves the 0x40 frame and handled at sp+0x2C. T-24501 */
+    s32 handled;
+    s32 girl;
+    s32 other_girl;
+
+    /* FAKE: unsigned read of the signed state byte reproduces the original lbu. */
+    if (((u8)D_800E6280.unk_F6C == 2) && (D_800E6280.unk_F80 & 1)) {
+        return 1;
+    }
+    /* FAKE: explicit signed-byte views preserve the selector range across packed stores. */
+    handled = 0;
+    if (D_800E6280.unk_F88 & 0x20) {
+        if (*(s8 *)&D_800E6280.unk_1093 >= 0) {
+            handled = 1;
+            func_80045414(9, 0, 0);
+            func_80044750(3);
+            if (func_8004480C() == 0) {
+                func_8004500C(0, 0);
+            }
+        }
+        switch (*(s8 *)&D_800E6280.unk_1093) {
+        case 4:
+            if (get_icon_can_use((s32) *(s8 *)&D_800E6280.unk_1093) != 0) {
+                func_80044750(0x500);
+                if (D_800E6280.unk_041 == 6) {
+                    if (((u16) D_800E6280.unk_0F4.h >> 0xC) == 0xB) {
+                        ((MenuIconBits *)&D_800E6280.unk_F68)->icon = *(s8 *)&D_800E6280.unk_1093;
+                        D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 = *(s8 *)&D_800E6280.unk_1093;
+                        D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02 = func_8006BDA8(1);
+                        func_80042908(7);
+                    } else {
+                        D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 = *(s8 *)&D_800E6280.unk_1093;
+                        D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02 = func_8006BDA8(1);
+                        ((MenuIconBits *)&D_800E6280.unk_F68)->icon = *(s8 *)&D_800E6280.unk_1093;
+                        girl = func_80053564((s32) ((u16) D_800E6280.unk_0F4.h >> 0xC));
+                        /* Shift back extracts flag bit 2 and preserves ugen temporary numbering. T-24501 */
+                        if ((girl != -1) && (((s32)(D_800E6280.unk_1BC[girl].unk_0C.u << 29) >> 31) != 0)) {
+                            D_800E6280.unk_1BC[girl].unk_06 += 1;
+                        }
+                        func_80042908(6);
+                    }
+                } else {
+                    other_girl = func_80053564((s32) ((u16) D_800E6280.unk_0F4.h >> 0xC));
+                    /* Keep the shift-back extraction here for the same temporary sequence. T-24501 */
+                    if ((other_girl != -1) && (((s32)(D_800E6280.unk_1BC[other_girl].unk_0C.u << 29) >> 31) != 0)) {
+                        D_800E6280.unk_1BC[other_girl].unk_06 += 1;
+                    }
+                    D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 = *(s8 *)&D_800E6280.unk_1093;
+                    D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02 = func_8006BDA8(1);
+                    ((MenuIconBits *)&D_800E6280.unk_F68)->icon = *(s8 *)&D_800E6280.unk_1093;
+                    func_80042908(5);
+                }
+            }
+            break;
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 5:
+        case 6:
+        case 7:
+            if (get_icon_can_use((s32) *(s8 *)&D_800E6280.unk_1093) != 0) {
+                ((MenuIconBits *)&D_800E6280.unk_F68)->icon = *(s8 *)&D_800E6280.unk_1093;
+                func_80044750(0x500);
+                D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 = *(s8 *)&D_800E6280.unk_1093;
+                D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02 = func_8006BDA8(1);
+                func_80042908(5);
+            }
+            break;
+        case 9:
+            if ((get_icon_can_use((s32) *(s8 *)&D_800E6280.unk_1093) != 0) && (appointment_find_today((s32) D_800E6280.unk_03E, (s32) D_800E6280.unk_03F, (s32) D_800E6280.unk_040) > 0)) {
+                ((MenuIconBits *)&D_800E6280.unk_F68)->icon = *(s8 *)&D_800E6280.unk_1093;
+                func_80044750(0x500);
+                func_80042908(0xFE);
+            }
+            break;
+        case 8:
+            if (get_icon_can_use((s32) *(s8 *)&D_800E6280.unk_1093) != 0) {
+                ((MenuIconBits *)&D_800E6280.unk_F68)->icon = *(s8 *)&D_800E6280.unk_1093;
+                func_80044750(0x50D);
+                func_80042908(0x10);
+            }
+            break;
+        case 10:
+            if (get_icon_can_use((s32) *(s8 *)&D_800E6280.unk_1093) != 0) {
+                func_80044750(0x50D);
+                func_80042908(0x20);
+            }
+            break;
+        case 12:
+            func_80044750(0x50D);
+            func_80042908(0x30);
+            break;
+        case 11:
+            func_80044750(0x50D);
+            func_80042908(0x40);
+            break;
+        }
+    }
+    return handled;
+}
 
 
 s32 func_800764AC(u32 *arg0) {

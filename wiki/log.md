@@ -2125,3 +2125,11 @@ Recovered the four timestamps/color array and by-value RECT call for `func_80044
 ## [2026-10-20] decision | T-24501 bound key-ring alias follow-up
 
 Local struct views of the canonical two-symbol ring do not restore the position reload in `func_80075C84` (resolved cost 154 unchanged); integer-base and position-relative variants are worse. Recorded exact forms/costs in [[matching-notes]] and [[tickets/T-24501-main-tail]], with no production/header edits. Same ownership scan confirms prior mouse fix and separate sndisp blockers.
+
+## [2026-10-20] build | T-24501 menu dispatcher literal match
+
+Resumed `func_80076000` region by region: trace proved 298/298 instructions and order-only differences; typed packed icon stores, explicit signed-byte selector views and shift-back flag extraction reduced resolved cost 214 -> 164 -> 138 -> 0. Literal default private link proves all 1,196 bytes; pre-review build, 27/27 image hashes, headers and prototype checks pass. Parent review requested relocating the view to `include/game.h` and explaining flag extraction; applied both, final header rebuild running. [[matching-notes]] records the causal steps; [[tickets/T-24501-main-tail]] remains In Progress.
+
+## [2026-10-20] build | T-24501 menu dispatcher final proof and review
+
+Post-`game.h` 486-step build passed, explicit SHA1 recomputation passed all 27 images, literal default private link re-proved all 1,196 dispatcher bytes, and headers/prototype branch checks pass (zero new, 15 known). Parent re-reviewed the moved view and shift comments: its one finding is resolved, no blocking findings remain. Focused source/header/wiki commit ready; [[tickets/T-24501-main-tail]] remains In Progress.
