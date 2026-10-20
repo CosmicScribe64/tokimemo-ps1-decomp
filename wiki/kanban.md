@@ -62,8 +62,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 
 ## In Review
-- [ ] [[tickets/T-24303-local-list-l6-p03|T-24303 Local list l6-p03]]
 
+- [ ] [[tickets/T-24303-local-list-l6-p03|T-24303 Local list l6-p03]]
 - [ ] [[tickets/T-24302-local-list-l6-p02|T-24302 Local list l6-p02]]
 - [ ] [[tickets/T-24132-name-ent-final-4|T-24132 Close remaining 4 unmatched functions of NAME_ENT (func_80138C1C, func_801398EC, func_8013AF78, func_80143580)]]
 - [ ] [[tickets/T-24077-etc-pair-scene|T-24077 Recover ETC pair-table scene]]
