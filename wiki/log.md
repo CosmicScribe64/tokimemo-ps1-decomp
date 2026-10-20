@@ -20849,3 +20849,7 @@ Ran the project image in a claude.ai cloud container: `dockerd` started by hand,
 ## [2026-10-20] query | T-24200 second pass on the y3 store
 
 Five more variants (y3 temporary with every UV store order) of `func_8013B460`: none beats the guarded 4 lines. Notes in [[matching-notes]] (T-24200). The other ~170 `INCLUDE_ASM` functions need their own packets: this cloud session holds the original asm of `src/ovl/TACO/8013B170.c` only.
+
+## [2026-10-20] ticket | T-24204 In Review: main func_8006D7EC stays at 1 row
+
+[[tickets/T-24204-cloud-packet-main-8006d7ec]]: cloud match packet for `src/main/8006CB30.c`. Asm fallback agrees with the packet reference; the guarded C is still the one `li v1,1` row. 11 function variants and about 30 small-file probes: uopt folds the first `idx++` in every source form (phis, aggregates, unions, algebraic zeros, constant-false loops and gotos). Guard comment now names T-24204; notes in [[matching-notes]] (T-24204). Local linked proof and review still due.
