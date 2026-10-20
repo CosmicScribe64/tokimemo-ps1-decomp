@@ -2162,3 +2162,7 @@ T-24522 pinned bf7e243bd214f8e52a4d81f130776c1c4638de36 for RPG_BAT func_8014BB8
 ## [2026-10-20] build | SHOUGATU match pinned and TAIIKU proof candidate found
 
 T-24523 pinned c182f981586a85cebf11675dea9ea0d731d75ff1 for SHOUGATU func_80133B44, 408 literal linked C bytes. Private overlay SHA1 d956b1df6fbf9d1f8261d7e1f98ea301f7eb66a9, 27 hashes with explicit read-only baseline provenance, and header/global/prototype guards pass. Parent and self standards review found no blockers; narrowing and padding documented FAKE. T-24521 separately reports TAIIKU func_80134060 linked equality at 1,348 bytes, awaiting exact candidate restoration, full guards and source review. [[tickets/T-24520-parallel-tail-coordination]] records pinned handoff checkpoints; workers continue.
+
+## [2026-10-20] query | Review TAIIKU default-C reconstruction candidate
+
+Parent reviewed the restored T-24521 TAIIKU func_80134060 candidate: existing aligned TaiShorts12 aggregates, index loops, canonical overlay-local declarations; unsigned first-store view and unused frame slot explicitly marked FAKE. The unrelated data-definition probe was excluded. No blocking source finding; private whole-overlay SHA1 remains necessary because three newly canonical declarations are visible across TAIIKU. T-24522 meanwhile reduced func_80144C84's current draft from 252 to 44 rows through typed stat pointers and staged output-global arithmetic; no second RPG_BAT match claimed. See [[tickets/T-24520-parallel-tail-coordination]].
