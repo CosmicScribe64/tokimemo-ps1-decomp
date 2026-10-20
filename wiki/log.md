@@ -2272,3 +2272,15 @@ spill-home residuals; no compiler-impossibility claim. No ownership beyond MASTE
 unaligned-copy F/B direction issue. Current aligned68-byte copy t2/t3 setup is
 distinct and unproven; no compiler defect or impossibility is claimed. Research
 README updated without rerunning any old backend audit.
+
+## [2026-10-20] ticket | T-24515 isolated NAME_ENT matching lane
+
+Created [[tickets/T-24515-name-ent]] In Progress at `eaf7c6e709cb85435c313ac2fbfde5c7db14cd93`, isolated `/private/tmp/tokimemo-t24515`. Read fresh wiki/guidance/standards and NAME_ENT family context before hypotheses. Four remaining functions; source-backed repairs prioritized.
+
+## [2026-10-20] query | T-24515 stale NAME_ENT guard repair
+
+[[tickets/T-24515-name-ent]] records reproduced current C controls and bounded negative pointer/local-width/snapshot probes. NAME_ENT func_80138C1C has stale loop lifetimes/endpoints and a real word-versus-byte date-store error; existing GsWord.date fields are the next narrow source repair. No production/header changes or new match claims.
+
+## [2026-10-20] build | T-24515 NAME_ENT corrected source checkpoint
+
+Fresh660-step remaining-unit ninja -j2 plus the preceding13-step NAME_ENT build passed; independent27/27 built SHA1 checks passed. Header/global/prototype guards pass (0 new,15 known prototype disagreements). Source-based reconstructions under drafts/T-24515 reduce NAME_ENT38C1C from284/331 to181/104 words/rows with repaired date-store width and correct frame; indexed398EC reduces213/266 to126/173. All remain nonmatching; [[matching-notes]] and [[tickets/T-24515-name-ent]] record exact blockers. Production source unchanged.
