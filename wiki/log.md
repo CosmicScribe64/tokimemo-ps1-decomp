@@ -2226,3 +2226,15 @@ Validated first-conflict diagnosis leads to53/53 in5528C by replacing named phas
 ## [2026-10-20] query | T-24522 preserve53-row helper and new MAIN donor scores
 
 Preserved source-only5528C53/53 plus exact stock/tracer byte evidence and failed causal ownership variants. Compared only the two new MAIN originals against the four remaining RPG_BAT targets; top similarities are generic division traps, with no new structural transplant. MAIN76000 source does not share current packed-field blockers;767A4 source pin pending. Full metrics: drafts/T-24522/README.md and [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 repeated quotient restores loop range
+
+Repeated quotient expressions in5528C produce64 literal/32 aligned, exact375 words, quotient v0 and selector v1; all instructions after106 match. Proposed one independent end-candidate/phase-sum computation reorder to resolve the remaining swapped ranges and ugen numbering. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 helper down to two pointer operand swaps
+
+Independent expression ordering and original arm-local modulo/assignment ordering reduce5528C to4 literal/4 aligned, exact375 words. Preserved best source and prior53-row checkpoint; production remains ASM. Approved index-times-one composition regresses230/210 with initial base/raw/pointer allocation changes; no identity grid. See [[tickets/T-24522-rpg-bat]] and drafts/T-24522/README.md.
+
+## [2026-10-20] query | T-24522 bounded pointer normalization negatives
+
+Two authorized addressing forms fail: byte-offset230/210, integer-address373/229. Best5528C4/4 remains source-only; only initial pointer-add operand orders differ. Recorded first ownership shifts and stopped addressing variants for coordinator consult. See [[tickets/T-24522-rpg-bat]].

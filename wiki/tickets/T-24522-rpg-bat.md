@@ -142,3 +142,19 @@ Two authorized orthogonal follow-ups: restoring original separate quotient and l
 Preserved best5528C53/53 source at body.c, former274/206 checkpoint at modulo-only.c. Fresh stock/tracer exact candidate agreement:1504 bytes SHA256ffb6038d8aa8ab017d1681a1a9960a13bed8ae79a51dee653f146ff7736acf0b, resolved keys identical. First loop mismatch start range priority45 precolored a0 vs target quotient v0; extra move at74 and initial pointer operand reversals remain. Restoring quotient/product locals359/227; pointer spelling53/53 unchanged; initial raw/loop quotient reuse369/225; sole quotient local359/215. No production changes.
 
 Latest coordinator priority is fresh donors. Compared exactly8 MAIN76000/767A4 original pairs against4 remaining RPG_BAT targets; ranked metrics and source-template findings in drafts/T-24522/README.md. Best767A4/DD8 .265918 is generic division-trap code; no fresh shared structure. MAIN76000's packed icon/selector source was inspected and does not fit the current target blockers.767A4 source still ASM in root when checked; source comparison waits for its pin. No donor-driven compiler variants.
+
+### 2026-10-20 repeated quotient expression closes loop ownership
+
+Exactly repeated *progress/10 expressions (no named quotient or assignment) gives64 literal/32 aligned with exact375-word length. Quotient now v0, selector v1, and every instruction after row106 agrees, including all callback bodies/loop latch/tail. This is a stronger source lead than raw-row53: it closes the major range split and restores callback addresses.
+
+Remaining: two initial pointer-operand swaps; phase_sum a1/end_candidate a2 reversed from target a2/a1; associated ugen phase load/quotient/product temporaries and assignment schedule. Proposed one independent computation reorder: end_candidate formula before phase_sum load, matching target range order and ugen quotient/product/phase sequence. No declaration permutation or register grid.
+
+### 2026-10-20 helper reaches two operand swaps
+
+End-candidate computation before phase-sum load produces46 literal/10 aligned. Computing each arm's color remainder before end assignment and sentinel100 then produces4/4, exact375 words. Target and current differ only in the order of the two source operands of initial progress and correction-arm phase pointer additions: target base first, current scaled index first. All other373 instructions agree, including every callback and loop tail. Best source is preserved at drafts/T-24522/RPG_BAT/func_8015528C/body.c; prior53-row ownership checkpoint is ownership-53.c. These remain source-only, with no coverage claim.
+
+The approved first-arm arg6-times-one/arg7-times-one index wrapper, leaving postjoin phase indexing plain, regresses230 literal/210 aligned. First divergence changes initial base v1 to t0, raw progress v0 to v1 and saved pointer ownership; desired operand order remains unresolved. No generic identity grid followed. Proposed a byte-addressed base-plus-byte-offset form as a distinct source-addressing hypothesis; not compiled pending coordinator assessment.
+
+Coordinator approved the two bounded addressing tests. Byte-offset indexing through u8* gives230/210, changing initial base/raw/saved pointer owners as the index wrapper did. Scalar32-bit integer-address addition gives373/229. Neither preserves target owners or fixes the literal residual. No more identity/address forms were run; best4 is preserved for a targeted coordinator consult. This is a precise unresolved source normalization issue, not a demonstrated toolchain limit.
+
+Preserved best4 text recompiled from its committed-destination path:4 literal/4 aligned. Documentation checker has0 strong findings; weak colon/long-sentence suggestions were inspected as technical metric descriptions. No production edits or unverified-match claims.

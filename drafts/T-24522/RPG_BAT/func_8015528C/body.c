@@ -1,5 +1,5 @@
-/* Source-only NON_MATCHING draft, T-24522: 53 literal / 53 aligned rows.
- * 376 words against target375; loop start/quotient range and pointer operands differ. */
+/* Source-only NON_MATCHING draft, T-24522: 4 literal / 4 aligned rows.
+ * 375 words as target; only two pointer-add operand orders differ. */
 void func_8015528C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
     s32 *work;
     s32 *progress;
@@ -27,22 +27,21 @@ void func_8015528C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     phase = &work[arg7];
     i = 0;
     do {
-        start = (s32) *progress / 10;
+        end_candidate = *progress / 10 + (i * arg3);
         phase_sum = *phase + i;
-        end_candidate = start + (i * arg3);
         if (end_candidate < arg0) {
-            start += (i - 1) * arg3;
-            end = end_candidate;
+            start = *progress / 10 + (i - 1) * arg3;
             /* FAKE: T-24522, equivalent remainder expression keeps arm ownership. */
             color_phase = (phase_sum % 3) * 1;
+            end = end_candidate;
             if (start < 0) {
                 goto block_9;
             }
         } else {
-            start += (i - 1) * arg3;
+            start = *progress / 10 + (i - 1) * arg3;
+            color_phase = phase_sum % 3;
             end = arg0;
             i = 0x64;
-            color_phase = phase_sum % 3;
             if (start < 0) {
 block_9:
                 start = 0;
