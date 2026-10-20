@@ -2145,3 +2145,11 @@ Added `drafts/T-24501/replay.py` and a FAKE comment on the archived unused scala
 ## [2026-10-20] build | T-24501 verify both source-only frame packets
 
 Replayed clean `func_800767A4` archive at resolved edit cost40 and exact diagnostic `func_800767A4-33.c` at30. The latter contains both33 candidate entries and an unused scalar after the array; [[matching-notes]] corrects the earlier abbreviated alternative description. Both archives identify FAKE locals; replay helper accepts the alternate body path. No production/header change.
+
+## [2026-10-20] build | T-24501 choice-string setup literal match
+
+Parent's bounded frame consult found two split scalar slots that close `func_800767A4`'s isolated gap with the original32-ID extent. Promoted candidate and re-proved all932 linked bytes. Parent review accepted typed buffers/loops and ticketed FAKE slots. Added the approved canonical prototype and explicit20-byte Shift-JIS suffix string definition; final two-job build and full checks running. [[matching-notes]] records the candidate SHA and exact encoding; [[tickets/T-24501-main-tail]] stays In Progress.
+
+## [2026-10-20] build | T-24501 choice-string final proof and review
+
+Post-prototype/string 520-step two-job build passed; explicit hashes passed all27 images, literal default private link re-proved932 bytes, headers passed and prototype branch check reports zero new disagreements (15 known). Parent reviewed the actual source/header/string diff with no remaining findings. MAIN checksum proves explicit20-byte source string placement and pool ordering. Focused pin ready; [[tickets/T-24501-main-tail]] remains In Progress.
