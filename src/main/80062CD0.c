@@ -708,7 +708,25 @@ INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80065964);
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80065B0C);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80065F34);
+/* Shows or hides records 3..D_800B5B24 + 4. The entry test is always false in the original too.
+ * FAKE: T-24301, each loop on one source line: as1 then keeps the first unrolled load first. */
+void func_80065F34(s32 show) {
+    s32 i;
+
+    if (D_800B5B24 == 0 && D_800B5B24 >= 11) {
+        return;
+    }
+    if (show == 1) {
+        for (i = 0; i < D_800B5B24 + 2; i++) ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_03 |= 0x80;
+        k_disp_switch(0, 1);
+    } else {
+        if (((DisplayActor44 *)D_8011ECD0)[3].unk_03 & 0x80) {
+            k_disp_switch(0, 0);
+        }
+        for (i = 0; i < D_800B5B24 + 2; i++) ((DisplayActor44 *)D_8011ECD0)[i + 3].unk_03 &= 0x7F;
+        D_80125CA0 = 0xB8;
+    }
+}
 
 void func_80066104(void) {
     func_8006612C();

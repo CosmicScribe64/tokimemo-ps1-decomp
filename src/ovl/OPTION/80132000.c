@@ -1,9 +1,11 @@
+#define MAIN_API_OVERRIDE_func_80053D10 /* implicit int view: the call's $v0 keeps unk_1115 in $v1 in func_80132BA8 (T-24301) */
 #define MAIN_API_OVERRIDE_func_80049A40 /* unprototyped view avoids 16-bit coordinate narrowing in func_80132000 (T-24134) */
 #include "common.h"
 #include "ovl/OPTION.h"
 /* FAKE: scoped minimum aggregate view of the word and adjacent flags, based on observed +0x14 indexing. T-9540 */
 
 void func_80049A40();
+s32 func_80053D10();
 
 void func_80132000(void) {
     if ((D_800E6280.unk_110A != 0x21) && (D_800E6280.unk_110A != 0x22) && (D_800E6280.unk_110A != 0x23)) {
@@ -253,9 +255,181 @@ void func_80132B30(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132BA8);
+/* Option screen state machine (loader, CD checks). */
+void func_80132BA8(void) {
+    s32 pad[5]; /* FAKE: T-24301, puts `rows` at sp+0x3C in the 0x90 frame */
+    Arrs4x8 rows;
+    u8 r;
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133010);
+    switch (*(u8 *)&D_800E6280.unk_110D) {
+    case 0:
+        D_800E6280.unk_1124 = 1;
+        func_800438DC(1, 0);
+        func_80048DAC(1);
+        func_80041584();
+        func_80048E78();
+        *(s32 *)&D_800E6280.unk_1095[3] = 0xA0;
+        func_800438F0(1);
+        D_800E6280.unk_037 = 0;
+        D_800E6280.unk_036 = 0;
+        D_800E6280.unk_038 = 0;
+        func_80048390();
+        D_800E6280.unk_10A2 = 0;
+        func_8004E58C();
+        D_800E6280.unk_1093 = 0;
+        D_800E6280.unk_1094 = 0;
+        func_8006BC28(0);
+        D_800E6280.unk_03A = 0xFF;
+        D_8013D300 = 0;
+        D_800B3220 = 0;
+        D_801230D0 = 0;
+        text_set_advance(0xE);
+        func_801325A0(&rows);
+        func_8004F870(0, 8, rows.a, rows.b, rows.c, rows.d);
+        func_8004E788(rows.a[0], rows.b[0], 0, "文字表示速度", 0);
+        func_8004E788(rows.a[1], rows.b[1], 0, "アイコンモード", 0);
+        func_8004E788(rows.a[2], rows.b[2], 0, "マウス設定", 0);
+        func_8004E788(rows.a[3], rows.b[3], 0, "メニューモード", 0);
+        func_8004E788(rows.a[4], rows.b[4], 0, "カーソル速度", 0);
+        func_8004E788(rows.a[5], rows.b[5], 0, "音声モード", 0);
+        func_8004E788(rows.a[6], rows.b[6], 0, "おまけ", 0);
+        func_8004E788(rows.a[7], rows.b[7], 0, "オプション終了", 0);
+        k_sub_reset_point_set();
+        k_sub_disp_start(0);
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = -0x78;
+        D_800E6280.unk_110D = 1;
+        func_80053CE0();
+        break;
+    case 1:
+        if (func_80053F04() != 0) {
+            r = D_800E6280.unk_1115;
+            if (r == 1) {
+                D_800E6280.unk_110D += 1;
+            } else if (r == 0xF1) {
+                D_800E6280.unk_110D += 1;
+            } else if (r == 0xFF) {
+                D_800E6280.unk_110D += 1;
+            }
+        } else if ((u32)D_800E6280.unk_1120 > 0x200) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 2:
+        func_80053D10();
+        if (D_800E6280.unk_1115 == 1) {
+            if (func_80054AF4(0) == 1) {
+                D_800E6280.unk_110D += 1;
+                func_80053CE0();
+            } else {
+                D_800E6280.unk_110D = 0xFF;
+            }
+            if (func_80054AF4(0xF) == 1) {
+                D_800B3220 = 1;
+            } else {
+                D_800B3220 = 0;
+            }
+        } else {
+            D_800E6280.unk_110D = 0xFF;
+        }
+        break;
+    case 3:
+        if (func_80054284() == 3) {
+            func_80053D10();
+            D_800E6280.unk_110D += 1;
+        } else if ((u32)D_800E6280.unk_1120 > 0x200 || D_800E6280.unk_1115 == 0xF0) {
+            func_80053D10();
+            D_800E6280.unk_110D = 0xFF;
+        }
+        break;
+    case 4:
+        if (func_800552DC(0) == -1) {
+            D_800E6280.unk_110D = 0xFF;
+        } else {
+            D_800E6280.unk_110D = 0xFF;
+        }
+        break;
+    case 0xFF:
+    default:
+        cd_read_sectors(0x3D, 0x801B0000, 0x9EA4);
+        func_8004284C();
+        break;
+    }
+    func_8004AC18(D_800E6280.unk_03A);
+}
+
+/* Option screen loader: waits for the CD, sets up records 96..159 and the palettes, then fades in. */
+void func_80133010(void) {
+    s32 i;
+
+    if (D_800E6280.unk_110D == 0) {
+        if (cd_read_sync_status() & 1) {
+            D_800E6280.unk_110D = 1;
+        }
+    } else if (D_800E6280.unk_110D == 1) {
+        func_80048E78();
+        D_8013D300 = 1;
+        for (i = 96; i < 160; i++) {
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_01 = 5;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_02 = 0x40;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_38 = 0x01000000;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_03 = 0x24;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_0C = (u8 *)0x801C32D8;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_10 = (u8 *)0x801C34E0;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_34 = (u8 *)0x801C32C8;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_04 = 8;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_18 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_43 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_05 = 0x80;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_26 = -0x200;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_2A = -0x200;
+            ((DisplayActor44 *)D_8011ECD0)[i].unk_07 = 0x80;
+        }
+        for (i = 0; i < 4; i++) {
+            func_80043914(0x801C34F0, (u8)(i + 0x10), 1, 1, i);
+        }
+        func_80043914(0x801B0000, 0x1F, 1, 1, 0);
+        for (i = 0; i != 4; i++) {
+            func_80043914(0x801CBEF0, (u8)(i + 0x1A), 1, 1, i);
+        }
+        load_tpage_buf_lock(5, 0x801C7CF0, 1);
+        func_801328C0();
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = -0x78;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_03 |= 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 8;
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_18 = 0xA;
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_26 = -0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_2A = -0x78;
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_03 |= 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[97].unk_01 = 3;
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_18 = 7;
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_26 = -0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_2A = -0x78;
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0x24;
+        ((DisplayActor44 *)D_8011ECD0)[106].unk_01 = 1;
+        ((DisplayActor44 *)D_8011ECD0)[159].unk_18 = 7;
+        ((DisplayActor44 *)D_8011ECD0)[159].unk_26 = -0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[159].unk_2A = -0x78;
+        ((DisplayActor44 *)D_8011ECD0)[159].unk_03 = 0x24;
+        ((DisplayActor44 *)D_8011ECD0)[159].unk_01 = 1;
+    }
+    if (D_800E6280.unk_110D != 0) {
+        D_800E6280.unk_03A -= 4;
+        if (D_800E6280.unk_03A <= 0x80) {
+            D_800E6280.unk_03A = 0x80;
+            if (D_800E6280.unk_110D == 1) {
+                D_800E6280.unk_110D = 2;
+            }
+        }
+        if (D_800E6280.unk_110D == 2) {
+            func_8004284C();
+        }
+    }
+    func_8004AC18(D_800E6280.unk_03A);
+}
 
 /* FAKE: s32 without an explicit return matches the unprototyped call at func_80132B30. T-24117 */
 s32 func_80133330(void) {

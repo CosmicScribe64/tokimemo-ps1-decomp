@@ -1245,7 +1245,46 @@ s16 func_8006C934(void) {
     }
 }
 
+/* NON_MATCHING: T-24301, 11 rows; the record pointer and the unk_00 value swap $t0/$t1, and the last-value
+ * copy is `andi v1,t1,0xff` in both arms where the original has one `move v1,t0` at the join. */
+#ifdef NON_MATCHING
+s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
+    GameState *g = &D_800E6280;
+    s32 i;
+    s32 n;
+    u8 sel;
+    u8 cur;
+
+    sel = 0xFF;
+    cur = 0;
+    n = 0;
+    i = 0;
+    do {
+        i++;
+        if (g->unk_75E[n].unk_04 == 0) {
+            break;
+        }
+        cur = g->unk_75E[n].unk_02;
+        if (cur != 0 && cur != 1 && cur != 2 && cur != 0xF) {
+        } else {
+            sel = g->unk_75E[n].unk_00;
+        }
+        cur = g->unk_75E[n].unk_00;
+        n++;
+    } while (i < 0x100);
+    for (i = n; i < 0x100; i++) {
+        g->unk_75E[i].unk_04 = 0;
+    }
+    *first = sel;
+    *last = cur;
+    if (n >= 0xFF) {
+        n = 0xFF;
+    }
+    return n;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006C988);
+#endif
 
 u8 *func_8006CA9C(void) {
     if (D_800E6280.unk_F74 == 0) {
