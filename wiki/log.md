@@ -2113,3 +2113,11 @@ Archived unmatched OPTION func_8013A7EC (cost90) and func_801326BC (cost144) sou
 ## [2026-10-20] lint | T-24503 archive FAKE source comments
 
 Parent archive review requested source-local FAKE comments in addition to the README descriptions. Added T-24503 comments to both unmatched OPTION bodies without changing C expressions. No replay required for comments; previous source-only costs remain90/144. [[tickets/T-24503-geko-option-completion]].
+
+## [2026-10-20] query | T-24503 larger GEKO draft repair evidence
+
+Repaired a concrete halfword-pointer stride error in func_80135DC0 and tested original frame/type/lifetime hypotheses (best cost547). Fresh evaluation of the exact-frame T-23005 hallway-picker draft gives cost480, reduced to450 by unsigned-seven compares and a year-range test. Traced compiles show structural differences in both drafts, so prior “all registers” wording is not current. Details in [[tickets/T-24503-geko-option-completion]].
+
+## [2026-10-20] query | T-24503 short-leaf history correction
+
+GEKO func_80144198 remains ASM and has multiple archived campaigns; verified current main and indexed histories before four new selector-lifetime tests. Baseline57 and no prototype-view gain; lifetime tests worsen68/74. No source promotion. Larger GEKO source checkpoints replay547/450 and are retained under drafts/T-24503/; the scene initializer's known text-call view gives525 only. [[tickets/T-24503-geko-option-completion]].
