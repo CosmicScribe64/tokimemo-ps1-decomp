@@ -687,7 +687,48 @@ s32 get_icon_can_use(s32 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006509C);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_800654D0);
+void func_800654D0(s32 n) {
+    s32 pad; /* FAKE: preserves original stack homes and frame size. T-24501 */
+    s32 i;
+    s16 x[16];
+    s16 y[16];
+    s16 w[16];
+    s16 h[16];
+
+    if (n != 15) {
+        n = 14;
+        D_800E6280.unk_F6D = 14;
+    }
+    for (i = 0; i < n; i++) {
+        x[i] = ((s16 (*)[2])D_80125C10)[i][0] - 10;
+        y[i] = ((s16 (*)[2])D_80125C10)[i][1] - 10;
+        w[i] = 20;
+        h[i] = 16;
+    }
+    i = 0; /* FAKE: keeps the saved zero index across menu_set. T-24501 */
+    menu_set(0, n & 0xFF, x, y, w, h);
+    for (i = 0; i < n; i++) {
+        ((DisplayActor44 *)D_8011ECD0)[i + 80].unk_16 = i;
+        ((DisplayActor44 *)D_8011ECD0)[i + 80].unk_26 = ((s16 (*)[2])D_80125C10)[i][0];
+        ((DisplayActor44 *)D_8011ECD0)[i + 80].unk_2A = ((s16 (*)[2])D_80125C10)[i][1];
+    }
+    for (i = 0; i < n; i++) {
+        ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_26 = ((s16 (*)[2])D_80125C10)[i][0];
+        ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_2A = ((s16 (*)[2])D_80125C10)[i][1];
+        ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_18 = 2;
+    }
+    if (n == 15) {
+        ((DisplayActor44 *)D_8011ECD0)[94].unk_16 = 15;
+        ((DisplayActor44 *)D_8011ECD0)[94].unk_26 = ((s16 *)D_80125C10)[28];
+        ((DisplayActor44 *)D_8011ECD0)[94].unk_2A = ((s16 *)D_80125C10)[29];
+        ((DisplayActor44 *)D_8011ECD0)[78].unk_18 = 2;
+        ((DisplayActor44 *)D_8011ECD0)[78].unk_26 = ((s16 *)D_80125C10)[28];
+        ((DisplayActor44 *)D_8011ECD0)[78].unk_2A = ((s16 *)D_80125C10)[29];
+    } else {
+        ((DisplayActor44 *)D_8011ECD0)[78].unk_03 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[94].unk_03 = 0;
+    }
+}
 
 void func_80065900(u8 arg0) {
     /* D_8012059A[1] is D_8012059C; the array form keeps IDO from hoisting the load above the first store */
