@@ -2202,3 +2202,11 @@ All eight archived full-TU cases reproduce their negative metrics with explicit-
 ## [2026-10-20] lint | Consolidate reviewed overlay archive histories
 
 [[tickets/T-24510-parallel-overlay-coordination]] merges reviewed TEL5544f3e03, corrected ENDING71896dd66 and ETC057eeb442 into the isolated coordinator branch, preserving original commits. All log entries from four original histories remain present (Docker audit); production src/include/config/tools diff against23e1a20fb empty. Docker catalog/lint0 broken links,0 ticket mismatches, one pre-existing large-page notice. No main push/integration-tree access or active-worker mutation.
+
+## [2026-10-20] query | Record second-lane source reconstruction evidence
+
+[[tickets/T-24510-parallel-overlay-coordination]] records NAME_ENT38C1C real store-width discrepancy, BUNKA_SD39290 frame-word87cost vs123guard, and MASTER363F4 exact frame/first213 instructions but342cost residual. No match claim. MASTER will archive narrow sources with replay and interfaces, avoiding another full27 rebuild when production is unchanged.
+
+## [2026-10-20] query | Review MASTER narrow handoff and fixed-copy distinction
+
+[[tickets/T-24510-parallel-overlay-coordination]] records MASTER dfec4bf72/8b76c1b46, unchanged production, zero new C bytes, retained candidate replay/unit hash/interface checks passed. Coordinator narrow archive review no remaining findings. Current aligned68bytecopy register issue is distinct/unproven; T-24092 already fixes historical direction state. NAME_ENT/family continue; parent reports8 matches91.2% outside these lanes.
