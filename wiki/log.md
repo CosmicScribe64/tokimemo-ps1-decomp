@@ -2199,3 +2199,115 @@ MAIN make_color_bar16, TACO func_8013F468 and RPG_BAT func_8014BB80 are integrat
 ## [2026-10-20] lint | Correct stale block-copy compiler guidance
 
 Bounded Astra consultation found that [[build-step-gaps]] and [[playbook]] still described a pre-T-24092 blocker as unimplemented. Inspected tools/ugen_pass.py, its wiring in tools/cc.py, and [[tickets/T-24092-ugen-block-copy-state-pass]]: the direction-state pass is already enabled. Updated both guidance pages to distinguish the historical census, the implemented direction fix, and still-unproven 32-byte register mismatches. Historical17test/6337function regression results are attributed to the ticket, not claimed as rerun. No compiler source or configuration changed.
+## [2026-10-20] decision | Favor source reconstruction in overlay lanes
+
+[[tickets/T-24510-parallel-overlay-coordination]]: all worker bases are `23e1a20fb`; parent main advanced with TACO. TEL starts the other remaining handler `func_8013D88C`, ETC validates its baseline checksum and tries explicit pointer cursors. Parent steering favors typed stale-draft repairs and family patterns, small causal no-gain sets, and immediate verified pins. All three workers informed; no new coverage claimed here.
+
+## [2026-10-20] build | ENDING baseline and targeted frame repair
+
+[[tickets/T-24510-parallel-overlay-coordination]] records ENDING unit baseline checksum pass at `23e1a20fb`. Worker avoids documented large scheduler barriers and tests the concrete declaration/frame mismatch in `func_801330E4`; no match yet, all-27 verification remains a promotion gate.
+
+## [2026-10-20] decision | Preserve bounded negatives and move across lane targets
+
+[[tickets/T-24510-parallel-overlay-coordination]] records TEL all27 baseline and concrete missing-condition audit, ENDING exact frame recovery with84 alignedcost remaining before moving to typed scene siblings, ETC stopped ranking pointer negative and repaired stale six-element buffer draft (476cost, not promoted). No match claimed. Worker tickets preserve detailed source/evidence.
+
+## [2026-10-20] build | Close bounded overlay experiments without coverage claims
+
+[[tickets/T-24510-parallel-overlay-coordination]]: TEL packed-word lifetime reduces instruction surplus but remains nonmatching; ENDING frame reconstruction and typed scene probes do not close; ETC FFAC recovers real six-entry buffer and original frame but not instruction shape. Workers preserve faithful source and exact replay, production unchanged. No lane function promoted; final checks/review and pins pending.
+
+## [2026-10-20] query | Pin ENDING negative research checkpoint
+
+[[tickets/T-24510-parallel-overlay-coordination]] records ENDING pin `3a7bd5984`, zero verified C bytes, production unchanged, all27 baseline checksums and header/global/prototype guards passed. Coordinator inspected scoped diff and evidence. Ticket remains In Review; replay sources in `drafts/T-24512/`. Parent reports five separate matches and91.0%; no lane coverage claim.
+
+## [2026-10-20] decision | Pin TEL closure and redirect ENDING worker to MASTER
+
+[[tickets/T-24510-parallel-overlay-coordination]]: TEL evidence `b24b039f4`, closure `5544f3e03`, zero matched bytes with all27 hashes/guards passed. ENDING follow-ups `658efedab`/`71896dd66` resolve duplicate context and distinguish retained-body504 from earlier variant890; ticket stays In Review for root acceptance. Parent grants MASTER ownership; new T-24514 isolated tree starts at `dba33c4f5`. Shared header edits avoided.
+
+## [2026-10-20] query | Pin ETC bounded reconstruction checkpoint
+
+[[tickets/T-24510-parallel-overlay-coordination]] records ETC `057eeb442`, zero new C bytes, production diff empty, all27 built hashes and interface guards passed. Eight source-only replay controls preserve exact negatives; archive contains no full-context copies or ASM dumps. Ticket In Review; MASTER remains active under expanded parent authorization.
+
+## [2026-10-20] decision | MASTER typed donor audit and candidate ownership
+
+[[tickets/T-24510-parallel-overlay-coordination]]: MASTER baseline checksum passes;35FB8 remains58cost after bounded controls.363F4 source reconstruction uses archived T-24048/344E0 typed loops while preserving target-specific cases. Corrected donor label:344E0 is not verified default C, remains INCLUDE_ASM. Root's additional lanes own TAIIKU/RPG_BAT/GYOZI/VALEN/SHOUGATU, no overlap.
+
+## [2026-10-20] decision | Reuse completed lane slots for fresh owned units
+
+[[tickets/T-24510-parallel-overlay-coordination]] records root's expanded ownership: NAME_ENT T-24515 and BUNKA_SD/EN_NICHI/KANGEI T-24516, fresh isolated trees; MASTER T-24514 continues. Three workers cap unchanged. Returned concise archive review: TEL/ETC no findings, ENDING duplicatecontext/metric attribution fixed; all zero matched gain. MASTER counted-loop reconstruction improves420to363cost but remains nonmatching.
+## [2026-10-20] ticket | T-24511 isolated TEL matching lane
+
+Created [[tickets/T-24511-tel]] in progress from `23e1a20fb`, isolated worktree `/private/tmp/tokimemo-t24511`. Read prior T-19022/T-23001/T-24022 evidence; month-promotion probes remain exhausted. Current source has `func_80134FE4` matched; target the remaining `func_8013D88C` before the large handler.
+
+## [2026-10-20] query | T-24511 menu reconstruction audit
+
+[[tickets/T-24511-tel]] records two fresh control-flow hypotheses for `func_8013D88C`: exclusive page-two condition chain and the omitted `arg2 == 14` bypass. The latter is distinct from the incompatible `case 14` in the old index dispatch. Docker baseline rebuild is underway; no production source changed.
+
+## [2026-10-20] build | T-24511 fresh baseline configure
+
+Existing `tokimemo-decomp-arm64` image configured a new build in `/private/tmp/tokimemo-t24511`, with the original root `disc/` mounted read-only. No dependency installs or game/build copies. `ninja -j2` is rebuilding all units before scratch probes; source remains unchanged.
+
+## [2026-10-20] build | T-24511 bounded TEL menu reconstruction
+
+Sixteen serial Docker probes reproduced the prior control and tested control-flow corrections, pointer lifetimes, frame topology and explicit F64 capture. Packed-word capture removes thirty words versus signed-index control; preserved corrected body is755 words/844 rows against745 target words. No match or production change. Source-only replay and negative ledger saved in drafts/T-24511; [[matching-notes]] and [[tickets/T-24511-tel]] record the result. Fresh673-step j2 baseline build passed all27 checksums and header/global checks. Limited large-handler audit found no new semantic repair; exhausted month probes remain untouched.
+
+## [2026-10-20] ticket | T-24511 reviewed bounded TEL handoff
+
+Standards/spec self-review of `23e1a20fb...b24b039f4` found no unresolved findings. All16 archived probes reproduced and independent27/27 built SHA1 passed; header/global/prototype guards pass (0 new,15 known prototype disagreements). [[tickets/T-24511-tel]] moved to Done for the bounded investigation; both matching targets remain unresolved. No production source/header/config/compiler changes, push or merge.
+
+## [2026-10-20] lint | T-24511 closure wiki check
+
+Docker `tools/wiki.py lint`:0 broken links,0 status mismatches; one existing large-page notice for [[data/t0018-cases]]. No new wiki page requiring an index entry; ticket remains on the board.
+## [2026-10-20] ticket | T-24512 ENDING lane initialized
+
+[[tickets/T-24512-ending]] is In Progress in isolated /private/tmp/tokimemo-t24512 from 23e1a20fb. Read [[notes/functions]] and ENDING history; scope is remaining ENDING functions, bounded source hypotheses, Docker-only analysis.
+
+## [2026-10-20] build | T-24512 bounded ENDING reconstructions
+
+[[tickets/T-24512-ending]]: Docker ENDING baseline SHA1 OK. 330E4 existing draft aligned104 ->84 after scalar/array frame reconstruction and removal of a redundant extracted-value local; level-spill and bonus-expression differences remain. Typed scene387B0 reconstruction148/177. Production source restored; zero new C bytes. Existing large scheduling blockers not repeated.
+
+## [2026-10-20] query | T-24512 ENDING source handoff
+
+[[tickets/T-24512-ending]] records all bounded causal outcomes in
+`drafts/T-24512/README.md`; [[families/ending-family-results]] has the330E4 frame
+lead. Full-unit scorer scores are diagnostic, no match claims. Production C,
+headers and compiler unchanged. Full baseline checksum/guard verification runs
+in Docker with immutable original disc mounted read-only.
+
+## [2026-10-20] build | T-24512 verified research handoff
+
+[[tickets/T-24512-ending]] moves In Progress -> In Review. Docker baseline build
+and explicit manifests pass27/27, header/global guards pass, prototype branch
+check has0 new disagreements (15 known). Archived reproduction scripts pass
+py_compile; standards/spec self-review and diff check pass. Production diff is
+empty, zero new C bytes. Research archive preserves the unresolved330E4 frame
+lead, without changing existing scheduler guards.
+
+## [2026-10-20] lint | T-24512 archive scope review
+
+[[tickets/T-24512-ending]] removes redundant generated full translation-unit
+context and empty declarations from its research archive. Reproduction scripts
+use current source/header context, so neither removed file was needed. Existing
+source-only candidate and score provenance remain; no original assembly dump.
+
+## [2026-10-20] build | T-24512 retained body validation
+
+[[tickets/T-24512-ending]] independently compiled both retained source bodies
+against current headers in Docker:330E4 aligned84,34270 aligned504. The earlier
+typed redraft report890 predates finish processing, so the source archive now
+makes the distinction explicit. No C match; replaced stale context hashes with
+exact baseline/source references.
+## [2026-10-20] ticket | T-24513 isolated ETC lane
+Created [[tickets/T-24513-etc-matching]] In Progress on codex/t24513-etc from 23e1a20fb, isolated /private/tmp/tokimemo-t24513. Read [[index]], [[status]], [[playbook]], function catalog and local standards. Largest target func_801480D0; no shared-root writes.
+
+## [2026-10-20] build | T-24513 ETC baseline and bounded source controls
+Fresh isolated Docker ETC build passes SHA1 681c93b6e57c885f86e074c885a8bf6c3cca2319. [[tickets/T-24513-etc-matching]] records rejected ranking pointer/return-liveness controls and grade direct-array controls. Reconstructed six-entry scene initializer buffer and correct element stride from original addresses; private draft only, no literal match or new C bytes. No shared header/config/compiler edits.
+
+## [2026-10-20] ticket | T-24513 archive self-review, In Review
+[[tickets/T-24513-etc-matching]] moves to In Review after standards/scope self-review, no findings. Coordinator approved focused negative-results archive, no production changes or matching C-byte gain. Fresh Docker ninja -j2 completes all 27 checksum targets. Archive retains corrected six-entry scene source, rejected ranking pointer reconstruction and exact full-TU replay; no generated assembly/data committed.
+
+## [2026-10-20] build | T-24513 final replay and 27 built hashes
+All eight archived full-TU cases reproduce their negative metrics with explicit-object DIFF and production unchanged. Final headers/globals/prototype guards pass (0 new, 15 known prototype disagreements). Independent hashing of actual build/SLPM_86.053.bin and build/ovl/*.bin passes 27/27. Corrected replay handling of expected DIFF exit1 and a separate checksum command's overlay working-directory error; no source promotion. [[tickets/T-24513-etc-matching]] remains In Review.
+
+## [2026-10-20] lint | Consolidate reviewed overlay archive histories
+
+[[tickets/T-24510-parallel-overlay-coordination]] merges reviewed TEL5544f3e03, corrected ENDING71896dd66 and ETC057eeb442 into the isolated coordinator branch, preserving original commits. All log entries from four original histories remain present (Docker audit); production src/include/config/tools diff against23e1a20fb empty. Docker catalog/lint0 broken links,0 ticket mismatches, one pre-existing large-page notice. No main push/integration-tree access or active-worker mutation.
