@@ -3005,3 +3005,43 @@ Created [[tickets/T-24603-taco-fan-colors]] In Progress under [[tickets/T-24600-
 ## [2026-10-20] lint | Fan completion wiki and patch checks
 
 Refreshed catalogs for [[tickets/T-24603-taco-fan-colors]]. Docker wiki lint reports zero broken links and zero status mismatches; existing large-page warnings remain for [[data/t0018-cases]] and [[log]]. `git diff --check` passes.
+
+## [2026-10-20] build | Sprite aggregates and four-lane structural probes
+
+Recorded Docker full-TU source experiments in [[matching-notes]] under [[tickets/T-24600-finish-matching]]. MAIN mod_set typed aggregates reveal persistent pointer spill and switch-ratio folding; prototype and lifetime controls do not match. NAME_ENT and TACO agents have narrower causal candidates; GEKO continues its allocation tail. Production remains at the last verified 6,819 functions, with no new promotion from these scratch results.
+
+## [2026-10-20] build | MAIN packed-field lifetime diagnosis
+
+The Docker instrumented compiler trace for mod_set identifies the packed-word versus extracted-field lifetime difference. Array, narrow-local and empty-boundary controls do not match; recorded in [[matching-notes]]. Started a fresh full-TU replay of the existing func_8006BA40 cursor draft under [[tickets/T-24600-finish-matching]]. No production code changed.
+
+## [2026-10-20] build | Cursor controls and fresh lane assignment
+
+Recorded current func_8006BA40 source controls and negative results in [[matching-notes]]. Source/header views remain unchanged. Reassigned the GEKO agent from exhausted local forms to MAIN hizuke_init after OPTION palette inspection found no new aggregate. NAME_ENT continues its register-only candidate; TACO continues matrix-copy structure. All work remains under [[tickets/T-24600-finish-matching]].
+
+## [2026-10-20] build | Initial flag snapshot reconstruction
+
+MAIN func_8006D138 now has a near-shape219-word scratch reconstruction against218 target, but its persistent base and initial flag value still have different loads/registers. Recorded hypothesis and negative minimization controls in [[matching-notes]]. Concurrent hizuke_init work recovers loop scheduling and narrows the date-value lifetime gap; NAME_ENT remains a register-order candidate. No new coverage claimed.
+
+## [2026-10-20] build | Schedule sorter reconstructed in scratch
+
+Recovered a compact typed schedule-sort body and compared pointer/record/halfword forms in Docker. Remaining unroll, retained-base and frame differences are recorded in [[matching-notes]]. Handed the flag-dispatch candidate to an independent matching agent after NAME_ENT reached an unresolved allocation-only checkpoint. Production remains unchanged under [[tickets/T-24600-finish-matching]].
+
+## [2026-10-20] ticket | Date display initialization reaches scheduling pair
+
+Created [[tickets/T-24604-hizuke-init]] In Progress under [[tickets/T-24600-finish-matching]]. Unsigned entry references recover the documented conversion-pass condition and all target date loads/registers; one address-load/store order remains. No pass/header change and no coverage credit before literal proof.
+
+## [2026-10-20] build | Schedule loop-index lifetime evidence
+
+Reusing the inner-sort counter for the two month-adjustment loops improves the typed scratch reconstruction; distinct indices and explicit four-way unrolling do not close the original gap. Recorded in [[matching-notes]]. T-24604 remains on its final scheduling pair while the two other lanes continue independent candidates.
+
+## [2026-10-20] ticket | Date display passes literal and integration review gates
+
+[[tickets/T-24604-hizuke-init]] In Progress -> In Review. Minimized private and default production proofs match1,048 literal linked bytes. Root full ninja, fresh27 hashes, declaration/global checks and prototype guard pass (zero new disagreements,15 known). Independent standards and spec reviewers report zero findings on the final minimized source. Eight unnecessary joined month/day pairs were split; the required year pair remains annotated.
+
+## [2026-10-20] ticket | Date display initialization complete
+
+[[tickets/T-24604-hizuke-init]] In Review -> Done after all review findings and integration gates were resolved. Updated [[status]] and [[tickets/T-24600-finish-matching]]: 6,820 functions, 2,094,700 bytes, 132 functions remaining. Four matching lanes continue; the completion goal remains active.
+
+## [2026-10-20] lint | Date display completion wiki checks
+
+Refreshed catalogs for [[tickets/T-24604-hizuke-init]]. Docker wiki lint reports zero broken links and zero ticket/board status mismatches; existing large-page warnings remain for [[data/t0018-cases]] and [[log]]. `git diff --check` passes.
