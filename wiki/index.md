@@ -22,6 +22,7 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[decompile-workflow]] - queue -> m2c -> edit -> build -> funcdiff -> commit; switches, jump tables
 - [[matching-notes]] - active notes page (append new sections here); older parts in `notes/`, index in [[notes/sections]]
 - [[build-step-gaps]] - what the build cannot reproduce yet (uopt, as1, ugen block-copy state)
+- [[as1-scheduler-rule]] - as1's global delay-slot filler: candidate order, weights, gates, the `volatile` lever (T-24900)
 - [[as1-scheduling]] - per-file as1/driver options tested on the as1 order near misses (T-24800); tools/as1_flag_sweep.py
 - [[keep-lines]] - proposed `keep` rule with a byte-match necessity proof
 - [[cloud-matching]] - matching one C file in a cloud container from a match packet

@@ -2190,6 +2190,7 @@ void func_8004CF30();
 s32 srn_vram_set(s32, s32, s32, s32);
 void move_255_line(s32 arg0, s32 arg1, s32 arg2);
 void mod_trans_vram(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+s32 get_fnt(u8 *output, u8 *source, s32 glyph, s32 divisor, s32 width, u8 flags);
 void func_8004DDD8();
 void func_8004DE1C(void);
 void func_8004DEAC();

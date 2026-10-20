@@ -235,7 +235,46 @@ void func_80143F48(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80142760", func_80144198);
+s32 func_80144198(s32 selector) {
+    s16 days_in_month;
+    s32 date[3];
+    GekoMonthDays days;
+    u8 year;
+    u8 month;
+
+    year = D_800E6280.unk_03E;
+    /* FAKE: T-24602, overwritten initial values and the empty test establish
+     * result/selector live ranges. The array also keeps the day calculation
+     * in one register; separate scalar results create an extra range. */
+    date[2] = 0;
+    date[1] = 0;
+    date[0] = year;
+    if (selector) {}
+    days = D_80147C54;
+    if (year == 0x60) {
+        days.day[1] = 29;
+    }
+    month = D_800E6280.unk_03F;
+    date[1] = month;
+    date[2] = D_800E6280.unk_040 - D_800E6280.unk_041 + 6;
+    days_in_month = days.day[month - 1];
+    date[0] = year;
+    if (days_in_month < date[2]) {
+        date[1] = month + 1;
+        date[2] -= days_in_month;
+        if (date[1] >= 13) {
+            date[1] = 1;
+            date[0] = year + 1;
+        }
+    }
+    if (selector == 0) {
+        return date[0];
+    }
+    if (selector == 1) {
+        return date[1];
+    }
+    return date[2];
+}
 
 void func_80144270(void) {
     s32 pad; /* FAKE: unused local that moves the table to sp+0x2C and the frame to 0x48 (T-3330 rule, T-23005) */

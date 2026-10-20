@@ -38,7 +38,7 @@ void func_80132810(void) {
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80132834);
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-24212, 3 rows (7 resolved rows in funcdiff); only the dispatch `sll t3,a1,2` is in the wrong delay slot. as1's global scheduler (trace `as1 -R -xbbdbg 8`) visits the `== 9` test block first and fills its slot with the `lui v0` of the `mode` reload from its fallthrough; the `sll` then goes to the third `if` head's slot. The original fills the `== 9` slot with the `sll` and keeps that `lui` and a `nop`. T-24033/T-24138: switch spellings, `sel` copies, mode reloads, `u8 mode`, nested ifs, autotweak. T-24212: `1 == mode`, byte view of the mode load, one-line ifs (all output-identical); else-if/goto/ternary/early-return-as-else forms change code. Notes: wiki/matching-notes.md T-24212. */
+/* NON_MATCHING: T-24900 (was T-24212), 3 rows (7 resolved rows in funcdiff); only the dispatch `sll t3,a1,2` is in the wrong delay slot. as1's global scheduler visits the `== 9` block (bb 8, weight 4) first and scans dominated blocks by (weight, number): bb 9's `lui v0` (mode reload, weight 7) comes before the dispatch bb 20 (weight 7) and passes every gate, so it fills the slot; the original must have had that lui pinned or bb 9 ordered after bb 20 (wiki/as1-scheduler-rule.md). Pinning it with a volatile D_80134544 keeps one load instead of uopt's two reloads (13 rows); a volatile first read changes the allocation (190). T-24212: `1 == mode`, byte view of the mode load, one-line ifs (all output-identical); else-if/goto/ternary/early-return-as-else forms change code. Notes: wiki/matching-notes.md T-24212. */
 s32 func_80132D0C(void) {
     s32 mode;
     GameState *state;

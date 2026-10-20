@@ -18,6 +18,7 @@ extern volatile u16 D_8013D3B8; /* volatile: both stores of func_80139E3C stay (
 extern u8 D_8013D3A4;
 extern u8 D_8013D3A0;
 extern s8 D_8013D39C;
+extern u8 D_8013D3F0;
 
 void func_80132AB8(void);
 void func_80132BA8(void);
@@ -46,6 +47,13 @@ s32 func_801376A8(void);
 void func_80139878(void);
 
 void func_80139A30();
+void func_80139E3C(s32 arg0);
+void func_80139F04(void);
+void func_80139F8C(void);
+void func_8013A010(void);
+void func_8013A038(void);
+void func_8013A060(void);
+void func_8013A334(void);
 s32 func_801394F4(void);
 void func_801399C0();
 

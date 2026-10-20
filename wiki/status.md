@@ -9,12 +9,26 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Progress (2026-10-20)
 
-- Game code: 6,816 / 6,952 functions, 2,091,568 / 2,276,920 bytes (91.9%), measured with Docker `tools/progress.py` after source integration `87df21291`. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
+- Game code: 6,823 / 6,952 functions, 2,098,084 / 2,276,920 bytes (92.1%), measured with Docker `tools/progress.py` after T-24607 editor promotion. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
 - Complete units: TT 303/303, DATE2 102/102, and every overlay not listed below.
-- Remaining by unit (136 functions): main 53, TACO 13, GEKO 9, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
+- Remaining by unit (129 functions): main 51, TACO 12, GEKO 7, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 1, BUNKA_SD 2, EN_NICHI 2, TEL 2.
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
 
 ## Active work
+
+- Current handoff: user requested wrapping up and pushing this session. T-24607 OPTION `func_80139A30` adds1,036 literal default-C bytes; all27 hashes and declaration guards pass. Seven functions /6,516 bytes completed in this continuation;129 remain. Matching lanes have stopped, with unfinished evidence preserved in [[matching-notes#T-24600: Wrap-up reconstruction checkpoints]]. The full decompilation remains incomplete; earlier activity entries below are historical.
+
+- T-24606 OPTION `func_8013A7EC` adds1,092 literal default-C bytes with all27 hashes, declaration guards and independent reviews passing. This continuation has completed six functions /5,480 bytes;130 remain. Root continues MAIN matrix reconstruction while agents continue OPTION numeric editing, TACO font rendering and NAME_ENT introduction. Completion goal remains active.
+
+- T-24605 GEKO `func_801420E4` adds1,256 literal default-C bytes, with all27 hashes, declaration guards and independent reviews passing. This continuation has completed five functions /4,388 bytes;131 remain. Root continues MAIN; agents continue TACO, OPTION and NAME_ENT reconstruction. Earlier scratch checkpoints remain preserved without coverage credit.
+
+- T-24604 MAIN `hizuke_init` adds 1,048 literal default-C bytes, with all 27 hashes, declaration guards and independent reviews passing. This continuation has completed four functions / 3,132 bytes; 132 remain. Current disjoint lanes: root schedule sort, agents MAIN flag dispatch, MAIN srn_set and TACO collision reconstruction. GEKO/NAME_ENT/OPTION scratch checkpoints are preserved without coverage credit.
+
+- User-authorized T-24600 fan-out: root owns MAIN; agents own GEKO, NAME_ENT and TACO. T-24603 TACO `func_80153B38` adds 832 literal linked bytes with all 27 hashes and independent reviews passing. This continuation has completed three functions / 2,084 bytes; 133 remain.
+
+- T-24602 GEKO `func_80144198` adds 216 literal linked bytes with the date-result array reconstruction. Full build, fresh 27 executable hashes, and independent standards/spec reviews pass. T-24600 continues with 134 functions remaining; its two completed functions add 1,252 bytes.
+
+- T-24600 completion continues until the full goal is achieved. First verified promotion: T-24601 `get_fnt`, 1,036 default-C bytes; full 27 checksums, header/global/prototype guards and independent standards/spec reviews pass. MAIN `func_8006C988`, `func_80047560` and GEKO `func_80133024` remain unmatched after bounded scratch probes. See [[matching-notes#T-24601: get_fnt literal match]].
 
 - Latest: MAIN `func_8004A814` adds 1,028 literal default-C bytes at `87df21291`; all 27 executable checksums and declaration guards pass, root source review has no findings. Resumed-run total: 23 functions / 24,564 bytes. Sol 6.1 medium continues the GPU family using the confirmed erased-coordinate-conversion behavior; Astra is idle after the bounded consultation. Other workers are idle to conserve usage. Source-only `func_8004A414` remains unmatched at resolved cost 132; no coverage credit for drafts. Earlier campaign entries below are historical.
 
