@@ -2170,3 +2170,7 @@ Moved [[tickets/T-24522-rpg-bat]] and its board card to In Review. Two productio
 ## [2026-10-20] query | T-24522 residual dependency map and archive review
 
 Coordinator reviewed1564d1bf1 source archive with no blockers. Read-only analysis mapped `func_80144C84`'s first moved EBE0 load and its third-arm threshold-to-clamp register carry/reload difference. Recorded one untested local-aggregate snapshot hypothesis without a compiler run. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 threshold snapshot folded away
+
+Tested the coordinator-approved two-word local aggregate snapshot in three meaningful forms at j1. All34/34 retain the original28-row `func_80144C84` gap plus6 spill-offset differences. No production change; kept the28-row source-only draft. Results and minimal dependency blocker added to drafts/T-24522/README.md and [[tickets/T-24522-rpg-bat]].

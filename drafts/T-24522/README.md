@@ -18,3 +18,9 @@ The remaining third-arm field08/EBE0 reload and store scheduling differ. The bui
 `func_80154DD8` and `func_8015528C`: current recent T-24027 source-only drafts and concrete negatives were read. They remain broad state-machine/interpolation gaps (326/288 and302/246 in T-24027). No fresh hypothesis justified rerunning those measurements.
 
 All experiments used the existing Docker arm64 image and one compiler process. Loose probe scripts, JSON candidate sets, full source candidates and diagnostics are preserved in ignored `build/T-24522/`; no generated target asm, binary, copyrighted data or production compiler change is committed.
+
+## Bounded threshold-snapshot follow-up
+
+After coordinator review, a read-only dependency map motivated one new structural hypothesis: capture the third threshold's EBE0/field08 inputs in a real two-word local aggregate, then mutate plain globals. Three meaningful forms were compiled at j1: third-threshold-only capture; refresh at both initial bound and third-threshold phase boundaries; reversed member/assignment order. All score34/34. Every form retains the exact original28-row code gap and adds6 limit-spill-offset rows(0x2C to0x28); the aggregate snapshot is optimized away. No new source form was promoted. Inputs and diagnostics remain ignored under `build/T-24522/forms55.json` and `55_*.c`/`55_*.diff`.
+
+The minimal remaining dependency blocker is now explicit: target reloads field08 and EBE0 on the noncall successor of the nested enemy-kind branch; current C carries the threshold registers forward, moves extra-minus20 into the branch slot and spills field08 along the call path. The earlier initial-bound EBE0 load also moves relative to counter writebacks. Ordinary pointer forms, branch spellings and the explicit snapshot do not reproduce the target dependency. This is evidence about tested source forms, not proof that no C source exists.
