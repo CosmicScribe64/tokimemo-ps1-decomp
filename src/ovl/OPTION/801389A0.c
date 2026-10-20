@@ -429,7 +429,152 @@ void func_801399C0(void) {
     func_8004B19C(D_8013D3F4 & 1, 0x78, 0xA);
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139A30);
+void func_80139A30(void) {
+    u32 repeat_selector;
+    u32 press_selector;
+    u32 decrease_selector;
+    s32 decreased;
+    /* FAKE: word-sized staging preserves the byte/halfword live ranges;
+     * direct narrow updates use different registers. T-24607 */
+    u32 value;
+    u32 character;
+    GameState *game = &D_800E6280;
+
+    if (D_800E6280.unk_F88 & 0x08000000) {
+        D_8013D3F0 = 1 - D_8013D3F0;
+    }
+    if ((D_8013D3F0 != 0) && (func_800460EC() & 2)) {
+        D_800E6280.unk_F88 |= 0x20;
+        D_800E6280.unk_F80 |= 4;
+    }
+    if (D_800E6280.unk_F80 & 5) {
+        if (D_800E6280.unk_F88 & 0x8000) {
+            character = game->unk_F5F;
+            game->unk_F5F = character + 1;
+        }
+        character = game->unk_F5F;
+        if (D_800E6280.unk_F88 & 0x2000) {
+            character = (character - 1) & 0xFF;
+        }
+        if (character == 0xFF) {
+            character = 0xF;
+        }
+        game->unk_F5F = character;
+        if (character >= 0x11U) {
+            game->unk_F5F = 0;
+        }
+    }
+    if ((D_8013D3B0 | D_8013D3B4) != 0) {
+        func_8013A060();
+    } else if (D_800E6280.unk_F88 & 0x860) {
+        switch (*(u8 *)&D_800E6280.unk_1093) {
+        case 0:
+            func_80139E3C(0);
+            break;
+        case 1:
+            func_80042940(3);
+            break;
+        case 2:
+            func_80042940(4);
+            break;
+        case 3:
+            func_8013A010();
+            break;
+        case 4:
+            func_8013A038();
+            break;
+        case 5:
+            if (D_800E6280.unk_F88 & 0x800) {
+                func_80042940(5);
+            } else {
+                func_80139F04();
+            }
+            break;
+        case 6:
+            func_80139F8C();
+            break;
+        }
+    }
+    /* FAKE: D_8013D3B8 is volatile for func_80139E3C (T-11340). Its
+     * nonvolatile halfword view here permits the original load coalescing.
+     * Explicit staged stores preserve the observed updates. T-24607 */
+    press_selector = D_800E6280.unk_F88 & 0xF00000;
+    repeat_selector = D_800E6280.unk_F80 & 0xF00000;
+    if (D_800E6280.unk_F80 & 0x50000) {
+        switch (repeat_selector) {
+        case 0x200000:
+            value = (*(u16 *)&D_8013D3B8);
+            (*(u16 *)&D_8013D3B8) = value + 1;
+            break;
+        case 0x400000:
+            value = (*(u16 *)&D_8013D3B8);
+            (*(u16 *)&D_8013D3B8) = value + 0xA;
+            break;
+        case 0x800000:
+            value = (*(u16 *)&D_8013D3B8);
+            (*(u16 *)&D_8013D3B8) = value + 0x64;
+            break;
+        case 0x100000:
+            value = (*(u16 *)&D_8013D3B8);
+            (*(u16 *)&D_8013D3B8) = value + 0x3E8;
+            break;
+        }
+        value = (*(u16 *)&D_8013D3B8);
+    } else {
+        switch (press_selector) {
+        default:
+            value = (*(u16 *)&D_8013D3B8);
+            break;
+        case 0x200000:
+            value = ((*(u16 *)&D_8013D3B8) + 1) & 0xFFFF;
+            break;
+        case 0x400000:
+            value = ((*(u16 *)&D_8013D3B8) + 0xA) & 0xFFFF;
+            break;
+        case 0x800000:
+            value = ((*(u16 *)&D_8013D3B8) + 0x64) & 0xFFFF;
+            break;
+        case 0x100000:
+            value = ((*(u16 *)&D_8013D3B8) + 0x3E8) & 0xFFFF;
+            break;
+        }
+    }
+    decrease_selector = D_800E6280.unk_F80 & 0xF00000;
+    if (D_800E6280.unk_F80 & 0xA0000) {
+        switch (decrease_selector) {
+        case 0x200000:
+            decreased = value - 1;
+            /* FAKE: retain the decrement result in v0 before narrowing;
+             * omitting the test adds a copy through v1. T-24607 */
+            if (decreased) {}
+            value = (u16)decreased;
+            break;
+        case 0x400000:
+            decreased = value - 0xA;
+            if (decreased != 0) {
+                value = (u16)decreased;
+            }
+            break;
+        case 0x800000:
+            decreased = value - 0x64;
+            if (decreased != 0) {
+                value = (u16)decreased;
+            }
+            break;
+        case 0x100000:
+            decreased = value - 0x3E8;
+            if (decreased != 0) {
+                value = (u16)decreased;
+            }
+            break;
+        }
+    }
+    (*(u16 *)&D_8013D3B8) = value;
+    if (value >= 0xB54U) {
+        (*(u16 *)&D_8013D3B8) = 0;
+    }
+    func_8013A334();
+}
 
 #define F80_BOOST_9E3C \
     (((D_800E6280.unk_F80 ^ 1) * 0) + ((D_800E6280.unk_F80 ^ 2) * 0) + ((D_800E6280.unk_F80 ^ 3) * 0) + \

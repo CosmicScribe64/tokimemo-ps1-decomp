@@ -59,6 +59,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
 
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
@@ -114,6 +115,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-24571-ending-first-portrait-view|T-24571 Test the first ENDING portrait16 alias view]]
 
 - [ ] [[tickets/T-24560-ending-slot|T-24560 Reconstruct ENDING level halfword slot]]
@@ -148,6 +150,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-24607-option-editor|T-24607 Match OPTION numeric editor]]
 
 - [ ] [[tickets/T-24606-option-calendar|T-24606 Match OPTION calendar controls]]
 
