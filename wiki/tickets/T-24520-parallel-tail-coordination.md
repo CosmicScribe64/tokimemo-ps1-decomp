@@ -36,5 +36,8 @@ Exact/near/lenient/wider-shape automatic copying was already exhausted by the pa
 | TAIIKU | func_80134060 | 1,348 | f278c1b6cbdc8793c0175ae41d6acc364bc1140d |
 | RPG_BAT | func_801447E0 | 924 | 66f4bbe19 (parent bf7e243bd) |
 | TAIIKU | func_80134F98 | 1,256 | 263294a8f6971a79d86544c8072a47053b77982c (parent f278c1b6c) |
+| GYOZI | func_80140F90 | 788 | 636b44839 (parent c182f9815) |
 
-All five compile as literal default C and match privately linked target bytes, totaling 5,060 bytes. Each passes 27 binary SHA1 checks using its private modified overlay plus 26 unchanged root outputs mounted read-only; the worker tickets state that provenance. Headers, globals and prototype checks pass. Parent source review found no blocking findings after RPG_BAT indentation repair. The originating chat integrated the first RPG_BAT match at d2665864e; workers continue. No global progress total is changed in this isolated coordinator tree.
+All six compile as literal default C and match privately linked target bytes, totaling 5,848 bytes. Each passes 27 binary SHA1 checks using private modified overlays plus unchanged root outputs mounted read-only; the worker tickets state that provenance. Headers, globals and prototype checks pass. Parent source review found no blocking findings after RPG_BAT indentation repair. The originating chat integrated the first RPG_BAT match at d2665864e; workers continue. No global progress total is changed in this isolated coordinator tree.
+
+GYOZI shared-header change: wrap existing `void func_800BCDF0();` under `MAIN_API_OVERRIDE_func_800BCDF0`, and use local `s32 func_800BCDF0();` only in src/ovl/GYOZI/80140C90.c. This focused patch preserves the originating chat's newer make_color_bar16 prototype when integrated. GyoziWork named byte fields replace scratch offsets; parent review found no blockers.

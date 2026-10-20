@@ -2178,3 +2178,7 @@ Parent source review found no blockers in T-24521 TAIIKU func_80134F98 (1,256 li
 ## [2026-10-20] build | Second RPG_BAT and TAIIKU matches pinned
 
 T-24522 pinned 66f4bbe19 atop bf7e243bd for RPG_BAT func_801447E0 (924 bytes). T-24521 pinned 263294a8f6971a79d86544c8072a47053b77982c atop f278c1b6c for TAIIKU func_80134F98 (1,256 bytes). Both have literal default linked equality, private whole-overlay hash, 27 checksum checks with explicit read-only baseline provenance, source guards and no-blocker parent source review. Five pinned lane functions total 5,060 bytes. [[tickets/T-24520-parallel-tail-coordination]] lists dependencies. Both workers continue: RPG_BAT four functions remain, TAIIKU nine.
+
+## [2026-10-20] build | Sixth verified lane match pinned
+
+T-24523 pinned 636b44839 atop c182f9815 for GYOZI func_80140F90 (788 bytes). Literal default private linked proof and GYOZI SHA1 43f92523116e7b6cd772d4397712a52eeda89703 pass; 27 hashes use private GYOZI and SHOUGATU plus 25 unchanged read-only baseline outputs. Header/global/prototype checks pass, 0 new disagreements and 15 known. Parent source review approved guarded main_api void-to-local-s32 view of func_800BCDF0 and named GyoziWork field recovery. Six pinned functions total 5,848 bytes. [[tickets/T-24520-parallel-tail-coordination]] records exact commit dependencies; all workers continue, no global progress total changed here.
