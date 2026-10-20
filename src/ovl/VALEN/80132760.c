@@ -204,81 +204,8 @@ s32 func_80132D0C(void) {
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80132D0C);
 #endif
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: score=171 (278/277 insns). D_80134548 promotes to $v0 across the % 8, % 2, and switch blocks; remaining diffs are CVTL 8 on the initial % 8 assignment and uopt hoisting D_800E6280.unk_F5F into $a0 at .L80133208. T-24101. T-24138: `.h` on u32 unk_10F8 replaced by word `& 0xFFFF` (original: lw D_800E7378 + andi 7 head); unk_11C halfwords via ValenStateView. Still far (initial-sum shape differs). */
-void func_80133088(void) {
-    D_80134548 = (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 +
-                  D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 +
-                  (D_800E6280.unk_10F8 & 0xFFFF)) % 8;
-    if ((get_h_tokimeki(D_800E6280.unk_F5F) < 0x46U && D_800E6280.unk_F5F != 0) ||
-        (D_800E6280.unk_1BC[0].unk_02 < 0x46 && D_800E6280.unk_F5F == 0)) {
-        if ((D_80134548 % 2) != 0) {
-            D_80134548 = (D_80134548 - 1) & 0xFF;
-        }
-        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 3;
-    } else {
-        if ((D_80134548 % 2) == 0) {
-            D_80134548 = (D_80134548 + 1) & 0xFF;
-        }
-        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 5;
-        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 5;
-    }
-    switch (D_80134548) {
-    case 0:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_02 += 2;
-        break;
-    case 1:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_02 -= 3;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_04 += 0xA;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_06 += 0xA;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_08 += 0xA;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0A += 0xA;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0E += 0xA;
-        break;
-    case 2:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_04 += 5;
-        break;
-    case 3:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_02 -= 5;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_06 += 0xA;
-        break;
-    case 4:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_02 += 2;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0A += 3;
-        break;
-    case 5:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_08 += 0xA;
-        break;
-    case 6:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0E += 5;
-        break;
-    case 7:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_04 += 5;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0E += 5;
-        break;
-    }
-    if (D_800E6280.unk_F5F == 9 && D_80134544 == 1) {
-        D_80134548 = 9;
-    }
-    if (D_800E6280.unk_F5F == 0 && D_80134544 == 1 && D_800E6280.unk_1BC[0].unk_02 >= 0x46) {
-        D_80134548 = 8;
-    }
-    if (D_800E6280.unk_F5F == 0 && D_80134544 == 1 && D_800E6280.unk_1BC[0].unk_02 < 0x46) {
-        D_80134548 = 0;
-    }
-    check_para_limit();
-    if (D_80134548 < 8) {
-        func_8007ED84(D_80134548 + 0x4072);
-    } else if (D_80134548 == 8) {
-        func_8007ED84(0x41DB);
-    } else {
-        func_8007ED84(0x41DA);
-    }
-    func_8004284C();
-}
-#else
+/* T-24523: stale guarded body removed; correct location/background draft in drafts/T-19016. */
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80133088);
-#endif
 
 void func_801334DC(void) {
     D_80134520 += 1;

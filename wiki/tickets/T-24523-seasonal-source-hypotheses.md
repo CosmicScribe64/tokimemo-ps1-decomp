@@ -1,7 +1,7 @@
 ---
 id: T-24523
 title: Match seasonal overlay tails using new source hypotheses
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-20
 updated: 2026-10-20
@@ -58,3 +58,11 @@ Applied the verified GYOZI selection-loop template to `func_8013E6E4`. Initial f
 The corrected typed sibling port for SHOUGATU `func_8013EA98` remains broad (resolved cost284), with copy/frame differences; no additional source archive or production change retained. The newly verified integer debug-call view does not close GYOZI `func_80138C9C`'s documented saved-register/rotation-loop tail. VALEN `func_80133088`'s current guarded draft is structurally stale versus the location/background target; the correct foundation already lives in drafts/T-19016 and its roughly190-row dispatch-layout tail is documented in [[notes/matching-05]]. No repeated broad grids run on those known scheduler/layout tails.
 
 - Source-only E6 checkpoint review: parent and self review found no blockers. Clearly labeled as unmatched, inherited matching controls carry FAKE/ticket comments, no assembly listings or game assets, and no production code change.
+
+### Stale VALEN draft cleanup and final handoff
+
+Removed the incorrect NON_MATCHING `func_80133088` body only; retained its matching assembly fallback in original address order, with a concise pointer to the existing correct T-19016 source. Provenance: immutable target VALEN offset0x1088 length0x454, VRAM0x80133088..0x801334DB; next function0x801334DC. It classifies seed bits into location choices, calls func_800AE0F0 and selects text/background ids. Removed body computed a girl-stat sum and changed stats, and contained no such location calls. This was a structural stale-body error, not an unresolved register delta.
+
+Private `ninja -j1 build/ovl/VALEN.ok` passes SHA1 `356aed2481987108f908d7013cc0392cea9dcc8c`. Header/global/prototype guards pass; final all27 hashes pass with private GYOZI, SHOUGATU and VALEN plus24 unchanged read-only baseline binaries. Parent and self standards/spec review found no blockers: assembly fallback retained, no header or compiler edit in this cleanup, no unverified coverage claim.
+
+Batch outcome: **2 verified functions / 1,196 bytes** (`SHOUGATU:func_80133B44`408B and `GYOZI:func_80140F90`788B), one unmatched source-only checkpoint, one stale guarded-body cleanup. Fourteen seasonal functions remain unmatched. In Review for integration handoff; no additional searches queued.
