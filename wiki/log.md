@@ -7,558 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-18] decision | T-24056 canonical short sibling drafts, no matches
-Preserved D820/D92C/DF14 source-only ports in drafts/T-24056, annotated full-TU reproduction62/72/12 rows. Correct f9 and threshold types, sibling >=1 predicate and field updates are retained. Read prior D820 threshold exhaustion without repeating it. Pointer/byte/reload/update-lifetime probes fail to recover DF14's initial byte address plus clamp reload together; ledger in README. Conditional FDC s16 header addition remains scratch-only. Production/header/config unchanged, independent default SHOUGATU SHA1 control passes through ASM; zero new C bytes. Updated [[shougatu-family-results]] and [[tickets/T-24056-shougatu-short-siblings]], now In Review. Prior matches unchanged; no push/merge.
-
-## [2026-10-18] build | Three more short functions verified
-
-Combined19468a8ec publishes GYOZI80137F48(164), SHOUGATU80136948(164), GYOZI80137188(176) after independent actual-C literal proofs,27 hashes and interface guards. T24059 reviewed Done; T24058 retains unmatched sibling. [[completion-run-2026-10-17]] now6507/6958 functions,1851416/2279368 bytes(81.2%),427952 remaining. T24056 source-only archive publishedc5c7f1eef; worker scopes updated to T24060/T24061/T24062.
-
-## [2026-10-18] ticket | Claim two small ENDING fade handlers
-
-Created [[tickets/T-24057-ending-small-pair]] before source work and started codex/complete-ending-small-pair from frozen DATE tip 71833d4e2. Read [[ending-family-results]] and prior T-18300/T-20930 aliasing and promotion findings. Scope is only func_80134B18/func_80134C2C in ENDING/80133C10.c, one serial Docker compiler; ENDING/80134D20.c belongs to another chat. Parent owns review/integration. DATE remains reserved with no further compilation while Astra investigates a shared branch-order mechanism.
-
-## [2026-10-18] ticket | T-24057 paired ENDING scheduling leads archived
-
-[[tickets/T-24057-ending-small-pair]] moves with its board card to In Review. [[ending-family-results]] records zero new C matches and two real-record leads at diagnostic cost 4 / 12 positional rows, exact 0x30 frames. `drafts/T-24057/` retains source, tagged byte-promotion provenance, safe full-TU replay and concrete early fade-load scheduling blocker. Terminal C2C flag ordering is fixed through its real aggregate; bounded source/callee controls are recorded. Production src/include/config and every other function remain unchanged, with no extra header/config scope.
-
-## [2026-10-18] ticket | SHUGAKU short-selector reconstruction
-
-Created [[tickets/T-24060-shugaku-short-selectors]] after reading [[shugaku-family-results]], old T-14500/T-18000 sources and T-10310 selector evidence. Own src/ovl/SHUGAKU/80138A60.c only; current types and bounded local/control-flow hypotheses, no header change yet.
-
-## [2026-10-18] decision | SHUGAKU short source corrections retained
-
-[[tickets/T-24060-shugaku-short-selectors]] moves to In Review with zero matches, production/header/config unchanged. [[shugaku-family-results]] records phase52/52 after repairing a phantom callee argument, and selector62/58 with meaningful shared-byte lifetime; old58-row context not surpassed. Valid structured source/reproducer saved; all loose diagnostics ignored. Baseline unit checksum passes, no default ASM coverage claim or compiler impossibility assertion.
-
-## [2026-10-18] ingest | Draft checkpoints and EVENT recipe transfer
-
-Preserved [[tickets/T-24057-ending-small-pair]] source-only archive2a97faf17 and [[tickets/T-24060-shugaku-short-selectors]] archive89ba6cc66 on main, with no production delta or coverage gain. Updated [[completion-run-2026-10-17]] ownership for fresh TACO/ETC lanes, corrected provisional ticket collision, transferred Astra neighbor-base selector recipe to DATE. EVENT scratch6848-byte match awaits production pin and independent proof. Read-only contributor check07:47UTC found no open PRs and unchanged claims#50/#56/#57.
-
-## [2026-10-18] ticket | Start T-24061 short control and copy package
-Reserved only GEKO80140A00:func80141870, SHOUGATU80134890:func801359FC and GYOZI80143AD0:func8014494C at01c0c2dae. Read T-23005 word-view/local negatives,35-byte string-table frame history and GYOZI postincrement evidence. Current matched sibling3506C setup return fix provides a new interface hypothesis; shared changes remain scratch-only pending coordination. [[tickets/T-24061-short-control-and-copy]] In Progress; one Docker compiler, no push/merge.
-
-## [2026-10-18] decision | T-24061 corrected short handlers, no promotion
-Read prior negatives and matched setup/dialogue forms; serial source-semantic/lifetime checks preserve GEKO byte postincrement plus word reload (44 rows), SHOUGATU correct girl/seed/halfword views (56 rows), and GYOZI scratch setup return prefix (84 rows). Table alignment, separate selector lifetimes, eager bool and record pointer/prefix-copy hypotheses failed; finite ledger and tested source reproduction in drafts/T-24061. No production/header/config edits, no forced registers/compiler patches; zero C bytes. Updated [[scenes-family-results]], [[shougatu-family-results]], [[event-family-results]] and [[tickets/T-24061-short-control-and-copy]], now In Review. Production control hashes pass through ASM fallbacks; prior matches preserved. No push/merge.
-
-## [2026-10-18] ticket | Resume EVENT through full-match closure
-
-[[tickets/T-24023-event-handler]] moves In Review to In Progress after dialogue commit 0a6f9e4b8. Inspect repeated date Boolean ranges and test the measured early-definition idiom from [[tickets/T-24021-dialogue-scheduling]]. Remaining scope and parent notifications follow [[tickets/T-24020-astra-hard-functions]].
-
-## [2026-10-18] query | EVENT separates the three Boolean materializations
-
-[[tickets/T-24023-event-handler]] finds a source-shape lead: distinct no-op month operands stop the unwanted shared comparison. Two sites match their original Boolean blocks; a middle byte mask emits one extra instruction. Test distinct wrappers that lower without instructions. Dialogue parent reports independent all-27 verification and publication as main f55a2d7e9; formal review accepted its marked FAKE idiom.
-
-## [2026-10-18] query | EVENT reaches exact structure with 29 exchanged branch operands
-
-[[tickets/T-24023-event-handler]] now has the exact 1,712 instructions in source-only drafts/T-24023/closure/body.c. Distinct no-op operands stop Boolean commoning; a positive date guard replaces both gotos without losing either failure exit and fixes tail load scheduling. Remaining cost 58 is 29 equality-operand swaps. Rejected two unrelated precedence-bug probe results during source audit. Continue through literal match; no C promotion yet.
-
-## [2026-10-18] query | Trace EVENT final operand reversals through conversion pass
-
-[[tickets/T-24023-event-handler]] reaches cost 28, fourteen branch operand pairs. Constant assignment through an existing word local fixes the other fifteen. Captured the unchanged conversion pass input/output and identified its constant-register ordering rule. Experimental pointer/local/call forms do not improve the remaining pairs; compiler and production source remain unchanged.
-
-## [2026-10-18] query | EVENT narrows to nine selector branch pairs
-
-[[tickets/T-24023-event-handler]] now has cost18 and exact structure through per-arm unsigned selector copies and separate byte-local comparison constants. Input/output ucode captures remain read-only diagnostics of the normal compiler. Target individual remaining source sites; preserve the selector value across later tests in each arm.
-
-## [2026-10-18] build | EVENT handler matches default C and full overlay checksum
-
-[[tickets/T-24023-event-handler]] moves In Progress to In Review. Default C matches all 1,712 instructions / 6,848 literal text bytes; normal EVENT SHA1 ff7184d7e92b7aff372450ac3b8c2bdd42e55a5e and header/global/prototype guards pass. Parent coordinated s32 func_801103A0(void); its sole C caller ignores the result and remains byte-identical. Updated [[matching-notes]], [[event-family-results]], [[register-cheatsheet]], index and coordinator. Final source marks the unknown-aggregate neighboring-byte view, Boolean identity operands and constant-capture byte local FAKE. Retained replay in drafts/T-24023/closure/. Parent retains formal review and main integration.
-
-## [2026-10-18] query | Record EVENT return view and closure controls
-
-[[tickets/T-24023-event-handler]] documents the intentional s32 fallthrough tail requested by parent preview review: original calls func_80011DFC then returns with its v0 unchanged, and the sole C caller ignores the result. The retained full-TU replay confirms literal6,848-byte match; direct selector symbol costs18, shared month equality967, literal comparison constants8, historical checkpoint214. No production cleanup or compiler changes after successful verification.
-
-## [2026-10-18] ticket | TACO short-helper count lane
-
-Created [[tickets/T-24063-taco-short-count]], confirmed three guarded targets and parent-owned disjoint scope. Read [[taco-family-results]], [[ido-52-evaluation]], copy-state and keep-line negatives. Two copies get fresh controls only; random-buffer view/control-flow are the concrete novel source hypothesis. One Docker compiler, no production/header edits yet.
-
-## [2026-10-18] decision | TACO short-count pass freezes known gaps
-
-[[tickets/T-24063-taco-short-count]] moves to In Review with zero C gain, production/header/config unchanged. [[taco-family-results]] records fresh29/16/20-row controls and a correct GameState unk_183C word-buffer view compiling identically29. Read prior copy-state compiler evidence and did not repeat exhausted grids. Five measured forms only; corrected body/reproducer retained, all loose instruction traces ignored. Baseline TACO checksum passes, no ASM fallback coverage claim.
-
-## [2026-10-18] ticket | T-24062 main audio helpers
-
-Created [[tickets/T-24062-main-audio-short]] In Progress for four short helpers in src/main/80079B10.c. Read prior T-17000/T-17012 and type/negative evidence; no other source ownership, one Docker compiler, headers coordinated before edits.
-
-## [2026-10-18] decision | T-24062 mixer C candidate
-
-[[tickets/T-24062-main-audio-short]]: func_8007BCFC scratch cost0 after typed four-byte buffer, paired work-field copy order, byte grouping and unsigned member view (FAKE marked). Installed unguarded C and root-approved s32 func_80087DC8(u8 *) declaration; wrapper/CD_vol in asm/libcd_rest.s establish return1 and four input bytes. Initial scratch address-versus-offset misreading corrected before production; T17000 original member offsets were right. Normal build/proof pending.
-
-## [2026-10-18] build | T-24062 verified mixer stopping point
-
-[[tickets/T-24062-main-audio-short]]: normal default func_8007BCFC literal MATCH236 bytes; four matched local audio siblings also MATCH. MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 and source/header/global/prototype guards pass. One approved wrapper declaration, two source FAKE constraints; no other function changed. Corrected unmatched queue/flag/table sources and results preserved in drafts/T-24062. Updated [[main-family-results]], moved ticket In Review. User requested stop after current verified work; no next function.
-
-## [2026-10-18] decision | Two focused Sol workers and verified EVENT/mixer gains
-
-User clarified keep goal active while reducing usage to1–2Sol6.1 agents, one function each. [[completion-run-2026-10-17]] records DATE44E20 and ENDING35F4C as the only continuing workers; Astra and three root workers stopped. Contributor30-minute heartbeat remains active. Independently integrated EVENT6848bytes and MAIN mixer236bytes, all27 hashes/literal C/interface gates pass. [[tickets/T-24023-event-handler]] Done after standards review; [[tickets/T-24062-main-audio-short]] remains In Review for residual drafts. T24061 archive6a0ef66b9 and T24063 archive3ef3fc8f1 published without production changes. Verified total6509functions/1858500bytes81.5%; goal remains100%.
-
-## [2026-10-18] ticket | Claim three small ETC count targets
-
-Created [[tickets/T-24060-etc-count-trio]] before source work on codex/complete-etc-count-trio from frozen acf7fa2c3. Current primary sources confirm all three assigned functions remain INCLUDE_ASM; parent owns coordination and disjoint scope. Read [[etc-family-results]] and prior temporary-order, pointer-folding and unaligned-copy evidence. One serial Docker compiler; DATE remains frozen and parent handles review/integration.
-
-## [2026-10-18] decision | Correct ETC ticket allocation to T-24064
-
-Parent reports T-24060 belongs to an independently frozen SHUGAKU package. Renamed this lane's newly created ETC ticket/card/index link to [[tickets/T-24064-etc-count-trio]], preserving history and source scope. The earlier local claim log names the provisional colliding ID; it does not supersede SHUGAKU ownership. No existing SHUGAKU ticket is present in this older checkout or modified here.
-
-## [2026-10-18] ticket | Reopen T-24051 for neighboring-base recipe
-
-[[tickets/T-24051-date-large-dispatcher]] reopens In Progress with its card and index. Parent Astra EVENT evidence motivates a bounded source-only neighboring-base byte view, not a repeated conversion-pass trace: selector D_800CA2F4 + 4, optional BF44 + 4, and the existing movie-work fade byte +0x1C. Exact addresses and byte load widths must remain; unknown aggregate ownership is FAKE. Preserve the frozen 28-row source, one serial Docker compiler and unchanged headers/config. [[tickets/T-24064-etc-count-trio]] remains queued In Progress for the same worker after DATE.
-
-## [2026-10-18] ticket | T-24051 recipe transfer leaves source checkpoint unchanged
-
-[[tickets/T-24051-date-large-dispatcher]] returns to In Review before [[tickets/T-24064-etc-count-trio]] compiler work. [[date-family-results]] and `drafts/T-24051/` retain six bounded EVENT-inspired controls: selector neighbor44, flag/fade/grouped28, captured byte constants132. Selector adds eight reversed pairs; other views fix none of the original14; captured locals shift all table offsets/base spill -4 despite frame0xE38. The exact28 source, production and prior matching bodies are preserved. No pass trace, compiler patch, header or config change was made.
-
-## [2026-10-18] decision | User narrows sole-worker focus to DATE
-
-Latest user steering continues [[tickets/T-24051-date-large-dispatcher]] In Progress after this checkpoint, with reduced usage and evidence-driven source hypotheses for func_80144E20 only. [[tickets/T-24064-etc-count-trio]] moves to Ready with its board card and index; ETC has only read-only prior notes and no new compiler probes. This supersedes the immediately preceding plan to resume ETC. No new agents, duplicate conversion-pass trace or compiler/header patch is authorized.
-
-## [2026-10-18] ticket | T-24047 ENDING initializer restart
-
-Created [[tickets/T-24047-ending-sprite-scene]] at main4496b0dc7 in isolated codex/complete-ending-large. Own only src/ovl/ENDING/80134D20.c; prior MAIN/EVENT/TEL scope revoked. One compiler, Docker only. Read [[ending-family-results]] and [[completion-run-2026-10-17]].
-
-## [2026-10-18] query | ENDING initializer source recovery
-
-[[tickets/T-24047-ending-sprite-scene]] hand reconstruction restores805/805 instructions, frame176 versus target160. Corrected typed menu arrays and ordinary loops; shared transfer-size and grid-divisor lifetime hypotheses are being tested. No match claimed.
-
-## [2026-10-18] query | ENDING initializer frame recovered
-
-[[tickets/T-24047-ending-sprite-scene]]: ordinary direct record indexing and two scalar locals recover original160-byte frame and stack table homes. Bitfield access restores scene-switch instructions. Current803/805-instruction source has aligned cost104; loop scheduling remains.
-
-## [2026-10-18] query | ENDING initializer narrowed to scheduling and constant types
-
-[[tickets/T-24047-ending-sprite-scene]] source reaches aligned cost64 with exact160-byte frame; normal branch/case bodies agree. Unsigned size/width typing and named quotient lifetime are material. Native AS1 tracing fails current shim validation, so tracing was discarded without production changes.
-
-## [2026-10-18] query | ENDING native AS1 trace fidelity established
-
-[[tickets/T-24047-ending-sprite-scene]] corrects earlier trace failure classification: optional .data lookup was a script error. Scratch native AS1 tracing now retains26784 DAG lines with stock code/data/relocation equality. Source Y/fade store order restores display loop; current aligned cost49.
-
-## [2026-10-18] query | ENDING initializer two blockers isolated
-
-[[tickets/T-24047-ending-sprite-scene]] reaches804/805 instructions, aligned cost43; first two initialization loops and all scene bodies now agree. Remaining constant-colour tie and cross-switch address scheduling remain unverified C. First menu-address roundtrip needs FAKE marking if retained.
-
-## [2026-10-18] ticket | ENDING initializer checkpoint in review
-
-[[tickets/T-24047-ending-sprite-scene]] enters In Review with source/replay/negative ledger under drafts/T-24047/. Preferred source804/805 instructions, aligned cost43. Explicitcase12 diagnostic has five differing words but wrong bound/table and is rejected. [[ending-family-results]] records recovered layout, loop order and remaining blockers. Zero new verified bytes.
-
-## [2026-10-18] build | ENDING checkpoint validation and review complete
-
-[[tickets/T-24047-ending-sprite-scene]] independent standards review has no actionable findings; parent scope review confirms the owned function is the only production change. Matching acceptance remains unmet and status stays In Review. Docker full-TU replay reproduces804/805 instructions/cost43, ENDING default rebuild passes SHA1, and headers/globals/branch prototypes pass with zero new disagreements. All27 built binaries pass manifest SHA1 checks after rebuilding inherited stale GEKO/GYOZI cache outputs without source edits. No coverage gain claimed.
-
-## [2026-10-18] ingest | Preserve focused DATE and ENDING checkpoints
-
-Published DATE33ce56acce source-only checkpoint as96301444d. Reviewed ENDINGb0111332c guarded reconstruction against CODING_STANDARDS; explicit FAKE casts, canonical fields, C89 and default ASM retained. Removed one trailing blank line; integration all27 hashes and interface guards pass. [[completion-run-2026-10-17]] records two continuing workers and uncounted DATE scratch four-row lead. No coverage change.
-
-## [2026-10-18] decision | Add two user-authorized Antigravity CLI workers
-
-Confirmed agy CLI model gemini-4-argon-medium and launched T24065 OPTION3394C and T24066 BUNKA_SD34418 in two clean reused checkouts. [[completion-run-2026-10-17]] records conversation/process handles and logs. Existing two Sol workers retain DATE/ENDING; no overlap or subagents. CLI auto mode unavailable, default review permissions retained. No new match claimed.
-
-## [2026-10-18] build | T-24051 reaches four-row source checkpoint
-
-[[tickets/T-24051-date-large-dispatcher]] and [[date-family-results]] record exact EVENT assignment-capture transfer: constants assigned inside comparisons fix twelve of fourteen branch pairs. Declaring the real byte after base preserves all21table offsets, base home and frame0xE38; four rows remain at source selector comparisons411/495. `drafts/T-24051/func_80144E20-4rows.c` is tagged FAKE and preserved beside the older28-row body. No production/header/pass changes or new verified bytes. Sole-worker DATE work continues In Progress.
-
-## [2026-10-18] decision | Antigravity shell approval pending
-
-Both new Antigravity CLI runs terminated after denied shell actions in noninteractive default request-review mode. No permission bypass or retry performed; user approval requested. [[completion-run-2026-10-17]] records terminal handles. Two Sol workers continue DATE/ENDING. New DATE four-row source checkpoint preserves exact frame/table layouts but is not a production match.
-
-## [2026-10-18] ticket | Continue focused ENDING initializer closure
-
-[[tickets/T-24047-ending-sprite-scene]] returns to In Progress for focused
-default-arm dependency and grid-constant lifetime probes. Reviewed checkpoint
-b0111332c is preserved. Scope remains one function, one compiler, no new workers.
-
-## [2026-10-18] query | ENDING dependency and constant probes remain negative
-
-[[tickets/T-24047-ending-sprite-scene]] records six bounded source probes.
-Default address roundtrips/volatile views and explicit constant locals worsen
-output. Early palette-store reordering is neutral; late reordering worsens it.
-The reviewed804/805-instruction checkpoint remains preferred, zero new bytes.
-
-## [2026-10-18] query | Explicit ENDING range control rejected
-
-[[tickets/T-24047-ending-sprite-scene]] outer if/switch variants retain duplicate
-range checks and selector lifetime changes,834 instructions each. Neither
-improves the checkpoint; production remains unchanged.
-
-## [2026-10-18] query | ENDING declaration metadata hypothesis ruled out
-
-[[tickets/T-24047-ending-sprite-scene]] constant casts and unsigned lvalue view
-are neutral. Scratch-only distinct default-cell symbols also retain804/cost43;
-the matrix declaration is not the source of speculative address motion. No
-header or production source changes are justified by these results.
-
-## [2026-10-18] ticket | ENDING focused continuation checkpoint
-
-[[tickets/T-24047-ending-sprite-scene]] returns to In Review after fourteen
-negative probes. Register constants also expand the frame. The ledger and
-[[ending-family-results]] retain results; production source/replay body remain
-unchanged from b0111332c. Scope and standards review has no new findings; no
-production revalidation is needed for this evidence-only update. Zero new bytes.
-
-## [2026-10-18] build | T-24051 zero diagnostic and missing export
-The consistent existing s16 selector-neighbor base plus assignment captures closes the remaining comparisons in [[date-family-results]]. Frozen source and canonical callback evidence are retained under drafts/T-24051. Literal replay fails closed on absent D_800CA2E8 export; parent approved one absolute symbol export plus the necessary DATE declarations before actual C promotion. [[tickets/T-24051-date-large-dispatcher]] remains In Progress; no default C proof claimed yet.
-
-## [2026-10-18] build | T-24051 actual DATE dispatcher match
-Promoted only func_80144E20 to unconditional C: explicit default linked proof MATCH 3,200 bytes, whole DATE checksum OK, header/global guards OK, prototype branch guard zero new disagreements (15 known). The approved single D_800CA2E8 absolute export resolves the prior missing-symbol dependency without allocation. Canonical DATE callback declarations and BF48 are included; production FAKE notes preserve source uncertainty. [[tickets/T-24051-date-large-dispatcher]] and board move to In Review for independent root review; [[date-family-results]] records closure. No other functions or ETC work changed.
-
-## [2026-10-18] build | DATE dispatcher3200-byte C match independently integrated
-
-Verified worker2da9bb5f8 actual default C with literal3200-byte proof, all27 binary hashes and interface guards. [[tickets/T-24051-date-large-dispatcher]] Done after root CODING_STANDARDS review; [[completion-run-2026-10-17]] records6510functions/1861692bytes81.7%. Existing Sol worker assigned only ETC41ABC next, T24067; ENDING worker continues, no new agents. Antigravity permission request remains pending.
-
-## [2026-10-18] ticket | Focus ETC work on one album-copy function
-
-Created [[tickets/T-24067-etc-album-copy]] before work on only func_80141ABC in ETC/80140F50.c, split from deferred [[tickets/T-24064-etc-count-trio]]. Read [[index]] and prior album-copy/cursor/register evidence in [[matching-notes]]. Reuse the clean built checkout from verified DATE 2da9bb5f8; one existing Sol medium worker, no batches or new agents. Parent owns DATE integration and independent review.
-
-## [2026-10-18] query | Contributor check08:13UTC
-
-Read-only GitHub check: no open PRs, claims#50/#56/#57 unchanged. NAME_ENT/TT exclusions continue. [[completion-run-2026-10-17]] retains two active Sol lanes: ENDING35F4C and [[tickets/T-24067-etc-album-copy]]. Both confirmed active via current chat handles; no new verified match. Antigravity approval still pending, no retries.
-
-## [2026-10-18] ticket | ENDING trace-led closure continues
-
-[[tickets/T-24047-ending-sprite-scene]] returns to In Progress. Existing AS1 DAG
-shows the first per-block schedule has the target's empty load slot; a later
-cross-block pass imports the default LUI into that stall. Inspect stock uopt
-listing support next, without rebuilding tracing tools or changing production.
-
-## [2026-10-18] query | Stock ENDING allocator listing blocked by runtime stub
-
-[[tickets/T-24047-ending-sprite-scene]] stock uopt listing attempt confirms the
-documented wrapper_ecvt assertion. Normal compilation is unaffected. No tracer
-rebuild or production flag change; existing AS1 DAG remains available.
-
-## [2026-10-18] query | ENDING extra default entries rejected
-
-[[tickets/T-24047-ending-sprite-scene]] packed scalar declaration swap is neutral.
-Out-of-range case -1/256 entries radically change frame/allocation at cost770;
-no useful control-flow barrier. Existing AS1 evidence motivates line grouping.
-
-## [2026-10-18] query | Partial ENDING stock trace includes complete target allocation
-
-[[tickets/T-24047-ending-sprite-scene]] corrects the tracing blocker: native
-uopt lists complete target allocation/reemission before crashing in a later
-function. Target ranges528/529 receive constrained colours6/7, matching the
-observed swapped constants. Line-grouping probes are neutral804/cost43.
-
-## [2026-10-18] query | ENDING result-local probes rejected; trace failure narrowed
-
-[[tickets/T-24047-ending-sprite-scene]] UV/page-result locals worsen to802
-instructions/cost623/621. A TU prefix ending after the target still hits ecvt
-in final statistics after target reemission; failure is not limited to later
-functions. Check lower native listing verbosity without compiler changes.
-
-## [2026-10-18] query | ENDING call metadata and narrow size views are neutral
-
-[[tickets/T-24047-ending-sprite-scene]] native listing level5 still hits ecvt;
-s16/u8 size views and implicit-int/unprototyped-void loader views are neutral.
-Matched neighbour36EE4 fills both selector stalls with its prologue and offers
-no empty-stall counterexample. Shared headers and production source unchanged.
-
-## [2026-10-18] ticket | ENDING trace-led checkpoint and allocator dependency
-
-[[tickets/T-24047-ending-sprite-scene]] returns to In Review with eleven more
-negative scores and unchanged production source. Native AS1 trace isolates
-cross-block motion; stock uopt trace exposes assignment order but lacks detailed
-range priority/cost data and aborts at ecvt. regdiff confirms the instrumented
-allocator is unavailable in the container. The coordinating lane previously
-found no host trace binary and requested no rebuild here. Record that diagnostic
-runtime as the next dependency; no compiler changes or new verified bytes.
-
-## [2026-10-18] ingest | Reuse rebuilt diagnostic allocator across two workers
-
-[[completion-run-2026-10-17]] records restored external tracer path and worker stock-output equivalence evidence. Shared read-only binary with [[tickets/T-24067-etc-album-copy]] for its22cost/26row pointer/copy register residual. ENDING continues same target. No new matched bytes or production-toolchain change; two Sol workers only.
-
-## [2026-10-18] ingest | T-24067 album-copy semantic audit
-Read prior T-9720/T-17300 evidence and current types for [[tickets/T-24067-etc-album-copy]]. Cursor arithmetic must advance eight bytes over 256 records, not eight GameState elements. Existing GameState/Work800E7D10/GsRec75E views cover source, save bytes and unaligned eight-byte assignment without new headers. Only this ETC function is under investigation; DATE publication reported by parent and all other ETC targets remain deferred.
-
-## [2026-10-18] decision | T-24067 save byte offsets
-The destination root is 0x800E7D10: count/mode at 0x800E7D38/37 are offsets +0x28/+0x27, hence existing unk_027 indices 1/0. Corrected this arithmetic before interpreting source comparisons. Initial compile identifies common-base CSE and loop-end placement as concrete allocation differences; bounded endpoint and printf temporary controls follow.
-
-## [2026-10-18] build | T-24067 reproduces prior album-copy boundary
-Canonical typed source gives35 diagnostic rows; independent endpoint identity reproduces prior27. Bounded copy-alignment, argument-width, signed store, count-postincrement and loop-preheader controls have no gain. [[tickets/T-24067-etc-album-copy]] records exact unresolved groups. Tests remain ignored scratch; production/interface scope unchanged. Direct repeated printf reads and existing-byte reuse are next source hypotheses, avoiding new frame homes.
-
-## [2026-10-18] build | T-24067 stored-mode read improves diagnostic
-Passing the saved mode byte to the final printf lets the compiler share the constant in a1 and restores that tail schedule: private cost27→22 (26 differing rows). Existing SDK printf, K&R/private return views and four source-line grouping controls do not change the remaining result. No compiler/header changes were made; [[tickets/T-24067-etc-album-copy]] remains In Progress with saved-register, argument-store and copy-temp differences under focused investigation.
-
-## [2026-10-18] query | T-24067 allocator tie isolated
-Existing read-only tracer shows fmt/save/end hoisted constants share priority3.33333325 and first-use numbering52/53/54 in [[tickets/T-24067-etc-album-copy]]. Identical-input stock and instrumented code/data/relocations agree. No production compiler change. Testing one endpoint assignment inside the loop to change first-use order while retaining semantics; prior explicit pre-loop endpoints, eliminated zero terms and postcondition controls do not improve cost22.
-
-## [2026-10-18] build | T-24067 canonical allocation checkpoint
-Retained drafts/T-24067/body.c and safe replay at cost18/28 rows, exact0x48 frame/75 words. FAKE format identity restores saved allocation; canonical GameState endpoint avoids any header/export alias. Source-only checkpoint preserves provenance while [[tickets/T-24067-etc-album-copy]] remains In Progress. No other function or production source changed.
-
-## [2026-10-18] query | T-11890 Sony/SN cc1psx versions on ratan2
-
-User-approved downloads of the mkst/esa `psyq-binaries` compiler sets (PsyQ 3.3, 3.5, 3.6 under dosemu2; 4.0, 4.1,
-4.3, 4.5, 4.6 under wine; throwaway containers in the scratchpad, nothing committed). None reproduces TT
-`func_8014D260` or the SDK habits: every version up to 4.5 prints the `div` macro and ASPSX expands it with the move
-after the checks; 4.0 equals our gcc 2.7.2-psx + maspsx output; no version prints the rd-through load or hazard nops.
-Results in [[gcc-objects]] and [[tickets/T-11890-tt-ratan2-aspsx]] (status unchanged, Done). Branch `cc1psx-d260`.
-
-## [2026-10-18] query | T-11890 old ASPSX and PsyQ library signatures (issue #63)
-
-DOS ASPSX 1.05 to 2.34 under dosemu2 (scratch container): no version reproduces TT `func_8014D260` or any of the three
-habits. lab313ru signatures of 12 libraries in 16 PsyQ releases against the 722 main-exe SDK functions: mixed vintages
-(libgte/libc 3.3-era, libgpu/libcd/libetc 3.7/4.0-era, libsnd/libspu poor everywhere); TT ratan2 and libgpu
-`func_8009E108` differ from 3.70/4.00 only at the habit spots, many others also in instruction order. The SDK C code
-comes from a toolchain no released set reproduces. [[gcc-objects]], [[tickets/T-11890-tt-ratan2-aspsx]] (status
-unchanged).
-
-## [2026-10-18] ticket | Repair ENDING allocator diagnostic prerequisite
-
-[[tickets/T-24047-ending-sprite-scene]] returns to In Progress after coordinating
-authorization for a bounded15-minute Docker rebuild of the documented tracer.
-No reusable source found in research/acceleration trees or user cache. External
-scratch /private/tmp/t24047-uopt, pinned revision and existing patches only;
-verify stock instruction equality before diagnostic use. Checkpoint4428f8789 saved.
-
-## [2026-10-18] build | Pinned ENDING diagnostic source verified
-
-[[tickets/T-24047-ending-sprite-scene]] generated uopt source matches the
-documented SHA256, ecvt patch applies with zero fuzz, and setup/generation uses
-56MB. Serial bounded Docker compilation of only the diagnostic allocator begins;
-no production compiler changes.
-
-## [2026-10-18] build | ENDING allocator tracer repaired and fidelity verified
-
-[[tickets/T-24047-ending-sprite-scene]] diagnostic rebuild succeeds in about3
-minutes,62MB external scratch. Patched and traced allocators reproduce stock
-code/data/relocation section inventories and bytes; target equals the preferred
-804-instruction checkpoint. Native diagnostic completes successfully. Detailed
-allocation analysis resumes with no production compiler changes.
-
-## [2026-10-18] ingest | Reusable ENDING allocator tracer and exact tie evidence
-
-[[ending-allocator-trace]] records external paths, pinned source/hash, exact
-Docker build/use/fidelity commands and the reusable verifier in
-drafts/T-24047/trace_fidelity.py. regdiff confirms both constants have priority5
-and cost0; first-use bit order528/529 gives the swapped colours. No compiler
-decision change or coverage gain. [[index]] links the new page.
-
-## [2026-10-18] query | ENDING scratch lifetime hypotheses measured
-
-[[tickets/T-24047-ending-sprite-scene]] confirms CFE does not reuse table stack
-homes across lexical blocks. Early UV local/table-slot forms worsen output.
-Union-member copying changes aligned stores to swl/swr; whole-union copy is
-the next control. Preferred source remains unchanged, zero new bytes.
-
-## [2026-10-18] query | ENDING constant order coupled to quotient priority
-
-[[tickets/T-24047-ending-sprite-scene]] whole-union control matches the preferred
-checkpoint but early UV forms worsen. Tracing the minimal UV/palette reorder
-shows why: constant order flips, while quotient priority drops15 to10 and its
-colour changes v1 to a0, shifting the grid constants and temporary pool. Test
-only a direct late quotient spelling next; no production changes retained.
-
-## [2026-10-18] query | ENDING constant-register tie closed in source lead
-
-[[tickets/T-24047-ending-sprite-scene]] direct late quotient spelling restores
-allocation after moving UV first. New closer804/cost37 fixes all four constant
-words; one zero store is early and default-arm LUI motion remains. Preserve
-drafts/T-24047/closer.c and --body replay support; production remains guarded at
-the reviewed checkpoint. [[ending-family-results]] and [[ending-allocator-trace]]
-record evidence and reusable diagnostics. Zero new verified bytes.
-
-## [2026-10-18] build | ENDING reusable tracer checkpoint validated
-
-[[tickets/T-24047-ending-sprite-scene]] default replay remains804/cost43 and
-archived closer reproduces804/cost37 with --body. Retained fidelity verifier
-reproduces stock code/data/relocations across both diagnostic binaries. Scope
-and standards review finds no production changes or open findings in the helper;
-all diagnostic outputs remain ignored/external. Task stays In Progress.
-
-## [2026-10-18] query | Contributor check at08:40 UTC
-
-Read-only GitHub query: no open PRs; issues #50/#56/#57 retain prior update timestamps. Existing ownership exclusions retained; next check around09:10 UTC. [[completion-run-2026-10-17]] records the check. No contributor messages sent.
-
-## [2026-10-18] decision | T-24067 counterfactual unavailable
-Parent preserved source checkpoint eadad3134 on main ebf0aa7b1. Optional private4.1-ugen comparison cannot run with existing tools; no downloads/install/image changes or expanded search. Further source controls have not improved cost18. Native listing identifies loop-header source-location boundary as the next narrow preheader-scheduling test. [[tickets/T-24067-etc-album-copy]] remains active; no production change or compiler-gap claim.
-
-## [2026-10-18] build | T-24067 source-line boundary gain
-Retained exact initializer/do source-line grouping in drafts/T-24067/body.c with FAKE scheduling explanation. Diagnostic improves cost18/28 rows to16/20, frame0x48/75 words unchanged. Safe replay validates exact tagged body. Independent endpoint symbol does not improve it, so canonical GameState endpoint remains. [[tickets/T-24067-etc-album-copy]] remains In Progress; no actual C match claimed.
-
-## [2026-10-18] query | ENDING loop scheduling fully recovered
-
-[[tickets/T-24047-ending-sprite-scene]] moving the zero store after UV closes
-the remaining initialization-loop gap:804/cost35. All scene bodies also agree.
-Explicitcase12 diagnostic leaves only the wrong bound word (cost2) and extra
-table entry, so it remains rejected. Only real default-arm AS1 motion remains.
-
-## [2026-10-18] query | ENDING address-motion metadata probes remain negative
-
-[[tickets/T-24047-ending-sprite-scene]] direct volatile views, selector cast,
-register qualifiers and ordinary default C label are neutral35. Volatile pointer
-store's lower score23 is offset cancellation with extra instructions, rejected.
-Unchanged assembler-input capture isolates the extra-case label/table/bound
-records. Guarded production reconstruction and archived body advance to35;
-default ASM fallback remains pending normal validation.
-
-## [2026-10-18] build | ENDING35 guarded source validated
-
-[[tickets/T-24047-ending-sprite-scene]] preferred replay804/cost35, reusable
-stock/diagnostic code-data-relocation fidelity, and fresh ENDING SHA1 all pass.
-Parent scope/standards review has no findings; guard and FAKE notes remain.
-[[ending-family-results]] and [[index]] reflect the sole AS1 blocker. Zero new
-verified C bytes; ticket remains In Progress.
-
-## [2026-10-18] query | ENDING script pointer metadata ruled out for current residue
-
-[[tickets/T-24047-ending-sprite-scene]] private pointer-table/EdScriptSet views
-are neutral35. The100-entry ledger retains all rejected diagnostics explicitly;
-no shared header change is supported. Guarded35 source is validated and ready
-for a source checkpoint while AS1 closure continues.
-
-## [2026-10-18] query | T-24067 source analogies checked
-Read parent pointers to [[register-cheatsheet]]41 and [[matching-notes]]6294-6310. Masked-byte-store recipe does not map to word printf arguments (mask emits ANDI); real stack-backed temporary adds frame and storage, while constant-first copy addresses retain16/20. [[tickets/T-24067-etc-album-copy]] records rejection evidence and next natural indexed-loop hypothesis. Production and compiler interfaces unchanged.
-
-## [2026-10-18] build | T-24067 typed index-loop gain
-Natural typed record indexing plus induction elimination fixes printf stack-store order and preheader schedule, reaching16 cost/16 rows with75 words/frame0x48. Removed unnecessary format-pointer identity; only source-line grouping remains FAKE. Preserve complementary cursor16/20 source and replay both under drafts/T-24067. [[tickets/T-24067-etc-album-copy]] remains In Progress; four saved-assignment and four copy-temp words remain.
-
-## [2026-10-18] ticket | Resume reserved NAME_ENT fade and page work
-
-PR #60 is merged; maintainer independently verified all 27 hashes and the 152-byte coordinate C match. [[tickets/T-20013-name-ent-fade-page-followup]] moves to In Progress for the two remaining functions reserved in issue #57. Work starts from ebf0aa7b1 on codex/name-ent-fade-page-followup.
-
-## [2026-10-18] build | Both reserved NAME_ENT functions reach zero
-
-[[tickets/T-20013-name-ent-fade-page-followup]] recovers func_80132320 (396 bytes) and func_80134248 (2256 bytes) in complete-file source probes. Fade store identities preserve A1; page index reuse restores the original frame and selector reloads, with measured indirect remainder, empty-test and OR-zero constraints. Individual removal controls are recorded in the ticket; all retained matching-only forms carry FAKE comments. No flags, tooling, headers or other function bodies change. Default build and actual linked proof are running before any match submission.
-
-## [2026-10-18] build | T-20013 default linked C independently verified
-
-[[tickets/T-20013-name-ent-fade-page-followup]] passes the default Docker build, all27 independent binary SHA1s, actual default linked funcdiff MATCH396/2256 bytes, headers/globals and prototype guard0new/15known. Integrated upstream2e7376c68; preserved both contributors' append entries and the unchanged tested NAME_ENT source blob22925eedc2793094c6a4e429399a5c3bef59ded9. Both functions are unguarded C with no ASM fallback; source-only contribution.
-
-## [2026-10-18] ticket | T-20013 ready for maintainer review
-
-[[tickets/T-20013-name-ent-fade-page-followup]] and [[kanban]] move to In Review after CODING_STANDARDS.md self-review. Only the two claimed function bodies change; all matching-only identities/read/test forms are marked FAKE and measured individually. [[matching-notes]] and [[name-ent-family-results]] record the source recovery. Maintainer review pending.
-
-## [2026-10-18] decision | Preserve final PR append history
-
-PR #62 integrates upstream708a0f02b after concurrent T-24067 archive/wiki updates. Both log histories are retained. Git confirms src/include/tools/config are identical to verified249ca2384, including the tested NAME_ENT blob; prior linked/hash/interface evidence still applies. No build repetition is needed for the archive/docs-only integration.
-
-## [2026-10-18] build | Integrate and independently verify PR62 NAME_ENT matches
-
-Published64ef469bf after actual default C proofs396/2256 bytes and all27 hashes/interface guards. Root standards review resolved T-20013 to Done and synchronized board. Docker progress6512/6958 functions,1864344/2279368 bytes (81.8%). [[completion-run-2026-10-17]] records contributor check and pending PR61 evidence; [[tickets/T-20013-name-ent-fade-page-followup]] records review. No new worker launched.
-
-## [2026-10-18] build | Preserve PR61 compiler evidence
-
-Integrated5397dc7f7 after reviewing tools/aspsx_survey.py, running its survey in Docker, and passing all27 hashes and interface guards. GitHub confirms PR61/62 merged. Survey is read-only; no production/toolchain changes and zero new coverage from PR61. [[gcc-objects]] and [[tickets/T-11890-tt-ratan2-aspsx]] preserve contributor findings; [[completion-run-2026-10-17]] updates handoff state.
-
-## [2026-10-18] query | T-24067 indexed allocation and copy-state evidence
-
-Indexed tracing confirms format/save/end bits54/55/56 share priority3.33333325 and save precedes end in numbering. Inclusive/do loops retain16/16; local-limit/narrow/top-exit forms lose induction elimination; split copies and explicit record/album pointers worsen. Read existing T-20710 block-copy state evidence in [[ido-52-evaluation]] as a supporting analogy for t5/t6, not a fresh4.1 result or exhausted-source claim. Updated drafts/T-24067/README.md and [[tickets/T-24067-etc-album-copy]]; production unchanged and target remains active.
-
-## [2026-10-18] query | T-24067 explicit endpoint range constraint
-
-Copied stock uopt stages without altering bytes; full-TU code/data/relocations equal ordinary replay. Indexed frontend has no end address; final format/save/end ranges tie, while cursor's explicit end entry store raises priority2.75 above save2.5. Endpoint-derived index bounds retain subtraction/entry guards rather than folding, and an empty endpoint reference adds a range. Retained source-only capture helper and minimal packet in drafts/T-24067/README.md; [[tickets/T-24067-etc-album-copy]] stays In Progress. Reviewed prior destination operand/count controls without repeating a broad sweep. Next evidence question is constant identity at bit creation, not a proposed compiler change.
-
-## [2026-10-18] query | ENDING AS1 candidate check isolated
-
-[[tickets/T-24047-ending-sprite-scene]] existing-local selector views are neutral.
-Read-only generated AS1 reference shows LUI is always an eligible opcode; focus
-on dependencies/control flow or pre-scheduling sequences. No assembler binary
-build or production compiler changes.
-
-## [2026-10-18] query | ENDING original-backend diagnostic prepared
-
-[[tickets/T-24047-ending-sprite-scene]] full-width bit-field view is neutral.
-Cached private diagnostic image exists and [[tickets/T-3110-test-ido-52-and-41]]
-records prior approval. Prepare one5.2 as1 replay of captured input plus symbol
-table, preserving production settings and the original trace-fidelity controls.
-
-## [2026-10-18] ingest | Existing IDO52 diagnostic provenance verified
-
-[[tickets/T-24047-ending-sprite-scene]] archive SHA256 equals the T-3110 record.
-Private extraction is37MB in external scratch; cached evaluation image replays
-the unchanged captured assembler input and symbol sidecar with project read-only.
-No production build change or host installation.
-
-## [2026-10-18] query | IDO52 assembler does not close ENDING motion
-
-[[tickets/T-24047-ending-sprite-scene]] original5.2 as1 produces identical target
-words to stock53,804/cost35. Capture fidelity remains exact. Next isolate the
-generator using existing approved diagnostic tools; production stays unchanged.
-
-## [2026-10-18] query | IDO52 generator is also identical for ENDING
-
-[[tickets/T-24047-ending-sprite-scene]] isolated52 ugen with production optimizer,
-uniform frame pass and53 as1 gives identical804/cost35 target words. Probe old
-front end only after a stock architecture equality control; production unchanged.
-
-## [2026-10-18] query | IDO52 front end and architecture controls agree
-
-[[tickets/T-24047-ending-sprite-scene]] stock x86/arm target output agrees, and
-isolated52 cfe with today's uniform passes also produces identical804/cost35.
-Test only the remaining optimizer stage; no production configuration changes.
-
-## [2026-10-18] query | Full IDO52 pipeline leaves ENDING residue unchanged
-
-[[tickets/T-24047-ending-sprite-scene]] isolated52 optimizer and complete52
-pipeline with today's uniform passes reproduce identical804/cost35 target
-words. Backend-version hypothesis closed for this source; return to referenced
-C default-label CFG metadata, without compiler exceptions or production changes.
-
-## [2026-10-18] query | ENDING source controls and IDO52 evidence checkpoint
-
-[[tickets/T-24047-ending-sprite-scene]] forward default goto is neutral35; empty
-inner switch is rejected at807/cost756. The105-entry source ledger and five
-backend controls remain explicit about zero coverage gain. [[ending-allocator-trace]]
-records cached image, approved archive hash, paths and replay interface. Parent
-scope/standards review has no new findings; production source is unchanged.
-
-## [2026-10-18] query | T-24067 address-bit creation measured
-
-Parent approved private logging only. Separate diagnostic binary records first eligible address encounters in makelivranges, with save bit55/block7 before end bit56/block8; format is54/block2. Its full object SHA and all code/data/relocations equal stock. Retained logging-only generator, exact hashes and replay/audit commands under drafts/T-24067; no generated compiler source/binary committed and shared tracer untouched. One derived goto-first indexed loop is neutral16/16 and rejected. [[tickets/T-24067-etc-album-copy]] remains In Progress; production remains assembly and only this target is active.
-
-## [2026-10-18] build | T-24067 early-continue allocation gain
-
-Early rejection/continue corrects saved end/save allocation and improves cost16/16 to8/8 rows. Exact tagged full-TU explicit-object default replay confirms only four second-copy t5/t6 instructions remain, with75 words/frame0x48. Retained improved body.c and previous indexed-body.c/cursor-body.c in drafts/T-24067; capture helpers explicitly retain the indexed baseline for prior trace provenance. [[tickets/T-24067-etc-album-copy]] stays In Progress; no production/header/config change or verified C claim.
-
-## [2026-10-18] query | Contributor TT toolchain report and ownership check
-
-Read issue63 and its new SDK signature/toolchain findings; no open PRs, NAME_ENT claims50/57 unchanged. [[completion-run-2026-10-17]] records the report as unverified evidence and retains TT ownership exclusion. No permanent assembly exception or scope/count change accepted. No contributor messages sent. ETC improved source-only checkpoint7083b5f14 is on main; both existing Sol workers remain active.
-
-## [2026-10-18] decision | T-24067 reject added-store state diagnostic
-
-Retained separate FAKE store-control.c: direct stack store before aggregate copy makes all four scratch-register words agree in current5.3, but adds SW, grows frame0x48→0x58 and changes branch offsets. Tagged full-TU default explicit-object replay reports15 rows, so it is rejected for promotion. Aggregate volatile qualifiers stay8/8. Required printf/tail/copy store sequencing supplies no immediate faithful direct-store substitute; [[tickets/T-24067-etc-album-copy]] records reasons. No compiler-version necessity inferred; continue read-only backend classification analysis within this function only.
-
-## [2026-10-18] query | ENDING wrappers neutral; existing shared-gap note consulted
-
-[[tickets/T-24047-ending-sprite-scene]] compound/do-once controls are neutral35.
-[[matching-notes]] already records the same VALEN default-entry gap. Focus next
-on equivalent call-argument sequencing of existing stores; avoid repeating its
-failed outlier/range tests. Sole production function remains unchanged.
-
-## [2026-10-18] query | ENDING call sequencing rejected; conversion-boundary control
-
-[[tickets/T-24047-ending-sprite-scene]] comma argument forms expand the frame
-and retain motion. Test a late, semantically false negative-u8 backedge solely
-to inspect CFG survival across the existing conversion post-pass. No assembly
-or compiler exception, no matching claim.
-
-## [2026-10-18] query | ENDING block and sequencing controls preserved
-
-[[tickets/T-24047-ending-sprite-scene]] compound/do-once wrappers remain804/cost35;
-comma arg0/arg3 forms are804/cost47 and51 with enlarged frames. Late false
-backedge is802/cost723 and retains LBU/BLTZ, so rejected. The110-row source
-ledger preserves all five controls. Evidence-only standards review has no new
-findings; production remains unchanged, guarded, and In Progress.
-
-## [2026-10-18] query | T-24067 read-only ugen copy mechanism
-
-[[tickets/T-24067-etc-album-copy]] and [[etc-family-results]] record the existing backend's tiny-copy scratch sequence and aggregate emit_rob path, which bypasses scalar store classification. Parent-authorized reference generation used pinned existing local inputs in Docker; no regenerated compiler was built/run. drafts/T-24067/README.md pins hashes and exact addresses. The proposed wide-integer address control was conditional on an existing project C89 type; no such type exists, and parent agreed to reject the extension before compilation. Best remains four differing words, production unchanged, ticket In Progress; next investigation stays within legal C89 mechanisms and prior-control exclusions.
-
-## [2026-10-18] build | T-24067 private ugen state trace and neutral C89 control
-
-Parent authorized a separate logging-only backend diagnostic; drafts/T-24067/trace_ugen.py generates/replays/audits it using existing Docker inputs. Whole stock/private object SHA28fc0f816f0d4471f7536aa32ae4c94f7446caf909b358c8dfb3f2048df72d7f and all code/data/relocation sections agree before evidence is used. Destination evaluation consumes two scratch entries, source evaluation none, then copy dummy advances head to13=t5. FP-free list at0x10019DAC correctly distinguished from any integer pending claim. Derived block-local register destination pointer is whole-object neutral and rejected; no count/memory/production changes. [[tickets/T-24067-etc-album-copy]] and [[etc-family-results]] stay In Progress at four differing words, with exact provenance in README and one-control replay retained.
-
-## [2026-10-18] query | T-24067 isolate stale backend stack input
-
-Parent-requested existing rejected-store comparison passes separate same-input whole-object and code/data/relocation equality. [[tickets/T-24067-etc-album-copy]] and [[etc-family-results]] record equal copy-entry/address-evaluation free lists but eval_mov slot sp+232=9 versus0x10000. Original pinned ugen disassembly confirms indirect destination skips its only local assignment before reading the slot; its value selects one/two dummy allocations and t5/t6. drafts/T-24067/trace_ugen.py and README preserve comparison/provenance. No legal source transition established; next precise evidence is last-writer provenance of that backend address. Best stays four words off, production unchanged, ticket In Progress; no compiler patch/older-toolchain necessity claim.
-
-## [2026-10-18] decision | func_8014D260 stays INCLUDE_ASM (proposed, issue #63)
-
-[[gcc-objects]] now states the reason: TT `func_8014D260` is PsyQ 3.70/4.00 `RATAN.OBJ` from a toolchain no public ASPSX or `cc1psx` release reproduces. [[tickets/T-11890-tt-ratan2-aspsx]] notes the proposal; wiki-only PR from diman8.
-
-## [2026-10-18] decision | Preserve PR64 findings without a permanent assembly exception
-
-Reviewed the wiki-only contributor diff against the 100% goal. [[gcc-objects]] distinguishes reported toolchain measurements from unproven unreleased-toolchain provenance; [[tickets/T-11890-tt-ratan2-aspsx]] remains Done for evidence only. Permanent assembly exception not accepted, existing matching scope/counts unchanged. [[completion-run-2026-10-17]] records the contributor check and next10:39UTC check. No production files changed and no match claimed; independent reproduction of the external toolchain survey remains outstanding.
-
 ## [2026-10-18] query | T-24067 identify matching backend helper writes
 
 Authorized narrow writer diagnostic, preceded by static stack/dispatch analysis, matches baseline slot9 to final required branch f_jump→f_emit_branch_rrll's a2 spill, and rejected-store slot0x10000 to f_unaligned_loadstore→f_loadstore's saved gp. Only named helpers' stack writes enter a bounded native record; no emulated writes/general memory trace. Both existing inputs re-pass separate whole-object and code/data/relocation audits. [[tickets/T-24067-etc-album-copy]] and [[etc-family-results]] retain four-word best/unchanged production and In Progress; drafts/T-24067/README.md records exact hashes, helper provenance and observation limits. No legal required-expression route established, so no new speculative source probe.
@@ -2085,6 +1533,7 @@ The l6-p01 merge carried 9 matches, not 1; listed in [[tickets/T-24301-local-lis
 ## [2026-10-20] query | Rank the remaining large functions
 
 Docker scan of current source INCLUDE_ASM entries and generated size headers identifies TEL func_80136724 as the largest remaining function (6,580 code bytes; older 7,044 includes jump tables). Ranked next targets and the prior exhausted TEL month-promotion avenue are recorded in [[tickets/T-24500-completion-orchestration]]. Three Sol workers remain active; no additional match claimed.
+
 ## [2026-10-20] ticket | T-24502 TACO completion
 
 Created [[tickets/T-24502-taco-completion]] In Progress in an isolated worktree from 2c7293275. Read [[index]], [[status]], [[playbook]] and project standards; TACO source ownership only.
@@ -2096,6 +1545,7 @@ Fresh typed particle-update C matches all 828 linked target bytes in the default
 ## [2026-10-20] build | T-24502 verified TACO particle update
 
 After the parent review's header placement fix, default func_80140028 matches 828 linked bytes and all 27 built binaries independently match their pinned SHA1 values. Header/global guards and prototype branch check pass (0 new disagreements). [[tickets/T-24502-taco-completion]] records the resolved review finding; campaign continues.
+
 ## [2026-10-20] ticket | T-24501 MAIN hard tails
 
 Created [[tickets/T-24501-main-tail]] In Progress on an isolated worktree from `2c7293275`. Start with `func_8006C988` and its documented 11-row pointer/value ordering tail; preserve MAIN-only ownership and use existing Docker data.
@@ -2111,6 +1561,7 @@ Created [[tickets/T-24501-main-tail]] In Progress on an isolated worktree from `
 ## [2026-10-20] build | T-24501 all 27 checksums verified
 
 Fresh Docker `ninja -j 6` exited zero and reported all 27 executable checksum checks OK for the literal `func_800654D0` C change. Header and prototype checks pass. Parent source review against CODING_STANDARDS.md has no outstanding finding; [[tickets/T-24501-main-tail]] remains In Progress for further MAIN work.
+
 ## [2026-10-20] ticket | T-24503 GEKO and OPTION completion
 
 Created [[tickets/T-24503-geko-option-completion]] in progress after scope changed from ETC before source edits. Start from GEKO func_80133024 and func_80134808 guards; preserve a contributor handoff. Read [[playbook]] and the T-24302 history in [[matching-notes]].
@@ -2154,6 +1605,7 @@ Parent review accepted the `make_color_bar16` body and identified the absent can
 ## [2026-10-20] build | T-24501 gradient declaration review resolved and 27 hashes pass
 
 The approved canonical prototype rebuild exits zero, including NAME_ENT and SHUGAKU callers. Literal default-C private-link proof for `make_color_bar16` remains MATCH (1,540 bytes), explicit SHA1 recomputation passes all 27 images, headers pass, and the prototype branch check has zero new disagreements. Parent review's declaration finding is resolved; no source-body findings remain. [[tickets/T-24501-main-tail]] stays In Progress for the remaining MAIN sweep.
+
 ## [2026-10-20] query | T-24503 retain GEKO date guard checkpoint
 
 Retained func_80133024 at two differing words with an explicit FAKE explanation, separately from the two matching commits. Additional causal tests on func_80132B24 did not improve cost61 (seven variants); latest func_80133C50 draft viewsweep confirms the known implicit-int text-call view but remains cost113. See [[matching-notes]] and [[tickets/T-24503-geko-option-completion]].
@@ -2169,6 +1621,7 @@ Archived unmatched OPTION func_8013A7EC (cost90) and func_801326BC (cost144) sou
 ## [2026-10-20] lint | T-24503 archive FAKE source comments
 
 Parent archive review requested source-local FAKE comments in addition to the README descriptions. Added T-24503 comments to both unmatched OPTION bodies without changing C expressions. No replay required for comments; previous source-only costs remain90/144. [[tickets/T-24503-geko-option-completion]].
+
 ## [2026-10-20] decision | T-24502 checkpoint typed quad transform
 
 Archived repaired func_80145650 C and concrete second-copy/register diagnostics in `drafts/T-24502/TACO/func_80145650/`; source remains asm. Bounded type, layout and return-view probes did not close its propagated ring differences. [[matching-notes]] records the exact first divergence; continuing other TACO functions under [[tickets/T-24502-taco-completion]].
@@ -2184,6 +1637,7 @@ Archived func_8013FBF0 typed SPRT draft with natural threshold branches and docu
 ## [2026-10-20] build | T-24502 TACO billboard matched
 
 func_8013F468 default C matches880 linked target bytes; all27 binary SHA1 checks and source guards pass. Parent review found no blockers. Typed point array, canonical UV macro order and marked frame/source grouping close the stale draft. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the third match (campaign4000 bytes).
+
 ## [2026-10-20] ticket | T-24522 isolated RPG_BAT lane
 
 Created [[tickets/T-24522-rpg-bat]] in isolated codex/t24522-rpg-bat worktree from dba33c4f5. Read current status/playbook, standards, and prior RPG_BAT negatives. Six functions remain; no coverage claimed.
@@ -2199,6 +1653,7 @@ MAIN make_color_bar16, TACO func_8013F468 and RPG_BAT func_8014BB80 are integrat
 ## [2026-10-20] lint | Correct stale block-copy compiler guidance
 
 Bounded Astra consultation found that [[build-step-gaps]] and [[playbook]] still described a pre-T-24092 blocker as unimplemented. Inspected tools/ugen_pass.py, its wiring in tools/cc.py, and [[tickets/T-24092-ugen-block-copy-state-pass]]: the direction-state pass is already enabled. Updated both guidance pages to distinguish the historical census, the implemented direction fix, and still-unproven 32-byte register mismatches. Historical17test/6337function regression results are attributed to the ticket, not claimed as rerun. No compiler source or configuration changed.
+
 ## [2026-10-20] decision | Favor source reconstruction in overlay lanes
 
 [[tickets/T-24510-parallel-overlay-coordination]]: all worker bases are `23e1a20fb`; parent main advanced with TACO. TEL starts the other remaining handler `func_8013D88C`, ETC validates its baseline checksum and tries explicit pointer cursors. Parent steering favors typed stale-draft repairs and family patterns, small causal no-gain sets, and immediate verified pins. All three workers informed; no new coverage claimed here.
@@ -2234,6 +1689,7 @@ Bounded Astra consultation found that [[build-step-gaps]] and [[playbook]] still
 ## [2026-10-20] decision | Reuse completed lane slots for fresh owned units
 
 [[tickets/T-24510-parallel-overlay-coordination]] records root's expanded ownership: NAME_ENT T-24515 and BUNKA_SD/EN_NICHI/KANGEI T-24516, fresh isolated trees; MASTER T-24514 continues. Three workers cap unchanged. Returned concise archive review: TEL/ETC no findings, ENDING duplicatecontext/metric attribution fixed; all zero matched gain. MASTER counted-loop reconstruction improves420to363cost but remains nonmatching.
+
 ## [2026-10-20] ticket | T-24511 isolated TEL matching lane
 
 Created [[tickets/T-24511-tel]] in progress from `23e1a20fb`, isolated worktree `/private/tmp/tokimemo-t24511`. Read prior T-19022/T-23001/T-24022 evidence; month-promotion probes remain exhausted. Current source has `func_80134FE4` matched; target the remaining `func_8013D88C` before the large handler.
@@ -2257,6 +1713,7 @@ Standards/spec self-review of `23e1a20fb...b24b039f4` found no unresolved findin
 ## [2026-10-20] lint | T-24511 closure wiki check
 
 Docker `tools/wiki.py lint`:0 broken links,0 status mismatches; one existing large-page notice for [[data/t0018-cases]]. No new wiki page requiring an index entry; ticket remains on the board.
+
 ## [2026-10-20] ticket | T-24512 ENDING lane initialized
 
 [[tickets/T-24512-ending]] is In Progress in isolated /private/tmp/tokimemo-t24512 from 23e1a20fb. Read [[notes/functions]] and ENDING history; scope is remaining ENDING functions, bounded source hypotheses, Docker-only analysis.
@@ -2296,6 +1753,7 @@ against current headers in Docker:330E4 aligned84,34270 aligned504. The earlier
 typed redraft report890 predates finish processing, so the source archive now
 makes the distinction explicit. No C match; replaced stale context hashes with
 exact baseline/source references.
+
 ## [2026-10-20] ticket | T-24513 isolated ETC lane
 Created [[tickets/T-24513-etc-matching]] In Progress on codex/t24513-etc from 23e1a20fb, isolated /private/tmp/tokimemo-t24513. Read [[index]], [[status]], [[playbook]], function catalog and local standards. Largest target func_801480D0; no shared-root writes.
 
@@ -2311,6 +1769,7 @@ All eight archived full-TU cases reproduce their negative metrics with explicit-
 ## [2026-10-20] lint | Consolidate reviewed overlay archive histories
 
 [[tickets/T-24510-parallel-overlay-coordination]] merges reviewed TEL5544f3e03, corrected ENDING71896dd66 and ETC057eeb442 into the isolated coordinator branch, preserving original commits. All log entries from four original histories remain present (Docker audit); production src/include/config/tools diff against23e1a20fb empty. Docker catalog/lint0 broken links,0 ticket mismatches, one pre-existing large-page notice. No main push/integration-tree access or active-worker mutation.
+
 ## [2026-10-20] query | T-24522 typed battle decision lead
 
 `func_80144C84` reconstructed from archived252-row draft to30 literal rows via typed first-counter pointer and staged output-global arithmetic. The remaining gap is third-arm counter store/reload scheduling; no production change or coverage claimed. Bounded negatives and metrics in [[tickets/T-24522-rpg-bat]].
@@ -2318,6 +1777,7 @@ All eight archived full-TU cases reproduce their negative metrics with explicit-
 ## [2026-10-20] build | T-24522 staged battle calculator match
 
 `func_801447E0` matches924 literal default linked bytes using the result global as the arithmetic variable and ordering the real k/lim locals. Private RPG_BAT SHA1 and linked proof pass; parent standards review has no findings. See [[tickets/T-24522-rpg-bat]], [[families/rpg-bat-family-results]].
+
 ## [2026-10-20] ticket | T-24521 TAIIKU matching lane
 
 Created [[tickets/T-24521-taiiku]] In Progress in isolated branch codex/t24521-taiiku from dba33c4f5. Read [[index]], [[status]], [[playbook]], function history and standards. The eleven remaining functions are unchanged; new source hypotheses will use Docker with one compiler job.
@@ -2341,6 +1801,7 @@ Reconstructed `func_80134F98` using actor fields and normal 4-runner and 12-char
 ## [2026-10-20] build | T-24521 TAIIKU func_80134F98 matched
 
 Matched another 1,256 literal default-C bytes. A direct table expression and the counter declaration order close the typed draft. Private TAIIKU SHA1, default linked function proof, 27-output hash manifest and all declaration guards pass. Standards self-review and independent parent source review found no blockers. Lane total: 2,604 bytes across two functions; nine remain. Details in [[tickets/T-24521-taiiku]] and [[matching-notes]].
+
 ## [2026-10-20] ticket | Seasonal isolated source hypotheses
 
 Started [[tickets/T-24523-seasonal-source-hypotheses]] in /private/tmp/tokimemo-t24523 at dba33c4f5. GYOZI, VALEN and SHOUGATU only; scheduler negatives are known and broad exhausted grids will not be repeated.
@@ -2361,11 +1822,9 @@ Started [[tickets/T-24523-seasonal-source-hypotheses]] in /private/tmp/tokimemo-
 
 [[tickets/T-24523-seasonal-source-hypotheses]] matches GYOZI func_80140F90: literal default C privately links to 788 original bytes, complete private GYOZI hash passes. Typed loops, named work-area fields, documented redundant narrowing and a guarded local integer debug-call view resolve the original register sequence. Header/global/prototype guards pass. Parent standards review has no blockers. [[matching-notes]] records the causal improvements and discarded lifetime probes.
 
-
 ## [2026-10-20] build | T-24502 fourth TACO match and stage-handler checkpoint
 
 func_8014CB24 matches 1,756 linked target bytes in default C. All 27 binary hashes and source/prototype guards pass. The repaired func_8014AB50 remains a NON_MATCHING guard with exactly seven constant-register instruction differences (28 bytes); its default fallback matches 1,876 bytes. Six zero-store chains isolate x=z=y as the original store order; remaining allocator evidence and bounded failed views are in [[matching-notes]]. Campaign [[tickets/T-24502-taco-completion]] reaches four matches, 5,756 bytes; awaiting parent source review before committing.
-
 
 ## [2026-10-20] decision | T-24502 stage-handler review complete
 
@@ -2507,6 +1966,7 @@ func_80144E3C matches all1,888 linked target bytes in default C. Correct u8 arg4
 ## [2026-10-20] query | Small-copy control and continued structural matching
 
 Bounded Astra synthetic control shows an8-byte temporary-ring effect but no change to the tested32-byte copy. Actual strCallback control produces identical default/skip-small objects and remains75 differing instruction positions, rejecting the proposed cause for that draft. No production compiler change. [[tickets/T-24500-completion-orchestration]] records evidence paths and pending archives. Sol lanes continue source reconstruction and fresh donor checks. GitHub read-only check finds no open PR or changed issue65; no contributor messages sent.
+
 ## [2026-10-20] decision | T-24501 park status display stack reconstruction
 
 Recovered the four timestamps/color array and by-value RECT call for `func_8004443C`; bounded order/gap/grouped-record variants leave broad allocation and home differences. Archived clean cost-109 scratch body, exact target/build homes, and declaration requirements in `drafts/T-24501/main/func_8004443C.c` and [[matching-notes]]. Production C and shared headers unchanged; [[tickets/T-24501-main-tail]] stays In Progress.
@@ -2530,6 +1990,7 @@ Repaired the previously untried func_801420E4 source's missing rodata declaratio
 ## [2026-10-20] ingest | Publish remaining MAIN and GEKO draft checkpoints
 
 Root reviewed and published MAIN b44f1e302 as e5d03aebd and GEKO9de2cd7cd as b90f0e4e4. Source-only archives retain exact nonmatching metrics and replay requirements, without coverage credit. MAIN scratch whitespace repaired; independent wiki append histories preserved. [[tickets/T-24500-completion-orchestration]] records continued deep source work and the bounded Astra seven-word TACO constant-allocation consultation. MAIN76000 has zero diagnostic differences but remains uncounted pending literal proof, shared-type correction and final integration checks.
+
 ## [2026-10-20] build | T-24501 menu dispatcher literal match
 
 Resumed `func_80076000` region by region: trace proved 298/298 instructions and order-only differences; typed packed icon stores, explicit signed-byte selector views and shift-back flag extraction reduced resolved cost 214 -> 164 -> 138 -> 0. Literal default private link proves all 1,196 bytes; pre-review build, 27/27 image hashes, headers and prototype checks pass. Parent review requested relocating the view to `include/game.h` and explaining flag extraction; applied both, final header rebuild running. [[matching-notes]] records the causal steps; [[tickets/T-24501-main-tail]] remains In Progress.
@@ -2542,7 +2003,6 @@ Post-`game.h` 486-step build passed, explicit SHA1 recomputation passed all 27 i
 
 Archived typed func_8013BAC4 (cost330, down from stale817) and func_8013C6D4 (cost251), with concrete frame/first-divergence evidence and bounded failed alternatives. Both remain production asm. [[matching-notes]] and [[tickets/T-24502-taco-completion]] link the durable drafts; moving to func_8013A790 scrolling/table logic.
 
-
 ## [2026-10-20] decision | T-24502 archive review and AB50 consult
 
 Parent review found the BAC4 raw instruction comparison exceeded standards10 excerpt guidance; removed the dump and kept concise NOTES plus replay wrapper/commands. Independent AB50 consult still has seven constant-register words; chain stores worsen instruction count. [[matching-notes]] records the concrete allocator finding to avoid repeats. No production change under [[tickets/T-24502-taco-completion]].
@@ -2550,3 +2010,7 @@ Parent review found the BAC4 raw instruction comparison exceeded standards10 exc
 ## [2026-10-20] build | Seventeenth match integrated, 91.6 percent
 
 MAIN func_80076000 is pushed at8253c1d73 after root standards review, shared-type correction, full build,27 hashes, literal default-C1196-byte proof and declaration guards. Fresh Docker census6810/6952 functions,2085476/2276920 bytes,142 remaining. [[status]] and [[tickets/T-24500-completion-orchestration]] updated. Corrected TACO source archive integrated at3c8582d6a using clean ancestry excluding the raw comparison dump. No archive coverage credit. Active Sol lanes continue; bounded Astra4AB50 test negative and preserved, no compiler change.
+
+## [2026-10-20] lint | Rotate oversized active log without losing history
+
+Under [[tickets/T-24500-completion-orchestration]], Docker tools/wiki.py rotate-log moved111 older entries to existing [[log/2026-W42]], retaining353 in the active page. Compared multisets of normalized entries across all log pages before/after: exact equality, including duplicate counts. No historical entry changed or disappeared. Lint0 broken links,0 ticket/status mismatches; only pre-existing large data/t0018-cases warning remains. Read-only GitHub check again found no open PR and unchanged issue65. No contributor messages sent.
