@@ -2846,3 +2846,10 @@ User rejected the recent low-yield method and explicitly restored Sol6.1 medium 
 ## [2026-10-20] build | Save loader adds672 verified C bytes
 
 Root reviewed and integrated func_800552DC at97a004d39 with default-C literal672-byte proof, all27 binary hashes and declaration guards. Fresh Docker progress6815/6952 functions,2090540/2276920 bytes,137 remaining; [[status]] refreshed. Resumed-run total22 functions/23536 bytes. Save-image view types support the inverse54FC0 investigation; TACO EAA4 coordinate reconstruction continues independently. [[tickets/T-24500-completion-orchestration]] remains active.
+## [2026-10-20] decision | T-24502 resumed coordinate-loop reconstruction
+
+Root reassigns TACO EAA4 in existing clean worktree. Read latest notes and original loop regions: middle inner loop counts pixel offsets256 through512, third outer latch compares Y512, unlike archived row-index forms. Recover those source controls serially with full-TU control; no repeated scalar/grid/Astra negatives. [[tickets/T-24502-taco-completion]].
+
+## [2026-10-20] decision | T-24502 EAA4 structural handoff
+
+Real middle row use plus separate height/width recover independent row count, height spill and saved Y/stride; third Y512 endpoint recovered. Full-TU491-word candidate has aligned cost186 and192 positional rows, predominantly real home differences; original121 control retained. Source-only replay, home/size/lifetime table and twelve non-stack-word classification saved; no new compilation merely for handoff. No padding/zero controls, production changes or coverage credit. [[tickets/T-24502-taco-completion]] and [[matching-notes]].
