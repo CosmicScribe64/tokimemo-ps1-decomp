@@ -53,6 +53,9 @@ kanban-plugin: board
 
 ## In Progress
 
+
+- [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
+
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
 - [ ] [[tickets/T-24518-etc-flow|T-24518 Reconstruct ETC initializer flow and live values]]
 
@@ -100,6 +103,7 @@ kanban-plugin: board
 
 ## In Review
 
+
 - [ ] [[tickets/T-24571-ending-first-portrait-view|T-24571 Test the first ENDING portrait16 alias view]]
 
 - [ ] [[tickets/T-24560-ending-slot|T-24560 Reconstruct ENDING level halfword slot]]
@@ -134,6 +138,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-24601-get-fnt-match|T-24601 Match glyph raster extraction and mirroring]]
 
 - [ ] [[tickets/T-24511-tel|T-24511 Investigate remaining TEL functions]]
 - [ ] [[tickets/T-24525-name-ent-indexed-posttest|T-24525 Test NAME_ENT indexed post-test record loop]]

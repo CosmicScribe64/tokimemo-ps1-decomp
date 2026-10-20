@@ -901,3 +901,21 @@ Single-row consultation232->226/196 independently confirmed; natural a0 call spi
 ### T-24501 get_fnt raster and mirror recovery
 
 Natural byte raster/mirror reconstruction343->23 resolved cost,258words versus259target. Proven256B temporary, byte row stride, fixed eight-byte horizontal permutation and correct8/16 vertical rowcounts replace inherited invalid array/wordcasts/manual unroll. Separate raster/shared mirror counter restores all saved roles and raster/vertical flow. Remaining frame188/1A0, buffer88/8C, late exit/move and multiply-order differences frozen for bounded consultation. Source-only packet/replay drafts/T-24501/main/get_fnt-notes.md; production/header unchanged.
+
+## T-24600: record-scan allocation and GEKO day-load probes
+
+[[tickets/T-24600-finish-matching]] confirms the 6,816/6,952 Docker census. No new verified C bytes and no production-source changes.
+
+MAIN `func_8006C988`: 25 baseline/join-local/type/switch probes, 20 increment-placement/base-lifetime probes, 24 address-construction probes, and 15 empty-test/load-seeding probes found no zero score. The best isolated scorer result is 715 versus 850 for the guarded baseline; these are permuter costs, not instruction counts or proof of a match. Full-TU verification still reports real differences across the same 69 instructions: pointer and PRE-value registers are swapped, with initialization and loop-tail scheduling differences. Wider `cur` removes narrowing but does not close the match, consistent with earlier evidence.
+
+Instrumented uopt reports the induction pointer as unconstrained bit 83 (priority 15.25) and PRE-loaded byte as unconstrained bit 84 (priority 20). Both are allocated in bit order, so raising the latter's priority alone is not a sufficient remedy. Arrow, byte-offset and reversed-add forms did not improve the score. Explicit early loads and empty tests did not successfully seed the desired range order. Some early assignment probes change semantics and were diagnostic controls only; none is suitable for promotion.
+
+GEKO `func_80133024`: 29 baseline/day-expression/empty-test probes found no improvement over isolated score 40. Byte views can retain that score; promotion masks and arithmetic no-ops worsen it. No full-TU candidate verification was warranted because none beat the baseline.
+
+Local reproducibility files remain gitignored in `build/T-24600/`: `probe.py`, `join.py`, `views.py`, `seed.py`, `geko.py`, candidate C and `regdiff/`. They require the current checkout and Docker; the trace used the existing `/private/tmp/t24047-uopt/variants/trace`. Do not count these scratch artifacts as completed decompilation.
+
+## T-24601: get_fnt literal match
+
+[[tickets/T-24601-get-fnt-match]] promotes the T-24501 natural raster/mirror reconstruction as 1,036 default-C bytes. Width-first multiplication in the horizontal loop fixes the second unrolled-row operand order (23 -> 21 cost). The missing odd-row `v0` pointer copy and early return-address load both come from return-register liveness: `s32 get_fnt(...)` without a return changes cost 21 -> 14 and restores all 259 instructions. Remaining differences are only seven frame-derived words. A marked five-word pad before the real 256-byte temporary plus one word after restores frame 0x1A0 and buffer 0x8C, giving cost zero. These unknown original locals and return-liveness constraint remain explicitly FAKE.
+
+Production locals renamed for raster roles; the canonical shared prototype is in `include/main_api.h`. Docker default-C funcdiff confirms all 1,036 literal linked bytes, full ninja checks all 27 executable hashes plus headers/globals, and prototype guard reports zero new disagreements (15 known). Independent standards and spec reviews have no findings. Current census 6,817/6,952 functions, 2,092,604/2,276,920 bytes. Earlier get_fnt source-only residual notes are superseded by this proof.

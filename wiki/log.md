@@ -2909,3 +2909,35 @@ MAIN `func_8004A814` is on main at `87df21291`: 1,028 linked default-C bytes mat
 ## [2026-10-20] decision | Recover glyph raster and mirror loop semantics
 
 [[tickets/T-24501-main-tail]] reconstructs get_fnt256B byte raster and natural mirror loops; full-TU343->23/258words versus259target, all saved roles recovered. Vertical old-count control verified8/16 rows. Shared-mirror/separate-raster ownership removes double-unroll and extra constant lifetimes; negatives preserved. Frame/home and late-expression residuals frozen for consultation, no production/header/compiler changes. See [[matching-notes]].
+
+## [2026-10-20] ticket | Resume completion under T-24600
+
+Created [[tickets/T-24600-finish-matching]] in In Progress for the user's completion request. Docker census confirms [[status]]: 6,816/6,952 game functions, 2,091,568/2,276,920 bytes. Read local ownership records; initial MAIN func_8006C988 experiments use scratch copies because existing conveyor records reserve the source. No coverage gained.
+
+## [2026-10-20] query | Trace MAIN record-scan register mismatch
+
+[[tickets/T-24600-finish-matching]] tested explicit join values and increment/base lifetimes in scratch, without a match. Full-TU candidate retains 69 instructions. Existing instrumented uopt identifies two unconstrained ranges allocated in bit order, not priority; pointer bit 83 precedes PRE-value bit 84. Production sources unchanged. Next experiment tests address-expression construction rather than repeating type/declaration grids.
+
+## [2026-10-20] query | Record unsuccessful allocator probes
+
+[[tickets/T-24600-finish-matching]] completed 84 MAIN record-scan and 29 GEKO day-load scratch probes without a match. Updated [[matching-notes]] with counts, scorer/verification distinctions, trace evidence and scratch paths, and [[status]] with unchanged coverage. Production C unchanged; completion remains outstanding.
+
+## [2026-10-20] lint | Validate completion checkpoint
+
+Docker wiki lint after [[tickets/T-24600-finish-matching]] updates: zero broken links and zero ticket/kanban status mismatches; existing large-page warnings for data/t0018-cases and log remain. `git diff --check` passes. No code changes or new match claims require review; the completion ticket remains In Progress.
+
+## [2026-10-20] decision | Continue until matching completion
+
+User explicitly directs uninterrupted pursuit of completion under [[tickets/T-24600-finish-matching]]. Activated persistent completion goal. MAIN func_80047560 source grouping remains unmatched on full-TU verification; isolated score gains are not credited. Reproduced the latest get_fnt source-only reconstruction at cost 23 and 258/259 words; testing pointer ownership and multiply order before frame adjustment.
+
+## [2026-10-20] build | Verify get_fnt default C and enter review
+
+[[tickets/T-24601-get-fnt-match]] moves In Progress -> In Review. Production default C literal-matches 1,036 linked bytes in Docker. Full `ninja -j 4` succeeds with 27 binary checksums and header/global checks; prototype guard reports zero new disagreements (15 known). Independent code-review skill standards and spec axes report no code findings. Census: 6,817/6,952 functions, 2,092,604/2,276,920 bytes (91.9%).
+
+## [2026-10-20] ticket | Complete get_fnt review
+
+[[tickets/T-24601-get-fnt-match]] moves In Review -> Done after independent standards/spec reviews found no issues and all pending byte/build/declaration checks passed. Updated [[status]] and [[matching-notes]] with 1,036 verified new C bytes; [[tickets/T-24600-finish-matching]] remains In Progress with 135 functions left.
+
+## [2026-10-20] lint | Refresh indexes after get_fnt promotion
+
+Docker catalog refresh reports 723 tickets, 423 sections and 3,074 indexed functions. Lint reports zero broken links and zero status mismatches, with the two existing large-page warnings. `git diff --check` passes. Generated indexes also catch up previously unindexed campaign notes.

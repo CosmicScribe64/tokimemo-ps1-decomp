@@ -80,7 +80,50 @@ void move_255_line(s32 arg0, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_trans_vram);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", get_fnt);
+/* FAKE: the integer return type without a return preserves the original v0
+ * lifetime and exit scheduling; callers discard the result. T-24601. */
+s32 get_fnt(u8 *output, u8 *source, s32 glyph, s32 divisor, s32 width, u8 flags) {
+    /* FAKE: unknown original locals occupy 20 bytes above the temporary and
+     * four below it, placing the 256-byte copy at sp+0x8C in a 0x1A0 frame.
+     * Neither pad is read or written. T-24601. */
+    s32 pad_above[5];
+    u8 pixels[256];
+    s32 pad_below;
+    s32 tiles_per_row;
+    s32 row;
+    s32 row_offset;
+    s32 mirror_row;
+
+    row = 0;
+    if (width > 0) {
+        tiles_per_row = 0x80 / width;
+        row_offset = 0;
+        do {
+            memcpy((row_offset / divisor) + output, ((s32) ((glyph % tiles_per_row) * width) / divisor) + source + ((s32) ((((glyph / tiles_per_row) * width) + row) << 7) / divisor), width / divisor);
+            row += 1;
+            row_offset += width;
+        } while (row != width);
+    }
+    if (flags & 1) {
+        memcpy(pixels, output, 0x100);
+        for (mirror_row = 0; mirror_row < width; mirror_row++) {
+            memcpy(output + (width - mirror_row - 1) * width, pixels + mirror_row * width, width);
+        }
+    }
+    if (flags & 2) {
+        memcpy(pixels, output, 0x100);
+        for (mirror_row = 0; mirror_row < width; mirror_row++) {
+            output[width * mirror_row + 4] = pixels[width * mirror_row + 3];
+            output[width * mirror_row + 5] = pixels[width * mirror_row + 2];
+            output[width * mirror_row + 6] = pixels[width * mirror_row + 1];
+            output[width * mirror_row + 7] = pixels[width * mirror_row];
+            output[width * mirror_row] = pixels[width * mirror_row + 7];
+            output[width * mirror_row + 1] = pixels[width * mirror_row + 6];
+            output[width * mirror_row + 2] = pixels[width * mirror_row + 5];
+            output[width * mirror_row + 3] = pixels[width * mirror_row + 4];
+        }
+    }
+}
 
 /* FAKE: taking the address of the argument forces the home-slot spill (sw a0,0(sp)); real source unknown. T-0400 */
 void func_8004DAC4(s32 arg0) {
