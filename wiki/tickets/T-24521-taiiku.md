@@ -1,7 +1,7 @@
 ---
 id: T-24521
 title: Match remaining TAIIKU functions
-status: In Review
+status: In Progress
 assignee: Codex
 created: 2026-10-20
 updated: 2026-10-20
@@ -91,3 +91,30 @@ Inspected the strongest instruction blocks and the matched source templates:
 - F3A4 shares the generic nine-instruction seven-way dispatch plus a five-instruction signed threshold/add sequence. Its actor update arms do not follow the donor's award loops or loader handle loops.
 
 Every pairing is below 0.30 and below `siblings.py`'s default 0.70 report threshold. No new structural transplant was justified; no compiler or build ran in this focused pass. Production remains the same two verified matches, with nine assembly tails. Returned to In Review for parent review of this evidence.
+
+### Fresh geometry reconstruction of func_8013E894
+
+Read indexed T-11010 and T-11640 history before starting; neither attempted this routine in depth. Original four `Rot_2D` outputs establish two separate coordinate arrays: x at sp+0xAC/0xB0/0xB4/0xB8 and y at sp+0x9C/0xA0/0xA4/0xA8. Scalar rotation inputs are sp+0x94 and sp+0x90. The routine rotates two radii at adjacent angles, translates all four points, scales y, warps two endpoint pairs about radial midpoints, negates/offsets coordinates, and clips/draws the two lines. Existing `TaiikuCamera0C` and `TaiikuBall` own every global access.
+
+Fresh real-array source compiles at 350 diagnostic rows, with a 192-byte frame versus target 200. Camera snapshots, the original early pair-counter advancement, and conditional y reads reduce this to 341 rows and a matching 200-byte frame. A two-dimensional endpoint-pair view scores 337 rows with frame 192; separate row/count lifetimes retain unit increments but leave 368 rows (flat) or 364 (2D). These are typed structural probes, not scalar declaration grids.
+
+Earliest remaining ownership difference: the target keeps x base in s3, y base in s2, plus distinct translation/scale/y-offset limits in s5/s6/fp that are all physically equal to x base. The explicit pointer source correctly spells bounds from each own array but uopt merges equal-valued ranges, leaving a register for the angle. Target angle spills at sp+0x78. Next hypothesis tests natural array-index induction through the five stages, sharing the real counter between loops, to let uopt create independent stage-limit ranges. No new coverage yet.
+
+Natural array-index stage loops reproduce the distinct equal-valued bounds and spill the angle. Splitting real first-endpoint x/y temporaries and placing the angle below the arrays gives the exact observed 200-byte frame and every known home (x 0xAC, y 0x9C, rotation inputs 0x94/0x90, angle 0x78), with no padding. This candidate is 245 instructions versus target 243 and reports 224 diagnostic rows. Named axis unions, a direct typed camera view, initial row copy spelling, own implicit-int return and an ephemeral implicit-int `Rot_2D` view do not change its bytes; the experimental shared-header view was restored.
+
+Reused the existing `/private/tmp/t24047-uopt/variants/trace` read-only after checking stock/traced full-TU `.text`, `.rel.text`, `.rodata`, `.rel.rodata`, `.data`, `.rel.data` inventories and bytes: all equal. First divergence at instruction34 is a ugen temporary, not a traced uopt range. First structural difference at106 is an extra `move a0,v0`. A shared `ixa(x, i*4)` range across three x stages has priority476.7 and takes v0, outranking the camera x field at100 (v1); the original has those roles reversed. Pair row is a separate priority140 v0 range and displaces the original first-y allocation. A stage-owned index hypothesis is being tested to split the shared address range naturally. No compiler patches or tracing rebuilds were made.
+
+
+### Geometry checkpoint and restricted MAIN donor pass
+
+Stage-owned indices regressed E894 to 307 diagnostic rows; post-increment endpoint induction gave 352. The best real-array reconstruction remains 224 rows with exact 200-byte frame/homes and 245 instructions versus 243. Saved as `drafts/T-24521/TAIIKU/func_8013E894/typed-arrays.c`. Its first structural divergence and faithful trace evidence are recorded above. No frame padding or artificial bound objects were added.
+
+Reconstructed E1FC from its original two phases: 64 straight strips followed by 64 rotated strips. The straight phase translates four x values and two y values before duplicating y endpoints; both phases share the real endpoint warp/clip operation. An explicit next-row lifetime gives the best 548 diagnostic rows, frame 208 versus target 200, with correct x/y array homes but next-angle home 0x74 versus target 0x60. Replacing the explicit next angle with derived `angle + 16` induction gives 606 rows at frame 208; moving its loop bound to that expression leaves bytes unchanged. Best body saved as `drafts/T-24521/TAIIKU/func_8013E1FC/typed-arrays.c`. Neither body matches; semantic equivalence is not proved and coverage remains unchanged.
+
+At coordinator request, compared only the newly solved MAIN donors func_80076000 (299 instructions) and func_800767A4 (233) against the nine TAIIKU tails using the same original-opcode normalization and directional SequenceMatcher method above. All 18 pairs are in `drafts/T-24521/main-donor-rankings.json`. The strongest are 767A4→35F3C 0.2699, 76000→35F3C 0.2396 and 767A4→E894 0.2143. The first pairing's longest blocks (12 and 11 instructions) are signed-division exception guards. The second shares at most five generic address/load instructions; the third shares at most four call-setup instructions. No source-template relationship or fresh compile hypothesis follows, so no compiler ran for this pass. Earlier donor pairs were not repeated.
+
+Restored production to the two verified matches; all nine remaining functions retain their prior assembly fallbacks. The source-only geometry archive uses existing owned aggregate views and real coordinate arrays; no experimental header change remains. Parent review of this bounded checkpoint is pending; the ticket stays In Progress under the coordinator's explicit active-work instruction.
+
+Focused inspection of the three remaining candidates identifies EC60 as a genuine structural sibling of E1FC: both have straight and rotated strip phases, x/y arrays at 0xAC/0x9C, 200-byte target frames, and the same midpoint/warp/clip body. EC60 starts straight x coordinates at +320/+240, duplicates both y endpoints before rotating all four points by camera angle, then translates/scales them. This provides an untried source transplant hypothesis from the new real-array reconstruction, although E1FC itself is still unmatched. DDB8's grid-loop unrolling and F3A4's actor-state dispatch do not share this geometry body. No new compiler ran for this inspection.
+
+Archive verification: Docker `ninja -j1 build/ovl/TAIIKU.ok` passes the original SHA1; both literal default linked matches still pass (1,348 and 1,256 bytes). Private TAIIKU plus 26 unchanged read-only root binaries passes 27/27 SHA1 checks. Header/global guards pass; branch prototype check passes with zero new and twelve known disagreements. README deslop scan reports zero hits. Standards self-review finds C89 source-only bodies, real array bounds and owned aggregate fields, no new padding/FAKE constructs, no production/header/compiler changes, and no raw game assets. Parent archive review pending. Local proof: `/private/tmp/t24521-geometry-checkpoint-proof.log`.

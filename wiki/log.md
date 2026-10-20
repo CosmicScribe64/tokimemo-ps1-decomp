@@ -2194,3 +2194,24 @@ Reopened [[tickets/T-24521-taiiku]] In Progress for a focused comparison restric
 ## [2026-10-20] query | T-24521 donor comparison findings
 
 Completed 18 comparisons restricted to the two new TAIIKU donors and nine tails. Maximum normalized opcode similarity was0.2896 for `func_80134F98` to `func_8013DDB8`, from generic dispatch. The genuine aggregate-copy relationship to `func_80135F3C` was already used by its earlier typed draft. No new structural transplant or compiler probe was justified. Saved ranked metadata and block interpretations in [[tickets/T-24521-taiiku]] and [[families/taiiku-family-results]]. Returned the ticket to In Review; production unchanged.
+
+## [2026-10-20] ticket | T-24521 geometry reconstruction resumed
+
+Reopened [[tickets/T-24521-taiiku]] In Progress for a fresh `func_8013E894` reconstruction after reading the T-11010/T-11640 history. Original stack accesses establish separate four-word x/y arrays, scalar rotation inputs and two endpoint pairs. Replace archived scalar-offset walks with real arrays and pointer loops before compiling. Previous source-only and donor hypotheses remain parked.
+
+## [2026-10-20] build | T-24521 real geometry array ownership
+
+Fresh `func_8013E894` source uses the original two four-word coordinate arrays and typed camera/ball fields. Structural probes compile with real DIFFs; the best so far is337 rows. Original separate equal-valued loop-limit ranges and spilled angle differ from the draft's merged limits. A natural array-induction hypothesis is running; no coverage claimed. Details in [[tickets/T-24521-taiiku]].
+
+## [2026-10-20] build | T-24521 geometry homes and faithful allocator trace
+
+Real endpoint temporaries plus natural array induction recover the original `func_8013E894` frame and all observed stack homes without padding. Reused the existing allocator tracer read-only and verified six complete code/data/relocation sections exactly equal stock before interpreting it. The remaining source differs by two instructions; the trace identifies a common x-address range outranking camera x and a separately promoted row range. See [[tickets/T-24521-taiiku]].
+
+
+## [2026-10-20] decision | T-24521 geometry archive and MAIN donor checkpoint
+
+Saved real-array E894 (224 rows, exact 200-byte frame) and E1FC (548 rows, 208-byte frame) source-only checkpoints after bounded loop/ownership hypotheses; restored production. Verified existing trace against stock emitted object sections before using first-divergence ranges. Restricted MAIN76000/767A4 versus nine-tail ranking found only generic division/address/call patterns; no donor compile justified. Updated [[families/taiiku-family-results]] and [[tickets/T-24521-taiiku]]; archive awaits parent review. Coordinator explicitly keeps ticket/[[kanban]] In Progress. Focused original inspection identifies EC60's two-phase real-array geometry as a new E1FC structural sibling; no further compile yet. Two verified matches remain unchanged; no additional coverage.
+
+## [2026-10-20] build | T-24521 restored geometry checkpoint validation
+
+Private TAIIKU checksum and both literal default linked matches pass after restoring production. Private TAIIKU plus 26 unchanged read-only root outputs pass 27 hashes. Headers/globals pass; prototype branch check has zero new/twelve known. README deslop scan has zero hits. Standards self-review of the source-only archive finds no unresolved issue; parent review remains pending in [[tickets/T-24521-taiiku]].
