@@ -1,9 +1,11 @@
+#define MAIN_API_OVERRIDE_func_80053D10 /* implicit int view: the call's $v0 keeps unk_1115 in $v1 in func_80132BA8 (T-24301) */
 #define MAIN_API_OVERRIDE_func_80049A40 /* unprototyped view avoids 16-bit coordinate narrowing in func_80132000 (T-24134) */
 #include "common.h"
 #include "ovl/OPTION.h"
 /* FAKE: scoped minimum aggregate view of the word and adjacent flags, based on observed +0x14 indexing. T-9540 */
 
 void func_80049A40();
+s32 func_80053D10();
 
 void func_80132000(void) {
     if ((D_800E6280.unk_110A != 0x21) && (D_800E6280.unk_110A != 0x22) && (D_800E6280.unk_110A != 0x23)) {
@@ -253,10 +255,7 @@ void func_80132B30(void) {
     }
 }
 
-/* NON_MATCHING: T-24301, 26 rows; the frame and case 0 match. Left: the unk_1115 reads sit in $v0 where the
- * original uses $v1, and as1 leaves no dead `li at` copies after the else-if arms of case 1 (three
- * instructions short). A switch on unk_1115 is worse (47). */
-#ifdef NON_MATCHING
+/* Option screen state machine (loader, CD checks). */
 void func_80132BA8(void) {
     s32 pad[5]; /* FAKE: T-24301, puts `rows` at sp+0x3C in the 0x90 frame */
     Arrs4x8 rows;
@@ -359,9 +358,6 @@ void func_80132BA8(void) {
     }
     func_8004AC18(D_800E6280.unk_03A);
 }
-#else
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132BA8);
-#endif
 
 /* Option screen loader: waits for the CD, sets up records 96..159 and the palettes, then fades in. */
 void func_80133010(void) {
