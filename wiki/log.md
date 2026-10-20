@@ -2827,3 +2827,7 @@ Fresh Docker full-TU baseline and the single canonical `D_8011F4DE` trial both s
 ## [2026-10-20] decision | Freeze text substitution IV packet
 
 [[tickets/T-24501-main-tail]] preserves `sndi` source210/259words and branch-reset211/260 versus263 target, exact observed buffer homes/frame118. Two-base forms and final approved conditional increments do not recover target cursor recomputation; final303/262/frame120 rejected. Source-only replay, precise LBU/induction evidence and capacity cautions archived; no production/header edit or compiler-defect claim. See [[matching-notes]].
+
+## [2026-10-20] decision | Return to Sol medium workers with Astra
+
+User rejected the recent low-yield method and explicitly restored Sol6.1 medium with Astra. [[status]] supersedes Luna-first policy, limits active matching to two workers, and prioritizes verified-byte payoff. MAIN worker freezes sndi variation sequence and performs a brief evidence-based family selection; former TACO worker resumes separate NAME_ENT/TACO ownership. No new Luna assignments or broad repeated sweeps. [[tickets/T-24500-completion-orchestration]] remains active toward100%.
