@@ -2215,3 +2215,21 @@ Saved real-array E894 (224 rows, exact 200-byte frame) and E1FC (548 rows, 208-b
 ## [2026-10-20] build | T-24521 restored geometry checkpoint validation
 
 Private TAIIKU checksum and both literal default linked matches pass after restoring production. Private TAIIKU plus 26 unchanged read-only root outputs pass 27 hashes. Headers/globals pass; prototype branch check has zero new/twelve known. README deslop scan has zero hits. Standards self-review of the source-only archive finds no unresolved issue; parent review remains pending in [[tickets/T-24521-taiiku]].
+
+
+## [2026-10-20] build | T-24521 single EC60 geometry sibling probe
+
+Parent review of archived E894/E1FC source-only bodies and README found no blockers: real arrays, canonical camera/ball fields, no padding or new types, C89 declarations, explicit unmatched limits. Prepared one authorized EC60 transplant using E1FC's real arrays and warp/clip body, observed positive straight bounds and four camera rotations, input (0, -radius) for curved rotation, and the original actor-102 x store. Compiling once; broad residual differences will be archived without a new search pipeline. Ticket remains In Progress: [[tickets/T-24521-taiiku]].
+
+
+## [2026-10-20] decision | T-24521 EC60 bounded transplant stopped
+
+The single authorized EC60 real-array sibling probe remains broad: 489 diagnostic rows, frame 216 versus 200, arrays 16 bytes high, and different first-loop induction. Saved source-only evidence and restored production without further compiler searches. Updated [[tickets/T-24521-taiiku]] and [[families/taiiku-family-results]]; ticket remains In Progress at coordinator request. No additional coverage.
+
+## [2026-10-20] build | T-24521 EC60 restoration verified
+
+Restored private TAIIKU checksum, two literal default linked matches and all 27 hashes pass. Headers/globals pass; prototype branch check stays zero new/twelve known. Reviewed the one weak README colon hit as valid list introduction. No production/header change remains; source-only standards self-review finds no unresolved issue. [[tickets/T-24521-taiiku]] keeps the measured residuals and pending parent review.
+
+## [2026-10-20] decision | T-24521 EC60 archive parent review passed
+
+Parent independently reviewed the EC60 source-only body and README against the standards with no blockers: C89, real arrays/locals, existing camera/actor fields, no dummy homes or new header/assembly, and explicit unmatched/semantic limits. Recorded review in [[tickets/T-24521-taiiku]]. No further EC60 compiler work; clean checkpoint awaits coordinator reassignment with ticket In Progress.

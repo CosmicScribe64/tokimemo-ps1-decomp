@@ -188,3 +188,6 @@ T-24521 checked the two newly matched functions as restricted sibling donors aga
 
 
 T-24521 geometry checkpoint: fresh real-array E894 source reproduces the original 200-byte frame and coordinate/angle homes, but remains 224 diagnostic rows (245 versus 243 instructions). Faithful stock/trace object comparison isolates a shared x-index range taking v0 and the first extra move at instruction 106. E1FC reconstruction of the straight/rotated strip phases remains 548 rows with frame 208 versus 200. Both are source-only in drafts/T-24521/TAIIKU/; nine assembly tails remain. A restricted 18-pair comparison against new MAIN76000/767A4 donors peaks at 0.2699 from signed-division guards, with no new source transplant. Full evidence: [[tickets/T-24521-taiiku]].
+
+
+T-24521 then tried one genuine EC60←E1FC geometry transplant. It remains broad at 489 diagnostic rows: frame 216 versus 200, both array homes 16 bytes high, and induction differs from the prologue. Saved source-only and restored production; no additional compile or coverage. See [[tickets/T-24521-taiiku]].
