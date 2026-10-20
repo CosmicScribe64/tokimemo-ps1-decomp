@@ -41,7 +41,7 @@ void func_80140DCC(void) {
     func_8004DE1C();
 }
 
-/* NON_MATCHING: the original promotes 0 into $a1 before the first branch (`or $a1,$zero,$zero; sb $a1,D_800F62CF; or $a0,$a1,$zero`), shifting the post-call temporaries and loop register by one. T-24116. */
+/* NON_MATCHING: T-24301, 11 rows; the original keeps 0 in $a1 from entry (`or $a1,$zero,$zero; sb $a1,D_800F62CF; or $a0,$a1,$zero`), which moves the loop counter to $v1. Zero locals of every width, assignment-expression arguments and chained stores all fold to $zero (T-24116, T-24301). */
 #ifdef NON_MATCHING
 void func_80140E0C(void) {
     s16 i;
@@ -52,7 +52,8 @@ void func_80140E0C(void) {
         D_80148750 = 1;
     }
     D_800F53A0.unk_F2F = 0;
-    D_80148620 = (((u8)func_8005E0E0(0) & 0x7F) == 4) * 4;
+    /* FAKE: the byte view of the girl index makes the later reload use $a1 for its address. T-24301 */
+    D_80148620 = (((u8)func_8005E0E0(((u8 *)&D_800F53A0)[0xF2F]) & 0x7F) == 4) * 4;
     D_80148614 = D_801481D4;
     D_80148618 = D_80148208;
     D_8014861C = D_8014823C;
