@@ -622,3 +622,10 @@ Final choice-string verification: the post-prototype/string 520-step build at `-
 `func_80046754` (884 bytes, `src/main/80046500.c`) now passes literal default linked C proof. Replaced inherited m2c duplicated/unrolled operations with natural loops over a packed 128x128 nibble texture. Clear each word column using an advancing `u32 *`; indexed clear arithmetic changes induction allocation. A byte-sized flat-fill color reduces180 resolved edits to19 (word-sized selector incorrectly promotes its input and shifts the entire flat branch). Explicit `u16` upload coordinates reduce19 to2. Initialize the row counter inside each mode branch: moving their common zero assignment before the `if` removes the flat branch's independently scheduled initialization and leaves one nop instead. Branch-local initialization closes tozero. No FAKE, dummy locals, inline asm or compiler changes. Exact canonical prototype added to `main_api.h`; parent notified and reviewed actual body/header with no findings. Literal proof884 bytes passes; final full27 checks running.
 
 Final radial verification:484-step post-header rebuild, explicit27/27 SHA1 hashes, headers/main_api and branch guard (zero new,15 known) pass. Parent review has no findings.
+
+
+### T-24501 quadrant renderer and CD consult checkpoint (2026-10-20)
+
+`func_80046AC8` (2,684 bytes) remains ASM. Typed primitive fields838 from raw1048; semantic locals/GameState view810; keeping texture page row bit unscaled and scaling at use restores target saved-register ranks and gives738. Explicit updates/shift spelling do not improve; comma-grouped UV stores and scoped case locals fail their specific tail/frame hypotheses. Broad frame/order and inherited channel/extent narrowings remain; no narrow compiler consult justified. Source-only draft and exact replay/width cautions archived under `drafts/T-24501/main/func_80046AC8*`. Stop this probe phase rather than repeat type/frame grids.
+
+Parent CD26 consult also negative: relative spacing repair grows frame by8 (66); address/counter reuse changes codegen (223); grouped flags/status assignment leaves26. Preserve baseline26 and its packet; no compiler changes.

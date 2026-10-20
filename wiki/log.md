@@ -2165,3 +2165,7 @@ Post-prototype/string 520-step two-job build passed; explicit hashes passed all2
 ## [2026-10-20] build | Radial texture post-header validation passes
 
 [[tickets/T-24501-main-tail]] final `func_80046754` source/header passed484-step two-job rebuild, explicit27/27 executable SHA1 hashes, headers/main_api and branch prototype guard (zero new,15 known). Parent review is clean; literal default884-byte proof passed on final source. Focused source/wiki pin ready.
+
+## [2026-10-20] decision | Preserve renderer recovery and bounded CD negatives
+
+[[tickets/T-24501-main-tail]] archives `func_80046AC8` typed semantic draft at738 (raw1048); source-expression lifetime restores target saved-register ranks, but frame/order/narrowing remain broad. Grouped UV/scoped-local hypotheses fail; no compiler escalation justified. Parent CD consult confirms baseline26 preferred over relative-frame repair, local reuse and grouped stores. Production unchanged; exact replay/cautions in [[matching-notes]].
