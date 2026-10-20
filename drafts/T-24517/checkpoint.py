@@ -38,7 +38,13 @@ def main():
         lparts, rparts = left[0].split(maxsplit=1), right[0].split(maxsplit=1)
         lw, rw = int(lparts[0], 16), int(rparts[0], 16)
         opcode = lw >> 26
-        mask = 0xFC0007FF if opcode == 0 else (0xFFFFFFFF if opcode in (2, 3) else 0xFC00FFFF)
+        assert opcode not in (16, 17, 18, 19) and rw >> 26 not in (16, 17, 18, 19), 'COP format requires a dedicated mask'
+        if opcode == 0:
+            mask = 0xFFFFFFFF if (lw & 63) in (12, 13) else 0xFC0007FF
+        elif opcode == 1:
+            mask = 0xFC1FFFFF  # REGIMM rt is a condition selector, not a register.
+        else:
+            mask = 0xFFFFFFFF if opcode in (2, 3) else 0xFC00FFFF
         if (lw & mask) != (rw & mask) or lparts[1:] != rparts[1:]:
             other.append(index)
         elif lw != rw:

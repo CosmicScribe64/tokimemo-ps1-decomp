@@ -2365,3 +2365,21 @@ immediate and relocation annotations when register fields are masked;167 rows
 are register-only substitutions,213-row exact diagnostic prefix. Section-owned
 strings/tables are normalized, so this is not literal linked-byte proof or C
 coverage. Root requests uopt/ugen attribution before any backend conclusion.
+
+## [2026-10-20] build | T-24517 exact tracer attribution
+
+[[tickets/T-24517-master-flow]] stock/traced exact sections and target checkpoint
+agree. Final uopt colours are only v0/v1/a0/a1; no temporary-register colour is
+assigned. First copy-end difference has no live range. Corrected opcode mask
+retains REGIMM condition selector and asserts no COP formats; existing-object
+check still652 positions,167 register-only and0 other rows. No backend defect
+or source impossibility inferred.
+
+## [2026-10-20] build | T-24517 narrow root consultation packet
+
+[[tickets/T-24517-master-flow]] packages recovered source, exact replay commands,
+stock/traced fidelity and identical enabled/omitted-shim sections. Synthetic
+aligned68-byte direct/indirect byte-store source yields relative end+3/+2;
+source goal is target+2 without changing preceding address setup. No defect or
+impossibility claimed. Narrow source-only archive self-review/syntax/prose checks
+pass; no original ASM, binary, ucode or full context archived. In Progress.
