@@ -65,7 +65,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-24201-cloud-packet-kangei-80134724|T-24201 Cloud packet: KANGEI func_80134724]]
 - [ ] [[tickets/T-24203-cloud-packet-geko-80136c20|T-24203 Cloud packet: GEKO func_80136C20]]
-- [ ] [[tickets/T-24200-cloud-packet-taco-8013b460|T-24200 Cloud packet pilot: TACO func_8013B460]]
 - [ ] [[tickets/T-24132-name-ent-final-4|T-24132 Close remaining 4 unmatched functions of NAME_ENT (func_80138C1C, func_801398EC, func_8013AF78, func_80143580)]]
 - [ ] [[tickets/T-24077-etc-pair-scene|T-24077 Recover ETC pair-table scene]]
 - [ ] [[tickets/T-24076-etc-album-search|T-24076 Recover ETC album search]]
