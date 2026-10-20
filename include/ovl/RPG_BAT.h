@@ -89,13 +89,15 @@ s32 func_80144C84();
 s32 func_801452C0();
 s32 func_801453B4();
 extern s32 D_8015EBBC;
-/* The two prototypes below can be hidden by a file that was matched with the implicit int view the
+/* The prototypes below can be hidden by a file that was matched with the implicit int view the
  * original callers had: it defines RPG_BAT_OVERRIDE_<name> before its includes and declares
  * `s32 <name>();` itself (the definitions in 8013E4D0.c are void; T-16210). */
 #ifndef RPG_BAT_OVERRIDE_func_8013E7C0
 void func_8013E7C0(s32 a, s32 b, s32 c, s32 d);
 #endif
+#ifndef RPG_BAT_OVERRIDE_func_8013E810
 void func_8013E810(s32 a, s32 b, s32 c, s32 d);
+#endif
 #ifndef RPG_BAT_OVERRIDE_func_8013E97C
 void func_8013E97C(s32 a, s32 b, s32 c);
 #endif
