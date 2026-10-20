@@ -53,3 +53,7 @@ Match TT `func_8014D260` (object `TT/8014D260`, PsyQ gcc `ratan2`), the last TT 
 2026-10-18, proposal on issue #63: keep `func_8014D260` as `INCLUDE_ASM` permanently with the reason in [[gcc-objects]] (PsyQ 3.70/4.00 `RATAN.OBJ` from an unreleased toolchain). Wiki-only PR from diman8 with the cc1psx, old-ASPSX and signature findings.
 
 2026-10-18, root integration of PR #64: preserve the contributor measurements as reported evidence. The permanent assembly exception is not accepted, and an unreleased toolchain remains an inference. This Done ticket records an evidence investigation only, not a C match or exemption; func_8014D260 remains unresolved in the existing completion scope. Documentation review found no code/config changes; no new match claimed.
+
+## Update 2026-10-20
+
+Superseded: `TT/8014D260` now matches in C on main with the updated toolchain (`config/toolchains.txt`: `TT/8014D260 gcc 2.7.2-psx 2.56`, commit 56b2c4f0d, issue #63). The conclusion above describes the state before that change.

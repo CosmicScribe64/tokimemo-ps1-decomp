@@ -20893,3 +20893,7 @@ Cloud packet sessions finished without a match: [[tickets/T-24201-cloud-packet-k
 ## [2026-10-20] ticket | T-24202, T-24204, T-24206 Done
 
 Cloud packet results merged. T-24206: main `func_800590CC` (268 bytes) matches, the first cloud-packet match (linked proof here). T-24202 KANGEI `func_8013852C` stays at 2 rows, T-24204 main `func_8006D7EC` at 1 row (compiler-ordering tails).
+
+## [2026-10-20] lint | T-11890 superseded
+
+[[tickets/T-11890-tt-ratan2-aspsx]] said `func_8014D260` stays INCLUDE_ASM; it matches on main since 56b2c4f0d (toolchain update, issue #63). Note added to the ticket.
