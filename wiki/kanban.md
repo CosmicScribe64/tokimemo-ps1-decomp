@@ -53,6 +53,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24502-taco-completion|T-24502 Match remaining TACO functions]]
+
 
 ## In Review
 

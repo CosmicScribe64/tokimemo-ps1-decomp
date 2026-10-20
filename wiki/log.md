@@ -2077,3 +2077,15 @@ Board cleanup after [[tickets/T-24400-wiki-reorganization]]: 55 In Review and 11
 ## [2026-10-20] ticket | T-24301 correction
 
 The l6-p01 merge carried 9 matches, not 1; listed in [[tickets/T-24301-local-list-l6-p01]].
+
+## [2026-10-20] ticket | T-24502 TACO completion
+
+Created [[tickets/T-24502-taco-completion]] In Progress in an isolated worktree from 2c7293275. Read [[index]], [[status]], [[playbook]] and project standards; TACO source ownership only.
+
+## [2026-10-20] build | T-24502 TACO func_80140028 literal match
+
+Fresh typed particle-update C matches all 828 linked target bytes in the default build. Corrected stale draft strides/fields and the TcPos argument; declaration layout and XYZ store order closed the remaining stack and scheduling differences. Recorded experiments in [[matching-notes]]. Full 27-binary build and header/prototype verification pending before integration; [[tickets/T-24502-taco-completion]] remains active.
+
+## [2026-10-20] build | T-24502 verified TACO particle update
+
+After the parent review's header placement fix, default func_80140028 matches 828 linked bytes and all 27 built binaries independently match their pinned SHA1 values. Header/global guards and prototype branch check pass (0 new disagreements). [[tickets/T-24502-taco-completion]] records the resolved review finding; campaign continues.
