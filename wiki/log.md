@@ -2081,3 +2081,7 @@ The l6-p01 merge carried 9 matches, not 1; listed in [[tickets/T-24301-local-lis
 ## [2026-10-20] decision | Resume completion with three Sol workers
 
 [[tickets/T-24500-completion-orchestration]] records the resumed run: MAIN T-24501, TACO T-24502, GEKO/OPTION T-24503 in isolated worktrees, GPT-6.1 Sol medium. Astra reserved for evidenced blockers. GitHub issue #65 contributor is out of tokens until Friday; the user authorized covering those functions meanwhile. No contributor messages sent. Remote main equals local `2c7293275`; no open PR returned. Docker `tools/progress.py` reports 6,793/6,952 game functions, 2,067,004/2,276,920 bytes (90.8%); corrected [[status]] and the remaining counts. Existing integration automation remains untouched.
+
+## [2026-10-20] query | Rank the remaining large functions
+
+Docker scan of current source INCLUDE_ASM entries and generated size headers identifies TEL func_80136724 as the largest remaining function (6,580 code bytes; older 7,044 includes jump tables). Ranked next targets and the prior exhausted TEL month-promotion avenue are recorded in [[tickets/T-24500-completion-orchestration]]. Three Sol workers remain active; no additional match claimed.
