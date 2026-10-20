@@ -53,6 +53,9 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
+
+
 
 
 
@@ -70,7 +73,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
 
 
 

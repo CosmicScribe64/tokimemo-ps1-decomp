@@ -2206,3 +2206,11 @@ At the root's explicit request, moved [[tickets/T-24523-seasonal-source-hypothes
 ## [2026-10-20] decision | Review corrected fourteen-edit VALEN foundation
 
 Parent and self review of drafts/T-24523/VALEN/func_80133088 found no blockers: C89, safe disjoint union phases, documented FAKE choices, exact annotated14-cost reproduction, precise source-level blockers and no listings/assets. Production/header diff remains empty. [[tickets/T-24523-seasonal-source-hypotheses]] returns from In Progress to In Review with matching kanban; coverage remains two exact functions/1,196 bytes.
+
+## [2026-10-20] ticket | Reopen candidate-list ownership analysis
+
+At the coordinator's explicit request, reopened [[tickets/T-24523-seasonal-source-hypotheses]] for GYOZI func_80138C9C. Read T-24116 and original stack accesses. The target proves values at sp+0x4C and one pointer spill at sp+0x44, but no record-prefix field access; a metadata struct is not inferred from unused space alone. Investigate actual gather/print/rotation stage lifetimes before any compile.
+
+## [2026-10-20] query | Candidate-list ownership and MAIN donors
+
+[[tickets/T-24523-seasonal-source-hypotheses]] records GYOZI func_80138C9C original local/global ownership evidence and four bounded probes: baseline103, stage scopes112, count/rotation scratch reuse103, direct global aggregate111, local work pointer150. The real list starts sp+0x4C; no local record prefix inferred. No production/header change or coverage. New MAIN76000/767A4 donors against14 remaining seasonal originals give maximum normalized ratios0.240/0.230; all28 negative and no donor transplant compiled. See [[matching-notes]].

@@ -1,7 +1,7 @@
 ---
 id: T-24523
 title: Match seasonal overlay tails using new source hypotheses
-status: In Review
+status: In Progress
 assignee: Codex
 created: 2026-10-20
 updated: 2026-10-20
@@ -92,3 +92,15 @@ Source-only checkpoint: drafts/T-24523/VALEN/func_80133088/body.c and README.md.
 Negative follow-ups: nested one-case dispatch unchanged; explicit case3/default alias worse21; two physical id/call line groups, destination comma assignments, and named string-pointer ranges all remain14. A previously started13-single semantic-view pass found no gain; the final requested func_800AE0F0-only integer/pointer return checks also remain14. No callee views retained. No broad historical scheduler grids repeated.
 
 - Fourteen-edit checkpoint review: parent and self found no blockers. C89; union active member written before use in disjoint phases; redundant byte override remains equivalent under the following &1; forward-label topology and FAKE controls are documented; scratch extern canonical-declaration warning explicit. Exact annotated body recompiled at14. No production/header changes, bulk instruction listings, target words or assets. Returned to In Review for this focused source/evidence handoff; verified coverage remains two functions/1,196 bytes.
+
+### Candidate-list ownership and new MAIN donors
+
+Read T-24116 before reconstructing GYOZI `func_80138C9C` (992 bytes). Original local accesses establish a thirteen-halfword list at sp+0x4C through sp+0x64, with final pointer spill at sp+0x44. They do not establish metadata at sp+0x48/0x4A or an encompassing local record. No local record was invented from unused stack space. The original keeps its shared signed-halfword index in s0 across gather, print, rotation and reorder stages, including the no-call rotation loop. Gather uses both a local count and independently loaded/stored global count around opaque callbacks.
+
+Current full-unit baseline resolved cost103 remains best. Four bounded source forms: natural C89 stage scopes with separate index locals112 (frame0x70, list+0x54, rotation index v0); reuse the real gather-count scalar for the later disjoint rotation offset103 (unchanged); direct global candidate-work aggregate111; local typed global-work pointer150 (s6/s7 and frame0x78). The latter two were scratch proof only. No production or header edits retained, no new archive of worse bodies, no coverage.
+
+The global aggregate hypothesis had address/width evidence: signed-halfword current at D_80147220+0, values[12] at+4 (24 bytes), signed-halfword count at+0x1C, unsigned-byte special at+0x20 and mode at+0x24; next known table begins+0x28. Unknown gaps remain byte padding. Original reload of count after each rotation values store motivated testing shared aggregate alias ownership. Direct aggregate still reloads that count but does not fix the s3/s4 swap, v0 rotation offset, early bound guard or hoisted second format pointer; it adds reloads in reorder branches. Local pointer adds saved-register/frame pressure. The scratch cast from the first old scalar is not proposed as a production declaration: any future successful aggregate must be owned by the overlay header and migrate all overlapping aliases/users.
+
+Also compared immutable original normalized opcodes from new MAIN `func_80076000` (1196 bytes) and `func_800767A4` (932 bytes) against the fourteen remaining seasonal targets, using the same op_token/SequenceMatcher method as the prior donor pass. MAIN76000's maximum ratio is0.240 to VALEN33088 (next GYOZI412A4,0.238). MAIN767A4's maximum is0.230 to SHOUGATU3E6E4 (next GYOZI38C9C,0.216). All28 pairs are structurally distant; no source transplant compiled. MAIN76000's available source manages packed menu icons rather than the candidate gather/rotation dataflow. No broad historic sweep or exhausted scheduler grid repeated.
+
+- Candidate-list/donor notes review: parent found no blockers in the precise deltas and raw-source scope. Self-review agrees; notes only, production unchanged, no instruction listings or coverage claim. Ticket stays In Progress for the newly assigned bounded VALEN32834 factoring hypothesis.
