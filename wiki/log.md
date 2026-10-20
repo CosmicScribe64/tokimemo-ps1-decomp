@@ -20897,3 +20897,7 @@ Cloud packet results merged. T-24206: main `func_800590CC` (268 bytes) matches, 
 ## [2026-10-20] lint | T-11890 superseded
 
 [[tickets/T-11890-tt-ratan2-aspsx]] said `func_8014D260` stays INCLUDE_ASM; it matches on main since 56b2c4f0d (toolchain update, issue #63). Note added to the ticket.
+
+## [2026-10-20] ticket | T-24210 In Review: main func_800591D8 matches (cloud packet)
+
+[[tickets/T-24210-cloud-packet-main-800591d8]]: match packet for `func_800591D8` in src/main/80058D20.c. Asm fallback equals the packet reference; the T-24206 `u16 *` re-read view and else-arm store order plus `unk_002` written first in the if arm give 0 differing lines (from the T-17017 guard's 32). Plain C with one FAKE; notes in [[matching-notes]] (T-24210). Local linked proof and review still due.
