@@ -14,10 +14,10 @@ Coordinate three user-authorized GPT-6.1 Sol medium workers from main `23e1a20fb
 
 ## Acceptance criteria
 
-- [ ] Isolated /private/tmp worker trees, file-disjoint overlay ownership, existing Docker toolchain and read-only raw-data mounts.
-- [ ] Pin source/wiki commits and literal-default-C evidence for any match: linked bytes, 27 checksums, header/global/prototype guards, standards review.
-- [ ] Preserve causal negative results and replayable source when blocked; do not count drafts as coverage.
-- [ ] Return durable handoff without pushing, merging main, editing integration tree, or messaging contributors.
+- [x] Isolated /private/tmp worker trees, file-disjoint overlay ownership, existing Docker toolchain and read-only raw-data mounts.
+- [x] Pin source/wiki commits and literal-default-C evidence for any match: linked bytes, 27 checksums, header/global/prototype guards, standards review.
+- [x] Preserve causal negative results and replayable source when blocked; do not count drafts as coverage.
+- [x] Return durable handoff without pushing, merging main, editing integration tree, or messaging contributors.
 
 ## Notes
 
@@ -63,3 +63,37 @@ MASTER363F4 coherent splice420cost; counted clone loop removes obsolete sprite p
 ## Consolidated archive handoff
 
 Parent requested one isolated handoff pin preserving individual commits. Merged TEL reviewed closure5544f3e03, ENDING corrected71896dd66, ETC057eeb442 into this coordinator branch with merge commits. Wiki conflict resolutions retain both append histories and both matching-note sections; no active worker tree altered. Docker catalog/lint:0 broken links,0 status mismatches, one existing large-page notice. Explicit Docker audit confirms every log entry from all four original histories remains present. Baseline23e1a20fb production src/include/config/tools diff empty; changed paths confined to wiki and narrow drafts/T-24511..13 source archives. No raw sources, assembly dumps, binaries, generated objects or full-context copies in final archive. No build repeated because production is unchanged and all three individual baseline27/guards passed. Ticket remains In Progress for active MASTER/NAME_ENT/family lanes.
+
+### Active continuation results
+
+NAME_ENT and family trees pin `eaf7c6e709cb85435c313ac2fbfde5c7db14cd93`. NAME_ENT baseline hash passes.38C1C old guard is284words/331rows, shared clear/copy counter plus known third endpoint187words/250rows vs185target; two space-byte captures182words/165rows. Audit finds actual store-width stale error (fullwordunk0F8 vs targetbyte), testing GsWord.date fields.398EC old213words vs123target shows excess unrolling, snapshots187 still far; AF78 pointer/width controls no gain.
+
+Family baseline owned three overlays hashes pass. KANGEI327DC fresh typed264cost, GS260; no match. BUNKA_SD39290 guard123cost, frame-word local87 restores shared70000000 constant; copied elapsed range under bounded test. EN_NICHI3735C stale raw-offset/phantom Vblnk-init arguments under typed reconstruction. Existing KANGEI two-row scheduler tails not repeated.
+
+MASTER363F4 reaches342cost with exact64byte frame and first213 instructions aligned after removing obsolete sprite/RNG locals. Residual copy-endtemporary t2vs t3, bne vs sltu/branch loopcompare, spill homes differ. Precoppy byteview neutral342, integeraddress439worse.35FB8 pointer lifetime58neutral;326B4 old frame-correct538 no fresh hypothesis. Worker preparing narrow source-only archive with actual retained-body replay/interfaces. Coordinator explicitly does not require another full27 rebuild for unchanged production archive; root-verified baseline provenance plus unit hash and empty productiondiff documented.
+
+MASTER final source-only checkpoint `dfec4bf7231735a47872ef4e2863260a075b2104` + `8b76c1b461d9cb9635ad76f79366ccd474e1e717`, base `dba33c4f5`, clean tree. Zero matched bytes; no src/include/config/tools diff; retained35FB8=58/363F4=342 compile. MASTER hash and interface guards pass; prototype0new/12known, three missing-unit stale baseline notes recorded. No unnecessary full27 rebuild for unchanged production. Coordinator inspected narrow two-bodies/replay/README archive, no fullcontext/original ASM dumps and no remaining findings; T-24514 stays In Review. README explicitly distinguishes current aligned68bytecopy register setup from already-fixed T-24092 F/B direction. No original compiler fix/audit repeated.
+
+Parent reports8 matches/91.2% through `d2665864e`; root updates stale block-copy wiki claims. This is parent-reported progress. MASTER exhausted current source-backed avenues; NAME_ENT and family workers remain active.
+
+NAME_ENT bounded closure:398EC direct-global indexing restores caches and automatic peel/pair126words vs123target; return neutral, modulo-first125, remainderlocal126, unresolved register ranking/HI-LO order.38C1C field-width semantic correction retained181words/104rows with correct96byteframe vs185target.43580 canonicalT20008 reproduces1078words/835rows, earlier semantic postdecrement/reload already present; no new hypothesis. Worker builds fresh all27 then guards/archive review; no production change.
+
+Family closure: BUNKA_SD39290 explicit-u32frame87cost/378words vs379target; elapsed89 and signedframe419 rejected.34D94 target audit corrects inverted selector==3 condition, constants(-160,-120), and swappedpriority/color stackargs; repaired243words/frame48 exact but144cost, no match. EN3735C typedactor/sentinel/20fade552words/453cost vs575target, no match. EN36DEC correctedwrongfade source/innerdispatch with indexedtable347words/317cost vs348target, bytecursor453worse. K327DC properbitfield280 vs264baseline, halflocalneutral; old2rowtails not repeated. Worker prepares focused semantic sourcearchive, replay/selfreview/checks; no productionpromotion.
+
+NAME_ENT final reviewed checkpoint `00bfc328d` + `30b4f5716bd3eac426d199a54668244f55aaaed1`, base `eaf7c6e709cb85435c313ac2fbfde5c7db14cd93`, clean tree. Zero matches and production src/include/config/tools identical.32 serial replay controls and retained104/173-row bodies compile/reproduce exactly; fresh673steps, explicit27built hashes pass; headers/globals/prototype0new15known pass. Coordinator source-only diff/ASMdump/fullcontext audit no findings. Ticket/board In Review for root acceptance; transient local Done corrected by append-only history. Wiki lint0broken/0mismatches (one preexistinglargepage). No further source hypothesis identified.
+
+Parent integrated consolidated archive0abd29391 as `127bba16c`, preserving independent append histories and removing one extra EOF blank. MASTER final reviewed pin8b76c1b46 and NAME_ENT30b4f5716 returned in chat; family worker still completing final checks.
+
+## Final bounded handoff
+
+Family checkpoint `1b212b6f7ca9c088b83f033dac974ca60c08bafa` (base `eaf7c6e70`) reviewed: five narrow bodies/replay/README plus wiki only, empty productiondiff, no fullcontext/ASMdump/binaries. Five retained actual-default full-TU explicit-object diagnostics reproduce DIFF: BUNKA34D94 target/candidate243/243 cost144; BUNKA39290 379/378 cost87; EN36DEC348/347 cost317; EN3735C575/552 cost453; K327DC274/270 cost264. Fresh633steps, independent27built hashes, headers/globals/prototype0new15known pass. Standards/spec self-review and coordinator scope audit no findings. T-24516 In Review.
+
+All six assigned tickets have completed their bounded source-backed investigations with zero new matches/C bytes. Earlier TEL/ENDING/ETC consolidated pin0abd29391 is integrated by parent127bba16c; outstanding independent source-only checkpoints for root acceptance are MASTERdfec4bf72+8b76c1b46, NAME_ENT00bfc328d+30b4f5716, family1b212b6f7. No workers remain compiling; no remaining distinct evidence-backed experiment identified in assigned units. Keep sources for future targeted consultation; do not call drafts coverage or claim compiler impossibility.
+
+Coordinator final review: all scoped source/wiki evidence reviewed, exact base and verification recorded, all history append-only, no raw-source mutation, no host installs, no production compiler change, no extra review subagents, no contributor messaging/push/main merge/integration-tree access. In Review for root acceptance. Matching objective remains unresolved.
+
+## Continued structural reconstruction
+
+Parent explicitly resumes work toward100%, requesting deeper original-flow reconstruction until a real match or concrete isolated backend blocker, not stopping after tiny causal sets. Two existing Sol6.1 medium workers restart in NEW isolated trees: MASTER363F4 T-24517 and ETC3FFAC T-24518. MASTER chosen for exact frame/first213instructions with real clone pointer-compare/lifetime mismatch; ETC chosen for corrected six-entry semantics but original retained-table-loop/unroll and buffer/lifetime differences. Each reconstructs original flow region-by-region, no grids or production compiler patches, no fallback coverage claims. Existing T-24047 read-only diagnostic tracer location supplied to ETC for a specific loop/type question; no instrumentation rebuild authorized.
+
+Consolidation now includes reviewed MASTERdfec4bf72/8b76c1b46, NAME_ENT00bfc328d/30b4f5716 and family1b212b6f7 via individual cherry-picks with original commit references. Kept exact worker log/matching-note append suffixes, regenerated combined catalogs, and retained existing coordinator history; no parent production ancestry imported. ROOT requested one pin for archive integration. Coordinator returns to In Progress for two deep workers; prior matching targets remain unresolved.

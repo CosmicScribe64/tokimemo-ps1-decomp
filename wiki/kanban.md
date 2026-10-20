@@ -62,6 +62,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24510-parallel-overlay-coordination|T-24510 Coordinate isolated TEL ENDING ETC matching lanes]]
 
 
+
+
 - [ ] [[tickets/T-24500-completion-orchestration|T-24500 Orchestrate the remaining matching functions]]
 - [ ] [[tickets/T-24502-taco-completion|T-24502 Match remaining TACO functions]]
 - [ ] [[tickets/T-24501-main-tail|T-24501 Match MAIN remaining functions]]
@@ -70,6 +72,13 @@ kanban-plugin: board
 
 
 ## In Review
+
+- [ ] [[tickets/T-24516-overlay-family|T-24516 Reconstruct BUNKA_SD EN_NICHI KANGEI functions]]
+
+- [ ] [[tickets/T-24515-name-ent|T-24515 Reconstruct remaining NAME_ENT functions]]
+
+- [ ] [[tickets/T-24514-master|T-24514 Reconstruct remaining MASTER functions]]
+
 
 - [ ] [[tickets/T-24512-ending|T-24512 Match remaining ENDING functions]]
 

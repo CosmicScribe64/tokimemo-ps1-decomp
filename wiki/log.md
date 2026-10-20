@@ -2382,3 +2382,116 @@ Recovered the old data-ownership blocker by assigning only the 64-byte initializ
 ## [2026-10-20] build | T-24501 menu palette final verification and review
 
 Fresh post-prototype 520-step build passed, explicit hashes passed 27/27 images, literal default private link proved `menu_bar_color`'s 84 bytes, headers passed, and branch prototypes report zero new disagreements (15 known). Parent reviewed the exact source/config/header change and data boundaries with no blocking standards findings. Removed the cosmetic blank after the marked FAKE mask; literal proof rebuilt the final source. [[tickets/T-24501-main-tail]] remains In Progress for further MAIN work.
+
+## [2026-10-20] query | Record second-lane source reconstruction evidence
+
+[[tickets/T-24510-parallel-overlay-coordination]] records NAME_ENT38C1C real store-width discrepancy, BUNKA_SD39290 frame-word87cost vs123guard, and MASTER363F4 exact frame/first213 instructions but342cost residual. No match claim. MASTER will archive narrow sources with replay and interfaces, avoiding another full27 rebuild when production is unchanged.
+
+## [2026-10-20] query | Review MASTER narrow handoff and fixed-copy distinction
+
+[[tickets/T-24510-parallel-overlay-coordination]] records MASTER dfec4bf72/8b76c1b46, unchanged production, zero new C bytes, retained candidate replay/unit hash/interface checks passed. Coordinator narrow archive review no remaining findings. Current aligned68bytecopy register issue is distinct/unproven; T-24092 already fixes historical direction state. NAME_ENT/family continue; parent reports8 matches91.2% outside these lanes.
+
+## [2026-10-20] query | Preserve real semantic repairs without match claims
+
+[[tickets/T-24510-parallel-overlay-coordination]] records NAME_ENT width/cache repairs and BUNKA_SD inverted-condition/draw-coordinate/argument-order repairs, plus EN_NICHI typed reconstruction. None matches. Workers stop bounded negatives and prepare exact narrow source replay and final checks; no production changes, no repeated copy-direction experiments.
+
+## [2026-10-20] query | Return reviewed NAME_ENT handoff
+
+[[tickets/T-24510-parallel-overlay-coordination]]: NAME_ENT00bfc328d/30b4f5716 reviewed source-only/no dumps/context/productiondiff,32 replay controls and all27 built hashes/guards pass, zero matches. Ticket In Review for root acceptance. Parent integrated earlier consolidated archive as127bba16c; MASTER8b76c1b46 also ready, family final checks pending.
+
+## [2026-10-20] ticket | Hand off completed bounded overlay investigations
+
+[[tickets/T-24510-parallel-overlay-coordination]] moves to In Review after all six source-backed lane tickets finish bounded work. Family1b212b6f7 source-only review no findings, five actual-C replay cases and all27 built hashes/guards pass. Earlier archive0abd29391 integrated127bba16c; MASTER8b76c1b46, NAME_ENT30b4f5716 and family1b212b6f7 await root acceptance. Zero new C matches/bytes, production unchanged across every worker. Durable sources/blockers preserved; no workers remain compiling.
+
+## [2026-10-20] ticket | T-24514 MASTER lane initialized
+
+[[tickets/T-24514-master]] is In Progress in isolated /private/tmp/tokimemo-t24514
+from dba33c4f5. Root reassigned the finished ENDING research lane to MASTER.
+Read [[notes/functions]] and [[families/master-family-results]] before source
+work; no main_api edits and no duplicate compiler work.
+
+## [2026-10-20] build | T-24514 MASTER twin lifetime probes
+
+[[tickets/T-24514-master]]: MASTER baseline checksum OK. Current typed35FB8
+matched-twin port scores58. Separate end marker148, do-marker58, absolute
+initializer62, absolute endpoints150; no match. Existing early s2 lifetime
+remains. Production and shared headers unchanged; next source reconstruction
+uses the related animation handlers rather than more lifetime permutations.
+
+## [2026-10-20] build | T-24514 animation reconstruction
+
+[[tickets/T-24514-master]]:363F4 target-specific source with archived344E0 typed
+shared-loop donor compiles at420 aligned. Indexed clone363, indexed points424;
+frame remains72 versus64. No match or compiler-limit proof. Donor344E0 is not
+matched C.35FB8 explicit shuffle pointer58 gives no further improvement.
+
+## [2026-10-20] build | T-24514 recovered animation frame
+
+[[tickets/T-24514-master]]:363F4 indexed clone with one-use RNG local removed
+scores342 and recovers frame64. First213 instructions match; aligned-copy end
+temporary and later loop/spill differences remain.326B4 historical correct-frame
+baseline scores538. Zero new C bytes; no production/header/compiler changes.
+
+## [2026-10-20] build | T-24514 narrow archive verification
+
+[[tickets/T-24514-master]] replay compiles35FB8 at58 and363F4 at342. MASTER unit
+checksum passes; headers/globals pass after reference-only DATE/TACO splits;
+prototype branch guard0 new disagreements,12 known. Source/header/tool/config
+diff empty. Standards/spec self-review and deslop review of the README complete.
+No full27 rebuild repeated for archive-only work, per root instruction.
+
+## [2026-10-20] ticket | T-24514 source checkpoint in review
+
+[[tickets/T-24514-master]] moves In Progress -> In Review for coordinator review.
+Zero new C bytes. Preserve the concrete copy-end register, loop-compare and
+spill-home residuals; no compiler-impossibility claim. No ownership beyond MASTER.
+
+## [2026-10-20] query | T-24514 copy residual distinction
+
+[[tickets/T-24514-master]] clarifies that enabled T-24092 already fixes the old
+unaligned-copy F/B direction issue. Current aligned68-byte copy t2/t3 setup is
+distinct and unproven; no compiler defect or impossibility is claimed. Research
+README updated without rerunning any old backend audit.
+
+## [2026-10-20] ticket | T-24515 isolated NAME_ENT matching lane
+
+Created [[tickets/T-24515-name-ent]] In Progress at `eaf7c6e709cb85435c313ac2fbfde5c7db14cd93`, isolated `/private/tmp/tokimemo-t24515`. Read fresh wiki/guidance/standards and NAME_ENT family context before hypotheses. Four remaining functions; source-backed repairs prioritized.
+
+## [2026-10-20] query | T-24515 stale NAME_ENT guard repair
+
+[[tickets/T-24515-name-ent]] records reproduced current C controls and bounded negative pointer/local-width/snapshot probes. NAME_ENT func_80138C1C has stale loop lifetimes/endpoints and a real word-versus-byte date-store error; existing GsWord.date fields are the next narrow source repair. No production/header changes or new match claims.
+
+## [2026-10-20] build | T-24515 NAME_ENT corrected source checkpoint
+
+Fresh660-step remaining-unit ninja -j2 plus the preceding13-step NAME_ENT build passed; independent27/27 built SHA1 checks passed. Header/global/prototype guards pass (0 new,15 known prototype disagreements). Source-based reconstructions under drafts/T-24515 reduce NAME_ENT38C1C from284/331 to181/104 words/rows with repaired date-store width and correct frame; indexed398EC reduces213/266 to126/173. All remain nonmatching; [[matching-notes]] and [[tickets/T-24515-name-ent]] record exact blockers. Production source unchanged.
+
+## [2026-10-20] ticket | T-24515 reviewed NAME_ENT handoff
+
+Self-review of `eaf7c6e70...00bfc328d` found no unresolved standards/spec findings. All32 archived source controls replay exact; two annotated preserved bodies reproduce104/173 rows. Independent27/27 built hashes and declaration guards pass. [[tickets/T-24515-name-ent]] moved to Done for the bounded investigation; four matching targets remain unresolved.
+
+## [2026-10-20] lint | T-24515 closure wiki pass
+
+Docker wiki lint reports0 broken links and0 status mismatches, with one existing large-page notice for [[data/t0018-cases]]. No new wiki page requiring an index entry; the ticket is on the board.
+
+## [2026-10-20] ticket | T-24515 root acceptance gate
+
+Coordinator reviewed `00bfc328d` with no new findings and requested In Review pending root acceptance. [[tickets/T-24515-name-ent]] moved from Done to In Review; this supersedes the earlier local bounded-investigation closure. No further NAME_ENT probes.
+
+## [2026-10-20] ticket | T-24516 isolated overlay-family lane
+Created [[tickets/T-24516-overlay-family]] In Progress for BUNKA_SD, EN_NICHI and KANGEI, isolated from exact main base eaf7c6e709cb85435c313ac2fbfde5c7db14cd93. Read [[index]], [[status]], [[playbook]] and local guidance. No other overlay ownership or integration writes.
+
+## [2026-10-20] ingest | T-24516 overlay source defects and bounded controls
+[[tickets/T-24516-overlay-family]] records fresh three-overlay checksum control and typed reconstruction of five functions. Found concrete BUNKA_SD func_80134D94 branch polarity, draw-coordinate and argument-order errors; repaired private source restores original word length/frame but remains144 aligned cost. Found EN_NICHI func_80136DEC alpha-source/dispatcher errors; indexed local-table recipe reduces466 to317 cost. KANGEI's two known scheduler tails are preserved without repeating grids. No literal match, production change or new C bytes.
+
+## [2026-10-20] decision | T-24516 stop bounded family controls, preserve source
+Final EN_NICHI byte-cursor and KANGEI typed-bitfield/club-local controls do not improve the retained reconstructed bodies. [[tickets/T-24516-overlay-family]] preserves five source drafts, metrics and precise semantic corrections in drafts/T-24516. No additional source/compiler search, coverage claim or production edit; fresh full27 verification begins for handoff.
+
+## [2026-10-20] ticket | T-24516 self-review and full27 validation, In Review
+[[tickets/T-24516-overlay-family]] moves to In Review after standards/scope self-review, no findings. Fresh Docker ninja-j2 completes all27 binary targets; independent built-path SHA1 also passes27/27. Header/global/prototype guards pass(0 new,15 known). Production source/header/config/tooling diff against eaf7c6e70 remains empty. No C-byte gain; five source reconstructions and known negative boundaries retained for coordinator review.
+
+## [2026-10-20] build | T-24516 retained-body replay confirmed
+All five actual full-TU C bodies in drafts/T-24516 reproduce their recorded word/row/aligned-cost metrics and explicit-object default resolved DIFF verdicts. Production unchanged. [[tickets/T-24516-overlay-family]] archive handoff is ready; no literal match asserted.
+
+## [2026-10-20] decision | Resume deep structural matching and consolidate remaining archives
+
+[[tickets/T-24510-parallel-overlay-coordination]] returns to In Progress at parent's explicit request. Two medium workers restart in fresh trees: MASTER363F4 T-24517 and ETC3FFAC T-24518, original-flow region reconstruction until match or isolated backend blocker. Consolidated reviewed MASTER/NAME_ENT/family archives through source-only cherry-picks retaining original refs and exact append suffixes. No production ancestry imported; no raw-source or active-worker mutation.
