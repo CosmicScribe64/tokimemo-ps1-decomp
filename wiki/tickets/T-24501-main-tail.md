@@ -97,3 +97,5 @@ Active `sndi` semantic recovery: correct first-stage found-flag/reset join, prop
 Inverse `func_80054FC0` source-only typed reconstruction frozen at 113/200 words (target 199), exact frame and first 45 resolved rows. Byte-loop and unsigned-bound source recovery retained; narrow copy-ring/epilogue packet prepared for parent consultation. No production/header changes. See [[matching-notes]].
 
 Circular GPU grid `func_8004A414` source recovery 390->164, exact 256-word count/frame 98/x-y homes. Natural bounds/distances and typed primitive retained in source-only packet; remaining CSE spill block/register ownership requires bounded consultation. Production/header unchanged. Inverse54FC0 consult negative 113/200; no further probes. See [[matching-notes]].
+
+Astra grid source improves164->132/256 with exact frame/all homes; adopted unchanged and independently replayed. One focused trace has identical ordinary output and identifies pre-colouring priority order; no source experiment justified yet. See packet provenance/rank table.
